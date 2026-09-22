@@ -1,0 +1,15 @@
+# Configuration proposal only. No node or launch file consumes this file yet.
+# All coordinates are Gazebo world metres; yaw is radians; velocity is m/s.
+# Supported future pattern vocabulary: straight, waypoint, oscillating,
+# crossing, circular. A future implementation must validate pattern parameters.
+enabled: false
+obstacles:
+  - id: future_crossing_box
+    enabled: false
+    dimensions: [0.6, 0.6, 0.8]
+    initial_pose: {x: 12.0, y: 0.0, z: 0.4, yaw: 0.0}
+    velocity: {x: 0.0, y: 0.0, z: 0.0}
+    motion:
+      pattern: crossing
+      waypoints: [[12.0, -1.5], [12.0, 1.5]]
+      repeat: false
