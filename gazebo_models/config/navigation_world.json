@@ -116,32 +116,6 @@
       ]
     },
     {
-      "name": "approach_divider_south",
-      "pose": [
-        -1,
-        -4,
-        0.5
-      ],
-      "size": [
-        0.2,
-        5,
-        1
-      ]
-    },
-    {
-      "name": "approach_divider_north",
-      "pose": [
-        -1,
-        4,
-        0.5
-      ],
-      "size": [
-        0.2,
-        5,
-        1
-      ]
-    },
-    {
       "name": "south_room_wall",
       "pose": [
         -2.5,
@@ -463,6 +437,84 @@
       "size": [
         5.5,
         0.1,
+        1
+      ]
+    },
+    {
+      "name": "south_entry",
+      "pose": [
+        -1,
+        -2.2,
+        0.5
+      ],
+      "size": [
+        0.2,
+        1.4,
+        1
+      ]
+    },
+    {
+      "name": "south_offset",
+      "pose": [
+        -1.6,
+        -4.2,
+        0.5
+      ],
+      "size": [
+        0.2,
+        0.6,
+        1
+      ]
+    },
+    {
+      "name": "south_end",
+      "pose": [
+        -0.9,
+        -5.9,
+        0.5
+      ],
+      "size": [
+        0.2,
+        0.6,
+        1
+      ]
+    },
+    {
+      "name": "north_entry",
+      "pose": [
+        -1,
+        2,
+        0.5
+      ],
+      "size": [
+        0.2,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "north_offset",
+      "pose": [
+        -1.7,
+        4,
+        0.5
+      ],
+      "size": [
+        0.2,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "north_end",
+      "pose": [
+        -0.8,
+        6,
+        0.5
+      ],
+      "size": [
+        0.2,
+        0.5,
         1
       ]
     }

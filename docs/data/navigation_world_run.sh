@@ -193,6 +193,9 @@ CHECK="no launched process died during bring-up"
 check bash -c "! grep -E 'process has died|exited with code [1-9]' '$OUT/mission.log' '$OUT/sim.log'"
 
 # --- the mission, nominal, nothing injected -------------------------------
+python3 "$WT/docs/data/navigation_world_observe.py" --out "$OUT/visual_topics.json" \
+    --duration "$MISSION_BUDGET" > "$OUT/observer.log" 2>&1 &
+REC_PIDS+=("$!")
 python3 -P "$WT/docs/data/c2nav42_cmdpath.py" record --out "$OUT/cmdpath" \
     --duration "$MISSION_BUDGET" --until-terminal > "$OUT/cmdpath.log" 2>&1 &
 REC_PIDS+=("$!")
