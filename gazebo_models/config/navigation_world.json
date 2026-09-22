@@ -1,0 +1,378 @@
+{
+  "bounds": [
+    -8,
+    16,
+    -9,
+    9
+  ],
+  "resolution": 0.05,
+  "world_to_map": [
+    2,
+    0
+  ],
+  "boxes": [
+    {
+      "name": "wall_north",
+      "pose": [
+        4,
+        9,
+        0.5
+      ],
+      "size": [
+        24.2,
+        0.2,
+        1
+      ]
+    },
+    {
+      "name": "wall_south",
+      "pose": [
+        4,
+        -9,
+        0.5
+      ],
+      "size": [
+        24.2,
+        0.2,
+        1
+      ]
+    },
+    {
+      "name": "wall_west",
+      "pose": [
+        -8,
+        0,
+        0.5
+      ],
+      "size": [
+        0.2,
+        18,
+        1
+      ]
+    },
+    {
+      "name": "wall_east",
+      "pose": [
+        16,
+        0,
+        0.5
+      ],
+      "size": [
+        0.2,
+        18,
+        1
+      ]
+    },
+    {
+      "name": "west_spine_south",
+      "pose": [
+        -4,
+        -5,
+        0.5
+      ],
+      "size": [
+        0.2,
+        5,
+        1
+      ]
+    },
+    {
+      "name": "west_spine_north",
+      "pose": [
+        -4,
+        5,
+        0.5
+      ],
+      "size": [
+        0.2,
+        5,
+        1
+      ]
+    },
+    {
+      "name": "west_room_south",
+      "pose": [
+        -6,
+        -2.5,
+        0.5
+      ],
+      "size": [
+        4,
+        0.2,
+        1
+      ]
+    },
+    {
+      "name": "west_room_north",
+      "pose": [
+        -6,
+        2.5,
+        0.5
+      ],
+      "size": [
+        4,
+        0.2,
+        1
+      ]
+    },
+    {
+      "name": "approach_divider_south",
+      "pose": [
+        -1,
+        -4,
+        0.5
+      ],
+      "size": [
+        0.2,
+        5,
+        1
+      ]
+    },
+    {
+      "name": "approach_divider_north",
+      "pose": [
+        -1,
+        4,
+        0.5
+      ],
+      "size": [
+        0.2,
+        5,
+        1
+      ]
+    },
+    {
+      "name": "south_room_wall",
+      "pose": [
+        -2.5,
+        -7.5,
+        0.5
+      ],
+      "size": [
+        3,
+        0.2,
+        1
+      ]
+    },
+    {
+      "name": "north_room_wall",
+      "pose": [
+        -2.5,
+        7.5,
+        0.5
+      ],
+      "size": [
+        3,
+        0.2,
+        1
+      ]
+    },
+    {
+      "name": "cross_south_west",
+      "pose": [
+        -2.5,
+        -2.5,
+        0.5
+      ],
+      "size": [
+        1.2,
+        0.2,
+        1
+      ]
+    },
+    {
+      "name": "cross_north_west",
+      "pose": [
+        -2.5,
+        2.5,
+        0.5
+      ],
+      "size": [
+        1.2,
+        0.2,
+        1
+      ]
+    },
+    {
+      "name": "east_spine_south",
+      "pose": [
+        10,
+        -5,
+        0.5
+      ],
+      "size": [
+        0.2,
+        5,
+        1
+      ]
+    },
+    {
+      "name": "east_spine_north",
+      "pose": [
+        10,
+        5,
+        0.5
+      ],
+      "size": [
+        0.2,
+        5,
+        1
+      ]
+    },
+    {
+      "name": "east_room_south",
+      "pose": [
+        13,
+        -2.5,
+        0.5
+      ],
+      "size": [
+        6,
+        0.2,
+        1
+      ]
+    },
+    {
+      "name": "east_room_north",
+      "pose": [
+        13,
+        2.5,
+        0.5
+      ],
+      "size": [
+        6,
+        0.2,
+        1
+      ]
+    },
+    {
+      "name": "east_dead_end_side",
+      "pose": [
+        13,
+        5,
+        0.5
+      ],
+      "size": [
+        0.2,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "east_dead_end_cap",
+      "pose": [
+        14.5,
+        6.5,
+        0.5
+      ],
+      "size": [
+        3,
+        0.2,
+        1
+      ]
+    },
+    {
+      "name": "cluster_a",
+      "pose": [
+        12,
+        -6,
+        0.5
+      ],
+      "size": [
+        0.8,
+        0.8,
+        1
+      ]
+    },
+    {
+      "name": "cluster_b",
+      "pose": [
+        14,
+        -5,
+        0.5
+      ],
+      "size": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "cluster_c",
+      "pose": [
+        12.4,
+        -3.8,
+        0.5
+      ],
+      "size": [
+        0.6,
+        0.6,
+        1
+      ]
+    },
+    {
+      "name": "offset_north",
+      "pose": [
+        8,
+        7.7,
+        0.5
+      ],
+      "size": [
+        0.6,
+        0.8,
+        1
+      ]
+    },
+    {
+      "name": "offset_south",
+      "pose": [
+        8,
+        -7.4,
+        0.5
+      ],
+      "size": [
+        0.6,
+        0.8,
+        1
+      ]
+    },
+    {
+      "name": "west_landmark",
+      "pose": [
+        -6,
+        5,
+        0.5
+      ],
+      "size": [
+        0.7,
+        1.1,
+        1
+      ]
+    },
+    {
+      "name": "west_offset",
+      "pose": [
+        -6.5,
+        -5.5,
+        0.5
+      ],
+      "size": [
+        0.8,
+        0.6,
+        1
+      ]
+    }
+  ],
+  "ramp_bays": {
+    "centres_y": [
+      -6,
+      -2,
+      2,
+      6
+    ],
+    "foot_x": 1,
+    "run": 2,
+    "platform_length": 1.5,
+    "width": 2.5
+  }
+}
