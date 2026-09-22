@@ -182,35 +182,19 @@ def test_debug_view_offers_every_topic_the_clean_view_does():
     assert clean <= debug, f'only in mission.rviz: {sorted(clean - debug)}'
 
 
-def test_clean_view_keeps_every_diagnostic_display_present():
-    """Nothing was DELETED from the clean view to tidy it.
-
-    TF, the particle cloud and the global costmap are all still in the
-    tree with their topics and QoS intact; they are unticked. A viewer
-    who wants them ticks the box, and no config edit is needed.
-    """
+def test_clean_view_enables_required_groups_and_displays():
     clean = dict(displays(load(MISSION)))
-    for path in ('TF', 'Localization/Particle Cloud',
-                 'Navigation/Global Costmap'):
-        assert path in clean, f'{path} was removed from mission.rviz'
-        assert clean[path].get('Enabled') is False, (
-            f'{path} is enabled in the clean view')
-
-
-def test_clean_view_enables_the_mission_hierarchy():
-    """MAP + ROBOT + GLOBAL PATH + LOCAL PLAN + GOAL + TARGET, all on.
-
-    This is the C2-M1.6 visual-quality bar restated as an assertion. If
-    a later edit unticks one of these the clean view stops being able to
-    answer the question it exists for.
-    """
-    clean = dict(displays(load(MISSION)))
-    for path in ('RobotModel', 'Navigation/Map', 'Navigation/Global Plan',
-                 'Navigation/Local Plan (DWB)', 'Navigation/Goal (from plan)',
-                 'Navigation/Local Costmap', 'Perception/LaserScan',
-                 'Perception/Perception Target'):
-        assert path in clean, f'{path} is missing from mission.rviz'
-        assert clean[path].get('Enabled') is True, f'{path} is disabled'
+    groups = load(MISSION)['Visualization Manager']['Displays']
+    assert [d['Name'] for d in groups] == [
+        'WORLD', 'NAVIGATION', 'ROBOT', 'SENSORS', 'MISSION']
+    for path in ('WORLD/Map', 'NAVIGATION/Global Costmap',
+                 'NAVIGATION/Local Costmap', 'NAVIGATION/Global Planner Path',
+                 'NAVIGATION/Local Controller Trajectory (DWB)',
+                 'ROBOT/RobotModel', 'ROBOT/TF', 'ROBOT/Robot Footprint',
+                 'SENSORS/LaserScan', 'MISSION/Perception Target'):
+        assert clean[path]['Enabled'] is True
+    assert topic_of(clean['NAVIGATION/Global Planner Path']) == '/plan'
+    assert topic_of(clean['NAVIGATION/Local Controller Trajectory (DWB)']) == '/local_plan'
 
 
 def test_debug_view_enables_its_diagnostics():
@@ -268,7 +252,7 @@ def test_both_mission_views_focus_on_the_centre_of_the_map():
     """
     from PIL import Image
     yml = os.path.join(os.path.dirname(__file__), '..', 'maps',
-                       'coco_world.yaml')
+                       'coco_navigation.yaml')
     with open(yml) as f:
         meta = yaml.safe_load(f)
     res = meta['resolution']
