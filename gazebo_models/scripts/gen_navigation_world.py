@@ -53,8 +53,9 @@ def generate(package):
     scan_height = CHASSIS_GROUND_CLEARANCE + LIDAR_MOUNT_XYZ[2]
     inset = scan_height / math.tan(math.radians(RAMP_ANGLE_DEG))
     bay = cfg['ramp_bays']
+    ramp_rectangles = []
     for y in bay['centres_y']:
-        rectangles.append((bay['foot_x']+inset,
+        ramp_rectangles.append((bay['foot_x']+inset,
                            bay['foot_x']+2*bay['run']+bay['platform_length']-inset,
                            y-bay['width']/2, y+bay['width']/2))
     xmin, xmax, ymin, ymax = cfg['bounds']
@@ -68,6 +69,14 @@ def generate(package):
         for col in range(width):
             x = ox+(col+.5)*res
             value = 254 if xmin < x < xmax and ymin < y < ymax else 205
+            # The flat scan observes the ramp silhouette, not its interior.
+            # Unknown interiors remain non-traversable (allow_unknown=false),
+            # without presenting AMCL with a large false zero-distance surface.
+            for a, b, c, d in ramp_rectangles:
+                if a-res/2 < x < b+res/2 and c-res/2 < y < d+res/2:
+                    value = (0 if min(abs(x-a), abs(x-b), abs(y-c), abs(y-d))
+                             <= res else 205)
+            # Known static wall/landmark geometry takes precedence.
             # Conservatively rasterize cells intersecting a collision rectangle.
             if any(a-res/2 < x < b+res/2 and c-res/2 < y < d+res/2
                    for a,b,c,d in rectangles):

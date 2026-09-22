@@ -62,3 +62,12 @@ def test_all_bays_and_rooms_connect_with_robot_clearance():
         assert component(6.8, target.lane_y) == home
     for point in [(-6,0), (-6,7), (-6,-7), (14,0), (12,5), (14,-7)]:
         assert component(*point) == home
+
+
+def test_ramp_interiors_are_unknown_not_false_occupied_surfaces():
+    meta = yaml.safe_load((PACKAGE/'maps/coco_navigation.yaml').read_text())
+    grid = np.array(Image.open(PACKAGE/'maps'/meta['image']))
+    for target in TARGETS:
+        col = int((4.05+2-meta['origin'][0])/.05)
+        row = grid.shape[0]-1-int((target.lane_y-meta['origin'][1])/.05)
+        assert grid[row, col] == 205
