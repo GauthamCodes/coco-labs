@@ -56,6 +56,8 @@ IDLE_LINES = {
 }
 
 
+# Historical gate traces below use the original bay coordinates explicitly.
+# Runtime defaults now come from the distributed target table.
 class Harness:
     """A scripted world for one MissionMachine.
 
@@ -67,7 +69,7 @@ class Harness:
 
     def __init__(self, plan=None, stall_limit=10.0, dt=0.1):
         self.machine = ms.MissionMachine(
-            plan or ms.MissionPlan('blue'), stall_limit=stall_limit)
+            plan or ms.MissionPlan('blue', lane=0.25), stall_limit=stall_limit)
         self.now = 0.0
         self.wall = 0.0
         self.dt = dt
@@ -340,7 +342,7 @@ class TestNominalSequence:
                              'approach', 'idle', 'rl', 'nav', 'idle']
 
     def test_traverse_only_skips_the_platform_and_completes(self):
-        harness = Harness(ms.MissionPlan('blue', do_grasp=False))
+        harness = Harness(ms.MissionPlan('blue', lane=0.25, do_grasp=False))
         run_to_climb(harness)
         harness.worker('ramp', 'segment', 'descend', 'goal',
                        extra='lateral=+0.01 disp=+0.01')
@@ -496,7 +498,7 @@ class TestArrivalConsistency:
     GREEN_STOPS = ((0.193, -0.212), (0.191, -0.209), (0.197, -0.223))
 
     def _green(self):
-        harness = Harness(ms.MissionPlan('green'))
+        harness = Harness(ms.MissionPlan('green', lane=-0.25))
         harness.colour = 'green'
         harness.publish(
             'perception', 'sel=green found=0 u=-- v=-- area=0 seen=-- age=0.05')
@@ -511,16 +513,16 @@ class TestArrivalConsistency:
         # wrong by more than the whole arrival window, which is a
         # localisation failure and belongs to the health monitor.
         assert ms.GOAL_XY_CONSISTENCY == 2.0 * ms.GOAL_XY_TOLERANCE
-        assert ms.MissionPlan('blue').xy_consistency == 0.5
+        assert ms.MissionPlan('blue', lane=0.25).xy_consistency == 0.5
 
     def test_the_band_can_never_be_tighter_than_the_tolerance(self):
-        plan = ms.MissionPlan('blue', xy_tolerance=0.4, xy_consistency=0.1)
+        plan = ms.MissionPlan('blue', lane=0.25, xy_tolerance=0.4, xy_consistency=0.1)
         assert plan.xy_consistency == 0.4
 
     def test_the_old_single_hard_gate_is_still_reachable(self):
         # Equal band and tolerance == the pre-C2-NAV.45 behaviour, so the
         # old policy is a configuration rather than a lost one.
-        harness = Harness(ms.MissionPlan('green', xy_consistency=0.25))
+        harness = Harness(ms.MissionPlan('green', lane=-0.25, xy_consistency=0.25))
         harness.colour = 'green'
         harness.tick(3)
         harness.nav_arrives(*self.GREEN_STOPS[0])
@@ -654,7 +656,7 @@ class TestArrivalConsistency:
     # ── F: the yaw gate is untouched ─────────────────────────────────────
     def test_the_yaw_gate_is_still_off_by_default(self):
         assert ms.GOAL_YAW_TOLERANCE is None
-        assert ms.MissionPlan('blue').yaw_tolerance is None
+        assert ms.MissionPlan('blue', lane=0.25).yaw_tolerance is None
 
     def test_the_yaw_is_still_reported_and_not_gated(self):
         harness = self._green()
@@ -667,7 +669,7 @@ class TestArrivalConsistency:
         assert harness.state == ms.CLIMB
 
     def test_turning_the_yaw_gate_on_still_gates(self):
-        harness = Harness(ms.MissionPlan('green', yaw_tolerance=0.25))
+        harness = Harness(ms.MissionPlan('green', lane=-0.25, yaw_tolerance=0.25))
         harness.colour = 'green'
         harness.tick(3)
         stop = self.GREEN_STOPS[0]
@@ -690,7 +692,7 @@ class TestArrivalConsistency:
     # helper rather than to the pre-ramp leg alone. Leaving it out of the
     # home leg would knowingly keep a futile retry there.
     def _to_home_leg(self):
-        harness = run_to_climb(Harness(ms.MissionPlan('blue',
+        harness = run_to_climb(Harness(ms.MissionPlan('blue', lane=0.25,
                                                       do_grasp=False)))
         harness.worker('ramp', 'segment', 'descend', 'goal',
                        extra='lateral=+0.01 disp=+0.01')
@@ -772,7 +774,7 @@ class TestFailureTimeoutAndRetry:
     def test_a_descent_timeout_carries_its_own_reason(self):
         # KNOWN PROBLEMS 3b: the descent timed out in both C2-M1.6 runs
         # and the log said only "FAILED at: 5. scripted descent".
-        harness = run_to_climb(Harness(ms.MissionPlan('blue',
+        harness = run_to_climb(Harness(ms.MissionPlan('blue', lane=0.25,
                                                       do_grasp=False)))
         harness.worker('ramp', 'segment', 'descend', 'timeout')
         assert harness.machine.reason == ms.DESCENT_TIMEOUT
@@ -793,7 +795,7 @@ class TestFailureTimeoutAndRetry:
         assert harness.state == ms.NAVIGATE_TO_RAMP
 
     def test_a_bad_heading_fails_only_when_the_gate_is_switched_on(self):
-        plan = ms.MissionPlan('blue', yaw_tolerance=0.25)
+        plan = ms.MissionPlan('blue', lane=0.25, yaw_tolerance=0.25)
         harness = Harness(plan)
         harness.tick(3)
         harness.nav_arrives(ms.PRE_RAMP_X, 0.25, yaw=0.9)
@@ -807,7 +809,7 @@ class TestFailureTimeoutAndRetry:
         # is the one that completes 19/20. No threshold has been measured,
         # so none is asserted.
         assert ms.GOAL_YAW_TOLERANCE is None
-        assert ms.MissionPlan('blue').yaw_tolerance is None
+        assert ms.MissionPlan('blue', lane=0.25).yaw_tolerance is None
         harness = Harness()
         harness.tick(3)
         harness.nav_arrives(ms.PRE_RAMP_X, 0.25, yaw=0.28)
@@ -1136,7 +1138,7 @@ class TestLocalizationRecovery:
         assert harness.machine.failed_state == ms.RETURN_HOME
 
     def test_the_trigger_is_off_when_localization_recovery_is_off(self):
-        plan = ms.MissionPlan('blue', localization_recovery=False)
+        plan = ms.MissionPlan('blue', lane=0.25, localization_recovery=False)
         harness = self.to_return_home(Harness(plan=plan))
         harness.degrade(ticks=5)
         # The signal is published and read by nobody. This is exactly how

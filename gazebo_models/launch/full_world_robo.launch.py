@@ -60,8 +60,8 @@ def launch_setup(context, *args, **kwargs):
     # The world is selectable so terrain properties can be swept WITHOUT
     # editing coco_world.world, which is frozen: v1's 10/10 traverse and
     # 19/20 fetch matrix are measurements against that exact file. The
-    # default is unchanged, so every existing command line behaves
-    # identically.
+    # larger navigation world is now the default. The frozen world remains
+    # selectable explicitly for non-traverse experiments.
     #
     # A bare name resolves inside the package's worlds/ directory; an
     # absolute path is taken as-is, which is what a generated variant in
@@ -130,9 +130,8 @@ def launch_setup(context, *args, **kwargs):
     )
 
     # The wedge's local origin is its foot edge (x=0, z=0), rising +x. Spawn it
-    # so the foot meets the ground at world x=RAMP_FOOT_X centred on y=0; the
-    # summit sits at RAMP_SUMMIT_X (=3.0, inside the east wall), leaving the
-    # west half of the arena free for driving and SLAM.
+    # so the foot meets the ground at world x=RAMP_FOOT_X. Traverse mode
+    # spawns one identical bay per target Y; plain climb mode keeps y=0.
     spawn_ramp = Node(
         package='ros_gz_sim',
         executable='create',
@@ -188,8 +187,8 @@ def launch_setup(context, *args, **kwargs):
     #     x=1.0 ---------- 3.0 ========= 4.5 ---------------- 6.5
     #            up-slope         flat           down-slope
     #
-    # The far foot at x=6.5 clears the east wall at x=8.0 by 1.5 m. The four
-    # fetch targets stand on the platform at TARGET_ROW_X = 4.05.
+    # Each bay ends at x=6.5. Targets stand at TARGET_ROW_X = 4.05 on
+    # separate platforms; all X-dependent mission gates remain unchanged.
     #
     # Note GOAL_MARGIN's reasoning does NOT apply in this configuration:
     # there is no drop past the crest here, only 1.5 m of level platform. The

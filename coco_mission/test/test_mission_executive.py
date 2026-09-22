@@ -34,6 +34,7 @@ import os
 import sys
 
 import pytest
+from coco_config.robot import lane_for_colour
 
 import rclpy
 
@@ -77,7 +78,7 @@ class TestItConstructs:
 
     def test_the_colour_picks_the_lane_from_the_table(self, node):
         assert node.colour == 'blue'
-        assert node.plan.lane == pytest.approx(0.25)
+        assert node.plan.lane == pytest.approx(lane_for_colour('blue'))
 
     def test_it_starts_without_a_colour_and_says_so(self, context):
         executive = mx.MissionExecutive()
@@ -239,7 +240,7 @@ class TestOperatorControl:
         node.machine.state = ms.CLIMB
         node._on_colour(String(data='green'))
         assert node.colour == 'blue'
-        assert node.plan.lane == pytest.approx(0.25)
+        assert node.plan.lane == pytest.approx(lane_for_colour('blue'))
 
     def test_a_colour_from_the_panel_before_the_start_is_taken(self, context):
         from std_msgs.msg import String
@@ -247,7 +248,7 @@ class TestOperatorControl:
         try:
             executive._on_colour(String(data='yellow'))
             assert executive.colour == 'yellow'
-            assert executive.plan.lane == pytest.approx(0.75)
+            assert executive.plan.lane == pytest.approx(lane_for_colour('yellow'))
             # It did not ask for the colour, so it must not assert it —
             # two publishers on that topic at 2 Hz is how the mode topic
             # went wrong once already.
