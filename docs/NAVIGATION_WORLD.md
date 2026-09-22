@@ -42,7 +42,7 @@ Side guards prevent a planned shortcut across the low ends of the wedges.
 This map is for the nominal 18-degree mission configuration. A different
 `ramp_angle` needs a corresponding map; curriculum experiments are separate.
 
-The layout includes long approach and east corridors, 1.4 m clear passages
+The layout includes long approach and east corridors, 1.3 m clear passages
 between guarded bays, offset walls, T and cross junctions, west rooms,
 an eastern dead-end room, an open central area, and an eastern obstacle
 cluster. Home, all pre-ramp poses, all descent exits, and representative room
@@ -88,8 +88,9 @@ The camera is centred on the larger map. Paths retain one live message each.
 The global planner remains `nav2_smac_planner::SmacPlanner2D` (`GridBased`),
 with NavFn still registered for existing comparison tools. The controller
 remains `dwb_core::DWBLocalPlanner`. No path is synthesized for RViz.
-`navigation_world_observe.py` can match message publisher GIDs to actual
-publishing nodes, rather than just listing advertised publishers.
+`navigation_world_observe.py` records received messages and advertised
+publisher identities. Planner action logs distinguish the used planner
+from other nodes that advertise the same topic.
 
 ## Future dynamic obstacles
 

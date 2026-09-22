@@ -256,102 +256,6 @@
         </visual>
       </link>
     </model>
-    <model name="south_room_wall">
-      <static>true</static>
-      <pose>-2.5 -7.5 0.5 0 0 0</pose>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>3 0.2 1</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.2 1</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.55 0.55 0.57 1</ambient>
-            <diffuse>0.55 0.55 0.57 1</diffuse>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="north_room_wall">
-      <static>true</static>
-      <pose>-2.5 7.5 0.5 0 0 0</pose>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>3 0.2 1</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>3 0.2 1</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.55 0.55 0.57 1</ambient>
-            <diffuse>0.55 0.55 0.57 1</diffuse>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cross_south_west">
-      <static>true</static>
-      <pose>-2.5 -2.5 0.5 0 0 0</pose>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>1.2 0.2 1</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>1.2 0.2 1</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.55 0.55 0.57 1</ambient>
-            <diffuse>0.55 0.55 0.57 1</diffuse>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cross_north_west">
-      <static>true</static>
-      <pose>-2.5 2.5 0.5 0 0 0</pose>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>1.2 0.2 1</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>1.2 0.2 1</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.55 0.55 0.57 1</ambient>
-            <diffuse>0.55 0.55 0.57 1</diffuse>
-          </material>
-        </visual>
-      </link>
-    </model>
     <model name="east_spine_south">
       <static>true</static>
       <pose>10 -5 0.5 0 0 0</pose>
@@ -856,21 +760,21 @@
         </visual>
       </link>
     </model>
-    <model name="south_entry">
+    <model name="red_approach_south">
       <static>true</static>
-      <pose>-1 -2.2 0.5 0 0 0</pose>
+      <pose>-0.75 -6.65 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.2 1.4 1</size>
+              <size>3.5 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.2 1.4 1</size>
+              <size>3.5 0.1 1</size>
             </box>
           </geometry>
           <material>
@@ -880,21 +784,21 @@
         </visual>
       </link>
     </model>
-    <model name="south_offset">
+    <model name="red_approach_north">
       <static>true</static>
-      <pose>-1.6 -4.2 0.5 0 0 0</pose>
+      <pose>-0.75 -5.35 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.2 0.6 1</size>
+              <size>3.5 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.2 0.6 1</size>
+              <size>3.5 0.1 1</size>
             </box>
           </geometry>
           <material>
@@ -904,21 +808,21 @@
         </visual>
       </link>
     </model>
-    <model name="south_end">
+    <model name="green_approach_south">
       <static>true</static>
-      <pose>-0.9 -5.9 0.5 0 0 0</pose>
+      <pose>-0.75 -2.65 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.2 0.6 1</size>
+              <size>3.5 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.2 0.6 1</size>
+              <size>3.5 0.1 1</size>
             </box>
           </geometry>
           <material>
@@ -928,21 +832,21 @@
         </visual>
       </link>
     </model>
-    <model name="north_entry">
+    <model name="green_approach_north">
       <static>true</static>
-      <pose>-1 2 0.5 0 0 0</pose>
+      <pose>-0.75 -1.35 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.2 1 1</size>
+              <size>3.5 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.2 1 1</size>
+              <size>3.5 0.1 1</size>
             </box>
           </geometry>
           <material>
@@ -952,21 +856,21 @@
         </visual>
       </link>
     </model>
-    <model name="north_offset">
+    <model name="blue_approach_south">
       <static>true</static>
-      <pose>-1.7 4 0.5 0 0 0</pose>
+      <pose>-0.75 1.35 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.2 1 1</size>
+              <size>3.5 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.2 1 1</size>
+              <size>3.5 0.1 1</size>
             </box>
           </geometry>
           <material>
@@ -976,21 +880,165 @@
         </visual>
       </link>
     </model>
-    <model name="north_end">
+    <model name="blue_approach_north">
       <static>true</static>
-      <pose>-0.8 6 0.5 0 0 0</pose>
+      <pose>-0.75 2.65 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.2 0.5 1</size>
+              <size>3.5 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.2 0.5 1</size>
+              <size>3.5 0.1 1</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.55 0.55 0.57 1</ambient>
+            <diffuse>0.55 0.55 0.57 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="yellow_approach_south">
+      <static>true</static>
+      <pose>-0.75 5.35 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>3.5 0.1 1</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>3.5 0.1 1</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.55 0.55 0.57 1</ambient>
+            <diffuse>0.55 0.55 0.57 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="yellow_approach_north">
+      <static>true</static>
+      <pose>-0.75 6.65 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>3.5 0.1 1</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>3.5 0.1 1</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.55 0.55 0.57 1</ambient>
+            <diffuse>0.55 0.55 0.57 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="west_corridor_landmark_0">
+      <static>true</static>
+      <pose>-3.8 -6.3 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.2 0.35 1</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 0.35 1</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.55 0.55 0.57 1</ambient>
+            <diffuse>0.55 0.55 0.57 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="west_corridor_landmark_1">
+      <static>true</static>
+      <pose>-3.8 -3.6 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.2 0.44999999999999996 1</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 0.44999999999999996 1</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.55 0.55 0.57 1</ambient>
+            <diffuse>0.55 0.55 0.57 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="west_corridor_landmark_2">
+      <static>true</static>
+      <pose>-3.8 4.7 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.2 0.55 1</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 0.55 1</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.55 0.55 0.57 1</ambient>
+            <diffuse>0.55 0.55 0.57 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="west_corridor_landmark_3">
+      <static>true</static>
+      <pose>-3.8 6.5 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.2 0.65 1</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 0.65 1</size>
             </box>
           </geometry>
           <material>

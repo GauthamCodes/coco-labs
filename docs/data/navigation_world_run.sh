@@ -221,6 +221,8 @@ wait_for "mission terminal" "$MISSION_BUDGET" terminal
 say "wall seconds from start call to terminal detection: $((SECONDS - START_S))"
 timeout 8 ros2 topic echo /mission/state --once --field data > "$OUT/final_state.txt" 2>&1
 cat "$OUT/final_state.txt"
+CHECK="full mission reached COMPLETE (not merely Nav2 success)"
+check grep -q "state=COMPLETE " "$OUT/final_state.txt"
 timeout 12 ros2 topic echo /amcl_pose --once > "$OUT/final_amcl_pose.txt" 2>&1
 sleep 3
 kill -INT "$CMDPATH_PID" 2>/dev/null

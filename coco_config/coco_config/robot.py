@@ -311,7 +311,7 @@ TARGET_MASS = 0.05        # kg; 0.118 N.m at full reach vs a 10 N.m limit
 # would spawn with no magnet at all, so a test asserts the two agree.
 #
 # Bay centrelines are 4 m apart. Each target is centred on a 2.5 m wide
-# platform, leaving 1.5 m of flat passage between adjacent bays.
+# platform; the navigation world adds side guards, leaving 1.3 m between bays.
 #
 # Diameters were 12/18/24/30 mm. They are 20/24/28/32 now: the small end
 # rose because a 12 mm x 158 mm cylinder tips at 4.3 deg and would not

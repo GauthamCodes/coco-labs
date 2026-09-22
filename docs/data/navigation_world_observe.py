@@ -53,12 +53,9 @@ def main():
                 entry['max_distance_from_home'] = max(
                     entry.get('max_distance_from_home', 0), ((p.x+2)**2+p.y**2)**.5)
             if topic in ('/plan', '/local_plan'):
-                for endpoint in node.get_publishers_info_by_topic(topic):
-                    if bytes(endpoint.endpoint_gid) == bytes(info['publisher_gid']):
-                        pubs = entry.setdefault('observed_publishers', [])
-                        publisher = {'node': endpoint.node_name, 'type': endpoint.topic_type}
-                        if publisher not in pubs:
-                            pubs.append(publisher)
+                entry['advertised_publishers'] = [
+                    {'node': endpoint.node_name, 'type': endpoint.topic_type}
+                    for endpoint in node.get_publishers_info_by_topic(topic)]
         return receive
 
     subscriptions = [('/map', OccupancyGrid, True),
