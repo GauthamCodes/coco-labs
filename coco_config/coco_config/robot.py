@@ -322,16 +322,18 @@ TARGET_MASS = 0.05        # kg; 0.118 N.m at full reach vs a 10 N.m limit
 # lift stays the reference. 32 mm is the tightest descent clearance
 # (~5.5 mm interpolated against the 28 mm case's verified 7.76 mm) and is
 # the one to drop to 30 mm if the gripper knocks it over.
+# Each target now occupies the centreline of its own identical traverse bay.
+# Only world Y changes; local ramp, approach and grasp geometry stays identical.
 TARGET_ROW_X = 4.05      # world x of the row, 0.45 m from the platform's far edge
 TARGETS = (
     Target('red',    'target_red',    0.020, TARGET_HEIGHT,
-           '0.85 0.10 0.10', -0.75),
+           '0.85 0.10 0.10', -6.0),
     Target('green',  'target_green',  0.024, TARGET_HEIGHT,
-           '0.10 0.70 0.15', -0.25),
+           '0.10 0.70 0.15', -2.0),
     Target('blue',   'target_blue',   0.028, TARGET_HEIGHT,
-           '0.10 0.25 0.85',  0.25),
+           '0.10 0.25 0.85',  2.0),
     Target('yellow', 'target_yellow', 0.032, TARGET_HEIGHT,
-           '0.90 0.80 0.10',  0.75),
+           '0.90 0.80 0.10',  6.0),
 )
 
 TARGET_COLOURS = tuple(t.colour for t in TARGETS)

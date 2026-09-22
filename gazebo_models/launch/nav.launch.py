@@ -86,7 +86,7 @@ def generate_launch_description():
                         'custom_teleop arbiter.launch.py to be running.'),
         DeclareLaunchArgument(
             'map',
-            default_value=os.path.join(pkg_share, 'maps', 'coco_world.yaml')),
+            default_value=os.path.join(pkg_share, 'maps', 'coco_navigation.yaml')),
         DeclareLaunchArgument(
             'params_file',
             default_value=os.path.join(pkg_share, 'config', 'nav2_params.yaml')),

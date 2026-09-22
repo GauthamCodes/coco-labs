@@ -140,7 +140,8 @@ def launch_setup(context, *args, **kwargs):
         arguments=[
             '-name', 'ramp',
             '-string', ramp_xml,
-            '-x', str(RAMP_FOOT_X), '-y', '0.0', '-z', '0.0',
+            '-x', str(RAMP_FOOT_X),
+            '-y', str(TARGETS[0].lane_y if traverse else 0.0), '-z', '0.0',
         ],
         output='screen',
     )
@@ -216,33 +217,26 @@ def launch_setup(context, *args, **kwargs):
     </link>
   </model>
 </sdf>'''
-        extra.append(Node(
-            package='ros_gz_sim', executable='create', name='spawn_platform',
-            arguments=['-name', 'ramp_platform', '-string', platform_sdf,
-                       '-x', str(plat_x), '-y', '0.0', '-z', str(rise / 2.0)],
-            output='screen'))
-        # The four fetch targets, in LANES ACROSS Y on the platform (which
-        # spans x 3.0..4.5). Not a row along x: the robot arrives travelling
-        # +x, so reaching the third object in a row would mean driving
-        # THROUGH the first two — 40-100 mm tall against a chassis with no
-        # such clearance — and no ordering lets the operator pick freely.
-        # With lanes the sequencer maps colour to a lane, sends Nav2 to a
-        # flat-ground pre-ramp pose (0.5, lane_y), and the policy climbs
-        # straight into the right lane. Zero pivoting on the ledge.
-        #
-        # Outer lane to platform edge: 0.50 m. Between lanes: 0.50 m.
-        # (Both were 0.29/0.33 while the ramp was 2.0 m wide; it is 2.5 m
-        # now, and the stale figures outlived the change.)
-        #
-        # These are 158 mm TALL, not the 60 mm they started at, and that
-        # is a reach fix rather than a cosmetic one. The arm reaches to
-        # base-x 0.1299 at the 30 mm height a 60 mm cylinder grasps at,
-        # while the chassis ends at 0.120 — so the 24 mm and 30 mm
-        # targets had a NEGATIVE approach window and could not be grasped
-        # at all, and the other two had under 4 mm. At 158 mm the grasp
-        # band lands at coco_config's TARGET_GRASP_Z, which is exactly
-        # pick_place.py's verified pinch point, and every window is ~27 mm.
-        # See coco_config/test/test_reach.py.
+        for index, target in enumerate(TARGETS):
+            # Identical bays translated only across Y preserve the policy's
+            # progress coordinate and the existing mission's climb/descent gates.
+            if index:
+                extra.append(Node(
+                    package='ros_gz_sim', executable='create',
+                    name=f'spawn_ramp_{target.colour}',
+                    arguments=['-name', f'ramp_{target.colour}',
+                               '-string', ramp_xml, '-x', str(RAMP_FOOT_X),
+                               '-y', str(target.lane_y), '-z', '0.0'],
+                    output='screen'))
+            extra.append(Node(
+                package='ros_gz_sim', executable='create',
+                name=f'spawn_platform_{target.colour}',
+                arguments=['-name', f'ramp_platform_{target.colour}',
+                           '-string', platform_sdf, '-x', str(plat_x),
+                           '-y', str(target.lane_y), '-z', str(rise / 2.0)],
+                output='screen'))
+        # Each rod remains at the verified local grasp position on its own
+        # platform. Colour, dimensions, inertia and magnet model IDs are unchanged.
         for target in TARGETS:
             radius = target.diameter / 2.0
             height = target.height
@@ -294,12 +288,15 @@ def launch_setup(context, *args, **kwargs):
         # Mirrored wedge: yaw pi flips its local +x, so placing its foot at
         # far_foot puts its crest back at the platform's far edge.
         far_foot = RAMP_SUMMIT_X + plat_len + RAMP_RUN
-        extra.append(Node(
-            package='ros_gz_sim', executable='create', name='spawn_ramp_down',
-            arguments=['-name', 'ramp_down', '-string', ramp_xml,
-                       '-x', str(far_foot), '-y', '0.0', '-z', '0.0',
-                       '-Y', str(math.pi)],
-            output='screen'))
+        for target in TARGETS:
+            extra.append(Node(
+                package='ros_gz_sim', executable='create',
+                name=f'spawn_ramp_down_{target.colour}',
+                arguments=['-name', f'ramp_down_{target.colour}',
+                           '-string', ramp_xml, '-x', str(far_foot),
+                           '-y', str(target.lane_y), '-z', '0.0',
+                           '-Y', str(math.pi)],
+                output='screen'))
 
     return [gz_sim, rsp, spawn_coco, spawn_ramp, bridge] + extra + spawners
 
@@ -317,7 +314,7 @@ def generate_launch_description():
                         'plain wedge ends in a vertical drop, so this is what '
                         'makes "carry something back down" physically possible.'),
         DeclareLaunchArgument(
-            'world', default_value='coco_world.world',
+            'world', default_value='coco_navigation.world',
             description='World file: a bare name resolves in the package '
                         'worlds/ directory, an absolute path is used as '
                         'given. Exists so terrain properties can be swept '
