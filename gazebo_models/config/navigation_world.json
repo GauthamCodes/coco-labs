@@ -361,6 +361,110 @@
         0.6,
         1
       ]
+    },
+    {
+      "name": "red_bay_guard_south",
+      "pose": [
+        3.75,
+        -7.3,
+        0.5
+      ],
+      "size": [
+        5.5,
+        0.1,
+        1
+      ]
+    },
+    {
+      "name": "red_bay_guard_north",
+      "pose": [
+        3.75,
+        -4.7,
+        0.5
+      ],
+      "size": [
+        5.5,
+        0.1,
+        1
+      ]
+    },
+    {
+      "name": "green_bay_guard_south",
+      "pose": [
+        3.75,
+        -3.3,
+        0.5
+      ],
+      "size": [
+        5.5,
+        0.1,
+        1
+      ]
+    },
+    {
+      "name": "green_bay_guard_north",
+      "pose": [
+        3.75,
+        -0.7,
+        0.5
+      ],
+      "size": [
+        5.5,
+        0.1,
+        1
+      ]
+    },
+    {
+      "name": "blue_bay_guard_south",
+      "pose": [
+        3.75,
+        0.7,
+        0.5
+      ],
+      "size": [
+        5.5,
+        0.1,
+        1
+      ]
+    },
+    {
+      "name": "blue_bay_guard_north",
+      "pose": [
+        3.75,
+        3.3,
+        0.5
+      ],
+      "size": [
+        5.5,
+        0.1,
+        1
+      ]
+    },
+    {
+      "name": "yellow_bay_guard_south",
+      "pose": [
+        3.75,
+        4.7,
+        0.5
+      ],
+      "size": [
+        5.5,
+        0.1,
+        1
+      ]
+    },
+    {
+      "name": "yellow_bay_guard_north",
+      "pose": [
+        3.75,
+        7.3,
+        0.5
+      ],
+      "size": [
+        5.5,
+        0.1,
+        1
+      ]
     }
   ],
   "ramp_bays": {

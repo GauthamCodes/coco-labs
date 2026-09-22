@@ -24,7 +24,7 @@ WT="${COCO_WT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 WS="${COCO_WS:-$(cd "$WT/../.." && pwd)}"
 OUT="${1:?usage: m6_run.sh OUT_DIR colour}"
 COLOUR="${2:?usage: m6_run.sh OUT_DIR colour}"
-MISSION_BUDGET=900
+MISSION_BUDGET=1800
 mkdir -p "$OUT"
 exec > >(tee -a "$OUT/runner.log") 2>&1
 say() { echo "m6_run: $* ($(date -u +%H:%M:%S) UTC)"; }

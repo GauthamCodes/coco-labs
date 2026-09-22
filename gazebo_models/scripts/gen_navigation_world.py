@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Generate the navigation world and map from config/navigation_world.json.
 
-Map coordinates retain the mission's world-to-map translation. The complete
-ramp footprints are occupied: Nav2 owns the flat legs; the existing ramp
-controller owns traversal. Targets are on those excluded elevated surfaces.
+Map coordinates retain the mission's world-to-map translation. Ramps are
+sliced at the flat-ground laser height so AMCL matches real scan boundaries.
+Side guards prevent flat-ground routes cutting across the low ramp edges.
 """
 import argparse
 import json
+import math
 from pathlib import Path
 import re
 import xml.etree.ElementTree as ET
@@ -47,10 +48,14 @@ def generate(package):
     ET.indent(sdf, space='  ')
     ET.ElementTree(sdf).write(package/'worlds/coco_navigation.world',
                             encoding='utf-8', xml_declaration=True)
+    from coco_config.robot import (CHASSIS_GROUND_CLEARANCE,
+                                   LIDAR_MOUNT_XYZ, RAMP_ANGLE_DEG)
+    scan_height = CHASSIS_GROUND_CLEARANCE + LIDAR_MOUNT_XYZ[2]
+    inset = scan_height / math.tan(math.radians(RAMP_ANGLE_DEG))
     bay = cfg['ramp_bays']
     for y in bay['centres_y']:
-        rectangles.append((bay['foot_x'],
-                           bay['foot_x']+2*bay['run']+bay['platform_length'],
+        rectangles.append((bay['foot_x']+inset,
+                           bay['foot_x']+2*bay['run']+bay['platform_length']-inset,
                            y-bay['width']/2, y+bay['width']/2))
     xmin, xmax, ymin, ymax = cfg['bounds']
     res = cfg['resolution']
