@@ -274,21 +274,24 @@ clone:
 
 ```bash
 # T1 — the simulator. One Gazebo at a time; a fresh one per mission run.
-ros2 launch gazebo_models full_world_robo.launch.py traverse:=true
+ros2 launch gazebo_models full_world_robo.launch.py traverse:=true gui:=true
 
 # T2 — the robot.
-ros2 launch coco_mission mission.launch.py rviz:=false
+ros2 launch coco_mission mission.launch.py rviz:=true target_colour:=red
 
 # T3 — start it, and watch.
-ros2 service call /mission/start std_srvs/srv/Trigger
+ros2 service call /mission/start std_srvs/srv/Trigger "{}"
 ros2 topic echo /mission/state --field data
 ```
 
 No environment variables and no policy path: the trained ramp policy ships
 in the repository and the launch file loads it by default. A nominal
 mission ends in `COMPLETE` with `result=fetch`, or in `ABORT` with an
-explicit reason — **187 s** headless, about five minutes with the Gazebo
-window open. Cleanup between runs and the troubleshooting that was actually
+explicit reason. The earlier compact-arena timing was **187 s** headless,
+about five minutes with the Gazebo window open. The default is now a
+24 × 18 m world with four separate target bays; see
+[the navigation-world guide](docs/NAVIGATION_WORLD.md) for its map, RViz
+outputs and validation workflow. Cleanup between runs and the troubleshooting that was actually
 diagnosed are in [HOW_TO_RUN.md](HOW_TO_RUN.md).
 
 > **Never pass `--fast`**, and there is deliberately no argument for it.
@@ -323,7 +326,8 @@ traversal — each runnable on their own, are in
 
 ## Images
 
-All screenshots are from the current Jazzy/Harmonic build.
+These screenshots include the earlier compact arena. The larger default
+world is described in [the navigation-world guide](docs/NAVIGATION_WORLD.md).
 
 | | |
 |---|---|
