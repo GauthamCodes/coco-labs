@@ -3799,3 +3799,39 @@ The active fresh run is /tmp/coco-large/green-v10; red/blue/yellow are queued
 by /tmp/coco-large/matrix_v10.sh only if green completes.
 The task is NOT complete until every colour has a physical completed fetch
 on the final geometry. User-owned local files remain untouched.
+
+## 2026-09-24 — Larger-world implementation verified
+
+FACT: final runtime revision 474601a completed four fresh simulator fetches:
+green, red (Gazebo GUI enabled), blue, yellow. Every colour physically lifted
+its rod, returned home, detached the magnet, placed the rod standing at
+Z=0.0790 m and passed VERIFY_PLACEMENT -> COMPLETE/fetch.
+Home errors: red 0.095 m, green 0.060 m, blue 0.085 m, yellow 0.133 m.
+Green and blue each needed one successful localization recovery near home;
+red and yellow needed none. These runs are not a measured reliability rate.
+
+The final geometry uses stronger asymmetric bay pilasters and offset exit
+columns, original 18-degree / 2 m slopes, 1.2 m platforms, and 1.2 m-clear
+approach corridors with open turning space and closed low-ramp shortcuts.
+Nav2 parameters, command routing, executive transitions, perception, grasp
+and depth fusion remain unchanged. The mapped-ground predicate derives the
+actual four bay centres; only its geometry was corrected.
+
+A host reboot cleared temporary /tmp captures after the matrix completed.
+Persistent executive, grasp, Nav2, RViz and simulator logs survived and are
+archived with hashes and colour-specific results in
+docs/data/navigation_world_final. Prior development results are retained too.
+The report distinguishes archived logs from lost temporary topic captures
+and screenshots; no lost files are claimed to remain available.
+
+FACT: post-reboot builds of only coco_config, gazebo_models and coco_mission
+passed. The final regression suite passed 730 tests. An earlier 9-versus-10
+message-count failure in the unchanged wiring test is retained in the test
+record; the isolated 25-test module and subsequent full suite both passed
+without changing the test or command path.
+
+See docs/NAVIGATION_WORLD_RESULTS.md for evidence and limitations,
+docs/NAVIGATION_WORLD.md for the three-command workflow and overlay setup,
+and docs/NAVIGATION_WORLD_FILES.txt for the changed-file manifest.
+Next: repeat the fresh-colour regression matrix for reliability before the
+first opt-in dynamic obstacle; dynamic behavior remains unimplemented.

@@ -43,7 +43,7 @@ Ramp boundaries follow the flat-ground LiDAR plane, derived from coco_config.
 Occluded ramp interiors are unknown, not filled occupied surfaces; the
 unchanged planner setting allow_unknown=false keeps them out of flat
 navigation routes. Two-metre side guards carry distinct neutral landmarks
-in each bay and prevent shortcuts across the low wedge edges.
+in each bay; offset exit columns add distinct scan features. The guards prevent shortcuts across the low wedge edges.
 This map is for the nominal 18-degree mission configuration. A different
 `ramp_angle` needs a corresponding map; curriculum experiments are separate.
 
@@ -123,7 +123,8 @@ magnet attachment/detachment and home position.
 A read-only observer can be started before calling `/mission/start`:
 
 ```bash
-python3 docs/data/navigation_world_observe.py --out /tmp/navigation-evidence.json
+mkdir -p "$HOME/coco_navigation_validation"
+python3 docs/data/navigation_world_observe.py --out "$HOME/coco_navigation_validation/navigation-evidence.json"
 ```
 
 On this machine validation uses a fresh `coco_navigation_overlay` over the
@@ -145,3 +146,5 @@ source ./setup_env.sh
 Then use the three launch/service commands above. The setup script also
 finds the optional MoveIt prefix beside the source workspace when an
 isolated overlay is selected. Unrelated package installations are untouched.
+
+Final fresh-colour results and retained evidence: [validation record](NAVIGATION_WORLD_RESULTS.md).

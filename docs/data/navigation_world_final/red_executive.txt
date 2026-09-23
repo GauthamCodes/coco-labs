@@ -1,0 +1,30 @@
+[INFO] [1790175175.304998908] [mission_executive]: mission_executive up: colour=red lane=-6.00 grasp=yes autostart=False
+[INFO] [1790175175.307617749] [mission_executive]: waiting for /mission/start — ros2 service call /mission/start std_srvs/srv/Trigger
+[INFO] [1790175394.306033623] [mission_executive]: starting the fetch for red
+[INFO] [1790175394.317460706] [mission_executive]: IDLE -> LOCALIZE
+[INFO] [1790175394.422132048] [mission_executive]: LOCALIZE -> NAVIGATE_TO_RAMP
+[INFO] [1790175394.517870147] [mission_executive]: NavigateToPose -> world (0.50, -6.00)
+[INFO] [1790175488.516227643] [mission_executive]: NAVIGATE_TO_RAMP arrived: ground truth 0.241 m from the goal (tolerance 0.25 m)
+[INFO] [1790175488.517861987] [mission_executive]: NAVIGATE_TO_RAMP -> ALIGN_FOR_CLIMB
+[INFO] [1790175489.020432713] [mission_executive]: pre-climb heading +0.022 rad (+1.3 deg); gate off
+[INFO] [1790175489.022643290] [mission_executive]: ALIGN_FOR_CLIMB -> CLIMB
+[INFO] [1790175489.116221767] [mission_executive]: calling /ramp/climb
+[INFO] [1790175527.417416636] [mission_executive]: CLIMB -> VERIFY_CLIMB
+[INFO] [1790175528.016948047] [mission_executive]: VERIFY_CLIMB -> SEARCH_TARGET
+[INFO] [1790175528.616339090] [mission_executive]: SEARCH_TARGET -> STOW_ARM
+[INFO] [1790175528.717281680] [mission_executive]: calling /grasp/stow
+[INFO] [1790175536.717037064] [mission_executive]: STOW_ARM -> APPROACH_TARGET
+[INFO] [1790175536.817467417] [mission_executive]: calling /approach/run
+[INFO] [1790175576.917627546] [mission_executive]: APPROACH_TARGET -> GRASP
+[INFO] [1790175577.020056242] [mission_executive]: calling /grasp/pick
+[INFO] [1790175665.520600818] [mission_executive]: GRASP -> VERIFY_GRASP
+[INFO] [1790175666.216260726] [mission_executive]: VERIFY_GRASP -> DESCEND
+[INFO] [1790175666.319085545] [mission_executive]: calling /ramp/descend
+[INFO] [1790175718.224916979] [mission_executive]: DESCEND -> RETURN_HOME
+[INFO] [1790175718.316013283] [mission_executive]: NavigateToPose -> world (-2.00, 0.00)
+[INFO] [1790175929.717815733] [mission_executive]: RETURN_HOME arrived: ground truth 0.095 m from the goal (tolerance 0.25 m)
+[INFO] [1790175929.723318237] [mission_executive]: RETURN_HOME -> PLACE
+[INFO] [1790175929.815707474] [mission_executive]: calling /grasp/place
+[INFO] [1790175983.716950606] [mission_executive]: PLACE -> VERIFY_PLACEMENT
+[INFO] [1790175984.227026100] [mission_executive]: VERIFY_PLACEMENT -> COMPLETE
+[INFO] [1790175984.233983042] [mission_executive]: MISSION COMPLETE: result=fetch reason=-- attempts={}

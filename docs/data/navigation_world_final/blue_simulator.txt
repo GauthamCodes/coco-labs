@@ -1,0 +1,142 @@
+[INFO] [1790176055.944788949] [gz_ros_control]: Loading controller_manager
+[INFO] [1790176055.963929673] [controller_manager]: Using ROS clock for triggering controller manager cycles.
+[INFO] [1790176055.967920887] [controller_manager]: Subscribing to '/robot_description' topic for robot description.
+[WARN] [1790176055.970843435] [gz_ros_control]: Waiting RM to load and initialize hardware...
+[INFO] [1790176055.971182529] [controller_manager]: Received robot description from topic.
+[INFO] [1790176055.971274383] [controller_manager]: Enforcing command limits is disabled. Command limits from URDF will be ignored.
+[INFO] [1790176055.979739091] [gz_ros_control]: The position_proportional_gain has been set to: 0.1
+[INFO] [1790176055.979854166] [gz_ros_control]: Loading joint: base_Revolute-1
+[INFO] [1790176055.979867074] [gz_ros_control]: 	State:
+[INFO] [1790176055.979878222] [gz_ros_control]: 		 position
+[INFO] [1790176055.979888171] [gz_ros_control]: 		 velocity
+[INFO] [1790176055.979901176] [gz_ros_control]: 	Command:
+[INFO] [1790176055.979908001] [gz_ros_control]: 		 velocity
+[INFO] [1790176055.979957351] [gz_ros_control]: Loading joint: base_Revolute-2
+[INFO] [1790176055.979964474] [gz_ros_control]: 	State:
+[INFO] [1790176055.979971087] [gz_ros_control]: 		 position
+[INFO] [1790176055.979978370] [gz_ros_control]: 		 velocity
+[INFO] [1790176055.979984824] [gz_ros_control]: 	Command:
+[INFO] [1790176055.979991329] [gz_ros_control]: 		 velocity
+[INFO] [1790176055.980022212] [gz_ros_control]: Loading joint: base_Revolute-3
+[INFO] [1790176055.980028626] [gz_ros_control]: 	State:
+[INFO] [1790176055.980035063] [gz_ros_control]: 		 position
+[INFO] [1790176055.980042285] [gz_ros_control]: 		 velocity
+[INFO] [1790176055.980048850] [gz_ros_control]: 	Command:
+[INFO] [1790176055.980054868] [gz_ros_control]: 		 velocity
+[INFO] [1790176055.980081549] [gz_ros_control]: Loading joint: base_Revolute-4
+[INFO] [1790176055.980087908] [gz_ros_control]: 	State:
+[INFO] [1790176055.980094158] [gz_ros_control]: 		 position
+[INFO] [1790176055.980100255] [gz_ros_control]: 		 velocity
+[INFO] [1790176055.980106324] [gz_ros_control]: 	Command:
+[INFO] [1790176055.980112265] [gz_ros_control]: 		 velocity
+[INFO] [1790176055.980136636] [gz_ros_control]: Loading joint: m_link1_Revolute-6
+[INFO] [1790176055.980143349] [gz_ros_control]: 	State:
+[INFO] [1790176055.980149561] [gz_ros_control]: 		 position
+[INFO] [1790176055.980166738] [gz_ros_control]: 			 found initial value: 0.000000
+[INFO] [1790176055.980181614] [gz_ros_control]: 		 velocity
+[INFO] [1790176055.980188106] [gz_ros_control]: 	Command:
+[INFO] [1790176055.980195520] [gz_ros_control]: 		 position
+[INFO] [1790176055.980222312] [gz_ros_control]: Loading joint: m_link2_Revolute-7
+[INFO] [1790176055.980228630] [gz_ros_control]: 	State:
+[INFO] [1790176055.980234793] [gz_ros_control]: 		 position
+[INFO] [1790176055.980241625] [gz_ros_control]: 			 found initial value: 0.000000
+[INFO] [1790176055.980248342] [gz_ros_control]: 		 velocity
+[INFO] [1790176055.980254703] [gz_ros_control]: 	Command:
+[INFO] [1790176055.980260588] [gz_ros_control]: 		 position
+[INFO] [1790176055.980284484] [gz_ros_control]: Loading joint: m_link3_Revolute-8
+[INFO] [1790176055.980290981] [gz_ros_control]: 	State:
+[INFO] [1790176055.980297048] [gz_ros_control]: 		 position
+[INFO] [1790176055.980303304] [gz_ros_control]: 			 found initial value: 0.000000
+[INFO] [1790176055.980309939] [gz_ros_control]: 		 velocity
+[INFO] [1790176055.980315904] [gz_ros_control]: 	Command:
+[INFO] [1790176055.980321744] [gz_ros_control]: 		 position
+[INFO] [1790176055.980344393] [gz_ros_control]: Loading joint: m_link3_Revolute-9
+[INFO] [1790176055.980350894] [gz_ros_control]: 	State:
+[INFO] [1790176055.980357000] [gz_ros_control]: 		 position
+[INFO] [1790176055.980363335] [gz_ros_control]: 			 found initial value: 0.000000
+[INFO] [1790176055.980369876] [gz_ros_control]: 		 velocity
+[INFO] [1790176055.980375935] [gz_ros_control]: 	Command:
+[INFO] [1790176055.980381786] [gz_ros_control]: 		 position
+[INFO] [1790176055.980541591] [gz_ros_control]: Loading sensor: imu
+[INFO] [1790176055.980581202] [gz_ros_control]: 	State:
+[INFO] [1790176055.980819318] [controller_manager]: Initialize hardware 'GazeboSimSystem' 
+[WARN] [1790176055.980849940] [controller_manager.hardware_component.system.GazeboSimSystem]: Executor is not available during hardware component initialization for 'GazeboSimSystem'. Skipping node creation!
+[INFO] [1790176055.980960620] [controller_manager]: Successful initialization of hardware 'GazeboSimSystem'
+[INFO] [1790176055.981189351] [controller_manager]: Activating component 'GazeboSimSystem'.
+[INFO] [1790176055.981208351] [resource_manager]: 'configure' hardware 'GazeboSimSystem' 
+[INFO] [1790176055.981215469] [gz_ros_control]: System Successfully configured!
+[INFO] [1790176055.981223780] [resource_manager]: Successful 'configure' of hardware 'GazeboSimSystem'
+[INFO] [1790176055.981236490] [resource_manager]: 'activate' hardware 'GazeboSimSystem' 
+[INFO] [1790176055.981254499] [resource_manager]: Successful 'activate' of hardware 'GazeboSimSystem'
+[WARN] [1790176055.981313398] [controller_manager]: Component 'GazeboSimSystem' does not have read or write statistics initialized, skipping registration.
+[INFO] [1790176055.981325920] [controller_manager]: Resource Manager has been successfully initialized. Starting Controller Manager services...
+[INFO] [1790176056.073434488] [controller_manager]: Loading controller : 'arm_controller' of type 'joint_trajectory_controller/JointTrajectoryController'
+[INFO] [1790176056.073501620] [controller_manager]: Loading controller 'arm_controller'
+[INFO] [1790176056.083562679] [controller_manager]: Controller 'arm_controller' node arguments: --ros-args --params-file /home/gautham/coco_navigation_overlay/install/gazebo_models/share/gazebo_models/urdf/coco_controllers.yaml -p use_sim_time:=true --params-file /tmp/launch_params_vcs3ns40 --param use_sim_time:=true 
+[INFO] [1790176056.100723972] [controller_manager]: Configuring controller: 'arm_controller'
+[INFO] [1790176056.101224145] [arm_controller]: No specific joint names are used for command interfaces. Using 'joints' parameter.
+[INFO] [1790176056.101305354] [arm_controller]: Command interfaces are [position] and state interfaces are [position velocity].
+[INFO] [1790176056.101364110] [arm_controller]: Using 'splines' interpolation method.
+[INFO] [1790176056.110649016] [arm_controller]: Action status changes will be monitored at 20.00 Hz.
+[INFO] [1790176056.116409819] [arm_controller]: Setting initial scaling factor to 1.000000
+[INFO] [1790176056.116456697] [arm_controller]: No scaling interface set. This controller will not read speed scaling from the hardware.
+[INFO] [1790176056.118303148] [controller_manager]: Activating controllers: [ arm_controller ]
+[WARN] [1790176058.050860123] [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.002 s).
+[INFO] [1790176059.423351314] [gz_ros_control]: IMU imu has a topic name: imu
+[INFO] [1790176059.423887822] [controller_manager]: Successfully switched controllers!
+[INFO] [1790176059.897875127] [controller_manager]: Loading controller : 'joint_state_broadcaster' of type 'joint_state_broadcaster/JointStateBroadcaster'
+[INFO] [1790176059.898761131] [controller_manager]: Loading controller 'joint_state_broadcaster'
+[INFO] [1790176059.907496159] [controller_manager]: Controller 'joint_state_broadcaster' node arguments: --ros-args --params-file /home/gautham/coco_navigation_overlay/install/gazebo_models/share/gazebo_models/urdf/coco_controllers.yaml -p use_sim_time:=true --params-file /tmp/launch_params_yk69bg4o --param use_sim_time:=true 
+[INFO] [1790176059.927266572] [controller_manager]: Configuring controller: 'joint_state_broadcaster'
+[INFO] [1790176059.927502405] [joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[INFO] [1790176059.936012009] [controller_manager]: Activating controllers: [ joint_state_broadcaster ]
+[INFO] [1790176059.945128723] [controller_manager]: Successfully switched controllers!
+[INFO] [1790176060.442612934] [controller_manager]: Loading controller : 'gripper_controller' of type 'joint_trajectory_controller/JointTrajectoryController'
+[INFO] [1790176060.442771306] [controller_manager]: Loading controller 'gripper_controller'
+[INFO] [1790176060.443094295] [controller_manager]: Controller 'gripper_controller' node arguments: --ros-args --params-file /home/gautham/coco_navigation_overlay/install/gazebo_models/share/gazebo_models/urdf/coco_controllers.yaml -p use_sim_time:=true --params-file /tmp/launch_params_t0nvgx2q --param use_sim_time:=true 
+[INFO] [1790176060.480105946] [controller_manager]: Configuring controller: 'gripper_controller'
+[INFO] [1790176060.480372827] [gripper_controller]: No specific joint names are used for command interfaces. Using 'joints' parameter.
+[INFO] [1790176060.480415175] [gripper_controller]: Command interfaces are [position] and state interfaces are [position velocity].
+[INFO] [1790176060.480430862] [gripper_controller]: Using 'splines' interpolation method.
+[INFO] [1790176060.482307175] [gripper_controller]: Action status changes will be monitored at 20.00 Hz.
+[INFO] [1790176060.485957391] [gripper_controller]: Setting initial scaling factor to 1.000000
+[INFO] [1790176060.486019113] [gripper_controller]: No scaling interface set. This controller will not read speed scaling from the hardware.
+[INFO] [1790176060.491479736] [controller_manager]: Activating controllers: [ gripper_controller ]
+[INFO] [1790176060.500561286] [controller_manager]: Successfully switched controllers!
+[INFO] [1790176061.003965697] [controller_manager]: Loading controller : 'diff_drive_controller' of type 'diff_drive_controller/DiffDriveController'
+[INFO] [1790176061.004027472] [controller_manager]: Loading controller 'diff_drive_controller'
+[INFO] [1790176061.012636807] [controller_manager]: Controller 'diff_drive_controller' node arguments: --ros-args --params-file /home/gautham/coco_navigation_overlay/install/gazebo_models/share/gazebo_models/urdf/coco_controllers.yaml -p use_sim_time:=true --params-file /tmp/launch_params_dharrclr --param use_sim_time:=true 
+[INFO] [1790176061.033164194] [controller_manager]: Configuring controller: 'diff_drive_controller'
+[INFO] [1790176061.044246919] [controller_manager]: Activating controllers: [ diff_drive_controller ]
+[INFO] [1790176061.053346673] [controller_manager]: Successfully switched controllers!
+[INFO] [1790176358.208579624] [arm_controller]: Received new action goal
+[INFO] [1790176358.208858676] [arm_controller]: Accepted new action goal
+[INFO] [1790176364.106451643] [arm_controller]: Goal reached, success!
+[INFO] [1790176405.328125815] [arm_controller]: Received new action goal
+[INFO] [1790176405.328225497] [arm_controller]: Accepted new action goal
+[INFO] [1790176410.705309239] [arm_controller]: Goal reached, success!
+[INFO] [1790176411.412546533] [arm_controller]: Received new action goal
+[INFO] [1790176411.412688881] [arm_controller]: Accepted new action goal
+[INFO] [1790176419.728453324] [arm_controller]: Goal reached, success!
+[INFO] [1790176430.274516683] [arm_controller]: Received new action goal
+[INFO] [1790176430.274622578] [arm_controller]: Accepted new action goal
+[INFO] [1790176438.008422466] [arm_controller]: Goal reached, success!
+[INFO] [1790176444.985827402] [arm_controller]: Received new action goal
+[INFO] [1790176444.985952123] [arm_controller]: Accepted new action goal
+[INFO] [1790176476.181156543] [arm_controller]: Goal reached, success!
+[INFO] [1790176695.582130114] [arm_controller]: Received new action goal
+[INFO] [1790176695.582237364] [arm_controller]: Accepted new action goal
+[INFO] [1790176708.370092059] [arm_controller]: Goal reached, success!
+[INFO] [1790176708.490750579] [arm_controller]: Received new action goal
+[INFO] [1790176708.490870495] [arm_controller]: Accepted new action goal
+[INFO] [1790176721.016831080] [arm_controller]: Goal reached, success!
+[INFO] [1790176724.388140142] [arm_controller]: Received new action goal
+[INFO] [1790176724.388240529] [arm_controller]: Accepted new action goal
+[INFO] [1790176733.313969059] [arm_controller]: Goal reached, success!
+[INFO] [1790176740.713734099] [arm_controller]: Received new action goal
+[INFO] [1790176740.714193050] [arm_controller]: Accepted new action goal
+[INFO] [1790176743.128482173] [arm_controller]: Goal reached, success!
+[INFO] [1790176763.034123946] [controller_manager.pal_statistics]: Async messages lost 0
+[INFO] [1790176763.034235875] [controller_manager.pal_statistics]: publish_async_failures_ 0
+[INFO] [1790176763.038716207] [controller_manager.pal_statistics]: Async messages lost 0
+[INFO] [1790176763.038789620] [controller_manager.pal_statistics]: publish_async_failures_ 1
