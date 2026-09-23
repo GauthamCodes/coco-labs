@@ -100,3 +100,22 @@ def test_approach_walls_close_low_ramp_shortcut():
     assert len(approaches) == 8
     for box in approaches:
         assert box['pose'][0] + box['size'][0]/2 > slice_x + .1
+
+
+def test_all_rods_have_full_platform_support_and_no_static_intersection():
+    import math
+    from coco_config.robot import TARGET_ROW_X, RAMP_SUMMIT_X, RAMP_ANGLE_DEG
+    cfg = json.loads((PACKAGE/'config/navigation_world.json').read_text())
+    rise = RAMP_RUN * math.tan(math.radians(RAMP_ANGLE_DEG))
+    for target in TARGETS:
+        radius = target.diameter / 2
+        assert TARGET_ROW_X-radius > RAMP_SUMMIT_X
+        assert TARGET_ROW_X+radius < RAMP_SUMMIT_X+PLATFORM_LEN
+        assert radius < RAMP_WIDTH/2
+        rod_lo = (TARGET_ROW_X-radius, target.lane_y-radius, rise)
+        rod_hi = (TARGET_ROW_X+radius, target.lane_y+radius, rise+target.height)
+        for box in cfg['boxes']:
+            # AABB separation is conservative for these upright cylinders.
+            assert any(rod_hi[i] <= box['pose'][i]-box['size'][i]/2 or
+                       rod_lo[i] >= box['pose'][i]+box['size'][i]/2
+                       for i in range(3)), (target.colour, box['name'])

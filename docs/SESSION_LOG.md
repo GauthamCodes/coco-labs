@@ -3767,3 +3767,35 @@ C2-NAV investigation. Merging is the owner's call:
 cd ~/ros2_ws\(personal\)/src/coco-robot-ros2
 git checkout main && git merge --ff-only c2nav49-integration
 ```
+
+## 2026-09-23 — Larger navigation world, verification ongoing
+
+Starting HEAD d317d85ee6f1575c2620f4e467d7e322d0310bc0.
+Current implementation and measured failures are in
+docs/NAVIGATION_WORLD.md and docs/NAVIGATION_WORLD_RESULTS.md.
+
+FACT: generated 24 x 18 m arena, matching 500 x 380 map at 0.05 m,
+four colour bays, automatic grouped RViz using real /plan and /local_plan,
+and disabled dynamic-obstacle example are implemented. Nav2 plugins,
+parameters and command routing are unchanged.
+
+FACT: red-v6 completed with physical grasp, home return and release, but
+the other colours failed return localization on that older geometry.
+Later tests identified a low-ramp planner shortcut, an entrance-turn stall,
+and a physical hang-up caused by a shortened/steeper downhill wedge.
+Those failures are recorded, not counted as successes.
+
+The current geometry restores both original 18-degree / 2 m slopes and
+shortens the platform to 1.2 m, retaining rod X=4.05 and all mission goals.
+The mapped-ground predicate now derives the four actual bay centres rather
+than wrongly excluding a single Y=0 wedge. Its thresholds/recovery logic
+are unchanged. This is a concrete new-geometry consistency correction.
+
+FACT: coco_config, gazebo_models and coco_mission built in the fresh
+coco_navigation_overlay; all 565 tests passed. A subsequent explicit
+rod support/static-intersection check passed with the seven geometry tests.
+GUI/server split startup was verified with sensors and visible rendering.
+The active fresh run is /tmp/coco-large/green-v10; red/blue/yellow are queued
+by /tmp/coco-large/matrix_v10.sh only if green completes.
+The task is NOT complete until every colour has a physical completed fetch
+on the final geometry. User-owned local files remain untouched.
