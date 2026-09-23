@@ -178,27 +178,20 @@ MAX_ANGULAR_ACCEL = 4.0       # rad/s^2
 # Keep RAMP_ANGLE_DEG below ~30: on the ramp the robot pitches nose-up by
 # roughly the grade, and coco_rl's tip-over terminator fires at 0.6 rad
 # (~34 deg), so a steeper wedge would read the climb itself as a fall.
-# RAMP_SUMMIT_X stays inside the east wall (x=8).
+# Shared uphill geometry; each colour now has its own bay.
 RAMP_FOOT_X = 1.0        # world x where the ramp foot meets the ground (z=0)
-# RUN was 2.5 and WIDTH 2.0. Both changed for the fetch mission's
-# up-over-down traverse: the crest carries a 1.5 m platform now, and with a
-# 2.5 m run the mirrored down-ramp's far foot would land at x=7.5, leaving
-# 0.5 m to the east wall — not enough for the robot (0.297 m x-footprint) to
-# turn around after descending. At 2.0 m the far foot is 6.5 m and there is
-# 1.5 m of room. The width went up because the four target objects sit in
-# lanes across y on the platform.
+# The original two-metre, 18-degree wedges are retained for both slopes.
 RAMP_RUN = 2.0           # horizontal length of the wedge (m)
-# Shorter descent leaves flat runout before the unchanged mission exit gate.
-DESCENT_RAMP_RUN = 1.5   # same rise, nominal downhill grade 23.43 degrees
 RAMP_WIDTH = 2.5         # width across the wedge (m), centred on y=0
 RAMP_ANGLE_DEG = 18      # default grade; matches meshes/ramp_wedge_18.stl
 RAMP_SUMMIT_X = RAMP_FOOT_X + RAMP_RUN   # world x of the crest (= 3.0)
 
 # Flat crest between the up-slope and the mirrored down-slope. The robot
-# has to stand on this to reach the targets, so it is 1.5 m rather than the
-# 0.5 m it started at. Spans world x RAMP_SUMMIT_X .. RAMP_SUMMIT_X+PLATFORM_LEN
-# (= 3.0 .. 4.5) and the full RAMP_WIDTH across y.
-PLATFORM_LEN = 1.5
+# stands here to reach the targets. Spans world x
+# RAMP_SUMMIT_X .. RAMP_SUMMIT_X+PLATFORM_LEN
+# (= 3.0 .. 4.2) and the full RAMP_WIDTH across y. Retain the original
+# downhill grade while leaving flat runout before the existing exit goal.
+PLATFORM_LEN = 1.2
 
 
 class Target(NamedTuple):
@@ -326,7 +319,7 @@ TARGET_MASS = 0.05        # kg; 0.118 N.m at full reach vs a 10 N.m limit
 # the one to drop to 30 mm if the gripper knocks it over.
 # Each target now occupies the centreline of its own identical traverse bay.
 # Only world Y changes; local ramp, approach and grasp geometry stays identical.
-TARGET_ROW_X = 4.05      # world x of the row, 0.45 m from the platform's far edge
+TARGET_ROW_X = 4.05      # world x of the row, 0.15 m from the platform's far edge
 TARGETS = (
     Target('red',    'target_red',    0.020, TARGET_HEIGHT,
            '0.85 0.10 0.10', -6.0),

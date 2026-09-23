@@ -69,9 +69,9 @@ Each rod has its own identical +X-facing ramp/platform/down-ramp assembly.
 | blue | 4.05 | 2.0 |
 | yellow | 4.05 | 6.0 |
 
-Each bay retains foot X=1.0, summit X=3.0, platform length 1.5 m,
-width 2.5 m. The downhill run is 1.5 m (far foot X=6.0), retaining the
-platform height with a nominal 23.43-degree grade. This provides flat runout
+Each bay retains foot X=1.0, summit X=3.0, platform length 1.2 m,
+width 2.5 m. Both slopes retain the original 2 m run and nominal 18-degree
+grade. The far foot is X=6.2, providing flat runout
 before the unchanged descent goal X=6.8. Rod dimensions, colours, mass, inertia
 calculation, model IDs and magnet bindings are unchanged. The mission's
 pre-ramp X=0.5, climb goal and descent goal remain unchanged. Colour-to-lane

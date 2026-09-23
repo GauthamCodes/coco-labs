@@ -827,8 +827,7 @@
     ],
     "foot_x": 1,
     "run": 2,
-    "platform_length": 1.5,
-    "width": 2.5,
-    "descent_run": 1.5
+    "platform_length": 1.2,
+    "width": 2.5
   }
 }

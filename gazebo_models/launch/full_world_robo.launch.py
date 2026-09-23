@@ -37,7 +37,7 @@ import shlex
 
 import xacro
 from ament_index_python.packages import get_package_share_directory
-from coco_config.robot import (DESCENT_RAMP_RUN, PLATFORM_LEN, RAMP_ANGLE_DEG, RAMP_FOOT_X,
+from coco_config.robot import (PLATFORM_LEN, RAMP_ANGLE_DEG, RAMP_FOOT_X,
                                RAMP_RUN, RAMP_SUMMIT_X, RAMP_WIDTH, SPAWN_XY,
                                SPAWN_Z, TARGET_MASS, TARGET_ROW_X, TARGETS)
 from launch import LaunchDescription
@@ -291,17 +291,13 @@ def launch_setup(context, *args, **kwargs):
 
         # Mirrored wedge: yaw pi flips its local +x, so placing its foot at
         # far_foot puts its crest back at the platform's far edge.
-        # Scale only local X: preserve the platform height and all curriculum
-        # rises while providing 0.5 m more flat travel before the exit gate.
-        down_xml = ramp_xml.replace(
-            '<mesh>', f'<mesh><scale>{DESCENT_RAMP_RUN / RAMP_RUN} 1 1</scale>')
-        far_foot = RAMP_SUMMIT_X + plat_len + DESCENT_RAMP_RUN
+        far_foot = RAMP_SUMMIT_X + plat_len + RAMP_RUN
         for target in TARGETS:
             extra.append(Node(
                 package='ros_gz_sim', executable='create',
                 name=f'spawn_ramp_down_{target.colour}',
                 arguments=['-name', f'ramp_down_{target.colour}',
-                           '-string', down_xml, '-x', str(far_foot),
+                           '-string', ramp_xml, '-x', str(far_foot),
                            '-y', str(target.lane_y), '-z', '0.0',
                            '-Y', str(math.pi)],
                 output='screen'))

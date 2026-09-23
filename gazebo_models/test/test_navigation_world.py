@@ -5,7 +5,7 @@ from pathlib import Path
 import shutil
 import xml.etree.ElementTree as ET
 
-from coco_config.robot import TARGETS, RAMP_WIDTH, RAMP_RUN, RAMP_FOOT_X, DESCENT_RAMP_RUN
+from coco_config.robot import TARGETS, RAMP_WIDTH, RAMP_RUN, RAMP_FOOT_X, PLATFORM_LEN
 import numpy as np
 from PIL import Image
 from scipy.ndimage import distance_transform_edt, label
@@ -39,7 +39,7 @@ def test_static_collisions_and_map_boundaries_agree():
         assert list(map(float, model.findtext('pose').split()))[:3] == box['pose']
         assert list(map(float, model.findtext('.//collision/geometry/box/size').split())) == box['size']
     bay = cfg['ramp_bays']
-    assert bay['descent_run'] == DESCENT_RAMP_RUN
+    assert bay['platform_length'] == PLATFORM_LEN
     assert bay['centres_y'] == [t.lane_y for t in TARGETS]
     assert (bay['foot_x'], bay['run'], bay['width']) == (RAMP_FOOT_X, RAMP_RUN, RAMP_WIDTH)
 
@@ -77,11 +77,11 @@ def test_ramp_interiors_are_unknown_not_false_occupied_surfaces():
 def test_downhill_runout_is_flat_and_connects_to_return_gate():
     meta = yaml.safe_load((PACKAGE/'maps/coco_navigation.yaml').read_text())
     grid = np.array(Image.open(PACKAGE/'maps'/meta['image']))
-    # The physical wedge now ends at X=6.0, leaving at least 0.5 m of
+    # The physical wedge now ends at X=6.2, leaving at least 0.4 m of
     # flat travel even when the existing exit goal accepts its tolerance.
     from coco_config.robot import RAMP_SUMMIT_X, PLATFORM_LEN
-    foot = RAMP_SUMMIT_X + PLATFORM_LEN + DESCENT_RAMP_RUN
-    assert foot == 6.0
+    foot = RAMP_SUMMIT_X + PLATFORM_LEN + RAMP_RUN
+    assert foot == 6.2
     for target in TARGETS:
         row = grid.shape[0]-1-int((target.lane_y-meta['origin'][1])/.05)
         for x in np.arange(foot, 6.81, .05):
