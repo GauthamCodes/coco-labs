@@ -30,7 +30,7 @@ exec > >(tee -a "$OUT/runner.log") 2>&1
 say() { echo "m6_run: $* ($(date -u +%H:%M:%S) UTC)"; }
 FAIL=0
 COMPLETED=0
-check() { if "$@"; then say "PASS $CHECK"; else say "FAIL $CHECK"; FAIL=1; fi; }
+check() { if "$@"; then say "PASS $CHECK"; else say "FAIL $CHECK"; FAIL=1; return 1; fi; }
 
 for p in 'g[z] sim' 'component_container_isolate[d]' 'nav_benc[h]' 'parameter_bridg[e]' \
          'full_world_rob[o].launch.py' 'nav[.]launch.py' 'mission[.]launch.py'; do
