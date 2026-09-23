@@ -10,7 +10,7 @@ Panels:
     - /ROBOT1
     - /SENSORS1
     - /MISSION1
-    Splitter Ratio: 0.5
+    Splitter Ratio: 0.88
   Tree Height: 700
 Visualization Manager:
   Class: ''
@@ -125,7 +125,7 @@ Visualization Manager:
       Length: 0.3
       Line Style: Billboards
       Line Width: 0.06
-      Name: Local Controller Trajectory (DWB)
+      Name: Local Controller Trajectory
       Offset:
         X: 0
         Y: 0

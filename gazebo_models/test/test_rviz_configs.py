@@ -189,12 +189,12 @@ def test_clean_view_enables_required_groups_and_displays():
         'WORLD', 'NAVIGATION', 'ROBOT', 'SENSORS', 'MISSION']
     for path in ('WORLD/Map', 'NAVIGATION/Global Costmap',
                  'NAVIGATION/Local Costmap', 'NAVIGATION/Global Planner Path',
-                 'NAVIGATION/Local Controller Trajectory (DWB)',
+                 'NAVIGATION/Local Controller Trajectory',
                  'ROBOT/RobotModel', 'ROBOT/TF', 'ROBOT/Robot Footprint',
                  'SENSORS/LaserScan', 'MISSION/Perception Target'):
         assert clean[path]['Enabled'] is True
     assert topic_of(clean['NAVIGATION/Global Planner Path']) == '/plan'
-    assert topic_of(clean['NAVIGATION/Local Controller Trajectory (DWB)']) == '/local_plan'
+    assert topic_of(clean['NAVIGATION/Local Controller Trajectory']) == '/local_plan'
 
 
 def test_debug_view_enables_its_diagnostics():

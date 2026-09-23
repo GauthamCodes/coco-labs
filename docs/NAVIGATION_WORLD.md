@@ -91,7 +91,7 @@ The camera is centred on the larger map. Paths retain one live message each.
 | Global Costmap | `/global_costmap/costmap` | `nav_msgs/msg/OccupancyGrid` |
 | Local Costmap | `/local_costmap/costmap` | `nav_msgs/msg/OccupancyGrid` |
 | Global Planner Path | `/plan` | `nav_msgs/msg/Path` |
-| Local Controller Trajectory (DWB) | `/local_plan` | `nav_msgs/msg/Path` |
+| Local Controller Trajectory | `/local_plan` | `nav_msgs/msg/Path` |
 | Robot Footprint | `/local_costmap/published_footprint` | `geometry_msgs/msg/PolygonStamped` |
 | LaserScan | `/scan` | `sensor_msgs/msg/LaserScan` |
 
