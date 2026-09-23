@@ -539,23 +539,23 @@ class TestTheMappedGroundGate:
         assert lh.on_mapped_ground(-2.0)
 
     def test_the_ramp_the_platform_and_the_far_slope_are_not(self):
-        for x in (1.0, 2.0, 3.0, 4.05, 4.5, 5.5, 6.5):
-            assert not lh.on_mapped_ground(x, 0.0), x
+        for y in lh.MAPPED_GROUND_CENTRES_Y:
+            for x in (1.0, 2.0, 3.0, 4.05, 4.5, 5.5, lh.MAPPED_GROUND_MAX_X):
+                assert not lh.on_mapped_ground(x, y), (x, y)
 
-    def test_the_corridor_BESIDE_the_wedge_is_mapped_ground(self):
-        # Experiment 2's defect. The robot does not climb back over the
-        # wedge to get home, it drives around it -- and an x-only gate
-        # called that whole corridor unmapped, discarding the signal for
-        # 65% of the return leg. Measured on the C2-M5.0 runs: the worst
-        # corridor sample on a leg that finished is 0.3798, against 0.3851
-        # on the flat, so the corridor scores like ordinary floor.
+    def test_the_corridors_between_bays_are_mapped_ground(self):
         for x in (1.5, 3.0, 4.5, 6.0):
-            assert lh.on_mapped_ground(x, +2.0), x
-            assert lh.on_mapped_ground(x, -2.0), x
+            for y in (-8.0, -4.0, 0.0, 4.0, 8.0):
+                assert lh.on_mapped_ground(x, y), (x, y)
 
-    def test_the_wedge_itself_is_still_gated_out(self):
-        for y in (0.0, +1.0, -1.0, +1.25, -1.25):
-            assert not lh.on_mapped_ground(3.5, y), y
+    def test_every_wedge_including_its_edges_is_gated_out(self):
+        for centre in lh.MAPPED_GROUND_CENTRES_Y:
+            for offset in (0.0, +1.0, -1.0, +1.25, -1.25):
+                assert not lh.on_mapped_ground(3.5, centre + offset)
+
+    def test_bay_centres_follow_the_spawn_configuration(self):
+        from coco_config.robot import TARGETS
+        assert lh.MAPPED_GROUND_CENTRES_Y == tuple(t.lane_y for t in TARGETS)
 
     def test_the_half_width_comes_from_the_wedge(self):
         from coco_config.robot import RAMP_WIDTH

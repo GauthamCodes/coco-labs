@@ -112,6 +112,7 @@ from coco_config.robot import (
     RAMP_RUN,
     RAMP_SUMMIT_X,
     RAMP_WIDTH,
+    TARGETS,
 )
 
 from dataclasses import dataclass
@@ -519,31 +520,13 @@ HEALTHY_HOLD_S = 3.0
 
 
 # ── the mapped-ground gate, in world coordinates ─────────────────────────
-# `coco_world.pgm` is a 2D slice of the FLAT world: the ramp, the platform
-# and the far slope are not in it, so a scan taken on any of them
-# disagrees with the map for a reason that is not localization. The span
-# is derived from coco_config rather than typed, so a re-parameterised
-# wedge moves the gate with it.
-#
-# foot 1.0 --- crest 3.0 === platform 4.5 --- far foot 6.5
+# The static map describes flat-ground scans, not scans taken on a pitched
+# ramp or elevated platform. Derive every bay's footprint from the same
+# configuration used by Gazebo; corridors between the bays remain mapped.
 MAPPED_GROUND_MIN_X = RAMP_FOOT_X
 MAPPED_GROUND_MAX_X = RAMP_SUMMIT_X + PLATFORM_LEN + RAMP_RUN
-# The wedge is only RAMP_WIDTH across, centred on y=0. **The gate was
-# x-only until Experiment 2 measured what that costs**, and it cost the
-# whole return leg: the robot does not climb back over the wedge to get
-# home, it drives AROUND it, down a corridor at |y| ~ 2 that is ordinary
-# mapped floor. An x-only gate calls that corridor unmapped and throws
-# the signal away exactly where C2-M5 needs it. Measured on exp2d: 65% of
-# RETURN_HOME gated out, 48 INCONSISTENT samples ignored, no trigger.
-#
-# Whether the corridor is scoreable at all was a real question -- the
-# laser sees the wedge's flank from there, and the wedge is not in the
-# map -- so it was measured on the five C2-M5.0 runs rather than assumed.
-# Worst corridor sample on a leg that FINISHED: 0.3798 (obstacle1),
-# against 0.3851 on the flat. The corridor behaves like the flat, and it
-# is where diverged2 kept its strongest evidence: 137 samples, median
-# 0.5075, all of which the x-only gate discarded.
 MAPPED_GROUND_HALF_WIDTH = RAMP_WIDTH / 2.0
+MAPPED_GROUND_CENTRES_Y = tuple(target.lane_y for target in TARGETS)
 
 
 def on_mapped_ground(world_x, world_y=None):
@@ -568,7 +551,8 @@ def on_mapped_ground(world_x, world_y=None):
     # the map; the floor either side of it is in the map like any other.
     if world_y is None:
         return False
-    return abs(world_y) > MAPPED_GROUND_HALF_WIDTH
+    return all(abs(world_y - centre) > MAPPED_GROUND_HALF_WIDTH
+               for centre in MAPPED_GROUND_CENTRES_Y)
 
 
 class Persistence:
