@@ -41,7 +41,8 @@ from coco_config.robot import (DESCENT_RAMP_RUN, PLATFORM_LEN, RAMP_ANGLE_DEG, R
                                RAMP_RUN, RAMP_SUMMIT_X, RAMP_WIDTH, SPAWN_XY,
                                SPAWN_Z, TARGET_MASS, TARGET_ROW_X, TARGETS)
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction
+from launch.actions import (DeclareLaunchArgument, ExecuteProcess,
+                            IncludeLaunchDescription, OpaqueFunction)
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
@@ -98,7 +99,11 @@ def launch_setup(context, *args, **kwargs):
     # ros_gz_sim runs `gz sim <gz_args>` with shell=True, so a world path
     # containing shell metacharacters (e.g. "ros2_ws(personal)") must be
     # quoted or gz never starts.
-    gz_args = ('-r -v2 ' if gui else '-r -s -v2 ') + shlex.quote(world_file)
+    # Start the server directly; the combined GUI/server mode can stall in
+    # the starting_world handshake before exposing any world services.
+    gz_args = '-r -s -v2 ' + shlex.quote(world_file)
+    gz_gui = [ExecuteProcess(cmd=['gz', 'sim', '-g', '-v2'],
+                             output='screen')] if gui else []
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('ros_gz_sim'),
@@ -301,7 +306,7 @@ def launch_setup(context, *args, **kwargs):
                            '-Y', str(math.pi)],
                 output='screen'))
 
-    return [gz_sim, rsp, spawn_coco, spawn_ramp, bridge] + extra + spawners
+    return [gz_sim, rsp, spawn_coco, spawn_ramp, bridge] + extra + spawners + gz_gui
 
 
 def generate_launch_description():
