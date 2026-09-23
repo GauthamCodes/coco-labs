@@ -53,10 +53,11 @@ def generate(package):
     scan_height = CHASSIS_GROUND_CLEARANCE + LIDAR_MOUNT_XYZ[2]
     inset = scan_height / math.tan(math.radians(RAMP_ANGLE_DEG))
     bay = cfg['ramp_bays']
+    down_inset = inset * bay['descent_run'] / bay['run']
     ramp_rectangles = []
     for y in bay['centres_y']:
         ramp_rectangles.append((bay['foot_x']+inset,
-                           bay['foot_x']+2*bay['run']+bay['platform_length']-inset,
+                           bay['foot_x']+bay['run']+bay['platform_length']+bay['descent_run']-down_inset,
                            y-bay['width']/2, y+bay['width']/2))
     xmin, xmax, ymin, ymax = cfg['bounds']
     res = cfg['resolution']

@@ -188,6 +188,8 @@ RAMP_FOOT_X = 1.0        # world x where the ramp foot meets the ground (z=0)
 # 1.5 m of room. The width went up because the four target objects sit in
 # lanes across y on the platform.
 RAMP_RUN = 2.0           # horizontal length of the wedge (m)
+# Shorter descent leaves flat runout before the unchanged mission exit gate.
+DESCENT_RAMP_RUN = 1.5   # same rise, nominal downhill grade 23.43 degrees
 RAMP_WIDTH = 2.5         # width across the wedge (m), centred on y=0
 RAMP_ANGLE_DEG = 18      # default grade; matches meshes/ramp_wedge_18.stl
 RAMP_SUMMIT_X = RAMP_FOOT_X + RAMP_RUN   # world x of the crest (= 3.0)
