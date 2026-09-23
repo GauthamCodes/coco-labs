@@ -87,3 +87,16 @@ def test_downhill_runout_is_flat_and_connects_to_return_gate():
         for x in np.arange(foot, 6.81, .05):
             col = int((x+2-meta['origin'][0])/.05)
             assert grid[row, col] == 254
+
+
+def test_approach_walls_close_low_ramp_shortcut():
+    cfg = json.loads((PACKAGE/'config/navigation_world.json').read_text())
+    # A planner route through X=1.3 crossed the low physical wedge while
+    # still looking free at the flat LiDAR slice. End the walls beyond it.
+    import math
+    from coco_config.robot import CHASSIS_GROUND_CLEARANCE, LIDAR_MOUNT_XYZ, RAMP_ANGLE_DEG
+    slice_x = RAMP_FOOT_X + (CHASSIS_GROUND_CLEARANCE + LIDAR_MOUNT_XYZ[2]) / math.tan(math.radians(RAMP_ANGLE_DEG))
+    approaches = [b for b in cfg['boxes'] if '_approach_' in b['name']]
+    assert len(approaches) == 8
+    for box in approaches:
+        assert box['pose'][0] + box['size'][0]/2 > slice_x + .1

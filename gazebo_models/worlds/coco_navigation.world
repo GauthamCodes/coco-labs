@@ -762,19 +762,19 @@
     </model>
     <model name="red_approach_south">
       <static>true</static>
-      <pose>-0.75 -6.65 0.5 0 0 0</pose>
+      <pose>-0.35 -6.65 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
           <material>
@@ -786,19 +786,19 @@
     </model>
     <model name="red_approach_north">
       <static>true</static>
-      <pose>-0.75 -5.35 0.5 0 0 0</pose>
+      <pose>-0.35 -5.35 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
           <material>
@@ -810,19 +810,19 @@
     </model>
     <model name="green_approach_south">
       <static>true</static>
-      <pose>-0.75 -2.65 0.5 0 0 0</pose>
+      <pose>-0.35 -2.65 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
           <material>
@@ -834,19 +834,19 @@
     </model>
     <model name="green_approach_north">
       <static>true</static>
-      <pose>-0.75 -1.35 0.5 0 0 0</pose>
+      <pose>-0.35 -1.35 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
           <material>
@@ -858,19 +858,19 @@
     </model>
     <model name="blue_approach_south">
       <static>true</static>
-      <pose>-0.75 1.35 0.5 0 0 0</pose>
+      <pose>-0.35 1.35 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
           <material>
@@ -882,19 +882,19 @@
     </model>
     <model name="blue_approach_north">
       <static>true</static>
-      <pose>-0.75 2.65 0.5 0 0 0</pose>
+      <pose>-0.35 2.65 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
           <material>
@@ -906,19 +906,19 @@
     </model>
     <model name="yellow_approach_south">
       <static>true</static>
-      <pose>-0.75 5.35 0.5 0 0 0</pose>
+      <pose>-0.35 5.35 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
           <material>
@@ -930,19 +930,19 @@
     </model>
     <model name="yellow_approach_north">
       <static>true</static>
-      <pose>-0.75 6.65 0.5 0 0 0</pose>
+      <pose>-0.35 6.65 0.5 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>3.5 0.1 1</size>
+              <size>4.3 0.1 1</size>
             </box>
           </geometry>
           <material>
