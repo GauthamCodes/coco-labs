@@ -16,7 +16,8 @@
 # isolated overlay because <ws>/install carries half-installed turtlebot3
 # packages that make ros_gz_sim's GazeboRosPaths.get_paths() enumeration
 # throw, which kills every gz launch. Export COCO_WS to choose the overlay.
-COCO_WS="${COCO_WS:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+COCO_SOURCE_WS="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+COCO_WS="${COCO_WS:-$COCO_SOURCE_WS}"
 
 if [ ! -f /opt/ros/jazzy/setup.bash ]; then
     echo "[setup_env] ERROR: /opt/ros/jazzy/setup.bash not found." >&2
@@ -64,6 +65,10 @@ COCO_PYVER="$(python3 -c 'import sys; print(f"python{sys.version_info.major}.{sy
 # installed the real ros-jazzy-moveit / ros-jazzy-rosbridge-suite debs,
 # in which case you can delete <ws>/moveit_prefix entirely).
 MV="$COCO_WS/moveit_prefix/root/opt/ros/jazzy"
+# Isolated overlays hold builds; optional tools remain beside the checkout.
+if [ ! -d "$MV" ]; then
+    MV="$COCO_SOURCE_WS/moveit_prefix/root/opt/ros/jazzy"
+fi
 if [ -d "$MV" ]; then
     export AMENT_PREFIX_PATH="$MV:$AMENT_PREFIX_PATH"
     export CMAKE_PREFIX_PATH="$MV:$CMAKE_PREFIX_PATH"
