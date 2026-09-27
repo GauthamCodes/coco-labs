@@ -1,0 +1,24 @@
+[3.345s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/gautham/ros2_ws(personal)/moveit_prefix/root/opt/ros/jazzy' in the environment variable AMENT_PREFIX_PATH doesn't contain any 'local_setup.*' files.
+[3.810s] WARNING:colcon.colcon_core.package_selection:Some selected packages are already built in one or more underlay workspaces:
+	'gazebo_models' is in: /home/gautham/coco_navigation_overlay/install/gazebo_models, /home/gautham/c2nav49_overlay/install/gazebo_models
+	'coco_config' is in: /home/gautham/coco_navigation_overlay/install/coco_config, /home/gautham/c2nav49_overlay/install/coco_config
+If a package in a merged underlay workspace is overridden and it installs headers, then all packages in the overlay must sort their include directories by workspace order. Failure to do so may result in build failures or undefined behavior at run time.
+If the overridden package is used by another package in any underlay, then the overriding package in the overlay must be API and ABI compatible or undefined behavior at run time may occur.
+
+If you understand the risks and want to override a package anyways, add the following to the command line:
+	--allow-overriding coco_config gazebo_models
+
+This may be promoted to an error in a future release of colcon-override-check.
+Starting >>> coco_config
+--- stderr: coco_config
+/usr/lib/python3/dist-packages/setuptools/command/easy_install.py:363: UserWarning: Unbuilt egg for pytest-repeat [unknown version] (/usr/lib/python3/dist-packages)
+  self.local_index = Environment(self.shadow_path + sys.path)
+---
+Finished <<< coco_config [9.83s]
+Starting >>> gazebo_models
+Finished <<< gazebo_models [0.73s]
+Starting >>> coco_mission
+Finished <<< coco_mission [0.57s]
+
+Summary: 3 packages finished [13.1s]
+  1 package had stderr output: coco_config

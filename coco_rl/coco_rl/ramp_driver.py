@@ -85,7 +85,7 @@ from rclpy.node import Node
 from std_msgs.msg import String
 from std_srvs.srv import Trigger
 
-from coco_config.robot import parse_region_map, resolve_lane
+from coco_config.robot import DESCENT_EXIT_X, parse_region_map, resolve_lane
 
 from coco_rl.ramp_env import CocoRampEnv, MAX_ANG, quat_to_rp
 
@@ -243,7 +243,7 @@ class RampDriver(Node):
         super().__init__('ramp_driver')
         self.declare_parameter('model', '')
         self.declare_parameter('cmd_vel_topic', RL_CMD_VEL_TOPIC)
-        self.declare_parameter('descend_goal_x', 6.8)
+        self.declare_parameter('descend_goal_x', DESCENT_EXIT_X)
         self.declare_parameter('status_topic', '/ramp/status')
         # Off reproduces the bare policy, which is how the +0.59 m baseline
         # was measured and how any claim that this helps stays falsifiable.

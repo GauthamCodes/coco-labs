@@ -39,16 +39,22 @@ def test_one_region_per_frozen_lane():
 
 
 def test_regions_are_ordered_by_y_and_named_stably():
-    """lane_1 is the most negative y; the names never depend on colour."""
-    assert REGION_IDS == ('lane_1', 'lane_2', 'lane_3', 'lane_4')
+    """bay_1 is the most negative y; the names never depend on colour."""
+    assert REGION_IDS == ('bay_1', 'bay_2', 'bay_3', 'bay_4')
     lanes = [r.lane_y for r in TARGET_REGIONS]
     assert lanes == sorted(lanes)
 
 
 def test_every_region_is_on_the_crest_at_the_frozen_row():
     for region in TARGET_REGIONS:
-        assert region.platform == TARGET_PLATFORM
+        assert region.platform.startswith('platform_bay_')
         assert region.row_x == TARGET_ROW_X
+        assert region.bay_y == region.lane_y
+        assert region.pre_ramp_x == 0.5
+        assert region.ramp_foot_x == 1.0
+        assert region.ramp_summit_x == 3.0
+        assert region.climb_end_x == 2.95
+        assert region.descent_x == 6.8
 
 
 def test_a_region_carries_no_colour():
@@ -64,9 +70,15 @@ def test_the_fixed_map_is_todays_colour_to_lane_table():
 
 
 def test_lookups_refuse_unknown_names_rather_than_defaulting():
-    assert region_by_id('lane_9') is None
-    assert lane_for_region('lane_9') is None
-    assert region_for_lane(0.0) is None     # between lanes 2 and 3
+    assert region_by_id('bay_9') is None
+    assert lane_for_region('bay_9') is None
+    assert region_for_lane(0.0) is None     # between bays 2 and 3 (-2.0 and +2.0)
+
+
+def test_legacy_lane_aliases_resolve_to_bays():
+    for i in range(1, 5):
+        assert region_by_id(f'lane_{i}') == region_by_id(f'bay_{i}')
+        assert lane_for_region(f'lane_{i}') == lane_for_region(f'bay_{i}')
 
 
 @pytest.mark.parametrize('colour', TARGET_COLOURS)
@@ -78,9 +90,9 @@ def test_no_region_map_is_exactly_the_frozen_lookup(colour):
 
 
 def test_a_region_map_moves_the_lane_with_the_colour():
-    swapped = dict(FIXED_REGION_MAP, red='lane_4', yellow='lane_1')
-    assert resolve_lane('red', swapped) == lane_for_region('lane_4')
-    assert resolve_lane('yellow', swapped) == lane_for_region('lane_1')
+    swapped = dict(FIXED_REGION_MAP, red='bay_4', yellow='bay_1')
+    assert resolve_lane('red', swapped) == lane_for_region('bay_4')
+    assert resolve_lane('yellow', swapped) == lane_for_region('bay_1')
     assert resolve_lane('red', swapped) != lane_for_colour('red')
 
 
@@ -91,7 +103,7 @@ def test_an_unknown_colour_resolves_to_none_with_or_without_a_map():
 
 def test_the_wire_form_round_trips_and_is_canonical():
     text = format_region_map(FIXED_REGION_MAP)
-    assert text == ('blue=lane_3,green=lane_2,red=lane_1,yellow=lane_4')
+    assert text == ('blue=bay_3,green=bay_2,red=bay_1,yellow=bay_4')
     assert parse_region_map(text) == FIXED_REGION_MAP
     shuffled = ','.join(reversed(text.split(',')))
     assert format_region_map(parse_region_map(shuffled)) == text
@@ -105,12 +117,12 @@ def test_blank_text_is_no_map():
 
 @pytest.mark.parametrize('text,message', [
     ('red', 'malformed'),
-    ('red=lane_1,green=', 'malformed'),
-    ('purple=lane_1', 'unknown colour'),
-    ('red=lane_9', 'unknown region'),
-    ('red=lane_1,red=lane_2', 'twice'),
-    ('red=lane_1,green=lane_1,blue=lane_3,yellow=lane_4', 'share a region'),
-    ('red=lane_1,green=lane_2,blue=lane_3', 'does not place'),
+    ('red=bay_1,green=', 'malformed'),
+    ('purple=bay_1', 'unknown colour'),
+    ('red=bay_9', 'unknown region'),
+    ('red=bay_1,red=bay_2', 'twice'),
+    ('red=bay_1,green=bay_1,blue=bay_3,yellow=bay_4', 'share a region'),
+    ('red=bay_1,green=bay_2,blue=bay_3', 'does not place'),
 ])
 def test_an_illegal_map_is_refused_not_half_applied(text, message):
     """A partial map would send the robot up the wrong lane."""

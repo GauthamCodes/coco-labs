@@ -1011,28 +1011,50 @@ function drawMissionLabel(mission) {
 // geometry, sent by the server from coco_config in map coordinates. This
 // page re-types none of it.
 function drawWorld(t) {
-  const box = (x0, x1, width, fill, stroke) => {
-    const [ax, ay] = toPixels(t, x0, width / 2);
-    const [bx, by] = toPixels(t, x1, -width / 2);
+  const box = (x0, x1, centerY, width, fill, stroke) => {
+    const [ax, ay] = toPixels(t, x0, centerY + width / 2);
+    const [bx, by] = toPixels(t, x1, centerY - width / 2);
     ctx.fillStyle = fill;
     ctx.fillRect(ax, ay, bx - ax, by - ay);
     ctx.strokeStyle = stroke;
     ctx.lineWidth = 1;
     ctx.strokeRect(ax, ay, bx - ax, by - ay);
   };
-  box(world.ramp.x0, world.ramp.x1, world.ramp.width,
-      "rgba(90, 110, 150, 0.18)", "rgba(120, 150, 200, 0.45)");
-  box(world.platform.x0, world.platform.x1, world.platform.width,
-      "rgba(90, 110, 150, 0.30)", "rgba(120, 150, 200, 0.6)");
 
-  ctx.save();
-  ctx.font = "11px system-ui, sans-serif";
-  ctx.fillStyle = "rgba(160, 175, 200, 0.75)";
-  const [rx, ry] = toPixels(t, (world.ramp.x0 + world.ramp.x1) / 2,
-                            world.ramp.width / 2 + 0.25);
-  ctx.textAlign = "center";
-  ctx.fillText("ramp", rx, ry);
-  ctx.restore();
+  if (world.bays && world.bays.length) {
+    world.bays.forEach((bay) => {
+      box(bay.ramp.x0, bay.ramp.x1, bay.y, bay.width,
+          "rgba(90, 110, 150, 0.18)", "rgba(120, 150, 200, 0.45)");
+      box(bay.platform.x0, bay.platform.x1, bay.y, bay.width,
+          "rgba(90, 110, 150, 0.30)", "rgba(120, 150, 200, 0.6)");
+      if (bay.descent) {
+        box(bay.descent.x0, bay.descent.x1, bay.y, bay.width,
+            "rgba(90, 110, 150, 0.12)", "rgba(120, 150, 200, 0.35)");
+      }
+      ctx.save();
+      ctx.font = "11px system-ui, sans-serif";
+      ctx.fillStyle = "rgba(160, 175, 200, 0.75)";
+      const [rx, ry] = toPixels(t, (bay.ramp.x0 + bay.ramp.x1) / 2,
+                                bay.y + bay.width / 2 + 0.25);
+      ctx.textAlign = "center";
+      ctx.fillText(bay.bay_id || "ramp", rx, ry);
+      ctx.restore();
+    });
+  } else if (world.ramp && world.platform) {
+    box(world.ramp.x0, world.ramp.x1, 0, world.ramp.width,
+        "rgba(90, 110, 150, 0.18)", "rgba(120, 150, 200, 0.45)");
+    box(world.platform.x0, world.platform.x1, 0, world.platform.width,
+        "rgba(90, 110, 150, 0.30)", "rgba(120, 150, 200, 0.6)");
+
+    ctx.save();
+    ctx.font = "11px system-ui, sans-serif";
+    ctx.fillStyle = "rgba(160, 175, 200, 0.75)";
+    const [rx, ry] = toPixels(t, (world.ramp.x0 + world.ramp.x1) / 2,
+                              world.ramp.width / 2 + 0.25);
+    ctx.textAlign = "center";
+    ctx.fillText("ramp", rx, ry);
+    ctx.restore();
+  }
 
   (world.targets || []).forEach((target) => {
     const [px, py] = toPixels(t, target.x, target.y);

@@ -1,0 +1,39 @@
+[INFO] [1790174387.821123197] [grasp_server]: grasp_server ready: /grasp/stow, /grasp/pick, /grasp/place. Needs move_group; assert /mission/mode idle while it runs so the wheels stay still.
+[INFO] [1790174389.608863370] [grasp_server]: target None -> green
+[INFO] [1790174684.435774538] [grasp_server]: Arm -> 'up' [-1.2, -0.5]
+[INFO] [1790174690.732748013] [grasp_server]: Arm 'up' done (MoveItErrorCode 1)
+[INFO] [1790174690.740880699] [grasp_server]: stow finished: done
+[INFO] [1790174730.027073557] [grasp_server]: Robot pose check ok (pre-grasp)
+[INFO] [1790174730.031645943] [grasp_server]: green at base-x 0.1544, y -0.0000: grasp [0.2731, 0.5059], hover [-0.105, 0.2947]
+[INFO] [1790174730.642283545] [grasp_server]: Arm -> 'up' [-1.2, -0.5]
+[INFO] [1790174730.699689922] [grasp_server]: Arm 'up' done (MoveItErrorCode 1)
+[INFO] [1790174731.610744423] [grasp_server]: Gripper -> open
+[INFO] [1790174734.804957637] [grasp_server]: Gripper reached open
+[INFO] [1790174734.815511871] [grasp_server]: Arm -> 'hover' [-0.10497967822900395, 0.29467199194119825]
+[INFO] [1790174741.200574890] [grasp_server]: Arm 'hover' done (MoveItErrorCode 1)
+[INFO] [1790174741.726713943] [grasp_server]: ACM: gripper links may contact target
+[INFO] [1790174741.730169659] [grasp_server]: Arm -> 'grasp' [0.27306135391881514, 0.5059044637096485]
+[INFO] [1790174750.860761742] [grasp_server]: Arm 'grasp' done (MoveItErrorCode 1)
+[INFO] [1790174758.239620206] [grasp_server]: Magnet attached
+[INFO] [1790174758.248686911] [grasp_server]: Gripper -> closed
+[INFO] [1790174761.814266934] [grasp_server]: Gripper reached closed without touching the target — the magnet, not the pinch, is the grasp
+[INFO] [1790174762.435035709] [grasp_server]: Arm -> 'raise' [0.1, 0.45]
+[INFO] [1790174771.734876578] [grasp_server]: Arm 'raise' done (MoveItErrorCode 1)
+[INFO] [1790174779.601352939] [grasp_server]: Target lifted 35.9 mm (z 0.7288 -> 0.7647) — the grasp is real
+[INFO] [1790174779.611720711] [grasp_server]: Arm -> 'up' [-1.2, -0.5]
+[INFO] [1790174813.961391169] [grasp_server]: Arm 'up' done (MoveItErrorCode 1)
+[INFO] [1790174813.963588930] [grasp_server]: pick finished: held
+[INFO] [1790175047.118057607] [grasp_server]: Robot pose check ok (pre-place)
+[INFO] [1790175048.037148365] [grasp_server]: Arm -> 'lift' [-0.3, 0.2]
+[INFO] [1790175062.074977591] [grasp_server]: Arm 'lift' done (MoveItErrorCode 1)
+[INFO] [1790175062.077010351] [grasp_server]: Arm -> 'place' [0.3040568922682194, 0.5899979044936724]
+[INFO] [1790175074.784792484] [grasp_server]: Arm 'place' done (MoveItErrorCode 1)
+[INFO] [1790175074.837203979] [grasp_server]: Magnet detached
+[INFO] [1790175074.847572881] [grasp_server]: Gripper -> open
+[INFO] [1790175078.246555098] [grasp_server]: Gripper reached open
+[INFO] [1790175078.254257044] [grasp_server]: Arm -> 'lift' [-0.3, 0.2]
+[INFO] [1790175087.871947958] [grasp_server]: Arm 'lift' done (MoveItErrorCode 1)
+[INFO] [1790175094.654046228] [grasp_server]: Target standing at z 0.0790 — the place is real
+[INFO] [1790175094.658947040] [grasp_server]: Arm -> 'home' [0.0, 0.0]
+[INFO] [1790175097.283466501] [grasp_server]: Arm 'home' done (MoveItErrorCode 1)
+[INFO] [1790175097.284790668] [grasp_server]: place finished: placed

@@ -90,8 +90,11 @@ same mistake with a state machine wrapped around it.
 import math
 
 from coco_config.robot import (
+    DESCENT_EXIT_X,
     RAMP_FOOT_X,
     RAMP_SUMMIT_X,
+    region_by_id,
+    region_for_lane,
     resolve_lane,
     SPAWN_XY,
 )
@@ -725,7 +728,6 @@ class MissionPlan:
                     else resolve_lane(colour, self.region_map))
         self.lane = 0.0 if resolved is None else resolved
         self.do_grasp = do_grasp
-        self.pre_ramp_x = pre_ramp_x
         self.home = home
         self.xy_tolerance = xy_tolerance
         # Never tighter than the tolerance it bounds: a consistency band
@@ -734,7 +736,20 @@ class MissionPlan:
         self.xy_consistency = max(xy_consistency, xy_tolerance)
         self.yaw_tolerance = yaw_tolerance
         self.lane_tolerance = lane_tolerance
-        self.climb_end_x = climb_end_x
+        # TargetRegion contract drives pre_ramp, ramp_foot, summit, climb_end and descent
+        target_region = (region_by_id(self.region) if self.region else None) or region_for_lane(self.lane)
+        if target_region is not None:
+            self.pre_ramp_x = target_region.pre_ramp_x if pre_ramp_x == PRE_RAMP_X else pre_ramp_x
+            self.climb_end_x = target_region.climb_end_x if climb_end_x == CLIMB_END_X else climb_end_x
+            self.ramp_foot_x = target_region.ramp_foot_x
+            self.ramp_summit_x = target_region.ramp_summit_x
+            self.descent_goal = (target_region.descent_x, self.lane)
+        else:
+            self.pre_ramp_x = pre_ramp_x
+            self.climb_end_x = climb_end_x
+            self.ramp_foot_x = RAMP_FOOT_X
+            self.ramp_summit_x = RAMP_SUMMIT_X
+            self.descent_goal = (DESCENT_EXIT_X, self.lane)
         # C2-M5.1. False publishes the health signal and acts on nothing,
         # which is how the false-positive experiment was run and how a
         # mission is reproduced exactly as it ran before C2-M5.1.
@@ -1210,9 +1225,9 @@ class MissionMachine:
             return (FAILURE, ALIGN_HEADING,
                     f'yaw={self.align_yaw:+.2f} rad, tolerance '
                     f'{self.plan.yaw_tolerance:.2f}')
-        if x > RAMP_FOOT_X:
+        if x > self.plan.ramp_foot_x:
             return (FAILURE, ALIGN_NOT_ON_FLAT,
-                    f'x={x:.2f} is past the ramp foot {RAMP_FOOT_X:.2f}')
+                    f'x={x:.2f} is past the ramp foot {self.plan.ramp_foot_x:.2f}')
         return SUCCESS
 
     def _check_climb(self, obs):

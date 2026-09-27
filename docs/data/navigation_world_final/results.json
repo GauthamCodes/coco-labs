@@ -1,0 +1,142 @@
+[
+  {
+    "colour": "green",
+    "outcome": "COMPLETE/fetch",
+    "lift_mm": 35.9,
+    "home_arrival_error_m": 0.06,
+    "placed_centre_z_m": 0.079,
+    "magnet_detached": true,
+    "localization_recoveries": 1,
+    "start_utc": "2026-09-23T14:43:22.231608+00:00",
+    "wall_duration_s": 495.8,
+    "gui": false,
+    "runtime_revision": "474601a1663830c965044e271c4a86a1282d2736",
+    "executive_log": "green_executive.txt",
+    "grasp_log": "green_grasp.txt",
+    "original_log_files": [
+      "python3_362034_1790174388644.log",
+      "python3_362031_1790174386888.log",
+      "component_container_isolated_362020_1790174384595.log",
+      "rviz2_362039_1790174385414.log",
+      "coco_navigation.world_361321_1790174377434.log"
+    ],
+    "pre_ramp_arrival_error_m": 0.355,
+    "source_sha256": {
+      "green_nav2.txt": "59b0f6f1d10d75aaa15e75462b7c75116a3569d63095dd7aaec2a1aff576ea38",
+      "green_rviz.txt": "47c463295478a2ff03c7096e7935ab9d6e4761514a30c16fcf64f30f7a6b9496",
+      "green_simulator.txt": "dd7f1f1edf1465b76fc52485f579d53b9b3efa266acbcc63d6b7966e21df788d",
+      "green_executive.txt": "17bad1e553559245c7ee3e5cc7028d4a2172d6b492312aa4ab15284c887f1b02",
+      "green_grasp.txt": "34f50cc1b9b720c28a67ddcfe39a88314ebadcd10966c235e8bbe060a4520bf2"
+    },
+    "nav2_log": "green_nav2.txt",
+    "controller_progress_failures": 0,
+    "controller_rate_warnings": 0,
+    "rviz_log": "green_rviz.txt",
+    "simulator_log": "green_simulator.txt"
+  },
+  {
+    "colour": "red",
+    "outcome": "COMPLETE/fetch",
+    "lift_mm": 35.8,
+    "home_arrival_error_m": 0.095,
+    "placed_centre_z_m": 0.079,
+    "magnet_detached": true,
+    "localization_recoveries": 0,
+    "start_utc": "2026-09-23T14:56:34.306034+00:00",
+    "wall_duration_s": 589.9,
+    "gui": true,
+    "runtime_revision": "474601a1663830c965044e271c4a86a1282d2736",
+    "executive_log": "red_executive.txt",
+    "grasp_log": "red_grasp.txt",
+    "original_log_files": [
+      "python3_370477_1790175174055.log",
+      "python3_370474_1790175174675.log",
+      "component_container_isolated_370463_1790175170797.log",
+      "rviz2_370480_1790175171710.log",
+      "coco_navigation.world_369731_1790175163057.log"
+    ],
+    "pre_ramp_arrival_error_m": 0.241,
+    "source_sha256": {
+      "red_nav2.txt": "3a354bffe346004a1af7ec497698cc790a9e636aebe09221b88235cdce50df27",
+      "red_rviz.txt": "a8153560fe20d08ec7cdd198a6e3072d93fc7a93645805a57edca83751440f5b",
+      "red_simulator.txt": "95c5ed3707336a87dee2e76299fa12a0311d2525b820eb096a1a5037ba14d683",
+      "red_executive.txt": "64331a180f63ff4127288ed27cb5a16501653210ad43c7b6e47a1e9fc4df4fdf",
+      "red_grasp.txt": "3a1fb3a24485ab7e010c683736b82442afa323f7b88cdd91c80ecd8cc58b61d5"
+    },
+    "nav2_log": "red_nav2.txt",
+    "controller_progress_failures": 0,
+    "controller_rate_warnings": 0,
+    "rviz_log": "red_rviz.txt",
+    "simulator_log": "red_simulator.txt"
+  },
+  {
+    "colour": "blue",
+    "outcome": "COMPLETE/fetch",
+    "lift_mm": 36.3,
+    "home_arrival_error_m": 0.085,
+    "placed_centre_z_m": 0.079,
+    "magnet_detached": true,
+    "localization_recoveries": 1,
+    "start_utc": "2026-09-23T15:11:20.112959+00:00",
+    "wall_duration_s": 463.8,
+    "gui": false,
+    "runtime_revision": "474601a1663830c965044e271c4a86a1282d2736",
+    "executive_log": "blue_executive.txt",
+    "grasp_log": "blue_grasp.txt",
+    "original_log_files": [
+      "python3_380159_1790176065266.log",
+      "python3_380157_1790176065237.log",
+      "component_container_isolated_380146_1790176062700.log",
+      "rviz2_380163_1790176063727.log",
+      "coco_navigation.world_379463_1790176055922.log"
+    ],
+    "pre_ramp_arrival_error_m": 0.321,
+    "source_sha256": {
+      "blue_nav2.txt": "63c358d2dedd4b3abad3eb7a6b80f4d1da3b72709f4954d56e7916559567d413",
+      "blue_rviz.txt": "eb9cb55561f3ea496b49ea6e2a0aa132d1541264e39c321f3fd6d7b45d0f5a68",
+      "blue_simulator.txt": "c65a517ebe62c657b994165bc2cdc3fcc0f9b1371bed3166bd35fb576677766c",
+      "blue_executive.txt": "bf7cfb3e33f9088cefcc1918d9a97055cc17c1f59c601f381bffb3943f274b49",
+      "blue_grasp.txt": "3afa0e7b847992cc69a16479efff4b15aa0cdf41dc26921afefc285d5c841fc9"
+    },
+    "nav2_log": "blue_nav2.txt",
+    "controller_progress_failures": 0,
+    "controller_rate_warnings": 0,
+    "rviz_log": "blue_rviz.txt",
+    "simulator_log": "blue_simulator.txt"
+  },
+  {
+    "colour": "yellow",
+    "outcome": "COMPLETE/fetch",
+    "lift_mm": 35.1,
+    "home_arrival_error_m": 0.133,
+    "placed_centre_z_m": 0.079,
+    "magnet_detached": true,
+    "localization_recoveries": 0,
+    "start_utc": "2026-09-23T15:24:04.969342+00:00",
+    "wall_duration_s": 497.2,
+    "gui": false,
+    "runtime_revision": "474601a1663830c965044e271c4a86a1282d2736",
+    "executive_log": "yellow_executive.txt",
+    "grasp_log": "yellow_grasp.txt",
+    "original_log_files": [
+      "python3_388673_1790176827647.log",
+      "python3_388672_1790176826909.log",
+      "component_container_isolated_388661_1790176824161.log",
+      "rviz2_388680_1790176824894.log",
+      "coco_navigation.world_387989_1790176817210.log"
+    ],
+    "pre_ramp_arrival_error_m": 0.231,
+    "source_sha256": {
+      "yellow_nav2.txt": "c6677df6f0cbd57cf9791ac9319c32086c463a6c169b2ba4b4ec86785e208ab9",
+      "yellow_rviz.txt": "0739c5f929534bb7b6dc3d96915b6751c2c2c6e0585c44b299d52122928841e7",
+      "yellow_simulator.txt": "8349b676f2619cd67c1936569ed9af040e3db32832d62c1542404eed7ae2b22b",
+      "yellow_executive.txt": "471b5a53857985144619f79792eff1fa64d45e02faf62ba87d2c700c0e499295",
+      "yellow_grasp.txt": "0f6178a161a5347ccea3ce5c4d1d4dab365c9d92465f37196a17c29d26255ac2"
+    },
+    "nav2_log": "yellow_nav2.txt",
+    "controller_progress_failures": 0,
+    "controller_rate_warnings": 0,
+    "rviz_log": "yellow_rviz.txt",
+    "simulator_log": "yellow_simulator.txt"
+  }
+]

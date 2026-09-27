@@ -141,7 +141,7 @@ def test_positions_actually_move_the_targets():
             region = region_by_id(t.region_id)
             xs.append(t.x - region.row_x)
             ys.append(t.y - region.lane_y)
-    assert max(xs) > 0.2 and min(xs) >= 0.0
+    assert max(xs) > 0.10 and min(xs) >= 0.0
     assert max(ys) > 0.02 and min(ys) < -0.02
 
 

@@ -1,0 +1,10 @@
+[INFO] [1790174387.915048478] [rviz2]: Stereo is NOT SUPPORTED
+[INFO] [1790174387.915382141] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)
+[INFO] [1790174387.999988203] [rviz2]: Stereo is NOT SUPPORTED
+[INFO] [1790174390.319872264] [rviz2]: Trying to create a map of size 500 x 380 using 1 swatches
+[INFO] [1790174390.321247133] [rviz2]: Trying to create a map of size 500 x 380 using 1 swatches
+[INFO] [1790174390.985048416] [rviz2]: Trying to create a map of size 60 x 60 using 1 swatches
+[INFO] [1790174414.844160166] [rviz2]: Message Filter dropping message: frame 'odom' at time 3.700 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1790174414.844529951] [rviz2]: Message Filter dropping message: frame 'odom' at time 3.714 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1790174415.619960035] [rviz2]: Message Filter dropping message: frame 'lidar_link' at time 3.600 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [1790175113.818056255] [rclcpp]: signal_handler(SIGINT/SIGTERM)

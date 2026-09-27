@@ -31,7 +31,7 @@ import math
 
 from coco_config.robot import (approach_window, PLATFORM_LEN,
                                RAMP_SUMMIT_X, RAMP_WIDTH, SPAWN_XY,
-                               TARGET_COLOURS, TARGET_ROW_X, TARGETS)
+                               TARGET_COLOURS, TARGET_REGIONS, TARGET_ROW_X, TARGETS)
 from coco_sim.episode import (approach_corridor_blocked, BACKENDS,
                               check_reproducible,
                               episode_from_json, episode_from_manifest,
@@ -69,7 +69,9 @@ def test_the_envelope_sits_on_the_platform():
     near, far = target_x_bounds(max(t.diameter for t in TARGETS))
     assert RAMP_SUMMIT_X < near < far < RAMP_SUMMIT_X + PLATFORM_LEN
     low, high = target_y_bounds()
-    assert -RAMP_WIDTH / 2.0 < low < 0.0 < high < RAMP_WIDTH / 2.0
+    min_y = min(r.bay_y for r in TARGET_REGIONS)
+    max_y = max(r.bay_y for r in TARGET_REGIONS)
+    assert min_y - RAMP_WIDTH / 2.0 < low < 0.0 < high < max_y + RAMP_WIDTH / 2.0
 
 
 def test_every_colour_has_a_graspable_window():

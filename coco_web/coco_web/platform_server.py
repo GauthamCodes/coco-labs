@@ -876,7 +876,7 @@ class CocoWebNode(Node):
         try:
             from coco_config.robot import (
                 PLATFORM_LEN, RAMP_FOOT_X, RAMP_SUMMIT_X, RAMP_WIDTH,
-                SPAWN_XY, TARGET_ROW_X, TARGETS,
+                SPAWN_XY, TARGET_REGIONS, TARGET_ROW_X, TARGETS,
             )
         except ImportError:
             self.get_logger().warn(
@@ -884,9 +884,31 @@ class CocoWebNode(Node):
                 'grid instead of the world')
             return None
         shift = -SPAWN_XY[0]
+        bays = [
+            {
+                'bay_id': region.region_id,
+                'platform_id': region.platform_id,
+                'y': region.bay_y,
+                'width': RAMP_WIDTH,
+                'ramp': {
+                    'x0': region.ramp_foot_x + shift,
+                    'x1': region.ramp_summit_x + shift,
+                },
+                'platform': {
+                    'x0': region.platform_bounds.x_min + shift,
+                    'x1': region.platform_bounds.x_max + shift,
+                },
+                'descent': {
+                    'x0': region.platform_bounds.x_max + shift,
+                    'x1': region.descent_x + shift,
+                },
+            }
+            for region in TARGET_REGIONS
+        ]
         return {
             'frame': 'map',
             'offset_x': shift,
+            'bays': bays,
             'ramp': {
                 'x0': RAMP_FOOT_X + shift,
                 'x1': RAMP_SUMMIT_X + shift,

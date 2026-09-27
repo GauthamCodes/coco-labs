@@ -131,11 +131,11 @@ PLATFORM_FAR_X = RAMP_SUMMIT_X + PLATFORM_LEN
 #: difference is the thing later stages are meant to measure, not hide.
 BACKENDS = ('gazebo', 'isaac', 'mujoco')
 
-#: World variants this module knows how to validate against. ``coco_world``
-#: is the frozen v1 fetch arena; ``coco_yard`` is the M7 terrain world,
-#: whose geometry is owned by :mod:`coco_sim.yard` and is not re-declared
-#: here.
-WORLD_VARIANTS = ('coco_world', 'coco_yard')
+#: World variants this module knows how to validate against.
+#: ``coco_navigation`` is the canonical 24x18 m 4-bay arena;
+#: ``coco_world`` is the frozen v1 fetch arena;
+#: ``coco_yard`` is the M7 terrain world.
+WORLD_VARIANTS = ('coco_navigation', 'coco_world', 'coco_yard')
 
 #: How much a target may be randomised in the ``'positions'`` level, as a
 #: fraction of the distance to its validated bound. Kept well under 1.0
@@ -390,16 +390,15 @@ def target_x_bounds(diameter):
 
 
 def target_y_bounds():
-    """Legal world-y range for a target, as (low, high).
+    """Legal world-y range for targets across all bays, as (low, high).
 
-    The robot must be able to stand in the target's lane with its
-    footprint on the platform, so the bound is the platform half-width
-    less the robot's half-footprint — the same rule
-    ``coco_config/test/test_targets.py::test_every_lane_fits_on_the_platform``
-    already applies to the frozen lanes.
+    Each bay platform is RAMP_WIDTH across, centred on its bay_y.
+    The outer bay bounds allow targets within each bay's standable platform area.
     """
     limit = RAMP_WIDTH / 2.0 - HALF_FOOTPRINT_X
-    return -limit, limit
+    min_bay_y = min(r.bay_y for r in TARGET_REGIONS)
+    max_bay_y = max(r.bay_y for r in TARGET_REGIONS)
+    return min_bay_y - limit, max_bay_y + limit
 
 
 def min_target_separation(a, b):

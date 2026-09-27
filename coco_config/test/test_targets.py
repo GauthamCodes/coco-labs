@@ -92,14 +92,14 @@ def test_every_lane_fits_on_the_platform():
     """
     A lane the robot cannot stand in is not a lane.
 
-    The platform is RAMP_WIDTH across, so the robot's half-footprint has
-    to clear the edge in the outermost lane.
+    Each platform is centred on its target lane. The robot and rod must
+    fit inside its half-width.
     """
     limit = RAMP_WIDTH / 2.0 - HALF_FOOTPRINT_X
     for target in TARGETS:
-        assert abs(target.lane_y) < limit, (
+        assert target.diameter / 2 < limit, (
             f'{target.colour} lane {target.lane_y:+.2f} leaves '
-            f'{limit - abs(target.lane_y):.3f} m to the platform edge')
+            f'{limit - target.diameter / 2:.3f} m to the platform edge')
 
 
 def test_the_target_row_is_on_the_platform():

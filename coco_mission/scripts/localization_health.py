@@ -112,6 +112,7 @@ from coco_config.robot import (
     RAMP_RUN,
     RAMP_SUMMIT_X,
     RAMP_WIDTH,
+    TARGETS,
 )
 
 from dataclasses import dataclass
@@ -544,6 +545,7 @@ MAPPED_GROUND_MAX_X = RAMP_SUMMIT_X + PLATFORM_LEN + RAMP_RUN
 # is where diverged2 kept its strongest evidence: 137 samples, median
 # 0.5075, all of which the x-only gate discarded.
 MAPPED_GROUND_HALF_WIDTH = RAMP_WIDTH / 2.0
+MAPPED_GROUND_CENTRES_Y = tuple(target.lane_y for target in TARGETS)
 
 
 def on_mapped_ground(world_x, world_y=None):
@@ -568,7 +570,8 @@ def on_mapped_ground(world_x, world_y=None):
     # the map; the floor either side of it is in the map like any other.
     if world_y is None:
         return False
-    return abs(world_y) > MAPPED_GROUND_HALF_WIDTH
+    return all(abs(world_y - centre) > MAPPED_GROUND_HALF_WIDTH
+               for centre in MAPPED_GROUND_CENTRES_Y)
 
 
 class Persistence:

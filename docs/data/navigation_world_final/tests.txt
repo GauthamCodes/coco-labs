@@ -1,0 +1,34 @@
+........................................................................ [  9%]
+....................F................................................... [ 19%]
+........................................................................ [ 29%]
+........................................................................ [ 39%]
+........................................................................ [ 49%]
+........................................................................ [ 59%]
+........................................................................ [ 69%]
+........................................................................ [ 78%]
+........................................................................ [ 88%]
+........................................................................ [ 98%]
+..........                                                               [100%]
+=================================== FAILURES ===================================
+________ TestLiveGraph.test_the_relay_output_is_restamped_and_unaltered ________
+
+self = <test_cmd_vel_wiring.TestLiveGraph object at 0x727cbf7aae40>
+fixed = <test_cmd_vel_wiring.Graph object at 0x727ca624a5d0>
+
+    def test_the_relay_output_is_restamped_and_unaltered(self, fixed):
+        _drive(fixed, stop_after=False)
+        gated = [m for m in fixed.gated_seen if m.twist.linear.x == GATED]
+>       assert len(gated) >= ENOUGH
+E       assert 9 >= 10
+E        +  where 9 = len([geometry_msgs.msg.TwistStamped(header=std_msgs.msg.Header(stamp=builtin_interfaces.msg.Time(sec=1790205980, nanosec=2...linear=geometry_msgs.msg.Vector3(x=0.123, y=0.0, z=0.0), angular=geometry_msgs.msg.Vector3(x=0.0, y=0.0, z=0.0))), ...])
+
+gazebo_models/test/test_cmd_vel_wiring.py:449: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+[INFO] [1790205980.091936887] [cmd_vel_relay]: Relaying /cmd_vel -> /cmd_vel_gated
+[INFO] [1790205980.117333254] [cmd_vel_arbiter]: Arbitrating /cmd_vel_teleop (preempts), /cmd_vel_gated, /cmd_vel_rl, /cmd_vel_approach -> /diff_drive_controller/cmd_vel
+[INFO] [1790205980.119917006] [cmd_vel_arbiter]: mode=nav (from /mission/mode); source timeout 0.30s
+----------------------------- Captured stderr call -----------------------------
+[INFO] [1790205980.219334919] [cmd_vel_arbiter]: source none -> nav (mode=nav)
+=========================== short test summary info ============================
+FAILED gazebo_models/test/test_cmd_vel_wiring.py::TestLiveGraph::test_the_relay_output_is_restamped_and_unaltered
+1 failed, 729 passed in 59.03s

@@ -193,10 +193,18 @@ RAMP_ANGLE_DEG = 18      # default grade; matches meshes/ramp_wedge_18.stl
 RAMP_SUMMIT_X = RAMP_FOOT_X + RAMP_RUN   # world x of the crest (= 3.0)
 
 # Flat crest between the up-slope and the mirrored down-slope. The robot
-# has to stand on this to reach the targets, so it is 1.5 m rather than the
-# 0.5 m it started at. Spans world x RAMP_SUMMIT_X .. RAMP_SUMMIT_X+PLATFORM_LEN
-# (= 3.0 .. 4.5) and the full RAMP_WIDTH across y.
-PLATFORM_LEN = 1.5
+# stands here to reach the targets. Spans world x
+# RAMP_SUMMIT_X .. RAMP_SUMMIT_X+PLATFORM_LEN
+# (= 3.0 .. 4.2) and the full RAMP_WIDTH across y. Retain the original
+# downhill grade while leaving flat runout before the existing exit goal.
+PLATFORM_LEN = 1.2
+
+# Additional physical navigation milestones across the traverse bay:
+RAMP_FAR_FOOT_X = RAMP_SUMMIT_X + PLATFORM_LEN + RAMP_RUN  # 6.2 m
+DESCENT_EXIT_X = 6.8   # Flat runout goal after down-ramp
+CLIMB_END_X = 2.95      # Summit approach margin: 0.05m before summit
+PRE_RAMP_X = 0.5       # Flat-ground approach waypoint before climbing
+BAY_Y_CENTRES = (-6.0, -2.0, 2.0, 6.0)
 
 
 class Target(NamedTuple):
@@ -322,16 +330,16 @@ TARGET_MASS = 0.05        # kg; 0.118 N.m at full reach vs a 10 N.m limit
 # lift stays the reference. 32 mm is the tightest descent clearance
 # (~5.5 mm interpolated against the 28 mm case's verified 7.76 mm) and is
 # the one to drop to 30 mm if the gripper knocks it over.
-TARGET_ROW_X = 4.05      # world x of the row, 0.45 m from the platform's far edge
+TARGET_ROW_X = 4.05      # world x of the row, 0.15 m from the platform's far edge
 TARGETS = (
     Target('red',    'target_red',    0.020, TARGET_HEIGHT,
-           '0.85 0.10 0.10', -0.75),
+           '0.85 0.10 0.10', -6.0),
     Target('green',  'target_green',  0.024, TARGET_HEIGHT,
-           '0.10 0.70 0.15', -0.25),
+           '0.10 0.70 0.15', -2.0),
     Target('blue',   'target_blue',   0.028, TARGET_HEIGHT,
-           '0.10 0.25 0.85',  0.25),
+           '0.10 0.25 0.85',  2.0),
     Target('yellow', 'target_yellow', 0.032, TARGET_HEIGHT,
-           '0.90 0.80 0.10',  0.75),
+           '0.90 0.80 0.10',  6.0),
 )
 
 TARGET_COLOURS = tuple(t.colour for t in TARGETS)
@@ -367,47 +375,111 @@ def colour_for_lane(lane_y, tol=0.1):
 
 
 # ── target regions ───────────────────────────────────────────────────────
-# A REGION is a place a target may stand, named, with no colour attached.
-# TARGETS above welds three different facts into one row: what an object
-# looks like (colour, diameter), what it is called in gz (model), and
-# where the world keeps it (lane_y). The first two are the object's
-# identity and travel with it. The third is WORLD GEOMETRY — the ramp is
-# 2.5 m wide and has four approach lines up it whatever stands on top —
-# and it is the only one an episode may move.
+# A REGION is a place / bay where a target may stand, named, with no colour
+# attached. TARGETS above welds three different facts into one row: what an
+# object looks like (colour, diameter), what it is called in gz (model), and
+# where the world keeps it (lane_y). The first two are the object's identity
+# and travel with it. The third is WORLD GEOMETRY — the 4-bay arena has 4
+# physically distinct ramp bays across Y — and it is what an episode varies.
 #
-# So the lanes are re-stated here as regions keyed by name. The region
-# table is static world knowledge of the same kind as the map: which
-# platform a region is on and which line up the ramp leads to it. What an
-# EPISODE adds is which colour stands in which region — that assignment
-# is privileged, lives in the episode manifest (coco_sim.episode), and
-# reaches the mission only as region NAMES, never as coordinates.
-#
+# TargetRegion defines the full physical bay/platform/approach contract.
 # Derived from TARGETS rather than re-typed, so the two cannot drift, and
-# ordered by world y so the names are stable: lane_1 is the most negative
-# y. FIXED_REGION_MAP is today's colour->lane table expressed in regions.
+# ordered by world y so the names are stable: bay_1 is the most negative y.
 class TargetRegion(NamedTuple):
-    """One named place on a platform where a target may stand."""
+    """One named place / bay where a target may stand.
 
-    region_id: str   # stable name; what an episode assigns a colour to
-    platform: str    # which platform (and the ramp up to it) it is on
-    lane_y: float    # world y of the approach line up the ramp and across
-    row_x: float     # world x of the region's nominal target position
+    Represents a full physical bay/ramp/platform contract in the 24x18 m arena.
+    """
+
+    region_id: str          # stable name: 'bay_1' .. 'bay_4'
+    platform_id: str        # 'platform_bay_1' .. 'platform_bay_4'
+    bay_y: float            # world y of bay centerline: -6.0, -2.0, 2.0, 6.0
+    pre_ramp_pose: tuple    # (0.5, bay_y, 0.0)
+    ramp_foot_pose: tuple   # (1.0, bay_y, 0.0)
+    ramp_summit_pose: tuple # (3.0, bay_y, 0.0)
+    target_nominal: tuple   # (4.05, bay_y, TARGET_GRASP_Z)
+    descent_exit_pose: tuple# (6.8, bay_y, 0.0)
+    platform_bounds: tuple  # (3.0, 4.2, bay_y - 1.25, bay_y + 1.25)
+    approach_corridor: tuple# (0.5, 1.0, bay_y - 0.6, bay_y + 0.6)
+
+    # Aliases & compatibility properties
+    @property
+    def platform(self) -> str:
+        return self.platform_id
+
+    @property
+    def lane_y(self) -> float:
+        return self.bay_y
+
+    @property
+    def row_x(self) -> float:
+        return self.target_nominal[0]
+
+    @property
+    def pre_ramp_x(self) -> float:
+        return self.pre_ramp_pose[0]
+
+    @property
+    def ramp_foot_x(self) -> float:
+        return self.ramp_foot_pose[0]
+
+    @property
+    def ramp_summit_x(self) -> float:
+        return self.ramp_summit_pose[0]
+
+    @property
+    def climb_end_x(self) -> float:
+        return CLIMB_END_X
+
+    @property
+    def descent_x(self) -> float:
+        return self.descent_exit_pose[0]
+
+    @property
+    def ramp_far_foot_x(self) -> float:
+        return RAMP_FAR_FOOT_X
 
 
-#: The one platform this world has: the crest between the up-slope and
-#: the mirrored down-slope (full_world_robo.launch.py traverse:=true).
-TARGET_PLATFORM = 'crest'
+def make_bay_region(index: int, bay_y: float) -> TargetRegion:
+    region_id = f'bay_{index}'
+    platform_id = f'platform_bay_{index}'
+    half_w = RAMP_WIDTH / 2.0  # 1.25
+    corridor_half_w = 0.6
+    return TargetRegion(
+        region_id=region_id,
+        platform_id=platform_id,
+        bay_y=bay_y,
+        pre_ramp_pose=(PRE_RAMP_X, bay_y, 0.0),
+        ramp_foot_pose=(RAMP_FOOT_X, bay_y, 0.0),
+        ramp_summit_pose=(RAMP_SUMMIT_X, bay_y, 0.0),
+        target_nominal=(TARGET_ROW_X, bay_y, TARGET_GRASP_Z),
+        descent_exit_pose=(DESCENT_EXIT_X, bay_y, 0.0),
+        platform_bounds=(RAMP_SUMMIT_X, RAMP_SUMMIT_X + PLATFORM_LEN,
+                         bay_y - half_w, bay_y + half_w),
+        approach_corridor=(PRE_RAMP_X, RAMP_FOOT_X,
+                           bay_y - corridor_half_w, bay_y + corridor_half_w),
+    )
+
 
 TARGET_REGIONS = tuple(
-    TargetRegion(f'lane_{index}', TARGET_PLATFORM, lane_y, TARGET_ROW_X)
-    for index, lane_y in enumerate(sorted(t.lane_y for t in TARGETS),
-                                   start=1))
+    make_bay_region(index, lane_y)
+    for index, lane_y in enumerate(sorted(t.lane_y for t in TARGETS), start=1)
+)
 
 REGION_IDS = tuple(r.region_id for r in TARGET_REGIONS)
+TARGET_PLATFORMS = tuple(r.platform_id for r in TARGET_REGIONS)
+TARGET_PLATFORM = 'platform_bay_1'
+
+_LANE_TO_BAY = {f'lane_{i}': f'bay_{i}' for i in range(1, 5)}
 
 
 def region_by_id(region_id):
-    """Return the TargetRegion called `region_id`, or None."""
+    """Return the TargetRegion called `region_id`, or None.
+
+    Accepts canonical 'bay_X' and legacy alias 'lane_X'.
+    """
+    if region_id in _LANE_TO_BAY:
+        region_id = _LANE_TO_BAY[region_id]
     for region in TARGET_REGIONS:
         if region.region_id == region_id:
             return region

@@ -1,0 +1,36 @@
+[INFO] [1790174389.169007787] [mission_executive]: mission_executive up: colour=green lane=-2.00 grasp=yes autostart=False
+[INFO] [1790174389.171288907] [mission_executive]: waiting for /mission/start — ros2 service call /mission/start std_srvs/srv/Trigger
+[INFO] [1790174602.231608190] [mission_executive]: starting the fetch for green
+[INFO] [1790174602.310812009] [mission_executive]: IDLE -> LOCALIZE
+[INFO] [1790174602.408170264] [mission_executive]: LOCALIZE -> NAVIGATE_TO_RAMP
+[INFO] [1790174602.507964598] [mission_executive]: NavigateToPose -> world (0.50, -2.00)
+[WARN] [1790174644.307680112] [mission_executive]: NAVIGATE_TO_RAMP arrived: ground truth 0.355 m from the goal — Nav2 reported SUCCESS but ground truth is 0.355 m out, past the 0.25 m tolerance. Accepted: within the 0.50 m consistency band, and the robot has stopped, so re-issuing the goal cannot close it
+[INFO] [1790174644.310494660] [mission_executive]: NAVIGATE_TO_RAMP -> ALIGN_FOR_CLIMB
+[INFO] [1790174644.612007902] [mission_executive]: pre-climb heading -0.003 rad (-0.2 deg); gate off
+[INFO] [1790174644.613814787] [mission_executive]: ALIGN_FOR_CLIMB -> CLIMB
+[INFO] [1790174644.710343280] [mission_executive]: calling /ramp/climb
+[INFO] [1790174682.508427383] [mission_executive]: CLIMB -> VERIFY_CLIMB
+[INFO] [1790174683.108951012] [mission_executive]: VERIFY_CLIMB -> SEARCH_TARGET
+[INFO] [1790174683.707634446] [mission_executive]: SEARCH_TARGET -> STOW_ARM
+[INFO] [1790174683.807358715] [mission_executive]: calling /grasp/stow
+[INFO] [1790174691.210862704] [mission_executive]: STOW_ARM -> APPROACH_TARGET
+[INFO] [1790174691.309166773] [mission_executive]: calling /approach/run
+[INFO] [1790174729.907962400] [mission_executive]: APPROACH_TARGET -> GRASP
+[INFO] [1790174730.009954061] [mission_executive]: calling /grasp/pick
+[INFO] [1790174814.507977619] [mission_executive]: GRASP -> VERIFY_GRASP
+[INFO] [1790174815.006708101] [mission_executive]: VERIFY_GRASP -> DESCEND
+[INFO] [1790174815.109038535] [mission_executive]: calling /ramp/descend
+[INFO] [1790174867.808465506] [mission_executive]: DESCEND -> RETURN_HOME
+[INFO] [1790174867.908634206] [mission_executive]: NavigateToPose -> world (-2.00, 0.00)
+[ERROR] [1790175009.107723706] [mission_executive]: RETURN_HOME -> RECOVERY [LOCALIZATION_DEGRADED]: SCAN_DISAGREES
+[INFO] [1790175009.308500686] [mission_executive]: RECOVERY -> RELOCALIZE [LOCALIZATION_DEGRADED]: relocalization 1/2 before resuming RETURN_HOME
+[WARN] [1790175009.409834477] [mission_executive]: localization recovery: re-seeding AMCL at the last verified fix (-0.21, 0.07), 0.2 s old, sigma 0.25 m
+[WARN] [1790175009.411517732] [mission_executive]: localization recovery: spinning +6.28 rad to re-observe
+[INFO] [1790175045.909730468] [mission_executive]: RELOCALIZE -> RETURN_HOME [LOCALIZATION_DEGRADED]: localization recovered; resuming RETURN_HOME
+[INFO] [1790175046.008866428] [mission_executive]: NavigateToPose -> world (-2.00, 0.00)
+[INFO] [1790175047.008181222] [mission_executive]: RETURN_HOME arrived: ground truth 0.060 m from the goal (tolerance 0.25 m)
+[INFO] [1790175047.011781752] [mission_executive]: RETURN_HOME -> PLACE
+[INFO] [1790175047.109604483] [mission_executive]: calling /grasp/place
+[INFO] [1790175097.508889961] [mission_executive]: PLACE -> VERIFY_PLACEMENT
+[INFO] [1790175098.008336367] [mission_executive]: VERIFY_PLACEMENT -> COMPLETE
+[INFO] [1790175098.013467469] [mission_executive]: MISSION COMPLETE: result=fetch reason=LOCALIZATION_DEGRADED attempts={'RELOCALIZE': 1}
