@@ -4340,3 +4340,110 @@ bash scripts/build_overlay.sh "$COCO_WS"
 ln -s "<ws>/moveit_prefix" "$COCO_WS/moveit_prefix"   # once; the runner refuses without MoveIt
 bash docs/data/p03c_episode_run.sh ~/coco_nav_runs/p03c_next positions 4 green
 ```
+
+---
+
+## Milestone 0A — Phase 0 repository + system cleanup (2026-09-29)
+
+**Status:** COMPLETE (all 0A acceptance criteria met; the push, the tags and the public actions await approval, as the milestone requires)
+
+**Repository**
+- main SHA: the commit that carries this entry, a child of the merge commit `232454d`. Local only.
+- merge SHA: `232454d` — parents `b15d445` (main) and `917bc59` (p03c-consolidation)
+- `jazzy2/main` (GauthamCodes/coco-robot-jazzy-2.0): `ea66155`. Local main is ahead of it and 0 behind, so a push would be a fast-forward. **Not pushed.**
+- `origin/main` (GauthamCodes/coco-robot-ros2, the old repo): `34f151c`. No shared history with main.
+- p03c branch: `p03c-consolidation` `917bc59` (local only, worktree `~/coco-p03c-consolidation`); now contained in main.
+- working tree: the user's checkout keeps its own uncommitted `CLAUDE.md` edit (14 lines, "Multi-agent protocol"), preserved byte-for-byte across the fast-forward. Its untracked `ROADMAP.md`, `AGENTS.md`, `.codex/`, `docs/agents/{DECISIONS,HANDOFF,RESULTS,TASK}.md`, `docs/RSE_ASSIGNMENT_PLAN_V2.md`, `P02_NOTE_FOR_CODEX.md` and `tatus --short` are untouched.
+
+**P03C**
+- **Verified:** main and p03c had diverged from `d317d85`: 22 commits on main (the 24×18 arena), 63 on p03c. `917bc59` re-typed main's arena work as content and dropped part of it. So there was no fast-forward: this is a real merge.
+- **Conflicts, resolved by hand:**
+  - `setup_env.sh`: p03c's MoveIt fallback.
+  - `full_world_robo.launch.py`: p03c's episode spawning, plus main's separate Gazebo GUI process (61ff385), which p03c had dropped.
+  - `coco_config/robot.py`: p03c's constants, main's comments.
+  - `docs/SESSION_LOG.md`: both sides, in date order.
+  - Auto-merged and checked: `README.md` (main's text), `localization_health.py` (comments only), `coco_web/CMakeLists.txt` (deleted, as on p03c).
+- **Tests (measured):** **1966 passed / 0 failed / 0 skipped**, on the staged tree and again on the committed `232454d`.
+  - Per package, run from inside each package, `ROS_DOMAIN_ID=77`, overlay `~/coco_p0merge_ws` (MoveIt linked).
+  - coco_config 93, coco_mission 338, custom_teleop 75, coco_rl 229, coco_perception 139, coco_moveit_config 12, coco_sim 280, coco_web 575, gazebo_models 225.
+  - p03c *alone* on `~/coco_consolidation_ws` reproduces only 1959 + 7 skipped, because that overlay has no MoveIt.
+- **Present in the merged tree:** 24×18 arena (`coco_navigation.world`, `navigation_world.json`), `EpisodeSpec` (`coco_sim/episode.py`), `TargetRegion` (`coco_config/robot.py`), `platform_server` (`coco_web/`), and the `/cmd_vel_gated` wiring (6503cd5, integrated by c8a8206).
+- **Unresolved issues:**
+  - The P03C 13/13 matrix (`~/coco_runs_p03c`) recorded head `dfcbc4b`, not `917bc59`: it ran on an uncommitted tree.
+  - Its report claims "exactly 35.8 mm lift on all 13" and "targets at X ∈ [6.3, 7.3]". The spawned targets are at x = 4.05 (measured, this session), so the INV-3 wording is wrong. The lift figure is not verified.
+  - The launch-file comment "Each bay ends at x=6.5" is stale; `robot.py` gives 6.2.
+
+**Collision monitor**
+- **Commit inspected:** the wiring change is `6503cd5` (C2-NAV.42). `c8a8206` is the C2-NAV.43 results commit that integrated it. Both are in main; nothing was re-applied, and `cmd_vel_arbiter.py` is unchanged.
+- **Topology (live, every run):**
+  - `/cmd_vel_nav`: pub `controller_server`, `behavior_server`; sub `velocity_smoother` only.
+  - `/cmd_vel_smoothed` → `collision_monitor` → `/cmd_vel` (+ inert `docking_server`) → `cmd_vel_relay`.
+  - `/cmd_vel_gated`: **1 pub (`cmd_vel_relay`), 1 sub (`cmd_vel_arbiter`)**.
+  - Wheel topic: **1 pub (`cmd_vel_arbiter`)**.
+  - The relay no longer feeds the smoother, so the loop is gone.
+- **Slowdown result:**
+  - Setup: injected SLOWDOWN (side wall at 0.32 m, raw 0.30 m/s held, frozen `coco_world.world`). Three valid fresh-sim runs; r03 is VOID (killed by a stale teardown of mine).
+  - Rates: monitor 19.98–20.02 Hz, relay 19.98–20.01 Hz, wheel 19.70–25.97 Hz. Wheel > relay is the arbiter's 20 Hz gap-fill re-emitting the latest command: 695 of 695 wheel messages equal the latest gated command.
+- **Wheel speed distribution:** 300 SLOWDOWN rows pooled; p50 / p90 / p99 / max = **0.090 / 0.090 / 0.090 / 0.090 m/s**. **0 of 300 rows over the cap (0.0 %).**
+- **Cap:** `slowdown_ratio` 0.3 (read back live) × 0.30 = **0.090 m/s**.
+  - Control (no wall): 0 SLOWDOWN rows; the wheel follows the raw 0.300.
+  - STOP probe: stopped by APPROACH at 0.264 m, wheels 0.0000 for the last 6 s while raw held 0.30. STOP itself never fired (`stop_held: false`), unlike C2-NAV.47.
+- **Four-run result:** **4 / 4 COMPLETE/fetch** (red, green, blue, yellow; commit `232454d`; fresh sim each; 17/17 runner checks each). Home error 0.103 / 0.075 / 0.108 / 0.129 m. Every target physically ended at home. Nav-owned rows over the monitor: **0 of 2,724**. `gated_zero_moving` 38 rows (1.39 %), inside the documented 0.088–2.92 % residual. Bypass rows matching the raw controller: 0. STOP rows: 0. The missions hit LIMIT only (plus 1 APPROACH row) and **no SLOWDOWN**. Historical P03C FIXED (`dfcbc4b`): 4/4 COMPLETE/fetch, home error 0.087 / 0.124 / 0.013 / 0.176 m. A separate series.
+- **Comparability:** a new series.
+  - v1 19/20 and C2-M5.0's 84.2 % were measured WITH the loop.
+  - The P03C 13/13 was measured WITHOUT it (6503cd5 predates `dfcbc4b`), on a different harness version.
+  - Details: `docs/data/m0a_cmdpath/README.md`.
+
+**Master context**
+- path: **MASTER CONTEXT PATH UNRESOLVED**
+- status: not found in the repo, any worktree, `~/Downloads`, `~/.claude/plans`, the Claude paste cache, or the Antigravity transcripts. The nearest candidate (paste-cache `260a52b0…`, "COCO 2.0 — POST-P0.2 PRODUCT + RESEARCH ROADMAP") has no §45 and no P0.4, so it is not treated as the master context. B2 was left untouched.
+
+**Cleanup**
+- **Protected locations:**
+  - **e-Yantra = `~/ros2_ws`** (origin eYantra-Robotics-Competition/eYRC_26-27_Strata-Cobot; `.bashrc` sources its install).
+  - `~/isaac-sim` and `~/.local/share/ov` (Isaac runtime data), `~/coco-isaac-backend`, `~/coco-infra-worktree`, `~/forge`, `~/forge-lab`, `~/dev/amr-fleet-nav`, `~/amr-fleet-nav-backup`, `~/ros2_ws(personal)/src/red_ball_nav`, `~/simple_bot_tutorial`, `~/robotic_arm_ws`.
+  - `~/assignment` and `~/assignment_ws` (ERICR assignment).
+  - All COCO worktrees; the evidence in `~/coco_nav_runs`, `~/coco_runs_p03c`, `~/coco_p03d_runs`, `~/coco_container_evidence`, `~/coco_runtime_runs` and `~/ros2_ws(personal)/rl_runs`.
+  - `~/ros2_ws(personal)/moveit_prefix`; Docker images; Downloads, Documents, Videos and Pictures; the Firefox and Brave profiles; the `~/.claude` and `~/.gemini` transcripts.
+- **Disposable candidates found:** caches, stale overlays, the npm cache and more; see the retained list.
+- **Deleted:**
+  - 420 `__pycache__`/`.pytest_cache` dirs outside protected trees (30.5 MB). The p03d worktree's were left while its batch was live.
+  - Overlays `~/p01_wt_overlay`, `~/coco_p02b_overlay`, `~/coco_p02c_overlay` (unreferenced, regenerable symlink installs) and `~/ros2_ws(personal)/c2m31_overlay` (131 dangling links): 7.5 MB.
+  - The npm cache (`npm cache clean --force`): 166.3 MB.
+- **Retained as unknown / awaiting approval:**
+  - `~/Downloads/Antigravity.tar.gz` (165 MB installer; `agy` is installed)
+  - `~/ros2_ws(personal)/src/coco-robot-ros2/.codex/worktrees/c2nav0-implementation` (219 MB, orphaned Codex worktree, UNKNOWN)
+  - the stray `tatus --short` (saved `git diff` output, Sep 19)
+  - `~/coco_consolidation_ws`, `~/coco_p03c_ws`, `~/coco_p02_overlay`, `~/c2nav48_overlay`, `~/coco_navigation_overlay` (referenced by docs or memory)
+  - `~/simple_gz_ws` (small personal project)
+  - `/var/crash` (117 MB, needs sudo)
+  - the Brave cache (1.7 GB, Brave running)
+  - Docker `coco-platform` images (8.4 GB shared, 91 MB reclaimable)
+  - `~/.local/share/claude` versions (tool-managed)
+  - registered worktrees whose branches are now in main
+- **Disk before:** used 62.93 GiB, free 33.77 GiB; home 27.48 GiB.
+- **Disk after:** used 62.70 GiB, free 34.00 GiB; home 27.26 GiB. This includes about 13 MB of new evidence and the new `~/coco_p0merge_ws`.
+- **Space recovered:** 204.4 MB deleted (apparent size, measured per item before deletion). `df` rose about 0.2 GiB net of the new run evidence.
+
+**Public/repository actions awaiting approval**
+- `git push jazzy2 main` (fast-forward from `ea66155`).
+- `archive/<branch>` tags for every remote branch (see the table in the final report), then any remote-branch deletions.
+- The fetch-video release asset; the coco-robot-ros2 pointer README and archival.
+- A name choice among the five free candidates, and the rename.
+
+**Unverified**
+- Why the STOP probe now ends under APPROACH rather than STOP. Suspected cause, not measured: C2-NAV.48's `robot_radius` 0.25.
+- The P03C report's 35.8 mm lift figure.
+- What `.codex/worktrees/c2nav0-implementation` contains.
+
+**Decisions required from human**
+- Approve `git push jazzy2 main`.
+- Give the master context's path, or confirm that B2 is dropped.
+- Approve the archive tags, then any branch deletions.
+- Choose a name.
+- Approve or deny each retained cleanup item above.
+- Whether PROJECT_STATE KL0 should be rewritten now (Phase 0 D1/C4) using `docs/data/m0a_cmdpath/README.md`.
+
+**Next milestone:** Phase 0 continuation (0B: B1–B3 roadmap install and CLAUDE.md addendum; C4/D1–D2 honest PROJECT_STATE and README; D3–D5 after approvals). Phase 1A only after Phase 0 closes.
+
+**EXACT NEXT ACTION:** after the owner approves: `cd "~/ros2_ws(personal)/src/coco-robot-ros2" && git push jazzy2 main`. Then start 0B with "Resume from the latest milestone checkpoint."
