@@ -4,7 +4,7 @@ How COCO becomes something you open in a browser, and what must stay true
 while it does.
 
 Companion documents: `WEB_API.md` (the wire protocol), `DOCKER.md` (the
-runtime), `ROADMAP.md` Track 3 (the sequence). The robotics stack itself
+runtime), `docs/history/ROADMAP_COCO2.md` Track 3 (the sequence). The robotics stack itself
 is described in `ARCHITECTURE.md`, and this document does not restate it.
 
 ---
@@ -62,7 +62,7 @@ And the product boundary for all of P0.x: no authentication, accounts,
 payments, cloud infrastructure, Kubernetes, multiplayer, public internet
 deployment, arbitrary ROS access, remote shell, user code execution,
 leaderboards or autoscaling. Those belong to the roadmap rows that own
-them (`ROADMAP.md` Track 4).
+them (`docs/history/ROADMAP_COCO2.md` Track 4).
 
 ---
 
@@ -355,7 +355,7 @@ launch.
 > navigation. P0.2 touches only the first. The first pass defaulted the
 > first switch off as though it were the second.
 
-WebRTC is parked under *Future* in `ROADMAP.md`. Binary WebSocket frames
+WebRTC is parked under *Future* in `docs/history/ROADMAP_COCO2.md`. Binary WebSocket frames
 proved adequate: zero drops in every live probe.
 
 **Every write to a browser is bounded (release pass).** Sensor frames:
@@ -422,7 +422,7 @@ things the protocol names, at velocities the server clamps. That property
 is what makes adding auth later a matter of gating the socket rather than
 auditing what a bridge might let through.
 
-**Do not expose this to the public internet.** `ROADMAP.md` P1.0 is where
+**Do not expose this to the public internet.** `docs/history/ROADMAP_COCO2.md` P1.0 is where
 that becomes a supported thing, and it is gated on authentication, TLS
 and per-session isolation — not on it happening to work.
 

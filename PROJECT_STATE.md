@@ -1,24 +1,109 @@
-# COCO 2.0 STATUS: ROBOT FROZEN / PLATFORM IN PROGRESS
+# COCO STATUS: ACTIVE — building COCO Lab
 
-**The ROBOT is final. There is no next robotics milestone.** Everything
-below describes it and still holds.
+**COCO is becoming COCO Lab** (working title): an interactive, browser-based
+robotics curriculum that runs on this real ROS 2 / Nav2 stack. The plan is
+[`docs/ROADMAP.md`](docs/ROADMAP.md); session prompts are
+[`docs/LAB_PHASES.md`](docs/LAB_PHASES.md). **Phase 0 ("make the repo tell
+the truth") is in progress. Phase 1 (Lab 1, Plan) has not started, and no
+`coco_lab` package exists yet.** The previous roadmap is archived at
+`docs/history/ROADMAP_COCO2.md`.
 
-**A productization track opened after that freeze** (`docs/ROADMAP.md`
-Track 4). P0.1 wraps the frozen robot in a browser-accessible platform:
+(Until 2026-09-29 this file was headed "COCO 2.0 STATUS: ROBOT FROZEN /
+PLATFORM IN PROGRESS". The new direction does not change the robot:
+everything below still describes it and still holds, **except where the
+CURRENT STATE section corrects it**. Measured results and known
+limitations are kept, including the bad ones.)
+
+## CURRENT STATE — 2026-09-29 (Phase 0, Milestone 0B)
+
+Labels used in this section: **(measured)** was produced by a run and is
+recorded with its evidence path. **(derived)** was computed from recorded
+evidence without a new run. **(historical)** is an earlier series, kept but
+not current. **Unverified** means claimed or suspected but not observed.
+
+| | |
+|---|---|
+| **Direction** | COCO Lab, per `docs/ROADMAP.md`: Phase 0 → 1 Plan → 2 Localise → 3 Map → 4 Search → 5 Move. The COCO 2.0 priority order is superseded |
+| **Canonical branch** | `main` on `jazzy2` = GauthamCodes/coco-robot-jazzy-2.0. `main` at `442bca0` is on the remote (pushed 2026-09-29). Twelve other remote branches still exist; their archival as `archive/*` tags is prepared and awaits approval (`docs/data/m0b_phase0/README.md`) |
+| **P03C** | **On `main`**, through merge commit `232454d` (parents `b15d445` main, `917bc59` p03c-consolidation). It brings the 24 × 18 m arena, `EpisodeSpec` (`coco_sim/episode.py`), `TargetRegion` (`coco_config/robot.py`), `platform_server` (`coco_web`) and the `/cmd_vel_gated` wiring |
+| **Tests** | **1,966 passed / 0 failed / 0 skipped** (measured in Milestone 0A on `232454d`, per package, cwd inside each package, clean ROS graph, overlay with MoveIt): coco_config 93, coco_mission 338, custom_teleop 75, coco_rl 229, coco_perception 139, coco_moveit_config 12, coco_sim 280, coco_web 575, gazebo_models 225. Milestone 0B changed documentation only |
+| **Command path — topology** | (measured, 0A, every run) `/cmd_vel_gated`: exactly **one publisher** (`cmd_vel_relay`) and **one subscriber** (`cmd_vel_arbiter`). The wheel topic has exactly **one publisher** (`cmd_vel_arbiter`). The relay no longer publishes on `/cmd_vel_nav`, so the loop is gone |
+| **Collision monitor — SLOWDOWN** | **Verified** (measured, 0A). Injected SLOWDOWN, three valid fresh-sim runs, 300 samples pooled. Wheel command p50 / p90 / p99 / max = **0.090 / 0.090 / 0.090 / 0.090 m/s** against a cap of 0.3 × 0.30 = 0.090 m/s. **0 of 300 over the cap**. `docs/data/m0a_cmdpath/README.md` |
+| **Collision monitor — STOP** | **Not re-verified.** The STOP probe (same script as C2-NAV.42/43/47) did **not** reproduce the historical STOP. The robot came to rest **0.264 m** from the wall under FootprintApproach, and STOP never fired (`stop_held: false`, 0 STOP rows). C2-NAV.43 and 47 stopped under STOP at 0.249 m (historical). **Unexplained.** C2-NAV.48's `robot_radius` 0.25 is a hypothesis, **unverified** |
+| **Fetch on the consolidated `main`** | **4 / 4 COMPLETE** (measured, 0A: FIXED red, green, blue, yellow; fresh simulator each; 17/17 runner checks each). Home error 0.103 / 0.075 / 0.108 / 0.129 m. Nav-owned rows over the monitor 0 of 2,724. Short-streak residual 1.39 %, inside the documented, unattributed 0.088–2.92 %. **Four runs is not a rate** |
+| **P03C 13/13 matrix** | (historical) 13 of 13 COMPLETE/fetch in `~/coco_runs_p03c`, on an uncommitted tree whose recorded head was `dfcbc4b`, not `917bc59`. It was measured **after** the `/cmd_vel_nav` fix (6503cd5 is an ancestor of `dfcbc4b`), not with the loop. Its report carries two errors; see *Corrections* below |
+| **Master context** | **MASTER CONTEXT PATH UNRESOLVED**: not found on disk. `docs/ROADMAP.md` and `CLAUDE.md` refer to it; no replacement was created |
+
+### Corrections to the P03C report (2026-09-29)
+
+The P03C report is kept as history: `~/coco_runs_p03c/master_matrix_report.json`
+and the P03C session's summary. Two of its statements are wrong and are not
+carried forward here.
+
+1. **"Exactly 35.8 mm lift on all 13" is wrong.**
+   - The report's `lift` field is the constant string `"35.8 mm"` on every
+     one of the 13 rows.
+   - Each run's own `mission.log` records a different ground-truth lift:
+     35.0, 35.3, 35.8, 34.9, 35.1, 34.5, 35.8, 35.7, 35.6, 35.6, 34.3, 34.5
+     and 35.5 mm, in report order.
+   - That is a range of **34.3–35.8 mm, median 35.3 mm**, and only 2 of 13
+     are 35.8 (derived: re-read from `~/coco_runs_p03c/*/mission.log`
+     on 2026-09-29; no new run).
+   - The FIXED blue row's directory is `test_fixed_blue`, not `run_fixed_blue`.
+2. **"Targets at X ∈ [6.3, 7.3]" is wrong.**
+   - The FIXED targets spawn at **x = 4.05**: measured in all four 0A FIXED
+     runs, and equal to `TARGET_ROW_X = 4.05` in `coco_config/robot.py`.
+   - The launch-file comment "Each bay ends at x=6.5" is also stale;
+     `robot.py` gives 6.2.
+
+### Known limitations — current summary
+
+The full text is under KNOWN LIMITATIONS below. Nothing there has been
+deleted.
+
+- **0. Collision monitor:** SLOWDOWN gating is verified at the wheels. STOP
+  behaviour is not re-verified (see above). The short-streak residual is
+  still unattributed.
+- **1–7:** unchanged. Severe AMCL divergence is detected, not recovered.
+  `RETURN_HOME` fails by two mechanisms. Detection latency varies 25×.
+  `--target` re-targeting does not work. The lateral verdict is a lower
+  bound. Counts are not rates. `rviz_2d_overlay_plugins` is absent.
+- **8. Stale wording.** KL8's "no Docker on the development machine" is out
+  of date: Docker is installed. An image was built and run on the
+  **unmerged** branch `claude/docker-reproducibility` (23f372c). Nothing
+  about the image has been verified on `main` in this milestone.
+- **Episodes:** `lane_4` thin-target search losses (P0.3 stage C, 8/10) are
+  still **not attributed** (`CLAUDE.md`, *Episodes*).
+
+### Unresolved
+
+- Why the STOP probe now ends under APPROACH at 0.264 m.
+- The attribution of the short-streak residual.
+- The master context's path.
+- The platform name. Candidates were checked in 0B; the choice is the
+  owner's.
+- The archive tags and remote-branch deletions (prepared, not run).
+- The fetch-video migration and the archival of coco-robot-ros2 (prepared,
+  not run).
+
+---
+
+**A productization track opened after the COCO 2.0 freeze**
+(`docs/history/ROADMAP_COCO2.md` Track 4). P0.1 wraps the frozen robot in a browser-accessible platform:
 a versioned WebSocket API, a real control interface, and a Docker
 appliance. It adds no robotics capability and is not permitted to change
 the robot — see **THE PLATFORM (P0.1)** below.
 
 | | |
 |---|---|
-| **Canonical branch** | `main` — the only branch. A fresh clone of it is sufficient |
+| **Canonical branch** | `main`. A fresh clone of it is sufficient. (This row used to add "the only branch"; twelve other remote branches exist — see CURRENT STATE) |
 | **Final commit** | the tip of `main`; `git log -1 --oneline` is the authority |
 | **Remote** | `https://github.com/GauthamCodes/coco-robot-jazzy-2.0` |
-| **Verified test count** | **829 passing, 0 failing, 0 skipped**, across eight packages with test suites (nine packages total). On `c2nav43-integration`: **997 passing, 0 failing, 0 skipped** (C2-NAV.45; was 975 at C2-NAV.43) |
+| **Verified test count** | **Current: 1,966 / 0 / 0 on the consolidated `main`** (see CURRENT STATE). Historical: **829 passing, 0 failing, 0 skipped**, across eight packages with test suites (nine packages total). On `c2nav43-integration`: **997 passing, 0 failing, 0 skipped** (C2-NAV.45; was 975 at C2-NAV.43) |
 | **Final nominal mission** | **COMPLETE.** All 16 nominal states, `attempt=1` throughout, `reason=--`, 186.7 s. Grasp physically verified from Gazebo ground truth: target lifted **35.1 mm** |
 | **Localization health** | **0 triggers** over 5,784 samples on that mission (`degraded=0` on every one) |
 | **Localization recovery** | **Detection works; severe recovery does not.** See KNOWN LIMITATIONS 1 |
-| **Command-path safety** | **Fixed on `c2nav43-integration`, pending the owner's merge.** Cut from `main`, with the C2-NAV.42 fix integrated. Raw-controller → wheel bypass rows **0** in every live test and every tour, and a held raw 0.30 m/s was stopped by PolygonStop. On `main` before the merge the gating does not reach the wheels. See KNOWN LIMITATIONS 0 and `docs/agents/C2-NAV.43_RESULTS.md` |
+| **Command-path safety** | **Current: on `main`; SLOWDOWN gating verified at the wheels, STOP not re-verified** (see CURRENT STATE). Historical row text follows. **Fixed on `c2nav43-integration`, pending the owner's merge.** Cut from `main`, with the C2-NAV.42 fix integrated. Raw-controller → wheel bypass rows **0** in every live test and every tour, and a held raw 0.30 m/s was stopped by PolygonStop. On `main` before the merge the gating does not reach the wheels. See KNOWN LIMITATIONS 0 and `docs/agents/C2-NAV.43_RESULTS.md` |
 | **Depth perception** | **Optional candidate, OFF by default.** `nav.launch.py depth_cloud:=true` plus a `perception` experiment block. See KNOWN LIMITATIONS 0 (C2-NAV.43) |
 | **Platform (P0.2 RELEASE CANDIDATE)** | Branch `p02-release-candidate` (from `coco-clean-runtime`). Codex's ten integration blockers resolved; lifecycle a stored state machine with legal edges; every browser write bounded; no topic on the wire (MJPEG at `/video/<alias>`, `web_video_server` on loopback). **5 / 5 fresh, browser-driven fetches COMPLETE** (red, blue, yellow, green headless; green `gui:=true`). Tests **0 failing, 0 skipped** (count below). Docker runtime **NOT VERIFIED**. See *P0.2 release pass* below |
 | **Platform (P0.2, second pass)** | Branch `p02-browser-experience` (from `921f6d0`; `main` does not contain P0.1). **1564 passing, 0 failing, 0 skipped**; clean build 9/9. Two missions **COMPLETE** started from the page in a real (headless Firefox) browser. Docker runtime **NOT VERIFIED**. See *P0.2, second pass* below |
@@ -332,7 +417,35 @@ graph — `HOW_TO_RUN.md`, "Test suite".
 These are the honest end of the project. They are reproducible, they are
 measured, and none of them is rounded up.
 
-**0 — C2-NAV.43 update (2026-09-17), on `c2nav43-integration`.** The
+**0 — Milestone 0A update (2026-09-28), on the consolidated `main` (`232454d`). CURRENT.**
+The fix (6503cd5, C2-NAV.42) is in `main`; nothing was re-applied and
+`cmd_vel_arbiter.py` is unchanged. Measured with `docs/data/m0a_cmdpath_run.sh`,
+one fresh simulator per run, `ROS_DOMAIN_ID=77`, in the frozen `coco_world.world`:
+
+- **topology** (every run): `/cmd_vel_gated` — 1 publisher (`cmd_vel_relay`),
+  1 subscriber (`cmd_vel_arbiter`); wheel topic — 1 publisher
+  (`cmd_vel_arbiter`); `/cmd_vel_nav` — publishers `controller_server` and
+  `behavior_server` only, subscriber `velocity_smoother` only;
+- **injected SLOWDOWN** (side wall 0.32 m, raw 0.30 m/s held; runs r01, r02,
+  r04; r03 VOID): 300 SLOWDOWN samples, wheel p50 / p90 / p99 / max
+  **0.090 / 0.090 / 0.090 / 0.090 m/s**, **0 of 300 over the 0.090 cap**;
+  control run without the wall: 0 SLOWDOWN rows, wheel 0.300;
+- **STOP probe** (`c2nav42_cmdpath.py stop`, unchanged): **STOP never fired**
+  (`stop_held: false`); FootprintApproach brought the robot to rest
+  **0.264 m** from the wall, wheels 0.0000 m/s for the last 6 s while raw
+  held 0.30 m/s. This differs from C2-NAV.43/47 (STOP, 0.249 m) and is
+  **not explained**; the `robot_radius` 0.25 explanation is a hypothesis,
+  **unverified**. **Collision STOP behaviour is therefore not verified on
+  `main`.**
+- **four FIXED fetches**: 4 / 4 COMPLETE, nav-owned rows over the monitor 0
+  of 2,724, short-streak residual 38 rows (1.39 %), still unattributed.
+
+Comparability: a new series. The v1 19/20 and C2-M5.0's 84.2 % were
+measured with the loop in place; the P03C 13/13 was measured after the fix,
+on a different harness. Evidence: `docs/data/m0a_cmdpath/README.md`. The
+entries below are kept as history.
+
+**0 — C2-NAV.43 update (2026-09-17), on `c2nav43-integration`.** (historical) The
 branch was cut from `main` and the C2-NAV.42 fix was cherry-picked after
 inspection: `d707327`, `8bf1fe4`, the gz world-path quoting, the
 owner-accepted nav2 defaults (sha256 `6f61e499…`) and the tour tooling.
@@ -617,6 +730,9 @@ kept below under KNOWN PROBLEMS.
 
 ## MILESTONE STATUS — ALL CLOSED
 
+(COCO 2.0's milestones. The project's current milestones are COCO Lab's
+phases in `docs/ROADMAP.md`; see CURRENT STATE at the top.)
+
 - **C2-M1 (observability): COMPLETE and verified.**
 - **C2-M1.5 (runtime integrity gate): COMPLETE.**
 - **C2-M1.6 (RViz presentation): COMPLETE.** Map quality classified GOOD.
@@ -636,12 +752,16 @@ kept below under KNOWN PROBLEMS.
 - **C2-M5.1 (monitor, recovery, resume): COMPLETE**, with the
   severe-divergence limitation above recorded rather than rounded up.
   **C2-M5 closed.**
-- **C2-M6 … C2-M9: scoped, not undertaken.** See `docs/ROADMAP.md`.
+- **C2-M6 … C2-M9: scoped, not undertaken.** See `docs/history/ROADMAP_COCO2.md`.
   They are a record of what was designed, not pending work.
 
 ---
 
 ## NO NEXT MILESTONE
+
+(Superseded 2026-09-29: the next milestone is set by `docs/ROADMAP.md`,
+Phase 0 then Phase 1A. The text below is kept as the COCO 2.0 closing
+record.)
 
 COCO 2.0 is finished. Any future work is a new version or a new project.
 

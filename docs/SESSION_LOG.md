@@ -4447,3 +4447,224 @@ bash docs/data/p03c_episode_run.sh ~/coco_nav_runs/p03c_next positions 4 green
 **Next milestone:** Phase 0 continuation (0B: B1–B3 roadmap install and CLAUDE.md addendum; C4/D1–D2 honest PROJECT_STATE and README; D3–D5 after approvals). Phase 1A only after Phase 0 closes.
 
 **EXACT NEXT ACTION:** after the owner approves: `cd "~/ros2_ws(personal)/src/coco-robot-ros2" && git push jazzy2 main`. Then start 0B with "Resume from the latest milestone checkpoint."
+
+---
+
+## Milestone 0B — Phase 0 closure preparation (2026-09-29)
+
+**Status:** PARTIAL. Every 0B deliverable is committed on the working branch
+`p0-consolidation-merge`. Two things are not done:
+- **Not landed on local `main`.** Your main checkout carries another agent
+  session's uncommitted `docs/SESSION_LOG.md` edit (see *Concurrent
+  activity*). A fast-forward would touch that file, so it is left to the
+  owner.
+- **One disposable item is not cleaned.** The permission classifier denied
+  the `/tmp/launch_params_*` sweep.
+
+Nothing public was changed.
+
+**Repository**
+- local main: `442bca0`
+- remote main: `jazzy2/main` `442bca0`. Pushed from this machine
+  2026-09-29 01:54:44 +0530, after 0A closed and not by this session
+  (remote-tracking reflog). 0 ahead / 0 behind.
+- P03C: in `main` through merge `232454d` (parents `b15d445`, `917bc59`).
+  `p03c-consolidation` `917bc59` is an ancestor of `main`.
+- `p0-consolidation-merge`: this commit, a child of `442bca0`, so
+  `main` → this commit is a fast-forward.
+- working tree (main checkout):
+  - `M CLAUDE.md`: the owner's 14-line "Multi-agent protocol" edit.
+  - `M docs/SESSION_LOG.md`: another session's +129-line "Milestone 0B-H" entry.
+  - Untracked: `ROADMAP.md`, `AGENTS.md`, `.codex/`,
+    `docs/agents/{DECISIONS,HANDOFF,RESULTS,TASK}.md`,
+    `docs/RSE_ASSIGNMENT_PLAN_V2.md`, `P02_NOTE_FOR_CODEX.md` and
+    `tatus --short`.
+  - This session changed none of them.
+
+**Documentation**
+- ROADMAP: `docs/ROADMAP.md` is the new COCO Lab roadmap, byte-identical to
+  the owner's file (sha256 `09c65bed…c19e`).
+- Old roadmap: kept byte-for-byte as `docs/history/ROADMAP_COCO2.md`
+  (`git mv`; identical to `442bca0:docs/ROADMAP.md`).
+- `docs/history/README.md` records the planner-framing correction and which
+  references still point at old-roadmap sections.
+- LAB_PHASES: `docs/LAB_PHASES.md`, byte-identical to
+  `~/ros2_ws(personal)/src/LAB_PHASES.md` (sha256 `622c9db3…2d735`).
+- Links: every rendered link in the changed docs resolves (54 checked).
+  The one unresolved path, at LAB_PHASES:162, is inside a fenced prompt:
+  it is the README banner's own root-relative text.
+- PROJECT_STATE:
+  - Header is now "ACTIVE — building COCO Lab", with the old header quoted.
+  - New section: CURRENT STATE (2026-09-29), covering direction, canonical
+    branch, P03C, tests, command-path topology, SLOWDOWN verified, STOP not
+    re-verified, fetch 4/4, P03C matrix, and the master context.
+  - Corrections to the P03C report.
+  - Known-limitations summary and the unresolved list.
+  - KL0 gets a new, current "Milestone 0A update" at its head. The C2-NAV.43
+    text and the original C2-M5.0 text stay below it as history.
+  - The milestone-status sections are marked superseded, not deleted.
+- README:
+  - The status banner from LAB_PHASES is at the very top.
+  - Planner claim corrected in the results table and in "A note on the
+    planner name". The 6.2 % is SmacPlanner2D vs NavFn (`use_astar: false`),
+    an implementation difference, not A\* beating Dijkstra. The numbers are
+    unchanged, the old wording is quoted as corrected, and Lab 1 is named
+    as where it will be shown.
+  - Tests row: 1,966 (0A), with 829 kept as the freeze figure.
+  - Collision-monitor bullet: SLOWDOWN verified, STOP not re-verified.
+  - Development-history table: a COCO Lab row.
+  - `docs/RESULTS.md`: same planner correction, plus a dated correction
+    note; the measured table is unchanged.
+- CLAUDE: the LAB_PHASES B3 addendum is appended verbatim (+27 / −0). Its
+  9 rules cover all 12 standing rules in the 0B prompt. The owner's
+  uncommitted edit is not in this commit; it survives a fast-forward
+  (3-way apply, disjoint hunks). The file's older "COCO 2.0 is frozen"
+  lines are unchanged, because edits are additive only.
+- AGENTS: not a mirror of CLAUDE.md (it is a 248-line multi-agent
+  protocol), so it gets no addendum. Untracked and untouched.
+- Master context: **MASTER CONTEXT PATH UNRESOLVED.** Re-searched for §45 /
+  "master context" in the repo, worktrees, `~/Downloads`, `~/Documents`,
+  `~/Desktop`, `~/.claude/plans`, the Claude paste cache, the Antigravity
+  and Antigravity-CLI brains, and `~/.codex`. Every hit is a reference to
+  the 0A search. No replacement was created.
+- Also repointed: `docs/PRODUCT_ARCHITECTURE.md`'s four citations of
+  old-roadmap sections now name `docs/history/ROADMAP_COCO2.md`.
+
+**Collision monitor**
+- current topology (measured, 0A):
+  - `/cmd_vel_gated`: 1 publisher (`cmd_vel_relay`), 1 subscriber
+    (`cmd_vel_arbiter`).
+  - Wheel topic: 1 publisher (`cmd_vel_arbiter`).
+- slowdown evidence (measured, 0A): 300 SLOWDOWN samples, wheel p50 / p90 /
+  p99 / max = 0.090 / 0.090 / 0.090 / 0.090 m/s. 0 over the 0.090 cap.
+- STOP behaviour: **not re-verified.** The probe stopped 0.264 m from the
+  wall under FootprintApproach, and STOP never fired. Historical: STOP at
+  0.249 m.
+- unresolved: why the probe now ends under APPROACH (the `robot_radius`
+  0.25 hypothesis is unverified), and the unattributed short-streak
+  residual. `cmd_vel_arbiter.py` untouched.
+
+**Corrections recorded (derived, from recorded evidence, no new run)**
+- P03C lift: the report's `lift` field is the constant "35.8 mm" on all 13
+  rows. The runs' own `mission.log` files record 34.3–35.8 mm, median 35.3,
+  with 35.8 in only 2 of 13.
+- P03C target location: the report says "X ∈ [6.3, 7.3]", but the targets
+  spawn at x = 4.05 (0A, and `TARGET_ROW_X`).
+- P03C comparability: the 13/13 was measured after the `/cmd_vel_nav` fix,
+  not with the loop. This contradicts LAB_PHASES C3's premise.
+- 0A's cleanup note: `/var/crash` does not need sudo. It is sticky and
+  world-writable, and the dumps were owned by `gautham`.
+
+**Cleanup** (`docs/data/m0b_phase0/README.md` §5 has the full table)
+- deleted by this session: `~/coco_consolidation_ws`, **5,127,285 B**. It
+  was a symlink overlay of the clean `917bc59` (ancestor of `main`), with 0
+  dangling links, no process using it, and it can be rebuilt with
+  `scripts/build_overlay.sh`.
+- removed by another session, not this one:
+  - `~/coco_p03c_ws`: 4,292,602 B when this session measured it. It was
+    already classified DELETE: symlinks of the clean `dfcbc4b`.
+  - all six `/var/crash` dumps, 120,765,102 B. Three were COCO-stack
+    crashes that this session would have kept.
+- retained:
+  - UNKNOWN: `~/Downloads/Antigravity.tar.gz` (172,322,487 B). It is the
+    Antigravity IDE, which is installed nowhere. `agy` 1.2.12 works but is
+    the separate CLI.
+  - UNKNOWN: `tatus --short` (19,011 B). An accidental `less` save, but the
+    only durable record of an abandoned CLAUDE.md stub; its blob
+    `7f93a36` is dangling.
+  - ARCHIVE: `.codex/worktrees/c2nav0-implementation` (219,462,730 B).
+    - It is orphaned: its gitdir was pruned.
+    - 64 of 65 post-checkout files are already in git history.
+    - `.navbench/c2nav35` (the patched `nav2_amcl` overlay and its logs)
+      is not in git.
+    - `.codex/` is user-owned.
+  - KEEP for now: the Brave cache (1,696,777,591 B), because Brave is
+    running (PID 3747).
+  - Not cleaned: `/tmp/launch_params_*` (837 files, 4,109,543 B from the 0A
+    runs; the classifier denied the sweep). `~/.local/bin/agy.*.old`
+    (218,132,688 B) is tool-managed.
+- protected: e-Yantra `~/ros2_ws` (eYRC_26-27_Strata-Cobot). This session
+  modified nothing under it; only read-only, home-wide `find` scans
+  traversed it. No new e-Yantra location
+  was found by this session. The other session's entry lists further eYRC
+  files in `~` and `~/Downloads`; this session did not verify them.
+- disk before: 36,522,295,296 B free (df, session start)
+- disk after: 36,751,978,496 B free (df, 02:12 IST). **+229,683,200 B, of
+  which 5,127,285 B is this session's deletion.** The rest is the
+  concurrent session's cleanup and other machine activity, so no
+  "recovered by 0B" figure beyond 5,127,285 B is claimed.
+
+**Concurrent activity**
+- Codex (`codex resume`, PID 9146) and `agy` (PID 9641) ran throughout.
+- An uncommitted "Milestone 0B-H — Canonical home/workspace cleanup" entry
+  (+129 lines) appeared in the main checkout's `docs/SESSION_LOG.md` at
+  02:06:43. The Antigravity-CLI brain `314eefc7…` read the 0A log at 01:58,
+  which suggests `agy` wrote it (inference, not verified).
+- That entry lists `~/coco_consolidation_ws` as "Preserved", and this
+  session had already deleted it. The two entries must be merged when this
+  branch lands.
+
+**Remote actions awaiting approval** (exact commands in
+`docs/data/m0b_phase0/README.md`)
+- `git push jazzy2 main`, once `main` has fast-forwarded to this commit.
+- 12 annotated `archive/<branch>` tags (commands prepared, not created),
+  then `git push jazzy2 'refs/tags/archive/*'`.
+- Delete 11 remote branches after the tags. `claude/docker-reproducibility`
+  and `main` are kept.
+- The `m6-fetch-demo` release on this repo at `9b1ed7f`, with
+  `coco_fetch_demo.mp4` (8,805,381 B, sha256 `7a2f761e…5674`), then the
+  one-line README pointer change.
+- The coco-robot-ros2 pointer banner, added not replaced (the repo cites an
+  IEEE ICRM 2025 paper), then its archival.
+
+**Name decision:** waiting on the owner. All eight candidates are free under
+GauthamCodes. Repositories with the name in their name: cutaway-robotics 0,
+coco-robot-lab 0, robotlab-live 0, botbench-lab 0, open-robotics-lab 4,
+coco-lab 271, ros-lab 1,660, nav-lab 1,933. The factual comparison is in the
+evidence file.
+
+**Video migration:** prepared, not run.
+- The current asset is the only copy anywhere under `~`.
+- Proposed: release `m6-fetch-demo` on coco-robot-jazzy-2.0 at `9b1ed7f`.
+- README line 59 is the only pointer.
+
+**Tests:** not re-run. This commit changes only `.md` files, and no test
+reads any of them (checked by grep over every package's `test/`). The count
+therefore stands at 0A's measured 1,966 / 0 / 0.
+
+**Unverified**
+- The STOP-probe change of mechanism.
+- The short-streak residual's cause.
+- Which process wrote the 0B-H entry and removed `/var/crash` and
+  `~/coco_p03c_ws`.
+- Whether the Docker image works on `main`.
+
+**Decisions waiting on the owner**
+1. Land this branch: merge the two SESSION_LOG entries, then fast-forward
+   `main`.
+2. Approve `git push jazzy2 main`.
+3. Approve the archive tags, then the 11 remote deletions.
+4. Choose a name.
+5. Approve the video migration, then the coco-robot-ros2 banner and
+   archival.
+6. Decide the retained items: the Antigravity IDE tarball, `tatus --short`,
+   the Codex worktree's `.navbench`, the Brave cache and
+   `/tmp/launch_params_*`.
+7. Give the master context's path, or drop B2.
+
+**NEXT MILESTONE:** Phase 1A — coco_lab core and proofs. Start it only after
+Phase 0 closes: this branch on `main` and pushed, the tags pushed, and the
+name decided.
+
+**EXACT NEXT ACTION:** in the main checkout, once the other session has
+finished:
+1. Save the other session's entry:
+   `git diff docs/SESSION_LOG.md > ~/coco_0bh_entry.patch`
+2. Restore the file: `git checkout -- docs/SESSION_LOG.md`
+3. Set CLAUDE.md aside:
+   `git stash push -m m0b-claude -- CLAUDE.md`
+4. Fast-forward: `git merge --ff-only p0-consolidation-merge`
+5. Re-apply your CLAUDE.md edit by SHA:
+   `git stash apply <sha of m0b-claude>`, then drop that stash entry.
+6. Paste the 0B-H entry back in above or below this one, and commit it.
+7. `git push jazzy2 main`

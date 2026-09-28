@@ -94,11 +94,23 @@ A gate:
 | **GridBased** (SmacPlanner2D, A\*) | **3.165** | 5.5 | 62 | 0.474 |
 | NavFn (Dijkstra) | 3.373 | 5.6 | 134 | 0.496 |
 
-A\* returns a **6.2 % shorter path at the same planning cost**, in half
-the waypoints. Note the clearance column goes the other way — NavFn's
-path stays 2 cm further from obstacles here. Both are far outside the
+`SmacPlanner2D` returns a **6.2 % shorter path than NavFn at the same
+planning cost**, in half the waypoints. Note the clearance column goes the
+other way — NavFn's path stays 2 cm further from obstacles here. Both are far outside the
 0.20 m robot radius, so it does not matter in this arena, but it is the
 honest result rather than a clean sweep.
+
+**Correction (2026-09-29, Phase 0).** This result was previously read, here
+and in the README, as A\* beating Dijkstra. The numbers stand; that reading
+does not. The comparison is between two planner *implementations* —
+`SmacPlanner2D` against `NavfnPlanner` with `use_astar: false` — and with an
+admissible heuristic and identical edge costs A\* and Dijkstra return paths
+of equal cost. The gap comes from how each planner extracts and costs its
+path: NavFn descends the gradient of a potential field (`calcPath`, the
+mechanism in `docs/DESIGN_DECISIONS.md`), `SmacPlanner2D` back-traces its
+node chain under its own traversal-cost model. How the 6.2 % divides between
+those causes is **not measured**; COCO Lab's Plan lab is scoped to measure
+and show it (`docs/ROADMAP.md`, Lab 1).
 
 ### Ten goals on the rebuilt stack
 

@@ -788,3 +788,30 @@ affected package's tests.
 At the end of every session, append a checkpoint to `docs/SESSION_LOG.md`:
 what was built, what was **measured**, what remains **unverified**, and the
 exact next command to run. Follow the format already in that file.
+
+## COCO Lab direction (added 2026-09-28)
+
+COCO is becoming COCO Lab (working title): an interactive, browser-based
+robotics curriculum running on this ROS 2 stack. Plan: docs/ROADMAP.md.
+Session prompts: docs/LAB_PHASES.md. The master context's §45 priority
+order is superseded; everything else in it still holds.
+
+Platform rules, in addition to everything above:
+1. coco_lab never imports rclpy. A test enforces it.
+2. The browser never names a topic, and never commands the robot except
+   through coco.v1 intents added additively.
+3. No new wheel publisher. Lab planners move the robot only via Nav2
+   FollowPath, through the existing command chain into cmd_vel_arbiter.
+4. Every mode is labelled on screen: Replay (recorded real run,
+   provenance shown), Sketch (browser model, measured fidelity shown),
+   Live (local stack).
+5. Every claim shown to a learner is backed by a property test or a
+   (measured) result, and cites it. Theorems are tested as properties,
+   not asserted.
+6. Comparisons hold inputs fixed: map, start, goal, recording, seed.
+7. Trace and bundle schemas are versioned; breaking changes bump the
+   major version.
+8. The TypeScript UI never re-implements an algorithm. It renders traces
+   and asks coco_lab.
+9. No new lab starts until the previous one has a public URL, a video and
+   a write-up. A lab's first version ships at most five algorithms.
