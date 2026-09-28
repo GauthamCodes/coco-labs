@@ -3768,6 +3768,382 @@ cd ~/ros2_ws\(personal\)/src/coco-robot-ros2
 git checkout main && git merge --ff-only c2nav49-integration
 ```
 
+---
+
+## 2026-09-20 — P0.2, the platform becomes usable
+
+**Built:**
+
+- `coco_web/mission_view.py` — the executive's state, translated. Reads
+  all **twelve** fields `/mission/state` carries; P0.1 read two and
+  looked for three (`colour`, `target`, `detail`) that the line has never
+  contained, so the mission colour on the wire was permanently null.
+  Carries both vocabularies: `phase` (ten product words) and `state` (the
+  executive's own name). `RECOVERY`/`RELOCALIZE` keep the phase of the
+  state they are retrying; `ABORT` with `OPERATOR_ABORT` is STOPPED, not
+  FAILED. Constants duplicated from `coco_mission` (importing it would
+  close a cycle) with an `ast` drift test in **both** directions.
+- `telemetry.parse_grasp_status` — `/grasp/status` is the one status
+  topic whose values contain spaces (`phase=pick:hover above target`), so
+  `parse_kv` silently truncates it. Slices to the next known key instead.
+- `coco_web/streams.py` — per-client subscriptions, rates and the bounded
+  queue. `subscribe`/`unsubscribe`/`set_stream` honoured. Default set is
+  P0.1's, which is what let the protocol stay `coco.v1`.
+- `coco_web/binary.py`, `imaging.py` — self-describing binary frames for
+  LiDAR, camera and depth. No ROS message on the wire; no topic in any
+  header. Nine malformed shapes tested.
+- `coco_web/metrics.py` — measured rates, drops, CPU, mission latency, at
+  `/api/metrics` and in telemetry.
+- `session.py` — a second axis: `lifecycle` (CREATED…FAILED) beside
+  `state` (readiness), so `/healthz` stays 200 during a mission. Plus
+  `connection`, and pilot/viewer drive arbitration.
+- `web/index.html`, `app.js`, `style.css` — Play and Engineering modes
+  rebuilt. The world view draws the real ramp, platform and target lanes
+  from `coco_config`. The hard-coded phase list and interpolated
+  percentage are **deleted**.
+- `gazebo_models/scripts/ros_clean.sh` — gained `platform_serve[r]`.
+
+**Measured (this session, one machine, one sitting):**
+
+- **A complete green fetch driven entirely through the browser
+  protocol**: all 16 states in order, `result=fetch`, **170.4 s**.
+- Telemetry **1 714 frames, 0 dropped**, peak socket buffer **0 B**.
+- Mission-state latency **18.4–82.7 ms** (1 714 samples in that run).
+- LiDAR binary frame **668.8 bytes** mean, **10.0 Hz**.
+- Camera **3 467 bytes** mean JPEG (q60, 320×240), **6.17 fps** under a
+  10 fps cap. Depth **19 frames in 5 s** with `depth_topic` set, **0**
+  without it.
+- Platform CPU **67–75 % of one core**.
+- `/diff_drive_controller/cmd_vel` **publisher count 1** (`cmd_vel_
+  arbiter`); the platform's only velocity publisher is `/cmd_vel_teleop`;
+  `-p teleop_topic:=/diff_drive_controller/cmd_vel` still refuses to
+  start with `UnsafeTopicError`.
+- Drive path: browser `drive` moved the wheels (40 commands, max
+  0.15 m/s); `stop` zeroed them; a second client's `drive` refused
+  `not_in_control` while its **STOP was honoured and reached the
+  wheels**; disconnecting the last client ended stopped. Positive control
+  honoured — the recorder saw **97** wheel commands.
+- Compatibility, both directions: a text-only client received **51 JSON
+  scans and 0 binary frames**; a binary client **50 binary frames and 0
+  duplicate JSON**.
+- Tests **1334 passing, 0 failing, 0 skipped** (was 1139). `coco_web`
+  116 → 291, `gazebo_models` 178 → 181. Clean 9/9 build.
+
+**Unverified:**
+
+- **The browser was never driven.** The Chrome extension was not
+  connected on this machine. The page is covered by static asset tests
+  (73 element ids used, 73 present; every frame type it sends is in the
+  server's schema; no ROS topic string in it) and by a WebSocket client
+  exercising the same server paths. **Rendering, layout and interaction
+  are unverified.**
+- **Docker, still.** Not installed. No port and no dependency was added
+  by P0.2. `docs/DOCKER.md` carries the exact procedure.
+- Camera/depth behaviour with **two simultaneous viewers** — the
+  shared-encode path is written and unit-tested but was never exercised
+  by two real clients at different settings.
+
+**Found, and fixed, by the live run:**
+
+- **P0.2's own bug.** `wants()` gated binary delivery on
+  `BINARY_STREAMS` (camera, depth) while `push_sensors` also framed
+  **lidar** as binary — so a client declaring `binary: false` got binary
+  lidar frames, which is exactly the compatibility guarantee the design
+  claims. Surfaced as a `UnicodeDecodeError` in a probe calling
+  `json.loads` on bytes. Split `BINARY_CAPABLE` from `BINARY_STREAMS`;
+  six tests pin it.
+- **A P0.1 gap.** `ros_clean.sh` had no `platform_server` pattern — the
+  node was added to a launch file and not to the sweep, the same rule
+  `mission_hud` already broke. An orphan holding :8080 was observed and
+  the next launch died `Address already in use`.
+
+**Open:**
+
+- **One of two mission attempts aborted**, reaching `RETURN_HOME` (13 of
+  16 states, including a verified grasp) and then failing
+  `RETURN_FAILED` with `planner_server: GridBased plugin failed to plan
+  from (7.97, 1.15) to (0.00, 0.00): "Start occupied"` — the robot's
+  believed pose inside an occupied cell after the descent. A
+  localisation outcome upstream of the web layer, which publishes no TF
+  and no goals during a mission. **Two runs is not a rate** and this does
+  not re-measure M6.
+- **`/healthz` 200 does not mean localised.** Two missions started in
+  that window aborted instantly with `NAVIGATION_FAILED` and
+  `bt_navigator` logging *"Initial robot pose is not available"*. The
+  bring-up script now waits for `map → odom`; the platform does not, and
+  arguably should expose that wait.
+- **AMCL dropped every scan** in one bring-up —
+  *"timestamp earlier than all the data in the transform cache"* —
+  alongside `robot_state_publisher: Moved backwards in time`. One
+  `/clock` publisher, one bridge, sim time advancing, so **not** the
+  documented stale-clock failure. Not diagnosed further; out of scope.
+- `<ws>/install` still cannot launch gz — the half-installed
+  `turtlebot3_teleop` (egg-link, no package marker) makes
+  `GazeboRosPaths.get_paths()` throw. P0.2 worked around it with a fully
+  isolated overlay at `/home/gautham/coco_p02_overlay`, built with
+  `AMENT_PREFIX_PATH` unset first, because a login shell on this machine
+  leaks another workspace onto the path and colcon bakes that chain into
+  the overlay's own `setup.bash`.
+
+**Next:**
+
+```bash
+# One command. It now sanitises AMENT_PREFIX_PATH first (a stray
+# half-installed package on it kills every gz launch) and waits for
+# map->odom after /healthz, because 200 does not mean localised:
+cd <repo> && ./scripts/run_platform.sh --native
+
+# then OPEN http://localhost:8080 IN A BROWSER and verify the UI --
+# the one thing P0.2 could not check. Specifically:
+#   Play mode draws the ramp, platform and four target lanes
+#   the joystick drives and STOP halts
+#   "show camera" starts frames; unticking stops them
+#   picking a colour and pressing Start advances the step counter
+#   switching to Engineering shows in/out rates and drops
+```
+
+If the simulator will not start, the cause is almost certainly a
+half-installed package on `AMENT_PREFIX_PATH` rather than anything in
+this repo — check with `printf '%s\n' "$AMENT_PREFIX_PATH" | tr : '\n'`
+and look for a prefix whose `share/ament_index` is missing.
+
+### Addendum, same session — two bring-up bugs found by running the entry point
+
+Both pre-existing in P0.1's `scripts/run_platform.sh` and
+`docker/entrypoint.sh`, both found by actually invoking the documented
+command rather than reading it.
+
+1. **`AMENT_PREFIX_PATH` was inherited.** ros_gz_sim's
+   `GazeboRosPaths.get_paths()` enumerates every package on it, so one
+   half-installed entry anywhere — here a stray `turtlebot3_teleop`, an
+   egg-link with no package marker — killed every gz launch with
+   *"package 'turtlebot3_teleop' not found"*. Two bring-ups were lost to
+   it before the error was recognised, because it names a package this
+   repo does not use.
+
+2. **`| grep -q` under `set -o pipefail` fails when it MATCHES.**
+   `grep -q` exits on the first match, closing the pipe; `ros2 topic
+   info` then dies of EPIPE (Python exits **120**) and `pipefail`
+   propagates that. **Measured: exit 0 without pipefail, exit 120 with
+   it, on the same matching input.** So the readiness wait never broke
+   out: `run_platform.sh --native` sat at `[coco] simulator…` for
+   **13+ minutes** with a robot that had been publishing odometry the
+   whole time. `docker/entrypoint.sh` had the identical line in the
+   function that sequences the simulator before the mission stack.
+
+   **After dropping `-q`: 15 seconds** from simulator launch to mission
+   stack launch (09:58:59 → 09:59:14), then `/healthz` 200. The fix is
+   `| grep PATTERN >/dev/null`, so grep drains the stream and the writer
+   never sees EPIPE.
+
+   The localisation wait added earlier in this same session had the bug
+   too, copied from the line above it — which is the argument for
+   `coco_rl/test/test_platform_scripts.py` asserting no `| grep -q`
+   survives in a script that sets pipefail, rather than a comment.
+
+**Verified after the fixes:** `./scripts/run_platform.sh --native`
+launches the simulator, waits 15 s, launches the mission stack, reports
+`drivable` at `/healthz` 200 and then waits for `map -> odom`.
+
+## 2026-09-22 — Clean COCO runtime: `turtlebot3_teleop` was never a COCO dependency
+
+Branch `coco-clean-runtime`, from `p02-browser-experience` @ `8991249`
+(the platform the success condition needs — `mission.launch.py
+platform:=` and `:8080` — exists only there; `main` d317d85 has the old
+rosbridge panel). No Nav2, PolygonStop, DWB, costmap, AMCL, goal or
+depth-fusion change.
+
+**The symptom, reproduced first.** A `bash --noprofile --norc` started
+from the developer's terminal, `source /opt/ros/jazzy/setup.bash`, the
+main checkout's `setup_env.sh`, then the user's exact command:
+`ros2 launch gazebo_models full_world_robo.launch.py traverse:=true
+gui:=true` → exit **1**, `package 'turtlebot3_teleop' not found`.
+
+**Root cause — environmental, not in this repo. Measured:**
+
+1. **No COCO → TurtleBot edge exists.** Every `package.xml`, every launch
+   file, `setup.py`, `CMakeLists.txt` and YAML value was audited; the
+   only mentions are comments (nav2_params.yaml's provenance). Every
+   package any COCO launch file looks up is declared.
+2. **The trace:** `full_world_robo.launch.py:102` includes ros_gz_sim's
+   `gz_sim.launch.py`, whose `launch_gz` (an `OpaqueFunction`, line 180)
+   starts with `GazeboRosPaths.get_paths()`. That lists every package on
+   `AMENT_PREFIX_PATH` (`ros2pkg.api.get_package_names` →
+   `ament_index_python.get_resources`, `os.listdir`) and resolves each
+   (`get_package_share_directory` → `get_resource`, `os.path.isfile`). A
+   marker that is a **dangling symlink** is listed and not resolvable.
+3. **`<ws>/install` put 2 such markers on the path** (colcon's own
+   `_local_setup_util_sh.py`, asked directly): `turtlebot3_teleop` and
+   `red_ball_nav`, both `--symlink-install` markers pointing into
+   `/home/gautham/ros2_ws/build/...` — the workspace's pre-rename path.
+   Installed 2026-07-29 / 07-21 and never rebuilt; the COCO packages were
+   rebuilt 2026-09-19 and re-pointed. colcon orders `turtlebot3_teleop`
+   first, so it is the one named. This matches C2-NAV.49's count of 2.
+   (My first replay said 8; it added every install dir with a `share/`,
+   which local_setup does not. Retracted.)
+4. **Correction to the repo's notes:** "an egg-link with no package
+   marker" was wrong. A prefix with NO marker is never listed and is
+   harmless — `turtlebot3_node` / `turtlebot3_example` sat in the same
+   install with none. Pinned in `test_no_turtlebot_dependency.py`.
+5. **Two contamination paths from `$HOME/ros2_ws/install`** (now an
+   unrelated e-Yantra workspace: `ur_description`,
+   `eyantra_kepler_colony`, `ebot_description`, `algorithms`):
+   `<ws>/install/setup.bash:25` froze it into the overlay's underlay
+   chain at build time, and `~/.bashrc:149` exports it into every
+   terminal — which `bash --noprofile --norc` does NOT clear.
+
+**Built:**
+
+- `setup_env.sh` — (a) removes every entry under an inherited non-ROS
+  ament/colcon prefix from nine path-like variables before sourcing ROS
+  (`COCO_PRESERVE_PATH=1` opts out, the knob `run_platform.sh` already
+  had); (b) sources the overlay's `local_setup.bash`, not `setup.bash`;
+  (c) finds `moveit_prefix` in the source workspace when `COCO_WS` points
+  at an isolated overlay; (d) runs `scripts/check_ament_path.py`, which
+  names every listed-but-unresolvable package. Warns; never edits.
+- `scripts/build_overlay.sh [DEST]` — this repo only (`--base-paths`),
+  clean package path, `--symlink-install`.
+- Tests: `gazebo_models/test/test_no_turtlebot_dependency.py` (25) and
+  `coco_rl/test/test_setup_env.py` (18). Swapping the old `setup_env.sh`
+  back in fails 3 of the first 8 (underlay leak, no dangling report,
+  MoveIt lost); the pre-sanitise version fails 8 of 18.
+
+**A wrong turn, measured and reverted:** `build_overlay.sh` first
+defaulted to a COPYING install (so a moved tree could not dangle).
+44 `coco_rl` tests then failed (34 failed, 10 errors), all
+`FileNotFoundError` on
+`<install>/coco_sim/lib/python3.12/site-packages/worlds/yard_params.yaml`
+— `coco_sim/yard.py:103` resolves `worlds/` from its source file.
+`--symlink-install` is now required and tested.
+
+**Measured:**
+
+- Tests **1607 / 0 / 0** on `~/coco_ws_build`, per package, cwd inside,
+  clean graph: coco_config 70, custom_teleop 75, coco_rl 216,
+  coco_perception 139, gazebo_models 206, coco_moveit_config 12,
+  coco_sim 55, coco_mission 317, coco_web 517. (1564 + 25 + 18.)
+- Overlay `~/coco_ws_build`: 9 packages, 16.0 s, underlay chain
+  `/opt/ros/jazzy` only, 0 dangling symlinks, 459 packages enumerated,
+  0 unresolvable, `GazeboRosPaths.get_paths()` OK.
+- Environment after, same inherited terminal (4 e-Yantra entries in):
+  `AMENT_PREFIX_PATH` = MoveIt prefix + 9 COCO + `/opt/ros/jazzy`;
+  0 entries under `$HOME/ros2_ws/` and 0 turtlebot entries across nine
+  variables; `gazebo_models`, `coco_mission`, `coco_web` resolve from
+  `~/coco_ws_build`.
+- **Live, three fresh simulators, green, browser-driven** (headless
+  Firefox, `scripts/browser_check/live.py`); evidence and the full table
+  in `docs/data/clean_runtime/`:
+  - Runs 1 and 2 — the user's exact commands, `gui:=true`: Gazebo server
+    + GUI as one tree, controllers active 7 s / 10 s after launch,
+    `/healthz` 200 10 s after the mission launch, Nav2 lifecycles active,
+    0 turtlebot mentions and 0 `[ERROR]` in `sim.log`. Both climbed,
+    found, approached and grasped (lift **35.8 / 34.8 mm**, ground truth),
+    descended — and **both ABORTED `RETURN_FAILED`**: `planner_server`
+    `"Start occupied"` ×3 from (8.00, 1.17) and (7.87, 1.25), the foot of
+    the ramp, after ~17 s of return driving under PolygonSlow/Limit.
+  - Run 3 — `live_run.sh` unmodified, `gui:=false`: **COMPLETE,
+    `result=fetch`, `attempts={}`**, all 16 states on the page, lift
+    35.2 mm, `place finished: placed`.
+  - Safety, all three: STOP with W held → first zero 16.2 / 3.8 / 3.0 ms;
+    browser SIGKILLed mid-drive → first zero 75.5 / 89.2 / 92.4 ms; moving
+    commands > 600 ms after either: 0. One publisher on
+    `/diff_drive_controller/cmd_vel` (`cmd_vel_arbiter`) throughout; the
+    platform's only velocity publisher is `/cmd_vel_teleop`. 8/8 hostile
+    frames refused. 0 dropped frames. Orphans after teardown, 55
+    `ros_clean.sh` patterns: 0.
+
+**Correction to P0.2's addendum** (above, not edited): its tip "look for a
+prefix whose `share/ament_index` is missing" finds the harmless case. The
+fatal one is a marker that EXISTS as a dangling symlink;
+`python3 scripts/check_ament_path.py` finds it.
+
+**NOT established:** why the GUI runs fail the return leg. GUI 0/2 vs
+headless 1/1 is three runs, not a rate, and P0.2's first pass saw the
+same `Start occupied` headless (1 of 2). It is Nav2 territory; nothing
+was investigated or tuned.
+
+**Unverified:** the user's own terminal (this ran from the job's shell,
+which carries the same `~/.bashrc` exports); `<ws>/install` itself is
+untouched and still cannot launch Gazebo; one completed fetch is not a
+rate; the GUI return-leg failure is unexplained.
+
+**Next command** (the configuration that completed; `gui:=true` also
+launches cleanly but 0 of 2 fetches got home with it):
+
+```bash
+export COCO_WS="$HOME/coco_ws_build"
+source <repo on coco-clean-runtime>/setup_env.sh
+ros2 launch gazebo_models full_world_robo.launch.py traverse:=true gui:=false
+ros2 launch coco_mission mission.launch.py platform:=true rviz:=false   # 2nd terminal
+# browser: http://localhost:8080 -> pick a colour -> Start
+```
+
+## 2026-09-22 — P0.2 release pass: Claude + Codex integrated, release candidate
+
+Branch `p02-release-candidate`, from `coco-clean-runtime` @ `b32539e`.
+No robot, Nav2, arbiter, safety-allowlist or perception code changed;
+`docs/RSE_ASSIGNMENT_PLAN_V2.md` untouched; protocol stays `coco.v1`.
+
+**Built.**
+
+- Codex: 10 of its 13 listed commits were already on the branch;
+  `c0d2f11` cherry-picked (`-x`); `09a77aa` ported selectively (decoder
+  strictness + stale-socket guard into `web/frame.js` / `app.js`, not the
+  `Transport` class); `fcefc1b` (evidence/replay) and the handoff commit
+  left on `codex/p02-hardening`.
+- All ten of Codex's caller-side blockers resolved: stored lifecycle with
+  explicit `LIFECYCLE_EDGES` (health never moves it; only COCO's simulator
+  loss fails it); every browser write bounded (state streams superseded,
+  4 MiB abandon, STOP at receipt); per-client `dropped`; close path
+  tested; padded rows tested at the ROS boundary; MJPEG at
+  `/video/<alias>` with `web_video_server` on loopback and 8080 the only
+  published port; `mission.timing` with named clocks, `changed_at` null;
+  telemetry kept pinned (explicit decision); keepalive 10/10 with a
+  startup check; decoder + stale guard ported to the page.
+- Harness: joystick drag, STOP hit-tests, MJPEG check, measured RTF,
+  `COCO_LIVE_GUI`, a dedicated ROS domain (61), a session-sweep teardown.
+
+**Measured.**
+
+- Tests, per package, cwd inside, clean ROS graph on a quiet machine:
+  coco_config 70, custom_teleop 75, coco_rl 218, coco_perception 139,
+  gazebo_models 206, coco_moveit_config 12, coco_sim 55, coco_mission
+  317, coco_web 575 = **1667 / 0 / 0**. Clean build 9/9.
+- **Under load, one timing test fails**: after a foreign COCO stack
+  (`~/c2nav49_overlay`, `gui:=true`, RViz) started at ~21:02, load average
+  43 on 12 cores, `gazebo_models/test/test_cmd_vel_wiring.py::TestLiveGraph::
+  test_the_relay_output_is_restamped_and_unaltered` failed 8 of 9 runs
+  (9 of the 10 messages it needs inside its window; private DDS domain, so
+  not the foreign graph). No code it tests changed. Not the documented
+  `TestTheOldLoopIsDetected` flake.
+- Slow client (tests): peer that stopped reading, 200 ticks, 3 runs —
+  its buffer 74–89 kB, healthy neighbour 200/200 frames, longest tick
+  40–42 ms, STOP from the stalled client reached the wheels.
+- **Live, 5 / 5 browser-driven fetches COMPLETE**, fresh simulator each:
+  red, blue, yellow, green headless; green `gui:=true`. Lift 35.6–36.0 mm,
+  all `placed`, `attempts={}`; 16/16 states on the page; transitions
+  9.6–101.7 ms to the DOM; RTF 0.455–0.506; joystick exercised (first
+  wheel motion 72.8–161.2 ms); STOP with W held and browser SIGKILL both
+  0 moving commands after; 1 wheel publisher; 8/8 hostile refused; 0
+  drops; 0 JS errors. `docs/data/p02_release/`.
+- GUI run: no divergence in timing or mission state; an unattributed
+  `/mission/mode` + Nav2 goal (2.50, 2.00) on shared domain 0 moved the
+  wheels at ≤ 0.012 m/s / 0.5 rad/s for 50 ms; `gz sim server` orphaned by
+  the process-group teardown, killed by PID (ours: our session, our
+  overlay, our cwd).
+
+**Unverified.** Docker (not installed); touch-screen joystick; any
+browser but Firefox; the source of the domain-0 goal; any rate.
+
+**Next command** — the configuration that completed five times:
+
+```bash
+export COCO_WS="$HOME/coco_ws_build"
+source <repo on p02-release-candidate>/setup_env.sh
+scripts/build_overlay.sh "$COCO_WS"
+scripts/browser_check/live_run.sh "$PWD" "$COCO_WS" out/live blue   # one fresh run
+```
+
 ## 2026-09-23 — Larger navigation world, verification ongoing
 
 Starting HEAD d317d85ee6f1575c2620f4e467d7e322d0310bc0.
@@ -3835,3 +4211,132 @@ docs/NAVIGATION_WORLD.md for the three-command workflow and overlay setup,
 and docs/NAVIGATION_WORLD_FILES.txt for the changed-file manifest.
 Next: repeat the fresh-colour regression matrix for reliability before the
 first opt-in dynamic obstacle; dynamic behavior remains unimplemented.
+
+## 2026-09-24 — P0.3 stage B: the episode specification; the machine; Isaac Sim on this hardware
+
+Branch `p03-episode-spec` from `p02-release-candidate` @ `c40098f`
+(unchanged). Design and assessment: `docs/EPISODE_ARCHITECTURE.md`.
+
+**Built.**
+
+- `coco_sim/coco_sim/episode.py`: `generate_episode(seed, level, backend,
+  world_variant, …)` → frozen `EpisodeSpec`; `manifest()` (privileged) vs
+  `task_view()` = `{episode_id, requested_colour}` (robot); levels
+  `fixed` (default, P0.2 pose for pose) · `colours` · `positions`;
+  `validate_episode()` against an envelope DERIVED from `coco_config`;
+  `ObstacleSpec` with motion fields, never generated; `EpisodeResult` +
+  `check_reproducible()`; timing keys must name their clock. Stdlib +
+  `coco_config` only.
+- The approach-corridor rule (`16e575b`), after measuring its absence.
+- Evidence: `docs/data/p03_episode_spec/`, `docs/data/isaac_foundation/`.
+
+**Measured.**
+
+- Tests, per package, cwd inside: coco_sim **55 → 128**, 0 failed, 0
+  skipped; coco_config **70**, coco_rl **218** unchanged. ament_flake8 and
+  ament_copyright clean on the new files (pep257 D213 only, the repo's
+  existing style).
+- Same seed → byte-identical manifest at every level; 10000 seeds × 3
+  levels all pass `validate_episode`.
+- Approach corridor blocked: `positions` **1012 / 10000** (276 on the
+  requested target) before `16e575b`, **0 / 10000** after; `fixed` and
+  `colours` 0 / 10000 both times.
+- Home cleanup: **1.61 GiB** reclaimed (40384126976 → 42111000576 B
+  free): a byte-identical backup of `.codex/worktrees/c2nav0-implementation`
+  (`diff -rq` empty; its small unique files kept), `~/ros2_humble` (103
+  upstream repos, 0 dirty, 0 unpushed), four `coco_ff_profile*` dirs.
+- Isaac Sim: hardware below the 6.x minimum on four counts, 6.1 not
+  downloaded. Existing 4.5.0 pip install: default start blocks forever in
+  `_wait_for_viewport`; with `create_new_stage=False` it starts in 12.4 s
+  and physics runs (60 s, 5114 steps, peak RSS 4.77 GB); rendering ends in
+  `LLVM ERROR: out of memory`; Jazzy discovers Isaac's endpoints on domain
+  77 but no message was delivered — 2/2 bridge-loaded runs aborted.
+
+**Unverified.** No episode has been spawned in Gazebo or driven. The
+`colours`/`positions` levels are geometric only, and the P0.2 mission
+cannot complete a `colours` episode (it navigates by `lane_for_colour`).
+Isaac ↔ Jazzy message exchange. Why the bridge-loaded runs abort. Docker.
+
+**Needs the owner.** Keep or remove Isaac Sim 4.5 (13.2 G, physics-only
+here); old `.claude/jobs/*/tmp` (1.18 G, one holds a rendered
+`candidate.mp4`); `~/.local/share/Trash` (327 M); `.cache/codex-runtimes`
+(1.8 G, re-downloads).
+
+**Next command** — stage C, spawn from the manifest behind a switch that
+defaults to today's layout:
+
+```bash
+cd coco_sim && python3 -c "from coco_sim.episode import generate_episode as g; print(g(seed=1827).to_json())"
+```
+
+## 2026-09-26 — P0.3 stage C: the episode spawns the Gazebo world; the mission resolves lanes by region
+
+Branch `p03c-episode-gazebo` from `p03-episode-spec` @ `b3c6598` (the
+verified episode baseline). Design: `docs/EPISODE_ARCHITECTURE.md` §0.
+Evidence: `docs/data/p03c_episode_gazebo/`. `main` (`b15d445`, the
+24 × 18 m arena) is a different lineage and was not touched.
+
+**Built.**
+
+- `coco_config`: `TARGET_REGIONS` (`lane_1…lane_4`, derived from
+  `TARGETS`), `FIXED_REGION_MAP`, `parse/format_region_map`,
+  `resolve_lane(colour, region_map)` (= `lane_for_colour` with no map).
+- `coco_sim.episode`: `TargetSpec.region_id` (manifest = source of truth
+  for colour → region); `positions` redrawn inside a region-local area
+  (±0.030 m across, row outward along); region checks run after p03's;
+  `region_map()` + `compat_mission_inputs()` (names only); `resolve_episode()`
+  shared by both launches; target z follows the episode's grade;
+  `validate_episode(area_slack=)` for read-back only.
+- `coco_sim.backends`: `TargetBody`, `GazeboBackend` (SDF + argv,
+  byte-identical to the old launch for FIXED), `IsaacBackend` (USD prim
+  specs, data only; `missing` names the world pieces Isaac lacks),
+  `check_instantiation()`; `coco_episode` CLI.
+- `full_world_robo.launch.py`: `episode_level` (default `fixed`),
+  `episode_seed`, `episode_colour`, `episode_manifest`, `episode_record`.
+- `mission.launch.py` + `mission_executive` + `ramp_driver`: the
+  `region_map` parameter (empty by default).
+- Harness `docs/data/p03c_episode_run.sh` / `_matrix.sh` / report.
+
+**Measured.**
+
+- Tests, per package, cwd inside, private domain, MoveIt on the path:
+  **1877 / 0 / 0** on this branch against **1740 / 0 / 0** measured on
+  `b3c6598` in this session (coco_config 70 → 92, coco_rl 218 → 229,
+  gazebo_models 206 → 219, coco_sim 128 → 199, coco_mission 317 → 337;
+  the other four unchanged). One pre-existing assertion extended
+  (`region_id` in the manifest), none deleted.
+- Generator: same seed → identical manifest at every level; 10000/10000
+  valid and in-region per level; all 24 assignments reached; POSITION dx
+  [0, +0.3739] m, dy [−0.0300, +0.0300] m.
+- Gazebo, 10 fresh runs (`docs/data/p03c_episode_gazebo/`): gz spawned
+  every manifest within 10 µm; region map on executive + ramp_driver as
+  expected 10/10; Nav2 arrival 0.005–0.080 m from the episode lane
+  (1.013–1.513 m from the frozen lane when moved); **8/10 COMPLETE —
+  FIXED 4/4, COLOUR 2/3, POSITION 2/3**; approach stop 0.1539–0.1545; one
+  wheel publisher, bypass 0, stop-breach 0 in all ten.
+- The two failures: lane_4, thinner target (green 24 mm, red 20 mm), lost
+  at SEARCH_TARGET after climbs 0.233 / 0.206 m off-lane (one then
+  `DESCENT_TIMEOUT` at x 4.50). Repeated once each with perception
+  recorded: found both (climbs 0.152 / 0.101 m); one COMPLETE, one void
+  (return leg outlasted the 900 s wall budget after a Nav2 abort). First
+  detections 3 × 4 and 4 × 4 px at ~1.40 m. Not attributed.
+- A read-back checker defect (no slack on the region's near edge; gz
+  settled FIXED targets 10 µm toward the crest) failed one runner check;
+  fixed in `df796dd`, all recorded poses pass re-judged.
+- A repeat refused to start because `ros_clean.sh --list` matched this
+  session's own waiter shell (its text contained a process pattern) — the
+  pre-flight working; relaunched.
+
+**Unverified.** Any rate. Why thin targets were lost after ~0.2 m climbs
+(not attributed). Isaac instantiating any of this (the adapter is data
+only; the Isaac world geometry does not exist). The browser's drawing in
+COLOUR/POSITION (it draws the frozen layout). Docker with episodes.
+
+**Next command** — reproduce one episode end to end:
+
+```bash
+export COCO_WS=$HOME/coco_p03c_ws
+bash scripts/build_overlay.sh "$COCO_WS"
+ln -s "<ws>/moveit_prefix" "$COCO_WS/moveit_prefix"   # once; the runner refuses without MoveIt
+bash docs/data/p03c_episode_run.sh ~/coco_nav_runs/p03c_next positions 4 green
+```

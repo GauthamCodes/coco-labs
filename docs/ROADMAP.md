@@ -3,11 +3,17 @@
 Long-term milestone tracking. **No session history here** — that is
 `docs/SESSION_LOG.md`. Current snapshot is `PROJECT_STATE.md`.
 
-> **This roadmap is closed.** COCO 2.0 is frozen at the release described
-> in `PROJECT_STATE.md`. Everything below marked DONE was built and
-> measured. **C2-M6 through C2-M9 were scoped and deliberately not
-> undertaken** — they are kept as a record of what was designed and
-> costed, not as pending work. Nothing here is a commitment.
+> **The ROBOTICS roadmap (Tracks 1–3) is closed.** COCO 2.0's robot is
+> frozen at the release described in `PROJECT_STATE.md`. Everything in
+> those tracks marked DONE was built and measured. **C2-M6 through C2-M9
+> were scoped and deliberately not undertaken** — they are kept as a
+> record of what was designed and costed, not as pending work. Nothing
+> there is a commitment.
+>
+> **Track 4 is open.** Productization — turning that frozen robot into
+> something you open in a browser — began at P0.1. It adds no robotics
+> capability and is not permitted to change the robot: see the rule at
+> the head of Track 4.
 
 ---
 
@@ -618,3 +624,240 @@ including its integration.**
 - Failures are preserved and explained, never rewritten.
 - Never `--fast`. Fresh simulator per mission run. Kill by process name.
 - Anything added to a launch file must be added to `ros_clean.sh`.
+
+---
+
+## Track 4 — the platform (P0.1–P2.0). OPEN
+
+> **The rule that governs this whole track:** COCO stays a real robotics
+> stack underneath. The browser is not replacing ROS 2, Gazebo, Nav2,
+> MoveIt, perception or mission logic — it is exposing them through an
+> approachable interface. ROS/Gazebo are the simulation authority; the
+> web layer is a client. A future user should be able to think *"drive
+> COCO up the ramp"*, not *"publish `geometry_msgs/Twist` to
+> `/cmd_vel`"*.
+>
+> Productization may not rewrite the robotics core, and may not turn
+> ROS/Gazebo into a browser-only simulator. Tracks 1–3's measurements stay
+> valid or the change is wrong.
+
+Design detail: `docs/PRODUCT_ARCHITECTURE.md`. Protocol:
+`docs/WEB_API.md`. Runtime: `docs/DOCKER.md`.
+
+| ID | Objective | Status |
+|---|---|---|
+| **P0.1** | Local platform appliance | ✅ **DONE** — code complete; Docker image authored but never built (no Docker on the dev machine) |
+| **P0.2** | Browser robotics experience | ✅ **RELEASE CANDIDATE** — branch `p02-release-candidate`; Codex's integration blockers closed, 5/5 browser-driven fetches (4 headless, 1 GUI); Docker runtime NOT VERIFIED. See *P0.2 release pass* below |
+| **P1.0** | Remote single-user hosted COCO | Not started. Gate: authentication, TLS, origin control |
+| **P1.1** | Multiple isolated sessions | Not started. Needs one container + `ROS_DOMAIN_ID` per session |
+| **P2.0** | Public robotics platform / game | Not started |
+
+**Future (direction, not commitment):** challenges · missions ·
+obstacle courses · replays · user-created scenarios · leaderboards ·
+robotics education. Also parked here: persistent simulation sessions
+(previously listed as P0.3) and a WebRTC evaluation — binary WebSocket
+frames have dropped nothing in any probe, so there is no measured reason
+to start either yet.
+
+**Out of scope until the row that owns it** — none of these may be built
+at P0.x: authentication, accounts, payments, cloud infrastructure,
+Kubernetes, multiplayer, public internet deployment, arbitrary ROS access,
+a remote shell, user code execution, leaderboards, autoscaling.
+
+### P0.1 — what was actually delivered
+
+- `coco_web` became a package with code in it (`ament_cmake` →
+  `ament_python`): `protocol.py`, `safety.py`, `session.py`,
+  `telemetry.py`, `platform_server.py`.
+- **`coco.v1`**, a versioned, closed-vocabulary WebSocket protocol. The
+  browser names intents, never topics. It replaces rosbridge, which let
+  any tab publish any topic.
+- **Command safety, enforced three ways** — the schema cannot express a
+  topic, the publish allowlist is checked against the wheel topics at
+  node construction (including ROS-parameter overrides), and velocity is
+  clamped at the boundary. Verified live: the node's only velocity
+  publisher is `/cmd_vel_teleop`.
+- A session model with per-component readiness, and `/healthz` that
+  answers **503 until the stack has converged**.
+- A two-mode UI (Play / Engineering) with a map + LiDAR + plan view.
+- A Dockerfile that builds all nine packages and an entrypoint that
+  sequences simulator → stack → ready, with `HEALTHCHECK` wired to
+  `/healthz`.
+- Tests: **1004 → 1139**, 0 failed, 0 skipped.
+
+**Not delivered, and not claimed:** the image has never been built.
+Docker is not installed on the development machine. See the status
+section of `docs/DOCKER.md` for exactly what that leaves unverified.
+
+### P0.2 — what was actually delivered
+
+- **Mission state from the executive, not the browser.** `mission_view.py`
+  reads all twelve fields `/mission/state` carries. P0.1 read two, and
+  looked for three (`colour`, `target`, `detail`) that the line has never
+  contained. Progress is *step N of 16* from the executive's own
+  `NOMINAL_NEXT` chain; the hard-coded phase list and the interpolated
+  percentage are gone.
+- **`subscribe` honoured**, plus `unsubscribe` and `set_stream`. The
+  default set is P0.1's, so no existing client changes behaviour; camera
+  and depth are opt-in and create their ROS subscriptions only while
+  someone is watching.
+- **Binary sensor frames** (`binary.py`, `imaging.py`) for LiDAR, camera
+  and depth. Self-describing, no ROS message on the wire, no topic in any
+  header.
+- **Backpressure**: one frame in flight per stream per client, plus a
+  1 MiB socket-buffer bound. Control frames are never dropped.
+- **Two session axes** (`state` for readiness, `lifecycle` for life) so
+  `/healthz` stays 200 during a mission, and `platform.connection`.
+- **`/api/metrics`**: measured in/out rates, drops, CPU, mission latency.
+- **Play and Engineering modes** rebuilt; the world view draws the real
+  ramp, platform and target lanes from `coco_config`.
+- **`ros_clean.sh` gained `platform_serve[r]`** — P0.1 added the node to
+  a launch file and not to the sweep, and an orphan holding :8080 was
+  observed during this work.
+- Tests: **1139 → 1334**, 0 failed, 0 skipped.
+
+**Measured live** (one machine, one session — not a rate):
+
+| | |
+|---|---|
+| Green fetch through the browser protocol | **COMPLETE**, all 16 states, `result=fetch`, 170.4 s |
+| Mission-state latency | 18.4–82.7 ms across runs (1 714 samples in the completing run) |
+| Telemetry frames / drops | 1 714 sent, **0 dropped**, peak socket buffer **0 B** |
+| LiDAR binary frame | 668.8 bytes mean, 10.0 Hz |
+| Camera frame | 3 467 bytes mean JPEG (q60, 320×240), 6.17 fps under a 10 fps cap |
+| Depth | 19 frames in 5 s with `depth_topic` set; **0** without it |
+| Platform CPU | 67–75 % of one core |
+| Wheel publishers | **1** (`cmd_vel_arbiter`), with the platform publishing only `/cmd_vel_teleop` |
+
+**Not claimed:** the UI was not driven in a real browser — the Chrome
+extension was not connected on this machine — so the page is covered by
+static asset tests and by a WebSocket client exercising the same server
+paths. One of two mission attempts aborted with `RETURN_FAILED`
+(`planner_server: "Start occupied"`), a localisation outcome upstream of
+the web layer; two runs is not a rate.
+
+WebRTC is parked under Future. Binary WebSocket frames proved adequate:
+zero drops in every probe.
+
+### P0.2, second pass — the browser experience, driven in a browser
+
+Branch `p02-browser-experience`, from `921f6d0`. Numbers in
+`PROJECT_STATE.md`; protocol in `docs/WEB_API.md`.
+
+- **The page was driven in a real browser for the first time** —
+  headless Firefox over WebDriver BiDi (`scripts/browser_check/`), no
+  extension, no Selenium. The first render found the not-ready curtain
+  **permanently drawn over the page and over STOP** (`display: flex`
+  outranked `hidden`); a mouse click on STOP landed on the curtain. Fixed,
+  and pinned by a test.
+- **Health became its own axis** (`HEALTHY / DEGRADED / UNHEALTHY`), beside
+  the lifecycle, judged on COCO-specific evidence that is *arriving*, not
+  on `/clock` or on a publisher existing.
+- **No ROS topic names on the wire**, including the component detail
+  strings and a mission refusal that carried them.
+- **Depth shown by default, fusion still off** — the image and the fusion
+  were conflated in the first pass.
+- **Client heartbeat**: a frozen server is noticed in 4 s; STOP stays
+  reachable over the curtain and pinned on phones; STOP clears held keys.
+- **The server tested over real sockets** (`test_platform_server.py`).
+- **Codex's hardening integrated** (ten commits, cherry-picked), including
+  a Docker entrypoint fix: the container used to tear its own stack down.
+
+**Measured** (two fresh simulators — not a rate): green and blue fetches
+**COMPLETE**, each started by clicking Start in the browser; every
+executive state rendered on the page 62.7–74.9 ms after ROS; STOP with a
+key still held and a browser killed mid-drive both left **0** moving
+wheel commands; the wheel topic had one publisher, the arbiter,
+throughout; 8/8 hostile socket frames refused; 0 JS errors. Tests
+**1564 / 0 / 0**; clean build 9/9. Docker runtime: **NOT VERIFIED**.
+
+### P0.2 release pass — Claude + Codex integrated, release candidate
+
+Branch `p02-release-candidate` (from `coco-clean-runtime`). Protocol and
+decisions in `docs/WEB_API.md`; evidence in `docs/data/p02_release/`.
+
+**Codex.** Of the thirteen commits in Codex's integration order on
+`codex/p02-hardening`, ten were already integrated in the second pass
+(cherry-picked `-x`), and
+`c0d2f11` (Node as a test-only dependency) was cherry-picked here. Not
+taken: `09a77aa`'s standalone transport — its stale-socket guard and
+validating decoder were **ported** into the page (`web/frame.js`), its
+`Transport` class was not, because the page's own transport is the one a
+real browser has driven — and `fcefc1b`'s evidence/replay tooling, which
+stays on its branch as provenance. All ten of the handoff's caller-side
+blockers were resolved here.
+
+**VERIFIED** (measured in this pass):
+
+- **Lifecycle is a stored state machine** with explicit legal edges,
+  validated by Codex's `lifecycle.validate_transition`; health is a
+  separate derived axis that never moves it. Walked end to end through
+  the real server (startup, ready, running, degradation, recovery,
+  failure, restart, stop).
+- **Every write to a browser is bounded**: sensor frames dropped per
+  client; telemetry and map superseded, never queued; control replies
+  always written; a client past 4 MiB unflushed is disconnected, which
+  stops the robot if it was the last. The 1 MiB socket bound had never
+  engaged (it read an attribute tornado 6.5 lacks); it does now. A peer
+  that stopped reading peaked at 74–89 kB while a healthy client beside
+  it got 200/200 telemetry frames, and a STOP sent by the stalled client
+  reached the wheel publisher.
+- **Binary `dropped` is per client** (was a shared 0).
+- **No topic on the wire, anywhere a browser can read**: MJPEG is served
+  at `/video/<alias>`; `web_video_server` listens on loopback only
+  (measured `127.0.0.1:8081`); the container publishes 8080 alone.
+- **Clocks named**: `mission.timing` separates the executive's ROS-clock
+  `elapsed` from this server's receipt times; `changed_at` (wall − sim)
+  is retired to `null`.
+- **Keepalive as configured**: 10 s / 10 s, which is what tornado was
+  already enforcing over the 30 s the code claimed.
+- **Real browser, three fresh simulators, three colours, headless: 3 / 3
+  fetches COMPLETE**, each started from the page. Every executive state
+  rendered (15 transitions each, 22.7–101.7 ms to the DOM). The
+  **joystick** was exercised for the first time (a real pointer drag):
+  forward and back, 0 moving commands after release. STOP was the
+  topmost element over the starting curtain, when ready and mid-mission;
+  STOP with W held and a browser killed mid-drive both left 0 moving
+  wheel commands; one wheel publisher (the arbiter) throughout; 8/8
+  hostile frames refused; 0 drops; 0 JS errors; 0 orphans. Two further
+  fresh runs also **COMPLETE**: green with `gui:=true` (the previous
+  pass's GUI return failure did not reproduce) and a headless green
+  control — **5 / 5 in this pass**.
+- **GUI vs headless**: no divergence in simulator timing or mission state;
+  the first concrete divergence was an **unattributed** `/mission/mode` +
+  Nav2 goal on the shared ROS domain 0 during the GUI run, which nothing
+  in the run sent. The live harness now runs on its own domain, and sweeps
+  its own sessions — GUI mode's `gz sim server` sits in its own process
+  group and was orphaned once.
+- **Tests**: 0 failed, 0 skipped, every package, per package, on a clean
+  graph; clean build 9/9 (totals in `PROJECT_STATE.md`).
+
+**NOT VERIFIED**: the Docker image (never built — no Docker on this
+machine; the procedure is in `docs/DOCKER.md`); a touch-screen joystick
+(mouse drag only); browsers other than Firefox; any rate (three runs,
+one per colour).
+
+**FUTURE** (unchanged): WebRTC; persistent sessions; everything under
+P1.0 onward. The P1.0 gate below is the next real work.
+
+### P1.0 — the gate
+
+**Authentication, TLS and origin control are prerequisites, not
+follow-ups.** P0.1 deliberately has none of them: it is a single-user
+local appliance and says so. Nothing in Track 3 exposes COCO to the
+public internet before P1.0 closes.
+
+### P1.1 — what multi-session actually needs
+
+Not a bigger `max_sessions`. Raising that number alone makes the platform
+wrong rather than multi-user, because two sessions on one ROS graph share
+`/mission/mode`, `/cmd_vel_teleop` and the wheels. It needs one container
+per session with its own `ROS_DOMAIN_ID`, and the web tier split out to
+front them — the split `docs/DOCKER.md` currently argues against, which
+becomes necessary exactly here.
+
+### Later, unscheduled
+
+Challenges, obstacle courses, mission scenarios, robot customisation,
+leaderboards, replay, robotics education, user-authored missions. Recorded
+as direction, not commitment — the same standard as C2-M6…C2-M9 above.

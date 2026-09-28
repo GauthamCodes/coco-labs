@@ -77,6 +77,19 @@ under `<workspace>/src/` — and sets up ROS, this workspace's overlay,
 DDS, Gazebo and the render fallback. If it prints `note: no overlay at
 <ws>/install`, build first and source second.
 
+**If it warns that packages "cannot be resolved"**, or `ros2 launch`
+dies with `package '<something COCO does not use>' not found` (for
+example `turtlebot3_teleop`): your install holds a stale package whose
+ament index entry is a broken symlink, and Gazebo's launch file dies on
+it. COCO does not need it. `--packages-select` does not help — the stale
+prefix is still sourced — so build COCO into an overlay of its own:
+
+```bash
+src/coco-robot-jazzy-2.0/scripts/build_overlay.sh "$HOME/coco_ws_build"
+export COCO_WS="$HOME/coco_ws_build"          # every terminal, before:
+source src/coco-robot-jazzy-2.0/setup_env.sh
+```
+
 ---
 
 ## 4. Run COCO ⭐
@@ -200,11 +213,20 @@ cd coco_mission && python3 -m pytest -q && cd ..
 ```
 
 Repeat for `coco_config`, `custom_teleop`, `coco_rl`, `coco_perception`,
-`coco_moveit_config` and `coco_sim`; `gazebo_models` needs one extra
-flag, `python3 -m pytest -q --ignore=test_integration`.
+`coco_moveit_config`, `coco_sim` and `coco_web`; `gazebo_models` needs one
+extra flag, `python3 -m pytest -q --ignore=test_integration`.
 
-**Expect 829 passing, 0 failing, 0 skipped** across the eight packages.
-`coco_web` has no tests; pytest exits 4 there, and that is not a failure.
+**Expect 1564 passing, 0 failing, 0 skipped** across all nine packages on
+`p02-browser-experience` (`coco_web` alone: 517). `main` predates the
+platform and expects 829 across eight — there `coco_web` has no tests.
+An isolated `ROS_DOMAIN_ID` (e.g. `export ROS_DOMAIN_ID=77`) gives the
+"clean ROS graph" without stopping a simulator you are using.
+
+### The page, in a real browser
+
+The colcon suite checks the page's files; it cannot check that the page
+*works*. `scripts/browser_check/README.md` drives it in headless Firefox —
+with synthetic data (no simulator needed) or against a live mission.
 
 ---
 
