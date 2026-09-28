@@ -4450,6 +4450,134 @@ bash docs/data/p03c_episode_run.sh ~/coco_nav_runs/p03c_next positions 4 green
 
 ---
 
+## Milestone 0B-H — Canonical home/workspace cleanup
+
+Status:
+    COMPLETE
+
+Disk:
+    before:
+        root used: 67,314,102,272 bytes (62.69 GiB / 67.31 GB)
+        root free: 36,515,110,912 bytes (34.01 GiB / 36.52 GB)
+        home: ~29 GiB
+    after:
+        root used: 67,155,456,000 bytes (62.54 GiB / 67.16 GB)
+        root free: 36,673,757,184 bytes (34.16 GiB / 36.67 GB)
+        home: ~29 GiB
+    recovered:
+        158,646,272 bytes (151.29 MiB / 158.65 MB) reclaimed on root filesystem
+        141,881,994 bytes (135.31 MB) apparent file data deleted across 2,088 directories and 4,623 files
+
+Deleted:
+    Stale ROS Overlays & Test Workspaces (8 directories):
+      - ~/c2nav48_overlay (1.42 MB, 177 symlinks, stale C2-NAV.48 branch overlay)
+      - ~/c2nav49_overlay (2.67 MB, 179 symlinks, stale C2-NAV.49 branch overlay)
+      - ~/coco_navigation_overlay (0.72 MB, 98 symlinks, incomplete 3-package nav test overlay)
+      - ~/coco_p02_overlay (1.15 MB, 183 symlinks, stale P0.2 overlay)
+      - ~/coco_p03c_ws (4.09 MB, 187 symlinks, stale episode-gazebo overlay superseded by main)
+      - ~/coco_infra_host_ws (1.71 MB, 187 symlinks, reproducible host overlay for infra worktree)
+      - ~/coco_isaac_ws (3.26 MB, 188 symlinks, reproducible overlay for isaac backend)
+      - ~/coco_navigation_validation (0.23 MB, 100% duplicate of checked-in docs/data/navigation_world_final/)
+    Accidental colcon directories in ~ (4 directories):
+      - ~/build (16 KB, accidental colcon build from April 2025)
+      - ~/install (56 KB, accidental colcon install from April 2025)
+      - ~/log (4.75 MB, accidental colcon log trees from April 2025 - March 2026)
+      - ~/workspace (0 KB, empty directory)
+    Loose diagnostic & temporary files in ~ (6 files):
+      - ~/frames_2026-04-25_19.46.32.gv (1.8 KB, one-off tf2_tools visualizer dump)
+      - ~/frames_2026-04-25_19.46.32.pdf (16.4 KB, one-off tf2_tools visualizer dump)
+      - ~/gz_sysinfo.sh (2.7 KB, one-off system capture script from June 2026)
+      - ~/gz_sysinfo.txt (17.0 KB, one-off system capture output from June 2026)
+      - ~/camera_check.py (2.1 KB, one-off camera topic probe from Sep 12)
+      - ~/depth_qos_check.py (0.8 KB, one-off depth topic probe from Sep 12)
+    Duplicate downloads (2 files):
+      - ~/Downloads/ROADMAP.md (22.3 KB, byte-for-byte duplicate of repo ROADMAP.md)
+      - ~/Downloads/LAB_PHASES (1).md (23.8 KB, byte-for-byte duplicate of repo LAB_PHASES.md)
+    System crash dumps in /var/crash (6 files, 115.15 MB):
+      - /var/crash/_usr_bin_ruby3.2.1000.crash (93.78 MB)
+      - /var/crash/_opt_ros_jazzy_lib_rclcpp_components_component_container_isolated.1000.crash (11.77 MB)
+      - /var/crash/_usr_bin_eog.1000.crash (4.74 MB)
+      - /var/crash/_opt_ros_jazzy_lib_ros_gz_bridge_parameter_bridge.1000.crash (4.07 MB)
+      - /var/crash/_usr_bin_node.1000.crash (0.62 MB)
+      - /var/crash/_opt_ros_jazzy_lib_rviz2_rviz2.1000.crash (0.19 MB)
+
+Preserved:
+    Active Workspaces & Overlays:
+      - ~/coco_ws_build (canonical clean workspace documented in HOW_TO_RUN.md & CLAUDE.md)
+      - ~/coco_p0merge_ws (active build overlay for main, MoveIt linked)
+      - ~/coco_consolidation_ws (active build overlay for p03c-consolidation worktree)
+      - ~/coco_p03d_ws (active build overlay for coco-p03d-target-search worktree)
+    Active Repositories & Worktrees:
+      - ~/ros2_ws(personal)/src/coco-robot-ros2 (canonical COCO repo, branch main @ 442bca0)
+      - ~/coco-p03c-consolidation (worktree p03c-consolidation @ 917bc59)
+      - ~/coco-p03d-target-search (worktree p03d-autonomous-target-search @ d220ab8)
+      - ~/coco-infra-worktree (worktree claude/docker-reproducibility @ 23f372c)
+      - ~/coco-isaac-backend (worktree p03-isaac-backend @ ffb3fc6)
+      - All 7 .claude worktrees (.claude/worktrees/* all dirty, preserved intact)
+    COCO Experimental Evidence:
+      - ~/coco_container_evidence (70.2 MB container reproducibility benchmarks)
+      - ~/coco_nav_runs (268.3 MB navigation test & live run logs)
+      - ~/coco_p03d_runs (38.2 MB autonomous target search runs)
+      - ~/coco_rl_runs (4.8 MB PPO curriculum training logs & benchmarks)
+      - ~/coco_runs_p03c (4.9 MB 13/13 multi-bay simulation matrix logs & report)
+      - ~/coco_runtime_runs (10.4 MB live GUI/headless validation logs)
+      - ~/ros2_ws(personal)/rl_runs (historical RL runs)
+    Required Backups:
+      - ~/coco-backup-20260807-0543.bundle (4.7 MB canonical COCO git bundle)
+      - ~/coco-backup-20260807-0543.refs.txt (references manifest)
+      - ~/coco_premerge_backup (152 KB pre-merge stash & untracked backup)
+      - ~/amr-fleet-nav-backup (14.2 MB fleet nav backup)
+      - ~/.bashrc.bak-2026-06-12 (4.5 KB bashrc backup)
+    RL Policy Artifacts:
+      - ~/ppo_coco_ramp.zip (144.7 KB ramp climb PPO policy)
+      - ~/ppo_coco_ramp.monitor.csv (105 B monitor log)
+    System Services & Tools:
+      - ~/lo-multicast.service (218 B loopback multicast systemd service definition)
+      - ~/bin (gh GitHub CLI, forge launcher)
+      - ~/isaac-sim (6.7 GB Isaac Sim installation)
+      - ~/.local/share/ov (7.3 GB Omniverse cache)
+      - Docker images coco-platform:61bef2ab3bdf and coco-platform:main-b15d445
+
+Protected:
+    - e-Yantra / eYRC material: ~/ros2_ws (eYRC_26-27_Strata-Cobot), ~/task1a_scratch, ~/SC#2200_task1A_detection.png, ~/Downloads/KD_2200*, ~/Downloads/result-*, ~/Downloads/Task 1*, ~/Downloads/you-are-helping-me-greedy-puppy.md, ~/.local/share/Trash/files/SC#2200_task1A.zip
+    - Active academic / other projects: ~/assignment, ~/assignment_ws, ~/dev/amr-fleet-nav, ~/forge, ~/forge-lab, ~/robotic_arm_ws, ~/simple_bot_tutorial, ~/ros2_ws(personal)/src/red_ball_nav
+    - User data: ~/Desktop, ~/Documents, ~/Downloads (personal documents & offer letters), ~/Music, ~/Pictures (screenshots), ~/Public, ~/Templates, ~/Videos (screencasts)
+
+E-Yantra:
+    confirmed untouched (E-YANTRA PROTECTED — NO FILES MODIFIED)
+
+COCO canonical:
+    Repo: ~/ros2_ws(personal)/src/coco-robot-ros2 (branch main, HEAD 442bca0)
+    Clean build overlay: ~/coco_ws_build
+    Active test overlay: ~/coco_p0merge_ws
+
+COCO evidence:
+    ~/coco_container_evidence, ~/coco_nav_runs, ~/coco_p03d_runs, ~/coco_rl_runs, ~/coco_runs_p03c, ~/coco_runtime_runs, ~/ros2_ws(personal)/rl_runs (all verified intact)
+
+Active projects:
+    COCO 2.0 (main + worktrees), eYRC_26-27_Strata-Cobot, amr-fleet-nav, forge, forge-lab, assignment_ws, robotic_arm_ws, simple_bot_tutorial, red_ball_nav
+
+Unknown items:
+    - ~/Downloads/Antigravity.tar.gz (172 MB): installer archive; agy is installed in ~/.local/bin/agy, retained awaiting user decision per Part H.
+    - ~/ros2_ws(personal)/src/coco-robot-ros2/.codex/worktrees/c2nav0-implementation (219 MB): orphaned Codex worktree with missing gitdir reference; retained awaiting user decision.
+    - ~/ros2_ws(personal)/src/coco-robot-ros2/tatus --short (19 KB): stray git diff output from Sep 19 in repo root; retained awaiting user decision.
+    - ~/simple_gz_ws (1.3 MB): personal empty world simulation workspace from April 2025; retained awaiting user decision.
+
+Git/worktrees:
+    All 11 registered worktrees verified via git worktree list; no worktree removed; git status on main clean except user-owned / untracked files.
+
+Risks or unresolved items:
+    - Decisions required on the 4 retained unknown items above.
+    - Pending approval from human for git push jazzy2 main and remote branch archive tags.
+
+NEXT MILESTONE:
+    Phase 0B repository/public-state work
+
+EXACT NEXT ACTION:
+    Resume from the Phase 0B checkpoint after human decisions on unknown items and push approval.
+
+---
+
 ## Milestone 0B — Phase 0 closure preparation (2026-09-29)
 
 **Status:** PARTIAL. Every 0B deliverable is committed on the working branch
