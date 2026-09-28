@@ -4796,3 +4796,194 @@ finished:
    `git stash apply <sha of m0b-claude>`, then drop that stash entry.
 6. Paste the 0B-H entry back in above or below this one, and commit it.
 7. `git push jazzy2 main`
+
+---
+
+## Milestone 0C — Phase 0 closure (2026-09-29)
+
+**Status:** COMPLETE, for everything this milestone may do locally. Each
+public action is prepared and awaits the owner. Nothing was pushed, tagged,
+published, renamed, archived or deleted remotely.
+
+**Local main**
+- SHA: the commit that carries this entry. Its parent is `cdcf17d` (the
+  0B-H entry preserved), whose parent is `b55f24f` (0B), fast-forwarded
+  from `442bca0`. **No merge commit.**
+- Clean: yes for tracked content, with one exception left deliberately:
+  - `M CLAUDE.md`: the owner's own 14-line "Multi-agent protocol" section.
+    It refers to the local, untracked `AGENTS.md`; committing it is the
+    owner's call.
+  - The untracked user-owned files (`.codex/`, `AGENTS.md`, `ROADMAP.md`,
+    `docs/agents/*`, `docs/RSE_ASSIGNMENT_PLAN_V2.md`,
+    `P02_NOTE_FOR_CODEX.md`, `tatus --short`) are unchanged.
+- Contains P03C: yes (merge `232454d`).
+- Contains Phase 0: yes (`b55f24f` + this commit).
+
+**Public main**
+- SHA: `jazzy2/main` = `442bca0`, the same as at session start. This
+  session did not change it.
+- Ahead / behind: local `main` is ahead of `jazzy2/main` by the 0C commits
+  and behind by 0. `442bca0` is their merge-base, so the push is a
+  fast-forward.
+- Push awaiting approval: `git push jazzy2 main`.
+
+**How the agent race was reconciled**
+1. Froze the state (`status`, `HEAD 442bca0`, worktree list, `diff`). The
+   only tracked changes were `CLAUDE.md` +14 (the owner's) and
+   `docs/SESSION_LOG.md` +129 (the 0B-H entry); nothing was staged.
+2. Safety copy: `~/coco_phase0_backups/0C_20260929_021946/`, containing
+   the full working-tree patch, the 0B-H patch, the CLAUDE patch, both
+   working files byte-for-byte, `HEAD.txt`, the stash SHA and `SHA256SUMS`.
+3. Compared the two logs. They were not identical and neither contained
+   the other:
+   - The branch had the 0B entry, which only mentions 0B-H.
+   - The working copy had the full 0B-H entry: its deletions, disk
+     figures, protected eYRC paths and `~/simple_gz_ws`.
+4. Checked the working files were unchanged since the backup. Stashed them
+   with the tag `m0c-preserve-0BH-CLAUDE-…` (`b9d1a1f`, captured by SHA).
+   Ran `git merge --ff-only p0-consolidation-merge`, which fast-forwarded
+   `442bca0..b55f24f`. `b55f24f` had been verified first:
+   - exactly 1 commit ahead and 0 behind;
+   - only `.md` files (11), with CLAUDE.md and SESSION_LOG as pure
+     additions.
+5. Re-applied the CLAUDE hunk from the stash; it is identical to the
+   backup's. Inserted the 0B-H block (7,647 B) verbatim between 0A and 0B.
+   Removing it again reproduces the committed file exactly; only the `---`
+   separators are shared. Committed as `cdcf17d`.
+6. Dropped only stash `b9d1a1f`, found by SHA. The owner's stash `fcf5fa4`
+   is untouched.
+- `git checkout -- <file>`, `reset --hard`, `clean` and force-pushes were
+  not used, and no agent's work was discarded.
+
+**Documentation (verified)**
+- ROADMAP:
+  - `docs/ROADMAP.md` is byte-identical to the owner's untracked root
+    `ROADMAP.md`.
+  - `docs/history/ROADMAP_COCO2.md` is byte-identical to
+    `442bca0:docs/ROADMAP.md`.
+  - The `~/Downloads` copies were deleted by 0B-H, which recorded them as
+    identical.
+- LAB_PHASES: byte-identical to `~/ros2_ws(personal)/src/LAB_PHASES.md`.
+- Links: 81 of 82 repo-internal links in all tracked `.md` files resolve.
+  The one exception is the README banner's text inside a LAB_PHASES code
+  fence.
+- PROJECT_STATE:
+  - Phase 0 is marked closed locally, with its public actions pending.
+  - The master-context row is updated.
+  - No hit in the scan repeats a corrected claim: every match is inside a
+    correction.
+- README: consistent with the new direction. The planner wording appears
+  only as a correction.
+- CLAUDE: the committed addendum, from 0B. The frozen-era text above it is
+  unchanged because edits are additive only; the addendum supersedes it.
+- SESSION_LOG: 0A → 0B-H → 0B → 0C, with nothing removed.
+- Master context: **MASTER CONTEXT: NOT PRESENT IN REPOSITORY.**
+  - The final targeted search covered every `.md`, `.txt`, `.json` and
+    `.jsonl` under `~`, except caches, `~/ros2_ws` and the run trees. It
+    looked for a §45 section co-occurring with P0.4, or a master-context
+    title.
+  - Only Phase 0 transcripts and plans matched, and every match is the B2
+    instruction or a "not found" report. No §45 body exists on this
+    machine.
+  - **B2: DROPPED — the canonical master context does not exist as a
+    repository file.** No substitute was created.
+  - The verbatim ROADMAP and addendum texts still mention it.
+
+**Collision monitor** (documentation unchanged in 0C; it was verified
+truthful)
+- slowdown: verified post-fix (0A), 300 valid samples.
+- wheel cap: 0.090 m/s. Wheel p50 / p90 / p99 / max = 0.090 / 0.090 /
+  0.090 / 0.090. 0 samples above it.
+- STOP behaviour: **not verified.** The wall probe stopped ≈0.264 m from
+  the wall under FootprintApproach, and STOP never fired. The cause is
+  unknown; `robot_radius` 0.25 is a hypothesis only. The pre-fix
+  historical results are kept separately (KL0 history, C2-M5.0's 84.2 %).
+- unresolved: the STOP mechanism change, and the short-streak residual.
+
+**P03C report** is kept as history. PROJECT_STATE carries the corrections:
+- the targets are at x = 4.05, not 6.3–7.3;
+- the lift is 34.3–35.8 mm, median 35.3, per the logs, not "35.8 mm on all
+  13".
+
+**Cleanup**
+- Remaining unknowns, now classified (details in
+  `docs/data/m0b_phase0/README.md` §7):
+  - Antigravity.tar.gz: **KEEP / owner decision.** The IDE is not
+    installed, the tarball is the only local copy, and the IDE has been
+    unused since 2026-09-11.
+  - Codex worktree: **KEEP.** It holds unique source and evidence, and its
+    committed work is only on the local, unpushed
+    `codex/c2nav34-odom-final`.
+  - `tatus --short`: **SAFE-TO-DELETE**, as a duplicate of the backup and
+    of stash `fcf5fa4`.
+  - `~/simple_gz_ws`: **SAFE-TO-DELETE** (pkg-create boilerplate with a
+    Gazebo Classic empty world).
+- Correction to 0B: blob `7f93a36` is held by stash `fcf5fa4`; it is not
+  dangling.
+- Correction to 0B-H: its "Preserved" list includes
+  `~/coco_consolidation_ws`, which 0B had already deleted (see 0B).
+- deleted this milestone: **nothing.**
+- disk: 36,748,484,608 B free at the start and 36,743,479,296 B at the end.
+  No recovery is claimed; this session only added the ~310 KB backup.
+- preserved: the four items above, the backups in `~/coco_phase0_backups/`
+  and `~/coco_premerge_backup/`, all worktrees, and all run evidence.
+  `/tmp/launch_params_*` (0A leftovers) is still pending the owner.
+- **E-YANTRA PROTECTED — NO FILES MODIFIED.**
+  - `~/ros2_ws` (eYRC_26-27_Strata-Cobot at `4559a79`): 0 files modified
+    since 01:58 IST.
+  - `~/task1a_scratch`, `~/SC#2200_task1A_detection.png` and the eYRC
+    downloads are present and untouched.
+
+**Remote branches**
+- Archive preparation: unchanged and still exact.
+  - 12 `archive/<branch>` tag commands are in
+    `docs/data/m0b_phase0/README.md` §2.
+  - The 13 tips are re-verified.
+  - Proposed deletions: 11 branches after the tags. Keep `main` and
+    `claude/docker-reproducibility`, which is unmerged (+10).
+
+**Repository name:** awaiting the owner's choice. All eight candidates are
+reconfirmed free (404): cutaway-robotics, coco-robot-lab, robotlab-live,
+open-robotics-lab, botbench-lab, coco-lab, nav-lab, ros-lab. The factual
+comparison is in §3 of the evidence file.
+
+**Video migration:** awaiting approval, with commands in §4 of the evidence
+file.
+- Release `m6-fetch-demo` on coco-robot-jazzy-2.0 at `9b1ed7f`, with
+  `coco_fetch_demo.mp4` (8,805,381 B, sha256 `7a2f761e…5674`, still the
+  only copy).
+- Then the README line 59 pointer change.
+- Then an added banner on coco-robot-ros2, not a replacement, because it
+  cites the IEEE ICRM 2025 paper.
+- Then its archival.
+
+**Tests**
+- existing measured baseline: 1,966 / 0 / 0 (0A, `232454d`).
+- additional tests run this milestone: none. Every 0B and 0C change is to
+  `.md` files, and no test reads them.
+
+**UNVERIFIED**
+- The STOP-probe mechanism change.
+- The short-streak residual's cause.
+- Which process wrote 0B-H.
+- Whether the master context exists outside this machine (for example, in
+  a chat). Only its absence from the machine is established.
+
+**HUMAN DECISIONS REQUIRED**
+1. `git push jazzy2 main`.
+2. Commit, or keep local, your CLAUDE.md "Multi-agent protocol" edit.
+3. The archive tags, then the 11 remote-branch deletions.
+4. The platform name.
+5. The video migration, then the coco-robot-ros2 banner and archival.
+6. The cleanup items: delete `tatus --short` and `~/simple_gz_ws` (both
+   SAFE-TO-DELETE)? Keep or delete Antigravity.tar.gz? Clear
+   `/tmp/launch_params_*`?
+7. Optionally, push or archive the local-only
+   `codex/c2nav34-odom-final`. It is the only git home of the C2-NAV.34/35
+   work.
+
+**NEXT MILESTONE:** Phase 1A — coco_lab core and proofs.
+
+**EXACT NEXT ACTION:** Begin Phase 1A only after Phase 0 is explicitly
+closed. That means the owner approves and runs `git push jazzy2 main`, and
+decides items 3–5 above, or explicitly defers them.

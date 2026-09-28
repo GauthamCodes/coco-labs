@@ -196,3 +196,64 @@ What that entry records:
 - It lists `~/coco_consolidation_ws` as preserved ("active build overlay"). This session had already deleted that overlay, on the grounds in §5. It can be rebuilt with `scripts/build_overlay.sh ~/coco_consolidation_ws` from `~/coco-p03c-consolidation`.
 
 The two logs must be merged when this branch lands.
+
+## 7. Milestone 0C additions (2026-09-29) — the tables above are not edited
+
+**Re-verified unchanged since 0B**, during Milestone 0C (2026-09-29, after 02:19 IST), after `git fetch jazzy2 --prune`:
+- all 13 remote branch tips are unchanged, and the remote has no tags;
+- all eight names are still free (404);
+- the `m6-fetch-demo` asset is still 8,805,381 B, and coco-robot-ros2 is not
+  archived;
+- this repo still has no releases.
+
+So the commands in §2 and §4 are still exact.
+
+**Corrections to §5.**
+- `tatus --short` is **not** the only record of that CLAUDE.md edit.
+  - Its new-side blob `7f93a36` is the CLAUDE.md held in the owner's stash
+    `fcf5fa4` ("local CLAUDE.md before C2-NAV.47 merge"). It is not
+    dangling.
+  - The file is md5-identical (`d8443d89…a9`) to
+    `~/coco_premerge_backup/20260919_033040/repo_local_files/tatus --short`.
+  - The C2-NAV.47 entry in `docs/SESSION_LOG.md` records that it was kept
+    deliberately, as a captured diff.
+- The Codex worktree's work is not in `main`. 61 of the 63 files changed
+  after checkout (excluding `.navbench/` and `log/`) are reachable only from
+  **`codex/c2nav34-odom-final` (`5c7f597`, a local-only branch, never
+  pushed)**. Two are also on the remote branch `worktree-c2nav0-diagnosis`.
+
+**Final classification of the four remaining unknowns** (read-only
+inspection; nothing deleted):
+
+| item | finding | class |
+|---|---|---|
+| `~/Downloads/Antigravity.tar.gz` (172,322,487 B) | See the notes below the table. | **KEEP / owner decision.** The "installed correctly" condition for SAFE-TO-DELETE is not met |
+| `.codex/worktrees/c2nav0-implementation` (219,462,730 B) | Its gitdir is pruned. The committed work lives only on the local branch `codex/c2nav34-odom-final`. `.navbench/c2nav35` holds an overlay `capture.hpp` whose blob is in no git object, plus build and selftest logs. The branch's `diagnostics/c2nav35/README.md` rebuilds `.navbench` from the upstream tarball, but not those logs | **KEEP** (unique source and evidence) |
+| `<repo>/tatus --short` (19,011 B) | Stray `less` save of a `git diff`. Its content is preserved twice: the md5-identical backup and stash `fcf5fa4`. An earlier session kept it on purpose | **SAFE-TO-DELETE** (duplicate); left for the owner |
+| `~/simple_gz_ws` (626,692 B) | See the notes below the table. | **SAFE-TO-DELETE**; left for the owner |
+
+Antigravity tarball:
+- It is the Antigravity IDE (Electron), not the `agy` CLI.
+- The IDE is not installed anywhere.
+- Its state directory `~/.gemini/antigravity` was created 2026-09-11 09:44,
+  14 minutes after the download, and has not changed since: 0
+  conversations.
+- The tarball is the only local copy. The IDE is a public download, so
+  offline recovery is the only reason to keep it.
+
+`~/simple_gz_ws`:
+- Not a git repo.
+- One package, `my_empty_world`: `ros2 pkg create` boilerplate (description
+  "TODO"), a 10-line empty SDF world and a 10-line launch file calling
+  Gazebo Classic `gazebo`, all dated 2025-04-17. The other ~620 KB is
+  `build/`, `install/` and `log/`.
+- Referenced only by the cleanup logs.
+
+Commands for the owner, if approved (none has been run):
+
+```bash
+rm -- "$HOME/ros2_ws(personal)/src/coco-robot-ros2/tatus --short"
+rm -r -- "$HOME/simple_gz_ws"
+rm -- "$HOME/Downloads/Antigravity.tar.gz"          # only if the IDE will never be reinstalled offline
+find /tmp -maxdepth 1 -name 'launch_params_*' -user "$USER" -type f -delete   # 0A leftovers; cleared at reboot anyway
+```

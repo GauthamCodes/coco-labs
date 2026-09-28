@@ -4,7 +4,8 @@
 robotics curriculum that runs on this real ROS 2 / Nav2 stack. The plan is
 [`docs/ROADMAP.md`](docs/ROADMAP.md); session prompts are
 [`docs/LAB_PHASES.md`](docs/LAB_PHASES.md). **Phase 0 ("make the repo tell
-the truth") is in progress. Phase 1 (Lab 1, Plan) has not started, and no
+the truth") is closed locally (Milestone 0C, 2026-09-29); its public actions
+(push, archive tags, name, video migration) await the owner's approval. Phase 1 (Lab 1, Plan) has not started, and no
 `coco_lab` package exists yet.** The previous roadmap is archived at
 `docs/history/ROADMAP_COCO2.md`.
 
@@ -14,7 +15,7 @@ everything below still describes it and still holds, **except where the
 CURRENT STATE section corrects it**. Measured results and known
 limitations are kept, including the bad ones.)
 
-## CURRENT STATE — 2026-09-29 (Phase 0, Milestone 0B)
+## CURRENT STATE — 2026-09-29 (Phase 0, Milestones 0B–0C)
 
 Labels used in this section: **(measured)** was produced by a run and is
 recorded with its evidence path. **(derived)** was computed from recorded
@@ -24,7 +25,7 @@ not current. **Unverified** means claimed or suspected but not observed.
 | | |
 |---|---|
 | **Direction** | COCO Lab, per `docs/ROADMAP.md`: Phase 0 → 1 Plan → 2 Localise → 3 Map → 4 Search → 5 Move. The COCO 2.0 priority order is superseded |
-| **Canonical branch** | `main` on `jazzy2` = GauthamCodes/coco-robot-jazzy-2.0. `main` at `442bca0` is on the remote (pushed 2026-09-29). Twelve other remote branches still exist; their archival as `archive/*` tags is prepared and awaits approval (`docs/data/m0b_phase0/README.md`) |
+| **Canonical branch** | `main` on `jazzy2` = GauthamCodes/coco-robot-jazzy-2.0. Remote `main` is `442bca0` (pushed 2026-09-29). Local `main` has fast-forwarded past it with the Phase 0 documentation (0B) and the reconciled session log (0C), awaiting `git push jazzy2 main`. Twelve other remote branches still exist; their archival as `archive/*` tags is prepared and awaits approval (`docs/data/m0b_phase0/README.md`) |
 | **P03C** | **On `main`**, through merge commit `232454d` (parents `b15d445` main, `917bc59` p03c-consolidation). It brings the 24 × 18 m arena, `EpisodeSpec` (`coco_sim/episode.py`), `TargetRegion` (`coco_config/robot.py`), `platform_server` (`coco_web`) and the `/cmd_vel_gated` wiring |
 | **Tests** | **1,966 passed / 0 failed / 0 skipped** (measured in Milestone 0A on `232454d`, per package, cwd inside each package, clean ROS graph, overlay with MoveIt): coco_config 93, coco_mission 338, custom_teleop 75, coco_rl 229, coco_perception 139, coco_moveit_config 12, coco_sim 280, coco_web 575, gazebo_models 225. Milestone 0B changed documentation only |
 | **Command path — topology** | (measured, 0A, every run) `/cmd_vel_gated`: exactly **one publisher** (`cmd_vel_relay`) and **one subscriber** (`cmd_vel_arbiter`). The wheel topic has exactly **one publisher** (`cmd_vel_arbiter`). The relay no longer publishes on `/cmd_vel_nav`, so the loop is gone |
@@ -32,7 +33,7 @@ not current. **Unverified** means claimed or suspected but not observed.
 | **Collision monitor — STOP** | **Not re-verified.** The STOP probe (same script as C2-NAV.42/43/47) did **not** reproduce the historical STOP. The robot came to rest **0.264 m** from the wall under FootprintApproach, and STOP never fired (`stop_held: false`, 0 STOP rows). C2-NAV.43 and 47 stopped under STOP at 0.249 m (historical). **Unexplained.** C2-NAV.48's `robot_radius` 0.25 is a hypothesis, **unverified** |
 | **Fetch on the consolidated `main`** | **4 / 4 COMPLETE** (measured, 0A: FIXED red, green, blue, yellow; fresh simulator each; 17/17 runner checks each). Home error 0.103 / 0.075 / 0.108 / 0.129 m. Nav-owned rows over the monitor 0 of 2,724. Short-streak residual 1.39 %, inside the documented, unattributed 0.088–2.92 %. **Four runs is not a rate** |
 | **P03C 13/13 matrix** | (historical) 13 of 13 COMPLETE/fetch in `~/coco_runs_p03c`, on an uncommitted tree whose recorded head was `dfcbc4b`, not `917bc59`. It was measured **after** the `/cmd_vel_nav` fix (6503cd5 is an ancestor of `dfcbc4b`), not with the loop. Its report carries two errors; see *Corrections* below |
-| **Master context** | **MASTER CONTEXT PATH UNRESOLVED**: not found on disk. `docs/ROADMAP.md` and `CLAUDE.md` refer to it; no replacement was created |
+| **Master context** | **MASTER CONTEXT: NOT PRESENT IN REPOSITORY.** Three Phase 0 searches (0A, 0B, 0C) found no document containing a §45 section anywhere on this machine; every hit was a reference to the search itself. **B2 is DROPPED**: the canonical master context does not exist as a repository file. `docs/ROADMAP.md` and `CLAUDE.md`'s COCO Lab addendum still mention it verbatim; read those mentions as pointing to a document outside the repository. No substitute was created |
 
 ### Corrections to the P03C report (2026-09-29)
 
@@ -79,7 +80,6 @@ deleted.
 
 - Why the STOP probe now ends under APPROACH at 0.264 m.
 - The attribution of the short-streak residual.
-- The master context's path.
 - The platform name. Candidates were checked in 0B; the choice is the
   owner's.
 - The archive tags and remote-branch deletions (prepared, not run).
