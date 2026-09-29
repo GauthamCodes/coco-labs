@@ -5339,3 +5339,93 @@ NEXT MILESTONE: Phase 1C — the real-stack hook, conformance and three
 real runs (LAB_PHASES.md §1C). Not started.
 EXACT NEXT ACTION: In a fresh session on branch `lab1`, read this entry
 and `docs/labs/ISRO_INVESTIGATION.md`, then execute LAB_PHASES.md §1C.
+
+## Phase 1C — the real-stack hook, conformance and three real runs (2026-09-29, in progress)
+
+Checkpoints are appended per sub-milestone. The approved plan, with the
+owner's decisions D-1 … D-6 at its top, is `docs/labs/PHASE_1C_PLAN.md`.
+
+### 1C-0 — reconstruction, baseline and plan checkpoint (2026-09-29)
+
+**Owner decisions (approved before this session; recorded, not re-asked):**
+- D-1: the real SLAM map-quality number is OUT of 1C and moves to Lab 3.
+  No generated or privileged map is substituted for it.
+- D-2: the costmap snapshot is `/global_costmap/costmap_raw`.
+- D-3: the smoothing comparison uses Smac's `unsmoothed_plan` output. It is
+  never described as "smoothing disabled": 1.3.11 has no such parameter.
+- D-4: the three runs' goal is world (0.5, 6.0), yaw 0.
+- D-5: bundle 1.1, additive, carries the recorded-run streams.
+- D-6: bundles go into git only if their committed total is ≤ 10 MB.
+
+**Starting state (FACT)**
+- Branch `lab1`, worktree `<repo>/.claude/worktrees/lab1`, HEAD
+  `e06dc94893a3f61138f7b68f0f4c4ccdc7329883`, equal to `jazzy2/lab1`
+  (fetched this session), tree clean.
+- Plan source `~/coco_lab_phase1c_plan.md`, SHA-256
+  `35ba2f85e455d5d62012cbac45082cc7bb5cc6efd9d05f443fa71b7ffe80c438`,
+  committed verbatim under the decisions header.
+- Installed: `nav2_smac_planner`, `nav2_costmap_2d`, `nav2_navfn_planner`,
+  `nav2_planner`, `nav2_controller`, `nav2_msgs` all `1.3.11-1noble.20260412`;
+  `rosbag2_py` 0.26.10; `slam_toolbox` 2.8.5.
+- Nav2 tag `1.3.11` is upstream commit
+  `6e0958affab9bc6c2367aa68c3bead164c2bc697` (`git ls-remote`). The sources
+  were re-fetched at that tag into `~/coco_lab_runs/lab1c/nav2_src_1.3.11/`
+  and hashed; the hashes and the installed-header cross-check are in
+  `docs/labs/CONFORMANCE.md`.
+- The mission `gazebo_models/config/nav2_params.yaml` SHA-256 is
+  `06c308aff78d4e7327212bbca280f62be7a7baef604ae41676e886b72301db8c`,
+  equal to `e06dc94`'s blob. This is the byte-identity reference for J4.
+- The saved map `coco_navigation` is 500 x 380 cells at 0.05 m, origin
+  (−6.5, −9.5), as the plan states.
+- No Gazebo, Nav2 or ROS process was running at session start. The Codex
+  desktop app was running, idle.
+
+**Baseline, measured (load average ≈ 1)**
+- `coco_lab` pip route (plain venv, `env -i`, rclpy absent, installed from
+  a copy outside the tree): **314 passed, 0 failed, 0 skipped**, 33.32 s.
+- `coco_lab` colcon route (job-local install, linters included):
+  **317 / 0 / 0**, 35.06 s.
+- Both equal the 1B-5 figures.
+- From a COCO-only overlay of this worktree (private ROS domain):
+  `gazebo_models` **227 / 0 / 0** (`--ignore=test_integration`),
+  `custom_teleop` **75 / 0 / 0**.
+
+**Discrepancies found (reported before implementing)**
+1. The session prompt names `docs/labs/RESULTS.md` and
+   `docs/PROJECT_STATE.md`. Neither exists: results live in
+   `docs/RESULTS.md` and the state file is the root `PROJECT_STATE.md`, as
+   1B-0 already recorded. Those are the files updated.
+2. **`scripts/build_overlay.sh` could not build this branch (measured).**
+   It requires `--symlink-install`, under which colcon runs `coco_lab`'s
+   `setup.py` through a symlink in the build directory; `setup.py` located
+   `requirements-test.txt` with `abspath`, beside the link, and failed with
+   `FileNotFoundError`, aborting every other package. The 1A/1B test routes
+   never used `--symlink-install`, so neither caught it. Fixed with
+   `realpath` (one line) and pinned by
+   `test_dependencies.py::test_setup_py_runs_through_a_symlink`. The overlay
+   then built all 10 packages. `coco_lab` after the fix: pip route **315 / 0 / 0**, colcon route **318 / 0 / 0** (each + the new test).
+3. The plan's line citations for `nav2_params.yaml` (":345-383") point a
+   few lines off in this file; the content (planner block) is as stated.
+
+**Source facts noted BEFORE any measurement (so they cannot be read as
+post-hoc explanations)**
+- `a_star.cpp:350-355`: once the best pushed heuristic is under
+  `tolerance / resolution` (5 cells), Smac counts "approach" iterations and
+  after `max_on_approach_iterations` (1000) returns the best-heuristic
+  node's CURRENT parent chain. That node can be the goal cell pushed but
+  not yet popped, so a path whose endpoint is the goal is not guaranteed
+  optimal. The pre-registered prediction (E equal within 1e-4 whenever the
+  endpoint is right) stands as written; this is the mechanism to examine
+  first if it fails (F-6).
+- `utils.hpp:44-53` (installed header): `getWorldCoords` returns
+  `origin + mx · res` for integer cell indices, i.e. the cell's lower-left
+  CORNER, not its centre. Smac 2D's raw and smoothed poses are therefore
+  expected half a cell (0.025 m) toward −x, −y of the cell centres. Smac
+  poses are mapped back to cells with `round`, not `floor`. To be checked
+  live in the static smoke test.
+- `a_star.cpp:425-437` + `smac_planner_2d.cpp:237-247`: the heuristic is
+  the Euclidean distance to the goal's CONTINUOUS map coordinates, so
+  h(goal cell) is up to √2/2, not 0. It remains consistent (1-Lipschitz),
+  so a popped goal is still optimal.
+
+NEXT: 1C-1 — `coco_lab_ros` skeleton, guards, pure modules and their tests.

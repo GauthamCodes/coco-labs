@@ -24,6 +24,8 @@ is a machine fact, recorded in docs/RESULTS.md, not re-run here.
 
 import os
 import re
+import subprocess
+import sys
 import xml.etree.ElementTree as ET
 
 HERE = os.path.join(os.path.dirname(__file__), '..')
@@ -52,3 +54,22 @@ def test_package_xml_declares_them_as_test_depends_only():
                for e in root.findall(tag)}
     assert not runtime, f'coco_lab declares runtime deps: {runtime}'
     assert root.find('export/build_type').text == 'ament_python'
+
+
+def test_setup_py_runs_through_a_symlink(tmp_path):
+    """
+    ``colcon build --symlink-install`` runs setup.py via a symlink.
+
+    scripts/build_overlay.sh requires --symlink-install, and colcon then
+    executes ``<build>/coco_lab/setup.py``, a symlink to the source file,
+    from a directory with no requirements-test.txt. With ``abspath`` the
+    extra's pins were looked for beside the link and the overlay build
+    failed (measured, Phase 1C-0); ``realpath`` follows the link.
+    """
+    link = tmp_path / 'setup.py'
+    link.symlink_to(os.path.realpath(os.path.join(HERE, 'setup.py')))
+    out = subprocess.run([sys.executable, str(link), '--name'],
+                         cwd=str(tmp_path), capture_output=True, text=True,
+                         timeout=60)
+    assert out.returncode == 0, out.stderr
+    assert out.stdout.strip().splitlines()[-1] == 'coco_lab'

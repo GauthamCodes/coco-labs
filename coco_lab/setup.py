@@ -17,7 +17,10 @@ import os
 from setuptools import find_packages, setup
 
 package_name = 'coco_lab'
-here = os.path.dirname(os.path.abspath(__file__))
+# realpath, not abspath: `colcon build --symlink-install` (which
+# scripts/build_overlay.sh requires) runs this file through a symlink in the
+# build directory, where requirements-test.txt does not exist.
+here = os.path.dirname(os.path.realpath(__file__))
 
 
 def _test_requirements():
