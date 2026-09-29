@@ -66,7 +66,8 @@ class Watch:
                        durability=QoSDurabilityPolicy.TRANSIENT_LOCAL))
         self.ex = MultiThreadedExecutor(num_threads=2)
         self.ex.add_node(self.node)
-        threading.Thread(target=self.ex.spin, daemon=True).start()
+        self.spin = threading.Thread(target=self.ex.spin, daemon=True)
+        self.spin.start()
 
     def _on_arb(self, msg):
         self.status = msg.data
@@ -92,7 +93,11 @@ class Watch:
                 'lab_phase': self.lab[-1]['phase'] if self.lab else None}
 
     def close(self):
+        # Stop the executor and JOIN its thread before destroying the node:
+        # destroying it under a spinning executor segfaulted at exit in the
+        # 1C dry run (measured, core dumped).
         self.ex.shutdown()
+        self.spin.join(timeout=10)
         self.node.destroy_node()
         rclpy.shutdown()
 

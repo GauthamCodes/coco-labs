@@ -33,6 +33,9 @@
 # Exit: 0 all checks passed; 1 a check failed (a RESULT, recorded);
 # 3 refused; 4 VOID (infrastructure, plan E.2/F-1); 5 F-3 (params differ).
 set -o pipefail
+# No core files: a crashing process must not fill the disk (the container
+# work measured apport writing 12 GB of cores on this machine).
+ulimit -c 0
 MODE="${1:?usage: lab1c_run.sh conformance|run|dry OUT [ALGO] [RUN_ID]}"
 OUT="${2:?usage: lab1c_run.sh MODE OUT}"
 ALGO="${3:-astar}"
@@ -268,3 +271,4 @@ print('watch samples', len(rows), 'violations', len(bad))
 sys.exit(1 if bad or not rows else 0)
 EOF
 say "session finished"
+exit "$FAIL"

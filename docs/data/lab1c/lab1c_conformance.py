@@ -172,7 +172,8 @@ def main():
     probe = Nav2Probe(name='lab1c_conformance_probe')
     ex = MultiThreadedExecutor(num_threads=4)
     ex.add_node(probe)
-    threading.Thread(target=ex.spin, daemon=True).start()
+    spin = threading.Thread(target=ex.spin, daemon=True)
+    spin.start()
     log = open(os.path.join(a.out, 'conformance.log'), 'a')
 
     def say(*x):
@@ -303,6 +304,7 @@ def main():
             'valid', doc.get('valid'), 'draws', doc['draws'],
             'void', len(doc['void']), 'no_path', len(doc['no_path']))
         ex.shutdown()
+        spin.join(timeout=10)       # never destroy under a spinning executor
         probe.destroy_node()
         rclpy.shutdown()
     return 0
