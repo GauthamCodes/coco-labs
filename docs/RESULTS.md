@@ -6447,3 +6447,234 @@ produced degradation → recovery → resume → COMPLETE.
    C2-M5.1, deliberately.
 5. **`check_lifted` does not check upright** and `check_released` asserts
    the floor height at home. Both stand from C2-M4.1.
+
+---
+
+## COCO Lab Phase 1A — the `coco_lab` core and its proofs (measured 2026-09-29)
+
+`coco_lab` (new package, branch `lab1`) is Lab 1's core:
+- the graph interface (`graph.py`);
+- the occupancy/cost grid (`grid.py`);
+- the four heuristics and the admissibility/consistency analysis that
+  the UI badge will come from (`heuristics.py`);
+- the five algorithms, BFS, Dijkstra, A\*, greedy best-first and
+  weighted A\* (`search.py`);
+- trace schema v1 (`trace.py`, documented in
+  [`docs/labs/TRACE_SCHEMA.md`](labs/TRACE_SCHEMA.md)).
+
+It is pure Python with a standard-library-only runtime and never imports
+`rclpy`. No web code and no ROS code were written.
+
+### Reproduce
+
+The pip route runs in a plain venv with no ROS anywhere:
+
+```bash
+python3 -m venv ~/labvenv          # needs python3-venv (see "Machine facts")
+~/labvenv/bin/pip install "./coco_lab[test]"        # from the repo root
+cd coco_lab && ~/labvenv/bin/python -P -m pytest --hypothesis-show-statistics \
+  --ignore=test/test_copyright.py --ignore=test/test_flake8.py \
+  --ignore=test/test_pep257.py      # the ament linters need ament
+```
+
+The colcon route uses ROS Jazzy and the per-package pytest convention in
+CLAUDE.md:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+rosdep install --from-paths <repo>/coco_lab --ignore-src -y  # python3-hypothesis
+colcon build --packages-select coco_lab && source install/local_setup.bash
+cd <repo>/coco_lab && python3 -P -m pytest --hypothesis-show-statistics
+```
+
+`-P` keeps the package directory off `sys.path`, so the **installed** copy
+is tested. `test/conftest.py` prints which copy was imported, and the
+hypothesis and networkx versions, in the report header.
+
+### Test counts (measured)
+
+| route | coco_lab imported from | result | suite time |
+|---|---|---|---|
+| colcon build + ROS Jazzy sourced | the colcon install tree | **141 passed, 0 failed, 0 skipped** | 22.89 s (23.6 s wall) |
+| `pip install coco_lab[test]`, plain venv, `env -i`, no ROS on `sys.path` (`import rclpy` → `ModuleNotFoundError`) | the venv's site-packages | **138 passed, 0 failed, 0 skipped** (the 3 ament linters excluded) | 22.50 s (25.5 s wall) |
+
+Both used hypothesis 6.98.15, networkx 2.8.8 and pytest 7.4.4 on Python
+3.12.3, with load average ≈ 3 on 12 cores. The suite's runtime depends on
+machine load. An earlier revision of this suite, run while other sessions'
+simulators held the load average at 28, took 49–61 s.
+
+| test file | tests |
+|---|---|
+| `test_search.py` | 44 |
+| `test_heuristics.py` | 30 |
+| `test_grid.py` | 22 |
+| `test_trace.py` | 20 |
+| `test_properties.py` | 9 |
+| `test_graph_interface.py` | 6 |
+| `test_no_ros.py` | 3 |
+| `test_stdlib_only.py` | 2 |
+| `test_dependencies.py` | 2 |
+| `test_copyright.py`, `test_flake8.py`, `test_pep257.py` | 1 each |
+| **total** | **141** |
+
+### The properties (measured)
+
+The oracle is networkx's Dijkstra on a `DiGraph` built from the grid's own
+`neighbours` and `edge_cost`. The grid's move generation is pinned
+separately, by hand-checked cases in `test_grid.py`.
+
+Every optimal algorithm must equal the oracle, and a no-path result must
+match networkx. Agreement is exact within 1e-9 relative, which absorbs only
+the float summation order of 1, √2 and cost-layer factors.
+
+The maps are seeded and derandomized:
+- sides 1–30;
+- density 0–0.6;
+- 4- or 8-connected, with diagonals costing √2 or 1;
+- corner cutting on or off;
+- a cost layer with weight 0.5, 2 or 10 on about half of them.
+
+Every property ran **1,000 passing examples and 0 failing** on both routes.
+"Invalid" draws are discarded ones, as explained below the table.
+
+| property | valid maps | discarded | maps with a path | time |
+|---|---|---|---|---|
+| A\* cost = Dijkstra cost = oracle (admissible h) | 1000 | 58 | 1000 | 2.81 s |
+| A\* expanded set ⊆ Dijkstra's ∪ {s : g\*(s) = C\*} (consistent h) | 1000 | 71 | 1000 | 2.80 s |
+| weighted A\* C\* ≤ cost ≤ w·C\*, w ∈ [1, 5] (admissible h) | 1000 | 58 | 1000 | 2.63 s |
+| w = 0 reproduces Dijkstra: cost, and the whole event stream and summary | 1000 | 0 | 516 | 2.86 s |
+| BFS = oracle under unit costs, and hops = networkx's | 1000 | 49 | 1000 | 1.96 s |
+| greedy cost ≥ C\* (any h) | 1000 | 49 | 1000 | 2.49 s |
+| all five agree on found / no path (any h, w ∈ [0, 5]) | 1000 | 0 | 390 (610 no path) | 3.49 s |
+| heuristic analysis never contradicted by true cost-to-go (`test_heuristics.py`) | 1000 | 0 | — | 2.25 s |
+
+- **Discards.** In the path-cost properties the goal is drawn from the
+  start's connected component. A map where no free cell has any neighbour,
+  such as 1×1, cannot give a path of at least one move, so it is discarded
+  with `assume`. All 1,000 valid maps in those rows have start ≠ goal and a
+  path.
+- **"Up to ties".** A\* may expand a state that Dijkstra did not only if
+  `g*(s) = C*` within 1e-9. The test also checks the reason: every state
+  A\* expands has `g*(s) + h(s) ≤ C*`.
+- **The analysis property.** Of the 1,000 maps, 785 carried an
+  admissible verdict, and it held on every state and every edge. 215 carried
+  an inadmissible verdict: 107 of those maps exposed the overestimate and
+  108 hid it behind obstacles. An inadmissible verdict is proved by its
+  witness instead (below).
+- **The greedy counterexample** is committed in `test_properties.py`
+  (`GREEDY_COUNTEREXAMPLE`: 5×5, 4-connected, Manhattan). Greedy's path
+  costs **7** against an optimum of **5**, under both tie-breaks. It walks
+  the top row into the pocket beside the wall.
+
+### The heuristic badge (`heuristics.analyse`)
+
+The verdict is decided exactly by checking single moves: each of the four
+heuristics is a norm, so it is consistent, and hence admissible, iff no
+single move's heuristic exceeds that move's base cost. The proof is in the
+docstring. The cost layer only multiplies edge costs by a factor ≥ 1, so
+the verdict holds for every map, cost layer included.
+
+| move model | zero | Manhattan | Euclidean | octile |
+|---|---|---|---|---|
+| 4-connected | ✓ | ✓ | ✓ | ✓ |
+| 8-connected, diagonal √2 | ✓ | ✗ (h = 2 > √2) | ✓ | ✓ |
+| 8-connected, diagonal 1 | ✓ | ✗ (2 > 1) | ✗ (√2 > 1) | ✗ (√2 > 1) |
+| 8-connected, diagonal 2 | ✓ | ✓ | ✓ | ✓ |
+
+- **Octile on a grid whose diagonals cost 1** is reported inadmissible, with
+  the diagonal move as its witness (h = √2 > 1). That is ISRO hypothesis
+  (b), which Phase 1B will test.
+- **Every ✗ carries a witness move,** and a test checks each one is a real
+  counterexample on an empty 3×3 grid.
+- **The check has teeth.** On a committed 6×3 map, A\* with Manhattan on
+  √2 diagonals returns **5 + √2 = 6.414** against the optimum
+  **3 + 2√2 = 5.828**; with octile it returns the optimum. On an *empty*
+  5×10 grid Manhattan happened to stay optimal, which is why the committed
+  map needs its obstacles.
+
+### Mutation check (measured; the scripts were not committed)
+
+Six deliberate bugs were injected into a copy of `search.py`, and
+`test_properties.py` was run against each copy. The report header confirmed
+the mutant was the copy imported.
+
+| mutant | caught by |
+|---|---|
+| no relaxation of open states | 4 properties |
+| A\* uses f = g + 1.5h | A\* = Dijkstra; A\* ⊆ Dijkstra |
+| BFS pops LIFO (depth-first) | BFS optimal under unit costs |
+| goal test on push instead of expansion | 4 properties |
+| gives up after 150 expansions | 6 properties, including all-five-agree-on-no-path |
+| weighted A\* uses w² instead of w | **no property** |
+
+- **Why `w²` survived.** The w·C\* bound is true but loose on these maps,
+  so a search with a weight of w² still met it on all 1,000.
+- **The fix.** `test_search.py::test_f_is_exactly_the_documented_priority`
+  now pins the priority on every event, and it fails 3 of its 8 cases on
+  that mutant (w = 0.5, 2.5 and 5; w = 0 cannot tell w from w²).
+- **What this shows about bounds.** A property that states a bound is
+  necessary but not sufficient evidence that the algorithm is the one
+  described.
+
+### Determinism (measured)
+
+- For the same inputs, every algorithm produces the same trace
+  (`test_same_inputs_same_trace`).
+- It is also the same across processes. The five traces' canonical JSON
+  hashes to one SHA-256 under `PYTHONHASHSEED` 0, 1 and 12345
+  (`test_traces_are_identical_across_processes_and_hash_seeds`).
+- `weighted_astar` with w = 0 reproduces Dijkstra's event stream exactly,
+  on all 1,000 maps of that property.
+
+### Failures during the session, and their causes
+
+No property ever failed against the algorithms as written. Every failure
+below was in a test, or in the evidence.
+
+1. **Manhattan-suboptimality map.** The first map for "an inadmissible
+   heuristic makes A\* suboptimal" was an empty grid, and there A\* with
+   Manhattan stayed optimal. It was replaced by the committed 6×3 map, found
+   by a seeded search. Its expected cost was first written by hand as
+   2 + 3√2, which was an arithmetic error; A\* returns 5 + √2.
+2. **Relax test.** The first relax test never relaxed: in Dijkstra the cheap
+   route arrived first. It was redesigned around a costly centre cell,
+   pushed diagonally at 11√2 and then relaxed orthogonally to 12.
+3. **Doc-pin regex.** The regex that pins `TRACE_SCHEMA.md` to the code
+   also matched the header table. It is now scoped to the event-columns
+   section.
+4. **pep257.** ament's pep257 rejected 27 docstrings under D213 (summary on
+   the first line), and later one more. They were converted to the repo's
+   style, with `"""` on its own line.
+5. **Coverage.** In the first version, 42–52 % of each property's 1,000 maps
+   had no path. On those maps the cost properties compare `None` with
+   `None`, so each theorem was really tested on about 500 maps. The
+   path-cost properties now draw the goal from the start's component and
+   discard trivial maps, as the table shows.
+6. **The `w²` mutant.** It survived every property; see the mutation check.
+
+### Machine facts found this session (measured)
+
+- **rosdep keys verified, not assumed.** `rosdep resolve python3-hypothesis
+  python3-networkx python3-pytest` resolves each to the apt package of the
+  same name. apt's candidates on this machine are `python3-hypothesis`
+  6.98.15 and `python3-networkx` 2.8.8. `requirements-test.txt` pins exactly
+  these.
+- **`python3-hypothesis` is not installed, and there is no passwordless
+  sudo.** A bare `colcon test` on this machine would therefore fail to
+  import hypothesis until `rosdep install` has run. The colcon-route row
+  above used a `--system-site-packages` venv that adds only the two pinned
+  packages.
+- **The user's `~/.local` has networkx 3.6.1** (a pip `--user` install). The
+  measured runs used 2.8.8, as the report headers show.
+- **`python3-venv` (ensurepip) is not installed.** The plain venv was
+  created with `--without-pip` and filled by the system pip 24 via
+  `pip --python <venv>/bin/python`.
+
+### Not yet measured
+
+- Pyodide loading the package, which is Phase 1D.
+- How the declared cost function
+  `base × (1 + cost_weight · cost[b] / cost_scale)` compares with
+  SmacPlanner2D's. Phase 1C reads Smac's source; nothing here claims they
+  match.
+- A bare `colcon test`, with apt-installed `python3-hypothesis`.

@@ -5056,3 +5056,117 @@ each deletion)
 
 NEXT MILESTONE: Phase 1A
 EXACT NEXT ACTION: Start a fresh Claude Code session and execute LAB_PHASES.md §1A.
+
+---
+
+## Phase 1A — the coco_lab core and its proofs (2026-09-29)
+
+**Status:** COMPLETE. Only 1A was done. There is no 1B work, no web code,
+no ROS code, and no algorithm beyond the five.
+
+**Precondition, checked at session start**
+- `SESSION_LOG.md` shows PHASE 0 — CLOSED and Milestone 0C COMPLETE.
+- Local `main` is `9ee4a52`, the CLOSED checkpoint.
+- Public `jazzy2/main` is `6853517`. The Phase 0 docs are public; the
+  CLOSED checkpoint commit is still local-only, as that entry itself
+  records.
+
+**Where**
+- Branch `lab1`, created from `main` `9ee4a52`.
+- Worktree `<repo>/.claude/worktrees/lab1`.
+- The SHA is the commit that carries this entry. `main` is untouched.
+
+**What was built**
+- `coco_lab/`, an ament_python package. Its runtime is standard-library
+  only (`install_requires=[]`) and it never imports rclpy. It builds with
+  colcon AND pip-installs into a plain venv. Modules:
+  - `graph.py`: the SearchGraph interface — `neighbours`, `edge_cost`,
+    `heuristic`, `locate`, `is_valid`. A (cell, heading) state space
+    plugs in without touching the algorithms; `test_graph_interface.py`
+    proves it with a toy heading space defined only in the test.
+  - `grid.py`: occupancy plus an optional cost layer; 4- and
+    8-connectivity; diagonal cost √2 (or 1); corner cutting off by
+    default, with a toggle. The declared cost function is
+    `base × (1 + cost_weight · cost[b] / cost_scale)`, with defaults 2.0
+    and 252.
+  - `heuristics.py`: zero, Manhattan, Euclidean and octile, plus
+    `analyse()`, which gives the admissible/consistent verdict with a
+    witness move and an exact single-move proof.
+  - `search.py`: BFS, Dijkstra, A\*, greedy and weighted A\*.
+    - The goal test runs on expansion, and closed states are never
+      reopened.
+    - Tie-breaking is `low_h` by default, with `fifo` behind a toggle.
+    - It is deterministic.
+  - `trace.py`: trace schema v1, with columnar push/expand/relax/path
+    events, a summary, and MAJOR.MINOR versioning.
+- `docs/labs/TRACE_SCHEMA.md`, pinned to the code by a test.
+- `requirements-test.txt` pins hypothesis 6.98.15, networkx 2.8.8 and
+  pytest 7.4.4. `package.xml` declares `python3-hypothesis` and
+  `python3-networkx` as test_depend.
+- `docs/RESULTS.md` has a new section, "COCO Lab Phase 1A".
+
+**Measured**
+- Tests:
+  - colcon route (ROS Jazzy, the colcon install tree imported): **141
+    passed, 0 failed, 0 skipped**, 22.89 s.
+  - pip route (plain venv, `env -i`, rclpy absent): **138 / 0 / 0**, the
+    3 ament linters excluded, 22.50 s.
+  - Load average was ≈ 3. Runs at load 28 took 49–61 s.
+- Properties: 7 roadmap properties plus the heuristic-analysis
+  cross-check. Each ran **1,000 passing examples, 0 failing**. The
+  path-cost properties' 1,000 all have a path of at least one move
+  (49–71 trivial draws discarded).
+- Oracle: networkx on the identical graph, exact within 1e-9 relative.
+- Committed counterexamples:
+  - greedy costs 7 against an optimum of 5;
+  - A\* with Manhattan on √2 diagonals costs 5 + √2 against an optimum of
+    3 + 2√2.
+- Mutation check: 5 of 6 injected bugs are caught by the properties.
+  - The survivor, weight w² instead of w, passes the loose w·C\* bound.
+  - It is now caught by a test pinning `f` on every event.
+- Determinism: one SHA-256 for all five traces under three
+  PYTHONHASHSEEDs.
+- rosdep keys verified with `rosdep resolve`. On this machine they
+  resolve to apt 6.98.15 / 2.8.8.
+
+**Failures, all fixed.** Every failure was a test or evidence defect, and
+none came from an algorithm. RESULTS.md lists all six with causes. The
+most important one: the first property design gave about 500 path-bearing
+maps per property, not 1,000.
+
+**UNVERIFIED**
+- A bare `colcon test`. `python3-hypothesis` is not apt-installed, and
+  there is no passwordless sudo. The colcon run used a
+  `--system-site-packages` venv that adds only the two pins.
+- Pyodide loading `coco_lab` (1D).
+- The declared cost function against SmacPlanner2D's (1C). No
+  equivalence is claimed.
+- A\*'s expanded set on no-path maps. Its branch in the ⊆-Dijkstra
+  property is dead, because that property now draws reachable goals.
+  The five algorithms' status agreement on no-path maps IS tested (610
+  such maps).
+
+**Traps paid this session**
+- ament's pep257 enforces D213: the docstring summary starts on the line
+  after `"""`.
+- `python3-venv` is missing here. Use `python3 -m venv --without-pip`,
+  then `python3 -m pip --python <venv>/bin/python install …`.
+- In this worktree, the Bash sandbox refuses compound commands that use
+  `env -i`, `$VAR` as the command name, loops, or heredocs. Put the steps
+  in a script file and `bash` it.
+- The worktree session cannot run a command that names another path as
+  its executable through a variable. Use absolute paths.
+
+**HUMAN DECISIONS REQUIRED**
+1. Optional: `sudo apt install python3-hypothesis`, or `rosdep install
+   --from-paths coco_lab --ignore-src`, so a bare `colcon test` can run.
+2. Phase 1B step 4 asks you for the ISRO simulator's source. Without it,
+   1B's result is labelled a reconstruction, never a diagnosis.
+3. Carried from Phase 0: pushing the local `main` checkpoint `9ee4a52`;
+   the archive tags; the name; the video migration; the Antigravity
+   installer; your uncommitted CLAUDE.md edit.
+
+NEXT MILESTONE: Phase 1B — bundles, maps, and the ISRO reconstruction.
+EXACT NEXT ACTION: In a fresh session, on branch `lab1`, execute
+LAB_PHASES.md §1B, and have the ISRO source (or the decision to go without
+it) ready.

@@ -1,0 +1,3 @@
+include package.xml
+include requirements-test.txt
+include resource/coco_lab
