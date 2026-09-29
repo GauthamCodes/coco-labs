@@ -5170,3 +5170,68 @@ NEXT MILESTONE: Phase 1B — bundles, maps, and the ISRO reconstruction.
 EXACT NEXT ACTION: In a fresh session, on branch `lab1`, execute
 LAB_PHASES.md §1B, and have the ISRO source (or the decision to go without
 it) ready.
+
+## Phase 1B — bundles, maps and the ISRO reconstruction (2026-09-29, in progress)
+
+Checkpoints are appended per sub-milestone.
+
+**Owner decisions this session (asked, answered):**
+1. The ISRO algorithm functions may be vendored VERBATIM into `coco_lab`,
+   pinned to upstream commit `5aad7b3`, with per-function hash checks.
+   They become public when `lab1` is pushed.
+2. There is no original internship-era `.py` and no
+   `simulation_metrics.csv`. The report's code listing, transcribed at
+   `5aad7b3`, is the source of truth. Table 1's raw data is absent.
+3. The arena map precision/recall is reported as a
+   rasterisation-consistency check, NOT map quality. The honest number is
+   deferred to 1C, because the saved Nav2 map is generated from the same
+   parameters as the world.
+
+### 1B-0 — recovery and baseline (2026-09-29)
+
+- Branch `lab1` at `c3713dd` == `jazzy2/lab1`, tree clean. The Phase 1A
+  entry above matches the repository.
+- Doc paths: `AGENTS.md` does not exist. `PROJECT_STATE.md` and
+  `HOW_TO_RUN.md` are at the repo root, not under `docs/`.
+- No 1A venv survived, so both routes were rebuilt in the job's tmp
+  directory.
+- **Measured baseline:**
+  - pip route (plain venv, `env -i`, `rclpy` absent): **138 / 0 / 0**,
+    20.00 s.
+  - colcon route (the tmp install tree imported): **141 / 0 / 0**,
+    21.09 s.
+  - Load average 0.2 to 1.4; hypothesis 6.98.15, networkx 2.8.8.
+- **Trap:** `pip install ./coco_lab` builds in-tree, creating
+  `coco_lab/build/` and `coco_lab.egg-info` (both gitignored). ament_flake8
+  then also lints the stale `build/lib` copy. Install from a copy of the
+  package outside the source tree instead. The two artefacts from this
+  session were removed.
+
+### 1B-1 — map contract (2026-09-29)
+
+- **Built:**
+  - `coco_lab/maps.py`: map schema v1 (`coco_lab.map` "1.0"), `LabMap`
+    (occupancy free/occupied/unknown, optional cost layer, optional
+    placement), `content_hash`, `to_grid`, `downsample`, `Raster`, the
+    Nav2 saved-map import/export, and `compare_occupied`.
+  - `coco_lab/teaching.py`: eight 20 x 20 fixtures, each with a claim.
+  - `docs/labs/MAP_FORMAT.md`, pinned to the code by a test.
+  - `docs/data/lab1b/arena_maps.py` and its output `arena_maps.json`.
+- **Decisions:**
+  - The move model is a run input, not part of the map. Unknown cells are
+    blocked by default.
+  - Row 0 is the top row, and `origin` is the bottom-left corner.
+- **Found:**
+  - A saved map read with `free_thresh` 0.25 turns map_saver's unknown
+    pixel 205 (occ 0.196) into FREE. `to_nav2` writes 0.196, as the repo's
+    generator does, and a test pins the difference.
+- **Measured:**
+  - Tests: pip route **219 / 0 / 0** (20.89 s); colcon route
+    **222 / 0 / 0** (21.83 s).
+  - Arena maps, a rasterisation-consistency number and NOT map quality
+    (decision 3).
+    - All occupied cells: precision **0.9456**, recall **0.5771**.
+    - Boxes only: precision **0.8941**, recall **1.000**.
+    - The saved map marks **13,186 of 15,600** ramp-body cells unknown.
+- **Unverified:** a map-quality number. That needs a slam_toolbox map of
+  `coco_navigation`, which is 1C at the earliest.

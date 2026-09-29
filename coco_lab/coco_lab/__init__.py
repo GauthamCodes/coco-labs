@@ -26,6 +26,8 @@ Modules:
   and consistency analysis the UI badge comes from
 - :mod:`coco_lab.search` -- the five algorithms
 - :mod:`coco_lab.trace` -- trace schema v1
+- :mod:`coco_lab.maps` -- map schema v1, Nav2 saved-map import, rasterising
+- :mod:`coco_lab.teaching` -- Lab 1's 20 x 20 teaching maps, claims tested
 """
 
 __version__ = '0.1.0'
