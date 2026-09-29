@@ -5589,3 +5589,93 @@ segfault at exit, a core dump, a runner exiting 0 on a FAIL).
 
 NEXT: 1C-5 — the three real runs, fresh simulator each: A\*, Dijkstra,
 greedy.
+
+### 1C-5 — the three real runs (2026-09-29, measured)
+
+`lab1c_run.sh run`, commit `248cac1` (clean), a fresh simulator each, in
+the approved order, 18:33–18:41 UTC, ROS domain 65, load 1.5–5.7.
+Evidence: `docs/data/lab1c/runs/`, `runs.json`, bundles in
+`docs/data/lab1c/bundles/`, bags in `~/coco_lab_runs/lab1c/run_<algo>/bag`.
+
+- Every runner check PASS in all three; 0 voids, 0 re-runs. All three
+  planned on the identical snapshot (`f7797c19…` = the conformance S0)
+  from the identical start cell (130, 190) to G\* (180, 310).
+- **A\***: SUCCEEDED, 27.372 s sim / 30.708 s wall, tracking error mean
+  0.072 m (p95 0.162, max 0.177), endpoint 0.191 m, 0 recoveries.
+- **Dijkstra**: SUCCEEDED, 27.456 s sim / 30.213 s wall, tracking mean
+  0.064 m (p95 0.153, max 0.208), endpoint 0.171 m, 0 recoveries. Same
+  optimal cost as A\* (160.0416) on a different, tied cell path; 33,374
+  expansions to A\*'s 7,100.
+- **Greedy**: FollowPath **ABORTED, `FAILED_TO_MAKE_PROGRESS` (105)** after
+  18.364 s sim. Its plan cost 369.1705 (2.31× the optimum) through 58
+  cells of raw cost ≥ 128; the robot stalled 1.27 m along the 11.25 m
+  plan, 5.289 m from the goal, 0.049 m moved in the last 10 s (the
+  progress checker needs 0.1 m per 10 s), collision monitor in
+  `PolygonSlow` for the last 12.8 s. A result (F-4), not a void.
+- Bundles 1.1 (all four streams present), built from each bag and equal
+  in trace and map to the node's glass-box bundle. Total 909,380 B ≤ 10 MB
+  → committed (D-6). Bags 6.9–8.4 MB each, external, SHA-256 in
+  `runs.json` and RESULTS.md.
+
+## Phase 1C — COMPLETE (2026-09-29)
+
+**Status:** COMPLETE: J1–J11 hold, with the negative results documented as
+results (plan §K).
+
+- **Branch** `lab1`. Commits this phase: `9daa3be` (1C-0), `0684b0f`
+  (1C-1/1C-2), `cb4e2b3` (dry-run fixes), `248cac1` (1C-3/1C-4), and the
+  closeout commit carrying this entry.
+- **Tests (measured, final regression, fresh overlay):** `coco_lab` pip
+  route **333 / 0 / 0**, colcon route **336 / 0 / 0**; `coco_lab_ros`
+  **69 / 0 / 0**; `gazebo_models` **229 / 0 / 0**; `custom_teleop`
+  **75 / 0 / 0** (untouched). 0 skipped anywhere.
+- **Invariants at close:** mission `nav2_params.yaml` SHA-256 `06c308af…`
+  (= `e06dc94`); no file of `custom_teleop`, `coco_mission`, `coco_web`,
+  `coco_config` or the mission's Nav2 config changed; the wheel topic's
+  only publisher was `cmd_vel_arbiter` in every sample of every session;
+  `ros_clean.sh --list` empty after every session.
+- **Conformance:** 50 valid pairs; the prediction held 36 / 36 (max
+  1.08e-15); 14 / 50 Smac raw paths stopped 1–2 cells short (post-hoc:
+  C1-optimal to where they stopped). **NavFn/M3:** M3's goal is absent
+  from the current world; M3's 6.2 % is neither reproduced nor refuted;
+  the present-day analogue measured Smac 1.378 % shorter than NavFn on one
+  pair. **Runs:** A\* and Dijkstra succeeded, greedy failed.
+- **Artifacts:** bundles in git (0.91 MB); bags external under
+  `~/coco_lab_runs/lab1c/` with their hashes committed; Nav2 1.3.11
+  sources fetched to `~/coco_lab_runs/lab1c/nav2_src_1.3.11/`, hashed in
+  CONFORMANCE.md.
+
+**Traps paid this phase (for CLAUDE.md's list; not added there — it is
+user-owned):**
+- `scripts/build_overlay.sh` requires `--symlink-install`, which runs a
+  package's `setup.py` through a symlink: resolve its own directory with
+  `realpath`, never `abspath`.
+- NavFn's `makePlan` writes FREE_SPACE into the global costmap it shares
+  with every other planner on planner_server, at each request's start
+  cell, and the write persists.
+- `ament_flake8` forks worker processes; forked after rclpy threads ran
+  in the same pytest process, a worker deadlocked on a futex. Run the
+  linters first.
+- Destroying an rclpy node under a still-spinning executor segfaulted at
+  exit: shut the executor down and JOIN its thread first.
+- A scratch script named `inspect.py` shadowed the stdlib for every script
+  in its directory (the CLAUDE.md scratch-dir trap, paid again).
+
+**UNVERIFIED / not measured:** a real map-quality number (Lab 3, D-1);
+any rate (one snapshot, one run each); M3 on its own world (an owner
+decision); the mechanism of the 14 short Smac paths beyond post-hoc
+consistency; NavFn's propagation in detail; the `lab_stack.launch.py
+planner:=true` route live (tested structurally only).
+
+**HUMAN DECISIONS REQUIRED:**
+1. Phase 1D go-ahead.
+2. Optional: a close replication of M3 on the frozen v1 world (world and
+   map unchanged since `58b307e`, lidar moved), as its own experiment.
+3. Carried: the Phase 0 public actions; `sudo apt install
+   python3-hypothesis` for a bare `colcon test`.
+
+NEXT MILESTONE: Phase 1D — the web app skeleton, measured
+(`LAB_PHASES.md` §1D). Not started.
+EXACT NEXT ACTION: In a fresh session on branch `lab1`, read this entry and
+`docs/labs/BUNDLE_FORMAT.md` (1D's decoder must read 1.1's recording
+arrays), then execute LAB_PHASES.md §1D.

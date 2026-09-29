@@ -6841,3 +6841,272 @@ No Phase 1A test was removed or weakened. The linter tests gained one
   HYPOTHESIS: a small-sample difference over runs without fixed inputs. The
   inputs and the CSV no longer exist.
 - **Whether the historical runs ever hit the smoother's infinite loop.**
+
+## COCO Lab Phase 1C — the real-stack hook, conformance and three real runs (measured 2026-09-29)
+
+Branch `lab1`, on top of Phase 1B (`e06dc94`). The design is
+[`docs/labs/PHASE_1C_PLAN.md`](labs/PHASE_1C_PLAN.md) with the owner's
+decisions D-1 … D-6; the source reading is
+[`docs/labs/CONFORMANCE.md`](labs/CONFORMANCE.md); the evidence is
+`docs/data/lab1c/` (README there). Every number below is **(measured)** —
+produced by a run in this session and held in a committed JSON — or
+**(derived)** from measured values by a stated formula. `coco_lab` was not
+tuned to match anything.
+
+This adds:
+- **`coco_lab_ros`**: `lab_planner` (plans once from the AMCL belief on a
+  `costmap_raw` snapshot with a `coco_lab` algorithm and sends ONE
+  unsmoothed path to controller_server's `FollowPath`; never publishes
+  velocity), the costmap adapter, the metrics, the lab-only Nav2 overlay
+  (adds only `NavFnAStar`), `lab_stack.launch.py`, the bag → bundle
+  exporter.
+- **Bundle 1.1** (D-5): recorded-run streams, additive; 1.0 bundles
+  byte-identical.
+- **The conformance sweep and the three real runs.**
+
+**Bringup used (plan §C.3, FACT):** `full_world_robo.launch.py gui:=false
+traverse:=true` (fresh, headless, never `--fast`), then
+`lab_stack.launch.py` = `custom_teleop arbiter.launch.py
+initial_mode:=nav` + `gazebo_models nav.launch.py arbiter:=true
+params_file:=<mission params + lab overlay>`. No executive, perception,
+MoveIt, web or RViz. The arbiter's mode is set by its launch parameter;
+nothing publishes `/mission/mode`. ROS domain 65.
+
+### Tests (measured; final regression at load 1.1–1.5)
+
+| suite | at 1C-0 (`e06dc94`) | after 1C |
+|---|---|---|
+| `coco_lab` pip route (plain venv, `env -i`, no ROS; 3 linters excluded) | 314 / 0 / 0 | **333 / 0 / 0** (34.13 s) |
+| `coco_lab` colcon route, linters included | 317 / 0 / 0 | **336 / 0 / 0** (37.26 s) |
+| `coco_lab_ros` | — | **69 / 0 / 0** (15.88 s) |
+| `gazebo_models` (`--ignore=test_integration`) | 227 / 0 / 0 | **229 / 0 / 0** (12.00 s) |
+| `custom_teleop` (not touched) | 75 / 0 / 0 | **75 / 0 / 0** |
+
+`coco_lab` +19: the `setup.py` symlink test (1) and bundle 1.1 (18).
+`gazebo_models` +2: existing parametrized `ros_clean.sh` tests over the
+new patterns. No test was removed or weakened. `coco_lab_ros`'s static
+smoke test runs the real map_server + planner_server; it is not skipped.
+
+### Safety of the hook (measured)
+
+- In every session (dry run, conformance, three runs): the wheel topic's
+  only publisher was `cmd_vel_arbiter` at start and end, and in every
+  1-second watch sample between (50 / 51 / 40 samples in the three runs,
+  341 in the conformance session; **0 violations**): no publisher added to
+  any arbiter input or command-chain link, arbiter `mode=nav` throughout,
+  `lab_planner` publishing only `/lab/plan`, `/lab/status`,
+  `/lab/costmap_snapshot`, `/lab/trace_gz` (plus `/rosout`,
+  `/parameter_events`).
+- 67 live planner_server + global_costmap parameters equal the merged
+  file, per session; the mission `nav2_params.yaml` SHA-256 equals
+  `e06dc94`'s, per session.
+- Tests: the forbidden-topic list is read from the arbiter's own source;
+  no Twist import; every `create_publisher` names a lab topic; a
+  constructed node's live publisher list holds only lab topics.
+
+### Conformance: coco_lab vs SmacPlanner2D vs NavFn (measured / derived)
+
+One fresh simulator, robot stationary at spawn, commit `cb4e2b3`,
+18:23–18:30 UTC. Seed 20260929. Evidence
+`docs/data/lab1c/conformance/` (`conformance.json` raw records,
+`conformance_summary.json` from `lab1c_report.py`).
+
+- **Snapshot S0** `sha256:f7797c19…` (`/global_costmap/costmap_raw`, D-2),
+  500 × 380 at 0.05 m, 117,387 candidate cells (raw ≤ 252) (measured).
+- **50 draws, 50 valid, 0 void, 0 no-path** (3 pairs resampled for the
+  2.0 m separation rule); straight-line separation 2.20–21.27 m, C1 path
+  length 2.42–32.13 m (measured). F-5 not triggered.
+- Smac's `unsmoothed_plan` captured for 50 / 50 requests; every raw path
+  starts on the requested cell; every raw pose on a cell corner (residual
+  ≤ 7.2e-6 cells) (measured).
+- **Two passes** (pre-registered at 1C-3 before this run): NavFn writes
+  FREE_SPACE into the shared costmap at each request's start cell
+  (`navfn_planner.cpp:241-242, 519-524`), so Smac was asked on an
+  S0-exact costmap for every pair, and NavFn afterwards. NavFn pass:
+  51 / 51 accepted, at most 14 cells changed, all cleared NavFn starts,
+  0 unexplained (measured).
+
+**E — the cell-cost comparison, Smac's raw A\* path against coco_lab's
+C1 optimum.** Pre-registered prediction: equal within relative 1e-4 on
+every pair whose raw path ends on the goal cell.
+
+| | result |
+|---|---|
+| pairs where the prediction applies (raw path captured, E defined, ends on the goal cell) | **36** of 50 (derived) |
+| within 1e-4 | **36 / 36** (derived) |
+| relative gap (E_smac − E\*_C1) / E\*_C1 | min 0, p25 0, median 1.41e-16, p75 2.36e-16, max **1.08e-15** (derived) |
+| raw paths NOT ending on the goal cell | **14 / 50**: 1 cell off (10) or 2 cells off (4), 0.035–0.127 m (measured) |
+
+The 14 short paths were excluded from the E comparison by the pre-declared
+rule. **Post-hoc** (`lab1c_offgoal.py`, written after the sweep; the rule
+was not changed): each of the 14 is the C1 optimum to the cell where it
+stopped (relative gap ≤ 2.0e-15), and their goals sit in costlier cells —
+median raw goal cost 122 against 0 for the 36 that reached the goal
+(derived, `offgoal.json`). HYPOTHESIS, not traced in the binary: Smac's
+on-approach exit (`a_star.cpp:350-355`) returned the best-heuristic node.
+
+**What this shows.** On this arena, SmacPlanner2D 1.3.11's raw A\* path
+has exactly coco_lab's C1 optimal cost wherever it reaches the goal (36 /
+36), and is C1-optimal to wherever it stops (14 / 14). That is conformance
+of COST, on one snapshot, on this map. Cell sequences are not compared —
+tie-breaking is not matchable (CONFORMANCE.md row 8).
+
+**C0 vs C1** (corner cutting off vs on): E(C0) / E(C1) = **1.000 on 50 /
+50** — corner cutting never changed an optimum here (derived). C1 A\*
+cost equals C1 Dijkstra cost on 50 / 50 (derived).
+
+**L and I — the returned paths against coco_lab's C1 optimum** (relative
+gap, `(other − C1) / C1`; derived; n = 50 unless stated):
+
+| path | L gap: min / p25 / median / p75 / max | I gap: median (min … max) |
+|---|---|---|
+| Smac raw (`unsmoothed_plan`) | −1.047 / −0.116 / +0.000 / +0.000 / +0.000 % | +0.000 % (−1.407 … +4.731 %) |
+| **Smac returned (smoothed)** | **−6.737 / −3.600 / −2.883 / −2.331 / −1.052 %** | +0.454 % (−6.952 … +8.996 %) |
+| NavFn, `use_astar: false` | −5.843 / −3.370 / −2.249 / −1.178 / +8.519 % | −2.183 % (−5.843 … +2.380 %) |
+| NavFn, `use_astar: true` (n = 49) | −6.609 / −2.349 / −1.297 / −0.269 / +9.133 % | −1.303 % (−6.609 … +7.715 %) |
+
+NavFn against Smac's returned path, L: `use_astar: false` median +0.570 %
+(−3.134 … +11.074 %); `true` median +1.426 % (−3.209 … +11.702 %)
+(derived).
+
+- Smac's smoothed path was shorter than the C1 cell-path optimum on every
+  pair (50 / 50), as a smoothed polyline shortcuts the 8-connected
+  staircase (derived).
+- I is the declared cost integrated along each path on S0; it is a
+  cross-planner quantity, not the conformance quantity, and Smac's poses
+  sit half a cell off the centres the other paths use (CONFORMANCE.md row
+  12).
+- **NavFn `use_astar: true` failed once** (draw 46, `NO_VALID_PATH` 208)
+  where NavFn's Dijkstra succeeded; no path entered a blocked cell
+  (measured).
+- Planning times are recorded, not compared (different implementations):
+  Smac 0.000–0.032 s, NavFn 0.000–0.010 s (server-reported), coco_lab C1
+  Dijkstra 0.036–1.534 s and A\* 0.003–1.107 s in pure Python (measured).
+
+### NavFn and M3 (the 6.2 %)
+
+- **The historical condition (FACT, git).** M3 (`58b307e`) compared Smac
+  and NavFn from spawn to world (0.5, 0.75) in the frozen v1
+  `coco_world.world`, around its Zone A gate: 3.165 m against 3.373 m.
+  That goal and gate do **not** exist in the current `coco_navigation`
+  world. The v1 world file and its map are byte-unchanged since `58b307e`,
+  but the robot's lidar mast has since moved from the front to a rear
+  corner, so M3's live costmap cannot be re-created identically.
+  **M3's 6.2 % is neither reproduced nor refuted here** — it was not
+  re-run, on original or reconstructed inputs.
+- **The present-day analogue (measured, a different world and goal):**
+  spawn (map (0, 0)) → G\* (world (0.5, 6.0) = map (2.5, 6.0)), on S0:
+
+  | path | L (m) | poses | I (m) |
+  |---|---|---|---|
+  | Smac returned (smoothed) | **7.785** | 154 | 8.259 |
+  | NavFn `use_astar: false` | **7.894** | 314 | 7.894 |
+  | NavFn `use_astar: true` | 7.916 | 315 | 7.918 |
+  | Smac raw / coco_lab C1 optimum | 8.002 / 8.002 | 154 cells | 8.002 / 8.002 |
+
+  Smac's returned path is **1.378 % shorter than NavFn's** here (derived,
+  `(7.894 − 7.785) / 7.894`), not 6.2 %; E(Smac raw) = E\*(C1) =
+  160.0416. NavFn's A\* path is 0.283 % longer than its Dijkstra path
+  (derived). One pair; not a rate.
+- On the 50 pairs, NavFn's path was a median 0.570 % LONGER than Smac's
+  returned path (range −3.134 … +11.074 %) and a median 2.249 % SHORTER
+  than the C1 cell-path optimum (derived). A shorter-than-optimal path is
+  not a contradiction: L of a smoothed or gradient-descent polyline and E
+  of a cell path are different quantities.
+
+### Unsmoothed Smac path (D-3)
+
+**Nav2 1.3.11 does not provide the required smoothing-disable
+configuration in the deployed SmacPlanner2D setup. Therefore the
+experiment uses the planner's published raw/unsmoothed path output where
+available** — `/unsmoothed_plan`, published only while subscribed
+(`smac_planner_2d.cpp:146, 307-310`). It is the pre-smoothing A\* path of
+the same request, captured 50 / 50 (measured). It is not a run with
+smoothing disabled.
+
+### The three real runs (measured)
+
+Fresh simulator each, commit `248cac1` (clean), 18:33–18:41 UTC, load
+1.5–5.7. Start: the AMCL belief at spawn, (0.000, 0.000) map, cell
+(130, 190), in all three. Goal G\* (D-4): world (0.5, 6.0), yaw 0 = map
+(2.5, 6.0), cell (180, 310). Graph C1, tie-break `low_h`, one plan, one
+`FollowPath` goal (`controller_id FollowPath`, `goal_checker_id
+goal_checker`), no replanning, the unsmoothed cell path driven. **All
+three planned on the identical snapshot, `sha256:f7797c19…` = S0**, from
+the identical start cell.
+
+| | A\* (euclidean) | Dijkstra | greedy (euclidean) |
+|---|---|---|---|
+| FollowPath result | **SUCCEEDED** | **SUCCEEDED** | **ABORTED, `FAILED_TO_MAKE_PROGRESS` (105)** |
+| planned cost (C1) / cells / L | 160.0416 / 154 / 8.002 m | 160.0416 / 154 / 8.002 m | **369.1705** / 183 / 11.254 m |
+| expansions (coco_lab) / plan wall | 7,100 / 0.152 s | 33,374 / 0.468 s | 1,251 / 0.027 s |
+| duration, goal accept → result (sim / wall) | 27.372 s / 30.708 s | 27.456 s / 30.213 s | 18.364 s / 20.901 s |
+| tracking error, GT to plan: mean / p95 / max | 0.072 / 0.162 / 0.177 m | 0.064 / 0.153 / 0.208 m | 0.052 / 0.113 / 0.117 m |
+| endpoint: last GT to G\* | 0.191 m | 0.171 m | **5.289 m** |
+| GT distance driven in the window | 7.687 m | 7.716 m | 1.407 m |
+| belief gap, AMCL to GT: mean / max (n) | 0.043 / 0.086 m (36) | 0.055 / 0.117 m (35) | 0.030 / 0.038 m (10) |
+| recoveries (spin, backup, drive_on_heading, wait, assisted_teleop goals) | 0 | 0 | 0 |
+| arbiter: `mode nav, active` none → nav → none at (sim s) | 49.2 → 58.7 → 87.2 | 49.0 → 59.7 → 88.3 | 50.2 → 59.1 → 79.0 |
+| collision monitor | `PolygonLimit` 6 short episodes, 79.2–81.1 s | `PolygonLimit` once, 80.8 s | `FootprintApproach` 62.2–62.9 s; **`PolygonSlow` 64.6 → 77.4 s** |
+| wheel commands (max \|v\|, \|w\|) | 665 (0.30, 1.00) | 640 (0.30, 1.00) | 490 (0.30, 1.00) |
+
+- **A\* and Dijkstra** found equal-cost optima (160.0416) along
+  **different** cell paths (a tie; the plans differ), and both reached the
+  goal. A\* expanded 7,100 states to Dijkstra's 33,374 (derived: 4.7×
+  fewer).
+- **Greedy is a result, not a void** (plan F-4). Its plan cost 2.31× the
+  optimum (derived) and crossed high-cost cells — 58 of its 183 cells at
+  raw cost ≥ 128, max 251, against 0 for every cell of A\*'s plan
+  (derived from the recorded snapshot). The robot tracked it closely while
+  it moved, then stalled 1.27 m along the 11.25 m plan, moving 0.049 m in
+  its last 10 s, with the collision monitor in `PolygonSlow` for the last
+  12.8 s; controller_server aborted with `FAILED_TO_MAKE_PROGRESS`
+  (measured). The deployed progress checker requires 0.1 m of movement
+  per 10 s (`SimpleProgressChecker`, `required_movement_radius 0.1`,
+  `movement_time_allowance 10.0`, FACT), which 0.049 m does not meet. No recovery ran — nothing but the lab node was in the loop,
+  and it does not replan by design.
+- The tracking error is small in every run because FollowPath tracks the
+  given path; it does not measure path quality. Endpoint errors of
+  0.17–0.19 m (ground truth) are under the goal checker's
+  `xy_goal_tolerance` 0.25 m, which it applies to the AMCL belief, not to
+  ground truth (FACT, `nav2_params.yaml`).
+
+**Evidence per run** (`docs/data/lab1c/runs/<algo>/`, `runs.json`):
+
+| run | bag (external, `~/coco_lab_runs/lab1c/run_<algo>/bag`) SHA-256, size | bundle (committed, `docs/data/lab1c/bundles/<algo>`) content hash, dir SHA-256, size | sim time |
+|---|---|---|---|
+| A\* | `13bc214dc78c2f3c761ca84d64a85c7fe4f5243d56b6546ad495536995a96c4f`, 8,127,558 B | `sha256:e2d25cd168f88875e112c3bec9a433f2809e734aa614c225d26af57f905781c4`, `96c7c6a4545c363446d1ca21c3e34f6700b07abad5250a84b534fc6acf18d371`, 336,558 B | 49.048–125.112 s |
+| Dijkstra | `498253a12e277ebfe16934fc11e74dbe305a8abf1ff4bcd35664a506b6c771dc`, 8,402,694 B | `sha256:180c4e26545cc4309e892405f0043de47065cfb67b3e0ffc472da62578164317`, `872d31797a450ca2370b086cc230be664614827b66e478a556fdce5aa2e9ec6d`, 463,733 B | 48.670–126.468 s |
+| greedy | `82b76311ee0d3ff9391f3f62cbc34bc5f7ea95e532bd814794d101870f847b7b`, 6,891,474 B | `sha256:fbc93dc51b2b9e834c3e5c744b368a7ef51908e2c55ce18bb4e6ab139ba834f4`, `a50508269ba30ba54f5bdb77ac9cbf626febb4fbf15ba30bc5ac1db9dc3e1e37`, 109,089 B | 49.900–116.934 s |
+
+- Bundles: format **1.1**, `recorded-run`, all four streams present (gt,
+  amcl, plan, cmd), each built from the BAG and cross-checked against the
+  node's glass-box bundle — trace and map equal in all three (measured).
+  The three total **909,380 B ≤ 10 MB**, so they are committed (D-6); each
+  committed copy loads, validates and hashes equal to the export
+  (measured).
+- Bags stay outside git (plan §F); the hash definition is
+  `coco_lab_ros.export.dir_sha256`.
+
+### The dry run (not a result)
+
+One A\* run (18:17–18:20 UTC) to prove the pipeline, per plan I.8. Its data
+is not used. It found three tool defects, fixed before any counted
+session, and checked the world against the saved map: with
+`traverse:=true`, all 19,031 lethal cells of the live snapshot are
+occupied in the saved map, and every occupied map cell is lethal live
+(measured).
+
+### Not yet measured
+
+- **A real map-quality number** (D-1: moved to Lab 3; no substitute given).
+- **Rates.** One conformance snapshot, one of each run: nothing here is a
+  rate. Whether greedy fails to G\* every time, or A\*/Dijkstra always
+  succeed, is not measured.
+- **M3 on its own world.** A close replication on the frozen v1 world is
+  possible (world and map unchanged; lidar moved); it was not run, and is
+  an owner decision.
+- **Why 14 Smac paths stopped short** beyond the post-hoc consistency with
+  the on-approach exit; the binary was not instrumented.
+- NavFn's potential propagation in detail (only its cost translation and
+  entry points were source-read).

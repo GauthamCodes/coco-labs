@@ -143,7 +143,30 @@ pipeline and two source facts, and it does not presume the hypothesis.
   **101.7667822809372** (relative gap 2.8e-16). One smoke pair, not the
   experiment.
 
-## 5. The live sweep
+## 5. The live sweep (MEASURED; distributions DERIVED)
 
-Filled in from `docs/data/lab1c/conformance.json` after the run — see
-`docs/RESULTS.md` "COCO Lab Phase 1C" until then.
+Full tables: `docs/RESULTS.md` "COCO Lab Phase 1C". Raw records:
+`docs/data/lab1c/conformance/conformance.json`; summary
+`conformance_summary.json` (`lab1c_report.py`); post-hoc `offgoal.json`.
+
+- One fresh simulator, robot at spawn; S0 `sha256:f7797c19…`, 500 × 380;
+  seed 20260929; **50 draws, 50 valid, 0 void, 0 no-path**.
+- **Prediction (pre-registered): E(Smac raw) = E\*(C1) within 1e-4 on
+  every pair whose raw path ends on the goal cell — held on 36 / 36**,
+  largest relative gap 1.08e-15. On this arena, rows 1–7 and 10 of §3 are
+  borne out in cost.
+- **Row 9 in practice:** 14 / 50 raw paths stopped 1–2 cells short of the
+  goal (0.035–0.127 m). Post-hoc, each is the C1 optimum to where it
+  stopped; their goals had median raw cost 122 against 0. The mechanism
+  (the on-approach exit) is a HYPOTHESIS consistent with the source, not
+  traced in the binary.
+- **Row 4 in practice:** E(C0) = E(C1) on 50 / 50. Corner cutting never
+  changed an optimum on this arena — the declared C0/C1 difference exists
+  but was not exercised.
+- **Row 13 in practice:** Smac's returned (smoothed) path was 1.05–6.74 %
+  shorter than the C1 cell-path optimum on every pair (median −2.88 %).
+- **NavFn:** L a median 2.25 % below C1 (`use_astar: false`) and 1.30 %
+  below (`true`, 49 pairs; one `NO_VALID_PATH` where Dijkstra succeeded);
+  a median 0.57 % / 1.43 % above Smac's returned path.
+- **What is NOT claimed:** that coco_lab and Smac produce the same cells
+  (ties differ), that this holds on another map, or anything about rates.

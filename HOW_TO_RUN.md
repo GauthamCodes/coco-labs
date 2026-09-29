@@ -245,6 +245,35 @@ ROS:
 - `python3 docs/data/lab1b/vendor_isro.py --check`. This one needs `gh`
   access to the private ISRO repository.
 
+### COCO Lab on the real stack (`coco_lab_ros`, Phase 1C)
+
+`coco_lab_ros` is a ROS package: build it into a COCO-only overlay
+(`scripts/build_overlay.sh`, which now builds `coco_lab` too) and run its
+tests from its own directory, like every other package. hypothesis and
+networkx must be importable (`coco_lab/requirements-test.txt`); the static
+smoke test starts map_server + planner_server on private ROS domain 86.
+
+To drive the robot with a `coco_lab` path — one plan from the AMCL belief,
+one `FollowPath` goal, never a velocity command:
+
+```bash
+# T1 -- a fresh simulator
+ros2 launch gazebo_models full_world_robo.launch.py gui:=false traverse:=true
+# T2 -- the arbiter in nav mode + Nav2 on the lab-merged parameters, and the planner
+ros2 launch coco_lab_ros lab_stack.launch.py planner:=true \
+    algorithm:=astar goal_x:=2.5 goal_y:=6.0 out_dir:=/tmp/lab_run
+```
+
+(The measured Phase 1C runs started the planner with `ros2 run coco_lab_ros
+lab_planner` from `lab1c_run.sh`; the `planner:=true` route above is
+covered by `test_launch.py`, not by a recorded live run.) Goals are in the
+MAP frame (world + (2, 0)). `algorithm` is `astar`,
+`dijkstra` or `greedy` (any `coco_lab` algorithm works). The recorded,
+repeatable version — refuse-if-busy, params readback, live publisher
+checks, rosbag2, bundle export — is `docs/data/lab1c/lab1c_run.sh`
+(`docs/data/lab1c/README.md`). Clean up with `ros_clean.sh`, which knows
+every new executable.
+
 ### The page, in a real browser
 
 The colcon suite checks the page's files; it cannot check that the page
