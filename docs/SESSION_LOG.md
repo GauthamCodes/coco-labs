@@ -5543,3 +5543,49 @@ parameters are recoverable from git, but its live costmap cannot be
 re-created identically. 1C runs only the approved present-day analogue;
 a re-run on the frozen world would be a close replication, not identical
 inputs, and is an owner decision (not run).
+
+### 1C-3 / 1C-4 — the dry run, and the conformance sweep on a live stack (2026-09-29)
+
+**Dry run (plan I.8; its data is NOT a result).** One A\* run end to end,
+18:17–18:20 UTC, `~/coco_lab_runs/lab1c/dry_1`. It reached the goal with
+every live check clean, confirmed the recorded topic set (the hidden
+behavior-server action status topics included, `/diff_drive_controller/
+cmd_vel` as `TwistStamped`, no `/mission/mode` publisher at all), the
+exporter on a real bag, and the world/map check: with `traverse:=true`,
+all 19,031 lethal cells of the live snapshot are occupied in the saved
+map and every occupied map cell is lethal live. It exposed three tool
+defects, fixed in `cb4e2b3` before any counted session (a watcher
+segfault at exit, a core dump, a runner exiting 0 on a FAIL).
+
+**Conformance session, MEASURED** — `lab1c_run.sh conformance`, commit
+`cb4e2b3`, tree clean, ROS domain 65, 18:23:13–18:30:31 UTC, load
+1.3 → 3.5. Evidence: `docs/data/lab1c/conformance/`.
+- Runner checks all PASS: mission params byte-identical; 67 live
+  planner_server/global_costmap parameters equal the merged file; wheel
+  topic's only publisher `cmd_vel_arbiter` at start and end; 341 watch
+  samples, 0 violations (arbiter `mode=nav` throughout, arbiter inputs
+  unchanged).
+- S0 `sha256:f7797c19…`, 500 x 380, 117,387 candidate cells (raw ≤ 252).
+  The dry run's snapshot had the same hash.
+- **50 draws, 50 valid, 0 void, 0 no-path**; 3 separation rejects. F-5 not
+  triggered. `unsmoothed_plan` captured 50 / 50 (one message each); every
+  raw start cell correct; corner residual ≤ 7.2e-6 cells.
+- **The pre-registered prediction held on every pair it applies to:
+  36 / 36 within 1e-4** (largest relative gap 1.08e-15).
+- **14 / 50 Smac raw paths did not end on the goal cell** — 1 or 2 cells
+  short (0.035–0.127 m). The pre-declared rule excluded them from the E
+  comparison. POST-HOC (`lab1c_offgoal.py`, written after the sweep, rule
+  unchanged): all 14 are the C1 optimum to the cell where they stopped
+  (largest gap 2.0e-15); their goals sit in costlier cells (median raw
+  cost 122 against 0). HYPOTHESIS, not traced: the on-approach exit
+  (`a_star.cpp:350-355`).
+- E(C0) = E(C1) on 50 / 50: corner cutting never changed an optimum here.
+  C1 A\* cost = C1 Dijkstra cost on 50 / 50.
+- NavFn pass: 51 / 51 accepted (50 pairs + the M3 analogue), at most 14
+  cells changed from S0, all cleared NavFn starts, 0 unexplained.
+  NavFnAStar failed once (draw 46, `NO_VALID_PATH` 208) where NavFn's
+  Dijkstra succeeded.
+- Distributions are in `conformance_summary.json` and RESULTS.md.
+
+NEXT: 1C-5 — the three real runs, fresh simulator each: A\*, Dijkstra,
+greedy.
