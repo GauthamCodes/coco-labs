@@ -5679,3 +5679,73 @@ NEXT MILESTONE: Phase 1D — the web app skeleton, measured
 EXACT NEXT ACTION: In a fresh session on branch `lab1`, read this entry and
 `docs/labs/BUNDLE_FORMAT.md` (1D's decoder must read 1.1's recording
 arrays), then execute LAB_PHASES.md §1D.
+
+## Phase 1D — the web app skeleton, measured (2026-09-30, in progress)
+
+Plan: `docs/labs/PHASE_1D_PLAN.md` (APPROVED; committed in 1D-0 from the
+planning session's plan store, verbatim below its header). The owner's
+instruction for this session: run 1D-0 … 1D-8 in one sitting, with no
+approval stops between blocks; do not touch `main`.
+
+### 1D-0 — reconstruction, baseline and toolchain (2026-09-30)
+
+**Repository state (verified):** branch `lab1` at `ca8ce79` ==
+`jazzy2/lab1`. **Discrepancy:** the tree was not clean. An untracked
+`AGENTS.md` (49,955 B, mtime 2026-09-30 01:02) is present; below its first
+line it is byte-identical to `CLAUDE.md`. It is user-owned (LAB_PHASES
+standing approvals), so it is left untracked and untouched, and it is
+never committed by this phase.
+
+**1C facts re-verified:**
+- The three 1C bundles total **909,380 B** (`du -cb`). All three are `1.1`,
+  gzip, `recorded-run`, `tool coco_lab_ros.lab_export`, with all 4 streams.
+- There are **six** golden fixtures: five `1.0` glass-box (`astar_open`,
+  `dijkstra_cost_field_gz` (the only gzip), `weighted_astar_greedy_trap`,
+  `bfs_no_path`, `astar_turn_trap_heading` (heading_grid)), and
+  `recorded_run_synthetic_1_1` (`1.1`, `missing ['cmd']`). **All six have
+  `geo: null`**, not just the synthetic one; the teaching grids are unplaced.
+- The mission `nav2_params.yaml` sha256 is `06c308af…`. No rosbag file is
+  tracked.
+
+**Baseline (measured, load 0.66–0.83, job-local overlay of this worktree,
+the 1C routes):**
+
+| suite | result |
+|---|---|
+| `coco_lab` pip route (plain venv, `env -i`, `-P`, 3 linters excluded) | **333 / 0 / 0** (33.09 s) |
+| `coco_lab` colcon route, linters included | **336 / 0 / 0** (35.27 s) |
+| `coco_lab_ros` | **69 / 0 / 0** (15.59 s) |
+| `gazebo_models` (`--ignore=test_integration`) | **229 / 0 / 0** (11.76 s) |
+| `custom_teleop` | **75 / 0 / 0** (1.37 s) |
+
+All equal the 1C close.
+
+**Toolchain (looked up 2026-09-30, not guessed):**
+
+| tool | pinned | source / reason |
+|---|---|---|
+| Pyodide | **314.0.7** (2026-09-14) | GitHub releases API + npm `pyodide` time list. Pyodide now versions by CPython (314 = Python 3.14). 0.29.5 / 0.27.8 (2026-09-16) are maintenance releases of older lines; 315.0.0a2 is a prerelease. `pyodide-lock.json` on the CDN: Python **3.14.2**, emscripten 5.0.3, micropip **0.11.1**. CDN `cdn.jsdelivr.net/pyodide/v314.0.7/full/` answers 200 (`pyodide.asm.wasm` 9,598,218 B) |
+| Node | **24.21.0** (`.nvmrc`) | nodejs.org `index.json`: newest LTS ("Krypton", 2026-09-07). The machine has Node **20.20.2**, which is EOL and below Vitest 5's engine range (`^22.12 \|\| ^24 \|\| >=26`). 24.21.0 is installed **job-locally** from the official tarball (sha256 checked against `SHASUMS256.txt`); the system Node is not touched |
+| npm | **11.19.0** | bundled with Node 24.21.0 |
+| vite | **8.3.1** | npm registry, latest |
+| @vitejs/plugin-react | **6.1.1** | npm registry, latest |
+| typescript | **7.0.2** | npm registry, latest (the native compiler; used only for `tsc --noEmit`) |
+| react / react-dom | **19.3.0** | npm registry, latest; `@types/*` 19.3.0 |
+| vitest | **5.0.2** | npm registry, latest |
+
+**Pages and `main` CI (verified):**
+- `GET /repos/GauthamCodes/coco-robot-jazzy-2.0/pages` → **404**. Pages is
+  not enabled.
+- `ci.yml` failed on the last 5 pushes to `main`, at "Build". **The cause is
+  diagnosed from the job log** (run 36516234213, job 109239016703). The
+  workflow's `colcon build --packages-select gazebo_models custom_teleop
+  coco_config coco_moveit_config coco_web coco_rl coco_perception
+  coco_mission` omits **`coco_sim`**, on which `gazebo_models` has depended
+  since the episode work. colcon fails with `Failed to find …
+  install/coco_sim/share/coco_sim/package.ps1 … Check that the following
+  packages have been built: coco_sim`. The failure predates 1D and is not
+  caused by it. Per the owner's instruction it is **documented, not fixed**,
+  in this phase.
+
+NEXT: 1D-1, the Python tools (expectations, invalid corpus, JSON corpus,
+catalog).
