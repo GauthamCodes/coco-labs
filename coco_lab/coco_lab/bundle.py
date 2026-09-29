@@ -13,7 +13,7 @@
 # limitations under the License.
 
 """
-Bundle format v1: one search run, portable, checkable and replayable.
+Bundle format v1 (1.0, 1.1): one search run, portable, checkable, replayable.
 
 The normative description is ``docs/labs/BUNDLE_FORMAT.md``; this module is
 its reference implementation and the tests pin one to the other.
@@ -40,6 +40,16 @@ never code -- and validates the trace against the embedded map: every
 state in bounds, every parent expanded before its child was pushed, the
 path contiguous under the recorded move model, its cost recomputed. It
 refuses; it never repairs.
+
+**1.1** (Phase 1C, additive) lets a ``recorded-run`` bundle carry what the
+rosbag recorded around the search: a ``recording`` manifest block and
+float64 stream arrays (``recording.<group>.<column>``) for the ground-truth
+pose, the AMCL pose, the planned path and the wheel commands. A stream
+that was not captured is listed in ``recording.missing`` and has no
+arrays -- never zero-filled. A bundle without a recording is written as
+``1.0``, byte-for-byte what a 1.0 writer produced, so every 1.0 bundle is
+also a valid 1.1 bundle. A 1.0 reader refuses a bundle that carries
+recording arrays (its array table is exact), with an error, not silently.
 """
 
 from dataclasses import dataclass
@@ -59,7 +69,11 @@ from .search import ALGORITHMS, search, TIE_BREAKS
 from .trace import COLUMNS, EVENT_KINDS, Trace, TraceError
 
 SCHEMA = 'coco_lab.bundle'
+#: What the writer emits for a bundle with no recording (unchanged since
+#: 1.0, so 1.0 bundles and the golden fixtures are byte-identical).
 VERSION = '1.0'
+#: What the writer emits for a recorded-run bundle with a recording.
+VERSION_RECORDED = '1.1'
 MAJOR = 1
 
 MANIFEST = 'manifest.json'
@@ -81,6 +95,18 @@ assert tuple(TRACE_DTYPES) == COLUMNS
 
 #: Map layers: occupancy always, cost when the map has one.
 MAP_ARRAYS = {'map.occupancy': 'u8', 'map.cost': 'f64'}
+
+#: Bundle 1.1 recording streams: group -> columns, all ``f64``, in wire
+#: order. ``t`` is seconds on the recording's clock (sim time), and must
+#: never decrease. Poses are ``(x, y, yaw)`` in the group's ``frame``;
+#: ``cmd`` is ``(t, v, w)``: linear x (m/s) and angular z (rad/s).
+RECORDING_GROUPS = {
+    'gt': ('t', 'x', 'y', 'yaw'),
+    'amcl': ('t', 'x', 'y', 'yaw'),
+    'plan': ('x', 'y', 'yaw'),
+    'cmd': ('t', 'v', 'w'),
+}
+RECORDING_KEYS = ('groups', 'missing', 'run_id', 'meta')
 
 #: Resource bounds for an untrusted bundle.
 MAX_MANIFEST_BYTES = 1024 * 1024
@@ -111,6 +137,11 @@ class Bundle:
     run: Dict[str, object]
     lab_map: LabMap
     trace: Trace
+    #: 1.1: ``{groups, missing, run_id, meta}`` or None (see
+    #: :func:`_check_recording`).
+    recording: Optional[Dict[str, object]] = None
+    #: 1.1: ``{group: {column: [float, ...]}}`` for every present group.
+    streams: Optional[Dict[str, Dict[str, List[float]]]] = None
 
     # -- construction ------------------------------------------------------
 
@@ -161,6 +192,12 @@ class Bundle:
                 f'run.map_hash {self.run["map_hash"]!r} is not the '
                 f'embedded map ({self.lab_map.content_hash()})')
         _check_trace_on_graph(self, self.graph())
+        _check_recording(self)
+
+    @property
+    def version(self) -> str:
+        """Return the version this bundle is written as."""
+        return VERSION_RECORDED if self.recording is not None else VERSION
 
     # -- serialisation -----------------------------------------------------
 
@@ -178,6 +215,10 @@ class Bundle:
             out.append(('map.cost', 'f64',
                         struct.pack(f'<{len(self.lab_map.cost)}d',
                                     *self.lab_map.cost)))
+        for group, column in recording_arrays(self.recording):
+            values = self.streams[group][column]
+            out.append((f'recording.{group}.{column}', 'f64',
+                        struct.pack(f'<{len(values)}d', *values)))
         return out
 
     def manifest(self, compression: str = 'none') -> Dict[str, object]:
@@ -195,7 +236,7 @@ class Bundle:
         m = self.lab_map
         manifest = {
             'schema': SCHEMA,
-            'version': VERSION,
+            'version': self.version,
             'provenance': dict(self.provenance),
             'run': dict(self.run),
             'map': {
@@ -212,6 +253,9 @@ class Bundle:
             'arrays': table,
             'encoding': {'byte_order': 'little', 'compression': compression},
         }
+        if self.recording is not None:
+            manifest['recording'] = json.loads(canonical_json(
+                self.recording))
         manifest['content_hash'] = content_hash(
             manifest, b''.join(d for _, _, d in self.arrays()))
         return manifest
@@ -439,6 +483,70 @@ def _check_run(run, trace: Trace) -> None:
         if h.get(key) != run[key]:
             raise BundleError(f'run.{key} {run[key]!r} disagrees with the '
                               f'trace header ({h.get(key)!r})')
+
+
+# -- the 1.1 recording -----------------------------------------------------------
+
+def recording_arrays(recording) -> List[Tuple[str, str]]:
+    """Return ``(group, column)`` of every recording array, in wire order."""
+    if recording is None:
+        return []
+    present = recording.get('groups') or {}
+    return [(g, c) for g, cols in RECORDING_GROUPS.items() if g in present
+            for c in cols]
+
+
+def _check_recording(bundle: 'Bundle') -> None:
+    rec, streams = bundle.recording, bundle.streams
+    if rec is None:
+        if streams:
+            raise BundleError('streams without a recording block')
+        return
+    if bundle.provenance.get('source_kind') != 'recorded-run':
+        raise BundleError('only a recorded-run bundle carries a recording')
+    if not isinstance(rec, dict) or set(rec) != set(RECORDING_KEYS):
+        raise BundleError(f'recording must have exactly the keys '
+                          f'{list(RECORDING_KEYS)}')
+    groups, missing = rec['groups'], rec['missing']
+    if not isinstance(groups, dict) or not isinstance(missing, list):
+        raise BundleError('recording.groups is an object, .missing a list')
+    known = set(RECORDING_GROUPS)
+    if set(groups) - known or set(missing) - known:
+        raise BundleError(f'unknown recording groups; known: '
+                          f'{sorted(known)}')
+    if set(groups) & set(missing) or \
+            set(groups) | set(missing) != known or \
+            len(missing) != len(set(missing)):
+        raise BundleError('every recording group is present or listed in '
+                          'recording.missing, exactly once')
+    if not (isinstance(rec['run_id'], str)
+            and isinstance(rec['meta'], dict)):
+        raise BundleError('recording.run_id is a string, .meta an object')
+    streams = streams or {}
+    if set(streams) != set(groups):
+        raise BundleError('streams must hold exactly the present groups')
+    for g, info in groups.items():
+        if not (isinstance(info, dict) and isinstance(info.get('frame'), str)
+                and isinstance(info.get('source'), str)
+                and isinstance(info.get('count'), int)
+                and not isinstance(info.get('count'), bool)):
+            raise BundleError(f'recording.groups.{g} needs frame, source '
+                              f'(strings) and count (int)')
+        cols = streams[g]
+        if not isinstance(cols, dict) or set(cols) != \
+                set(RECORDING_GROUPS[g]):
+            raise BundleError(f'stream {g} must have exactly the columns '
+                              f'{list(RECORDING_GROUPS[g])}')
+        lengths = {len(v) for v in cols.values()}
+        if lengths != {info['count']}:
+            raise BundleError(f'stream {g}: columns disagree with count '
+                              f'{info["count"]}')
+        for c, values in cols.items():
+            if not all(_num(v) for v in values):
+                raise BundleError(f'stream {g}.{c} holds a non-finite value')
+        t = cols.get('t')
+        if t is not None and any(b < a for a, b in zip(t, t[1:])):
+            raise BundleError(f'stream {g}.t decreases')
 
 
 # -- trace-on-graph checks -----------------------------------------------------
@@ -683,6 +791,21 @@ def decode(manifest: Dict[str, object], raw: bytes) -> Bundle:
     expected = [f'trace.{c}' for c in COLUMNS] + ['map.occupancy']
     if manifest['map'].get('cost_layer'):
         expected.append('map.cost')
+    recording = manifest.get('recording')
+    try:
+        minor = int(str(manifest['version']).split('.')[1])
+    except (IndexError, ValueError):
+        raise BundleError(f'bad bundle version {manifest["version"]!r}') \
+            from None
+    if recording is not None:
+        if minor < 1:
+            raise BundleError('a recording needs bundle version 1.1 or '
+                              'later')
+        if not isinstance(recording, dict) or not isinstance(
+                recording.get('groups'), dict):
+            raise BundleError('recording.groups must be an object')
+        expected += [f'recording.{g}.{c}'
+                     for g, c in recording_arrays(recording)]
     if list(table) != expected:
         raise BundleError(f'arrays must be exactly {expected}, in order; '
                           f'got {list(table)}')
@@ -698,8 +821,12 @@ def decode(manifest: Dict[str, object], raw: bytes) -> Bundle:
 
     def column(name):
         a = table[name]
-        want = TRACE_DTYPES.get(name[6:]) if name.startswith('trace.') \
-            else MAP_ARRAYS[name]
+        if name.startswith('trace.'):
+            want = TRACE_DTYPES.get(name[6:])
+        elif name.startswith('recording.'):
+            want = 'f64'
+        else:
+            want = MAP_ARRAYS[name]
         if a['dtype'] != want:
             raise BundleError(f'array {name}: dtype {a["dtype"]}, expected '
                               f'{want}')
@@ -743,8 +870,13 @@ def decode(manifest: Dict[str, object], raw: bytes) -> Bundle:
         trace = Trace(dict(tr['header']), events, dict(tr['summary']))
     except (KeyError, TypeError) as exc:
         raise BundleError(f'trace: missing {exc}') from None
+    streams = None
+    if recording is not None:
+        streams = {}
+        for g, c in recording_arrays(recording):
+            streams.setdefault(g, {})[c] = column(f'recording.{g}.{c}')
     bundle = Bundle(dict(manifest['provenance']), dict(manifest['run']),
-                    lab_map, trace)
+                    lab_map, trace, recording, streams)
     bundle.validate()
     return bundle
 

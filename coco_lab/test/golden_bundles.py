@@ -80,11 +80,57 @@ def make(name):
     return b, compression
 
 
+#: Bundle 1.1: a SYNTHETIC recorded-run bundle, so Phase 1D's decoder has
+#: recording arrays to test against. Its search is real (cost_field,
+#: Dijkstra); its rosbag hash and streams are made up and say so in
+#: ``recording.meta``. It is not evidence of any run. ``cmd`` is listed as
+#: missing on purpose, to exercise the "not captured" path.
+RECORDED = {'recorded_run_synthetic_1_1': 'none'}
+
+RECORDED_PROVENANCE = dict(
+    FIXED_PROVENANCE, source_kind='recorded-run',
+    rosbag={'sha256': '0' * 64, 'sim_time_start': 10.0,
+            'sim_time_end': 12.0})
+
+
+def make_recorded(name):
+    """Return the synthetic 1.1 recorded-run bundle and its compression."""
+    b, _ = make('dijkstra_cost_field_gz')
+    recording = {
+        'groups': {
+            'gt': {'frame': 'map', 'source': '/model/coco/odometry',
+                   'count': 3},
+            'amcl': {'frame': 'map', 'source': '/amcl_pose', 'count': 2},
+            'plan': {'frame': 'map', 'source': '/lab/plan', 'count': 3},
+        },
+        'missing': ['cmd'],
+        'run_id': 'golden-synthetic',
+        'meta': {'synthetic': True,
+                 'note': 'made-up streams for decoder tests; not a run'},
+    }
+    streams = {
+        'gt': {'t': [10.0, 11.0, 12.0], 'x': [0.5, 1.0, 1.5],
+               'y': [0.5, 0.5, 0.75], 'yaw': [0.0, 0.0, 0.25]},
+        'amcl': {'t': [10.5, 11.5], 'x': [0.75, 1.25], 'y': [0.5, 0.5],
+                 'yaw': [0.0, 0.125]},
+        'plan': {'x': [0.5, 1.0, 1.5], 'y': [0.5, 0.5, 0.5],
+                 'yaw': [0.0, 0.0, 0.0]},
+    }
+    rb = bundle.Bundle(dict(RECORDED_PROVENANCE), b.run, b.lab_map, b.trace,
+                       recording, streams)
+    rb.validate()
+    return rb, RECORDED[name]
+
+
 def build(root):
     """Write every golden bundle under ``root``; return their paths."""
     paths = []
     for name in GOLDEN:
         b, compression = make(name)
+        paths.append(bundle.write_bundle(b, os.path.join(root, name),
+                                         compression))
+    for name in RECORDED:
+        b, compression = make_recorded(name)
         paths.append(bundle.write_bundle(b, os.path.join(root, name),
                                          compression))
     return paths

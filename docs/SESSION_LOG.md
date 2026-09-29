@@ -5429,3 +5429,117 @@ post-hoc explanations)**
   so a popped goal is still optimal.
 
 NEXT: 1C-1 — `coco_lab_ros` skeleton, guards, pure modules and their tests.
+
+### 1C-1 — `coco_lab_ros`: pure modules, guards, tests (2026-09-29)
+
+- **Built** (`coco_lab_ros/`, ament_python, depends on `coco_lab`, rclpy,
+  nav2_msgs; nothing depends on it, so the graph stays acyclic):
+  - `costmap.py` — a `nav2_msgs/Costmap` snapshot: content hash (stamp
+    excluded), Nav2's own `worldToMapContinuous` with the float32 step
+    emulated, the row flip, 253/254 → OCCUPIED, 255 → UNKNOWN, raw value
+    kept in the cost layer for every cell (lossless, tested).
+  - `planning.py` — C0 and C1 exactly as plan §D pre-registered; the run
+    table (A* euclidean, Dijkstra zero, greedy euclidean, plan §E.2).
+  - `metrics.py` — L, E (undefined, never coerced, for a non-move), I
+    (2.5 mm midpoint sampling), c_max, endpoint, nearest-rank p95,
+    linear-interpolation quartiles. `pathing.py` — cell centres, travel
+    yaw, goal yaw last; Smac poses mapped back by `round` (corners).
+  - `params.py` — deep merge, lists replaced, deterministic dump;
+    `config/nav2_lab_overlay.yaml` adds only `NavFnAStar`.
+  - `safety.py` — the forbidden topics (wheel, arbiter inputs, command
+    chain) and `violations()`.
+- **Guards**: the forbidden list is read from the arbiter's own source;
+  no Twist import; every `create_publisher` names a lab topic; no
+  forbidden topic literal outside `safety.py`; a constructed node
+  publishes only the four lab topics; `coco_lab` never imports
+  `coco_lab_ros`; the pure modules import with ROS poisoned.
+- **Properties** (1,000 path-bearing random RAW costmaps each, measured
+  with `--hypothesis-show-statistics`): E\*(C0) ≥ E\*(C1) — 1000 passing,
+  0 failing, 2 rejected by `assume`; the C1 optimum (Dijkstra and A\*)
+  equals networkx — 1000 passing, 0 failing, 10 rejected.
+- Golden `costmap_raw` fixture with pinned costs and trace hashes.
+
+### 1C-2 — the hook: node, launch, overlay, bundle 1.1, exporter (2026-09-29)
+
+- **Built**: `lab_planner` (one plan, one FollowPath goal, no replanning;
+  latched `/lab/plan`, `/lab/status` JSON, `/lab/costmap_snapshot`,
+  `/lab/trace_gz`; a glass-box bundle on disk); `nav2_client.Nav2Probe`
+  (publishes nothing); `lab_stack.launch.py` (arbiter `initial_mode:=nav`
+  + `nav.launch.py arbiter:=true params_file:=<merged>`);
+  `lab_static_smoke.launch.py`; `export.py` (bag → 1.1 bundle + metrics,
+  built from the BAG and cross-checked with the node's glass-box bundle);
+  `run_analysis.py`; `ros_clean.sh` patterns for every new executable,
+  launch file and script (install-path anchored; tested with a decoy).
+- **Bundle 1.1** (`coco_lab/bundle.py`, D-5): an optional `recording`
+  block + `recording.<group>.<col>` f64 arrays (gt, amcl, plan, cmd); a
+  stream not captured is listed in `recording.missing`, never
+  zero-filled. A bundle without a recording is still written as `"1.0"`:
+  the five 1.0 golden fixtures are unchanged, byte for byte. A 1.0
+  reader refuses a bundle WITH a recording (its array table is exact) —
+  stated in BUNDLE_FORMAT.md, not hidden. New golden fixture
+  `recorded_run_synthetic_1_1` (synthetic streams, labelled so).
+- **Static smoke, measured on the real Nav2 1.3.11 binaries** (map_server
+  + planner_server, no Gazebo, a committed 80 x 60 map): all three
+  planner ids answer; `/unsmoothed_plan` is the topic name and is
+  published for GridBased only; **Smac's poses sit on cell corners**
+  (residual 1.0e-6 cells), confirming the 1C-0 source reading; on that
+  map E(Smac raw) = E\*(C1) to 2.8e-16 relative. A smoke number, not the
+  experiment.
+- **Found and fixed before any Gazebo run:**
+  1. **NavFn writes into the shared global costmap (measured, then
+     source-confirmed).** In a dry run of the conformance tool against the
+     static stack, 12 of 12 pairs went VOID: the costmap hash changed
+     after every NavFn request and never after Smac's.
+     `NavfnPlanner::clearRobotCell` sets the START cell to FREE_SPACE in
+     the costmap planner_server shares (`navfn_planner.cpp` @1.3.11
+     :241-242, :519-524), and the write persists. See the amendment below.
+  2. `lab_planner` looped on the global `rclpy.ok()`, false under a
+     non-default context; now `self.context.ok()`.
+  3. The suite hung for 10 minutes: `ament_flake8`'s forked workers
+     blocked on a futex after rclpy threads had run in the process. The
+     linters now run first (a stable reorder in `conftest.py`); 3 of 3
+     consecutive runs then passed.
+  4. `export.py` named the wheel topic as a literal (to read it); the
+     guard refused it; it uses `safety.WHEEL_TOPIC` now.
+- **Tests, measured (load ≈ 0.5):** `coco_lab_ros` **69 / 0 / 0** (15.6 s,
+  3 consecutive runs); `coco_lab` colcon **336 / 0 / 0**, pip route
+  **333 / 0 / 0**; `gazebo_models` **229 / 0 / 0** (227 at 1C-0; the two
+  new are existing parametrized `ros_clean.sh` tests over the new
+  patterns).
+
+### 1C-3 pre-registration — written BEFORE the Gazebo conformance run
+
+These fix how the approved design is executed. None is a reaction to a
+Gazebo measurement; there has been none yet.
+
+1. **Two passes (forced by finding 1 above).** Pass 1 asks Smac for every
+   draw, each request bracketed by the costmap hash, which must equal S0
+   (else VOID — the plan's rule, unchanged). Pass 2 asks NavFn then
+   NavFnAStar on the same valid pairs; after each, the costmap's
+   cell-level difference from S0 is recorded, and the NavFn half is
+   accepted only if every changed cell is an earlier NavFn start cell,
+   now 0. The pair distribution, the metrics and coco_lab (always on S0)
+   are unchanged.
+2. **"Draw" and "valid".** A draw is one pair meeting the 2.0 m separation
+   rule; separation rejections are resampled and counted
+   (`separation_rejects`), not drawn. A valid pair is non-void AND C1
+   reachable; C1-unreachable pairs are listed in `no_path` with Smac's
+   answer. Stop at 50 valid or 100 draws (F-5 below 50).
+3. **Start/goal** are sent as cell centres, yaw 0, `use_start`.
+4. **Named extra**: the M3 analogue, spawn (map (0, 0)) → G\* (map
+   (2.5, 6.0)), asked in both passes.
+
+**M3 — discrepancy with the approved plan (FACT, git).** The plan says
+M3's goal "does not exist in this world". True of `coco_navigation`, the
+current world (lanes at y = ±2, ±6; no gate). But M3 (commit `58b307e`)
+ran on the frozen v1 `coco_world.world`, which still contains the Zone A
+gate, with goal world (0.5, 0.75): **the world file and its map
+(`coco_world.pgm/.yaml`) are byte-unchanged since `58b307e`**. What
+changed: `nav2_params.yaml` (the diff touches the local costmap, not the
+planner or global costmap blocks) and the robot xacro — **the lidar mast
+moved from the front to a rear corner**, which changes what the live
+scan layers mark. So M3's world, map, start and goal survive and its
+parameters are recoverable from git, but its live costmap cannot be
+re-created identically. 1C runs only the approved present-day analogue;
+a re-run on the frozen world would be a close replication, not identical
+inputs, and is an owner decision (not run).

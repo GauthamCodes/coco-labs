@@ -5,7 +5,10 @@ checked, drawn and (for glass-box runs) replayed without ROS and without
 trusting whoever produced it.
 
 - Schema name: `coco_lab.bundle`
-- Current version `"1.0"`
+- Versions: `"1.0"`, and `"1.1"` (Phase 1C, additive: the recorded-run
+  streams, below). The writer emits `"1.0"` for every bundle without a
+  recording, byte-for-byte as before, and `"1.1"` only for a recorded-run
+  bundle that carries one.
 - Reference implementation: `coco_lab/coco_lab/bundle.py`
 - Pinned by: `coco_lab/test/test_bundle.py::test_the_doc_matches_the_implementation`
 - Golden fixtures: `coco_lab/test/fixtures/bundles/`. Phase 1D's TypeScript
@@ -87,6 +90,44 @@ write anywhere:
 - Every array is little-endian.
 - `f64` keeps a trace's `g`, `h` and `f` exact, with no rounding in transit.
 
+## Version 1.1: the recording (recorded-run only)
+
+Added in Phase 1C (owner decision D-5) so a bundle exported from a rosbag
+can carry what was recorded around the search. Pinned by
+`coco_lab/test/test_bundle_recording.py`; golden fixture
+`recorded_run_synthetic_1_1` (synthetic streams, marked so in its `meta`; it
+is not evidence of any run).
+
+A 1.1 manifest may hold one more top-level field, `recording`, allowed only
+when `provenance.source_kind` is `recorded-run`:
+
+| field | type | meaning |
+|---|---|---|
+| `groups` | object | one entry per stream PRESENT: `{frame, source, count}` -- the frame its poses are in, the topic it came from, its sample count |
+| `missing` | list | every stream NOT captured. Each of the four groups is in exactly one of `groups` and `missing`: a missing stream is named, never zero-filled or silently absent |
+| `run_id` | string | the run's id |
+| `meta` | object | anything else the exporter records (result, timeline, hashes) |
+
+Each present group adds `f64` arrays after the map's, in this order:
+
+| group | arrays (all `f64`, one value per sample) |
+|---|---|
+| `gt` | `recording.gt.t`, `recording.gt.x`, `recording.gt.y`, `recording.gt.yaw` -- ground-truth pose |
+| `amcl` | `recording.amcl.t`, `recording.amcl.x`, `recording.amcl.y`, `recording.amcl.yaw` -- the localisation belief |
+| `plan` | `recording.plan.x`, `recording.plan.y`, `recording.plan.yaw` -- the path handed to the controller |
+| `cmd` | `recording.cmd.t`, `recording.cmd.v`, `recording.cmd.w` -- wheel commands: linear x (m/s), angular z (rad/s) |
+
+`t` is seconds on the recording's clock and never decreases; every value is
+finite; every column of a group has the group's `count`. The checks refuse
+a recording on anything but a recorded-run, a recording under version
+`"1.0"`, recording arrays without the block, and every violation above.
+
+**Compatibility.** Every 1.0 bundle is a valid 1.1 bundle, and a 1.1
+reader reads it unchanged. The reverse does not hold for a bundle WITH a
+recording: a 1.0 reader's array table is exact, so it refuses one, with an
+error rather than a misreading. A 1.1 bundle without a recording is
+written as `"1.0"` and is readable by both.
+
 ## `content_hash`
 
 The SHA-256 of:
@@ -164,7 +205,9 @@ does not record every input of its search.
 
 The rule is the same as the trace's:
 
-- an additive field or array bumps MINOR, and readers of the same MAJOR
-  ignore what they do not know;
+- an additive field or array bumps MINOR. Readers of the same MAJOR ignore
+  manifest FIELDS they do not know; the ARRAY table stays exact, so an
+  array added by a later MINOR is refused by an earlier reader (as 1.1's
+  recording arrays are by a 1.0 reader) rather than ignored;
 - a change of meaning bumps MAJOR, and a reader refuses a MAJOR it does not
   speak.

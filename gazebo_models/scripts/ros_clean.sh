@@ -245,6 +245,17 @@ PATTERNS=(
   # It is an ExecuteProcess, so a SIGKILLed launch parent orphans it and
   # leaves :8000 bound — after which the next run's panel never serves.
   'http[.]server.*coco_we[b]'
+  # COCO Lab Phase 1C (coco_lab_ros). The executables are anchored on their
+  # install path, lib/coco_lab_ros/<name>, so a shell whose command TEXT
+  # merely mentions a name is not swept (the p03c waiter trap). Pinned by
+  # coco_lab_ros/test/test_ros_clean.py.
+  'lab_stack[.]launch.py'
+  'lab_static_smoke[.]launch.py'
+  'coco_lab_ros/lab_planne[r]'
+  'coco_lab_ros/lab_param[s]'
+  'coco_lab_ros/lab_expor[t]'
+  'lab1c_conformanc[e][.]py'
+  'lab1c_watc[h][.]py'
 )
 
 survivors() {
