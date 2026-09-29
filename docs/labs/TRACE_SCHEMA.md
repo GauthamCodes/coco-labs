@@ -100,6 +100,24 @@ This is the rule `coco.v1` already uses:
 - **Changes of meaning bump MAJOR,** and a reader refuses a MAJOR it does not
   speak. `Trace.from_dict` does exactly that.
 
-Bundles (Phase 1B, `docs/labs/BUNDLE_FORMAT.md`) will carry traces as
+Bundles ([`BUNDLE_FORMAT.md`](BUNDLE_FORMAT.md), Phase 1B) carry traces as
 little-endian typed arrays under the same column names. This JSON form is the
 reference that the bundle encoding round-trips against.
+
+## Graph kinds (Phase 1B)
+
+Two graph kinds exist. Neither changed the trace schema: the header's
+`graph` block always allowed "any other graph", so the version stays `1.0`.
+
+- `grid`: `coco_lab.grid.Grid`. `sub` is always `0`.
+- `heading_grid`: `coco_lab.heading.HeadingGrid`, the *(cell, incoming
+  heading)* space of the ISRO investigation
+  ([`ISRO_INVESTIGATION.md`](ISRO_INVESTIGATION.md)).
+  - The header's `graph` block adds `moves` (`isro_v3_6`), `turn_penalty`,
+    `start_sub` (8) and `goal_sub` (9).
+  - `sub` is the index of the move that entered the cell, in the order N, S,
+    W, E, NW, NE, SW, SE (0–7). It is `8` at the start, which has no heading
+    yet, and `9` for the goal sink.
+  - The goal sink is entered from any arrival at the goal cell at cost 0. So
+    the last `path` event repeats the goal cell with `sub` 9, and
+    `path_steps` counts that zero-length step.

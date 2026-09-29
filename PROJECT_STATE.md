@@ -5,9 +5,25 @@ robotics curriculum that runs on this real ROS 2 / Nav2 stack. The plan is
 [`docs/ROADMAP.md`](docs/ROADMAP.md); session prompts are
 [`docs/LAB_PHASES.md`](docs/LAB_PHASES.md). **Phase 0 ("make the repo tell
 the truth") is closed locally (Milestone 0C, 2026-09-29); its public actions
-(push, archive tags, name, video migration) await the owner's approval. Phase 1 (Lab 1, Plan) has not started, and no
-`coco_lab` package exists yet.** The previous roadmap is archived at
-`docs/history/ROADMAP_COCO2.md`.
+(push, archive tags, name, video migration) await the owner's approval.
+Phase 1 (Lab 1, Plan) is under way on branch `lab1`: 1A and 1B are
+complete (see *COCO LAB — PHASE 1* below).** The previous roadmap is
+archived at `docs/history/ROADMAP_COCO2.md`.
+
+(Correction, 2026-09-29, Phase 1B: until now this paragraph said "Phase 1
+has not started, and no `coco_lab` package exists yet". That became false
+at Phase 1A, commit `c3713dd`, which did not update this file.)
+
+## COCO LAB — PHASE 1 (branch `lab1`, 2026-09-29)
+
+| | |
+|---|---|
+| **1A** | `coco_lab`: the graph interface, the grid, four heuristics with their admissibility analysis, five algorithms, and trace schema v1. It is ROS-free and standard-library-only. `c3713dd`; `docs/RESULTS.md` "COCO Lab Phase 1A" |
+| **1B** | Map schema v1 (`coco_lab.maps`, `docs/labs/MAP_FORMAT.md`), with Nav2 saved-map import and nine 20 x 20 teaching fixtures whose claims are tested. Bundle format v1 (`coco_lab.bundle`, `docs/labs/BUNDLE_FORMAT.md`), with golden fixtures for 1D. The ISRO investigation (`docs/labs/ISRO_INVESTIGATION.md`). `docs/RESULTS.md` "COCO Lab Phase 1B" |
+| **Tests** | (measured, 1B-5) `coco_lab` alone: colcon route and pip route counts are in RESULTS.md. The rest of the workspace is unchanged by Phase 1 |
+| **Map quality** | **Not measured.** The saved Nav2 map of the arena is *generated* from the same parameters as the world, so its precision/recall against a ground-truth rasterisation (0.9456 / 0.5771, measured) is a rasterisation-consistency number, not map quality. That needs a slam_toolbox map of this arena (1C at the earliest) |
+| **ISRO "A\* 5x faster, 4 % longer"** | "4 %" is 3.5 % in *smoothed waypoint count*, not path length or cost. It is **not reproduced** on fixed inputs (ratio 0.9993). The 5x time ratio is of the same magnitude here (4.5–5.4x on long trips). The simulator's cell-only state IS suboptimal under its turn penalty (about 1 map in 6, up to 2.4 %), but symmetrically for A\* and Dijkstra. Its path smoother can loop forever (measured) |
+| **Next** | Phase 1C, which is **not started**. It waits for the owner's go-ahead |
 
 (Until 2026-09-29 this file was headed "COCO 2.0 STATUS: ROBOT FROZEN /
 PLATFORM IN PROGRESS". The new direction does not change the robot:

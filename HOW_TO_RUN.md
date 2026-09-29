@@ -222,6 +222,29 @@ platform and expects 829 across eight — there `coco_web` has no tests.
 An isolated `ROS_DOMAIN_ID` (e.g. `export ROS_DOMAIN_ID=77`) gives the
 "clean ROS graph" without stopping a simulator you are using.
 
+### COCO Lab's core (`coco_lab`, branch `lab1`)
+
+`coco_lab` needs no ROS. The two routes are:
+
+- **Plain venv (no ROS).** Install from a copy outside the source tree,
+  because `pip install ./coco_lab` builds in-tree and leaves a
+  `coco_lab/build/` that the flake8 test then lints. Then run
+  `cd coco_lab && <venv>/bin/python -P -m pytest --ignore=test/test_copyright.py --ignore=test/test_flake8.py --ignore=test/test_pep257.py`.
+  The three ament linters need ROS.
+- **colcon.** `colcon build --packages-select coco_lab`, source
+  `install/local_setup.bash`, then `cd coco_lab && python3 -P -m pytest`.
+  hypothesis 6.98.15 and networkx 2.8.8 must be importable
+  (`coco_lab/requirements-test.txt`).
+
+The Phase 1B evidence scripts run from the repository root, also without
+ROS:
+
+- `python3 docs/data/lab1b/arena_maps.py`
+- `python3 docs/data/lab1b/resolution.py`
+- `python3 docs/data/lab1b/isro_experiment.py`
+- `python3 docs/data/lab1b/vendor_isro.py --check`. This one needs `gh`
+  access to the private ISRO repository.
+
 ### The page, in a real browser
 
 The colcon suite checks the page's files; it cannot check that the page

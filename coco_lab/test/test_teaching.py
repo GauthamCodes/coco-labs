@@ -32,7 +32,7 @@ def run(name, algorithm, **model):
 def test_the_set_is_the_documented_one():
     assert sorted(teaching.FIXTURES) == sorted([
         'open', 'corridor', 'wall_one_gap', 'two_routes', 'greedy_trap',
-        'diagonal_leak', 'no_path', 'cost_field'])
+        'diagonal_leak', 'no_path', 'cost_field', 'turn_trap'])
 
 
 @pytest.mark.parametrize('name', sorted(teaching.FIXTURES))

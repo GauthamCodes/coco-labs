@@ -19,5 +19,7 @@ import pytest
 @pytest.mark.linter
 @pytest.mark.pep257
 def test_pep257():
-    rc = main(argv=['.', 'test'])
+    # The vendored ISRO code keeps its original style (coco_lab/isro).
+    rc = main(argv=['--exclude', 'coco_lab/isro/upstream_v3_6.py', '--',
+                    '.', 'test'])
     assert rc == 0, 'Found code style errors / warnings'

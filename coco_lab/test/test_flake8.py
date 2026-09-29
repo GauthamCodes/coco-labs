@@ -19,7 +19,8 @@ import pytest
 @pytest.mark.flake8
 @pytest.mark.linter
 def test_flake8():
-    rc, errors = main_with_errors(argv=[])
+    # The vendored ISRO code keeps its original style (coco_lab/isro).
+    rc, errors = main_with_errors(argv=['--exclude', 'upstream_v3_6.py'])
     assert rc == 0, \
         'Found %d code style errors / warnings:\n' % len(errors) + \
         '\n'.join(errors)

@@ -55,10 +55,15 @@ def no_ros(monkeypatch):
 
 
 def all_modules():
+    """Every module in coco_lab, subpackages included (coco_lab.isro)."""
     import coco_lab
     return ['coco_lab'] + [
-        f'coco_lab.{m.name}'
-        for m in pkgutil.iter_modules(coco_lab.__path__)]
+        m.name for m in pkgutil.walk_packages(coco_lab.__path__,
+                                              prefix='coco_lab.')]
+
+
+def test_the_walk_reaches_subpackages():
+    assert 'coco_lab.isro.upstream_v3_6' in all_modules()
 
 
 def test_every_module_imports_without_ros(no_ros):

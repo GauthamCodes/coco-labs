@@ -31,9 +31,17 @@ PACKAGE_DIR = os.path.dirname(coco_lab.__file__)
 
 
 def runtime_sources():
-    for name in sorted(os.listdir(PACKAGE_DIR)):
-        if name.endswith('.py'):
-            yield os.path.join(PACKAGE_DIR, name)
+    """Every .py file in the package, subpackages included."""
+    for root, dirs, names in os.walk(PACKAGE_DIR):
+        dirs.sort()
+        for name in sorted(names):
+            if name.endswith('.py'):
+                yield os.path.join(root, name)
+
+
+def test_the_walk_reaches_subpackages():
+    assert any(p.endswith(os.path.join('isro', 'upstream_v3_6.py'))
+               for p in runtime_sources())
 
 
 def test_every_import_is_stdlib_or_coco_lab():

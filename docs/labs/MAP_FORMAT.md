@@ -147,10 +147,11 @@ rules:
 
 ## Teaching fixtures (`coco_lab/teaching.py`)
 
-There are eight 20 x 20 fixtures, plus `turn_trap` (Phase 1B-4, a heading
-space). Each carries a `purpose`, a `claim` and a `run` move model, and
-`test/test_teaching.py` checks every claim against the algorithms and a
-networkx oracle:
+There are nine 20 x 20 fixtures. `turn_trap` is searched on the heading
+space; the other eight on a grid. Each carries a `purpose`, a `claim` and a
+`run` move model. `test/test_teaching.py` checks every claim against the
+algorithms and a networkx oracle, and `test/test_isro.py` checks
+`turn_trap`'s:
 
 | fixture | claim |
 |---|---|
@@ -162,6 +163,7 @@ networkx oracle:
 | `diagonal_leak` | the corner rule decides whether a diagonal wall is a wall; 4-connectivity costs more |
 | `no_path` | all five report `no_path` |
 | `cost_field` | with the cost layer the optimum detours through a cheap gap |
+| `turn_trap` | with a turn penalty, the ISRO simulator's cell-only search is 0.1 costlier than the (cell, heading) optimum (`test_isro.py`) |
 
 ## What this is not
 

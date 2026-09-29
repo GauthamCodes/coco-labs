@@ -28,6 +28,10 @@ Modules:
 - :mod:`coco_lab.trace` -- trace schema v1
 - :mod:`coco_lab.maps` -- map schema v1, Nav2 saved-map import, rasterising
 - :mod:`coco_lab.teaching` -- Lab 1's 20 x 20 teaching maps, claims tested
+- :mod:`coco_lab.bundle` -- bundle format v1: save, check, load, replay
+- :mod:`coco_lab.heading` -- the (cell, incoming heading) state space
+- :mod:`coco_lab.isro` -- the ISRO simulator's search, verbatim, and its
+  harness (historical behaviour, kept apart from the reference code)
 """
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'

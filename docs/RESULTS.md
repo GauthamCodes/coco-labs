@@ -6678,3 +6678,166 @@ below was in a test, or in the evidence.
   SmacPlanner2D's. Phase 1C reads Smac's source; nothing here claims they
   match.
 - A bare `colcon test`, with apt-installed `python3-hypothesis`.
+
+## COCO Lab Phase 1B — bundles, maps and the ISRO reconstruction (measured 2026-09-29)
+
+Branch `lab1`, on top of Phase 1A (`c3713dd`). This adds:
+- **Map schema v1:** `coco_lab/maps.py` and `docs/labs/MAP_FORMAT.md`.
+- **Nine 20 x 20 teaching fixtures:** `coco_lab/teaching.py`.
+- **Bundle format v1:** `coco_lab/bundle.py` and `docs/labs/BUNDLE_FORMAT.md`,
+  with five golden bundles in `coco_lab/test/fixtures/bundles/`.
+- **The (cell, heading) state space:** `coco_lab/heading.py`.
+- **The ISRO simulator's search, vendored verbatim, and its harness:**
+  `coco_lab/isro/`.
+- **The investigation:** `docs/labs/ISRO_INVESTIGATION.md`.
+- **Evidence scripts and outputs:** `docs/data/lab1b/`.
+
+Every number below was produced this session. Labels follow
+`ISRO_INVESTIGATION.md`.
+
+### Baseline, before any change (measured)
+
+| route | result | time |
+|---|---|---|
+| pip, plain venv, `env -i`, `rclpy` absent (3 ament linters excluded) | **138 / 0 / 0** | 20.00 s |
+| colcon build into a tmp install tree, ROS Jazzy | **141 / 0 / 0** | 21.09 s |
+
+This reproduces Phase 1A's counts exactly. Load average 0.2–1.4; hypothesis
+6.98.15, networkx 2.8.8, Python 3.12.3.
+
+### After Phase 1B (measured)
+
+| route | result | time |
+|---|---|---|
+| pip route, installed from a copy of the package | **314 / 0 / 0** | 33.48 s |
+| colcon route, linters included | **317 / 0 / 0** | 35.49 s |
+
+Load average ≈ 2.4. `coco_lab` builds with colcon in 1.3–1.4 s. The
+difference (+176 on each route) is new tests:
+- `test_bundle.py`, 75;
+- `test_maps.py`, 63;
+- `test_teaching.py`, 19;
+- `test_isro.py`, 17;
+- one walk-reaches-subpackages check each in `test_no_ros.py` and
+  `test_stdlib_only.py`.
+
+No Phase 1A test was removed or weakened. The linter tests gained one
+`--exclude` for the verbatim vendored file only.
+
+### Maps (measured)
+
+- **The Nav2 saved map imports exactly.** `coco_navigation` loads as
+  500 x 380 cells at 0.05 m, origin (−6.5, −9.5): 19,031 occupied, 143,959
+  free and 27,010 unknown. Content hash `sha256:f92e24fb…`.
+- **Saved map vs ground truth.** (b) is rasterised from
+  `navigation_world.json` and `coco_config` at the LiDAR scan height
+  (0.2135 m), with the `centre` rule and solid ramp bodies. It is a
+  **rasterisation-consistency number, NOT map quality**, because the saved
+  map is generated from the same parameters (owner decision, 2026-09-29).
+
+  | cells | precision | recall | notes |
+  |---|---|---|---|
+  | all occupied | **0.9456** | **0.5771** | 13,186 of 15,600 ramp-body cells are unknown in the saved map, which draws ramp outlines only |
+  | boxes only | **0.8941** | **1.000** | the generator's `overlap` rule adds partial cells |
+
+- **map_saver's unknown pixel.** Pixel 205 (occ 0.196) reads back as
+  **FREE** under a `free_thresh` of 0.25. `to_nav2` writes 0.196, as the
+  repo's generator does, and a test pins the difference.
+- **Every teaching fixture's claim holds.** Examples:
+  - `greedy_trap`: greedy 24.071 against the optimum 22.899.
+  - `diagonal_leak`: 15.556 with corner cutting, 30.485 without, 34.0 on
+    4-connectivity.
+  - `cost_field`: the detour costs 20.314 against 31.0 for the straight
+    line under the cost layer.
+
+### Bundles (measured)
+
+- **Every golden bundle loads, validates and replays** event-for-event.
+  Five bundles: A\*, gzipped Dijkstra with a cost layer, weighted A\*, a BFS
+  no-path run, and a heading-grid A\*.
+- **The writer is byte-stable.** The committed bytes equal a fresh write, in
+  a test.
+- **Round trip and replay, property-tested.** 150 seeded maps x 3
+  algorithms round-trip and replay exactly.
+- **Rejection classes each have a test.** 35 malformed-manifest cases, plus
+  truncation, padding, a flipped bit, a NaN, off-grid events, an impossible
+  transition, a broken path, an edited map, a gzip bomb (64 MiB of zeros
+  stopped at the declared size) and deep nesting.
+- **Full-arena Dijkstra** (`docs/data/lab1b/resolution.py`; 8-connected,
+  no corner cutting, unknown blocked; same map-frame endpoints; median of 3
+  runs, load ≈ 2.5):
+
+  | | 0.05 m (native, 500 x 380) | 0.10 m (2 x 2 conservative downsample) |
+  |---|---|---|
+  | search time, trace included | **1.022 s** | **0.228 s** |
+  | expansions / events | 136,917 / 283,378 | 33,764 / 70,319 |
+  | bundle raw / gzip | 14.08 MB / 1.44 MB | 3.50 MB / 0.38 MB |
+  | bundle write raw / gzip | 0.39 s / 2.81 s | 0.08 s / 0.79 s |
+  | load + validate | 0.36–0.38 s | 0.08 s |
+  | path length | 31.914 m | 32.131 m (+0.68 %) |
+
+  **Recommendation: 0.10 m for edit mode.** It is 4.5x faster and about 4x
+  smaller for a 0.68 % longer path. The raw native bundle is close to the
+  16 MB artifact limit. The two are not close, so this is a recommendation
+  and not a tie. Replaying a recorded run should keep its native resolution.
+
+### ISRO (measured; full account in `docs/labs/ISRO_INVESTIGATION.md`)
+
+- **Source:** `GauthamCodes/isro-factory-pathfinding-simulator` @
+  `5aad7b3`, `astar_simulator_final_v3_6.py` (SHA-256 `ba05a8f3…`).
+  - It is a transcription of the internship report's code listing.
+  - The owner confirmed there is no original `.py` and no CSV.
+  - Seven line ranges are vendored verbatim and hash-checked.
+- **The historical Table 1 metric.** "Steps" is `len(smooth_path(path))`,
+  a waypoint count after smoothing. The report's "4 % longer" is
+  2.64 / 2.55 = **3.5 %** in that count.
+- **Controlled experiment.**
+  - 1,800 seeded 30 x 30 maps: 1,200 long trips and 600 short ones, at
+    densities 0 to 0.3.
+  - Identical inputs for every model.
+  - The deterministic hash `c97ad0fc…` is identical across two runs.
+
+  | | long (1,198 with a path) | short (599) |
+  |---|---|---|
+  | historical A\* ≠ historical Dijkstra in true cost | 148 (A\* higher 82, lower 66; mean +0.007 %) | 29 |
+  | historical A\* suboptimal vs (cell, heading) optimum | 201, max +2.37 % | 42, max +2.85 % |
+  | historical Dijkstra suboptimal | 184, max +2.22 % | 41, max +2.85 % |
+  | corrected A\* vs Dijkstra | **0 differ** | **0 differ** |
+  | ablation (penalty 0): historical vs optimum | **0 differ** | **0 differ** |
+  | "Steps" ratio of means, A\* / Dijkstra | **0.9993** | **0.9966** |
+  | search time ratio, Dijkstra / A\* (means / medians) | 4.47x / 5.41x (repeat run: 4.50x / 5.42x) | 2.19x / 2.02x |
+  | counterfactual (b), diagonals = 1: A\* longer in geometry | mean +1.72 % (+4.74 % where they differ) | mean +0.33 % |
+
+- **The Table 1 gap is not reproduced.** The 3.5 % Steps gap does not
+  appear on fixed inputs: the ratio is 0.9993 on long trips and 0.9966 on
+  short ones.
+- **The 5x time ratio is of that magnitude here.** It is a consistency
+  check, not a reproduction.
+- **The cell-only state really does lose optimality** under the turn
+  penalty, but it does so symmetrically for A\* and Dijkstra.
+- **The minimal case is `turn_trap`:**
+  - one crate straight ahead of the start;
+  - an exact g-tie at (6, 2) between the NW and N arrivals;
+  - both historical searches cost 10.4426, against the optimum 10.3426.
+- **The historical smoother can loop forever (measured).**
+  - A diagonal step past a blocked corner defeats its line-of-sight test.
+  - The harness's termination check agreed with the verbatim smoother in
+    20 of 20 cases.
+  - It would not return on 0 / 141 / 221 / 259 of about 300 long-trip paths
+    at densities 0 / 0.1 / 0.2 / 0.3.
+- **Octile on the (cell, heading) graph.** It is consistent on every edge
+  of 200 seeded maps, with h(goal) = 0. `HeadingGrid` A\* and Dijkstra
+  match an independent networkx oracle on 1,000 seeded maps (934 with a
+  path, 66 without).
+
+### Not yet measured
+
+- **A map-quality number.** It needs a slam_toolbox map of
+  `coco_navigation`, which is 1C at the earliest.
+- **Pyodide loading `coco_lab`** (1D), including `bundle.py`'s `gzip` and
+  `subprocess` use. `git_provenance` returns `None` where there is no
+  subprocess.
+- **Why the internship-era runs logged 3.5 % more Steps for A\*.** It is a
+  HYPOTHESIS: a small-sample difference over runs without fixed inputs. The
+  inputs and the CSV no longer exist.
+- **Whether the historical runs ever hit the smoother's infinite loop.**
