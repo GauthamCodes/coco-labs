@@ -4987,3 +4987,72 @@ file.
 **EXACT NEXT ACTION:** Begin Phase 1A only after Phase 0 is explicitly
 closed. That means the owner approves and runs `git push jazzy2 main`, and
 decides items 3–5 above, or explicitly defers them.
+
+---
+
+## PHASE 0 — CLOSED (2026-09-29)
+
+**Public main**
+- Pushed with the owner's approval: `git push jazzy2 main`, `442bca0..6853517`.
+- Before the push: local `6853517`, remote `442bca0`, 0 behind / 3 ahead,
+  and the push was verified to be a fast-forward.
+- **Public main SHA: `6853517`**, equal to local `main` (checked with
+  `git ls-remote`).
+- The GitHub API confirms the public tree carries the Phase 0
+  documentation:
+  - `docs/ROADMAP.md`, whose blob `c5b132d` matches local;
+  - `docs/LAB_PHASES.md`;
+  - `docs/history/ROADMAP_COCO2.md`;
+  - `docs/data/m0b_phase0/README.md`;
+  - the README's COCO Lab banner;
+  - PROJECT_STATE's "ACTIVE — building COCO Lab" header.
+- This checkpoint commit is local only. The owner approved one push, not
+  this commit.
+
+**Cleanup completed** (owner-approved; apparent sizes measured just before
+each deletion)
+- `<repo>/tatus --short`: 19,011 B. Before deleting, it was re-confirmed
+  md5-identical (`d8443d89…`) to
+  `~/coco_premerge_backup/20260919_033040/repo_local_files/tatus --short`.
+  Its content is also held in stash `fcf5fa4`.
+- `~/simple_gz_ws`: 626,692 B. Before deleting, it was re-confirmed that
+  it is not a git repo, has the same 4 boilerplate source files, and no
+  open handles.
+- `/tmp/launch_params_*`: 837 files, 4,109,543 B.
+  - Deleted: files dated 2026-09-28 01:13 to before 02:30 on 09-29 (the
+    0A-era set). The list was built explicitly, not with a glob, and
+    covers only files older than 08:40 that no live process named on its
+    command line.
+  - **Kept: 23 files belonging to a LIVE COCO run.** It is a p03d mission
+    on `~/coco_p03d_ws`, launched 08:41:40 by another session. All 17
+    files named on its live command lines are verified present.
+- Total deleted: **4,755,246 B**. `df` free went from 36,726,976,512 B to
+  36,734,537,728 B; the gain is larger because of block rounding, and the
+  live run is writing.
+
+**Codex work preserved**
+- `<repo>/.codex/worktrees/c2nav0-implementation` is untouched: 219,462,730
+  B, the same as in 0B.
+- The local-only branch `codex/c2nav34-odom-final` is untouched at
+  `5c7f597`.
+- The owner's note named `~/.codex/worktrees`; that path does not exist.
+  The worktree is under the repository's `.codex/`.
+
+**Antigravity installer preserved:** `~/Downloads/Antigravity.tar.gz`,
+172,322,487 B, unchanged since 2026-09-11. It awaits the owner's decision.
+
+**E-YANTRA PROTECTED — NO FILES MODIFIED.**
+- `~/ros2_ws` (eYRC_26-27_Strata-Cobot at `4559a79`): 0 files modified
+  since 01:58 IST.
+- `~/task1a_scratch` and `~/SC#2200_task1A_detection.png` are present.
+
+**Still awaiting the owner:**
+- archive tags, then remote-branch deletions;
+- the name;
+- the video migration and the coco-robot-ros2 archival;
+- the Antigravity installer;
+- the owner's uncommitted CLAUDE.md edit;
+- pushing this checkpoint.
+
+NEXT MILESTONE: Phase 1A
+EXACT NEXT ACTION: Start a fresh Claude Code session and execute LAB_PHASES.md §1A.
