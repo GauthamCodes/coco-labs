@@ -5973,3 +5973,132 @@ EXACT NEXT ACTION: after the owner's two actions, fast-forward `main` to
 `lab1` (no force). Watch `lab.yml`'s `deploy`, then run
 `python3 lab_web/tools/browser/check.py https://gauthamcodes.github.io/coco-robot-jazzy-2.0/ out/ smoke phone weight`
 and record the result.
+
+---
+
+## PHASE 1 — COMPLETE (2026-09-30)
+
+This is the final Phase 1 entry. No further Phase 1 milestone exists.
+1D is closed with this entry, and no 1E, 1F or other subdivision was
+created. `LAB_PHASES.md` §1E was not undertaken inside Phase 1, by the
+owner's closure instruction.
+
+**What Phase 1 delivered**
+
+| part | what |
+|---|---|
+| Pathfinding | `coco_lab` (1A): graph and grid, four heuristics, and five algorithms (A\*, Dijkstra, Weighted A\*, BFS, Greedy best-first) with trace schema v1. ROS-free, standard library only |
+| Maps | Map schema v1, Nav2 saved-map import and nine teaching fixtures (1B) |
+| Bundles | Bundle format 1.0 (1B) and 1.1 with recorded-run streams (1C). Six golden fixtures |
+| ISRO | The investigation: "4 %" is waypoint count; not reproduced on fixed inputs (1B) |
+| Real Nav2 | `coco_lab_ros` (1C). Smac 2D's raw A\* cost equals coco_lab's C1 on 36 / 36 comparable pairs. The robot moves only via `FollowPath` |
+| Real runs | Three recorded runs to (0.5, 6.0): A\* and Dijkstra succeeded, greedy failed `FAILED_TO_MAKE_PROGRESS` (1C) |
+| Browser | `lab_web` (1D): a TypeScript decoder exactly equal to `bundle.py`, the trace player, recorded-run overlays and mode badges |
+| Pyodide | A lazily started worker reruns `coco_lab` itself on an edit (1D) |
+| Deployment | GitHub Pages, from `lab.yml`'s `deploy` on `main` (this entry) |
+
+**This session**
+
+1. **Verified the starting state** (measured): `lab1` = `jazzy2/lab1` =
+   `ef94b5a`, and `jazzy2/main` = `6853517`, an ancestor 18 commits
+   behind. The Pages API returned `build_type: workflow` and the URL.
+   `AGENTS.md` was untracked; it was not touched.
+2. **Diagnosed main's red `ci.yml` from its logs, not from memory.** 1D
+   had called it a one-word fix (add `coco_sim`); **that diagnosis was
+   incomplete**. There were three layers:
+   - Build: `coco_sim` was missing (run 36516234213).
+   - Collection: `mujoco` was missing, so coco_rl exited 2 (run
+     33418188446).
+   - Tests: 22 failures and 9 errors, from missing `nav2_bringup` and
+     `ros_gz_sim`. This only appeared once the first two were fixed (PR
+     run 36670100628).
+
+   Two commits fixed it:
+   - `b1e9f85` added `coco_sim` to both package lists and
+     `mujoco==3.11.0`, coco_sim's own pin;
+   - `59af2f6` added `ros-jazzy-nav2-bringup` and `ros-jazzy-ros-gz-sim`,
+     both existing `gazebo_models` exec_depends.
+
+   No test, floor or package was removed.
+3. **Local equivalent of the CI** (measured; fresh job-local overlay;
+   the workflow's package lists and guard): 9 / 9 built, 1059 tests,
+   0 failures, 7 skipped. All 7 skips are `test_pick_poses`, which needs
+   `moveit_msgs`: not on this machine's path, but apt-installed on the
+   runner, where all 7 ran.
+4. **Final regression** (measured, load 0.7–1.4). Every count equals 1D-8:
+   - coco_lab pip 333 / 0 / 0, colcon 336 / 0 / 0;
+   - coco_lab_ros 69 / 0 / 0;
+   - gazebo_models 229 / 0 / 0;
+   - custom_teleop 75 / 0 / 0;
+   - lab_web/tools 58 / 0 / 0;
+   - vitest 142; typecheck clean;
+   - two builds identical (`5f6a6489…`).
+5. **Gate.** PR #1 `lab1` → `main`: `CI` passed (run 36670545174: 1059
+   tests, 0 failures, 0 errors, **0 skipped**), and `Lab` passed.
+6. **Fast-forwarded `main`**: `git push jazzy2 59af2f6:main`,
+   `6853517..59af2f6`, no force and no merge commit. `jazzy2/main` was
+   re-checked just before. PR #1 then read MERGED.
+   - This also made public the Phase 0 checkpoint `9ee4a52`, which the
+     PHASE 0 entry recorded as "local only". It is an ancestor of `lab1`.
+   - The local `main` branch (`9ee4a52`, checked out in the owner's
+     primary checkout) was not touched.
+7. **Deployed** (measured):
+   - `CI` on `main` succeeded (run 36671154026);
+   - `Lab` on `main` succeeded, **including `deploy`** (run 36671154008);
+   - GitHub lists a `github-pages` deployment of `59af2f6`.
+8. **Verified the public site** (measured, headless Firefox 156 against
+   the URL itself; RESULTS "COCO Lab Phase 1 — closure"):
+   - all 10 catalog bundles (7 of format 1.0, 3 of format 1.1) decode and
+     draw with the right badge;
+   - 0 console errors, no cookie, no storage;
+   - player, reduced motion and phone 390 × 844 pass;
+   - no Pyodide request before the first edit, and only the pinned CDN
+     after it;
+   - `arrays.bin.gz` is served as `application/gzip` with no
+     `Content-Encoding`, byte-identical to the build.
+
+   Timings came from two samples:
+   - at load ~30, from another session's live COCO mission sweep: warm
+     edit 3,871–4,395 ms, a **miss**;
+   - at 1-minute load ~2: warm edit 1,412 / 1,468 / 1,493 ms, **met,
+     with a 7 ms margin**. Playback was 59.94 fps at the 60 Hz cap.
+
+**Final commit**
+- The deployed and verified Phase 1 state is **`59af2f6`**.
+- The closeout commit carrying this entry changes documents and
+  `docs/data/lab1d/live/` only. `main` and `lab1` are both fast-forwarded
+  to it; its SHA is in `git log` and the final report.
+
+**Public URL:** <https://gauthamcodes.github.io/coco-robot-jazzy-2.0/>
+
+**Remaining limitations (factual)**
+- The warm-edit target holds on the public site only narrowly (7 ms at
+  load ~2), and fails under heavy load. It is not measured on an idle
+  machine or on any other machine.
+- Every browser number is headless Firefox 156 on this machine. A headed
+  browser, a real phone, Safari and Chrome are not measured.
+- Three real runs are not a rate. M3's 6.2 % was neither reproduced nor
+  refuted (1C). Map quality is not measured (moved to Lab 3).
+- A bare `colcon test` of `coco_lab` locally still needs
+  `python3-hypothesis` (1C).
+- Phase 0's public actions (archive tags, name, video migration) are
+  still the owner's.
+
+**Traps paid this session**
+- A `until grep -q PATTERN` waiter matched the text of its own command
+  line, which `pgrep -af` had printed into the same output file. The
+  p03c waiter trap, again: anchor the pattern (`^check.py exit`).
+- A diagnosis written as "the fix is one word" had not been run. Adding
+  `coco_sim` exposed the next two layers. CI fixes are only known once CI
+  has run them.
+
+**Phase 2 has NOT started.**
+
+NEXT MAJOR PHASE: Phase 2, not started.
+- The owner's closure instruction names it "SLAM Lab".
+- `docs/ROADMAP.md` names Phase 2 **"Localise"** (Lab 2: MCL against EKF,
+  kidnap recovery), and places the slam_toolbox map of the arena in Lab 3.
+- The two names disagree. The owner decides which is Phase 2 before it
+  starts; this entry does not.
+EXACT NEXT ACTION: none inside Phase 1. Open a fresh session for Phase 2
+only when the owner asks.

@@ -297,6 +297,19 @@ validation boundary, and `tools/browser/check.py`, which measures the
 built site in headless Firefox. CI is `.github/workflows/lab.yml`, beside
 the ROS `ci.yml`.
 
+**The public site** is <https://gauthamcodes.github.io/coco-robot-jazzy-2.0/>.
+`lab.yml`'s `deploy` job publishes it on every push to `main`; there is no
+manual step. To check the live site the same way as the local build
+(headless Firefox; screenshots and `report.json` land in `out/`):
+
+```bash
+python3 lab_web/tools/browser/check.py https://gauthamcodes.github.io/coco-robot-jazzy-2.0/ out/ smoke phone weight
+bash docs/data/lab1d/live/http_check.sh   # status, .gz headers, bytes vs your lab_web/dist (npm run build first)
+```
+
+Omit the scenario names to run all seven, including `fps` and `edit`.
+Timings depend on the machine's load, so record `_meta.loadavg` with them.
+
 ### The page, in a real browser
 
 The colcon suite checks the page's files; it cannot check that the page

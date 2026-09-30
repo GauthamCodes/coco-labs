@@ -7245,8 +7245,9 @@ measured medians):** search 649 / 221 ms = **2.9×**, load 281 / 76 ms =
 
 ### Not yet measured / not done
 
-- **GitHub Pages.** It is not enabled (the API returns 404), and `main`
-  has not been fast-forwarded. The public URL, how Pages serves
+- *(Superseded 2026-09-30 by "COCO Lab Phase 1 — closure" below: Pages
+  is live and `main`'s CI is green.)* **GitHub Pages.** It is not enabled
+  (the API returns 404), and `main` has not been fast-forwarded. The public URL, how Pages serves
   `arrays.bin.gz`, and the `deploy` job are therefore **unverified**. The
   `deploy` job has only been skipped (it runs on `main`).
 - A headed browser, a real phone, Safari or Chrome.
@@ -7255,3 +7256,171 @@ measured medians):** search 649 / 221 ms = **2.9×**, load 281 / 76 ms =
 - **The ROS `ci.yml` on `main`** is red for a pre-existing reason,
   diagnosed from its log: `coco_sim` is missing from `--packages-select`.
   1D neither caused nor fixed it.
+  *(Superseded 2026-09-30: that diagnosis was incomplete. With `coco_sim`
+  added, three runner dependencies were still missing. All four are fixed
+  and `main`'s CI is green; see the closure section below.)*
+
+## COCO Lab Phase 1 — closure: CI, deployment and the public site (measured 2026-09-30)
+
+Phase 1 is closed. No new code; the only changes were to `ci.yml` and the
+documentation. The approved Phase 1 state is `59af2f6`, the commit that
+was deployed and verified; the closeout commit after it changes documents
+and evidence only.
+
+### Git (measured)
+
+- `main` was fast-forwarded `6853517..59af2f6` by a plain push, with no
+  merge commit and no force. Before the push, `jazzy2/main` was still
+  `6853517` and was an ancestor of `lab1`.
+- PR #1 (`lab1` → `main`) was the CI gate. GitHub marked it MERGED when
+  `main` reached its head.
+
+### The ROS `ci.yml` on `main` — fixed (measured from the workflow logs)
+
+| run | where | result | cause |
+|---|---|---|---|
+| 36516234213 | `main`, before | Build **failed** | `gazebo_models` exec_depends on `coco_sim`, which was not in `--packages-select` |
+| 33418188446 | `main`, August | Test **failed**: coco_rl exit 2 | `coco_rl.yard_env` imports `mujoco` at module scope; the runner never installed it |
+| 36670100628 | PR #1, `b1e9f85` (`coco_sim` + `mujoco==3.11.0`) | 1059 tests, **22 failures + 9 errors**, all in gazebo_models | every one a `PackageNotFoundError`: `nav2_bringup` (60 hits) and `ros_gz_sim` (33). The tests read those packages' installed launch files |
+| 36670545174 | PR #1, `59af2f6` (+ `ros-jazzy-nav2-bringup`, `ros-jazzy-ros-gz-sim`) | **1059 tests, 0 failures, 0 errors, 0 skipped**; floor guard: 1057 collected in 7 suites | — |
+| 36671154026 | `main` push, `59af2f6` | **success** | — |
+
+- The `mujoco` pin is `coco_sim/setup.py`'s own `install_requires`.
+- Both apt packages are existing `gazebo_models` `exec_depend`s.
+- No test was disabled, and the floor guard (230) is unchanged.
+- The local equivalent (a fresh job-local overlay, the same package lists
+  and the workflow's own guard) gave 1059 tests with 0 failures, but 7
+  skipped: `coco_moveit_config`'s `test_pick_poses` needs `moveit_msgs`,
+  which is not on this machine's path without the MoveIt prefix. The
+  runner apt-installs it, and there all 7 ran.
+
+### Final regression (measured, fresh job-local overlay, load 0.7–1.4)
+
+| suite | result | at 1D-8 |
+|---|---|---|
+| `coco_lab` pip route | **333 / 0 / 0** | 333 |
+| `coco_lab` colcon route | **336 / 0 / 0** | 336 |
+| `coco_lab_ros` | **69 / 0 / 0** | 69 |
+| `gazebo_models` | **229 / 0 / 0** | 229 |
+| `custom_teleop` | **75 / 0 / 0** | 75 |
+| `lab_web/tools` | **58 / 0 / 0** | 58 |
+| vitest | **142 passed** (5 files) | 142 |
+| typecheck | clean | clean |
+| `build_catalog.py` | all 10 bundles validated and replayed ("all N events identical") | same |
+| two production builds | identical, `tree_sha256 5f6a6489…` (local). CI `6faccf46…` | identical |
+
+The local and CI tree hashes differ for the reason recorded at 1D:
+`GITHUB_SHA` and the regenerated arena provenance. Each build reproduces
+itself.
+
+`Lab` on `main` (run 36671154008) passed: coco_lab 333 / 0 skipped,
+`lab_web/tools` 58 / 0 skipped, and vitest 142. Its `deploy` job
+succeeded, and GitHub records a `github-pages` deployment of `59af2f6`.
+
+### Invariants (measured)
+
+- Since `6853517`, no existing ROS package changed except
+  `gazebo_models/scripts/ros_clean.sh`, which gained 7 sweep patterns in
+  1C. `gazebo_models/config` and `coco_mission` are identical to `main`
+  before the closure.
+- The mission `nav2_params.yaml` sha256 is `06c308af…`, unchanged.
+- `coco_lab_ros` publishes only `/lab/*` topics. It moves the robot only
+  through a `FollowPath` action client, and it never publishes velocity.
+- `lab_web/src` contains no WebSocket, rosbridge or `cmd_vel` reference,
+  and no search implementation (open or closed sets, heaps).
+- No rosbag file (`.db3`, `.mcap`, `.bag`) is tracked.
+
+### The public site (measured, headless Firefox 156.0.1 against the public URL)
+
+URL: <https://gauthamcodes.github.io/coco-robot-jazzy-2.0/>. The live
+catalog reports `built_from: 59af2f6, dirty: false` and coco_lab 0.2.0.
+Evidence is in `docs/data/lab1d/live/`.
+
+**HTTP** (`http_check.txt`):
+- `/`, `index.html` and `generated/catalog.json` return 200.
+- The JS, CSS and Pyodide-worker assets under `/coco-robot-jazzy-2.0/`
+  return 200, so the base path works. A missing bundle path returns 404.
+- **`arrays.bin.gz` on Pages:** all six are served as
+  `content-type: application/gzip` with **no `Content-Encoding`**, even
+  to a client sending `Accept-Encoding: gzip`. Each has the gzip magic
+  `1f 8b` and is byte-identical to the local build. Pages therefore does
+  not do what Vite's dev server did (1D, "Found during 1D" item 1).
+
+**Functional** (`browser_report_loaded.json`; the phone scenario passed again in `browser_report_quiet.json`):
+- **smoke**: all 10 catalog bundles load, decode and draw with the right
+  mode badge. That is 5 golden fixtures and 2 arena bundles (format 1.0),
+  and the 3 recorded real runs (format 1.1, "Replay — recorded real
+  run"). The sixth golden fixture, `recorded_run_synthetic_1_1`, is not in
+  the public catalog by design (PHASE_1D_PLAN §G); vitest covers it.
+- **Clean page**: 0 console errors, no cookie, 0 storage items.
+- **player**: ← 177, Shift+← 77 and → 78 on the 178-event trace. Space
+  plays and pauses, and scrub works. These equal the local numbers.
+- **reduced motion**: nothing autoplays, and playback moves in jumps of
+  3,595 events.
+- **phone 390 × 844**: `scrollWidth` 378. Play, scrub, picker, badge and
+  canvas all hit-test, and a real tap plays.
+- **Pyodide**: no Pyodide request is made before the first edit. After
+  it, the only third-party files are the six under
+  `cdn.jsdelivr.net/pyodide/v314.0.7/full/`. The edited bundle is
+  recomputed by coco_lab in the browser, and it is labelled so.
+
+**Timings** — first live sample. It was taken **under load average ~22–30
+on 12 cores**: another session's COCO simulator and mission sweep
+(`coco_p03d_ws`) was running. This session did not start that load, and
+did not stop it.
+
+| | target (1D) | local, 1D (load 0.5–1.0) | **live, load 29.7** |
+|---|---|---|---|
+| full-arena Dijkstra playback, 1,000 events/frame | ≥ 60 fps | 60.07 fps, 0 frames > 25 ms | **59.96 fps**, 5 of 283 frames > 25 ms (max gap 36 ms) |
+| warm edit (0.10 m arena), edits 2–4 | ≤ 1.5 s | 1,421 / 1,405 / 1,418 ms | **3,871 / 4,070 / 4,395 ms** (coco_lab search 1,720 ms against 649) |
+| cold first edit | report | 13,453 ms | **27,531 ms** (Pyodide 18,512 ms, install 1,802 ms) |
+| initial page weight, excluding Pyodide | report | 100,573 B, 7 requests | **93,595 B** transferred, 7 requests |
+| first frame | report | 138 ms | **1,301 ms** (network + load) |
+
+The loaded live warm edit **misses** the 1.5 s target by 2.4–2.9 s. The
+local 1D value was measured on a quiet machine.
+
+**Second live sample** (`browser_report_quiet.json`, 05:25 UTC). The
+other session's load had dropped: the 1-minute load average was
+2.0–2.95, but the 5- and 15-minute averages were still 12.8–16.4.
+Only `fps edit phone weight` were re-run.
+
+| | target (1D) | local, 1D | **live, 1-min load 2.0–2.95** |
+|---|---|---|---|
+| full-arena Dijkstra playback, 1,000 events/frame | ≥ 60 fps | 60.07 fps | **59.94 fps**, 1 of 283 frames > 25 ms (max gap 26 ms); draw median 3 ms |
+| same, 10,000 events/frame | — | 59.87 fps | **60.40 fps**, 0 frames > 25 ms |
+| warm edit, edits 2–4 | ≤ 1.5 s | 1,421 / 1,405 / 1,418 ms | **1,412 / 1,468 / 1,493 ms** (search 647–675 ms, load 258–301 ms, write 452–503 ms) |
+| cold first edit | report | 13,453 ms | **14,268 ms** (Pyodide 11,599 ms, install 659 ms) |
+| initial page weight | report | 100,573 B | **93,595 B** transferred (91,795 B encoded body), 7 requests |
+| first frame | report | 138 ms (local server) | **992 ms** (network) |
+| phone 390 × 844 | works | works | **works**: `scrollWidth` 378, all 5 controls hit-test, the tap plays |
+
+What these two samples show:
+- **On the public site, the warm-edit target is met with almost no
+  margin.** The three edits were 1,412, 1,468 and 1,493 ms; the worst
+  has 7 ms to spare, against ~80 ms locally at 1D. The sample was taken
+  while the longer load averages were still elevated. Under heavy load
+  the target is missed (first sample).
+- **Playback is at the 60 Hz refresh cap in both samples.** At 1,000
+  events/frame it measured 59.94 and 59.96 fps. That is 0.06 fps and
+  0.04 fps below the 60 fps figure, and 1 and 5 frame gaps exceeded
+  25 ms. The numbers are recorded as measured, not rounded up.
+- **The public page is lighter than the local preview** (93,595 against
+  100,573 B), because Pages compresses the text assets in transit. Measured: the 266,380 B JS bundle is sent with `content-encoding: gzip` as 85,389 B.
+- **Its first frame is later** (992–1,301 ms against 138 ms), because
+  the files come over the network, not from a local server.
+
+### Remaining limitations (factual)
+
+- Every browser number is from headless Firefox 156 on this machine. A
+  headed browser, a real phone, Safari and Chrome are **not measured**.
+- The warm-edit target (≤ 1.5 s) holds on the public site only narrowly.
+  The worst warm edit was 1,493 ms at 1-minute load ~2, and 3,871–4,395
+  ms at load ~30. It has not been measured on a fully idle machine, or on
+  any other machine.
+- `coco_moveit_config`'s 7 `test_pick_poses` tests skip locally without
+  the MoveIt prefix; they ran in CI.
+- 1C's standing limitations are unchanged: three real runs are not a
+  rate, and M3's 6.2 % was neither reproduced nor refuted. Map quality is
+  not measured (moved to Lab 3).
+
