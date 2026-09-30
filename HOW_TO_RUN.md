@@ -274,6 +274,29 @@ checks, rosbag2, bundle export — is `docs/data/lab1c/lab1c_run.sh`
 (`docs/data/lab1c/README.md`). Clean up with `ros_clean.sh`, which knows
 every new executable.
 
+### COCO Lab in the browser (`lab_web`, Phase 1D)
+
+`lab_web/` is the static web app: a trace player and bundle decoder, plus a
+Pyodide worker that reruns `coco_lab` when you edit a map. It is not a ROS
+package (`COLCON_IGNORE`) and needs no ROS. It needs Node **24.21.0**
+(`lab_web/.nvmrc`; `nvm install` in `lab_web/`), and a Python in which
+`coco_lab` is importable (a plain venv or the overlay) for the data build.
+
+```bash
+cd lab_web
+npm ci                              # exact pins from package-lock.json
+python3 tools/build_catalog.py      # validate + replay every bundle with coco_lab; build the wheel
+npm run dev                         # http://localhost:5173/coco-robot-jazzy-2.0/
+npm test                            # vitest (decoder, player, renderer)
+python3 -P -m pytest tools          # the Python half; needs coco_lab + pytest
+npm run build && npm run check:dist # production build + static checks
+```
+
+`lab_web/README.md` has the details. That includes the decoder's
+validation boundary, and `tools/browser/check.py`, which measures the
+built site in headless Firefox. CI is `.github/workflows/lab.yml`, beside
+the ROS `ci.yml`.
+
 ### The page, in a real browser
 
 The colcon suite checks the page's files; it cannot check that the page

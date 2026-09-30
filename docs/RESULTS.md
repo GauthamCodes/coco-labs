@@ -7110,3 +7110,148 @@ occupied in the saved map, and every occupied map cell is lethal live
   the on-approach exit; the binary was not instrumented.
 - NavFn's potential propagation in detail (only its cost translation and
   entry points were source-read).
+
+## COCO Lab Phase 1D — the web app skeleton, measured (2026-09-30)
+
+Branch `lab1`, on top of Phase 1C (`ca8ce79`). The design is
+[`docs/labs/PHASE_1D_PLAN.md`](labs/PHASE_1D_PLAN.md) (approved). The code is
+`lab_web/` ([README](../lab_web/README.md)) and the evidence
+`docs/data/lab1d/`. Every number is **(measured)**, produced by a run in
+this session, or **(derived)** by a stated formula. Browser numbers come
+from **headless Firefox 156.0.1** on the development machine. A headed
+browser, a phone or another engine was not measured, and nothing is
+extrapolated to one.
+
+This adds `lab_web/`, a Vite 8.3.1 + TypeScript 7.0.2 + React 19.3.0 site
+(Canvas 2D, Node 24.21.0) that is not a ROS package:
+- a TypeScript bundle 1.0/1.1 decoder that agrees exactly with
+  `coco_lab/bundle.py`;
+- a trace player with recorded-run overlays;
+- a Pyodide 314.0.7 worker that reruns `coco_lab` itself when you edit a
+  map;
+- `.github/workflows/lab.yml`.
+
+No ROS, Nav2, arbiter, planner, `coco_lab` algorithm or bundle-schema file
+changed. The mission `nav2_params.yaml` sha256 is still `06c308af…`.
+
+### Tests (measured)
+
+| suite | at 1D-0 (`ca8ce79`) | after 1D |
+|---|---|---|
+| `coco_lab` pip route (plain venv, `env -i`, 3 linters excluded) | 333 / 0 / 0 | **333 / 0 / 0** (33.20 s) |
+| `coco_lab` colcon route, linters included | 336 / 0 / 0 | **336 / 0 / 0** (35.19 s) |
+| `coco_lab_ros` | 69 / 0 / 0 | **69 / 0 / 0** |
+| `gazebo_models` (`--ignore=test_integration`) | 229 / 0 / 0 | **229 / 0 / 0** |
+| `custom_teleop` | 75 / 0 / 0 | **75 / 0 / 0** |
+| `lab_web/tools` (pytest, plain venv) | — | **58 / 0 / 0** |
+| `lab_web` vitest | — | **142 passed** |
+
+The final regression ran on a fresh job-local overlay at load 0.95. CI
+(`lab.yml`, run 36661469461, Node v24.21.0 / npm 11.19.0) was green on
+`lab1`: coco_lab 333 collected, 0 skipped; lab_web/tools 58; vitest 142;
+two builds with an identical tree hash. The previous run, 36661285245, was
+red: one coco_lab test needs setuptools, which a fresh Python 3.12 venv
+lacks. CI now pins setuptools 84.0.0, as the local venv has. `lab_web` is
+`COLCON_IGNORE`d: `colcon list` lists 11 packages and not `lab_web`.
+
+### The decoder (measured)
+
+- **All nine bundles agree exactly with Python**: the six golden fixtures
+  (five `1.0`, one `1.1`) and the three 1C recorded runs (`1.1`).
+  - For every array of every bundle, the sha256 of the decoded
+    little-endian bytes, the count and the first and last values equal
+    `coco_lab`'s (`lab_web/test/golden/expected.json`).
+  - The content hash and the map hash are recomputed in TypeScript and
+    equal the manifests.
+  - A forced `DataView` (big-endian-host) path gives identical bytes.
+  - The fixtures have unaligned `i32`/`f64` offsets (asserted), so every
+    array is copied, not viewed.
+- **Canonical JSON:** 1,217 seeded, deliberately non-canonical JSON texts
+  match Python's `canonical_json` byte for byte and hash for hash. They
+  vary whitespace, key order, float lexemes, escapes, astral keys, `-0` and
+  30-digit ints. The 1,218th, `1e400`, is refused by both sides. 4,000
+  doubles of every magnitude match Python's `repr`.
+- **The invalid corpus (48 committed cases, plus a generated oversize
+  manifest)**:
+  - Python refuses all but one; TypeScript refuses every structural case
+    with the named error class.
+  - The one Python accepts is a duplicate JSON key, where TypeScript is
+    stricter.
+  - The two *semantic* cases (a path step that is not a neighbour; a
+    blocked start) decode structurally in TypeScript. The catalog gate
+    then refuses them, because only `coco_lab` can judge them.
+  - A 64 MiB gzip bomb stops at the declared size + 1 byte.
+- **The synthetic 1.1 fixture** (`geo: null`, `cmd` missing) decodes. Its
+  overlay is refused with "no geo — cannot place", and `cmd` is reported as
+  "not captured". This is tested at the data layer; the fixture is not
+  served as evidence.
+- **Orientation:** for all 154, 154 and 183 planned-path points of the three
+  1C runs, TypeScript's `cellAt` equals `LabMap.cell_at`. The 1C start is
+  stored `[189, 130]`, which is the session log's (col 130, y-up 190).
+
+### The site (measured, headless Firefox 156, load 0.5–1.0; `docs/data/lab1d/browser_report.json`)
+
+| | target | measured |
+|---|---|---|
+| Playback of the full-arena native Dijkstra trace (283,378 events) | ≥ 60 fps | **60.07 fps** at 1,000 events/frame: 284 frames in 4.711 s, **0 dropped** (no gap > 25 ms; max gap 20 ms); draw 3 ms median, 5 ms max. 59.87 fps at 10,000 events/frame (28 frames). `requestAnimationFrame` ran at the 60 Hz refresh, so this is the cap, not headroom |
+| Edit → first frame, Pyodide warm (0.10 m arena, 70,319-event Dijkstra) | ≤ 1.5 s | **1,421 / 1,405 / 1,418 ms** (edits 2–4). Inside coco_lab: search ~649 ms, load_bundle ~281 ms, write_bundle ~456 ms |
+| Pyodide cold (first edit, click → first frame) | report | **13,453 ms**: Pyodide load 11,431 ms (includes downloading it from the CDN), wheel install 282 ms |
+| Initial page weight, excluding Pyodide | report | **100,573 B** transferred (7 requests, including the default 20 × 20 bundle); first frame at 138 ms |
+| Replay at 390 × 844 | works | `scrollWidth` 378 ≤ 390; Play, scrub, picker, badge and canvas all hit-test (44 px controls); a real tap plays. Screenshots `phone_390x844_*.png` |
+| Third-party requests | only the pinned Pyodide CDN | **none** before the first edit. After it, only 6 files under `cdn.jsdelivr.net/pyodide/v314.0.7/full/`. No cookie; storage 0 items |
+| Build | deterministic | two builds give an identical `dist` tree hash (local `56c68f17…`; CI `0eea139c…`, which differs because of `GITHUB_SHA` and the regenerated arena provenance) |
+
+**The warm-edit target was first MISSED, then met by a defect fix, not by
+a scope change.** The first measurement was 1,943–1,975 ms. Pyodide's
+`load_bundle` took ~805 ms, against 76 ms for the same step in CPython. The
+cause was my glue: it copied the JavaScript `Uint8Array` into Python with
+`bytes(proxy)`, element by element. With `JsProxy.to_bytes()` (one memcpy)
+`load_bundle` fell to ~270 ms and the edit to 1,391–1,429 ms. The margin
+is **~80 ms**, and it was measured in a headless browser on this machine
+only. None of the plan's scope options (a coarser map, teaching grids only,
+pre-warming, a TypeScript hot loop) was taken.
+
+**Pyodide versus CPython, the same glue on the same edits (derived from
+measured medians):** search 649 / 221 ms = **2.9×**, load 281 / 76 ms =
+3.7×, write 456 / 137 ms = 3.3×. The whole coco_lab step is 1,386 / 435 ms
+= 3.2× (`docs/data/lab1d/cpython_glue.json`,
+`lab_web/tools/time_glue_cpython.py`).
+
+**Also measured:** 
+- Every catalog bundle loads, validates against the catalog and draws,
+  with the correct mode badge and no console error (10 of 10).
+- Keyboard: ← 177, Shift+← 77 and → 78 on a 178-event trace. Space plays
+  and pauses.
+- Hover shows the stored g/h/f.
+- `prefers-reduced-motion` (a profile preference): `matchMedia` reports
+  reduce, nothing autoplays, and play advances in discrete jumps of 3,595
+  events.
+- After an edit the badge reads "Replay — computed in your browser by
+  coco_lab", and the picker names the bundle as your edit.
+- micropip 0.11.1 installed `coco_lab`'s wheel, `.data/` included, with no
+  packaging change.
+
+### Found during 1D (measured, fixed)
+
+1. **Vite's dev and preview servers mark `*.gz` `Content-Encoding: gzip`**,
+   so the browser inflated `arrays.bin.gz` before the decoder saw it. The
+   decoder refused it correctly (no gzip magic) rather than repairing it.
+   The fix is in the server: `vite.config.ts` serves `.gz` as
+   `application/gzip` bytes, byte-identical to the committed file (`cmp`).
+2. Play from the end of a trace stopped immediately (a stale position
+   ref).
+3. The glue's slow `bytes(JsProxy)` copy (above), and its uncleaned
+   temporary directories after a refused edit.
+
+### Not yet measured / not done
+
+- **GitHub Pages.** It is not enabled (the API returns 404), and `main`
+  has not been fast-forwarded. The public URL, how Pages serves
+  `arrays.bin.gz`, and the `deploy` job are therefore **unverified**. The
+  `deploy` job has only been skipped (it runs on `main`).
+- A headed browser, a real phone, Safari or Chrome.
+- The decoder at sizes far above the largest served bundle (14.1 MB raw).
+  Lazy decoding is future work.
+- **The ROS `ci.yml` on `main`** is red for a pre-existing reason,
+  diagnosed from its log: `coco_sim` is missing from `--packages-select`.
+  1D neither caused nor fixed it.

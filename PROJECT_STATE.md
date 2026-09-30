@@ -7,7 +7,8 @@ robotics curriculum that runs on this real ROS 2 / Nav2 stack. The plan is
 the truth") is closed locally (Milestone 0C, 2026-09-29); its public actions
 (push, archive tags, name, video migration) await the owner's approval.
 Phase 1 (Lab 1, Plan) is under way on branch `lab1`: 1A, 1B and 1C are
-complete (see *COCO LAB — PHASE 1* below).** The previous roadmap is
+complete, and 1D is implemented, with its deployment awaiting the owner (see
+*COCO LAB — PHASE 1* below).** The previous roadmap is
 archived at `docs/history/ROADMAP_COCO2.md`.
 
 (Correction, 2026-09-29, Phase 1B: until now this paragraph said "Phase 1
@@ -24,7 +25,9 @@ at Phase 1A, commit `c3713dd`, which did not update this file.)
 | **Tests** | (measured) counts per package are in RESULTS.md "COCO Lab Phase 1C". Phase 1C touched `coco_lab` (bundle 1.1, `setup.py`), added `coco_lab_ros`, and added `ros_clean.sh` patterns; nothing else |
 | **Map quality** | **Not measured.** The saved Nav2 map of the arena is *generated* from the same parameters as the world, so its precision/recall against a ground-truth rasterisation (0.9456 / 0.5771, measured) is a rasterisation-consistency number, not map quality. That needs a slam_toolbox map of this arena; owner decision D-1 (2026-09-29) moved it to **Lab 3** |
 | **ISRO "A\* 5x faster, 4 % longer"** | "4 %" is 3.5 % in *smoothed waypoint count*, not path length or cost. It is **not reproduced** on fixed inputs (ratio 0.9993). The 5x time ratio is of the same magnitude here (4.5–5.4x on long trips). The simulator's cell-only state IS suboptimal under its turn penalty (about 1 map in 6, up to 2.4 %), but symmetrically for A\* and Dijkstra. Its path smoother can loop forever (measured) |
-| **Next** | Phase 1D (the web app skeleton, `LAB_PHASES.md` §1D), **not started**. It waits for the owner's go-ahead |
+| **1D** | `lab_web/` (not a ROS package): a Vite + TypeScript + React site that renders `coco_lab` bundles and never searches. Its TypeScript decoder agrees exactly with `bundle.py` on all nine bundles (six golden fixtures, three 1C runs), on 1,217 canonical-JSON cases and 4,000 float reprs, and on a 48-case invalid corpus (measured). The trace player draws the recorded-run overlays. A lazily started Pyodide 314.0.7 worker reruns `coco_lab` itself on a map edit, and its result is badged "Replay — computed in your browser by coco_lab". Measured in headless Firefox: full-arena Dijkstra plays at 60.07 fps; a warm edit on the 0.10 m arena takes 1,405–1,421 ms (target ≤ 1.5 s, ~80 ms margin); a cold first edit 13,453 ms; the page weighs 100,573 B. `lab.yml` CI is green on `lab1`. `docs/RESULTS.md` "COCO Lab Phase 1D", `lab_web/README.md` |
+| **Deployment** | **Not deployed.** GitHub Pages is not enabled (the API returns 404), and `main` has not been fast-forwarded. Both are owner actions (`PHASE_1D_PLAN.md` §I). The ROS `ci.yml` on `main` is red for a pre-existing reason, diagnosed: `coco_sim` is missing from its `--packages-select`. 1D neither caused nor fixed it. There is no public URL yet |
+| **Next** | The owner enables Pages (Settings → Pages → Source: GitHub Actions) and rules on whether the pre-existing `ci.yml` red blocks the `main` fast-forward. After the deploy, the public URL is verified at phone width. Then Phase 1E (Lab 1's content, `LAB_PHASES.md` §1E), **not started** |
 
 (Until 2026-09-29 this file was headed "COCO 2.0 STATUS: ROBOT FROZEN /
 PLATFORM IN PROGRESS". The new direction does not change the robot:
