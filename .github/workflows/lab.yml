@@ -35,7 +35,11 @@ jobs:
           # install from a copy: an in-tree pip build leaves build/ behind,
           # which ament_flake8 would then lint (SESSION_LOG 1B-0)
           cp -r coco_lab "$RUNNER_TEMP/coco_lab_src"
-          "$RUNNER_TEMP/venv/bin/pip" install "$RUNNER_TEMP/coco_lab_src" -r coco_lab/requirements-test.txt
+          # setuptools: test_dependencies.py::test_setup_py_runs_through_a_symlink
+          # executes setup.py, and a Python 3.12 venv ships without it.
+          # 84.0.0 = the local plain venv's (measured, 1D-7; CI run 36661285245
+          # failed that one test without it)
+          "$RUNNER_TEMP/venv/bin/pip" install setuptools==84.0.0 "$RUNNER_TEMP/coco_lab_src" -r coco_lab/requirements-test.txt
       - name: Test (the three ament linters need ament; the colcon route runs them)
         working-directory: coco_lab
         run: |
