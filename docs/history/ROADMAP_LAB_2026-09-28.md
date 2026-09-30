@@ -1,18 +1,10 @@
 # COCO Lab — roadmap
 
-> **Status, 2026-09-30: plan revised (Phase 2 · Live added). Phase 0
-> closed. Phase 1 closed by decision with open items: 1E skipped as a
-> session (only parts of its must-haves 5 and 8 exist, from 1D); 1F
-> partial — the public URL is live and CI is green, but the demo video,
-> `docs/labs/LAB1_PLAN.md`, the README "Try it" link and the `lab1-v1.0`
-> tag and release are outstanding; 1G not run. The open items are listed
-> under "Lab 1.1" in §5. Phase 2 not started.**
+> **Status, 2026-09-28: Phase 0 not started.**
 > This roadmap supersedes the priority order in the COCO 2.0 master context
 > (§45). Everything else in that document — its invariants, protected files
 > and git rules — still holds. The previous roadmap is archived at
-> [`docs/history/ROADMAP_COCO2.md`](history/ROADMAP_COCO2.md), and this
-> plan as first installed (before Phase 2 · Live) at
-> [`docs/history/ROADMAP_LAB_2026-09-28.md`](history/ROADMAP_LAB_2026-09-28.md).
+> [`docs/history/ROADMAP_COCO2.md`](history/ROADMAP_COCO2.md).
 >
 > Session prompts: [`docs/LAB_PHASES.md`](LAB_PHASES.md) ·
 > Current state: [`docs/SESSION_LOG.md`](SESSION_LOG.md) ·
@@ -28,8 +20,7 @@ actually search for.
 ## 1. What COCO Lab is
 
 **An interactive, browser-based robotics curriculum that runs on a real ROS 2
-robot — and lets you drive that robot live: by joystick, by Nav2 goal, or by
-handing it the whole mission.**
+robot.**
 
 The well-known algorithm visualisers stop at the grid. PathFinding.js and Red
 Blob Games show search spreading over cells. PythonRobotics animates filters
@@ -63,9 +54,8 @@ reproducible, shareable link.
   Nav2 stack. The browser displays and asks; it never decides.
 - **Not a replacement for the stack.** Every lab ties back to something the
   real robot did, recorded with provenance.
-- **Not, yet, an always-on hosted robot.** The public site is static. The
-  live robot runs on the Docker stack: locally for anyone who runs it, and on
-  the public site during scheduled live sessions (§3.5).
+- **Not, yet, a hosted multi-user service.** The public tier is a static
+  site; live sessions run locally (§3.5).
 
 ---
 
@@ -97,12 +87,11 @@ measured, documented failures:
 | Previous item | Now | Reason |
 |---|---|---|
 | P03C consolidation | Done; lands on `main` in Phase 0 | Not yet on the remote |
-| P0.4 autonomous discovery | **Phase 5**, as Lab 4 (Search) | Search under uncertainty is a belief problem and teaches better after Localise and Map. The master context's design (§17–25) is unchanged; it is built visualisation-first |
+| P0.4 autonomous discovery | **Phase 4**, as Lab 4 (Search) | Search under uncertainty is a belief problem and teaches better after Localise and Map. The master context's design (§17–25) is unchanged; it is built visualisation-first |
 | Cross-simulator scene generation; full Isaac backend | **Deferred** (§9) | 6 GB VRAM limits already hit (LLVM, OOM); little learner value from a second renderer; cross-engine rigour already shown — 0.242 mm MuJoCo–Gazebo parity (measured) |
-| Dynamic obstacles | **Phase 6**, in Lab 5 (Move) | Apron only, per the M7_DESIGN §2.6 spec |
+| Dynamic obstacles | **Phase 5**, in Lab 5 (Move) | Apron only, per the M7_DESIGN §2.6 spec |
 | Advanced learning / RL | **Later lab** (Learn) | Phase 3 and C2-M2 measured that RL isn't justified on this task; that finding is the lesson |
-| Browser control of the real robot, including remote sessions | **Phase 2** (Live) | The three modes already exist in coco.v1; scheduled sessions through a tunnel make them public without running costs |
-| Always-on hosting; concurrent multi-user sessions; cloud | **Deferred** (§9) | It needs a host that can render Gazebo's sensors, and it costs money and operations before there's a measured audience |
+| Browser expansion: multi-user, remote execution, cloud | **Deferred** (§9) | The static public tier delivers most of the value at zero running cost |
 
 ---
 
@@ -131,7 +120,7 @@ flowchart TB
   ALG --> NODE --> NAV --> ARB
   ALG --> CI
   REC --> BUN --> APP
-  APP -.->|live mode, Phase 2| PS
+  APP -.->|live mode in Phase 4| PS
 ```
 
 ### 3.1 `coco_lab` — the core
@@ -167,12 +156,11 @@ real robot.
 
 A static site on GitHub Pages: free to host, no install, no analytics, no
 cookies, and it opens on a phone, which is where most people will first click
-the link. Two modes, **always labelled on screen**, plus Live during scheduled
-sessions (§3.5):
+the link. Two modes, **always labelled on screen**:
 
 - **Replay** — real runs recorded from the Docker stack and exported to
   bundles, with provenance shown.
-- **Sketch** (from Phase 3) — a 2D differential-drive and ray-cast LiDAR model
+- **Sketch** (from Phase 2) — a 2D differential-drive and ray-cast LiDAR model
   in the browser, so anyone can drive, kidnap and map without Gazebo.
 
 Sketch is the one place the project's no-fake-simulation rule bends, so it
@@ -194,63 +182,15 @@ learner watched really drives the robot, and **nothing new publishes to the
 wheels**. Lab runs use a lab-only Nav2 parameter overlay, so the mission's
 configuration is untouched.
 
-### 3.5 The live robot (Phase 2)
+### 3.5 The live tier (Phase 4)
 
-The flagship view: the real robot, moving, controllable from the page in
-three modes. The capability already exists — coco.v1 has the intents and
-`cmd_vel_arbiter` already mediates the modes — so Phase 2 carries it into
-COCO Lab rather than building it.
+The Docker appliance, run locally. Lab controls become new coco.v1 intents.
+These are additive, which the protocol's own versioning rule treats as
+non-breaking, and they are routed through `safety.PUBLISH_ALLOWLIST`. The
+browser still never names a topic and never owns robotics logic.
 
-| Mode | What you do | coco.v1 intents (exist today) | What drives the wheels |
-|---|---|---|---|
-| Teleop | Joystick or keyboard | `set_mode: teleop`, `drive` | You, through the arbiter's teleop input |
-| Nav2 | Click a goal on the map | `set_mode: auto`, `nav_goal` | Nav2, through the relay and the arbiter |
-| Autonomous | Pick a colour, press start | `select_target`, `mission: start / abort` | The mission executive, handing the wheels between Nav2, the RL policy and the approach controller |
-
-`stop` works in every mode, and the arbiter already lets teleop preempt any
-autonomous source. The live panel makes that visible rather than hiding it.
-
-**What the page shows:**
-
-- the arena map with the robot's pose live — its belief, with the truth
-  toggle, since the server already subscribes to the ground-truth
-  `/model/coco/odometry`
-- the camera stream, which the server already serves as MJPEG
-- the active mode, who holds control, and which source the arbiter is
-  forwarding
-- the global plan and local trajectory in Nav2 mode, and the mission's state,
-  step by step, in autonomous mode
-
-A 3D view of the robot rendered in the browser from its own URDF and STL
-meshes, driven by live telemetry rather than video, is the should-have. It
-looks like the real thing, and spectators cost almost no bandwidth.
-
-**New work beyond carrying the panel over:**
-
-- **Driver and spectators.** The platform is single-session by design
-  (P0.1). Remote sessions need one driver holding a control code, everyone
-  else watching, an idle timeout and a session time cap.
-- **Scheduled public sessions.** The Docker stack on this machine, reachable
-  through a tunnel (Cloudflare Tunnel or Tailscale Funnel, for example) so no
-  router ports open, exposing only the coco.v1 endpoint. The public site
-  shows "live now" or the next session time. Hand an interviewer the control
-  code and let them drive.
-- **Lab hooks.** In Nav2 mode, choose the planner: Nav2's SmacPlanner2D, or
-  any Lab 1 planner through the `FollowPath` hook from 1C.
-- **Small additive intent changes**, such as an optional heading on
-  `nav_goal`, which takes only x and y today. All of it goes through
-  `safety.PUBLISH_ALLOWLIST`; the browser still never names a topic and never
-  owns robotics logic.
-
-**Honest labels.** Until Lab 4 (P0.4) lands, the autonomous mode is told
-which lane the colour is in — `resolve_lane()` hands the mission the
-answer, from the episode's region map or, with none, exactly
-`lane_for_colour()` — and the page says so. After P0.4 it discovers the target, and the
-label changes.
-
-Outside a live session, the public site shows Replay and Sketch, plus a short
-Docker quickstart for running the whole stack and driving it locally.
-Always-on hosting stays deferred (§9).
+Live mode arrives with Lab 4's mission theatre, the first lab that needs it.
+Until then, Replay and Sketch cover everything.
 
 ---
 
@@ -277,26 +217,20 @@ killing by process name — all still apply.
    version.
 8. **The TypeScript UI never re-implements an algorithm.** It renders traces
    and asks `coco_lab`.
-9. **Live control is exclusive and interruptible.** One driver holds control
-   at a time; teleop preempts autonomy, as the arbiter already guarantees;
-   `stop` is always one tap away; remote sessions expose only the coco.v1
-   endpoint.
 
 ---
 
 ## 5. The labs
 
 Build order and curriculum order are the same: each lab needs the concepts of
-the one before. Labs also plug into the live robot (§3.5) where they can:
-Lab 1's planners become choices in Nav2 mode, and Lab 4 turns the autonomous
-mode from told to discovering.
+the one before.
 
 | Lab | What learners play with | Where the real robot comes in |
 |---|---|---|
 | 1 · Plan | BFS, Dijkstra, A\*, greedy best-first, weighted A\*; paint obstacles, race, predict-then-reveal | Paths driven via `FollowPath`; SmacPlanner2D conformance; the A\* exhibit |
 | 2 · Localise | Particle filter vs EKF; kidnap the robot; particle and injection sliders; truth toggle | AMCL failures replayed; `recovery_alpha` and `robot_localization` A/Bs |
 | 3 · Map | Occupancy mapping → EKF-SLAM → FastSLAM → pose graph; "map the arena" | slam_toolbox vs Cartographer on identical drives; trajectory error and map score |
-| 4 · Search | The robot knows only "red": belief over bays, negative search, your order vs the policy | P0.4, built visualisation-first; the live autonomous mode starts discovering instead of being told |
+| 4 · Search | The robot knows only "red": belief over bays, negative search, your order vs the policy | P0.4, built visualisation-first; mission theatre; live mode |
 | 5 · Move | DWB vs MPPI vs Regulated Pure Pursuit; moving actors; D\* Lite | Nav2 trajectory debug topics; run 15's "0 of 819" explained |
 
 ### Lab 1 — Plan (v1 scope)
@@ -330,50 +264,6 @@ mode from told to discovering.
     otherwise it is a reconstruction.
 - **Later increments (Lab 1.1+):** JPS, Theta\*, RRT / RRT\* / PRM, Hybrid A\*;
   beat-the-planner, stars, daily seed.
-
-#### Lab 1.1 — Lab 1 must-haves not delivered when Phase 1 closed (2026-09-30)
-
-Phase 1 was closed by decision after 1D and a partial 1F; 1E was never run
-as a session (`docs/SESSION_LOG.md`, "PHASE 1 — COMPLETE" and the plan
-revision entry). What exists on the public site is 1D's trace player: ten
-catalog bundles, recorded-run overlays, mode badges, and a one-cell edit
-recomputed by `coco_lab` in Pyodide. Still owed, from `LAB_PHASES.md` 1E
-and 1F:
-
-- **1E.1 Settings panel:** the five algorithms; the heuristic picker with
-  the admissibility and consistency badge from `coco_lab`;
-  4/8-connectivity; a tie-breaking toggle; the weighted-A\* slider (0–5)
-  with the suboptimality bound shown live. *Not built*; the page shows each
-  bundle's stored settings only.
-- **1E.2 Map ladder:** teaching grid → arena occupancy → inflated costmap
-  with the footprint (from `coco_config`) swept along the path. *Not
-  built.*
-- **1E.3 Race mode:** two to four algorithms on identical inputs, a
-  synchronised step counter, and the final table. *Not built.*
-- **1E.4 Predict-then-reveal.** *Not built.*
-- **1E.5 Paint obstacles and recompute:** *partial*. A single-cell toggle
-  is recomputed by `coco_lab` in Pyodide. Painting, and a clear message
-  rejecting a blocked start or goal, are not built or verified.
-- **1E.6 Share links** encoding seed, edits and settings, with a tested
-  round trip. *Not built*; only `?bundle=<id>` selects a catalog bundle.
-- **1E.7 Break-the-planner challenge,** verified automatically. *Not
-  built.*
-- **1E.8 "Driven by COCO":** *partial*. The three 1C runs replay with ground
-  truth, AMCL belief and plan overlaid, provenance, and the "Replay —
-  recorded real run" label; tracking error is shown as mean / p95 / max.
-  The tracking-error *plot* is not built.
-- **1E.9 The exhibit, "The A\* myth, twice"** (a)–(c), every claim cited.
-  *Not built*, so the Phase 1 row's "the A\* exhibit live" is not met.
-- **1F.1 `docs/labs/LAB1_PLAN.md`.** *Not written.*
-- **1F.2 README:** the "Try it" link to the public URL at the top, a short
-  Lab 1 section, and the planner claim linked to the exhibit. *Not done*
-  (the planner claim itself was corrected in Phase 0).
-- **1F.3 Demo video,** 60–90 s, of the web app. *Not made.*
-- **1F.4 Tag `lab1-v1.0` and a draft release** with the video and notes.
-  *Not done.*
-- **1F.5 Final checks:** CI green on `main`, per-package counts, and the
-  page at phone width (headless Firefox, 390 × 844) are *done*. A real
-  phone, and a share-link round trip, are *not*.
 
 ### Lab 2 — Localise
 
@@ -411,10 +301,8 @@ and 1F:
   policy against the learner's chosen order, and expected search cost.
 - **Build:** to the master context's P0.4 design, visualisation-first,
   including its anti-cheat tests.
-- **Mission theatre:** the live panel's autonomous mode, with the search
-  visualised as it happens — belief/truth overlays and the FSM timeline. From
-  here on the autonomous mode discovers the target instead of being told,
-  and its label changes to say so.
+- **Mission theatre:** the full autonomous fetch with belief/truth overlays
+  and the FSM timeline. This is the first use of live mode.
 
 ### Lab 5 — Move
 
@@ -442,31 +330,15 @@ and 1F:
 |---|---|---|---|
 | **0 · Make the repo tell the truth** | 1 | Consolidated `main`; honest README and PROJECT_STATE; this roadmap installed | Consolidation on `main` with per-package test counts (measured); collision-monitor loop measured, fixed and re-measured with a comparability statement; branches archived as `archive/*` tags; name decided |
 | **1 · Plan** | 3 | Public URL, demo video, `docs/labs/LAB1_PLAN.md` | Property tests green on ≥1,000 random maps with exact oracle agreement; three real runs replayable; SmacPlanner2D conformance reported; the A\* exhibit live; works on a phone |
-| **2 · Live** | 2 | The live robot on the site: teleop, Nav2 and autonomous modes; scheduled public sessions | All three modes working from the Lab page against the local stack, with command-to-wheel latency (measured); driver and spectator control tested; a remote session driven from a phone on mobile data; the tunnel verified to expose only the coco.v1 endpoint |
-| **3 · Localise** | 2–3 | Lab 2; Sketch mode | Sketch fidelity vs Gazebo measured and shown; MCL vs EKF on identical inputs; kidnap-recovery A/B with non-zero `recovery_alpha` (measured) |
-| **4 · Map** | 3–4 | Lab 3 | slam_toolbox, Cartographer and three `coco_lab` SLAMs on identical recorded drives; trajectory error and map score published |
-| **5 · Search** | 3 | Lab 4 (P0.4); the autonomous mode discovers | The master context's P0.4 matrix (≥16 runs, including negative-first-region) passing and replayable; the live autonomous mode switched to discovery and its label updated |
-| **6 · Move** | 2–3 | Lab 5; dynamic obstacles | DWB, MPPI and RPP on identical paths with rollouts shown; moving actors on the apron; D\* Lite replanning |
-
-Phase numbers and lab numbers diverge from Phase 3 on, because Live is a
-phase but not a lab.
-
-**Rule 9 against this table (owner's reading, 2026-09-30).** Rule 9 of
-the CLAUDE.md addendum, which is §7 scope rule 1 here (not §4 invariant 9,
-the live-control rule), says no new *lab* starts until the previous one has
-a public URL, a video and a write-up. Live is a phase, not a lab, so
-**Phase 2 is not blocked**. **Lab 2 (Phase 3) is blocked** until Lab 1 has
-its demo video and its write-up (`docs/labs/LAB1_PLAN.md`); on 2026-09-30
-Lab 1 had only its public URL.
+| **2 · Localise** | 2–3 | Lab 2; Sketch mode | Sketch fidelity vs Gazebo measured and shown; MCL vs EKF on identical inputs; kidnap-recovery A/B with non-zero `recovery_alpha` (measured) |
+| **3 · Map** | 3–4 | Lab 3 | slam_toolbox, Cartographer and three `coco_lab` SLAMs on identical recorded drives; trajectory error and map score published |
+| **4 · Search** | 3 | Lab 4 (P0.4); mission theatre; live mode | The master context's P0.4 matrix (≥16 runs, including negative-first-region) passing and replayable; live-mode intents additive to coco.v1 |
+| **5 · Move** | 2–3 | Lab 5; dynamic obstacles | DWB, MPPI and RPP on identical paths with rollouts shown; moving actors on the apron; D\* Lite replanning |
 
 **Minimum signature release: Phases 0 and 1, about four weeks.** It stands on
 its own: a public URL, a video, a write-up and a measured, tested lab.
 Everything after it adds to a working product rather than building toward
 one.
-
-**Phase 2 adds the live robot, about six weeks in total.** It comes after
-Lab 1 rather than before, because it reuses Lab 1's web app, deploy pipeline
-and map renderer.
 
 Prompts for Phase 0 and Phase 1 (split into sessions 1A–1F) are in
 `docs/LAB_PHASES.md`. Prompts for later phases get written from this document
@@ -510,7 +382,7 @@ property, using hypothesis:
 | All algorithms agree on "no path" | — |
 
 **Oracles.** networkx shortest-path costs (a test-only dependency). From
-Phase 3, PythonRobotics (MIT) as a cross-check for filters and SLAM.
+Phase 2, PythonRobotics (MIT) as a cross-check for filters and SLAM.
 
 **Conformance.** `coco_lab` A\* vs SmacPlanner2D on identical costmap
 snapshots; SLAM variants vs slam_toolbox and Cartographer on identical
@@ -531,7 +403,7 @@ the pattern `coco_web` already uses for its binary frames.
 | Deferred | Revisit when |
 |---|---|
 | Full Isaac backend; cross-simulator scene equivalence | More VRAM or cloud credits, **and** a lab that needs what Isaac adds (e.g., photoreal perception) |
-| Always-on hosted live robot; concurrent drivers | Scheduled sessions show sustained demand, and a host that can render Gazebo's camera and LiDAR is funded (a GPU instance, or accepting slow software rendering) |
+| Multi-user live sessions; cloud hosting | A measured audience asks for live control, and running costs are covered |
 | Global leaderboard | Share links are in real use; it needs a small backend |
 | VLM task layer (M7_DESIGN §2.7) | A lab teaches it |
 | M7 Phase 4 policy training | A lab needs a trained policy as teaching material |
@@ -551,7 +423,6 @@ deleted.
 | Sketch mistaken for the real robot | Always labelled; fidelity measured and shown |
 | A large conformance gap vs SmacPlanner2D | A finding, not a failure: smoothing and cost models differ. Report and explain |
 | Recordings too large for the static site | Measure bundle sizes (1B); downsample; host large recordings as release assets |
-| Remote live sessions: security, abuse, bandwidth | The closed coco.v1 vocabulary (the reason rosbridge was removed); a control code; rate limits and a session time cap; a tunnel, so no open router ports; a containerised stack; telemetry-driven rendering for spectators instead of video; a kill switch on the host |
 | Scope creep | §7 |
 
 ---
@@ -559,9 +430,6 @@ deleted.
 ## 11. Measures of success
 
 - The public URL loads and replays on a phone (Phase 1).
-- The live robot: command-to-wheel latency measured locally and through the
-  tunnel, and one remote session driven end to end in each of the three
-  modes (Phase 2).
 - Property tests reported with their count, maps per property and exact
   oracle agreement, marked (measured) in `RESULTS.md`.
 - Conformance, fidelity and performance numbers published with reproduction

@@ -114,6 +114,10 @@ Platform rules, in addition to everything above:
    and asks coco_lab.
 9. No new lab starts until the previous one has a public URL, a video and
    a write-up. A lab's first version ships at most five algorithms.
+10. Live control is exclusive and interruptible: one driver holds control
+    at a time; teleop preempts autonomy, as the arbiter already
+    guarantees; stop is always one tap away; remote sessions expose only
+    the coco.v1 endpoint.
 ----- END CLAUDE.md ADDENDUM -----
 
 PART C — the collision-monitor loop (PROJECT_STATE known limitation 0)
@@ -188,7 +192,7 @@ every decision still waiting on me.
 
 ## Phase 1 — Lab 1: Plan (≈3 weeks, six sessions)
 
-### 1A — the core and its proofs
+### 1A — the core and its proofs — *as run: DONE, 2026-09-29 (`c3713dd`)*
 
 ```
 Phase 1A — the coco_lab core and its proofs.
@@ -251,7 +255,7 @@ failure with its cause. Write the counts to docs/RESULTS.md marked
 SESSION_LOG.md, commit, and stop.
 ```
 
-### 1B — bundles, maps and the ISRO reconstruction
+### 1B — bundles, maps and the ISRO reconstruction — *as run: DONE, 2026-09-29*
 
 ```
 Phase 1B — bundles, maps, and the ISRO reconstruction.
@@ -302,7 +306,7 @@ Write every number to RESULTS.md marked (measured). Checkpoint, commit,
 stop.
 ```
 
-### 1C — the real-stack hook, conformance and three real runs
+### 1C — the real-stack hook, conformance and three real runs — *as run: DONE, 2026-09-29 (`ca8ce79`)*
 
 ```
 Phase 1C — the real-stack hook, conformance, and three real runs.
@@ -354,7 +358,7 @@ Everything goes into RESULTS.md marked (measured). Checkpoint, commit,
 stop.
 ```
 
-### 1D — the web app skeleton, measured
+### 1D — the web app skeleton, measured — *as run: DONE, 2026-09-30; deployed at the Phase 1 closure (`e5ad135`)*
 
 ```
 Phase 1D — the web app skeleton, measured.
@@ -397,10 +401,14 @@ Precondition: SESSION_LOG.md shows 1C complete. Branch lab1.
 7. Replay must work at phone width; editing can be desktop-first. Say how
    you checked.
 
+8. Leave room for Phase 2 (Live), but don't build it: the map renderer
+   should draw a live pose stream as well as a recorded trace, and the app
+   shell should have a slot for a Live view.
+
 Checkpoint, commit, stop.
 ```
 
-### 1E — Lab 1's content
+### 1E — Lab 1's content — *as run: SKIPPED (Phase 1 closed by decision, 2026-09-30); only parts of must-haves 5 and 8 exist, from 1D. Owed as Lab 1.1, ROADMAP §5*
 
 ```
 Phase 1E — Lab 1's content.
@@ -455,7 +463,7 @@ Otherwise log them in docs/ROADMAP.md as Lab 1.1.
 Do not add a sixth algorithm. Checkpoint, commit, stop.
 ```
 
-### 1F — ship Lab 1
+### 1F — ship Lab 1 — *as run: PARTIAL, 2026-09-30. Done: public URL live, CI green on `main`, per-package counts, 390 px headless check. Not done: `LAB1_PLAN.md`, README "Try it", demo video, `lab1-v1.0` tag and release, real phone, share-link round trip. Owed as Lab 1.1*
 
 ```
 Phase 1F — ship Lab 1.
@@ -485,11 +493,11 @@ Precondition: SESSION_LOG.md shows 1E complete. Branch lab1.
 6. Update the status line in docs/ROADMAP.md, and checkpoint
    SESSION_LOG.md.
 
-Phase 1 is then done. Don't start Phase 2. Its prompt gets written from
-docs/ROADMAP.md §5–6 when I'm ready.
+Phase 1 is then done. Don't start Phase 2 (Live). Its prompt gets written
+from docs/ROADMAP.md §3.5 and §6 when I'm ready.
 ```
 
-### 1G — optional learning check
+### 1G — optional learning check — *as run: NOT RUN (optional; its precondition, a 1F release, was never met)*
 
 ```
 Phase 1G (optional) — a learning check.
