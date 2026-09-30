@@ -28,8 +28,9 @@ Usage::
 ``http://127.0.0.1:4173/coco-robot-jazzy-2.0/``. Scenarios: ``smoke``
 (every catalog bundle loads and draws), ``player`` (keyboard, scrub,
 play), ``reduced`` (prefers-reduced-motion), ``fps`` (full-arena Dijkstra
-playback), ``phone`` (390 x 844), ``edit`` (Pyodide cold and warm),
-``weight`` (initial page weight). Default: all. Writes ``report.json`` and
+playback), ``phone`` (390 x 844), ``edit`` (Pyodide cold and warm: one
+painted cell to its first frame), ``weight`` (initial page weight), ``lab``
+(Lab 1.1: settings, painting, a race, the map ladder). Default: all. Writes ``report.json`` and
 screenshots into ``<outdir>``.
 """
 
@@ -164,6 +165,43 @@ async def catalog(s):
 async def reset_perf(s):
     await s.js("(() => { const p = window.__cocoLabPerf; p.frames.length = 0;"
                " p.frameTimes.length = 0; p.marks = {}; return 1; })()")
+
+
+async def box_of(s, testid):
+    """[left, top, width, height] of an element, scrolled into view."""
+    return await s.js(
+        f"(() => {{ const e = document.querySelector('[data-testid={testid}]');"
+        " e.scrollIntoView({block: 'center'}); const r = e.getBoundingClientRect();"
+        " return [r.left, r.top, r.width, r.height]; })()")
+
+
+async def click_testid(s, testid):
+    """A real pointer click on the centre of an element."""
+    b = await box_of(s, testid)
+    await s.b.click(s.ctx, b[0] + b[2] / 2, b[1] + b[3] / 2)
+
+
+async def focus_testid(s, testid):
+    await s.js(f"(document.querySelector('[data-testid={testid}]').focus(), 1)")
+
+
+async def drag_cells(s, cells, w, h):
+    """A real pointer drag through map cells [(row, col), ...]."""
+    b = await box_of(s, 'map-canvas')
+    pts = [(b[0] + b[2] * (c + 0.5) / w, b[1] + b[3] * (r + 0.5) / h) for r, c in cells]
+    acts = [{'type': 'pointerMove', 'x': int(pts[0][0]), 'y': int(pts[0][1])},
+            {'type': 'pointerDown', 'button': 0}]
+    for x, y in pts[1:]:
+        acts += [{'type': 'pointerMove', 'x': int(x), 'y': int(y), 'duration': 30}]
+    acts += [{'type': 'pointerUp', 'button': 0}]
+    await s.b.cmd('input.performActions', context=s.ctx, actions=[{
+        'type': 'pointer', 'id': 'mouse', 'parameters': {'pointerType': 'mouse'},
+        'actions': acts}])
+
+
+STATUS_SETTLED = ("(() => { const e = document.querySelector('[data-testid=edit-status]');"
+                  " return e && !e.classList.contains('busy') ? e.className : null; })()")
+TEXT = "(() => {{ const e = document.querySelector('[data-testid={}]'); return e ? e.innerText : null; }})()"
 
 
 # -- scenarios -------------------------------------------------------------------
@@ -394,6 +432,10 @@ async def edit(site, out):
           return [[Math.floor(H/2), Math.floor(W/2)], [Math.floor(H/2)+3, Math.floor(W/2)+5],
                   [Math.floor(H/2)-4, Math.floor(W/2)-6], [Math.floor(H/2)+1, Math.floor(W/2)-2]];
         }})()""")
+        # Lab 1.1: an edit is a brush stroke; a click with the 1 x 1 brush
+        # paints one cell, the same change 1D's click-to-toggle made on a
+        # free cell. Choosing the tool starts no Python (checked below).
+        await click_testid(s, 'tool-paint')
         for i, (r, c) in enumerate(cells):
             t0 = time.time()
             await click_cell(r, c)
@@ -419,8 +461,90 @@ async def edit(site, out):
                 'edits': results, 'console_errors': s.errors()}
 
 
+async def lab(site, out):
+    """
+    Lab 1.1 Part A on the teaching grid, by real pointer and keys.
+
+    Settings (the coco_lab badge and bound as the page shows them, then a
+    run), a painted stroke, a stroke over the start (refused before any
+    Python), a four-way race, and the map ladder with the footprint sweep.
+    """
+    async with Session(site, out) as s:
+        await s.open('?perf&bundle=astar_open')
+        await s.wait(READY, timeout=90)
+        rep = {'python_before_any_change': [u for u in s.requests() if 'pyodide' in u]}
+        rep['badge_8_octile'] = await s.js(TEXT.format('heuristic-badge'))
+        await click_testid(s, 'set-conn-4')
+        rep['badge_4_octile'] = await s.js(TEXT.format('heuristic-badge'))
+        await click_testid(s, 'set-conn-8')
+        await focus_testid(s, 'set-heuristic')
+        await s.key('')  # Home: 'zero'
+        await s.key('')  # ArrowDown: 'manhattan'
+        rep['badge_8_manhattan'] = await s.js(TEXT.format('heuristic-badge'))
+        rep['bound_astar_manhattan'] = await s.js(TEXT.format('bound'))
+        await s.key('')  # End: 'octile'
+        await focus_testid(s, 'set-algorithm')
+        await s.key('')  # End: weighted_astar
+        # the slider is enabled only once React has re-rendered for weighted A*
+        await s.wait("!document.querySelector('[data-testid=set-weight]').disabled", timeout=5)
+        await focus_testid(s, 'set-weight')
+        for _ in range(5):
+            await s.key('')  # ArrowRight: w 1.00 -> 2.25
+        rep['bound_wastar_2_25'] = await s.js(TEXT.format('bound'))
+        await click_testid(s, 'set-tie-fifo')
+        await s.shot('lab_settings')
+        t0 = time.time()
+        await click_testid(s, 'run-settings')
+        await s.wait(STATUS_SETTLED, timeout=300, every=0.1)
+        rep['settings_run'] = {'status': await s.js(TEXT.format('edit-status')),
+                               'badge': await s.js(TEXT.format('mode-badge')),
+                               'wall_s': round(time.time() - t0, 2)}
+        await s.shot('lab_settings_run')
+
+        await click_testid(s, 'tool-paint')
+        await focus_testid(s, 'brush')
+        await s.key('')  # brush 3 x 3
+        await drag_cells(s, [(10, 4), (10, 8), (10, 12)], 20, 20)
+        await s.wait(STATUS_SETTLED, timeout=120, every=0.1)
+        rep['paint'] = await s.js(TEXT.format('edit-status'))
+        await s.shot('lab_paint')
+        await drag_cells(s, [(15, 2)], 20, 20)  # the start cell
+        await asyncio.sleep(0.3)
+        rep['paint_over_start'] = {
+            'status': await s.js(TEXT.format('edit-status')),
+            'class': await s.js(STATUS_SETTLED)}
+
+        for a in ('bfs', 'greedy'):
+            await click_testid(s, f'race-{a}')
+        await click_testid(s, 'race-start')
+        await s.wait("document.querySelector('[data-testid=race-table]')", timeout=120)
+        rep['race'] = {
+            'panes': await s.js("document.querySelectorAll('[data-testid=race-pane]').length"),
+            'table': await s.js(TEXT.format('race-table')),
+            'status': await s.js(TEXT.format('edit-status'))}
+        await s.js("(document.querySelector('[data-testid=race]').scrollIntoView({block: 'start'}), 1)")
+        await s.shot('lab_race')
+        await click_testid(s, 'race-close')
+
+        rungs = {}
+        for n in (2, 3):
+            await reset_perf(s)
+            await click_testid(s, f'rung-{n}')
+            await s.wait("window.__cocoLabPerf.marks['bundle-first-frame']", timeout=60)
+            await asyncio.sleep(0.3)
+            rungs[n] = {'picker': await s.js(
+                "document.querySelector('[data-testid=picker]').selectedOptions[0].textContent"),
+                'sweep_note': await s.js(TEXT.format('sweep-note'))}
+            await s.shot(f'lab_rung{n}')
+        rep['ladder'] = rungs
+        rep['third_party'] = sorted({u for u in s.requests()
+                                     if urlparse(u).netloc != urlparse(site).netloc})
+        rep['console_errors'] = s.errors()
+        return rep
+
+
 SCENARIOS = {'smoke': smoke, 'player': player, 'reduced': reduced, 'fps': fps,
-             'phone': phone, 'weight': weight, 'edit': edit}
+             'phone': phone, 'weight': weight, 'edit': edit, 'lab': lab}
 
 
 async def main(argv):

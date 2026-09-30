@@ -14,6 +14,8 @@ export interface PlayerProps {
   onSeek: (k: number) => void;
   onPlaying: (p: boolean) => void;
   onSpeed: (s: number) => void;
+  /** What one step is: a trace event (default) or, in a race, an expansion. */
+  unit?: 'events' | 'expansions';
 }
 
 /**
@@ -21,7 +23,8 @@ export interface PlayerProps {
  * one event, Shift+←/→ step 100. With `prefers-reduced-motion` nothing
  * autoplays, and play advances in discrete jumps (no per-frame animation).
  */
-export function Player({ n, k, playing, speed, reducedMotion, onSeek, onPlaying, onSpeed }: PlayerProps) {
+export function Player({ n, k, playing, speed, reducedMotion, onSeek, onPlaying, onSpeed, unit = 'events' }: PlayerProps) {
+  const one = unit === 'events' ? 'event' : 'expansion';
   const kRef = useRef(k);
   kRef.current = k;
   // keep the ref current between a seek and the re-render it causes, so the
@@ -59,8 +62,10 @@ export function Player({ n, k, playing, speed, reducedMotion, onSeek, onPlaying,
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const t = e.target as HTMLElement | null;
+      // other controls keep their own keys; of the range inputs, only the
+      // player's scrub bar steps the trace (the weight slider is its own)
       if (t && (t.tagName === 'SELECT' || t.tagName === 'TEXTAREA' ||
-        (t.tagName === 'INPUT' && (t as HTMLInputElement).type !== 'range'))) return;
+        (t.tagName === 'INPUT' && !((t as HTMLInputElement).type === 'range' && t.classList.contains('scrub'))))) return;
       if (e.code === 'Space') {
         if (t && t.tagName === 'BUTTON') return; // the focused button handles its own Space
         e.preventDefault();
@@ -84,14 +89,14 @@ export function Player({ n, k, playing, speed, reducedMotion, onSeek, onPlaying,
   return (
     <div className="player" role="group" aria-label="Trace player">
       <div className="player-buttons">
-        <button type="button" onClick={() => step(-100)} aria-label="Back 100 events">«</button>
-        <button type="button" onClick={() => step(-1)} aria-label="Back one event">‹</button>
+        <button type="button" onClick={() => step(-100)} aria-label={`Back 100 ${unit}`}>«</button>
+        <button type="button" onClick={() => step(-1)} aria-label={`Back one ${one}`}>‹</button>
         <button type="button" className="play" onClick={() => onPlaying(!playing)}
           aria-label={playing ? 'Pause' : 'Play'} data-testid="play">{playing ? 'Pause' : 'Play'}</button>
-        <button type="button" onClick={() => step(1)} aria-label="Forward one event">›</button>
-        <button type="button" onClick={() => step(100)} aria-label="Forward 100 events">»</button>
+        <button type="button" onClick={() => step(1)} aria-label={`Forward one ${one}`}>›</button>
+        <button type="button" onClick={() => step(100)} aria-label={`Forward 100 ${unit}`}>»</button>
         <label className="speed">
-          <span>events/frame</span>
+          <span>{unit}/frame</span>
           <select value={speed} onChange={(e) => { const v = Number(e.target.value); if (v > 0) onSpeed(v); }} aria-label="Speed">
             {SPEEDS.map((s) => <option key={s} value={s}>{s}</option>)}
           </select>
@@ -99,7 +104,7 @@ export function Player({ n, k, playing, speed, reducedMotion, onSeek, onPlaying,
       </div>
       <input className="scrub" type="range" min={0} max={n} step={1} value={k} aria-label="Scrub"
         data-testid="scrub" onChange={(e) => { onPlaying(false); onSeek(Number(e.target.value)); }} />
-      <div className="player-pos" aria-live="off">event {k.toLocaleString('en')} of {n.toLocaleString('en')}</div>
+      <div className="player-pos" aria-live="off">{one} {k.toLocaleString('en')} of {n.toLocaleString('en')}</div>
     </div>
   );
 }

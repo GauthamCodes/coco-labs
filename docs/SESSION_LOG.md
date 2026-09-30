@@ -6209,3 +6209,87 @@ and these:
 NEXT: the owner writes the Phase 2 (Live) prompt from `docs/ROADMAP.md`
 §3.5 and §6. Before Lab 2 (Phase 3), Lab 1 needs its video and
 `docs/labs/LAB1_PLAN.md` (ROADMAP §5, "Lab 1.1").
+
+---
+
+## Lab 1.1 — Part A: make it a lab (2026-10-01)
+
+Precondition met: the plan revision is at `ee8aace` (`lab1` = `main`).
+Scope as directed:
+- the break-the-planner challenge, beat-the-planner, stars and the daily
+  seed moved to a new **"Lab 1.2"** list in ROADMAP §5;
+- no sixth algorithm.
+
+**Built**
+- The settings panel (1E.1).
+- The map ladder with COCO's footprint swept along the path (1E.2).
+- Race mode (1E.3).
+- Brush painting and erasing, with start and goal protected (1E.5).
+
+Details are in `docs/RESULTS.md`, "COCO Lab 1.1, Part A", and in the Lab 1.1
+list in ROADMAP §5, where these four are marked done.
+
+**New in `coco_lab`**
+- `search.suboptimality_bound`.
+- Property 8 (the bound the UI shows holds, for every algorithm and
+  heuristic, on 1,000 maps).
+- A w = 1 ≡ A\* property (`test_weight_one_reproduces_astar`).
+- `test_bound.py`.
+
+The page shows only verdicts `coco_lab` computed at site build time (catalog
+1.1 `settings`).
+
+**Decisions taken here, stated, cheap to change**
+1. **The footprint** is the rectangle enclosing the chassis and wheels,
+   0.297 m × 0.314 m (derived from `coco_config/robot.py`).
+   - `coco_config` has no footprint or robot-radius constant.
+   - Nav2's `robot_radius` (0.20 m global, 0.25 m local) is a costmap
+     parameter, not a robot dimension, and was not used.
+2. **The weight slider** moves in 0.25 steps, so that every bound shown is
+   one `coco_lab` computed.
+3. **The costmap rung** is the 1C A\* run's recorded global costmap,
+   downsampled ×2 by `coco_lab`, so its edits run at the edit map's 0.10 m.
+4. **Settings and races** apply to grid bundles. The heading exhibit keeps
+   its recorded settings (and can be painted); recorded runs stay
+   read-only.
+5. **Painting reruns the shown bundle's own settings.** "Run" applies the
+   panel's settings; a race uses them for every entrant.
+
+**Measured** (local production build, headless Firefox 156, load 1.0–1.7)
+- Tests, all 0 failed, 0 skipped:
+  - `coco_lab` pip 349, colcon 352;
+  - `coco_lab_ros` 69, `gazebo_models` 229, `custom_teleop` 75;
+  - `lab_web/tools` 69; vitest 157;
+  - builds identical (`19df8d0f…`).
+- Warm paint → first frame: **1,158 / 1,172 / 1,159 ms** (target ≤ 1.5 s;
+  1D 1,405–1,421).
+- Playback: **59.96 fps**, 0 frames over 25 ms; 10k events/frame 59.87.
+  An interleaved A/B against the 1D build on the same machine cannot tell
+  them apart.
+- Phone: 378 ≤ 390. Weight: 107,321 B. Smoke: 11 of 11, 0 console errors.
+
+**Found and fixed** (each measured, then fixed)
+1. The player stole the arrow keys from every range input, so the weight
+   slider could not be moved by keyboard.
+2. The swept footprint, rendered lazily inside a playback frame, dropped
+   1–2 frames per full-arena playback. Memoising the panels did not help;
+   turning the sweep off did. It is now pre-rendered outside the frame
+   loop.
+3. An unbreakable citation widened the page to 401 px at phone width.
+
+**Unverified**
+- The public site with Part A (measured locally only).
+- Race timing on the 0.10 m arena.
+- A headed browser, a real phone, Safari and Chrome.
+
+**Traps paid this session**
+- `pgrep -f "gz sim"` in a compound shell matched the shell's own command
+  line, and reported a simulator that did not exist. Check `ps` instead.
+- A `-k` pytest filter plus an explicit file path silently widened the
+  collection. Run a new file alone.
+- WebDriver key presses sent right after a `<select>` change can reach a
+  control React has not yet re-enabled. Wait for the control's `disabled`
+  to clear.
+
+NEXT: Part B (LAB_PHASES Lab 1.1 prompt, items 6–9) on "continue". Phase 2
+(Live) has not started.

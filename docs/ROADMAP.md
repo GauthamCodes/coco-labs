@@ -328,8 +328,8 @@ mode from told to discovering.
     penalty, and an octile heuristic that overestimates for the move costs
     used. It is labelled a diagnosis only if the ISRO source is examined;
     otherwise it is a reconstruction.
-- **Later increments (Lab 1.1+):** JPS, Theta\*, RRT / RRT\* / PRM, Hybrid A\*;
-  beat-the-planner, stars, daily seed.
+- **Later increments (Lab 1.2+):** JPS, Theta\*, RRT / RRT\* / PRM, Hybrid A\*;
+  and the games listed under Lab 1.2 below.
 
 #### Lab 1.1 — Lab 1 must-haves not delivered when Phase 1 closed (2026-09-30)
 
@@ -343,21 +343,28 @@ and 1F:
 - **1E.1 Settings panel:** the five algorithms; the heuristic picker with
   the admissibility and consistency badge from `coco_lab`;
   4/8-connectivity; a tie-breaking toggle; the weighted-A\* slider (0–5)
-  with the suboptimality bound shown live. *Not built*; the page shows each
-  bundle's stored settings only.
+  with the suboptimality bound shown live. **Done in Lab 1.1 Part A
+  (2026-10-01).** The badge and the bound are looked up in a table
+  `coco_lab` computes at site build time (`search.suboptimality_bound`,
+  checked on 1,000 maps by `test_the_reported_suboptimality_bound_holds`);
+  the slider moves in 0.25 steps so every bound shown is one it computed.
 - **1E.2 Map ladder:** teaching grid → arena occupancy → inflated costmap
-  with the footprint (from `coco_config`) swept along the path. *Not
-  built.*
+  with the footprint (from `coco_config`) swept along the path. **Done in
+  Lab 1.1 Part A.** The third rung is Nav2's own global costmap from the 1C
+  A\* run, downsampled x2 by `coco_lab`; the footprint, 0.297 m x 0.314 m,
+  is *derived* from `coco_config` (chassis and wheels) and drawn only on a
+  map with geo.
 - **1E.3 Race mode:** two to four algorithms on identical inputs, a
-  synchronised step counter, and the final table. *Not built.*
+  synchronised step counter, and the final table. **Done in Lab 1.1 Part
+  A.** The shared counter counts expansions; the optimum is `coco_lab`'s
+  Dijkstra on the same inputs.
 - **1E.4 Predict-then-reveal.** *Not built.*
-- **1E.5 Paint obstacles and recompute:** *partial*. A single-cell toggle
-  is recomputed by `coco_lab` in Pyodide. Painting, and a clear message
-  rejecting a blocked start or goal, are not built or verified.
+- **1E.5 Paint obstacles and recompute:** **Done in Lab 1.1 Part A.** A
+  1, 3 or 5 cell brush paints or erases; a drag is one stroke, applied and
+  searched by `coco_lab` in Pyodide. A stroke over the start or the goal is
+  refused with a message, by the page and again by the worker.
 - **1E.6 Share links** encoding seed, edits and settings, with a tested
   round trip. *Not built*; only `?bundle=<id>` selects a catalog bundle.
-- **1E.7 Break-the-planner challenge,** verified automatically. *Not
-  built.*
 - **1E.8 "Driven by COCO":** *partial*. The three 1C runs replay with ground
   truth, AMCL belief and plan overlaid, provenance, and the "Replay —
   recorded real run" label; tracking error is shown as mean / p95 / max.
@@ -374,6 +381,18 @@ and 1F:
 - **1F.5 Final checks:** CI green on `main`, per-package counts, and the
   page at phone width (headless Firefox, 390 × 844) are *done*. A real
   phone, and a share-link round trip, are *not*.
+
+#### Lab 1.2 — deferred from Lab 1.1 by the owner (2026-10-01)
+
+Not part of Lab 1.1; each stays a Lab 1 increment, and none adds an
+algorithm:
+
+- **Break-the-planner challenge** (was 1E.7): "paint a map where greedy
+  best-first's path costs at least twice the optimum", verified
+  automatically.
+- **Beat-the-planner:** draw your own path and compare it with the search.
+- **Stars:** one to three, per exercise.
+- **Daily seed.**
 
 ### Lab 2 — Localise
 

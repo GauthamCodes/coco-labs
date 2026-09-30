@@ -210,6 +210,46 @@ def search(graph: SearchGraph, start: State, goal: State,
     return SearchResult('found', path, g[goal], trace)
 
 
+def suboptimality_bound(algorithm: str, report,
+                        weight: Optional[float] = None) -> Optional[float]:
+    """
+    Return ``B`` such that the path found costs at most ``B x optimal``.
+
+    ``report`` is :func:`coco_lab.heuristics.analyse` for the heuristic on
+    the graph's move model. ``None`` means no guarantee holds on every map.
+    This is the number the UI shows next to the weighted-A* slider; the
+    property tests check that it holds.
+
+    - ``dijkstra``: 1.
+    - ``astar``: 1 when the heuristic is consistent; otherwise ``None``,
+      because a closed state is never reopened.
+    - ``weighted_astar``: ``max(1, w)`` when the heuristic is consistent.
+      For ``w <= 1``, ``w * h`` is itself consistent, so the search is
+      optimal; for ``w > 1``, the ``w x optimal`` bound holds without
+      reopening (Likhachev, Gordon and Thrun, ARA*, NIPS 2003).
+    - ``greedy``: ``None``; it ignores ``g``.
+    - ``bfs``: ``None``; it is optimal in steps, not in cost.
+    """
+    if algorithm not in ALGORITHMS:
+        raise ValueError(
+            f'unknown algorithm {algorithm!r}; expected one of {ALGORITHMS}')
+    if algorithm == 'weighted_astar':
+        if weight is None or not (isinstance(weight, (int, float))
+                                  and math.isfinite(weight) and weight >= 0):
+            raise ValueError(
+                f'weighted_astar needs a finite weight >= 0, got {weight!r}')
+    elif weight is not None:
+        raise ValueError(f'weight applies only to weighted_astar, '
+                         f'not {algorithm!r}')
+    if algorithm == 'dijkstra':
+        return 1.0
+    if algorithm in ('greedy', 'bfs') or not report.consistent:
+        return None
+    if algorithm == 'astar':
+        return 1.0
+    return max(1.0, float(weight))
+
+
 def _describe(graph) -> Dict[str, object]:
     describe = getattr(graph, 'describe', None)
     return describe() if callable(describe) else {'kind': type(graph).__name__}

@@ -35,6 +35,8 @@ export const PALETTE = {
   unknown: '#8C8C8C',
   /** Cost layer on free cells: white (0) to this at the map's maximum cost. */
   costMax: '#C9C1B1',
+  /** The edge of COCO's footprint swept along the path (Okabe–Ito blue). */
+  sweepEdge: OKABE_ITO.blue,
 } as const;
 
 export function rgb(hex: string): [number, number, number] {

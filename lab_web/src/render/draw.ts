@@ -12,6 +12,12 @@ import type { DecodedBundle } from '../bundle/model';
 import type { Overlay } from './overlays';
 import { PALETTE } from './palette';
 
+/** A brush stroke being drawn, before coco_lab has applied it. */
+export interface Preview {
+  value: 'occupied' | 'free';
+  cells: Array<[number, number]>;
+}
+
 export interface Scene {
   bundle: DecodedBundle;
   mapLayer: HTMLCanvasElement | OffscreenCanvas;
@@ -19,6 +25,9 @@ export interface Scene {
   path: Array<[number, number]>; // [row, col] cells, in order
   overlays: Overlay[];
   hover: [number, number] | null;
+  /** The robot's footprint along the path, pre-rendered (renderSweepLayer). */
+  sweepLayer?: HTMLCanvasElement | null;
+  preview?: Preview | null;
 }
 
 export function makeLayer(width: number, height: number): HTMLCanvasElement {
@@ -51,6 +60,21 @@ export function drawScene(ctx: CanvasRenderingContext2D, s: Scene, scale: number
   ctx.drawImage(s.traceLayer as CanvasImageSource, 0, 0, width * scale, height * scale);
   ctx.setTransform(scale, 0, 0, scale, 0, 0);
   const px = 1 / scale; // one device pixel, in cell units
+
+  // the footprint swept along the path, rendered once per bundle and size
+  // (renderSweepLayer) -- a frame only blits it
+  if (s.sweepLayer && s.sweepLayer.width === ctx.canvas.width && s.sweepLayer.height === ctx.canvas.height) {
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(s.sweepLayer, 0, 0);
+    ctx.restore();
+  }
+
+  // a stroke being painted, before coco_lab has applied it
+  if (s.preview) {
+    ctx.fillStyle = s.preview.value === 'occupied' ? 'rgba(0, 0, 0, 0.55)' : 'rgba(255, 255, 255, 0.75)';
+    for (const [r, c] of s.preview.cells) ctx.fillRect(c, r, 1, 1);
+  }
 
   // the search's path, as stored in the trace
   if (s.path.length > 1) {
@@ -113,6 +137,52 @@ export function drawScene(ctx: CanvasRenderingContext2D, s: Scene, scale: number
     ctx.strokeRect(c, r, 1, 1);
   }
   ctx.restore();
+}
+
+/**
+ * The swept footprint as one device-sized layer: the UNION of the
+ * rectangles, lightened and outlined, so it reads as the area the robot
+ * covers. One nonzero fill on a mask (so overlaps are not darker), then an
+ * outline made by offsetting the mask a device pixel each way and cutting
+ * its interior out -- the union's edge, without the rectangles' inner
+ * edges. Built outside the frame loop: it costs tens of ms (measured: done
+ * lazily inside a frame, it dropped frames that 1D did not).
+ */
+export function renderSweepLayer(polys: Array<Array<[number, number]>>, scale: number,
+  w: number, h: number): HTMLCanvasElement {
+  const sweepMask = document.createElement('canvas');
+  const sweepRing = document.createElement('canvas');
+  const out = document.createElement('canvas');
+  for (const c of [sweepMask, sweepRing, out]) {
+    c.width = w;
+    c.height = h;
+  }
+  const m = sweepMask.getContext('2d')!;
+  m.setTransform(scale, 0, 0, scale, 0, 0);
+  m.beginPath();
+  for (const poly of polys) {
+    poly.forEach(([x, y], i) => (i ? m.lineTo(x, y) : m.moveTo(x, y)));
+    m.closePath();
+  }
+  m.fillStyle = '#ffffff';
+  m.fill('nonzero');
+
+  const r = sweepRing.getContext('2d')!;
+  const d = Math.max(1.5, Math.min(3, scale / 3));
+  for (const [dx, dy] of [[-d, 0], [d, 0], [0, -d], [0, d]]) r.drawImage(sweepMask, dx, dy);
+  r.globalCompositeOperation = 'source-in';
+  r.fillStyle = PALETTE.sweepEdge;
+  r.fillRect(0, 0, w, h);
+  r.globalCompositeOperation = 'destination-out';
+  r.drawImage(sweepMask, 0, 0);
+  r.globalCompositeOperation = 'source-over';
+
+  const o = out.getContext('2d')!;
+  o.globalAlpha = 0.45;
+  o.drawImage(sweepMask, 0, 0); // lighten what the robot covers
+  o.globalAlpha = 1;
+  o.drawImage(sweepRing, 0, 0);
+  return out;
 }
 
 function strokePoints(ctx: CanvasRenderingContext2D, pts: Array<[number, number]>): void {

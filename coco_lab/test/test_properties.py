@@ -33,7 +33,8 @@ property actually ran and how they split across move models and outcomes.
 from coco_lab.graph import HEURISTICS
 from coco_lab.grid import Grid
 from coco_lab.heuristics import analyse
-from coco_lab.search import search, TIE_BREAKS
+from coco_lab.search import (ALGORITHMS, search, suboptimality_bound,
+                             TIE_BREAKS)
 from hypothesis import given, strategies as st
 from lab_maps import (cases, close, isclose_or_none, oracle_cost,
                       oracle_graph, PROPERTY_SETTINGS, record_outcome)
@@ -159,6 +160,20 @@ def test_weight_zero_reproduces_dijkstra(case, h, tie):
     assert w0.trace.summary == dj.trace.summary
 
 
+@PROPERTY_SETTINGS
+@given(case=cases(), h=any_heuristic, tie=tie_breaks)
+def test_weight_one_reproduces_astar(case, h, tie):
+    """The whole event stream: f = g + 1*h, and the tie term is 1*h = h."""
+    record_outcome(oracle_cost(case) is not None)
+    a = search(case.grid, case.start, case.goal, 'astar', heuristic=h,
+               tie_break=tie)
+    w1 = search(case.grid, case.start, case.goal, 'weighted_astar',
+                heuristic=h, weight=1.0, tie_break=tie)
+    assert w1.cost == a.cost
+    assert w1.trace.events == a.trace.events
+    assert w1.trace.summary == a.trace.summary
+
+
 # -- 5. BFS is optimal under unit edge costs --------------------------------
 
 unit_cost_cases = st.one_of(
@@ -240,3 +255,36 @@ def test_all_five_agree_on_no_path(case, h, w, tie):
                                      **kw).status
     expected = 'found' if reachable else 'no_path'
     assert set(statuses.values()) == {expected}, statuses
+
+
+# -- 8. the bound the UI shows holds: cost <= B x optimal -------------------
+
+SLIDER_WEIGHTS = [i / 4 for i in range(21)]  # the page's 0.25 steps, 0..5
+
+
+@PROPERTY_SETTINGS
+@given(case=cases(reachable=True), h=any_heuristic,
+       algorithm=st.sampled_from(ALGORITHMS),
+       w=st.one_of(st.sampled_from(SLIDER_WEIGHTS),
+                   st.floats(min_value=0.0, max_value=5.0)),
+       tie=tie_breaks)
+def test_the_reported_suboptimality_bound_holds(case, h, algorithm, w, tie):
+    """
+    Whatever :func:`suboptimality_bound` reports, the search meets.
+
+    This is the claim printed beside the weighted-A* slider, so it is
+    checked for every algorithm and heuristic, admissible or not; when the
+    function reports ``None`` there is no claim to check.
+    """
+    kw = {'weight': w} if algorithm == 'weighted_astar' else {}
+    bound = suboptimality_bound(algorithm, analyse(h, case.grid.move_model),
+                                **kw)
+    optimal = oracle_cost(case)
+    record_outcome(optimal is not None)
+    r = search(case.grid, case.start, case.goal, algorithm, heuristic=h,
+               tie_break=tie, **kw)
+    assert r.found == (optimal is not None)
+    if bound is None or optimal is None:
+        return
+    assert r.cost <= bound * optimal or close(r.cost, bound * optimal), (
+        algorithm, h, w, r.cost, bound, optimal)

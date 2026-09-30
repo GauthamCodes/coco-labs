@@ -39,11 +39,15 @@ def main():
     d = os.path.join(LAB_WEB, 'public', 'generated', 'bundles', 'arena_0_10m')
     m = open(os.path.join(d, 'manifest.json'), 'rb').read()
     a = open(os.path.join(d, 'arrays.bin.gz'), 'rb').read()
-    out = recompute.edit(m, 'arrays.bin.gz', a, *CELLS[0])
+    def paint(cell):
+        return json.dumps({'strokes': [{'value': 'occupied', 'cells': [list(cell)]}]})
+
+    out = recompute.recompute(paint(CELLS[0]), m, 'arrays.bin.gz', a)
     first = out['timings']
     warm = []
     for cell in CELLS[1:]:
-        out = recompute.edit(out['manifest'], out['arrays_name'], out['arrays_file'], *cell)
+        b = out['bundles'][0]
+        out = recompute.recompute(paint(cell), b['manifest'], b['arrays_name'], b['arrays_file'])
         warm.append(out['timings'])
     report = {
         'python': sys.version.split()[0],

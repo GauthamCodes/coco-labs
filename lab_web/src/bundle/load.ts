@@ -116,6 +116,51 @@ export interface Catalog {
   tool: string;
   wheel: { path: string; sha256: string; bytes: number } | null;
   bundles: CatalogEntry[];
+  /** 1.1: coco_lab's verdicts for the settings panel (src/lab/settings.ts). */
+  settings?: SettingsAnalysis;
+  /** 1.1: the map ladder, lowest rung first. */
+  ladder?: LadderRung[];
+  /** 1.1: COCO's footprint, derived from coco_config. */
+  footprint?: Footprint;
+}
+
+/** One move model's verdicts, computed by coco_lab at site build time. */
+export interface ModelAnalysis {
+  connectivity: 4 | 8;
+  diagonal_cost: number | null;
+  heuristic: string;
+  admissible: boolean;
+  consistent: boolean;
+  reason: string;
+  witness: number[] | null;
+  /** Per algorithm: cost <= bound x optimal, or null (no guarantee). */
+  bounds: Record<'bfs' | 'dijkstra' | 'astar' | 'greedy', number | null> & {
+    weighted_astar: Array<number | null>; // one per SettingsAnalysis.weights
+  };
+}
+
+export interface SettingsAnalysis {
+  by: string;
+  cite: string;
+  algorithms: string[];
+  heuristics: string[];
+  tie_breaks: string[];
+  weights: number[];
+  models: ModelAnalysis[];
+}
+
+export interface LadderRung {
+  rung: number;
+  id: string;
+  title: string;
+  note: string;
+}
+
+export interface Footprint {
+  length_m: number;
+  width_m: number;
+  source: string;
+  derivation: string;
 }
 
 /**

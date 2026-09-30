@@ -63,7 +63,7 @@ describe('the worker glue', () => {
   it('imports only coco_lab and the standard library', () => {
     const py = readFileSync(join(LAB_WEB, 'src/worker/recompute.py'), 'utf-8');
     const imports = [...py.matchAll(/^(?:from|import) ([\w.]+)/gm)].map((m) => m[1].split('.')[0]);
-    expect(new Set(imports)).toEqual(new Set(['json', 'os', 'shutil', 'sys', 'tempfile', 'time', 'coco_lab']));
+    expect(new Set(imports)).toEqual(new Set(['collections', 'json', 'os', 'shutil', 'sys', 'tempfile', 'time', 'coco_lab']));
     expect(py).toContain("TOOL = 'lab_web/pyodide'");
   });
 });

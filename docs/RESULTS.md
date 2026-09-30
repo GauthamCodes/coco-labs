@@ -7424,3 +7424,162 @@ What these two samples show:
   rate, and M3's 6.2 % was neither reproduced nor refuted. Map quality is
   not measured (moved to Lab 3).
 
+
+## COCO Lab 1.1, Part A — the lab's controls (measured 2026-10-01)
+
+Part A of Lab 1.1 (the "Lab 1.1" list in `docs/ROADMAP.md` §5): the
+settings panel, the map ladder with COCO's footprint swept along the path,
+race mode, and brush painting. The page still never searches: every change
+is one request to `coco_lab` in the Pyodide worker, and every verdict on
+screen (admissible, consistent, the suboptimality bound) is looked up in a
+table `coco_lab` computed when the site was built. Evidence:
+`docs/data/lab11/part_a/`.
+
+### What was built
+
+- **`coco_lab.search.suboptimality_bound(algorithm, report, weight)`.** It
+  returns `B` with cost ≤ `B` × optimal, or `None` when nothing is
+  guaranteed:
+  - Dijkstra: 1;
+  - A\*: 1 with a consistent heuristic, otherwise `None`;
+  - weighted A\*: `max(1, w)` with a consistent heuristic, otherwise
+    `None`;
+  - greedy and BFS: `None`.
+
+  A new property, `test_the_reported_suboptimality_bound_holds`, checks the
+  bound for **every** algorithm and heuristic, admissible or not, on 1,000
+  maps, at the slider's positions and at random weights in [0, 5]. A second
+  new property, `test_weight_one_reproduces_astar`, backs the panel's
+  sentence "w = 1 is A\*" event for event, as property 4 already did for
+  w = 0 and Dijkstra.
+- **Catalog 1.1** (`lab_web/tools/build_catalog.py`, additive), with three
+  new blocks:
+  - `settings`: coco_lab's report and bounds for every move model the
+    served grid bundles use (4-connected, and 8-connected with diagonal
+    √2), at each of the slider's 21 weights, 0 to 5 in 0.25 steps;
+  - `ladder`;
+  - `footprint`.
+- **COCO's footprint, 0.297 m × 0.314 m (derived).** It is taken from
+  `coco_config/robot.py` as the rectangle enclosing the chassis and the four
+  wheels:
+  - length = max(`CHASSIS_SIZE[0]` 0.24, `WHEELBASE` 0.18 +
+    2 × `WHEEL_RADIUS` 0.0585);
+  - width = max(`CHASSIS_SIZE[1]` 0.274, `WHEEL_SEPARATION` 0.274 +
+    `WHEEL_WIDTH` 0.04).
+
+  `coco_config` has no footprint or robot-radius constant. The sweep is
+  drawn only on a map with geo; on the teaching grid the page says why it
+  cannot be placed.
+- **The map ladder:**
+  - rung 1, the teaching grid (`astar_open`);
+  - rung 2, arena occupancy (`arena_0_10m`);
+  - rung 3, a new catalog bundle, `costmap_0_10m`: Nav2's own
+    `/global_costmap/costmap_raw` snapshot recorded in the 1C A\* run,
+    downsampled ×2 by `coco_lab`, and searched with that run's algorithm,
+    heuristic and move model (A\*, Euclidean, cost weight 2). It is 4,693
+    events, and `bundle.replay` reproduces all of them.
+- **The worker glue** (`src/worker/recompute.py`) now does one request per
+  change:
+  - it applies brush strokes, refusing one that covers the start or the
+    goal;
+  - it runs one to four searches, and can also run `coco_lab`'s Dijkstra
+    for the optimum;
+  - it serialises through `Bundle.validate` / `manifest` / `arrays`, which
+    `test_the_bytes_are_write_bundles_bytes` checks is byte-identical to
+    `write_bundle`;
+  - it caches each validated bundle by content hash, so only the first
+    change to a bundle pays for `load_bundle`.
+- **The page:**
+  - the settings panel;
+  - Look / Paint wall / Erase with a 1, 3 or 5 cell brush (a drag is one
+    stroke; a paint tool also works on a phone);
+  - race mode: two to four panes advanced together by a shared counter of
+    expansions, and a table of expansions, cost, length and gap to optimal;
+  - the ladder and the sweep toggle.
+
+  Settings and races apply to grid bundles. The heading-graph exhibit keeps
+  its recorded settings (it can still be painted), and the recorded runs
+  stay read-only.
+
+### Tests (measured; fresh job-local overlay, load 0.7–2.3)
+
+| suite | Part A | 1D-8 |
+|---|---|---|
+| `coco_lab` pip route | **349 / 0 / 0** | 333 |
+| `coco_lab` colcon route, linters included | **352 / 0 / 0** | 336 |
+| `coco_lab_ros` | 69 / 0 / 0 | 69 |
+| `gazebo_models` | 229 / 0 / 0 | 229 |
+| `custom_teleop` | 75 / 0 / 0 | 75 |
+| `lab_web/tools` (incl. the no-search guard) | **69 / 0 / 0** | 58 |
+| vitest | **157 passed** | 142 |
+
+- Typecheck is clean.
+- `build_catalog.py` validates and replays all 11 served bundles.
+- Two production builds are identical (`tree_sha256 19df8d0f…`).
+
+### The 1D budgets, re-measured with Part A in place (headless Firefox 156, local preview, load 1.0–1.7)
+
+| | target | 1D (local) | **Part A (local, measured)** |
+|---|---|---|---|
+| Full-arena Dijkstra playback, 1,000 events/frame | ≥ 60 fps | 60.07 fps, 0 frames > 25 ms | **59.96 fps, 0 frames > 25 ms** (max gap 20 ms; draw median 3 ms, max 6 ms) |
+| Same, 10,000 events/frame | — | 59.87 fps | **59.87 fps, 0 frames > 25 ms** |
+| Paint one cell → first frame, Pyodide warm (0.10 m arena), edits 2–4 | ≤ 1.5 s | 1,421 / 1,405 / 1,418 ms | **1,158 / 1,172 / 1,159 ms**. In coco_lab: search 655–661 ms, load **0 ms** (cached), serialise 449–453 ms |
+| Cold first change (click → first frame) | report | 13,453 ms | **18,383 ms**: the Pyodide download and start alone took 16,307 ms, and across this session's runs 16–95 s, all the CDN; install 280 ms |
+| Initial page weight, excluding Pyodide | report | 100,573 B | **107,321 B** transferred, 7 requests |
+| 390 × 844 | no horizontal scroll | `scrollWidth` 378 | **378**; all controls hit-test; a tap plays |
+| Smoke | every bundle draws | 10 of 10 | **11 of 11**, 0 console errors, no cookie, no storage |
+
+**The warm edit is faster than in 1D** (≈ 250 ms), because the glue no
+longer revalidates a bundle it validated or wrote itself.
+
+**Playback: Part A first dropped frames, and that was fixed.** Measured
+first, Part A played at 59.73 / 59.79 / 59.82 fps with 2 frames over 25 ms
+in each sample (30–39 ms gaps), against 0 for 1D. To separate the code from
+the machine, the 1D site was built from `ee8aace`, served beside Part A, and
+sampled in interleaved runs:
+- the draw time was identical (median 3 ms);
+- memoising the panels did **not** help;
+- turning the sweep off did.
+
+The cause was the swept footprint being rendered lazily inside the first
+frame that needed it (three device-sized canvases and ~200 polygons). It is
+now rendered once per bundle, toggle and canvas size, outside the frame
+loop, and a frame only blits it. After the fix, interleaved on the same
+machine:
+
+| 1,000 events/frame | fps | frames > 25 ms |
+|---|---|---|
+| 1D build (`ee8aace`) | 59.94 / 59.98 / 60.03 | 0 / 0 / 1 |
+| Part A | 59.98 / 60.15 / 60.12 | 0 / 1 / 0 |
+
+Both builds sit at the 60 Hz `requestAnimationFrame` cap; single samples
+fall on either side of 60, as 1D's did. Part A is not distinguishable from
+1D here (derived from the six samples above).
+
+### Found during Part A (measured, fixed)
+
+1. **The player captured the arrow keys of every range input**, not just
+   its own scrub bar, so the weight slider could not be moved from the
+   keyboard; the arrows stepped the trace instead. Found by the harness's
+   real key presses. Only the `.scrub` input now steps the trace, and the
+   1D keyboard checks are unchanged: ← 177, Shift+← 77, → 78.
+2. **The lazily rendered sweep dropped frames** (above).
+3. **Phone width regressed to `scrollWidth` 401 > 390.** An unbreakable
+   citation (`test_properties.py::test_the_reported_…`) widened the side
+   panel. Notes, citations, badges and status lines now wrap anywhere, and
+   the width is 378 again.
+
+Also: a stroke over the start is refused by the page before any Python
+starts ("the brush covered the start cell (15, 2)…"), and the worker refuses
+the same stroke (`test_a_stroke_over_the_start_or_goal_is_refused_clearly`).
+
+### Not yet measured / not done
+
+- The **public site** with Part A. These numbers are local; Part A reaches
+  Pages only when `main` is fast-forwarded.
+- Race mode has no budget. Measured once on the 20 × 20 grid
+  (`browser_report.json`, `lab`): 4 searches 24 ms, write 17 ms, optimum
+  7 ms. On the 0.10 m arena, not measured.
+- A headed browser, a real phone, Safari and Chrome, as before.
+- The cold start depends on the jsDelivr download (16–95 s in this
+  session); nothing in Part A changed it.

@@ -1,22 +1,39 @@
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { BundleError } from '../bundle/errors';
 import {
   fetchBundle, requireValidated, type BundleFiles, type Catalog, type CatalogEntry,
 } from '../bundle/load';
 import type { DecodedBundle, ValidatedBy } from '../bundle/model';
+import { coversEndpoint, endpointRefusal, type Tool } from '../lab/brush';
+import { sweptFootprint } from '../lab/footprint';
+import { settingsLocked, settingsOf, toRun, type SearchSettings } from '../lab/settings';
 import { HoverIndex } from '../trace/hover';
-import { Editor, useEditor } from './Editor';
+import { pathCells } from '../trace/cursor';
+import type { Stroke } from '../worker/protocol';
+import { LabStatusLine, useLab } from './Editor';
+import { Ladder } from './Ladder';
 import { MapView } from './MapView';
 import { ModeBadge } from './ModeBadge';
 import { HoverPanel, ProvenancePanel, RecordingPanel, SummaryPanel } from './panels';
 import { perfMark } from './perf';
 import { Player } from './Player';
+import { RaceSetup, RaceView } from './Race';
+import { SettingsPanel } from './SettingsPanel';
+import { Tools } from './Tools';
 
 const BASE = import.meta.env.BASE_URL; // from site.config.ts via vite.config.ts
+
+// Panels whose props do not change with the playback cursor: memoised, so a
+// playback tick re-renders only the map and the player (measured: without
+// this, Part A dropped 1-2 frames per full-arena playback that 1D did not)
+const LadderM = memo(Ladder);
+const SettingsPanelM = memo(SettingsPanel);
+const RaceSetupM = memo(RaceSetup);
+const ToolsM = memo(Tools);
 const DATA = `${BASE}generated/`;
 
 /** A loaded bundle, and how we know it may be drawn. */
@@ -27,7 +44,7 @@ export interface Current {
   validated: NonNullable<ValidatedBy>;
 }
 
-/** Future hook (1E): N panes compare N bundles on identical inputs. */
+/** A catalog bundle, or one coco_lab just computed in the worker. */
 export type BundleRef = { catalogId: string } | { worker: true };
 
 type Tab = 'summary' | 'provenance' | 'recording' | 'hover';
@@ -56,6 +73,12 @@ export function App() {
   const [speed, setSpeed] = useState(100);
   const [hover, setHover] = useState<[number, number] | null>(null);
   const [tab, setTab] = useState<Tab>('summary');
+  const [settings, setSettings] = useState<SearchSettings | null>(null);
+  const [tool, setTool] = useState<Tool>('look');
+  const [brush, setBrush] = useState(1);
+  const [sweep, setSweep] = useState(true);
+  const [raceChosen, setRaceChosen] = useState<string[]>(['dijkstra', 'astar']);
+  const [race, setRace] = useState<{ entrants: Current[]; optimalCost: number | null } | null>(null);
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -77,13 +100,45 @@ export function App() {
     setPlaying(false);
     setHover(null);
     setK(c.bundle.trace.n); // show the finished search; play restarts from 0
+    setSettings(settingsOf(c.bundle));
   }, []);
   // after an edit the drawn bundle is no catalog entry: say so in the picker
   const showEdited = useCallback((c: Current) => {
     setSelection([{ worker: true }]);
+    setRace(null);
     show(c);
   }, [show]);
-  const { status: editStatus, setStatus: setEditStatus, edit } = useEditor(catalog, showEdited);
+  const { status: editStatus, setStatus: setEditStatus, run } = useLab(catalog);
+
+  const onStroke = useCallback(async (stroke: Stroke) => {
+    if (!current) return;
+    const hit = coversEndpoint(stroke, current.bundle.run.start, current.bundle.run.goal);
+    if (hit) {
+      setEditStatus({ state: 'error', refused: true, message: `Not applied: ${endpointRefusal(hit.what, hit.cell)}` });
+      return;
+    }
+    const r = await run(current, { strokes: [stroke], connectivity: null, runs: null, optimal: false },
+      stroke.value === 'occupied' ? 'painting and searching again' : 'erasing and searching again');
+    if (r) showEdited(r.bundles[0]);
+  }, [current, run, setEditStatus, showEdited]);
+
+  const onRunSettings = useCallback(async () => {
+    if (!current || !settings) return;
+    const r = await run(current, { strokes: [], connectivity: settings.connectivity, runs: [toRun(settings)], optimal: false },
+      'searching with your settings');
+    if (r) showEdited(r.bundles[0]);
+  }, [current, settings, run, showEdited]);
+
+  const onRace = useCallback(async () => {
+    if (!current || !settings) return;
+    const runs = raceChosen.map((a) => toRun({ ...settings, algorithm: a }));
+    const r = await run(current, { strokes: [], connectivity: settings.connectivity, runs, optimal: true },
+      `racing ${runs.length} algorithms on identical inputs`);
+    if (r) {
+      setPlaying(false);
+      setRace({ entrants: r.bundles, optimalCost: r.optimalCost });
+    }
+  }, [current, settings, raceChosen, run]);
 
   useEffect(() => {
     const ref = selection[0];
@@ -93,6 +148,7 @@ export function App() {
     let cancelled = false;
     setLoading(true);
     setCurrent(null);
+    setRace(null);
     setEditStatus({ state: 'idle' });
     perfMark('bundle-fetch-start');
     fetchBundle(`${DATA}${entry.path}`)
@@ -128,6 +184,14 @@ export function App() {
 
   const editable = !!current && !!catalog?.wheel && (current.entry?.editable ?? false) &&
     current.bundle.provenance.source_kind === 'glass-box';
+  const locked = current ? (editable ? settingsLocked(current.bundle)
+    : settingsLocked(current.bundle) ?? 'This bundle is not editable.') : null;
+  const busy = editStatus.state === 'busy';
+  const swept = useMemo(() => (current && sweep
+    ? sweptFootprint(pathCells(current.bundle.trace.events, current.bundle.trace.n), current.bundle.map.geo, catalog?.footprint)
+    : null), [current, sweep, catalog]);
+  const currentId = selection[0] && 'catalogId' in selection[0] ? selection[0].catalogId : null;
+  const onRung = useCallback((id: string) => setSelection([{ catalogId: id }]), []);
   const marked = useRef<DecodedBundle | null>(null);
   const onDrawn = useCallback((b: DecodedBundle) => {
     if (marked.current === b) return;
@@ -173,14 +237,35 @@ export function App() {
       {current && (
         <main className="stage">
           <div className="canvas-col">
-            <MapView bundle={current.bundle} k={k} hover={hover} onHover={setHover} onDrawn={onDrawn}
-              onCellClick={editable ? (cell) => edit(current, cell) : undefined} />
-            <Legend recorded={!!current.bundle.recording} />
-            <Player n={current.bundle.trace.n} k={k} playing={playing} speed={speed}
-              reducedMotion={reducedMotion} onSeek={setK} onPlaying={setPlaying} onSpeed={setSpeed} />
-            <Editor editable={editable} status={editStatus} />
+            {race ? (
+              <RaceView entrants={race.entrants} optimalCost={race.optimalCost} reducedMotion={reducedMotion}
+                onClose={() => setRace(null)} />
+            ) : (
+              <>
+                <MapView bundle={current.bundle} k={k} hover={hover} onHover={setHover} onDrawn={onDrawn}
+                  tool={editable ? tool : 'look'} brush={brush} onStroke={editable ? onStroke : undefined}
+                  sweep={swept} />
+                <Legend recorded={!!current.bundle.recording} sweep={!!swept?.placed} />
+                <Player n={current.bundle.trace.n} k={k} playing={playing} speed={speed}
+                  reducedMotion={reducedMotion} onSeek={setK} onPlaying={setPlaying} onSpeed={setSpeed} />
+                <ToolsM editable={editable} tool={tool} brush={brush} onTool={setTool} onBrush={setBrush} />
+              </>
+            )}
+            <LabStatusLine status={editStatus} />
           </div>
           <aside className="side">
+            {catalog?.ladder && (
+              <LadderM ladder={catalog.ladder} currentId={currentId} onRung={onRung}
+                sweep={sweep} onSweep={setSweep} footprint={catalog.footprint} swept={swept} />
+            )}
+            {catalog?.settings && settings && (
+              <SettingsPanelM analysis={catalog.settings} bundle={current.bundle} value={settings}
+                onChange={setSettings} onRun={onRunSettings} locked={locked} busy={busy} />
+            )}
+            {catalog?.settings && (
+              <RaceSetupM algorithms={catalog.settings.algorithms} chosen={raceChosen} onChosen={setRaceChosen}
+                onStart={onRace} disabled={locked} busy={busy} />
+            )}
             <div className="tabs" role="tablist">
               {(['summary', 'provenance', 'recording', 'hover'] as Tab[]).map((t) => (
                 <button key={t} type="button" role="tab" aria-selected={tab === t}
@@ -200,13 +285,13 @@ export function App() {
 
       <footer className="foot">
         <span>Built from {__BUILD_COMMIT__}.</span>{' '}
-        <span>No analytics, no cookies. The only third-party request is Pyodide {__PYODIDE_VERSION__}, and only after you edit a map.</span>
+        <span>No analytics, no cookies. The only third-party request is Pyodide {__PYODIDE_VERSION__}, and only after you paint, change a setting or start a race.</span>
       </footer>
     </div>
   );
 }
 
-function Legend({ recorded }: { recorded: boolean }) {
+function Legend({ recorded, sweep }: { recorded: boolean; sweep: boolean }) {
   return (
     <ul className="legend" aria-label="Legend">
       <li><i className="sw open" />open</li>
@@ -217,6 +302,7 @@ function Legend({ recorded }: { recorded: boolean }) {
       {recorded && <li><i className="sw gt" />ground truth</li>}
       {recorded && <li><i className="sw amcl" />AMCL belief</li>}
       {recorded && <li><i className="sw plan" />published plan</li>}
+      {sweep && <li><i className="sw sweep" />COCO's footprint, swept</li>}
     </ul>
   );
 }

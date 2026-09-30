@@ -2,16 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /**
- * The Pyodide worker. Started only when a user edits a map (the page never
- * creates it otherwise), it loads the PINNED Pyodide from its CDN, installs
- * coco_lab from the wheel this site serves (sha256-checked against the
- * catalog before installation), and runs `recompute.py` -- glue that calls
- * coco_lab's own load_bundle, search and write_bundle. No package other
- * than micropip (from Pyodide's own lock file) and coco_lab is installed.
+ * The Pyodide worker. Started only when a user paints a map, changes a
+ * search setting or starts a race (the page never creates it otherwise), it
+ * loads the PINNED Pyodide from its CDN, installs coco_lab from the wheel
+ * this site serves (sha256-checked against the catalog before
+ * installation), and runs `recompute.py` -- glue that calls coco_lab's own
+ * load_bundle, search and bundle serialisation. No package other than
+ * micropip (from Pyodide's own lock file) and coco_lab is installed.
  */
 
 import recomputeSource from './recompute.py?raw';
-import type { EditRequest, EditResponse, WorkerTimings } from './protocol';
+import type { RecomputeRequest, RecomputeResponse, WorkerBundle, WorkerTimings } from './protocol';
 
 interface PyProxy {
   toJs(opts?: { dict_converter?: typeof Object.fromEntries; create_pyproxies?: boolean }): unknown;
@@ -34,7 +35,7 @@ async function sha256(bytes: Uint8Array): Promise<string> {
   return [...new Uint8Array(d)].map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-async function start(req: EditRequest) {
+async function start(req: RecomputeRequest) {
   const cold: Partial<WorkerTimings> = {};
   let t = performance.now();
   const mod = await import(/* @vite-ignore */ `${req.pyodideIndexUrl}pyodide.mjs`);
@@ -67,33 +68,38 @@ async function start(req: EditRequest) {
   return { py, cold };
 }
 
-self.onmessage = async (ev: MessageEvent<EditRequest>) => {
+self.onmessage = async (ev: MessageEvent<RecomputeRequest>) => {
   const req = ev.data;
   let stage: 'load' | 'edit' = 'load';
-  const post = (msg: EditResponse, transfer: Transferable[] = []) =>
+  const post = (msg: RecomputeResponse, transfer: Transferable[] = []) =>
     (self as unknown as { postMessage(m: unknown, t: Transferable[]): void }).postMessage(msg, transfer);
   try {
     const first = ready === null;
     ready ??= start(req);
     const { py, cold } = await ready;
     stage = 'edit';
-    const edit = py.runPython('lab_recompute.edit') as (...a: unknown[]) => PyProxy;
-    const out = edit(req.manifest, req.arraysName, req.arraysFile, req.cell[0], req.cell[1]);
+    const recompute = py.runPython('lab_recompute.recompute') as (...a: unknown[]) => PyProxy;
+    const out = recompute(JSON.stringify(req.spec), req.manifest, req.arraysName, req.arraysFile);
     const r = out.toJs({ dict_converter: Object.fromEntries }) as Record<string, any>;
     out.destroy();
-    const manifest = new Uint8Array(r.manifest);
-    const arraysFile = new Uint8Array(r.arrays_file);
+    const bundles: WorkerBundle[] = (r.bundles as Array<Record<string, any>>).map((b) => ({
+      manifest: new Uint8Array(b.manifest), arraysFile: new Uint8Array(b.arrays_file),
+      arraysName: b.arrays_name, contentHash: b.content_hash,
+    }));
     post({
-      id: req.id, ok: true, manifest, arraysFile, arraysName: r.arrays_name,
-      contentHash: r.content_hash, cocoLabVersion: r.coco_lab_version,
-      pythonVersion: r.python_version, pyodideVersion: py.version,
+      id: req.id, ok: true, bundles, optimalCost: r.optimal_cost ?? null,
+      cocoLabVersion: r.coco_lab_version, pythonVersion: r.python_version, pyodideVersion: py.version,
       timings: { ...(first ? cold : {}), ...(r.timings as WorkerTimings) },
-    }, [manifest.buffer, arraysFile.buffer]);
+    }, bundles.flatMap((b) => [b.manifest.buffer, b.arraysFile.buffer]));
   } catch (exc) {
     const msg = (exc as Error).message ?? String(exc);
-    if (stage === 'load') ready = null; // let a later edit retry the load
+    if (stage === 'load') ready = null; // let a later request retry the load
     // a Python exception's message ends with its own "Type: message" line
     const last = msg.trim().split('\n').filter(Boolean).pop() ?? msg;
-    post({ id: req.id, ok: false, stage, error: stage === 'edit' ? last : msg });
+    const refused = /^(lab_recompute\.)?Refused: /.test(last);
+    post({
+      id: req.id, ok: false, stage, refused,
+      error: stage === 'edit' ? last.replace(/^(lab_recompute\.)?\w+: /, '') : msg,
+    });
   }
 };
