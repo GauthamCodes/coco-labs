@@ -66,17 +66,27 @@ async function fetchCapped(url: string, cap: number): Promise<Uint8Array> {
   return out;
 }
 
+export interface BundleFiles {
+  manifest: Uint8Array;
+  arraysName: string;
+  arraysFile: Uint8Array;
+}
+
 /** Fetch `<dirUrl>manifest.json` and its arrays file, bounded like Python. */
-export async function fetchBundle(dirUrl: string): Promise<DecodedBundle> {
+export async function fetchBundleFiles(dirUrl: string): Promise<BundleFiles> {
   const manifest = await fetchCapped(`${dirUrl}manifest.json`, MAX_MANIFEST_BYTES);
   const parsed = parseManifest(manifest);
-  const name = arraysFileName(parsed.compression);
+  const arraysName = arraysFileName(parsed.compression);
   // raw: the declared total + 1 is enough to detect padding; gzip: the
   // compressed file is bounded by the array cap (its output by the total).
   const cap = parsed.compression === 'gzip' ? MAX_ARRAY_BYTES : parsed.total + 1;
-  const file = await fetchCapped(`${dirUrl}${name}`, cap);
-  const raw = parsed.compression === 'gzip' ? await boundedGunzip(file, parsed.total) : file;
-  return decode(parsed, raw);
+  const arraysFile = await fetchCapped(`${dirUrl}${arraysName}`, cap);
+  return { manifest, arraysName, arraysFile };
+}
+
+export async function fetchBundle(dirUrl: string): Promise<{ bundle: DecodedBundle; files: BundleFiles }> {
+  const files = await fetchBundleFiles(dirUrl);
+  return { bundle: await loadBundleBytes(files.manifest, files.arraysFile), files };
 }
 
 // -- the catalog gate ------------------------------------------------------------
