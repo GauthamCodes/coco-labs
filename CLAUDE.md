@@ -793,8 +793,9 @@ exact next command to run. Follow the format already in that file.
 
 COCO is becoming COCO Lab (working title): an interactive, browser-based
 robotics curriculum running on this ROS 2 stack. Plan: docs/ROADMAP.md.
-Session prompts: docs/LAB_PHASES.md. The master context's §45 priority
-order is superseded; everything else in it still holds.
+Session prompts: docs/LAB_PHASES.md. The master context lives outside
+this repository (no copy is checked in); its §45 priority order is
+superseded, and everything else in it still holds.
 
 Platform rules, in addition to everything above:
 1. coco_lab never imports rclpy. A test enforces it.
@@ -815,3 +816,7 @@ Platform rules, in addition to everything above:
    and asks coco_lab.
 9. No new lab starts until the previous one has a public URL, a video and
    a write-up. A lab's first version ships at most five algorithms.
+10. Live control is exclusive and interruptible: one driver holds control
+    at a time; teleop preempts autonomy, as the arbiter already
+    guarantees; stop is always one tap away; remote sessions expose only
+    the coco.v1 endpoint.

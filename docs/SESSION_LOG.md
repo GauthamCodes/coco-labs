@@ -6100,5 +6100,112 @@ NEXT MAJOR PHASE: Phase 2, not started.
   kidnap recovery), and places the slam_toolbox map of the arena in Lab 3.
 - The two names disagree. The owner decides which is Phase 2 before it
   starts; this entry does not.
+- *(Resolved later on 2026-09-30 by the plan revision: Phase 2 is **Live**;
+  SLAM is Phase 4, Map; Localise is Phase 3. See the next entry.)*
 EXACT NEXT ACTION: none inside Phase 1. Open a fresh session for Phase 2
 only when the owner asks.
+
+---
+
+## Plan revision — Phase 2 · Live added (2026-09-30)
+
+Docs only; no code, config, launch, world or test changes. Owner-approved
+as a revision on top of the closed Phases 0 and 1: the original
+installation prompt assumed Phase 0 had not started, and Phase 0 had in
+fact already installed the first COCO Lab plan (Milestone 0B, `b55f24f`).
+
+**Source files** (`~/Downloads`, copied from, never moved or edited):
+- `ROADMAP.md`: 27,191 B, 2026-09-30 11:41:25, sha256 `ed79b83b…c11c4e3`.
+- `LAB_PHASES.md`: 24,430 B, 2026-09-30 11:41:16, sha256 `eb223591…c5656`.
+- Diffed against `main` (`e5ad135`), they differ only by the Live delta,
+  so nothing added to either doc during Phases 0–1 was lost.
+
+**Installed:**
+- `main`'s `docs/ROADMAP.md`, unchanged, is archived as
+  `docs/history/ROADMAP_LAB_2026-09-28.md` (`ROADMAP_COCO2.md` untouched).
+- The Live delta was patched onto `docs/ROADMAP.md` and
+  `docs/LAB_PHASES.md`:
+  - Phase 2 · Live, and the renumbering: Localise 3, Map 4, Search 5,
+    Move 6;
+  - §3.5 "The live robot";
+  - invariant 9, live control;
+  - addendum rule 10;
+  - the 1D "leave room for Live" note;
+  - the 1F next-step line.
+- **One delta hunk was left out:** a new STEP 0 reading item inside the
+  closed Phase 0 prompt ("which coco.v1 intents exist today …; Phase 2
+  (Live) reuses them"). It was not in the approved list.
+
+**Facts checked against `main`** (all hold): the coco.v1 intents
+- `set_mode` with `teleop`/`auto`/`stop`;
+- `drive`;
+- `nav_goal` `{x, y}` only;
+- `select_target`;
+- `mission` `start`/`abort`;
+- `stop`;
+
+and these:
+- `safety.PUBLISH_ALLOWLIST`;
+- the server's `/model/coco/odometry` subscription;
+- MJPEG at `/video/<alias>`;
+- `session.py`'s "SINGLE USER / SINGLE SESSION";
+- the 1C `FollowPath` hook;
+- 1,966 tests;
+- `b15d445` and `p03c-consolidation` are ancestors of `main`;
+- M3 3.165 m vs 3.373 m.
+
+**Fact corrected:** in §3.5, the mission is told its lane by
+`resolve_lane()`, which uses the episode's region map, or exactly
+`lane_for_colour()` without one. The downloaded text named only
+`lane_for_colour()`.
+
+**Phase 1 recorded as it ran:**
+- In `LAB_PHASES.md`, each block heading is annotated:
+  - 1A–1D DONE;
+  - 1E SKIPPED;
+  - 1F PARTIAL;
+  - 1G NOT RUN.
+- The ROADMAP status line reads "plan revised (Phase 2 · Live added).
+  Phase 0 closed. Phase 1 closed by decision with open items: … Phase 2
+  not started."
+- Every undelivered 1E and 1F must-have is listed under **"Lab 1.1"** in
+  ROADMAP §5.
+- **Rule 9** is written beside the phases table: Phase 2 (Live, not a lab)
+  is not blocked; Lab 2 (Phase 3) is blocked until Lab 1 has its video and
+  `LAB1_PLAN.md`.
+
+**Master context:** `~/Downloads/COCO2_MASTER_CONTEXT.md` does not exist.
+- The CLAUDE.md addendum now says the master context lives outside the
+  repository.
+- The §45 banner was skipped.
+- **The path remains UNRESOLVED**, as recorded in Phase 0.
+
+**Other docs:**
+- CLAUDE.md:
+  - rule 10 added;
+  - the master-context sentence reworded, which is the only non-additive
+    change, and was owner-approved.
+- AGENTS.md got the identical edits; it is still **untracked**.
+- "Superseded by docs/ROADMAP.md on 2026-09-30" banners were added at the
+  top of `docs/FUTURE_WORK.md`, `docs/M7_DESIGN.md` and
+  `docs/M7_PHASES.md`; the items themselves are unedited.
+- PROJECT_STATE's header and Next row now say Phase 2 = Live and list
+  Lab 1's open items.
+- The PHASE 1 — COMPLETE entry's "SLAM Lab vs Localise" note is marked
+  resolved: **Phase 2 is Live; SLAM is Phase 4 (Map).**
+
+**Flagged, not changed:**
+- `lab_web/README.md:122` says `sketch` is "reserved for Phase 2"; under
+  the revised plan Sketch arrives in Phase 3.
+- `docs/labs/PHASE_1D_PLAN.md` says the same; it is an approved-plan
+  record.
+- PROJECT_STATE's COCO 2.0 "## NO NEXT MILESTONE" heading sits in the
+  section the file marks as history.
+- `LAB_PHASES.md` keeps its "Before Phase 0" and Phase 0 blocks
+  unadapted, as history.
+
+**Phase 2 has NOT started.**
+
+NEXT: the owner writes the Phase 2 (Live) prompt from `docs/ROADMAP.md`
+§3.5 and §6. Before Lab 2 (Phase 3), Lab 1 needs its video and
+`docs/labs/LAB1_PLAN.md` (ROADMAP §5, "Lab 1.1").
