@@ -7603,3 +7603,143 @@ start, a four-way race and the costmap rung, with 0 console errors.
 - A headed browser, a real phone, Safari and Chrome, as before.
 - The cold start depends on the jsDelivr download (16–95 s in this
   session); nothing in Part A changed it.
+
+## COCO Lab 1.1, Part B — the lab teaches (measured 2026-10-01)
+
+Part B of Lab 1.1:
+- predict-then-reveal;
+- share links;
+- the real-run tracking-error plot and provenance;
+- the exhibit, "The A\* myth, twice".
+
+As in Part A, the page never searches, and every number it shows is read
+from a committed record, or from a trace `coco_lab` computed. Evidence:
+`docs/data/lab11/part_b/`.
+
+### What was built
+
+- **Predict-then-reveal** (`src/lab/predict.ts`). One optional question
+  before a run:
+  - before a race: "which will expand the fewest cells?" (a tie credits
+    every tied algorithm);
+  - before a settings run: "will the path cost more, less, or the same?".
+
+  The reveal gives the measured answer from the trace summaries.
+- **Share links, format v1** (`src/lab/share.ts`):
+  `?v=1&bundle=<id>&s=<settings>&e=<edits>&h=<digest>`.
+  - The settings are indices into the catalog's lists. The edits are the
+    cells that differ from the bundle's map, run-length and varint-encoded,
+    in base64url. `h` is the first 12 hex of the sha256 over the trace's
+    columns.
+  - Opening a link reruns `coco_lab` in the worker on those inputs, and says
+    whether the trace came out identical.
+  - A link is untrusted input, with nine refusal cases tested. Plain
+    `?bundle=<id>` links are unchanged.
+  - A link has no seed, because no Lab 1 input is random.
+- **The CI round trip, in both languages.**
+  - `tools/make_share_vectors.py` writes `test/golden/share_vectors.json`:
+    two edit-and-settings vectors on committed fixtures, with the digest
+    coco_lab's glue computes for each, plus the digest of every golden
+    bundle.
+  - `tools/test_glue.py::test_share_vectors_reproduce_their_trace_digests`
+    reruns the glue and must get those digests.
+  - `test/share.test.ts` checks four things:
+    - the TypeScript digest equals Python's on all five golden bundles;
+    - each vector encodes to a link and decodes back to exactly the inputs
+      Python ran (the links are pinned by snapshot);
+    - 1,000 seeded random edit sets round-trip;
+    - malformed links are refused.
+- **The tracking-error plot** for the three 1C runs.
+  - It is 1C's own definition: every ground-truth sample in the FollowPath
+    window, measured to the published plan.
+  - It is recomputed at site build by 1C's own code
+    (`coco_lab_ros.run_analysis.window` and
+    `metrics.distance_to_polyline`), from each bundle's streams.
+  - The build **fails unless the series reproduces the recorded n, mean,
+    p95 and max exactly**, and it did for all three. The page checks the
+    same before drawing.
+  - The plot follows the house chart rules: one axis, a 2 px line, the mean
+    and p95 labelled directly, a crosshair and readout (also by keyboard),
+    and the recorded statistics as its table view.
+  - The series colour was validated with the dataviz palette checker:
+    Okabe–Ito blue `#0072B2` passes on the light surface. The site's dark
+    accent `#56B4E9` **failed** the dark lightness band, so dark mode uses
+    `#3A96CF`, which passes.
+- **Provenance on each real-run replay:** commit, seed (none: a real run is
+  not seeded), bundle hash and rosbag hash, beside the label "Replay —
+  recorded real run".
+- **The exhibit**, a separate view, built from `exhibit.json`, which
+  `build_catalog.py` derives from committed evidence only:
+  - **(a)** A\* (octile) and Dijkstra run live on one map. The claim cites
+    `test_astar_cost_equals_dijkstra_with_admissible_heuristic` (1,000
+    maps), the inadmissible counterexample
+    `test_an_inadmissible_heuristic_makes_astar_suboptimal`, and 1C's 50 / 50
+    real-costmap pairs.
+  - **(b)** M3's 3.165 m and 3.373 m, labelled **neither reproduced nor
+    refuted**, as 1C recorded. Beside them, 1C's measured present-day
+    analogue: Smac returned 7.785 m, NavFn 7.894 / 7.916 m, Smac raw and the
+    coco_lab C1 optimum 8.002 m, with E 160.0416 for both. The 50-pair
+    summary is included.
+  - **(c)** The ISRO "4 %" is labelled a **reconstruction**, as 1B recorded
+    it. The report's Table 1 figures, 2.64 against 2.55 Steps, are "not
+    reproduced": the Steps ratio was 0.9993 (long trips) and 0.9966 (short).
+    The historical A\*/Dijkstra costs differ on 148 of 1,198 maps, in both
+    directions; with heading in the state they differ on 0 of 1,198.
+  - The M3 and Table 1 figures are copied from RESULTS.md and
+    ISRO_INVESTIGATION.md, and the build checks that each is printed there.
+    A test (`test_every_cited_test_exists`) checks that every test the page
+    cites exists.
+
+### Missing data, reported rather than filled in
+
+- **The 1C analogue's paths were not recorded.**
+  `conformance.json`'s `m3_analogue` holds each path's length, pose count
+  and costs, but not its coordinates. So exhibit (b) is a table, and draws
+  no path. Recording them would take a new live run.
+- **M3's 6.2 % itself was never re-run** (1C). The exhibit presents it as
+  M3's historical measurement, with its status.
+
+### Tests (measured; fresh job-local overlay, load 0.3–0.9)
+
+| suite | Part B | Part A |
+|---|---|---|
+| `coco_lab` pip / colcon | 349 / 352, 0 / 0 | 349 / 352 |
+| `coco_lab_ros` | 69 | 69 |
+| `gazebo_models` | 229 | 229 |
+| `custom_teleop` | 75 | 75 |
+| `lab_web/tools` | **72 / 0 / 0** | 69 |
+| vitest | **180 passed** | 157 |
+
+- Two builds are identical (`tree_sha256 88a148b5…`).
+- `coco_lab` itself is unchanged in Part B.
+
+### In a real browser (local build, headless Firefox 156, load 0.66–0.89)
+
+- **Share links:**
+  - A link made from a painted, re-set view
+    (`?v=1&bundle=astar_open&s=2.3.4.0.4&e=pgER&h=33332b479a43`), opened in
+    a fresh browser, gave "This link reproduced the exact trace".
+  - So did the two committed CI vectors opened as links. The digest CPython
+    computed for each equals the one `coco_lab` computed under Pyodide.
+  - Each took 3.6–3.8 s from open to verdict.
+- **Predict-then-reveal:** both reveals appeared with the measured answer.
+- **Replay:** the provenance line; a 1,369-point plot; a readout "0.042 m
+  at 11.49 s"; the table 1369 / 0.072 / 0.162 / 0.177 m.
+- **Exhibit (a), live:** Dijkstra 22.899495 = A\* 22.899495, 372 against 152
+  expansions. The paths differ in cells where equal-cost paths tie.
+- **0 console errors** in every scenario.
+
+| the 1D budgets, re-measured | target | Part A | **Part B (measured)** |
+|---|---|---|---|
+| full-arena playback, 1,000 events/frame | ≥ 60 fps | 59.96 | **60.01 fps**, 0 frames > 25 ms |
+| same, 10,000 events/frame | — | 59.87 | 59.73 fps, 0 frames > 25 ms |
+| warm paint → first frame, edits 2–4 | ≤ 1.5 s | 1,158–1,172 ms | **1,134 / 1,145 / 1,134 ms** |
+| cold first change | report | 18,383 ms | 5,095 ms (Pyodide 3,099 ms: the CDN was fast this time) |
+| initial page weight | report | 107,321 B | **115,555 B** |
+| 390 × 844 | no horizontal scroll | 378 | **378** |
+| smoke | every bundle draws | 11 of 11 | **11 of 11** |
+
+### Not yet measured
+
+- Part B on the public site; this section is the local build.
+- A headed browser, a real phone, Safari and Chrome.

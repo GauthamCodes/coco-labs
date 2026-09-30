@@ -71,7 +71,17 @@ never by the page: `settings` (per move model, `coco_lab.heuristics.analyse`
 and `coco_lab.search.suboptimality_bound`, the latter at each of the
 weight slider's 21 positions, 0 to 5 in 0.25 steps), `ladder` (the three
 map rungs) and `footprint` (COCO's footprint, derived from
-`coco_config/robot.py`, with its derivation).
+`coco_config/robot.py`, with its derivation). Part B adds `exhibit`
+(`exhibit.json`, built from committed evidence only) and, on each recorded
+run, `tracking` (`tracking/<id>.json`, 1C's tracking-error series,
+recomputed by 1C's code and checked against the recorded statistics); both
+are fetched only when shown.
+
+**Share links** (`src/lab/share.ts`, format v1) name the bundle, the
+settings, the map edits and a 12-hex prefix of the trace's sha256. Opening
+one reruns coco_lab on those inputs and says whether the trace is
+identical. The round trip is tested in both languages against
+`test/golden/share_vectors.json` (`tools/make_share_vectors.py`).
 
 ## The decoder and its validation boundary
 

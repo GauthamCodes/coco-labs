@@ -37,6 +37,7 @@ screenshots into ``<outdir>``.
 import asyncio
 import json
 import os
+import re
 import shutil
 import signal
 import statistics
@@ -492,12 +493,14 @@ async def lab(site, out):
             await s.key('')  # ArrowRight: w 1.00 -> 2.25
         rep['bound_wastar_2_25'] = await s.js(TEXT.format('bound'))
         await click_testid(s, 'set-tie-fifo')
+        await click_testid(s, 'predict-cost-more')  # predict-then-reveal (Part B)
         await s.shot('lab_settings')
         t0 = time.time()
         await click_testid(s, 'run-settings')
         await s.wait(STATUS_SETTLED, timeout=300, every=0.1)
         rep['settings_run'] = {'status': await s.js(TEXT.format('edit-status')),
                                'badge': await s.js(TEXT.format('mode-badge')),
+                               'reveal': await s.js(TEXT.format('reveal')),
                                'wall_s': round(time.time() - t0, 2)}
         await s.shot('lab_settings_run')
 
@@ -516,11 +519,13 @@ async def lab(site, out):
 
         for a in ('bfs', 'greedy'):
             await click_testid(s, f'race-{a}')
+        await click_testid(s, 'predict-fewest-astar')
         await click_testid(s, 'race-start')
         await s.wait("document.querySelector('[data-testid=race-table]')", timeout=120)
         rep['race'] = {
             'panes': await s.js("document.querySelectorAll('[data-testid=race-pane]').length"),
             'table': await s.js(TEXT.format('race-table')),
+            'reveal': await s.js(TEXT.format('reveal')),
             'status': await s.js(TEXT.format('edit-status'))}
         await s.js("(document.querySelector('[data-testid=race]').scrollIntoView({block: 'start'}), 1)")
         await s.shot('lab_race')
@@ -543,8 +548,100 @@ async def lab(site, out):
         return rep
 
 
+VERDICT = ("(() => { const e = document.querySelector('[data-testid=share-verdict]');"
+           " return e ? e.innerText : null; })()")
+
+
+async def share(site, out):
+    """
+    Share links in a real browser: make one from a painted, re-set view;
+    open it in a FRESH page; coco_lab reruns it and the page compares the
+    trace digest. Then the two committed CI vectors (test/golden), opened
+    as links.
+    """
+    rep = {}
+    async with Session(site, out) as s:
+        await s.open('?perf&bundle=astar_open')
+        await s.wait(READY, timeout=90)
+        await click_testid(s, 'tool-paint')
+        await drag_cells(s, [(8, 6), (8, 10), (8, 14)], 20, 20)
+        await s.wait(STATUS_SETTLED, timeout=300, every=0.1)
+        await click_testid(s, 'set-conn-4')
+        await click_testid(s, 'run-settings')
+        await s.wait(STATUS_SETTLED, timeout=120, every=0.1)
+        await click_testid(s, 'share-make')
+        await s.wait("document.querySelector('[data-testid=share-link]')", timeout=10)
+        link = await s.js("document.querySelector('[data-testid=share-link]').value")
+        made = {'link': link, 'digest_on_page': None}
+        rep['made'] = made
+    query = link[link.index('?'):]
+    snap_path = os.path.join(HERE, '..', '..', 'test', '__snapshots__', 'share.test.ts.snap')
+    with open(snap_path) as f:
+        vectors = re.findall(r'"(\?v=1&[^"]+)"', f.read())
+    rep['opened'] = []
+    for q in [query] + vectors:
+        async with Session(site, out) as s:
+            t0 = time.time()
+            await s.open(q)
+            await s.wait(VERDICT, timeout=300, every=0.2)
+            rep['opened'].append({'query': q, 'verdict': await s.js(VERDICT),
+                                  'wall_s': round(time.time() - t0, 1), 'console_errors': s.errors()})
+            if q is query:
+                await s.shot('share_opened')
+    return rep
+
+
+async def replay(site, out):
+    """A recorded run: provenance, the tracking-error plot, a hover readout, the table view."""
+    async with Session(site, out) as s:
+        await s.open('?perf&bundle=lab1c_astar')
+        await s.wait(READY, timeout=90)
+        await s.wait("document.querySelector('[data-testid=tracking-plot]')", timeout=30)
+        b = await box_of(s, 'tracking-plot')
+        await s.b.cmd('input.performActions', context=s.ctx, actions=[{
+            'type': 'pointer', 'id': 'mouse', 'parameters': {'pointerType': 'mouse'},
+            'actions': [{'type': 'pointerMove', 'x': int(b[0] + b[2] * 0.4), 'y': int(b[1] + b[3] / 2)}]}])
+        await s.wait("document.querySelector('[data-testid=tracking-tip]')", timeout=5)
+        rep = {'provenance': await s.js(TEXT.format('run-provenance')),
+               'tip': await s.js(TEXT.format('tracking-tip')),
+               'table': await s.js(TEXT.format('tracking-table')),
+               'badge': await s.js(TEXT.format('mode-badge')),
+               'points': await s.js("document.querySelector('[data-testid=tracking-plot] .series')"
+                                    ".getAttribute('d').split(/[ML]/).length - 1"),
+               'console_errors': s.errors()}
+        await s.js("(document.querySelector('[data-testid=tracking]').scrollIntoView({block: 'start'}), 1)")
+        await s.shot('replay_tracking')
+        return rep
+
+
+async def exhibit(site, out):
+    """The exhibit: (a) run live, (b) and (c) read from the evidence."""
+    async with Session(site, out) as s:
+        await s.open('?perf&bundle=astar_open')
+        await s.wait(READY, timeout=90)
+        await click_testid(s, 'view-exhibit')
+        await s.wait("document.querySelector('[data-testid=exhibit-run]')", timeout=30)
+        await click_testid(s, 'exhibit-run')
+        await s.wait("document.querySelector('[data-testid=exhibit-a-verdict]')", timeout=300, every=0.2)
+        rep = {'a': await s.js(TEXT.format('exhibit-a-verdict')),
+               'b_table': await s.js(TEXT.format('exhibit-b-table')),
+               'c_label': await s.js(TEXT.format('exhibit-c-label'))}
+        await s.js("(document.querySelector('[data-testid=exhibit]').scrollIntoView({block: 'start'}), 1)")
+        await s.shot('exhibit_top')
+        await s.js("(document.querySelector('[data-testid=exhibit-b]').scrollIntoView({block: 'start'}), 1)")
+        await s.shot('exhibit_b')
+        await reset_perf(s)
+        await click_testid(s, 'exhibit-c-open')
+        await s.wait("window.__cocoLabPerf.marks['bundle-first-frame']", timeout=60)
+        rep['c_opens'] = await s.js(
+            "document.querySelector('[data-testid=picker]').selectedOptions[0].textContent")
+        rep['console_errors'] = s.errors()
+        return rep
+
+
 SCENARIOS = {'smoke': smoke, 'player': player, 'reduced': reduced, 'fps': fps,
-             'phone': phone, 'weight': weight, 'edit': edit, 'lab': lab}
+             'phone': phone, 'weight': weight, 'edit': edit, 'lab': lab,
+             'share': share, 'replay': replay, 'exhibit': exhibit}
 
 
 async def main(argv):

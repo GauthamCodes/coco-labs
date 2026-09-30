@@ -165,3 +165,16 @@ def test_painting_works_on_the_heading_graph(tmp_path):
     b = reload(out, tmp_path)
     assert b.run['graph']['kind'] == 'heading_grid'
     assert b.lab_map.at((0, 0)) == OCCUPIED
+
+
+def test_share_vectors_reproduce_their_trace_digests():
+    """
+    The Python half of the share-link round trip (src/lab/share.ts).
+
+    Regenerating test/golden/share_vectors.json reruns the glue on each
+    vector's edits and settings; the digests must equal the committed ones,
+    which is what a browser opening the link compares against.
+    """
+    import make_share_vectors
+    with open(make_share_vectors.OUT) as f:
+        assert f.read() == make_share_vectors.build()

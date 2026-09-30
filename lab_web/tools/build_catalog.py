@@ -268,6 +268,161 @@ LADDER = [
 ]
 
 
+RESULTS_MD = os.path.join(common.REPO, 'docs', 'RESULTS.md')
+ISRO_MD = os.path.join(common.REPO, 'docs', 'labs', 'ISRO_INVESTIGATION.md')
+CONFORMANCE = os.path.join(common.REPO, 'docs', 'data', 'lab1c', 'conformance')
+ISRO_JSON = os.path.join(common.REPO, 'docs', 'data', 'lab1b', 'isro_experiment.json')
+
+
+def _in_doc(path, *needles):
+    """Refuse to ship a figure that the document it cites does not print."""
+    with open(path, encoding='utf-8') as f:
+        text = f.read()
+    for n in needles:
+        if n not in text:
+            raise SystemExit(f'{path} does not contain {n!r}; the exhibit cites it')
+
+
+def exhibit_data():
+    """
+    The exhibit "The A* myth, twice", from committed evidence only.
+
+    (a) is run live in the browser; its claim cites the 1,000-map property.
+    (b) comes from 1C's conformance record; M3's own figures are copied from
+    RESULTS.md and checked to be printed there. (c) comes from 1B's
+    controlled experiment; the report's Table 1 figures are copied from the
+    investigation and checked to be printed there. Nothing is filled in:
+    1C recorded the analogue's lengths, not its paths, so none is drawn.
+    """
+    with open(os.path.join(CONFORMANCE, 'conformance.json')) as f:
+        conf = json.load(f)
+    with open(os.path.join(CONFORMANCE, 'conformance_summary.json')) as f:
+        summ = json.load(f)
+    with open(ISRO_JSON) as f:
+        isro = json.load(f)
+    a3 = conf['m3_analogue']
+    _in_doc(RESULTS_MD, '| **GridBased** (SmacPlanner2D, A\\*) | **3.165** |',
+            '| NavFn (Dijkstra) | 3.373 |', "**M3's 6.2 % is neither reproduced nor refuted here**")
+    _in_doc(ISRO_MD, '| A\\* | 2.64 | 1.59 | 1.2 |', '| Dijkstra | 2.55 | 1.73 | 6.0 |')
+    c1c = 'docs/RESULTS.md, "COCO Lab Phase 1C" > '
+    lng, sht = isro['long'], isro['short']
+    return {
+        'schema': 'lab_web.exhibit', 'version': '1.0',
+        'a': {
+            'property': ('coco_lab/test/test_properties.py::'
+                         'test_astar_cost_equals_dijkstra_with_admissible_heuristic'),
+            'property_maps': 1000,
+            'counter': ('coco_lab/test/test_heuristics.py::'
+                        'test_an_inadmissible_heuristic_makes_astar_suboptimal'),
+            'live': {'bundle': 'weighted_astar_greedy_trap', 'heuristic': 'octile',
+                     'connectivity': 8},
+            'real_stack': {'astar_equals_dijkstra_C1': summ['astar_equals_dijkstra_C1'],
+                           'of': summ['valid'],
+                           'cite': c1c + '"Conformance: coco_lab vs SmacPlanner2D vs NavFn"'},
+        },
+        'b': {
+            'm3': {'smac_m': 3.165, 'navfn_m': 3.373,
+                   'cite': ('docs/RESULTS.md, "A — SmacPlanner2D and the evidence '
+                            'for it"; gazebo_models/scripts/plan_compare.py'),
+                   'status': c1c + '"NavFn and M3 (the 6.2 %)"'},
+            'analogue': {
+                'start_world': a3['start_world'], 'goal_world': a3['goal_world'],
+                'rows': [
+                    {'path': 'SmacPlanner2D, returned (smoothed)',
+                     'L': a3['nav2']['GridBased']['L'], 'poses': a3['nav2']['GridBased']['poses']},
+                    {'path': 'NavFn, use_astar: false', 'L': a3['nav2']['NavFn']['L'],
+                     'poses': a3['nav2']['NavFn']['poses']},
+                    {'path': 'NavFn, use_astar: true', 'L': a3['nav2']['NavFnAStar']['L'],
+                     'poses': a3['nav2']['NavFnAStar']['poses']},
+                    {'path': "SmacPlanner2D raw A* (unsmoothed_plan)", 'L': a3['smac_raw']['L'],
+                     'poses': a3['smac_raw']['poses'], 'E': a3['smac_raw']['E']},
+                    {'path': "coco_lab C1 optimum (cell path)", 'L': a3['lab']['C1_dijkstra']['L'],
+                     'poses': a3['lab']['C1_dijkstra']['cells'], 'E': a3['lab']['C1_dijkstra']['E']},
+                ],
+                'paths_recorded': False,
+                'cite': c1c + '"NavFn and M3 (the 6.2 %)"; docs/data/lab1c/conformance/conformance.json (m3_analogue)',
+            },
+            'fifty': {
+                'n': summ['valid'],
+                'e_within': summ['prediction']['within'],
+                'e_applies': summ['prediction']['within'] + summ['prediction']['outside'],
+                'e_gap_max': summ['E_gap_smac_raw_vs_C1']['max'],
+                'navfn_vs_smac_L': summ['L_gap_NavFn_vs_smac'],
+                'smac_vs_c1_L': summ['L_gap_smac_vs_C1'],
+                'cite': c1c + '"Conformance: coco_lab vs SmacPlanner2D vs NavFn"; '
+                        'docs/data/lab1c/conformance/conformance_summary.json',
+            },
+            'mechanism_cite': 'docs/DESIGN_DECISIONS.md (NavFn calcPath); README.md "What the 6.2 % is, and what it is not"',
+        },
+        'c': {
+            'label': 'reconstruction',
+            'label_why': ('Phase 1B examined a faithful recreation of the simulator, '
+                          'transcribed from the internship report\'s code listing (commit '
+                          '5aad7b3); no internship-era file or metrics CSV exists. 1B '
+                          'recorded the result as a reconstruction.'),
+            'table1': {'astar_steps': 2.64, 'dijkstra_steps': 2.55,
+                       'astar_ms': 1.2, 'dijkstra_ms': 6.0,
+                       'cite': 'docs/labs/ISRO_INVESTIGATION.md §6 (report §VIII, Table 1)'},
+            'steps_ratio_long': lng['M1_smoothed_steps']['ratio_of_means'],
+            'steps_ratio_short': sht['M1_smoothed_steps']['ratio_of_means'],
+            'm1_cost': lng['M1_astar_vs_M1_dijkstra_cost'],
+            'm1_vs_optimum': lng['M1_astar_vs_optimum'],
+            'm2_cost': lng['M2_astar_vs_M2_dijkstra'],
+            'time_ratio_long': [lng['M1_time_UNHASHED']['ratio_of_means_dijkstra_over_astar'],
+                                lng['M1_time_UNHASHED']['ratio_of_medians_dijkstra_over_astar']],
+            'live': {'bundle': 'astar_turn_trap_heading'},
+            'cite': ('docs/labs/ISRO_INVESTIGATION.md §5 (MEASURED); '
+                     'docs/data/lab1b/isro_experiment.json; docs/RESULTS.md, '
+                     '"COCO Lab Phase 1B"'),
+        },
+    }
+
+
+TRACKING_CITE = ('docs/RESULTS.md, "COCO Lab Phase 1C" > "The three real runs '
+                 '(measured)"; coco_lab_ros/test/test_run_analysis.py::'
+                 'test_tracking_error')
+
+
+def tracking_series(path):
+    """
+    Return the per-sample tracking error of a recorded run, for the plot.
+
+    Recomputed here from the bundle's own ground-truth and plan streams with
+    1C's definition and code (``coco_lab_ros.run_analysis.window`` and
+    ``coco_lab_ros.metrics.distance_to_polyline``, pure Python), and refused
+    unless its statistics equal the ones the bundle recorded -- so the plot
+    is the series behind the recorded mean / p95 / max, not a new one.
+    """
+    sys.path.insert(0, os.path.join(common.REPO, 'coco_lab_ros'))
+    from coco_lab_ros import metrics, run_analysis  # noqa: E402 (pure Python)
+    b = bundle.load_bundle(path)
+    gs, ps = b.streams['gt'], b.streams['plan']
+    gt = list(zip(gs['t'], gs['x'], gs['y'], gs['yaw']))
+    plan_xy = list(zip(ps['x'], ps['y']))
+    meta = b.recording['meta']
+    t0, t1 = meta['window_sim']
+    gw = run_analysis.window(gt, t0, t1)
+    errs = [metrics.distance_to_polyline((s[1], s[2]), plan_xy) for s in gw]
+    stats = metrics.tracking_stats(errs)
+    if stats != meta['tracking_error_m']:
+        raise SystemExit(f'{path}: recomputed tracking error {stats} is not the '
+                         f'recorded {meta["tracking_error_m"]}')
+    return {
+        'schema': 'lab_web.tracking', 'version': '1.0',
+        'definition': ('for every ground-truth sample between FollowPath '
+                       'acceptance and result, its distance (map frame) to '
+                       'the nearest point of the published plan'),
+        'by': ('coco_lab_ros.run_analysis.window + metrics.distance_to_polyline '
+               '(1C code), recomputed at site build from this bundle; its '
+               'n / mean / p95 / max equal the recorded ones exactly'),
+        'cite': TRACKING_CITE,
+        'window_sim': [t0, t1],
+        't': [round(s[0] - t0, 3) for s in gw],
+        'e': [round(e, 5) for e in errs],
+        'stats': stats,
+    }
+
+
 def _dir_bytes(path):
     return sum(os.path.getsize(os.path.join(path, n))
                for n in sorted(os.listdir(path)))
@@ -338,11 +493,16 @@ def build(out=OUT, wheel='build', with_benchmark=True):
         shutil.rmtree(out)
     os.makedirs(os.path.join(out, 'bundles'))
     entries = []
+    os.makedirs(os.path.join(out, 'tracking'))
     for bid, rel, title, group, cite in SERVED_INFO:
         dst = os.path.join(out, 'bundles', bid)
         shutil.copytree(os.path.join(common.REPO, rel), dst)
         entries.append(_entry(bid, dst, title, group, cite,
                               editable=group == TEACHING))
+        if group == RECORDED:
+            with open(os.path.join(out, 'tracking', f'{bid}.json'), 'w') as f:
+                f.write(json.dumps(tracking_series(dst), sort_keys=True) + '\n')
+            entries[-1]['tracking'] = f'tracking/{bid}.json'
     generated = [('arena_0_10m', False,
                   'Dijkstra across the arena at 0.10 m (edit map)', True)]
     if with_benchmark:
@@ -395,7 +555,10 @@ def build(out=OUT, wheel='build', with_benchmark=True):
         'settings': settings_analysis(diagonal_costs),
         'ladder': LADDER,
         'footprint': robot_footprint(),
+        'exhibit': 'exhibit.json',  # fetched only when the exhibit is opened
     }
+    with open(os.path.join(out, 'exhibit.json'), 'w') as f:
+        f.write(json.dumps(exhibit_data(), indent=1, sort_keys=True) + '\n')
     with open(os.path.join(out, 'catalog.json'), 'w') as f:
         f.write(json.dumps(catalog, indent=1, sort_keys=True) + '\n')
     return catalog

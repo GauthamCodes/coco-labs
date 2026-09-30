@@ -106,6 +106,8 @@ export interface CatalogEntry {
   editable: boolean;
   validated: { by: string; replay: string };
   citation: string;
+  /** 1.1: a recorded run's tracking-error series, fetched on demand. */
+  tracking?: string;
 }
 
 export interface Catalog {
@@ -122,6 +124,8 @@ export interface Catalog {
   ladder?: LadderRung[];
   /** 1.1: COCO's footprint, derived from coco_config. */
   footprint?: Footprint;
+  /** 1.1: the exhibit's evidence file, fetched when the exhibit is opened. */
+  exhibit?: string;
 }
 
 /** One move model's verdicts, computed by coco_lab at site build time. */

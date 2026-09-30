@@ -307,8 +307,9 @@ python3 lab_web/tools/browser/check.py https://gauthamcodes.github.io/coco-robot
 bash docs/data/lab1d/live/http_check.sh   # status, .gz headers, bytes vs your lab_web/dist (npm run build first)
 ```
 
-Omit the scenario names to run all eight, including `fps`, `edit` and `lab`
-(Lab 1.1: settings, painting, a race, the map ladder).
+Omit the scenario names to run all eleven, including `fps`, `edit`, `lab`
+(settings, painting, a race, the map ladder), `share` (a link made, opened
+fresh and checked), `replay` (the tracking-error plot) and `exhibit`.
 Timings depend on the machine's load, so record `_meta.loadavg` with them.
 
 ### The page, in a real browser

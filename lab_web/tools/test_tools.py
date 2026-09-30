@@ -199,3 +199,49 @@ def test_the_guard_catches_what_it_names():
 
 def test_lab_web_is_colcon_ignored():
     assert os.path.exists(os.path.join(common.LAB_WEB, 'COLCON_IGNORE'))
+
+
+# -- every claim cites real evidence (CLAUDE.md "COCO Lab" rule 5) ----------------
+
+CITED_TEST = re.compile(r'([\w/.-]+\.py)::(test_\w+)')
+
+
+def _cited_tests(obj):
+    if isinstance(obj, str):
+        yield from CITED_TEST.findall(obj)
+    elif isinstance(obj, dict):
+        for v in obj.values():
+            yield from _cited_tests(v)
+    elif isinstance(obj, list):
+        for v in obj:
+            yield from _cited_tests(v)
+
+
+def test_every_cited_test_exists():
+    """The exhibit, the settings panel and the tracking plot name tests; each must exist."""
+    import build_catalog
+    src = [build_catalog.exhibit_data(), build_catalog.TRACKING_CITE,
+           build_catalog.settings_analysis({build_catalog.SQRT2})['cite']]
+    cited = sorted(set(_cited_tests(src)))
+    assert len(cited) >= 4, cited
+    for path, name in cited:
+        full = os.path.join(common.REPO, path)
+        assert os.path.exists(full), path
+        with open(full) as f:
+            assert re.search(rf'^def {name}\(', f.read(), re.M), f'{path}::{name}'
+
+
+def test_the_catalog_serves_the_exhibit_and_the_tracking_series(tmp_path):
+    import build_catalog
+    out = tmp_path / 'generated'
+    cat = build_catalog.build(str(out), wheel=None, with_benchmark=False)
+    ex = json.loads((out / cat['exhibit']).read_text())
+    assert ex['c']['label'] == 'reconstruction'
+    assert ex['b']['analogue']['paths_recorded'] is False
+    tracked = [e for e in cat['bundles'] if e.get('tracking')]
+    assert [e['id'] for e in tracked] == ['lab1c_astar', 'lab1c_dijkstra', 'lab1c_greedy']
+    for e in tracked:
+        s = json.loads((out / e['tracking']).read_text())
+        rec = bundle.load_bundle(str(out / e['path'])).recording['meta']
+        assert s['stats'] == rec['tracking_error_m']
+        assert len(s['t']) == len(s['e']) == rec['tracking_error_m']['n']

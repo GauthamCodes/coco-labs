@@ -10,7 +10,9 @@ import {
 import type { DecodedBundle, ValidatedBy } from '../bundle/model';
 import { coversEndpoint, endpointRefusal, type Tool } from '../lab/brush';
 import { sweptFootprint } from '../lab/footprint';
-import { settingsLocked, settingsOf, toRun, type SearchSettings } from '../lab/settings';
+import { revealCost, revealFewest, type Reveal } from '../lab/predict';
+import { diffRuns, parseShare, runsToStrokes, shareQuery, traceDigest } from '../lab/share';
+import { ALGORITHM_NAMES, settingsLocked, settingsOf, toRun, type SearchSettings } from '../lab/settings';
 import { HoverIndex } from '../trace/hover';
 import { pathCells } from '../trace/cursor';
 import type { Stroke } from '../worker/protocol';
@@ -21,9 +23,13 @@ import { ModeBadge } from './ModeBadge';
 import { HoverPanel, ProvenancePanel, RecordingPanel, SummaryPanel } from './panels';
 import { perfMark } from './perf';
 import { Player } from './Player';
+import { RevealNote } from './Predict';
+import { ShareBox } from './ShareBox';
 import { RaceSetup, RaceView } from './Race';
 import { SettingsPanel } from './SettingsPanel';
+import { Exhibit } from './Exhibit';
 import { Tools } from './Tools';
+import { TrackingPlot } from './TrackingPlot';
 
 const BASE = import.meta.env.BASE_URL; // from site.config.ts via vite.config.ts
 
@@ -78,7 +84,20 @@ export function App() {
   const [brush, setBrush] = useState(1);
   const [sweep, setSweep] = useState(true);
   const [raceChosen, setRaceChosen] = useState<string[]>(['dijkstra', 'astar']);
-  const [race, setRace] = useState<{ entrants: Current[]; optimalCost: number | null } | null>(null);
+  const [race, setRace] = useState<{ entrants: Current[]; optimalCost: number | null; reveal: Reveal | null } | null>(null);
+  // the catalog bundle the current view was derived from (share links diff against it)
+  const [base, setBase] = useState<Current | null>(null);
+  const [costPrediction, setCostPrediction] = useState<string | null>(null);
+  const [racePrediction, setRacePrediction] = useState<string | null>(null);
+  const [reveal, setReveal] = useState<Reveal | null>(null);
+  const [shareVerdict, setShareVerdict] = useState<{ ok: boolean | null; message: string } | null>(null);
+  const pendingShare = useRef<string | null>(null);
+  const [view, setView] = useState<'lab' | 'exhibit'>('lab');
+  const dataUrl = useCallback((p: string) => `${DATA}${p}`, []);
+  const openFromExhibit = useCallback((id: string) => {
+    setView('lab');
+    setSelection([{ catalogId: id }]);
+  }, []);
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -88,6 +107,7 @@ export function App() {
       .then((c: Catalog) => {
         setCatalog(c);
         const params = new URLSearchParams(window.location.search);
+        if (params.has('v')) pendingShare.current = window.location.search; // a share link: applied once loaded
         const first = c.bundles.find((b) => b.id === params.get('bundle')) ?? c.bundles[0];
         if (first) setSelection([{ catalogId: first.id }]);
       })
@@ -117,6 +137,7 @@ export function App() {
       setEditStatus({ state: 'error', refused: true, message: `Not applied: ${endpointRefusal(hit.what, hit.cell)}` });
       return;
     }
+    setReveal(null);
     const r = await run(current, { strokes: [stroke], connectivity: null, runs: null, optimal: false },
       stroke.value === 'occupied' ? 'painting and searching again' : 'erasing and searching again');
     if (r) showEdited(r.bundles[0]);
@@ -124,10 +145,17 @@ export function App() {
 
   const onRunSettings = useCallback(async () => {
     if (!current || !settings) return;
+    const predicted = costPrediction;
+    const before = current.bundle.trace.summary;
+    setReveal(null);
     const r = await run(current, { strokes: [], connectivity: settings.connectivity, runs: [toRun(settings)], optimal: false },
       'searching with your settings');
-    if (r) showEdited(r.bundles[0]);
-  }, [current, settings, run, showEdited]);
+    if (r) {
+      showEdited(r.bundles[0]);
+      setReveal(revealCost(predicted, before, r.bundles[0].bundle.trace.summary, (x) => x.toFixed(3)));
+      setCostPrediction(null);
+    }
+  }, [current, settings, costPrediction, run, showEdited]);
 
   const onRace = useCallback(async () => {
     if (!current || !settings) return;
@@ -136,9 +164,74 @@ export function App() {
       `racing ${runs.length} algorithms on identical inputs`);
     if (r) {
       setPlaying(false);
-      setRace({ entrants: r.bundles, optimalCost: r.optimalCost });
+      const rows = r.bundles.map((b) => ({
+        algorithm: b.bundle.trace.header.algorithm, expansions: b.bundle.trace.summary.expansions }));
+      const predicted = racePrediction !== null && raceChosen.includes(racePrediction) ? racePrediction : null;
+      setRace({ entrants: r.bundles, optimalCost: r.optimalCost,
+        reveal: revealFewest(predicted, rows, (a) => ALGORITHM_NAMES[a] ?? a) });
+      setRacePrediction(null);
     }
-  }, [current, settings, raceChosen, run]);
+  }, [current, settings, raceChosen, racePrediction, run]);
+
+  // a share link: rerun coco_lab on the link's inputs, then compare digests
+  useEffect(() => {
+    const search = pendingShare.current;
+    if (!search || !base || !catalog || !base.entry) return;
+    pendingShare.current = null;
+    const w = base.bundle.map.width;
+    let st;
+    try {
+      st = parseShare(search, catalog.settings,
+        (id) => (id === base.entry!.id ? w * base.bundle.map.height : null));
+    } catch (exc) {
+      setShareVerdict({ ok: false, message: `This share link was refused: ${(exc as Error).message}` });
+      return;
+    }
+    if (!st) return;
+    if (!st.settings && st.runs.length === 0) {
+      setShareVerdict({ ok: null, message: 'This link shows the bundle as published.' });
+      return;
+    }
+    const editableBase = base.bundle.provenance.source_kind === 'glass-box' && !!base.entry.editable;
+    if (!editableBase || (st.settings && settingsLocked(base.bundle))) {
+      setShareVerdict({ ok: false, message: 'This share link changes a bundle that cannot be changed; it is shown as published.' });
+      return;
+    }
+    const share = st;
+    void (async () => {
+      const r = await run(base, {
+        strokes: runsToStrokes(share.runs, w), connectivity: share.settings?.connectivity ?? null,
+        runs: share.settings ? [toRun(share.settings)] : null, optimal: false,
+      }, 'reproducing the shared view');
+      if (!r) {
+        setShareVerdict({ ok: false, message: 'coco_lab could not reproduce this link; the reason is below.' });
+        return;
+      }
+      showEdited(r.bundles[0]);
+      const d = (await traceDigest(r.bundles[0].bundle)).slice(0, 12);
+      setShareVerdict(share.digest === null
+        ? { ok: null, message: `Recomputed from the link by coco_lab in your browser (trace sha256 ${d}…); the link carried no digest to compare.` }
+        : d === share.digest
+          ? { ok: true, message: `This link reproduced the exact trace: sha256 ${d}…, recomputed in your browser by coco_lab.` }
+          : { ok: false, message: `This link did NOT reproduce the same trace: the link says ${share.digest}…, coco_lab computed ${d}….` });
+    })();
+  }, [base, catalog, run, showEdited]);
+
+  const makeLink = useCallback(async () => {
+    if (!current || !current.entry) throw new Error('nothing is shown');
+    const url = new URL(window.location.href);
+    if (current.validated.by === 'catalog' || !base) {
+      url.search = `?bundle=${encodeURIComponent(current.entry.id)}`;
+      return url.href;
+    }
+    const runs = diffRuns(base.bundle.map.occupancy, current.bundle.map.occupancy);
+    const grid = settingsLocked(current.bundle) === null;
+    url.search = shareQuery({
+      bundle: current.entry.id, settings: grid ? settingsOf(current.bundle) : null, runs,
+      digest: (await traceDigest(current.bundle)).slice(0, 12),
+    }, catalog?.settings);
+    return url.href;
+  }, [current, base, catalog]);
 
   useEffect(() => {
     const ref = selection[0];
@@ -149,6 +242,7 @@ export function App() {
     setLoading(true);
     setCurrent(null);
     setRace(null);
+    if (!pendingShare.current) setShareVerdict(null); // it described the previous view
     setEditStatus({ state: 'idle' });
     perfMark('bundle-fetch-start');
     fetchBundle(`${DATA}${entry.path}`)
@@ -156,7 +250,10 @@ export function App() {
         const validated = requireValidated(bundle, entry)!; // throws catalog_mismatch
         if (!cancelled) {
           perfMark('bundle-decoded');
-          show({ entry, bundle, files, validated });
+          const c = { entry, bundle, files, validated };
+          setReveal(null);
+          show(c);
+          setBase(c);
         }
       })
       .catch((exc: unknown) => {
@@ -204,8 +301,22 @@ export function App() {
     <div className="app">
       <header className="top">
         <h1>COCO Lab <span className="sub">search, replayed from evidence</span></h1>
+        <nav className="views" aria-label="Views">
+          <button type="button" className={view === 'lab' ? 'seg-btn active' : 'seg-btn'} aria-pressed={view === 'lab'}
+            onClick={() => setView('lab')} data-testid="view-lab">Lab</button>
+          <button type="button" className={view === 'exhibit' ? 'seg-btn active' : 'seg-btn'} aria-pressed={view === 'exhibit'}
+            onClick={() => setView('exhibit')} data-testid="view-exhibit" disabled={!catalog?.exhibit}>The A* myth, twice</button>
+        </nav>
         <ModeBadge provenance={current?.bundle.provenance ?? null} />
       </header>
+      {view === 'exhibit' && catalog && (
+        <>
+          <Exhibit catalog={catalog} dataUrl={dataUrl} run={run} busy={busy} reducedMotion={reducedMotion}
+            onOpenBundle={openFromExhibit} />
+          <LabStatusLine status={editStatus} />
+        </>
+      )}
+      {view === 'lab' && (<>
 
       <div className="picker">
         <label>
@@ -239,7 +350,7 @@ export function App() {
           <div className="canvas-col">
             {race ? (
               <RaceView entrants={race.entrants} optimalCost={race.optimalCost} reducedMotion={reducedMotion}
-                onClose={() => setRace(null)} />
+                onClose={() => setRace(null)} reveal={race.reveal} />
             ) : (
               <>
                 <MapView bundle={current.bundle} k={k} hover={hover} onHover={setHover} onDrawn={onDrawn}
@@ -248,10 +359,15 @@ export function App() {
                 <Legend recorded={!!current.bundle.recording} sweep={!!swept?.placed} />
                 <Player n={current.bundle.trace.n} k={k} playing={playing} speed={speed}
                   reducedMotion={reducedMotion} onSeek={setK} onPlaying={setPlaying} onSpeed={setSpeed} />
+                {current.entry?.tracking && current.bundle.recording && current.validated.by === 'catalog' && (
+                  <TrackingPlot entry={current.entry} bundle={current.bundle} dataUrl={`${DATA}${current.entry.tracking}`} />
+                )}
                 <ToolsM editable={editable} tool={tool} brush={brush} onTool={setTool} onBrush={setBrush} />
+                <ShareBox makeLink={makeLink} verdict={shareVerdict} />
               </>
             )}
             <LabStatusLine status={editStatus} />
+            {!race && reveal && <RevealNote reveal={reveal} />}
           </div>
           <aside className="side">
             {catalog?.ladder && (
@@ -260,11 +376,13 @@ export function App() {
             )}
             {catalog?.settings && settings && (
               <SettingsPanelM analysis={catalog.settings} bundle={current.bundle} value={settings}
-                onChange={setSettings} onRun={onRunSettings} locked={locked} busy={busy} />
+                onChange={setSettings} onRun={onRunSettings} locked={locked} busy={busy}
+                prediction={costPrediction} onPrediction={setCostPrediction} />
             )}
             {catalog?.settings && (
               <RaceSetupM algorithms={catalog.settings.algorithms} chosen={raceChosen} onChosen={setRaceChosen}
-                onStart={onRace} disabled={locked} busy={busy} />
+                onStart={onRace} disabled={locked} busy={busy}
+                prediction={racePrediction} onPrediction={setRacePrediction} />
             )}
             <div className="tabs" role="tablist">
               {(['summary', 'provenance', 'recording', 'hover'] as Tab[]).map((t) => (
@@ -282,6 +400,7 @@ export function App() {
           </aside>
         </main>
       )}
+      </>)}
 
       <footer className="foot">
         <span>Built from {__BUILD_COMMIT__}.</span>{' '}

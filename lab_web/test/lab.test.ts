@@ -13,6 +13,7 @@ import type { Catalog } from '../src/bundle/load';
 import type { DecodedBundle } from '../src/bundle/model';
 import { brushCells, coversEndpoint, endpointRefusal, StrokeBuilder } from '../src/lab/brush';
 import { sweptFootprint } from '../src/lab/footprint';
+import { costChange, fewestExpanded, revealCost, revealFewest } from '../src/lab/predict';
 import { cursorAtStep, expansionEnds, raceRow } from '../src/lab/race';
 import {
   analysisFor, boundFor, describeBound, sameAsBundle, settingsLocked, settingsOf, toRun,
@@ -174,5 +175,36 @@ describe('the swept footprint', () => {
     const [p0, p1, , p3] = r.polygons[0];
     expect(Math.hypot(p0[0] - p1[0], p0[1] - p1[1]) * res).toBeCloseTo(catalog.footprint!.width_m, 9);
     expect(Math.hypot(p0[0] - p3[0], p0[1] - p3[1]) * res).toBeCloseTo(catalog.footprint!.length_m, 9);
+  });
+});
+
+describe('predict-then-reveal reads the summaries coco_lab wrote', () => {
+  const sum = (path_cost: number | null) => ({
+    status: path_cost === null ? 'no_path' : 'found', expansions: 1, pushes: 1, relaxes: 0, path_cost,
+    path_length: path_cost, path_steps: 1,
+  }) as DecodedBundle['trace']['summary'];
+
+  it('classifies every cost change', () => {
+    expect(costChange(sum(10), sum(12))).toBe('more');
+    expect(costChange(sum(12), sum(10))).toBe('less');
+    expect(costChange(sum(10), sum(10 + 1e-12))).toBe('same');
+    expect(costChange(sum(null), sum(3))).toBe('found');
+    expect(costChange(sum(3), sum(null))).toBe('lost');
+    expect(costChange(sum(null), sum(null))).toBe('none');
+  });
+
+  it('judges a prediction, and a skipped question is not judged', () => {
+    expect(revealCost('more', sum(1), sum(2), String).right).toBe(true);
+    expect(revealCost('less', sum(1), sum(2), String).right).toBe(false);
+    expect(revealCost(null, sum(1), sum(2), String).right).toBeNull();
+  });
+
+  it('a tie for fewest expansions credits every tied algorithm', () => {
+    const rows = [{ algorithm: 'astar', expansions: 87 }, { algorithm: 'greedy', expansions: 21 },
+      { algorithm: 'bfs', expansions: 21 }];
+    expect(fewestExpanded(rows)).toEqual({ min: 21, algorithms: ['greedy', 'bfs'] });
+    expect(revealFewest('bfs', rows, (a) => a).right).toBe(true);
+    expect(revealFewest('astar', rows, (a) => a).right).toBe(false);
+    expect(revealFewest('greedy', rows, (a) => a).measured).toContain('a tie');
   });
 });

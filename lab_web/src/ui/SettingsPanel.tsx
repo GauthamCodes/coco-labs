@@ -3,9 +3,11 @@
 
 import type { SettingsAnalysis } from '../bundle/load';
 import type { DecodedBundle } from '../bundle/model';
+import { COST_QUESTION } from '../lab/predict';
 import {
   ALGORITHM_NAMES, analysisFor, boundFor, describeBound, sameAsBundle, type SearchSettings,
 } from '../lab/settings';
+import { PredictQuestion } from './Predict';
 
 const HEURISTIC_NAMES: Record<string, string> = {
   zero: 'zero (h = 0)', manhattan: 'Manhattan', euclidean: 'Euclidean', octile: 'octile',
@@ -22,6 +24,8 @@ export interface SettingsPanelProps {
   onRun: () => void;
   locked: string | null;
   busy: boolean;
+  prediction: string | null;
+  onPrediction: (v: string | null) => void;
 }
 
 /**
@@ -30,7 +34,8 @@ export interface SettingsPanelProps {
  * table the site was built with; the search runs in coco_lab when you press
  * Run.
  */
-export function SettingsPanel({ analysis: sa, bundle, value, onChange, onRun, locked, busy }: SettingsPanelProps) {
+export function SettingsPanel({ analysis: sa, bundle, value, onChange, onRun, locked, busy, prediction,
+  onPrediction }: SettingsPanelProps) {
   const set = (patch: Partial<SearchSettings>) => onChange({ ...value, ...patch });
   const m = analysisFor(sa, bundle, value.connectivity, value.heuristic);
   const bound = m ? boundFor(sa, m, value.algorithm, value.weight) : undefined;
@@ -108,6 +113,10 @@ export function SettingsPanel({ analysis: sa, bundle, value, onChange, onRun, lo
         </p>
         <p className="cite">Verdicts: {sa.by}. Tested in {sa.cite}.</p>
 
+        {!unchanged && (
+          <PredictQuestion id="cost" question={COST_QUESTION.question} options={COST_QUESTION.options}
+            value={prediction} onChange={onPrediction} />
+        )}
         <button type="button" className="run" onClick={onRun} disabled={!!locked || busy || unchanged}
           data-testid="run-settings">
           {unchanged ? 'These are the shown settings' : 'Run with these settings'}

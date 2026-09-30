@@ -3,11 +3,13 @@
 
 import { useMemo, useState } from 'react';
 
+import type { Reveal } from '../lab/predict';
 import { cursorAtStep, expansionEnds, raceRow } from '../lab/race';
 import { ALGORITHM_NAMES } from '../lab/settings';
 import type { Current } from './App';
 import { MapView } from './MapView';
 import { Player } from './Player';
+import { PredictQuestion, RevealNote } from './Predict';
 
 export interface RaceSetupProps {
   algorithms: string[];
@@ -16,10 +18,13 @@ export interface RaceSetupProps {
   onStart: () => void;
   disabled: string | null;
   busy: boolean;
+  prediction: string | null;
+  onPrediction: (v: string | null) => void;
 }
 
 /** Pick two to four algorithms; they run on identical inputs. */
-export function RaceSetup({ algorithms, chosen, onChosen, onStart, disabled, busy }: RaceSetupProps) {
+export function RaceSetup({ algorithms, chosen, onChosen, onStart, disabled, busy, prediction,
+  onPrediction }: RaceSetupProps) {
   const toggle = (a: string) => onChosen(chosen.includes(a) ? chosen.filter((x) => x !== a)
     : algorithms.filter((x) => chosen.includes(x) || x === a));
   const ok = chosen.length >= 2 && chosen.length <= 4;
@@ -36,6 +41,11 @@ export function RaceSetup({ algorithms, chosen, onChosen, onStart, disabled, bus
             {ALGORITHM_NAMES[a] ?? a}
           </label>
         ))}
+        {ok && (
+          <PredictQuestion id="fewest" question="Before you race: which will expand the fewest cells?"
+            options={chosen.map((a) => [a, ALGORITHM_NAMES[a] ?? a])}
+            value={prediction !== null && chosen.includes(prediction) ? prediction : null} onChange={onPrediction} />
+        )}
         <button type="button" className="run" onClick={onStart} disabled={!ok} data-testid="race-start">
           {ok ? `Race ${chosen.length}` : 'Choose two to four'}
         </button>
@@ -49,6 +59,7 @@ export interface RaceViewProps {
   optimalCost: number | null;
   reducedMotion: boolean;
   onClose: () => void;
+  reveal: Reveal | null;
 }
 
 const pct = (x: number) => `${x >= 0 ? '+' : ''}${(x * 100).toFixed(1)} %`;
@@ -59,7 +70,7 @@ const num = (x: number | null, d = 2) => (x === null ? '—' : x.toFixed(d));
  * EXPANSIONS, and the final table. Every number is from the trace summaries
  * coco_lab wrote; the optimum is coco_lab's Dijkstra on the same inputs.
  */
-export function RaceView({ entrants, optimalCost, reducedMotion, onClose }: RaceViewProps) {
+export function RaceView({ entrants, optimalCost, reducedMotion, onClose, reveal }: RaceViewProps) {
   const ends = useMemo(() => entrants.map((e) => expansionEnds(e.bundle.trace.events, e.bundle.trace.n)), [entrants]);
   const maxStep = Math.max(...ends.map((e) => e.length));
   const [step, setStep] = useState(maxStep);
@@ -74,6 +85,7 @@ export function RaceView({ entrants, optimalCost, reducedMotion, onClose }: Race
         <h2>Race on identical inputs</h2>
         <button type="button" onClick={onClose} data-testid="race-close">Back to one search</button>
       </div>
+      {reveal && <RevealNote reveal={reveal} />}
       <div className={`race-grid n${entrants.length}`}>
         {entrants.map((e, i) => {
           const k = cursorAtStep(ends[i], e.bundle.trace.n, step);

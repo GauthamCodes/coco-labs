@@ -358,19 +358,33 @@ and 1F:
   synchronised step counter, and the final table. **Done in Lab 1.1 Part
   A.** The shared counter counts expansions; the optimum is `coco_lab`'s
   Dijkstra on the same inputs.
-- **1E.4 Predict-then-reveal.** *Not built.*
+- **1E.4 Predict-then-reveal.** **Done in Lab 1.1 Part B (2026-10-01):**
+  before a race ("which will expand the fewest cells?") and before a
+  settings run ("will the path cost more, less, or the same?"); the reveal
+  reads the trace summaries coco_lab wrote.
 - **1E.5 Paint obstacles and recompute:** **Done in Lab 1.1 Part A.** A
   1, 3 or 5 cell brush paints or erases; a drag is one stroke, applied and
   searched by `coco_lab` in Pyodide. A stroke over the start or the goal is
   refused with a message, by the page and again by the worker.
 - **1E.6 Share links** encoding seed, edits and settings, with a tested
-  round trip. *Not built*; only `?bundle=<id>` selects a catalog bundle.
-- **1E.8 "Driven by COCO":** *partial*. The three 1C runs replay with ground
-  truth, AMCL belief and plan overlaid, provenance, and the "Replay —
-  recorded real run" label; tracking error is shown as mean / p95 / max.
-  The tracking-error *plot* is not built.
+  round trip. **Done in Lab 1.1 Part B.** Format v1 names the catalog
+  bundle, the settings and the map edits (run-length), plus the trace's
+  digest; opening a link reruns coco_lab and says whether the trace came
+  out identical. CI tests the round trip in both languages
+  (`test/share.test.ts`, `tools/test_glue.py::test_share_vectors_reproduce_their_trace_digests`).
+  There is no seed to encode: no Lab 1 input is random (the daily seed is
+  Lab 1.2).
+- **1E.8 "Driven by COCO":** **Done in Lab 1.1 Part B.** The tracking-error
+  plot is 1C's definition, recomputed at site build by 1C's own code and
+  refused unless it reproduces the recorded n / mean / p95 / max exactly;
+  the provenance line shows the commit, the seed (none: a real run is not
+  seeded), the bundle hash and the rosbag hash.
 - **1E.9 The exhibit, "The A\* myth, twice"** (a)–(c), every claim cited.
-  *Not built*, so the Phase 1 row's "the A\* exhibit live" is not met.
+  **Done in Lab 1.1 Part B.** (a) runs live; (b) reports 1C's measured
+  analogue — M3's 6.2 % itself stays *neither reproduced nor refuted*, and
+  the analogue's paths are not drawn because 1C recorded their lengths, not
+  their coordinates; (c) is labelled a reconstruction, as 1B recorded it.
+  A test checks that every test the page cites exists.
 - **1F.1 `docs/labs/LAB1_PLAN.md`.** *Not written.*
 - **1F.2 README:** the "Try it" link to the public URL at the top, a short
   Lab 1 section, and the planner claim linked to the exhibit. *Not done*

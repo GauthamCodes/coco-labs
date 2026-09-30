@@ -6300,3 +6300,64 @@ site test was left unchanged.)
 
 NEXT: Part B (LAB_PHASES Lab 1.1 prompt, items 6–9) on "continue". Phase 2
 (Live) has not started.
+
+---
+
+## Lab 1.1 — Part B: make it teach (2026-10-01)
+
+Continued on the owner's "continue", from `main` = `lab1` = `3b4be8f`.
+
+**Built** (details in `docs/RESULTS.md`, "COCO Lab 1.1, Part B"; ROADMAP §5
+Lab 1.1 now marks 1E.4, 1E.6, 1E.8 and 1E.9 done)
+- **Predict-then-reveal**, before a race and before a settings run.
+- **Share links**, format v1. Opening one reruns coco_lab and compares the
+  trace digest. The round trip is tested in CI in both languages, through
+  committed vectors (`test/golden/share_vectors.json`).
+- **The tracking-error plot and provenance** on the 1C replays. The series
+  is recomputed by 1C's code at site build, and refused unless it
+  reproduces the recorded statistics exactly.
+- **The exhibit, "The A\* myth, twice":** (a) live; (b) from 1C's record;
+  (c) from 1B's, labelled a reconstruction. A test checks that every test
+  the page cites exists.
+
+**Reported, not filled in**
+- 1C's analogue recorded path lengths, not path coordinates, so exhibit (b)
+  draws no paths.
+- M3's 6.2 % was never re-run. The exhibit says "neither reproduced nor
+  refuted".
+- Share links carry no seed, because no Lab 1 input is random (the daily
+  seed is Lab 1.2).
+
+**Measured** (local build, headless Firefox 156, load 0.3–0.9)
+- Tests, all 0 failed, 0 skipped:
+  - `coco_lab` 349 / 352, unchanged;
+  - `coco_lab_ros` 69, `gazebo_models` 229, `custom_teleop` 75;
+  - `lab_web/tools` 72; vitest 180;
+  - builds identical (`88a148b5…`).
+- Share links:
+  - a link made from a painted, re-set view, opened in a fresh browser,
+    reproduced the exact trace;
+  - so did both committed CI vectors, which means CPython's and Pyodide's
+    digests agree;
+  - 3.6–3.8 s from open to verdict.
+- Budgets: playback 60.01 fps with 0 frames over 25 ms; warm paint
+  1,134–1,145 ms; phone 378; smoke 11 of 11; weight 115,555 B (+8,234 B on
+  Part A).
+- 0 console errors in all eleven scenarios.
+
+**Found and fixed during Part B**
+- The plot's hover readout covered the top y-axis label. It now has a
+  reserved line above the plot.
+- The dataviz palette check **failed** the site's dark accent as a series
+  colour (lightness 0.735 on the dark surface). The chart uses `#3A96CF`
+  in dark mode instead, which passes.
+- The harness's new scenarios first waited for readiness marks that only
+  exist with `?perf`. That was a harness bug, fixed in the harness.
+
+**Unverified**
+- Part B on the public site.
+- A headed browser, a real phone, Safari and Chrome.
+
+NEXT: Part C (items 10–16: LAB1_PLAN.md, README, the three stale spots,
+the demo video, the tag and the draft release, the owner's phone check,
+and the closing status) on "continue". Phase 2 (Live) has not started.
