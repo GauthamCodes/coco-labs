@@ -7739,7 +7739,22 @@ from a committed record, or from a trace `coco_lab` computed. Evidence:
 | 390 × 844 | no horizontal scroll | 378 | **378** |
 | smoke | every bundle draws | 11 of 11 | **11 of 11** |
 
+### On the public site (measured; `main` = `aa0935a`, load 0.23–0.69)
+
+`main` was fast-forwarded `3b4be8f..aa0935a` with `CI` and `Lab` green, and
+the live catalog reads `built_from aa0935a`, `dirty: false`. Evidence is in
+`docs/data/lab11/part_b/public/browser_report.json`.
+- **Share links:** the link made from a painted, re-set view, and both CI
+  vectors, all reproduced the exact trace on the public site, in 4.7–5.7 s
+  each.
+- **Budgets:**
+  - playback 60.03 fps (1,000 events/frame) and 60.22 fps (10,000), with 0
+    frames over 25 ms;
+  - warm paint 1,137 / 1,147 / 1,159 ms;
+  - phone 378; smoke 11 of 11.
+- **Replay and exhibit (a):** as local.
+- **Console errors:** 0 in every scenario.
+
 ### Not yet measured
 
-- Part B on the public site; this section is the local build.
 - A headed browser, a real phone, Safari and Chrome.

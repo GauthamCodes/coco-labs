@@ -6355,8 +6355,13 @@ Lab 1.1 now marks 1E.4, 1E.6, 1E.8 and 1E.9 done)
   exist with `?perf`. That was a harness bug, fixed in the harness.
 
 **Unverified**
-- Part B on the public site.
 - A headed browser, a real phone, Safari and Chrome.
+
+(Added after the fast-forward of `main` to `aa0935a`, deployed: Part B on
+the public site, load 0.23–0.69. Every share link reproduced its trace
+exactly, in 4.7–5.7 s. Playback 60.03 fps; warm paint 1,137–1,159 ms;
+phone 378; smoke 11 of 11; 0 console errors. See RESULTS
+"COCO Lab 1.1, Part B".)
 
 NEXT: Part C (items 10–16: LAB1_PLAN.md, README, the three stale spots,
 the demo video, the tag and the draft release, the owner's phone check,
