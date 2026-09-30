@@ -14,7 +14,8 @@
     "build": "tsc --noEmit -p . && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "tools": "python3 tools/build_catalog.py"
+    "tools": "python3 tools/build_catalog.py",
+    "check:dist": "node tools/check_dist.mjs"
   },
   "dependencies": {
     "react": "19.3.0",

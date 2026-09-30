@@ -78,7 +78,12 @@ export function App() {
     setHover(null);
     setK(c.bundle.trace.n); // show the finished search; play restarts from 0
   }, []);
-  const { status: editStatus, setStatus: setEditStatus, edit } = useEditor(catalog, show);
+  // after an edit the drawn bundle is no catalog entry: say so in the picker
+  const showEdited = useCallback((c: Current) => {
+    setSelection([{ worker: true }]);
+    show(c);
+  }, [show]);
+  const { status: editStatus, setStatus: setEditStatus, edit } = useEditor(catalog, showEdited);
 
   useEffect(() => {
     const ref = selection[0];
@@ -143,7 +148,12 @@ export function App() {
           <span>Bundle</span>
           <select data-testid="picker" value={(selection[0] && 'catalogId' in selection[0]) ? selection[0].catalogId : ''}
             onChange={(e) => setSelection([{ catalogId: e.target.value }])} disabled={!catalog}>
-            {(!selection[0] || !('catalogId' in selection[0])) && <option value="">(computed in your browser)</option>}
+            {(!selection[0] || !('catalogId' in selection[0])) && (
+              <option value="">
+                {current?.entry ? `Your edit of “${current.entry.title}” — computed in your browser by coco_lab`
+                  : '(choose a bundle)'}
+              </option>
+            )}
             {groups.map(([name, entries]) => (
               <optgroup key={name} label={name}>
                 {entries.map((e) => <option key={e.id} value={e.id}>{e.title}</option>)}

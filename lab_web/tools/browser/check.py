@@ -208,14 +208,22 @@ async def player(site, out):
         seq.append(('shift+left', (await s.js(STATE))['k']))
         await s.key('')                      # ArrowRight
         seq.append(('right', (await s.js(STATE))['k']))
+        # Space on a trace long enough to watch (71,900 events at 100/frame)
+        await s.open('?perf&bundle=lab1c_dijkstra')
+        await s.wait(READY)
         await s.js("document.activeElement && document.activeElement.blur(), 1")
-        await s.key(' ')                           # Space: play
-        await asyncio.sleep(0.4)
+        await s.key(' ')                           # Space: play (restarts from 0)
+        await asyncio.sleep(0.5)
         playing = await s.js(STATE)
-        seq.append(('space', playing['play'], playing['k']))
+        seq.append(('space: play', playing['play'], playing['k']))
         await s.key(' ')                           # Space: pause
+        await asyncio.sleep(0.3)
         paused = await s.js(STATE)
-        seq.append(('space again', paused['play'], paused['k']))
+        await asyncio.sleep(0.5)
+        still = await s.js(STATE)
+        seq.append(('space: pause', paused['play'], paused['k'], 'k 0.5 s later', still['k']))
+        await s.open('?perf&bundle=astar_open')
+        await s.wait(READY)
         # scrub: set the range input as a user would (input event)
         await s.js("(() => { const r = document.querySelector('[data-testid=scrub]');"
                    " const set = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;"
