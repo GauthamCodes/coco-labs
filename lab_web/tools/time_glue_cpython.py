@@ -30,6 +30,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 LAB_WEB = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(LAB_WEB, 'src', 'worker'))
+sys.dont_write_bytecode = True  # keep src/ free of __pycache__ (test/site.test.ts)
 import recompute  # noqa: E402
 
 CELLS = [(95, 125), (98, 130), (91, 119), (96, 123), (97, 124), (93, 121)]

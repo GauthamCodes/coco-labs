@@ -31,7 +31,13 @@ import common
 import pytest
 
 sys.path.insert(0, os.path.join(common.LAB_WEB, 'src', 'worker'))
+# no __pycache__ inside the site's source tree: test/site.test.ts reads every
+# file under src/, and a .pyc embeds this checkout's path (measured: on the
+# CI runner the path holds the repository name, which that test forbids)
+_dont_write = sys.dont_write_bytecode
+sys.dont_write_bytecode = True
 import recompute  # noqa: E402
+sys.dont_write_bytecode = _dont_write
 
 FIXTURES = os.path.join(common.REPO, 'coco_lab', 'test', 'fixtures',
                         'bundles')
