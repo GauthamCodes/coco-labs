@@ -6278,8 +6278,15 @@ The page shows only verdicts `coco_lab` computed at site build time (catalog
 3. An unbreakable citation widened the page to 401 px at phone width.
 
 **Unverified**
-- The public site with Part A (measured locally only).
 - Race timing on the 0.10 m arena.
+
+(Added after the fast-forward of `main` to `dfa388e`: the public site with
+Part A was measured. Warm paint 1,165 / 1,169 / 1,165 ms; playback 60.02
+fps; phone 378; smoke 11 of 11; `lab` scenario passed. See RESULTS
+"COCO Lab 1.1, Part A". `lab.yml` first failed on `d7e176b`: the new glue
+test wrote a `.pyc` into `src/` whose embedded runner path held the repo
+name. It was fixed in `dfa388e` with `sys.dont_write_bytecode`, and the
+site test was left unchanged.)
 - A headed browser, a real phone, Safari and Chrome.
 
 **Traps paid this session**

@@ -7573,10 +7573,30 @@ Also: a stroke over the start is refused by the page before any Python
 starts ("the brush covered the start cell (15, 2)…"), and the worker refuses
 the same stroke (`test_a_stroke_over_the_start_or_goal_is_refused_clearly`).
 
+### The public site with Part A (measured; `main` = `dfa388e`, load 0.65–0.98)
+
+`main` was fast-forwarded `ee8aace..dfa388e` with `CI` and `Lab` green.
+`deploy` ran (Lab run 36765413632), and the live catalog reads version
+1.1, `built_from dfa388e`, `dirty: false`. Evidence is in
+`docs/data/lab11/part_a/public/`.
+
+| | target | Phase 1 closure, live | **Part A, live** |
+|---|---|---|---|
+| Paint one cell → first frame, warm, edits 2–4 | ≤ 1.5 s | 1,412 / 1,468 / 1,493 ms | **1,165 / 1,169 / 1,165 ms** |
+| Full-arena playback, 1,000 events/frame | ≥ 60 fps | 59.94 fps | **60.02 fps**, 1 of 284 frames > 25 ms (27 ms) |
+| Same, 10,000 events/frame | — | 60.40 fps | 59.60 fps, 0 frames > 25 ms |
+| Cold first change | report | 14,268 ms | 17,093 ms (Pyodide 14,152 ms) |
+| Initial page weight | report | 93,595 B | 100,409 B |
+| Phone 390 × 844 | no horizontal scroll | 378 | **378**, all controls hit-test |
+| Smoke | every bundle draws | 10 of 10 | **11 of 11**, 0 console errors |
+
+The live warm-edit margin went from 7 ms to about 335 ms, because of the
+glue's validated-bundle cache. The `lab` scenario passed on the public site
+too: the bound "cost ≤ 2.25 × the optimum", a refused stroke over the
+start, a four-way race and the costmap rung, with 0 console errors.
+
 ### Not yet measured / not done
 
-- The **public site** with Part A. These numbers are local; Part A reaches
-  Pages only when `main` is fast-forwarded.
 - Race mode has no budget. Measured once on the 20 × 20 grid
   (`browser_report.json`, `lab`): 4 searches 24 ms, write 17 ms, optimum
   7 ms. On the 0.10 m arena, not measured.
