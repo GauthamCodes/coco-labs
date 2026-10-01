@@ -408,17 +408,28 @@ class CocoWebNode(Node):
         """
         try:
             from coco_config.joint_limits import ARM_LIMITS
-            arm = {
-                'shoulder': tuple(ARM_LIMITS['m_link1_Revolute-6']),
-                'elbow': tuple(ARM_LIMITS['m_link2_Revolute-7']),
-            }
-            grip = tuple(ARM_LIMITS['m_link3_Revolute-8'])
-            return arm, grip
-        except (ImportError, KeyError):
+        except ImportError:
+            # A stripped image with no coco_config: a supported mode.
             self.get_logger().warn(
                 'coco_config.joint_limits unavailable; arm control '
                 'disabled rather than guessed')
             return None, None
+        # A joint missing from a coco_config that IS present is not a
+        # stripped image, it is a rename -- and quietly disabling the arm
+        # is how a rename hides (917bc59's platform_bounds hid the same
+        # way). Refuse to start instead.
+        wanted = {'shoulder': 'm_link1_Revolute-6',
+                  'elbow': 'm_link2_Revolute-7',
+                  'gripper': 'm_link3_Revolute-8'}
+        missing = sorted(j for j in wanted.values() if j not in ARM_LIMITS)
+        if missing:
+            raise RuntimeError(
+                f'coco_config.joint_limits.ARM_LIMITS has no {missing}; '
+                f'it has {sorted(ARM_LIMITS)}. A joint was renamed: update '
+                'CocoWebNode._load_joint_limits to match.')
+        arm = {'shoulder': tuple(ARM_LIMITS[wanted['shoulder']]),
+               'elbow': tuple(ARM_LIMITS[wanted['elbow']])}
+        return arm, tuple(ARM_LIMITS[wanted['gripper']])
 
     # ── subscription callbacks ─────────────────────────────────────────
     @staticmethod

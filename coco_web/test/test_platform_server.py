@@ -1608,3 +1608,129 @@ def test_welcome_carries_the_real_world_geometry_end_to_end():
         assert bay['ramp']['x1'] == bay['platform']['x0']
         assert bay['descent']['x0'] == bay['platform']['x1']
     assert published[-1] == ('stop',)
+
+
+# ── coco_config's other real paths: colours, depth clip, arm limits ─────
+class _CapturingLogger(_Logger):
+    """Keep warnings: a loader that falls back says so only here."""
+
+    def __init__(self):
+        """Start with no warnings."""
+        self.warnings = []
+
+    def warn(self, msg, *_a, **_k):
+        """Record the warning."""
+        self.warnings.append(msg)
+
+
+class RealConfigNode(RealWorldNode):
+    """
+    RealWorldNode whose colours, depth clip and arm limits are REAL.
+
+    FakeNode hard-codes all three, so no test ever ran the loaders that
+    CocoWebNode.__init__ calls -- the same blind spot that hid 917bc59's
+    world-geometry break. These are the real methods, called in the real
+    order, against the real coco_config.
+    """
+
+    def __init__(self):
+        """Load as CocoWebNode.__init__ does, with a capturing logger."""
+        super().__init__()
+        self.log = _CapturingLogger()
+        self._depth_clip = ps.CocoWebNode._load_depth_clip(self)
+        self.colours = ps.CocoWebNode._load_colours(self)
+        self.arm_limits, self.grip_limits = (
+            ps.CocoWebNode._load_joint_limits(self))
+
+    def get_logger(self):
+        """Return the capturing logger."""
+        return self.log
+
+
+def test_the_real_colour_table_reaches_the_browser_and_gates_targets():
+    """The welcome carries coco_config's colours; only those are accepted."""
+    from coco_config import robot
+
+    async def body():
+        node = RealConfigNode()
+        h = await Harness(node).start()
+        try:
+            ws = await h.client()
+            colours = ws.welcome['limits']['colours']
+            for colour in colours:
+                await h.request(ws, {'type': 'select_target',
+                                     'colour': colour}, 'ack')
+            refused = await h.request(ws, {'type': 'select_target',
+                                           'colour': 'purple'}, 'error')
+            ws.close()
+            return node, colours, refused
+        finally:
+            await h.stop()
+
+    node, colours, refused = _run(body())
+    # A silent fallback to protocol.FALLBACK_COLOURS warns and nothing else.
+    assert node.log.warnings == [], node.log.warnings
+    assert colours == [t.colour for t in robot.TARGETS]
+    assert [p for p in node.published if p[0] == 'colour'] == [
+        ('colour', c) for c in colours]
+    assert refused['code'] == 'bad_colour'
+
+
+def test_the_real_depth_clip_sets_the_depth_frames_range():
+    """The loaded clip, not the frame's own min/max, labels a depth frame."""
+    import struct
+    from coco_config import robot
+    from sensor_msgs.msg import Image
+    node = RealConfigNode()
+    # The loader returns None on an ImportError WITHOUT a warning, and the
+    # page then rescales every frame; this is the line that catches it.
+    assert node._depth_clip is not None, (
+        'depth clip fell back to a per-frame range')
+    width, height = 4, 3
+    metres = [1.0 + 0.1 * i for i in range(width * height)]   # 1.0-2.1 m
+    msg = Image(width=width, height=height, encoding='32FC1',
+                step=width * 4, is_bigendian=0,
+                data=struct.pack(f'<{len(metres)}f', *metres))
+    # The encoder's own node-state slice, as the boundary tests above use;
+    # the clip it encodes with is the one the real loader returned.
+    stub = _boundary_stub()
+    stub._depth_clip = node._depth_clip
+    ps.CocoWebNode._encode_image(stub, 'depth', msg)
+    assert stub.warnings == []
+    extra = stub._snap['depth']['extra']
+    assert (extra['min_m'], extra['max_m']) == tuple(robot.CAMERA_DEPTH_CLIP)
+
+
+def test_the_real_arm_limits_reach_the_browser_and_clamp_the_gripper():
+    """The welcome carries coco_config.joint_limits, joint by joint."""
+    from coco_config.joint_limits import ARM_LIMITS
+
+    async def body():
+        node = RealConfigNode()
+        h = await Harness(node).start()
+        try:
+            ws = await h.client()
+            ws.close()
+            return node, ws.welcome['limits']
+        finally:
+            await h.stop()
+
+    node, limits = _run(body())
+    assert node.log.warnings == [], node.log.warnings
+    assert limits['arm'] == {
+        'shoulder': list(ARM_LIMITS['m_link1_Revolute-6']),
+        'elbow': list(ARM_LIMITS['m_link2_Revolute-7'])}
+    assert limits['gripper'] == list(ARM_LIMITS['m_link3_Revolute-8'])
+
+
+def test_a_renamed_joint_refuses_to_start_instead_of_warning(monkeypatch):
+    """A rename in joint_limits must fail loudly, not disable the arm."""
+    import pytest
+    from coco_config import joint_limits
+    renamed = dict(joint_limits.ARM_LIMITS)
+    renamed['m_link1_shoulder'] = renamed.pop('m_link1_Revolute-6')
+    monkeypatch.setattr(joint_limits, 'ARM_LIMITS', renamed)
+    node = FakeNode()
+    node.get_logger = _CapturingLogger
+    with pytest.raises(RuntimeError, match='m_link1_Revolute-6'):
+        ps.CocoWebNode._load_joint_limits(node)
