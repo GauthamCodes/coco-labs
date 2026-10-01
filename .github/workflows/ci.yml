@@ -45,7 +45,10 @@ jobs:
           # mujoco: coco_rl.yard_env and coco_sim import it at module scope,
           # so without it coco_rl's collection aborts (exit 2). The pin is
           # coco_sim/setup.py's install_requires.
-          pip install --break-system-packages gymnasium mujoco==3.11.0
+          # tornado: coco_web's server. Pinned to the version its suite was
+          # measured on (6.5.7); the tests encode 6.5 behaviour, e.g.
+          # write_message returning a Task and IOStream._write_buffer.
+          pip install --break-system-packages gymnasium mujoco==3.11.0 tornado==6.5.7
 
       - name: Build
         run: |
@@ -64,7 +67,12 @@ jobs:
         run: |
           source /opt/ros/jazzy/setup.bash
           source install/setup.bash
-          colcon test --packages-select gazebo_models custom_teleop coco_config coco_moveit_config coco_rl coco_perception coco_sim
+          # coco_web was built but never tested here, so its suite could not
+          # fail CI. That is how 917bc59's platform_bounds break -- every
+          # browser connection dying before `welcome` -- stayed green: its
+          # 575 tests ran only on developer machines, all on a stubbed
+          # world_geometry. test_platform_server.py now runs the real one.
+          colcon test --packages-select gazebo_models custom_teleop coco_config coco_moveit_config coco_rl coco_perception coco_sim coco_web
           colcon test-result --verbose
           # colcon test exits 0 even when a package collected nothing, which
           # is exactly how the coco_rl suite went unnoticed: its tests use
