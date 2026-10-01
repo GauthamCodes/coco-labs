@@ -6877,3 +6877,51 @@ NEXT: Phase 2, only when the owner asks.
   build-and-test is now 90 min, about 2x 44.3. That still ends a ~2 h
   hang.
 - The Lab job limits are unchanged; their slowest green run is 1.4 min.
+
+## Phase 2 · Live — Part A: audit and design (2026-10-02)
+
+Branch `live` (from 6249e7d). No code changed. The precondition was
+checked against the Phase 2 prep entry above, and all five items hold.
+Report: `docs/live/PART_A_AUDIT.md`. Evidence: `docs/data/live/part_a/`.
+
+**Measured** (one live run: fresh sim, mission.launch.py, domain 62, quiet
+machine; one run is not a rate):
+- **Safety defect: `stop` does not stop a running mission.** Sent exactly
+  as the page's STOP sends it during `NAVIGATE_TO_RAMP`:
+  - wheels zero at +1.5 ms;
+  - the executive re-asserted `nav` at +698 ms;
+  - wheels moving again at +723 ms, then 152 moving commands over 7.7 s;
+  - only `mission abort` stopped them (+87 ms).
+- **Teleop preemption works.** 30/30 drive frames acked, first at the wheel
+  topic in 1.6 ms, arbiter `active=teleop`. The mission resumed on release.
+- **Nav2 mode does not drive under `mission.launch.py`.** The idle executive
+  re-asserts `idle` at 2 Hz, so `set_mode auto` lasted about 390 ms.
+  - Nav2 still planned (25 `/plan`) and commanded (499 moving
+    `/cmd_vel_gated`).
+  - The wheels moved 0.
+- Teleop with no mission: 3.2 ms to the wheel topic.
+- Telemetry 10.00 Hz received.
+- Wheel publishers: 1 (`cmd_vel_arbiter`) in every sample.
+- `localised` stayed false for 400 s at rest: no AMCL update without motion.
+
+**Designed** (report §4–§6):
+- lab_web reuses `frame.js` unchanged, with shared committed fixtures.
+- 11 additive changes.
+- A pure `control.py` driver/spectator model.
+- Truth reaches the telemetry builder only (AST test). The executive already
+  reads `/model/coco/odometry` itself, so the invariant is scoped to the web
+  layer.
+- Tunnel comparison: Cloudflare named tunnel if there is a domain on
+  Cloudflare, else Tailscale Funnel.
+
+**Open: owner decisions Q1–Q4** (report §7): `stop` aborts an active
+mission; executive asserts mode only while a mission runs; spectator STOP in
+code mode; tunnel choice.
+
+**Unverified**
+- `/local_plan` on this stack.
+- Chrome's LNA prompt for the Pages site → `ws://localhost` (vendor docs
+  only).
+- Every tunnel property (vendor docs only).
+
+NEXT: Part B, on the owner's "continue" and Q1–Q4.

@@ -1,0 +1,247 @@
+[INFO] [launch]: All log files can be found below /home/gautham/.ros/log/2026-10-02-04-36-52-692706-gautham-Nitro-ANV15-51-329135
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: [episode] ep-83b636dd724b level=fixed seed=0 requested=yellow manifest_sha256=7a66fd5ce879a8f2 red=bay_1 green=bay_2 blue=bay_3 yellow=bay_4
+[INFO] [gazebo-1]: process started with pid [329188]
+[INFO] [robot_state_publisher-2]: process started with pid [329189]
+[INFO] [create-3]: process started with pid [329190]
+[INFO] [create-4]: process started with pid [329191]
+[INFO] [parameter_bridge-5]: process started with pid [329193]
+[INFO] [create-6]: process started with pid [329194]
+[INFO] [create-7]: process started with pid [329195]
+[INFO] [create-8]: process started with pid [329196]
+[INFO] [create-9]: process started with pid [329197]
+[INFO] [create-10]: process started with pid [329198]
+[INFO] [create-11]: process started with pid [329199]
+[INFO] [create-12]: process started with pid [329200]
+[INFO] [create-13]: process started with pid [329201]
+[INFO] [create-14]: process started with pid [329208]
+[INFO] [create-15]: process started with pid [329211]
+[INFO] [create-16]: process started with pid [329216]
+[INFO] [magnet_release.py-17]: process started with pid [329219]
+[INFO] [create-18]: process started with pid [329222]
+[INFO] [create-19]: process started with pid [329226]
+[INFO] [create-20]: process started with pid [329236]
+[INFO] [create-21]: process started with pid [329252]
+[INFO] [spawner-22]: process started with pid [329255]
+[INFO] [spawner-23]: process started with pid [329261]
+[INFO] [spawner-24]: process started with pid [329267]
+[INFO] [spawner-25]: process started with pid [329269]
+[robot_state_publisher-2] [INFO] [1790896013.208163594] [robot_state_publisher]: Robot initialized
+[create-4] [INFO] [1790896013.210743513] [spawn_ramp]: Requesting list of world names.
+[create-8] [INFO] [1790896013.239494706] [spawn_platform_green]: Requesting list of world names.
+[create-9] [INFO] [1790896013.243755544] [spawn_ramp_blue]: Requesting list of world names.
+[create-7] [INFO] [1790896013.249043107] [spawn_ramp_green]: Requesting list of world names.
+[create-3] [INFO] [1790896013.252098239] [spawn_coco]: Requesting list of world names.
+[create-13] [INFO] [1790896013.261778974] [spawn_target_red]: Requesting list of world names.
+[create-20] [INFO] [1790896013.267235735] [spawn_ramp_down_blue]: Requesting list of world names.
+[create-16] [INFO] [1790896013.283524425] [spawn_target_yellow]: Requesting list of world names.
+[create-6] [INFO] [1790896013.285688807] [spawn_platform_red]: Requesting list of world names.
+[create-19] [INFO] [1790896013.301378778] [spawn_ramp_down_green]: Requesting list of world names.
+[create-15] [INFO] [1790896013.303101121] [spawn_target_blue]: Requesting list of world names.
+[create-11] [INFO] [1790896013.304200834] [spawn_ramp_yellow]: Requesting list of world names.
+[create-18] [INFO] [1790896013.306172800] [spawn_ramp_down_red]: Requesting list of world names.
+[create-14] [INFO] [1790896013.309433739] [spawn_target_green]: Requesting list of world names.
+[create-12] [INFO] [1790896013.316665284] [spawn_platform_yellow]: Requesting list of world names.
+[create-21] [INFO] [1790896013.317870898] [spawn_ramp_down_yellow]: Requesting list of world names.
+[create-10] [INFO] [1790896013.322297347] [spawn_platform_blue]: Requesting list of world names.
+[spawner-23] [INFO] [1790896013.751072059] [spawner_diff_drive_controller]: waiting for service /controller_manager/list_controllers to become available...
+[parameter_bridge-5] [INFO] [1790896014.325258220] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.327414969] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/scan (gz.msgs.LaserScan) -> /scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.331295058] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/image (gz.msgs.Image) -> /camera/image_raw (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.332835044] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/depth_image (gz.msgs.Image) -> /camera/depth/image_raw (sensor_msgs/msg/Image)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.335765049] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/camera_info (gz.msgs.CameraInfo) -> /camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.338328818] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/camera/points (gz.msgs.PointCloudPacked) -> /camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.340390405] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/imu (gz.msgs.IMU) -> /imu (sensor_msgs/msg/Imu)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.342769674] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/model/coco/odometry (gz.msgs.Odometry) -> /model/coco/odometry (nav_msgs/msg/Odometry)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.345477721] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/magnet/pick_target/attach (std_msgs/msg/Empty) -> /magnet/pick_target/attach (gz.msgs.Empty)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.348442096] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/magnet/pick_target/detach (std_msgs/msg/Empty) -> /magnet/pick_target/detach (gz.msgs.Empty)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.350225944] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/magnet/pick_target/state (gz.msgs.StringMsg) -> /magnet/pick_target/state (std_msgs/msg/String)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.352081265] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/magnet/target_red/attach (std_msgs/msg/Empty) -> /magnet/target_red/attach (gz.msgs.Empty)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.353726979] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/magnet/target_red/detach (std_msgs/msg/Empty) -> /magnet/target_red/detach (gz.msgs.Empty)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.355717969] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/magnet/target_red/state (gz.msgs.StringMsg) -> /magnet/target_red/state (std_msgs/msg/String)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.357938861] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/magnet/target_green/attach (std_msgs/msg/Empty) -> /magnet/target_green/attach (gz.msgs.Empty)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.359285306] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/magnet/target_green/detach (std_msgs/msg/Empty) -> /magnet/target_green/detach (gz.msgs.Empty)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.360700314] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/magnet/target_green/state (gz.msgs.StringMsg) -> /magnet/target_green/state (std_msgs/msg/String)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.363070353] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/magnet/target_blue/attach (std_msgs/msg/Empty) -> /magnet/target_blue/attach (gz.msgs.Empty)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.364411317] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/magnet/target_blue/detach (std_msgs/msg/Empty) -> /magnet/target_blue/detach (gz.msgs.Empty)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.365812746] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/magnet/target_blue/state (gz.msgs.StringMsg) -> /magnet/target_blue/state (std_msgs/msg/String)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.367532741] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/magnet/target_yellow/attach (std_msgs/msg/Empty) -> /magnet/target_yellow/attach (gz.msgs.Empty)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.369014744] [ros_gz_bridge]: Creating ROS->GZ Bridge: [/magnet/target_yellow/detach (std_msgs/msg/Empty) -> /magnet/target_yellow/detach (gz.msgs.Empty)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.371219762] [ros_gz_bridge]: Creating GZ->ROS Bridge: [/magnet/target_yellow/state (gz.msgs.StringMsg) -> /magnet/target_yellow/state (std_msgs/msg/String)] (Lazy 0)
+[parameter_bridge-5] [INFO] [1790896014.711709916] [ros_gz_bridge]: Passing message from ROS std_msgs/msg/Empty to Gazebo gz.msgs.Empty (showing msg only once per type)
+[create-11] [INFO] [1790896015.755370110] [spawn_ramp_yellow]: Entity creation successful.
+[create-15] [INFO] [1790896015.755416666] [spawn_target_blue]: Entity creation successful.
+[create-6] [INFO] [1790896015.755562985] [spawn_platform_red]: Entity creation successful.
+[create-20] [INFO] [1790896015.755562413] [spawn_ramp_down_blue]: Entity creation successful.
+[create-13] [INFO] [1790896015.755683544] [spawn_target_red]: Entity creation successful.
+[create-18] [INFO] [1790896015.755716099] [spawn_ramp_down_red]: Entity creation successful.
+[create-21] [INFO] [1790896015.756329156] [spawn_ramp_down_yellow]: Entity creation successful.
+[create-19] [INFO] [1790896015.762202485] [spawn_ramp_down_green]: Entity creation successful.
+[create-9] [INFO] [1790896015.763667619] [spawn_ramp_blue]: Entity creation successful.
+[create-16] [INFO] [1790896015.763974947] [spawn_target_yellow]: Entity creation successful.
+[create-4] [INFO] [1790896015.764233254] [spawn_ramp]: Entity creation successful.
+[create-12] [INFO] [1790896015.764424878] [spawn_platform_yellow]: Entity creation successful.
+[create-14] [INFO] [1790896015.764833828] [spawn_target_green]: Entity creation successful.
+[create-10] [INFO] [1790896015.765090800] [spawn_platform_blue]: Entity creation successful.
+[create-8] [INFO] [1790896015.766099322] [spawn_platform_green]: Entity creation successful.
+[create-3] [INFO] [1790896015.767812245] [spawn_coco]: Entity creation successful.
+[create-7] [INFO] [1790896015.768424765] [spawn_ramp_green]: Entity creation successful.
+[INFO] [create-11]: process has finished cleanly [pid 329199]
+[INFO] [create-19]: process has finished cleanly [pid 329226]
+[INFO] [create-4]: process has finished cleanly [pid 329191]
+[INFO] [create-10]: process has finished cleanly [pid 329198]
+[INFO] [create-15]: process has finished cleanly [pid 329211]
+[INFO] [create-21]: process has finished cleanly [pid 329252]
+[INFO] [create-12]: process has finished cleanly [pid 329200]
+[INFO] [create-18]: process has finished cleanly [pid 329222]
+[INFO] [create-8]: process has finished cleanly [pid 329196]
+[INFO] [create-20]: process has finished cleanly [pid 329236]
+[INFO] [create-7]: process has finished cleanly [pid 329195]
+[INFO] [create-16]: process has finished cleanly [pid 329216]
+[INFO] [create-9]: process has finished cleanly [pid 329197]
+[INFO] [create-3]: process has finished cleanly [pid 329190]
+[INFO] [create-14]: process has finished cleanly [pid 329208]
+[INFO] [create-6]: process has finished cleanly [pid 329194]
+[INFO] [create-13]: process has finished cleanly [pid 329201]
+[gazebo-1] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="coco"]/link[@name="base_footprint"]/sensor[@name="camera"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gazebo-1] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="coco"]/link[@name="base_footprint"]/sensor[@name="imu"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gazebo-1] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="coco"]/link[@name="base_footprint"]/sensor[@name="lidar"]/gz_frame_id:<urdf-string>:L0]: XML Element[gz_frame_id], child of element[sensor], not defined in SDF. Copying[gz_frame_id] as children of [sensor].
+[gazebo-1] [INFO] [1790896016.179568940] [gz_ros_control]: Loading controller_manager
+[gazebo-1] [INFO] [1790896016.198922446] [controller_manager]: Using ROS clock for triggering controller manager cycles.
+[gazebo-1] [INFO] [1790896016.202623577] [controller_manager]: Subscribing to '/robot_description' topic for robot description.
+[gazebo-1] [WARN] [1790896016.205739420] [gz_ros_control]: Waiting RM to load and initialize hardware...
+[gazebo-1] [INFO] [1790896016.206653289] [controller_manager]: Received robot description from topic.
+[gazebo-1] [INFO] [1790896016.206746004] [controller_manager]: Enforcing command limits is disabled. Command limits from URDF will be ignored.
+[gazebo-1] [INFO] [1790896016.216644300] [gz_ros_control]: The position_proportional_gain has been set to: 0.1
+[gazebo-1] [INFO] [1790896016.216757346] [gz_ros_control]: Loading joint: base_Revolute-1
+[gazebo-1] [INFO] [1790896016.216768027] [gz_ros_control]: 	State:
+[gazebo-1] [INFO] [1790896016.216777537] [gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1790896016.216792623] [gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1790896016.216804563] [gz_ros_control]: 	Command:
+[gazebo-1] [INFO] [1790896016.216810887] [gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1790896016.216860082] [gz_ros_control]: Loading joint: base_Revolute-2
+[gazebo-1] [INFO] [1790896016.216866074] [gz_ros_control]: 	State:
+[gazebo-1] [INFO] [1790896016.216871721] [gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1790896016.216877512] [gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1790896016.216882788] [gz_ros_control]: 	Command:
+[gazebo-1] [INFO] [1790896016.216887792] [gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1790896016.216910547] [gz_ros_control]: Loading joint: base_Revolute-3
+[gazebo-1] [INFO] [1790896016.216915781] [gz_ros_control]: 	State:
+[gazebo-1] [INFO] [1790896016.216920663] [gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1790896016.216926305] [gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1790896016.216932987] [gz_ros_control]: 	Command:
+[gazebo-1] [INFO] [1790896016.216941683] [gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1790896016.216970629] [gz_ros_control]: Loading joint: base_Revolute-4
+[gazebo-1] [INFO] [1790896016.216977705] [gz_ros_control]: 	State:
+[gazebo-1] [INFO] [1790896016.216984507] [gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1790896016.216992435] [gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1790896016.216997686] [gz_ros_control]: 	Command:
+[gazebo-1] [INFO] [1790896016.217002444] [gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1790896016.217023818] [gz_ros_control]: Loading joint: m_link1_Revolute-6
+[gazebo-1] [INFO] [1790896016.217029144] [gz_ros_control]: 	State:
+[gazebo-1] [INFO] [1790896016.217034089] [gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1790896016.217053937] [gz_ros_control]: 			 found initial value: 0.000000
+[gazebo-1] [INFO] [1790896016.217068488] [gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1790896016.217073620] [gz_ros_control]: 	Command:
+[gazebo-1] [INFO] [1790896016.217079652] [gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1790896016.217099918] [gz_ros_control]: Loading joint: m_link2_Revolute-7
+[gazebo-1] [INFO] [1790896016.217105150] [gz_ros_control]: 	State:
+[gazebo-1] [INFO] [1790896016.217110013] [gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1790896016.217115275] [gz_ros_control]: 			 found initial value: 0.000000
+[gazebo-1] [INFO] [1790896016.217121153] [gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1790896016.217125956] [gz_ros_control]: 	Command:
+[gazebo-1] [INFO] [1790896016.217130664] [gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1790896016.217148427] [gz_ros_control]: Loading joint: m_link3_Revolute-8
+[gazebo-1] [INFO] [1790896016.217153446] [gz_ros_control]: 	State:
+[gazebo-1] [INFO] [1790896016.217158206] [gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1790896016.217163213] [gz_ros_control]: 			 found initial value: 0.000000
+[gazebo-1] [INFO] [1790896016.217168751] [gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1790896016.217173678] [gz_ros_control]: 	Command:
+[gazebo-1] [INFO] [1790896016.217178347] [gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1790896016.217195878] [gz_ros_control]: Loading joint: m_link3_Revolute-9
+[gazebo-1] [INFO] [1790896016.217200852] [gz_ros_control]: 	State:
+[gazebo-1] [INFO] [1790896016.217205726] [gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1790896016.217210750] [gz_ros_control]: 			 found initial value: 0.000000
+[gazebo-1] [INFO] [1790896016.217216279] [gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1790896016.217220980] [gz_ros_control]: 	Command:
+[gazebo-1] [INFO] [1790896016.217225826] [gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1790896016.217375808] [gz_ros_control]: Loading sensor: imu
+[gazebo-1] [INFO] [1790896016.217418144] [gz_ros_control]: 	State:
+[gazebo-1] [INFO] [1790896016.217626104] [controller_manager]: Initialize hardware 'GazeboSimSystem' 
+[gazebo-1] [WARN] [1790896016.217653118] [controller_manager.hardware_component.system.GazeboSimSystem]: Executor is not available during hardware component initialization for 'GazeboSimSystem'. Skipping node creation!
+[gazebo-1] [INFO] [1790896016.217745889] [controller_manager]: Successful initialization of hardware 'GazeboSimSystem'
+[gazebo-1] [INFO] [1790896016.217968624] [controller_manager]: Activating component 'GazeboSimSystem'.
+[gazebo-1] [INFO] [1790896016.217996730] [resource_manager]: 'configure' hardware 'GazeboSimSystem' 
+[gazebo-1] [INFO] [1790896016.218003177] [gz_ros_control]: System Successfully configured!
+[gazebo-1] [INFO] [1790896016.218010813] [resource_manager]: Successful 'configure' of hardware 'GazeboSimSystem'
+[gazebo-1] [INFO] [1790896016.218021453] [resource_manager]: 'activate' hardware 'GazeboSimSystem' 
+[gazebo-1] [INFO] [1790896016.218036579] [resource_manager]: Successful 'activate' of hardware 'GazeboSimSystem'
+[gazebo-1] [WARN] [1790896016.218083855] [controller_manager]: Component 'GazeboSimSystem' does not have read or write statistics initialized, skipping registration.
+[gazebo-1] [INFO] [1790896016.218093959] [controller_manager]: Resource Manager has been successfully initialized. Starting Controller Manager services...
+[spawner-23] [INFO] [1790896016.260315052] [spawner_diff_drive_controller]: Setting controller param "params_file" to "['/tmp/launch_params_1dbh2p08']" for diff_drive_controller
+[gazebo-1] [INFO] [1790896016.262687422] [controller_manager]: Loading controller : 'diff_drive_controller' of type 'diff_drive_controller/DiffDriveController'
+[gazebo-1] [INFO] [1790896016.262768995] [controller_manager]: Loading controller 'diff_drive_controller'
+[gazebo-1] [INFO] [1790896016.273418886] [controller_manager]: Controller 'diff_drive_controller' node arguments: --ros-args --params-file /home/gautham/coco_labs_ws/install/gazebo_models/share/gazebo_models/urdf/coco_controllers.yaml -p use_sim_time:=true --params-file /tmp/launch_params_1dbh2p08 --param use_sim_time:=true 
+[spawner-23] [INFO] [1790896016.285715980] [spawner_diff_drive_controller]: Loaded diff_drive_controller
+[gazebo-1] [INFO] [1790896016.286899059] [controller_manager]: Configuring controller: 'diff_drive_controller'
+[gazebo-1] [INFO] [1790896016.296958696] [controller_manager]: Activating controllers: [ diff_drive_controller ]
+[gazebo-1] [WARN] [1790896018.309973069] [gz_ros_control]:  Desired controller update period (0.01 s) is slower than the gazebo simulation period (0.002 s).
+[gazebo-1] [INFO] [1790896018.975339433] [gz_ros_control]: IMU imu has a topic name: imu
+[gazebo-1] [INFO] [1790896018.975668418] [controller_manager]: Successfully switched controllers!
+[spawner-23] [INFO] [1790896018.984674118] [spawner_diff_drive_controller]: Configured and activated diff_drive_controller
+[magnet_release.py-17] [INFO] [1790896018.985083643] [magnet_release]: target_red detached
+[magnet_release.py-17] [INFO] [1790896018.985885547] [magnet_release]: target_green detached
+[magnet_release.py-17] [INFO] [1790896018.986173316] [magnet_release]: target_blue detached
+[magnet_release.py-17] [INFO] [1790896018.986494676] [magnet_release]: target_yellow detached
+[magnet_release.py-17] [INFO] [1790896018.986722922] [magnet_release]: all 4 targets released
+[INFO] [spawner-23]: process has finished cleanly [pid 329261]
+[INFO] [magnet_release.py-17]: process has finished cleanly [pid 329219]
+[spawner-25] [INFO] [1790896019.329483941] [spawner_gripper_controller]: Setting controller param "params_file" to "['/tmp/launch_params_1pszccez']" for gripper_controller
+[gazebo-1] [INFO] [1790896019.331245943] [controller_manager]: Loading controller : 'gripper_controller' of type 'joint_trajectory_controller/JointTrajectoryController'
+[gazebo-1] [INFO] [1790896019.331293931] [controller_manager]: Loading controller 'gripper_controller'
+[gazebo-1] [INFO] [1790896019.342077670] [controller_manager]: Controller 'gripper_controller' node arguments: --ros-args --params-file /home/gautham/coco_labs_ws/install/gazebo_models/share/gazebo_models/urdf/coco_controllers.yaml -p use_sim_time:=true --params-file /tmp/launch_params_1pszccez --param use_sim_time:=true 
+[spawner-25] [INFO] [1790896019.353638766] [spawner_gripper_controller]: Loaded gripper_controller
+[gazebo-1] [INFO] [1790896019.354668966] [controller_manager]: Configuring controller: 'gripper_controller'
+[gazebo-1] [INFO] [1790896019.354859262] [gripper_controller]: No specific joint names are used for command interfaces. Using 'joints' parameter.
+[gazebo-1] [INFO] [1790896019.354901707] [gripper_controller]: Command interfaces are [position] and state interfaces are [position velocity].
+[gazebo-1] [INFO] [1790896019.354938724] [gripper_controller]: Using 'splines' interpolation method.
+[gazebo-1] [INFO] [1790896019.361128961] [gripper_controller]: Action status changes will be monitored at 20.00 Hz.
+[gazebo-1] [INFO] [1790896019.365123675] [gripper_controller]: Setting initial scaling factor to 1.000000
+[gazebo-1] [INFO] [1790896019.365156743] [gripper_controller]: No scaling interface set. This controller will not read speed scaling from the hardware.
+[gazebo-1] [INFO] [1790896019.373624700] [controller_manager]: Activating controllers: [ gripper_controller ]
+[gazebo-1] [INFO] [1790896019.382466883] [controller_manager]: Successfully switched controllers!
+[spawner-25] [INFO] [1790896019.393373588] [spawner_gripper_controller]: Configured and activated gripper_controller
+[INFO] [spawner-25]: process has finished cleanly [pid 329269]
+[spawner-24] [INFO] [1790896019.750100471] [spawner_arm_controller]: Setting controller param "params_file" to "['/tmp/launch_params_4n4_tw10']" for arm_controller
+[gazebo-1] [INFO] [1790896019.751319936] [controller_manager]: Loading controller : 'arm_controller' of type 'joint_trajectory_controller/JointTrajectoryController'
+[gazebo-1] [INFO] [1790896019.751383748] [controller_manager]: Loading controller 'arm_controller'
+[gazebo-1] [INFO] [1790896019.751538707] [controller_manager]: Controller 'arm_controller' node arguments: --ros-args --params-file /home/gautham/coco_labs_ws/install/gazebo_models/share/gazebo_models/urdf/coco_controllers.yaml -p use_sim_time:=true --params-file /tmp/launch_params_4n4_tw10 --param use_sim_time:=true 
+[spawner-24] [INFO] [1790896019.774428042] [spawner_arm_controller]: Loaded arm_controller
+[gazebo-1] [INFO] [1790896019.776849739] [controller_manager]: Configuring controller: 'arm_controller'
+[gazebo-1] [INFO] [1790896019.777047064] [arm_controller]: No specific joint names are used for command interfaces. Using 'joints' parameter.
+[gazebo-1] [INFO] [1790896019.777089815] [arm_controller]: Command interfaces are [position] and state interfaces are [position velocity].
+[gazebo-1] [INFO] [1790896019.777107071] [arm_controller]: Using 'splines' interpolation method.
+[gazebo-1] [INFO] [1790896019.781161749] [arm_controller]: Action status changes will be monitored at 20.00 Hz.
+[gazebo-1] [INFO] [1790896019.790528015] [arm_controller]: Setting initial scaling factor to 1.000000
+[gazebo-1] [INFO] [1790896019.790577019] [arm_controller]: No scaling interface set. This controller will not read speed scaling from the hardware.
+[gazebo-1] [INFO] [1790896019.819277130] [controller_manager]: Activating controllers: [ arm_controller ]
+[gazebo-1] [INFO] [1790896019.843010828] [controller_manager]: Successfully switched controllers!
+[spawner-24] [INFO] [1790896019.855921284] [spawner_arm_controller]: Configured and activated arm_controller
+[INFO] [spawner-24]: process has finished cleanly [pid 329267]
+[spawner-22] [INFO] [1790896020.399095469] [spawner_joint_state_broadcaster]: Setting controller param "params_file" to "['/tmp/launch_params_a3od2bm0']" for joint_state_broadcaster
+[gazebo-1] [INFO] [1790896020.409883712] [controller_manager]: Loading controller : 'joint_state_broadcaster' of type 'joint_state_broadcaster/JointStateBroadcaster'
+[gazebo-1] [INFO] [1790896020.409932159] [controller_manager]: Loading controller 'joint_state_broadcaster'
+[gazebo-1] [INFO] [1790896020.421387951] [controller_manager]: Controller 'joint_state_broadcaster' node arguments: --ros-args --params-file /home/gautham/coco_labs_ws/install/gazebo_models/share/gazebo_models/urdf/coco_controllers.yaml -p use_sim_time:=true --params-file /tmp/launch_params_a3od2bm0 --param use_sim_time:=true 
+[spawner-22] [INFO] [1790896020.532664258] [spawner_joint_state_broadcaster]: Loaded joint_state_broadcaster
+[gazebo-1] [INFO] [1790896020.536196184] [controller_manager]: Configuring controller: 'joint_state_broadcaster'
+[gazebo-1] [INFO] [1790896020.536352506] [joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[gazebo-1] [INFO] [1790896020.620150694] [controller_manager]: Activating controllers: [ joint_state_broadcaster ]
+[gazebo-1] [INFO] [1790896020.649155250] [controller_manager]: Successfully switched controllers!
+[spawner-22] [INFO] [1790896020.689902039] [spawner_joint_state_broadcaster]: Configured and activated joint_state_broadcaster
+[INFO] [spawner-22]: process has finished cleanly [pid 329255]
+[gazebo-1] [1;32mMsg[0m [NameManager::issueNewName] (Skeleton::Joint | coco) The name [fixed] is a duplicate, so it has been renamed to [fixed(1)]
+[gazebo-1] [1;32mMsg[0m [NameManager::issueNewName] (Skeleton::N4dart8dynamics9ShapeNodeE | coco) The name [link:c] is a duplicate, so it has been renamed to [link:c(1)]
+[gazebo-1] [1;32mMsg[0m [NameManager::issueNewName] (Skeleton::Joint | coco) The name [fixed] is a duplicate, so it has been renamed to [fixed(2)]
+[gazebo-1] [1;32mMsg[0m [NameManager::issueNewName] (Skeleton::N4dart8dynamics9ShapeNodeE | coco) The name [link:c] is a duplicate, so it has been renamed to [link:c(2)]
+[gazebo-1] [1;32mMsg[0m [NameManager::issueNewName] (Skeleton::Joint | coco) The name [fixed] is a duplicate, so it has been renamed to [fixed(3)]
+[gazebo-1] [1;32mMsg[0m [NameManager::issueNewName] (Skeleton::N4dart8dynamics9ShapeNodeE | coco) The name [link:c] is a duplicate, so it has been renamed to [link:c(3)]
