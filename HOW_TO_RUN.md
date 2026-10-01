@@ -131,7 +131,7 @@ and the perception markers.
 T2 serves the panel itself. On the machine running COCO:
 
 ```text
-http://localhost:8000
+http://localhost:8080
 ```
 
 From your phone, on the same network as that machine, use its address on
@@ -143,12 +143,14 @@ hostname -I | awk '{print $1}'     # e.g. 192.168.1.42
 ```
 
 ```text
-http://192.168.1.42:8000
+http://192.168.1.42:8080
 ```
 
-The dot beside the title turns **green** when the browser has reached
-the robot. If it stays red, the page loaded but rosbridge did not — see
-*Troubleshooting*.
+The connection readout says **Ready** when the browser has reached the
+robot (`platform_server`, the `coco.v1` WebSocket on the same port). If it
+stays on **Disconnected**, the page loaded but the socket did not — see
+*Troubleshooting*. The old rosbridge panel is on `:8000/legacy.html`, and
+only with `mission.launch.py platform:=false`.
 
 ### Choose a target
 
@@ -218,12 +220,16 @@ cd coco_mission && python3 -m pytest -q && cd ..
 ```
 
 Repeat for `coco_config`, `custom_teleop`, `coco_rl`, `coco_perception`,
-`coco_moveit_config`, `coco_sim` and `coco_web`; `gazebo_models` needs one
-extra flag, `python3 -m pytest -q --ignore=test_integration`.
+`coco_moveit_config`, `coco_sim`, `coco_web`, `coco_lab` and
+`coco_lab_ros`; `gazebo_models` needs one extra flag,
+`python3 -m pytest -q --ignore=test_integration`.
 
-**Expect 1564 passing, 0 failing, 0 skipped** across all nine packages on
-`p02-browser-experience` (`coco_web` alone: 517). `main` predates the
-platform and expects 829 across eight — there `coco_web` has no tests.
+**Expect 2391 passing, 0 failing, 0 skipped** across all eleven packages
+on `main` at 6307949, measured 2026-10-01 in a fresh `~/coco_labs_ws`:
+coco_config 93, coco_lab 352, coco_lab_ros 69, coco_sim 280, coco_rl 229,
+coco_perception 139, coco_moveit_config 12, custom_teleop 75,
+gazebo_models 229, coco_mission 338, coco_web 575. `coco_lab` needs
+hypothesis 6.98.15 and networkx 2.8.8 (`coco_lab/requirements-test.txt`).
 An isolated `ROS_DOMAIN_ID` (e.g. `export ROS_DOMAIN_ID=77`) gives the
 "clean ROS graph" without stopping a simulator you are using.
 
@@ -329,7 +335,7 @@ with synthetic data (no simulator needed) or against a live mission.
 
 | What you see | What to do |
 |---|---|
-| The panel loads but its dot stays **red** | rosbridge is not running or is unreachable. Check T2 for `Rosbridge WebSocket server started on port 9090`, and install `ros-jazzy-rosbridge-suite` if it is missing. From a phone, confirm you used the machine's network address, not `localhost`. |
+| The panel loads but stays **Disconnected** | The `/ws` socket is failing. Check T2 for `Uncaught exception GET /ws` from `platform_server`: on `main` at 6307949 every connection dies with `AttributeError: 'tuple' object has no attribute 'x_min'` (measured 2026-10-01; fixed on branch `fix/platform-world-geometry`, 95c1eef). From a phone, confirm you used the machine's network address, not `localhost`. (With `platform:=false`, the legacy panel needs rosbridge: T2 should print `Rosbridge WebSocket server started on port 9090`.) |
 | **Start mission** never enables | No colour is picked. Press one of the four buttons first. |
 | The state line reads `mission: offline` | The executive is not up. It is started by T2; check that terminal for errors. |
 | `package 'coco_mission' not found` | The overlay was not sourced, or was sourced before the build. Build from the workspace root, **then** `source setup_env.sh` in each terminal. |

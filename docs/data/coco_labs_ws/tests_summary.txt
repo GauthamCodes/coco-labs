@@ -1,0 +1,13 @@
+python: /home/gautham/.claude/jobs/eb997671/tmp/venv_sys/bin/python ROS_DOMAIN_ID=73 COCO_WS=/home/gautham/coco_labs_ws
+AMENT_PREFIX_PATH=/home/gautham/coco_labs_ws/moveit_prefix/root/opt/ros/jazzy:/home/gautham/coco_labs_ws/install/coco_mission:/home/gautham/coco_labs_ws/install/coco_perception:/home/gautham/coco_labs_ws/install/coco_moveit_config:/home/gautham/coco_labs_ws/install/coco_lab_ros:/home/gautham/coco_labs_ws/install/gazebo_models:/home/gautham/coco_labs_ws/install/coco_web:/home/gautham/coco_labs_ws/install/custom_teleop:/home/gautham/coco_labs_ws/install/coco_sim:/home/gautham/coco_labs_ws/install/coco_rl:/home/gautham/coco_labs_ws/install/coco_lab:/home/gautham/coco_labs_ws/install/coco_config:/opt/ros/jazzy
+coco_config rc=0 1s :: 93 passed in 0.48s
+coco_lab rc=0 42s :: 352 passed in 41.65s
+coco_lab_ros rc=0 16s :: 69 passed, 12 warnings in 15.92s
+coco_sim rc=0 3s :: 280 passed in 1.89s
+coco_rl rc=0 8s :: 229 passed in 7.88s
+coco_perception rc=0 2s :: 139 passed, 12 warnings in 1.85s
+coco_moveit_config rc=0 1s :: 12 passed in 0.45s
+custom_teleop rc=0 2s :: 75 passed, 12 warnings in 1.37s
+gazebo_models rc=0 12s :: 229 passed in 11.74s
+coco_mission rc=0 7s :: 338 passed in 6.37s
+coco_web rc=0 11s :: 575 passed, 12 warnings in 11.33s
