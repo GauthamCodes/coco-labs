@@ -351,3 +351,29 @@ def test_the_image_installs_what_the_web_platform_needs_at_runtime():
         assert WEB_RUNTIME[dep] in dockerfile, (
             f'{dep} is a coco_web runtime dependency but the image never '
             f'installs {WEB_RUNTIME[dep]}')
+
+
+def test_the_image_pins_tornado_to_the_version_ci_tests():
+    """
+    The image runs the tornado coco_web's suite is measured on.
+
+    Ubuntu's python3-tornado is 6.4 (measured in the image, 2026-10-02);
+    the suite encodes 6.5 behaviour and CI pins 6.5.7. One pin, two
+    places, asserted equal so they cannot drift.
+    """
+    dockerfile = _instructions(REPO / 'Dockerfile')
+    pinned = re.findall(r'pip3 install[^\n]*\btornado==([0-9.]+)', dockerfile)
+    ci = (REPO / '.github' / 'workflows' / 'ci.yml').read_text()
+    assert pinned == re.findall(r'\btornado==([0-9.]+)', ci) == ['6.5.7']
+
+
+def test_compose_disables_core_dumps():
+    """
+    `docker compose up` writes no core files.
+
+    A crash in the container is dumped by the HOST's apport, and Docker's
+    default core limit is unlimited: 12 GB of rviz2/Nav2 cores once filled
+    this machine's disk (2026-09-25).
+    """
+    service = _compose()['services']['coco']
+    assert service['ulimits']['core'] == {'soft': 0, 'hard': 0}

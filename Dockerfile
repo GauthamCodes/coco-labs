@@ -58,6 +58,13 @@ RUN pip3 install --break-system-packages --no-cache-dir \
  && pip3 install --break-system-packages --no-cache-dir \
       stable-baselines3 gymnasium
 
+# tornado: coco_web's suite is measured on 6.5.7 (CI pins the same) and
+# encodes 6.5 behaviour -- write_message returning a Task,
+# IOStream._write_buffer. The apt python3-tornado above is 6.4 (measured in
+# this image, 2026-10-02); pip's /usr/local copy shadows it. A layer of its
+# own, so the apt and torch layers above stay cached.
+RUN pip3 install --break-system-packages --no-cache-dir tornado==6.5.7
+
 WORKDIR ${COCO_WS}
 COPY . src/coco-labs/
 

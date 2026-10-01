@@ -46,6 +46,13 @@ services:
       COCO_RVIZ: "false"
     # Gazebo's physics and DDS both want more than the default 64 MB.
     shm_size: "2gb"
+    # No core files, ever. A crash in the container is dumped by the
+    # HOST's apport, and Docker's default core limit is unlimited: 12 GB
+    # of rviz2/Nav2 cores once filled this machine's disk (2026-09-25).
+    ulimits:
+      core:
+        soft: 0
+        hard: 0
     # Nav2 and the RL policy are CPU-bound here; without a GPU the sensor
     # rendering is software. Raise if the sim runs below real time.
     stop_grace_period: 30s
