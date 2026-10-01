@@ -1563,3 +1563,48 @@ def test_a_padded_big_endian_depth_row_is_read_correctly_at_the_boundary():
                                  clip=(0.1, 8.0), step=width * 4 + pad,
                                  is_bigendian=False)[0]
     assert misread != expected
+
+
+# ── the real world geometry, end to end ─────────────────────────────────
+class RealWorldNode(FakeNode):
+    """
+    FakeNode with the REAL ``world_geometry``, which reads coco_config.
+
+    Every other test here stubs ``world_geometry`` to None. That stub hid
+    917bc59's break -- the real method read ``platform_bounds.x_min`` off
+    a tuple and raised inside ``ControlSocket.open()``, so no browser
+    could connect -- through 575 green tests. This node keeps the real
+    method, so the break surfaces as a socket that is never greeted.
+    """
+
+    world_geometry = ps.CocoWebNode.world_geometry
+
+
+def test_welcome_carries_the_real_world_geometry_end_to_end():
+    """A real client connects and is greeted with coco_config's bays."""
+    from coco_config import robot
+
+    async def body():
+        h = await Harness(RealWorldNode()).start()
+        try:
+            ws = await h.client()
+            # The greeted socket works: hello was acked inside client(),
+            # and STOP is honoured.
+            await h.request(ws, {'type': 'stop'}, 'ack')
+            ws.close()
+            return ws.welcome['world'], list(h.node.published)
+        finally:
+            await h.stop()
+
+    world, published = _run(body())
+    shift = -robot.SPAWN_XY[0]
+    assert world['frame'] == 'map'
+    assert world['offset_x'] == shift
+    assert [b['bay_id'] for b in world['bays']] == [
+        r.region_id for r in robot.TARGET_REGIONS]
+    for bay, region in zip(world['bays'], robot.TARGET_REGIONS):
+        x_min, x_max = region.platform_bounds[:2]
+        assert bay['platform'] == {'x0': x_min + shift, 'x1': x_max + shift}
+        assert bay['ramp']['x1'] == bay['platform']['x0']
+        assert bay['descent']['x0'] == bay['platform']['x1']
+    assert published[-1] == ('stop',)
