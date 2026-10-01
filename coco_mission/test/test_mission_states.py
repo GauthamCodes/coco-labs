@@ -242,6 +242,7 @@ class TestContractTable:
         for state in ms.NOMINAL_NEXT:
             assert state in ms.CONTRACTS
             assert ms.NOMINAL_NEXT[state] in ms.CONTRACTS
+        assert 'THROWAWAY_BREAK' in ms.CONTRACTS
 
     def test_every_retry_target_is_a_real_state(self):
         for contract in ms.CONTRACTS.values():
