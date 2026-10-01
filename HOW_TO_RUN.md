@@ -26,8 +26,8 @@ There is one demonstration, and it is the whole robot.
 
 ```bash
 mkdir -p ~/ros2_ws/src && cd ~/ros2_ws/src
-git clone https://github.com/GauthamCodes/coco-robot-jazzy-2.0.git
-cd coco-robot-jazzy-2.0
+git clone https://github.com/GauthamCodes/coco-labs.git
+cd coco-labs
 ```
 
 Everything is on `main`. There is no other branch, and nothing to
@@ -62,7 +62,7 @@ virtualenv works too, as long as ROS 2 can import from it.
 ```bash
 cd ~/ros2_ws
 colcon build --symlink-install
-source src/coco-robot-jazzy-2.0/setup_env.sh
+source src/coco-labs/setup_env.sh
 ```
 
 **Expect:** `Summary: 9 packages finished`, **0 errors**. `setuptools`
@@ -85,9 +85,9 @@ it. COCO does not need it. `--packages-select` does not help — the stale
 prefix is still sourced — so build COCO into an overlay of its own:
 
 ```bash
-src/coco-robot-jazzy-2.0/scripts/build_overlay.sh "$HOME/coco_ws_build"
+src/coco-labs/scripts/build_overlay.sh "$HOME/coco_ws_build"
 export COCO_WS="$HOME/coco_ws_build"          # every terminal, before:
-source src/coco-robot-jazzy-2.0/setup_env.sh
+source src/coco-labs/setup_env.sh
 ```
 
 ---
@@ -286,7 +286,7 @@ package (`COLCON_IGNORE`) and needs no ROS. It needs Node **24.21.0**
 cd lab_web
 npm ci                              # exact pins from package-lock.json
 python3 tools/build_catalog.py      # validate + replay every bundle with coco_lab; build the wheel
-npm run dev                         # http://localhost:5173/coco-robot-jazzy-2.0/
+npm run dev                         # http://localhost:5173/coco-labs/
 npm test                            # vitest (decoder, player, renderer)
 python3 -P -m pytest tools          # the Python half; needs coco_lab + pytest
 npm run build && npm run check:dist # production build + static checks
@@ -297,13 +297,13 @@ validation boundary, and `tools/browser/check.py`, which measures the
 built site in headless Firefox. CI is `.github/workflows/lab.yml`, beside
 the ROS `ci.yml`.
 
-**The public site** is <https://gauthamcodes.github.io/coco-robot-jazzy-2.0/>.
+**The public site** is <https://gauthamcodes.github.io/coco-labs/>.
 `lab.yml`'s `deploy` job publishes it on every push to `main`; there is no
 manual step. To check the live site the same way as the local build
 (headless Firefox; screenshots and `report.json` land in `out/`):
 
 ```bash
-python3 lab_web/tools/browser/check.py https://gauthamcodes.github.io/coco-robot-jazzy-2.0/ out/ smoke phone weight
+python3 lab_web/tools/browser/check.py https://gauthamcodes.github.io/coco-labs/ out/ smoke phone weight
 bash docs/data/lab1d/live/http_check.sh   # status, .gz headers, bytes vs your lab_web/dist (npm run build first)
 ```
 

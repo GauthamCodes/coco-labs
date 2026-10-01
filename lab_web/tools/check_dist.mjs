@@ -4,7 +4,7 @@
 /**
  * Static checks on a production build (`dist/`), for CI and for 1D-8.
  *
- *   node tools/check_dist.mjs [--base /coco-robot-jazzy-2.0/] [--expect-hash HEX]
+ *   node tools/check_dist.mjs [--base /coco-labs/] [--expect-hash HEX]
  *
  * 1. Every src/href in dist/index.html is under the base path (or data:).
  * 2. The CSP names exactly the pinned Pyodide CDN directory.

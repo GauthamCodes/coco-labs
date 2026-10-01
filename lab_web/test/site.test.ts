@@ -18,8 +18,8 @@ const src = walk(join(LAB_WEB, 'src')).map((p) => ({ p, text: readFileSync(p, 'u
 
 describe('deployment constants', () => {
   it('the base path is the repository name, defined once', () => {
-    expect(DEFAULT_BASE).toBe('/coco-robot-jazzy-2.0/');
-    for (const { p, text } of src) expect(text.includes('coco-robot-jazzy-2.0'), p).toBe(false);
+    expect(DEFAULT_BASE).toBe('/coco-labs/');
+    for (const { p, text } of src) expect(text.includes('coco-labs'), p).toBe(false);
     const vite = readFileSync(join(LAB_WEB, 'vite.config.ts'), 'utf-8');
     expect(vite).toMatch(/process\.env\.LAB_BASE \?\? DEFAULT_BASE/);
   });

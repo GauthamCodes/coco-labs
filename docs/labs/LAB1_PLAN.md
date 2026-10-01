@@ -1,7 +1,7 @@
 # Lab 1 — Plan
 
-**Try it:** <https://gauthamcodes.github.io/coco-robot-jazzy-2.0/> · the
-exhibit: <https://gauthamcodes.github.io/coco-robot-jazzy-2.0/?view=exhibit>
+**Try it:** <https://gauthamcodes.github.io/coco-labs/> · the
+exhibit: <https://gauthamcodes.github.io/coco-labs/?view=exhibit>
 
 COCO Lab's first lab teaches graph search for robot path planning, in the
 browser, on the same maps and the same Nav2 stack a real robot used. This
@@ -121,7 +121,7 @@ date they were measured; they were not re-measured.
 Reproduce:
 
 ```bash
-python3 lab_web/tools/browser/check.py https://gauthamcodes.github.io/coco-robot-jazzy-2.0/ out/
+python3 lab_web/tools/browser/check.py https://gauthamcodes.github.io/coco-labs/ out/
 ```
 
 This runs eleven scenarios. Timings depend on the machine's load, so record

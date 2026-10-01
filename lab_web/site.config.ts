@@ -13,7 +13,7 @@
  * The Pyodide pin is here too, because both `index.html`'s CSP and the
  * worker must name exactly the same CDN directory (a test asserts it).
  */
-export const DEFAULT_BASE = '/coco-robot-jazzy-2.0/';
+export const DEFAULT_BASE = '/coco-labs/';
 
 /** Looked up 2026-09-30 (GitHub releases + npm); Python 3.14.2 inside. */
 export const PYODIDE_VERSION = '314.0.7';

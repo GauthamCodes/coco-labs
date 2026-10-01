@@ -10,7 +10,9 @@ Phase 1 (Lab 1, Plan) is CLOSED by decision (2026-09-30), with open
 items: 1A–1D are complete, 1E was skipped and 1F is partial. `main` was
 fast-forwarded to the Phase 1 state with the ROS `CI` and the `Lab`
 workflow both green, and the site is live at
-<https://gauthamcodes.github.io/coco-robot-jazzy-2.0/>, verified in a
+<https://gauthamcodes.github.io/coco-labs/> (until 2026-10-01 at
+`/coco-robot-jazzy-2.0/`; COCO Lab moved to its own repository,
+`GauthamCodes/coco-labs`), verified in a
 headless browser (see *COCO LAB — PHASE 1* below). The plan was revised
 the same day: Phase 2 is now **Live** (the real robot on the site), and it
 has not started.** The previous roadmap is
@@ -53,7 +55,7 @@ not current. **Unverified** means claimed or suspected but not observed.
 | | |
 |---|---|
 | **Direction** | COCO Lab, per `docs/ROADMAP.md`: Phase 0 → 1 Plan → 2 Localise → 3 Map → 4 Search → 5 Move. The COCO 2.0 priority order is superseded |
-| **Canonical branch** | `main` on `jazzy2` = GauthamCodes/coco-robot-jazzy-2.0. Remote `main` is `442bca0` (pushed 2026-09-29). Local `main` has fast-forwarded past it with the Phase 0 documentation (0B) and the reconciled session log (0C), awaiting `git push jazzy2 main`. Twelve other remote branches still exist; their archival as `archive/*` tags is prepared and awaits approval (`docs/data/m0b_phase0/README.md`) |
+| **Canonical branch** | *(As of 2026-09-29; since 2026-10-01 the repository is `GauthamCodes/coco-labs`.)* `main` on `jazzy2` = GauthamCodes/coco-robot-jazzy-2.0. Remote `main` is `442bca0` (pushed 2026-09-29). Local `main` has fast-forwarded past it with the Phase 0 documentation (0B) and the reconciled session log (0C), awaiting `git push jazzy2 main`. Twelve other remote branches still exist; their archival as `archive/*` tags is prepared and awaits approval (`docs/data/m0b_phase0/README.md`) |
 | **P03C** | **On `main`**, through merge commit `232454d` (parents `b15d445` main, `917bc59` p03c-consolidation). It brings the 24 × 18 m arena, `EpisodeSpec` (`coco_sim/episode.py`), `TargetRegion` (`coco_config/robot.py`), `platform_server` (`coco_web`) and the `/cmd_vel_gated` wiring |
 | **Tests** | **1,966 passed / 0 failed / 0 skipped** (measured in Milestone 0A on `232454d`, per package, cwd inside each package, clean ROS graph, overlay with MoveIt): coco_config 93, coco_mission 338, custom_teleop 75, coco_rl 229, coco_perception 139, coco_moveit_config 12, coco_sim 280, coco_web 575, gazebo_models 225. Milestone 0B changed documentation only |
 | **Command path — topology** | (measured, 0A, every run) `/cmd_vel_gated`: exactly **one publisher** (`cmd_vel_relay`) and **one subscriber** (`cmd_vel_arbiter`). The wheel topic has exactly **one publisher** (`cmd_vel_arbiter`). The relay no longer publishes on `/cmd_vel_nav`, so the loop is gone |
@@ -126,7 +128,7 @@ the robot — see **THE PLATFORM (P0.1)** below.
 |---|---|
 | **Canonical branch** | `main`. A fresh clone of it is sufficient. (This row used to add "the only branch"; twelve other remote branches exist — see CURRENT STATE) |
 | **Final commit** | the tip of `main`; `git log -1 --oneline` is the authority |
-| **Remote** | `https://github.com/GauthamCodes/coco-robot-jazzy-2.0` |
+| **Remote** | `https://github.com/GauthamCodes/coco-labs` (COCO Lab's own repository since 2026-10-01; before that, `GauthamCodes/coco-robot-jazzy-2.0`) |
 | **Verified test count** | **Current: 1,966 / 0 / 0 on the consolidated `main`** (see CURRENT STATE). Historical: **829 passing, 0 failing, 0 skipped**, across eight packages with test suites (nine packages total). On `c2nav43-integration`: **997 passing, 0 failing, 0 skipped** (C2-NAV.45; was 975 at C2-NAV.43) |
 | **Final nominal mission** | **COMPLETE.** All 16 nominal states, `attempt=1` throughout, `reason=--`, 186.7 s. Grasp physically verified from Gazebo ground truth: target lifted **35.1 mm** |
 | **Localization health** | **0 triggers** over 5,784 samples on that mission (`degraded=0` on every one) |
@@ -431,7 +433,7 @@ cd ~/ros2_ws
 colcon build --symlink-install --packages-select \
     coco_config coco_sim coco_rl coco_perception \
     coco_moveit_config custom_teleop gazebo_models coco_mission coco_web
-source src/coco-robot-jazzy-2.0/setup_env.sh
+source src/coco-labs/setup_env.sh
 ```
 
 Then the three-terminal mission in `HOW_TO_RUN.md`, "A normal autonomous

@@ -1,4 +1,4 @@
-**▶ Try it: [COCO Lab 1 — Plan](https://gauthamcodes.github.io/coco-robot-jazzy-2.0/)** — graph search
+**▶ Try it: [COCO Lab 1 — Plan](https://gauthamcodes.github.io/coco-labs/)** — graph search
 on a real robot's maps, in your browser.
 
 > **Status — September 2026.** COCO is becoming **COCO Lab**: an
@@ -18,7 +18,7 @@ teaching grid to the costmap Nav2 used on a real run. In the lab you can:
 
 Every search runs in `coco_lab` (Python, in your browser via Pyodide); the
 page never searches. Every claim names its evidence. The exhibit,
-**[The A\* myth, twice](https://gauthamcodes.github.io/coco-robot-jazzy-2.0/?view=exhibit)**,
+**[The A\* myth, twice](https://gauthamcodes.github.io/coco-labs/?view=exhibit)**,
 takes apart two "A\* vs Dijkstra" results, one of them COCO's own (below).
 Write-up, measured numbers and limitations:
 [docs/labs/LAB1_PLAN.md](docs/labs/LAB1_PLAN.md).
@@ -219,7 +219,7 @@ and sensor poses. Full node/topic graph and TF tree in
 ## Repository structure
 
 ```
-coco-robot-jazzy-2.0/
+coco-labs/
 ├── README.md · HOW_TO_RUN.md · LICENSE
 ├── CLAUDE.md                         # repo engineering constraints + trap list
 ├── PROJECT_STATE.md                  # final state snapshot
@@ -296,8 +296,8 @@ tests — are in **[HOW_TO_RUN.md](HOW_TO_RUN.md)**. The whole of it is:
 ```bash
 # Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic
 mkdir -p ~/ros2_ws/src && cd ~/ros2_ws/src
-git clone https://github.com/GauthamCodes/coco-robot-jazzy-2.0.git
-cd coco-robot-jazzy-2.0 && rosdep install --from-paths . --ignore-src -r -y
+git clone https://github.com/GauthamCodes/coco-labs.git
+cd coco-labs && rosdep install --from-paths . --ignore-src -r -y
 
 cd ../.. && colcon build --symlink-install --packages-select \
     coco_config coco_sim coco_rl coco_perception \
@@ -405,7 +405,7 @@ wherever the neighbourhood is unvisited — the mechanism is recorded in
 model. How much of the 6.2 % each of those accounts for has **not** been
 measured. COCO Lab's first lab (Plan) shows exactly this distinction on
 the real stack: see the exhibit
-**[The A\* myth, twice](https://gauthamcodes.github.io/coco-robot-jazzy-2.0/?view=exhibit)**,
+**[The A\* myth, twice](https://gauthamcodes.github.io/coco-labs/?view=exhibit)**,
 part (b).
 (This paragraph previously called the 6.2 % "an A\*-beats-Dijkstra
 result"; the numbers are unchanged, the interpretation was wrong.)

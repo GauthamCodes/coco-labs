@@ -2,7 +2,7 @@
 # Public-site HTTP checks: status, type, encoding, size, gzip magic, and byte equality with the local build.
 # Usage: http_check.sh [site-url] [local lab_web/dist to compare against]
 # (Phase 1 closure, 2026-09-30; output recorded in http_check.txt.)
-U="${1:-https://gauthamcodes.github.io/coco-robot-jazzy-2.0/}"
+U="${1:-https://gauthamcodes.github.io/coco-labs/}"
 L="${2:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd)/lab_web/dist}"
 T="$(mktemp -d)"
 for p in "" index.html generated/catalog.json; do

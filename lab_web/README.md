@@ -22,15 +22,15 @@ or the colcon overlay), for the data build. No ROS.
 cd lab_web
 npm ci                                   # exact pins, from the lockfile
 python3 tools/build_catalog.py           # = npm run tools: validate every bundle with coco_lab, build the wheel
-npm run dev                              # http://localhost:5173/coco-robot-jazzy-2.0/
+npm run dev                              # http://localhost:5173/coco-labs/
 npm test                                 # vitest: decoder, player, renderer
 python3 -P -m pytest tools               # the Python half (needs coco_lab + pytest)
 npm run build && npm run check:dist      # production build + static checks
-npx vite preview                         # serve dist/ at http://localhost:4173/coco-robot-jazzy-2.0/
-python3 tools/browser/check.py http://127.0.0.1:4173/coco-robot-jazzy-2.0/ out/   # headless Firefox
+npx vite preview                         # serve dist/ at http://localhost:4173/coco-labs/
+python3 tools/browser/check.py http://127.0.0.1:4173/coco-labs/ out/   # headless Firefox
 ```
 
-The base path `/coco-robot-jazzy-2.0/` (the GitHub Pages project path) is
+The base path `/coco-labs/` (the GitHub Pages project path) is
 defined once, in `site.config.ts`; `LAB_BASE=/ npm run build` overrides it.
 The Pyodide pin (314.0.7) lives beside it and fills the CSP in `index.html`.
 

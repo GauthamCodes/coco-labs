@@ -25,7 +25,7 @@ Usage::
     python3 lab_web/tools/browser/check.py <site-url> <outdir> [scenario...]
 
 ``<site-url>`` is the site root, e.g.
-``http://127.0.0.1:4173/coco-robot-jazzy-2.0/``. Scenarios: ``smoke``
+``http://127.0.0.1:4173/coco-labs/``. Scenarios: ``smoke``
 (every catalog bundle loads and draws), ``player`` (keyboard, scrub,
 play), ``reduced`` (prefers-reduced-motion), ``fps`` (full-arena Dijkstra
 playback), ``phone`` (390 x 844), ``edit`` (Pyodide cold and warm: one
