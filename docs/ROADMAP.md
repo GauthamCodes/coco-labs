@@ -1,12 +1,18 @@
 # COCO Lab — roadmap
 
-> **Status, 2026-09-30: plan revised (Phase 2 · Live added). Phase 0
-> closed. Phase 1 closed by decision with open items: 1E skipped as a
-> session (only parts of its must-haves 5 and 8 exist, from 1D); 1F
-> partial — the public URL is live and CI is green, but the demo video,
-> `docs/labs/LAB1_PLAN.md`, the README "Try it" link and the `lab1-v1.0`
-> tag and release are outstanding; 1G not run. The open items are listed
-> under "Lab 1.1" in §5. Phase 2 not started.**
+> **Status, 2026-10-01: Lab 1 complete and released.**
+> - The Lab 1.1 open items (§5) were delivered on 2026-10-01, and
+>   `lab1-v1.0` is published with the demo video:
+>   <https://github.com/GauthamCodes/coco-labs/releases/tag/lab1-v1.0>.
+> - COCO Lab now lives in its own repository, `GauthamCodes/coco-labs`,
+>   served at <https://gauthamcodes.github.io/coco-labs/>.
+> - Phases 0 and 1 are closed. 1G (optional) was not run. Lab 1.2 is
+>   deferred (§5).
+> - **Phase 2 (Live) has not started.**
+>
+> *(The status line of 2026-09-30 read: "plan revised (Phase 2 · Live
+> added) … Phase 1 closed by decision with open items … Phase 2 not
+> started.")*
 > This roadmap supersedes the priority order in the COCO 2.0 master context
 > (§45). Everything else in that document — its invariants, protected files
 > and git rules — still holds. The previous roadmap is archived at
@@ -331,7 +337,7 @@ mode from told to discovering.
 - **Later increments (Lab 1.2+):** JPS, Theta\*, RRT / RRT\* / PRM, Hybrid A\*;
   and the games listed under Lab 1.2 below.
 
-#### Lab 1.1 — Lab 1 must-haves not delivered when Phase 1 closed (2026-09-30)
+#### Lab 1.1 — Lab 1 must-haves not delivered when Phase 1 closed (2026-09-30) — all delivered 2026-10-01
 
 Phase 1 was closed by decision after 1D and a partial 1F; 1E was never run
 as a session (`docs/SESSION_LOG.md`, "PHASE 1 — COMPLETE" and the plan
@@ -385,16 +391,23 @@ and 1F:
   the analogue's paths are not drawn because 1C recorded their lengths, not
   their coordinates; (c) is labelled a reconstruction, as 1B recorded it.
   A test checks that every test the page cites exists.
-- **1F.1 `docs/labs/LAB1_PLAN.md`.** *Not written.*
+- **1F.1 `docs/labs/LAB1_PLAN.md`.** **Done (Lab 1.1 Part C, 2026-10-01).**
 - **1F.2 README:** the "Try it" link to the public URL at the top, a short
-  Lab 1 section, and the planner claim linked to the exhibit. *Not done*
+  Lab 1 section, and the planner claim linked to the exhibit. **Done (Part C).**
   (the planner claim itself was corrected in Phase 0).
-- **1F.3 Demo video,** 60–90 s, of the web app. *Not made.*
+- **1F.3 Demo video,** 60–90 s, of the web app. **Done (Part C):** 65.3 s,
+  recorded from the public site, viewport only; one cut, the Pyodide
+  warm-up (6.6 s), before recording.
 - **1F.4 Tag `lab1-v1.0` and a draft release** with the video and notes.
-  *Not done.*
+  **Done, and published with the owner's approval (2026-10-01)**, on
+  `GauthamCodes/coco-labs`.
 - **1F.5 Final checks:** CI green on `main`, per-package counts, and the
   page at phone width (headless Firefox, 390 × 844) are *done*. A real
-  phone, and a share-link round trip, are *not*.
+  phone, and a share-link round trip, are *not*. **Done (Part C):** a
+  share link round-trips in CI (both languages), in headless Firefox on
+  the public site, and — owner-reported — on a Nothing Phone (1) in Chrome,
+  where the page loaded, the trace played and a share link showed "This
+  link reproduced the exact trace".
 
 #### Lab 1.2 — deferred from Lab 1.1 by the owner (2026-10-01)
 
@@ -490,7 +503,9 @@ the live-control rule), says no new *lab* starts until the previous one has
 a public URL, a video and a write-up. Live is a phase, not a lab, so
 **Phase 2 is not blocked**. **Lab 2 (Phase 3) is blocked** until Lab 1 has
 its demo video and its write-up (`docs/labs/LAB1_PLAN.md`); on 2026-09-30
-Lab 1 had only its public URL.
+Lab 1 had only its public URL. **Satisfied 2026-10-01:** Lab 1 has its
+public URL, its video (release `lab1-v1.0`) and its write-up, so rule 9 no
+longer blocks Lab 2.
 
 **Minimum signature release: Phases 0 and 1, about four weeks.** It stands on
 its own: a public URL, a video, a write-up and a measured, tested lab.

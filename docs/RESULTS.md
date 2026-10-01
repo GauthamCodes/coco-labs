@@ -7758,3 +7758,72 @@ the live catalog reads `built_from aa0935a`, `dirty: false`. Evidence is in
 ### Not yet measured
 
 - A headed browser, a real phone, Safari and Chrome.
+
+## COCO Lab 1.1, Part C — Lab 1 shipped (measured 2026-10-01)
+
+Part C closed Lab 1:
+- the write-up, `docs/labs/LAB1_PLAN.md`;
+- the README's "Try it" link and Lab 1 section;
+- the three stale spots;
+- the demo video;
+- the release, published on the owner's approval;
+- the owner's phone check.
+
+On the owner's instruction, COCO Lab also moved to its own repository,
+`GauthamCodes/coco-labs`. Evidence: `docs/data/lab11/part_c/`.
+
+### The move to `GauthamCodes/coco-labs`
+
+- **The repository:** created public (GitHub Pages needs it), with the
+  `main` and `lab1` history pushed unchanged. Pages is set to GitHub
+  Actions, and the default branch is `main`.
+- **The rename:** every live reference now names `coco-labs`, including
+  the site's base path (`/coco-labs/`), its test, the tools, README,
+  HOW_TO_RUN, LAB1_PLAN, lab_web/README, the CLAUDE.md repository row and
+  PROJECT_STATE's current rows.
+- **What kept the old name:** the evidence and history. The sections of
+  this file already measured, SESSION_LOG entries, approved plan records
+  and the JSON reports keep the URL they were measured at; dated notes say
+  where things moved.
+- **CI on the new repository** (`main` = `3206f1e`): `CI` (run 36822170117)
+  and `Lab` (run 36822170285) both passed, and `deploy` published the site.
+  The live catalog reads `built_from 3206f1e`, `dirty: false`.
+
+### The new public site (headless Firefox 156, load 0.54–1.08)
+
+<https://gauthamcodes.github.io/coco-labs/>:
+
+| | target | measured |
+|---|---|---|
+| smoke | every bundle draws | 11 of 11, 0 console errors, no cookie, no storage |
+| full-arena playback, 1,000 / 10,000 events/frame | ≥ 60 fps | 59.95 / 59.73 fps, 0 frames > 25 ms (the 60 Hz cap) |
+| paint one cell → first frame, warm, edits 2–4 | ≤ 1.5 s | 1,188 / 1,195 / 1,170 ms |
+| phone 390 × 844 | no horizontal scroll | `scrollWidth` 378 |
+| share links | reproduce the exact trace | 3 of 3, including one made on this URL, 5.9–6.2 s each |
+| replay, exhibit | work | as before; `?view=exhibit` opens the exhibit |
+
+### The owner's phone check (owner-reported, 2026-10-01)
+
+On a **Nothing Phone (1), in Chrome**, the page loaded and the trace
+played. The share link opened and showed "This link reproduced the exact
+trace". This was reported by the owner, not instrumented, so it records
+what worked, not timings. The site was then at the old URL; it is the same
+site at the new one.
+
+### The release
+
+- **`lab1-v1.0`:** an annotated tag on `3206f1e`, pushed to `coco-labs`
+  only, and **published**:
+  <https://github.com/GauthamCodes/coco-labs/releases/tag/lab1-v1.0>.
+- **The video asset:** `coco_lab1_demo.mp4`, 65.3 s, 1120 × 920, H.264,
+  2,005,151 B, sha256 `10793f8c…`. The public download was checked
+  identical. It was recorded from the new URL by
+  `lab_web/tools/browser/record_demo.py`, capturing the headless browser's
+  viewport only, at real pacing.
+- **One cut:** the one-time Pyodide start-up and a warm-up search, 6.6 s,
+  before recording began (`video_cuts.json`).
+- **The first video was not shipped.** Recorded the same way from the old
+  URL, it ended on that URL; it was replaced so that no published artefact
+  names the old repository.
+- **On the old repository:** the unpublished draft release there was
+  deleted, and no `lab1-v1.0` tag exists there.

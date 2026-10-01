@@ -408,7 +408,7 @@ Precondition: SESSION_LOG.md shows 1C complete. Branch lab1.
 Checkpoint, commit, stop.
 ```
 
-### 1E — Lab 1's content — *as run: SKIPPED (Phase 1 closed by decision, 2026-09-30); only parts of must-haves 5 and 8 exist, from 1D. Owed as Lab 1.1, ROADMAP §5*
+### 1E — Lab 1's content — *as run: SKIPPED (Phase 1 closed by decision, 2026-09-30); only parts of must-haves 5 and 8 exist, from 1D. Owed as Lab 1.1, ROADMAP §5* — **DONE in Lab 1.1, 2026-10-01** (must-have 7, the challenge, moved to Lab 1.2 by the owner)
 
 ```
 Phase 1E — Lab 1's content.
@@ -463,7 +463,7 @@ Otherwise log them in docs/ROADMAP.md as Lab 1.1.
 Do not add a sixth algorithm. Checkpoint, commit, stop.
 ```
 
-### 1F — ship Lab 1 — *as run: PARTIAL, 2026-09-30. Done: public URL live, CI green on `main`, per-package counts, 390 px headless check. Not done: `LAB1_PLAN.md`, README "Try it", demo video, `lab1-v1.0` tag and release, real phone, share-link round trip. Owed as Lab 1.1*
+### 1F — ship Lab 1 — *as run: PARTIAL, 2026-09-30. Done: public URL live, CI green on `main`, per-package counts, 390 px headless check. Not done: `LAB1_PLAN.md`, README "Try it", demo video, `lab1-v1.0` tag and release, real phone, share-link round trip. Owed as Lab 1.1* — **DONE in Lab 1.1, 2026-10-01** (release `lab1-v1.0` published on `GauthamCodes/coco-labs`; real-phone check owner-reported)
 
 ```
 Phase 1F — ship Lab 1.
@@ -497,7 +497,7 @@ Phase 1 is then done. Don't start Phase 2 (Live). Its prompt gets written
 from docs/ROADMAP.md §3.5 and §6 when I'm ready.
 ```
 
-### 1G — optional learning check — *as run: NOT RUN (optional; its precondition, a 1F release, was never met)*
+### 1G — optional learning check — *as run: NOT RUN (optional). Its precondition, the 1F release, was met on 2026-10-01; it has not been started*
 
 ```
 Phase 1G (optional) — a learning check.

@@ -6366,3 +6366,76 @@ phone 378; smoke 11 of 11; 0 console errors. See RESULTS
 NEXT: Part C (items 10–16: LAB1_PLAN.md, README, the three stale spots,
 the demo video, the tag and the draft release, the owner's phone check,
 and the closing status) on "continue". Phase 2 (Live) has not started.
+
+---
+
+## Lab 1.1 — Part C: ship it; LAB 1.1 COMPLETE (2026-10-01)
+
+Done on the owner's "continue", then on their reply of 2026-10-01. The
+reply had three parts:
+- the phone check;
+- approval to publish;
+- an instruction to move COCO Lab to its own repository, named "coco
+  labs", and to return `coco-robot-jazzy-2.0` to its state before COCO Lab.
+
+**Delivered** (details in `docs/RESULTS.md`, "COCO Lab 1.1, Part C")
+- **10.** `docs/labs/LAB1_PLAN.md`. Every cited test name is verified to
+  exist. Earlier-phase numbers carry their phase and date.
+- **11.** README: "Try it" at the very top, a short Lab 1 section, and the
+  6.2 % paragraph linked to the exhibit. `?view=exhibit` opens it.
+- **12.** The three stale spots: Sketch is Phase 3 in `lab_web/README` and
+  `PHASE_1D_PLAN`, and PROJECT_STATE points to the current plan under
+  "NO NEXT MILESTONE".
+- **13.** The demo video: 65.3 s, viewport only, recorded by
+  `lab_web/tools/browser/record_demo.py`. The probe frame was taken first;
+  the probes and frames were deleted. It is not in git; a copy is in
+  `~/Videos/coco_lab1_demo.mp4`.
+- **14.** `lab1-v1.0` was **published with the owner's approval** on
+  `GauthamCodes/coco-labs`.
+- **15. The owner's phone check, as reported:** Nothing Phone (1), Chrome.
+  The page loaded and the trace played; the share link showed "This link
+  reproduced the exact trace".
+- **16.** The ROADMAP status line, the Lab 1.1 list (every item delivered)
+  and the rule 9 note (satisfied); LAB_PHASES 1E and 1F marked DONE; 1G's
+  stale "precondition never met" corrected; PROJECT_STATE's header and Next
+  row; this entry.
+
+**The move to `GauthamCodes/coco-labs`** (created public; Pages set to
+GitHub Actions; default branch `main`)
+- `main` and `lab1` were pushed with their history; local remote `labs`.
+- Every live reference to the repository was renamed (commit `bd77ed9`).
+  The evidence and history keep the URL they were measured at, with dated
+  notes.
+- On the new repo, `CI` and `Lab` passed and `deploy` published the site
+  at <https://gauthamcodes.github.io/coco-labs/>. Headless Firefox measured
+  it at 11 of 11 bundles, 59.95 fps, warm paint 1,170–1,195 ms and phone
+  378. A share link made there, and both CI vectors, reproduced exactly.
+- The demo video was **re-recorded from the new URL** before publishing.
+  The approved cut ended on the old URL; the new one is the same tour,
+  65.3 s.
+- On the old repository, the unpublished draft release was deleted; no
+  `lab1-v1.0` tag was ever pushed there.
+
+**Measured:** in RESULTS "COCO Lab 1.1, Part C". Tests on the release
+commit, unchanged since Part B: `coco_lab` 349 / 352; `lab_web/tools` 72;
+vitest 180; 0 failed, 0 skipped.
+
+**NOT done, and why: resetting `GauthamCodes/coco-robot-jazzy-2.0`.** The
+owner asked to return it to "the state it used to be in … when I tried to
+integrate Isaac Sim". That rewrites a public repository's `main`, and the
+history admits more than one reading:
+- `b15d445` (2026-09-24): `main` during the Isaac work.
+- `442bca0` (2026-09-29): after the P03C merge and Milestone 0A, both of
+  which landed as COCO Lab's Phase 0.
+
+It also leaves three things to decide: the old repo's `lab1` branch, its
+Pages site, and whether to force-push or add a restoring commit. The owner
+was asked; nothing on the old repository was changed except deleting its
+unpublished draft.
+
+LAB 1 IS COMPLETE AND RELEASED. Lab 1.2 (challenge, beat-the-planner,
+stars, daily seed) is deferred. **Phase 2 (Live) has not started.**
+
+NEXT: the owner's answer on the old repository. Then Phase 2 (Live), only
+when the owner asks. Its prompt is to be written from `docs/ROADMAP.md`
+§3.5 and §6.

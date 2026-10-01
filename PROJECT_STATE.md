@@ -6,15 +6,19 @@ robotics curriculum that runs on this real ROS 2 / Nav2 stack. The plan is
 [`docs/LAB_PHASES.md`](docs/LAB_PHASES.md). **Phase 0 ("make the repo tell
 the truth") is closed locally (Milestone 0C, 2026-09-29); its public actions
 (push, archive tags, name, video migration) await the owner's approval.
-Phase 1 (Lab 1, Plan) is CLOSED by decision (2026-09-30), with open
-items: 1A–1D are complete, 1E was skipped and 1F is partial. `main` was
+Lab 1 is complete and released (2026-10-01): Lab 1.1 delivered the
+open items Phase 1's closure left (1E, 1F), and `lab1-v1.0` is published
+with its demo video
+(<https://github.com/GauthamCodes/coco-labs/releases/tag/lab1-v1.0>).
+Phase 1 (Lab 1, Plan) was CLOSED by decision on 2026-09-30, with 1E
+skipped and 1F partial; `main` was
 fast-forwarded to the Phase 1 state with the ROS `CI` and the `Lab`
 workflow both green, and the site is live at
 <https://gauthamcodes.github.io/coco-labs/> (until 2026-10-01 at
 `/coco-robot-jazzy-2.0/`; COCO Lab moved to its own repository,
 `GauthamCodes/coco-labs`), verified in a
 headless browser (see *COCO LAB — PHASE 1* below). The plan was revised
-the same day: Phase 2 is now **Live** (the real robot on the site), and it
+the same day: Phase 2 is now Live (the real robot on the site), and it
 has not started.** The previous roadmap is
 archived at `docs/history/ROADMAP_COCO2.md`, and the first COCO Lab plan
 (before Phase 2 · Live) at `docs/history/ROADMAP_LAB_2026-09-28.md`.
@@ -37,7 +41,7 @@ at Phase 1A, commit `c3713dd`, which did not update this file.)
 | **Deployment** | **Live** (measured 2026-09-30). `main` was fast-forwarded `6853517..59af2f6` (no merge commit, no force) after PR #1 ran both workflows green. `lab.yml`'s `deploy` succeeded on `main` (run 36671154008), and GitHub records a `github-pages` deployment of `59af2f6`. URL: <https://gauthamcodes.github.io/coco-robot-jazzy-2.0/>. The live catalog says `built_from 59af2f6, dirty: false`. *(Moved 2026-10-01: COCO Lab is now `GauthamCodes/coco-labs`, served at <https://gauthamcodes.github.io/coco-labs/>; the URL in this row is where that 2026-09-30 measurement was taken.)* `docs/RESULTS.md` "COCO Lab Phase 1 — closure: the public site" |
 | **Main CI** | **Green** for the first time since August (run 36671154026: 1059 tests, 0 failures, 0 errors, 0 skipped). It had been red because the workflow's environment was incomplete, as its logs show: `coco_sim` was missing from `--packages-select` (Build failed), and the runner lacked `mujoco` (coco_rl's collection aborted) and `nav2_bringup` / `ros_gz_sim` (31 gazebo_models failures). Fixes `b1e9f85` and `59af2f6` add those only; no test, floor or package was removed |
 | **Public site** (measured, headless Firefox 156 against the public URL) | All 10 catalog bundles (7 of format 1.0, 3 of format 1.1) load, decode and draw with the right mode badge. 0 console errors, no cookies, and nothing stored. Phone 390 × 844 works: `scrollWidth` 378, all controls hit-test, and a tap plays. Pages serves `arrays.bin.gz` as `application/gzip` with **no** `Content-Encoding`, byte-identical to the build. No Pyodide request is made before the first edit, and afterwards only the pinned CDN. Timings, 2 live samples: at 1-minute load ~2, warm edit 1,412 / 1,468 / 1,493 ms (target ≤ 1.5 s, worst margin 7 ms) and playback 59.94 fps. Under another session's simulator load (~30), the warm edit was 3,871–4,395 ms, **missing** the target. Both samples are in RESULTS |
-| **Next** | **Phase 2 — Live, not started** (`docs/ROADMAP.md` §3.5 and §6; plan revised 2026-09-30). It puts the real robot on the site in teleop, Nav2 and autonomous modes, with scheduled public sessions. SLAM is Phase 4 (Map); Localise is Phase 3. Rule 9 does not block Phase 2, because Live is not a lab, but it **blocks Lab 2 (Phase 3)** until Lab 1 has its demo video and write-up. **Lab 1's open items** (ROADMAP §5, "Lab 1.1"), none of them built: 1E's settings panel, map ladder, race mode, predict-then-reveal, share links, break-the-planner challenge, the "A\* myth, twice" exhibit, full obstacle painting with blocked start/goal messages, and the tracking-error plot; 1F's `docs/labs/LAB1_PLAN.md`, README "Try it" link and Lab 1 section, demo video, `lab1-v1.0` tag and release, and real-phone and share-link checks. 1G (optional) was not run. No Phase 1 subdivision was created |
+| **Next** | **Phase 2 — Live, not started** (`docs/ROADMAP.md` §3.5 and §6). Lab 1 is complete and released (`lab1-v1.0`, 2026-10-01): every Lab 1.1 item in ROADMAP §5 is delivered, and rule 9 no longer blocks Lab 2 (Lab 1 has its URL, video and write-up, `docs/labs/LAB1_PLAN.md`). **Deferred to Lab 1.2:** the break-the-planner challenge, beat-the-planner, stars, the daily seed. 1G (optional) not run. COCO Lab's repository is `GauthamCodes/coco-labs` since 2026-10-01 |
 
 (Until 2026-09-29 this file was headed "COCO 2.0 STATUS: ROBOT FROZEN /
 PLATFORM IN PROGRESS". The new direction does not change the robot:

@@ -110,13 +110,20 @@ date they were measured; they were not re-measured.
 
 ### The site (headless Firefox 156; this session; RESULTS "COCO Lab 1.1, Part B")
 
-| measure | target | local | public site |
+| measure | target | local | public site, `coco-labs` |
 |---|---|---|---|
-| full-arena Dijkstra playback (283,378 events) | ≥ 60 fps | 60.01 fps | 60.03 fps |
-| paint one cell → first frame, warm, 0.10 m arena | ≤ 1.5 s | 1,134–1,145 ms | 1,137–1,159 ms |
-| share link → "reproduced the exact trace" | works | 3 of 3, 3.6–3.8 s | 3 of 3, 4.7–5.7 s |
+| full-arena Dijkstra playback (283,378 events) | ≥ 60 fps | 60.01 fps | 59.95 fps, 0 frames > 25 ms (the 60 Hz cap) |
+| paint one cell → first frame, warm, 0.10 m arena | ≤ 1.5 s | 1,134–1,145 ms | 1,170–1,195 ms |
+| share link → "reproduced the exact trace" | works | 3 of 3, 3.6–3.8 s | 3 of 3, 5.9–6.2 s |
 | phone 390 × 844, horizontal scroll | none | `scrollWidth` 378 | 378 |
 | initial page weight (Pyodide excluded) | report | 115,555 B | — |
+| a real phone (owner-reported) | works | — | Nothing Phone (1), Chrome: page loaded, trace played, a share link reproduced the exact trace |
+
+The `coco-labs` column was measured on 2026-10-01 at
+<https://gauthamcodes.github.io/coco-labs/>, built from `3206f1e`
+(`docs/data/lab11/part_c/browser_report_coco_labs.json`). Before the move,
+the same site measured 60.03 fps, 1,137–1,159 ms and 4.7–5.7 s at
+`/coco-robot-jazzy-2.0/` (RESULTS "COCO Lab 1.1, Part B").
 
 Reproduce:
 
@@ -153,9 +160,12 @@ Reproduce: `python3 docs/data/lab1b/isro_experiment.py` (output
 
 ## 5. Not verified
 
-- **A real phone, a headed browser, Safari and Chrome.** Every browser
-  number is headless Firefox 156 on the development machine. The owner's
-  phone check is recorded in `docs/SESSION_LOG.md` when done.
+- **A headed desktop browser, Safari, and phones other than one.** Every
+  measured browser number is headless Firefox 156 on the development
+  machine. One real phone was checked by the owner (a Nothing Phone (1),
+  Chrome: the page loaded, the trace played, a share link reproduced the
+  exact trace; recorded in `docs/SESSION_LOG.md`); that check reports what
+  worked, not timings.
 - **M3's 6.2 % itself**, never re-run (its goal no longer exists).
 - **The 1C analogue's paths**, whose coordinates were not recorded; the
   exhibit shows their lengths only.
