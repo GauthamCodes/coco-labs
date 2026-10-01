@@ -224,12 +224,23 @@ Repeat for `coco_config`, `custom_teleop`, `coco_rl`, `coco_perception`,
 `coco_lab_ros`; `gazebo_models` needs one extra flag,
 `python3 -m pytest -q --ignore=test_integration`.
 
-**Expect 2391 passing, 0 failing, 0 skipped** across all eleven packages
-on `main` at 6307949, measured 2026-10-01 in a fresh `~/coco_labs_ws`:
+Or all eleven at once, failing if any package fails or does not collect:
+
+```bash
+src/coco-labs/scripts/run_all_package_tests.sh --make-venv   # first time
+src/coco-labs/scripts/run_all_package_tests.sh               # after that
+```
+
+`--make-venv` builds `<ws>/test_venv` with coco_lab's pinned test
+dependencies, hypothesis 6.98.15 and networkx 2.8.8
+(`coco_lab/requirements-test.txt`). Bare `python3` without them makes
+the script refuse to start.
+
+**Expect 2398 passing, 0 failing, 0 skipped** across all eleven packages,
+measured 2026-10-02 with that script in `~/coco_labs_ws`:
 coco_config 93, coco_lab 352, coco_lab_ros 69, coco_sim 280, coco_rl 229,
 coco_perception 139, coco_moveit_config 12, custom_teleop 75,
-gazebo_models 229, coco_mission 338, coco_web 575. `coco_lab` needs
-hypothesis 6.98.15 and networkx 2.8.8 (`coco_lab/requirements-test.txt`).
+gazebo_models 229, coco_mission 338, coco_web 582.
 An isolated `ROS_DOMAIN_ID` (e.g. `export ROS_DOMAIN_ID=77`) gives the
 "clean ROS graph" without stopping a simulator you are using.
 
