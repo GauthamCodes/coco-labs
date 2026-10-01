@@ -787,6 +787,8 @@ phases in `docs/ROADMAP.md`; see CURRENT STATE at the top.)
 
 ## NO NEXT MILESTONE
 
+(Current plan: [`docs/ROADMAP.md`](docs/ROADMAP.md) — its status line says where COCO Lab is; added 2026-10-01.)
+
 (Superseded 2026-09-29: the next milestone is set by `docs/ROADMAP.md`,
 Phase 0 then Phase 1A. The text below is kept as the COCO 2.0 closing
 record.)

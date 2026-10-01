@@ -108,6 +108,7 @@ export function App() {
         setCatalog(c);
         const params = new URLSearchParams(window.location.search);
         if (params.has('v')) pendingShare.current = window.location.search; // a share link: applied once loaded
+        if (params.get('view') === 'exhibit' && c.exhibit) setView('exhibit'); // the README links here
         const first = c.bundles.find((b) => b.id === params.get('bundle')) ?? c.bundles[0];
         if (first) setSelection([{ catalogId: first.id }]);
       })

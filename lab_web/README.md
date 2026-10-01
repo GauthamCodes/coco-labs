@@ -142,7 +142,7 @@ The badge text comes from the bundle's own `provenance`:
 | `recorded-run` | Replay — recorded real run |
 | `glass-box`, `tool` = `lab_web/pyodide` | Replay — computed in your browser by coco_lab |
 | any other `glass-box` | Replay — coco_lab computation (glass-box) |
-| `sketch` | reserved for Phase 2; never produced in 1D |
+| `sketch` | reserved for Phase 3 (Sketch mode; Phase 2 is Live since the 2026-09-30 plan revision); never produced |
 
 Live mode does not exist here, and nothing in lab_web talks to ROS.
 

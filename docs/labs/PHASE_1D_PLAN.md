@@ -43,7 +43,9 @@ Owner decisions taken in this session:
   "Replay — recorded real run". Glass-box bundles show "Replay — coco_lab computation
   (glass-box)". A browser recompute is written as `glass-box` with
   `tool='lab_web/pyodide'` and shows "Replay — computed in your browser by coco_lab".
-  `sketch` stays reserved for Phase 2. No new mode, and no CLAUDE.md edit.
+  `sketch` stays reserved for Phase 3 (Sketch mode; it read "Phase 2" until
+  the 2026-09-30 plan revision made Phase 2 Live). No new mode, and no
+  CLAUDE.md edit.
 - **Base path.** `/coco-robot-jazzy-2.0/`, set in one constant and overridable by the
   env var `LAB_BASE`. A build test asserts every asset URL is under it.
 

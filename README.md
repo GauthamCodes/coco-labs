@@ -1,7 +1,27 @@
+**▶ Try it: [COCO Lab 1 — Plan](https://gauthamcodes.github.io/coco-robot-jazzy-2.0/)** — graph search
+on a real robot's maps, in your browser.
+
 > **Status — September 2026.** COCO is becoming **COCO Lab**: an
 > interactive, browser-based robotics curriculum that runs on this real
 > ROS 2 / Nav2 stack. Everything below remains accurate and measured.
 > Plan: [docs/ROADMAP.md](docs/ROADMAP.md).
+
+## Lab 1 — Plan
+
+Five search algorithms, traced event by event, on maps that climb from a
+teaching grid to the costmap Nav2 used on a real run. In the lab you can:
+- change the heuristic and see coco_lab's verdict on it;
+- race two to four algorithms on identical inputs;
+- paint walls and get the search rerun;
+- replay three runs the real robot drove;
+- share a link that reproduces your exact trace.
+
+Every search runs in `coco_lab` (Python, in your browser via Pyodide); the
+page never searches. Every claim names its evidence. The exhibit,
+**[The A\* myth, twice](https://gauthamcodes.github.io/coco-robot-jazzy-2.0/?view=exhibit)**,
+takes apart two "A\* vs Dijkstra" results, one of them COCO's own (below).
+Write-up, measured numbers and limitations:
+[docs/labs/LAB1_PLAN.md](docs/labs/LAB1_PLAN.md).
 
 # COCO 2.0 — Autonomous Mobile Manipulator
 
@@ -383,8 +403,10 @@ wherever the neighbourhood is unvisited — the mechanism is recorded in
 [docs/DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md) — while
 `SmacPlanner2D` back-traces its node chain, with its own traversal-cost
 model. How much of the 6.2 % each of those accounts for has **not** been
-measured. COCO Lab's first lab (Plan) is built to show exactly this
-distinction on the real stack ([docs/ROADMAP.md](docs/ROADMAP.md)).
+measured. COCO Lab's first lab (Plan) shows exactly this distinction on
+the real stack: see the exhibit
+**[The A\* myth, twice](https://gauthamcodes.github.io/coco-robot-jazzy-2.0/?view=exhibit)**,
+part (b).
 (This paragraph previously called the 6.2 % "an A\*-beats-Dijkstra
 result"; the numbers are unchanged, the interpretation was wrong.)
 
