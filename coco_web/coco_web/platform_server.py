@@ -884,6 +884,10 @@ class CocoWebNode(Node):
                 'grid instead of the world')
             return None
         shift = -SPAWN_XY[0]
+        # TargetRegion.platform_bounds is a plain tuple,
+        # (x_min, x_max, y_min, y_max) -- not an object with .x_min. Reading
+        # it as one raised AttributeError in ControlSocket.open(), so every
+        # browser connection died before `welcome` from 917bc59 on.
         bays = [
             {
                 'bay_id': region.region_id,
@@ -895,11 +899,11 @@ class CocoWebNode(Node):
                     'x1': region.ramp_summit_x + shift,
                 },
                 'platform': {
-                    'x0': region.platform_bounds.x_min + shift,
-                    'x1': region.platform_bounds.x_max + shift,
+                    'x0': region.platform_bounds[0] + shift,
+                    'x1': region.platform_bounds[1] + shift,
                 },
                 'descent': {
-                    'x0': region.platform_bounds.x_max + shift,
+                    'x0': region.platform_bounds[1] + shift,
                     'x1': region.descent_x + shift,
                 },
             }
