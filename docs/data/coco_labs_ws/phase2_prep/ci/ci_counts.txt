@@ -1,0 +1,7 @@
+ci.yml colcon test-result | collected, per run (coco-labs):
+4661898_before:  Summary: 1637 tests, 0 errors, 0 failures, 0 skipped |  collected 1635 tests across 8 suites, 0 failed/errored
+adb7d55_lab1:  Summary: 1982 tests, 0 errors, 0 failures, 0 skipped |  collected 1979 tests across 9 suites, 0 failed/errored
+fcea269_one_coco_mission_assertion_broken_throwaway:  Summary: 1982 tests, 0 errors, 2 failures, 0 skipped | 
+proof-run failure records:
+ build/coco_mission/test_results/coco_mission/coco_mission_pytest.xunit.xml: 338 tests, 0 errors, 1 failure, 0 skipped
+ - coco_mission.test.test_mission_states.TestContractTable test_every_nominal_state_has_a_contract

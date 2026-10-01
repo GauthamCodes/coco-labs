@@ -1,0 +1,7 @@
+commit adb7d55b7162a2d1b5e407ae79b7221f277369e3
+#6 CACHED
+#7 CACHED
+#9 [ 4/10] RUN pip3 install --break-system-packages --no-cache-dir tornado==6.5.7
+#9 0.854 Collecting tornado==6.5.7
+#12 10.18 Summary: 9 packages finished [9.47s]
+compose build exit=0 in 16 s

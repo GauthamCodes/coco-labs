@@ -18,6 +18,25 @@ or, equivalently:
 
 ## Status: authored, not runtime-tested
 
+**2026-10-02, later — `docker compose up` is the path, measured**
+(`docs/data/coco_labs_ws/phase2_prep/compose/`). Two changes:
+- The compose service sets `ulimits: core: 0/0`, so `docker compose up`
+  writes no host core files. A static test pins this.
+- The image pins tornado **6.5.7** in a layer of its own, the version
+  CI tests; a static test asserts the two pins agree.
+
+`docker compose build` on lab1 adb7d55 took 16 s, with the apt and torch
+layers cached. `docker compose up -d` was healthy in 12 s. Inside the
+container, `ulimit -c` was 0 (soft and hard), and tornado was 6.5.7 from
+`/usr/local`. Headless Firefox drove the page on `:8080`:
+- W for 2 s moved the robot −0.0006 → 0.4252 m, and S brought it back to
+  0.0024 m.
+- STOP, clicked with W still held, zeroed the wheels 4.3 ms later.
+- The arbiter was the only wheel publisher.
+
+`docker compose down` left no container and no Gazebo. No mission ran in
+the container.
+
 **2026-10-02 — built and driven, measured** (`docs/data/coco_labs_ws/docker/`).
 `docker compose build` on coco-labs `main` 4661898 produced
 `coco-platform:jazzy` (8.18 GB, 9 packages, 4353 s, most of it a slow

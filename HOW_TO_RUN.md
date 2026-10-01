@@ -236,9 +236,9 @@ dependencies, hypothesis 6.98.15 and networkx 2.8.8
 (`coco_lab/requirements-test.txt`). Bare `python3` without them makes
 the script refuse to start.
 
-**Expect 2398 passing, 0 failing, 0 skipped** across all eleven packages,
+**Expect 2400 passing, 0 failing, 0 skipped** across all eleven packages,
 measured 2026-10-02 with that script in `~/coco_labs_ws`:
-coco_config 93, coco_lab 352, coco_lab_ros 69, coco_sim 280, coco_rl 229,
+coco_config 93, coco_lab 352, coco_lab_ros 69, coco_sim 280, coco_rl 231,
 coco_perception 139, coco_moveit_config 12, custom_teleop 75,
 gazebo_models 229, coco_mission 338, coco_web 582.
 An isolated `ROS_DOMAIN_ID` (e.g. `export ROS_DOMAIN_ID=77`) gives the

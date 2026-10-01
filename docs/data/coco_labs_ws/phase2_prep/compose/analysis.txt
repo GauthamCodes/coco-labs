@@ -1,0 +1,5 @@
+recorder rows {'odom': 198, 'mission': 48, 'graph': 23, 'teleop': 67, 'wheel': 179}
+wheel publishers seen [('/cmd_vel_arbiter',)] | teleop publishers seen [('/coco_web_platform',)]
+drive_forward_down: teleop 23, wheel 49 (37 moving, max |lin| 0.3), key->first wheel motion 68.5 ms, odom x -0.0006 -> 0.4252
+drive_back_down: teleop 23, wheel 53 (40 moving, max |lin| 0.3), key->first wheel motion 29.8 ms, odom x 0.4252 -> 0.0024
+STOP: W held before click -> 31 moving wheel cmds; after click first zero at 4.3 ms; moving cmds later than 600 ms: 0; odom x at click 0.245 -> end 0.275

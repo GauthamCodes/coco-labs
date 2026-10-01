@@ -1,0 +1,11 @@
+coco-platform  | [coco] COCO 2.0 appliance starting
+coco-platform  | [coco]   workspace   /opt/coco_ws
+coco-platform  | [coco]   http        :8080   video :8081
+coco-platform  | [coco]   gui=false rviz=false colour=blue
+coco-platform  | [coco] 1/3 simulator (gazebo_models full_world_robo.launch.py)
+coco-platform  | [coco]     simulator clock and model odometry are up
+coco-platform  | [coco]     controllers active
+coco-platform  | [coco] 2/3 mission stack + web platform (coco_mission mission.launch.py)
+coco-platform  | [coco] 3/3 waiting for the platform to report ready on /healthz
+coco-platform  | [coco]     web platform has not bound :8080 yet
+coco-platform  | [coco] READY — open http://localhost:8080

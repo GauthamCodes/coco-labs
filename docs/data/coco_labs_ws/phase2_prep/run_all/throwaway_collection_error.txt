@@ -1,0 +1,58 @@
+[tests] interpreter: /home/gautham/coco_labs_ws/test_venv/bin/python (3.12.3 pytest 7.4.4 hypothesis 6.98.15 networkx 2.8.8)
+[tests] workspace:   /home/gautham/coco_labs_ws   ROS_DOMAIN_ID=74
+--- Testing coco_config ---
+........................................................................ [ 77%]
+.....................                                                    [100%]
+93 passed in 0.80s
+--- Testing coco_sim ---
+........................................................................ [ 77%]
+................................................................         [100%]
+280 passed in 2.45s
+--- Testing coco_mission ---
+........................................................................ [ 85%]
+..................................................                       [100%]
+338 passed in 7.19s
+--- Testing coco_web ---
+........................................................................ [ 98%]
+......                                                                   [100%]
+582 passed, 12 warnings in 12.74s
+--- Testing gazebo_models ---
+........................................................................ [ 94%]
+.............                                                            [100%]
+229 passed in 13.38s
+--- Testing coco_rl ---
+........................................................................ [ 94%]
+.............                                                            [100%]
+229 passed in 9.98s
+--- Testing coco_perception ---
+........................................................................ [ 51%]
+...................................................................      [100%]
+139 passed, 12 warnings in 2.60s
+--- Testing coco_moveit_config ---
+............                                                             [100%]
+12 passed in 0.97s
+--- Testing custom_teleop ---
+........................................................................ [ 96%]
+...                                                                      [100%]
+75 passed, 12 warnings in 2.19s
+--- Testing coco_lab ---
+ERROR  - ModuleNotFoundError: No module named 'coco_lab_throwaway_module_that...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.78s
+--- Testing coco_lab_ros ---
+.....................................................................    [100%]
+69 passed, 12 warnings in 17.37s
+==================================================
+coco_config          ok   93 passed in 0.80s
+coco_sim             ok   280 passed in 2.45s
+coco_mission         ok   338 passed in 7.19s
+coco_web             ok   582 passed, 12 warnings in 12.74s
+gazebo_models        ok   229 passed in 13.38s
+coco_rl              ok   229 passed in 9.98s
+coco_perception      ok   139 passed, 12 warnings in 2.60s
+coco_moveit_config   ok   12 passed in 0.97s
+custom_teleop        ok   75 passed, 12 warnings in 2.19s
+coco_lab             FAIL (pytest exit 2) 1 error in 0.78s
+coco_lab_ros         ok   69 passed, 12 warnings in 17.37s
+==================================================
+[tests] FAILED: at least one package did not pass

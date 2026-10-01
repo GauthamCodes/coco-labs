@@ -1,0 +1,3 @@
+[tests] REFUSING: /usr/bin/python3 cannot import pytest, hypothesis and networkx.
+[tests] Run with --make-venv, or set COCO_TEST_PYTHON, or
+[tests]   sudo apt install python3-hypothesis python3-networkx

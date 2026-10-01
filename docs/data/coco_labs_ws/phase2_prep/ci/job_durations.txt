@@ -1,0 +1,8 @@
+coco-labs              ci.yml   job=build-and-test     green runs= 10 median=  5.2 min  slowest=14.0 min (run 36920498579, adb7d55)
+coco-labs              lab.yml  job=coco_lab in a plain venv (no ROS) green runs= 20 median=  1.2 min  slowest=1.4 min (run 36823487589, 72532de)
+coco-labs              lab.yml  job=deploy to GitHub Pages (main only) green runs=  7 median=  0.1 min  slowest=0.2 min (run 36911645197, 0cb574b)
+coco-labs              lab.yml  job=lab_web (tools, decoder, site build) green runs= 20 median=  1.1 min  slowest=1.3 min (run 36828156263, 44e7d76)
+coco-robot-jazzy-2.0   ci.yml   job=build-and-test     green runs= 12 median=  5.8 min  slowest=24.8 min (run 36753287221, ee8aace)
+coco-robot-jazzy-2.0   lab.yml  job=coco_lab in a plain venv (no ROS) green runs= 23 median=  1.1 min  slowest=1.3 min (run 36809117507, e36d6c4)
+coco-robot-jazzy-2.0   lab.yml  job=deploy to GitHub Pages (main only) green runs=  9 median=  0.1 min  slowest=0.2 min (run 36810217352, 60519f6)
+coco-robot-jazzy-2.0   lab.yml  job=lab_web (tools, decoder, site build) green runs= 23 median=  1.0 min  slowest=1.2 min (run 36809117507, e36d6c4)

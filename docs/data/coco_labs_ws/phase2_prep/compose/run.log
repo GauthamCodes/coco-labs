@@ -1,0 +1,22 @@
+[compose 02:58:42] repo adb7d55; image sha256:d940c8f4fd68722f39be249a6711b12ebbac3fadd270d457076265c445752c14
+ Network coco-labs_default Creating 
+ Network coco-labs_default Creating 
+ Network coco-labs_default Created 
+ Network coco-labs_default Created 
+ Container coco-platform Creating 
+ Container coco-platform Created 
+ Container coco-platform Starting 
+ Container coco-platform Started 
+[compose 02:58:55] healthz 200 after 12 s
+[compose 02:58:55] in-container: ulimit -c = 0, hard = 0
+[compose 02:58:55] in-container: tornado 6.5.7 /usr/local/lib/python3.12/dist-packages/tornado/__init__.py
+[compose 02:59:00] browser scenario
+[compose 02:59:18] browser scenario exit 0
+[compose 02:59:20] compose down
+ Container coco-platform Stopping 
+ Container coco-platform Stopped 
+ Container coco-platform Removing 
+ Container coco-platform Removed 
+ Network coco-labs_default Removing 
+ Network coco-labs_default Removed 
+[compose 02:59:26] after teardown: gz processes on host = 0; containers = 0

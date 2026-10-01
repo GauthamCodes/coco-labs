@@ -1,0 +1,29 @@
+== test_the_real_colour_table_reaches_the_browser_and_gates_targets  [broken: colours]
+E         Left contains one more item: 'coco_config unavailable; using the protocol fallback colour list'
+E         Use -v to get more diff
+FAILED test/test_platform_server.py::test_the_real_colour_table_reaches_the_browser_and_gates_targets
+1 failed in 0.81s
+== test_the_real_colour_table_reaches_the_browser_and_gates_targets  [unbroken]
+1 passed in 0.78s
+== test_the_real_depth_clip_sets_the_depth_frames_range  [broken: depth]
+E       assert None is not None
+E        +  where None = <test_platform_server.RealConfigNode object at 0x7e89ed8df9b0>._depth_clip
+FAILED test/test_platform_server.py::test_the_real_depth_clip_sets_the_depth_frames_range
+1 failed in 0.82s
+== test_the_real_depth_clip_sets_the_depth_frames_range  [unbroken]
+1 passed in 0.71s
+== test_the_real_arm_limits_reach_the_browser_and_clamp_the_gripper  [broken: arm]
+E           RuntimeError: coco_config.joint_limits.ARM_LIMITS has no ['m_link1_Revolute-6']; it has ['m_link1_shoulder', 'm_link2_Revolute-7', 'm_link3_Revolute-8', 'm_link3_Revolute-9']. A joint was 
+FAILED test/test_platform_server.py::test_the_real_arm_limits_reach_the_browser_and_clamp_the_gripper
+1 failed in 0.84s
+== test_the_real_arm_limits_reach_the_browser_and_clamp_the_gripper  [unbroken]
+1 passed in 0.74s
+== renamed-joint test  [old loader: warn and disable]
+E       Failed: DID NOT RAISE <class 'RuntimeError'>
+FAILED test/test_platform_server.py::test_a_renamed_joint_refuses_to_start_instead_of_warning
+1 failed in 0.82s
+== renamed-joint test  [new loader]
+1 passed in 0.75s
+== whole coco_web
+582 passed, 12 warnings in 11.91s
+?? AGENTS.md

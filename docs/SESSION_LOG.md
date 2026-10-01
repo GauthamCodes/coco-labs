@@ -6722,3 +6722,148 @@ done. The README carries no CI badge.
 browser panel, now works on main both natively and in Docker.
 
 NEXT: Phase 2, only when the owner asks.
+
+## Phase 2 prep: honest test script, coco_mission in CI, real-path tests, Docker pins, CI timeouts (2026-10-02)
+
+Done on the owner's six-point prep instruction: small fixes only, no
+features, on `lab1`, with `main` fast-forwarded once both workflows were
+green. Evidence: `docs/data/coco_labs_ws/phase2_prep/`.
+
+**1. `scripts/run_all_package_tests.sh` fails when anything fails.**
+- **The `|| true` is gone.** Any non-zero pytest exit fails the package
+  and the script (exit 1): failures (1), collection errors (2), no tests
+  (5), anything else. A per-package table is printed at the end.
+- **The interpreter is chosen deliberately**: `$COCO_TEST_PYTHON`, else
+  `<ws>/test_venv` (built by `--make-venv` from
+  `coco_lab/requirements-test.txt`, with system site-packages), else
+  `python3`. The script refuses (exit 2) if the interpreter cannot import
+  pytest, hypothesis and networkx.
+- **Found on the way.** `setup_env.sh` puts `~/.local` first on
+  `PYTHONPATH`, deliberately, so the runtime's pip `--user` packages win.
+  That silently replaced the venv's pinned networkx 2.8.8 with a
+  user-site 3.6.1 (measured). Every earlier coco_lab run in this session
+  therefore ran on 3.6.1. The script now puts the venv's site-packages
+  first; `setup_env.sh` is unchanged.
+- **Proved** (each throwaway reverted):
+
+  | case | script exit |
+  |---|---|
+  | a failing assertion in coco_lab | 1 (coco_lab `1 failed, 351 passed`) |
+  | an unresolvable import in a coco_lab test | 1 (pytest exit 2) |
+  | `/usr/bin/python3` | refused, exit 2 |
+
+- **Green run** in `~/coco_labs_ws` at lab1 adb7d55, on a quiet machine,
+  domain 74, with hypothesis 6.98.15 and networkx 2.8.8: **all 11
+  packages, 2400 passed.**
+
+  | package | tests |
+  |---|---|
+  | coco_config | 93 |
+  | coco_sim | 280 |
+  | coco_mission | 338 |
+  | coco_web | 582 |
+  | gazebo_models | 229 |
+  | coco_rl | 231 |
+  | coco_perception | 139 |
+  | coco_moveit_config | 12 |
+  | custom_teleop | 75 |
+  | coco_lab | 352 |
+  | coco_lab_ros | 69 |
+
+  HOW_TO_RUN documents the script and the count.
+
+**2. coco_mission is tested in CI.**
+
+| run | colcon summary | suites |
+|---|---|---|
+| 4661898, before | 1637 tests | 8 |
+| adb7d55 | **1982 tests**, 0 failures | 9 |
+
+The +345 is coco_mission's 338 plus the 7 tests added in this pass. The
+proof was a throwaway draft PR, #4, closed with its branch deleted: lab1
+with one `test_mission_states.py` assertion broken. CI failed on exactly
+`TestContractTable.test_every_nominal_state_has_a_contract`. The summary
+read "2 failures" because ament_cmake wraps the whole pytest run as one
+ctest test (`Testing/…/Test.xml: 1 test, 1 failure`), so one broken test
+counts twice. That wrapper is also why the colcon summary is 3 above the
+collected count.
+
+**3. Real-path tests for colours, depth clip and arm limits.**
+- **The tests run the real loaders.** `RealConfigNode` calls the real
+  `_load_*` loaders in `CocoWebNode.__init__`'s order, against the real
+  `coco_config`:
+  - colours go through the real server and a real WebSocket (`welcome`,
+    each colour accepted, `purple` refused);
+  - arm limits are checked in `welcome`;
+  - the depth clip goes through the real `_encode_image` into the frame's
+    `min_m`/`max_m`, using the existing `_boundary_stub` as frame store.
+- **A renamed joint now fails loudly.** `_load_joint_limits` raises
+  `RuntimeError`, naming the missing joint, when `coco_config` is present
+  but a joint is not. A stripped image with no `coco_config` still warns.
+- **Fail first.** A pytest plugin, `coco_breakers.py`, applied one break
+  per test:
+
+  | test | broken input | how it failed |
+  |---|---|---|
+  | colours | `TARGET_COLOURS` removed | the captured fallback warning |
+  | depth clip | `CAMERA_DEPTH_CLIP` removed | `None` clip |
+  | arm limits | shoulder joint renamed | the new `RuntimeError` |
+  | renamed joint | the pre-change loader | `DID NOT RAISE` |
+
+  All pass unbroken. coco_web: **582 passed.**
+
+**4. Docker: compose is safe and is the path.**
+- **Changes.** tornado is pinned to 6.5.7 in its own image layer, and the
+  compose service sets `ulimits: core: 0/0`. Two static tests pin both;
+  each failed first on the old files (no pin; `KeyError 'ulimits'`).
+- **Build.** `docker compose build` took 16 s, with apt and torch cached;
+  image `d940c8f4fd68`.
+- **Run.** `docker compose up -d` was healthy in 12 s. Inside the
+  container, `ulimit -c` was 0 (soft and hard), and tornado was 6.5.7 from
+  `/usr/local`. Browser on `:8080`:
+
+  | action | wheel commands | key to first wheel motion | odometry x |
+  |---|---|---|---|
+  | W held 2 s | 49 | 68.5 ms | −0.0006 → 0.4252 m |
+  | S held 2 s | 53 | 29.8 ms | 0.4252 → 0.0024 m |
+  | STOP clicked with W held | — | first zero 4.3 ms after the click | — |
+
+  After the STOP, 0 moving commands arrived past 600 ms. The wheel topic
+  had 1 publisher, the arbiter. `docker compose down` left 0 containers
+  and 0 Gazebo.
+- **Wait.** The run started only after an unrelated e-Yantra Kepler
+  simulator, from another session, had run for about 71 min. It was left
+  untouched, and the run waited for it.
+- `docs/DOCKER.md` has a dated note.
+
+**5. CI timeouts.** Every job in both workflows now has a timeout, set from
+the slowest GREEN run measured over every successful run on both repos:
+
+| job | slowest green | `timeout-minutes` |
+|---|---|---|
+| build-and-test | 24.8 min | 60 |
+| coco-lab-venv | 1.4 min | 20 |
+| lab-web | 1.3 min | 20 |
+| deploy | 0.2 min | 10 |
+
+The two 2026-10-01 hangs (~2 h each) would now end at 60 min. **No
+ROS/apt cache:** `ros-tooling/setup-ros@v0.7`'s `action.yml` has no cache
+input, and hand-caching `/var/cache/apt` is not clean. Skipped, and the
+reason is written beside the timeout.
+
+**Merged.** `main` was fast-forwarded `0cb574b..adb7d55` after CI and Lab
+were green on adb7d55 through draft PR #3, which GitHub marked merged.
+`main`'s own push CI and Lab are both green on adb7d55. This entry follows
+the same gate.
+
+**Unverified / not done**
+- No mission ran in the container.
+- The depth test still uses the encoder's node-state stub (the clip and
+  encoder are real).
+- The colour and depth loaders still fall back quietly on an
+  `ImportError`; only the joint rename is loud, as asked.
+- The 37 stubbed `world_geometry` tests are unchanged.
+
+**Phase 2 (Live) has not started.**
+
+NEXT: Phase 2, only when the owner asks.
