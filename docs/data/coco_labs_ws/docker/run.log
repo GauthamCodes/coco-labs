@@ -1,0 +1,9 @@
+[docker 00:18:13] image: sha256:13a4f1cf7f7a1d6793d94cc3c72a3cf48a9707f0cee51b776da85701162b8eb9 2026-10-02T00:16:27.900642952+05:30
+e53a7fea75249994766ad44fe2471505f5cb0b929d0ec99f9a5d0cf3d5bd4e09
+[docker 00:18:25] healthz 200 after 12 s
+[docker 00:18:25] container health: starting
+[docker 00:18:26] in-image tornado: 6.4
+[docker 00:18:31] browser scenario
+[docker 00:18:48] browser scenario exit 0
+[docker 00:18:49] stopping container
+[docker 00:18:55] after teardown: gz processes on host = 0; containers named coco-labs-teleop = 0

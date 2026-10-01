@@ -6586,3 +6586,139 @@ reproduce the live check, with the new workspace on that branch:
 `~/coco_labs_ws/src/coco-labs/scripts/browser_check/live_run.sh
 ~/coco_labs_ws/src/coco-labs ~/coco_labs_ws <out> green`, then
 `analyse_live.py <out>`.
+
+## The world-geometry fix merged; coco_web in CI; COCO in Docker (2026-10-02)
+
+Done on the owner's seven-point instruction of 2026-10-01: merge after two
+checks; fast-forward main only with both workflows green; run
+`run_all_package_tests.sh` once; prove the Docker path; disable the old
+repo's CI; log; stop.
+
+**1. Consumer audit of `TargetRegion.platform_bounds`.** 917bc59 did not
+convert an existing value. It *introduced* `platform_bounds` as a plain
+tuple `(x_min, x_max, y_min, y_max)` and, in the same commit, the
+`coco_web` reader that treated it as an object. Every consumer in every
+package:
+- `coco_sim/test/test_multi_bay_invariants.py:122` unpacks the tuple.
+  Correct.
+- `coco_web/coco_web/platform_server.py` (`world_geometry`) read
+  `.x_min`/`.x_max`. This was the only wrong one, and the fix makes it
+  index the tuple.
+
+The sibling tuple fields 917bc59 introduced also have no attribute-style
+reader:
+- `approach_corridor` has no consumers at all.
+- The five 3-tuple poses are read only through `TargetRegion`'s own
+  indexing properties.
+- `coco_web/web/app.js` reads the dict `world_geometry` builds, not the
+  tuple.
+
+No further fixes were needed.
+
+**2. Tests on the real path.**
+- **New end-to-end test:**
+  `test_platform_server.py::test_welcome_carries_the_real_world_geometry_end_to_end`.
+  `RealWorldNode` is `FakeNode` with the real `CocoWebNode.world_geometry`,
+  run through the real `make_app` and `ControlSocket.open()`. A real
+  WebSocket client checks every bay in `welcome` against `coco_config`,
+  then checks that STOP is honoured.
+- **Fails first.** On the pre-fix server it fails with a `TypeError` on a
+  `None` frame, because the socket closes without a welcome, which was the
+  live symptom. On the fix it passes. coco_web: **578 passed**, 0 failed.
+- **Stubs, reported and not rewritten:** **37 coco_web tests run on a
+  stubbed `world_geometry`**: 33 `FakeNode` (returns None) in
+  `test_platform_server.py` and 4 `Mock` (returns `{}`) in
+  `test_transport.py`. 22 of the 37 open a WebSocket and are greeted with
+  the stub.
+- **Others hiding something similar:** three more `welcome` fields come
+  from `coco_config` at runtime, and **no coco_web test calls the real
+  loaders** (`_load_colours`, `_load_depth_clip`, `_load_joint_limits`).
+  `_load_joint_limits` also catches `KeyError`, so a renamed joint would
+  disable arm control with a warning, not fail a test.
+- **CI did not test coco_web at all.** `ci.yml` built it but listed only
+  seven packages under `colcon test`, so the new test would never have
+  failed CI. The PR's run on 23e99db collected 1057 tests across 7 suites,
+  and the new tests were absent from its log. Fixed in 4661898: coco_web
+  is now in the test step, with tornado 6.5.7 pinned. `coco_mission` is
+  still built and not tested; left as it is.
+- **Proved in CI:**
+
+  | run | colcon summary |
+  |---|---|
+  | 23e99db, before | 1059 tests, 0 failures |
+  | 4661898, the fix | **1637 tests, 0 failures** |
+  | throwaway 1593af9 = 4661898 with only the fix reverted | 1637 tests, **3 failures**, exactly the three world-geometry tests |
+
+  The throwaway was draft PR #2, closed with its branch deleted.
+
+**3. Fast-forward.** main had not moved (44e7d76). PR #1, a draft used as
+the CI gate, was green on both workflows on 4661898, so main was
+fast-forwarded `44e7d76..4661898` by push. GitHub then marked PR #1
+merged. `lab1` was fast-forwarded to match.
+- **main's own push-triggered CI** sat in "Setup ROS 2 Jazzy" for nearly
+  2 h (the ROS apt mirror was also slowing the Docker build). It was
+  cancelled and re-run: attempt 2 **succeeded**, 1637 tests, 0 failures, 8 suites.
+
+**4. `scripts/run_all_package_tests.sh`, run once in `~/coco_labs_ws`**
+(main 4661898, scrubbed env, domain 74). The script **exited 0 while two
+packages did not run**: it calls plain `pytest`, the system Python has no
+`hypothesis`, and its `|| true` swallows the collection error. Reported,
+not changed.
+
+| package | script | per-package (2026-10-01) |
+|---|---|---|
+| coco_config | 93 | 93 |
+| coco_sim | 280 | 280 |
+| coco_mission | 338 | 338 |
+| coco_web | 578 | 575 (+3 new tests) |
+| gazebo_models | 229 | 229 |
+| coco_rl | 229 | 229 |
+| coco_perception | 139 | 139 |
+| coco_moveit_config | 12 | 12 |
+| custom_teleop | 75 | 75 |
+| coco_lab | **collection error** | 352 |
+| coco_lab_ros | **collection error** | 69 |
+
+**5. Docker, measured** (`docs/data/coco_labs_ws/docker/`)
+- **Build.** `docker compose build` on main 4661898 produced
+  `coco-platform:jazzy` (`13a4f1cf7f7a`, 8.18 GB, 9 packages) in 4353 s.
+- **Run.** `docker run` mirrored the compose service (port 8080, shm 2g,
+  env) plus `--ulimit core=0`, which compose lacks; `docker compose up`
+  itself was not run. `/healthz` returned 200 12 s after start. Headless
+  Firefox on the host drove the page at `:8080`, and the page read
+  `Ready`/`Healthy` with 0 JS errors. The recorder ran inside the
+  container, because the image's DDS is loopback-only.
+
+  | browser action | wheel commands | key to first wheel motion | odometry x |
+  |---|---|---|---|
+  | W held 2 s | 52 | 60.4 ms | −0.0006 → 0.4222 m |
+  | S held 2 s | 53 | 29.2 ms | 0.4222 → 0.0469 m |
+  | STOP clicked with W still held | — | wheels at zero 67.5 ms after the click | — |
+
+  After the STOP, 0 moving commands arrived past 600 ms. The wheel topic
+  had 1 publisher, `cmd_vel_arbiter`.
+- **Teardown** left 0 Gazebo processes and 0 containers.
+- The image ships **tornado 6.4** (apt), not the 6.5.7 coco_web's suite
+  runs on. No mission ran in the container.
+- `docs/DOCKER.md` has a dated note: its "never built" line was false as
+  of today.
+
+**6. Old repo.** Its `CI` workflow is `disabled_manually` and its `main`
+is still `2bb57c2`, so the tree is unchanged. The **existing** failed
+check on `2bb57c2`, recorded before disabling, still shows. Removing it
+means deleting that run's record (`gh run delete 36825530637 -R
+GauthamCodes/coco-robot-jazzy-2.0`), which was not asked for and was not
+done. The README carries no CI badge.
+
+**Unverified / not done**
+- `docker compose up` itself.
+- A mission inside the container.
+- Any coco_web test on tornado 6.4.
+- `coco_mission` in CI.
+- `run_all_package_tests.sh` hiding collection errors.
+- The three untested `_load_*` loaders.
+
+**Phase 2 (Live) has not started.** Its starting point, teleop through the
+browser panel, now works on main both natively and in Docker.
+
+NEXT: Phase 2, only when the owner asks.

@@ -1,0 +1,28 @@
+--- Testing coco_config ---
+93 passed in 0.36s
+--- Testing coco_sim ---
+280 passed in 1.88s
+--- Testing coco_mission ---
+338 passed in 6.84s
+--- Testing coco_web ---
+578 passed, 12 warnings in 11.80s
+--- Testing gazebo_models ---
+229 passed in 12.85s
+--- Testing coco_rl ---
+229 passed in 8.59s
+--- Testing coco_perception ---
+139 passed, 12 warnings in 1.92s
+--- Testing coco_moveit_config ---
+12 passed in 0.40s
+--- Testing custom_teleop ---
+75 passed, 12 warnings in 1.44s
+--- Testing coco_lab ---
+E   ModuleNotFoundError: No module named 'hypothesis'
+ERROR  - ModuleNotFoundError: No module named 'hypothesis'
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.16s
+--- Testing coco_lab_ros ---
+E   ModuleNotFoundError: No module named 'hypothesis'
+ERROR  - ModuleNotFoundError: No module named 'hypothesis'
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.33s

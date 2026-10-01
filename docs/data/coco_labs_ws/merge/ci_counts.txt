@@ -1,0 +1,8 @@
+ci.yml colcon test-result / collected, per run (coco-labs):
+23e99db_before_coco_web_in_CI:  Summary: 1059 tests, 0 errors, 0 failures, 0 skipped |  collected 1057 tests across 7 suites, 0 failed/errored
+4661898_fix:  Summary: 1637 tests, 0 errors, 0 failures, 0 skipped |  collected 1635 tests across 8 suites, 0 failed/errored
+1593af9_fix_reverted_throwaway:  Summary: 1637 tests, 0 errors, 3 failures, 0 skipped | 
+proof-run failures:
+ - coco_web.test.test_platform_server test_welcome_carries_the_real_world_geometry_end_to_end
+ - coco_web.test.test_world_geometry test_every_region_becomes_a_bay_in_map_coordinates
+ - coco_web.test.test_world_geometry test_world_geometry_builds_from_the_real_config

@@ -1,0 +1,9 @@
+commit 4661898af7536ddea3ad06430e363e140e92f16f
+ Image coco-platform:jazzy Building 
+#11 9.806 Summary: 9 packages finished [9.13s]
+#15 naming to docker.io/library/coco-platform:jazzy done
+#15 unpacking to docker.io/library/coco-platform:jazzy
+#15 unpacking to docker.io/library/coco-platform:jazzy 12.1s done
+ Image coco-platform:jazzy Built 
+build exit=0 in 4353 s
+coco-platform:jazzy 13a4f1cf7f7a 8.18GB 40 seconds ago

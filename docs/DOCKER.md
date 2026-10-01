@@ -18,6 +18,23 @@ or, equivalently:
 
 ## Status: authored, not runtime-tested
 
+**2026-10-02 — built and driven, measured** (`docs/data/coco_labs_ws/docker/`).
+`docker compose build` on coco-labs `main` 4661898 produced
+`coco-platform:jazzy` (8.18 GB, 9 packages, 4353 s, most of it a slow
+`packages.ros.org`). Started with `docker run` mirroring this file's
+compose service (port 8080, shm 2g, env) plus `--ulimit core=0`, which
+compose does not set; a host apport once took 12 GB of container cores.
+`/healthz` returned 200 12 s after start. Headless Firefox on the host drove
+the page at `:8080`:
+- W for 2 s moved the robot −0.0006 → 0.4222 m, and S for 2 s brought it
+  back to 0.0469 m.
+- STOP, clicked with W still held, zeroed the wheels 67.5 ms later.
+- The wheel topic had 1 publisher, the arbiter.
+
+The image ships tornado **6.4** (apt); coco_web's suite is measured on
+6.5.7. `docker compose up` itself was not run, and no mission ran in the
+container. The paragraphs below are kept as written.
+
 **`docker build` has never been executed against this Dockerfile.** Docker
 is not installed on the machine this was written on — no binary, no
 daemon, no podman — so the image has not been built, started, or

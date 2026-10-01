@@ -1,0 +1,62 @@
+[
+ {
+  "t": 1790880516.1748,
+  "action": "page_ready",
+  "seconds": 0.53,
+  "state": {
+   "conn": "Ready",
+   "health": "Healthy",
+   "pose": "x -0.00  y -0.00  \u03b8 0\u00b0 \u00b7 finding its position",
+   "vel": "0.00 m/s \u00b7 0.00 rad/s",
+   "src": "wheels: idle",
+   "lifecycle": "READY",
+   "healthRead": "HEALTHY"
+  }
+ },
+ {
+  "t": 1790880516.7943,
+  "action": "drive_forward_down",
+  "key": "w"
+ },
+ {
+  "t": 1790880518.8316,
+  "action": "drive_forward_up",
+  "key": "w"
+ },
+ {
+  "t": 1790880520.3467,
+  "action": "drive_back_down",
+  "key": "s"
+ },
+ {
+  "t": 1790880522.354,
+  "action": "drive_back_up",
+  "key": "s"
+ },
+ {
+  "t": 1790880523.9378,
+  "action": "stop_test_w_down"
+ },
+ {
+  "t": 1790880525.5291,
+  "action": "stop_clicked_w_still_held"
+ },
+ {
+  "t": 1790880528.0508,
+  "action": "stop_test_w_up",
+  "state": {
+   "conn": "Ready",
+   "health": "Healthy",
+   "pose": "x 0.32  y -0.01  \u03b8 -1\u00b0",
+   "vel": "-0.00 m/s \u00b7 -0.00 rad/s",
+   "src": "wheels: idle",
+   "lifecycle": "READY",
+   "healthRead": "HEALTHY"
+  }
+ },
+ {
+  "t": 1790880528.0512,
+  "action": "js_errors",
+  "errors": []
+ }
+]

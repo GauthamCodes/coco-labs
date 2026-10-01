@@ -1,0 +1,3 @@
+test_platform_server.py: 39 tests; FakeNode (stub returns None): 33; Mock (stub returns {}): 0; of those, connect a WebSocket and receive the stubbed welcome: 18; real world_geometry: 1
+test_transport.py: 4 tests; FakeNode (stub returns None): 0; Mock (stub returns {}): 4; of those, connect a WebSocket and receive the stubbed welcome: 4; real world_geometry: 0
+total tests on a stubbed world_geometry: 37
