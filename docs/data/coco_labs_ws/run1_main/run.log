@@ -1,0 +1,8 @@
+[live 12:12:17] overlay /home/gautham/coco_labs_ws ; colour green ; gui false
+[live 12:12:26] controllers up
+[live 12:12:30] healthz: 200
+[live 12:12:30] browser scenario
+[live 12:23:01] browser scenario exit 1
+[live 12:23:01] safety probe
+[live 12:23:03] teardown
+[live 12:23:12] done

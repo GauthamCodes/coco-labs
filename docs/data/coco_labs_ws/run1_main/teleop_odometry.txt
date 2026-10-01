@@ -1,0 +1,9 @@
+recorder kinds Counter({'odom': 5818, 'mission': 1269, 'graph': 636})
+first rows by kind:
+   {'k': 'odom', 'x': -0.0006, 'y': -0.0, 'v': -0.0, 'w': 0.0, 't': 1790836946.7532}
+   {'k': 'graph', 'wheel_pubs': [], 'teleop_pubs': [], 'localised': False, 't': 1790836947.7358}
+   {'k': 'mission', 'line': 'state=IDLE prev=-- event=run elapsed=3.5 timeout=-- attempt=1 retries=0 owner=nobody mode=idle reason=-- result=--', 't': 1790836949.0096}
+drive_forward_down {'odom': 27, 'graph': 3, 'mission': 6} odom (-0.0006, -0.0) -> (-0.0006, -0.0)
+drive_back_down {'odom': 27, 'mission': 6, 'graph': 3} odom (-0.0006, -0.0) -> (-0.0006, -0.0)
+joy_forward_down {'graph': 3, 'odom': 24, 'mission': 5} odom (-0.0006, -0.0) -> (-0.0006, -0.0)
+joy_back_down {'mission': 6, 'odom': 24, 'graph': 2} odom (-0.0006, -0.0) -> (-0.0006, -0.0)

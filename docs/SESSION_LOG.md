@@ -6439,3 +6439,150 @@ stars, daily seed) is deferred. **Phase 2 (Live) has not started.**
 NEXT: the owner's answer on the old repository. Then Phase 2 (Live), only
 when the owner asks. Its prompt is to be written from `docs/ROADMAP.md`
 §3.5 and §6.
+
+## Old repository restored; COCO Lab gets its own workspace (2026-10-01)
+
+Done on the owner's answers of 2026-10-01 to the four questions above:
+- restore target `b15d445`, as one restoring commit, not a force-push;
+- delete the old `lab1` and turn off the old Pages, keeping `archive/*`
+  tags;
+- a dedicated colcon workspace at `~/coco_labs_ws/src/coco-labs`;
+- then build, test and launch there, and stop.
+
+**The old repository, `GauthamCodes/coco-robot-jazzy-2.0`**
+- **Backup first.** A mirror of every ref was bundled to
+  `~/coco-robot-jazzy-2.0-backup-20261001.bundle` (27,079,954 B, sha256
+  `8aadf89b…5628e134`). `git bundle verify` reports it complete. The bundle
+  holds 15 refs (14 branches and `refs/pull/1/head`), listed in
+  `~/coco-robot-jazzy-2.0-backup-20261001.refs.txt`.
+- **`main` restored by commit `2bb57c2`**, pushed as a fast-forward from
+  `60519f6` with no force. Its tree is `b15d445`'s plus one change:
+  `git diff b15d445 2bb57c2` shows only README.md, the two-line note the
+  owner wrote. The full history stays reachable.
+- **`lab1` deleted** after checking that all of its commits are in
+  coco-labs (`60519f6` is an ancestor of `labs/lab1`; 0 commits missing).
+- **Pages turned off.** The API returns 404 for the site, and the old URL
+  returns HTTP 404.
+- **Tags: none to keep.** The old repository has **0 tags**, `archive/*`
+  or otherwise (`git ls-remote --tags`), so nothing was touched.
+- **The old repo's CI is red on `2bb57c2`, as expected.** The `CI`
+  workflow failed with `coco_rl` exiting 2 after 1.84 s, at collection.
+  `b15d445` never had a CI run of its own. The `ci.yml` fixes that made
+  main green came after it, and an exact restore removes them again.
+  Recorded, not changed.
+
+**coco-labs: paths point at the new workspace** (`6307949`, fast-forwarded
+to `main`; `CI` and `Lab` both green on `main`; Pages 200)
+- The workspace is now `~/coco_labs_ws`, and the clone is
+  `src/coco-labs`, in:
+  - `setup_env.sh`, `HOW_TO_RUN.md`, `README.md`, `docs/RUNNING.md`,
+    `PROJECT_STATE.md`, `docs/FUTURE_WORK.md`, the Docker files and
+    `CLAUDE.md`'s Environment section;
+  - the runner scripts, which now work out the repo and workspace from
+    their own location instead of a deleted consolidation worktree.
+- `build_overlay.sh` with no argument now builds `$HOME/coco_labs_ws`.
+- **CLAUDE.md now says never to source the old workspace and this one in
+  the same shell**, because duplicate package names shadow each other.
+- Recorded measurements that name old paths are history, and unchanged.
+
+**The new workspace, `~/coco_labs_ws`** (measured)
+- A fresh `git clone` of coco-labs. The user-space MoveIt prefix is
+  **copied** (90 MB) into `~/coco_labs_ws/moveit_prefix`, not linked into
+  the old workspace. The copy leaves out the old prefix's stray self-link.
+- Clean build, from a scrubbed environment:
+  `Summary: 11 packages finished [8.73s]`, exit 0. Once sourced,
+  `AMENT_PREFIX_PATH` holds only this workspace's install, its MoveIt
+  prefix and `/opt/ros/jazzy`.
+- **Tests: 2391 passed, 0 failed, 0 skipped.** Run per package, with cwd
+  in the package and on ROS domain 73. coco_lab's pinned hypothesis and
+  networkx came from a system-site venv, since there is no sudo here.
+
+  | package | tests |
+  |---|---|
+  | coco_config | 93 |
+  | coco_lab | 352 |
+  | coco_lab_ros | 69 |
+  | coco_sim | 280 |
+  | coco_rl | 229 |
+  | coco_perception | 139 |
+  | coco_moveit_config | 12 |
+  | custom_teleop | 75 |
+  | gazebo_models | 229 |
+  | coco_mission | 338 |
+  | coco_web | 575 |
+
+  coco_moveit_config's 12 includes the 7 MoveIt pick-pose tests, so the
+  copied prefix works.
+
+**Teleop through the browser panel: FAILS on `main`; one defect, fixed on
+a branch** (measured; `docs/data/coco_labs_ws/`)
+- **Run 1, on `main` (`6307949`).** HOW_TO_RUN's two terminals ran
+  headless through `scripts/browser_check/live_run.sh`, on domain 61.
+  - The stack itself was healthy. `/healthz` returned 200
+    (READY/HEALTHY) 4 s after the controllers came up. The arbiter was the
+    sole wheel publisher, the platform the sole teleop publisher, and
+    AMCL localised.
+  - **The page never connected.** It read `Disconnected` for the whole
+    420 s wait, and the platform logged **1,193** `Uncaught exception GET
+    /ws` errors, each `AttributeError: 'tuple' object has no attribute
+    'x_min'`.
+  - **The robot did not move.** Odometry stayed at (−0.0006, 0.0)
+    through W, S and both joystick drags, and the recorder saw no message
+    on the teleop topic or the wheel topic.
+- **Cause.** `917bc59` (2026-09-28, P03C consolidation) made
+  `TargetRegion.platform_bounds` a plain tuple, but
+  `CocoWebNode.world_geometry()` still read `.x_min`/`.x_max`. It runs in
+  `ControlSocket.open()`, so every browser connection has died since that
+  commit. coco_web's 575 tests stayed green because every one that
+  reaches `welcome` stubs `world_geometry`.
+- **Fix: branch `fix/platform-world-geometry` (`95c1eef`), pushed to
+  coco-labs and NOT merged.** The fix indexes the tuple and adds
+  `coco_web/test/test_world_geometry.py`, which runs the real method
+  against the real `coco_config`. The new test fails 2/2 on the pre-fix
+  code with the same `AttributeError` and passes 2/2 on the fix; coco_web
+  then has 577 passed, 0 failed.
+- **Run 2, on the fix, fresh simulator.** 0 `/ws` exceptions; the page
+  read `Ready`/`Healthy` immediately.
+  - **The panel drives the robot.**
+
+    | action | wheel commands | key to first wheel motion | odometry x |
+    |---|---|---|---|
+    | W held 2 s | 53 | 36.9 ms | −0.0006 → 0.5304 m |
+    | S held 2 s | 54 | 22.5 ms | 0.5304 → −0.0514 m |
+    | joystick up 1.5 s | 49 | 112.2 ms | −0.0514 → 0.4719 m |
+    | joystick down 1.5 s | 46 | 70.0 ms | 0.4719 → −0.0369 m |
+
+  - **STOP with W still held:** wheels at zero 59.7 ms later.
+  - **Browser SIGKILLed while driving:** wheels at zero 48.3 ms later.
+    After both, 0 moving commands past 600 ms.
+  - Wheel publishers: exactly 1, `/cmd_vel_arbiter`. The safety probe
+    refused all 8 hostile frames.
+  - **The green fetch through the browser completed**: `COMPLETE`,
+    `result=fetch`, 194.1 s wall, RTF 0.823. It took one
+    RECOVERY → RELOCALIZE on the return, so it finished with
+    `reason=LOCALIZATION_DEGRADED`. Every ROS state was rendered on the
+    page. One run is not a rate.
+- **HOW_TO_RUN corrected.** It sent readers to `:8000` and rosbridge, but
+  `mission.launch.py` serves the platform on **:8080** (measured). The
+  rosbridge panel is `:8000/legacy.html`, only with `platform:=false`.
+  The test expectation is now this session's 2391 across eleven packages,
+  replacing the stale 1564 across nine.
+
+**Unverified / not done**
+- `scripts/run_all_package_tests.sh` was repointed but never run. It calls
+  plain `pytest`, which has no hypothesis here.
+- The Docker image path change (`src/coco-labs`) is only statically
+  tested.
+- **The old checkout and its worktrees were left exactly as they were.**
+  `~/ros2_ws(personal)` and the old `coco-robot-ros2` clone were only
+  read: the MoveIt prefix was copied, not moved.
+
+**Phase 2 (Live) has not started.** Its starting point is a working
+teleop panel, and on `main` it is not one until
+`fix/platform-world-geometry` is merged.
+
+NEXT: the owner decides on `fix/platform-world-geometry` (`95c1eef`). To
+reproduce the live check, with the new workspace on that branch:
+`~/coco_labs_ws/src/coco-labs/scripts/browser_check/live_run.sh
+~/coco_labs_ws/src/coco-labs ~/coco_labs_ws <out> green`, then
+`analyse_live.py <out>`.
