@@ -1,7 +1,7 @@
 # DOCKER — the local platform runtime
 
 ```bash
-git clone <this repo> && cd coco-robot-ros2
+git clone <this repo> && cd coco-labs
 docker compose build          # first build is long: ROS desktop + CPU torch
 docker compose up
 # then open http://localhost:8080

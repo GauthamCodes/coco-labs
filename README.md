@@ -295,7 +295,7 @@ tests — are in **[HOW_TO_RUN.md](HOW_TO_RUN.md)**. The whole of it is:
 
 ```bash
 # Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic
-mkdir -p ~/ros2_ws/src && cd ~/ros2_ws/src
+mkdir -p ~/coco_labs_ws/src && cd ~/coco_labs_ws/src
 git clone https://github.com/GauthamCodes/coco-labs.git
 cd coco-labs && rosdep install --from-paths . --ignore-src -r -y
 

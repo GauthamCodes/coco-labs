@@ -24,7 +24,7 @@ corrupting the control loop, the trained policy scores **10/10 at both 18° and
    pick-and-place) has been re-verified on the dGPU.
 2. **Install the real debs when sudo is available** —
    `ros-jazzy-moveit`, `ros-jazzy-rosbridge-suite`,
-   `ros-jazzy-web-video-server` — then delete `~/ros2_ws/moveit_prefix/`
+   `ros-jazzy-web-video-server` — then delete `<ws>/moveit_prefix/`
    and the prefix block in `setup_env.sh` stops mattering.
 
 ## Manipulation

@@ -95,7 +95,7 @@ def main():
           file=err)
     print(f'{TAG} COCO dependencies. Build a COCO-only overlay and point '
           'COCO_WS at it:', file=err)
-    print(f'{TAG}   scripts/build_overlay.sh "$HOME/coco_ws_build"', file=err)
+    print(f'{TAG}   scripts/build_overlay.sh "$HOME/coco_labs_ws"', file=err)
     return 1
 
 

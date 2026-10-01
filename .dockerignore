@@ -1,4 +1,4 @@
-# Dockerfile does `COPY . src/coco-robot-ros2/`, so without this the local
+# Dockerfile does `COPY . src/coco-labs/`, so without this the local
 # colcon build tree and any RL checkpoints get baked into the image and
 # then built over. Mirrors .gitignore.
 __pycache__/

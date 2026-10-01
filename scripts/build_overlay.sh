@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # build_overlay.sh — build a COCO-only colcon overlay, and nothing else.
 #
-#   ./scripts/build_overlay.sh                     into $HOME/coco_ws_build
+#   ./scripts/build_overlay.sh                     into $HOME/coco_labs_ws
 #   ./scripts/build_overlay.sh DEST                into DEST
 #   ./scripts/build_overlay.sh DEST --packages-select coco_web   extra args
 #
@@ -31,7 +31,7 @@
 set -o pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-DEST="${1:-$HOME/coco_ws_build}"
+DEST="${1:-$HOME/coco_labs_ws}"
 [ "$#" -gt 0 ] && shift
 mkdir -p "$DEST" || exit 1
 DEST="$(cd "$DEST" && pwd)"

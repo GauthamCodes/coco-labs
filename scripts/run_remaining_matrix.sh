@@ -13,8 +13,9 @@ RUNS=(
     "positions 40 yellow /home/gautham/coco_runs_p03c/run_positions_s40_yellow"
 )
 
-SCRIPT="/home/gautham/coco-p03c-consolidation/scripts/consolidation_run.sh"
-REPORT="/home/gautham/coco-p03c-consolidation/docs/data/navigation_world_report.py"
+WT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SCRIPT="$WT/scripts/consolidation_run.sh"
+REPORT="$WT/docs/data/navigation_world_report.py"
 
 for line in "${RUNS[@]}"; do
     read -r LEVEL SEED COLOUR OUT <<< "$line"

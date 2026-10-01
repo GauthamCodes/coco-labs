@@ -25,13 +25,18 @@ There is one demonstration, and it is the whole robot.
 ## 1. Clone
 
 ```bash
-mkdir -p ~/ros2_ws/src && cd ~/ros2_ws/src
+mkdir -p ~/coco_labs_ws/src && cd ~/coco_labs_ws/src
 git clone https://github.com/GauthamCodes/coco-labs.git
 cd coco-labs
 ```
 
 Everything is on `main`. There is no other branch, and nothing to
 download separately — the trained ramp policy ships in the repository.
+
+Give COCO a workspace of its own (`~/coco_labs_ws` here), and **never
+source another colcon workspace in the same shell** — two workspaces that
+both build a package of the same name shadow each other, and which copy
+runs depends on sourcing order.
 
 ## 2. Install dependencies
 
@@ -60,16 +65,16 @@ virtualenv works too, as long as ROS 2 can import from it.
 ## 3. Build
 
 ```bash
-cd ~/ros2_ws
+cd ~/coco_labs_ws
 colcon build --symlink-install
 source src/coco-labs/setup_env.sh
 ```
 
-**Expect:** `Summary: 9 packages finished`, **0 errors**. `setuptools`
+**Expect:** `Summary: 11 packages finished`, **0 errors**. `setuptools`
 deprecation warnings on stderr are normal. If your workspace holds other
 packages too, add `--packages-select coco_config coco_sim coco_rl
 coco_perception coco_moveit_config custom_teleop gazebo_models
-coco_mission coco_web` to build only these nine.
+coco_mission coco_web coco_lab coco_lab_ros` to build only these eleven.
 
 Source `setup_env.sh` **in every terminal, before anything else**. It
 finds the workspace from its own path — so the clone can live anywhere
@@ -85,8 +90,8 @@ it. COCO does not need it. `--packages-select` does not help — the stale
 prefix is still sourced — so build COCO into an overlay of its own:
 
 ```bash
-src/coco-labs/scripts/build_overlay.sh "$HOME/coco_ws_build"
-export COCO_WS="$HOME/coco_ws_build"          # every terminal, before:
+src/coco-labs/scripts/build_overlay.sh "$HOME/coco_labs_overlay"
+export COCO_WS="$HOME/coco_labs_overlay"      # every terminal, before:
 source src/coco-labs/setup_env.sh
 ```
 

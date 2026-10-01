@@ -7,16 +7,18 @@
 > six v1 demos below still run and are still the fastest way to see the
 > individual subsystems on their own.
 >
-> Paths below say `src/coco-robot-ros2` from when the repo had that name.
-> Substitute your own clone directory; `setup_env.sh` locates the
-> workspace from its own path, so the name does not matter.
+> Paths below use the workspace `~/coco_labs_ws` and the clone
+> `src/coco-labs` (2026-10-01; earlier revisions said `~/ros2_ws` and
+> `src/coco-robot-ros2`). `setup_env.sh` locates the workspace from its
+> own path, so the names do not matter — but never source two workspaces
+> that build these packages in one shell.
 
 Everything below was verified end-to-end on this machine (Ubuntu 24.04,
 ROS 2 Jazzy, gz-sim 8.11) on 2026-07-04. **Every terminal needs the env
 script first:**
 
 ```bash
-source ~/ros2_ws/src/coco-robot-ros2/setup_env.sh
+source ~/coco_labs_ws/src/coco-labs/setup_env.sh
 ```
 
 It sources ROS + the workspace, sets CycloneDDS-on-loopback, picks a
@@ -26,7 +28,7 @@ and wires in the user-space MoveIt/rosbridge prefix.
 Build (once, or after edits):
 
 ```bash
-cd ~/ros2_ws
+cd ~/coco_labs_ws
 colcon build --symlink-install \
   --packages-select gazebo_models custom_teleop coco_config coco_moveit_config coco_web coco_rl
 ```
@@ -77,7 +79,7 @@ ros2 launch gazebo_models slam.launch.py
 ros2 run gazebo_models map_drive.py
 # save when done:
 ros2 run nav2_map_server map_saver_cli \
-  -f ~/ros2_ws/src/coco-robot-ros2/gazebo_models/maps/coco_world \
+  -f ~/coco_labs_ws/src/coco-labs/gazebo_models/maps/coco_world \
   --ros-args -p use_sim_time:=true
 ```
 
@@ -501,7 +503,7 @@ ros2 run gazebo_models ros_clean.sh          # or --list to see what is up
 | Issue | Status / fix |
 |---|---|
 | **NVIDIA driver won't load** — `modprobe nvidia` says `Operation not permitted` | SecureBoot is rejecting an unenrolled module signature, *not* a missing module. Check `mokutil --list-enrolled`: if it shows only Canonical's CA, run `sudo mokutil --import /var/lib/shim-signed/mok/MOK.der`, reboot, and choose **Enroll MOK → Continue** at the blue screen. Until then `setup_env.sh` auto-falls back to the Intel iGPU (RTF still ≈ 1.0); forcing the NVIDIA EGL vendor while the driver is down segfaults gz-sim in `driCreateNewScreen3`. |
-| **MoveIt / rosbridge / web_video_server not apt-installed** | They run from `~/ros2_ws/moveit_prefix/` (user-space deb extraction, no root). With sudo: `sudo apt install ros-jazzy-moveit ros-jazzy-rosbridge-suite ros-jazzy-web-video-server`, then delete the prefix dir. |
+| **MoveIt / rosbridge / web_video_server not apt-installed** | They run from `<ws>/moveit_prefix/` (user-space deb extraction, no root). With sudo: `sudo apt install ros-jazzy-moveit ros-jazzy-rosbridge-suite ros-jazzy-web-video-server`, then delete the prefix dir. |
 | Python (non-ROS) deps | `pip install --user --break-system-packages -r requirements.txt` — pinned to the versions the published results were produced on. numpy is held at 1.26.x because the Jazzy debs are built against the numpy 1.x ABI. |
 | pip user packages | `tornado pymongo cbor2` (rosbridge), `torch` (CPU build), `stable-baselines3 gymnasium` (RL) — installed with `pip install --user --break-system-packages`. |
 | `~/assignment_ws` in `.bashrc` | Disabled (it was Humble-built and broke Jazzy shells). Backup: `~/.bashrc.bak-2026-06-12`. |

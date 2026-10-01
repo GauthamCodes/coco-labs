@@ -433,10 +433,8 @@ Everything is in **`HOW_TO_RUN.md`**, and every command in it was checked
 against this tree. The short path:
 
 ```bash
-cd ~/ros2_ws
-colcon build --symlink-install --packages-select \
-    coco_config coco_sim coco_rl coco_perception \
-    coco_moveit_config custom_teleop gazebo_models coco_mission coco_web
+cd ~/coco_labs_ws            # this repo's own workspace: src/coco-labs
+colcon build --symlink-install
 source src/coco-labs/setup_env.sh
 ```
 

@@ -391,7 +391,7 @@ exist while the file is present in source. Measured both ways: stale
 gives 77/29, fresh 106/0. If you see the 29:
 
 ```bash
-cd ~/ros2_ws && colcon build --packages-select coco_sim
+cd ~/coco_labs_ws && colcon build --packages-select coco_sim
 ```
 
 **Run them on a clean ROS graph.** A live stack makes `coco_mission`
@@ -750,13 +750,28 @@ contract, `docs/DOCKER.md` the runtime. What must not be relearned:
 
 ## Environment
 
+**The workspace is `~/coco_labs_ws`, and it holds this repository and
+nothing else** (`~/coco_labs_ws/src/coco-labs`, since 2026-10-01).
+
+**Never source the old workspace and this one in the same shell** —
+`~/ros2_ws(personal)` (the old `coco-robot-ros2` checkout and its
+worktrees), or any overlay built from it such as `~/coco_ws_build`.
+Both build the same package names, and duplicate package names shadow
+each other: which `coco_mission` runs depends on sourcing order, and the
+symptom is a fix that is in the source and absent from the behaviour.
+One workspace per shell; open a fresh terminal to switch.
+
 ```bash
-source <ws>/src/<clone>/setup_env.sh   # every terminal, first
-cd <ws> && colcon build --symlink-install   # always from the ws root
+source ~/coco_labs_ws/src/coco-labs/setup_env.sh   # every terminal, first
+cd ~/coco_labs_ws && colcon build --symlink-install  # always from the ws root
 ```
 
-The workspace also contains `red_ball_nav` / turtlebot3 packages;
-`turtlebot3_node` fails on a missing `dynamixel_sdk` — pre-existing and
+`scripts/build_overlay.sh` with no argument builds exactly that
+workspace (`$HOME/coco_labs_ws`) from a clean package path.
+
+The paragraphs below describe the OLD shared workspace, kept because the
+measurements above were taken in it. The old workspace also contains
+`red_ball_nav` / turtlebot3 packages; `turtlebot3_node` fails on a missing `dynamixel_sdk` — pre-existing and
 unrelated. Use `--packages-select` with the `coco*` / `custom_teleop` /
 `gazebo_models` packages to avoid the noise.
 
@@ -776,7 +791,7 @@ export COCO_WS="$HOME/coco_ws_build"; source <repo>/setup_env.sh
 | | |
 |---|---|
 | Repo | `coco-labs` (GitHub `GauthamCodes/coco-labs`; it was `coco-robot-jazzy-2.0` until 2026-10-01, when COCO Lab moved to its own repository), cloned under `<ws>/src/`. `setup_env.sh` finds the workspace from its own path, so the clone name and location do not matter |
-| Workspace root | `<ws>`, e.g. `~/ros2_ws` |
+| Workspace root | `<ws>` = `~/coco_labs_ws` (its own colcon workspace since 2026-10-01; the old one was `~/ros2_ws(personal)` — never source both) |
 | Shipped v1 policy | `coco_rl/policies/phase5_24deg_s0p0.zip`, **in the repository** and installed to `share/coco_rl/policies/`. It is `mission.launch.py`'s `policy` default, so no path and no `COCO_POLICY` is needed to run. Original training artefact: `/home/gautham/coco_rl_runs/curriculum_20260726_211008/phase5_24deg_s0p0.zip` (identical, md5 `1421ce4a…`) |
 | RL run archive | `/home/gautham/coco_rl_runs/` |
 

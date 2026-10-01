@@ -59,7 +59,7 @@ RUN pip3 install --break-system-packages --no-cache-dir \
       stable-baselines3 gymnasium
 
 WORKDIR ${COCO_WS}
-COPY . src/coco-robot-ros2/
+COPY . src/coco-labs/
 
 # All NINE packages. The image this replaces built six and silently left
 # out coco_mission, coco_perception and coco_sim -- so the mission system

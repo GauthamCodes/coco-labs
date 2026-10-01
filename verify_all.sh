@@ -24,7 +24,7 @@
 set -o pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# Colcon builds from the workspace root (<ws>/src/coco-robot-ros2 -> <ws>).
+# Colcon builds from the workspace root (<ws>/src/<clone> -> <ws>).
 WS="$(cd "$REPO/../.." 2>/dev/null && pwd || echo "$REPO")"
 [ -d "$WS/src" ] || WS="$REPO"
 

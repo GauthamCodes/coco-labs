@@ -27,8 +27,8 @@
 # rest of the night. Progress: tail -f ~/coco_rl_runs/overnight_chain.log
 set -o pipefail
 
-REPO="/home/gautham/ros2_ws/src/coco-robot-ros2"
-WS="/home/gautham/ros2_ws"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WS="${COCO_WS:-$(cd "$REPO/../.." && pwd)}"
 RUNS="$HOME/coco_rl_runs"
 LOG="$RUNS/overnight_chain.log"
 REPORT="$RUNS/REPORT.md"
@@ -73,9 +73,9 @@ start_sim() {  # $1 grade, $2 logfile
 }
 
 set_min_lin() {  # $1 value
-  python3 - "$1" <<'PY'
+  python3 - "$1" "$REPO/coco_rl/coco_rl/ramp_env.py" <<'PY'
 import re, sys
-p = '/home/gautham/ros2_ws/src/coco-robot-ros2/coco_rl/coco_rl/ramp_env.py'
+p = sys.argv[2]
 s = open(p).read()
 s2 = re.sub(r'^MIN_LIN = [0-9.]+$', f'MIN_LIN = {sys.argv[1]}', s, count=1, flags=re.M)
 assert s2 != s or f'MIN_LIN = {sys.argv[1]}' in s, 'MIN_LIN substitution failed'

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # COCO 2.0 P03C Consolidation Episode Runner
 set -o pipefail
-WT="/home/gautham/coco-p03c-consolidation"
-WS="/home/gautham/coco_consolidation_ws"
+WT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+WS="${COCO_WS:-$(cd "$WT/../.." && pwd)}"
 
 OUT="${1:?usage: consolidation_run.sh OUT_DIR colour level seed [manifest]}"
 COLOUR="${2:?colour required}"
@@ -30,7 +30,7 @@ source "$WT/setup_env.sh" > /dev/null 2>&1
 source "$WS/install/local_setup.bash" || exit 1
 export PYTHONPATH="$WT/coco_sim:$WT/coco_config:$WS/build/custom_teleop:$WS/build/coco_config:$PYTHONPATH"
 
-MV="/home/gautham/ros2_ws(personal)/moveit_prefix/root/opt/ros/jazzy"
+MV="$WS/moveit_prefix/root/opt/ros/jazzy"
 PYVER="$(python3 -c 'import sys; print(f"python{sys.version_info.major}.{sys.version_info.minor}")')"
 if [ -d "$MV" ]; then
     export AMENT_PREFIX_PATH="$MV:$AMENT_PREFIX_PATH"

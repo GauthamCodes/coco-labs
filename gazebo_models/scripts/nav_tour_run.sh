@@ -54,7 +54,7 @@ EXP_IN="${1:-}"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WT="$(cd "$HERE/../.." && pwd)"
 # The COLCON WORKSPACE root, which is NOT the repo root: this repo lives at
-# <ws>/src/coco-robot-ros2, so the overlay is <ws>/install. This script was
+# <ws>/src/<clone>, so the overlay is <ws>/install. This script was
 # written in a worktree that carried its own install/ and build/, and using
 # "$WT/install" on main sources a STALE <repo>/install instead (C2-NAV.48).
 # Derived the way setup_env.sh derives it, and overridable like $WT.

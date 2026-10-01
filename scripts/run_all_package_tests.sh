@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 set -e
 
-export COCO_WS=/home/gautham/coco_consolidation_ws
-source /home/gautham/coco-p03c-consolidation/setup_env.sh
-source /home/gautham/coco_consolidation_ws/install/local_setup.bash
+# Every package's tests, per package, cwd = the package dir (CLAUDE.md §8).
+# The checkout is this script's repo; the workspace is <ws> above it
+# (~/coco_labs_ws), or $COCO_WS.
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export COCO_WS="${COCO_WS:-$(cd "$REPO_DIR/../.." && pwd)}"
+source "$REPO_DIR/setup_env.sh"
+source "$COCO_WS/install/local_setup.bash"
 
-MV="/home/gautham/ros2_ws(personal)/moveit_prefix/root/opt/ros/jazzy"
+MV="$COCO_WS/moveit_prefix/root/opt/ros/jazzy"
 PYVER="$(python3 -c 'import sys; print(f"python{sys.version_info.major}.{sys.version_info.minor}")')"
 if [ -d "$MV" ]; then
     export AMENT_PREFIX_PATH="$MV:$AMENT_PREFIX_PATH"
@@ -15,7 +19,6 @@ if [ -d "$MV" ]; then
     export PATH="$MV/bin:$PATH"
 fi
 
-REPO_DIR=/home/gautham/coco-p03c-consolidation
 PACKAGES=(
     "coco_config"
     "coco_sim"
@@ -26,6 +29,8 @@ PACKAGES=(
     "coco_perception"
     "coco_moveit_config"
     "custom_teleop"
+    "coco_lab"
+    "coco_lab_ros"
 )
 
 TOTAL_PASSED=0

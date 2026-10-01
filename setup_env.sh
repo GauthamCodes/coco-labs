@@ -1,13 +1,13 @@
 # setup_env.sh — source this in every terminal before running anything.
 #
-#   source ~/ros2_ws/src/coco-robot-ros2/setup_env.sh
+#   source ~/coco_labs_ws/src/coco-labs/setup_env.sh
 #
 # Sets up: ROS 2 Jazzy + workspace overlay, CycloneDDS on loopback,
 # Gazebo Harmonic, the user-space MoveIt/rosbridge prefix (if present),
 # and a render-engine fallback for when the NVIDIA driver is not loaded.
 
 # Locate the colcon workspace from this script's own path rather than
-# assuming ~/ros2_ws: this file lives at <ws>/src/coco-robot-ros2/, so the
+# assuming a fixed path: this file lives at <ws>/src/<clone>/, so the
 # workspace root is two directories up. Without this, a clone anywhere
 # else sources ROS but silently never sources its own overlay, and every
 # `ros2 launch` then fails with "package not found" for no visible reason.
