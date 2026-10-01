@@ -10,14 +10,16 @@ jobs:
   build-and-test:
     runs-on: ubuntu-24.04
     # Slowest GREEN run of this job, measured 2026-10-02 over every
-    # successful run on coco-labs and coco-robot-jazzy-2.0: 24.8 min
-    # (median 5.1-5.8). The limit is generous so a slow mirror is not
-    # killed, and finite so a hang is: two runs on 2026-10-01 sat in
-    # 'Setup ROS 2 Jazzy' for ~2 h until cancelled by hand.
+    # successful run on coco-labs and coco-robot-jazzy-2.0: 44.3 min
+    # (run 36930257226, almost all of it in 'Setup ROS 2 Jazzy' on a slow
+    # mirror; median 5.2-5.8). It was 60 until that run showed 60 would
+    # leave a slow mirror only 1.35x. The limit is generous so a slow
+    # mirror is not killed, and finite so a hang is: two runs on
+    # 2026-10-01 sat in that step for ~2 h until cancelled by hand.
     # No apt/ROS cache: ros-tooling/setup-ros@v0.7 has no cache input,
     # and caching /var/cache/apt by hand is not clean (root-owned, and
     # it saves only the download). Skipped deliberately.
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 

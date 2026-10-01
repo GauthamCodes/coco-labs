@@ -6867,3 +6867,13 @@ the same gate.
 **Phase 2 (Live) has not started.**
 
 NEXT: Phase 2, only when the owner asks.
+
+**Addendum, same day: build-and-test timeout 60 → 90.**
+- `main`'s push CI on 8bd8041 (run 36930257226) **succeeded in
+  44.3 min**, almost all of it in 'Setup ROS 2 Jazzy' on a slow mirror.
+  That is a new slowest green run, and against it the 60-min limit would
+  have left only 1.35x.
+- Following the rule (base the limit on the slowest green run seen),
+  build-and-test is now 90 min, about 2x 44.3. That still ends a ~2 h
+  hang.
+- The Lab job limits are unchanged; their slowest green run is 1.4 min.
