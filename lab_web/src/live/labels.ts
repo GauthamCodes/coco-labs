@@ -42,9 +42,41 @@ export function fallbackWarning(welcome: Welcome | null): string | null {
     `limits are built-in defaults, not the robot's own.`;
 }
 
+/**
+ * This tab's role. `open`: anyone connected may command (local stack).
+ * `driver` / `spectator`: a code-access session, decided by the SERVER
+ * (coco_web/control.py); the page only reads it.
+ */
+export type Role = 'open' | 'driver' | 'spectator';
+export function role(t: Telemetry | null, you: string | undefined): Role {
+  const c = t?.platform.control;
+  if (!c || c.access !== 'code') return 'open';
+  return c.driver_id && you && c.driver_id === you ? 'driver' : 'spectator';
+}
+
+/** What a refusal code means to the person who got it. */
+export function refusalWords(code: string, message: string): string {
+  switch (code) {
+    case 'stopped': return 'Stopped — pick a mode to move again.';
+    case 'spectator': return 'You are watching. Only the driver, who entered the control code, can command COCO.';
+    case 'bad_code': return 'That control code is not right for this session.';
+    case 'driver_present': return 'Someone else is driving. Control passes only when they let go or go idle.';
+    case 'rate_limited': return 'Too many commands at once; slow down.';
+    case 'session_over': return 'This live session has ended. COCO is stopped.';
+    case 'session_full': return 'This live session is full. Try again later.';
+    default: return message;
+  }
+}
+
 /** Who holds the stick, from this tab's point of view. */
 export function controlHolder(t: Telemetry | null, you: string | undefined): string {
   if (!t) return 'unknown';
+  const c = t.platform.control;
+  if (c && c.access === 'code') {
+    if (c.over) return 'nobody — the session has ended';
+    if (role(t, you) === 'driver') return 'you (the driver)';
+    return c.driver ? 'the driver (another person)' : 'nobody — enter the control code to drive';
+  }
   const pilot = t.platform.pilot;
   const active = t.platform.arbiter?.active ?? null;
   if (pilot && you && pilot === you) return 'you';

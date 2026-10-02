@@ -74,7 +74,17 @@ export interface Telemetry {
     pilot: string | null; health: string;
     arbiter: { mode: string | null; active: string | null; online: boolean };
     stop?: { latched: boolean; since: number | null; violations: number };
+    /** Additive (Phase 2 Part C): who may command COCO. */
+    control?: Control;
   };
+}
+
+/** `platform.control`: open (local) or code (one driver, spectators). */
+export interface Control {
+  access: 'open' | 'code';
+  over: string | null;
+  driver?: boolean; driver_id?: string | null; clients?: number; max_clients?: number;
+  idle_s?: number; idle_left_s?: number | null; session_left_s?: number; last_end?: string | null;
 }
 
 export interface MapFrame {
@@ -99,10 +109,12 @@ export type Intent =
   | { type: 'mission'; action: 'start' | 'abort' }
   | { type: 'nav_goal'; x: number; y: number }
   | { type: 'subscribe'; streams: string[] }
-  | { type: 'set_stream'; stream: 'camera'; fps?: number; quality?: number; scale?: number };
+  | { type: 'set_stream'; stream: 'camera'; fps?: number; quality?: number; scale?: number }
+  | { type: 'claim'; code: string }
+  | { type: 'release' };
 
 /** The intent types this tab sends; each must be in welcome.commands. */
 export const INTENT_TYPES: readonly Intent['type'][] = [
   'hello', 'ping', 'drive', 'stop', 'set_mode', 'select_target', 'mission',
-  'nav_goal', 'subscribe', 'set_stream',
+  'nav_goal', 'subscribe', 'set_stream', 'claim', 'release',
 ];

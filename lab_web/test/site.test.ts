@@ -4,7 +4,7 @@
 // Source-level guarantees the build checks (tools/check_dist.mjs) rely on.
 
 import { readdirSync, readFileSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 import { DEFAULT_BASE, PYODIDE_INDEX_URL, PYODIDE_VERSION } from '../site.config';
@@ -48,6 +48,19 @@ describe('privacy', () => {
       expect(/document\.cookie|localStorage|sessionStorage|indexedDB|sendBeacon|navigator\.userAgent/.test(text), p)
         .toBe(false);
     }
+  });
+
+  it('the ONE cross-origin request is the Live probe, to LIVE_REMOTE\'s /healthz only', () => {
+    // Phase 2 Part C: "is a session live?" asks the configured endpoint.
+    // It is in exactly one place, fed only from site.config's LIVE_REMOTE,
+    // and sends no credentials (status.ts). Nothing else leaves the origin.
+    const callers = src.filter(({ text }) => /fetch\(u, init\)/.test(text)).map(({ p }) => p);
+    expect(callers.map((p) => relative(join(LAB_WEB, 'src'), p))).toEqual([join('ui', 'LiveView.tsx')]);
+    const tsx = readFileSync(join(LAB_WEB, 'src/ui/LiveView.tsx'), 'utf-8');
+    expect(tsx).toMatch(/probe\(LIVE_REMOTE\?\.ws, \(u, init\) => fetch\(u, init\)\)/);
+    const status = readFileSync(join(LAB_WEB, 'src/live/status.ts'), 'utf-8');
+    expect(status).toContain("credentials: 'omit'");
+    expect(status).toMatch(/\/healthz`/);
   });
 
   it('every fetch is same-origin, relative to the base URL', () => {

@@ -36,6 +36,10 @@ const NOT_FETCHED = [
   /^http:\/\/www\.w3\.org\/(2000\/svg|1999\/xlink|1998\/Math\/MathML|XML\/1998\/namespace|1999\/xhtml)$/,
   /^https:\/\/react\.dev\/errors\/$/, // React builds an error message with this link text
   /^http:\/\/www\.apache\.org\/licenses\/LICENSE-2\.0$/, // the licence header of the embedded recompute.py
+  // Phase 2 Part C: a hyperlink a visitor may follow from the Live tab when
+  // no session is live (site.config DOCKER_QUICKSTART_URL). Navigation, not
+  // a request the page makes.
+  /^https:\/\/github\.com\/GauthamCodes\/coco-labs\/blob\/main\/docs\/DOCKER\.md$/,
 ];
 
 const failures = [];
@@ -52,11 +56,17 @@ for (const m of html.matchAll(/\s(?:src|href)="([^"]+)"/g)) {
 }
 const csp = html.match(/Content-Security-Policy"\s+content="([^"]+)"/)?.[1] ?? '';
 if (!csp.includes(`script-src 'self' 'wasm-unsafe-eval' ${pyodide};`)) failures.push(`CSP does not pin ${pyodide}: ${csp}`);
-if ((csp.match(/https?:\/\//g) ?? []).length !== 2) failures.push(`CSP names another origin: ${csp}`);
+// Phase 2 Part C: a configured remote session adds exactly its own host,
+// as wss: (the socket) and https: (the /healthz probe). Unset: neither.
+const remoteWs = siteConfig.match(/LIVE_REMOTE[^=]*= \{ ws: '(wss:\/\/[^/']+)[^']*' \}/)?.[1] ?? null;
+if (!remoteWs && !/LIVE_REMOTE[^=]*= null;/.test(siteConfig)) failures.push('LIVE_REMOTE is neither null nor { ws: \'wss://...\' }');
+const remoteHttps = remoteWs ? remoteWs.replace(/^wss:/, 'https:') : null;
+if ((csp.match(/https?:\/\//g) ?? []).length !== 2 + (remoteHttps ? 1 : 0)) failures.push(`CSP names another origin: ${csp}`);
+if (remoteHttps && !csp.includes(` ${remoteHttps}`)) failures.push(`CSP lacks the remote probe origin ${remoteHttps}`);
 
 // 5 (Phase 2): the Live tab may open WebSockets ONLY to LIVE_CONNECT_SRC
 const live = [...(siteConfig.match(/LIVE_CONNECT_SRC[^=]*= \[([^\]]*)\]/)?.[1] ?? '').matchAll(/'([^']+)'/g)]
-  .map((m) => m[1]).sort();
+  .map((m) => m[1]).concat(remoteWs ? [remoteWs] : []).sort();
 const wsInCsp = (csp.match(/wss?:\/\/[^\s;]+/g) ?? []).sort();
 if (!live.length || JSON.stringify(wsInCsp) !== JSON.stringify(live)) {
   failures.push(`CSP WebSocket origins ${JSON.stringify(wsInCsp)} != LIVE_CONNECT_SRC ${JSON.stringify(live)}`);
@@ -77,7 +87,9 @@ for (const f of files) {
   for (const m of text.matchAll(/https?:\/\/[^\s"'`)<>\\]+/g)) {
     const url = m[0];
     const ok = url.startsWith(pyodide) || (url === pyodide.slice(0, -1)) ||
-      NOT_FETCHED.some((re) => re.test(url)) || url.startsWith('https://cdn.jsdelivr.net/pyodide/v${');
+      NOT_FETCHED.some((re) => re.test(url)) || url.startsWith('https://cdn.jsdelivr.net/pyodide/v${') ||
+      // the configured remote session's probe origin, named in the CSP
+      (remoteHttps !== null && f.endsWith('index.html') && url.replace(/;$/, '') === remoteHttps);
     const key = `${relative(dist, f)}: ${url}`;
     found.set(key, ok);
     if (!ok) failures.push(`external URL ${key}`);

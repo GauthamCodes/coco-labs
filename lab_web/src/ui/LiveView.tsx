@@ -16,10 +16,14 @@ import { LiveClient, type ConnState } from '../live/client';
 import { isZero, keysVelocity, KEYS, stickVelocity, type Velocity } from '../live/drive';
 import { loadFrameDecoder, type DecodedFrame } from '../live/frame';
 import {
-  controlHolder, fallbackWarning, LANE_TOLD, liveLabel, localisationNote, overriding, sourceWords,
+  controlHolder, fallbackWarning, LANE_TOLD, liveLabel, localisationNote, overriding, refusalWords, role,
+  sourceWords,
 } from '../live/labels';
 import { draw, gridImage, toCanvas, toMap, type View } from '../live/mapdraw';
-import type { MapFrame, Telemetry, Welcome } from '../live/protocol';
+import type { Intent, MapFrame, Telemetry, Welcome } from '../live/protocol';
+import scheduleDoc from '../live/schedule.json';
+import { loadSchedule, nextSession, probe, statusWords, type LiveVerdict } from '../live/status';
+import { DOCKER_QUICKSTART_URL, LIVE_REMOTE } from '../../site.config';
 
 const BASE = import.meta.env.BASE_URL;
 export const DEFAULT_URL = 'ws://localhost:8080/ws';
@@ -77,7 +81,7 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
         onTelemetry: (t) => { window.__cocoLiveTele = t; setTele(t); },
         onMap: setMap,
         onSensor: (f) => { if (f.stream === 'camera') void paint(camera.current, f); },
-        onError: (code, message) => setNote({ text: code === 'stopped' ? 'Stopped — pick a mode to move again.' : message, bad: code !== 'not_in_control' }),
+        onError: (code, message) => setNote({ text: refusalWords(code, message), bad: code !== 'not_in_control' }),
       });
       client.current = c;
       window.__cocoLive = c;
@@ -95,7 +99,15 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
       : [...tl, { state: s, words: tele?.mission?.words ?? null, at: Date.now() }].slice(-40)));
   }, [tele?.mission?.state, tele?.mission?.words]);
 
-  const send = useCallback((intent: Parameters<LiveClient['send']>[0]) => client.current?.send(intent) ?? null, []);
+  const send = useCallback((intent: Intent) => client.current?.send(intent) ?? null, []);
+  // In a code-access session the SERVER decides who may command COCO
+  // (coco_web/control.py) and refuses spectators. The page also holds a
+  // spectator's commands back, so a watcher's keys do not flood refusals.
+  const myRole = role(tele, welcome?.you);
+  const spectator = myRole === 'spectator';
+  const spectatorRef = useRef(false);
+  spectatorRef.current = spectator;
+  const command = useCallback((intent: Intent) => (spectatorRef.current ? null : send(intent)), [send]);
   const missionActive = !!tele?.mission?.active;
   const latched = !!tele?.platform.stop?.latched;
 
@@ -103,8 +115,8 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
   const pickMode = useCallback((m: 'teleop' | 'auto') => {
     if (missionActive) return;
     uiMode.current = m;
-    send({ type: 'set_mode', mode: m });
-  }, [missionActive, send]);
+    command({ type: 'set_mode', mode: m });
+  }, [missionActive, command]);
 
   // ── driving: one 10 Hz loop for stick and keys, 3 zeros on release ──
   const stick = useRef<Velocity>({ linear: 0, angular: 0 });
@@ -126,16 +138,20 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
       } else {
         zeros.current = 3;
       }
-      send({ type: 'drive', linear: v.linear, angular: v.angular });
+      command({ type: 'drive', linear: v.linear, angular: v.angular });
     }, 100);
     return () => clearInterval(t);
-  }, [limits, send]);
+  }, [limits, command]);
 
   const stop = useCallback(() => {
     held.current.clear();
     stick.current = { linear: 0, angular: 0 };
     zeros.current = 3;
     uiMode.current = 'stop';
+    if (spectatorRef.current) {
+      setNote({ text: 'STOP is the driver\'s (and the host\'s) in a live session. You are watching.', bad: true });
+      return;
+    }
     const sent = send({ type: 'stop' });
     setNote(sent !== null ? { text: 'STOP sent — latched until you pick a mode.', bad: false }
       : { text: 'Not connected — nothing was sent. The server stops COCO when its last page leaves.', bad: true });
@@ -208,8 +224,9 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
     const r = cv.getBoundingClientRect();
     if (!view.current) return;
     const [x, y] = toMap(view.current, (e.clientX - r.left) * (cv.width / r.width), (e.clientY - r.top) * (cv.height / r.height));
+    if (spectator) { setNote({ text: refusalWords('spectator', ''), bad: true }); return; }
     if (uiMode.current !== 'auto') pickMode('auto');
-    send({ type: 'nav_goal', x, y });
+    command({ type: 'nav_goal', x, y });
     setNote({ text: `Goal sent: (${x.toFixed(2)}, ${y.toFixed(2)})`, bad: false });
   };
 
@@ -219,8 +236,10 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
   const locNote = localisationNote(tele);
   const goal = tele?.nav.goal;
   const m = tele?.mission;
+  const ctl = tele?.platform.control;
   return (
     <section className="live" data-testid="live">
+      <LiveStatus onJoin={(ws) => { setDraftUrl(ws); setUrl(ws); }} current={url} />
       <div className="live-bar">
         <form onSubmit={(e) => { e.preventDefault(); setUrl(draftUrl.trim()); }}>
           <label>Server <input value={draftUrl} onChange={(e) => setDraftUrl(e.target.value)} data-testid="live-url"
@@ -235,6 +254,19 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
       {frameErr && <div className="error" role="alert">Sensor decoder unavailable: {frameErr}</div>}
       {warning && <div className="error" role="alert" data-testid="live-fallback">{warning}</div>}
       {latched && <div className="banner stop-banner" data-testid="live-latched">STOPPED (latched). Pick a mode, or start a mission, to move again.</div>}
+      {ctl?.access === 'code' && (
+        <div className="banner session" data-testid="live-session">
+          {ctl.over ? <span>This live session has ended ({ctl.over}). COCO is stopped.</span>
+            : myRole === 'driver' ? (
+              <span>You are the driver.{ctl.idle_left_s != null ? ` Idle release in ${Math.ceil(ctl.idle_left_s)} s.` : ''}
+                {ctl.session_left_s != null ? ` Session ends in ${Math.floor(ctl.session_left_s / 60)} min.` : ''}{' '}
+                <button type="button" className="seg-btn" data-testid="live-release"
+                  onClick={() => send({ type: 'release' })}>Release control (stops COCO)</button></span>
+            ) : (
+              <ClaimBox driverPresent={!!ctl.driver} onClaim={(code) => send({ type: 'claim', code })} />
+            )}
+        </div>
+      )}
       {overriding(tele) && <div className="banner override" data-testid="live-override">You are overriding the mission: your stick outranks it. Let go and the mission resumes.</div>}
 
       <div className="seg" role="tablist" aria-label="Live mode">
@@ -287,14 +319,14 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
               <div className="live-colours">
                 {(welcome?.limits.colours ?? []).map((c) => (
                   <button key={c} type="button" className={colour === c ? 'seg-btn active' : 'seg-btn'} data-testid={`live-colour-${c}`}
-                    onClick={() => { setColour(c); send({ type: 'select_target', colour: c }); }}>{c}</button>
+                    disabled={spectator} onClick={() => { setColour(c); command({ type: 'select_target', colour: c }); }}>{c}</button>
                 ))}
               </div>
               <div className="live-actions">
-                <button type="button" className="seg-btn" disabled={!colour || missionActive} data-testid="live-start"
-                  onClick={() => send({ type: 'mission', action: 'start' })}>Start</button>
-                <button type="button" className="seg-btn" disabled={!missionActive} data-testid="live-abort"
-                  onClick={() => send({ type: 'mission', action: 'abort' })}>Abort</button>
+                <button type="button" className="seg-btn" disabled={spectator || !colour || missionActive} data-testid="live-start"
+                  onClick={() => command({ type: 'mission', action: 'start' })}>Start</button>
+                <button type="button" className="seg-btn" disabled={spectator || !missionActive} data-testid="live-abort"
+                  onClick={() => command({ type: 'mission', action: 'abort' })}>Abort</button>
               </div>
               <p className="honest" data-testid="live-lane-told">{LANE_TOLD}</p>
               {m && <p data-testid="live-mission">{m.state}{m.step && m.steps ? ` — step ${m.step} of ${m.steps}` : ''}
@@ -307,8 +339,60 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
           {note && <p className={note.bad ? 'note bad' : 'note'} role="status">{note.text}</p>}
         </aside>
       </div>
-      <button type="button" className="live-stop" onClick={stop} data-testid="live-stop">STOP</button>
+      <button type="button" className="live-stop" onClick={stop} data-testid="live-stop" disabled={spectator}
+        aria-disabled={spectator}>{spectator ? 'STOP — driver only' : 'STOP'}</button>
     </section>
+  );
+}
+
+/** A spectator's way in: the control code the host gave them. */
+function ClaimBox({ driverPresent, onClaim }: { driverPresent: boolean; onClaim(code: string): void }) {
+  const [code, setCode] = useState('');
+  return (
+    <form onSubmit={(e) => { e.preventDefault(); if (code.trim()) onClaim(code.trim()); }}>
+      <span>You are watching{driverPresent ? '; someone else is driving' : ''}. </span>
+      <label>Control code <input value={code} onChange={(e) => setCode(e.target.value)} data-testid="live-code"
+        autoComplete="off" spellCheck={false} size={10} /></label>
+      <button type="submit" className="seg-btn" data-testid="live-claim" disabled={driverPresent}>Take control</button>
+    </form>
+  );
+}
+
+const SCHEDULE = loadSchedule(scheduleDoc);
+
+/**
+ * The public status line: is a scheduled remote session live NOW? Asks the
+ * configured endpoint's /healthz (status.ts); with none configured, or no
+ * answer, it says so and points to Replay and the Docker quickstart.
+ */
+function LiveStatus({ onJoin, current }: { onJoin(ws: string): void; current: string }) {
+  const [verdict, setVerdict] = useState<LiveVerdict>(
+    LIVE_REMOTE ? { state: 'offline', why: 'checking' } : { state: 'unconfigured' });
+  useEffect(() => {
+    if (!LIVE_REMOTE) return;
+    let alive = true;
+    const check = () => {
+      // The ONE cross-origin request this site makes: the remote endpoint's
+      // /healthz, which answers CORS only for this site (control.origins).
+      void probe(LIVE_REMOTE?.ws, (u, init) => fetch(u, init)).then((v) => { if (alive) setVerdict(v); });
+    };
+    check();
+    const t = setInterval(check, 30_000);
+    return () => { alive = false; clearInterval(t); };
+  }, []);
+  const words = statusWords(verdict, nextSession(SCHEDULE, new Date()));
+  const remote = LIVE_REMOTE?.ws;
+  return (
+    <div className={words.live ? 'live-status-card on' : 'live-status-card'} data-testid="live-status">
+      <b>{words.live ? 'Live now' : 'Remote session'}</b> <span data-testid="live-status-words">{words.headline}</span>
+      {words.live && remote && remote !== current && (
+        <button type="button" className="seg-btn" data-testid="live-join" onClick={() => onJoin(remote)}>Watch</button>
+      )}
+      {!words.live && (
+        <span data-testid="live-fallback-links"> Meanwhile: <a href={import.meta.env.BASE_URL}>Replay recorded runs</a>
+          {' · '}<a href={DOCKER_QUICKSTART_URL} target="_blank" rel="noreferrer">run COCO yourself (Docker quickstart)</a>.</span>
+      )}
+    </div>
   );
 }
 

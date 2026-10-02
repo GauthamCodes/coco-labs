@@ -225,6 +225,11 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .stop-banner { background: var(--error-bg); color: var(--error-fg); }
 .override { background: #fff3cd; color: #5c4400; }
 @media (prefers-color-scheme: dark) { .override { background: #4a3b00; color: #ffe9a6; } }
+.session { background: var(--panel, rgba(127, 127, 127, 0.12)); font-weight: 400; }
+.session form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.live-status-card { padding: 8px 12px; border-radius: 6px; margin: 4px 0 8px; border: 1px solid rgba(127, 127, 127, 0.35); }
+.live-status-card.on { border-color: #2ca02c; }
+.live-stop:disabled { opacity: 0.55; cursor: not-allowed; }
 .seg { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
 .live-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 12px; }
 @media (max-width: 820px) { .live-grid { grid-template-columns: minmax(0, 1fr); } }

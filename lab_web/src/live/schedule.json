@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "note": "Scheduled public COCO Live sessions. start: ISO 8601 with an explicit offset; minutes: length. Empty until the owner schedules one: the page then says none is scheduled rather than inventing a time.",
+  "sessions": []
+}
