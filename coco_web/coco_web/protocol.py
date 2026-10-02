@@ -106,6 +106,10 @@ DEFAULT_STREAMS = streams_mod.DEFAULT_STREAMS
 REFUSAL_CODES = {
     'not_in_control': 'another browser is driving; press STOP to take '
                       'over, or wait for it to let go',
+    # Additive (Phase 2): the latched STOP refuses anything that would
+    # start motion until a mode is picked again.
+    'stopped': 'COCO is stopped; pick a mode (teleop or auto) or start a '
+               'mission to move again',
 }
 
 

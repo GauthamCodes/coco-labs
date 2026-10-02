@@ -182,6 +182,25 @@ class FakeNode:
         self.published.append(('mission', action))
         return True, f'/mission/{action} called'
 
+    def hold_zero(self, seconds):
+        """Record a request to hold explicit zeros."""
+        self.published.append(('hold', seconds))
+
+    def cancel_hold(self):
+        """Record the end of a zero hold."""
+        self.published.append(('cancel_hold',))
+
+    def set_mode_watch(self, callback):
+        """Keep the /mission/mode observer, as the real node does."""
+        self.mode_watch = callback
+
+    def running_mission(self, state='CLIMB', mode='rl'):
+        """Make the executive's status line say a mission is running."""
+        self.snap['mission'] = (f'state={state} prev=VERIFY_NAV event=run '
+                                f'mode={mode} owner=ramp_driver')
+        self.fresh['mission'] = True
+        return self
+
 
 def _image(seq, stream='camera'):
     """Build one encoded frame the way _encode_image stores it."""
@@ -524,7 +543,135 @@ def test_a_second_client_cannot_drive_but_its_stop_is_honoured():
     refused, published = _run(body())
     assert refused['code'] == 'not_in_control'
     assert ('drive', 0.3, 0.0) not in published
-    assert published[-1] == ('stop',)
+    # STOP is latched since Phase 2: the zero, a held zero, then idle.
+    after = published[published.index(('drive', 0.1, 0.0)) + 1:]
+    assert after[0] == ('stop',)
+    assert ('mode', 'stop') in after
+
+
+# ── the latched STOP (Phase 2, owner decision 1) ───────────────────────
+# Part A measured STOP during a fetch: wheels zero at 1.5 ms, moving again
+# at 723 ms, because the executive re-asserted `nav`. These pin the fix.
+
+def _stop_scenario(node, *frames):
+    """Connect one client, send `frames` in order, return replies + log."""
+    async def body():
+        h = await Harness(node).start()
+        ws = await h.client()
+        replies = []
+        for frame in frames:
+            ws.write_message(json.dumps(frame))
+            replies.append(await h.until(
+                ws, lambda f: f.get('type') in ('ack', 'error')))
+        await h.stop()
+        return replies, list(node.published), h.platform
+    return _run(body())
+
+
+def test_stop_during_a_running_mission_aborts_it_and_idles_the_arbiter():
+    """STOP = zero, a held zero, `idle`, and the abort."""
+    _replies, published, _p = _stop_scenario(
+        FakeNode().running_mission(), {'type': 'stop'})
+    assert ('stop',) in published
+    assert ('mode', 'stop') in published          # the arbiter's `idle`
+    assert ('mission', 'abort') in published
+    assert any(p[0] == 'hold' and p[1] >= 1.0 for p in published)
+
+
+def test_stop_with_no_mission_running_does_not_abort():
+    """An abort from IDLE is terminal for the executive: never send one."""
+    for line, fresh in (('state=IDLE mode=idle', True),
+                        ('state=CLIMB mode=rl', False),
+                        ('', False),
+                        ('state=ABORT mode=idle', True)):
+        node = FakeNode()
+        node.snap['mission'] = line
+        node.fresh['mission'] = fresh
+        _r, published, _p = _stop_scenario(node, {'type': 'stop'})
+        assert ('mission', 'abort') not in published, line
+        assert ('mode', 'stop') in published, line
+
+
+def test_set_mode_stop_is_the_same_latched_stop():
+    """The page's Stop mode button must not be a weaker STOP."""
+    _r, published, platform = _stop_scenario(
+        FakeNode().running_mission(), {'type': 'set_mode', 'mode': 'stop'})
+    assert ('mission', 'abort') in published
+    assert platform.stop_latch.latched
+
+
+def test_after_stop_drive_and_goals_are_refused_until_a_mode_is_picked():
+    """Nothing starts motion again without an explicit choice."""
+    replies, published, _p = _stop_scenario(
+        FakeNode(),
+        {'type': 'stop'},
+        {'type': 'drive', 'linear': 0.0, 'angular': 0.0},
+        {'type': 'drive', 'linear': 0.2, 'angular': 0.0},
+        {'type': 'nav_goal', 'x': 1.0, 'y': 0.0},
+        {'type': 'set_mode', 'mode': 'teleop'},
+        {'type': 'drive', 'linear': 0.2, 'angular': 0.0})
+    # The page's three post-STOP zeros are accepted; motion is not.
+    assert [r['type'] for r in replies] == [
+        'ack', 'ack', 'error', 'error', 'ack', 'ack']
+    assert replies[2]['code'] == 'stopped'
+    assert replies[3]['code'] == 'stopped'
+    assert ('drive', 0.2, 0.0) in published
+    assert published.index(('cancel_hold',)) < published.index(
+        ('drive', 0.2, 0.0))
+    assert ('goal', 1.0, 0.0) not in published
+
+
+def test_picking_auto_or_starting_a_mission_releases_the_latch():
+    """Each explicit choice releases it; select_target does not."""
+    for frame in ({'type': 'set_mode', 'mode': 'auto'},
+                  {'type': 'mission', 'action': 'start'}):
+        _r, _pub, platform = _stop_scenario(FakeNode(), {'type': 'stop'},
+                                            frame)
+        assert not platform.stop_latch.latched, frame
+    _r, _pub, platform = _stop_scenario(
+        FakeNode(), {'type': 'stop'},
+        {'type': 'select_target', 'colour': 'blue'})
+    assert platform.stop_latch.latched
+
+
+def test_a_moving_mode_seen_while_latched_is_put_back_to_idle():
+    """The backstop: nothing may re-assert a moving mode after a STOP."""
+    node = FakeNode()
+    _r, _pub, platform = _stop_scenario(node, {'type': 'stop'})
+    before = len(node.published)
+    node.mode_watch('nav')            # e.g. a stale executive tick
+    node.mode_watch('idle')           # not a violation
+    after = node.published[before:]
+    assert ('mode', 'stop') in after
+    assert any(p[0] == 'hold' for p in after)
+    assert platform.stop_latch.as_dict()['violations'] == 1
+
+
+def test_a_moving_mode_with_no_stop_in_force_is_left_alone():
+    """Released, the server must not fight the executive or the user."""
+    node = FakeNode()
+    h = ps.Platform(node)
+    node.mode_watch('nav')
+    assert node.published == []
+    assert not h.stop_latch.latched
+
+
+def test_telemetry_reports_the_latch():
+    """platform.stop is additive: latched, since, violations."""
+    async def body():
+        h = await Harness(FakeNode()).start()
+        ws = await h.client()
+        await h.request(ws, {'type': 'stop'}, 'ack')
+        h.platform.tick()
+        frame = await h.until(
+            ws, lambda f: f.get('type') == 'telemetry'
+            and f['platform'].get('stop', {}).get('latched'))
+        await h.stop()
+        return frame
+    stop = _run(body())['platform']['stop']
+    assert stop['latched'] is True
+    assert isinstance(stop['since'], float)
+    assert stop['violations'] == 0
 
 
 def test_the_last_client_leaving_stops_the_robot_and_not_before():
@@ -1607,7 +1754,9 @@ def test_welcome_carries_the_real_world_geometry_end_to_end():
         assert bay['platform'] == {'x0': x_min + shift, 'x1': x_max + shift}
         assert bay['ramp']['x1'] == bay['platform']['x0']
         assert bay['descent']['x0'] == bay['platform']['x1']
-    assert published[-1] == ('stop',)
+    # STOP was honoured: its zero went out (then the hold and idle).
+    assert ('stop',) in published
+    assert ('mode', 'stop') in published
 
 
 # ── coco_config's other real paths: colours, depth clip, arm limits ─────

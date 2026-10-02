@@ -592,6 +592,7 @@ Echoes the client's current stream set and per-stream config.
 | `bad_mode`, `bad_colour`, `bad_action`, `unknown_stream` | outside the allowed set |
 | `bad_binary`, `bad_streams`, `bad_stream`, `bad_stream_config` | malformed subscription or tuning |
 | `not_in_control` | another client holds the stick — **resolves itself** |
+| `stopped` | a latched STOP is in force; `drive` (non-zero) and `nav_goal` are refused until `set_mode teleop`/`auto` or `mission start` (Phase 2) |
 | `refused` | well-formed, but the robot would not do it |
 | `command_failed` | the server raised while acting on it |
 
@@ -909,6 +910,33 @@ still held by the other hand does not drive the robot off again on the
 next 100 ms tick. With no connection, the page says nothing was sent —
 and that COCO stops by itself: the drive watchdog zeroes a stick that
 goes quiet for 0.5 s, and the last client leaving publishes a stop.
+
+### STOP is latched (Phase 2, 2026-10-02)
+
+Part A measured the old STOP during a fetch: wheels at zero in 1.5 ms,
+then moving again at 723 ms, because the executive re-asserted `nav`
+(`docs/live/PART_A_AUDIT.md`). Owner decision: STOP aborts a running
+mission and holds the arbiter in idle until a mode is picked again.
+`stop` and `set_mode stop` now both do this, from any client:
+
+1. an explicit zero on the teleop input, then zeros at 10 Hz for 1 s.
+   Teleop outranks every mode in the arbiter, so the wheels stay at zero
+   while the abort is in flight;
+2. `/mission/mode` `idle`;
+3. `/mission/abort`, **only if the executive's own status line says a
+   mission is running**. An abort sent to an IDLE executive is terminal
+   for it;
+4. the latch. While it holds:
+   - non-zero `drive` and any `nav_goal` are refused with `stopped`, but
+     zero drives are accepted;
+   - a moving mode seen on `/mission/mode` is put back to `idle` and the
+     zero hold renewed, and counted as a violation. It never fires in
+     normal operation, because the executive asserts its mode only while
+     a mission runs.
+
+`set_mode teleop`, `set_mode auto` and `mission start` release it.
+Telemetry carries `platform.stop {latched, since, violations}`, which is
+additive.
 
 ### Protocol strictness added in P0.2's second pass (Codex, integrated)
 

@@ -97,6 +97,7 @@ import time
 from coco_web import binary, imaging, metrics as metrics_mod
 from coco_web import mjpeg, protocol, safety
 from coco_web import session as session_mod
+from coco_web import stop_latch as stop_mod
 from coco_web import streams as streams_mod
 from coco_web import telemetry as tele
 
@@ -276,6 +277,13 @@ class CocoWebNode(Node):
         self._ros_is_sim = bool(self.get_parameter('use_sim_time').value)
         self._last_drive = 0.0
         self._drive_zeroed = True
+        # The latched STOP's zero hold (stop_latch.py): while active, the
+        # 10 Hz watchdog publishes explicit zeros on the teleop input,
+        # which the arbiter puts ahead of every mode.
+        self._zero_hold = stop_mod.ZeroHold()
+        # Who wants to see /mission/mode as it arrives: the Platform's
+        # latch backstop. Set by set_mode_watch; called on this thread.
+        self._mode_watch = None
         # Which optional sensor streams clients are watching, and the
         # rclpy subscriptions currently open for them. The two are
         # reconciled on the rclpy thread (see _reconcile_streams): the
@@ -350,6 +358,11 @@ class CocoWebNode(Node):
         # permanently null and only the browser's own echo filled it in.
         self.create_subscription(
             String, '/mission/target_colour', self._on_colour, 10)
+        # Read-only. The latched STOP's backstop: a moving mode arriving
+        # while STOP is in force is answered at once, on this thread,
+        # rather than at the next 2 Hz arbiter status line.
+        self.create_subscription(
+            String, '/mission/mode', self._on_mode_topic, 10)
 
         # The drive watchdog runs on the steady clock: a paused simulator
         # must not freeze the thing that stops the robot.
@@ -689,6 +702,25 @@ class CocoWebNode(Node):
             self._snap['colour'] = msg.data
             self._snap['colour_t'] = time.monotonic()
 
+    def _on_mode_topic(self, msg):
+        """Hand each /mission/mode value to the latch backstop, if any."""
+        watch = self._mode_watch
+        if watch is not None:
+            watch(msg.data)
+
+    def set_mode_watch(self, callback):
+        """Register the callable that sees every /mission/mode value."""
+        self._mode_watch = callback
+
+    def hold_zero(self, seconds):
+        """Publish explicit zeros on the teleop input for `seconds`."""
+        self._zero_hold.hold(time.monotonic(), seconds)
+        self.publish_stop()
+
+    def cancel_hold(self):
+        """End a zero hold: the user picked a mode and may drive."""
+        self._zero_hold.cancel()
+
     # ── command publishing: the only paths out ─────────────────────────
     def publish_drive(self, linear, angular):
         """Publish one teleop velocity. Already clamped by protocol.decode."""
@@ -718,7 +750,13 @@ class CocoWebNode(Node):
         The browser sends `drive` continuously while the stick is held.
         Silence means the client is gone or the socket stalled, and a held
         velocity must not outlive the client that asked for it.
+
+        It also carries the latched STOP's zero hold: while one is active,
+        an explicit zero goes out every tick.
         """
+        if self._zero_hold.active(time.monotonic()):
+            self.publish_stop()
+            return
         if self._drive_zeroed:
             return
         if time.monotonic() - self._last_drive > DRIVE_TIMEOUT_S:
@@ -1001,6 +1039,55 @@ class Platform:
         # Open /video/<alias> responses, so their counters are reachable
         # and a test can see a slow viewer is bounded.
         self.video_viewers = set()
+        # The latched STOP (stop_latch.py). The node reports every
+        # /mission/mode value here so a moving mode re-asserted while
+        # STOP is in force is answered at once.
+        self.stop_latch = stop_mod.StopLatch()
+        watch = getattr(node, 'set_mode_watch', None)
+        if callable(watch):
+            watch(self.on_mission_mode)
+
+    def engage_stop(self):
+        """
+        STOP, latched: zero now, zeros held, arbiter idle, mission aborted.
+
+        The abort goes only to an executive whose own status line says a
+        mission is running. Aborting an IDLE executive drives it to ABORT,
+        which is terminal, so a STOP pressed while driving by hand would
+        end autonomous mode for the rest of the session.
+        """
+        node = self.node
+        node.publish_stop()
+        node.hold_zero(stop_mod.HOLD_S)
+        node.publish_mode('stop')
+        snap, fresh = node.snapshot()
+        state = tele.parse_kv_line(snap.get('mission') or '').get('state')
+        if stop_mod.mission_running(state, fresh.get('mission')):
+            node.call_mission('abort')
+        self.stop_latch.engage(time.time())
+        self.pilot_clear()
+
+    def release_stop(self, kind, frame):
+        """Release the latch if this intent is an explicit choice to move."""
+        if self.stop_latch.releases(kind, frame) and self.stop_latch.release():
+            self.node.cancel_hold()
+
+    def on_mission_mode(self, mode):
+        """
+        Put a moving mode seen while STOP is in force back to idle.
+
+        Called on the rclpy thread for every /mission/mode value. In normal
+        operation it never acts, because the executive falls silent when
+        its mission ends. It exists so that "nothing may re-assert a moving
+        mode after a STOP" does not rest on that alone.
+        """
+        if not self.stop_latch.violated_by(mode):
+            return
+        self.node.publish_mode('stop')
+        self.node.hold_zero(stop_mod.HOLD_S)
+        self.node.get_logger().warn(
+            f'/mission/mode {mode!r} while STOP is latched: put back to '
+            f'idle and the wheels held at zero')
 
     def pilot_claim(self, client):
         """
@@ -1258,6 +1345,9 @@ class Platform:
                 # different questions (see session.HEALTH_STATES).
                 'health': sess.health_state(),
                 'pilot': self.pilot_id(),
+                # Additive (Phase 2): the latched STOP, so a page can say
+                # why nothing moves and what releases it.
+                'stop': self.stop_latch.as_dict(),
             })
 
     def broadcast(self, frame, stream='telemetry'):
@@ -1518,6 +1608,12 @@ class ControlSocket(tornado.websocket.WebSocketHandler):
         if kind == 'ping':
             self._write(protocol.encode(protocol.pong(frame['t'])))
             return True, ''
+        latch = self.platform.stop_latch
+        if latch.blocks(kind, frame):
+            # Latched STOP: nothing starts motion again until a mode is
+            # picked (set_mode teleop/auto) or a mission is started.
+            return False, 'stopped'
+        self.platform.release_stop(kind, frame)
         if kind == 'drive':
             if not self.platform.pilot_claim(self):
                 return False, 'not_in_control'
@@ -1529,10 +1625,18 @@ class ControlSocket(tornado.websocket.WebSocketHandler):
             # control is not a safety control -- and the person who can
             # see the robot about to hit something may well be the one
             # watching rather than the one driving.
-            node.publish_stop()
-            self.platform.pilot_clear()
+            #
+            # And it is LATCHED (Phase 2, owner decision 1): it aborts a
+            # running mission and holds the arbiter in idle until a mode is
+            # picked again. A single zero used to last 0.3 s before the
+            # mission drove on (measured, docs/live/PART_A_AUDIT.md).
+            self.platform.engage_stop()
             return True, ''
         if kind == 'set_mode':
+            if frame['mode'] == 'stop':
+                # The page's Stop mode button is not a weaker STOP.
+                self.platform.engage_stop()
+                return True, ''
             return node.publish_mode(frame['mode']), 'unknown mode'
         if kind == 'select_target':
             node.publish_colour(frame['colour'])

@@ -786,6 +786,9 @@ document.addEventListener("keydown", (event) => {
     held.clear();                  // same reason as the STOP button
     stopDriving();
     send({ type: "stop" });
+    // STOP is latched server-side: show Stop, so the next key or stick
+    // press sends set_mode teleop -- the explicit choice that releases it.
+    setMode("stop");
     return;
   }
   const key = KEYS[event.key];
