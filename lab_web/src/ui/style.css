@@ -211,3 +211,43 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   border-radius: 6px; overflow-wrap: anywhere; }
 .exhibit p, .exhibit li { overflow-wrap: anywhere; }
 
+
+/* Phase 2: the Live tab */
+.mode-live { color: #d55e00; }
+.live { margin: 12px 0 72px; }
+.live-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-bottom: 8px; }
+.live-bar form { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.live-bar input { min-height: var(--touch); font-size: 0.95rem; width: min(320px, 70vw); }
+.live-bar code { overflow-wrap: anywhere; }
+.muted { color: var(--muted); }
+.conn { font-weight: 600; } .conn-open { color: var(--browser); } .conn-silent, .conn-closed { color: var(--error-fg); }
+.banner { padding: 10px 12px; border-radius: 6px; margin: 8px 0; font-weight: 600; }
+.stop-banner { background: var(--error-bg); color: var(--error-fg); }
+.override { background: #fff3cd; color: #5c4400; }
+@media (prefers-color-scheme: dark) { .override { background: #4a3b00; color: #ffe9a6; } }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.live-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 12px; }
+@media (max-width: 820px) { .live-grid { grid-template-columns: minmax(0, 1fr); } }
+.live-map canvas { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; color: var(--fg); touch-action: none; }
+.live-map canvas.clickable { cursor: crosshair; }
+.live-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.9rem; margin-top: 4px; align-items: center; }
+.live-legend label { display: inline-flex; gap: 6px; align-items: center; min-height: var(--touch); }
+.sw.belief { border: 2px solid #ff8c2a; border-radius: 50%; background: transparent; }
+.sw.local { background: #d55e00; height: 4px; border: 0; }
+.live-side { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.live-status { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; margin: 0; }
+.live-status dt { color: var(--muted); } .live-status dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+.live-camera { width: 100%; height: auto; background: #000; border-radius: 6px; }
+.live-panel p { overflow-wrap: anywhere; }
+.live-colours, .live-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.honest { font-size: 0.9rem; border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+.live-timeline { font-size: 0.9rem; max-height: 220px; overflow-y: auto; padding-left: 22px; }
+.live-timeline li.now { font-weight: 700; }
+.note { font-size: 0.95rem; } .note.bad { color: var(--error-fg); }
+.joystick { position: relative; width: min(180px, 60vw); aspect-ratio: 1; border-radius: 50%; border: 2px solid var(--line);
+  background: var(--panel); touch-action: none; user-select: none; margin: 4px auto; }
+.joystick .knob { position: absolute; left: 30%; top: 30%; width: 40%; height: 40%; border-radius: 50%; background: #ff8c2a;
+  pointer-events: none; }
+.live-stop { position: fixed; z-index: 50; right: 16px; bottom: 16px; min-height: 56px; min-width: 120px; padding: 0 24px;
+  font-size: 1.2rem; font-weight: 800; color: #fff; background: #c0392b; border: 3px solid #7a1b10; border-radius: 10px; cursor: pointer; }
+@media (max-width: 600px) { .live-stop { left: 16px; right: 16px; } }

@@ -54,6 +54,21 @@ const csp = html.match(/Content-Security-Policy"\s+content="([^"]+)"/)?.[1] ?? '
 if (!csp.includes(`script-src 'self' 'wasm-unsafe-eval' ${pyodide};`)) failures.push(`CSP does not pin ${pyodide}: ${csp}`);
 if ((csp.match(/https?:\/\//g) ?? []).length !== 2) failures.push(`CSP names another origin: ${csp}`);
 
+// 5 (Phase 2): the Live tab may open WebSockets ONLY to LIVE_CONNECT_SRC
+const live = [...(siteConfig.match(/LIVE_CONNECT_SRC[^=]*= \[([^\]]*)\]/)?.[1] ?? '').matchAll(/'([^']+)'/g)]
+  .map((m) => m[1]).sort();
+const wsInCsp = (csp.match(/wss?:\/\/[^\s;]+/g) ?? []).sort();
+if (!live.length || JSON.stringify(wsInCsp) !== JSON.stringify(live)) {
+  failures.push(`CSP WebSocket origins ${JSON.stringify(wsInCsp)} != LIVE_CONNECT_SRC ${JSON.stringify(live)}`);
+}
+
+// 6 (Phase 2): the Live tab ships coco_web's own frame decoder, byte for byte
+const frameSrc = readFileSync(join(here, '..', 'coco_web', 'web', 'frame.js'));
+let frameDist = null;
+try { frameDist = readFileSync(join(dist, 'coco', 'frame.js')); } catch { /* reported below */ }
+if (!frameDist) failures.push('dist/coco/frame.js is missing');
+else if (!frameDist.equals(frameSrc)) failures.push('dist/coco/frame.js differs from coco_web/web/frame.js');
+
 // 3: external URLs anywhere in the build
 const found = new Map();
 for (const f of files) {

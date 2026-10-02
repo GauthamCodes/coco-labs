@@ -1,14 +1,18 @@
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
 
-import { createReadStream, existsSync, statSync } from 'node:fs';
+import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 
-import { DEFAULT_BASE, PYODIDE_INDEX_URL, PYODIDE_VERSION } from './site.config.ts';
+import { DEFAULT_BASE, LIVE_CONNECT_SRC, PYODIDE_INDEX_URL, PYODIDE_VERSION } from './site.config.ts';
+
+/** coco_web's own binary-frame decoder: shipped as-is, never ported. */
+const FRAME_JS = fileURLToPath(new URL('../coco_web/web/frame.js', import.meta.url));
 
 const base = process.env.LAB_BASE ?? DEFAULT_BASE;
 
@@ -51,7 +55,24 @@ export default defineConfig({
       // index.html's CSP names the pinned Pyodide directory; fill it from
       // site.config.ts so the two can never disagree.
       name: 'coco-lab-csp',
-      transformIndexHtml: (html: string) => html.replaceAll('%PYODIDE_INDEX_URL%', PYODIDE_INDEX_URL),
+      transformIndexHtml: (html: string) => html.replaceAll('%PYODIDE_INDEX_URL%', PYODIDE_INDEX_URL)
+        .replaceAll('%LIVE_CONNECT_SRC%', LIVE_CONNECT_SRC.join(' ')),
+    },
+    {
+      // The Live tab decodes binary sensor frames with coco_web/web/frame.js
+      // itself: copied byte for byte into the build (check_dist.mjs compares
+      // them) and served from the same path by the dev server.
+      name: 'coco-lab-frame-js',
+      configureServer: (server) => {
+        server.middlewares.use((req, res, next) => {
+          if ((req.url ?? '').split('?')[0] !== `${base}coco/frame.js`) return next();
+          res.setHeader('Content-Type', 'text/javascript');
+          createReadStream(FRAME_JS).pipe(res);
+        });
+      },
+      generateBundle() {
+        this.emitFile({ type: 'asset', fileName: 'coco/frame.js', source: readFileSync(FRAME_JS) });
+      },
     },
   ],
   define: {

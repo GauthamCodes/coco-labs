@@ -28,6 +28,7 @@ import { ShareBox } from './ShareBox';
 import { RaceSetup, RaceView } from './Race';
 import { SettingsPanel } from './SettingsPanel';
 import { Exhibit } from './Exhibit';
+import { LiveView } from './LiveView';
 import { Tools } from './Tools';
 import { TrackingPlot } from './TrackingPlot';
 
@@ -92,7 +93,9 @@ export function App() {
   const [reveal, setReveal] = useState<Reveal | null>(null);
   const [shareVerdict, setShareVerdict] = useState<{ ok: boolean | null; message: string } | null>(null);
   const pendingShare = useRef<string | null>(null);
-  const [view, setView] = useState<'lab' | 'exhibit'>('lab');
+  const [view, setView] = useState<'lab' | 'exhibit' | 'live'>(
+    () => (new URLSearchParams(window.location.search).get('view') === 'live' ? 'live' : 'lab'));
+  const [liveText, setLiveText] = useState('Live — local stack');
   const dataUrl = useCallback((p: string) => `${DATA}${p}`, []);
   const openFromExhibit = useCallback((id: string) => {
     setView('lab');
@@ -307,9 +310,14 @@ export function App() {
             onClick={() => setView('lab')} data-testid="view-lab">Lab</button>
           <button type="button" className={view === 'exhibit' ? 'seg-btn active' : 'seg-btn'} aria-pressed={view === 'exhibit'}
             onClick={() => setView('exhibit')} data-testid="view-exhibit" disabled={!catalog?.exhibit}>The A* myth, twice</button>
+          <button type="button" className={view === 'live' ? 'seg-btn active' : 'seg-btn'} aria-pressed={view === 'live'}
+            onClick={() => setView('live')} data-testid="view-live">Live</button>
         </nav>
-        <ModeBadge provenance={current?.bundle.provenance ?? null} />
+        {view === 'live'
+          ? <span className="mode-badge mode-live" data-testid="mode-badge">{liveText}</span>
+          : <ModeBadge provenance={current?.bundle.provenance ?? null} />}
       </header>
+      {view === 'live' && <LiveView onLabel={setLiveText} />}
       {view === 'exhibit' && catalog && (
         <>
           <Exhibit catalog={catalog} dataUrl={dataUrl} run={run} busy={busy} reducedMotion={reducedMotion}

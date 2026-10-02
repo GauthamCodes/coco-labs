@@ -1,0 +1,47 @@
+{
+ "invalid": {
+  "bad magic": "WE9YTwECAGh7InNlcSI6OCwidCI6MTIuNSwidyI6OCwiaCI6NiwiZW5jIjoianBlZyIsImRyb3BwZWQiOjAsInF1YWxpdHkiOjYwLCJzdHJlYW0iOiJjYW1lcmEiLCJwYXlsb2FkX2J5dGVzIjo4ff/YanBlZ//Z",
+  "camera truncated": "Q09DTwECAGh7InNlcSI6OCwidCI6MTIuNSwidyI6OCwiaCI6NiwiZW5jIjoianBlZyIsImRyb3BwZWQiOjAsInF1YWxpdHkiOjYwLCJzdHJlYW0iOiJjYW1lcmEiLCJwYXlsb2FkX2J5dGVzIjo4ff/YanBlZ/8=",
+  "depth padded": "Q09DTwEDAJB7InNlcSI6OSwidCI6MTIuNSwidyI6OCwiaCI6NiwiZW5jIjoianBlZyIsImRyb3BwZWQiOjExLCJtaW5fbSI6MC4xLCJtYXhfbSI6OC4wLCJwYWxldHRlIjoiZ3JleV9uZWFyX2JyaWdodCIsInN0cmVhbSI6ImRlcHRoIiwicGF5bG9hZF9ieXRlcyI6OH3/2GpwZWf/2Xg=",
+  "depth range inverted": "Q09DTwEDAKV7InNlcSI6IDksICJ0IjogMTIuNSwgInciOiA4LCAiaCI6IDYsICJlbmMiOiAianBlZyIsICJkcm9wcGVkIjogMTEsICJtaW5fbSI6IDUuMCwgIm1heF9tIjogMS4wLCAicGFsZXR0ZSI6ICJncmV5X25lYXJfYnJpZ2h0IiwgInN0cmVhbSI6ICJkZXB0aCIsICJwYXlsb2FkX2J5dGVzIjogOH3/2GpwZWf/2Q==",
+  "empty": "",
+  "header longer than frame": "Q09DTwEC//97InNlcSI6OCwidCI6MTIuNSwidyI6OCwiaCI6NiwiZW5jIjoianBlZyIsImRyb3BwZWQiOjAsInF1YWxpdHkiOjYwLCJzdHJlYW0iOiJjYW1lcmEiLCJwYXlsb2FkX2J5dGVzIjo4ff/YanBlZ//Z",
+  "kind disagrees with header": "Q09DTwEDAGh7InNlcSI6OCwidCI6MTIuNSwidyI6OCwiaCI6NiwiZW5jIjoianBlZyIsImRyb3BwZWQiOjAsInF1YWxpdHkiOjYwLCJzdHJlYW0iOiJjYW1lcmEiLCJwYXlsb2FkX2J5dGVzIjo4ff/YanBlZ//Z",
+  "lidar count lies": "Q09DTwEBAMN7InNlcSI6IDcsICJ0IjogMTIuNSwgImNvdW50IjogNDAsICJlbmMiOiAidWludDE2YmUtbW0iLCAiYW5nbGVfbWluIjogLTEuMCwgImFuZ2xlX3N0ZXAiOiAwLjUsICJzY2FsZSI6IDEwMDAuMCwgImZsb29yIjogMC4xNSwgIm5vX3JldHVybiI6IDAsICJkcm9wcGVkIjogMywgInN0cmVhbSI6ICJsaWRhciIsICJwYXlsb2FkX2J5dGVzIjogNn0E0gAAB9A=",
+  "lidar short a ray": "Q09DTwEBAKt7InNlcSI6NywidCI6MTIuNSwiY291bnQiOjMsImVuYyI6InVpbnQxNmJlLW1tIiwiYW5nbGVfbWluIjotMS4wLCJhbmdsZV9zdGVwIjowLjUsInNjYWxlIjoxMDAwLjAsImZsb29yIjowLjE1LCJub19yZXR1cm4iOjAsImRyb3BwZWQiOjMsInN0cmVhbSI6ImxpZGFyIiwicGF5bG9hZF9ieXRlcyI6Nn0E0gAA",
+  "magic only": "Q09DTw==",
+  "negative seq": "Q09DTwECAHp7InNlcSI6IC0xLCAidCI6IDEyLjUsICJ3IjogOCwgImgiOiA2LCAiZW5jIjogImpwZWciLCAiZHJvcHBlZCI6IDAsICJxdWFsaXR5IjogNjAsICJzdHJlYW0iOiAiY2FtZXJhIiwgInBheWxvYWRfYnl0ZXMiOiA4ff/YanBlZ//Z",
+  "not jpeg": "Q09DTwECAHh7InNlcSI6IDgsICJ0IjogMTIuNSwgInciOiA4LCAiaCI6IDYsICJlbmMiOiAicG5nIiwgImRyb3BwZWQiOiAwLCAicXVhbGl0eSI6IDYwLCAic3RyZWFtIjogImNhbWVyYSIsICJwYXlsb2FkX2J5dGVzIjogOH3/2GpwZWf/2Q==",
+  "topic in metadata": "Q09DTwECAJd7InNlcSI6IDgsICJ0IjogMTIuNSwgInciOiA4LCAiaCI6IDYsICJlbmMiOiAianBlZyIsICJkcm9wcGVkIjogMCwgInF1YWxpdHkiOiA2MCwgInN0cmVhbSI6ICJjYW1lcmEiLCAicGF5bG9hZF9ieXRlcyI6IDgsICJ0b3BpYyI6ICIvY2FtZXJhL2ltYWdlX3JhdyJ9/9hqcGVn/9k=",
+  "unknown kind": "Q09DTwEJAGh7InNlcSI6OCwidCI6MTIuNSwidyI6OCwiaCI6NiwiZW5jIjoianBlZyIsImRyb3BwZWQiOjAsInF1YWxpdHkiOjYwLCJzdHJlYW0iOiJjYW1lcmEiLCJwYXlsb2FkX2J5dGVzIjo4ff/YanBlZ//Z",
+  "version 2": "Q09DTwICAGh7InNlcSI6OCwidCI6MTIuNSwidyI6OCwiaCI6NiwiZW5jIjoianBlZyIsImRyb3BwZWQiOjAsInF1YWxpdHkiOjYwLCJzdHJlYW0iOiJjYW1lcmEiLCJwYXlsb2FkX2J5dGVzIjo4ff/YanBlZ//Z"
+ },
+ "valid": {
+  "camera": {
+   "blob": "Q09DTwECAGh7InNlcSI6OCwidCI6MTIuNSwidyI6OCwiaCI6NiwiZW5jIjoianBlZyIsImRyb3BwZWQiOjAsInF1YWxpdHkiOjYwLCJzdHJlYW0iOiJjYW1lcmEiLCJwYXlsb2FkX2J5dGVzIjo4ff/YanBlZ//Z",
+   "dropped": 0,
+   "payload_bytes": 8,
+   "seq": 8,
+   "stream": "camera"
+  },
+  "depth": {
+   "blob": "Q09DTwEDAJB7InNlcSI6OSwidCI6MTIuNSwidyI6OCwiaCI6NiwiZW5jIjoianBlZyIsImRyb3BwZWQiOjExLCJtaW5fbSI6MC4xLCJtYXhfbSI6OC4wLCJwYWxldHRlIjoiZ3JleV9uZWFyX2JyaWdodCIsInN0cmVhbSI6ImRlcHRoIiwicGF5bG9hZF9ieXRlcyI6OH3/2GpwZWf/2Q==",
+   "dropped": 11,
+   "payload_bytes": 8,
+   "seq": 9,
+   "stream": "depth"
+  },
+  "lidar": {
+   "blob": "Q09DTwEBAKt7InNlcSI6NywidCI6MTIuNSwiY291bnQiOjMsImVuYyI6InVpbnQxNmJlLW1tIiwiYW5nbGVfbWluIjotMS4wLCJhbmdsZV9zdGVwIjowLjUsInNjYWxlIjoxMDAwLjAsImZsb29yIjowLjE1LCJub19yZXR1cm4iOjAsImRyb3BwZWQiOjMsInN0cmVhbSI6ImxpZGFyIiwicGF5bG9hZF9ieXRlcyI6Nn0E0gAAB9A=",
+   "dropped": 3,
+   "payload_bytes": 6,
+   "ranges": [
+    1.234,
+    null,
+    2.0
+   ],
+   "seq": 7,
+   "stream": "lidar"
+  }
+ }
+}

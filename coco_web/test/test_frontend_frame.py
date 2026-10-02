@@ -105,6 +105,21 @@ def test_the_page_decoder_agrees_with_the_python_encoder(tmp_path):
     assert '# pass 3' in result.stdout, result.stdout
 
 
+#: The same fixtures, committed: lab_web's Live tab decodes them with the
+#: same web/frame.js in its own test suite (lab_web/test/live.test.ts),
+#: so one decoder and one fixture set are proved in both packages.
+SHARED = HERE / 'fixtures' / 'frames.json'
+
+
+# Regenerate on purpose, after a deliberate binary.py change:
+#   cd coco_web/test && PYTHONPATH=.. python3 -c "import json,
+#   test_frontend_frame as t; open('fixtures/frames.json', 'w').write(
+#   json.dumps(t._fixtures(), indent=1, sort_keys=True) + chr(10))"
+def test_the_committed_shared_fixtures_are_what_the_encoder_makes_now():
+    """Fail when binary.py changes and the shared fixtures do not."""
+    assert json.loads(SHARED.read_text()) == _fixtures()
+
+
 def test_every_broken_fixture_is_broken_for_python_too():
     """The fixtures are real refusals, not decoder disagreements."""
     for name, blob in _fixtures()['invalid'].items():

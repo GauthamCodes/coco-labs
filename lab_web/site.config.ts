@@ -15,6 +15,13 @@
  */
 export const DEFAULT_BASE = '/coco-labs/';
 
+/**
+ * Where the Live tab may open a coco.v1 WebSocket (the CSP's connect-src).
+ * Phase 2 Part B: the local stack only. A remote session's endpoint is
+ * added here in Part C, never by widening this to every `ws:`/`wss:`.
+ */
+export const LIVE_CONNECT_SRC: readonly string[] = ['ws://localhost:*', 'ws://127.0.0.1:*'];
+
 /** Looked up 2026-09-30 (GitHub releases + npm); Python 3.14.2 inside. */
 export const PYODIDE_VERSION = '314.0.7';
 export const PYODIDE_INDEX_URL =
