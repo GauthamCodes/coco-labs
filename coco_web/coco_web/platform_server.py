@@ -116,7 +116,7 @@ from sensor_msgs.msg import Image, LaserScan
 
 from std_msgs.msg import String
 
-from std_srvs.srv import Trigger
+from std_srvs.srv import Empty, Trigger
 
 import tornado.ioloop
 import tornado.iostream
@@ -311,13 +311,27 @@ class CocoWebNode(Node):
             JointTrajectory, '/gripper_controller/joint_trajectory', 10)
 
         self._srv_start = self.create_client(Trigger, '/mission/start')
+        # AMCL's no-motion update, asked for ONCE when the service appears,
+        # so the belief the page draws has seen a scan before the robot
+        # moves. It changes no pose by command: AMCL fuses one more scan
+        # at the same odometry. Not reachable from the browser.
+        self._srv_nomotion = self.create_client(
+            Empty, '/request_nomotion_update')
+        self._nomotion_requested = False
         self._srv_abort = self.create_client(Trigger, '/mission/abort')
 
         # ── subscriptions: telemetry only ──────────────────────────────
         self.create_subscription(
             Odometry, '/diff_drive_controller/odom', self._on_odom, 10)
+        # TRANSIENT_LOCAL, matching AMCL's publisher. AMCL publishes one
+        # pose at startup (set_initial_pose) and then only on filter
+        # updates, which need motion. A VOLATILE subscriber misses the
+        # startup one, and Phase 2 Part A measured `localised: false` for
+        # 400 s at rest because of exactly that. Every other subscriber on
+        # the graph already matched it.
         self.create_subscription(
-            PoseWithCovarianceStamped, '/amcl_pose', self._on_amcl, 10)
+            PoseWithCovarianceStamped, '/amcl_pose', self._on_amcl,
+            _latched_qos())
         self.create_subscription(
             LaserScan, '/scan', self._on_scan, _sensor_qos())
         # COCO's own model odometry, straight from the gz plugin, as
@@ -370,6 +384,7 @@ class CocoWebNode(Node):
         # Optional sensor subscriptions are created and destroyed here,
         # on the rclpy thread. See want_streams for why not inline.
         self.create_timer(0.25, self._reconcile_streams)
+        self.create_timer(1.0, self._request_nomotion_update)
 
         self.get_logger().info(
             f'COCO platform on http://{self.bind}:{self.http_port} '
@@ -701,6 +716,18 @@ class CocoWebNode(Node):
         with self._lock:
             self._snap['colour'] = msg.data
             self._snap['colour_t'] = time.monotonic()
+
+    def _request_nomotion_update(self):
+        """Ask AMCL for one update without motion, once, when it is up."""
+        if self._nomotion_requested:
+            return
+        if not self._srv_nomotion.service_is_ready():
+            return
+        self._nomotion_requested = True
+        self._srv_nomotion.call_async(Empty.Request())
+        self.get_logger().info(
+            'asked AMCL for a no-motion update, so the robot is localised '
+            'before it moves')
 
     def _on_mode_topic(self, msg):
         """Hand each /mission/mode value to the latch backstop, if any."""

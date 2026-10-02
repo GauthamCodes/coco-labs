@@ -468,6 +468,13 @@ last — nearly always odometry — and after a ramp climb a robot verified
 home was drawn at (0.61, 3.71), outside the arena. `frame` and
 `localised` are new, additive fields.
 
+**Localised before motion (Phase 2).** AMCL publishes `/amcl_pose`
+TRANSIENT_LOCAL: one pose at startup, then only on filter updates, which
+need motion. The server subscribed VOLATILE and missed the startup pose,
+so `localised` stayed `false` for 400 s at rest (measured). It now
+matches AMCL's durability, and calls AMCL's `request_nomotion_update` once
+when the service appears, so the first belief has seen a scan.
+
 A section the client did not subscribe to is `null` (or `[]` for `path`),
 which is already its meaning before the first message arrives — so a
 client needs no new branch.

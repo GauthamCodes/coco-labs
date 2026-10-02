@@ -100,6 +100,9 @@ PUBLISH_ALLOWLIST = {
 CALL_ALLOWLIST = {
     'mission_start': ('/mission/start', 'std_srvs/srv/Trigger'),
     'mission_abort': ('/mission/abort', 'std_srvs/srv/Trigger'),
+    # Called by the server itself, once at startup; no browser intent maps
+    # to it. AMCL fuses one more scan at the same pose: nothing moves.
+    'localise_nomotion': ('/request_nomotion_update', 'std_srvs/srv/Empty'),
 }
 
 # Panel velocity limits, matching the joystick the old panel shipped. The
