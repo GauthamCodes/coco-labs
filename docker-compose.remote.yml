@@ -1,0 +1,29 @@
+# COCO Lab — a REMOTE live session (Phase 2 Part C).
+#
+#   docker compose -f docker-compose.yml -f docker-compose.remote.yml up -d
+#   scripts/live_session.sh code      # the control code, for the driver
+#   scripts/live_session.sh kill      # host kill switch
+#
+# What changes against the local appliance, and why:
+#   - access=code: one driver holding the host's control code; everyone
+#     else is a spectator with telemetry and camera, and no STOP (owner
+#     decision 3). Idle release 60 s, session cap 20 min, 25 clients.
+#   - remote=true: the platform serves /ws and /healthz ONLY. No page,
+#     no /api, no /video. The page is the public lab_web site.
+#   - origins: only the Pages site and localhost may open /ws from a
+#     browser, or read /healthz cross-origin.
+#   - the host port binds 127.0.0.1 ONLY, so nothing on the LAN reaches
+#     it either; the tunnel is the one way in.
+#
+# The tunnel itself is NOT here yet: the owner has not chosen between
+# Tailscale Funnel and a Cloudflare named tunnel (docs/live/PART_A_AUDIT.md
+# §6, docs/live/PART_C_REPORT.md). Whichever it is points at this one
+# port and nothing else.
+services:
+  coco:
+    ports: !override
+      - "127.0.0.1:${COCO_HTTP_PORT:-8080}:8080"
+    environment:
+      COCO_ACCESS: "code"
+      COCO_REMOTE: "true"
+      COCO_ORIGINS: "https://gauthamcodes.github.io,http://localhost:*,http://127.0.0.1:*"

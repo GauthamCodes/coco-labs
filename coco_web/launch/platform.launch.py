@@ -85,6 +85,35 @@ def generate_launch_description():
                         'session health DEGRADED (comma-separated: lidar, '
                         'navigation, perception, mission). The launch that '
                         'starts them should declare them'),
+        # Remote sessions (Phase 2 Part C; coco_web/control.py). The
+        # defaults are the local appliance exactly. A remote session is
+        # access:=code remote:=true origins:=<Pages site>,http://localhost:*
+        # and the server refuses remote without code.
+        DeclareLaunchArgument(
+            'access', default_value='open',
+            description='open: anyone connected may command COCO (local). '
+                        "code: one driver holding the host's control code, "
+                        'everyone else a spectator, no spectator STOP'),
+        DeclareLaunchArgument(
+            'remote', default_value='false',
+            description='serve /ws and /healthz only (no page, /api, '
+                        '/video); requires access:=code'),
+        DeclareLaunchArgument(
+            'origins', default_value='*',
+            description='browser origins allowed to open /ws and read '
+                        '/healthz cross-origin, comma-separated; :* = any '
+                        'port; * = any origin (local)'),
+        DeclareLaunchArgument(
+            'session_idle_s', default_value='60.0',
+            description='code access: release the driver (and stop COCO) '
+                        'after this long without a command'),
+        DeclareLaunchArgument(
+            'session_cap_s', default_value='1200.0',
+            description='code access: end the session (and stop COCO) '
+                        'after this long'),
+        DeclareLaunchArgument(
+            'max_clients', default_value='25',
+            description='code access: driver plus spectators'),
         DeclareLaunchArgument(
             'arbiter', default_value='true',
             description='start cmd_vel_arbiter, which forwards the '
@@ -112,6 +141,12 @@ def generate_launch_description():
                 'depth_topic': LaunchConfiguration('depth_topic'),
                 'expected_components':
                     LaunchConfiguration('expected_components'),
+                'access': LaunchConfiguration('access'),
+                'remote': LaunchConfiguration('remote'),
+                'origins': LaunchConfiguration('origins'),
+                'session_idle_s': LaunchConfiguration('session_idle_s'),
+                'session_cap_s': LaunchConfiguration('session_cap_s'),
+                'max_clients': LaunchConfiguration('max_clients'),
             }],
         ),
 

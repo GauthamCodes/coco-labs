@@ -155,8 +155,13 @@ def normalise_code(code):
 
 
 def parse_origins(text):
-    """Split a comma-separated origin list; blanks dropped, order kept."""
-    if not isinstance(text, str):
+    """
+    Split a comma-separated origin list; blanks dropped, order kept.
+
+    Empty, or ``*`` alone (a launch argument cannot easily be empty), is
+    the empty list: any origin.
+    """
+    if not isinstance(text, str) or text.strip() in ('', '*'):
         return ()
     return tuple(o.strip().rstrip('/') for o in text.split(',') if o.strip())
 

@@ -23,6 +23,14 @@ VIDEO_PORT="${COCO_VIDEO_PORT:-8081}"
 TARGET_COLOUR="${COCO_TARGET_COLOUR:-blue}"
 GUI="${COCO_GUI:-false}"
 RVIZ="${COCO_RVIZ:-false}"
+# Remote live sessions (Phase 2 Part C; docker-compose.remote.yml). The
+# defaults are the local appliance: open access, every route, any origin.
+ACCESS="${COCO_ACCESS:-open}"
+REMOTE="${COCO_REMOTE:-false}"
+ORIGINS="${COCO_ORIGINS:-*}"
+IDLE_S="${COCO_SESSION_IDLE_S:-60.0}"
+CAP_S="${COCO_SESSION_CAP_S:-1200.0}"
+MAX_CLIENTS="${COCO_MAX_CLIENTS:-25}"
 
 # shellcheck disable=SC1091
 source /opt/ros/jazzy/setup.bash || die "no ROS 2 Jazzy in this image"
@@ -87,6 +95,7 @@ run_platform() {
   log "  workspace   ${COCO_WS}"
   log "  http        :${HTTP_PORT}   video :${VIDEO_PORT}"
   log "  gui=${GUI} rviz=${RVIZ} colour=${TARGET_COLOUR}"
+  log "  access=${ACCESS} remote=${REMOTE} origins=${ORIGINS}"
 
   log "1/3 simulator (gazebo_models full_world_robo.launch.py)"
   launch_bg /tmp/coco_sim.log gazebo_models \
@@ -112,7 +121,10 @@ run_platform() {
   log "2/3 mission stack + web platform (coco_mission mission.launch.py)"
   launch_bg /tmp/coco_stack.log coco_mission mission.launch.py \
     "rviz:=${RVIZ}" "target_colour:=${TARGET_COLOUR}" \
-    platform:=true web:=true
+    platform:=true web:=true \
+    "access:=${ACCESS}" "remote:=${REMOTE}" "origins:=${ORIGINS}" \
+    "session_idle_s:=${IDLE_S}" "session_cap_s:=${CAP_S}" \
+    "max_clients:=${MAX_CLIENTS}"
   STACK_PID=$LAUNCHED_PID
 
   log "3/3 waiting for the platform to report ready on /healthz"
@@ -123,6 +135,13 @@ run_platform() {
   while [ "$waited" -lt 240 ]; do
     if curl -fsS "http://127.0.0.1:${HTTP_PORT}/healthz" >/dev/null 2>&1; then
       log "READY — open http://localhost:${HTTP_PORT}"
+      if [ "$ACCESS" = code ]; then
+        # The host's code, from the platform's own log line. Also:
+        #   docker exec coco-platform coco-entrypoint \
+        #     ros2 service call /coco_web_platform/session_code std_srvs/srv/Trigger
+        grep -o 'live session: control code [A-Z0-9]*' /tmp/coco_stack.log \
+          | tail -1 | sed 's/^/[coco] /'
+      fi
       break
     fi
     local body

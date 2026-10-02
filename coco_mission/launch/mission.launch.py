@@ -286,6 +286,14 @@ def generate_launch_description():
                         'wheel topic at startup; rosbridge lets any '
                         'browser tab publish any topic. false selects the '
                         'legacy panel for one more release.'),
+        # Remote sessions (Phase 2 Part C), forwarded to platform.launch.py
+        # unchanged; see its descriptions. Defaults: the local appliance.
+        DeclareLaunchArgument('access', default_value='open'),
+        DeclareLaunchArgument('remote', default_value='false'),
+        DeclareLaunchArgument('origins', default_value='*'),
+        DeclareLaunchArgument('session_idle_s', default_value='60.0'),
+        DeclareLaunchArgument('session_cap_s', default_value='1200.0'),
+        DeclareLaunchArgument('max_clients', default_value='25'),
         DeclareLaunchArgument(
             'web', default_value='true',
             description='Start the browser control interface: the camera '
@@ -360,6 +368,9 @@ def generate_launch_description():
         # platform's session health reads DEGRADED if any of them is down.
         include(coco_web, 'platform.launch.py',
                 {'use_sim_time': use_sim_time, 'arbiter': 'false',
+                 **{name: LaunchConfiguration(name) for name in (
+                     'access', 'remote', 'origins', 'session_idle_s',
+                     'session_cap_s', 'max_clients')},
                  'expected_components': PythonExpression([
                      "'lidar,navigation,perception' + (',mission' if '",
                      LaunchConfiguration('executive'),

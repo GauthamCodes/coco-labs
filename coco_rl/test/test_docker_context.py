@@ -379,3 +379,77 @@ def test_compose_disables_core_dumps():
     """
     service = _compose()['services']['coco']
     assert service['ulimits']['core'] == {'soft': 0, 'hard': 0}
+
+
+# ── remote live sessions (Phase 2 Part C) ──────────────────────────────
+
+def _remote():
+    """Parse docker-compose.remote.yml, understanding compose's !override."""
+    yaml = pytest.importorskip('yaml')
+
+    class Loader(yaml.SafeLoader):
+        """SafeLoader plus compose's !override and !reset tags."""
+
+    def _seq(loader, node):
+        return loader.construct_sequence(node)
+    Loader.add_constructor('!override', _seq)
+    Loader.add_constructor('!reset', _seq)
+    return yaml.load((REPO / 'docker-compose.remote.yml').read_text(),
+                     Loader=Loader)
+
+
+def test_the_remote_override_publishes_only_loopback_8080():
+    """
+    A remote session is reached through the tunnel, never the LAN.
+
+    The override REPLACES the base port list (!override); merged, the base
+    0.0.0.0:8080 would survive beside it.
+    """
+    text = (REPO / 'docker-compose.remote.yml').read_text()
+    assert 'ports: !override' in text
+    services = _remote()['services']
+    assert list(services) == ['coco']
+    assert services['coco']['ports'] == [
+        '127.0.0.1:${COCO_HTTP_PORT:-8080}:8080']
+
+
+def test_the_remote_override_is_code_access_remote_and_origin_bound():
+    """access=code, remote=true, and the Pages site plus localhost only."""
+    env = _remote()['services']['coco']['environment']
+    assert env['COCO_ACCESS'] == 'code'
+    assert env['COCO_REMOTE'] == 'true'
+    origins = env['COCO_ORIGINS'].split(',')
+    assert origins == ['https://gauthamcodes.github.io',
+                       'http://localhost:*', 'http://127.0.0.1:*']
+
+
+def test_the_base_compose_stays_the_local_appliance():
+    """Without the override: open access, every route, any origin."""
+    env = _compose()['services']['coco']['environment']
+    assert env['COCO_ACCESS'] == '${COCO_ACCESS:-open}'
+    assert env['COCO_REMOTE'] == '${COCO_REMOTE:-false}'
+
+
+def test_the_entrypoint_forwards_every_session_setting():
+    """Each COCO_* session variable reaches mission.launch.py."""
+    text = (REPO / 'docker' / 'entrypoint.sh').read_text()
+    for env, arg in (('COCO_ACCESS', 'access'), ('COCO_REMOTE', 'remote'),
+                     ('COCO_ORIGINS', 'origins'),
+                     ('COCO_SESSION_IDLE_S', 'session_idle_s'),
+                     ('COCO_SESSION_CAP_S', 'session_cap_s'),
+                     ('COCO_MAX_CLIENTS', 'max_clients')):
+        assert f'${{{env}:-' in text, env
+        assert f'"{arg}:=${{' in text, arg
+
+
+def test_the_session_args_are_forwarded_by_both_launch_files():
+    """mission.launch.py -> platform.launch.py -> the node, same six names."""
+    mission = (REPO / 'coco_mission' / 'launch' / 'mission.launch.py'
+               ).read_text()
+    platform = (REPO / 'coco_web' / 'launch' / 'platform.launch.py'
+                ).read_text()
+    for name in ('access', 'remote', 'origins', 'session_idle_s',
+                 'session_cap_s', 'max_clients'):
+        assert f"DeclareLaunchArgument('{name}'" in mission, name
+        assert f"'{name}', default_value=" in platform, name
+        assert f"'{name}': LaunchConfiguration('{name}')" in platform, name

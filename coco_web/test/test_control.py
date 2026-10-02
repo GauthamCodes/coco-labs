@@ -755,6 +755,7 @@ def test_no_origin_list_is_any_origin():
     assert control.origin_allowed('https://evil.example', ())
     assert control.parse_origins('') == ()
     assert control.parse_origins(None) == ()
+    assert control.parse_origins(' * ') == ()
 
 
 # ── purity ─────────────────────────────────────────────────────────────

@@ -44,6 +44,14 @@ services:
       COCO_TARGET_COLOUR: "${COCO_TARGET_COLOUR:-blue}"
       COCO_GUI: "false"
       COCO_RVIZ: "false"
+      # Remote live sessions: see docker-compose.remote.yml. Defaults are
+      # the local appliance (open access, every route, any origin).
+      COCO_ACCESS: "${COCO_ACCESS:-open}"
+      COCO_REMOTE: "${COCO_REMOTE:-false}"
+      COCO_ORIGINS: "${COCO_ORIGINS:-*}"
+      COCO_SESSION_IDLE_S: "${COCO_SESSION_IDLE_S:-60}"
+      COCO_SESSION_CAP_S: "${COCO_SESSION_CAP_S:-1200}"
+      COCO_MAX_CLIENTS: "${COCO_MAX_CLIENTS:-25}"
     # Gazebo's physics and DDS both want more than the default 64 MB.
     shm_size: "2gb"
     # No core files, ever. A crash in the container is dumped by the
