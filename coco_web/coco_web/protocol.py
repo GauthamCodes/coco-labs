@@ -82,6 +82,10 @@ _CLIENT_SCHEMA = {
     'subscribe': {'streams'},
     'unsubscribe': {'streams'},
     'set_stream': {'stream', 'fps', 'quality', 'scale'},
+    # Additive (Phase 2 Part C): a remote session's driver presents the
+    # host's control code, and lets go. See control.py.
+    'claim': {'code'},
+    'release': set(),
 }
 
 #: Optional on every client frame: an opaque correlation id echoed back in
@@ -110,6 +114,18 @@ REFUSAL_CODES = {
     # start motion until a mode is picked again.
     'stopped': 'COCO is stopped; pick a mode (teleop or auto) or start a '
                'mission to move again',
+    # Additive (Phase 2 Part C): the driver / spectator policy's codes,
+    # defined beside the policy in control.REFUSALS and listed here so the
+    # wire contract has one table. A test asserts the two agree.
+    'spectator': 'you are watching this session; only the driver who '
+                 'entered the control code can command COCO',
+    'bad_code': 'that control code is not valid for this session',
+    'driver_present': 'someone else holds control; it is released only '
+                      'when they let go or go idle',
+    'rate_limited': 'too many frames; slow down',
+    'session_over': 'this live session has ended; COCO is stopped',
+    'session_full': 'this live session is full; try again later',
+    'open_access': 'this session is open: no control code is needed',
 }
 
 
@@ -398,6 +414,26 @@ def _v_set_stream(frame, _colours, frame_id):
     return out
 
 
+def _v_claim(frame, _colours, frame_id):
+    """
+    Validate a claim: the control code, as a short string.
+
+    Only the shape is checked here; whether it is THE code is the control
+    policy's call (control.py), compared in constant time.
+    """
+    code = frame.get('code')
+    if not isinstance(code, str) or not 0 < len(code) <= 64:
+        raise ProtocolError(
+            'bad_code', 'code must be a non-empty string of at most 64 '
+            'characters', frame_id)
+    return {'code': code}
+
+
+def _v_release(_frame, _colours, _frame_id):
+    """Validate a release frame, which carries nothing at all."""
+    return {}
+
+
 _VALIDATORS = {
     'hello': _v_hello,
     'ping': _v_ping,
@@ -412,6 +448,8 @@ _VALIDATORS = {
     'subscribe': _v_streams,
     'unsubscribe': _v_streams,
     'set_stream': _v_set_stream,
+    'claim': _v_claim,
+    'release': _v_release,
 }
 
 
