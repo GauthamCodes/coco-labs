@@ -298,7 +298,7 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
               </div>
               <p className="honest" data-testid="live-lane-told">{LANE_TOLD}</p>
               {m && <p data-testid="live-mission">{m.state}{m.step && m.steps ? ` — step ${m.step} of ${m.steps}` : ''}
-                {m.words ? `: ${m.words}` : ''}{m.reason ? ` (${m.reason_words ?? m.reason})` : ''}{m.result ? ` — result: ${m.result}` : ''}</p>}
+                {m.words ? `: ${m.words}` : ''}{m.reason ? (m.result === 'fetch' || m.result === 'traverse' ? ` (recovered on the way from: ${m.reason_words ?? m.reason})` : ` (${m.reason_words ?? m.reason})`) : ''}{m.result ? ` — result: ${m.result}` : ''}</p>}
               <ol className="live-timeline" data-testid="live-timeline">
                 {timeline.map((s, i) => <li key={`${s.state}-${i}`} className={i === timeline.length - 1 ? 'now' : ''}>{s.state}{s.words ? ` — ${s.words}` : ''}</li>)}
               </ol>

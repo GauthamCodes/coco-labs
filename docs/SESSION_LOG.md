@@ -6963,3 +6963,39 @@ Test counts: coco_web 582 → 629, coco_mission 338 → 344.
 - Every number is a single run per row, not a rate.
 
 NEXT: Part B (Live view).
+
+## Phase 2 · Part B — Live view, local (2026-10-02)
+
+Report: `docs/live/PART_B.md`. Evidence: `docs/data/live/part_b/`.
+Harness: `scripts/live_check/`.
+
+**Built**
+- coco_web, additive telemetry: `you`, `config`, `robot.belief`,
+  `robot.truth` (display only), `nav.local_path`, `nav.goal`,
+  `nav.path_rx`. coco.v1 is frozen at 54133fe by `test_additive.py`.
+- lab_web Live tab: three modes, STOP always visible, belief and truth
+  toggle, camera, the arbiter's source and who holds control, honest
+  labels.
+- Binary frames are decoded by coco_web's own `frame.js` against shared
+  committed fixtures.
+
+**Measured** (headless Firefox, fresh simulator per run)
+- drive frame → wheel: p50 4.6 ms, max 9.7 ms (n = 170);
+- STOP → wheel zero: 6.2 ms;
+- `nav_goal` → `/plan`: p50 8.6 ms (n = 7), and 7/7 goals succeeded;
+- telemetry received at 10.0 Hz;
+- preemption: 3.5 ms to the wheels;
+- fetches from the page: **3/3 COMPLETE** (blue preempted, green,
+  yellow), recoveries 1/1/0;
+- 1 wheel publisher throughout;
+- the platform's live publishers are exactly the allowlist.
+
+Tests: 2512 across 11 packages, plus lab_web 194.
+
+**Unverified**
+- Part B in Docker.
+- The camera fps on the page.
+- A real touchscreen.
+
+NEXT: Part C, which needs the owner's tunnel choice (the reply left it as
+a placeholder).

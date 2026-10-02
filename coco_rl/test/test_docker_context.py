@@ -341,8 +341,10 @@ def test_the_image_installs_what_the_web_platform_needs_at_runtime():
     package = (REPO / 'coco_web' / 'package.xml').read_text()
     declared = set(re.findall(r'<exec_depend>([^<]+)</exec_depend>',
                               package))
+    # action_msgs (Phase 2, nav.goal status): rclpy itself depends on it,
+    # so every image with rclpy has it.
     from_base = {'rclpy', 'std_msgs', 'std_srvs', 'geometry_msgs',
-                 'nav_msgs', 'sensor_msgs', 'trajectory_msgs'}
+                 'nav_msgs', 'sensor_msgs', 'trajectory_msgs', 'action_msgs'}
     ours = {'coco_config', 'custom_teleop'}
     unmapped = declared - from_base - ours - set(WEB_RUNTIME)
     assert not unmapped, f'no image mapping for: {sorted(unmapped)}'

@@ -1,0 +1,33 @@
+{"t": 1790921735.296621, "kind": "cond", "label": "ready", "ok": true, "after": 0.23264575004577637}
+{"t": 1790921735.299491, "kind": "cond", "label": "localised", "ok": true, "after": 0.0027446746826171875}
+{"t": 1790921735.3042598, "kind": "dom_start", "dom": {"badge": "Live \u2014 local stack", "conn": "connected", "rate": "telemetry 0.0 Hz (measured here)", "fallback": null, "latched": null, "override": null, "mode": "idle", "source": "nothing (wheels held still)", "holder": "nobody", "lane": null, "mission": null, "goal": null, "localised": null, "timeline": []}}
+{"t": 1790921735.4078224, "kind": "click", "target": "live-panel-teleop", "t_page": 1790921735405}
+{"t": 1790921736.5175183, "kind": "phase", "name": "presses"}
+{"t": 1790921797.0847182, "kind": "phase", "name": "stop_while_held"}
+{"t": 1790921797.896206, "kind": "click", "target": "live-stop", "t_page": 1790921797894}
+{"t": 1790921801.2820613, "kind": "dom_after_stop", "dom": {"badge": "Live \u2014 local stack", "conn": "connected", "rate": "telemetry 10.0 Hz (measured here)", "fallback": null, "latched": "STOPPED (latched). Pick a mode, or start a mission, to move again.", "override": null, "mode": "idle", "source": "nothing (wheels held still)", "holder": "you", "lane": null, "mission": null, "goal": null, "localised": null, "timeline": []}}
+{"t": 1790921801.2821395, "kind": "phase", "name": "nav2"}
+{"t": 1790921801.2873416, "kind": "click", "target": "live-panel-nav2", "t_page": 1790921801285}
+{"t": 1790921802.359407, "kind": "goal", "x": 1.0, "y": 0.0, "screen": [302.36841741753256, 481.25000460818404], "t_page": 1790921802357}
+{"t": 1790921804.662836, "kind": "cond", "label": "goal_1.0_0.0", "ok": true, "after": 2.239575147628784}
+{"t": 1790921804.668276, "kind": "goal_done", "x": 1.0, "y": 0.0, "ok": true, "status": "succeeded", "pose": {"x": 0.7265245075645234, "y": -0.002368227934444432, "z": 0, "yaw": 0.021801491756164512}, "truth": {"x": 0.7039055745894682, "y": 0.0033929675521689835, "yaw": 0.027891029162405344}}
+{"t": 1790921806.179084, "kind": "goal", "x": 0.5, "y": 1.2, "screen": [286.10525976513566, 442.1868472955336], "t_page": 1790921806177}
+{"t": 1790921824.331572, "kind": "cond", "label": "goal_0.5_1.2", "ok": true, "after": 18.092499494552612}
+{"t": 1790921824.3387146, "kind": "goal_done", "x": 0.5, "y": 1.2, "ok": true, "status": "succeeded", "pose": {"x": 0.43316232723266895, "y": 1.0645547887104891, "z": 0, "yaw": -0.3068657246078713}, "truth": {"x": 0.4935658102683369, "y": 1.1484489529043955, "yaw": -0.4558361684560097}}
+{"t": 1790921825.8502755, "kind": "goal", "x": 2.0, "y": 0.5, "screen": [334.89473272232635, 464.9736890612463], "t_page": 1790921825848}
+{"t": 1790921834.6629786, "kind": "cond", "label": "goal_2.0_0.5", "ok": true, "after": 8.747344970703125}
+{"t": 1790921834.670214, "kind": "goal_done", "x": 2.0, "y": 0.5, "ok": true, "status": "succeeded", "pose": {"x": 1.8299721661847734, "y": 0.5122941016861903, "z": 0, "yaw": -0.23949909172907582}, "truth": {"x": 1.8428018713134764, "y": 0.48178463050062303, "yaw": -0.3377920958010215}}
+{"t": 1790921836.1815848, "kind": "goal", "x": 0.0, "y": -1.5, "screen": [269.84210211273876, 530.0789512489971], "t_page": 1790921836179}
+{"t": 1790921855.1770282, "kind": "cond", "label": "goal_0.0_-1.5", "ok": true, "after": 18.930453062057495}
+{"t": 1790921855.1871834, "kind": "goal_done", "x": 0.0, "y": -1.5, "ok": true, "status": "succeeded", "pose": {"x": -0.0738566619186492, "y": -1.5737687085708851, "z": 0, "yaw": -0.32439840363385253}, "truth": {"x": 0.04217970978480157, "y": -1.437559197465338, "yaw": -0.5024382190941039}}
+{"t": 1790921856.7017045, "kind": "goal", "x": -0.5, "y": 0.8, "screen": [253.5789444603418, 455.20789973308376], "t_page": 1790921856700}
+{"t": 1790921879.7947013, "kind": "cond", "label": "goal_-0.5_0.8", "ok": true, "after": 23.031983375549316}
+{"t": 1790921879.8029284, "kind": "goal_done", "x": -0.5, "y": 0.8, "ok": true, "status": "succeeded", "pose": {"x": -0.5550078707390269, "y": 0.6763765011994308, "z": 0, "yaw": -0.3529260628067532}, "truth": {"x": -0.4311100533396903, "y": 0.7819438848487009, "yaw": -0.512311195079859}}
+{"t": 1790921881.3159776, "kind": "goal", "x": 2.5, "y": -0.5, "screen": [351.1578903747233, 497.5263201551217], "t_page": 1790921881314}
+{"t": 1790921899.5128005, "kind": "cond", "label": "goal_2.5_-0.5", "ok": true, "after": 18.133352041244507}
+{"t": 1790921899.518124, "kind": "goal_done", "x": 2.5, "y": -0.5, "ok": true, "status": "succeeded", "pose": {"x": 2.415497086477619, "y": -0.47835964978643697, "z": 0, "yaw": -0.22128698623345144}, "truth": {"x": 2.324131575756979, "y": -0.4788930353019098, "yaw": -0.3062418630051316}}
+{"t": 1790921901.0297186, "kind": "goal", "x": 0.0, "y": 0.0, "screen": [269.84210211273876, 481.25000460818404], "t_page": 1790921901027}
+{"t": 1790921921.2557712, "kind": "cond", "label": "goal_0.0_0.0", "ok": true, "after": 20.164257526397705}
+{"t": 1790921921.2647529, "kind": "goal_done", "x": 0.0, "y": 0.0, "ok": true, "status": "succeeded", "pose": {"x": -0.17338080098581954, "y": 0.056353825266268504, "z": 0, "yaw": 0.3519960796398254}, "truth": {"x": -0.07078177426521304, "y": -0.014506447216057611, "yaw": 0.5844051854906959}}
+{"t": 1790921922.8326218, "kind": "dom_end", "dom": {"badge": "Live \u2014 local stack", "conn": "connected", "rate": "telemetry 10.0 Hz (measured here)", "fallback": null, "latched": null, "override": null, "mode": "nav", "source": "Nav2", "holder": "you", "lane": null, "mission": null, "goal": "Goal (-0.03, 0.01): succeeded", "localised": null, "timeline": []}}
+{"t": 1790921922.9268427, "kind": "done"}
