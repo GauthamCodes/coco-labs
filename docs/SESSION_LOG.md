@@ -6925,3 +6925,41 @@ code mode; tunnel choice.
 - Every tunnel property (vendor docs only).
 
 NEXT: Part B, on the owner's "continue" and Q1–Q4.
+
+## Phase 2 · safety fixes merged to main (2026-10-02)
+
+Owner decisions on Part A:
+1. STOP is latched.
+2. The executive asserts its mode only while a mission runs.
+3. Spectators get no STOP.
+4. Tunnel: the reply left the placeholder unfilled, so the choice is still
+   open (needed in Part C).
+
+Write-up: `docs/live/SAFETY_FIXES.md`. Evidence: `docs/data/live/safety/`.
+
+**Built** (failing-first tests):
+- latched STOP in coco_web (`stop_latch.py`), f1600b2;
+- executive mode only while running, 6c1653f;
+- `/amcl_pose` TRANSIENT_LOCAL plus one `request_nomotion_update`, 54133fe.
+
+Test counts: coco_web 582 → 629, coco_mission 338 → 344.
+`run_all_package_tests.sh` now takes package names.
+
+**Measured**
+- **STOP at five stages.** Wheel command zero in 1.4–5.8 ms, body at rest
+  in 63–225 ms. 0 moving commands to +10 s, no moving mode re-asserted,
+  RECOVERY → ABORT in about 1.8 s, latched with 0 violations.
+- **On the ramp it holds.** 28–32 mm stopping distance, then ≤ 0.001 mm
+  over 9 s.
+- **Nav2 with no mission:** 7/7 goals native and 7/7 in Docker compose,
+  with Nav2's commands at the wheels.
+- **Regression fetch:** COMPLETE, with 1 RELOCALIZE.
+- **Localised** 0.05–0.11 s after connect.
+- **CI:** 2035 tests, 0 failures on 54133fe.
+- **main** fast-forwarded 6249e7d..54133fe.
+
+**Unverified**
+- Whether the arm stops mid-grasp.
+- Every number is a single run per row, not a rate.
+
+NEXT: Part B (Live view).
