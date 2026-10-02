@@ -96,6 +96,7 @@ import time
 
 from action_msgs.msg import GoalStatusArray
 from coco_web import binary, imaging, metrics as metrics_mod
+from coco_web import control as control_mod
 from coco_web import mjpeg, protocol, safety
 from coco_web import session as session_mod
 from coco_web import stop_latch as stop_mod
@@ -106,6 +107,8 @@ from geometry_msgs.msg import (PoseStamped, PoseWithCovarianceStamped,
                                TwistStamped)
 
 from nav_msgs.msg import OccupancyGrid, Odometry, Path
+
+from rcl_interfaces.msg import ParameterDescriptor
 
 import rclpy
 from rclpy.executors import ExternalShutdownException, SingleThreadedExecutor
@@ -244,8 +247,27 @@ class CocoWebNode(Node):
         # declares its whole stack. See session.DEFAULT_EXPECTED.
         self.declare_parameter(
             'expected_components', ','.join(session_mod.DEFAULT_EXPECTED))
+        # Remote sessions (Phase 2 Part C, control.py). The defaults are
+        # P0.1's local appliance exactly: open access, every route, any
+        # origin. `access:=code` is the driver/spectator policy;
+        # `remote:=true` serves /ws and /healthz only; `origins` is the
+        # browser-origin allowlist (comma-separated, ':*' = any port).
+        loose = ParameterDescriptor(dynamic_typing=True)
+        self.declare_parameter('access', control_mod.ACCESS_OPEN)
+        self.declare_parameter('session_idle_s', 60.0, loose)
+        self.declare_parameter('session_cap_s', 1200.0, loose)
+        self.declare_parameter('max_clients', 25, loose)
+        self.declare_parameter('remote', False, loose)
+        self.declare_parameter('origins', '')
 
         self.http_port = int(self.get_parameter('http_port').value)
+        self.control_config = control_config(
+            access=self.get_parameter('access').value,
+            idle_s=self.get_parameter('session_idle_s').value,
+            cap_s=self.get_parameter('session_cap_s').value,
+            max_clients=self.get_parameter('max_clients').value,
+            remote=self.get_parameter('remote').value,
+            origins=self.get_parameter('origins').value)
         self.video_port = int(self.get_parameter('video_port').value)
         self.bind = str(self.get_parameter('bind').value)
 
@@ -819,6 +841,30 @@ class CocoWebNode(Node):
         """Register the callable that sees every /mission/mode value."""
         self._mode_watch = callback
 
+    def serve_host_controls(self, platform):
+        """
+        Offer the HOST's session controls as Trigger services on this node.
+
+        ``~/session_kill``, ``~/session_new`` and ``~/session_code``. They
+        live on the ROS graph, which in the container is loopback-only
+        DDS: reachable by ``docker exec ... ros2 service call`` on the
+        host, and by nothing that arrives over HTTP. No coco.v1 frame maps
+        onto them.
+        """
+        def serve(action):
+            def callback(_request, response):
+                response.success, response.message = action()
+                return response
+            return callback
+        self._host_services = [
+            self.create_service(Trigger, '~/session_kill',
+                                serve(platform.host_kill)),
+            self.create_service(Trigger, '~/session_new',
+                                serve(platform.host_new_session)),
+            self.create_service(Trigger, '~/session_code',
+                                serve(platform.host_code)),
+        ]
+
     def hold_zero(self, seconds):
         """Publish explicit zeros on the teleop input for `seconds`."""
         self._zero_hold.hold(time.monotonic(), seconds)
@@ -1168,6 +1214,106 @@ class Platform:
         watch = getattr(node, 'set_mode_watch', None)
         if callable(watch):
             watch(self.on_mission_mode)
+        # Who may command COCO (control.py). A node without a config --
+        # every unit-test stand-in -- gets P0.1's open, local appliance.
+        config = getattr(node, 'control_config', None)
+        if not isinstance(config, dict):
+            config = control_config()
+        self.control_config = config
+        self.remote = config['remote']
+        self.origins = config['origins']
+        # The tornado loop, so the rclpy thread's host services can close
+        # sockets on the thread that owns them. Set by main().
+        self.loop = None
+        self.control = self._new_control()
+
+    def _new_control(self):
+        """Build a fresh control session; in code mode, log its code."""
+        config = self.control_config
+        session = control_mod.ControlSession(
+            access=config['access'], policy=config['policy'],
+            clock=time.monotonic, on_stop=self._on_control_end)
+        if session.code_mode:
+            # The host reads it here or from ~/session_code. It is never
+            # put in a URL or on the wire.
+            self.node.get_logger().info(
+                f'live session: control code {session.code} '
+                f'(idle {config["policy"].idle_s:g} s, '
+                f'cap {config["policy"].cap_s:g} s)')
+        return session
+
+    def _on_control_end(self, reason):
+        """
+        Stop COCO because control, or the session, ended.
+
+        Every ending in control.py lands here: release, idle, the driver
+        leaving, ownership lost, the cap, the kill switch. It is the
+        latched STOP, so the robot is zeroed, a running mission aborted
+        and the arbiter held idle. A session that is OVER also closes
+        every socket.
+        """
+        self.node.get_logger().warn(f'live session: control ended '
+                                    f'({reason}); COCO stopped')
+        self.engage_stop()
+        if reason in (control_mod.END_EXPIRED, control_mod.END_KILLED):
+            self._on_loop(self._close_all, reason)
+
+    def _on_loop(self, fn, *args):
+        """Run `fn` on the tornado thread (now, if there is no loop)."""
+        if self.loop is None:
+            fn(*args)
+        else:
+            self.loop.add_callback(fn, *args)
+
+    def _close_all(self, reason):
+        """Close every client socket, saying why."""
+        for client in list(self.clients):
+            try:
+                client.refuse('session_over', close=True)
+            except tornado.websocket.WebSocketClosedError:
+                pass
+            self.clients.discard(client)
+
+    # ── host actions (Trigger services; never reachable over HTTP) ─────
+    def host_kill(self):
+        """Kill the session (host switch): stop, end it, void the code."""
+        self.control.kill()
+        return True, 'session killed: COCO stopped, code void, sockets closed'
+
+    def host_new_session(self):
+        """End the current session (which stops COCO) and start a new one."""
+        if self.control.over is None:
+            self.control.kill()
+        self.control = self._new_control()
+        code = self.control.code
+        return True, (f'new session, control code {code}' if code
+                      else 'new open session')
+
+    def host_code(self):
+        """Report the current session's code and state, to the host."""
+        c = self.control
+        if c.over:
+            return False, f'session over ({c.over}); call session_new'
+        if not c.code_mode:
+            return True, 'open access: no code'
+        left = c.as_dict()['session_left_s']
+        return True, (f'control code {c.code}; driver '
+                      f'{"present" if c.driver else "none"}; '
+                      f'{left:.0f} s left')
+
+    def autonomy_busy(self):
+        """
+        Report whether autonomy the driver started is running.
+
+        The idle clock's exemption (control.py): the executive reports a
+        mission running, or this browser's last Nav2 goal is accepted or
+        executing.
+        """
+        if self.session.mission_running:
+            return True
+        snap, _fresh = self.node.snapshot()
+        goal = snap.get('goal') or {}
+        return goal.get('status') in ('accepted', 'executing')
 
     def engage_stop(self):
         """
@@ -1277,6 +1423,10 @@ class Platform:
         """
         metrics = self.node.metrics
         metrics.clients = len(self.clients)
+        # Fail closed on ownership, then apply idle and the cap.
+        self.control.reconcile(
+            [c.client_id for c in self.clients if c.client_id])
+        self.control.tick(busy=self.autonomy_busy())
         self.broadcast(self.refresh(), 'telemetry')
         metrics.mission_delivered()
         snap, _fresh = self.node.snapshot()
@@ -1479,6 +1629,9 @@ class Platform:
                 # Additive (Phase 2): the latched STOP, so a page can say
                 # why nothing moves and what releases it.
                 'stop': self.stop_latch.as_dict(),
+                # Additive (Phase 2 Part C): who may command COCO. A
+                # client compares control.driver_id with welcome.you.
+                'control': self.control.as_dict(),
             })
 
     def broadcast(self, frame, stream='telemetry'):
@@ -1629,7 +1782,11 @@ class ControlSocket(tornado.websocket.WebSocketHandler):
 
     def check_origin(self, origin):
         """
-        Accept any origin.
+        Accept any origin, unless an ``origins`` allowlist is configured.
+
+        Phase 2 Part C: a remote session sets ``origins`` to the Pages
+        site and localhost (control.origin_allowed); a refused origin gets
+        tornado's 403 at the handshake. With no list, P0.1's rule below.
 
         P0.1 is a single-user LOCAL appliance with no authentication and
         no secrets to steal, and locking the origin down here would break
@@ -1639,11 +1796,24 @@ class ControlSocket(tornado.websocket.WebSocketHandler):
         platform is exposed beyond localhost -- see the security boundary
         section of docs/WEB_API.md and the P1.0 row of docs/ROADMAP.md.
         """
-        return True
+        return control_mod.origin_allowed(origin, self.platform.origins)
+
+    def refuse(self, code, frame_id=None, close=False):
+        """Send a refusal with its coco.v1 text; optionally hang up."""
+        self._write(protocol.encode(protocol.error(
+            code, protocol.REFUSAL_CODES.get(code, code), frame_id)))
+        if close:
+            self.close(CLOSE_CODES.get(code, 4403), code)
 
     def open(self):       # noqa: A003 - tornado names this handler hook
         """Register the client and send the welcome frame."""
         self.client_id = f'{id(self):x}'
+        admitted = self.platform.control.connect(self.client_id)
+        if not admitted.ok:
+            # Over or full: say why, then hang up, before this client is
+            # registered anywhere.
+            self.refuse(admitted.code, close=True)
+            return
         self.platform.clients.add(self)
         self.platform.session.attach(self.client_id)
         node = self.platform.node
@@ -1681,6 +1851,9 @@ class ControlSocket(tornado.websocket.WebSocketHandler):
         it immediate.
         """
         self.platform.clients.discard(self)
+        # The driver leaving ends control and stops COCO (control.py).
+        if self.client_id:
+            self.platform.control.disconnect(self.client_id)
         # A driver closing its tab must not keep the stick, or the next
         # client to connect is locked out by a browser that no longer
         # exists.
@@ -1701,15 +1874,32 @@ class ControlSocket(tornado.websocket.WebSocketHandler):
     def on_message(self, message):
         """Validate one client frame and act on it."""
         node = self.platform.node
+        control = self.platform.control
         try:
             frame = protocol.decode(message, colours=node.colours)
         except protocol.ProtocolError as exc:
+            charged = control.malformed(self.client_id)
+            if not charged.ok:
+                self.refuse(charged.code, exc.frame_id, close=charged.close)
+                return
             self._write(protocol.encode(
                 protocol.error(exc.code, str(exc), exc.frame_id)))
+            if charged.close:
+                self.close(4429, 'rate_limited')
             return
 
         kind = frame['type']
         frame_id = frame.get('id')
+        # Who may do this (control.py). Open access admits everything but
+        # claim/release, exactly as before; code access is the driver /
+        # spectator policy. claim and release are acted on in admit().
+        verdict = control.admit(self.client_id, kind, frame)
+        if not verdict.ok:
+            self.refuse(verdict.code, frame_id, close=verdict.close)
+            return
+        if kind in control_mod.CONTROL_INTENTS:
+            self._write(protocol.encode(protocol.ack(frame_id, kind)))
+            return
         try:
             ok, detail = self._dispatch(kind, frame, node)
         except Exception as exc:       # noqa: BLE001 - see below
@@ -1823,6 +2013,16 @@ class HealthHandler(tornado.web.RequestHandler):
         self.platform.refresh()
         body, status = self.platform.session.health()
         body['protocol'] = protocol.PROTOCOL_VERSION
+        # Additive (Phase 2 Part C): whether a live session is open, for
+        # the public site's "live now" probe. No ids, no code.
+        body['live'] = self.platform.control.summary()
+        # The public site reads this cross-origin. Only an allowlisted
+        # origin is told it may; with no list (local), no header, as before.
+        origin = self.request.headers.get('Origin')
+        if self.platform.origins and control_mod.origin_allowed(
+                origin, self.platform.origins):
+            self.set_header('Access-Control-Allow-Origin', origin)
+            self.set_header('Vary', 'Origin')
         self.set_status(status)
         self.set_header('Content-Type', 'application/json')
         self.write(json.dumps(body, indent=1))
@@ -1964,18 +2164,70 @@ def keepalive_settings(interval=None, timeout=None):
             'websocket_ping_timeout': timeout}
 
 
+#: WebSocket close codes for a refusal that hangs up (4000-4999 is the
+#: application range). The reason string is the coco.v1 refusal code.
+CLOSE_CODES = {'session_over': 4403, 'session_full': 4503,
+               'rate_limited': 4429, 'bad_code': 4401, 'spectator': 4403}
+
+
+def _as_bool(value):
+    """Read a launch-file boolean, which may arrive as a string."""
+    if isinstance(value, str):
+        if value.strip().lower() in ('true', '1', 'yes'):
+            return True
+        if value.strip().lower() in ('false', '0', 'no', ''):
+            return False
+        raise ValueError(f'not a boolean: {value!r}')
+    return bool(value)
+
+
+def control_config(access=control_mod.ACCESS_OPEN, idle_s=60.0, cap_s=1200.0,
+                   max_clients=25, remote=False, origins=''):
+    """
+    Validate the remote-session parameters into one dict, or refuse.
+
+    A bad value stops the server at startup, like a wheel topic in the
+    allowlist does: a typo in ``access`` must not quietly run an OPEN
+    session on the public internet. And ``remote`` without ``code``
+    access is refused for the same reason.
+    """
+    access = str(access).strip().lower()
+    if access not in control_mod.ACCESS_MODES:
+        raise ValueError(f'access must be one of {control_mod.ACCESS_MODES},'
+                         f' got {access!r}')
+    remote = _as_bool(remote)
+    if remote and access != control_mod.ACCESS_CODE:
+        raise ValueError('remote:=true requires access:=code: a remote '
+                         'session is never open to every visitor')
+    policy = control_mod.Policy(idle_s=float(idle_s), cap_s=float(cap_s),
+                                max_clients=int(max_clients))
+    return {'access': access, 'policy': policy, 'remote': remote,
+            'origins': control_mod.parse_origins(origins)}
+
+
 def make_app(platform, web_root):
-    """Build the tornado Application: API first, static files last."""
-    return tornado.web.Application(
-        [
-            (r'/ws', ControlSocket, {'platform': platform}),
-            (r'/healthz', HealthHandler, {'platform': platform}),
+    """
+    Build the tornado Application: API first, static files last.
+
+    A remote platform (``remote:=true``) serves ONLY ``/ws`` and
+    ``/healthz``: no page, no ``/api/*``, no ``/video/*``. Everything else
+    is tornado's 404. The camera still reaches a remote browser, as binary
+    frames on ``/ws``.
+    """
+    routes = [
+        (r'/ws', ControlSocket, {'platform': platform}),
+        (r'/healthz', HealthHandler, {'platform': platform}),
+    ]
+    if not platform.remote:
+        routes += [
             (r'/api/session', SessionHandler, {'platform': platform}),
             (r'/api/metrics', MetricsHandler, {'platform': platform}),
             (r'/video/([a-z]+)', VideoHandler, {'platform': platform}),
             (r'/(.*)', tornado.web.StaticFileHandler,
              {'path': web_root, 'default_filename': 'index.html'}),
-        ],
+        ]
+    return tornado.web.Application(
+        routes,
         # Protocol-level keepalive. A client whose network vanished
         # without a FIN otherwise sits in `clients` forever, counting as
         # a viewer -- which matters here because the LAST client
@@ -2006,9 +2258,15 @@ def main(args=None):
     spin_thread.start()
 
     platform = Platform(node)
+    platform.loop = tornado.ioloop.IOLoop.current()
+    node.serve_host_controls(platform)
     web_root = str(node.get_parameter('web_root').value) or _default_web_root()
     app = make_app(platform, web_root)
     app.listen(node.http_port, address=node.bind)
+    if platform.remote:
+        node.get_logger().info(
+            f'REMOTE: serving /ws and /healthz only; origins '
+            f'{", ".join(platform.origins) or "ANY"}')
 
     ticker = tornado.ioloop.PeriodicCallback(
         platform.tick, 1000.0 / TELEMETRY_HZ)

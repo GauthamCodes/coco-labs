@@ -575,11 +575,16 @@ def test_kill_stops_even_with_no_driver_and_twice():
 
 
 def test_kill_works_in_open_access_too():
-    """The host's switch is not a code-mode feature."""
+    """The host's switch is not a code-mode feature: it ends open too."""
     s, _clock, stops = make(access=control.ACCESS_OPEN)
+    assert s.admit('a', 'drive', {}).ok
     s.kill()
     assert stops.reasons == [control.END_KILLED]
     assert s.over == control.END_KILLED
+    for kind in sorted(control.COMMAND_INTENTS):
+        assert s.admit('a', kind, {}).code == 'session_over', kind
+    assert s.admit('a', 'ping', {}).ok
+    assert not s.connect('b').ok
 
 
 # ── stop on every ending; fail closed ──────────────────────────────────
@@ -665,6 +670,91 @@ def test_policy_rejects_nonsense():
         control.ControlSession('code-ish', clock=FakeClock())
     with pytest.raises(ValueError):
         control.ControlSession(control.ACCESS_CODE)
+
+
+# ── malformed frames ───────────────────────────────────────────────
+
+def test_garbage_is_charged_and_closed():
+    """Undecodable frames take frame tokens and count toward abuse."""
+    s, _clock, _stops = make(frame_rate=10.0, frame_burst=10.0,
+                             abuse_limit=5)
+    joined(s, 'g')
+    verdicts = [s.malformed('g') for _ in range(5)]
+    assert verdicts[-1].close and not verdicts[-2].close
+    s2, _c, _s = make(frame_rate=3.0, frame_burst=3.0)
+    joined(s2, 'g')
+    codes = [s2.malformed('g').code for _ in range(4)]
+    assert codes[-1] == 'rate_limited'
+
+
+def test_garbage_from_an_unknown_connection_closes():
+    """Fail closed on a connection the session never admitted."""
+    s, _clock, _stops = make()
+    assert s.malformed('ghost').close
+
+
+def test_open_access_never_charges_garbage():
+    """Open access is P0.1: no limits."""
+    s, _clock, _stops = make(access=control.ACCESS_OPEN)
+    assert all(s.malformed('x').ok for _ in range(1000))
+
+
+# ── telemetry block ────────────────────────────────────────────────────
+
+def test_the_broadcast_block_names_the_driver_connection_only():
+    """driver_id lets each client compare with its own welcome.you."""
+    s, _clock, _stops = make()
+    joined(s, 'a', 'b')
+    assert s.as_dict()['driver_id'] is None
+    claim(s, 'a')
+    block = s.as_dict()
+    assert block['driver'] is True and block['driver_id'] == 'a'
+    assert 'role' not in block
+    assert s.as_dict('b')['role'] == 'spectator'
+
+
+def test_the_public_summary_has_no_ids_and_no_code():
+    """/healthz may say a session is live; it may not say who drives."""
+    s, _clock, _stops = make()
+    joined(s, 'a')
+    claim(s, 'a')
+    summary = s.summary()
+    assert summary['driver'] is True and summary['access'] == 'code'
+    assert 'driver_id' not in summary and CODE not in repr(summary)
+    assert "'a'" not in repr(summary)
+
+
+# ── origins ────────────────────────────────────────────────────────────
+
+PAGES = 'https://gauthamcodes.github.io'
+ALLOWED = control.parse_origins(f'{PAGES}, http://localhost:*, '
+                                'http://127.0.0.1:*,')
+
+
+@pytest.mark.parametrize('origin', [
+    PAGES, PAGES + '/', 'https://GauthamCodes.github.io',
+    'http://localhost', 'http://localhost:4173', 'http://localhost:8080',
+    'http://127.0.0.1:5173'])
+def test_allowed_origins(origin):
+    """The Pages site and localhost on any port."""
+    assert control.origin_allowed(origin, ALLOWED)
+
+
+@pytest.mark.parametrize('origin', [
+    None, '', 'null', 'https://evil.example', 'http://gauthamcodes.github.io',
+    'https://gauthamcodes.github.io.evil.example', 'https://localhost:4173',
+    'http://localhost:4173.evil.example', 'http://localhost:', 'http://localhost:80a',
+    'http://localhost.evil.example', 'https://other.github.io'])
+def test_refused_origins(origin):
+    """Anything else, including look-alikes and the wrong scheme."""
+    assert not control.origin_allowed(origin, ALLOWED)
+
+
+def test_no_origin_list_is_any_origin():
+    """Empty keeps P0.1's local behaviour."""
+    assert control.origin_allowed('https://evil.example', ())
+    assert control.parse_origins('') == ()
+    assert control.parse_origins(None) == ()
 
 
 # ── purity ─────────────────────────────────────────────────────────────

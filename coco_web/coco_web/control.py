@@ -154,6 +154,45 @@ def normalise_code(code):
     return code.replace(' ', '').replace('-', '').upper()[:64]
 
 
+def parse_origins(text):
+    """Split a comma-separated origin list; blanks dropped, order kept."""
+    if not isinstance(text, str):
+        return ()
+    return tuple(o.strip().rstrip('/') for o in text.split(',') if o.strip())
+
+
+def origin_allowed(origin, allowed):
+    """
+    Whether a browser ``Origin`` may open the WebSocket.
+
+    ``allowed`` empty means any origin: P0.1's documented local behaviour.
+    Entries match exactly (scheme, host and port), except that an entry
+    ending ``:*`` matches that scheme and host on any port, which is how
+    ``http://localhost:*`` admits a locally served lab_web whatever its
+    port. ``null`` (a file:// page, a sandbox) never matches.
+
+    This is a BROWSER boundary only. A non-browser client sends whatever
+    Origin it likes, which is why the driver's code, not the origin, is
+    what grants control.
+    """
+    if not allowed:
+        return True
+    if not isinstance(origin, str) or not origin or origin == 'null':
+        return False
+    origin = origin.strip().rstrip('/').lower()
+    for entry in allowed:
+        entry = entry.lower()
+        if entry.endswith(':*'):
+            base = entry[:-2]
+            if origin == base:
+                return True
+            if origin.startswith(base + ':') and origin[len(base) + 1:].isdigit():
+                return True
+        elif origin == entry:
+            return True
+    return False
+
+
 @dataclass(frozen=True)
 class Policy:
     """The numbers. Defaults are Part A §5.3's proposals, not measurements."""
@@ -303,6 +342,8 @@ class ControlSession:
         everyone, exactly as before.
         """
         with self._lock:
+            if self._over:
+                return Verdict(False, 'session_over', close=True)
             if not self.code_mode:
                 return ALLOW
             self._expire_if_due()
@@ -350,6 +391,10 @@ class ControlSession:
             if not self.code_mode:
                 if kind in CONTROL_INTENTS:
                     return Verdict(False, 'open_access')
+                if self._over and kind not in READ_INTENTS:
+                    # Killed by the host: nothing commands COCO again
+                    # until a new session, in either access mode.
+                    return Verdict(False, 'session_over')
                 return ALLOW
             now = self._clock()
             self._expire_if_due(now)
@@ -394,6 +439,27 @@ class ControlSession:
             # An intent this module was never told about is refused, not
             # waved through: the safe default for a new command type.
             return self._refuse(client, 'spectator')
+
+    def malformed(self, client_id):
+        """
+        Charge an undecodable frame to its sender.
+
+        A frame that fails validation never reaches ``admit`` (it has no
+        trustworthy kind), but it cost the server a parse. It takes a
+        frame token and counts as a refusal, so a client flooding garbage
+        is limited and closed like one flooding pings.
+        """
+        with self._lock:
+            if not self.code_mode:
+                return ALLOW
+            client = self._clients.get(client_id)
+            if client is None:
+                return Verdict(False, 'spectator', close=True)
+            if not client.frames.take(self._clock()):
+                return self._refuse(client, 'rate_limited')
+            client.refused_in_row += 1
+            return Verdict(True, close=(client.refused_in_row
+                                        >= self.policy.abuse_limit))
 
     def _claim(self, client_id, client, code, now):
         if self._driver is not None:
@@ -491,26 +557,41 @@ class ControlSession:
         self._on_stop(reason)
 
     # ── telemetry ──────────────────────────────────────────────────────
+    def summary(self):
+        """
+        Return what an anonymous visitor may know, for ``/healthz``.
+
+        Whether a session is live, whether someone is driving, how full it
+        is and how long it has left. No ids, no code.
+        """
+        block = self.as_dict()
+        return {key: block.get(key) for key in (
+            'access', 'driver', 'clients', 'max_clients', 'session_left_s',
+            'over')}
+
     def as_dict(self, client_id=None):
         """
-        Build the ``platform.control`` block (additive), for one client.
+        Build the ``platform.control`` block (additive).
 
-        Never contains the code. ``role`` is this client's: driver,
-        spectator, or open (anyone may command).
+        Never contains the code. With ``client_id``, ``role`` is that
+        client's: driver or spectator (open: anyone may command).
         """
         with self._lock:
             now = self._clock()
             if not self.code_mode:
-                return {'access': self.access, 'role': 'open'}
+                return {'access': self.access, 'role': 'open',
+                        'over': self._over}
             idle_left = None
             if self._driver is not None and self._last_active is not None:
                 idle_left = max(0.0, self.policy.idle_s
                                 - (now - self._last_active))
-            return {
+            out = {
                 'access': self.access,
-                'role': ('driver' if client_id is not None
-                         and client_id == self._driver else 'spectator'),
                 'driver': self._driver is not None,
+                # The driver's connection id, compared by each client with
+                # its own welcome.you, like platform.pilot. An id is not a
+                # credential: control is bound to the connection object.
+                'driver_id': self._driver,
                 'clients': len(self._clients),
                 'max_clients': self.policy.max_clients,
                 'idle_s': self.policy.idle_s,
@@ -520,3 +601,7 @@ class ControlSession:
                 'over': self._over,
                 'last_end': self._last_end,
             }
+            if client_id is not None:
+                out['role'] = ('driver' if client_id == self._driver
+                               else 'spectator')
+            return out
