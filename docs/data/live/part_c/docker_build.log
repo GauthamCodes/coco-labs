@@ -1,0 +1,29 @@
+before: jazzy 7d664d5fe79f 2026-10-02 11:24:12 +0530 IST
+before: 61bef2ab3bdf 14788247425e 2026-09-25 08:42:24 +0530 IST
+before: main-b15d445 af6e70ec8b96 2026-09-24 05:01:25 +0530 IST
+#14 DONE 0.0s
+
+#15 [10/10] RUN chmod +x /usr/local/bin/coco-entrypoint
+#15 DONE 0.2s
+
+#16 exporting to image
+#16 exporting layers
+#16 exporting layers 1.0s done
+#16 exporting manifest sha256:2f964d5927185feae2e83403c9d1573355bb5cbd8c95ec5d31e20d8aad0a9b78 done
+#16 exporting config sha256:9f34a1588f35f3f703da9a2ed16b0d4791c2cf4676f3ceb52030d913ba2de870 done
+#16 exporting attestation manifest sha256:9753e27190755098bed6159dc549ae3c16b9ac4c78d1771a7b7d044707413b11 done
+#16 exporting manifest list sha256:48544a3ddbf3fcbf7d86940721aed8fac43378314e5c456c9bcc810f942a21f7 done
+#16 naming to docker.io/library/coco-platform:jazzy done
+#16 unpacking to docker.io/library/coco-platform:jazzy
+#16 unpacking to docker.io/library/coco-platform:jazzy 0.4s done
+#16 DONE 1.5s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+ Image coco-platform:jazzy Built 
+build rc=0 in 14 s
+after: jazzy 48544a3ddbf3 2026-10-02 13:13:56 +0530 IST
+after: 61bef2ab3bdf 14788247425e 2026-09-25 08:42:24 +0530 IST
+after: main-b15d445 af6e70ec8b96 2026-09-24 05:01:25 +0530 IST
+
+Error response from daemon: No such image: osrf/ros:jazzy-desktop
