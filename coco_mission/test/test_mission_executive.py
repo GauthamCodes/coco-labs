@@ -300,6 +300,78 @@ class TestRunning:
         assert node.exit_code() == 1
 
 
+class _ModeRecorder:
+    """Stands in for the /mission/mode publisher and keeps what it sent."""
+
+    def __init__(self):
+        self.sent = []
+
+    def publish(self, msg):
+        self.sent.append(msg.data)
+
+
+class TestModeOnlyWhileRunning:
+    """
+    The executive asserts /mission/mode only while a mission runs.
+
+    Phase 2 measured the cost of asserting it while IDLE: the browser's
+    Nav2 mode (`set_mode auto`) was overwritten with `idle` within 0.5 s,
+    so Nav2 planned and commanded (499 moving commands) and the wheels
+    moved 0. And asserting it after a STOP would put the robot back on a
+    moving source (docs/live/PART_A_AUDIT.md).
+    """
+
+    def _recorded(self, node):
+        recorder = _ModeRecorder()
+        node._mode_pub = recorder
+        return recorder
+
+    def test_an_idle_executive_publishes_no_mode(self, node):
+        recorder = self._recorded(node)
+        for _ in range(30):
+            rclpy.spin_once(node, timeout_sec=0.05)
+        node._assert_outputs()
+        assert node.machine.state == ms.IDLE
+        assert recorder.sent == []
+
+    def test_an_idle_executive_still_publishes_its_state(self, node):
+        self._recorded(node)
+        node._assert_outputs()
+        assert ms.parse_kv(node._last_published)['state'] == ms.IDLE
+
+    def test_a_running_mission_re_asserts_its_mode(self, node):
+        recorder = self._recorded(node)
+        node.machine.state = ms.CLIMB
+        node._mode = 'rl'
+        node._assert_outputs()
+        node._assert_outputs()
+        assert recorder.sent == ['rl', 'rl']
+
+    @pytest.mark.parametrize('terminal', [ms.ABORT, ms.COMPLETE])
+    def test_the_end_hands_back_idle_once_then_falls_silent(
+            self, node, terminal):
+        recorder = self._recorded(node)
+        node.machine.state = ms.NAVIGATE_TO_RAMP
+        node._mode = 'nav'
+        node._assert_outputs()
+        node.machine.state = terminal
+        node._mode = 'idle'
+        for _ in range(5):
+            node._assert_outputs()
+        assert recorder.sent == ['nav', 'idle']
+
+    def test_no_moving_mode_after_the_mission_ends(self, node):
+        recorder = self._recorded(node)
+        node.machine.state = ms.CLIMB
+        node._mode = 'rl'
+        node._assert_outputs()
+        node.machine.state = ms.ABORT
+        # A stale moving mode left in _mode must not leak out.
+        for _ in range(5):
+            node._assert_outputs()
+        assert recorder.sent == ['rl', 'idle']
+
+
 class TestWiring:
     """The launch file and the cleanup script know about the new node."""
 

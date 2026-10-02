@@ -48,7 +48,8 @@ in   /grasp/status            std_msgs/String
 in   /perception/status       std_msgs/String
 in   /cmd_vel_arbiter/status  std_msgs/String
 in   /mission/target_colour   std_msgs/String
-out  /mission/mode            std_msgs/String   (2 Hz, and on change)
+out  /mission/mode            std_msgs/String   (2 Hz and on change, ONLY while
+     a mission runs; `idle` once when it ends; silent in IDLE)
 out  /mission/state           std_msgs/String   (2 Hz, and on change)
 out  /mission/target_colour   std_msgs/String   only when the colour came
      from a parameter or the CLI, exactly as traverse_demo does — with
@@ -125,6 +126,7 @@ TICK_HZ = 10.0
 # MUST be re-asserted: if it lapses, the arbiter keeps its last value,
 # and a mode set once at a step boundary is a mode nothing refreshes if
 # the executive dies. 2 Hz matches traverse_demo and the web panel.
+# The mode is asserted only while a mission runs: see _assert_outputs.
 PUBLISH_HZ = 2.0
 
 # How long a service or action server may be missing before the request
@@ -345,6 +347,9 @@ class MissionExecutive(Node):
         self._issued = []
 
         self._mode = 'idle'
+        # Whether this node has been asserting a mode, so the end of a
+        # mission hands back `idle` once. See _assert_outputs.
+        self._asserting_mode = False
         self._last_published = None
 
         # The tick runs on a STEADY clock — see the module docstring. A
@@ -808,6 +813,11 @@ class MissionExecutive(Node):
                 Trigger.Request()).add_done_callback(on_reply)
 
     # ── outputs ──────────────────────────────────────────────────────────
+    def _mission_running(self):
+        """True from the start until COMPLETE or ABORT; never in IDLE."""
+        return (self.machine.state != ms.IDLE
+                and self.machine.state not in ms.TERMINAL_STATES)
+
     def _assert_outputs(self, event='run'):
         """Re-assert the mode, the state and (if ours) the colour.
 
@@ -816,7 +826,18 @@ class MissionExecutive(Node):
         a mode nothing refreshes if this node dies mid-leg, and the
         robot would keep driving on the last one it saw.
         """
-        self._mode_pub.publish(String(data=self._mode))
+        # The mode only while a mission RUNS (Phase 2, owner decision 2).
+        # Asserting `idle` from IDLE overwrote the browser's Nav2 mode
+        # within 0.5 s, so Nav2 commanded and the wheels never moved; and
+        # anything asserted after the mission ends could put the robot
+        # back on a moving source after a STOP. The end hands the arbiter
+        # back `idle` exactly once, then this node falls silent.
+        if self._mission_running():
+            self._mode_pub.publish(String(data=self._mode))
+            self._asserting_mode = True
+        elif self._asserting_mode:
+            self._mode_pub.publish(String(data='idle'))
+            self._asserting_mode = False
         line = self.machine.status_line(self.now(), event=event)
         self._state_pub.publish(String(data=line))
         self._last_published = line

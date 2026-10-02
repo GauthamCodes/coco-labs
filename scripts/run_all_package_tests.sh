@@ -5,6 +5,7 @@
 #
 #   scripts/run_all_package_tests.sh               run them all
 #   scripts/run_all_package_tests.sh --make-venv   build $COCO_WS/test_venv first
+#   scripts/run_all_package_tests.sh coco_web coco_mission   only these
 #
 # The checkout is this script's repo; the workspace is <ws> above it
 # (~/coco_labs_ws), or $COCO_WS. Run it on a clean ROS graph (or set an
@@ -88,6 +89,16 @@ PACKAGES=(
     "coco_lab"
     "coco_lab_ros"
 )
+# Optional: name packages to run only those, same interpreter and env.
+if [ "$#" -gt 0 ]; then
+    for PKG in "$@"; do
+        case " ${PACKAGES[*]} " in
+            *" $PKG "*) ;;
+            *) echo "[tests] unknown package: $PKG" >&2; exit 2 ;;
+        esac
+    done
+    PACKAGES=("$@")
+fi
 
 echo "[tests] interpreter: $PY ($("$PY" -c 'import sys, pytest, hypothesis, networkx; print(sys.version.split()[0], "pytest", pytest.__version__, "hypothesis", hypothesis.__version__, "networkx", networkx.__version__)'))"
 echo "[tests] workspace:   $COCO_WS   ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}"
