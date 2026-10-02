@@ -419,7 +419,8 @@ _VALIDATORS = {
 # Builders rather than free-form dicts so every frame that leaves the
 # server has one definition, and the docs can be generated from one place.
 
-def welcome(session, streams, limits, subscriptions=None, world=None):
+def welcome(session, streams, limits, subscriptions=None, world=None,
+            you=None, config=None):
     """
     Build the first frame: contract, session, limits and subscriptions.
 
@@ -440,6 +441,14 @@ def welcome(session, streams, limits, subscriptions=None, world=None):
         frame['subscriptions'] = subscriptions
     if world is not None:
         frame['world'] = world
+    # Additive (Phase 2). `you` is this connection's id, so a client can
+    # tell whether `platform.pilot` is itself. `config` says whether the
+    # colours, depth clip and joint limits came from coco_config or from
+    # fallbacks, so a page can say so rather than look right and be wrong.
+    if you is not None:
+        frame['you'] = you
+    if config is not None:
+        frame['config'] = config
     return frame
 
 

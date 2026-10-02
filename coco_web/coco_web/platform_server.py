@@ -94,6 +94,7 @@ import os
 import threading
 import time
 
+from action_msgs.msg import GoalStatusArray
 from coco_web import binary, imaging, metrics as metrics_mod
 from coco_web import mjpeg, protocol, safety
 from coco_web import session as session_mod
@@ -233,6 +234,10 @@ class CocoWebNode(Node):
         # The COCO-specific proof that the simulator up there is OURS.
         # See simulator_up() for why /clock alone is not enough.
         self.declare_parameter('sim_topic', '/model/coco/odometry')
+        # Ground truth for DISPLAY (Phase 2): the same model odometry,
+        # decoded and put in the map frame, sent as robot.truth. It never
+        # reaches the mission through this node -- see _on_truth.
+        self.declare_parameter('truth', True)
         # Optional components whose absence makes the session DEGRADED
         # (the health axis). Only the launch file knows whether Nav2 or
         # the executive were started at all, so it says; mission.launch.py
@@ -292,11 +297,17 @@ class CocoWebNode(Node):
         self._open_streams = {}
         self._image_seq = {'camera': 0, 'depth': 0}
         self._image_config = {}
+        # Which coco_config values fell back to defaults; welcome.config.
+        self.config_fallbacks = []
         self._depth_clip = self._load_depth_clip()
         self.metrics = metrics_mod.Metrics(streams_mod.STREAMS)
 
         self.colours = self._load_colours()
         self.arm_limits, self.grip_limits = self._load_joint_limits()
+        self._spawn_xy = self._load_spawn()
+        # The browser's last Nav2 goal, and the action's status entries
+        # as (accepted_stamp_s, code), for nav.goal.
+        self._goal_entries = []
 
         # ── publishers: exactly the allowlist, nothing else ────────────
         self._pub_drive = self.create_publisher(
@@ -353,6 +364,18 @@ class CocoWebNode(Node):
             OccupancyGrid, '/local_costmap/costmap', self._on_nav_alive,
             _sensor_qos(depth=1), raw=True)
         self.create_subscription(Path, '/plan', self._on_path, 10)
+        # Phase 2 (Live), read-only: the controller's local trajectory,
+        # the NavigateToPose goal status (TRANSIENT_LOCAL, like AMCL), and
+        # ground truth for display.
+        self.create_subscription(
+            Path, '/local_plan', self._on_local_path, 10)
+        self.create_subscription(
+            GoalStatusArray, '/navigate_to_pose/_action/status',
+            self._on_goal_status, _latched_qos())
+        if bool(self.get_parameter('truth').value) and self._spawn_xy:
+            self.create_subscription(
+                Odometry, str(self.get_parameter('sim_topic').value),
+                self._on_truth, _sensor_qos(depth=1))
         # /map is latched TRANSIENT_LOCAL by nav2_map_server and published
         # once at activation, so a late-joining server needs the matching
         # durability or it waits forever for a message already sent.
@@ -407,6 +430,7 @@ class CocoWebNode(Node):
             self.get_logger().warn(
                 'coco_config unavailable; using the protocol fallback '
                 'colour list')
+            self.config_fallbacks.append('colours')
             return tuple(protocol.FALLBACK_COLOURS)
 
     def _load_depth_clip(self):
@@ -422,7 +446,23 @@ class CocoWebNode(Node):
             from coco_config.robot import CAMERA_DEPTH_CLIP
             return tuple(CAMERA_DEPTH_CLIP)
         except ImportError:
+            self.config_fallbacks.append('depth_clip')
             return None
+
+    def _load_spawn(self):
+        """Return SPAWN_XY, the map origin in the world, or None."""
+        try:
+            from coco_config.robot import SPAWN_XY
+            return (float(SPAWN_XY[0]), float(SPAWN_XY[1]))
+        except ImportError:
+            self.config_fallbacks.append('spawn')
+            return None
+
+    def config_doc(self):
+        """Return welcome.config: where the configuration came from."""
+        return {'source': 'fallback' if self.config_fallbacks
+                else 'coco_config',
+                'fallbacks': list(self.config_fallbacks)}
 
     def _load_joint_limits(self):
         """
@@ -441,6 +481,7 @@ class CocoWebNode(Node):
             self.get_logger().warn(
                 'coco_config.joint_limits unavailable; arm control '
                 'disabled rather than guessed')
+            self.config_fallbacks.append('joint_limits')
             return None, None
         # A joint missing from a coco_config that IS present is not a
         # stripped image, it is a rename -- and quietly disabling the arm
@@ -495,6 +536,9 @@ class CocoWebNode(Node):
                 self._tracker.amcl(stamp, *pose), z)
             self._snap['frame'] = self._tracker.frame
             self._snap['nav_t'] = time.monotonic()
+            # The filter's own estimate, with its spread: robot.belief.
+            self._snap['belief_raw'] = (
+                pose, list(msg.pose.covariance), stamp)
 
     def _on_scan(self, msg):
         """Downsample the LiDAR once, here, rather than per connected client."""
@@ -525,6 +569,42 @@ class CocoWebNode(Node):
         with self._lock:
             self._snap['path'] = tele.path_payload(points)
             self._snap['nav_t'] = time.monotonic()
+            # Wall clock at receipt: nav_goal -> first plan is measured
+            # against it (Phase 2).
+            self._snap['path_rx'] = time.time()
+
+    def _on_local_path(self, msg):
+        """Reduce the controller's local trajectory to a polyline."""
+        points = [(p.pose.position.x, p.pose.position.y) for p in msg.poses]
+        with self._lock:
+            self._snap['local_path'] = tele.path_payload(points, limit=60)
+
+    def _on_goal_status(self, msg):
+        """Keep the NavigateToPose status entries, for nav.goal."""
+        entries = [(s.goal_info.stamp.sec + s.goal_info.stamp.nanosec * 1e-9,
+                    s.status) for s in msg.status_list]
+        with self._lock:
+            self._goal_entries = entries
+
+    def _on_truth(self, msg):
+        """
+        Keep the simulator's ground truth, in the map frame, for DISPLAY.
+
+        This is the ONE place the truth enters this node, and refresh() is
+        the one place it leaves: as robot.truth, to the browser. No
+        publish_* or service call reads it (an AST test pins that), so the
+        web layer adds no path from truth to the mission. Throttled to
+        10 Hz: the plugin publishes about 47 Hz (measured).
+        """
+        now = time.monotonic()
+        with self._lock:
+            if now - self._snap.get('truth_t', 0.0) < 0.1:
+                return
+        _stamp, pose, _z = self._pose2d(msg)
+        truth = tele.truth_to_map(*pose, self._spawn_xy)
+        with self._lock:
+            self._snap['truth'] = truth
+            self._snap['truth_t'] = now
 
     def _on_map(self, msg):
         """
@@ -813,6 +893,10 @@ class CocoWebNode(Node):
         msg.pose.position.y = float(y)
         msg.pose.orientation.w = 1.0
         self._pub_goal.publish(msg)
+        with self._lock:
+            self._snap['goal'] = {
+                'x': float(x), 'y': float(y), 'sent_wall': time.time(),
+                'sent_ros': self.get_clock().now().nanoseconds * 1e-9}
         return True
 
     def publish_arm(self, shoulder, elbow):
@@ -873,6 +957,17 @@ class CocoWebNode(Node):
         now = time.monotonic()
         with self._lock:
             snap = dict(self._snap)
+            entries = list(self._goal_entries)
+        ros_now = self.get_clock().now().nanoseconds * 1e-9
+        raw = snap.get('belief_raw')
+        snap['belief'] = (tele.belief_payload(*raw, ros_now)
+                          if raw else None)
+        goal = snap.get('goal')
+        if goal:
+            status = tele.goal_status(entries, goal['sent_ros'])
+            snap['goal'] = {'x': goal['x'], 'y': goal['y'],
+                            'sent_at': goal['sent_wall'],
+                            'status': status or 'sent'}
         fresh = {
             'robot': now - snap['odom_t'] < STALE_AFTER_S,
             'arbiter': now - snap['arbiter_t'] < STALE_AFTER_S,
@@ -1350,12 +1445,21 @@ class Platform:
                 'localised': snap.get('frame') == 'map',
                 'velocity': snap['velocity'],
                 'online': fresh['robot'],
+                # Additive (Phase 2). belief: AMCL's own estimate with its
+                # spread. truth: the simulator's, map frame, DISPLAY ONLY.
+                'belief': snap.get('belief'),
+                'truth': snap.get('truth'),
             },
             mission=mission,
             nav={
                 'online': fresh['navigation'],
                 'path': snap['path'] or [],
                 'active_source': arbiter['active'],
+                # Additive (Phase 2): the local trajectory, this browser's
+                # last goal and its Nav2 status, and when /plan arrived.
+                'local_path': snap.get('local_path') or [],
+                'goal': snap.get('goal'),
+                'path_rx': snap.get('path_rx'),
             },
             sensors={
                 'lidar': snap['scan'],
@@ -1557,7 +1661,10 @@ class ControlSocket(tornado.websocket.WebSocketHandler):
             node.camera_streams(),
             limits,
             subscriptions=self.subscription.as_dict(),
-            world=node.world_geometry())))
+            world=node.world_geometry(),
+            you=self.client_id,
+            config=(node.config_doc() if hasattr(node, 'config_doc')
+                    else None))))
         # The map is broadcast only when it changes, so a client joining
         # after that would otherwise draw an empty view until the next
         # map_server restart -- which, for a static map, is never.

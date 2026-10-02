@@ -37,6 +37,8 @@ class TestTransport(AsyncHTTPTestCase):
         self.node.metrics = metrics.Metrics()
         self.node.camera_streams.return_value = {}
         self.node.world_geometry.return_value = {}
+        self.node.config_doc.return_value = {'source': 'coco_config',
+                                             'fallbacks': []}
         self.node.snapshot.return_value = ({}, {})
         # The node interface gained expected_components() with the health
         # axis; a bare Mock would hand the session a Mock to iterate.

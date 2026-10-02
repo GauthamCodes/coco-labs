@@ -194,6 +194,11 @@ class FakeNode:
         """Keep the /mission/mode observer, as the real node does."""
         self.mode_watch = callback
 
+    def config_doc(self):
+        """Report where the configuration came from, as the node does."""
+        return dict(getattr(self, 'config', None)
+                    or {'source': 'coco_config', 'fallbacks': []})
+
     def running_mission(self, state='CLIMB', mode='rl'):
         """Make the executive's status line say a mission is running."""
         self.snap['mission'] = (f'state={state} prev=VERIFY_NAV event=run '
@@ -672,6 +677,84 @@ def test_telemetry_reports_the_latch():
     assert stop['latched'] is True
     assert isinstance(stop['since'], float)
     assert stop['violations'] == 0
+
+
+# ── Phase 2 Part B: additive welcome and telemetry fields ──────────────
+
+def test_welcome_tells_a_client_its_own_id():
+    """`you` lets a page read platform.pilot as "me" or "someone else"."""
+    async def body():
+        h = await Harness(FakeNode()).start()
+        a = await h.client()
+        b = await h.client()
+        await h.request(a, {'type': 'drive', 'linear': 0.1,
+                            'angular': 0.0}, 'ack')
+        pilot = h.platform.pilot_id()
+        await h.stop()
+        return a.welcome, b.welcome, pilot
+    a, b, pilot = _run(body())
+    assert a['you'] == pilot
+    assert b['you'] != pilot and isinstance(b['you'], str)
+
+
+def test_welcome_says_when_the_config_fell_back():
+    """The Live view must be able to say "fallback configuration"."""
+    async def body(config):
+        node = FakeNode()
+        node.config = config
+        h = await Harness(node).start()
+        ws = await h.client()
+        await h.stop()
+        return ws.welcome['config']
+    assert _run(body(None)) == {'source': 'coco_config', 'fallbacks': []}
+    fell = {'source': 'fallback', 'fallbacks': ['colours', 'depth_clip']}
+    assert _run(body(fell)) == fell
+
+
+def _telemetry(node):
+    """One telemetry frame from a real server around `node`."""
+    async def body():
+        h = await Harness(node).start()
+        ws = await h.client()
+        h.platform.tick()
+        frame = await h.until(ws, lambda f: f.get('type') == 'telemetry')
+        await h.stop()
+        return frame
+    return _run(body())
+
+
+def test_telemetry_carries_belief_truth_local_path_and_goal():
+    """Each new field passes through exactly as the node observed it."""
+    node = FakeNode()
+    belief = {'x': 1.0, 'y': 0.5, 'yaw': 0.1, 'cov_xx': 0.02,
+              'cov_yy': 0.03, 'cov_yawyaw': 0.01, 'age_s': 0.4}
+    truth = {'x': 1.02, 'y': 0.49, 'yaw': 0.11}
+    goal = {'x': 2.0, 'y': 0.0, 'sent_at': 123.0, 'status': 'executing'}
+    node.snap.update(belief=belief, truth=truth, goal=goal, path_rx=124.5,
+                     local_path=[[1.0, 0.5], [1.2, 0.5]])
+    frame = _telemetry(node)
+    assert frame['robot']['belief'] == belief
+    assert frame['robot']['truth'] == truth
+    assert frame['nav']['goal'] == goal
+    assert frame['nav']['local_path'] == [[1.0, 0.5], [1.2, 0.5]]
+    assert frame['nav']['path_rx'] == 124.5
+
+
+def test_new_fields_are_null_or_empty_before_anything_arrives():
+    """Absent is null (or [] for a path), as for every older field."""
+    frame = _telemetry(FakeNode())
+    assert frame['robot']['belief'] is None
+    assert frame['robot']['truth'] is None
+    assert frame['nav']['goal'] is None
+    assert frame['nav']['local_path'] == []
+
+
+def test_telemetry_sections_keep_every_frozen_key():
+    """Additive only, checked on a frame a real server sent."""
+    from test_additive import FROZEN_SECTIONS
+    frame = _telemetry(FakeNode())
+    for section, keys in FROZEN_SECTIONS.items():
+        assert keys <= set(frame[section]), section
 
 
 def test_the_last_client_leaving_stops_the_robot_and_not_before():

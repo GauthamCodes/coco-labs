@@ -387,3 +387,60 @@ def _as_float(value, default=0.0):
         return float(value)
     except (TypeError, ValueError):
         return default
+
+
+# ── Phase 2 (Live): belief, ground truth, goal status ──────────────────
+
+def belief_payload(pose, covariance, stamp, now):
+    """
+    Build ``robot.belief``: AMCL's own estimate, not the odometry blend.
+
+    ``robot.pose`` is odometry put through the last AMCL correction, so it
+    moves smoothly; this is the raw filter output with its spread, which
+    is what a localisation lesson needs to see. ``covariance`` is the
+    row-major 6x6 of PoseWithCovariance; ``stamp`` and ``now`` are on the
+    same (ROS) clock, so ``age_s`` is how stale the belief is.
+    """
+    x, y, yaw = pose
+    cov = list(covariance) if covariance is not None else []
+
+    def at(i):
+        return _as_float(cov[i]) if len(cov) > i else None
+    return {'x': _as_float(x), 'y': _as_float(y), 'yaw': _as_float(yaw),
+            'cov_xx': at(0), 'cov_yy': at(7), 'cov_yawyaw': at(35),
+            'age_s': round(max(0.0, _as_float(now) - _as_float(stamp)), 3)}
+
+
+def truth_to_map(x, y, yaw, spawn_xy):
+    """
+    Put the simulator's ground truth into the map frame.
+
+    The map's origin is the robot's spawn point with no rotation, so the
+    map pose is the world pose minus ``SPAWN_XY`` -- the same derivation
+    ``world_geometry`` uses for the arena. Display only: see
+    ``platform_server`` for why the truth never reaches the mission.
+    """
+    return {'x': _as_float(x) - spawn_xy[0], 'y': _as_float(y) - spawn_xy[1],
+            'yaw': _as_float(yaw)}
+
+
+#: action_msgs/GoalStatus codes, in words.
+GOAL_STATUS = {0: 'unknown', 1: 'accepted', 2: 'executing', 3: 'canceling',
+               4: 'succeeded', 5: 'canceled', 6: 'aborted'}
+
+
+def goal_status(entries, sent_ros):
+    """
+    Return the status of the newest goal accepted since ``sent_ros``.
+
+    ``entries`` are ``(accepted_stamp_s, status_code)`` pairs from the
+    NavigateToPose status topic, which also lists the mission's own goals,
+    so only goals accepted at or after this browser goal was sent count.
+    None when Nav2 has not accepted it yet.
+    """
+    mine = [(stamp, code) for stamp, code in entries
+            if _as_float(stamp) >= _as_float(sent_ros) - 0.05]
+    if not mine:
+        return None
+    _stamp, code = max(mine, key=lambda item: item[0])
+    return GOAL_STATUS.get(int(code), 'unknown')

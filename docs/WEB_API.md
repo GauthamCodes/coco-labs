@@ -918,6 +918,31 @@ next 100 ms tick. With no connection, the page says nothing was sent —
 and that COCO stops by itself: the drive watchdog zeroes a stick that
 goes quiet for 0.5 s, and the last client leaving publishes a stop.
 
+### Phase 2 additions (additive, `coco.v1`)
+
+`coco_web/test/test_additive.py` freezes the coco.v1 surface as it was
+on main 54133fe. It checks every frame type and field, every mode,
+refusal code, welcome key and telemetry key; none may disappear. On top
+of that surface, Phase 2 adds:
+
+| where | field | what |
+|---|---|---|
+| `welcome` | `you` | this connection's id: compare with `platform.pilot` |
+| `welcome` | `config` | `{source: "coco_config"\|"fallback", fallbacks: [...]}`; names `colours`, `depth_clip`, `joint_limits` or `spawn` when one fell back |
+| `robot` | `belief` | AMCL's own estimate: `{x, y, yaw, cov_xx, cov_yy, cov_yawyaw, age_s}`, or null |
+| `robot` | `truth` | the simulator's pose in the **map** frame (world − `SPAWN_XY`), 10 Hz, **display only**; null without a simulator, or with `truth:=false` |
+| `nav` | `local_path` | the controller's `/local_plan`, ≤ 60 points |
+| `nav` | `goal` | this server's last browser goal: `{x, y, sent_at, status}`. `status` is `sent`, then the NavigateToPose status of the newest goal accepted after it (`accepted`, `executing`, `succeeded`, `aborted`, `canceled`…) |
+| `nav` | `path_rx` | server wall clock when the current `/plan` arrived |
+| `platform` | `stop` | the latched STOP (below) |
+| error code | `stopped` | the latched STOP (below) |
+
+The truth is written in one callback and read only by the telemetry
+builder (`test_truth_display_only.py`), so the web layer adds no path from
+truth to the mission. The mission executive reads `/model/coco/odometry`
+itself, for its own arrival gates; that predates Phase 2 and is outside
+this layer.
+
 ### STOP is latched (Phase 2, 2026-10-02)
 
 Part A measured the old STOP during a fetch: wheels at zero in 1.5 ms,
