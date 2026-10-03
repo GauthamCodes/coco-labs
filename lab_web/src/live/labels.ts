@@ -7,7 +7,7 @@
  * it, and `test/live.test.ts` pins the wording that must not drift.
  */
 
-import type { Telemetry, Welcome } from './protocol';
+import type { Control, Telemetry, Welcome } from './protocol';
 
 /** Rule 4: the mode is labelled on screen. */
 export function liveLabel(url: string): string {
@@ -105,4 +105,18 @@ export function overriding(t: Telemetry | null): boolean {
 export function localisationNote(t: Telemetry | null): string | null {
   if (!t || !t.robot.online) return null;
   return t.robot.localised ? null : 'Not localised yet: the pose is odometry only.';
+}
+
+/**
+ * The driver's idle line. While a mission or a Nav2 goal runs, AUTONOMY
+ * holds the inactivity lease and the idle clock is suspended (coco_web
+ * control.py; test_control.py::test_autonomy_is_not_driver_activity). Say
+ * so, rather than show a countdown that does not move. The session cap is
+ * never suspended.
+ */
+export function idleLine(ctl: Control | null | undefined): string {
+  if (!ctl || ctl.access !== 'code') return '';
+  if (ctl.lease === 'autonomy') return ' Idle release paused: autonomy is running (the session cap still applies).';
+  if (ctl.idle_left_s != null) return ` Idle release in ${Math.ceil(ctl.idle_left_s)} s.`;
+  return '';
 }

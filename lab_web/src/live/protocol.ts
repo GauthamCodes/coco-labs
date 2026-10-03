@@ -85,6 +85,8 @@ export interface Control {
   over: string | null;
   driver?: boolean; driver_id?: string | null; clients?: number; max_clients?: number;
   idle_s?: number; idle_left_s?: number | null; session_left_s?: number; last_end?: string | null;
+  /** Who holds the inactivity lease: the driver (idle clock runs) or autonomy (suspended). */
+  lease?: 'driver' | 'autonomy' | null; last_input_s?: number | null;
 }
 
 export interface MapFrame {

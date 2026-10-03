@@ -57,6 +57,15 @@ describe('the probe says "live" only when the server says so', () => {
     const v = await probe(WS, f);
     expect(v.state).toBe('starting');
     expect(statusWords(v, null).live).toBe(false);
+    // A 503 may also be a component lost mid-session: never claim "starting" only.
+    expect(statusWords(v, null).headline).toContain('or a component is down');
+  });
+
+  it('a negative or non-numeric time left or count is dropped, not shown', async () => {
+    const { f } = answering(200, health({ ...LIVE, session_left_s: -5, clients: 'many' }));
+    const v = await probe(WS, f);
+    expect(v).toEqual({ state: 'live', driver: false, leftS: null, clients: null });
+    expect(statusWords(v, null).headline).not.toMatch(/-\d|min left/);
   });
 
   it('live unavailable: the session has ended (expired or killed)', async () => {

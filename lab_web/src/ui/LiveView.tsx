@@ -16,7 +16,7 @@ import { LiveClient, type ConnState } from '../live/client';
 import { isZero, keysVelocity, KEYS, stickVelocity, type Velocity } from '../live/drive';
 import { loadFrameDecoder, type DecodedFrame } from '../live/frame';
 import {
-  controlHolder, fallbackWarning, LANE_TOLD, liveLabel, localisationNote, overriding, refusalWords, role,
+  controlHolder, fallbackWarning, idleLine, LANE_TOLD, liveLabel, localisationNote, overriding, refusalWords, role,
   sourceWords,
 } from '../live/labels';
 import { draw, gridImage, toCanvas, toMap, type View } from '../live/mapdraw';
@@ -258,7 +258,7 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
         <div className="banner session" data-testid="live-session">
           {ctl.over ? <span>This live session has ended ({ctl.over}). COCO is stopped.</span>
             : myRole === 'driver' ? (
-              <span>You are the driver.{ctl.idle_left_s != null ? ` Idle release in ${Math.ceil(ctl.idle_left_s)} s.` : ''}
+              <span>You are the driver.{idleLine(ctl)}
                 {ctl.session_left_s != null ? ` Session ends in ${Math.floor(ctl.session_left_s / 60)} min.` : ''}{' '}
                 <button type="button" className="seg-btn" data-testid="live-release"
                   onClick={() => send({ type: 'release' })}>Release control (stops COCO)</button></span>

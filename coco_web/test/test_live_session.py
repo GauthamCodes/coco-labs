@@ -393,6 +393,28 @@ def test_remote_serves_nothing_but_ws_and_healthz(path):
     assert json.loads(health.body)['protocol'] == 'coco.v1'
 
 
+@pytest.mark.parametrize('method,path', [
+    ('GET', '/healthz'), ('GET', '/nope'), ('POST', '/nope'),
+    ('GET', '/api/session'), ('DELETE', '/healthz')])
+def test_remote_responses_carry_no_server_banner(method, path):
+    """No tornado version on the public surface, 404s included."""
+    async def body():
+        h = await Harness(CodeNode(remote=True)).start()
+        try:
+            resp = await AsyncHTTPClient().fetch(
+                f'http://127.0.0.1:{h.port}{path}', method=method,
+                body=b'' if method == 'POST' else None,
+                raise_error=False)
+        finally:
+            await h.stop()
+        return resp
+    resp = _run(body())
+    assert 'Server' not in resp.headers, (method, path, resp.headers)
+    assert b'tornado' not in (resp.body or b'').lower()
+    if path != '/healthz':
+        assert resp.code == 404
+
+
 def test_a_local_platform_still_serves_the_page():
     """remote:=false (default) keeps every route, as before."""
     async def body():
@@ -482,6 +504,9 @@ def test_open_access_refuses_claims_and_lets_anyone_stop():
 @pytest.mark.parametrize('kwargs', [
     {'access': 'opne'}, {'access': ''}, {'remote': True},
     {'remote': True, 'access': 'open'}, {'remote': 'maybe', 'access': 'code'},
+    {'remote': True, 'access': 'code'},
+    {'remote': True, 'access': 'code', 'origins': '*'},
+    {'remote': True, 'access': 'code', 'origins': ' , '},
     {'access': 'code', 'idle_s': 0}, {'access': 'code', 'max_clients': 0}])
 def test_control_config_refuses_unsafe_or_broken_settings(kwargs):
     """A typo must not run an OPEN session on the public internet."""

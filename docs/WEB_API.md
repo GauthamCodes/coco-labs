@@ -979,15 +979,15 @@ Server wiring: `test_live_session.py` (real sockets). Report:
 | launch arg | default | meaning |
 |---|---|---|
 | `access` | `open` | `open`: today's behaviour exactly. `code`: one driver holding the host's code, everyone else a spectator |
-| `remote` | `false` | serve `/ws` and `/healthz` only (everything else 404). Refused unless `access:=code` |
-| `origins` | `*` | browser origins allowed to open `/ws` (403 otherwise) and read `/healthz` cross-origin; `:*` = any port |
+| `remote` | `false` | serve `/ws` and `/healthz` only (everything else a bare JSON 404; no `Server` banner on any of them). Refused unless `access:=code` **and** `origins` is a non-empty allowlist |
+| `origins` | `*` | browser origins allowed to open `/ws` (403 otherwise) and read `/healthz` cross-origin; `:*` = any port. Empty or `*` = any origin, which `remote:=true` refuses |
 | `session_idle_s` / `session_cap_s` / `max_clients` | 60 / 1200 / 25 | code access only |
 
 | where | field | what |
 |---|---|---|
 | client frame | `claim {code}` | present the host's control code; ack makes this connection THE driver |
 | client frame | `release {}` | the driver lets go; COCO stops (latched STOP) |
-| `platform` | `control` | `{access, over}` in open access; in code access also `driver`, `driver_id` (compare with `welcome.you`), `clients`, `max_clients`, `idle_s`, `idle_left_s`, `session_left_s`, `last_end`. Never the code |
+| `platform` | `control` | `{access, over}` in open access; in code access also `driver`, `driver_id` (compare with `welcome.you`), `clients`, `max_clients`, `idle_s`, `idle_left_s`, `lease`, `last_input_s`, `session_left_s`, `last_end`. Never the code. `lease` is `driver` (idle clock running, `idle_left_s` a countdown), `autonomy` (suspended, `idle_left_s` null) or null (no driver); `last_input_s` is seconds since the driver's last command, never reset by autonomy |
 | `/healthz` body | `live` | `{access, driver, clients, max_clients, session_left_s, over}`: no ids, no code |
 | error codes | `spectator`, `bad_code`, `driver_present`, `rate_limited`, `session_over`, `session_full`, `open_access` | see `protocol.REFUSAL_CODES` |
 
@@ -999,10 +999,17 @@ In code access:
 - a second claim while a driver holds control is `driver_present`,
   whatever code it carries: control is never transferred implicitly;
 - every ending calls the latched STOP: `release`, idle (no driver command
-  for `session_idle_s`, except while a mission or the browser's Nav2 goal
-  runs), the driver disconnecting, ownership found inconsistent, the cap,
+  for `session_idle_s` while the driver holds the lease), the driver
+  disconnecting, ownership found inconsistent, the cap,
   the kill switch. The cap and the kill also close every socket (4403
   `session_over`) and refuse new ones until the host starts a new session;
+- **the inactivity lease** (owner decision, Part C): while the executive
+  reports a mission running, or the browser's Nav2 goal is `accepted` or
+  `executing`, AUTONOMY holds the lease and the idle clock is suspended.
+  This is not counted as driver activity (`last_input_s` keeps growing).
+  When autonomy ends the lease returns to the driver with a full
+  `session_idle_s` window from that moment. An unknown mission state is
+  not autonomy (fail closed). The session cap is never suspended;
 - token buckets per client: 60 frames/s, `drive` 20/s, other commands
   2/s (burst 6). The driver's STOP is never rate-limited. Undecodable
   frames are charged too; 100 refusals in a row, or 5 wrong codes, close

@@ -1655,7 +1655,20 @@ class Platform:
         return streams_mod.filter_telemetry(frame, subscription)
 
 
-class ControlSocket(tornado.websocket.WebSocketHandler):
+class _NoBanner:
+    """
+    Send no ``Server: TornadoServer/<version>`` header.
+
+    The handlers a remote platform serves are public; a version string
+    tells a scanner which advisories to try and tells a visitor nothing.
+    """
+
+    def set_default_headers(self):
+        """Drop tornado's banner from every response of this handler."""
+        self.clear_header('Server')
+
+
+class ControlSocket(_NoBanner, tornado.websocket.WebSocketHandler):
     """One browser connection, speaking protocol.PROTOCOL_VERSION."""
 
     def initialize(self, platform):
@@ -2001,7 +2014,7 @@ class ControlSocket(tornado.websocket.WebSocketHandler):
         return False, f'unhandled frame type {kind!r}'
 
 
-class HealthHandler(tornado.web.RequestHandler):
+class HealthHandler(_NoBanner, tornado.web.RequestHandler):
     """``GET /healthz`` -- 200 only when the session is READY."""
 
     def initialize(self, platform):
@@ -2189,7 +2202,8 @@ def control_config(access=control_mod.ACCESS_OPEN, idle_s=60.0, cap_s=1200.0,
     A bad value stops the server at startup, like a wheel topic in the
     allowlist does: a typo in ``access`` must not quietly run an OPEN
     session on the public internet. And ``remote`` without ``code``
-    access is refused for the same reason.
+    access, or without an ``origins`` allowlist, is refused for the same
+    reason.
     """
     access = str(access).strip().lower()
     if access not in control_mod.ACCESS_MODES:
@@ -2199,10 +2213,28 @@ def control_config(access=control_mod.ACCESS_OPEN, idle_s=60.0, cap_s=1200.0,
     if remote and access != control_mod.ACCESS_CODE:
         raise ValueError('remote:=true requires access:=code: a remote '
                          'session is never open to every visitor')
+    allowed = control_mod.parse_origins(origins)
+    if remote and not allowed:
+        # An empty list means ANY origin (P0.1's local rule). On the
+        # public internet that would let every web page a visitor has
+        # open talk to COCO from their browser, so it is refused.
+        raise ValueError('remote:=true requires an origins allowlist '
+                         '(the Pages site and localhost): an empty or "*" '
+                         'list admits every origin')
     policy = control_mod.Policy(idle_s=float(idle_s), cap_s=float(cap_s),
                                 max_clients=int(max_clients))
     return {'access': access, 'policy': policy, 'remote': remote,
-            'origins': control_mod.parse_origins(origins)}
+            'origins': allowed}
+
+
+class RemoteNotFound(_NoBanner, tornado.web.RequestHandler):
+    """Every path a remote platform does not serve: a bare 404, no banner."""
+
+    def prepare(self):
+        """Answer 404 for any method, before any handler logic."""
+        self.set_status(404)
+        self.set_header('Content-Type', 'application/json')
+        self.finish('{"error": "not_found"}')
 
 
 def make_app(platform, web_root):
@@ -2211,8 +2243,8 @@ def make_app(platform, web_root):
 
     A remote platform (``remote:=true``) serves ONLY ``/ws`` and
     ``/healthz``: no page, no ``/api/*``, no ``/video/*``. Everything else
-    is tornado's 404. The camera still reaches a remote browser, as binary
-    frames on ``/ws``.
+    is a bare 404 (``RemoteNotFound``), with no server banner. The camera
+    still reaches a remote browser, as binary frames on ``/ws``.
     """
     routes = [
         (r'/ws', ControlSocket, {'platform': platform}),
@@ -2226,8 +2258,12 @@ def make_app(platform, web_root):
             (r'/(.*)', tornado.web.StaticFileHandler,
              {'path': web_root, 'default_filename': 'index.html'}),
         ]
+    extra = {}
+    if platform.remote:
+        extra['default_handler_class'] = RemoteNotFound
     return tornado.web.Application(
         routes,
+        **extra,
         # Protocol-level keepalive. A client whose network vanished
         # without a FIN otherwise sits in `clients` forever, counting as
         # a viewer -- which matters here because the LAST client

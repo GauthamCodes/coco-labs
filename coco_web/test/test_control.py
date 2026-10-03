@@ -353,8 +353,8 @@ def test_pings_and_subscriptions_are_not_activity():
     assert s.driver is None and stops.reasons == [control.END_IDLE]
 
 
-def test_running_autonomy_counts_as_activity():
-    """A fetch runs for minutes untouched; busy keeps the driver."""
+def test_running_autonomy_holds_the_lease():
+    """A fetch runs for minutes untouched; autonomy keeps the driver."""
     s, clock, stops = make(idle_s=60.0)
     joined(s, 'a')
     claim(s, 'a')
@@ -362,8 +362,94 @@ def test_running_autonomy_counts_as_activity():
         clock.advance(10.0)
         assert s.tick(busy=True) is None
     assert s.driver == 'a' and stops.reasons == []
-    clock.advance(60.0)
+
+
+def test_autonomy_is_not_driver_activity():
+    """The lease is autonomy's, said so; the driver's input clock runs on."""
+    s, clock, _stops = make(idle_s=60.0)
+    joined(s, 'a')
+    claim(s, 'a')
+    clock.advance(5.0)
+    s.tick(busy=True)
+    clock.advance(295.0)
+    s.tick(busy=True)
+    block = s.as_dict('a')
+    assert block['lease'] == control.LEASE_AUTONOMY
+    assert block['idle_left_s'] is None
+    assert block['last_input_s'] == pytest.approx(300.0)
+
+
+def test_the_lease_returns_to_the_driver_with_a_full_window():
+    """When autonomy ends, idle_s is counted from that moment, then stops."""
+    s, clock, stops = make(idle_s=60.0)
+    joined(s, 'a')
+    claim(s, 'a')
+    s.tick(busy=True)
+    clock.advance(300.0)
+    assert s.tick(busy=False) is None
+    block = s.as_dict('a')
+    assert block['lease'] == control.LEASE_DRIVER
+    assert block['idle_left_s'] == pytest.approx(60.0)
+    assert block['last_input_s'] == pytest.approx(300.0)
+    clock.advance(59.0)
+    assert s.tick(busy=False) is None and s.driver == 'a'
+    clock.advance(1.0)
     assert s.tick(busy=False) == control.END_IDLE
+    assert stops.reasons == [control.END_IDLE]
+
+
+def test_a_command_after_autonomy_restarts_the_window():
+    """Driver input after autonomy ended is the later of the two."""
+    s, clock, _stops = make(idle_s=60.0)
+    joined(s, 'a')
+    claim(s, 'a')
+    s.tick(busy=True)
+    clock.advance(100.0)
+    s.tick(busy=False)
+    clock.advance(30.0)
+    assert s.admit('a', 'drive', {}).ok
+    clock.advance(59.0)
+    assert s.tick() is None
+    assert s.as_dict('a')['idle_left_s'] == pytest.approx(1.0)
+    clock.advance(1.0)
+    assert s.tick() == control.END_IDLE
+
+
+def test_a_driver_without_autonomy_reports_the_driver_lease():
+    """No autonomy: the lease is the driver's and the countdown runs."""
+    s, clock, _stops = make(idle_s=60.0)
+    joined(s, 'a')
+    claim(s, 'a')
+    clock.advance(10.0)
+    s.tick(busy=False)
+    block = s.as_dict('a')
+    assert block['lease'] == control.LEASE_DRIVER
+    assert block['idle_left_s'] == pytest.approx(50.0)
+    assert block['last_input_s'] == pytest.approx(10.0)
+
+
+def test_no_driver_no_lease():
+    """With nobody driving there is no lease, whatever autonomy does."""
+    s, clock, _stops = make(idle_s=60.0)
+    joined(s, 'a')
+    s.tick(busy=True)
+    block = s.as_dict('a')
+    assert block['lease'] is None and block['idle_left_s'] is None
+
+
+def test_autonomy_history_does_not_carry_to_the_next_driver():
+    """After control ends, a new driver's window starts at their claim."""
+    s, clock, _stops = make(idle_s=60.0)
+    joined(s, 'a', 'b')
+    claim(s, 'a')
+    s.tick(busy=True)
+    clock.advance(100.0)
+    s.tick(busy=False)
+    s.admit('a', 'release', {})
+    clock.advance(1.0)
+    assert claim(s, 'b').ok
+    clock.advance(60.0)
+    assert s.tick() == control.END_IDLE
 
 
 @pytest.mark.parametrize('busy', [None, 1, 'yes', 'True'])

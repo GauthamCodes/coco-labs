@@ -16,7 +16,7 @@ import { describe, expect, it } from 'vitest';
 
 import { isZero, keysVelocity, stickVelocity } from '../src/live/drive';
 import {
-  controlHolder, fallbackWarning, LANE_TOLD, liveLabel, localisationNote, overriding, sourceWords,
+  controlHolder, fallbackWarning, idleLine, LANE_TOLD, liveLabel, localisationNote, overriding, sourceWords,
 } from '../src/live/labels';
 import { fit, toCanvas, toMap } from '../src/live/mapdraw';
 import { INTENT_TYPES, type Telemetry } from '../src/live/protocol';
@@ -149,5 +149,21 @@ describe('map transform', () => {
     expect(x).toBeCloseTo(1.5);
     expect(y).toBeCloseTo(0.5);
     expect(toCanvas(v, 0, 1)[1]).toBeLessThan(toCanvas(v, 0, 0)[1]);
+  });
+});
+
+describe('the idle line names who holds the lease', () => {
+  it('shows a countdown only while the driver holds it', () => {
+    expect(idleLine({ access: 'code', over: null, lease: 'driver', idle_left_s: 41.2 })).toBe(' Idle release in 42 s.');
+  });
+  it('says autonomy holds it, with no countdown, and that the cap still applies', () => {
+    const line = idleLine({ access: 'code', over: null, lease: 'autonomy', idle_left_s: null });
+    expect(line).toContain('paused: autonomy is running');
+    expect(line).toContain('session cap still applies');
+    expect(line).not.toMatch(/\d+ s/);
+  });
+  it('says nothing in open access or without a block', () => {
+    expect(idleLine({ access: 'open', over: null })).toBe('');
+    expect(idleLine(null)).toBe('');
   });
 });

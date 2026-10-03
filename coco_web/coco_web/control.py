@@ -62,12 +62,22 @@ refused ``session_over`` until the host creates a new session (a new
 
 Idle, and autonomy
 ------------------
-The idle clock is reset by the driver's command intents. A fetch runs for
-minutes with nobody touching anything, so ``tick(busy=True)`` -- the
-platform passes "the executive reports a mission running, or a Nav2 goal
-the browser sent is active" -- also counts as activity. A stale or unknown
-mission state is NOT busy, so the idle clock runs (fail closed). The
-session cap bounds everything regardless.
+The idle clock measures the DRIVER's inactivity: it is reset by the
+driver's command intents and by nothing else. A fetch runs for minutes with
+nobody touching anything, so while autonomy runs the inactivity lease is
+held by AUTONOMY instead (owner decision, Phase 2 Part C): ``tick(busy=True)``
+-- the platform passes "the executive reports a mission running, or a Nav2
+goal the browser sent is accepted or executing" -- suspends the idle clock.
+It is NOT recorded as driver activity: ``last_input_s`` keeps counting from
+the driver's last real command, and telemetry says ``lease: autonomy`` with
+``idle_left_s`` null rather than a countdown that never moves.
+
+When autonomy ends the lease returns to the driver with a full ``idle_s``
+window, measured from that moment (``autonomy_ended``), so a driver who
+watched a fetch to the end is not stopped the instant it completes. A
+stale or unknown mission state is NOT busy, so the idle clock runs (fail
+closed). The session cap bounds everything regardless: autonomy holds the
+inactivity lease, never the session.
 
 Rate limits
 -----------
@@ -128,6 +138,10 @@ END_DISCONNECT = 'driver_disconnected'
 END_AMBIGUOUS = 'ownership_lost'
 END_EXPIRED = 'expired'
 END_KILLED = 'killed'
+
+#: Who holds the inactivity lease while there is a driver.
+LEASE_DRIVER = 'driver'
+LEASE_AUTONOMY = 'autonomy'
 
 #: Unambiguous characters only (no 0/O, 1/I/L), so a code read aloud or
 #: typed on a phone survives. 31 symbols, 8 of them: ~39.6 bits.
@@ -305,6 +319,8 @@ class ControlSession:
         self._driver = None
         self._driver_since = None
         self._last_active = None
+        self._autonomy_since = None
+        self._autonomy_ended = None
         self._clients = {}
         self._over = None
         self._last_end = None
@@ -484,6 +500,7 @@ class ControlSession:
         self._driver = client_id
         self._driver_since = now
         self._last_active = now
+        self._autonomy_ended = None
         client.bad_codes = 0
         client.refused_in_row = 0
         return ALLOW
@@ -498,8 +515,9 @@ class ControlSession:
         """
         Apply the session cap and the idle timeout on the injected clock.
 
-        ``busy`` is True while autonomy the driver started is running
-        (see the module docstring); it counts as the driver's activity.
+        ``busy`` is True while autonomy is running (see the module
+        docstring): autonomy holds the inactivity lease and the idle clock
+        is suspended. It is never counted as the driver's activity.
         Returns the ending applied this tick, or None.
         """
         with self._lock:
@@ -511,12 +529,24 @@ class ControlSession:
             if self._driver is None:
                 return None
             if busy is True:
-                self._last_active = now
+                # Autonomy holds the lease: the idle clock is suspended,
+                # and the driver's last input is left as it was.
+                if self._autonomy_since is None:
+                    self._autonomy_since = now
                 return None
-            if now - self._last_active >= self.policy.idle_s:
+            if self._autonomy_since is not None:
+                self._autonomy_since = None
+                self._autonomy_ended = now
+            if now - self._idle_from() >= self.policy.idle_s:
                 self._end_control(END_IDLE)
                 return END_IDLE
             return None
+
+    def _idle_from(self):
+        """Return when the idle clock last (re)started for this driver."""
+        if self._autonomy_ended is None:
+            return self._last_active
+        return max(self._last_active, self._autonomy_ended)
 
     def _expire_if_due(self, now=None):
         if self._over or not self.code_mode:
@@ -540,6 +570,8 @@ class ControlSession:
 
     # ── endings ────────────────────────────────────────────────────────
     def _end_control(self, reason):
+        self._autonomy_since = None
+        self._autonomy_ended = None
         self._driver = None
         self._driver_since = None
         self._last_active = None
@@ -547,6 +579,8 @@ class ControlSession:
         self._stop(reason)
 
     def _end_session(self, reason):
+        self._autonomy_since = None
+        self._autonomy_ended = None
         self._over = reason
         self._code = None
         self._driver = None
@@ -586,10 +620,15 @@ class ControlSession:
             if not self.code_mode:
                 return {'access': self.access, 'role': 'open',
                         'over': self._over}
-            idle_left = None
+            idle_left = lease = last_input = None
             if self._driver is not None and self._last_active is not None:
-                idle_left = max(0.0, self.policy.idle_s
-                                - (now - self._last_active))
+                last_input = now - self._last_active
+                if self._autonomy_since is not None:
+                    lease = LEASE_AUTONOMY
+                else:
+                    lease = LEASE_DRIVER
+                    idle_left = max(0.0, self.policy.idle_s
+                                    - (now - self._idle_from()))
             out = {
                 'access': self.access,
                 'driver': self._driver is not None,
@@ -601,6 +640,12 @@ class ControlSession:
                 'max_clients': self.policy.max_clients,
                 'idle_s': self.policy.idle_s,
                 'idle_left_s': idle_left,
+                # Who holds the inactivity lease: the driver (the idle
+                # clock runs) or autonomy (suspended; idle_left_s null).
+                'lease': lease,
+                # Seconds since the driver's last command intent. Autonomy
+                # never resets it.
+                'last_input_s': last_input,
                 'session_left_s': (0.0 if self._over else max(
                     0.0, self.ends_at() - now)),
                 'over': self._over,

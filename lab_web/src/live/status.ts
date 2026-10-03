@@ -47,7 +47,8 @@ export function classify(status: number, body: unknown): LiveVerdict {
   }
   if (live.over) return { state: 'ended' };
   if (status !== 200) return { state: 'starting' };
-  const num = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? v : null);
+  // Counts and times are never negative; a value that is, is not trusted.
+  const num = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) && v >= 0 ? v : null);
   return { state: 'live', driver: live.driver === true, leftS: num(live.session_left_s), clients: num(live.clients) };
 }
 
@@ -117,7 +118,9 @@ export function statusWords(v: LiveVerdict, next: ReturnType<typeof nextSession>
       const left = v.leftS != null ? `, ${Math.floor(v.leftS / 60)} min left` : '';
       return { live: true, headline: `Live now${left}. ${v.driver ? 'Someone is driving; you can watch.' : 'Nobody is driving yet; the host has the control code.'}` };
     }
-    case 'starting': return { live: false, headline: 'A session is starting: the robot stack is not ready yet.' };
+    // /healthz 503 means "a required component is not up": the stack may be
+    // starting, or something went down mid-session. Say only what is known.
+    case 'starting': return { live: false, headline: 'A session is open, but the robot stack is not ready (starting, or a component is down).' };
     case 'ended': return { live: false, headline: `The last session has ended.${when ? ` Next: ${when}.` : ' No session is scheduled.'}` };
     default:
       return { live: false, headline: `No live session right now.${when ? ` ${next!.inProgress ? 'One is scheduled now but not reachable' : 'Next scheduled'}: ${when}.` : ' No session is scheduled.'}` };
