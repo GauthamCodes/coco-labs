@@ -7211,3 +7211,40 @@ NEXT: on "start", run `docs/live/tunnel/README.md` (compose up with the
 sidecar), `scripts/live_session.sh code`, recorder in the container,
 then the phone session. Record instrumented and user-reported values
 separately.
+
+## Phase 2 · Part C closed with gaps; Part D (ship) — docs and release readiness (2026-10-04)
+
+**The phone session** (owner, 2026-10-03 18:52–19:02Z; `PART_C_REPORT.md`
+C6; `c6_phone_session/`, analysed by `an_phone.py`):
+- Instrumented. Phone connected 18:53:45.8Z and claimed 18:54:23Z (one
+  driver id all session, ≤ 2 clients). Three teleop bursts. A Nav2 goal
+  (goal → plan 13.1 ms). Mission start → NAVIGATE_TO_RAMP (step 3 of 16).
+  **Driver disconnect at 18:58:02.005Z**: STOP latched, mission
+  RECOVERY → ABORT `OPERATOR_ABORT`, robot 0.3 m/s → rest in 0.54 s, 0
+  moving commands for 10 s, no reconnect. 1 wheel publisher (123/123).
+- Owner-reported (screenshots): RTT ≈ 282–293 ms, telemetry 5 Hz, Nav2
+  goal executing, mission at step 3 of 16.
+- **Gaps**, not assumed: STOP pressed on the phone; the cause of the
+  disconnect; a second-device spectator; preemption from the phone; a
+  completed mission from the phone; idle/cap from the phone. Also, the
+  browser goal still read `executing` for 34 s after the mission's goal
+  replaced it.
+
+**Part D (this session):**
+- `docs/live/LIVE.md` (new): architecture, security boundaries, safety
+  behaviour, the host runbook, local use, recovery, measured summary,
+  limitations, and the prioritised backlog with acceptance criteria
+  (remote stability first). README Live section; ROADMAP status and
+  "as built"; PROJECT_STATE Now/Next.
+- Validated: the three compose combinations parse (local 0.0.0.0:8080,
+  remote 127.0.0.1:8080, tunnel sidecar none). lab_web 238, tsc, build,
+  check_dist clean. 0 broken relative links in the changed docs.
+- `run_all_package_tests.sh` **2691 / 0**.
+- Stack and tunnel down.
+
+**Release readiness:** ROADMAP §6 "done when" for Phase 2 is met, with the
+phone gaps above. A `live-v1.0` release and tag are owner-gated (Lab 1's
+precedent was a release with a video). Not done.
+
+NEXT: the owner's release decision (video, `live-v1.0`), then LIVE.md §9
+item 1.

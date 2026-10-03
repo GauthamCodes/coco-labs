@@ -1,0 +1,40 @@
+== window: watcher 18:52:25.006Z .. 19:02:25.202Z (600 s, 3002 telemetry frames); session started 2026-10-03T18:52:33Z
+
+== control timeline (changes only)
+  18:52:25.006Z driver_id=None lease=None last_end=None over=None latched=False clients=1 left=1163
+  18:52:33.614Z driver_id=None lease=None last_end=None over=None latched=True clients=1 left=1200
+  18:53:45.802Z driver_id=None lease=None last_end=None over=None latched=True clients=2 left=1128
+  18:54:23.001Z driver_id=7417d052b2c0 lease=driver last_end=None over=None latched=True clients=2 left=1090
+  18:55:09.805Z driver_id=7417d052b2c0 lease=driver last_end=None over=None latched=False clients=2 left=1044
+  18:55:46.602Z driver_id=7417d052b2c0 lease=autonomy last_end=None over=None latched=False clients=2 left=1007
+  18:58:02.005Z driver_id=None lease=None last_end=driver_disconnected over=None latched=True clients=1 left=871
+  distinct driver ids, in order: ['7417d052b2c0']
+  max clients seen: 2
+  frames with a driver but no driver id: 0
+
+== mission (executive, /mission/state)
+  18:52:09.084Z IDLE  (state=IDLE prev=-- event=run elapsed=11.2 timeout=-- attempt=1 retries=0 owner=nobody mode=idle reason=-- result=--)
+  18:57:28.484Z LOCALIZE  (state=LOCALIZE prev=IDLE event=enter elapsed=0.0 timeout=40 attempt=1 retries=0 owner=nobody mode=idle reason=-- result=--)
+  18:57:28.583Z NAVIGATE_TO_RAMP  (state=NAVIGATE_TO_RAMP prev=LOCALIZE event=enter elapsed=0.0 timeout=240 attempt=1 retries=2 owner=nav2 mode=nav reason=-- result=--)
+  18:58:02.088Z RECOVERY  (state=RECOVERY prev=NAVIGATE_TO_RAMP event=enter elapsed=0.0 timeout=20 attempt=1 retries=0 owner=nobody mode=idle reason=OPERATOR_ABORT res)
+  18:58:03.284Z ABORT  (state=ABORT prev=RECOVERY event=enter elapsed=0.0 timeout=-- attempt=1 retries=0 owner=nobody mode=idle reason=OPERATOR_ABORT result=aborted)
+  sequence: IDLE > LOCALIZE > NAVIGATE_TO_RAMP > RECOVERY > ABORT
+
+== Nav2: /goal_pose -> first /plan (server side)
+  18:55:46.522Z goal (12.63, -0.52) -> plan 13.1 ms (228 poses)
+  18:55:46.602Z browser goal (12.630850485229391, -0.5201457112296377) status executing
+  18:58:02.207Z browser goal (12.630850485229391, -0.5201457112296377) status canceling
+  18:58:02.402Z browser goal (12.630850485229391, -0.5201457112296377) status canceled
+
+== teleop: /cmd_vel_teleop messages 167 (moving 115); wheel messages 3487 (moving 3189)
+  teleop topic -> wheel (in the container, NOT phone-side): n=112 p50 1.2 p95 3.5 max 99.0 ms
+  teleop bursts (gap > 1 s): 3; first 18:55:14.664Z, last 18:55:31.541Z
+
+== STOP latch events (telemetry 5 Hz) and wheels after
+  18:52:33.614Z latched (last_end=None, driver_id=None); moving wheel cmds in the 2 s before: 0, in the 10 s after: 0; truth |vx| near the latch 0.0 m/s, at rest after 0.1 s
+  18:58:02.005Z latched (last_end=driver_disconnected, driver_id=None); moving wheel cmds in the 2 s before: 41, in the 10 s after: 0; truth |vx| near the latch 0.3 m/s, at rest after 0.54 s
+
+== refused /ws handshakes in the platform log: 0
+
+== wheel publishers: {(1, ('cmd_vel_arbiter',)): 123}
+== /mission/mode values seen: {'idle': 8, 'teleop': 1, 'nav': 69}

@@ -23,6 +23,26 @@ takes apart two "A\* vs Dijkstra" results, one of them COCO's own (below).
 Write-up, measured numbers and limitations:
 [docs/labs/LAB1_PLAN.md](docs/labs/LAB1_PLAN.md).
 
+## Live — the real stack, from the browser (Phase 2)
+
+**[The Live tab](https://gauthamcodes.github.io/coco-labs/?view=live)**
+drives COCO in three modes (teleop, a Nav2 goal, the autonomous fetch)
+over `coco.v1`; the page never names a ROS topic, and
+`cmd_vel_arbiter` stays the only wheel publisher. Run it on your own
+machine with the [Docker quickstart](docs/DOCKER.md), or drive the
+owner's machine during a scheduled public session. A session is
+exposed through Tailscale Funnel as `/ws` and `/healthz` only. It has one
+driver holding a host-issued code, spectators who only watch, a 60 s idle
+release and a 20-minute cap, and every ending stops the robot.
+
+Measured: on a real phone over mobile data, the page claimed control,
+drove, sent a Nav2 goal and started a mission; when the phone dropped,
+COCO went from 0.3 m/s to rest in 0.54 s and the mission aborted. Through
+the tunnel the command path is fast (drive → wheel p50 45 ms) but the
+view lags by seconds on a relayed link. Guide, security boundaries,
+safety behaviour, limitations and backlog:
+[docs/live/LIVE.md](docs/live/LIVE.md).
+
 # COCO 2.0 — Autonomous Mobile Manipulator
 
 **ROS 2 Jazzy · Gazebo Harmonic · Nav2 · MoveIt 2**

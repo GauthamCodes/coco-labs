@@ -1,0 +1,139 @@
+boot: 2026/10/03 18:51:48 Starting tailscaled
+boot: 2026/10/03 18:51:48 Waiting for tailscaled socket at /tmp/tailscaled.sock
+TPM: error opening: stat /dev/tpmrm0: no such file or directory
+2026/10/03 18:51:48 Program starting: v1.102.5-1-t5fb2a81b0, Go 1.26.6: []string{"tailscaled", "--socket=/tmp/tailscaled.sock", "--statedir=/var/lib/tailscale", "--tun=userspace-networking"}
+2026/10/03 18:51:48 LogID: 977a8d71413a971532847e8cc785f7eed63bf5908e1e4a81eddef4c4f8289688
+2026/10/03 18:51:48 logpolicy: using system state directory "/var/lib/tailscale"
+2026/10/03 18:51:48 dns: [rc=unknown ret=direct]
+2026/10/03 18:51:48 dns: using "direct" mode
+2026/10/03 18:51:48 dns: using *dns.directManager
+2026/10/03 18:51:48 dns: inotify: NewDirWatcher: context canceled
+2026/10/03 18:51:48 wgengine.NewUserspaceEngine(tun "userspace-networking") ...
+2026/10/03 18:51:48 tstun: error initializing tun dev stats polling: error getting ifIndex: no such device
+2026/10/03 18:51:48 dns: using dns.noopManager
+2026/10/03 18:51:48 link state: interfaces.State{defaultRoute=eth0 ifs={eth0:[172.18.0.3/16]} v4=true v6=false}
+2026/10/03 18:51:48 magicsock: [warning] failed to force-set UDP read buffer size to 7340032: operation not permitted; using kernel default values (impacts throughput only)
+2026/10/03 18:51:48 magicsock: [warning] failed to force-set UDP write buffer size to 7340032: operation not permitted; using kernel default values (impacts throughput only)
+2026/10/03 18:51:48 magicsock: [warning] failed to force-set UDP read buffer size to 7340032: operation not permitted; using kernel default values (impacts throughput only)
+2026/10/03 18:51:48 magicsock: [warning] failed to force-set UDP write buffer size to 7340032: operation not permitted; using kernel default values (impacts throughput only)
+2026/10/03 18:51:48 magicsock: disco key = d:efc938857bb46c4d
+2026/10/03 18:51:48 Creating WireGuard device...
+2026/10/03 18:51:48 Bringing WireGuard device up...
+2026/10/03 18:51:48 Bringing router up...
+2026/10/03 18:51:48 Clearing router settings...
+2026/10/03 18:51:48 Starting network monitor...
+2026/10/03 18:51:48 Engine created.
+2026/10/03 18:51:48 pm: using backend prefs for "profile-d763": Prefs{ra=false dns=false want=true routes=[] statefulFiltering=false tags=tag:coco-live nf=on host="coco-live" update=check Persist{o=, n=[d4LAL] u="coco-live.taile7cb60.ts.net" ak=-}}
+2026/10/03 18:51:48 logpolicy: using system state directory "/var/lib/tailscale"
+2026/10/03 18:51:48 linkChange: in state NoState; PAC or proxyConfig changed; updating routes
+2026/10/03 18:51:48 got LocalBackend in 22ms
+2026/10/03 18:51:48 Start
+2026/10/03 18:51:48 ipnext: "conn25": skipping extension
+2026/10/03 18:51:48 ipnext: active extensions: captiveportal, acme, portlist, posture, clientupdate, relayserver, routecheck, serviceclientprefs, taildrop
+2026/10/03 18:51:48 load netmap from cache: netmap cache is not available
+2026/10/03 18:51:48 Backend: logs: be:977a8d71413a971532847e8cc785f7eed63bf5908e1e4a81eddef4c4f8289688 fe:
+2026/10/03 18:51:48 control: client.Login(0)
+2026/10/03 18:51:48 health(warnable=warming-up): error: Tailscale is starting. Please wait.
+2026/10/03 18:51:48 control: doLogin(regen=false, hasUrl=false)
+boot: 2026/10/03 18:51:48 [warning] failed to symlink socket: mkdir /var/run/tailscale: permission denied
+	To interact with the Tailscale CLI please use `tailscale --socket="/tmp/tailscaled.sock"`
+boot: 2026/10/03 18:51:48 Running 'tailscale up'
+2026/10/03 18:51:48 localapi: [POST] /localapi/v0/check-prefs
+2026/10/03 18:51:48 localapi: [POST] /localapi/v0/start
+2026/10/03 18:51:48 control: client.Shutdown ...
+2026/10/03 18:51:48 control: updateRoutine: exiting
+2026/10/03 18:51:48 control: mapRoutine: exiting
+2026/10/03 18:51:48 control: authRoutine: exiting
+2026/10/03 18:51:48 health(warnable=login-state): error: You are logged out. The last login error was: fetch control key: Get "https://controlplane.tailscale.com/key?v=142": context canceled
+2026/10/03 18:51:48 control: Client.Shutdown done.
+2026/10/03 18:51:48 Start
+2026/10/03 18:51:48 Start: updated prefs: Prefs{ra=false dns=false want=true routes=[] statefulFiltering=false tags=tag:coco-live nf=on host="coco-live" update=check Persist{o=, n=[d4LAL] u="coco-live.taile7cb60.ts.net" ak=-}}, reason: [opts.UpdatePrefs]
+2026/10/03 18:51:48 load netmap from cache: netmap cache is not available
+2026/10/03 18:51:48 Backend: logs: be:977a8d71413a971532847e8cc785f7eed63bf5908e1e4a81eddef4c4f8289688 fe:
+2026/10/03 18:51:48 control: client.Login(0)
+2026/10/03 18:51:48 control: doLogin(regen=false, hasUrl=false)
+2026/10/03 18:51:48 health(warnable=login-state): ok
+2026/10/03 18:51:49 control: control server key from https://controlplane.tailscale.com: ts2021=[fSeS+], legacy=[nlFWp]
+2026/10/03 18:51:49 control: RegisterReq: onode= node=[d4LAL] fup=false nks=false
+2026/10/03 18:51:50 control: RegisterReq: got response; nodeKeyExpired=false, machineAuthorized=true; authURL=false
+2026/10/03 18:51:50 control: netmap: got new dial plan from control
+2026/10/03 18:51:50 tstun: peer config: peerConfigTable{nativeAddr4: 100.70.8.62, nativeAddr6: fd7a:115c:a1e0::7c30:83f}
+2026/10/03 18:51:50 magicsock: new contact: control-netmap usec=1636635 cached=false
+2026/10/03 18:51:50 active login: coco-live.taile7cb60.ts.net
+2026/10/03 18:51:50 serve: creating a new proxy handler for http://coco:8080/healthz
+2026/10/03 18:51:50 serve: creating a new proxy handler for http://coco:8080/ws
+2026/10/03 18:51:50 Hostinfo.IngressEnabled changed to true
+2026/10/03 18:51:50 netmap: suggested exit node: no preferred DERP, try again later
+2026/10/03 18:51:50 Switching ipn state NoState -> Starting (WantRunning=true, nm=true)
+2026/10/03 18:51:50 magicsock: SetPrivateKey called (init)
+2026/10/03 18:51:50 wgengine: Reconfig: configuring router
+2026/10/03 18:51:50 wgengine: Reconfig: user dialer
+2026/10/03 18:51:50 monitor: gateway and self IP changed: gw=172.18.0.1 self=172.18.0.3
+2026/10/03 18:51:50 tsdial: bart table size: 3
+2026/10/03 18:51:50 wgengine: Reconfig: configuring DNS
+2026/10/03 18:51:50 dns: Set: {DefaultResolvers:[] Routes:{} SearchDomains:[] Hosts:0}
+2026/10/03 18:51:50 dns: Resolvercfg: {Routes:{} Hosts:0 LocalDomains:[]}
+2026/10/03 18:51:50 dns: OScfg: {}
+2026/10/03 18:51:50 peerapi: serving on http://100.70.8.62:49091
+2026/10/03 18:51:50 peerapi: serving on http://[fd7a:115c:a1e0::7c30:83f]:49091
+2026/10/03 18:51:50 tstun: peer config: peerConfigTable(nil)
+2026/10/03 18:51:50 netmap: suggested exit node: no preferred DERP, try again later
+2026/10/03 18:51:50 wgengine: Reconfig: configuring router
+2026/10/03 18:51:50 wgengine: Reconfig: user dialer
+2026/10/03 18:51:50 tsdial: bart table size: 2
+2026/10/03 18:51:50 wgengine: Reconfig: configuring DNS
+2026/10/03 18:51:50 dns: Set: {DefaultResolvers:[] Routes:{} SearchDomains:[] Hosts:0}
+2026/10/03 18:51:50 dns: Resolvercfg: {Routes:{} Hosts:0 LocalDomains:[]}
+2026/10/03 18:51:50 dns: OScfg: {}
+2026/10/03 18:51:50 health(warnable=invalid-packet-filter): error: The coordination server sent an invalid packet filter permitting traffic to unlocked nodes; rejecting all packets for safety
+2026/10/03 18:51:50 health(warnable=invalid-packet-filter): ok
+2026/10/03 18:51:50 tstun: peer config: peerConfigTable{nativeAddr4: 100.70.8.62, nativeAddr6: fd7a:115c:a1e0::7c30:83f}
+2026/10/03 18:51:50 netmap: suggested exit node: no preferred DERP, try again later
+2026/10/03 18:51:50 wgengine: Reconfig: configuring router
+2026/10/03 18:51:50 wgengine: Reconfig: user dialer
+2026/10/03 18:51:50 tsdial: bart table size: 3
+2026/10/03 18:51:50 wgengine: Reconfig: configuring DNS
+2026/10/03 18:51:50 dns: Set: {DefaultResolvers:[] Routes:{} SearchDomains:[] Hosts:0}
+2026/10/03 18:51:50 dns: Resolvercfg: {Routes:{} Hosts:0 LocalDomains:[]}
+2026/10/03 18:51:50 dns: OScfg: {}
+2026/10/03 18:51:51 netcheck: DetectCaptivePortal(found=false)
+2026/10/03 18:51:51 magicsock: home DERP changing from derp-0 [0ms] to derp-6 [6ms] (forced=false)
+2026/10/03 18:51:51 magicsock: home is now derp-6 (blr)
+2026/10/03 18:51:51 magicsock: adding connection to derp-6 for home-keep-alive
+2026/10/03 18:51:51 magicsock: 1 active derp conns: derp-6=cr0s,wr0s
+2026/10/03 18:51:51 magicsock: endpoints changed: 43.224.159.233:43842 (stun), 172.18.0.3:43842 (local)
+2026/10/03 18:51:51 control: NetInfo: NetInfo{varies=false ipv6=false ipv6os=true udp=true icmpv4=false derp=#6 portmap= link="" firewallmode=""}
+2026/10/03 18:51:51 derphttp.Client.Connect: connecting to derp-6 (blr)
+2026/10/03 18:51:51 updating netmap in disk cache
+2026/10/03 18:51:51 Switching ipn state Starting -> Running (WantRunning=true, nm=true)
+2026/10/03 18:51:51 health(warnable=warming-up): ok
+boot: 2026/10/03 18:51:51 serve proxy: unsetting previous config
+2026/10/03 18:51:51 localapi: [POST] /localapi/v0/serve-config
+2026/10/03 18:51:51 serve: closing idle connections to http://coco:8080/ws
+2026/10/03 18:51:51 serve: closing idle connections to http://coco:8080/healthz
+2026/10/03 18:51:51 Hostinfo.IngressEnabled changed to false
+boot: 2026/10/03 18:51:51 Startup complete, waiting for shutdown signal
+boot: 2026/10/03 18:51:51 serve proxy: applying serve config
+2026/10/03 18:51:51 localapi: [POST] /localapi/v0/serve-config
+2026/10/03 18:51:51 serve: creating a new proxy handler for http://coco:8080/healthz
+2026/10/03 18:51:51 serve: creating a new proxy handler for http://coco:8080/ws
+2026/10/03 18:51:51 Hostinfo.IngressEnabled changed to true
+2026/10/03 18:51:52 magicsock: derp-6 connected; connGen=1
+2026/10/03 18:52:48 Drop: TCP{[fd7a:115c:a1e0::5c01:d68c]:39048 > [fd7a:115c:a1e0::7c30:83f]:49091} 80 no rules matched
+2026/10/03 18:52:52 Drop: TCP{[fd7a:115c:a1e0::5c01:d68c]:35954 > [fd7a:115c:a1e0::7c30:83f]:49091} 80 no rules matched
+2026/10/03 18:52:52 [RATELIMIT] format("%s: %s %d %s\n%s")
+2026/10/03 18:53:39 Drop: TCP{[fd7a:115c:a1e0:ab12:4843:cd96:6268:d02b]:48393 > [fd7a:115c:a1e0::7c30:83f]:49091} 80 no rules matched
+2026/10/03 18:53:44 Drop: TCP{[fd7a:115c:a1e0:ab12:4843:cd96:6268:d02b]:39072 > [fd7a:115c:a1e0::7c30:83f]:49091} 80 no rules matched
+2026/10/03 18:54:05 Received error: PollNetMap: unexpected EOF
+2026/10/03 18:54:05 control: controlhttp: forcing port 443 dial due to recent noise dial
+2026/10/03 18:54:07 control: netmap: got new dial plan from control
+2026/10/03 18:54:09 Drop: TCP{[fd7a:115c:a1e0::5c01:d68c]:25685 > [fd7a:115c:a1e0::7c30:83f]:49091} 80 no rules matched
+2026/10/03 18:56:50 Drop: TCP{[fd7a:115c:a1e0:ab12:4843:cd96:6268:d02b]:42502 > [fd7a:115c:a1e0::7c30:83f]:49091} 80 no rules matched
+2026/10/03 18:56:50 Drop: TCP{[fd7a:115c:a1e0:ab12:4843:cd96:6268:d02b]:29237 > [fd7a:115c:a1e0::7c30:83f]:49091} 80 no rules matched
+2026/10/03 18:56:51 Drop: TCP{[fd7a:115c:a1e0::5c01:d68c]:57127 > [fd7a:115c:a1e0::7c30:83f]:49091} 80 no rules matched
+2026/10/03 18:56:51 Drop: TCP{[fd7a:115c:a1e0::5c01:d68c]:54711 > [fd7a:115c:a1e0::7c30:83f]:49091} 80 no rules matched
+2026/10/03 18:56:51 [RATELIMIT] format("%s: %s %d %s\n%s")
+2026/10/03 18:56:59 [RATELIMIT] format("%s: %s %d %s\n%s") (7 dropped)
+2026/10/03 18:58:02 netstack: decrementing connsInFlightByClient[fd7a:115c:a1e0:ab12:4843:cd96:6268:d02b] because the packet was not handled; new value is 0
+2026/10/03 18:58:02 netstack: decrementing connsInFlightByClient[fd7a:115c:a1e0:ab12:4843:cd96:6268:d02b] because the packet was not handled; new value is 0
+2026/10/03 18:58:02 netstack: decrementing connsInFlightByClient[fd7a:115c:a1e0:ab12:4843:cd96:6268:d02b] because the packet was not handled; new value is 0

@@ -1,4 +1,4 @@
-# Phase 2 · Part C — driver, spectators, remote sessions (2026-10-04: deployed; at the phone-test gate)
+# Phase 2 · Part C — driver, spectators, remote sessions (DONE 2026-10-04, with the evidence gaps listed)
 
 Branch `live`. Evidence: `docs/data/live/part_c/` (gunzip `*.gz` first).
 Harness: `docs/data/live/part_c/scripts/`. Every number is **(measured)**
@@ -14,7 +14,7 @@ unless marked; n = 1 per row. One run is not a rate.
 | C3 tunnel | **done: Tailscale Funnel** (owner's choice) at `https://coco-live.taile7cb60.ts.net`, `/ws` + `/healthz` only, sidecar container. Down between sessions |
 | C4 exposure | **done**: host side (no non-loopback TCP listener at all) + external (check-host.net nodes, WebFetch) + through Funnel (origins, paths) |
 | C5 public status | **done**; `LIVE_REMOTE` = the Funnel endpoint; "Live now" seen on the real page through the real endpoint |
-| C6 remote session | tunnel measured with the shipped page (this host as the client); **the phone session has not happened**. Gate: the Pages deploy (needs a push: owner) |
+| C6 remote session | **done**: a real phone on mobile data drove through the public page and Funnel (2026-10-03 18:53–18:58Z). Claim, teleop, a Nav2 goal and a mission start; the session ended in a driver disconnect that stopped COCO and aborted the mission. Gaps below |
 | C7 / C8 | full local suite 2691/0; **CI and Lab green on a61150c** (PR #8 and `main`); `main` fast-forwarded 54133fe..a61150c (owner-approved); **Pages deployed** with the Live tab |
 
 ## Implementation
@@ -274,10 +274,55 @@ WireGuard: new exposure); end-to-end flow control (protocol addition).
 No release, no tag, no branch deleted, no force-push. The keepalive is
 unchanged (10 s / 10 s; owner: keep it until further notice).
 
-## C6 — the phone session: NOT YET RUN
+## C6 — the phone session (2026-10-03, 18:52–19:02Z)
 
-Nothing below this line is measured. The public page is now deployed
-(above); the stack and the tunnel are down until the owner says "start".
+Fresh stack (image 3f8e34da16eb, the runtime of 5b58960 = deployed
+a61150c), Funnel up, a new host session at 18:52:33Z (code issued on the
+host). The owner drove from a phone on mobile data via the deployed
+public page. Evidence: `c6_phone_session/` (`analysis.txt` from
+`an_phone.py`; gunzip `*.gz`). Three kinds of evidence, kept apart:
+
+**Instrumented** (server side, host clock; n = 1 session):
+
+| event | value |
+|---|---|
+| deployed public page before the phone joined | "**Live now**, 19 min left. Nobody is driving yet; the host has the control code." (headless render of the real URL) |
+| phone connected | 18:53:45.8Z (clients 1 → 2; the other client is the loopback watcher) |
+| claim | 18:54:23.0Z; **one driver id for the whole session**; never more than 2 clients; 0 refused handshakes |
+| teleop | 3 bursts, 18:55:14–18:55:31Z, 115 moving teleop commands; teleop topic → wheel inside the container p50 1.2 ms, p95 3.5 (NOT phone-side) |
+| Nav2 goal from the phone | (12.63, −0.52) at 18:55:46.5Z; `/goal_pose` → first `/plan` **13.1 ms** (228 poses); lease → `autonomy` |
+| mission from the phone | start 18:57:28Z: LOCALIZE → **NAVIGATE_TO_RAMP** (step 3 of 16); the executive's goal replaced the browser's (plans 40 → 300 poses) |
+| driver disconnect | **18:58:02.005Z**: `last_end=driver_disconnected`, STOP latched, mission RECOVERY → **ABORT `OPERATOR_ABORT`** 1.2 s later, browser goal canceled; robot **0.3 m/s → at rest in 0.54 s** (truth); **0** moving wheel commands in the 10 s after |
+| after the disconnect | no reconnect in the remaining 263 s (clients stayed 1) |
+| wheel publishers | 1 (`cmd_vel_arbiter`) in 123/123 samples |
+
+**Reported by the owner** (phone screenshots; not instrumented): the
+page connected over Funnel and named the owner as the driver; RTT shown
+**≈ 282–293 ms**; telemetry shown **5 Hz**; a Nav2 goal executing; the
+autonomous mission shown at **step 3 of 16**.
+
+**Qualitative** (owner, from the phone test): mobile layout, visualisation
+quality, telemetry rate and remote latency need production work
+(backlog: `docs/live/LIVE.md` §9).
+
+**Evidence gaps, not assumed to have passed:**
+- **STOP pressed on the phone**: not in the record. The only latch events
+  are the new session and the disconnect. Phone-side STOP latency:
+  unmeasured. (STOP through Funnel from this host: 148.4 ms, above.)
+- **Why the phone disconnected**: unknown (closed or backgrounded page,
+  network loss, or a keepalive drop that never reconnected). The
+  instruments show only that the server saw the driver's socket end.
+- **Spectator on a second device**: not tried (only the phone and the
+  watcher connected). Spectator refusal is covered by C2 and C1b (scripted,
+  over the real protocol) and the unit tests.
+- **Teleop preemption of the mission from the phone**: not tried (teleop
+  ended 2 min before the mission started).
+- **A mission completed from the phone**: no; it ended at step 3 by the
+  disconnect.
+- **Idle release / session cap from the phone**: not exercised.
+- **The browser goal's status** stayed `executing` for 34 s after the
+  mission's goal replaced it in Nav2: the view did not show the
+  preemption.
 
 ## C5 — public Live status
 
@@ -313,7 +358,7 @@ Docker quickstart. The probe is the site's one cross-origin request,
 
 ## Unverified
 
-- **The phone session** (mobile data, the real Live tab on Pages): not run.
+- The phone-session gaps listed in C6.
 - An autonomous fetch through the tunnel (C1b ran on loopback).
 - WebSocket Origin checks from an external network (done through Funnel
   from this host's network; external nodes checked reachability/paths).

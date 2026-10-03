@@ -8,7 +8,11 @@
 >   served at <https://gauthamcodes.github.io/coco-labs/>.
 > - Phases 0 and 1 are closed. 1G (optional) was not run. Lab 1.2 is
 >   deferred (§5).
-> - **Phase 2 (Live) has not started.**
+> - **Phase 2 (Live), 2026-10-04: Parts A–C done, Part D (ship) in progress.**
+>   The Live tab is on the public site; a phone on mobile data drove the robot
+>   through Tailscale Funnel. Status against §6's "done when" is in
+>   [`docs/live/LIVE.md`](live/LIVE.md) and the report
+>   [`docs/live/PART_C_REPORT.md`](live/PART_C_REPORT.md).
 >
 > *(The status line of 2026-09-30 read: "plan revised (Phase 2 · Live
 > added) … Phase 1 closed by decision with open items … Phase 2 not
@@ -257,6 +261,15 @@ label changes.
 Outside a live session, the public site shows Replay and Sketch, plus a short
 Docker quickstart for running the whole stack and driving it locally.
 Always-on hosting stays deferred (§9).
+
+**As built (2026-10-04).** Three modes, driver and spectators, scheduled
+sessions through **Tailscale Funnel** (`/ws` and `/healthz` only), the
+public "live now" status, and the Docker remote configuration are built
+and measured (`docs/live/`). **Not built:** the planner choice in Nav2
+mode (lab hook), the optional `nav_goal` heading, and the 3D view. They,
+and the phone test's production findings (remote stability, telemetry
+rate, mobile layout, visualisation), are the prioritised backlog in
+`docs/live/LIVE.md` §9.
 
 ---
 
