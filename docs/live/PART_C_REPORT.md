@@ -1,4 +1,4 @@
-# Phase 2 · Part C — driver, spectators, remote sessions (2026-10-03: at the REMOTE DRIVE GATE)
+# Phase 2 · Part C — driver, spectators, remote sessions (2026-10-04: deployed; at the phone-test gate)
 
 Branch `live`. Evidence: `docs/data/live/part_c/` (gunzip `*.gz` first).
 Harness: `docs/data/live/part_c/scripts/`. Every number is **(measured)**
@@ -15,7 +15,7 @@ unless marked; n = 1 per row. One run is not a rate.
 | C4 exposure | **done**: host side (no non-loopback TCP listener at all) + external (check-host.net nodes, WebFetch) + through Funnel (origins, paths) |
 | C5 public status | **done**; `LIVE_REMOTE` = the Funnel endpoint; "Live now" seen on the real page through the real endpoint |
 | C6 remote session | tunnel measured with the shipped page (this host as the client); **the phone session has not happened**. Gate: the Pages deploy (needs a push: owner) |
-| C7 / C8 | full local suite run (below); CI not run (needs a push: owner) |
+| C7 / C8 | full local suite 2691/0; **CI and Lab green on a61150c** (PR #8 and `main`); `main` fast-forwarded 54133fe..a61150c (owner-approved); **Pages deployed** with the Live tab |
 
 ## Implementation
 
@@ -261,11 +261,23 @@ sessions (slower detection of a vanished driver; the 0.5 s wheel
 watchdog still stops motion); a direct path (a published UDP port for
 WireGuard: new exposure); end-to-end flow control (protocol addition).
 
+## Deployment (2026-10-03/04, owner-approved)
+
+| step | result (measured) |
+|---|---|
+| push `live` 74ab139..a61150c (fast-forward) | PR #8: CI run 37144071122 **success**, Lab run 37144071114 **success** |
+| fast-forward `main` 54133fe..a61150c (only after both green) | CI run 37144441639 **success**; Lab run 37144441651 **success**, including "deploy to GitHub Pages (main only)" |
+| deployed bundle `assets/index-DwMTg_hp.js` (332,655 B) | Live tab present (claim box, status line, idle-pause wording); `coco-live.taile7cb60.ts.net` present; **0** ROS topic names |
+| deployed CSP `connect-src` | `'self'`, Pyodide CDN, `ws://localhost:*`, `ws://127.0.0.1:*`, `wss://` and `https://coco-live.taile7cb60.ts.net`, nothing else |
+| public Live URL rendered (headless Firefox), stack down | "No live session right now. No session is scheduled."; Replay + Docker quickstart links shown; connection `closed` (`c5_public_status_offline/`) |
+
+No release, no tag, no branch deleted, no force-push. The keepalive is
+unchanged (10 s / 10 s; owner: keep it until further notice).
+
 ## C6 — the phone session: NOT YET RUN
 
-Nothing below this line is measured. The page the phone needs is not on
-the public site: Pages deploys `main` (54133fe), whose bundle has no Live
-tab (checked), and only the Pages origin and localhost may open `/ws`.
+Nothing below this line is measured. The public page is now deployed
+(above); the stack and the tunnel are down until the owner says "start".
 
 ## C5 — public Live status
 

@@ -1,0 +1,9 @@
+{
+ "status": "No live session right now. No session is scheduled.",
+ "card": "Remote session No live session right now. No session is scheduled. Meanwhile: Replay recorded runs \u00b7 run COCO yourself (Docker quickstart).",
+ "fallback_links": true,
+ "conn": "closed",
+ "badge": "Live \u2014 remote session",
+ "url": "https://gauthamcodes.github.io/coco-labs/?view=live&live=wss://coco-live.taile7cb60.ts.net/ws",
+ "at": "2026-10-03T18:45:04Z"
+}

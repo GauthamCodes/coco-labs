@@ -7192,3 +7192,22 @@ NEXT: on approval, push `live` and wait for CI; ff `main` and wait for
 the Pages deploy. Then bring the stack up fresh with the tunnel
 (`docs/live/tunnel/README.md`), `live_session.sh code`, and the phone
 session.
+
+## Phase 2 · Part C — deployed; at the phone-test gate (2026-10-04)
+
+Owner approved the deployment gate. Keepalive unchanged (owner).
+- Pushed `live` 74ab139..a61150c; PR #8 CI 37144071122 and Lab
+  37144071114 both **success**.
+- Fast-forwarded `main` 54133fe..a61150c; CI 37144441639 and Lab
+  37144441651 (including the Pages deploy job) **success**.
+- The deployed bundle has the Live tab and the Funnel endpoint, and 0
+  topic names. The CSP allows exactly the Funnel's two origins. The
+  public Live URL rendered with the stack down reads "No live session
+  right now. No session is scheduled.", with Replay and Docker links.
+- No release, no tag, no branch deletion, no force-push.
+- Stack and tunnel **down** until the owner says "start".
+
+NEXT: on "start", run `docs/live/tunnel/README.md` (compose up with the
+sidecar), `scripts/live_session.sh code`, recorder in the container,
+then the phone session. Record instrumented and user-reported values
+separately.
