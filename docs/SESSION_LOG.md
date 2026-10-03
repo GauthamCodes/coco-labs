@@ -6999,3 +6999,54 @@ Tests: 2512 across 11 packages, plus lab_web 194.
 
 NEXT: Part C, which needs the owner's tunnel choice (the reply left it as
 a placeholder).
+
+## Phase 2 · Part C — driver, spectators, remote sessions (2026-10-02/03, IN PROGRESS: waiting on the tunnel choice)
+
+Report: `docs/live/PART_C_REPORT.md`. Evidence: `docs/data/live/part_c/`.
+Branch `live`, commits 213f9bd..HEAD, **not pushed** (pushing re-runs CI
+on the PR; the brief asks for CI at the end of Part C). `main` untouched
+(54133fe).
+
+**Precondition** held, checked against the repo: Part A, the safety fixes
+on main, Part B and its invariants. CI and Lab were green on 74ab139 on
+GitHub; the Part B entry above had not recorded that.
+
+**Built**
+- `coco_web/control.py` (pure, injected clock): one driver per host code,
+  spectators refused every command **including STOP** (owner decision 3),
+  idle release, session cap, per-client token buckets, host kill; every
+  ending calls the latched STOP. `access:=open` (default) is P0.1 exactly.
+- Server wiring, `remote:=true` (`/ws` + `/healthz` only), `origins`
+  allowlist, `/healthz` `live` summary + CORS for allowlisted origins;
+  host-only Trigger services `session_kill/new/code`;
+  `scripts/live_session.sh`.
+- `docker-compose.remote.yml`: code, remote, origins, host port on
+  127.0.0.1 only. **No tunnel**: the choice is the owner's.
+- lab_web: claim/release UI, spectator controls held back, STOP shown
+  "driver only" for spectators; public status (`status.ts`, empty
+  `schedule.json`, Replay + Docker fallback); `LIVE_REMOTE = null`.
+
+**Measured** (n = 1 each, not rates)
+- C1 Docker fetch, fresh container: red **COMPLETE**, 259.5 s wall, 0
+  recoveries, 0 relocalisations, 1 wheel publisher.
+- C2 live (remote compose, idle 20 s, cap 150 s): **20/20** checks; 0
+  moving wheel commands in the spectator phase; driver disconnect
+  mid-drive → wheels zero +16.8 ms; kill mid-drive → zero +318.4 ms
+  (includes docker exec), 0 moving after; cap while driving → socket
+  4403, 0 moving to +10 s, truth 0.000 m/s by +0.31 s.
+- C4 host half: only 127.0.0.1:8080 published; LAN and bridge IPs no
+  connection; every path but `/ws` and `/healthz` 404; bad origins 403.
+- Tests: `run_all_package_tests.sh` **2665 passed** (2512 at Part B;
+  coco_web 688→836, coco_rl 231→236); lab_web vitest **234** (194).
+
+**Unverified**: everything through a tunnel; the policy defaults in real
+use; a real phone.
+
+**Waiting on the owner**
+1. The tunnel: Tailscale Funnel, or a Cloudflare named tunnel (and its
+   hostname). Part A §6.
+2. Confirm the idle exemption while a mission or a browser Nav2 goal runs.
+3. Whether to push `live` now (one CI run) or only at the end of Part C.
+
+NEXT: on the tunnel choice, C3 (that tunnel only, at 127.0.0.1:8080),
+then C4 external checks, set `LIVE_REMOTE`, then C6 with the owner.
