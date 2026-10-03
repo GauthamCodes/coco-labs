@@ -7153,3 +7153,42 @@ true), the compose sidecar, the external check from another network,
   Pages, which needs `live` on `main` (push + fast-forward after CI).
 - Then: `ts.sh stop`; bring up remote compose + sidecar; `funnel status`;
   external check from another network; `LIVE_REMOTE`; gate.
+
+## Phase 2 · Part C — Funnel live, exposure checked, tunnel measured; at the remote-drive gate (2026-10-03, late)
+
+Continued in the same session after the owner's Tailscale login.
+
+**Done** (commits 6a30783, 5b58960 and this checkpoint):
+- The Funnel node is `coco-live.taile7cb60.ts.net`, `tag:coco-live`, with
+  funnel and https caps read from the machine before it served anything.
+  Funnel serves exactly `/ws` and `/healthz` → `coco:8080`.
+- `--shields-up` cannot be combined with Funnel (measured): dropped.
+  `--reset` added. `LIVE_REMOTE` set; the CSP gains exactly two origins.
+- Exposure. Host: no non-loopback TCP listener. External (check-host.net
+  nodes, WebFetch): paths and ports as intended. Through Funnel: origin
+  and path checks pass. No address was port-scanned (shared NAT, not the
+  owner's). Two "remote" agents ran on this machine and are counted as
+  host-side only.
+- **Defect:** through Funnel the shipped page lost its socket 17 times in
+  ~15 min. Funnel carries ~58 KiB/s, DERP-relayed (uplink 1.83 MB/s), so
+  the backlog hid beyond the server and the keepalive closed the socket.
+  **Fix:** a remote stream budget (telemetry 5 Hz, camera 3 fps at half
+  scale). After it, the shipped page through Funnel: drive → wheel p50
+  45.2 ms (n = 170), STOP → zero 148.4 ms, goal → plan p50 153.3 ms,
+  goals 5/5. But telemetry gaps reached 15.5 s, app RTT p50 0.56–1.46 s,
+  and there were 2 keepalive drops in 407 s.
+- Tests: `run_all_package_tests.sh` **2691 / 0** (11 packages); lab_web
+  238, tsc, build, check_dist clean. The bundle contains 0 topic names.
+- Stack and tunnel **down** (public endpoint times out).
+
+**Unverified**: the phone session; a fetch through the tunnel; CI.
+
+**Owner**: (1) approve pushing `live` and fast-forwarding `main` once both
+workflows are green, so Pages serves the Live tab (the phone has no other
+allowed origin); (2) optional: a longer keepalive for remote sessions;
+(3) the phone session.
+
+NEXT: on approval, push `live` and wait for CI; ff `main` and wait for
+the Pages deploy. Then bring the stack up fresh with the tunnel
+(`docs/live/tunnel/README.md`), `live_session.sh code`, and the phone
+session.

@@ -1,4 +1,4 @@
-# Phase 2 · Part C — driver, spectators, remote sessions (IN PROGRESS, 2026-10-03: at the tunnel gate)
+# Phase 2 · Part C — driver, spectators, remote sessions (2026-10-03: at the REMOTE DRIVE GATE)
 
 Branch `live`. Evidence: `docs/data/live/part_c/` (gunzip `*.gz` first).
 Harness: `docs/data/live/part_c/scripts/`. Every number is **(measured)**
@@ -11,11 +11,11 @@ unless marked; n = 1 per row. One run is not a rate.
 | precondition | holds: Part A; safety fixes on main (`labs/main` = 54133fe); Part B and its invariants; CI **and** Lab green on 74ab139 (GitHub pull_request runs; the Part B log entry had not recorded this) |
 | C1 Docker fetch | **done: 1/1 COMPLETE** (open access); **C1b: 1/1 COMPLETE in the remote session configuration** |
 | C2 session model | **done**: pure module + server wiring + live in Docker |
-| C3 tunnel | **Tailscale Funnel chosen (owner, 2026-10-03)**; sidecar logged-in step pending the owner's one-time admin/login action. Both options built as compose sidecars in `docs/live/tunnel/` (README there). Cloudflare ingress verified offline; Tailscale untested without an account. Nothing exposed |
-| C4 exposure | **host half done** (below); the external half needs the tunnel |
-| C5 public status | **done**; `LIVE_REMOTE` is `null` until a tunnel exists, so the site truthfully says no session is configured. 89e0239: a 503 no longer claims only "starting"; negative counts/times are dropped |
-| C6 remote session | not started: needs C3, then the owner on a phone on mobile data |
-| C7 / C8 | not started (final CI after C6) |
+| C3 tunnel | **done: Tailscale Funnel** (owner's choice) at `https://coco-live.taile7cb60.ts.net`, `/ws` + `/healthz` only, sidecar container. Down between sessions |
+| C4 exposure | **done**: host side (no non-loopback TCP listener at all) + external (check-host.net nodes, WebFetch) + through Funnel (origins, paths) |
+| C5 public status | **done**; `LIVE_REMOTE` = the Funnel endpoint; "Live now" seen on the real page through the real endpoint |
+| C6 remote session | tunnel measured with the shipped page (this host as the client); **the phone session has not happened**. Gate: the Pages deploy (needs a push: owner) |
+| C7 / C8 | full local suite run (below); CI not run (needs a push: owner) |
 
 ## Implementation
 
@@ -28,7 +28,10 @@ unless marked; n = 1 per row. One run is not a rate.
 | c942310 | lab_web: claim box / release / countdowns / spectator STOP shown "driver only"; `status.ts` probe + `schedule.json` + Replay / Docker fallback; `LIVE_REMOTE` in `site.config.ts` (adds exactly its `wss:`+`https:` to the CSP; `check_dist` verifies, exercised with a throwaway value and reverted) |
 | 5494bf9 | C2 live evidence, `docs/WEB_API.md` |
 | 89e0239 | the idle exemption made explicit as an **autonomy-held lease** (below); `remote:=true` refuses an empty/`*` origins list; no `Server: TornadoServer` banner and a bare JSON 404 on the remote surface; status wording |
-| (this commit) | C3 prepared: `docs/live/tunnel/` (both options, offline ingress check, `external_check.sh`) |
+| fbc0f77 | C3 prepared: `docs/live/tunnel/` (both options, offline ingress check) |
+| 40b5b5d | C1b (remote-config fetch); flood close-code fix; Tailscale sidecar non-root, caps dropped |
+| 6a30783 | `ts.sh` login that waits; `external_check.sh` scoped to our own hostname; `test_tunnel_config.py` |
+| 5b58960 | Funnel live; no `--shields-up` (incompatible), `--reset`; `LIVE_REMOTE`; **remote stream budget**; harness claim step |
 
 Defaults (proposals from Part A §5.3, **not measured**): idle 60 s, cap
 20 min, 25 clients, 60 frames/s, `drive` 20/s, other commands 2/s burst 6,
@@ -51,16 +54,15 @@ suspended. Without the lease a 60 s idle would abort every remote fetch
 
 ## Tests
 
-`run_all_package_tests.sh`, all 11 packages, domain 74, quiet machine:
-**2665 passed, 0 failed** (Part B: 2512) on cbc1e26. After 89e0239,
-affected packages only: coco_web **850** (836), coco_rl **236**; lab_web
-vitest **238** (234), typecheck, build and `check_dist` clean. The full
-run is owed at the end of Part C.
+`run_all_package_tests.sh`, all 11 packages, domain 74, on 5b58960
+(2026-10-03): **2691 passed, 0 failed** (2665 on cbc1e26; Part B 2512).
+lab_web: vitest **238** passed, typecheck, build and `check_dist` clean.
+CI: **not run** (it needs a push; owner).
 
 | package | Part B | now | what |
 |---|---|---|---|
-| coco_web | 688 | 850 | `test_control.py` (pure, fake clock, no sleeps; +7 lease tests replacing 1), `test_live_session.py` (real sockets; +3 origins refusals, +5 no-banner) |
-| coco_rl | 231 | 236 | remote compose: loopback-only port, code/remote/origins, entrypoint + launch forwarding |
+| coco_web | 688 | 857 | `test_control.py` (pure, fake clock; lease), `test_live_session.py` (real sockets: origins refusals, no banner, flood close code, remote telemetry rate and camera budget), `test_streams.py` (remote budget) |
+| coco_rl | 231 | 241 | remote compose; `test_tunnel_config.py` (Funnel serves exactly /ws + /healthz to coco:8080; sidecar publishes nothing, non-root, caps dropped, no SSH, pinned) |
 | others | | unchanged | coco_config 93, coco_sim 280, coco_mission 344, gazebo_models 229, coco_perception 139, coco_moveit_config 12, custom_teleop 75, coco_lab 352, coco_lab_ros 69 |
 
 Covered: driver acquire, spectator refusal (every command, STOP
@@ -159,29 +161,116 @@ and several ephemeral ports) are outside Docker and are not what any
 tunnel would point at. **"Nothing else is exposed" is not claimed until
 the external check (C4, after C3).**
 
-## C3 — tunnel: PREPARED, NOT ACTIVE (owner choice open)
+## C3 — the tunnel: Tailscale Funnel
 
-`docs/live/tunnel/README.md` has the vendor facts (re-read 2026-10-03),
-both runbooks, and what remains to be checked at activation. Both
-connectors are a sidecar on the compose network that reaches `coco:8080`
-(the platform_server that the host publishes on `127.0.0.1:8080`) and
-routes only `/ws` and `/healthz`. No host network, no published port, no
-Docker socket.
+`docs/live/tunnel/README.md` is the runbook. The node is the
+`tailscale/tailscale:v1.102.5` container (no Tailscale on the host, no
+sudo), on the compose network, as uid 1000 with every capability dropped,
+userspace networking, no Tailscale SSH, tagged `tag:coco-live`. It
+publishes no port, has no host network and no Docker socket.
 
-| | prepared | verified |
+| check (measured) | result |
+|---|---|
+| node, read from the machine | `coco-live.taile7cb60.ts.net`, tag `tag:coco-live`, MagicDNS on; caps include `funnel` and `https` (ports 443/8443/10000) **before** Funnel was turned on |
+| `tailscale funnel status` | `https://coco-live.taile7cb60.ts.net (Funnel on)`; `/ws` → `http://coco:8080/ws`; `/healthz` → `http://coco:8080/healthz`; nothing else |
+| prefs | ShieldsUp false, RunSSH false, RunWebClient false, no routes, no exit node |
+| sidecar's own listeners | Docker's DNS 127.0.0.11, and tailscaled's peer API on 0.0.0.0:49091 inside the sidecar's namespace (not published: compose network and the owner's own tailnet only) |
+| `--shields-up` | **incompatible**: "Unable to turn on Funnel while shields-up is enabled". Dropped; it only governs the owner's own tailnet devices |
+| containerboot | gives an interactive login 60 s, then exits; `ts.sh login` runs tailscaled directly so the login waits |
+| stale prefs | a state with `--shields-up` made `tailscale up` refuse: `--reset` added, so each start asserts the committed settings |
+| first request | TLS reset until the certificate was issued (16:58:21Z, 20 s after the first request) |
+
+Activation checks from the prepared runbook, now answered: a proxy to the
+non-loopback `coco:8080` works; `/ws` and `/healthz` are proxied to the
+same paths (no mount-path stripping); `cap_drop: ALL` works in userspace
+mode. Cloudflare was compared and verified offline only; not used.
+
+## C4 — exposure
+
+**Host side** (`c4_exposure/host_listeners_idle.txt`, idle): **no TCP
+listener on any non-loopback address**, no sshd, nothing on 22/2375/2376,
+Docker API only the root:docker unix socket. Non-loopback UDP: mDNS 5353
+(the desktop's browsers) and two ephemeral ports. With the stack up the
+only Docker publication is `127.0.0.1:8080` (C2/C1b `exposure_local.txt`).
+Nothing on this host can be reached from any network except through the
+tunnel's outbound connection.
+
+**External** (genuinely different networks):
+
+| vantage | check | result |
 |---|---|---|
-| Cloudflare named tunnel | `config.yml.template`, compose sidecar (cloudflared 2026.9.3, read-only, caps dropped), `ingress_check.sh` | **offline (measured):** `ingress validate` OK; `/ws`, `/healthz` → coco; 13 other paths and hosts → 404 (`c3_tunnel_prep/cloudflare_ingress_offline.txt`) |
-| Tailscale Funnel | `serve.json` (`/ws`, `/healthz` only, AllowFunnel 443), compose sidecar (userspace, `--shields-up`, `tag:coco-live`), policy-file snippet | **not verified**: needs an account. Three activation checks are listed in the README (proxy to a non-loopback host; mount-path semantics; shields-up vs Funnel) |
-| both | `docker compose config` parses; the only published port is `127.0.0.1:8080` | `external_check.sh HOST [HOME_IP]`: syntax-checked only, **not yet run** |
+| check-host.net nodes (CH, ES, ID, IR, SE, TR, BR, IN, RU, US, FI, … ; `external_checkhost_run2/3.txt`) | `/healthz` | 200 on 4/4 |
+| same | `/`, `/api/session`, `/video/camera` | 404 on 12/12 |
+| same | `:8443/healthz`, `:10000/healthz` | no HTTP (connection broken) on 8/8 |
+| WebFetch (Anthropic's fetchers) | `/healthz`; `/api/session` | coco.v1 `ready`, code session, no ids or code; 404 |
 
-The one missing input is the owner's: which tunnel, and its hostname
-(Cloudflare: a hostname on a domain on Cloudflare DNS; Tailscale: the
-tailnet name, which appears in the public URL). Each also needs a
-one-time account action that only the owner can do (browser login, or
-the policy file and an auth key).
+**Through Funnel, from this host's network** (`tunnel_check_from_host.txt`,
+`COCO_CHECK_IP=-4`; this host has no working IPv6): Pages origin 101,
+`localhost` 101, `evil.example` / look-alike / `null` 403; 18 other
+paths 404; POST `/healthz` 405; cleartext → 302; no `Server` banner;
+CORS only for the Pages origin. PASS. These Origin verdicts are made by
+platform_server and do not depend on the client's network.
+
+**Not done, deliberately:** no address was port-scanned. This host sits
+behind a shared NAT (10.40.1.125/21 → 43.224.159.233) that belongs to the
+network's operator, and an agent asked to scan it refused for lack of
+authorization; Funnel's ingress servers belong to Tailscale. Two "remote"
+agents turned out to run on this machine (same egress), so their results
+are counted as host-side only.
+
+## C6 — through the tunnel (this host as the client; NOT the phone session)
+
+**A defect, measured, then fixed.** The shipped page driven through
+Funnel lost its WebSocket **17 times in ~15 min** (attempt 2); each loss
+correctly ended control and stopped COCO. Cause:
+
+| soak (`tunnel_soak.py`, spectator) | result |
+|---|---|
+| no camera, 10 Hz, 120 s | 0 closes, 10.12 Hz, **58.0 KiB/s** delivered |
+| camera at the local defaults | closed at **44.6 s, "ping timed out"** (server keepalive 10 s); 37.8 KiB/s delivered |
+| this host's uplink (Cloudflare speed test, 2 × 4 MB) | **1.83 MB/s**: the ceiling is the tunnel's |
+| Funnel path | active ingress peer (home DERP Tokyo) has **no direct address: relayed** |
+
+The backlog grows in buffers beyond the server (kernel, tailscaled, the
+relay) where the per-client in-flight bound cannot see it. **Fix
+(5b58960, `remote:=true` only):** telemetry every 2nd tick (5 Hz), camera
+3 fps (max 5) at half scale, depth likewise. Derived ~31 KiB/s.
+
+After the fix (image 3f8e34da16eb):
+
+| measurement (n) | value |
+|---|---|
+| app ping RTT, no camera (55) | p50 **564 ms**, p95 3997, p99 4614, max 4614 |
+| app ping RTT, camera (89) | p50 **1460 ms**, p95 7198, p99 8307, max 8307; 0 closes in 180 s |
+| camera soak 300 s | 1 close ("ping timed out" at 128.4 s), 4.70 Hz |
+| shipped page, `c6_tunnel_page_teleop_nav`: drive frame → wheel (170) | p50 **45.2 ms**, p90 151.5, p99 249.3, max 367.7 |
+| key press → first wheel (41) | p50 149.8, p99 317.0, max 367.7 ms |
+| STOP frame → wheel zero (1) | **148.4 ms**; 0 moving commands 0.2–3.3 s; latched banner shown |
+| Nav2 goal → first plan (4) | p50 153.3, max 156.8 ms; goals 5/5 succeeded |
+| telemetry received | 4.65 Hz; gaps p50 185, p99 1001, **max 15452 ms** |
+| reconnects | **2 in 407 s** |
+| claim through the page | "holder: you (the driver)" 0.31 s after pressing Take control |
+| public status line | "**Live now**, 18 min left. Nobody is driving yet; the host has the control code." (real page, real endpoint) |
+| wheel publishers | 1 (`cmd_vel_arbiter`) throughout |
+
+So the **command path** (phone → robot) is fast; the **view** (robot →
+phone) lags by seconds and the 10 s keepalive still drops a connection
+every few minutes. A drop stops COCO and the driver must claim again.
+Options for the owner (not taken): a longer keepalive for remote
+sessions (slower detection of a vanished driver; the 0.5 s wheel
+watchdog still stops motion); a direct path (a published UDP port for
+WireGuard: new exposure); end-to-end flow control (protocol addition).
+
+## C6 — the phone session: NOT YET RUN
+
+Nothing below this line is measured. The page the phone needs is not on
+the public site: Pages deploys `main` (54133fe), whose bundle has no Live
+tab (checked), and only the Pages origin and localhost may open `/ws`.
 
 ## C5 — public Live status
 
+`LIVE_REMOTE = { ws: 'wss://coco-live.taile7cb60.ts.net/ws' }` (5b58960);
+the CSP gains exactly its `wss:` and `https:` origins (`check_dist`).
 `lab_web/src/live/status.ts`: "Live now" only when the configured
 endpoint's `/healthz` answers coco.v1 with an open code session; starting
 (503), ended, an open server, non-JSON, another protocol, unreachable,
@@ -200,14 +289,22 @@ Docker quickstart. The probe is the site's one cross-origin request,
 - The image base is pinned by tag, not digest.
 - The kill latency above includes `docker exec` start-up; it is a host
   action, not a browser one.
+- **Funnel is DERP-relayed here**: ~58 KiB/s, view lag of seconds (app
+  RTT p50 0.56–1.46 s, max 8.3 s), and a keepalive drop every few
+  minutes, each of which stops COCO and needs a re-claim.
+- The Pages origin allowlist admits every page under
+  `https://gauthamcodes.github.io` (an Origin has no path).
+- Spectators cannot STOP, so a spectator who sees trouble cannot help;
+  the host's kill switch is the backstop.
+- The tailnet (23 peers, the owner's) can reach the sidecar's peer API and
+  its :443; shields-up was impossible with Funnel.
 
 ## Unverified
 
-- Everything through a tunnel (C4 external, C6). The Tailscale
-  configuration as a whole; `external_check.sh` has never run.
-- The lease change (89e0239) is unit- and socket-tested, not yet driven
-  live: C2's idle-release row predates it, but no autonomy ran there, so
-  the path it measured has not changed.
+- **The phone session** (mobile data, the real Live tab on Pages): not run.
+- An autonomous fetch through the tunnel (C1b ran on loopback).
+- WebSocket Origin checks from an external network (done through Funnel
+  from this host's network; external nodes checked reachability/paths).
 - The policy defaults under real use (idle 60 s, cap 20 min, rate limits).
 - A real phone driving the Live tab (Part B ran headless Firefox only).
 - The arm stopping mid-grasp on STOP (carried from the safety fixes).
@@ -219,6 +316,21 @@ Docker quickstart. The probe is the site's one cross-origin request,
 git archive -o /tmp/head.tar HEAD && mkdir -p /tmp/head && tar -xf /tmp/head.tar -C /tmp/head
 bash docs/data/live/part_c/scripts/docker_build.sh /tmp/head
 bash docs/data/live/part_c/scripts/docker_run.sh docs/data/live/part_c/c1_fetch_red fetch red
+# C1b: fetch in the remote configuration (fresh container)
+PROBE=probe_remote_fetch PROBE_ARG=red COCO_SESSION_IDLE_S=60 COCO_SESSION_CAP_S=1200 \
+  bash docs/data/live/part_c/scripts/docker_remote_run.sh docs/data/live/part_c/c7_remote_fetch_red
+python3 docs/data/live/part_c/scripts/an_remote_fetch.py docs/data/live/part_c/c7_remote_fetch_red  # after gunzip
+# C3: tunnel up (owner logged the node in once: docs/live/tunnel/tailscale/ts.sh login)
+COCO_TS_STATE=$HOME/coco_tailscale_state docker compose -f docker-compose.yml -f docker-compose.remote.yml \
+  -f docs/live/tunnel/tailscale/docker-compose.tunnel-tailscale.yml up -d
+# C4
+bash docs/data/live/part_c/scripts/host_listeners.sh
+COCO_CHECK_IP=-4 bash docs/live/tunnel/external_check.sh coco-live.taile7cb60.ts.net
+bash docs/live/tunnel/checkhost.sh coco-live.taile7cb60.ts.net
+# C6 (this host as client)
+python3 docs/data/live/part_c/scripts/tunnel_soak.py OUT.jsonl wss://coco-live.taile7cb60.ts.net/ws 180 camera
+bash docs/data/live/part_c/scripts/tunnel_browser_run.sh docs/data/live/part_c/c6_tunnel_page_teleop_nav teleop_nav
+python3 scripts/live_check/analyse_b.py docs/data/live/part_c/c6_tunnel_page_teleop_nav
 # C2 + C4 host half (remote compose)
 bash docs/data/live/part_c/scripts/docker_remote_run.sh docs/data/live/part_c/c2_session_docker
 PROBE=probe_expiry COCO_SESSION_CAP_S=90 \

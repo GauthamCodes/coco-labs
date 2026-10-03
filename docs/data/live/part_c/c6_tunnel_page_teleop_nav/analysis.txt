@@ -1,0 +1,112 @@
+{
+ "run": "c6_tunnel_page_teleop_nav",
+ "browser_clock_offset_ms": 0,
+ "drive_frame_to_wheel_ms": {
+  "n": 170,
+  "min": 0.6,
+  "p50": 45.2,
+  "p90": 151.5,
+  "p99": 249.3,
+  "max": 367.7,
+  "mean": 66.4
+ },
+ "press_to_first_wheel_ms": {
+  "n": 41,
+  "min": 144.1,
+  "p50": 149.8,
+  "p90": 162.3,
+  "p99": 317.0,
+  "max": 367.7,
+  "mean": 159.0
+ },
+ "stop": {
+  "stop_frame_to_wheel_zero_ms": 148.4,
+  "moving_cmds_0.2_to_3.3s": 0,
+  "latched_banner": "STOPPED (latched). Pick a mode, or start a mission, to move again."
+ },
+ "goals": [
+  {
+   "goal": [
+    1.0,
+    0.0
+   ],
+   "status": "succeeded",
+   "goal_to_first_plan_ms": 156.8,
+   "truth_error_m": 0.309
+  },
+  {
+   "goal": [
+    0.5,
+    1.2
+   ],
+   "status": "succeeded",
+   "goal_to_first_plan_ms": 150.6,
+   "truth_error_m": 0.043
+  },
+  {
+   "goal": [
+    2.0,
+    0.5
+   ],
+   "status": "succeeded",
+   "goal_to_first_plan_ms": 154.3,
+   "truth_error_m": 0.14
+  },
+  {
+   "goal": [
+    0.0,
+    -1.5
+   ],
+   "status": "succeeded",
+   "goal_to_first_plan_ms": 152.3,
+   "truth_error_m": 0.124
+  },
+  {
+   "goal": [
+    -0.5,
+    0.8
+   ],
+   "status": "succeeded",
+   "goal_to_first_plan_ms": null,
+   "truth_error_m": 2.282
+  }
+ ],
+ "goal_to_first_plan_ms": {
+  "n": 4,
+  "min": 150.6,
+  "p50": 153.3,
+  "p90": 156.1,
+  "p99": 156.7,
+  "max": 156.8,
+  "mean": 153.5
+ },
+ "goals_succeeded": "5/5",
+ "telemetry_received": {
+  "frames": 1893,
+  "span_s": 406.9,
+  "rate_hz": 4.65,
+  "gap_ms": {
+   "n": 1892,
+   "min": 0,
+   "p50": 185.0,
+   "p90": 363.0,
+   "p99": 1000.9,
+   "max": 15452,
+   "mean": 215.0
+  }
+ },
+ "page_end": {
+  "badge": "Live \u2014 remote session",
+  "mission": null,
+  "fallback": null,
+  "lane": null
+ },
+ "wheel_publishers": [
+  [
+   1,
+   [
+    "cmd_vel_arbiter"
+   ]
+  ]
+ ]
+}

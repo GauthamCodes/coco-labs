@@ -1,0 +1,8 @@
+
+# Funnel on:
+#     - https://coco-live.taile7cb60.ts.net
+
+https://coco-live.taile7cb60.ts.net (Funnel on)
+|-- /ws      proxy http://coco:8080/ws
+|-- /healthz proxy http://coco:8080/healthz
+
