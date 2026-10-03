@@ -7133,3 +7133,23 @@ NEXT: the owner's Tailscale login (policy snippet, DNS/HTTPS, login URL
 from `ts.sh login`) and a ruling on the push. Then `ts.sh caps` (funnel
 true), the compose sidecar, the external check from another network,
 `LIVE_REMOTE`, and the remote drive gate.
+
+### Checkpoint: waiting on the owner (2026-10-03, ~22:10 IST)
+
+- Done since 40b5b5d: 6a30783. `ts.sh login` now waits (containerboot
+  timed out at 60 s, measured). `external_check.sh` is scoped to the
+  owner's own Funnel hostname: the host's public address is a shared NAT
+  owned by the network operator and is not scanned. The idle host has
+  **no TCP listener on any non-loopback address** and no sshd (measured,
+  `c4_exposure/host_listeners_idle.txt`). `test_tunnel_config.py`:
+  coco_rl 236 → 241.
+- A login is pending in container `coco-ts-login` (state
+  `~/coco_tailscale_state`). On resume: `bash docs/live/tunnel/tailscale/ts.sh caps`
+  (needs `funnel True`, `https True`, tag `tag:coco-live`). If the login
+  URL has expired, run `ts.sh login` again.
+- Owner actions asked for: (1) the policy snippet (tagOwners + nodeAttrs
+  funnel for tag:coco-live), (2) DNS: MagicDNS + HTTPS certificates,
+  (3) open the login URL. Plus a ruling: the phone needs the Live tab on
+  Pages, which needs `live` on `main` (push + fast-forward after CI).
+- Then: `ts.sh stop`; bring up remote compose + sidecar; `funnel status`;
+  external check from another network; `LIVE_REMOTE`; gate.
