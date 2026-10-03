@@ -1,0 +1,13 @@
+[coco] COCO 2.0 appliance starting
+[coco]   workspace   /opt/coco_ws
+[coco]   http        :8080   video :8081
+[coco]   gui=false rviz=false colour=blue
+[coco]   access=code remote=true origins=https://gauthamcodes.github.io,http://localhost:*,http://127.0.0.1:*
+[coco] 1/3 simulator (gazebo_models full_world_robo.launch.py)
+[coco]     simulator clock and model odometry are up
+[coco]     controllers active
+[coco] 2/3 mission stack + web platform (coco_mission mission.launch.py)
+[coco] 3/3 waiting for the platform to report ready on /healthz
+[coco]     web platform has not bound :8080 yet
+[coco] READY — open http://localhost:8080
+[coco] live session: control code NS2QRMQA

@@ -7095,3 +7095,41 @@ key). Hostname-independent preparation is done.
 NEXT: on the choice, `docs/live/tunnel/README.md` for that option, then
 `external_check.sh` from another network, set `LIVE_REMOTE`, then the
 "Remote drive gate ready" handoff to the owner's phone (C6).
+
+## Phase 2 · Part C — Tailscale chosen; remote-config fetch; flood close fixed (2026-10-03, later)
+
+Owner decisions (brief): **Tailscale Funnel**, nothing paid; every
+session rule as built (lease paused explicitly, cap always runs,
+spectators no STOP). Reconciled: `live` at fbc0f77, matches.
+
+**Measured** (n = 1; `docs/live/PART_C_REPORT.md` C1b):
+- image 0a325ed08650 (fbc0f77). The remote compose with real defaults
+  completed a red fetch: all 16 states, 468.3 s wall, 0 recoveries,
+  0 relocalisations, 1 wheel publisher in 111/111 samples. :8080 inside
+  the container is `platform_server`.
+- Lease: `autonomy` throughout; `last_input_s` peaked at 528.1 s with
+  the driver kept. Lease back 0.05 s after COMPLETE, then idle release
+  59.91 s later with STOP latched. Nav2 goal: lease autonomy; goal → plan
+  5.2 ms.
+- Spectator STOP/abort mid-CLIMB: refused, mission unaffected. Driver
+  burst of 40: 20/20 ack/rate_limited. Kill → 4403, 0 moving after.
+- **Defect found and fixed:** a flooded socket closed without a close
+  code (RST after an uncaught write to a closing socket). on_message now
+  ignores frames once closing; failing-first regression test. coco_web
+  850 → 851.
+
+**Built**: `probe_remote_fetch.py`, `an_remote_fetch.py`; the Tailscale
+sidecar runs as uid 1000 with all capabilities dropped (it reaches its
+login step, measured), image pinned to v1.102.5; `ts.sh
+login|wait|caps|stop`.
+
+**Found**: the public Pages site (deployed from `main` 54133fe) has **no
+Live tab** (the deployed bundle has none of its strings), and only the
+Pages origin and localhost may open `/ws`. A phone session therefore
+needs `live` on `main`, i.e. a push, which this brief forbids. That is
+for the owner.
+
+NEXT: the owner's Tailscale login (policy snippet, DNS/HTTPS, login URL
+from `ts.sh login`) and a ruling on the push. Then `ts.sh caps` (funnel
+true), the compose sidecar, the external check from another network,
+`LIVE_REMOTE`, and the remote drive gate.

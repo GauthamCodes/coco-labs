@@ -1,0 +1,12 @@
+listeners (local:port inode):
+00000000:1F90 674033
+0100007F:A827 645028
+0100007F:AA7B 645026
+0100007F:2CF7 632806
+0100007F:AD95 675946
+0100007F:8E01 675948
+0100007F:8FDB 645024
+0100007F:B1F7 675944
+0B00007F:8B71 672276
+0100007F:1F91 682090
+:8080 pid 652: /usr/bin/python3 /opt/coco_ws/install/coco_web/lib/coco_web/platform_server --ros-args -r __node:=coco_web_platform --params-file /tmp/launch_params_lu2i567a 

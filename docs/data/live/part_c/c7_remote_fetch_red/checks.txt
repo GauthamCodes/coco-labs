@@ -1,0 +1,31 @@
+PASS host issued a code: got True
+PASS driver claim: got 'ack'
+PASS second claim, right code: got 'driver_present'
+FAIL invalid code: got 'driver_present'
+PASS lease after claim: got 'driver'
+PASS driver drive burst of 40: some rate_limited: got 20
+PASS driver drive burst of 40: some admitted: got 20
+PASS driver STOP right after the burst is not rate limited: got 'ack'
+FAIL flooding spectator closed (4403/4429): got None
+PASS flooding spectator: no command admitted: got []
+PASS set_mode auto: got 'ack'
+PASS nav_goal: got 'ack'
+PASS Nav2 goal running: lease autonomy: got True
+PASS Nav2 goal running: idle_left_s null: got None
+PASS Nav2 goal done: lease back to driver: got 'driver'
+PASS select_target: got 'ack'
+PASS mission start: got 'ack'
+PASS spectator STOP mid-mission: got 'spectator'
+PASS spectator abort mid-mission: got 'spectator'
+PASS mission unaffected by spectator: got True
+PASS fetch terminal state: got 'COMPLETE'
+PASS driver kept control through the mission: got True
+PASS last_input_s exceeded idle_s during autonomy (no faked activity): got 468.22767215099884
+PASS spectator mid-mission checks ran: got True
+PASS lease back to driver after the mission: got True
+PASS a fresh idle window after autonomy: got 59.99869599300291
+PASS idle release after the mission: got True
+PASS STOP latched after idle release: got True
+PASS reclaim: got 'ack'
+PASS kill closes the driver: got 4403
+28/30 checks pass

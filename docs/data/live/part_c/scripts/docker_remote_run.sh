@@ -24,9 +24,16 @@ docker cp "$D/recorder.py" coco-platform:/tmp/recorder.py
 docker exec -d coco-platform bash -c \
   'source /opt/ros/jazzy/setup.bash; source /opt/coco_ws/install/setup.bash; exec python3 /tmp/recorder.py /tmp/ros.jsonl'
 bash "$D/exposure_local.sh" > "$RUN/exposure_local.txt" 2>&1
+# Which process owns :8080 inside the container: the real platform_server.
+docker exec coco-platform bash -c 'for p in /proc/[0-9]*; do
+  for f in $p/fd/*; do l=$(readlink "$f" 2>/dev/null); case "$l" in socket:*) echo "${p#/proc/} ${l#socket:}";; esac; done
+done > /tmp/socks; echo "listeners (local:port inode):"; awk "NR>1 && \$4==\"0A\" {print \$2, \$10}" /proc/net/tcp /proc/net/tcp6;
+for ino in $(awk "NR>1 && \$4==\"0A\" && \$2 ~ /:1F90$/ {print \$10}" /proc/net/tcp /proc/net/tcp6); do
+  pid=$(grep -w "\[$ino\]" /tmp/socks | head -1 | cut -d" " -f1); echo ":8080 pid $pid: $(tr "\0" " " < /proc/$pid/cmdline)"; done' \
+  > "$RUN/listeners_in_container.txt" 2>&1
 sleep 2
-python3 "$D/${PROBE:-probe_session}.py" "$RUN/ws.jsonl" "ws://127.0.0.1:${COCO_HTTP_PORT:-8080}/ws" \
-  "http://localhost:4173" "$COCO_SESSION_IDLE_S" | tee "$RUN/checks.txt"
+python3 "$D/${PROBE:-probe_session}.py" "$RUN/ws.jsonl" "${PROBE_URL:-ws://127.0.0.1:${COCO_HTTP_PORT:-8080}/ws}" \
+  "${PROBE_ORIGIN:-http://localhost:4173}" "${PROBE_ARG:-$COCO_SESSION_IDLE_S}" | tee "$RUN/checks.txt"
 echo "probe exit $?"
 docker exec coco-platform pkill -INT -f 'recorder.p[y]'
 sleep 1

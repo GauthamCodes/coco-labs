@@ -1,9 +1,8 @@
-# The remote-session tunnel (Phase 2 Part C3): PREPARED, NOT ACTIVE
+# The remote-session tunnel (Phase 2 Part C3)
 
-**Nothing in this directory is running, and nothing has been exposed.**
-The owner has not chosen between the two options (Part A §7 Q4, still open
-on 2026-10-03). Both are prepared to the point where only the owner's
-account actions and the hostname remain. Pick one; the other is deleted.
+**The owner chose Tailscale Funnel (2026-10-03).** No paid domain, VPS or
+tunnel. Option A (Cloudflare) below is kept only as the record of what was
+compared and verified offline. It is not used.
 
 Either way the shape is the same:
 
@@ -77,26 +76,32 @@ COCO_TUNNEL_DIR=$C/run docker compose -f docker-compose.yml -f docker-compose.re
 To check at activation (not yet verified): the image's `nonroot` user can
 read the mounted credentials; the first `tunnel run` logs four connections.
 
-## Option B: Tailscale Funnel (`tailscale/`)
+## Option B: Tailscale Funnel (`tailscale/`) — CHOSEN
 
-Owner, once, in the admin console: enable MagicDNS and HTTPS
-certificates; add to the policy file
+There's no Tailscale on the host and no sudo, so the node is the
+`tailscale/tailscale:v1.102.5` container. It runs as the host uid with
+every capability dropped (this works: measured, the node reached its login
+step). It is userspace-only, `--shields-up`, and tagged `tag:coco-live`.
 
-```json
-"tagOwners": { "tag:coco-live": ["autogroup:admin"] },
-"nodeAttrs": [ { "target": ["tag:coco-live"], "attr": ["funnel"] } ]
-```
+Owner, once (browser; **in this order**, because the login asks for the tag):
+1. Admin console → **Access controls**: merge into the policy file
+   ```json
+   "tagOwners": { "tag:coco-live": ["autogroup:admin"] },
+   "nodeAttrs": [ { "target": ["tag:coco-live"], "attr": ["funnel"] } ]
+   ```
+   and grant `tag:coco-live` nothing in `acls`/`grants`.
+2. Admin console → **DNS**: MagicDNS on; HTTPS Certificates → Enable.
+3. Open the login URL printed by `docs/live/tunnel/tailscale/ts.sh login`.
 
-(and grant `tag:coco-live` nothing in `acls`/`grants`), then create a
-reusable or one-off auth key tagged `tag:coco-live`.
-
-Then:
+Then (Claude):
 
 ```bash
-TS_AUTHKEY=tskey-... COCO_TS_STATE=$HOME/coco_tailscale_state \
+bash docs/live/tunnel/tailscale/ts.sh wait && bash docs/live/tunnel/tailscale/ts.sh caps   # funnel True, https True, tag
+bash docs/live/tunnel/tailscale/ts.sh stop
+COCO_TS_STATE=$HOME/coco_tailscale_state \
 docker compose -f docker-compose.yml -f docker-compose.remote.yml \
   -f docs/live/tunnel/tailscale/docker-compose.tunnel-tailscale.yml up -d
-docker exec coco-tunnel tailscale funnel status
+docker exec coco-tunnel tailscale --socket=/tmp/tailscaled.sock funnel status
 ```
 
 To check at activation (**not verified; none of this could be tested

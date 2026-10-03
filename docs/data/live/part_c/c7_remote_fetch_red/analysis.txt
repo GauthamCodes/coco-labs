@@ -1,0 +1,9 @@
+checks 28/30; failed: ['invalid code', 'flooding spectator closed (4403/4429)']
+lease=autonomy telemetry rows 4756; peak last_input_s 528.1 s; idle_s 60.0
+nav_goal tx -> /goal_pose 1.4 ms; -> first /plan 5.2 ms
+mission end -> lease back 0.05 s; lease back -> idle release 59.91 s (telemetry, 10 Hz)
+wheel cmds from idle release to the next client frame: 1 over 0.0 s, moving 0
+moving wheel cmds after kill: 0
+wheel publisher samples 111 [(1, ('cmd_vel_arbiter',))]
+driver burst of 40 drive: ack 20, rate_limited 20
+spectator flood: replies 96, spectator 21, rate_limited 75, close [1791044692.4377997, None, None]

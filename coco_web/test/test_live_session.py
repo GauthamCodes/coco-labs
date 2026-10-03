@@ -25,6 +25,7 @@ it.
 
 import asyncio
 import json
+import logging
 
 from coco_web import control
 from coco_web import platform_server as ps
@@ -162,6 +163,48 @@ def test_a_wrong_code_is_refused_and_five_close_the_socket():
     codes, hung_up = _run(body())
     assert codes == ['bad_code'] * 4
     assert hung_up
+
+
+def test_a_flooding_spectator_is_closed_with_a_code_and_moves_nothing():
+    """
+    A burst past the abuse limit ends in a CLOSE CODE, not a TCP abort.
+
+    Measured live (Part C, c7_remote_fetch_red): frames already buffered
+    behind the close reached on_message, refuse() wrote to a closing
+    socket, the uncaught WebSocketClosedError made tornado abort the
+    stream, and the client saw no close code at all.
+    """
+    uncaught = []
+
+    class Catch(logging.Handler):
+        """Record what tornado logs as an uncaught handler exception."""
+
+        def emit(self, record):
+            """Keep the message."""
+            uncaught.append(record.getMessage())
+
+    catch = Catch(level=logging.ERROR)
+    logging.getLogger('tornado.application').addHandler(catch)
+
+    async def body():
+        h = await Harness(CodeNode()).start()
+        fixed(h)
+        ws = await h.client()
+        for _ in range(300):
+            ws.write_message(json.dumps({'type': 'drive', 'linear': 0.3,
+                                         'angular': 0.0}))
+        hung_up = await closed(ws, timeout=5.0)
+        await h.stop()
+        return hung_up, ws.close_code, h.node
+    try:
+        hung_up, code, node = _run(body())
+    finally:
+        logging.getLogger('tornado.application').removeHandler(catch)
+    assert hung_up
+    assert code in (4403, 4429), code
+    assert moving(node) == []
+    # The direct symptom: frames after the close must not reach refuse().
+    assert uncaught == [], uncaught
 
 
 def test_the_welcome_and_telemetry_say_who_drives_without_the_code():

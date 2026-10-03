@@ -1886,6 +1886,13 @@ class ControlSocket(_NoBanner, tornado.websocket.WebSocketHandler):
 
     def on_message(self, message):
         """Validate one client frame and act on it."""
+        conn = self.ws_connection
+        if conn is None or conn.is_closing():
+            # Frames already buffered behind a close we sent: nothing to
+            # do. Answering them would write to a closing socket, raise,
+            # and make tornado abort the stream -- an RST that discards
+            # the close code the client is owed (measured live, Part C).
+            return
         node = self.platform.node
         control = self.platform.control
         try:

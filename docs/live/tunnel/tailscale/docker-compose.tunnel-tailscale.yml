@@ -1,31 +1,37 @@
-# PREPARED, NOT ACTIVE. Tailscale Funnel sidecar for a remote COCO Live
-# session. Phase 2 Part C3; docs/live/tunnel/README.md.
+# Tailscale Funnel sidecar for a remote COCO Live session (owner's choice,
+# 2026-10-03). Phase 2 Part C3; docs/live/tunnel/README.md.
 #
-#   TS_AUTHKEY=tskey-... COCO_TS_STATE=$HOME/coco_tailscale_state \
+#   COCO_TS_STATE=$HOME/coco_tailscale_state \
 #   docker compose -f docker-compose.yml -f docker-compose.remote.yml \
 #     -f docs/live/tunnel/tailscale/docker-compose.tunnel-tailscale.yml up -d
 #
+# The node is logged in ONCE with docs/live/tunnel/tailscale/ts.sh login
+# (state persists in COCO_TS_STATE); TS_AUTHKEY is optional.
+#
 # serve.json (beside this file) routes /ws and /healthz ONLY, to coco:8080
-# on the compose network, and turns Funnel on for 443. Userspace
-# networking (the image default) and --shields-up: tailscaled creates no
-# TUN device and refuses incoming tailnet connections, so the node offers
-# the tailnet nothing but Serve/Funnel. No host network, no published
-# ports, no Docker socket.
+# on the compose network -- the same platform_server the host publishes on
+# 127.0.0.1:8080 -- and turns Funnel on for 443. Userspace networking (no
+# TUN device) and --shields-up (no incoming tailnet connections): the node
+# offers the internet and the tailnet nothing but those two paths. Runs as
+# the host user with every capability dropped. No host network, no
+# published ports, no Docker socket.
 services:
   tunnel:
-    image: tailscale/tailscale:${COCO_TAILSCALE_TAG:-stable}
+    image: tailscale/tailscale:${COCO_TAILSCALE_TAG:-v1.102.5}
     container_name: coco-tunnel
     hostname: coco-live
+    user: "${COCO_TS_UID:-1000}:${COCO_TS_GID:-1000}"
     environment:
-      TS_AUTHKEY: "${TS_AUTHKEY:?set TS_AUTHKEY (an auth key from the admin console)}"
+      TS_AUTHKEY: "${TS_AUTHKEY:-}"
       TS_HOSTNAME: "coco-live"
       TS_STATE_DIR: "/var/lib/tailscale"
+      TS_SOCKET: "/tmp/tailscaled.sock"
       TS_USERSPACE: "true"
       TS_SERVE_CONFIG: "/config/serve.json"
       # tag:coco-live is the ONE node the policy file grants `funnel`.
       TS_EXTRA_ARGS: "--shields-up --advertise-tags=tag:coco-live"
     volumes:
-      - ${COCO_TS_STATE:?set COCO_TS_STATE to a persistent state dir}:/var/lib/tailscale
+      - ${COCO_TS_STATE:?set COCO_TS_STATE to the persistent state dir}:/var/lib/tailscale
       - ./docs/live/tunnel/tailscale/serve.json:/config/serve.json:ro
     depends_on:
       coco:

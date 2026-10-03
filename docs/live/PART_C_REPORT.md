@@ -9,9 +9,9 @@ unless marked; n = 1 per row. One run is not a rate.
 | part | status |
 |---|---|
 | precondition | holds: Part A; safety fixes on main (`labs/main` = 54133fe); Part B and its invariants; CI **and** Lab green on 74ab139 (GitHub pull_request runs; the Part B log entry had not recorded this) |
-| C1 Docker fetch | **done: 1/1 COMPLETE** |
+| C1 Docker fetch | **done: 1/1 COMPLETE** (open access); **C1b: 1/1 COMPLETE in the remote session configuration** |
 | C2 session model | **done**: pure module + server wiring + live in Docker |
-| C3 tunnel | **PREPARED, NOT ACTIVE; waiting on the owner's choice.** Both options built as compose sidecars in `docs/live/tunnel/` (README there). Cloudflare ingress verified offline; Tailscale untested without an account. Nothing exposed |
+| C3 tunnel | **Tailscale Funnel chosen (owner, 2026-10-03)**; sidecar logged-in step pending the owner's one-time admin/login action. Both options built as compose sidecars in `docs/live/tunnel/` (README there). Cloudflare ingress verified offline; Tailscale untested without an account. Nothing exposed |
 | C4 exposure | **host half done** (below); the external half needs the tunnel |
 | C5 public status | **done**; `LIVE_REMOTE` is `null` until a tunnel exists, so the site truthfully says no session is configured. 89e0239: a 503 no longer claims only "starting"; negative counts/times are dropped |
 | C6 remote session | not started: needs C3, then the owner on a phone on mobile data |
@@ -103,6 +103,45 @@ After the cap and after the kill: a new connection got `error session_over`
 then close 4403; `session_code` said `session over (expired|killed); call
 session_new`; `session_new` issued a new code; the old code was `bad_code`
 in the new session. Wheel publishers 1 throughout both runs.
+
+## C1b — autonomous fetch in the REMOTE session configuration (2026-10-03)
+
+Image `coco-platform:jazzy` 0a325ed08650 (fbc0f77). `docker-compose.yml`
+plus `docker-compose.remote.yml`, the real defaults (idle 60 s, cap
+1200 s), fresh container, driven over coco.v1 from the host by
+`probe_remote_fetch.py` (driver A, spectator B, flooder R). n = 1.
+Evidence: `c7_remote_fetch_red/` (`analysis.txt`; gunzip `*.gz`).
+
+| item | value (measured) |
+|---|---|
+| outcome | **red COMPLETE, `result=fetch`**, all 16 states in nominal order |
+| `mission start` → COMPLETE | 468.3 s wall (C1, open access: 259.5 s; one run each, not a comparison) |
+| RECOVERY / RELOCALIZE | 0 / 0 |
+| wheel publishers | 1 (`cmd_vel_arbiter`) in 111/111 samples (5 s) |
+| who serves :8080 in the container | `/opt/coco_ws/install/coco_web/lib/coco_web/platform_server` (0.0.0.0:8080); every other listener 127.0.0.1 |
+| lease during the fetch | `autonomy` in 4756 telemetry rows; driver held control, **`last_input_s` peaked at 528.1 s** (idle 60 s): no faked activity |
+| mission end → lease back to driver | 0.05 s; then a fresh window of 59.999 s |
+| lease back → idle release | **59.91 s** (10 Hz telemetry); STOP latched; 0 moving wheel commands |
+| Nav2 goal | lease `autonomy` while executing, `idle_left_s` null; back to `driver` after; `nav_goal` → first `/plan` 5.2 ms |
+| spectator STOP / abort mid-mission (CLIMB) | `spectator`, both; mission unaffected (CLIMB → CLIMB) |
+| driver burst of 40 `drive` | 20 ack, 20 `rate_limited`; the driver's STOP right after: ack |
+| spectator flood, 300 `drive` | 0 admitted (21 `spectator`, 75 `rate_limited`), socket closed, **but with no close code**: a defect, below |
+| reclaim, then host kill | 4403 close; 0 moving wheel commands after |
+
+**28/30 checks.** The two failures:
+- `invalid code` got `driver_present`. That was the probe's ordering: a
+  claim while a driver holds control is `driver_present` whatever its
+  code (by design; C2 measured `bad_code` with no driver). The probe now
+  checks the code with no driver present.
+- **Defect, fixed:** once the abuse limit closed the flooder's socket,
+  frames already buffered still reached `on_message`. `refuse()` wrote
+  to the closing socket and raised `WebSocketClosedError`. Tornado then
+  aborted the stream with unread data, the kernel sent RST, and the client
+  lost the 4403/4429 close code and its last 4 refusals. Robot safety was
+  not affected (0 of 300 admitted). Fix: `on_message` ignores frames once
+  the connection is closing. Regression test
+  `test_a_flooding_spectator_is_closed_with_a_code_and_moves_nothing`
+  failed first (uncaught exception logged), then passed.
 
 ## C4 — exposure, host half (`c2_session_docker/exposure_local.txt`)
 
