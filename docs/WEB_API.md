@@ -970,6 +970,49 @@ mission and holds the arbiter in idle until a mode is picked again.
 Telemetry carries `platform.stop {latched, since, violations}`, which is
 additive.
 
+### Remote sessions: driver and spectators (Phase 2 Part C, additive)
+
+Policy: `coco_web/control.py` (pure, injected clock, `test_control.py`).
+Server wiring: `test_live_session.py` (real sockets). Report:
+`docs/live/PART_C_REPORT.md`.
+
+| launch arg | default | meaning |
+|---|---|---|
+| `access` | `open` | `open`: today's behaviour exactly. `code`: one driver holding the host's code, everyone else a spectator |
+| `remote` | `false` | serve `/ws` and `/healthz` only (everything else 404). Refused unless `access:=code` |
+| `origins` | `*` | browser origins allowed to open `/ws` (403 otherwise) and read `/healthz` cross-origin; `:*` = any port |
+| `session_idle_s` / `session_cap_s` / `max_clients` | 60 / 1200 / 25 | code access only |
+
+| where | field | what |
+|---|---|---|
+| client frame | `claim {code}` | present the host's control code; ack makes this connection THE driver |
+| client frame | `release {}` | the driver lets go; COCO stops (latched STOP) |
+| `platform` | `control` | `{access, over}` in open access; in code access also `driver`, `driver_id` (compare with `welcome.you`), `clients`, `max_clients`, `idle_s`, `idle_left_s`, `session_left_s`, `last_end`. Never the code |
+| `/healthz` body | `live` | `{access, driver, clients, max_clients, session_left_s, over}`: no ids, no code |
+| error codes | `spectator`, `bad_code`, `driver_present`, `rate_limited`, `session_over`, `session_full`, `open_access` | see `protocol.REFUSAL_CODES` |
+
+In code access:
+- every command intent (`drive`, `stop`, `set_mode`, `select_target`,
+  `mission`, `nav_goal`, `set_arm`, `set_gripper`) from anyone but the
+  driver is refused `spectator`. **That includes STOP** (owner decision 3);
+  the host stops COCO with the kill switch;
+- a second claim while a driver holds control is `driver_present`,
+  whatever code it carries: control is never transferred implicitly;
+- every ending calls the latched STOP: `release`, idle (no driver command
+  for `session_idle_s`, except while a mission or the browser's Nav2 goal
+  runs), the driver disconnecting, ownership found inconsistent, the cap,
+  the kill switch. The cap and the kill also close every socket (4403
+  `session_over`) and refuse new ones until the host starts a new session;
+- token buckets per client: 60 frames/s, `drive` 20/s, other commands
+  2/s (burst 6). The driver's STOP is never rate-limited. Undecodable
+  frames are charged too; 100 refusals in a row, or 5 wrong codes, close
+  the socket.
+
+Host controls (ROS `std_srvs/Trigger` on the platform node; loopback DDS
+inside the container, no coco.v1 frame maps onto them):
+`/coco_web_platform/session_code`, `session_new`, `session_kill`, via
+`scripts/live_session.sh code|new|kill|status`.
+
 ### Protocol strictness added in P0.2's second pass (Codex, integrated)
 
 `decode()` now rejects a frame with **duplicate keys** (`bad_json`) —
@@ -1028,3 +1071,10 @@ thirteen things the protocol names, at velocities the server clamps,
 against an allowlist checked at node construction.
 
 `bind:=127.0.0.1` refuses the LAN today if you want that.
+
+**Remote sessions (Phase 2 Part C)** change this for the exposed stack
+only: `docker-compose.remote.yml` runs `access:=code remote:=true` with
+an origin allowlist (the Pages site and localhost), and binds the host
+port to `127.0.0.1`, so the tunnel is the only way in. The control code
+is the only credential; an Origin header is a browser boundary, not
+authentication.

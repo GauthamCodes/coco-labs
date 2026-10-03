@@ -1,0 +1,2 @@
+PASS driver claim: got 'ack' want 'ack'
+PASS set_mode teleop: got 'ack' want 'ack'

@@ -1,0 +1,3 @@
+image sha256:90385a15077702ae9f17139466c8b2ba7edd65dd4751738ab262e34c56e771c2
+idle 20 s, cap 150 s
+[docker] health: healthy

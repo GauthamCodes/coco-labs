@@ -1,0 +1,48 @@
+name: coco-labs
+services:
+  coco:
+    build:
+      context: /home/gautham/coco_live_ws/src/coco-labs
+      dockerfile: Dockerfile
+    container_name: coco-platform
+    environment:
+      COCO_ACCESS: code
+      COCO_GUI: "false"
+      COCO_HTTP_PORT: "8080"
+      COCO_MAX_CLIENTS: "25"
+      COCO_ORIGINS: https://gauthamcodes.github.io,http://localhost:*,http://127.0.0.1:*
+      COCO_REMOTE: "true"
+      COCO_RVIZ: "false"
+      COCO_SESSION_CAP_S: "90"
+      COCO_SESSION_IDLE_S: "20"
+      COCO_TARGET_COLOUR: blue
+      COCO_VIDEO_PORT: "8081"
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -fsS
+        - http://127.0.0.1:8080/healthz
+      timeout: 5s
+      interval: 10s
+      retries: 30
+      start_period: 3m0s
+    image: coco-platform:jazzy
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        host_ip: 127.0.0.1
+        target: 8080
+        published: "8080"
+        protocol: tcp
+    restart: 'no'
+    shm_size: "2147483648"
+    stop_grace_period: 30s
+    ulimits:
+      core:
+        soft: 0
+        hard: 0
+networks:
+  default:
+    name: coco-labs_default

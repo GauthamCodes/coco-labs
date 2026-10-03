@@ -1,0 +1,105 @@
+== listening sockets on this host (ss -ltn), and who holds :8080
+LISTEN 0      128        127.0.0.1:34741      0.0.0.0:*          
+LISTEN 0      4096       127.0.0.1:631        0.0.0.0:*          
+LISTEN 0      4096       127.0.0.1:8080       0.0.0.0:*          
+LISTEN 0      4096   127.0.0.53%lo:53         0.0.0.0:*          
+LISTEN 0      4096      127.0.0.54:53         0.0.0.0:*          
+LISTEN 0      4096           [::1]:631           [::]:*          
+LISTEN 0      64         127.0.0.1:5345       0.0.0.0:*          
+State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess
+-- :8080 bound by:
+LISTEN 0      4096       127.0.0.1:8080       0.0.0.0:*                                    
+== docker port coco-platform
+8080/tcp -> 127.0.0.1:8080
+== paths on 127.0.0.1:8080 (remote:=true serves /ws and /healthz only)
+/healthz               200
+/                      404
+/index.html            404
+/app.js                404
+/frame.js              404
+/legacy.html           404
+/api/session           404
+/api/metrics           404
+/video/camera          404
+/video/annotated       404
+/ws/../api/session     404
+/.git/config           404
+/etc/passwd            404
+== /ws handshake by Origin (101 = upgraded, 403 = refused)
+https://gauthamcodes.github.io                101
+http://localhost:4173                         101
+http://127.0.0.1:5173                         101
+https://evil.example                          403
+https://gauthamcodes.github.io.evil.example   403
+null                                          403
+== /healthz CORS by Origin
+https://gauthamcodes.github.io Access-Control-Allow-Origin: https://gauthamcodes.github.io
+http://localhost:5173          Access-Control-Allow-Origin: http://localhost:5173
+https://evil.example           
+== /healthz body
+{
+ "status": "ready",
+ "ready": true,
+ "lifecycle": "READY",
+ "health": "HEALTHY",
+ "degraded_by": [],
+ "session": "afd62edfd4b2",
+ "missing": [],
+ "components": {
+  "arbiter": {
+   "name": "arbiter",
+   "up": true,
+   "detail": "the command arbiter is reporting"
+  },
+  "lidar": {
+   "name": "lidar",
+   "up": true,
+   "detail": "LiDAR scans are arriving"
+  },
+  "mission": {
+   "name": "mission",
+   "up": true,
+   "detail": "the mission executive is reporting"
+  },
+  "navigation": {
+   "name": "navigation",
+   "up": true,
+   "detail": "navigation is running"
+  },
+  "perception": {
+   "name": "perception",
+   "up": true,
+   "detail": "the target finder is reporting"
+  },
+  "robot": {
+   "name": "robot",
+   "up": true,
+   "detail": "the wheel controller is reporting odometry"
+  },
+  "ros": {
+   "name": "ros",
+   "up": true,
+   "detail": "the platform node is running"
+  },
+  "simulator": {
+   "name": "simulator",
+   "up": true,
+   "detail": "COCO's own simulator is stepping"
+  }
+ },
+ "protocol": "coco.v1",
+ "live": {
+  "access": "code",
+  "driver": false,
+  "clients": 0,
+  "max_clients": 25,
+  "session_left_s": 72.0128196279984,
+  "over": null
+ }
+}
+== the LAN cannot reach :8080 (host port bound to 127.0.0.1)
+10.40.1.125:8080                         000 (000 = no connection)
+172.17.0.1:8080                          000 (000 = no connection)
+172.18.0.1:8080                          000 (000 = no connection)
+== ROS / DDS / Gazebo inside the container are not published
+{"8080/tcp":[{"HostIp":"127.0.0.1","HostPort":"8080"}]}
