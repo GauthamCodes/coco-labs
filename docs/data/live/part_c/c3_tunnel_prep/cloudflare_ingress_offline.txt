@@ -1,0 +1,22 @@
+== image
+cloudflare/cloudflared@sha256:072c067d25ccbe61d46e18f0d0723255f2bb5304f7317caa95b27031520ff92c
+cloudflared version 2026.9.3 (built 2026-09-24-16:19 UTC)
+== ingress validate
+Validating rules from /etc/cloudflared/config.yml
+OK
+== which rule each URL matches (rule 0 = /ws, 1 = /healthz, 2 = catch-all 404)
+https://coco.example.invalid/ws                  Matched rule #0 	service: http://coco:8080 
+https://coco.example.invalid/healthz             Matched rule #1 	service: http://coco:8080 
+https://coco.example.invalid/ws?code=x           Matched rule #0 	service: http://coco:8080 
+https://coco.example.invalid/                    Matched rule #2 	service: http_status:404 
+https://coco.example.invalid/index.html          Matched rule #2 	service: http_status:404 
+https://coco.example.invalid/api/session         Matched rule #2 	service: http_status:404 
+https://coco.example.invalid/api/metrics         Matched rule #2 	service: http_status:404 
+https://coco.example.invalid/video/camera        Matched rule #2 	service: http_status:404 
+https://coco.example.invalid/ws/                 Matched rule #2 	service: http_status:404 
+https://coco.example.invalid/wsx                 Matched rule #2 	service: http_status:404 
+https://coco.example.invalid/ws/../api/session   Matched rule #2 	service: http_status:404 
+https://coco.example.invalid/healthz/x           Matched rule #2 	service: http_status:404 
+https://coco.example.invalid/.git/config         Matched rule #2 	service: http_status:404 
+https://other.example.invalid/ws                 Matched rule #2 	service: http_status:404 
+https://other.example.invalid/healthz            Matched rule #2 	service: http_status:404 

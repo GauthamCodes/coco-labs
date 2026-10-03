@@ -1,0 +1,16 @@
+{
+  "TCP": {
+    "443": { "HTTPS": true }
+  },
+  "Web": {
+    "${TS_CERT_DOMAIN}:443": {
+      "Handlers": {
+        "/ws": { "Proxy": "http://coco:8080/ws" },
+        "/healthz": { "Proxy": "http://coco:8080/healthz" }
+      }
+    }
+  },
+  "AllowFunnel": {
+    "${TS_CERT_DOMAIN}:443": true
+  }
+}

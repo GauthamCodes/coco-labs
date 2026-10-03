@@ -7050,3 +7050,48 @@ use; a real phone.
 
 NEXT: on the tunnel choice, C3 (that tunnel only, at 127.0.0.1:8080),
 then C4 external checks, set `LIVE_REMOTE`, then C6 with the owner.
+
+## Phase 2 · Part C — tunnel-independent work finished; at the tunnel gate (2026-10-03)
+
+Fresh session. Reconciled against git: branch `live`, cbc1e26, matched the
+expected checkpoint (Parts A and B, C1, C2, C4 host half and C5 done). The
+untracked `AGENTS.md` is not ours and was left alone. `live` is **not
+pushed** (the brief: CI once, at the end of Part C).
+
+**Owner decisions in the brief:** STOP is driver/host only; control is
+exclusive; every ending stops; during a mission or an active Nav2 goal,
+**autonomy holds the inactivity lease**, made explicit rather than faked
+as heartbeats; don't push yet. The tunnel is still **not chosen**: the
+brief says not to choose for the owner.
+
+**Built**
+- 89e0239: `control.py` lease. `tick(busy=True)` suspends idle without
+  touching the driver's input time. Fields `lease` and `last_input_s`.
+  A full `idle_s` window starts after autonomy ends; nothing carries to
+  the next driver. The cap is never suspended. lab_web: "Idle release
+  paused: autonomy is running". `remote:=true` refuses empty/`*` origins.
+  No tornado banner and a JSON 404 on the remote surface. status.ts: 503
+  wording, negative numbers dropped. `docs/WEB_API.md`.
+- `docs/live/tunnel/`: both tunnels as inactive compose sidecars,
+  `ingress_check.sh` (offline), `external_check.sh` (to run from outside),
+  README with the vendor facts re-read today and both runbooks.
+
+**Measured**
+- cloudflared 2026.9.3, `--network none`: ingress validate OK; only `/ws`
+  and `/healthz` on the hostname route to coco; 13 other paths/hosts 404.
+- Tests: coco_web 836 → **850**, coco_rl **236**, lab_web vitest 234 →
+  **238**, all 0 failed; tsc, build, check_dist clean. The full
+  `run_all_package_tests.sh` is owed at the end of Part C.
+
+**Unverified**: all of Tailscale; anything through a tunnel;
+`external_check.sh` never run; the lease never driven live.
+
+**Waiting on the owner (the one decision):** Cloudflare named tunnel (a
+hostname on a domain on Cloudflare DNS, plus `tunnel login/create/route
+dns` in a browser), or Tailscale Funnel (the tailnet name; MagicDNS, HTTPS
+and the `funnel` attribute in the admin console; a `tag:coco-live` auth
+key). Hostname-independent preparation is done.
+
+NEXT: on the choice, `docs/live/tunnel/README.md` for that option, then
+`external_check.sh` from another network, set `LIVE_REMOTE`, then the
+"Remote drive gate ready" handoff to the owner's phone (C6).

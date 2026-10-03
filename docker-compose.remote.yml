@@ -15,10 +15,10 @@
 #   - the host port binds 127.0.0.1 ONLY, so nothing on the LAN reaches
 #     it either; the tunnel is the one way in.
 #
-# The tunnel itself is NOT here yet: the owner has not chosen between
-# Tailscale Funnel and a Cloudflare named tunnel (docs/live/PART_A_AUDIT.md
-# §6, docs/live/PART_C_REPORT.md). Whichever it is points at this one
-# port and nothing else.
+# The tunnel itself is NOT here: the owner has not chosen between
+# Tailscale Funnel and a Cloudflare named tunnel. Both are prepared,
+# inactive, in docs/live/tunnel/ (a third -f file, a sidecar on the
+# compose network that reaches coco:8080 and nothing else).
 services:
   coco:
     ports: !override

@@ -1,4 +1,4 @@
-# Phase 2 · Part C — driver, spectators, remote sessions (IN PROGRESS, 2026-10-03)
+# Phase 2 · Part C — driver, spectators, remote sessions (IN PROGRESS, 2026-10-03: at the tunnel gate)
 
 Branch `live`. Evidence: `docs/data/live/part_c/` (gunzip `*.gz` first).
 Harness: `docs/data/live/part_c/scripts/`. Every number is **(measured)**
@@ -11,9 +11,9 @@ unless marked; n = 1 per row. One run is not a rate.
 | precondition | holds: Part A; safety fixes on main (`labs/main` = 54133fe); Part B and its invariants; CI **and** Lab green on 74ab139 (GitHub pull_request runs; the Part B log entry had not recorded this) |
 | C1 Docker fetch | **done: 1/1 COMPLETE** |
 | C2 session model | **done**: pure module + server wiring + live in Docker |
-| C3 tunnel | **BLOCKED: the tunnel choice is still open.** Part A §7 Q4 was never answered; SESSION_LOG records the reply left a placeholder. Everything tunnel-independent is built (`docker-compose.remote.yml`) |
+| C3 tunnel | **PREPARED, NOT ACTIVE; waiting on the owner's choice.** Both options built as compose sidecars in `docs/live/tunnel/` (README there). Cloudflare ingress verified offline; Tailscale untested without an account. Nothing exposed |
 | C4 exposure | **host half done** (below); the external half needs the tunnel |
-| C5 public status | **done**; `LIVE_REMOTE` is `null` until a tunnel exists, so the site truthfully says no session is configured |
+| C5 public status | **done**; `LIVE_REMOTE` is `null` until a tunnel exists, so the site truthfully says no session is configured. 89e0239: a 503 no longer claims only "starting"; negative counts/times are dropped |
 | C6 remote session | not started: needs C3, then the owner on a phone on mobile data |
 | C7 / C8 | not started (final CI after C6) |
 
@@ -27,6 +27,8 @@ unless marked; n = 1 per row. One run is not a rate.
 | c921ec4 | launch args through `mission.launch.py` → `platform.launch.py`; entrypoint env; `docker-compose.remote.yml` (code, remote, origins, **127.0.0.1:8080** via `!override`); `scripts/live_session.sh code\|new\|kill\|status` |
 | c942310 | lab_web: claim box / release / countdowns / spectator STOP shown "driver only"; `status.ts` probe + `schedule.json` + Replay / Docker fallback; `LIVE_REMOTE` in `site.config.ts` (adds exactly its `wss:`+`https:` to the CSP; `check_dist` verifies, exercised with a throwaway value and reverted) |
 | 5494bf9 | C2 live evidence, `docs/WEB_API.md` |
+| 89e0239 | the idle exemption made explicit as an **autonomy-held lease** (below); `remote:=true` refuses an empty/`*` origins list; no `Server: TornadoServer` banner and a bare JSON 404 on the remote surface; status wording |
+| (this commit) | C3 prepared: `docs/live/tunnel/` (both options, offline ingress check, `external_check.sh`) |
 
 Defaults (proposals from Part A §5.3, **not measured**): idle 60 s, cap
 20 min, 25 clients, 60 frames/s, `drive` 20/s, other commands 2/s burst 6,
@@ -34,21 +36,30 @@ Defaults (proposals from Part A §5.3, **not measured**): idle 60 s, cap
 is never rate-limited. `access:=open` (the default) is P0.1's behaviour:
 the whole pre-existing suite passes unchanged.
 
-**One design call to confirm (owner):** while the executive reports a
-mission running, or the browser's Nav2 goal is `accepted`/`executing`,
-the idle clock does not run. Without it a 60 s idle would abort every
-remote fetch (≈ 260 s). The cap still bounds it; an unknown mission
-state is NOT busy (fails closed).
+**The inactivity lease (owner decision, confirmed in the 2026-10-03
+brief).** While the executive reports a mission running, or the browser's
+Nav2 goal is `accepted`/`executing`, **autonomy holds the lease** and the
+idle clock is suspended. This is not counted as driver activity: until
+89e0239 the code wrote the driver's last-activity time, and now it doesn't.
+Telemetry says `lease: autonomy`, `idle_left_s: null`, and `last_input_s`
+keeps growing; the driver's banner says "Idle release paused: autonomy is
+running (the session cap still applies)". When autonomy ends, the lease
+returns to the driver with a full `idle_s` window from that moment. An
+unknown mission state is not autonomy (fail closed). The cap is never
+suspended. Without the lease a 60 s idle would abort every remote fetch
+(≈ 260 s, C1).
 
 ## Tests
 
 `run_all_package_tests.sh`, all 11 packages, domain 74, quiet machine:
-**2665 passed, 0 failed** (Part B: 2512). lab_web vitest **234** (194),
-typecheck, build and `check_dist` clean.
+**2665 passed, 0 failed** (Part B: 2512) on cbc1e26. After 89e0239,
+affected packages only: coco_web **850** (836), coco_rl **236**; lab_web
+vitest **238** (234), typecheck, build and `check_dist` clean. The full
+run is owed at the end of Part C.
 
 | package | Part B | now | what |
 |---|---|---|---|
-| coco_web | 688 | 836 | `test_control.py` (pure, fake clock, no sleeps), `test_live_session.py` (real sockets) |
+| coco_web | 688 | 850 | `test_control.py` (pure, fake clock, no sleeps; +7 lease tests replacing 1), `test_live_session.py` (real sockets; +3 origins refusals, +5 no-banner) |
 | coco_rl | 231 | 236 | remote compose: loopback-only port, code/remote/origins, entrypoint + launch forwarding |
 | others | | unchanged | coco_config 93, coco_sim 280, coco_mission 344, gazebo_models 229, coco_perception 139, coco_moveit_config 12, custom_teleop 75, coco_lab 352, coco_lab_ros 69 |
 
@@ -109,12 +120,26 @@ and several ephemeral ports) are outside Docker and are not what any
 tunnel would point at. **"Nothing else is exposed" is not claimed until
 the external check (C4, after C3).**
 
-## C3 — tunnel: OPEN (owner)
+## C3 — tunnel: PREPARED, NOT ACTIVE (owner choice open)
 
-Part A §6 compared Tailscale Funnel and a Cloudflare named tunnel
-(recommendation: named tunnel if a domain is on Cloudflare, else Funnel).
-Either will point at `127.0.0.1:8080` and nothing else; the compose side
-is ready.
+`docs/live/tunnel/README.md` has the vendor facts (re-read 2026-10-03),
+both runbooks, and what remains to be checked at activation. Both
+connectors are a sidecar on the compose network that reaches `coco:8080`
+(the platform_server that the host publishes on `127.0.0.1:8080`) and
+routes only `/ws` and `/healthz`. No host network, no published port, no
+Docker socket.
+
+| | prepared | verified |
+|---|---|---|
+| Cloudflare named tunnel | `config.yml.template`, compose sidecar (cloudflared 2026.9.3, read-only, caps dropped), `ingress_check.sh` | **offline (measured):** `ingress validate` OK; `/ws`, `/healthz` → coco; 13 other paths and hosts → 404 (`c3_tunnel_prep/cloudflare_ingress_offline.txt`) |
+| Tailscale Funnel | `serve.json` (`/ws`, `/healthz` only, AllowFunnel 443), compose sidecar (userspace, `--shields-up`, `tag:coco-live`), policy-file snippet | **not verified**: needs an account. Three activation checks are listed in the README (proxy to a non-loopback host; mount-path semantics; shields-up vs Funnel) |
+| both | `docker compose config` parses; the only published port is `127.0.0.1:8080` | `external_check.sh HOST [HOME_IP]`: syntax-checked only, **not yet run** |
+
+The one missing input is the owner's: which tunnel, and its hostname
+(Cloudflare: a hostname on a domain on Cloudflare DNS; Tailscale: the
+tailnet name, which appears in the public URL). Each also needs a
+one-time account action that only the owner can do (browser login, or
+the policy file and an auth key).
 
 ## C5 — public Live status
 
@@ -139,7 +164,11 @@ Docker quickstart. The probe is the site's one cross-origin request,
 
 ## Unverified
 
-- Everything through a tunnel (C4 external, C6).
+- Everything through a tunnel (C4 external, C6). The Tailscale
+  configuration as a whole; `external_check.sh` has never run.
+- The lease change (89e0239) is unit- and socket-tested, not yet driven
+  live: C2's idle-release row predates it, but no autonomy ran there, so
+  the path it measured has not changed.
 - The policy defaults under real use (idle 60 s, cap 20 min, rate limits).
 - A real phone driving the Live tab (Part B ran headless Firefox only).
 - The arm stopping mid-grasp on STOP (carried from the safety fixes).

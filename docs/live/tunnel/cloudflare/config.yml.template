@@ -1,0 +1,35 @@
+# PREPARED, NOT ACTIVE. Cloudflare named tunnel (locally managed) for a
+# remote COCO Live session. Phase 2 Part C3; docs/live/tunnel/README.md.
+#
+# Rendered by the owner's choice: replace COCO_TUNNEL_UUID and
+# COCO_TUNNEL_HOSTNAME (cloudflared does not expand environment variables
+# in this file). Locally managed so the ingress rules live HERE, in the
+# repository, not in a dashboard.
+#
+# The connector runs as a sidecar on the compose network
+# (docker-compose.tunnel-cloudflare.yml) and reaches exactly one thing:
+# the platform_server at coco:8080, the same port the host publishes on
+# 127.0.0.1:8080. Only /ws and /healthz are routed; every other path,
+# and every other hostname, is the catch-all 404 at Cloudflare's edge and
+# never reaches COCO. The platform itself (remote:=true) also serves only
+# those two paths -- two independent layers.
+tunnel: COCO_TUNNEL_UUID
+credentials-file: /etc/cloudflared/COCO_TUNNEL_UUID.json
+
+# The metrics listener, pinned to the sidecar's OWN loopback (its network
+# namespace contains nothing else, and it publishes no ports).
+metrics: 127.0.0.1:20241
+no-autoupdate: true
+
+ingress:
+  # coco.v1 WebSocket. Path regex is Go syntax, anchored on both ends, and
+  # matched against the path only (no query string).
+  - hostname: COCO_TUNNEL_HOSTNAME
+    path: ^/ws$
+    service: http://coco:8080
+  # Public health surface: the site's "live now" probe.
+  - hostname: COCO_TUNNEL_HOSTNAME
+    path: ^/healthz$
+    service: http://coco:8080
+  # Mandatory catch-all.
+  - service: http_status:404

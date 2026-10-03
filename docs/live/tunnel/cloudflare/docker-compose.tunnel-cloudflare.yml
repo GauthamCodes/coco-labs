@@ -1,0 +1,28 @@
+# PREPARED, NOT ACTIVE. Cloudflare named-tunnel sidecar for a remote COCO
+# Live session. Phase 2 Part C3; docs/live/tunnel/README.md.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.remote.yml \
+#     -f docs/live/tunnel/cloudflare/docker-compose.tunnel-cloudflare.yml up -d
+#
+# The sidecar is on the compose network only: no host network, no
+# published ports, no Docker socket, no host filesystem beyond its own
+# read-only config and credentials. It dials OUT to Cloudflare; nothing
+# dials in.
+services:
+  tunnel:
+    # 2026.9.3 is the version ingress_check.sh validated these rules with
+    # (docs/data/live/part_c/c3_tunnel_prep/cloudflare_ingress_offline.txt).
+    image: cloudflare/cloudflared:${COCO_CLOUDFLARED_TAG:-2026.9.3}
+    container_name: coco-tunnel
+    command: ["tunnel", "--config", "/etc/cloudflared/config.yml", "run"]
+    volumes:
+      # config.yml rendered from config.yml.template, and the tunnel's
+      # credentials JSON from `cloudflared tunnel create`. Never committed.
+      - ${COCO_TUNNEL_DIR:?set COCO_TUNNEL_DIR to the rendered config dir}:/etc/cloudflared:ro
+    depends_on:
+      coco:
+        condition: service_healthy
+    read_only: true
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    restart: "no"
