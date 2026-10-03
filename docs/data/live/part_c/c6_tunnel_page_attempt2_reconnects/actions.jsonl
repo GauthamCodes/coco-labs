@@ -1,0 +1,36 @@
+{"t": 1791047790.8861387, "kind": "cond", "label": "ready", "ok": true, "after": 3.687191963195801}
+{"t": 1791047790.8875852, "kind": "cond", "label": "localised", "ok": true, "after": 0.0013577938079833984}
+{"t": 1791047790.8905268, "kind": "dom_start", "dom": {"badge": "Live \u2014 remote session", "conn": "connected", "rate": "telemetry 0.0 Hz (measured here)", "fallback": null, "latched": "STOPPED (latched). Pick a mode, or start a mission, to move again.", "override": null, "mode": "idle", "source": "nothing (wheels held still)", "holder": "nobody \u2014 enter the control code to drive", "lane": null, "mission": null, "goal": null, "localised": null, "timeline": [], "status": "Live now, 19 min left. Nobody is driving yet; the host has the control code.", "session": "You are watching. Control code Take control"}}
+{"t": 1791047791.0085278, "kind": "click", "target": "live-code", "t_page": 1791047791007}
+{"t": 1791047791.1421723, "kind": "click", "target": "live-claim", "t_page": 1791047791140}
+{"t": 1791047791.513018, "kind": "claimed", "after": 0.3093411922454834, "dom": {"badge": "Live \u2014 remote session", "conn": "connected", "rate": "telemetry 2.2 Hz (measured here)", "fallback": null, "latched": "STOPPED (latched). Pick a mode, or start a mission, to move again.", "override": null, "mode": "idle", "source": "nothing (wheels held still)", "holder": "you (the driver)", "lane": null, "mission": null, "goal": null, "localised": null, "timeline": [], "status": "Live now, 19 min left. Nobody is driving yet; the host has the control code.", "session": "You are the driver. Idle release in 60 s. Session ends in 19 min. Release control (stops COCO)"}}
+{"t": 1791047791.6173003, "kind": "click", "target": "live-panel-teleop", "t_page": 1791047791616}
+{"t": 1791047792.6834154, "kind": "phase", "name": "presses"}
+{"t": 1791047853.1804996, "kind": "phase", "name": "stop_while_held"}
+{"t": 1791047853.9918272, "kind": "click", "target": "live-stop", "t_page": 1791047853989}
+{"t": 1791047857.3868415, "kind": "dom_after_stop", "dom": {"badge": "Live \u2014 remote session", "conn": "connected", "rate": "telemetry 14.6 Hz (measured here)", "fallback": null, "latched": "STOPPED (latched). Pick a mode, or start a mission, to move again.", "override": null, "mode": "idle", "source": "nothing (wheels held still)", "holder": "nobody \u2014 enter the control code to drive", "lane": null, "mission": null, "goal": null, "localised": null, "timeline": [], "status": "Live now, 18 min left. Nobody is driving yet; the host has the control code.", "session": "You are watching. Control code Take control"}}
+{"t": 1791047857.3869913, "kind": "phase", "name": "nav2"}
+{"t": 1791047857.3969364, "kind": "click", "target": "live-panel-nav2", "t_page": 1791047857393}
+{"t": 1791047858.4725928, "kind": "goal", "x": 1.0, "y": 0.0, "screen": [319.36841741753256, 678.5000046081841], "t_page": 1791047858471}
+{"t": 1791047978.714421, "kind": "cond", "label": "goal_1.0_0.0", "ok": false, "after": 120}
+{"t": 1791047978.7210348, "kind": "goal_done", "x": 1.0, "y": 0.0, "ok": false, "status": null, "pose": {"x": -0.01416382290914919, "y": 0.00020866624871027472, "z": 0, "yaw": -0.0006141115784108335}, "truth": {"x": -0.014374292551642576, "y": 7.916314831909798e-08, "yaw": 5.587828139394297e-07}}
+{"t": 1791047980.2342172, "kind": "goal", "x": 0.5, "y": 1.2, "screen": [303.10525976513566, 639.4368472955337], "t_page": 1791047980232}
+{"t": 1791048100.3242128, "kind": "cond", "label": "goal_0.5_1.2", "ok": false, "after": 120}
+{"t": 1791048100.3298068, "kind": "goal_done", "x": 0.5, "y": 1.2, "ok": false, "status": null, "pose": {"x": -0.01416382290914919, "y": 0.00020866624871027472, "z": 0, "yaw": -0.0006141115784108335}, "truth": {"x": -0.014374292551642576, "y": 7.916314831909798e-08, "yaw": 5.587828139394297e-07}}
+{"t": 1791048101.8426116, "kind": "goal", "x": 2.0, "y": 0.5, "screen": [351.89473272232635, 662.2236890612463], "t_page": 1791048101840}
+{"t": 1791048222.0735917, "kind": "cond", "label": "goal_2.0_0.5", "ok": false, "after": 120}
+{"t": 1791048222.081215, "kind": "goal_done", "x": 2.0, "y": 0.5, "ok": false, "status": null, "pose": {"x": -0.01416382290914919, "y": 0.00020866624871027472, "z": 0, "yaw": -0.0006141115784108335}, "truth": {"x": -0.014374292551642576, "y": 7.916314831909798e-08, "yaw": 5.587828139394297e-07}}
+{"t": 1791048223.5909023, "kind": "goal", "x": 0.0, "y": -1.5, "screen": [286.84210211273876, 727.3289512489971], "t_page": 1791048223589}
+{"t": 1791048343.7523975, "kind": "cond", "label": "goal_0.0_-1.5", "ok": false, "after": 120}
+{"t": 1791048343.7582293, "kind": "goal_done", "x": 0.0, "y": -1.5, "ok": false, "status": null, "pose": {"x": -0.01416382290914919, "y": 0.00020866624871027472, "z": 0, "yaw": -0.0006141115784108335}, "truth": {"x": -0.014374292551642576, "y": 7.916314831909798e-08, "yaw": 5.587828139394297e-07}}
+{"t": 1791048345.2703402, "kind": "goal", "x": -0.5, "y": 0.8, "screen": [270.5789444603418, 652.4578997330838], "t_page": 1791048345267}
+{"t": 1791048465.4176342, "kind": "cond", "label": "goal_-0.5_0.8", "ok": false, "after": 120}
+{"t": 1791048465.424908, "kind": "goal_done", "x": -0.5, "y": 0.8, "ok": false, "status": null, "pose": {"x": -0.01416382290914919, "y": 0.00020866624871027472, "z": 0, "yaw": -0.0006141115784108335}, "truth": {"x": -0.014374292551642576, "y": 7.916314831909798e-08, "yaw": 5.587828139394297e-07}}
+{"t": 1791048466.937532, "kind": "goal", "x": 2.5, "y": -0.5, "screen": [368.1578903747233, 694.7763201551218], "t_page": 1791048466935}
+{"t": 1791048587.0567744, "kind": "cond", "label": "goal_2.5_-0.5", "ok": false, "after": 120}
+{"t": 1791048587.0645633, "kind": "goal_done", "x": 2.5, "y": -0.5, "ok": false, "status": null, "pose": {"x": -0.01416382290914919, "y": 0.00020866624871027472, "z": 0, "yaw": -0.0006141115784108335}, "truth": {"x": -0.014374292551642576, "y": 7.916314831909798e-08, "yaw": 5.587828139394297e-07}}
+{"t": 1791048588.5767496, "kind": "goal", "x": 0.0, "y": 0.0, "screen": [286.84210211273876, 678.5000046081841], "t_page": 1791048588574}
+{"t": 1791048708.7044294, "kind": "cond", "label": "goal_0.0_0.0", "ok": false, "after": 120}
+{"t": 1791048708.7114093, "kind": "goal_done", "x": 0.0, "y": 0.0, "ok": false, "status": null, "pose": {"x": -0.01416382290914919, "y": 0.00020866624871027472, "z": 0, "yaw": -0.0006141115784108335}, "truth": {"x": -0.014374292551642576, "y": 7.916314831909798e-08, "yaw": 5.587828139394297e-07}}
+{"t": 1791048710.305585, "kind": "dom_end", "dom": {"badge": "Live \u2014 remote session", "conn": "connected", "rate": "telemetry 4.8 Hz (measured here)", "fallback": null, "latched": "STOPPED (latched). Pick a mode, or start a mission, to move again.", "override": null, "mode": "idle", "source": "nothing (wheels held still)", "holder": "nobody \u2014 enter the control code to drive", "lane": null, "mission": null, "goal": null, "localised": null, "timeline": [], "status": "Live now, 4 min left. Nobody is driving yet; the host has the control code.", "session": "You are watching. Control code Take control"}}
+{"t": 1791048710.3613412, "kind": "done"}

@@ -143,6 +143,26 @@ LIMITS = {
     },
 }
 
+#: A REMOTE session's budget (Phase 2 Part C; remote:=true only).
+#:
+#: Measured through Tailscale Funnel (docs/live/PART_C_REPORT.md, C6
+#: soak): the whole connection carried ~58 KiB/s, while this host's own
+#: uplink did 1.83 MB/s, so the ceiling is the tunnel's. At the local
+#: defaults (telemetry 10 Hz, camera 10 fps) the backlog grew in buffers
+#: BEYOND this server (kernel, tailscaled, the relay), where the in-flight
+#: bound above cannot see it, until even the keepalive ping was stuck
+#: behind it and the socket closed at 44.6 s. So a remote session sends
+#: telemetry at half the tick rate and starts the camera low and small,
+#: with ceilings a client cannot negotiate past. Derived total at these
+#: defaults: ~31 KiB/s, about half the measured ceiling.
+REMOTE_TELEMETRY_HZ = 5.0
+REMOTE_LIMITS = {
+    'camera': dict(LIMITS['camera'], fps=3.0, fps_max=5.0,
+                   scale=0.5, scale_max=0.5),
+    'depth': dict(LIMITS['depth'], fps=2.0, fps_max=3.0,
+                  scale=0.5, scale_max=0.5),
+}
+
 #: Bytes of unflushed socket buffer past which even a first frame is
 #: dropped. A stalled TCP connection can leave a write "in flight"
 #: indefinitely; this is the second bound, on the transport rather than
@@ -176,15 +196,16 @@ def _validated_names(names):
     return set(values)
 
 
-def clamp(stream, field, value):
+def clamp(stream, field, value, table=None):
     """
     Clamp one tunable to its documented bounds.
 
     Clamped rather than refused, for the same reason velocity is: a
     client asking for 30 fps wants "as fast as you can", and answering
-    that with an error helps nobody.
+    that with an error helps nobody. ``table`` is LIMITS unless given
+    (REMOTE_LIMITS for a remote session).
     """
-    limits = LIMITS.get(stream)
+    limits = (LIMITS if table is None else table).get(stream)
     if limits is None or f'{field}_min' not in limits:
         return None
     low, high = limits[f'{field}_min'], limits[f'{field}_max']
@@ -243,13 +264,16 @@ def filter_telemetry(frame, subscription):
 class Subscription:
     """One client's streams, its negotiated rates, and its backlog."""
 
-    def __init__(self, streams=None, binary=False):
+    def __init__(self, streams=None, binary=False, limits=None):
         """Start from the default set unless the client named others."""
         self.streams = _validated_names(
             DEFAULT_STREAMS if streams is None else streams)
         self._closed = False
         self.binary = bool(binary)
-        self.config = {name: dict(values) for name, values in LIMITS.items()}
+        #: LIMITS, or REMOTE_LIMITS for a remote session's socket.
+        self.limits = LIMITS if limits is None else limits
+        self.config = {name: dict(values)
+                       for name, values in self.limits.items()}
         self.sent = {name: 0 for name in STREAMS}
         self.dropped = {name: 0 for name in STREAMS}
         #: STATE frames replaced by a newer one before they could be sent.
@@ -324,7 +348,7 @@ class Subscription:
         for field, value in fields.items():
             if value is None:
                 continue
-            clamped = clamp(stream, field, value)
+            clamped = clamp(stream, field, value, self.limits)
             if clamped is not None:
                 target[field] = clamped
         return dict(target)

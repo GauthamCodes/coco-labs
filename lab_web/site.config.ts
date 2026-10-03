@@ -25,11 +25,12 @@ export const LIVE_CONNECT_SRC_LOCAL: readonly string[] = ['ws://localhost:*', 'w
 /**
  * The scheduled REMOTE session's endpoint (Phase 2 Part C): the coco.v1
  * WebSocket. The public Live tab probes the same host's /healthz to say
- * "live now" truthfully. `null` until a tunnel exists: the tunnel choice is
- * still the owner's (docs/live/PART_C_REPORT.md). Setting it adds exactly
- * this host's wss: and https: origins to the CSP, nothing wider.
+ * "live now" truthfully -- only when that endpoint reports an open session,
+ * never because it is set here. The owner's Tailscale Funnel
+ * (docs/live/tunnel/README.md); offline between sessions. Setting it adds
+ * exactly this host's wss: and https: origins to the CSP, nothing wider.
  */
-export const LIVE_REMOTE: { ws: string } | null = null;
+export const LIVE_REMOTE: { ws: string } | null = { ws: 'wss://coco-live.taile7cb60.ts.net/ws' };
 
 /** The remote endpoint's two origins, for the CSP; none when unset. */
 export function remoteConnectSrc(remote: { ws: string } | null): string[] {

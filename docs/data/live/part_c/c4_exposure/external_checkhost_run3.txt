@@ -1,0 +1,10 @@
+at 2026-10-03T17:08:30Z
+https://coco-live.taile7cb60.ts.net/.git/config  not checked (check-host.net refused the request)
+https://coco-live.taile7cb60.ts.net:8443/healthz     si1.node.check-host.net      code=None msg=Broken pipe t=0.87605094909668
+https://coco-live.taile7cb60.ts.net:8443/healthz     ua1.node.check-host.net      code=None msg=Broken pipe t=0.779067993164062
+https://coco-live.taile7cb60.ts.net:8443/healthz     us1.node.check-host.net      code=None msg=Broken pipe t=0.537631034851074
+https://coco-live.taile7cb60.ts.net:8443/healthz     vn1.node.check-host.net      code=None msg=Broken pipe t=0.496639013290405
+https://coco-live.taile7cb60.ts.net:10000/healthz    br1.node.check-host.net      code=None msg=Broken pipe t=0.898916006088257
+https://coco-live.taile7cb60.ts.net:10000/healthz    de4.node.check-host.net      code=None msg=Broken pipe t=0.775053977966309
+https://coco-live.taile7cb60.ts.net:10000/healthz    ru1.node.check-host.net      code=None msg=Broken pipe t=0.864500999450684
+https://coco-live.taile7cb60.ts.net:10000/healthz    ru3.node.check-host.net      code=None msg=Broken pipe t=0.869375944137573

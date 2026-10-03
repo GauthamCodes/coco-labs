@@ -11,9 +11,11 @@
 # serve.json (beside this file) routes /ws and /healthz ONLY, to coco:8080
 # on the compose network -- the same platform_server the host publishes on
 # 127.0.0.1:8080 -- and turns Funnel on for 443. Userspace networking (no
-# TUN device) and --shields-up (no incoming tailnet connections): the node
-# offers the internet and the tailnet nothing but those two paths. Runs as
-# the host user with every capability dropped. No host network, no
+# TUN device, no Tailscale SSH). NOT --shields-up: Tailscale refuses to turn
+# Funnel on while it is set (measured 2026-10-03, "Unable to turn on Funnel
+# while shields-up is enabled"). Shields-up only ever governed connections
+# from the owner's own tailnet devices, never the internet. Runs as the
+# host user with every capability dropped. No host network, no
 # published ports, no Docker socket.
 services:
   tunnel:
@@ -29,7 +31,10 @@ services:
       TS_USERSPACE: "true"
       TS_SERVE_CONFIG: "/config/serve.json"
       # tag:coco-live is the ONE node the policy file grants `funnel`.
-      TS_EXTRA_ARGS: "--shields-up --advertise-tags=tag:coco-live"
+      # --reset: every start asserts exactly these settings, never ones a
+      # previous run left in the state (measured: a stale --shields-up
+      # made `tailscale up` refuse and the sidecar exit).
+      TS_EXTRA_ARGS: "--reset --advertise-tags=tag:coco-live"
     volumes:
       - ${COCO_TS_STATE:?set COCO_TS_STATE to the persistent state dir}:/var/lib/tailscale
       - ./docs/live/tunnel/tailscale/serve.json:/config/serve.json:ro

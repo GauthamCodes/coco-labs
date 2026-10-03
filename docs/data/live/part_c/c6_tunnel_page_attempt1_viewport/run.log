@@ -1,0 +1,24 @@
+True: new session, control code TE68RT63
+Traceback (most recent call last):
+  File "/home/gautham/ros2_ws(personal)/src/coco-robot-ros2/.claude/worktrees/lab1/scripts/live_check/live_b.py", line 208, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/gautham/ros2_ws(personal)/src/coco-robot-ros2/.claude/worktrees/lab1/scripts/live_check/live_b.py", line 189, in main
+    await teleop_nav(b, ctx)
+  File "/home/gautham/ros2_ws(personal)/src/coco-robot-ros2/.claude/worktrees/lab1/scripts/live_check/live_b.py", line 115, in teleop_nav
+    await b.click(ctx, pt[0], pt[1])
+  File "/home/gautham/ros2_ws(personal)/src/coco-robot-ros2/.claude/worktrees/lab1/scripts/live_check/../browser_check/bidi.py", line 80, in click
+    await self.cmd('input.performActions', context=ctx, actions=[{
+  File "/home/gautham/ros2_ws(personal)/src/coco-robot-ros2/.claude/worktrees/lab1/scripts/live_check/../browser_check/bidi.py", line 55, in cmd
+    raise RuntimeError(
+RuntimeError: input.performActions: move target out of bounds: Move target (269, 699) is out of bounds of viewport dimensions (1366, 682)
+live_b exit 1
+preview left: 0

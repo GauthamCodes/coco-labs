@@ -75,14 +75,22 @@ def test_the_sidecar_publishes_nothing_and_touches_no_host_surface():
     assert '/config/serve.json:ro' in mounts
 
 
-def test_the_node_is_userspace_shields_up_and_tagged():
-    """No TUN device, no incoming tailnet connections, one granted tag."""
+def test_the_node_is_userspace_tagged_and_runs_no_ssh_server():
+    """
+    No TUN device, no Tailscale SSH, one granted tag.
+
+    Not --shields-up: Tailscale refuses to turn Funnel on while it is set
+    (measured, 2026-10-03), so the sidecar exited and nothing was served.
+    """
     env = _compose()['services']['tunnel']['environment']
     assert env['TS_USERSPACE'] == 'true'
     assert env['TS_SERVE_CONFIG'] == '/config/serve.json'
     args = env['TS_EXTRA_ARGS'].split()
-    assert '--shields-up' in args
+    assert '--shields-up' not in args
+    assert not any(a.startswith('--ssh') for a in args)
     assert '--advertise-tags=tag:coco-live' in args
+    # Each start asserts exactly this configuration, nothing left in state.
+    assert '--reset' in args
 
 
 def test_the_tailscale_image_is_pinned():

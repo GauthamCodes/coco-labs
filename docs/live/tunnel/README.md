@@ -81,7 +81,8 @@ read the mounted credentials; the first `tunnel run` logs four connections.
 There's no Tailscale on the host and no sudo, so the node is the
 `tailscale/tailscale:v1.102.5` container. It runs as the host uid with
 every capability dropped (this works: measured, the node reached its login
-step). It is userspace-only, `--shields-up`, and tagged `tag:coco-live`.
+step). It is userspace-only and tagged `tag:coco-live`. It is **not**
+`--shields-up`: Funnel refuses to start with it (measured).
 
 Owner, once (browser; **in this order**, because the login asks for the tag):
 1. Admin console → **Access controls**: merge into the policy file
@@ -113,7 +114,8 @@ without an account**):
    namespace, `--shields-up` then becomes load-bearing.
 2. That a handler at `/ws` proxies the upgrade to `/ws` (and doesn't strip
    the mount path), and that `/` and `/api/session` are 404 at the node.
-3. That `--shields-up` does not also block Funnel, and that `cap_drop: ALL`
+3. ~~That `--shields-up` does not also block Funnel~~: it does (measured,
+   2026-10-03); dropped. And that `cap_drop: ALL`
    is compatible with userspace networking.
 
 ## After either: the external check, and the site

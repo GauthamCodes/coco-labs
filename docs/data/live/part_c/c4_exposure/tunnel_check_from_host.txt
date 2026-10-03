@@ -1,0 +1,42 @@
+== vantage
+  egress ip: 43.224.159.233
+  resolve:   2403:2500:400:20::e8e 2403:2500:400:20::25a 
+  at:        2026-10-03T16:59:20Z
+== /healthz
+  GET /healthz -> 200; {  "status": "ready",  "ready": true,  "lifecycle": "READY",  "health": "HEALTHY",  "degraded_by": [],  "session": "081628e8a9c7",  "missing": [],  "components": {   "arbiter": {    "name": "arbiter",    "up": true,    "detail": "the command arbiter is reporting"   },   "lidar": {    "name": "lidar"
+  Origin https://gauthamcodes.github.io -> ACAO 'https://gauthamcodes.github.io'
+  Origin https://evil.example -> ACAO ''
+  Origin null -> ACAO ''
+  Server header: ''
+== /ws upgrade by Origin (101 admitted, 403 refused)
+  Origin https://gauthamcodes.github.io -> 101
+  Origin http://localhost:4173 -> 101
+  Origin https://evil.example -> 403
+  Origin https://gauthamcodes.github.io.evil.example -> 403
+  Origin null -> 403
+  (no Origin header -> 101; a non-browser client: the control code, not the origin, is the credential)
+== paths that must not exist (404)
+  GET / -> 404
+  GET /index.html -> 404
+  GET /app.js -> 404
+  GET /frame.js -> 404
+  GET /legacy.html -> 404
+  GET /api/session -> 404
+  GET /api/metrics -> 404
+  GET /video/camera -> 404
+  GET /video/annotated -> 404
+  GET /ws/ -> 404
+  GET /wsx -> 404
+  GET /healthz/x -> 404
+  GET /.git/config -> 404
+  GET /etc/passwd -> 404
+  GET /docker.sock -> 404
+  GET /v1.43/containers/json -> 404
+  GET /_ping -> 404
+  GET /metrics -> 404
+  POST /healthz -> 405
+== Funnel's other ports on this hostname (only 443 is configured)
+  https://coco-live.taile7cb60.ts.net:8443/healthz -> 000
+  https://coco-live.taile7cb60.ts.net:10000/healthz -> 000
+  http://coco-live.taile7cb60.ts.net/healthz (cleartext) -> 302
+== verdict: PASS

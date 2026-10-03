@@ -12,13 +12,16 @@
 # public address belongs to the network's operator, and Funnel's ingress
 # servers belong to Tailscale. That nothing ELSE on the host is reachable is
 # shown host-side instead: it has no non-loopback listener at all
-# (docs/data/live/part_c/scripts/exposure_local.sh).
+# (docs/data/live/part_c/scripts/host_listeners.sh, exposure_local.sh).
 #
 # Expected: /healthz 200 or 503 with "protocol": "coco.v1"; /ws 101 for
 # the Pages origin and localhost; 403 for foreign or null origins; every
 # other path 404; 8443 and 10000 not served; no tornado banner.
 set -u
 HOST="${1:?usage: external_check.sh HOST}"
+# COCO_CHECK_IP=-4 (or -6) pins the IP family, for a vantage where one is
+# broken (the COCO host has no working IPv6: measured).
+curl() { command curl ${COCO_CHECK_IP:-} "$@"; }
 PAGES="https://gauthamcodes.github.io"
 FAIL=0
 bad() { echo "  !! $*"; FAIL=1; }

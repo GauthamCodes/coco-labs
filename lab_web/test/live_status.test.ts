@@ -210,9 +210,12 @@ describe('no active session: the fallback', () => {
 });
 
 describe('the endpoint and the CSP', () => {
-  it('no remote endpoint is configured until a tunnel exists', () => {
-    expect(LIVE_REMOTE).toBeNull();
-    expect(liveConnectSrc()).toEqual([...LIVE_CONNECT_SRC_LOCAL]);
+  it('the remote endpoint is the owner\'s Funnel, and the CSP gains exactly its two origins', () => {
+    // Was null until the tunnel existed (Part C3). A different host here
+    // must be a deliberate change, not a drive-by edit.
+    expect(LIVE_REMOTE).toEqual({ ws: 'wss://coco-live.taile7cb60.ts.net/ws' });
+    expect(liveConnectSrc()).toEqual([
+      ...LIVE_CONNECT_SRC_LOCAL, 'wss://coco-live.taile7cb60.ts.net', 'https://coco-live.taile7cb60.ts.net']);
   });
 
   it('a configured endpoint adds exactly its own wss: and https: origins', () => {

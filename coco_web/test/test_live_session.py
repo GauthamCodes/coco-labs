@@ -458,6 +458,60 @@ def test_remote_responses_carry_no_server_banner(method, path):
         assert resp.code == 404
 
 
+@pytest.mark.parametrize('remote,expected', [(True, 5), (False, 10)])
+def test_a_remote_platform_sends_telemetry_at_its_budget(remote, expected):
+    """
+    Ten ticks: a remote platform sends 5 telemetry frames, a local one 10.
+
+    The 10 Hz tick still runs (idle, cap and STOP enforcement keep their
+    resolution); only what goes down the wire is halved, because through
+    Funnel the connection's ceiling was measured at ~58 KiB/s.
+    """
+    async def body():
+        h = await Harness(CodeNode(remote=remote)).start()
+        fixed(h)
+        ws = await h.client()
+        frames = []
+        for _ in range(10):
+            h.platform.tick()
+            await asyncio.sleep(0.02)
+        try:
+            while True:
+                raw = await asyncio.wait_for(ws.read_message(), 0.5)
+                if raw is None:
+                    break
+                if isinstance(raw, str) and json.loads(raw)['type'] == 'telemetry':
+                    frames.append(raw)
+        except asyncio.TimeoutError:
+            pass
+        await h.stop()
+        return len(frames), h.platform
+    count, platform = _run(body())
+    assert count == expected
+    assert platform.control.code_mode
+
+
+@pytest.mark.parametrize('remote', [True, False])
+def test_a_remote_client_gets_the_remote_camera_budget(remote):
+    """A remote socket's camera is clamped to REMOTE_LIMITS; local is not."""
+    from coco_web import streams as st
+
+    async def body():
+        h = await Harness(CodeNode(remote=remote)).start()
+        ws = await h.client()
+        reply = await frame(h, ws, {'type': 'set_stream', 'stream': 'camera',
+                                    'fps': 30, 'scale': 1.0})
+        config = [dict(c.subscription.config['camera'])
+                  for c in h.platform.clients]
+        await h.stop()
+        return reply, config
+    reply, config = _run(body())
+    assert reply['type'] == 'ack' and len(config) == 1
+    limits = st.REMOTE_LIMITS if remote else st.LIMITS
+    assert config[0]['fps'] == limits['camera']['fps_max']
+    assert config[0]['scale'] == limits['camera']['scale_max']
+
+
 def test_a_local_platform_still_serves_the_page():
     """remote:=false (default) keeps every route, as before."""
     async def body():

@@ -186,6 +186,39 @@ def test_the_rate_cap_sits_below_the_sensor_rate():
     assert st.LIMITS['camera']['fps_max'] <= 15.0
 
 
+def test_a_remote_session_has_a_smaller_camera_budget():
+    """
+    Through Tailscale Funnel the WHOLE connection carried ~58 KiB/s.
+
+    Measured (Part C, c6_tunnel_soak): the camera's default 10 fps on top
+    of 10 Hz telemetry exceeded it, the backlog hid in buffers past the
+    server, and the keepalive closed the socket at 44.6 s. A remote
+    session starts lower and cannot be talked above its ceiling.
+    """
+    sub = st.Subscription(limits=st.REMOTE_LIMITS)
+    assert sub.config['camera']['fps'] < st.LIMITS['camera']['fps']
+    asked = sub.configure('camera', fps=60.0, scale=1.0)
+    assert asked['fps'] == st.REMOTE_LIMITS['camera']['fps_max'] <= 5.0
+    assert asked['scale'] == st.REMOTE_LIMITS['camera']['scale_max'] <= 0.5
+    # The local appliance is unchanged.
+    assert st.Subscription().configure('camera', fps=60.0)['fps'] == 15.0
+
+
+def test_the_remote_budget_sits_well_under_the_measured_ceiling():
+    """
+    Derived: telemetry + lidar + camera at the remote defaults < 60 %.
+
+    Frame sizes are the ones measured over the tunnel (telemetry 4.6 KB
+    with binary lidar, lidar 0.67 KB, camera 2.0 KB at full scale, which
+    is about a quarter of that at half scale).
+    """
+    ceiling = 58.0 * 1024
+    cam = st.REMOTE_LIMITS['camera']
+    budget = (st.REMOTE_TELEMETRY_HZ * 4600 + 10 * 670
+              + cam['fps'] * 2000 * cam['scale'] ** 2)
+    assert budget < 0.6 * ceiling
+
+
 def test_quality_and_scale_are_clamped_too():
     """Every tunable has bounds, not just the rate."""
     sub = st.Subscription()

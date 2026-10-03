@@ -20,7 +20,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
 from bidi import Bidi, launch  # noqa: E402
 
 OUT, URL, SCEN, ARGS = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4:]
-PORT = 9226
+PORT = int(os.environ.get('COCO_BIDI_PORT', '9226'))
+#: Phase 2 Part C: a code-access session. With COCO_CODE set the page is
+#: driven exactly as a remote driver would: read the public status line,
+#: type the code into the claim box, press Take control.
+CODE = os.environ.get('COCO_CODE')
 log = open(os.path.join(OUT, 'actions.jsonl'), 'a', buffering=1)
 
 #: Map-frame goals on free floor (each had a 0.45 m free neighbourhood on
@@ -76,7 +80,8 @@ async def dom(b, ctx):
               source: tx('live-source'), holder: tx('live-holder'),
               lane: tx('live-lane-told'), mission: tx('live-mission'),
               goal: tx('live-goal'), localised: tx('live-localised'),
-              timeline: [...document.querySelectorAll('[data-testid="live-timeline"] li')].map(e => e.textContent)};
+              timeline: [...document.querySelectorAll('[data-testid="live-timeline"] li')].map(e => e.textContent),
+              status: tx('live-status-words'), session: tx('live-session')};
     })()''')
 
 
@@ -119,6 +124,24 @@ async def teleop_nav(b, ctx):
         await asyncio.sleep(1.5)
 
 
+async def claim(b, ctx, code):
+    await click_testid(b, ctx, 'live-code')
+    acts = []
+    for ch in code:
+        acts += [{'type': 'keyDown', 'value': ch}, {'type': 'keyUp', 'value': ch}]
+    await b.keys(ctx, acts)
+    await click_testid(b, ctx, 'live-claim')
+    t0 = time.time()
+    while time.time() - t0 < 10:
+        if await b.eval(ctx, '!!document.querySelector(\'[data-testid="live-release"]\')'):
+            w('claimed', after=time.time() - t0, dom=await dom(b, ctx))
+            await b.shot(ctx, os.path.join(OUT, 'claimed.png'))
+            return True
+        await asyncio.sleep(0.1)
+    w('claimed', after=None, dom=await dom(b, ctx))
+    return False
+
+
 async def fetch(b, ctx, colour, preempt):
     await click_testid(b, ctx, 'live-panel-auto')
     await asyncio.sleep(0.5)
@@ -154,16 +177,26 @@ async def main():
         await b.cmd('session.new', capabilities={})
         tree = await b.cmd('browsingContext.getTree')
         ctx = tree['contexts'][0]['context']
+        # Explicit viewport: the headless window's own was 1366x682 here,
+        # which put the map below the fold once Part C added the status
+        # card and session banner (measured: a goal click out of bounds).
+        await b.cmd('browsingContext.setViewport', context=ctx,
+                    viewport={'width': 1400, 'height': 1100})
         await b.cmd('browsingContext.navigate', context=ctx, url=URL, wait='complete')
         ok = await wait_tele(b, ctx, 't.robot.online && t.nav.online && t.mission && t.mission.online',
                              300, 'ready')
         await wait_tele(b, ctx, 't.robot.localised', 60, 'localised')
         w('dom_start', dom=await dom(b, ctx))
         await b.shot(ctx, os.path.join(OUT, 'start.png'))
-        if ok and SCEN == 'teleop_nav':
-            await teleop_nav(b, ctx)
-        elif ok and SCEN == 'fetch':
-            await fetch(b, ctx, ARGS[0], 'preempt' in ARGS[1:])
+        if ok and CODE:
+            ok = await claim(b, ctx, CODE)
+        try:
+            if ok and SCEN == 'teleop_nav':
+                await teleop_nav(b, ctx)
+            elif ok and SCEN == 'fetch':
+                await fetch(b, ctx, ARGS[0], 'preempt' in ARGS[1:])
+        except Exception as exc:  # noqa: BLE001 - keep the page log
+            w('scenario_error', error=repr(exc))
         await b.shot(ctx, os.path.join(OUT, 'end.png'))
         w('dom_end', dom=await dom(b, ctx))
         page = await b.eval(ctx, '''(() => ({

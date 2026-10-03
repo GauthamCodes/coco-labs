@@ -4,7 +4,7 @@
 # grants it. State persists in $COCO_TS_STATE (default
 # ~/coco_tailscale_state), which the compose sidecar then reuses.
 #
-#   login  start a throwaway tailscaled (userspace, shields-up, no serve
+#   login  start a throwaway tailscaled (userspace, no serve
 #          config, so nothing is served) and print the login URL
 #   wait   wait for the login to complete; print the node's DNS name
 #   caps   the node's MagicDNS name, tags and capabilities (funnel, https)
@@ -31,7 +31,7 @@ case "${1:-}" in
     fi
     # The same settings the compose sidecar's containerboot will assert.
     docker exec -d "$NAME" sh -c 'tailscale --socket=/tmp/tailscaled.sock login \
-      --hostname=coco-live --advertise-tags=tag:coco-live --shields-up \
+      --hostname=coco-live --advertise-tags=tag:coco-live \
       --accept-dns=false > /tmp/login.log 2>&1'
     for _ in $(seq 1 30); do
       url=$(docker exec "$NAME" cat /tmp/login.log 2>/dev/null | grep -o 'https://login.tailscale.com/[^ ]*' | tail -1)

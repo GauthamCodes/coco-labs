@@ -1221,6 +1221,13 @@ class Platform:
             config = control_config()
         self.control_config = config
         self.remote = config['remote']
+        # A remote platform sends telemetry every Nth tick (streams.py,
+        # REMOTE_TELEMETRY_HZ). The tick itself stays at TELEMETRY_HZ so
+        # idle, the cap and STOP enforcement keep their resolution.
+        self._telemetry_every = (
+            max(1, round(TELEMETRY_HZ / streams_mod.REMOTE_TELEMETRY_HZ))
+            if self.remote else 1)
+        self._ticks = 0
         self.origins = config['origins']
         # The tornado loop, so the rclpy thread's host services can close
         # sockets on the thread that owns them. Set by main().
@@ -1427,7 +1434,11 @@ class Platform:
         self.control.reconcile(
             [c.client_id for c in self.clients if c.client_id])
         self.control.tick(busy=self.autonomy_busy())
-        self.broadcast(self.refresh(), 'telemetry')
+        # Ticks 0, N, 2N, ...: the very first tick always carries one.
+        due = self._ticks % self._telemetry_every == 0
+        self._ticks += 1
+        if due:
+            self.broadcast(self.refresh(), 'telemetry')
         metrics.mission_delivered()
         snap, _fresh = self.node.snapshot()
         seq = snap.get('map_seq', 0)
@@ -1675,7 +1686,8 @@ class ControlSocket(_NoBanner, tornado.websocket.WebSocketHandler):
         """Receive the shared Platform from the Application's route table."""
         self.platform = platform
         self.client_id = None
-        self.subscription = streams_mod.Subscription()
+        self.subscription = streams_mod.Subscription(
+            limits=(streams_mod.REMOTE_LIMITS if platform.remote else None))
         self.abandoned = False
 
     # ── outbound ───────────────────────────────────────────────────────
