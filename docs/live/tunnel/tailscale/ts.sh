@@ -16,22 +16,29 @@ NAME=coco-ts-login
 ts() { docker exec "$NAME" tailscale --socket=/tmp/tailscaled.sock "$@"; }
 case "${1:-}" in
   login)
+    # tailscaled directly, not the image's containerboot: containerboot
+    # gives an interactive login 60 s and then exits (measured), which no
+    # human clicking a link can rely on. `tailscale login` here waits.
     mkdir -p "$STATE" && chmod 0700 "$STATE"
     docker rm -f "$NAME" >/dev/null 2>&1
     docker run -d --name "$NAME" --user "$(id -u):$(id -g)" --cap-drop ALL \
-      --security-opt no-new-privileges:true \
-      -e TS_STATE_DIR=/var/lib/tailscale -e TS_SOCKET=/tmp/tailscaled.sock \
-      -e TS_USERSPACE=true -e TS_HOSTNAME=coco-live \
-      -e "TS_EXTRA_ARGS=--shields-up --advertise-tags=tag:coco-live" \
-      -v "$STATE:/var/lib/tailscale" "$IMG" >/dev/null || exit 1
+      --security-opt no-new-privileges:true -v "$STATE:/var/lib/tailscale" \
+      --entrypoint tailscaled "$IMG" --tun=userspace-networking \
+      --statedir=/var/lib/tailscale --socket=/tmp/tailscaled.sock >/dev/null || exit 1
+    sleep 3
+    if ts status --json 2>/dev/null | grep '"BackendState": "Running"' >/dev/null; then
+      echo "already logged in"; exit 0
+    fi
+    # The same settings the compose sidecar's containerboot will assert.
+    docker exec -d "$NAME" sh -c 'tailscale --socket=/tmp/tailscaled.sock login \
+      --hostname=coco-live --advertise-tags=tag:coco-live --shields-up \
+      --accept-dns=false > /tmp/login.log 2>&1'
     for _ in $(seq 1 30); do
-      url=$(docker logs "$NAME" 2>&1 | grep -o 'https://login.tailscale.com/[^ ]*' | tail -1)
+      url=$(docker exec "$NAME" cat /tmp/login.log 2>/dev/null | grep -o 'https://login.tailscale.com/[^ ]*' | tail -1)
       [ -n "$url" ] && { echo "LOGIN URL: $url"; exit 0; }
-      ts status --json 2>/dev/null | grep '"BackendState": "Running"' >/dev/null \
-        && { echo "already logged in"; exit 0; }
       sleep 1
     done
-    docker logs --tail 20 "$NAME"; exit 1 ;;
+    docker exec "$NAME" cat /tmp/login.log; docker logs --tail 20 "$NAME"; exit 1 ;;
   wait)
     for _ in $(seq 1 "${2:-600}"); do
       ts status --json 2>/dev/null | grep '"BackendState": "Running"' >/dev/null && break

@@ -1,0 +1,33 @@
+2026-10-03T16:37:43Z
+== TCP listeners (all interfaces)
+LISTEN 0      4096      127.0.0.54:53    0.0.0.0:*
+LISTEN 0      4096       127.0.0.1:631   0.0.0.0:*
+LISTEN 0      128        127.0.0.1:34741 0.0.0.0:*
+LISTEN 0      4096   127.0.0.53%lo:53    0.0.0.0:*
+LISTEN 0      64         127.0.0.1:5345  0.0.0.0:*
+LISTEN 0      4096           [::1]:631      [::]:*
+== UDP sockets bound (all interfaces)
+UNCONN 0      0        224.0.0.251:5353  0.0.0.0:*
+UNCONN 0      0        224.0.0.251:5353  0.0.0.0:*
+UNCONN 0      0        224.0.0.251:5353  0.0.0.0:*
+UNCONN 0      0            0.0.0.0:5353  0.0.0.0:*
+UNCONN 0      0         127.0.0.54:53    0.0.0.0:*
+UNCONN 0      0      127.0.0.53%lo:53    0.0.0.0:*
+UNCONN 0      0            0.0.0.0:34805 0.0.0.0:*
+UNCONN 0      0               [::]:5353     [::]:*
+UNCONN 0      0               [::]:52082    [::]:*
+== TCP listeners NOT on loopback
+none
+== UDP sockets NOT on loopback
+224.0.0.251:5353
+224.0.0.251:5353
+224.0.0.251:5353
+0.0.0.0:5353
+0.0.0.0:34805
+[::]:5353
+[::]:52082
+== SSH / Docker API
+no sshd process
+no listener on 22, 2375, 2376
+srw-rw---- 1 root docker 0 Oct  3 01:35 /var/run/docker.sock
+== containers and published ports

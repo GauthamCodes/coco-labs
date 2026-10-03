@@ -1,38 +1,38 @@
 #!/usr/bin/env bash
-# external_check.sh HOST [HOME_IP] -- what the public internet can reach.
+# external_check.sh HOST -- what the public internet gets from the tunnel.
 #
-# RUN IT FROM OUTSIDE: a machine on another network (a cloud shell, a
-# phone hotspot on mobile data), never from the COCO host -- localhost
-# reaching localhost proves nothing. Needs bash, curl, nc (OpenBSD or
-# ncat); prints every command's result, and exits non-zero if anything
-# expected closed is open or anything expected open is not.
+# RUN IT FROM OUTSIDE: a machine on another network (a phone on mobile
+# data, a cloud shell). From the COCO host itself it still crosses the
+# internet to Tailscale's Funnel ingress and back, but that is the same
+# network, so it does not count as the external check.
 #
-#   HOST     the tunnel hostname (e.g. coco.example.org, or
-#            coco-live.<tailnet>.ts.net)
-#   HOME_IP  optional: the COCO host's own public egress address
-#            (`curl -s https://ifconfig.me` ON the host). Scanned for SSH,
-#            Docker, ROS/DDS, Gazebo and the platform ports, which must
-#            all be closed: the tunnel dials out, nothing dials in.
+# It talks ONLY to HOST, the owner's own Funnel hostname, and only on the
+# three ports Funnel can ever listen on (443, 8443, 10000). It does not
+# scan anyone's IP address: the COCO host sits behind a shared NAT whose
+# public address belongs to the network's operator, and Funnel's ingress
+# servers belong to Tailscale. That nothing ELSE on the host is reachable is
+# shown host-side instead: it has no non-loopback listener at all
+# (docs/data/live/part_c/scripts/exposure_local.sh).
 #
 # Expected: /healthz 200 or 503 with "protocol": "coco.v1"; /ws 101 for
-# the Pages origin; 403 for a foreign or null origin; every other path
-# 404; every non-443 TCP port closed or filtered.
+# the Pages origin and localhost; 403 for foreign or null origins; every
+# other path 404; 8443 and 10000 not served; no tornado banner.
 set -u
-HOST="${1:?usage: external_check.sh HOST [HOME_IP]}"
-HOME_IP="${2:-}"
+HOST="${1:?usage: external_check.sh HOST}"
 PAGES="https://gauthamcodes.github.io"
 FAIL=0
 bad() { echo "  !! $*"; FAIL=1; }
+TMP="$(mktemp)"; trap 'rm -f "$TMP"' EXIT
 
-echo "== vantage (must NOT be the COCO host's network)"
+echo "== vantage"
 echo "  egress ip: $(curl -s --max-time 10 https://ifconfig.me || echo unknown)"
 echo "  resolve:   $(getent hosts "$HOST" | awk '{print $1}' | tr '\n' ' ')"
 date -u +"  at:        %Y-%m-%dT%H:%M:%SZ"
 
 echo "== /healthz"
-code=$(curl -s -o /tmp/coco_hz.$$ -w '%{http_code}' --max-time 15 "https://$HOST/healthz")
-echo "  GET /healthz -> $code; $(head -c 300 /tmp/coco_hz.$$ | tr '\n' ' ')"
-grep '"coco.v1"' /tmp/coco_hz.$$ >/dev/null || bad "healthz is not coco.v1"
+code=$(curl -s -o "$TMP" -w '%{http_code}' --max-time 15 "https://$HOST/healthz")
+echo "  GET /healthz -> $code; $(head -c 300 "$TMP" | tr '\n' ' ')"
+grep '"coco.v1"' "$TMP" >/dev/null || bad "healthz is not coco.v1"
 [ "$code" = 200 ] || [ "$code" = 503 ] || bad "healthz status $code"
 for o in "$PAGES" "https://evil.example" "null"; do
   acao=$(curl -s -D - -o /dev/null --max-time 15 -H "Origin: $o" "https://$HOST/healthz" \
@@ -41,10 +41,9 @@ for o in "$PAGES" "https://evil.example" "null"; do
   if [ "$o" = "$PAGES" ]; then [ "$acao" = "$PAGES" ] || bad "Pages origin not allowed"
   else [ -z "$acao" ] || bad "origin $o allowed"; fi
 done
-srv=$(curl -s -D - -o /dev/null --max-time 15 "https://$HOST/healthz" | tr -d '\r' | grep -i '^server:')
-echo "  Server header: '${srv}' (the edge's own, if any; never TornadoServer)"
-echo "$srv" | grep -i tornado >/dev/null && bad "tornado banner visible"
-rm -f /tmp/coco_hz.$$
+hdrs=$(curl -s -D - -o /dev/null --max-time 15 "https://$HOST/healthz" | tr -d '\r')
+echo "  Server header: '$(echo "$hdrs" | grep -i '^server:')'"
+echo "$hdrs" | grep -i '^server:.*tornado' >/dev/null && bad "tornado banner visible"
 
 echo "== /ws upgrade by Origin (101 admitted, 403 refused)"
 ws() {
@@ -72,41 +71,17 @@ for p in / /index.html /app.js /frame.js /legacy.html /api/session /api/metrics 
 done
 c=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 -X POST "https://$HOST/healthz")
 echo "  POST /healthz -> $c"
-c=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://$HOST/healthz")
-echo "  plain http:// /healthz -> $c (a redirect or refusal; never COCO over cleartext)"
+[ "$c" = 200 ] && bad "POST /healthz answered 200"
 
-PORTS="22 80 2375 2376 7400 7401 7410 7411 7412 8080 8081 8443 9090 10000 11311 11345 11346 20241"
-scan() {
-  local target="$1" open=""
-  for port in $PORTS; do
-    if nc -z -w 4 "$target" "$port" 2>/dev/null; then open="$open $port"; fi
-  done
-  echo "  $target open TCP:${open:- none}" >&2
-  echo "$open"
-}
-echo "== TCP ports on the tunnel hostname"
-# These are the VENDOR's edge, not this machine: Cloudflare answers its
-# proxied HTTP(S) ports (80, 8080, 8443, ...) for every proxied hostname
-# and routes them through the same ingress rules. So an open edge port is
-# not itself an exposure; what it SERVES is. Each open port must give
-# nothing but the two intended paths: /api/session and / never 200.
-o=$(scan "$HOST")
-for port in $o; do
-  for scheme in https http; do
-    for p in /api/session / /video/camera; do
-      c=$(curl -sk -o /dev/null -w '%{http_code}' --max-time 8 "$scheme://$HOST:$port$p")
-      echo "  $scheme://$HOST:$port$p -> $c"
-      [ "$c" = 200 ] && bad "$scheme port $port serves $p"
-    done
-  done
+echo "== Funnel's other ports on this hostname (only 443 is configured)"
+for port in 8443 10000; do
+  c=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "https://$HOST:$port/healthz")
+  echo "  https://$HOST:$port/healthz -> $c"
+  [ "$c" = 200 ] || [ "$c" = 503 ] && bad "port $port serves COCO"
 done
-if [ -n "$HOME_IP" ]; then
-  echo "== TCP ports on the COCO host's own public address (all must be closed)"
-  o=$(scan "$HOME_IP")
-  for port in $o; do bad "port $port open on $HOME_IP"; done
-  echo "  (UDP 7400+/DDS and gz-transport multicast cannot be proven closed with nc;"
-  echo "   inside the container DDS is loopback-only and no UDP port is published)"
-fi
+c=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://$HOST/healthz")
+echo "  http://$HOST/healthz (cleartext) -> $c"
+[ "$c" = 200 ] || [ "$c" = 503 ] && bad "COCO served over cleartext"
 
 echo "== verdict: $([ $FAIL = 0 ] && echo PASS || echo FAIL)"
 exit $FAIL

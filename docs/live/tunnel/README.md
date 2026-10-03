@@ -119,9 +119,19 @@ without an account**):
 ## After either: the external check, and the site
 
 ```bash
-# from a DIFFERENT network (cloud shell, phone hotspot), never this host:
-bash docs/live/tunnel/external_check.sh HOSTNAME "$(curl -s https://ifconfig.me)"   # HOME_IP taken ON the host
+# from a DIFFERENT network (phone on mobile data, cloud shell):
+bash docs/live/tunnel/external_check.sh coco-live.<tailnet>.ts.net
+# host side: no non-loopback listener at all, Docker publishes 127.0.0.1:8080 only
+bash docs/data/live/part_c/scripts/exposure_local.sh
 ```
+
+Scope: the check talks only to the owner's own Funnel hostname. It does
+**not** port-scan the host's public address. That address is a shared NAT
+(host 10.40.1.125/21) belonging to the network's operator, and scanning
+it was refused (2026-10-03) for lack of authorization. "SSH / Docker API
+/ ROS / Gazebo unreachable" therefore rests on the host-side fact that
+none of them listens on any non-loopback address, and on Funnel being the
+only ingress.
 
 Then set `LIVE_REMOTE = { ws: 'wss://HOSTNAME/ws' }` in
 `lab_web/site.config.ts`. `check_dist` verifies that the CSP gains exactly
