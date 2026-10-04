@@ -7248,3 +7248,44 @@ precedent was a release with a video). Not done.
 
 NEXT: the owner's release decision (video, `live-v1.0`), then LIVE.md §9
 item 1.
+
+## Phase 3 · Localise (Lab 2) — IN PROGRESS checkpoint (2026-10-04)
+
+One session, the whole phase (owner's brief). Branch **`lab2`**, cut from
+`live` = `main` = 4530a8b. Worktree `.claude/worktrees/lab1`; tests and
+real-stack runs use a COPY overlay `~/coco_loc_ws` (the parenthesised
+worktree path breaks colcon/gz quoting; Phase 2 did the same with
+`~/coco_live_ws`). `LAB_SOURCE.txt` in the copy names the source commit.
+
+**Reconciled before starting.** Phase 2: Parts A–C done, Part D docs done;
+`live-v1.0` release/video owner-gated, not done. Rule 9 applies to labs,
+not phases, and Lab 1 has URL + video + write-up, so Lab 2 is not blocked.
+Baseline (measured, this session): `run_all_package_tests.sh` **2691 /
+0 / 0** (11 packages); lab_web vitest **238**, tsc clean.
+
+**Built so far (commits 530fac0, 4b711a4, 4222306, 50bab2c):**
+- coco_lab (stdlib, no rclpy): `sketch.py`, `localise.py` (MCL with
+  nav2_amcl's likelihood field AND score `1 + sum pz^3`, augmented MCL
+  seeded as nav2_amcl pf.c seeds it; EKF on raw beams), `kalman.py`,
+  `locbundle.py` (loc bundle 1.0, replay_check), `loc_teaching.py`.
+- lab_web: Lab 2 view (`?view=localise`), TS loc decoder pinned to Python,
+  worker `localise` glue, catalog 1.2, exhibits.
+- Real stack: `docs/data/lab2/` runner, probe, batch, overlays
+  `nav2_loc_{shipped,recovery}.yaml`, `ekf_odom_imu.yaml` (lab only).
+
+**Measured so far:** Sketch fidelity (2 fresh sims, 237 scans, 111,804
+beams: |e| median 2.2 mm, 86.7 % < 5 cm; odometry: straight 0.000 m,
+square 2.30 m / 2.45 rad, tours 17.2 m and 2.6 m); Sketch rates over 20
+seeds (`sketch_rates.json`); robot_localization replay (square 2.30 →
+0.05 m; tour max 21.6 → 0.45 m, at 4x — being redone at 1x, the 4x
+replay lags 0.12 m while moving). Kidnap A/B: running.
+
+**Defects found and fixed:** a subnormal heading made a Sketch ray NaN;
+augmented MCL never injected until seeded like pf.c; the probe never saw
+AMCL's latched pose (2 sessions VOID, kept as `*.void1`); the landmarks
+kidnap moved 1.45 m while the lab said "across the room" (now 9.2 m,
+pinned by a test).
+
+NEXT (if this session is cleared): finish the A/B batch
+(`~/coco_lab_runs/lab2/batch.tsv`), `an_kidnap.py`, the 1x replays +
+`an_ekf.py`, `amcl_replay.py` per drive and arm, then docs and CI.
