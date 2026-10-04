@@ -32,13 +32,14 @@ export function workerStarted(): boolean {
 
 export function requestRecompute(
   req: Omit<RecomputeRequest, 'id' | 'type' | 'pyodideIndexUrl'>,
+  type: RecomputeRequest['type'] = 'recompute',
 ): Promise<RecomputeResponse> {
   const id = nextId++;
   return new Promise((resolve) => {
     pending.set(id, resolve);
     // copies, so the page keeps its own bytes
     getWorker().postMessage({
-      ...req, id, type: 'recompute', pyodideIndexUrl: PYODIDE_INDEX_URL,
+      ...req, id, type, pyodideIndexUrl: PYODIDE_INDEX_URL,
       manifest: req.manifest.slice(), arraysFile: req.arraysFile.slice(),
     } satisfies RecomputeRequest);
   });

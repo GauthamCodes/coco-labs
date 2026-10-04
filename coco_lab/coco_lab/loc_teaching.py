@@ -153,16 +153,17 @@ def arena_scenario(seed: int = 5) -> Scenario:
     """
     Return a kidnap in COCO's arena (map frame; the spawn is map (0, 0)).
 
-    The robot is carried from the spawn side of the arena to the far side
-    of the bays at t = 30 s -- to map (16, 0), one of the real-stack A/B's
-    kidnap targets (``docs/data/lab2``). ``build_catalog`` pairs it with the saved
-    Nav2 map at 0.10 m.
+    The robot loops near the spawn and at t = 20 s is carried past the
+    bays to map (16, 0), facing +y -- target K1 of the real-stack kidnap
+    A/B (``docs/data/lab2``) -- where it drives two small loops.
+    ``build_catalog`` pairs it with the saved Nav2 map at 0.10 m.
     """
+    loop = [(16.0, 1.2), (15.2, 1.2), (15.2, -1.2), (16.0, -1.2), (16.0, 0.0)]
     return Scenario(start=(0.0, 0.0, 0.0),
-                    route=[(4.0, 0.0), (4.0, 3.0), (8.0, 3.0), (12.0, 0.0),
-                           (14.0, -3.0)],
+                    route=[(-2.0, 0.0), (-2.0, 1.5), (0.0, 1.5), (0.0, 0.0)]
+                    + loop + loop,
                     seed=seed, noise=Noise(),
-                    kidnap=Kidnap(t=30.0, to=(16.0, 0.0, math.pi / 2)))
+                    kidnap=Kidnap(t=20.0, to=(16.0, 0.0, math.pi / 2)))
 
 
 def route_points(sc: Scenario) -> List[Tuple[float, float]]:

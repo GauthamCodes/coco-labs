@@ -44,9 +44,11 @@ import tempfile
 import time
 
 import coco_lab
-from coco_lab import bundle
+from coco_lab import bundle, locbundle
+from coco_lab.localise import EKFParams, MCLParams
 from coco_lab.maps import FREE, LabMap, OCCUPIED
 from coco_lab.search import search
+from coco_lab.sketch import Kidnap, Noise, Scenario, SketchMap
 
 TOOL = 'lab_web/pyodide'
 #: validated bundles by content hash, most recent last (bounded)
@@ -203,4 +205,140 @@ def recompute(request_json, manifest, arrays_name, arrays_file):
                     'write_bundle_ms': sum(write_ms),
                     'optimal_ms': optimal_ms, 'runs': len(runs),
                     'total_ms': _ms(t_all)},
+    }
+
+
+# -- Lab 2: localisation -------------------------------------------------------
+
+#: The Sketch world's default odometry alphas (coco_lab.sketch.Noise) are
+#: what the motion-noise slider scales; the filters are told the same.
+_ALPHA0 = Noise().odom_alphas[0]
+#: The filters never assume less range noise than COCO's AMCL does
+#: (sigma_hit 0.2 m, gazebo_models/config/nav2_params.yaml).
+_SIGMA_FLOOR = 0.2
+_LOC_CACHE = OrderedDict()
+_SMAPS = OrderedDict()
+
+
+def _load_loc(manifest_bytes, arrays_name, arrays_file):
+    """Return ``(LocBundle, load_ms)``, validated by coco_lab, cached."""
+    manifest_bytes = _bytes(manifest_bytes)
+    claimed = json.loads(manifest_bytes).get('content_hash')
+    if claimed in _LOC_CACHE:
+        _LOC_CACHE.move_to_end(claimed)
+        return _LOC_CACHE[claimed], 0.0
+    t0 = time.perf_counter()
+    work = tempfile.mkdtemp(prefix='lab_loc_')
+    try:
+        with open(os.path.join(work, 'manifest.json'), 'wb') as f:
+            f.write(manifest_bytes)
+        with open(os.path.join(work, arrays_name), 'wb') as f:
+            f.write(_bytes(arrays_file))
+        lb = locbundle.load_loc_bundle(work)
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
+    _LOC_CACHE[claimed] = lb
+    while len(_LOC_CACHE) > 4:
+        _LOC_CACHE.popitem(last=False)
+    return lb, _ms(t0)
+
+
+def _smap(lab_map):
+    key = lab_map.content_hash()
+    if key not in _SMAPS:
+        _SMAPS[key] = SketchMap(lab_map)
+        while len(_SMAPS) > 3:
+            _SMAPS.popitem(last=False)
+    return _SMAPS[key]
+
+
+def _num(req, key, lo, hi):
+    v = req.get(key)
+    if not isinstance(v, (int, float)) or isinstance(v, bool) or \
+            not (lo <= v <= hi):
+        raise Refused(f'{key} must be a number from {lo} to {hi}')
+    return v
+
+
+def localise(request_json, manifest, arrays_name, arrays_file):
+    """
+    Rerun the current localisation scenario with the learner's settings.
+
+    ``request_json``: ``{particles, motion_noise, sensor_sigma, injection,
+    alpha_slow, alpha_fast, inject_fraction, init, kidnap: null | {t, to:
+    [x, y, yaw]}, seed, filter_seed}``. One Sketch world is simulated from
+    the bundle's scenario with these settings, and on it coco_lab runs
+    MCL (the learner's settings), the same MCL with injection OFF when
+    injection is on (COCO's AMCL setting, for the A/B), and the EKF -- all
+    on identical inputs, in ONE bundle.
+    """
+    t_all = time.perf_counter()
+    req = json.loads(request_json)
+    lb, load_ms = _load_loc(manifest, arrays_name, arrays_file)
+    n = int(_num(req, 'particles', 10, 2000))
+    scale = _num(req, 'motion_noise', 0.0, 5.0)
+    sigma = _num(req, 'sensor_sigma', 0.0, 0.5)
+    inj = req.get('injection')
+    if inj not in ('none', 'augmented', 'fixed'):
+        raise Refused('injection must be none, augmented or fixed')
+    a_slow = _num(req, 'alpha_slow', 0.0, 1.0)
+    a_fast = _num(req, 'alpha_fast', 0.0, 1.0)
+    frac = _num(req, 'inject_fraction', 0.0, 0.5)
+    init = req.get('init')
+    if init not in ('tracking', 'global'):
+        raise Refused('init must be tracking or global')
+    seed = int(_num(req, 'seed', 0, 2 ** 31 - 1))
+    fseed = int(_num(req, 'filter_seed', 0, 2 ** 31 - 1))
+    old = lb.world.scenario
+    d = old.to_dict()
+    alphas = [_ALPHA0 * scale] * 4
+    d['noise'] = {'odom_alphas': alphas, 'range_sigma': sigma}
+    d['seed'] = seed
+    kid = req.get('kidnap')
+    if kid is None:
+        d['kidnap'] = None
+    else:
+        t = _num(kid, 't', 0.5, old.max_time)
+        to = kid.get('to')
+        if not (isinstance(to, list) and len(to) == 3 and all(
+                isinstance(v, (int, float)) for v in to)):
+            raise Refused('the kidnap needs a place: (x, y, yaw)')
+        d['kidnap'] = Kidnap(float(t), tuple(float(v) for v in to)).to_dict()
+    sc = Scenario.from_dict(d)
+    smap = _smap(lb.lab_map)
+    if kid is not None and smap.clearance(*sc.kidnap.to[:2]) < 0.11:
+        raise Refused('that kidnap target is inside or against a wall: '
+                      'pick a free spot')
+    hit = max(_SIGMA_FLOOR, sigma)
+    mcl = MCLParams(particles=n, alphas=tuple(alphas), sigma_hit=hit,
+                    init=init, injection=inj, alpha_slow=a_slow,
+                    alpha_fast=a_fast, inject_fraction=frac, seed=fseed)
+    runs = [('mcl', 'mcl', mcl)]
+    if inj != 'none':
+        runs.append(('mcl_coco', 'mcl', MCLParams(
+            particles=n, alphas=tuple(alphas), sigma_hit=hit, init=init,
+            injection='none', seed=fseed)))
+    runs.append(('ekf', 'ekf', EKFParams(alphas=tuple(alphas),
+                                          sigma_hit=hit, init=init)))
+    t0 = time.perf_counter()
+    try:
+        nb = locbundle.LocBundle.compute(
+            lb.lab_map, sc, runs, bundle.make_provenance(
+                'sketch', seed=seed, tool=TOOL), smap=smap)
+    except ValueError as exc:
+        raise Refused(str(exc)) from None
+    compute_ms = _ms(t0)
+    t0 = time.perf_counter()
+    m_out, name, a_out, digest = nb.to_bytes('none')
+    _LOC_CACHE[digest] = nb
+    write_ms = _ms(t0)
+    return {
+        'bundles': [{'manifest': m_out, 'arrays_file': a_out,
+                     'arrays_name': name, 'content_hash': digest}],
+        'optimal_cost': None,
+        'coco_lab_version': coco_lab.__version__,
+        'python_version': sys.version.split()[0],
+        'timings': {'load_bundle_ms': load_ms, 'search_ms': compute_ms,
+                    'write_bundle_ms': write_ms, 'optimal_ms': 0.0,
+                    'runs': len(runs), 'total_ms': _ms(t_all)},
     }

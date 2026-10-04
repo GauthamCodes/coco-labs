@@ -49,7 +49,9 @@ async function load(dir: string) {
   return loadLocBytes(manifest, arrays);
 }
 
-describe.each(expected.bundles.map((e: any) => [e.id, e]))('loc bundle %s', (_id, exp: any) => {
+const cases: Array<[string, any]> = expected.bundles.map((e: any) => [e.id, e]);
+
+describe.each(cases)('loc bundle %s', (_id, exp) => {
   it('decodes, every array byte-identical to coco_lab', async () => {
     const b = await load(exp.dir);
     expect(b.version).toBe(exp.version);

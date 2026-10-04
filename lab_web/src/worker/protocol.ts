@@ -25,14 +25,34 @@ export interface RecomputeSpec {
   optimal: boolean; // also run coco_lab's Dijkstra for the optimum
 }
 
+/**
+ * Lab 2: the learner's localisation settings. coco_lab simulates ONE Sketch
+ * world from the current bundle's scenario with these and runs every
+ * filter on it (src/worker/recompute.py `localise`).
+ */
+export interface LocSpec {
+  particles: number; // 10..2000
+  motion_noise: number; // x Sketch's default odometry alphas (world AND filters), 0..5
+  sensor_sigma: number; // range noise, metres, 0..0.5
+  injection: 'none' | 'augmented' | 'fixed';
+  alpha_slow: number;
+  alpha_fast: number;
+  inject_fraction: number; // 0..0.5
+  init: 'tracking' | 'global';
+  kidnap: { t: number; to: [number, number, number] } | null;
+  seed: number; // the world's
+  filter_seed: number; // the particle filter's
+}
+
 export interface RecomputeRequest {
   id: number;
-  type: 'recompute';
+  /** 'recompute': Lab 1's search glue; 'localise': Lab 2's (recompute.py `localise`). */
+  type: 'recompute' | 'localise';
   /** The CURRENT bundle's files, byte for byte. */
   manifest: Uint8Array;
   arraysName: string;
   arraysFile: Uint8Array;
-  spec: RecomputeSpec;
+  spec: RecomputeSpec | LocSpec;
   /** Absolute URL of coco_lab's wheel on this site, and its sha256. */
   wheelUrl: string;
   wheelSha256: string;

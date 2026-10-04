@@ -10,7 +10,9 @@
  * - `glass-box` written by the Pyodide worker (`tool` lab_web/pyodide)
  *   -> "Replay — computed in your browser by coco_lab"
  * - any other `glass-box` -> "Replay — coco_lab computation (glass-box)"
- * - `sketch` is reserved for Phase 2; Phase 1D never produces one.
+ * - `sketch` (Lab 2, Localise): coco_lab's 2D browser model -- "Sketch —
+ *   a model, not the robot", plus "computed in your browser" when the
+ *   Pyodide worker wrote it. Its measured fidelity is shown beside it.
  * A browser recomputation is never presented as a robot run.
  */
 
@@ -33,7 +35,9 @@ export function modeLabel(p: Pick<Provenance, 'source_kind' | 'tool'>): ModeLabe
         ? { mode: 'Replay', kind: 'browser', text: 'Replay — computed in your browser by coco_lab' }
         : { mode: 'Replay', kind: 'glass-box', text: 'Replay — coco_lab computation (glass-box)' };
     case 'sketch':
-      return { mode: 'Sketch', kind: 'sketch', text: 'Sketch — browser model (reserved; not produced in Phase 1D)' };
+      return p.tool === PYODIDE_TOOL
+        ? { mode: 'Sketch', kind: 'sketch', text: 'Sketch — computed in your browser by coco_lab; a model, not the robot' }
+        : { mode: 'Sketch', kind: 'sketch', text: 'Sketch — coco_lab\'s 2D model, not the robot' };
   }
 }
 

@@ -29,6 +29,7 @@ import { RaceSetup, RaceView } from './Race';
 import { SettingsPanel } from './SettingsPanel';
 import { Exhibit } from './Exhibit';
 import { LiveView } from './LiveView';
+import { Localise } from './loc/Localise';
 import { Tools } from './Tools';
 import { TrackingPlot } from './TrackingPlot';
 
@@ -93,8 +94,10 @@ export function App() {
   const [reveal, setReveal] = useState<Reveal | null>(null);
   const [shareVerdict, setShareVerdict] = useState<{ ok: boolean | null; message: string } | null>(null);
   const pendingShare = useRef<string | null>(null);
-  const [view, setView] = useState<'lab' | 'exhibit' | 'live'>(
-    () => (new URLSearchParams(window.location.search).get('view') === 'live' ? 'live' : 'lab'));
+  const [view, setView] = useState<'lab' | 'exhibit' | 'live' | 'localise'>(() => {
+    const v = new URLSearchParams(window.location.search).get('view');
+    return v === 'live' ? 'live' : v === 'localise' ? 'localise' : 'lab';
+  });
   const [liveText, setLiveText] = useState('Live — local stack');
   const dataUrl = useCallback((p: string) => `${DATA}${p}`, []);
   const openFromExhibit = useCallback((id: string) => {
@@ -304,20 +307,26 @@ export function App() {
   return (
     <div className="app">
       <header className="top">
-        <h1>COCO Lab <span className="sub">search, replayed from evidence</span></h1>
+        <h1>COCO Lab <span className="sub">{view === 'localise' ? 'localisation, from evidence' : 'search, replayed from evidence'}</span></h1>
         <nav className="views" aria-label="Views">
           <button type="button" className={view === 'lab' ? 'seg-btn active' : 'seg-btn'} aria-pressed={view === 'lab'}
-            onClick={() => setView('lab')} data-testid="view-lab">Lab</button>
+            onClick={() => setView('lab')} data-testid="view-lab">Lab 1 · Plan</button>
           <button type="button" className={view === 'exhibit' ? 'seg-btn active' : 'seg-btn'} aria-pressed={view === 'exhibit'}
             onClick={() => setView('exhibit')} data-testid="view-exhibit" disabled={!catalog?.exhibit}>The A* myth, twice</button>
+          <button type="button" className={view === 'localise' ? 'seg-btn active' : 'seg-btn'}
+            aria-pressed={view === 'localise'} onClick={() => setView('localise')} data-testid="view-localise"
+            disabled={!(catalog as { localise?: unknown } | null)?.localise}>Lab 2 · Localise</button>
           <button type="button" className={view === 'live' ? 'seg-btn active' : 'seg-btn'} aria-pressed={view === 'live'}
             onClick={() => setView('live')} data-testid="view-live">Live</button>
         </nav>
         {view === 'live'
           ? <span className="mode-badge mode-live" data-testid="mode-badge">{liveText}</span>
-          : <ModeBadge provenance={current?.bundle.provenance ?? null} />}
+          : view === 'localise'
+            ? <span className="mode-badge mode-sketch" data-testid="mode-badge">Sketch — a model, not the robot</span>
+            : <ModeBadge provenance={current?.bundle.provenance ?? null} />}
       </header>
       {view === 'live' && <LiveView onLabel={setLiveText} />}
+      {view === 'localise' && catalog && <Localise catalog={catalog} reducedMotion={reducedMotion} />}
       {view === 'exhibit' && catalog && (
         <>
           <Exhibit catalog={catalog} dataUrl={dataUrl} run={run} busy={busy} reducedMotion={reducedMotion}
