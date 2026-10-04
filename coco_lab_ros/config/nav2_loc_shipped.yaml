@@ -1,0 +1,12 @@
+# COCO Lab Phase 3 (Lab 2, Localise) -- kidnap A/B, arm A: AS SHIPPED.
+#
+# Deep-merged by coco_lab_ros.params onto a COPY of
+# gazebo_models/config/nav2_params.yaml; the mission's file is never edited.
+#
+# It restates the mission's own values, so the merged file equals the
+# mission's (tested: test_loc_overlays.py). It exists so both arms of the
+# A/B are produced by the same merge, from the same base, by the same tool.
+amcl:
+  ros__parameters:
+    recovery_alpha_fast: 0.0
+    recovery_alpha_slow: 0.0

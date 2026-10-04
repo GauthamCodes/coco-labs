@@ -1,0 +1,13 @@
+# COCO Lab Phase 3 (Lab 2, Localise) -- kidnap A/B, arm B: INJECTION ON.
+#
+# Deep-merged by coco_lab_ros.params onto a COPY of
+# gazebo_models/config/nav2_params.yaml; the mission's file is never edited.
+#
+# Its ONLY change (tested: test_loc_overlays.py): AMCL's augmented-MCL
+# random-particle injection, off in the mission (0.0 / 0.0), set to the
+# values Nav2's AMCL configuration guide suggests ("A good value might be
+# 0.1" / "0.001", docs.nav2.org, configuring_amcl.md, read 2026-10-04).
+amcl:
+  ros__parameters:
+    recovery_alpha_fast: 0.1
+    recovery_alpha_slow: 0.001
