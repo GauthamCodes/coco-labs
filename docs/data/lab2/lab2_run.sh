@@ -235,8 +235,8 @@ sleep 8
 # -- the session ----------------------------------------------------------------------
 PROBE=("$PY" -P "$HERE/lab2_probe.py")
 if [ "$MODE" = fidelity ]; then
-    CHECK="scans at 40 seeded poses"
-    check "${PROBE[@]}" scans --n 40 --seed 0 --out "$OUT/scans.jsonl"
+    CHECK="scans at 40 seeded poses (seed ${FIDELITY_SEED:-0})"
+    check "${PROBE[@]}" scans --n 40 --seed "${FIDELITY_SEED:-0}" --out "$OUT/scans.jsonl"
     CHECK="drive straight"
     check "${PROBE[@]}" drive --label straight --start=-5.0,0.0,0.0 \
         --route="1.5,0.0" --out "$OUT/drives.jsonl"

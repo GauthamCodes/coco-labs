@@ -164,6 +164,15 @@ FORBIDDEN = [
     (r'\bopenSet\b|\bclosedSet\b|\bcameFrom\b|\bopenList\b',
      'search bookkeeping'),
     (r'\bedge_?[Cc]ost\s*\(', 'an edge-cost function'),
+    # Lab 2: the browser renders localisation; coco_lab computes it
+    (r'\b(ray_?[Cc]ast\w*|castRay\w*|cast_ray\w*)\s*\(', 'a ray caster'),
+    (r'\b[Kk]alman\w*\s*\(|\b(ekf|EKF)(Predict|Update|_predict|_update)\w*\s*\(',
+     'a Kalman step'),
+    (r'\b[Rr]esample\w*\s*\(|\blowVariance\w*\s*\(', 'particle resampling'),
+    (r'\b(likelihood\w*|motion_?[Mm]odel\w*|sample_?[Mm]otion\w*)\s*\(',
+     'a sensor or motion model'),
+    (r'\bgauss(ian)?\s*\(|\brandn\s*\(|\bMath\.random\b',
+     'random sampling (filters and Sketch draw from coco_lab\'s seeded RNG)'),
 ]
 
 
@@ -172,6 +181,12 @@ def _source_files():
         for name in files:
             if name.endswith(('.ts', '.tsx', '.js', '.py')):
                 yield os.path.join(root, name)
+
+
+def test_loc_expectations_regenerate_byte_identical():
+    import make_loc_expectations
+    with open(make_loc_expectations.OUT) as f:
+        assert f.read() == make_loc_expectations.build()
 
 
 def test_lab_web_src_has_no_search_implementation():
@@ -192,7 +207,10 @@ def test_the_guard_catches_what_it_names():
     samples = ['const pq = new PriorityQueue()', 'heappush(q, x)',
                'function neighbours(s) {', 'octile(dr, dc)',
                'dijkstra(graph, s, g)', 'cameFrom.set(n, c)',
-               'edgeCost(a, b)']
+               'edgeCost(a, b)', 'rayCast(map, p, a)', 'kalmanUpdate(mu, P)',
+               'ekfPredict(m)', 'resample(w)', 'lowVarianceResample(w, u)',
+               'likelihoodField(d)', 'sampleMotion(u)', 'gauss(0, 1)',
+               'Math.random()']
     for s in samples:
         assert any(re.search(p, s) for p, _ in FORBIDDEN), s
 

@@ -284,7 +284,7 @@ export async function decode(parsed: ParsedManifest, raw: Uint8Array,
   };
 }
 
-async function buildMap(md: JObject, table: Map<string, JObject>, raw: Uint8Array,
+export async function buildMap(md: JObject, table: Map<string, JObject>, raw: Uint8Array,
   column: (name: string) => ReturnType<typeof readArray>): Promise<MapLayer> {
   // Python evaluates LabMap's arguments first: the cost column (dtype), then geo
   const cost = table.has('map.cost') ? column('map.cost') as Float64Array : null;
@@ -361,7 +361,7 @@ function validUtc(s: string): boolean {
   return y >= 1 && d <= days;
 }
 
-function checkProvenance(p: JObject): void {
+export function checkProvenance(p: JObject): void {
   const kind = p.get('source_kind');
   if (!(isStr(kind) && SOURCE_KINDS.includes(kind))) {
     fail('provenance', `provenance.source_kind ${JSON.stringify(toPlain(kind ?? null))} not in ${SOURCE_KINDS}`);
