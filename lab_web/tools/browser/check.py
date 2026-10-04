@@ -691,6 +691,23 @@ async def localise(site, out):
         await s.wait(LOC_DONE, timeout=900, every=0.2)
         rep['cold_run'] = {'wall_s': round(time.time() - t0, 2), **(await s.js(LOC_STATE))}
         await s.shot('loc_after_cold_run')
+        # the same settings as the catalog bundle: does coco_lab in Pyodide
+        # reproduce the CPython run's summaries exactly?
+        # as TEXT: BiDi's serialisation cuts objects this deep to {}
+        cat = json.loads(await s.js(f"fetch('{s.site}generated/catalog.json').then(r => r.text())"))
+        entry = next(e for e in cat['localise']['bundles'] if e['id'] == 'loc_kidnap')
+        mine = json.loads(await s.js('JSON.stringify(window.__cocoLabLoc)'))
+        same_outcome = all(
+            a['summary']['recovered'] == b['summary']['recovered'] and
+            a['summary']['recovery_s'] == b['summary']['recovery_s']
+            for a, b in zip(mine['runs'], entry['runs']))
+        rep['pyodide_vs_cpython'] = {
+            'drawn_by': mine['by'],
+            'summaries_identical': [r['summary'] for r in mine['runs']] ==
+            [r['summary'] for r in entry['runs']],
+            'same_recovered_and_recovery_s': same_outcome,
+            'runs': [{'id': a['id'], 'pyodide': a['summary'], 'cpython': b['summary']}
+                     for a, b in zip(mine['runs'], entry['runs'])]}
         # pick a kidnap target by clicking the map, then a warm run
         btn = await s.js("(() => { const b = [...document.querySelectorAll('button')]"
                          ".find((x) => /^to \\(/.test(x.textContent)); if (!b) return null;"

@@ -112,6 +112,15 @@ function LocLab({ catalog, part, reducedMotion }: { catalog: Catalog; part: Loca
   const b = cur?.bundle ?? null;
   const n = b ? b.world.updates.length : 0;
 
+  // for the browser harness (like window.__cocoLabPerf): what is drawn, by whom
+  useEffect(() => {
+    if (!cur) return;
+    (window as unknown as { __cocoLabLoc?: unknown }).__cocoLabLoc = {
+      by: cur.by, contentHash: cur.bundle.contentHash, scene: cur.entry.id,
+      runs: cur.bundle.runs.map((r) => ({ id: r.id, summary: r.summary })),
+    };
+  }, [cur]);
+
   // play in sim time: `rate` simulated seconds per wall second
   useEffect(() => {
     if (!playing || !b) return;

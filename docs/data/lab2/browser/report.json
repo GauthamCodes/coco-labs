@@ -1,0 +1,201 @@
+{
+ "_meta": {
+  "firefox": "Mozilla Firefox 157.0",
+  "headless": true,
+  "loadavg": [
+   "7.85",
+   "6.29",
+   "6.36"
+  ],
+  "site": "http://127.0.0.1:4173/coco-labs/",
+  "when_utc": "2026-10-04T12:27:17Z"
+ },
+ "localise": {
+  "_loadavg": [
+   "7.30",
+   "6.27",
+   "6.35"
+  ],
+  "cold_run": {
+   "canvases": 1,
+   "cookie": "",
+   "header_badge": "Sketch \u2014 a model, not the robot",
+   "k": 0,
+   "mode": "Sketch \u2014 computed in your browser by coco_lab; a model, not the robot",
+   "n": 196,
+   "scene": "loc_kidnap",
+   "status": "Done in 9.4 s (coco_lab: 3.5 s for the world and 3 filters).",
+   "storage": 0,
+   "wall_s": 9.64
+  },
+  "console_errors": [],
+  "exhibit_labels": [
+   "historical (measured 2026-08-31, C2-M5.1)",
+   "historical (measured 2026-08-31, C2-M5.1, on the v1 wedge world, not the current arena)",
+   "historical (measured 2026-08-31, C2-M5.0, run diverged1, induced)",
+   "historical (measured, M6 fetch matrix)"
+  ],
+  "exhibits": [
+   "1. Injection off: AMCL cannot leave a pose it is sure of",
+   "2. Global relocalisation converged inside the ramp",
+   "3. Covariance is not health: AMCL's uncertainty moved the wrong way",
+   "4. Run 15: 3.4 m of drift in the unmapped corridor"
+  ],
+  "fidelity": "How close is Sketch to the real stack? At 237 identical poses in Gazebo, Sketch's LiDAR is within 5 cm of Gazebo's on 86.7 % of 111,804 beams (median |error| 2.2 mm). Its wheels never slip: Gazebo's don't either on a straight line, but on turns they do (measured).",
+  "kidnap_button_after": "to (3.0, 2.5)",
+  "kidnap_button_before": "to (1.5, 6.8)",
+  "played": {
+   "k_after_3s": 22,
+   "k_before": 0
+  },
+  "pyodide_requests_before_run": [],
+  "pyodide_vs_cpython": {
+   "drawn_by": "pyodide",
+   "runs": [
+    {
+     "cpython": {
+      "converged_s": 0.0,
+      "final_err_xy": 0.07689591437268115,
+      "final_err_yaw": 0.02844481982422753,
+      "kidnap_s": 40.1,
+      "max_err_xy": 9.285445600056415,
+      "mean_err_xy": 0.9920996112495346,
+      "n_updates": 197,
+      "ok_hold": 5,
+      "ok_xy": 0.5,
+      "ok_yaw": 0.3,
+      "recovered": true,
+      "recovery_s": 27.199999999999996
+     },
+     "id": "mcl",
+     "pyodide": {
+      "converged_s": 0,
+      "final_err_xy": 0.08224304435438658,
+      "final_err_yaw": 0.021733539850312233,
+      "kidnap_s": 40.1,
+      "max_err_xy": 9.285445596531483,
+      "mean_err_xy": 0.9923007889605415,
+      "n_updates": 197,
+      "ok_hold": 5,
+      "ok_xy": 0.5,
+      "ok_yaw": 0.3,
+      "recovered": true,
+      "recovery_s": 27.199999999999996
+     }
+    },
+    {
+     "cpython": {
+      "converged_s": 0.0,
+      "final_err_xy": 9.114490036192219,
+      "final_err_yaw": 1.5661524577427945,
+      "kidnap_s": 40.1,
+      "max_err_xy": 12.166720076564228,
+      "mean_err_xy": 5.719201459756074,
+      "n_updates": 197,
+      "ok_hold": 5,
+      "ok_xy": 0.5,
+      "ok_yaw": 0.3,
+      "recovered": false,
+      "recovery_s": null
+     },
+     "id": "mcl_coco",
+     "pyodide": {
+      "converged_s": 0,
+      "final_err_xy": 9.114490035592022,
+      "final_err_yaw": 1.5661524773944864,
+      "kidnap_s": 40.1,
+      "max_err_xy": 12.166720077580171,
+      "mean_err_xy": 5.719201470768758,
+      "n_updates": 197,
+      "ok_hold": 5,
+      "ok_xy": 0.5,
+      "ok_yaw": 0.3,
+      "recovered": false,
+      "recovery_s": null
+     }
+    },
+    {
+     "cpython": {
+      "converged_s": 0.0,
+      "final_err_xy": 7.748229549446452,
+      "final_err_yaw": 1.0129547371148284,
+      "kidnap_s": 40.1,
+      "max_err_xy": 9.320731762641852,
+      "mean_err_xy": 5.125403048081961,
+      "n_updates": 197,
+      "ok_hold": 5,
+      "ok_xy": 0.5,
+      "ok_yaw": 0.3,
+      "recovered": false,
+      "recovery_s": null
+     },
+     "id": "ekf",
+     "pyodide": {
+      "converged_s": 0,
+      "final_err_xy": 7.74821912905848,
+      "final_err_yaw": 1.012955434841622,
+      "kidnap_s": 40.1,
+      "max_err_xy": 9.320731753764065,
+      "mean_err_xy": 5.125402328765448,
+      "n_updates": 197,
+      "ok_hold": 5,
+      "ok_xy": 0.5,
+      "ok_yaw": 0.3,
+      "recovered": false,
+      "recovery_s": null
+     }
+    }
+   ],
+   "same_recovered_and_recovery_s": true,
+   "summaries_identical": false
+  },
+  "race_canvases": 3,
+  "revealed": "MCL (your settings): recovered 27.2 s after the kidnap (final error 0.08 m) \u2014 you said yes, right. One run is not a rate: on this scene's catalog world, over 20 filter seeds, it recovered in 18 of 20 \u2014 Sketch, docs/data/lab2/sketch_rates.json (python3 docs/data/lab2/sketch_rates.py --seeds 20 --out docs/data/lab2/sketch_rates.json).\n\nMCL, injection off (as COCO ships AMCL): did not recover (final error 9.11 m) \u2014 you said yes, not this time. One run is not a rate: on this scene's catalog world, over 20 filter seeds, it recovered in 0 of 20 \u2014 Sketch, docs/data/lab2/sketch_rates.json (python3 docs/data/lab2/sketch_rates.py --seeds 20 --out docs/data/lab2/sketch_rates.json).\n\nEKF: did not recover (final error 7.75 m) \u2014 you said yes, not this time. One run is not a rate: on this scene's catalog world, over 1 filter seed, it recovered in 0 of 1 (the EKF draws nothing random, so one run is all runs) \u2014 Sketch, docs/data/lab2/sketch_rates.json (python3 docs/data/lab2/sketch_rates.py --seeds 20 --out docs/data/lab2/sketch_rates.json).",
+  "start": {
+   "canvases": 1,
+   "cookie": "",
+   "header_badge": "Sketch \u2014 a model, not the robot",
+   "k": 0,
+   "mode": "Sketch \u2014 coco_lab's 2D model, not the robot",
+   "n": 196,
+   "scene": "loc_kidnap",
+   "status": null,
+   "storage": 0
+  },
+  "third_party": [
+   "",
+   "cdn.jsdelivr.net"
+  ],
+  "warm_run": {
+   "canvases": 1,
+   "cookie": "",
+   "header_badge": "Sketch \u2014 a model, not the robot",
+   "k": 26,
+   "mode": "Sketch \u2014 computed in your browser by coco_lab; a model, not the robot",
+   "n": 191,
+   "scene": "loc_kidnap",
+   "status": "Done in 3.6 s (coco_lab: 3.5 s for the world and 3 filters).",
+   "storage": 0,
+   "wall_s": 3.64
+  }
+ },
+ "localise_phone": {
+  "_loadavg": [
+   "6.35",
+   "5.44",
+   "6.40"
+  ],
+  "console_errors": [],
+  "exhibits": {
+   "clientWidth": 378,
+   "overflowing": [],
+   "scrollWidth": 378
+  },
+  "k_after_play_2s": 14,
+  "lab": {
+   "clientWidth": 378,
+   "overflowing": [],
+   "scrollWidth": 378
+  }
+ }
+}
