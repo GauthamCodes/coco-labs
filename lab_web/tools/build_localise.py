@@ -255,6 +255,14 @@ def ekf_drift():
     return dict(d, status='measured')
 
 
+def amcl_odom():
+    """AMCL on wheel odometry vs on the EKF, offline, or not measured."""
+    d = _load('amcl_odom.json')
+    if d is None:
+        return {'status': 'not yet measured'}
+    return dict(d, status='measured')
+
+
 def covariance_series():
     """
     C2-M5.0 ``diverged1``: AMCL's covariance against its true error.
@@ -379,6 +387,7 @@ def exhibits():
                 'cite': 'docs/RESULTS.md "The one failure: run 15, and it '
                         'is a localisation failure"'},
             'ekf': ekf_drift(),
+            'amcl': amcl_odom(),
             'note': 'The robot_localization result is measured on Phase 3 '
                     'drives in the current arena, not on run 15, and does '
                     'not claim to fix it.',
@@ -399,6 +408,7 @@ def localise_block(out):
         'sketch_rates': sketch_rates(),
         'kidnap_ab': kidnap_ab(),
         'ekf_drift': ekf_drift(),
+        'amcl_odom': amcl_odom(),
         'limits': {'particles': [10, 2000], 'motion_noise': [0, 5],
                    'sensor_sigma': [0, 0.5], 'inject_fraction': [0, 0.5]},
     }

@@ -11,7 +11,8 @@ interface Exhibits {
   aliasing: { title: string; historical: Historical; sketch: string };
   covariance: { title: string; historical: Historical;
     series: { t: number[]; err_xy: number[]; sigma_xy: number[]; scan_map_d: Array<number | null>; injection_t: number } };
-  run15: { title: string; historical: Historical; ekf: LocalisePart['ekf_drift']; note: string };
+  run15: { title: string; historical: Historical; ekf: LocalisePart['ekf_drift'];
+    amcl?: NonNullable<LocalisePart['amcl_odom']>; note: string };
 }
 
 function Label({ text }: { text: string }) {
@@ -77,6 +78,7 @@ export function LocExhibits({ part, dataUrl }: { part: LocalisePart; dataUrl: (p
         <Label text={ex.run15.historical.label} />
         <Cite text={ex.run15.historical.cite} />
         <EkfResult ekf={ex.run15.ekf} />
+        {ex.run15.amcl && <AmclResult amcl={ex.run15.amcl} />}
         <p className="note">{ex.run15.note}</p>
       </section>
     </article>
@@ -153,6 +155,32 @@ function EkfResult({ ekf }: { ekf: LocalisePart['ekf_drift'] }) {
         </tbody>
       </table>
       <Cite text={ekf.cite} />
+    </div>
+  );
+}
+
+function AmclResult({ amcl }: { amcl: NonNullable<LocalisePart['amcl_odom']> }) {
+  if (amcl.status !== 'measured') {
+    return <p className="honest">AMCL on each odometry, offline on the same scans: not yet measured.</p>;
+  }
+  const keyed = new Map(amcl.drives.map((d) => [`${d.session}/${d.drive}/${d.arm}`, d]));
+  const rows = [...new Set(amcl.drives.map((d) => `${d.session}/${d.drive}`))];
+  return (
+    <div className="honest" data-testid="exhibit-amcl">
+      <p><strong>And AMCL on top of each (measured, Phase 3).</strong> {amcl.definition}</p>
+      <div className="scroll-x"><table className="rows-table">
+        <thead><tr><th>drive</th><th>AMCL on wheel odometry: mean / max error</th><th>AMCL on the EKF: mean / max error</th></tr></thead>
+        <tbody>
+          {rows.map((r) => {
+            const w = keyed.get(`${r}/wheel`);
+            const e = keyed.get(`${r}/ekf`);
+            const f = (d?: { mean_err_xy: number; max_err_xy: number }) =>
+              (d ? `${d.mean_err_xy.toFixed(3)} / ${d.max_err_xy.toFixed(3)} m` : '—');
+            return <tr key={r}><td>{r}</td><td>{f(w)}</td><td>{f(e)}</td></tr>;
+          })}
+        </tbody>
+      </table></div>
+      <Cite text={amcl.cite} />
     </div>
   );
 }

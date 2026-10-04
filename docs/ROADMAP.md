@@ -14,6 +14,11 @@
 >   [`docs/live/LIVE.md`](live/LIVE.md) and the report
 >   [`docs/live/PART_C_REPORT.md`](live/PART_C_REPORT.md).
 >
+> - **Phase 3 (Localise, Lab 2), 2026-10-04: implemented, tested and
+>   measured on branch `lab2`; not yet deployed** (merging to `main` is
+>   the owner's call). Status against §6's "done when" and the remaining
+>   items: [`docs/labs/LAB2_LOCALISE.md`](labs/LAB2_LOCALISE.md).
+>
 > *(The status line of 2026-09-30 read: "plan revised (Phase 2 · Live
 > added) … Phase 1 closed by decision with open items … Phase 2 not
 > started.")*
@@ -445,6 +450,19 @@ algorithm:
   with non-zero `recovery_alpha_*`, and a `robot_localization` EKF fusing
   wheel odometry and IMU (motivated by run 15).
 - **Sketch mode lands here**, with its fidelity measured against Gazebo.
+
+**As built (2026-10-04, branch `lab2`).** Sketch (coco_lab: 2D diff drive
++ ray-cast LiDAR, seeded) with its fidelity shown beside the mode
+(measured: 86.7 % of beams within 5 cm at 237 identical poses; odometry
+exact on straights, wrong on turns); MCL (nav2_amcl's likelihood field,
+score and injection) and EKF localisation, traced in loc bundle 1.0; the
+Lab 2 view with every listed control, belief vs truth, error plot, race and
+predict-then-reveal; the four exhibits, each cited. Real stack: the
+kidnap A/B (shipped 0 / 10, injection 2 / 10 — unresolved, p = 0.237);
+robot_localization (wheel pose + gyro) cut a 120 m tour's worst odometry
+error from 21.6 m to 0.21 m on identical recorded drives (an upper bound:
+noiseless sim gyro), observe-only, the mission untouched. Numbers:
+`docs/RESULTS.md` "COCO Lab Phase 3"; write-up `docs/labs/LAB2_LOCALISE.md`.
 
 ### Lab 3 — Map
 

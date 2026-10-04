@@ -23,6 +23,29 @@ takes apart two "A\* vs Dijkstra" results, one of them COCO's own (below).
 Write-up, measured numbers and limitations:
 [docs/labs/LAB1_PLAN.md](docs/labs/LAB1_PLAN.md).
 
+## Lab 2 — Localise (Phase 3)
+
+**Lab 2 · Localise** (`?view=localise`) puts a particle filter and an EKF
+side by side on identical inputs, in **Sketch**: coco_lab's 2D model of
+COCO, labelled as a model, not the robot, with its measured fidelity beside
+it. At 237 identical poses in Gazebo, Sketch's LiDAR is within 5 cm on
+86.7 % of beams; its wheels never slip, and COCO's do on every turn. You
+can change particles, motion and sensor noise, and AMCL-style injection;
+kidnap the robot by clicking the map; hide the truth; predict, then
+reveal; race the filters. Everything is rerun by coco_lab in your browser.
+
+Four of COCO's real localisation failures are exhibits, each with its
+evidence. The real stack was measured too:
+- **Kidnap recovery:** with AMCL's injection off (as shipped) it recovered
+  0 of 10 fresh-simulator kidnaps; with Nav2's suggested values, 2 of 10.
+  That is not a resolved difference.
+- **robot_localization** fusing the wheels' pose with the gyro cut odometry
+  error on a 120 m tour from 21.6 m to 0.21 m at worst, on identical
+  recorded drives. That is an upper bound: the simulated gyro is noiseless.
+
+Write-up, numbers and limitations:
+[docs/labs/LAB2_LOCALISE.md](docs/labs/LAB2_LOCALISE.md).
+
 ## Live — the real stack, from the browser (Phase 2)
 
 **[The Live tab](https://gauthamcodes.github.io/coco-labs/?view=live)**

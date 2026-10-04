@@ -8015,13 +8015,86 @@ hashes are recomputed and equal, tampering and an unknown major are
 refused. `tools/test_loc_glue.py`: the worker glue's output loads and
 REPLAYS byte for byte under coco_lab.
 
-### The kidnap A/B on the real stack
+### The kidnap A/B on the real stack (measured)
 
-PENDING
+`docs/data/lab2/lab2_batch.sh` → `lab2_run.sh kidnap ARM TARGET`, one
+FRESH simulator per trial (`full_world_robo.launch.py gui:=false
+traverse:=true` + `lab_stack` on the mission's `nav2_params.yaml` merged
+with `nav2_loc_<arm>.yaml`; the live AMCL parameters read back and checked
+equal to the merge in every session). AMCL localised at the spawn (within
+0.3 m / 0.2 rad, read from its latched `/amcl_pose`), then the robot was
+teleported (`gz set_pose`, odometry not told) to one of five map-frame
+targets — K1 (16, 0), K2 (−3, 7), K3 (14, 6.5), K4 (−3, −7), K5 (2, −7.5),
+each ≥ 0.75 m from a wall and 3.6–17 m from the spawn — and rotated in
+place at 0.5 rad/s through `/cmd_vel_teleop` for 180 s of sim time (≈ 361
+AMCL updates per trial). Two rounds, each target once per arm per round.
+**Recovered** = within 0.5 m and 0.3 rad of the truth, held 5 s of sim
+time (the Sketch definition, held by time). `python3
+docs/data/lab2/an_kidnap.py lab2 --out docs/data/lab2/kidnap_ab.json`.
 
-### robot_localization: wheel odometry and IMU
+| arm | `recovery_alpha_slow` / `_fast` | recovered | when (s after the teleport) | VOID |
+|---|---|---|---|---|
+| shipped | 0.0 / 0.0 | **0 of 10** | — | 1 |
+| injection on (Nav2's suggested values) | 0.001 / 0.1 | **2 of 10** | 6.5 (K3, round 2), 36.0 (K5, round 2) | 2 |
 
-PENDING
+- The failures ended 3.4–14.8 m from the truth. With injection on, AMCL's
+  estimate visibly HOPS between wrong modes (K1: between ≈ 17 m and ≈ 11 m
+  off); with it off it drifts smoothly — injection was active, it just
+  rarely put a particle near the truth in 180 s on this arena.
+- **This does not resolve a difference:** 2 of 10 vs 0 of 10 has a
+  one-sided Fisher exact p of **0.237** (derived). Ten trials per arm is
+  not a rate. What it does establish: on this arena, with rotation only,
+  turning injection on at Nav2's suggested values is **not** a reliable
+  recovery from a confident wrong pose, and as shipped COCO never
+  recovered (0 of 10, consistent with the historical C2-M5.1 finding).
+- Sketch's arena kidnap at the same target K1 (500 particles, driving
+  loops rather than rotating) gave 0 / 20 off and 2 / 20 on — the same
+  order, not a validation of either.
+- Every valid session passed every runner check; 4,344 watch samples, the
+  wheel topic's only publisher `cmd_vel_arbiter` in all of them.
+- VOID, kept and not counted: `shipped_K1.void1`, `recovery_K1.void1` (the
+  probe did not read AMCL's latched pose) and `recovery_K2.void2` (the
+  target "−3,7" read as an option). Sources: every session records its
+  commit (`source_copy_of`) except `recovery_K1`, whose stamp a mid-batch
+  sync deleted; it ran the scripts of `50bab2c` (the stamp of the session
+  before it).
+
+### robot_localization: wheel odometry and IMU (measured)
+
+`rl_replay.sh` replays each fidelity session's bag (wheel odometry, gyro,
+`/tf_static`; the bag's clock, 1×) into `robot_localization`'s `ekf_node`
+on a private domain; `an_ekf.py` anchors each estimate at the drive's
+first pose and scores it against the truth. Identical recorded inputs for
+both columns. **Adopted configuration** (`coco_lab_ros/config/
+ekf_odom_imu.yaml`): the wheels' pose x, y differentiated + the gyro's yaw
+rate → `docs/data/lab2/ekf_drift.json`.
+
+| drive | driven | wheel odometry: final / max error | EKF: final / max error |
+|---|---|---|---|
+| fidelity_s1 straight | 6.4 m, 0 rad | 0.000 / 0.000 m | 0.022 / 0.025 m |
+| fidelity_s1 square | 15.4 m, 11.0 rad | 2.298 / 2.541 m | 0.065 / 0.065 m |
+| fidelity_s1 tour | 120.1 m, 56.2 rad | 2.595 / 21.610 m | 0.172 / 0.207 m |
+| fidelity_1 straight | 6.4 m, 0 rad | 0.000 / 0.000 m | 0.029 / 0.033 m |
+| fidelity_1 tour | 120.2 m, 56.3 rad | 17.237 / 33.642 m | 0.078 / 0.243 m |
+
+**The first configuration measured** fused the wheels' TWIST (vx, vy) +
+the gyro (`docs/data/lab2/ekf_variants/ekf_odom_twist.yaml` →
+`ekf_drift_twist.json`): straight 0.120 / 0.127 m, square 0.050 / 0.077 m,
+tours 0.188 / 0.446 and 0.156 / 0.565 m (final / max). The cause of its
+straight-line error, measured from the fidelity_s1 bag: the
+diff_drive_controller's published twist integrates to **1.9 % more
+distance than its own pose** (6.5428 vs 6.4197 m on the straight; 122.04
+vs 119.88 m on the tour). Fusing the pose differentially removes it; the
+pose-differential configuration is better on 4 of 5 drives and was
+adopted.
+
+Caveats, stated: Gazebo's gyro is noiseless (the xacro declares none), so
+these are an **upper bound** for a real gyro; the IMU's orientation is NOT
+fused (Gazebo reports the true heading with zero covariance, measured from
+the bag); two sessions, five drives — not a rate. The EKF runs live only
+**observe-only** (`lab_ekf.launch.py`, `publish_tf: false`): feeding it to
+AMCL would mean turning off the controller's odometry TF, a production
+change this phase does not make.
 
 ### AMCL on each odometry, offline, identical scans
 

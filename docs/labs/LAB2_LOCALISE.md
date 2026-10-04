@@ -77,13 +77,86 @@ and every cited test must exist (`lab_web/tools/test_tools.py`).
 
 ## 4. Measured numbers, and how to reproduce them
 
-PENDING — filled from `docs/RESULTS.md` "COCO Lab Phase 3 — Localise" at
-the end of the session.
+Full tables, commands, sample counts and provenance: `docs/RESULTS.md`
+"COCO Lab Phase 3 — Localise". Reproduction: `docs/data/lab2/README.md`.
+
+### 4.1 Sketch fidelity against Gazebo (measured; 2 fresh simulators)
+
+| | |
+|---|---|
+| range error at identical poses | 237 scans, 111,804 beams with a return in both: median e = Gazebo − Sketch **+0.2 mm**, p05 −19.3 mm, p95 +80.5 mm; \|e\| median 2.2 mm, p99 1.43 m |
+| beams within 1 / 5 / 10 cm | 74.8 / **86.7** / 95.5 % |
+| where Sketch is worst | beams that meet the bays' 3D ramps and platforms, which the 2D map does not hold |
+| odometry, straight 6.4 m (×2) | Gazebo 0.000 m; Sketch (default noise, 200 seeds) median 0.21 m |
+| odometry, square 15.4 m / 11 rad | Gazebo 2.30 m, 2.45 rad; Sketch median 0.29 m |
+| odometry, tour 120 m / 56 rad (×2) | Gazebo 17.2 m and 2.6 m; Sketch median 5.6 and 6.1 m |
+
+Sketch's wheels never slip; COCO's skid-steer odometry is exact along the
+body and wrong at turning (its wheel yaw rate integrates to 72.5 rad where
+the gyro and the truth give 56.3 / 56.2 rad). The default noise is
+direction-blind, so it is wrong in both directions — that gap is the
+lesson the label points to, not a defect tuned away.
+
+### 4.2 Sketch outcome counts (measured, Sketch; 20 filter seeds)
+
+Kidnap (9.2 m): injection off **0 / 20**, augmented **18 / 20**, fixed
+5 % **13 / 20**, EKF never. Global start: 300 particles 9 / 20, 1,000
+particles 15 / 20, EKF never. Twins: 13 / 20 right, 5 / 20 the twin.
+Arena kidnap: off 0 / 20, augmented 2 / 20.
+
+### 4.3 The real stack (measured)
+
+| | result |
+|---|---|
+| kidnap A/B, 10 fresh simulators per arm | `recovery_alpha` 0 / 0 (shipped): **0 of 10** recovered; 0.001 / 0.1: **2 of 10** (6.5 s, 36.0 s). One-sided Fisher p = 0.237 (derived): **not resolved** |
+| robot_localization (wheel pose differential + gyro), identical recorded drives | square 2.30 → **0.065 m**; tours (worst error) 21.6 → **0.21 m** and 33.6 → **0.24 m**; straights 0.000 → 0.02–0.03 m |
+| the first EKF configuration (wheel twist + gyro) | straights 0.12 m: the controller's twist integrates 1.9 % more distance than its pose (measured); not adopted |
+| AMCL on each odometry, offline, identical scans | AMCL_ODOM_ROW |
+| wheel topic | 1 publisher (`cmd_vel_arbiter`) in every watch sample of every session (4,344 in the A/B) |
+
+### 4.4 The site (measured, headless Firefox, local build)
+
+Cold in-browser run (Pyodide start + one world + three filters) 9.6 s,
+warm 3.6 s; 0 console errors; no Pyodide request before the first run; no
+horizontal overflow at 390 × 844; Lab 2 is loaded only when opened (Lab
+1's main bundle 108 KB gzipped, Lab 2's chunk 14 KB). In-browser runs give
+the SAME outcomes as CPython's but not the same bits (mean errors differ by
+1e-8 to 2e-4 m), so they are labelled as browser runs. Lab 1's browser
+scenarios showed no regression (warm edit 1.36–1.48 s; a share link
+reproduces its exact trace).
+
+### 4.5 Tests
+
+Counts at the close of the phase: `docs/RESULTS.md` "COCO Lab Phase 3" >
+"Tests".
 
 ## 5. Not verified
 
-PENDING
+- **The public site.** Lab 2 is on branch `lab2`; it is not on `main`, so
+  not deployed. Everything in 4.4 is the local production build.
+- **A real phone.** Phone width was checked in headless Firefox only.
+- **A real IMU.** Gazebo's gyro is noiseless; the robot_localization
+  improvement is an upper bound.
+- **robot_localization feeding AMCL live.** Only offline (4.3) and
+  observe-only live; the controller's odometry TF was not changed.
+- **Recovery with motion other than rotation.** The A/B rotated in place;
+  driving might help or hurt injection.
+- **Rates.** Every real-stack count above is a count (n ≤ 10), not a rate.
 
 ## 6. Known limitations
 
-PENDING
+- Sketch is 2D. The saved map's bays are "unknown" cells and Gazebo's
+  ramps and platforms are 3D, so beams near the bays disagree by up to
+  metres (p99 1.43 m).
+- Sketch's odometry noise is the odometry motion model's four alphas: it
+  does not model skid-steer's systematic turning error, measured at about
+  29 % of yaw rate on the tour.
+- MCL uses a fixed particle count (AMCL adapts it with KLD sampling) and
+  the textbook odometry model; its score and injection are AMCL's.
+- The EKF updates on raw ranges with numerical Jacobians and a χ² gate; a
+  Gaussian cannot hold two hypotheses, which is the lesson, but it also
+  means its numbers say nothing about a landmark-based EKF.
+- Loc bundles are 0.5–4.2 MB (f32 particles); they are fetched only when a
+  scene is opened.
+- The real-stack A/B used one rotation-only recovery behaviour and five
+  targets; it does not establish what recovery rate injection gives.

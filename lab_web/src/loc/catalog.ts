@@ -95,6 +95,13 @@ export type EkfDrift = Measured<{
     ekf: { final_pos_err_m: number; final_yaw_err_rad: number; max_pos_err_m: number } }>;
 }>;
 
+export type AmclOdom = Measured<{
+  cite: string;
+  definition: string;
+  drives: Array<{ session: string; drive: string; arm: 'wheel' | 'ekf'; n: number;
+    mean_err_xy: number; max_err_xy: number; final_err_xy: number }>;
+}>;
+
 export interface LocalisePart {
   version: string;
   bundles: LocEntry[];
@@ -103,6 +110,7 @@ export interface LocalisePart {
   sketch_rates: SketchRates;
   kidnap_ab: KidnapAB;
   ekf_drift: EkfDrift;
+  amcl_odom?: AmclOdom;
   limits: { particles: [number, number]; motion_noise: [number, number];
     sensor_sigma: [number, number]; inject_fraction: [number, number] };
 }
