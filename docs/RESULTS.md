@@ -7827,3 +7827,206 @@ site at the new one.
   names the old repository.
 - **On the old repository:** the unpublished draft release there was
   deleted, and no `lab1-v1.0` tag exists there.
+
+---
+
+## COCO Lab Phase 3 — Localise (Lab 2) (measured 2026-10-04)
+
+Branch `lab2` (from `live` = `main` = 4530a8b). Labels: **(measured)**
+produced by a run this session, with its evidence path; **(derived)**
+computed from recorded evidence; **historical**; **unverified**.
+**Sketch** numbers are measurements of coco_lab's model, not of the robot.
+Evidence index and reproduction commands: `docs/data/lab2/README.md`.
+
+### What was built
+
+- `coco_lab` (standard library only; no rclpy — the existing
+  `test_no_ros.py` and `test_stdlib_only.py` cover the new modules):
+  `sketch.py` (2D differential drive + ray-cast LiDAR on a LabMap; exact
+  EDT; COCO's LiDAR, decimated 480 → 60 beams; odometry noise by the
+  odometry motion model's alphas; kidnap; seeded), `localise.py` (MCL with
+  nav2_amcl's likelihood field AND its score `1 + Σ pz³`, low-variance
+  resampling, augmented-MCL injection seeded exactly as nav2_amcl's `pf.c`
+  seeds `w_slow`/`w_fast`, a fixed-share option; EKF localisation on raw
+  beams with numerical Jacobians, a χ² gate and a Joseph update),
+  `kalman.py`, `locbundle.py` (loc bundle 1.0, `replay_check`),
+  `loc_teaching.py` (two rooms, four scenes). Formats:
+  `docs/labs/LOC_FORMAT.md` (pinned by a test).
+- `lab_web`: the Lab 2 view (`?view=localise`): Sketch scenes, controls,
+  belief/truth, particles, scan at the belief, race, error plot,
+  predict-then-reveal, a kidnap placed by clicking the map, and the
+  exhibits. A TypeScript loc decoder pinned to Python; the Pyodide worker's
+  `localise` glue. Catalog 1.2 (additive).
+- Real stack (lab only; the mission's `nav2_params.yaml` is byte-identical
+  to e06dc94 in every session, checked): `docs/data/lab2/` runner, probe
+  and batch; overlays `nav2_loc_{shipped,recovery}.yaml`;
+  `ekf_odom_imu.yaml` and the observe-only `lab_ekf.launch.py`.
+
+### Sketch fidelity against Gazebo (measured)
+
+Two `lab2_run.sh fidelity` sessions, each on a fresh headless simulator
+(`full_world_robo.launch.py gui:=false traverse:=true` + `lab_stack`),
+analysed by `python3 docs/data/lab2/an_fidelity.py fidelity_1 fidelity_s1
+--max-tilt 2.0 --seeds 200` → `docs/data/lab2/fidelity/fidelity.json`.
+
+**Range error at identical poses.** 80 seeded poses (seeds 0 and 1,
+clearance ≥ 0.4 m, uniform yaw), 3 scans each = 240 scans; at each scan
+Sketch cast COCO's 480-beam LiDAR on the saved Nav2 map (0.05 m) from the
+TRUE pose Gazebo reported at that scan's stamp. 3 scans (one pose,
+fidelity_1 pose 8, map (3.17, −1.87)) were excluded: the robot settled
+tilted 13.1°. 237 scans, 113,760 beams:
+
+| class | beams |
+|---|---|
+| both returned | 111,804 |
+| Gazebo only | 12 |
+| Sketch only | 123 |
+| neither | 1,821 |
+
+| e = Gazebo − Sketch, both returned (m) | p05 | p25 | median | p75 | p95 | p99 |
+|---|---|---|---|---|---|---|
+| | −0.0193 | −0.0013 | +0.0002 | +0.0036 | +0.0805 | +1.3631 |
+
+|e| median **2.2 mm**, p95 92.8 mm, p99 1.43 m, max 10.13 m. Share of
+beams within 1 / 2 / 5 / 10 / 25 cm: **74.8 / 80.5 / 86.7 / 95.5 /
+98.2 %**. Every beam with both returns struck an occupied map cell in
+Sketch (0 struck "unknown"). The worst pose (p90 |e| 0.178 m) is fidelity_1
+pose 24, map (4.02, −0.13), between the bay ends, where beams meet ramp and
+platform geometry the 2D map does not hold.
+
+**Odometry drift on the same commands.** Each drive was steered at 10 Hz
+by `coco_lab.sketch.drive_command` (the function Sketch drives with) on
+the true pose, through `/cmd_vel_teleop`. Gazebo's wheel odometry was
+placed in the map at the drive's first pose; Sketch replayed the SAME
+recorded command sequence (zero noise, and its default alphas over 200
+seeds):
+
+| session / drive | driven | Gazebo odometry final error | Gazebo truth vs commanded unicycle | Sketch, zero noise | Sketch, default noise: median [p05–p95] |
+|---|---|---|---|---|---|
+| fidelity_1 / straight | 6.4 m, 0.0 rad | 0.000 m | 0.000 m | 0 | 0.213 [0.045–0.645] m |
+| fidelity_1 / tour | 120.2 m, 56.2 rad | 17.237 m, 2.685 rad | 16.762 m | 0 | 5.635 [1.545–11.887] m |
+| fidelity_s1 / straight | 6.4 m, 0.0 rad | 0.000 m | 0.000 m | 0 | 0.215 [0.044–0.651] m |
+| fidelity_s1 / square | 15.4 m, 11.0 rad | 2.298 m, 2.445 rad | 2.082 m | 0 | 0.286 [0.073–0.615] m |
+| fidelity_s1 / tour | 120.1 m, 56.1 rad | 2.595 m, 1.603 rad | 1.813 m | 0 | 6.062 [1.740–12.019] m |
+
+What that says: COCO's skid-steer odometry is exact along the body and
+wrong at turning; Sketch's wheels never slip (zero-noise drift is
+rounding), and its default noise is direction-blind — too much on a
+straight, too little on the first tour, about right on the second. The two
+tours, the same drive law on the same route in two fresh simulators,
+ended 17.2 m and 2.6 m off: **two samples, not a rate**. In the
+fidelity_s1 bag the wheels' yaw-rate integral over the tour is 72.5 rad
+where the gyro gives 56.3 rad (the truth turned 56.2 rad) (derived).
+
+Provenance: fidelity_s1 ran from `4b711a4` (stamped), all runner checks
+PASS. fidelity_1 ran from an uncommitted working tree before the source
+stamp existed (its `meta.json` has no commit), and its runner checks FAIL:
+the probe aborted at teardown after writing its data (exit 134, fixed in
+`4b711a4`) and the square drive did not run (an argparse error on a route
+beginning with "−", fixed). Its 120 scans, straight and tour are complete
+and are used. Wheel topic: 1 publisher, `cmd_vel_arbiter`, in every watch
+sample of both sessions (721 and the s1 log).
+
+### Sketch outcome counts over 20 filter seeds (measured, Sketch)
+
+`python3 docs/data/lab2/sketch_rates.py --seeds 20 --out
+docs/data/lab2/sketch_rates.json` (one world per scene, its catalog seed;
+only the filter's seed varies). Recovered/converged: within 0.5 m and
+0.3 rad for 5 consecutive updates.
+
+| scene | filter | result over 20 seeds |
+|---|---|---|
+| kidnap (landmarks, carried 9.2 m at t = 40 s) | MCL, injection off | recovered **0 / 20** |
+| | MCL, augmented (α 0.001 / 0.1) | recovered **18 / 20** |
+| | MCL, fixed 5 % | recovered **13 / 20** |
+| | EKF (deterministic) | not recovered (1 / 1 run) |
+| global (landmarks) | MCL, 300 particles | converged **9 / 20** |
+| | MCL, 1,000 particles | converged **15 / 20** |
+| | EKF | not converged |
+| twins (symmetric) | MCL, 1,000 particles | converged to the truth 13 / 20; ended > 2 m off (the twin) 5 / 20 |
+| tracking (landmarks) | MCL 300 / EKF | 20 / 20 / tracked |
+| arena kidnap (K1) | MCL 500, off / augmented | recovered **0 / 20** / **2 / 20** |
+
+Every catalog bundle uses filter seed 0; none was chosen for its outcome.
+
+### The filters' correctness (tests)
+
+- EKF = Kalman: sequential updates equal the one-solve information-form
+  posterior (300 random linear Gaussian problems, 1e-7); a scalar random
+  walk reaches the Riccati fixed point `(−q + √(q² + 4qr))/2` (200 cases);
+  a noiseless constant-velocity filter equals the batch over its start
+  (`coco_lab/test/test_kalman.py`).
+- MCL: low-variance resampling copies particle i ⌊Nwᵢ⌋ or ⌈Nwᵢ⌉ times (500
+  weight vectors); weights sum to 1 and 1 ≤ n_eff ≤ N at every update;
+  seeded determinism; the world never depends on the filter; neither
+  filter reads the truth; MCL converges from a uniform cloud on the
+  landmarks room in ≥ 7 of 10 seeds (`test_localise.py`).
+- Sketch: ray lengths equal the analytic wall distance (300 rays), the EDT
+  equals brute force, the unicycle step equals its ODE, one scenario gives
+  one run bit for bit, a kidnap moves the truth and not the odometry, the
+  twins room is symmetric to the ray caster (`test_sketch.py`).
+
+### Defects found and fixed during the phase (each has a regression test or a recorded fix)
+
+1. A ray at heading −3.4e−309 returned NaN (`1/sin` of a subnormal
+   overflowed; `0 × inf` at a cell boundary) — hypothesis found it;
+   `test_a_subnormal_heading_is_axis_parallel_not_nan`.
+2. Augmented MCL never injected: `w_slow` started at 0 and, at α 0.001,
+   could not catch up. nav2_amcl's `pf.c` seeds both averages with the
+   first `w_avg`; coco_lab now does (before: 0 injections after a kidnap;
+   after: 16 / 20, then 18 / 20 on the 9.2 m scene).
+3. The landmarks kidnap moved the robot 1.45 m while the lab said "across
+   the room"; it now carries it 9.2 m
+   (`test_the_kidnap_scene_carries_the_robot_across_the_room`).
+4. The probe never received AMCL's pose at a stationary spawn: `/amcl_pose`
+   is latched (transient local) and published only on filter updates.
+   Two A/B sessions were VOID (kept as `*.void1`).
+5. Route and target arguments beginning with "−" were read as options
+   (`--route=`, `--to=`); one A/B session VOID (kept as `*.void2`).
+6. At 390 px the Localise page overflowed by 32 px (the scene select);
+   fixed and checked in headless Firefox.
+
+### The browser (measured, headless Firefox, this machine)
+
+`python3 lab_web/tools/browser/check.py http://127.0.0.1:4173/coco-labs/
+OUT localise localise_phone` on the local build → `docs/data/lab2/browser/
+report.json`: the kidnap scene loads and draws (mode label "Sketch —
+coco_lab's 2D model, not the robot"); predict-then-reveal reveals coco_lab's
+outcomes with the 20-seed counts; play advances 22 updates in 3 s at 4×; the
+race draws 3 maps; a click on the map sets the kidnap target; **0 console
+errors**, no cookies or storage, no Pyodide request before the first run.
+A **cold** in-browser run (Pyodide + coco_lab, then one world and three
+filters) took **9.6 s** and a **warm** one **3.6 s** (coco_lab: 3.5 s).
+At 390 × 844 the lab and the exhibits have no horizontal overflow.
+
+**Pyodide vs CPython on identical inputs:** the kidnap scene rerun in the
+browser with the catalog bundle's settings gave the SAME outcome for all
+three filters (recovered / not, and the recovery time 27.2 s) but NOT the
+same bits: mean errors differ by 1e-8 to 2e-4 m (e.g. MCL 0.99230 vs
+0.99210 m). That is why a browser run is labelled "computed in your
+browser" and never claimed identical to the catalog's. Decoding is exact
+(below). (measured, n = 1)
+
+### Cross-language decoding (tests)
+
+`lab_web/test/locdecode.test.ts`: for both golden loc bundles every
+array's little-endian bytes hash-equal coco_lab's, the content and map
+hashes are recomputed and equal, tampering and an unknown major are
+refused. `tools/test_loc_glue.py`: the worker glue's output loads and
+REPLAYS byte for byte under coco_lab.
+
+### The kidnap A/B on the real stack
+
+PENDING
+
+### robot_localization: wheel odometry and IMU
+
+PENDING
+
+### AMCL on each odometry, offline, identical scans
+
+PENDING
+
+### Tests
+
+PENDING
