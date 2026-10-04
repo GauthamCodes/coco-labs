@@ -35,7 +35,7 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 : "${COCO_WS:?set COCO_WS to the overlay built from this repo}"
 export ROS_DOMAIN_ID="${ROS_DOMAIN_ID:-68}"
 source "$REPO/setup_env.sh" > /dev/null 2>&1
-CONFIG="$REPO/coco_lab_ros/config/ekf_odom_imu.yaml"
+CONFIG="${RL_CONFIG:-$REPO/coco_lab_ros/config/ekf_odom_imu.yaml}"
 mkdir -p "$OUT" || exit 3
 [ -e "$OUT/rl_bag" ] && { echo "refusing: $OUT/rl_bag exists"; exit 3; }
 say() { echo "rl_replay: $* ($(date -u +%H:%M:%S) UTC)"; }

@@ -1,0 +1,40 @@
+# COCO Lab Phase 3 -- robot_localization VARIANT, an experiment input only.
+#
+# Identical to coco_lab_ros/config/ekf_odom_imu.yaml except in how the
+# wheels enter: their POSE x, y, differentiated (odom0_differential true),
+# instead of their TWIST vx, vy. Why: the diff_drive_controller's published
+# twist integrates to 1.9 % more distance than its own pose on a straight
+# drive (6.5428 vs 6.4197 m; tour 122.04 vs 119.88 m; measured from the
+# fidelity_s1 bag), and an EKF fusing the twist inherits that. The gyro
+# still provides the yaw rate; the wheels' heading is still not fused.
+# Compared with the twist configuration on the same bags:
+# docs/data/lab2/ekf_drift.json.
+ekf_filter_node:
+  ros__parameters:
+    use_sim_time: true
+    frequency: 30.0
+    sensor_timeout: 0.1
+    two_d_mode: true
+    publish_tf: false          # replay: AMCL's/diff_drive's TF untouched
+    map_frame: map
+    odom_frame: odom
+    base_link_frame: base_footprint
+    world_frame: odom
+
+    odom0: /diff_drive_controller/odom
+    #              x      y      z      roll   pitch  yaw
+    #              vx     vy     vz     vroll  vpitch vyaw
+    #              ax     ay     az
+    odom0_config: [true,  true,  false, false, false, false,
+                   false, false, false, false, false, false,
+                   false, false, false]
+    odom0_differential: true
+    odom0_relative: false
+
+    imu0: /imu
+    imu0_config: [false, false, false, false, false, false,
+                  false, false, false, false, false, true,
+                  false, false, false]
+    imu0_differential: false
+    imu0_relative: false
+    imu0_remove_gravitational_acceleration: true
