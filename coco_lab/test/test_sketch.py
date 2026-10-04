@@ -182,6 +182,16 @@ def test_a_kidnap_moves_the_truth_and_not_the_odometry():
     assert jump_odom < sc.v_max * sc.dt + 1e-9
 
 
+def test_the_kidnap_scene_carries_the_robot_across_the_room():
+    """The lab says the robot is carried 9.2 m: pinned, so it stays true."""
+    mid, sc, _ = loc_teaching.scenarios()['kidnap']
+    w = sketch.simulate(sketch.SketchMap(loc_teaching.teaching_maps()[mid]),
+                        sc)
+    a, b = w.gt[w.kidnap_row - 1], w.gt[w.kidnap_row]
+    assert round(math.hypot(b[0] - a[0], b[1] - a[1]), 1) == 9.2
+    assert abs(w.t[w.kidnap_row] - 40.0) < 0.11
+
+
 def test_updates_follow_amcl_thresholds():
     w = sketch.simulate(ROOM, _scenario())
     assert w.updates[0] == 0

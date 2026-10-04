@@ -64,7 +64,8 @@ SCENES = {
     'loc_kidnap': (
         'The kidnapped robot (landmarks room)', 'loc_landmarks', 'kidnap',
         {'particles': 300, 'injection': 'augmented', 'init': 'tracking'},
-        'At t = 40 s the robot is carried across the room; odometry is not '
+        'At t = 40 s the robot is picked up and carried 9.2 m to the far '
+        'corner of the room; odometry is not '
         'told. Compare MCL with injection on, the same MCL with injection '
         'off (as COCO ships AMCL), and the EKF -- on one world.',
         [f'{LOC_TEST}::test_injection_is_what_recovers_a_kidnap',

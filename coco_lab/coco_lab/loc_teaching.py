@@ -132,7 +132,7 @@ def scenarios() -> Dict[str, Tuple[str, Scenario, Dict[str, object]]]:
                      {'init': 'tracking'}),
         'kidnap': ('loc_landmarks',
                    Scenario(start=(1.5, 1.5, 0.0), route=tour, seed=2,
-                            kidnap=Kidnap(t=40.0, to=(9.0, 4.5, math.pi))),
+                            kidnap=Kidnap(t=40.0, to=(1.5, 6.8, 0.0))),
                    {'init': 'tracking'}),
         'global': ('loc_landmarks',
                    Scenario(start=(3.0, 4.0, 0.5), route=tour[2:], seed=3),

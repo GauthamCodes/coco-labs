@@ -61,7 +61,8 @@ import time
 import rclpy
 from rclpy.executors import SingleThreadedExecutor
 from rclpy.node import Node
-from rclpy.qos import qos_profile_sensor_data
+from rclpy.executors import ExternalShutdownException
+from rclpy.qos import DurabilityPolicy, QoSProfile, qos_profile_sensor_data
 
 from geometry_msgs.msg import PoseWithCovarianceStamped, TwistStamped
 from nav_msgs.msg import Odometry
@@ -118,8 +119,13 @@ class Probe(Node):
                                  qos_profile_sensor_data)
         self.create_subscription(LaserScan, '/scan', self._scan,
                                  qos_profile_sensor_data)
-        self.create_subscription(PoseWithCovarianceStamped, '/amcl_pose',
-                                 self._amcl, 10)
+        # AMCL publishes /amcl_pose only on a filter update, latched
+        # (transient local): a robot standing at spawn makes no update, so a
+        # VOLATILE subscriber never sees the pose. That VOIDed the first two
+        # kidnap sessions ("AMCL never localised at spawn").
+        self.create_subscription(
+            PoseWithCovarianceStamped, '/amcl_pose', self._amcl,
+            QoSProfile(depth=1, durability=DurabilityPolicy.TRANSIENT_LOCAL))
         self.pub = self.create_publisher(TwistStamped, '/cmd_vel_teleop', 10)
 
     def _truth(self, m):
@@ -388,7 +394,13 @@ def main(argv=None):
     node = Probe(w2m)
     ex = SingleThreadedExecutor()
     ex.add_node(node)
-    th = threading.Thread(target=ex.spin, daemon=True)
+    def spin():
+        try:
+            ex.spin()
+        except ExternalShutdownException:
+            pass  # the shutdown below, not an error
+
+    th = threading.Thread(target=spin, daemon=True)
     th.start()
     try:
         deadline = time.time() + 60

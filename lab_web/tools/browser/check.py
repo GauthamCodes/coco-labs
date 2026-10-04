@@ -639,9 +639,115 @@ async def exhibit(site, out):
         return rep
 
 
+LOC_READY = ("(() => { const c = document.querySelector('[data-testid=loc-canvas]');"
+             " return !!(c && c.width > 0 && document.querySelector('[data-testid=loc-mode]')); })()")
+LOC_STATE = """(() => {
+  const t = (s) => { const e = document.querySelector(s); return e ? e.textContent.trim() : null; };
+  const scrub = document.querySelector('[data-testid=loc-scrub]');
+  return { header_badge: t('[data-testid=mode-badge]'), mode: t('[data-testid=loc-mode]'),
+    k: scrub ? Number(scrub.value) : null, n: scrub ? Number(scrub.max) : null,
+    status: t('[data-testid=loc-status]'), scene: (document.querySelector('[data-testid=loc-picker]') || {}).value,
+    canvases: document.querySelectorAll('[data-testid=loc-canvas]').length,
+    cookie: document.cookie, storage: localStorage.length + sessionStorage.length };
+})()"""
+LOC_DONE = ("(() => { const e = document.querySelector('[data-testid=loc-status]');"
+            " return e && !e.classList.contains('busy') ? e.className : null; })()")
+
+
+async def localise(site, out):
+    """Lab 2: Sketch label, predict-reveal, play, race, a coco_lab run in Pyodide, kidnap pick, exhibits."""
+    async with Session(site, out) as s:
+        await s.open('?view=localise&scene=loc_kidnap')
+        await s.wait(LOC_READY, timeout=90)
+        rep = {'start': await s.js(LOC_STATE),
+               'fidelity': await s.js(TEXT.format('loc-fidelity'))}
+        await s.shot('loc_start')
+        # predict: answer every question 'yes' with real clicks, then reveal
+        n_q = await s.js("document.querySelectorAll('.predict input[type=radio]').length / 2")
+        for i in range(int(n_q)):
+            b = await s.js(f"(() => {{ const e = document.querySelectorAll('.predict input[type=radio]')[{2 * i}];"
+                           " e.scrollIntoView({block: 'center'}); const r = e.getBoundingClientRect();"
+                           " return [r.left, r.top, r.width, r.height]; })()")
+            await s.b.click(s.ctx, b[0] + b[2] / 2, b[1] + b[3] / 2)
+        await click_testid(s, 'loc-reveal')
+        await s.wait("document.querySelector('[data-testid=loc-revealed]')", timeout=10)
+        rep['revealed'] = await s.js(TEXT.format('loc-revealed'))
+        # play for 3 s of wall time
+        k0 = (await s.js(LOC_STATE))['k']
+        await click_testid(s, 'loc-play')
+        await asyncio.sleep(3.0)
+        rep['played'] = {'k_before': k0, 'k_after_3s': (await s.js(LOC_STATE))['k']}
+        await click_testid(s, 'loc-truth')
+        await s.shot('loc_belief_only')
+        await click_testid(s, 'loc-truth')
+        await click_testid(s, 'loc-race-toggle')
+        rep['race_canvases'] = (await s.js(LOC_STATE))['canvases']
+        await s.shot('loc_race')
+        await click_testid(s, 'loc-race-toggle')
+        before = [u for u in s.requests() if 'pyodide' in u or 'jsdelivr' in u]
+        # cold run: Pyodide + coco_lab, then the world and three filters
+        t0 = time.time()
+        await click_testid(s, 'loc-run')
+        await s.wait(LOC_DONE, timeout=900, every=0.2)
+        rep['cold_run'] = {'wall_s': round(time.time() - t0, 2), **(await s.js(LOC_STATE))}
+        await s.shot('loc_after_cold_run')
+        # pick a kidnap target by clicking the map, then a warm run
+        btn = await s.js("(() => { const b = [...document.querySelectorAll('button')]"
+                         ".find((x) => /^to \\(/.test(x.textContent)); if (!b) return null;"
+                         " b.scrollIntoView({block: 'center'}); const r = b.getBoundingClientRect();"
+                         " return [r.left, r.top, r.width, r.height, b.textContent]; })()")
+        rep['kidnap_button_before'] = btn[4] if btn else None
+        if btn:
+            await s.b.click(s.ctx, btn[0] + btn[2] / 2, btn[1] + btn[3] / 2)
+            cb = await box_of(s, 'loc-canvas')
+            # the landmarks room is 12 x 8 m: aim at (3.0, 2.5), free floor
+            await s.b.click(s.ctx, cb[0] + cb[2] * 3.0 / 12.0, cb[1] + cb[3] * (1 - 2.5 / 8.0))
+            rep['kidnap_button_after'] = await s.js(
+                "[...document.querySelectorAll('button')].find((x) => /^to \\(/.test(x.textContent))?.textContent")
+        t0 = time.time()
+        await click_testid(s, 'loc-run')
+        await s.wait(LOC_DONE, timeout=600, every=0.1)
+        rep['warm_run'] = {'wall_s': round(time.time() - t0, 2), **(await s.js(LOC_STATE))}
+        await s.shot('loc_after_warm_run')
+        await click_testid(s, 'loc-sub-exhibits')
+        await s.wait("document.querySelector('[data-testid=exhibit-covariance] svg')", timeout=30)
+        rep['exhibits'] = await s.js("[...document.querySelectorAll('[data-testid=loc-exhibits] h3')]"
+                                     ".map((h) => h.textContent)")
+        rep['exhibit_labels'] = await s.js("[...document.querySelectorAll('[data-testid=loc-exhibits] .label-note')]"
+                                           ".map((h) => h.textContent)")
+        await s.shot('loc_exhibits')
+        rep['pyodide_requests_before_run'] = before
+        rep['third_party'] = sorted({urlparse(u).netloc for u in s.requests()
+                                     if urlparse(u).netloc != urlparse(site).netloc})
+        rep['console_errors'] = s.errors()
+        return rep
+
+
+async def localise_phone(site, out):
+    """Lab 2 at 390 x 844: no horizontal scroll; the controls are reachable."""
+    async with Session(site, out, width=390, height=844) as s:
+        await s.open('?view=localise&scene=loc_tracking')
+        await s.wait(LOC_READY, timeout=90)
+        geo = await s.js("({ scrollWidth: document.documentElement.scrollWidth,"
+                         " clientWidth: document.documentElement.clientWidth })")
+        await s.shot('loc_phone_top')
+        await click_testid(s, 'loc-play')
+        await asyncio.sleep(2.0)
+        k = (await s.js(LOC_STATE))['k']
+        await box_of(s, 'loc-run')
+        await s.shot('loc_phone_controls')
+        await click_testid(s, 'loc-sub-exhibits')
+        await s.wait("document.querySelector('[data-testid=loc-exhibits]')", timeout=30)
+        geo2 = await s.js("({ scrollWidth: document.documentElement.scrollWidth,"
+                          " clientWidth: document.documentElement.clientWidth })")
+        await s.shot('loc_phone_exhibits')
+        return {'lab': geo, 'exhibits': geo2, 'k_after_play_2s': k, 'console_errors': s.errors()}
+
+
 SCENARIOS = {'smoke': smoke, 'player': player, 'reduced': reduced, 'fps': fps,
              'phone': phone, 'weight': weight, 'edit': edit, 'lab': lab,
-             'share': share, 'replay': replay, 'exhibit': exhibit}
+             'share': share, 'replay': replay, 'exhibit': exhibit,
+             'localise': localise, 'localise_phone': localise_phone}
 
 
 async def main(argv):
