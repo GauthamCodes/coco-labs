@@ -149,6 +149,27 @@ def test_a_bundle_needs_one_to_four_unique_runs():
         b.validate()
 
 
+def test_the_doc_matches_the_implementation():
+    """docs/labs/LOC_FORMAT.md is normative; pin its names to the code."""
+    from coco_lab import localise as L
+    doc = open(os.path.join(HERE, '..', '..', 'docs', 'labs',
+                            'LOC_FORMAT.md'), encoding='utf-8').read()
+    for name in (L.SCHEMA, LB.SCHEMA, f'"{L.VERSION}"', f'"{LB.VERSION}"'):
+        assert name in doc, name
+    for name in L.COMMON_COLUMNS + L.FILTER_COLUMNS['mcl'] + \
+            L.FILTER_COLUMNS['ekf'] + L.PARTICLE_COLUMNS:
+        assert f'`{name}`' in doc or f'`{name},' in doc or \
+            f'{name}`' in doc, name
+    for name in LB.WORLD_COLUMNS:
+        assert f'world.{name}' in doc, name
+    for key in ('n_updates', 'mean_err_xy', 'max_err_xy', 'final_err_xy',
+                'final_err_yaw', 'converged_s', 'kidnap_s', 'recovered',
+                'recovery_s'):
+        assert f'`{key}`' in doc, key
+    assert f'`ok_xy` {L.OK_XY}' in doc and f'`ok_yaw` {L.OK_YAW}' in doc
+    assert f'`ok_hold` {L.OK_HOLD}' in doc
+
+
 def test_unexpected_arrays_are_refused(tmp_path):
     b, _ = golden_loc_bundles.make('twins_small')
     arrays = b.arrays() + [('extra.thing', 'u8', b'\x00')]

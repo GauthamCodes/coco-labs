@@ -55,7 +55,7 @@ bound, and applies the rest in one Joseph-form update
 (:mod:`coco_lab.kalman`). It cannot represent two places at once, and
 that is the lesson the race shows.
 
-Trace schema ``coco_lab.loc_trace`` 1.0 (``docs/labs/LOC_TRACE_SCHEMA.md``):
+Trace schema ``coco_lab.loc_trace`` 1.0 (``docs/labs/LOC_FORMAT.md``):
 one row per filter update, the estimate, its covariance and its error; for
 MCL, the weighted particle set at every update.
 """

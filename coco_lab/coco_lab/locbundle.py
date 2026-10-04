@@ -15,7 +15,7 @@
 """
 Localisation bundle format 1.0: one Sketch world, and filters run on it.
 
-The normative description is ``docs/labs/LOC_BUNDLE_FORMAT.md``; this
+The normative description is ``docs/labs/LOC_FORMAT.md``; this
 module is its reference implementation and the tests pin one to the other.
 It follows bundle format v1's rules exactly (``coco_lab.bundle``), and
 reuses its content hash, provenance and bounded reading:
