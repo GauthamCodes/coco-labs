@@ -7449,3 +7449,38 @@ drafts. Phase 4 (Map) not started.
 NEXT (owner): on approval, `git push labs live-v1.0 lab2-v1.0`, then
 `gh release edit <tag> -R GauthamCodes/coco-labs --draft=false` for each.
 Optionally fast-forward `main` to this record commit afterwards.
+
+## Phase 2 + 3 RELEASED; Phase 4 (Map, Lab 3) opened (2026-10-04, ~18:20 UTC)
+
+Owner's prompt (Phase 4): "The owner has explicitly approved publication
+of live-v1.0 and lab2-v1.0", then ship, reconcile and continue into
+Phase 4 in the same session.
+
+**Published (measured, checked unauthenticated with curl):**
+- `git push labs refs/tags/live-v1.0 refs/tags/lab2-v1.0` — both
+  annotated tags now on `labs` (`live-v1.0` → `4530a8b`, `lab2-v1.0` →
+  `4b675c1`), beside `lab1-v1.0`.
+- `gh release edit live-v1.0 --draft=false --latest=false --verify-tag`,
+  then `lab2-v1.0 --draft=false --latest --verify-tag`. Published
+  18:17:00Z / 18:17:02Z; `lab2-v1.0` is "Latest".
+  <https://github.com/GauthamCodes/coco-labs/releases/tag/live-v1.0>,
+  <https://github.com/GauthamCodes/coco-labs/releases/tag/lab2-v1.0>.
+- Release bodies = `docs/releases/*.md` (diff: only a trailing newline).
+- `lab2-v1.0`'s asset `coco_lab2_demo.mp4` downloads 200, 3,399,232 B,
+  sha256 `b13aa1fe…` = the PUBLIC-site recording recorded in
+  `docs/data/lab2/video/README.md` (`~/coco_lab_runs/lab2/video_public/`).
+  The file in `~/coco_lab_runs/lab2/video/` (`7dd04673…`) is the earlier
+  local-build recording — not the release asset, as that README says.
+- Every link in both notes answers 200 (Pages root, `?view=live`,
+  `?view=localise`, both `blob/<tag>/…` write-ups).
+- Pages: latest `github-pages` deployment 6844374404 of `4b675c1`.
+
+**Reconciled:** `main` fast-forwarded `4b675c1..e128036` (the docs-only
+release-gate commit; plain push, no force, no merge commit). `main` is
+not branch-protected.
+
+**Correction to the prompt:** none of substance — the repo agreed with
+it (e128036 was the release-gate commit and a descendant of `main`).
+
+Phase 4 work is on branch **`lab3`** (from `e128036`), worktree
+`.claude/worktrees/lab1` of the old checkout (remote `labs`).

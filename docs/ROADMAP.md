@@ -20,8 +20,10 @@
 >   <https://gauthamcodes.github.io/coco-labs/?view=localise> (verified on
 >   the public site, headless Firefox). Its demo video was re-recorded from
 >   the public site. The `live-v1.0` (Phase 2) and `lab2-v1.0` (Phase 3)
->   tags and release drafts are prepared; **publishing them is the
->   owner's call**. Status against §6's "done when" and the remaining
+>   tags and releases are **published** (2026-10-04, owner-approved):
+>   <https://github.com/GauthamCodes/coco-labs/releases/tag/live-v1.0>,
+>   <https://github.com/GauthamCodes/coco-labs/releases/tag/lab2-v1.0>
+>   (with the video). Status against §6's "done when" and the remaining
 >   items: [`docs/labs/LAB2_LOCALISE.md`](labs/LAB2_LOCALISE.md).
 >   *(Until 2026-10-04 this line read "implemented, tested and measured on
 >   branch `lab2`; not yet deployed".)*
