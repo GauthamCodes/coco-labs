@@ -1,7 +1,7 @@
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
 
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, memo, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { BundleError } from '../bundle/errors';
 import {
@@ -29,7 +29,6 @@ import { RaceSetup, RaceView } from './Race';
 import { SettingsPanel } from './SettingsPanel';
 import { Exhibit } from './Exhibit';
 import { LiveView } from './LiveView';
-import { Localise } from './loc/Localise';
 import { Tools } from './Tools';
 import { TrackingPlot } from './TrackingPlot';
 
@@ -43,6 +42,8 @@ const SettingsPanelM = memo(SettingsPanel);
 const RaceSetupM = memo(RaceSetup);
 const ToolsM = memo(Tools);
 const DATA = `${BASE}generated/`;
+// Lab 2 is fetched only when its view is opened: Lab 1's first load does not pay for it
+const Localise = lazy(() => import('./loc/Localise').then((m) => ({ default: m.Localise })));
 
 /** A loaded bundle, and how we know it may be drawn. */
 export interface Current {
@@ -326,7 +327,11 @@ export function App() {
             : <ModeBadge provenance={current?.bundle.provenance ?? null} />}
       </header>
       {view === 'live' && <LiveView onLabel={setLiveText} />}
-      {view === 'localise' && catalog && <Localise catalog={catalog} reducedMotion={reducedMotion} />}
+      {view === 'localise' && catalog && (
+        <Suspense fallback={<p className="loading">Loading Lab 2…</p>}>
+          <Localise catalog={catalog} reducedMotion={reducedMotion} />
+        </Suspense>
+      )}
       {view === 'exhibit' && catalog && (
         <>
           <Exhibit catalog={catalog} dataUrl={dataUrl} run={run} busy={busy} reducedMotion={reducedMotion}

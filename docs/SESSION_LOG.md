@@ -7289,3 +7289,42 @@ pinned by a test).
 NEXT (if this session is cleared): finish the A/B batch
 (`~/coco_lab_runs/lab2/batch.tsv`), `an_kidnap.py`, the 1x replays +
 `an_ekf.py`, `amcl_replay.py` per drive and arm, then docs and CI.
+
+### Checkpoint — usage limit reached (2026-10-04 ~12:40 UTC)
+
+Since the entry above (commits through this one, pushed to `labs/lab2`):
+- Probe and runner fixes: `--to=` (K2/K4 negative x VOIDed `recovery_K2`,
+  kept as `.void2`); observe-only `lab_ekf.launch.py` + `ros_clean.sh`
+  patterns; `test_ekf_config.py`, `test_sketch_constants.py` (the latter
+  NOT yet run: it needs the overlay's coco_config); `LOC_FORMAT.md`
+  (pinned); view, glue, catalog-1.2 tests; Lab 2 lazy-loaded (main JS
+  108 KB gz, Localise chunk 14 KB gz); phone overflow fixed.
+- **Measured:** browser — cold in-browser run 9.6 s, warm 3.6 s, 0
+  console errors; Pyodide vs CPython on identical inputs: same outcomes,
+  NOT the same bits (`docs/data/lab2/browser/report.json`). Lab 1's
+  browser scenarios: no regression (warm edit 1.36–1.48 s; share link
+  reproduces). lab_web vitest **257**, tools **86**, tsc/build/check_dist
+  clean. robot_localization at 1x on fidelity_s1: square 2.30 → 0.05 m,
+  tour max 21.6 → 0.45 m, straight 0.000 → 0.120 m — the controller's
+  TWIST integrates 1.9 % more than its pose (measured from the bag); a
+  pose-differential variant (`docs/data/lab2/ekf_variants/`) is queued.
+  Kidnap A/B so far: K1 shipped and K1 recovery both NOT recovered in
+  180 s (injection active in B: the estimate hops between wrong modes).
+- **Still running in the background (job scripts in
+  `~/.claude/jobs/eb997671/tmp/`, may finish without this session):**
+  round 1 of the A/B (`batch2.log`), then `chain.sh`: round 2 (`:r2`
+  sessions + K2 rerun) → variant replays (`rlpd_*`) → `amcl_replay.py`
+  for 5 drives × 2 arms into `~/coco_lab_runs/lab2/amcl_replay/`.
+  Check with `cat ~/coco_lab_runs/lab2/batch.tsv`; if nothing is running,
+  `pgrep -af 'g[z] sim|lab2_'`.
+
+**Remaining to close Phase 3:** `an_kidnap.py ~/coco_lab_runs/lab2 --out
+docs/data/lab2/kidnap_ab.json`; `an_ekf.py` on both 1x replays (and the
+variant) → `ekf_drift.json`, choose the config the data supports;
+`an_amcl.py ~/coco_lab_runs/lab2/amcl_replay --out
+docs/data/lab2/amcl_odom.json`; rebuild the catalog; fill the PENDING
+sections of `docs/RESULTS.md` and `docs/labs/LAB2_LOCALISE.md`; README,
+ROADMAP and PROJECT_STATE; run `test_sketch_constants.py` and the full
+`run_all_package_tests.sh` (COCO_WS=~/coco_loc_ws, after `sync.sh`);
+record the demo (`record_lab2_demo.py`); open a draft PR lab2 → main for
+CI. Deploying (main) and a release stay owner-gated.

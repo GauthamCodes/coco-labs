@@ -37,8 +37,26 @@ async function load(id: string): Promise<DecodedBundle> {
 describe('the catalog carries coco_lab verdicts (1.1)', () => {
   it('is built', () => {
     expect(existsSync(CATALOG)).toBe(true);
-    expect(catalog.version).toBe('1.1');
+    // 1.2 is additive (Lab 2's `localise` block); every 1.1 member below still holds
+    expect(catalog.version).toBe('1.2');
     expect(catalog.settings?.weights).toEqual(Array.from({ length: 21 }, (_, i) => i / 4));
+  });
+
+  it('carries Lab 2: replayed Sketch bundles at filter seed 0, and its evidence', () => {
+    const loc = (catalog as unknown as { localise: any }).localise;
+    expect(loc.version).toBe('1.0');
+    expect(loc.bundles.map((b: any) => b.id)).toEqual(
+      ['loc_tracking', 'loc_kidnap', 'loc_global', 'loc_twins', 'loc_arena_kidnap']);
+    for (const b of loc.bundles) {
+      expect(b.source_kind).toBe('sketch');
+      expect(b.spec.filter_seed).toBe(0);
+      expect(b.validated.replay).toMatch(/reproduced byte for byte/);
+      expect(b.cites.length).toBeGreaterThan(0);
+    }
+    for (const k of ['fidelity', 'sketch_rates', 'kidnap_ab', 'ekf_drift']) {
+      expect(['measured', 'not yet measured']).toContain(loc[k].status);
+    }
+    expect(loc.exhibits).toBe('loc_exhibits.json');
   });
 
   it('every ladder rung is a served bundle, lowest first', () => {
