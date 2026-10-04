@@ -8096,9 +8096,37 @@ the bag); two sessions, five drives — not a rate. The EKF runs live only
 AMCL would mean turning off the controller's odometry TF, a production
 change this phase does not make.
 
-### AMCL on each odometry, offline, identical scans
+### AMCL on each odometry, offline, identical scans (measured)
 
-PENDING
+`amcl_replay.py`, per recorded drive and arm: a fresh `nav2_map_server` +
+`nav2_amcl` (the session's merged mission parameters; initial pose = the
+truth at the drive's start) on a private domain, the bag played from the
+drive's start at 1×. The arms differ ONLY in the `odom → base_footprint`
+transform AMCL is given: the recorded wheel odometry, or the adopted EKF
+(`publish_tf` on, fed the recorded wheel pose and gyro). Error of every
+`/amcl_pose` to the truth at its stamp → `docs/data/lab2/amcl_odom.json`
+(`python3 docs/data/lab2/an_amcl.py amcl_replay amcl_replay_pd`).
+
+| drive | AMCL on wheel odometry: mean / max | AMCL on the EKF: mean / max | AMCL poses |
+|---|---|---|---|
+| fidelity_s1 straight | 0.056 / 0.154 m | 0.042 / 0.135 m | 23 / 23 |
+| fidelity_s1 square | 0.114 / 0.214 m | 0.123 / 0.221 m | 89 / 91 |
+| fidelity_s1 tour | 0.106 / **0.407** m | 0.088 / **0.195** m | 578 / 573 |
+| fidelity_1 straight | 0.060 / 0.199 m | 0.068 / 0.204 m | 23 / 23 |
+| fidelity_1 tour | 0.099 / **0.298** m | 0.101 / **0.220** m | 589 / 576 |
+
+In this **fully mapped** arena, AMCL's scan matching absorbs the wheel
+odometry's drift: mean errors differ by ≤ 0.02 m either way, and the EKF
+lowers the worst error on both tours (0.407 → 0.195 m, 0.298 → 0.220 m).
+One replay per drive and arm: not a rate. With the first (twist) EKF the
+same replays gave a WORSE straight (mean 0.118 / max 0.362 m on
+fidelity_s1; `amcl_odom_twist.json`) — the twist bias reaches AMCL too.
+
+**What this does not test:** run 15's case. Run 15 drifted in a corridor
+the v1 map left blank, where AMCL had no scan to match and dead-reckoned
+on the wheels; there, the EKF's ≈ 100× better odometry (above) is what
+would matter. The current arena has no such stretch, so that is
+**unverified** here, and no claim is made that this fixes run 15.
 
 ### Tests
 

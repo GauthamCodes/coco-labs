@@ -111,7 +111,7 @@ Arena kidnap: off 0 / 20, augmented 2 / 20.
 | kidnap A/B, 10 fresh simulators per arm | `recovery_alpha` 0 / 0 (shipped): **0 of 10** recovered; 0.001 / 0.1: **2 of 10** (6.5 s, 36.0 s). One-sided Fisher p = 0.237 (derived): **not resolved** |
 | robot_localization (wheel pose differential + gyro), identical recorded drives | square 2.30 → **0.065 m**; tours (worst error) 21.6 → **0.21 m** and 33.6 → **0.24 m**; straights 0.000 → 0.02–0.03 m |
 | the first EKF configuration (wheel twist + gyro) | straights 0.12 m: the controller's twist integrates 1.9 % more distance than its pose (measured); not adopted |
-| AMCL on each odometry, offline, identical scans | AMCL_ODOM_ROW |
+| AMCL on each odometry, offline, identical scans | in the fully mapped arena AMCL absorbs the drift: means within 0.02 m either way; the EKF lowers the tours' worst error 0.41 → 0.20 m and 0.30 → 0.22 m. Run 15's unmapped-corridor case is not tested |
 | wheel topic | 1 publisher (`cmd_vel_arbiter`) in every watch sample of every session (4,344 in the A/B) |
 
 ### 4.4 The site (measured, headless Firefox, local build)

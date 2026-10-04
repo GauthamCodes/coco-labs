@@ -16,8 +16,10 @@ lab write-up is [`docs/labs/LAB2_LOCALISE.md`](../../labs/LAB2_LOCALISE.md).
 | `sketch_rates.py` → `sketch_rates.json` | Sketch outcome counts over 20 filter seeds per setting (Sketch, not the robot) |
 | `an_kidnap.py` → `kidnap_ab.json` | the real-stack kidnap A/B: AMCL `recovery_alpha_*` 0/0 (as shipped) vs 0.001/0.1 |
 | `rl_replay.sh` | replays a session's wheel odometry and gyro into robot_localization's `ekf_node`, offline |
-| `an_ekf.py` → `ekf_drift.json` | wheel odometry vs the EKF on identical recorded drives |
-| `amcl_replay.py` → `an_amcl.py` → `amcl_odom.json` | AMCL on wheel odometry vs AMCL on the EKF, offline, on identical recorded scans |
+| `an_ekf.py` → `ekf_drift.json` | wheel odometry vs the ADOPTED EKF (`coco_lab_ros/config/ekf_odom_imu.yaml`: wheel pose differential + gyro) on identical recorded drives |
+| `ekf_drift_twist.json`, `ekf_variants/` | the first configuration measured (wheel twist + gyro), not adopted, and the two variant files as replayed (`ekf_odom_pose_diff.yaml` equals the lab config, tested) |
+| `amcl_replay.py` → `an_amcl.py` → `amcl_odom.json` | AMCL on wheel odometry vs AMCL on the adopted EKF, offline, on identical recorded scans; `amcl_odom_twist.json` is the same with the twist EKF |
+| `browser/report.json` | the headless-Firefox checks (`check.py localise localise_phone`), including Pyodide vs CPython |
 
 Large artifacts — the rosbag2 directories (≈ 120 MB per fidelity session),
 the per-session logs and the probe's JSON lines — live under
@@ -56,7 +58,18 @@ python3 docs/data/lab2/an_ekf.py $R/fidelity_s1:$R/rl1x_fidelity_s1 \
     $R/fidelity_1:$R/rl1x_fidelity_1 --out docs/data/lab2/ekf_drift.json
 
 python3 docs/data/lab2/sketch_rates.py --seeds 20 --out docs/data/lab2/sketch_rates.json
+
+# AMCL on each odometry: one fresh map_server + AMCL per drive and arm
+for s in fidelity_s1 fidelity_1; do for d in straight square tour; do
+  for arm in wheel ekf; do
+    python3 docs/data/lab2/amcl_replay.py $R/$s $d $arm $R/amcl/${s}_${d}_${arm}.jsonl
+done; done; done      # (fidelity_1 has no square drive)
+python3 docs/data/lab2/an_amcl.py $R/amcl --out docs/data/lab2/amcl_odom.json
 ```
+
+As run in Phase 3, the wheel arm's files are in `amcl_replay/`, the
+adopted EKF arm's in `amcl_replay_pd/` and the twist EKF arm's in
+`amcl_replay_twist/` (the config was changed between them).
 
 `an_ekf.py` and `amcl_replay.py` need the ROS environment (rosbag2_py);
 `an_fidelity.py`, `an_kidnap.py` and `sketch_rates.py` need only coco_lab.

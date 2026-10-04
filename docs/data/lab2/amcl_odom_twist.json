@@ -1,0 +1,128 @@
+{
+ "cite": "docs/RESULTS.md \"COCO Lab Phase 3\"; docs/data/lab2/amcl_odom.json",
+ "command": "python3 docs/data/lab2/an_amcl.py amcl_replay amcl_replay_twist",
+ "definition": "amcl_replay.py: per recorded drive, a fresh map_server + AMCL (the session's merged mission parameters, initial pose = the truth at the drive's start) on a private domain, the bag played from the drive's start at 1x; arms differ ONLY in the odom -> base_footprint transform: the recorded wheel odometry, or robot_localization (ekf_odom_imu.yaml, publish_tf on) fed the recorded wheel twist and gyro.",
+ "drives": [
+  {
+   "arm": "wheel",
+   "drive": "straight",
+   "final_err_xy": 0.19855010980103618,
+   "final_err_yaw": 0.02481544970352134,
+   "max_err_xy": 0.19855010980103618,
+   "max_truth_dt": 0.0,
+   "mean_err_xy": 0.0599041909820625,
+   "n": 23,
+   "play_rc": 0,
+   "session": "fidelity_1"
+  },
+  {
+   "arm": "wheel",
+   "drive": "tour",
+   "final_err_xy": 0.01184345441470324,
+   "final_err_yaw": 0.03045030299569529,
+   "max_err_xy": 0.29796397221216026,
+   "max_truth_dt": 0.0,
+   "mean_err_xy": 0.09889193011624135,
+   "n": 589,
+   "play_rc": 0,
+   "session": "fidelity_1"
+  },
+  {
+   "arm": "wheel",
+   "drive": "square",
+   "final_err_xy": 0.2081875980199541,
+   "final_err_yaw": 0.0028396707579081415,
+   "max_err_xy": 0.21395641803213203,
+   "max_truth_dt": 0.0,
+   "mean_err_xy": 0.11447542135408494,
+   "n": 89,
+   "play_rc": 0,
+   "session": "fidelity_s1"
+  },
+  {
+   "arm": "wheel",
+   "drive": "straight",
+   "final_err_xy": 0.1537195952233795,
+   "final_err_yaw": 0.003375861483106757,
+   "max_err_xy": 0.1537195952233795,
+   "max_truth_dt": 0.0,
+   "mean_err_xy": 0.05627242058980405,
+   "n": 23,
+   "play_rc": 0,
+   "session": "fidelity_s1"
+  },
+  {
+   "arm": "wheel",
+   "drive": "tour",
+   "final_err_xy": 0.19617325309670117,
+   "final_err_yaw": 0.06691051959920724,
+   "max_err_xy": 0.4067292929205768,
+   "max_truth_dt": 0.0,
+   "mean_err_xy": 0.10609580352175567,
+   "n": 578,
+   "play_rc": 0,
+   "session": "fidelity_s1"
+  },
+  {
+   "arm": "ekf",
+   "drive": "straight",
+   "final_err_xy": 0.19402076664356976,
+   "final_err_yaw": 0.013025963073932001,
+   "max_err_xy": 0.19402076664356976,
+   "max_truth_dt": 0.0,
+   "mean_err_xy": 0.06260757331926553,
+   "n": 23,
+   "play_rc": 0,
+   "session": "fidelity_1"
+  },
+  {
+   "arm": "ekf",
+   "drive": "tour",
+   "final_err_xy": 0.10541559286844547,
+   "final_err_yaw": 0.008342162180775325,
+   "max_err_xy": 0.27990230042642106,
+   "max_truth_dt": 0.0,
+   "mean_err_xy": 0.10292901888123403,
+   "n": 583,
+   "play_rc": 0,
+   "session": "fidelity_1"
+  },
+  {
+   "arm": "ekf",
+   "drive": "square",
+   "final_err_xy": 0.2508877847056785,
+   "final_err_yaw": 0.017785615860568704,
+   "max_err_xy": 0.2508877847056785,
+   "max_truth_dt": 0.0,
+   "mean_err_xy": 0.13507236456293137,
+   "n": 91,
+   "play_rc": 0,
+   "session": "fidelity_s1"
+  },
+  {
+   "arm": "ekf",
+   "drive": "straight",
+   "final_err_xy": 0.36178244188056025,
+   "final_err_yaw": 0.011853974776393716,
+   "max_err_xy": 0.36178244188056025,
+   "max_truth_dt": 0.0,
+   "mean_err_xy": 0.11755262668585939,
+   "n": 23,
+   "play_rc": 0,
+   "session": "fidelity_s1"
+  },
+  {
+   "arm": "ekf",
+   "drive": "tour",
+   "final_err_xy": 0.04285476828825712,
+   "final_err_yaw": 0.013096458785761378,
+   "max_err_xy": 0.23750679129803456,
+   "max_truth_dt": 0.0,
+   "mean_err_xy": 0.10327852232541743,
+   "n": 579,
+   "play_rc": 0,
+   "session": "fidelity_s1"
+  }
+ ],
+ "tool": "docs/data/lab2/an_amcl.py"
+}
