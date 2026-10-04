@@ -16,7 +16,8 @@
 # lab2_batch.sh ROOT SESSION...  -- run lab2_run.sh sessions one after the
 # other, each on its own fresh simulator, into ROOT/<name>.
 #
-#   SESSION is  fidelity:<seed>  or  kidnap:<arm>:<target>
+#   SESSION is  fidelity:<seed>  or  kidnap:<arm>:<target>[:<round>]
+#   (a round tag names a repeat: kidnap_<arm>_<target>_<round>)
 #
 # Before each session it waits until no Gazebo has run for 60 s (another
 # project shares this machine; CLAUDE.md §5: one Gazebo at a time, and we
@@ -37,10 +38,10 @@ quiet_gz() {
     done
 }
 for s in "$@"; do
-    IFS=: read -r mode a b <<< "$s"
+    IFS=: read -r mode a b c <<< "$s"
     case "$mode" in
       fidelity) name="fidelity_s$a"; args=(fidelity "$ROOT/$name") ;;
-      kidnap) name="kidnap_${a}_$b"; args=(kidnap "$ROOT/$name" "$a" "$b") ;;
+      kidnap) name="kidnap_${a}_$b${c:+_$c}"; args=(kidnap "$ROOT/$name" "$a" "$b") ;;
       *) echo "bad session $s"; exit 2 ;;
     esac
     for attempt in 1 2 3 4 5; do
