@@ -249,7 +249,7 @@ if [ "$MODE" = fidelity ]; then
         --route="$(cat "$HERE/tour_route.txt")" --out "$OUT/drives.jsonl"
 else
     CHECK="kidnap $TARGET ($TO), arm $ARM"
-    check "${PROBE[@]}" kidnap --to "$TO" --rotate-s 180 --out "$OUT/kidnap.jsonl"
+    check "${PROBE[@]}" kidnap --to="$TO" --rotate-s 180 --out "$OUT/kidnap.jsonl"
 fi
 
 CHECK="wheel topic: exactly one publisher, cmd_vel_arbiter (end)"
