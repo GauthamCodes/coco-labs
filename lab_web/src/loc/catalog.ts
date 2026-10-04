@@ -85,6 +85,8 @@ export type KidnapAB = Measured<{
   arms: Record<string, { alpha_slow: number; alpha_fast: number; n: number; recovered: number;
     void: number; recovery_s: number[] }>;
   trials: ABTrial[];
+  /** derived: one-sided Fisher exact p, injection on better than off */
+  fisher_one_sided_p?: number;
 }>;
 
 export type EkfDrift = Measured<{

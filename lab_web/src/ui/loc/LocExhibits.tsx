@@ -102,6 +102,11 @@ function ABResult({ ab }: { ab: LocalisePart['kidnap_ab'] }) {
           ))}
         </tbody>
       </table>
+      {ab.fisher_one_sided_p !== undefined && (
+        <p className="honest" data-testid="exhibit-ab-p">Is injection better here? Not shown: if the arm made no
+          difference, a split at least this lopsided would happen with probability {ab.fisher_one_sided_p.toFixed(3)}
+          (one-sided Fisher exact test, derived).</p>
+      )}
       <TrialPlot trials={ab.trials} />
       <p className="note">Fresh simulator per trial; counts this small are not rates.</p>
       <Cite text={ab.cite} />

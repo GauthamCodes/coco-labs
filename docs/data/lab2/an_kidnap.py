@@ -45,6 +45,19 @@ HOLD_S = 5.0
 ARMS = {'shipped': (0.0, 0.0), 'recovery': (0.001, 0.1)}
 
 
+def fisher_one_sided(k_b, n_b, k_a, n_a):
+    """P(arm B recovers >= k_b of n_b | k_a + k_b recoveries in all), exact.
+
+    The hypergeometric tail: how likely B would look at least this much
+    better than A if the arm made no difference (derived, no new run).
+    """
+    from math import comb
+    total = k_a + k_b
+    n = n_a + n_b
+    return sum(comb(n_b, k) * comb(n_a, total - k)
+               for k in range(k_b, min(n_b, total) + 1)) / comb(n, total)
+
+
 def wrap(a):
     return (a + math.pi) % (2 * math.pi) - math.pi
 
@@ -133,6 +146,10 @@ def main(argv=None):
             'truth for 5 s of sim time.'),
         'ok_xy': OK_XY, 'ok_yaw': OK_YAW, 'hold_s': HOLD_S,
         'arms': arms, 'trials': trials,
+        # derived: the difference, tested (injection on better than off)
+        'fisher_one_sided_p': round(fisher_one_sided(
+            arms['recovery']['recovered'], arms['recovery']['n'],
+            arms['shipped']['recovered'], arms['shipped']['n']), 4),
     }
     with open(args.out, 'w') as f:
         json.dump(result, f, indent=1, sort_keys=True)

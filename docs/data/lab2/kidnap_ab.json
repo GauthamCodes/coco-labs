@@ -23,6 +23,7 @@
  "cite": "docs/RESULTS.md \"COCO Lab Phase 3\"; docs/data/lab2/kidnap_ab.json",
  "command": "python3 docs/data/lab2/an_kidnap.py lab2 --out docs/data/lab2/kidnap_ab.json",
  "definition": "Fresh simulator per trial (full_world_robo traverse:=true + lab_stack with the mission parameters merged with nav2_loc_<arm>.yaml). AMCL localised at the spawn, then the robot was teleported (gz set_pose) to one of five targets and rotated in place at 0.5 rad/s for 180 s of sim time through /cmd_vel_teleop. Recovered: within 0.5 m and 0.3 rad of the truth for 5 s of sim time.",
+ "fisher_one_sided_p": 0.2368,
  "hold_s": 5.0,
  "ok_xy": 0.5,
  "ok_yaw": 0.3,

@@ -7328,3 +7328,48 @@ ROADMAP and PROJECT_STATE; run `test_sketch_constants.py` and the full
 `run_all_package_tests.sh` (COCO_WS=~/coco_loc_ws, after `sync.sh`);
 record the demo (`record_lab2_demo.py`); open a draft PR lab2 → main for
 CI. Deploying (main) and a release stay owner-gated.
+
+## Phase 3 · Localise (Lab 2) — implemented, measured, documented (2026-10-04)
+
+Resumed from the checkpoint above; every run it left in the background
+had finished. Branch `lab2`.
+
+**Measured (the remaining real-stack work):**
+- **Kidnap A/B** (`docs/data/lab2/kidnap_ab.json`), 20 valid
+  fresh-simulator trials, 5 targets × 2 rounds per arm, 180 s of rotation:
+  shipped `recovery_alpha` 0/0 recovered **0 of 10**; Nav2's suggested
+  0.001/0.1 recovered **2 of 10** (6.5 s, 36.0 s). One-sided Fisher p =
+  0.237 (derived): not resolved. 3 VOID kept. 4,344 watch samples, wheel
+  topic `cmd_vel_arbiter` only.
+- **robot_localization**: the first configuration (wheel TWIST + gyro) had
+  0.12 m on a 6.4 m straight because the controller's twist integrates
+  1.9 % more than its pose (measured from the bag). The wheel POSE
+  differential + gyro configuration beat it on 4 of 5 drives and was
+  adopted (`ekf_odom_imu.yaml`; the twist one kept as a variant): square
+  2.30 → 0.065 m, tours' worst error 21.6 → 0.21 m and 33.6 → 0.24 m.
+  Upper bound (noiseless sim gyro). Observe-only live.
+- **AMCL on each odometry**, offline on identical scans
+  (`amcl_odom.json`): in the fully mapped arena AMCL absorbs the drift
+  (means within 0.02 m); the EKF lowers the tours' worst error 0.41 →
+  0.20 and 0.30 → 0.22 m. Run 15's unmapped-corridor case NOT tested.
+- Browser (local build): cold 9.4 s, warm 3.5 s, 0 console errors, phone
+  width clean, Lab 1 unchanged (smoke 11/11). Demo video 91.6 s
+  (`docs/data/lab2/video/`, file outside git).
+
+**Tests:** `run_all_package_tests.sh` **2,772 / 0 / 0** (coco_lab 352 →
+416, coco_lab_ros 69 → 86); lab_web vitest 257, tools 86; tsc, build,
+check_dist clean. One genuine failure found and fixed on the way:
+`robot_localization` undeclared in `coco_lab_ros/package.xml` (and added
+to CI's apt list).
+
+**Docs:** `docs/labs/LAB2_LOCALISE.md`, `docs/labs/LOC_FORMAT.md`,
+`docs/RESULTS.md` "COCO Lab Phase 3", `docs/data/lab2/README.md`, README,
+ROADMAP, PROJECT_STATE.
+
+**Unverified:** the public site (not deployed); a real phone; a real
+IMU; robot_localization feeding AMCL live; recovery with motion other than
+rotation; rates (every real-stack count is n ≤ 10).
+
+NEXT: the owner's decisions — fast-forward `main` once the `lab2` PR's CI
+is green (deploys Lab 2), and the release gates (`live-v1.0`, a Lab 2
+release with this video). Phase 4 (Map) is not started.

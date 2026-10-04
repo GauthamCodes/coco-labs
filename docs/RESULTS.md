@@ -8128,6 +8128,36 @@ on the wheels; there, the EKF's ≈ 100× better odometry (above) is what
 would matter. The current arena has no such stretch, so that is
 **unverified** here, and no claim is made that this fixes run 15.
 
-### Tests
+### Tests (measured, this session)
 
-PENDING
+`COCO_WS=~/coco_loc_ws ROS_DOMAIN_ID=77 scripts/run_all_package_tests.sh`
+on a clean graph: **2,772 passed, 0 failed, 0 skipped** (baseline at the
+start of the phase: 2,691).
+
+| package | baseline | now |
+|---|---|---|
+| coco_config | 93 | 93 |
+| coco_sim | 280 | 280 |
+| coco_mission | 344 | 344 |
+| coco_web | 857 | 857 |
+| gazebo_models | 229 | 229 |
+| coco_rl | 241 | 241 |
+| coco_perception | 139 | 139 |
+| coco_moveit_config | 12 | 12 |
+| custom_teleop | 75 | 75 |
+| coco_lab | 352 | **416** |
+| coco_lab_ros | 69 | **86** |
+
+`lab_web`: vitest 238 → **257**; tools pytest 73 → **86**; `tsc`, `vite
+build` and `check_dist` clean. The first full run failed one test, and it
+was a real defect: `lab_ekf.launch.py` launches `robot_localization`, which
+`coco_lab_ros/package.xml` did not declare
+(`test_no_turtlebot_dependency.py::test_every_package_a_launch_file_looks_up_is_declared`);
+declared, and `ros-jazzy-robot-localization` added to CI's apt list.
+
+### Demo video
+
+91.6 s, recorded in headless Firefox from the LOCAL production build
+(Lab 2 is not deployed), one 10 s cut (the Pyodide start-up), 0 console
+errors: `docs/data/lab2/video/` (the file itself is outside git, as Lab
+1's was until its release).

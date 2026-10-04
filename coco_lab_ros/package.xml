@@ -31,6 +31,9 @@
   <exec_depend>launch</exec_depend>
   <exec_depend>launch_ros</exec_depend>
   <exec_depend>rosbag2_py</exec_depend>
+  <!-- Only for lab_ekf.launch.py (Lab 2), observe-only; the mission never
+       loads it (test_ekf_config.py). -->
+  <exec_depend>robot_localization</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

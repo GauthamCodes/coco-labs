@@ -127,7 +127,7 @@ reproduces its exact trace).
 
 ### 4.5 Tests
 
-Counts at the close of the phase: `docs/RESULTS.md` "COCO Lab Phase 3" >
+`run_all_package_tests.sh` **2,772 / 0 / 0** (coco_lab 416, coco_lab_ros 86; baseline 2,691); lab_web vitest 257, tools 86; tsc, build, check_dist clean. Details: `docs/RESULTS.md` "COCO Lab Phase 3" >
 "Tests".
 
 ## 5. Not verified

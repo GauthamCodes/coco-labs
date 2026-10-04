@@ -1,0 +1,14 @@
+{
+ "frames": 3323,
+ "video_s": 91.62,
+ "capture_fps": 36.27,
+ "cuts": [
+  {
+   "what": "before recording: the one-time Pyodide start-up and a warm-up run",
+   "seconds_cut": 10.05,
+   "at_video_s": 0.0
+  }
+ ],
+ "console_errors": [],
+ "site": "http://127.0.0.1:4173/coco-labs/"
+}

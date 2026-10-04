@@ -40,6 +40,7 @@ jobs:
             ros-jazzy-cv-bridge \
             ros-jazzy-nav2-bringup \
             ros-jazzy-ros-gz-sim \
+            ros-jazzy-robot-localization \
             python3-opencv \
             python3-numpy \
             liburdfdom-tools
