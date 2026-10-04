@@ -45,6 +45,12 @@ from rclpy.serialization import deserialize_message
 from rosidl_runtime_py.utilities import get_message
 
 WORLD_TO_MAP = (2.0, 0.0)
+ADOPTED = ('coco_lab_ros/config/ekf_odom_imu.yaml: the wheels\' pose x, y '
+           'differentiated + the gyro\'s yaw rate (not the wheels\' heading '
+           'or yaw rate, not the IMU orientation); robot_localization\'s '
+           'ekf_node replayed offline at 1x on each session\'s own bag '
+           '(rl_replay.sh). Gazebo\'s gyro is noiseless: an upper bound for '
+           'a real one.')
 
 
 def wrap(a):
@@ -133,6 +139,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     ap.add_argument('pairs', nargs='+', help='SESSION_DIR:RL_DIR')
     ap.add_argument('--out', required=True)
+    ap.add_argument('--config', default=ADOPTED,
+                    help='what configuration the RL_DIRs were replayed with')
     args = ap.parse_args(argv)
     drives = []
     for pair in args.pairs:
@@ -166,11 +174,7 @@ def main(argv=None):
         'command': 'python3 docs/data/lab2/an_ekf.py ' + ' '.join(
             ':'.join(os.path.basename(x) for x in p.split(':'))
             for p in args.pairs),
-        'config': 'coco_lab_ros/config/ekf_odom_imu.yaml: wheel vx, vy + '
-                  'gyro vyaw (not wheel vyaw, not IMU orientation); '
-                  "robot_localization's ekf_node replayed offline on the "
-                  "session's own bag (rl_replay.sh, rate 4). Gazebo's gyro "
-                  'is noiseless: an upper bound for a real one.',
+        'config': args.config,
         'cite': 'docs/RESULTS.md "COCO Lab Phase 3"; '
                 'docs/data/lab2/ekf_drift.json',
         'drives': drives,

@@ -15,9 +15,12 @@
 """
 Lab 2's robot_localization configuration: what it fuses, and what it leaves alone.
 
-- it fuses the wheels' vx, vy and the gyro's yaw rate -- never the wheels'
-  yaw rate (skid-steer's weak axis, measured) and never the IMU's
+- it fuses the wheels' pose x, y DIFFERENTIALLY and the gyro's yaw rate --
+  never the wheels' heading or yaw rate (skid-steer's weak axis, measured),
+  never their twist (it reads 1.9 % high, measured), and never the IMU's
   orientation (Gazebo's is ground truth with zero covariance, measured);
+- its settings are exactly those replayed as ``ekf_odom_pose_diff.yaml``
+  (the evidence in ``docs/data/lab2/ekf_drift.json`` is for THIS file);
 - it never publishes TF, so the odometry transform AMCL and Nav2 use stays
   the diff_drive_controller's;
 - nothing the mission runs loads it: no file under gazebo_models,
@@ -32,6 +35,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PKG = os.path.dirname(HERE)
 REPO = os.path.dirname(PKG)
 CONFIG = os.path.join(PKG, 'config', 'ekf_odom_imu.yaml')
+VARIANTS = os.path.join(REPO, 'docs', 'data', 'lab2', 'ekf_variants')
 LAUNCH = os.path.join(PKG, 'launch', 'lab_ekf.launch.py')
 
 # robot_localization's 15-element order: x y z, roll pitch yaw, vx vy vz,
@@ -48,15 +52,26 @@ def fused(key):
     return {n for n, on in zip(NAMES, cfg()[key]) if on}
 
 
-def test_it_fuses_wheel_speed_and_gyro_rate_only():
-    assert fused('odom0_config') == {'vx', 'vy'}
+def test_it_fuses_wheel_position_changes_and_gyro_rate_only():
+    assert fused('odom0_config') == {'x', 'y'}
+    assert cfg()['odom0_differential'] is True
     assert fused('imu0_config') == {'vyaw'}
+    assert cfg()['imu0_differential'] is False
     c = cfg()
     assert c['odom0'] == '/diff_drive_controller/odom'
     assert c['imu0'] == '/imu'
     assert c['two_d_mode'] is True
     assert c['world_frame'] == c['odom_frame'] == 'odom'
     assert c['base_link_frame'] == 'base_footprint'
+
+
+def test_the_measured_variants_are_what_they_say():
+    replayed = params.load(os.path.join(VARIANTS, 'ekf_odom_pose_diff.yaml'))
+    assert replayed == params.load(CONFIG)
+    twist = params.load(os.path.join(VARIANTS, 'ekf_odom_twist.yaml'))
+    t = twist['ekf_filter_node']['ros__parameters']
+    assert {n for n, on in zip(NAMES, t['odom0_config']) if on} == {'vx', 'vy'}
+    assert t['odom0_differential'] is False
 
 
 def test_it_never_publishes_tf():

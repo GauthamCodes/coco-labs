@@ -1,16 +1,27 @@
 # COCO Lab Phase 3 (Lab 2, Localise) -- robot_localization EKF, LAB ONLY.
 #
-# NOT used by the mission: nothing in gazebo_models or coco_mission loads
-# this file (tested: test_ekf_config.py). It is the configuration measured
-# in docs/RESULTS.md "COCO Lab Phase 3" (robot_localization), replayed
-# offline on recorded drives (docs/data/lab2/rl_replay.sh).
+# NOT used by the mission: nothing in gazebo_models, coco_mission,
+# custom_teleop or coco_web loads this file (tested: test_ekf_config.py).
+# It is the configuration measured in docs/RESULTS.md "COCO Lab Phase 3"
+# (robot_localization), replayed offline on recorded drives
+# (docs/data/lab2/rl_replay.sh) and run live, observe-only, by
+# coco_lab_ros/launch/lab_ekf.launch.py.
 #
-# Why these inputs. COCO is a four-wheel skid-steer robot: its wheel
-# odometry is good along the body (a straight 6.4 m drive ended 0.000 m off
-# in Gazebo, measured) and bad at turning (2.45 rad of yaw error over 11 rad
-# turned on the square, measured). So the EKF takes the wheels' forward and
-# lateral speed (vx, vy -- vy is ~0, the non-holonomic constraint) and the
-# GYRO's yaw rate, and NOT the wheels' yaw rate.
+# Why these inputs. COCO is a four-wheel skid-steer robot. Its wheel
+# odometry POSE is good along the body (a straight 6.4 m drive ended
+# 0.000 m off in Gazebo) and bad at turning (2.45 rad of yaw error over
+# 11 rad turned on the square); its wheel yaw rate over-reads (72.5 rad
+# integrated where the gyro and the truth give 56.3 / 56.2 rad on the tour).
+# All measured, docs/RESULTS.md.
+#
+# So the EKF takes the wheels' POSE x, y DIFFERENTIATED (odom0_differential:
+# the change in x, y between messages, as a velocity) and the GYRO's yaw
+# rate -- and NOT the wheels' heading or yaw rate. The first configuration
+# measured fused the wheels' TWIST vx, vy instead
+# (docs/data/lab2/ekf_variants/ekf_odom_twist.yaml): the controller's
+# published twist integrates to 1.9 % more distance than its own pose, and
+# that EKF inherited it (0.12 m on a 6.4 m straight; this one 0.022-0.029 m,
+# measured on the same bags).
 #
 # What it does not take: the IMU's orientation. Gazebo's IMU reports the
 # simulator's own orientation with zero covariance (measured from the bag),
@@ -24,7 +35,7 @@ ekf_filter_node:
     frequency: 30.0
     sensor_timeout: 0.1
     two_d_mode: true
-    publish_tf: false          # replay: AMCL's/diff_drive's TF untouched
+    publish_tf: false          # observe only: AMCL's/diff_drive's TF untouched
     map_frame: map
     odom_frame: odom
     base_link_frame: base_footprint
@@ -34,10 +45,10 @@ ekf_filter_node:
     #              x      y      z      roll   pitch  yaw
     #              vx     vy     vz     vroll  vpitch vyaw
     #              ax     ay     az
-    odom0_config: [false, false, false, false, false, false,
-                   true,  true,  false, false, false, false,
+    odom0_config: [true,  true,  false, false, false, false,
+                   false, false, false, false, false, false,
                    false, false, false]
-    odom0_differential: false
+    odom0_differential: true
     odom0_relative: false
 
     imu0: /imu

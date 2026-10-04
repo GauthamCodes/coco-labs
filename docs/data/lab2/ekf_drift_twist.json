@@ -1,0 +1,108 @@
+{
+ "cite": "docs/RESULTS.md \"COCO Lab Phase 3\"; docs/data/lab2/ekf_drift.json",
+ "command": "python3 docs/data/lab2/an_ekf.py fidelity_s1:rl1x_fidelity_s1 fidelity_1:rl1x_fidelity_1",
+ "config": "docs/data/lab2/ekf_variants/ekf_odom_twist.yaml (the FIRST configuration measured, not adopted): the wheels' twist vx, vy + the gyro's yaw rate; replayed offline at 1x (rl_replay.sh). The controller's twist integrates to 1.9 % more distance than its pose.",
+ "drives": [
+  {
+   "distance_m": 6.41983616285243,
+   "drive": "straight",
+   "ekf": {
+    "final_pos_err_m": 0.11997299183190324,
+    "final_yaw_err_rad": 5.177946960088775e-11,
+    "max_pos_err_m": 0.11998460162263913,
+    "samples": 1174
+   },
+   "rotation_rad": 2.3340758659173844e-08,
+   "session": "fidelity_s1",
+   "t0": 158.52,
+   "t1": 181.98,
+   "wheel_odom": {
+    "final_pos_err_m": 0.00014486386965619196,
+    "final_yaw_err_rad": 4.4702850399147565e-07,
+    "max_pos_err_m": 0.00014486386965619196,
+    "samples": 1174
+   }
+  },
+  {
+   "distance_m": 15.4077982582262,
+   "drive": "square",
+   "ekf": {
+    "final_pos_err_m": 0.04963901243687625,
+    "final_yaw_err_rad": 0.04551372458716907,
+    "max_pos_err_m": 0.07720738051455286,
+    "samples": 3154
+   },
+   "rotation_rad": 10.974054017795904,
+   "session": "fidelity_s1",
+   "t0": 186.18,
+   "t1": 249.24,
+   "wheel_odom": {
+    "final_pos_err_m": 2.298079575479769,
+    "final_yaw_err_rad": 2.4452414668679445,
+    "max_pos_err_m": 2.5410753538789224,
+    "samples": 3154
+   }
+  },
+  {
+   "distance_m": 120.13831155297996,
+   "drive": "tour",
+   "ekf": {
+    "final_pos_err_m": 0.18814172858407058,
+    "final_yaw_err_rad": 0.016583639080439472,
+    "max_pos_err_m": 0.44589655765111635,
+    "samples": 22025
+   },
+   "rotation_rad": 56.16345379269361,
+   "session": "fidelity_s1",
+   "t0": 253.58,
+   "t1": 694.06,
+   "wheel_odom": {
+    "final_pos_err_m": 2.594913287333984,
+    "final_yaw_err_rad": 1.6026437009274335,
+    "max_pos_err_m": 21.609842119788276,
+    "samples": 22025
+   }
+  },
+  {
+   "distance_m": 6.419842808778521,
+   "drive": "straight",
+   "ekf": {
+    "final_pos_err_m": 0.12706137990015764,
+    "final_yaw_err_rad": 4.455369406741738e-11,
+    "max_pos_err_m": 0.12708513932365983,
+    "samples": 1173
+   },
+   "rotation_rad": 2.3324666198476507e-08,
+   "session": "fidelity_1",
+   "t0": 162.6,
+   "t1": 186.04,
+   "wheel_odom": {
+    "final_pos_err_m": 0.00014969596267681997,
+    "final_yaw_err_rad": 2.523051476188698e-06,
+    "max_pos_err_m": 0.00014969596267681997,
+    "samples": 1173
+   }
+  },
+  {
+   "distance_m": 120.17622049605784,
+   "drive": "tour",
+   "ekf": {
+    "final_pos_err_m": 0.1560640846021144,
+    "final_yaw_err_rad": 0.0020949193885795303,
+    "max_pos_err_m": 0.5647491849709072,
+    "samples": 22023
+   },
+   "rotation_rad": 56.29756833348874,
+   "session": "fidelity_1",
+   "t0": 191.72,
+   "t1": 632.16,
+   "wheel_odom": {
+    "final_pos_err_m": 17.237211284144365,
+    "final_yaw_err_rad": 2.685404540253047,
+    "max_pos_err_m": 33.6420617445186,
+    "samples": 22023
+   }
+  }
+ ],
+ "tool": "docs/data/lab2/an_ekf.py"
+}

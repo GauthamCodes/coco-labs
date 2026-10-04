@@ -1,4 +1,5 @@
-# COCO Lab Phase 3 -- robot_localization VARIANT, an experiment input only.
+# COCO Lab Phase 3 -- robot_localization VARIANT as replayed (rlpd_*): its settings
+# are now the lab config, coco_lab_ros/config/ekf_odom_imu.yaml (tested equal).
 #
 # Identical to coco_lab_ros/config/ekf_odom_imu.yaml except in how the
 # wheels enter: their POSE x, y, differentiated (odom0_differential true),
