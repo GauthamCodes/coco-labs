@@ -7370,6 +7370,10 @@ ROADMAP, PROJECT_STATE.
 IMU; robot_localization feeding AMCL live; recovery with motion other than
 rotation; rates (every real-stack count is n ≤ 10).
 
-NEXT: the owner's decisions — fast-forward `main` once the `lab2` PR's CI
-is green (deploys Lab 2), and the release gates (`live-v1.0`, a Lab 2
-release with this video). Phase 4 (Map) is not started.
+**CI:** draft PR #10 (`lab2` → `main`) at 56a6ffc — all checks green:
+ROS build-and-test 2,273 tests / 0 failures / 0 skipped; coco_lab venv
+413; lab_web tools 86, vitest 257, site build; deploy skipped (main only).
+
+NEXT: the owner's decisions — fast-forward `main` to `lab2` (deploys Lab
+2 to Pages), then the release gates (`live-v1.0`, a Lab 2 release with
+the video at `~/coco_lab_runs/lab2/video/`). Phase 4 (Map) is not started.

@@ -8155,6 +8155,12 @@ was a real defect: `lab_ekf.launch.py` launches `robot_localization`, which
 (`test_no_turtlebot_dependency.py::test_every_package_a_launch_file_looks_up_is_declared`);
 declared, and `ros-jazzy-robot-localization` added to CI's apt list.
 
+**CI** (draft PR #10, `lab2` → `main`, at 56a6ffc): `CI` build-and-test
+(run 37217694120) **2,273 tests, 0 errors, 0 failures, 0 skipped**; `Lab`
+(run 37217694091): coco_lab in a plain venv **413 passed** (the local 416
+less the three ament linters), lab_web tools **86**, vitest **257**, site
+build green; the Pages deploy job skipped (main only).
+
 ### Demo video
 
 91.6 s, recorded in headless Firefox from the LOCAL production build
