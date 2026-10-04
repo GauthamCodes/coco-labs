@@ -723,13 +723,27 @@ async def localise(site, out):
         return rep
 
 
+OVERFLOW = """(() => {
+  const W = document.documentElement.clientWidth;
+  const wide = [...document.querySelectorAll('body *')].filter((e) => {
+    const r = e.getBoundingClientRect();
+    if (r.right <= W + 0.5) return false;
+    // inside a box that scrolls on its own: not page overflow
+    for (let p = e.parentElement; p; p = p.parentElement) {
+      if (getComputedStyle(p).overflowX === 'auto') return false;
+    }
+    return true;
+  }).slice(0, 8).map((e) => `${e.tagName.toLowerCase()}.${e.className}`);
+  return { scrollWidth: document.documentElement.scrollWidth, clientWidth: W, overflowing: wide };
+})()"""
+
+
 async def localise_phone(site, out):
     """Lab 2 at 390 x 844: no horizontal scroll; the controls are reachable."""
     async with Session(site, out, width=390, height=844) as s:
         await s.open('?view=localise&scene=loc_tracking')
         await s.wait(LOC_READY, timeout=90)
-        geo = await s.js("({ scrollWidth: document.documentElement.scrollWidth,"
-                         " clientWidth: document.documentElement.clientWidth })")
+        geo = await s.js(OVERFLOW)
         await s.shot('loc_phone_top')
         await click_testid(s, 'loc-play')
         await asyncio.sleep(2.0)
@@ -738,8 +752,7 @@ async def localise_phone(site, out):
         await s.shot('loc_phone_controls')
         await click_testid(s, 'loc-sub-exhibits')
         await s.wait("document.querySelector('[data-testid=loc-exhibits]')", timeout=30)
-        geo2 = await s.js("({ scrollWidth: document.documentElement.scrollWidth,"
-                          " clientWidth: document.documentElement.clientWidth })")
+        geo2 = await s.js(OVERFLOW)
         await s.shot('loc_phone_exhibits')
         return {'lab': geo, 'exhibits': geo2, 'k_after_play_2s': k, 'console_errors': s.errors()}
 

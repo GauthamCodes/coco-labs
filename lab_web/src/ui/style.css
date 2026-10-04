@@ -260,8 +260,11 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 /* Phase 3: Lab 2 -- Localise (Sketch) */
 .loc { margin: 8px 0 24px; }
 .loc-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin: 8px 0; }
-.picker-inline { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; flex: 1 1 280px; }
-.picker-inline select { min-height: var(--touch); font-size: 1rem; flex: 1 1 240px; max-width: 100%; }
+.picker-inline { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; flex: 1 1 280px; min-width: 0; }
+.picker-inline select { min-height: var(--touch); font-size: 1rem; flex: 1 1 200px; min-width: 0; width: 100%; max-width: 100%; }
+.loc .scroll-x { overflow-x: auto; max-width: 100%; }
+.loc .side, .loc .canvas-col { min-width: 0; }
+.loc .field select { min-width: 0; max-width: 100%; }
 .loc .lede { margin: 4px 0 8px; }
 .loc-figure { margin: 0; min-width: 0; }
 .loc-figure figcaption { font-size: 0.85rem; margin: 2px 0; }

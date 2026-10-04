@@ -39,6 +39,8 @@ PKG = os.path.dirname(HERE)
 REPO = os.path.dirname(PKG)
 SCRIPT = os.path.join(REPO, 'gazebo_models', 'scripts', 'ros_clean.sh')
 SCRIPTS = ('lab1c_conformance.py', 'lab1c_watch.py')
+#: Phase 3 (Lab 2): the live probe and the offline AMCL replay
+LAB2_SCRIPTS = ('lab2_probe.py', 'amcl_replay.py')
 
 
 def patterns():
@@ -73,16 +75,23 @@ def command_lines():
     lines += [f'/usr/bin/python3 /opt/ros/jazzy/bin/ros2 launch coco_lab_ros '
               f'{f} gui:=false' for f in launch_files()]
     lines += [f'python3 -P /repo/docs/data/lab1c/{s} --out x' for s in SCRIPTS]
+    lines += [f'python3 -P /repo/docs/data/lab2/{s} kidnap --to 1,2,3'
+              for s in LAB2_SCRIPTS]
+    # lab_ekf.launch.py's node, as ros2 launch starts it
+    lines.append('/opt/ros/jazzy/lib/robot_localization/ekf_node --ros-args '
+                 '-r __node:=ekf_filter_node --params-file /x/ekf.yaml')
     return lines
 
 
 def test_the_package_declares_what_this_test_covers():
     assert set(console_scripts()) == {'lab_planner', 'lab_params',
                                       'lab_export'}
-    assert launch_files() == ['lab_stack.launch.py',
+    assert launch_files() == ['lab_ekf.launch.py', 'lab_stack.launch.py',
                               'lab_static_smoke.launch.py']
     for s in SCRIPTS:
         assert os.path.exists(os.path.join(REPO, 'docs', 'data', 'lab1c', s))
+    for s in LAB2_SCRIPTS:
+        assert os.path.exists(os.path.join(REPO, 'docs', 'data', 'lab2', s))
 
 
 @pytest.mark.parametrize('line', command_lines())

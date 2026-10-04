@@ -256,6 +256,14 @@ PATTERNS=(
   'coco_lab_ros/lab_expor[t]'
   'lab1c_conformanc[e][.]py'
   'lab1c_watc[h][.]py'
+  # COCO Lab Phase 3 (Lab 2): the observe-only EKF launch and its node
+  # (anchored on robot_localization's install path), the live probe (it
+  # publishes /cmd_vel_teleop: an orphan must not keep driving) and the
+  # offline AMCL replay. Pinned by coco_lab_ros/test/test_ros_clean.py.
+  'lab_ekf[.]launch.py'
+  'robot_localization/ekf_nod[e]'
+  'lab2_prob[e][.]py'
+  'amcl_repla[y][.]py'
 )
 
 survivors() {

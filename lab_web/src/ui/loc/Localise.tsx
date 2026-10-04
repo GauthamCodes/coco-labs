@@ -298,7 +298,7 @@ function FidelityNote({ fid }: { fid: LocalisePart['fidelity'] }) {
           ))}
         </tbody>
       </table>
-      <table className="rows-table">
+      <div className="scroll-x"><table className="rows-table">
         <caption>Odometry drift on the same commands</caption>
         <thead><tr><th>drive</th><th>driven</th><th>Gazebo odometry, final error</th><th>Sketch (default noise), median [p05–p95]</th></tr></thead>
         <tbody>
@@ -312,7 +312,7 @@ function FidelityNote({ fid }: { fid: LocalisePart['fidelity'] }) {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
       <p className="cite">(measured) {fid.cite}. Command: <code>{fid.command}</code></p>
     </details>
   );
@@ -344,7 +344,7 @@ function LocPlayer({ n, k, t, playing, rate, onSeek, onPlaying, onRate }: {
 function RaceTable({ bundle: b, k }: { bundle: DecodedLocBundle; k: number }) {
   const f = (v: number | null, d = 2) => (v === null ? '—' : v.toFixed(d));
   return (
-    <table className="race-table" data-testid="loc-race-table">
+    <div className="scroll-x"><table className="race-table" data-testid="loc-race-table">
       <caption className="note">Same world, same odometry, same scans: only the filter differs.</caption>
       <thead><tr><th>filter</th><th>error now</th><th>mean error</th><th>converged at</th>
         {b.world.kidnapRow !== null && <th>after the kidnap</th>}</tr></thead>
@@ -361,7 +361,7 @@ function RaceTable({ bundle: b, k }: { bundle: DecodedLocBundle; k: number }) {
           </tr>
         ))}
       </tbody>
-    </table>
+    </table></div>
   );
 }
 
