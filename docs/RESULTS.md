@@ -8040,6 +8040,15 @@ Compared with the local build above (9.6 s cold, 3.6 s warm), the cold run
 includes fetching Pyodide from its CDN and is set by it; n = 1 each, so
 the difference is not a finding.
 
+**Re-checked on the final deployment** (`main` = `4b675c1`, docs only on
+top of `4405065`; Pages deployment 6844374404, `built_from 4b675c1`; load
+0.12–0.62): the same checks, the same results, 0 console errors; cold
+9.28 s, warm 3.05 s (`docs/data/lab2/public/report_4b675c1.json`). On
+that commit `CI` run 37221184465 failed its first attempt on
+`gazebo_models` `test_the_relay_output_is_restamped_and_unaltered`
+(`assert 9 >= 10`, the load-sensitive test in `CLAUDE.md`) and passed on
+re-run; not root-caused.
+
 ### Cross-language decoding (tests)
 
 `lab_web/test/locdecode.test.ts`: for both golden loc bundles every

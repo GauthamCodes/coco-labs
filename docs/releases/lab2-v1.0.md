@@ -49,8 +49,13 @@ labelled); no horizontal scroll at 390 × 844; Lab 1's smoke 11 of 11.
 `run_all_package_tests.sh` **2,772 passed, 0 failed, 0 skipped** (coco_lab
 416, coco_lab_ros 86; the Phase 2 baseline was 2,691); lab_web vitest
 **257**, tools **86**; `tsc`, build and `check_dist` clean. CI on `main`
-at `4405065`: `CI` (run 37219611482) and `Lab` with the Pages deploy (run
-37219611486) green.
+at `4405065` (the code): `CI` (run 37219611482, 2,273 tests) and `Lab`
+with the Pages deploy (run 37219611486) green. At this tag's commit
+`4b675c1` (docs only on top): `Lab` with the deploy green (run
+37221184498); `CI` run 37221184465 failed its first attempt on
+`gazebo_models` `test_the_relay_output_is_restamped_and_unaltered`
+(`assert 9 >= 10`, the load-sensitive test recorded in `CLAUDE.md`) and
+passed on re-run.
 
 ### Known limitations
 

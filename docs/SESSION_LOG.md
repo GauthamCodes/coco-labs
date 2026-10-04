@@ -7420,3 +7420,32 @@ reproduced, real-stack counts n ≤ 10.
 
 NEXT: the owner's approval to push the two tags and publish the two
 drafts. Phase 4 (Map) not started.
+
+### Checkpoint — at the release-publication gate (2026-10-04, ~17:50 UTC)
+
+- PR #10 was recorded MERGED by GitHub when `main` reached its head
+  (`4405065`), so the docs commit got its CI gate on new draft **PR #11**
+  (`lab2` → `main`): CI and Lab green on `4b675c1`.
+- `main` fast-forwarded `4405065..4b675c1`. Lab 37221184498 (with the
+  deploy) green; Pages deployment 6844374404 of `4b675c1`, live catalog
+  `built_from 4b675c1`, `dirty: false`. **CI 37221184465 failed attempt
+  1** on `gazebo_models`
+  `TestLiveGraph::test_the_relay_output_is_restamped_and_unaltered`,
+  `assert 9 >= 10`: the load-sensitive test CLAUDE.md records (9 of the
+  10 messages in its window). The same code had passed that job three
+  times. **Re-run (attempt 2): success.** Not root-caused; recorded.
+- Public checks re-run on the `4b675c1` build (load 0.12–0.62): same
+  results, 0 console errors; cold 9.28 s, warm 3.05 s
+  (`docs/data/lab2/public/report_4b675c1.json`).
+- **Tags, LOCAL ONLY (not pushed):** `live-v1.0` (annotated) → `4530a8b`;
+  `lab2-v1.0` (annotated) → `4b675c1` (= `main` = the deployed site).
+  Neither exists on `labs`.
+- **Draft releases on `labs` (not published):** `live-v1.0`, target
+  `4530a8b`, no asset; `lab2-v1.0`, target `4b675c1`, asset
+  `coco_lab2_demo.mp4` (the public-site recording, 3,399,232 B; the
+  download was checked, sha256 `b13aa1fe…`). Bodies = `docs/releases/*.md`.
+- This entry is on `lab2` (PR #11) only; `main` stays at `4b675c1`.
+
+NEXT (owner): on approval, `git push labs live-v1.0 lab2-v1.0`, then
+`gh release edit <tag> -R GauthamCodes/coco-labs --draft=false` for each.
+Optionally fast-forward `main` to this record commit afterwards.

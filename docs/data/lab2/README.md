@@ -21,6 +21,7 @@ lab write-up is [`docs/labs/LAB2_LOCALISE.md`](../../labs/LAB2_LOCALISE.md).
 | `amcl_replay.py` → `an_amcl.py` → `amcl_odom.json` | AMCL on wheel odometry vs AMCL on the adopted EKF, offline, on identical recorded scans; `amcl_odom_twist.json` is the same with the twist EKF |
 | `browser/report.json` | the headless-Firefox checks (`check.py localise localise_phone`), including Pyodide vs CPython |
 | `public/report.json` | the same checks plus Lab 1's `smoke`, on the DEPLOYED site (`https://gauthamcodes.github.io/coco-labs/`, built from `4405065`), 2026-10-04 |
+| `public/report_4b675c1.json` | the same, re-run on the final deployment (built from `4b675c1`, the `lab2-v1.0` commit) |
 | `video/` | the demo video's provenance: `cuts.json` (local build, the first recording) and `cuts_public.json` (the public site) |
 
 Large artifacts — the rosbag2 directories (≈ 120 MB per fidelity session),
