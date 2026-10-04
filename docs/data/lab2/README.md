@@ -20,6 +20,8 @@ lab write-up is [`docs/labs/LAB2_LOCALISE.md`](../../labs/LAB2_LOCALISE.md).
 | `ekf_drift_twist.json`, `ekf_variants/` | the first configuration measured (wheel twist + gyro), not adopted, and the two variant files as replayed (`ekf_odom_pose_diff.yaml` equals the lab config, tested) |
 | `amcl_replay.py` → `an_amcl.py` → `amcl_odom.json` | AMCL on wheel odometry vs AMCL on the adopted EKF, offline, on identical recorded scans; `amcl_odom_twist.json` is the same with the twist EKF |
 | `browser/report.json` | the headless-Firefox checks (`check.py localise localise_phone`), including Pyodide vs CPython |
+| `public/report.json` | the same checks plus Lab 1's `smoke`, on the DEPLOYED site (`https://gauthamcodes.github.io/coco-labs/`, built from `4405065`), 2026-10-04 |
+| `video/` | the demo video's provenance: `cuts.json` (local build, the first recording) and `cuts_public.json` (the public site) |
 
 Large artifacts — the rosbag2 directories (≈ 120 MB per fidelity session),
 the per-session logs and the probe's JSON lines — live under

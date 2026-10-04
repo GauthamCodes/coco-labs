@@ -8007,6 +8007,39 @@ same bits: mean errors differ by 1e-8 to 2e-4 m (e.g. MCL 0.99230 vs
 browser" and never claimed identical to the catalog's. Decoding is exact
 (below). (measured, n = 1)
 
+### On the public site (measured 2026-10-04; `main` = `4405065`, headless Firefox 157.0, load 2.85–6.06)
+
+`main` was fast-forwarded `4530a8b..4405065` (no merge commit, no force)
+after PR #10's `CI` and `Lab` were green. On `main`, `CI` (run
+37219611482) and `Lab` (run 37219611486, including its Pages deploy job)
+**succeeded**. GitHub records `github-pages` deployment 6844092018 of
+`4405065`, and the live catalog reads `built_from 4405065…`,
+`dirty: false`.
+
+`check.py https://gauthamcodes.github.io/coco-labs/ OUT smoke localise
+localise_phone` → `docs/data/lab2/public/report.json`:
+- **Lab 1 (`smoke`):** 11 of 11 catalog bundles load and draw, 0 console
+  errors, no cookies or storage.
+- **Lab 2 (`localise`):** the kidnap scene loads labelled "Sketch —
+  coco_lab's 2D model, not the robot", with the fidelity note beside it;
+  predict-then-reveal reveals coco_lab's outcomes with the 20-seed counts;
+  play advances 22 updates in 3 s at 4×; hiding the truth leaves only the
+  belief; the race draws 3 maps (MCL, MCL injection off, EKF); a click on
+  the map moves the kidnap target from (1.5, 6.8) to (3.0, 2.5); all four
+  exhibits render (the covariance figure's SVG included) with their
+  labels. **0 console errors**; no Pyodide request before the first run;
+  third-party hosts: `cdn.jsdelivr.net` only (Pyodide).
+- **In-browser runs:** cold (Pyodide + coco_lab, one world, three filters)
+  **11.35 s**, warm **3.05 s** (coco_lab 2.8 s). Against CPython on the
+  catalog bundle's settings: the SAME outcomes (recovered / not, recovery
+  time) for all three filters, not the same bits — as on the local build.
+- **390 × 844:** no horizontal overflow in the lab or the exhibits
+  (scrollWidth 378 = clientWidth); play advanced 14 updates in 2 s.
+
+Compared with the local build above (9.6 s cold, 3.6 s warm), the cold run
+includes fetching Pyodide from its CDN and is set by it; n = 1 each, so
+the difference is not a finding.
+
 ### Cross-language decoding (tests)
 
 `lab_web/test/locdecode.test.ts`: for both golden loc bundles every
@@ -8167,3 +8200,9 @@ build green; the Pages deploy job skipped (main only).
 (Lab 2 is not deployed), one 10 s cut (the Pyodide start-up), 0 console
 errors: `docs/data/lab2/video/` (the file itself is outside git, as Lab
 1's was until its release).
+
+**Re-recorded from the public site** after deployment (2026-10-04), with
+the same script: 91.76 s span, one 10.56 s cut (the Pyodide start-up),
+0 console errors; H.264 1120 × 920, 3,399,232 B, sha256 `b13aa1fe…`
+(`docs/data/lab2/video/cuts_public.json`). This is the recording prepared
+as the `lab2-v1.0` release asset.

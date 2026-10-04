@@ -1,8 +1,8 @@
 # Lab 2 — Localise
 
 > **Try it:** <https://gauthamcodes.github.io/coco-labs/?view=localise>
-> (once `lab2` is on `main`; until then, build `lab_web` locally:
-> `lab_web/README.md`). Branch `lab2`; Phase 3 of `docs/ROADMAP.md`.
+> (deployed 2026-10-04 from `main` = `4405065`). Phase 3 of
+> `docs/ROADMAP.md`.
 
 Labels used here, as everywhere in this repository: **(measured)** was
 produced by a run in Phase 3 and is recorded with its command, sample count
@@ -125,6 +125,12 @@ the SAME outcomes as CPython's but not the same bits (mean errors differ by
 scenarios showed no regression (warm edit 1.36–1.48 s; a share link
 reproduces its exact trace).
 
+**On the public site** (measured 2026-10-04, deployed from `4405065`, the
+same checks plus Lab 1's smoke): the same behaviour, 0 console errors;
+cold run 11.35 s, warm 3.05 s; Lab 1 smoke 11 of 11; no overflow at
+390 × 844. `docs/RESULTS.md` "COCO Lab Phase 3" > "On the public site";
+`docs/data/lab2/public/report.json`.
+
 ### 4.5 Tests
 
 `run_all_package_tests.sh` **2,772 / 0 / 0** (coco_lab 416, coco_lab_ros 86; baseline 2,691); lab_web vitest 257, tools 86; tsc, build, check_dist clean. Details: `docs/RESULTS.md` "COCO Lab Phase 3" >
@@ -132,8 +138,9 @@ reproduces its exact trace).
 
 ## 5. Not verified
 
-- **The public site.** Lab 2 is on branch `lab2`; it is not on `main`, so
-  not deployed. Everything in 4.4 is the local production build.
+- ~~**The public site.**~~ Verified 2026-10-04 (4.4): deployed from
+  `main` = `4405065` and driven in headless Firefox. A headed browser,
+  Safari and Chrome are still not measured.
 - **A real phone.** Phone width was checked in headless Firefox only.
 - **A real IMU.** Gazebo's gyro is noiseless; the robot_localization
   improvement is an upper bound.

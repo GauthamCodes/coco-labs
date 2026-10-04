@@ -14,10 +14,17 @@
 >   [`docs/live/LIVE.md`](live/LIVE.md) and the report
 >   [`docs/live/PART_C_REPORT.md`](live/PART_C_REPORT.md).
 >
-> - **Phase 3 (Localise, Lab 2), 2026-10-04: implemented, tested and
->   measured on branch `lab2`; not yet deployed** (merging to `main` is
->   the owner's call). Status against §6's "done when" and the remaining
+> - **Phase 3 (Localise, Lab 2), 2026-10-04: implemented, tested,
+>   measured and deployed.** `main` was fast-forwarded to `4405065` with
+>   `CI` and `Lab` green, and Lab 2 is live at
+>   <https://gauthamcodes.github.io/coco-labs/?view=localise> (verified on
+>   the public site, headless Firefox). Its demo video was re-recorded from
+>   the public site. The `live-v1.0` (Phase 2) and `lab2-v1.0` (Phase 3)
+>   tags and release drafts are prepared; **publishing them is the
+>   owner's call**. Status against §6's "done when" and the remaining
 >   items: [`docs/labs/LAB2_LOCALISE.md`](labs/LAB2_LOCALISE.md).
+>   *(Until 2026-10-04 this line read "implemented, tested and measured on
+>   branch `lab2`; not yet deployed".)*
 >
 > *(The status line of 2026-09-30 read: "plan revised (Phase 2 · Live
 > added) … Phase 1 closed by decision with open items … Phase 2 not
@@ -463,6 +470,9 @@ robot_localization (wheel pose + gyro) cut a 120 m tour's worst odometry
 error from 21.6 m to 0.21 m on identical recorded drives (an upper bound:
 noiseless sim gyro), observe-only, the mission untouched. Numbers:
 `docs/RESULTS.md` "COCO Lab Phase 3"; write-up `docs/labs/LAB2_LOCALISE.md`.
+Deployed 2026-10-04 from `main` = `4405065` and verified on the public
+site (measured: `docs/RESULTS.md` "COCO Lab Phase 3" > "On the public
+site").
 
 ### Lab 3 — Map
 

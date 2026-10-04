@@ -7377,3 +7377,46 @@ ROS build-and-test 2,273 tests / 0 failures / 0 skipped; coco_lab venv
 NEXT: the owner's decisions — fast-forward `main` to `lab2` (deploys Lab
 2 to Pages), then the release gates (`live-v1.0`, a Lab 2 release with
 the video at `~/coco_lab_runs/lab2/video/`). Phase 4 (Map) is not started.
+
+## Phase 3 · ship: deployed, verified on the public site, releases prepared (2026-10-04)
+
+Owner's prompt: ship the completed Phase 3; FF `main` if the rule permits
+and CI is green; verify the public site; prepare `live-v1.0` and
+`lab2-v1.0`; **publish nothing without explicit approval**.
+
+**Done:**
+- PR #10 green on `4405065` (CI 37218065856, Lab 37218065868). Only docs
+  changed since the full local run on `56a6ffc` (2,772 / 0 / 0), so the
+  standing rule (FF only, every test green) held.
+- `main` fast-forwarded `4530a8b..4405065` on `labs` (plain push, no
+  merge commit, no force). On `main`: CI 37219611482 and Lab 37219611486
+  (with the Pages deploy) **success**. Deployment 6844092018 of `4405065`;
+  live catalog `built_from 4405065`, `dirty: false`.
+- **Public site (measured)**, headless Firefox 157, `check.py <public>
+  smoke localise localise_phone` → `docs/data/lab2/public/report.json`:
+  Lab 1 smoke 11/11; Lab 2 Sketch label + fidelity note, predict/reveal,
+  play, truth toggle, race (3 maps), kidnap target by click, 4 exhibits;
+  cold 11.35 s, warm 3.05 s; Pyodide = CPython outcomes; 390 px clean;
+  **0 console errors**. The Live view (stack down) reads "No live session
+  right now. No session is scheduled." (its only console errors are the
+  failed `ws://localhost:8080` connects — no local stack).
+- **Video:** the local-build recording validated (sha256 matches); a
+  public-site recording made with the same script, 91.76 s, one 10.56 s
+  cut, 0 console errors, sha256 `b13aa1fe…`
+  (`~/coco_lab_runs/lab2/video_public/`, outside git;
+  `docs/data/lab2/video/`). That is the `lab2-v1.0` asset.
+- Docs: RESULTS "On the public site" + video note; LAB2_LOCALISE §4.4/§5;
+  ROADMAP; PROJECT_STATE Now/Next; release notes `docs/releases/`.
+- No Phase 2 video exists (a live session needs the stack + tunnel up).
+
+**Releases (prepared, NOT published):** `live-v1.0` → `4530a8b` (Phase 2
+on `main`, deployed then); `lab2-v1.0` → the `main` commit carrying this
+entry. Annotated tags local, drafts on GitHub — see the next entry for
+what exists.
+
+**Unverified (unchanged, Phase 3's limitations):** no real-phone test, no
+real IMU, no live robot_localization → AMCL integration, run 15 not
+reproduced, real-stack counts n ≤ 10.
+
+NEXT: the owner's approval to push the two tags and publish the two
+drafts. Phase 4 (Map) not started.
