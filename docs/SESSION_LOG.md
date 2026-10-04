@@ -7484,3 +7484,52 @@ it (e128036 was the release-gate commit and a descendant of `main`).
 
 Phase 4 work is on branch **`lab3`** (from `e128036`), worktree
 `.claude/worktrees/lab1` of the old checkout (remote `labs`).
+
+### Phase 4 (Map, Lab 3) — design checkpoint (2026-10-04, ~18:40 UTC)
+
+Survey findings (the repository, checked this session):
+- **Drives exist; no new recording needed to start.** Lab 2's `fidelity`
+  sessions recorded, each on a FRESH simulator, the same commanded 121 m
+  tour (`docs/data/lab2/tour_route.txt`): `fidelity_1` (sim t 191.7–632.2)
+  and `fidelity_s1` (253.6–694.1), each 4,385 rows, ending where they
+  began (a loop). Bags under `~/coco_lab_runs/lab2/<s>/bag` carry `/scan`
+  (480 beams, 10 Hz, frame `lidar_link`), `/tf` (`odom→base_footprint` =
+  wheel odometry, joints, AND AMCL's `map→odom` — must be dropped before a
+  SLAM replay), `/tf_static`, `/imu`, `/diff_drive_controller/odom` and
+  the truth `/model/coco/odometry` (world frame; map = world + (2, 0)).
+  Wheel-odometry drift on these tours: 17.2 m and 2.6 m (historical, Lab 2).
+- **slam_toolbox 2.8.5 is installed**; the project's own config is
+  `gazebo_models/config/slam_params.yaml` (online async, Ceres) — used
+  unchanged as the shipped arm.
+- **Cartographer is NOT installed** and there is no sudo. The released
+  `ros-jazzy-cartographer-ros` 2.0.9003 is in apt; its only missing system
+  dependency is `liblua5.2-0`. Plan: a user-space prefix of the released
+  debs (`~/coco_labs_ws/cartographer_prefix`, `apt-get download` +
+  `dpkg -x`), the same pattern as `moveit_prefix`.
+- **Map score already defined by the project:** `coco_lab.maps.
+  compare_occupied` against `docs/data/lab1b/arena_maps.py ground_truth`
+  (rasterised from `navigation_world.json` at LiDAR height, rule centre).
+  Phase 1B's 0.9456 / 0.5771 is rasterisation consistency, NOT map
+  quality; D-1 moved map quality to Lab 3.
+
+Design (decided here; each is documented where it lands):
+1. `coco_lab` (stdlib only, no rclpy): `occgrid` (log-odds, Bresenham,
+   ROS-style 0..100/255 cells), `landmarks` (deterministic corner
+   extractor + IDEALISED range-bearing sensor with known association and
+   ray-cast visibility), `ekfslam`, `fastslam` (grid-based RBPF, as
+   GMapping minus its scan-matched proposal), `posegraph` (ICP front end,
+   loop closure by ICP near old nodes, Gauss–Newton + preconditioned CG),
+   `mapeval` (ATE with SE(2) alignment; occupied precision/recall exact =
+   `compare_occupied` and with a stated tolerance against truth SURFACE
+   cells; coverage), `slambundle` (map bundle 1.0, locbundle's rules).
+2. Runs on one world: known poses, odometry poses (the naive baseline),
+   EKF-SLAM, FastSLAM, pose graph (± loop closure). Identical inputs by
+   construction.
+3. Real drives: derived replay bags (tour window, `map→odom` dropped) →
+   slam_toolbox (shipped params; loop closing on/off), Cartographer
+   (released 2D config adapted to COCO's frames; odometry on, IMU off so
+   every backend gets scans + wheel odometry), and coco_lab's SLAMs on
+   the same scans. ATE vs truth, map score vs the ground-truth raster.
+4. lab_web `?view=map`: Sketch mapping (route by clicking, noise, loop
+   closure toggle, corridor, compare, belief/truth), the "map the arena"
+   challenge, and a Replay of the real tour's backends.
