@@ -37,9 +37,25 @@ async function load(id: string): Promise<DecodedBundle> {
 describe('the catalog carries coco_lab verdicts (1.1)', () => {
   it('is built', () => {
     expect(existsSync(CATALOG)).toBe(true);
-    // 1.2 is additive (Lab 2's `localise` block); every 1.1 member below still holds
-    expect(catalog.version).toBe('1.2');
+    // 1.2 and 1.3 are additive (Lab 2's `localise` block, Lab 3's `map` block);
+    // every 1.1 member below still holds
+    expect(catalog.version).toBe('1.3');
     expect(catalog.settings?.weights).toEqual(Array.from({ length: 21 }, (_, i) => i / 4));
+  });
+
+  it('carries Lab 3: replayed map bundles, the documented challenge score, and its evidence', () => {
+    const map = (catalog as unknown as { map: any }).map;
+    expect(map.version).toBe('1.0');
+    const kinds = map.bundles.map((b: any) => b.kind);
+    expect(kinds.filter((k: string) => k === 'sketch')).toHaveLength(3);
+    expect(kinds).toContain('challenge');
+    for (const b of map.bundles) {
+      expect(b.validated.replay).toMatch(/byte for byte/);
+      expect(b.cites.length).toBeGreaterThan(0);
+      for (const r of b.runs) expect(r.summary.map.f1).toBeGreaterThanOrEqual(0);
+    }
+    expect(map.challenge.score).toMatch(/^round\(100 x F1\)/);
+    expect(map.run_ids).toEqual(['known', 'odometry', 'ekf_slam', 'fastslam', 'pose_graph', 'pose_graph_noloop']);
   });
 
   it('carries Lab 2: replayed Sketch bundles at filter seed 0, and its evidence', () => {
