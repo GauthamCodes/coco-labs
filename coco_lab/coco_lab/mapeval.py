@@ -124,8 +124,10 @@ def errors(est, truth, T=(0.0, 0.0, 0.0)) -> List[float]:
 
 def reachable(truth: LabMap, start_xy: Tuple[float, float]) -> bytearray:
     """
-    Return a mask (row-major, like ``occupancy``) of free cells reachable
-    from ``start_xy`` by 4-connected steps through the truth's FREE cells.
+    Return the mask of free cells reachable from ``start_xy``.
+
+    Row-major, like ``occupancy``: 4-connected steps through the truth's
+    FREE cells.
     """
     w, h = truth.width, truth.height
     occ = truth.occupancy
@@ -196,7 +198,7 @@ def score_map(truth: Truth, test: LabMap,
     t = truth.map
     if (t.width, t.height, t.resolution, t.origin) != \
             (test.width, test.height, test.resolution, test.origin):
-        raise ValueError('test map must have the truth map\'s placement '
+        raise ValueError("test map must have the truth map's placement "
                          '(use resample_onto)')
     occ = test.occupancy
     n_occ = good = 0
@@ -222,6 +224,33 @@ def score_map(truth: Truth, test: LabMap,
         'reachable_free_cells': truth.n_reach,
         'exact': compare_occupied(t, test),
     }
+
+
+#: :func:`diff_raster`'s classes
+DIFF_NONE, DIFF_FOUND, DIFF_FALSE, DIFF_MISSED = 0, 1, 2, 3
+
+
+def diff_raster(truth: Truth, test: LabMap,
+                tol: float = DEFAULT_TOL) -> bytes:
+    """
+    Return one class per truth cell, for drawing map vs truth.
+
+    ``1`` the map's wall is within ``tol`` of a true wall (counted by
+    precision); ``2`` the map's wall is not (a false wall); ``3`` a VISIBLE
+    true wall with no mapped wall within ``tol`` (missed by recall);
+    ``0`` anything else. Exactly the cells :func:`score_map` counts.
+    """
+    occ = test.occupancy
+    tdist = edt([v == OCCUPIED for v in occ], test.width, test.height)
+    res = test.resolution
+    out = bytearray(len(occ))
+    for i, v in enumerate(occ):
+        if v == OCCUPIED:
+            out[i] = DIFF_FOUND if truth.dist[i] <= tol + 1e-9 \
+                else DIFF_FALSE
+        elif truth.walls[i] and tdist[i] * res > tol + 1e-9:
+            out[i] = DIFF_MISSED
+    return bytes(out)
 
 
 def resample_onto(like: LabMap, cells: bytes, width: int, height: int,

@@ -24,13 +24,16 @@ whose error and Jacobians this follows). slam_toolbox (Karto) and
 Cartographer are both pose-graph SLAMs with far better front ends.
 
 **Front end.** Node ``k``'s scan is matched to node ``k-1``'s by
-point-to-line ICP (:func:`icp`), starting from odometry's guess. The edge's
-information is the ICP's own Hessian ``sum(n n^T) / sigma_icp^2`` PLUS
-odometry's information: along a direction the scan cannot see (a smooth
-corridor's axis, where every normal is perpendicular to it) the Hessian
-has nothing, and the edge falls back to odometry there. That is how a
-featureless corridor shows up: not as an error, but as missing
-information (tested).
+point-to-line ICP (:func:`icp`) with odometry's relative pose as a
+Gaussian PRIOR (a MAP match). The edge's information is the ICP's own
+Hessian ``sum(n n^T) / sigma_icp^2`` PLUS odometry's information: along a
+direction the scan cannot see (a smooth corridor's axis, where every
+normal is perpendicular to it) the Hessian has nothing, and both the
+edge's value and its information fall back to odometry there. That is how
+a featureless corridor shows up: not as an error, but as missing
+information (tested). (Matching without the prior let ICP slide 0.12 to
+0.20 m along the loop room's corridors where odometry was within 0.03 m
+-- measured in Phase 4, and the reason for the prior.)
 
 **Loop closure.** At every node, earlier nodes at least ``loop_min_gap``
 updates old and within ``loop_radius`` of the current ESTIMATE are
@@ -46,7 +49,8 @@ optimiser over the whole graph.
 edge's error at the current poses, build the sparse normal equations
 ``H dx = -b`` (3 x 3 blocks), fix node 0 (the gauge), and solve with
 conjugate gradients preconditioned by the exact inverse of the graph's
-CHAIN (:class:`ChainPreconditioner`). Repeat until the step is tiny. On known small graphs it reaches the exact
+CHAIN (:class:`ChainPreconditioner`). Repeat until the step is tiny. On
+known small graphs it reaches the exact
 least-squares answer (tested against a dense solve), and chi^2 never
 rises from one iteration to the next on the cases tested.
 """
@@ -203,16 +207,21 @@ def min_eig3(A: Mat3) -> float:
 
 def icp(ref: List[Tuple[float, float]], cur: List[Tuple[float, float]],
         guess: Pose, max_iter: int = 25, max_dist: float = 0.5,
-        normal_gap: float = 0.5, damping: float = 1e-3) -> ICPResult:
+        normal_gap: float = 0.5, damping: float = 1e-3,
+        prior: Optional[Mat3] = None, sigma: float = 0.05) -> ICPResult:
     """
     Point-to-line ICP: the pose of ``cur``'s frame in ``ref``'s frame.
 
     Each current point, moved by the pose so far, is paired with its
     nearest reference point within ``max_dist`` that has a normal; the
-    step minimises the summed squared distance along those normals,
-    linearised in the rotation, with a small ``damping`` that keeps an
-    unobservable direction where the guess put it. Stops when the step is
-    below 0.1 mm and 0.0001 rad.
+    step minimises the summed squared distance along those normals
+    (each residual of standard deviation ``sigma``), linearised in the
+    rotation. With ``prior`` (an information matrix on ``(x, y, yaw)``)
+    the guess is a Gaussian PRIOR in the same least squares -- a MAP
+    match: along a direction the scan cannot see (a corridor's axis) the
+    answer stays at the guess instead of sliding. Without a prior a small
+    ``damping`` regularises the step. Stops when the step is below
+    0.1 mm and 0.0001 rad.
     """
     normals = _normals(ref, normal_gap)
     keep = [i for i, nv in enumerate(normals) if nv is not None]
@@ -251,9 +260,18 @@ def icp(ref: List[Tuple[float, float]], cur: List[Tuple[float, float]],
             pairs.append(e)
         if len(pairs) < 3:
             break
-        A = [[H[a][b] + (damping * len(pairs) if a == b else 0.0)
-              for b in range(3)] for a in range(3)]
-        step = solve3(A, [-g[0], -g[1], -g[2]])
+        w = 1.0 / (sigma * sigma)
+        if prior is not None:
+            dv = (x - guess[0], y - guess[1], wrap(th - guess[2]))
+            A = [[w * H[a][b] + prior[a][b] for b in range(3)]
+                 for a in range(3)]
+            rhs = [-(w * g[a] + sum(prior[a][c] * dv[c] for c in range(3)))
+                   for a in range(3)]
+        else:
+            A = [[H[a][b] + (damping * len(pairs) if a == b else 0.0)
+                  for b in range(3)] for a in range(3)]
+            rhs = [-g[0], -g[1], -g[2]]
+        step = solve3(A, rhs)
         if step is None:
             break
         x, y, th = x + step[0], y + step[1], wrap(th + step[2])
@@ -287,7 +305,7 @@ def edge_error(xi: Pose, xj: Pose, z: Pose) -> Tuple[float, float, float]:
 
 
 def _jacobians(xi: Pose, xj: Pose, z: Pose):
-    """The tutorial's A = de/dxi and B = de/dxj (Grisetti et al. 2010, eq. 32-33)."""
+    """Return A = de/dxi and B = de/dxj (Grisetti et al. 2010, eq. 32-33)."""
     ci, si = math.cos(xi[2]), math.sin(xi[2])
     cz, sz = math.cos(z[2]), math.sin(z[2])
     dx, dy = xj[0] - xi[0], xj[1] - xi[1]
@@ -405,7 +423,7 @@ class ChainPreconditioner:
         return [c for blk in x for c in blk]
 
 
-def pcg(Hd, Hoff, b, n, tol=1e-12, max_iter=None) -> Tuple[List[float], int]:
+def pcg(Hd, Hoff, b, n, tol=1e-9, max_iter=None) -> Tuple[List[float], int]:
     """
     Solve ``H x = b`` (block-sparse SPD); return ``(x, iterations)``.
 
@@ -449,11 +467,11 @@ def linear_system(poses: Sequence[Pose], edges: Sequence[Edge],
         xi, xj = poses[ed.i], poses[ed.j]
         e = edge_error(xi, xj, ed.z)
         A, B = _jacobians(xi, xj, ed.z)
-        O = ed.info
+        info = ed.info
         # AtO = A^T O, BtO = B^T O
-        AtO = [[sum(A[k][a] * O[k][c] for k in range(3)) for c in range(3)]
+        AtO = [[sum(A[k][a] * info[k][c] for k in range(3)) for c in range(3)]
                for a in range(3)]
-        BtO = [[sum(B[k][a] * O[k][c] for k in range(3)) for c in range(3)]
+        BtO = [[sum(B[k][a] * info[k][c] for k in range(3)) for c in range(3)]
                for a in range(3)]
         i, j = ed.i, ed.j
         Hij = Hoff.setdefault((i, j), [[0.0] * 3 for _ in range(3)]) \
@@ -476,8 +494,8 @@ def linear_system(poses: Sequence[Pose], edges: Sequence[Edge],
 
 
 def optimise(poses: Sequence[Pose], edges: Sequence[Edge],
-             iterations: int = 10, fixed: int = 0) -> Tuple[List[Pose],
-                                                             List[float]]:
+             iterations: int = 10,
+             fixed: int = 0) -> Tuple[List[Pose], List[float]]:
     """
     Gauss-Newton over the graph; return ``(poses, chi2 after each iteration)``.
 
@@ -494,7 +512,7 @@ def optimise(poses: Sequence[Pose], edges: Sequence[Edge],
         x = [(x[i][0] + dx[3 * i], x[i][1] + dx[3 * i + 1],
               wrap(x[i][2] + dx[3 * i + 2])) for i in range(n)]
         hist.append(chi2(x, edges))
-        if max(abs(v) for v in dx) < 1e-7:
+        if max(abs(v) for v in dx) < 1e-5:
             break
     return x, hist
 
@@ -584,6 +602,7 @@ def run_pose_graph(inp: slam.SlamInputs, like: LabMap,
     loop_events = []  # (update k, node j)
     opt = {'k': [], 'iterations': [], 'chi2_before': [], 'chi2_after': []}
     last_closure = -10 ** 9
+    stale = False
     snaps = set(slam.snapshot_updates(len(inp), p.snapshots))
     snapshots, maps = [], []
     w_icp = 1.0 / p.icp_sigma ** 2
@@ -602,7 +621,8 @@ def run_pose_graph(inp: slam.SlamInputs, like: LabMap,
     for k in range(1, len(inp)):
         d = odom_delta(inp.odom[k - 1], inp.odom[k])
         guess = apply_delta((0.0, 0.0, 0.0), *d)
-        r = icp(pts[k - 1], pts[k], guess, max_dist=p.icp_max_dist)
+        r = icp(pts[k - 1], pts[k], guess, max_dist=p.icp_max_dist,
+                prior=odom_info, sigma=p.icp_sigma)
         ok = (r.converged and r.rmse <= p.icp_max_rmse and
               r.inliers >= p.icp_min_inliers)
         if ok:
@@ -635,18 +655,23 @@ def run_pose_graph(inp: slam.SlamInputs, like: LabMap,
                 loops += 1
             if loops:
                 last_closure = k
+                stale = True
                 poses, hist = optimise(poses, edges, p.iterations)
                 opt['k'].append(k)
                 opt['iterations'].append(len(hist) - 1)
                 opt['chi2_before'].append(hist[0])
                 opt['chi2_after'].append(hist[-1])
                 optimised = 1
-                grid = _rebuild(like, grid_params, poses, inp, angles, k)
-        if not optimised:
+        if not stale:
             grid.integrate(poses[k], inp.ranges[k], angles, li.mount,
                            li.range_min, li.range_max)
         record(k, int(ok), loops, optimised)
         if k in snaps:
+            # after an optimisation every past pose moved: the map is
+            # rebuilt from the scans at their current estimates, lazily
+            if stale:
+                grid = _rebuild(like, grid_params, poses, inp, angles, k)
+                stale = False
             snapshots.append(k)
             maps.append(grid.to_u8())
     arrays = {

@@ -35,3 +35,6 @@ log/
 # legitimately tracks. Ignoring the whole directory would hide them
 # silently. Only the generated worktrees are ignored.
 .claude/worktrees/
+
+# hypothesis example database (local test runs)
+.hypothesis/

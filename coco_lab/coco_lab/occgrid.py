@@ -155,7 +155,7 @@ class OccupancyGrid:
                    lab_map.origin, params)
 
     def copy(self) -> 'OccupancyGrid':
-        """Return an independent copy (FastSLAM copies maps on resampling)."""
+        """Return an independent duplicate: FastSLAM duplicates on resampling."""
         g = OccupancyGrid.__new__(OccupancyGrid)
         g.width, g.height = self.width, self.height
         g.resolution, g.origin, g.params = (self.resolution, self.origin,
@@ -178,8 +178,8 @@ class OccupancyGrid:
         """Return P(occupied) of a cell; 0.5 outside the grid."""
         if not self.inside(ix, iy):
             return 0.5
-        return 1.0 - 1.0 / (1.0 + math.exp(self.logodds[ix + iy *
-                                                          self.width]))
+        lg = self.logodds[ix + iy * self.width]
+        return 1.0 - 1.0 / (1.0 + math.exp(lg))
 
     def add(self, ix: int, iy: int, dl: float) -> None:
         """Add ``dl`` to a cell's log-odds, clamped (ignores outside cells)."""

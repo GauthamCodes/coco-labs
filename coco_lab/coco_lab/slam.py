@@ -53,7 +53,7 @@ MAJOR = 1
 ALGORITHMS = ('known', 'odometry', 'ekf_slam', 'fastslam', 'pose_graph')
 COMMON_COLUMNS = ('row', 't', 'est_x', 'est_y', 'est_yaw')
 #: wire dtypes the trace's arrays may use
-ARRAY_DTYPES = ('i32', 'f32', 'f64')
+ARRAY_DTYPES = ('u8', 'i32', 'f32', 'f64')
 
 Pose = Tuple[float, float, float]
 
@@ -113,8 +113,8 @@ def dead_reckon(inp: SlamInputs) -> List[Pose]:
     """
     out = [tuple(inp.start)]
     for k in range(1, len(inp)):
-        out.append(apply_delta(out[-1], *odom_delta(inp.odom[k - 1],
-                                                     inp.odom[k])))
+        d = odom_delta(inp.odom[k - 1], inp.odom[k])
+        out.append(apply_delta(out[-1], *d))
     return out
 
 
@@ -209,9 +209,12 @@ class SlamTrace:
         for name, (dtype, vals) in self.arrays.items():
             if dtype not in ARRAY_DTYPES:
                 raise SlamError(f'array {name!r}: dtype {dtype!r}')
-            if dtype == 'i32' and not all(isinstance(v, int) for v in vals):
+            ints = dtype in ('u8', 'i32')
+            if ints and not all(isinstance(v, int) for v in vals):
                 raise SlamError(f'array {name!r} must be integers')
-            if dtype != 'i32' and not all(math.isfinite(v) for v in vals):
+            if dtype == 'u8' and not all(0 <= v <= 255 for v in vals):
+                raise SlamError(f'array {name!r}: u8 out of range')
+            if not ints and not all(math.isfinite(v) for v in vals):
                 raise SlamError(f'array {name!r} must be finite')
         if 'final.x' in self.arrays and len(self.arrays['final.x'][1]) != n:
             raise SlamError('the final trajectory has one pose per update')

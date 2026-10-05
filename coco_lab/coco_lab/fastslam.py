@@ -21,9 +21,18 @@ known poses (:mod:`occgrid`). So sample trajectories with a particle
 filter, and give every particle its own map built from its own trajectory
 -- the Rao-Blackwellisation (Murphy 1999; Montemerlo et al. 2002). With a
 grid map per particle it is the algorithm behind GMapping (Grisetti et al.
-2007), minus GMapping's scan-matched proposal and its selective
-resampling refinements -- which is exactly why this one needs more
-particles than GMapping does, and the lab shows the cost.
+2007).
+
+This one is plain FastSLAM: every particle's motion is SAMPLED from the
+odometry model. GMapping adds an "improved proposal" (each sampled pose
+corrected by scan matching before it is weighted) and is not reproduced
+here. A greedy hill-climbing version of it was tried in Phase 4 and made
+things WORSE on COCO's recorded tour: in the corridor between the bays the
+scan's likelihood is flat along the corridor, and greedy steps slid the
+particles along it (measured; ``docs/RESULTS.md`` "COCO Lab Phase 4"). What
+the tour showed instead is that FastSLAM lives or dies by its MOTION
+MODEL: with COCO's AMCL alphas (0.2 each, deliberately loose) it depleted
+and diverged; with alphas calibrated on a different drive it tracked.
 
 Per update:
 
@@ -31,10 +40,15 @@ Per update:
    (``sketch.sample_delta``, the filter's ``alphas``).
 2. **Weight** each particle by how well the scan fits ITS map: every used
    beam's endpoint scores ``z_hit * p + z_rand``, ``p`` the highest
-   occupancy probability in the endpoint's 3 x 3 cell neighbourhood of the
-   particle's map (0.5 where the particle has never looked: no evidence
-   either way). Log-likelihoods are summed and scaled by ``temperature``
-   before exponentiating.
+   occupancy probability among the OBSERVED cells of the endpoint's 3 x 3
+   neighbourhood in the particle's map, and 0 where it has observed none
+   -- an endpoint in unexplored space is no evidence of a wall, as in
+   GMapping, where a beam that matches nothing gets a fixed low
+   likelihood. (Scoring unexplored cells 0.5 would make "my scan lands
+   where I have never looked" score higher than "my scan lands where I
+   saw free space", favouring particles that wander off the map.)
+   Log-likelihoods are summed and scaled by ``temperature`` before
+   exponentiating.
 3. **Resample** (low variance, Lab 2's ``low_variance_resample``) only
    when the effective sample size ``1 / sum(w^2)`` falls below
    ``neff_fraction * N`` -- Doucet's selective resampling, which GMapping
@@ -137,7 +151,7 @@ def scan_log_likelihood(grid: OccupancyGrid, pose, ranges, angles, mount,
                     v = lg[base + jx]
                     if v > best:
                         best = v
-        p = 1.0 - 1.0 / (1.0 + exp(best)) if anyseen else 0.5
+        p = 1.0 - 1.0 / (1.0 + exp(best)) if anyseen else 0.0
         total += log(z_hit * p + z_rand)
     return total
 

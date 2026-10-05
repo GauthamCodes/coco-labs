@@ -43,10 +43,9 @@ estimates (:mod:`occgrid`): EKF-SLAM itself builds only the landmark map.
 
 from dataclasses import asdict, dataclass
 import math
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, Optional, Tuple
 
 from . import slam
-from .landmarks import LandmarkSensor
 from .localise import _motion_jacobians
 from .maps import LabMap
 from .occgrid import GridParams, OccupancyGrid
