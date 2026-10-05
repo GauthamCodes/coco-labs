@@ -15,6 +15,8 @@
 # ARM      loop   -- the backend as configured (loop closure on)
 #          noloop -- loop closure off: slam_toolbox do_loop_closing false;
 #                    Cartographer POSE_GRAPH.optimize_every_n_nodes 0
+#          loop_noodom -- Cartographer only, a DIAGNOSTIC: global SLAM on,
+#                    wheel odometry off (cartographer/coco_2d_loop_noodom.lua)
 # DRIVE_DIR  a make_drive.py output (its bag/ is replayed)
 #
 # The drive's bag is played at 1.0x with its recorded clock (--clock 100,
@@ -44,7 +46,7 @@ HERE="$REPO/docs/data/lab3"
 CARTO_PREFIX="${CARTO_PREFIX:-$HOME/coco_labs_ws/cartographer_prefix/root}"
 export ROS_DOMAIN_ID="${ROS_DOMAIN_ID:-67}"
 case "$BACKEND/$ARM" in
-    slam_toolbox/loop|slam_toolbox/noloop|cartographer/loop|cartographer/noloop) ;;
+    slam_toolbox/loop|slam_toolbox/noloop|cartographer/loop|cartographer/noloop|cartographer/loop_noodom) ;;
     *) echo "bad BACKEND/ARM: $BACKEND/$ARM"; exit 2 ;;
 esac
 [ -d "$DRIVE/bag" ] || { echo "no bag in $DRIVE"; exit 2; }
@@ -115,6 +117,7 @@ if [ "$BACKEND" = slam_toolbox ]; then
 else
     BASENAME=coco_2d.lua
     [ "$ARM" = noloop ] && BASENAME=coco_2d_no_loop.lua
+    [ "$ARM" = loop_noodom ] && BASENAME=coco_2d_loop_noodom.lua
     # cartographer resolves include "map_builder.lua" against its COMPILED-IN
     # share path (/opt/ros/jazzy/share/cartographer), absent for a user-space
     # prefix: stage the released files verbatim beside ours, one directory

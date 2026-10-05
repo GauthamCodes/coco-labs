@@ -217,7 +217,7 @@ function Provenance({ cur }: { cur: Current }) {
         <div className="row"><dt>checked by</dt><dd>{cur.detail}</dd></div>
         <div className="row"><dt>content</dt><dd><code>{b.contentHash.slice(0, 19)}…</code></dd></div>
         <div className="row"><dt>map</dt><dd>{b.map.id} ({b.map.width} × {b.map.height} at {b.map.geo?.resolution} m)</dd></div>
-        <div className="row"><dt>LiDAR</dt><dd>{b.world.nBeams} of COCO's 480 beams, {b.world.lidar.range_min}–{b.world.lidar.range_max} m</dd></div>
+        <div className="row"><dt>LiDAR</dt><dd>{b.world.nBeams} of COCO's 480 beams, {fmt(b.world.lidar.range_min)}–{fmt(b.world.lidar.range_max, 0)} m</dd></div>
         <div className="row"><dt>updates</dt><dd>{b.world.updates.length} (every 0.25 m or 0.2 rad of odometry)</dd></div>
         {bag && <div className="row"><dt>recording</dt><dd>rosbag2 <code>{bag.sha256.slice(0, 12)}…</code>, sim time
           {' '}{bag.sim_time_start.toFixed(1)}–{bag.sim_time_end.toFixed(1)} s</dd></div>}

@@ -134,17 +134,23 @@ async def tour(s):
     await top(s)
     await hold(4.0)
     await check.click_testid(s, 'map-clear')
-    await check.click_testid(s, 'map-draw')
+    # the challenge starts with drawing ON: toggle only if it is off
+    if not await s.js("document.querySelector('[data-testid=map-draw]')"
+                      ".getAttribute('aria-pressed') === 'true'"):
+        await check.click_testid(s, 'map-draw')
     cb = await check.box_of(s, 'slam-canvas')
     # the arena map is 25 x 19 m, origin (-6.5, -9.5): a loop round the north half and back
-    for x, y in ((6.0, 0.0), (11.45, 2.15), (11.45, 7.75), (-1.45, 7.5), (-1.25, -0.5), (6.0, -0.4)):
+    # the default drive's waypoints (map_teaching.ARENA_ROUTE: each >= 0.5 m
+    # from a wall), clicked; a click too near a wall is REFUSED with a reason
+    for x, y in ((6.0, 0.0), (11.45, 2.15), (11.45, 7.75), (-1.45, 7.5), (-1.25, 0.5), (1.0, 0.0)):
         await s.b.click(s.ctx, cb[0] + cb[2] * (x + 6.5) / 25.0, cb[1] + cb[3] * (1 - (y + 9.5) / 19.0))
         await hold(0.7)
     await check.click_testid(s, 'map-draw')
     await s.caption('Drive it and map it: the score is round(100 x F1) of the map, computed by coco_lab')
     await check.click_testid(s, 'map-challenge-run')
     await wait_cut(s, 'coco_lab mapping the challenge drive in the browser (Pyodide)',
-                   "!!document.querySelector('[data-testid=map-attempts]')")
+                   "(() => { const e = [...document.querySelectorAll('.edit-status')].pop();"
+                   " return !!(e && !e.classList.contains('busy')); })()")
     await check.click_testid(s, 'map-end')
     await s.js("(document.querySelector('[data-testid=map-challenge-score]').scrollIntoView({block: 'center'}), 1)")
     await hold(6.0)

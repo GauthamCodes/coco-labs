@@ -128,7 +128,9 @@ def test_every_case_names_a_known_code_and_tier():
 def test_the_catalog_validates_and_replays_what_it_serves(tmp_path):
     import build_catalog
     out = tmp_path / 'generated'
-    cat = build_catalog.build(str(out), wheel=None, with_benchmark=False)
+    # Lab 1 checks: the map block is built and checked by its own test
+    cat = build_catalog.build(str(out), wheel=None, with_benchmark=False,
+                              with_map=False)
     ids = [e['id'] for e in cat['bundles']]
     assert 'recorded_run_synthetic_1_1' not in ids   # a fixture, not evidence
     for e in cat['bundles']:
@@ -301,7 +303,9 @@ def test_every_cited_test_exists():
 def test_the_catalog_serves_the_exhibit_and_the_tracking_series(tmp_path):
     import build_catalog
     out = tmp_path / 'generated'
-    cat = build_catalog.build(str(out), wheel=None, with_benchmark=False)
+    # Lab 1 checks: the map block is built and checked by its own test
+    cat = build_catalog.build(str(out), wheel=None, with_benchmark=False,
+                              with_map=False)
     ex = json.loads((out / cat['exhibit']).read_text())
     assert ex['c']['label'] == 'reconstruction'
     assert ex['b']['analogue']['paths_recorded'] is False
