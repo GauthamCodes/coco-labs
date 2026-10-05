@@ -6,6 +6,9 @@
 #
 #   lab3_batch.sh RUNS_DIR
 #
+# MODE=sync in the environment runs slam_toolbox's synchronous node (see
+# slam_replay.sh); Cartographer is the same in both.
+#
 # Writes RUNS_DIR/backends/<drive>_<backend>_<arm>/ (slam_replay.sh) and
 # RUNS_DIR/backends/<...>/score.json (an_backend.py). A run directory that
 # already exists is skipped (re-running resumes; nothing is overwritten).
@@ -14,7 +17,7 @@ RUNS="${1:?usage: lab3_batch.sh RUNS_DIR}"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 mkdir -p "$RUNS/backends"
 for drive in s1_tour 1_tour; do
-    for backend in slam_toolbox cartographer; do
+    for backend in ${BACKENDS:-slam_toolbox cartographer}; do
         for arm in loop noloop; do
             out="$RUNS/backends/${drive}_${backend}_${arm}"
             if [ -e "$out" ]; then echo "skip $out"; continue; fi

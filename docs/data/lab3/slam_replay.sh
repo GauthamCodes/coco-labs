@@ -7,6 +7,11 @@
 #   slam_replay.sh BACKEND ARM DRIVE_DIR OUT
 #
 # BACKEND  slam_toolbox | cartographer
+# MODE (environment) async (default) | sync -- slam_toolbox only:
+#          async_slam_toolbox_node (the project's slam.launch.py; drops scans
+#          when it falls behind) or sync_slam_toolbox_node (the SAME params;
+#          processes every scan, so the result does not depend on the
+#          machine's load). Cartographer's online node queues, never drops.
 # ARM      loop   -- the backend as configured (loop closure on)
 #          noloop -- loop closure off: slam_toolbox do_loop_closing false;
 #                    Cartographer POSE_GRAPH.optimize_every_n_nodes 0
@@ -32,6 +37,8 @@ ARM="${2:?}"
 DRIVE="${3:?}"
 OUT="${4:?}"
 RATE="${RATE:-1.0}"
+MODE="${MODE:-async}"
+case "$MODE" in async|sync) ;; *) echo "bad MODE: $MODE"; exit 2 ;; esac
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 HERE="$REPO/docs/data/lab3"
 CARTO_PREFIX="${CARTO_PREFIX:-$HOME/coco_labs_ws/cartographer_prefix/root}"
@@ -42,8 +49,18 @@ case "$BACKEND/$ARM" in
 esac
 [ -d "$DRIVE/bag" ] || { echo "no bag in $DRIVE"; exit 2; }
 [ -e "$OUT" ] && { echo "refusing: $OUT exists"; exit 3; }
-if pgrep -f 'async_slam_toolbo[x]|cartographer_nod[e]|cartographer_occupancy_grid_nod[e]|lab3_slam_recor[d]|slam_recor[d].py' > /dev/null; then
-    echo "refusing: a SLAM backend or recorder is already running"; exit 4
+# a previous run's processes may still be exiting (measured: two round-2 runs
+# were refused straight after the run before them, under a load of ~20):
+# wait up to 60 s, then refuse and NAME what is running
+PAT='a?sync_slam_toolbo[x]|cartographer_nod[e]|cartographer_occupancy_grid_nod[e]|lab3_slam_recor[d]|slam_recor[d].py'
+for _ in $(seq 1 12); do
+    pgrep -f "$PAT" > /dev/null || break
+    sleep 5
+done
+if pgrep -f "$PAT" > /dev/null; then
+    echo "refusing: a SLAM backend or recorder is already running:"
+    pgrep -af "$PAT" | cut -c1-160
+    exit 4
 fi
 mkdir -p "$OUT"
 set +u
@@ -70,7 +87,7 @@ trap 'exit 130' INT TERM
 
 {
     echo "{"
-    echo "  \"backend\": \"$BACKEND\", \"arm\": \"$ARM\", \"rate\": $RATE,"
+    echo "  \"backend\": \"$BACKEND\", \"arm\": \"$ARM\", \"rate\": $RATE, \"mode\": \"$MODE\","
     echo "  \"drive\": \"$DRIVE\", \"ros_domain_id\": $ROS_DOMAIN_ID,"
     echo "  \"started_utc\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\","
     echo "  \"loadavg_start\": \"$(cut -d' ' -f1-3 /proc/loadavg)\","
@@ -87,7 +104,7 @@ if [ "$BACKEND" = slam_toolbox ]; then
         printf 'slam_toolbox:\n  ros__parameters:\n    do_loop_closing: false\n' > "$OUT/noloop.yaml"
         PARAMS+=("--params-file" "$OUT/noloop.yaml")
     fi
-    setsid ros2 run slam_toolbox async_slam_toolbox_node --ros-args \
+    setsid ros2 run slam_toolbox "${MODE}_slam_toolbox_node" --ros-args \
         -r __node:=slam_toolbox "${PARAMS[@]}" -p use_sim_time:=true \
         > "$OUT/backend.log" 2>&1 &
     PGIDS+=("$!")
