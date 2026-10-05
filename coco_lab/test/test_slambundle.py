@@ -19,6 +19,7 @@ import math
 import os
 
 from coco_lab import bundle, loc_teaching, map_teaching, mapworld, slambundle
+import golden_slam_bundles
 from coco_lab.sketch import Scenario
 import pytest
 
@@ -172,3 +173,42 @@ def test_a_recorded_world_round_trips_with_an_external_run(tmp_path):
     e = back.external[0]
     assert e.summary['ate_online']['rmse'] == pytest.approx(0.0, abs=1e-6)
     assert e.summary['map']['coverage'] == 1.0
+
+
+GOLDEN_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          'fixtures', 'slam_bundles')
+
+
+def _files(d):
+    return {n: open(os.path.join(d, n), 'rb').read()
+            for n in sorted(os.listdir(d))}
+
+
+@pytest.mark.parametrize('name', sorted(golden_slam_bundles.GOLDEN))
+def test_golden_map_bundles_are_byte_identical_to_the_writer(name,
+                                                             tmp_path):
+    b, compression = golden_slam_bundles.make(name)
+    slambundle.write_slam_bundle(b, str(tmp_path / name), compression)
+    committed = os.path.join(GOLDEN_DIR, name)
+    assert os.path.isdir(committed), f'missing golden fixture {committed}'
+    assert _files(str(tmp_path / name)) == _files(committed)
+
+
+@pytest.mark.parametrize('name', sorted(golden_slam_bundles.GOLDEN))
+def test_golden_map_bundles_load_and_replay(name):
+    slambundle.replay_check(slambundle.load_slam_bundle(
+        os.path.join(GOLDEN_DIR, name)))
+
+
+def test_the_golden_set_covers_what_the_decoder_needs():
+    loaded = {n: slambundle.load_slam_bundle(os.path.join(GOLDEN_DIR, n))
+              for n in golden_slam_bundles.GOLDEN}
+    algs = {tr.algorithm for b in loaded.values() for _, tr in b.runs}
+    assert algs == {'known', 'odometry', 'ekf_slam', 'fastslam',
+                    'pose_graph'}
+    assert {b.world.source for b in loaded.values()} == {'sketch',
+                                                          'recorded'}
+    assert any(b.external for b in loaded.values())
+    comps = {json.load(open(os.path.join(GOLDEN_DIR, n, 'manifest.json')))
+             ['encoding']['compression'] for n in loaded}
+    assert comps == {'none', 'gzip'}

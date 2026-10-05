@@ -29,9 +29,10 @@ def maps():
     return mt.teaching_maps()
 
 
-def test_every_scenario_drives_its_route_to_the_end(maps):
-    for sid, (mid, sc) in mt.scenarios().items():
-        w = mapworld.from_sketch(maps[mid], sc)
+def test_every_scene_drives_its_route_to_the_end(maps):
+    for sid in mt.scenarios():
+        m, sc = mt.scene_scenario(sid, maps)
+        w = mapworld.from_sketch(m, sc)
         assert w.status == 'route_done', sid
         end = w.gt[-1]
         last = sc.route[-1]
@@ -39,8 +40,8 @@ def test_every_scenario_drives_its_route_to_the_end(maps):
 
 
 def test_the_loop_rooms_drive_is_a_loop(maps):
-    mid, sc = mt.scenarios()['map_loop']
-    w = mapworld.from_sketch(maps[mid], sc)
+    m, sc = mt.scene_scenario('map_loop', maps)
+    w = mapworld.from_sketch(m, sc)
     # it passes its start again after going round the block
     near = [i for i, p in enumerate(w.gt)
             if math.hypot(p[0] - sc.start[0], p[1] - sc.start[1]) < 0.5]
@@ -91,6 +92,25 @@ def test_run_specs_tell_the_slams_the_true_noise():
     assert ids == list(mt.RUN_IDS)
     noloop = {r: p for r, _, p in mt.run_specs()}['pose_graph_noloop']
     assert noloop.loop_closure is False
+
+
+def test_a_click_behind_a_wall_is_driven_around_it(maps):
+    smap = SketchMap(maps['map_loop'])
+    # from the south corridor to the north one: the block is in between
+    route = mt.plan_route(smap, (2.0, 2.0), [(10.0, 8.0)])
+    assert route[-1] == (10.0, 8.0) and len(route) >= 2
+    for (x0, y0), (x1, y1) in zip([(2.0, 2.0)] + route, route):
+        for i in range(21):
+            f = i / 20
+            assert not smap.is_blocked(x0 + f * (x1 - x0), y0 + f * (y1 - y0))
+
+
+def test_an_unreachable_click_is_refused(maps):
+    smap = SketchMap(maps['map_loop'])
+    with pytest.raises(ValueError, match='cannot be reached'):
+        mt.plan_route(smap, (2.0, 2.0), [(8.0, 5.0)])  # inside the block
+    with pytest.raises(ValueError, match='waypoints'):
+        mt.plan_route(smap, (2.0, 2.0), [(3.0, 2.0)] * (mt.MAX_CLICKS + 1))
 
 
 def test_the_arena_scenario_is_fixed_but_its_route_is_the_learners():

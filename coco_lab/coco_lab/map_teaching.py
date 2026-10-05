@@ -192,3 +192,65 @@ def run_specs(scale: float = NOISE_SCALE, particles: int = 20,
             snapshots=snapshots, loop_closure=False)),
     }
     return [(i, specs[i][0], specs[i][1]) for i in ids]
+
+
+#: the most waypoints a learner may click
+MAX_CLICKS = 24
+
+
+def plan_route(smap, start: Tuple[float, float],
+               clicks: List[Tuple[float, float]]) -> List[Tuple[float, float]]:
+    """
+    Return the drive through ``clicks``: coco_lab's A* between each pair.
+
+    The learner clicks where to go; Lab 1's A* (``sketch.plan_path``, on
+    the map inflated by the robot's radius) finds a way there, so a click
+    behind a wall is driven around it, not into it. Raises ``ValueError``
+    for a click that cannot be reached (inside or within the robot's
+    radius of an obstacle, or walled off).
+    """
+    from .sketch import plan_path
+    if not 1 <= len(clicks) <= MAX_CLICKS:
+        raise ValueError(f'1 to {MAX_CLICKS} waypoints, not {len(clicks)}')
+    from .sketch import ROBOT_RADIUS
+    route: List[Tuple[float, float]] = []
+    here = tuple(start)
+    for c in clicks:
+        if smap.clearance(c[0], c[1]) < ROBOT_RADIUS:
+            raise ValueError(f'({c[0]:.1f}, {c[1]:.1f}) cannot be reached: '
+                             f'the robot does not fit there')
+        try:
+            leg = plan_path(smap, here, tuple(c))
+        except ValueError:
+            raise ValueError(f'({c[0]:.1f}, {c[1]:.1f}) cannot be reached '
+                             f'from ({here[0]:.1f}, {here[1]:.1f})') from None
+        route.extend(leg)
+        here = tuple(c)
+    return route
+
+
+def scenario_for(base: Scenario, smap, clicks, scale: float,
+                 seed: int) -> Scenario:
+    """Return ``base`` with the learner's drive, noise scale and world seed."""
+    route = plan_route(smap, base.start[:2], clicks)
+    return Scenario(start=base.start, route=route, seed=seed,
+                    noise=noise(scale), lidar=base.lidar,
+                    max_time=base.max_time, dt=base.dt, v_max=base.v_max,
+                    w_max=base.w_max)
+
+
+def scene_scenario(sid: str, maps: Dict[str, LabMap] = None) -> Tuple[
+        LabMap, Scenario]:
+    """
+    Return ``(map, scenario)`` for a scene AS THE LAB SHOWS IT.
+
+    The scene's route is treated as the learner's clicks and expanded by
+    :func:`plan_route`, exactly as a rerun in the browser does it, so the
+    catalog bundle is what "Run" with unchanged settings reproduces.
+    """
+    from .sketch import SketchMap
+    maps = maps or teaching_maps()
+    mid, base = scenarios()[sid]
+    m = maps[mid]
+    return m, scenario_for(base, SketchMap(m), base.route, NOISE_SCALE,
+                           base.seed)

@@ -210,31 +210,62 @@ def test_a_corridor_constrains_nothing_along_its_axis():
     assert abs(r.pose[1]) < 1e-6 and abs(r.pose[2]) < 1e-6
 
 
-def _scene(sid, **kw):
-    maps = map_teaching.teaching_maps()
-    mid, sc = map_teaching.scenarios()[sid]
-    w = mapworld.from_sketch(maps[mid], sc)
-    return maps[mid], w
+def _scene(sid):
+    m, sc = map_teaching.scene_scenario(sid)  # the scene as the lab shows it
+    return m, mapworld.from_sketch(m, sc)
+
+
+#: the loop room's worlds 0..19: what the lab's 20-world count rests on
+LOOP_SEEDS = range(20)
 
 
 @pytest.fixture(scope='module')
-def loop_runs():
-    m, w = _scene('map_loop')
-    inp, tp = w.inputs(), w.true_poses()
-    specs = {i: (a, p) for i, a, p in map_teaching.run_specs()}
-    on = mapping.run('pose_graph', inp, m, specs['pose_graph'][1])
-    off = mapping.run('pose_graph', inp, m, specs['pose_graph_noloop'][1])
-    return tp, on, off
+def loop_worlds():
+    """Pose graph with and without loop closure on 20 loop-room worlds."""
+    out = []
+    specs = {i: p for i, _, p in map_teaching.run_specs()}
+    for seed in LOOP_SEEDS:
+        m, sc = map_teaching.scene_scenario('map_loop')
+        sc.seed = seed
+        w = mapworld.from_sketch(m, sc)
+        inp, tp = w.inputs(), w.true_poses()
+        on = mapping.run('pose_graph', inp, m, specs['pose_graph'])
+        off = mapping.run('pose_graph', inp, m, specs['pose_graph_noloop'])
+        out.append((seed, tp, on, off))
+    return out
 
 
-def test_loop_closure_closes_the_loop_room(loop_runs):
-    """The lab's claim: on the loop room, loop closure helps (seed 11)."""
-    tp, on, off = loop_runs
-    assert len(on.arrays['loops.k'][1]) >= 1
-    assert len(off.arrays['loops.k'][1]) == 0
-    a_on = mapeval.ate(on.final_trajectory(), tp, False)['rmse']
-    a_off = mapeval.ate(off.final_trajectory(), tp, False)['rmse']
-    assert a_on < 0.5 * a_off
+@pytest.fixture(scope='module')
+def loop_runs(loop_worlds):
+    """One world where a loop was closed (the first such seed)."""
+    for _, tp, on, off in loop_worlds:
+        if len(on.arrays['loops.k'][1]):
+            return tp, on, off
+    raise AssertionError('no loop-room world closed a loop')
+
+
+def test_loop_closure_usually_closes_the_loop_room(loop_worlds):
+    """
+    The lab's claim, over 20 worlds (Sketch), as the page states it.
+
+    Loop closure was found in at least 15 of 20 worlds; where it was found
+    it lowered the final trajectory error in at least 13; where it was not
+    found the robot was lost by more than 0.8 m before it came back (the
+    matcher never recognised its start). Exact counts:
+    docs/data/lab3/sketch_counts.json.
+    """
+    closed = [(tp, on, off) for _, tp, on, off in loop_worlds
+              if len(on.arrays['loops.k'][1])]
+    assert len(closed) >= 15
+    better = sum(mapeval.ate(on.final_trajectory(), tp, False)['rmse'] <
+                 mapeval.ate(off.final_trajectory(), tp, False)['rmse']
+                 for tp, on, off in closed)
+    assert better >= 13
+    for _, tp, on, off in loop_worlds:
+        assert len(off.arrays['loops.k'][1]) == 0
+        if not len(on.arrays['loops.k'][1]):
+            assert mapeval.ate(on.final_trajectory(), tp,
+                               False)['rmse'] > 0.8
 
 
 def test_every_optimisation_lowers_chi2(loop_runs):

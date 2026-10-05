@@ -513,8 +513,9 @@ class Scenario:
         route = [tuple(float(v) for v in p) for p in d['route']]
         if not route or any(len(p) != 2 for p in route):
             raise ValueError('route must be a non-empty list of (x, y)')
-        if len(route) > 64:
-            raise ValueError(f'a route has at most 64 waypoints, not '
+        if len(route) > MAX_ROUTE:
+            raise ValueError(f'a route has at most {MAX_ROUTE} waypoints, '
+                             f'not '
                              f'{len(route)}')
         kid = d.get('kidnap')
         sc = cls(start, route, int(d.get('seed', 0)),
@@ -633,6 +634,10 @@ def _nearest_free(g, cell):
                 q.append(n)
     return None
 
+
+#: The most waypoints a scenario's route may hold (Lab 3 raised it from 64:
+#: a learner's arena drive, expanded by A* into waypoints, needs more).
+MAX_ROUTE = 512
 
 #: The driver reaches a waypoint when it is this close (metres).
 WAYPOINT_TOL = 0.12
