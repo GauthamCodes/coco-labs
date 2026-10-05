@@ -19,8 +19,8 @@ import math
 import os
 
 from coco_lab import bundle, loc_teaching, map_teaching, mapworld, slambundle
-import golden_slam_bundles
 from coco_lab.sketch import Scenario
+import golden_slam_bundles
 import pytest
 
 ROUTE = loc_teaching.LANDMARKS_ROUTE[:3]
@@ -228,8 +228,8 @@ def test_the_golden_set_covers_what_the_decoder_needs():
     algs = {tr.algorithm for b in loaded.values() for _, tr in b.runs}
     assert algs == {'known', 'odometry', 'ekf_slam', 'fastslam',
                     'pose_graph'}
-    assert {b.world.source for b in loaded.values()} == {'sketch',
-                                                          'recorded'}
+    sources = {b.world.source for b in loaded.values()}
+    assert sources == {'sketch', 'recorded'}
     assert any(b.external for b in loaded.values())
     comps = {json.load(open(os.path.join(GOLDEN_DIR, n, 'manifest.json')))
              ['encoding']['compression'] for n in loaded}

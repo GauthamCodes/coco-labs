@@ -220,9 +220,9 @@ def icp(ref: List[Tuple[float, float]], cur: List[Tuple[float, float]],
     linearised in the rotation. The scan counts as ONE measurement of
     standard deviation ``sigma``: each of its N residuals is weighted
     ``1 / (sigma^2 N)``, because neighbouring beams on one wall do not err
-    independently (treating them as independent made a 60-beam scan claim
-    millimetre accuracy, and the front end beat odometry LESS often than it
-    lost to it on the arena -- measured in Phase 4). With ``prior`` (an information matrix on ``(x, y, yaw)``)
+    independently; ``sigma`` itself is CALIBRATED per sensor
+    (:class:`PoseGraphParams`, ``icp_sigma``). With ``prior`` (an
+    information matrix on ``(x, y, yaw)``)
     the guess is a Gaussian PRIOR in the same least squares -- a MAP
     match: along a direction the scan cannot see (a corridor's axis) the
     answer stays at the guess instead of sliding. Without a prior a small
