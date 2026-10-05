@@ -1,0 +1,81 @@
+{
+ "ate_online": {
+  "aligned": true,
+  "alignment": [
+   14.209626,
+   0.320336,
+   -0.004953
+  ],
+  "final": 6.42332,
+  "max": 15.208273,
+  "mean": 2.154011,
+  "n": 4405,
+  "rmse": 3.370867
+ },
+ "ate_wheel_odometry": {
+  "aligned": true,
+  "alignment": [
+   -4.914756,
+   5.004067,
+   -0.290962
+  ],
+  "final": 8.087844,
+  "max": 12.628742,
+  "mean": 5.722418,
+  "n": 4405,
+  "rmse": 6.281198
+ },
+ "drive": "/home/gautham/coco_lab_runs/lab3/drives/s1_tour",
+ "end": {
+  "loadavg_end": "2.36 3.10 3.11",
+  "play_rc": 0,
+  "play_wall_s": 649.160888
+ },
+ "map": {
+  "coverage": 0.757516,
+  "exact": {
+   "false_negative": 14442,
+   "false_positive": 4861,
+   "precision": 0.174142,
+   "recall": 0.032873,
+   "test_unknown": 61055,
+   "true_positive": 1025,
+   "truth_occupied_marked_unknown": 15714
+  },
+  "f1": 0.116915,
+  "occupied_cells": 5886,
+  "precision": 0.246177,
+  "reachable_free_cells": 144995,
+  "recall": 0.076662,
+  "tol_m": 0.1,
+  "visible_wall_cells": 6483
+ },
+ "map_grid": {
+  "height": 405,
+  "origin": [
+   -22.308618,
+   -10.7
+  ],
+  "resolution": 0.05,
+  "stamp": 695.050084,
+  "width": 685
+ },
+ "map_to_odom_messages": 43915,
+ "maps_seen": 452,
+ "meta": {
+  "arm": "loop_noodom",
+  "backend": "cartographer",
+  "cartographer_debs": "b030bc0bea32fe27dfb70a31e14491b6ab767379811877e6497af28338eab5d8  liblua5.2-0_5.2.4-3build2_amd64.deb 3a551cf9662dab71896a40d8569622058e88b9b144ab7dabe11527cbb5d9ec09  ros-jazzy-cartographer_2.0.9004-1noble.20260225.051215_amd64.deb b7c2ff8d60e747a7ef4e7ad9cb8ddc7be6a1605d2d1fbb9322fa273463b32bfd  ros-jazzy-cartographer-ros_2.0.9003-2noble.20260903.085256_amd64.deb b0559a9cd10be44e69de60e933a14f4af02a6ebdcc4a0d4159e653181229ffb9  ros-jazzy-cartographer-ros-msgs_2.0.9003-2noble.20260902.041333_amd64.deb ",
+  "drive": "/home/gautham/coco_lab_runs/lab3/drives/s1_tour",
+  "git_head": "e3899acc2a8baa84effa8f6f09009c33cecd38f6",
+  "loadavg_start": "1.96 2.36 2.86",
+  "mode": "async",
+  "rate": 1.0,
+  "ros_domain_id": 67,
+  "slam_toolbox": "2.8.5-1noble.20260615.161600",
+  "started_utc": "2026-10-05T15:37:10Z"
+ },
+ "n_scans": 4405,
+ "run": "/home/gautham/coco_lab_runs/lab3_diag/s1_tour_cartographer_loop_noodom",
+ "scans_before_first_map_to_odom": 0
+}
