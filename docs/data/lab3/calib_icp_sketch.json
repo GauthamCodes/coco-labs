@@ -1,0 +1,16 @@
+{
+ "definition": "sigma^2 = mean(e^T (H/N) e) / 3 over accepted consecutive matches; median-based value uses the chi2(3) median 2.366",
+ "drive": "sketch: loc_twins, seed 0, the Lab 3 scenes' noise",
+ "icp_sigma": 0.007007,
+ "icp_sigma_from_median": 0.00541,
+ "matches_accepted": 134,
+ "rotation_error_rad": {
+  "max": 0.025886,
+  "median": 0.003559
+ },
+ "translation_error_m": {
+  "max": 0.05968,
+  "median": 0.010555
+ },
+ "updates": 149
+}

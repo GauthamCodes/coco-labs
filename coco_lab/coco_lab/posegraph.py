@@ -538,8 +538,12 @@ class PoseGraphParams:
     #: otherwise claim infinite certainty)
     odom_sigma_xy: float = 0.005
     odom_sigma_yaw: float = 0.002
-    #: an ICP residual's standard deviation (sets the ICP Hessian's weight)
-    icp_sigma: float = 0.05
+    #: one scan match's standard deviation (the scan is ONE measurement).
+    #: Calibrated, not chosen: 0.007 m is Sketch's (its 2 cm range noise),
+    #: measured on Lab 2's twins room, which no Lab 3 claim uses
+    #: (docs/data/lab3/calib_icp.py --sketch). A recorded drive passes its
+    #: own (Gazebo's noiseless LiDAR: 0.0035 m on Lab 2's square drive).
+    icp_sigma: float = 0.007
     icp_max_dist: float = 0.5
     icp_max_rmse: float = 0.08
     icp_min_inliers: float = 0.5

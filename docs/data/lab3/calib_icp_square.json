@@ -1,0 +1,16 @@
+{
+ "definition": "sigma^2 = mean(e^T (H/N) e) / 3 over accepted consecutive matches; median-based value uses the chi2(3) median 2.366",
+ "drive": "/home/gautham/coco_lab_runs/lab3/drives_calib/s1_square",
+ "icp_sigma": 0.003508,
+ "icp_sigma_from_median": 0.001098,
+ "matches_accepted": 77,
+ "rotation_error_rad": {
+  "max": 0.014378,
+  "median": 0.000835
+ },
+ "translation_error_m": {
+  "max": 0.257571,
+  "median": 0.002286
+ },
+ "updates": 93
+}

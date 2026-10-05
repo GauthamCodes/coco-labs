@@ -30,7 +30,8 @@ SLAMs', and are labelled so.
     occupancy mapping with the true / the dead-reckoned poses.
 ``pose_graph``, ``pose_graph_noloop``
     loop closure on / off -- the loop-closure effect; its odometry edges
-    use the calibrated motion model below, as EKF-SLAM and FastSLAM do.
+    use the calibrated motion model below, as EKF-SLAM and FastSLAM do, and
+    its scan matches the recorded LiDAR's calibrated sigma (``ICP_SIGMA``).
 ``ekf_slam``, ``fastslam``
     with the motion model CALIBRATED on a different drive: Lab 2's square
     drive (same session, not the tour) measured 2.445 rad of wheel-yaw
@@ -75,6 +76,10 @@ AMCL_ALPHAS = (0.2, 0.2, 0.2, 0.2)
 FLOOR = 0.005
 WORLD_SEED = 0
 FASTSLAM_SEEDS = (0, 1, 2, 3, 4)
+#: one scan match's sigma on the RECORDED LiDAR, calibrated on Lab 2's
+#: square drive (not scored): docs/data/lab3/calib_icp.py ->
+#: docs/data/lab3/calib_icp_square.json
+ICP_SIGMA = 0.0035
 #: the arena's corners at 2 m spacing: 40, spread over the whole arena
 #: (at 1 m and a cap of 32 they all fell in its southern half -- measured)
 LANDMARKS = mapworld.LandmarkSpec(min_separation=2.0, max_count=64)
@@ -116,10 +121,12 @@ def arm_runs(arm, cal):
     if arm in ('known', 'odometry'):
         return [(arm, arm, mapping.GivenPoseParams(snapshots=SNAPSHOTS))]
     if arm == 'pose_graph':
-        return [(arm, arm, PoseGraphParams(alphas=cal, snapshots=SNAPSHOTS))]
+        return [(arm, arm, PoseGraphParams(alphas=cal, icp_sigma=ICP_SIGMA,
+                                           snapshots=SNAPSHOTS))]
     if arm == 'pose_graph_noloop':
         return [(arm, 'pose_graph', PoseGraphParams(
-            alphas=cal, snapshots=SNAPSHOTS, loop_closure=False))]
+            alphas=cal, icp_sigma=ICP_SIGMA, snapshots=SNAPSHOTS,
+            loop_closure=False))]
     alphas = AMCL_ALPHAS if arm.endswith('_amcl') else cal
     if arm.startswith('ekf_slam'):
         return [(arm, 'ekf_slam', EKFSlamParams(alphas=alphas,
