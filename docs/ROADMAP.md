@@ -27,6 +27,10 @@
 >   items: [`docs/labs/LAB2_LOCALISE.md`](labs/LAB2_LOCALISE.md).
 >   *(Until 2026-10-04 this line read "implemented, tested and measured on
 >   branch `lab2`; not yet deployed".)*
+> - **Phase 4 (Map, Lab 3), 2026-10-05: implemented, tested, measured**
+>   on branch `lab3` — status, numbers and limitations in
+>   [`docs/labs/LAB3_MAP.md`](labs/LAB3_MAP.md); deployment state in
+>   `docs/SESSION_LOG.md`.
 >
 > *(The status line of 2026-09-30 read: "plan revised (Phase 2 · Live
 > added) … Phase 1 closed by decision with open items … Phase 2 not
@@ -485,13 +489,31 @@ site").
 - **Real backends:** slam_toolbox (already in the stack) and Cartographer
   (its ROS 2 port is released for Jazzy; upstream is dormant), run on
   **identical recorded drives**. GMapping and Hector are ROS 1-era and not
-  officially released for Jazzy at the time of writing (verify), so their
-  ideas live in `coco_lab` rather than in unofficial ports.
+  officially released for Jazzy (verified 2026-10-05: no `ros-jazzy-`
+  gmapping or hector package in apt; Cartographer, slam_toolbox, RTAB-Map
+  and MRPT are), so their ideas live in `coco_lab` rather than in
+  unofficial ports.
 - **Metrics:** absolute trajectory error against ground truth, and a map
   score against a ground-truth occupancy map rasterised from the world
   generator.
 - **Challenge:** "map the arena" in Sketch mode, scored. Learners discover
   that loop closures help and featureless corridors hurt.
+
+**As built (2026-10-05, branch `lab3`).** coco_lab: log-odds occupancy
+mapping, EKF-SLAM on an IDEALISED landmark sensor (labelled), grid FastSLAM
+(Rao-Blackwellised), pose-graph SLAM (MAP point-to-line ICP, loop closure
+on well-constrained matches, Gauss-Newton with a chain-preconditioned CG),
+the metrics (ATE after a rigid alignment; map precision / recall / F1 at
+0.10 m against visible truth walls; coverage), map bundle 1.0. The Lab 3 view
+(`?view=map`): Sketch scenes (loop room, featureless corridor, landmarks
+room), the "map the arena" challenge scored round(100 x F1), and a Replay of
+a recorded tour. Real backends on two identical recorded 121 m tours, three
+rounds (measured): slam_toolbox (project config) 0.103 / 0.793 m online ATE,
+map F1 0.933 / 0.400; Cartographer (released config) F1 0.19 / 0.17 with
+global SLAM on, 0.88 / 0.92 off — loop closure hurt on these drives,
+reproduced, not attributed. coco_lab on the same drives: pose graph 0.267 /
+0.758 m, FastSLAM 0.12–0.24 / 0.09–0.53 m (5 seeds). Numbers:
+`docs/RESULTS.md` "COCO Lab Phase 4"; write-up `docs/labs/LAB3_MAP.md`.
 
 ### Lab 4 — Search (P0.4)
 

@@ -8215,3 +8215,257 @@ the same script: 91.76 s span, one 10.56 s cut (the Pyodide start-up),
 0 console errors; H.264 1120 × 920, 3,399,232 B, sha256 `b13aa1fe…`
 (`docs/data/lab2/video/cuts_public.json`). This is the recording prepared
 as the `lab2-v1.0` release asset.
+
+## COCO Lab Phase 4 — Map (Lab 3) (measured 2026-10-05)
+
+Branch `lab3` (from `main` = e128036, the Phase 2 + 3 release record).
+Labels: **(measured)** produced by a run this session, with its evidence
+path; **(derived)** computed from recorded evidence; **historical**;
+**unverified**. **Sketch** numbers are measurements of coco_lab's model,
+not of the robot. Evidence index and reproduction commands:
+`docs/data/lab3/README.md`.
+
+### Releases shipped first (measured)
+
+`live-v1.0` (→ 4530a8b) and `lab2-v1.0` (→ 4b675c1) pushed and published
+with the owner's approval on 2026-10-04 18:17 UTC; `lab2-v1.0` carries the
+public-site video (3,399,232 B, sha256 `b13aa1fe…`, downloaded and checked);
+every link in both notes answered 200. `main` fast-forwarded 4b675c1 →
+e128036; `CI` 37223916490 and `Lab` 37223916534 green on it; Pages
+deployment 6844850197.
+
+### What was built
+
+- `coco_lab` (standard library only; no rclpy — `test_no_ros.py` and
+  `test_stdlib_only.py` walk every new module): `occgrid.py` (log-odds
+  occupancy mapping, Bresenham, clamp, `nav_msgs/OccupancyGrid` bytes and
+  nav2's 0.25 / 0.65 thresholds), `landmarks.py` (deterministic convex-corner
+  extractor; an IDEALISED range-bearing sensor with known identity and
+  ray-cast visibility), `ekfslam.py` (EKF-SLAM, known correspondences,
+  landmarks added on first sight; range-bearing and a relative-xy model whose
+  linear case is checked against the exact Gaussian posterior), `fastslam.py`
+  (grid FastSLAM: a Rao-Blackwellised particle filter, per-particle maps,
+  Neff-triggered low-variance resampling, final trajectory = the surviving
+  ancestry), `posegraph.py` (point-to-line ICP as a MAP match with odometry
+  as a prior; the scan as ONE measurement of calibrated sigma; odometry
+  information from the told motion model; loop closure only on a
+  well-constrained match; Gauss-Newton with a chain-preconditioned conjugate
+  gradient), `mapping.py`, `mapeval.py` (ATE with a rigid 2D alignment;
+  map precision / recall / F1 at a stated tolerance against VISIBLE truth
+  walls; coverage; the project's exact `compare_occupied`; a map-vs-truth
+  class raster), `mapworld.py` (a Sketch world or a recorded drive),
+  `slambundle.py` (map bundle 1.0, replayed and re-scored byte for byte),
+  `map_teaching.py` (four scenes; drives planned by coco_lab's own A*).
+  Formats: `docs/labs/SLAM_FORMAT.md` (pinned by a test).
+- `lab_web`: `?view=map` — Sketch, the "map the arena" challenge, and the
+  Replay of the recorded tour; a TypeScript map-bundle decoder pinned to
+  Python byte for byte; the worker's `mapping` glue; the guard extended to
+  occupancy mapping, scan matching, graph optimisation and mapping metrics.
+  Catalog 1.3 (additive).
+- Real backends, offline (no simulator started): the two recorded tours cut
+  from Lab 2's bags and replayed into slam_toolbox (the project's
+  `slam_params.yaml`, unchanged) and Cartographer (the RELEASED 2.0.9003 debs
+  from a user-space prefix; its released 2D configuration with only COCO's
+  frames, odometry and range limits changed), loop closure on and off;
+  `docs/data/lab3/`.
+
+### The recorded drives (measured)
+
+No new simulator run. Lab 2 recorded, each on a FRESH headless simulator,
+the same commanded tour twice; `make_drive.py` cut each tour out of its bag
+(AMCL's `map -> odom` dropped: 4,425 and 4,424 transforms; everything else
+byte for byte). Wheel odometry is `odom -> base_footprint` as recorded;
+truth is `/model/coco/odometry` in the map frame.
+
+| drive | session | sim time | scans | updates (coco_lab) | wheel-odometry ATE (aligned) |
+|---|---|---|---|---|---|
+| `s1_tour` | `fidelity_s1` | 253.6–694.1 s | 4,405 | 627 | 6.281 m |
+| `1_tour` | `fidelity_1` | 191.7–632.2 s | 4,404 | 626 | 7.317 m |
+
+### How good is one scan match? (measured, calibration — not scored)
+
+`calib_icp.py`: the pose graph's one-measurement scan sigma, as
+`sigma^2 = mean(e^T (H/N) e) / 3` over accepted consecutive matches against
+the truth, on data no claim uses.
+
+| where | matches | sigma | median error |
+|---|---|---|---|
+| recorded LiDAR: Lab 2's SQUARE drive (`fidelity_s1`, not the tours) | 77 of 92 | **3.5 mm** | 2.3 mm, 0.8 mrad |
+| Sketch (2 cm range noise): Lab 2's twins room, seed 0 | 134 of 148 | **7.0 mm** | 3.6 mm, 10.6 mrad |
+
+The first value the code carried was a hand-picked 0.05 m. With it, and the
+calibrated motion model, the pose graph on `s1_tour` ended **4.73 m** off
+(measured during development; that log was overwritten and is not kept as
+an evidence file); with the calibrated 3.5 mm, **0.267 m** (measured,
+`results.json`). The motion model is calibrated
+the same way, on the same square drive: alpha1 = (2.445 rad of wheel-yaw
+error / 10.974 rad turned)^2 = **0.0497**; the other three a chosen floor of
+0.005 (the straights measured 0.000 m) — stated as chosen, not measured.
+
+### coco_lab on the recorded tours (measured)
+
+`an_coco.py` at 8a15d92 (clean), 60 of 480 beams, grid = the truth raster
+(0.05 m), start told, scored after a rigid 2D alignment against Phase 1B's
+ground-truth raster at 0.10 m. Load average 14–41 (other sessions'
+simulators; coco_lab is single-threaded and deterministic, so load changes
+its time, not its result). `~/coco_lab_runs/lab3/coco_final_*.json`, in
+`docs/data/lab3/results.json`.
+
+| run | `s1_tour` final ATE / map F1 | `1_tour` final ATE / map F1 |
+|---|---|---|
+| known poses (the ceiling) | 0.000 m / **0.937** | 0.000 m / **0.938** |
+| odometry only | 6.260 m / 0.101 | 7.126 m / 0.072 |
+| pose graph | **0.267 m / 0.664** | 0.758 m / 0.220 |
+| pose graph, loop closure off | 0.443 m / 0.492 | 0.708 m / 0.265 |
+| FastSLAM, calibrated model, seeds 0–4 | 0.120–0.236 m / 0.636–0.810 | 0.087–0.533 m / 0.382–0.848 |
+| FastSLAM, COCO's AMCL alphas (0.2 x 4), seeds 0–4 | 0.885–1.034 m / 0.188–0.410 | 0.944–1.300 m / 0.110–0.334 |
+| EKF-SLAM, IDEALISED landmarks (synthesised from truth), calibrated | 0.321 m / 0.655 | 0.269 m / 0.721 |
+| EKF-SLAM, IDEALISED landmarks, AMCL alphas | 0.253 m / 0.664 | 0.239 m / 0.666 |
+
+- **The motion model decides FastSLAM.** With AMCL's deliberately loose
+  alphas it loses the tour on every seed; with alphas calibrated on another
+  drive it tracks. Five seeds, two drives: a spread, not a rate.
+- **EKF-SLAM's numbers are not comparable with the LiDAR SLAMs'**: its
+  landmark observations are synthesised from the truth (40 box corners,
+  ~1,380 observations per tour) with known identity.
+- **Loop closures were TRUE** (`an_loops.py` → `loops.json`): 9 on
+  `s1_tour`, 4 on `1_tour`, every one within 2 cm and 0.011 rad of the true
+  relative pose. On `s1_tour` the pose graph recognised its start at the end
+  (closures to nodes 52–64) and pulled the loop straight (0.443 → 0.267 m);
+  on `1_tour` it closed only four short local loops and never recognised the
+  start — the big loop stayed open (0.708 → 0.758 m).
+- Tried and REMOVED: a greedy hill-climbing "improved proposal" for FastSLAM
+  (GMapping's idea, simplified). In a diagnostic trace on `s1_tour`
+  (calibrated motion model, seed 0, 20 particles) it was 1.5–3.2 m off at
+  the sampled updates, sliding along the corridor between the bays, where
+  plain FastSLAM stayed within 0.48 m (measured during development; the
+  trace is not kept as an evidence file). Plain FastSLAM is what ships.
+
+### The real backends on identical recorded drives (measured)
+
+`slam_replay.sh` per backend x arm x drive (1.0x requested, online, ROS
+domain 67, no simulator), scored by `an_backend.py` → `results.json`.
+slam_toolbox 2.8.5 with `gazebo_models/config/slam_params.yaml` unchanged
+(async node in rounds r1, r2; the SYNC node with the same params in round
+`sync`); Cartographer 2.0.9003 (released debs, user-space prefix), its
+released 2D configuration with only COCO's frames, odometry and range
+limits changed (`docs/data/lab3/cartographer/coco_2d.lua`). 20 runs + 1
+diagnostic. Two s1 Cartographer runs of round 2 were first REFUSED by the
+runner's own "another SLAM is running" check (a previous run still exiting
+under load); the check now waits and names what it sees, and the two runs
+were made afterwards into the same round.
+
+| backend | drive | round r1: ATE / F1 (load) | round r2: ATE / F1 (load) | round sync: ATE / F1 (load) |
+|---|---|---|---|---|
+| slam_toolbox (project config) | `s1_tour` | 0.103 m / 0.933 (6.06) | 0.104 m / 0.933 (19.67) | 0.104 m / 0.933 (5.24) |
+| slam_toolbox (project config) | `1_tour` | 0.793 m / 0.400 (24.73) | 0.794 m / 0.399 (30.62) | 0.793 m / 0.400 (1.53) |
+| slam_toolbox, loop closing off | `s1_tour` | 0.078 m / 0.928 (7.76) | 0.076 m / 0.923 (32.63) | 0.078 m / 0.928 (1.59) |
+| slam_toolbox, loop closing off | `1_tour` | 0.107 m / 0.897 (1.79) | 0.107 m / 0.897 (24.20) | 0.107 m / 0.897 (3.78) |
+| Cartographer (released 2D config) | `s1_tour` | 0.814 m / 0.192 (13.68) | 0.813 m / 0.193 (9.36) | — |
+| Cartographer (released 2D config) | `1_tour` | 0.687 m / 0.170 (1.64) | 0.665 m / 0.180 (37.48) | — |
+| Cartographer, global SLAM off | `s1_tour` | 0.063 m / 0.882 (26.19) | 0.059 m / 0.889 (2.05) | — |
+| Cartographer, global SLAM off | `1_tour` | 0.044 m / 0.915 (2.42) | 0.075 m / 0.909 (18.35) | — |
+
+ATE = the backend's ONLINE belief at every scan (its latest `map -> odom`
+composed with the recorded wheel odometry) after one rigid 2D alignment;
+F1 = its final map, moved by that alignment, against the ground truth at
+0.10 m. In brackets: the 1-minute load average at the end of the run (other
+sessions' simulators shared the machine).
+
+- **The numbers do not depend on the load**: two async rounds and slam_toolbox's
+  synchronous node (every scan processed) agree to about three decimals at
+  loads from 1.5 to 37.
+- **Loop closure HURT here.** Cartographer's released configuration with
+  global SLAM on drew sheared, rotated maps on both tours (F1 0.17–0.19);
+  with global SLAM off it mapped them well (F1 0.88–0.92, ATE 0.04–0.08 m).
+  slam_toolbox's loop closing was harmless on `s1_tour` and wrecked
+  `1_tour` (F1 0.40 against 0.90 off), identically in all three rounds.
+  **Measured and reproduced; not attributed**: their pose graphs are not
+  recorded, so their closures cannot be checked against the truth the way
+  coco_lab's were (§4.2).
+- **One hypothesis tested and REJECTED** (a diagnostic, one run, not a comparison arm): that Cartographer's global optimisation is pulled off by the skid-steer wheel odometry. With odometry OFF and global SLAM on (`cartographer/coco_2d_loop_noodom.lua`) the `s1_tour` map was worse still: ATE 3.371 m, F1 0.117 (load 2.4; `diagnostic_cartographer_loop_noodom.json`).
+- Wheel odometry alone: 6.281 m (`s1_tour`) and 7.317 m (`1_tour`), aligned.
+
+### Sketch over 20 worlds per scene (measured, Sketch)
+
+`docs/data/lab3/sketch_counts.py` at `d9cffb9` (clean): each scene's drive and noise (x3), world seeds 0–19, FastSLAM seed 0. Median [p10–p90] final trajectory error (m) and map F1.
+
+| run | loop room | corridor | landmarks room |
+|---|---|---|---|
+| known poses | 0.00 [0.00–0.00] m · F1 0.99 | 0.00 [0.00–0.00] m · F1 0.97 | 0.00 [0.00–0.00] m · F1 0.99 |
+| odometry only | 1.68 [1.11–3.10] m · F1 0.33 | 3.08 [1.94–5.16] m · F1 0.37 | 1.73 [1.07–2.81] m · F1 0.30 |
+| EKF-SLAM (idealised) | 0.29 [0.12–0.39] m · F1 0.79 | 1.10 [0.53–2.74] m · F1 0.58 | 0.09 [0.05–0.19] m · F1 0.96 |
+| FastSLAM (20 particles) | 0.18 [0.12–0.28] m · F1 0.88 | 1.70 [1.34–1.94] m · F1 0.48 | 0.15 [0.11–0.18] m · F1 0.92 |
+| pose graph | 0.22 [0.12–0.37] m · F1 0.81 | 0.90 [0.49–1.59] m · F1 0.42 | 0.11 [0.06–0.28] m · F1 0.92 |
+| pose graph, loop closure off | 0.75 [0.49–0.99] m · F1 0.47 | 0.99 [0.62–1.59] m · F1 0.38 | 0.75 [0.39–1.33] m · F1 0.47 |
+
+Loop closure found / lowered the pose graph's final error: loop room **19 / 19** of 20; landmarks room **20 / 19**; corridor **14 / 6** — in the corridor a closure at the end does not tell the graph how long the corridor was.
+
+### Defects found and fixed during the phase (each measured)
+
+- **FastSLAM's unexplored cells** scored 0.5 (neutral) at first: "my scan
+  lands where I have never looked" then beat "it lands on free space I
+  saw". Now 0 (no wall evidence), as GMapping's unmatched beams are.
+- **The pose graph's front end slid along corridors**: ICP without a prior
+  moved 0.12–0.20 m along the loop room's corridors where odometry was
+  within 0.03 m (Sketch). Fixed: odometry is a Gaussian prior inside the
+  match (MAP), and an edge's information is the Hessian plus odometry's.
+- **Fixed odometry information** (0.10 m / 0.05 rad per edge whatever the
+  noise): replaced by the told motion model's covariance for each step.
+- **A hand-picked scan sigma** (0.05 m): replaced by calibrated values
+  (3.5 mm recorded, 7.0 mm Sketch). With 0.05 m the real tour's pose graph
+  ended 4.73 m off (development measurement; not kept as a file).
+- **Landmark extraction capped at 32** put every landmark of the arena in
+  its southern half (EKF-SLAM 1.725 m on `s1_tour`); arena worlds now use a
+  2 m spacing (40 landmarks, no cap reached; the tool refuses if it is).
+- **The first full test run** found three flake8 findings in coco_lab;
+  fixed.
+- **`plan_path` snaps an unreachable goal to the nearest free cell but ends
+  the route at the blocked point**: `plan_route` now refuses a click where
+  the robot does not fit (tested).
+
+### The browser
+
+Local production build (`vite preview`, headless Firefox 157, load 2.1–2.3;
+`docs/data/lab3/browser/report_local.json`):
+
+| | |
+|---|---|
+| console errors | **0** (Lab 3 desktop and phone, Lab 2, Lab 1's smoke) |
+| first coco_lab run (Pyodide start-up + the loop room's world + 6 algorithms) | 13.9 s |
+| warm runs | a new world 8.1 s; a clicked one-waypoint drive 3.1 s; the challenge 3.1 s |
+| Pyodide vs CPython | the same outcomes, not the same bits (final ATEs differ in the 6th decimal) — browser runs are labelled as such |
+| before the first run | no Pyodide request |
+| phone, 390 × 844 | no horizontal overflow on Sketch, the challenge or Replay |
+| Lab 3's chunk | loaded only when opened (`MapLab-*.js`, 15 KB gzipped) |
+| regressions | Lab 2: cold 8.8 s, warm 3.1 s, same outcomes as CPython, 4 exhibits; Lab 1's smoke 11 of 11 |
+
+PLACEHOLDER-PUBLIC
+
+### Tests
+
+`COCO_WS=~/coco_map_ws ROS_DOMAIN_ID=77 scripts/run_all_package_tests.sh`
+(a copy overlay of 2c0ad65; the worktree's path has parentheses) on a clean
+graph, load 1.4–2.8: **2,848 passed, 0 failed, 0 skipped** (Phase 3 closed
+at 2,772).
+
+| package | Phase 3 | now |
+|---|---|---|
+| coco_config | 93 | 93 |
+| coco_sim | 280 | 280 |
+| coco_mission | 344 | 344 |
+| coco_web | 857 | 857 |
+| gazebo_models | 229 | 229 |
+| coco_rl | 241 | 241 |
+| coco_perception | 139 | 139 |
+| coco_moveit_config | 12 | 12 |
+| custom_teleop | 75 | 75 |
+| coco_lab | 416 | **492** |
+| coco_lab_ros | 86 | 86 |
+
+`lab_web`: vitest 257 → **275**; tools pytest 86 → **95** (103 s); `tsc`,
+`vite build` and `check_dist` clean. The first full run of the phase (at
+d41f350) failed one coco_lab test, `test_flake8` (three findings), fixed in
+60e8fbf. Two `lab_web` catalog tests that check only Lab 1 now build the
+catalog without Lab 3's block (`with_map=False`), which its own test builds
+and checks — no assertion removed.

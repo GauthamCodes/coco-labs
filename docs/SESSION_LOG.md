@@ -7577,3 +7577,33 @@ coco_lab runs; `make_replay_bundle.py` → `docs/data/lab3/replay/`;
 `an_results.py` → `results.json`; docs (LAB3_MAP, RESULTS, README for
 docs/data/lab3, PROJECT_STATE, ROADMAP); full tests; PR + CI; deploy;
 public check; video; release draft.
+
+## Phase 4 · Map (Lab 3) — implemented, measured, documented (2026-10-05)
+
+Branch `lab3`. Everything below is in `docs/labs/LAB3_MAP.md` and
+`docs/RESULTS.md` "COCO Lab Phase 4" with commands and evidence paths.
+
+**Built:** coco_lab occupancy mapping, EKF-SLAM (IDEALISED landmarks),
+grid FastSLAM, pose-graph SLAM, metrics, map bundle 1.0
+(`SLAM_FORMAT.md`), the Lab 3 view (Sketch, challenge, Replay), the
+real-backend pipeline (`docs/data/lab3/`), Cartographer from the released
+debs in `~/coco_labs_ws/cartographer_prefix`.
+
+**Measured:** real backends on two identical recorded tours, three rounds
+(two async, one slam_toolbox sync), 20 runs + 1 diagnostic: results agree
+across rounds and loads 1.5–37; loop closure hurt (Cartographer both
+tours, slam_toolbox one), NOT attributed, odometry hypothesis rejected.
+coco_lab on the same tours (pose graph 0.267 / 0.758 m; FastSLAM depends
+on the motion model; 13 of 13 loop closures true). Scan sigma and motion
+model calibrated on data no claim uses. Sketch 20-world counts. Local
+browser: 0 console errors, phone width clean, Labs 1/2 unchanged.
+
+**Tests:** run_all_package_tests 2,848 / 0 / 0 (coco_lab 416 → 492);
+vitest 275; tools 95; tsc/build/check_dist clean.
+
+**Unverified:** a physical robot (Gazebo only), why the backends' loop
+closure hurt, a real phone, rates (2 drives, 5 seeds).
+
+NEXT: draft PR `lab3` → `main`, CI green, fast-forward `main` (deploys),
+public-site checks, video from the public site, tag `lab3-v1.0` locally
+and a draft release (publishing is the owner's call).
