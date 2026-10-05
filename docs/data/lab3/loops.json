@@ -1,0 +1,254 @@
+{
+ "command": "python3 docs/data/lab3/an_loops.py s1_tour 1_tour",
+ "definition": "false: matched relative pose more than 0.5 m or 0.2 rad from the true one",
+ "drives": {
+  "1_tour": {
+   "closures": 4,
+   "closures_detail": [
+    {
+     "error_m": 0.0063,
+     "error_rad": 0.0006,
+     "false": false,
+     "matched_rel": [
+      0.7222,
+      -0.2831,
+      2.6597
+     ],
+     "node_new": 157,
+     "node_old": 136,
+     "true_distance_m": 0.7728,
+     "true_rel": [
+      0.7175,
+      -0.2872,
+      2.6603
+     ]
+    },
+    {
+     "error_m": 0.0138,
+     "error_rad": 0.0111,
+     "false": false,
+     "matched_rel": [
+      0.7777,
+      0.7168,
+      -1.2669
+     ],
+     "node_new": 273,
+     "node_old": 253,
+     "true_distance_m": 1.0515,
+     "true_rel": [
+      0.7648,
+      0.7216,
+      -1.278
+     ]
+    },
+    {
+     "error_m": 0.0058,
+     "error_rad": 0.0018,
+     "false": false,
+     "matched_rel": [
+      1.0604,
+      -1.037,
+      0.5287
+     ],
+     "node_new": 386,
+     "node_old": 366,
+     "true_distance_m": 1.4842,
+     "true_rel": [
+      1.0571,
+      -1.0418,
+      0.5305
+     ]
+    },
+    {
+     "error_m": 0.0035,
+     "error_rad": 0.0004,
+     "false": false,
+     "matched_rel": [
+      1.4309,
+      1.1201,
+      3.1254
+     ],
+     "node_new": 484,
+     "node_old": 464,
+     "true_distance_m": 1.8204,
+     "true_rel": [
+      1.4342,
+      1.1211,
+      3.1258
+     ]
+    }
+   ],
+   "false": 0,
+   "final_ate_rmse": 0.7583
+  },
+  "s1_tour": {
+   "closures": 9,
+   "closures_detail": [
+    {
+     "error_m": 0.0012,
+     "error_rad": 0.0005,
+     "false": false,
+     "matched_rel": [
+      1.8205,
+      -0.093,
+      2.15
+     ],
+     "node_new": 153,
+     "node_old": 133,
+     "true_distance_m": 1.823,
+     "true_rel": [
+      1.8206,
+      -0.0942,
+      2.1495
+     ]
+    },
+    {
+     "error_m": 0.0043,
+     "error_rad": 0.004,
+     "false": false,
+     "matched_rel": [
+      0.7861,
+      0.6599,
+      -1.3961
+     ],
+     "node_new": 271,
+     "node_old": 251,
+     "true_distance_m": 1.0241,
+     "true_rel": [
+      0.782,
+      0.6613,
+      -1.4
+     ]
+    },
+    {
+     "error_m": 0.0069,
+     "error_rad": 0.0005,
+     "false": false,
+     "matched_rel": [
+      1.0338,
+      -1.0368,
+      0.4646
+     ],
+     "node_new": 383,
+     "node_old": 363,
+     "true_distance_m": 1.4631,
+     "true_rel": [
+      1.0283,
+      -1.0409,
+      0.4651
+     ]
+    },
+    {
+     "error_m": 0.0031,
+     "error_rad": 0.0002,
+     "false": false,
+     "matched_rel": [
+      1.0146,
+      0.4161,
+      2.8826
+     ],
+     "node_new": 486,
+     "node_old": 466,
+     "true_distance_m": 1.0941,
+     "true_rel": [
+      1.0116,
+      0.4167,
+      2.8824
+     ]
+    },
+    {
+     "error_m": 0.0168,
+     "error_rad": 0.0074,
+     "false": false,
+     "matched_rel": [
+      -0.4649,
+      -1.0059,
+      0.7691
+     ],
+     "node_new": 536,
+     "node_old": 52,
+     "true_distance_m": 1.1207,
+     "true_rel": [
+      -0.4803,
+      -1.0125,
+      0.7765
+     ]
+    },
+    {
+     "error_m": 0.0008,
+     "error_rad": 0.0017,
+     "false": false,
+     "matched_rel": [
+      -0.1036,
+      0.0207,
+      -0.0125
+     ],
+     "node_new": 546,
+     "node_old": 57,
+     "true_distance_m": 0.1053,
+     "true_rel": [
+      -0.1031,
+      0.0213,
+      -0.0108
+     ]
+    },
+    {
+     "error_m": 0.0031,
+     "error_rad": 0.0006,
+     "false": false,
+     "matched_rel": [
+      0.1646,
+      0.0193,
+      -0.0114
+     ],
+     "node_new": 546,
+     "node_old": 56,
+     "true_distance_m": 0.1683,
+     "true_rel": [
+      0.1669,
+      0.0213,
+      -0.0108
+     ]
+    },
+    {
+     "error_m": 0.0022,
+     "error_rad": 0.0022,
+     "false": false,
+     "matched_rel": [
+      -0.0137,
+      -0.0166,
+      -1.1111
+     ],
+     "node_new": 556,
+     "node_old": 63,
+     "true_distance_m": 0.0229,
+     "true_rel": [
+      -0.0132,
+      -0.0187,
+      -1.1089
+     ]
+    },
+    {
+     "error_m": 0.0004,
+     "error_rad": 0.0012,
+     "false": false,
+     "matched_rel": [
+      -0.0227,
+      -0.0239,
+      -1.3688
+     ],
+     "node_new": 556,
+     "node_old": 64,
+     "true_distance_m": 0.0329,
+     "true_rel": [
+      -0.0224,
+      -0.0242,
+      -1.37
+     ]
+    }
+   ],
+   "false": 0,
+   "final_ate_rmse": 0.2673
+  }
+ }
+}
