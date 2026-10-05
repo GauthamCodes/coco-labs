@@ -1,0 +1,449 @@
+{
+ "_meta": {
+  "firefox": "Mozilla Firefox 157.0",
+  "headless": true,
+  "loadavg": [
+   "2.31",
+   "4.71",
+   "12.58"
+  ],
+  "site": "http://127.0.0.1:4173/coco-labs/",
+  "when_utc": "2026-10-05T10:25:35Z"
+ },
+ "localise": {
+  "_loadavg": [
+   "2.26",
+   "4.21",
+   "11.87"
+  ],
+  "cold_run": {
+   "canvases": 1,
+   "cookie": "",
+   "header_badge": "Sketch \u2014 a model, not the robot",
+   "k": 0,
+   "mode": "Sketch \u2014 computed in your browser by coco_lab; a model, not the robot",
+   "n": 196,
+   "scene": "loc_kidnap",
+   "status": "Done in 8.6 s (coco_lab: 3.1 s for the world and 3 filters).",
+   "storage": 0,
+   "wall_s": 8.81
+  },
+  "console_errors": [],
+  "exhibit_labels": [
+   "historical (measured 2026-08-31, C2-M5.1)",
+   "historical (measured 2026-08-31, C2-M5.1, on the v1 wedge world, not the current arena)",
+   "historical (measured 2026-08-31, C2-M5.0, run diverged1, induced)",
+   "historical (measured, M6 fetch matrix)"
+  ],
+  "exhibits": [
+   "1. Injection off: AMCL cannot leave a pose it is sure of",
+   "2. Global relocalisation converged inside the ramp",
+   "3. Covariance is not health: AMCL's uncertainty moved the wrong way",
+   "4. Run 15: 3.4 m of drift in the unmapped corridor"
+  ],
+  "fidelity": "How close is Sketch to the real stack? At 237 identical poses in Gazebo, Sketch's LiDAR is within 5 cm of Gazebo's on 86.7 % of 111,804 beams (median |error| 2.2 mm). Its wheels never slip: Gazebo's don't either on a straight line, but on turns they do (measured).",
+  "kidnap_button_after": "to (3.0, 2.5)",
+  "kidnap_button_before": "to (1.5, 6.8)",
+  "played": {
+   "k_after_3s": 22,
+   "k_before": 0
+  },
+  "pyodide_requests_before_run": [],
+  "pyodide_vs_cpython": {
+   "drawn_by": "pyodide",
+   "runs": [
+    {
+     "cpython": {
+      "converged_s": 0.0,
+      "final_err_xy": 0.07689591437268115,
+      "final_err_yaw": 0.02844481982422753,
+      "kidnap_s": 40.1,
+      "max_err_xy": 9.285445600056415,
+      "mean_err_xy": 0.9920996112495346,
+      "n_updates": 197,
+      "ok_hold": 5,
+      "ok_xy": 0.5,
+      "ok_yaw": 0.3,
+      "recovered": true,
+      "recovery_s": 27.199999999999996
+     },
+     "id": "mcl",
+     "pyodide": {
+      "converged_s": 0,
+      "final_err_xy": 0.08224304435438658,
+      "final_err_yaw": 0.021733539850312233,
+      "kidnap_s": 40.1,
+      "max_err_xy": 9.285445596531483,
+      "mean_err_xy": 0.9923007889605415,
+      "n_updates": 197,
+      "ok_hold": 5,
+      "ok_xy": 0.5,
+      "ok_yaw": 0.3,
+      "recovered": true,
+      "recovery_s": 27.199999999999996
+     }
+    },
+    {
+     "cpython": {
+      "converged_s": 0.0,
+      "final_err_xy": 9.114490036192219,
+      "final_err_yaw": 1.5661524577427945,
+      "kidnap_s": 40.1,
+      "max_err_xy": 12.166720076564228,
+      "mean_err_xy": 5.719201459756074,
+      "n_updates": 197,
+      "ok_hold": 5,
+      "ok_xy": 0.5,
+      "ok_yaw": 0.3,
+      "recovered": false,
+      "recovery_s": null
+     },
+     "id": "mcl_coco",
+     "pyodide": {
+      "converged_s": 0,
+      "final_err_xy": 9.114490035592022,
+      "final_err_yaw": 1.5661524773944864,
+      "kidnap_s": 40.1,
+      "max_err_xy": 12.166720077580171,
+      "mean_err_xy": 5.719201470768758,
+      "n_updates": 197,
+      "ok_hold": 5,
+      "ok_xy": 0.5,
+      "ok_yaw": 0.3,
+      "recovered": false,
+      "recovery_s": null
+     }
+    },
+    {
+     "cpython": {
+      "converged_s": 0.0,
+      "final_err_xy": 7.748229549446452,
+      "final_err_yaw": 1.0129547371148284,
+      "kidnap_s": 40.1,
+      "max_err_xy": 9.320731762641852,
+      "mean_err_xy": 5.125403048081961,
+      "n_updates": 197,
+      "ok_hold": 5,
+      "ok_xy": 0.5,
+      "ok_yaw": 0.3,
+      "recovered": false,
+      "recovery_s": null
+     },
+     "id": "ekf",
+     "pyodide": {
+      "converged_s": 0,
+      "final_err_xy": 7.74821912905848,
+      "final_err_yaw": 1.012955434841622,
+      "kidnap_s": 40.1,
+      "max_err_xy": 9.320731753764065,
+      "mean_err_xy": 5.125402328765448,
+      "n_updates": 197,
+      "ok_hold": 5,
+      "ok_xy": 0.5,
+      "ok_yaw": 0.3,
+      "recovered": false,
+      "recovery_s": null
+     }
+    }
+   ],
+   "same_recovered_and_recovery_s": true,
+   "summaries_identical": false
+  },
+  "race_canvases": 3,
+  "revealed": "MCL (your settings): recovered 27.2 s after the kidnap (final error 0.08 m) \u2014 you said yes, right. One run is not a rate: on this scene's catalog world, over 20 filter seeds, it recovered in 18 of 20 \u2014 Sketch, docs/data/lab2/sketch_rates.json (python3 docs/data/lab2/sketch_rates.py --seeds 20 --out docs/data/lab2/sketch_rates.json).\n\nMCL, injection off (as COCO ships AMCL): did not recover (final error 9.11 m) \u2014 you said yes, not this time. One run is not a rate: on this scene's catalog world, over 20 filter seeds, it recovered in 0 of 20 \u2014 Sketch, docs/data/lab2/sketch_rates.json (python3 docs/data/lab2/sketch_rates.py --seeds 20 --out docs/data/lab2/sketch_rates.json).\n\nEKF: did not recover (final error 7.75 m) \u2014 you said yes, not this time. One run is not a rate: on this scene's catalog world, over 1 filter seed, it recovered in 0 of 1 (the EKF draws nothing random, so one run is all runs) \u2014 Sketch, docs/data/lab2/sketch_rates.json (python3 docs/data/lab2/sketch_rates.py --seeds 20 --out docs/data/lab2/sketch_rates.json).",
+  "start": {
+   "canvases": 1,
+   "cookie": "",
+   "header_badge": "Sketch \u2014 a model, not the robot",
+   "k": 0,
+   "mode": "Sketch \u2014 coco_lab's 2D model, not the robot",
+   "n": 196,
+   "scene": "loc_kidnap",
+   "status": null,
+   "storage": 0
+  },
+  "third_party": [
+   "",
+   "cdn.jsdelivr.net"
+  ],
+  "warm_run": {
+   "canvases": 1,
+   "cookie": "",
+   "header_badge": "Sketch \u2014 a model, not the robot",
+   "k": 0,
+   "mode": "Sketch \u2014 computed in your browser by coco_lab; a model, not the robot",
+   "n": 191,
+   "scene": "loc_kidnap",
+   "status": "Done in 3.0 s (coco_lab: 2.9 s for the world and 3 filters).",
+   "storage": 0,
+   "wall_s": 3.13
+  }
+ },
+ "mapping": {
+  "_loadavg": [
+   "2.09",
+   "4.39",
+   "12.18"
+  ],
+  "challenge_run": {
+   "attempts": "#\tSLAM\tscore\tbest possible\twaypoints\n1\tPose graph\t22\t69\t6",
+   "score": "Score\n\n22 / 100 \u2014 Pose graph on your drive\n\nThe best map this drive allows (known poses): 69. Coverage 43 %; trajectory error 1.72 m.\n\nHow the score is computed\n\nLoop closures help \u2014 coming back where you have been lets the pose graph pull its map straight. Long featureless stretches hurt \u2014 there the scans cannot tell how far you went.",
+   "wall_s": 3.09
+  },
+  "challenge_start": "Score\n\n22 / 100 \u2014 Pose graph on the scene's drive\n\nThe best map this drive allows (known poses): 69. Coverage 43 %; trajectory error 1.72 m.\n\nHow the score is computed\n\nLoop closures help \u2014 coming back where you have been lets the pose graph pull its map straight. Long featureless stretches hurt \u2014 there the scans cannot tell how far you went.",
+  "cold_run": {
+   "by": "pyodide",
+   "canvases": 1,
+   "hash": "sha256:fa23d21933ad64e4976534e0f0bae3990f23f174654567884feab6994b2c9aad",
+   "k": 1,
+   "mode": "Sketch \u2014 computed in your browser by coco_lab; a model, not the robot",
+   "n": 173,
+   "status": "Done in 13.6 s (coco_lab: 8.0 s for the world and 6 algorithms).",
+   "wall_s": 13.9
+  },
+  "console_errors": [],
+  "explain": "Pose graph: scan matching between poses, loop closures, and an optimiser over the whole graph. The arrow is the estimate as it ran; the dashed line is the optimised graph at the end.",
+  "fidelity": "Sketch is coco_lab's 2D model, not the robot. At 237 identical poses its LiDAR is within 5 cm of Gazebo's on 86.7 % of beams; its wheels never slip (measured, Lab 2: docs/RESULTS.md \"COCO Lab Phase 3\"; docs/data/lab2/fidelity/fidelity.json).",
+  "played": {
+   "k_after_3s": 26,
+   "k_before": 0
+  },
+  "pyodide_requests_before_run": [],
+  "pyodide_vs_cpython": {
+   "drawn_by": "pyodide",
+   "runs": [
+    {
+     "cpython_f1": 0.991808,
+     "cpython_final_ate": 0.0,
+     "id": "known",
+     "pyodide_f1": 0.991808,
+     "pyodide_final_ate": 0
+    },
+    {
+     "cpython_f1": 0.407535,
+     "cpython_final_ate": 1.467533,
+     "id": "odometry",
+     "pyodide_f1": 0.407535,
+     "pyodide_final_ate": 1.467531
+    },
+    {
+     "cpython_f1": 0.966618,
+     "cpython_final_ate": 0.077848,
+     "id": "ekf_slam",
+     "pyodide_f1": 0.966618,
+     "pyodide_final_ate": 0.077848
+    },
+    {
+     "cpython_f1": 0.878398,
+     "cpython_final_ate": 0.175565,
+     "id": "fastslam",
+     "pyodide_f1": 0.878398,
+     "pyodide_final_ate": 0.175564
+    },
+    {
+     "cpython_f1": 0.723504,
+     "cpython_final_ate": 0.24382,
+     "id": "pose_graph",
+     "pyodide_f1": 0.723504,
+     "pyodide_final_ate": 0.24382
+    },
+    {
+     "cpython_f1": 0.651444,
+     "cpython_final_ate": 0.487947,
+     "id": "pose_graph_noloop",
+     "pyodide_f1": 0.651444,
+     "pyodide_final_ate": 0.487946
+    }
+   ],
+   "summaries_identical": false
+  },
+  "race_canvases": 6,
+  "replay": {
+   "mode": "Replay \u2014 a recorded run of the real stack in Gazebo",
+   "real": null,
+   "table": "Same world, same odometry, same scans: only the algorithm differs. Trajectories are scored after one rigid 2D alignment (no SLAM here was given the map frame).\nrun\terror now\ttrajectory error (RMSE)\tmap score F1\tprecision\trecall\tcoverage\t\n Known poses\t0.00 m\t0.00 m\t0.94\t1.00\t0.88\t84 %\t\n Odometry only\t8.25 m\t6.26 m\t0.10\t0.27\t0.06\t29 %\t\n EKF-SLAM (idealised landmarks)\t0.26 m\t0.32 m\t0.66\t0.76\t0.58\t82 %\t33 landmarks\n FastSLAM\t0.09 m\t0.24 \u2192 0.24 m\t0.64\t0.70\t0.59\t81 %\tresampled 557\u00d7\n Pose graph\t0.72 m\t0.31 \u2192 0.27 m\t0.66\t0.74\t0.60\t82 %\t9 loop closures\n Pose graph, loop closure off\t1.66 m\t0.44 m\t0.49\t0.62\t0.41\t82 %\t0 loop closures\n slam_toolbox\t0.03 m\t0.10 m (online)\t0.93\t0.95\t0.91\t93 %\tslam_toolbox (loop)\n slam_toolbox, loop closing off\t0.28 m\t0.07 m (online)\t0.93\t0.92\t0.93\t93 %\tslam_toolbox (noloop)\n Cartographer\t1.03 m\t0.81 m (online)\t0.20\t0.33\t0.14\t80 %\tcartographer (loop)\n Cartographer, global SLAM off\t0.12 m\t0.06 m (online)\t0.89\t0.96\t0.82\t88 %\tcartographer (noloop)"
+  },
+  "revealed": "With loop closure: 3 loop closures, final error 0.24 m; without: 0.49 m \u2014 it helped; you said yes.",
+  "start": {
+   "by": "catalog",
+   "canvases": 1,
+   "hash": "sha256:0a649f835ba6d0e254c610d5fa4745f933eb75b151b82dfd788271c5b35974b8",
+   "k": 0,
+   "mode": "Sketch \u2014 coco_lab's 2D model, not the robot",
+   "n": 173,
+   "status": null
+  },
+  "table": "Same world, same odometry, same scans: only the algorithm differs. Every run was told the start, so they share the map frame.\nrun\terror now\ttrajectory error (RMSE)\tmap score F1\tprecision\trecall\tcoverage\t\n Known poses\t0.00 m\t0.00 m\t0.99\t1.00\t0.98\t99 %\t\n Odometry only\t2.40 m\t1.47 m\t0.41\t0.55\t0.33\t86 %\t\n EKF-SLAM (idealised landmarks)\t0.05 m\t0.08 m\t0.97\t0.97\t0.96\t99 %\t12 landmarks\n FastSLAM\t0.25 m\t0.17 \u2192 0.18 m\t0.88\t0.87\t0.88\t98 %\tresampled 171\u00d7\n Pose graph\t0.12 m\t0.43 \u2192 0.24 m\t0.72\t0.79\t0.67\t98 %\t3 loop closures\n Pose graph, loop closure off\t0.78 m\t0.49 m\t0.65\t0.72\t0.60\t95 %\t0 loop closures",
+  "third_party": [
+   "",
+   "cdn.jsdelivr.net"
+  ],
+  "warm_run_clicked_drive": {
+   "by": "pyodide",
+   "canvases": 1,
+   "hash": "sha256:48ad6f98f458d831a7c6a3edb9dd3a0f3a37e1506de3ad89ff442de7a0df7977",
+   "k": 1,
+   "mode": "Sketch \u2014 computed in your browser by coco_lab; a model, not the robot",
+   "n": 57,
+   "status": "Done in 3.0 s (coco_lab: 2.9 s for the world and 6 algorithms).",
+   "wall_s": 3.12
+  },
+  "warm_run_new_world": {
+   "by": "pyodide",
+   "canvases": 1,
+   "hash": "sha256:b4381e3f3f13e09c363ae2ca4cfd0d83a34566839ee226b9ffb965937e41c9c6",
+   "k": 0,
+   "mode": "Sketch \u2014 computed in your browser by coco_lab; a model, not the robot",
+   "n": 173,
+   "revealed_text": "Same world, same odometry, same scans: only the algorithm differs. Every run was told the start, so they share the map frame.\nrun\terror now\ttrajectory error (RMSE)\tmap score F1\tprecision\trecall\tcoverage\t\n Known poses\t0.00 m\t0.00 m\t0.99\t1.00\t0.98\t99 %\t\n Odometry only\t0.00 m\t1.31 m\t0.35\t0.45\t0.28\t85 %\t\n EKF-SLAM (idealised landmarks)\t0.00 m\t0.34 m\t0.57\t0.64\t0.51\t96 %\t12 landmarks\n FastSLAM\t0.00 m\t0.44 \u2192 0.44 m\t0.73\t0.75\t0.72\t95 %\tresampled 169\u00d7\n Pose graph\t0.00 m\t0.83 \u2192 0.13 m\t0.92\t0.92\t0.91\t99 %\t3 loop closures\n Pose graph, loop closure off\t0.00 m\t0.88 m\t0.40\t0.47\t0.34\t91 %\t0 loop closures",
+   "status": "Done in 8.0 s (coco_lab: 8.0 s for the world and 6 algorithms).",
+   "wall_s": 8.12
+  }
+ },
+ "mapping_phone": {
+  "_loadavg": [
+   "2.14",
+   "4.29",
+   "12.02"
+  ],
+  "challenge": {
+   "clientWidth": 378,
+   "overflowing": [],
+   "scrollWidth": 378
+  },
+  "console_errors": [],
+  "k_after_play_2s": 23,
+  "lab": {
+   "clientWidth": 378,
+   "overflowing": [],
+   "scrollWidth": 378
+  },
+  "replay": {
+   "clientWidth": 378,
+   "overflowing": [],
+   "scrollWidth": 378
+  }
+ },
+ "smoke": {
+  "_loadavg": [
+   "5.81",
+   "8.67",
+   "16.34"
+  ],
+  "bundles": [
+   {
+    "badge": "Replay \u2014 coco_lab computation (glass-box)",
+    "error": null,
+    "id": "astar_open",
+    "k": 178,
+    "load_to_first_frame_s": 0.52,
+    "n": 178,
+    "recording_panel": null,
+    "source_kind": "glass-box"
+   },
+   {
+    "badge": "Replay \u2014 coco_lab computation (glass-box)",
+    "error": null,
+    "id": "dijkstra_cost_field_gz",
+    "k": 747,
+    "load_to_first_frame_s": 0.51,
+    "n": 747,
+    "recording_panel": null,
+    "source_kind": "glass-box"
+   },
+   {
+    "badge": "Replay \u2014 coco_lab computation (glass-box)",
+    "error": null,
+    "id": "weighted_astar_greedy_trap",
+    "k": 405,
+    "load_to_first_frame_s": 0.499,
+    "n": 405,
+    "recording_panel": null,
+    "source_kind": "glass-box"
+   },
+   {
+    "badge": "Replay \u2014 coco_lab computation (glass-box)",
+    "error": null,
+    "id": "bfs_no_path",
+    "k": 750,
+    "load_to_first_frame_s": 0.501,
+    "n": 750,
+    "recording_panel": null,
+    "source_kind": "glass-box"
+   },
+   {
+    "badge": "Replay \u2014 coco_lab computation (glass-box)",
+    "error": null,
+    "id": "astar_turn_trap_heading",
+    "k": 130,
+    "load_to_first_frame_s": 0.491,
+    "n": 130,
+    "recording_panel": null,
+    "source_kind": "glass-box"
+   },
+   {
+    "badge": "Replay \u2014 recorded real run",
+    "error": null,
+    "id": "lab1c_astar",
+    "k": 18660,
+    "load_to_first_frame_s": 0.574,
+    "n": 18660,
+    "recording_panel": "Recorded streams\ngroup\tframe\tsource\tsamples\ton the map\ngt\tmap\t/model/coco/odometry\t3803\tdrawn\namcl\tmap\t/amcl_pose\t37\tdrawn\nplan\tmap\t/lab/plan\t154\tdrawn\ncmd\tbase_footprint\t/diff_drive_controller/cmd_vel\t665\tno (velocities)\ncmd: 665 wheel commands (base_footprint; plotted in Phase 1E)\nRun results, as exported by coco_lab_ros.lab_export\nrun id\nlab1c-run-astar-20260929T183259Z\nresult phase\nsucceeded\nerror code\n0\nduration (sim s)\n27.372\nwindow (sim s)\n[58.594, 85.966]\ntracking error mean / p95 / max (m)\n0.0719718 / 0.161586 / 0.176898 (n 1369)\nendpoint error (m)\n0.190748\nrecoveries\nassisted_teleop 0 \u00b7 backup 0 \u00b7 drive_on_heading 0 \u00b7 spin 0 \u00b7 wait 0\nsynthetic\n\u2014\nnote\n\u2014\n\nEvidence: docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"The three real runs (measured)\"",
+    "source_kind": "recorded-run"
+   },
+   {
+    "badge": "Replay \u2014 recorded real run",
+    "error": null,
+    "id": "lab1c_dijkstra",
+    "k": 71900,
+    "load_to_first_frame_s": 0.56,
+    "n": 71900,
+    "recording_panel": "Recorded streams\ngroup\tframe\tsource\tsamples\ton the map\ngt\tmap\t/model/coco/odometry\t3890\tdrawn\namcl\tmap\t/amcl_pose\t36\tdrawn\nplan\tmap\t/lab/plan\t154\tdrawn\ncmd\tbase_footprint\t/diff_drive_controller/cmd_vel\t640\tno (velocities)\ncmd: 640 wheel commands (base_footprint; plotted in Phase 1E)\nRun results, as exported by coco_lab_ros.lab_export\nrun id\nlab1c-run-dijkstra-20260929T183547Z\nresult phase\nsucceeded\nerror code\n0\nduration (sim s)\n27.456\nwindow (sim s)\n[59.356, 86.812]\ntracking error mean / p95 / max (m)\n0.063948 / 0.153347 / 0.208063 (n 1373)\nendpoint error (m)\n0.171378\nrecoveries\nassisted_teleop 0 \u00b7 backup 0 \u00b7 drive_on_heading 0 \u00b7 spin 0 \u00b7 wait 0\nsynthetic\n\u2014\nnote\n\u2014\n\nEvidence: docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"The three real runs (measured)\"",
+    "source_kind": "recorded-run"
+   },
+   {
+    "badge": "Replay \u2014 recorded real run",
+    "error": null,
+    "id": "lab1c_greedy",
+    "k": 4368,
+    "load_to_first_frame_s": 0.548,
+    "n": 4368,
+    "recording_panel": "Recorded streams\ngroup\tframe\tsource\tsamples\ton the map\ngt\tmap\t/model/coco/odometry\t3351\tdrawn\namcl\tmap\t/amcl_pose\t11\tdrawn\nplan\tmap\t/lab/plan\t183\tdrawn\ncmd\tbase_footprint\t/diff_drive_controller/cmd_vel\t490\tno (velocities)\ncmd: 490 wheel commands (base_footprint; plotted in Phase 1E)\nRun results, as exported by coco_lab_ros.lab_export\nrun id\nlab1c-run-greedy-20260929T183835Z\nresult phase\nfollow_failed\nerror code\n105\nduration (sim s)\n18.364\nwindow (sim s)\n[58.96, 77.324]\ntracking error mean / p95 / max (m)\n0.052485 / 0.112628 / 0.117467 (n 919)\nendpoint error (m)\n5.28942\nrecoveries\nassisted_teleop 0 \u00b7 backup 0 \u00b7 drive_on_heading 0 \u00b7 spin 0 \u00b7 wait 0\nsynthetic\n\u2014\nnote\n\u2014\n\nEvidence: docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"The three real runs (measured)\"",
+    "source_kind": "recorded-run"
+   },
+   {
+    "badge": "Replay \u2014 coco_lab computation (glass-box)",
+    "error": null,
+    "id": "arena_0_10m",
+    "k": 70319,
+    "load_to_first_frame_s": 0.506,
+    "n": 70319,
+    "recording_panel": null,
+    "source_kind": "glass-box"
+   },
+   {
+    "badge": "Replay \u2014 coco_lab computation (glass-box)",
+    "error": null,
+    "id": "arena_native",
+    "k": 283378,
+    "load_to_first_frame_s": 0.525,
+    "n": 283378,
+    "recording_panel": null,
+    "source_kind": "glass-box"
+   },
+   {
+    "badge": "Replay \u2014 coco_lab computation (glass-box)",
+    "error": null,
+    "id": "costmap_0_10m",
+    "k": 4693,
+    "load_to_first_frame_s": 0.511,
+    "n": 4693,
+    "recording_panel": null,
+    "source_kind": "glass-box"
+   }
+  ],
+  "console_errors": [],
+  "cookie": "",
+  "storage_items": 0
+ }
+}
