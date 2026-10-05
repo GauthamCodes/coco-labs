@@ -277,3 +277,10 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .loc .field input[type='range'] { flex: 1 1 160px; min-height: var(--touch); }
 .loc .field input[type='number'] { width: 6.5em; min-height: var(--touch); font-size: 0.95rem; }
 .loc .side .note { margin: 0 0 6px; font-size: 0.8rem; }
+
+/* Lab 3 (Map) */
+.loc-head h2.inline { display: inline; margin: 0 12px 0 0; font-size: 1.1rem; }
+.race-table tr.focus td { background: var(--hover, rgba(0, 114, 178, 0.08)); }
+.race-table tbody tr { cursor: pointer; }
+.score .big { font-size: 1.6rem; margin: 4px 0; }
+.score .big strong { font-size: 2.2rem; }

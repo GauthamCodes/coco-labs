@@ -44,6 +44,8 @@ const ToolsM = memo(Tools);
 const DATA = `${BASE}generated/`;
 // Lab 2 is fetched only when its view is opened: Lab 1's first load does not pay for it
 const Localise = lazy(() => import('./loc/Localise').then((m) => ({ default: m.Localise })));
+// Lab 3 likewise: fetched only when its view is opened
+const MapLab = lazy(() => import('./map/MapLab').then((m) => ({ default: m.MapLab })));
 
 /** A loaded bundle, and how we know it may be drawn. */
 export interface Current {
@@ -95,9 +97,9 @@ export function App() {
   const [reveal, setReveal] = useState<Reveal | null>(null);
   const [shareVerdict, setShareVerdict] = useState<{ ok: boolean | null; message: string } | null>(null);
   const pendingShare = useRef<string | null>(null);
-  const [view, setView] = useState<'lab' | 'exhibit' | 'live' | 'localise'>(() => {
+  const [view, setView] = useState<'lab' | 'exhibit' | 'live' | 'localise' | 'map'>(() => {
     const v = new URLSearchParams(window.location.search).get('view');
-    return v === 'live' ? 'live' : v === 'localise' ? 'localise' : 'lab';
+    return v === 'live' ? 'live' : v === 'localise' ? 'localise' : v === 'map' ? 'map' : 'lab';
   });
   const [liveText, setLiveText] = useState('Live — local stack');
   const dataUrl = useCallback((p: string) => `${DATA}${p}`, []);
@@ -308,7 +310,8 @@ export function App() {
   return (
     <div className="app">
       <header className="top">
-        <h1>COCO Lab <span className="sub">{view === 'localise' ? 'localisation, from evidence' : 'search, replayed from evidence'}</span></h1>
+        <h1>COCO Lab <span className="sub">{view === 'localise' ? 'localisation, from evidence'
+          : view === 'map' ? 'mapping, from evidence' : 'search, replayed from evidence'}</span></h1>
         <nav className="views" aria-label="Views">
           <button type="button" className={view === 'lab' ? 'seg-btn active' : 'seg-btn'} aria-pressed={view === 'lab'}
             onClick={() => setView('lab')} data-testid="view-lab">Lab 1 · Plan</button>
@@ -317,6 +320,9 @@ export function App() {
           <button type="button" className={view === 'localise' ? 'seg-btn active' : 'seg-btn'}
             aria-pressed={view === 'localise'} onClick={() => setView('localise')} data-testid="view-localise"
             disabled={!(catalog as { localise?: unknown } | null)?.localise}>Lab 2 · Localise</button>
+          <button type="button" className={view === 'map' ? 'seg-btn active' : 'seg-btn'}
+            aria-pressed={view === 'map'} onClick={() => setView('map')} data-testid="view-map"
+            disabled={!(catalog as { map?: unknown } | null)?.map}>Lab 3 · Map</button>
           <button type="button" className={view === 'live' ? 'seg-btn active' : 'seg-btn'} aria-pressed={view === 'live'}
             onClick={() => setView('live')} data-testid="view-live">Live</button>
         </nav>
@@ -324,12 +330,19 @@ export function App() {
           ? <span className="mode-badge mode-live" data-testid="mode-badge">{liveText}</span>
           : view === 'localise'
             ? <span className="mode-badge mode-sketch" data-testid="mode-badge">Sketch — a model, not the robot</span>
+            : view === 'map'
+              ? <span className="mode-badge mode-sketch" data-testid="mode-badge">Sketch and Replay — each labelled below</span>
             : <ModeBadge provenance={current?.bundle.provenance ?? null} />}
       </header>
       {view === 'live' && <LiveView onLabel={setLiveText} />}
       {view === 'localise' && catalog && (
         <Suspense fallback={<p className="loading">Loading Lab 2…</p>}>
           <Localise catalog={catalog} reducedMotion={reducedMotion} />
+        </Suspense>
+      )}
+      {view === 'map' && catalog && (
+        <Suspense fallback={<p className="loading">Loading Lab 3…</p>}>
+          <MapLab catalog={catalog} reducedMotion={reducedMotion} />
         </Suspense>
       )}
       {view === 'exhibit' && catalog && (

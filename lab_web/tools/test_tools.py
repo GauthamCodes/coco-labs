@@ -173,6 +173,14 @@ FORBIDDEN = [
      'a sensor or motion model'),
     (r'\bgauss(ian)?\s*\(|\brandn\s*\(|\bMath\.random\b',
      'random sampling (filters and Sketch draw from coco_lab\'s seeded RNG)'),
+    # Lab 3: the browser renders maps; coco_lab builds and scores them
+    (r'\b(log_?[Oo]dds\w*|bresenham\w*|integrate[Ss]can\w*|'
+     r'inverse_?[Ss]ensor\w*)\s*\(', 'occupancy mapping'),
+    (r'\b(icp|ICP|scan_?[Mm]atch\w*|gauss_?[Nn]ewton\w*|'
+     r'optimi[sz]e_?[Gg]raph\w*|loop_?[Cc]losure\w*)\s*\(',
+     'scan matching / pose-graph optimisation'),
+    (r'\b(ate|alignSe2|align_se2|scoreMap|score_map|diffRaster)\s*\(',
+     'a mapping metric (coco_lab.mapeval computes every score)'),
 ]
 
 
@@ -187,6 +195,44 @@ def test_loc_expectations_regenerate_byte_identical():
     import make_loc_expectations
     with open(make_loc_expectations.OUT) as f:
         assert f.read() == make_loc_expectations.build()
+
+
+def test_slam_expectations_regenerate_byte_identical():
+    import make_slam_expectations
+    with open(make_slam_expectations.OUT) as f:
+        assert f.read() == make_slam_expectations.build()
+
+
+def test_every_lab3_cited_test_exists():
+    """Every Lab 3 scene and the challenge name tests; each must exist."""
+    import build_map
+    src = [list(v) for v in build_map.SCENES.values()] + [build_map.CHALLENGE]
+    cited = sorted(set(_cited_tests(src)))
+    assert len(cited) >= 8, cited
+    for path, name in cited:
+        full = os.path.join(common.REPO, path)
+        assert os.path.exists(full), path
+        with open(full) as f:
+            assert re.search(rf'^def {name}\(', f.read(), re.M), \
+                f'{path}::{name}'
+
+
+def test_the_catalog_serves_lab3_validated_and_replayed(tmp_path):
+    """Every map bundle in the catalog is coco_lab's, replayed, scored."""
+    import build_map
+    from coco_lab import slambundle
+    out = tmp_path / 'generated'
+    block = build_map.map_block(str(out))
+    kinds = [e['kind'] for e in block['bundles']]
+    assert kinds.count('sketch') == 3 and kinds.count('challenge') == 1
+    for e in block['bundles']:
+        b = slambundle.load_slam_bundle(str(out / e['path']))
+        assert b.manifest()['content_hash'] == e['content_hash']
+        assert [r['id'] for r in e['runs']] == [r for r, _ in b.runs]
+        if e['kind'] != 'replay':
+            assert e['spec']['clicks'] and e['spec']['seed'] == \
+                b.provenance['seed']
+    assert block['challenge']['score'].startswith('round(100 x F1)')
 
 
 def test_lab_web_src_has_no_search_implementation():
@@ -210,7 +256,10 @@ def test_the_guard_catches_what_it_names():
                'edgeCost(a, b)', 'rayCast(map, p, a)', 'kalmanUpdate(mu, P)',
                'ekfPredict(m)', 'resample(w)', 'lowVarianceResample(w, u)',
                'likelihoodField(d)', 'sampleMotion(u)', 'gauss(0, 1)',
-               'Math.random()']
+               'Math.random()', 'logOdds(p)', 'bresenham(a, b)',
+               'integrateScan(g, z)', 'icp(a, b)', 'scanMatch(a, b)',
+               'gaussNewton(g)', 'optimiseGraph(g)', 'loopClosure(k)',
+               'alignSe2(a, b)', 'scoreMap(t, m)', 'ate(e, t)']
     for s in samples:
         assert any(re.search(p, s) for p, _ in FORBIDDEN), s
 
