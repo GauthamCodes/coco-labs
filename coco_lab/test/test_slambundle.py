@@ -200,6 +200,28 @@ def test_golden_map_bundles_load_and_replay(name):
         os.path.join(GOLDEN_DIR, name)))
 
 
+def test_the_doc_matches_the_implementation():
+    """docs/labs/SLAM_FORMAT.md names every column, array and key there is."""
+    doc = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..',
+                            '..', 'docs', 'labs', 'SLAM_FORMAT.md')).read()
+    from coco_lab import ekfslam, fastslam, posegraph, slam
+    for name in (slambundle.SCHEMA, slam.SCHEMA, *slam.ALGORITHMS,
+                 *slam.COMMON_COLUMNS, *ekfslam.COLUMNS, *fastslam.COLUMNS,
+                 *posegraph.COLUMNS, *slambundle.WORLD_COLUMNS):
+        assert f'`{name}`' in doc or name in doc, name
+    b = slambundle.load_slam_bundle(os.path.join(GOLDEN_DIR,
+                                                 'recorded_small_gz'))
+    s = slambundle.load_slam_bundle(os.path.join(GOLDEN_DIR, 'loop_small'))
+    for sb in (b, s):
+        for key in sb.manifest():
+            assert f'`{key}`' in doc, key
+        for _, tr in sb.runs:
+            for name in tr.arrays:
+                assert f'`{name}`' in doc, name
+    assert f'`{slambundle.VERSION}`' in doc or \
+        f'"{slambundle.VERSION}"' in doc
+
+
 def test_the_golden_set_covers_what_the_decoder_needs():
     loaded = {n: slambundle.load_slam_bundle(os.path.join(GOLDEN_DIR, n))
               for n in golden_slam_bundles.GOLDEN}

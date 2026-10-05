@@ -7533,3 +7533,47 @@ Design (decided here; each is documented where it lands):
 4. lab_web `?view=map`: Sketch mapping (route by clicking, noise, loop
    closure toggle, corridor, compare, belief/truth), the "map the arena"
    challenge, and a Replay of the real tour's backends.
+
+### Phase 4 checkpoint — implementation in place, evidence being finished (2026-10-05, ~09:45 UTC)
+
+Branch `lab3` (pushed to `labs`). What exists (code + tests; nothing below
+is a final number unless marked):
+- `coco_lab`: `occgrid`, `landmarks` (IDEALISED sensor), `slam`,
+  `ekfslam`, `fastslam` (plain RBPF), `posegraph` (MAP point-to-line ICP
+  with odometry prior, scan = one measurement, odometry information from
+  the told motion model, loop closure gated on a well-constrained match,
+  Gauss-Newton + chain-preconditioned CG), `mapping`, `mapeval`,
+  `mapworld`, `slambundle` (map bundle 1.0, `docs/labs/SLAM_FORMAT.md`,
+  doc pinned by a test), `map_teaching` (loop room, corridor, landmarks
+  room, arena challenge; routes planned by coco_lab's A*).
+  coco_lab focused runs green (last full venv run 484 before later
+  additions; final count at the end).
+- `lab_web`: `?view=map` (Sketch / challenge / Replay), map decoder pinned
+  byte-for-byte to Python (`slamdecode.test.ts`), `mapview.test.ts`,
+  worker `mapping` glue (`test_map_glue.py`), guard extended to mapping
+  code, `build_map.py` (catalog 1.3). Local site build + headless Firefox
+  (`check.py ... mapping`): works, 0 console errors, Pyodide = CPython to
+  the 6th decimal.
+- Real backends (`docs/data/lab3/`): drives extracted from Lab 2's two
+  recorded tours (`make_drive.py`), `slam_replay.sh` (slam_toolbox with the
+  project's params; Cartographer from the RELEASED debs in a user-space
+  prefix — runs cleanly, no missing library), `an_backend.py`.
+
+Findings so far (to be finalised in RESULTS):
+- Round 1 (`~/coco_lab_runs/lab3`, all 8 runs) found loop closure ON
+  making Cartographer's map much worse on both drives (F1 0.17-0.19 vs
+  0.88-0.92 off) and slam_toolbox's worse on tour 1 — but several runs
+  overlapped heavy load (other sessions' simulators, load up to 47).
+  Round 2 (`~/coco_lab_runs/lab3_r2`) is also under external load and two
+  s1 Cartographer runs were REFUSED by the runner's process check (to be
+  filled). A quiet round is still owed before any claim.
+- coco_lab on the real tour: FastSLAM depends on the motion model (AMCL
+  alphas diverge, calibrated alphas track); a greedy improved proposal was
+  tried and REMOVED (worse). Final coco_lab numbers being re-run at
+  `da253eb` (pose graph told the calibrated model).
+
+NEXT: finish round 2, fill the refused runs, a quiet round 3; final
+coco_lab runs; `make_replay_bundle.py` → `docs/data/lab3/replay/`;
+`an_results.py` → `results.json`; docs (LAB3_MAP, RESULTS, README for
+docs/data/lab3, PROJECT_STATE, ROADMAP); full tests; PR + CI; deploy;
+public check; video; release draft.
