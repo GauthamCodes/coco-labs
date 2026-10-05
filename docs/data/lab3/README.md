@@ -26,6 +26,9 @@ identical wheel odometry, the simulator's truth kept aside for scoring.
 | `sketch_counts.py` → `sketch_counts.json` | the Sketch scenes over 20 worlds each (Sketch, not the robot) |
 | `an_results.py` → `results.json` | every real-drive number in one file, with each backend run's machine load |
 | `lab3_common.py` | drives, the ground truth (Phase 1B's `arena_maps.py ground_truth`), ROS maps |
+| `browser/report_local.json` | `lab_web/tools/browser/check.py <local vite preview> smoke mapping mapping_phone localise`, before deployment |
+| `public/report.json` | the same checks against the PUBLIC site, deployed from `ee9bd65` (2026-10-05) |
+| `video/` | the demo video's provenance (`cuts_public.json`, `README.md`); the file itself is a release asset, not in git |
 
 Large artifacts — the derived bags (95 MB each), backend logs and records —
 live under `~/coco_lab_runs/lab3*/`, outside git. Every number the docs quote

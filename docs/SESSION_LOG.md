@@ -7607,3 +7607,33 @@ closure hurt, a real phone, rates (2 drives, 5 seeds).
 NEXT: draft PR `lab3` → `main`, CI green, fast-forward `main` (deploys),
 public-site checks, video from the public site, tag `lab3-v1.0` locally
 and a draft release (publishing is the owner's call).
+
+### Phase 4 — deployed, verified on the public site, release gate prepared (2026-10-05, ~17:00 UTC)
+
+- **PR #12** (`lab3` → `main`, draft): `CI` 37337531668 and `Lab`
+  37337531548 green on `ee9bd65`.
+- **`main` fast-forwarded `e128036` → `ee9bd65`** (plain push, no force).
+  `CI` 37340218072 and `Lab` 37340217984 green on `main`; Pages deployment
+  6864344558; the live catalog's `built_from` = `ee9bd65`, not dirty.
+- **Public-site checks** (measured, headless Firefox 157, load 2.4–3.1,
+  `docs/data/lab3/public/report.json`): `check.py <public> smoke mapping
+  mapping_phone localise` — 0 console errors in all four; Lab 3 cold 15.7 s,
+  warm 8.3 / 3.1 s, the challenge 3.1 s; Pyodide = CPython (F1 identical,
+  ATE to the 6th decimal); no overflow at 390 × 844; Lab 1 smoke 11 of 11;
+  Lab 2 cold 10.1 s, warm 3.2 s.
+- **Video** recorded from the public site (`record_lab3_demo.py`): 122.3 s,
+  H.264 1120 × 920, 5,268,119 B, sha256 `0d964890…`, 0 console errors,
+  three listed cuts (`docs/data/lab3/video/`). A first recording was
+  discarded: `Recorder.cut` stamped mid-video cuts on the monotonic clock
+  (`at_video_s` 78581.53); fixed in `record_demo.py` (Lab 3 is the first
+  demo to cut mid-recording; no earlier evidence affected) and re-recorded.
+- Placeholders filled in `LAB3_MAP.md`, `RESULTS.md`; release notes
+  `docs/releases/lab3-v1.0.md` committed; `PROJECT_STATE.md` and
+  `ROADMAP.md` say deployed. Tools tests 95 / 0 after the recorder fix.
+- **`lab3-v1.0`: annotated tag LOCAL only and a DRAFT GitHub release with
+  the video.** Publishing (pushing the tag, un-drafting) is the owner's
+  call; it was not covered by this session's approval.
+
+NEXT: the owner decides on publishing `lab3-v1.0`:
+`git push labs lab3-v1.0 && gh release edit lab3-v1.0 -R GauthamCodes/coco-labs --draft=false --latest --verify-tag`.
+Phase 5 (Search) NOT started.

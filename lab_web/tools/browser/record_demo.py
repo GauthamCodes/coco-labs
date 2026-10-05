@@ -119,8 +119,9 @@ class Recorder(check.Session):
         t0 = time.monotonic()
         result = await coro
         dt = time.monotonic() - t0
-        self.cuts.append({'what': what, 'seconds_cut': round(dt, 2),
-                          'at_video_s': round(self.frames[-1][1] if self.frames else 0.0, 2)})
+        # frame times are on the monotonic clock; the cut is placed in VIDEO time
+        at = self.frames[-1][1] - self.frames[0][1] if self.frames else 0.0
+        self.cuts.append({'what': what, 'seconds_cut': round(dt, 2), 'at_video_s': round(at, 2)})
         self.t_cut += dt
         self.recording = True
         return result

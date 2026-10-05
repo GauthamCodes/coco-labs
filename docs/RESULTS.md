@@ -8440,7 +8440,24 @@ Local production build (`vite preview`, headless Firefox 157, load 2.1–2.3;
 | Lab 3's chunk | loaded only when opened (`MapLab-*.js`, 15 KB gzipped) |
 | regressions | Lab 2: cold 8.8 s, warm 3.1 s, same outcomes as CPython, 4 exhibits; Lab 1's smoke 11 of 11 |
 
-PLACEHOLDER-PUBLIC
+**On the public site** (measured 2026-10-05 16:41 UTC, deployed from
+`main` = `ee9bd65`, Pages deployment 6864344558, the catalog's `built_from`
+`ee9bd65`, not dirty; headless Firefox 157, load 2.4–3.1;
+`docs/data/lab3/public/report.json`): **0 console errors** on Lab 3 (desktop
+and phone), Lab 2 and Lab 1's smoke (11 of 11 bundles). First coco_lab run
+15.7 s; warm runs: a new world 8.3 s, a clicked one-waypoint drive 3.1 s,
+the challenge 3.1 s. Pyodide against CPython on the six runs: map F1
+identical, final ATE equal to the 6th decimal. No Pyodide request before the
+first run; the only third-party host is `cdn.jsdelivr.net` (Pyodide). No
+horizontal overflow at 390 × 844 on Sketch, the challenge or Replay. Lab 2:
+cold 10.1 s, warm 3.2 s, 4 exhibits.
+
+**The video** (`docs/data/lab3/video/README.md`): recorded from the public
+site after deployment by `lab_web/tools/browser/record_lab3_demo.py`, H.264
+1120 × 920, 122.3 s, 5,268,119 B, sha256 `0d964890…`, 0 console errors;
+three cuts, each listed with its length in `cuts_public.json` (the Pyodide
+start-up and a warm-up, 19.41 s; coco_lab rerunning the corridor world,
+14.32 s; mapping the challenge drive, 3.44 s).
 
 ### Tests
 

@@ -27,10 +27,15 @@
 >   items: [`docs/labs/LAB2_LOCALISE.md`](labs/LAB2_LOCALISE.md).
 >   *(Until 2026-10-04 this line read "implemented, tested and measured on
 >   branch `lab2`; not yet deployed".)*
-> - **Phase 4 (Map, Lab 3), 2026-10-05: implemented, tested, measured**
->   on branch `lab3` — status, numbers and limitations in
->   [`docs/labs/LAB3_MAP.md`](labs/LAB3_MAP.md); deployment state in
->   `docs/SESSION_LOG.md`.
+> - **Phase 4 (Map, Lab 3), 2026-10-05: implemented, tested, measured
+>   and deployed.** `main` was fast-forwarded to `ee9bd65` after CI and Lab
+>   were green on the PR, and the site was verified on the public URL
+>   (0 console errors, headless Firefox). The demo video was recorded from
+>   the public site. `lab3-v1.0` is tagged LOCALLY with a DRAFT release;
+>   publishing it is the owner's call. Status, numbers and limitations:
+>   [`docs/labs/LAB3_MAP.md`](labs/LAB3_MAP.md).
+>   *(Until 2026-10-05 16:30 UTC this line read "implemented, tested,
+>   measured on branch `lab3`".)*
 >
 > *(The status line of 2026-09-30 read: "plan revised (Phase 2 · Live
 > added) … Phase 1 closed by decision with open items … Phase 2 not
@@ -499,7 +504,7 @@ site").
 - **Challenge:** "map the arena" in Sketch mode, scored. Learners discover
   that loop closures help and featureless corridors hurt.
 
-**As built (2026-10-05, branch `lab3`).** coco_lab: log-odds occupancy
+**As built (2026-10-05, branch `lab3`; deployed from `main` = `ee9bd65`).** coco_lab: log-odds occupancy
 mapping, EKF-SLAM on an IDEALISED landmark sensor (labelled), grid FastSLAM
 (Rao-Blackwellised), pose-graph SLAM (MAP point-to-line ICP, loop closure
 on well-constrained matches, Gauss-Newton with a chain-preconditioned CG),
