@@ -44,15 +44,29 @@ export interface LocSpec {
   filter_seed: number; // the particle filter's
 }
 
+/**
+ * Lab 3: the learner's mapping settings. coco_lab plans the drive through the
+ * clicks (Lab 1's A*), simulates ONE Sketch world and runs every requested
+ * algorithm on it (src/worker/recompute.py `mapping`).
+ */
+export interface MapSpec {
+  clicks: Array<[number, number]>; // 1..24 waypoints, map frame
+  noise_scale: number; // x Sketch's default odometry alphas (world AND filters), 0..5
+  particles: number; // FastSLAM, 2..100
+  fastslam_seed: number;
+  seed: number; // the world's
+  runs: string[]; // some of known, odometry, ekf_slam, fastslam, pose_graph, pose_graph_noloop
+}
+
 export interface RecomputeRequest {
   id: number;
-  /** 'recompute': Lab 1's search glue; 'localise': Lab 2's (recompute.py `localise`). */
-  type: 'recompute' | 'localise';
+  /** 'recompute': Lab 1's search glue; 'localise': Lab 2's; 'mapping': Lab 3's (recompute.py). */
+  type: 'recompute' | 'localise' | 'mapping';
   /** The CURRENT bundle's files, byte for byte. */
   manifest: Uint8Array;
   arraysName: string;
   arraysFile: Uint8Array;
-  spec: RecomputeSpec | LocSpec;
+  spec: RecomputeSpec | LocSpec | MapSpec;
   /** Absolute URL of coco_lab's wheel on this site, and its sha256. */
   wheelUrl: string;
   wheelSha256: string;

@@ -342,3 +342,105 @@ def localise(request_json, manifest, arrays_name, arrays_file):
                     'write_bundle_ms': write_ms, 'optimal_ms': 0.0,
                     'runs': len(runs), 'total_ms': _ms(t_all)},
     }
+
+
+# -- Lab 3: Map ------------------------------------------------------------------
+
+_SLAM_CACHE = OrderedDict()
+
+
+def _load_slam(manifest_bytes, arrays_name, arrays_file):
+    """Return ``(SlamBundle, load_ms)``, validated by coco_lab, cached."""
+    from coco_lab import slambundle
+    manifest_bytes = _bytes(manifest_bytes)
+    claimed = json.loads(manifest_bytes).get('content_hash')
+    if claimed in _SLAM_CACHE:
+        _SLAM_CACHE.move_to_end(claimed)
+        return _SLAM_CACHE[claimed], 0.0
+    t0 = time.perf_counter()
+    work = tempfile.mkdtemp(prefix='lab_map_')
+    try:
+        with open(os.path.join(work, 'manifest.json'), 'wb') as f:
+            f.write(manifest_bytes)
+        with open(os.path.join(work, arrays_name), 'wb') as f:
+            f.write(_bytes(arrays_file))
+        sb = slambundle.load_slam_bundle(work)
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
+    _SLAM_CACHE[claimed] = sb
+    while len(_SLAM_CACHE) > 3:
+        _SLAM_CACHE.popitem(last=False)
+    return sb, _ms(t0)
+
+
+def _is_num(v):
+    return isinstance(v, (int, float)) and not isinstance(v, bool)
+
+
+def mapping(request_json, manifest, arrays_name, arrays_file):
+    """
+    Rerun the current Sketch mapping world with the learner's settings.
+
+    ``request_json``: ``{clicks: [[x, y], ...], noise_scale, particles,
+    fastslam_seed, seed, runs: [run ids]}``. coco_lab plans the drive
+    through the clicks (Lab 1's A*, ``map_teaching.plan_route``), simulates
+    ONE Sketch world from the current bundle's start and LiDAR, and runs
+    every requested algorithm on it -- identical inputs, in ONE bundle,
+    scored by ``coco_lab.mapeval``.
+    """
+    from coco_lab import map_teaching, mapworld, slambundle
+    t_all = time.perf_counter()
+    req = json.loads(request_json)
+    sb, load_ms = _load_slam(manifest, arrays_name, arrays_file)
+    if sb.world.source != 'sketch':
+        raise Refused('a recorded drive cannot be driven again: it is a '
+                      'recording')
+    clicks = req.get('clicks')
+    if not (isinstance(clicks, list) and
+            1 <= len(clicks) <= map_teaching.MAX_CLICKS and
+            all(isinstance(c, list) and len(c) == 2 and
+                all(_is_num(v) for v in c) for c in clicks)):
+        raise Refused(f'the drive needs 1 to {map_teaching.MAX_CLICKS} '
+                      f'waypoints')
+    scale = _num(req, 'noise_scale', 0.0, 5.0)
+    particles = int(_num(req, 'particles', 2, 100))
+    fseed = int(_num(req, 'fastslam_seed', 0, 2 ** 31 - 1))
+    seed = int(_num(req, 'seed', 0, 2 ** 31 - 1))
+    runs = req.get('runs')
+    if not (isinstance(runs, list) and runs and len(set(runs)) == len(runs)
+            and all(r in map_teaching.RUN_IDS for r in runs)):
+        raise Refused(f'runs must be some of {list(map_teaching.RUN_IDS)}')
+    ids = [r for r in map_teaching.RUN_IDS if r in runs]
+    smap = _smap(sb.lab_map)
+    try:
+        sc = map_teaching.scenario_for(sb.world.scenario, smap,
+                                       [tuple(c) for c in clicks], scale,
+                                       seed)
+    except ValueError as exc:
+        raise Refused(str(exc)) from None
+    t0 = time.perf_counter()
+    try:
+        world = mapworld.from_sketch(sb.lab_map, sc, sb.world.landmark_spec,
+                                     smap=smap)
+        specs = map_teaching.run_specs(scale=scale, particles=particles,
+                                       fastslam_seed=fseed, ids=ids)
+        nb = slambundle.SlamBundle.compute(
+            sb.lab_map, world, specs, bundle.make_provenance(
+                'sketch', seed=seed, tool=TOOL), tol=sb.tol)
+    except ValueError as exc:
+        raise Refused(str(exc)) from None
+    compute_ms = _ms(t0)
+    t0 = time.perf_counter()
+    m_out, name, a_out, digest = nb.to_bytes('none')
+    _SLAM_CACHE[digest] = nb
+    write_ms = _ms(t0)
+    return {
+        'bundles': [{'manifest': m_out, 'arrays_file': a_out,
+                     'arrays_name': name, 'content_hash': digest}],
+        'optimal_cost': None,
+        'coco_lab_version': coco_lab.__version__,
+        'python_version': sys.version.split()[0],
+        'timings': {'load_bundle_ms': load_ms, 'search_ms': compute_ms,
+                    'write_bundle_ms': write_ms, 'optimal_ms': 0.0,
+                    'runs': len(specs), 'total_ms': _ms(t_all)},
+    }

@@ -78,7 +78,8 @@ self.onmessage = async (ev: MessageEvent<RecomputeRequest>) => {
     ready ??= start(req);
     const { py, cold } = await ready;
     stage = 'edit';
-    const fn = req.type === 'localise' ? 'lab_recompute.localise' : 'lab_recompute.recompute';
+    const fn = req.type === 'localise' ? 'lab_recompute.localise'
+      : req.type === 'mapping' ? 'lab_recompute.mapping' : 'lab_recompute.recompute';
     const recompute = py.runPython(fn) as (...a: unknown[]) => PyProxy;
     const out = recompute(JSON.stringify(req.spec), req.manifest, req.arraysName, req.arraysFile);
     const r = out.toJs({ dict_converter: Object.fromEntries }) as Record<string, any>;

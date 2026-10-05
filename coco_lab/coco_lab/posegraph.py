@@ -25,8 +25,10 @@ Cartographer are both pose-graph SLAMs with far better front ends.
 
 **Front end.** Node ``k``'s scan is matched to node ``k-1``'s by
 point-to-line ICP (:func:`icp`) with odometry's relative pose as a
-Gaussian PRIOR (a MAP match). The edge's information is the ICP's own
-Hessian ``sum(n n^T) / sigma_icp^2`` PLUS odometry's information: along a
+Gaussian PRIOR (a MAP match); odometry's information is its motion
+model's (the same ``alphas`` every SLAM here is told), for that step's
+motion. The edge's information is the ICP's own
+Hessian ``sum(n n^T) / (N sigma_icp^2)`` PLUS odometry's information: along a
 direction the scan cannot see (a smooth corridor's axis, where every
 normal is perpendicular to it) the Hessian has nothing, and both the
 edge's value and its information fall back to odometry there. That is how
@@ -214,9 +216,13 @@ def icp(ref: List[Tuple[float, float]], cur: List[Tuple[float, float]],
 
     Each current point, moved by the pose so far, is paired with its
     nearest reference point within ``max_dist`` that has a normal; the
-    step minimises the summed squared distance along those normals
-    (each residual of standard deviation ``sigma``), linearised in the
-    rotation. With ``prior`` (an information matrix on ``(x, y, yaw)``)
+    step minimises the summed squared distance along those normals,
+    linearised in the rotation. The scan counts as ONE measurement of
+    standard deviation ``sigma``: each of its N residuals is weighted
+    ``1 / (sigma^2 N)``, because neighbouring beams on one wall do not err
+    independently (treating them as independent made a 60-beam scan claim
+    millimetre accuracy, and the front end beat odometry LESS often than it
+    lost to it on the arena -- measured in Phase 4). With ``prior`` (an information matrix on ``(x, y, yaw)``)
     the guess is a Gaussian PRIOR in the same least squares -- a MAP
     match: along a direction the scan cannot see (a corridor's axis) the
     answer stays at the guess instead of sliding. Without a prior a small
@@ -260,7 +266,9 @@ def icp(ref: List[Tuple[float, float]], cur: List[Tuple[float, float]],
             pairs.append(e)
         if len(pairs) < 3:
             break
-        w = 1.0 / (sigma * sigma)
+        # the scan as ONE measurement of standard deviation ``sigma``: the
+        # residuals of neighbouring beams on one wall are not independent
+        w = 1.0 / (sigma * sigma * len(pairs))
         if prior is not None:
             dv = (x - guess[0], y - guess[1], wrap(th - guess[2]))
             A = [[w * H[a][b] + prior[a][b] for b in range(3)]
@@ -523,9 +531,13 @@ def optimise(poses: Sequence[Pose], edges: Sequence[Edge],
 class PoseGraphParams:
     """Front end, loop closure and optimiser settings."""
 
-    #: odometry edge information comes from these standard deviations
-    odom_sigma_xy: float = 0.10
-    odom_sigma_yaw: float = 0.05
+    #: the odometry motion model's alphas, as told to every SLAM here; an
+    #: odometry edge's covariance is that model's, for that step's motion
+    alphas: Tuple[float, float, float, float] = (0.02, 0.02, 0.02, 0.02)
+    #: floors on an odometry edge's standard deviation (a zero move would
+    #: otherwise claim infinite certainty)
+    odom_sigma_xy: float = 0.005
+    odom_sigma_yaw: float = 0.002
     #: an ICP residual's standard deviation (sets the ICP Hessian's weight)
     icp_sigma: float = 0.05
     icp_max_dist: float = 0.5
@@ -545,6 +557,8 @@ class PoseGraphParams:
 
     def check(self) -> None:
         """Raise :class:`slam.SlamError` unless the parameters make sense."""
+        if len(self.alphas) != 4 or any(v < 0 for v in self.alphas):
+            raise slam.SlamError('alphas: four values >= 0')
         for name in ('odom_sigma_xy', 'odom_sigma_yaw', 'icp_sigma',
                      'icp_max_dist', 'icp_max_rmse', 'loop_radius',
                      'loop_max_rmse'):
@@ -565,7 +579,27 @@ class PoseGraphParams:
 
     def to_dict(self) -> Dict[str, object]:
         """Return a JSON-ready dict."""
-        return asdict(self)
+        d = asdict(self)
+        d['alphas'] = list(self.alphas)
+        return d
+
+
+def odometry_information(rot1: float, trans: float, rot2: float,
+                         p: 'PoseGraphParams') -> Mat3:
+    """
+    Return the information of one odometry edge, in node ``k-1``'s frame.
+
+    The odometry motion model's covariance for this step (``V M V^T``,
+    linearised exactly as EKF-SLAM and Lab 2's EKF do it, at heading 0:
+    the edge is expressed in the previous node's frame) plus the floors,
+    inverted.
+    """
+    from .localise import _motion_jacobians
+    _, Q = _motion_jacobians((0.0, 0.0, 0.0), rot1, trans, rot2, p.alphas)
+    Q[0][0] += p.odom_sigma_xy ** 2
+    Q[1][1] += p.odom_sigma_xy ** 2
+    Q[2][2] += p.odom_sigma_yaw ** 2
+    return _inv3(Q)
 
 
 def _diag(sxy, syaw) -> Mat3:
@@ -592,7 +626,6 @@ def run_pose_graph(inp: slam.SlamInputs, like: LabMap,
     li = inp.lidar
     pts = [scan_points(z, angles, li.mount, li.range_min, li.range_max)
            for z in inp.ranges]
-    odom_info = _diag(p.odom_sigma_xy, p.odom_sigma_yaw)
     poses: List[Pose] = [tuple(inp.start)]
     edges: List[Edge] = []
     grid = OccupancyGrid.like(like, grid_params)
@@ -621,12 +654,14 @@ def run_pose_graph(inp: slam.SlamInputs, like: LabMap,
     for k in range(1, len(inp)):
         d = odom_delta(inp.odom[k - 1], inp.odom[k])
         guess = apply_delta((0.0, 0.0, 0.0), *d)
+        odom_info = odometry_information(*d, p)
         r = icp(pts[k - 1], pts[k], guess, max_dist=p.icp_max_dist,
                 prior=odom_info, sigma=p.icp_sigma)
         ok = (r.converged and r.rmse <= p.icp_max_rmse and
               r.inliers >= p.icp_min_inliers)
         if ok:
-            info = [[w_icp * r.hessian[a][b] + odom_info[a][b]
+            wn = w_icp / max(1, r._n)
+            info = [[wn * r.hessian[a][b] + odom_info[a][b]
                      for b in range(3)] for a in range(3)]
             edges.append(Edge(k - 1, k, r.pose, info, 'icp'))
         else:
@@ -648,7 +683,8 @@ def run_pose_graph(inp: slam.SlamInputs, like: LabMap,
                         lr.inliers >= p.loop_min_inliers and
                         lr.min_eig_per_point() >= p.loop_min_eig):
                     continue
-                info = [[w_icp * lr.hessian[a][b] for b in range(3)]
+                wn = w_icp / max(1, lr._n)
+                info = [[wn * lr.hessian[a][b] for b in range(3)]
                         for a in range(3)]
                 edges.append(Edge(j, k, lr.pose, info, 'loop'))
                 loop_events.append((k, j))

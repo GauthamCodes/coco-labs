@@ -61,6 +61,7 @@ from coco_lab.heuristics import analyse, MoveModel, SQRT2  # noqa: E402
 from coco_lab.search import (ALGORITHMS, search,  # noqa: E402
                              suboptimality_bound, TIE_BREAKS)
 import build_localise  # noqa: E402
+import build_map  # noqa: E402
 import common  # noqa: E402
 
 OUT = os.path.join(common.LAB_WEB, 'public', 'generated')
@@ -488,7 +489,8 @@ def build_wheel(dest_dir):
     return os.path.join(dest_dir, wheels[0])
 
 
-def build(out=OUT, wheel='build', with_benchmark=True, with_localise=True):
+def build(out=OUT, wheel='build', with_benchmark=True, with_localise=True,
+          with_map=True):
     """Build the site data under ``out``; return the catalog."""
     if os.path.isdir(out):
         shutil.rmtree(out)
@@ -563,6 +565,11 @@ def build(out=OUT, wheel='build', with_benchmark=True, with_localise=True):
         # replayed here, and the evidence its exhibits cite
         catalog['version'] = '1.2'
         catalog['localise'] = build_localise.localise_block(out)
+    if with_map:
+        # 1.3 (additive): Lab 3, Map -- map bundles coco_lab computed (or
+        # the committed recorded drive) and replayed here, and the evidence
+        catalog['version'] = '1.3'
+        catalog['map'] = build_map.map_block(out)
     with open(os.path.join(out, 'exhibit.json'), 'w') as f:
         f.write(json.dumps(exhibit_data(), indent=1, sort_keys=True) + '\n')
     with open(os.path.join(out, 'catalog.json'), 'w') as f:
@@ -577,14 +584,18 @@ def main(argv=None):
                     help="a prebuilt wheel to serve, or 'build' (default)")
     ap.add_argument('--no-benchmark', action='store_true')
     ap.add_argument('--no-localise', action='store_true')
+    ap.add_argument('--no-map', action='store_true')
     args = ap.parse_args(argv)
     cat = build(args.out, args.wheel, not args.no_benchmark,
-                not args.no_localise)
+                not args.no_localise, not args.no_map)
     for e in cat['bundles']:
         print(f"{e['id']:28s} {e['source_kind']:13s} {e['events']:7d} "
               f"events {e['bytes']:9d} B  {e['validated']['replay']}")
     for e in cat.get('localise', {}).get('bundles', []):
         print(f"{e['id']:28s} sketch        {len(e['runs'])} runs "
+              f"{e['bytes']:9d} B  {e['validated']['replay']}")
+    for e in cat.get('map', {}).get('bundles', []):
+        print(f"{e['id']:28s} {e['kind']:13s} {len(e['runs'])} runs "
               f"{e['bytes']:9d} B  {e['validated']['replay']}")
     print('wheel:', cat['wheel'])
 

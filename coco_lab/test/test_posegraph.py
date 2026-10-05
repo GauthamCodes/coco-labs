@@ -248,24 +248,18 @@ def test_loop_closure_usually_closes_the_loop_room(loop_worlds):
     """
     The lab's claim, over 20 worlds (Sketch), as the page states it.
 
-    Loop closure was found in at least 15 of 20 worlds; where it was found
-    it lowered the final trajectory error in at least 13; where it was not
-    found the robot was lost by more than 0.8 m before it came back (the
-    matcher never recognised its start). Exact counts:
+    Loop closure was found in at least 15 of 20 worlds, and in every world
+    where it was found it lowered the final trajectory error. Exact counts:
     docs/data/lab3/sketch_counts.json.
     """
     closed = [(tp, on, off) for _, tp, on, off in loop_worlds
               if len(on.arrays['loops.k'][1])]
     assert len(closed) >= 15
-    better = sum(mapeval.ate(on.final_trajectory(), tp, False)['rmse'] <
-                 mapeval.ate(off.final_trajectory(), tp, False)['rmse']
-                 for tp, on, off in closed)
-    assert better >= 13
-    for _, tp, on, off in loop_worlds:
+    for tp, on, off in closed:
+        assert mapeval.ate(on.final_trajectory(), tp, False)['rmse'] < \
+            mapeval.ate(off.final_trajectory(), tp, False)['rmse']
+    for _, _, _, off in loop_worlds:
         assert len(off.arrays['loops.k'][1]) == 0
-        if not len(on.arrays['loops.k'][1]):
-            assert mapeval.ate(on.final_trajectory(), tp,
-                               False)['rmse'] > 0.8
 
 
 def test_every_optimisation_lowers_chi2(loop_runs):

@@ -138,17 +138,23 @@ def scenarios() -> Dict[str, Tuple[str, Scenario]]:
 
 #: the arena challenge: start at the spawn, map (0, 0), facing +x
 ARENA_START = (0.0, 0.0, 0.0)
-#: a short default drive near the spawn; the learner draws their own
-ARENA_ROUTE = [(4.0, 0.0), (4.0, 2.0), (-2.0, 2.0), (-2.0, -2.0),
-               (4.0, -2.0), (4.0, 0.0), (0.5, 0.0)]
+#: the default drive: one loop round the arena's north half, on the lanes
+#: the real tour drove (map frame, every point >= 0.5 m from a wall); the
+#: learner draws their own
+ARENA_ROUTE = [(6.0, 0.0), (11.45, 2.15), (11.45, 7.75), (-1.45, 7.5),
+               (-1.25, 0.5), (1.0, 0.0)]
 ARENA_SEED = 21
+#: the challenge's odometry noise: Sketch's default (x1), which on the real
+#: 120 m tour drifted a median 5.6 m against Gazebo's 2.6 and 17.2 m
+#: (Lab 2, measured) -- the same order as the robot's own
+ARENA_NOISE_SCALE = 1.0
 
 
 def arena_scenario(route: List[Tuple[float, float]] = None,
                    seed: int = ARENA_SEED) -> Scenario:
     """Return the challenge's scenario: fixed start, seed and noise."""
     return Scenario(start=ARENA_START, route=list(route or ARENA_ROUTE),
-                    seed=seed, noise=noise(), max_time=1200.0)
+                    seed=seed, noise=noise(ARENA_NOISE_SCALE), max_time=1200.0)
 
 
 def teaching_maps() -> Dict[str, LabMap]:
@@ -187,9 +193,10 @@ def run_specs(scale: float = NOISE_SCALE, particles: int = 20,
         'fastslam': ('fastslam', FastSlamParams(
             particles=particles, alphas=alphas, seed=fastslam_seed,
             snapshots=snapshots)),
-        'pose_graph': ('pose_graph', PoseGraphParams(snapshots=snapshots)),
+        'pose_graph': ('pose_graph', PoseGraphParams(
+            alphas=alphas, snapshots=snapshots)),
         'pose_graph_noloop': ('pose_graph', PoseGraphParams(
-            snapshots=snapshots, loop_closure=False)),
+            alphas=alphas, snapshots=snapshots, loop_closure=False)),
     }
     return [(i, specs[i][0], specs[i][1]) for i in ids]
 
