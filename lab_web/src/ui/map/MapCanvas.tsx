@@ -291,7 +291,7 @@ export function MapCanvas(p: MapCanvasProps) {
       {p.label && <figcaption>{p.label}</figcaption>}
       <div className="map-wrap" ref={wrap}>
         <canvas ref={canvas} className={p.onPick ? 'map-canvas editable' : 'map-canvas'} onClick={onClick}
-          role="img" aria-label={`Map at update ${k + 1} of ${b.world.updates.length}`} data-testid="map-canvas" />
+          role="img" aria-label={`Map at update ${k + 1} of ${b.world.updates.length}`} data-testid="slam-canvas" />
       </div>
     </figure>
   );

@@ -774,10 +774,142 @@ async def localise_phone(site, out):
         return {'lab': geo, 'exhibits': geo2, 'k_after_play_2s': k, 'console_errors': s.errors()}
 
 
+MAP_READY = ("(() => { const c = document.querySelector('[data-testid=slam-canvas]');"
+             " return !!(c && c.width > 0 && window.__cocoLabMap); })()")
+MAP_STATE = """(() => {
+  const t = (s) => { const e = document.querySelector(s); return e ? e.textContent.trim() : null; };
+  const scrub = document.querySelector('[data-testid=map-scrub]');
+  return { mode: t('[data-testid=map-mode]'), status: t('[data-testid=map-status]'),
+    k: scrub ? Number(scrub.value) : null, n: scrub ? Number(scrub.max) : null,
+    canvases: document.querySelectorAll('[data-testid=slam-canvas]').length,
+    by: window.__cocoLabMap ? window.__cocoLabMap.by : null,
+    hash: window.__cocoLabMap ? window.__cocoLabMap.contentHash : null };
+})()"""
+MAP_DONE = ("(() => { const e = document.querySelector('[data-testid=map-status]');"
+            " return !!(e && !e.classList.contains('busy')); })()")
+
+
+async def mapping(site, out):
+    """Lab 3: Sketch label, predict-reveal, play, compare, Pyodide runs, a clicked drive, the challenge, Replay."""
+    async with Session(site, out) as s:
+        await s.open('?view=map&scene=map_loop')
+        await s.wait(MAP_READY, timeout=90)
+        rep = {'start': await s.js(MAP_STATE), 'fidelity': await s.js(TEXT.format('map-fidelity')),
+               'explain': await s.js(TEXT.format('map-explain'))}
+        await s.shot('map_start')
+        b = await s.js("(() => { const e = document.querySelector('.predict input[type=radio]');"
+                       " e.scrollIntoView({block: 'center'}); const r = e.getBoundingClientRect();"
+                       " return [r.left, r.top, r.width, r.height]; })()")
+        await s.b.click(s.ctx, b[0] + b[2] / 2, b[1] + b[3] / 2)
+        await click_testid(s, 'map-reveal')
+        await s.wait("document.querySelector('[data-testid=map-revealed]')", timeout=10)
+        rep['revealed'] = await s.js(TEXT.format('map-revealed'))
+        k0 = (await s.js(MAP_STATE))['k']
+        await click_testid(s, 'map-play')
+        await asyncio.sleep(3.0)
+        rep['played'] = {'k_before': k0, 'k_after_3s': (await s.js(MAP_STATE))['k']}
+        await click_testid(s, 'map-end')
+        await click_testid(s, 'map-show-diff')
+        await s.shot('map_end_diff')
+        await click_testid(s, 'map-show-diff')
+        await click_testid(s, 'map-race-toggle')
+        rep['race_canvases'] = (await s.js(MAP_STATE))['canvases']
+        await s.shot('map_compare')
+        await click_testid(s, 'map-race-toggle')
+        rep['table'] = await s.js(TEXT.format('map-score-table'))
+        before = [u for u in s.requests() if 'pyodide' in u or 'jsdelivr' in u]
+        t0 = time.time()
+        await click_testid(s, 'map-run')
+        await s.wait(MAP_DONE, timeout=900, every=0.2)
+        rep['cold_run'] = {'wall_s': round(time.time() - t0, 2), **(await s.js(MAP_STATE))}
+        await s.shot('map_after_cold_run')
+        cat = json.loads(await s.js(f"fetch('{s.site}generated/catalog.json').then(r => r.text())"))
+        entry = next(e for e in cat['map']['bundles'] if e['id'] == 'map_loop')
+        mine = json.loads(await s.js('JSON.stringify(window.__cocoLabMap)'))
+        rep['pyodide_vs_cpython'] = {
+            'drawn_by': mine['by'],
+            'summaries_identical': [r['summary'] for r in mine['runs']] == [r['summary'] for r in entry['runs']],
+            'runs': [{'id': a['id'], 'pyodide_final_ate': a['summary']['ate_final']['rmse'],
+                      'cpython_final_ate': b['summary']['ate_final']['rmse'],
+                      'pyodide_f1': a['summary']['map']['f1'], 'cpython_f1': b['summary']['map']['f1']}
+                     for a, b in zip(mine['runs'], entry['runs'])]}
+        await click_testid(s, 'map-new-world')
+        t0 = time.time()
+        await click_testid(s, 'map-run')
+        await s.wait(MAP_DONE, timeout=600, every=0.1)
+        rep['warm_run_new_world'] = {'wall_s': round(time.time() - t0, 2), **(await s.js(MAP_STATE)),
+                                     'revealed_text': await s.js(TEXT.format('map-score-table'))}
+        # draw a drive: clear, then one click at (10, 8) in the 16 x 10 m loop room
+        await click_testid(s, 'map-clear')
+        await click_testid(s, 'map-draw')
+        cb = await box_of(s, 'slam-canvas')
+        await s.b.click(s.ctx, cb[0] + cb[2] * 10.0 / 16.0, cb[1] + cb[3] * (1 - 8.0 / 10.0))
+        await click_testid(s, 'map-draw')
+        t0 = time.time()
+        await click_testid(s, 'map-run')
+        await s.wait(MAP_DONE, timeout=600, every=0.1)
+        rep['warm_run_clicked_drive'] = {'wall_s': round(time.time() - t0, 2), **(await s.js(MAP_STATE))}
+        await s.shot('map_clicked_drive')
+        # the challenge
+        await click_testid(s, 'map-sub-challenge')
+        await s.wait(MAP_READY.replace(' && window.__cocoLabMap', ''), timeout=90)
+        rep['challenge_start'] = await s.js(TEXT.format('map-challenge-score'))
+        t0 = time.time()
+        await click_testid(s, 'map-challenge-run')
+        await s.wait("(() => { const e = document.querySelector('[data-testid=map-attempts]'); return !!e; })()",
+                     timeout=600, every=0.2)
+        rep['challenge_run'] = {'wall_s': round(time.time() - t0, 2),
+                                'score': await s.js(TEXT.format('map-challenge-score')),
+                                'attempts': await s.js(TEXT.format('map-attempts'))}
+        await s.shot('map_challenge')
+        # Replay (when the site carries a recorded drive)
+        await click_testid(s, 'map-sub-replay')
+        await asyncio.sleep(1.0)
+        has = await s.js("!!document.querySelector('[data-testid=slam-canvas]') ||"
+                         " !!document.querySelector('.honest')")
+        if has:
+            try:
+                await s.wait(MAP_READY.replace(' && window.__cocoLabMap', ''), timeout=120)
+                rep['replay'] = {'mode': await s.js(TEXT.format('map-mode')),
+                                 'table': await s.js(TEXT.format('map-score-table')),
+                                 'real': await s.js(TEXT.format('map-real'))}
+                await s.shot('map_replay')
+            except TimeoutError:
+                rep['replay'] = {'text': await s.js("document.querySelector('.honest')?.textContent")}
+        rep['pyodide_requests_before_run'] = before
+        rep['third_party'] = sorted({urlparse(u).netloc for u in s.requests()
+                                     if urlparse(u).netloc != urlparse(site).netloc})
+        rep['console_errors'] = s.errors()
+        return rep
+
+
+async def mapping_phone(site, out):
+    """Lab 3 at 390 x 844: no horizontal scroll; the controls are reachable."""
+    async with Session(site, out, width=390, height=844) as s:
+        await s.open('?view=map&scene=map_corridor')
+        await s.wait(MAP_READY, timeout=90)
+        geo = await s.js(OVERFLOW)
+        await s.shot('map_phone_top')
+        await click_testid(s, 'map-play')
+        await asyncio.sleep(2.0)
+        k = (await s.js(MAP_STATE))['k']
+        await box_of(s, 'map-run')
+        await s.shot('map_phone_controls')
+        await click_testid(s, 'map-sub-challenge')
+        await asyncio.sleep(2.0)
+        geo2 = await s.js(OVERFLOW)
+        await click_testid(s, 'map-sub-replay')
+        await asyncio.sleep(3.0)
+        geo3 = await s.js(OVERFLOW)
+        await s.shot('map_phone_replay')
+        return {'lab': geo, 'challenge': geo2, 'replay': geo3, 'k_after_play_2s': k, 'console_errors': s.errors()}
+
+
 SCENARIOS = {'smoke': smoke, 'player': player, 'reduced': reduced, 'fps': fps,
              'phone': phone, 'weight': weight, 'edit': edit, 'lab': lab,
              'share': share, 'replay': replay, 'exhibit': exhibit,
-             'localise': localise, 'localise_phone': localise_phone}
+             'localise': localise, 'localise_phone': localise_phone,
+             'mapping': mapping, 'mapping_phone': mapping_phone}
 
 
 async def main(argv):

@@ -29,7 +29,8 @@ SLAMs', and are labelled so.
 ``known``, ``odometry``
     occupancy mapping with the true / the dead-reckoned poses.
 ``pose_graph``, ``pose_graph_noloop``
-    loop closure on / off -- the loop-closure effect.
+    loop closure on / off -- the loop-closure effect; its odometry edges
+    use the calibrated motion model below, as EKF-SLAM and FastSLAM do.
 ``ekf_slam``, ``fastslam``
     with the motion model CALIBRATED on a different drive: Lab 2's square
     drive (same session, not the tour) measured 2.445 rad of wheel-yaw
@@ -115,10 +116,10 @@ def arm_runs(arm, cal):
     if arm in ('known', 'odometry'):
         return [(arm, arm, mapping.GivenPoseParams(snapshots=SNAPSHOTS))]
     if arm == 'pose_graph':
-        return [(arm, arm, PoseGraphParams(snapshots=SNAPSHOTS))]
+        return [(arm, arm, PoseGraphParams(alphas=cal, snapshots=SNAPSHOTS))]
     if arm == 'pose_graph_noloop':
         return [(arm, 'pose_graph', PoseGraphParams(
-            snapshots=SNAPSHOTS, loop_closure=False))]
+            alphas=cal, snapshots=SNAPSHOTS, loop_closure=False))]
     alphas = AMCL_ALPHAS if arm.endswith('_amcl') else cal
     if arm.startswith('ekf_slam'):
         return [(arm, 'ekf_slam', EKFSlamParams(alphas=alphas,

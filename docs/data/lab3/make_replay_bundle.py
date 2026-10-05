@@ -57,9 +57,10 @@ def specs(cal):
                                                snapshots=SNAPSHOTS)),
         ('fastslam', 'fastslam', FastSlamParams(alphas=cal, seed=0,
                                                 snapshots=SNAPSHOTS)),
-        ('pose_graph', 'pose_graph', PoseGraphParams(snapshots=SNAPSHOTS)),
+        ('pose_graph', 'pose_graph', PoseGraphParams(alphas=cal,
+                                                    snapshots=SNAPSHOTS)),
         ('pose_graph_noloop', 'pose_graph', PoseGraphParams(
-            snapshots=SNAPSHOTS, loop_closure=False)),
+            alphas=cal, snapshots=SNAPSHOTS, loop_closure=False)),
     ]
 
 
