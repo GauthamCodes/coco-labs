@@ -7873,3 +7873,15 @@ NEXT: push `lab4`, new PR for CI (the FF marked #14 merged), FF `main`
 again (the release record + the cosmetic fix; same approval), re-check the
 public page, tag `lab4-v1.0` LOCALLY + DRAFT release with the video —
 publishing is the owner's call. Phase 6 NOT started.
+
+### Phase 5 — COMPLETE (2026-10-07, ~02:20 IST)
+
+- PR #15 (release record + cosmetic fix) CI green; `main` fast-forwarded
+  `0cb5588..b554910` (same owner approval); Pages deploy succeeded; the
+  public catalog is 1.4 built from `b554910` (clean); Lab 4 re-checked on
+  the public URL: 0 console errors, the matrix without `(--)`.
+- `lab4-v1.0`: annotated tag LOCAL at `b554910` + DRAFT GitHub release with
+  `coco_lab4_demo.mp4` (2,505,787 B, sha256 `979ee7d5…`). Publishing is the
+  owner's call:
+  `git push labs lab4-v1.0 && gh release edit lab4-v1.0 -R GauthamCodes/coco-labs --draft=false --latest --verify-tag`.
+- Phase 6 (Move) NOT started.
