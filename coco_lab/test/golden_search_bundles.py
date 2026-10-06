@@ -74,6 +74,7 @@ def line_problem():
 
 
 class _Region:
+
     def __init__(self, k, y):
         self.region_id = f'bay_{k}'
         self.bay_y = y
@@ -82,7 +83,7 @@ class _Region:
 
 
 def arena_problem(detection=0.9):
-    """COCO's arena, from literal geometry (no coco_config import)."""
+    """Return the arena problem, from literal geometry (no coco_config)."""
     regs = rs.bay_regions([_Region(k, y) for k, y in
                            enumerate((-6.0, -2.0, 2.0, 6.0), start=1)],
                           2.95)
@@ -113,8 +114,8 @@ def _arena_recorded():
     timeline = [[0.0, 'LOCALIZE', None], [1.0, 'SELECT_SEARCH_REGION', None],
                 [2.0, 'NAVIGATE_TO_RAMP', None], [9.0, 'SURVEY_REGION', None],
                 [30.0, 'MARK_REGION_SEARCHED', None],
-                [31.0, 'LEAVE_REGION', None], [50.0, 'ABORT',
-                                                'OPERATOR_ABORT']]
+                [31.0, 'LEAVE_REGION', None],
+                [50.0, 'ABORT', 'OPERATOR_ABORT']]
     rec = SearchRun('made_up', 'recorded', tr, t, timeline,
                     {'note': 'MADE UP for the decoder; not a run'},
                     {'truth_region': 'bay_2', 'source': 'typed by hand'})
