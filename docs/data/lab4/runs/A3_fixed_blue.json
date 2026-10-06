@@ -1,0 +1,129 @@
+{
+ "bag_sha256": "9eff932901f4c776ace87fd0fae18d61dd0671cd00ac62efeaf9b40ed4ac70a5",
+ "colour": "blue",
+ "commit": "d78a1d8",
+ "dirty_paths": "1",
+ "discovered": "bay_3",
+ "discovered_at": 1,
+ "episode_id": "ep-be0f51920fb2",
+ "evidence_dir": "/home/gautham/coco_lab_runs/lab4/matrix/A3_fixed_blue",
+ "home_error_m": 0.079,
+ "level": "fixed",
+ "lifted": true,
+ "looks": [
+  {
+   "found": true,
+   "lines": null,
+   "region": "bay_3",
+   "seen": [
+    "blue"
+   ]
+  }
+ ],
+ "order": [
+  "bay_3"
+ ],
+ "order_arg": "policy",
+ "outcome": "COMPLETE",
+ "reason": "--",
+ "recoveries": 0,
+ "relocalisations": 0,
+ "result": "fetch",
+ "run": "A3_fixed_blue",
+ "runner_checks_pass": true,
+ "seed": 0,
+ "sim_s": 145.036,
+ "timeline": [
+  [
+   -4.088,
+   "IDLE",
+   null
+  ],
+  [
+   0.0,
+   "LOCALIZE",
+   null
+  ],
+  [
+   0.036,
+   "SELECT_SEARCH_REGION",
+   null
+  ],
+  [
+   0.076,
+   "NAVIGATE_TO_RAMP",
+   null
+  ],
+  [
+   13.174,
+   "ALIGN_FOR_CLIMB",
+   null
+  ],
+  [
+   13.213,
+   "CLIMB",
+   null
+  ],
+  [
+   25.02,
+   "VERIFY_CLIMB",
+   null
+  ],
+  [
+   25.24,
+   "SURVEY_REGION",
+   null
+  ],
+  [
+   25.439,
+   "STOW_ARM",
+   null
+  ],
+  [
+   28.013,
+   "APPROACH_TARGET",
+   null
+  ],
+  [
+   40.23,
+   "GRASP",
+   null
+  ],
+  [
+   68.038,
+   "VERIFY_GRASP",
+   null
+  ],
+  [
+   68.251,
+   "DESCEND",
+   null
+  ],
+  [
+   84.425,
+   "RETURN_HOME",
+   null
+  ],
+  [
+   127.617,
+   "PLACE",
+   null
+  ],
+  [
+   144.818,
+   "VERIFY_PLACEMENT",
+   null
+  ],
+  [
+   145.036,
+   "COMPLETE",
+   null
+  ]
+ ],
+ "timeline_source": "rosbag",
+ "told": {
+  "target_colour": "blue"
+ },
+ "truth_region": "bay_3",
+ "void": false
+}

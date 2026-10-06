@@ -1,0 +1,43 @@
+{
+ "bag_sha256": "0faa0c2dd1820b37f1ad5125d7712a08ed8451a041a7375ab151625c17236bba",
+ "colour": "red",
+ "commit": "d78a1d8",
+ "dirty_paths": "1",
+ "discovered": null,
+ "discovered_at": null,
+ "episode_id": "ep-d0e9f5fca915",
+ "evidence_dir": "/home/gautham/coco_lab_runs/lab4/matrix/B3_colours_s7_red.void-1",
+ "home_error_m": null,
+ "level": "colours",
+ "lifted": null,
+ "looks": [],
+ "order": [],
+ "order_arg": "policy",
+ "outcome": "VOID",
+ "reason": null,
+ "recoveries": 0,
+ "relocalisations": 0,
+ "result": null,
+ "run": "B3_colours_s7_red.void-1",
+ "runner_checks_pass": false,
+ "seed": 7,
+ "sim_s": 3.23,
+ "timeline": [
+  [
+   0.0,
+   "--",
+   null
+  ],
+  [
+   0.03,
+   "IDLE",
+   null
+  ]
+ ],
+ "timeline_source": "hrec (10 Hz samples)",
+ "told": {
+  "target_colour": "red"
+ },
+ "truth_region": "bay_3",
+ "void": true
+}

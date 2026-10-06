@@ -1,0 +1,104 @@
+{
+ "bag_sha256": "a2e6ca7b87531458f58a356e5eccc251d74d623041671c80dfc4d5d799ee9dc1",
+ "colour": "green",
+ "commit": "d78a1d8",
+ "dirty_paths": "1",
+ "discovered": null,
+ "discovered_at": null,
+ "episode_id": "ep-e89ab8905964",
+ "evidence_dir": "/home/gautham/coco_lab_runs/lab4/matrix/C1_green_stop_after_bay3",
+ "home_error_m": null,
+ "level": "fixed",
+ "lifted": null,
+ "looks": [
+  {
+   "found": false,
+   "lines": 100,
+   "region": "bay_3",
+   "seen": [
+    "blue"
+   ]
+  }
+ ],
+ "order": [
+  "bay_3"
+ ],
+ "order_arg": "bay_3",
+ "outcome": "ABORT",
+ "reason": "SEARCH_EXHAUSTED",
+ "recoveries": 0,
+ "relocalisations": 0,
+ "result": "aborted",
+ "run": "C1_green_stop_after_bay3",
+ "runner_checks_pass": true,
+ "seed": 0,
+ "sim_s": 85.168,
+ "timeline": [
+  [
+   -4.183,
+   "IDLE",
+   null
+  ],
+  [
+   0.0,
+   "LOCALIZE",
+   null
+  ],
+  [
+   0.034,
+   "SELECT_SEARCH_REGION",
+   null
+  ],
+  [
+   0.07,
+   "NAVIGATE_TO_RAMP",
+   null
+  ],
+  [
+   13.361,
+   "ALIGN_FOR_CLIMB",
+   null
+  ],
+  [
+   13.442,
+   "CLIMB",
+   null
+  ],
+  [
+   25.046,
+   "VERIFY_CLIMB",
+   null
+  ],
+  [
+   25.226,
+   "SURVEY_REGION",
+   null
+  ],
+  [
+   45.233,
+   "MARK_REGION_SEARCHED",
+   null
+  ],
+  [
+   45.27,
+   "LEAVE_REGION",
+   null
+  ],
+  [
+   59.238,
+   "RETURN_HOME",
+   null
+  ],
+  [
+   85.168,
+   "ABORT",
+   "SEARCH_EXHAUSTED"
+  ]
+ ],
+ "timeline_source": "rosbag",
+ "told": {
+  "target_colour": "green"
+ },
+ "truth_region": "bay_2",
+ "void": false
+}

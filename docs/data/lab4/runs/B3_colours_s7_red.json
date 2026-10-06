@@ -1,0 +1,144 @@
+{
+ "bag_sha256": "d1ef02ac083c84f77be483112d2a59ee4995d4a0b3a31c288541802d80ef7c9c",
+ "colour": "red",
+ "commit": "d78a1d8",
+ "dirty_paths": "1",
+ "discovered": "bay_3",
+ "discovered_at": 1,
+ "episode_id": "ep-d0e9f5fca915",
+ "evidence_dir": "/home/gautham/coco_lab_runs/lab4/matrix/B3_colours_s7_red",
+ "home_error_m": 0.047,
+ "level": "colours",
+ "lifted": true,
+ "looks": [
+  {
+   "found": true,
+   "lines": null,
+   "region": "bay_3",
+   "seen": [
+    "red"
+   ]
+  }
+ ],
+ "order": [
+  "bay_3"
+ ],
+ "order_arg": "policy",
+ "outcome": "COMPLETE",
+ "reason": "LOCALIZATION_DEGRADED",
+ "recoveries": 1,
+ "relocalisations": 1,
+ "result": "fetch",
+ "run": "B3_colours_s7_red",
+ "runner_checks_pass": true,
+ "seed": 7,
+ "sim_s": 155.936,
+ "timeline": [
+  [
+   -3.799,
+   "IDLE",
+   null
+  ],
+  [
+   0.0,
+   "LOCALIZE",
+   null
+  ],
+  [
+   0.037,
+   "SELECT_SEARCH_REGION",
+   null
+  ],
+  [
+   0.071,
+   "NAVIGATE_TO_RAMP",
+   null
+  ],
+  [
+   13.069,
+   "ALIGN_FOR_CLIMB",
+   null
+  ],
+  [
+   13.144,
+   "CLIMB",
+   null
+  ],
+  [
+   24.773,
+   "VERIFY_CLIMB",
+   null
+  ],
+  [
+   24.943,
+   "SURVEY_REGION",
+   null
+  ],
+  [
+   25.154,
+   "STOW_ARM",
+   null
+  ],
+  [
+   27.736,
+   "APPROACH_TARGET",
+   null
+  ],
+  [
+   40.173,
+   "GRASP",
+   null
+  ],
+  [
+   67.96,
+   "VERIFY_GRASP",
+   null
+  ],
+  [
+   68.161,
+   "DESCEND",
+   null
+  ],
+  [
+   84.159,
+   "RETURN_HOME",
+   null
+  ],
+  [
+   125.847,
+   "RECOVERY",
+   "LOCALIZATION_DEGRADED"
+  ],
+  [
+   125.934,
+   "RELOCALIZE",
+   "LOCALIZATION_DEGRADED"
+  ],
+  [
+   138.162,
+   "RETURN_HOME",
+   "LOCALIZATION_DEGRADED"
+  ],
+  [
+   138.249,
+   "PLACE",
+   "LOCALIZATION_DEGRADED"
+  ],
+  [
+   155.753,
+   "VERIFY_PLACEMENT",
+   "LOCALIZATION_DEGRADED"
+  ],
+  [
+   155.936,
+   "COMPLETE",
+   "LOCALIZATION_DEGRADED"
+  ]
+ ],
+ "timeline_source": "rosbag",
+ "told": {
+  "target_colour": "red"
+ },
+ "truth_region": "bay_3",
+ "void": false
+}

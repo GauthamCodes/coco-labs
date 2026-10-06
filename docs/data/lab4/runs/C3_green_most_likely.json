@@ -1,0 +1,193 @@
+{
+ "bag_sha256": "9626ebe5764579e9c38366f38c3cd78cbafe3db929e997bef5fc7da0c5d0cab3",
+ "colour": "green",
+ "commit": "d78a1d8",
+ "dirty_paths": "1",
+ "discovered": "bay_2",
+ "discovered_at": 2,
+ "episode_id": "ep-e89ab8905964",
+ "evidence_dir": "/home/gautham/coco_lab_runs/lab4/matrix/C3_green_most_likely",
+ "home_error_m": 0.022,
+ "level": "fixed",
+ "lifted": true,
+ "looks": [
+  {
+   "found": false,
+   "lines": 100,
+   "region": "bay_1",
+   "seen": [
+    "red"
+   ]
+  },
+  {
+   "found": true,
+   "lines": null,
+   "region": "bay_2",
+   "seen": [
+    "green"
+   ]
+  }
+ ],
+ "order": [
+  "bay_1",
+  "bay_2"
+ ],
+ "order_arg": "bay_1,bay_2,bay_3,bay_4",
+ "outcome": "COMPLETE",
+ "reason": "LOCALIZATION_DEGRADED",
+ "recoveries": 1,
+ "relocalisations": 1,
+ "result": "fetch",
+ "run": "C3_green_most_likely",
+ "runner_checks_pass": true,
+ "seed": 0,
+ "sim_s": 248.707,
+ "timeline": [
+  [
+   -4.089,
+   "IDLE",
+   null
+  ],
+  [
+   0.0,
+   "LOCALIZE",
+   null
+  ],
+  [
+   0.04,
+   "SELECT_SEARCH_REGION",
+   null
+  ],
+  [
+   0.08,
+   "NAVIGATE_TO_RAMP",
+   null
+  ],
+  [
+   27.196,
+   "ALIGN_FOR_CLIMB",
+   null
+  ],
+  [
+   27.282,
+   "CLIMB",
+   null
+  ],
+  [
+   38.911,
+   "VERIFY_CLIMB",
+   null
+  ],
+  [
+   39.106,
+   "SURVEY_REGION",
+   null
+  ],
+  [
+   59.121,
+   "MARK_REGION_SEARCHED",
+   null
+  ],
+  [
+   59.164,
+   "LEAVE_REGION",
+   null
+  ],
+  [
+   73.289,
+   "SELECT_SEARCH_REGION",
+   null
+  ],
+  [
+   73.333,
+   "NAVIGATE_TO_RAMP",
+   null
+  ],
+  [
+   110.755,
+   "ALIGN_FOR_CLIMB",
+   null
+  ],
+  [
+   110.916,
+   "CLIMB",
+   null
+  ],
+  [
+   117.891,
+   "VERIFY_CLIMB",
+   null
+  ],
+  [
+   118.127,
+   "SURVEY_REGION",
+   null
+  ],
+  [
+   118.314,
+   "STOW_ARM",
+   null
+  ],
+  [
+   120.91,
+   "APPROACH_TARGET",
+   null
+  ],
+  [
+   133.08,
+   "GRASP",
+   null
+  ],
+  [
+   161.299,
+   "VERIFY_GRASP",
+   null
+  ],
+  [
+   161.487,
+   "DESCEND",
+   null
+  ],
+  [
+   177.486,
+   "RETURN_HOME",
+   null
+  ],
+  [
+   218.587,
+   "RECOVERY",
+   "LOCALIZATION_DEGRADED"
+  ],
+  [
+   218.674,
+   "RELOCALIZE",
+   "LOCALIZATION_DEGRADED"
+  ],
+  [
+   230.813,
+   "RETURN_HOME",
+   "LOCALIZATION_DEGRADED"
+  ],
+  [
+   230.902,
+   "PLACE",
+   "LOCALIZATION_DEGRADED"
+  ],
+  [
+   248.498,
+   "VERIFY_PLACEMENT",
+   "LOCALIZATION_DEGRADED"
+  ],
+  [
+   248.707,
+   "COMPLETE",
+   "LOCALIZATION_DEGRADED"
+  ]
+ ],
+ "timeline_source": "rosbag",
+ "told": {
+  "target_colour": "green"
+ },
+ "truth_region": "bay_2",
+ "void": false
+}

@@ -1,0 +1,227 @@
+{
+ "bag_sha256": "5a7472192c618d3a4b22e8680219c9bb3b784d063c1792029364dae3dd9d47ac",
+ "colour": "green",
+ "commit": "d78a1d8",
+ "dirty_paths": "1",
+ "discovered": "bay_2",
+ "discovered_at": 3,
+ "episode_id": "ep-e89ab8905964",
+ "evidence_dir": "/home/gautham/coco_lab_runs/lab4/matrix/A2_fixed_green",
+ "home_error_m": 0.074,
+ "level": "fixed",
+ "lifted": true,
+ "looks": [
+  {
+   "found": false,
+   "lines": 100,
+   "region": "bay_3",
+   "seen": [
+    "blue"
+   ]
+  },
+  {
+   "found": false,
+   "lines": 100,
+   "region": "bay_4",
+   "seen": [
+    "yellow"
+   ]
+  },
+  {
+   "found": true,
+   "lines": null,
+   "region": "bay_2",
+   "seen": [
+    "green"
+   ]
+  }
+ ],
+ "order": [
+  "bay_3",
+  "bay_4",
+  "bay_2"
+ ],
+ "order_arg": "policy",
+ "outcome": "COMPLETE",
+ "reason": "--",
+ "recoveries": 0,
+ "relocalisations": 0,
+ "result": "fetch",
+ "run": "A2_fixed_green",
+ "runner_checks_pass": true,
+ "seed": 0,
+ "sim_s": 314.419,
+ "timeline": [
+  [
+   -3.234,
+   "IDLE",
+   null
+  ],
+  [
+   0.0,
+   "LOCALIZE",
+   null
+  ],
+  [
+   0.029,
+   "SELECT_SEARCH_REGION",
+   null
+  ],
+  [
+   0.064,
+   "NAVIGATE_TO_RAMP",
+   null
+  ],
+  [
+   13.301,
+   "ALIGN_FOR_CLIMB",
+   null
+  ],
+  [
+   13.428,
+   "CLIMB",
+   null
+  ],
+  [
+   24.822,
+   "VERIFY_CLIMB",
+   null
+  ],
+  [
+   25.029,
+   "SURVEY_REGION",
+   null
+  ],
+  [
+   45.045,
+   "MARK_REGION_SEARCHED",
+   null
+  ],
+  [
+   45.072,
+   "LEAVE_REGION",
+   null
+  ],
+  [
+   59.429,
+   "SELECT_SEARCH_REGION",
+   null
+  ],
+  [
+   59.451,
+   "NAVIGATE_TO_RAMP",
+   null
+  ],
+  [
+   96.369,
+   "ALIGN_FOR_CLIMB",
+   null
+  ],
+  [
+   96.415,
+   "CLIMB",
+   null
+  ],
+  [
+   103.416,
+   "VERIFY_CLIMB",
+   null
+  ],
+  [
+   103.622,
+   "SURVEY_REGION",
+   null
+  ],
+  [
+   123.641,
+   "MARK_REGION_SEARCHED",
+   null
+  ],
+  [
+   123.682,
+   "LEAVE_REGION",
+   null
+  ],
+  [
+   137.63,
+   "SELECT_SEARCH_REGION",
+   null
+  ],
+  [
+   137.664,
+   "NAVIGATE_TO_RAMP",
+   null
+  ],
+  [
+   187.064,
+   "ALIGN_FOR_CLIMB",
+   null
+  ],
+  [
+   187.219,
+   "CLIMB",
+   null
+  ],
+  [
+   194.22,
+   "VERIFY_CLIMB",
+   null
+  ],
+  [
+   194.435,
+   "SURVEY_REGION",
+   null
+  ],
+  [
+   194.622,
+   "STOW_ARM",
+   null
+  ],
+  [
+   197.243,
+   "APPROACH_TARGET",
+   null
+  ],
+  [
+   209.633,
+   "GRASP",
+   null
+  ],
+  [
+   236.814,
+   "VERIFY_GRASP",
+   null
+  ],
+  [
+   237.032,
+   "DESCEND",
+   null
+  ],
+  [
+   253.22,
+   "RETURN_HOME",
+   null
+  ],
+  [
+   297.132,
+   "PLACE",
+   null
+  ],
+  [
+   314.239,
+   "VERIFY_PLACEMENT",
+   null
+  ],
+  [
+   314.419,
+   "COMPLETE",
+   null
+  ]
+ ],
+ "timeline_source": "rosbag",
+ "told": {
+  "target_colour": "green"
+ },
+ "truth_region": "bay_2",
+ "void": false
+}

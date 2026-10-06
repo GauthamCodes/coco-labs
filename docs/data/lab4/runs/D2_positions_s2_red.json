@@ -1,0 +1,178 @@
+{
+ "bag_sha256": "1e2fa980a8c5693635369cb1601444ae62962bbff70154540e6cc2188a41a35f",
+ "colour": "red",
+ "commit": "d78a1d8",
+ "dirty_paths": "1",
+ "discovered": "bay_4",
+ "discovered_at": 2,
+ "episode_id": "ep-8ef4f54d7715",
+ "evidence_dir": "/home/gautham/coco_lab_runs/lab4/matrix/D2_positions_s2_red",
+ "home_error_m": 0.151,
+ "level": "positions",
+ "lifted": true,
+ "looks": [
+  {
+   "found": false,
+   "lines": 100,
+   "region": "bay_3",
+   "seen": [
+    "yellow"
+   ]
+  },
+  {
+   "found": true,
+   "lines": null,
+   "region": "bay_4",
+   "seen": [
+    "red"
+   ]
+  }
+ ],
+ "order": [
+  "bay_3",
+  "bay_4"
+ ],
+ "order_arg": "policy",
+ "outcome": "COMPLETE",
+ "reason": "--",
+ "recoveries": 0,
+ "relocalisations": 0,
+ "result": "fetch",
+ "run": "D2_positions_s2_red",
+ "runner_checks_pass": true,
+ "seed": 2,
+ "sim_s": 232.166,
+ "timeline": [
+  [
+   -4.516,
+   "IDLE",
+   null
+  ],
+  [
+   0.0,
+   "LOCALIZE",
+   null
+  ],
+  [
+   0.043,
+   "SELECT_SEARCH_REGION",
+   null
+  ],
+  [
+   0.084,
+   "NAVIGATE_TO_RAMP",
+   null
+  ],
+  [
+   13.024,
+   "ALIGN_FOR_CLIMB",
+   null
+  ],
+  [
+   13.148,
+   "CLIMB",
+   null
+  ],
+  [
+   24.967,
+   "VERIFY_CLIMB",
+   null
+  ],
+  [
+   25.147,
+   "SURVEY_REGION",
+   null
+  ],
+  [
+   45.183,
+   "MARK_REGION_SEARCHED",
+   null
+  ],
+  [
+   45.223,
+   "LEAVE_REGION",
+   null
+  ],
+  [
+   58.943,
+   "SELECT_SEARCH_REGION",
+   null
+  ],
+  [
+   58.986,
+   "NAVIGATE_TO_RAMP",
+   null
+  ],
+  [
+   94.124,
+   "ALIGN_FOR_CLIMB",
+   null
+  ],
+  [
+   94.162,
+   "CLIMB",
+   null
+  ],
+  [
+   101.358,
+   "VERIFY_CLIMB",
+   null
+  ],
+  [
+   101.571,
+   "SURVEY_REGION",
+   null
+  ],
+  [
+   101.768,
+   "STOW_ARM",
+   null
+  ],
+  [
+   104.378,
+   "APPROACH_TARGET",
+   null
+  ],
+  [
+   116.543,
+   "GRASP",
+   null
+  ],
+  [
+   144.55,
+   "VERIFY_GRASP",
+   null
+  ],
+  [
+   144.764,
+   "DESCEND",
+   null
+  ],
+  [
+   160.754,
+   "RETURN_HOME",
+   null
+  ],
+  [
+   214.785,
+   "PLACE",
+   null
+  ],
+  [
+   231.964,
+   "VERIFY_PLACEMENT",
+   null
+  ],
+  [
+   232.166,
+   "COMPLETE",
+   null
+  ]
+ ],
+ "timeline_source": "rosbag",
+ "told": {
+  "target_colour": "red"
+ },
+ "truth_region": "bay_4",
+ "void": false
+}
