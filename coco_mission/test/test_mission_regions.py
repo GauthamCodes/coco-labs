@@ -168,8 +168,12 @@ def _launch_module():
 
 def _resolve(**configs):
     context = LaunchContext()
+    # search=false: these tests are about the TOLD mission's compatibility
+    # channel, which search:=false keeps exactly as it was. The search
+    # path is tested in test_mission_search.py.
     base = {'episode_level': 'fixed', 'episode_seed': '0',
-            'episode_manifest': '', 'target_colour': 'blue'}
+            'episode_manifest': '', 'target_colour': 'blue',
+            'search': 'false'}
     base.update({k: str(v) for k, v in configs.items()})
     context.launch_configurations.update(base)
     actions = _launch_module().resolve_mission_episode(context)

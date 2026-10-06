@@ -123,6 +123,12 @@ RECOVERY = 'RECOVERY'
 # resumes. It is not on NOMINAL_NEXT and cannot be reached from it.
 RELOCALIZE = 'RELOCALIZE'
 ABORT = 'ABORT'
+# Phase 5 (Lab 4): the search states. Entered only when the plan carries a
+# search session; the told mission never visits them.
+SELECT_SEARCH_REGION = 'SELECT_SEARCH_REGION'
+SURVEY_REGION = 'SURVEY_REGION'
+MARK_REGION_SEARCHED = 'MARK_REGION_SEARCHED'
+LEAVE_REGION = 'LEAVE_REGION'
 
 TERMINAL_STATES = (COMPLETE, ABORT)
 
@@ -174,6 +180,14 @@ PLACEMENT_VERIFY_TIMEOUT = 'PLACEMENT_VERIFY_TIMEOUT'
 RECOVERY_TIMEOUT = 'RECOVERY_TIMEOUT'
 OPERATOR_ABORT = 'OPERATOR_ABORT'
 CLOCK_STALLED = 'CLOCK_STALLED'
+# Phase 5. Every region was surveyed and none held the target.
+SEARCH_EXHAUSTED = 'SEARCH_EXHAUSTED'
+# The survey window passed without the perception status needed to call
+# it a miss: silence is not a negative observation.
+PERCEPTION_SILENT = 'PERCEPTION_SILENT'
+LEAVE_FAILED = 'LEAVE_FAILED'
+LEAVE_TIPPED = 'LEAVE_TIPPED'
+LEAVE_TIMEOUT = 'LEAVE_TIMEOUT'
 # C2-M5.1. The scan stopped agreeing with the map, and stayed that way
 # for DEGRADED_HOLD_S. Distinct from RETURN_FAILED on purpose: that one
 # says Nav2 gave up, this one says the pose Nav2 was steering by is not
@@ -187,6 +201,19 @@ LOCALIZATION_RECOVERY_UNAVAILABLE = 'LOCALIZATION_RECOVERY_UNAVAILABLE'
 RUNNING = 'running'
 SUCCESS = 'success'
 FAILURE = 'failure'
+# A survey that saw, properly, that the target is not here. Neither a
+# success nor a failure: an observation, and it never enters RECOVERY.
+NEGATIVE = 'negative'
+
+# Phase 5. How long a survey looks before a miss counts, and how many
+# fresh perception lines that miss must rest on. 20 s is SEARCH_TARGET's
+# 15 s window plus a quarter: a negative costs a whole region, so it waits
+# a little longer than a confirmation does. 10 lines is two seconds of
+# target_finder's 5 Hz status -- the "prove you can see something" rule
+# (CLAUDE.md, the cmd_vel message-type trap): a window with no status in it is
+# PERCEPTION_SILENT, never a miss.
+SURVEY_WINDOW = 20.0
+SURVEY_MIN_LINES = 10
 
 # ── what happens when a state's retries run out ──────────────────────────
 ESCALATE_ABORT = 'abort'
@@ -659,6 +686,27 @@ CONTRACTS = {
              'budget, so a leg that Nav2 aborted has not already spent it'),
     COMPLETE: StateContract(COMPLETE, 'idle', 'nobody', None),
     ABORT: StateContract(ABORT, 'idle', 'nobody', None),
+    # Phase 5 (Lab 4). The search states, entered only in search mode.
+    SELECT_SEARCH_REGION: StateContract(
+        SELECT_SEARCH_REGION, 'idle', 'nobody', 10.0,
+        note='coco_lab.regionsearch chooses the next bay from the belief, '
+             'the bays searched and where the robot is -- never from the '
+             'manifest, a region map or the truth'),
+    SURVEY_REGION: StateContract(
+        SURVEY_REGION, 'idle', 'nobody', SURVEY_WINDOW + 15.0,
+        max_retries=1, on_exhausted=ESCALATE_SKIP_GRASP,
+        note='look at the platform for SURVEY_WINDOW s. A find goes on to '
+             'the grasp; a miss resting on SURVEY_MIN_LINES fresh lines is '
+             'an observation, not a failure; silence is a failure'),
+    MARK_REGION_SEARCHED: StateContract(
+        MARK_REGION_SEARCHED, 'idle', 'nobody', 10.0,
+        note='bookkeeping: the miss is in the belief and the bay is '
+             'marked searched'),
+    LEAVE_REGION: StateContract(
+        LEAVE_REGION, 'rl', 'ramp_driver', 120.0,
+        note='back down the ramp the robot climbed (/ramp/retreat), never '
+             'over a deck that still holds a target. No retry, for the '
+             'same reason as CLIMB'),
 }
 
 # The nominal path. Written once, here, so the sequence is readable
@@ -694,7 +742,20 @@ STATE_SERVICE = {
     GRASP: '/grasp/pick',
     DESCEND: '/ramp/descend',
     PLACE: '/grasp/place',
+    LEAVE_REGION: '/ramp/retreat',
 }
+
+# The search loop's own path, which NOMINAL_NEXT (the told mission, and
+# the step-N-of-16 progress the browser shows) does not contain.
+SEARCH_NEXT = {
+    LOCALIZE: SELECT_SEARCH_REGION,
+    SELECT_SEARCH_REGION: NAVIGATE_TO_RAMP,
+    VERIFY_CLIMB: SURVEY_REGION,
+    SURVEY_REGION: STOW_ARM,
+    MARK_REGION_SEARCHED: LEAVE_REGION,
+}
+SEARCH_STATES = (SELECT_SEARCH_REGION, SURVEY_REGION, MARK_REGION_SEARCHED,
+                 LEAVE_REGION)
 
 
 class MissionPlan:
@@ -714,8 +775,15 @@ class MissionPlan:
                  lane_tolerance=LANE_TOLERANCE,
                  climb_end_x=CLIMB_END_X,
                  localization_recovery=True,
-                 region_map=None):
+                 region_map=None,
+                 search=None):
         self.colour = colour
+        # Phase 5. A mission_search.SearchSession, or None for the told
+        # mission. With one, the region map is refused: a search that was
+        # also told the answer would be no search.
+        self.search = search
+        if search is not None and region_map:
+            raise ValueError('a searching mission takes no region map')
         # Stage C. `region_map` is an episode's colour -> region NAME
         # assignment (coco_config.robot.parse_region_map); the lane comes
         # from the static region table, so the plan never holds a target
@@ -724,8 +792,14 @@ class MissionPlan:
         # nothing gets. An explicit `lane` still wins over both.
         self.region_map = dict(region_map or {})
         self.region = self.region_map.get(colour)
-        resolved = (lane if lane is not None
-                    else resolve_lane(colour, self.region_map))
+        # Phase 5: a searching plan holds no lane until the search picks a
+        # bay (set_region). Resolving one from the colour here would be
+        # the told channel again, however briefly.
+        if search is not None:
+            resolved = lane
+        else:
+            resolved = (lane if lane is not None
+                        else resolve_lane(colour, self.region_map))
         self.lane = 0.0 if resolved is None else resolved
         self.do_grasp = do_grasp
         self.home = home
@@ -737,7 +811,8 @@ class MissionPlan:
         self.yaw_tolerance = yaw_tolerance
         self.lane_tolerance = lane_tolerance
         # TargetRegion contract drives pre_ramp, ramp_foot, summit, climb_end and descent
-        target_region = (region_by_id(self.region) if self.region else None) or region_for_lane(self.lane)
+        target_region = (region_by_id(self.region) if self.region else None) or (
+            None if search is not None else region_for_lane(self.lane))
         if target_region is not None:
             self.pre_ramp_x = target_region.pre_ramp_x if pre_ramp_x == PRE_RAMP_X else pre_ramp_x
             self.climb_end_x = target_region.climb_end_x if climb_end_x == CLIMB_END_X else climb_end_x
@@ -754,6 +829,30 @@ class MissionPlan:
         # which is how the false-positive experiment was run and how a
         # mission is reproduced exactly as it ran before C2-M5.1.
         self.localization_recovery = localization_recovery
+
+    @property
+    def searching(self):
+        """Return True when the mission discovers its target."""
+        return self.search is not None
+
+    def set_region(self, region_id):
+        """
+        Point the plan at one bay: the one the search chose to survey.
+
+        Everything the climb needs -- lane, pre-ramp pose, climb end,
+        descent goal -- comes from the static region table, exactly as for
+        a told mission; only who chose the bay differs.
+        """
+        target_region = region_by_id(region_id)
+        if target_region is None:
+            raise ValueError(f'unknown region {region_id!r}')
+        self.region = target_region.region_id
+        self.lane = target_region.lane_y
+        self.pre_ramp_x = target_region.pre_ramp_x
+        self.climb_end_x = target_region.climb_end_x
+        self.ramp_foot_x = target_region.ramp_foot_x
+        self.ramp_summit_x = target_region.ramp_summit_x
+        self.descent_goal = (target_region.descent_x, self.lane)
 
     @property
     def pre_ramp(self):
@@ -811,6 +910,13 @@ class MissionMachine:
         self._ros_still_since = None
         self._pending_events = []
         self._started_at = None
+        # Phase 5, the survey in progress: fresh lines counted, colours
+        # seen, and the miss waiting for MARK_REGION_SEARCHED to record.
+        self._survey_lines = 0
+        self._survey_stamp = None
+        self._survey_seen = set()
+        self._pending_miss = None
+        self._selected_token = None
 
     # ── introspection ────────────────────────────────────────────────────
     @property
@@ -862,6 +968,8 @@ class MissionMachine:
 
         if status == SUCCESS:
             self._advance(obs)
+        elif status == NEGATIVE:
+            self._survey_negative(obs)
         elif status == FAILURE:
             self._fail(obs, reason, detail=detail)
         else:
@@ -909,6 +1017,10 @@ class MissionMachine:
         self._accepted_at = None
         self._latched_outcome = None
         self._saw_busy = False
+        if state == SURVEY_REGION:
+            self._survey_lines = 0
+            self._survey_stamp = None
+            self._survey_seen = set()
         self._pending_events.append(
             Event(now, self.previous, state, reason=reason,
                   attempt=self.attempt(state), detail=detail))
@@ -931,15 +1043,33 @@ class MissionMachine:
                                     f'{resume}')
             return
 
-        nxt = NOMINAL_NEXT[self.state]
+        if self.plan.searching and self.state == LEAVE_REGION:
+            self._after_leaving(now)
+            return
+
+        if self.plan.searching and self.state in SEARCH_NEXT:
+            nxt = SEARCH_NEXT[self.state]
+        else:
+            nxt = NOMINAL_NEXT[self.state]
 
         if self.state == IDLE:
             self._started_at = now
 
         # --no-grasp, and the skip_grasp escalation, both cut the same
-        # five platform states out of the path.
+        # five platform states out of the path. A SEARCHING mission leaves
+        # by backing down the ramp instead: the descent drives forward over
+        # the deck, and the target is still standing on it.
         if nxt in PLATFORM_STATES and not self._grasping():
-            nxt = DESCEND
+            nxt = LEAVE_REGION if self.plan.searching else DESCEND
+
+        if self.state == SELECT_SEARCH_REGION:
+            search = self.plan.search
+            self._transition(
+                nxt, now,
+                detail=f'search chose {self.plan.region} '
+                       f'(survey {len(search.order) + 1}, '
+                       f'searched {",".join(search.problem.ids[i] for i in search.searched) or "none"})')
+            return
 
         if self.state == RETURN_HOME and not self._grasping():
             # Nothing to put down. A traverse that was asked for ends
@@ -960,6 +1090,34 @@ class MissionMachine:
             self.result = 'fetch'
 
         self._transition(nxt, now)
+
+    def _after_leaving(self, now):
+        """Back on the flat: look in the next bay, or go home."""
+        search = self.plan.search
+        if (self.degraded_reason is None and search.discovered is None
+                and search.remaining() > 0):
+            self._transition(SELECT_SEARCH_REGION, now,
+                             detail=f'{search.remaining()} bay(s) left')
+            return
+        if self.degraded_reason is None and search.discovered is None:
+            self.degraded_reason = SEARCH_EXHAUSTED
+            self._transition(RETURN_HOME, now, reason=SEARCH_EXHAUSTED,
+                             detail='every bay searched; coming home')
+            return
+        self._transition(RETURN_HOME, now, reason=self.degraded_reason,
+                         detail='left the bay; coming home')
+
+    def _survey_negative(self, obs):
+        """A survey that saw, properly, that the target is not here."""
+        self._pending_miss = {
+            'seen': sorted(self._survey_seen),
+            'lines': self._survey_lines,
+            'stamp': obs.ros_now}
+        seen = ','.join(sorted(self._survey_seen)) or 'nothing'
+        self._transition(
+            MARK_REGION_SEARCHED, obs.ros_now,
+            detail=f'{self.plan.region}: no {self.plan.colour} in '
+                   f'{self._survey_lines} perception lines (saw {seen})')
 
     def _grasping(self):
         """True while the grasp half of the mission is still live."""
@@ -1026,10 +1184,13 @@ class MissionMachine:
         if (not self.escalate
                 and contract.on_exhausted == ESCALATE_SKIP_GRASP):
             # Give up on the object, keep the robot. The descent and the
-            # drive home still run; the reason is carried to the end.
+            # drive home still run; the reason is carried to the end. A
+            # searching mission leaves the way it came (LEAVE_REGION): the
+            # target may still be on the deck the descent would cross.
             self.degraded_reason = self.reason
-            self._transition(DESCEND, now, reason=self.reason,
-                             detail='grasp abandoned; coming home')
+            self._transition(
+                LEAVE_REGION if self.plan.searching else DESCEND, now,
+                reason=self.reason, detail='grasp abandoned; coming home')
             return
 
         self.result = 'aborted'
@@ -1073,6 +1234,8 @@ class MissionMachine:
             # _resolve_recovery therefore aborts. One spin per charged
             # attempt, and the attempt was charged against the leg.
             RELOCALIZE: LOCALIZATION_RECOVERY_TIMEOUT,
+            SURVEY_REGION: PERCEPTION_SILENT,
+            LEAVE_REGION: LEAVE_TIMEOUT,
         }.get(self.state, RECOVERY_TIMEOUT)
 
     # ── the directive ────────────────────────────────────────────────────
@@ -1295,6 +1458,70 @@ class MissionMachine:
         if obs.perception.get('found') == '1':
             return SUCCESS
         return RUNNING
+
+    # ── Phase 5, the search ──────────────────────────────────────────────
+    def _check_select_search_region(self, obs):
+        # Once per entry. The choice is coco_lab's, from the search's own
+        # state; the observation's pose, the colour and the perception
+        # line are not read here at all.
+        if self._selected_token != self._token:
+            self._selected_token = self._token
+            region = self.plan.search.select()
+            if region is None:
+                return (FAILURE, SEARCH_EXHAUSTED,
+                        'no bay left for this search policy')
+            self.plan.set_region(region)
+        return SUCCESS
+
+    def _check_survey_region(self, obs):
+        view = obs.perception
+        if (view.newer_than(self.entered_at)
+                and view.stamp != self._survey_stamp):
+            self._survey_stamp = view.stamp
+            selected = view.get('sel')
+            if (not missing(selected) and self.plan.colour
+                    and selected != self.plan.colour):
+                return (FAILURE, TARGET_COLOUR_MISMATCH,
+                        f'vision is selecting {selected}, mission wants '
+                        f'{self.plan.colour}')
+            if selected == self.plan.colour:
+                self._survey_lines += 1
+                seen = view.get('seen')
+                if not missing(seen):
+                    self._survey_seen |= {c for c in seen.split(',') if c}
+                if view.get('found') == '1':
+                    # Discovery. The point is perception's, in
+                    # base_footprint; nothing here knows where the target
+                    # was put. (The line's `lane=` field is
+                    # lane_for_colour -- the told lane -- and is not read.)
+                    point = tuple(_as_float(view.get(k))
+                                  for k in ('x', 'y', 'z'))
+                    self.plan.search.observe(
+                        True, seen=self._survey_seen, point=point,
+                        stamp=obs.ros_now, lines=self._survey_lines)
+                    return SUCCESS
+        if self.elapsed(obs.ros_now) < SURVEY_WINDOW:
+            return RUNNING
+        if self._survey_lines >= SURVEY_MIN_LINES:
+            return NEGATIVE
+        return (FAILURE, PERCEPTION_SILENT,
+                f'{self._survey_lines} perception lines for '
+                f'{self.plan.colour} in {SURVEY_WINDOW:.0f}s; a miss needs '
+                f'{SURVEY_MIN_LINES}')
+
+    def _check_mark_region_searched(self, obs):
+        miss = self._pending_miss or {}
+        self._pending_miss = None
+        if self.plan.search.current is not None:
+            self.plan.search.observe(False, **miss)
+        return SUCCESS
+
+    def _check_leave_region(self, obs):
+        return self._check_worker(
+            obs, '/ramp/retreat', obs.ramp, 'segment',
+            good=('goal',),
+            reasons={'tipped': LEAVE_TIPPED, 'timeout': LEAVE_TIMEOUT},
+            default=LEAVE_FAILED)
 
     def _check_verify_grasp(self, obs):
         if not obs.grasp.newer_than(self.entered_at):

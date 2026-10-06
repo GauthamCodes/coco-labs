@@ -107,7 +107,8 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 
-from coco_sim.episode import compat_mission_inputs, resolve_episode
+from coco_sim.episode import (compat_mission_inputs, resolve_episode,
+                              search_mission_inputs)
 
 from launch import LaunchDescription
 from launch.actions import (DeclareLaunchArgument, IncludeLaunchDescription,
@@ -144,6 +145,7 @@ def resolve_mission_episode(context):
     """
     level = LaunchConfiguration('episode_level').perform(context)
     manifest = LaunchConfiguration('episode_manifest').perform(context)
+    searching = LaunchConfiguration('search').perform(context) == 'true'
     if level == 'fixed' and not manifest:
         return []
     colour = LaunchConfiguration('target_colour').perform(context)
@@ -151,16 +153,30 @@ def resolve_mission_episode(context):
         level=level,
         seed=LaunchConfiguration('episode_seed').perform(context),
         requested_colour=colour, manifest_path=manifest)
-    inputs = compat_mission_inputs(spec)
-    requested = inputs['target_colour']
-    actions = [
-        SetLaunchConfiguration('target_colour', requested),
-        SetLaunchConfiguration(REGION_MAP, inputs['region_map']),
-        LogInfo(msg=(
-            f'[episode] {spec.episode_id} level={spec.level} '
-            f'seed={spec.seed} requested={requested} '
-            f'region_map={inputs["region_map"]}')),
-    ]
+    if searching:
+        # Phase 5: the searching mission gets the task view's colour and
+        # NOTHING else. REGION_MAP stays empty whatever the manifest says;
+        # the robot finds out which bay for itself.
+        inputs = search_mission_inputs(spec)
+        requested = inputs['target_colour']
+        actions = [
+            SetLaunchConfiguration('target_colour', requested),
+            LogInfo(msg=(
+                f'[episode] {spec.episode_id} level={spec.level} '
+                f'seed={spec.seed} requested={requested} '
+                f'search=true (told the colour only)')),
+        ]
+    else:
+        inputs = compat_mission_inputs(spec)
+        requested = inputs['target_colour']
+        actions = [
+            SetLaunchConfiguration('target_colour', requested),
+            SetLaunchConfiguration(REGION_MAP, inputs['region_map']),
+            LogInfo(msg=(
+                f'[episode] {spec.episode_id} level={spec.level} '
+                f'seed={spec.seed} requested={requested} '
+                f'region_map={inputs["region_map"]}')),
+        ]
     if requested != colour:
         actions.append(LogInfo(msg=(
             f'[episode] target_colour {colour} overridden by the '
@@ -325,6 +341,29 @@ def generate_launch_description():
             description='Recorded manifest JSON (the world launch '
                         'episode_record). Wins over level/seed, and its '
                         'requested colour overrides target_colour.'),
+        # -- search (Phase 5, Lab 4) ----------------------------------------
+        DeclareLaunchArgument(
+            'search', default_value='true', choices=['true', 'false'],
+            description='true (default since Phase 5): the mission '
+                        'DISCOVERS the target -- told only the colour, it '
+                        'surveys the bays in the order coco_lab chooses, '
+                        'and no region map reaches the robot. false: the '
+                        'told mission (resolve_lane), exactly as measured '
+                        'before Phase 5.'),
+        DeclareLaunchArgument(
+            'search_policy', default_value='expected_cost',
+            choices=['expected_cost', 'given'],
+            description='expected_cost: coco_lab.regionsearch minimises '
+                        'expected search cost. given: survey search_order.'),
+        DeclareLaunchArgument(
+            'search_order', default_value='',
+            description='Comma-separated bays (e.g. bay_4,bay_1) for a '
+                        'held-fixed comparison; implies search_policy '
+                        'given.'),
+        DeclareLaunchArgument(
+            'search_detection', default_value='0.9',
+            description='P(found | target on the surveyed platform), an '
+                        'ASSUMPTION (mission_search.DEFAULT_DETECTION).'),
         OpaqueFunction(function=resolve_mission_episode),
         DeclareLaunchArgument(
             'lateral_hold', default_value='true',
@@ -397,6 +436,10 @@ def generate_launch_description():
                 # silently ignored; the topic has to be a parameter.
                 'cmd_vel_topic': '/cmd_vel_rl',
                 'lateral_hold': LaunchConfiguration('lateral_hold'),
+                # Phase 5: searching, the colour does not set the climb's
+                # datum; the bay the executive chose does.
+                'search_mode': ParameterValue(
+                    LaunchConfiguration('search'), value_type=bool),
                 # Typed as a string so an empty map stays '' instead of
                 # being YAML-parsed into a null parameter.
                 'region_map': ParameterValue(
@@ -432,6 +475,14 @@ def generate_launch_description():
                 'region_map': ParameterValue(
                     LaunchConfiguration(REGION_MAP, default=''),
                     value_type=str),
+                'search': ParameterValue(
+                    LaunchConfiguration('search'), value_type=bool),
+                'search_policy': LaunchConfiguration('search_policy'),
+                'search_order': ParameterValue(
+                    LaunchConfiguration('search_order'), value_type=str),
+                'search_detection': ParameterValue(
+                    LaunchConfiguration('search_detection'),
+                    value_type=float),
             }],
             condition=IfCondition(LaunchConfiguration('executive')),
         ),

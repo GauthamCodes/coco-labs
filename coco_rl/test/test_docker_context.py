@@ -210,8 +210,10 @@ def test_dockerfile_builds_every_package_the_mission_needs():
     if not dockerfile.exists():
         pytest.skip('Dockerfile not present in this tree')
     text = dockerfile.read_text()
+    # coco_lab since Phase 5: mission_search imports coco_lab.regionsearch,
+    # so an image without it cannot start the (default, searching) mission.
     required = [
-        'coco_config', 'coco_mission', 'coco_moveit_config',
+        'coco_config', 'coco_lab', 'coco_mission', 'coco_moveit_config',
         'coco_perception', 'coco_rl', 'coco_sim', 'coco_web',
         'custom_teleop', 'gazebo_models',
     ]

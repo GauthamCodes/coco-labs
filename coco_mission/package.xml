@@ -42,6 +42,9 @@
   <exec_depend>action_msgs</exec_depend>
   <exec_depend>std_srvs</exec_depend>
   <exec_depend>coco_config</exec_depend>
+  <!-- Phase 5: the search decision is coco_lab.regionsearch, the same
+       code Lab 4 runs in the browser. coco_lab depends on nothing. -->
+  <exec_depend>coco_lab</exec_depend>
   <!-- /imu, the source for ROBOT PITCH. -->
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>rviz2</exec_depend>

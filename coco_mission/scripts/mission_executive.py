@@ -99,6 +99,8 @@ from coco_config.robot import parse_region_map, TARGET_COLOURS
 
 from geometry_msgs.msg import PoseWithCovarianceStamped
 
+import mission_search as msearch
+
 import mission_states as ms
 
 from nav2_msgs.action import NavigateToPose, Spin
@@ -161,7 +163,7 @@ STATUS_TOPICS = (
 # RECOVERY/ABORT use to stop them. /grasp has no stop service — an arm
 # trajectory in flight is finished by move_group, not interrupted here.
 SERVICES = (
-    '/ramp/climb', '/ramp/descend', '/ramp/stop',
+    '/ramp/climb', '/ramp/descend', '/ramp/retreat', '/ramp/stop',
     '/approach/run', '/approach/stop',
     '/grasp/stow', '/grasp/pick', '/grasp/place',
 )
@@ -221,6 +223,18 @@ class MissionExecutive(Node):
         # Region names only: the lane comes from coco_config's static
         # region table, and no target coordinate reaches this node.
         self.declare_parameter('region_map', '')
+        # Phase 5 (Lab 4). True: the mission DISCOVERS the target -- it is
+        # told only the colour, and searches the bays in the order
+        # coco_lab.regionsearch chooses (or a given order, for a held-fixed
+        # comparison). A region map is refused alongside it. False (this
+        # node's default; mission.launch.py's is true) is the told mission.
+        self.declare_parameter('search', False)
+        self.declare_parameter('search_policy', 'expected_cost')
+        self.declare_parameter('search_order', '')
+        self.declare_parameter('search_detection',
+                               msearch.DEFAULT_DETECTION)
+        # '' = the installed Nav2 map the stack localises against.
+        self.declare_parameter('search_map', '')
 
         # The CLI wins over the parameter, because `ros2 run ... --colour
         # blue` is the headless form and the parameter is the launch-file
@@ -251,6 +265,10 @@ class MissionExecutive(Node):
         self.exit_on_finish = bool(
             self.get_parameter('exit_on_finish').value)
 
+        self.search = None
+        if bool(self.get_parameter('search').value):
+            self.search = self._build_search()
+
         self.plan = ms.MissionPlan(
             self.colour, lane=lane, do_grasp=do_grasp,
             xy_tolerance=float(self.get_parameter('xy_tolerance').value),
@@ -259,7 +277,8 @@ class MissionExecutive(Node):
                 self.get_parameter('lane_tolerance').value),
             localization_recovery=bool(
                 self.get_parameter('localization_recovery').value),
-            region_map=self.region_map)
+            region_map=self.region_map,
+            search=self.search)
         self.machine = ms.MissionMachine(
             self.plan,
             stall_limit=float(self.get_parameter('stall_limit').value))
@@ -299,6 +318,14 @@ class MissionExecutive(Node):
         self._state_pub = self.create_publisher(String, '/mission/state', 10)
         self._colour_pub = self.create_publisher(
             String, '/mission/target_colour', 10)
+        # Phase 5. The bay being surveyed (ramp_driver's cross-track datum
+        # in search mode) and the search's own status line, which says
+        # mode=told when this mission is the told one -- so a display can
+        # label it honestly from what is running, not from a constant.
+        self._region_pub = self.create_publisher(
+            String, '/mission/search_region', 10)
+        self._search_pub = self.create_publisher(
+            String, '/mission/search', 10)
 
         # ── the subsystems ───────────────────────────────────────────────
         self._nav = ActionClient(self, NavigateToPose, 'navigate_to_pose')
@@ -360,15 +387,39 @@ class MissionExecutive(Node):
         self.create_timer(1.0 / PUBLISH_HZ, self._assert_outputs,
                           clock=self._steady)
 
+        if self.search is not None:
+            problem = self.search.problem
+            self.get_logger().info(
+                f'SEARCH mode: told the colour only; bays '
+                f'{",".join(problem.ids)}, uniform prior, detection '
+                f'{problem.detection[0]:.2f} (assumed), policy '
+                f'{self.search.policy}'
+                f'{"" if not self.search.given_order else " order " + ",".join(problem.ids[i] for i in self.search.given_order)}; '
+                f'travel (m, A* on {problem.meta.get("map")}) '
+                f'{problem.travel}')
         self.get_logger().info(
             f'mission_executive up: colour={self.colour or "--"} '
-            f'lane={self.plan.lane:+.2f}{_region_note(self.plan)} '
+            f'lane={"searching" if self.search is not None else f"{self.plan.lane:+.2f}"}'
+            f'{_region_note(self.plan)} '
             f'grasp={"yes" if do_grasp else "no (traverse only)"} '
             f'autostart={self.started}')
         if not self.started:
             self.get_logger().info(
                 'waiting for /mission/start — '
                 'ros2 service call /mission/start std_srvs/srv/Trigger')
+
+    def _build_search(self):
+        """Build the search session from the robot's own map; refuse a bad one."""
+        path = str(self.get_parameter('search_map').value or '') or \
+            msearch.default_map_yaml()
+        problem = msearch.build_problem(
+            path, float(self.get_parameter('search_detection').value))
+        policy = str(self.get_parameter('search_policy').value)
+        order = msearch.parse_order(
+            str(self.get_parameter('search_order').value or ''), problem)
+        if order and policy != 'given':
+            policy = 'given'
+        return msearch.SearchSession(problem, policy, order)
 
     # ── clocks ───────────────────────────────────────────────────────────
     def now(self):
@@ -411,11 +462,18 @@ class MissionExecutive(Node):
             xy_tolerance=self.plan.xy_tolerance,
             yaw_tolerance=self.plan.yaw_tolerance,
             lane_tolerance=self.plan.lane_tolerance,
-            region_map=self.region_map)
+            localization_recovery=self.plan.localization_recovery,
+            region_map=self.region_map,
+            search=self.search)
         self.machine.plan = self.plan
-        self.get_logger().info(
-            f'target colour {colour}, lane {self.plan.lane:+.2f}'
-            f'{_region_note(self.plan)}')
+        if self.search is not None:
+            self.get_logger().info(
+                f'target colour {colour}; searching (the colour does not '
+                f'choose a bay)')
+        else:
+            self.get_logger().info(
+                f'target colour {colour}, lane {self.plan.lane:+.2f}'
+                f'{_region_note(self.plan)}')
 
     # ── operator services ────────────────────────────────────────────────
     def _on_start(self, request, response):
@@ -472,6 +530,11 @@ class MissionExecutive(Node):
 
         for event in directive.events:
             self._log_event(event)
+            if self.search is not None and (
+                    event.previous in ms.SEARCH_STATES
+                    or event.state in ms.SEARCH_STATES):
+                self.get_logger().info(
+                    f'search: {self.search.status_line()}')
 
         if (directive.request is not None
                 and directive.request.token != self._token):
@@ -843,6 +906,13 @@ class MissionExecutive(Node):
         self._last_published = line
         if self.announce and self.colour:
             self._colour_pub.publish(String(data=self.colour))
+        if self.search is not None:
+            self._search_pub.publish(
+                String(data=self.search.status_line()))
+            if self.plan.region:
+                self._region_pub.publish(String(data=self.plan.region))
+        else:
+            self._search_pub.publish(String(data=msearch.TOLD_LINE))
 
     # ── shutdown ─────────────────────────────────────────────────────────
     def should_exit(self):

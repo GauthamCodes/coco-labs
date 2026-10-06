@@ -125,12 +125,12 @@ def test_the_executive_module_is_where_we_think_it_is():
 
 
 def test_every_state_name_matches_the_executive():
-    """All nineteen states, spelled exactly as the executive spells them."""
+    """All twenty-three states (four since Phase 5), spelled exactly."""
     constants = _executive_constants()
     for state in mv.STATES:
         assert constants.get(state) == state, (
             f'{state} is not a state constant in mission_states.py')
-    assert len(mv.STATES) == 19
+    assert len(mv.STATES) == 23
 
 
 def test_terminal_states_match_the_executive():
@@ -156,12 +156,12 @@ def test_nominal_order_matches_the_executive_chain():
 
 
 def test_every_reason_matches_the_executive():
-    """All forty-eight failure reasons exist, spelled identically."""
+    """All fifty-three failure reasons (five since Phase 5) exist."""
     constants = _executive_constants()
     for reason in mv.REASONS:
         assert constants.get(reason) == reason, (
             f'{reason} is not a reason constant in mission_states.py')
-    assert len(mv.REASONS) == 48
+    assert len(mv.REASONS) == 53
 
 
 def test_no_executive_reason_is_missing_from_our_copy():
@@ -441,7 +441,7 @@ def test_an_unknown_reason_is_marked_unknown_not_printed_as_prose():
 
 
 def test_a_known_reason_is_marked_known():
-    """The forty-eight documented reasons pass the same check."""
+    """The fifty-three documented reasons pass the same check."""
     line = LINE.replace('reason=--', 'reason=CLIMB_TIPPED')
     view = mv.normalise(_fields(line))
     assert view['reason_known'] is True
@@ -477,3 +477,56 @@ def test_no_percentage_is_reported():
         if isinstance(value, float):
             assert not 0.0 < value < 1.0 or key != 'progress'
     assert 'progress' not in view
+
+
+# -- Phase 5 (Lab 4): the search ------------------------------------------------
+
+def test_search_states_match_the_executive_tuple():
+    assert tuple(_executive_constants()['SEARCH_STATES']) == mv.SEARCH_STATES
+
+
+def test_the_search_loop_is_not_on_the_told_missions_step_chain():
+    """Step N of 16 is the told path; a search state reports no step."""
+    chain = _executive_constants()['SEARCH_NEXT']
+    assert chain['LOCALIZE'] == 'SELECT_SEARCH_REGION'
+    assert chain['VERIFY_CLIMB'] == 'SURVEY_REGION'
+    for state in mv.SEARCH_STATES:
+        assert mv.step_for(state) == (None, 16)
+        assert mv.phase_for(state) == 'SEARCHING'
+
+
+SEARCH_LINE = ('mode=discover policy=expected_cost '
+               'regions=bay_1,bay_2,bay_3,bay_4 '
+               'order=bay_3,bay_4 current=bay_2 searched=bay_3,bay_4 '
+               'belief=0.4386,0.4386,0.0614,0.0614 discovered=-- surveys=2 '
+               'seen=yellow driven=20.54 detection=0.90')
+
+
+def test_the_search_line_becomes_the_search_block():
+    from coco_web import telemetry as tele
+    block = tele.parse_mission_search(SEARCH_LINE)
+    assert block['online'] and block['mode'] == 'discover'
+    assert block['regions'] == ['bay_1', 'bay_2', 'bay_3', 'bay_4']
+    assert block['order'] == ['bay_3', 'bay_4']
+    assert block['searched'] == ['bay_3', 'bay_4']
+    assert block['current'] == 'bay_2' and block['discovered'] is None
+    assert block['belief'] == [0.4386, 0.4386, 0.0614, 0.0614]
+    assert block['surveys'] == 2 and block['seen'] == ['yellow']
+    assert block['driven'] == 20.54 and block['detection'] == 0.9
+
+
+def test_a_told_mission_says_so_and_silence_says_nothing():
+    from coco_web import telemetry as tele
+    assert tele.parse_mission_search('mode=told')['mode'] == 'told'
+    quiet = tele.parse_mission_search('')
+    assert quiet['online'] is False and quiet['mode'] is None
+
+
+def test_a_belief_that_does_not_fit_the_regions_is_dropped():
+    from coco_web import telemetry as tele
+    bad = SEARCH_LINE.replace('belief=0.4386,0.4386,0.0614,0.0614',
+                              'belief=0.5,0.5')
+    assert tele.parse_mission_search(bad)['belief'] == []
+    worse = SEARCH_LINE.replace('0.0614,0.0614', '0.0614,nan')
+    assert tele.parse_mission_search(worse)['belief'] == []
+    assert tele.parse_mission_search('mode=lying')['mode'] is None

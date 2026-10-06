@@ -46,8 +46,10 @@ class _Log:
 
 
 def _stub(region_map):
+    # _search_mode False: the told mission, which these tests are about
+    # (Phase 5's search mode is test_ramp_driver_search.py).
     return SimpleNamespace(_region_map=region_map, _lane_y=None,
-                           get_logger=lambda: _Log())
+                           _search_mode=False, get_logger=lambda: _Log())
 
 
 def _say(stub, colour):

@@ -16,6 +16,8 @@ install(
     scripts/mission_hud.py
     scripts/mission_executive.py
     scripts/mission_states.py
+    # Phase 5: the mission's search state; the decision is coco_lab's.
+    scripts/mission_search.py
     # localization_health.py is the same shape as mission_states.py: a
     # pure library beside the nodes so `import localization_health`
     # resolves for anything run out of lib/<pkg>. C2-M5.0 shipped it

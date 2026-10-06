@@ -30,6 +30,8 @@ Services (all ``std_srvs/Trigger``)
 -----------------------------------
 ``/ramp/climb``    run the PPO policy from here to the summit
 ``/ramp/descend``  scripted heading-hold down the far slope
+``/ramp/retreat``  scripted reverse back down the ramp just climbed
+                  (Phase 5: leaving a bay that did not hold the target)
 ``/ramp/stop``     abort whatever is running and command zero
 
 ``/ramp/status`` (``std_msgs/String``, 5 Hz) reports as space-separated
@@ -85,7 +87,8 @@ from rclpy.node import Node
 from std_msgs.msg import String
 from std_srvs.srv import Trigger
 
-from coco_config.robot import DESCENT_EXIT_X, parse_region_map, resolve_lane
+from coco_config.robot import (DESCENT_EXIT_X, parse_region_map, PRE_RAMP_X,
+                               region_by_id, resolve_lane)
 
 from coco_rl.ramp_env import CocoRampEnv, MAX_ANG, quat_to_rp
 
@@ -113,6 +116,44 @@ DESCEND_ARRIVE = 0.15      # m from the goal x that counts as arrived
 DESCEND_TIMEOUT = 90.0     # s of wall clock before giving up
 DESCEND_HZ = 20.0          # command rate; inside the arbiter 0.3 s timeout
 TIP_LIMIT = 0.6            # rad of |roll| or |pitch|; matches ramp_env
+
+
+# Phase 5 (Lab 4): leaving a bay that did NOT hold the target. The descent
+# drives forward over the deck -- through the row where that bay's target
+# still stands -- so a search leaves the way it came: backwards, down the
+# ramp it climbed, to the flat in front of it. Same shape as the descent
+# (never a stationary pivot on a grade; the linear term never depends on
+# heading error), mirrored, slower, and held to the line the robot climbed:
+# its own y at the start of the segment, so it needs no lane at all.
+RETREAT_SPEED = 0.15        # m/s, backwards
+RETREAT_YAW_GAIN = 1.2      # rad/s per rad of heading error
+RETREAT_YAW_CLAMP = 0.4     # rad/s ceiling on the correction
+RETREAT_LATERAL_GAIN = 1.0  # rad of heading reference per metre of drift
+RETREAT_HEADING_LIMIT = 0.25  # rad: the most the line-hold may lean
+RETREAT_ARRIVE = 0.10       # m past the goal x that counts as arrived
+RETREAT_TIMEOUT = 90.0      # s of wall clock before giving up
+#: Clear of the ramp foot (1.0) and just ahead of the pre-ramp pose (0.5),
+#: so the next Nav2 leg starts on mapped flat ground.
+RETREAT_GOAL_X = PRE_RAMP_X + 0.15
+
+
+def retreat_cmd(yaw, x, y_drift, goal_x):
+    """
+    Velocity command for backing down the ramp, as (linear, angular, done).
+
+    Pure. Reverses at RETREAT_SPEED toward ``goal_x`` (smaller x), holding
+    the heading at a reference that leans back toward the line the robot
+    started on: backing up with a positive yaw moves the robot toward -y,
+    so a drift of ``y_drift`` metres to the left asks for a positive yaw.
+    """
+    if x - goal_x <= RETREAT_ARRIVE:
+        return 0.0, 0.0, True
+    ref = max(-RETREAT_HEADING_LIMIT,
+              min(RETREAT_HEADING_LIMIT, RETREAT_LATERAL_GAIN * y_drift))
+    err = math.atan2(math.sin(ref - yaw), math.cos(ref - yaw))
+    ang = max(-RETREAT_YAW_CLAMP, min(RETREAT_YAW_CLAMP,
+                                      RETREAT_YAW_GAIN * err))
+    return -RETREAT_SPEED, ang, False
 
 
 def descend_cmd(yaw, x, goal_x):
@@ -266,10 +307,20 @@ class RampDriver(Node):
         self.declare_parameter('region_map', '')
         self.declare_parameter('odom_topic', '/model/coco/odometry')
         self.declare_parameter('colour_topic', '/mission/target_colour')
+        # Phase 5 (Lab 4). A searching mission is not told where the
+        # target is, so the colour must not set the cross-track datum: the
+        # executive names the bay it chose on region_topic instead. False
+        # (the default) is the told mission, unchanged.
+        self.declare_parameter('search_mode', False)
+        self.declare_parameter('region_topic', '/mission/search_region')
+        self.declare_parameter('retreat_goal_x', RETREAT_GOAL_X)
 
         self._model_path = self.get_parameter('model').value
         self._descend_goal_x = float(
             self.get_parameter('descend_goal_x').value)
+        self._retreat_goal_x = float(
+            self.get_parameter('retreat_goal_x').value)
+        self._search_mode = bool(self.get_parameter('search_mode').value)
 
         self._env = None
         self._model = None
@@ -304,11 +355,15 @@ class RampDriver(Node):
         self.create_subscription(
             String, self.get_parameter('colour_topic').value,
             self._on_colour, 10)
+        self.create_subscription(
+            String, self.get_parameter('region_topic').value,
+            self._on_region, 10)
 
         self._status_pub = self.create_publisher(
             String, self.get_parameter('status_topic').value, 10)
         self.create_service(Trigger, '/ramp/climb', self._on_climb)
         self.create_service(Trigger, '/ramp/descend', self._on_descend)
+        self.create_service(Trigger, '/ramp/retreat', self._on_retreat)
         self.create_service(Trigger, '/ramp/stop', self._on_stop)
         self.create_timer(1.0 / STATUS_HZ, self._publish_status)
 
@@ -331,12 +386,28 @@ class RampDriver(Node):
         cannot disagree. With no map that is the frozen colour->lane
         table; deriving the lane any other way is how two drift apart.
         """
+        if self._search_mode:
+            # Searching: the colour is what to look for, not where.
+            return
         lane = resolve_lane((msg.data or '').strip().lower(),
                             self._region_map)
         if lane is not None and lane != self._lane_y:
             self.get_logger().info(
                 f'cross-track datum -> lane {lane:+.2f} ({msg.data.strip()})')
             self._lane_y = lane
+
+    def _on_region(self, msg):
+        """Take the datum from the bay the search chose (search mode only)."""
+        if not self._search_mode:
+            return
+        region = region_by_id((msg.data or '').strip())
+        if region is None:
+            return
+        if region.lane_y != self._lane_y:
+            self.get_logger().info(
+                f'cross-track datum -> lane {region.lane_y:+.2f} '
+                f'({region.region_id}, chosen by the search)')
+            self._lane_y = region.lane_y
 
     def cross_track(self):
         """Signed distance from the target lane centreline, or None.
@@ -400,6 +471,15 @@ class RampDriver(Node):
         threading.Thread(target=self._run_descend, daemon=True).start()
         response.success = True
         response.message = 'descend started; watch /ramp/status'
+        return response
+
+    def _on_retreat(self, request, response):
+        del request
+        if self._busy:
+            return self._reject(f'busy running {self.segment}')
+        threading.Thread(target=self._run_retreat, daemon=True).start()
+        response.success = True
+        response.message = 'retreat started; watch /ramp/status'
         return response
 
     def _on_stop(self, request, response):
@@ -544,6 +624,58 @@ class RampDriver(Node):
         self.get_logger().info(
             f'descend finished: {self.outcome} at x={self.progress:.2f}, '
             f'final pitch {self.pitch:+.3f} rad')
+
+
+    def _run_retreat(self):
+        with self._lock:
+            self._busy = True
+            self._abort.clear()
+            self.segment, self.outcome, self.step = 'retreat', None, 0
+            y0 = None
+            try:
+                env = self._ensure_env()
+                env._spin(0.2)
+                deadline = time.time() + RETREAT_TIMEOUT
+                while not self._abort.is_set():
+                    pose = env._pose_msg().pose.pose
+                    q = pose.orientation
+                    yaw = math.atan2(2 * (q.w * q.z + q.x * q.y),
+                                     1 - 2 * (q.y * q.y + q.z * q.z))
+                    if y0 is None:
+                        y0 = pose.position.y
+                    self.disp = pose.position.y - y0
+                    iq = env._imu.orientation
+                    roll, self.pitch = quat_to_rp(iq.x, iq.y, iq.z, iq.w)
+                    lin, ang, done = retreat_cmd(
+                        yaw, pose.position.x, self.disp,
+                        self._retreat_goal_x)
+                    self.progress = pose.position.x
+                    self.step += 1
+                    if done:
+                        self.outcome = 'goal'
+                        break
+                    if abs(roll) > TIP_LIMIT or abs(self.pitch) > TIP_LIMIT:
+                        self.outcome = 'tipped'
+                        break
+                    if time.time() > deadline:
+                        self.outcome = 'timeout'
+                        break
+                    env._publish(lin, ang)
+                    next_tick = time.time() + 1.0 / DESCEND_HZ
+                    while time.time() < next_tick and rclpy.ok():
+                        env._spin(0.01)
+                else:
+                    self.outcome = 'stopped'
+                env._publish(0.0, 0.0)
+            except Exception as exc:                      # noqa: BLE001
+                self.outcome = f'error: {exc}'
+                self.get_logger().error(f'retreat failed: {exc}')
+            finally:
+                self.segment = 'idle'
+                self._busy = False
+        self.get_logger().info(
+            f'retreat finished: {self.outcome} at x={self.progress:.2f}, '
+            f'drift {self.disp:+.3f} m, final pitch {self.pitch:+.3f} rad')
 
 
 def main(args=None):

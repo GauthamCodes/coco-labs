@@ -777,6 +777,21 @@ def compat_mission_inputs(spec):
     }
 
 
+def search_mission_inputs(spec):
+    """
+    Return the ROS parameters a SEARCHING mission is given (Phase 5).
+
+    Exactly one string -- the task, from :meth:`EpisodeSpec.task_view` --
+    and nothing else: no region map, no coordinate. This is the
+    observable side of the boundary the episode spec already draws; the
+    privileged compatibility channel (:func:`compat_mission_inputs`) is
+    what the searching mission is NOT given. Two episodes that differ only
+    in where the targets stand produce identical inputs, which
+    ``test_episode_search.py`` asserts.
+    """
+    return {'target_colour': spec.task_view()['requested_colour']}
+
+
 def resolve_episode(level='fixed', seed=0, requested_colour=None,
                     manifest_path='', backend='gazebo',
                     ramp_angle_deg=RAMP_ANGLE_DEG):

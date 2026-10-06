@@ -133,7 +133,13 @@ class TestCmdVelInvariant:
         topics = sorted(publisher.topic_name
                         for publisher in node.publishers
                         if publisher.topic_name not in builtin)
-        assert topics == ['/initialpose', '/mission/mode', '/mission/state',
+        # Phase 5 added two, neither a velocity: /mission/search (the
+        # search's own key=value status, and `mode=told` from a told
+        # mission, so a display labels what is RUNNING) and
+        # /mission/search_region (the bay the search chose, a region NAME,
+        # which ramp_driver holds the climb to in search mode).
+        assert topics == ['/initialpose', '/mission/mode', '/mission/search',
+                          '/mission/search_region', '/mission/state',
                           '/mission/target_colour']
 
     def test_the_pose_seed_is_not_on_any_velocity_topic(self, node):

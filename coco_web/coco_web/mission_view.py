@@ -96,6 +96,12 @@ COMPLETE = 'COMPLETE'
 RECOVERY = 'RECOVERY'
 RELOCALIZE = 'RELOCALIZE'
 ABORT = 'ABORT'
+# Phase 5 (Lab 4): the search states. A searching mission enters them in a
+# loop between LOCALIZE and STOW_ARM; the told mission never does.
+SELECT_SEARCH_REGION = 'SELECT_SEARCH_REGION'
+SURVEY_REGION = 'SURVEY_REGION'
+MARK_REGION_SEARCHED = 'MARK_REGION_SEARCHED'
+LEAVE_REGION = 'LEAVE_REGION'
 
 #: Every state the executive can report. Nineteen.
 STATES = (
@@ -103,7 +109,12 @@ STATES = (
     VERIFY_CLIMB, SEARCH_TARGET, STOW_ARM, APPROACH_TARGET, GRASP,
     VERIFY_GRASP, DESCEND, RETURN_HOME, PLACE, VERIFY_PLACEMENT,
     COMPLETE, RECOVERY, RELOCALIZE, ABORT,
+    SELECT_SEARCH_REGION, SURVEY_REGION, MARK_REGION_SEARCHED, LEAVE_REGION,
 )
+
+#: The executive's SEARCH_STATES, in its order (pinned by the tests).
+SEARCH_STATES = (SELECT_SEARCH_REGION, SURVEY_REGION, MARK_REGION_SEARCHED,
+                 LEAVE_REGION)
 
 #: The two states a mission ends in and never leaves.
 TERMINAL_STATES = (COMPLETE, ABORT)
@@ -140,6 +151,9 @@ REASONS = (
     'OPERATOR_ABORT', 'CLOCK_STALLED', 'LOCALIZATION_DEGRADED',
     'LOCALIZATION_RECOVERY_FAILED', 'LOCALIZATION_RECOVERY_TIMEOUT',
     'LOCALIZATION_RECOVERY_UNAVAILABLE',
+    # Phase 5 (Lab 4).
+    'SEARCH_EXHAUSTED', 'PERCEPTION_SILENT', 'LEAVE_FAILED',
+    'LEAVE_TIPPED', 'LEAVE_TIMEOUT',
 )
 
 #: The one reason that means a person pressed Abort rather than the
@@ -175,6 +189,10 @@ PHASE_OF = {
     PLACE: 'RETURNING',
     VERIFY_PLACEMENT: 'RETURNING',
     COMPLETE: 'COMPLETED',
+    SELECT_SEARCH_REGION: 'SEARCHING',
+    SURVEY_REGION: 'SEARCHING',
+    MARK_REGION_SEARCHED: 'SEARCHING',
+    LEAVE_REGION: 'SEARCHING',
 }
 
 #: Operator-facing wording, one per executive state. The state name
@@ -199,6 +217,10 @@ WORDS = {
     RECOVERY: 'Recovering',
     RELOCALIZE: 'Working out where it is again',
     ABORT: 'Mission stopped',
+    SELECT_SEARCH_REGION: 'Choosing which bay to look in next',
+    SURVEY_REGION: 'Looking for the cylinder on this platform',
+    MARK_REGION_SEARCHED: 'Not here: marking this bay searched',
+    LEAVE_REGION: 'Backing down the ramp to try another bay',
 }
 
 #: Plain-English wording for the failure reasons an operator can act on.
@@ -218,6 +240,8 @@ REASON_WORDS = {
     'GRASP_UNVERIFIED': 'The grasp did not lift the cylinder',
     'LOCALIZATION_DEGRADED': 'The robot lost track of where it is',
     'CLOCK_STALLED': 'The simulator clock stopped',
+    'SEARCH_EXHAUSTED': 'Searched every bay and did not find it',
+    'PERCEPTION_SILENT': 'The camera stopped reporting during a look',
 }
 
 #: How ``/mission/state`` spells "this field has no value".
@@ -382,4 +406,55 @@ def normalise(fields, colour=None, receipt=None):
         # Deprecated in the P0.2 release pass; always None. See timing().
         'changed_at': None,
         'timing': timing(elapsed, receipt if fields else None),
+    }
+
+
+def _floats(text):
+    out = []
+    for part in (text or '').split(','):
+        try:
+            value = float(part)
+        except ValueError:
+            return []
+        if not math.isfinite(value) or not 0.0 <= value <= 1.0:
+            return []
+        out.append(value)
+    return out
+
+
+def _names(text):
+    raw = _value({'v': text}, 'v')
+    return [] if raw is None else [n for n in raw.split(',') if n]
+
+
+def search_view(fields):
+    """
+    Turn ``/mission/search``'s fields into the telemetry ``search`` block.
+
+    ``mode`` is what the RUNNING mission says it does: ``discover`` (it
+    was told only the colour and searches) or ``told`` (resolve_lane, as
+    before Phase 5); None when nothing has been heard. The browser's
+    honest label is chosen from this, never from a constant. ``belief``
+    is aligned with ``regions``, or empty if the two disagree.
+    """
+    mode = _value(fields, 'mode')
+    regions = _names(fields.get('regions'))
+    belief = _floats(fields.get('belief'))
+    if len(belief) != len(regions):
+        belief = []
+    discovered = _value(fields, 'discovered')
+    return {
+        'online': bool(fields),
+        'mode': mode if mode in ('discover', 'told') else None,
+        'policy': _value(fields, 'policy'),
+        'regions': regions,
+        'order': _names(fields.get('order')),
+        'current': _value(fields, 'current'),
+        'searched': _names(fields.get('searched')),
+        'belief': belief,
+        'discovered': discovered,
+        'surveys': _integer(fields, 'surveys'),
+        'seen': _names(fields.get('seen')),
+        'driven': _number(fields, 'driven'),
+        'detection': _number(fields, 'detection'),
     }

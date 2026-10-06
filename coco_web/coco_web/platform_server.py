@@ -288,6 +288,7 @@ class CocoWebNode(Node):
             'pose': None, 'velocity': None, 'scan': None, 'path': None,
             'arbiter': '', 'arbiter_t': 0.0,
             'mission': '', 'mission_t': 0.0,
+            'search': '', 'search_t': 0.0,
             'perception': '', 'perception_t': 0.0,
             'grasp': '', 'grasp_t': 0.0,
             'colour': '', 'colour_t': 0.0,
@@ -407,6 +408,10 @@ class CocoWebNode(Node):
             String, '/cmd_vel_arbiter/status', self._on_arbiter, 10)
         self.create_subscription(
             String, '/mission/state', self._on_mission, 10)
+        # Phase 5 (Lab 4): the search's own line -- mode=discover with the
+        # belief and the bays searched, or mode=told from a told mission.
+        self.create_subscription(
+            String, '/mission/search', self._on_search, 10)
         self.create_subscription(
             String, '/perception/status', self._on_perception, 10)
         self.create_subscription(
@@ -683,6 +688,12 @@ class CocoWebNode(Node):
         # behind the UI is.
         if changed:
             self.metrics.mission_seen()
+
+    def _on_search(self, msg):
+        """Keep the mission's search line (Phase 5); parsed later."""
+        with self._lock:
+            self._snap['search'] = msg.data
+            self._snap['search_t'] = time.monotonic()
 
     def _on_perception(self, msg):
         """Keep the target finder's status line."""
@@ -1018,6 +1029,7 @@ class CocoWebNode(Node):
             'robot': now - snap['odom_t'] < STALE_AFTER_S,
             'arbiter': now - snap['arbiter_t'] < STALE_AFTER_S,
             'mission': now - snap['mission_t'] < STALE_AFTER_S,
+            'search': now - snap['search_t'] < STALE_AFTER_S,
             'perception': now - snap['perception_t'] < STALE_AFTER_S,
             'navigation': now - snap['nav_t'] < STALE_AFTER_S,
             'grasp': now - snap['grasp_t'] < STALE_AFTER_S,
@@ -1582,6 +1594,10 @@ class Platform:
             snap['mission'] if fresh['mission'] else '',
             colour=colour,
             receipt=snap.get('mission_rx') if fresh['mission'] else None)
+        # Additive in coco.v1: what the running mission says it does, and
+        # its search state. Absent (online false) from a pre-Phase-5 stack.
+        mission['search'] = tele.parse_mission_search(
+            snap['search'] if fresh.get('search') else '')
         perception = tele.parse_perception_status(
             snap['perception'] if fresh['perception'] else '')
         grasp = tele.parse_grasp_status(

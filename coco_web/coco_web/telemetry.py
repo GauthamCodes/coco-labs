@@ -104,6 +104,11 @@ def parse_arbiter_status(line):
     }
 
 
+def parse_mission_search(line):
+    """Shape ``/mission/search`` into telemetry (Phase 5), via mission_view."""
+    return mission_view.search_view(parse_kv_line(line))
+
+
 def parse_mission_state(line, colour=None, receipt=None):
     """
     Shape ``/mission/state`` into telemetry, via ``mission_view``.

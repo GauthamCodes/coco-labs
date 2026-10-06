@@ -68,13 +68,14 @@ RUN pip3 install --break-system-packages --no-cache-dir tornado==6.5.7
 WORKDIR ${COCO_WS}
 COPY . src/coco-labs/
 
-# All NINE packages. The image this replaces built six and silently left
-# out coco_mission, coco_perception and coco_sim -- so the mission system
-# was not in the "reproducible" image at all, and `docker compose up`
-# could never have run a fetch.
+# All NINE packages, and coco_lab. The image this replaces built six and
+# silently left out coco_mission, coco_perception and coco_sim -- so the
+# mission system was not in the "reproducible" image at all, and `docker
+# compose up` could never have run a fetch. coco_lab joined in Phase 5:
+# the searching mission's decision is coco_lab.regionsearch (pure Python).
 RUN . /opt/ros/jazzy/setup.sh && \
     colcon build --symlink-install --packages-select \
-      coco_config coco_mission coco_moveit_config coco_perception \
+      coco_config coco_lab coco_mission coco_moveit_config coco_perception \
       coco_rl coco_sim coco_web custom_teleop gazebo_models
 
 ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
