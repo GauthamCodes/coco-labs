@@ -147,6 +147,8 @@ def digest(run_dir):
         if os.path.exists(os.path.join(run_dir, 'final_state.txt')) else ''
     state = (re.search(r'state=([A-Z_]+)', fs) or [None, None])[1]
     reason = (re.search(r' reason=([^ ]+)', fs) or [None, None])[1]
+    if reason == '--':          # the executive's "no reason"
+        reason = None
     result = (re.search(r' result=([^ \n]+)', fs) or [None, None])[1]
     del final
     rows = _hrec(os.path.join(run_dir, 'hrec.csv'))

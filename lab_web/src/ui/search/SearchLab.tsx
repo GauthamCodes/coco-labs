@@ -11,7 +11,7 @@ import {
   loadSearchBytes, parseSearchManifest, type DecodedSearchBundle, type Problem, type SearchRun,
 } from '../../search/decode';
 import {
-  beliefAt, bookkeepingAt, candidatesAt, fmt, kindAt, narrate, pathAt, pct, positionAt, styleOf,
+  beliefAt, bookkeepingAt, candidatesAt, fmt, kindAt, narrate, outcomeWords, pathAt, pct, positionAt, styleOf,
 } from '../../search/view';
 import { requestRecompute, workerStarted } from '../../worker/client';
 import type { SearchSpec } from '../../worker/protocol';
@@ -570,6 +570,7 @@ function Timeline({ run, e }: { run: SearchRun; e: number }) {
 
 // -- What is proven ------------------------------------------------------------------------
 
+
 function Evidence({ part }: { part: SearchPart }) {
   const m = part.matrix;
   return (
@@ -590,7 +591,7 @@ function Evidence({ part }: { part: SearchPart }) {
             <tbody>{m.rows.map((r) => (
               <tr key={r.run}><td>{r.run}</td><td>{r.colour}</td><td>{r.truth_region}</td>
                 <td>{r.order.join(' → ') || '—'}{r.order_arg !== 'policy' ? ' (given)' : ''}</td>
-                <td>{r.discovered ?? 'no'}</td><td>{r.outcome}{r.reason ? ` (${r.reason})` : ''}</td>
+                <td>{r.discovered ?? 'no'}</td><td>{outcomeWords(r.outcome, r.reason)}</td>
                 <td>{r.lifted === null ? '—' : r.lifted ? 'yes' : 'no'}</td><td>{r.home_error_m === null ? '—' : `${fmt(r.home_error_m)} m`}</td>
                 <td>{r.relocalisations}</td><td>{r.recoveries}</td></tr>))}</tbody>
           </table></div>

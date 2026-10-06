@@ -116,3 +116,10 @@ export const RUN_STYLE: Record<string, { label: string; color: string; what: str
 export function styleOf(policy: string) {
   return RUN_STYLE[policy] ?? { label: policy, color: '#555', what: '' };
 }
+
+/** A matrix row's outcome in words: a COMPLETE that relocalised is not a failure. */
+export function outcomeWords(outcome: string, reason: string | null): string {
+  const r = reason && reason !== '--' ? reason : null;
+  if (outcome === 'COMPLETE') return r === 'LOCALIZATION_DEGRADED' ? 'COMPLETE (after a relocalisation)' : 'COMPLETE';
+  return r ? `${outcome} (${r})` : outcome;
+}
