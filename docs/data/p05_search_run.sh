@@ -266,6 +266,12 @@ ros2 topic echo /mission/state --field data > "$OUT/state_stream.txt" 2>&1 &
 REC_PIDS+=("$!")
 ros2 topic echo /mission/search --field data > "$OUT/search_stream.txt" 2>&1 &
 REC_PIDS+=("$!")
+# The bundle's provenance names a rosbag: the mission's own lines and the
+# ground-truth odometry (home error), stopped with INT like the others.
+ros2 bag record -o "$OUT/bag" /mission/state /mission/search \
+    /mission/search_region /perception/status /ramp/status /approach/status \
+    /grasp/status /model/coco/odometry > "$OUT/bag.log" 2>&1 &
+REC_PIDS+=("$!")
 # Added after the first matrix: two episodes lost their target in
 # SEARCH_TARGET and nothing had recorded what perception reported. Each is
 # a 5 Hz key=value line; `sel found seen` and `lateral` are the ones read.
