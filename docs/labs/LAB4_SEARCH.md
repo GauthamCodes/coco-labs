@@ -133,12 +133,168 @@ is labelled told, and one that reports nothing gets no claim either way
 
 ## 4. Measured
 
-(Filled from `docs/data/lab4/results.json` when the matrix completes.)
+### 4.1 The searching mission in Gazebo (measured, 16 runs)
+
+`docs/data/p05_matrix.sh` (16 runs, `docs/data/p05_search_run.sh` each: a
+fresh headless simulator, never `--fast`, ROS domain 64), robot code at
+`d78a1d8`; evidence `docs/data/lab4/` (`results.json`, `runs/`, the replay
+bundle), rebuilt by `python3 docs/data/p05_evidence.py
+~/coco_lab_runs/lab4/matrix`. Every run passed every runner check,
+including **both robot nodes holding an EMPTY region map, the executive
+`search=true`, ramp_driver `search_mode=true`, and no parameter naming a
+manifest** — what the robot was given was the colour.
+
+| run | episode | asked | truth (manifest) | order given | bays looked | found (look) | mission | lift | home error | reloc. | recov. | sim s |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| A1_fixed_red | fixed 0 | red | bay_1 | policy | bay_3, bay_4, bay_2, bay_1 | bay_1 (4) | COMPLETE | yes | 0.016 m | 0 | 0 | 410.6 |
+| A2_fixed_green | fixed 0 | green | bay_2 | policy | bay_3, bay_4, bay_2 | bay_2 (3) | COMPLETE | yes | 0.074 m | 0 | 0 | 314.4 |
+| A3_fixed_blue | fixed 0 | blue | bay_3 | policy | bay_3 | bay_3 (1) | COMPLETE | yes | 0.079 m | 0 | 0 | 145.0 |
+| A4_fixed_yellow | fixed 0 | yellow | bay_4 | policy | bay_3, bay_4 | bay_4 (2) | COMPLETE | yes | 0.169 m | 0 | 0 | 229.6 |
+| B1_colours_s5_red | colours 5 | red | bay_1 | policy | bay_3, bay_4, bay_2, bay_1 | bay_1 (4) | COMPLETE | yes | 0.028 m | 0 | 0 | 414.1 |
+| B2_colours_s1_red | colours 1 | red | bay_2 | policy | bay_3, bay_4, bay_2 | bay_2 (3) | **ABORT RETURN_FAILED** | yes | — | 0 | 3 | 305.5 |
+| B3_colours_s7_red | colours 7 | red | bay_3 | policy | bay_3 | bay_3 (1) | COMPLETE (after a relocalisation) | yes | 0.047 m | 1 | 1 | 155.9 |
+| B4_colours_s2_red | colours 2 | red | bay_4 | policy | bay_3, bay_4 | bay_4 (2) | COMPLETE | yes | 0.060 m | 0 | 0 | 239.1 |
+| C1_green_stop_after_bay3 | fixed 0 | green | bay_2 | bay_3 | bay_3 | no | **ABORT SEARCH_EXHAUSTED** (as designed) | — | — | 0 | 0 | 85.2 |
+| C2_green_nearest | fixed 0 | green | bay_2 | bay_3,bay_2,bay_1,bay_4 | bay_3, bay_2 | bay_2 (2) | COMPLETE (after a relocalisation) | yes | 0.060 m | 1 | 1 | 239.3 |
+| C3_green_most_likely | fixed 0 | green | bay_2 | bay_1,bay_2,bay_3,bay_4 | bay_1, bay_2 | bay_2 (2) | COMPLETE (after a relocalisation) | yes | 0.022 m | 1 | 1 | 248.7 |
+| C4_green_reverse | fixed 0 | green | bay_2 | bay_4,bay_1,bay_2,bay_3 | bay_4, bay_1, bay_2 | bay_2 (3) | COMPLETE | yes | 0.095 m | 0 | 0 | 343.6 |
+| D1_positions_s1_red | positions 1 | red | bay_2 | policy | bay_3, bay_4, bay_2 | bay_2 (3) | COMPLETE | yes | 0.109 m | 0 | 0 | 320.2 |
+| D2_positions_s2_red | positions 2 | red | bay_4 | policy | bay_3, bay_4 | bay_4 (2) | COMPLETE | yes | 0.151 m | 0 | 0 | 232.2 |
+| D3_positions_s3_red | positions 3 | red | bay_2 | policy | bay_3, bay_4, bay_2 | bay_2 (3) | COMPLETE | yes | 0.044 m | 0 | 0 | 316.1 |
+| D4_positions_s4_red | positions 4 | red | bay_2 | policy | bay_3, bay_4, bay_2 | bay_2 (3) | COMPLETE | yes | 0.102 m | 0 | 0 | 317.8 |
+
+"sim s" is simulator seconds from LOCALIZE to the terminal state (from each
+run's rosbag, `docs/data/p05_bagtimes.py`). Home error is ground truth at
+COMPLETE vs home (−2, 0) — scoring only. Lift = VERIFY_GRASP passed
+(grasp_server's `lifted=1`, which checks the object moved UP).
+
+Derived from the table (16 runs: an inventory, **not a rate**):
+
+- **14 COMPLETE, 2 ABORT.** Of the 14, 11 had nothing go wrong and 3 (B3,
+  C2, C3) relocalised once on the return home (`SCAN_DISAGREES`, one spin,
+  recovered). The aborts: **B2 `RETURN_FAILED`** and **C1
+  `SEARCH_EXHAUSTED`** — the deliberate "give up after the first bay" order.
+- **Negative search, physically:** in 14 of 16 runs the target was not in
+  the first bay looked at; A1 and B1 searched bay_3, bay_4 and bay_2 and
+  found red in the LAST bay. Every miss was marked before the find.
+- **Every look agreed with the truth:** 39 looks, 24 misses and 15 finds;
+  no find in a bay without the target, no miss in the bay with it. The
+  assumed d = 0.9 was not contradicted (15 of 15 finds where the target
+  was) — a count, not a measurement of d.
+- **The real robot chose what coco_lab chooses:** all 16 recorded searches
+  are rebuilt from their looks alone by `replay_search` and reproduce byte
+  for byte; a recording whose bay differed from the policy's choice would
+  have been refused.
+- **Leaving:** 24 of 24 `/ramp/retreat` segments reached their goal; none
+  entered RECOVERY. Lift verified 15 of 15. Home error 0.016–0.169 m over
+  the 14 completed runs.
+- **The B2 failure is localisation, not search.** Red was found in bay_2 and
+  lifted; on the return, the planner was planning from map (6.52, 2.25)
+  (world (4.52, 2.25)) while ground truth was world (6.66, −2.00) — 4.8 m
+  apart, about one bay pitch across. The localisation monitor's verdict
+  there was `UNKNOWN`, so nothing relocalised; three plans found no path and
+  the mission aborted. This is the live limitation already recorded
+  (severe confident AMCL divergence is not reliably recovered). The
+  bay-pitch offset suggests aliasing between identical bays; **not
+  attributed**. The return after bay_2's descent: B2 failed, C2 and C3
+  relocalised and recovered, A2, C4, D1, D3, D4 were clean.
+
+**Search orders on one placement (rule 6: FIXED, green in bay_2, same
+world, same seed — only the order differs):**
+
+| order | runs | looks | sim s to the end | expected cost of the order (derived, coco_lab) |
+|---|---|---|---|---|
+| the robot's (bay_3, bay_4, bay_2, bay_1) | A2 | 3 | 314.4 | 30.45 m |
+| nearest first (bay_3, bay_2, …) | C2 | 2 | 239.3 (one relocalisation) | 30.83 m |
+| most likely first (bay_1, bay_2, …) | C3 | 2 | 248.7 (one relocalisation) | 32.26 m |
+| bay_4, bay_1, bay_2, bay_3 | C4 | 3 | 343.6 | 38.42 m |
+| bay_3 only — stop after A | C1 | 1, not found | 85.2 | 8.67 m, but P(find) 0.225: the challenge FAILED |
+
+On this one placement two simpler orders beat the robot's. That is the
+lesson, not a contradiction: the robot minimises the EXPECTED cost over
+where the target might be (it does not know), and on this bay its order
+looks third. One placement per order: not a comparison of policies.
+
+**Void:** `B3_colours_s7_red.void-1` — the runner's `ros2 service call
+/mission/start` could not join DDS domain 64 ("Failed to find a free
+participant index"): seven `ros2 bag record` processes from earlier runs had
+outlived them (a backgrounded job ignores SIGINT). Harness, not robot; the
+runner now stops them with SIGTERM (`3ddfe74`) and B3 was rerun. Those
+leaked recorders also recorded later runs into earlier runs' bags; each
+run's timeline is cut at its own first terminal state.
+
+### 4.2 Gazebo smoke runs before the matrix (not results)
+
+`smoke1_fixed_yellow`: died at launch on the `origins` defect (§7).
+`smoke2_fixed_yellow`: searched bay_3, saw blue, backed down (retreat 0.003 m
+drift), found yellow in bay_4, grasped — then the machine rebooted
+mid-descent. Incomplete; kept in `~/coco_lab_runs/lab4/`.
+
+### 4.3 The site (measured, headless Firefox, local build)
+
+`python3 lab_web/tools/browser/check.py <site> <out> search search_phone`
+on `vite preview` of the build: the Lab 4 flow end to end — order, predict,
+place the target in bay_1, reveal (a cold Pyodide start + coco_lab: 17.6 s
+wall, coco_lab's own part 22 ms for 4 searches), play to the end, the belief
+table, the Replay of A1 with its FSM timeline and truth toggle, the evidence
+tab; **0 console errors**; at 390 px no tab overflows. Public-site numbers:
+§4.5.
+
+### 4.4 Tests
+
+(Written when the full run completes.)
+
+### 4.5 On the public site
+
+(Written after the deploy.)
 
 ## 5. Not verified
 
-(Written with §4.)
+- **A real robot.** Everything here ran on the real stack in GAZEBO.
+- **d.** 0.9 is assumed; 15 of 15 finds is a count on 16 runs, not a
+  detection rate, and the lighting, target sizes and approach are
+  Gazebo's.
+- **Rates of anything.** 16 runs: COMPLETE 14 of 16 is an inventory.
+- **Why B2's localisation diverged.** Measured, not attributed.
+- **A real phone, Safari, Chrome.** Headless Firefox only.
+- **The Docker image with coco_lab.** The Dockerfile now builds coco_lab
+  (statically tested); the image was not rebuilt this phase.
+- **Live mode with a browser attached.** The label logic is unit-tested
+  against the mission's `/mission/search` line and the line itself was
+  recorded in every matrix run; a live browser session on a searching stack
+  was not driven this phase.
 
 ## 6. Known limitations
 
-(Written with §4.)
+- **The search domain is COCO's four bays**, and the prior is uniform. A
+  look costs a climb, because the crest hides the platform from the flat.
+- **One pass.** The real mission surveys each bay once; with d < 1 a miss
+  is not proof, but a second pass is a Sketch option only.
+- **The survey is a fixed 20 s window** from the end of the climb; a target
+  the camera cannot see from there (e.g. far off the bay's centreline)
+  would be missed — the POSITION episodes stay within ±0.030 m across the
+  bay (measured envelope), so this was not exercised.
+- **Leaving backs down the ramp** (`/ramp/retreat`): 24 of 24 here; a new
+  scripted motion with no other evidence.
+- **Localisation on the return** is the weak leg (B2, and three
+  relocalisations), as before Phase 5.
+- **Travel costs are the robot's map**, A* inflated by 0.20 m; Nav2's real
+  paths differ (the matrix's sim seconds are the measured cost).
+- **The told mission still exists** (`search:=false`) and is what every
+  measurement before Phase 5 used.
+- **Sketch ≠ the robot:** Lab 4's Sketch samples looks with the robot's d;
+  it does not simulate climbing, perception or localisation.
+
+## 7. Found and fixed during the phase (each measured)
+
+- **The default `mission.launch.py` could not start** since `c921ec4`
+  (2026-10-02): `platform.launch.py` passed `origins` (default `*`) as a bare
+  substitution and launch_ros YAML-parses it (`*` is an alias token). Every
+  default launch — including the Live tab's local stack — died before any
+  node ran. Fixed (`180c9f1`), with a test that evaluates the parameters as
+  launch does.
+- **The ROS CI did not build coco_lab** (PR #14's first CI run), and a
+  static test still expected the old `origins` text; both fixed.
+- **The runner leaked bag recorders** (see "Void" above).
+- **A given order that ran out was logged as "every bay searched"** (C1);
+  now "every bay in the given order searched" (`3e043c1`).

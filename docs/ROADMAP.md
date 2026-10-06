@@ -39,6 +39,16 @@
 >   *(Until 2026-10-05 16:30 UTC this line read "implemented, tested,
 >   measured on branch `lab3`".)*
 >
+> - **Phase 5 (Search, Lab 4), 2026-10-06/07: implemented, tested and
+>   measured on branch `lab4`.** The autonomous mission now DISCOVERS the
+>   target (told only the colour; `coco_lab.regionsearch` chooses the bays),
+>   and the Live label follows what the running mission reports. Gazebo
+>   matrix (measured, 16 runs, fresh simulator each): 14 COMPLETE, 2 ABORT
+>   (one localisation failure on the return after a correct find; one the
+>   deliberate stop-after-the-first-bay order); every recorded search
+>   replays byte for byte through coco_lab. Write-up
+>   [`docs/labs/LAB4_SEARCH.md`](labs/LAB4_SEARCH.md).
+>
 > *(The status line of 2026-09-30 read: "plan revised (Phase 2 · Live
 > added) … Phase 1 closed by decision with open items … Phase 2 not
 > started.")*
@@ -277,11 +287,14 @@ looks like the real thing, and spectators cost almost no bandwidth.
   `safety.PUBLISH_ALLOWLIST`; the browser still never names a topic and never
   owns robotics logic.
 
-**Honest labels.** Until Lab 4 (P0.4) lands, the autonomous mode is told
-which lane the colour is in — `resolve_lane()` hands the mission the
+**Honest labels.** Until Lab 4 (P0.4) landed, the autonomous mode was told
+which lane the colour is in — `resolve_lane()` handed the mission the
 answer, from the episode's region map or, with none, exactly
-`lane_for_colour()` — and the page says so. After P0.4 it discovers the target, and the
-label changes.
+`lane_for_colour()` — and the page said so. Since Phase 5 (2026-10-06) it
+discovers the target (`mission.launch.py search:=true`, the default), and
+the label is chosen from what the RUNNING mission reports on
+`/mission/search`: "discovers" only for `mode=discover`, told for a stack
+launched `search:=false`, no claim for one that reports nothing.
 
 Outside a live session, the public site shows Replay and Sketch, plus a short
 Docker quickstart for running the whole stack and driving it locally.
@@ -533,6 +546,23 @@ reproduced, not attributed. coco_lab on the same drives: pose graph 0.267 /
   visualised as it happens — belief/truth overlays and the FSM timeline. From
   here on the autonomous mode discovers the target instead of being told,
   and its label changes to say so.
+
+**As built (2026-10-06/07, branch `lab4`).** The master context's P0.4 text
+is not in the repository; this section and the Phase 5 brief were the spec.
+coco_lab: `regionsearch` (belief over COCO's four bays, Bayes on a miss,
+the exact expected-cost order over every remaining order, d = 0.9 ASSUMED,
+uniform prior, teaching policies nearest-first / most-likely-first /
+the learner's order, a seeded Sketch, `replay_search` of recorded looks)
+and search bundle 1.0 (`docs/labs/SEARCH_FORMAT.md`). The mission:
+SELECT_SEARCH_REGION, SURVEY_REGION, MARK_REGION_SEARCHED, LEAVE_REGION
+(`/ramp/retreat`: back down the ramp it climbed) around the proven fetch;
+told only `task_view()`'s colour (anti-cheat tests in coco_sim,
+coco_mission, coco_lab). The Lab 4 view (`?view=search`): your order,
+predict, reveal coco_lab's plans, place the target and watch both search;
+Replay of the Gazebo runs with their FSM timeline and an evaluator-only
+truth toggle; every claim with its test. Gazebo (measured, 16 runs):
+14 COMPLETE, 2 ABORT; numbers `docs/RESULTS.md` "COCO Lab Phase 5"; write-up
+`docs/labs/LAB4_SEARCH.md`.
 
 ### Lab 5 — Move
 
