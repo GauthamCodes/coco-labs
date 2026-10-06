@@ -150,7 +150,16 @@ def digest(run_dir):
     result = (re.search(r' result=([^ \n]+)', fs) or [None, None])[1]
     del final
     rows = _hrec(os.path.join(run_dir, 'hrec.csv'))
-    timeline = _timeline(rows)
+    # The bag's timeline (p05_bagtimes.py: every transition, simulator
+    # seconds from LOCALIZE) when there is one; hrec's 10 Hz samples
+    # otherwise, which can miss a state shorter than 0.1 s.
+    bt_path = os.path.join(run_dir, 'bag_timeline.json')
+    if os.path.exists(bt_path):
+        timeline = json.load(open(bt_path))['timeline']
+        timeline_source = 'rosbag'
+    else:
+        timeline = _timeline(rows)
+        timeline_source = 'hrec (10 Hz samples)'
     states = [t[1] for t in timeline]
     home_error = None
     if rows and state == 'COMPLETE':
@@ -169,7 +178,8 @@ def digest(run_dir):
         lifted = any(p == 'VERIFY_GRASP' and s == 'DESCEND'
                      for p, s, _, _ in transitions)
     bag = os.path.join(run_dir, 'bag')
-    sim_end = float(rows[-1]['t_sim']) if rows else None
+    sim_end = timeline[-1][0] if timeline_source == 'rosbag' and timeline \
+        else (float(rows[-1]['t_sim']) if rows else None)
     return {
         'run': name, 'void': '.void-' in name,
         'commit': meta.get('head'), 'dirty_paths': meta.get('dirty_paths'),
@@ -190,7 +200,7 @@ def digest(run_dir):
         'runner_checks_pass': 'FAIL ' not in runner and 'torn down; runner '
                               'checks PASS' in runner,
         'travel_logged': travel,
-        'timeline': timeline,
+        'timeline': timeline, 'timeline_source': timeline_source,
         'bag_sha256': _sha_dir(bag) if os.path.isdir(bag) else None,
         'evidence_dir': run_dir,
     }
@@ -273,13 +283,14 @@ def main(argv=None):
         if rec['sim_s'] is not None:
             ends.append(rec['sim_s'])
     if runs:
+        if len(hashes) != len(runs):
+            raise SystemExit('every recorded run needs its rosbag')
         prov = bundle.make_provenance(
             'recorded-run', git=bundle.git_provenance(REPO),
-            tool='docs/data/p05_evidence.py')
-        prov['rosbag'] = {
-            'sha256': hashlib.sha256('\n'.join(sorted(hashes)).encode())
-            .hexdigest(),
-            'sim_time_start': 0.0, 'sim_time_end': max(ends or [0.0])}
+            tool='docs/data/p05_evidence.py', rosbag={
+                'sha256': hashlib.sha256('\n'.join(sorted(hashes)).encode())
+                .hexdigest(),
+                'sim_time_start': 0.0, 'sim_time_end': max(ends or [0.0])})
         prov['title'] = 'The real mission, searching in Gazebo (Phase 5 matrix)'
         sb = sbm.SearchBundle(prov, problem, runs)
         dst = os.path.join(args.out, 'replay', 'p05_matrix')
