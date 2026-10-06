@@ -65,8 +65,11 @@ jobs:
       - name: Build
         run: |
           source /opt/ros/jazzy/setup.bash
+          # coco_lab since Phase 5: coco_mission's search imports it. Its
+          # tests run in the Lab workflow's plain venv (no ROS); here it is
+          # built so coco_mission can be.
           colcon build --symlink-install \
-            --packages-select gazebo_models custom_teleop coco_config coco_moveit_config coco_web coco_rl coco_perception coco_mission coco_sim
+            --packages-select gazebo_models custom_teleop coco_config coco_lab coco_moveit_config coco_web coco_rl coco_perception coco_mission coco_sim
 
       - name: Validate robot model
         run: |

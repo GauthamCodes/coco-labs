@@ -221,6 +221,21 @@ def test_dockerfile_builds_every_package_the_mission_needs():
     assert not missing, f'Dockerfile never builds: {", ".join(missing)}'
 
 
+def test_ros_ci_builds_coco_lab_before_the_mission():
+    """
+    The ROS CI builds every package coco_mission needs, coco_lab included.
+
+    Phase 5's first CI run failed exactly here: coco_mission (search)
+    depends on coco_lab, and ci.yml's --packages-select did not name it.
+    """
+    ci = (REPO / '.github' / 'workflows' / 'ci.yml').read_text()
+    build = re.search(r'colcon build[^\n]*\n\s*--packages-select([^\n]*)', ci)
+    assert build, 'ci.yml has no colcon build --packages-select line'
+    names = build.group(1).split()
+    for pkg in ('coco_lab', 'coco_mission', 'coco_config', 'coco_sim'):
+        assert pkg in names, pkg
+
+
 def test_the_image_uses_container_paths_only():
     """
     No developer workspace path may be baked into the image.
