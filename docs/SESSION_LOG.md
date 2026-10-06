@@ -7781,3 +7781,40 @@ uses `must`.
 **Gazebo is free now** (no simulator after the reboot). Next: the Lab 4
 view (`lab_web/src/ui/search/`), then the 16-run matrix with
 `~/coco_search_ws/run.sh NAME LEVEL SEED COLOUR [ORDER]`.
+
+### Phase 5 — checkpoint: Lab 4 built, matrix RUNNING (2026-10-06, ~14:10 UTC)
+
+Commits since d78a1d8: `3288cc0` site plumbing, `4327c2d` the Lab 4 view +
+Live label from `/mission/search`, `9e0a954` SEARCH_FORMAT.md + extractor,
+`f5d2a0d` browser checks, `03ce2bb` sim-time timeline from rosbag,
+`28abcdf` write-up draft (LAB4_SEARCH.md §1-3), `ab87786` demo recorder,
+`f3f366e` WEB_API + LIVE.md.
+
+**The matrix is running** in the background since 13:05 UTC:
+`~/coco_search_ws/matrix.sh` (= `docs/data/p05_matrix.sh`), overlay at
+`d78a1d8`, ~28 min wall per run (16 runs ≈ 7.5 h). Resumable: rerun
+`~/coco_search_ws/matrix.sh` after any interruption (a run dir without
+result.json becomes `NAME.void-N` and is rerun). Log:
+`~/coco_lab_runs/lab4/matrix_driver.log`. DO NOT `sync.sh` the overlay
+while it runs (the runner reads from it).
+
+- **A1_fixed_red COMPLETE (measured):** told "red", searched bay_3 (saw
+  blue), bay_4 (yellow), bay_2 (green), found red in bay_1 at look 4,
+  fetched, 0.016 m from home, 410.6 s sim, 0 recoveries, every runner check
+  PASS. Its recorded search replays byte-identically through coco_lab
+  (the robot chose exactly what coco_lab chooses).
+
+Local browser checks (headless Firefox, `vite preview`): Lab 4 search flow
+end to end incl. a Pyodide run (cold 17.6 s, coco_lab 22 ms), Replay of A1
+with its FSM timeline, Evidence tab; phone width 390 px no overflow on any
+tab; 0 console errors. vitest 283 (+8), live tests updated, tools 101 (+6)
++3 Lab 4 tool tests, tsc/build/check_dist clean.
+
+**When the matrix ends:** `~/coco_search_ws/py.sh docs/data/p05_bagtimes.py
+~/coco_lab_runs/lab4/matrix/*/`, then `python3 -P docs/data/p05_evidence.py
+~/coco_lab_runs/lab4/matrix` (writes docs/data/lab4/{results.json,runs/,
+replay/p05_matrix/}), finish LAB4_SEARCH.md §4-6, RESULTS.md "COCO Lab
+Phase 5", PROJECT_STATE, ROADMAP; full `run_all_package_tests.sh` on a
+quiet machine (`COCO_WS=~/coco_search_ws ROS_DOMAIN_ID=77`, after
+sync.sh); PR lab4 -> main, CI; deploy; public checks; video
+(`record_lab4_demo.py`).
