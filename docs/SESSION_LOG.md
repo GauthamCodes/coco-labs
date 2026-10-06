@@ -7818,3 +7818,30 @@ Phase 5", PROJECT_STATE, ROADMAP; full `run_all_package_tests.sh` on a
 quiet machine (`COCO_WS=~/coco_search_ws ROS_DOMAIN_ID=77`, after
 sync.sh); PR lab4 -> main, CI; deploy; public checks; video
 (`record_lab4_demo.py`).
+
+### Phase 5 — checkpoint: matrix done, tests green, ready to deploy (2026-10-07, ~00:45 UTC)
+
+**Matrix COMPLETE** (16 valid runs + 1 void; `docs/data/lab4/`, commit
+`39b2303`): 14 COMPLETE (3 after one relocalisation on the return), 2 ABORT
+— B2 `RETURN_FAILED` after a correct find + lift (AMCL 4.8 m from truth on
+the return, monitor UNKNOWN; not attributed) and C1 `SEARCH_EXHAUSTED`
+(the deliberate stop-after-the-first-bay order). 39 looks all agreed with
+the truth; 24/24 retreats; lift 15/15; home error 0.016–0.169 m over the
+14; every recorded search replays byte for byte through coco_lab. B3's
+first attempt void (harness: leaked bag recorders exhausted DDS domain 64
+participants; runner fixed `3ddfe74`, B3 rerun COMPLETE).
+
+**Tests:** `run_all_package_tests.sh` **2,975 / 0 / 0** (overlay of
+`e25f9c8`); vitest 286; tools 104; tsc/build/check_dist clean. Local
+browser checks (full 16-run Replay): 0 console errors, phone width clean.
+Docs: LAB4_SEARCH.md §1–7 (public-site §4.5 pending), RESULTS.md "COCO Lab
+Phase 5", ROADMAP, PROJECT_STATE, LIVE.md, WEB_API.md. Branch pushed
+(`labs/lab4`), PR #14 (draft).
+
+**Waiting on:** the owner's approval to fast-forward `main` to `lab4` (the
+Pages deploy runs from `main`; this session's rules forbid pushing/merging
+`main` unasked). After that: verify the public site (`check.py
+https://gauthamcodes.github.io/coco-labs/ <out> smoke search
+search_phone`), record the video from it (`record_lab4_demo.py`), write
+§4.5, tag `lab4-v1.0` locally + a DRAFT release (publishing is the owner's
+call), checkpoint. Phase 6 NOT started.
