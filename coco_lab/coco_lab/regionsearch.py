@@ -479,6 +479,108 @@ class SearchTrace:
                          n_regions)
 
 
+def _check_policy(problem: SearchProblem, policy: str,
+                  given_order: Sequence[int]) -> None:
+    if policy not in POLICIES:
+        raise SearchError(f'unknown policy {policy!r}')
+    n = problem.n
+    if policy == 'given':
+        if not given_order or len(set(given_order)) != len(given_order) \
+                or not all(0 <= i < n for i in given_order):
+            raise SearchError('given_order must be distinct region indices')
+
+
+def _search_loop(problem: SearchProblem, policy: str, observe,
+                 given: Tuple[int, ...], passes: int, limit: int,
+                 header: Dict[str, object]) -> Tuple[SearchTrace,
+                                                     Dict[str, object]]:
+    """
+    Run the select / survey / mark loop; ``observe(i)`` says what a look saw.
+
+    ``observe`` returns True (found), False (a miss) or None (no more
+    looks: the run stopped, e.g. a recording that ends there). Everything
+    else -- the choice, Bayes, the costs -- is the policy's and this
+    module's, and is identical whoever supplies the outcomes.
+    """
+    n = problem.n
+    tr = SearchTrace(header, [], [], [], [], [], [], {})
+    nan = [math.nan] * n
+
+    def emit(kind, region, outcome, cost, belief, cands=None):
+        tr.kind.append(KIND_CODE[kind])
+        tr.region.append(region)
+        tr.outcome.append(outcome)
+        tr.cost.append(cost)
+        tr.belief.extend(belief)
+        tr.candidates.extend(nan if cands is None else
+                             [math.nan if c is None else c for c in cands])
+
+    belief = tuple(problem.prior)
+    searched: Tuple[int, ...] = ()
+    location = problem.start
+    cost, surveys, done_passes = 0.0, 0, 1
+    order: List[int] = []
+    discovered: Optional[int] = None
+    status = 'exhausted'
+    contradicted = False
+    while True:
+        view = SearchView(belief, searched, location, given)
+        nxt = choose(policy, problem, view)
+        if nxt is None and policy != 'given' and done_passes < passes and \
+                any(belief[i] > EPS for i in range(n)):
+            searched, done_passes = (), done_passes + 1
+            view = SearchView(belief, searched, location, given)
+            nxt = choose(policy, problem, view)
+        if nxt is None:
+            status = 'exhausted'
+            emit('exhausted', -1, -1, cost, belief)
+            break
+        if surveys >= limit:
+            status = 'stopped'
+            emit('stopped', -1, -1, cost, belief)
+            break
+        found = observe(nxt)
+        if found is None:
+            status = 'stopped'
+            emit('stopped', -1, -1, cost, belief)
+            break
+        emit('select', nxt, -1, cost, belief,
+             candidate_costs(problem, view))
+        cost += problem.leg(location, nxt)
+        surveys += 1
+        order.append(nxt)
+        emit('survey', nxt, 1 if found else 0, cost, belief)
+        location = problem.regions[nxt].id
+        if found:
+            belief = update(belief, nxt, True, problem.detection[nxt])
+            discovered = nxt
+            status = 'discovered'
+            emit('discover', nxt, 1, cost, belief)
+            break
+        if belief[nxt] * problem.detection[nxt] >= 1.0:
+            # The model said the target had to be here and the camera
+            # never misses: a miss contradicts "there is a target". Only
+            # reachable with no target placed and d = 1.
+            contradicted = True
+            status = 'exhausted'
+            emit('exhausted', nxt, -1, cost, belief)
+            break
+        belief = update(belief, nxt, False, problem.detection[nxt])
+        searched = searched + (nxt,)
+        emit('mark', nxt, 0, cost, belief)
+
+    summary = {
+        'status': status,
+        'order': [problem.ids[i] for i in order],
+        'surveys': surveys,
+        'discovered': None if discovered is None else problem.ids[discovered],
+        'discovered_at': None if discovered is None else surveys,
+        'cost': round(cost, 9),
+        'model_contradicted': contradicted,
+    }
+    return tr, summary
+
+
 def run_search(problem: SearchProblem, policy: str, truth: Optional[int],
                *, seed: int = 0, true_detection: Optional[Sequence[float]]
                = None, max_surveys: Optional[int] = None,
@@ -501,12 +603,7 @@ def run_search(problem: SearchProblem, policy: str, truth: Optional[int],
     n = problem.n
     if truth is not None and not 0 <= truth < n:
         raise SearchError(f'truth {truth} out of range')
-    if policy not in POLICIES:
-        raise SearchError(f'unknown policy {policy!r}')
-    if policy == 'given':
-        if not given_order or len(set(given_order)) != len(given_order) \
-                or not all(0 <= i < n for i in given_order):
-            raise SearchError('given_order must be distinct region indices')
+    _check_policy(problem, policy, given_order)
     if not 1 <= passes <= 4:
         raise SearchError('passes must be 1..4')
     td = tuple(true_detection) if true_detection is not None \
@@ -518,86 +615,61 @@ def run_search(problem: SearchProblem, policy: str, truth: Optional[int],
         raise SearchError(f'max_surveys must be 0..{MAX_SURVEYS}')
     rng = random.Random(seed)
 
-    tr = SearchTrace({'schema': SCHEMA, 'version': VERSION,
-                      'policy': policy, 'seed': seed,
-                      'given_order': [problem.ids[i] for i in given_order],
-                      'max_surveys': max_surveys, 'passes': passes,
-                      'true_detection': list(td)},
-                     [], [], [], [], [], [], {})
-    nan = [math.nan] * n
-
-    def emit(kind, region, outcome, cost, belief, cands=None):
-        tr.kind.append(KIND_CODE[kind])
-        tr.region.append(region)
-        tr.outcome.append(outcome)
-        tr.cost.append(cost)
-        tr.belief.extend(belief)
-        tr.candidates.extend(nan if cands is None else
-                             [math.nan if c is None else c for c in cands])
-
-    belief = tuple(problem.prior)
-    searched: Tuple[int, ...] = ()
-    location = problem.start
-    cost, surveys, done_passes = 0.0, 0, 1
-    order: List[int] = []
-    discovered: Optional[int] = None
-    status = 'exhausted'
-    contradicted = False
-    given = tuple(given_order)
-    while True:
-        view = SearchView(belief, searched, location, given)
-        nxt = choose(policy, problem, view)
-        if nxt is None and policy != 'given' and done_passes < passes and \
-                any(belief[i] > EPS for i in range(n)):
-            searched, done_passes = (), done_passes + 1
-            view = SearchView(belief, searched, location, given)
-            nxt = choose(policy, problem, view)
-        if nxt is None:
-            status = 'exhausted'
-            emit('exhausted', -1, -1, cost, belief)
-            break
-        if surveys >= limit:
-            status = 'stopped'
-            emit('stopped', -1, -1, cost, belief)
-            break
-        emit('select', nxt, -1, cost, belief,
-             candidate_costs(problem, view))
-        cost += problem.leg(location, nxt)
+    def observe(nxt):
         # The truth is read here, and only here.
         found = truth == nxt and rng.random() < td[nxt]
-        surveys += 1
-        order.append(nxt)
-        emit('survey', nxt, 1 if found else 0, cost, belief)
-        location = problem.regions[nxt].id
-        if found:
-            belief = update(belief, nxt, True, problem.detection[nxt])
-            discovered = nxt
-            status = 'discovered'
-            emit('discover', nxt, 1, cost, belief)
-            break
-        if belief[nxt] * problem.detection[nxt] >= 1.0:
-            # The model said the target had to be here and the camera
-            # never misses: a miss contradicts "there is a target". Only
-            # reachable with no target placed (truth None) and d = 1.
-            contradicted = True
-            status = 'exhausted'
-            emit('exhausted', nxt, -1, cost, belief)
-            break
-        belief = update(belief, nxt, False, problem.detection[nxt])
-        searched = searched + (nxt,)
-        emit('mark', nxt, 0, cost, belief)
+        return found
 
-    tr.summary = {
-        'status': status,
-        'order': [problem.ids[i] for i in order],
-        'surveys': surveys,
-        'discovered': None if discovered is None else problem.ids[discovered],
-        'discovered_at': None if discovered is None else surveys,
-        'cost': round(cost, 9),
-        'truth': None if truth is None else problem.ids[truth],
-        'model_contradicted': contradicted,
-    }
+    tr, summary = _search_loop(
+        problem, policy, observe, tuple(given_order), passes, limit,
+        {'schema': SCHEMA, 'version': VERSION, 'source': 'sketch',
+         'policy': policy, 'seed': seed,
+         'given_order': [problem.ids[i] for i in given_order],
+         'max_surveys': max_surveys, 'passes': passes,
+         'true_detection': list(td)})
+    summary['truth'] = None if truth is None else problem.ids[truth]
+    tr.summary = summary
     tr.validate(n)
+    return tr
+
+
+def replay_search(problem: SearchProblem, policy: str,
+                  outcomes: Sequence[Tuple[str, bool]],
+                  given_order: Sequence[int] = ()) -> SearchTrace:
+    """
+    Rebuild a RECORDED search from its observations alone.
+
+    ``outcomes`` is what the real mission saw, ``(region_id, found)`` in
+    order. The policy chooses each region again from the same belief; a
+    recording whose region differs from that choice did not follow the
+    policy, and is refused. The result is the trace the robot computed --
+    belief, candidate costs, bookkeeping -- with no truth anywhere in it.
+    A recording that ends before a find or exhaustion ends ``stopped``.
+    """
+    problem.validate()
+    _check_policy(problem, policy, given_order)
+    queue = list(outcomes)
+
+    def observe(nxt):
+        if not queue:
+            return None
+        rid, found = queue.pop(0)
+        if rid != problem.ids[nxt]:
+            raise SearchError(f'recording surveyed {rid} where policy '
+                              f'{policy} chooses {problem.ids[nxt]}')
+        return bool(found)
+
+    tr, summary = _search_loop(
+        problem, policy, observe, tuple(given_order), 1, MAX_SURVEYS,
+        {'schema': SCHEMA, 'version': VERSION, 'source': 'recorded',
+         'policy': policy,
+         'given_order': [problem.ids[i] for i in given_order]})
+    if queue:
+        raise SearchError(f'{len(queue)} recorded looks after the search '
+                          f'ended')
+    summary['truth'] = None
+    tr.summary = summary
+    tr.validate(problem.n)
     return tr
 
 

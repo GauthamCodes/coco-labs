@@ -339,3 +339,37 @@ def test_the_platforms_web_video_server_listens_on_loopback_only():
     # launch_ros holds literal values YAML-dumped ('127.0.0.1\n...\n').
     import yaml
     assert yaml.safe_load(params.get('address', '')) == '127.0.0.1', params
+
+
+def test_platform_launch_parameters_evaluate_with_every_default():
+    """
+    The default launch must get as far as building the node's parameters.
+
+    launch_ros YAML-parses a parameter given as a bare substitution, and
+    ``origins``' default ``*`` is a YAML alias token. From c921ec4
+    (2026-10-02) until Phase 5 the default ``mission.launch.py`` died
+    before starting anything, with "Unable to parse the value of
+    parameter origins as yaml" (measured 2026-10-06). This evaluates the
+    platform node's parameters exactly as launch does.
+    """
+    from launch import LaunchContext
+    from launch.actions import DeclareLaunchArgument
+    from launch_ros.actions import Node
+    from launch_ros.utilities import evaluate_parameters
+
+    entities = _platform_launch_entities()
+    context = LaunchContext()
+    for e in entities:
+        if isinstance(e, DeclareLaunchArgument):
+            context.launch_configurations[e.name] = ''.join(
+                getattr(p, 'text', '') for p in e.default_value)
+    context.launch_configurations.setdefault('use_sim_time', 'true')
+    platform = [e for e in entities if isinstance(e, Node)
+                and 'platform_server' in str(e.node_executable)]
+    assert len(platform) == 1
+    params = evaluate_parameters(context, platform[0]._Node__parameters)
+    merged = {}
+    for block in params:
+        if isinstance(block, dict):
+            merged.update(block)
+    assert merged['origins'] == '*'

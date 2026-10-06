@@ -51,6 +51,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 
 from launch_ros.actions import Node
+from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
@@ -143,7 +144,13 @@ def generate_launch_description():
                     LaunchConfiguration('expected_components'),
                 'access': LaunchConfiguration('access'),
                 'remote': LaunchConfiguration('remote'),
-                'origins': LaunchConfiguration('origins'),
+                # A STRING, explicitly. launch_ros YAML-parses a bare
+                # value, and the default '*' is a YAML alias token: since
+                # c921ec4 (2026-10-02) the default launch died with
+                # "Unable to parse the value of parameter origins as
+                # yaml" (measured, Phase 5, 2026-10-06).
+                'origins': ParameterValue(LaunchConfiguration('origins'),
+                                          value_type=str),
                 'session_idle_s': LaunchConfiguration('session_idle_s'),
                 'session_cap_s': LaunchConfiguration('session_cap_s'),
                 'max_clients': LaunchConfiguration('max_clients'),
