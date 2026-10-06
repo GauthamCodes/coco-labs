@@ -237,12 +237,39 @@ on `vite preview` of the build: the Lab 4 flow end to end — order, predict,
 place the target in bay_1, reveal (a cold Pyodide start + coco_lab: 17.6 s
 wall, coco_lab's own part 22 ms for 4 searches), play to the end, the belief
 table, the Replay of A1 with its FSM timeline and truth toggle, the evidence
-tab; **0 console errors**; at 390 px no tab overflows. Public-site numbers:
-§4.5.
+tab; **0 console errors**; at 390 px no tab overflows. Re-run with the full
+16-run Replay (`e25f9c8` + rebuilt catalog): 0 console errors on Lab 1's
+smoke check and Lab 4's two scenarios; the Pyodide reveal 8.7 s wall
+(coco_lab 8 ms); no overflow at 390 px. Public-site numbers: §4.5.
 
 ### 4.4 Tests
 
-(Written when the full run completes.)
+`COCO_WS=~/coco_search_ws ROS_DOMAIN_ID=77 scripts/run_all_package_tests.sh`
+(a copy overlay of `e25f9c8`; the worktree's path has parentheses) on a
+quiet machine after the matrix: **2,975 passed, 0 failed, 0 skipped**
+(Phase 4 closed at 2,848).
+
+| package | Phase 4 | now | what is new |
+|---|---|---|---|
+| coco_config | 93 | 93 | |
+| coco_sim | 280 | **323** | `test_episode_search.py`: what a searching mission is given |
+| coco_mission | 344 | **371** | `test_mission_search.py`: the search states, anti-cheat, the launch path |
+| coco_web | 857 | **863** | `mission.search`, the four states and five reasons, the default-launch parameters |
+| gazebo_models | 229 | 229 | |
+| coco_rl | 241 | **251** | `test_ramp_driver_search.py` (retreat, search-mode datum), Docker/CI build lists |
+| coco_perception | 139 | 139 | (unchanged — target_finder untouched) |
+| coco_moveit_config | 12 | 12 | |
+| custom_teleop | 75 | 75 | |
+| coco_lab | 492 | **533** | `test_regionsearch.py` (1,000-problem properties), `test_searchbundle.py` |
+| coco_lab_ros | 86 | 86 | |
+
+The first full run of the phase (at `3e043c1`) failed coco_lab's
+`test_flake8` and `test_pep257` on three formatting findings in a test
+helper (`golden_search_bundles.py`), fixed in `e25f9c8`; the rerun above is
+complete. `lab_web`: vitest 275 → **286**; tools pytest 95 → **104**;
+`tsc`, `vite build` and `check_dist` clean. CI on PR #14: green after two
+fixes (coco_lab not built by the ROS CI; a static test that still expected
+the old `origins` text).
 
 ### 4.5 On the public site
 
