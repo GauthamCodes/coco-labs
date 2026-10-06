@@ -107,6 +107,20 @@ cleanup() {
     trap - EXIT INT TERM
     for pid in "${REC_PIDS[@]}"; do kill -INT "$pid" 2>/dev/null; done
     sleep 5
+    # A background job of a non-interactive bash IGNORES SIGINT, so the INT
+    # above never stopped `ros2 bag record`: seven recorders outlived their
+    # runs, kept recording later runs on domain 64 and used up Cyclone's
+    # participant slots until a `ros2 service call` could not join (B3,
+    # measured 2026-10-06). SIGTERM is handled (rosbag2 closes the MCAP and
+    # writes metadata.yaml); wait for each to go.
+    for pid in "${REC_PIDS[@]}"; do kill -TERM "$pid" 2>/dev/null; done
+    for _ in $(seq 1 20); do
+        alive=0
+        for pid in "${REC_PIDS[@]}"; do kill -0 "$pid" 2>/dev/null && alive=1; done
+        [ "$alive" = 0 ] && break
+        sleep 1
+    done
+    for pid in "${REC_PIDS[@]}"; do kill -KILL "$pid" 2>/dev/null; done
     for sig in INT TERM KILL; do
         alive=0
         for pg in "${PGIDS[@]}"; do kill -"$sig" -- "-$pg" 2>/dev/null && alive=1; done
