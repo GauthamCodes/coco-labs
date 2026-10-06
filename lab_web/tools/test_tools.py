@@ -183,6 +183,13 @@ FORBIDDEN = [
      'scan matching / pose-graph optimisation'),
     (r'\b(ate|alignSe2|align_se2|scoreMap|score_map|diffRaster)\s*\(',
      'a mapping metric (coco_lab.mapeval computes every score)'),
+    # Lab 4: the browser renders searches; coco_lab.regionsearch decides them
+    (r'\b(bayes\w*|posterior\w*|update_?[Bb]elief\w*|normali[sz]e_?[Bb]elief\w*)'
+     r'\s*\(', "a belief update (Bayes' rule is coco_lab's)"),
+    (r'\b(expected_?[Cc]ost\w*|plan_?[Cc]ost\w*|candidate_?[Cc]osts?\w*|'
+     r'permutations?\w*|optimal_?[Oo]rder\w*|ratio_?[Oo]rder\w*|'
+     r'choose_?(Region|Next|Bay)\w*)\s*\(',
+     'a search-order decision (coco_lab costs and chooses every order)'),
 ]
 
 
@@ -203,6 +210,48 @@ def test_slam_expectations_regenerate_byte_identical():
     import make_slam_expectations
     with open(make_slam_expectations.OUT) as f:
         assert f.read() == make_slam_expectations.build()
+
+
+def test_search_expectations_regenerate_byte_identical():
+    import make_search_expectations
+    with open(make_search_expectations.OUT) as f:
+        assert f.read() == make_search_expectations.build()
+
+
+def test_every_lab4_cited_test_exists():
+    """Every Lab 4 claim, bundle and the challenge name tests; each must exist."""
+    import build_search
+    src = [build_search.CLAIMS, build_search.search_block.__doc__ or '']
+    cited = sorted(set(_cited_tests(src)))
+    assert len(cited) >= 12, cited
+    for path, name in cited:
+        full = os.path.join(common.REPO, path)
+        assert os.path.exists(full), path
+        with open(full) as f:
+            assert re.search(rf'^def {name}\(', f.read(), re.M), \
+                f'{path}::{name}'
+
+
+def test_the_catalog_serves_lab4_validated_and_replayed(tmp_path):
+    """Every search bundle is coco_lab's and replays; the problem is the mission's."""
+    import build_search
+    from coco_lab import searchbundle
+    out = tmp_path / 'generated'
+    block = build_search.search_block(str(out))
+    assert block['bundles'][0]['kind'] == 'sketch'
+    for e in block['bundles']:
+        b = searchbundle.load_search_bundle(str(out / e['path']))
+        searchbundle.replay_check(b)
+        assert b.manifest()['content_hash'] == e['content_hash']
+        assert [r['id'] for r in e['runs']] == [r.id for r in b.runs]
+    arena = searchbundle.load_search_bundle(
+        str(out / block['bundles'][0]['path']))
+    # the same problem the mission builds: uniform prior, the assumed d
+    assert arena.problem.prior == (0.25,) * 4
+    assert arena.problem.detection == (build_search.mission_detection(),) * 4
+    assert arena.problem.meta['detection_is'] == 'assumed'
+    for c in block['claims']:
+        assert c['cites'], c['id']
 
 
 def test_every_lab3_cited_test_exists():
@@ -261,7 +310,10 @@ def test_the_guard_catches_what_it_names():
                'Math.random()', 'logOdds(p)', 'bresenham(a, b)',
                'integrateScan(g, z)', 'icp(a, b)', 'scanMatch(a, b)',
                'gaussNewton(g)', 'optimiseGraph(g)', 'loopClosure(k)',
-               'alignSe2(a, b)', 'scoreMap(t, m)', 'ate(e, t)']
+               'alignSe2(a, b)', 'scoreMap(t, m)', 'ate(e, t)',
+               'bayesUpdate(b, i)', 'posterior(b)', 'expectedCost(o)',
+               'planCost(p, b)', 'permutations(xs)', 'optimalOrder(p)',
+               'chooseNext(v)', 'candidateCosts(p, v)']
     for s in samples:
         assert any(re.search(p, s) for p, _ in FORBIDDEN), s
 

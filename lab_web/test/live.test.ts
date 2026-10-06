@@ -16,7 +16,8 @@ import { describe, expect, it } from 'vitest';
 
 import { isZero, keysVelocity, stickVelocity } from '../src/live/drive';
 import {
-  controlHolder, fallbackWarning, idleLine, LANE_TOLD, liveLabel, localisationNote, overriding, sourceWords,
+  autonomousLabel, controlHolder, DISCOVERS, fallbackWarning, idleLine, LANE_TOLD, liveLabel, localisationNote, overriding,
+  searchLine, sourceWords,
 } from '../src/live/labels';
 import { fit, toCanvas, toMap } from '../src/live/mapdraw';
 import { INTENT_TYPES, type Telemetry } from '../src/live/protocol';
@@ -107,10 +108,39 @@ describe('honest labels', () => {
     expect(liveLabel('ws://127.0.0.1:8080/ws')).toBe('Live — local stack');
     expect(liveLabel('wss://coco.example.net/ws')).toBe('Live — remote session');
   });
-  it('says the mission is told the lane, and that discovery is Phase 5', () => {
+  // Phase 5: the label comes from what the RUNNING mission reports
+  // (/mission/search via coco_web), never from a constant.
+  const search = (mode: 'discover' | 'told' | null, extra = {}) => ({
+    online: true, mode, policy: 'expected_cost', regions: ['bay_1', 'bay_2', 'bay_3', 'bay_4'],
+    order: [], current: null, searched: [], belief: [0.25, 0.25, 0.25, 0.25], discovered: null,
+    surveys: 0, seen: [], driven: 0, detection: 0.9, ...extra,
+  });
+  it('says the robot discovers the target only when the mission says it searches', () => {
+    expect(autonomousLabel(search('discover'))).toEqual({ kind: 'discover', text: DISCOVERS });
+    expect(DISCOVERS).toContain('told only the colour');
+  });
+  it('says the mission is told the bay when it was launched told', () => {
+    expect(autonomousLabel(search('told'))).toEqual({ kind: 'told', text: LANE_TOLD });
     expect(LANE_TOLD).toContain('resolve_lane()');
     expect(LANE_TOLD).toContain('lane_for_colour()');
-    expect(LANE_TOLD).toContain('Phase 5');
+  });
+  it('claims neither when the mission has not reported (an older stack)', () => {
+    for (const s of [null, undefined, { ...search('discover'), online: false }, search(null)]) {
+      const l = autonomousLabel(s);
+      expect(l.kind).toBe('unknown');
+      expect(l.text).not.toContain('discovers');
+    }
+  });
+  it('shows the search as it happens, from the mission\'s own line', () => {
+    expect(searchLine(search('told'))).toBeNull();
+    expect(searchLine(search('discover'))).toContain('belief bay_1 25%');
+    const line = searchLine(search('discover', {
+      searched: ['bay_3'], current: 'bay_4', seen: ['blue'], belief: [0.3226, 0.3226, 0.0323, 0.3226],
+    }))!;
+    expect(line).toContain('searched: bay_3');
+    expect(line).toContain('now: bay_4');
+    expect(line).toContain('last look saw blue');
+    expect(searchLine(search('discover', { discovered: 'bay_4', current: 'bay_4' }))).toContain('found in bay_4');
   });
   it('warns only when the server fell back', () => {
     expect(fallbackWarning(null)).toBeNull();

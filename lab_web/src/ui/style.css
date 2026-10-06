@@ -284,3 +284,34 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .race-table tbody tr { cursor: pointer; }
 .score .big { font-size: 1.6rem; margin: 4px 0; }
 .score .big strong { font-size: 2.2rem; }
+
+/* Lab 4 (Search) */
+.arena-svg { width: 100%; height: auto; max-height: 70vh; border: 1px solid var(--line); background: var(--panel); display: block; }
+.arena-svg .arena-floor { fill: var(--panel); }
+.arena-svg .ramp { fill: var(--line); opacity: 0.55; }
+.arena-svg .platform { fill: var(--line); stroke: var(--muted); stroke-width: 1.5; }
+.arena-svg .bay.current .platform { stroke: var(--accent); stroke-width: 4; }
+.arena-svg .bay.searched .platform { fill: var(--bg); stroke-dasharray: 6 4; }
+.arena-svg .bay.found .platform { stroke: #009e73; stroke-width: 5; }
+.arena-svg .bay-label, .arena-svg .home-label, .arena-svg .belief-text, .arena-svg .truth-label { fill: var(--fg); font-size: 15px; }
+.arena-svg .searched-mark { fill: var(--muted); font-size: 14px; font-style: italic; }
+.arena-svg .found-mark { fill: #009e73; font-size: 16px; font-weight: 700; }
+.arena-svg .belief-bg { fill: none; stroke: var(--line); }
+.arena-svg .belief-bar { fill: var(--accent); }
+.arena-svg .fov { fill: #e69f00; opacity: 0.35; }
+.arena-svg .search-path { fill: none; stroke: var(--accent); stroke-width: 3; stroke-dasharray: 2 6; stroke-linecap: round; }
+.arena-svg .home { fill: none; stroke: var(--fg); stroke-width: 2; }
+.arena-svg .robot { fill: var(--fg); }
+.arena-svg .truth { stroke: var(--fg); stroke-width: 2; }
+.legend .sw.belief { background: var(--accent); }
+.legend .sw.platform { background: var(--line); }
+.legend .sw.fov { background: #e69f00; opacity: 0.6; }
+.legend .sw.truth { background: #d62728; }
+.bay-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
+.slider-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.slider-row input[type='range'] { flex: 1 1 140px; min-height: var(--touch); }
+.narrate { margin: 6px 0; }
+.timeline { font-size: 0.85rem; padding-left: 1.2em; max-height: 18em; overflow-y: auto; }
+.timeline li.future { color: var(--muted); }
+.claims { padding-left: 1.1em; }
+.claims li p { margin: 2px 0; }

@@ -16,7 +16,7 @@ import { LiveClient, type ConnState } from '../live/client';
 import { isZero, keysVelocity, KEYS, stickVelocity, type Velocity } from '../live/drive';
 import { loadFrameDecoder, type DecodedFrame } from '../live/frame';
 import {
-  controlHolder, fallbackWarning, idleLine, LANE_TOLD, liveLabel, localisationNote, overriding, refusalWords, role,
+  autonomousLabel, controlHolder, fallbackWarning, idleLine, liveLabel, localisationNote, overriding, refusalWords, role, searchLine,
   sourceWords,
 } from '../live/labels';
 import { draw, gridImage, toCanvas, toMap, type View } from '../live/mapdraw';
@@ -328,7 +328,16 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
                 <button type="button" className="seg-btn" disabled={spectator || !missionActive} data-testid="live-abort"
                   onClick={() => command({ type: 'mission', action: 'abort' })}>Abort</button>
               </div>
-              <p className="honest" data-testid="live-lane-told">{LANE_TOLD}</p>
+              {(() => {
+                const lab = autonomousLabel(m?.search);
+                const line = searchLine(m?.search);
+                return (
+                  <>
+                    <p className={`honest ${lab.kind}`} data-testid="live-autonomous-label" data-kind={lab.kind}>{lab.text}</p>
+                    {line && <p data-testid="live-search">{line}</p>}
+                  </>
+                );
+              })()}
               {m && <p data-testid="live-mission">{m.state}{m.step && m.steps ? ` — step ${m.step} of ${m.steps}` : ''}
                 {m.words ? `: ${m.words}` : ''}{m.reason ? (m.result === 'fetch' || m.result === 'traverse' ? ` (recovered on the way from: ${m.reason_words ?? m.reason})` : ` (${m.reason_words ?? m.reason})`) : ''}{m.result ? ` — result: ${m.result}` : ''}</p>}
               <ol className="live-timeline" data-testid="live-timeline">

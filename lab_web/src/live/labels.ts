@@ -7,7 +7,7 @@
  * it, and `test/live.test.ts` pins the wording that must not drift.
  */
 
-import type { Control, Telemetry, Welcome } from './protocol';
+import type { Control, MissionSearch, Telemetry, Welcome } from './protocol';
 
 /** Rule 4: the mode is labelled on screen. */
 export function liveLabel(url: string): string {
@@ -24,14 +24,53 @@ export function isLocal(url: string): boolean {
 }
 
 /**
- * The autonomous mode is TOLD the lane (ROADMAP §3.5). The mission resolves
- * the colour's lane with resolve_lane(): the episode's region map, or with
- * none, exactly lane_for_colour(). It does not search. Discovery is Phase 5.
+ * The TOLD mission (`mission.launch.py search:=false`): it resolves the
+ * colour's bay with resolve_lane() -- the episode's region map, or with none,
+ * exactly lane_for_colour() -- and does not search. Until Phase 5 this was
+ * the only autonomous mode, and the page always said so.
  */
 export const LANE_TOLD =
-  'Honest label: the mission is told which lane this colour is in ' +
-  '(resolve_lane() / lane_for_colour()). It does not search for the target; ' +
-  'discovering it arrives in Phase 5.';
+  'Honest label: this mission was launched TOLD (search:=false): it is told ' +
+  'which bay this colour is in (resolve_lane() / lane_for_colour()) and does ' +
+  'not search for the target.';
+
+/** Phase 5: what a mission that reports mode=discover does. */
+export const DISCOVERS =
+  'The robot discovers the target: it is told only the colour, then searches ' +
+  "the bays in the order coco_lab chooses (least expected search cost, " +
+  're-planned after every look). No bay and no position reaches it; the ' +
+  'camera finds the target.';
+
+/** Until the running mission says which it is, no claim either way. */
+export const SEARCH_UNKNOWN =
+  'The running mission has not reported whether it searches, so this page ' +
+  'claims neither: an older stack is told the bay.';
+
+/**
+ * The autonomous mode's honest label, from what the RUNNING mission
+ * reports (`/mission/search`), never from a constant: a stack launched
+ * search:=false, or one from before Phase 5, is labelled told.
+ */
+export function autonomousLabel(search: MissionSearch | null | undefined):
+  { kind: 'discover' | 'told' | 'unknown'; text: string } {
+  if (search?.online && search.mode === 'discover') return { kind: 'discover', text: DISCOVERS };
+  if (search?.online && search.mode === 'told') return { kind: 'told', text: LANE_TOLD };
+  return { kind: 'unknown', text: SEARCH_UNKNOWN };
+}
+
+/** One line of search progress, from the mission's own report; null when it is not searching. */
+export function searchLine(search: MissionSearch | null | undefined): string | null {
+  if (!search?.online || search.mode !== 'discover') return null;
+  const parts: string[] = [];
+  if (search.discovered) parts.push(`found in ${search.discovered}`);
+  if (search.searched.length) parts.push(`searched: ${search.searched.join(', ')}`);
+  if (search.current && !search.discovered) parts.push(`now: ${search.current}`);
+  if (search.seen.length) parts.push(`last look saw ${search.seen.join(', ')}`);
+  if (search.belief.length === search.regions.length && search.regions.length) {
+    parts.push(`belief ${search.regions.map((r, i) => `${r} ${Math.round(search.belief[i] * 100)}%`).join(' · ')}`);
+  }
+  return parts.length ? `Search: ${parts.join('; ')}` : 'Search: not started';
+}
 
 /** Shown when the server's colours, depth clip or limits are defaults. */
 export function fallbackWarning(welcome: Welcome | null): string | null {

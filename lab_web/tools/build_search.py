@@ -128,7 +128,8 @@ def _entry(sid, title, kind, back, digest, size, lesson, cites, extra=None):
                    r.trace.header['policy'], 'summary': r.trace.summary}
                   for r in back.runs],
          'validated': {'by': f'coco_lab {coco_lab.__version__}',
-                       'replay': 'byte-identical'},
+                       'replay': 'reproduced byte for byte '
+                                 '(searchbundle.replay_check)'},
          'lesson': lesson, 'cites': cites}
     e.update(extra or {})
     return e

@@ -53,6 +53,17 @@ export interface Mission {
   reason: string | null; reason_words: string | null; result: string | null;
   owner: string | null; mode: string | null; step: number | null;
   steps: number | null; recovering: boolean;
+  /** Phase 5, additive: what the RUNNING mission says it does (coco_web mission_view.search_view). */
+  search?: MissionSearch | null;
+}
+
+export interface MissionSearch {
+  online: boolean;
+  /** 'discover': told only the colour, it searches. 'told': resolve_lane(), as before Phase 5. */
+  mode: 'discover' | 'told' | null;
+  policy: string | null; regions: string[]; order: string[]; current: string | null;
+  searched: string[]; belief: number[]; discovered: string | null; surveys: number | null;
+  seen: string[]; driven: number | null; detection: number | null;
 }
 
 export interface Goal { x: number; y: number; sent_at: number; status: string }
