@@ -7637,3 +7637,27 @@ and a draft release (publishing is the owner's call).
 NEXT: the owner decides on publishing `lab3-v1.0`:
 `git push labs lab3-v1.0 && gh release edit lab3-v1.0 -R GauthamCodes/coco-labs --draft=false --latest --verify-tag`.
 Phase 5 (Search) NOT started.
+
+### Lab 3 released — `lab3-v1.0` published (2026-10-06, ~09:40 UTC)
+
+The owner approved publishing `lab3-v1.0` in this session ("approve
+lab3-v1.0", 2026-10-06). Before that, the gate was checked and found
+closed: no approval was recorded in `PROJECT_STATE.md`, this log, or
+`labs/main`, the tag was local only, and the release was a draft.
+
+Done:
+- `git push labs lab3-v1.0` (annotated tag `e46b0d7` → commit `a63a4c8`).
+- `gh release edit lab3-v1.0 -R GauthamCodes/coco-labs --draft=false
+  --latest --verify-tag`. Published 2026-10-06T09:38:28Z, marked Latest.
+
+Verified (measured, this session):
+- `git ls-remote --tags labs` lists `lab3-v1.0` → `a63a4c8`.
+- `gh release list`: Lab 3 = Latest, Lab 2 / Live / Lab 1 unchanged.
+- The release asset `coco_lab3_demo.mp4`, downloaded from its public URL,
+  is 5,268,119 B with sha256 `0d9648909acb6365bb29856489062c339ef473a9203db7c6d69f7f03f19c4e66`,
+  the hash recorded at recording time.
+- Both links in the release notes answer HTTP 200 (`?view=map` on the
+  public site; `docs/labs/LAB3_MAP.md` at the tag).
+
+No Lab 3 engineering was redone. Phase 5 (Search, Lab 4) starts on branch
+**`lab4`** (from `a63a4c8`), same worktree.

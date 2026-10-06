@@ -31,8 +31,10 @@
 >   and deployed.** `main` was fast-forwarded to `ee9bd65` after CI and Lab
 >   were green on the PR, and the site was verified on the public URL
 >   (0 console errors, headless Firefox). The demo video was recorded from
->   the public site. `lab3-v1.0` is tagged LOCALLY with a DRAFT release;
->   publishing it is the owner's call. Status, numbers and limitations:
+>   the public site. `lab3-v1.0` is **published** (2026-10-06,
+>   owner-approved): <https://github.com/GauthamCodes/coco-labs/releases/tag/lab3-v1.0>
+>   (with the video). *(Until 2026-10-06: "tagged LOCALLY with a DRAFT
+>   release; publishing it is the owner's call".)* Status, numbers and limitations:
 >   [`docs/labs/LAB3_MAP.md`](labs/LAB3_MAP.md).
 >   *(Until 2026-10-05 16:30 UTC this line read "implemented, tested,
 >   measured on branch `lab3`".)*
