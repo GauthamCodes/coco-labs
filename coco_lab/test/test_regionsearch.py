@@ -480,3 +480,28 @@ def test_the_arena_order_does_not_depend_on_the_colour_asked_for():
                                   true_detection=[0.0] * 4).summary['order'])
               for t in range(4)}
     assert orders == {('bay_3', 'bay_4', 'bay_2', 'bay_1')}
+
+
+@PROPERTY_SETTINGS
+@given(problems())
+def test_the_robot_plan_is_its_optimal_order_and_needs_no_truth(p):
+    plan = rs.policy_plan(p, 'expected_cost')
+    best = rs.optimal_order(p, p.prior, 'home', range(p.n))
+    e = rs.plan_cost(p, p.prior, 'home', best)['expected']
+    assert plan['expected_cost'] == pytest.approx(e, rel=1e-7, abs=1e-9)
+    for t in range(p.n):
+        tr = rs.run_search(p, 'expected_cost', t, seed=3)
+        assert tr.summary['plan'] == plan
+
+
+def test_the_arena_plans_carry_the_counterexample_numbers():
+    p = arena(0.9)
+    robot = rs.policy_plan(p, 'expected_cost')
+    near = rs.policy_plan(p, 'nearest')
+    likely = rs.policy_plan(p, 'most_likely')
+    assert robot['order'] == ['bay_3', 'bay_4', 'bay_2', 'bay_1']
+    assert near['order'] == ['bay_3', 'bay_2', 'bay_1', 'bay_4']
+    assert likely['order'] == ['bay_1', 'bay_2', 'bay_3', 'bay_4']
+    assert (robot['expected_cost'], near['expected_cost'],
+            likely['expected_cost']) == pytest.approx(
+        (30.448354875, 30.832245925, 32.264463825))

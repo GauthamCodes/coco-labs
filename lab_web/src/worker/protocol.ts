@@ -58,15 +58,29 @@ export interface MapSpec {
   runs: string[]; // some of known, odometry, ekf_slam, fastslam, pose_graph, pose_graph_noloop
 }
 
+/**
+ * Lab 4's search request (src/worker/recompute.py `search_lab`): coco_lab
+ * runs the robot's policy, the learner's order and the teaching policies on
+ * ONE problem, ONE placement, ONE seed, and returns one search bundle.
+ */
+export interface SearchSpec {
+  prior: number[]; // a non-negative weight per bay
+  detection: number; // the robot's d, 0.5..1
+  true_detection: number; // how often the camera really finds it, 0..1
+  truth: number | null; // the bay the target stands in (the page hides it until reveal)
+  order: number[]; // the learner's order (may be partial: stopping early)
+  seed: number;
+}
+
 export interface RecomputeRequest {
   id: number;
   /** 'recompute': Lab 1's search glue; 'localise': Lab 2's; 'mapping': Lab 3's (recompute.py). */
-  type: 'recompute' | 'localise' | 'mapping';
+  type: 'recompute' | 'localise' | 'mapping' | 'search';
   /** The CURRENT bundle's files, byte for byte. */
   manifest: Uint8Array;
   arraysName: string;
   arraysFile: Uint8Array;
-  spec: RecomputeSpec | LocSpec | MapSpec;
+  spec: RecomputeSpec | LocSpec | MapSpec | SearchSpec;
   /** Absolute URL of coco_lab's wheel on this site, and its sha256. */
   wheelUrl: string;
   wheelSha256: string;

@@ -581,6 +581,36 @@ def _search_loop(problem: SearchProblem, policy: str, observe,
     return tr, summary
 
 
+def policy_plan(problem: SearchProblem, policy: str,
+                given_order: Sequence[int] = ()) -> Dict[str, object]:
+    """
+    Return the policy's whole one-pass plan, before any look.
+
+    The order it would survey if every look missed (so: computed from the
+    problem alone, no truth), with that order's expected cost and P(find)
+    under the prior -- the number a learner's prediction is compared with.
+    """
+    belief = tuple(problem.prior)
+    searched: Tuple[int, ...] = ()
+    location = problem.start
+    order: List[int] = []
+    while True:
+        nxt = choose(policy, problem,
+                     SearchView(belief, searched, location,
+                                tuple(given_order)))
+        if nxt is None:
+            break
+        order.append(nxt)
+        if belief[nxt] * problem.detection[nxt] < 1.0:
+            belief = update(belief, nxt, False, problem.detection[nxt])
+        searched = searched + (nxt,)
+        location = problem.ids[nxt]
+    cost = plan_cost(problem, problem.prior, problem.start, order)
+    return {'order': [problem.ids[i] for i in order],
+            'expected_cost': round(cost['expected'], 9),
+            'p_find': round(cost['p_find'], 12)}
+
+
 def run_search(problem: SearchProblem, policy: str, truth: Optional[int],
                *, seed: int = 0, true_detection: Optional[Sequence[float]]
                = None, max_surveys: Optional[int] = None,
@@ -628,6 +658,7 @@ def run_search(problem: SearchProblem, policy: str, truth: Optional[int],
          'max_surveys': max_surveys, 'passes': passes,
          'true_detection': list(td)})
     summary['truth'] = None if truth is None else problem.ids[truth]
+    summary['plan'] = policy_plan(problem, policy, given_order)
     tr.summary = summary
     tr.validate(n)
     return tr
@@ -668,6 +699,7 @@ def replay_search(problem: SearchProblem, policy: str,
         raise SearchError(f'{len(queue)} recorded looks after the search '
                           f'ended')
     summary['truth'] = None
+    summary['plan'] = policy_plan(problem, policy, given_order)
     tr.summary = summary
     tr.validate(problem.n)
     return tr

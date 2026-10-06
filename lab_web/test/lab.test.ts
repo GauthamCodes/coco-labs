@@ -37,9 +37,9 @@ async function load(id: string): Promise<DecodedBundle> {
 describe('the catalog carries coco_lab verdicts (1.1)', () => {
   it('is built', () => {
     expect(existsSync(CATALOG)).toBe(true);
-    // 1.2 and 1.3 are additive (Lab 2's `localise` block, Lab 3's `map` block);
-    // every 1.1 member below still holds
-    expect(catalog.version).toBe('1.3');
+    // 1.2, 1.3 and 1.4 are additive (Lab 2's `localise` block, Lab 3's `map`
+    // block, Lab 4's `search` block); every 1.1 member below still holds
+    expect(catalog.version).toBe('1.4');
     expect(catalog.settings?.weights).toEqual(Array.from({ length: 21 }, (_, i) => i / 4));
   });
 

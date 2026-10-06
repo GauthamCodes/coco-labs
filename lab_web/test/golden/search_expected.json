@@ -1,0 +1,425 @@
+{
+ "bundles": [
+  {
+   "arrays": {
+    "run.made_up.belief": {
+     "count": 36,
+     "dtype": "f64",
+     "first": 0.25,
+     "last": 0.0,
+     "offset": 180,
+     "sha256": "3051b63cdeb01fb98f801c194b77ae7e48c010d9536c8ee4eaecf1a8448d8e14"
+    },
+    "run.made_up.candidates": {
+     "count": 36,
+     "dtype": "f64",
+     "first": 32.26446382500001,
+     "last": "nan",
+     "offset": 468,
+     "sha256": "76e4d861529a512064bea9cbe58f29284181809a8b978820ee88b4cf38462bab"
+    },
+    "run.made_up.cost": {
+     "count": 9,
+     "dtype": "f64",
+     "first": 0.0,
+     "last": 36.413351000000006,
+     "offset": 108,
+     "sha256": "7b58cf09ad092f879e9e6501d329a803da218faf8a0dec9c3e3c167a26283d9a"
+    },
+    "run.made_up.kind": {
+     "count": 9,
+     "dtype": "i32",
+     "first": 0,
+     "last": 3,
+     "offset": 0,
+     "sha256": "29dbee61605b0565acc1ed2b00094fb7653ad238f7ef181d5dba43ac96a5365e"
+    },
+    "run.made_up.outcome": {
+     "count": 9,
+     "dtype": "i32",
+     "first": -1,
+     "last": 1,
+     "offset": 72,
+     "sha256": "24075c589c4939e2b238b262156a211da8e1ab99c6ba893169bcee683855816c"
+    },
+    "run.made_up.region": {
+     "count": 9,
+     "dtype": "i32",
+     "first": 2,
+     "last": 1,
+     "offset": 36,
+     "sha256": "d162c1de48832abc4b82b70721e691d9d17d87279b707e836184aa75f6bb8104"
+    },
+    "run.made_up.t": {
+     "count": 9,
+     "dtype": "f64",
+     "first": 0.0,
+     "last": 80.0,
+     "offset": 756,
+     "sha256": "7fe86932a403c574dd38dff4d91c3a114bb65e20de80e5e34433a60a65c7a67a"
+    },
+    "run.sketch_bay_1.belief": {
+     "count": 48,
+     "dtype": "f64",
+     "first": 0.25,
+     "last": 0.0,
+     "offset": 1068,
+     "sha256": "360d15df122d6aed1bae0d13ef890b2da4da9fccd6068458542e912d99c0dea5"
+    },
+    "run.sketch_bay_1.candidates": {
+     "count": 48,
+     "dtype": "f64",
+     "first": 32.26446382500001,
+     "last": "nan",
+     "offset": 1452,
+     "sha256": "1504ed60fcc02b3b56cdac2f0d49cdb0b69c2132cb731607613ccdb896cd6f17"
+    },
+    "run.sketch_bay_1.cost": {
+     "count": 12,
+     "dtype": "f64",
+     "first": 0.0,
+     "last": 48.256854000000004,
+     "offset": 972,
+     "sha256": "8c27d264ecf332bcb798b0cf0b383ea95ab20feb6dd56912e2d4dcc269af0739"
+    },
+    "run.sketch_bay_1.kind": {
+     "count": 12,
+     "dtype": "i32",
+     "first": 0,
+     "last": 3,
+     "offset": 828,
+     "sha256": "a99a29f277bc708b35eaadc184bab455bdc913840d4891a3c6e773a972d1931e"
+    },
+    "run.sketch_bay_1.outcome": {
+     "count": 12,
+     "dtype": "i32",
+     "first": -1,
+     "last": 1,
+     "offset": 924,
+     "sha256": "2f46c4d43f3eefb287f40dcadbd25742b95f7b9c11a612efb19671ba4858ce8a"
+    },
+    "run.sketch_bay_1.region": {
+     "count": 12,
+     "dtype": "i32",
+     "first": 2,
+     "last": 0,
+     "offset": 876,
+     "sha256": "cf2431f71c7289e1507d214be1cc5a836fc03a0a24ab937110496d5a1d6fa959"
+    }
+   },
+   "compression": "gzip",
+   "content_hash": "sha256:af7fd0a8bbd4364be0ee9ad657a07cfa64d4ef4cdb36b99b15e5255b24c12a6f",
+   "dir": "coco_lab/test/fixtures/search_bundles/arena_recorded_gz",
+   "id": "arena_recorded_gz",
+   "regions": [
+    "bay_1",
+    "bay_2",
+    "bay_3",
+    "bay_4"
+   ],
+   "runs": [
+    {
+     "id": "made_up",
+     "kind": "recorded",
+     "n_events": 9,
+     "summary": {
+      "cost": 36.413351,
+      "discovered": "bay_2",
+      "discovered_at": 3,
+      "model_contradicted": false,
+      "order": [
+       "bay_3",
+       "bay_4",
+       "bay_2"
+      ],
+      "plan": {
+       "expected_cost": 30.448354875,
+       "order": [
+        "bay_3",
+        "bay_4",
+        "bay_2",
+        "bay_1"
+       ],
+       "p_find": 0.9
+      },
+      "status": "discovered",
+      "surveys": 3,
+      "truth": null
+     }
+    },
+    {
+     "id": "sketch_bay_1",
+     "kind": "sketch",
+     "n_events": 12,
+     "summary": {
+      "cost": 48.256854,
+      "discovered": "bay_1",
+      "discovered_at": 4,
+      "model_contradicted": false,
+      "order": [
+       "bay_3",
+       "bay_4",
+       "bay_2",
+       "bay_1"
+      ],
+      "plan": {
+       "expected_cost": 30.448354875,
+       "order": [
+        "bay_3",
+        "bay_4",
+        "bay_2",
+        "bay_1"
+       ],
+       "p_find": 0.9
+      },
+      "status": "discovered",
+      "surveys": 4,
+      "truth": "bay_1"
+     }
+    }
+   ],
+   "version": "1.0"
+  },
+  {
+   "arrays": {
+    "run.gave_up.belief": {
+     "count": 12,
+     "dtype": "f64",
+     "first": 0.3333333333333333,
+     "last": 0.4545454545454546,
+     "offset": 896,
+     "sha256": "2497092ce595d133d4362991c9d09885577e95dda9522d1a49a26c8d3ae77ec0"
+    },
+    "run.gave_up.candidates": {
+     "count": 12,
+     "dtype": "f64",
+     "first": 5.5,
+     "last": "nan",
+     "offset": 992,
+     "sha256": "12c27c76fc3cde7b169b6570151224c180754ca2419a03625c0fb139d301b2ba"
+    },
+    "run.gave_up.cost": {
+     "count": 4,
+     "dtype": "f64",
+     "first": 0.0,
+     "last": 2.5,
+     "offset": 864,
+     "sha256": "342c937d4c19aff95b09cf4e0d3e1f716926e3239b24b0cb6295b99612f4883b"
+    },
+    "run.gave_up.kind": {
+     "count": 4,
+     "dtype": "i32",
+     "first": 0,
+     "last": 5,
+     "offset": 816,
+     "sha256": "53468ebc113f40d8632767eefcd86745a491d078543a3c56ee537b64e4f149c1"
+    },
+    "run.gave_up.outcome": {
+     "count": 4,
+     "dtype": "i32",
+     "first": -1,
+     "last": -1,
+     "offset": 848,
+     "sha256": "17d014410caf8ff36d2c9584a9908ef2a30936e7c5e1e9dcb8d07f5f4a409e99"
+    },
+    "run.gave_up.region": {
+     "count": 4,
+     "dtype": "i32",
+     "first": 0,
+     "last": -1,
+     "offset": 832,
+     "sha256": "34885ea2ef8490886fae553c8ce7ffb5a27563825e5f6ce02784875d1ace0e47"
+    },
+    "run.mine.belief": {
+     "count": 9,
+     "dtype": "f64",
+     "first": 0.3333333333333333,
+     "last": 1.0,
+     "offset": 672,
+     "sha256": "74a3f6678fb1a0f8f068e65a7ed50bc7c12bf44d5000f3adb670eaafc04630db"
+    },
+    "run.mine.candidates": {
+     "count": 9,
+     "dtype": "f64",
+     "first": 5.5,
+     "last": "nan",
+     "offset": 744,
+     "sha256": "c1093bc167eb658909a7c29e6b13436a941e0fbf041b40cdc4322f8c33440867"
+    },
+    "run.mine.cost": {
+     "count": 3,
+     "dtype": "f64",
+     "first": 0.0,
+     "last": 4.5,
+     "offset": 648,
+     "sha256": "b4d2d2020226a8cf4ed85ccce547e3c2e2a37b8f54f3bcc94c9cfece797d063c"
+    },
+    "run.mine.kind": {
+     "count": 3,
+     "dtype": "i32",
+     "first": 0,
+     "last": 3,
+     "offset": 612,
+     "sha256": "87fa498592c87cce6f973bfd6aeb542c8d045f18160697c2628b158cb4a3a123"
+    },
+    "run.mine.outcome": {
+     "count": 3,
+     "dtype": "i32",
+     "first": -1,
+     "last": 1,
+     "offset": 636,
+     "sha256": "333e0b3a702657299113538ca36393eb716d96359cf5238f3ddee4127872380d"
+    },
+    "run.mine.region": {
+     "count": 3,
+     "dtype": "i32",
+     "first": 2,
+     "last": 2,
+     "offset": 624,
+     "sha256": "636952d3023d8cf5d8245ac30efb93a443bd4bc23b5e331d51ecb82425fdc30a"
+    },
+    "run.policy.belief": {
+     "count": 27,
+     "dtype": "f64",
+     "first": 0.3333333333333333,
+     "last": 1.0,
+     "offset": 180,
+     "sha256": "a975e73eef7a061592ac1d193e420b465ec5e33aece6576219af98d579919178"
+    },
+    "run.policy.candidates": {
+     "count": 27,
+     "dtype": "f64",
+     "first": 5.5,
+     "last": "nan",
+     "offset": 396,
+     "sha256": "0b52ecd6c53cae130ba67a34eec079d386bad379d18057cb5ca7ce57c9eaadaa"
+    },
+    "run.policy.cost": {
+     "count": 9,
+     "dtype": "f64",
+     "first": 0.0,
+     "last": 7.5,
+     "offset": 108,
+     "sha256": "df42713650476e3694e3567eac23572dbb49ab034c9b21170aea2ee353ea6e89"
+    },
+    "run.policy.kind": {
+     "count": 9,
+     "dtype": "i32",
+     "first": 0,
+     "last": 3,
+     "offset": 0,
+     "sha256": "29dbee61605b0565acc1ed2b00094fb7653ad238f7ef181d5dba43ac96a5365e"
+    },
+    "run.policy.outcome": {
+     "count": 9,
+     "dtype": "i32",
+     "first": -1,
+     "last": 1,
+     "offset": 72,
+     "sha256": "24075c589c4939e2b238b262156a211da8e1ab99c6ba893169bcee683855816c"
+    },
+    "run.policy.region": {
+     "count": 9,
+     "dtype": "i32",
+     "first": 0,
+     "last": 2,
+     "offset": 36,
+     "sha256": "6cc7a16e0323d4c58d3ad2cbc69d3490aff5519611be8104b26801b898074e03"
+    }
+   },
+   "compression": "none",
+   "content_hash": "sha256:32ac9a01596fad833be1b2d821b20e18a2aa768fb9ceb2d5adca68b8bf588892",
+   "dir": "coco_lab/test/fixtures/search_bundles/line_small",
+   "id": "line_small",
+   "regions": [
+    "r0",
+    "r1",
+    "r2"
+   ],
+   "runs": [
+    {
+     "id": "policy",
+     "kind": "sketch",
+     "n_events": 9,
+     "summary": {
+      "cost": 7.5,
+      "discovered": "r2",
+      "discovered_at": 3,
+      "model_contradicted": false,
+      "order": [
+       "r0",
+       "r1",
+       "r2"
+      ],
+      "plan": {
+       "expected_cost": 5.5,
+       "order": [
+        "r0",
+        "r1",
+        "r2"
+       ],
+       "p_find": 0.8
+      },
+      "status": "discovered",
+      "surveys": 3,
+      "truth": "r2"
+     }
+    },
+    {
+     "id": "mine",
+     "kind": "sketch",
+     "n_events": 3,
+     "summary": {
+      "cost": 4.5,
+      "discovered": "r2",
+      "discovered_at": 1,
+      "model_contradicted": false,
+      "order": [
+       "r2"
+      ],
+      "plan": {
+       "expected_cost": 8.233333333,
+       "order": [
+        "r2",
+        "r0",
+        "r1"
+       ],
+       "p_find": 0.8
+      },
+      "status": "discovered",
+      "surveys": 1,
+      "truth": "r2"
+     }
+    },
+    {
+     "id": "gave_up",
+     "kind": "sketch",
+     "n_events": 4,
+     "summary": {
+      "cost": 2.5,
+      "discovered": null,
+      "discovered_at": null,
+      "model_contradicted": false,
+      "order": [
+       "r0"
+      ],
+      "plan": {
+       "expected_cost": 5.5,
+       "order": [
+        "r0",
+        "r1",
+        "r2"
+       ],
+       "p_find": 0.8
+      },
+      "status": "stopped",
+      "surveys": 1,
+      "truth": "r2"
+     }
+    }
+   ],
+   "version": "1.0"
+  }
+ ],
+ "note": "generated by lab_web/tools/make_search_expectations.py"
+}

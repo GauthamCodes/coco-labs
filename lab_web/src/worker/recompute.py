@@ -444,3 +444,86 @@ def mapping(request_json, manifest, arrays_name, arrays_file):
                     'write_bundle_ms': write_ms, 'optimal_ms': 0.0,
                     'runs': len(specs), 'total_ms': _ms(t_all)},
     }
+
+
+# -- Lab 4: search -----------------------------------------------------------------
+
+def search_lab(request_json, manifest, arrays_name, arrays_file):
+    """
+    Rerun Lab 4's searches on the current problem with the learner's settings.
+
+    ``request_json``: ``{prior: [w per region], detection, true_detection,
+    truth: index | null, order: [indices] (the learner's, may be partial or
+    empty), seed}``. coco_lab builds the problem from the CURRENT bundle's
+    (validated by ``searchbundle.load_search_bundle``) with the learner's
+    prior and detection, and runs -- on ONE problem, ONE placement, ONE
+    seed (rule 6) -- the robot's policy, the learner's order (if any) and
+    the two teaching policies. Every expected cost on the page is in the
+    returned bundle's summaries (``plan``), computed here by coco_lab.
+    """
+    from coco_lab import regionsearch as rs, searchbundle as sbm
+    import dataclasses
+    t_all = time.perf_counter()
+    req = json.loads(request_json)
+    t0 = time.perf_counter()
+    work = tempfile.mkdtemp(prefix='lab_search_')
+    try:
+        with open(os.path.join(work, 'manifest.json'), 'wb') as f:
+            f.write(_bytes(manifest))
+        with open(os.path.join(work, arrays_name), 'wb') as f:
+            f.write(_bytes(arrays_file))
+        sb = sbm.load_search_bundle(work)
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
+    load_ms = _ms(t0)
+    p = sb.problem
+    n = p.n
+    prior = req.get('prior')
+    if not (isinstance(prior, list) and len(prior) == n
+            and all(_is_num(w) and w >= 0 for w in prior) and sum(prior) > 0):
+        raise Refused(f'the prior needs {n} non-negative weights, not all '
+                      f'zero')
+    d = _num(req, 'detection', 0.5, 1.0)
+    td = _num(req, 'true_detection', 0.0, 1.0)
+    seed = int(_num(req, 'seed', 0, 2 ** 31 - 1))
+    truth = req.get('truth')
+    if truth is not None and not (isinstance(truth, int) and 0 <= truth < n):
+        raise Refused('the target must stand in one of the bays')
+    order = req.get('order') or []
+    if not (isinstance(order, list) and len(set(order)) == len(order)
+            and all(isinstance(i, int) and 0 <= i < n for i in order)):
+        raise Refused('your order must name each bay at most once')
+    try:
+        problem = dataclasses.replace(
+            p, detection=tuple(d for _ in range(n)), prior=rs.normalise(prior))
+        problem.validate()
+    except rs.SearchError as exc:
+        raise Refused(str(exc)) from None
+    t0 = time.perf_counter()
+    common = dict(seed=seed, true_detection=[td] * n)
+    runs = [sbm.SearchRun('robot', 'sketch', rs.run_search(
+        problem, 'expected_cost', truth, **common))]
+    if order:
+        runs.append(sbm.SearchRun('mine', 'sketch', rs.run_search(
+            problem, 'given', truth, given_order=tuple(order), **common)))
+    runs.append(sbm.SearchRun('nearest', 'sketch', rs.run_search(
+        problem, 'nearest', truth, **common)))
+    runs.append(sbm.SearchRun('likely', 'sketch', rs.run_search(
+        problem, 'most_likely', truth, **common)))
+    nb = sbm.SearchBundle(bundle.make_provenance('sketch', seed=seed,
+                                                 tool=TOOL), problem, runs)
+    nb.validate()
+    compute_ms = _ms(t0)
+    t0 = time.perf_counter()
+    m_out, name, a_out, digest = nb.to_bytes('none')
+    write_ms = _ms(t0)
+    return {
+        'bundles': [{'manifest': m_out, 'arrays_file': a_out,
+                     'arrays_name': name, 'content_hash': digest}],
+        'optimal_cost': None,
+        'coco_lab_version': coco_lab.__version__,
+        'python_version': sys.version.split()[0],
+        'timings': {'load_bundle_ms': load_ms, 'search_ms': compute_ms,
+                    'write_bundle_ms': write_ms, 'optimal_ms': 0.0,
+                    'runs': len(runs), 'total_ms': _ms(t_all)},
+    }
