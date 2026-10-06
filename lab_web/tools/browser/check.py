@@ -905,11 +905,89 @@ async def mapping_phone(site, out):
         return {'lab': geo, 'challenge': geo2, 'replay': geo3, 'k_after_play_2s': k, 'console_errors': s.errors()}
 
 
+SEARCH_READY = "!!document.querySelector('[data-testid=search-arena]')"
+SEARCH_DONE = ("(() => { const e = document.querySelector('[data-testid=search-status]');"
+               " return !!(e && !e.classList.contains('busy')); })()")
+
+
+async def search(site, out):
+    """Lab 4: order, predict, place, reveal (coco_lab in Pyodide), play, replay, evidence."""
+    async with Session(site, out) as s:
+        await s.open('?view=search')
+        await s.wait(SEARCH_READY, timeout=90)
+        rep = {'mode': await s.js(TEXT.format('search-mode')),
+               'default_plan': await s.js(TEXT.format('search-default-plan'))}
+        await s.shot('search_start')
+        before = [u for u in s.requests() if 'pyodide' in u]
+        for bay in ('bay_1', 'bay_2', 'bay_3', 'bay_4'):
+            await click_testid(s, f'search-order-{bay}')
+        rep['my_order'] = await s.js(TEXT.format('search-my-order'))
+        await click_testid(s, 'search-pred-mine')
+        await s.js("(() => { const e = document.querySelector('[data-testid=search-truth-pick]');"
+                   " const set = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value').set;"
+                   " set.call(e, '0'); e.dispatchEvent(new Event('change', { bubbles: true })); })()")
+        t0 = time.time()
+        await click_testid(s, 'search-run')
+        await s.wait(SEARCH_DONE, timeout=600, every=0.2)
+        rep['cold_run'] = {'wall_s': round(time.time() - t0, 2),
+                           'status': await s.js(TEXT.format('search-status'))}
+        rep['revealed'] = await s.js(TEXT.format('search-revealed'))
+        rep['outcomes'] = await s.js(TEXT.format('search-outcomes'))
+        rep['truth_drawn'] = await s.js("!!document.querySelector('[data-testid=search-truth]')")
+        await click_testid(s, 'search-end')
+        rep['narrate_end'] = await s.js(TEXT.format('search-narrate'))
+        rep['belief_table_end'] = await s.js(TEXT.format('search-belief-table'))
+        await s.shot('search_revealed')
+        await click_testid(s, 'search-sub-replay')
+        await asyncio.sleep(2.0)
+        none = await s.js(TEXT.format('search-no-replay'))
+        if none:
+            rep['replay'] = {'text': none}
+        else:
+            await s.wait(SEARCH_READY, timeout=60)
+            await click_testid(s, 'search-replay-end')
+            await click_testid(s, 'search-replay-truth')
+            rep['replay'] = {'mode': await s.js(TEXT.format('search-replay-mode')),
+                             'narrate_end': await s.js(TEXT.format('search-replay-narrate')),
+                             'timeline': await s.js(TEXT.format('search-timeline')),
+                             'truth': await s.js(TEXT.format('search-replay-truth-value'))}
+            await s.shot('search_replay')
+        await click_testid(s, 'search-sub-evidence')
+        await asyncio.sleep(1.0)
+        rep['evidence'] = (await s.js(TEXT.format('search-evidence')) or '')[:2000]
+        await s.shot('search_evidence')
+        rep['pyodide_requests_before_run'] = before
+        rep['third_party'] = sorted({urlparse(u).netloc for u in s.requests()
+                                     if urlparse(u).netloc != urlparse(site).netloc})
+        rep['console_errors'] = s.errors()
+        return rep
+
+
+async def search_phone(site, out):
+    """Lab 4 at 390 x 844: no horizontal scroll on any tab; the controls are reachable."""
+    async with Session(site, out, width=390, height=844) as s:
+        await s.open('?view=search')
+        await s.wait(SEARCH_READY, timeout=90)
+        geo = await s.js(OVERFLOW)
+        await s.shot('search_phone_top')
+        await box_of(s, 'search-run')
+        await s.shot('search_phone_controls')
+        await click_testid(s, 'search-sub-replay')
+        await asyncio.sleep(3.0)
+        geo2 = await s.js(OVERFLOW)
+        await s.shot('search_phone_replay')
+        await click_testid(s, 'search-sub-evidence')
+        await asyncio.sleep(1.0)
+        geo3 = await s.js(OVERFLOW)
+        return {'try': geo, 'replay': geo2, 'evidence': geo3, 'console_errors': s.errors()}
+
+
 SCENARIOS = {'smoke': smoke, 'player': player, 'reduced': reduced, 'fps': fps,
              'phone': phone, 'weight': weight, 'edit': edit, 'lab': lab,
              'share': share, 'replay': replay, 'exhibit': exhibit,
              'localise': localise, 'localise_phone': localise_phone,
-             'mapping': mapping, 'mapping_phone': mapping_phone}
+             'mapping': mapping, 'mapping_phone': mapping_phone,
+             'search': search, 'search_phone': search_phone}
 
 
 async def main(argv):
