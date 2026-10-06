@@ -469,4 +469,11 @@ def test_the_session_args_are_forwarded_by_both_launch_files():
                  'session_cap_s', 'max_clients'):
         assert f"DeclareLaunchArgument('{name}'" in mission, name
         assert f"'{name}', default_value=" in platform, name
-        assert f"'{name}': LaunchConfiguration('{name}')" in platform, name
+        # Forwarded to the node: directly, or wrapped as a typed string
+        # (origins, since Phase 5: a bare '*' is a YAML alias token and
+        # killed the default launch -- coco_web/test/test_web_assets.py
+        # evaluates the parameters).
+        assert re.search(rf"'{name}': (ParameterValue\(\s*)?"
+                         rf"LaunchConfiguration\('{name}'\)", platform), name
+    assert re.search(r"'origins': ParameterValue\(\s*LaunchConfiguration"
+                     r"\('origins'\),\s*value_type=str\)", platform)
