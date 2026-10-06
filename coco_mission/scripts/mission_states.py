@@ -1101,8 +1101,12 @@ class MissionMachine:
             return
         if self.degraded_reason is None and search.discovered is None:
             self.degraded_reason = SEARCH_EXHAUSTED
+            # A given order may stop short of the bays: say which it was
+            # (C1, measured: told only bay_3, the log said "every bay").
+            what = ('every bay in the given order searched'
+                    if search.policy == 'given' else 'every bay searched')
             self._transition(RETURN_HOME, now, reason=SEARCH_EXHAUSTED,
-                             detail='every bay searched; coming home')
+                             detail=f'{what}; coming home')
             return
         self._transition(RETURN_HOME, now, reason=self.degraded_reason,
                          detail='left the bay; coming home')

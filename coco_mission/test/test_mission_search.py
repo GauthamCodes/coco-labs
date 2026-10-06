@@ -351,6 +351,8 @@ def test_a_given_order_is_followed_and_a_short_one_ends_exhausted():
     miss(h)
     assert h.state == ms.RETURN_HOME
     assert h.machine.degraded_reason == ms.SEARCH_EXHAUSTED
+    assert h.machine.detail == ('every bay in the given order searched; '
+                                'coming home')
 
 
 def test_the_selection_check_reads_only_the_search_state():
