@@ -240,6 +240,9 @@ def main(argv=None):
     ap.add_argument('--out', default=OUT)
     args = ap.parse_args(argv)
     problem = build_search.arena_problem()
+    # Before anything is written: the evidence files are tracked, so
+    # rewriting them would make the tree read dirty.
+    git = bundle.git_provenance(REPO)
     os.makedirs(os.path.join(args.out, 'runs'), exist_ok=True)
     records = []
     for name in sorted(os.listdir(args.matrix_dir)):
@@ -288,7 +291,7 @@ def main(argv=None):
         if len(hashes) != len(runs):
             raise SystemExit('every recorded run needs its rosbag')
         prov = bundle.make_provenance(
-            'recorded-run', git=bundle.git_provenance(REPO),
+            'recorded-run', git=git,
             tool='docs/data/p05_evidence.py', rosbag={
                 'sha256': hashlib.sha256('\n'.join(sorted(hashes)).encode())
                 .hexdigest(),
