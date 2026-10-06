@@ -7745,3 +7745,39 @@ Design (decided here; each is documented where it lands):
    truth/belief), Replay of the Gazebo matrix runs, exhibits cited.
 
 Next: `coco_lab.regionsearch` + tests.
+
+### Phase 5 — checkpoint: search implemented, first Gazebo evidence (2026-10-06, ~13:05 UTC)
+
+Commits on `lab4`: `15a358b` coco_lab.regionsearch; `d050b49` the mission
+discovers (search mode default on; anti-cheat on the EpisodeSpec seam);
+`180c9f1` default-launch fix + search bundle 1.0 + runner; `9c574ee`
+runner rosbag; `3288cc0` Lab 4 site plumbing (catalog 1.4 `search` block,
+worker glue, TS decoder). Focused tests green at each commit (coco_mission
+371, coco_rl 250, coco_sim 323, coco_web 862+1, coco_lab regionsearch +
+searchbundle 40, vitest searchdecode 8, glue 6).
+
+**Found and fixed (measured):** since `c921ec4` (2026-10-02) the DEFAULT
+`mission.launch.py` died before starting anything: platform.launch.py
+passed `origins` (default `*`) as a bare substitution and launch_ros
+YAML-parses it ("Unable to parse the value of parameter origins as
+yaml"). Now an explicit string; `test_web_assets.py::test_platform_launch_
+parameters_evaluate_with_every_default`. Also: p03c's runner idiom
+`check ... || exit 4` never exits (check returns 0); the Phase 5 runner
+uses `must`.
+
+**Gazebo, smoke only (not results):** overlay `~/coco_search_ws`
+(`sync.sh`, `t.sh`, `run.sh`), evidence `~/coco_lab_runs/lab4/`.
+- `smoke1_fixed_yellow`: INCOMPLETE -- the launch bug above.
+- `smoke2_fixed_yellow` (code 9c574ee): every bring-up check PASS,
+  including both nodes with an EMPTY region map, `search=true`,
+  `search_mode=true`. Told "yellow" only, the mission chose bay_3 (as
+  coco_lab predicts), climbed, saw blue in 100 perception lines, marked
+  bay_3 searched (belief 0.3226/0.3226/0.0323/0.3226 = Bayes at d 0.9),
+  `/ramp/retreat` backed down to x = 0.75 with 0.003 m drift, chose bay_4,
+  climbed, FOUND yellow, stowed, approached, grasped, verified the grasp
+  and entered DESCEND -- then the MACHINE REBOOTED (uptime reset; the
+  session ended). INCOMPLETE, not a result. Cause of the reboot unknown.
+
+**Gazebo is free now** (no simulator after the reboot). Next: the Lab 4
+view (`lab_web/src/ui/search/`), then the 16-run matrix with
+`~/coco_search_ws/run.sh NAME LEVEL SEED COLOUR [ORDER]`.
