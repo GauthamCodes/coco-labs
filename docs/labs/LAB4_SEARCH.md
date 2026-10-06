@@ -1,8 +1,8 @@
 # Lab 4 — Search
 
 > **Try it:** <https://gauthamcodes.github.io/coco-labs/?view=search>
-> (DRAFT — the deploy line is written when it is deployed). Phase 5 of
-> `docs/ROADMAP.md` (P0.4).
+> (deployed 2026-10-06 from `main` = `0cb5588`, owner-approved). Phase 5 of
+> `docs/ROADMAP.md` (P0.4). Demo video: `docs/data/lab4/video/README.md`.
 
 Labels used here, as everywhere in this repository: **(measured)** was
 produced by a run in Phase 5 and is recorded with its command, sample count
@@ -266,14 +266,34 @@ quiet machine after the matrix: **2,975 passed, 0 failed, 0 skipped**
 The first full run of the phase (at `3e043c1`) failed coco_lab's
 `test_flake8` and `test_pep257` on three formatting findings in a test
 helper (`golden_search_bundles.py`), fixed in `e25f9c8`; the rerun above is
-complete. `lab_web`: vitest 275 → **286**; tools pytest 95 → **104**;
+complete. `lab_web`: vitest 275 → **286** (→ **289** with the view tests of
+`3529f8b`); tools pytest 95 → **104**;
 `tsc`, `vite build` and `check_dist` clean. CI on PR #14: green after two
 fixes (coco_lab not built by the ROS CI; a static test that still expected
 the old `origins` text).
 
-### 4.5 On the public site
+### 4.5 On the public site (measured)
 
-(Written after the deploy.)
+`main` fast-forwarded `a63a4c8..0cb5588` (owner-approved, 2026-10-06). The
+first Pages deploy job sat in `waiting` for ~30 min during a GitHub incident
+("Several services are degraded"; a cancel returned HTTP 502); once GitHub
+reported all systems operational the run was cancelled and re-run, and the
+deploy succeeded (Pages deployment 6894319926). The live catalog is 1.4,
+built from `0cb5588`, clean, with the measured matrix.
+
+`python3 lab_web/tools/browser/check.py https://gauthamcodes.github.io/coco-labs/
+docs/data/lab4/public smoke search search_phone localise_phone mapping_phone`
+(Mozilla Firefox 157.0, headless, load 1.88, 1.21, 0.99,
+2026-10-06T20:19:38Z): **0 console errors** in every scenario (Lab 1's
+smoke, Lab 4's two, Lab 2's and Lab 3's phone checks); the Lab 4 reveal
+9.1 s wall including the cold Pyodide start
+("Done in 9.0 s (coco_lab: 9 ms for 4 searches)."); the Replay of the Gazebo runs loads
+(`Replay — recorded real run`, truth toggle bay_1); at
+390 px no Lab 4 tab overflows; third-party requests only to
+cdn.jsdelivr.net (Pyodide). Report: `docs/data/lab4/public/report.json`.
+
+The demo video was recorded from the public site:
+`docs/data/lab4/video/README.md` (95.8 s, 0 console errors).
 
 ## 5. Not verified
 

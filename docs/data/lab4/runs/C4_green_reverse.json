@@ -43,7 +43,7 @@
  ],
  "order_arg": "bay_4,bay_1,bay_2,bay_3",
  "outcome": "COMPLETE",
- "reason": "--",
+ "reason": null,
  "recoveries": 0,
  "relocalisations": 0,
  "result": "fetch",

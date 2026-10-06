@@ -25,7 +25,7 @@
  ],
  "order_arg": "policy",
  "outcome": "COMPLETE",
- "reason": "--",
+ "reason": null,
  "recoveries": 0,
  "relocalisations": 0,
  "result": "fetch",

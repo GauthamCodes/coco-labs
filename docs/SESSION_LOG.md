@@ -7845,3 +7845,31 @@ https://gauthamcodes.github.io/coco-labs/ <out> smoke search
 search_phone`), record the video from it (`record_lab4_demo.py`), write
 §4.5, tag `lab4-v1.0` locally + a DRAFT release (publishing is the owner's
 call), checkpoint. Phase 6 NOT started.
+
+### Phase 5 — deployed, verified on the public site, video, release notes (2026-10-07, ~02:10 IST)
+
+The owner approved deploying Phase 5 to `main` ("approve deployment of
+Phase 5 / lab4 to main"). `main` fast-forwarded `a63a4c8..0cb5588`. The
+Pages deploy job then sat in `waiting` (~30 min) during a GitHub incident
+("Several services are degraded"; `gh run cancel` answered HTTP 502); once
+githubstatus said all systems operational, the run was cancelled and
+re-run and the deploy succeeded (Pages deployment 6894319926).
+
+- **Public site (measured):** catalog 1.4 from `0cb5588` (clean); headless
+  Firefox 157 against the public URL: 0 console errors in Lab 1's smoke,
+  Lab 4's two scenarios, Lab 2's and Lab 3's phone checks; the Lab 4 reveal
+  9.1 s incl. the cold Pyodide start (coco_lab 9 ms); Replay loads with the
+  truth toggle; no overflow at 390 px. `docs/data/lab4/public/report.json`.
+- **Video (measured):** `record_lab4_demo.py` from the public site: 95.8 s,
+  1,795 frames, 2 cuts listed, 0 console errors, sha256 `979ee7d5…`
+  (`docs/data/lab4/video/`). Its matrix shows `COMPLETE (--)`; fixed after
+  (`3529f8b`, outcome in words; extractor records no reason as null;
+  provenance taken before rewriting tracked evidence, `f3b5d7b`). Evidence
+  regenerated at `f3b5d7b` (clean).
+- vitest 289 (3 view tests added). Release notes
+  `docs/releases/lab4-v1.0.md`.
+
+NEXT: push `lab4`, new PR for CI (the FF marked #14 merged), FF `main`
+again (the release record + the cosmetic fix; same approval), re-check the
+public page, tag `lab4-v1.0` LOCALLY + DRAFT release with the video —
+publishing is the owner's call. Phase 6 NOT started.

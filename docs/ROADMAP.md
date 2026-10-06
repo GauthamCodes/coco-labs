@@ -39,8 +39,12 @@
 >   *(Until 2026-10-05 16:30 UTC this line read "implemented, tested,
 >   measured on branch `lab3`".)*
 >
-> - **Phase 5 (Search, Lab 4), 2026-10-06/07: implemented, tested and
->   measured on branch `lab4`.** The autonomous mission now DISCOVERS the
+> - **Phase 5 (Search, Lab 4), 2026-10-06/07: implemented, tested,
+>   measured and deployed** (`main` fast-forwarded to `0cb5588`,
+>   owner-approved; verified on the public site with 0 console errors;
+>   video recorded from it; `lab4-v1.0` tagged LOCALLY with a DRAFT release —
+>   publishing is the owner's call). *(Until 2026-10-07: "implemented, tested
+>   and measured on branch `lab4`".)* The autonomous mission now DISCOVERS the
 >   target (told only the colour; `coco_lab.regionsearch` chooses the bays),
 >   and the Live label follows what the running mission reports. Gazebo
 >   matrix (measured, 16 runs, fresh simulator each): 14 COMPLETE, 2 ABORT
