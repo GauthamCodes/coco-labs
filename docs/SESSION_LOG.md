@@ -7661,3 +7661,87 @@ Verified (measured, this session):
 
 No Lab 3 engineering was redone. Phase 5 (Search, Lab 4) starts on branch
 **`lab4`** (from `a63a4c8`), same worktree.
+
+### Phase 5 (Search, Lab 4) — survey findings and design checkpoint (2026-10-06, ~10:30 UTC)
+
+Branch **`lab4`** (from `a63a4c8` + the release record `534e52a`), worktree
+`.claude/worktrees/lab1` of the old checkout, remote `labs`.
+
+Survey findings (the repository, checked this session):
+- **The master context's P0.4 design is not in the repository** (as Phase
+  0 recorded). ROADMAP §5 Lab 4 and the Phase 5 prompt are the spec.
+- **Prior search work exists but is NOT on this lineage:** local branch
+  `p03d-autonomous-target-search` (9 commits, 2026-09-28..30, by a
+  concurrent session; on no remote), built on the OLD single-crest
+  four-lane world. Reference only: its lessons are taken (perception-only
+  acquisition; colour must not change the order; stale frames rejected;
+  failures kept), its code is not — this lineage is the 24 x 18 m arena
+  with FOUR SEPARATE BAYS (`bay_1..bay_4` at y -6/-2/+2/+6, each its own
+  ramp and platform). It also edited `coco_perception/target_pose.py`,
+  which this phase does not need to touch.
+- **The crest occludes the platform from the flat** (target_finder's
+  docstring; `lane_for_colour`), so surveying a bay means climbing it.
+- **target_finder already gives a negative observation:** `found=0
+  seen=<colours>`; on `found=1` it carries the perceived base_footprint
+  `x y z range`. Its `lane=` field is `lane_for_colour(sel)` — the TOLD
+  lane — and the search must never read it (to be pinned by a test).
+- **Cross-bay sightings are impossible by geometry:** HFOV 1.25 rad
+  (±35.8°); a neighbouring bay's target is ~72° off-axis at the survey
+  pose, behind side guards.
+- **The executive's arrival checks read ground-truth pose** (pre-existing,
+  C2-NAV.45). The search decision must therefore take no pose input.
+- **A miss leaves another colour's target on the deck.** The existing
+  `skip_grasp` path DESCENDs forward over the platform — straight through
+  x = 4.05 on the centreline, where that target stands (heading-hold at
+  yaw 0). A fetch never meets this because the target is held by then; a
+  search meets it on every miss. Not measured; a hazard by geometry.
+- **Docker builds nine named packages and not `coco_lab`.**
+- **Gazebo is BLOCKED right now:** three simulators are running, none
+  started by this session — two e-Yantra Kepler worlds (pids 388835,
+  389677, since 2026-10-05 23:25) and one `gz sim server` with no world path
+  (pid 270753, since 2026-10-05 14:45, reparented to systemd — the shape of
+  an orphaned GUI-mode server). Per the owner's instruction, not touched;
+  no simulator is started while any runs.
+
+Design (decided here; each is documented where it lands):
+1. **`coco_lab.regionsearch`** (stdlib only): regions as semantic places
+   (approach = pre-ramp pose, ramp, platform/survey area, exit), a belief
+   over regions, a detection model (`d` = P(found | there), no false
+   alarms — a positive is confirmed by approach and grasp), Bayesian
+   negative updates, travel costs in metres (derived: A* on the robot's
+   own Nav2 map, inflated by the robot radius, plus the ramp up and back),
+   exact expected-search-cost minimisation over every remaining order
+   (≤ 8 regions), deterministic tie-break by region order, re-planned
+   after every observation. Teaching policies beside it: nearest-first,
+   most-likely-first, the learner's order. A versioned trace and
+   **search bundle 1.0** (locbundle's rules).
+2. **Mission prior is uniform.** The frozen colour→bay table is the
+   told channel; using it as a prior would be telling by another name.
+3. **FSM (search mode):** LOCALIZE → SELECT_SEARCH_REGION →
+   NAVIGATE_TO_RAMP → ALIGN_FOR_CLIMB → CLIMB → VERIFY_CLIMB →
+   SURVEY_REGION → (found) STOW_ARM … COMPLETE; (miss)
+   MARK_REGION_SEARCHED → LEAVE_REGION → SELECT_SEARCH_REGION, or
+   RETURN_HOME → ABORT `SEARCH_EXHAUSTED` when none remain. A miss is an
+   observation, not a failure: it never enters RECOVERY.
+4. **LEAVE_REGION backs down the ramp it climbed** (`/ramp/retreat`, a
+   scripted heading- and lane-hold reverse in ramp_driver, published on
+   ramp_driver's existing `/cmd_vel_rl`, mode `rl`): never over a deck that
+   still holds a target, and the next bay is then on the near side. NEW
+   motion, unmeasured until Gazebo is free; fallback if it fails there: a
+   far-side descent held to an offset line clear of the target.
+5. **Anti-cheat on the existing seam:** `mission.launch.py search:=true`
+   (default) hands both nodes ONLY `task_view()['requested_colour']` — an
+   empty region map, whatever the manifest says; ramp_driver in search mode
+   ignores the colour and follows `/mission/search_region`. Discovery =
+   target_finder `found=1` while surveying; the pose the grasp uses is
+   approach_server's from `/perception/target`. The manifest is never a
+   fallback. `search:=false` keeps the told mission exactly as measured.
+6. **Reporting:** `/mission/search` (key=value: mode, order, current,
+   searched, belief, discovered); `mission_view` adds `mission.search`
+   (additive); the Live label is driven by it — "discovers" only when the
+   running mission says `mode=discover`.
+7. **Lab 4 view `?view=search`:** Sketch (coco_lab via Pyodide: belief,
+   learner order vs policy, expected cost, predict-then-reveal,
+   truth/belief), Replay of the Gazebo matrix runs, exhibits cited.
+
+Next: `coco_lab.regionsearch` + tests.
