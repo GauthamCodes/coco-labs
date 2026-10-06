@@ -129,3 +129,16 @@ def test_the_learner_and_the_policy_share_one_problem():
     m = b.manifest()
     assert 'problem' in m and all('problem' not in r for r in m['runs'])
     assert {r.trace.summary['truth'] for r in b.runs} == {'r2'}
+
+
+def test_the_format_document_matches_the_code():
+    doc = open(os.path.join(HERE, '..', '..', 'docs', 'labs',
+                            'SEARCH_FORMAT.md')).read()
+    assert f'`{sbm.SCHEMA}`' in doc and f'`{sbm.VERSION}`' in doc
+    assert f'`MAX_RUNS` = {sbm.MAX_RUNS}' in doc
+    assert ', '.join(rs.KINDS) in doc
+    for kind in sbm.KINDS:
+        assert f'`{kind}`' in doc
+    for col in sbm.INT_COLUMNS + ('cost', 'belief', 'candidates', 't'):
+        assert f'`run.<id>.{col}`' in doc, col
+    assert f'`{rs.SCHEMA}`' in doc
