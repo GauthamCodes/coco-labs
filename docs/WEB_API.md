@@ -494,7 +494,7 @@ This is the whole of the executive's state, translated.
   "active": true,                 // may the UI offer Start?
   "recovering": false,
   "colour": "green",
-  "reason": null,                 // one of 48 structured failure codes
+  "reason": null,                 // one of 53 structured failure codes (48 before Phase 5)
   "reason_known": true,           // false: an unrecognised code
   "reason_words": null,           // plain English, where it exists
   "result": null,                 // fetch | traverse | aborted
@@ -514,9 +514,43 @@ This is the whole of the executive's state, translated.
     "wall_first_seen": 1789815507.9  // wall clock this server FIRST saw it
   },
   "detail": null,                 // alias of `reason`, for P0.1 clients
-  "raw": "state=CLIMB prev=… "
+  "raw": "state=CLIMB prev=… ",
+  "search": { …see below… }        // Phase 5, additive
 }
 ```
+
+#### The search (Phase 5, additive within coco.v1)
+
+`mission.search` is the executive's `/mission/search` line, translated by
+`coco_web/mission_view.search_view`. It says what the RUNNING mission does,
+so a client labels it from evidence rather than from a constant: the
+lab_web Live tab says "the robot discovers the target" only for
+`mode: "discover"`.
+
+```jsonc
+"search": {
+  "online": true,                 // false: no /mission/search heard (a pre-Phase-5 stack)
+  "mode": "discover",             // "discover" | "told" (search:=false) | null
+  "policy": "expected_cost",      // or "given" (an order held fixed)
+  "regions": ["bay_1", "bay_2", "bay_3", "bay_4"],
+  "order": ["bay_3"],             // bays looked at, in order
+  "current": "bay_4",             // the bay being surveyed, or null
+  "searched": ["bay_3"],
+  "belief": [0.3226, 0.3226, 0.0323, 0.3226],   // aligned with regions; [] if not
+  "discovered": null,             // the bay the target was found in
+  "surveys": 1,
+  "seen": ["blue"],               // what the last look saw
+  "driven": 8.67,                 // metres planned so far (derived from the travel table)
+  "detection": 0.9                // the ASSUMED d
+}
+```
+
+Region names only: no coordinate, no topic. The told mission sends
+`mode=told` and nothing else. Since Phase 5 the executive's states include
+`SELECT_SEARCH_REGION`, `SURVEY_REGION`, `MARK_REGION_SEARCHED` and
+`LEAVE_REGION` (phase `SEARCHING`, no `step`: the step-of-16 ordinal is the
+told path's), and five more failure codes: `SEARCH_EXHAUSTED`,
+`PERCEPTION_SILENT`, `LEAVE_FAILED`, `LEAVE_TIPPED`, `LEAVE_TIMEOUT`.
 
 #### Timestamp provenance (release pass)
 

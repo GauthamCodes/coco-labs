@@ -171,8 +171,16 @@ connected may STOP.
 - The image base is pinned by tag, not digest.
 - Not built from ROADMAP §3.5: the planner choice in Nav2 mode (lab hook),
   an optional heading on `nav_goal`, the 3D view (should-have).
-- The autonomous mode is **told** the lane (`resolve_lane()`); discovery is
-  Phase 5. The page says so.
+- **Since Phase 5 (2026-10-06) the autonomous mode DISCOVERS the target**
+  (`mission.launch.py search:=true`, the default): told only the colour, it
+  searches the bays in the order `coco_lab.regionsearch` chooses
+  (`docs/labs/LAB4_SEARCH.md`). The page's label is chosen from what the
+  RUNNING mission reports on `/mission/search` (coco_web's additive
+  `mission.search` block): "discovers" only for `mode=discover`; a stack
+  launched `search:=false` is labelled told (`resolve_lane()`), and one that
+  reports nothing gets no claim. *(Until 2026-10-06 this line read: "The
+  autonomous mode is **told** the lane (`resolve_lane()`); discovery is
+  Phase 5. The page says so.")*
 
 ## 9. Backlog (from the phone test), in priority order
 
