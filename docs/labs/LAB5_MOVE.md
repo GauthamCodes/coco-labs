@@ -302,7 +302,19 @@ when that run is asked for; no horizontal page scroll at 390 × 844 on any tab.
 
 ### 4.7 Tests
 
-Filled at the release gate.
+`COCO_WS=~/coco_search_ws ROS_DOMAIN_ID=77 scripts/run_all_package_tests.sh`
+(a copy overlay of `5cd039d`, clean) on a quiet machine after the matrix:
+**3,081 passed, 0 failed, 0 skipped** (Phase 5 closed at 2,975).
+
+| package | Phase 5 | now | what is new |
+|---|---|---|---|
+| coco_lab | 533 | **604** | `test_dstarlite.py` (hand-checked cases; 1,000-map properties with change sequences), `test_replan.py` (1,000-world properties), `test_movemetrics.py`, `test_movebundle.py` (golden bundles, replay refusals, the format document) |
+| coco_lab_ros | 86 | **121** | `test_lab5.py` (overlay diff and equal limits, scenarios, frozen paths clear the arena, actor rules and node), frozen-path planner tests, the per-node publisher guard, `lab_actors` in the sweep |
+| coco_config, coco_sim, coco_mission, coco_web, gazebo_models, coco_rl, coco_perception, coco_moveit_config, custom_teleop | 93, 323, 371, 863, 229, 251, 139, 12, 75 | unchanged | |
+
+`lab_web`: vitest 289 → **307** (`movedecode.test.ts`, `moveview.test.ts`);
+tools pytest 104 → **117** (`test_move_glue.py`, the Lab 5 expectations, the
+extended no-algorithm guard); `tsc`, `vite build` and `check_dist` clean.
 
 ### 4.8 On the public site
 
