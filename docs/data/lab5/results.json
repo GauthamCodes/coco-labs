@@ -1,14 +1,14 @@
 {
  "git": {
-  "commit": "4cb984fc1469ca224fac2685835f48b77cbc527c",
-  "dirty": true
+  "commit": "59a65b6db8bf3d281cfc9b8f087009b889b05132",
+  "dirty": false
  },
  "matrix": "/home/gautham/coco_lab_runs/lab5/matrix",
  "scenarios": {
   "crossing": {
    "bundle": "drive/crossing/",
-   "bytes": 1171832,
-   "content_hash": "sha256:804e9532d3d2b58eb99c00824225d732e47d5ad16e81f6ec3e553f3cade96390",
+   "bytes": 1171833,
+   "content_hash": "sha256:f5c4a65b706c68668c74a5586742a50c1d6e550cd9b51ec0a5510e4cecfeae30",
    "controllers": {
     "DWB": {
      "actor_contacts_while_wheels_stopped": 0,
@@ -1129,8 +1129,8 @@
   },
   "mislocalised": {
    "bundle": "drive/mislocalised/",
-   "bytes": 29625,
-   "content_hash": "sha256:a7283e04967e0bfb3415bf106a217086897ae1de130185a6c5f9621e65e077f8",
+   "bytes": 29626,
+   "content_hash": "sha256:6cfc120ce45180404718dff380b8d08388fc83bf516a6109b2e0118a6c5b5701",
    "controllers": {
     "DWB": {
      "actor_contacts_while_wheels_stopped": 0,
@@ -1977,8 +1977,8 @@
   },
   "oncoming": {
    "bundle": "drive/oncoming/",
-   "bytes": 1036535,
-   "content_hash": "sha256:2134b2a1f496fd885270c508b00c07bddc7934222a065f71cbe8eb2ca8785b6e",
+   "bytes": 1036536,
+   "content_hash": "sha256:32a6e225ebc7c954966f93cffe7b0790b8dfae0ec642c32350e1f15cce903029",
    "controllers": {
     "DWB": {
      "actor_contacts_while_wheels_stopped": 5,
@@ -3101,8 +3101,8 @@
   },
   "static_room": {
    "bundle": "drive/static_room/",
-   "bytes": 1668759,
-   "content_hash": "sha256:81460422288e1203e2baefe5d7154d027c7a89a7a0dcaae58f8a8988f7aedd7c",
+   "bytes": 1668760,
+   "content_hash": "sha256:65f841da7a2419e7e763cbb34fbe0d3d7acf45c13d54085a70f29f650371367b",
    "controllers": {
     "DWB": {
      "actor_contacts_while_wheels_stopped": 0,
