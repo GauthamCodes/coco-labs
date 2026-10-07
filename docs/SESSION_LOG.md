@@ -7885,3 +7885,30 @@ publishing is the owner's call. Phase 6 NOT started.
   owner's call:
   `git push labs lab4-v1.0 && gh release edit lab4-v1.0 -R GauthamCodes/coco-labs --draft=false --latest --verify-tag`.
 - Phase 6 (Move) NOT started.
+
+### Lab 4 released — `lab4-v1.0` published (2026-10-07, ~10:16 UTC)
+
+The owner approved publishing `lab4-v1.0` ("approve lab4-v1.0",
+2026-10-07), exactly as prepared.
+
+Done:
+- `git push labs lab4-v1.0` (annotated tag `f4f11da` → commit `b554910`).
+- `gh release edit lab4-v1.0 -R GauthamCodes/coco-labs --draft=false
+  --latest --verify-tag`. Published 2026-10-07T10:16:04Z, marked Latest.
+
+Verified (measured, this session):
+- `git ls-remote --tags labs` lists `lab4-v1.0` → `b554910`.
+- `gh release list`: Lab 4 = Latest; Labs 1–3 and Live unchanged.
+- The asset `coco_lab4_demo.mp4`, downloaded from its public URL, is
+  2,505,787 B with sha256
+  `979ee7d57ca367f6fb3ff89a2d88ebf5607cba7c8b76e840c1316b862ea97ed8`, the
+  hash recorded at recording time.
+- Both links in the release notes answer HTTP 200 (`?view=search` on the
+  public site; `docs/labs/LAB4_SEARCH.md` at the tag).
+
+Phase 5 / Lab 4 is SHIPPED. No engineering redone. `PROJECT_STATE.md` and
+the ROADMAP status line updated to say so (on branch `lab4`; `main` stays
+at `b554910`, the tagged commit).
+
+NEXT: Phase 6 (Move, Lab 5) — NOT started: `docs/ROADMAP.md` §5 "Lab 5 —
+Move" and §6.

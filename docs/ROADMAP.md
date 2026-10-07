@@ -42,8 +42,10 @@
 > - **Phase 5 (Search, Lab 4), 2026-10-06/07: implemented, tested,
 >   measured and deployed** (`main` fast-forwarded to `0cb5588`,
 >   owner-approved; verified on the public site with 0 console errors;
->   video recorded from it; `lab4-v1.0` tagged LOCALLY with a DRAFT release —
->   publishing is the owner's call). *(Until 2026-10-07: "implemented, tested
+>   video recorded from it). `lab4-v1.0` is **published** (2026-10-07,
+>   owner-approved): <https://github.com/GauthamCodes/coco-labs/releases/tag/lab4-v1.0>
+>   (with the video). *(Until 2026-10-07: "tagged LOCALLY with a DRAFT
+>   release — publishing is the owner's call".)* *(Until 2026-10-07: "implemented, tested
 >   and measured on branch `lab4`".)* The autonomous mission now DISCOVERS the
 >   target (told only the colour; `coco_lab.regionsearch` chooses the bays),
 >   and the Live label follows what the running mission reports. Gazebo
