@@ -313,7 +313,9 @@ when that run is asked for; no horizontal page scroll at 390 × 844 on any tab.
 | coco_lab_ros | 86 | **121** | `test_lab5.py` (overlay diff and equal limits, scenarios, frozen paths clear the arena, actor rules and node), frozen-path planner tests, the per-node publisher guard, `lab_actors` in the sweep |
 | coco_config, coco_sim, coco_mission, coco_web, gazebo_models, coco_rl, coco_perception, coco_moveit_config, custom_teleop | 93, 323, 371, 863, 229, 251, 139, 12, 75 | unchanged | |
 
-`lab_web`: vitest 289 → **307** (`movedecode.test.ts`, `moveview.test.ts`);
+`lab_web`: vitest 289 → **308** (`movedecode.test.ts`, `moveview.test.ts`,
+and a Lab 5 catalog test; the catalog-version pin moved 1.4 → 1.5 — CI
+caught it after a local run against a catalog built before Lab 5);
 tools pytest 104 → **117** (`test_move_glue.py`, the Lab 5 expectations, the
 extended no-algorithm guard); `tsc`, `vite build` and `check_dist` clean.
 

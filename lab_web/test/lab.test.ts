@@ -37,10 +37,28 @@ async function load(id: string): Promise<DecodedBundle> {
 describe('the catalog carries coco_lab verdicts (1.1)', () => {
   it('is built', () => {
     expect(existsSync(CATALOG)).toBe(true);
-    // 1.2, 1.3 and 1.4 are additive (Lab 2's `localise` block, Lab 3's `map`
-    // block, Lab 4's `search` block); every 1.1 member below still holds
-    expect(catalog.version).toBe('1.4');
+    // 1.2 .. 1.5 are additive (Lab 2's `localise` block, Lab 3's `map`
+    // block, Lab 4's `search` block, Lab 5's `move` block); every 1.1 member
+    // below still holds
+    expect(catalog.version).toBe('1.5');
     expect(catalog.settings?.weights).toEqual(Array.from({ length: 21 }, (_, i) => i / 4));
+  });
+
+  it('carries Lab 5: replayed replan and drive bundles, three controllers, cited claims', () => {
+    const move = (catalog as unknown as { move: {
+      replan: { bundles: Array<{ kind: string; validated: { replay: string }; summary: { costs_agree: boolean } }> };
+      drive: { bundles: Array<{ id: string; validated: { replay: string } }> };
+      controllers: Array<{ id: string }>; claims: Array<{ cites: string[] }>; run15: { quotes: string[] };
+    } }).move;
+    expect(move.replan.bundles.filter((b) => b.kind === 'sketch').length).toBeGreaterThanOrEqual(1);
+    for (const b of move.replan.bundles) {
+      expect(b.validated.replay).toMatch(/byte for byte/);
+      expect(b.summary.costs_agree).toBe(true);
+    }
+    for (const b of move.drive.bundles) expect(b.validated.replay).toMatch(/recomputed/);
+    expect(move.controllers.map((c) => c.id)).toEqual(['DWB', 'MPPI', 'RPP']);
+    for (const c of move.claims) expect(c.cites.length).toBeGreaterThan(0);
+    expect(move.run15.quotes).toContain('DWBLocalPlanner: No valid trajectories out of 819!');
   });
 
   it('carries Lab 3: replayed map bundles, the documented challenge score, and its evidence', () => {
