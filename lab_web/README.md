@@ -57,6 +57,13 @@ src/loc/              Lab 2 (Localise): the loc-bundle decoder, catalog types, d
 src/map/              Lab 3 (Map): the map-bundle decoder (pinned to coco_lab/slambundle.py by
                       test/slamdecode.test.ts), catalog types, display arithmetic (view.ts)
 src/ui/loc/ src/ui/map/  the Lab 2 and Lab 3 views, lazily loaded (?view=localise, ?view=map)
+src/move/             Lab 5 (Move): the replan- and drive-bundle decoders (pinned to
+                      coco_lab/movebundle.py by test/golden/move_expected.json), catalog
+                      types, display bookkeeping (time lookup, the map at step k) -- no
+                      controller, no D* Lite, no metric
+src/ui/move/          the Lab 5 view, lazily loaded (?view=move): Replay of the Gazebo
+                      controller runs, run 15, the D* Lite Sketch (coco_lab in Pyodide via
+                      worker/recompute.py `replan_lab`)
 src/live/             the Live tab's coco.v1 client (Phase 2)
 src/worker/           the Pyodide worker, its protocol, recompute.py (glue only: recompute,
                       localise, mapping)

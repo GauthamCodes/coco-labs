@@ -7999,7 +7999,9 @@ history rewritten.
   and fails a section that checks nothing: now 253 of 255 leaves checked,
   the 2 undeclared being pre-existing mission keys (`FollowPath.stateful`,
   a `static_layer` key on the local costmap). Phase 1C's own readback did
-  check all its 63 leaves, so its evidence stands.
+  check all 67 of its leaves (its committed params_readback.json files), so
+  its evidence stands. (Corrected later this phase: this entry first said
+  63.)
 - `ros_clean.sh --list` matched an orphaned `target_finder` of ANOTHER
   workspace (`~/coco_m1_ws`, ROS domain 181, parent systemd --user), not
   started by this session. It was left alone; `lab5_run.sh` now sweeps only

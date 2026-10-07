@@ -55,6 +55,13 @@
 >   replays byte for byte through coco_lab. Write-up
 >   [`docs/labs/LAB4_SEARCH.md`](labs/LAB4_SEARCH.md).
 >
+> - **Phase 6 (Move, Lab 5), 2026-10-07: implemented, tested and measured
+>   on branch `lab5`.** DWB, MPPI and Regulated Pure Pursuit on the same
+>   frozen global paths (54 Gazebo runs, fresh simulator each, 0 void),
+>   apron-only kinematic actors, run 15's mechanism reproduced (its exact
+>   symptom not), D\* Lite in coco_lab with the Lab 5 view
+>   (`?view=move`). Write-up [`docs/labs/LAB5_MOVE.md`](labs/LAB5_MOVE.md).
+>
 > *(The status line of 2026-09-30 read: "plan revised (Phase 2 · Live
 > added) … Phase 1 closed by decision with open items … Phase 2 not
 > started.")*
@@ -578,6 +585,26 @@ truth toggle; every claim with its test. Gazebo (measured, 16 runs):
 - Moving actors on the apron only (M7_DESIGN §2.6). Gazebo actors are
   ray-cast-visible but produce no physics contacts, so account for that.
 - D\* Lite replanning when the world changes.
+
+**As built (2026-10-07, branch `lab5`).** A lab-only controller overlay
+(`coco_lab_ros/config/nav2_move_overlay.yaml`) loads MPPI and RPP beside the
+mission's untouched DWB, every robot limit equal; `lab_planner path_file:=`
+sends one frozen SmacPlanner2D path to any of them. Rollouts are Nav2's own:
+DWB `/evaluation`, MPPI `/trajectories`, RPP's lookahead and arc. Actors
+(`lab_actors`): visual-only grey cylinders, no collision geometry, poses
+driven through Gazebo, robot-triggered, validated to the apron; contacts are
+measured from ground truth. Metrics fixed before measuring
+(`coco_lab.movemetrics`: tracking error, travel time, RMS commanded
+accelerations, minimum footprint clearance). Gazebo (measured, 54 runs):
+static room DWB 0/5, MPPI 5/5, RPP 5/5; crossing 15/15; oncoming — nobody
+swerved, the person reached a stopped robot in 15/15; mislocalised by run
+15's 3.4 m — all three controllers refused the path in their first cycle
+(`INVALID_PATH`, 0 candidates scored), the mechanism of run 15 but not its
+"0 of 819". D\* Lite (`coco_lab.dstarlite`, `coco_lab.replan`): optimal after
+every change (1,000-map properties); less total work than A\* from scratch in
+191 of 200 Sketch worlds, but 2.9x MORE on Nav2's real costmap change
+(Experiment C). Numbers: `docs/RESULTS.md` "COCO Lab Phase 6"; write-up
+`docs/labs/LAB5_MOVE.md`.
 
 ### Later labs
 

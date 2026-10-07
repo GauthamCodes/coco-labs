@@ -190,6 +190,17 @@ FORBIDDEN = [
      r'permutations?\w*|optimal_?[Oo]rder\w*|ratio_?[Oo]rder\w*|'
      r'choose_?(Region|Next|Bay)\w*)\s*\(',
      'a search-order decision (coco_lab costs and chooses every order)'),
+    # Lab 5: the browser renders drives and replans; Nav2 and coco_lab
+    # compute them
+    (r'\b(calc_?[Kk]ey|calculate_?[Kk]ey|update_?[Vv]ertex|'
+     r'compute_?[Ss]hortest_?[Pp]ath|[Dd]star\w*|d_?[Ss]tar\w*)\s*\(',
+     "D* Lite (coco_lab.dstarlite's)"),
+    (r'\b(dynamic_?[Ww]indow\w*|pure_?[Pp]ursuit\w*|regulated\w*|mppi\w*|'
+     r'score_?[Tt]rajector\w*|simulate_?[Tt]rajector\w*)\s*\(',
+     "a local controller (Nav2's, recorded)"),
+    (r'\b(tracking_?[Ee]rror\w*|polygon_?[Dd]istance\w*|'
+     r'min_?[Cc]learance\w*|rms\w*|smoothness\w*)\s*\(',
+     'a Lab 5 metric (coco_lab.movemetrics computes every one)'),
 ]
 
 

@@ -8620,3 +8620,91 @@ run's timeline is cut at its own first terminal state.
 ### The site and the tests
 
 `docs/labs/LAB4_SEARCH.md` §4.3–4.5.
+
+
+## COCO Lab Phase 6 — Move (Lab 5) (measured 2026-10-07)
+
+Branch `lab5`. Write-up `docs/labs/LAB5_MOVE.md` (definitions, every claim
+and its test, limitations); evidence `docs/data/lab5/` (README there);
+formats `docs/labs/MOVE_FORMAT.md`. Labels as everywhere: (measured) here,
+(derived) computed from committed inputs, (historical) quoted.
+
+### Held fixed (derived from the committed configuration; tested)
+
+One global path per route, computed ONCE by the mission's SmacPlanner2D and
+frozen in a file (`coco_lab_ros/config/lab5_paths/`: room 13.020 m,
+`5c460ab6…`; apron 7.500 m, `1e141d38…`); every run sends that file
+unchanged. DWB (the mission's `FollowPath`, untouched), MPPI and Regulated
+Pure Pursuit (Nav2 1.3.11 docs examples) on one controller_server via a
+lab-only overlay, every robot limit DWB's (0.3 m/s, no reverse, 1.0 rad/s,
+3.0 / −2.5 m/s², 3.2 rad/s²). Same start (the spawn), same costmaps, smoother,
+collision monitor and arbiter. Metrics fixed before measuring:
+`coco_lab.movemetrics` (LAB5_MOVE.md §2.4).
+
+### The controller matrix (measured, 54 runs)
+
+Fresh simulator per run, controllers interleaved, source `656264a` (clean),
+ROS domain 66. 54 valid, 0 void, every runner check PASS (live parameters =
+merged file; the wheel topic's only publisher `cmd_vel_arbiter` in every 1 s
+sample; lab nodes publishing only their declared topics). Medians over runs
+[min–max]; the output of `docs/data/lab5/lab5_tables.py`, pasted.
+
+| scenario | DWB | MPPI | RPP |
+|---|---|---|---|
+| static_room (hairpin into a room) | **0 / 5** reached (105: no progress, stalled before the hairpin) | 5 / 5, 51.8 s; tracking max 0.554 m (median); clearance ≥ 0.236 m | 5 / 5, 51.2 s; tracking max 0.174 m (median) |
+| crossing (person crosses ahead) | 5 / 5, 26.3 s; actor clearance ≥ 0.340 m | 5 / 5, 29.5 s; ≥ 0.442 m | 5 / 5, 28.7 s; ≥ 0.333 m |
+| oncoming (person walks down the path) | 5 / 5 "reached" — contact 5 / 5 | 5 / 5 "reached" — contact 5 / 5 | **0 / 5** (104: patience exceeded); contact 5 / 5 after the abort |
+| mislocalised (belief 3.4 m off) | 0 / 3 (103 invalid path) | 0 / 3 (103) | 0 / 3 (103) |
+
+Full tables, every metric: LAB5_MOVE.md §4.1. Findings, each measured:
+
+- **DWB never completed the room path (0 of 5)**; MPPI got round by cutting
+  the corner (largest tracking error, least wall clearance); RPP tracked
+  closest. Not attributed beyond the logs.
+- **Oncoming: nobody swerved.** In 15 of 15 runs the robot stayed within
+  0.261 m of the path line, and the person reached it with its wheels already
+  commanded to 0 m/s (DWB and MPPI stopped by the collision monitor's
+  `PolygonStop`, RPP by its own collision check). DWB's and MPPI's "succeeded"
+  exists only because the actor has no collision geometry and walks through.
+- **Run 15's mechanism reproduced, its symptom not.** 9 of 9 runs, belief
+  3.401–3.403 m from truth: all three controllers aborted in their first
+  control cycle with `INVALID_PATH`, logging `Resulting plan has 0 poses in
+  it.` — the path lay wholly outside the 3 × 3 m local costmap. DWB scored 0
+  candidates (0 of 0), not run 15's 819. Run 15 itself (historical, above:
+  "The one failure: run 15") is not re-runnable in this arena.
+- **The actors are seen by the LiDAR** (`lab5_actor_seen.py`): crossing
+  1,523 of 1,523 in-view scans within 2.5 m hit the actor within 0.08 m of the
+  geometry; oncoming 777 of 939 (misses not attributed).
+- MPPI's RMS dv/dt maxima (4.86, 5.98) are the controller server's zero stop
+  command 2 ms after MPPI's last command in 3 of 10 runs that reached the goal
+  at speed; reported as defined.
+
+### D\* Lite (derived)
+
+- coco_lab's D\* Lite (Koenig & Likhachev, basic version) equals networkx's
+  Dijkstra after every change and move on 1,000 seeded maps
+  (`coco_lab/test/test_dstarlite.py`), and every replan equals A\* from
+  scratch on 1,000 seeded worlds (`coco_lab/test/test_replan.py`).
+- **Sketch worlds, seeds 0–199** (`replan_sketch_stats.json`): costs agreed
+  in every round; total work below A\* from scratch in 191 of 200 episodes
+  (median ratio 0.59, range 0.26–2.14); more work than A\* in 188 of 2,204
+  single replans.
+- **Experiment C** (inputs measured in Gazebo, every check PASS): Nav2's
+  settled global costmap before and after a person stopped 2.2 m ahead; 443
+  cells changed, 104 newly blocked, in a 67 × 177-cell apron window. Repair:
+  **D\* Lite 3,209 expansions, A\* from scratch 1,114**, the same cost
+  (160.598 cells). Not attributed. Reproduces from the committed snapshots
+  (`sha256:f382da9f…`).
+
+### Found and fixed during the phase (measured)
+
+D\* Lite's last-bit key ties (a cost 0.59 below optimal on 3 of 400 random
+cases, fixed with a tolerant key order used by the heap peek too); a
+parameter readback that silently checked nothing (rclcpp answers a request
+naming any undeclared parameter with an empty list); a `ros_clean.sh` sweep
+that would have killed another session's orphan (the Phase 6 runner sweeps
+only its own ROS domain). LAB5_MOVE.md §7.
+
+### The site and the tests
+
+`docs/labs/LAB5_MOVE.md` §4.6–4.8.
