@@ -27,7 +27,7 @@ Usage::
 ``<site-url>`` is the site root, e.g.
 ``http://127.0.0.1:4173/coco-labs/``. Scenarios: ``smoke``
 (every catalog bundle loads and draws), ``player`` (keyboard, scrub,
-play), ``reduced`` (prefers-reduced-motion), ``fps`` (full-arena Dijkstra
+play), ``move`` / ``move_phone`` (Lab 5), ``reduced`` (prefers-reduced-motion), ``fps`` (full-arena Dijkstra
 playback), ``phone`` (390 x 844), ``edit`` (Pyodide cold and warm: one
 painted cell to its first frame), ``weight`` (initial page weight), ``lab``
 (Lab 1.1: settings, painting, a race, the map ladder). Default: all. Writes ``report.json`` and
@@ -982,12 +982,105 @@ async def search_phone(site, out):
         return {'try': geo, 'replay': geo2, 'evidence': geo3, 'console_errors': s.errors()}
 
 
+MOVE_MAP = "!!document.querySelector('[data-testid=move-map]')"
+MOVE_GRID = "!!document.querySelector('[data-testid=move-replan-grid]')"
+MOVE_DONE = ("(() => { const e = document.querySelector('[data-testid=move-replan-status]');"
+             " return !!(e && !e.classList.contains('busy')); })()")
+SET_RANGE = ("(() => {{ const e = document.querySelector('[data-testid={}]');"
+             " const set = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;"
+             " set.call(e, String(Number(e.min) + {} * (Number(e.max) - Number(e.min))));"
+             " e.dispatchEvent(new Event('input', {{ bubbles: true }})); return e.value; }})()")
+
+
+async def move(site, out):
+    """Lab 5: controllers (scrub, reveal), people, run 15, D* Lite (paint, Pyodide run), evidence."""
+    async with Session(site, out) as s:
+        await s.open('?view=move')
+        await s.wait(MOVE_MAP, timeout=90)
+        rep = {'mode': await s.js(TEXT.format('move-mode')),
+               'chain': await s.js(TEXT.format('move-chain'))}
+        await s.shot('move_drive_start')
+        rep['scrub_mid'] = await s.js(SET_RANGE.format('move-drive-scrub', 0.55))
+        await asyncio.sleep(0.5)
+        rep['readout_mid'] = await s.js(TEXT.format('move-readout'))
+        await s.shot('move_drive_mid')
+        await click_testid(s, 'move-pred-MPPI')
+        await click_testid(s, 'move-reveal')
+        await asyncio.sleep(0.3)
+        rep['revealed'] = await s.js(TEXT.format('move-revealed'))
+        rep['table'] = await s.js(TEXT.format('move-table'))
+        await s.shot('move_drive_table')
+        before = [u for u in s.requests() if 'pyodide' in u]
+        await click_testid(s, 'move-sub-people')
+        await asyncio.sleep(2.0)
+        none = await s.js(TEXT.format('move-drive-none'))
+        if none:
+            rep['people'] = {'text': none}
+        else:
+            await s.wait(MOVE_MAP, timeout=60)
+            await s.js(SET_RANGE.format('move-drive-scrub', 0.5))
+            await asyncio.sleep(0.5)
+            rep['people'] = {'readout': await s.js(TEXT.format('move-readout')),
+                             'actor_drawn': await s.js("!!document.querySelector('[data-testid=move-actor]')")}
+            await s.shot('move_people')
+        await click_testid(s, 'move-sub-run15')
+        await asyncio.sleep(2.0)
+        rep['run15'] = {'history': await s.js(TEXT.format('move-run15-history')),
+                        'summary': await s.js(TEXT.format('move-run15-summary')) or
+                        await s.js(TEXT.format('move-run15-none'))}
+        await s.shot('move_run15')
+        await click_testid(s, 'move-sub-replan')
+        await s.wait(MOVE_GRID, timeout=60)
+        rep['replan_mode'] = await s.js(TEXT.format('move-replan-mode'))
+        await click_testid(s, 'move-replan-end')
+        rep['replan_end'] = await s.js(TEXT.format('move-replan-narrate'))
+        rep['rounds'] = await s.js(TEXT.format('move-rounds'))
+        await s.shot('move_replan_end')
+        b = await box_of(s, 'move-replan-grid')
+        for r, c in ((4, 6), (5, 6), (6, 6)):           # three hidden obstacles
+            await s.b.click(s.ctx, b[0] + b[2] * (c + 0.5) / 32, b[1] + b[3] * (r + 0.5) / 20)
+        t0 = time.time()
+        await click_testid(s, 'move-replan-run')
+        await s.wait(MOVE_DONE, timeout=600, every=0.2)
+        rep['replan_run'] = {'wall_s': round(time.time() - t0, 2),
+                             'status': await s.js(TEXT.format('move-replan-status')),
+                             'mode': await s.js(TEXT.format('move-replan-mode')),
+                             'summary': await s.js(TEXT.format('move-replan-summary'))}
+        await click_testid(s, 'move-replan-end')
+        await s.shot('move_replan_run')
+        await click_testid(s, 'move-sub-evidence')
+        await asyncio.sleep(1.0)
+        rep['evidence'] = (await s.js(TEXT.format('move-evidence')) or '')[:3000]
+        await s.shot('move_evidence')
+        rep['pyodide_requests_before_run'] = before
+        rep['third_party'] = sorted({urlparse(u).netloc for u in s.requests()
+                                     if urlparse(u).netloc != urlparse(site).netloc})
+        rep['console_errors'] = s.errors()
+        return rep
+
+
+async def move_phone(site, out):
+    """Lab 5 at 390 x 844: no horizontal page scroll on any tab."""
+    async with Session(site, out, width=390, height=844) as s:
+        await s.open('?view=move')
+        await s.wait(MOVE_MAP, timeout=90)
+        geo = {'drive': await s.js(OVERFLOW)}
+        await s.shot('move_phone_drive')
+        for sub in ('people', 'run15', 'replan', 'evidence'):
+            await click_testid(s, f'move-sub-{sub}')
+            await asyncio.sleep(2.5)
+            geo[sub] = await s.js(OVERFLOW)
+            await s.shot(f'move_phone_{sub}')
+        return dict(geo, console_errors=s.errors())
+
+
 SCENARIOS = {'smoke': smoke, 'player': player, 'reduced': reduced, 'fps': fps,
              'phone': phone, 'weight': weight, 'edit': edit, 'lab': lab,
              'share': share, 'replay': replay, 'exhibit': exhibit,
              'localise': localise, 'localise_phone': localise_phone,
              'mapping': mapping, 'mapping_phone': mapping_phone,
-             'search': search, 'search_phone': search_phone}
+             'search': search, 'search_phone': search_phone,
+             'move': move, 'move_phone': move_phone}
 
 
 async def main(argv):

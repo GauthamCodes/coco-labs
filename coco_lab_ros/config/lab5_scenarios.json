@@ -50,6 +50,22 @@
       "goal": [0.0, -7.5, -1.5708],
       "inject": {"dx": 0.0, "dy": 3.4, "dyaw": 0.0, "sigma_xy": 0.05},
       "actors": []
+    },
+    {
+      "id": "parked",
+      "title": "A person stops on the apron path (Experiment C: the costmap changes)",
+      "path": "lab5_path_apron.json",
+      "start": [0.0, 0.0, 0.0],
+      "goal": [0.0, -7.5, -1.5708],
+      "note": "Its trigger never fires (robot y < -100): the person stands at the first waypoint for the whole session, 2.2 m from the robot, inside the costmaps' 2.5 m marking range. Used only by lab5_run.sh snapshot.",
+      "actors": [
+        {
+          "id": "actor_0",
+          "waypoints": [[0.0, -2.2], [0.0, -2.3]],
+          "speed": 0.25,
+          "trigger": {"axis": "y", "op": "<", "value": -100.0}
+        }
+      ]
     }
   ]
 }

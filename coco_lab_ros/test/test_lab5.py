@@ -104,13 +104,24 @@ def scenarios():
     return actors.load_scenarios(SCENARIOS)
 
 
-def test_the_scenarios_are_the_four_lab5_names():
+def test_the_scenarios_are_the_five_lab5_names():
     assert sorted(scenarios()) == ['crossing', 'mislocalised', 'oncoming',
-                                   'static_room']
+                                   'parked', 'static_room']
+
+
+def test_the_parked_person_never_moves_and_is_within_marking_range():
+    a = scenarios()['parked']['actors'][0]
+    # the trigger cannot fire anywhere on the map (y >= -8.9)
+    assert a['trigger'] == {'axis': 'y', 'op': '<', 'value': -100.0}
+    assert actors.actor_pose(a, None, 1e6) == actors.actor_pose(a, None, 0)
+    x, y, _ = actors.actor_pose(a, None, 0)
+    # the lidar sits at (-0.09, +0.10) from the robot at (0, 0, yaw 0)
+    assert math.hypot(x + 0.09, y - 0.10) < 2.5     # obstacle_max_range
+    assert abs(math.atan2(y - 0.10, x + 0.09)) < 4.1888 / 2   # in view
 
 
 @pytest.mark.parametrize('sid', ['crossing', 'mislocalised', 'oncoming',
-                                 'static_room'])
+                                 'parked', 'static_room'])
 def test_each_scenario_names_a_frozen_path_that_matches_it(sid):
     sc = scenarios()[sid]
     poses, frame, sha = load_path_file(os.path.join(PATHS, sc['path']))

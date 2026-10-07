@@ -368,3 +368,9 @@ def test_the_catalog_serves_the_exhibit_and_the_tracking_series(tmp_path):
         rec = bundle.load_bundle(str(out / e['path'])).recording['meta']
         assert s['stats'] == rec['tracking_error_m']
         assert len(s['t']) == len(s['e']) == rec['tracking_error_m']['n']
+
+
+def test_move_expectations_regenerate_byte_identical():
+    import make_move_expectations
+    with open(make_move_expectations.OUT) as f:
+        assert f.read() == make_move_expectations.build()

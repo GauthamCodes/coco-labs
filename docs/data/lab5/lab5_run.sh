@@ -18,6 +18,11 @@
 #
 #   lab5_run.sh capture OUT                       freeze the scenarios' global
 #                                                 paths (SmacPlanner2D, once)
+#   lab5_run.sh snapshot OUT                      Experiment C: Nav2's global
+#                                                 costmap before and after a
+#                                                 person stops on the apron
+#                                                 (scenario 'parked'); the
+#                                                 robot does not move
 #   lab5_run.sh run OUT SCENARIO CONTROLLER [ID]  one controller run:
 #       SCENARIO   static_room | crossing | oncoming | mislocalised
 #       CONTROLLER DWB | MPPI | RPP  (FollowPath's controller_id
@@ -54,6 +59,7 @@ SCEN_FILE="$REPO/coco_lab_ros/config/lab5_scenarios.json"
 export ROS_DOMAIN_ID="${ROS_DOMAIN_ID:-66}"
 case "$MODE" in
   capture) ;;
+  snapshot) SCENARIO=parked ;;
   run)
     case "$CONTROLLER" in
       DWB) CID=FollowPath ;; MPPI) CID=MPPI ;; RPP) CID=RPP ;;
@@ -293,6 +299,21 @@ if [ "$MODE" = capture ]; then
     say "capturing frozen paths"
     CHECK="every scenario path captured from SmacPlanner2D"
     check "$PY" -P "$HERE/lab5_capture.py" --scenarios "$SCEN_FILE" --out "$OUT/paths" --meta "$OUT/meta.json"
+elif [ "$MODE" = snapshot ]; then
+    CHECK="the global costmap settled (before)"
+    check "$PY" -P "$HERE/lab5_snapshot.py" --out "$OUT/costmap_before.json" --timeout 120 || { VOID="no settled costmap"; exit 4; }
+    setsid ros2 run coco_lab_ros lab_actors --ros-args -p use_sim_time:=true \
+        -p scenario:=parked -p scenarios_file:="$SCEN_FILE" \
+        > "$OUT/actors.log" 2>&1 &
+    PGIDS+=("$!")
+    actor_spawned() { grep -q "spawned .* ok" "$OUT/actors.log"; }
+    CHECK="the parked person spawned in Gazebo"
+    wait_for "actor spawned" 60 actor_spawned || { FAIL=1; VOID="actor did not spawn"; exit 4; }
+    say "PASS $CHECK"
+    CHECK="the global costmap changed and settled again (after)"
+    check "$PY" -P "$HERE/lab5_snapshot.py" --out "$OUT/costmap_after.json" \
+        --differ-from "$OUT/costmap_before.json" --timeout 120
+    timeout 8 ros2 topic echo /scan --once > "$OUT/scan_after.txt" 2>&1
 else
     SLIM=(/model/coco/odometry /amcl_pose /tf /tf_static /clock /scan
           /lab/plan /lab/status /lab/actors
