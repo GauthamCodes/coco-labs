@@ -1,0 +1,19 @@
+{
+ "frames": 4298,
+ "video_s": 122.47,
+ "capture_fps": 35.09,
+ "cuts": [
+  {
+   "what": "before recording: the one-time Pyodide start-up and a warm-up run",
+   "seconds_cut": 7.32,
+   "at_video_s": 0.0
+  },
+  {
+   "what": "coco_lab running the D* Lite episode in the browser (Pyodide)",
+   "seconds_cut": 2.21,
+   "at_video_s": 97.2
+  }
+ ],
+ "console_errors": [],
+ "site": "https://gauthamcodes.github.io/coco-labs/"
+}

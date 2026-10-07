@@ -319,9 +319,25 @@ caught it after a local run against a catalog built before Lab 5);
 tools pytest 104 → **117** (`test_move_glue.py`, the Lab 5 expectations, the
 extended no-algorithm guard); `tsc`, `vite build` and `check_dist` clean.
 
-### 4.8 On the public site
+### 4.8 On the public site (measured)
 
-Filled after deployment.
+`main` fast-forwarded `1970e42` → `0fef157` after PR #17's CI was green;
+both workflows green on `main`; Pages deployment 6916595601; the public
+catalog is 1.5, `built_from` `0fef157`, not dirty. Headless Firefox 157
+against `https://gauthamcodes.github.io/coco-labs/` (2026-10-07 17:41 UTC,
+load ≈ 1.9; `docs/data/lab5/public/report.json`):
+
+- `move`: 0 console errors; the Replay, the reveal ("On the median run, RPP
+  stays closest to the path"), the person drawn in the people tab, run 15's
+  summary, and a D\* Lite run with three painted obstacles: 13.4 s cold
+  including the Pyodide start (coco_lab 95 ms for 19 plans, every plan's
+  cost equal to A\*'s); no Pyodide request before that run.
+- `move_phone`: no horizontal page scroll at 390 × 844 on any of the five
+  tabs.
+- Earlier labs, unchanged: Lab 1 `smoke` 11 of 11 bundles drawn, 0 console
+  errors; `localise_phone`, `mapping_phone`, `search_phone` no overflow, 0
+  console errors.
+- The demo video was recorded from this site (`docs/data/lab5/video/`).
 
 ## 5. Not verified
 

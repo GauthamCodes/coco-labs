@@ -1,0 +1,32 @@
+-- move
+-- move_phone
+-- smoke
+-- localise_phone
+-- mapping_phone
+-- search_phone
+{
+ "move": {
+  "mode": "Replay \u2014 recorded real run",
+  "chain": "global planner\nonce: the whole path (here SmacPlanner2D, frozen in a file)\nlocal controller\n10 Hz: DWB, MPPI or Regulated Pure Pursuit\nvelocity smoother\ncaps acceleration\ncollision monitor\nslows or stops near what the LiDAR sees\ncmd_vel_arbiter\nthe only thing that drives the wheels",
+  "scrub_mid": "92.574",
+  "readout_mid": "DWB (Dynamic Window). Samples (v, w) pairs it can reach within one control step (819 per cycle with the mission's settings), rolls each forward 1.5 s, scores each with critics -- obstacle cost, distance to the path and the goal, alignment, oscillation -- and drives the best. A critic can reject a candidate outright.\n\ncontroller asked\nv 0.30 m/s, \u03c9 -0.08 rad/s\nwheels got\nv 0.30 m/s, \u03c9 -0.08 rad/s (after the velocity smoother and the collision monitor)\ncollision monitor\nnot acting\nDWB this cycle\n819 of 819 candidates valid\nbelief vs truth\n0.17 m apart (AMCL vs Gazebo)\noutcome\ngave up: failed to make progress (stuck 10 s)\n\nShown: every candidate it scored (Nav2's own /evaluation), rejected ones in red.",
+  "revealed": "On the median run, RPP stays closest to the path; you said MPPI.",
+  "table": "Median over runs [min\u2013max]; times only for runs that reached the goal.\ncontroller\treached the goal\ttracking error, mean\ttravel time\tRMS \u03c9\u0307 (rad/s\u00b2)\tmin clearance\nDWB\t0 / 5\t0.121 m [0.089\u20130.141]\t\u2014\t1.01 [0.74\u20131.75]\t0.402 m [0.306\u20130.470]\nMPPI\t5 / 5\t0.143 m [0.135\u20130.152]\t51.8 s [51.5\u201352.8]\t0.24 [0.23\u20131.35]\t0.262 m [0.236\u20130.289]\nRPP\t5 / 5\t0.097 m [0.092\u20130.104]\t51.2 s [51.0\u201351.4]\t0.26 [0.24\u20130.28]\t0.322 m [0.316\u20130.340]",
+  "people": {
+   "readout": "DWB (Dynamic Window). Samples (v, w) pairs it can reach within one control step (819 per cycle with the mission's settings), rolls each forward 1.5 s, scores each with critics -- obstacle cost, distance to the path and the goal, alignment, oscillation -- and drives the best. A critic can reject a candidate outright.\n\ncontroller asked\nv 0.27 m/s, \u03c9 -0.03 rad/s\nwheels got\nv 0.27 m/s, \u03c9 -0.02 rad/s (after the velocity smoother and the collision monitor)\ncollision monitor\napproach (FootprintApproach)\nDWB this cycle\n819 of 819 candidates valid\nbelief vs truth\n0.17 m apart (AMCL vs Gazebo)\noutcome\nreached the goal\n\nShown: every candidate it scored (Nav2's own /evaluation), rejected ones in red.",
+   "actor_drawn": true
+  },
+  "run15": {
+   "history": "History: run 15, as it was recorded\n\nFrom COCO's 20-run fetch matrix (M6, in the v1 wedge world). The robot had picked its target and was driving home when AMCL put it 3.4 m from where it really was \u2014 in a corridor the map deliberately left featureless. The global planner still had a path. The local controller rejected every single candidate:\n\nDWBLocalPlanner: No valid trajectories out of 819!\nPathDistCritic: None of the 5 first of 5 (5) points of the global plan\nGoalDistCritic: None of the points of the global plan were in the local costmap.\n\trun 15 (failed)\trun 11 (same colour, succeeded)\nground truth, map\t(8.747, 0.149)\t(\u22120.085, 0.016)\nAMCL believed\t(7.252, \u22122.962)\t(\u22120.013, \u22120.055)\ngap\t3.4 m\t0.10 m\n\nQuoted verbatim (checked at site build): docs/RESULTS.md \"The one failure: run 15, and it is a localisation failure\" (the M6 fetch matrix in the v1 wedge world; that text entered RESULTS.md on 2026-08-06, per git)",
+   "summary": "DWB: 3 follow_failed of 3 (Nav2 error 103: invalid path) \u00b7 cycles where DWB rejected every candidate: 0, 0, 0; cycles with nothing to score: 1, 1, 1\nMPPI: 3 follow_failed of 3 (Nav2 error 103: invalid path)\nRPP: 3 follow_failed of 3 (Nav2 error 103: invalid path)"
+  },
+  "replan_mode": "Sketch \u2014 coco_lab's 2D model, not the robot",
+  "replan_end": "Arrived, after 18 replan(s).",
+  "rounds": "Every plan: the same cost from both (coco_lab checks each), different work. Bars: cells touched.\nplan\tat step\tcells it saw change\tcost\tD* Lite\tA* from scratch\nfirst\t0\t0\t30.66\t\n80\t\n51\nreplan 1\t2\t1\t28.24\t\n0\t\n46\nreplan 2\t3\t1\t27.24\t\n0\t\n44\nreplan 3\t6\t1\t24.24\t\n0\t\n37\nreplan 4\t9\t1\t20.83\t\n0\t\n26\nreplan 5\t11\t1\t18.41\t\n0\t\n23\nreplan 6\t15\t1\t16.41\t\n16\t\n19\nreplan 7\t16\t1\t18.83\t\n77\t\n30\nreplan 8\t17\t1\t21.24\t\n61\t\n39\nreplan 9\t26\t3\t33.56\t\n178\t\n154\nreplan 10\t35\t1\t23.90\t\n4\t\n114\nreplan 11\t37\t1\t22.49\t\n6\t\n74\nreplan 12\t38\t1\t25.73\t\n18\t\n93\nreplan 13\t42\t1\t21.73\t\n0\t\n64\nreplan 14\t45\t2\t17.90\t\n0\t\n25\nreplan 15\t52\t1\t10.07\t\n0\t\n10\nreplan 16\t56\t1\t5.83\t\n7\t\n7\nreplan 17\t59\t1\t2.41\t\n0\t\n3\nreplan 18\t60\t1\t1.41\t\n0\t\n2",
+  "replan_run": {
+   "wall_s": 14.54,
+   "status": "Done in 13.4 s (coco_lab: 95 ms for 19 plans).",
+   "mode": "Sketch \u2014 computed in your browser by coco_lab; a model, not the robot",
+   "summary": "outcome\nreached the goal\nreplans\n18\nfirst plan\n30.66 (cells)\nwalked\n67.63 (cells)\nsearch work, all plans\nD* Lite 447 \u00b7 A* from scratch 861\nsame answers?\nyes, every plan"
+  },
+  "evidence": "What is proven, and where\n\nEvery controller drives the SAME global path -- one file, its hash checked in every run -- on the same robot with the same speed, turn-rate and acceleration limits.\n\nEvidence: coco_lab_ros/test/test_lab5.py::test_each_scenario_names_a_frozen_path_that_matches_it; coco_lab_ros/test/test_lab5.py::test_no_controller_gets_a_faster_or_more_agile_robot\n\nEvery number in the comparison is recomputed from the recording at site build by coco_lab; a bundle whose numbers do not reproduce is refused.\n\nEvidence: coco_lab/test/test_movebundle.py::test_a_metric_that_does_not_reproduce_is_refused; coco_lab/test/test_movemetrics.py::test_box_clearance_axis_aligned_and_rotated\n\nThe moving person is seen by the LiDAR but has no collision geometry: it cannot pu

@@ -55,8 +55,12 @@
 >   replays byte for byte through coco_lab. Write-up
 >   [`docs/labs/LAB4_SEARCH.md`](labs/LAB4_SEARCH.md).
 >
-> - **Phase 6 (Move, Lab 5), 2026-10-07: implemented, tested and measured
->   on branch `lab5`.** DWB, MPPI and Regulated Pure Pursuit on the same
+> - **Phase 6 (Move, Lab 5), 2026-10-07: implemented, tested, measured and
+>   deployed** (`main` fast-forwarded to `0fef157` on green CI; verified on
+>   the public site with 0 console errors; video recorded from it;
+>   `lab5-v1.0` tagged LOCALLY with a DRAFT release — publishing is the
+>   owner's call). *(Until deployment: "implemented, tested and measured on
+>   branch `lab5`".)* DWB, MPPI and Regulated Pure Pursuit on the same
 >   frozen global paths (54 Gazebo runs, fresh simulator each, 0 void),
 >   apron-only kinematic actors, run 15's mechanism reproduced (its exact
 >   symptom not), D\* Lite in coco_lab with the Lab 5 view
