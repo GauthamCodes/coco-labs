@@ -8022,3 +8022,44 @@ NEXT: commit; then the measured matrix (A static_room, B crossing +
 oncoming, mislocalised) with `~/coco_search_ws/lab5.sh run NAME SCENARIO
 CONTROLLER`, extraction `~/coco_search_ws/ex.sh NAME...`; meanwhile the
 Lab 5 view in lab_web.
+
+
+### Phase 6 — checkpoint: matrix measured, Experiment C, Lab 5 page built (2026-10-07, ~16:40 UTC)
+
+Commits on `lab5` (pushed to `labs/lab5`): `f64ba87` controllers/paths/
+actors/D* Lite/metrics; `656264a` matrix driver + tests (the matrix ran from
+this source, clean); `39ab63c` formats, decoders, the Move page, worker glue,
+site build; `4cb984f` Experiment C capture; `89c69b1` evidence; `5cd039d`
+write-up and docs.
+
+**Measured (Gazebo, all in `docs/labs/LAB5_MOVE.md` §4 and RESULTS.md "COCO
+Lab Phase 6"):**
+- Matrix (54 runs, fresh simulator each, 0 void, every runner check PASS):
+  static_room DWB 0/5 (105, stalled before the hairpin), MPPI 5/5 (corner
+  cut, max tracking 0.554 m median), RPP 5/5 (closest); crossing 15/15, no
+  contact; oncoming DWB 5/5 and MPPI 5/5 "reached" with contact 5/5 each,
+  RPP 0/5 (104) with contact 5/5 after its abort — nobody swerved (≤ 0.261 m
+  off the line), wheels at 0 m/s at every first contact; mislocalised 9/9
+  failed in the first cycle with INVALID_PATH (103, "Resulting plan has 0
+  poses"), gap 3.401–3.403 m — run 15's mechanism, NOT its "0 of 819".
+- Actor visibility: crossing 1,523/1,523 in-view scans hit; oncoming 777/939.
+- Experiment C (`snapshot_c1`, source `4cb984f`): 443 cells changed, 104
+  newly blocked; D* Lite 3,209 expansions vs A* from scratch 1,114, same
+  cost 160.598. Sketch seeds 0–199: D* Lite below A* in 191/200 episodes,
+  above in 188/2,204 replans.
+
+**Local site (headless Firefox):** 0 console errors; Replay, reveal, Run 15,
+D* Lite run in Pyodide (5.8 s cold, coco_lab 158 ms), no overflow at 390 px.
+
+**Tests so far (focused):** coco_lab dstarlite/replan/movemetrics/movebundle
++ lint; coco_lab_ros 68 (test_lab5 etc.); lab_web tools 117; vitest 307.
+Full `run_all_package_tests.sh` running on the overlay of `5cd039d`.
+
+**Corrected in this entry's predecessor:** Phase 1C's readback checked 67
+leaves, not 63.
+
+NEXT: full test totals into LAB5_MOVE.md §4.7; PR `lab5` -> `main`; CI;
+fast-forward `main` (green-CI rule); public checks
+(`check.py https://gauthamcodes.github.io/coco-labs/ OUT move move_phone smoke`);
+video `record_lab5_demo.py`; release notes; tag `lab5-v1.0` LOCAL + draft
+release (publishing is the owner's call).
