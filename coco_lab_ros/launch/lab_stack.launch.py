@@ -38,7 +38,10 @@ nothing else -- no executive, perception, MoveIt, web layer or RViz:
 - optionally ``lab_planner``, which plans once and sends one FollowPath.
 
 ``params_file:=`` overrides the merged file (the runners pass one they
-merged and hashed themselves). Goals are in the MAP frame.
+merged and hashed themselves). ``overlay:=`` names the overlay merged when
+no params_file is given: ``nav2_lab_overlay.yaml`` (default, Phase 1C) or
+``nav2_move_overlay.yaml`` (Phase 6: DWB, MPPI and RPP side by side).
+Goals are in the MAP frame.
 """
 
 import os
@@ -52,6 +55,9 @@ from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
+
+#: The lab-only overlays (config/); the mission's file is never edited.
+OVERLAYS = ('nav2_lab_overlay.yaml', 'nav2_move_overlay.yaml')
 
 PLANNER_ARGS = {
     'algorithm': 'astar', 'heuristic': 'euclidean', 'graph': 'C1',
@@ -68,8 +74,11 @@ def merged_params(context):
     from coco_lab_ros.params import merge_files
     base = os.path.join(get_package_share_directory('gazebo_models'),
                         'config', 'nav2_params.yaml')
+    name = LaunchConfiguration('overlay').perform(context)
+    if name not in OVERLAYS:
+        raise RuntimeError(f'overlay must be one of {OVERLAYS}, got {name!r}')
     overlay = os.path.join(get_package_share_directory('coco_lab_ros'),
-                           'config', 'nav2_lab_overlay.yaml')
+                           'config', name)
     out = os.path.join(tempfile.mkdtemp(prefix='coco_lab_'),
                        'nav2_lab_params.yaml')
     merge_files(base, overlay, out)
@@ -112,6 +121,7 @@ def generate_launch_description():
     """Return the lab stack's launch description."""
     return LaunchDescription(
         [DeclareLaunchArgument('params_file', default_value=''),
+         DeclareLaunchArgument('overlay', default_value=OVERLAYS[0]),
          DeclareLaunchArgument('planner', default_value='false')]
         + [DeclareLaunchArgument(k, default_value=v)
            for k, v in PLANNER_ARGS.items()]

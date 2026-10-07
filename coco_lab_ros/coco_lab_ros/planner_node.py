@@ -30,6 +30,13 @@ else (plan §C.1). One run is:
 5. send that path, unsmoothed, to ``FollowPath`` -- one goal, no
    replanning -- and report the result.
 
+With ``path_file`` set (Phase 6, Lab 5) steps 1 and 3-4's search are
+skipped: the path is READ from a frozen JSON file (:func:`load_path_file`)
+and sent unchanged, so every controller drives exactly the same global
+path. ``controller_id`` picks the controller (``FollowPath`` = the
+mission's DWB; ``MPPI`` and ``RPP`` exist only under the lab's
+``nav2_move_overlay.yaml``).
+
 It never publishes velocity, never publishes ``/mission/mode`` (the
 arbiter's mode comes from its launch parameter), and publishes nothing but
 :data:`coco_lab_ros.safety.LAB_TOPICS` (tested on a constructed node).
@@ -76,6 +83,32 @@ STATUS_QOS = QoSProfile(depth=50, history=QoSHistoryPolicy.KEEP_LAST,
                         durability=QoSDurabilityPolicy.TRANSIENT_LOCAL)
 
 
+def load_path_file(path):
+    """
+    Return ``(poses, frame, sha256)`` of a frozen path file.
+
+    The file is JSON ``{"frame": "map", "poses": [[x, y, yaw], ...]}``
+    (more keys allowed); at least two poses, every number finite. The
+    hash is of the file's bytes, so a run can say which path it drove.
+    """
+    import math
+    with open(path, 'rb') as f:
+        raw = f.read()
+    data = json.loads(raw.decode('utf-8'))
+    poses = data.get('poses')
+    if not isinstance(poses, list) or len(poses) < 2:
+        raise ValueError(f'{path}: "poses" must list at least two poses')
+    out = []
+    for q in poses:
+        if (not isinstance(q, list) or len(q) != 3
+                or not all(isinstance(v, (int, float))
+                           and math.isfinite(v) for v in q)):
+            raise ValueError(f'{path}: bad pose {q!r}')
+        out.append((float(q[0]), float(q[1]), float(q[2])))
+    frame = data.get('frame', 'map')
+    return out, frame, hashlib.sha256(raw).hexdigest()
+
+
 def sim_seconds(t) -> float:
     """Return an rclpy Time as float seconds."""
     return t.nanoseconds * 1e-9
@@ -108,6 +141,7 @@ class LabPlanner(Node):
         d('follow_timeout', 600.0)
         d('out_dir', '')
         d('run_id', '')
+        d('path_file', '')
         d('autostart', True)
         self.p = {n: self.get_parameter(n).value for n in (
             'algorithm', 'heuristic', 'graph', 'tie_break', 'goal_x',
@@ -115,7 +149,7 @@ class LabPlanner(Node):
             'base_frame', 'settle_count', 'costmap_timeout', 'tf_timeout',
             'follow', 'controller_id', 'goal_checker_id',
             'progress_checker_id', 'follow_timeout', 'out_dir', 'run_id',
-            'autostart')}
+            'path_file', 'autostart')}
 
         # The ONLY publishers this node creates (coco_lab_ros.safety).
         self._plan_pub = self.create_publisher(Path, '/lab/plan', LATCHED)
@@ -206,6 +240,8 @@ class LabPlanner(Node):
     def run(self):
         """Plan once and (if ``follow``) drive once. Return the outcome."""
         p = self.p
+        if p['path_file']:
+            return self.run_frozen()
         self.status('waiting', costmap_topic=p['costmap_topic'])
         msg = self.wait_costmap()
         if msg is None:
@@ -259,6 +295,35 @@ class LabPlanner(Node):
         self._write_bundle(plan)
         planned = {k: v for k, v in base.items() if k != 'poses'}
         self.status('planned', **planned)
+        if not p['follow']:
+            return self.status('done', followed=False)
+        return self.follow(path)
+
+    def run_frozen(self):
+        """Drive a frozen path file once (no search). Return the outcome."""
+        p = self.p
+        try:
+            poses, frame, sha = load_path_file(p['path_file'])
+        except (OSError, ValueError) as exc:
+            return self.status('failed', reason=f'path_file: {exc}')
+        pose = self.wait_pose()
+        if pose is None:
+            return self.status('failed', reason=f'no {p["global_frame"]} -> '
+                               f'{p["base_frame"]} transform')
+        path = self._path_msg(poses, frame)
+        self._plan_pub.publish(path)
+        base = {
+            'path_file': os.path.basename(p['path_file']),
+            'path_sha256': sha, 'frame': frame, 'path_cells': len(poses),
+            'path_L_m': path_length([q[:2] for q in poses]),
+            'start_world': list(pose[:3]), 'belief_stamp': pose[3],
+            'goal_world': list(poses[-1]),
+            'controller_id': p['controller_id'],
+            'coco_lab_version': coco_lab.__version__,
+            'coco_lab_ros_version': __version__,
+        }
+        self._write('plan.json', dict(base, poses=[list(q) for q in poses]))
+        self.status('planned', **base)
         if not p['follow']:
             return self.status('done', followed=False)
         return self.follow(path)

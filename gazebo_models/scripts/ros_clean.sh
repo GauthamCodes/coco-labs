@@ -264,6 +264,11 @@ PATTERNS=(
   'robot_localization/ekf_nod[e]'
   'lab2_prob[e][.]py'
   'amcl_repla[y][.]py'
+  # COCO Lab Phase 6 (Lab 5): the actor driver. An orphan would keep
+  # teleporting its models into the next run's world. Anchored on its
+  # install path like the other lab executables; pinned by
+  # coco_lab_ros/test/test_ros_clean.py.
+  'coco_lab_ros/lab_actor[s]'
 )
 
 survivors() {

@@ -58,17 +58,26 @@ LAB_TOPICS = {
     '/lab/trace_gz': 'std_msgs/msg/UInt8MultiArray',
 }
 
+#: Everything the Lab 5 actor driver publishes, and nothing else. It moves
+#: Gazebo models through gz-transport, never through ROS.
+ACTOR_TOPICS = {
+    '/lab/actors': 'std_msgs/msg/String',
+}
+
 #: ROS infrastructure topics every rclpy node publishes on its own.
 INFRASTRUCTURE_TOPICS = ('/rosout', '/parameter_events')
 
 
-def violations(names_and_types):
+def violations(names_and_types, allowed=None):
     """
     Return every forbidden publisher in ``[(topic, [types])]``.
 
     ``names_and_types`` is what ``get_publisher_names_and_types_by_node``
-    returns. An empty list means the node is safe.
+    returns. ``allowed`` is the node's declared topics (default
+    :data:`LAB_TOPICS`, the planner's). An empty list means the node is
+    safe.
     """
+    allowed = LAB_TOPICS if allowed is None else allowed
     bad = []
     for topic, types in names_and_types:
         if topic in FORBIDDEN_TOPICS:
@@ -77,6 +86,6 @@ def violations(names_and_types):
         for t in types:
             if t in VELOCITY_TYPES:
                 bad.append(f'{topic}: carries {t}')
-        if topic not in LAB_TOPICS and topic not in INFRASTRUCTURE_TOPICS:
+        if topic not in allowed and topic not in INFRASTRUCTURE_TOPICS:
             bad.append(f'{topic}: not a declared lab topic')
     return bad

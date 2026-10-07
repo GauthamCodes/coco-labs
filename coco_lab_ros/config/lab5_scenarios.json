@@ -1,0 +1,55 @@
+{
+  "schema": "coco_lab_ros.lab5_scenarios",
+  "version": "1.0",
+  "frame": "map",
+  "note": "Lab 5 (Move). Map frame = world + (2, 0) (navigation_world.json world_to_map). The robot always starts at its spawn, map (0, 0, 0). A scenario names a FROZEN path file (config/lab5_paths/); every controller drives that same file. Actors: coco_lab_ros/actors.py (M7_DESIGN 2.6: apron only, kinematic, visual-only, robot-triggered).",
+  "scenarios": [
+    {
+      "id": "static_room",
+      "title": "Around a wall end and into a room",
+      "path": "lab5_path_room.json",
+      "start": [0.0, 0.0, 0.0],
+      "goal": [-2.9, 4.2, -1.5708],
+      "actors": []
+    },
+    {
+      "id": "crossing",
+      "title": "A person crosses the apron in front of the robot",
+      "path": "lab5_path_apron.json",
+      "start": [0.0, 0.0, 0.0],
+      "goal": [0.0, -7.5, -1.5708],
+      "actors": [
+        {
+          "id": "actor_0",
+          "waypoints": [[-1.5, -4.5], [0.8, -4.5]],
+          "speed": 0.25,
+          "trigger": {"axis": "y", "op": "<", "value": -1.8}
+        }
+      ]
+    },
+    {
+      "id": "oncoming",
+      "title": "A person walks straight down the robot's path towards it",
+      "path": "lab5_path_apron.json",
+      "start": [0.0, 0.0, 0.0],
+      "goal": [0.0, -7.5, -1.5708],
+      "actors": [
+        {
+          "id": "actor_0",
+          "waypoints": [[0.0, -8.0], [0.0, -0.6]],
+          "speed": 0.25,
+          "trigger": {"axis": "y", "op": "<", "value": -1.0}
+        }
+      ]
+    },
+    {
+      "id": "mislocalised",
+      "title": "The robot believes it is 3.4 m from where it is (run 15's gap)",
+      "path": "lab5_path_apron.json",
+      "start": [0.0, 0.0, 0.0],
+      "goal": [0.0, -7.5, -1.5708],
+      "inject": {"dx": 0.0, "dy": 3.4, "dyaw": 0.0, "sigma_xy": 0.05},
+      "actors": []
+    }
+  ]
+}

@@ -7912,3 +7912,111 @@ at `b554910`, the tagged commit).
 
 NEXT: Phase 6 (Move, Lab 5) — NOT started: `docs/ROADMAP.md` §5 "Lab 5 —
 Move" and §6.
+
+
+## Phase 6 · Move (Lab 5) — survey, design and first Gazebo evidence (2026-10-07)
+
+Branch **`lab5`** (from `1970e42`), worktree `.claude/worktrees/lab1` of the
+old checkout, remote `labs`. Overlay `~/coco_search_ws` (reused from Phase 5:
+`sync.sh`, `t.sh`; new `lab5.sh`, `ex.sh`), evidence `~/coco_lab_runs/lab5/`.
+
+**State reconciled first.** `1970e42` (the Lab 4 release record, docs/state
+only: PROJECT_STATE, ROADMAP, SESSION_LOG) was a direct descendant of
+`main` = `b554910`. PR #16, CI green (build-and-test, plain-venv coco_lab,
+lab_web), then `main` fast-forwarded `b554910..1970e42` by plain push. No
+history rewritten.
+
+**Survey findings (checked this session):**
+- Nav2 1.3.11 here ships all three controllers: `nav2_dwb_controller`,
+  `nav2_mppi_controller`, `nav2_regulated_pure_pursuit_controller`.
+- Debug output each publishes (measured in the smoke bags): DWB
+  (`debug_trajectory_details: true`, already the mission's) `/evaluation`
+  = every scored candidate, **819 per control cycle** (the same count as run
+  15's "0 of 819": same sampling config) — rejected ones carry `total -1`
+  and the rejecting critic's raw score -1; `/local_plan`. MPPI (`visualize:
+  true`) `/trajectories` = one SPHERE marker per sampled point (400 of 2000
+  trajectories x 10 points), **stamps zero** (log time used), and
+  `/optimal_trajectory`; no per-sample cost is published. RPP
+  `/lookahead_point` (in **base_footprint**), `/lookahead_collision_arc`.
+- No dynamic-obstacle infrastructure existed (only an unused
+  `dynamic_obstacles.example.yaml` proposal); no D* Lite or replanning code.
+- The robot's LiDAR is `gpu_lidar` (renders visuals); the world has
+  UserCommands (`/world/coco_world/set_pose`); `gz.transport13` Python
+  bindings are installed.
+- The apron (map frame = world + (2, 0)): x -1.7..1.0, y -8.9..8.9, between
+  the west corridor landmarks and the bays' approach walls; the robot spawns
+  mid-apron at map (0, 0).
+- Run 15 (v1 wedge world, M6 matrix) cannot be re-run as such: that world's
+  corridor is not this arena. Its evidence is RESULTS.md's log excerpt and
+  AMCL-vs-truth table. Plan: reproduce the MECHANISM (an operator
+  `/initialpose` 3.4 m off — run 15's measured gap — then FollowPath) and
+  label it a mechanism reproduction, never run 15.
+
+**Design (decided here):**
+1. `coco_lab_ros/config/nav2_move_overlay.yaml`: controller_server loads
+   `FollowPath` (the mission's DWB, untouched), `MPPI`, `RPP` (Nav2 docs
+   examples), every robot limit set to DWB's (0.3 m/s, no reverse, 1.0
+   rad/s, accel 3.0/-2.5, yaw accel 3.2); MPPI model_dt 0.1 at the shared
+   10 Hz. Merged onto a copy; mission file sha pinned (06c308af…).
+2. Frozen global paths: SmacPlanner2D asked ONCE (`lab5_run.sh capture`),
+   written to `coco_lab_ros/config/lab5_paths/` (room 13.020 m, 248 poses;
+   apron 7.500 m, 151 poses; captured 11:17 UTC from source `1970e42`+WIP);
+   `lab_planner path_file:=` sends that file unchanged with
+   `controller_id:=FollowPath|MPPI|RPP`.
+3. Scenarios (`coco_lab_ros/config/lab5_scenarios.json`): `static_room`
+   (around the west spine's end, a hairpin, into the room), `crossing`
+   (an actor crosses the apron at y -4.5, triggered at robot y < -1.8),
+   `oncoming` (an actor walks up the robot's path, triggered at y < -1.0),
+   `mislocalised` (`/initialpose` +3.4 m in y, run 15's gap).
+4. Actors (`coco_lab_ros/actors.py`, node `lab_actors`): M7_DESIGN §2.6 —
+   apron only (validated), grey Ø0.30 x 0.60 m, **visual only, no collision
+   geometry**, gravity off, pose driven through gz `set_pose` at 20 Hz of
+   sim time, robot-triggered from GROUND TRUTH, 0.25 m/s. Contacts are never
+   felt; they are measured (clearance <= 0).
+5. Metrics (`coco_lab.movemetrics`, fixed before measuring): tracking error
+   (1C's: GT distance to the path polyline; mean, p95 nearest rank, max);
+   travel time (FollowPath accept -> result, sim s); smoothness (RMS of the
+   CONTROLLER's commanded dv/dt and dw/dt from `/cmd_vel_nav`); minimum
+   clearance (exact footprint-rectangle 0.297 x 0.314 m to box / to actor
+   cylinder, from GT and `navigation_world.json`).
+6. D* Lite (`coco_lab.dstarlite`, Koenig & Likhachev Fig. 3) on the
+   SearchGraph interface; `coco_lab.replan` = the episode (optimistic map,
+   sense radius, scheduled world changes, A* from scratch beside every
+   round); `coco_lab.movebundle` = replan bundle 1.0 + drive bundle 1.0.
+
+**Found and fixed (measured):**
+- D* Lite returned a cost 0.59 BELOW optimal on 3 of 400 random cases:
+  equal keys formed in a different order differ in the last bit
+  (7.242640687119286 vs …285) and ended the search one state early. Keys
+  now compare within `KEY_EPS` 1e-9 — and the heap peek must use the SAME
+  tolerant order (a second failure: an entry (…0955, 5.41) sat behind
+  (…095, 11.66) in raw heap order). After both: 0 mismatches in 3,000
+  random change sequences and 1,000-map properties.
+- `lab1c_watch.py`'s parameter readback pattern is blind to a request that
+  names ANY undeclared parameter: rclcpp then returns an EMPTY list and
+  `zip` checks nothing (the first smoke "checked 63", silently skipping
+  controller_server and local_costmap). `lab5_watch.py` falls back per name
+  and fails a section that checks nothing: now 253 of 255 leaves checked,
+  the 2 undeclared being pre-existing mission keys (`FollowPath.stateful`,
+  a `static_layer` key on the local costmap). Phase 1C's own readback did
+  check all its 63 leaves, so its evidence stands.
+- `ros_clean.sh --list` matched an orphaned `target_finder` of ANOTHER
+  workspace (`~/coco_m1_ws`, ROS domain 181, parent systemd --user), not
+  started by this session. It was left alone; `lab5_run.sh` now sweeps only
+  processes whose environment has its own `ROS_DOMAIN_ID` (66) and still
+  refuses if any Gazebo runs.
+
+**Smoke runs (static_room, one each — NOT results):** all runner checks
+PASS, wheel topic publisher `cmd_vel_arbiter` only throughout.
+- DWB: `FAILED_TO_MAKE_PROGRESS` after 43.7 s sim, stalled at map
+  (-1.16, 7.06) before the hairpin, heading swinging, `Oscillation`
+  rejecting 400 of 819 candidates per cycle.
+- MPPI: succeeded, 55.2 s; tracking max 0.548 m (cuts the hairpin), min
+  clearance 0.226 m.
+- RPP: succeeded, 51.2 s; tracking max 0.175 m; lookahead point a median
+  0.627 m from the true robot (lookahead_dist 0.6): frame chain verified.
+
+NEXT: commit; then the measured matrix (A static_room, B crossing +
+oncoming, mislocalised) with `~/coco_search_ws/lab5.sh run NAME SCENARIO
+CONTROLLER`, extraction `~/coco_search_ws/ex.sh NAME...`; meanwhile the
+Lab 5 view in lab_web.

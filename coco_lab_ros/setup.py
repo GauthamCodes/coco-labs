@@ -28,7 +28,10 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + '/config', glob('config/*.yaml')),
+        ('share/' + package_name + '/config', glob('config/*.yaml')
+         + glob('config/*.json')),
+        ('share/' + package_name + '/config/lab5_paths',
+            glob('config/lab5_paths/*.json')),
         ('share/' + package_name + '/launch', glob('launch/*.launch.py')),
     ],
     install_requires=['setuptools'],
@@ -43,6 +46,7 @@ setup(
             'lab_planner = coco_lab_ros.planner_node:main',
             'lab_params = coco_lab_ros.params:main',
             'lab_export = coco_lab_ros.export:main',
+            'lab_actors = coco_lab_ros.actor_node:main',
         ],
     },
 )
