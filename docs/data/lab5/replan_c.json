@@ -2,9 +2,9 @@
  "after": "sha256:018f2371f44de987dd20bf3754decaecd5c3dd02ed1eab97a02f38e985e3dbc2",
  "before": "sha256:f7797c19475d435eea4eb04be7cf90d66228f6115f3e3557839a0abc88274482",
  "bundle": "replan/arena_c/",
- "bytes": 55335,
+ "bytes": 55336,
  "cells_changed": 443,
- "content_hash": "sha256:f382da9f7bcd0f37eb9c88cbe3edff67f09e9b87d23c7141419029f2e09cfe20",
+ "content_hash": "sha256:2d032ada7d3784ceb1c0d5c0d2efde97de59383466412386c1de6f1bd646e727",
  "goal_cell": [
   162,
   40

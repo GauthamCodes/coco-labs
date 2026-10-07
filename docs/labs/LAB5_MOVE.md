@@ -290,7 +290,8 @@ attributed**.
   **D\* Lite 3,209 expansions, A\* from scratch 1,114**, the same cost (160.598
   cells). On this real change, repairing cost 2.9× searching again. Not
   attributed. Rebuilt from the committed snapshots it reproduces the same
-  bundle (`sha256:f382da9f…`).
+  episode (measured: identical rounds and arrays at two commits); the
+  committed bundle, made at clean `e5913c8`, is `sha256:2d032ada…`.
 
 ### 4.6 The site (measured, local build, headless Firefox)
 

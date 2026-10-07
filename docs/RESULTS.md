@@ -8694,7 +8694,7 @@ Full tables, every metric: LAB5_MOVE.md §4.1. Findings, each measured:
   cells changed, 104 newly blocked, in a 67 × 177-cell apron window. Repair:
   **D\* Lite 3,209 expansions, A\* from scratch 1,114**, the same cost
   (160.598 cells). Not attributed. Reproduces from the committed snapshots
-  (`sha256:f382da9f…`).
+  (bundle `sha256:2d032ada…`, made at clean `e5913c8`).
 
 ### Found and fixed during the phase (measured)
 
