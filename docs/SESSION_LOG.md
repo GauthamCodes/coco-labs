@@ -8106,3 +8106,21 @@ NEXT: the owner's call on publishing `lab5-v1.0` (tag LOCAL at the release
 record on `main`, DRAFT release with `coco_lab5_demo.mp4`):
 `git push labs lab5-v1.0 && gh release edit lab5-v1.0 -R GauthamCodes/coco-labs --draft=false --latest --verify-tag`.
 No later phase started.
+
+
+### Phase 6 — COMPLETE: release record on `main`, `lab5-v1.0` tag local + draft release (2026-10-07, ~19:30 UTC)
+
+- PR #18 (release record): Lab green; CI's `build-and-test` hung ~1 h in
+  "Setup ROS 2 Jazzy" (before any repository code), was cancelled and
+  re-run: green. `main` fast-forwarded `0fef157..2b6f8ad` (plain push).
+- On `main` = `2b6f8ad`: CI, Lab and the Pages deploy green; the public
+  catalog is 1.5 from `2b6f8ad`, clean. Re-checked on the public URL (19:25
+  UTC): Lab 5 and Lab 1 smoke 0 console errors, 11/11 bundles drawn, D\*
+  Lite in Pyodide 6.1 s (coco_lab 166 ms).
+- `lab5-v1.0`: annotated tag LOCAL at `2b6f8ad` + DRAFT release (target the
+  full sha) with `coco_lab5_demo.mp4`; the uploaded asset downloads with
+  sha256 `442cc010…`, the hash recorded at recording time. Publishing is
+  the owner's call:
+  `git push labs lab5-v1.0 && gh release edit lab5-v1.0 -R GauthamCodes/coco-labs --draft=false --latest --verify-tag`.
+- Phase 6 / Lab 5 is complete apart from that decision. No later phase
+  started.
