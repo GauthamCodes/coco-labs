@@ -85,7 +85,7 @@ def command_lines():
 
 def test_the_package_declares_what_this_test_covers():
     assert set(console_scripts()) == {'lab_planner', 'lab_params',
-                                      'lab_export'}
+                                      'lab_export', 'lab_actors'}
     assert launch_files() == ['lab_ekf.launch.py', 'lab_stack.launch.py',
                               'lab_static_smoke.launch.py']
     for s in SCRIPTS:

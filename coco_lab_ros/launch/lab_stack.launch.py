@@ -74,7 +74,7 @@ def merged_params(context):
     from coco_lab_ros.params import merge_files
     base = os.path.join(get_package_share_directory('gazebo_models'),
                         'config', 'nav2_params.yaml')
-    name = LaunchConfiguration('overlay').perform(context)
+    name = context.launch_configurations.get('overlay', OVERLAYS[0])
     if name not in OVERLAYS:
         raise RuntimeError(f'overlay must be one of {OVERLAYS}, got {name!r}')
     overlay = os.path.join(get_package_share_directory('coco_lab_ros'),

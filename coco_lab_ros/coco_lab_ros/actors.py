@@ -214,8 +214,13 @@ def load_scenarios(path: str) -> Dict[str, Dict[str, object]]:
 
 def schedule(actor: Dict[str, object], t_trigger: float, t_end: float,
              dt: float = 0.05) -> List[Tuple[float, float, float, float]]:
-    """Return ``[(t, x, y, yaw)]`` from the trigger to ``t_end``."""
+    """
+    Return ``[(t, x, y, yaw)]`` from the trigger to ``t_end``, every ``dt``.
+
+    The arc length is ``speed x k x dt`` from the step count, so the poses
+    do not depend on the trigger time at all (only the ``t`` column does).
+    """
     n = int(math.floor((t_end - t_trigger) / dt + 1e-9))
-    return [(t_trigger + k * dt,) + actor_pose(actor, t_trigger,
-                                               t_trigger + k * dt)
-            for k in range(n + 1)]
+    return [(t_trigger + k * dt,) + position_along(
+        actor['waypoints'], float(actor['speed']) * k * dt)
+        for k in range(n + 1)]

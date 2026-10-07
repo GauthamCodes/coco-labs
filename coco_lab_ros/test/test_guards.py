@@ -101,8 +101,14 @@ def test_no_module_imports_a_velocity_type():
                 assert node.attr not in ('Twist', 'TwistStamped'), name
 
 
+#: Each publishing module and the ONLY topics it may publish (Phase 6
+#: added the actor driver, with its own allowlist).
+PUBLISHERS = {'planner_node.py': safety.LAB_TOPICS,
+              'actor_node.py': safety.ACTOR_TOPICS}
+
+
 def test_every_publisher_names_a_lab_topic():
-    found = []
+    found = {}
     for name, tree in sources():
         for node in ast.walk(tree):
             if (isinstance(node, ast.Call)
@@ -110,9 +116,12 @@ def test_every_publisher_names_a_lab_topic():
                 topic = node.args[1]
                 assert isinstance(topic, ast.Constant), \
                     f'{name}: a publisher topic must be a literal'
-                assert topic.value in safety.LAB_TOPICS, (name, topic.value)
-                found.append(topic.value)
-    assert sorted(found) == sorted(safety.LAB_TOPICS)
+                assert name in PUBLISHERS, f'{name} publishes undeclared'
+                assert topic.value in PUBLISHERS[name], (name, topic.value)
+                found.setdefault(name, []).append(topic.value)
+    assert {n: sorted(t) for n, t in found.items()} == \
+        {n: sorted(t) for n, t in PUBLISHERS.items()}
+    assert not set(safety.ACTOR_TOPICS) & set(safety.FORBIDDEN_TOPICS)
 
 
 def test_no_forbidden_topic_is_named_outside_safety():

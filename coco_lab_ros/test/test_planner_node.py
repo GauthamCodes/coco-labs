@@ -185,3 +185,78 @@ def test_a_blocked_goal_fails_and_sends_nothing(tmp_path):
     assert outcome['phase'] == 'failed' and 'blocked' in outcome['reason']
     assert goals == []
     assert not os.path.exists(tmp_path / 'plan_bundle')
+
+
+def run_frozen(tmp_path, path_file, controller_id):
+    """Run lab_planner with ``path_file`` against a fake FollowPath."""
+    import rclpy
+    from geometry_msgs.msg import TransformStamped
+    from nav2_msgs.action import FollowPath
+    from rclpy.action import ActionServer
+    from rclpy.executors import MultiThreadedExecutor
+    from rclpy.parameter import Parameter
+    from tf2_ros import StaticTransformBroadcaster
+    from coco_lab_ros.planner_node import LabPlanner
+
+    ctx = rclpy.Context()
+    rclpy.init(context=ctx, domain_id=DOMAIN)
+    fake = rclpy.create_node('fake_nav2', context=ctx)
+    goals = []
+
+    def execute(handle):
+        goals.append(handle.request)
+        handle.succeed()
+        return FollowPath.Result()
+    ActionServer(fake, FollowPath, 'follow_path', execute)
+    t = TransformStamped()
+    t.header.frame_id, t.child_frame_id = 'map', 'base_footprint'
+    t.transform.rotation.w = 1.0
+    StaticTransformBroadcaster(fake).sendTransform(t)
+    node = LabPlanner(context=ctx, parameter_overrides=[
+        Parameter('path_file', Parameter.Type.STRING, str(path_file)),
+        Parameter('controller_id', Parameter.Type.STRING, controller_id),
+        Parameter('out_dir', Parameter.Type.STRING, str(tmp_path / 'out')),
+        Parameter('tf_timeout', Parameter.Type.DOUBLE, 30.0)])
+    ex = MultiThreadedExecutor(num_threads=4, context=ctx)
+    ex.add_node(fake)
+    ex.add_node(node)
+    spin = threading.Thread(target=ex.spin, daemon=True)
+    spin.start()
+    try:
+        assert node.done.wait(60), 'lab_planner never finished'
+        return node.outcome, goals
+    finally:
+        ex.shutdown()
+        node.destroy_node()
+        fake.destroy_node()
+        rclpy.shutdown(context=ctx)
+
+
+def test_a_frozen_path_is_sent_unchanged_to_the_named_controller(tmp_path):
+    poses = [[0.0, 0.0, 0.0], [0.5, 0.0, 0.0], [0.5, 0.5, 1.5707963]]
+    f = tmp_path / 'path.json'
+    f.write_text(json.dumps({'frame': 'map', 'poses': poses}))
+    outcome, goals = run_frozen(tmp_path, f, 'MPPI')
+    assert outcome['phase'] == 'succeeded', outcome
+    assert len(goals) == 1 and goals[0].controller_id == 'MPPI'
+    got = goals[0].path.poses
+    assert len(got) == 3
+    for p, (x, y, yaw) in zip(got, poses):
+        assert p.pose.position.x == x and p.pose.position.y == y
+        q = p.pose.orientation
+        assert 2 * math.atan2(q.z, q.w) == pytest.approx(yaw, abs=1e-9)
+    plan = json.loads((tmp_path / 'out' / 'plan.json').read_text())
+    assert plan['path_sha256'] == hashlib.sha256(f.read_bytes()).hexdigest()
+    assert plan['controller_id'] == 'MPPI' and plan['poses'] == poses
+    assert not os.path.exists(tmp_path / 'out' / 'plan_bundle')
+
+
+@pytest.mark.parametrize('body', [
+    '{"poses": [[0, 0, 0]]}', '{"poses": [[0, 0], [1, 1]]}',
+    '{"poses": [[0, 0, 0], [1, NaN, 0]]}', '{}'])
+def test_a_bad_path_file_is_refused(tmp_path, body):
+    from coco_lab_ros.planner_node import load_path_file
+    f = tmp_path / 'bad.json'
+    f.write_text(body)
+    with pytest.raises(ValueError):
+        load_path_file(str(f))
