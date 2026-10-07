@@ -76,8 +76,15 @@ class ReplanWorld:
     sense_radius: Optional[float] = 2.5
     connectivity: int = 8
     heuristic: str = 'octile'
-    #: optional cost layer, the same for known and truth (Grid's units)
+    #: optional cost layer of the robot's map (Grid's units)
     cost: Optional[List[float]] = None
+    #: the world's cost layer, if it differs from the map's (a costmap
+    #: update changes inflation costs, not only occupancy); needs ``cost``
+    truth_cost: Optional[List[float]] = None
+    #: the first step at which the robot senses: 0 (from the start) or 1
+    #: (the world's difference arrives after the first plan -- a global
+    #: costmap update between two snapshots, Experiment C)
+    first_sense_step: int = 0
     #: ``[(step, [(row, col, blocked), ...]), ...]``: world changes
     schedule: List[Tuple[int, List[Tuple[int, int, bool]]]] = field(
         default_factory=list)
@@ -95,6 +102,24 @@ class ReplanWorld:
             raise ReplanError('known and truth must cover the grid')
         if self.cost is not None and len(self.cost) != n:
             raise ReplanError('cost must cover the grid')
+        if self.truth_cost is not None and (self.cost is None
+                                            or len(self.truth_cost) != n):
+            raise ReplanError('truth_cost needs cost, and must cover the '
+                              'grid')
+        if self.first_sense_step not in (0, 1):
+            raise ReplanError('first_sense_step must be 0 or 1')
+        if self.first_sense_step == 1:
+            # the first step is taken unsensed: its cells must not differ
+            r0, c0 = self.start
+            for r in range(max(0, r0 - 1), min(self.height, r0 + 2)):
+                for c in range(max(0, c0 - 1), min(self.width, c0 + 2)):
+                    i = r * self.width + c
+                    if self.known[i] != self.truth[i] or (
+                            self.truth_cost is not None
+                            and self.cost[i] != self.truth_cost[i]):
+                        raise ReplanError('with first_sense_step 1 the '
+                                          'cells around the start must be '
+                                          'known')
         if self.sense_radius is not None and not (
                 isinstance(self.sense_radius, (int, float))
                 and 1.5 <= self.sense_radius <= 64):
@@ -121,9 +146,11 @@ class ReplanWorld:
         if not 1 <= self.max_steps <= 100000:
             raise ReplanError('max_steps must be in 1..100000')
 
-    def grid(self, blocked: Sequence[bool]) -> Grid:
-        """Return a :class:`Grid` of ``blocked`` with this world's model."""
-        return Grid(self.width, self.height, list(blocked), self.cost,
+    def grid(self, blocked: Sequence[bool],
+             cost: Optional[Sequence[float]] = None) -> Grid:
+        """Return a :class:`Grid` with this world's model."""
+        return Grid(self.width, self.height, list(blocked),
+                    self.cost if cost is None else list(cost),
                     connectivity=self.connectivity)
 
     def to_dict(self) -> Dict[str, object]:
@@ -134,6 +161,8 @@ class ReplanWorld:
                 'connectivity': self.connectivity,
                 'heuristic': self.heuristic,
                 'has_cost': self.cost is not None,
+                'has_truth_cost': self.truth_cost is not None,
+                'first_sense_step': self.first_sense_step,
                 'schedule': [[s, [list(c) for c in cells]]
                              for s, cells in self.schedule],
                 'max_steps': self.max_steps}
@@ -170,7 +199,7 @@ class ReplanResult:
         """Return a JSON-ready digest of the episode."""
         d = sum(r.dstar_expansions for r in self.rounds)
         a = sum(r.astar_expansions for r in self.rounds)
-        g = self.world.grid(self.world.truth)
+        g = self.world.grid(self.world.truth, self.world.truth_cost)
         moved = 0.0
         for p, q in zip(self.walk, self.walk[1:]):
             moved += g.move_cost(p, q)
@@ -188,7 +217,8 @@ class ReplanResult:
                     for r in self.rounds)}
 
 
-def _sense(world: ReplanWorld, truth, known, at: Cell) -> List[Cell]:
+def _sense(world: ReplanWorld, truth, known, at: Cell, tcost=None,
+           kcost=None) -> List[Cell]:
     """Copy the truth of the sensed cells into ``known``; return changes."""
     out = []
     r0, c0 = at
@@ -200,8 +230,11 @@ def _sense(world: ReplanWorld, truth, known, at: Cell) -> List[Cell]:
             if R is not None and math.hypot(r - r0, c - c0) > R:
                 continue
             i = r * world.width + c
-            if known[i] != truth[i]:
+            if known[i] != truth[i] or (tcost is not None
+                                        and kcost[i] != tcost[i]):
                 known[i] = truth[i]
+                if tcost is not None:
+                    kcost[i] = tcost[i]
                 out.append((r, c))
     return out
 
@@ -211,8 +244,11 @@ def run_replan(world: ReplanWorld) -> ReplanResult:
     world.validate()
     truth = list(world.truth)
     known = list(world.known)
-    _sense(world, truth, known, world.start)
-    grid = world.grid(known)
+    tcost = list(world.truth_cost) if world.truth_cost is not None else None
+    kcost = list(world.cost) if tcost is not None else None
+    changed0 = (_sense(world, truth, known, world.start, tcost, kcost)
+                if world.first_sense_step == 0 else [])
+    grid = world.grid(known, kcost)
     dsl = DStarLite(grid, world.start, world.goal, world.heuristic)
     expanded_before = set()
     rounds: List[Round] = []
@@ -239,7 +275,7 @@ def run_replan(world: ReplanWorld) -> ReplanResult:
                 'expansions'], astar_cost=ref.cost if ref.found else None))
         return found, path
 
-    found, path = plan([])
+    found, path = plan(changed0)
     status = 'reached' if dsl.start == world.goal else None
     while status is None:
         if not found:
@@ -254,12 +290,12 @@ def run_replan(world: ReplanWorld) -> ReplanResult:
         step = len(walk) - 1
         for r, c, b in schedule.get(step, []):
             truth[r * world.width + c] = bool(b)
-        changed = _sense(world, truth, known, nxt)
+        changed = _sense(world, truth, known, nxt, tcost, kcost)
         if nxt == world.goal:
             status = 'reached'
             break
         if changed:
-            new = world.grid(known)
+            new = world.grid(known, kcost)
             _, affected = grid_changes(grid, new)
             dsl.apply_changes(new, affected)
             grid = new

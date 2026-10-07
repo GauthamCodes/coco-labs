@@ -47,6 +47,7 @@ const Localise = lazy(() => import('./loc/Localise').then((m) => ({ default: m.L
 // Lab 3 likewise: fetched only when its view is opened
 const MapLab = lazy(() => import('./map/MapLab').then((m) => ({ default: m.MapLab })));
 const SearchLab = lazy(() => import('./search/SearchLab').then((m) => ({ default: m.SearchLab })));
+const MoveLab = lazy(() => import('./move/MoveLab').then((m) => ({ default: m.MoveLab })));
 
 /** A loaded bundle, and how we know it may be drawn. */
 export interface Current {
@@ -98,10 +99,10 @@ export function App() {
   const [reveal, setReveal] = useState<Reveal | null>(null);
   const [shareVerdict, setShareVerdict] = useState<{ ok: boolean | null; message: string } | null>(null);
   const pendingShare = useRef<string | null>(null);
-  const [view, setView] = useState<'lab' | 'exhibit' | 'live' | 'localise' | 'map' | 'search'>(() => {
+  const [view, setView] = useState<'lab' | 'exhibit' | 'live' | 'localise' | 'map' | 'search' | 'move'>(() => {
     const v = new URLSearchParams(window.location.search).get('view');
     return v === 'live' ? 'live' : v === 'localise' ? 'localise' : v === 'map' ? 'map'
-      : v === 'search' ? 'search' : 'lab';
+      : v === 'search' ? 'search' : v === 'move' ? 'move' : 'lab';
   });
   const [liveText, setLiveText] = useState('Live — local stack');
   const dataUrl = useCallback((p: string) => `${DATA}${p}`, []);
@@ -314,7 +315,8 @@ export function App() {
       <header className="top">
         <h1>COCO Lab <span className="sub">{view === 'localise' ? 'localisation, from evidence'
           : view === 'map' ? 'mapping, from evidence'
-            : view === 'search' ? 'finding the target, from evidence' : 'search, replayed from evidence'}</span></h1>
+            : view === 'search' ? 'finding the target, from evidence'
+              : view === 'move' ? 'moving along a path, from evidence' : 'search, replayed from evidence'}</span></h1>
         <nav className="views" aria-label="Views">
           <button type="button" className={view === 'lab' ? 'seg-btn active' : 'seg-btn'} aria-pressed={view === 'lab'}
             onClick={() => setView('lab')} data-testid="view-lab">Lab 1 · Plan</button>
@@ -329,6 +331,9 @@ export function App() {
           <button type="button" className={view === 'search' ? 'seg-btn active' : 'seg-btn'}
             aria-pressed={view === 'search'} onClick={() => setView('search')} data-testid="view-search"
             disabled={!(catalog as { search?: unknown } | null)?.search}>Lab 4 · Search</button>
+          <button type="button" className={view === 'move' ? 'seg-btn active' : 'seg-btn'}
+            aria-pressed={view === 'move'} onClick={() => setView('move')} data-testid="view-move"
+            disabled={!(catalog as { move?: unknown } | null)?.move}>Lab 5 · Move</button>
           <button type="button" className={view === 'live' ? 'seg-btn active' : 'seg-btn'} aria-pressed={view === 'live'}
             onClick={() => setView('live')} data-testid="view-live">Live</button>
         </nav>
@@ -336,7 +341,7 @@ export function App() {
           ? <span className="mode-badge mode-live" data-testid="mode-badge">{liveText}</span>
           : view === 'localise'
             ? <span className="mode-badge mode-sketch" data-testid="mode-badge">Sketch — a model, not the robot</span>
-            : view === 'map' || view === 'search'
+            : view === 'map' || view === 'search' || view === 'move'
               ? <span className="mode-badge mode-sketch" data-testid="mode-badge">Sketch and Replay — each labelled below</span>
             : <ModeBadge provenance={current?.bundle.provenance ?? null} />}
       </header>
@@ -354,6 +359,11 @@ export function App() {
       {view === 'search' && catalog && (
         <Suspense fallback={<p className="loading">Loading Lab 4…</p>}>
           <SearchLab catalog={catalog} reducedMotion={reducedMotion} />
+        </Suspense>
+      )}
+      {view === 'move' && catalog && (
+        <Suspense fallback={<p className="loading">Loading Lab 5…</p>}>
+          <MoveLab catalog={catalog} reducedMotion={reducedMotion} />
         </Suspense>
       )}
       {view === 'exhibit' && catalog && (

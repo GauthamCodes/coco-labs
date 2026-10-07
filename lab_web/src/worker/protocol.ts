@@ -72,15 +72,27 @@ export interface SearchSpec {
   seed: number;
 }
 
+/**
+ * Lab 5's replanning request (src/worker/recompute.py `replan_lab`):
+ * coco_lab builds the world (a seeded Sketch, or the current bundle's),
+ * adds the learner's painted obstacles to the WORLD only, and drives one
+ * D* Lite episode with A* from scratch beside every round.
+ */
+export interface ReplanSpec {
+  seed: number | null; // null: the current bundle's world
+  sense_radius: number; // cells, 1.5..6
+  painted: Array<[number, number]>; // [row, col]: obstacles the robot's map lacks
+}
+
 export interface RecomputeRequest {
   id: number;
-  /** 'recompute': Lab 1's search glue; 'localise': Lab 2's; 'mapping': Lab 3's (recompute.py). */
-  type: 'recompute' | 'localise' | 'mapping' | 'search';
+  /** 'recompute': Lab 1's glue; 'localise': Lab 2's; 'mapping': Lab 3's; 'search': Lab 4's; 'replan': Lab 5's (recompute.py). */
+  type: 'recompute' | 'localise' | 'mapping' | 'search' | 'replan';
   /** The CURRENT bundle's files, byte for byte. */
   manifest: Uint8Array;
   arraysName: string;
   arraysFile: Uint8Array;
-  spec: RecomputeSpec | LocSpec | MapSpec | SearchSpec;
+  spec: RecomputeSpec | LocSpec | MapSpec | SearchSpec | ReplanSpec;
   /** Absolute URL of coco_lab's wheel on this site, and its sha256. */
   wheelUrl: string;
   wheelSha256: string;

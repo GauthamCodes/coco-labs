@@ -96,20 +96,27 @@ def _manifest(body: Dict[str, object], arrays, compression: str
     return m
 
 
-def _write(body, arrays, out_dir: str, compression: str) -> str:
+def _serialise(body, arrays, compression: str):
+    """Return ``(manifest bytes, arrays file name, arrays file, hash)``."""
     m = _manifest(body, arrays, compression)
     raw = b''.join(d for _, _, d in arrays)
-    os.makedirs(out_dir, exist_ok=True)
     if compression == 'gzip':
         data, name = gzip.compress(raw, compresslevel=9, mtime=0), \
             _b.ARRAYS_GZ
     else:
         data, name = raw, _b.ARRAYS
+    return (_b.canonical_json(m).encode('utf-8'), name, data,
+            m['content_hash'])
+
+
+def _write(body, arrays, out_dir: str, compression: str) -> str:
+    mbytes, name, data, digest = _serialise(body, arrays, compression)
+    os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, _b.MANIFEST), 'wb') as f:
-        f.write(_b.canonical_json(m).encode('utf-8'))
+        f.write(mbytes)
     with open(os.path.join(out_dir, name), 'wb') as f:
         f.write(data)
-    return m['content_hash']
+    return digest
 
 
 def parse_manifest(text: bytes, schema: str) -> Dict[str, object]:
@@ -236,6 +243,8 @@ def replan_arrays(result) -> List[Tuple[str, str, bytes]]:
                                               for b in result.known_final]))]
     if w.cost is not None:
         out.append(('cost', 'f64', _pack('f64', w.cost)))
+    if w.truth_cost is not None:
+        out.append(('truth_cost', 'f64', _pack('f64', w.truth_cost)))
     out.append(('walk', 'i32', _pack('i32', [v for c in result.walk
                                              for v in c])))
     out.append(('paths', 'i32', _pack('i32', [v for r in result.rounds
@@ -276,6 +285,15 @@ def write_replan_bundle(result, provenance, out_dir: str,
                   out_dir, compression)
 
 
+def replan_bytes(result, provenance, compression: str = 'none'):
+    """Return a replan bundle as bytes (the worker's path; no files)."""
+    _b._check_provenance(provenance)
+    if provenance.get('source_kind') not in ('sketch', 'glass-box'):
+        raise MoveBundleError('a replan bundle is a sketch or glass-box')
+    return _serialise(replan_body(result, provenance), replan_arrays(result),
+                      compression)
+
+
 def load_replan_bundle(path: str) -> Tuple[Dict[str, object],
                                            ReplanWorld]:
     """Read and check a replan bundle; return ``(manifest, world)``."""
@@ -288,6 +306,7 @@ def load_replan_bundle(path: str) -> Tuple[Dict[str, object],
     truth = [bool(v) for v in take('truth', 'u8')]
     take('known_final', 'u8')
     cost = take('cost', 'f64') if wd.get('has_cost') else None
+    tcost = take('truth_cost', 'f64') if wd.get('has_truth_cost') else None
     take('walk', 'i32')
     take('paths', 'i32')
     for name in TRACE_COLUMNS:
@@ -299,7 +318,8 @@ def load_replan_bundle(path: str) -> Tuple[Dict[str, object],
             tuple(wd['start']), tuple(wd['goal']),
             sense_radius=wd['sense_radius'],
             connectivity=int(wd['connectivity']),
-            heuristic=str(wd['heuristic']), cost=cost,
+            heuristic=str(wd['heuristic']), cost=cost, truth_cost=tcost,
+            first_sense_step=int(wd.get('first_sense_step', 0)),
             schedule=[(int(s), [(int(c[0]), int(c[1]), bool(c[2]))
                                 for c in cells])
                       for s, cells in wd.get('schedule', [])],

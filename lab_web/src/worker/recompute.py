@@ -527,3 +527,77 @@ def search_lab(request_json, manifest, arrays_name, arrays_file):
                     'write_bundle_ms': write_ms, 'optimal_ms': 0.0,
                     'runs': len(runs), 'total_ms': _ms(t_all)},
     }
+
+
+# -- Lab 5: replanning (D* Lite) ------------------------------------------------
+
+def replan_lab(request_json, manifest, arrays_name, arrays_file):
+    """
+    Rerun Lab 5's D* Lite episode with the learner's world.
+
+    ``request_json``: ``{seed: int | null, sense_radius, painted: [[row,
+    col], ...]}``. With a seed coco_lab builds ``replan.sketch_world(seed)``;
+    without one it reuses the CURRENT bundle's world (validated by
+    ``movebundle.load_replan_bundle``). ``painted`` cells become obstacles
+    of the WORLD that the robot's map does not have -- the robot meets them
+    only when it is close enough to see them. coco_lab drives the episode
+    (``replan.run_replan``: D* Lite, and A* from scratch beside every
+    round); the page only draws the bundle it returns.
+    """
+    from coco_lab import movebundle as mb, replan
+    import dataclasses
+    t_all = time.perf_counter()
+    req = json.loads(request_json)
+    t0 = time.perf_counter()
+    work = tempfile.mkdtemp(prefix='lab_replan_')
+    try:
+        with open(os.path.join(work, 'manifest.json'), 'wb') as f:
+            f.write(_bytes(manifest))
+        with open(os.path.join(work, arrays_name), 'wb') as f:
+            f.write(_bytes(arrays_file))
+        _, world = mb.load_replan_bundle(work)
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
+    load_ms = _ms(t0)
+    sense = _num(req, 'sense_radius', 1.5, 6.0)
+    seed = req.get('seed')
+    if seed is not None:
+        if not (isinstance(seed, int) and 0 <= seed <= 9999):
+            raise Refused('the seed must be a whole number from 0 to 9999')
+        world = replan.sketch_world(seed, sense_radius=sense)
+    else:
+        world = dataclasses.replace(world, sense_radius=sense,
+                                    known=list(world.known),
+                                    truth=list(world.truth))
+    painted = req.get('painted') or []
+    if not (isinstance(painted, list) and len(painted) <= 200):
+        raise Refused('paint at most 200 cells')
+    for cell in painted:
+        if not (isinstance(cell, list) and len(cell) == 2
+                and all(isinstance(v, int) for v in cell)
+                and 0 <= cell[0] < world.height
+                and 0 <= cell[1] < world.width):
+            raise Refused('a painted cell is off the map')
+        if tuple(cell) in (world.start, world.goal):
+            raise Refused('the start and the goal must stay free')
+        world.truth[cell[0] * world.width + cell[1]] = True
+    t0 = time.perf_counter()
+    try:
+        res = replan.run_replan(world)
+    except ValueError as exc:
+        raise Refused(str(exc)) from None
+    compute_ms = _ms(t0)
+    t0 = time.perf_counter()
+    prov = bundle.make_provenance('sketch', seed=seed, tool=TOOL)
+    m_out, name, a_out, digest = mb.replan_bytes(res, prov, 'none')
+    write_ms = _ms(t0)
+    return {
+        'bundles': [{'manifest': m_out, 'arrays_file': a_out,
+                     'arrays_name': name, 'content_hash': digest}],
+        'optimal_cost': None,
+        'coco_lab_version': coco_lab.__version__,
+        'python_version': sys.version.split()[0],
+        'timings': {'load_bundle_ms': load_ms, 'search_ms': compute_ms,
+                    'write_bundle_ms': write_ms, 'optimal_ms': 0.0,
+                    'runs': len(res.rounds), 'total_ms': _ms(t_all)},
+    }
