@@ -37,6 +37,15 @@ written by ``lab5_extract.py``, and the runner's JSON files). Writes:
 
 Run directories without ``run.json`` (VOID attempts, ``*.void-K``) are
 listed under ``void`` with their reason and are never in a statistic.
+
+Two SUPPLEMENTARY facts per run, outside the metric definitions and
+labelled so: DWB control cycles in which it scored candidates and rejected
+every one (``all_rejected``: n > 0, none valid -- run 15's "0 of 819") are
+counted apart from cycles with nothing to score (``empty``: n = 0); and
+``actor_contact_whole_recording`` repeats the actor-clearance computation
+over the WHOLE recording, not just the FollowPath window -- a robot that
+stopped and aborted can still be walked into afterwards by a kinematic
+actor that does not stop.
 """
 
 import argparse
@@ -136,6 +145,7 @@ def bundle_run(name, run, extras, k, rollouts):
             k2: seen[k2] for k2 in ('scans_in_range', 'hits', 'misses',
                                     'abs_error_m', 'within_m', 'tol_m')},
         'inject': inj,
+        'actor_whole': whole_recording_actor_clearance(run),
     }
     out = {
         'id': f'{run["meta"]["controller"]}_{k}',
@@ -173,6 +183,34 @@ def git_info():
 
 def dist(vals):
     return mm.distribution([v for v in vals if v is not None])
+
+
+def whole_recording_actor_clearance(run):
+    """
+    Actor clearance over the whole recording (supplementary).
+
+    Also, for a contact, the FIRST ground-truth sample at clearance 0, the
+    wheel command (``/diff_drive_controller/cmd_vel``) in force then, and
+    the robot's largest distance from the path's line x = 0 before it.
+    """
+    if not run['actors']:
+        return None
+    acts = [{'radius': 0.15, 'track': [(r[0], r[1], r[2]) for r in tr]}
+            for tr in run['actors'].values()]
+    gt = [tuple(g) for g in run['gt']]
+    c = mm.clearance(gt, [], acts)['actor']
+    out = {'min_m': c['min_m'], 't': c['t'],
+           'after_window': None if c['t'] is None
+           else c['t'] > run['window'][1],
+           'first_contact_t': None, 'wheel_v_at_contact': None}
+    if c['min_m'] == 0.0:
+        for g in gt:
+            if mm.clearance([g], [], acts)['actor']['min_m'] == 0.0:
+                out['first_contact_t'] = g[0]
+                w = [v for v in run['cmd_wheel'] if v[0] <= g[0]]
+                out['wheel_v_at_contact'] = w[-1][1] if w else None
+                break
+    return out
 
 
 def main():
@@ -272,10 +310,27 @@ def main():
                 'min_clearance_actor_m': dist(
                     [x['clearance']['actor']['min_m'] for x in met]),
                 'contacts': sum(1 for x in met if x['clearance']['contact']),
-                'zero_valid_cycles': [
-                    sum(1 for e in r['eval'] if e[2] == 0)
-                    for r in runs if r['controller'] == ctrl] if ctrl == 'DWB'
-                else None,
+                'dwb_all_rejected_cycles': [
+                    sum(1 for e in r['eval'] if e[1] > 0 and e[2] == 0)
+                    for r in runs if r['controller'] == ctrl]
+                if ctrl == 'DWB' else None,
+                'dwb_empty_cycles': [
+                    sum(1 for e in r['eval'] if e[1] == 0)
+                    for r in runs if r['controller'] == ctrl]
+                if ctrl == 'DWB' else None,
+                'actor_contacts_whole_recording': sum(
+                    1 for r in runs if r['controller'] == ctrl
+                    and (r['record'].get('actor_whole') or {}).get('min_m')
+                    == 0.0),
+                'actor_contacts_while_wheels_stopped': sum(
+                    1 for r in runs if r['controller'] == ctrl
+                    and (r['record'].get('actor_whole') or {}).get(
+                        'wheel_v_at_contact') == 0.0),
+                'max_lateral_m': dist([max(
+                    (abs(g[1] - r['gt'][0][1]) for g in r['gt']
+                     if r['window'][0] <= g[0] <= r['window'][1]),
+                    default=None) for r in runs if r['controller'] == ctrl])
+                if sc in ('crossing', 'oncoming') else None,
             }
         for b in m['runs']:
             r = next(x for x in runs if x['id'] == b['id'])
@@ -289,8 +344,12 @@ def main():
                          'runner_checks_pass':
                              b['record']['runner_checks_pass'],
                          'eval_cycles': len(r['eval']),
-                         'eval_zero_valid': sum(1 for e in r['eval']
-                                                if e[2] == 0)})
+                         'eval_all_rejected': sum(1 for e in r['eval']
+                                                  if e[1] > 0 and e[2] == 0),
+                         'eval_empty': sum(1 for e in r['eval']
+                                           if e[1] == 0),
+                         'actor_whole_recording':
+                             r['record'].get('actor_whole')})
         block['rows'] = rows
         results['scenarios'][sc] = block
         print(f'{sc}: {len(runs)} runs, bundle {digest[:19]}… {size} B')

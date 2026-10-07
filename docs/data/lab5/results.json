@@ -1,0 +1,4020 @@
+{
+ "git": {
+  "commit": "4cb984fc1469ca224fac2685835f48b77cbc527c",
+  "dirty": true
+ },
+ "matrix": "/home/gautham/coco_lab_runs/lab5/matrix",
+ "scenarios": {
+  "crossing": {
+   "bundle": "drive/crossing/",
+   "bytes": 1171832,
+   "content_hash": "sha256:804e9532d3d2b58eb99c00824225d732e47d5ad16e81f6ec3e553f3cade96390",
+   "controllers": {
+    "DWB": {
+     "actor_contacts_while_wheels_stopped": 0,
+     "actor_contacts_whole_recording": 0,
+     "contacts": 0,
+     "dwb_all_rejected_cycles": [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "dwb_empty_cycles": [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "error_codes": [],
+     "max_lateral_m": {
+      "max": 0.16724999999999998,
+      "median": 0.157864,
+      "min": 0.154219,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": 0.3608818251039779,
+      "median": 0.3550970984264231,
+      "min": 0.3399061254218625,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.3608818251039779,
+      "median": 0.3550970984264231,
+      "min": 0.3399061254218625,
+      "n": 5
+     },
+     "min_clearance_static_m": {
+      "max": 0.7796600053898481,
+      "median": 0.745867479031248,
+      "min": 0.7368355339171899,
+      "n": 5
+     },
+     "outcomes": {
+      "succeeded": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.965087408337832,
+      "median": 0.90026898956791,
+      "min": 0.6452399531356744,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 0.27243514551099834,
+      "median": 0.2637712551017358,
+      "min": 0.21873538257168115,
+      "n": 5
+     },
+     "runs": 5,
+     "time_s_succeeded": {
+      "max": 26.522000000000006,
+      "median": 26.319999999999993,
+      "min": 26.11399999999999,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.16692190314245223,
+      "median": 0.15778990314245225,
+      "min": 0.15389090314245224,
+      "n": 5
+     },
+     "tracking_mean_m": {
+      "max": 0.06994660739400012,
+      "median": 0.04949423904567154,
+      "min": 0.04685295627689649,
+      "n": 5
+     }
+    },
+    "MPPI": {
+     "actor_contacts_while_wheels_stopped": 0,
+     "actor_contacts_whole_recording": 0,
+     "contacts": 0,
+     "dwb_all_rejected_cycles": null,
+     "dwb_empty_cycles": null,
+     "error_codes": [],
+     "max_lateral_m": {
+      "max": 0.257363,
+      "median": 0.249971,
+      "min": 0.231516,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": 0.46040033592146434,
+      "median": 0.4574510846601707,
+      "min": 0.4423962952356626,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.46040033592146434,
+      "median": 0.4574510846601707,
+      "min": 0.4423962952356626,
+      "n": 5
+     },
+     "min_clearance_static_m": {
+      "max": 0.750006706479326,
+      "median": 0.7414197071805606,
+      "min": 0.6918708225465109,
+      "n": 5
+     },
+     "outcomes": {
+      "succeeded": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.42446590802403594,
+      "median": 0.27996020146560296,
+      "min": 0.24378444051456657,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 5.9764044445296145,
+      "median": 0.14532819439741299,
+      "min": 0.11708011919402064,
+      "n": 5
+     },
+     "runs": 5,
+     "time_s_succeeded": {
+      "max": 29.894000000000005,
+      "median": 29.482000000000014,
+      "min": 29.409999999999997,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.25703490314245225,
+      "median": 0.24964290314245224,
+      "min": 0.23149990314245225,
+      "n": 5
+     },
+     "tracking_mean_m": {
+      "max": 0.07490329014191528,
+      "median": 0.06902419939036092,
+      "min": 0.05894777099737024,
+      "n": 5
+     }
+    },
+    "RPP": {
+     "actor_contacts_while_wheels_stopped": 0,
+     "actor_contacts_whole_recording": 0,
+     "contacts": 0,
+     "dwb_all_rejected_cycles": null,
+     "dwb_empty_cycles": null,
+     "error_codes": [],
+     "max_lateral_m": {
+      "max": 0.186169,
+      "median": 0.180752,
+      "min": 0.173815,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": 0.34932227303717633,
+      "median": 0.344798364201953,
+      "min": 0.332669761372017,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.34932227303717633,
+      "median": 0.344798364201953,
+      "min": 0.332669761372017,
+      "n": 5
+     },
+     "min_clearance_static_m": {
+      "max": 0.7662201593115621,
+      "median": 0.752873109548889,
+      "min": 0.7339965456270477,
+      "n": 5
+     },
+     "outcomes": {
+      "succeeded": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.3749961995859003,
+      "median": 0.3154566935364783,
+      "min": 0.2877305413858039,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 0.3760432509665541,
+      "median": 0.32721786308733664,
+      "min": 0.1858321758492354,
+      "n": 5
+     },
+     "runs": 5,
+     "time_s_succeeded": {
+      "max": 28.888000000000005,
+      "median": 28.652,
+      "min": 28.464000000000013,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.18584090314245225,
+      "median": 0.18042390314245224,
+      "min": 0.17361490314245223,
+      "n": 5
+     },
+     "tracking_mean_m": {
+      "max": 0.07033983192242506,
+      "median": 0.05242387698547107,
+      "min": 0.04642720026220773,
+      "n": 5
+     }
+    }
+   },
+   "path_sha256": "1e141d385a33df92b52774c2267b4b6ab08e915ff5d4159d83eba0e366e4c8f6",
+   "rows": [
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0040999999999999925,
+      "hits": 97,
+      "misses": 0,
+      "scans_in_range": 97,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.3596491460877267,
+      "t": 95.76,
+      "wheel_v_at_contact": null
+     },
+     "controller": "DWB",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 353,
+     "eval_empty": 0,
+     "id": "DWB_1",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.3596491460877267,
+        "t": 95.76
+       },
+       "contact": false,
+       "min_m": 0.3596491460877267,
+       "static": {
+        "index": 30,
+        "min_m": 0.7796600053898481,
+        "t": 100.02
+       }
+      },
+      "samples": {
+       "cmd": 411,
+       "gt": 1313
+      },
+      "smoothness": {
+       "n": 409,
+       "rms_angular_accel": 0.9615843733932541,
+       "rms_linear_accel": 0.26767818984362957,
+       "skipped_pairs": 1
+      },
+      "time_s": 26.263999999999996,
+      "tracking_m": {
+       "max": 0.16563190314245224,
+       "mean": 0.04949423904567154,
+       "n": 1313,
+       "p95": 0.13502390314245225
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_DWB_1",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0031000000000001027,
+      "hits": 99,
+      "misses": 0,
+      "scans_in_range": 99,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.3608818251039779,
+      "t": 100.5,
+      "wheel_v_at_contact": null
+     },
+     "controller": "DWB",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 325,
+     "eval_empty": 0,
+     "id": "DWB_2",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.3608818251039779,
+        "t": 100.5
+       },
+       "contact": false,
+       "min_m": 0.3608818251039779,
+       "static": {
+        "index": 30,
+        "min_m": 0.7368355339171899,
+        "t": 105.16
+       }
+      },
+      "samples": {
+       "cmd": 368,
+       "gt": 1306
+      },
+      "smoothness": {
+       "n": 366,
+       "rms_angular_accel": 0.965087408337832,
+       "rms_linear_accel": 0.24636394932898645,
+       "skipped_pairs": 1
+      },
+      "time_s": 26.11399999999999,
+      "tracking_m": {
+       "max": 0.16692190314245223,
+       "mean": 0.06994660739400012,
+       "n": 1306,
+       "p95": 0.12900090314245224
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_DWB_2",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0036000000000000476,
+      "hits": 98,
+      "misses": 0,
+      "scans_in_range": 98,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.3399061254218625,
+      "t": 90.1,
+      "wheel_v_at_contact": null
+     },
+     "controller": "DWB",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 328,
+     "eval_empty": 0,
+     "id": "DWB_3",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.3399061254218625,
+        "t": 90.1
+       },
+       "contact": false,
+       "min_m": 0.3399061254218625,
+       "static": {
+        "index": 30,
+        "min_m": 0.7395634897901022,
+        "t": 94.28
+       }
+      },
+      "samples": {
+       "cmd": 377,
+       "gt": 1324
+      },
+      "smoothness": {
+       "n": 375,
+       "rms_angular_accel": 0.90026898956791,
+       "rms_linear_accel": 0.2637712551017358,
+       "skipped_pairs": 1
+      },
+      "time_s": 26.486000000000004,
+      "tracking_m": {
+       "max": 0.15389090314245224,
+       "mean": 0.04685295627689649,
+       "n": 1324,
+       "p95": 0.11608790314245224
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_DWB_3",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0040999999999999925,
+      "hits": 99,
+      "misses": 0,
+      "scans_in_range": 99,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.3550970984264231,
+      "t": 94.48,
+      "wheel_v_at_contact": null
+     },
+     "controller": "DWB",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 330,
+     "eval_empty": 0,
+     "id": "DWB_4",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.3550970984264231,
+        "t": 94.48
+       },
+       "contact": false,
+       "min_m": 0.3550970984264231,
+       "static": {
+        "index": 30,
+        "min_m": 0.745867479031248,
+        "t": 98.96
+       }
+      },
+      "samples": {
+       "cmd": 383,
+       "gt": 1316
+      },
+      "smoothness": {
+       "n": 381,
+       "rms_angular_accel": 0.8864857968453973,
+       "rms_linear_accel": 0.27243514551099834,
+       "skipped_pairs": 1
+      },
+      "time_s": 26.319999999999993,
+      "tracking_m": {
+       "max": 0.15753590314245225,
+       "mean": 0.06389545323362249,
+       "n": 1316,
+       "p95": 0.11597490314245223
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_DWB_4",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0041999999999999815,
+      "hits": 100,
+      "misses": 0,
+      "scans_in_range": 100,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.3461118548065971,
+      "t": 93.24,
+      "wheel_v_at_contact": null
+     },
+     "controller": "DWB",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 227,
+     "eval_empty": 0,
+     "id": "DWB_5",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.3461118548065971,
+        "t": 93.24
+       },
+       "contact": false,
+       "min_m": 0.3461118548065971,
+       "static": {
+        "index": 29,
+        "min_m": 0.7566738306870442,
+        "t": 102.4
+       }
+      },
+      "samples": {
+       "cmd": 288,
+       "gt": 1326
+      },
+      "smoothness": {
+       "n": 286,
+       "rms_angular_accel": 0.6452399531356744,
+       "rms_linear_accel": 0.21873538257168115,
+       "skipped_pairs": 1
+      },
+      "time_s": 26.522000000000006,
+      "tracking_m": {
+       "max": 0.15778990314245225,
+       "mean": 0.04718744281168329,
+       "n": 1326,
+       "p95": 0.12105990314245224
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_DWB_5",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0028000000000001357,
+      "hits": 106,
+      "misses": 0,
+      "scans_in_range": 106,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.4601407864926408,
+      "t": 98.86,
+      "wheel_v_at_contact": null
+     },
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_1",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.4601407864926408,
+        "t": 98.86
+       },
+       "contact": false,
+       "min_m": 0.4601407864926408,
+       "static": {
+        "index": 30,
+        "min_m": 0.750006706479326,
+        "t": 103.38
+       }
+      },
+      "samples": {
+       "cmd": 447,
+       "gt": 1474
+      },
+      "smoothness": {
+       "n": 446,
+       "rms_angular_accel": 0.42446590802403594,
+       "rms_linear_accel": 5.9764044445296145,
+       "skipped_pairs": 0
+      },
+      "time_s": 29.482000000000014,
+      "tracking_m": {
+       "max": 0.24964290314245224,
+       "mean": 0.06902419939036092,
+       "n": 1474,
+       "p95": 0.22294790314245225
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_MPPI_1",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0021999999999999797,
+      "hits": 109,
+      "misses": 0,
+      "scans_in_range": 109,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.46040033592146434,
+      "t": 103.1,
+      "wheel_v_at_contact": null
+     },
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_2",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.46040033592146434,
+        "t": 103.1
+       },
+       "contact": false,
+       "min_m": 0.46040033592146434,
+       "static": {
+        "index": 32,
+        "min_m": 0.7465778112339849,
+        "t": 91.24
+       }
+      },
+      "samples": {
+       "cmd": 407,
+       "gt": 1486
+      },
+      "smoothness": {
+       "n": 405,
+       "rms_angular_accel": 0.2691513197444001,
+       "rms_linear_accel": 0.139383243514352,
+       "skipped_pairs": 1
+      },
+      "time_s": 29.72800000000001,
+      "tracking_m": {
+       "max": 0.25703490314245225,
+       "mean": 0.05894777099737024,
+       "n": 1486,
+       "p95": 0.23130090314245225
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_MPPI_2",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0021999999999999797,
+      "hits": 106,
+      "misses": 0,
+      "scans_in_range": 106,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.45321189336468015,
+      "t": 102.6,
+      "wheel_v_at_contact": null
+     },
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_3",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.45321189336468015,
+        "t": 102.6
+       },
+       "contact": false,
+       "min_m": 0.45321189336468015,
+       "static": {
+        "index": 29,
+        "min_m": 0.6918708225465109,
+        "t": 112.5
+       }
+      },
+      "samples": {
+       "cmd": 419,
+       "gt": 1470
+      },
+      "smoothness": {
+       "n": 417,
+       "rms_angular_accel": 0.27996020146560296,
+       "rms_linear_accel": 0.14532819439741299,
+       "skipped_pairs": 1
+      },
+      "time_s": 29.409999999999997,
+      "tracking_m": {
+       "max": 0.24618090314245225,
+       "mean": 0.06766163600168747,
+       "n": 1470,
+       "p95": 0.22064390314245225
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_MPPI_3",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0019000000000000128,
+      "hits": 110,
+      "misses": 0,
+      "scans_in_range": 110,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.4423962952356626,
+      "t": 90.12,
+      "wheel_v_at_contact": null
+     },
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_4",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.4423962952356626,
+        "t": 90.12
+       },
+       "contact": false,
+       "min_m": 0.4423962952356626,
+       "static": {
+        "index": 30,
+        "min_m": 0.7184651884393337,
+        "t": 95.36
+       }
+      },
+      "samples": {
+       "cmd": 551,
+       "gt": 1474
+      },
+      "smoothness": {
+       "n": 550,
+       "rms_angular_accel": 0.4242747247728102,
+       "rms_linear_accel": 5.331998437664905,
+       "skipped_pairs": 0
+      },
+      "time_s": 29.47200000000001,
+      "tracking_m": {
+       "max": 0.25457890314245224,
+       "mean": 0.07490329014191528,
+       "n": 1474,
+       "p95": 0.22561090314245225
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_MPPI_4",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0027999999999999137,
+      "hits": 108,
+      "misses": 0,
+      "scans_in_range": 108,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.4574510846601707,
+      "t": 101.9,
+      "wheel_v_at_contact": null
+     },
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_5",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.4574510846601707,
+        "t": 101.9
+       },
+       "contact": false,
+       "min_m": 0.4574510846601707,
+       "static": {
+        "index": 30,
+        "min_m": 0.7414197071805606,
+        "t": 104.26
+       }
+      },
+      "samples": {
+       "cmd": 347,
+       "gt": 1495
+      },
+      "smoothness": {
+       "n": 345,
+       "rms_angular_accel": 0.24378444051456657,
+       "rms_linear_accel": 0.11708011919402064,
+       "skipped_pairs": 1
+      },
+      "time_s": 29.894000000000005,
+      "tracking_m": {
+       "max": 0.23149990314245225,
+       "mean": 0.07189125337750266,
+       "n": 1495,
+       "p95": 0.20481190314245223
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_MPPI_5",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0034999999999998366,
+      "hits": 98,
+      "misses": 0,
+      "scans_in_range": 98,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.332669761372017,
+      "t": 103.52,
+      "wheel_v_at_contact": null
+     },
+     "controller": "RPP",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_1",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.332669761372017,
+        "t": 103.52
+       },
+       "contact": false,
+       "min_m": 0.332669761372017,
+       "static": {
+        "index": 32,
+        "min_m": 0.7662201593115621,
+        "t": 93.32
+       }
+      },
+      "samples": {
+       "cmd": 386,
+       "gt": 1444
+      },
+      "smoothness": {
+       "n": 384,
+       "rms_angular_accel": 0.3749961995859003,
+       "rms_linear_accel": 0.3760432509665541,
+       "skipped_pairs": 1
+      },
+      "time_s": 28.888000000000005,
+      "tracking_m": {
+       "max": 0.18042390314245224,
+       "mean": 0.04642720026220773,
+       "n": 1444,
+       "p95": 0.16147090314245224
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_RPP_1",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0036999999999998145,
+      "hits": 97,
+      "misses": 0,
+      "scans_in_range": 97,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.34932227303717633,
+      "t": 96.6,
+      "wheel_v_at_contact": null
+     },
+     "controller": "RPP",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_2",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.34932227303717633,
+        "t": 96.6
+       },
+       "contact": false,
+       "min_m": 0.34932227303717633,
+       "static": {
+        "index": 29,
+        "min_m": 0.7632062894247931,
+        "t": 106.12
+       }
+      },
+      "samples": {
+       "cmd": 425,
+       "gt": 1433
+      },
+      "smoothness": {
+       "n": 423,
+       "rms_angular_accel": 0.3154566935364783,
+       "rms_linear_accel": 0.3547892332648829,
+       "skipped_pairs": 1
+      },
+      "time_s": 28.652,
+      "tracking_m": {
+       "max": 0.18548390314245225,
+       "mean": 0.05242387698547107,
+       "n": 1433,
+       "p95": 0.16370890314245223
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_RPP_2",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0038000000000000256,
+      "hits": 99,
+      "misses": 0,
+      "scans_in_range": 99,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.344798364201953,
+      "t": 102.3,
+      "wheel_v_at_contact": null
+     },
+     "controller": "RPP",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_3",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.344798364201953,
+        "t": 102.3
+       },
+       "contact": false,
+       "min_m": 0.344798364201953,
+       "static": {
+        "index": 29,
+        "min_m": 0.7496818370841292,
+        "t": 111.06
+       }
+      },
+      "samples": {
+       "cmd": 398,
+       "gt": 1441
+      },
+      "smoothness": {
+       "n": 396,
+       "rms_angular_accel": 0.2877305413858039,
+       "rms_linear_accel": 0.32721786308733664,
+       "skipped_pairs": 1
+      },
+      "time_s": 28.831999999999994,
+      "tracking_m": {
+       "max": 0.17361490314245223,
+       "mean": 0.05578539989537054,
+       "n": 1441,
+       "p95": 0.14957690314245223
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_RPP_3",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0040999999999999925,
+      "hits": 99,
+      "misses": 0,
+      "scans_in_range": 99,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.3485656189531855,
+      "t": 90.22,
+      "wheel_v_at_contact": null
+     },
+     "controller": "RPP",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_4",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.3485656189531855,
+        "t": 90.22
+       },
+       "contact": false,
+       "min_m": 0.3485656189531855,
+       "static": {
+        "index": 29,
+        "min_m": 0.752873109548889,
+        "t": 98.36
+       }
+      },
+      "samples": {
+       "cmd": 555,
+       "gt": 1425
+      },
+      "smoothness": {
+       "n": 553,
+       "rms_angular_accel": 0.35163844866127447,
+       "rms_linear_accel": 0.22400319977113453,
+       "skipped_pairs": 1
+      },
+      "time_s": 28.516000000000005,
+      "tracking_m": {
+       "max": 0.18584090314245225,
+       "mean": 0.07033983192242506,
+       "n": 1425,
+       "p95": 0.16605890314245225
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_RPP_4",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0040999999999999925,
+      "hits": 98,
+      "misses": 0,
+      "scans_in_range": 98,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": null,
+      "min_m": 0.3411167494313755,
+      "t": 98.2,
+      "wheel_v_at_contact": null
+     },
+     "controller": "RPP",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_5",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.3411167494313755,
+        "t": 98.2
+       },
+       "contact": false,
+       "min_m": 0.3411167494313755,
+       "static": {
+        "index": 29,
+        "min_m": 0.7339965456270477,
+        "t": 107.04
+       }
+      },
+      "samples": {
+       "cmd": 355,
+       "gt": 1424
+      },
+      "smoothness": {
+       "n": 353,
+       "rms_angular_accel": 0.299072084939024,
+       "rms_linear_accel": 0.1858321758492354,
+       "skipped_pairs": 1
+      },
+      "time_s": 28.464000000000013,
+      "tracking_m": {
+       "max": 0.17784290314245224,
+       "mean": 0.05101227228448029,
+       "n": 1424,
+       "p95": 0.15737590314245223
+      }
+     },
+     "outcome": "succeeded",
+     "run": "crossing_RPP_5",
+     "runner_checks_pass": true
+    }
+   ],
+   "status": "measured",
+   "title": "A person crosses the apron in front of the robot"
+  },
+  "mislocalised": {
+   "bundle": "drive/mislocalised/",
+   "bytes": 29625,
+   "content_hash": "sha256:a7283e04967e0bfb3415bf106a217086897ae1de130185a6c5f9621e65e077f8",
+   "controllers": {
+    "DWB": {
+     "actor_contacts_while_wheels_stopped": 0,
+     "actor_contacts_whole_recording": 0,
+     "contacts": 0,
+     "dwb_all_rejected_cycles": [
+      0,
+      0,
+      0
+     ],
+     "dwb_empty_cycles": [
+      1,
+      1,
+      1
+     ],
+     "error_codes": [
+      103
+     ],
+     "max_lateral_m": null,
+     "min_clearance_actor_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "min_clearance_m": {
+      "max": 1.4255033993589774,
+      "median": 1.4255033993589774,
+      "min": 1.4255033993589774,
+      "n": 1
+     },
+     "min_clearance_static_m": {
+      "max": 1.4255033993589774,
+      "median": 1.4255033993589774,
+      "min": 1.4255033993589774,
+      "n": 1
+     },
+     "outcomes": {
+      "follow_failed": 3
+     },
+     "rms_angular_accel": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "rms_linear_accel": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "runs": 3,
+     "time_s_succeeded": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "tracking_max_m": {
+      "max": 0.00032809685754776,
+      "median": 0.00032809685754776,
+      "min": 0.00032809685754776,
+      "n": 1
+     },
+     "tracking_mean_m": {
+      "max": 0.00032809685754776,
+      "median": 0.00032809685754776,
+      "min": 0.00032809685754776,
+      "n": 1
+     }
+    },
+    "MPPI": {
+     "actor_contacts_while_wheels_stopped": 0,
+     "actor_contacts_whole_recording": 0,
+     "contacts": 0,
+     "dwb_all_rejected_cycles": null,
+     "dwb_empty_cycles": null,
+     "error_codes": [
+      103
+     ],
+     "max_lateral_m": null,
+     "min_clearance_actor_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "min_clearance_m": {
+      "max": 1.4255033993589774,
+      "median": 1.4254030459413782,
+      "min": 1.425302692523779,
+      "n": 2
+     },
+     "min_clearance_static_m": {
+      "max": 1.4255033993589774,
+      "median": 1.4254030459413782,
+      "min": 1.425302692523779,
+      "n": 2
+     },
+     "outcomes": {
+      "follow_failed": 3
+     },
+     "rms_angular_accel": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "rms_linear_accel": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "runs": 3,
+     "time_s_succeeded": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "tracking_max_m": {
+      "max": 0.00032809685754776,
+      "median": 0.00020945073702827128,
+      "min": 9.080461650878255e-05,
+      "n": 2
+     },
+     "tracking_mean_m": {
+      "max": 0.00032809685754776,
+      "median": 0.00020945073702827128,
+      "min": 9.080461650878255e-05,
+      "n": 2
+     }
+    },
+    "RPP": {
+     "actor_contacts_while_wheels_stopped": 0,
+     "actor_contacts_whole_recording": 0,
+     "contacts": 0,
+     "dwb_all_rejected_cycles": null,
+     "dwb_empty_cycles": null,
+     "error_codes": [
+      103
+     ],
+     "max_lateral_m": null,
+     "min_clearance_actor_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "min_clearance_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "min_clearance_static_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "outcomes": {
+      "follow_failed": 3
+     },
+     "rms_angular_accel": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "rms_linear_accel": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "runs": 3,
+     "time_s_succeeded": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "tracking_max_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "tracking_mean_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     }
+    }
+   },
+   "path_sha256": "1e141d385a33df92b52774c2267b4b6ab08e915ff5d4159d83eba0e366e4c8f6",
+   "rows": [
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "DWB",
+     "error_code": 103,
+     "eval_all_rejected": 0,
+     "eval_cycles": 1,
+     "eval_empty": 1,
+     "id": "DWB_1",
+     "inject": {
+      "amcl_after": [
+       -0.006534832133455973,
+       3.402668214317154
+      ],
+      "amcl_updates_after": 1,
+      "gap_after_m": 3.402673792030995,
+      "gt_after": [
+       -0.0003281069195684161,
+       8.305064603028366e-08
+      ],
+      "gt_at_inject": [
+       -0.0003281069195684161,
+       8.305064603028366e-08,
+       3.7111249993221175e-07
+      ],
+      "ok": true,
+      "settle_s": 8.0,
+      "sigma_xy": 0.05,
+      "told": [
+       -0.0003281069195684161,
+       3.400000083050646,
+       3.7111249993221175e-07
+      ]
+     },
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": null,
+       "static": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       }
+      },
+      "samples": {
+       "cmd": 1,
+       "gt": 0
+      },
+      "smoothness": {
+       "n": 0,
+       "rms_angular_accel": null,
+       "rms_linear_accel": null,
+       "skipped_pairs": 0
+      },
+      "time_s": 0.007999999999995566,
+      "tracking_m": {
+       "max": null,
+       "mean": null,
+       "n": 0,
+       "p95": null
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "mislocalised_DWB_1",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "DWB",
+     "error_code": 103,
+     "eval_all_rejected": 0,
+     "eval_cycles": 1,
+     "eval_empty": 1,
+     "id": "DWB_2",
+     "inject": {
+      "amcl_after": [
+       -0.006578475350047734,
+       3.403478467261928
+      ],
+      "amcl_updates_after": 1,
+      "gap_after_m": 3.4034414834298787,
+      "gt_after": [
+       -8.573979499182371e-05,
+       4.317692418086224e-05
+      ],
+      "gt_at_inject": [
+       -8.573979499182371e-05,
+       4.317692418086224e-05,
+       0.001149726194264811
+      ],
+      "ok": true,
+      "settle_s": 8.0,
+      "sigma_xy": 0.05,
+      "told": [
+       -8.573979499182371e-05,
+       3.400043176924181,
+       0.001149726194264811
+      ]
+     },
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": null,
+       "static": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       }
+      },
+      "samples": {
+       "cmd": 0,
+       "gt": 0
+      },
+      "smoothness": {
+       "n": 0,
+       "rms_angular_accel": null,
+       "rms_linear_accel": null,
+       "skipped_pairs": 0
+      },
+      "time_s": 0.006000000000000227,
+      "tracking_m": {
+       "max": null,
+       "mean": null,
+       "n": 0,
+       "p95": null
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "mislocalised_DWB_2",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "DWB",
+     "error_code": 103,
+     "eval_all_rejected": 0,
+     "eval_cycles": 1,
+     "eval_empty": 1,
+     "id": "DWB_3",
+     "inject": {
+      "amcl_after": [
+       -0.006534832132441231,
+       3.402668214317306
+      ],
+      "amcl_updates_after": 1,
+      "gap_after_m": 3.402673792030994,
+      "gt_after": [
+       -0.00032810691855367224,
+       8.30507988988299e-08
+      ],
+      "gt_at_inject": [
+       -0.00032810691855367224,
+       8.30507988988299e-08,
+       3.7111272073839506e-07
+      ],
+      "ok": true,
+      "settle_s": 8.0,
+      "sigma_xy": 0.05,
+      "told": [
+       -0.00032810691855367224,
+       3.4000000830507986,
+       3.7111272073839506e-07
+      ]
+     },
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 1.4255033993589774,
+       "static": {
+        "index": 32,
+        "min_m": 1.4255033993589774,
+        "t": 83.08
+       }
+      },
+      "samples": {
+       "cmd": 1,
+       "gt": 1
+      },
+      "smoothness": {
+       "n": 0,
+       "rms_angular_accel": null,
+       "rms_linear_accel": null,
+       "skipped_pairs": 0
+      },
+      "time_s": 0.0040000000000048885,
+      "tracking_m": {
+       "max": 0.00032809685754776,
+       "mean": 0.00032809685754776,
+       "n": 1,
+       "p95": 0.00032809685754776
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "mislocalised_DWB_3",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "MPPI",
+     "error_code": 103,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_1",
+     "inject": {
+      "amcl_after": [
+       -0.006534832133455973,
+       3.402668214317154
+      ],
+      "amcl_updates_after": 1,
+      "gap_after_m": 3.402673792030995,
+      "gt_after": [
+       -0.0003281069195684161,
+       8.3050646031478e-08
+      ],
+      "gt_at_inject": [
+       -0.0003281069195684161,
+       8.3050646031478e-08,
+       3.711124999132017e-07
+      ],
+      "ok": true,
+      "settle_s": 8.0,
+      "sigma_xy": 0.05,
+      "told": [
+       -0.0003281069195684161,
+       3.400000083050646,
+       3.711124999132017e-07
+      ]
+     },
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": null,
+       "static": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       }
+      },
+      "samples": {
+       "cmd": 0,
+       "gt": 0
+      },
+      "smoothness": {
+       "n": 0,
+       "rms_angular_accel": null,
+       "rms_linear_accel": null,
+       "skipped_pairs": 0
+      },
+      "time_s": 0.006000000000000227,
+      "tracking_m": {
+       "max": null,
+       "mean": null,
+       "n": 0,
+       "p95": null
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "mislocalised_MPPI_1",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "MPPI",
+     "error_code": 103,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_2",
+     "inject": {
+      "amcl_after": [
+       -0.006907947548959648,
+       3.400936041941767
+      ],
+      "amcl_updates_after": 1,
+      "gap_after_m": 3.4009140006694447,
+      "gt_after": [
+       -8.578857042174093e-05,
+       2.888382993161534e-05
+      ],
+      "gt_at_inject": [
+       -8.578857042174093e-05,
+       2.888382993161534e-05,
+       0.0013077480694315333
+      ],
+      "ok": true,
+      "settle_s": 8.0,
+      "sigma_xy": 0.05,
+      "told": [
+       -8.578857042174093e-05,
+       3.4000288838299317,
+       0.0013077480694315333
+      ]
+     },
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 1.425302692523779,
+       "static": {
+        "index": 33,
+        "min_m": 1.425302692523779,
+        "t": 83.56
+       }
+      },
+      "samples": {
+       "cmd": 0,
+       "gt": 1
+      },
+      "smoothness": {
+       "n": 0,
+       "rms_angular_accel": null,
+       "rms_linear_accel": null,
+       "skipped_pairs": 0
+      },
+      "time_s": 0.007999999999995566,
+      "tracking_m": {
+       "max": 9.080461650878255e-05,
+       "mean": 9.080461650878255e-05,
+       "n": 1,
+       "p95": 9.080461650878255e-05
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "mislocalised_MPPI_2",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "MPPI",
+     "error_code": 103,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_3",
+     "inject": {
+      "amcl_after": [
+       -0.006534832133455973,
+       3.402668214317154
+      ],
+      "amcl_updates_after": 1,
+      "gap_after_m": 3.402673792030995,
+      "gt_after": [
+       -0.0003281069195684161,
+       8.305064603083239e-08
+      ],
+      "gt_at_inject": [
+       -0.0003281069195684161,
+       8.305064603083239e-08,
+       3.711124999484446e-07
+      ],
+      "ok": true,
+      "settle_s": 8.0,
+      "sigma_xy": 0.05,
+      "told": [
+       -0.0003281069195684161,
+       3.400000083050646,
+       3.711124999484446e-07
+      ]
+     },
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 1.4255033993589774,
+       "static": {
+        "index": 32,
+        "min_m": 1.4255033993589774,
+        "t": 83.38
+       }
+      },
+      "samples": {
+       "cmd": 0,
+       "gt": 1
+      },
+      "smoothness": {
+       "n": 0,
+       "rms_angular_accel": null,
+       "rms_linear_accel": null,
+       "skipped_pairs": 0
+      },
+      "time_s": 0.012000000000000455,
+      "tracking_m": {
+       "max": 0.00032809685754776,
+       "mean": 0.00032809685754776,
+       "n": 1,
+       "p95": 0.00032809685754776
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "mislocalised_MPPI_3",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "RPP",
+     "error_code": 103,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_1",
+     "inject": {
+      "amcl_after": [
+       -0.006252172567610972,
+       3.4034436047541163
+      ],
+      "amcl_updates_after": 1,
+      "gap_after_m": 3.403449230600237,
+      "gt_after": [
+       -1.6324285418978235e-05,
+       8.686380972539454e-08
+      ],
+      "gt_at_inject": [
+       -1.6324285418978235e-05,
+       8.686380972539454e-08,
+       5.397333675400593e-07
+      ],
+      "ok": true,
+      "settle_s": 8.0,
+      "sigma_xy": 0.05,
+      "told": [
+       -1.6324285418978235e-05,
+       3.40000008686381,
+       5.397333675400593e-07
+      ]
+     },
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": null,
+       "static": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       }
+      },
+      "samples": {
+       "cmd": 0,
+       "gt": 0
+      },
+      "smoothness": {
+       "n": 0,
+       "rms_angular_accel": null,
+       "rms_linear_accel": null,
+       "skipped_pairs": 0
+      },
+      "time_s": 0.003999999999990678,
+      "tracking_m": {
+       "max": null,
+       "mean": null,
+       "n": 0,
+       "p95": null
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "mislocalised_RPP_1",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "RPP",
+     "error_code": 103,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_2",
+     "inject": {
+      "amcl_after": [
+       -0.006534832133455973,
+       3.402668214317154
+      ],
+      "amcl_updates_after": 1,
+      "gap_after_m": 3.402673792030995,
+      "gt_after": [
+       -0.0003281069195684161,
+       8.305064602998681e-08
+      ],
+      "gt_at_inject": [
+       -0.0003281069195684161,
+       8.305064602998681e-08,
+       3.7111249994158353e-07
+      ],
+      "ok": true,
+      "settle_s": 8.0,
+      "sigma_xy": 0.05,
+      "told": [
+       -0.0003281069195684161,
+       3.400000083050646,
+       3.7111249994158353e-07
+      ]
+     },
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": null,
+       "static": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       }
+      },
+      "samples": {
+       "cmd": 0,
+       "gt": 0
+      },
+      "smoothness": {
+       "n": 0,
+       "rms_angular_accel": null,
+       "rms_linear_accel": null,
+       "skipped_pairs": 0
+      },
+      "time_s": 0.009999999999990905,
+      "tracking_m": {
+       "max": null,
+       "mean": null,
+       "n": 0,
+       "p95": null
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "mislocalised_RPP_2",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "RPP",
+     "error_code": 103,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_3",
+     "inject": {
+      "amcl_after": [
+       -0.006252172592755296,
+       3.4034436048123444
+      ],
+      "amcl_updates_after": 1,
+      "gap_after_m": 3.403449230600238,
+      "gt_after": [
+       -1.6324310563309297e-05,
+       8.692203654737339e-08
+      ],
+      "gt_at_inject": [
+       -1.6324310563309297e-05,
+       8.692203654737339e-08,
+       5.39719375746985e-07
+      ],
+      "ok": true,
+      "settle_s": 8.0,
+      "sigma_xy": 0.05,
+      "told": [
+       -1.6324310563309297e-05,
+       3.4000000869220366,
+       5.39719375746985e-07
+      ]
+     },
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": null,
+       "static": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       }
+      },
+      "samples": {
+       "cmd": 1,
+       "gt": 0
+      },
+      "smoothness": {
+       "n": 0,
+       "rms_angular_accel": null,
+       "rms_linear_accel": null,
+       "skipped_pairs": 0
+      },
+      "time_s": 0.007999999999995566,
+      "tracking_m": {
+       "max": null,
+       "mean": null,
+       "n": 0,
+       "p95": null
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "mislocalised_RPP_3",
+     "runner_checks_pass": true
+    }
+   ],
+   "status": "measured",
+   "title": "The robot believes it is 3.4 m from where it is (run 15's gap)"
+  },
+  "oncoming": {
+   "bundle": "drive/oncoming/",
+   "bytes": 1036535,
+   "content_hash": "sha256:2134b2a1f496fd885270c508b00c07bddc7934222a065f71cbe8eb2ca8785b6e",
+   "controllers": {
+    "DWB": {
+     "actor_contacts_while_wheels_stopped": 5,
+     "actor_contacts_whole_recording": 5,
+     "contacts": 5,
+     "dwb_all_rejected_cycles": [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "dwb_empty_cycles": [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "error_codes": [],
+     "max_lateral_m": {
+      "max": 0.181108,
+      "median": 0.155833,
+      "min": 0.149007,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 5
+     },
+     "min_clearance_static_m": {
+      "max": 0.7613661743483934,
+      "median": 0.7540233451169434,
+      "min": 0.7310738971160523,
+      "n": 5
+     },
+     "outcomes": {
+      "succeeded": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.6774430490670115,
+      "median": 0.5948963906406257,
+      "min": 0.558264183452524,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 0.30054838386971844,
+      "median": 0.2589255511847756,
+      "min": 0.24048356267251048,
+      "n": 5
+     },
+     "runs": 5,
+     "time_s_succeeded": {
+      "max": 28.562000000000012,
+      "median": 28.304000000000002,
+      "min": 28.084000000000003,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.18077990314245224,
+      "median": 0.15550490314245224,
+      "min": 0.14867890314245225,
+      "n": 5
+     },
+     "tracking_mean_m": {
+      "max": 0.062145749981904905,
+      "median": 0.04500936478959324,
+      "min": 0.04063344350045107,
+      "n": 5
+     }
+    },
+    "MPPI": {
+     "actor_contacts_while_wheels_stopped": 5,
+     "actor_contacts_whole_recording": 5,
+     "contacts": 5,
+     "dwb_all_rejected_cycles": null,
+     "dwb_empty_cycles": null,
+     "error_codes": [],
+     "max_lateral_m": {
+      "max": 0.261036,
+      "median": 0.23699299999999998,
+      "min": 0.235603,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 5
+     },
+     "min_clearance_static_m": {
+      "max": 0.759203179360515,
+      "median": 0.7410978569477226,
+      "min": 0.7220979906928061,
+      "n": 5
+     },
+     "outcomes": {
+      "succeeded": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.33160360743340517,
+      "median": 0.24559781915005072,
+      "min": 0.2104865213243818,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 0.1425685379716835,
+      "median": 0.1332391685030847,
+      "min": 0.12480105993576374,
+      "n": 5
+     },
+     "runs": 5,
+     "time_s_succeeded": {
+      "max": 32.489999999999995,
+      "median": 31.974000000000004,
+      "min": 31.900000000000006,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.26070790314245224,
+      "median": 0.23666490314245223,
+      "min": 0.23540390314245224,
+      "n": 5
+     },
+     "tracking_mean_m": {
+      "max": 0.09359101658860866,
+      "median": 0.07416260406377391,
+      "min": 0.0659346008495854,
+      "n": 5
+     }
+    },
+    "RPP": {
+     "actor_contacts_while_wheels_stopped": 5,
+     "actor_contacts_whole_recording": 5,
+     "contacts": 0,
+     "dwb_all_rejected_cycles": null,
+     "dwb_empty_cycles": null,
+     "error_codes": [
+      104
+     ],
+     "max_lateral_m": {
+      "max": 0.19222799999999998,
+      "median": 0.17946499999999999,
+      "min": 0.172169,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": 0.24244439336635068,
+      "median": 0.21808972004604635,
+      "min": 0.20938467911098943,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.24244439336635068,
+      "median": 0.21808972004604635,
+      "min": 0.20938467911098943,
+      "n": 5
+     },
+     "min_clearance_static_m": {
+      "max": 0.7938965706696415,
+      "median": 0.7851498981085243,
+      "min": 0.7762061963836879,
+      "n": 5
+     },
+     "outcomes": {
+      "follow_failed": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.27131703547946107,
+      "median": 0.2443128248963445,
+      "min": 0.23580391524275024,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 0.3295506011248531,
+      "median": 0.2935969712843521,
+      "min": 0.28949456010442637,
+      "n": 5
+     },
+     "runs": 5,
+     "time_s_succeeded": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "tracking_max_m": {
+      "max": 0.19189990314245223,
+      "median": 0.17944890314245224,
+      "min": 0.17184090314245223,
+      "n": 5
+     },
+     "tracking_mean_m": {
+      "max": 0.06933021849168156,
+      "median": 0.057570509856208284,
+      "min": 0.03575495605376926,
+      "n": 5
+     }
+    }
+   },
+   "path_sha256": "1e141d385a33df92b52774c2267b4b6ab08e915ff5d4159d83eba0e366e4c8f6",
+   "rows": [
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0131,
+      "hits": 50,
+      "misses": 10,
+      "scans_in_range": 60,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": 93.62,
+      "min_m": 0.0,
+      "t": 93.62,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "DWB",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 296,
+     "eval_empty": 0,
+     "id": "DWB_1",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.0,
+        "t": 93.62
+       },
+       "contact": true,
+       "min_m": 0.0,
+       "static": {
+        "index": 30,
+        "min_m": 0.7613661743483934,
+        "t": 97.66
+       }
+      },
+      "samples": {
+       "cmd": 327,
+       "gt": 1413
+      },
+      "smoothness": {
+       "n": 325,
+       "rms_angular_accel": 0.613462894765049,
+       "rms_linear_accel": 0.28311075631835525,
+       "skipped_pairs": 1
+      },
+      "time_s": 28.27199999999999,
+      "tracking_m": {
+       "max": 0.18077990314245224,
+       "mean": 0.04500936478959324,
+       "n": 1413,
+       "p95": 0.13935090314245224
+      }
+     },
+     "outcome": "succeeded",
+     "run": "oncoming_DWB_1",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.013000000000000012,
+      "hits": 51,
+      "misses": 10,
+      "scans_in_range": 61,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": 95.36,
+      "min_m": 0.0,
+      "t": 95.36,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "DWB",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 291,
+     "eval_empty": 0,
+     "id": "DWB_2",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.0,
+        "t": 95.36
+       },
+       "contact": true,
+       "min_m": 0.0,
+       "static": {
+        "index": 29,
+        "min_m": 0.7540233451169434,
+        "t": 103.82
+       }
+      },
+      "samples": {
+       "cmd": 320,
+       "gt": 1419
+      },
+      "smoothness": {
+       "n": 318,
+       "rms_angular_accel": 0.5948963906406257,
+       "rms_linear_accel": 0.2583060499011032,
+       "skipped_pairs": 1
+      },
+      "time_s": 28.38799999999999,
+      "tracking_m": {
+       "max": 0.17564790314245224,
+       "mean": 0.044458524898079096,
+       "n": 1419,
+       "p95": 0.13253890314245223
+      }
+     },
+     "outcome": "succeeded",
+     "run": "oncoming_DWB_2",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0131,
+      "hits": 51,
+      "misses": 9,
+      "scans_in_range": 60,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": 95.1,
+      "min_m": 0.0,
+      "t": 95.1,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "DWB",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 270,
+     "eval_empty": 0,
+     "id": "DWB_3",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.0,
+        "t": 95.1
+       },
+       "contact": true,
+       "min_m": 0.0,
+       "static": {
+        "index": 29,
+        "min_m": 0.7443355059112233,
+        "t": 103.06
+       }
+      },
+      "samples": {
+       "cmd": 321,
+       "gt": 1404
+      },
+      "smoothness": {
+       "n": 319,
+       "rms_angular_accel": 0.6774430490670115,
+       "rms_linear_accel": 0.30054838386971844,
+       "skipped_pairs": 1
+      },
+      "time_s": 28.084000000000003,
+      "tracking_m": {
+       "max": 0.14867890314245225,
+       "mean": 0.04702341221440212,
+       "n": 1404,
+       "p95": 0.10670890314245224
+      }
+     },
+     "outcome": "succeeded",
+     "run": "oncoming_DWB_3",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.013199999999999878,
+      "hits": 51,
+      "misses": 9,
+      "scans_in_range": 60,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": 95.34,
+      "min_m": 0.0,
+      "t": 95.34,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "DWB",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 279,
+     "eval_empty": 0,
+     "id": "DWB_4",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.0,
+        "t": 95.34
+       },
+       "contact": true,
+       "min_m": 0.0,
+       "static": {
+        "index": 29,
+        "min_m": 0.7550068372020255,
+        "t": 103.88
+       }
+      },
+      "samples": {
+       "cmd": 318,
+       "gt": 1415
+      },
+      "smoothness": {
+       "n": 316,
+       "rms_angular_accel": 0.558264183452524,
+       "rms_linear_accel": 0.24048356267251048,
+       "skipped_pairs": 1
+      },
+      "time_s": 28.304000000000002,
+      "tracking_m": {
+       "max": 0.14877890314245223,
+       "mean": 0.04063344350045107,
+       "n": 1415,
+       "p95": 0.11042890314245224
+      }
+     },
+     "outcome": "succeeded",
+     "run": "oncoming_DWB_4",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.012899999999999912,
+      "hits": 52,
+      "misses": 10,
+      "scans_in_range": 62,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": 94.82,
+      "min_m": 0.0,
+      "t": 94.82,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "DWB",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 279,
+     "eval_empty": 0,
+     "id": "DWB_5",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.0,
+        "t": 94.82
+       },
+       "contact": true,
+       "min_m": 0.0,
+       "static": {
+        "index": 29,
+        "min_m": 0.7310738971160523,
+        "t": 103.38
+       }
+      },
+      "samples": {
+       "cmd": 323,
+       "gt": 1428
+      },
+      "smoothness": {
+       "n": 321,
+       "rms_angular_accel": 0.564693008232858,
+       "rms_linear_accel": 0.2589255511847756,
+       "skipped_pairs": 1
+      },
+      "time_s": 28.562000000000012,
+      "tracking_m": {
+       "max": 0.15550490314245224,
+       "mean": 0.062145749981904905,
+       "n": 1428,
+       "p95": 0.10939990314245224
+      }
+     },
+     "outcome": "succeeded",
+     "run": "oncoming_DWB_5",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.013000000000000123,
+      "hits": 55,
+      "misses": 9,
+      "scans_in_range": 64,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": 96.16,
+      "min_m": 0.0,
+      "t": 96.16,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_1",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.0,
+        "t": 96.16
+       },
+       "contact": true,
+       "min_m": 0.0,
+       "static": {
+        "index": 29,
+        "min_m": 0.7410868794230729,
+        "t": 105.12
+       }
+      },
+      "samples": {
+       "cmd": 347,
+       "gt": 1598
+      },
+      "smoothness": {
+       "n": 345,
+       "rms_angular_accel": 0.2104865213243818,
+       "rms_linear_accel": 0.13021276789946173,
+       "skipped_pairs": 1
+      },
+      "time_s": 31.966000000000008,
+      "tracking_m": {
+       "max": 0.23540390314245224,
+       "mean": 0.08080156138931963,
+       "n": 1598,
+       "p95": 0.20370090314245223
+      }
+     },
+     "outcome": "succeeded",
+     "run": "oncoming_MPPI_1",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.013000000000000123,
+      "hits": 54,
+      "misses": 10,
+      "scans_in_range": 64,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": 97.22,
+      "min_m": 0.0,
+      "t": 97.22,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_2",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.0,
+        "t": 97.22
+       },
+       "contact": true,
+       "min_m": 0.0,
+       "static": {
+        "index": 32,
+        "min_m": 0.7566928972006368,
+        "t": 84.5
+       }
+      },
+      "samples": {
+       "cmd": 353,
+       "gt": 1620
+      },
+      "smoothness": {
+       "n": 351,
+       "rms_angular_accel": 0.3214562220537026,
+       "rms_linear_accel": 0.12480105993576374,
+       "skipped_pairs": 1
+      },
+      "time_s": 32.384,
+      "tracking_m": {
+       "max": 0.23660490314245225,
+       "mean": 0.07382696501594531,
+       "n": 1620,
+       "p95": 0.20719090314245223
+      }
+     },
+     "outcome": "succeeded",
+     "run": "oncoming_MPPI_2",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.013100000000000112,
+      "hits": 53,
+      "misses": 11,
+      "scans_in_range": 64,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": 97.36,
+      "min_m": 0.0,
+      "t": 97.36,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_3",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.0,
+        "t": 97.36
+       },
+       "contact": true,
+       "min_m": 0.0,
+       "static": {
+        "index": 29,
+        "min_m": 0.759203179360515,
+        "t": 107.34
+       }
+      },
+      "samples": {
+       "cmd": 351,
+       "gt": 1599
+      },
+      "smoothness": {
+       "n": 349,
+       "rms_angular_accel": 0.24559781915005072,
+       "rms_linear_accel": 0.1332391685030847,
+       "skipped_pairs": 1
+      },
+      "time_s": 31.974000000000004,
+      "tracking_m": {
+       "max": 0.23666490314245223,
+       "mean": 0.07416260406377391,
+       "n": 1599,
+       "p95": 0.20800690314245224
+      }
+     },
+     "outcome": "succeeded",
+     "run": "oncoming_MPPI_3",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.01309999999999989,
+      "hits": 54,
+      "misses": 9,
+      "scans_in_range": 63,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": 96.5,
+      "min_m": 0.0,
+      "t": 96.5,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_4",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.0,
+        "t": 96.5
+       },
+       "contact": true,
+       "min_m": 0.0,
+       "static": {
+        "index": 29,
+        "min_m": 0.7220979906928061,
+        "t": 106.5
+       }
+      },
+      "samples": {
+       "cmd": 370,
+       "gt": 1625
+      },
+      "smoothness": {
+       "n": 368,
+       "rms_angular_accel": 0.33160360743340517,
+       "rms_linear_accel": 0.1425685379716835,
+       "skipped_pairs": 1
+      },
+      "time_s": 32.489999999999995,
+      "tracking_m": {
+       "max": 0.26070790314245224,
+       "mean": 0.09359101658860866,
+       "n": 1625,
+       "p95": 0.22932990314245225
+      }
+     },
+     "outcome": "succeeded",
+     "run": "oncoming_MPPI_4",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.01309999999999989,
+      "hits": 54,
+      "misses": 11,
+      "scans_in_range": 65,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": false,
+      "first_contact_t": 97.26,
+      "min_m": 0.0,
+      "t": 97.26,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_5",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.0,
+        "t": 97.26
+       },
+       "contact": true,
+       "min_m": 0.0,
+       "static": {
+        "index": 32,
+        "min_m": 0.7410978569477226,
+        "t": 84.2
+       }
+      },
+      "samples": {
+       "cmd": 371,
+       "gt": 1595
+      },
+      "smoothness": {
+       "n": 369,
+       "rms_angular_accel": 0.21583831024574518,
+       "rms_linear_accel": 0.14129341817370003,
+       "skipped_pairs": 1
+      },
+      "time_s": 31.900000000000006,
+      "tracking_m": {
+       "max": 0.2530089031424522,
+       "mean": 0.0659346008495854,
+       "n": 1595,
+       "p95": 0.22341290314245224
+      }
+     },
+     "outcome": "succeeded",
+     "run": "oncoming_MPPI_5",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.01309999999999989,
+      "hits": 50,
+      "misses": 13,
+      "scans_in_range": 63,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": true,
+      "first_contact_t": 96.72,
+      "min_m": 0.0,
+      "t": 96.72,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "RPP",
+     "error_code": 104,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_1",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.24244439336635068,
+        "t": 95.74
+       },
+       "contact": false,
+       "min_m": 0.24244439336635068,
+       "static": {
+        "index": 32,
+        "min_m": 0.7920337731386989,
+        "t": 84.4
+       }
+      },
+      "samples": {
+       "cmd": 207,
+       "gt": 938
+      },
+      "smoothness": {
+       "n": 206,
+       "rms_angular_accel": 0.23752903662014976,
+       "rms_linear_accel": 0.28949456010442637,
+       "skipped_pairs": 0
+      },
+      "time_s": 18.75200000000001,
+      "tracking_m": {
+       "max": 0.17944890314245224,
+       "mean": 0.057247300326680836,
+       "n": 938,
+       "p95": 0.16988590314245225
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "oncoming_RPP_1",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.01309999999999989,
+      "hits": 51,
+      "misses": 12,
+      "scans_in_range": 63,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": true,
+      "first_contact_t": 97.04,
+      "min_m": 0.0,
+      "t": 97.04,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "RPP",
+     "error_code": 104,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_2",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.2099000024511524,
+        "t": 96.18
+       },
+       "contact": false,
+       "min_m": 0.2099000024511524,
+       "static": {
+        "index": 32,
+        "min_m": 0.7762061963836879,
+        "t": 84.76
+       }
+      },
+      "samples": {
+       "cmd": 203,
+       "gt": 937
+      },
+      "smoothness": {
+       "n": 202,
+       "rms_angular_accel": 0.24566859798000876,
+       "rms_linear_accel": 0.2923794034594881,
+       "skipped_pairs": 0
+      },
+      "time_s": 18.726,
+      "tracking_m": {
+       "max": 0.19189990314245223,
+       "mean": 0.057570509856208284,
+       "n": 937,
+       "p95": 0.18224190314245223
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "oncoming_RPP_2",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.01309999999999989,
+      "hits": 51,
+      "misses": 13,
+      "scans_in_range": 64,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": true,
+      "first_contact_t": 97.72,
+      "min_m": 0.0,
+      "t": 97.72,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "RPP",
+     "error_code": 104,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_3",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.20938467911098943,
+        "t": 96.86
+       },
+       "contact": false,
+       "min_m": 0.20938467911098943,
+       "static": {
+        "index": 32,
+        "min_m": 0.7851498981085243,
+        "t": 85.54
+       }
+      },
+      "samples": {
+       "cmd": 210,
+       "gt": 942
+      },
+      "smoothness": {
+       "n": 209,
+       "rms_angular_accel": 0.23580391524275024,
+       "rms_linear_accel": 0.2935969712843521,
+       "skipped_pairs": 0
+      },
+      "time_s": 18.834000000000003,
+      "tracking_m": {
+       "max": 0.17184090314245223,
+       "mean": 0.03575495605376926,
+       "n": 942,
+       "p95": 0.16242790314245223
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "oncoming_RPP_3",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.0131,
+      "hits": 50,
+      "misses": 13,
+      "scans_in_range": 63,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": true,
+      "first_contact_t": 97.24,
+      "min_m": 0.0,
+      "t": 97.24,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "RPP",
+     "error_code": 104,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_4",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.21808972004604635,
+        "t": 96.36
+       },
+       "contact": false,
+       "min_m": 0.21808972004604635,
+       "static": {
+        "index": 32,
+        "min_m": 0.7938965706696415,
+        "t": 84.98
+       }
+      },
+      "samples": {
+       "cmd": 208,
+       "gt": 944
+      },
+      "smoothness": {
+       "n": 207,
+       "rms_angular_accel": 0.27131703547946107,
+       "rms_linear_accel": 0.3080615737514554,
+       "skipped_pairs": 0
+      },
+      "time_s": 18.872,
+      "tracking_m": {
+       "max": 0.17461890314245224,
+       "mean": 0.06933021849168156,
+       "n": 944,
+       "p95": 0.16486090314245225
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "oncoming_RPP_4",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": {
+      "abs_error_m": 0.01309999999999989,
+      "hits": 50,
+      "misses": 13,
+      "scans_in_range": 63,
+      "tol_m": 0.08,
+      "within_m": 2.5
+     },
+     "actor_whole_recording": {
+      "after_window": true,
+      "first_contact_t": 97.92,
+      "min_m": 0.0,
+      "t": 97.92,
+      "wheel_v_at_contact": 0.0
+     },
+     "controller": "RPP",
+     "error_code": 104,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_5",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": 0,
+        "min_m": 0.23584625299671028,
+        "t": 96.96
+       },
+       "contact": false,
+       "min_m": 0.23584625299671028,
+       "static": {
+        "index": 32,
+        "min_m": 0.7765900047165412,
+        "t": 84.66
+       }
+      },
+      "samples": {
+       "cmd": 211,
+       "gt": 937
+      },
+      "smoothness": {
+       "n": 210,
+       "rms_angular_accel": 0.2443128248963445,
+       "rms_linear_accel": 0.3295506011248531,
+       "skipped_pairs": 0
+      },
+      "time_s": 18.72800000000001,
+      "tracking_m": {
+       "max": 0.19054290314245223,
+       "mean": 0.06236490494573129,
+       "n": 937,
+       "p95": 0.18113090314245223
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "oncoming_RPP_5",
+     "runner_checks_pass": true
+    }
+   ],
+   "status": "measured",
+   "title": "A person walks straight down the robot's path towards it"
+  },
+  "static_room": {
+   "bundle": "drive/static_room/",
+   "bytes": 1668759,
+   "content_hash": "sha256:81460422288e1203e2baefe5d7154d027c7a89a7a0dcaae58f8a8988f7aedd7c",
+   "controllers": {
+    "DWB": {
+     "actor_contacts_while_wheels_stopped": 0,
+     "actor_contacts_whole_recording": 0,
+     "contacts": 0,
+     "dwb_all_rejected_cycles": [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "dwb_empty_cycles": [
+      0,
+      0,
+      0,
+      0,
+      0
+     ],
+     "error_codes": [
+      105
+     ],
+     "max_lateral_m": null,
+     "min_clearance_actor_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "min_clearance_m": {
+      "max": 0.4701600748625212,
+      "median": 0.4019052150698126,
+      "min": 0.3059664187058647,
+      "n": 5
+     },
+     "min_clearance_static_m": {
+      "max": 0.4701600748625212,
+      "median": 0.4019052150698126,
+      "min": 0.3059664187058647,
+      "n": 5
+     },
+     "outcomes": {
+      "follow_failed": 5
+     },
+     "rms_angular_accel": {
+      "max": 1.7545379334257993,
+      "median": 1.0143816607116278,
+      "min": 0.737660644323078,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 0.3287773290006175,
+      "median": 0.25545888400048655,
+      "min": 0.22531400745655755,
+      "n": 5
+     },
+     "runs": 5,
+     "time_s_succeeded": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "tracking_max_m": {
+      "max": 0.2549733890797148,
+      "median": 0.23730638732256334,
+      "min": 0.22225348539269021,
+      "n": 5
+     },
+     "tracking_mean_m": {
+      "max": 0.14052322693578856,
+      "median": 0.12083265316199845,
+      "min": 0.08890826081642587,
+      "n": 5
+     }
+    },
+    "MPPI": {
+     "actor_contacts_while_wheels_stopped": 0,
+     "actor_contacts_whole_recording": 0,
+     "contacts": 0,
+     "dwb_all_rejected_cycles": null,
+     "dwb_empty_cycles": null,
+     "error_codes": [],
+     "max_lateral_m": null,
+     "min_clearance_actor_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "min_clearance_m": {
+      "max": 0.28922548677764814,
+      "median": 0.26240000317085305,
+      "min": 0.23629669953516963,
+      "n": 5
+     },
+     "min_clearance_static_m": {
+      "max": 0.28922548677764814,
+      "median": 0.26240000317085305,
+      "min": 0.23629669953516963,
+      "n": 5
+     },
+     "outcomes": {
+      "succeeded": 5
+     },
+     "rms_angular_accel": {
+      "max": 1.3452221884938202,
+      "median": 0.24355374915353864,
+      "min": 0.23144906953102018,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 4.86468621173952,
+      "median": 0.050545160015198216,
+      "min": 0.04610057944943497,
+      "n": 5
+     },
+     "runs": 5,
+     "time_s_succeeded": {
+      "max": 52.806,
+      "median": 51.80200000000001,
+      "min": 51.474000000000004,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.5602200174318543,
+      "median": 0.5541270558457593,
+      "min": 0.5419978396606598,
+      "n": 5
+     },
+     "tracking_mean_m": {
+      "max": 0.15248118930833657,
+      "median": 0.14288979321072323,
+      "min": 0.13466059981155878,
+      "n": 5
+     }
+    },
+    "RPP": {
+     "actor_contacts_while_wheels_stopped": 0,
+     "actor_contacts_whole_recording": 0,
+     "contacts": 0,
+     "dwb_all_rejected_cycles": null,
+     "dwb_empty_cycles": null,
+     "error_codes": [],
+     "max_lateral_m": null,
+     "min_clearance_actor_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "min_clearance_m": {
+      "max": 0.3396613434475745,
+      "median": 0.3219103440658237,
+      "min": 0.31554076029643974,
+      "n": 5
+     },
+     "min_clearance_static_m": {
+      "max": 0.3396613434475745,
+      "median": 0.3219103440658237,
+      "min": 0.31554076029643974,
+      "n": 5
+     },
+     "outcomes": {
+      "succeeded": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.2773067121714811,
+      "median": 0.25766613877777894,
+      "min": 0.23591931712366457,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 0.169267697715917,
+      "median": 0.1365734777099965,
+      "min": 0.1268161468418803,
+      "n": 5
+     },
+     "runs": 5,
+     "time_s_succeeded": {
+      "max": 51.39,
+      "median": 51.178,
+      "min": 51.016000000000005,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.18428983480168742,
+      "median": 0.17368233374699824,
+      "min": 0.16883794799502322,
+      "n": 5
+     },
+     "tracking_mean_m": {
+      "max": 0.10397792324288734,
+      "median": 0.09701963802268153,
+      "min": 0.09199111657900134,
+      "n": 5
+     }
+    }
+   },
+   "path_sha256": "5c460ab60d578b30a83f1db6f0e4a17885f2e81dba8c74dc80fd5f8b92f190ce",
+   "rows": [
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "DWB",
+     "error_code": 105,
+     "eval_all_rejected": 0,
+     "eval_cycles": 422,
+     "eval_empty": 0,
+     "id": "DWB_1",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.4701600748625212,
+       "static": {
+        "index": 40,
+        "min_m": 0.4701600748625212,
+        "t": 101.74
+       }
+      },
+      "samples": {
+       "cmd": 510,
+       "gt": 1999
+      },
+      "smoothness": {
+       "n": 509,
+       "rms_angular_accel": 1.0143816607116278,
+       "rms_linear_accel": 0.26513834607643577,
+       "skipped_pairs": 0
+      },
+      "time_s": 39.97800000000001,
+      "tracking_m": {
+       "max": 0.2532197334203499,
+       "mean": 0.14052322693578856,
+       "n": 1999,
+       "p95": 0.2148435161399163
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "static_room_DWB_1",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "DWB",
+     "error_code": 105,
+     "eval_all_rejected": 0,
+     "eval_cycles": 382,
+     "eval_empty": 0,
+     "id": "DWB_2",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.4246208016354022,
+       "static": {
+        "index": 40,
+        "min_m": 0.4246208016354022,
+        "t": 99.46
+       }
+      },
+      "samples": {
+       "cmd": 433,
+       "gt": 1876
+      },
+      "smoothness": {
+       "n": 432,
+       "rms_angular_accel": 0.737660644323078,
+       "rms_linear_accel": 0.24485921288409165,
+       "skipped_pairs": 0
+      },
+      "time_s": 37.50800000000001,
+      "tracking_m": {
+       "max": 0.2549733890797148,
+       "mean": 0.12251964122840624,
+       "n": 1876,
+       "p95": 0.21665022295527547
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "static_room_DWB_2",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "DWB",
+     "error_code": 105,
+     "eval_all_rejected": 0,
+     "eval_cycles": 365,
+     "eval_empty": 0,
+     "id": "DWB_3",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.3059664187058647,
+       "static": {
+        "index": 40,
+        "min_m": 0.3059664187058647,
+        "t": 112.72
+       }
+      },
+      "samples": {
+       "cmd": 405,
+       "gt": 1910
+      },
+      "smoothness": {
+       "n": 404,
+       "rms_angular_accel": 1.7182611522011664,
+       "rms_linear_accel": 0.25545888400048655,
+       "skipped_pairs": 0
+      },
+      "time_s": 38.194,
+      "tracking_m": {
+       "max": 0.23631136792278423,
+       "mean": 0.08890826081642587,
+       "n": 1910,
+       "p95": 0.20183561740124034
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "static_room_DWB_3",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "DWB",
+     "error_code": 105,
+     "eval_all_rejected": 0,
+     "eval_cycles": 405,
+     "eval_empty": 0,
+     "id": "DWB_4",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.4019052150698126,
+       "static": {
+        "index": 40,
+        "min_m": 0.4019052150698126,
+        "t": 98.08
+       }
+      },
+      "samples": {
+       "cmd": 451,
+       "gt": 2046
+      },
+      "smoothness": {
+       "n": 450,
+       "rms_angular_accel": 0.8461855894011828,
+       "rms_linear_accel": 0.22531400745655755,
+       "skipped_pairs": 0
+      },
+      "time_s": 40.932,
+      "tracking_m": {
+       "max": 0.23730638732256334,
+       "mean": 0.10918690483198601,
+       "n": 2046,
+       "p95": 0.19462197192854605
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "static_room_DWB_4",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "DWB",
+     "error_code": 105,
+     "eval_all_rejected": 0,
+     "eval_cycles": 395,
+     "eval_empty": 0,
+     "id": "DWB_5",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.3723052317428129,
+       "static": {
+        "index": 40,
+        "min_m": 0.3723052317428129,
+        "t": 109.04
+       }
+      },
+      "samples": {
+       "cmd": 442,
+       "gt": 1978
+      },
+      "smoothness": {
+       "n": 441,
+       "rms_angular_accel": 1.7545379334257993,
+       "rms_linear_accel": 0.3287773290006175,
+       "skipped_pairs": 0
+      },
+      "time_s": 39.56,
+      "tracking_m": {
+       "max": 0.22225348539269021,
+       "mean": 0.12083265316199845,
+       "n": 1978,
+       "p95": 0.20129192115692807
+      }
+     },
+     "outcome": "follow_failed",
+     "run": "static_room_DWB_5",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_1",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.25975278269290314,
+       "static": {
+        "index": 5,
+        "min_m": 0.25975278269290314,
+        "t": 110.82
+       }
+      },
+      "samples": {
+       "cmd": 552,
+       "gt": 2574
+      },
+      "smoothness": {
+       "n": 550,
+       "rms_angular_accel": 0.2326388959924609,
+       "rms_linear_accel": 0.050545160015198216,
+       "skipped_pairs": 1
+      },
+      "time_s": 51.474000000000004,
+      "tracking_m": {
+       "max": 0.5602200174318543,
+       "mean": 0.14288979321072323,
+       "n": 2574,
+       "p95": 0.5148866390445128
+      }
+     },
+     "outcome": "succeeded",
+     "run": "static_room_MPPI_1",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_2",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.28922548677764814,
+       "static": {
+        "index": 5,
+        "min_m": 0.28922548677764814,
+        "t": 110.68
+       }
+      },
+      "samples": {
+       "cmd": 632,
+       "gt": 2578
+      },
+      "smoothness": {
+       "n": 630,
+       "rms_angular_accel": 0.24355374915353864,
+       "rms_linear_accel": 0.053386752625716925,
+       "skipped_pairs": 1
+      },
+      "time_s": 51.566,
+      "tracking_m": {
+       "max": 0.5541270558457593,
+       "mean": 0.13703099302211919,
+       "n": 2578,
+       "p95": 0.5032305557493825
+      }
+     },
+     "outcome": "succeeded",
+     "run": "static_room_MPPI_2",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_3",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.26334884446274404,
+       "static": {
+        "index": 5,
+        "min_m": 0.26334884446274404,
+        "t": 114.18
+       }
+      },
+      "samples": {
+       "cmd": 565,
+       "gt": 2590
+      },
+      "smoothness": {
+       "n": 564,
+       "rms_angular_accel": 1.3452221884938202,
+       "rms_linear_accel": 4.86468621173952,
+       "skipped_pairs": 0
+      },
+      "time_s": 51.80200000000001,
+      "tracking_m": {
+       "max": 0.5595822886705639,
+       "mean": 0.13466059981155878,
+       "n": 2590,
+       "p95": 0.5111725203871419
+      }
+     },
+     "outcome": "succeeded",
+     "run": "static_room_MPPI_3",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_4",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.26240000317085305,
+       "static": {
+        "index": 5,
+        "min_m": 0.26240000317085305,
+        "t": 109.76
+       }
+      },
+      "samples": {
+       "cmd": 569,
+       "gt": 2597
+      },
+      "smoothness": {
+       "n": 567,
+       "rms_angular_accel": 0.23144906953102018,
+       "rms_linear_accel": 0.04610057944943497,
+       "skipped_pairs": 1
+      },
+      "time_s": 51.93599999999999,
+      "tracking_m": {
+       "max": 0.5475861312842963,
+       "mean": 0.15248118930833657,
+       "n": 2597,
+       "p95": 0.49688282185330446
+      }
+     },
+     "outcome": "succeeded",
+     "run": "static_room_MPPI_4",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "MPPI",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "MPPI_5",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.23629669953516963,
+       "static": {
+        "index": 5,
+        "min_m": 0.23629669953516963,
+        "t": 109.62
+       }
+      },
+      "samples": {
+       "cmd": 622,
+       "gt": 2640
+      },
+      "smoothness": {
+       "n": 620,
+       "rms_angular_accel": 0.2451776607272827,
+       "rms_linear_accel": 0.04800843571219679,
+       "skipped_pairs": 1
+      },
+      "time_s": 52.806,
+      "tracking_m": {
+       "max": 0.5419978396606598,
+       "mean": 0.14349299097148555,
+       "n": 2640,
+       "p95": 0.49014750079958863
+      }
+     },
+     "outcome": "succeeded",
+     "run": "static_room_MPPI_5",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "RPP",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_1",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.3396613434475745,
+       "static": {
+        "index": 5,
+        "min_m": 0.3396613434475745,
+        "t": 111.92
+       }
+      },
+      "samples": {
+       "cmd": 572,
+       "gt": 2570
+      },
+      "smoothness": {
+       "n": 570,
+       "rms_angular_accel": 0.23659791689099238,
+       "rms_linear_accel": 0.1342280841118097,
+       "skipped_pairs": 1
+      },
+      "time_s": 51.39,
+      "tracking_m": {
+       "max": 0.18218834264313064,
+       "mean": 0.10397792324288734,
+       "n": 2570,
+       "p95": 0.17486538932719303
+      }
+     },
+     "outcome": "succeeded",
+     "run": "static_room_RPP_1",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "RPP",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_2",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.3193103082857064,
+       "static": {
+        "index": 5,
+        "min_m": 0.3193103082857064,
+        "t": 107.76
+       }
+      },
+      "samples": {
+       "cmd": 596,
+       "gt": 2559
+      },
+      "smoothness": {
+       "n": 594,
+       "rms_angular_accel": 0.2656364444782588,
+       "rms_linear_accel": 0.169267697715917,
+       "skipped_pairs": 1
+      },
+      "time_s": 51.178,
+      "tracking_m": {
+       "max": 0.16883794799502322,
+       "mean": 0.09199111657900134,
+       "n": 2559,
+       "p95": 0.15468798797607775
+      }
+     },
+     "outcome": "succeeded",
+     "run": "static_room_RPP_2",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "RPP",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_3",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.3314180817042417,
+       "static": {
+        "index": 5,
+        "min_m": 0.3314180817042417,
+        "t": 109.58
+       }
+      },
+      "samples": {
+       "cmd": 553,
+       "gt": 2555
+      },
+      "smoothness": {
+       "n": 551,
+       "rms_angular_accel": 0.23591931712366457,
+       "rms_linear_accel": 0.1365734777099965,
+       "skipped_pairs": 1
+      },
+      "time_s": 51.108000000000004,
+      "tracking_m": {
+       "max": 0.18428983480168742,
+       "mean": 0.10044118391068775,
+       "n": 2555,
+       "p95": 0.1787944156822752
+      }
+     },
+     "outcome": "succeeded",
+     "run": "static_room_RPP_3",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "RPP",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_4",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.31554076029643974,
+       "static": {
+        "index": 5,
+        "min_m": 0.31554076029643974,
+        "t": 109.18
+       }
+      },
+      "samples": {
+       "cmd": 558,
+       "gt": 2551
+      },
+      "smoothness": {
+       "n": 556,
+       "rms_angular_accel": 0.25766613877777894,
+       "rms_linear_accel": 0.1268161468418803,
+       "skipped_pairs": 1
+      },
+      "time_s": 51.016000000000005,
+      "tracking_m": {
+       "max": 0.17368233374699824,
+       "mean": 0.09389588823094701,
+       "n": 2551,
+       "p95": 0.169895087154033
+      }
+     },
+     "outcome": "succeeded",
+     "run": "static_room_RPP_4",
+     "runner_checks_pass": true
+    },
+    {
+     "actor_seen": null,
+     "actor_whole_recording": null,
+     "controller": "RPP",
+     "error_code": 0,
+     "eval_all_rejected": 0,
+     "eval_cycles": 0,
+     "eval_empty": 0,
+     "id": "RPP_5",
+     "inject": null,
+     "metrics": {
+      "clearance": {
+       "actor": {
+        "index": null,
+        "min_m": null,
+        "t": null
+       },
+       "contact": false,
+       "min_m": 0.3219103440658237,
+       "static": {
+        "index": 5,
+        "min_m": 0.3219103440658237,
+        "t": 114.62
+       }
+      },
+      "samples": {
+       "cmd": 757,
+       "gt": 2562
+      },
+      "smoothness": {
+       "n": 755,
+       "rms_angular_accel": 0.2773067121714811,
+       "rms_linear_accel": 0.15354417386335445,
+       "skipped_pairs": 1
+      },
+      "time_s": 51.25200000000001,
+      "tracking_m": {
+       "max": 0.17023603326900805,
+       "mean": 0.09701963802268153,
+       "n": 2562,
+       "p95": 0.15041105245280062
+      }
+     },
+     "outcome": "succeeded",
+     "run": "static_room_RPP_5",
+     "runner_checks_pass": true
+    }
+   ],
+   "status": "measured",
+   "title": "Around a wall end and into a room"
+  }
+ },
+ "schema": "coco_lab.lab5_results",
+ "version": "1.0",
+ "void": []
+}

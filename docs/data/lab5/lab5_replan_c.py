@@ -36,7 +36,7 @@ the two must agree on cost -- and writes it as a glass-box replan bundle
 """
 
 import argparse
-import hashlib
+import gzip
 import json
 import os
 import subprocess
@@ -56,7 +56,13 @@ GOAL = (0.0, -7.5)
 
 
 def load(path):
-    d = json.load(open(path))
+    if not os.path.exists(path) and os.path.exists(path + '.gz'):
+        path += '.gz'
+    if path.endswith('.gz'):
+        with gzip.open(path, 'rt') as f:
+            d = json.load(f)
+    else:
+        d = json.load(open(path))
     s = Snapshot(width=d['width'], height=d['height'],
                  resolution=d['resolution'], origin=tuple(d['origin']),
                  frame_id=d['frame_id'], data=bytes(d['data']))
@@ -130,7 +136,7 @@ def main():
     changed = sum(1 for x, y, p, q in zip(kb, ka, cb_, ca)
                   if x != y or p != q)
     out = {'schema': 'coco_lab.lab5_replan_c', 'version': '1.0',
-           'run_dir': os.path.abspath(a.run_dir),
+           'run_dir': os.path.basename(os.path.abspath(a.run_dir)),
            'before': db['content_hash'], 'after': da['content_hash'],
            'window_map_frame': list(WINDOW), 'grid': [w, h],
            'resolution_m': sb.resolution, 'start_cell': list(start),
@@ -139,9 +145,7 @@ def main():
            'summary': m['summary'], 'rounds': m['rounds'],
            'bundle': 'replan/arena_c/', 'content_hash': digest,
            'bytes': sum(os.path.getsize(os.path.join(dst, f))
-                        for f in os.listdir(dst)),
-           'sha256_before_file': hashlib.sha256(open(os.path.join(
-               a.run_dir, 'costmap_before.json'), 'rb').read()).hexdigest()}
+                        for f in os.listdir(dst))}
     with open(os.path.join(a.out, 'replan_c.json'), 'w') as f:
         json.dump(out, f, indent=1, sort_keys=True)
         f.write('\n')

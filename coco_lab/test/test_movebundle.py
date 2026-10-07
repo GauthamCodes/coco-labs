@@ -219,3 +219,26 @@ def test_the_golden_bundles_are_what_the_writer_writes(tmp_path):
                 assert a.read() == c.read(), (name, f)
     mb.replay_replan(os.path.join(here, 'replan_small'))
     mb.replay_drive(os.path.join(here, 'drive_toy_gz'))
+
+
+def test_the_format_document_matches_the_code():
+    doc = os.path.join(os.path.dirname(__file__), '..', '..', 'docs', 'labs',
+                       'MOVE_FORMAT.md')
+    with open(doc, encoding='utf-8') as f:
+        text = f.read()
+    for needle in (mb.REPLAN_SCHEMA, mb.DRIVE_SCHEMA, f'`{mb.VERSION}`',
+                   f'1 to {mb.MAX_RUNS}'):
+        assert needle in text, needle
+    names = {n for n, _, _ in mb.replan_arrays(run_replan(sketch_world(0)))}
+    scenario, runs = drive_data()
+    names |= {n.replace('DWB_1', '<id>').replace('actor_0', '<aid>')
+              for n, _, _ in mb.drive_arrays(scenario, runs)}
+    for n in sorted(names):
+        if n.startswith('trace.'):
+            assert n[6:] in text, n
+        elif n.startswith('run.<id>.roll.'):
+            assert 'run.<id>.roll.*' in text and n.split('.')[-1] in text, n
+        elif n.startswith('run.<id>.chosen.'):
+            assert 'run.<id>.chosen.t' in text, n
+        else:
+            assert f'`{n}`' in text, n

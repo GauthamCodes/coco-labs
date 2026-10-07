@@ -70,12 +70,16 @@ function Run15({ part, reducedMotion }: { part: MovePart; reducedMotion: boolean
     <>
       <section className="history" data-testid="move-run15-history">
         <h2>History: run 15, as it was recorded</h2>
-        <p className="note">From COCO's 20-run fetch matrix (the v1 wedge world, 2026-07). The robot had picked its
+        <p className="note">From COCO's 20-run fetch matrix (M6, in the v1 wedge world). The robot had picked its
           target and was driving home when AMCL put it 3.4 m from where it really was — in a corridor the map
           deliberately left featureless. The global planner still had a path. The local controller rejected every
           single candidate:</p>
-        <pre className="quote">{part.run15.quotes.slice(0, 3).join('\n')}</pre>
-        <pre className="quote">{part.run15.quotes.slice(3).join('\n')}</pre>
+        <pre className="quote">{part.run15.quotes.filter((q) => !q.startsWith('|')).join('\n')}</pre>
+        <div className="scroll-x"><table className="race-table quote-table" aria-label="Run 15: where AMCL put the robot">
+          <tbody>{part.run15.quotes.filter((q) => q.startsWith('|')).map((q) => (
+            <tr key={q}>{q.split('|').slice(1, -1).map((cell, i) => (
+              <td key={i}>{cell.replace(/\*\*/g, '').trim()}</td>))}</tr>))}</tbody>
+        </table></div>
         <p className="cite">Quoted verbatim (checked at site build): {part.run15.source}</p>
       </section>
       <section>
@@ -87,9 +91,16 @@ function Run15({ part, reducedMotion }: { part: MovePart; reducedMotion: boolean
           <ul className="claims" data-testid="move-run15-summary">
             {Object.entries(m.controllers).map(([c, r]) => (
               <li key={c}><strong>{c}:</strong> {Object.entries(r.outcomes).map(([o, n]) => `${n} ${o}`).join(', ')}
-                {' '}of {r.runs}{r.zero_valid_cycles ? ` · control cycles with 0 valid candidates per run: ${r.zero_valid_cycles.join(', ')}` : ''}
-                {r.min_clearance_static_m.min !== null ? ` · closest to a wall: ${fmt(r.min_clearance_static_m.min, 3)} m` : ''}</li>))}
+                {' '}of {r.runs}{r.error_codes.length ? ` (Nav2 error ${r.error_codes.join(', ')}${r.error_codes.includes(103) ? ': invalid path' : ''})` : ''}
+                {r.dwb_all_rejected_cycles ? ` · cycles where DWB rejected every candidate: ${r.dwb_all_rejected_cycles.join(', ')}; cycles with nothing to score: ${(r.dwb_empty_cycles ?? []).join(', ')}` : ''}</li>))}
           </ul>
+        ) : null}
+        {m ? (
+          <p className="reveal wrong" data-testid="move-run15-verdict">Same mechanism, different symptom. Here the 3.4 m error
+            puts the whole path outside the robot's 3 × 3 m local costmap, so Nav2 prunes it to nothing ("Resulting plan has 0 poses
+            in it") and every controller gives up in its first control cycle, before scoring a single trajectory. Run 15's log shows a
+            different path to the same end: DWB still held 5 points of the plan, none of them in the local costmap and free, and it
+            scored all 819 candidates and rejected each. Either way: the global plan was fine; the robot did not know where it stood.</p>
         ) : <p className="note" data-testid="move-run15-none">Not yet measured.</p>}
       </section>
       <DriveView part={part} reducedMotion={reducedMotion} scenarioIds={[part.run15.reproduced]}

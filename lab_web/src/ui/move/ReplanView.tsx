@@ -165,6 +165,7 @@ export function ReplanView({ catalog, part, reducedMotion }: { catalog: Catalog;
               </dl>
               <p className="note">Costs are in grid steps: 1 across, 1.414 diagonally{b.cost ? ', times the cost layer' : ''}.</p>
             </section>
+            <Measured part={part} />
             <section>
               <h2>Where this came from</h2>
               <dl className="rows">
@@ -178,6 +179,28 @@ export function ReplanView({ catalog, part, reducedMotion }: { catalog: Catalog;
         </main>
       )}
     </>
+  );
+}
+
+/** What was measured beyond the episode on screen: many seeds, and Nav2's real costmap. */
+function Measured({ part }: { part: MovePart }) {
+  const st = part.replan.sketch_stats;
+  const c = part.replan.experiment_c;
+  if (!st && !c) return null;
+  const rep = c?.rounds[c.rounds.length - 1];
+  return (
+    <section data-testid="move-replan-measured">
+      <h2>Is it always less work?</h2>
+      {st && <p className="note">No. Over {st.seeds} seeded worlds like this one, D* Lite's total work was below A* from
+        scratch in {st.episodes_dstar_less_total} (median {fmt(st.episode_ratio_dstar_over_astar.median)} of A*'s, range
+        {' '}{fmt(st.episode_ratio_dstar_over_astar.min)}–{fmt(st.episode_ratio_dstar_over_astar.max)}); in
+        {' '}{st.replans_dstar_more} of {st.replans} single replans it did more. The answers agreed every time.</p>}
+      {c && rep && <p className="note">On Nav2's own global costmap (Experiment C: a person stops on the apron, {c.cells_changed}
+        {' '}cells change, {c.newly_blocked} become blocked), D* Lite's repair touched {rep.dstar_expansions.toLocaleString('en')} cells
+        and A* from scratch {rep.astar_expansions.toLocaleString('en')} — for the same cost ({fmt(rep.cost)} vs {fmt(rep.astar_cost)}).
+        Pick "Nav2's global costmap…" above to watch it.</p>}
+      <p className="cite">Evidence: docs/data/lab5/replan_sketch_stats.json; docs/data/lab5/replan_c.json; docs/RESULTS.md "COCO Lab Phase 6"</p>
+    </section>
   );
 }
 

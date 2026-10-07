@@ -18,9 +18,13 @@ const ERROR_WORDS: Record<number, string> = {
   104: 'patience exceeded', 105: 'failed to make progress (stuck 10 s)', 106: 'no valid control', 107: 'timed out',
 };
 
-export function outcomeText(run: { outcome: string; record?: Record<string, unknown> }): string {
+export function outcomeText(run: { outcome: string; record?: Record<string, unknown>;
+  metrics?: { clearance: { contact: boolean } } }): string {
   const code = Number(run.record?.error_code ?? 0);
-  return OUTCOME_WORDS[run.outcome] + (code && ERROR_WORDS[code] ? `: ${ERROR_WORDS[code]}` : code ? ` (code ${code})` : '');
+  const whole = (run.record?.actor_whole as { min_m: number | null } | null | undefined)?.min_m === 0;
+  const contact = run.metrics?.clearance.contact || whole;
+  return OUTCOME_WORDS[run.outcome] + (code && ERROR_WORDS[code] ? `: ${ERROR_WORDS[code]}` : code ? ` (code ${code})` : '')
+    + (contact ? ' — and the person walked into the stopped robot (contact)' : '');
 }
 
 function pathXY(b: DecodedDriveBundle): Array<[number, number]> {
@@ -253,11 +257,18 @@ function Compare({ part, entry }: { part: MovePart; entry: DriveEntry }) {
               return (
                 <tr key={c}><td>{c}</td><td>{r.outcomes.succeeded ?? 0} / {r.runs}</td>
                   <td>{d(r.tracking_mean_m, 'm', 3)}</td><td>{d(r.time_s_succeeded, 's', 1)}</td>
-                  <td>{d(r.rms_angular_accel, '', 2)}</td><td>{d(r.min_clearance_m, 'm', 3)}{r.contacts ? ` · ${r.contacts} contact(s)` : ''}</td></tr>);
+                  <td>{d(r.rms_angular_accel, '', 2)}</td><td>{d(r.min_clearance_m, 'm', 3)}
+                    {r.actor_contacts_whole_recording ? ` · contact in ${r.actor_contacts_whole_recording} of ${r.runs} runs` : ''}</td></tr>);
             })}</tbody>
           </table></div>
           <p className="note">{sc.controllers[ctrl[0]].runs} runs per controller, each on a fresh simulator: a small
             sample, not a rate. Definitions: docs/labs/LAB5_MOVE.md §2.</p>
+          {ctrl.some((c) => sc.controllers[c].actor_contacts_whole_recording > 0) && (
+            <p className="note" data-testid="move-contacts">The person is a ghost: no collision geometry, and it never stops.
+              {' '}{ctrl.map((c) => `${c}: contact in ${sc.controllers[c].actor_contacts_whole_recording} of ${sc.controllers[c].runs} runs, `
+                + `${sc.controllers[c].actor_contacts_while_wheels_stopped} with the wheels already at 0 m/s`
+                + (sc.controllers[c].max_lateral_m?.max != null ? `, never more than ${fmt(sc.controllers[c].max_lateral_m!.max, 2)} m off the path line` : ''))
+                .join('; ')}. So nobody swerved: the robot stopped in its way, and it walked in.</p>)}
         </>
       )}
     </section>

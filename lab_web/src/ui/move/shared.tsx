@@ -88,8 +88,14 @@ export function Walls({ f, boxes }: { f: Frame; boxes: number[][] }) {
   return (
     <g className="mv-walls">
       {boxes.filter(([cx, cy, sx, sy]) => cx + sx / 2 > f.x0 && cx - sx / 2 < f.x1 && cy + sy / 2 > f.y0 && cy - sy / 2 < f.y1)
-        .map(([cx, cy, sx, sy], i) => (
-          <rect key={i} className="mv-wall" x={X(f, cx - sx / 2)} y={Y(f, cy + sy / 2)} width={sx * f.s} height={sy * f.s} />))}
+        .map(([cx, cy, sx, sy], i) => {
+          // clipped to the frame: drawn exactly as much wall as the frame shows
+          const x0 = Math.max(f.x0, cx - sx / 2);
+          const x1 = Math.min(f.x1, cx + sx / 2);
+          const y0 = Math.max(f.y0, cy - sy / 2);
+          const y1 = Math.min(f.y1, cy + sy / 2);
+          return <rect key={i} className="mv-wall" x={X(f, x0)} y={Y(f, y1)} width={(x1 - x0) * f.s} height={(y1 - y0) * f.s} />;
+        })}
     </g>
   );
 }

@@ -141,13 +141,52 @@ CLAIMS = [
              'steps into a cell it could have known was blocked.',
      'cites': [f'{R}::test_an_optimistic_robot_arrives_iff_the_world_has_'
                f'a_route']},
-    {'id': 'dstar_work',
-     'text': 'D* Lite repairs only what the change touched. Usually that '
-             'is far less work than searching again -- but not always: a '
-             'change near the goal can cost more than a fresh A*.',
-     'cites': [f'{R}::test_the_closed_door_forces_at_least_one_replan',
-               'docs/RESULTS.md "COCO Lab Phase 6"']},
 ]
+
+
+def _load_json(name):
+    p = os.path.join(LAB5, name)
+    if not os.path.exists(p):
+        return None
+    with open(p) as f:
+        return json.load(f)
+
+
+def _experiment_c():
+    c = _load_json('replan_c.json')
+    if c is None:
+        return None
+    keep = ('grid', 'resolution_m', 'window_map_frame', 'cells_changed',
+            'newly_blocked', 'summary', 'before', 'after', 'content_hash')
+    out = {k: c[k] for k in keep}
+    out['rounds'] = [{k: v for k, v in r.items() if k != 'changed'}
+                     for r in c['rounds']]
+    return out
+
+
+def work_claim():
+    """The D* Lite work claim, composed from the evidence files (no typed numbers)."""
+    st = _load_json('replan_sketch_stats.json')
+    c = _load_json('replan_c.json')
+    if st is None or c is None:
+        return {'id': 'dstar_work', 'text': 'How D* Lite\'s work compares '
+                'with A* from scratch: not yet measured.', 'cites': []}
+    ratio = st['episode_ratio_dstar_over_astar']
+    rep = c['rounds'][-1]
+    return {
+        'id': 'dstar_work',
+        'text': (f"Same answer, not always less work. Over {st['seeds']} "
+                 f"seeded Sketch worlds D* Lite's total work was below A* "
+                 f"from scratch in {st['episodes_dstar_less_total']} "
+                 f"(median {ratio['median']:.2f} of A*'s), yet in "
+                 f"{st['replans_dstar_more']} of {st['replans']} single "
+                 f"replans it did more; and on the real costmap change of "
+                 f"Experiment C it touched {rep['dstar_expansions']:,} cells "
+                 f"where A* from scratch touched {rep['astar_expansions']:,}."),
+        'cites': ['docs/data/lab5/replan_sketch_stats.json',
+                  'docs/data/lab5/replan_c.json',
+                  'docs/RESULTS.md "COCO Lab Phase 6"',
+                  f'{R}::test_every_round_agrees_with_astar_from_scratch']}
 
 #: Run 15, as RESULTS.md records it. Each string is checked verbatim.
 RUN15_QUOTES = [
@@ -155,9 +194,10 @@ RUN15_QUOTES = [
     'PathDistCritic: None of the 5 first of 5 (5) points of the global plan',
     'GoalDistCritic: None of the points of the global plan were in the '
     'local costmap.',
-    '| **gap** | **3.4 m** | **0.10 m** |',
-    '| AMCL believed | (7.252, \u22122.962) | (\u22120.013, \u22120.055) |',
+    '| | run 15 (failed) | run 11 (same colour, succeeded) |',
     '| ground truth, map | (8.747, 0.149) | (\u22120.085, 0.016) |',
+    '| AMCL believed | (7.252, \u22122.962) | (\u22120.013, \u22120.055) |',
+    '| **gap** | **3.4 m** | **0.10 m** |',
 ]
 
 
@@ -267,15 +307,20 @@ def move_block(out):
     _in_doc(RESULTS_MD, RUN15_QUOTES)
     return {
         'version': '1.0',
-        'replan': {'bundles': replan_entries(out), 'limits': LIMITS},
+        'replan': {'bundles': replan_entries(out), 'limits': LIMITS,
+                   'experiment_c': _experiment_c(),
+                   'sketch_stats': {k: v for k, v in (
+                       _load_json('replan_sketch_stats.json') or {}).items()
+                       if k != 'rows'} or None},
         'drive': {'bundles': drive_entries(out), 'results': _results()},
         'controllers': CONTROLLERS,
-        'claims': CLAIMS,
+        'claims': CLAIMS + [work_claim()],
         'run15': {
             'quotes': RUN15_QUOTES,
             'source': 'docs/RESULTS.md "The one failure: run 15, and it is '
-                      'a localisation failure" (M6 fetch matrix, v1 '
-                      'wedge world, 2026-07)',
+                      'a localisation failure" (the M6 fetch matrix in the '
+                      'v1 wedge world; that text entered RESULTS.md on '
+                      '2026-08-06, per git)',
             'reproduced': 'mislocalised',
         },
     }
