@@ -8063,3 +8063,46 @@ fast-forward `main` (green-CI rule); public checks
 (`check.py https://gauthamcodes.github.io/coco-labs/ OUT move move_phone smoke`);
 video `record_lab5_demo.py`; release notes; tag `lab5-v1.0` LOCAL + draft
 release (publishing is the owner's call).
+
+
+### Phase 6 — deployed, verified on the public site, video, release gate (2026-10-07, ~18:00 UTC)
+
+- **PR #17** (`lab5` → `main`): CI and Lab green on `0fef157` after one fix
+  (the catalog-version pin 1.4 → 1.5; a local vitest run had used a catalog
+  built before Lab 5). GitHub rejected every push for ~25 min (HTTP 500 at
+  ref update, status page green, Actions queue stalled); nothing was forced,
+  the push went through on retry.
+- **`main` fast-forwarded `1970e42..0fef157`** (plain push, green-CI rule);
+  both workflows green on `main`; Pages deployment 6916595601; the public
+  catalog is 1.5 from `0fef157`, clean.
+- **Public site** (measured, `docs/data/lab5/public/report.json`): 0 console
+  errors in `move`, `move_phone`, Lab 1 `smoke` (11/11), `localise_phone`,
+  `mapping_phone`, `search_phone`; D\* Lite in Pyodide 13.4 s cold (coco_lab
+  95 ms); no overflow at 390 px on any Lab 5 tab.
+- **Video** from the public site: 122.5 s, 3,615,891 B, sha256 `442cc010…`,
+  2 cuts listed, 0 console errors (`docs/data/lab5/video/`).
+- Release notes `docs/releases/lab5-v1.0.md`.
+- **Evidence provenance:** drive bundles regenerated from clean `59a65b6`,
+  Experiment C from clean `e5913c8` (its arrays byte-identical to the first
+  build at `89c69b1`).
+
+**Phase 6 acceptance (against the brief):** three controllers on identical
+inputs — yes (54 runs, same frozen path files, hashes in every run);
+metrics published — yes (RESULTS.md "COCO Lab Phase 6", LAB5_MOVE.md §4.1);
+dynamic obstacles demonstrated — yes (crossing, oncoming; visibility 1,523
+/ 1,523 and 777 / 939 scans); D\* Lite tested and integrated — yes
+(coco_lab, worker, page, Experiment C); Lab 5 public — yes; video — yes;
+write-up — yes; CI green — yes; no prior lab regressed — yes (package
+counts unchanged outside coco_lab/coco_lab_ros; Labs 1–4 public checks
+clean). **Run 15:** mechanism reproduced, its "0 of 819" symptom NOT —
+stated everywhere it appears.
+
+**Unverified:** physical robot; rates (5 runs per controller); why DWB
+stalls at the hairpin, why no controller swerved, why D\* Lite out-worked A\*
+on Experiment C, why oncoming scans miss; tuned controllers; D\* Lite in the
+Nav2 loop.
+
+NEXT: the owner's call on publishing `lab5-v1.0` (tag LOCAL at the release
+record on `main`, DRAFT release with `coco_lab5_demo.mp4`):
+`git push labs lab5-v1.0 && gh release edit lab5-v1.0 -R GauthamCodes/coco-labs --draft=false --latest --verify-tag`.
+No later phase started.
