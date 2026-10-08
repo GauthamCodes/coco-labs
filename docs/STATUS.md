@@ -9,13 +9,14 @@ only. Read order for agents (README §9): `README.md`, this file,
 
 | | |
 |---|---|
-| Repository | `GauthamCodes/coco-labs` (remote `labs` in the working checkout; see [`v2/data/m0/START_STATE.md`](v2/data/m0/START_STATE.md)) |
-| v1 | **Frozen** at tag `coco-lab-v1-final` = `3571169` (coco-labs `main` = `2b6f8ad` fast-forwarded to `lab5`) |
-| Branch | `v2/m0-transition` (from `3571169`) |
-| Current SHA | the head of `v2/m0-transition`; each checkpoint commit is listed below |
-| Milestone | **M0 · Transition** |
-| Checkpoint | M0.1–M0.8 done. The independent review (2026-10-08) found one exit criterion unmet (Live console errors) and five overstatements; fixes A.1–A.5 are applied (below). Merge under the owner's one-off permission once the M0-close conditions hold (suites, CI, 0 console errors in all six views, README = owner's file) |
-| Merge to `main` | not merged yet; the owner granted a one-off permission to merge PR #19 when the M0-close conditions hold (plan-change log, 2026-10-08) |
+| Repository | `GauthamCodes/coco-labs`; canonical checkout `~/coco_labs_ws/src/coco-labs` ([`v2/CHECKOUTS.md`](v2/CHECKOUTS.md)) |
+| v1 | **Frozen** at tag `coco-lab-v1-final` = `3571169` |
+| M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
+| Branch | `v2/m1-arena-core` (from `main` = `9f58b83`), worked in the worktree `.claude/worktrees/v2-m1-arena-core`, overlay `~/coco_lab_m1_ws` |
+| Milestone | **M1 · Glass-box Arena core** ([`v2/M1_PROMPT.md`](v2/M1_PROMPT.md)) |
+| Checkpoint | B.1 preflight done; **next: M1.1 `coco_schemas`, starting with the event-transport measurement (ADR 0001)** |
+| Merge to `main` | M1 opens a PR when every agent-measurable criterion passes; it is **not** merged by the agent |
+| Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 phone performance, phone cold start and usability (README §7, M1) |
 
 ## Checkpoint log
 
@@ -122,6 +123,36 @@ only. Read order for agents (README §9): `README.md`, this file,
   `build-and-test` pass (collected 2,356 tests across 9 suites, 0
   failed), `coco_lab in a plain venv` pass, `lab_web` pass, Pages deploy
   skipped (PR run).
+
+- **M0 closed (2026-10-08).** PR #19 merged at `9f58b83` (`gh pr merge
+  --merge`, branch kept) after every M0-close condition held on the final
+  head `21d94a8`: packages 3,081 / 0 / 0, vitest 320 / 0 / 0, tools
+  117 / 0 / 0; CI `build-and-test`, `coco_lab in a plain venv`, `lab_web`
+  pass (Pages deploy skipped on the PR run); 0 console errors in all six
+  views; `README.md` byte-identical to the owner's file. The `main` run
+  then deployed Pages (success), and the public site was checked:
+  [`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json).
+
+## M1 checkpoint log
+
+- **B.1 Preflight (2026-10-08).** Canonical checkout
+  `~/coco_labs_ws/src/coco-labs`: clean, `origin` = `GauthamCodes/coco-labs`,
+  no local-only commits; `main` fast-forwarded `6249e7d` → `9f58b83`
+  (contains the PR #19 merge; `coco-lab-v1-final` → `3571169`).
+  [`v2/CHECKOUTS.md`](v2/CHECKOUTS.md) written. Overlay `~/coco_labs_ws`
+  rebuilt from that checkout; M1 builds its worktree into
+  `~/coco_lab_m1_ws`. **Incident:** the session first built into
+  `~/coco_m1_ws`, which is the robot project's overlay (`~/coco-isaac-21`);
+  with Gautham's approval it was restored the same day by re-running its
+  recorded build, and no COCO Lab path remains in it (CHECKOUTS.md).
+  **Toolchain:** Node 24.21.0 (`lab_web/.nvmrc`; binary from
+  `~/coco_v2_ws/node`), npm lockfile (`npm ci`); Python 3.12.3 test venv
+  `~/coco_labs_ws/test_venv` (system site packages: pytest 7.4.4,
+  hypothesis 6.98.15, numpy 1.26.4, protobuf 4.21.12; `protoc` 3.21.12);
+  Pyodide 314.0.7 (`site.config.ts`; Python 3.14.2 inside, whose lock lists
+  protobuf 7.34.1, zstandard 0.25.0, numpy 2.4.6). **M1 baseline** on
+  `9f58b83`: packages **3,081 / 0 / 0**, vitest **320 / 0 / 0**, tools
+  **117 / 0 / 0**. Next: M1.1.
 
 ## Capabilities (README §2), with evidence class
 

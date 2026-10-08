@@ -1,0 +1,25 @@
+# Checkouts: which tree is COCO Lab's
+
+Recorded 2026-10-08 (M1 step B.1), under the owner's plan change of the
+same date (`docs/STATUS.md`, plan-change log).
+
+| Checkout | Role |
+|---|---|
+| `~/coco_labs_ws/src/coco-labs` | **Canonical.** A clone of `GauthamCodes/coco-labs` (`origin`). Its `main` was fast-forwarded to the merged `main` (`9f58b83`, PR #19's merge commit) on 2026-10-08; it had no uncommitted changes and no local-only commits beforehand. `CLAUDE.md`, `setup_env.sh` and `scripts/` already default to `~/coco_labs_ws`. The overlay `~/coco_labs_ws/install` is rebuilt from this tree (`scripts/build_overlay.sh`). |
+| `~/coco_labs_ws/src/coco-labs/.claude/worktrees/<name>` | Agent worktrees of the canonical checkout, one per milestone branch (M1: `v2-m1-arena-core` on branch `v2/m1-arena-core`). Each builds into its own overlay (M1: `~/coco_lab_m1_ws`, `scripts/build_overlay.sh ~/coco_lab_m1_ws`), so the default overlay never points into a worktree that may be removed. Ignored by git (`.gitignore`: `.claude/worktrees/`). |
+| `~/ros2_ws(personal)/src/coco-robot-ros2` and its worktrees | **Legacy. Not used for COCO Lab.** It is the COCO robot project's checkout, with `coco-labs` added as the remote `labs`; its local `main` is the robot trunk. Labs 2–5 and M0 were developed in its worktrees (`.claude/worktrees/lab1`, `v2-m0`), so it holds that local history. Left untouched. |
+| `~/coco_m1_ws` | **Not COCO Lab's.** The robot project's overlay for `~/coco-isaac-21` (its own M1 numbering). On 2026-10-08 the M1 session built COCO Lab into it by mistake; with the owner's approval it was restored the same day by re-running its recorded build. COCO Lab directories are prefixed `coco_lab_`. |
+| `~/coco_v2_ws` | M0's copy-based overlay (the `(personal)` path broke colcon and gz quoting). Kept for its Node 24.21.0 toolchain, which M1's helpers reuse. |
+
+## Why
+
+- One tree, one overlay: the review of M0 (2026-10-08) flagged that
+  `~/coco_labs_ws/src/coco-labs` was a stale clone (`main` = `6249e7d`)
+  while `CLAUDE.md` and the scripts defaulted to it, so a session could
+  build and test the wrong tree.
+- The legacy checkout's path contains parentheses, which broke colcon,
+  CMake and gz quoting (hence M0's copy-overlay workaround), and its
+  `main` is a different repository's trunk, which made every git command
+  there a hazard for COCO Lab.
+- Nothing is deleted: the legacy checkout keeps the local history of Labs
+  2–5 and M0; everything COCO Lab needs is on `GauthamCodes/coco-labs`.
