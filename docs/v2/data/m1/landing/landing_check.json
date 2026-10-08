@@ -1,0 +1,79 @@
+{
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "cases": [
+  {
+   "query": "(bare)",
+   "want": "arena",
+   "got": "arena",
+   "v1_link_opens": "v1",
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?perf",
+   "want": "arena",
+   "got": "arena",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=arena",
+   "want": "arena",
+   "got": "arena",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=plan",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=exhibit",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=live",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=move",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?bundle=astar_open",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?bundle=astar_open&v=1",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  }
+ ],
+ "errors": [],
+ "pass": true
+}

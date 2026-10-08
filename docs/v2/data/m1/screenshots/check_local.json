@@ -1,0 +1,56 @@
+{
+ "mode": "check",
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "renderer": "chromium default (SwiftShader)",
+ "channel_tol": 40,
+ "max_bad": 0.005,
+ "results": {
+  "self_test": {
+   "pass": true,
+   "differing_fraction": 0.030893504996660163,
+   "compared": "stack_lab1c_astar_t400 vs stack_lab1c_greedy_t300"
+  },
+  "trace_bfs_no_path": {
+   "pass": true,
+   "differing_fraction": 0,
+   "size": [
+    968,
+    631
+   ]
+  },
+  "trace_costmap_astar": {
+   "pass": true,
+   "differing_fraction": 0,
+   "size": [
+    968,
+    631
+   ]
+  },
+  "stack_lab1c_astar_t400": {
+   "pass": true,
+   "differing_fraction": 0,
+   "size": [
+    968,
+    631
+   ]
+  },
+  "stack_lab1c_greedy_t300": {
+   "pass": true,
+   "differing_fraction": 0,
+   "size": [
+    968,
+    631
+   ]
+  },
+  "attract_t200": {
+   "pass": true,
+   "differing_fraction": 0,
+   "size": [
+    968,
+    631
+   ]
+  }
+ },
+ "errors": [],
+ "pass": true
+}

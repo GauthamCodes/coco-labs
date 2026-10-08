@@ -4,7 +4,7 @@
   "lab1c_astar": {
    "pass": true,
    "badge": "STACK",
-   "first_shown_ms": 416,
+   "first_shown_ms": 942,
    "head": 760,
    "ticks": 760,
    "cursor": 18660,
@@ -30,7 +30,7 @@
   "lab1c_dijkstra": {
    "pass": true,
    "badge": "STACK",
-   "first_shown_ms": 488,
+   "first_shown_ms": 760,
    "head": 777,
    "ticks": 777,
    "cursor": 71900,
@@ -56,7 +56,7 @@
   "lab1c_greedy": {
    "pass": true,
    "badge": "STACK",
-   "first_shown_ms": 276,
+   "first_shown_ms": 421,
    "head": 670,
    "ticks": 670,
    "cursor": 4368,
@@ -82,7 +82,7 @@
   "bfs_no_path": {
    "pass": true,
    "badge": "MODEL",
-   "first_shown_ms": 223,
+   "first_shown_ms": 345,
    "head": 1,
    "ticks": 1,
    "cursor": 750,
@@ -104,7 +104,7 @@
   "arena_native": {
    "pass": true,
    "badge": "MODEL",
-   "first_shown_ms": 539,
+   "first_shown_ms": 1150,
    "head": 1,
    "ticks": 1,
    "cursor": 283378,

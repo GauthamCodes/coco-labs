@@ -8829,3 +8829,38 @@ with a live A* search, the LiDAR fan and `?stress` = 50,000 instanced points
 60–61 fps in every one of 10 seconds, p95 frame 16.9–17.0 ms (the display
 cap), 0 console errors. The same load on SwiftShader (software GL): 1–2
 fps. Not measured: a phone (Gautham, `?perf`).
+
+## COCO Lab v2 · M1.10 — the Glass-box Arena against its acceptance criteria (measured 2026-10-09)
+
+Append-only. Evidence class **MODEL** (the Arena model, `coco_lab`, the
+browser). Full table, conditions and files: `docs/v2/M1_RESULTS.md`; data
+under `docs/v2/data/m1/`. Laptop: Intel Core i5-13420H, RTX 4050 laptop
+GPU, Ubuntu 24.04, in its **power-saver** profile (recorded); M1.5's
+profile was not recorded, so M1.5 → M1.10 timings are not a controlled
+comparison.
+
+- **Determinism (met):** 100 recorded sessions (416 goals, 337 teleop
+  commands, 84 planner switches, 79 stops) × 150 ticks replayed in
+  Chromium 156, Firefox 157, WebKit 27.2 (the site's own worker) and
+  Pyodide 314.0.7 on Node 24: 15,000 ticks per engine, **0 differing**.
+- **Correctness (met):** all 5,000 golden searches (1,000 maps × 5
+  algorithms) reproduce Lab 1 exactly.
+- **Laptop performance (met):** 60–61 fps, p95 frame 17.3–17.9 ms, with
+  50,000 points + 20,000 segments over the grid (GPU via ANGLE).
+- **Responsiveness (met):** goal click → first frame drawing that goal's
+  search, warm, n = 25: median 40.4 ms, p95 70.8, max 71.5, 25/25 under
+  100 ms. Seek ≤ 0.6 ms on an 81,593-event search. Before an M1.10 fix the
+  same measurement read median 414 ms, p95 2,690 ms (a search was hidden
+  until it finished); the earlier "47–73 ms" figures timed first goals only.
+- **Laptop cold start, self-hosted, n = 10 each (unthrottled / emulated
+  Wi-Fi / emulated 4G):** first visible computation 754 / 1,629 / 3,299 ms
+  (medians); live model ready 5,023 / 6,603 / **10,782** ms. M0 baseline:
+  12,857 ms median cold first computation (CDN, real network, n = 5).
+  Under 10 s for the first visible computation on every link; the live
+  model on emulated 4G is over.
+- **Not an M1 criterion, reported:** a goal clicked right after a planner
+  change waits for the re-plan — median 293 ms, max 4,029 ms (parked, M2).
+  Attract mode costs the live model's load 155–575 ms (A/B, n = 10 each).
+- **Pending Gautham, not measured here:** phone fps, phone cold start on
+  mobile data, the 5-person usability test.
+- **WebAssembly (ADR 0002):** nothing ported; no agent-measured budget fails.

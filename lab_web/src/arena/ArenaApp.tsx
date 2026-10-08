@@ -111,7 +111,7 @@ export function ArenaApp() {
 
   const goal = useCallback((x: number, y: number) => {
     takeOver();
-    perf.goalSent();
+    perf.goalSent(wallMs(), live.current?.shownSearch?.searchId ?? null);
     r.current?.setGoal([x, y]);
     setRunCard(null);
     if (live.current && !live.current.live) live.current.goLive();
@@ -235,7 +235,8 @@ export function ArenaApp() {
         const st = active()?.shownSearch;
         if (st && st.cursor > 0) {
           if (firstComputation) { firstComputation = false; perf.mark('first_computation_shown', wallMs()); }
-          perf.frontierDrawn();
+          // goal timing is the LIVE model's: a recording's search ids are its own
+          if (active() === live.current) perf.frontierDrawn(st.searchId);
         }
       };
       rr.start();

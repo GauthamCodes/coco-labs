@@ -11,7 +11,12 @@ import './ui/style.css';
 const root = createRoot(document.getElementById('root')!);
 const render = (node: ReactNode) => root.render(<StrictMode>{node}</StrictMode>);
 
-if (new URLSearchParams(window.location.search).get('view') === 'arena') {
+// The Arena is the landing page (M1.10, once every agent-measured M1
+// criterion passed). Every v1 link either names its view (`?view=plan`,
+// `?view=live`, ...) or is a v1 share link (`?bundle=`, `?v=`), and keeps
+// opening v1 exactly as before.
+const q = new URLSearchParams(window.location.search);
+if (q.get('view') === 'arena' || (!q.has('view') && !q.has('bundle') && !q.has('v'))) {
   void import('./arena/ArenaApp').then(({ ArenaApp }) => render(<ArenaApp />));
 } else {
   void import('./ui/App').then(({ App }) => render(<App />));

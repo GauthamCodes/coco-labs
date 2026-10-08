@@ -14,9 +14,9 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | Branch | `v2/m1-arena-core` (from `main` = `9f58b83`), worked in the worktree `.claude/worktrees/v2-m1-arena-core`, overlay `~/coco_lab_m1_ws` |
 | Milestone | **M1 · Glass-box Arena core** ([`v2/M1_PROMPT.md`](v2/M1_PROMPT.md)) |
-| Checkpoint | B.1 and **M1.1–M1.9 done**; **next: M1.10 measure and decide** (every B.4 budget incl. cross-browser determinism over 100 sessions, cold start n ≥ 10, responsiveness; ADR 0002 WASM gate; M1_RESULTS.md; screenshot tests in CI; then the PR into main, NOT merged). Arena is NOT yet the default landing page: that waits for every agent criterion |
+| Checkpoint | **M1.1–M1.10 done.** Every agent-measurable B.4 criterion met ([`v2/M1_RESULTS.md`](v2/M1_RESULTS.md)); the Arena is the landing page for the bare URL; PR into `main` opened, **not merged** (Gautham). M1 closes after a fresh review session (README §9) and the three Gautham criteria |
 | Merge to `main` | M1 opens a PR when every agent-measurable criterion passes; it is **not** merged by the agent |
-| Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 phone performance, phone cold start and usability (README §7, M1) |
+| Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance** and **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)) — never marked done by the agent; the M1 PR's merge |
 
 ## Checkpoint log
 
@@ -352,6 +352,45 @@ only. Read order for agents (README §9): `README.md`, this file,
   re-run passed 231 / 0), vitest **374 / 0 / 0** (+17), tools
   **117 / 0 / 0**. Next: M1.10.
 
+- **M1.10 Measure and decide (2026-10-09).** Every B.4 budget measured on
+  the final build, laptop in its **power-saver** profile (recorded; M1.5's
+  was not, so M1.5 → M1.10 timings are not a controlled comparison). Full
+  table: [`v2/M1_RESULTS.md`](v2/M1_RESULTS.md); decision:
+  [`v2/adr/0002-wasm-gate.md`](v2/adr/0002-wasm-gate.md) — **port nothing**.
+  - **Determinism — met:** 100 recorded sessions (random goals, teleop,
+    stops, planner switches) × 150 ticks in Chromium 156, Firefox 157,
+    WebKit 27.2 (the site's own worker) and Pyodide-in-Node: 15,000 ticks
+    each, **0 differing** (`v2/data/m1/determinism/`). WebKit runs here
+    without sudo via `~/coco_lab_m1_ws/bin/webkit_run.sh` (four media
+    libraries unpacked privately; nothing system-wide changed).
+  - **Correctness — met:** 5,000/5,000 golden searches (1,000 maps).
+  - **Laptop performance — met:** 60–61 fps, 50k points + 20k segments.
+  - **Responsiveness — met:** warm goal click → first frame drawing that
+    goal's search: median **40.4 ms**, max 71.5, 25/25 under 100; seek
+    ≤ 0.6 ms. Two bugs found and fixed first: the timer stopped on the
+    previous search (earlier "47–73 ms" timed first goals only), and the
+    session hid a streaming search until it finished (honest measurement
+    before the fix: median 414 ms, p95 2,690 ms). A vitest pins the fix.
+  - **Laptop cold start — met for the first visible computation:** 754 /
+    1,629 / 3,299 ms (unthrottled / emulated Wi-Fi / 4G, n = 10 each,
+    self-hosted); live model ready 5,023 / 6,603 / **10,782** ms (4G over
+    10 s). M0 baseline: 12,857 ms.
+  - **Hygiene — met:** 0 console errors in all seven views and every
+    harness; phone width checked; CI gains a `lab-web-browsers` job
+    (determinism in 3 browsers, 5 screenshot scenes with a self-test) and
+    a determinism vitest.
+  - **Pending Gautham:** phone performance, phone cold start, usability.
+  - Also: the `?perf` panel's stale "first frontier node shown" row
+    replaced; landing route checked 9/9 (`v2/data/m1/landing/`); two
+    findings parked for M2 (`docs/IDEAS.md`): a goal right after a planner
+    change waits for the re-plan (median 293 ms, max 4.0 s); attract mode
+    costs the live model's load 155–575 ms.
+  - Tests: packages **3,235 / 0 / 0**, vitest **381 / 0 / 0** (+7), tools
+    **117 / 0 / 0**.
+  - The re-runs on the final build replaced `v2/data/m1/timeline/`,
+    `experience/` and `replay/`'s files in place; the files the M1.7–M1.9
+    entries above quote are in git at `0f90e35` (M1.9) and its parents.
+
 ## Capabilities (README §2), with evidence class
 
 Classes as README §3 defines them: MODEL, STACK, REMOTE, HARDWARE (none
@@ -371,6 +410,9 @@ exist), UNRESOLVED, CONCEPT.
 | Latched STOP; drive command p50 4.6 ms; STOP 6.2 ms | STACK | Local network | `docs/live/LIVE.md` |
 | Phone on mobile data drove the robot; RTT about 282–293 ms; disconnect stop about 0.54 s | REMOTE | Robot simulated | `docs/live/PART_C_REPORT.md` |
 | v1 site baseline (cold start, warm edit, frame rate, sizes) — laptop | MODEL | Phone not yet measured | `docs/v2/BASELINE.md` |
+| The Arena: identical per-tick hashes in Chromium, Firefox, WebKit and Pyodide-in-Node (100 sessions, 15,000 ticks each) | MODEL | Laptop; not yet on a phone | `docs/v2/data/m1/determinism/` |
+| The Arena: 60 fps at 50k points + 20k segments; goal → computation on screen in 40 ms median (warm); first visible computation 0.75–3.3 s cold | MODEL | Laptop, power-saver; phone pending Gautham | `docs/v2/M1_RESULTS.md` |
+| Lab 1's three recorded full-stack runs played in the Arena viewer | STACK | Played, not re-measured | `docs/v2/data/m1/replay/` |
 
 **Unresolved, kept labelled** (README §2): DWB's hairpin stall; why no
 controller swerved; D\* Lite's extra work on the real costmap; loop-closure

@@ -92,9 +92,15 @@ export class ArenaSession {
     return this.history[tick - first] ?? null;
   }
 
-  /** The search on the computation track: the latest planned at or before the shown tick. */
+  /**
+   * The search on the computation track: the latest planned at or before
+   * the shown tick. Live, that includes the search being computed NOW for
+   * the tick in progress (head + 1), which streams in while the model is
+   * still planning; waiting for its tick would hide it until the whole
+   * search had finished (measured, M1.10).
+   */
   get shownSearch(): PlanStore | null {
-    const at = this.shownTick?.tick ?? 0;
+    const at = this.viewTick === null ? this.head + 1 : this.shownTick?.tick ?? 0;
     let id: number | null = null;
     for (const [k, sid] of this.searchesAt) if (k <= at) id = sid;
     if (id === null && this.viewTick === null && this.searchesAt.length) id = this.searchesAt[this.searchesAt.length - 1][1];

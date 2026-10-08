@@ -68,7 +68,11 @@ try {
   await page.waitForTimeout(1500);
   const a2 = await pose(page);
   const attractMoved = !!a1 && !!a2 && Math.hypot(a2[0] - a1[0], a2[1] - a1[1]) > 0.01;
-  ok('attract_plays', (await mode(page)) === 'attract' && attractMoved, {
+  // the ?perf panel shows these marks ON SCREEN (a mark the panel does not name reads "—")
+  const panel = { recording: await page.getByTestId('perf-attract_ready').textContent(),
+    computation: await page.getByTestId('perf-first_computation_shown').textContent() };
+  ok('attract_plays', (await mode(page)) === 'attract' && attractMoved && /\d/.test(panel.recording) && /\d/.test(panel.computation), {
+    panel,
     attract_ready_ms: Math.round(marks0.attract_ready - marks0.nav_start), first_computation_ms: marks0.first_computation_shown
       ? Math.round(marks0.first_computation_shown - marks0.nav_start) : null, arena_ready_yet: !!marks0.arena_ready });
   await page.screenshot({ path: join(OUT, '1_attract.png') });

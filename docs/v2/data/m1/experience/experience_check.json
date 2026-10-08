@@ -3,8 +3,12 @@
  "steps": {
   "attract_plays": {
    "pass": true,
-   "attract_ready_ms": 674,
-   "first_computation_ms": 961,
+   "panel": {
+    "recording": "501 ms",
+    "computation": "731 ms"
+   },
+   "attract_ready_ms": 501,
+   "first_computation_ms": 731,
    "arena_ready_yet": false
   },
   "click_takes_over": {
@@ -42,7 +46,7 @@
    "pass": true,
    "url_chars": 490,
    "tick": 404,
-   "chain": "d3da3794608fcfd5be58be899132ca20cd06ba7a4190edbe4a4ae3e9d7541583",
+   "chain": "5a8ccdad80141ecdd2150777633388e6dbcf5a73e719b69c7bad1f902e87a712",
    "inputs": 10
   },
   "share_link_reproduces": {
@@ -50,7 +54,7 @@
    "verdict": "Shared run: reproduced exactly: the hash chain after tick 404 matches the link",
    "after": {
     "tick": 404,
-    "chain": "d3da3794608fcfd5be58be899132ca20cd06ba7a4190edbe4a4ae3e9d7541583"
+    "chain": "5a8ccdad80141ecdd2150777633388e6dbcf5a73e719b69c7bad1f902e87a712"
    }
   },
   "phone_tap_goal": {
@@ -67,6 +71,6 @@
   }
  },
  "errors": [],
- "laptop_ms": 94919,
+ "laptop_ms": 95283,
  "pass": true
 }

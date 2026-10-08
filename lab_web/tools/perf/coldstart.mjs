@@ -5,7 +5,7 @@
  * Arena cold start (M1.5 / M1.10), in headless Chromium, n fresh browsers.
  *
  *   node tools/perf/coldstart.mjs --site http://127.0.0.1:4173/coco-labs/
- *        [--runs 10] [--pyodide self|cdn] [--throttle none|wifi|4g]
+ *        [--runs 10] [--pyodide self|cdn] [--throttle none|wifi|4g] [--gl swiftshader|gpu]
  *        [--out FILE.json]
  *
  * Each run: a new browser and context (empty cache), open `?view=arena&perf`,
@@ -20,7 +20,8 @@
  * The phone itself is measured by Gautham (docs/v2/PHONE_MEASURE.md).
  */
 
-import { writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { readFileSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import { chromium } from 'playwright';
 
@@ -30,6 +31,13 @@ const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) =>
 }, []));
 const SITE = args.site ?? 'http://127.0.0.1:4173/coco-labs/';
 const RUNS = Number(args.runs ?? 10);
+// --gl gpu: the laptop's GPU through ANGLE, as a real browser renders; default
+// is headless Chromium's software GL (SwiftShader), which runs on the CPU
+const GL = args.gl === 'gpu' ? 'gpu' : 'swiftshader';
+// --no-attract 1: an A/B arm, the attract recording's request refused, so the
+// page boots as it did before M1.8 (it logs that one failed fetch)
+const NO_ATTRACT = args['no-attract'] === '1';
+const LAUNCH = GL === 'gpu' ? { args: ['--use-angle=gl-egl', '--ignore-gpu-blocklist', '--enable-gpu'] } : {};
 const SOURCE = args.pyodide ?? 'self';
 const THROTTLE = args.throttle ?? 'none';
 const PROFILES = {
@@ -54,8 +62,9 @@ async function throttle(context, page) {
 }
 
 async function run(i) {
-  const browser = await chromium.launch();
+  const browser = await chromium.launch(LAUNCH);
   const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  if (NO_ATTRACT) await context.route('**/generated/arena/attract.mcap', (r) => r.abort());
   const page = await context.newPage();
   await throttle(context, page);
   const errors = [];
@@ -80,8 +89,10 @@ async function run(i) {
     const readyMarks = await page.evaluate(() => ({ ...window.__cocoPerf.marks, navStart: window.__cocoPerf.navStart }));
     // one goal, sent at the next tick; time the first plan events back
     const goalAt = await page.evaluate(() => {
-      window.__cocoArena.queue.push({ kind: 'goal', x: 6.0, y: 4.0 });
-      return performance.timeOrigin + performance.now();
+      const at = performance.timeOrigin + performance.now();
+      // as a click does: hands the attract recording over to the live model (M1.8)
+      window.__cocoArena.goal(6.0, 4.0);
+      return at;
     });
     await page.waitForFunction(() => window.__cocoPerf.firstPlanBatchAt !== null, null, { timeout: 60_000, polling: 10 });
     const first = await page.evaluate(() => window.__cocoPerf.firstPlanBatchAt);
@@ -95,6 +106,9 @@ async function run(i) {
         worker_create: rel('worker_create'), pyodide_module: rel('pyodide_module'),
         pyodide_ready: rel('pyodide_ready'), coco_lab_ready: rel('coco_lab_ready'),
         arena_ready: rel('arena_ready'), first_frame: rel('first_frame'),
+        // M1.8: the attract recording plays before the live model is ready; its
+        // first drawn search is the page's FIRST VISIBLE COMPUTATION
+        attract_ready: rel('attract_ready'), first_computation_shown: rel('first_computation_shown'),
       },
       // includes waiting for the next 100 ms tick boundary (dt): the goal is
       // applied at the start of a tick, by design
@@ -116,10 +130,14 @@ for (let i = 0; i < RUNS; i += 1) {
 const b = await chromium.launch();
 const result = {
   meta: {
-    site: SITE, runs: RUNS, pyodide: SOURCE, throttle: THROTTLE, profile: PROFILES[THROTTLE],
+    site: SITE, runs: RUNS, pyodide: SOURCE, throttle: THROTTLE, profile: PROFILES[THROTTLE], gl: GL, no_attract: NO_ATTRACT,
     browser: `chromium ${b.version()} (Playwright, headless)`, cpu: os.cpus()[0].model,
     at_utc: new Date().toISOString(), load1: Math.round(os.loadavg()[0] * 10) / 10,
+    // CPU speed decides these numbers: record the laptop's power state (M1.10 found power-saver)
+    power_profile: (() => { try { return execFileSync('powerprofilesctl', ['get']).toString().trim(); } catch { return 'unknown'; } })(),
+    governor: (() => { try { return readFileSync('/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor', 'utf-8').trim(); } catch { return 'unknown'; } })(),
   },
+  first_computation_shown_ms: summary(runs.map((r) => r.ms_since_navigation.first_computation_shown).filter((x) => x !== null)),
   arena_ready_ms: summary(runs.map((r) => r.ms_since_navigation.arena_ready)),
   pyodide_ready_ms: summary(runs.map((r) => r.ms_since_navigation.pyodide_ready)),
   goal_to_first_plan_events_ms: summary(runs.map((r) => r.goal_to_first_plan_events_ms)),
@@ -127,5 +145,6 @@ const result = {
   runs,
 };
 await b.close();
-console.log(JSON.stringify({ arena_ready_ms: result.arena_ready_ms, goal_to_first: result.goal_to_first_plan_events_ms }));
+console.log(JSON.stringify({ first_computation_ms: result.first_computation_shown_ms, arena_ready_ms: result.arena_ready_ms,
+  goal_to_first: result.goal_to_first_plan_events_ms }));
 if (args.out) writeFileSync(args.out, JSON.stringify(result, null, 1) + '\n');

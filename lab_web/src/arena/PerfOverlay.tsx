@@ -18,7 +18,8 @@ const STAGES: [string, string][] = [
   ['coco_lab_ready', 'coco_lab ready'],
   ['arena_ready', 'Arena ready'],
   ['first_frame', 'first frame drawn'],
-  ['first_frontier_shown', 'first frontier node shown'],
+  ['attract_ready', 'recording ready (attract)'],
+  ['first_computation_shown', 'first computation shown'],
 ];
 
 export function PerfOverlay() {

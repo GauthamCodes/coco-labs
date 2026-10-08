@@ -50,12 +50,25 @@ class Perf {
     this.emit();
   }
 
-  /** Goal click -> the frame that first DRAWS that search's frontier. */
+  /**
+   * Goal click -> the frame that first DRAWS that goal's search's frontier.
+   * The search on screen at the click is remembered: until a DIFFERENT
+   * search is drawn, the old one's frames do not count.
+   */
   readonly goalToFrontier: number[] = [];
   private goalAt: number | null = null;
-  goalSent(at = wallMs()) { this.goalAt = at; }
-  frontierDrawn(at = wallMs()) {
-    if (this.goalAt === null) return;
+  private goalPrevSearch: number | null = null;
+  /** Every goal click, and the first frame that drew each search (for the harnesses). */
+  readonly goalClicks: number[] = [];
+  readonly firstDraw = new Map<number, number>();
+  goalSent(at = wallMs(), shownSearch: number | null = null) {
+    this.goalAt = at;
+    this.goalPrevSearch = shownSearch;
+    this.goalClicks.push(at);
+  }
+  frontierDrawn(searchId: number, at = wallMs()) {
+    if (!this.firstDraw.has(searchId)) this.firstDraw.set(searchId, at);
+    if (this.goalAt === null || searchId === this.goalPrevSearch) return;
     this.goalToFrontier.push(at - this.goalAt);
     this.goalAt = null;
     this.emit();

@@ -1,0 +1,26 @@
+{
+ "mode": "make",
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "renderer": "chromium default (SwiftShader)",
+ "channel_tol": 40,
+ "max_bad": 0.005,
+ "results": {
+  "trace_bfs_no_path": {
+   "bytes": 3464
+  },
+  "trace_costmap_astar": {
+   "bytes": 9224
+  },
+  "stack_lab1c_astar_t400": {
+   "bytes": 10384
+  },
+  "stack_lab1c_greedy_t300": {
+   "bytes": 10375
+  },
+  "attract_t200": {
+   "bytes": 30979
+  }
+ },
+ "errors": [],
+ "pass": true
+}

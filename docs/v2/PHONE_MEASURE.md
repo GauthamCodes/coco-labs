@@ -19,9 +19,13 @@ public URL** (step A).
    type the phone shows (4G / 5G) and the signal bars.
 2. Use a **private / incognito tab** each time, so nothing is cached.
 3. Open `https://gauthamcodes.github.io/coco-labs/?view=arena&perf`.
-4. The panel at the bottom right shows, in milliseconds since you opened
-   the link:
-   - `Pyodide ready`, `coco_lab ready`, `Arena ready`;
+4. The panel (top of the screen on a phone) shows, in milliseconds since
+   you opened the link:
+   - `recording ready (attract)` and **`first computation shown`**: the
+     page opens on a recorded demo (labelled MODEL) and draws its search
+     before the live model has loaded. **This is the cold-start number**:
+     the first visible computation;
+   - `Pyodide ready`, `coco_lab ready`, `Arena ready` (the live model);
    - `first frame drawn`;
    - `first plan events` (after you tap a goal);
    - `fps` (frames in the last second, and the 95th-percentile frame time);
@@ -33,7 +37,7 @@ public URL** (step A).
 8. Record each run in the table below, with the phone model, browser and
    version, and the network type.
 
-| Run | Network | Pyodide ready | Arena ready | First frame | First plan events | fps (30 s in) | p95 frame ms |
+| Run | Network | First computation shown | Arena ready | First frame | First plan events | fps (30 s in) | p95 frame ms |
 |---|---|---|---|---|---|---|---|
 | 1 | | | | | | | |
 | 2 | | | | | | | |
@@ -43,9 +47,9 @@ public URL** (step A).
 
 Phone: ______ Browser and version: ______ Date: ______
 
-**Pass if:** the median `first frame drawn` (or the first visible
-computation the attract mode shows) is under 10 s, and `fps` is 30 or more
-at default detail. Report the numbers either way; a miss is a result.
+**Pass if:** the median `first computation shown` is under 10 s on mobile
+data (phone cold start), and `fps` is 30 or more at default detail (phone
+performance). Report the numbers either way; a miss is a result.
 
 ## B. Your laptop over Wi-Fi (possible now)
 

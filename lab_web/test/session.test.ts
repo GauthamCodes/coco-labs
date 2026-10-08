@@ -153,3 +153,22 @@ describe('the two tracks', () => {
     expect(s.recordAt(12_005)?.ranges).not.toBeNull();
   });
 });
+
+describe('a search being computed now is shown live (M1.10 responsiveness)', () => {
+  it('streams onto the computation track before its tick arrives; history keeps the old rule', () => {
+    const s = new ArenaSession(W, H, 0.1);
+    const [b0, b1] = bigSearch();
+    for (let k = 1; k <= 5; k += 1) s.onTick(tick(k), new Float32Array(4));
+    s.onPlanBatch({ search_id: 0, planner: 'astar', tick: 2, final: true }, b0); // an earlier goal's search
+    // a new goal: its search is planned during the step for tick 5 -> 6, and streams in
+    s.onPlanBatch({ search_id: 1, planner: 'bfs', tick: 5, final: false }, b1);
+    expect(s.head).toBe(5);
+    expect(s.shownSearch?.searchId).toBe(1); // live: shown while it computes, not after
+    expect(s.shownSearch!.cursor).toBeGreaterThan(0);
+    s.seekTick(4); // (seeking to the head itself rejoins live, by design)
+    expect(s.live).toBe(false);
+    expect(s.shownSearch?.searchId).toBe(0); // at tick 4 in history it had not been planned yet
+    s.goLive();
+    expect(s.shownSearch?.searchId).toBe(1);
+  });
+});
