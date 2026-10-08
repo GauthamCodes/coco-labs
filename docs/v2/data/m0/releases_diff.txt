@@ -1,0 +1,51 @@
+--- releases_before/live-v1.0.md
++++ releases_after/live-v1.0.md
+@@ -1,7 +1,7 @@
+ 
+ # Title
+ 
+-COCO Live — the real robot in the browser (v1.0)
++Live Stack (simulated): drive COCO's ROS 2 stack from the browser
+ 
+ # Body
+ 
+@@ -81,3 +81,5 @@
+ (The public site is now built from a later commit that adds Lab 2; the Live
+ tab's code, `lab_web/src/live` and `coco_web`, is unchanged since this tag.)
+ 
++Wording corrected on 2026-10-08: COCO has only run in simulation (Gazebo). See docs/v2/data/m0/releases_before/.
++
+--- releases_before/lab1-v1.0.md
++++ releases_after/lab1-v1.0.md
+@@ -9,7 +9,7 @@
+ exhibit: https://gauthamcodes.github.io/coco-labs/?view=exhibit
+ 
+ COCO Lab's first lab, **Plan**: graph search for robot path planning, in
+-the browser, on the maps a real robot used. Five algorithms are traced
++the browser, on the maps the full ROS 2 stack (simulated) used. Five algorithms are traced
+ event by event: BFS, Dijkstra, A\*, greedy best-first and weighted A\*.
+ Every search runs in `coco_lab` (Python, in your browser via Pyodide); the
+ page never searches. Write-up, every claim's evidence and the limitations:
+@@ -66,3 +66,5 @@
+ and a warm-up search (6.6 s) happened before recording began. The captions
+ were added to the page by the recorder; they are not part of the site.
+ 
++Wording corrected on 2026-10-08: COCO has only run in simulation (Gazebo). See docs/v2/data/m0/releases_before/.
++
+--- releases_before/lab4-v1.0.md
++++ releases_after/lab4-v1.0.md
+@@ -24,7 +24,7 @@
+   belief bars, searched bays, the camera's view while it looks, the costs
+   coco_lab compared at every step. Change the prior and the detection
+   probability and see the robot's order change.
+-- **The real robot (Replay):** 16 searches the real mission ran in Gazebo,
++- **The full ROS 2 stack, simulated (Replay):** 16 searches the real mission ran in Gazebo,
+   told only the colour, with the mission's state machine in simulator
+   seconds and the truth — from the episode manifest, the evaluator's side —
+   behind a toggle.
+@@ -68,3 +68,5 @@
+ public site, browser only; coco_lab's computing waits cut and listed
+ (`docs/data/lab4/video/`).
+ 
++Wording corrected on 2026-10-08: COCO has only run in simulation (Gazebo). See docs/v2/data/m0/releases_before/.
++
