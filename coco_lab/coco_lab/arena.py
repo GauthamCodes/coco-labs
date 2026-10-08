@@ -43,9 +43,10 @@ import math
 import struct
 from typing import Dict, List, Optional, Sequence, Tuple
 
+from .events import SearchEventColumns
 from .maps import OCCUPIED
 from .rng import Rng
-from .search import search, SearchResult
+from .search import collect, search_events, SearchResult
 from .sketch import (_inflated_grid_map, _nearest_free, drive_command,
                      LidarSpec, SketchMap, step_pose, wrap)
 from .worldspec import arena_map, normalize, to_map_frame
@@ -140,7 +141,8 @@ class Arena:
 
     def __init__(self, spec: Dict[str, object], seed: int,
                  planner: str = 'astar', range_sigma: float = 0.0,
-                 lidar_every: int = 1):
+                 lidar_every: int = 1, on_plan_batch=None,
+                 plan_batch_size: int = 2048):
         """Build the world from ``spec`` and place the robot at its start."""
         self.spec = normalize(spec)
         if planner not in PLANNERS:
@@ -172,6 +174,12 @@ class Arena:
         if self.smap.clearance(sx, sy) < self.radius * 0.5:
             raise ArenaError(f'start {self.start} is against a wall')
         self.planner = planner
+        #: called with (columns, meta) for each batch of plan events, while
+        #: the search runs (coco_lab.events.SearchEventColumns); never part
+        #: of the state, so it cannot change a hash
+        self.on_plan_batch = on_plan_batch
+        self.plan_batch_size = plan_batch_size
+        self.plans_made = 0
         self.tick = 0
         self._chain = hashlib.sha256(STATE_LAYOUT).digest()
         self._reset_robot()
@@ -235,7 +243,25 @@ class Arena:
         if s is None or t is None:
             raise ArenaError(f'no free cell near the robot or {self.goal}')
         goal = self.goal
-        res = search(g, s, t, **PLANNERS[self.planner])
+        events = search_events(g, s, t, **PLANNERS[self.planner])
+        if self.on_plan_batch is None:
+            res = collect(events)
+        else:
+            # stream the search to the renderer while it runs (M1.5);
+            # the search, and so the state, is the same either way
+            cols = SearchEventColumns(search_id=self.plans_made,
+                                      tick=self.tick, t_world=self.t_world)
+            meta = {'search_id': self.plans_made, 'planner': self.planner,
+                    'tick': self.tick}
+            size, hook = self.plan_batch_size, self.on_plan_batch
+
+            def sink(row):
+                cols.add(row)
+                if len(cols) >= size:
+                    hook(cols.drain(), dict(meta, final=False))
+            res = collect(events, sink)
+            hook(cols.drain(), dict(meta, final=True))
+        self.plans_made += 1
         waypoints = []
         if res.path:
             cells = [(c[0], c[1]) for c in res.path]

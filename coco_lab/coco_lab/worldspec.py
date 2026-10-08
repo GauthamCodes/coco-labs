@@ -278,28 +278,61 @@ def arena_map(spec: Dict[str, object], map_id: str = '') -> LabMap:
     ox, oy = b['x_min'] - m, b['y_min'] - m
     width = round((b['x_max'] - b['x_min'] + 2 * m) / res)
     height = round((b['y_max'] - b['y_min'] + 2 * m) / res)
-    ramps, boxes = ramp_rectangles(spec), box_rectangles(spec)
-    h = res / 2
-    occ = bytearray(width * height)
-    for row in range(height):
-        y = oy + (height - row - 0.5) * res
-        for col in range(width):
-            x = ox + (col + 0.5) * res
-            v = FREE if (b['x_min'] < x < b['x_max']
-                         and b['y_min'] < y < b['y_max']) else UNKNOWN
-            for a, bb, c, d in ramps:
-                if a - h < x < bb + h and c - h < y < d + h:
-                    v = (OCCUPIED if min(abs(x - a), abs(x - bb), abs(y - c),
-                                         abs(y - d)) <= res else UNKNOWN)
-            for a, bb, c, d in boxes:
-                if a - h < x < bb + h and c - h < y < d + h:
-                    v = OCCUPIED
-                    break
-            occ[row * width + col] = v
+    occ = _rasterise(b, res, ox, oy, width, height, ramp_rectangles(spec),
+                     box_rectangles(spec))
     dx, dy = spec['world_to_map']
     return LabMap(width, height, bytes(occ), map_id=map_id or spec['id'],
                   resolution=res, origin=(ox + dx, oy + dy), frame='map',
                   meta={'world_spec': spec['id']})
+
+
+def _rasterise(b, res, ox, oy, width, height, ramps, boxes) -> bytearray:
+    """
+    Apply arena_map's rules, visiting each rectangle's cells only (M1.5).
+
+    The same per-cell tests, in the same order (bounds, then each ramp in
+    turn, then any box), with the same cell centres, so the output is
+    identical to testing every cell against every rectangle -- only the
+    cells a rectangle cannot touch are skipped (timings:
+    docs/v2/data/m1/coldstart/).
+    """
+    h = res / 2
+    xs = [ox + (col + 0.5) * res for col in range(width)]
+    ys = [oy + (height - row - 0.5) * res for row in range(height)]
+    inside = bytes(FREE if b['x_min'] < x < b['x_max'] else UNKNOWN
+                   for x in xs)
+    unknown_row = bytes([UNKNOWN]) * width
+    occ = bytearray(width * height)
+    for row, y in enumerate(ys):
+        occ[row * width:(row + 1) * width] = (
+            inside if b['y_min'] < y < b['y_max'] else unknown_row)
+
+    def cols(lo, hi):
+        c0 = max(0, math.floor((lo - ox) / res - 0.5) - 1)
+        c1 = min(width - 1, math.ceil((hi - ox) / res - 0.5) + 1)
+        return [c for c in range(c0, c1 + 1) if lo < xs[c] < hi]
+
+    def rows(lo, hi):
+        r0 = max(0, math.floor(height - 0.5 - (hi - oy) / res) - 1)
+        r1 = min(height - 1, math.ceil(height - 0.5 - (lo - oy) / res) + 1)
+        return [r for r in range(r0, r1 + 1) if lo < ys[r] < hi]
+
+    for a, bb, c, d in ramps:
+        cs = cols(a - h, bb + h)
+        for r in rows(c - h, d + h):
+            y, base = ys[r], r * width
+            for col in cs:
+                x = xs[col]
+                occ[base + col] = (OCCUPIED if min(abs(x - a), abs(x - bb),
+                                                   abs(y - c), abs(y - d))
+                                   <= res else UNKNOWN)
+    for a, bb, c, d in boxes:
+        cs = cols(a - h, bb + h)
+        for r in rows(c - h, d + h):
+            base = r * width
+            for col in cs:
+                occ[base + col] = OCCUPIED
+    return occ
 
 
 def to_map_frame(spec, x: float, y: float) -> Tuple[float, float]:

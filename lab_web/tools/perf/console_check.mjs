@@ -35,7 +35,7 @@ const OUT = args.out ?? 'console-out';
 const SETTLE_MS = Number(args.settle ?? 8000);
 const PORT = args['recovery-port'] ? Number(args['recovery-port']) : null;
 const STUB = args.stub ?? join(new URL('.', import.meta.url).pathname, 'stub_stack.py');
-const VIEWS = ['plan', 'live', 'localise', 'map', 'search', 'move'];
+const VIEWS = ['plan', 'live', 'localise', 'map', 'search', 'move', 'arena'];
 mkdirSync(OUT, { recursive: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const origin = new URL(SITE).origin;

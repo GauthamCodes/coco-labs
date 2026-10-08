@@ -47,6 +47,9 @@ import sys
 HERE = os.path.dirname(os.path.realpath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
 OUT = os.path.join(REPO, 'worlds', 'coco_arena_v1.yaml')
+#: The canonical bytes (coco_lab.worldspec.canonical_bytes): what the browser
+#: loads (Pyodide has no YAML parser) and what run_id hashes.
+OUT_JSON = os.path.join(REPO, 'worlds', 'coco_arena_v1.json')
 NAV_JSON = 'gazebo_models/config/navigation_world.json'
 ROBOT_PY = 'coco_config/coco_config/robot.py'
 SKETCH_PY = 'coco_lab/coco_lab/sketch.py'
@@ -187,24 +190,38 @@ def build():
     return '\n'.join(lines) + '\n'
 
 
+def canonical(text):
+    """Return the spec's canonical bytes (needs PyYAML and coco_lab)."""
+    import yaml
+    sys.path.insert(0, os.path.join(REPO, 'coco_lab'))
+    from coco_lab.worldspec import canonical_bytes
+    return canonical_bytes(yaml.safe_load(text))
+
+
 def main(argv=None):
-    """Write the YAML, or check that the committed one is current."""
+    """Write the YAML and its canonical JSON, or check both are current."""
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[1])
     ap.add_argument('--check', action='store_true')
     a = ap.parse_args(argv)
     text = build()
+    data = canonical(text)
     if a.check:
         with open(OUT, encoding='utf-8') as f:
-            if f.read() != text:
-                print('STALE: worlds/coco_arena_v1.yaml differs from its '
-                      'sources; run worlds/tools/make_coco_arena_v1.py',
-                      file=sys.stderr)
-                return 1
-        print('worlds/coco_arena_v1.yaml is current')
+            stale = f.read() != text
+        with open(OUT_JSON, 'rb') as f:
+            stale = stale or f.read() != data
+        if stale:
+            print('STALE: worlds/coco_arena_v1.yaml or .json differs from '
+                  'its sources; run worlds/tools/make_coco_arena_v1.py',
+                  file=sys.stderr)
+            return 1
+        print('worlds/coco_arena_v1.yaml and .json are current')
         return 0
     with open(OUT, 'w', encoding='utf-8') as f:
         f.write(text)
-    print(f'wrote {os.path.relpath(OUT, REPO)}')
+    with open(OUT_JSON, 'wb') as f:
+        f.write(data)
+    print(f'wrote {os.path.relpath(OUT, REPO)} and its canonical JSON')
     return 0
 
 

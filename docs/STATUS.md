@@ -14,7 +14,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | Branch | `v2/m1-arena-core` (from `main` = `9f58b83`), worked in the worktree `.claude/worktrees/v2-m1-arena-core`, overlay `~/coco_lab_m1_ws` |
 | Milestone | **M1 · Glass-box Arena core** ([`v2/M1_PROMPT.md`](v2/M1_PROMPT.md)) |
-| Checkpoint | B.1 and **M1.1–M1.4 done**; **next: M1.5 worker runtime + cold start** (measure the Arena path first: self-hosted Pyodide from `node_modules/pyodide`, a trimmed `python_stdlib.zip` via `stdLibURL`, no micropip, preload in attract mode; `?perf` overlay) |
+| Checkpoint | B.1 and **M1.1–M1.5 done**; **next: M1.6 renderer** (Three.js 0.186.x on WebGL 2 beside React: occupancy data texture, frontier/closed instancing, heatmap, path, LiDAR fan, robot, footprint, truth outline; picking inspector; `docs/v2/VISUAL_SYSTEM.md`) |
 | Merge to `main` | M1 opens a PR when every agent-measurable criterion passes; it is **not** merged by the agent |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 phone performance, phone cold start and usability (README §7, M1) |
 
@@ -233,6 +233,30 @@ only. Read order for agents (README §9): `README.md`, this file,
   D\* Lite's `plan.incremental` (optional) is not done. Tests: packages
   **3,230 / 0 / 0** (`coco_lab` 649 → 663, `coco_schemas` 86 → 88),
   vitest **332 / 0 / 0**, tools **117 / 0 / 0**. Next: M1.5.
+
+- **M1.5 Worker runtime + cold start (2026-10-08).** `?view=arena` (code-
+  split from the v1 labs): a Web Worker runs Pyodide + coco_lab +
+  `lab_web/src/arena/arena_glue.py`; the Arena streams plan events WHILE it
+  plans (`Arena(on_plan_batch=...)`, `coco_lab.search.collect`), posted as
+  transferable typed-array batches (ADR 0001), then each tick with its
+  ranges. Cold-start work, each measured before/after
+  ([`v2/COLDSTART.md`](v2/COLDSTART.md)): Pyodide **self-hosted** from the
+  pinned npm package; stdlib **trimmed** to the 142 files the Arena imports
+  (2.55 → 0.78 MB, identical hashes); no micropip/wheel (a sha-checked
+  `coco_lab.zip`); Arena world rasterised per rectangle (780.7 → 9.8 ms in
+  Pyodide, identical output); the worker starts when the page opens.
+  Laptop, n = 10, Pages-like gzip: **Arena ready 2,087 ms** (2,055–2,182)
+  unthrottled, **3,605** on emulated Wi-Fi, **7,301** on emulated 4G;
+  jsDelivr instead: 76,046 / 9,124 ms medians with 11 of 20 runs stalling
+  (not attributed). Goal → first plan events 89–104 ms medians. `?perf`
+  overlay (stage times, fps, event throughput, step cost) and
+  [`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md) for Gautham. Console: 0
+  errors in all seven views incl. `arena`, which makes 0 cross-origin
+  requests. Appended to `docs/RESULTS.md`. Tests: packages
+  **3,232 / 0 / 0**, vitest **336 / 0 / 0** (`arena_runtime.test.ts`: trimmed
+  = full stdlib, hash for hash), tools **117 / 0 / 0**. Not yet: first
+  VISIBLE computation (needs M1.6), attract-mode recording (M1.8), phone
+  numbers (Gautham). Next: M1.6.
 
 ## Capabilities (README §2), with evidence class
 

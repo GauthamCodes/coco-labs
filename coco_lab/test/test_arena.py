@@ -171,3 +171,23 @@ def test_the_state_layout_has_the_documented_size(arena0):
     n = len(arena0.ranges)
     assert len(arena0.state_bytes()) == 8 + 5 * 8 + 3 + 2 * 8 + 2 * 4 \
         + 32 + 32 + 4 + 4 * n
+
+
+def test_streaming_plan_batches_changes_nothing_and_carries_the_trace():
+    """on_plan_batch sees the search as it runs; the state is unaffected."""
+    batches = []
+    inputs = [InputEvent(0, 'goal', x=6.0, y=4.0),
+              InputEvent(30, 'planner', choice='dijkstra')]
+    a = Arena(SPEC, seed=4, on_plan_batch=lambda c, m: batches.append((c, m)),
+              plan_batch_size=500)
+    ticks = run(a, inputs, 40)
+    assert [t.state_hash for t in ticks] == replay(SPEC, 4, inputs, 40)
+    plans = [p for t in ticks for p in t.plans]
+    assert [m['search_id'] for _, m in batches if m['final']] == [0, 1]
+    for p, sid in zip(plans, (0, 1)):
+        mine = [c for c, m in batches if m['search_id'] == sid]
+        assert all(len(c['seq']) <= 500 for c in mine)
+        kinds = [k for c in mine for k in c['kind']]
+        assert kinds == [k + 1 for k in p.result.trace.events['kind']]
+        rows = [r for c in mine for r in c['row']]
+        assert rows == list(p.result.trace.events['row'])

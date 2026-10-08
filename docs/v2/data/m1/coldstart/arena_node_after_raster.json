@@ -1,0 +1,26 @@
+{
+ "meta": {
+  "at_utc": "2026-10-08T13:46:40.110Z",
+  "node": "v24.21.0",
+  "pyodide": "314.0.7",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "load1": 2.2
+ },
+ "load_pyodide_ms": 1392,
+ "write_coco_lab_ms": 3,
+ "python": {
+  "import_ms": 53.6,
+  "normalize_ms": 0.7,
+  "arena_map_ms": 9.8,
+  "sketchmap_edt_ms": 228.6,
+  "inflate_ms": 20,
+  "to_grid_ms": 14.2,
+  "arena_init_total_ms": 274.5,
+  "first_step_with_astar_plan_ms": 85.1,
+  "plan_events": 13422,
+  "plan_expansions": 4402,
+  "steps_100_ms": 772.5,
+  "scan_480_beams_ms": 7,
+  "hash_after_101": "c09ddb256ab2357010b843a3fcd9f2c546ba8f4cfa6ee298341665d120c764ce"
+ }
+}

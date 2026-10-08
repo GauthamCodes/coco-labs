@@ -22,6 +22,7 @@ equal the Gazebo world's models.
 
 import copy
 import os
+import random
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
@@ -118,6 +119,62 @@ def test_ramps_are_their_scan_height_silhouette(spec):
     assert x0 > n['ramps']['foot_x']
     assert x1 < n['ramps']['foot_x'] + 2 * n['ramps']['run'] + \
         n['ramps']['platform_length']
+
+
+def reference_occupancy(spec):
+    """arena_map's rules, cell by cell against every rectangle (M1.2's code)."""
+    from coco_lab.maps import FREE, OCCUPIED, UNKNOWN
+    from coco_lab.worldspec import box_rectangles
+    spec = normalize(spec)
+    b, res = spec['bounds'], spec['arena']['resolution']
+    m = spec['arena']['margin']
+    ox, oy = b['x_min'] - m, b['y_min'] - m
+    width = round((b['x_max'] - b['x_min'] + 2 * m) / res)
+    height = round((b['y_max'] - b['y_min'] + 2 * m) / res)
+    ramps, boxes = ramp_rectangles(spec), box_rectangles(spec)
+    h = res / 2
+    occ = bytearray(width * height)
+    for row in range(height):
+        y = oy + (height - row - 0.5) * res
+        for col in range(width):
+            x = ox + (col + 0.5) * res
+            v = FREE if (b['x_min'] < x < b['x_max']
+                         and b['y_min'] < y < b['y_max']) else UNKNOWN
+            for a, bb, c, d in ramps:
+                if a - h < x < bb + h and c - h < y < d + h:
+                    v = (OCCUPIED if min(abs(x - a), abs(x - bb), abs(y - c),
+                                         abs(y - d)) <= res else UNKNOWN)
+            for a, bb, c, d in boxes:
+                if a - h < x < bb + h and c - h < y < d + h:
+                    v = OCCUPIED
+                    break
+            occ[row * width + col] = v
+    return bytes(occ)
+
+
+def test_the_fast_rasteriser_equals_the_cell_by_cell_rules(spec):
+    """Random worlds, including boxes on cell edges and off the map."""
+    rng = random.Random(9)
+    for k in range(25):
+        s = copy.deepcopy(spec)
+        s['bounds'] = {'x_min': rng.uniform(-3, -1), 'x_max': rng.uniform(2, 6),
+                       'y_min': rng.uniform(-3, -1), 'y_max': rng.uniform(1, 4)}
+        s['arena']['resolution'] = rng.choice([0.05, 0.1, 0.13])
+        s['arena']['margin'] = rng.choice([0.0, 0.5, 0.25])
+        s['ramps']['centres_y'] = [rng.uniform(-2, 3)]
+        s['ramps']['foot_x'] = rng.uniform(-2, 2)
+        s['boxes'] = []
+        for i in range(rng.randint(1, 12)):
+            # snap some boxes to exact cell edges, where < vs <= matters
+            snap = rng.random() < 0.4
+            cx = round(rng.uniform(-4, 7) / 0.05) * 0.05 if snap \
+                else rng.uniform(-4, 7)
+            s['boxes'].append({'id': f'b{i}', 'kind': 'obstacle',
+                               'center': [cx, rng.uniform(-4, 5)],
+                               'size': [rng.uniform(0.01, 3),
+                                        rng.uniform(0.01, 3)],
+                               'z': 0.5, 'height': 1.0})
+        assert arena_map(s).occupancy == reference_occupancy(s), k
 
 
 @pytest.mark.parametrize('mutate,match', [

@@ -8787,3 +8787,34 @@ Gazebo recordings `~/coco_lab_runs/lab2/fidelity_1` and `fidelity_s1`
   are the same.
 - Conditions: CPython 3.12.3 (not Pyodide), development laptop
   (i5-13420H); the figure is a property of the data, not of the machine.
+
+## COCO Lab v2 · M1.5 — the Arena's cold start and runtime (measured 2026-10-08)
+
+Append-only. Evidence class **MODEL**. Device: the development laptop
+(Intel i5-13420H), headless Chromium 156 (Playwright), Node 24.21.0,
+Pyodide 314.0.7. Reference: `docs/v2/COLDSTART.md`; evidence:
+`docs/v2/data/m1/coldstart/`.
+
+- **Arena ready** (Pyodide + coco_lab + the World built), ms since
+  navigation, n = 10 fresh browsers each, served gzip-encoded like GitHub
+  Pages (`lab_web/tools/perf/serve_dist.mjs`), self-hosted Pyodide with the
+  trimmed stdlib: **2,087** (2,055–2,182) unthrottled; **3,605**
+  (3,569–3,669) on an emulated 30 Mbit/s, 20 ms link; **7,301**
+  (7,185–7,411) on an emulated 9 Mbit/s, 170 ms "4G" link. 4,944,244 B
+  transferred. 0 console errors in all runs.
+- **Trimmed stdlib** (142 of the zip's files, 2,545,637 → 775,763 B): with
+  the full stdlib, self-hosted, the same links gave 4,026 (3,987–4,137) and
+  8,948 (8,892–9,046): trimming saved 421 ms and 1,647 ms. Same per-tick
+  hashes on both (`lab_web/test/arena_runtime.test.ts`).
+- **jsDelivr CDN instead** (v1's way, full stdlib, real internet plus the
+  same emulation): 76,046 (4,484–90,958) and 9,124 (8,734–80,346); 11 of 20
+  runs took over 20 s to make Pyodide ready. Stalls not attributed; not a
+  controlled comparison.
+- **Inside Pyodide-in-Node:** Arena world rasterisation 780.7 → 9.8 ms after
+  rasterising per rectangle (identical output, tested); Arena init 1,036.8 →
+  274.5 ms; one tick 7.5 ms (480-beam scan 6.8 ms); an A* plan across the
+  arena 86.4 ms (4,402 expansions, 13,422 events).
+- **Goal to first plan events reaching the page** (warm): median 89–104 ms
+  across configurations (68–133 ms), including up to one 100 ms tick wait.
+- Not measured here: the phone (Gautham, `docs/v2/PHONE_MEASURE.md`), and
+  first VISIBLE computation (needs the renderer; M1.10).

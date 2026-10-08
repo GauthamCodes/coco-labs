@@ -116,6 +116,8 @@ jobs:
         run: |
           node --version && npm --version
           npm run typecheck
+          # the Arena runtime test boots Pyodide on these (M1.5)
+          npm run arena-assets
           npm test
       - name: Build twice; the two builds must be identical
         working-directory: lab_web

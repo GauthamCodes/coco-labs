@@ -148,14 +148,26 @@ def search(graph: SearchGraph, start: State, goal: State,
     traces are byte-identical to Lab 1's on the 1,000-map corpus
     (``test/test_golden_traces.py``).
     """
-    events = search_events(graph, start, goal, algorithm, heuristic, weight,
-                           tie_break)
+    return collect(search_events(graph, start, goal, algorithm, heuristic,
+                                 weight, tie_break))
+
+
+def collect(events, sink: Optional[Callable[[EventRow], None]] = None
+            ) -> SearchResult:
+    """
+    Run a :func:`search_events` generator to the end into a v1 trace.
+
+    ``sink``, if given, sees every row as it is made (the Arena hands rows
+    to the renderer in batches while the search runs).
+    """
     tb = TraceBuilder()
     add = tb.add
     try:
         while True:
             e = next(events)
             add(e[0], e[1:4], e[4], e[5], e[6], e[7:10])
+            if sink is not None:
+                sink(e)
     except StopIteration as stop:
         out: SearchOutcome = stop.value
     trace = Trace(out.header, tb.columns, out.summary)
