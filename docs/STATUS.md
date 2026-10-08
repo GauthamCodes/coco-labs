@@ -14,7 +14,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | Branch | `v2/m0-transition` (from `3571169`) |
 | Current SHA | the head of `v2/m0-transition`; each checkpoint commit is listed below |
 | Milestone | **M0 · Transition** |
-| Checkpoint | M0.6 Honesty fixes — done |
+| Checkpoint | M0.7 Freeze robot-stack packages — done |
 | Merge to `main` | not merged; owner's approval required (README §3, integrity rule 5) |
 
 ## Checkpoint log
@@ -60,6 +60,13 @@ only. Read order for agents (README §9): `README.md`, this file,
   (bodies untouched). No "two-finger" wording exists outside the archive
   and frozen code comments. `lab_web/test/live.test.ts` updated for the
   new label; vitest 308 / 0 / 0.
+- **M0.7 Freeze the robot-stack packages (2026-10-08).** `FROZEN.md` in
+  each of the nine: `coco_config`, `coco_mission`, `coco_moveit_config`,
+  `coco_perception`, `coco_rl`, `coco_sim`, `coco_web`, `custom_teleop`,
+  `gazebo_models` — kept, no new features, decision G3 pending; nothing
+  deleted. `coco_lab`, `coco_lab_ros` and `lab_web` are COCO Lab's own and
+  are not frozen. `coco_web`'s `platform_server` is unfrozen by plan at
+  M4–M5 (README §4).
 
 ## Capabilities (README §2), with evidence class
 
