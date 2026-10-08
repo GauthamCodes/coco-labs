@@ -42,10 +42,9 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
+from coco_lab import search as search_mod  # noqa: E402
 import lab_maps  # noqa: E402
 import test_properties  # noqa: E402
-
-from coco_lab import search as search_mod  # noqa: E402
 
 
 def main(out):

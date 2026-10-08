@@ -15,6 +15,7 @@ normative; this page explains them.
 | v1 trace converter (lossless) | `coco_schemas/coco_schemas/trace_v1.py` |
 | Run identity | `coco_schemas/coco_schemas/runid.py`, `lab_web/src/schemas/runid.ts` |
 | Compatibility rules + baseline | `coco_schemas/coco_schemas/compat.py`, `coco_schemas/compat/v1.binpb` |
+| Columnar emitter (Python, no protobuf) | `coco_lab/coco_lab/events.py` (`SearchEventColumns`, `stream`), fed by `coco_lab.search.search_events` (M1.4); bytes pinned by `coco_schemas/test/test_columns.py` |
 | Columnar fast encoder | `lab_web/src/schemas/columns.ts` |
 | Container (MCAP + zstd) | `lab_web/src/schemas/mcap.ts` |
 | Cross-language vectors | `coco_schemas/test/vectors/` (written by `coco_schemas/scripts/make_vectors.py`) |

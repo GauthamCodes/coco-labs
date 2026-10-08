@@ -14,7 +14,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | Branch | `v2/m1-arena-core` (from `main` = `9f58b83`), worked in the worktree `.claude/worktrees/v2-m1-arena-core`, overlay `~/coco_lab_m1_ws` |
 | Milestone | **M1 · Glass-box Arena core** ([`v2/M1_PROMPT.md`](v2/M1_PROMPT.md)) |
-| Checkpoint | B.1, M1.1, M1.2 and **M1.3 done**; **next: M1.4 planners emit events** (freeze the `test_all_five_agree_on_no_path` corpus as parameters plus v1-trace digests BEFORE touching `search.py`; then the generator API; CI golden-trace test) |
+| Checkpoint | B.1 and **M1.1–M1.4 done**; **next: M1.5 worker runtime + cold start** (measure the Arena path first: self-hosted Pyodide from `node_modules/pyodide`, a trimmed `python_stdlib.zip` via `stdLibURL`, no micropip, preload in attract mode; `?perf` overlay) |
 | Merge to `main` | M1 opens a PR when every agent-measurable criterion passes; it is **not** merged by the agent |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 phone performance, phone cold start and usability (README §7, M1) |
 
@@ -213,6 +213,26 @@ only. Read order for agents (README §9): `README.md`, this file,
   (`coco_lab` 622 → 649), vitest **332 / 0 / 0**, tools **117 / 0 / 0**.
   Not claimed: native CPython and Pyodide hash equality (different `libm`);
   cross-browser equality is measured in M1.5/M1.10. Next: M1.4.
+
+- **M1.4 Planners emit events (2026-10-08).** First, before
+  `search.py` changed: Lab 1's traces frozen on the 1,000-map corpus of
+  `test_all_five_agree_on_no_path` (all five algorithms per map, with the
+  property's own heuristic, tie-break and weight; 5,000 searches, 1,950
+  found) as map parameters plus each trace's sha256 —
+  `coco_lab/test/golden_traces_v1.json.gz` (`e801785`), made at a commit
+  whose search stack equals the tag `coco-lab-v1-final`. Then
+  `coco_lab.search.search_events()`: a generator yielding each push /
+  expand / relax / path event as the search makes it (validated at the
+  call), with `search()` now its consumer; `coco_lab/events.py` turns rows
+  into `SearchEventBatch` columns in batches (ADR 0001). **Golden traces:
+  all 5,000 searches reproduce Lab 1 exactly** — same expansion order,
+  g/h/f, parents, path, summary (sha256 of the canonical trace), through
+  both `search_events` and `search` (`coco_lab/test/test_golden_traces.py`,
+  in CI with `coco_lab`'s suite); the emitted columns encode to the same
+  protobuf bytes as the converter's (`coco_schemas/test/test_columns.py`).
+  D\* Lite's `plan.incremental` (optional) is not done. Tests: packages
+  **3,230 / 0 / 0** (`coco_lab` 649 → 663, `coco_schemas` 86 → 88),
+  vitest **332 / 0 / 0**, tools **117 / 0 / 0**. Next: M1.5.
 
 ## Capabilities (README §2), with evidence class
 
