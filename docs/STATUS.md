@@ -14,8 +14,8 @@ only. Read order for agents (README §9): `README.md`, this file,
 | Branch | `v2/m0-transition` (from `3571169`) |
 | Current SHA | the head of `v2/m0-transition`; each checkpoint commit is listed below |
 | Milestone | **M0 · Transition** |
-| Checkpoint | M0.1–M0.8 done; exit checks passed; awaiting merge approval and independent review |
-| Merge to `main` | not merged; owner's approval required (README §3, integrity rule 5) |
+| Checkpoint | M0.1–M0.8 done. The independent review (2026-10-08) found one exit criterion unmet (Live console errors) and five overstatements; fixes A.1–A.5 are applied (below). Merge under the owner's one-off permission once the M0-close conditions hold (suites, CI, 0 console errors in all six views, README = owner's file) |
+| Merge to `main` | not merged yet; the owner granted a one-off permission to merge PR #19 when the M0-close conditions hold (plan-change log, 2026-10-08) |
 
 ## Checkpoint log
 
@@ -83,6 +83,36 @@ only. Read order for agents (README §9): `README.md`, this file,
   robot" on screen. Evidence: [`docs/v2/data/m0/EXIT.md`](v2/data/m0/EXIT.md).
   **M0 is not closed**: it closes after Gautham approves the merge and a
   fresh review session verifies the report (README §9.9).
+
+- **Independent review (2026-10-08, README §9.9): done.** A fresh
+  session that did not do the work checked PR #19 at `c70f447`; report
+  saved verbatim as [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md).
+  Verdicts: tag, releases, README, archive, nothing deleted, RESULTS
+  append-only, required files, baseline numbers (recomputed exactly),
+  tests (3,081 / 308 / 117), CI, recordings (3/3), lab5 fast-forward and
+  checkpoint discipline **VERIFIED**; views load **VERIFIED, Live
+  excepted**; honesty copy **NOT VERIFIED (partly fixed)**.
+  Recommendation: **MERGE AFTER FIXES**. What the "exit checks passed"
+  line above used to claim was not true: Live still logged console
+  errors, so README §7's "every current public view still loads with no
+  console errors" was not met.
+- **M0 review fixes (2026-10-08, `[M0-fix]` commits).** Each finding and
+  how it was resolved:
+
+  | Review finding | Resolution | Evidence |
+  |---|---|---|
+  | Exit criterion not met: Live logged `ws://localhost:8080` connection-refused errors | **A.2 quiet Live probe.** Measured first: in Chromium a fetch to a dead endpoint is itself a console error (refused port, unresolvable host, opaque `no-cors` alike), so the page now contacts only what was asked for: a `?live=` link, Connect or Watch (`/healthz` first, backoff 2 s doubling to 30 s, socket only after an answer), and the scheduled demo's endpoint only while a demo is on. All six views: **0 console errors, 0 page errors**; Live opens 0 sockets on load; recovery against a stand-in server connects with 1 socket | `v2/data/m0/exit/console_after_fix.json`, `probe_noise.json` |
+  | STATUS.md said "exit checks passed" (overstated) | Replaced by the Checkpoint row above and this entry | this file |
+  | "All four CI jobs passed" | Three passed; the Pages deploy is **skipped** on PR runs (it runs on `main` only) | PR #19 checks |
+  | Correction notes claimed for the lab4 release notes, but only the repo copy was corrected; lab1-v1.0's "a real robot used" not mentioned; live-v1.0 title says "the real robot" | **A.4**: the three published texts edited, wording only, under a one-off owner permission; tags, targets, flags and assets re-read identical | `v2/data/m0/releases_before/`, `releases_after/`, `releases_diff.txt` |
+  | `docs/RESULTS.md:8568` "The real robot chose…" has no note; `docs/history/ROADMAP_LAB_2026-09-28.md` has no header | **A.3**: appended dated correction note in RESULTS.md (line untouched); correction header on the roadmap (body untouched). Repo search: 68 hits, 0 needing a fix; rendered site shows no "real robot" | `v2/data/m0/exit/copycheck_after_fix.json` |
+  | Gripper described two ways (plan: magnet only; robot-stack record: fingers and a magnet) | **A.1**: owner's corrected plan installed (plan-change log); four M0-written lines now say "two fingers and a magnet; the magnet holds the object" | README sha256 `23214733…175935c` |
+  | "Two exit criteria aren't fully met" counted the phone baseline | The phone baseline is **not** an M0 exit criterion: M0.3 asks for the method and the script, which exist. The measurement itself is **pending Gautham** ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)) | — |
+  | "Worktree clean" not checkable by the reviewer | The fix session ran `git status` before every commit in the same worktree; the remote branch head is the pushed end SHA | `git log` |
+  | Merging lands lab5's two docs-only commits on `main` | Expected under M0.1; no action | START_STATE.md |
+  | `~/coco_labs_ws/src/coco-labs` is a stale clone while `CLAUDE.md` and the scripts default to it | **Resolved by M1 step B.1**: that checkout is fast-forwarded to the merged `main` and becomes canonical (plan-change log, 2026-10-08) | `v2/CHECKOUTS.md` (M1) |
+
+- **M0-close tests (2026-10-08).** TESTS_PLACEHOLDER
 
 ## Capabilities (README §2), with evidence class
 

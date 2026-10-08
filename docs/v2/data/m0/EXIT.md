@@ -47,3 +47,14 @@ horizontal overflow at 390 px. Command:
 `README.md` is byte-identical to `~/Downloads/README.md` (sha256
 `4b003e50c28f8a217ce7315c2574cd123da959d2d61eeff92a4c053d451a2ab6`, `cmp`
 clean).
+
+## After the independent review (2026-10-08, M0 fix)
+
+Appended; the record above is unchanged. The review found the Live view's
+console errors left README §7's exit criterion unmet. After fix A.2, on a
+production build in headless Chromium 156: plan, live, localise, map,
+search and move each load with **0 console errors and 0 page errors**; the
+Live view opens no socket and makes no cross-origin request on load.
+Evidence: [`exit/console_after_fix.json`](exit/console_after_fix.json);
+why the fix is shaped as it is: [`exit/probe_noise.json`](exit/probe_noise.json);
+wording: [`exit/copycheck_after_fix.json`](exit/copycheck_after_fix.json).
