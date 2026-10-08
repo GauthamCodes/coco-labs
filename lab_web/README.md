@@ -1,11 +1,22 @@
 # lab_web — COCO Lab in the browser (Phase 1D, Lab 1.1)
 
+> **Deprecated parts (COCO Lab v2, 2026-10-08).** The Canvas 2D renderers,
+> the per-lab bundle/trace decoders and the six separate views are
+> replaced in M1–M2 by one Three.js Arena on one trace envelope; the React
+> + Vite + TypeScript shell is kept. **Every current view keeps working
+> until its replacement ships.** Which part, which milestone:
+> [`docs/v2/DEPRECATIONS.md`](../docs/v2/DEPRECATIONS.md).
+
 The browser tier of COCO Lab. It **renders** search traces that `coco_lab`
 produced, and **asks** `coco_lab` (running in the browser via Pyodide) to
 recompute when you paint a map, change a search setting or start a race.
 It never implements a search: no priority
-queue, no neighbour generator, no heuristic (CLAUDE.md "COCO Lab" rule 8;
-`tools/test_tools.py::test_lab_web_src_has_no_search_implementation`).
+queue, no neighbour generator, no heuristic
+(`tools/test_tools.py::test_lab_web_src_has_no_search_implementation`).
+This was v1's "COCO Lab" rule 8; v2 replaces it with a testable invariant —
+a second implementation of an algorithm must be trace-equivalent to the
+Python reference on the property-test corpus, checked in CI (`CLAUDE.md`,
+"The replaced invariant"). Until such a check exists, the test above stands.
 
 Plan: [`docs/labs/PHASE_1D_PLAN.md`](../docs/labs/PHASE_1D_PLAN.md).
 Measurements: `docs/RESULTS.md`, "COCO Lab Phase 1D" and "COCO Lab 1.1,
