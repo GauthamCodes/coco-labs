@@ -8750,3 +8750,14 @@ connection.
 - **Recordings cited by checksum**: the three Lab 1C bags resolve in
   `~/coco_lab_runs/lab1c/` with equal hash and size (3/3,
   `docs/v2/data/m0/FREEZE.md`).
+
+## Correction note — "real robot" in Phase 5 (added 2026-10-08, COCO Lab v2 · M0 fix A.3)
+
+Append-only; the line it corrects is not edited. In the Phase 5 (Lab 4)
+section above, line 8568 reads **"The real robot chose what coco_lab
+chooses"**. There, "real robot" means **the full ROS 2 stack in Gazebo
+(simulated)** — evidence class STACK. No physical robot exists, and nothing
+in this file ran on hardware (README §2, corrections 1 and 3). The result
+itself stands as written: all 16 recorded Gazebo searches rebuild from
+their looks alone through `replay_search`, byte for byte.
+

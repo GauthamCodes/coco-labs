@@ -1,5 +1,7 @@
 # COCO Lab — roadmap
 
+> **Correction (2026-10-08, COCO Lab v2 · M0 fix A.3).** Where this document says "real robot" or "the real robot" (five places in the body, among them the table heading "Where the real robot comes in"), it means **the full ROS 2 stack (simulated)** in Gazebo. No physical robot exists, and nothing here ran on hardware (README §2, corrections 1 and 3). This is a historical roadmap, superseded by `README.md`; the text below is kept as written.
+
 > **Status, 2026-09-28: Phase 0 not started.**
 > This roadmap supersedes the priority order in the COCO 2.0 master context
 > (§45). Everything else in that document — its invariants, protected files

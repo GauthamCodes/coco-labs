@@ -1,0 +1,686 @@
+{
+ "terms": "real robot|two-finger|2-finger|magnet gripper",
+ "scope": [
+  "lab_web/src",
+  "docs",
+  "README.md",
+  "CLAUDE.md",
+  "PROJECT_STATE.md"
+ ],
+ "excluded": [
+  "docs/archive/"
+ ],
+ "commit_before_this_file": "40b6dc2a7cc997184c0d2e282b49173bc99775ac",
+ "hits": 68,
+ "by_class": {
+  "label_vocabulary": 2,
+  "quotes_old_text": 2,
+  "not_hardware": 2,
+  "correction_rule": 2,
+  "idea_log": 2,
+  "hypothetical": 3,
+  "covered_by_appended_note": 1,
+  "correction_text": 8,
+  "status_record": 5,
+  "covered_by_header": 10,
+  "negation": 1,
+  "evidence_record": 30
+ },
+ "needs_fix": [],
+ "detail": [
+  {
+   "file": "CLAUDE.md",
+   "line": 52,
+   "term": "REAL ROBOT",
+   "text": "MODEL, SIMULATION RESULT, REAL ROBOT RESULT, INFERENCE. **No physical robot",
+   "class": "label_vocabulary",
+   "why": "the label name, followed by \"No physical robot exists\""
+  },
+  {
+   "file": "PROJECT_STATE.md",
+   "line": 49,
+   "term": "real robot",
+   "text": "the site — until 2026-10-08 this read \"the real robot on the site\"), and it",
+   "class": "quotes_old_text",
+   "why": "records the M0.6 rewording"
+  },
+  {
+   "file": "README.md",
+   "line": 64,
+   "term": "real robot",
+   "text": "| **Play** | Challenges scored only with real robotics metrics |",
+   "class": "not_hardware",
+   "why": "\"real robotics metrics\" is not a robot claim"
+  },
+  {
+   "file": "README.md",
+   "line": 173,
+   "term": "REAL ROBOT",
+   "text": "The labels shown to learners map onto these: MEASURED, ASSUMPTION, SIMPLIFIED MODEL, SIMULATION RESULT, REAL ROBOT RESULT, INFERENCE.",
+   "class": "label_vocabulary",
+   "why": "the evidence-label name for HARDWARE results (none exist)"
+  },
+  {
+   "file": "README.md",
+   "line": 380,
+   "term": "real robot",
+   "text": "- Wherever the site or docs say \"real robot\" for the Gazebo stack, say \"the full ROS 2 stack (simulated)\".",
+   "class": "correction_rule",
+   "why": "the plan's own correction rule"
+  },
+  {
+   "file": "README.md",
+   "line": 553,
+   "term": "real robot",
+   "text": "| G5 | Will a physical robot exist within a year? | Assume no; no \"real robot\" wording anywhere |",
+   "class": "correction_rule",
+   "why": "decision G5 default"
+  },
+  {
+   "file": "docs/IDEAS.md",
+   "line": 11,
+   "term": "real robot",
+   "text": "2026-10-08 | Rename the published `live-v1.0` release title (\"the real robot in the browser\") — owner action, releases are not edited by agents | release title contradicts README correction 3 | M0 mer",
+   "class": "idea_log",
+   "why": "parked ideas quoting the wording to replace"
+  },
+  {
+   "file": "docs/IDEAS.md",
+   "line": 12,
+   "term": "real robot",
+   "text": "2026-10-08 | Replace the remaining \"real stack\" / \"real run\" / \"real mission\" / \"Replay — recorded real run\" wording (consistent with README correction 1, but easy to misread as hardware) with evidenc",
+   "class": "idea_log",
+   "why": "parked ideas quoting the wording to replace"
+  },
+  {
+   "file": "docs/RESULTS.md",
+   "line": 6145,
+   "term": "real robot",
+   "text": "that role on a real robot is an open question this milestone does not",
+   "class": "hypothetical",
+   "why": "an open question about hardware"
+  },
+  {
+   "file": "docs/RESULTS.md",
+   "line": 8568,
+   "term": "real robot",
+   "text": "- **The real robot chose what coco_lab chooses:** all 16 recorded searches",
+   "class": "covered_by_appended_note",
+   "why": "append-only correction note at the end of RESULTS.md (M0 fix A.3)"
+  },
+  {
+   "file": "docs/RESULTS.md",
+   "line": 8754,
+   "term": "real robot",
+   "text": "## Correction note — \"real robot\" in Phase 5 (added 2026-10-08, COCO Lab v2 · M0 fix A.3)",
+   "class": "correction_text",
+   "why": "the appended note"
+  },
+  {
+   "file": "docs/RESULTS.md",
+   "line": 8757,
+   "term": "real robot",
+   "text": "section above, line 8568 reads **\"The real robot chose what coco_lab",
+   "class": "correction_text",
+   "why": "the appended note"
+  },
+  {
+   "file": "docs/RESULTS.md",
+   "line": 8758,
+   "term": "real robot",
+   "text": "chooses\"**. There, \"real robot\" means **the full ROS 2 stack in Gazebo",
+   "class": "correction_text",
+   "why": "the appended note"
+  },
+  {
+   "file": "docs/SESSION_LOG.md",
+   "line": 1751,
+   "term": "real robot",
+   "text": "real robot.",
+   "class": "hypothetical",
+   "why": "wrapped tail of \"it bounds what C2-M2.1 can claim about a real robot\" (line 1750-1751)"
+  },
+  {
+   "file": "docs/SESSION_LOG.md",
+   "line": 1919,
+   "term": "real robot",
+   "text": "still bounds what any of it claims about a real robot.",
+   "class": "hypothetical",
+   "why": "same"
+  },
+  {
+   "file": "docs/SESSION_LOG.md",
+   "line": 8184,
+   "term": "real robot",
+   "text": "- M0.6 copy: \"Live Stack (simulated)\", no \"real robot\" for the Gazebo",
+   "class": "status_record",
+   "why": "the M0.6 log entry"
+  },
+  {
+   "file": "docs/STATUS.md",
+   "line": 62,
+   "term": "two-finger",
+   "text": "(bodies untouched). No \"two-finger\" wording exists outside the archive",
+   "class": "status_record",
+   "why": "STATUS.md records the corrections themselves"
+  },
+  {
+   "file": "docs/STATUS.md",
+   "line": 123,
+   "term": "real robot",
+   "text": "| G5 | Will a physical robot exist within a year? | Assume no; no \"real robot\" wording anywhere |",
+   "class": "status_record",
+   "why": "STATUS.md records the corrections themselves"
+  },
+  {
+   "file": "docs/STATUS.md",
+   "line": 134,
+   "term": "two-finger",
+   "text": "| 2026-10-08 | **Gripper wording corrected.** README §2 correction 2 and M0.6 now read \"two fingers and a magnet; the magnet does the holding\". README sha256 `4b003e50…a2ab6` → `23214733…175935c`. | T",
+   "class": "status_record",
+   "why": "STATUS.md records the corrections themselves"
+  },
+  {
+   "file": "docs/STATUS.md",
+   "line": 135,
+   "term": "real robot",
+   "text": "| 2026-10-08 | **One-off permission to edit three published release texts** (`live-v1.0`, `lab1-v1.0`, `lab4-v1.0`): wording only, never assets, tags or targets. | Their \"real robot\" wording describes",
+   "class": "status_record",
+   "why": "STATUS.md records the corrections themselves"
+  },
+  {
+   "file": "docs/history/ROADMAP_COCO2.md",
+   "line": 632,
+   "term": "real robot",
+   "text": "> **The rule that governs this whole track:** COCO stays a real robotics",
+   "class": "not_hardware",
+   "why": "\"real robotics project\", not a robot claim"
+  },
+  {
+   "file": "docs/history/ROADMAP_LAB_2026-09-28.md",
+   "line": 3,
+   "term": "real robot",
+   "text": "> **Correction (2026-10-08, COCO Lab v2 · M0 fix A.3).** Where this document says \"real robot\" or \"the real robot\" (five places in the body, among them the table heading \"Where the real robot comes in",
+   "class": "correction_text",
+   "why": "the file's correction header"
+  },
+  {
+   "file": "docs/history/ROADMAP_LAB_2026-09-28.md",
+   "line": 58,
+   "term": "real robot",
+   "text": "real robot did, recorded with provenance.",
+   "class": "covered_by_header",
+   "why": "the file opens with a 2026-10-08 correction header"
+  },
+  {
+   "file": "docs/history/ROADMAP_LAB_2026-09-28.md",
+   "line": 140,
+   "term": "real robot",
+   "text": "real robot.",
+   "class": "covered_by_header",
+   "why": "the file opens with a 2026-10-08 correction header"
+  },
+  {
+   "file": "docs/history/ROADMAP_LAB_2026-09-28.md",
+   "line": 230,
+   "term": "real robot",
+   "text": "| Lab | What learners play with | Where the real robot comes in |",
+   "class": "covered_by_header",
+   "why": "the file opens with a 2026-10-08 correction header"
+  },
+  {
+   "file": "docs/history/ROADMAP_LAB_2026-09-28.md",
+   "line": 253,
+   "term": "Real robot",
+   "text": "- **Real robot:** three recorded runs (A\\*, Dijkstra and greedy on the same",
+   "class": "covered_by_header",
+   "why": "the file opens with a 2026-10-08 correction header"
+  },
+  {
+   "file": "docs/history/ROADMAP_LAB_2026-09-28.md",
+   "line": 425,
+   "term": "real robot",
+   "text": "| Sketch mistaken for the real robot | Always labelled; fidelity measured and shown |",
+   "class": "covered_by_header",
+   "why": "the file opens with a 2026-10-08 correction header"
+  },
+  {
+   "file": "docs/labs/LAB1_PLAN.md",
+   "line": 3,
+   "term": "real robot",
+   "text": "> **Correction (2026-10-08, COCO Lab v2 · M0.6).** Where this document says \"real robot\" or \"the real robot\", it means **the full ROS 2 stack (simulated)** in Gazebo. No physical robot exists, and not",
+   "class": "correction_text",
+   "why": "the file's correction header"
+  },
+  {
+   "file": "docs/labs/LAB1_PLAN.md",
+   "line": 9,
+   "term": "real robot",
+   "text": "browser, on the same maps and the same Nav2 stack a real robot used. This",
+   "class": "covered_by_header",
+   "why": "the file opens with a 2026-10-08 correction header"
+  },
+  {
+   "file": "docs/labs/LAB3_MAP.md",
+   "line": 225,
+   "term": "real robot",
+   "text": "- **A real robot.** Everything real here was recorded on the real stack in",
+   "class": "negation",
+   "why": "listed under \"Not verified\"; the line says it ran on the stack"
+  },
+  {
+   "file": "docs/labs/LAB4_SEARCH.md",
+   "line": 3,
+   "term": "real robot",
+   "text": "> **Correction (2026-10-08, COCO Lab v2 · M0.6).** Where this document says \"real robot\" or \"the real robot\", it means **the full ROS 2 stack (simulated)** in Gazebo. No physical robot exists, and not",
+   "class": "correction_text",
+   "why": "the file's correction header"
+  },
+  {
+   "file": "docs/labs/LAB4_SEARCH.md",
+   "line": 186,
+   "term": "real robot",
+   "text": "- **The real robot chose what coco_lab chooses:** all 16 recorded searches",
+   "class": "covered_by_header",
+   "why": "the file opens with a 2026-10-08 correction header"
+  },
+  {
+   "file": "docs/labs/LAB4_SEARCH.md",
+   "line": 302,
+   "term": "real robot",
+   "text": "- **A real robot.** Everything here ran on the real stack in GAZEBO.",
+   "class": "covered_by_header",
+   "why": "the file opens with a 2026-10-08 correction header"
+  },
+  {
+   "file": "docs/labs/LAB5_MOVE.md",
+   "line": 3,
+   "term": "real robot",
+   "text": "> **Correction (2026-10-08, COCO Lab v2 · M0.6).** Where this document says \"real robot\" or \"the real robot\", it means **the full ROS 2 stack (simulated)** in Gazebo. No physical robot exists, and not",
+   "class": "correction_text",
+   "why": "the file's correction header"
+  },
+  {
+   "file": "docs/labs/LAB5_MOVE.md",
+   "line": 355,
+   "term": "real robot",
+   "text": "- D\\* Lite driving the real robot: it runs in coco_lab (Sketch and on two real",
+   "class": "covered_by_header",
+   "why": "the file opens with a 2026-10-08 correction header"
+  },
+  {
+   "file": "docs/live/LIVE.md",
+   "line": 3,
+   "term": "real robot",
+   "text": "*(Until 2026-10-08 this title read \"COCO Live — the real robot in the",
+   "class": "quotes_old_text",
+   "why": "records the M0.6 retitle"
+  },
+  {
+   "file": "docs/releases/lab4-v1.0.md",
+   "line": 1,
+   "term": "real robot",
+   "text": "> **Correction (2026-10-08, COCO Lab v2 · M0.6).** Where this document says \"real robot\" or \"the real robot\", it means **the full ROS 2 stack (simulated)** in Gazebo. No physical robot exists, and not",
+   "class": "correction_text",
+   "why": "the file's correction header"
+  },
+  {
+   "file": "docs/releases/lab4-v1.0.md",
+   "line": 22,
+   "term": "real robot",
+   "text": "- **The real robot (Replay):** 16 searches the real mission ran in Gazebo,",
+   "class": "covered_by_header",
+   "why": "the file opens with a 2026-10-08 correction header"
+  },
+  {
+   "file": "docs/v2/data/m0/EXIT.md",
+   "line": 38,
+   "term": "real robot",
+   "text": "At 1400 × 1000 and 390 × 844, in all six views: no visible \"real robot\"",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/FREEZE.md",
+   "line": 25,
+   "term": "real robot",
+   "text": "the real robot in the browser\". The plan's correction 3 says Live drives",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/REVIEW_2026-10-08.md",
+   "line": 18,
+   "term": "real robot",
+   "text": "| Honesty copy | NOT VERIFIED (partly fixed) | `lab_web/src` has 0 matches and the built site shows none on screen. Some present-tense \"real robot\" claims remain (listed below the table). |",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/REVIEW_2026-10-08.md",
+   "line": 37,
+   "term": "Real robot",
+   "text": "**\"Real robot\" wording that remains:**",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/REVIEW_2026-10-08.md",
+   "line": 38,
+   "term": "real robot",
+   "text": "- **Published GitHub release bodies:** `lab1-v1.0` says \"on the maps a real robot used\". `lab4-v1.0` says \"The real robot (Replay): 16 searches…\". The `live-v1.0` title still says \"the real robot in t",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/REVIEW_2026-10-08.md",
+   "line": 39,
+   "term": "real robot",
+   "text": "- **`docs/RESULTS.md:8568`:** \"The real robot chose what coco_lab chooses\". There is no correction note, although the append-only rule would allow one.",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/REVIEW_2026-10-08.md",
+   "line": 40,
+   "term": "real robot",
+   "text": "- **`docs/history/ROADMAP_LAB_2026-09-28.md` (not archived, no correction header):** lines 56, 138, 228 (\"Where the real robot comes in\") and 251.",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/REVIEW_2026-10-08.md",
+   "line": 42,
+   "term": "real robot",
+   "text": "- **Negations, so fine:** LAB3:225 and LAB4:302 (\"A real robot.\" under \"Not verified\").",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/REVIEW_2026-10-08.md",
+   "line": 43,
+   "term": "Two-finger",
+   "text": "- **\"Two-finger\" / \"2-finger\":** appears only in README correction 2.",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/REVIEW_2026-10-08.md",
+   "line": 47,
+   "term": "real robot",
+   "text": "2. **\"Correction notes on … the lab4 release notes.\"** Only the repo copy, `docs/releases/lab4-v1.0.md`, was corrected. The published GitHub release body still says \"The real robot (Replay)\".",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/REVIEW_2026-10-08.md",
+   "line": 48,
+   "term": "real robot",
+   "text": "3. **The lab1-v1.0 release body (\"a real robot used\") isn't mentioned at all.** The report raises only the live-v1.0 title as a question for you.",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/REVIEW_2026-10-08.md",
+   "line": 59,
+   "term": "magnet gripper",
+   "text": "- **The gripper is described two ways.** Correction 2 says \"magnet gripper, not two-finger\", while the frozen robot-stack docs (DESIGN_DECISIONS, FUTURE_WORK, RESULTS) describe fingers plus a magnet (",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/REVIEW_2026-10-08.md",
+   "line": 71,
+   "term": "real robot",
+   "text": "result: M0 checks out: suites 3,081/308/117 pass, CI green, baseline numbers recompute exactly, nothing deleted. Recommend merge after fixes: Live still logs console errors (an exit criterion) and STA",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 8,
+   "term": "real robot",
+   "text": "Terms: \"real robot\", \"two-finger\", \"2-finger\", \"magnet gripper\".",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 23,
+   "term": "real robot",
+   "text": "TERMS = re.compile(r'real robot|two-finger|2-finger|magnet gripper', re.I)",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 30,
+   "term": "real robot",
+   "text": "('README.md', 'real robotics metrics', 'not_hardware', '\"real robotics metrics\" is not a robot claim'),",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 31,
+   "term": "REAL ROBOT",
+   "text": "('README.md', 'REAL ROBOT RESULT', 'label_vocabulary', 'the evidence-label name for HARDWARE results (none exist)'),",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 33,
+   "term": "real robot",
+   "text": "('README.md', 'no \"real robot\" wording anywhere', 'correction_rule', 'decision G5 default'),",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 34,
+   "term": "REAL ROBOT",
+   "text": "('CLAUDE.md', 'REAL ROBOT RESULT', 'label_vocabulary', 'the label name, followed by \"No physical robot exists\"'),",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 39,
+   "term": "real robot",
+   "text": "('docs/labs/LAB3_MAP.md', 'A real robot.', 'negation', 'listed under \"Not verified\"; the line says it ran on the stack'),",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 40,
+   "term": "real robot",
+   "text": "('docs/history/ROADMAP_COCO2.md', 'COCO stays a real robotics', 'not_hardware', '\"real robotics project\", not a robot claim'),",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 42,
+   "term": "real robot",
+   "text": "('docs/SESSION_LOG.md', 'still bounds what any of it claims about a real robot', 'hypothetical', 'same'),",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 43,
+   "term": "real robot",
+   "text": "('docs/SESSION_LOG.md', 'real robot.', 'hypothetical',",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 44,
+   "term": "real robot",
+   "text": "'wrapped tail of \"it bounds what C2-M2.1 can claim about a real robot\" (line 1750-1751)'),",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 45,
+   "term": "real robot",
+   "text": "('docs/SESSION_LOG.md', 'no \"real robot\" for the Gazebo', 'status_record', 'the M0.6 log entry'),",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 46,
+   "term": "real robot",
+   "text": "('docs/RESULTS.md', 'that role on a real robot is an open question', 'hypothetical', 'an open question about hardware'),",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 47,
+   "term": "real robot",
+   "text": "('docs/RESULTS.md', 'The real robot chose what coco_lab chooses', 'covered_by_appended_note',",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 49,
+   "term": "real robot",
+   "text": "('docs/RESULTS.md', '\"real robot\" in Phase 5', 'correction_text', 'the appended note'),",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/copycheck_text.py",
+   "line": 51,
+   "term": "real robot",
+   "text": "('docs/RESULTS.md', 'chooses\"**. There, \"real robot\" means', 'correction_text', 'the appended note'),",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  },
+  {
+   "file": "docs/v2/data/m0/releases.txt",
+   "line": 5,
+   "term": "real robot",
+   "text": "COCO Live — the real robot in the browser (v1.0)\t\tlive-v1.0\t2026-10-04T18:17:00Z",
+   "class": "evidence_record",
+   "why": "M0 evidence quoting the wording it checked"
+  }
+ ],
+ "rendered_site": [
+  {
+   "view": "live",
+   "width": 1400,
+   "has_live_stack_simulated": true,
+   "has_scheduled_demo": true,
+   "has_full_stack_simulated": true,
+   "visible_real_robot": false,
+   "horizontal_overflow": false
+  },
+  {
+   "view": "search",
+   "width": 1400,
+   "has_live_stack_simulated": true,
+   "has_scheduled_demo": false,
+   "has_full_stack_simulated": true,
+   "visible_real_robot": false,
+   "horizontal_overflow": false
+  },
+  {
+   "view": "plan",
+   "width": 1400,
+   "has_live_stack_simulated": true,
+   "has_scheduled_demo": false,
+   "has_full_stack_simulated": false,
+   "visible_real_robot": false,
+   "horizontal_overflow": false
+  },
+  {
+   "view": "localise",
+   "width": 1400,
+   "has_live_stack_simulated": true,
+   "has_scheduled_demo": false,
+   "has_full_stack_simulated": false,
+   "visible_real_robot": false,
+   "horizontal_overflow": false
+  },
+  {
+   "view": "map",
+   "width": 1400,
+   "has_live_stack_simulated": true,
+   "has_scheduled_demo": false,
+   "has_full_stack_simulated": false,
+   "visible_real_robot": false,
+   "horizontal_overflow": false
+  },
+  {
+   "view": "move",
+   "width": 1400,
+   "has_live_stack_simulated": true,
+   "has_scheduled_demo": false,
+   "has_full_stack_simulated": false,
+   "visible_real_robot": false,
+   "horizontal_overflow": false
+  },
+  {
+   "view": "live",
+   "width": 390,
+   "has_live_stack_simulated": true,
+   "has_scheduled_demo": true,
+   "has_full_stack_simulated": true,
+   "visible_real_robot": false,
+   "horizontal_overflow": false
+  },
+  {
+   "view": "search",
+   "width": 390,
+   "has_live_stack_simulated": true,
+   "has_scheduled_demo": false,
+   "has_full_stack_simulated": true,
+   "visible_real_robot": false,
+   "horizontal_overflow": false
+  },
+  {
+   "view": "plan",
+   "width": 390,
+   "has_live_stack_simulated": true,
+   "has_scheduled_demo": false,
+   "has_full_stack_simulated": false,
+   "visible_real_robot": false,
+   "horizontal_overflow": false
+  },
+  {
+   "view": "localise",
+   "width": 390,
+   "has_live_stack_simulated": true,
+   "has_scheduled_demo": false,
+   "has_full_stack_simulated": false,
+   "visible_real_robot": false,
+   "horizontal_overflow": false
+  },
+  {
+   "view": "map",
+   "width": 390,
+   "has_live_stack_simulated": true,
+   "has_scheduled_demo": false,
+   "has_full_stack_simulated": false,
+   "visible_real_robot": false,
+   "horizontal_overflow": false
+  },
+  {
+   "view": "move",
+   "width": 390,
+   "has_live_stack_simulated": true,
+   "has_scheduled_demo": false,
+   "has_full_stack_simulated": false,
+   "visible_real_robot": false,
+   "horizontal_overflow": false
+  }
+ ]
+}
