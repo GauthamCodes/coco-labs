@@ -1,0 +1,143 @@
+{
+ "(no schema) .json": {
+  "count": 374,
+  "dirs": {
+   "docs/data/p03c_episode_gazebo": 97,
+   "docs/data/m0a_cmdpath": 29,
+   "docs/data/c2nav49_live": 26,
+   "docs/data/p02_release": 25,
+   "docs/data/lab1c": 23,
+   "docs/data/lab4": 20,
+   "docs/data/c2nav43_live": 18,
+   "docs/data/lab11": 16
+  }
+ },
+ "(no schema) .json.gz": {
+  "count": 7,
+  "dirs": {
+   "docs/data/live": 5,
+   "docs/data/lab5": 2
+  }
+ },
+ "(unreadable: JSONDecodeError)": {
+  "count": 2,
+  "dirs": {
+   "lab_web/test/invalid": 2
+  }
+ },
+ "(unreadable: UnicodeDecodeError)": {
+  "count": 1,
+  "dirs": {
+   "lab_web/test/invalid": 1
+  }
+ },
+ "coco_lab.bundle@1.0": {
+  "count": 40,
+  "dirs": {
+   "lab_web/test/invalid": 35,
+   "coco_lab/test/fixtures": 5
+  }
+ },
+ "coco_lab.bundle@1.1": {
+  "count": 9,
+  "dirs": {
+   "lab_web/test/invalid": 5,
+   "docs/data/lab1c": 3,
+   "coco_lab/test/fixtures": 1
+  }
+ },
+ "coco_lab.bundle@2.0": {
+  "count": 1,
+  "dirs": {
+   "lab_web/test/invalid": 1
+  }
+ },
+ "coco_lab.bundle@v1": {
+  "count": 1,
+  "dirs": {
+   "lab_web/test/invalid": 1
+  }
+ },
+ "coco_lab.drive_bundle@1.0": {
+  "count": 5,
+  "dirs": {
+   "docs/data/lab5": 4,
+   "coco_lab/test/fixtures": 1
+  }
+ },
+ "coco_lab.lab1c.conformance/1@?": {
+  "count": 1,
+  "dirs": {
+   "docs/data/lab1c": 1
+  }
+ },
+ "coco_lab.lab1c.runs/1@?": {
+  "count": 1,
+  "dirs": {
+   "docs/data/lab1c": 1
+  }
+ },
+ "coco_lab.lab5_replan_c@1.0": {
+  "count": 1,
+  "dirs": {
+   "docs/data/lab5": 1
+  }
+ },
+ "coco_lab.lab5_results@1.0": {
+  "count": 1,
+  "dirs": {
+   "docs/data/lab5": 1
+  }
+ },
+ "coco_lab.loc_bundle@1.0": {
+  "count": 2,
+  "dirs": {
+   "coco_lab/test/fixtures": 2
+  }
+ },
+ "coco_lab.replan_bundle@1.0": {
+  "count": 2,
+  "dirs": {
+   "coco_lab/test/fixtures": 1,
+   "docs/data/lab5": 1
+  }
+ },
+ "coco_lab.search_bundle@1.0": {
+  "count": 3,
+  "dirs": {
+   "coco_lab/test/fixtures": 2,
+   "docs/data/lab4": 1
+  }
+ },
+ "coco_lab.slam_bundle@1.0": {
+  "count": 3,
+  "dirs": {
+   "coco_lab/test/fixtures": 2,
+   "docs/data/lab3": 1
+  }
+ },
+ "coco_lab_ros.lab5_path@1.0": {
+  "count": 2,
+  "dirs": {
+   "coco_lab_ros/config/lab5_paths": 2
+  }
+ },
+ "coco_lab_ros.lab5_scenarios@1.0": {
+  "count": 1,
+  "dirs": {
+   "coco_lab_ros/config/lab5_scenarios.json": 1
+  }
+ },
+ "lab_web.share_vectors@1.0": {
+  "count": 1,
+  "dirs": {
+   "lab_web/test/golden": 1
+  }
+ },
+ "x@1.0": {
+  "count": 1,
+  "dirs": {
+   "lab_web/test/invalid": 1
+  }
+ }
+}

@@ -7,7 +7,7 @@ file records position only.
 |---|---|
 | Branch | `v2/m0-transition` (from `3571169`, coco-labs `main` fast-forwarded to `lab5`) |
 | Milestone | **M0 · Transition** |
-| Checkpoint | M0.2 Freeze v1 — done |
+| Checkpoint | M0.3 Baseline — done |
 
 ## Checkpoint log
 
@@ -20,3 +20,11 @@ file records position only.
   demo video, `live-v1.0` has none by design. The three recordings
   `docs/RESULTS.md` cites by checksum resolve in `~/coco_lab_runs/`
   (3/3). Evidence: [`docs/v2/data/m0/FREEZE.md`](v2/data/m0/FREEZE.md).
+- **M0.3 Baseline (2026-10-08).** Laptop, Playwright, local production
+  build, 5 fresh browsers each: Pyodide cold first edit median 12,857 ms
+  (6,567–42,882), warm edit median 1,445 ms (1,265–1,686), every playing
+  view at 60 fps rAF with 0 long tasks; `dist/` 23,010,799 B, Pyodide
+  6,358,909 B. Phone: method written, **not yet measured**. Evidence:
+  [`docs/v2/BASELINE.md`](v2/BASELINE.md),
+  [`docs/v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md), `docs/RESULTS.md`
+  "COCO Lab v2 · M0 baseline".

@@ -8708,3 +8708,45 @@ only its own ROS domain). LAB5_MOVE.md §7.
 ### The site and the tests
 
 `docs/labs/LAB5_MOVE.md` §4.6–4.8.
+
+## COCO Lab v2 · M0 baseline — v1 frozen and measured (measured 2026-10-08)
+
+The v1 site measured at `coco-lab-v1-final` (`3571169`) before v2 changes
+anything. Full method, conditions and tables: `docs/v2/BASELINE.md`; raw
+data `docs/v2/data/m0/perf/`. Evidence class **MODEL** (the browser) for
+every number here. Device: laptop (i5-13420H, 15 GiB RAM, Ubuntu 24.04),
+idle machine (load 0.35–1.2), local production build served by `vite
+preview`, Playwright 1.64.0 / Chromium 156.0.8078.4 headless, a fresh
+browser (empty cache) per run, Pyodide 314.0.7 from its CDN over the home
+connection.
+
+- **Pyodide cold start** (Plan view, 0.10 m arena, first one-cell edit,
+  click → first frame), n = 5: **median 12,857 ms, range 6,567–42,882
+  ms**. The page's own "Pyodide load" (includes the CDN download) fell
+  39,736 → 3,937 ms over the five consecutive runs; not attributed.
+- **Warm map edit** (edits 2–4 of each run), n = 15: **median 1,445 ms,
+  range 1,265–1,686 ms** (Lab 1.1 Part A recorded 1,158–1,172 ms on
+  Firefox; the difference is not investigated).
+- **Playback frame rate**, 5 s windows, n = 5 per view: rAF **60 fps**
+  (range 60–60), 0 long tasks, max frame gap 16.8 ms in every playing
+  view; the picture changed 60.0 (plan), 6.4 (localise), 8.8 (map), 1.0
+  (search) and 17.6 (move) times per second — each view's own step rate.
+  Live: no playback without a running Stack, not measured.
+- **Production `dist/`**: 23,010,799 B in 78 files, of which app JS/CSS
+  559,706 B (index JS 337,864 B raw, 107,569 B gzip -9) and the five
+  bundle directories (Labs 1–5) 21,316,400 B. **Pyodide** (CDN, first edit only): 6,358,909 B in 6 requests.
+  Plan view on the 0.10 m arena: 590,902 B to the first frame, 6,537,154 B
+  more through the first edit.
+- **Every public view loads** in this build: plan, localise, map, search
+  and move with **0 console errors**; **live logs 2–4 browser network
+  errors** (the coco.v1 socket to `ws://localhost:8080/ws` refused — no
+  local Stack — and the remote `/healthz` host not resolving — the session
+  endpoint offline). Present on the untouched v1 build.
+- **Phone**: **not yet measured**; the method and an empty results table
+  are in `docs/v2/PHONE_BASELINE.md`.
+- **Tests at `3571169`** (clean overlay build): packages 3,081 / 0 / 0,
+  `lab_web` vitest 308 / 0 / 0, build tools 117 / 0 / 0
+  (`docs/v2/data/m0/START_STATE.md`).
+- **Recordings cited by checksum**: the three Lab 1C bags resolve in
+  `~/coco_lab_runs/lab1c/` with equal hash and size (3/3,
+  `docs/v2/data/m0/FREEZE.md`).

@@ -1,0 +1,100 @@
+{
+ "dist_total_bytes": 23010799,
+ "dist_files": 78,
+ "groups": {
+  "generated/loc": {
+   "files": 10,
+   "bytes": 9240476
+  },
+  "generated/map": {
+   "files": 10,
+   "bytes": 5122539
+  },
+  "generated/move": {
+   "files": 16,
+   "bytes": 3996956
+  },
+  "generated/bundles": {
+   "files": 22,
+   "bytes": 2902162
+  },
+  "assets (app JS/CSS/worker)": {
+   "files": 7,
+   "bytes": 559706
+  },
+  "generated/catalog.json": {
+   "files": 1,
+   "bytes": 557674
+  },
+  "generated/loc_exhibits.json": {
+   "files": 1,
+   "bytes": 324932
+  },
+  "generated/py (coco_lab wheel for Pyodide)": {
+   "files": 1,
+   "bytes": 180744
+  },
+  "generated/tracking": {
+   "files": 3,
+   "bytes": 61313
+  },
+  "generated/search": {
+   "files": 4,
+   "bytes": 54267
+  },
+  "coco/frame.js": {
+   "files": 1,
+   "bytes": 4767
+  },
+  "generated/exhibit.json": {
+   "files": 1,
+   "bytes": 4084
+  },
+  "index.html": {
+   "files": 1,
+   "bytes": 1179
+  }
+ },
+ "app_assets": [
+  {
+   "file": "assets/index-C1fM-g6w.js",
+   "bytes": 337864,
+   "gzip9_bytes": 107569
+  },
+  {
+   "file": "assets/MoveLab-Bl0DJgva.js",
+   "bytes": 48607,
+   "gzip9_bytes": 15319
+  },
+  {
+   "file": "assets/Localise-C82caZ37.js",
+   "bytes": 45654,
+   "gzip9_bytes": 14308
+  },
+  {
+   "file": "assets/MapLab-OdGllgdB.js",
+   "bytes": 45645,
+   "gzip9_bytes": 14912
+  },
+  {
+   "file": "assets/SearchLab-CXPdBjmE.js",
+   "bytes": 35008,
+   "gzip9_bytes": 11075
+  },
+  {
+   "file": "assets/pyodide.worker-BWUKgqTL.js",
+   "bytes": 27929,
+   "gzip9_bytes": 8155
+  },
+  {
+   "file": "assets/index-C55dnZf3.css",
+   "bytes": 18999,
+   "gzip9_bytes": 4704
+  },
+  {
+   "file": "index.html",
+   "bytes": 1179,
+   "gzip9_bytes": 596
+  }
+ ]
+}
