@@ -1,8 +1,11 @@
 # Test-only dependencies of coco_lab, pinned. The runtime needs none.
 #
 # The pins are the versions `rosdep resolve` gives on Jazzy's platform
-# (Ubuntu 24.04: python3-hypothesis 6.98.15, python3-networkx 2.8.8), so a
+# (Ubuntu 24.04: python3-hypothesis 6.98.15, python3-networkx 2.8.8,
+# python3-yaml 6.0.1), so a
 # pip install in a plain venv and a rosdep install test the same code.
 hypothesis==6.98.15
 networkx==2.8.8
 pytest==7.4.4
+# World Spec tests parse worlds/*.yaml (M1.2); coco_lab itself reads JSON.
+pyyaml==6.0.1
