@@ -14,7 +14,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | Branch | `v2/m1-arena-core` (from `main` = `9f58b83`), worked in the worktree `.claude/worktrees/v2-m1-arena-core`, overlay `~/coco_lab_m1_ws` |
 | Milestone | **M1 · Glass-box Arena core** ([`v2/M1_PROMPT.md`](v2/M1_PROMPT.md)) |
-| Checkpoint | B.1 and **M1.1–M1.8 done**; **next: M1.9 converters** (Lab 1 bundles and the 3 recorded full-stack replays play in the new viewer, labelled STACK). Arena is NOT yet the default landing page: that waits for every agent criterion (M1.10) |
+| Checkpoint | B.1 and **M1.1–M1.9 done**; **next: M1.10 measure and decide** (every B.4 budget incl. cross-browser determinism over 100 sessions, cold start n ≥ 10, responsiveness; ADR 0002 WASM gate; M1_RESULTS.md; screenshot tests in CI; then the PR into main, NOT merged). Arena is NOT yet the default landing page: that waits for every agent criterion |
 | Merge to `main` | M1 opens a PR when every agent-measurable criterion passes; it is **not** merged by the agent |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 phone performance, phone cold start and usability (README §7, M1) |
 
@@ -321,6 +321,36 @@ only. Read order for agents (README §9): `README.md`, this file,
   and side A's id (−1) collided with an empty PlanStore's; the phone stage
   letterboxed. Tests: packages **3,232 / 0 / 0**, vitest **357 / 0 / 0**
   (+10), tools **117 / 0 / 0**. Next: M1.9.
+
+- **M1.9 Converters (2026-10-09).** All eleven Lab 1 bundles the site
+  serves — the five teaching traces, the three arena/costmap traces and
+  the **three recorded full-stack runs** (Phase 1C) — convert to v2 run
+  files (`lab_web/src/convert/lab1.ts`; built by
+  `tools/build_v2_runs.mjs` into `generated/v2/`) and play in the Arena
+  viewer at `?view=arena&replay=<id>`, with the timeline and inspector.
+  Recorded runs are labelled **STACK** (`TIER_STACK`): the robot is drawn
+  where the stack believed it was (AMCL) with ground truth beside it,
+  0.1 s of sim time per tick, the search at FollowPath acceptance, the
+  arbiter / collision-monitor annotations on the timeline, and the run's
+  measured results quoted from the bundle (never recomputed). Traces are
+  MODEL (`TIER_TRACE`). No model worker starts for a replay. The old Lab 1
+  view is unchanged and still reads the v1 bundles.
+  **Lossless, checked strictly:** the v1 arrays are rebuilt from the v2
+  CHANNELS alone and the v1 decoder must accept them with the original
+  content hash — at every build (a failure stops the build) and in
+  `test/convert_lab1.test.ts` (11/11; one flipped ground-truth bit is
+  caught; byte-deterministic). Schema: new additive
+  `coco.plan.path.poses.v1` / `PathBatch` for the stack's published
+  `/lab/plan` (SCHEMAS.md, "Whole bundles"). **Browser check**
+  (`tools/perf/replay_check.mjs`; `docs/v2/data/m1/replay/`): 3 STACK runs
+  played to the end (760 / 777 / 670 ticks) and 2 traces (incl. the
+  283,378-event arena benchmark) fully revealed, first frame 223–539 ms,
+  0 workers, 0 console errors; all seven views 0 console errors
+  (`console_check.json`). Tests: packages **3,235 / 0 / 0** (the first
+  run had 2 `gazebo_models` live-graph tests error with rclpy
+  `RCLError: error creating node`; M1.9 touches no ROS package and the
+  re-run passed 231 / 0), vitest **374 / 0 / 0** (+17), tools
+  **117 / 0 / 0**. Next: M1.10.
 
 ## Capabilities (README §2), with evidence class
 

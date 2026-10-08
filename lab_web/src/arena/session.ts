@@ -23,8 +23,8 @@ import type { PlanInfo, SearchColumns, Tick } from './protocol';
 import { PlanStore } from './render/planStore';
 
 export interface TickRecord {
-  tick: number; t_world: number; pose: [number, number, number]; v: number; w: number; mode: string;
-  hash: string; ranges: Float32Array | null; plans: PlanInfo[];
+  tick: number; t_world: number; pose: [number, number, number]; truth?: [number, number, number]; v: number; w: number;
+  mode: string; hash: string; ranges: Float32Array | null; plans: PlanInfo[];
 }
 
 /** Reveal a live search over about this many frames at speed 1. */
@@ -51,7 +51,7 @@ export class ArenaSession {
   // -- input from the worker -------------------------------------------------
 
   onTick(t: Tick, ranges: Float32Array) {
-    this.history.push({ tick: t.tick, t_world: t.t_world, pose: t.pose, v: t.v, w: t.w, mode: t.mode, hash: t.hash,
+    this.history.push({ tick: t.tick, t_world: t.t_world, pose: t.pose, truth: t.truth, v: t.v, w: t.w, mode: t.mode, hash: t.hash,
       ranges, plans: t.plans });
     const drop = this.history.length - 1 - KEEP_RANGES;
     if (drop >= 0) this.history[drop].ranges = null;

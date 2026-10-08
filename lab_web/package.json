@@ -9,14 +9,14 @@
     "node": ">=24.21.0 <25"
   },
   "scripts": {
-    "dev": "node tools/build_arena_assets.mjs && node tools/build_attract.mjs && vite",
+    "dev": "node tools/build_arena_assets.mjs && node tools/build_attract.mjs && node tools/build_v2_runs.mjs && vite",
     "typecheck": "tsc --noEmit -p .",
-    "build": "node tools/build_arena_assets.mjs && node tools/build_attract.mjs && tsc --noEmit -p . && vite build",
+    "build": "node tools/build_arena_assets.mjs && node tools/build_attract.mjs && node tools/build_v2_runs.mjs && tsc --noEmit -p . && vite build",
     "preview": "vite preview",
     "test": "vitest run",
     "tools": "python3 tools/build_catalog.py",
     "check:dist": "node tools/check_dist.mjs",
-    "arena-assets": "node tools/build_arena_assets.mjs && node tools/build_attract.mjs"
+    "arena-assets": "node tools/build_arena_assets.mjs && node tools/build_attract.mjs && node tools/build_v2_runs.mjs"
   },
   "dependencies": {
     "@bufbuild/protobuf": "2.15.0",

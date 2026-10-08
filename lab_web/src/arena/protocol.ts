@@ -46,6 +46,8 @@ export interface PlanInfo {
 
 export interface Tick {
   tick: number; t_world: number; pose: [number, number, number]; v: number; w: number;
+  /** Ground truth when it differs from `pose` (a recorded stack run: pose = its belief). */
+  truth?: [number, number, number];
   mode: string; blocked: boolean; arrived: boolean; hash: string; chain: string; plans: PlanInfo[];
 }
 

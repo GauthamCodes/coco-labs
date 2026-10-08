@@ -61,6 +61,8 @@ CHANNELS = (
             'coco.plan.v1.IncrementalHeader', False),
     Channel('coco.plan.incremental.events.v1', 'plan.incremental',
             'coco.plan.v1.IncrementalEventBatch', True),
+    Channel('coco.plan.path.poses.v1', 'plan.path', 'coco.plan.v1.PathBatch',
+            True),
     Channel('coco.input.events.v1', 'input', 'coco.input.v1.InputEventBatch',
             True),
     Channel('coco.metrics.values.v1', 'metrics',
@@ -71,7 +73,7 @@ CHANNELS = (
 
 #: The families README section 5.2 / M1.1 asks for in M1.
 FAMILIES = ('world', 'robot', 'truth', 'sensor.scan', 'plan.search',
-            'plan.incremental', 'input', 'metrics', 'annotation')
+            'plan.incremental', 'plan.path', 'input', 'metrics', 'annotation')
 
 BY_NAME = {c.name: c for c in CHANNELS}
 

@@ -50,6 +50,7 @@ channels carry one record.
 | `coco.plan.incremental.events.v1` | `coco.plan.v1.IncrementalEventBatch` | stream | expand / raise / update / change / path / move, g and rhs, round |
 | `coco.input.events.v1` | `coco.input.v1.InputEventBatch` | stream | goals, teleop, STOP, planner choice, reset: applied at the start of `tick` |
 | `coco.metrics.values.v1` | `coco.metrics.v1.MetricBatch` | stream | named numbers with units |
+| `coco.plan.path.poses.v1` | `coco.plan.v1.PathBatch` | stream | a published metric path (e.g. the stack's `/lab/plan`); added in M1.9, additive |
 | `coco.annotation.text.v1` | `coco.annotation.v1.AnnotationBatch` | stream | text at a moment, optionally a place |
 
 ## The three clocks
@@ -120,6 +121,35 @@ serialize/parse — on every Lab 1 bundle in the repository (the six
 D\* Lite's columns map the same way; v1 wrote infinity as `-1`, v2 writes
 IEEE `+inf` (tested both ways).
 
+### Whole bundles: Lab 1 in the Arena viewer (M1.9)
+
+`lab_web/src/convert/lab1.ts` converts a whole v1 bundle (map, trace and,
+for a recorded run, the recording) into a v2 run file; at build time
+`tools/build_v2_runs.mjs` writes every catalogued bundle to
+`generated/v2/<id>.mcap`, and `?view=arena&replay=<id>` plays it.
+
+| v1 | v2 |
+|---|---|
+| `manifest.json`, byte for byte | `Manifest.spec`, `spec_format` `coco_lab.bundle.v1+json` (so `run_id` hashes it) |
+| `map.occupancy`, `map.cost` | `coco.world.grid.v1` (`occupancy`; `cost` as f32, **refused** unless every value is exact) |
+| `trace` | `coco.plan.search.{header,events,summary}.v1` (as above; unknown fields refused) |
+| `recording.gt` | `coco.truth.pose.v1` |
+| `recording.amcl` | `coco.robot.state.v1` (the stack's belief; `v`, `omega` NaN: none recorded with it) |
+| `recording.plan` | `coco.plan.path.poses.v1` (new in M1.9) |
+| `recording.cmd` | `coco.metrics.values.v1` (`cmd.v` m/s, `cmd.w` rad/s) |
+| arbiter / collision-monitor timelines | `coco.annotation.text.v1` (also kept in the spec bytes) |
+
+A recorded run is `TIER_STACK` / `STACK`; a glass-box trace is
+`TIER_TRACE` / `MODEL`. Clocks: a trace has tick 0, t_world 0; a recording
+keeps sim time as `t_world` exactly, with tick = 0.1 s bins from the
+rosbag start, and its search sits at FollowPath acceptance.
+
+**Lossless, checked strictly:** `toLab1` rebuilds the v1 arrays from the
+**channels alone** and the site's v1 decoder must accept them, which it does
+only when the bundle's content hash matches; the build refuses to write a
+file that fails, and `lab_web/test/convert_lab1.test.ts` checks all eleven
+bundles (and that one flipped bit in one ground-truth double is caught).
+
 ## Compatibility within a major
 
 `coco_schemas/compat.py` compares the schemas against the committed
@@ -157,4 +187,5 @@ log re-simulates them (README §5.2).
 | Within-major compatibility | `coco_schemas/test/test_compat.py` |
 | Channel names, clocks, families | `coco_schemas/test/test_channels.py` |
 | Lab 1 traces without loss | `coco_schemas/test/test_trace_v1.py` |
+| Lab 1 bundles without loss (whole bundles, hash-checked) | `lab_web/test/convert_lab1.test.ts`; `tools/build_v2_runs.mjs` at every build |
 | Python ↔ TypeScript bytes and run_id | `lab_web/test/schemas.test.ts` |

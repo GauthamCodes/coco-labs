@@ -1,0 +1,129 @@
+{
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "runs": {
+  "lab1c_astar": {
+   "pass": true,
+   "badge": "STACK",
+   "first_shown_ms": 416,
+   "head": 760,
+   "ticks": 760,
+   "cursor": 18660,
+   "received": 18660,
+   "pose": [
+    2.0787497574246463,
+    6.021138677695537,
+    0.043186555229773806
+   ],
+   "truth": [
+    2.3533334816687796,
+    6.101806635050071,
+    0.06509191306914058
+   ],
+   "mode": "recording",
+   "client": null,
+   "results": "Measured in this run (Phase 1C, docs/RESULTS.md): succeeded after 27.4 s sim time · tracking error mean 0.072 m, p95 0.162 m · endpoint error 0.191 m · belief gap mean 0.043 m",
+   "note": "arbiter: mode nav, active none",
+   "links": 11,
+   "workers": 0,
+   "errors": []
+  },
+  "lab1c_dijkstra": {
+   "pass": true,
+   "badge": "STACK",
+   "first_shown_ms": 488,
+   "head": 777,
+   "ticks": 777,
+   "cursor": 71900,
+   "received": 71900,
+   "pose": [
+    2.194142204768783,
+    5.986273610269842,
+    0.052386005619104656
+   ],
+   "truth": [
+    2.3579835826188567,
+    6.065284998380612,
+    0.1431004906087978
+   ],
+   "mode": "recording",
+   "client": null,
+   "results": "Measured in this run (Phase 1C, docs/RESULTS.md): succeeded after 27.5 s sim time · tracking error mean 0.064 m, p95 0.153 m · endpoint error 0.171 m · belief gap mean 0.055 m",
+   "note": "arbiter: mode nav, active none",
+   "links": 11,
+   "workers": 0,
+   "errors": []
+  },
+  "lab1c_greedy": {
+   "pass": true,
+   "badge": "STACK",
+   "first_shown_ms": 276,
+   "head": 670,
+   "ticks": 670,
+   "cursor": 4368,
+   "received": 4368,
+   "pose": [
+    1.0015197030432197,
+    0.9450369617586118,
+    1.4458297079312206
+   ],
+   "truth": [
+    0.9576842372596004,
+    0.9403796523687914,
+    1.5210029185999536
+   ],
+   "mode": "recording",
+   "client": null,
+   "results": "Measured in this run (Phase 1C, docs/RESULTS.md): follow_failed after 18.4 s sim time · tracking error mean 0.052 m, p95 0.113 m · endpoint error 5.289 m · belief gap mean 0.030 m",
+   "note": "arbiter: mode nav, active none",
+   "links": 11,
+   "workers": 0,
+   "errors": []
+  },
+  "bfs_no_path": {
+   "pass": true,
+   "badge": "MODEL",
+   "first_shown_ms": 223,
+   "head": 1,
+   "ticks": 1,
+   "cursor": 750,
+   "received": 750,
+   "pose": [
+    2.5,
+    7.5,
+    0
+   ],
+   "truth": null,
+   "mode": "recording",
+   "client": null,
+   "results": null,
+   "note": null,
+   "links": 11,
+   "workers": 0,
+   "errors": []
+  },
+  "arena_native": {
+   "pass": true,
+   "badge": "MODEL",
+   "first_shown_ms": 539,
+   "head": 1,
+   "ticks": 1,
+   "cursor": 283378,
+   "received": 283378,
+   "pose": [
+    -4.975,
+    -7.475,
+    0
+   ],
+   "truth": null,
+   "mode": "recording",
+   "client": null,
+   "results": null,
+   "note": null,
+   "links": 11,
+   "workers": 0,
+   "errors": []
+  }
+ },
+ "errors": [],
+ "pass": true
+}
