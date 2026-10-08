@@ -1,0 +1,66 @@
+{
+ "meta": {
+  "site": "http://127.0.0.1:4173/coco-labs/",
+  "runs": 5,
+  "window_s": 5,
+  "browser": "chromium chromium (Playwright)",
+  "started_utc": "2026-10-08T07:08:45.161Z",
+  "headless": true,
+  "browser_version": "156.0.8078.4",
+  "finished_utc": "2026-10-08T07:09:03.525Z"
+ },
+ "load": [
+  {
+   "view": "plan",
+   "ms_to_network_idle": 2207,
+   "title": "COCO Lab",
+   "mode_badge": "Replay — coco_lab computation (glass-box)",
+   "body_text_chars": 3483,
+   "console_errors": []
+  },
+  {
+   "view": "localise",
+   "ms_to_network_idle": 2274,
+   "title": "COCO Lab",
+   "mode_badge": "Sketch — a model, not the robot",
+   "body_text_chars": 4034,
+   "console_errors": []
+  },
+  {
+   "view": "map",
+   "ms_to_network_idle": 2214,
+   "title": "COCO Lab",
+   "mode_badge": "Sketch and Replay — each labelled below",
+   "body_text_chars": 4335,
+   "console_errors": []
+  },
+  {
+   "view": "search",
+   "ms_to_network_idle": 2230,
+   "title": "COCO Lab",
+   "mode_badge": "Sketch and Replay — each labelled below",
+   "body_text_chars": 2948,
+   "console_errors": []
+  },
+  {
+   "view": "move",
+   "ms_to_network_idle": 2254,
+   "title": "COCO Lab",
+   "mode_badge": "Sketch and Replay — each labelled below",
+   "body_text_chars": 3396,
+   "console_errors": []
+  },
+  {
+   "view": "live",
+   "ms_to_network_idle": 6180,
+   "title": "COCO Lab",
+   "mode_badge": "Live Stack (simulated) — local",
+   "body_text_chars": 1141,
+   "console_errors": [
+    "WebSocket connection to 'ws://localhost:8080/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED",
+    "WebSocket connection to 'ws://localhost:8080/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED",
+    "WebSocket connection to 'ws://localhost:8080/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED"
+   ]
+  }
+ ]
+}

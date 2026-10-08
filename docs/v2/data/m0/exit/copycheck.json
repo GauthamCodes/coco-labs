@@ -1,0 +1,110 @@
+[
+ {
+  "view": "live",
+  "width": 1400,
+  "has_live_stack_simulated": true,
+  "has_scheduled_demo": true,
+  "has_full_stack_simulated": true,
+  "visible_real_robot": false,
+  "horizontal_overflow": false
+ },
+ {
+  "view": "search",
+  "width": 1400,
+  "has_live_stack_simulated": true,
+  "has_scheduled_demo": false,
+  "has_full_stack_simulated": true,
+  "visible_real_robot": false,
+  "horizontal_overflow": false
+ },
+ {
+  "view": "plan",
+  "width": 1400,
+  "has_live_stack_simulated": true,
+  "has_scheduled_demo": false,
+  "has_full_stack_simulated": false,
+  "visible_real_robot": false,
+  "horizontal_overflow": false
+ },
+ {
+  "view": "localise",
+  "width": 1400,
+  "has_live_stack_simulated": true,
+  "has_scheduled_demo": false,
+  "has_full_stack_simulated": false,
+  "visible_real_robot": false,
+  "horizontal_overflow": false
+ },
+ {
+  "view": "map",
+  "width": 1400,
+  "has_live_stack_simulated": true,
+  "has_scheduled_demo": false,
+  "has_full_stack_simulated": false,
+  "visible_real_robot": false,
+  "horizontal_overflow": false
+ },
+ {
+  "view": "move",
+  "width": 1400,
+  "has_live_stack_simulated": true,
+  "has_scheduled_demo": false,
+  "has_full_stack_simulated": false,
+  "visible_real_robot": false,
+  "horizontal_overflow": false
+ },
+ {
+  "view": "live",
+  "width": 390,
+  "has_live_stack_simulated": true,
+  "has_scheduled_demo": true,
+  "has_full_stack_simulated": true,
+  "visible_real_robot": false,
+  "horizontal_overflow": false
+ },
+ {
+  "view": "search",
+  "width": 390,
+  "has_live_stack_simulated": true,
+  "has_scheduled_demo": false,
+  "has_full_stack_simulated": true,
+  "visible_real_robot": false,
+  "horizontal_overflow": false
+ },
+ {
+  "view": "plan",
+  "width": 390,
+  "has_live_stack_simulated": true,
+  "has_scheduled_demo": false,
+  "has_full_stack_simulated": false,
+  "visible_real_robot": false,
+  "horizontal_overflow": false
+ },
+ {
+  "view": "localise",
+  "width": 390,
+  "has_live_stack_simulated": true,
+  "has_scheduled_demo": false,
+  "has_full_stack_simulated": false,
+  "visible_real_robot": false,
+  "horizontal_overflow": false
+ },
+ {
+  "view": "map",
+  "width": 390,
+  "has_live_stack_simulated": true,
+  "has_scheduled_demo": false,
+  "has_full_stack_simulated": false,
+  "visible_real_robot": false,
+  "horizontal_overflow": false
+ },
+ {
+  "view": "move",
+  "width": 390,
+  "has_live_stack_simulated": true,
+  "has_scheduled_demo": false,
+  "has_full_stack_simulated": false,
+  "visible_real_robot": false,
+  "horizontal_overflow": false
+ }
+]

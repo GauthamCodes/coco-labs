@@ -14,7 +14,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | Branch | `v2/m0-transition` (from `3571169`) |
 | Current SHA | the head of `v2/m0-transition`; each checkpoint commit is listed below |
 | Milestone | **M0 · Transition** |
-| Checkpoint | M0.8 Deprecation notes — done; exit checks next |
+| Checkpoint | M0.1–M0.8 done; exit checks passed; awaiting merge approval and independent review |
 | Merge to `main` | not merged; owner's approval required (README §3, integrity rule 5) |
 
 ## Checkpoint log
@@ -73,6 +73,14 @@ only. Read order for agents (README §9): `README.md`, this file,
   six views → one Arena app (end of M2); races → Sandbox compare; replays
   and exhibits → Case Files (M3). Each stays working until its
   replacement ships; nothing deleted. Banner in `lab_web/README.md`.
+- **M0 exit checks (2026-10-08).** On `9480faa`: packages 3,081 / 0 / 0,
+  vitest 308 / 0 / 0, tools 117 / 0 / 0 (equal to M0.1); production build
+  clean; plan, localise, map, search, move load with 0 console errors;
+  live logs only the refused-socket network errors it logged in v1 (no
+  Stack running); honesty copy visible at 1400 and 390 px, no "real
+  robot" on screen. Evidence: [`docs/v2/data/m0/EXIT.md`](v2/data/m0/EXIT.md).
+  **M0 is not closed**: it closes after Gautham approves the merge and a
+  fresh review session verifies the report (README §9.9).
 
 ## Capabilities (README §2), with evidence class
 

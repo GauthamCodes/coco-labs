@@ -8154,3 +8154,51 @@ Verified (measured, this session):
 Phase 6 / Lab 5 is SHIPPED. PROJECT_STATE and the ROADMAP status line say so
 (on branch `lab5`; `main` stays at `2b6f8ad`, the tagged commit). No later
 phase started.
+
+
+## COCO Lab v2 · M0 Transition (2026-10-08)
+
+The v2 master plan (`README.md`, "the Glass-box Arena") is installed as the
+authority. Branch **`v2/m0-transition`** from `3571169` (coco-labs `main`
+`2b6f8ad` fast-forwarded to `lab5`; two documentation-only commits), in
+a fresh worktree `.claude/worktrees/v2-m0` of the old checkout, remote
+`labs`. Copy overlay `~/coco_v2_ws` (`sync.sh`, `alltests.sh`,
+`m0/*.sh`); Node 24.21.0 from the official tarball at
+`~/coco_v2_ws/node`. No simulator was launched.
+
+**Done (one commit per checkpoint, prefixed `[M0.n]`):**
+- M0.1 starting state and preflight tests (`docs/v2/data/m0/START_STATE.md`).
+- M0.2 annotated tag `coco-lab-v1-final` on `3571169`; the six releases are
+  published (five with videos; `live-v1.0` has none, by design); the three
+  Lab 1C bags cited by checksum resolve (`FREEZE.md`).
+- M0.3 laptop baseline with Playwright 1.64.0 (new exact-pinned
+  devDependency; `lab_web/tools/perf/baseline.mjs`), `docs/v2/BASELINE.md`,
+  `docs/v2/PHONE_BASELINE.md` (+ `tools/perf/phone_marks.js`), RESULTS.md
+  section "COCO Lab v2 · M0 baseline" (appended).
+- M0.4 `README.md` = the master plan byte for byte; v1 README, ROADMAP,
+  LAB_PHASES and retired CLAUDE.md rules in `docs/archive/v1/`; new
+  `docs/ROADMAP.md`, `docs/STATUS.md`, `docs/IDEAS.md`; PROJECT_STATE and
+  CLAUDE.md updated.
+- M0.5 Remove: nothing to delete (no Isaac-in-Lab, VLM or browser policy
+  training code exists; `REMOVALS.md`).
+- M0.6 copy: "Live Stack (simulated)", no "real robot" for the Gazebo
+  stack on the site, correction notes on three lab write-ups and the lab4
+  release notes.
+- M0.7 `FROZEN.md` in the nine robot-stack packages.
+- M0.8 `docs/v2/DEPRECATIONS.md`.
+
+**Measured (this session):** preflight at `3571169` packages 3,081 / 0 /
+0, vitest 308 / 0 / 0, tools 117 / 0 / 0; after M0.8: packages 3,081 / 0 / 0,
+vitest 308 / 0 / 0, tools 117 / 0 / 0. Laptop (MODEL): cold first edit
+median 12,857 ms (6,567–42,882), warm edit median 1,445 ms
+(1,265–1,686), every playing view 60 fps rAF, 0 long tasks. Exit load
+check: plan/localise/map/search/move 0 console errors; Live logs browser
+network errors when no Stack runs (same as v1).
+
+**Unverified:** the phone baseline (method only); why cold start fell
+39.7 → 3.9 s over five runs; why warm edits are slower than Lab 1.1's
+Firefox numbers; CI on the PR at the time of writing.
+
+NEXT: the owner reviews the PR `v2/m0-transition` → `main` and approves the
+merge; a fresh review session verifies the M0 report (README §9.9); then
+M1 · Glass-box Arena core (README §7), starting with M1.1 `coco_schemas`.
