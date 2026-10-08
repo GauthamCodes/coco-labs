@@ -15,7 +15,7 @@ _sym_db = _symbol_database.Default()
 from coco_schemas.gen.coco.common.v1 import common_pb2 as coco_dot_common_dot_v1_dot_common__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x19\x63oco/world/v1/world.proto\x12\rcoco.world.v1\x1a\x1b\x63oco/common/v1/common.proto\"\xbe\x01\n\tWorldGrid\x12\x0e\n\x06map_id\x18\x01 \x01(\t\x12\r\n\x05width\x18\x02 \x01(\r\x12\x0e\n\x06height\x18\x03 \x01(\r\x12\x12\n\nresolution\x18\x04 \x01(\x01\x12\x10\n\x08origin_x\x18\x05 \x01(\x01\x12\x10\n\x08origin_y\x18\x06 \x01(\x01\x12\x0f\n\x07\x62locked\x18\x07 \x01(\x0c\x12\x0c\n\x04\x63ost\x18\x08 \x03(\x02\x12\x13\n\x0bspec_sha256\x18\t \x01(\t\x12\x16\n\x0erow0_is_bottom\x18\n \x01(\x08\"u\n\x05Shape\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04kind\x18\x02 \x01(\t\x12*\n\x07polygon\x18\x03 \x01(\x0b\x32\x19.coco.common.v1.Polygon2D\x12&\n\x06params\x18\x04 \x01(\x0b\x32\x16.coco.common.v1.Params\"\x7f\n\rWorldGeometry\x12\x10\n\x08world_id\x18\x01 \x01(\t\x12\x13\n\x0bspec_sha256\x18\x02 \x01(\t\x12\x0f\n\x07width_m\x18\x03 \x01(\x01\x12\x10\n\x08height_m\x18\x04 \x01(\x01\x12$\n\x06shapes\x18\x05 \x03(\x0b\x32\x14.coco.world.v1.Shapeb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x19\x63oco/world/v1/world.proto\x12\rcoco.world.v1\x1a\x1b\x63oco/common/v1/common.proto\"\xd1\x01\n\tWorldGrid\x12\x0e\n\x06map_id\x18\x01 \x01(\t\x12\r\n\x05width\x18\x02 \x01(\r\x12\x0e\n\x06height\x18\x03 \x01(\r\x12\x12\n\nresolution\x18\x04 \x01(\x01\x12\x10\n\x08origin_x\x18\x05 \x01(\x01\x12\x10\n\x08origin_y\x18\x06 \x01(\x01\x12\x0f\n\x07\x62locked\x18\x07 \x01(\x0c\x12\x0c\n\x04\x63ost\x18\x08 \x03(\x02\x12\x13\n\x0bspec_sha256\x18\t \x01(\t\x12\x16\n\x0erow0_is_bottom\x18\n \x01(\x08\x12\x11\n\toccupancy\x18\x0b \x01(\x0c\"u\n\x05Shape\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04kind\x18\x02 \x01(\t\x12*\n\x07polygon\x18\x03 \x01(\x0b\x32\x19.coco.common.v1.Polygon2D\x12&\n\x06params\x18\x04 \x01(\x0b\x32\x16.coco.common.v1.Params\"\x7f\n\rWorldGeometry\x12\x10\n\x08world_id\x18\x01 \x01(\t\x12\x13\n\x0bspec_sha256\x18\x02 \x01(\t\x12\x0f\n\x07width_m\x18\x03 \x01(\x01\x12\x10\n\x08height_m\x18\x04 \x01(\x01\x12$\n\x06shapes\x18\x05 \x03(\x0b\x32\x14.coco.world.v1.Shapeb\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'coco.world.v1.world_pb2', globals())
@@ -23,9 +23,9 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   _WORLDGRID._serialized_start=74
-  _WORLDGRID._serialized_end=264
-  _SHAPE._serialized_start=266
-  _SHAPE._serialized_end=383
-  _WORLDGEOMETRY._serialized_start=385
-  _WORLDGEOMETRY._serialized_end=512
+  _WORLDGRID._serialized_end=283
+  _SHAPE._serialized_start=285
+  _SHAPE._serialized_end=402
+  _WORLDGEOMETRY._serialized_start=404
+  _WORLDGEOMETRY._serialized_end=531
 # @@protoc_insertion_point(module_scope)

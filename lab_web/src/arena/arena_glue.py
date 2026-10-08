@@ -44,6 +44,48 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048):
     return json.dumps(world), m.occupancy
 
 
+def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048):
+    """
+    Run two planners from the robot's cell to (gx, gy); change nothing.
+
+    Side-by-side compare (M1.8): the same map, start, goal and seed for both,
+    on the Arena's own planning grid, streamed as columnar batches tagged
+    'A' / 'B' (search ids -101 / -102: never the run's own, never a
+    PlanStore's empty -1). The Arena's state,
+    and so every hash, is untouched. Returns both summaries as JSON.
+    """
+    from coco_lab.events import SearchEventColumns
+    from coco_lab.search import collect, search_events
+    from coco_lab.sketch import _nearest_free
+
+    a = _arena
+    g = a.grid
+    s = _nearest_free(g, a.plan_map.cell_at(a.pose[0], a.pose[1]))
+    t_cell = a.plan_map.cell_at(float(gx), float(gy))
+    if s is None or t_cell is None:
+        raise ValueError(f'goal ({gx}, {gy}) or the robot is off the map')
+    t = _nearest_free(g, t_cell)
+    out = {}
+    for side, sid, name in (('A', -101, planner_a), ('B', -102, planner_b)):
+        if name not in PLANNERS:
+            raise ValueError(f'unknown planner {name!r}')
+        cols = SearchEventColumns(search_id=sid, tick=a.tick,
+                                  t_world=a.t_world)
+        meta = {'search_id': sid, 'planner': name, 'tick': a.tick,
+                'compare': side}
+
+        def sink(row, cols=cols, meta=meta):
+            cols.add(row)
+            if len(cols) >= int(batch_size):
+                post_batch(cols.drain(), json.dumps(dict(meta, final=False)))
+        res = collect(search_events(g, s, t, **PLANNERS[name]), sink)
+        post_batch(cols.drain(), json.dumps(dict(meta, final=True)))
+        out[side] = {'planner': name, 'status': res.status,
+                     'summary': res.trace.summary,
+                     'resolution': a.plan_map.resolution}
+    return json.dumps(out)
+
+
 def step(inputs_json):
     """Step one tick; return (tick JSON, ranges as float32)."""
     events = [InputEvent(**e) for e in json.loads(inputs_json)]

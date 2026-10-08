@@ -37,7 +37,7 @@ channels carry one record.
 | Channel | Message | Kind | What |
 |---|---|---|---|
 | `coco.envelope.manifest.v1` | `coco.envelope.v1.Manifest` | static | the run's envelope (below) |
-| `coco.world.grid.v1` | `coco.world.v1.WorldGrid` | static | occupancy grid (+ optional cost layer) |
+| `coco.world.grid.v1` | `coco.world.v1.WorldGrid` | static | occupancy grid (+ optional cost layer); field 11 `occupancy` (free / occupied / unknown codes) added in M1.8, additive, checked by `test_compat.py` |
 | `coco.world.geometry.v1` | `coco.world.v1.WorldGeometry` | static | named shapes: walls, obstacles, bays, zones (M1.2) |
 | `coco.robot.params.v1` | `coco.robot.v1.RobotParams` | static | wheel radius and separation, limits, footprint, LiDAR mount |
 | `coco.robot.state.v1` | `coco.robot.v1.RobotStateBatch` | stream | pose the model/stack believes, commanded v and ω |

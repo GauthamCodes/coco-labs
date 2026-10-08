@@ -18,7 +18,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file coco/world/v1/world.proto.
  */
 export const file_coco_world_v1_world: GenFile = /*@__PURE__*/
-  fileDesc("Chljb2NvL3dvcmxkL3YxL3dvcmxkLnByb3RvEg1jb2NvLndvcmxkLnYxIr4BCglXb3JsZEdyaWQSDgoGbWFwX2lkGAEgASgJEg0KBXdpZHRoGAIgASgNEg4KBmhlaWdodBgDIAEoDRISCgpyZXNvbHV0aW9uGAQgASgBEhAKCG9yaWdpbl94GAUgASgBEhAKCG9yaWdpbl95GAYgASgBEg8KB2Jsb2NrZWQYByABKAwSDAoEY29zdBgIIAMoAhITCgtzcGVjX3NoYTI1NhgJIAEoCRIWCg5yb3cwX2lzX2JvdHRvbRgKIAEoCCJ1CgVTaGFwZRIKCgJpZBgBIAEoCRIMCgRraW5kGAIgASgJEioKB3BvbHlnb24YAyABKAsyGS5jb2NvLmNvbW1vbi52MS5Qb2x5Z29uMkQSJgoGcGFyYW1zGAQgASgLMhYuY29jby5jb21tb24udjEuUGFyYW1zIn8KDVdvcmxkR2VvbWV0cnkSEAoId29ybGRfaWQYASABKAkSEwoLc3BlY19zaGEyNTYYAiABKAkSDwoHd2lkdGhfbRgDIAEoARIQCghoZWlnaHRfbRgEIAEoARIkCgZzaGFwZXMYBSADKAsyFC5jb2NvLndvcmxkLnYxLlNoYXBlYgZwcm90bzM", [file_coco_common_v1_common]);
+  fileDesc("Chljb2NvL3dvcmxkL3YxL3dvcmxkLnByb3RvEg1jb2NvLndvcmxkLnYxItEBCglXb3JsZEdyaWQSDgoGbWFwX2lkGAEgASgJEg0KBXdpZHRoGAIgASgNEg4KBmhlaWdodBgDIAEoDRISCgpyZXNvbHV0aW9uGAQgASgBEhAKCG9yaWdpbl94GAUgASgBEhAKCG9yaWdpbl95GAYgASgBEg8KB2Jsb2NrZWQYByABKAwSDAoEY29zdBgIIAMoAhITCgtzcGVjX3NoYTI1NhgJIAEoCRIWCg5yb3cwX2lzX2JvdHRvbRgKIAEoCBIRCglvY2N1cGFuY3kYCyABKAwidQoFU2hhcGUSCgoCaWQYASABKAkSDAoEa2luZBgCIAEoCRIqCgdwb2x5Z29uGAMgASgLMhkuY29jby5jb21tb24udjEuUG9seWdvbjJEEiYKBnBhcmFtcxgEIAEoCzIWLmNvY28uY29tbW9uLnYxLlBhcmFtcyJ/Cg1Xb3JsZEdlb21ldHJ5EhAKCHdvcmxkX2lkGAEgASgJEhMKC3NwZWNfc2hhMjU2GAIgASgJEg8KB3dpZHRoX20YAyABKAESEAoIaGVpZ2h0X20YBCABKAESJAoGc2hhcGVzGAUgAygLMhQuY29jby53b3JsZC52MS5TaGFwZWIGcHJvdG8z", [file_coco_common_v1_common]);
 
 /**
  * An occupancy grid, row-major from the map origin.
@@ -92,6 +92,16 @@ export type WorldGrid = Message<"coco.world.v1.WorldGrid"> & {
    * @generated from field: bool row0_is_bottom = 10;
    */
   row0IsBottom: boolean;
+
+  /**
+   * Added in v1.1 (M1.8, compatible): width*height bytes in coco_lab's
+   * LabMap codes, 0 = free, 1 = occupied, 2 = unknown. `blocked` loses the
+   * occupied/unknown distinction a renderer needs; readers that know this
+   * field prefer it.
+   *
+   * @generated from field: bytes occupancy = 11;
+   */
+  occupancy: Uint8Array;
 };
 
 /**

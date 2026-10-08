@@ -31,7 +31,8 @@ interface Pyodide {
   FS: { writeFile(path: string, data: Uint8Array | string): void };
   unpackArchive(buf: Uint8Array, format: string, opts: { extractDir: string }): void;
   runPython(code: string): unknown;
-  pyimport(name: string): { init: (...a: unknown[]) => PyProxy; step: (s: string) => PyProxy };
+  pyimport(name: string): { init: (...a: unknown[]) => PyProxy; step: (s: string) => PyProxy;
+    compare: (...a: unknown[]) => string };
 }
 
 const post = (msg: FromWorker, transfer: Transferable[] = []) =>
@@ -49,6 +50,7 @@ async function sha256(bytes: Uint8Array): Promise<string> {
 }
 
 let glue: ReturnType<Pyodide['pyimport']> | null = null;
+let onBatchFn: ((cols: PyProxy, metaJson: string) => void) | null = null;
 
 /** Copy one Python array column out into its own transferable typed array. */
 function column(cols: PyProxy, name: string): ArrayBufferView {
@@ -89,6 +91,7 @@ async function boot(req: Extract<ToWorker, { type: 'boot' }>) {
     post({ type: 'plan_batch', meta: JSON.parse(metaJson), columns: columns as unknown as SearchColumns, at: wallMs() },
       Object.values(columns).map((a) => a.buffer as ArrayBuffer));
   };
+  onBatchFn = onBatch;
   const out = glue.init(spec, req.seed, req.planner, onBatch, req.batchSize);
   const world = JSON.parse(out.get(0) as unknown as string);
   const occ = out.get(1);
@@ -113,12 +116,19 @@ function step(req: Extract<ToWorker, { type: 'step' }>) {
   post({ type: 'tick', tick, ranges, stepMs: performance.now() - t0, at: wallMs() }, [ranges.buffer]);
 }
 
+function compare(req: Extract<ToWorker, { type: 'compare' }>) {
+  if (!glue || !onBatchFn) throw new Error('compare before boot');
+  const result = JSON.parse(glue.compare(req.a, req.b, req.x, req.y, onBatchFn, 2048));
+  post({ type: 'compare_done', result });
+}
+
 let queue: Promise<void> = Promise.resolve();
 self.onmessage = (ev: MessageEvent<ToWorker>) => {
   const req = ev.data;
   queue = queue.then(async () => {
     try {
       if (req.type === 'boot') await boot(req);
+      else if (req.type === 'compare') compare(req);
       else step(req);
     } catch (e) {
       post({ type: 'error', stage: req.type, message: e instanceof Error ? e.message : String(e) });

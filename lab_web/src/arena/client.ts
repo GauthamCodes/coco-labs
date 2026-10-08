@@ -8,13 +8,15 @@
  */
 
 import { PYODIDE_INDEX_URL } from '../../site.config.ts';
-import { wallMs, type BootRequest, type FromWorker, type InputRow, type SearchColumns, type Tick, type World } from './protocol';
+import { wallMs, type BootRequest, type CompareSide, type FromWorker, type InputRow, type SearchColumns, type Tick, type World } from './protocol';
 import { perf } from './perf';
 
 export interface ArenaEvents {
   onWorld?(world: World, occupancy: Uint8Array): void;
   onPlanBatch?(meta: Extract<FromWorker, { type: 'plan_batch' }>['meta'], columns: SearchColumns): void;
   onTick?(tick: Tick, ranges: Float32Array): void;
+  onCompareBatch?(meta: Extract<FromWorker, { type: 'plan_batch' }>['meta'], columns: SearchColumns): void;
+  onCompareDone?(result: { A: CompareSide; B: CompareSide }): void;
   onError?(stage: string, message: string): void;
 }
 
@@ -42,7 +44,10 @@ export class ArenaClient {
           resolve(d.world);
         } else if (d.type === 'plan_batch') {
           perf.planBatch(d.columns.seq.length, d.at);
-          ev.onPlanBatch?.(d.meta, d.columns);
+          if (d.meta.compare) ev.onCompareBatch?.(d.meta, d.columns);
+          else ev.onPlanBatch?.(d.meta, d.columns);
+        } else if (d.type === 'compare_done') {
+          ev.onCompareDone?.(d.result);
         } else if (d.type === 'tick') {
           this.tick = d.tick.tick;
           perf.tick(d.stepMs);
@@ -68,9 +73,19 @@ export class ArenaClient {
     return this.ready;
   }
 
-  /** Advance one tick, applying `inputs` at its start (each row gets this tick). */
-  step(inputs: Omit<InputRow, 'tick'>[] = []): void {
-    this.worker.postMessage({ type: 'step', inputs: inputs.map((i) => ({ ...i, tick: this.tick })) });
+  /**
+   * Advance one tick, applying `inputs` at its start (each row gets this
+   * tick). Returns the stamped rows: the run's input log (share links).
+   */
+  step(inputs: Omit<InputRow, 'tick'>[] = []): InputRow[] {
+    const rows = inputs.map((i) => ({ ...i, tick: this.tick }) as InputRow);
+    this.worker.postMessage({ type: 'step', inputs: rows });
+    return rows;
+  }
+
+  /** Two planners on the same start, goal and seed; the model is unchanged. */
+  compare(a: string, b: string, x: number, y: number): void {
+    this.worker.postMessage({ type: 'compare', a, b, x, y });
   }
 
   close(): void {

@@ -24,6 +24,11 @@ message WorldGrid {
   // Row 0 is the map's bottom row (Nav2 / ROS convention) when true; the
   // top row when false.
   bool row0_is_bottom = 10;
+  // Added in v1.1 (M1.8, compatible): width*height bytes in coco_lab's
+  // LabMap codes, 0 = free, 1 = occupied, 2 = unknown. `blocked` loses the
+  // occupied/unknown distinction a renderer needs; readers that know this
+  // field prefer it.
+  bytes occupancy = 11;
 }
 
 // Named shapes: walls, obstacles, bays, zones (M1.2 fills this from the World Spec).

@@ -14,7 +14,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | Branch | `v2/m1-arena-core` (from `main` = `9f58b83`), worked in the worktree `.claude/worktrees/v2-m1-arena-core`, overlay `~/coco_lab_m1_ws` |
 | Milestone | **M1 · Glass-box Arena core** ([`v2/M1_PROMPT.md`](v2/M1_PROMPT.md)) |
-| Checkpoint | B.1 and **M1.1–M1.7 done**; **next: M1.8 experience** (attract recording in MCAP at build time via Pyodide-in-Node, keyboard + joystick teleop, compare two planners, end-of-run heatmap with totals, share link with spec hash + seed + input log + final chain) |
+| Checkpoint | B.1 and **M1.1–M1.8 done**; **next: M1.9 converters** (Lab 1 bundles and the 3 recorded full-stack replays play in the new viewer, labelled STACK). Arena is NOT yet the default landing page: that waits for every agent criterion (M1.10) |
 | Merge to `main` | M1 opens a PR when every agent-measurable criterion passes; it is **not** merged by the agent |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 phone performance, phone cold start and usability (README §7, M1) |
 
@@ -293,6 +293,34 @@ only. Read order for agents (README §9): `README.md`, this file,
   (`docs/v2/data/m1/timeline/timeline_check.json` + screenshots).
   Tests: packages **3,232 / 0 / 0**, vitest **347 / 0 / 0** (+6), tools
   **117 / 0 / 0**. Next: M1.8.
+
+- **M1.8 Experience (2026-10-08).** `?view=arena` now opens on a
+  **recording** (attract mode): `tools/build_attract.mjs` runs the real
+  coco_lab + `arena_glue.py` in Pyodide-in-Node at build time (three goals,
+  astar / dijkstra / greedy) and writes `generated/arena/attract.mcap` with
+  the site's own protobuf encoders (the first v2-container file the page
+  reads; 688,717 B, byte-identical across two builds, sha256 d3d18d8e…). It plays while
+  Pyodide loads, labelled a MODEL recording; the first click, key, joystick
+  move or planner choice hands over to the live model. Also: keyboard teleop
+  (W A S D / arrows, space = STOP), an on-screen joystick (mouse, pen,
+  touch), side-by-side **compare** of two planners on the same map, start,
+  goal and seed (the worker's `compare` changes no model state: same hash
+  chain after, tested), an end-of-run card with expansions / path cost /
+  path length and the heatmap switched on, and a **share link**
+  (`?run=`: spec sha256, seed, input log, final tick and hash chain) that
+  replays the run and says whether the chain matched, rather than claiming
+  it. `WorldGrid` gained an additive `occupancy` field (11).
+  **Browser check** (`tools/perf/experience_check.mjs`, Chromium + GPU,
+  0 console errors, all 9 steps pass; `docs/v2/data/m1/experience/`):
+  attract moving at 674 ms, first computation shown at 961 ms (live model
+  not yet ready); click → live → arrival with totals; W held 1.2 s moved
+  0.39 m; joystick drag moved 0.52 m; compare astar 3,904 vs bfs 37,324
+  expansions, both path cost 175.18; a shared link replayed to the **same
+  chain** at tick 404; a Pixel 7 tap gave a goal with no horizontal scroll.
+  Fixed on the way: compare captured the planners chosen at first render,
+  and side A's id (−1) collided with an empty PlanStore's; the phone stage
+  letterboxed. Tests: packages **3,232 / 0 / 0**, vitest **357 / 0 / 0**
+  (+10), tools **117 / 0 / 0**. Next: M1.9.
 
 ## Capabilities (README §2), with evidence class
 

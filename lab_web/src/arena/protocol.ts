@@ -22,7 +22,11 @@ export interface BootRequest {
 }
 
 export interface StepRequest { type: 'step'; inputs: InputRow[] }
-export type ToWorker = BootRequest | StepRequest;
+/** Two planners from the robot's cell to (x, y); the model is not changed (M1.8). */
+export interface CompareRequest { type: 'compare'; a: string; b: string; x: number; y: number }
+export type ToWorker = BootRequest | StepRequest | CompareRequest;
+
+export interface CompareSide { planner: string; status: string; summary: Record<string, number | string | null>; resolution: number }
 
 /** Wall-clock milliseconds (timeOrigin + now), comparable across page and worker. */
 export const wallMs = () => performance.timeOrigin + performance.now();
@@ -55,7 +59,8 @@ export interface SearchColumns {
 export type FromWorker =
   | { type: 'mark'; name: string; at: number }
   | { type: 'world'; world: World; occupancy: Uint8Array; at: number }
-  | { type: 'plan_batch'; meta: { search_id: number; planner: string; tick: number; final: boolean };
+  | { type: 'plan_batch'; meta: { search_id: number; planner: string; tick: number; final: boolean; compare?: 'A' | 'B' };
       columns: SearchColumns; at: number }
   | { type: 'tick'; tick: Tick; ranges: Float32Array; stepMs: number; at: number }
+  | { type: 'compare_done'; result: { A: CompareSide; B: CompareSide } }
   | { type: 'error'; stage: string; message: string };

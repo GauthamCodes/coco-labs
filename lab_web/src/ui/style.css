@@ -400,3 +400,19 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .timeline { display: grid; gap: 6px; }
 .timeline .track { display: grid; gap: 2px; font-size: 0.85rem; }
 .timeline input[type="range"] { width: 100%; }
+/* narrow screens: the stage takes the map's own shape (25 m x 19 m), no letterbox */
+@media (max-width: 700px) { .arena-stage { height: auto; aspect-ratio: 500 / 380; } }
+.arena-banner { margin: 6px 0; padding: 6px 10px; border-radius: 6px; font-size: 0.9rem; border-left: 4px solid var(--line); }
+.arena-banner.attract { border-left-color: #6a4bd1; }
+.arena-banner.live { border-left-color: #009e73; }
+.arena-banner.replay { border-left-color: #e69f00; }
+.compare { display: grid; gap: 6px; margin: 8px 0; }
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.compare-pane { margin: 0; display: grid; gap: 4px; }
+.compare-pane .arena-canvas { height: min(40vh, 360px); border-radius: 6px; }
+.compare-pane figcaption { font-size: 0.85rem; }
+@media (max-width: 700px) { .compare-grid { grid-template-columns: 1fr; } }
+.run-card { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 8px 10px; border-radius: 6px;
+  background: var(--panel); border: 1px solid var(--line); }
+.layers-and-share { display: grid; gap: 6px; flex: 1 1 260px; }
+.share-url { flex: 1 1 240px; min-width: 0; font: 12px ui-monospace, monospace; }
