@@ -8124,3 +8124,33 @@ No later phase started.
   `git push labs lab5-v1.0 && gh release edit lab5-v1.0 -R GauthamCodes/coco-labs --draft=false --latest --verify-tag`.
 - Phase 6 / Lab 5 is complete apart from that decision. No later phase
   started.
+
+
+### Lab 5 released — `lab5-v1.0` published (2026-10-08, ~05:13 UTC)
+
+The owner approved publishing `lab5-v1.0` ("approve lab5-v1.0",
+2026-10-08), exactly as prepared. No Phase 6 engineering was redone.
+
+Done:
+- `git push labs lab5-v1.0` (annotated tag `4df59f9` → commit `2b6f8ad`,
+  `main`'s release record).
+- `gh release edit lab5-v1.0 -R GauthamCodes/coco-labs --draft=false
+  --latest --verify-tag`. Published 2026-10-08T05:11:35Z, marked Latest.
+
+Verified (measured, this session):
+- `git ls-remote --tags labs` lists `lab5-v1.0` → `4df59f9`, peeled
+  `^{}` → `2b6f8ad` (= `labs/main`).
+- `gh release list`: Lab 5 = Latest; Labs 1–4 and Live unchanged.
+- The asset `coco_lab5_demo.mp4`, downloaded from its public URL, is
+  3,615,891 B with sha256
+  `442cc010206399fcfc9c64314cd74f13c91e9a654032942775181182b4adb3cf`, the
+  hash recorded at recording time.
+- The release-note links answer HTTP 200 (`?view=move` on the public site;
+  `docs/labs/LAB5_MOVE.md` at the tag), and so does the release page.
+- The public site still serves catalog 1.5 built from `2b6f8ad` (clean);
+  headless Firefox at 05:12 UTC: Lab 5 0 console errors, the Replay labelled
+  "recorded real run", a D\* Lite run in Pyodide 7.3 s (coco_lab 186 ms).
+
+Phase 6 / Lab 5 is SHIPPED. PROJECT_STATE and the ROADMAP status line say so
+(on branch `lab5`; `main` stays at `2b6f8ad`, the tagged commit). No later
+phase started.
