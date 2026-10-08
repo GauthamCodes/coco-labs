@@ -1,0 +1,15 @@
+==================================================
+coco_config          ok   93 passed in 0.80s
+coco_sim             ok   323 passed in 3.47s
+coco_mission         ok   371 passed in 11.94s
+coco_web             ok   863 passed, 12 warnings in 28.02s
+gazebo_models        ok   229 passed in 19.92s
+coco_rl              ok   251 passed in 14.30s
+coco_perception      ok   139 passed, 12 warnings in 2.92s
+coco_moveit_config   ok   12 passed in 0.91s
+custom_teleop        ok   75 passed, 12 warnings in 2.66s
+coco_lab             ok   604 passed in 237.96s (0:03:57)
+coco_lab_ros         ok   121 passed, 12 warnings in 26.04s
+==================================================
+[tests] all 11 packages passed
+DONE exit=0

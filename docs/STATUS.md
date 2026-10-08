@@ -112,7 +112,16 @@ only. Read order for agents (README §9): `README.md`, this file,
   | Merging lands lab5's two docs-only commits on `main` | Expected under M0.1; no action | START_STATE.md |
   | `~/coco_labs_ws/src/coco-labs` is a stale clone while `CLAUDE.md` and the scripts default to it | **Resolved by M1 step B.1**: that checkout is fast-forwarded to the merged `main` and becomes canonical (plan-change log, 2026-10-08) | `v2/CHECKOUTS.md` (M1) |
 
-- **M0-close tests (2026-10-08).** TESTS_PLACEHOLDER
+- **M0-close tests (2026-10-08).** On `33c11dc` (overlay `~/coco_v2_ws`,
+  ROS domain 78): packages **3,081 / 0 / 0** (equal to M0.1; per package in
+  [`v2/data/m0/exit/packages_after_fix.txt`](v2/data/m0/exit/packages_after_fix.txt)),
+  `lab_web` typecheck clean and vitest **320 / 0 / 0** (308 unchanged + 12
+  new in `test/live_gate.test.ts`), build tools **117 / 0 / 0**. The package
+  run shared the machine with an orphaned e-Yantra `gz sim server` (owner's,
+  about one core, not touched); nothing failed. PR #19 CI on `33c11dc`:
+  `build-and-test` pass (collected 2,356 tests across 9 suites, 0
+  failed), `coco_lab in a plain venv` pass, `lab_web` pass, Pages deploy
+  skipped (PR run).
 
 ## Capabilities (README §2), with evidence class
 
