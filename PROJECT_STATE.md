@@ -45,7 +45,8 @@ workflow both green, and the site is live at
 `/coco-robot-jazzy-2.0/`; COCO Lab moved to its own repository,
 `GauthamCodes/coco-labs`), verified in a
 headless browser (see *COCO LAB — PHASE 1* below). The plan was revised
-the same day: Phase 2 is now Live (the real robot on the site), and it
+the same day: Phase 2 is now Live (the full ROS 2 stack (simulated) on
+the site — until 2026-10-08 this read "the real robot on the site"), and it
 has not started.** The previous roadmap is
 archived at `docs/history/ROADMAP_COCO2.md`, and the first COCO Lab plan
 (before Phase 2 · Live) at `docs/history/ROADMAP_LAB_2026-09-28.md`.

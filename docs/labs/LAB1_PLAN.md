@@ -1,5 +1,7 @@
 # Lab 1 — Plan
 
+> **Correction (2026-10-08, COCO Lab v2 · M0.6).** Where this document says "real robot" or "the real robot", it means **the full ROS 2 stack (simulated)** in Gazebo. No physical robot exists, and nothing here ran on hardware (README §2, corrections 1 and 3). The text below is kept as written.
+
 **Try it:** <https://gauthamcodes.github.io/coco-labs/> · the
 exhibit: <https://gauthamcodes.github.io/coco-labs/?view=exhibit>
 

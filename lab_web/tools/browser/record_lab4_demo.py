@@ -112,7 +112,8 @@ async def tour(s):
     await s.caption('Same placement, same seed, every policy: only the order differs')
     await hold(6.0)
     await top(s)
-    await s.caption('The real robot, in Gazebo: told only the colour, searching with the same coco_lab code')
+    await s.caption('The full ROS 2 stack (simulated), in Gazebo: told only the colour, '
+                    'searching with the same coco_lab code')
     await check.click_testid(s, 'search-sub-replay')
     await s.wait(check.SEARCH_READY, timeout=60)
     await top(s)

@@ -1,4 +1,10 @@
-# COCO Live — the real robot in the browser (Phase 2)
+# Live Stack (simulated) — the full ROS 2 stack (simulated) in the browser (Phase 2)
+
+*(Until 2026-10-08 this title read "COCO Live — the real robot in the
+browser". No physical robot exists: Live is a scheduled demo of the
+simulated stack, on the owner's machine, README §2 correction 3. It is
+replaced publicly by cloud Stack sessions at M5,
+[`docs/v2/DEPRECATIONS.md`](../v2/DEPRECATIONS.md).)*
 
 The Live tab of COCO Lab drives the simulated COCO robot running the real
 ROS 2 / Nav2 stack, in three modes: **teleop**, **Nav2 goal**, and the

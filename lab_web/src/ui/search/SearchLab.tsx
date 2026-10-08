@@ -60,7 +60,7 @@ export function SearchLab({ catalog, reducedMotion }: { catalog: Catalog; reduce
     return v === 'replay' || v === 'evidence' ? v : 'try';
   });
   if (!part) return <p className="error">This site was built without Lab 4.</p>;
-  const tabs: Array<[Sub, string]> = [['try', 'Find it (Sketch)'], ['replay', 'The real robot (Replay)'],
+  const tabs: Array<[Sub, string]> = [['try', 'Find it (Sketch)'], ['replay', 'The full ROS 2 stack (simulated) — Replay'],
     ['evidence', 'What is proven']];
   return (
     <div className="loc search-lab">

@@ -9,3 +9,4 @@ One line per idea (README §0, change control), in the form:
 2026-10-08 | Explain why warm edits measured 1,265–1,686 ms against Lab 1.1's 1,158–1,172 ms (Chromium vs Firefox, harness, machine) | an unexplained baseline difference | M1
 2026-10-08 | Cold-start measurement against a fixed, recorded network profile (throttled) instead of the live CDN path, which ranged 3.9–39.7 s | cold start is not comparable run to run | M1
 2026-10-08 | Rename the published `live-v1.0` release title ("the real robot in the browser") — owner action, releases are not edited by agents | release title contradicts README correction 3 | M0 merge (owner)
+2026-10-08 | Replace the remaining "real stack" / "real run" / "real mission" / "Replay — recorded real run" wording (consistent with README correction 1, but easy to misread as hardware) with evidence-class badges (STACK, MODEL) | M0.6 fixed only "real robot"; the shorthand "real" remains in v1 views and generated captions | M2

@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /**
- * The Live tab: the real robot, through coco.v1, in three modes.
+ * The Live tab ("Live Stack (simulated)"): the full ROS 2 stack (simulated)
+ * in Gazebo, through coco.v1, in three modes. No physical robot exists.
  *
  * It renders what the server sends and sends intents; it decides nothing
  * about the robot (rule 8). Safety stays where it is enforced: the server
@@ -239,6 +240,11 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
   const ctl = tele?.platform.control;
   return (
     <section className="live" data-testid="live">
+      <p className="note" data-testid="live-what">
+        <strong>Live Stack (simulated)</strong> — a scheduled demo of the simulated stack: the full ROS 2 stack
+        (simulated) in Gazebo, on the owner's machine, driven through the same command chain as every recording.
+        No physical robot exists; nothing here runs on hardware.
+      </p>
       <LiveStatus onJoin={(ws) => { setDraftUrl(ws); setUrl(ws); }} current={url} />
       <div className="live-bar">
         <form onSubmit={(e) => { e.preventDefault(); setUrl(draftUrl.trim()); }}>
@@ -393,7 +399,7 @@ function LiveStatus({ onJoin, current }: { onJoin(ws: string): void; current: st
   const remote = LIVE_REMOTE?.ws;
   return (
     <div className={words.live ? 'live-status-card on' : 'live-status-card'} data-testid="live-status">
-      <b>{words.live ? 'Live now' : 'Remote session'}</b> <span data-testid="live-status-words">{words.headline}</span>
+      <b>{words.live ? 'Live now' : 'Scheduled demo'}</b> <span data-testid="live-status-words">{words.headline}</span>
       {words.live && remote && remote !== current && (
         <button type="button" className="seg-btn" data-testid="live-join" onClick={() => onJoin(remote)}>Watch</button>
       )}

@@ -14,7 +14,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | Branch | `v2/m0-transition` (from `3571169`) |
 | Current SHA | the head of `v2/m0-transition`; each checkpoint commit is listed below |
 | Milestone | **M0 · Transition** |
-| Checkpoint | M0.5 Remove — done |
+| Checkpoint | M0.6 Honesty fixes — done |
 | Merge to `main` | not merged; owner's approval required (README §3, integrity rule 5) |
 
 ## Checkpoint log
@@ -48,6 +48,18 @@ only. Read order for agents (README §9): `README.md`, this file,
   (`coco_sim`) and the Isaac evidence are kept (frozen package; evidence).
   Old themes rewritten in `docs/ROADMAP.md`. Evidence:
   [`docs/v2/data/m0/REMOVALS.md`](v2/data/m0/REMOVALS.md).
+- **M0.6 Honesty fixes (2026-10-08, copy only).** Site: the Live tab, its
+  header and its mode badge read "Live Stack (simulated)" (local /
+  scheduled demo), with a line saying it is a scheduled demo of the
+  simulated stack and that no physical robot exists; Lab 4's "The real
+  robot (Replay)" tab reads "The full ROS 2 stack (simulated) — Replay";
+  the Lab 4 demo recorder's caption likewise. Docs: `docs/live/LIVE.md`
+  title and `PROJECT_STATE.md` reworded with the old text recorded;
+  correction notes at the top of `docs/labs/LAB1_PLAN.md`,
+  `LAB4_SEARCH.md`, `LAB5_MOVE.md` and `docs/releases/lab4-v1.0.md`
+  (bodies untouched). No "two-finger" wording exists outside the archive
+  and frozen code comments. `lab_web/test/live.test.ts` updated for the
+  new label; vitest 308 / 0 / 0.
 
 ## Capabilities (README §2), with evidence class
 
