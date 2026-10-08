@@ -1,0 +1,51 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// Incremental replanning (D* Lite), round by round: the v2 form of
+// coco_lab.dstarlite's ReplanTrace. Infinity is IEEE +inf here; the v1
+// trace wrote -1, and the converter maps one to the other (tested).
+// Channels: coco.plan.incremental.header.v1 (IncrementalHeader),
+//           coco.plan.incremental.events.v1 (IncrementalEventBatch).
+
+syntax = "proto3";
+
+package coco.plan.v1;
+
+import "coco/common/v1/common.proto";
+
+// coco_lab.dstarlite.EVENT_KINDS, in code order, shifted by one.
+enum IncrementalEventKind {
+  INCREMENTAL_EVENT_KIND_UNSPECIFIED = 0;
+  INCREMENTAL_EVENT_KIND_EXPAND = 1;
+  INCREMENTAL_EVENT_KIND_RAISE = 2;
+  INCREMENTAL_EVENT_KIND_UPDATE = 3;
+  INCREMENTAL_EVENT_KIND_CHANGE = 4;
+  INCREMENTAL_EVENT_KIND_PATH = 5;
+  INCREMENTAL_EVENT_KIND_MOVE = 6;
+}
+
+message IncrementalHeader {
+  uint64 search_id = 1;
+  string source_schema = 2;
+  string source_version = 3;
+  string algorithm = 4;  // "dstar_lite"
+  string heuristic = 5;
+  coco.common.v1.Loc start = 6;
+  coco.common.v1.Loc goal = 7;
+  coco.common.v1.Params graph = 8;
+  coco.common.v1.Params params = 9;  // anything else the run was told
+}
+
+message IncrementalEventBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated IncrementalEventKind kind = 4;
+  repeated sint32 row = 5;
+  repeated sint32 col = 6;
+  repeated sint32 sub = 7;
+  repeated double g = 8;    // +inf for infinity
+  repeated double rhs = 9;  // +inf for infinity
+  repeated uint32 round = 10;  // 0 = first plan, k = k-th replan
+  uint64 search_id = 11;
+}

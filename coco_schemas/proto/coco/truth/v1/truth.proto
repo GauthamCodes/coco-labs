@@ -1,0 +1,19 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// Ground truth: the ONE authoritative source (README section 3, invariant 4).
+// Display only: nothing that commands the robot may read it.
+// Channel: coco.truth.pose.v1 (TruthPoseBatch).
+
+syntax = "proto3";
+
+package coco.truth.v1;
+
+message TruthPoseBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated double x = 4;
+  repeated double y = 5;
+  repeated double theta = 6;
+}

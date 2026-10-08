@@ -1,0 +1,43 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// The world: static geometry a run takes place in.
+// Channels: coco.world.grid.v1 (WorldGrid), coco.world.geometry.v1 (WorldGeometry).
+
+syntax = "proto3";
+
+package coco.world.v1;
+
+import "coco/common/v1/common.proto";
+
+// An occupancy grid, row-major from the map origin.
+message WorldGrid {
+  string map_id = 1;
+  uint32 width = 2;    // cells
+  uint32 height = 3;   // cells
+  double resolution = 4;  // metres per cell
+  double origin_x = 5;    // world position of cell (0, 0)'s outer corner
+  double origin_y = 6;
+  bytes blocked = 7;      // width*height bytes, 1 = blocked, 0 = free
+  repeated float cost = 8;  // optional cost layer, width*height values, or empty
+  string spec_sha256 = 9;   // the World Spec it was generated from, if any
+  // Row 0 is the map's bottom row (Nav2 / ROS convention) when true; the
+  // top row when false.
+  bool row0_is_bottom = 10;
+}
+
+// Named shapes: walls, obstacles, bays, zones (M1.2 fills this from the World Spec).
+message Shape {
+  string id = 1;
+  string kind = 2;  // "wall", "obstacle", "bay", "ramp_zone", "zone"
+  coco.common.v1.Polygon2D polygon = 3;
+  coco.common.v1.Params params = 4;
+}
+
+message WorldGeometry {
+  string world_id = 1;
+  string spec_sha256 = 2;
+  double width_m = 3;
+  double height_m = 4;
+  repeated Shape shapes = 5;
+}

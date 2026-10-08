@@ -1,0 +1,19 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// Named numbers, with units. The end-of-run totals (expansions, path cost,
+// path length) and per-tick figures alike.
+// Channel: coco.metrics.values.v1 (MetricBatch).
+
+syntax = "proto3";
+
+package coco.metrics.v1;
+
+message MetricBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated string name = 4;   // e.g. "plan.expansions"
+  repeated double value = 5;
+  repeated string unit = 6;   // e.g. "count", "m", "s"; "" for dimensionless
+}

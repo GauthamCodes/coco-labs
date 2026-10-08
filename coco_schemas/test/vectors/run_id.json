@@ -1,0 +1,61 @@
+{
+ "method": "coco_schemas.runid (docs/v2/SCHEMAS.md)",
+ "note": "seed is a decimal string: it may exceed 2**53",
+ "vectors": [
+  {
+   "note": "empty spec, seed 0, no engines",
+   "spec_utf8": "",
+   "seed": "0",
+   "engines": [],
+   "spec_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "run_id": "16d4b275c34f068bc81571fb9a8d1c4e161dca3dd30d4f64e42879717db5539a"
+  },
+  {
+   "note": "a small spec, two engines out of order",
+   "spec_utf8": "{\"world\":\"coco_arena_v1\"}",
+   "seed": "42",
+   "engines": [
+    [
+     "pyodide",
+     "314.0.7"
+    ],
+    [
+     "coco_lab",
+     "0.2.0"
+    ]
+   ],
+   "spec_sha256": "894292acccfbfac8c55d610ae6518fda9cfa6385e704be5cb94f5677ed807510",
+   "run_id": "89d741685999f61fa241f674299c62e15a4f2472222b443dd3ae07e732837553"
+  },
+  {
+   "note": "largest seed",
+   "spec_utf8": "{\"a\":1}",
+   "seed": "18446744073709551615",
+   "engines": [
+    [
+     "coco_lab",
+     "abc123"
+    ]
+   ],
+   "spec_sha256": "015abd7f5cc57a2dd94b7590f04ad8084273905ee33ec5cebeae62276a97f862",
+   "run_id": "6c3bc642ade6d8cf47b8e61db6454b4b9f6d53904f64fd9a08deb3d81d96f0ae"
+  },
+  {
+   "note": "non-ASCII spec and engine version",
+   "spec_utf8": "{\"note\":\"héllo — π\"}",
+   "seed": "7",
+   "engines": [
+    [
+     "python",
+     "3.14.2"
+    ],
+    [
+     "coco_lab",
+     "déf"
+    ]
+   ],
+   "spec_sha256": "53243753c6050b9d558dbdf6b764bc8df55eb7c160cf554c0fa3d478952526a2",
+   "run_id": "b7ca5b6a3cc9a3d78611c7b2dbbdc1d28e00eae2ebddb124ec6e16a008237db0"
+  }
+ ]
+}

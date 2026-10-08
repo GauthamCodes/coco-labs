@@ -14,7 +14,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | Branch | `v2/m1-arena-core` (from `main` = `9f58b83`), worked in the worktree `.claude/worktrees/v2-m1-arena-core`, overlay `~/coco_lab_m1_ws` |
 | Milestone | **M1 · Glass-box Arena core** ([`v2/M1_PROMPT.md`](v2/M1_PROMPT.md)) |
-| Checkpoint | B.1 preflight done; **next: M1.1 `coco_schemas`, starting with the event-transport measurement (ADR 0001)** |
+| Checkpoint | B.1 and **M1.1 done**; **next: M1.2 World Spec v1** (`worlds/coco_arena_v1.yaml` from `gazebo_models/config/navigation_world.json` + `coco_config/robot.py`) |
 | Merge to `main` | M1 opens a PR when every agent-measurable criterion passes; it is **not** merged by the agent |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 phone performance, phone cold start and usability (README §7, M1) |
 
@@ -153,6 +153,27 @@ only. Read order for agents (README §9): `README.md`, this file,
   protobuf 7.34.1, zstandard 0.25.0, numpy 2.4.6). **M1 baseline** on
   `9f58b83`: packages **3,081 / 0 / 0**, vitest **320 / 0 / 0**, tools
   **117 / 0 / 0**. Next: M1.1.
+
+- **M1.1 `coco_schemas` (2026-10-08).** Transport settled first,
+  measured: [ADR 0001](v2/adr/0001-event-transport.md) — Python emits
+  columnar typed arrays, TypeScript encodes protobuf for storage
+  (Pyodide-in-Node, 258,263 events: columnar 75.3 ms + 8.4 ms;
+  protobuf-in-Python 92.2 + 4.4 ms and a 248 KB wheel; JS encode 41.1 ms,
+  byte-identical; MODEL, laptop). New package `coco_schemas`: envelope
+  (`Manifest`, `run_id`) and the nine families as 15 channels
+  `coco.<family>.<name>.v1`, every batch carrying `seq`/`tick`/`t_world`;
+  generated Python (protoc 3.21.12) and TypeScript (protoc-gen-es 2.15.0);
+  within-major compatibility rules against `compat/v1.binpb`; lossless
+  v1-trace converter (all 9 Lab 1 bundles incl. the 3 recorded full-stack
+  runs, and 1,000 maps × 5 algorithms, byte-identical canonical JSON);
+  MCAP + zstd container (`lab_web/src/schemas/mcap.ts`); Python ↔
+  TypeScript byte and `run_id` parity vectors. CI: `coco_schemas` built
+  and tested in `ci.yml`, TypeScript generation checked in `lab.yml`.
+  Reference: [`v2/SCHEMAS.md`](v2/SCHEMAS.md). Tests: packages
+  **3,169 / 0 / 0** (3,081 + 86 `coco_schemas` + 2 `gazebo_models`
+  per-package checks), vitest **332 / 0 / 0** (+12), tools **117 / 0 / 0**.
+  Stop condition "schemas cannot express a Lab 1 trace without loss": not
+  hit. Next: M1.2.
 
 ## Capabilities (README §2), with evidence class
 

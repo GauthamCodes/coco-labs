@@ -43,6 +43,8 @@ jobs:
             ros-jazzy-robot-localization \
             python3-opencv \
             python3-numpy \
+            python3-protobuf \
+            protobuf-compiler \
             liburdfdom-tools
           # coco_rl's tests guard their imports with pytest.importorskip, so
           # without gymnasium they would skip silently and CI would report
@@ -57,6 +59,10 @@ jobs:
           # mujoco: coco_rl.yard_env and coco_sim import it at module scope,
           # so without it coco_rl's collection aborts (exit 2). The pin is
           # coco_sim/setup.py's install_requires.
+          # protobuf-compiler + python3-protobuf: coco_schemas (M1.1). Its
+          # tests regenerate the Python code with protoc and diff it against
+          # the commit, so protoc must be Ubuntu 24.04's 3.21.12, the one the
+          # committed code was made with (generate.py refuses any other).
           # tornado: coco_web's server. Pinned to the version its suite was
           # measured on (6.5.7); the tests encode 6.5 behaviour, e.g.
           # write_message returning a Task and IOStream._write_buffer.
@@ -69,7 +75,7 @@ jobs:
           # tests run in the Lab workflow's plain venv (no ROS); here it is
           # built so coco_mission can be.
           colcon build --symlink-install \
-            --packages-select gazebo_models custom_teleop coco_config coco_lab coco_moveit_config coco_web coco_rl coco_perception coco_mission coco_sim
+            --packages-select gazebo_models custom_teleop coco_config coco_lab coco_moveit_config coco_web coco_rl coco_perception coco_mission coco_sim coco_schemas
 
       - name: Validate robot model
         run: |
@@ -89,7 +95,7 @@ jobs:
           # browser connection dying before `welcome` -- stayed green: its
           # 575 tests ran only on developer machines, all on a stubbed
           # world_geometry. test_platform_server.py now runs the real one.
-          colcon test --packages-select gazebo_models custom_teleop coco_config coco_moveit_config coco_rl coco_perception coco_sim coco_web coco_mission
+          colcon test --packages-select gazebo_models custom_teleop coco_config coco_moveit_config coco_rl coco_perception coco_sim coco_web coco_mission coco_schemas
           colcon test-result --verbose
           # colcon test exits 0 even when a package collected nothing, which
           # is exactly how the coco_rl suite went unnoticed: its tests use

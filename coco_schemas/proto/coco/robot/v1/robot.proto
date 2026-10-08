@@ -1,0 +1,37 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// The robot: its parameters (static) and its state as the model or the
+// stack believes it. Ground truth is NOT here; it is coco.truth (README
+// section 3, invariant 4).
+// Channels: coco.robot.params.v1 (RobotParams), coco.robot.state.v1 (RobotStateBatch).
+
+syntax = "proto3";
+
+package coco.robot.v1;
+
+import "coco/common/v1/common.proto";
+
+message RobotParams {
+  string robot_id = 1;
+  double wheel_radius = 2;      // m
+  double wheel_separation = 3;  // m, track width
+  double max_linear = 4;        // m/s
+  double max_angular = 5;       // rad/s
+  coco.common.v1.Polygon2D footprint = 6;  // robot frame
+  double radius = 7;            // m, the circumscribed radius
+  coco.common.v1.Pose2D lidar_mount = 8;   // robot frame
+  string source = 9;            // where the numbers come from, e.g. coco_config/robot.py
+}
+
+// One row per control tick. Fields 1-3 are the clocks every event carries.
+message RobotStateBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated double x = 4;
+  repeated double y = 5;
+  repeated double theta = 6;
+  repeated double v = 7;      // commanded linear velocity, m/s
+  repeated double omega = 8;  // commanded angular velocity, rad/s
+}

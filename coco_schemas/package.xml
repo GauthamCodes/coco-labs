@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>coco_schemas</name>
+  <version>1.0.0</version>
+  <description>
+    COCO Lab v2's event schemas: one envelope (the run manifest) and typed
+    channel families (world, robot, truth, sensor.scan, plan.search,
+    plan.incremental, input, metrics, annotation), as protobuf, with
+    generated Python and TypeScript. No rclpy. docs/v2/SCHEMAS.md.
+  </description>
+  <maintainer email="gauthamanil888@gmail.com">gautham</maintainer>
+  <license>Apache-2.0</license>
+
+  <!-- The generated Python needs the protobuf runtime. rosdep key
+       python3-protobuf = Ubuntu 24.04's 4.21.12, the version
+       requirements.txt pins for pip installs. -->
+  <exec_depend>python3-protobuf</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+  <!-- the lossless tests convert real coco_lab traces -->
+  <test_depend>coco_lab</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

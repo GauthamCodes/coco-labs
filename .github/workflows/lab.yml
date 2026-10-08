@@ -106,6 +106,11 @@ jobs:
       - name: Install (lockfile, exact pins)
         working-directory: lab_web
         run: npm ci
+      - name: coco_schemas' TypeScript is what protoc generates today
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y --no-install-recommends protobuf-compiler
+          python3 coco_schemas/scripts/generate.py --lang ts --check
       - name: Typecheck and the TypeScript tests
         working-directory: lab_web
         run: |

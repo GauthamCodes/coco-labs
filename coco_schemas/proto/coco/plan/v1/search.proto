@@ -1,0 +1,74 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// Graph search, event by event: the v2 form of coco_lab's v1 trace
+// (coco_lab/coco_lab/trace.py, docs/labs/TRACE_SCHEMA.md). A v1 trace maps
+// onto header + events + summary with nothing lost (tested).
+// Channels: coco.plan.search.header.v1 (SearchHeader),
+//           coco.plan.search.events.v1 (SearchEventBatch),
+//           coco.plan.search.summary.v1 (SearchSummary).
+
+syntax = "proto3";
+
+package coco.plan.v1;
+
+import "coco/common/v1/common.proto";
+
+// v1 EVENT_KINDS, in code order, shifted by one so 0 stays "unspecified".
+enum SearchEventKind {
+  SEARCH_EVENT_KIND_UNSPECIFIED = 0;
+  SEARCH_EVENT_KIND_PUSH = 1;
+  SEARCH_EVENT_KIND_EXPAND = 2;
+  SEARCH_EVENT_KIND_RELAX = 3;
+  SEARCH_EVENT_KIND_PATH = 4;
+}
+
+enum SearchStatus {
+  SEARCH_STATUS_UNSPECIFIED = 0;
+  SEARCH_STATUS_FOUND = 1;
+  SEARCH_STATUS_NO_PATH = 2;
+}
+
+message SearchHeader {
+  uint64 search_id = 1;   // distinguishes searches within one run
+  string source_schema = 2;   // "coco_lab.trace" for a v1 trace
+  string source_version = 3;  // e.g. "1.0"
+  string algorithm = 4;   // bfs, dijkstra, astar, greedy, weighted_astar
+  string heuristic = 5;
+  optional double weight = 6;  // absent unless weighted_astar
+  string tie_break = 7;   // low_h, fifo
+  coco.common.v1.Loc start = 8;
+  coco.common.v1.Loc goal = 9;
+  coco.common.v1.Params graph = 10;  // the graph's describe(), in order
+  uint64 tick = 11;       // the control tick the search ran in
+  double t_world = 12;
+}
+
+// One row per event. Columns 4-13 are the v1 trace's, in its order.
+message SearchEventBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated SearchEventKind kind = 4;
+  repeated sint32 row = 5;
+  repeated sint32 col = 6;
+  repeated sint32 sub = 7;
+  repeated double g = 8;
+  repeated double h = 9;
+  repeated double f = 10;
+  repeated sint32 parent_row = 11;  // -1 for no parent
+  repeated sint32 parent_col = 12;
+  repeated sint32 parent_sub = 13;
+  uint64 search_id = 14;
+}
+
+message SearchSummary {
+  uint64 search_id = 1;
+  SearchStatus status = 2;
+  uint64 expansions = 3;
+  uint64 pushes = 4;
+  uint64 relaxes = 5;
+  optional double path_cost = 6;    // absent when no path
+  optional double path_length = 7;  // cells (Euclidean), absent when no path
+  optional uint64 path_steps = 8;
+}
