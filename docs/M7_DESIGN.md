@@ -401,6 +401,10 @@ best case.
 
 #### 2. A VLM task interface above the sequencer
 
+> **Removed from COCO Lab's scope permanently (2026-10-08, `README.md` §4
+> and §6: "VLM layer — Remove").** Kept below, unchanged, as the robot
+> project's design record. No code for it was ever written.
+
 Two concrete uses, both replacing something that is currently a cheat:
 
 - **Open-vocabulary target selection.** Today `--colour` is a table lookup

@@ -14,7 +14,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | Branch | `v2/m0-transition` (from `3571169`) |
 | Current SHA | the head of `v2/m0-transition`; each checkpoint commit is listed below |
 | Milestone | **M0 · Transition** |
-| Checkpoint | M0.4 Install the plan — done |
+| Checkpoint | M0.5 Remove — done |
 | Merge to `main` | not merged; owner's approval required (README §3, integrity rule 5) |
 
 ## Checkpoint log
@@ -41,6 +41,13 @@ only. Read order for agents (README §9): `README.md`, this file,
   to `docs/archive/v1/`: `README_v1.md`, `ROADMAP.md`, `LAB_PHASES.md`,
   `CLAUDE_v1_rules.md`. New: `docs/ROADMAP.md` (pointer + v1 history),
   this file, `docs/IDEAS.md`; `PROJECT_STATE.md` and `CLAUDE.md` updated.
+- **M0.5 Remove (2026-10-08).** No code or config exists for Isaac inside
+  COCO Lab, the VLM layer or browser policy training; **0 files deleted**.
+  The robot project's design sections for the VLM layer and policy
+  training are marked out of scope in place; the robot-stack Isaac adapter
+  (`coco_sim`) and the Isaac evidence are kept (frozen package; evidence).
+  Old themes rewritten in `docs/ROADMAP.md`. Evidence:
+  [`docs/v2/data/m0/REMOVALS.md`](v2/data/m0/REMOVALS.md).
 
 ## Capabilities (README §2), with evidence class
 

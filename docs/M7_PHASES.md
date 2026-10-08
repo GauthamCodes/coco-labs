@@ -189,6 +189,12 @@ handles the camber fine, say so — that changes what M8 should be.
 
 ## Phase 4 — Policy training (M8.0, M8.1)
 
+> **Not COCO Lab work (2026-10-08, `README.md` §4 and §6).** Browser policy
+> training is removed from COCO Lab permanently, and RL lessons or policy
+> training are deferred until the robot project shows where learning beats
+> classical control. This phase is the robot project's plan, kept unchanged
+> as its record; it was never started.
+
 ```
 Goal: a policy that beats B2, or an honest report that it does not.
 
@@ -248,7 +254,8 @@ Goal: the headline number.
 > wheel odometry + IMU) — motivated by run 15 of the Phase 0.5 matrix,
 > which lost the mission after a successful pick when AMCL drifted 3.4 m
 > and DWB scored 0 of 819 trajectories; judged on the descent-end AMCL
-> gap, currently 0.119–1.183 m. **(2) A VLM task interface** above the
+> gap, currently 0.119–1.183 m. **(2) A VLM task interface** (removed from
+> COCO Lab's scope permanently, 2026-10-08, `README.md` §4) above the
 > sequencer — open-vocabulary target selection, and grasp verification
 > from the camera frame to replace `check_lifted`'s read of gz ground
 > truth. **(3) MPPI vs DWB** with a comparison table. **(4) Residual RL**
