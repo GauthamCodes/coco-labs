@@ -387,6 +387,12 @@ only. Read order for agents (README §9): `README.md`, this file,
     costs the live model's load 155–575 ms.
   - Tests: packages **3,235 / 0 / 0**, vitest **381 / 0 / 0** (+7), tools
     **117 / 0 / 0**.
+  - **CI** (Lab run 37850645657 on `1abe73f`, all jobs green): the new
+    browser job replayed 10 recorded sessions (1,500 ticks each) in
+    Chromium, Firefox and WebKit on GitHub's runner — **0 mismatched**
+    against the committed Pyodide-in-Node hashes — and all 5 screenshot
+    scenes matched the laptop-made baselines **pixel for pixel** (self-test:
+    two different scenes differ by 3.1 % of pixels, so the check can fail).
   - The re-runs on the final build replaced `v2/data/m1/timeline/`,
     `experience/` and `replay/`'s files in place; the files the M1.7–M1.9
     entries above quote are in git at `0f90e35` (M1.9) and its parents.
