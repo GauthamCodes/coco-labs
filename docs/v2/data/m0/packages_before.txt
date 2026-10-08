@@ -1,0 +1,14 @@
+[tests] interpreter: /home/gautham/coco_v2_ws/test_venv/bin/python (3.12.3 pytest 7.4.4 hypothesis 6.98.15 networkx 2.8.8)
+[tests] workspace:   /home/gautham/coco_v2_ws   ROS_DOMAIN_ID=78
+coco_config          ok   93 passed in 0.83s
+coco_sim             ok   323 passed in 3.68s
+coco_mission         ok   371 passed in 11.87s
+coco_web             ok   863 passed, 12 warnings in 27.15s
+gazebo_models        ok   229 passed in 18.38s
+coco_rl              ok   251 passed in 15.84s
+coco_perception      ok   139 passed, 12 warnings in 3.70s
+coco_moveit_config   ok   12 passed in 0.90s
+custom_teleop        ok   75 passed, 12 warnings in 2.50s
+coco_lab             ok   604 passed in 247.57s (0:04:07)
+coco_lab_ros         ok   121 passed, 12 warnings in 27.18s
+[tests] all 11 packages passed

@@ -1,0 +1,5 @@
+> coco-lab-web@0.1.0 typecheck
+> tsc --noEmit -p .
+ RUN  v5.0.2 /home/gautham/ros2_ws(personal)/src/coco-robot-ros2/.claude/worktrees/v2-m0/lab_web
+ Test Files  17 passed (17)
+      Tests  308 passed (308)
