@@ -3,9 +3,9 @@
 
 /**
  * `?view=arena`: the Glass-box Arena (M1). The worker boots as soon as the
- * page opens; the renderer (Three.js, beside React) draws the world, the
- * robot and the planner's computation as it streams in; React draws only
- * panels. Timeline (M1.7) and experience (M1.8) build on this.
+ * page opens; the renderer (Three.js, beside React) draws whatever the
+ * timeline (ArenaSession) shows -- the live head, or any past tick and any
+ * point of its search; React draws only panels.
  */
 
 import { useEffect, useRef, useState } from 'react';
@@ -13,23 +13,22 @@ import { useEffect, useRef, useState } from 'react';
 import { ArenaClient, type PyodideSource } from './client';
 import { PerfOverlay } from './PerfOverlay';
 import { perf } from './perf';
-import { wallMs, type InputRow, type PlanInfo, type Tick, type World } from './protocol';
+import { wallMs, type InputRow, type Tick, type World } from './protocol';
 import { currentTheme } from './render/palette';
-import { PlanStore, type CellInfo } from './render/planStore';
+import type { CellInfo, PlanStore } from './render/planStore';
 import { ArenaRenderer, DEFAULT_LAYERS, type LayerVisibility } from './render/Renderer';
+import { ArenaSession } from './session';
+import { Timeline } from './Timeline';
 
 declare global {
   interface Window {
-    /** Harness hooks (tools/perf): the client, the latest tick, an input queue, the renderer. */
+    /** Harness hooks (tools/perf): client, latest tick, input queue, renderer, session. */
     __cocoArena?: {
       client: ArenaClient; queue: Omit<InputRow, 'tick'>[]; last: Tick | null;
-      renderer: ArenaRenderer | null; store: () => PlanStore | null; goal: (x: number, y: number) => void;
+      renderer: ArenaRenderer | null; session: () => ArenaSession | null; goal: (x: number, y: number) => void;
     };
   }
 }
-
-/** Reveal a search over about this many frames (the timeline makes it adjustable). */
-const REVEAL_FRAMES = 90;
 
 export function ArenaApp() {
   const params = new URLSearchParams(window.location.search);
@@ -37,16 +36,16 @@ export function ArenaApp() {
   const source: PyodideSource = params.get('pyodide') === 'cdn' ? 'cdn' : 'self';
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const [world, setWorld] = useState<World | null>(null);
-  const [tick, setTick] = useState<Tick | null>(null);
-  const [plan, setPlan] = useState<PlanInfo | null>(null);
+  const [session, setSession] = useState<ArenaSession | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [inspect, setInspect] = useState(false);
   const [picked, setPicked] = useState<CellInfo | null>(null);
   const [layers, setLayers] = useState<LayerVisibility>(DEFAULT_LAYERS);
   const [planner, setPlanner] = useState('astar');
+  const [, setFrame] = useState(0);
   const queue = useRef<Omit<InputRow, 'tick'>[]>([]);
   const renderer = useRef<ArenaRenderer | null>(null);
-  const store = useRef<PlanStore | null>(null);
+  const sessionRef = useRef<ArenaSession | null>(null);
   const inspectRef = useRef(false);
   inspectRef.current = inspect;
 
@@ -62,11 +61,37 @@ export function ArenaApp() {
     let client: ArenaClient | null = null;
     let first = true;
     let frontierPending = false;
-    r?.start();
+    let inFlight = false;
+    let owed = 0;
+    let lastFrame = performance.now();
+    let shownStore: PlanStore | null = null;
+    let shownTick = -1;
+    let goalMark: [number, number] | null = null;
+
+    const stepNow = () => {
+      if (inFlight || !client?.world) { owed += 1; return; }
+      inFlight = true;
+      client.step(queue.current.splice(0));
+    };
+
     if (r) {
       r.onFrame = () => {
-        const s = store.current;
-        if (s && s.cursor < s.received) s.advance(s.cursor + Math.max(64, Math.ceil(s.received / REVEAL_FRAMES)));
+        const now = performance.now();
+        const s = sessionRef.current;
+        if (s) {
+          owed = Math.min(4, owed + s.frame(now - lastFrame)); // a slow worker never builds a backlog
+          if (owed > 0 && !inFlight) { owed -= 1; stepNow(); }
+          const st = s.shownSearch;
+          if (st !== shownStore) { shownStore = st; r!.setPlan(st); }
+          const t = s.shownTick;
+          if (t && t.tick !== shownTick) {
+            shownTick = t.tick;
+            r!.setPose(t.pose);
+            if (t.ranges) r!.setScan(t.pose, t.ranges);
+            r!.setGoal(t.mode === 'goal' && s.live ? goalMark : null);
+          }
+        }
+        lastFrame = now;
       };
       r.onAfterRender = () => {
         if (first && client?.world) { first = false; perf.mark('first_frame', wallMs()); }
@@ -76,50 +101,46 @@ export function ArenaApp() {
           perf.frontierDrawn();
         }
       };
+      r.start();
     }
     let outline: Promise<[number, number][]> = fetch(`${import.meta.env.BASE_URL}generated/arena/robot_outline.json`,
       { credentials: 'omit' }).then((x) => x.json()).then((j) => j.polygon);
+    outline = outline.catch(() => [[0.12, 0], [-0.12, 0.137], [-0.12, -0.137]]);
     client = new ArenaClient({
       onWorld: (w, occ) => {
         setWorld(w);
-        store.current = new PlanStore(w.width, w.height);
-        void outline.then((poly) => { r?.setWorld(w, occ, poly); r?.setPlan(store.current); });
+        const s = new ArenaSession(w.width, w.height, w.dt);
+        sessionRef.current = s;
+        setSession(s);
+        void outline.then((poly) => r?.setWorld(w, occ, poly));
       },
       onPlanBatch: (meta, cols) => {
-        const s = store.current;
+        const s = sessionRef.current;
         if (!s) return;
-        if (meta.search_id !== s.searchId) { s.begin(meta.search_id, meta.planner); r?.setPlan(s); }
-        s.append(cols, meta.final);
-        if (s.cursor === 0) {
-          s.advance(1); // the first frontier node shows on the very next frame
-          frontierPending = true;
-        }
+        const isNew = !s.searches.has(meta.search_id);
+        s.onPlanBatch(meta, cols);
+        if (isNew) frontierPending = true;
       },
       onTick: (t, ranges) => {
-        setTick(t);
-        if (t.plans.length) setPlan(t.plans[t.plans.length - 1]);
-        r?.setPose(t.pose);
-        r?.setScan(t.pose, ranges);
-        if (t.arrived || t.mode !== 'goal') r?.setGoal(null);
+        inFlight = false;
+        sessionRef.current?.onTick(t, ranges);
         if (window.__cocoArena) window.__cocoArena.last = t;
       },
-      onError: (stage, message) => setError(`${stage}: ${message}`),
+      onError: (stage, message) => { inFlight = false; setError(`${stage}: ${message}`); },
     }, { pyodide: source, seed: Number(params.get('seed') ?? 1) });
-    outline = outline.catch(() => [[0.12, 0], [-0.12, 0.137], [-0.12, -0.137]]);
 
-    const stepNow = () => client!.step(queue.current.splice(0));
     const goal = (x: number, y: number) => {
       perf.goalSent();
+      goalMark = [x, y];
+      r?.setGoal(goalMark);
+      const s = sessionRef.current;
+      if (s && !s.live) s.goLive();
       queue.current.push({ kind: 'goal', x, y });
-      r?.setGoal([x, y]);
-      stepNow(); // the goal is planned at once, not at the next tick boundary
+      stepNow(); // planned at once, not at the next tick boundary
     };
-    window.__cocoArena = { client, queue: queue.current, last: null, renderer: r, store: () => store.current, goal };
-    let timer: ReturnType<typeof setInterval> | undefined;
-    void client.whenReady().then((w) => {
-      if (params.has('stress')) r?.addStress(50_000, 20_000);
-      timer = setInterval(stepNow, w.dt * 1000);
-    }, () => {});
+    window.__cocoArena = { client, queue: queue.current, last: null, renderer: r, session: () => sessionRef.current, goal };
+    void client.whenReady().then(() => { if (params.has('stress')) r?.addStress(50_000, 20_000); }, () => {});
+    const ui = setInterval(() => setFrame((n) => n + 1), 200);
 
     // a click (not a drag) sets a goal, or inspects a cell in inspect mode
     let down: [number, number] | null = null;
@@ -131,7 +152,8 @@ export function ArenaApp() {
       const cell = r.cellAt(x, y);
       if (inspectRef.current) {
         r.showPick(cell);
-        setPicked(cell && store.current ? store.current.info(cell[0], cell[1]) : null);
+        const st = sessionRef.current?.shownSearch ?? null;
+        setPicked(cell && st ? st.info(cell[0], cell[1]) : null);
       } else if (cell) {
         goal(x, y);
       }
@@ -139,7 +161,7 @@ export function ArenaApp() {
     cv.addEventListener('pointerdown', onDown);
     cv.addEventListener('pointerup', onUp);
     return () => {
-      clearInterval(timer);
+      clearInterval(ui);
       cv.removeEventListener('pointerdown', onDown);
       cv.removeEventListener('pointerup', onUp);
       client?.close();
@@ -153,6 +175,8 @@ export function ArenaApp() {
 
   const toggle = (k: keyof LayerVisibility) => setLayers((l) => ({ ...l, [k]: !l[k] }));
   const choosePlanner = (p: string) => { setPlanner(p); queue.current.push({ kind: 'planner', choice: p }); };
+  const tick = session?.shownTick ?? null;
+  const plan = tick ? [...(session?.history ?? [])].reverse().find((h) => h.tick <= tick.tick && h.plans.length)?.plans.at(-1) ?? null : null;
 
   return (
     <main className="arena" data-testid="arena">
@@ -168,6 +192,7 @@ export function ArenaApp() {
         {!world && <p className="arena-loading" data-testid="arena-status">Loading the model (Pyodide + coco_lab)…</p>}
       </div>
       <section className="arena-panels">
+        <Timeline session={session} />
         <div className="arena-row" role="group" aria-label="Planner">
           {(world?.planners ?? []).map((p) => (
             <button key={p} type="button" className={p === planner ? 'seg-btn active' : 'seg-btn'}

@@ -14,7 +14,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | Branch | `v2/m1-arena-core` (from `main` = `9f58b83`), worked in the worktree `.claude/worktrees/v2-m1-arena-core`, overlay `~/coco_lab_m1_ws` |
 | Milestone | **M1 · Glass-box Arena core** ([`v2/M1_PROMPT.md`](v2/M1_PROMPT.md)) |
-| Checkpoint | B.1 and **M1.1–M1.6 done**; **next: M1.7 timeline** (world track = ticks, computation track = seq within the selected tick; play, pause, step, speed, scrub; keyframes for seeking — `PlanStore.seek` already replays) |
+| Checkpoint | B.1 and **M1.1–M1.7 done**; **next: M1.8 experience** (attract recording in MCAP at build time via Pyodide-in-Node, keyboard + joystick teleop, compare two planners, end-of-run heatmap with totals, share link with spec hash + seed + input log + final chain) |
 | Merge to `main` | M1 opens a PR when every agent-measurable criterion passes; it is **not** merged by the agent |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 phone performance, phone cold start and usability (README §7, M1) |
 
@@ -277,6 +277,22 @@ only. Read order for agents (README §9): `README.md`, this file,
   (`render/shots/`); the `?perf` overlay no longer blocks taps on phones.
   Tests: packages **3,232 / 0 / 0**, vitest **341 / 0 / 0**, tools
   **117 / 0 / 0**. Next: M1.7.
+
+- **M1.7 Timeline (2026-10-08).** `lab_web/src/arena/session.ts`
+  (pure, tested): the world track keeps every tick the model reports (pose,
+  ranges for the last 12,000, mode, hash, plans) and the computation track
+  is the search planned at or before the shown tick, one keyframed
+  `PlanStore` per search (a keyframe every 16,384 events). Play / pause /
+  speed (0.25–4×) drive the WORLD clock (`frame()` says when a model step is
+  due; pausing stops the simulation); history replays then rejoins live.
+  `Timeline.tsx`: play, ±1 tick, speed, live, world and computation
+  scrubbers, ±1 event. **Seek budget:** on a 380k-event search (Lab 1 arena
+  size), every seek < 100 ms and equal to a fresh replay
+  (`test/session.test.ts`); in the browser on a real 81,593-event Dijkstra,
+  world and computation seeks took ≤ 2 ms
+  (`docs/v2/data/m1/timeline/timeline_check.json` + screenshots).
+  Tests: packages **3,232 / 0 / 0**, vitest **347 / 0 / 0** (+6), tools
+  **117 / 0 / 0**. Next: M1.8.
 
 ## Capabilities (README §2), with evidence class
 

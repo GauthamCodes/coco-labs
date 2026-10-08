@@ -23,6 +23,8 @@ const PUSH = 1;
 const EXPAND = 2;
 const RELAX = 3;
 const PATH_EVENT = 4;
+/** A keyframe every this many events (M1.7). */
+export const KEY_EVERY = 16384;
 
 export interface CellInfo {
   row: number; col: number; state: 'none' | 'frontier' | 'closed' | 'path';
@@ -77,6 +79,7 @@ export class PlanStore {
     this.planner = planner;
     this.received = 0;
     this.final = false;
+    this.keys = [];
     this.reset();
   }
 
@@ -110,11 +113,34 @@ export class PlanStore {
     if (final) this.final = true;
   }
 
-  /** Apply events up to (not including) ``to``, forward only. */
+  /** Apply events up to (not including) ``to``, forward only (keyframing as it goes). */
   advance(to: number) {
     const end = Math.min(to, this.received);
+    const start = this.cursor;
+    while (this.cursor < end) {
+      const nextKey = (Math.floor(this.cursor / KEY_EVERY) + 1) * KEY_EVERY;
+      const seg = Math.min(end, nextKey);
+      this.apply(this.cursor, seg);
+      this.cursor = seg;
+      if (seg === nextKey && !this.keys.some((k) => k.at === seg)) this.snapshot();
+    }
+    if (end !== start) this.dirty = true;
+  }
+
+  /** Keyframes: the state after every KEY_EVERY events (M1.7: seek < 100 ms). */
+  private keys: { at: number; state: Uint8Array; order: Int32Array; last: Int32Array;
+    expansions: number; frontier: number; pathLen: number }[] = [];
+
+  get keyframes(): number { return this.keys.length; }
+
+  private snapshot() {
+    this.keys.push({ at: this.cursor, state: this.state.slice(), order: this.order.slice(), last: this.last.slice(),
+      expansions: this.expansions, frontier: this.frontier, pathLen: this.pathCells.length });
+  }
+
+  private apply(from: number, end: number) {
     const W = this.width;
-    for (let i = this.cursor; i < end; i += 1) {
+    for (let i = from; i < end; i += 1) {
       const cell = this.row[i] * W + this.col[i];
       const k = this.kind[i];
       const s = this.state[cell];
@@ -132,14 +158,27 @@ export class PlanStore {
       }
       this.last[cell] = i;
     }
-    if (end !== this.cursor) this.dirty = true;
-    this.cursor = Math.max(this.cursor, end);
   }
 
-  /** Show the state after exactly ``to`` events (backwards replays from 0). */
+  /**
+   * Show the state after exactly ``to`` events. Backwards: restore the last
+   * keyframe at or before ``to`` (or start over), then replay forward.
+   */
   seek(to: number) {
     const t = Math.max(0, Math.min(to, this.received));
-    if (t < this.cursor) this.reset();
+    if (t < this.cursor) {
+      let key = null;
+      for (const k of this.keys) if (k.at <= t && (!key || k.at > key.at)) key = k;
+      if (key) {
+        this.state.set(key.state); this.order.set(key.order); this.last.set(key.last);
+        this.expansions = key.expansions; this.frontier = key.frontier;
+        this.pathCells.length = key.pathLen;
+        this.cursor = key.at;
+        this.dirty = true;
+      } else {
+        this.reset();
+      }
+    }
     this.advance(t);
   }
 
