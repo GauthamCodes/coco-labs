@@ -37,7 +37,9 @@ only. Read order for agents (README §9): `README.md`, this file,
   [`docs/v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md), `docs/RESULTS.md`
   "COCO Lab v2 · M0 baseline".
 - **M0.4 Install the plan (2026-10-08).** `README.md` = the master plan,
-  byte-identical to the owner's file (sha256 `4b003e50…a2ab6`). Archived
+  byte-identical to the owner's file (sha256 `4b003e50…a2ab6`;
+  replaced on 2026-10-08 by the gripper-corrected plan, sha256
+  `23214733…175935c`, see the plan-change log). Archived
   to `docs/archive/v1/`: `README_v1.md`, `ROADMAP.md`, `LAB_PHASES.md`,
   `CLAUDE_v1_rules.md`. New: `docs/ROADMAP.md` (pointer + v1 history),
   this file, `docs/IDEAS.md`; `PROJECT_STATE.md` and `CLAUDE.md` updated.
@@ -126,6 +128,10 @@ label).
 Changes to `README.md` happen only at a milestone boundary, by Gautham,
 as a dated entry here (README §0).
 
-| Date | Change | By |
-|---|---|---|
-| — | (none yet) | — |
+| Date | Change | Reason | By |
+|---|---|---|---|
+| 2026-10-08 | **Live console errors are fixed, not waived.** The quiet Live probe moves from `docs/IDEAS.md` into M0 (fix A.2), so the M0 exit criterion "no console errors in any view" is met before merging. | Independent review 2026-10-08: the criterion was not met and STATUS.md overstated it. | Gautham (M0-close / M1 prompt §0.1) |
+| 2026-10-08 | **Gripper wording corrected.** README §2 correction 2 and M0.6 now read "two fingers and a magnet; the magnet does the holding". README sha256 `4b003e50…a2ab6` → `23214733…175935c`. | The robot-stack record (RESULTS "The magnet fires before the fingers close") shows fingers *and* a magnet; "magnet, not two-finger" was wrong. Raised by the review. | Gautham (prompt §0.2) |
+| 2026-10-08 | **One-off permission to edit three published release texts** (`live-v1.0`, `lab1-v1.0`, `lab4-v1.0`): wording only, never assets, tags or targets. | Their "real robot" wording describes the Gazebo stack; agents otherwise never edit releases. | Gautham (prompt §0.3) |
+| 2026-10-08 | **One-off permission to merge PR #19** once the fixes are pushed, CI is green and the M0-close conditions hold. Merging deploys Pages. | Closes M0 (README §9.9 review done). | Gautham (prompt §0.4) |
+| 2026-10-08 | **Canonical checkout from M1 on is `~/coco_labs_ws/src/coco-labs`**, fast-forwarded to the merged `main`. `~/ros2_ws(personal)` and its worktrees are left untouched and no longer used for COCO Lab. | `CLAUDE.md` and the scripts already default to that path; the review flagged the stale clone as a risk of building the wrong tree. | Gautham (prompt §0.5) |

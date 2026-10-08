@@ -121,7 +121,7 @@ Each item is labelled with its evidence class (defined in section 3).
 ### Corrections every agent must respect
 
 1. **No physical robot exists.** Nothing has run on hardware. "Real" in COCO Lab means the full ROS 2 stack in Gazebo, as opposed to the browser model.
-2. **The gripper is a magnet gripper,** not a two-finger gripper.
+2. **The gripper has two fingers and a magnet, and the magnet does the holding** (it fires before the fingers close). Describe it that way, never as fingers alone and never as a magnet alone.
 3. **Live drives the simulated stack** on Gautham's machine. Its name and copy must not imply hardware.
 4. **Lab 5, head-on scenario.** The actor walked into an already-stopped robot in all 15 runs. DWB's and MPPI's "reached" exists only because the actor has no collision body.
 
@@ -378,7 +378,7 @@ M0–M3 together form a complete product with no cloud. Effort ranges are rough 
     - If none of these exist as code, record that.
 6. **M0.6 Honesty fixes** (copy only, no behaviour change):
     - Wherever the site or docs say "real robot" for the Gazebo stack, say "the full ROS 2 stack (simulated)".
-    - Gripper → magnet.
+    - Gripper → "two fingers and a magnet; the magnet holds the object".
     - Rename Live to "Live Stack (simulated)", and label it a scheduled demo of the simulated stack.
 7. **M0.7 Freeze the robot-stack packages** inside `coco-labs` with a `FROZEN.md` note: kept, no new features, decision G3 pending. Nothing is deleted.
 8. **M0.8 Deprecation notes.** Mark the Replace items (Canvas renderer, per-lab formats, per-lab views) as deprecated in docs, with the milestone that replaces them. Nothing is deleted yet; every current view keeps working.

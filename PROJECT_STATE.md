@@ -15,7 +15,7 @@ work stands, open questions G1–G6 and the plan-change log:
 | **Tests** | (measured, `3571169`, clean overlay build) packages **3,081 / 0 / 0**, `lab_web` vitest **308 / 0 / 0**, build tools **117 / 0 / 0** (`docs/v2/data/m0/START_STATE.md`) |
 | **Baseline** | (measured, laptop, MODEL) Pyodide cold first edit median 12,857 ms, warm edit median 1,445 ms, every playing view 60 fps; phone **not yet measured** (`docs/v2/BASELINE.md`) |
 | **Robot-stack packages** | **Frozen** inside this repository (`FROZEN.md` in each): kept because Live and the recordings depend on them, no new features, decision G3 pending. The COCO robot project itself (Isaac / P03D line) is a separate repository and is never modified from COCO Lab work |
-| **Wording** | No physical robot exists. "Real" in COCO Lab means the full ROS 2 stack in Gazebo; Live is "Live Stack (simulated)"; the gripper is a magnet gripper (README §2 corrections) |
+| **Wording** | No physical robot exists. "Real" in COCO Lab means the full ROS 2 stack in Gazebo; Live is "Live Stack (simulated)"; the gripper has two fingers and a magnet; the magnet holds the object (README §2 corrections) |
 | **v1 planning docs** | Archived unchanged in `docs/archive/v1/` (README, ROADMAP, LAB_PHASES, retired CLAUDE.md rules). `docs/ROADMAP.md` is now a pointer to README §7 plus the v1 history |
 
 Everything below this line is the **v1 record**, kept as written (with

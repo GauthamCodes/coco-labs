@@ -16,7 +16,7 @@ This package is part of the **COCO robot stack** that lives inside the
   Gautham decides, the default holds: the COCO robot repository is
   canonical, and these packages are frozen, not deleted.
 
-**What it is and why it is kept:** The Gazebo Harmonic worlds, the URDF/xacro robot (the magnet gripper is a `DetachableJoint`), launch files, Nav2 configuration and `ros_clean.sh`: the full ROS 2 stack (simulated) that produced every STACK result.
+**What it is and why it is kept:** The Gazebo Harmonic worlds, the URDF/xacro robot (the gripper has two fingers and a magnet; the magnet holds the object, as a `DetachableJoint`), launch files, Nav2 configuration and `ros_clean.sh`: the full ROS 2 stack (simulated) that produced every STACK result.
 
 All engineering rules for it in `CLAUDE.md` still apply (simulator
 hygiene, `ros_clean.sh`, never `--fast`, one source of truth for robot

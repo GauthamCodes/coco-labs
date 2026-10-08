@@ -16,7 +16,7 @@ This package is part of the **COCO robot stack** that lives inside the
   Gautham decides, the default holds: the COCO robot repository is
   canonical, and these packages are frozen, not deleted.
 
-**What it is and why it is kept:** MoveIt configuration and pick poses for the 2-DOF arm and magnet gripper used by the fetch.
+**What it is and why it is kept:** MoveIt configuration and pick poses for the 2-DOF arm and its gripper (two fingers and a magnet; the magnet holds the object) used by the fetch.
 
 All engineering rules for it in `CLAUDE.md` still apply (simulator
 hygiene, `ros_clean.sh`, never `--fast`, one source of truth for robot
