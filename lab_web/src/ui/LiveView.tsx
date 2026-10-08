@@ -23,7 +23,11 @@ import {
 import { draw, gridImage, toCanvas, toMap, type View } from '../live/mapdraw';
 import type { Intent, MapFrame, Telemetry, Welcome } from '../live/protocol';
 import scheduleDoc from '../live/schedule.json';
-import { loadSchedule, nextSession, probe, statusWords, type LiveVerdict } from '../live/status';
+import { HealthWatch, openWhenReachable, type ProbeReport } from '../live/gate';
+import {
+  demoWindowOpen, healthUrl, lastCheckWords, loadSchedule, nextSession, offlineWords, probe, remoteReached, statusWords,
+  type LiveVerdict,
+} from '../live/status';
 import { DOCKER_QUICKSTART_URL, LIVE_REMOTE } from '../../site.config';
 
 const BASE = import.meta.env.BASE_URL;
@@ -42,13 +46,22 @@ declare global {
   }
 }
 
-function initialUrl(): string {
+/**
+ * The socket target, and whether someone ASKED for it. A `?live=` link is a
+ * request; the prefilled localhost default is not, so nothing is contacted
+ * until Connect (or Watch) is pressed. See gate.ts for why.
+ */
+function initialTarget(): { url: string; explicit: boolean } {
   const q = new URLSearchParams(window.location.search).get('live');
-  return q && /^wss?:\/\//.test(q) ? q : DEFAULT_URL;
+  return q && /^wss?:\/\//.test(q) ? { url: q, explicit: true } : { url: DEFAULT_URL, explicit: false };
 }
 
 export function LiveView({ onLabel }: { onLabel(text: string): void }) {
-  const [url, setUrl] = useState(initialUrl);
+  const [target] = useState(initialTarget);
+  const [url, setUrl] = useState(target.url);
+  const [explicit, setExplicit] = useState(target.explicit);
+  const [attempt, setAttempt] = useState(0);
+  const [reach, setReach] = useState<ProbeReport | null>(null);
   const [draftUrl, setDraftUrl] = useState(url);
   const [conn, setConn] = useState<ConnState>('closed');
   const [welcome, setWelcome] = useState<Welcome | null>(null);
@@ -66,12 +79,15 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
   const uiMode = useRef<'teleop' | 'auto' | 'stop' | null>(null);
 
   useEffect(() => { onLabel(liveLabel(url)); }, [url, onLabel]);
+  const connectTo = useCallback((ws: string) => { setUrl(ws); setExplicit(true); setAttempt((n) => n + 1); }, []);
 
   // ── connection ───────────────────────────────────────────────────────
   useEffect(() => {
+    setReach(null);
+    if (!explicit) return undefined;
     let alive = true;
     let c: LiveClient | null = null;
-    loadFrameDecoder(BASE).catch((e: Error) => setFrameErr(e.message)).finally(() => {
+    const open = () => loadFrameDecoder(BASE).catch((e: Error) => setFrameErr(e.message)).finally(() => {
       if (!alive) return;
       c = new LiveClient(url, {
         onState: setConn,
@@ -88,9 +104,13 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
       window.__cocoLive = c;
       c.connect();
     });
+    // The socket opens only after /healthz answered as coco.v1; until then
+    // the page backs off (2 s doubling to 30 s) and opens no socket at all.
+    const cancel = openWhenReachable(url, (u, init) => fetch(u, init), () => { void open(); },
+      (r) => { if (alive) setReach(r); });
     const t = setInterval(() => setRate(client.current?.telemetryRate() ?? 0), 1000);
-    return () => { alive = false; clearInterval(t); c?.close(); client.current = null; };
-  }, [url]);
+    return () => { alive = false; cancel(); clearInterval(t); c?.close(); client.current = null; };
+  }, [url, explicit, attempt]);
 
   // ── mission timeline: states as the executive reports them ──────────
   useEffect(() => {
@@ -245,18 +265,20 @@ export function LiveView({ onLabel }: { onLabel(text: string): void }) {
         (simulated) in Gazebo, on the owner's machine, driven through the same command chain as every recording.
         No physical robot exists; nothing here runs on hardware.
       </p>
-      <LiveStatus onJoin={(ws) => { setDraftUrl(ws); setUrl(ws); }} current={url} />
+      <LiveStatus onJoin={(ws) => { setDraftUrl(ws); connectTo(ws); }} current={explicit ? url : null}
+        connected={conn === 'open'} />
       <div className="live-bar">
-        <form onSubmit={(e) => { e.preventDefault(); setUrl(draftUrl.trim()); }}>
+        <form onSubmit={(e) => { e.preventDefault(); connectTo(draftUrl.trim()); }}>
           <label>Server <input value={draftUrl} onChange={(e) => setDraftUrl(e.target.value)} data-testid="live-url"
             spellCheck={false} /></label>
           <button type="submit" className="seg-btn">Connect</button>
         </form>
-        <span className={`conn conn-${conn}`} data-testid="live-conn">{conn === 'open' ? 'connected' : conn}</span>
+        <span className={`conn conn-${conn}`} data-testid="live-conn">{connWords(conn, explicit, reach)}</span>
         <span className="muted">to <code>{url}</code></span>
         <span className="muted" data-testid="live-rate">telemetry {rate.toFixed(1)} Hz (measured here)</span>
         {client.current?.rttMs != null && <span className="muted">RTT {client.current.rttMs.toFixed(0)} ms</span>}
       </div>
+      <p className="muted" data-testid="live-probe">{probeWords(url, explicit, reach, conn)}</p>
       {frameErr && <div className="error" role="alert">Sensor decoder unavailable: {frameErr}</div>}
       {warning && <div className="error" role="alert" data-testid="live-fallback">{warning}</div>}
       {latched && <div className="banner stop-banner" data-testid="live-latched">STOPPED (latched). Pick a mode, or start a mission, to move again.</div>}
@@ -373,33 +395,70 @@ function ClaimBox({ driverPresent, onClaim }: { driverPresent: boolean; onClaim(
   );
 }
 
+/** The connection badge: "not connected" until asked, "offline" while /healthz is unanswered. */
+function connWords(conn: ConnState, explicit: boolean, reach: ProbeReport | null): string {
+  if (!explicit) return 'not connected';
+  if (conn === 'open') return 'connected';
+  if (conn === 'closed' && !reach?.reachable) return reach ? 'offline' : 'checking';
+  return conn;
+}
+
+/** One line under the bar: what the page has (and has not) contacted. */
+function probeWords(url: string, explicit: boolean, reach: ProbeReport | null, conn: ConnState): string {
+  if (!explicit) {
+    return 'Not connected. Nothing is contacted until you press Connect (a stack on this machine: see the Docker quickstart).';
+  }
+  const h = healthUrl(url);
+  if (!reach) return `Checking ${h ?? url}…`;
+  if (reach.reachable && conn !== 'closed') return lastCheckWords({ at: reach.at, contacted: h, reachable: true, nextInMs: null });
+  return lastCheckWords({ at: reach.at, contacted: h, reachable: reach.reachable, nextInMs: reach.nextInMs });
+}
+
 const SCHEDULE = loadSchedule(scheduleDoc);
 
 /**
  * The public status line: is a scheduled remote session live NOW? Asks the
- * configured endpoint's /healthz (status.ts); with none configured, or no
- * answer, it says so and points to Replay and the Docker quickstart.
+ * configured endpoint's /healthz (status.ts) -- but only while a scheduled
+ * demo is on (or about to start), because asking a dead endpoint is a console
+ * error in Chromium (gate.ts). Otherwise it reads only the schedule, says
+ * the Live Stack is offline, and points to Replay and the Docker quickstart.
  */
-function LiveStatus({ onJoin, current }: { onJoin(ws: string): void; current: string }) {
-  const [verdict, setVerdict] = useState<LiveVerdict>(
-    LIVE_REMOTE ? { state: 'offline', why: 'checking' } : { state: 'unconfigured' });
+function LiveStatus({ onJoin, current, connected }: { onJoin(ws: string): void; current: string | null; connected: boolean }) {
+  const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
-    if (!LIVE_REMOTE) return;
-    let alive = true;
-    const check = () => {
-      // The ONE cross-origin request this site makes: the remote endpoint's
-      // /healthz, which answers CORS only for this site (control.origins).
-      void probe(LIVE_REMOTE?.ws, (u, init) => fetch(u, init)).then((v) => { if (alive) setVerdict(v); });
-    };
-    check();
-    const t = setInterval(check, 30_000);
-    return () => { alive = false; clearInterval(t); };
+    const t = setInterval(() => setNow(Date.now()), 30_000);
+    return () => clearInterval(t);
   }, []);
-  const words = statusWords(verdict, nextSession(SCHEDULE, new Date()));
+  const windowOpen = !!LIVE_REMOTE && demoWindowOpen(SCHEDULE, new Date(now));
+  const [rep, setRep] = useState<ProbeReport | null>(null);
+  useEffect(() => {
+    setRep(null);
+    if (!windowOpen) return undefined;
+    let alive = true;
+    // The ONE cross-origin request this site makes on its own: the remote
+    // endpoint's /healthz, which answers CORS only for this site (control.origins).
+    const w = new HealthWatch(() => probe(LIVE_REMOTE?.ws, (u, init) => fetch(u, init)).then(remoteReached),
+      (r) => { if (alive) setRep(r); });
+    w.start();
+    return () => { alive = false; w.stop(); };
+  }, [windowOpen]);
+  const next = nextSession(SCHEDULE, new Date(now));
+  const verdict: LiveVerdict = rep?.verdict
+    ?? (LIVE_REMOTE ? { state: 'offline', why: windowOpen ? 'checking' : 'no demo is on' } : { state: 'unconfigured' });
+  const words = statusWords(verdict, next);
+  const headline = words.live || verdict.state === 'starting' || verdict.state === 'ended' ? words.headline
+    // Connected to a stack the visitor named: the CARD is about the public demo.
+    : connected ? `The public scheduled demo is offline; this page is connected to the stack named below.`
+      : offlineWords(next);
+  const h = healthUrl(LIVE_REMOTE?.ws);
+  const last = !windowOpen ? lastCheckWords({ at: now, contacted: null, reachable: false, nextInMs: null })
+    : rep ? lastCheckWords({ at: rep.at, contacted: h, reachable: rep.reachable, nextInMs: rep.nextInMs })
+      : `Checking ${h}…`;
   const remote = LIVE_REMOTE?.ws;
   return (
     <div className={words.live ? 'live-status-card on' : 'live-status-card'} data-testid="live-status">
-      <b>{words.live ? 'Live now' : 'Scheduled demo'}</b> <span data-testid="live-status-words">{words.headline}</span>
+      <b>{words.live ? 'Live now' : 'Scheduled demo'}</b> <span data-testid="live-status-words">{headline}</span>
+      {' '}<span className="muted" data-testid="live-last-check">{last}</span>
       {words.live && remote && remote !== current && (
         <button type="button" className="seg-btn" data-testid="live-join" onClick={() => onJoin(remote)}>Watch</button>
       )}

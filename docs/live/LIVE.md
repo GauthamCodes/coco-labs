@@ -123,7 +123,13 @@ The Docker quickstart is [`../DOCKER.md`](../DOCKER.md):
 `docker compose up -d`, then open `http://localhost:8080/` (verified,
 DOCKER.md), or serve the Lab yourself (`cd lab_web && npm run build &&
 npx vite preview`) and open its Live tab, whose default endpoint is
-`ws://localhost:8080/ws` (verified, PART_B). Opening the *public* Pages
+`ws://localhost:8080/ws` (verified, PART_B). Since 2026-10-08 (M0 fix
+A.2) the tab contacts that endpoint only when asked: press **Connect**, or
+open `?view=live&live=ws://localhost:8080/ws`. It asks `/healthz` first
+(2 s backoff doubling to 30 s while nothing answers) and opens the socket
+only once something answers, so a page with no stack running logs no
+console errors. Verified against a stand-in server, not a real stack:
+`docs/v2/data/m0/exit/console_after_fix.json`. Opening the *public* Pages
 site against a local stack is **unverified**: browsers may prompt for, or
 block, an https page reaching `ws://localhost` (PART_A_AUDIT §5.5). Local
 (`access:=open`) is the single-user appliance: no code, and anyone

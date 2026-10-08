@@ -61,12 +61,21 @@ if (!csp.includes(`script-src 'self' 'wasm-unsafe-eval' ${pyodide};`)) failures.
 const remoteWs = siteConfig.match(/LIVE_REMOTE[^=]*= \{ ws: '(wss:\/\/[^/']+)[^']*' \}/)?.[1] ?? null;
 if (!remoteWs && !/LIVE_REMOTE[^=]*= null;/.test(siteConfig)) failures.push('LIVE_REMOTE is neither null nor { ws: \'wss://...\' }');
 const remoteHttps = remoteWs ? remoteWs.replace(/^wss:/, 'https:') : null;
-if ((csp.match(/https?:\/\//g) ?? []).length !== 2 + (remoteHttps ? 1 : 0)) failures.push(`CSP names another origin: ${csp}`);
+// M0 fix A.2: the Live tab asks a LOCAL stack's /healthz before opening its
+// socket, so LIVE_CONNECT_SRC_LOCAL may name loopback http: origins -- only
+// loopback, and only exactly those listed there.
+const liveListed = [...(siteConfig.match(/LIVE_CONNECT_SRC[^=]*= \[([^\]]*)\]/)?.[1] ?? '').matchAll(/'([^']+)'/g)]
+  .map((m) => m[1]);
+const localHttp = liveListed.filter((o) => o.startsWith('http'));
+for (const o of localHttp) {
+  if (!/^http:\/\/(localhost|127\.0\.0\.1):\*$/.test(o)) failures.push(`LIVE_CONNECT_SRC_LOCAL names a non-loopback http origin: ${o}`);
+  if (!csp.split(/[\s;]+/).includes(o)) failures.push(`CSP lacks the local probe origin ${o}`);
+}
+if ((csp.match(/https?:\/\//g) ?? []).length !== 2 + (remoteHttps ? 1 : 0) + localHttp.length) failures.push(`CSP names another origin: ${csp}`);
 if (remoteHttps && !csp.includes(` ${remoteHttps}`)) failures.push(`CSP lacks the remote probe origin ${remoteHttps}`);
 
 // 5 (Phase 2): the Live tab may open WebSockets ONLY to LIVE_CONNECT_SRC
-const live = [...(siteConfig.match(/LIVE_CONNECT_SRC[^=]*= \[([^\]]*)\]/)?.[1] ?? '').matchAll(/'([^']+)'/g)]
-  .map((m) => m[1]).concat(remoteWs ? [remoteWs] : []).sort();
+const live = liveListed.filter((o) => /^wss?:/.test(o)).concat(remoteWs ? [remoteWs] : []).sort();
 const wsInCsp = (csp.match(/wss?:\/\/[^\s;]+/g) ?? []).sort();
 if (!live.length || JSON.stringify(wsInCsp) !== JSON.stringify(live)) {
   failures.push(`CSP WebSocket origins ${JSON.stringify(wsInCsp)} != LIVE_CONNECT_SRC ${JSON.stringify(live)}`);
@@ -89,7 +98,9 @@ for (const f of files) {
     const ok = url.startsWith(pyodide) || (url === pyodide.slice(0, -1)) ||
       NOT_FETCHED.some((re) => re.test(url)) || url.startsWith('https://cdn.jsdelivr.net/pyodide/v${') ||
       // the configured remote session's probe origin, named in the CSP
-      (remoteHttps !== null && f.endsWith('index.html') && url.replace(/;$/, '') === remoteHttps);
+      (remoteHttps !== null && f.endsWith('index.html') && url.replace(/;$/, '') === remoteHttps) ||
+      // a local stack's /healthz origin, named in the CSP (checked above)
+      (f.endsWith('index.html') && localHttp.includes(url.replace(/;$/, '')));
     const key = `${relative(dist, f)}: ${url}`;
     found.set(key, ok);
     if (!ok) failures.push(`external URL ${key}`);

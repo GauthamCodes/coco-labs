@@ -109,3 +109,13 @@ in total. lab_web vitest: 194.
 - **The public site.** It cannot reach a local stack except from the same
   machine: Chromium's Local Network Access prompt and `ws://` mixed-content
   rules, per vendor docs, not verified here.
+
+---
+
+**Note added 2026-10-08 (COCO Lab v2, M0 fix A.2; the text above is
+unchanged).** The tab no longer connects to its default endpoint on load.
+It contacts a stack only when asked (Connect, Watch, or a `?live=` link),
+asks that host's `/healthz` first, and opens the WebSocket only after an
+answer. `scripts/live_check/run_b.sh` now passes
+`&live=ws://localhost:8080/ws` for that reason. See
+`docs/v2/data/m0/exit/console_after_fix.json`.

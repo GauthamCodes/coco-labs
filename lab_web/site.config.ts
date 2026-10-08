@@ -16,11 +16,13 @@
 export const DEFAULT_BASE = '/coco-labs/';
 
 /**
- * Where the Live tab may open a coco.v1 WebSocket (the CSP's connect-src).
+ * Where the Live tab may open a coco.v1 WebSocket, and ask the same host's
+ * /healthz before it does (the CSP's connect-src).
  * The local stack, plus the one remote endpoint below when it is set --
  * never by widening this to every `ws:`/`wss:`.
  */
-export const LIVE_CONNECT_SRC_LOCAL: readonly string[] = ['ws://localhost:*', 'ws://127.0.0.1:*'];
+export const LIVE_CONNECT_SRC_LOCAL: readonly string[] = [
+  'ws://localhost:*', 'ws://127.0.0.1:*', 'http://localhost:*', 'http://127.0.0.1:*'];
 
 /**
  * The scheduled REMOTE session's endpoint (Phase 2 Part C): the coco.v1

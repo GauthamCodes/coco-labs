@@ -52,30 +52,70 @@ export function classify(status: number, body: unknown): LiveVerdict {
   return { state: 'live', driver: live.driver === true, leftS: num(live.session_left_s), clients: num(live.clients) };
 }
 
-type FetchLike = (url: string, init?: { signal?: AbortSignal; cache?: RequestCache; credentials?: RequestCredentials })
+export type FetchLike = (url: string, init?: {
+  signal?: AbortSignal; cache?: RequestCache; credentials?: RequestCredentials; mode?: RequestMode;
+})
   => Promise<{ status: number; json(): Promise<unknown> }>;
 
-/** Probe the endpoint once. Never throws; anything unexpected is "offline". */
-export async function probe(ws: string | null | undefined, fetchFn: FetchLike, timeoutMs = 4000): Promise<LiveVerdict> {
-  if (!ws) return { state: 'unconfigured' };
+/** What one /healthz check found: the verdict, and whether a coco.v1 server answered at all. */
+export interface CheckResult { reachable: boolean; verdict: LiveVerdict }
+
+/** A /healthz body from a coco.v1 server, whatever its session state: the stack is there. */
+export function isCocoHealth(body: unknown): boolean {
+  return !!body && typeof body === 'object' && (body as Record<string, unknown>).protocol === 'coco.v1';
+}
+
+/** A server on the visitor's own machine (the Docker quickstart's stack). */
+export function isLoopback(hostname: string): boolean {
+  const h = hostname.toLowerCase();
+  return h === 'localhost' || h.endsWith('.localhost') || h === '[::1]' || /^127(\.\d{1,3}){3}$/.test(h);
+}
+
+/**
+ * Check the endpoint once. Never throws; anything unexpected is "offline"
+ * and not reachable. `reachable` is true for ANY coco.v1 answer (200 or
+ * 503, open or code access): the Live tab opens its socket only then.
+ *
+ * A loopback endpoint is asked with an OPAQUE request (`no-cors`): a local
+ * platform_server has no `origins` allowlist, so it sends no CORS header
+ * (coco_web HealthHandler, frozen) and a readable request would be refused
+ * by the browser even with the stack up. There, any answer at all means
+ * "something is listening"; the socket then speaks coco.v1 as before.
+ */
+export async function check(ws: string | null | undefined, fetchFn: FetchLike, timeoutMs = 4000): Promise<CheckResult> {
+  if (!ws) return { reachable: false, verdict: { state: 'unconfigured' } };
   const url = healthUrl(ws);
-  if (!url) return { state: 'offline', why: 'the configured endpoint is not a ws(s):// URL' };
+  if (!url) return { reachable: false, verdict: { state: 'offline', why: 'the configured endpoint is not a ws(s):// URL' } };
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), timeoutMs);
   try {
+    if (isLoopback(new URL(url).hostname)) {
+      await fetchFn(url, { signal: ctl.signal, cache: 'no-store', credentials: 'omit', mode: 'no-cors' });
+      return { reachable: true, verdict: { state: 'offline', why: 'no public session on this server' } };
+    }
     const r = await fetchFn(url, { signal: ctl.signal, cache: 'no-store', credentials: 'omit' });
     let body: unknown = null;
     try {
       body = await r.json();
     } catch {
-      return { state: 'offline', why: 'the endpoint did not answer with JSON' };
+      return { reachable: false, verdict: { state: 'offline', why: 'the endpoint did not answer with JSON' } };
     }
-    return classify(r.status, body);
+    return { reachable: isCocoHealth(body), verdict: classify(r.status, body) };
   } catch {
-    return { state: 'offline', why: 'the endpoint is unreachable' };
+    return { reachable: false, verdict: { state: 'offline', why: 'the endpoint is unreachable' } };
   } finally {
     clearTimeout(timer);
   }
+}
+
+/** Probe the endpoint once. Never throws; anything unexpected is "offline". */
+export async function probe(ws: string | null | undefined, fetchFn: FetchLike, timeoutMs = 4000): Promise<LiveVerdict> {
+  return (await check(ws, fetchFn, timeoutMs)).verdict;
+}
+
+/** The scheduled-demo endpoint answered with a public session's state (live, starting or ended). */
+export function remoteReached(v: LiveVerdict): CheckResult {
+  return { verdict: v, reachable: v.state === 'live' || v.state === 'starting' || v.state === 'ended' };
 }
 
 export interface Session { start: Date; minutes: number; note: string }
@@ -125,4 +165,43 @@ export function statusWords(v: LiveVerdict, next: ReturnType<typeof nextSession>
     default:
       return { live: false, headline: `No live session right now.${when ? ` ${next!.inProgress ? 'One is scheduled now but not reachable' : 'Next scheduled'}: ${when}.` : ' No session is scheduled.'}` };
   }
+}
+
+/** How early before a scheduled demo the page starts asking its endpoint. */
+export const DEMO_LEAD_MS = 10 * 60_000;
+
+/**
+ * Is a scheduled demo on (or about to start) at `now`? Outside these windows
+ * the Live tab contacts NOTHING: in a browser every request to an endpoint
+ * that is down is a console error ("Failed to load resource"), measured in
+ * Chromium for both a refused port and an unresolvable host.
+ */
+export function demoWindowOpen(sessions: Session[], now: Date, leadMs = DEMO_LEAD_MS): boolean {
+  const t = now.getTime();
+  return sessions.some((s) => t >= s.start.getTime() - leadMs && t < s.start.getTime() + s.minutes * 60_000);
+}
+
+export const OFFLINE_HEADLINE = 'Live Stack (simulated) is offline — it runs during scheduled demos';
+
+/** The offline line, with the next scheduled demo if there is one. */
+export function offlineWords(next: ReturnType<typeof nextSession>): string {
+  const when = next ? `${next.session.start.toUTCString()} (${next.session.minutes} min)` : null;
+  return `${OFFLINE_HEADLINE}. ${when ? `${next!.inProgress ? 'Scheduled now' : 'Next'}: ${when}.` : 'No demo is scheduled.'}`;
+}
+
+/** A wall-clock time as the visitor reads it. */
+export function clockWords(ms: number): string {
+  return new Date(ms).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+
+/**
+ * "When did the page last look, and what did it look at?" `contacted` is the
+ * /healthz URL asked, or null when only the schedule was read (nothing sent).
+ */
+export function lastCheckWords(c: { at: number; contacted: string | null; reachable: boolean; nextInMs: number | null }): string {
+  const t = clockWords(c.at);
+  if (!c.contacted) return `Last checked ${t}: no demo is scheduled now, so nothing was contacted.`;
+  if (c.reachable) return `Last checked ${t}: ${c.contacted} answered.`;
+  const next = c.nextInMs != null ? ` Next check in ${Math.round(c.nextInMs / 1000)} s.` : '';
+  return `Last checked ${t}: no answer from ${c.contacted}.${next}`;
 }
