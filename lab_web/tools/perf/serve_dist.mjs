@@ -50,8 +50,10 @@ createServer((req, res) => {
   const headers = { 'Content-Type': TYPES[ext] ?? 'application/octet-stream', 'Cache-Control': 'no-cache' };
   let body = readFileSync(file);
   if (COMPRESS.has(ext) && /\bgzip\b/.test(req.headers['accept-encoding'] ?? '')) {
-    if (!cache.has(file)) cache.set(file, gzipSync(body, { level: 6 }));
-    body = cache.get(file);
+    const st = statSync(file);
+    const key = `${file}:${st.mtimeMs}:${st.size}`; // a rebuild invalidates it
+    if (!cache.has(key)) cache.set(key, gzipSync(body, { level: 6 }));
+    body = cache.get(key);
     headers['Content-Encoding'] = 'gzip';
     headers.Vary = 'Accept-Encoding';
   }

@@ -14,7 +14,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | Branch | `v2/m1-arena-core` (from `main` = `9f58b83`), worked in the worktree `.claude/worktrees/v2-m1-arena-core`, overlay `~/coco_lab_m1_ws` |
 | Milestone | **M1 · Glass-box Arena core** ([`v2/M1_PROMPT.md`](v2/M1_PROMPT.md)) |
-| Checkpoint | B.1 and **M1.1–M1.5 done**; **next: M1.6 renderer** (Three.js 0.186.x on WebGL 2 beside React: occupancy data texture, frontier/closed instancing, heatmap, path, LiDAR fan, robot, footprint, truth outline; picking inspector; `docs/v2/VISUAL_SYSTEM.md`) |
+| Checkpoint | B.1 and **M1.1–M1.6 done**; **next: M1.7 timeline** (world track = ticks, computation track = seq within the selected tick; play, pause, step, speed, scrub; keyframes for seeking — `PlanStore.seek` already replays) |
 | Merge to `main` | M1 opens a PR when every agent-measurable criterion passes; it is **not** merged by the agent |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 phone performance, phone cold start and usability (README §7, M1) |
 
@@ -257,6 +257,26 @@ only. Read order for agents (README §9): `README.md`, this file,
   = full stdlib, hash for hash), tools **117 / 0 / 0**. Not yet: first
   VISIBLE computation (needs M1.6), attract-mode recording (M1.8), phone
   numbers (Gautham). Next: M1.6.
+
+- **M1.6 Renderer (2026-10-08).** `lab_web/src/arena/render/`: Three.js
+  0.186.0 on WebGL 2, beside React (React draws panels only); orthographic
+  top-down with mouse, wheel and touch (pan, pinch) control. Layers:
+  occupancy + closed set / expansion heatmap (two data textures, one
+  shader), frontier (instanced), path, LiDAR fan (one merged line buffer),
+  footprint, COCO's outline from the Gazebo chassis mesh (`base.stl` →
+  convex hull at build time), truth as a dashed outline, goal, picked cell.
+  Inspector: state, expansion order, g, h, f, parent, latest event, from
+  coco_lab's events (`PlanStore`, 5 tests on a real search). Visual system
+  v1, light and dark: [`v2/VISUAL_SYSTEM.md`](v2/VISUAL_SYSTEM.md). The
+  plan reveals over about 90 frames; a goal steps the model at once. Laptop
+  GPU (RTX 4050 via ANGLE/OpenGL ES 3.2, headless Chromium): Arena + 50,000
+  points + 20,000 segments at **60–61 fps**, p95 frame 16.9–17.0 ms (10 s);
+  on SwiftShader the same load is 1–2 fps, so fps numbers always name the
+  renderer (`docs/v2/data/m1/render/`). Screens at 1280 light/dark and 390 px:
+  0 console errors, no horizontal overflow, the inspector works
+  (`render/shots/`); the `?perf` overlay no longer blocks taps on phones.
+  Tests: packages **3,232 / 0 / 0**, vitest **341 / 0 / 0**, tools
+  **117 / 0 / 0**. Next: M1.7.
 
 ## Capabilities (README §2), with evidence class
 

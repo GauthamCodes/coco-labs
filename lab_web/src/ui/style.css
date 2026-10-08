@@ -383,3 +383,17 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .perf-overlay dl div { display: flex; justify-content: space-between; gap: 12px; }
 .perf-overlay dt { opacity: 0.75; }
 .perf-overlay dd { margin: 0; text-align: right; }
+/* the overlay is read, never touched: taps go through to the controls */
+.perf-overlay { pointer-events: none; }
+@media (max-width: 600px) {
+  .perf-overlay { top: 8px; bottom: auto; right: 8px; left: 8px; font-size: 11px; opacity: 0.92; }
+}
+.arena-stage { position: relative; height: min(70vh, 640px); margin: 8px 0; border-radius: 6px; overflow: hidden; }
+.arena-canvas { width: 100%; height: 100%; display: block; cursor: crosshair; }
+.arena-loading { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; }
+.arena-panels { display: grid; gap: 8px; }
+.arena-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.layer-toggle { display: inline-flex; gap: 4px; align-items: center; font-size: 0.85rem; }
+.inspector { display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; margin: 0;
+  font: 13px/1.4 ui-monospace, monospace; }
+.inspector dd { margin: 0; }

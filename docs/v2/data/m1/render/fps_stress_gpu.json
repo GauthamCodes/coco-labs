@@ -1,0 +1,46 @@
+{
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "gl_mode": "gpu",
+ "flags": [
+  "--use-angle=gl-egl",
+  "--ignore-gpu-blocklist",
+  "--enable-gpu"
+ ],
+ "browser": "156.0.8078.4",
+ "load": {
+  "points": 50000,
+  "segments": 20000
+ },
+ "renderer": {
+  "vendor": "Google Inc. (NVIDIA Corporation)",
+  "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"
+ },
+ "renderer_error": null,
+ "fps_per_second": [
+  61,
+  61,
+  61,
+  61,
+  61,
+  61,
+  61,
+  61,
+  60,
+  61
+ ],
+ "fps_median": 61,
+ "fps_min": 60,
+ "frame_ms_p95_per_second": [
+  17,
+  16.9,
+  17,
+  17,
+  17,
+  16.9,
+  16.9,
+  17,
+  17,
+  17
+ ],
+ "console_errors": []
+}

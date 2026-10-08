@@ -8818,3 +8818,14 @@ Pyodide 314.0.7. Reference: `docs/v2/COLDSTART.md`; evidence:
   across configurations (68–133 ms), including up to one 100 ms tick wait.
 - Not measured here: the phone (Gautham, `docs/v2/PHONE_MEASURE.md`), and
   first VISIBLE computation (needs the renderer; M1.10).
+
+## COCO Lab v2 · M1.6 — the Arena renderer's frame rate (measured 2026-10-08)
+
+Append-only. Evidence class **MODEL**. `lab_web/tools/perf/render_fps.mjs`,
+`docs/v2/data/m1/render/fps_stress_gpu.json` (+ screenshot): the Arena view
+with a live A* search, the LiDAR fan and `?stress` = 50,000 instanced points
++ 20,000 line segments over the grid texture, 1280 × 900, headless Chromium
+156 on the laptop's **NVIDIA RTX 4050 via ANGLE (OpenGL ES 3.2)**: rAF
+60–61 fps in every one of 10 seconds, p95 frame 16.9–17.0 ms (the display
+cap), 0 console errors. The same load on SwiftShader (software GL): 1–2
+fps. Not measured: a phone (Gautham, `?perf`).

@@ -20,6 +20,7 @@ export interface PerfSnapshot {
   firstPlanBatchAt: number | null;
   ticks: number;
   stepMsMedian: number | null;
+  goalToFrontierMs: number[];
 }
 
 class Perf {
@@ -49,6 +50,17 @@ class Perf {
     this.emit();
   }
 
+  /** Goal click -> the frame that first DRAWS that search's frontier. */
+  readonly goalToFrontier: number[] = [];
+  private goalAt: number | null = null;
+  goalSent(at = wallMs()) { this.goalAt = at; }
+  frontierDrawn(at = wallMs()) {
+    if (this.goalAt === null) return;
+    this.goalToFrontier.push(at - this.goalAt);
+    this.goalAt = null;
+    this.emit();
+  }
+
   tick(stepMs: number) {
     this.steps.push(stepMs);
     if (this.steps.length > 600) this.steps.splice(0, 300);
@@ -69,6 +81,7 @@ class Perf {
       firstPlanBatchAt: this.firstPlanBatchAt,
       ticks: this.steps.length,
       stepMsMedian: s.length ? s[s.length >> 1] : null,
+      goalToFrontierMs: [...this.goalToFrontier],
     };
   }
 

@@ -18,6 +18,7 @@ const STAGES: [string, string][] = [
   ['coco_lab_ready', 'coco_lab ready'],
   ['arena_ready', 'Arena ready'],
   ['first_frame', 'first frame drawn'],
+  ['first_frontier_shown', 'first frontier node shown'],
 ];
 
 export function PerfOverlay() {
@@ -38,6 +39,8 @@ export function PerfOverlay() {
           <div key={k}><dt>{label}</dt><dd data-testid={`perf-${k}`}>{since(s.marks[k])}</dd></div>
         ))}
         <div><dt>first plan events</dt><dd data-testid="perf-first-plan">{since(s.firstPlanBatchAt)}</dd></div>
+        <div><dt>goal → frontier drawn</dt><dd data-testid="perf-goal-frontier">
+          {s.goalToFrontierMs.length ? `${s.goalToFrontierMs[s.goalToFrontierMs.length - 1].toFixed(0)} ms (last of ${s.goalToFrontierMs.length})` : '—'}</dd></div>
         <div><dt>fps</dt><dd data-testid="perf-fps">{s.fps} (p95 frame {s.frameMsP95.toFixed(1)} ms)</dd></div>
         <div><dt>plan events</dt><dd data-testid="perf-events">{s.eventsReceived.toLocaleString()} ({s.eventsPerSecond.toLocaleString()}/s)</dd></div>
         <div><dt>step</dt><dd data-testid="perf-step">{s.stepMsMedian != null ? `${s.stepMsMedian.toFixed(1)} ms median, ${s.ticks} ticks` : '—'}</dd></div>

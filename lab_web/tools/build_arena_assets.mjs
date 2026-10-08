@@ -114,6 +114,42 @@ export function trimmedStdlib(fullZip, keepList) {
   return { zip: zip(entries), files: entries.length };
 }
 
+/**
+ * COCO's top-down silhouette, from the Gazebo chassis mesh (M1.6).
+ *
+ * gazebo_models/meshes/base.stl is in millimetres (xacro mesh_scale 0.001)
+ * with Y up: its X spans the chassis length (240 mm) and Z its width
+ * (274 mm). The chassis collision box (coco_robo2.xacro, chassis_collision)
+ * is centred at mesh (-120, *, -80) mm, and coco_config's CHASSIS_FRONT_X
+ * = 0.120 puts that centre on base_link. So the outline in base_link metres
+ * is the convex hull of the mesh's (x, z) points, shifted by (+120, +80) mm.
+ * The hull is symmetric front/back and left/right, so no sign is assumed.
+ */
+export function robotOutline(stl) {
+  const n = stl.readUInt32LE(80);
+  const pts = new Map();
+  for (let i = 0; i < n; i += 1) {
+    for (let k = 0; k < 3; k += 1) {
+      const o = 84 + 50 * i + 12 + 12 * k;
+      const x = Math.round(stl.readFloatLE(o) * 10) / 10;
+      const z = Math.round(stl.readFloatLE(o + 8) * 10) / 10;
+      pts.set(`${x},${z}`, [x, z]);
+    }
+  }
+  const p = [...pts.values()].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const half = (list) => {
+    const h = [];
+    for (const q of list) {
+      while (h.length >= 2 && cross(h[h.length - 2], h[h.length - 1], q) <= 0) h.pop();
+      h.push(q);
+    }
+    return h.slice(0, -1);
+  };
+  const hull = [...half(p), ...half([...p].reverse())];
+  return hull.map(([x, z]) => [Math.round((x + 120) * 10) / 10000, Math.round((z + 80) * 10) / 10000]);
+}
+
 function main() {
   // arena
   const arenaDir = join(out, 'arena');
@@ -126,6 +162,11 @@ function main() {
   writeFileSync(join(arenaDir, 'coco_lab.zip'), cocoZip);
   const spec = readFileSync(join(repo, 'worlds', 'coco_arena_v1.json'));
   writeFileSync(join(arenaDir, 'coco_arena_v1.json'), spec);
+  const outline = robotOutline(readFileSync(join(repo, 'gazebo_models', 'meshes', 'base.stl')));
+  writeFileSync(join(arenaDir, 'robot_outline.json'), JSON.stringify({
+    source: 'gazebo_models/meshes/base.stl (convex hull of x-z, mm -> base_link m; build_arena_assets.mjs)',
+    frame: 'base_link, x forward, metres', polygon: outline,
+  }) + '\n');
 
   // pyodide, self-hosted
   const pyDir = join(out, 'pyodide');
