@@ -1,9 +1,36 @@
-# COCO STATUS: ACTIVE — building COCO Lab
+# COCO STATUS: COCO Lab v1 FROZEN at `coco-lab-v1-final`; v2 in progress (M0 · Transition)
+
+## COCO LAB v2 — CURRENT STATE (2026-10-08)
+
+**The authority is [`README.md`](README.md)** — the COCO Lab v2 master plan
+("the Glass-box Arena"), installed byte for byte on 2026-10-08. Where the
+work stands, open questions G1–G6 and the plan-change log:
+[`docs/STATUS.md`](docs/STATUS.md). Ideas parked for later:
+[`docs/IDEAS.md`](docs/IDEAS.md).
+
+| | |
+|---|---|
+| **v1** | **Frozen** at annotated tag `coco-lab-v1-final` = `3571169` (coco-labs `main` `2b6f8ad` fast-forwarded to `lab5`). Six releases published: `lab1-v1.0`, `live-v1.0`, `lab2-v1.0`, `lab3-v1.0`, `lab4-v1.0`, `lab5-v1.0` (checked, `docs/v2/data/m0/FREEZE.md`). The public site keeps serving v1 until M1–M2 replace its views (`docs/v2/DEPRECATIONS.md`) |
+| **v2** | **In progress: M0 · Transition** on branch `v2/m0-transition` (README §7). No v2 feature exists yet; M1 (the Glass-box Arena core) has not started |
+| **Tests** | (measured, `3571169`, clean overlay build) packages **3,081 / 0 / 0**, `lab_web` vitest **308 / 0 / 0**, build tools **117 / 0 / 0** (`docs/v2/data/m0/START_STATE.md`) |
+| **Baseline** | (measured, laptop, MODEL) Pyodide cold first edit median 12,857 ms, warm edit median 1,445 ms, every playing view 60 fps; phone **not yet measured** (`docs/v2/BASELINE.md`) |
+| **Robot-stack packages** | **Frozen** inside this repository (`FROZEN.md` in each): kept because Live and the recordings depend on them, no new features, decision G3 pending. The COCO robot project itself (Isaac / P03D line) is a separate repository and is never modified from COCO Lab work |
+| **Wording** | No physical robot exists. "Real" in COCO Lab means the full ROS 2 stack in Gazebo; Live is "Live Stack (simulated)"; the gripper is a magnet gripper (README §2 corrections) |
+| **v1 planning docs** | Archived unchanged in `docs/archive/v1/` (README, ROADMAP, LAB_PHASES, retired CLAUDE.md rules). `docs/ROADMAP.md` is now a pointer to README §7 plus the v1 history |
+
+Everything below this line is the **v1 record**, kept as written (with
+one link repointed to the archive). Where it names `docs/ROADMAP.md`
+sections or phases, it means `docs/archive/v1/ROADMAP.md`.
+
+---
+
+## COCO LAB v1 — STATUS AS LAST WRITTEN (2026-10-08, before v2)
+
 
 **COCO is becoming COCO Lab** (working title): an interactive, browser-based
 robotics curriculum that runs on this real ROS 2 / Nav2 stack. The plan is
 [`docs/ROADMAP.md`](docs/ROADMAP.md); session prompts are
-[`docs/LAB_PHASES.md`](docs/LAB_PHASES.md). **Phase 0 ("make the repo tell
+[`docs/LAB_PHASES.md`](docs/archive/v1/LAB_PHASES.md) (archived). **Phase 0 ("make the repo tell
 the truth") is closed locally (Milestone 0C, 2026-09-29); its public actions
 (push, archive tags, name, video migration) await the owner's approval.
 Lab 1 is complete and released (2026-10-01): Lab 1.1 delivered the
