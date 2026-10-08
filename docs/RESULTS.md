@@ -8761,3 +8761,29 @@ in this file ran on hardware (README §2, corrections 1 and 3). The result
 itself stands as written: all 16 recorded Gazebo searches rebuild from
 their looks alone through `replay_search`, byte for byte.
 
+
+## COCO Lab v2 · M1.3 — the Arena model's LiDAR against Gazebo (measured 2026-10-08)
+
+Append-only. Evidence class **MODEL vs STACK**. Tool:
+`docs/v2/data/m1/lidar/arena_lidar_fidelity.py`; output:
+`docs/v2/data/m1/lidar/arena_lidar_fidelity.json`; inputs: the Lab 2
+Gazebo recordings `~/coco_lab_runs/lab2/fidelity_1` and `fidelity_s1`
+(the full ROS 2 stack, simulated), the same as Lab 2's figure.
+
+- **What changed since Lab 2:** the model's world is no longer the saved
+  Nav2 map but the Arena world GENERATED from `worlds/coco_arena_v1.yaml`
+  (`coco_lab.worldspec.arena_map`), and the LiDAR is the one the spec
+  declares, cast by `coco_lab.arena.Arena`.
+- **Result (measured):** 237 scans used of 240 recorded (3 excluded, tilt
+  over 2°), 113,760 beams: 111,804 both returned, 12 Gazebo only, 123
+  model only, 1,821 neither. **86.73 % of beams within 5 cm**
+  (0.8673124396264892), 74.82 % within 1 cm, 95.48 % within 10 cm —
+  **identical** to Lab 2's Sketch figures (`docs/data/lab2/fidelity/
+  fidelity.json`), to the last digit.
+- **Why identical (measured):** the Arena's ranges equal Lab 2's Sketch
+  ranges on every one of the 113,760 beams (0 differ), because the
+  spec-generated world equals `gazebo_models/maps/coco_navigation.pgm` cell
+  for cell (`coco_lab/test/test_worldspec.py`) and the ray-caster and LiDAR
+  are the same.
+- Conditions: CPython 3.12.3 (not Pyodide), development laptop
+  (i5-13420H); the figure is a property of the data, not of the machine.

@@ -1,0 +1,42 @@
+{
+ "beams": 113760,
+ "beams_differing_from_lab2_sketch": 0,
+ "classes": {
+  "both": 111804,
+  "gz_only": 12,
+  "model_only": 123,
+  "neither": 1821
+ },
+ "evidence_class": "MODEL vs STACK",
+ "frac_abs_below": {
+  "0.01": 0.7482200994597689,
+  "0.02": 0.8052484705377267,
+  "0.05": 0.8673124396264892,
+  "0.10": 0.9547869485886015,
+  "0.25": 0.9816732853922937
+ },
+ "lab2_classes": {
+  "both": 111804,
+  "gz_only": 12,
+  "neither": 1821,
+  "sketch_only": 123
+ },
+ "lab2_frac_abs_below": {
+  "0.01": 0.7482200994597689,
+  "0.02": 0.8052484705377267,
+  "0.05": 0.8673124396264892,
+  "0.10": 0.9547869485886015,
+  "0.25": 0.9816732853922937
+ },
+ "lab2_scans_used": 237,
+ "max_abs_range_difference_from_lab2_sketch_m": 0.0,
+ "max_tilt_deg": 2.0,
+ "model": "coco_lab.arena.Arena on worlds/coco_arena_v1.yaml (arena_map, 0.05 m, map frame), 480-beam LiDAR from the spec",
+ "scans_recorded": 240,
+ "scans_used": 237,
+ "sessions": [
+  "fidelity_1",
+  "fidelity_s1"
+ ],
+ "tool": "docs/v2/data/m1/lidar/arena_lidar_fidelity.py"
+}

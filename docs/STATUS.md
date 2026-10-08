@@ -14,7 +14,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | Branch | `v2/m1-arena-core` (from `main` = `9f58b83`), worked in the worktree `.claude/worktrees/v2-m1-arena-core`, overlay `~/coco_lab_m1_ws` |
 | Milestone | **M1 · Glass-box Arena core** ([`v2/M1_PROMPT.md`](v2/M1_PROMPT.md)) |
-| Checkpoint | B.1, M1.1 and **M1.2 done**; **next: M1.3 Arena model core** (`coco_lab`: fixed-step kinematics, LiDAR via Sketch's ray-caster, in-library RNG, input events, per-tick state hash; then re-run the 237-pose LiDAR comparison from `~/coco_lab_runs/lab2/fidelity_1`, `fidelity_s1`) |
+| Checkpoint | B.1, M1.1, M1.2 and **M1.3 done**; **next: M1.4 planners emit events** (freeze the `test_all_five_agree_on_no_path` corpus as parameters plus v1-trace digests BEFORE touching `search.py`; then the generator API; CI golden-trace test) |
 | Merge to `main` | M1 opens a PR when every agent-measurable criterion passes; it is **not** merged by the agent |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 phone performance, phone cold start and usability (README §7, M1) |
 
@@ -194,6 +194,25 @@ only. Read order for agents (README §9): `README.md`, this file,
   (`coco_lab` 604 → 622; `gazebo_models`' known `TestTheOldLoopIsDetected`
   node-creation flake errored once and passed 25/25 and 231/231 on re-run),
   vitest **332 / 0 / 0**, tools **117 / 0 / 0**. Next: M1.3.
+
+- **M1.3 Arena model core (2026-10-08).** `coco_lab/arena.py`: the
+  World Spec's world, Sketch's ray-caster and motion law, fixed
+  `dt` = 0.1 s, accel-limited commands, teleop / goal / STOP / planner /
+  reset as input events at the start of their tick, the five planners on
+  the radius-inflated map, and a per-tick SHA-256 over a documented,
+  quantized layout plus a run hash chain. `coco_lab/rng.py`: xoshiro256**
+  seeded by SplitMix64, equal to the authors' reference C (gcc 13.3) on
+  five seeds. Reference: [`v2/ARENA_MODEL.md`](v2/ARENA_MODEL.md).
+  **LiDAR re-confirmed (MODEL vs STACK):** on Lab 2's 237 recorded poses
+  the Arena gives **86.73 % of beams within 5 cm — identical to Lab 2**,
+  and its ranges equal Lab 2's Sketch ranges on all 113,760 beams (the
+  spec-generated world equals the saved map; same caster and LiDAR).
+  Evidence: [`v2/data/m1/lidar/arena_lidar_fidelity.json`](v2/data/m1/lidar/arena_lidar_fidelity.json);
+  appended to `docs/RESULTS.md`. The dispatched `Lab` CI run on the M1.2
+  commit passed (run 37782383206). Tests: packages **3,214 / 0 / 0**
+  (`coco_lab` 622 → 649), vitest **332 / 0 / 0**, tools **117 / 0 / 0**.
+  Not claimed: native CPython and Pyodide hash equality (different `libm`);
+  cross-browser equality is measured in M1.5/M1.10. Next: M1.4.
 
 ## Capabilities (README §2), with evidence class
 
