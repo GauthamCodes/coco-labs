@@ -47,7 +47,8 @@ for _ in $(seq 1 30); do
   curl -fsS http://localhost:4173/coco-labs/ >/dev/null 2>&1 && break
   sleep 1
 done
-python3 "$HERE/live_b.py" "$OUT" "http://localhost:4173/coco-labs/?view=live" "$@"
+# The tab contacts a stack only when asked (M0 fix A.2): name it in the link.
+python3 "$HERE/live_b.py" "$OUT" "http://localhost:4173/coco-labs/?view=live&live=ws://localhost:8080/ws" "$@"
 echo "[run_b] live_b exit $?"
 kill -INT "$REC" 2>/dev/null; wait "$REC" 2>/dev/null
 kill -TERM -- "-$PREVIEW" 2>/dev/null

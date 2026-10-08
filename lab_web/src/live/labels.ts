@@ -9,9 +9,12 @@
 
 import type { Control, MissionSearch, Telemetry, Welcome } from './protocol';
 
-/** Rule 4: the mode is labelled on screen. */
+/**
+ * Rule 4: the mode is labelled on screen. Live drives the full ROS 2 stack
+ * in Gazebo, never hardware (README §2, correction 3), so the label says so.
+ */
 export function liveLabel(url: string): string {
-  return isLocal(url) ? 'Live — local stack' : 'Live — remote session';
+  return isLocal(url) ? 'Live Stack (simulated) — local' : 'Live Stack (simulated) — scheduled demo';
 }
 
 export function isLocal(url: string): boolean {

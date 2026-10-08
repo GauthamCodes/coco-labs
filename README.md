@@ -1,465 +1,611 @@
-**▶ Try it: [COCO Lab 1 — Plan](https://gauthamcodes.github.io/coco-labs/)** — graph search
-on a real robot's maps, in your browser.
+# COCO Lab v2 — Master Plan: the Glass-box Arena
 
-> **Status — September 2026.** COCO is becoming **COCO Lab**: an
-> interactive, browser-based robotics curriculum that runs on this real
-> ROS 2 / Nav2 stack. Everything below remains accurate and measured.
-> Plan: [docs/ROADMAP.md](docs/ROADMAP.md).
-
-## Lab 1 — Plan
-
-Five search algorithms, traced event by event, on maps that climb from a
-teaching grid to the costmap Nav2 used on a real run. In the lab you can:
-- change the heuristic and see coco_lab's verdict on it;
-- race two to four algorithms on identical inputs;
-- paint walls and get the search rerun;
-- replay three runs the real robot drove;
-- share a link that reproduces your exact trace.
-
-Every search runs in `coco_lab` (Python, in your browser via Pyodide); the
-page never searches. Every claim names its evidence. The exhibit,
-**[The A\* myth, twice](https://gauthamcodes.github.io/coco-labs/?view=exhibit)**,
-takes apart two "A\* vs Dijkstra" results, one of them COCO's own (below).
-Write-up, measured numbers and limitations:
-[docs/labs/LAB1_PLAN.md](docs/labs/LAB1_PLAN.md).
-
-## Lab 2 — Localise (Phase 3)
-
-**Lab 2 · Localise** (`?view=localise`) puts a particle filter and an EKF
-side by side on identical inputs, in **Sketch**: coco_lab's 2D model of
-COCO, labelled as a model, not the robot, with its measured fidelity beside
-it. At 237 identical poses in Gazebo, Sketch's LiDAR is within 5 cm on
-86.7 % of beams; its wheels never slip, and COCO's do on every turn. You
-can change particles, motion and sensor noise, and AMCL-style injection;
-kidnap the robot by clicking the map; hide the truth; predict, then
-reveal; race the filters. Everything is rerun by coco_lab in your browser.
-
-Four of COCO's real localisation failures are exhibits, each with its
-evidence. The real stack was measured too:
-- **Kidnap recovery:** with AMCL's injection off (as shipped) it recovered
-  0 of 10 fresh-simulator kidnaps; with Nav2's suggested values, 2 of 10.
-  That is not a resolved difference.
-- **robot_localization** fusing the wheels' pose with the gyro cut odometry
-  error on a 120 m tour from 21.6 m to 0.21 m at worst, on identical
-  recorded drives. That is an upper bound: the simulated gyro is noiseless.
-
-Write-up, numbers and limitations:
-[docs/labs/LAB2_LOCALISE.md](docs/labs/LAB2_LOCALISE.md).
-
-## Live — the real stack, from the browser (Phase 2)
-
-**[The Live tab](https://gauthamcodes.github.io/coco-labs/?view=live)**
-drives COCO in three modes (teleop, a Nav2 goal, the autonomous fetch)
-over `coco.v1`; the page never names a ROS topic, and
-`cmd_vel_arbiter` stays the only wheel publisher. Run it on your own
-machine with the [Docker quickstart](docs/DOCKER.md), or drive the
-owner's machine during a scheduled public session. A session is
-exposed through Tailscale Funnel as `/ws` and `/healthz` only. It has one
-driver holding a host-issued code, spectators who only watch, a 60 s idle
-release and a 20-minute cap, and every ending stops the robot.
-
-Measured: on a real phone over mobile data, the page claimed control,
-drove, sent a Nav2 goal and started a mission; when the phone dropped,
-COCO went from 0.3 m/s to rest in 0.54 s and the mission aborted. Through
-the tunnel the command path is fast (drive → wheel p50 45 ms) but the
-view lags by seconds on a relayed link. Guide, security boundaries,
-safety behaviour, limitations and backlog:
-[docs/live/LIVE.md](docs/live/LIVE.md).
-
-# COCO 2.0 — Autonomous Mobile Manipulator
-
-**ROS 2 Jazzy · Gazebo Harmonic · Nav2 · MoveIt 2**
-
-**Choose a colour on your phone. COCO finds it, grasps it, and brings it
-home.**
-
-A 4-wheel differential-drive base with a 2-DOF planar arm that drives out
-across an arena, climbs a ramp under a learned policy, identifies the
-cylinder *you* chose by sight, picks it up from a raised platform,
-carries it home and puts it down — deciding for itself, at every step,
-whether the step actually worked.
-
-![COCO fetching a cylinder](docs/images/demo_fetch.gif)
-
-*One continuous autonomous run: navigate, climb, detect, grasp, return.
-Select the target colour from the control panel; the fetch above is what
-follows.*
-
-| | |
-|---|---|
-| **Perception** | the target's position is *measured*, not assumed — 60 benchmark placements, 8 live grasps |
-| **Terrain-aware control** | grade and traction estimated from the IMU and the wheels, published and not driven |
-| **Autonomous navigation** | Nav2 on the flat, with arrival verified against world pose rather than the action result |
-| **Manipulation** | MoveIt 2 plus a closed-form 2-link IK, driven by the measured pose |
-| **Mission executive** | 19 explicit states with per-state contracts, timeouts, retries and structured failure reasons |
-| **Localization health + recovery** | a scan-vs-map consistency signal, a persistence requirement, a safe stop proved at the arbiter, and a bounded recovery that verifies health before resuming |
-
-## ▶ [Run the full autonomous fetch](HOW_TO_RUN.md)
-
-Clone, build and launch; then open the control panel in a browser, pick
-RED, GREEN, BLUE or YELLOW, and press start. Two commands and a browser,
-no configuration, nothing to download separately — the trained ramp
-policy ships in the repository. Everything is on `main`.
-
-### Then read
-
-* **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — the packages, the
-  four control paradigms, and who owns the wheels in each state
-* **[docs/RESULTS.md](docs/RESULTS.md)** — every measured number, with
-  the run that produced it
-* **[docs/DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md)** — problem,
-  diagnosis, fix, evidence
+> **Authority file for all COCO Lab work from 8 October 2026.**
+> Every coding agent reads this file and `docs/STATUS.md` before touching anything.
+> Repository: [`GauthamCodes/coco-labs`](https://github.com/GauthamCodes/coco-labs) · Public site: <https://gauthamcodes.github.io/coco-labs/>
 
 ---
 
-## Results
+## 0. How to use this file
 
-Every number below was produced by a run on this machine. Each is marked
-**measured** or **derived** in `docs/RESULTS.md`, alongside the command
-that reproduces it; anything not yet measured says so rather than being
-estimated.
+**Authority order.** A lower item may never contradict a higher one.
 
-▶ **[Watch the fetch mission end to end](https://github.com/GauthamCodes/coco-robot-ros2/releases/download/m6-fetch-demo/coco_fetch_demo.mp4)**
-— one continuous uncut run, split-screen Gazebo and RViz, 75 s.
+1. **The repository** (code plus committed evidence) is the truth about what COCO Lab *is* today.
+2. **This README** is the truth about what COCO Lab *becomes*, in which order, and under which rules.
+3. **`docs/STATUS.md`** records where the work stands: current SHA, milestone, checkpoint, open questions, and the plan-change log.
+4. **A milestone prompt** carries the instructions for one milestone. It quotes this file; it never extends it.
+5. **Agent reports** are claims to verify, never facts. A claim becomes fact only when its evidence is committed and re-checkable.
 
-| | Result |
-|---|---|
-| **Fetch mission** | **19/20** over five runs of each of the four colours, fresh simulator every run. The base stopped inside a **5.5 mm** approach window **20/20** (sd 0.6 mm) and the grasp held **20/20** (lift 33.9–35.9 mm, ground truth). The one failure picked its target and then could not localise its way home: [details](docs/RESULTS.md#the-fetch-matrix--20-runs-5-per-colour) |
-| **Perception** | **60/60** placements measured, 720/720 frames detected, horizontal error **0.7 / 1.4 / 2.4 mm** (min/median/max). Driving a real grasp: **8/8** picks physically verified by reading the object's own height out of the simulator, not by trusting an action result |
-| **Mission executive** | A full fetch through all 16 nominal states with `retries=0` and no failure reason at any sample; then four live failure injections, which it handled **unchanged** |
-| **Localization health** | The scan-vs-map signal fires **0 times** across two whole healthy missions (1714 and 1753 samples) and three healthy recorded legs, and detects an injected 3 m pose error from robot-observable information alone. AMCL covariance is measured to be the **wrong** signal — it moved the *wrong way* at the divergence |
-| **Terrain estimation** | Grade is observable to **0.1–1.4° MAE**. Coulomb friction is measured **not identifiable** on this robot: τ spans **0.0003** across a μ span of 0.35 |
-| **RL challenge** | **Solved — 10/10.** A PPO policy summits the ramp, evaluated deterministically at **10/10 on both the 18° and 24° grades**, re-verified 10/10 after the ramp rebuild without retraining |
-| **Navigation** | **10/10** goals on a ten-goal tour (mean 34.7 s, 36.3 m driven, home to within 12 cm), planned by `SmacPlanner2D` (a grid A\*), whose path was **6.2 % shorter** than NavFn's (`use_astar: false`) on the M3 comparison — a difference between two planner implementations, not A\* beating Dijkstra: [why](#a-note-on-the-planner-name) |
-| **IK accuracy** | 20,000/20,000 round-trips, max error 1.7 × 10⁻¹⁶ m, 1.5 µs per solve |
-| **Training throughput** | **3,712 steps/s at 8 workers = 427×** real time in headless MuJoCo; cross-engine parity **0.242 mm** worst case over 264 settle probes (**0.138 mm** geometric, the rest a constant compliance offset) |
-| **Simulation** | RTF ≈ 1.0; every sensor at its nominal rate, measured in sim time |
-| **Tests** | **1,966** passing across nine packages, **0 failures, 0 skipped**, on the consolidated `main` (merge `232454d`, measured 2026-09-28; **829** at the COCO 2.0 freeze). Run per package on a clean ROS graph — [how](HOW_TO_RUN.md#4-tests) |
+**Change control.**
+
+- The plan changes only at a milestone boundary, by Gautham, as a dated entry in the plan-change log in `docs/STATUS.md`.
+- New ideas go to `docs/IDEAS.md` as one line each, in the form `date | idea | gap it closes | earliest milestone`. They are never implemented mid-milestone.
+
+**COCO Lab is a separate project from the COCO robot project** (the Isaac / P03D line in the robot repo). Never modify the robot repo, its worktrees (for example `~/coco-isaac-21`) or its evidence from COCO Lab work.
 
 ---
 
-## Known limitations
+## 1. What COCO Lab is becoming
 
-These are current, reproducible, and deliberately not rounded up.
+**COCO Lab becomes one browser app: a glass-box robot arena.** You drive or dispatch COCO through its world and see everything it computes, live:
 
-* **Severe localization divergence is detected but not reliably
-  recovered.** The monitor sees a 3 m confidently-wrong pose and the
-  executive safe-stops and re-seeds AMCL, but the mission does not get
-  home. Two measured causes, neither in the executive:
-  `recovery_alpha_fast/slow` are `0.0`, so AMCL cannot leave a mode it is
-  confident in; and global relocalization on this near-rectangular map
-  converged to a pose inside the ramp footprint, after which the planner
-  reported "Start occupied". **No live run has produced
-  degradation → recovery → resume → COMPLETE.** The recovery path is
-  unit-tested; the end-to-end resume is not.
-* **The collision monitor's SLOWDOWN reaches the wheels; its STOP
-  behaviour is not yet re-verified.** Before C2-NAV.42 the arbiter read
-  `/cmd_vel_nav`, the topic `nav2_bringup` also uses for the controller's
-  raw output, and during a 0.090 m/s slowdown the wheels were commanded
-  **0.300 m/s** on 84.2 % of samples (historical, pre-fix). The relay now
-  publishes `/cmd_vel_gated`, and the arbiter reads that. Measured on the
-  consolidated `main` (Milestone 0A, 2026-09-28): `/cmd_vel_gated` has
-  exactly one publisher (the relay) and one subscriber (the arbiter), the
-  wheel topic exactly one publisher (the arbiter), and during an injected
-  SLOWDOWN the wheel command was **0.090 m/s at p50, p90, p99 and max —
-  0 of 300 samples over the cap**. The STOP probe did **not** reproduce
-  the historical STOP (C2-NAV.43/47 stopped 0.249 m from a wall under
-  STOP): the robot came to rest **0.264 m** from the wall under
-  FootprintApproach and STOP never fired. That is **not yet explained**.
-  The trace still shows the wheels above the monitor on short streaks
-  (0.088–2.92 % of samples per tour), not attributed. The fetch has been
-  re-measured on the fixed path since 19/20 (which had the loop in place)
-  as new series, never as a before/after: C2-NAV.49 12/12, and four fresh
-  FIXED fetches on the consolidated `main`, 4/4 —
-  [evidence](docs/data/m0a_cmdpath/README.md).
-* **`RETURN_HOME` fails by at least two distinct mechanisms**, six failed
-  and five succeeded across all recorded sessions. One class is AMCL
-  divergence and is now detectable; the other — position error inside the
-  healthy band with yaw error reaching 1.31 rad — is **not separable by
-  any signal recorded**, and no threshold is proposed for it.
-* **`--target` grasp re-targeting does not work** away from the tuned
-  point (0/5, later 5/14) and is reported as such rather than omitted.
-* **The lateral reachability verdict is a lower bound**, not a limit: the
-  approach controller nulls the bearing first, so a +30 mm lateral offset
-  reached the grasp as −3.0 mm and succeeded.
-* **Counts are not rates.** 60 placements, 8 grasps and 5 localization
-  runs are each a small deterministic sample. The standing mission figure
-  is the 20-run fetch matrix.
-* The Docker images are provided for reproducibility and have **not**
-  been runtime-tested here.
+- search frontiers and expansion heatmaps
+- particles and their weights
+- the evolving map
+- candidate trajectories and their scores
+- beliefs over search regions
+
+You can pause, step, inspect any decision, and replay. Then you compare with what the full ROS 2 stack did in Gazebo, failures included.
+
+- **Tagline:** *See what the robot computes.*
+- **The design question every feature answers:** what is the robot computing right now, and how can the user see and understand it?
+- **The core moment:** the ISRO Pygame simulator, grown up. The user clicks a goal, watches the planner's search spread as the robot drives, and at the end sees a heatmap of every node the algorithm computed.
+
+### Pillars
+
+| Pillar | Promise | Test a feature must pass |
+| --- | --- | --- |
+| Glass box | Internal computation is the main view | Does it make some computation visible or understandable? |
+| Honest | Model, Stack and hardware results are labelled, never conflated; failures stay on display | Is every on-screen claim traceable to evidence, with its class? |
+| Playable | Zero install, instant response | Does it work in a phone browser at first click? |
+| Reproducible | Every run is a spec plus a seed anyone can rerun | Can someone reproduce what they see from a link? |
+
+### Who it is for, in priority order
+
+1. Robotics learners (the design target).
+2. Instructors.
+3. Researchers and practitioners.
+
+### Four modes in one app
+
+| Mode | What it is |
+| --- | --- |
+| **Learn** | Guided missions organized around the robot's questions |
+| **Play** | Challenges scored only with real robotics metrics |
+| **Sandbox** | Free play, comparisons, and "Run N seeds" experiments |
+| **Case Files** | Recorded full-stack runs and failures, inspectable |
+
+### What COCO Lab is not
+
+- a physics-accurate simulator
+- a cloud ROS IDE
+- a course website
+- a VLM, LLM or RL showcase
 
 ---
 
-## Engineering lessons
+## 2. Where COCO Lab stands: v1, frozen at tag `coco-lab-v1-final`
 
-The failures are kept because they are the part that took the work.
+**Releases.** Six releases shipped between 29 Sep and 8 Oct 2026:
 
-**The RL result was 0/10 before it was 10/10**, and three distinct bugs
-were masking each other:
+| Release | Lab |
+| --- | --- |
+| `lab1-v1.0` | Plan |
+| `live-v1.0` | Live |
+| `lab2-v1.0` | Localise |
+| `lab3-v1.0` | Map |
+| `lab4-v1.0` | Search |
+| `lab5-v1.0` | Move |
 
-1. **The ramp was unclimbable.** The shipped mesh was a CAD shell with a
-   ~66° near-vertical face, and the goal only reached the ramp *foot*.
-   Rebuilt as a parametric wedge with a summit goal.
-2. **The goal was unreachable by 1.6 cm.** It sat at the exact crest, but
-   the wedge's back face is vertical — so the tip-over terminator fired
-   *before* `x` crossed the line. A completed climb at x = 5.4838 was
-   logged as a fall against a 5.5 m goal. That is why the first
-   curriculum recorded 1 goal in 1,399 episodes.
-3. **`--fast` was corrupting the control loop.** Unlocking the real-time
-   factor makes sim time outrun wall-clock ROS delivery, so `cmd_vel`
-   arrives late and the controller's 0.5 s watchdog repeatedly halts the
-   wheels. That pumping reared the chassis over backwards. Same seed,
-   same config: **with `--fast`, 531/533 episodes tipped and evaluation
-   scored 0/10; without it, 0/533 tipped and evaluation scored 10/10** —
-   and it ran *faster*, because physics was never the bottleneck.
+Last known SHAs: `main` = `2b6f8ad`, `lab5` = `3571169`. Verify both before relying on them.
 
-**Other findings that changed the design**, each written up with its
-evidence in [docs/DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md):
+**Architecture today.**
 
-* **Covariance is the wrong health signal.** The intuitive design —
-  watch AMCL's covariance and act when it grows — is measured to fail:
-  both divergence runs reported a *smaller* `sigma_xy` than either leg
-  that finished. A filter that is wrong and sure looks exactly like a
-  filter that is right and sure. The scan-vs-map likelihood detects the
-  same divergence in 0.4 s.
-* **Friction is not identifiable from an IMU and wheel encoders.** A
-  steady climb is in equilibrium, so the traction ratio is pinned at
-  `tan(grade)` whatever μ is, and the drivetrain cannot saturate the
-  contact on the flat. Two earlier formulations were wrong in ways that
-  *looked like the result being sought*.
-* **A stale camera pitch survived every test.** A `-0.314 rad` constant
-  outlived the geometry it described; two tests now assert the camera RPY
-  is `(0,0,0)`.
-* **A map that looks right in RViz can still be wrong.** The map and its
-  RViz overlay are separate artefacts and were audited separately.
-* **`/diff_drive_controller/cmd_vel` carries two message types.** The
-  arbiter publishes `TwistStamped`; a `Twist` subscriber matches nothing,
-  receives nothing, raises nothing, and `ros2 topic info` still reads
-  healthy. It cost a run — the recorder captured 0 commands, which reads
-  exactly like "no stale command was issued". **Any check whose success
-  condition is "we saw nothing" must first prove it can see something.**
-* **Integration bugs hide in topic ownership.** Swapping the perception
-  source needed *two* topics, not one; setting only the point topic left
-  a gate reading a topic nobody published, and the mission timed out in a
-  way that looked like a camera fault.
+- `lab_web` (Vite, TypeScript, React) on GitHub Pages renders recordings and re-runs `coco_lab` through Pyodide.
+- `coco_lab` is a pure-Python algorithm library with no `rclpy`.
+- `coco_lab_ros` bridges `coco_lab` to Nav2.
+- `platform_server` (in `coco_web`) is the only web-to-ROS bridge, speaking `coco.v1`.
+- `cmd_vel_arbiter` is the only wheel publisher.
+- The Gazebo Harmonic + ROS 2 Jazzy stack runs locally. Live reaches it through Tailscale Funnel.
 
----
+**Tests at the last gate.** 3,081 package tests, 308 website tests and 117 build-tool tests, all passing. CI was green.
 
-## Architecture in one paragraph
+### Evidence worth keeping forever
 
-Four control paradigms hand the same wheels back and forth through
-`cmd_vel_arbiter`, which is the **sole** publisher to the controller:
-Nav2 on the flat, a PPO policy on the ramp, a visual servo across the
-platform, and MoveIt for the arm. `coco_mission`'s executive owns the
-sequencing and the contracts; `coco_config` sits at the bottom holding
-the shared constants that the robot model itself is generated from, so
-there is exactly one source of truth for wheelbase, masses, joint limits
-and sensor poses. Full node/topic graph and TF tree in
-[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Each item is labelled with its evidence class (defined in section 3).
+
+| Result | Class | Caveat |
+| --- | --- | --- |
+| Smac and `coco_lab` find the same optimal cost on 36/36 pairs | STACK + MODEL | — |
+| Sketch LiDAR against Gazebo: 86.7% of beams within 5 cm | MODEL vs STACK | Turns diverge (no wheel slip) |
+| Kidnapping, model: 18/20 with injection vs 0/20 without | MODEL | — |
+| Kidnapping, Stack: 2/10 vs 0/10 (Fisher p = 0.237) | UNRESOLVED | — |
+| Loop closure damaged maps on both real SLAM backends | STACK | Cause unattributed |
+| Search: 14/16 complete, 39/39 looks correct | STACK | All 16 replay byte for byte through `coco_lab` |
+| Lab 5: 54 runs, 0 void | STACK | DWB 0/5 at the hairpin; nobody swerved head-on |
+| Run 15 mechanism reproduced 9/9 | STACK | Exact "0 of 819" not reproduced |
+| D\* Lite less work than A\* in 191/200 teaching worlds | MODEL | 2.9× *more* work on one real costmap |
+| Latched STOP; drive command p50 4.6 ms; STOP 6.2 ms | STACK | Local network |
+| Phone on mobile data drove the robot; RTT about 282–293 ms; disconnect stop about 0.54 s | REMOTE | Robot simulated |
+
+### Corrections every agent must respect
+
+1. **No physical robot exists.** Nothing has run on hardware. "Real" in COCO Lab means the full ROS 2 stack in Gazebo, as opposed to the browser model.
+2. **The gripper has two fingers and a magnet, and the magnet does the holding** (it fires before the fingers close). Describe it that way, never as fingers alone and never as a magnet alone.
+3. **Live drives the simulated stack** on Gautham's machine. Its name and copy must not imply hardware.
+4. **Lab 5, head-on scenario.** The actor walked into an already-stopped robot in all 15 runs. DWB's and MPPI's "reached" exists only because the actor has no collision body.
+
+### Unresolved, and kept labelled as unresolved
+
+- DWB's hairpin stall
+- why no controller swerved
+- D\* Lite's extra work on the real costmap
+- loop-closure damage
+- exact Run 15
+- recovery from confident AMCL divergence
+- the collision-monitor residual
+- untested remote behaviours: phone STOP, second spectator, mid-mission preemption, remote mission completion, idle and session caps, the cause of the disconnect, and the stale Nav2 "executing" label
 
 ---
 
-## Repository structure
+## 3. Non-negotiable rules
+
+### Invariants kept from v1
+
+1. `coco_lab` never imports `rclpy`.
+2. Browser code never names a ROS topic. It speaks `coco.v1`, which only grows additively unless a major version is declared.
+3. `cmd_vel_arbiter` is the sole wheel publisher, in every tier, forever.
+4. Ground truth has one authoritative source: the `truth` channel. Nothing fabricates truth elsewhere.
+5. Data formats are versioned. A breaking change means a major version plus a converter.
+6. Comparisons hold every non-compared variable fixed.
+7. Remote control is exclusive and interruptible, and STOP always wins.
+8. Gazebo `--fast` stays banned. It produced 531/533 tip-overs.
+
+### The one invariant replaced, and why
+
+**Old:** "No algorithm in TypeScript."
+
+**New:** *Any second implementation of an algorithm (WebAssembly, TypeScript) must be trace-equivalent to the Python reference on the property-test corpus, checked in CI.*
+
+The intent stays the same: no silent divergence. It becomes testable, and it allows performance kernels if measurement ever demands them.
+
+### Evidence classes, used in code, docs and UI
+
+| Class | Meaning |
+| --- | --- |
+| MODEL | `coco_lab`, the Arena model, the browser |
+| STACK | Full ROS 2 stack in Gazebo, recorded |
+| REMOTE | Over the public internet, robot simulated |
+| HARDWARE | A physical robot. **None exist.** |
+| UNRESOLVED | Reproduced but unexplained, statistically unresolved, or untested |
+| CONCEPT | Discussed, not built |
+
+The labels shown to learners map onto these: MEASURED, ASSUMPTION, SIMPLIFIED MODEL, SIMULATION RESULT, REAL ROBOT RESULT, INFERENCE.
+
+### Integrity rules
+
+1. **Every learner-facing claim cites committed evidence.** Mission and Case File content without evidence references fails CI (from M2 onward).
+2. **Negative results stay visible.** Nothing is removed to make a lesson look cleaner.
+3. **Never delete evidence:**
+    - recordings in `~/coco_lab_runs/`
+    - the contents of `docs/RESULTS.md`, which is append-only
+    - release tags
+    - GitHub releases
+4. **No game mechanic changes robot behaviour or rewards luck.** Scores use real metrics or decision quality in expectation.
+5. **Git safety.**
+    - No `git clean`, `git reset --hard`, force-push, branch deletion or tag deletion without Gautham's explicit approval.
+    - Work happens on `v2/...` branches, merged to `main` only with green CI and Gautham's approval.
+6. **The machine is shared with the robot project.** That project's overnight batch runs need an idle machine, so no heavy COCO Lab jobs (Gazebo, long builds, benchmarks) run during an announced robot batch window.
+
+---
+
+## 4. Component verdicts
+
+| Component | Verdict | What happens |
+| --- | --- | --- |
+| `coco_lab` Python library | Keep, redesign | Stays the reference implementation; emits unified events through a generator API (M1) |
+| Pyodide in a Web Worker | Keep, redesign | Streams events incrementally; a kernel moves to WASM only if it misses a measured budget (M1 gate) |
+| Per-lab bundle and trace formats | Replace | Common envelope plus typed event families in MCAP; converters keep every old recording playable (M1–M2) |
+| Canvas 2D rendering | Replace | Three.js WebGL 2 renderer (M1) |
+| React + Vite + TypeScript shell | Keep | Panels and navigation; the renderer lives beside React |
+| Six separate lab views | Merge | One Arena app; old views stay live until their content is migrated (end of M2) |
+| Sketch 2D model | Keep, redesign | Becomes the deterministic Arena model, generated from the World Spec (M1) |
+| GitHub Pages hosting | Keep | Browser tier |
+| `coco.v1` | Keep, extend | Additive event channel and session handshake (M5) |
+| `platform_server` | Keep, redesign | Gateway inside each cloud Stack container (M4–M5) |
+| Live through Tailscale Funnel | Replace (public) | Renamed "Live Stack (simulated)" now; Gautham's private bench; replaced publicly by cloud sessions (M5) |
+| Docker image | Keep, redesign | Basis of the cloud worker (M4) |
+| Arbiter, latched STOP, caps, kill switch | Keep | Unchanged in every tier |
+| `coco_lab_ros` | Keep, extend | ROS-to-event adapter (M3) |
+| Predict-then-reveal, paint-and-recompute, map challenge | Keep | Move into Learn, Sandbox and Play |
+| Races and comparisons | Merge | Sandbox split-compare |
+| Real-run replays, A\* myth exhibit, Run 15, Nav2 overlay | Merge | Case Files (M3) |
+| Share links | Keep, redesign | Spec-hash plus input-log links |
+| Robot-stack ROS packages inside `coco-labs` | Freeze | Not deleted (Live and the recordings depend on them); no new features; G3 decides long-term |
+| Old roadmap "Learn" (RL), "Many Robots", global leaderboard | Defer | See section 6 |
+| Old roadmap "Estimate" | Merge | Into the Localise lens |
+| Isaac integration inside COCO Lab, VLM layer, browser policy training | Remove | Out of scope permanently |
+
+---
+
+## 5. Target architecture
+
+### 5.1 Two simulation tiers, one world spec
+
+**Tier 1: the Arena model.** A deterministic 2D / 2.5D simulator running beside the algorithms inside a Web Worker (Pyodide + `coco_lab`). It is the main experience, and it costs nothing per user. Deterministic by construction:
+
+- fixed time step
+- single-threaded loop
+- seeded in-library RNG
+- per-tick state hash
+
+**Tier 2: the Stack.** The existing ROS 2 + Gazebo Harmonic system in cloud containers. Batch runs first (M4); interactive sessions only if gated in (M5). It is not bitwise deterministic, so its recordings are its replays.
+
+**World Spec.** One versioned YAML describing geometry, bays, ramp zone, obstacles, actors and the robot (from `coco_config`). Generators produce both the Arena world and the Gazebo SDF.
+
+**Fidelity report.** Each release ships one (LiDAR agreement, odometry in turns, controller tracking), shown in the UI as "model gap" chips.
+
+### 5.2 One trace system
+
+A **family of typed schemas under one envelope**: neither one flat universal event list nor separate per-lab formats.
+
+- **Envelope (manifest):**
+    - `run_id` = hash of canonical spec + seed + engine versions
+    - the spec, tier, evidence class, library and engine SHAs, schema list, provenance
+- **Channels.** Named `coco.<family>.<name>.v<major>`, defined in a new `coco_schemas` package (protobuf) that generates Python and TypeScript:
+    - world, robot, truth, `sensor.scan`, estimate
+    - `plan.search`, `plan.incremental`
+    - `localise.particles`, `localise.ekf`
+    - `map.grid`, `map.slam`
+    - `control.local`, `decide.search`, `mission.fsm`
+    - metrics, annotation, input
+- **Visual primitives.** The renderer's whole vocabulary: instanced points, poses, line sets, polygons, scalar grids, graphs, region distributions, sparse labels. Each primitive carries a pick ID back to its semantic event.
+- **Lenses.** One per family: event → primitives, inspector templates, default level of detail, captions, aggregates (for example, the end-of-run heatmap). A lens lays out and aggregates; it never computes the algorithm.
+- **Three clocks on every event:**
+    - `t_world` (simulation seconds)
+    - `tick` (control cycle)
+    - `seq` (computation step)
+
+    The timeline has a world track and a computation track.
+- **Storage.** MCAP container, protobuf messages, zstd-compressed indexed chunks, keyframes every few seconds for seeking. Arena-model replays can be spec + seed + input log, re-simulated.
+- **Level of detail.** Producers emit full or summary detail; clients subscribe per channel.
+- **Golden traces.** The existing property corpus produces golden traces, diffed in CI.
+
+### 5.3 Rendering
+
+- **Three.js on WebGL 2.** Orthographic 2.5D by default, perspective on demand.
+- **Techniques:**
+    - instancing for points
+    - merged line buffers for fans and rays
+    - data textures for grids and heatmaps
+    - glTF robot meshes converted from Gazebo's
+    - ID picking for the inspector
+- **Threads.** The simulation and algorithms run in a worker and post transferable buffers; the renderer owns the main thread; React draws only panels.
+- **A visual design system with fixed colour semantics per layer:** frontier, visited, chosen path, rejected candidates, truth (always an outline), uncertainty (always translucent).
+- **Rejected:** Canvas 2D (ceiling), pixel streaming (can't be inspected), WebGPU directly (later, through Three.js's WebGPU path, only if budgets fail).
+
+### 5.4 Cloud (from M4 only)
+
+Three things, in order of cost:
+
+1. **CDN:** the app, the replay library, Case Files.
+2. **Batch Stack runs:** API, queue, one fresh container per job, MCAP to object storage.
+3. **Interactive Stack sessions:** gated (M5).
+
+Rules for the cloud:
+
+- No Kubernetes or microservices until there are several worker hosts.
+- Each container gets its own network and localhost-range ROS 2 discovery.
+- No user code ever runs server-side.
+- Sign-in is required for Stack compute.
+- A global daily spend cap.
+
+### 5.5 Latency rules
+
+- Every pedagogical interaction (scrub, inspect, layers, paint, predict, compare) runs in the browser.
+- Stack sessions use client-side prediction, interpolation, latest-state-wins delivery, and "pause the view, not the robot".
+- Safety stays server-side: STOP latches in the arbiter path, and a disconnect stops the robot.
+- Attract mode plays a recorded replay while Pyodide loads, hiding the cold start.
+
+### 5.6 Experiments
+
+- **One spec format** (`spec_version`, world, scenario, robot, sensors, tier, arms, seeds, trials, metrics with one primary, budget), run identically in the browser, the cloud, or locally with `coco run spec.yaml`.
+- **Results:**
+    - k/n with Wilson 95% intervals
+    - median and IQR with bootstrap intervals
+    - McNemar or Wilcoxon for paired comparisons
+- **Exports:** YAML, CSV, Parquet, MCAP.
+
+### 5.7 Hardware contract (gated, not built)
+
+A future physical robot is a third backend behind the same gateway and event families, with the HARDWARE class, a hardware e-stop, firmware limits, a supervisor and a reservation system. Any participant can press STOP; only the driver drives.
+
+---
+
+## 6. Scope fence
+
+**The drift test.** Before any task, the agent names three things:
+
+- the milestone
+- the checkpoint
+- the exit criterion the task advances
+
+If it cannot name all three, the task is out of scope.
+
+**Non-goals until further notice** (rejected without discussion):
+
+- Vision-language models, LLM planners, natural-language robot commands
+- Multi-robot behaviour
+- RL lessons or policy training, until the robot project shows where learning beats classical control
+- A third simulator (MuJoCo, Webots, Isaac) inside COCO Lab
+- A physical-robot mode before a robot exists
+- A global leaderboard before deterministic server-side score verification exists
+- Kubernetes, multi-region, microservices
+- XP, levels, streaks, loot, or any score that rewards luck
+- Package renames or restructures done for aesthetics
+- Changes to the COCO robot repo or its worktrees
+
+---
+
+## 7. Roadmap
 
 ```
-coco-labs/
-├── README.md · HOW_TO_RUN.md · LICENSE
-├── CLAUDE.md                         # repo engineering constraints + trap list
-├── PROJECT_STATE.md                  # final state snapshot
-├── coco_config/                      # shared constants — one source of truth
-├── coco_sim/                         # world/model generation, MJCF from config
-├── coco_rl/                          # Gymnasium envs, PPO training, baselines
-│   ├── mujoco_env.py                 #   pure Python — imports no ROS, by rule
-│   ├── terrain_observer.py           #   grade + traction from IMU and wheels
-│   └── baselines.py                  #   classical controllers B0–B3
-├── coco_perception/                  # HSV + depth object identification
-│   ├── target_finder.py              #   which target is in front
-│   └── target_pose.py                #   where it is, in metres
-├── coco_mission/                     # the executive and localization health
-│   ├── mission_states.py             #   pure state machine, 19 states
-│   ├── mission_executive.py          #   the ROS adapter around it
-│   ├── localization_health.py        #   pure scan-vs-map consistency
-│   └── localization_monitor.py       #   the ROS adapter around that
-├── coco_moveit_config/               # MoveIt 2: SRDF, move_group, pick/place
-├── custom_teleop/                    # teleop + cmd_vel_arbiter (sole publisher)
-├── gazebo_models/                    # robot model, worlds, Nav2, RViz configs
-├── coco_web/                         # browser control panel (rosbridge)
-├── docs/
-│   ├── ARCHITECTURE.md · RESULTS.md · DESIGN_DECISIONS.md
-│   ├── SESSION_LOG.md                # full development history
-│   ├── data/                         # every measured CSV + its analysis script
-│   └── images/
-└── .github/workflows/                # build + model validation + tests
+M0 Transition ─▶ M1 Glass-box Arena core ─▶ M2 Whole loop ─▶ M3 Play + Case Files (public v2 launch)
+     ─▶ M4 Stack in the cloud: batch + experiments
+     ─▶ [gate: cost per slot-hour fits budget AND demand shown] ─▶ M5 Interactive Stack sessions
+     ─▶ [gate: a physical robot exists] ─▶ M6 Hardware bridge
 ```
 
-`docs/data/` holds the raw CSVs behind every number in `RESULTS.md`
-together with the scripts that produced and analysed them, so the
-reported figures can be recomputed rather than taken on trust.
+M0–M3 together form a complete product with no cloud. Effort ranges are rough estimates for part-time, agent-assisted work.
+
+### M0 · Transition: freeze v1, set up v2 (about 1 week)
+
+**Objective:** freeze and measure v1, install this plan as the authority, remove what is marked Remove, fix public honesty issues. **No new features.**
+
+1. **M0.1 Verify.**
+    - Locate the repo.
+    - Record `main` and `lab5` SHAs, worktree cleanliness, and full test counts (package, web, build tools) on a clean build.
+    - If `lab5` is strictly ahead of `main` with documentation-only changes, fast-forward `main`. Otherwise stop and report.
+2. **M0.2 Freeze v1.**
+    - Tag the last v1 commit `coco-lab-v1-final`.
+    - Confirm all six releases and their assets exist.
+    - Confirm that recordings cited by checksum in `docs/RESULTS.md` resolve in `~/coco_lab_runs/`. Report any that do not.
+3. **M0.3 Baseline measurements, before anything changes.** Write everything to `docs/v2/BASELINE.md` and `docs/RESULTS.md` with evidence labels:
+    - Pyodide cold start and warm map edit on the laptop, automated (Playwright or similar)
+    - an instruction page plus script so Gautham can repeat the measurement on his phone
+    - production bundle sizes
+    - frame rate of each current view during playback
+    - an inventory of every bundle and trace format, and of duplicated visualization code in `lab_web`
+4. **M0.4 Install the plan.**
+    - Copy this README to the repo root, after archiving the old one to `docs/archive/v1/README_v1.md`.
+    - Create `docs/STATUS.md` and `docs/IDEAS.md`.
+    - Archive the old `docs/ROADMAP.md` to `docs/archive/v1/`, and replace it with a short pointer to this section plus the v1 history table.
+    - Update `PROJECT_STATE.md`.
+    - Update `CLAUDE.md`: keep every engineering rule that still holds; add "README.md is the authority" and the drift test.
+5. **M0.5 Remove.**
+    - Delete code, config, docs or roadmap entries for Isaac-in-Lab, the VLM layer and browser policy training. List every file in the commit message.
+    - Rewrite the old roadmap themes: "Learn" → deferred, "Estimate" → merged into Localise, "Many Robots" → deferred.
+    - If none of these exist as code, record that.
+6. **M0.6 Honesty fixes** (copy only, no behaviour change):
+    - Wherever the site or docs say "real robot" for the Gazebo stack, say "the full ROS 2 stack (simulated)".
+    - Gripper → "two fingers and a magnet; the magnet holds the object".
+    - Rename Live to "Live Stack (simulated)", and label it a scheduled demo of the simulated stack.
+7. **M0.7 Freeze the robot-stack packages** inside `coco-labs` with a `FROZEN.md` note: kept, no new features, decision G3 pending. Nothing is deleted.
+8. **M0.8 Deprecation notes.** Mark the Replace items (Canvas renderer, per-lab formats, per-lab views) as deprecated in docs, with the milestone that replaces them. Nothing is deleted yet; every current view keeps working.
+
+**Exit criteria:**
+
+- CI is green.
+- Test counts are equal to or higher than M0.1's.
+- Every current public view still loads with no console errors.
+- The baseline file is committed.
+- The README is in place; `STATUS.md`, `ROADMAP.md`, `PROJECT_STATE.md` and `CLAUDE.md` are consistent with it.
+- The report is written.
+- Gautham approves the merge to `main`.
+
+### M1 · Glass-box Arena core (about 4–6 weeks)
+
+**Objective:** a stranger opens one URL on a phone, clicks a goal, watches the planner compute visibly as the robot drives, and sees the end-of-run heatmap. All of it is deterministic, measured, and on the new engine.
+
+1. **M1.1 `coco_schemas`.**
+    - The envelope plus the world, robot, truth, `sensor.scan`, `plan.search`, `plan.incremental`, input, metrics and annotation families.
+    - Protobuf with generated Python and TypeScript; CI schema checks.
+2. **M1.2 World Spec v1.** The COCO arena and robot parameters, plus a generator for the Arena model. Gazebo SDF generation is designed for, not built.
+3. **M1.3 Arena model core in `coco_lab`.**
+    - Fixed-step differential-drive kinematics and 2D LiDAR (reuse Sketch; re-confirm the 86.7% fidelity number).
+    - Seeded RNG; per-tick state hash; goals and teleop arrive as input events.
+4. **M1.4 Planners emit events.** BFS, Dijkstra, A\*, greedy and weighted A\* (D\* Lite optional) through a generator API. Golden traces must match Lab 1's (expansion order and costs) on the 1,000-map corpus.
+5. **M1.5 Worker runtime.** Pyodide in a Web Worker streaming transferable event batches; preload during attract mode.
+6. **M1.6 Renderer.**
+    - Three.js orthographic arena.
+    - Layers: occupancy, frontier, closed set, heatmap, path, LiDAR, robot, footprint, truth outline.
+    - Picking opens the inspector (g, h, f, parent, expansion order).
+    - Visual design system v1.
+7. **M1.7 Timeline.** World and computation tracks; play, pause, step, speed, scrub; keyframe seeking.
+8. **M1.8 Experience.**
+    - attract-mode landing, give-a-goal
+    - keyboard and touch-joystick teleop
+    - planner choice, side-by-side compare
+    - end-of-run heatmap
+    - share link (spec hash + input log)
+    - the MODEL badge
+9. **M1.9 Converters.** Lab 1 bundles and its three real-run replays play in the new viewer. The old Lab 1 view stays live.
+10. **M1.10 Measure and decide.** Measure every budget below; record the WebAssembly gate decision. Nothing is ported unless a budget fails.
+
+**Acceptance criteria:**
+
+| Area | Criterion |
+| --- | --- |
+| Determinism | Identical per-tick hashes in Chrome, Firefox, Safari and Pyodide-in-Node across 100 recorded sessions |
+| Correctness | New traces match Lab 1's on all 1,000 corpus maps |
+| Laptop performance | 60 fps with about 50,000 points, 20,000 segments and one grid texture |
+| Phone performance | 30 fps or better at default detail on Gautham's phone |
+| Responsiveness | First frontier node within 100 ms of a goal click (warm); seek under 100 ms |
+| Cold start | First visible computation within 10 s of opening the URL on the phone over mobile data |
+| Usability | 5 people new to robotics set a goal and explain the heatmap within 2 minutes, unaided |
+| Release hygiene | No console errors; phone-width check; schema, golden-trace, determinism and screenshot tests in CI |
+
+**Not in M1:**
+
+- other lenses and local controllers
+- the cloud, accounts, a Stack adapter
+- leaderboards, the 3D arm
+- WebGPU
+- WASM ports without a failed budget
+- new algorithms
+
+**Stop and escalate if:**
+
+- The phone cannot reach 15 fps at minimum detail.
+- Cross-browser hashes differ.
+- The schemas cannot express an existing Lab 1 trace without loss.
+
+### M2 · The whole loop (about 5–7 weeks)
+
+**In the arena together:** localization (MCL, EKF, injection), mapping and SLAM (occupancy, EKF-SLAM, FastSLAM, pose graph), local control and search decisions.
+
+**New teaching implementations,** labelled MODEL and compared with Lab 5's Stack runs:
+
+- a DWA-style sampler
+- a pure-pursuit tracker
+- a small MPPI
+
+**Also in M2:**
+
+- an Arena fetch mission (abstract colour detection, kinematic 2-DOF arm inset)
+- the Run 15 mechanism reproduced in the model
+- fidelity report v1
+- Learn missions 1–6, written as data files with evidence references
+
+**Exit criteria:**
+
+- Every learner-facing claim from Labs 1–5 reappears with its evidence.
+- Every old bundle converts and replays.
+- The 16 search runs replay byte for byte through the new pipeline.
+- The old per-lab views are retired; their release tags remain.
+
+### M3 · Play and Case Files: public v2 launch (about 4–5 weeks)
+
+**Case Files.** Every existing recording, converted through a ROS-to-event adapter in `coco_lab_ros`, with a model-vs-Stack comparison view:
+
+- 16 search runs
+- 54 Move runs
+- SLAM tours
+- Run 15
+- the A\* myth
+
+**Play.** The five cheapest challenges first; challenge-a-friend links from input logs; local bests.
+
+**Verification prototype.** Re-simulation under Pyodide in Node.
+
+**Exit criteria:**
+
+- A cold visitor sees computation within 10 s on a mid-range phone.
+- Every Case File claim links to its evidence.
+- Shared challenge links reproduce exactly.
+
+### M4 · The Stack in the cloud: batch runs and experiments (about 4–6 weeks)
+
+**Built:**
+
+- pinned headless Stack image
+- worker and queue
+- small API with sign-in and quotas
+- object storage
+- pre-run replay library
+- "Run N seeds"
+- the `coco run` command line
+- global spend cap
+
+**Measured:**
+
+- Stack real-time factor in cloud containers
+- start-up time
+- CPU-only (software rendering) against GPU
+- cost per run and per slot-hour
+
+### M5 · Interactive Stack sessions (gated, about 4–6 weeks)
+
+**Gate:**
+
+- M4's cost per slot-hour fits the budget (G4).
+- M3 shows demand.
+
+**Built:**
+
+- session manager, warm pool, gateway
+- additive `coco.v1` event channel
+- client-side prediction
+- 3D view with Gazebo meshes
+
+**Measured remotely:** STOP, preemption, spectators, caps, disconnect.
+
+**Then:** retire the public Tailscale Live tab.
+
+### M6 · Hardware bridge (gated)
+
+Gated on:
+
+- a physical robot existing (G5)
+- the robot project's sim-to-real gate
+- M5's remote-safety measurements
 
 ---
 
-## Robot description
+## 8. Decisions pending, and the defaults agents use until Gautham decides
 
-| Subsystem | Details |
-|---|---|
-| Base | 4 driven wheels, differential (skid) steer; radius 0.0585 m, track 0.274 m |
-| Drive control | `diff_drive_controller/DiffDriveController`, velocity interfaces |
-| Arm | 2 revolute joints via `arm_controller` (JointTrajectoryController) |
-| Gripper | 2 finger joints via `gripper_controller` (JTC) |
-| Lidar | 240° front arc, 480 samples, 0.15–12 m, 10 Hz (`gpu_lidar`) |
-| Camera | RGBD 320×240 @ 15 Hz, RGB + depth + point cloud |
-| Frames | `map → odom → base_footprint → base_link → …` (REP-103 z-up) |
-
-> **Model note:** the CAD export used a Y-up frame and originally mounted
-> the arm bracket on the chassis *bottom* — the robot rested on its own
-> elbow, which caused the low real-time factor and the arm oscillation at
-> spawn documented in earlier revisions. The xacro re-roots the model z-up
-> and mounts the arm on the top face; RTF went from ~0.23 to ~1.0.
-
-### Key topics
-
-| Topic | Type | Direction |
-|---|---|---|
-| `/scan` | `sensor_msgs/LaserScan` | lidar → SLAM / Nav2 costmaps |
-| `/camera/image_raw`, `/camera/depth/image_raw`, `/camera/points` | Image / PointCloud2 | camera out |
-| `/diff_drive_controller/cmd_vel` | `geometry_msgs/TwistStamped` | arbiter → wheels (sole publisher) |
-| `/cmd_vel_teleop`, `/cmd_vel_gated`, `/cmd_vel_rl` | `geometry_msgs/TwistStamped` | arbiter inputs, one per source (`/cmd_vel_gated` is Nav2 after the collision monitor) |
-| `/perception/target` | `geometry_msgs/PointStamped` | measured target position |
-| `/mission/state` | `std_msgs/String` | executive: state, retries, failure reason |
-| `/localization/health` | `std_msgs/String` | scan-vs-map consistency verdict |
-| `/map` | `nav_msgs/OccupancyGrid` | SLAM / map server |
+| ID | Decision | Default until decided |
+| --- | --- | --- |
+| G1 | Primary audience | Learners first |
+| G2 | Priority against the robot project and job hunt | Not an agent decision; agents respect announced robot batch windows |
+| G3 | Canonical robot stack | The robot repo is canonical; `coco-labs` robot packages are frozen, not deleted |
+| G4 | Monthly cloud budget | Zero; no cloud resources are created before M4 and an explicit budget |
+| G5 | Will a physical robot exist within a year? | Assume no; no "real robot" wording anywhere |
+| G6 | License and outside contributions | Unchanged from the current repo |
 
 ---
 
-## Quick start
+## 9. Rules for coding agents
 
-Full, verified instructions — requirements, build, troubleshooting and the
-tests — are in **[HOW_TO_RUN.md](HOW_TO_RUN.md)**. The whole of it is:
+1. **One prompt per milestone.** Work through every checkpoint without pausing, unless a stop condition fires.
+2. **Read first:** `README.md`, `docs/STATUS.md`, `CLAUDE.md`, `PROJECT_STATE.md`.
+3. **Apply the drift test** before each task. Anything outside the checkpoint list goes to `docs/IDEAS.md`, never into code.
+4. **Branch and commits.**
+    - Branch `v2/<milestone>` (for example `v2/m1-arena-core`).
+    - Commits are prefixed with the checkpoint, for example `[M1.3]`.
+    - `docs/STATUS.md` is updated at every checkpoint.
+5. **Testing.** Focused tests during work; the full suites (`run_all_package_tests.sh`, web tests, build-tool tests) at each checkpoint's end.
+6. **Resources.** RTX 4050 laptop GPU (6 GB VRAM), 16 GB RAM, Ubuntu 24.04, ROS 2 Jazzy. Never run two simulators at once. Respect robot batch windows.
+7. **Never:**
+    - delete evidence, tags or releases
+    - run destructive git commands without approval
+    - touch the robot repo
+    - invent numbers
+    - mark anything MEASURED without committed data
+8. **Final report**, in this form:
 
-```bash
-# Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic
-mkdir -p ~/coco_labs_ws/src && cd ~/coco_labs_ws/src
-git clone https://github.com/GauthamCodes/coco-labs.git
-cd coco-labs && rosdep install --from-paths . --ignore-src -r -y
-
-cd ../.. && colcon build --symlink-install --packages-select \
-    coco_config coco_sim coco_rl coco_perception \
-    coco_moveit_config custom_teleop gazebo_models coco_mission coco_web
+```
+Milestone / checkpoints completed:
+Start SHA → end SHA, branch, worktree clean (y/n):
+Per checkpoint: what changed | evidence file(s) | evidence class
+Tests: suite → passed / failed / skipped (before vs after)
+Measurements taken (with device and conditions):
+Files removed (full list) and why:
+Deviations from the plan, and why:
+Ideas parked in docs/IDEAS.md:
+Stop condition hit? which one:
+Questions for Gautham:
+Next step according to README.md:
 ```
 
-Then, in three terminals, each with `source ./setup_env.sh` run from the
-clone:
-
-```bash
-# T1 — the simulator. One Gazebo at a time; a fresh one per mission run.
-ros2 launch gazebo_models full_world_robo.launch.py traverse:=true gui:=true
-
-# T2 — the robot.
-ros2 launch coco_mission mission.launch.py rviz:=true target_colour:=red
-
-# T3 — start it, and watch.
-ros2 service call /mission/start std_srvs/srv/Trigger "{}"
-ros2 topic echo /mission/state --field data
-```
-
-No environment variables and no policy path: the trained ramp policy ships
-in the repository and the launch file loads it by default. A nominal
-mission ends in `COMPLETE` with `result=fetch`, or in `ABORT` with an
-explicit reason. The earlier compact-arena timing was **187 s** headless,
-about five minutes with the Gazebo window open. The default is now a
-24 × 18 m world with four separate target bays; see
-[the navigation-world guide](docs/NAVIGATION_WORLD.md) for its map, RViz
-outputs and validation workflow. Cleanup between runs and the troubleshooting that was actually
-diagnosed are in [HOW_TO_RUN.md](HOW_TO_RUN.md).
-
-> **Never pass `--fast`**, and there is deliberately no argument for it.
-> See Engineering lessons above.
+9. **Independent review.** A milestone closes in `STATUS.md` only after a fresh review session, given only the repo, this README and the report, has verified that:
+    - the commits exist
+    - a sample of the tests pass
+    - every evidence file named in the report exists and supports its claim
 
 ---
 
-## Development history
+## 10. Where things live
 
-The project was built in two phases. The numbering is historical and the
-current system does not require it.
-
-| Phase | Status | What it added |
-|---|---|---|
-| **v1 — M0–M6** | closed, measured | Jazzy/Harmonic port, z-up model, 4WD `ros2_control`, JTC arm; lidar + RGBD, slam_toolbox mapping, Nav2 + AMCL; MoveIt 2 pick-and-place; browser control panel; PPO ramp traversal; and the full fetch mission at **19/20** |
-| **v2 — M7 "The Yard"** | Phases 1–3 done | Randomised multi-route terrain, RL training moved to headless MuJoCo for throughput, and classical baselines built specifically to test whether the policy is necessary — the answer to which is recorded even though it is unflattering |
-| **COCO 2.0** | **complete, frozen** | Observability, terrain estimation, the mission executive, perception-driven manipulation, and localization health + recovery |
-| **COCO Lab** | **active — Phase 0** | The browser-based robotics curriculum on this stack. Plan: [docs/ROADMAP.md](docs/ROADMAP.md) |
-
-Full history, decision by decision, in
-[docs/SESSION_LOG.md](docs/SESSION_LOG.md); the roadmap that produced it
-in [docs/history/ROADMAP_COCO2.md](docs/history/ROADMAP_COCO2.md), and
-the current plan in [docs/ROADMAP.md](docs/ROADMAP.md). The v1 subsystem demos — teleop,
-mapping, standalone Nav2, MoveIt pick-and-place, the browser panel, RL
-traversal — each runnable on their own, are in
-[docs/RUNNING.md](docs/RUNNING.md).
-
-> **Companion project:**
-> [red_ball_nav](https://github.com/GauthamCodes/red_ball_nav) —
-> perception-driven navigation on a TurtleBot3, working inside a
-> third-party robot description rather than a custom one.
-
----
-
-## Images
-
-These screenshots include the earlier compact arena. The larger default
-world is described in [the navigation-world guide](docs/NAVIGATION_WORLD.md).
-
-| | |
-|---|---|
-| ![Robot](docs/images/robot_hero.png) | ![Carry](docs/images/pick_carry.png) |
-| The mobile manipulator: 4WD base, 2-DOF arm, 2-finger gripper, lidar mast, RGBD camera | Mid-carry: the cylinder is held through the full lift arc |
-| ![Arena](docs/images/arena_overview.png) | ![Map](docs/images/slam_map.png) |
-| The arena: obstacles, walled ramp structure, 12 m × 7 m | slam_toolbox occupancy map from the scripted mapping drive |
-| ![Mission view](docs/images/c2m16_mission_clean.png) | ![Debug view](docs/images/c2m16_mission_debug.png) |
-| The clean mission RViz view | The debug view: costmaps, particle cloud, TF |
-| ![Learning curve](docs/images/ppo_learning_curve.png) | ![Controller comparison](docs/images/c2m21_controller_comparison.png) |
-| PPO return over 528 episodes — the rolling mean never escapes −11…−13 | Classical baselines against the policy on the Yard routes |
-
----
-
-## License
-
-Apache-2.0 — see [LICENSE](LICENSE).
-
-### A note on the planner name
-
-`SmacPlanner2D` **is A\*** — a grid-based A\* with an 8-connected Moore
-neighbourhood, recovering its path by back-tracing the node chain rather
-than by NavFn's gradient descent over a potential field. The name does not
-announce that, so it is worth stating.
-
-**What the 6.2 % is, and what it is not.** The measured comparison (M3,
-[docs/RESULTS.md](docs/RESULTS.md#a--smacplanner2d-and-the-evidence-for-it))
-was **`SmacPlanner2D` against `NavfnPlanner` with `use_astar: false`**:
-3.165 m against 3.373 m on the same start and goal. It is **not** an
-A\*-beats-Dijkstra result. With an admissible heuristic and identical edge
-costs, A\* and Dijkstra return paths of equal cost — the heuristic changes
-how much is searched, not the answer. The gap comes from the two planners'
-*implementations*: NavFn does not read its path off its search but descends
-the gradient of a potential field (`calcPath`), falling back to grid steps
-wherever the neighbourhood is unvisited — the mechanism is recorded in
-[docs/DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md) — while
-`SmacPlanner2D` back-traces its node chain, with its own traversal-cost
-model. How much of the 6.2 % each of those accounts for has **not** been
-measured. COCO Lab's first lab (Plan) shows exactly this distinction on
-the real stack: see the exhibit
-**[The A\* myth, twice](https://gauthamcodes.github.io/coco-labs/?view=exhibit)**,
-part (b).
-(This paragraph previously called the 6.2 % "an A\*-beats-Dijkstra
-result"; the numbers are unchanged, the interpretation was wrong.)
-
-One precision, because it is easy to overclaim: the heuristic is plain
-Euclidean and **not** cost-aware. Cost-awareness lives in the traversal
-cost (`cost_travel_multiplier`), not the heuristic — which is what keeps
-the heuristic admissible. There is also **no heuristic-weight parameter**
-on `SmacPlanner2D`, so the tidy "set the weight to zero and watch A\*
-become Dijkstra" demonstration is not available without patching Nav2.
-`NavfnPlanner`'s `use_astar` flag is the real heuristic on/off toggle in
-this stack. Details in [docs/M7_DESIGN.md](docs/M7_DESIGN.md).
-
-The local controller is **DWB**.
+| File | Role |
+| --- | --- |
+| `README.md` | This plan: the authority |
+| `docs/STATUS.md` | Current position, open questions, plan-change log |
+| `docs/IDEAS.md` | Parked ideas |
+| `docs/ROADMAP.md` | Pointer to section 7, plus the v1 history |
+| `docs/RESULTS.md` | Every measured number, append-only |
+| `docs/v2/` | Baselines, architecture, schema docs for v2 |
+| `docs/archive/v1/` | Archived v1 README, roadmap and other retired docs |
+| `CLAUDE.md` | Engineering rules for agents |
+| `PROJECT_STATE.md` | Authoritative current state |
+| `~/coco_lab_runs/` | Raw evidence recordings (outside git; never delete) |

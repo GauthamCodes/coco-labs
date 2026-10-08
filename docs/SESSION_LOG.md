@@ -8106,3 +8106,99 @@ NEXT: the owner's call on publishing `lab5-v1.0` (tag LOCAL at the release
 record on `main`, DRAFT release with `coco_lab5_demo.mp4`):
 `git push labs lab5-v1.0 && gh release edit lab5-v1.0 -R GauthamCodes/coco-labs --draft=false --latest --verify-tag`.
 No later phase started.
+
+
+### Phase 6 — COMPLETE: release record on `main`, `lab5-v1.0` tag local + draft release (2026-10-07, ~19:30 UTC)
+
+- PR #18 (release record): Lab green; CI's `build-and-test` hung ~1 h in
+  "Setup ROS 2 Jazzy" (before any repository code), was cancelled and
+  re-run: green. `main` fast-forwarded `0fef157..2b6f8ad` (plain push).
+- On `main` = `2b6f8ad`: CI, Lab and the Pages deploy green; the public
+  catalog is 1.5 from `2b6f8ad`, clean. Re-checked on the public URL (19:25
+  UTC): Lab 5 and Lab 1 smoke 0 console errors, 11/11 bundles drawn, D\*
+  Lite in Pyodide 6.1 s (coco_lab 166 ms).
+- `lab5-v1.0`: annotated tag LOCAL at `2b6f8ad` + DRAFT release (target the
+  full sha) with `coco_lab5_demo.mp4`; the uploaded asset downloads with
+  sha256 `442cc010…`, the hash recorded at recording time. Publishing is
+  the owner's call:
+  `git push labs lab5-v1.0 && gh release edit lab5-v1.0 -R GauthamCodes/coco-labs --draft=false --latest --verify-tag`.
+- Phase 6 / Lab 5 is complete apart from that decision. No later phase
+  started.
+
+
+### Lab 5 released — `lab5-v1.0` published (2026-10-08, ~05:13 UTC)
+
+The owner approved publishing `lab5-v1.0` ("approve lab5-v1.0",
+2026-10-08), exactly as prepared. No Phase 6 engineering was redone.
+
+Done:
+- `git push labs lab5-v1.0` (annotated tag `4df59f9` → commit `2b6f8ad`,
+  `main`'s release record).
+- `gh release edit lab5-v1.0 -R GauthamCodes/coco-labs --draft=false
+  --latest --verify-tag`. Published 2026-10-08T05:11:35Z, marked Latest.
+
+Verified (measured, this session):
+- `git ls-remote --tags labs` lists `lab5-v1.0` → `4df59f9`, peeled
+  `^{}` → `2b6f8ad` (= `labs/main`).
+- `gh release list`: Lab 5 = Latest; Labs 1–4 and Live unchanged.
+- The asset `coco_lab5_demo.mp4`, downloaded from its public URL, is
+  3,615,891 B with sha256
+  `442cc010206399fcfc9c64314cd74f13c91e9a654032942775181182b4adb3cf`, the
+  hash recorded at recording time.
+- The release-note links answer HTTP 200 (`?view=move` on the public site;
+  `docs/labs/LAB5_MOVE.md` at the tag), and so does the release page.
+- The public site still serves catalog 1.5 built from `2b6f8ad` (clean);
+  headless Firefox at 05:12 UTC: Lab 5 0 console errors, the Replay labelled
+  "recorded real run", a D\* Lite run in Pyodide 7.3 s (coco_lab 186 ms).
+
+Phase 6 / Lab 5 is SHIPPED. PROJECT_STATE and the ROADMAP status line say so
+(on branch `lab5`; `main` stays at `2b6f8ad`, the tagged commit). No later
+phase started.
+
+
+## COCO Lab v2 · M0 Transition (2026-10-08)
+
+The v2 master plan (`README.md`, "the Glass-box Arena") is installed as the
+authority. Branch **`v2/m0-transition`** from `3571169` (coco-labs `main`
+`2b6f8ad` fast-forwarded to `lab5`; two documentation-only commits), in
+a fresh worktree `.claude/worktrees/v2-m0` of the old checkout, remote
+`labs`. Copy overlay `~/coco_v2_ws` (`sync.sh`, `alltests.sh`,
+`m0/*.sh`); Node 24.21.0 from the official tarball at
+`~/coco_v2_ws/node`. No simulator was launched.
+
+**Done (one commit per checkpoint, prefixed `[M0.n]`):**
+- M0.1 starting state and preflight tests (`docs/v2/data/m0/START_STATE.md`).
+- M0.2 annotated tag `coco-lab-v1-final` on `3571169`; the six releases are
+  published (five with videos; `live-v1.0` has none, by design); the three
+  Lab 1C bags cited by checksum resolve (`FREEZE.md`).
+- M0.3 laptop baseline with Playwright 1.64.0 (new exact-pinned
+  devDependency; `lab_web/tools/perf/baseline.mjs`), `docs/v2/BASELINE.md`,
+  `docs/v2/PHONE_BASELINE.md` (+ `tools/perf/phone_marks.js`), RESULTS.md
+  section "COCO Lab v2 · M0 baseline" (appended).
+- M0.4 `README.md` = the master plan byte for byte; v1 README, ROADMAP,
+  LAB_PHASES and retired CLAUDE.md rules in `docs/archive/v1/`; new
+  `docs/ROADMAP.md`, `docs/STATUS.md`, `docs/IDEAS.md`; PROJECT_STATE and
+  CLAUDE.md updated.
+- M0.5 Remove: nothing to delete (no Isaac-in-Lab, VLM or browser policy
+  training code exists; `REMOVALS.md`).
+- M0.6 copy: "Live Stack (simulated)", no "real robot" for the Gazebo
+  stack on the site, correction notes on three lab write-ups and the lab4
+  release notes.
+- M0.7 `FROZEN.md` in the nine robot-stack packages.
+- M0.8 `docs/v2/DEPRECATIONS.md`.
+
+**Measured (this session):** preflight at `3571169` packages 3,081 / 0 /
+0, vitest 308 / 0 / 0, tools 117 / 0 / 0; after M0.8: packages 3,081 / 0 / 0,
+vitest 308 / 0 / 0, tools 117 / 0 / 0. Laptop (MODEL): cold first edit
+median 12,857 ms (6,567–42,882), warm edit median 1,445 ms
+(1,265–1,686), every playing view 60 fps rAF, 0 long tasks. Exit load
+check: plan/localise/map/search/move 0 console errors; Live logs browser
+network errors when no Stack runs (same as v1).
+
+**Unverified:** the phone baseline (method only); why cold start fell
+39.7 → 3.9 s over five runs; why warm edits are slower than Lab 1.1's
+Firefox numbers; CI on the PR at the time of writing.
+
+NEXT: the owner reviews the PR `v2/m0-transition` → `main` and approves the
+merge; a fresh review session verifies the M0 report (README §9.9); then
+M1 · Glass-box Arena core (README §7), starting with M1.1 `coco_schemas`.

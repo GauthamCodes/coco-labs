@@ -1,0 +1,26 @@
+[
+ {
+  "path": "lab1c/run_astar/bag",
+  "resolves": true,
+  "sha256": "13bc214dc78c2f3c761ca84d64a85c7fe4f5243d56b6546ad495536995a96c4f",
+  "size": 8127558,
+  "cited_sha256": "13bc214dc78c2f3c761ca84d64a85c7fe4f5243d56b6546ad495536995a96c4f",
+  "cited_size": 8127558
+ },
+ {
+  "path": "lab1c/run_dijkstra/bag",
+  "resolves": true,
+  "sha256": "498253a12e277ebfe16934fc11e74dbe305a8abf1ff4bcd35664a506b6c771dc",
+  "size": 8402694,
+  "cited_sha256": "498253a12e277ebfe16934fc11e74dbe305a8abf1ff4bcd35664a506b6c771dc",
+  "cited_size": 8402694
+ },
+ {
+  "path": "lab1c/run_greedy/bag",
+  "resolves": true,
+  "sha256": "82b76311ee0d3ff9391f3f62cbc34bc5f7ea95e532bd814794d101870f847b7b",
+  "size": 6891474,
+  "cited_sha256": "82b76311ee0d3ff9391f3f62cbc34bc5f7ea95e532bd814794d101870f847b7b",
+  "cited_size": 6891474
+ }
+]

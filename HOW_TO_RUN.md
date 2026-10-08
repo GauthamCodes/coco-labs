@@ -378,8 +378,10 @@ state line. The measured evidence, including what did not work, is in
 
 ## Technical documentation
 
-- [`README.md`](README.md) — what COCO is, what was measured, and what
-  it still cannot do
+- [`README.md`](README.md) — the COCO Lab v2 master plan (the authority
+  since 2026-10-08); the v1 README — what COCO is, what was measured, and
+  what it still cannot do — is archived at
+  [`docs/archive/v1/README_v1.md`](docs/archive/v1/README_v1.md)
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — the nine packages, the
   four control paradigms, and who owns the wheels in each mission state
 - [`docs/RESULTS.md`](docs/RESULTS.md) — every measured number and the

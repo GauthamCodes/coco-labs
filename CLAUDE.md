@@ -1,29 +1,128 @@
 # CLAUDE.md
 
 Repo-level engineering constraints and reproducibility rules. Read this
-before touching anything. This file is for people working *on* the repo;
-the project itself is introduced in `README.md`.
+before touching anything, after `README.md` (the COCO Lab v2 master plan,
+the authority) and `docs/STATUS.md`. This file is for people working *on*
+the repo. Rules retired at v2 are in `docs/archive/v1/CLAUDE_v1_rules.md`.
 
-## State first — START HERE
+## Authority — START HERE (COCO Lab v2, since 2026-10-08)
 
-**`PROJECT_STATE.md`** (repo root) is the authoritative snapshot: what is
-done, what is broken, what was measured, and the known limitations.
+**`README.md` is the authority** for COCO Lab: it is the v2 master plan
+("the Glass-box Arena"), and where anything in this file, `PROJECT_STATE.md`
+or an old document conflicts with it, `README.md` wins. Authority order
+(README §0): the repository (code + committed evidence) is the truth about
+what COCO Lab *is*; `README.md` about what it *becomes*; `docs/STATUS.md`
+about where the work stands; a milestone prompt carries one milestone's
+instructions and never extends the README; agent reports are claims to
+verify, never facts.
 
-**COCO 2.0 is frozen.** Everything is on `main` — one branch, complete.
-The development-era split, where implementation lived on a feature branch
-and the state files on the trunk, is over; `docs/STATE_PROTOCOL.md`
-records how that worked and is kept as history, not as a live rule. A
-fresh clone of `main` is sufficient. **A missing package now means a
-build problem, not an unmerged branch.**
+**Read first, in this order:** `README.md`, `docs/STATUS.md`, this file,
+`PROJECT_STATE.md`. Then the documents the task touches (`docs/RESULTS.md`,
+`docs/DESIGN_DECISIONS.md`, `docs/ARCHITECTURE.md`, the lab write-ups in
+`docs/labs/`, `docs/SESSION_LOG.md`). The v1 README, roadmap and phase
+prompts are archived in `docs/archive/v1/`.
 
-## Read first
+**COCO Lab is a separate project from the COCO robot project** (the Isaac /
+P03D line). Never modify the robot repository, its worktrees (for example
+`~/coco-isaac-21`, `~/coco-p03d-target-search`) or its evidence from COCO
+Lab work. The robot-stack packages inside this repository are **frozen**
+(`FROZEN.md` in each): kept, no new features, decision G3 pending.
 
-`README.md`, `docs/ARCHITECTURE.md`, `docs/DESIGN_DECISIONS.md`,
-`docs/RESULTS.md`, `docs/FUTURE_WORK.md`, `docs/M7_DESIGN.md`,
-`docs/SESSION_LOG.md`.
+### The drift test — before every task
 
-They are long. Read them anyway. Most of what you need to avoid is already
-written down, usually with the cost of learning it attached.
+Name three things: **the milestone, the checkpoint, and the exit criterion
+the task advances.** If you cannot name all three, the task is out of scope:
+add one line to `docs/IDEAS.md` (`date | idea | gap it closes | earliest
+milestone`) and move on. Ideas are never implemented mid-milestone. The
+plan changes only at a milestone boundary, by Gautham, as a dated entry in
+`docs/STATUS.md`'s plan-change log.
+
+### Evidence classes — in code, docs and UI
+
+| Class | Meaning |
+|---|---|
+| MODEL | `coco_lab`, the Arena model, the browser |
+| STACK | Full ROS 2 stack in Gazebo, recorded |
+| REMOTE | Over the public internet, robot simulated |
+| HARDWARE | A physical robot. **None exist.** |
+| UNRESOLVED | Reproduced but unexplained, statistically unresolved, or untested |
+| CONCEPT | Discussed, not built |
+
+Learner-facing labels map onto these: MEASURED, ASSUMPTION, SIMPLIFIED
+MODEL, SIMULATION RESULT, REAL ROBOT RESULT, INFERENCE. **No physical robot
+exists**: "real" in COCO Lab means the full ROS 2 stack in Gazebo, Live is
+"Live Stack (simulated)", and the gripper has two fingers and a magnet; the
+magnet holds the object. The
+`(measured)` / `(derived)` discipline of rule 1 below still applies inside
+every class.
+
+### The replaced invariant: second implementations
+
+**Old (retired):** "The TypeScript UI never re-implements an algorithm."
+**Now:** *any second implementation of an algorithm (WebAssembly,
+TypeScript) must be trace-equivalent to the Python reference on the
+property-test corpus, checked in CI.* Same intent — no silent divergence —
+but testable. A kernel moves out of Python only when a measured budget
+fails (M1.10's WebAssembly gate). Every other v1 invariant stands (README
+§3): `coco_lab` never imports `rclpy`; browser code never names a ROS
+topic and speaks `coco.v1`, which only grows additively; `cmd_vel_arbiter`
+is the sole wheel publisher in every tier; ground truth has one source,
+the `truth` channel; data formats are versioned (breaking = major +
+converter); comparisons hold every non-compared variable fixed; remote
+control is exclusive and interruptible and STOP always wins; Gazebo
+`--fast` stays banned.
+
+### The robot-batch-window rule
+
+**The machine is shared with the robot project, whose overnight batch runs
+need an idle machine.** During an announced robot batch window, run no heavy
+COCO Lab job — no Gazebo, no long builds, no full test suites, no
+benchmarks. Before any heavy job, check
+`ps aux | grep -Ei 'gz|gazebo|isaac|ros2'`; if a simulator, Isaac or a
+robot-project batch is running, report it and wait for Gautham's go-ahead.
+Never run two simulators at once. Hardware: RTX 4050 laptop GPU (6 GB
+VRAM), 16 GB RAM, Ubuntu 24.04, ROS 2 Jazzy.
+
+### Git, per README §3 and §9
+
+Work on `v2/<milestone>` branches; prefix every commit with its checkpoint
+(`[M1.3] …`); update `docs/STATUS.md` at the end of every checkpoint;
+merge to `main` only with green CI and Gautham's approval. **Never** `git
+clean`, `git reset --hard`, force-push, or delete a branch or tag without
+his explicit approval. Never delete evidence: recordings in
+`~/coco_lab_runs/`, the contents of `docs/RESULTS.md` (append-only),
+release tags, GitHub releases. Never invent a number; never mark anything
+MEASURED without committed data.
+
+### Final report template (README §9) — end every milestone with it
+
+```
+Milestone / checkpoints completed:
+Start SHA → end SHA, branch, worktree clean (y/n):
+Per checkpoint: what changed | evidence file(s) | evidence class
+Tests: suite → passed / failed / skipped (before vs after)
+Measurements taken (with device and conditions):
+Files removed (full list) and why:
+Deviations from the plan, and why:
+Ideas parked in docs/IDEAS.md:
+Stop condition hit? which one:
+Questions for Gautham:
+Next step according to README.md:
+```
+
+A milestone closes in `docs/STATUS.md` only after a fresh review session —
+given only the repository, `README.md` and the report — has verified the
+commits exist, a sample of the tests pass, and every evidence file named in
+the report exists and supports its claim.
+
+## The robot stack inside this repository (frozen)
+
+**`PROJECT_STATE.md`** holds the v1 and robot-stack record: what was done,
+what is broken, what was measured, the known limitations. Its top section is
+the current v2 state. **COCO 2.0 (the robot stack) is frozen**; a missing
+package means a build problem, not an unmerged branch. The pre-v2 versions
+of this section and of "Read first" are in
+`docs/archive/v1/CLAUDE_v1_rules.md`.
 
 ## What this project is
 
@@ -290,48 +389,17 @@ symptom usually surfaces several layers from the cause.
 
 ### 8. Tests are green or the phase is not done
 
-**On `p03c-episode-gazebo` it is 1877, 0 failing, 0 skipped**, against
-**1740** measured on its base `b3c6598` in the same session: coco_config
-70 → 92, coco_rl 218 → 229, gazebo_models 206 → 219, coco_sim 128 → 199,
-coco_mission 317 → 337; custom_teleop 75, coco_perception 139,
-coco_moveit_config 12, coco_web 575 unchanged.
-
-**Release baseline: 829 passing, 0 failing, 0 skipped.** On
-`p02-release-candidate` it is **1667** (breakdowns below). On
-`p02-browser-experience` it was **1334** (C2-NAV.49's 1004, plus 135 from P0.1, plus 195 from
-P0.2). `gazebo_models` carried most of the earlier growth — 41 on the
-release tree, **181** here — and `coco_web` carries all of the latest:
-**297**, from nothing two releases ago. Measured on the
-release tree, per package, **with cwd set to the package directory**, on
-a clean ROS graph:
-
-| package | tests |
-|---|---|
-| `coco_config` | 70 |
-| `custom_teleop` | 67 |
-| `coco_rl` | 164 |
-| `coco_perception` | 139 |
-| `gazebo_models` | 41 |
-| `coco_moveit_config` | 12 |
-| `coco_sim` | 55 |
-| `coco_mission` | 281 |
-| **total** | **829** |
-
-`coco_web` used to have no `test/` directory — pytest exited 4 there,
-which was recorded here as "not a failure". **That is no longer true.**
-P0.1 gave it 116 tests and, for the first time, the flake8/pep257/
-copyright linters: expect **116** from `coco_web`, and note that adding
-the linters is what surfaced the pre-existing docstring failures in
-`web.launch.py`.
-
-**1607 -> 1667 breakdown (P0.2 release pass, `p02-release-candidate`).**
-`coco_web` 517 -> 575 (stored lifecycle + server-level lifecycle walk,
-slow-client/flood/per-client-drop/close-path/padded-row tests on real
-sockets, the MJPEG proxy and parser, timing provenance, keepalive, the
-leak test's harvested needles, the Node decoder test, the loopback bind),
-`coco_rl` 216 -> 218 (8080-only compose and `EXPOSE`, `frame.js` ships).
-Nothing else moved. Measured per package on `~/coco_ws_build`, 0 failed,
-0 skipped, **on a quiet machine**.
+**Current counts (measured at `coco-lab-v1-final` = `3571169`, clean
+overlay build, 2026-10-08):** packages **3,081 / 0 / 0** via
+`scripts/run_all_package_tests.sh` (coco_config 93, coco_sim 323,
+coco_mission 371, coco_web 863, gazebo_models 229, coco_rl 251,
+coco_perception 139, coco_moveit_config 12, custom_teleop 75, coco_lab 604,
+coco_lab_ros 121), `lab_web` vitest **308 / 0 / 0**, `lab_web/tools`
+(build-tool tests) **117 / 0 / 0** (`docs/v2/data/m0/START_STATE.md`).
+`docs/STATUS.md` carries the latest. At every milestone exit the counts are
+equal or higher; any decrease is explained by a listed deletion. The
+historical per-branch counts and their breakdowns (829, 1004 … 1877) are
+archived in `docs/archive/v1/CLAUDE_v1_rules.md`.
 
 **And one load-sensitivity fact, measured.** With a foreign COCO GUI +
 RViz stack running (load average 43 on 12 cores),
@@ -341,32 +409,6 @@ runs on a private DDS domain, so this is CPU starvation, not the other
 graph; it passed 4 of 4 on the quiet machine. Not the
 `TestTheOldLoopIsDetected` flake recorded below. A red `gazebo_models` on
 a busy machine is not a regression until it is red on a quiet one.
-
-**1564 -> 1607 breakdown (`coco-clean-runtime`).** `gazebo_models`
-181 -> 206 (`test_no_turtlebot_dependency.py`: no TurtleBot edge in any
-package.xml, launch file, build file or YAML value; every launch lookup
-declared; the dangling-marker mechanism against the real ros_gz_sim),
-`coco_rl` 198 -> 216 (`test_setup_env.py`: `setup_env.sh` in a clean
-bash). Measured on `~/coco_ws_build`, 0 failed, 0 skipped. Nothing else
-moved.
-
-**1334 -> 1564 breakdown (P0.2, second pass).** `coco_web` 297 -> 517
-(health axis, real-socket server tests, map-frame pose, launch/asset
-checks, and Codex's integrated hardening: protocol, streams, binary,
-imaging, mission, lifecycle, transport), `coco_rl` 190 -> 198 (Docker
-static checks, the entrypoint-children test), `coco_mission` 315 -> 317
-(`expected_components` evaluated for `executive:=true/false`). Nothing
-else moved.
-
-**1139 -> 1334 breakdown (P0.2).** `coco_web` 116 -> 297 (mission
-translation, subscriptions, binary frames, imaging, metrics, web
-assets), `coco_rl` 179 -> 190 (the bring-up scripts, beside the Docker
-context checks), `gazebo_models` 178 -> 181 (the `platform_serve[r]`
-sweep pattern). Nothing else moved.
-
-**1004 -> 1139 breakdown (P0.1).** `coco_web` 0 -> 116, `coco_mission`
-311 -> 315 (the `platform:=` web-layer selection), `coco_rl` 164 -> 179
-(the Docker build-context guards). Nothing else moved.
 
 **Three invocation facts that change the total and are NOT regressions.**
 All three were measured both ways.
@@ -753,6 +795,19 @@ contract, `docs/DOCKER.md` the runtime. What must not be relearned:
 **The workspace is `~/coco_labs_ws`, and it holds this repository and
 nothing else** (`~/coco_labs_ws/src/coco-labs`, since 2026-10-01).
 
+**Where the work actually happened (checked 2026-10-08, M0.1).** That
+clone stopped at `main` = `6249e7d` and never received `lab2`…`lab5`.
+Every phase from Lab 2 to Lab 5, and M0, was done in worktrees of the old
+checkout `~/ros2_ws(personal)/src/coco-robot-ros2` (`.claude/worktrees/lab1`,
+then `.claude/worktrees/v2-m0`), whose remote **`labs`** is
+`GauthamCodes/coco-labs`; builds and tests ran from a COPY overlay
+(`~/coco_search_ws`, then `~/coco_v2_ws`: an rsync of the worktree plus
+`scripts/build_overlay.sh`), because colcon and gz cannot quote the
+parenthesised path. In that checkout the branch named `main` is the robot
+project's trunk, not coco-labs `main` — compare against `labs/main`.
+`lab_web` needs Node 24.21.0 (`.nvmrc`); the machine's Node is 20, so a
+pinned copy is installed beside the overlay (`~/coco_v2_ws/node`).
+
 **Never source the old workspace and this one in the same shell** —
 `~/ros2_ws(personal)` (the old `coco-robot-ros2` checkout and its
 worktrees), or any overlay built from it such as `~/coco_ws_build`.
@@ -800,37 +855,39 @@ export COCO_WS="$HOME/coco_ws_build"; source <repo>/setup_env.sh
 Small commits with real messages. After each substantive change, run the
 affected package's tests.
 
-At the end of every session, append a checkpoint to `docs/SESSION_LOG.md`:
+Update `docs/STATUS.md` at the end of every checkpoint (README §9). At the
+end of every session, also append a checkpoint to `docs/SESSION_LOG.md`:
 what was built, what was **measured**, what remains **unverified**, and the
-exact next command to run. Follow the format already in that file.
+exact next command to run. Follow the format already in that file. Full
+suites (`scripts/run_all_package_tests.sh`, the `lab_web` tests, the build
+tool tests) run at each checkpoint's end; focused tests during the work.
 
-## COCO Lab direction (added 2026-09-28)
+## COCO Lab platform rules (v1 rules that still hold)
 
-COCO is becoming COCO Lab (working title): an interactive, browser-based
-robotics curriculum running on this ROS 2 stack. Plan: docs/ROADMAP.md.
-Session prompts: docs/LAB_PHASES.md. The master context lives outside
-this repository (no copy is checked in); its §45 priority order is
-superseded, and everything else in it still holds.
+These came with the COCO Lab direction (2026-09-28) and still hold under
+`README.md`. Retired: the old rule 8 (replaced, see "The replaced
+invariant" above), rule 9 (lab-by-lab release gating — v2 is organised by
+milestones), and the pointers to the v1 roadmap and phase prompts; all
+three are in `docs/archive/v1/CLAUDE_v1_rules.md`.
 
-Platform rules, in addition to everything above:
 1. coco_lab never imports rclpy. A test enforces it.
 2. The browser never names a topic, and never commands the robot except
    through coco.v1 intents added additively.
 3. No new wheel publisher. Lab planners move the robot only via Nav2
    FollowPath, through the existing command chain into cmd_vel_arbiter.
-4. Every mode is labelled on screen: Replay (recorded real run,
-   provenance shown), Sketch (browser model, measured fidelity shown),
-   Live (local stack).
+4. Every mode is labelled on screen: Replay (a recorded run of the full
+   ROS 2 stack in Gazebo, provenance shown), Sketch (browser model,
+   measured fidelity shown), Live (the simulated stack, "Live Stack
+   (simulated)"). v2 adds the evidence class (MODEL, STACK, REMOTE …) to
+   every label.
 5. Every claim shown to a learner is backed by a property test or a
    (measured) result, and cites it. Theorems are tested as properties,
-   not asserted.
+   not asserted. From M2 on, content without evidence references fails CI.
 6. Comparisons hold inputs fixed: map, start, goal, recording, seed.
 7. Trace and bundle schemas are versioned; breaking changes bump the
    major version.
-8. The TypeScript UI never re-implements an algorithm. It renders traces
-   and asks coco_lab.
-9. No new lab starts until the previous one has a public URL, a video and
-   a write-up. A lab's first version ships at most five algorithms.
+8. *(retired — see "The replaced invariant: second implementations")*
+9. *(retired — v2 milestones replace per-lab release gating)*
 10. Live control is exclusive and interruptible: one driver holds control
     at a time; teleop preempts autonomy, as the arbiter already
     guarantees; stop is always one tap away; remote sessions expose only

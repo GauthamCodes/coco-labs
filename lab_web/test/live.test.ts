@@ -104,9 +104,9 @@ describe('driving', () => {
 
 describe('honest labels', () => {
   it('labels the mode, local or remote (rule 4)', () => {
-    expect(liveLabel('ws://localhost:8080/ws')).toBe('Live — local stack');
-    expect(liveLabel('ws://127.0.0.1:8080/ws')).toBe('Live — local stack');
-    expect(liveLabel('wss://coco.example.net/ws')).toBe('Live — remote session');
+    expect(liveLabel('ws://localhost:8080/ws')).toBe('Live Stack (simulated) — local');
+    expect(liveLabel('ws://127.0.0.1:8080/ws')).toBe('Live Stack (simulated) — local');
+    expect(liveLabel('wss://coco.example.net/ws')).toBe('Live Stack (simulated) — scheduled demo');
   });
   // Phase 5: the label comes from what the RUNNING mission reports
   // (/mission/search via coco_web), never from a constant.

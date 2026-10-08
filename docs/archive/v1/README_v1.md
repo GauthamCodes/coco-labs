@@ -1,0 +1,465 @@
+**▶ Try it: [COCO Lab 1 — Plan](https://gauthamcodes.github.io/coco-labs/)** — graph search
+on a real robot's maps, in your browser.
+
+> **Status — September 2026.** COCO is becoming **COCO Lab**: an
+> interactive, browser-based robotics curriculum that runs on this real
+> ROS 2 / Nav2 stack. Everything below remains accurate and measured.
+> Plan: [docs/ROADMAP.md](docs/ROADMAP.md).
+
+## Lab 1 — Plan
+
+Five search algorithms, traced event by event, on maps that climb from a
+teaching grid to the costmap Nav2 used on a real run. In the lab you can:
+- change the heuristic and see coco_lab's verdict on it;
+- race two to four algorithms on identical inputs;
+- paint walls and get the search rerun;
+- replay three runs the real robot drove;
+- share a link that reproduces your exact trace.
+
+Every search runs in `coco_lab` (Python, in your browser via Pyodide); the
+page never searches. Every claim names its evidence. The exhibit,
+**[The A\* myth, twice](https://gauthamcodes.github.io/coco-labs/?view=exhibit)**,
+takes apart two "A\* vs Dijkstra" results, one of them COCO's own (below).
+Write-up, measured numbers and limitations:
+[docs/labs/LAB1_PLAN.md](docs/labs/LAB1_PLAN.md).
+
+## Lab 2 — Localise (Phase 3)
+
+**Lab 2 · Localise** (`?view=localise`) puts a particle filter and an EKF
+side by side on identical inputs, in **Sketch**: coco_lab's 2D model of
+COCO, labelled as a model, not the robot, with its measured fidelity beside
+it. At 237 identical poses in Gazebo, Sketch's LiDAR is within 5 cm on
+86.7 % of beams; its wheels never slip, and COCO's do on every turn. You
+can change particles, motion and sensor noise, and AMCL-style injection;
+kidnap the robot by clicking the map; hide the truth; predict, then
+reveal; race the filters. Everything is rerun by coco_lab in your browser.
+
+Four of COCO's real localisation failures are exhibits, each with its
+evidence. The real stack was measured too:
+- **Kidnap recovery:** with AMCL's injection off (as shipped) it recovered
+  0 of 10 fresh-simulator kidnaps; with Nav2's suggested values, 2 of 10.
+  That is not a resolved difference.
+- **robot_localization** fusing the wheels' pose with the gyro cut odometry
+  error on a 120 m tour from 21.6 m to 0.21 m at worst, on identical
+  recorded drives. That is an upper bound: the simulated gyro is noiseless.
+
+Write-up, numbers and limitations:
+[docs/labs/LAB2_LOCALISE.md](docs/labs/LAB2_LOCALISE.md).
+
+## Live — the real stack, from the browser (Phase 2)
+
+**[The Live tab](https://gauthamcodes.github.io/coco-labs/?view=live)**
+drives COCO in three modes (teleop, a Nav2 goal, the autonomous fetch)
+over `coco.v1`; the page never names a ROS topic, and
+`cmd_vel_arbiter` stays the only wheel publisher. Run it on your own
+machine with the [Docker quickstart](docs/DOCKER.md), or drive the
+owner's machine during a scheduled public session. A session is
+exposed through Tailscale Funnel as `/ws` and `/healthz` only. It has one
+driver holding a host-issued code, spectators who only watch, a 60 s idle
+release and a 20-minute cap, and every ending stops the robot.
+
+Measured: on a real phone over mobile data, the page claimed control,
+drove, sent a Nav2 goal and started a mission; when the phone dropped,
+COCO went from 0.3 m/s to rest in 0.54 s and the mission aborted. Through
+the tunnel the command path is fast (drive → wheel p50 45 ms) but the
+view lags by seconds on a relayed link. Guide, security boundaries,
+safety behaviour, limitations and backlog:
+[docs/live/LIVE.md](docs/live/LIVE.md).
+
+# COCO 2.0 — Autonomous Mobile Manipulator
+
+**ROS 2 Jazzy · Gazebo Harmonic · Nav2 · MoveIt 2**
+
+**Choose a colour on your phone. COCO finds it, grasps it, and brings it
+home.**
+
+A 4-wheel differential-drive base with a 2-DOF planar arm that drives out
+across an arena, climbs a ramp under a learned policy, identifies the
+cylinder *you* chose by sight, picks it up from a raised platform,
+carries it home and puts it down — deciding for itself, at every step,
+whether the step actually worked.
+
+![COCO fetching a cylinder](docs/images/demo_fetch.gif)
+
+*One continuous autonomous run: navigate, climb, detect, grasp, return.
+Select the target colour from the control panel; the fetch above is what
+follows.*
+
+| | |
+|---|---|
+| **Perception** | the target's position is *measured*, not assumed — 60 benchmark placements, 8 live grasps |
+| **Terrain-aware control** | grade and traction estimated from the IMU and the wheels, published and not driven |
+| **Autonomous navigation** | Nav2 on the flat, with arrival verified against world pose rather than the action result |
+| **Manipulation** | MoveIt 2 plus a closed-form 2-link IK, driven by the measured pose |
+| **Mission executive** | 19 explicit states with per-state contracts, timeouts, retries and structured failure reasons |
+| **Localization health + recovery** | a scan-vs-map consistency signal, a persistence requirement, a safe stop proved at the arbiter, and a bounded recovery that verifies health before resuming |
+
+## ▶ [Run the full autonomous fetch](HOW_TO_RUN.md)
+
+Clone, build and launch; then open the control panel in a browser, pick
+RED, GREEN, BLUE or YELLOW, and press start. Two commands and a browser,
+no configuration, nothing to download separately — the trained ramp
+policy ships in the repository. Everything is on `main`.
+
+### Then read
+
+* **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** — the packages, the
+  four control paradigms, and who owns the wheels in each state
+* **[docs/RESULTS.md](docs/RESULTS.md)** — every measured number, with
+  the run that produced it
+* **[docs/DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md)** — problem,
+  diagnosis, fix, evidence
+
+---
+
+## Results
+
+Every number below was produced by a run on this machine. Each is marked
+**measured** or **derived** in `docs/RESULTS.md`, alongside the command
+that reproduces it; anything not yet measured says so rather than being
+estimated.
+
+▶ **[Watch the fetch mission end to end](https://github.com/GauthamCodes/coco-robot-ros2/releases/download/m6-fetch-demo/coco_fetch_demo.mp4)**
+— one continuous uncut run, split-screen Gazebo and RViz, 75 s.
+
+| | Result |
+|---|---|
+| **Fetch mission** | **19/20** over five runs of each of the four colours, fresh simulator every run. The base stopped inside a **5.5 mm** approach window **20/20** (sd 0.6 mm) and the grasp held **20/20** (lift 33.9–35.9 mm, ground truth). The one failure picked its target and then could not localise its way home: [details](docs/RESULTS.md#the-fetch-matrix--20-runs-5-per-colour) |
+| **Perception** | **60/60** placements measured, 720/720 frames detected, horizontal error **0.7 / 1.4 / 2.4 mm** (min/median/max). Driving a real grasp: **8/8** picks physically verified by reading the object's own height out of the simulator, not by trusting an action result |
+| **Mission executive** | A full fetch through all 16 nominal states with `retries=0` and no failure reason at any sample; then four live failure injections, which it handled **unchanged** |
+| **Localization health** | The scan-vs-map signal fires **0 times** across two whole healthy missions (1714 and 1753 samples) and three healthy recorded legs, and detects an injected 3 m pose error from robot-observable information alone. AMCL covariance is measured to be the **wrong** signal — it moved the *wrong way* at the divergence |
+| **Terrain estimation** | Grade is observable to **0.1–1.4° MAE**. Coulomb friction is measured **not identifiable** on this robot: τ spans **0.0003** across a μ span of 0.35 |
+| **RL challenge** | **Solved — 10/10.** A PPO policy summits the ramp, evaluated deterministically at **10/10 on both the 18° and 24° grades**, re-verified 10/10 after the ramp rebuild without retraining |
+| **Navigation** | **10/10** goals on a ten-goal tour (mean 34.7 s, 36.3 m driven, home to within 12 cm), planned by `SmacPlanner2D` (a grid A\*), whose path was **6.2 % shorter** than NavFn's (`use_astar: false`) on the M3 comparison — a difference between two planner implementations, not A\* beating Dijkstra: [why](#a-note-on-the-planner-name) |
+| **IK accuracy** | 20,000/20,000 round-trips, max error 1.7 × 10⁻¹⁶ m, 1.5 µs per solve |
+| **Training throughput** | **3,712 steps/s at 8 workers = 427×** real time in headless MuJoCo; cross-engine parity **0.242 mm** worst case over 264 settle probes (**0.138 mm** geometric, the rest a constant compliance offset) |
+| **Simulation** | RTF ≈ 1.0; every sensor at its nominal rate, measured in sim time |
+| **Tests** | **1,966** passing across nine packages, **0 failures, 0 skipped**, on the consolidated `main` (merge `232454d`, measured 2026-09-28; **829** at the COCO 2.0 freeze). Run per package on a clean ROS graph — [how](HOW_TO_RUN.md#4-tests) |
+
+---
+
+## Known limitations
+
+These are current, reproducible, and deliberately not rounded up.
+
+* **Severe localization divergence is detected but not reliably
+  recovered.** The monitor sees a 3 m confidently-wrong pose and the
+  executive safe-stops and re-seeds AMCL, but the mission does not get
+  home. Two measured causes, neither in the executive:
+  `recovery_alpha_fast/slow` are `0.0`, so AMCL cannot leave a mode it is
+  confident in; and global relocalization on this near-rectangular map
+  converged to a pose inside the ramp footprint, after which the planner
+  reported "Start occupied". **No live run has produced
+  degradation → recovery → resume → COMPLETE.** The recovery path is
+  unit-tested; the end-to-end resume is not.
+* **The collision monitor's SLOWDOWN reaches the wheels; its STOP
+  behaviour is not yet re-verified.** Before C2-NAV.42 the arbiter read
+  `/cmd_vel_nav`, the topic `nav2_bringup` also uses for the controller's
+  raw output, and during a 0.090 m/s slowdown the wheels were commanded
+  **0.300 m/s** on 84.2 % of samples (historical, pre-fix). The relay now
+  publishes `/cmd_vel_gated`, and the arbiter reads that. Measured on the
+  consolidated `main` (Milestone 0A, 2026-09-28): `/cmd_vel_gated` has
+  exactly one publisher (the relay) and one subscriber (the arbiter), the
+  wheel topic exactly one publisher (the arbiter), and during an injected
+  SLOWDOWN the wheel command was **0.090 m/s at p50, p90, p99 and max —
+  0 of 300 samples over the cap**. The STOP probe did **not** reproduce
+  the historical STOP (C2-NAV.43/47 stopped 0.249 m from a wall under
+  STOP): the robot came to rest **0.264 m** from the wall under
+  FootprintApproach and STOP never fired. That is **not yet explained**.
+  The trace still shows the wheels above the monitor on short streaks
+  (0.088–2.92 % of samples per tour), not attributed. The fetch has been
+  re-measured on the fixed path since 19/20 (which had the loop in place)
+  as new series, never as a before/after: C2-NAV.49 12/12, and four fresh
+  FIXED fetches on the consolidated `main`, 4/4 —
+  [evidence](docs/data/m0a_cmdpath/README.md).
+* **`RETURN_HOME` fails by at least two distinct mechanisms**, six failed
+  and five succeeded across all recorded sessions. One class is AMCL
+  divergence and is now detectable; the other — position error inside the
+  healthy band with yaw error reaching 1.31 rad — is **not separable by
+  any signal recorded**, and no threshold is proposed for it.
+* **`--target` grasp re-targeting does not work** away from the tuned
+  point (0/5, later 5/14) and is reported as such rather than omitted.
+* **The lateral reachability verdict is a lower bound**, not a limit: the
+  approach controller nulls the bearing first, so a +30 mm lateral offset
+  reached the grasp as −3.0 mm and succeeded.
+* **Counts are not rates.** 60 placements, 8 grasps and 5 localization
+  runs are each a small deterministic sample. The standing mission figure
+  is the 20-run fetch matrix.
+* The Docker images are provided for reproducibility and have **not**
+  been runtime-tested here.
+
+---
+
+## Engineering lessons
+
+The failures are kept because they are the part that took the work.
+
+**The RL result was 0/10 before it was 10/10**, and three distinct bugs
+were masking each other:
+
+1. **The ramp was unclimbable.** The shipped mesh was a CAD shell with a
+   ~66° near-vertical face, and the goal only reached the ramp *foot*.
+   Rebuilt as a parametric wedge with a summit goal.
+2. **The goal was unreachable by 1.6 cm.** It sat at the exact crest, but
+   the wedge's back face is vertical — so the tip-over terminator fired
+   *before* `x` crossed the line. A completed climb at x = 5.4838 was
+   logged as a fall against a 5.5 m goal. That is why the first
+   curriculum recorded 1 goal in 1,399 episodes.
+3. **`--fast` was corrupting the control loop.** Unlocking the real-time
+   factor makes sim time outrun wall-clock ROS delivery, so `cmd_vel`
+   arrives late and the controller's 0.5 s watchdog repeatedly halts the
+   wheels. That pumping reared the chassis over backwards. Same seed,
+   same config: **with `--fast`, 531/533 episodes tipped and evaluation
+   scored 0/10; without it, 0/533 tipped and evaluation scored 10/10** —
+   and it ran *faster*, because physics was never the bottleneck.
+
+**Other findings that changed the design**, each written up with its
+evidence in [docs/DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md):
+
+* **Covariance is the wrong health signal.** The intuitive design —
+  watch AMCL's covariance and act when it grows — is measured to fail:
+  both divergence runs reported a *smaller* `sigma_xy` than either leg
+  that finished. A filter that is wrong and sure looks exactly like a
+  filter that is right and sure. The scan-vs-map likelihood detects the
+  same divergence in 0.4 s.
+* **Friction is not identifiable from an IMU and wheel encoders.** A
+  steady climb is in equilibrium, so the traction ratio is pinned at
+  `tan(grade)` whatever μ is, and the drivetrain cannot saturate the
+  contact on the flat. Two earlier formulations were wrong in ways that
+  *looked like the result being sought*.
+* **A stale camera pitch survived every test.** A `-0.314 rad` constant
+  outlived the geometry it described; two tests now assert the camera RPY
+  is `(0,0,0)`.
+* **A map that looks right in RViz can still be wrong.** The map and its
+  RViz overlay are separate artefacts and were audited separately.
+* **`/diff_drive_controller/cmd_vel` carries two message types.** The
+  arbiter publishes `TwistStamped`; a `Twist` subscriber matches nothing,
+  receives nothing, raises nothing, and `ros2 topic info` still reads
+  healthy. It cost a run — the recorder captured 0 commands, which reads
+  exactly like "no stale command was issued". **Any check whose success
+  condition is "we saw nothing" must first prove it can see something.**
+* **Integration bugs hide in topic ownership.** Swapping the perception
+  source needed *two* topics, not one; setting only the point topic left
+  a gate reading a topic nobody published, and the mission timed out in a
+  way that looked like a camera fault.
+
+---
+
+## Architecture in one paragraph
+
+Four control paradigms hand the same wheels back and forth through
+`cmd_vel_arbiter`, which is the **sole** publisher to the controller:
+Nav2 on the flat, a PPO policy on the ramp, a visual servo across the
+platform, and MoveIt for the arm. `coco_mission`'s executive owns the
+sequencing and the contracts; `coco_config` sits at the bottom holding
+the shared constants that the robot model itself is generated from, so
+there is exactly one source of truth for wheelbase, masses, joint limits
+and sensor poses. Full node/topic graph and TF tree in
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+---
+
+## Repository structure
+
+```
+coco-labs/
+├── README.md · HOW_TO_RUN.md · LICENSE
+├── CLAUDE.md                         # repo engineering constraints + trap list
+├── PROJECT_STATE.md                  # final state snapshot
+├── coco_config/                      # shared constants — one source of truth
+├── coco_sim/                         # world/model generation, MJCF from config
+├── coco_rl/                          # Gymnasium envs, PPO training, baselines
+│   ├── mujoco_env.py                 #   pure Python — imports no ROS, by rule
+│   ├── terrain_observer.py           #   grade + traction from IMU and wheels
+│   └── baselines.py                  #   classical controllers B0–B3
+├── coco_perception/                  # HSV + depth object identification
+│   ├── target_finder.py              #   which target is in front
+│   └── target_pose.py                #   where it is, in metres
+├── coco_mission/                     # the executive and localization health
+│   ├── mission_states.py             #   pure state machine, 19 states
+│   ├── mission_executive.py          #   the ROS adapter around it
+│   ├── localization_health.py        #   pure scan-vs-map consistency
+│   └── localization_monitor.py       #   the ROS adapter around that
+├── coco_moveit_config/               # MoveIt 2: SRDF, move_group, pick/place
+├── custom_teleop/                    # teleop + cmd_vel_arbiter (sole publisher)
+├── gazebo_models/                    # robot model, worlds, Nav2, RViz configs
+├── coco_web/                         # browser control panel (rosbridge)
+├── docs/
+│   ├── ARCHITECTURE.md · RESULTS.md · DESIGN_DECISIONS.md
+│   ├── SESSION_LOG.md                # full development history
+│   ├── data/                         # every measured CSV + its analysis script
+│   └── images/
+└── .github/workflows/                # build + model validation + tests
+```
+
+`docs/data/` holds the raw CSVs behind every number in `RESULTS.md`
+together with the scripts that produced and analysed them, so the
+reported figures can be recomputed rather than taken on trust.
+
+---
+
+## Robot description
+
+| Subsystem | Details |
+|---|---|
+| Base | 4 driven wheels, differential (skid) steer; radius 0.0585 m, track 0.274 m |
+| Drive control | `diff_drive_controller/DiffDriveController`, velocity interfaces |
+| Arm | 2 revolute joints via `arm_controller` (JointTrajectoryController) |
+| Gripper | 2 finger joints via `gripper_controller` (JTC) |
+| Lidar | 240° front arc, 480 samples, 0.15–12 m, 10 Hz (`gpu_lidar`) |
+| Camera | RGBD 320×240 @ 15 Hz, RGB + depth + point cloud |
+| Frames | `map → odom → base_footprint → base_link → …` (REP-103 z-up) |
+
+> **Model note:** the CAD export used a Y-up frame and originally mounted
+> the arm bracket on the chassis *bottom* — the robot rested on its own
+> elbow, which caused the low real-time factor and the arm oscillation at
+> spawn documented in earlier revisions. The xacro re-roots the model z-up
+> and mounts the arm on the top face; RTF went from ~0.23 to ~1.0.
+
+### Key topics
+
+| Topic | Type | Direction |
+|---|---|---|
+| `/scan` | `sensor_msgs/LaserScan` | lidar → SLAM / Nav2 costmaps |
+| `/camera/image_raw`, `/camera/depth/image_raw`, `/camera/points` | Image / PointCloud2 | camera out |
+| `/diff_drive_controller/cmd_vel` | `geometry_msgs/TwistStamped` | arbiter → wheels (sole publisher) |
+| `/cmd_vel_teleop`, `/cmd_vel_gated`, `/cmd_vel_rl` | `geometry_msgs/TwistStamped` | arbiter inputs, one per source (`/cmd_vel_gated` is Nav2 after the collision monitor) |
+| `/perception/target` | `geometry_msgs/PointStamped` | measured target position |
+| `/mission/state` | `std_msgs/String` | executive: state, retries, failure reason |
+| `/localization/health` | `std_msgs/String` | scan-vs-map consistency verdict |
+| `/map` | `nav_msgs/OccupancyGrid` | SLAM / map server |
+
+---
+
+## Quick start
+
+Full, verified instructions — requirements, build, troubleshooting and the
+tests — are in **[HOW_TO_RUN.md](HOW_TO_RUN.md)**. The whole of it is:
+
+```bash
+# Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic
+mkdir -p ~/coco_labs_ws/src && cd ~/coco_labs_ws/src
+git clone https://github.com/GauthamCodes/coco-labs.git
+cd coco-labs && rosdep install --from-paths . --ignore-src -r -y
+
+cd ../.. && colcon build --symlink-install --packages-select \
+    coco_config coco_sim coco_rl coco_perception \
+    coco_moveit_config custom_teleop gazebo_models coco_mission coco_web
+```
+
+Then, in three terminals, each with `source ./setup_env.sh` run from the
+clone:
+
+```bash
+# T1 — the simulator. One Gazebo at a time; a fresh one per mission run.
+ros2 launch gazebo_models full_world_robo.launch.py traverse:=true gui:=true
+
+# T2 — the robot.
+ros2 launch coco_mission mission.launch.py rviz:=true target_colour:=red
+
+# T3 — start it, and watch.
+ros2 service call /mission/start std_srvs/srv/Trigger "{}"
+ros2 topic echo /mission/state --field data
+```
+
+No environment variables and no policy path: the trained ramp policy ships
+in the repository and the launch file loads it by default. A nominal
+mission ends in `COMPLETE` with `result=fetch`, or in `ABORT` with an
+explicit reason. The earlier compact-arena timing was **187 s** headless,
+about five minutes with the Gazebo window open. The default is now a
+24 × 18 m world with four separate target bays; see
+[the navigation-world guide](docs/NAVIGATION_WORLD.md) for its map, RViz
+outputs and validation workflow. Cleanup between runs and the troubleshooting that was actually
+diagnosed are in [HOW_TO_RUN.md](HOW_TO_RUN.md).
+
+> **Never pass `--fast`**, and there is deliberately no argument for it.
+> See Engineering lessons above.
+
+---
+
+## Development history
+
+The project was built in two phases. The numbering is historical and the
+current system does not require it.
+
+| Phase | Status | What it added |
+|---|---|---|
+| **v1 — M0–M6** | closed, measured | Jazzy/Harmonic port, z-up model, 4WD `ros2_control`, JTC arm; lidar + RGBD, slam_toolbox mapping, Nav2 + AMCL; MoveIt 2 pick-and-place; browser control panel; PPO ramp traversal; and the full fetch mission at **19/20** |
+| **v2 — M7 "The Yard"** | Phases 1–3 done | Randomised multi-route terrain, RL training moved to headless MuJoCo for throughput, and classical baselines built specifically to test whether the policy is necessary — the answer to which is recorded even though it is unflattering |
+| **COCO 2.0** | **complete, frozen** | Observability, terrain estimation, the mission executive, perception-driven manipulation, and localization health + recovery |
+| **COCO Lab** | **active — Phase 0** | The browser-based robotics curriculum on this stack. Plan: [docs/ROADMAP.md](docs/ROADMAP.md) |
+
+Full history, decision by decision, in
+[docs/SESSION_LOG.md](docs/SESSION_LOG.md); the roadmap that produced it
+in [docs/history/ROADMAP_COCO2.md](docs/history/ROADMAP_COCO2.md), and
+the current plan in [docs/ROADMAP.md](docs/ROADMAP.md). The v1 subsystem demos — teleop,
+mapping, standalone Nav2, MoveIt pick-and-place, the browser panel, RL
+traversal — each runnable on their own, are in
+[docs/RUNNING.md](docs/RUNNING.md).
+
+> **Companion project:**
+> [red_ball_nav](https://github.com/GauthamCodes/red_ball_nav) —
+> perception-driven navigation on a TurtleBot3, working inside a
+> third-party robot description rather than a custom one.
+
+---
+
+## Images
+
+These screenshots include the earlier compact arena. The larger default
+world is described in [the navigation-world guide](docs/NAVIGATION_WORLD.md).
+
+| | |
+|---|---|
+| ![Robot](docs/images/robot_hero.png) | ![Carry](docs/images/pick_carry.png) |
+| The mobile manipulator: 4WD base, 2-DOF arm, 2-finger gripper, lidar mast, RGBD camera | Mid-carry: the cylinder is held through the full lift arc |
+| ![Arena](docs/images/arena_overview.png) | ![Map](docs/images/slam_map.png) |
+| The arena: obstacles, walled ramp structure, 12 m × 7 m | slam_toolbox occupancy map from the scripted mapping drive |
+| ![Mission view](docs/images/c2m16_mission_clean.png) | ![Debug view](docs/images/c2m16_mission_debug.png) |
+| The clean mission RViz view | The debug view: costmaps, particle cloud, TF |
+| ![Learning curve](docs/images/ppo_learning_curve.png) | ![Controller comparison](docs/images/c2m21_controller_comparison.png) |
+| PPO return over 528 episodes — the rolling mean never escapes −11…−13 | Classical baselines against the policy on the Yard routes |
+
+---
+
+## License
+
+Apache-2.0 — see [LICENSE](LICENSE).
+
+### A note on the planner name
+
+`SmacPlanner2D` **is A\*** — a grid-based A\* with an 8-connected Moore
+neighbourhood, recovering its path by back-tracing the node chain rather
+than by NavFn's gradient descent over a potential field. The name does not
+announce that, so it is worth stating.
+
+**What the 6.2 % is, and what it is not.** The measured comparison (M3,
+[docs/RESULTS.md](docs/RESULTS.md#a--smacplanner2d-and-the-evidence-for-it))
+was **`SmacPlanner2D` against `NavfnPlanner` with `use_astar: false`**:
+3.165 m against 3.373 m on the same start and goal. It is **not** an
+A\*-beats-Dijkstra result. With an admissible heuristic and identical edge
+costs, A\* and Dijkstra return paths of equal cost — the heuristic changes
+how much is searched, not the answer. The gap comes from the two planners'
+*implementations*: NavFn does not read its path off its search but descends
+the gradient of a potential field (`calcPath`), falling back to grid steps
+wherever the neighbourhood is unvisited — the mechanism is recorded in
+[docs/DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md) — while
+`SmacPlanner2D` back-traces its node chain, with its own traversal-cost
+model. How much of the 6.2 % each of those accounts for has **not** been
+measured. COCO Lab's first lab (Plan) shows exactly this distinction on
+the real stack: see the exhibit
+**[The A\* myth, twice](https://gauthamcodes.github.io/coco-labs/?view=exhibit)**,
+part (b).
+(This paragraph previously called the 6.2 % "an A\*-beats-Dijkstra
+result"; the numbers are unchanged, the interpretation was wrong.)
+
+One precision, because it is easy to overclaim: the heuristic is plain
+Euclidean and **not** cost-aware. Cost-awareness lives in the traversal
+cost (`cost_travel_multiplier`), not the heuristic — which is what keeps
+the heuristic admissible. There is also **no heuristic-weight parameter**
+on `SmacPlanner2D`, so the tidy "set the weight to zero and watch A\*
+become Dijkstra" demonstration is not available without patching Nav2.
+`NavfnPlanner`'s `use_astar` flag is the real heuristic on/off toggle in
+this stack. Details in [docs/M7_DESIGN.md](docs/M7_DESIGN.md).
+
+The local controller is **DWB**.

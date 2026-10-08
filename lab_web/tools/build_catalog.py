@@ -356,7 +356,8 @@ def exhibit_data():
                 'cite': c1c + '"Conformance: coco_lab vs SmacPlanner2D vs NavFn"; '
                         'docs/data/lab1c/conformance/conformance_summary.json',
             },
-            'mechanism_cite': 'docs/DESIGN_DECISIONS.md (NavFn calcPath); README.md "What the 6.2 % is, and what it is not"',
+            'mechanism_cite': ('docs/DESIGN_DECISIONS.md (NavFn calcPath); '
+                               'docs/archive/v1/README_v1.md "What the 6.2 % is, and what it is not"'),
         },
         'c': {
             'label': 'reconstruction',

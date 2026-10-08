@@ -1,0 +1,23 @@
+Lab 5 — Move (lab5-v1.0)	Latest	lab5-v1.0	2026-10-08T05:11:35Z
+COCO Lab 4 — Search (v1.0)		lab4-v1.0	2026-10-07T10:16:04Z
+COCO Lab 3 — Map (v1.0)		lab3-v1.0	2026-10-06T09:38:28Z
+COCO Lab 2 — Localise (v1.0)		lab2-v1.0	2026-10-04T18:17:02Z
+COCO Live — the real robot in the browser (v1.0)		live-v1.0	2026-10-04T18:17:00Z
+COCO Lab 1 — Plan (v1.0)		lab1-v1.0	2026-10-01T06:06:30Z
+== lab1-v1.0
+draft=false published=2026-10-01T06:06:30Z target=main
+  asset coco_lab1_demo.mp4 2005151 B 
+== live-v1.0
+draft=false published=2026-10-04T18:17:00Z target=4530a8b867e89dbf641790903ece7888e08b05f4
+== lab2-v1.0
+draft=false published=2026-10-04T18:17:02Z target=4b675c14b62b606508970845ee9b1f162a6379b1
+  asset coco_lab2_demo.mp4 3399232 B 
+== lab3-v1.0
+draft=false published=2026-10-06T09:38:28Z target=a63a4c84145470c2fde5b384ddb088e56d4cde4d
+  asset coco_lab3_demo.mp4 5268119 B 
+== lab4-v1.0
+draft=false published=2026-10-07T10:16:04Z target=b554910f547c34c8ca68e056132720a25983ebfd
+  asset coco_lab4_demo.mp4 2505787 B 
+== lab5-v1.0
+draft=false published=2026-10-08T05:11:35Z target=2b6f8ad8665dfe88d33b3e5c4c58bb519411c008
+  asset coco_lab5_demo.mp4 3615891 B 

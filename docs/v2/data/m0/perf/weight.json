@@ -1,0 +1,148 @@
+{
+ "meta": {
+  "site": "http://127.0.0.1:4173/coco-labs/",
+  "runs": 5,
+  "window_s": 5,
+  "browser": "chromium chromium (Playwright)",
+  "started_utc": "2026-10-08T06:41:29.832Z",
+  "headless": true,
+  "browser_version": "156.0.8078.4"
+ },
+ "initial_load": {
+  "requests": 6,
+  "body_bytes": 590902
+ },
+ "through_first_edit": {
+  "requests": 8,
+  "body_bytes": 6537154
+ },
+ "pyodide_cdn": {
+  "requests": 6,
+  "body_bytes": 6358909,
+  "files": [
+   {
+    "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+    "type": "script",
+    "body": 8021,
+    "headers": 0
+   },
+   {
+    "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+    "type": "fetch",
+    "body": 25115,
+    "headers": 0
+   },
+   {
+    "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+    "type": "fetch",
+    "body": 2508511,
+    "headers": 0
+   },
+   {
+    "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+    "type": "script",
+    "body": 262670,
+    "headers": 0
+   },
+   {
+    "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+    "type": "fetch",
+    "body": 3442784,
+    "headers": 0
+   },
+   {
+    "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/micropip-0.11.1-py3-none-any.whl",
+    "type": "fetch",
+    "body": 111808,
+    "headers": 0
+   }
+  ]
+ },
+ "all": [
+  {
+   "url": "http://127.0.0.1:4173/coco-labs/?view=plan&perf&bundle=arena_0_10m",
+   "type": "document",
+   "body": 612,
+   "headers": 262
+  },
+  {
+   "url": "http://127.0.0.1:4173/coco-labs/assets/index-C55dnZf3.css",
+   "type": "stylesheet",
+   "body": 4738,
+   "headers": 347
+  },
+  {
+   "url": "http://127.0.0.1:4173/coco-labs/assets/index-C1fM-g6w.js",
+   "type": "script",
+   "body": 107954,
+   "headers": 355
+  },
+  {
+   "url": "http://127.0.0.1:4173/coco-labs/generated/catalog.json",
+   "type": "fetch",
+   "body": 95510,
+   "headers": 304
+  },
+  {
+   "url": "http://127.0.0.1:4173/coco-labs/generated/bundles/arena_0_10m/manifest.json",
+   "type": "fetch",
+   "body": 1073,
+   "headers": 302
+  },
+  {
+   "url": "http://127.0.0.1:4173/coco-labs/generated/bundles/arena_0_10m/arrays.bin.gz",
+   "type": "fetch",
+   "body": 381015,
+   "headers": 198
+  },
+  {
+   "url": "http://127.0.0.1:4173/coco-labs/assets/pyodide.worker-BWUKgqTL.js",
+   "type": "script",
+   "body": 0,
+   "headers": 302
+  },
+  {
+   "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+   "type": "script",
+   "body": 8021,
+   "headers": 0
+  },
+  {
+   "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+   "type": "fetch",
+   "body": 25115,
+   "headers": 0
+  },
+  {
+   "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+   "type": "fetch",
+   "body": 2508511,
+   "headers": 0
+  },
+  {
+   "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+   "type": "script",
+   "body": 262670,
+   "headers": 0
+  },
+  {
+   "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+   "type": "fetch",
+   "body": 3442784,
+   "headers": 0
+  },
+  {
+   "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/micropip-0.11.1-py3-none-any.whl",
+   "type": "fetch",
+   "body": 111808,
+   "headers": 0
+  },
+  {
+   "url": "http://127.0.0.1:4173/coco-labs/generated/py/coco_lab-0.2.0-py3-none-any.whl",
+   "type": "fetch",
+   "body": 178245,
+   "headers": 288
+  }
+ ],
+ "console_errors": []
+}

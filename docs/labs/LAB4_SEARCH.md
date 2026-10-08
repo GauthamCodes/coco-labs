@@ -1,5 +1,7 @@
 # Lab 4 — Search
 
+> **Correction (2026-10-08, COCO Lab v2 · M0.6).** Where this document says "real robot" or "the real robot", it means **the full ROS 2 stack (simulated)** in Gazebo. No physical robot exists, and nothing here ran on hardware (README §2, corrections 1 and 3). The text below is kept as written.
+
 > **Try it:** <https://gauthamcodes.github.io/coco-labs/?view=search>
 > (deployed 2026-10-06 from `main` = `0cb5588`, owner-approved). Phase 5 of
 > `docs/ROADMAP.md` (P0.4). Demo video: `docs/data/lab4/video/README.md`.

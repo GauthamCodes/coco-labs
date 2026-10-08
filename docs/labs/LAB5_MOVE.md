@@ -1,5 +1,7 @@
 # Lab 5 — Move
 
+> **Correction (2026-10-08, COCO Lab v2 · M0.6).** Where this document says "real robot" or "the real robot", it means **the full ROS 2 stack (simulated)** in Gazebo. No physical robot exists, and nothing here ran on hardware (README §2, corrections 1 and 3). The text below is kept as written.
+
 `?view=move` on the site. Phase 6 of `docs/ROADMAP.md`. Branch `lab5`.
 Evidence: `docs/data/lab5/` (its README lists every file). Formats:
 `docs/labs/MOVE_FORMAT.md`. Labels as everywhere in this repository:

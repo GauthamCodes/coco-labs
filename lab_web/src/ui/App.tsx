@@ -104,7 +104,7 @@ export function App() {
     return v === 'live' ? 'live' : v === 'localise' ? 'localise' : v === 'map' ? 'map'
       : v === 'search' ? 'search' : v === 'move' ? 'move' : 'lab';
   });
-  const [liveText, setLiveText] = useState('Live — local stack');
+  const [liveText, setLiveText] = useState('Live Stack (simulated) — local');
   const dataUrl = useCallback((p: string) => `${DATA}${p}`, []);
   const openFromExhibit = useCallback((id: string) => {
     setView('lab');
@@ -316,7 +316,8 @@ export function App() {
         <h1>COCO Lab <span className="sub">{view === 'localise' ? 'localisation, from evidence'
           : view === 'map' ? 'mapping, from evidence'
             : view === 'search' ? 'finding the target, from evidence'
-              : view === 'move' ? 'moving along a path, from evidence' : 'search, replayed from evidence'}</span></h1>
+              : view === 'move' ? 'moving along a path, from evidence'
+                : view === 'live' ? 'Live Stack (simulated)' : 'search, replayed from evidence'}</span></h1>
         <nav className="views" aria-label="Views">
           <button type="button" className={view === 'lab' ? 'seg-btn active' : 'seg-btn'} aria-pressed={view === 'lab'}
             onClick={() => setView('lab')} data-testid="view-lab">Lab 1 · Plan</button>
@@ -335,7 +336,7 @@ export function App() {
             aria-pressed={view === 'move'} onClick={() => setView('move')} data-testid="view-move"
             disabled={!(catalog as { move?: unknown } | null)?.move}>Lab 5 · Move</button>
           <button type="button" className={view === 'live' ? 'seg-btn active' : 'seg-btn'} aria-pressed={view === 'live'}
-            onClick={() => setView('live')} data-testid="view-live">Live</button>
+            onClick={() => setView('live')} data-testid="view-live">Live Stack (simulated)</button>
         </nav>
         {view === 'live'
           ? <span className="mode-badge mode-live" data-testid="mode-badge">{liveText}</span>
