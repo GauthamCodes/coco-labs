@@ -12,11 +12,12 @@ only. Read order for agents (README §9): `README.md`, this file,
 | Repository | `GauthamCodes/coco-labs`; canonical checkout `~/coco_labs_ws/src/coco-labs` ([`v2/CHECKOUTS.md`](v2/CHECKOUTS.md)) |
 | v1 | **Frozen** at tag `coco-lab-v1-final` = `3571169` |
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
-| Branch | `v2/m1-arena-core` (from `main` = `9f58b83`), worked in the worktree `.claude/worktrees/v2-m1-arena-core`, overlay `~/coco_lab_m1_ws` |
-| Milestone | **M1 · Glass-box Arena core** ([`v2/M1_PROMPT.md`](v2/M1_PROMPT.md)) |
-| Checkpoint | **M1.1–M1.10 done; independent review done (2026-10-09, [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md)), its fixes applied.** Every agent-measurable B.4 criterion met ([`v2/M1_RESULTS.md`](v2/M1_RESULTS.md)); the Arena is the landing page for the bare URL; PR into `main` opened, **not merged** (Gautham). M1 closes after a fresh review session (README §9) and the three Gautham criteria |
-| Merge to `main` | M1 opens a PR when every agent-measurable criterion passes; it is **not** merged by the agent |
-| Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance** and **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)) — never marked done by the agent; the M1 PR's merge |
+| M1 | **Closed 2026-10-09 — agent-measurable criteria**: independent review [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md) (MERGE AFTER FIXES, every fix done); PR #20 merged into `main` as **`0a2516a`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena, a goal click drew its search, all six v1 views 0 console / 0 page errors ([`v2/data/m1/exit/public_after_merge.json`](v2/data/m1/exit/public_after_merge.json)). **Still pending Gautham:** phone performance, phone cold start, usability |
+| Branch | `v2/m2-whole-loop` (from `main` = `0a2516a`), worked in the worktree `.claude/worktrees/v2-m2-whole-loop`, overlay `~/coco_lab_m2_ws` |
+| Milestone | **M2 · The whole loop** ([`v2/M2_PROMPT.md`](v2/M2_PROMPT.md)) |
+| Checkpoint | **B.1 preflight done** (below). Next: M2.0 |
+| Merge to `main` | M2 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #20 only) |
+| Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows — never marked done by the agent |
 
 ## Checkpoint log
 
@@ -417,6 +418,33 @@ only. Read order for agents (README §9): `README.md`, this file,
   (`v2/M1_RESULTS.md`, `docs/RESULTS.md`). `[M1-fix]` commits:
   `setup_webkit_libs.sh`, power state in every harness, `LANDING=arena|v1`,
   the plan-change log, the `coco_schemas` CI fix, this evidence.
+
+## M2 checkpoint log
+
+- **Part A closed (2026-10-09).** M1 reviewed, fixed and merged — see the
+  M1 review entry above and the Position table. Public site check after
+  the deploy (Chromium, headless): the bare URL opens the Arena, the live
+  model became ready at 11.6 s over the real internet (the laptop was
+  running the M2 baseline suites at the time; not a budget measurement), a
+  real click at (6.0, 4.0) produced that goal's search, drawn 90.7 ms after
+  the click; plan, live, localise, map, search and move open v1 with 0
+  console errors, 0 page errors, 0 cross-origin requests
+  ([`v2/data/m1/exit/public_after_merge.json`](v2/data/m1/exit/public_after_merge.json),
+  harness `lab_web/tools/perf/public_check.mjs`).
+- **B.1 Preflight (2026-10-09).** Canonical checkout clean, no local-only
+  commits; `main` fast-forwarded `9f58b83` → `0a2516a`; branch
+  `v2/m2-whole-loop` in worktree `.claude/worktrees/v2-m2-whole-loop`;
+  overlay `~/coco_lab_m2_ws` (new; `ls -d` first). Part B of the prompt
+  saved as [`v2/M2_PROMPT.md`](v2/M2_PROMPT.md). No phone results are
+  recorded here by Gautham, so no M2.0b. **M2 baseline** on `0a2516a`:
+  packages **3,235 / 0 / 0**, vitest **385 / 0 / 0**, build tools
+  **134 / 0 / 0** (the run read 135: it included one parametrised case for
+  the then-uncommitted `public_check.mjs`). Toolchain: Node 24.21.0,
+  Python 3.12.3, pytest 7.4.4, hypothesis 6.98.15, numpy 1.26.4, protobuf
+  4.21.12, protoc 3.21.12, Pyodide 314.0.7, ROS 2 Jazzy. Power state at
+  the baseline: **power-saver, on battery** (AC unplugged, 66 %), load
+  4.4 — tests only; no budget was measured in it
+  (`~/coco_lab_m2_ws/logs/baseline_env.txt`). Next: M2.0.
 
 ## Capabilities (README §2), with evidence class
 
