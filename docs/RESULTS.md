@@ -8864,3 +8864,32 @@ comparison.
 - **Pending Gautham, not measured here:** phone fps, phone cold start on
   mobile data, the 5-person usability test.
 - **WebAssembly (ADR 0002):** nothing ported; no agent-measured budget fails.
+
+## COCO Lab v2 · M1 review — M1 budgets re-measured in the balanced profile on AC (measured 2026-10-09)
+
+Append-only. Evidence class **MODEL**. Measured by the independent M1
+review session from a fresh clone (`~/review/coco-labs-m1`, branch
+`v2/m1-arena-core` at `4b4bef8`: M1's code plus the review's harness
+fixes, no behaviour change), production build served as GitHub Pages
+serves it. Laptop: Intel Core i5-13420H, RTX 4050 laptop GPU (ANGLE,
+OpenGL ES 3.2), Ubuntu 24.04, **balanced** profile **on AC** (the owner's
+standard since 2026-10-09; switched from power-saver for the run and
+restored after), governor `powersave` (intel_pstate), 1-min load 1.0–3.6
+(the owner's desktop browser was open). Every file records these
+conditions. Network profiles are M1's own, for comparability: "desktop" =
+unthrottled, "fast-4G" = M1's "Wi-Fi" profile (30 Mbit/s, 20 ms),
+"emulated 4G" = 9 Mbit/s, 170 ms. Files: `docs/v2/data/m1/balanced/`.
+The M1.10 power-saver numbers above stand as the worst-case row.
+
+| Budget | Balanced, on AC (n) | M1.10, power-saver |
+|---|---|---|
+| Laptop fps, 50k points + 20k segments + grid | 60–61 in all 100 one-second samples (10 runs × 10 s), p95 frame 16.8–17.6 ms | 60–61, p95 17.3–17.9 ms |
+| Goal click → first frame of that goal's search (warm) | median **42.9 ms**, p95 61.9, max 63.2, 25/25 under 100 ms (n = 25; first goal 45.9 ms) | median 40.4, p95 70.8, max 71.5, 25/25 |
+| Seek | max **0.7 ms**, median 0.2 ms (70 seeks in 10 runs, 81,593-event search) | ≤ 0.6 ms |
+| First visible computation, desktop / fast-4G / emulated 4G | **631** (415–651) / **1,366** (1,123–1,374) / **3,381** (2,985–3,403) ms (n = 10 each) | 754 / 1,629 / 3,299 |
+| Live model ready, desktop / fast-4G / emulated 4G | **2,683** (2,191–2,789) / **4,061** (3,781–4,243) / **8,191** (7,933–8,296) ms (n = 10 each) | 5,023 / 6,603 / 10,782 |
+| Goal clicked right after a planner change (not an M1 criterion) | median 138.6 ms, p95 1,436.5, max 1,708.4, 10/25 under 100 ms | median 293, p95 3,193, max 4,029, 7/25 |
+
+0 console errors in every run. In balanced mode the live model is ready
+under 10 s on emulated 4G (8.2 s); in power-saver it was not (10.8 s).
+The goal-after-planner-change queue remains (M2.0).

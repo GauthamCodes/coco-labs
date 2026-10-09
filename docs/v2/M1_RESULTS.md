@@ -19,11 +19,35 @@ The site is served the way GitHub Pages serves it (gzip, `/coco-labs/`,
 `lab_web/tools/perf/serve_dist.mjs`). Network profiles are Chromium's
 emulation: "Wi-Fi" 30 Mbit/s, 20 ms; "4G" 9 Mbit/s, 170 ms.
 
+## Re-measured in the balanced profile on AC (M1 review, 2026-10-09)
+
+The owner's standard from 2026-10-09 is the **balanced** profile **on AC**
+(`docs/STATUS.md`, plan-change log). The independent M1 review re-measured
+every M1 budget that way, from a fresh clone at `4b4bef8` (M1 + harness
+fixes, no behaviour change), n ≥ 10; every file records the power profile,
+AC state, governor and load (`balanced/`, and `docs/RESULTS.md`). The
+power-saver rows in the table below are **kept** as the worst case.
+
+| Budget | Balanced, on AC | Power-saver (M1.10, below) |
+|---|---|---|
+| Laptop fps under the stress load | 60–61 in all 100 samples (10 runs), p95 frame 16.8–17.6 ms | 60–61 |
+| Warm goal → its frontier drawn | median **42.9 ms**, p95 61.9, max 63.2, 25/25 < 100 | median 40.4, max 71.5, 25/25 |
+| Seek | max **0.7 ms** (70 seeks) | ≤ 0.6 ms |
+| First visible computation, desktop / fast-4G* / emulated 4G | **631 / 1,366 / 3,381 ms** | 754 / 1,629 / 3,299 |
+| Live model ready (secondary), same | 2,683 / 4,061 / **8,191 ms** | 5,023 / 6,603 / **10,782** |
+| Goal right after a planner change (M2.0) | median 138.6, max 1,708.4, 10/25 < 100 | median 293, max 4,029, 7/25 |
+
+\* "fast-4G" is M1's "Wi-Fi" emulation profile (30 Mbit/s, 20 ms), kept so
+the rows compare. Files: `balanced/fps/`, `balanced/responsiveness/`,
+`balanced/timeline/`, `balanced/coldstart/`.
+
 ## Acceptance criteria (M1 B.4)
+
+Measured in **power-saver** (M1.10); the balanced rows are above.
 
 | Area | Criterion | Result | Evidence |
 |---|---|---|---|
-| Determinism | Identical per-tick hashes, Chromium + Firefox + WebKit + Pyodide-in-Node, 100 recorded sessions with random goals and teleop | **Met.** 100 sessions × 150 ticks = 15,000 ticks per engine; **0 differing** in every engine; every engine's digest of all hashes `0e43a0b5d6b9…`. The sessions: 416 goals, 337 teleop commands, 84 planner switches, 79 stops, from a fixed-seed generator. Each session a fresh model (a new Pyodide in Node; a new production worker in each browser). | `determinism/determinism.json`, `hashes_*.json.gz`, `sessions.json`; `lab_web/tools/perf/determinism.mjs` |
+| Determinism | Identical per-tick hashes, Chromium + Firefox + WebKit + Pyodide-in-Node, 100 recorded sessions with random goals and teleop | **Met.** 100 sessions × 150 ticks = 15,000 ticks per engine; **0 differing** in every engine; every engine's digest of all hashes `0e43a0b5d6b9…`. The sessions: 416 goals, 337 teleop commands, 84 planner switches, 79 stops, from a fixed-seed generator. Each session a fresh model: a new production worker in each browser; in Node, one Pyodide per run with a fresh module (`importlib.reload`) and a fresh Arena per session *(M1 review correction, 2026-10-09: this said "a new Pyodide in Node", which the harness does not do — its own comment says so)*. Re-run by the M1 review: 25 sessions × 4 engines, 0 differing, and 0 against these committed hashes (`review/determinism_rerun/`). | `determinism/determinism.json`, `hashes_*.json.gz`, `sessions.json`; `lab_web/tools/perf/determinism.mjs` |
 | Correctness | Golden traces match Lab 1 on all 1,000 corpus maps | **Met.** All 5,000 searches (1,000 maps × 5 algorithms) reproduce Lab 1's traces exactly | `coco_lab/test/test_golden_traces.py` (in the package suite and CI's plain-venv job) |
 | Laptop performance | 60 fps with ~50,000 points, 20,000 segments and one grid texture | **Met.** 60–61 fps in each of 10 seconds, p95 frame 17.3–17.9 ms (GPU) | `render/fps_stress_gpu_m110.json` |
 | Responsiveness | First frontier node visible within 100 ms of a goal click (warm); seek under 100 ms | **Met.** Real mouse clicks, click → first rendered frame drawing THAT goal's search: median **40.4 ms**, p95 70.8, max 71.5, **25/25** under 100 (first, cold-of-the-live-model goal: 64.8 ms; GPU). Seek: ≤ 0.6 ms in the browser on an 81,593-event search; every seek < 100 ms on a 380k-event search (vitest). | `responsiveness/responsiveness_gpu.json`; `timeline/timeline_check.json`; `lab_web/test/session.test.ts` |
@@ -31,7 +55,7 @@ emulation: "Wi-Fi" 30 Mbit/s, 20 ms; "4G" 9 Mbit/s, 170 ms.
 | Phone performance | 30 fps or better at default detail | **Pending Gautham** (`?perf`, `docs/v2/PHONE_MEASURE.md`) | — |
 | Phone cold start | First visible computation within 10 s on mobile data | **Pending Gautham** (the `?perf` panel's "first computation shown") | — |
 | Usability | 5 people new to robotics set a goal and explain the heatmap within 2 minutes, unaided | **Pending Gautham** (`docs/v2/USABILITY_TEST.md`) | — |
-| Hygiene | 0 console errors in every view; phone-width layout; schema, golden-trace, determinism and screenshot tests in CI; existing suites pass | **Met** (CI result of the new browser job: see `docs/STATUS.md`). 0 console errors in all seven views and in every harness below; Pixel 7 viewport: a tap gives a goal, no horizontal scroll; CI: schema tests (`coco_schemas`), golden traces (`coco_lab`), determinism (vitest: 5 sessions in Pyodide-in-Node against the committed hashes; browser job: 10 sessions in Chromium, Firefox and WebKit), screenshot tests (5 Arena scenes, SwiftShader, with a self-test that two different scenes differ: 3.1 % of pixels). | `console_m110/console_check.json`; `experience/experience_check.json`; `screenshots/check_local.json`; `.github/workflows/lab.yml` |
+| Hygiene | 0 console errors in every view; phone-width layout; schema, golden-trace, determinism and screenshot tests in CI; existing suites pass | **Met** (CI result of the new browser job: see `docs/STATUS.md`). 0 console errors in all seven views and in every harness below; Pixel 7 viewport: a tap gives a goal, no horizontal scroll; CI: schema tests (`coco_schemas`) *(M1 review correction, 2026-10-09: false until `[M1-fix]` `b3dc8a0` — CI's `build-and-test` collected 0 `coco_schemas` tests and failed on PR #20, because `setup.py` did not declare pytest; they ran only locally)*, golden traces (`coco_lab`), determinism (vitest: 5 sessions in Pyodide-in-Node against the committed hashes; browser job: 10 sessions in Chromium, Firefox and WebKit), screenshot tests (5 Arena scenes, SwiftShader, with a self-test that two different scenes differ: 3.1 % of pixels). | `console_m110/console_check.json`; `experience/experience_check.json`; `screenshots/check_local.json`; `.github/workflows/lab.yml` |
 
 ## Found and fixed in M1.10 (each would have hidden a miss)
 
@@ -85,4 +109,7 @@ losslessly, the three recorded full-stack runs played as STACK
   agent-measured budget fails.
 - The Arena is the site's landing page (bare URL); every v1 link — a named
   view or a v1 share link — still opens v1 (`landing/landing_check.json`,
-  9/9).
+  9/9). *(M1 review correction, 2026-10-09: 3 of those 9 cases are Arena
+  URLs, and `?view=localise|map|search` and a bare `?v=` were not opened;
+  the review's 14-case check covers every v1 form, 14/14:
+  `landing/landing_check_review.json`.)*

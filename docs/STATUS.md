@@ -14,7 +14,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | Branch | `v2/m1-arena-core` (from `main` = `9f58b83`), worked in the worktree `.claude/worktrees/v2-m1-arena-core`, overlay `~/coco_lab_m1_ws` |
 | Milestone | **M1 · Glass-box Arena core** ([`v2/M1_PROMPT.md`](v2/M1_PROMPT.md)) |
-| Checkpoint | **M1.1–M1.10 done.** Every agent-measurable B.4 criterion met ([`v2/M1_RESULTS.md`](v2/M1_RESULTS.md)); the Arena is the landing page for the bare URL; PR into `main` opened, **not merged** (Gautham). M1 closes after a fresh review session (README §9) and the three Gautham criteria |
+| Checkpoint | **M1.1–M1.10 done; independent review done (2026-10-09, [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md)), its fixes applied.** Every agent-measurable B.4 criterion met ([`v2/M1_RESULTS.md`](v2/M1_RESULTS.md)); the Arena is the landing page for the bare URL; PR into `main` opened, **not merged** (Gautham). M1 closes after a fresh review session (README §9) and the three Gautham criteria |
 | Merge to `main` | M1 opens a PR when every agent-measurable criterion passes; it is **not** merged by the agent |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance** and **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)) — never marked done by the agent; the M1 PR's merge |
 
@@ -168,7 +168,7 @@ only. Read order for agents (README §9): `README.md`, this file,
   runs, and 1,000 maps × 5 algorithms, byte-identical canonical JSON);
   MCAP + zstd container (`lab_web/src/schemas/mcap.ts`); Python ↔
   TypeScript byte and `run_id` parity vectors. CI: `coco_schemas` built
-  and tested in `ci.yml`, TypeScript generation checked in `lab.yml`.
+  and tested in `ci.yml` *(M1 review correction: built, but `colcon test` collected 0 of its tests until `[M1-fix]` `b3dc8a0`, so the claim was false through M1.10)*, TypeScript generation checked in `lab.yml`.
   Reference: [`v2/SCHEMAS.md`](v2/SCHEMAS.md). Tests: packages
   **3,169 / 0 / 0** (3,081 + 86 `coco_schemas` + 2 `gazebo_models`
   per-package checks), vitest **332 / 0 / 0** (+12), tools **117 / 0 / 0**.
@@ -396,6 +396,27 @@ only. Read order for agents (README §9): `README.md`, this file,
   - The re-runs on the final build replaced `v2/data/m1/timeline/`,
     `experience/` and `replay/`'s files in place; the files the M1.7–M1.9
     entries above quote are in git at `0f90e35` (M1.9) and its parents.
+
+- **M1 independent review (2026-10-09, README §9.9).** A fresh session that
+  did not build M1 reviewed PR #20 from a fresh clone (`~/review/coco-labs-m1`,
+  head `4e06942`); report: [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md).
+  Verified: no deleted files, RESULTS.md append-only, suites 3,235 / 381 /
+  117, golden traces 5,000/5,000, determinism re-run (25 sessions × 4
+  engines, 0 mismatched, 0 against the committed hashes), both schema
+  changes backward-compatible (an M1.1 reader parses M1.10 bytes), the
+  responsiveness fix pinned by a test that fails without it, 0 console
+  errors in all seven views, 14/14 URL forms. **Found:** CI's
+  `build-and-test` failed on PR #20 — `coco_schemas` collected 0 tests
+  under `colcon test` — so M1's "schema tests in CI" was false; fixed under
+  a one-off owner permission (plan-change log). Overstated: "a new Pyodide
+  in Node" per determinism session; "every v1 link 9/9" (3 of the 9 are
+  Arena URLs). M1 budgets re-measured in the **balanced** profile on AC
+  (owner's standard): warm goal → frontier median 42.9 ms; first visible
+  computation 631 / 1,366 / 3,381 ms; live model ready 2,683 / 4,061 /
+  8,191 ms (desktop / fast-4G / emulated 4G); power-saver rows kept
+  (`v2/M1_RESULTS.md`, `docs/RESULTS.md`). `[M1-fix]` commits:
+  `setup_webkit_libs.sh`, power state in every harness, `LANDING=arena|v1`,
+  the plan-change log, the `coco_schemas` CI fix, this evidence.
 
 ## Capabilities (README §2), with evidence class
 
