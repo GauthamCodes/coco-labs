@@ -1,0 +1,4327 @@
+{
+ "tool": "docs/v2/data/m2/m25/move_comparison.py",
+ "evidence": {
+  "model": "MODEL",
+  "stack": "STACK"
+ },
+ "python": "3.12.3",
+ "seeds": [
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "scenarios": {
+  "static_room": {
+   "title": "Around a wall end and into a room",
+   "model": {
+    "dwa": {
+     "summary": {
+      "runs": 5,
+      "outcomes": {
+       "failed_to_make_progress": 5
+      },
+      "identical_across_seeds": true,
+      "tracking_mean_m": {
+       "n": 5,
+       "min": 0.042789852365180306,
+       "median": 0.042789852365180306,
+       "max": 0.042789852365180306
+      },
+      "tracking_max_m": {
+       "n": 5,
+       "min": 0.27158000975257124,
+       "median": 0.27158000975257124,
+       "max": 0.27158000975257124
+      },
+      "time_s_succeeded": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "rms_linear_accel": {
+       "n": 5,
+       "min": 0.1907062560082683,
+       "median": 0.1907062560082683,
+       "max": 0.1907062560082683
+      },
+      "rms_angular_accel": {
+       "n": 5,
+       "min": 0.42326802453448026,
+       "median": 0.42326802453448026,
+       "max": 0.42326802453448026
+      },
+      "min_clearance_m": {
+       "n": 5,
+       "min": 0.29215766843706414,
+       "median": 0.29215766843706414,
+       "max": 0.29215766843706414
+      },
+      "min_clearance_actor_m": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "contacts": 0,
+      "actor_held_ticks": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     },
+     "runs": [
+      {
+       "controller": "dwa",
+       "seed": 1,
+       "outcome": "failed_to_make_progress",
+       "error_code": 105,
+       "ticks": 348,
+       "cycles": 348,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -1.2406,
+        6.5174,
+        1.637
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 348,
+         "mean": 0.042789852365180306,
+         "p95": 0.21729116438883694,
+         "max": 0.27158000975257124
+        },
+        "time_s": 34.800000000000004,
+        "smoothness": {
+         "n": 347,
+         "rms_linear_accel": 0.1907062560082683,
+         "rms_angular_accel": 0.42326802453448026,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.29215766843706414,
+         "static": {
+          "min_m": 0.29215766843706414,
+          "t": 24.8,
+          "index": 40
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 348,
+         "cmd": 348
+        }
+       },
+       "wall_s": 8.34
+      },
+      {
+       "controller": "dwa",
+       "seed": 2,
+       "outcome": "failed_to_make_progress",
+       "error_code": 105,
+       "ticks": 348,
+       "cycles": 348,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -1.2406,
+        6.5174,
+        1.637
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 348,
+         "mean": 0.042789852365180306,
+         "p95": 0.21729116438883694,
+         "max": 0.27158000975257124
+        },
+        "time_s": 34.800000000000004,
+        "smoothness": {
+         "n": 347,
+         "rms_linear_accel": 0.1907062560082683,
+         "rms_angular_accel": 0.42326802453448026,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.29215766843706414,
+         "static": {
+          "min_m": 0.29215766843706414,
+          "t": 24.8,
+          "index": 40
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 348,
+         "cmd": 348
+        }
+       },
+       "wall_s": 8.36
+      },
+      {
+       "controller": "dwa",
+       "seed": 3,
+       "outcome": "failed_to_make_progress",
+       "error_code": 105,
+       "ticks": 348,
+       "cycles": 348,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -1.2406,
+        6.5174,
+        1.637
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 348,
+         "mean": 0.042789852365180306,
+         "p95": 0.21729116438883694,
+         "max": 0.27158000975257124
+        },
+        "time_s": 34.800000000000004,
+        "smoothness": {
+         "n": 347,
+         "rms_linear_accel": 0.1907062560082683,
+         "rms_angular_accel": 0.42326802453448026,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.29215766843706414,
+         "static": {
+          "min_m": 0.29215766843706414,
+          "t": 24.8,
+          "index": 40
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 348,
+         "cmd": 348
+        }
+       },
+       "wall_s": 8.49
+      },
+      {
+       "controller": "dwa",
+       "seed": 4,
+       "outcome": "failed_to_make_progress",
+       "error_code": 105,
+       "ticks": 348,
+       "cycles": 348,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -1.2406,
+        6.5174,
+        1.637
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 348,
+         "mean": 0.042789852365180306,
+         "p95": 0.21729116438883694,
+         "max": 0.27158000975257124
+        },
+        "time_s": 34.800000000000004,
+        "smoothness": {
+         "n": 347,
+         "rms_linear_accel": 0.1907062560082683,
+         "rms_angular_accel": 0.42326802453448026,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.29215766843706414,
+         "static": {
+          "min_m": 0.29215766843706414,
+          "t": 24.8,
+          "index": 40
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 348,
+         "cmd": 348
+        }
+       },
+       "wall_s": 8.35
+      },
+      {
+       "controller": "dwa",
+       "seed": 5,
+       "outcome": "failed_to_make_progress",
+       "error_code": 105,
+       "ticks": 348,
+       "cycles": 348,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -1.2406,
+        6.5174,
+        1.637
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 348,
+         "mean": 0.042789852365180306,
+         "p95": 0.21729116438883694,
+         "max": 0.27158000975257124
+        },
+        "time_s": 34.800000000000004,
+        "smoothness": {
+         "n": 347,
+         "rms_linear_accel": 0.1907062560082683,
+         "rms_angular_accel": 0.42326802453448026,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.29215766843706414,
+         "static": {
+          "min_m": 0.29215766843706414,
+          "t": 24.8,
+          "index": 40
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 348,
+         "cmd": 348
+        }
+       },
+       "wall_s": 8.45
+      }
+     ]
+    },
+    "rpp": {
+     "summary": {
+      "runs": 5,
+      "outcomes": {
+       "succeeded": 5
+      },
+      "identical_across_seeds": true,
+      "tracking_mean_m": {
+       "n": 5,
+       "min": 0.02704345987292091,
+       "median": 0.02704345987292091,
+       "max": 0.02704345987292091
+      },
+      "tracking_max_m": {
+       "n": 5,
+       "min": 0.14858762164234615,
+       "median": 0.14858762164234615,
+       "max": 0.14858762164234615
+      },
+      "time_s_succeeded": {
+       "n": 5,
+       "min": 46.1,
+       "median": 46.1,
+       "max": 46.1
+      },
+      "rms_linear_accel": {
+       "n": 5,
+       "min": 0.12051646520687076,
+       "median": 0.12051646520687076,
+       "max": 0.12051646520687076
+      },
+      "rms_angular_accel": {
+       "n": 5,
+       "min": 0.30448913320499893,
+       "median": 0.30448913320499893,
+       "max": 0.30448913320499893
+      },
+      "min_clearance_m": {
+       "n": 5,
+       "min": 0.22973687218325822,
+       "median": 0.22973687218325822,
+       "max": 0.22973687218325822
+      },
+      "min_clearance_actor_m": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "contacts": 0,
+      "actor_held_ticks": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     },
+     "runs": [
+      {
+       "controller": "rpp",
+       "seed": 1,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 461,
+       "cycles": 457,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -2.7991,
+        4.4257,
+        -1.77
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 461,
+         "mean": 0.02704345987292091,
+         "p95": 0.1085409251439223,
+         "max": 0.14858762164234615
+        },
+        "time_s": 46.1,
+        "smoothness": {
+         "n": 456,
+         "rms_linear_accel": 0.12051646520687076,
+         "rms_angular_accel": 0.30448913320499893,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.22973687218325822,
+         "static": {
+          "min_m": 0.22973687218325822,
+          "t": 30.1,
+          "index": 5
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 461,
+         "cmd": 457
+        }
+       },
+       "wall_s": 6.14
+      },
+      {
+       "controller": "rpp",
+       "seed": 2,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 461,
+       "cycles": 457,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -2.7991,
+        4.4257,
+        -1.77
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 461,
+         "mean": 0.02704345987292091,
+         "p95": 0.1085409251439223,
+         "max": 0.14858762164234615
+        },
+        "time_s": 46.1,
+        "smoothness": {
+         "n": 456,
+         "rms_linear_accel": 0.12051646520687076,
+         "rms_angular_accel": 0.30448913320499893,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.22973687218325822,
+         "static": {
+          "min_m": 0.22973687218325822,
+          "t": 30.1,
+          "index": 5
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 461,
+         "cmd": 457
+        }
+       },
+       "wall_s": 6.56
+      },
+      {
+       "controller": "rpp",
+       "seed": 3,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 461,
+       "cycles": 457,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -2.7991,
+        4.4257,
+        -1.77
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 461,
+         "mean": 0.02704345987292091,
+         "p95": 0.1085409251439223,
+         "max": 0.14858762164234615
+        },
+        "time_s": 46.1,
+        "smoothness": {
+         "n": 456,
+         "rms_linear_accel": 0.12051646520687076,
+         "rms_angular_accel": 0.30448913320499893,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.22973687218325822,
+         "static": {
+          "min_m": 0.22973687218325822,
+          "t": 30.1,
+          "index": 5
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 461,
+         "cmd": 457
+        }
+       },
+       "wall_s": 6.53
+      },
+      {
+       "controller": "rpp",
+       "seed": 4,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 461,
+       "cycles": 457,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -2.7991,
+        4.4257,
+        -1.77
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 461,
+         "mean": 0.02704345987292091,
+         "p95": 0.1085409251439223,
+         "max": 0.14858762164234615
+        },
+        "time_s": 46.1,
+        "smoothness": {
+         "n": 456,
+         "rms_linear_accel": 0.12051646520687076,
+         "rms_angular_accel": 0.30448913320499893,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.22973687218325822,
+         "static": {
+          "min_m": 0.22973687218325822,
+          "t": 30.1,
+          "index": 5
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 461,
+         "cmd": 457
+        }
+       },
+       "wall_s": 7.91
+      },
+      {
+       "controller": "rpp",
+       "seed": 5,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 461,
+       "cycles": 457,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -2.7991,
+        4.4257,
+        -1.77
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 461,
+         "mean": 0.02704345987292091,
+         "p95": 0.1085409251439223,
+         "max": 0.14858762164234615
+        },
+        "time_s": 46.1,
+        "smoothness": {
+         "n": 456,
+         "rms_linear_accel": 0.12051646520687076,
+         "rms_angular_accel": 0.30448913320499893,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.22973687218325822,
+         "static": {
+          "min_m": 0.22973687218325822,
+          "t": 30.1,
+          "index": 5
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 461,
+         "cmd": 457
+        }
+       },
+       "wall_s": 5.99
+      }
+     ]
+    },
+    "mppi": {
+     "summary": {
+      "runs": 5,
+      "outcomes": {
+       "succeeded": 5
+      },
+      "identical_across_seeds": false,
+      "tracking_mean_m": {
+       "n": 5,
+       "min": 0.020001681447528726,
+       "median": 0.021192364708837463,
+       "max": 0.023005522021631093
+      },
+      "tracking_max_m": {
+       "n": 5,
+       "min": 0.08946203944038161,
+       "median": 0.09321221833167707,
+       "max": 0.11807234919249177
+      },
+      "time_s_succeeded": {
+       "n": 5,
+       "min": 85.9,
+       "median": 86.2,
+       "max": 86.80000000000001
+      },
+      "rms_linear_accel": {
+       "n": 5,
+       "min": 0.2112157577033879,
+       "median": 0.2148124491880445,
+       "max": 0.21543973731184507
+      },
+      "rms_angular_accel": {
+       "n": 5,
+       "min": 0.5438286223420141,
+       "median": 0.5613367639333888,
+       "max": 0.6075064020913327
+      },
+      "min_clearance_m": {
+       "n": 5,
+       "min": 0.27323032681452547,
+       "median": 0.27717688570955606,
+       "max": 0.2802403271482921
+      },
+      "min_clearance_actor_m": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "contacts": 0,
+      "actor_held_ticks": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     },
+     "runs": [
+      {
+       "controller": "mppi",
+       "seed": 1,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 864,
+       "cycles": 858,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -2.7986,
+        4.425,
+        -1.7687
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 864,
+         "mean": 0.020001681447528726,
+         "p95": 0.04345138353157384,
+         "max": 0.09067185391683671
+        },
+        "time_s": 86.4,
+        "smoothness": {
+         "n": 857,
+         "rms_linear_accel": 0.2112157577033879,
+         "rms_angular_accel": 0.6075064020913327,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.27323032681452547,
+         "static": {
+          "min_m": 0.27323032681452547,
+          "t": 59.0,
+          "index": 5
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 864,
+         "cmd": 858
+        }
+       },
+       "wall_s": 28.42
+      },
+      {
+       "controller": "mppi",
+       "seed": 2,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 862,
+       "cycles": 855,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -2.7844,
+        4.42,
+        -1.7844
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 862,
+         "mean": 0.021192364708837463,
+         "p95": 0.04202852666812821,
+         "max": 0.09321221833167707
+        },
+        "time_s": 86.2,
+        "smoothness": {
+         "n": 854,
+         "rms_linear_accel": 0.2117397057272865,
+         "rms_angular_accel": 0.5613367639333888,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.27717688570955606,
+         "static": {
+          "min_m": 0.27717688570955606,
+          "t": 58.5,
+          "index": 5
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 862,
+         "cmd": 855
+        }
+       },
+       "wall_s": 33.35
+      },
+      {
+       "controller": "mppi",
+       "seed": 3,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 859,
+       "cycles": 853,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -2.7909,
+        4.4247,
+        -1.7962
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 859,
+         "mean": 0.021198172429751305,
+         "p95": 0.0373814182905332,
+         "max": 0.09557016459430366
+        },
+        "time_s": 85.9,
+        "smoothness": {
+         "n": 852,
+         "rms_linear_accel": 0.21543973731184507,
+         "rms_angular_accel": 0.5569091897634427,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.2762827123033855,
+         "static": {
+          "min_m": 0.2762827123033855,
+          "t": 58.2,
+          "index": 5
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 859,
+         "cmd": 853
+        }
+       },
+       "wall_s": 33.9
+      },
+      {
+       "controller": "mppi",
+       "seed": 4,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 862,
+       "cycles": 855,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -2.7888,
+        4.4226,
+        -1.7867
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 862,
+         "mean": 0.020889160481439933,
+         "p95": 0.04018029631098763,
+         "max": 0.08946203944038161
+        },
+        "time_s": 86.2,
+        "smoothness": {
+         "n": 854,
+         "rms_linear_accel": 0.21490964814559596,
+         "rms_angular_accel": 0.5438286223420141,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.2802403271482921,
+         "static": {
+          "min_m": 0.2802403271482921,
+          "t": 59.0,
+          "index": 5
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 862,
+         "cmd": 855
+        }
+       },
+       "wall_s": 28.2
+      },
+      {
+       "controller": "mppi",
+       "seed": 5,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 868,
+       "cycles": 862,
+       "actor_held_ticks": [],
+       "final_pose": [
+        -2.8006,
+        4.4182,
+        -1.7959
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 868,
+         "mean": 0.023005522021631093,
+         "p95": 0.05270849851719677,
+         "max": 0.11807234919249177
+        },
+        "time_s": 86.80000000000001,
+        "smoothness": {
+         "n": 861,
+         "rms_linear_accel": 0.2148124491880445,
+         "rms_angular_accel": 0.5660157250248797,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.27763523338687074,
+         "static": {
+          "min_m": 0.27763523338687074,
+          "t": 59.0,
+          "index": 5
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 868,
+         "cmd": 862
+        }
+       },
+       "wall_s": 28.38
+      }
+     ]
+    }
+   },
+   "stack": {
+    "DWB": {
+     "runs": 5,
+     "outcomes": {
+      "follow_failed": 5
+     },
+     "error_codes": [
+      105
+     ],
+     "tracking_mean_m": {
+      "max": 0.14052322693578856,
+      "median": 0.12083265316199845,
+      "min": 0.08890826081642587,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.2549733890797148,
+      "median": 0.23730638732256334,
+      "min": 0.22225348539269021,
+      "n": 5
+     },
+     "time_s_succeeded": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "rms_linear_accel": {
+      "max": 0.3287773290006175,
+      "median": 0.25545888400048655,
+      "min": 0.22531400745655755,
+      "n": 5
+     },
+     "rms_angular_accel": {
+      "max": 1.7545379334257993,
+      "median": 1.0143816607116278,
+      "min": 0.737660644323078,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.4701600748625212,
+      "median": 0.4019052150698126,
+      "min": 0.3059664187058647,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "contacts": 0
+    },
+    "RPP": {
+     "runs": 5,
+     "outcomes": {
+      "succeeded": 5
+     },
+     "error_codes": [],
+     "tracking_mean_m": {
+      "max": 0.10397792324288734,
+      "median": 0.09701963802268153,
+      "min": 0.09199111657900134,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.18428983480168742,
+      "median": 0.17368233374699824,
+      "min": 0.16883794799502322,
+      "n": 5
+     },
+     "time_s_succeeded": {
+      "max": 51.39,
+      "median": 51.178,
+      "min": 51.016000000000005,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 0.169267697715917,
+      "median": 0.1365734777099965,
+      "min": 0.1268161468418803,
+      "n": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.2773067121714811,
+      "median": 0.25766613877777894,
+      "min": 0.23591931712366457,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.3396613434475745,
+      "median": 0.3219103440658237,
+      "min": 0.31554076029643974,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "contacts": 0
+    },
+    "MPPI": {
+     "runs": 5,
+     "outcomes": {
+      "succeeded": 5
+     },
+     "error_codes": [],
+     "tracking_mean_m": {
+      "max": 0.15248118930833657,
+      "median": 0.14288979321072323,
+      "min": 0.13466059981155878,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.5602200174318543,
+      "median": 0.5541270558457593,
+      "min": 0.5419978396606598,
+      "n": 5
+     },
+     "time_s_succeeded": {
+      "max": 52.806,
+      "median": 51.80200000000001,
+      "min": 51.474000000000004,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 4.86468621173952,
+      "median": 0.050545160015198216,
+      "min": 0.04610057944943497,
+      "n": 5
+     },
+     "rms_angular_accel": {
+      "max": 1.3452221884938202,
+      "median": 0.24355374915353864,
+      "min": 0.23144906953102018,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.28922548677764814,
+      "median": 0.26240000317085305,
+      "min": 0.23629669953516963,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "contacts": 0
+    }
+   }
+  },
+  "crossing": {
+   "title": "A person crosses the apron in front of the robot",
+   "model": {
+    "dwa": {
+     "summary": {
+      "runs": 5,
+      "outcomes": {
+       "succeeded": 5
+      },
+      "identical_across_seeds": true,
+      "tracking_mean_m": {
+       "n": 5,
+       "min": 0.036804007128771424,
+       "median": 0.036804007128771424,
+       "max": 0.036804007128771424
+      },
+      "tracking_max_m": {
+       "n": 5,
+       "min": 0.2536867250617787,
+       "median": 0.2536867250617787,
+       "max": 0.2536867250617787
+      },
+      "time_s_succeeded": {
+       "n": 5,
+       "min": 26.200000000000003,
+       "median": 26.200000000000003,
+       "max": 26.200000000000003
+      },
+      "rms_linear_accel": {
+       "n": 5,
+       "min": 0.1737986235229197,
+       "median": 0.1737986235229197,
+       "max": 0.1737986235229197
+      },
+      "rms_angular_accel": {
+       "n": 5,
+       "min": 0.3971391488629508,
+       "median": 0.3971391488629508,
+       "max": 0.3971391488629508
+      },
+      "min_clearance_m": {
+       "n": 5,
+       "min": 0.3161926303979562,
+       "median": 0.3161926303979562,
+       "max": 0.3161926303979562
+      },
+      "min_clearance_actor_m": {
+       "n": 5,
+       "min": 0.3161926303979562,
+       "median": 0.3161926303979562,
+       "max": 0.3161926303979562
+      },
+      "contacts": 0,
+      "actor_held_ticks": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     },
+     "runs": [
+      {
+       "controller": "dwa",
+       "seed": 1,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 262,
+       "cycles": 261,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0117,
+        -7.2518,
+        -1.5795
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 262,
+         "mean": 0.036804007128771424,
+         "p95": 0.22247146341156482,
+         "max": 0.2536867250617787
+        },
+        "time_s": 26.200000000000003,
+        "smoothness": {
+         "n": 260,
+         "rms_linear_accel": 0.1737986235229197,
+         "rms_angular_accel": 0.3971391488629508,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.3161926303979562,
+         "static": {
+          "min_m": 0.7797096625878566,
+          "t": 4.6000000000000005,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.3161926303979562,
+          "t": 14.8,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 262,
+         "cmd": 261
+        }
+       },
+       "wall_s": 6.45
+      },
+      {
+       "controller": "dwa",
+       "seed": 2,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 262,
+       "cycles": 261,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0117,
+        -7.2518,
+        -1.5795
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 262,
+         "mean": 0.036804007128771424,
+         "p95": 0.22247146341156482,
+         "max": 0.2536867250617787
+        },
+        "time_s": 26.200000000000003,
+        "smoothness": {
+         "n": 260,
+         "rms_linear_accel": 0.1737986235229197,
+         "rms_angular_accel": 0.3971391488629508,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.3161926303979562,
+         "static": {
+          "min_m": 0.7797096625878566,
+          "t": 4.6000000000000005,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.3161926303979562,
+          "t": 14.8,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 262,
+         "cmd": 261
+        }
+       },
+       "wall_s": 6.45
+      },
+      {
+       "controller": "dwa",
+       "seed": 3,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 262,
+       "cycles": 261,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0117,
+        -7.2518,
+        -1.5795
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 262,
+         "mean": 0.036804007128771424,
+         "p95": 0.22247146341156482,
+         "max": 0.2536867250617787
+        },
+        "time_s": 26.200000000000003,
+        "smoothness": {
+         "n": 260,
+         "rms_linear_accel": 0.1737986235229197,
+         "rms_angular_accel": 0.3971391488629508,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.3161926303979562,
+         "static": {
+          "min_m": 0.7797096625878566,
+          "t": 4.6000000000000005,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.3161926303979562,
+          "t": 14.8,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 262,
+         "cmd": 261
+        }
+       },
+       "wall_s": 6.42
+      },
+      {
+       "controller": "dwa",
+       "seed": 4,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 262,
+       "cycles": 261,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0117,
+        -7.2518,
+        -1.5795
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 262,
+         "mean": 0.036804007128771424,
+         "p95": 0.22247146341156482,
+         "max": 0.2536867250617787
+        },
+        "time_s": 26.200000000000003,
+        "smoothness": {
+         "n": 260,
+         "rms_linear_accel": 0.1737986235229197,
+         "rms_angular_accel": 0.3971391488629508,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.3161926303979562,
+         "static": {
+          "min_m": 0.7797096625878566,
+          "t": 4.6000000000000005,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.3161926303979562,
+          "t": 14.8,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 262,
+         "cmd": 261
+        }
+       },
+       "wall_s": 6.43
+      },
+      {
+       "controller": "dwa",
+       "seed": 5,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 262,
+       "cycles": 261,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0117,
+        -7.2518,
+        -1.5795
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 262,
+         "mean": 0.036804007128771424,
+         "p95": 0.22247146341156482,
+         "max": 0.2536867250617787
+        },
+        "time_s": 26.200000000000003,
+        "smoothness": {
+         "n": 260,
+         "rms_linear_accel": 0.1737986235229197,
+         "rms_angular_accel": 0.3971391488629508,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.3161926303979562,
+         "static": {
+          "min_m": 0.7797096625878566,
+          "t": 4.6000000000000005,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.3161926303979562,
+          "t": 14.8,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 262,
+         "cmd": 261
+        }
+       },
+       "wall_s": 6.59
+      }
+     ]
+    },
+    "rpp": {
+     "summary": {
+      "runs": 5,
+      "outcomes": {
+       "succeeded": 5
+      },
+      "identical_across_seeds": true,
+      "tracking_mean_m": {
+       "n": 5,
+       "min": 0.020200197045760548,
+       "median": 0.020200197045760548,
+       "max": 0.020200197045760548
+      },
+      "tracking_max_m": {
+       "n": 5,
+       "min": 0.1515659075826527,
+       "median": 0.1515659075826527,
+       "max": 0.1515659075826527
+      },
+      "time_s_succeeded": {
+       "n": 5,
+       "min": 26.6,
+       "median": 26.6,
+       "max": 26.6
+      },
+      "rms_linear_accel": {
+       "n": 5,
+       "min": 0.40151470488350866,
+       "median": 0.40151470488350866,
+       "max": 0.40151470488350866
+      },
+      "rms_angular_accel": {
+       "n": 5,
+       "min": 0.3863531695135987,
+       "median": 0.3863531695135987,
+       "max": 0.3863531695135987
+      },
+      "min_clearance_m": {
+       "n": 5,
+       "min": 0.2898834752257904,
+       "median": 0.2898834752257904,
+       "max": 0.2898834752257904
+      },
+      "min_clearance_actor_m": {
+       "n": 5,
+       "min": 0.2898834752257904,
+       "median": 0.2898834752257904,
+       "max": 0.2898834752257904
+      },
+      "contacts": 0,
+      "actor_held_ticks": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     },
+     "runs": [
+      {
+       "controller": "rpp",
+       "seed": 1,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 266,
+       "cycles": 265,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        -0.0,
+        -7.2599,
+        -1.5708
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 266,
+         "mean": 0.020200197045760548,
+         "p95": 0.1365655227488918,
+         "max": 0.1515659075826527
+        },
+        "time_s": 26.6,
+        "smoothness": {
+         "n": 264,
+         "rms_linear_accel": 0.40151470488350866,
+         "rms_angular_accel": 0.3863531695135987,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.2898834752257904,
+         "static": {
+          "min_m": 0.7937764335233963,
+          "t": 5.2,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.2898834752257904,
+          "t": 15.3,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 266,
+         "cmd": 265
+        }
+       },
+       "wall_s": 3.53
+      },
+      {
+       "controller": "rpp",
+       "seed": 2,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 266,
+       "cycles": 265,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        -0.0,
+        -7.2599,
+        -1.5708
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 266,
+         "mean": 0.020200197045760548,
+         "p95": 0.1365655227488918,
+         "max": 0.1515659075826527
+        },
+        "time_s": 26.6,
+        "smoothness": {
+         "n": 264,
+         "rms_linear_accel": 0.40151470488350866,
+         "rms_angular_accel": 0.3863531695135987,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.2898834752257904,
+         "static": {
+          "min_m": 0.7937764335233963,
+          "t": 5.2,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.2898834752257904,
+          "t": 15.3,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 266,
+         "cmd": 265
+        }
+       },
+       "wall_s": 3.51
+      },
+      {
+       "controller": "rpp",
+       "seed": 3,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 266,
+       "cycles": 265,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        -0.0,
+        -7.2599,
+        -1.5708
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 266,
+         "mean": 0.020200197045760548,
+         "p95": 0.1365655227488918,
+         "max": 0.1515659075826527
+        },
+        "time_s": 26.6,
+        "smoothness": {
+         "n": 264,
+         "rms_linear_accel": 0.40151470488350866,
+         "rms_angular_accel": 0.3863531695135987,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.2898834752257904,
+         "static": {
+          "min_m": 0.7937764335233963,
+          "t": 5.2,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.2898834752257904,
+          "t": 15.3,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 266,
+         "cmd": 265
+        }
+       },
+       "wall_s": 3.98
+      },
+      {
+       "controller": "rpp",
+       "seed": 4,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 266,
+       "cycles": 265,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        -0.0,
+        -7.2599,
+        -1.5708
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 266,
+         "mean": 0.020200197045760548,
+         "p95": 0.1365655227488918,
+         "max": 0.1515659075826527
+        },
+        "time_s": 26.6,
+        "smoothness": {
+         "n": 264,
+         "rms_linear_accel": 0.40151470488350866,
+         "rms_angular_accel": 0.3863531695135987,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.2898834752257904,
+         "static": {
+          "min_m": 0.7937764335233963,
+          "t": 5.2,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.2898834752257904,
+          "t": 15.3,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 266,
+         "cmd": 265
+        }
+       },
+       "wall_s": 3.59
+      },
+      {
+       "controller": "rpp",
+       "seed": 5,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 266,
+       "cycles": 265,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        -0.0,
+        -7.2599,
+        -1.5708
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 266,
+         "mean": 0.020200197045760548,
+         "p95": 0.1365655227488918,
+         "max": 0.1515659075826527
+        },
+        "time_s": 26.6,
+        "smoothness": {
+         "n": 264,
+         "rms_linear_accel": 0.40151470488350866,
+         "rms_angular_accel": 0.3863531695135987,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.2898834752257904,
+         "static": {
+          "min_m": 0.7937764335233963,
+          "t": 5.2,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.2898834752257904,
+          "t": 15.3,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 266,
+         "cmd": 265
+        }
+       },
+       "wall_s": 3.53
+      }
+     ]
+    },
+    "mppi": {
+     "summary": {
+      "runs": 5,
+      "outcomes": {
+       "succeeded": 5
+      },
+      "identical_across_seeds": false,
+      "tracking_mean_m": {
+       "n": 5,
+       "min": 0.028221318342147937,
+       "median": 0.02928787337009735,
+       "max": 0.030409703697132324
+      },
+      "tracking_max_m": {
+       "n": 5,
+       "min": 0.08374774963516075,
+       "median": 0.09058531074430927,
+       "max": 0.09643164556731496
+      },
+      "time_s_succeeded": {
+       "n": 5,
+       "min": 48.400000000000006,
+       "median": 48.5,
+       "max": 48.900000000000006
+      },
+      "rms_linear_accel": {
+       "n": 5,
+       "min": 0.1938564530349967,
+       "median": 0.22035792336733434,
+       "max": 0.23617784199948444
+      },
+      "rms_angular_accel": {
+       "n": 5,
+       "min": 0.5562857964002512,
+       "median": 0.5642674581896,
+       "max": 0.6579519305612472
+      },
+      "min_clearance_m": {
+       "n": 5,
+       "min": 0.4521185477942796,
+       "median": 0.46516007973555296,
+       "max": 0.4677164861412856
+      },
+      "min_clearance_actor_m": {
+       "n": 5,
+       "min": 0.4521185477942796,
+       "median": 0.46516007973555296,
+       "max": 0.4677164861412856
+      },
+      "contacts": 0,
+      "actor_held_ticks": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     },
+     "runs": [
+      {
+       "controller": "mppi",
+       "seed": 1,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 485,
+       "cycles": 484,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0168,
+        -7.2608,
+        -1.6583
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 485,
+         "mean": 0.03026109318675797,
+         "p95": 0.05268346159659879,
+         "max": 0.08374774963516075
+        },
+        "time_s": 48.5,
+        "smoothness": {
+         "n": 483,
+         "rms_linear_accel": 0.22641484704164544,
+         "rms_angular_accel": 0.5562857964002512,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.4670254635287163,
+         "static": {
+          "min_m": 0.8083686295358221,
+          "t": 20.5,
+          "index": 31
+         },
+         "actor": {
+          "min_m": 0.4670254635287163,
+          "t": 30.8,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 485,
+         "cmd": 484
+        }
+       },
+       "wall_s": 16.74
+      },
+      {
+       "controller": "mppi",
+       "seed": 2,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 486,
+       "cycles": 485,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0091,
+        -7.2589,
+        -1.581
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 486,
+         "mean": 0.028221318342147937,
+         "p95": 0.05232963343294102,
+         "max": 0.09231515935926204
+        },
+        "time_s": 48.6,
+        "smoothness": {
+         "n": 484,
+         "rms_linear_accel": 0.22035792336733434,
+         "rms_angular_accel": 0.5634629866389893,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.4677164861412856,
+         "static": {
+          "min_m": 0.8081671081903354,
+          "t": 36.300000000000004,
+          "index": 30
+         },
+         "actor": {
+          "min_m": 0.4677164861412856,
+          "t": 30.3,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 486,
+         "cmd": 485
+        }
+       },
+       "wall_s": 16.64
+      },
+      {
+       "controller": "mppi",
+       "seed": 3,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 489,
+       "cycles": 488,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0038,
+        -7.2603,
+        -1.637
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 489,
+         "mean": 0.030409703697132324,
+         "p95": 0.06839812959986205,
+         "max": 0.09643164556731496
+        },
+        "time_s": 48.900000000000006,
+        "smoothness": {
+         "n": 487,
+         "rms_linear_accel": 0.21835229045155108,
+         "rms_angular_accel": 0.6579519305612472,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.45944590398290064,
+         "static": {
+          "min_m": 0.8117572796778681,
+          "t": 12.200000000000001,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.45944590398290064,
+          "t": 30.700000000000003,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 489,
+         "cmd": 488
+        }
+       },
+       "wall_s": 19.37
+      },
+      {
+       "controller": "mppi",
+       "seed": 4,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 484,
+       "cycles": 483,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0017,
+        -7.2551,
+        -1.6601
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 484,
+         "mean": 0.02928787337009735,
+         "p95": 0.054635882833521665,
+         "max": 0.08985848231917616
+        },
+        "time_s": 48.400000000000006,
+        "smoothness": {
+         "n": 482,
+         "rms_linear_accel": 0.23617784199948444,
+         "rms_angular_accel": 0.5642674581896,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.4521185477942796,
+         "static": {
+          "min_m": 0.80891148800334,
+          "t": 46.0,
+          "index": 29
+         },
+         "actor": {
+          "min_m": 0.4521185477942796,
+          "t": 32.300000000000004,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 484,
+         "cmd": 483
+        }
+       },
+       "wall_s": 18.84
+      },
+      {
+       "controller": "mppi",
+       "seed": 5,
+       "outcome": "succeeded",
+       "error_code": 0,
+       "ticks": 485,
+       "cycles": 484,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0218,
+        -7.2599,
+        -1.6608
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 485,
+         "mean": 0.029243234865547245,
+         "p95": 0.052860529891209554,
+         "max": 0.09058531074430927
+        },
+        "time_s": 48.5,
+        "smoothness": {
+         "n": 483,
+         "rms_linear_accel": 0.1938564530349967,
+         "rms_angular_accel": 0.6230252856049604,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.46516007973555296,
+         "static": {
+          "min_m": 0.7999589421251349,
+          "t": 9.0,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.46516007973555296,
+          "t": 30.400000000000002,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 485,
+         "cmd": 484
+        }
+       },
+       "wall_s": 18.92
+      }
+     ]
+    }
+   },
+   "stack": {
+    "DWB": {
+     "runs": 5,
+     "outcomes": {
+      "succeeded": 5
+     },
+     "error_codes": [],
+     "tracking_mean_m": {
+      "max": 0.06994660739400012,
+      "median": 0.04949423904567154,
+      "min": 0.04685295627689649,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.16692190314245223,
+      "median": 0.15778990314245225,
+      "min": 0.15389090314245224,
+      "n": 5
+     },
+     "time_s_succeeded": {
+      "max": 26.522000000000006,
+      "median": 26.319999999999993,
+      "min": 26.11399999999999,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 0.27243514551099834,
+      "median": 0.2637712551017358,
+      "min": 0.21873538257168115,
+      "n": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.965087408337832,
+      "median": 0.90026898956791,
+      "min": 0.6452399531356744,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.3608818251039779,
+      "median": 0.3550970984264231,
+      "min": 0.3399061254218625,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": 0.3608818251039779,
+      "median": 0.3550970984264231,
+      "min": 0.3399061254218625,
+      "n": 5
+     },
+     "contacts": 0
+    },
+    "RPP": {
+     "runs": 5,
+     "outcomes": {
+      "succeeded": 5
+     },
+     "error_codes": [],
+     "tracking_mean_m": {
+      "max": 0.07033983192242506,
+      "median": 0.05242387698547107,
+      "min": 0.04642720026220773,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.18584090314245225,
+      "median": 0.18042390314245224,
+      "min": 0.17361490314245223,
+      "n": 5
+     },
+     "time_s_succeeded": {
+      "max": 28.888000000000005,
+      "median": 28.652,
+      "min": 28.464000000000013,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 0.3760432509665541,
+      "median": 0.32721786308733664,
+      "min": 0.1858321758492354,
+      "n": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.3749961995859003,
+      "median": 0.3154566935364783,
+      "min": 0.2877305413858039,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.34932227303717633,
+      "median": 0.344798364201953,
+      "min": 0.332669761372017,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": 0.34932227303717633,
+      "median": 0.344798364201953,
+      "min": 0.332669761372017,
+      "n": 5
+     },
+     "contacts": 0
+    },
+    "MPPI": {
+     "runs": 5,
+     "outcomes": {
+      "succeeded": 5
+     },
+     "error_codes": [],
+     "tracking_mean_m": {
+      "max": 0.07490329014191528,
+      "median": 0.06902419939036092,
+      "min": 0.05894777099737024,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.25703490314245225,
+      "median": 0.24964290314245224,
+      "min": 0.23149990314245225,
+      "n": 5
+     },
+     "time_s_succeeded": {
+      "max": 29.894000000000005,
+      "median": 29.482000000000014,
+      "min": 29.409999999999997,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 5.9764044445296145,
+      "median": 0.14532819439741299,
+      "min": 0.11708011919402064,
+      "n": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.42446590802403594,
+      "median": 0.27996020146560296,
+      "min": 0.24378444051456657,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.46040033592146434,
+      "median": 0.4574510846601707,
+      "min": 0.4423962952356626,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": 0.46040033592146434,
+      "median": 0.4574510846601707,
+      "min": 0.4423962952356626,
+      "n": 5
+     },
+     "contacts": 0
+    }
+   }
+  },
+  "oncoming": {
+   "title": "A person walks straight down the robot's path towards it",
+   "model": {
+    "dwa": {
+     "summary": {
+      "runs": 5,
+      "outcomes": {
+       "no_valid_control": 5
+      },
+      "identical_across_seeds": true,
+      "tracking_mean_m": {
+       "n": 5,
+       "min": 0.05119949725442035,
+       "median": 0.05119949725442035,
+       "max": 0.05119949725442035
+      },
+      "tracking_max_m": {
+       "n": 5,
+       "min": 0.2536867250617787,
+       "median": 0.2536867250617787,
+       "max": 0.2536867250617787
+      },
+      "time_s_succeeded": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "rms_linear_accel": {
+       "n": 5,
+       "min": 0.20190271390536815,
+       "median": 0.20190271390536815,
+       "max": 0.20190271390536815
+      },
+      "rms_angular_accel": {
+       "n": 5,
+       "min": 0.5202198283213156,
+       "median": 0.5202198283213156,
+       "max": 0.5202198283213156
+      },
+      "min_clearance_m": {
+       "n": 5,
+       "min": 0.08164596237597413,
+       "median": 0.08164596237597413,
+       "max": 0.08164596237597413
+      },
+      "min_clearance_actor_m": {
+       "n": 5,
+       "min": 0.08164596237597413,
+       "median": 0.08164596237597413,
+       "max": 0.08164596237597413
+      },
+      "contacts": 0,
+      "actor_held_ticks": [
+       4,
+       4,
+       4,
+       4,
+       4
+      ]
+     },
+     "runs": [
+      {
+       "controller": "dwa",
+       "seed": 1,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 171,
+       "cycles": 171,
+       "actor_held_ticks": [
+        4
+       ],
+       "final_pose": [
+        0.005,
+        -4.4697,
+        -1.5496
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 171,
+         "mean": 0.05119949725442035,
+         "p95": 0.2404673753672317,
+         "max": 0.2536867250617787
+        },
+        "time_s": 17.1,
+        "smoothness": {
+         "n": 170,
+         "rms_linear_accel": 0.20190271390536815,
+         "rms_angular_accel": 0.5202198283213156,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.08164596237597413,
+         "static": {
+          "min_m": 0.7797096625878566,
+          "t": 4.6000000000000005,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.08164596237597413,
+          "t": 16.7,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 171,
+         "cmd": 171
+        }
+       },
+       "wall_s": 5.06
+      },
+      {
+       "controller": "dwa",
+       "seed": 2,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 171,
+       "cycles": 171,
+       "actor_held_ticks": [
+        4
+       ],
+       "final_pose": [
+        0.005,
+        -4.4697,
+        -1.5496
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 171,
+         "mean": 0.05119949725442035,
+         "p95": 0.2404673753672317,
+         "max": 0.2536867250617787
+        },
+        "time_s": 17.1,
+        "smoothness": {
+         "n": 170,
+         "rms_linear_accel": 0.20190271390536815,
+         "rms_angular_accel": 0.5202198283213156,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.08164596237597413,
+         "static": {
+          "min_m": 0.7797096625878566,
+          "t": 4.6000000000000005,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.08164596237597413,
+          "t": 16.7,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 171,
+         "cmd": 171
+        }
+       },
+       "wall_s": 5.02
+      },
+      {
+       "controller": "dwa",
+       "seed": 3,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 171,
+       "cycles": 171,
+       "actor_held_ticks": [
+        4
+       ],
+       "final_pose": [
+        0.005,
+        -4.4697,
+        -1.5496
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 171,
+         "mean": 0.05119949725442035,
+         "p95": 0.2404673753672317,
+         "max": 0.2536867250617787
+        },
+        "time_s": 17.1,
+        "smoothness": {
+         "n": 170,
+         "rms_linear_accel": 0.20190271390536815,
+         "rms_angular_accel": 0.5202198283213156,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.08164596237597413,
+         "static": {
+          "min_m": 0.7797096625878566,
+          "t": 4.6000000000000005,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.08164596237597413,
+          "t": 16.7,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 171,
+         "cmd": 171
+        }
+       },
+       "wall_s": 4.98
+      },
+      {
+       "controller": "dwa",
+       "seed": 4,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 171,
+       "cycles": 171,
+       "actor_held_ticks": [
+        4
+       ],
+       "final_pose": [
+        0.005,
+        -4.4697,
+        -1.5496
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 171,
+         "mean": 0.05119949725442035,
+         "p95": 0.2404673753672317,
+         "max": 0.2536867250617787
+        },
+        "time_s": 17.1,
+        "smoothness": {
+         "n": 170,
+         "rms_linear_accel": 0.20190271390536815,
+         "rms_angular_accel": 0.5202198283213156,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.08164596237597413,
+         "static": {
+          "min_m": 0.7797096625878566,
+          "t": 4.6000000000000005,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.08164596237597413,
+          "t": 16.7,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 171,
+         "cmd": 171
+        }
+       },
+       "wall_s": 5.01
+      },
+      {
+       "controller": "dwa",
+       "seed": 5,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 171,
+       "cycles": 171,
+       "actor_held_ticks": [
+        4
+       ],
+       "final_pose": [
+        0.005,
+        -4.4697,
+        -1.5496
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 171,
+         "mean": 0.05119949725442035,
+         "p95": 0.2404673753672317,
+         "max": 0.2536867250617787
+        },
+        "time_s": 17.1,
+        "smoothness": {
+         "n": 170,
+         "rms_linear_accel": 0.20190271390536815,
+         "rms_angular_accel": 0.5202198283213156,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.08164596237597413,
+         "static": {
+          "min_m": 0.7797096625878566,
+          "t": 4.6000000000000005,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.08164596237597413,
+          "t": 16.7,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 171,
+         "cmd": 171
+        }
+       },
+       "wall_s": 5.01
+      }
+     ]
+    },
+    "rpp": {
+     "summary": {
+      "runs": 5,
+      "outcomes": {
+       "no_valid_control": 5
+      },
+      "identical_across_seeds": true,
+      "tracking_mean_m": {
+       "n": 5,
+       "min": 0.032346283016341876,
+       "median": 0.032346283016341876,
+       "max": 0.032346283016341876
+      },
+      "tracking_max_m": {
+       "n": 5,
+       "min": 0.1515659075826527,
+       "median": 0.1515659075826527,
+       "max": 0.1515659075826527
+      },
+      "time_s_succeeded": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "rms_linear_accel": {
+       "n": 5,
+       "min": 0.3052420597772614,
+       "median": 0.3052420597772614,
+       "max": 0.3052420597772614
+      },
+      "rms_angular_accel": {
+       "n": 5,
+       "min": 0.4886984014625155,
+       "median": 0.4886984014625155,
+       "max": 0.4886984014625155
+      },
+      "min_clearance_m": {
+       "n": 5,
+       "min": 0.2557525247464736,
+       "median": 0.2557525247464736,
+       "max": 0.2557525247464736
+      },
+      "min_clearance_actor_m": {
+       "n": 5,
+       "min": 0.2557525247464736,
+       "median": 0.2557525247464736,
+       "max": 0.2557525247464736
+      },
+      "contacts": 0,
+      "actor_held_ticks": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     },
+     "runs": [
+      {
+       "controller": "rpp",
+       "seed": 1,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 166,
+       "cycles": 166,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0003,
+        -4.4457,
+        -1.571
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 166,
+         "mean": 0.032346283016341876,
+         "p95": 0.14498860013198997,
+         "max": 0.1515659075826527
+        },
+        "time_s": 16.6,
+        "smoothness": {
+         "n": 165,
+         "rms_linear_accel": 0.3052420597772614,
+         "rms_angular_accel": 0.4886984014625155,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.2557525247464736,
+         "static": {
+          "min_m": 0.7937764335233963,
+          "t": 5.2,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.2557525247464736,
+          "t": 16.6,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 166,
+         "cmd": 166
+        }
+       },
+       "wall_s": 2.79
+      },
+      {
+       "controller": "rpp",
+       "seed": 2,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 166,
+       "cycles": 166,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0003,
+        -4.4457,
+        -1.571
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 166,
+         "mean": 0.032346283016341876,
+         "p95": 0.14498860013198997,
+         "max": 0.1515659075826527
+        },
+        "time_s": 16.6,
+        "smoothness": {
+         "n": 165,
+         "rms_linear_accel": 0.3052420597772614,
+         "rms_angular_accel": 0.4886984014625155,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.2557525247464736,
+         "static": {
+          "min_m": 0.7937764335233963,
+          "t": 5.2,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.2557525247464736,
+          "t": 16.6,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 166,
+         "cmd": 166
+        }
+       },
+       "wall_s": 2.72
+      },
+      {
+       "controller": "rpp",
+       "seed": 3,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 166,
+       "cycles": 166,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0003,
+        -4.4457,
+        -1.571
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 166,
+         "mean": 0.032346283016341876,
+         "p95": 0.14498860013198997,
+         "max": 0.1515659075826527
+        },
+        "time_s": 16.6,
+        "smoothness": {
+         "n": 165,
+         "rms_linear_accel": 0.3052420597772614,
+         "rms_angular_accel": 0.4886984014625155,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.2557525247464736,
+         "static": {
+          "min_m": 0.7937764335233963,
+          "t": 5.2,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.2557525247464736,
+          "t": 16.6,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 166,
+         "cmd": 166
+        }
+       },
+       "wall_s": 2.73
+      },
+      {
+       "controller": "rpp",
+       "seed": 4,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 166,
+       "cycles": 166,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0003,
+        -4.4457,
+        -1.571
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 166,
+         "mean": 0.032346283016341876,
+         "p95": 0.14498860013198997,
+         "max": 0.1515659075826527
+        },
+        "time_s": 16.6,
+        "smoothness": {
+         "n": 165,
+         "rms_linear_accel": 0.3052420597772614,
+         "rms_angular_accel": 0.4886984014625155,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.2557525247464736,
+         "static": {
+          "min_m": 0.7937764335233963,
+          "t": 5.2,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.2557525247464736,
+          "t": 16.6,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 166,
+         "cmd": 166
+        }
+       },
+       "wall_s": 2.71
+      },
+      {
+       "controller": "rpp",
+       "seed": 5,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 166,
+       "cycles": 166,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0003,
+        -4.4457,
+        -1.571
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 166,
+         "mean": 0.032346283016341876,
+         "p95": 0.14498860013198997,
+         "max": 0.1515659075826527
+        },
+        "time_s": 16.6,
+        "smoothness": {
+         "n": 165,
+         "rms_linear_accel": 0.3052420597772614,
+         "rms_angular_accel": 0.4886984014625155,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.2557525247464736,
+         "static": {
+          "min_m": 0.7937764335233963,
+          "t": 5.2,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.2557525247464736,
+          "t": 16.6,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 166,
+         "cmd": 166
+        }
+       },
+       "wall_s": 2.73
+      }
+     ]
+    },
+    "mppi": {
+     "summary": {
+      "runs": 5,
+      "outcomes": {
+       "no_valid_control": 5
+      },
+      "identical_across_seeds": false,
+      "tracking_mean_m": {
+       "n": 5,
+       "min": 0.03125880698373085,
+       "median": 0.03192388456644019,
+       "max": 0.03436897686308097
+      },
+      "tracking_max_m": {
+       "n": 5,
+       "min": 0.08374774963516075,
+       "median": 0.09058531074430927,
+       "max": 0.09643164556731496
+      },
+      "time_s_succeeded": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "rms_linear_accel": {
+       "n": 5,
+       "min": 0.19267978567153507,
+       "median": 0.2297971296566323,
+       "max": 0.2805546154198061
+      },
+      "rms_angular_accel": {
+       "n": 5,
+       "min": 0.6080714002136784,
+       "median": 0.681038186092008,
+       "max": 1.0702402597141127
+      },
+      "min_clearance_m": {
+       "n": 5,
+       "min": 0.08732844659059302,
+       "median": 0.12582232750473013,
+       "max": 0.15532136585816167
+      },
+      "min_clearance_actor_m": {
+       "n": 5,
+       "min": 0.08732844659059302,
+       "median": 0.12582232750473013,
+       "max": 0.15532136585816167
+      },
+      "contacts": 0,
+      "actor_held_ticks": [
+       0,
+       0,
+       0,
+       0,
+       1
+      ]
+     },
+     "runs": [
+      {
+       "controller": "mppi",
+       "seed": 1,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 248,
+       "cycles": 248,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0345,
+        -3.3986,
+        -1.5511
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 248,
+         "mean": 0.03329286669370403,
+         "p95": 0.0754690013960397,
+         "max": 0.08374774963516075
+        },
+        "time_s": 24.8,
+        "smoothness": {
+         "n": 247,
+         "rms_linear_accel": 0.2531933679973852,
+         "rms_angular_accel": 0.621849811560341,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.15208565248453162,
+         "static": {
+          "min_m": 0.8083686295358221,
+          "t": 20.5,
+          "index": 31
+         },
+         "actor": {
+          "min_m": 0.15208565248453162,
+          "t": 24.8,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 248,
+         "cmd": 248
+        }
+       },
+       "wall_s": 9.97
+      },
+      {
+       "controller": "mppi",
+       "seed": 2,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 252,
+       "cycles": 252,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0209,
+        -3.4075,
+        -1.5775
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 252,
+         "mean": 0.03125880698373085,
+         "p95": 0.07975403329202467,
+         "max": 0.09231515935926204
+        },
+        "time_s": 25.200000000000003,
+        "smoothness": {
+         "n": 251,
+         "rms_linear_accel": 0.2805546154198061,
+         "rms_angular_accel": 0.681038186092008,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.09412703880187298,
+         "static": {
+          "min_m": 0.8081675991226637,
+          "t": 9.5,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.09412703880187298,
+          "t": 25.200000000000003,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 252,
+         "cmd": 252
+        }
+       },
+       "wall_s": 10.19
+      },
+      {
+       "controller": "mppi",
+       "seed": 3,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 253,
+       "cycles": 253,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0304,
+        -3.4001,
+        -1.7312
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 253,
+         "mean": 0.03436897686308097,
+         "p95": 0.08669929423882587,
+         "max": 0.09643164556731496
+        },
+        "time_s": 25.3,
+        "smoothness": {
+         "n": 252,
+         "rms_linear_accel": 0.2297971296566323,
+         "rms_angular_accel": 0.8022994674953783,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.12582232750473013,
+         "static": {
+          "min_m": 0.8117572796778681,
+          "t": 12.200000000000001,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.12582232750473013,
+          "t": 25.3,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 253,
+         "cmd": 253
+        }
+       },
+       "wall_s": 10.34
+      },
+      {
+       "controller": "mppi",
+       "seed": 4,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 246,
+       "cycles": 246,
+       "actor_held_ticks": [
+        0
+       ],
+       "final_pose": [
+        0.0279,
+        -3.3957,
+        -1.5568
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 246,
+         "mean": 0.03192388456644019,
+         "p95": 0.07993493589285443,
+         "max": 0.08985848231917616
+        },
+        "time_s": 24.6,
+        "smoothness": {
+         "n": 245,
+         "rms_linear_accel": 0.22504238827126338,
+         "rms_angular_accel": 0.6080714002136784,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.15532136585816167,
+         "static": {
+          "min_m": 0.8110926358798344,
+          "t": 11.700000000000001,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.15532136585816167,
+          "t": 24.6,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 246,
+         "cmd": 246
+        }
+       },
+       "wall_s": 9.97
+      },
+      {
+       "controller": "mppi",
+       "seed": 5,
+       "outcome": "no_valid_control",
+       "error_code": 104,
+       "ticks": 252,
+       "cycles": 252,
+       "actor_held_ticks": [
+        1
+       ],
+       "final_pose": [
+        0.0282,
+        -3.3879,
+        -1.7528
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 252,
+         "mean": 0.031798025840083545,
+         "p95": 0.07818260725414332,
+         "max": 0.09058531074430927
+        },
+        "time_s": 25.200000000000003,
+        "smoothness": {
+         "n": 251,
+         "rms_linear_accel": 0.19267978567153507,
+         "rms_angular_accel": 1.0702402597141127,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 0.08732844659059302,
+         "static": {
+          "min_m": 0.7999589421251349,
+          "t": 9.0,
+          "index": 32
+         },
+         "actor": {
+          "min_m": 0.08732844659059302,
+          "t": 25.1,
+          "index": 0
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 252,
+         "cmd": 252
+        }
+       },
+       "wall_s": 10.23
+      }
+     ]
+    }
+   },
+   "stack": {
+    "DWB": {
+     "runs": 5,
+     "outcomes": {
+      "succeeded": 5
+     },
+     "error_codes": [],
+     "tracking_mean_m": {
+      "max": 0.062145749981904905,
+      "median": 0.04500936478959324,
+      "min": 0.04063344350045107,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.18077990314245224,
+      "median": 0.15550490314245224,
+      "min": 0.14867890314245225,
+      "n": 5
+     },
+     "time_s_succeeded": {
+      "max": 28.562000000000012,
+      "median": 28.304000000000002,
+      "min": 28.084000000000003,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 0.30054838386971844,
+      "median": 0.2589255511847756,
+      "min": 0.24048356267251048,
+      "n": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.6774430490670115,
+      "median": 0.5948963906406257,
+      "min": 0.558264183452524,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 5
+     },
+     "contacts": 5
+    },
+    "RPP": {
+     "runs": 5,
+     "outcomes": {
+      "follow_failed": 5
+     },
+     "error_codes": [
+      104
+     ],
+     "tracking_mean_m": {
+      "max": 0.06933021849168156,
+      "median": 0.057570509856208284,
+      "min": 0.03575495605376926,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.19189990314245223,
+      "median": 0.17944890314245224,
+      "min": 0.17184090314245223,
+      "n": 5
+     },
+     "time_s_succeeded": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "rms_linear_accel": {
+      "max": 0.3295506011248531,
+      "median": 0.2935969712843521,
+      "min": 0.28949456010442637,
+      "n": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.27131703547946107,
+      "median": 0.2443128248963445,
+      "min": 0.23580391524275024,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.24244439336635068,
+      "median": 0.21808972004604635,
+      "min": 0.20938467911098943,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": 0.24244439336635068,
+      "median": 0.21808972004604635,
+      "min": 0.20938467911098943,
+      "n": 5
+     },
+     "contacts": 0
+    },
+    "MPPI": {
+     "runs": 5,
+     "outcomes": {
+      "succeeded": 5
+     },
+     "error_codes": [],
+     "tracking_mean_m": {
+      "max": 0.09359101658860866,
+      "median": 0.07416260406377391,
+      "min": 0.0659346008495854,
+      "n": 5
+     },
+     "tracking_max_m": {
+      "max": 0.26070790314245224,
+      "median": 0.23666490314245223,
+      "min": 0.23540390314245224,
+      "n": 5
+     },
+     "time_s_succeeded": {
+      "max": 32.489999999999995,
+      "median": 31.974000000000004,
+      "min": 31.900000000000006,
+      "n": 5
+     },
+     "rms_linear_accel": {
+      "max": 0.1425685379716835,
+      "median": 0.1332391685030847,
+      "min": 0.12480105993576374,
+      "n": 5
+     },
+     "rms_angular_accel": {
+      "max": 0.33160360743340517,
+      "median": 0.24559781915005072,
+      "min": 0.2104865213243818,
+      "n": 5
+     },
+     "min_clearance_m": {
+      "max": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 5
+     },
+     "min_clearance_actor_m": {
+      "max": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 5
+     },
+     "contacts": 5
+    }
+   }
+  },
+  "mislocalised": {
+   "title": "The robot believes it is 3.4 m from where it is (run 15's gap)",
+   "model": {
+    "dwa": {
+     "summary": {
+      "runs": 5,
+      "outcomes": {
+       "invalid_path": 5
+      },
+      "identical_across_seeds": true,
+      "tracking_mean_m": {
+       "n": 5,
+       "min": 0.0,
+       "median": 0.0,
+       "max": 0.0
+      },
+      "tracking_max_m": {
+       "n": 5,
+       "min": 0.0,
+       "median": 0.0,
+       "max": 0.0
+      },
+      "time_s_succeeded": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "rms_linear_accel": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "rms_angular_accel": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "min_clearance_m": {
+       "n": 5,
+       "min": 1.4253074229793374,
+       "median": 1.4253074229793374,
+       "max": 1.4253074229793374
+      },
+      "min_clearance_actor_m": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "contacts": 0,
+      "actor_held_ticks": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     },
+     "runs": [
+      {
+       "controller": "dwa",
+       "seed": 1,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      },
+      {
+       "controller": "dwa",
+       "seed": 2,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      },
+      {
+       "controller": "dwa",
+       "seed": 3,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      },
+      {
+       "controller": "dwa",
+       "seed": 4,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      },
+      {
+       "controller": "dwa",
+       "seed": 5,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      }
+     ]
+    },
+    "rpp": {
+     "summary": {
+      "runs": 5,
+      "outcomes": {
+       "invalid_path": 5
+      },
+      "identical_across_seeds": true,
+      "tracking_mean_m": {
+       "n": 5,
+       "min": 0.0,
+       "median": 0.0,
+       "max": 0.0
+      },
+      "tracking_max_m": {
+       "n": 5,
+       "min": 0.0,
+       "median": 0.0,
+       "max": 0.0
+      },
+      "time_s_succeeded": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "rms_linear_accel": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "rms_angular_accel": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "min_clearance_m": {
+       "n": 5,
+       "min": 1.4253074229793374,
+       "median": 1.4253074229793374,
+       "max": 1.4253074229793374
+      },
+      "min_clearance_actor_m": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "contacts": 0,
+      "actor_held_ticks": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     },
+     "runs": [
+      {
+       "controller": "rpp",
+       "seed": 1,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      },
+      {
+       "controller": "rpp",
+       "seed": 2,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      },
+      {
+       "controller": "rpp",
+       "seed": 3,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      },
+      {
+       "controller": "rpp",
+       "seed": 4,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      },
+      {
+       "controller": "rpp",
+       "seed": 5,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      }
+     ]
+    },
+    "mppi": {
+     "summary": {
+      "runs": 5,
+      "outcomes": {
+       "invalid_path": 5
+      },
+      "identical_across_seeds": true,
+      "tracking_mean_m": {
+       "n": 5,
+       "min": 0.0,
+       "median": 0.0,
+       "max": 0.0
+      },
+      "tracking_max_m": {
+       "n": 5,
+       "min": 0.0,
+       "median": 0.0,
+       "max": 0.0
+      },
+      "time_s_succeeded": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "rms_linear_accel": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "rms_angular_accel": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "min_clearance_m": {
+       "n": 5,
+       "min": 1.4253074229793374,
+       "median": 1.4253074229793374,
+       "max": 1.4253074229793374
+      },
+      "min_clearance_actor_m": {
+       "n": 0,
+       "min": null,
+       "median": null,
+       "max": null
+      },
+      "contacts": 0,
+      "actor_held_ticks": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     },
+     "runs": [
+      {
+       "controller": "mppi",
+       "seed": 1,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      },
+      {
+       "controller": "mppi",
+       "seed": 2,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      },
+      {
+       "controller": "mppi",
+       "seed": 3,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      },
+      {
+       "controller": "mppi",
+       "seed": 4,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      },
+      {
+       "controller": "mppi",
+       "seed": 5,
+       "outcome": "invalid_path",
+       "error_code": 103,
+       "ticks": 1,
+       "cycles": 1,
+       "actor_held_ticks": [],
+       "final_pose": [
+        0.0,
+        0.0,
+        0.0
+       ],
+       "metrics": {
+        "tracking_m": {
+         "n": 1,
+         "mean": 0.0,
+         "p95": 0.0,
+         "max": 0.0
+        },
+        "time_s": 0.1,
+        "smoothness": {
+         "n": 0,
+         "rms_linear_accel": null,
+         "rms_angular_accel": null,
+         "skipped_pairs": 0
+        },
+        "clearance": {
+         "min_m": 1.4253074229793374,
+         "static": {
+          "min_m": 1.4253074229793374,
+          "t": 0.1,
+          "index": 32
+         },
+         "actor": {
+          "min_m": null,
+          "t": null,
+          "index": null
+         },
+         "contact": false
+        },
+        "samples": {
+         "gt": 1,
+         "cmd": 1
+        }
+       },
+       "wall_s": 0.0
+      }
+     ]
+    }
+   },
+   "stack": {
+    "DWB": {
+     "runs": 3,
+     "outcomes": {
+      "follow_failed": 3
+     },
+     "error_codes": [
+      103
+     ],
+     "tracking_mean_m": {
+      "max": 0.00032809685754776,
+      "median": 0.00032809685754776,
+      "min": 0.00032809685754776,
+      "n": 1
+     },
+     "tracking_max_m": {
+      "max": 0.00032809685754776,
+      "median": 0.00032809685754776,
+      "min": 0.00032809685754776,
+      "n": 1
+     },
+     "time_s_succeeded": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "rms_linear_accel": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "rms_angular_accel": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "min_clearance_m": {
+      "max": 1.4255033993589774,
+      "median": 1.4255033993589774,
+      "min": 1.4255033993589774,
+      "n": 1
+     },
+     "min_clearance_actor_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "contacts": 0
+    },
+    "RPP": {
+     "runs": 3,
+     "outcomes": {
+      "follow_failed": 3
+     },
+     "error_codes": [
+      103
+     ],
+     "tracking_mean_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "tracking_max_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "time_s_succeeded": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "rms_linear_accel": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "rms_angular_accel": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "min_clearance_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "min_clearance_actor_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "contacts": 0
+    },
+    "MPPI": {
+     "runs": 3,
+     "outcomes": {
+      "follow_failed": 3
+     },
+     "error_codes": [
+      103
+     ],
+     "tracking_mean_m": {
+      "max": 0.00032809685754776,
+      "median": 0.00020945073702827128,
+      "min": 9.080461650878255e-05,
+      "n": 2
+     },
+     "tracking_max_m": {
+      "max": 0.00032809685754776,
+      "median": 0.00020945073702827128,
+      "min": 9.080461650878255e-05,
+      "n": 2
+     },
+     "time_s_succeeded": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "rms_linear_accel": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "rms_angular_accel": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "min_clearance_m": {
+      "max": 1.4255033993589774,
+      "median": 1.4254030459413782,
+      "min": 1.425302692523779,
+      "n": 2
+     },
+     "min_clearance_actor_m": {
+      "max": null,
+      "median": null,
+      "min": null,
+      "n": 0
+     },
+     "contacts": 0
+    }
+   }
+  }
+ }
+}

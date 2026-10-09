@@ -33,9 +33,10 @@ import { Timeline } from './Timeline';
 import { caption } from './lens/captions';
 import { drawLenses, HOVERS } from './lens/draw';
 import { EventLog, LensBar, LensCharts, LensInspector } from './lens/panels';
-import { LocaliseControls, MapControls } from './lens/controls';
+import { LocaliseControls, MapControls, MoveControls } from './lens/controls';
 import './lens/localise';
 import './lens/map';
+import './lens/move';
 import { defaultLayers, LENS_BY_ID, LENSES, LEVELS, packForConfig, type LensId, type Level } from './lens/registry';
 import { LensLayers } from './render/lensLayers';
 import { sha256Hex } from '../bundle/sha256';
@@ -144,6 +145,7 @@ export function ArenaApp() {
   }, [takeOver]);
   const locOn = useRef(false);
   const mapOn = useRef(false);
+  const moveOn = useRef(false);
 
   const goal = useCallback((x: number, y: number) => {
     takeOver();
@@ -492,6 +494,12 @@ export function ArenaApp() {
     sendConfig('arena.range_sigma=0.02');
     sendConfig('map.algorithm=occupancy');
   }, [lens, packs, mode, sendConfig]);
+  // the Move lens hands the wheels to the DWA sampler, once (M2.5)
+  useEffect(() => {
+    if (lens !== 'move' || moveOn.current || !packs.has('move') || mode === 'replay' || mode === 'recording') return;
+    moveOn.current = true;
+    sendConfig('move.controller=dwa');
+  }, [lens, packs, mode, sendConfig]);
   // Focus: everything outside the lens dims (the robot and truth never do)
   useEffect(() => {
     r.current?.setFocusDim(!focus || lens === 'plan' ? 1 : 0.25, focus ? 0.5 : 1);
@@ -552,6 +560,7 @@ export function ArenaApp() {
         onLens={setLens} onLevel={setLevel} onFocus={setFocus} />
       {lens === 'localise' && <LocaliseControls send={sendConfig} live={mode === 'live'} />}
       {lens === 'map' && <MapControls send={sendConfig} live={mode === 'live'} />}
+      {lens === 'move' && <MoveControls send={sendConfig} live={mode === 'live'} />}
       {level !== 'watch' && session && (() => { const c = caption(lens, session.families, tick?.tick ?? 0);
         return c ? <p className="lens-caption" data-testid="lens-caption" role="status">{c}</p> : null; })()}
       <div className="arena-stage">

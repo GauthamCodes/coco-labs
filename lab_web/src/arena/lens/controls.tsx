@@ -80,3 +80,31 @@ export function MapControls({ send, live }: { send: Send; live: boolean }) {
     </div>
   );
 }
+
+const SCENARIO_TITLES: [string, string][] = [
+  ['none', 'your own goals'],
+  ['static_room', 'Lab 5: the hairpin (round a wall end, into a room)'],
+  ['crossing', 'Lab 5: a person crosses the path'],
+  ['oncoming', 'Lab 5: a person walks head-on down the path'],
+  ['mislocalised', 'Lab 5: run 15 — believes it is 3.4 m away'],
+];
+
+export function MoveControls({ send, live }: { send: Send; live: boolean }) {
+  const [controller, setController] = useState('dwa');
+  const [scenario, setScenario] = useState('none');
+  if (!live) return <p className="lens-empty">The Move lens runs on the live model: click the map to take over.</p>;
+  return (
+    <div className="lens-controls" data-testid="move-controls" role="group" aria-label="Local control settings">
+      <label>controller <select value={controller} data-testid="move-controller"
+        onChange={(e) => { setController(e.target.value); send(`move.controller=${e.target.value}`); }}>
+        <option value="dwa">DWA (after DWB)</option><option value="rpp">regulated pure pursuit</option>
+        <option value="mppi">MPPI</option><option value="builtin">M1's waypoint driver</option>
+      </select></label>
+      <label>scenario <select value={scenario} data-testid="move-scenario"
+        onChange={(e) => { setScenario(e.target.value); send(`move.scenario=${e.target.value}`); }}>
+        {SCENARIO_TITLES.map(([id, t]) => <option key={id} value={id}>{t}</option>)}
+      </select></label>
+      <span className="lens-hint">MODEL controllers, written after Lab 5's. Here the actors are solid; in Lab 5's Gazebo runs they had no collision body.</span>
+    </div>
+  );
+}

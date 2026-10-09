@@ -100,6 +100,7 @@ export const LENSES: readonly Lens[] = [
       { id: 'rejected', label: 'rejected', role: 'computation', colour: 'rejected', from: 'explain', meaning: 'candidates it refused, and why' },
       { id: 'local_window', label: 'local window', role: 'computation', colour: 'localWindow', from: 'explain', meaning: 'the part of the world the controller considers' },
       { id: 'lookahead', label: 'lookahead', role: 'computation', colour: 'lookahead', from: 'inspect', meaning: 'the path point a tracker steers for' },
+      { id: 'given_path', label: 'given path', role: 'computation', colour: 'path', from: 'explain', meaning: 'the global path the controller was handed whole: a Lab 5 scenario’s frozen SmacPlanner2D path' },
       { id: 'actors', label: 'actors', role: 'world', colour: 'actor', from: 'watch', meaning: 'moving people, drawn at their collision radius (the Arena’s actors have collision bodies; Lab 5’s Gazebo actors had none)' },
     ],
   },

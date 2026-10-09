@@ -663,6 +663,60 @@ only. Read order for agents (README §9): `README.md`, this file,
     `lab_web/src`; removed, and the check no longer writes bytecode.) Next:
     M2.5 (Move lens).
 
+- **M2.5 Move lens (2026-10-09).** Evidence: `v2/data/m2/m25/`; write-up
+  [`v2/M2_MOVE_COMPARISON.md`](v2/M2_MOVE_COMPARISON.md).
+  - **Three teaching controllers (MODEL, `coco_lab/control.py`):** a DWA
+    sampler after DWB (DWB's critics and scales; 11 × 21 samples, not 819),
+    regulated pure pursuit (Lab 5's RPP parameters, collision detection on
+    the arc), a small MPPI (Lab 5's horizon, noise, temperature and critic
+    weights; 128 samples, not 2,000). Each sees a 3 × 3 m local window at
+    0.05 m around the BELIEVED pose, marked from the current scan and
+    inflated as the mission's local costmap is (inscribed 0.255 m, tested),
+    and emits `control.local` with per-critic scores and rejection reasons.
+    Every simplification is listed in the module docstring.
+  - **The move subsystem (`coco_lab/move_arena.py`, move pack):**
+    `move.controller|scenario|belief_offset`; Nav2's FollowPath outcomes
+    and codes (103/104/105). Three additive core hooks in `arena.py`
+    (`command`, `discs`, `world_step`); with none provided every existing
+    hash is unchanged. **Arena actors have collision bodies** (the LiDAR
+    sees them, the robot cannot drive into one, an actor waits for the
+    robot), unlike Lab 5's visual-only Gazebo actors; said wherever the two
+    are compared.
+  - **Lab 5's scenarios rebuilt from their definitions:**
+    `coco_lab/move_scenarios.py`, generated from `coco_lab_ros/config/`
+    (the frozen paths and `lab5_scenarios.json`), pinned to them by a test.
+  - **Model vs STACK (`move_comparison.json`, 5 seeds × 3 controllers × 4
+    scenarios; Lab 5's metrics code and obstacles):** the outcome and code
+    agree in **9 of 9** cells of the hairpin, the crossing and run 15 —
+    including DWB's hairpin failure (DWA: 5 × 105, DWB: 5 × 105), a
+    coincidence of outcome whose mechanism was not examined. The head-on
+    scenario **differs**: the model's DWA and MPPI fail (104) where the
+    stack's DWB and MPPI "succeeded" by passing through the person (contact
+    5/5 each); RPP fails (104) in both. The model tracks tighter (0.020–
+    0.043 m vs 0.049–0.143 m) and its MPPI is slower (86 vs 52 s on the
+    hairpin); neither gap is attributed.
+  - **Run 15 in the model (MODEL; STACK 9/9 beside it):** belief 3.4 m
+    north of the truth; the whole path outside the window around the
+    belief; every controller fails INVALID_PATH in its first cycle with 0
+    candidates, 15 of 15 runs (Lab 5: 9 of 9, code 103, 0 of 0 candidates).
+  - **Lens (browser, `browser/move_check.json`, Chromium):** candidates
+    shaded by cost, rejected ones, the chosen trajectory, the lookahead,
+    the local window, the given path, the actors' bodies; controller and
+    scenario pickers as `config` inputs. Run 15 from the picker for each
+    controller: one `invalid_path` cycle with 0 candidates, belief–truth
+    gap 3.4 m; the crossing with DWA succeeded with candidates, the chosen
+    trajectory and the actor drawn; 0 console errors, 0 three.js warnings.
+  - **Cost per tick (CPython, crossing):** DWA 23.6 ms, RPP 12.7 ms, MPPI
+    32.5 ms (MPPI's normals now come two per 64-bit draw; it was 50.5 ms),
+    of which the M1 scan is about 10 ms. Browser budgets: M2.11.
+  - **Determinism with local control on:** 10 sessions (every controller
+    and scenario drawn) × Pyodide-in-Node, Chromium, Firefox, WebKit:
+    **0 of 1,500 ticks mismatched each**; CPython vs Pyodide **0 of 1,500**
+    (`determinism_move/`).
+  - Tests: packages **3,413 / 0 / 0** (`coco_lab` 697 → 719:
+    `test_move_arena.py` 22), vitest **424 / 0 / 0**, build tools
+    **139 / 0 / 0**. Next: M2.6 (Decide lens and the fetch mission).
+
 ## Capabilities (README §2), with evidence class
 
 Classes as README §3 defines them: MODEL, STACK, REMOTE, HARDWARE (none

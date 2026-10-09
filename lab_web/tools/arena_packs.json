@@ -11,7 +11,7 @@
   },
   "move": {
    "requires": [],
-   "modules": ["movebundle.py", "movemetrics.py"]
+   "modules": ["control.py", "move_arena.py", "move_scenarios.py", "movebundle.py", "movemetrics.py"]
   },
   "decide": {
    "requires": [],

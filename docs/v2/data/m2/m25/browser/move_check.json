@@ -1,0 +1,139 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-09T13:13:48.899Z",
+   "power_profile": "power-saver",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 97
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.52,
+    "5m": 2.42,
+    "15m": 1.8
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  },
+  "end": {
+   "at_utc": "2026-10-09T13:14:46.967Z",
+   "power_profile": "power-saver",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 97
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.46,
+    "5m": 2.7,
+    "15m": 1.94
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ },
+ "site": "http://127.0.0.1:4194/coco-labs/",
+ "steps": {
+  "controls": true,
+  "run15": {
+   "dwa": {
+    "commands": [
+     {
+      "tick": 21,
+      "status": "invalid_path",
+      "n": 0,
+      "controller": "dwa"
+     }
+    ],
+    "belief": [
+     0,
+     3.4,
+     0
+    ],
+    "truth": [
+     0,
+     0,
+     0
+    ],
+    "mode": "idle"
+   },
+   "rpp": {
+    "commands": [
+     {
+      "tick": 57,
+      "status": "invalid_path",
+      "n": 0,
+      "controller": "rpp"
+     }
+    ],
+    "belief": [
+     0,
+     3.4,
+     0
+    ],
+    "truth": [
+     0,
+     0,
+     0
+    ],
+    "mode": "idle"
+   },
+   "mppi": {
+    "commands": [
+     {
+      "tick": 68,
+      "status": "invalid_path",
+      "n": 0,
+      "controller": "mppi"
+     }
+    ],
+    "belief": [
+     0,
+     3.4,
+     0
+    ],
+    "truth": [
+     0,
+     0,
+     0
+    ],
+    "mode": "idle"
+   }
+  },
+  "run15_layers": [
+   "candidates",
+   "local_window",
+   "given_path"
+  ],
+  "crossing_layers": [
+   "candidates",
+   "chosen",
+   "local_window",
+   "actors",
+   "given_path"
+  ],
+  "crossing_command": {
+   "tick": 195,
+   "status": "ok",
+   "n": 231,
+   "controller": "dwa"
+  },
+  "actor": [
+   [
+    -0.20000000000000062,
+    -4.5,
+    0.15
+   ]
+  ],
+  "inspector": "control.local.candidates tick 211candidates231rejectedcollision ×37control.local.command tick 211controllerdwacycle133statusokcandidates (valid)231 (194)chosen157commandv 0.210 m/s, ω 0.003 rad/s",
+  "crossing_outcome": "succeeded"
+ },
+ "errors": [],
+ "warnings": [],
+ "pass": true
+}

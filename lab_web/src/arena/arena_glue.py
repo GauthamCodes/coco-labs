@@ -129,6 +129,12 @@ def _tick_json(t, inputs):
     # the whole loop (M2.3): the robot is drawn where it BELIEVES it is,
     # the truth beside it (as a recorded stack run draws AMCL and truth)
     extra = {} if t.belief is None else {'truth': list(t.pose)}
+    if t.actors:
+        extra['actors'] = [list(a) for a in t.actors]
+    mv = _arena.subsystems.get('move')
+    given = mv.take_path() if mv is not None else None
+    if given:
+        extra['path'] = [v for p in given for v in p]
     return json.dumps({
         **extra,
         'tick': t.tick, 't_world': t.t_world,

@@ -132,8 +132,12 @@ From the first loop input the Arena keeps:
   (`docs/v2/data/m2/m23/slip_fidelity.json`; `FIDELITY_v1.md`);
 - **subsystems**, each registered in `SUBSYSTEMS` by its own Python pack
   (`coco_lab.loc_arena` registers `localise`, `coco_lab.map_arena`
-  registers `map`); a `config` for a subsystem whose pack is not loaded is
-  refused.
+  registers `map`, `coco_lab.move_arena` registers `move`); a `config` for
+  a subsystem whose pack is not loaded is refused. A subsystem may also
+  provide `command()` (it drives instead of M1's waypoint driver while a
+  goal is followed), `discs()` (moving bodies: the LiDAR sees them and the
+  robot cannot drive into them) and `world_step()` (it moves them, after
+  the robot and before the scan).
 
 **Planning and driving use the BELIEF** (`Arena.belief()`: the localiser's
 estimate, MCL's when both run), never the truth: a localisation error
@@ -159,6 +163,14 @@ estimate (3 × int64 micro-units); for FastSLAM x, y, θ, weight per particle
 (int64 micro-units); for EKF-SLAM the whole state vector μ (int64
 micro-units); for the pose graph the edge count u32. The built grid itself
 is not hashed: it is a function of the hashed poses and the hashed scans.
+The move subsystem's state: controller, scenario and outcome u8 (indices
+into `move_arena.CONTROLLERS` / `SCENARIOS` / `OUTCOMES`), the belief
+offset (3 × int64 micro-units), the cycle count u32 and the path index u64;
+its stream (4 × u64); per actor x, y and distance walked (int64
+micro-units), triggered u8 and ticks held u32; MPPI's warm-start control
+sequence (2 × 28 int64 micro-units; nothing for DWA and RPP); the time no
+valid command began (−1 if none) and the progress checker's time (int64
+micro-units).
 
 ### The map subsystem (M2.4)
 
@@ -186,3 +198,38 @@ on the same scans, and FastSLAM to give the class's estimate draw for draw.
   Lab 3 scored: ATE (RMSE, aligned for SLAMs) and F1 / precision / recall
   of the map (`coco.metrics.values.v1`). The truth is used only for those
   scores and for the idealised sensor's observations (Lab 3's rule).
+
+### The move subsystem (M2.5)
+
+`config` keys: `move.controller=builtin|dwa|rpp|mppi`,
+`move.scenario=static_room|crossing|oncoming|mislocalised|none`,
+`move.belief_offset=dx,dy,dyaw`. The controllers are TEACHING
+implementations written after Lab 5's Nav2 controllers
+(`coco_lab/control.py`, evidence class MODEL; every simplification is in its
+docstring); each cycle they see a 3 × 3 m local window at 0.05 m around the
+BELIEVED pose, marked from the current scan within 2.5 m and inflated as the
+mission's local costmap inflates, and the part of the path that lies in it.
+FollowPath's outcomes are Nav2's: succeeded (0.25 m, then a turn to the
+goal's heading), INVALID_PATH 103 (no path pose in the window), NO_VALID_CONTROL
+104 (no valid command for more than 0.3 s), FAILED_TO_MAKE_PROGRESS 105
+(under 0.1 m in 10 s).
+
+- A scenario is Lab 5's, rebuilt from its definition
+  (`coco_lab/move_scenarios.py`, generated from `coco_lab_ros/config/` and
+  tested against it): the robot at map (0, 0, 0), handed the FROZEN path
+  (not the Arena's plan), the actors at their first waypoint until the
+  robot's TRUE pose crosses the trigger line, then walking once at their
+  speed.
+- **Actors are solid** (radius 0.15 m): the LiDAR sees them, the robot cannot
+  drive into one, and an actor waits while its next step would walk into the
+  robot. Lab 5's Gazebo actors had no collision body.
+- `mislocalised` (and `move.belief_offset`) puts the belief a fixed offset
+  from the truth when no localiser runs.
+- Every cycle emits `coco.control.local.candidates.v1` (every candidate DWA
+  scored; RPP's one arc; 24 of MPPI's 128 samples and its optimum; every
+  third trajectory point), `coco.control.local.command.v1` and the metrics
+  `n_valid`, `cmd_v`, `tracking_error`; an outcome emits `outcome.<name>`.
+  Actors ride on the tick (`actors`), and a path given whole on the tick it
+  was given (`path`).
+
+The comparison with Lab 5's STACK results is `docs/v2/M2_MOVE_COMPARISON.md`.

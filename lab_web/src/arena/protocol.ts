@@ -61,6 +61,10 @@ export interface Tick {
   mode: string; blocked: boolean; arrived: boolean; hash: string; chain: string; plans: PlanInfo[];
   /** The inputs this tick applied, stamped by the model (M2.0; absent in recordings made before). */
   inputs?: InputRow[];
+  /** M2.5: moving bodies (x, y, radius); absent when there are none. */
+  actors?: [number, number, number][];
+  /** M2.5: a global path given whole on this tick (x0, y0, x1, y1, ...): a Lab 5 scenario's frozen path. */
+  path?: number[];
 }
 
 /** SearchEventBatch columns (coco.plan.search.events.v1), as typed arrays. */

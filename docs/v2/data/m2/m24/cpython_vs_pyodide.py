@@ -30,6 +30,7 @@ sys.path.insert(0, os.path.join(REPO, 'lab_web', 'src', 'arena'))
 import arena_glue  # noqa: E402
 import coco_lab.loc_arena  # noqa: E402,F401
 import coco_lab.map_arena  # noqa: E402,F401
+import coco_lab.move_arena  # noqa: E402,F401
 
 
 def main():
@@ -57,7 +58,7 @@ def main():
                 mismatched += 1
                 if len(first) < 5:
                     first.append({'session': s['id'], 'tick': k})
-    res = {'tool': 'docs/v2/data/m2/m24/cpython_vs_pyodide.py', 'evidence': 'MODEL',
+    res = {'tool': 'docs/v2/data/m2/m24/cpython_vs_pyodide.py', 'evidence': 'MODEL', 'sessions_dir': os.path.relpath(os.path.abspath(a.dir), REPO),
            'engine': f'CPython {sys.version.split()[0]}', 'sessions': len(doc['sessions']),
            'ticks': ticks, 'mismatched': mismatched, 'first_mismatches': first,
            'seconds': round(time.time() - t0, 1)}

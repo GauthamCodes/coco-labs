@@ -172,6 +172,8 @@ class Tick:
     state_hash: str = ''
     #: the whole loop's belief (None until the loop is on: then truth is it)
     belief: Optional[Tuple[float, float, float]] = None
+    #: moving bodies in the world, (x, y, radius) (M2.5: the Move pack's actors)
+    actors: List[Tuple[float, float, float]] = field(default_factory=list)
 
 
 def _q(v: float, scale: float) -> int:
@@ -374,6 +376,12 @@ class Arena:
         if self.mode == 'teleop':
             return self.teleop[0], self.teleop[1], False
         if self.mode == 'goal':
+            # a local controller from a subsystem drives instead (M2.5)
+            for name in sorted(self.subsystems):
+                f = getattr(self.subsystems[name], 'command', None)
+                c = f(self) if f is not None else None
+                if c is not None:
+                    return c
             while self.wp_index < len(self.waypoints):
                 c = drive_command(self.belief(), self.waypoints[self.wp_index],
                                   lim['auto_linear'], lim['auto_angular'],
@@ -385,8 +393,20 @@ class Arena:
             return 0.0, 0.0, True
         return 0.0, 0.0, False
 
+    def discs(self) -> List[Tuple[float, float, float]]:
+        """Every moving body's (x, y, radius), from the subsystems (M2.5)."""
+        out: List[Tuple[float, float, float]] = []
+        for name in sorted(self.subsystems):
+            f = getattr(self.subsystems[name], 'discs', None)
+            if f is not None:
+                out.extend(f())
+        return out
+
     def _scan(self) -> List[float]:
         true = self.smap.scan(self.pose, self.lidar, self.angles)
+        discs = self.discs() if self.subsystems else []
+        if discs:
+            true = _with_discs(true, self.pose, self.lidar, self.angles, discs)
         lo, hi = self.lidar.range_min, self.lidar.range_max
         out = []
         for z in true:
@@ -570,6 +590,10 @@ class Arena:
             # the wheels did the commanded motion; the body turned less
             new = step_pose(before, self.v, self.w * SLIP_TURN, dt)
         blocked = self.smap.clearance(new[0], new[1]) < self.radius * 0.5
+        if not blocked and self.subsystems:
+            # a moving body is solid: the robot cannot drive into one (M2.5)
+            blocked = any(math.hypot(new[0] - dx, new[1] - dy) < self.radius + r
+                          for dx, dy, r in self.discs())
         if blocked:
             new = wheels = before
             self.v = self.w = 0.0
@@ -580,6 +604,10 @@ class Arena:
                                       self.odom_rng)
             self.odom = apply_delta(self.odom, n1, nt, n2)
         self.tick += 1
+        for name in sorted(self.subsystems):
+            f = getattr(self.subsystems[name], 'world_step', None)
+            if f is not None:
+                f(self)
         self.ranges = self._scan()
         for name in sorted(self.subsystems):
             self.subsystems[name].on_tick(self)
@@ -588,7 +616,8 @@ class Arena:
         h = hashlib.sha256(b).hexdigest()
         return Tick(self.tick, self.t_world, self.pose, self.v, self.w,
                     self.mode, list(self.ranges), plans, applied, blocked,
-                    arrived, h, belief=self.belief() if self.loop else None)
+                    arrived, h, belief=self.belief() if self.loop else None,
+                    actors=self.discs() if self.subsystems else [])
 
     def step(self, events: Sequence[InputEvent] = ()) -> Tick:
         """Apply this tick's inputs, plan once, advance ``dt``, scan, hash."""
@@ -648,6 +677,33 @@ class Arena:
     def chain(self) -> str:
         """Return the hash chain over every tick so far (one per run)."""
         return self._chain.hex()
+
+
+def _with_discs(ranges, pose, lidar, angles, discs) -> List[float]:
+    """Return ``ranges`` shortened where a beam meets a disc first."""
+    x, y, th = pose
+    mx, my, myaw = lidar.mount
+    c, s = math.cos(th), math.sin(th)
+    sx = x + c * mx - s * my
+    sy = y + s * mx + c * my
+    out = list(ranges)
+    for k, a in enumerate(angles):
+        ux, uy = math.cos(th + myaw + a), math.sin(th + myaw + a)
+        for dx, dy, r in discs:
+            fx, fy = dx - sx, dy - sy
+            b = fx * ux + fy * uy
+            q = b * b - (fx * fx + fy * fy - r * r)
+            if q < 0:
+                continue
+            t = b - math.sqrt(q)
+            if t < 0:
+                t = b + math.sqrt(q)
+                if t < 0:
+                    continue
+                t = 0.0  # the sensor is inside the disc
+            if t < out[k]:
+                out[k] = t
+    return out
 
 
 def replay(spec: Dict[str, object], seed: int, inputs: Sequence[InputEvent],

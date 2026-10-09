@@ -72,6 +72,7 @@ function make() {
   // noise, a localisation filter with random knobs -- and may be kidnapped
   const LOOP = args.loop === '1';
   const MAP = args.map === '1';
+  const MOVE = args.move === '1';
   const sessions = [];
   for (let s = 0; s < n; s += 1) {
     const inputs = [];
@@ -91,6 +92,11 @@ function make() {
       if (alg === 'fastslam') inputs.push({ tick: 0, kind: 'config', choice: `map.fastslam.particles=${5 + Math.floor(r() * 16)}` });
       if (alg === 'pose_graph' && r() < 0.5) inputs.push({ tick: 0, kind: 'config', choice: 'map.pose_graph.loop_closure=off' });
       inputs.push({ tick: 0, kind: 'config', choice: `map.algorithm=${alg}` });
+    }
+    // --move 1 (M2.5): a local controller, and often one of Lab 5's scenarios (its own draws)
+    if (MOVE) {
+      inputs.push({ tick: 0, kind: 'config', choice: `move.controller=${['dwa', 'rpp', 'mppi'][Math.floor(r() * 3)]}` });
+      if (r() < 0.7) inputs.push({ tick: 0, kind: 'config', choice: `move.scenario=${['static_room', 'crossing', 'oncoming', 'mislocalised'][Math.floor(r() * 4)]}` });
     }
     while (true) {
       t += 1 + Math.floor(r() * 30);

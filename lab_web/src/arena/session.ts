@@ -26,6 +26,8 @@ import { PlanStore } from './render/planStore';
 export interface TickRecord {
   tick: number; t_world: number; pose: [number, number, number]; truth?: [number, number, number]; v: number; w: number;
   mode: string; hash: string; ranges: Float32Array | null; plans: PlanInfo[];
+  /** M2.5: moving bodies (x, y, radius), when the Move pack's actors are out. */
+  actors?: [number, number, number][];
 }
 
 /** Reveal a live search over about this many frames at speed 1. */
@@ -41,6 +43,8 @@ export class ArenaSession {
   readonly families = new FamilyStore();
   /** M2.2: each channel's static header (FilterHeader, ControllerHeader, ...), as the model sent it. */
   readonly headers = new Map<string, Record<string, unknown>>();
+  /** M2.5: a global path handed to the robot whole (a Lab 5 scenario's frozen path), from the tick it was given. */
+  readonly givenPaths: { tick: number; xy: number[] }[] = [];
   /** Search started at each tick (tick -> search ids), for the computation track. */
   private searchesAt: [number, number][] = [];
   /** null: follow the live head. Otherwise the tick being shown. */
@@ -65,7 +69,8 @@ export class ArenaSession {
 
   onTick(t: Tick, ranges: Float32Array) {
     this.history.push({ tick: t.tick, t_world: t.t_world, pose: t.pose, truth: t.truth, v: t.v, w: t.w, mode: t.mode, hash: t.hash,
-      ranges, plans: t.plans });
+      ranges, plans: t.plans, actors: t.actors });
+    if (t.path) this.givenPaths.push({ tick: t.tick, xy: t.path });
     const drop = this.history.length - 1 - KEEP_RANGES;
     if (drop >= 0) this.history[drop].ranges = null;
   }
