@@ -1,0 +1,4915 @@
+{
+ "tool": "docs/v2/data/m2/m26/fetch_matrix.py",
+ "evidence": "MODEL",
+ "python": "3.12.3",
+ "seeds": [
+  1,
+  2
+ ],
+ "configs": {
+  "plain": [],
+  "mcl": [
+   "arena.range_sigma=0.02",
+   "localise.filter=mcl"
+  ],
+  "mcl+rpp": [
+   "arena.range_sigma=0.02",
+   "localise.filter=mcl",
+   "move.controller=rpp"
+  ],
+  "mcl+mppi": [
+   "arena.range_sigma=0.02",
+   "localise.filter=mcl",
+   "move.controller=mppi"
+  ],
+  "mcl+dwa": [
+   "arena.range_sigma=0.02",
+   "localise.filter=mcl",
+   "move.controller=dwa"
+  ]
+ },
+ "runs": {
+  "plain": [
+   {
+    "colour": "red",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 4,
+    "recoveries": 0,
+    "ticks": 1505,
+    "t_sim_s": 150.5,
+    "max_true_loc_error_m": 0.0,
+    "final_bay_belief": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the red target; it is not told which bay holds it"
+     },
+     {
+      "tick": 1,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "no_localiser",
+      "reason": "no localiser runs: the belief is the truth (SIMPLIFIED)"
+     },
+     {
+      "tick": 2,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 138,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 158,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 159,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 432,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 452,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 453,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 857,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 877,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 2); P(bay) 0.08 after the miss"
+     },
+     {
+      "tick": 878,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 1 (bay_1): expected 11.8 m"
+     },
+     {
+      "tick": 1143,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1163,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the red target, seen: the camera saw Bay 1"
+     },
+     {
+      "tick": 1223,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 1505,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 11.1
+   },
+   {
+    "colour": "red",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 4,
+    "recoveries": 0,
+    "ticks": 1505,
+    "t_sim_s": 150.5,
+    "max_true_loc_error_m": 0.0,
+    "final_bay_belief": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the red target; it is not told which bay holds it"
+     },
+     {
+      "tick": 1,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "no_localiser",
+      "reason": "no localiser runs: the belief is the truth (SIMPLIFIED)"
+     },
+     {
+      "tick": 2,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 138,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 158,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 159,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 432,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 452,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 453,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 857,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 877,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 2); P(bay) 0.08 after the miss"
+     },
+     {
+      "tick": 878,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 1 (bay_1): expected 11.8 m"
+     },
+     {
+      "tick": 1143,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1163,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the red target, seen: the camera saw Bay 1"
+     },
+     {
+      "tick": 1223,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 1505,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 11.7
+   },
+   {
+    "colour": "green",
+    "seed": 1,
+    "result": "failed: every bay searched once and the target not found",
+    "state": "failed",
+    "surveys": 4,
+    "recoveries": 0,
+    "ticks": 1164,
+    "t_sim_s": 116.4,
+    "max_true_loc_error_m": 0.0,
+    "final_bay_belief": [
+     0.25,
+     0.25,
+     0.25,
+     0.25
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the green target; it is not told which bay holds it"
+     },
+     {
+      "tick": 1,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "no_localiser",
+      "reason": "no localiser runs: the belief is the truth (SIMPLIFIED)"
+     },
+     {
+      "tick": 2,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 138,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 158,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 159,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 432,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 452,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 453,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 857,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 877,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 2); P(bay) 0.08 after the miss"
+     },
+     {
+      "tick": 878,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 1 (bay_1): expected 11.8 m"
+     },
+     {
+      "tick": 1143,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1163,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 1); P(bay) 0.25 after the miss"
+     },
+     {
+      "tick": 1164,
+      "from": "choose_bay",
+      "to": "failed",
+      "event": "target_not_found",
+      "reason": "every bay searched once and the target not found"
+     }
+    ],
+    "wall_s": 9.2
+   },
+   {
+    "colour": "green",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 3,
+    "recoveries": 0,
+    "ticks": 1089,
+    "t_sim_s": 108.9,
+    "max_true_loc_error_m": 0.0,
+    "final_bay_belief": [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the green target; it is not told which bay holds it"
+     },
+     {
+      "tick": 1,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "no_localiser",
+      "reason": "no localiser runs: the belief is the truth (SIMPLIFIED)"
+     },
+     {
+      "tick": 2,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 138,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 158,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 159,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 432,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 452,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 453,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 857,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 877,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the green target, seen: the camera saw Bay 2"
+     },
+     {
+      "tick": 937,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 1089,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 8.7
+   },
+   {
+    "colour": "blue",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 1,
+    "recoveries": 0,
+    "ticks": 372,
+    "t_sim_s": 37.2,
+    "max_true_loc_error_m": 0.0,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the blue target; it is not told which bay holds it"
+     },
+     {
+      "tick": 1,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "no_localiser",
+      "reason": "no localiser runs: the belief is the truth (SIMPLIFIED)"
+     },
+     {
+      "tick": 2,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 138,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 158,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the blue target, seen: the camera saw Bay 3"
+     },
+     {
+      "tick": 218,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 372,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 2.7
+   },
+   {
+    "colour": "blue",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 1,
+    "recoveries": 0,
+    "ticks": 372,
+    "t_sim_s": 37.2,
+    "max_true_loc_error_m": 0.0,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the blue target; it is not told which bay holds it"
+     },
+     {
+      "tick": 1,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "no_localiser",
+      "reason": "no localiser runs: the belief is the truth (SIMPLIFIED)"
+     },
+     {
+      "tick": 2,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 138,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 158,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the blue target, seen: the camera saw Bay 3"
+     },
+     {
+      "tick": 218,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 372,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 2.8
+   },
+   {
+    "colour": "yellow",
+    "seed": 1,
+    "result": "failed: every bay searched once and the target not found",
+    "state": "failed",
+    "surveys": 4,
+    "recoveries": 0,
+    "ticks": 1164,
+    "t_sim_s": 116.4,
+    "max_true_loc_error_m": 0.0,
+    "final_bay_belief": [
+     0.25,
+     0.25,
+     0.25,
+     0.25
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the yellow target; it is not told which bay holds it"
+     },
+     {
+      "tick": 1,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "no_localiser",
+      "reason": "no localiser runs: the belief is the truth (SIMPLIFIED)"
+     },
+     {
+      "tick": 2,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 138,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 158,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no yellow target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 159,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 432,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 452,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no yellow target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 453,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 857,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 877,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no yellow target (the camera saw Bay 2); P(bay) 0.08 after the miss"
+     },
+     {
+      "tick": 878,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 1 (bay_1): expected 11.8 m"
+     },
+     {
+      "tick": 1143,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1163,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no yellow target (the camera saw Bay 1); P(bay) 0.25 after the miss"
+     },
+     {
+      "tick": 1164,
+      "from": "choose_bay",
+      "to": "failed",
+      "event": "target_not_found",
+      "reason": "every bay searched once and the target not found"
+     }
+    ],
+    "wall_s": 9.3
+   },
+   {
+    "colour": "yellow",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 2,
+    "recoveries": 0,
+    "ticks": 795,
+    "t_sim_s": 79.5,
+    "max_true_loc_error_m": 0.0,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the yellow target; it is not told which bay holds it"
+     },
+     {
+      "tick": 1,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "no_localiser",
+      "reason": "no localiser runs: the belief is the truth (SIMPLIFIED)"
+     },
+     {
+      "tick": 2,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 138,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 158,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no yellow target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 159,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 432,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 452,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the yellow target, seen: the camera saw Bay 4"
+     },
+     {
+      "tick": 512,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 795,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 6.2
+   }
+  ],
+  "mcl": [
+   {
+    "colour": "red",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 4,
+    "recoveries": 0,
+    "ticks": 1820,
+    "t_sim_s": 182.0,
+    "max_true_loc_error_m": 0.3494,
+    "final_bay_belief": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the red target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 281,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 301,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 302,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 635,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 655,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 656,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 1103,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1123,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 2); P(bay) 0.08 after the miss"
+     },
+     {
+      "tick": 1124,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 1 (bay_1): expected 11.8 m"
+     },
+     {
+      "tick": 1453,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1473,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the red target, seen: the camera saw Bay 1"
+     },
+     {
+      "tick": 1533,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 1820,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 22.2
+   },
+   {
+    "colour": "red",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 4,
+    "recoveries": 0,
+    "ticks": 1767,
+    "t_sim_s": 176.7,
+    "max_true_loc_error_m": 0.3479,
+    "final_bay_belief": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the red target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 203,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 223,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 224,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 581,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 601,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 602,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 1024,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1044,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 2); P(bay) 0.08 after the miss"
+     },
+     {
+      "tick": 1045,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 1 (bay_1): expected 11.8 m"
+     },
+     {
+      "tick": 1389,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1409,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the red target, seen: the camera saw Bay 1"
+     },
+     {
+      "tick": 1469,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 1767,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 20.6
+   },
+   {
+    "colour": "green",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 3,
+    "recoveries": 0,
+    "ticks": 1352,
+    "t_sim_s": 135.2,
+    "max_true_loc_error_m": 0.334,
+    "final_bay_belief": [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the green target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 281,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 301,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 302,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 635,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 655,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 656,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 1103,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1123,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the green target, seen: the camera saw Bay 2"
+     },
+     {
+      "tick": 1183,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 1352,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 16.1
+   },
+   {
+    "colour": "green",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 3,
+    "recoveries": 0,
+    "ticks": 1259,
+    "t_sim_s": 125.9,
+    "max_true_loc_error_m": 0.3479,
+    "final_bay_belief": [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the green target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 203,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 223,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 224,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 581,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 601,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 602,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 1024,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1044,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the green target, seen: the camera saw Bay 2"
+     },
+     {
+      "tick": 1104,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 1259,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 14.6
+   },
+   {
+    "colour": "blue",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 1,
+    "recoveries": 0,
+    "ticks": 591,
+    "t_sim_s": 59.1,
+    "max_true_loc_error_m": 0.266,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the blue target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 281,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 301,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the blue target, seen: the camera saw Bay 3"
+     },
+     {
+      "tick": 361,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 591,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 7.0
+   },
+   {
+    "colour": "blue",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 1,
+    "recoveries": 0,
+    "ticks": 446,
+    "t_sim_s": 44.6,
+    "max_true_loc_error_m": 0.291,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the blue target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 203,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 223,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the blue target, seen: the camera saw Bay 3"
+     },
+     {
+      "tick": 283,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 446,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 4.8
+   },
+   {
+    "colour": "yellow",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 2,
+    "recoveries": 0,
+    "ticks": 1002,
+    "t_sim_s": 100.2,
+    "max_true_loc_error_m": 0.4061,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the yellow target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 281,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 301,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no yellow target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 302,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 635,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 655,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the yellow target, seen: the camera saw Bay 4"
+     },
+     {
+      "tick": 715,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 1002,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 11.6
+   },
+   {
+    "colour": "yellow",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 2,
+    "recoveries": 0,
+    "ticks": 960,
+    "t_sim_s": 96.0,
+    "max_true_loc_error_m": 0.3913,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the yellow target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 203,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 223,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no yellow target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 224,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 581,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 601,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the yellow target, seen: the camera saw Bay 4"
+     },
+     {
+      "tick": 661,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 960,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 11.1
+   }
+  ],
+  "mcl+rpp": [
+   {
+    "colour": "red",
+    "seed": 1,
+    "result": "failed: NAVIGATION_FAILED: no_valid_control",
+    "state": "failed",
+    "surveys": 2,
+    "recoveries": 5,
+    "ticks": 1011,
+    "t_sim_s": 101.1,
+    "max_true_loc_error_m": 0.365,
+    "final_bay_belief": [
+     0.4545,
+     0.4545,
+     0.0455,
+     0.0455
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the red target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 188,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 208,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 209,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 412,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 432,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 439,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 459,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 556,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 576,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 577,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 901,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 921,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 937,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 957,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 974,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 994,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 3 of 3)"
+     },
+     {
+      "tick": 1011,
+      "from": "go_to_bay",
+      "to": "failed",
+      "event": "navigation_failed",
+      "reason": "NAVIGATION_FAILED: no_valid_control"
+     }
+    ],
+    "wall_s": 16.8
+   },
+   {
+    "colour": "red",
+    "seed": 2,
+    "result": "failed: NAVIGATION_FAILED: no_valid_control",
+    "state": "failed",
+    "surveys": 2,
+    "recoveries": 6,
+    "ticks": 1053,
+    "t_sim_s": 105.3,
+    "max_true_loc_error_m": 0.3225,
+    "final_bay_belief": [
+     0.4545,
+     0.4545,
+     0.0455,
+     0.0455
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the red target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 182,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 202,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 203,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 243,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 263,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 432,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 452,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 457,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 477,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 3 of 3)"
+     },
+     {
+      "tick": 581,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 601,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 602,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 932,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 952,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 960,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 980,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 1028,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 1048,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 3 of 3)"
+     },
+     {
+      "tick": 1053,
+      "from": "go_to_bay",
+      "to": "failed",
+      "event": "navigation_failed",
+      "reason": "NAVIGATION_FAILED: no_valid_control"
+     }
+    ],
+    "wall_s": 17.4
+   },
+   {
+    "colour": "green",
+    "seed": 1,
+    "result": "failed: NAVIGATION_FAILED: no_valid_control",
+    "state": "failed",
+    "surveys": 2,
+    "recoveries": 5,
+    "ticks": 1011,
+    "t_sim_s": 101.1,
+    "max_true_loc_error_m": 0.365,
+    "final_bay_belief": [
+     0.4545,
+     0.4545,
+     0.0455,
+     0.0455
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the green target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 188,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 208,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 209,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 412,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 432,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 439,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 459,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 556,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 576,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 577,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 901,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 921,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 937,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 957,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 974,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 994,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 3 of 3)"
+     },
+     {
+      "tick": 1011,
+      "from": "go_to_bay",
+      "to": "failed",
+      "event": "navigation_failed",
+      "reason": "NAVIGATION_FAILED: no_valid_control"
+     }
+    ],
+    "wall_s": 17.2
+   },
+   {
+    "colour": "green",
+    "seed": 2,
+    "result": "failed: NAVIGATION_FAILED: no_valid_control",
+    "state": "failed",
+    "surveys": 2,
+    "recoveries": 6,
+    "ticks": 1053,
+    "t_sim_s": 105.3,
+    "max_true_loc_error_m": 0.3225,
+    "final_bay_belief": [
+     0.4545,
+     0.4545,
+     0.0455,
+     0.0455
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the green target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 182,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 202,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 203,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 243,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 263,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 432,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 452,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 457,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 477,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 3 of 3)"
+     },
+     {
+      "tick": 581,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 601,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 602,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 932,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 952,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 960,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 980,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 1028,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 1048,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 3 of 3)"
+     },
+     {
+      "tick": 1053,
+      "from": "go_to_bay",
+      "to": "failed",
+      "event": "navigation_failed",
+      "reason": "NAVIGATION_FAILED: no_valid_control"
+     }
+    ],
+    "wall_s": 17.5
+   },
+   {
+    "colour": "blue",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 1,
+    "recoveries": 3,
+    "ticks": 526,
+    "t_sim_s": 52.6,
+    "max_true_loc_error_m": 0.3044,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the blue target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 188,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 208,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the blue target, seen: the camera saw Bay 3"
+     },
+     {
+      "tick": 268,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 313,
+      "from": "return",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 333,
+      "from": "recover",
+      "to": "return",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 377,
+      "from": "return",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 397,
+      "from": "recover",
+      "to": "return",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 412,
+      "from": "return",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 432,
+      "from": "recover",
+      "to": "return",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 3 of 3)"
+     },
+     {
+      "tick": 526,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 7.4
+   },
+   {
+    "colour": "blue",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 1,
+    "recoveries": 3,
+    "ticks": 517,
+    "t_sim_s": 51.7,
+    "max_true_loc_error_m": 0.2673,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the blue target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 182,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 202,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the blue target, seen: the camera saw Bay 3"
+     },
+     {
+      "tick": 262,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 309,
+      "from": "return",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 329,
+      "from": "recover",
+      "to": "return",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 375,
+      "from": "return",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 395,
+      "from": "recover",
+      "to": "return",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 404,
+      "from": "return",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 424,
+      "from": "recover",
+      "to": "return",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 3 of 3)"
+     },
+     {
+      "tick": 517,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 7.3
+   },
+   {
+    "colour": "yellow",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 2,
+    "recoveries": 3,
+    "ticks": 958,
+    "t_sim_s": 95.8,
+    "max_true_loc_error_m": 0.365,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the yellow target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 188,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 208,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no yellow target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 209,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 412,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 432,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 439,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 459,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 556,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 576,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the yellow target, seen: the camera saw Bay 4"
+     },
+     {
+      "tick": 636,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 679,
+      "from": "return",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 699,
+      "from": "recover",
+      "to": "return",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 958,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 14.8
+   },
+   {
+    "colour": "yellow",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 2,
+    "recoveries": 3,
+    "ticks": 955,
+    "t_sim_s": 95.5,
+    "max_true_loc_error_m": 0.341,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the yellow target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 182,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 202,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no yellow target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 203,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 243,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 263,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 432,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 452,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 457,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 477,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 3 of 3)"
+     },
+     {
+      "tick": 581,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 601,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the yellow target, seen: the camera saw Bay 4"
+     },
+     {
+      "tick": 661,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 955,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 14.8
+   }
+  ],
+  "mcl+mppi": [
+   {
+    "colour": "red",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 4,
+    "recoveries": 0,
+    "ticks": 2646,
+    "t_sim_s": 264.6,
+    "max_true_loc_error_m": 0.3521,
+    "final_bay_belief": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the red target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 286,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 306,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 307,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 783,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 803,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 804,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 1562,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1582,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 2); P(bay) 0.08 after the miss"
+     },
+     {
+      "tick": 1583,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 1 (bay_1): expected 11.8 m"
+     },
+     {
+      "tick": 2063,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 2083,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the red target, seen: the camera saw Bay 1"
+     },
+     {
+      "tick": 2143,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 2646,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 104.0
+   },
+   {
+    "colour": "red",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 4,
+    "recoveries": 1,
+    "ticks": 2849,
+    "t_sim_s": 284.9,
+    "max_true_loc_error_m": 0.3891,
+    "final_bay_belief": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the red target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 311,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 331,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 332,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 828,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 848,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 995,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1015,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 1016,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 1767,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1787,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 2); P(bay) 0.08 after the miss"
+     },
+     {
+      "tick": 1788,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 1 (bay_1): expected 11.8 m"
+     },
+     {
+      "tick": 2256,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 2276,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the red target, seen: the camera saw Bay 1"
+     },
+     {
+      "tick": 2336,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 2849,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 113.4
+   },
+   {
+    "colour": "green",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 3,
+    "recoveries": 0,
+    "ticks": 1908,
+    "t_sim_s": 190.8,
+    "max_true_loc_error_m": 0.3508,
+    "final_bay_belief": [
+     0.0,
+     1.0,
+     0.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the green target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 286,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 306,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 307,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 783,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 803,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 804,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 1562,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1582,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the green target, seen: the camera saw Bay 2"
+     },
+     {
+      "tick": 1642,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 1908,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 66.3
+   },
+   {
+    "colour": "green",
+    "seed": 2,
+    "result": "failed: every bay searched once and the target not found",
+    "state": "failed",
+    "surveys": 4,
+    "recoveries": 1,
+    "ticks": 2277,
+    "t_sim_s": 227.7,
+    "max_true_loc_error_m": 0.3891,
+    "final_bay_belief": [
+     0.25,
+     0.25,
+     0.25,
+     0.25
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the green target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 311,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 331,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 332,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 828,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 848,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 995,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1015,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 1016,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 1767,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1787,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 2); P(bay) 0.08 after the miss"
+     },
+     {
+      "tick": 1788,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 1 (bay_1): expected 11.8 m"
+     },
+     {
+      "tick": 2256,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 2276,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 1); P(bay) 0.25 after the miss"
+     },
+     {
+      "tick": 2277,
+      "from": "choose_bay",
+      "to": "failed",
+      "event": "target_not_found",
+      "reason": "every bay searched once and the target not found"
+     }
+    ],
+    "wall_s": 80.7
+   },
+   {
+    "colour": "blue",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 1,
+    "recoveries": 0,
+    "ticks": 630,
+    "t_sim_s": 63.0,
+    "max_true_loc_error_m": 0.2571,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the blue target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 286,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 306,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the blue target, seen: the camera saw Bay 3"
+     },
+     {
+      "tick": 366,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 630,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 20.3
+   },
+   {
+    "colour": "blue",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 1,
+    "recoveries": 0,
+    "ticks": 653,
+    "t_sim_s": 65.3,
+    "max_true_loc_error_m": 0.3095,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the blue target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 311,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 331,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the blue target, seen: the camera saw Bay 3"
+     },
+     {
+      "tick": 391,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 653,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 22.5
+   },
+   {
+    "colour": "yellow",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 2,
+    "recoveries": 0,
+    "ticks": 1369,
+    "t_sim_s": 136.9,
+    "max_true_loc_error_m": 0.2791,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the yellow target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 286,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 306,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no yellow target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 307,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 783,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 803,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the yellow target, seen: the camera saw Bay 4"
+     },
+     {
+      "tick": 863,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 1369,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 51.6
+   },
+   {
+    "colour": "yellow",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 2,
+    "recoveries": 1,
+    "ticks": 1581,
+    "t_sim_s": 158.1,
+    "max_true_loc_error_m": 0.3891,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the yellow target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 311,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 331,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no yellow target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 332,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 828,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 848,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 995,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1015,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the yellow target, seen: the camera saw Bay 4"
+     },
+     {
+      "tick": 1075,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 1581,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 61.2
+   }
+  ],
+  "mcl+dwa": [
+   {
+    "colour": "red",
+    "seed": 1,
+    "result": "failed: NAVIGATION_FAILED: no_valid_control",
+    "state": "failed",
+    "surveys": 2,
+    "recoveries": 3,
+    "ticks": 675,
+    "t_sim_s": 67.5,
+    "max_true_loc_error_m": 0.3,
+    "final_bay_belief": [
+     0.4545,
+     0.4545,
+     0.0455,
+     0.0455
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the red target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 185,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 205,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 206,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 470,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 490,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 491,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 537,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 557,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 602,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 622,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 627,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 647,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 3 of 3)"
+     },
+     {
+      "tick": 675,
+      "from": "go_to_bay",
+      "to": "failed",
+      "event": "navigation_failed",
+      "reason": "NAVIGATION_FAILED: no_valid_control"
+     }
+    ],
+    "wall_s": 17.5
+   },
+   {
+    "colour": "red",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 4,
+    "recoveries": 0,
+    "ticks": 1509,
+    "t_sim_s": 150.9,
+    "max_true_loc_error_m": 0.3124,
+    "final_bay_belief": [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the red target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 180,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 200,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 201,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 473,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 493,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 494,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 893,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 913,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 2); P(bay) 0.08 after the miss"
+     },
+     {
+      "tick": 914,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 1 (bay_1): expected 11.8 m"
+     },
+     {
+      "tick": 1156,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1176,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the red target, seen: the camera saw Bay 1"
+     },
+     {
+      "tick": 1236,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 1509,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 45.3
+   },
+   {
+    "colour": "green",
+    "seed": 1,
+    "result": "failed: NAVIGATION_FAILED: no_valid_control",
+    "state": "failed",
+    "surveys": 2,
+    "recoveries": 3,
+    "ticks": 675,
+    "t_sim_s": 67.5,
+    "max_true_loc_error_m": 0.3,
+    "final_bay_belief": [
+     0.4545,
+     0.4545,
+     0.0455,
+     0.0455
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the green target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 185,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 205,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 206,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 470,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 490,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 491,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 537,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 557,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 602,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 622,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 627,
+      "from": "go_to_bay",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 647,
+      "from": "recover",
+      "to": "go_to_bay",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 3 of 3)"
+     },
+     {
+      "tick": 675,
+      "from": "go_to_bay",
+      "to": "failed",
+      "event": "navigation_failed",
+      "reason": "NAVIGATION_FAILED: no_valid_control"
+     }
+    ],
+    "wall_s": 18.3
+   },
+   {
+    "colour": "green",
+    "seed": 2,
+    "result": "failed: every bay searched once and the target not found",
+    "state": "failed",
+    "surveys": 4,
+    "recoveries": 0,
+    "ticks": 1177,
+    "t_sim_s": 117.7,
+    "max_true_loc_error_m": 0.2697,
+    "final_bay_belief": [
+     0.25,
+     0.25,
+     0.25,
+     0.25
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the green target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 180,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 200,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 201,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 473,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 493,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 4); P(bay) 0.05 after the miss"
+     },
+     {
+      "tick": 494,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 2 (bay_2): expected 22.9 m"
+     },
+     {
+      "tick": 893,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 913,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 2); P(bay) 0.08 after the miss"
+     },
+     {
+      "tick": 914,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 1 (bay_1): expected 11.8 m"
+     },
+     {
+      "tick": 1156,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 1176,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 1); P(bay) 0.25 after the miss"
+     },
+     {
+      "tick": 1177,
+      "from": "choose_bay",
+      "to": "failed",
+      "event": "target_not_found",
+      "reason": "every bay searched once and the target not found"
+     }
+    ],
+    "wall_s": 33.6
+   },
+   {
+    "colour": "blue",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 1,
+    "recoveries": 2,
+    "ticks": 508,
+    "t_sim_s": 50.8,
+    "max_true_loc_error_m": 0.289,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the blue target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 185,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 205,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the blue target, seen: the camera saw Bay 3"
+     },
+     {
+      "tick": 265,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 308,
+      "from": "return",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 328,
+      "from": "recover",
+      "to": "return",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 362,
+      "from": "return",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 382,
+      "from": "recover",
+      "to": "return",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 508,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 11.9
+   },
+   {
+    "colour": "blue",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 1,
+    "recoveries": 0,
+    "ticks": 397,
+    "t_sim_s": 39.7,
+    "max_true_loc_error_m": 0.2653,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the blue target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 180,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 200,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the blue target, seen: the camera saw Bay 3"
+     },
+     {
+      "tick": 260,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 397,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 9.7
+   },
+   {
+    "colour": "yellow",
+    "seed": 1,
+    "result": "failed: NAVIGATION_FAILED: no_valid_control",
+    "state": "failed",
+    "surveys": 2,
+    "recoveries": 3,
+    "ticks": 705,
+    "t_sim_s": 70.5,
+    "max_true_loc_error_m": 0.32,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the yellow target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.35 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 185,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 205,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no yellow target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 206,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 470,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 490,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the yellow target, seen: the camera saw Bay 4"
+     },
+     {
+      "tick": 550,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 608,
+      "from": "return",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 628,
+      "from": "recover",
+      "to": "return",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 655,
+      "from": "return",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 675,
+      "from": "recover",
+      "to": "return",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 2 of 3)"
+     },
+     {
+      "tick": 680,
+      "from": "return",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 700,
+      "from": "recover",
+      "to": "return",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 3 of 3)"
+     },
+     {
+      "tick": 705,
+      "from": "return",
+      "to": "failed",
+      "event": "navigation_failed",
+      "reason": "NAVIGATION_FAILED: no_valid_control"
+     }
+    ],
+    "wall_s": 17.8
+   },
+   {
+    "colour": "yellow",
+    "seed": 2,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 2,
+    "recoveries": 1,
+    "ticks": 868,
+    "t_sim_s": 86.8,
+    "max_true_loc_error_m": 0.3265,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     0.0,
+     1.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the yellow target; it is not told which bay holds it"
+     },
+     {
+      "tick": 50,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "localise_timeout",
+      "reason": "not localised after 5 s (sigma 0.33 m): going anyway"
+     },
+     {
+      "tick": 51,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 180,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 200,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no yellow target (the camera saw Bay 3); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 201,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 473,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 493,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the yellow target, seen: the camera saw Bay 4"
+     },
+     {
+      "tick": 553,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 593,
+      "from": "return",
+      "to": "recover",
+      "event": "controller_failed",
+      "reason": "no_valid_control: backing up 0.30 m (after Nav2's BackUp recovery)"
+     },
+     {
+      "tick": 613,
+      "from": "recover",
+      "to": "return",
+      "event": "recovered",
+      "reason": "backed up; re-planning (recovery 1 of 3)"
+     },
+     {
+      "tick": 868,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 24.8
+   }
+  ],
+  "mislocalised": [
+   {
+    "colour": "red",
+    "seed": 1,
+    "result": "failed: NAVIGATION_FAILED: moved less than 0.1 m in 10 s (blocked?)",
+    "state": "failed",
+    "surveys": 1,
+    "recoveries": 0,
+    "ticks": 577,
+    "t_sim_s": 57.7,
+    "max_true_loc_error_m": 4.0,
+    "final_bay_belief": [
+     0.3226,
+     0.3226,
+     0.0323,
+     0.3226
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the red target; it is not told which bay holds it"
+     },
+     {
+      "tick": 1,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "no_localiser",
+      "reason": "no localiser runs: the robot takes the pose it was given as true"
+     },
+     {
+      "tick": 2,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 280,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 300,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no red target (the camera saw Bay 4 (the robot believes it is at Bay 3)); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 301,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 577,
+      "from": "go_to_bay",
+      "to": "failed",
+      "event": "no_progress",
+      "reason": "NAVIGATION_FAILED: moved less than 0.1 m in 10 s (blocked?)"
+     }
+    ],
+    "wall_s": 4.6
+   },
+   {
+    "colour": "green",
+    "seed": 1,
+    "result": "failed: NAVIGATION_FAILED: moved less than 0.1 m in 10 s (blocked?)",
+    "state": "failed",
+    "surveys": 1,
+    "recoveries": 0,
+    "ticks": 577,
+    "t_sim_s": 57.7,
+    "max_true_loc_error_m": 4.0,
+    "final_bay_belief": [
+     0.3226,
+     0.3226,
+     0.0323,
+     0.3226
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the green target; it is not told which bay holds it"
+     },
+     {
+      "tick": 1,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "no_localiser",
+      "reason": "no localiser runs: the robot takes the pose it was given as true"
+     },
+     {
+      "tick": 2,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 280,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 300,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no green target (the camera saw Bay 4 (the robot believes it is at Bay 3)); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 301,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 577,
+      "from": "go_to_bay",
+      "to": "failed",
+      "event": "no_progress",
+      "reason": "NAVIGATION_FAILED: moved less than 0.1 m in 10 s (blocked?)"
+     }
+    ],
+    "wall_s": 4.5
+   },
+   {
+    "colour": "blue",
+    "seed": 1,
+    "result": "failed: NAVIGATION_FAILED: moved less than 0.1 m in 10 s (blocked?)",
+    "state": "failed",
+    "surveys": 1,
+    "recoveries": 0,
+    "ticks": 577,
+    "t_sim_s": 57.7,
+    "max_true_loc_error_m": 4.0,
+    "final_bay_belief": [
+     0.3226,
+     0.3226,
+     0.0323,
+     0.3226
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the blue target; it is not told which bay holds it"
+     },
+     {
+      "tick": 1,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "no_localiser",
+      "reason": "no localiser runs: the robot takes the pose it was given as true"
+     },
+     {
+      "tick": 2,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 280,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 300,
+      "from": "detect",
+      "to": "choose_bay",
+      "event": "miss",
+      "reason": "no blue target (the camera saw Bay 4 (the robot believes it is at Bay 3)); P(bay) 0.03 after the miss"
+     },
+     {
+      "tick": 301,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 4 (bay_4): expected 28.1 m"
+     },
+     {
+      "tick": 577,
+      "from": "go_to_bay",
+      "to": "failed",
+      "event": "no_progress",
+      "reason": "NAVIGATION_FAILED: moved less than 0.1 m in 10 s (blocked?)"
+     }
+    ],
+    "wall_s": 4.5
+   },
+   {
+    "colour": "yellow",
+    "seed": 1,
+    "result": "fetch",
+    "state": "done",
+    "surveys": 1,
+    "recoveries": 0,
+    "ticks": 514,
+    "t_sim_s": 51.4,
+    "max_true_loc_error_m": 4.0,
+    "final_bay_belief": [
+     0.0,
+     0.0,
+     1.0,
+     0.0
+    ],
+    "transitions": [
+     {
+      "tick": 0,
+      "from": "idle",
+      "to": "localise",
+      "event": "start",
+      "reason": "told to fetch the yellow target; it is not told which bay holds it"
+     },
+     {
+      "tick": 1,
+      "from": "localise",
+      "to": "choose_bay",
+      "event": "no_localiser",
+      "reason": "no localiser runs: the robot takes the pose it was given as true"
+     },
+     {
+      "tick": 2,
+      "from": "choose_bay",
+      "to": "go_to_bay",
+      "event": "bay_chosen",
+      "reason": "Bay 3 (bay_3): expected 30.4 m"
+     },
+     {
+      "tick": 280,
+      "from": "go_to_bay",
+      "to": "detect",
+      "event": "arrived",
+      "reason": "at the bay, looking"
+     },
+     {
+      "tick": 300,
+      "from": "detect",
+      "to": "grasp",
+      "event": "target_detected",
+      "reason": "the yellow target, seen: the camera saw Bay 4 (the robot believes it is at Bay 3)"
+     },
+     {
+      "tick": 360,
+      "from": "grasp",
+      "to": "return",
+      "event": "grasped",
+      "reason": "the magnet holds the target; going home"
+     },
+     {
+      "tick": 514,
+      "from": "return",
+      "to": "done",
+      "event": "home",
+      "reason": "home with the target"
+     }
+    ],
+    "wall_s": 4.1
+   }
+  ]
+ }
+}

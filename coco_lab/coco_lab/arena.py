@@ -208,6 +208,7 @@ class Arena:
         self.dt = self.spec['arena']['dt']
         self.range_sigma = float(range_sigma)
         # planning: the map inflated by the robot's radius, 8-connected
+        self.plan_clearance = self.radius
         self.plan_map = _inflated_grid_map(self.smap, self.radius)
         self.grid = self.plan_map.to_grid(connectivity=8)
         self.seed = seed
@@ -231,6 +232,11 @@ class Arena:
         self._collector: Optional[Collector] = None
         self._stream = None
         self._want_plan = False
+        #: a goal a subsystem asked for (M2.6: the mission), taken at the
+        #: start of the next tick; ``_requested`` keeps it planned if the
+        #: tick is amended
+        self._goal_request: Optional[Tuple[float, float]] = None
+        self._requested = False
         #: called with (channel, tick, columns, scalars) for each whole-loop
         #: family batch (coco_lab.columns); never part of the state
         self.on_family = on_family
@@ -484,6 +490,12 @@ class Arena:
             if not (math.isfinite(v) and v >= 0):
                 raise ArenaError('arena.range_sigma must be >= 0')
             self.range_sigma = v
+        elif key == 'plan_clearance':
+            v = float(value)
+            if not (math.isfinite(v) and self.radius <= v <= 1.0):
+                raise ArenaError(f'arena.plan_clearance must be in '
+                                 f'[{self.radius}, 1.0] m')
+            self.set_plan_clearance(v)
         elif key == 'odom_alphas':
             a = tuple(float(x) for x in value.split(','))
             if len(a) != 4 or any(not (math.isfinite(x) and x >= 0)
@@ -504,9 +516,20 @@ class Arena:
         if self.on_family is not None:
             self.on_family(channel, self.tick, None, header)
 
+    def set_plan_clearance(self, r: float) -> None:
+        """Plan on the map inflated by ``r`` (M1: the robot's radius)."""
+        if r != self.plan_clearance:
+            self.plan_clearance = r
+            self.plan_map = _inflated_grid_map(self.smap, r)
+            self.grid = self.plan_map.to_grid(connectivity=8)
+
+    def request_goal(self, x: float, y: float) -> None:
+        """Ask for a goal from a subsystem: planned at the next tick's start."""
+        self._goal_request = (float(x), float(y))
+
     def _prepare(self):
         """Apply the pending inputs to the snapshot; start the one search."""
-        self._want_plan = False
+        self._want_plan = self._requested
         for e in self._pending:
             self._apply(e)
         if self._want_plan and self.goal is not None:
@@ -522,6 +545,11 @@ class Arena:
         for e in loop:
             self._apply_loop(e)
         self._loop_applied = loop
+        if self._goal_request is not None:
+            # committed like a loop input: an amendment re-plans it
+            self.goal, self.teleop = self._goal_request, (0.0, 0.0)
+            self._goal_request = None
+            self._requested = True
         self._snap = self._snapshot()
         self._pending = [e for e in events if e.kind not in LOOP_KINDS]
         self._in_step = True
@@ -574,6 +602,7 @@ class Arena:
         if self._collector is not None:
             plans.append(self._plan_finish())
         applied = self._loop_applied + self._pending
+        self._requested = False
         self._pending = []
         self._loop_applied = []
         self._in_step = False
@@ -662,6 +691,10 @@ class Arena:
                       struct.pack('<4q', *(_q(a, Q_STATE)
                                            for a in self.odom_alphas)),
                       struct.pack('<4Q', *self.odom_rng.state)]
+            if self.plan_clearance != self.radius:
+                # only when set (M2.6), so earlier loop hashes are unchanged
+                parts.append(b'clearance' + struct.pack(
+                    '<q', _q(self.plan_clearance, Q_STATE)))
             for name in sorted(self.subsystems):
                 nb = name.encode('utf-8')
                 sb = self.subsystems[name].state_bytes()

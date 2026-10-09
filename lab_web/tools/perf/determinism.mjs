@@ -73,6 +73,7 @@ function make() {
   const LOOP = args.loop === '1';
   const MAP = args.map === '1';
   const MOVE = args.move === '1';
+  const MISSION = args.mission === '1';
   const sessions = [];
   for (let s = 0; s < n; s += 1) {
     const inputs = [];
@@ -98,6 +99,11 @@ function make() {
       inputs.push({ tick: 0, kind: 'config', choice: `move.controller=${['dwa', 'rpp', 'mppi'][Math.floor(r() * 3)]}` });
       if (r() < 0.7) inputs.push({ tick: 0, kind: 'config', choice: `move.scenario=${['static_room', 'crossing', 'oncoming', 'mislocalised'][Math.floor(r() * 4)]}` });
     }
+    // --mission 1 (M2.6): a fetch from tick 0, sometimes with the target moved (its own draws)
+    if (MISSION) {
+      if (r() < 0.5) inputs.push({ tick: 0, kind: 'config', choice: `mission.truth=bay_${1 + Math.floor(r() * 4)}` });
+      inputs.push({ tick: 0, kind: 'config', choice: `mission.start=${['red', 'green', 'blue', 'yellow'][Math.floor(r() * 4)]}` });
+    }
     while (true) {
       t += 1 + Math.floor(r() * 30);
       if (t >= ticks - 5) break;
@@ -108,7 +114,7 @@ function make() {
         inputs.push({ tick: t, kind: 'teleop', linear: (2 * r() - 1) * lim.teleop_linear, angular: (2 * r() - 1) * lim.teleop_angular });
       } else if (LOOP && u < 0.85) {
         // a kidnap to a known-free goal-sized spot (the Arena refuses walls; the generator stays clear)
-        const spots = [[6.0, 4.0], [2.5, 2.0], [0.5, -2.5], [12.0, 5.5], [9.0, -4.0], [3.0, -6.5]];
+        const spots = [[6.0, 4.0], [2.5, 2.0], [0.5, -2.5], [10.0, 3.0], [9.0, -4.0], [3.0, -6.5]]; // (12, 5.5) was inside a box until M2.6
         const [kx, ky] = spots[Math.floor(r() * spots.length)];
         inputs.push({ tick: t, kind: 'kidnap', x: kx, y: ky, theta: (2 * r() - 1) * Math.PI, has_theta: true });
       } else if (u < 0.9) {

@@ -117,7 +117,7 @@ TABLES: Dict[str, Tuple[Tuple[Tuple[str, str], ...],
     'coco.arm.v1.ArmStateBatch': (
         (('joint1', 'd'), ('joint2', 'd'), ('ee_x', 'd'), ('ee_z', 'd'),
          ('finger_left', 'd'), ('finger_right', 'd'), ('magnet_on', 'B'),
-         ('holding', 'B'), ('phase', 's')),
+         ('holding', 'B'), ('phase', 's'), ('elbow_x', 'd'), ('elbow_z', 'd')),
         ()),
 }
 

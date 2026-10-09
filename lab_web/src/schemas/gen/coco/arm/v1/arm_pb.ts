@@ -20,7 +20,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file coco/arm/v1/arm.proto.
  */
 export const file_coco_arm_v1_arm: GenFile = /*@__PURE__*/
-  fileDesc("ChVjb2NvL2FybS92MS9hcm0ucHJvdG8SC2NvY28uYXJtLnYxItUBCg1Bcm1TdGF0ZUJhdGNoEgsKA3NlcRgBIAMoBBIMCgR0aWNrGAIgAygEEg8KB3Rfd29ybGQYAyADKAESDgoGam9pbnQxGAQgAygBEg4KBmpvaW50MhgFIAMoARIMCgRlZV94GAYgAygBEgwKBGVlX3oYByADKAESEwoLZmluZ2VyX2xlZnQYCCADKAESFAoMZmluZ2VyX3JpZ2h0GAkgAygBEhEKCW1hZ25ldF9vbhgKIAMoCBIPCgdob2xkaW5nGAsgAygIEg0KBXBoYXNlGAwgAygJYgZwcm90bzM");
+  fileDesc("ChVjb2NvL2FybS92MS9hcm0ucHJvdG8SC2NvY28uYXJtLnYxIvcBCg1Bcm1TdGF0ZUJhdGNoEgsKA3NlcRgBIAMoBBIMCgR0aWNrGAIgAygEEg8KB3Rfd29ybGQYAyADKAESDgoGam9pbnQxGAQgAygBEg4KBmpvaW50MhgFIAMoARIMCgRlZV94GAYgAygBEgwKBGVlX3oYByADKAESEwoLZmluZ2VyX2xlZnQYCCADKAESFAoMZmluZ2VyX3JpZ2h0GAkgAygBEhEKCW1hZ25ldF9vbhgKIAMoCBIPCgdob2xkaW5nGAsgAygIEg0KBXBoYXNlGAwgAygJEg8KB2VsYm93X3gYDSADKAESDwoHZWxib3dfehgOIAMoAWIGcHJvdG8z");
 
 /**
  * @generated from message coco.arm.v1.ArmStateBatch
@@ -99,6 +99,20 @@ export type ArmStateBatch = Message<"coco.arm.v1.ArmStateBatch"> & {
    * @generated from field: repeated string phase = 12;
    */
   phase: string[];
+
+  /**
+   * m, the elbow joint, forward of the shoulder (M2.6, additive)
+   *
+   * @generated from field: repeated double elbow_x = 13;
+   */
+  elbowX: number[];
+
+  /**
+   * m, up from the shoulder
+   *
+   * @generated from field: repeated double elbow_z = 14;
+   */
+  elbowZ: number[];
 };
 
 /**

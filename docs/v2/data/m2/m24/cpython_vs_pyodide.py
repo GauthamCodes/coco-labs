@@ -30,6 +30,7 @@ sys.path.insert(0, os.path.join(REPO, 'lab_web', 'src', 'arena'))
 import arena_glue  # noqa: E402
 import coco_lab.loc_arena  # noqa: E402,F401
 import coco_lab.map_arena  # noqa: E402,F401
+import coco_lab.mission_arena  # noqa: E402,F401
 import coco_lab.move_arena  # noqa: E402,F401
 
 

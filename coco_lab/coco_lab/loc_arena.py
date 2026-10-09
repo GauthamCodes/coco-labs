@@ -131,6 +131,7 @@ class ArenaLocaliser:
         self.anchor, self.anchor_odom = start, a.odom
         self.last_odom = None
         self._est: Dict[str, Tuple[float, float, float]] = {}
+        self._cov: Dict[str, Tuple[float, float]] = {}
 
     def on_reset(self, arena) -> None:
         """Restart the filters at the start pose (a reset is a new run)."""
@@ -138,6 +139,22 @@ class ArenaLocaliser:
             self._start()
 
     # -- per tick --------------------------------------------------------------
+
+    def quality(self) -> Optional[Dict[str, float]]:
+        """
+        Return what the robot knows of its own uncertainty, or None.
+
+        ``sigma_xy`` (m): the square root of the trace of the position
+        covariance of the estimate the belief comes from (MCL's, else the
+        EKF's); ``filter``: which. None before the first update.
+        """
+        cov = getattr(self, '_cov', {})
+        for who in ('mcl', 'ekf'):
+            if who in cov:
+                xx, yy = cov[who]
+                return {'sigma_xy': math.sqrt(max(0.0, xx + yy)),
+                        'filter': who}
+        return None
 
     def belief(self) -> Optional[Tuple[float, float, float]]:
         """Return the estimate (MCL's, else the EKF's), once one has updated."""
@@ -163,6 +180,7 @@ class ArenaLocaliser:
             u = self.mcl.update(odom, z)
             est, cov = u['est'], u['cov']
             self._est['mcl'] = est
+            self._cov['mcl'] = (cov[0], cov[2])
             P, w = u['particles']
             ps = Batch('coco.localise.v1.ParticleSetBatch',
                        update=self.mcl.updates - 1, filter_id='mcl')
@@ -187,6 +205,7 @@ class ArenaLocaliser:
             u = self.ekf.update(odom, z)
             est, P = u['est'], u['P']
             self._est['ekf'] = est
+            self._cov['ekf'] = (P[0][0], P[1][1])
             pm, pP = u['pred_mu'], u['pred_P']
             kb = Batch('coco.localise.v1.EkfUpdateBatch', filter_id='ekf')
             kb.add(tick, t, update=self.ekf.updates - 1,

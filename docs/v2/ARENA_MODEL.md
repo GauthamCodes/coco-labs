@@ -137,7 +137,20 @@ From the first loop input the Arena keeps:
   provide `command()` (it drives instead of M1's waypoint driver while a
   goal is followed), `discs()` (moving bodies: the LiDAR sees them and the
   robot cannot drive into them) and `world_step()` (it moves them, after
-  the robot and before the scan).
+  the robot and before the scan). A subsystem asks for a goal with
+  `Arena.request_goal(x, y)` (M2.6, the mission): it is committed at the
+  start of the next tick, before the snapshot, like a loop input, so an
+  amended tick still plans it and a learner's own input in that tick still
+  wins;
+- **`arena.plan_clearance=<m>`** (M2.6): plan on the map inflated by this
+  much instead of the robot's radius (0.22 m, M1's), within [0.22, 1.0] m.
+  The mission and the three local controllers raise it to 0.40 m: M1's
+  planner keeps only the robot's radius from walls, inside the local
+  window's 0.255 m inscribed band and with no margin for any localisation
+  error (measured: DWA refused its first fetch leg; a 0.19 m MCL error put
+  the robot against a box). Appended to the loop section of the hash
+  (`clearance` + int64 micro-units) only when it differs from the radius,
+  so every earlier hash is unchanged.
 
 **Planning and driving use the BELIEF** (`Arena.belief()`: the localiser's
 estimate, MCL's when both run), never the truth: a localisation error
@@ -171,6 +184,12 @@ micro-units), triggered u8 and ticks held u32; MPPI's warm-start control
 sequence (2 × 28 int64 micro-units; nothing for DWA and RPP); the time no
 valid command began (−1 if none) and the progress checker's time (int64
 micro-units).
+The mission subsystem's state: state u8, colour u8 (0 = none), the true
+bay, the target bay and the location i8 (−1 = none / home), awaiting a plan
+u8, the searched bays as a bit mask u32, the update count u32; the belief
+over the bays (int64, × 10¹²); the state's start time, the world's
+detection rate and the progress checker's time (int64 micro-units), the
+recovery count and the leg u8; its stream (4 × u64).
 
 ### The map subsystem (M2.4)
 
@@ -233,3 +252,39 @@ goal's heading), INVALID_PATH 103 (no path pose in the window), NO_VALID_CONTROL
   was given (`path`).
 
 The comparison with Lab 5's STACK results is `docs/v2/M2_MOVE_COMPARISON.md`.
+
+### The mission subsystem (M2.6)
+
+`config` keys: `mission.start=red|green|blue|yellow`, `mission.truth=bay_k`
+(where the target really stands; default the frozen layout),
+`mission.detect=<p>` (the camera's REAL rate, default 0.9), `mission.abort=1`.
+The fetch runs **localise → choose a bay → plan → local control → detect →
+grasp → return**, each step done by the pack that owns it, so a localisation
+error reaches the planner (it plans from the believed cell), the controller
+(it steers by the belief), the survey (the camera sees what is TRULY in
+front of the robot) and the search (a miss is booked at the bay the robot
+believes it searched).
+
+- **The search is Lab 4's** (`coco_lab/regionsearch.py`; the problem in
+  `coco_lab/fetch_problem.py`, generated from `build_search.arena_problem()`
+  and pinned to it by a test): a uniform prior over the four bays, the robot's
+  detection probability d = 0.9 **labelled ASSUMPTION** (in
+  `coco.decide.search.header.v1` and on screen), Bayes on a miss, the next bay
+  by the least expected metres driven over every order. Every choice emits the
+  belief, the expected cost of every order of the bays left, and the action.
+- **SIMPLIFIED:** the Arena is flat, so the ramp climb is not modelled; the
+  robot surveys and grasps from the bay's pre-ramp pose. A bay is in view when
+  the robot's TRUE position is within 0.6 m of that pose; detection is found
+  with probability `mission.detect` when that bay holds the target, never a
+  false positive (`coco.sensor.detect.colour.v1`).
+- **The arm** (`coco_lab/arm.py`, geometry pinned to `arm_ik.py`): two
+  revolute joints in the side view, two fingers and a magnet — **the magnet
+  holds**; the pick is `pick_place.py`'s verified joint poses, interpolated
+  (`coco.arm.state.v1`, with the elbow; additive fields 13–14).
+- A leg fails as Nav2 would report it: no path, the controller's outcome,
+  no progress (under 0.1 m in 10 s), 300 s. After a controller gives up
+  (104/105) the robot backs up 0.30 m and re-plans, at most 3 times — after
+  Nav2's BackUp recovery; SIMPLIFIED: no costmap clearing, spin or wait.
+- Every 10 ticks it emits `loc_error` (the true error, which the learner can
+  see and the robot cannot) and, with a localiser, `loc_sigma` (the robot's
+  own uncertainty).

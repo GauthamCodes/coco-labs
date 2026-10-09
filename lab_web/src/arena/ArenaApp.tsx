@@ -33,7 +33,9 @@ import { Timeline } from './Timeline';
 import { caption } from './lens/captions';
 import { drawLenses, HOVERS } from './lens/draw';
 import { EventLog, LensBar, LensCharts, LensInspector } from './lens/panels';
-import { LocaliseControls, MapControls, MoveControls } from './lens/controls';
+import { DecideControls, LocaliseControls, MapControls, MoveControls } from './lens/controls';
+import { MissionPanel } from './lens/mission';
+import './lens/decide';
 import './lens/localise';
 import './lens/map';
 import './lens/move';
@@ -139,8 +141,17 @@ export function ArenaApp() {
   }, [setMode]);
 
   /** A whole-loop setting: a config input, so it is in the run's log (M2.3). */
+  // a config for a pack not loaded yet waits for it: the model refuses a subsystem it has not got (M2.6)
+  const readyPacks = useRef<Set<string>>(new Set(['core']));
+  const waitingConfigs = useRef<string[]>([]);
   const sendConfig = useCallback((choice: string) => {
     takeOver();
+    const pack = packForConfig(choice);
+    if (!readyPacks.current.has(pack)) {
+      waitingConfigs.current.push(choice);
+      client.current?.loadPack(pack);
+      return;
+    }
     queue.current.push({ kind: 'config', choice });
   }, [takeOver]);
   const locOn = useRef(false);
@@ -316,7 +327,13 @@ export function ArenaApp() {
       },
       onPlanBatch: (meta, cols) => live.current?.onPlanBatch(meta, cols),
       onFamily: (m) => live.current?.onFamily(m),
-      onPackReady: (pack) => setPacks((p) => new Set([...p, pack])),
+      onPackReady: (pack) => {
+        readyPacks.current.add(pack);
+        const go = waitingConfigs.current.filter((c) => readyPacks.current.has(packForConfig(c)));
+        waitingConfigs.current = waitingConfigs.current.filter((c) => !readyPacks.current.has(packForConfig(c)));
+        for (const choice of go) queue.current.push({ kind: 'config', choice });
+        setPacks((p) => new Set([...p, pack]));
+      },
       onCompareBatch: (meta, cols) => {
         setCompare((c) => {
           if (!c) return c;
@@ -561,6 +578,8 @@ export function ArenaApp() {
       {lens === 'localise' && <LocaliseControls send={sendConfig} live={mode === 'live'} />}
       {lens === 'map' && <MapControls send={sendConfig} live={mode === 'live'} />}
       {lens === 'move' && <MoveControls send={sendConfig} live={mode === 'live'} />}
+      {lens === 'decide' && <DecideControls send={sendConfig} live={mode === 'live'} />}
+      {lens === 'decide' && session && <MissionPanel session={session} tick={tick?.tick ?? 0} />}
       {level !== 'watch' && session && (() => { const c = caption(lens, session.families, tick?.tick ?? 0);
         return c ? <p className="lens-caption" data-testid="lens-caption" role="status">{c}</p> : null; })()}
       <div className="arena-stage">

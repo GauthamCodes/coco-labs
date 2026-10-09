@@ -108,3 +108,30 @@ export function MoveControls({ send, live }: { send: Send; live: boolean }) {
     </div>
   );
 }
+
+export function DecideControls({ send, live }: { send: Send; live: boolean }) {
+  const [colour, setColour] = useState('red');
+  const [truth, setTruth] = useState('layout');
+  const [detect, setDetect] = useState(0.9);
+  if (!live) return <p className="lens-empty">The Decide lens runs on the live model: click the map to take over.</p>;
+  return (
+    <div className="lens-controls" data-testid="decide-controls" role="group" aria-label="Fetch mission settings">
+      <label>fetch <select value={colour} data-testid="decide-colour" onChange={(e) => setColour(e.target.value)}>
+        {['red', 'green', 'blue', 'yellow'].map((c) => <option key={c} value={c}>{c}</option>)}
+      </select></label>
+      <label title="where the target really stands; the robot is never told">target really in <select value={truth} data-testid="decide-truth"
+        onChange={(e) => { setTruth(e.target.value); if (e.target.value !== 'layout') send(`mission.truth=${e.target.value}`); }}>
+        <option value="layout">its colour's bay (the layout)</option>
+        {['bay_1', 'bay_2', 'bay_3', 'bay_4'].map((b) => <option key={b} value={b}>{b.replace('_', ' ')}</option>)}
+      </select></label>
+      <label title="how often the camera REALLY finds a target in view; the robot always assumes 0.9 (an ASSUMPTION)">camera finds it
+        <input type="range" min={0.3} max={1} step={0.05} value={detect} data-testid="decide-detect"
+          onChange={(e) => setDetect(Number(e.target.value))} onPointerUp={() => send(`mission.detect=${detect}`)} />{detect.toFixed(2)}</label>
+      <button type="button" data-testid="decide-start" onClick={() => send(`mission.start=${colour}`)}>Start the fetch</button>
+      <button type="button" data-testid="decide-mcl" onClick={() => { send('arena.range_sigma=0.02'); send('localise.filter=mcl'); }}>localise with MCL</button>
+      <button type="button" data-testid="decide-mislocalise" title="the robot believes it is 4 m south of where it is (no localiser)"
+        onClick={() => send('move.belief_offset=0.0,-4.0,0.0')}>believe 4 m south</button>
+      <button type="button" data-testid="decide-abort" onClick={() => send('mission.abort=1')}>abort</button>
+    </div>
+  );
+}

@@ -107,7 +107,7 @@ export const LENSES: readonly Lens[] = [
   {
     id: 'decide', title: 'Decide', question: 'How does it decide where to look?', pack: 'decide', since: 'M2.6',
     families: ['decide.search', 'sensor.detect', 'mission.fsm', 'arm'],
-    charts: ['expected_cost', 'p_max'],
+    charts: ['expected_cost', 'p_max', 'loc_error'],
     layers: [
       { id: 'belief', label: 'belief', role: 'computation', colour: 'belief', from: 'watch', meaning: 'P(target in bay): the fill is the probability' },
       { id: 'detection', label: 'detections', role: 'computation', colour: 'detection', from: 'watch', meaning: 'what each look reported (detection probability labelled)' },

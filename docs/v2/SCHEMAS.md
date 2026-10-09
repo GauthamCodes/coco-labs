@@ -92,7 +92,7 @@ or a fixed stride (critic scores: one per critic named in the header).
 | `coco.mission.fsm.header.v1` | `coco.mission.v1.MissionHeader` | static | the mission's states in order, its parameters, evidence class |
 | `coco.mission.fsm.transition.v1` | `coco.mission.v1.TransitionBatch` | stream | every transition: from, to, the event, a reason a learner can read, a terminal result |
 | `coco.sensor.detect.colour.v1` | `coco.sensor.v1.DetectionBatch` | stream | ABSTRACT colour detection (no image simulated): looked where, for what colour, detected or not; the detection probability and its label per batch |
-| `coco.arm.state.v1` | `coco.arm.v1.ArmStateBatch` | stream | the 2-DOF arm's joints and end effector (side view), the two fingers, the magnet, whether the magnet holds an object, the phase |
+| `coco.arm.state.v1` | `coco.arm.v1.ArmStateBatch` | stream | the 2-DOF arm's joints and end effector (side view), the two fingers, the magnet, whether the magnet holds an object, the phase; the elbow (`elbow_x`, `elbow_z`, fields 13–14, added at M2.6) |
 
 Rules the families keep, from README §3: truth lives only in
 `coco.truth.pose.v1` (estimates, detections and SLAM never carry it); the

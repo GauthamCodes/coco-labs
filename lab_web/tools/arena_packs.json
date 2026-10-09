@@ -15,7 +15,7 @@
   },
   "decide": {
    "requires": [],
-   "modules": ["regionsearch.py", "searchbundle.py"]
+   "modules": ["arm.py", "fetch_problem.py", "mission_arena.py", "regionsearch.py", "searchbundle.py"]
   }
  }
 }

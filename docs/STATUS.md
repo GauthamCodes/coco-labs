@@ -595,7 +595,7 @@ only. Read order for agents (README §9): `README.md`, this file,
     Chromium, Firefox and WebKit: **1,500 ticks each, 0 mismatched**
     (`determinism_loop/`); the harness gained `make --loop 1` and loads
     every pack.
-  - Tests: packages **3,375 / 0 / 0** (`coco_lab` 670 → 681:
+  - Tests: packages **3,371 / 0 / 0** (corrected at M2.6 from 3,375, a sum slip; `coco_lab` 670 → 681:
     `test_loc_arena.py` 11; `coco_schemas` 209 → 211), vitest **417 / 0 / 0**,
     build tools **137 / 0 / 0**. Next: M2.4 (Map lens).
 
@@ -656,7 +656,7 @@ only. Read order for agents (README §9): `README.md`, this file,
     Chromium, Firefox, WebKit: **0 mismatched of 1,500 ticks each**
     (`determinism_map/`); native CPython 3.12.3 against the Pyodide hashes:
     **0 of 1,500** (`determinism_map/cpython.json`).
-  - Tests: packages **3,391 / 0 / 0** (`coco_lab` 681 → 697:
+  - Tests: packages **3,387 / 0 / 0** (corrected at M2.6 from 3,391; `coco_lab` 681 → 697:
     `test_map_arena.py` 16), vitest **424 / 0 / 0** (+7: `lens_layers`,
     `renderer_path`), build tools **138 / 0 / 0**. (The first vitest run
     failed `site.test.ts` on a `__pycache__` the CPython check wrote under
@@ -713,9 +713,76 @@ only. Read order for agents (README §9): `README.md`, this file,
     and scenario drawn) × Pyodide-in-Node, Chromium, Firefox, WebKit:
     **0 of 1,500 ticks mismatched each**; CPython vs Pyodide **0 of 1,500**
     (`determinism_move/`).
-  - Tests: packages **3,413 / 0 / 0** (`coco_lab` 697 → 719:
+  - Tests: packages **3,409 / 0 / 0** (corrected at M2.6 from 3,413; `coco_lab` 697 → 719:
     `test_move_arena.py` 22), vitest **424 / 0 / 0**, build tools
     **139 / 0 / 0**. Next: M2.6 (Decide lens and the fetch mission).
+
+- **M2.6 Decide lens and the fetch mission (2026-10-09).** Evidence:
+  `v2/data/m2/m26/`. Documented in [`v2/ARENA_MODEL.md`](v2/ARENA_MODEL.md)
+  "The mission subsystem".
+  - **The fetch (MODEL, `coco_lab/mission_arena.py`, decide pack):**
+    localise → choose a bay → plan → local control → detect → grasp →
+    return, each step done by the pack that owns it (`mission.fsm`
+    transitions carry the event and the reason in words).
+  - **Lab 4's Bayesian bay search:** the problem is Lab 4's exactly
+    (`coco_lab/fetch_problem.py`, generated from
+    `build_search.arena_problem()`; a tools test pins it); uniform prior,
+    **d = 0.9 labelled ASSUMPTION** in the data and on screen, Bayes on a
+    miss, the expected cost of every order of the bays left and the chosen
+    bay at each decision (tested against `regionsearch` choice by choice).
+  - **`sensor.detect`:** abstract colour detection from the bay the robot
+    is TRULY at (within 0.6 m of its pre-ramp pose), never a false
+    positive, at the world's rate `mission.detect` (default 0.9). Across
+    the matrix below, looks at the true bay found the target 30 times and
+    missed 4.
+  - **The arm (`coco_lab/arm.py`):** `arm_ik.py`'s geometry (a test pins
+    every constant), `pick_place.py`'s verified joint poses interpolated;
+    two fingers and a magnet, **the magnet holds**. Side-view inset drawn
+    from the model's batches (`coco.arm.v1` gained `elbow_x`/`elbow_z`,
+    fields 13–14, additive; the page computes no kinematics).
+  - **SIMPLIFIED, said on screen:** the Arena is flat, so the ramp climb is
+    not modelled; survey and grasp happen at the pre-ramp pose. Recovery
+    after a controller gives up: back up 0.30 m and re-plan, at most 3 —
+    after Nav2's BackUp, without its costmap clearing, spin or wait.
+  - **Core:** `arena.plan_clearance` (hashed only when set) — the mission and
+    the local controllers plan at 0.40 m, because M1's 0.22 m paths left no
+    margin (measured: DWA refused its first leg; a 0.19 m MCL error put the
+    robot against a box); `Arena.request_goal`; the localiser's
+    `quality()`.
+  - **Fetch matrix (MODEL, `fetch_matrix.json`, 4 colours × 2 seeds):**
+    no localiser **6/8**, MCL **8/8**, MCL + RPP **4/8**, MCL + MPPI
+    **7/8**, MCL + DWA **4/8**. Every "target not found" (4) is the camera
+    missing the true bay at d < 1; every MCL + RPP/DWA navigation failure
+    (7) is NO_VALID_CONTROL on the leg after Bay 4, where three backups did
+    not help — **not attributed**. RPP needed 34 recoveries across its 8
+    runs. Not a rate for the robot.
+  - **Whole-loop visibility (MODEL):** told it is 4 m south of the truth,
+    the robot drives to where it believes Bay 3 is; the camera sees Bay 4;
+    the miss is booked against Bay 3 (P 0.25 → 0.03), then it drives into
+    what it believed was clear and the leg fails (no progress) — 3 of 4
+    colours; yellow, whose target IS in Bay 4, was fetched. Tested, and
+    seen in the browser with the true error (4.00 m) shown beside the
+    robot's own view.
+  - **Lens (browser, `browser/mission_check.json`, Chromium):** bays filled
+    by belief, the chosen bay, every look; the mission panel (state and
+    reason, the belief table with d's label, true error vs the robot's
+    σ, the arm inset); controls as `config` inputs, a config for a pack not
+    yet loaded now waits for it. A red fetch with the target in Bay 3:
+    localise → … → done, `fetch`, the inset "magnet on, holding the
+    target"; then the 4 m mislocalisation: the miss booked against Bay 3
+    while the camera saw Bay 4. 0 console errors, 0 three.js warnings.
+  - **Determinism with the mission:** 10 sessions × 300 ticks × 4 engines,
+    **0 of 3,000 ticks mismatched each**; CPython vs Pyodide **0 of 3,000**
+    (`determinism_mission/`). (The session generator's kidnap spot
+    (12, 5.5) lay inside a box; replaced by (10, 3). No committed session
+    had drawn it — checked.)
+  - Tests: packages **3,425 / 0 / 0** (`coco_lab` 719 → 735:
+    `test_mission_arena.py`), vitest **424 / 0 / 0**, build tools
+    **142 / 0 / 0** (+3: `test_fetch_problem.py` 2, the conditions check
+    of `mission_check.mjs` 1). The package totals recorded at M2.3, M2.4
+    and M2.5 were each 4 too high (a sum slip; the per-package counts were
+    right) — corrected above, re-added from the logs. Next: M2.7
+    (converters).
 
 ## Capabilities (README §2), with evidence class
 

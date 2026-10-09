@@ -74,6 +74,12 @@ PROGRESS_RADIUS = 0.1
 PROGRESS_TIME = 10.0
 #: every n-th trajectory point goes to the lens
 TRAJ_STRIDE = 3
+#: a local controller plans with this clearance from walls (m), as the
+#: mission's global costmap keeps paths away from them; M1's planner keeps
+#: only the robot's 0.22 m, inside the local window's 0.255 m inscribed
+#: band, so a controller refused the path it was given (measured: DWA,
+#: FAILED_TO_MAKE_PROGRESS on its first fetch leg)
+CLEARANCE = 0.40
 
 
 def _q(v: float) -> int:
@@ -158,6 +164,8 @@ class ArenaMover:
             if value not in CONTROLLERS:
                 raise ArenaError(f'move.controller must be one of {CONTROLLERS}')
             self.controller = value
+            if value != 'builtin' and a.plan_clearance < CLEARANCE:
+                a.set_plan_clearance(CLEARANCE)
             self.engine = {'builtin': None, 'dwa': DWA(), 'rpp': RPP(),
                            'mppi': MPPI(self.rng)}[value]
             self._clear_run()
