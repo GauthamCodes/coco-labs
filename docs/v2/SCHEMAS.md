@@ -53,6 +53,53 @@ channels carry one record.
 | `coco.plan.path.poses.v1` | `coco.plan.v1.PathBatch` | stream | a published metric path (e.g. the stack's `/lab/plan`); added in M1.9, additive |
 | `coco.annotation.text.v1` | `coco.annotation.v1.AnnotationBatch` | stream | text at a moment, optionally a place |
 
+### The whole loop's families (M2.1, additive within v1)
+
+Ten families, 26 channels, added in M2.1 without touching an M1 message
+(`test_compat.py` checks them against the M1.1 baseline, which is
+unchanged). Every stream message is flat — repeated scalar columns plus
+per-batch scalars, no nested messages — so `coco_lab.columns` declares each
+one as a table without protobuf, and `test_columns_m2.py` holds every table
+to its generated descriptor (names, order, kinds) and round-trips a filled
+batch through protobuf. Variable-length lists inside a row are flattened
+with an `*_offset` / `*_len` pair (candidate trajectories, search orders)
+or a fixed stride (critic scores: one per critic named in the header).
+
+| Channel | Message | Kind | What |
+|---|---|---|---|
+| `coco.estimate.pose.v1` | `coco.estimate.v1.EstimateBatch` | stream | what an estimator BELIEVES the pose is (MCL, EKF, a SLAM, odometry), with the covariance's upper triangle; `estimator` names it. Never the truth |
+| `coco.localise.particles.header.v1` | `coco.localise.v1.FilterHeader` | static | MCL's id and every knob (particles, alphas, sigma_hit, injection) |
+| `coco.localise.particles.set.v1` | `coco.localise.v1.ParticleSetBatch` | stream | the weighted particle set after one update (rows share clocks) |
+| `coco.localise.particles.update.v1` | `coco.localise.v1.ParticleUpdateBatch` | stream | per update: n_eff, resampled, injected, p_inject, w_avg / w_slow / w_fast |
+| `coco.localise.ekf.header.v1` | `coco.localise.v1.FilterHeader` | static | the EKF's id and knobs |
+| `coco.localise.ekf.update.v1` | `coco.localise.v1.EkfUpdateBatch` | stream | per update: predicted and posterior mean + covariance, beams used / gated, NIS |
+| `coco.map.grid.header.v1` | `coco.map.v1.MapGridHeader` | static | the built map's geometry, inverse sensor model, and whose poses built it |
+| `coco.map.grid.snapshot.v1` | `coco.map.v1.MapGridSnapshotBatch` | stream | the whole log-odds grid at a keyframe (float32 bytes) |
+| `coco.map.grid.cells.v1` | `coco.map.v1.MapCellBatch` | stream | the cells one update changed, with their new log-odds |
+| `coco.map.slam.header.v1` | `coco.map.v1.SlamHeader` | static | algorithm, knobs, and the sensor — EKF-SLAM's landmark sensor is labelled **IDEALISED** here |
+| `coco.map.slam.landmarks.v1` | `coco.map.v1.LandmarkBatch` | stream | EKF-SLAM's landmark means and covariances |
+| `coco.map.slam.particles.v1` | `coco.map.v1.SlamParticleBatch` | stream | FastSLAM's particles and the best one |
+| `coco.map.slam.nodes.v1` | `coco.map.v1.GraphNodeBatch` | stream | pose-graph nodes at a `stage` ("raw" / "optimised") with the graph's chi² — a loop closure shows before and after |
+| `coco.map.slam.edges.v1` | `coco.map.v1.GraphEdgeBatch` | stream | pose-graph edges (odometry, scan match, loop) and each one's error |
+| `coco.control.local.header.v1` | `coco.control.v1.ControllerHeader` | static | controller kind, its critics (the stride of `critic_scores`), knobs, evidence class |
+| `coco.control.local.candidates.v1` | `coco.control.v1.CandidateBatch` | stream | every candidate of one cycle: (v, ω), valid, rejection reason, total cost, per-critic scores, trajectory |
+| `coco.control.local.command.v1` | `coco.control.v1.CommandBatch` | stream | per cycle: the chosen candidate (−1 = none valid), the command, a status ("no_valid_candidate", ...), the lookahead point |
+| `coco.decide.search.header.v1` | `coco.decide.v1.SearchProblemHeader` | static | the regions, and the detection probability **with its label** ("ASSUMPTION" for the Arena's 0.9) |
+| `coco.decide.search.belief.v1` | `coco.decide.v1.BeliefBatch` | stream | P(target in region) per region per update (update 0 = prior) |
+| `coco.decide.search.orders.v1` | `coco.decide.v1.OrderCostBatch` | stream | the expected cost of each visiting order considered |
+| `coco.decide.search.action.v1` | `coco.decide.v1.ActionBatch` | stream | the region chosen, its expected cost and the reason |
+| `coco.decide.search.observation.v1` | `coco.decide.v1.ObservationBatch` | stream | what a look found |
+| `coco.mission.fsm.header.v1` | `coco.mission.v1.MissionHeader` | static | the mission's states in order, its parameters, evidence class |
+| `coco.mission.fsm.transition.v1` | `coco.mission.v1.TransitionBatch` | stream | every transition: from, to, the event, a reason a learner can read, a terminal result |
+| `coco.sensor.detect.colour.v1` | `coco.sensor.v1.DetectionBatch` | stream | ABSTRACT colour detection (no image simulated): looked where, for what colour, detected or not; the detection probability and its label per batch |
+| `coco.arm.state.v1` | `coco.arm.v1.ArmStateBatch` | stream | the 2-DOF arm's joints and end effector (side view), the two fingers, the magnet, whether the magnet holds an object, the phase |
+
+Rules the families keep, from README §3: truth lives only in
+`coco.truth.pose.v1` (estimates, detections and SLAM never carry it); the
+idealised landmark sensor and the assumed detection probability are
+labelled in the data itself, so a view cannot show them unlabelled; the
+gripper is two fingers and a magnet, and `holding` follows the magnet.
+
 ## The three clocks
 
 Every event carries `t_world` (simulation seconds), `tick` (control cycle)

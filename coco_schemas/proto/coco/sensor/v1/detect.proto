@@ -1,0 +1,29 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// Abstract colour detection (M2.1): what the robot's camera reports when it
+// looks for a coloured target, in the Arena model. It is ABSTRACT -- no
+// image is simulated: a look at a region either reports the colour or not,
+// with a stated detection probability, which is labelled wherever it is
+// shown (0.9 in the Arena is an ASSUMPTION, not a measurement). A look
+// never reports a target that is not there (the robot's perception,
+// approach and grasp confirm a positive). The truth of where the target
+// stands is coco.truth's, never this channel's.
+// Family sensor.detect. Channel: coco.sensor.detect.colour.v1 (DetectionBatch).
+
+syntax = "proto3";
+
+package coco.sensor.v1;
+
+message DetectionBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated string region_id = 4;    // where it looked
+  repeated string colour = 5;       // the colour it looked for
+  repeated bool detected = 6;
+  repeated double range = 7;        // m, to the reported target (NaN if none)
+  repeated double bearing = 8;      // rad, robot frame (NaN if none)
+  double detection_probability = 9;
+  string detection_label = 10;      // "ASSUMPTION" or "MEASURED: <evidence>"
+}

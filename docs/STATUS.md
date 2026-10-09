@@ -446,6 +446,61 @@ only. Read order for agents (README §9): `README.md`, this file,
   4.4 — tests only; no budget was measured in it
   (`~/coco_lab_m2_ws/logs/baseline_env.txt`). Next: M2.0.
 
+- **M2.0 Carry-overs (2026-10-09).** Evidence: `v2/data/m2/m20/`.
+  - **Cancellable planning (MODEL).** A tick's inputs are applied first and
+    the tick plans once, on the state they leave; a step runs in slices,
+    and an input that arrives while a step plans joins its tick (`amend`),
+    cancelling the search in flight. The worker yields between slices of
+    4,096 events, so the page's input lands within about a slice. M1's
+    hash layout is unchanged: M1's 100 recorded sessions give **0
+    differing** hashes old vs new (native, 15,000 ticks) and whole vs
+    sliced-and-amended (916 ticks amended) (`arena_equivalence.json`), and
+    Pyodide-in-Node reproduces M1's committed hashes **15,000 / 15,000**
+    (`pyodide_vs_m1_hashes.json`). Measured (balanced, AC, GPU, real
+    clicks, n = 25): **goal right after a planner change median 35.2 ms,
+    p95 64.2, max 65.5, 25/25 under 100 ms** (target ≤ 100 / ≤ 500; M1:
+    293 / 4,029 power-saver, 138.6 / 1,708 balanced); warm goals median
+    40.7, max 58.5 — no regression (`responsiveness/`).
+  - **Attract mode vs the live model (measured, n = 10, desktop / emulated
+    4G):** `eager` first visible computation 610 / 3,371 ms, live model
+    ready 2,597 / 8,130; `low` (low-priority fetch) 619 / 3,142 and
+    2,608 / **7,895**; `after_pyodide` live ready 2,318 / 7,463 but first
+    computation 1,995 / ~7,860 (only 2 of 10 4G runs recorded it);
+    `after_live` live ready 2,332 / 7,486, first computation not
+    measurable (the harness's goal takes over first). **Default: `low`**
+    — the literal "delay until the live model has loaded" (`after_live`)
+    saves ~640 ms of live-model-ready on 4G but moves the first visible
+    computation to the live model's own (~7.5 s), and README §5.5 (the
+    authority) has attract mode play *while* Pyodide loads (deviation,
+    recorded). `coldstart/m20_*`.
+  - **Live model ready ≤ 10 s on emulated 4G (Plan lens):** met, 7,895 ms
+    with the default (balanced, AC).
+  - **Every harness records power state:** done in the M1 review
+    (`[M1-fix]` `2ad8ecf`).
+  - **Lens modules lazy-loaded within 3 s of selection:** the lenses do
+    not exist yet; the split loader comes with the lens registry (M2.2)
+    and is measured in M2.11.
+  - Tests: packages: `coco_lab` 665 → 670 (5 new arena tests); vitest
+    385 / 0 / 0; tools 135 / 0 / 0.
+
+- **M2.1 Schemas (2026-10-09).** Ten families, 26 channels, added within
+  v1 (`coco_schemas/proto/coco/{estimate,localise,map,control,decide,
+  mission,arm}/v1`, `sensor/v1/detect.proto`): estimate; localise.particles
+  and localise.ekf; map.grid and map.slam; control.local (candidates,
+  per-critic scores, rejection reasons, chosen command); decide.search
+  (belief, expected cost per order, action, observation); mission.fsm;
+  sensor.detect (abstract, detection probability with its label); arm
+  (joints, two fingers, magnet, holding). All flat (repeated scalar
+  columns + per-batch scalars), so `coco_lab/columns.py` declares each as
+  a table without protobuf. Evidence: `test_compat.py` passes against the
+  unchanged M1.1 baseline (additive); `test_columns_m2.py` holds every
+  table to its descriptor and round-trips it; TypeScript's `encodeBatch`
+  reproduces Python protobuf's bytes for all 18 batch messages
+  (`coco_schemas/test/vectors/m2_batches.json`,
+  `lab_web/test/schemas_m2.test.ts`, 19 tests). Reference:
+  [`v2/SCHEMAS.md`](v2/SCHEMAS.md), "The whole loop's families". Tests:
+  `coco_schemas` 91 → **209 / 0 / 0**. Next: M2.2 (lens framework).
+
 ## Capabilities (README §2), with evidence class
 
 Classes as README §3 defines them: MODEL, STACK, REMOTE, HARDWARE (none

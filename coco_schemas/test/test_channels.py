@@ -17,7 +17,8 @@
 import ast
 import os
 
-from coco_schemas.channels import (BY_NAME, CHANNELS, FAMILIES, message_class,
+from coco_schemas.channels import (BY_NAME, CHANNELS, FAMILIES, M2_FAMILIES,
+                                   message_class,
                                    parse)
 from conftest import PKG
 from google.protobuf.descriptor import FieldDescriptor as FD
@@ -60,6 +61,11 @@ def test_stream_messages_carry_the_three_clocks(ch):
         assert (f.name, f.type, f.label) == (name, typ, FD.LABEL_REPEATED)
     # every other repeated field is a column of the same length (scan's
     # `ranges` excepted: it is the concatenation of every scan's beams)
+    # M1's batches have one per-batch field, search_id; the M2 families'
+    # per-batch scalars (filter_id, update, ...) are declared field for
+    # field in coco_lab.columns and held there by test_columns_m2.py
+    if ch.family in M2_FAMILIES:
+        return
     for f in d.fields:
         if f.number > 3 and f.label != FD.LABEL_REPEATED:
             assert f.name == 'search_id', (ch.name, f.name)
