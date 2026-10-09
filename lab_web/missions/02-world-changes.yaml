@@ -5,7 +5,7 @@ number: 2
 title: What if the world changes?
 question: The robot planned on the map it had. The world disagrees. Plan again from scratch, or repair the plan?
 lens: plan
-v1: "?view=move"
+v1: "v1/?view=move&move=replan"
 beats:
   - beat: hook
     text: >-

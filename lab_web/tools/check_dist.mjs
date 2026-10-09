@@ -112,9 +112,9 @@ for (const f of files) {
     if (!ok) failures.push(`external URL ${key}`);
   }
 }
-// the worker builds its URL from the pinned constant; make sure it is in the bundle
-const workerFile = files.find((f) => /pyodide\.worker-.*\.js$/.test(f));
-if (!workerFile) failures.push('no pyodide worker chunk in dist');
+// M2.10: v1 Lab 1's recompute worker (pyodide.worker-*.js) went with the v1
+// lab views; it lives on in the frozen build at v1/ (docs/v2/adr/0003). The
+// pinned CDN URL must still be in the page bundle (the Arena's ?pyodide=cdn).
 // M1.5: the page is code-split (main.tsx loads the v1 App or the Arena), so
 // the pinned URL lives in an app chunk, not necessarily in index-*.js.
 const pageJs = files.filter((f) => /assets\/[^/]+\.js$/.test(f) && !/\.worker-/.test(f))

@@ -6,7 +6,7 @@ number: 1
 title: How does a robot find a path?
 question: Out of every way across the arena, how does COCO pick one -- and is it the shortest?
 lens: plan
-v1: "?view=plan"
+v1: "v1/?view=plan"
 beats:
   - beat: hook
     text: >-

@@ -15,7 +15,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M1 | **Closed 2026-10-09 — agent-measurable criteria**: independent review [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md) (MERGE AFTER FIXES, every fix done); PR #20 merged into `main` as **`0a2516a`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena, a goal click drew its search, all six v1 views 0 console / 0 page errors ([`v2/data/m1/exit/public_after_merge.json`](v2/data/m1/exit/public_after_merge.json)). **Still pending Gautham:** phone performance, phone cold start, usability |
 | Branch | `v2/m2-whole-loop` (from `main` = `0a2516a`), worked in the worktree `.claude/worktrees/v2-m2-whole-loop`, overlay `~/coco_lab_m2_ws` |
 | Milestone | **M2 · The whole loop** ([`v2/M2_PROMPT.md`](v2/M2_PROMPT.md)) |
-| Checkpoint | **M2.9 done** (M2 checkpoint log below). Next: M2.10 |
+| Checkpoint | **M2.10 done** (M2 checkpoint log below). Next: M2.11 |
 | Merge to `main` | M2 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #20 only) |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows — never marked done by the agent |
 
@@ -930,6 +930,58 @@ only. Read order for agents (README §9): `README.md`, this file,
   - Tests: packages **3,432 / 0 / 0** (unchanged), vitest **459 / 0 / 0**
     (+1: the registry's gaps), build tools **172 / 0 / 0** (+8:
     `test_fidelity.py`). Next: M2.10 (retire the v1 views).
+- **M2.10 Retire the v1 lab views (2026-10-10).** Decision record
+  [`v2/adr/0003-v1-archive.md`](v2/adr/0003-v1-archive.md); evidence
+  `v2/data/m2/m210/`.
+  - **`/v1/` is the frozen v1 build, made from its tag at deploy time**
+    (`lab_web/tools/build_v1_archive.sh`): a depth-1 clone of
+    `coco-lab-v1-final` (refused unless it is `3571169`), the tag's OWN
+    `build_catalog.py`, `npm ci` and `vite build` at `/coco-labs/v1/`, the
+    tag's own dist check, copied into the Pages artifact. Measured locally:
+    108 s, 23 MB, 78 files. Two builds differ only in `created_utc` in 13
+    bundle manifests (excluded from every content hash by design;
+    `v1_archive_build.json`). Not stored anywhere new — options B (commit the
+    built files) and C (a release asset) are recorded in the ADR.
+  - **Routing** (`lab_web/src/landing.ts`, `test/landing.test.ts`): a bare
+    `?view=plan|localise|map|search|move` goes to its Learn mission;
+    `?view=live` stays in `main` (until M5), now as its own page
+    (`src/ui/LiveApp.tsx`, the same `LiveView`); a Lab 1 bundle or share link
+    naming a bundle unchanged opens its converted run in the Arena
+    (`?view=arena&replay=<id>`); everything else a v1 page understood — share
+    links with settings or map edits, deep links into a lab, `?view=exhibit`,
+    unknown bundles — goes to `v1/` with its query intact. Missions link to
+    their v1 page in the archive (`v1/?view=…`; a test enforces it).
+  - **Every v1 URL form resolves with 0 console errors** (B.3 "Links"):
+    `v1_links_check.mjs`, 22 forms, Chromium, the built site served with the
+    archive at `v1/` — 22 of 22 (`browser/v1_links_check.json`); it now runs
+    in CI's browser job. The Learn check passes on the same build
+    (`browser/learn_check.json`).
+  - **The removal preconditions held before any code was removed:** the URL
+    test above, `M2_CLAIMS_COVERAGE.md` complete (98 of 98), the 16 searches
+    replaying byte for byte (`coco_schemas/test/test_search_replay_v2.py`).
+  - **Removed (69 files, listed in the commit):** the v1 lab view code — 52
+    files under `lab_web/src` (`ui/` except `LiveView.tsx` and `style.css`,
+    `lab/`, `trace/`, v1 `render/`, the `loc|map|move|search` view and
+    catalog modules, `model/mode.ts`, and the v1 recompute worker
+    `worker/`); the 7 vitest files that tested them and the share-link
+    golden vectors; the 5 Python glue tests of the removed worker,
+    `make_share_vectors.py`, `time_glue_cpython.py`; and two v1-only
+    harnesses, `perf/baseline.mjs` (M0's v1 timings) and
+    `perf/landing_check.mjs` (superseded by `v1_links_check.mjs`). Their
+    committed evidence stays, reproducible from the tag. The site data the
+    v1 views read is still built: the converters and the missions read it.
+    Lab 5's three site-data tests moved to `test_lab5_site.py`.
+  - CI (`lab.yml`): the `lab-web` job builds the archive into the Pages
+    artifact (timeout 20 → 30 min); the browser job builds it and runs the
+    URL forms. `check_dist` no longer requires v1's worker chunk.
+  - Tests: packages **3,432 / 0 / 0** (unchanged); vitest **343 / 0 / 0**
+    (−116, all from listed deletions: `trace` 47, `lab` 21, `share` 20,
+    `localise` 10, `mapview` 9, `moveview` 9, `searchview` 3, `site` −1 (the
+    worker-glue check); `landing` +4, 4 → 8; counted by running each file at
+    `74f5170`); build tools **126 / 0 / 0** (−46: the glue tests `test_glue`
+    12, `test_loc_glue` 13, `test_move_glue` 12, `test_map_glue` 6,
+    `test_search_glue` 6; `test_lab5_site` +3, `test_missions` +1, the
+    harness conditions check −1). Next: M2.11 (measure and decide).
 
 ## Capabilities (README §2), with evidence class
 

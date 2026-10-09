@@ -12,8 +12,10 @@
  *    on screen (the page's own perf records: the click, then the first frame
  *    that drew the search planned for those goal coordinates).
  * 2. Each v1 view (`?view=plan|live|localise|map|search|move`) in a fresh
- *    page: it must open v1 (not the Arena), and log 0 console errors and 0
- *    page errors over a settle window that covers Live's probe backoff.
+ *    page: since M2.10 the five lab views land on their Learn mission and
+ *    Live on the Live view (src/landing.ts); each must land there and log 0
+ *    console errors and 0 page errors over a settle window that covers
+ *    Live's probe backoff. (Every other v1 URL form: v1_links_check.mjs.)
  * Every page's console errors, page errors and cross-origin requests are
  * recorded. Exit 0 only if everything passes.
  */
@@ -30,6 +32,9 @@ const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) =>
 const SITE = args.site ?? 'https://gauthamcodes.github.io/coco-labs/';
 const SETTLE_MS = Number(args.settle ?? 8000);
 const VIEWS = ['plan', 'live', 'localise', 'map', 'search', 'move'];
+// where each lands since M2.10 (src/landing.ts MISSION_FOR_VIEW)
+const LANDS = { plan: 'mission:find-a-path', localise: 'mission:where-it-is', map: 'mission:build-a-map',
+  search: 'mission:where-to-look', move: 'mission:avoid-things', live: 'live' };
 const GOAL = [6.0, 4.0]; // open floor in the map frame (responsiveness.mjs's first goal)
 
 const browser = await chromium.launch();
@@ -96,9 +101,14 @@ try {
     const rec = watch(page);
     await page.goto(`${SITE}?view=${v}`, { waitUntil: 'networkidle' });
     await page.waitForTimeout(SETTLE_MS);
-    const app = await page.evaluate(() => (document.querySelector('[data-testid=arena]') ? 'arena' : document.querySelector('#root')?.firstElementChild ? 'v1' : 'empty'));
-    const one = { view: v, opened: app, ...rec };
-    one.pass = app === 'v1' && rec.console_errors.length === 0 && rec.page_errors.length === 0;
+    const app = await page.evaluate(() => {
+      const m = document.querySelector('[data-testid=mission]');
+      if (m) return `mission:${m.getAttribute('data-mission')}`;
+      if (document.querySelector('[data-testid=nav-arena]')) return 'live';
+      return document.querySelector('[data-testid=arena]') ? 'arena' : 'other';
+    });
+    const one = { view: v, opened: app, url: page.url(), ...rec };
+    one.pass = app === LANDS[v] && rec.console_errors.length === 0 && rec.page_errors.length === 0;
     out.views.push(one);
     console.log(`${v}: ${one.pass ? 'PASS' : 'FAIL'} opened ${app}; console ${rec.console_errors.length}, page ${rec.page_errors.length}, cross-origin ${rec.cross_origin.length}`);
     await ctx.close();

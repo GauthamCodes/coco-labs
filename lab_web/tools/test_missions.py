@@ -171,6 +171,11 @@ def test_a_predict_needs_a_valid_answer():
     _broken(lambda m: m['beats'][1].update(answer=99))
 
 
+def test_the_v1_link_is_the_archive():
+    _broken(lambda m: m.update(v1='?view=plan'))
+    assert all(m['v1'].startswith('v1/?view=') for m in MS)
+
+
 def test_a_claim_with_no_evidence_or_an_unknown_label_is_refused():
     _broken(lambda m: m['claims'][0].update(evidence=[]))
     _broken(lambda m: m['claims'][0].update(label='TRUST ME'))

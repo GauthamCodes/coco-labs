@@ -6,7 +6,7 @@ title: How does a robot avoid things?
 question: The global path is a line on a map. Something steps onto it. Who decides what the wheels do next?
 lens: move
 gaps: [lidar, tracking]
-v1: "?view=move"
+v1: "v1/?view=move"
 beats:
   - beat: hook
     text: >-

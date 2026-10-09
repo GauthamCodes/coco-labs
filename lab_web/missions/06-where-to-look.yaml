@@ -6,7 +6,7 @@ title: How does a robot decide where to look?
 question: COCO is told "fetch the red one" -- not where it is. Four bays. Which first, and what does a miss tell it?
 lens: decide
 gaps: [lidar, odometry, tracking]
-v1: "?view=search"
+v1: "v1/?view=search"
 beats:
   - beat: hook
     text: >-

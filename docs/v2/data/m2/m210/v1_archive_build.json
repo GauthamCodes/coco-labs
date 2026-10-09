@@ -1,0 +1,82 @@
+{
+ "all_differences_are_created_utc_only": true,
+ "build_seconds_local": 108,
+ "bytes_a": 23010835,
+ "commit": "35711693d11da99218fa85050db60c6e10462bd2",
+ "differ": [
+  {
+   "content_hash_equal": true,
+   "equal_without_created_utc": true,
+   "file": "generated/loc/loc_arena_kidnap/manifest.json"
+  },
+  {
+   "content_hash_equal": true,
+   "equal_without_created_utc": true,
+   "file": "generated/loc/loc_global/manifest.json"
+  },
+  {
+   "content_hash_equal": true,
+   "equal_without_created_utc": true,
+   "file": "generated/loc/loc_kidnap/manifest.json"
+  },
+  {
+   "content_hash_equal": true,
+   "equal_without_created_utc": true,
+   "file": "generated/loc/loc_tracking/manifest.json"
+  },
+  {
+   "content_hash_equal": true,
+   "equal_without_created_utc": true,
+   "file": "generated/loc/loc_twins/manifest.json"
+  },
+  {
+   "content_hash_equal": true,
+   "equal_without_created_utc": true,
+   "file": "generated/map/map_arena/manifest.json"
+  },
+  {
+   "content_hash_equal": true,
+   "equal_without_created_utc": true,
+   "file": "generated/map/map_corridor/manifest.json"
+  },
+  {
+   "content_hash_equal": true,
+   "equal_without_created_utc": true,
+   "file": "generated/map/map_landmarks/manifest.json"
+  },
+  {
+   "content_hash_equal": true,
+   "equal_without_created_utc": true,
+   "file": "generated/map/map_loop/manifest.json"
+  },
+  {
+   "content_hash_equal": true,
+   "equal_without_created_utc": true,
+   "file": "generated/move/replan/sketch_0/manifest.json"
+  },
+  {
+   "content_hash_equal": true,
+   "equal_without_created_utc": true,
+   "file": "generated/move/replan/sketch_1/manifest.json"
+  },
+  {
+   "content_hash_equal": true,
+   "equal_without_created_utc": true,
+   "file": "generated/move/replan/sketch_2/manifest.json"
+  },
+  {
+   "content_hash_equal": true,
+   "equal_without_created_utc": true,
+   "file": "generated/search/search_arena/manifest.json"
+  }
+ ],
+ "evidence": "MODEL (build tooling)",
+ "files": {
+  "a": 78,
+  "b": 78
+ },
+ "only_in_a": [],
+ "only_in_b": [],
+ "tag": "coco-lab-v1-final",
+ "tool": "docs/v2/data/m2/m210/compare_v1_builds.py"
+}

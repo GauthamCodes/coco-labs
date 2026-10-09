@@ -107,6 +107,9 @@ def check(m: Dict[str, object], name: str) -> None:
         raise MissionError(f'{name}: schema must be coco.mission.v1')
     if m['lens'] not in LENSES:
         raise MissionError(f'{name}: lens {m["lens"]}')
+    # M2.10: the v1 page is the frozen build at v1/ (docs/v2/adr/0003-v1-archive.md)
+    if not str(m['v1']).startswith('v1/?view='):
+        raise MissionError(f'{name}: v1 must link into the archive, v1/?view=...')
     for g in m.get('gaps', []):
         if g not in fidelity.GAP_IDS:
             raise MissionError(f'{name}: no model gap {g!r} (docs/v2/FIDELITY_v1.md has {fidelity.GAP_IDS})')
@@ -197,7 +200,10 @@ def coverage_markdown(missions) -> str:
              "mission, or if any mission claim's evidence does not resolve.", '',
              f'The v1 inventory: `docs/v2/data/m2/m28/v1_claims.json` ({len(v1)} claims: every cited statement '
              "the v1 pages showed -- the site data's `cite`/`cites`/`citation` objects and every "
-             '`className="cite"` element of the v1 views; made by `docs/v2/data/m2/m28/v1_claims.py`).', '',
+             '`className="cite"` element of the v1 views; made by `docs/v2/data/m2/m28/v1_claims.py`). '
+             'M2.10 removed the v1 views from `main`: a `ui:<file>:<line>` id names that line as it stood at `1f91eee` (M2.8), '
+             'where the inventory was made and can be re-made; the views themselves are served frozen at `v1/` '
+             '(docs/v2/adr/0003-v1-archive.md).', '',
              f'**Covered: {len(v1) - len(uncovered)} of {len(v1)}.** Uncovered: {len(uncovered)}. '
              f'Unknown references: {len(unknown)}.', '']
     titles = {'lab1': 'Lab 1 (Plan)', 'lab2': 'Lab 2 (Localise)', 'lab3': 'Lab 3 (Map)', 'lab4': 'Lab 4 (Search)',

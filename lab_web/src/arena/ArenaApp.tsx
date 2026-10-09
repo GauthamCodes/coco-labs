@@ -576,7 +576,7 @@ export function ArenaApp() {
           title={evidence === 'STACK' ? 'Recorded from the full ROS 2 stack in Gazebo (simulation), not a robot'
             : 'A model in your browser: coco_lab, not the robot'}>{evidence}</span>
         <a href={`${import.meta.env.BASE_URL}?view=learn`} data-testid="learn-link">Learn</a>
-        <a href={`${import.meta.env.BASE_URL}?view=plan`} data-testid="v1-labs-link">v1 labs</a>
+        <a href={`${import.meta.env.BASE_URL}v1/`} data-testid="v1-labs-link">v1 labs (archive)</a>
       </header>
       {missionBack && <p className="mission-back"><a href={`${import.meta.env.BASE_URL}${missionBack}`} data-testid="mission-back">
         ← Back to the mission</a></p>}
