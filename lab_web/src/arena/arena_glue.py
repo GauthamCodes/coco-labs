@@ -16,11 +16,43 @@ import json
 from coco_lab.arena import Arena, InputEvent, PLANNERS
 
 _arena = None
+_post_family = None
 
 
-def init(spec_json, seed, planner, post_batch, batch_size=2048):
+def emit_family(channel, tick, columns, scalars):
+    """
+    Hand one family batch (coco_lab.columns.Batch.drain()) to JavaScript.
+
+    Numeric columns go as arrays (the worker transfers their buffers);
+    string and bool columns, and the per-batch scalars, go as JSON
+    (M2.2; ADR 0001).
+    """
+    if _post_family is None:
+        return
+    numeric, plain = {}, {}
+    for name, col in columns.items():
+        if isinstance(col, array) and col.typecode != 'B':
+            numeric[name] = col
+        elif isinstance(col, array):
+            plain[name] = [bool(v) for v in col]
+        else:
+            plain[name] = list(col)
+    _post_family(numeric, json.dumps({'channel': channel, 'tick': int(tick),
+                                      'numeric': list(numeric),
+                                      'plain': plain, 'scalars': scalars}))
+
+
+def emit_header(channel, header):
+    """Hand a static header (a dict) to JavaScript, once."""
+    if _post_family is not None:
+        _post_family({}, json.dumps({'channel': channel, 'header': header}))
+
+
+def init(spec_json, seed, planner, post_batch, batch_size=2048,
+         post_family=None):
     """Build the Arena; return (world JSON, occupancy bytes)."""
-    global _arena
+    global _arena, _post_family
+    _post_family = post_family
 
     def hook(columns, meta):
         post_batch(columns, json.dumps(meta))

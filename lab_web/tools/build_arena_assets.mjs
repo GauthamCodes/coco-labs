@@ -150,16 +150,69 @@ export function robotOutline(stl) {
   return hull.map(([x, z]) => [Math.round((x + 120) * 10) / 10000, Math.round((z + 80) * 10) / 10000]);
 }
 
+/**
+ * Assign every coco_lab module to a pack and check the imports respect the
+ * split: core imports only core; a pack imports core, itself, or a pack it
+ * `requires`. Relative imports (`from .x import`, `from . import x`) and
+ * absolute `coco_lab.x` ones are read from the source; a violation stops
+ * the build (a lazily loaded module must never be needed before its pack).
+ */
+export function splitPacks(files, defs) {
+  const packOf = new Map();
+  const listed = new Map();
+  for (const [name, d] of Object.entries(defs)) {
+    for (const m of d.modules) {
+      const key = `coco_lab/${m}`;
+      if (listed.has(key)) throw new Error(`arena_packs.json: ${m} is in both ${listed.get(key)} and ${name}`);
+      listed.set(key, name);
+    }
+  }
+  const names = new Set(files.map(([n]) => n));
+  for (const key of listed.keys()) if (!names.has(key)) throw new Error(`arena_packs.json lists ${key}, which does not exist`);
+  for (const [n] of files) packOf.set(n, listed.get(n) ?? 'core');
+  const modPack = (mod) => packOf.get(`coco_lab/${mod}.py`) ?? packOf.get(`coco_lab/${mod}/__init__.py`);
+  const errors = [];
+  for (const [n, buf] of files) {
+    const me = packOf.get(n);
+    const allowed = new Set(['core', me, ...(me === 'core' ? [] : defs[me].requires)]);
+    const text = buf.toString('utf-8');
+    const deps = new Set();
+    for (const m of text.matchAll(/^\s*from \.([A-Za-z_][\w]*)[\w.]* import /gm)) deps.add(m[1]);
+    for (const m of text.matchAll(/^\s*from \. import ([\w, ]+)/gm)) for (const x of m[1].split(',')) deps.add(x.trim());
+    for (const m of text.matchAll(/^\s*(?:from|import) coco_lab\.([A-Za-z_]\w*)/gm)) deps.add(m[1]);
+    for (const d of deps) {
+      const p = modPack(d);
+      if (p === undefined) continue; // a name imported from a package __init__, not a module
+      if (!allowed.has(p)) errors.push(`${n} (${me}) imports ${d} (${p})`);
+    }
+  }
+  if (errors.length) throw new Error(`arena packs: imports cross packs:\n  ${errors.join('\n  ')}`);
+  return packOf;
+}
+
 function main() {
   // arena
   const arenaDir = join(out, 'arena');
   rmSync(arenaDir, { recursive: true, force: true });
   mkdirSync(arenaDir, { recursive: true });
   const src = join(repo, 'coco_lab', 'coco_lab');
-  const entries = walk(src).filter((f) => f.endsWith('.py'))
+  const all = walk(src).filter((f) => f.endsWith('.py'))
     .map((f) => [`coco_lab/${relative(src, f)}`, readFileSync(f)]);
+  // M2.2: split into packs (tools/arena_packs.json); core = everything not in a lens pack
+  const { packs: packDefs } = JSON.parse(readFileSync(join(here, 'arena_packs.json'), 'utf-8'));
+  const packOf = splitPacks(all, packDefs);
+  const entries = all.filter(([name]) => packOf.get(name) === 'core');
   const cocoZip = zip(entries);
   writeFileSync(join(arenaDir, 'coco_lab.zip'), cocoZip);
+  const packs = {};
+  for (const name of Object.keys(packDefs)) {
+    const files = all.filter(([n]) => packOf.get(n) === name);
+    const z = zip(files);
+    const file = `coco_lab_${name}.zip`;
+    writeFileSync(join(arenaDir, file), z);
+    packs[name] = { file, bytes: z.length, sha256: sha256(z), requires: packDefs[name].requires,
+      modules: files.map(([n]) => n.replace(/^coco_lab\//, '').replace(/\.py$/, '').replace(/\//g, '.')) };
+  }
   const spec = readFileSync(join(repo, 'worlds', 'coco_arena_v1.json'));
   writeFileSync(join(arenaDir, 'coco_arena_v1.json'), spec);
   const outline = robotOutline(readFileSync(join(repo, 'gazebo_models', 'meshes', 'base.stl')));
@@ -196,6 +249,7 @@ function main() {
   const manifest = {
     pyodide: pyodideVersion,
     coco_lab_zip: { bytes: cocoZip.length, sha256: sha256(cocoZip), files: entries.length },
+    packs,
     spec: { file: 'coco_arena_v1.json', bytes: spec.length, sha256: sha256(spec) },
     pyodide_files: files,
     stdlib: FULL_STDLIB ? 'full' : 'trimmed (tools/arena_stdlib.txt)',

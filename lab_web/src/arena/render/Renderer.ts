@@ -55,6 +55,8 @@ uniform vec3 uFree, uOccupied, uUnknown, uClosed, uPath;
 uniform vec3 uViridis[5];
 uniform float uClosedAlpha, uMaxOrder;
 uniform bool uShowOcc, uShowClosed, uHeat, uShowPath;
+uniform float uPlanDim, uWorldDim;
+uniform vec3 uBg;
 varying vec2 vUv;
 vec3 viridis(float t) {
   t = clamp(t, 0.0, 1.0) * 4.0;
@@ -69,6 +71,8 @@ vec3 viridis(float t) {
 void main() {
   float occ = texture2D(uOcc, vUv).r * 255.0;
   vec3 c = uShowOcc ? (occ < 0.5 ? uFree : occ < 1.5 ? uOccupied : uUnknown) : uFree;
+  c = mix(uBg, c, uWorldDim);  // Focus (M2.2): the world, dimmed outside the lens
+  vec3 base = c;
   vec4 st = texture2D(uState, vUv) * 255.0;
   float s = st.r;
   float order = st.g * 65536.0 + st.b * 256.0 + st.a;
@@ -76,6 +80,7 @@ void main() {
   if (uHeat && expanded) c = viridis(uMaxOrder > 0.0 ? order / uMaxOrder : 0.0);
   else if (uShowClosed && s > 1.5 && s < 2.5) c = mix(c, uClosed, uClosedAlpha);
   if (uShowPath && s > 2.5) c = mix(c, uPath, uHeat ? 0.0 : 0.25);
+  c = mix(base, c, uPlanDim);  // Focus: the Plan lens's layers, dimmed outside it
   gl_FragColor = vec4(c, 1.0);
 }`;
 
@@ -145,6 +150,7 @@ export class ArenaRenderer {
         uClosed: { value: col(p.closed) }, uPath: { value: col(p.path) },
         uViridis: { value: VIRIDIS.map(col) }, uClosedAlpha: { value: p.closedAlpha }, uMaxOrder: { value: 1 },
         uShowOcc: { value: true }, uShowClosed: { value: true }, uHeat: { value: false }, uShowPath: { value: true },
+        uPlanDim: { value: 1 }, uWorldDim: { value: 1 }, uBg: { value: col(p.background) },
       },
     });
     const plane = new THREE.Mesh(new THREE.PlaneGeometry(W * r, H * r), this.gridMat);
@@ -320,6 +326,25 @@ export class ArenaRenderer {
     this.robot.visible = L.robot;
     if (this.footprint) this.footprint.visible = L.footprint;
     if (this.truth) this.truth.visible = L.truth;
+  }
+
+  /**
+   * Focus (M2.2): dim the Plan lens's layers (closed set, heatmap, path,
+   * frontier) and the world (occupancy, LiDAR, footprint) by these factors
+   * (1 = as drawn). The robot and the truth outline are never dimmed.
+   */
+  setFocusDim(plan: number, world: number) {
+    if (this.gridMat) { this.gridMat.uniforms.uPlanDim.value = plan; this.gridMat.uniforms.uWorldDim.value = 0.35 + 0.65 * world; }
+    const fade = (o: THREE.Object3D | null, f: number, base: number) => {
+      const m = (o as THREE.Mesh | null)?.material as THREE.Material | undefined;
+      if (!m) return;
+      m.transparent = true;
+      m.opacity = base * f;
+    };
+    fade(this.frontier, plan, 1);
+    fade(this.pathLine, plan, 1);
+    fade(this.lidar, world, this.palette.lidarAlpha);
+    fade(this.footprint, world, 1);
   }
 
   // -- camera and input -----------------------------------------------------

@@ -19,7 +19,8 @@
  * Pure: no DOM, no worker, no renderer -- test/session.test.ts drives it.
  */
 
-import type { PlanInfo, SearchColumns, Tick } from './protocol';
+import { FamilyStore } from './lens/store';
+import type { FamilyMessage, PlanInfo, SearchColumns, Tick } from './protocol';
 import { PlanStore } from './render/planStore';
 
 export interface TickRecord {
@@ -36,6 +37,10 @@ export const SPEEDS = [0.25, 0.5, 1, 2, 4];
 export class ArenaSession {
   readonly history: TickRecord[] = [];
   readonly searches = new Map<number, PlanStore>();
+  /** M2.2: the whole loop's family batches, by channel and tick (lens/store.ts). */
+  readonly families = new FamilyStore();
+  /** M2.2: each channel's static header (FilterHeader, ControllerHeader, ...), as the model sent it. */
+  readonly headers = new Map<string, Record<string, unknown>>();
   /** Search started at each tick (tick -> search ids), for the computation track. */
   private searchesAt: [number, number][] = [];
   /** null: follow the live head. Otherwise the tick being shown. */
@@ -47,6 +52,14 @@ export class ArenaSession {
   private clockMs = 0;
 
   constructor(readonly width: number, readonly height: number, readonly dt: number) {}
+
+  /** A family batch or header from the model (M2.2). */
+  onFamily(m: FamilyMessage) {
+    if (m.header) { this.headers.set(m.channel, m.header); return; }
+    if (m.columns && m.tick !== undefined) {
+      this.families.add({ channel: m.channel, tick: m.tick, columns: m.columns, scalars: m.scalars ?? {} });
+    }
+  }
 
   // -- input from the worker -------------------------------------------------
 

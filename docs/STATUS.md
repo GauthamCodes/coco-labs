@@ -501,6 +501,46 @@ only. Read order for agents (README §9): `README.md`, this file,
   [`v2/SCHEMAS.md`](v2/SCHEMAS.md), "The whole loop's families". Tests:
   `coco_schemas` 91 → **209 / 0 / 0**. Next: M2.2 (lens framework).
 
+- **M2.2 Lens framework (2026-10-09).** `lab_web/src/arena/lens/`:
+  a registry of five lenses (Plan, Localise, Map, Move, Decide), each
+  with its families, layers (role: computation / uncertainty / world;
+  a palette colour; the level it appears at), Inspect charts and Python
+  pack; a lens bar (lens tabs, **Watch / Explain / Inspect**, **Focus**);
+  Explain: value labels under the mouse (per-lens hover functions; Plan's
+  from the shown search) and captions at key events; Inspect: one
+  inspector template per family, an event log and metric charts (charts
+  only at Inspect or when a mission asks). A family store files every
+  batch the model emits by channel and tick (timeline-seekable); the
+  worker carries family batches (numeric columns transferred, strings and
+  bools as JSON) and static headers. Drawing primitives
+  (`render/lensLayers.ts`): instanced points, poses, translucent ellipses
+  (an opaque one is refused), coloured line sets, polygons, a log-odds
+  texture; Focus dims everything outside the lens (the robot and truth
+  never). Palette and [`v2/VISUAL_SYSTEM.md`](v2/VISUAL_SYSTEM.md): a
+  fixed colour per new layer, uncertainty translucent, truth an outline.
+  Recorded runs open at Explain (their closed set is the content); the
+  live arena at Watch. **Lazy Python packs** (the M2.0 carry-over):
+  `coco_lab.zip` (core, Plan) 191 → **93 KB**; localise 22 KB, map 53 KB
+  (requires localise), move 12 KB, decide 16 KB
+  (`lab_web/tools/arena_packs.json`; the build refuses a cross-pack
+  import); the trimmed stdlib gains `datetime` and `gzip` (+7.6 KB),
+  which the packs need (`stdlib_usage.mjs` now imports every module any
+  coco_lab source names). Measured in Chromium (unthrottled, laptop,
+  power-saver at the time — not a budget run): a lens's pack ready
+  **359–569 ms** after its selection, cold or warm cache (target ≤ 3 s;
+  re-measured in M2.11); Watch shows ≤ 2 computation layers in every
+  lens; hover label read on screen; Pixel 7: no horizontal scroll; 0
+  console errors (`v2/data/m2/m22/lens_check.json`, screenshots); all
+  seven views 0 console errors (`m22/console/`); the 5 CI screenshot
+  scenes still match M1's baselines pixel for pixel. Tests:
+  `lens_registry.test.ts` (9: the rules above), `arena_packs.test.ts` (3:
+  every module of every pack imports in Pyodide on the trimmed stdlib).
+  The lenses other than Plan show "arrives in M2.x" until their
+  checkpoint lands. Suites: vitest **416 / 0 / 0** (385 + 19 + 9 + 3),
+  build tools **136 / 0 / 0**; the browser-side algorithm guard
+  (`test_tools.py`) holds (a drawing method named like a mapping step was
+  renamed). Next: M2.3 (Localise lens).
+
 ## Capabilities (README §2), with evidence class
 
 Classes as README §3 defines them: MODEL, STACK, REMOTE, HARDWARE (none

@@ -1,0 +1,201 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-09T08:19:09.192Z",
+   "power_profile": "power-saver",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 7.06,
+    "5m": 3.98,
+    "15m": 2.91
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  },
+  "end": {
+   "at_utc": "2026-10-09T08:20:28.988Z",
+   "power_profile": "power-saver",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 5.88,
+    "5m": 4.14,
+    "15m": 3.04
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ },
+ "meta": {
+  "site": "http://127.0.0.1:4194/coco-labs/",
+  "settle_ms": 8000,
+  "started_utc": "2026-10-09T08:19:09.194Z",
+  "headless": true,
+  "browser": "chromium 156.0.8078.4 (Playwright)",
+  "finished_utc": "2026-10-09T08:20:28.858Z"
+ },
+ "views": [
+  {
+   "view": "plan",
+   "ms_observed": 8680,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": "Replay — coco_lab computation (glass-box)",
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "live",
+   "ms_observed": 8841,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": "Live Stack (simulated) — local",
+    "conn": "not connected",
+    "probe": "Not connected. Nothing is contacted until you press Connect (a stack on this machine: see the Docker quickstart).",
+    "status": "Live Stack (simulated) is offline — it runs during scheduled demos. No demo is scheduled.",
+    "last_check": "Last checked 01:49:18 PM: no demo is scheduled now, so nothing was contacted."
+   }
+  },
+  {
+   "view": "localise",
+   "ms_observed": 8746,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": "Sketch — a model, not the robot",
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "map",
+   "ms_observed": 8710,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": "Sketch and Replay — each labelled below",
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "search",
+   "ms_observed": 8738,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": "Sketch and Replay — each labelled below",
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "move",
+   "ms_observed": 8784,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": "Sketch and Replay — each labelled below",
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "arena",
+   "ms_observed": 16772,
+   "console_errors": [],
+   "console_warnings": [
+    "[.WebGL-0x28c001b7200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x28c001b7200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x28c001b7200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x28c001b7200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)",
+    "THREE.BufferGeometry: Buffer size too small for points data. Use .dispose() and create a new geometry.",
+    "THREE.BufferGeometry: Buffer size too small for points data. Use .dispose() and create a new geometry.",
+    "THREE.BufferGeometry: Buffer size too small for points data. Use .dispose() and create a new geometry."
+   ],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": null,
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  }
+ ],
+ "recovery": null,
+ "live_390": {
+  "console_errors": [],
+  "console_warnings": [],
+  "page_errors": [],
+  "websockets": [],
+  "cross_origin_requests": [],
+  "failed_requests": [],
+  "shown": {
+   "badge": "Live Stack (simulated) — local",
+   "conn": "not connected",
+   "probe": "Not connected. Nothing is contacted until you press Connect (a stack on this machine: see the Docker quickstart).",
+   "status": "Live Stack (simulated) is offline — it runs during scheduled demos. No demo is scheduled.",
+   "last_check": "Last checked 01:50:20 PM: no demo is scheduled now, so nothing was contacted."
+  },
+  "scroll_width": 390
+ },
+ "summary": {
+  "views_with_console_errors": [],
+  "views_with_page_errors": [],
+  "total_console_errors": 0,
+  "total_page_errors": 0,
+  "live_websockets_on_load": 0
+ }
+}

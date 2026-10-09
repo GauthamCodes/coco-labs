@@ -23,13 +23,18 @@ import { Joystick } from './Joystick';
 import { PerfOverlay } from './PerfOverlay';
 import { perf } from './perf';
 import { wallMs, type InputRow, type PlanInfo, type Tick, type World } from './protocol';
-import { currentTheme } from './render/palette';
+import { currentTheme, PALETTES } from './render/palette';
 import { PlanStore, type CellInfo } from './render/planStore';
 import { parseConverted, type ConvertedRun } from './replay';
 import { ArenaRenderer, DEFAULT_LAYERS, type LayerVisibility } from './render/Renderer';
 import { ArenaSession } from './session';
 import { decodeRun, shareUrl, type SharedRun } from './share';
 import { Timeline } from './Timeline';
+import { caption } from './lens/captions';
+import { drawLenses, HOVERS } from './lens/draw';
+import { EventLog, LensBar, LensCharts, LensInspector } from './lens/panels';
+import { defaultLayers, LENS_BY_ID, LENSES, LEVELS, type LensId, type Level } from './lens/registry';
+import { LensLayers } from './render/lensLayers';
 import { sha256Hex } from '../bundle/sha256';
 
 declare global {
@@ -67,6 +72,19 @@ export function ArenaApp() {
   const [inspect, setInspect] = useState(false);
   const [picked, setPicked] = useState<CellInfo | null>(null);
   const [layers, setLayers] = useState<LayerVisibility>(DEFAULT_LAYERS);
+  // M2.2 lenses: which one, how much detail, Focus, and the lens layers' toggles
+  const [lens, setLens] = useState<LensId>(LENSES.some((l) => l.id === params.get('lens')) ? params.get('lens') as LensId : 'plan');
+  // a recorded run opens at Explain: its search (closed set included) is what it is there to show
+  const [level, setLevel] = useState<Level>(LEVELS.includes(params.get('level') as Level) ? params.get('level') as Level
+    : replayParam ? 'explain' : 'watch');
+  const [focus, setFocus] = useState(params.has('focus'));
+  const [lensOn, setLensOn] = useState<Record<string, boolean>>({});
+  const [packs, setPacks] = useState<Set<string>>(new Set(['core']));
+  const [hover, setHover] = useState<{ text: string; x: number; y: number } | null>(null);
+  const levelRef = useRef<Level>(level);
+  levelRef.current = level;
+  const lensRef = useRef<LensId>(lens);
+  lensRef.current = lens;
   const [planner, setPlanner] = useState('astar');
   const [cmpPick, setCmpPick] = useState(false);
   const [cmpA, setCmpA] = useState('astar');
@@ -80,6 +98,9 @@ export function ArenaApp() {
   const [, setFrame] = useState(0);
 
   const r = useRef<ArenaRenderer | null>(null);
+  const ll = useRef<LensLayers | null>(null);
+  const lensOnRef = useRef<Record<string, boolean>>({});
+  lensOnRef.current = lensOn;
   const client = useRef<ArenaClient | null>(null);
   const modeRef = useRef<Mode>(mode);
   const live = useRef<ArenaSession | null>(null);
@@ -89,6 +110,8 @@ export function ArenaApp() {
   const occupancy = useRef<Uint8Array | null>(null);
   const outline = useRef<[number, number][]>([[0.12, 0], [-0.12, 0.137], [-0.12, -0.137]]);
   const lastTick = useRef<Tick | null>(null);
+  const worldRef = useRef<World | null>(null);
+  worldRef.current = world;
   const specSha = useRef<string>('');
   const pendingTakeover = useRef(false);
   const inspectRef = useRef(false);
@@ -125,6 +148,7 @@ export function ArenaApp() {
     let rr: ArenaRenderer | null = null;
     try {
       rr = new ArenaRenderer(cv, currentTheme());
+      ll.current = new LensLayers(rr.scene, PALETTES[currentTheme()]);
     } catch (e) {
       setError(`renderer: ${(e as Error).message}`);
     }
@@ -136,6 +160,8 @@ export function ArenaApp() {
     let shown: ArenaSession | null = null;
     let shownStore: PlanStore | null = null;
     let shownTick = -1;
+    let drawnVersion = -1;
+    let drawnTick = -1;
     let firstFrame = true;
     let firstComputation = true;
     const replayRun = runParam ? (() => { try { return decodeRun(runParam); } catch (e) { setError(`share link: ${(e as Error).message}`); return null; } })() : null;
@@ -232,6 +258,11 @@ export function ArenaApp() {
         const st = s.shownSearch;
         if (st !== shownStore) { shownStore = st; rr!.setPlan(st); }
         const t = s.shownTick;
+        if (ll.current && worldRef.current && (s.families.version !== drawnVersion || (t?.tick ?? 0) !== drawnTick)) {
+          drawnVersion = s.families.version; drawnTick = t?.tick ?? 0;
+          drawLenses({ layers: ll.current, session: s, tick: drawnTick, world: worldRef.current,
+            on: (id) => lensOnRef.current[id] ?? false });
+        }
         if (t && t.tick !== shownTick) {
           shownTick = t.tick;
           rr!.setPose(t.pose, t.truth ?? t.pose);
@@ -268,6 +299,8 @@ export function ArenaApp() {
         }
       },
       onPlanBatch: (meta, cols) => live.current?.onPlanBatch(meta, cols),
+      onFamily: (m) => live.current?.onFamily(m),
+      onPackReady: (pack) => setPacks((p) => new Set([...p, pack])),
       onCompareBatch: (meta, cols) => {
         setCompare((c) => {
           if (!c) return c;
@@ -334,6 +367,29 @@ export function ArenaApp() {
     };
     cv.addEventListener('pointerdown', onDown);
     cv.addEventListener('pointerup', onUp);
+    // Explain and Inspect: a value label under the mouse (M2.2), read from what the model emitted
+    const onMove = (e: PointerEvent) => {
+      if (levelRef.current === 'watch' || e.pointerType !== 'mouse' || !rr || !worldSet) { setHover(null); return; }
+      const [x, y] = rr.toWorld(e.clientX, e.clientY);
+      const s = active();
+      let text: string | null = null;
+      if (lensRef.current === 'plan') {
+        const cell = rr.cellAt(x, y);
+        const info = cell && s?.shownSearch ? s.shownSearch.info(cell[0], cell[1]) : null;
+        if (info && info.state !== 'none') {
+          text = `${info.state}${info.expansion !== null ? ` · expanded #${info.expansion}` : ''}`
+            + (info.g !== null ? ` · g ${info.g.toFixed(2)} h ${(info.h ?? 0).toFixed(2)} f ${(info.f ?? 0).toFixed(2)}` : '');
+        }
+      } else if (s && worldRef.current && ll.current) {
+        text = HOVERS[lensRef.current]?.({ layers: ll.current, session: s, tick: s.shownTick?.tick ?? 0, world: worldRef.current,
+          on: (id) => lensOnRef.current[id] ?? false }, x, y) ?? null;
+      }
+      const b = cv.getBoundingClientRect();
+      setHover(text ? { text, x: e.clientX - b.left + 12, y: e.clientY - b.top + 12 } : null);
+    };
+    const onLeave = () => setHover(null);
+    cv.addEventListener('pointermove', onMove);
+    cv.addEventListener('pointerleave', onLeave);
 
     // keyboard teleop: WASD / arrows, space = STOP
     const held = new Set<string>();
@@ -360,6 +416,8 @@ export function ArenaApp() {
       clearInterval(ui);
       cv.removeEventListener('pointerdown', onDown);
       cv.removeEventListener('pointerup', onUp);
+      cv.removeEventListener('pointermove', onMove);
+      cv.removeEventListener('pointerleave', onLeave);
       window.removeEventListener('keydown', keydown);
       window.removeEventListener('keyup', keyup);
       client.current?.close();
@@ -370,6 +428,25 @@ export function ArenaApp() {
   }, []);
 
   useEffect(() => { r.current?.setLayers(layers); }, [layers]);
+  // a lens and a level choose the default layers (Watch: at most two computation layers)
+  useEffect(() => {
+    const plan = new Set(defaultLayers(LENS_BY_ID.plan, lens === 'plan' ? level : 'watch'));
+    setLayers((l) => ({ ...l, frontier: lens === 'plan' && plan.has('frontier'), path: plan.has('path'),
+      closed: lens === 'plan' && plan.has('closed'), heatmap: lens === 'plan' && plan.has('heatmap') }));
+    const on: Record<string, boolean> = {};
+    for (const L of LENSES) if (L.id !== 'plan') for (const x of L.layers) on[x.id] = false;
+    if (lens !== 'plan') for (const id of defaultLayers(LENS_BY_ID[lens], level)) on[id] = true;
+    setLensOn(on);
+    client.current?.loadPack(LENS_BY_ID[lens].pack);
+  }, [lens, level]);
+  useEffect(() => {
+    for (const [id, v] of Object.entries(lensOn)) ll.current?.setVisible(id, v);
+  }, [lensOn]);
+  // Focus: everything outside the lens dims (the robot and truth never do)
+  useEffect(() => {
+    r.current?.setFocusDim(!focus || lens === 'plan' ? 1 : 0.25, focus ? 0.5 : 1);
+    for (const L of LENSES) for (const x of L.layers) ll.current?.setDim(x.id, !focus || L.id === lens ? 1 : 0.25);
+  }, [focus, lens]);
 
   const toggle = (k: keyof LayerVisibility) => setLayers((l) => ({ ...l, [k]: !l[k] }));
   const choosePlanner = (p: string) => { setPlanner(p); takeOver(); queue.current.push({ kind: 'planner', choice: p }); };
@@ -420,10 +497,16 @@ export function ArenaApp() {
           ? `Recorded run (STACK): COCO driven by the full ROS 2 stack in Gazebo — ${converted.title}. The solid robot is where the stack believed it was (AMCL); the outline is ground truth.`
           : `Glass-box trace (MODEL): ${converted.title}, computed by coco_lab. No world, no robot: the search alone.`)}
       </p>
+      <LensBar lens={lens} level={level} focus={focus}
+        available={new Set(LENSES.filter((l) => l.id === 'plan' || packs.has(l.pack)).map((l) => l.id))}
+        onLens={setLens} onLevel={setLevel} onFocus={setFocus} />
+      {level !== 'watch' && session && (() => { const c = caption(lens, session.families, tick?.tick ?? 0);
+        return c ? <p className="lens-caption" data-testid="lens-caption" role="status">{c}</p> : null; })()}
       <div className="arena-stage">
         <canvas ref={canvas} className="arena-canvas" data-testid="arena-canvas"
           aria-label="The arena: click or tap to give COCO a goal" />
         {!world && <p className="arena-loading" data-testid="arena-status">Loading…</p>}
+        {hover && <span className="hover-label" data-testid="hover-label" style={{ left: hover.x, top: hover.y }}>{hover.text}</span>}
       </div>
       {compare && world && occupancy.current && (
         <Compare state={compare} world={world} occupancy={occupancy.current} outline={outline.current} onClose={() => setCompare(null)} />
@@ -477,6 +560,14 @@ export function ArenaApp() {
         <div className="arena-row">
           {showLive && <Joystick onChange={onJoystick} />}
           <div className="layers-and-share">
+            {lens !== 'plan' && (
+              <div className="arena-row" role="group" aria-label={`${LENS_BY_ID[lens].title} layers`}>
+                {LENS_BY_ID[lens].layers.map((x) => (
+                  <label key={x.id} className="layer-toggle" title={x.meaning}><input type="checkbox" checked={lensOn[x.id] ?? false}
+                    onChange={() => setLensOn((o) => ({ ...o, [x.id]: !o[x.id] }))} data-testid={`lens-layer-${x.id}`} data-role={x.role} />{x.label}</label>
+                ))}
+              </div>
+            )}
             <div className="arena-row" role="group" aria-label="Layers">
               {(Object.keys(layers) as (keyof LayerVisibility)[]).map((k) => (
                 <label key={k} className="layer-toggle"><input type="checkbox" checked={layers[k]} onChange={() => toggle(k)}
@@ -515,6 +606,13 @@ export function ArenaApp() {
             <dt>parent</dt><dd>{picked.parent ? `(${picked.parent[0]}, ${picked.parent[1]})` : '—'}</dd>
             <dt>latest event</dt><dd>{picked.event != null ? `#${picked.event} ${picked.kind}` : '—'}</dd>
           </dl>
+        )}
+        {level === 'inspect' && session && (
+          <section className="lens-inspect" data-testid="lens-inspect" aria-label={`${LENS_BY_ID[lens].title} lens, Inspect`}>
+            <LensInspector lens={LENS_BY_ID[lens]} store={session.families} tick={tick?.tick ?? 0} />
+            <EventLog lens={LENS_BY_ID[lens]} store={session.families} tick={tick?.tick ?? 0} />
+            <LensCharts lens={LENS_BY_ID[lens]} store={session.families} tick={tick?.tick ?? 0} />
+          </section>
         )}
       </section>
       {showPerf && <PerfOverlay />}

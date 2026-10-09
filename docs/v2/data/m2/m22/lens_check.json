@@ -1,0 +1,235 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-09T08:11:50.438Z",
+   "power_profile": "power-saver",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.63,
+    "5m": 2.78,
+    "15m": 2.16
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  },
+  "end": {
+   "at_utc": "2026-10-09T08:12:40.573Z",
+   "power_profile": "power-saver",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 7.7,
+    "5m": 4.02,
+    "15m": 2.62
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ },
+ "site": "http://127.0.0.1:4194/coco-labs/",
+ "cold": {
+  "plan": {
+   "pack": "core",
+   "ms": 0
+  },
+  "localise": {
+   "pack": "localise",
+   "ms": 525
+  },
+  "map": {
+   "pack": "map",
+   "ms": 569
+  },
+  "move": {
+   "pack": "move",
+   "ms": 364
+  },
+  "decide": {
+   "pack": "decide",
+   "ms": 354
+  }
+ },
+ "warm": {
+  "plan": {
+   "pack": "core",
+   "ms": 0
+  },
+  "localise": {
+   "pack": "localise",
+   "ms": 565
+  },
+  "map": {
+   "pack": "map",
+   "ms": 525
+  },
+  "move": {
+   "pack": "move",
+   "ms": 375
+  },
+  "decide": {
+   "pack": "decide",
+   "ms": 388
+  }
+ },
+ "levels": {
+  "plan": {
+   "watch": {
+    "layers_on": [
+     "frontier",
+     "path"
+    ],
+    "inspect_panel": false
+   },
+   "explain": {
+    "layers_on": [
+     "frontier",
+     "path",
+     "closed"
+    ],
+    "inspect_panel": false
+   },
+   "inspect": {
+    "layers_on": [
+     "frontier",
+     "path",
+     "closed",
+     "heatmap"
+    ],
+    "inspect_panel": true
+   }
+  },
+  "localise": {
+   "watch": {
+    "layers_on": [
+     "particles",
+     "estimate"
+    ],
+    "inspect_panel": false
+   },
+   "explain": {
+    "layers_on": [
+     "particles",
+     "estimate",
+     "covariance"
+    ],
+    "inspect_panel": false
+   },
+   "inspect": {
+    "layers_on": [
+     "particles",
+     "estimate",
+     "covariance",
+     "odometry"
+    ],
+    "inspect_panel": true
+   }
+  },
+  "map": {
+   "watch": {
+    "layers_on": [
+     "built_map",
+     "slam_pose"
+    ],
+    "inspect_panel": false
+   },
+   "explain": {
+    "layers_on": [
+     "built_map",
+     "slam_pose",
+     "landmarks",
+     "slam_particles"
+    ],
+    "inspect_panel": false
+   },
+   "inspect": {
+    "layers_on": [
+     "built_map",
+     "slam_pose",
+     "landmarks",
+     "slam_particles",
+     "graph"
+    ],
+    "inspect_panel": true
+   }
+  },
+  "move": {
+   "watch": {
+    "layers_on": [
+     "chosen",
+     "candidates"
+    ],
+    "inspect_panel": false
+   },
+   "explain": {
+    "layers_on": [
+     "chosen",
+     "candidates",
+     "rejected",
+     "local_window"
+    ],
+    "inspect_panel": false
+   },
+   "inspect": {
+    "layers_on": [
+     "chosen",
+     "candidates",
+     "rejected",
+     "local_window",
+     "lookahead"
+    ],
+    "inspect_panel": true
+   }
+  },
+  "decide": {
+   "watch": {
+    "layers_on": [
+     "belief",
+     "detection"
+    ],
+    "inspect_panel": false
+   },
+   "explain": {
+    "layers_on": [
+     "belief",
+     "detection"
+    ],
+    "inspect_panel": false
+   },
+   "inspect": {
+    "layers_on": [
+     "belief",
+     "detection"
+    ],
+    "inspect_panel": true
+   }
+  }
+ },
+ "phone": {
+  "overflow_x": false,
+  "width": 412,
+  "lens_bar_h": 94
+ },
+ "errors": [],
+ "hover": "path · expanded #842 · g 4.24 h 148.89 f 4.24",
+ "summary": {
+  "cold_pack_ms_max": 569,
+  "warm_pack_ms_max": 565,
+  "warm_under_3s": true,
+  "watch_at_most_two": true,
+  "phone_no_overflow": true,
+  "hover_label": "path · expanded #842 · g 4.24 h 148.89 f 4.24",
+  "console_errors": 0
+ },
+ "pass": true
+}

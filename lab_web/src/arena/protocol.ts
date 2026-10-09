@@ -32,7 +32,9 @@ export interface StepRequest { type: 'step'; inputs: InputRow[] }
 export interface AmendRequest { type: 'amend'; inputs: InputRow[] }
 /** Two planners from the robot's cell to (x, y); the model is not changed (M1.8). */
 export interface CompareRequest { type: 'compare'; a: string; b: string; x: number; y: number }
-export type ToWorker = BootRequest | StepRequest | AmendRequest | CompareRequest;
+/** M2.2: load a lens's Python pack (tools/arena_packs.json) if it is not loaded yet. */
+export interface LoadPackRequest { type: 'load_pack'; pack: string }
+export type ToWorker = BootRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest;
 
 export interface CompareSide { planner: string; status: string; summary: Record<string, number | string | null>; resolution: number }
 
@@ -68,7 +70,20 @@ export interface SearchColumns {
   parent_row: Int32Array; parent_col: Int32Array; parent_sub: Int32Array;
 }
 
+/** M2.2: one whole-loop family batch (coco_lab.columns), or a channel's static header. */
+export interface FamilyMessage {
+  type: 'family';
+  channel: string;
+  tick?: number;
+  /** numeric columns (transferred typed arrays) and plain ones (strings, bools) together */
+  columns?: Record<string, ArrayLike<number> | ArrayLike<bigint> | boolean[] | string[]>;
+  scalars?: Record<string, number | string | boolean>;
+  header?: Record<string, unknown>;
+}
+
 export type FromWorker =
+  | FamilyMessage
+  | { type: 'pack_ready'; pack: string; ms: number }
   | { type: 'mark'; name: string; at: number }
   | { type: 'world'; world: World; occupancy: Uint8Array; at: number }
   | { type: 'plan_batch'; meta: { search_id: number; planner: string; tick: number; final: boolean; compare?: 'A' | 'B';
