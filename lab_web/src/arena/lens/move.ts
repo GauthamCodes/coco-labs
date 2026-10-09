@@ -31,10 +31,19 @@ function trajSegments(cols: Record<string, unknown>, rows: number[]): number[] {
   return out;
 }
 
+/** The latest candidate batch at or before the tick that `keep` accepts (a recorded drive interleaves two kinds). */
+function latestWhere(c: DrawContext, keep: (controller: string) => boolean) {
+  const all = c.session.families.before('coco.control.local.candidates.v1', c.tick);
+  for (let i = all.length - 1; i >= 0; i -= 1) if (keep(String(all[i].scalars.controller_id ?? ''))) return all[i];
+  return null;
+}
+
 function drawMove(c: DrawContext) {
   const L = c.layers;
   const rec = c.session.recordAt(c.tick) ?? c.session.shownTick;
-  const cand = c.session.families.latest('coco.control.local.candidates.v1', c.tick);
+  // a STACK drive (M2.7) sends Nav2's sampled candidates and, as "<run>/chosen", the trajectory it chose each cycle
+  const cand = latestWhere(c, (id) => !id.endsWith('/chosen'));
+  const stackChosen = latestWhere(c, (id) => id.endsWith('/chosen'));
   const cmd = c.session.families.latest('coco.control.local.command.v1', c.tick);
   if (cand) {
     const cols = cand.columns; const valid = cols.valid as ArrayLike<boolean | number>; const cost = cols.cost as Num;
@@ -54,8 +63,10 @@ function drawMove(c: DrawContext) {
     }
     if (ok.length) L.segments('candidates', trajSegments(cols, ok), 'candidate', L.alpha('candidateAlpha'), shade); else L.remove('candidates');
     if (bad.length) L.segments('rejected', trajSegments(cols, bad), 'rejected', L.alpha('rejectedAlpha')); else L.remove('rejected');
-    if (chosen >= 0 && chosen < valid.length) L.segments('chosen', trajSegments(cols, [chosen]), 'chosen', 1); else L.remove('chosen');
-  } else for (const id of ['candidates', 'rejected', 'chosen']) L.remove(id);
+    if (chosen >= 0 && chosen < valid.length && !stackChosen) L.segments('chosen', trajSegments(cols, [chosen]), 'chosen', 1);
+    else if (!stackChosen) L.remove('chosen');
+  } else { L.remove('candidates'); L.remove('rejected'); if (!stackChosen) L.remove('chosen'); }
+  if (stackChosen) L.segments('chosen', trajSegments(stackChosen.columns, [0]), 'chosen', 1);
   if (cmd) {
     const lx = (cmd.columns.lookahead_x as Num)[0]; const ly = (cmd.columns.lookahead_y as Num)[0];
     if (Number.isFinite(lx)) L.points('lookahead', [lx], [ly], 'lookahead', 1, 0.06); else L.remove('lookahead');

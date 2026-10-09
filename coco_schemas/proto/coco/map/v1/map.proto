@@ -43,6 +43,10 @@ message MapGridSnapshotBatch {
   string map_id = 4;
   bytes logodds_f32 = 5;
   uint64 update = 6;          // the update that produced it
+  // The map as nav_msgs/OccupancyGrid bytes (0..100, 255 unknown, NORTH row
+  // first) -- what map_saver writes and Lab 3's traces stored (M2.7,
+  // additive). A snapshot carries this OR logodds_f32.
+  bytes cells_u8 = 7;
 }
 
 // Cells one update changed, with their new log-odds.

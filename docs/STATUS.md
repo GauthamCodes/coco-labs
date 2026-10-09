@@ -784,6 +784,47 @@ only. Read order for agents (README §9): `README.md`, this file,
     right) — corrected above, re-added from the logs. Next: M2.7
     (converters).
 
+- **M2.7 Converters (2026-10-09).** Evidence: `v2/data/m2/m27/`; documented
+  in [`v2/SCHEMAS.md`](v2/SCHEMAS.md) "Labs 2–5, without loss".
+  - **Labs 2–5 convert losslessly into the whole loop's families**
+    (`lab_web/src/convert/lab2.ts`, `lab3.ts`, `lab4.ts`, `lab5.ts`,
+    `lab5replan.ts`): every array rebuilt from the CHANNELS alone and
+    accepted by the lab's own v1 decoder, which re-checks the content hash;
+    an unknown array is refused, never dropped; every channel is the
+    registry's (tested). Round trips, all exact: Lab 2's 5 bundles, Lab 3's 5
+    (the recorded tour as STACK, its slam_toolbox / Cartographer runs
+    labelled STACK, coco_lab's MODEL), Lab 4's 2, Lab 5's 4 drive bundles
+    (54 runs, one v2 run per drive) and 4 replanning bundles.
+  - **The 16 searches recorded on the full stack replay byte for byte
+    through the new pipeline** (hard requirement): converted to
+    `p05_matrix.mcap` (the vitest test requires that exact file), then
+    `coco_schemas/test/test_search_replay_v2.py` takes each search's looks
+    off the CONVERTED observation channel alone, `replay_search` chooses
+    every bay again, and the re-encoded channels equal the file's messages
+    byte for byte — 16 of 16; one flipped look is caught.
+  - **Lab 5's Nav2 candidate overlays play as STACK**: the build converts
+    every drive, drawn on Nav2's saved map, into `generated/v2/lab5_*.mcap`
+    (54 runs, listed in the viewer); `?view=arena&replay=<id>` plays it
+    through the Move lens — Nav2's own candidates and chosen trajectory,
+    nothing computed, Lab 5's measured outcome on the card. Browser check
+    (`browser/stack_drive_check.json`, Chromium, `lab5_static_room_dwb_1`):
+    header STACK, Nav2's candidates and its chosen trajectory drawn, the
+    card "follow_failed (code 105) · tracking error mean 0.141 m", 0
+    console errors, 0 three.js warnings.
+  - **Additive schema changes within v1** (no renumbering, nothing removed):
+    `coco.truth.actors.v1` (`ActorPoseBatch`), D* Lite's event kinds and
+    `rhs` / `round`, `ScanBatch.ranges_f64`, `MapGridSnapshotBatch.cells_u8`.
+    `test_columns.py` now names the two D*-only fields A*'s emitter never
+    fills.
+  - The other converted runs (Labs 2, 3, 4 and Lab 5's replanning) are
+    verified by tests and not yet served: their lenses replay them at M2.8
+    / M2.10 or the v1 links forward to `/v1/`.
+  - Tests: packages **3,432 / 0 / 0** (`coco_schemas` 211 → 218:
+    `test_search_replay_v2.py` 4, the new channel and the D*-only field
+    check), vitest **450 / 0 / 0** (+26: the five converter test files),
+    build tools **143 / 0 / 0** (+1: the conditions check of
+    `stack_drive_check.mjs`). Next: M2.8 (Learn missions).
+
 ## Capabilities (README §2), with evidence class
 
 Classes as README §3 defines them: MODEL, STACK, REMOTE, HARDWARE (none

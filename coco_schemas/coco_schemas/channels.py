@@ -49,6 +49,8 @@ CHANNELS = (
             True),
     Channel('coco.truth.pose.v1', 'truth', 'coco.truth.v1.TruthPoseBatch',
             True),
+    Channel('coco.truth.actors.v1', 'truth',
+            'coco.truth.v1.ActorPoseBatch', True),
     Channel('coco.sensor.scan.lidar.v1', 'sensor.scan',
             'coco.sensor.v1.ScanBatch', True),
     Channel('coco.plan.search.header.v1', 'plan.search',

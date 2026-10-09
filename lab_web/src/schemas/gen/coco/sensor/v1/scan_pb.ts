@@ -17,7 +17,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file coco/sensor/v1/scan.proto.
  */
 export const file_coco_sensor_v1_scan: GenFile = /*@__PURE__*/
-  fileDesc("Chljb2NvL3NlbnNvci92MS9zY2FuLnByb3RvEg5jb2NvLnNlbnNvci52MSKoAQoJU2NhbkJhdGNoEgsKA3NlcRgBIAMoBBIMCgR0aWNrGAIgAygEEg8KB3Rfd29ybGQYAyADKAESEQoJYW5nbGVfbWluGAQgAygBEhcKD2FuZ2xlX2luY3JlbWVudBgFIAMoARIRCglyYW5nZV9taW4YBiADKAISEQoJcmFuZ2VfbWF4GAcgAygCEg0KBWNvdW50GAggAygNEg4KBnJhbmdlcxgJIAMoAmIGcHJvdG8z");
+  fileDesc("Chljb2NvL3NlbnNvci92MS9zY2FuLnByb3RvEg5jb2NvLnNlbnNvci52MSK8AQoJU2NhbkJhdGNoEgsKA3NlcRgBIAMoBBIMCgR0aWNrGAIgAygEEg8KB3Rfd29ybGQYAyADKAESEQoJYW5nbGVfbWluGAQgAygBEhcKD2FuZ2xlX2luY3JlbWVudBgFIAMoARIRCglyYW5nZV9taW4YBiADKAISEQoJcmFuZ2VfbWF4GAcgAygCEg0KBWNvdW50GAggAygNEg4KBnJhbmdlcxgJIAMoAhISCgpyYW5nZXNfZjY0GAogAygBYgZwcm90bzM");
 
 /**
  * @generated from message coco.sensor.v1.ScanBatch
@@ -80,6 +80,15 @@ export type ScanBatch = Message<"coco.sensor.v1.ScanBatch"> & {
    * @generated from field: repeated float ranges = 9;
    */
   ranges: number[];
+
+  /**
+   * The same beams at full precision, when the source has them (M2.7,
+   * additive): a Sketch scan's noisy ranges are not exact in float.
+   * Readers that know this field prefer it; `ranges` is always filled.
+   *
+   * @generated from field: repeated double ranges_f64 = 10;
+   */
+  rangesF64: number[];
 };
 
 /**

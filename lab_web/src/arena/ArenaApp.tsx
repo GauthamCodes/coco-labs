@@ -234,6 +234,8 @@ export function ArenaApp() {
           setSession(s);
           setConverted(rec);
           setLayers((l) => ({ ...l, lidar: false, footprint: false, ...(rec.evidence === 'MODEL' ? { robot: false, truth: false } : {}) }));
+          // a converted Lab 5 drive (M2.7) is shown through the Move lens: Nav2's own candidates
+          if (rec.headers?.some((h) => h.channel === 'coco.control.local.header.v1')) setLens('move');
         })
         .catch((e) => setError(`recorded run: ${(e as Error).message}`));
     }
@@ -573,11 +575,13 @@ export function ArenaApp() {
           : `Glass-box trace (MODEL): ${converted.title}, computed by coco_lab. No world, no robot: the search alone.`)}
       </p>
       <LensBar lens={lens} level={level} focus={focus}
-        available={new Set(LENSES.filter((l) => l.id === 'plan' || packs.has(l.pack)).map((l) => l.id))}
+        available={new Set(LENSES.filter((l) => l.id === 'plan' || packs.has(l.pack) || (converted?.headers ?? []).some((h) => l.families.some((f) => h.channel.includes(f)))).map((l) => l.id))}
         onLens={setLens} onLevel={setLevel} onFocus={setFocus} />
       {lens === 'localise' && <LocaliseControls send={sendConfig} live={mode === 'live'} />}
       {lens === 'map' && <MapControls send={sendConfig} live={mode === 'live'} />}
-      {lens === 'move' && <MoveControls send={sendConfig} live={mode === 'live'} />}
+      {lens === 'move' && (converted?.headers?.some((h) => h.channel === 'coco.control.local.header.v1')
+        ? <p className="lens-hint" data-testid="move-recorded">Recorded (STACK): Nav2's own candidates as it logged them and the trajectory it chose each cycle — nothing here is computed by the model.</p>
+        : <MoveControls send={sendConfig} live={mode === 'live'} />)}
       {lens === 'decide' && <DecideControls send={sendConfig} live={mode === 'live'} />}
       {lens === 'decide' && session && <MissionPanel session={session} tick={tick?.tick ?? 0} />}
       {level !== 'watch' && session && (() => { const c = caption(lens, session.families, tick?.tick ?? 0);
@@ -599,7 +603,12 @@ export function ArenaApp() {
           <button type="button" className="seg-btn" onClick={() => setRunCard(null)}>OK</button>
         </section>
       )}
-      {converted?.evidence === 'STACK' && stats && (
+      {converted?.card && (
+        <section className="run-card" data-testid="stack-results" aria-label="Measured in this recorded run">
+          <b>Measured in this run</b> (STACK, docs/labs/LAB5_MOVE.md): <span>{converted.card}</span>
+        </section>
+      )}
+      {converted?.evidence === 'STACK' && stats && !converted.card && (
         <section className="run-card" data-testid="stack-results" aria-label="Measured in this recorded run">
           <b>Measured in this run</b> (Phase 1C, docs/RESULTS.md):
           <span> {stats.result?.phase ?? '—'} after {typeof stats.duration_sim_s === 'number' ? stats.duration_sim_s.toFixed(1) : '—'} s sim time ·
@@ -663,8 +672,8 @@ export function ArenaApp() {
           </div>
         </div>
         {runs.length > 0 && (
-          <nav className="arena-row recorded-runs" aria-label="Lab 1 runs in this viewer" data-testid="recorded-runs">
-            <span>Lab 1 runs in this viewer:</span>
+          <nav className="arena-row recorded-runs" aria-label="Recorded and computed runs in this viewer" data-testid="recorded-runs">
+            <span>Runs in this viewer:</span>
             {runs.map((x) => (
               <a key={x.id} href={`${import.meta.env.BASE_URL}?view=arena&replay=${x.id}`} data-testid={`replay-${x.id}`}
                 aria-current={x.id === recId ? 'page' : undefined}>{x.evidence === 'STACK' ? `${x.title} · STACK` : x.title}</a>

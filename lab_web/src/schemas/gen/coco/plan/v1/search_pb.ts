@@ -22,7 +22,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file coco/plan/v1/search.proto.
  */
 export const file_coco_plan_v1_search: GenFile = /*@__PURE__*/
-  fileDesc("Chljb2NvL3BsYW4vdjEvc2VhcmNoLnByb3RvEgxjb2NvLnBsYW4udjEitgIKDFNlYXJjaEhlYWRlchIRCglzZWFyY2hfaWQYASABKAQSFQoNc291cmNlX3NjaGVtYRgCIAEoCRIWCg5zb3VyY2VfdmVyc2lvbhgDIAEoCRIRCglhbGdvcml0aG0YBCABKAkSEQoJaGV1cmlzdGljGAUgASgJEhMKBndlaWdodBgGIAEoAUgAiAEBEhEKCXRpZV9icmVhaxgHIAEoCRIiCgVzdGFydBgIIAEoCzITLmNvY28uY29tbW9uLnYxLkxvYxIhCgRnb2FsGAkgASgLMhMuY29jby5jb21tb24udjEuTG9jEiUKBWdyYXBoGAogASgLMhYuY29jby5jb21tb24udjEuUGFyYW1zEgwKBHRpY2sYCyABKAQSDwoHdF93b3JsZBgMIAEoAUIJCgdfd2VpZ2h0IoICChBTZWFyY2hFdmVudEJhdGNoEgsKA3NlcRgBIAMoBBIMCgR0aWNrGAIgAygEEg8KB3Rfd29ybGQYAyADKAESKwoEa2luZBgEIAMoDjIdLmNvY28ucGxhbi52MS5TZWFyY2hFdmVudEtpbmQSCwoDcm93GAUgAygREgsKA2NvbBgGIAMoERILCgNzdWIYByADKBESCQoBZxgIIAMoARIJCgFoGAkgAygBEgkKAWYYCiADKAESEgoKcGFyZW50X3JvdxgLIAMoERISCgpwYXJlbnRfY29sGAwgAygREhIKCnBhcmVudF9zdWIYDSADKBESEQoJc2VhcmNoX2lkGA4gASgEIvsBCg1TZWFyY2hTdW1tYXJ5EhEKCXNlYXJjaF9pZBgBIAEoBBIqCgZzdGF0dXMYAiABKA4yGi5jb2NvLnBsYW4udjEuU2VhcmNoU3RhdHVzEhIKCmV4cGFuc2lvbnMYAyABKAQSDgoGcHVzaGVzGAQgASgEEg8KB3JlbGF4ZXMYBSABKAQSFgoJcGF0aF9jb3N0GAYgASgBSACIAQESGAoLcGF0aF9sZW5ndGgYByABKAFIAYgBARIXCgpwYXRoX3N0ZXBzGAggASgESAKIAQFCDAoKX3BhdGhfY29zdEIOCgxfcGF0aF9sZW5ndGhCDQoLX3BhdGhfc3RlcHMqpwEKD1NlYXJjaEV2ZW50S2luZBIhCh1TRUFSQ0hfRVZFTlRfS0lORF9VTlNQRUNJRklFRBAAEhoKFlNFQVJDSF9FVkVOVF9LSU5EX1BVU0gQARIcChhTRUFSQ0hfRVZFTlRfS0lORF9FWFBBTkQQAhIbChdTRUFSQ0hfRVZFTlRfS0lORF9SRUxBWBADEhoKFlNFQVJDSF9FVkVOVF9LSU5EX1BBVEgQBCphCgxTZWFyY2hTdGF0dXMSHQoZU0VBUkNIX1NUQVRVU19VTlNQRUNJRklFRBAAEhcKE1NFQVJDSF9TVEFUVVNfRk9VTkQQARIZChVTRUFSQ0hfU1RBVFVTX05PX1BBVEgQAmIGcHJvdG8z", [file_coco_common_v1_common]);
+  fileDesc("Chljb2NvL3BsYW4vdjEvc2VhcmNoLnByb3RvEgxjb2NvLnBsYW4udjEitgIKDFNlYXJjaEhlYWRlchIRCglzZWFyY2hfaWQYASABKAQSFQoNc291cmNlX3NjaGVtYRgCIAEoCRIWCg5zb3VyY2VfdmVyc2lvbhgDIAEoCRIRCglhbGdvcml0aG0YBCABKAkSEQoJaGV1cmlzdGljGAUgASgJEhMKBndlaWdodBgGIAEoAUgAiAEBEhEKCXRpZV9icmVhaxgHIAEoCRIiCgVzdGFydBgIIAEoCzITLmNvY28uY29tbW9uLnYxLkxvYxIhCgRnb2FsGAkgASgLMhMuY29jby5jb21tb24udjEuTG9jEiUKBWdyYXBoGAogASgLMhYuY29jby5jb21tb24udjEuUGFyYW1zEgwKBHRpY2sYCyABKAQSDwoHdF93b3JsZBgMIAEoAUIJCgdfd2VpZ2h0Ip4CChBTZWFyY2hFdmVudEJhdGNoEgsKA3NlcRgBIAMoBBIMCgR0aWNrGAIgAygEEg8KB3Rfd29ybGQYAyADKAESKwoEa2luZBgEIAMoDjIdLmNvY28ucGxhbi52MS5TZWFyY2hFdmVudEtpbmQSCwoDcm93GAUgAygREgsKA2NvbBgGIAMoERILCgNzdWIYByADKBESCQoBZxgIIAMoARIJCgFoGAkgAygBEgkKAWYYCiADKAESEgoKcGFyZW50X3JvdxgLIAMoERISCgpwYXJlbnRfY29sGAwgAygREhIKCnBhcmVudF9zdWIYDSADKBESEQoJc2VhcmNoX2lkGA4gASgEEgsKA3JocxgPIAMoARINCgVyb3VuZBgQIAMoDSL7AQoNU2VhcmNoU3VtbWFyeRIRCglzZWFyY2hfaWQYASABKAQSKgoGc3RhdHVzGAIgASgOMhouY29jby5wbGFuLnYxLlNlYXJjaFN0YXR1cxISCgpleHBhbnNpb25zGAMgASgEEg4KBnB1c2hlcxgEIAEoBBIPCgdyZWxheGVzGAUgASgEEhYKCXBhdGhfY29zdBgGIAEoAUgAiAEBEhgKC3BhdGhfbGVuZ3RoGAcgASgBSAGIAQESFwoKcGF0aF9zdGVwcxgIIAEoBEgCiAEBQgwKCl9wYXRoX2Nvc3RCDgoMX3BhdGhfbGVuZ3RoQg0KC19wYXRoX3N0ZXBzKpwCCg9TZWFyY2hFdmVudEtpbmQSIQodU0VBUkNIX0VWRU5UX0tJTkRfVU5TUEVDSUZJRUQQABIaChZTRUFSQ0hfRVZFTlRfS0lORF9QVVNIEAESHAoYU0VBUkNIX0VWRU5UX0tJTkRfRVhQQU5EEAISGwoXU0VBUkNIX0VWRU5UX0tJTkRfUkVMQVgQAxIaChZTRUFSQ0hfRVZFTlRfS0lORF9QQVRIEAQSGwoXU0VBUkNIX0VWRU5UX0tJTkRfUkFJU0UQBRIcChhTRUFSQ0hfRVZFTlRfS0lORF9VUERBVEUQBhIcChhTRUFSQ0hfRVZFTlRfS0lORF9DSEFOR0UQBxIaChZTRUFSQ0hfRVZFTlRfS0lORF9NT1ZFEAgqYQoMU2VhcmNoU3RhdHVzEh0KGVNFQVJDSF9TVEFUVVNfVU5TUEVDSUZJRUQQABIXChNTRUFSQ0hfU1RBVFVTX0ZPVU5EEAESGQoVU0VBUkNIX1NUQVRVU19OT19QQVRIEAJiBnByb3RvMw", [file_coco_common_v1_common]);
 
 /**
  * @generated from message coco.plan.v1.SearchHeader
@@ -189,6 +189,20 @@ export type SearchEventBatch = Message<"coco.plan.v1.SearchEventBatch"> & {
    * @generated from field: uint64 search_id = 14;
    */
   searchId: bigint;
+
+  /**
+   * D* Lite's one-step lookahead (M2.7, additive)
+   *
+   * @generated from field: repeated double rhs = 15;
+   */
+  rhs: number[];
+
+  /**
+   * D* Lite: the replanning round (M2.7, additive)
+   *
+   * @generated from field: repeated uint32 round = 16;
+   */
+  round: number[];
 };
 
 /**
@@ -284,6 +298,36 @@ export enum SearchEventKind {
    * @generated from enum value: SEARCH_EVENT_KIND_PATH = 4;
    */
   PATH = 4,
+
+  /**
+   * D* Lite's events (M2.7, additive; Lab 5's replanning traces)
+   *
+   * a cell's g raised (underconsistent)
+   *
+   * @generated from enum value: SEARCH_EVENT_KIND_RAISE = 5;
+   */
+  RAISE = 5,
+
+  /**
+   * a cell's rhs recomputed and requeued
+   *
+   * @generated from enum value: SEARCH_EVENT_KIND_UPDATE = 6;
+   */
+  UPDATE = 6,
+
+  /**
+   * an edge cost the robot sensed changed
+   *
+   * @generated from enum value: SEARCH_EVENT_KIND_CHANGE = 7;
+   */
+  CHANGE = 7,
+
+  /**
+   * the robot stepped to the next cell
+   *
+   * @generated from enum value: SEARCH_EVENT_KIND_MOVE = 8;
+   */
+  MOVE = 8,
 }
 
 /**

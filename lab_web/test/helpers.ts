@@ -30,3 +30,18 @@ export async function loadDir(dir: string, opts: DecodeOptions = {}) {
   const { manifest, arrays } = readBundleDir(dir);
   return loadBundleBytes(manifest, arrays, opts);
 }
+
+/** coco_schemas' channel registry (channels.py): name -> message, read from the Python source. */
+export function registeredChannels(): Map<string, string> {
+  const src = readFileSync(join(LAB_WEB, '..', 'coco_schemas', 'coco_schemas', 'channels.py'), 'utf-8');
+  const out = new Map<string, string>();
+  for (const m of src.matchAll(/Channel\('([^']+)',\s*'[^']+',\s*'([^']+)'/g)) out.set(m[1], m[2]);
+  return out;
+}
+
+/** Every channel a run uses is registered, with the registered message. */
+export function unregistered(messages: { channel: string; schemaName: string }[]): string[] {
+  const reg = registeredChannels();
+  return [...new Set(messages.filter((m) => m.channel !== 'coco.envelope.manifest.v1' && reg.get(m.channel) !== m.schemaName)
+    .map((m) => `${m.channel} (${m.schemaName})`))];
+}

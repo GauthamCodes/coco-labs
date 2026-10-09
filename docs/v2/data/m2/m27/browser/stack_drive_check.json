@@ -1,0 +1,67 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-09T16:59:54.747Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 90
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.91,
+    "5m": 4.02,
+    "15m": 3.44
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-09T16:59:59.381Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 90
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 4.96,
+    "5m": 4.24,
+    "15m": 3.51
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4194/coco-labs/",
+ "run": "lab5_static_room_dwb_1",
+ "steps": {
+  "header": {
+   "controller_id": "DWB_1",
+   "kind": "DWB",
+   "critics": [],
+   "evidence": "STACK"
+  },
+  "banner": "Recorded run (STACK): COCO driven by the full ROS 2 stack in Gazebo — Lab 5 · Around a wall end and into a room · DWB run DWB_1. The solid robot is where the stack believed it was (AMCL); the outline is ground truth.",
+  "card": "Measured in this run (STACK, docs/labs/LAB5_MOVE.md): follow_failed (code 105) · tracking error mean 0.141 m · min clearance 0.470 m — Lab 5 measured these from this recording",
+  "first_candidate_tick": 10,
+  "layers": [
+   "candidates",
+   "chosen",
+   "local_window"
+  ],
+  "lens_active": null,
+  "counts": {
+   "sampled": 2,
+   "chosen": 5,
+   "rows": 44
+  }
+ },
+ "errors": [],
+ "warnings": [],
+ "pass": true
+}
