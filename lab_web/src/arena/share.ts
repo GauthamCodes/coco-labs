@@ -25,26 +25,29 @@ export interface SharedRun {
   inputs: InputRow[];
 }
 
-const KINDS = ['goal', 'teleop', 'stop', 'planner', 'reset'] as const;
+// M2.3 appends kidnap and config: an M1 link's kind indices are unchanged
+const KINDS = ['goal', 'teleop', 'stop', 'planner', 'reset', 'kidnap', 'config'] as const;
 type Row = [number, number, ...(number | string)[]];
 
 function toRow(r: InputRow): Row {
   const k = KINDS.indexOf(r.kind);
   if (r.kind === 'goal') return [r.tick, k, r.x ?? 0, r.y ?? 0];
   if (r.kind === 'teleop') return [r.tick, k, r.linear ?? 0, r.angular ?? 0];
-  if (r.kind === 'planner') return [r.tick, k, r.choice ?? ''];
+  if (r.kind === 'planner' || r.kind === 'config') return [r.tick, k, r.choice ?? ''];
+  if (r.kind === 'kidnap') return [r.tick, k, r.x ?? 0, r.y ?? 0, r.theta ?? 0, r.has_theta ? 1 : 0];
   return [r.tick, k];
 }
 
 function fromRow(a: unknown): InputRow {
   if (!Array.isArray(a) || a.length < 2) throw new Error('bad input row');
-  const [tick, k, p, q] = a as [number, number, unknown, unknown];
+  const [tick, k, p, q, th, ht] = a as [number, number, unknown, unknown, unknown, unknown];
   if (!Number.isInteger(tick) || tick < 0 || !Number.isInteger(k) || k < 0 || k >= KINDS.length) throw new Error('bad input row');
   const kind = KINDS[k];
   const num = (v: unknown) => { if (typeof v !== 'number' || !Number.isFinite(v)) throw new Error('bad number'); return v; };
   if (kind === 'goal') return { tick, kind, x: num(p), y: num(q) };
   if (kind === 'teleop') return { tick, kind, linear: num(p), angular: num(q) };
-  if (kind === 'planner') { if (typeof p !== 'string') throw new Error('bad planner'); return { tick, kind, choice: p }; }
+  if (kind === 'planner' || kind === 'config') { if (typeof p !== 'string') throw new Error(`bad ${kind}`); return { tick, kind, choice: p }; }
+  if (kind === 'kidnap') return { tick, kind, x: num(p), y: num(q), theta: num(th), has_theta: ht === 1 };
   return { tick, kind };
 }
 

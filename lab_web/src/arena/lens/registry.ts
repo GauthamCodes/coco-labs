@@ -70,7 +70,7 @@ export const LENSES: readonly Lens[] = [
   {
     id: 'localise', title: 'Localise', question: 'How does a robot know where it is?', pack: 'localise', since: 'M2.3',
     families: ['estimate', 'localise.particles', 'localise.ekf'],
-    charts: ['err_xy', 'err_yaw', 'n_eff'],
+    charts: ['err_xy.mcl', 'err_xy.ekf', 'err_xy.odometry', 'n_eff'],
     layers: [
       { id: 'particles', label: 'particles', role: 'uncertainty', colour: 'particles', from: 'watch', meaning: 'MCL hypotheses of the pose; size = weight' },
       { id: 'estimate', label: 'estimate', role: 'computation', colour: 'estimate', from: 'watch', meaning: 'the pose the filter believes' },
@@ -122,6 +122,12 @@ const RANK: Record<Level, number> = { watch: 0, explain: 1, inspect: 2 };
 /** The layers a lens shows by default at a level. */
 export function defaultLayers(lens: Lens, level: Level): string[] {
   return lens.layers.filter((l) => RANK[l.from] <= RANK[level]).map((l) => l.id);
+}
+
+/** The Python pack a `config` input needs (its key's first part names the subsystem). */
+export function packForConfig(choice: string): string {
+  const head = choice.split('=')[0].split('.')[0];
+  return ({ localise: 'localise', map: 'map', move: 'move', mission: 'decide', decide: 'decide' } as Record<string, string>)[head] ?? 'core';
 }
 
 /** Every layer id any lens owns, with its lens. */

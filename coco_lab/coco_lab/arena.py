@@ -36,6 +36,19 @@ labelled); a step whose end would bring the robot's centre within
 
 The same spec, seed and input log give the same hashes, tick for tick.
 
+**The whole loop (M2).** Two more input kinds turn it on: ``kidnap`` (the
+robot is carried; odometry is not told) and ``config`` (``key=value``:
+``arena.slip=on``, ``localise.filter=mcl``, ...). From the first of them
+the Arena keeps wheel odometry (the motion model's noise, Sketch's
+``sample_delta``), an optional labelled wheel-slip model (the truth turns
+less than the wheels report, Lab 2's measured turn divergence), and the
+subsystems a ``config`` names -- each registered in :data:`SUBSYSTEMS` by
+its own pack (``coco_lab.loc_arena`` for ``localise``). Planning and
+driving then use the robot's BELIEF (a localiser's estimate when there is
+one), never the truth. Loop inputs apply first in their tick and are
+committed at once; an amendment cannot carry one. Until the first loop
+input the state, and so every hash, is exactly M1's.
+
 **Planning happens once per tick, after all of the tick's inputs** (M2.0):
 a goal, a planner change or both in one tick give one search, on the state
 the inputs leave. A step can run in slices -- :meth:`Arena.begin_step`,
@@ -57,13 +70,29 @@ from .events import SearchEventColumns
 from .maps import OCCUPIED
 from .rng import Rng
 from .search import Collector, search_events, SearchResult
-from .sketch import (_inflated_grid_map, _nearest_free, drive_command,
-                     LidarSpec, SketchMap, step_pose, wrap)
+from .sketch import (_inflated_grid_map, _nearest_free, apply_delta,
+                     drive_command, LidarSpec, odom_delta, sample_delta,
+                     SketchMap, step_pose, wrap)
 from .worldspec import arena_map, normalize, to_map_frame
 
 #: The state-hash layout's name; a change to the layout changes this.
 STATE_LAYOUT = b'coco.arena.state.v1\x00'
-INPUT_KINDS = ('goal', 'teleop', 'stop', 'planner', 'reset')
+INPUT_KINDS = ('goal', 'teleop', 'stop', 'planner', 'reset', 'kidnap',
+               'config')
+#: Inputs that switch on or drive the whole loop (M2); applied first
+LOOP_KINDS = ('kidnap', 'config')
+#: The whole loop's subsystems, registered by their packs on import
+#: (name -> class taking the Arena): never imported by this module
+SUBSYSTEMS: Dict[str, type] = {}
+LOOP_LAYOUT = b'coco.arena.loop.v1\x00'
+#: The wheel-slip option (M2.3, off by default; labelled wherever shown):
+#: in turns the truth rotates this fraction of what the wheels report.
+#: COCO's skid-steer wheel odometry integrated 72.5 rad of yaw on the
+#: recorded tour where the gyro and the truth gave 56.3 / 56.2 rad
+#: (docs/labs/LAB2_LOCALISE.md section 4.1; STACK), so 56.2 / 72.5.
+SLIP_TURN = 56.2 / 72.5
+#: Sketch's default odometry noise (coco_lab.sketch.Noise)
+ODOM_ALPHAS = (0.02, 0.02, 0.02, 0.02)
 MODES = ('idle', 'teleop', 'goal')
 #: The planners a learner can choose, and how each is run on the grid.
 PLANNERS: Dict[str, Dict[str, object]] = {
@@ -110,6 +139,8 @@ class InputEvent:
         for name in ('x', 'y', 'theta', 'linear', 'angular'):
             if not math.isfinite(getattr(self, name)):
                 raise ArenaError(f'{name} must be finite')
+        if self.kind == 'config' and '=' not in self.choice:
+            raise ArenaError(f'config must be key=value, got {self.choice!r}')
 
 
 @dataclass
@@ -139,6 +170,8 @@ class Tick:
     blocked: bool = False
     arrived: bool = False
     state_hash: str = ''
+    #: the whole loop's belief (None until the loop is on: then truth is it)
+    belief: Optional[Tuple[float, float, float]] = None
 
 
 def _q(v: float, scale: float) -> int:
@@ -152,7 +185,7 @@ class Arena:
     def __init__(self, spec: Dict[str, object], seed: int,
                  planner: str = 'astar', range_sigma: float = 0.0,
                  lidar_every: int = 1, on_plan_batch=None,
-                 plan_batch_size: int = 2048):
+                 plan_batch_size: int = 2048, on_family=None):
         """Build the world from ``spec`` and place the robot at its start."""
         self.spec = normalize(spec)
         if planner not in PLANNERS:
@@ -196,6 +229,16 @@ class Arena:
         self._collector: Optional[Collector] = None
         self._stream = None
         self._want_plan = False
+        #: called with (channel, tick, columns, scalars) for each whole-loop
+        #: family batch (coco_lab.columns); never part of the state
+        self.on_family = on_family
+        # -- the whole loop (M2): off until the first loop input
+        self.loop = False
+        self.subsystems: Dict[str, object] = {}
+        self.slip = False
+        self.odom = (0.0, 0.0, 0.0)
+        self.odom_alphas = ODOM_ALPHAS
+        self.odom_rng: Optional[Rng] = None
         self._chain = hashlib.sha256(STATE_LAYOUT).digest()
         self._reset_robot()
         self.ranges = self._scan()
@@ -245,11 +288,16 @@ class Arena:
                 self._want_plan = True
         elif e.kind == 'reset':
             self._reset_robot()
+            if self.loop:
+                self.odom = (0.0, 0.0, 0.0)
+                for name in sorted(self.subsystems):
+                    self.subsystems[name].on_reset(self)
 
     def _plan_begin(self):
         """Start the search from the current pose to the goal (not run yet)."""
         g = self.grid
-        s_cell = self.plan_map.cell_at(self.pose[0], self.pose[1])
+        here = self.belief()
+        s_cell = self.plan_map.cell_at(here[0], here[1])
         t_cell = self.plan_map.cell_at(*self.goal)
         if s_cell is None or t_cell is None:
             raise ArenaError(f'goal {self.goal} or the robot is off the map')
@@ -327,7 +375,7 @@ class Arena:
             return self.teleop[0], self.teleop[1], False
         if self.mode == 'goal':
             while self.wp_index < len(self.waypoints):
-                c = drive_command(self.pose, self.waypoints[self.wp_index],
+                c = drive_command(self.belief(), self.waypoints[self.wp_index],
                                   lim['auto_linear'], lim['auto_angular'],
                                   self.dt)
                 if c is not None:
@@ -365,6 +413,77 @@ class Arena:
                 raise ArenaError(f'input for tick {e.tick} given at tick '
                                  f'{self.tick}')
 
+    # -- the whole loop ---------------------------------------------------------
+
+    def belief(self) -> Tuple[float, float, float]:
+        """Where the robot believes it is: a localiser's estimate, or truth."""
+        for name in sorted(self.subsystems):
+            b = getattr(self.subsystems[name], 'belief', None)
+            pose = b() if b is not None else None
+            if pose is not None:
+                return pose
+        return self.pose
+
+    def _activate(self):
+        if not self.loop:
+            self.loop = True
+            self.odom = (0.0, 0.0, 0.0)
+            self.odom_rng = self.rng.split()
+
+    def _apply_loop(self, e: InputEvent):
+        self._activate()
+        if e.kind == 'kidnap':
+            th = wrap(e.theta) if e.has_theta else self.pose[2]
+            if self.smap.clearance(e.x, e.y) < self.radius * 0.5:
+                raise ArenaError(f'kidnap target ({e.x}, {e.y}) is against '
+                                 'a wall')
+            self.pose = (e.x, e.y, th)          # odometry is not told
+            self.v = self.w = 0.0
+            return
+        key, _, value = e.choice.partition('=')
+        head, _, rest = key.partition('.')
+        if head == 'arena':
+            self._config_arena(rest, value)
+            return
+        sub = self.subsystems.get(head)
+        if sub is None:
+            cls = SUBSYSTEMS.get(head)
+            if cls is None:
+                raise ArenaError(f'no subsystem {head!r} (its pack is not '
+                                 'loaded)')
+            sub = self.subsystems[head] = cls(self)
+        sub.config(rest, value)
+
+    def _config_arena(self, key: str, value: str):
+        if key == 'slip':
+            if value not in ('on', 'off'):
+                raise ArenaError(f'arena.slip must be on or off, not {value!r}')
+            self.slip = value == 'on'
+        elif key == 'range_sigma':
+            v = float(value)
+            if not (math.isfinite(v) and v >= 0):
+                raise ArenaError('arena.range_sigma must be >= 0')
+            self.range_sigma = v
+        elif key == 'odom_alphas':
+            a = tuple(float(x) for x in value.split(','))
+            if len(a) != 4 or any(not (math.isfinite(x) and x >= 0)
+                                  for x in a):
+                raise ArenaError('arena.odom_alphas must be four values >= 0')
+            self.odom_alphas = a
+        else:
+            raise ArenaError(f'unknown arena setting {key!r}')
+
+    def emit(self, channel: str, batch) -> None:
+        """Hand a filled coco_lab.columns.Batch to the family hook."""
+        if self.on_family is not None and len(batch):
+            cols, scalars = batch.drain()
+            self.on_family(channel, self.tick, cols, scalars)
+
+    def emit_header(self, channel: str, header: Dict[str, object]) -> None:
+        """Hand a channel's static header to the family hook."""
+        if self.on_family is not None:
+            self.on_family(channel, self.tick, None, header)
+
     def _prepare(self):
         """Apply the pending inputs to the snapshot; start the one search."""
         self._want_plan = False
@@ -378,8 +497,13 @@ class Arena:
         if self._in_step:
             raise ArenaError('a step is already in progress')
         self._check_ticks(events)
+        # loop inputs first, committed now (never restored by an amendment)
+        loop = [e for e in events if e.kind in LOOP_KINDS]
+        for e in loop:
+            self._apply_loop(e)
+        self._loop_applied = loop
         self._snap = self._snapshot()
-        self._pending = list(events)
+        self._pending = [e for e in events if e.kind not in LOOP_KINDS]
         self._in_step = True
         try:
             self._prepare()
@@ -407,6 +531,8 @@ class Arena:
         if not self._in_step:
             raise ArenaError('amend outside a step')
         self._check_ticks(events)
+        if any(e.kind in LOOP_KINDS for e in events):
+            raise ArenaError('a loop input opens a tick; it cannot amend one')
         self._plan_cancel()
         self._restore(self._snap)
         before = len(self._pending)
@@ -427,8 +553,9 @@ class Arena:
         plans: List[Plan] = []
         if self._collector is not None:
             plans.append(self._plan_finish())
-        applied = self._pending
+        applied = self._loop_applied + self._pending
         self._pending = []
+        self._loop_applied = []
         self._in_step = False
         tv, tw, arrived = self._command()
         lim, dt = self.limits, self.dt
@@ -436,20 +563,32 @@ class Arena:
         dw = lim['angular_accel'] * dt
         self.v += max(-dv, min(dv, tv - self.v))
         self.w += max(-dw, min(dw, tw - self.w))
-        new = step_pose(self.pose, self.v, self.w, dt)
+        before = self.pose
+        new = step_pose(before, self.v, self.w, dt)
+        wheels = new
+        if self.loop and self.slip:
+            # the wheels did the commanded motion; the body turned less
+            new = step_pose(before, self.v, self.w * SLIP_TURN, dt)
         blocked = self.smap.clearance(new[0], new[1]) < self.radius * 0.5
         if blocked:
-            new = self.pose
+            new = wheels = before
             self.v = self.w = 0.0
         self.pose = new
+        if self.loop:
+            r1, tr, r2 = odom_delta(before, wheels)
+            n1, nt, n2 = sample_delta(r1, tr, r2, self.odom_alphas,
+                                      self.odom_rng)
+            self.odom = apply_delta(self.odom, n1, nt, n2)
         self.tick += 1
         self.ranges = self._scan()
+        for name in sorted(self.subsystems):
+            self.subsystems[name].on_tick(self)
         b = self.state_bytes()
         self._chain = hashlib.sha256(self._chain + b).digest()
         h = hashlib.sha256(b).hexdigest()
         return Tick(self.tick, self.t_world, self.pose, self.v, self.w,
                     self.mode, list(self.ranges), plans, applied, blocked,
-                    arrived, h)
+                    arrived, h, belief=self.belief() if self.loop else None)
 
     def step(self, events: Sequence[InputEvent] = ()) -> Tick:
         """Apply this tick's inputs, plan once, advance ``dt``, scan, hash."""
@@ -484,6 +623,21 @@ class Arena:
         parts.append(struct.pack(f'<{len(self.ranges)}I', *(
             NO_RETURN if r == math.inf else _q(r, Q_RANGE)
             for r in self.ranges)))
+        if self.loop:
+            # the whole loop's state (layout coco.arena.loop.v1, ARENA_MODEL.md)
+            ox, oy, oth = self.odom
+            parts += [LOOP_LAYOUT,
+                      struct.pack('<3qBq', _q(ox, Q_STATE), _q(oy, Q_STATE),
+                                  _q(oth, Q_STATE), self.slip,
+                                  _q(self.range_sigma, Q_STATE)),
+                      struct.pack('<4q', *(_q(a, Q_STATE)
+                                           for a in self.odom_alphas)),
+                      struct.pack('<4Q', *self.odom_rng.state)]
+            for name in sorted(self.subsystems):
+                nb = name.encode('utf-8')
+                sb = self.subsystems[name].state_bytes()
+                parts += [struct.pack('<I', len(nb)), nb,
+                          struct.pack('<I', len(sb)), sb]
         return b''.join(parts)
 
     def state_hash(self) -> str:

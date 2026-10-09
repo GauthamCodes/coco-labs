@@ -395,48 +395,65 @@ class LikelihoodField:
         self.log_off = math.log(self.pz_off)
 
 
-def run_mcl(smap: SketchMap, world: WorldRun, params: MCLParams) -> LocTrace:
-    """Run Monte Carlo localisation over ``world``'s inputs; trace it."""
-    params.check()
-    inp = _Inputs(world)
-    rng = random.Random(params.seed)
-    lidar = inp.lidar
-    beams = _beam_subset(lidar.samples, params.beams)
-    b_cos = [math.cos(inp.angles[b] + lidar.mount[2]) for b in beams]
-    b_sin = [math.sin(inp.angles[b] + lidar.mount[2]) for b in beams]
-    mx, my = lidar.mount[0], lidar.mount[1]
-    lf = LikelihoodField(smap, params.sigma_hit, params.z_hit, params.z_rand,
-                         params.max_dist, lidar.range_max)
-    amcl = params.aggregate == 'amcl'
-    table, off_map = (lf.cube, lf.cube_off) if amcl else (lf.log, lf.log_off)
-    ox, oy = smap.origin
-    inv_r = 1.0 / smap.resolution
-    W, H = smap.width, smap.height
-    free = smap.free_cells(margin=ROBOT_RADIUS * 0.5)
-    if not free:
-        raise LocError('the map has no free cell to put a particle in')
-    N = params.particles
+class MCL:
+    """
+    Monte Carlo localisation, one update at a time (M2.3).
 
-    if params.init == 'tracking':
-        sx, sy, sth = params.init_sigma
-        x0, y0, th0 = inp.start
-        P = [(x0 + rng.gauss(0, sx), y0 + rng.gauss(0, sy),
-              wrap(th0 + rng.gauss(0, sth))) for _ in range(N)]
-    else:
-        P = [_random_free_pose(free, smap, rng) for _ in range(N)]
+    Exactly :func:`run_mcl`'s filter -- which is this class run over a
+    WorldRun's update rows -- so the Arena runs the same algorithm, draw
+    for draw, as Lab 2 did. It reads odometry and scans, never the truth.
+    ``rng`` is any source with ``random``, ``gauss``, ``randrange`` and
+    ``uniform``: ``random.Random(params.seed)`` for Lab 2's traces, the
+    Arena's own :class:`coco_lab.rng.Rng` stream in the Arena.
+    """
 
-    cols = {name: [] for name in COMMON_COLUMNS + FILTER_COLUMNS['mcl']}
-    parts = {'offset': [0], 'x': [], 'y': [], 'yaw': [], 'w': []}
-    w_slow = w_fast = 0.0
-    w = [1.0 / N] * N  # normalised; uniform after every resample
-    a1, a2, a3, a4 = params.alphas
-    gt_rows = world.gt
-    prev_odom = inp.odom[0]
-    for k in range(len(inp.rows)):
+    def __init__(self, smap: SketchMap, lidar, params: MCLParams,
+                 start: Tuple[float, float, float], rng):
+        """Build the likelihood field and draw the initial particles."""
+        params.check()
+        self.smap, self.lidar, self.params, self.rng = smap, lidar, params, rng
+        angles = lidar.angles()
+        self.beams = _beam_subset(lidar.samples, params.beams)
+        self.b_cos = [math.cos(angles[b] + lidar.mount[2]) for b in self.beams]
+        self.b_sin = [math.sin(angles[b] + lidar.mount[2]) for b in self.beams]
+        self.lf = LikelihoodField(smap, params.sigma_hit, params.z_hit,
+                                  params.z_rand, params.max_dist,
+                                  lidar.range_max)
+        self.amcl = params.aggregate == 'amcl'
+        self.free = smap.free_cells(margin=ROBOT_RADIUS * 0.5)
+        if not self.free:
+            raise LocError('the map has no free cell to put a particle in')
+        N = params.particles
+        if params.init == 'tracking':
+            sx, sy, sth = params.init_sigma
+            x0, y0, th0 = start
+            self.P = [(x0 + rng.gauss(0, sx), y0 + rng.gauss(0, sy),
+                       wrap(th0 + rng.gauss(0, sth))) for _ in range(N)]
+        else:
+            self.P = [_random_free_pose(self.free, smap, rng)
+                      for _ in range(N)]
+        self.w = [1.0 / N] * N  # normalised; uniform after every resample
+        self.w_slow = self.w_fast = 0.0
+        self.prev_odom = None
+        self.updates = 0
+
+    def update(self, odom, z) -> Dict[str, object]:
+        """
+        Run one filter update.
+
+        Motion from the previous odometry, measurement, estimate, injection
+        bookkeeping, resampling. Returns the estimate, its covariance, the bookkeeping, and the
+        weighted particle set as it stood when the estimate was taken
+        (after weighting, before resampling -- what Lab 2 traced).
+        """
+        params, rng = self.params, self.rng
+        N = params.particles
+        P, w = self.P, self.w
+        smap = self.smap
         # -- motion: sample the odometry model per particle
-        if k > 0:
-            rot1, trans, rot2 = odom_delta(prev_odom, inp.odom[k])
-            prev_odom = inp.odom[k]
+        if self.prev_odom is not None:
+            a1, a2, a3, a4 = params.alphas
+            rot1, trans, rot2 = odom_delta(self.prev_odom, odom)
             r1n = min(abs(rot1), abs(math.pi - abs(rot1)))
             r2n = min(abs(rot2), abs(math.pi - abs(rot2)))
             s1 = math.sqrt(a1 * r1n * r1n + a2 * trans * trans)
@@ -452,11 +469,18 @@ def run_mcl(smap: SketchMap, world: WorldRun, params: MCLParams) -> LocTrace:
                 moved.append((x + tr * math.cos(h), y + tr * math.sin(h),
                               wrap(h + r2)))
             P = moved
+        self.prev_odom = odom
 
         # -- measurement: the likelihood field
-        z = inp.ranges[k]
-        used = [(z[b], b_cos[i], b_sin[i]) for i, b in enumerate(beams)
-                if z[b] != INF]
+        amcl = self.amcl
+        table, off_map = ((self.lf.cube, self.lf.cube_off) if amcl
+                          else (self.lf.log, self.lf.log_off))
+        ox, oy = smap.origin
+        inv_r = 1.0 / smap.resolution
+        W, H = smap.width, smap.height
+        mx, my = self.lidar.mount[0], self.lidar.mount[1]
+        used = [(z[b], self.b_cos[i], self.b_sin[i])
+                for i, b in enumerate(self.beams) if z[b] != INF]
         n_used = len(used)
         score = []
         for (x, y, th) in P:
@@ -503,22 +527,7 @@ def run_mcl(smap: SketchMap, world: WorldRun, params: MCLParams) -> LocTrace:
 
         # -- estimate: the heaviest cluster's weighted mean
         est, cov, cw = _cluster_estimate(P, w)
-        gt = gt_rows[inp.rows[k]]
-        exy, eyaw = _error(est, gt)
-        for name, val in (('row', inp.rows[k]), ('t', inp.t[k]),
-                          ('est_x', est[0]), ('est_y', est[1]),
-                          ('est_yaw', est[2]), ('cov_xx', cov[0]),
-                          ('cov_xy', cov[1]), ('cov_yy', cov[2]),
-                          ('cov_yaw', cov[3]), ('err_xy', exy),
-                          ('err_yaw', eyaw), ('n_eff', n_eff),
-                          ('cluster_weight', cw)):
-            cols[name].append(val)
-        for (x, y, th), wi in zip(P, w):
-            parts['x'].append(x)
-            parts['y'].append(y)
-            parts['yaw'].append(th)
-            parts['w'].append(wi)
-        parts['offset'].append(len(parts['x']))
+        traced = (P, w)
 
         # -- injection bookkeeping (augmented MCL)
         p_inject = 0.0
@@ -528,16 +537,16 @@ def run_mcl(smap: SketchMap, world: WorldRun, params: MCLParams) -> LocTrace:
             # 0.001 would keep w_fast / w_slow >> 1 for thousands of
             # updates and nothing would ever be injected (measured here
             # before this line existed: 0 injections after a kidnap)
-            if w_slow == 0.0:
-                w_slow = w_avg
+            if self.w_slow == 0.0:
+                self.w_slow = w_avg
             else:
-                w_slow += params.alpha_slow * (w_avg - w_slow)
-            if w_fast == 0.0:
-                w_fast = w_avg
+                self.w_slow += params.alpha_slow * (w_avg - self.w_slow)
+            if self.w_fast == 0.0:
+                self.w_fast = w_avg
             else:
-                w_fast += params.alpha_fast * (w_avg - w_fast)
-            if w_slow > 0:
-                p_inject = max(0.0, 1.0 - w_fast / w_slow)
+                self.w_fast += params.alpha_fast * (w_avg - self.w_fast)
+            if self.w_slow > 0:
+                p_inject = max(0.0, 1.0 - self.w_fast / self.w_slow)
         elif n_used and params.injection == 'fixed':
             p_inject = params.inject_fraction
 
@@ -550,18 +559,52 @@ def run_mcl(smap: SketchMap, world: WorldRun, params: MCLParams) -> LocTrace:
             newP = []
             for i in idx:
                 if p_inject > 0.0 and rng.random() < p_inject:
-                    newP.append(_random_free_pose(free, smap, rng))
+                    newP.append(_random_free_pose(self.free, smap, rng))
                     injected += 1
                 else:
                     newP.append(P[i])
             P = newP
             w = [1.0 / N] * N
-        cols['resampled'].append(1 if do else 0)
-        cols['injected'].append(injected)
-        cols['p_inject'].append(p_inject)
-        cols['w_avg'].append(w_avg)
-        cols['w_slow'].append(w_slow)
-        cols['w_fast'].append(w_fast)
+        self.P, self.w = P, w
+        self.updates += 1
+        return {'est': est, 'cov': cov, 'cluster_weight': cw,
+                'n_eff': n_eff, 'resampled': 1 if do else 0,
+                'injected': injected, 'p_inject': p_inject,
+                'w_avg': w_avg, 'w_slow': self.w_slow,
+                'w_fast': self.w_fast, 'particles': traced}
+
+
+def run_mcl(smap: SketchMap, world: WorldRun, params: MCLParams) -> LocTrace:
+    """Run Monte Carlo localisation over ``world``'s inputs; trace it."""
+    params.check()
+    inp = _Inputs(world)
+    f = MCL(smap, inp.lidar, params, inp.start, random.Random(params.seed))
+    cols = {name: [] for name in COMMON_COLUMNS + FILTER_COLUMNS['mcl']}
+    parts = {'offset': [0], 'x': [], 'y': [], 'yaw': [], 'w': []}
+    gt_rows = world.gt
+    for k in range(len(inp.rows)):
+        u = f.update(inp.odom[k], inp.ranges[k])
+        est, cov = u['est'], u['cov']
+        gt = gt_rows[inp.rows[k]]
+        exy, eyaw = _error(est, gt)
+        for name, val in (('row', inp.rows[k]), ('t', inp.t[k]),
+                          ('est_x', est[0]), ('est_y', est[1]),
+                          ('est_yaw', est[2]), ('cov_xx', cov[0]),
+                          ('cov_xy', cov[1]), ('cov_yy', cov[2]),
+                          ('cov_yaw', cov[3]), ('err_xy', exy),
+                          ('err_yaw', eyaw), ('n_eff', u['n_eff']),
+                          ('cluster_weight', u['cluster_weight'])):
+            cols[name].append(val)
+        P, w = u['particles']
+        for (x, y, th), wi in zip(P, w):
+            parts['x'].append(x)
+            parts['y'].append(y)
+            parts['yaw'].append(th)
+            parts['w'].append(wi)
+        parts['offset'].append(len(parts['x']))
+        for name in ('resampled', 'injected', 'p_inject', 'w_avg', 'w_slow',
+                     'w_fast'):
+            cols[name].append(u[name])
 
     trace = LocTrace(_header('mcl', params.to_dict(), world), cols,
                      summarise(cols, world), parts)
@@ -657,54 +700,66 @@ def _motion_jacobians(mu, rot1, trans, rot2, alphas):
     return G, Q
 
 
-def run_ekf(smap: SketchMap, world: WorldRun, params: EKFParams) -> LocTrace:
-    """Run EKF localisation over ``world``'s inputs; trace it."""
-    params.check()
-    inp = _Inputs(world)
-    lidar = inp.lidar
-    beams = _beam_subset(lidar.samples, params.beams)
-    rmax = lidar.range_max
-    R1 = params.sigma_hit ** 2
+class EKF:
+    """
+    EKF localisation, one update at a time (M2.3).
 
-    def expected(pose, b):
-        sx, sy, sth = _sensor_pose(pose, lidar.mount)
-        return smap.cast(sx, sy, sth + inp.angles[b], rmax)
+    Exactly :func:`run_ekf`'s filter, which is this class run over a
+    WorldRun's update rows. No randomness; it reads odometry and scans,
+    never the truth.
+    """
 
-    if params.init == 'tracking':
-        mu = list(inp.start)
-        s = params.init_sigma
-        P = [[s[0] ** 2, 0.0, 0.0], [0.0, s[1] ** 2, 0.0],
-             [0.0, 0.0, s[2] ** 2]]
-    else:
-        # an EKF must start somewhere: the middle of the free space,
-        # facing +x, with a covariance as wide as the map
-        free = smap.free_cells(margin=ROBOT_RADIUS * 0.5)
-        cx = sum(smap.cell_centre(*c)[0] for c in free) / len(free)
-        cy = sum(smap.cell_centre(*c)[1] for c in free) / len(free)
-        mu = [cx, cy, 0.0]
-        span = max(smap.width, smap.height) * smap.resolution / 2
-        P = [[span ** 2, 0.0, 0.0], [0.0, span ** 2, 0.0],
-             [0.0, 0.0, math.pi ** 2]]
+    def __init__(self, smap: SketchMap, lidar, params: EKFParams,
+                 start: Tuple[float, float, float]):
+        """Start from ``start`` (tracking) or the middle of the free space."""
+        params.check()
+        self.smap, self.lidar, self.params = smap, lidar, params
+        self.angles = lidar.angles()
+        self.beams = _beam_subset(lidar.samples, params.beams)
+        self.R1 = params.sigma_hit ** 2
+        if params.init == 'tracking':
+            self.mu = list(start)
+            s = params.init_sigma
+            self.P = [[s[0] ** 2, 0.0, 0.0], [0.0, s[1] ** 2, 0.0],
+                      [0.0, 0.0, s[2] ** 2]]
+        else:
+            # an EKF must start somewhere: the middle of the free space,
+            # facing +x, with a covariance as wide as the map
+            free = smap.free_cells(margin=ROBOT_RADIUS * 0.5)
+            cx = sum(smap.cell_centre(*c)[0] for c in free) / len(free)
+            cy = sum(smap.cell_centre(*c)[1] for c in free) / len(free)
+            self.mu = [cx, cy, 0.0]
+            span = max(smap.width, smap.height) * smap.resolution / 2
+            self.P = [[span ** 2, 0.0, 0.0], [0.0, span ** 2, 0.0],
+                      [0.0, 0.0, math.pi ** 2]]
+        self.prev_odom = None
+        self.updates = 0
 
-    cols = {name: [] for name in COMMON_COLUMNS + FILTER_COLUMNS['ekf']}
-    prev_odom = inp.odom[0]
-    for k in range(len(inp.rows)):
-        if k > 0:
-            rot1, trans, rot2 = odom_delta(prev_odom, inp.odom[k])
-            prev_odom = inp.odom[k]
+    def _expected(self, pose, b):
+        sx, sy, sth = _sensor_pose(pose, self.lidar.mount)
+        return self.smap.cast(sx, sy, sth + self.angles[b],
+                              self.lidar.range_max)
+
+    def update(self, odom, z) -> Dict[str, object]:
+        """One prediction (from the previous odometry) and one update."""
+        params = self.params
+        mu, P = self.mu, self.P
+        if self.prev_odom is not None:
+            rot1, trans, rot2 = odom_delta(self.prev_odom, odom)
             G, Q = _motion_jacobians(mu, rot1, trans, rot2, params.alphas)
             mu, P = kalman.predict(
                 mu, P, lambda m: list(apply_delta(m, rot1, trans, rot2)),
                 G, Q)
-        z = inp.ranges[k]
+        self.prev_odom = odom
+        pred_mu, pred_P = list(mu), [list(r) for r in P]
         rows_H, zs, zhats = [], [], []
         gated = 0
         nis_sum = 0.0
         pose = tuple(mu)
-        for b in beams:
+        for b in self.beams:
             if z[b] == INF:
                 continue
-            zh = expected(pose, b)
+            zh = self._expected(pose, b)
             if zh == INF:
                 continue
             Hrow = []
@@ -715,8 +770,8 @@ def run_ekf(smap: SketchMap, world: WorldRun, params: EKFParams) -> LocTrace:
                 minus = list(pose)
                 plus[j] += d
                 minus[j] -= d
-                zp = expected(tuple(plus), b)
-                zm = expected(tuple(minus), b)
+                zp = self._expected(tuple(plus), b)
+                zm = self._expected(tuple(minus), b)
                 if zp == INF or zm == INF:
                     okj = False
                     break
@@ -724,7 +779,7 @@ def run_ekf(smap: SketchMap, world: WorldRun, params: EKFParams) -> LocTrace:
             if not okj:
                 continue
             S = sum(Hrow[i] * sum(P[i][j] * Hrow[j] for j in range(3))
-                    for i in range(3)) + R1
+                    for i in range(3)) + self.R1
             nu = z[b] - zh
             nis = nu * nu / S
             if nis > params.gate:
@@ -736,10 +791,27 @@ def run_ekf(smap: SketchMap, world: WorldRun, params: EKFParams) -> LocTrace:
             zhats.append(zh)
         if rows_H:
             m = len(rows_H)
-            R = [[R1 if i == j else 0.0 for j in range(m)] for i in range(m)]
+            R = [[self.R1 if i == j else 0.0 for j in range(m)]
+                 for i in range(m)]
             mu, P, _, _ = kalman.update(mu, P, zs, zhats, rows_H, R)
             mu[2] = wrap(mu[2])
-        est = (mu[0], mu[1], mu[2])
+        self.mu, self.P = mu, P
+        self.updates += 1
+        return {'est': (mu[0], mu[1], mu[2]), 'P': P, 'pred_mu': pred_mu,
+                'pred_P': pred_P, 'beams_used': len(rows_H),
+                'beams_gated': gated,
+                'nis': nis_sum / len(rows_H) if rows_H else 0.0}
+
+
+def run_ekf(smap: SketchMap, world: WorldRun, params: EKFParams) -> LocTrace:
+    """Run EKF localisation over ``world``'s inputs; trace it."""
+    params.check()
+    inp = _Inputs(world)
+    f = EKF(smap, inp.lidar, params, inp.start)
+    cols = {name: [] for name in COMMON_COLUMNS + FILTER_COLUMNS['ekf']}
+    for k in range(len(inp.rows)):
+        u = f.update(inp.odom[k], inp.ranges[k])
+        est, P = u['est'], u['P']
         gt = world.gt[inp.rows[k]]
         exy, eyaw = _error(est, gt)
         for name, val in (('row', inp.rows[k]), ('t', inp.t[k]),
@@ -747,9 +819,9 @@ def run_ekf(smap: SketchMap, world: WorldRun, params: EKFParams) -> LocTrace:
                           ('est_yaw', est[2]), ('cov_xx', P[0][0]),
                           ('cov_xy', P[0][1]), ('cov_yy', P[1][1]),
                           ('cov_yaw', P[2][2]), ('err_xy', exy),
-                          ('err_yaw', eyaw), ('beams_used', len(rows_H)),
-                          ('beams_gated', gated),
-                          ('nis', nis_sum / len(rows_H) if rows_H else 0.0)):
+                          ('err_yaw', eyaw), ('beams_used', u['beams_used']),
+                          ('beams_gated', u['beams_gated']),
+                          ('nis', u['nis'])):
             cols[name].append(val)
     trace = LocTrace(_header('ekf', params.to_dict(), world), cols,
                      summarise(cols, world))

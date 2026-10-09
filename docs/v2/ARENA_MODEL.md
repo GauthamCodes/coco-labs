@@ -102,3 +102,52 @@ ranges on **every** beam (0 of 113,760 differ). Evidence:
 [`docs/v2/data/m1/lidar/arena_lidar_fidelity.json`](data/m1/lidar/arena_lidar_fidelity.json)
 (MODEL vs STACK; Gazebo recordings `~/coco_lab_runs/lab2/fidelity_1`,
 `fidelity_s1`).
+
+## The whole loop (M2)
+
+M1's Arena had no localisation: its belief WAS its truth. From M2.3 two
+more input kinds turn on the whole loop (`coco_lab/arena.py`):
+
+| Input | Meaning |
+|---|---|
+| `kidnap` (x, y, θ) | the robot is carried; odometry and every filter are not told |
+| `config` (`key=value`) | switch on or tune a subsystem: `arena.slip=on`, `arena.range_sigma=0.02`, `arena.odom_alphas=a1,a2,a3,a4`, `localise.filter=mcl\|ekf\|both\|off`, `localise.mcl.particles=500`, `localise.mcl.injection=augmented`, ... |
+
+**Loop inputs apply first in their tick** and are committed at once; an
+amendment cannot carry one (the worker holds it for the next tick). Until
+the first loop input the Arena is exactly M1's: the same state, the same
+hashes (M1's 100 recorded sessions still give 0 differing hashes).
+
+From the first loop input the Arena keeps:
+
+- **wheel odometry**: the wheels' motion each tick, through Sketch's
+  odometry motion model (`sample_delta`, default alphas 0.02), on its own
+  random stream split from the master at activation;
+- **the wheel-slip option** (`arena.slip`, OFF by default, labelled on
+  screen as a model option): in turns the body rotates `SLIP_TURN` =
+  56.2 / 72.5 = 0.775 of what the wheels report — Lab 2's measured turn
+  divergence of COCO's skid-steer wheel odometry on the recorded tour.
+  Measured against all of Lab 2's recorded drives, it helps on one tour
+  and the square and badly hurts on the other tour, so it stays off
+  (`docs/v2/data/m2/m23/slip_fidelity.json`; `FIDELITY_v1.md`);
+- **subsystems**, each registered in `SUBSYSTEMS` by its own Python pack
+  (`coco_lab.loc_arena` registers `localise`); a `config` for a subsystem
+  whose pack is not loaded is refused.
+
+**Planning and driving use the BELIEF** (`Arena.belief()`: the localiser's
+estimate, MCL's when both run), never the truth: a localisation error
+reaches the planner (the search starts from the believed cell) and the
+driver. The tick reports the belief as `pose` and the truth beside it; the
+renderer draws the robot at the belief and the truth as the dashed outline.
+
+### The loop section of the state hash (`coco.arena.loop.v1`)
+
+Appended to the M1 layout only once the loop is on, little-endian:
+`coco.arena.loop.v1\0`; odometry x, y, θ as int64 micro-units; slip u8;
+range σ int64 micro-units; the four odometry alphas int64 micro-units; the
+odometry stream's state (4 × u64); then for each subsystem in name order its
+name (u32 length + UTF-8) and its state (u32 length + bytes). The localise
+subsystem's state: filter u8; its stream (4 × u64); for MCL the particle
+count u32, w_slow and w_fast (int64, ×10¹²), then x, y, θ, weight per
+particle (int64 micro-units); for the EKF μ (3) and P (9) as int64
+micro-units; the last update's odometry (3 × int64) and the update count u32.

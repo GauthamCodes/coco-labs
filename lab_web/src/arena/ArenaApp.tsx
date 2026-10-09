@@ -33,7 +33,9 @@ import { Timeline } from './Timeline';
 import { caption } from './lens/captions';
 import { drawLenses, HOVERS } from './lens/draw';
 import { EventLog, LensBar, LensCharts, LensInspector } from './lens/panels';
-import { defaultLayers, LENS_BY_ID, LENSES, LEVELS, type LensId, type Level } from './lens/registry';
+import { LocaliseControls } from './lens/controls';
+import './lens/localise';
+import { defaultLayers, LENS_BY_ID, LENSES, LEVELS, packForConfig, type LensId, type Level } from './lens/registry';
 import { LensLayers } from './render/lensLayers';
 import { sha256Hex } from '../bundle/sha256';
 
@@ -134,6 +136,13 @@ export function ArenaApp() {
     return true;
   }, [setMode]);
 
+  /** A whole-loop setting: a config input, so it is in the run's log (M2.3). */
+  const sendConfig = useCallback((choice: string) => {
+    takeOver();
+    queue.current.push({ kind: 'config', choice });
+  }, [takeOver]);
+  const locOn = useRef(false);
+
   const goal = useCallback((x: number, y: number) => {
     takeOver();
     perf.goalSent(wallMs(), live.current?.shownSearch?.searchId ?? null);
@@ -180,6 +189,9 @@ export function ArenaApp() {
       if (!c?.world || inFlight) return;
       if (modeRef.current === 'replay' && replayRun) {
         if (c.tick >= replayRun.ticks) return;
+        const need = [...new Set(replayRun.inputs.filter((x) => x.kind === 'config').map((x) => packForConfig(x.choice ?? '')))];
+        const missing = need.filter((p) => !c.packs.has(p));
+        if (missing.length) { missing.forEach((p) => c.loadPack(p)); return; }
         queue.current.push(...replayRun.inputs.filter((x) => x.tick === c.tick));
       }
       inFlight = true;
@@ -343,8 +355,30 @@ export function ArenaApp() {
 
     // a click (not a drag): a goal, a compare goal, or an inspected cell
     let down: [number, number] | null = null;
-    const onDown = (e: PointerEvent) => { down = [e.clientX, e.clientY]; };
+    let kidnapping = false;
+    const onDown = (e: PointerEvent) => {
+      down = [e.clientX, e.clientY];
+      // Localise lens: grabbing the robot (its TRUE pose) starts a kidnap
+      const t = lastTick.current;
+      kidnapping = false;
+      if (lensRef.current === 'localise' && modeRef.current === 'live' && t && rr) {
+        const truth = t.truth ?? t.pose;
+        const [x, y] = rr.toWorld(e.clientX, e.clientY);
+        if (Math.hypot(x - truth[0], y - truth[1]) < 0.35) { kidnapping = true; rr.panSuspended = true; }
+      }
+    };
     const onUp = (e: PointerEvent) => {
+      if (rr) rr.panSuspended = false;
+      if (kidnapping && rr && down && Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) {
+        kidnapping = false;
+        down = null;
+        const [x, y] = rr.toWorld(e.clientX, e.clientY);
+        const t = lastTick.current;
+        const th = (t?.truth ?? t?.pose ?? [0, 0, 0])[2];
+        queue.current.push({ kind: 'kidnap', x, y, theta: th, has_theta: true });
+        return;
+      }
+      kidnapping = false;
       if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6 || !rr || !worldSet) return;
       down = null;
       const [x, y] = rr.toWorld(e.clientX, e.clientY);
@@ -442,6 +476,13 @@ export function ArenaApp() {
   useEffect(() => {
     for (const [id, v] of Object.entries(lensOn)) ll.current?.setVisible(id, v);
   }, [lensOn]);
+  // the Localise lens switches localisation on, once its pack is loaded and the live model drives (M2.3)
+  useEffect(() => {
+    if (lens !== 'localise' || locOn.current || !packs.has('localise') || mode === 'replay' || mode === 'recording') return;
+    locOn.current = true;
+    sendConfig('arena.range_sigma=0.02');
+    sendConfig('localise.filter=both');
+  }, [lens, packs, mode, sendConfig]);
   // Focus: everything outside the lens dims (the robot and truth never do)
   useEffect(() => {
     r.current?.setFocusDim(!focus || lens === 'plan' ? 1 : 0.25, focus ? 0.5 : 1);
@@ -500,6 +541,7 @@ export function ArenaApp() {
       <LensBar lens={lens} level={level} focus={focus}
         available={new Set(LENSES.filter((l) => l.id === 'plan' || packs.has(l.pack)).map((l) => l.id))}
         onLens={setLens} onLevel={setLevel} onFocus={setFocus} />
+      {lens === 'localise' && <LocaliseControls send={sendConfig} live={mode === 'live'} />}
       {level !== 'watch' && session && (() => { const c = caption(lens, session.families, tick?.tick ?? 0);
         return c ? <p className="lens-caption" data-testid="lens-caption" role="status">{c}</p> : null; })()}
       <div className="arena-stage">

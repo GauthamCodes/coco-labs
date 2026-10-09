@@ -110,6 +110,10 @@ TABLES: Dict[str, Tuple[Tuple[Tuple[str, str], ...],
         (('region_id', 's'), ('colour', 's'), ('detected', 'B'),
          ('range', 'd'), ('bearing', 'd')),
         (('detection_probability', 'd'), ('detection_label', 's'))),
+    # M1's metrics batch: the whole loop's numbers (errors, ATE, F1, ...)
+    'coco.metrics.v1.MetricBatch': (
+        (('name', 's'), ('value', 'd'), ('unit', 's')),
+        ()),
     'coco.arm.v1.ArmStateBatch': (
         (('joint1', 'd'), ('joint2', 'd'), ('ee_x', 'd'), ('ee_z', 'd'),
          ('finger_left', 'd'), ('finger_right', 'd'), ('magnet_on', 'B'),

@@ -46,7 +46,9 @@ def test_every_m2_family_has_a_channel():
 
 
 def test_every_m2_stream_message_has_a_column_table():
-    assert sorted(TABLES) == sorted(set(M2_STREAMS) - NOT_COLUMNAR)
+    # plus M1's metrics batch, which the whole loop emits its numbers in
+    assert sorted(TABLES) == sorted((set(M2_STREAMS) - NOT_COLUMNAR)
+                                    | {'coco.metrics.v1.MetricBatch'})
 
 
 @pytest.mark.parametrize('message', sorted(TABLES))

@@ -17,7 +17,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file coco/input/v1/input.proto.
  */
 export const file_coco_input_v1_input: GenFile = /*@__PURE__*/
-  fileDesc("Chljb2NvL2lucHV0L3YxL2lucHV0LnByb3RvEg1jb2NvLmlucHV0LnYxIs4BCg9JbnB1dEV2ZW50QmF0Y2gSCwoDc2VxGAEgAygEEgwKBHRpY2sYAiADKAQSDwoHdF93b3JsZBgDIAMoARImCgRraW5kGAQgAygOMhguY29jby5pbnB1dC52MS5JbnB1dEtpbmQSCQoBeBgFIAMoARIJCgF5GAYgAygBEg0KBXRoZXRhGAcgAygBEhEKCWhhc190aGV0YRgIIAMoCBIOCgZsaW5lYXIYCSADKAESDwoHYW5ndWxhchgKIAMoARIOCgZjaG9pY2UYCyADKAkqlgEKCUlucHV0S2luZBIaChZJTlBVVF9LSU5EX1VOU1BFQ0lGSUVEEAASEwoPSU5QVVRfS0lORF9HT0FMEAESFQoRSU5QVVRfS0lORF9URUxFT1AQAhITCg9JTlBVVF9LSU5EX1NUT1AQAxIWChJJTlBVVF9LSU5EX1BMQU5ORVIQBBIUChBJTlBVVF9LSU5EX1JFU0VUEAViBnByb3RvMw");
+  fileDesc("Chljb2NvL2lucHV0L3YxL2lucHV0LnByb3RvEg1jb2NvLmlucHV0LnYxIs4BCg9JbnB1dEV2ZW50QmF0Y2gSCwoDc2VxGAEgAygEEgwKBHRpY2sYAiADKAQSDwoHdF93b3JsZBgDIAMoARImCgRraW5kGAQgAygOMhguY29jby5pbnB1dC52MS5JbnB1dEtpbmQSCQoBeBgFIAMoARIJCgF5GAYgAygBEg0KBXRoZXRhGAcgAygBEhEKCWhhc190aGV0YRgIIAMoCBIOCgZsaW5lYXIYCSADKAESDwoHYW5ndWxhchgKIAMoARIOCgZjaG9pY2UYCyADKAkqxAEKCUlucHV0S2luZBIaChZJTlBVVF9LSU5EX1VOU1BFQ0lGSUVEEAASEwoPSU5QVVRfS0lORF9HT0FMEAESFQoRSU5QVVRfS0lORF9URUxFT1AQAhITCg9JTlBVVF9LSU5EX1NUT1AQAxIWChJJTlBVVF9LSU5EX1BMQU5ORVIQBBIUChBJTlBVVF9LSU5EX1JFU0VUEAUSFQoRSU5QVVRfS0lORF9LSUROQVAQBhIVChFJTlBVVF9LSU5EX0NPTkZJRxAHYgZwcm90bzM");
 
 /**
  * One row per input, applied at the START of `tick` (before that tick's step).
@@ -131,6 +131,20 @@ export enum InputKind {
    * @generated from enum value: INPUT_KIND_RESET = 5;
    */
   RESET = 5,
+
+  /**
+   * x, y (theta if has_theta): the robot is carried; odometry is not told (M2.3)
+   *
+   * @generated from enum value: INPUT_KIND_KIDNAP = 6;
+   */
+  KIDNAP = 6,
+
+  /**
+   * choice = "key=value": switch on or tune a whole-loop subsystem (M2.3)
+   *
+   * @generated from enum value: INPUT_KIND_CONFIG = 7;
+   */
+  CONFIG = 7,
 }
 
 /**

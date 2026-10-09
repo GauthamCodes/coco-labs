@@ -5,7 +5,7 @@
 
 export interface InputRow {
   tick: number;
-  kind: 'goal' | 'teleop' | 'stop' | 'planner' | 'reset';
+  kind: 'goal' | 'teleop' | 'stop' | 'planner' | 'reset' | 'kidnap' | 'config';
   x?: number; y?: number; theta?: number; has_theta?: boolean;
   linear?: number; angular?: number; choice?: string;
 }

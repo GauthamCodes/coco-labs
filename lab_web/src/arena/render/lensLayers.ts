@@ -54,6 +54,11 @@ export class LensLayers {
 
   constructor(private readonly scene: THREE.Scene, private palette: Palette) {}
 
+  /** A translucency token from the palette (uncertainty layers' alphas). */
+  alpha(key: 'particlesAlpha' | 'covarianceAlpha' | 'landmarkAlpha' | 'candidateAlpha' | 'rejectedAlpha' | 'beliefAlpha'): number {
+    return this.palette[key];
+  }
+
   setPalette(p: Palette) {
     this.palette = p;
     for (const [id, e] of this.entries) this.recolour(id, e);

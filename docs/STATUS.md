@@ -541,6 +541,64 @@ only. Read order for agents (README §9): `README.md`, this file,
   (`test_tools.py`) holds (a drawing method named like a mapping step was
   renamed). Next: M2.3 (Localise lens).
 
+- **M2.3 Localise lens (2026-10-09).** Evidence: `v2/data/m2/m23/`.
+  - **The whole loop's core (MODEL, `coco_lab/arena.py`):** two input
+    kinds, `kidnap` and `config` (`key=value`; additive in
+    `coco.input.v1`, enum 6 and 7; share links append them, M1 links
+    decode unchanged). From the first one: wheel odometry (Sketch's
+    motion-model noise), the labelled **wheel-slip option**, and
+    subsystems registered by their packs; the planner and the driver use
+    the **belief**, never the truth. Without a loop input the state is
+    M1's exactly. Documented in [`v2/ARENA_MODEL.md`](v2/ARENA_MODEL.md)
+    "The whole loop", with the loop section of the hash layout.
+  - **MCL and EKF, step-wise:** `localise.MCL` / `localise.EKF` are Lab 2's
+    filters one update at a time; `run_mcl` / `run_ekf` now consume them —
+    Lab 2's golden bundles and tests pass unchanged. `coco_lab/loc_arena.py`
+    (localise pack) runs them in the Arena on the same odometry and scans
+    (MCL and EKF on identical inputs), emitting particle sets, MCL's
+    bookkeeping, the EKF's predict/update, every estimator's pose (MCL,
+    EKF, dead reckoning) and the errors against the model's truth.
+    A test replays the Arena's MCL inputs into a standalone `MCL` and gets
+    the same estimates, draw for draw.
+  - **Lens (browser):** particles (translucent, size by weight), estimates
+    with 95 % ellipses, dead reckoning; controls for filter, particle
+    count, injection, motion and sensor noise, slip (all `config` inputs,
+    so they are in the run's log); **kidnap by dragging the robot**; error
+    series at Inspect (`err_xy.mcl|ekf|odometry`, `n_eff`). Browser check
+    (Chromium, `browser/localise_check.json`): the pack loads, the
+    families stream, a drag kidnaps the robot exactly where it was dropped
+    (error 0.06 → 4.45 m, injection off), 0 console errors. (Fixed on the
+    way: a drag also panned the map, so the kidnap landed elsewhere.)
+  - **Kidnapping, reproduced with the new engine (MODEL):** Lab 2's
+    `sketch_rates.py`, now running on the step-wise MCL, gives **every
+    per-seed result identical** to the committed Lab 2 file — kidnap off
+    **0/20**, augmented **18/20**, fixed 13/20, EKF never; global 9/20;
+    arena kidnap 0/20 vs 2/20 (`sketch_rates_new_engine.json`).
+  - **New, closed loop (MODEL):** the same kind of kidnap in the Arena,
+    where the robot drives on its belief: **0/20 recovered with injection
+    off and 0/20 with augmented** (500 particles, 70 s); the lost robot
+    drove into walls in 19/20 and 17/20 runs, and a stopped robot gives
+    MCL no more updates (`arena_kidnap.json`). Lab 2's 18/20 was open
+    loop (its Sketch driver followed the TRUE pose), in a teaching room;
+    the difference is the loop, not the filter.
+  - **Wheel slip vs the recorded Gazebo drives (MODEL vs STACK):** with
+    slip on, the model's wheel odometry ends 17.14 m / 3.14 rad from its
+    truth on tour 1 (Gazebo: 17.24 m / 2.69 rad) and 2.10 m / 3.05 rad on
+    the square (Gazebo 2.30 / 2.45), and the model's truth ends 0.26 m
+    from Gazebo's on the square (2.08 m with slip off) — but on tour 2
+    (Gazebo 2.60 m) it ends 16.3 m off and its truth 17.0 m from
+    Gazebo's (1.8 m off). Gazebo's two tours drifted 17.2 m and 2.6 m:
+    no single ratio fits both. **Slip stays OFF by default**
+    (`slip_fidelity.json`).
+  - **Determinism:** 10 whole-loop sessions (range noise, MCL/EKF/both
+    with random knobs, slip, 7 kidnaps) × 150 ticks in Pyodide-in-Node,
+    Chromium, Firefox and WebKit: **1,500 ticks each, 0 mismatched**
+    (`determinism_loop/`); the harness gained `make --loop 1` and loads
+    every pack.
+  - Tests: packages **3,375 / 0 / 0** (`coco_lab` 670 → 681:
+    `test_loc_arena.py` 11; `coco_schemas` 209 → 211), vitest **417 / 0 / 0**,
+    build tools **137 / 0 / 0**. Next: M2.4 (Map lens).
+
 ## Capabilities (README §2), with evidence class
 
 Classes as README §3 defines them: MODEL, STACK, REMOTE, HARDWARE (none

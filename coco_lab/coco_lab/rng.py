@@ -92,6 +92,16 @@ class Rng:
         r = math.sqrt(-2.0 * math.log(1.0 - u1))
         return mu + sigma * r * math.cos(2.0 * math.pi * u2)
 
+    def uniform(self, a: float, b: float) -> float:
+        """Return a float in [a, b) (one draw)."""
+        return a + (b - a) * self.random()
+
+    def randrange(self, n: int) -> int:
+        """Return an int in [0, n) (one draw; bias < n / 2**53)."""
+        if n < 1:
+            raise ValueError(f'randrange needs n >= 1, got {n}')
+        return min(n - 1, int(self.random() * n))
+
     def split(self) -> 'Rng':
         """Return an independent stream seeded from the next output."""
         return Rng(self.next_u64())

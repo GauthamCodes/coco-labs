@@ -110,6 +110,8 @@ export class ArenaRenderer {
   private stress: THREE.Object3D[] = [];
   private view = { cx: 0, cy: 0, scale: 50 }; // pixels per metre
   private store: PlanStore | null = null;
+  /** M2.3: while the page drags something (the robot, to kidnap it), a drag does not pan. */
+  panSuspended = false;
   private raf = 0;
   onFrame?: () => void;
   /** Called after each frame is submitted (the measurement hook for "drawn"). */
@@ -408,7 +410,7 @@ export class ArenaRenderer {
       const prev = pts.get(e.pointerId);
       if (!prev) return;
       pts.set(e.pointerId, [e.clientX, e.clientY]);
-      if (pts.size === 1) {
+      if (pts.size === 1 && !this.panSuspended) {
         this.view.cx -= (e.clientX - prev[0]) / this.view.scale;
         this.view.cy += (e.clientY - prev[1]) / this.view.scale;
       } else if (pts.size === 2 && pinch0 > 0) {

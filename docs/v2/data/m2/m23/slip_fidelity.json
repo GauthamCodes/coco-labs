@@ -1,0 +1,121 @@
+{
+ "tool": "docs/v2/data/m2/m23/slip_fidelity.py",
+ "slip_turn": 0.7751724137931035,
+ "evidence": "MODEL (the Arena motion law) vs STACK (recorded Gazebo drives, Lab 2)",
+ "sessions": [
+  "/home/gautham/coco_lab_runs/lab2/fidelity_1",
+  "/home/gautham/coco_lab_runs/lab2/fidelity_s1"
+ ],
+ "drives": [
+  {
+   "session": "fidelity_1",
+   "drive": "straight",
+   "ticks": 214,
+   "truth_rotation_rad": 2.331230941621243e-08,
+   "stack": {
+    "odom_pos_err_m": 0.00014969596267681997,
+    "odom_yaw_err_rad": 2.523051476188698e-06
+   },
+   "model_slip_off": {
+    "odom_pos_err_m": 0.0,
+    "odom_yaw_err_rad": 0.0,
+    "truth_vs_stack_truth_m": 0.00015719179089605234,
+    "truth_yaw_vs_stack_rad": 8.949499008537032e-08
+   },
+   "model_slip_on": {
+    "odom_pos_err_m": 1.3998652780478893e-07,
+    "odom_yaw_err_rad": 2.5315765039835014e-08,
+    "truth_vs_stack_truth_m": 0.00015719147634990868,
+    "truth_yaw_vs_stack_rad": 6.41792250455353e-08
+   }
+  },
+  {
+   "session": "fidelity_1",
+   "drive": "tour",
+   "ticks": 4384,
+   "truth_rotation_rad": 56.245028325219145,
+   "stack": {
+    "odom_pos_err_m": 17.237211284144365,
+    "odom_yaw_err_rad": 2.685404540253047
+   },
+   "model_slip_off": {
+    "odom_pos_err_m": 0.0,
+    "odom_yaw_err_rad": 0.0,
+    "truth_vs_stack_truth_m": 16.76225265177674,
+    "truth_yaw_vs_stack_rad": 1.7205334988354961
+   },
+   "model_slip_on": {
+    "odom_pos_err_m": 17.14212163413224,
+    "odom_yaw_err_rad": 3.1377548785372316,
+    "truth_vs_stack_truth_m": 16.816330897438764,
+    "truth_yaw_vs_stack_rad": 1.417221379701736
+   }
+  },
+  {
+   "session": "fidelity_s1",
+   "drive": "straight",
+   "ticks": 214,
+   "truth_rotation_rad": 2.3329466358745776e-08,
+   "stack": {
+    "odom_pos_err_m": 0.00014486386965619196,
+    "odom_yaw_err_rad": 4.4702850399147565e-07
+   },
+   "model_slip_off": {
+    "odom_pos_err_m": 0.0,
+    "odom_yaw_err_rad": 0.0,
+    "truth_vs_stack_truth_m": 0.00016383763419397515,
+    "truth_yaw_vs_stack_rad": 8.95888154772706e-08
+   },
+   "model_slip_on": {
+    "odom_pos_err_m": 1.2844769144054719e-07,
+    "odom_yaw_err_rad": 2.5344139231719964e-08,
+    "truth_vs_stack_truth_m": 0.00016383737152349332,
+    "truth_yaw_vs_stack_rad": 6.424467624555064e-08
+   }
+  },
+  {
+   "session": "fidelity_s1",
+   "drive": "square",
+   "ticks": 610,
+   "truth_rotation_rad": 10.974053593259853,
+   "stack": {
+    "odom_pos_err_m": 2.298079575479769,
+    "odom_yaw_err_rad": 2.4452414668679445
+   },
+   "model_slip_off": {
+    "odom_pos_err_m": 0.0,
+    "odom_yaw_err_rad": 0.0,
+    "truth_vs_stack_truth_m": 2.0818565521882193,
+    "truth_yaw_vs_stack_rad": 2.8718795993307693
+   },
+   "model_slip_on": {
+    "odom_pos_err_m": 2.0980850072316755,
+    "odom_yaw_err_rad": 3.0489614865673276,
+    "truth_vs_stack_truth_m": 0.2616966097651409,
+    "truth_yaw_vs_stack_rad": 0.17708188723655827
+   }
+  },
+  {
+   "session": "fidelity_s1",
+   "drive": "tour",
+   "ticks": 4384,
+   "truth_rotation_rad": 56.100440782908905,
+   "stack": {
+    "odom_pos_err_m": 2.594913287333984,
+    "odom_yaw_err_rad": 1.6026437009274335
+   },
+   "model_slip_off": {
+    "odom_pos_err_m": 0.0,
+    "odom_yaw_err_rad": 0.0,
+    "truth_vs_stack_truth_m": 1.8128882613843011,
+    "truth_yaw_vs_stack_rad": 2.9204333841469294
+   },
+   "model_slip_on": {
+    "odom_pos_err_m": 16.29683322299256,
+    "odom_yaw_err_rad": 1.4630350573263784,
+    "truth_vs_stack_truth_m": 17.037189872043996,
+    "truth_yaw_vs_stack_rad": 1.8997168657062784
+   }
+  }
+ ]
+}

@@ -2135,6 +2135,88 @@
    "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIki+v0F79aVUQPlJtU/HcxvAiQlq+BauUUB5knTN5M9YQELMJVXby1jAAkUsYtjHUEC1F9F2TO9VQGHhJM0fIzJAP+CBAYSnRMAqSEgyq3e4lU1A5/1/nDCpMcBzf/W4bydQQJQ0f0xrL1VAkQ2ki02fPMDfbkkO2PNLwJyiI7n8/yzAxsIQOX3VKMC94xQdye5UQDJIgCpu3GLmPsA4pFGBk+31v9wtyQG7Ui9AO1PovMaUREBr1EM0uiM0wKFns+pz7SbAC2DKwAF1PMA8iJ0pdG5BQPIolfCEzFZAOkhVZ7XAHtdFQGH9n8N8FUfAherm4m8PQMAmGw+22MBUwLBW7ZqQ8EnA+7K0U3OSWECaCYZzDbVHQLnCu1zEMUZA0a5Cyk+wU0BAllJIxIECUgJvaw=="
   },
   {
+   "message": "coco.metrics.v1.MetricBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "name": "s",
+    "value": "d",
+    "unit": "s"
+   },
+   "scalar_types": {},
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "name": [
+     "ASSUMPTION",
+     "ok",
+     "no_valid_candidate",
+     "",
+     "",
+     "no_valid_candidate",
+     "ASSUMPTION",
+     "bay α",
+     ""
+    ],
+    "value": [
+     -26.408054,
+     51.895835,
+     -75.262978,
+     23.051849,
+     -85.638525,
+     14.418658,
+     80.683106,
+     -85.800434,
+     72.366806
+    ],
+    "unit": [
+     "",
+     "",
+     "no_valid_candidate",
+     "collision",
+     "bay α",
+     "collision",
+     "",
+     "ASSUMPTION",
+     "no_valid_candidate"
+    ]
+   },
+   "scalars": {},
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIgpBU1NVTVBUSU9OIgJvayISbm9fdmFsaWRfY2FuZGlkYXRlIgAiACISbm9fdmFsaWRfY2FuZGlkYXRlIgpBU1NVTVBUSU9OIgZiYXkgzrEiACpIggAZOnZoOsBbzqW4qvJJQFJkraHU0FLAj1Tf+UUNN0BrK/aX3WhVwORqZFda1ixA42w6ArgrVEDQJodPOnNVwIB+3795F1JAMgAyADISbm9fdmFsaWRfY2FuZGlkYXRlMgljb2xsaXNpb24yBmJheSDOsTIJY29sbGlzaW9uMgAyCkFTU1VNUFRJT04yEm5vX3ZhbGlkX2NhbmRpZGF0ZQ=="
+  },
+  {
    "message": "coco.mission.v1.TransitionBatch",
    "types": {
     "seq": "Q",

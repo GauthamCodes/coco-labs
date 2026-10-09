@@ -13,7 +13,7 @@ batches WHILE the search runs (ADR 0001). Imports: coco_lab, json, array.
 from array import array
 import json
 
-from coco_lab.arena import Arena, InputEvent, PLANNERS
+from coco_lab.arena import Arena, InputEvent, LOOP_KINDS, PLANNERS
 
 _arena = None
 _post_family = None
@@ -57,8 +57,15 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
     def hook(columns, meta):
         post_batch(columns, json.dumps(meta))
 
+    def family(channel, tick, columns, scalars):
+        if columns is None:
+            emit_header(channel, scalars)
+        else:
+            emit_family(channel, tick, columns, scalars)
+
     _arena = Arena(json.loads(spec_json), int(seed), planner=planner,
-                   on_plan_batch=hook, plan_batch_size=int(batch_size))
+                   on_plan_batch=hook, plan_batch_size=int(batch_size),
+                   on_family=family)
     m = _arena.lab_map
     li = _arena.lidar
     world = {
@@ -119,8 +126,13 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048):
 
 
 def _tick_json(t, inputs):
+    # the whole loop (M2.3): the robot is drawn where it BELIEVES it is,
+    # the truth beside it (as a recorded stack run draws AMCL and truth)
+    extra = {} if t.belief is None else {'truth': list(t.pose)}
     return json.dumps({
-        'tick': t.tick, 't_world': t.t_world, 'pose': list(t.pose),
+        **extra,
+        'tick': t.tick, 't_world': t.t_world,
+        'pose': list(t.belief if t.belief is not None else t.pose),
         'v': t.v, 'w': t.w, 'mode': t.mode, 'blocked': t.blocked,
         'arrived': t.arrived, 'hash': t.state_hash,
         'chain': _arena.chain,
@@ -147,6 +159,9 @@ def step(inputs_json):
 # -- that arrives while the tick plans can join it (amend) ----------------
 
 _pending_rows = []
+#: loop inputs (kidnap, config) that arrived as amendments: a loop input
+#: opens a tick, so they wait for the next one (coco_lab.arena)
+_held_rows = []
 
 
 def _stamp(inputs_json):
@@ -159,8 +174,11 @@ def _stamp(inputs_json):
 
 def begin(inputs_json):
     """Apply this tick's inputs and start its search; nothing runs yet."""
-    global _pending_rows
-    rows = _stamp(inputs_json)
+    global _pending_rows, _held_rows
+    rows = _held_rows + json.loads(inputs_json)
+    _held_rows = []
+    for r in rows:
+        r['tick'] = _arena.tick
     _arena.begin_step([InputEvent(**e) for e in rows])
     _pending_rows = rows
 
@@ -173,8 +191,11 @@ def advance(n):
 def amend(inputs_json):
     """Inputs that arrived while the tick planned: they join this tick."""
     rows = _stamp(inputs_json)
-    _arena.amend([InputEvent(**e) for e in rows])
-    _pending_rows.extend(rows)
+    _held_rows.extend(r for r in rows if r['kind'] in LOOP_KINDS)
+    rows = [r for r in rows if r['kind'] not in LOOP_KINDS]
+    if rows:
+        _arena.amend([InputEvent(**e) for e in rows])
+        _pending_rows.extend(rows)
 
 
 def finish():

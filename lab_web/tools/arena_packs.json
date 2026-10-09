@@ -3,7 +3,7 @@
  "packs": {
   "localise": {
    "requires": [],
-   "modules": ["kalman.py", "loc_teaching.py", "locbundle.py", "localise.py"]
+   "modules": ["kalman.py", "loc_arena.py", "loc_teaching.py", "locbundle.py", "localise.py"]
   },
   "map": {
    "requires": ["localise"],

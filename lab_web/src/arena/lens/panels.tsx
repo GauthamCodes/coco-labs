@@ -110,16 +110,23 @@ function rows(family: string, b: FamilyBatch): [string, string][] {
 }
 
 export function LensInspector({ lens, store, tick }: { lens: Lens; store: FamilyStore; tick: number }) {
-  const shown = store.channels().filter((c) => lens.families.includes(familyOf(c)))
-    .map((c) => store.latest(c, tick)).filter((b): b is FamilyBatch => b !== null);
+  const shown: FamilyBatch[] = [];
+  for (const c of store.channels().filter((x) => lens.families.includes(familyOf(x)))) {
+    const b = store.latest(c, tick);
+    if (!b) continue;
+    // several estimators share a channel: every one emitted at that tick
+    if (c === 'coco.estimate.pose.v1') shown.push(...store.at(c, b.tick)); else shown.push(b);
+  }
   if (!shown.length) return <p className="lens-empty" data-testid="lens-inspector-empty">Nothing from the {lens.title} lens yet{lens.since !== 'M1' ? ` (its live computation arrives in ${lens.since})` : ''}.</p>;
   return (
     <div className="lens-inspector" data-testid="lens-inspector">
-      {shown.map((b) => (
-        <dl key={b.channel} className="inspector" data-channel={b.channel}>
-          <dt className="inspector-head">{b.channel.replace(/^coco\./, '').replace(/\.v\d+$/, '')}</dt><dd>tick {b.tick}</dd>
-          {rows(familyOf(b.channel), b).map(([k, v]) => <><dt key={`${k}-k`}>{k}</dt><dd key={`${k}-v`}>{v}</dd></>)}
-        </dl>
+      {shown.map((b, i) => (
+        <section key={`${b.channel}-${i}`} className="inspector-group" data-channel={b.channel}>
+          <h4>{b.channel.replace(/^coco\./, '').replace(/\.v\d+$/, '')} <span className="tick">tick {b.tick}</span></h4>
+          <dl className="inspector">
+            {rows(familyOf(b.channel), b).flatMap(([k, v]) => [<dt key={`${k}-k`}>{k}</dt>, <dd key={`${k}-v`}>{v}</dd>])}
+          </dl>
+        </section>
       ))}
     </div>
   );

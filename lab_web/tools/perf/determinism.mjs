@@ -67,11 +67,22 @@ function make() {
   const lim = spec.robot.limits;
   const n = Number(args.n ?? 100);
   const ticks = Number(args.ticks ?? 150);
-  const r = rng(20261009);
+  const r = rng(Number(args['gen-seed'] ?? 20261009));
+  // --loop 1 (M2): every session also switches on the whole loop -- range
+  // noise, a localisation filter with random knobs -- and may be kidnapped
+  const LOOP = args.loop === '1';
   const sessions = [];
   for (let s = 0; s < n; s += 1) {
     const inputs = [];
     let t = 0;
+    if (LOOP) {
+      const filt = ['mcl', 'ekf', 'both'][Math.floor(r() * 3)];
+      inputs.push({ tick: 0, kind: 'config', choice: `arena.range_sigma=${[0.01, 0.02, 0.04][Math.floor(r() * 3)]}` });
+      inputs.push({ tick: 0, kind: 'config', choice: `localise.mcl.particles=${50 + 10 * Math.floor(r() * 26)}` });
+      inputs.push({ tick: 0, kind: 'config', choice: `localise.mcl.injection=${['none', 'augmented', 'fixed'][Math.floor(r() * 3)]}` });
+      if (r() < 0.3) inputs.push({ tick: 0, kind: 'config', choice: 'arena.slip=on' });
+      inputs.push({ tick: 0, kind: 'config', choice: `localise.filter=${filt}` });
+    }
     while (true) {
       t += 1 + Math.floor(r() * 30);
       if (t >= ticks - 5) break;
@@ -80,6 +91,11 @@ function make() {
         inputs.push({ tick: t, kind: 'goal', x: x_min + dx + 0.5 + r() * (x_max - x_min - 1), y: y_min + dy + 0.5 + r() * (y_max - y_min - 1) });
       } else if (u < 0.8) {
         inputs.push({ tick: t, kind: 'teleop', linear: (2 * r() - 1) * lim.teleop_linear, angular: (2 * r() - 1) * lim.teleop_angular });
+      } else if (LOOP && u < 0.85) {
+        // a kidnap to a known-free goal-sized spot (the Arena refuses walls; the generator stays clear)
+        const spots = [[6.0, 4.0], [2.5, 2.0], [0.5, -2.5], [12.0, 5.5], [9.0, -4.0], [3.0, -6.5]];
+        const [kx, ky] = spots[Math.floor(r() * spots.length)];
+        inputs.push({ tick: t, kind: 'kidnap', x: kx, y: ky, theta: (2 * r() - 1) * Math.PI, has_theta: true });
       } else if (u < 0.9) {
         inputs.push({ tick: t, kind: 'planner', choice: PLANNERS[Math.floor(r() * PLANNERS.length)] });
       } else {
@@ -112,6 +128,10 @@ async function node() {
     // a fresh interpreter state per session would cost a reload of Pyodide; a fresh
     // MODULE (importlib.reload) plus a fresh Arena from init() is what is reset
     py.unpackArchive(new Uint8Array(readFileSync(join(GEN, 'arena', 'coco_lab.zip'))), 'zip', { extractDir: '/home/pyodide' });
+    // every lens pack (M2.2), and the subsystems they register (M2.3)
+    const mf = JSON.parse(readFileSync(join(GEN, 'arena', 'manifest.json'), 'utf-8'));
+    for (const p of Object.values(mf.packs ?? {})) py.unpackArchive(new Uint8Array(readFileSync(join(GEN, 'arena', p.file))), 'zip', { extractDir: '/home/pyodide' });
+    py.runPython(`import importlib\nfor m in ${JSON.stringify(Object.values(mf.packs ?? {}).flatMap((p) => p.modules))}: importlib.import_module('coco_lab.' + m)`);
     py.FS.writeFile('/home/pyodide/arena_glue.py', readFileSync(join(web, 'src', 'arena', 'arena_glue.py'), 'utf-8'));
     py.runPython("import sys\nif '/home/pyodide' not in sys.path: sys.path.insert(0, '/home/pyodide')\nimport importlib, arena_glue\nimportlib.reload(arena_glue)");
     const glue = py.pyimport('arena_glue');
@@ -136,6 +156,7 @@ async function browser(name) {
   const SITE = args.site ?? 'http://127.0.0.1:4174/coco-labs/';
   const worker = readdirSync(join(web, 'dist', 'assets')).find((f) => /^arena\.worker-.*\.js$/.test(f));
   if (!worker) throw new Error('no built arena.worker in dist/assets: build the site first');
+  const PACK_NAMES = Object.keys(JSON.parse(readFileSync(join(web, 'dist', 'generated', 'arena', 'manifest.json'), 'utf-8')).packs ?? {});
   const opts = name === 'chromium' ? {} : name === 'webkit' && args['webkit-exe'] ? { executablePath: args['webkit-exe'] } : {};
   const b = await pw[name].launch(opts);
   const page = await b.newPage();
@@ -148,8 +169,9 @@ async function browser(name) {
   const res = [];
   const t0 = Date.now();
   for (const s of load()) {
-    const r = await page.evaluate(async ([url, base, s]) => {
+    const r = await page.evaluate(async ([url, base, s, PACKS]) => {
       const w = new Worker(url, { type: 'module' });
+      let packs = 0;
       const hashes = [];
       let chain = '';
       let k = 0;
@@ -159,7 +181,8 @@ async function browser(name) {
           w.onmessage = (m) => {
             const d = m.data;
             if (d.type === 'error') reject(new Error(`${d.stage}: ${d.message}`));
-            else if (d.type === 'world') next();
+            else if (d.type === 'world') { packs = PACKS.length; if (!packs) next(); else for (const p of PACKS) w.postMessage({ type: 'load_pack', pack: p }); }
+            else if (d.type === 'pack_ready') { packs -= 1; if (packs === 0) next(); }
             else if (d.type === 'tick') {
               hashes.push(d.tick.hash);
               chain = d.tick.chain;
@@ -175,7 +198,7 @@ async function browser(name) {
         w.terminate();
       }
       return { hashes, chain };
-    }, [`${SITE}assets/${worker}`, new URL(SITE).pathname, s]);
+    }, [`${SITE}assets/${worker}`, new URL(SITE).pathname, s, PACK_NAMES]);
     res.push({ id: s.id, ...r });
     if (s.id % 10 === 9) console.log(`${name}: ${s.id + 1} sessions, ${Math.round((Date.now() - t0) / 1000)} s`);
   }

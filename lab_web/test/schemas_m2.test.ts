@@ -22,6 +22,7 @@ import * as decide from '../src/schemas/gen/coco/decide/v1/decide_pb';
 import * as estimate from '../src/schemas/gen/coco/estimate/v1/estimate_pb';
 import * as localise from '../src/schemas/gen/coco/localise/v1/localise_pb';
 import * as map from '../src/schemas/gen/coco/map/v1/map_pb';
+import * as metrics from '../src/schemas/gen/coco/metrics/v1/metrics_pb';
 import * as mission from '../src/schemas/gen/coco/mission/v1/mission_pb';
 import * as detect from '../src/schemas/gen/coco/sensor/v1/detect_pb';
 import { REPO } from './helpers';
@@ -38,7 +39,7 @@ interface Vec {
 const VECS: Vec[] = JSON.parse(readFileSync(join(REPO, 'coco_schemas', 'test', 'vectors', 'm2_batches.json'), 'utf-8')).vectors;
 
 const DESCS = new Map<string, DescMessage>();
-for (const mod of [arm, control, decide, estimate, localise, map, mission, detect] as Record<string, unknown>[]) {
+for (const mod of [arm, control, decide, estimate, localise, map, metrics, mission, detect] as Record<string, unknown>[]) {
   for (const v of Object.values(mod)) {
     const d = v as DescMessage;
     if (d && typeof d === 'object' && d.kind === 'message') DESCS.set(d.typeName, d);
@@ -59,7 +60,7 @@ function column(t: string, xs: (number | string | boolean)[]): Column {
 
 describe('M2 batches: TypeScript encodes what Python protobuf encodes', () => {
   it('covers every whole-loop batch message', () => {
-    expect(VECS.length).toBe(18);
+    expect(VECS.length).toBe(19); // 18 M2 batches + M1's MetricBatch (the loop's numbers)
     for (const v of VECS) expect(DESCS.has(v.message), v.message).toBe(true);
   });
 
