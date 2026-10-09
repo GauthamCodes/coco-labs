@@ -12,6 +12,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => {
   if (a.startsWith('--')) acc.push([a.slice(2), all[i + 1]]);
@@ -21,11 +23,14 @@ const SITE = args.site ?? 'http://127.0.0.1:4174/coco-labs/';
 const OUT = args.out ?? 'landing-out';
 mkdirSync(OUT, { recursive: true });
 
-// [query, expected app]
+// [query, expected app]. Every v1 URL form (M1 review, 2026-10-09: the M1.10
+// version covered plan, exhibit, live and move only, and called its 9 cases
+// "9 v1 links" although 3 of them are Arena URLs).
 const CASES = [
-  ['', 'arena'], ['?perf', 'arena'], ['?view=arena', 'arena'],
-  ['?view=plan', 'v1'], ['?view=exhibit', 'v1'], ['?view=live', 'v1'], ['?view=move', 'v1'],
-  ['?bundle=astar_open', 'v1'], ['?bundle=astar_open&v=1', 'v1'],
+  ['', 'arena'], ['?perf', 'arena'], ['?view=arena', 'arena'], ['?view=arena&replay=lab1c_astar', 'arena'],
+  ['?view=plan', 'v1'], ['?view=live', 'v1'], ['?view=localise', 'v1'], ['?view=map', 'v1'],
+  ['?view=search', 'v1'], ['?view=move', 'v1'], ['?view=exhibit', 'v1'],
+  ['?bundle=astar_open', 'v1'], ['?bundle=astar_open&v=1', 'v1'], ['?v=1', 'v1'],
 ];
 
 const browser = await chromium.launch();
@@ -56,6 +61,6 @@ try {
   await browser.close();
 }
 out.pass = out.cases.every((c) => c.pass);
-writeFileSync(join(OUT, 'landing_check.json'), JSON.stringify(out, null, 1) + '\n');
+writeFileSync(join(OUT, 'landing_check.json'), JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...out }, null, 1) + '\n');
 console.log(JSON.stringify({ pass: out.pass, errors: out.errors.length }));
 process.exit(out.pass ? 0 : 1);

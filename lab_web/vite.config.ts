@@ -9,12 +9,16 @@ import { fileURLToPath } from 'node:url';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 
-import { DEFAULT_BASE, liveConnectSrc, PYODIDE_INDEX_URL, PYODIDE_VERSION } from './site.config.ts';
+import { DEFAULT_BASE, DEFAULT_LANDING, liveConnectSrc, PYODIDE_INDEX_URL, PYODIDE_VERSION } from './site.config.ts';
 
 /** coco_web's own binary-frame decoder: shipped as-is, never ported. */
 const FRAME_JS = fileURLToPath(new URL('../coco_web/web/frame.js', import.meta.url));
 
 const base = process.env.LAB_BASE ?? DEFAULT_BASE;
+
+/** What the bare URL opens (site.config.ts): `LANDING=arena|v1` overrides the default for one build. */
+const landing = process.env.LANDING ?? DEFAULT_LANDING;
+if (landing !== 'arena' && landing !== 'v1') throw new Error(`LANDING must be "arena" or "v1", not "${landing}"`);
 
 /**
  * Serve `*.gz` as the file's own bytes (`application/gzip`, NO
@@ -80,6 +84,7 @@ export default defineConfig({
     // "local" so two local builds stay byte-identical.
     __BUILD_COMMIT__: JSON.stringify(process.env.GITHUB_SHA ?? 'local'),
     __PYODIDE_VERSION__: JSON.stringify(PYODIDE_VERSION),
+    __LANDING__: JSON.stringify(landing),
   },
   build: {
     outDir: 'dist',
