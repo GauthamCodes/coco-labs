@@ -13,6 +13,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => {
   if (a.startsWith('--')) acc.push([a.slice(2), all[i + 1]]);
@@ -71,4 +73,4 @@ try {
   await browser.close();
 }
 console.log(JSON.stringify({ events: out.events, seek_ms_max: out.seek_ms_max, seeks: out.seek_computation?.map((x) => Math.round(x.ms * 10) / 10), rejoined: out.rejoined, errors: errors.length }));
-writeFileSync(join(OUT, 'timeline_check.json'), JSON.stringify(out, null, 1) + '\n');
+writeFileSync(join(OUT, 'timeline_check.json'), JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...out }, null, 1) + '\n');

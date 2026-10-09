@@ -20,6 +20,8 @@ import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import os from 'node:os';
 import { loadPyodide, version as pyodideVersion } from 'pyodide';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => {
   if (a.startsWith('--')) acc.push([a.slice(2), all[i + 1]]);
@@ -89,8 +91,8 @@ json.dumps(T)
     load_pyodide_ms: Math.round(loadMs), write_coco_lab_ms: Math.round(writeMs),
     python: Object.fromEntries(Object.entries(out).map(([k, v]) => [k, typeof v === 'number' ? Math.round(v * 10) / 10 : v])),
   };
-  console.log(JSON.stringify(result, null, 1));
-  if (args.out) writeFileSync(args.out, JSON.stringify(result, null, 1) + '\n');
+  console.log(JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...result }, null, 1));
+  if (args.out) writeFileSync(args.out, JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...result }, null, 1) + '\n');
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) await main();

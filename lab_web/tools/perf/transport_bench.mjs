@@ -32,6 +32,8 @@ import { fileURLToPath } from 'node:url';
 import os from 'node:os';
 import { BinaryWriter, WireType } from '@bufbuild/protobuf/wire';
 import { loadPyodide, version as pyodideVersion } from 'pyodide';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => {
   if (a.startsWith('--')) acc.push([a.slice(2), all[i + 1]]);
@@ -222,5 +224,5 @@ const result = {
   C_protobuf_rowwise_in_python: { python: summary(C, 'pyMs'), to_js: summary(C, 'jsMs'), bytes: C[0].u8.byteLength },
   D_js_encode_of_A: { js: summary(D, 'jsMs'), bytes: D[0].u8.byteLength, identical_to_B: identical },
 };
-console.log(JSON.stringify(result, null, 1));
-if (args.out) writeFileSync(args.out, JSON.stringify(result, null, 1) + '\n');
+console.log(JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...result }, null, 1));
+if (args.out) writeFileSync(args.out, JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...result }, null, 1) + '\n');

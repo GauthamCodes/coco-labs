@@ -24,6 +24,8 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import { chromium } from 'playwright';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => {
   if (a.startsWith('--')) acc.push([a.slice(2), all[i + 1]]);
@@ -147,4 +149,4 @@ const result = {
 await b.close();
 console.log(JSON.stringify({ first_computation_ms: result.first_computation_shown_ms, arena_ready_ms: result.arena_ready_ms,
   goal_to_first: result.goal_to_first_plan_events_ms }));
-if (args.out) writeFileSync(args.out, JSON.stringify(result, null, 1) + '\n');
+if (args.out) writeFileSync(args.out, JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...result }, null, 1) + '\n');

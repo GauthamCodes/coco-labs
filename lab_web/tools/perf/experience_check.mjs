@@ -21,6 +21,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium, devices } from 'playwright';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => {
   if (a.startsWith('--')) acc.push([a.slice(2), all[i + 1]]);
@@ -173,5 +175,5 @@ try {
 }
 out.pass = Object.values(out.steps).every((s) => s.pass) && out.errors.length === 0;
 console.log(JSON.stringify({ pass: out.pass, errors: out.errors.length, first: out.errors.slice(0, 3) }));
-writeFileSync(join(OUT, 'experience_check.json'), JSON.stringify(out, null, 1) + '\n');
+writeFileSync(join(OUT, 'experience_check.json'), JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...out }, null, 1) + '\n');
 process.exit(out.pass ? 0 : 1);

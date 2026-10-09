@@ -16,6 +16,8 @@
 
 import { writeFileSync } from 'node:fs';
 import { chromium } from 'playwright';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => {
   if (a.startsWith('--')) acc.push([a.slice(2), all[i + 1]]);
@@ -66,4 +68,4 @@ try {
   await browser.close();
 }
 console.log(JSON.stringify({ gl: GL, renderer: out.renderer, fps_median: out.fps_median, fps_min: out.fps_min }));
-if (args.out) writeFileSync(args.out, JSON.stringify(out, null, 1) + '\n');
+if (args.out) writeFileSync(args.out, JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...out }, null, 1) + '\n');

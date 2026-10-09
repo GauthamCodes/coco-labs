@@ -14,6 +14,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => {
   if (a.startsWith('--')) acc.push([a.slice(2), all[i + 1]]);
@@ -75,6 +77,6 @@ try {
   await browser.close();
 }
 out.pass = Object.values(out.runs).every((r) => r.pass);
-writeFileSync(join(OUT, 'replay_check.json'), JSON.stringify(out, null, 1) + '\n');
+writeFileSync(join(OUT, 'replay_check.json'), JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...out }, null, 1) + '\n');
 console.log(JSON.stringify({ pass: out.pass, errors: out.errors.length }));
 process.exit(out.pass ? 0 : 1);

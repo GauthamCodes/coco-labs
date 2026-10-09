@@ -25,6 +25,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => {
   if (a.startsWith('--')) acc.push([a.slice(2), all[i + 1]]);
@@ -113,4 +115,4 @@ try {
 }
 console.log(JSON.stringify({ first: out.first_goal_ms, n: out.warm_n, median: out.median_ms, p95: out.p95_ms, max: out.max_ms,
   under_100: out.under_100, renderer: out.renderer, errors: errors.length }));
-writeFileSync(join(OUT, `responsiveness_${GPU ? 'gpu' : 'swiftshader'}${IMMEDIATE ? '_planner_then_goal' : ''}.json`), JSON.stringify(out, null, 1) + '\n');
+writeFileSync(join(OUT, `responsiveness_${GPU ? 'gpu' : 'swiftshader'}${IMMEDIATE ? '_planner_then_goal' : ''}.json`), JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...out }, null, 1) + '\n');

@@ -34,6 +34,8 @@ import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gunzipSync, gzipSync } from 'node:zlib';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const web = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const GEN = join(web, 'public', 'generated');
@@ -96,7 +98,7 @@ function make() {
 const load = () => JSON.parse(readFileSync(args.sessions ?? join(OUT, 'sessions.json'), 'utf-8')).sessions
   .slice(0, Number(args.limit ?? Infinity));
 const save = (engine, info, res) => {
-  writeFileSync(join(OUT, `hashes_${engine}.json.gz`), gzipSync(JSON.stringify({ engine, ...info, sessions: res })));
+  writeFileSync(join(OUT, `hashes_${engine}.json.gz`), gzipSync(JSON.stringify({ engine, conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...info, sessions: res })));
   console.log(`${engine}: ${res.length} sessions, ${res.reduce((n, x) => n + x.hashes.length, 0)} ticks`);
 };
 
@@ -210,7 +212,7 @@ function compare() {
       all_hashes_sha256: digest, page_errors: d.page_errors ?? [] };
   }
   out.pass = Object.keys(runs).length >= Number(args.engines ?? 4) && Object.values(out.engines).every((e) => e.ticks_mismatched === 0 && e.sessions === sessions.length);
-  writeFileSync(join(OUT, 'determinism.json'), JSON.stringify(out, null, 1) + '\n');
+  writeFileSync(join(OUT, 'determinism.json'), JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...out }, null, 1) + '\n');
   console.log(JSON.stringify(Object.fromEntries(Object.entries(out.engines).map(([k, v]) => [k, [v.ticks_compared, v.ticks_mismatched, v.all_hashes_sha256.slice(0, 12)]]))), 'pass', out.pass);
   process.exit(out.pass ? 0 : 1);
 }

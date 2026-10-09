@@ -12,6 +12,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => {
   if (a.startsWith('--')) acc.push([a.slice(2), all[i + 1]]);
@@ -68,4 +70,4 @@ for (const [w, h, theme] of [[1280, 900, 'light'], [1280, 900, 'dark'], [390, 84
   await page.close();
 }
 await browser.close();
-writeFileSync(join(OUT, 'arena_shots.json'), JSON.stringify(result, null, 1) + '\n');
+writeFileSync(join(OUT, 'arena_shots.json'), JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...result }, null, 1) + '\n');

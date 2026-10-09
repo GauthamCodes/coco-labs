@@ -23,6 +23,8 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const web = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const BASE = join(web, 'test', 'screenshots');
@@ -124,6 +126,6 @@ try {
 }
 const pass = mode === 'make' || (Object.values(results).every((r) => r.pass) && errors.length === 0);
 const report = { mode, site: SITE, renderer: 'chromium default (SwiftShader)', channel_tol: CHANNEL_TOL, max_bad: MAX_BAD, results, errors, pass };
-writeFileSync(join(mode === 'make' ? BASE : OUT, mode === 'make' ? 'baselines.json' : 'screenshots.json'), JSON.stringify(report, null, 1) + '\n');
+writeFileSync(join(mode === 'make' ? BASE : OUT, mode === 'make' ? 'baselines.json' : 'screenshots.json'), JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...report }, null, 1) + '\n');
 console.log(JSON.stringify({ pass, errors: errors.length }));
 process.exit(pass ? 0 : 1);

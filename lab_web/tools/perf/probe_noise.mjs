@@ -10,6 +10,8 @@
  */
 
 import { chromium } from 'playwright';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const i = process.argv.indexOf('--port');
 const PORT = i > 0 ? Number(process.argv[i + 1]) : 8099;
@@ -32,4 +34,4 @@ for (const [name, js] of Object.entries(cases)) {
   out.cases[name] = { outcome, console: [...seen], console_errors: seen.filter((s) => s.startsWith('error')).length };
 }
 await browser.close();
-console.log(JSON.stringify(out, null, 1));
+console.log(JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...out }, null, 1));
