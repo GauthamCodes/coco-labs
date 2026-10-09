@@ -1,8 +1,10 @@
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
 
-/** Which of the two code-split apps a URL opens. */
+/** What the bare URL opens (the build-time switch). */
 export type Landing = 'arena' | 'v1';
+/** Which of the three code-split apps a URL opens: Learn (M2.8) only by name. */
+export type AppId = Landing | 'learn';
 
 /**
  * `?view=arena` always opens the Arena. Every v1 link names its view
@@ -10,9 +12,10 @@ export type Landing = 'arena' | 'v1';
  * `?v=`), and always opens v1. Only the BARE URL depends on `landing`, the
  * build-time switch (`site.config.ts` `DEFAULT_LANDING`, or `LANDING=`).
  */
-export function chooseApp(search: string, landing: Landing): Landing {
+export function chooseApp(search: string, landing: Landing): AppId {
   const q = new URLSearchParams(search);
   if (q.get('view') === 'arena') return 'arena';
+  if (q.get('view') === 'learn') return 'learn';
   if (q.has('view') || q.has('bundle') || q.has('v')) return 'v1';
   // Arena-only parameters (its links always add view=arena; a hand-trimmed one still works)
   if (q.has('run') || q.has('replay')) return 'arena';

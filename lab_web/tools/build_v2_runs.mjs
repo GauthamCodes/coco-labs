@@ -82,6 +82,13 @@ try {
     console.log(`lab5 ${sc}: ${conv.length} runs, round trip exact`);
   }
   writeFileSync(join(OUT, 'index.json'), JSON.stringify({ schema: 'lab_web.v2_runs', version: '1.0', runs: index }, null, 1) + '\n');
+  // a Learn mission (M2.8) may link only to a run this index holds (build_catalog.py wrote missions.json)
+  const ids = new Set(index.map((x) => x.id));
+  const missions = JSON.parse(readFileSync(join(GEN, 'missions.json'), 'utf-8')).missions;
+  for (const m of missions) for (const b of m.beats) {
+    if (b.arena?.replay && !ids.has(b.arena.replay)) throw new Error(`mission ${m.id} beat ${b.beat}: no recorded run "${b.arena.replay}"`);
+  }
+  console.log(`missions: ${missions.length}, every replay link names a run here`);
 } finally {
   await server.close();
 }

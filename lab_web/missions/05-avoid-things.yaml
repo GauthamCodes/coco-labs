@@ -1,0 +1,165 @@
+# Learn mission 5 (M2.8). Data, not code.
+schema: coco.mission.v1
+id: avoid-things
+number: 5
+title: How does a robot avoid things?
+question: The global path is a line on a map. Something steps onto it. Who decides what the wheels do next?
+lens: move
+v1: "?view=move"
+beats:
+  - beat: hook
+    text: >-
+      The planner hands COCO one path. Turning that path into wheel speeds, ten times
+      a second, around things the map never knew, is the local controller's job.
+      Watch DWA's candidate arcs fan out ahead of the robot.
+    arena: {lens: move, level: watch, cfg: ['move.controller=dwa', 'move.scenario=crossing']}
+    claims: [controllers, same-inputs]
+  - beat: predict
+    question: >-
+      COCO must drive round the end of a wall and into a room. Three controllers --
+      DWB, Regulated Pure Pursuit and MPPI -- get the same path, robot and limits.
+      Which one fails?
+    options:
+      - DWB, the sampling controller Nav2 ships by default
+      - Regulated Pure Pursuit, which has no candidates to choose between
+      - MPPI, because it averages
+      - None of them
+    answer: 0
+    claims: [hairpin]
+  - beat: reveal
+    text: >-
+      On the full stack DWB never got round the wall end: 0 of 5, Nav2's code 105. The
+      Arena's DWA fails the same way with the same code -- an agreement of outcome,
+      not a proof that the mechanism is the same.
+    claims: [hairpin, agreement]
+  - beat: manipulate
+    text: >-
+      Pick the controller and the scenario: a person crossing, a person walking
+      straight at the robot, the hairpin, run 15's 3.4 m mislocalisation. MPPI shows a
+      sample of its 128 rollouts and the blend it drives; RPP shows the arc it checks.
+    arena: {lens: move, level: explain, cfg: ['move.controller=mppi', 'move.scenario=oncoming']}
+    claims: [controllers, head-on]
+  - beat: explain
+    text: >-
+      Nobody swerved, in either world. A ghost person on the stack was driven through;
+      a solid one in the Arena was stopped in front of. And a robot that is wrong
+      about where it stands gets no help from any controller.
+    claims: [head-on, actor, run15-quoted, metrics]
+  - beat: stack
+    text: >-
+      Lab 5's drives, recorded on the full ROS 2 stack in Gazebo and converted without
+      loss: watch DWB stall at the wall end, with the critics' chosen trajectory drawn
+      each cycle.
+    arena: {replay: lab5_static_room_dwb_1, level: explain}
+    claims: [stack-drives]
+  - beat: challenge
+    stub: true
+    text: Arrives in M3.
+claims:
+  - id: same-inputs
+    label: TESTED
+    text: >-
+      Every controller drives the SAME global path -- one file, its hash checked in
+      every run -- on the same robot with the same speed, turn-rate and acceleration
+      limits. In the Arena the scenario paths are the same frozen files.
+    evidence:
+      - coco_lab_ros/test/test_lab5.py::test_each_scenario_names_a_frozen_path_that_matches_it
+      - coco_lab_ros/test/test_lab5.py::test_no_controller_gets_a_faster_or_more_agile_robot
+      - docs/v2/data/m2/m25/make_move_scenarios.py
+    v1: ['catalog.move.claims[same_inputs]', 'ui:lab_web/src/ui/move/MoveLab.tsx:119']
+  - id: controllers
+    label: SIMPLIFIED MODEL
+    text: >-
+      On the stack DWB samples 819 (v, w) pairs per cycle and rolls each 1.5 s
+      forward, scored by critics; MPPI samples 2,000 noisy 2.8 s control sequences and
+      averages them weighted by exp(-cost / temperature); Regulated Pure Pursuit chases
+      a point 0.6 m ahead, slows on tight curves and stops rather than swerve. The
+      Arena's versions are smaller: DWA 11 x 21 samples with DWB's critic scales, MPPI
+      128 x 28 steps, RPP with Lab 5's parameters.
+    evidence:
+      - gazebo_models/config/nav2_params.yaml
+      - coco_lab_ros/config/nav2_move_overlay.yaml
+      - coco_lab_ros/test/test_lab5.py::test_the_overlay_adds_two_controllers_and_changes_nothing_else
+      - coco_lab/coco_lab/control.py
+      - coco_lab/test/test_move_arena.py
+    v1: ['catalog.move.controllers[DWB]', 'catalog.move.controllers[MPPI]', 'catalog.move.controllers[RPP]',
+         'ui:lab_web/src/ui/move/MoveLab.tsx:124']
+  - id: hairpin
+    label: SIMULATION RESULT
+    text: >-
+      Around a wall end and into a room, on the full stack, 5 runs each, fresh
+      simulator: DWB failed 5 of 5 with FAILED_TO_MAKE_PROGRESS (105); RPP and MPPI
+      succeeded 5 of 5.
+    evidence:
+      - docs/RESULTS.md "COCO Lab Phase 6"
+      - docs/data/lab5/README.md
+      - docs/data/lab5/results.json
+    v1: ['catalog.move.drive.bundles[static_room]']
+  - id: agreement
+    label: SIMPLIFIED MODEL
+    text: >-
+      The Arena's controllers on the same paths: hairpin, crossing and run 15 agree
+      with the stack in 9 of 9 controller-scenario cells, counting outcome and code.
+      Why the model's DWA stalls before the turn has not been examined.
+    evidence:
+      - docs/v2/M2_MOVE_COMPARISON.md
+      - docs/v2/data/m2/m25/move_comparison.json
+    v1: []
+  - id: head-on
+    label: SIMPLIFIED MODEL
+    text: >-
+      A person walking straight down the path: on the stack DWB and MPPI "succeeded"
+      with a contact in all 10 runs -- the actor was a ghost -- and RPP failed 5 of 5
+      (104). In the Arena the person is solid and all three stop in front of it (104).
+      Nobody swerved in either world. The difference is the actor model, by
+      construction.
+    evidence:
+      - docs/v2/M2_MOVE_COMPARISON.md
+      - docs/v2/data/m2/m25/move_comparison.json
+      - docs/RESULTS.md "COCO Lab Phase 6"
+    v1: ['catalog.move.drive.bundles[oncoming]']
+  - id: actor
+    label: TESTED
+    text: >-
+      On the stack the moving person is seen by the LiDAR but has no collision
+      geometry: it cannot push the robot. A contact is measured, from ground truth, as
+      a clearance of zero. A person crossing in front was passed by all three
+      controllers, 5 of 5 each.
+    evidence:
+      - coco_lab_ros/test/test_lab5.py::test_the_actor_has_no_collision_geometry
+      - coco_lab/test/test_movemetrics.py::test_an_actor_walking_through_the_robot_is_a_contact
+      - docs/RESULTS.md "COCO Lab Phase 6"
+    v1: ['catalog.move.claims[actor]', 'catalog.move.drive.bundles[crossing]']
+  - id: metrics
+    label: TESTED
+    text: >-
+      Every number in the comparison is recomputed from the recording by coco_lab --
+      the same code for the stack's recordings and the Arena's runs; a bundle whose
+      numbers do not reproduce is refused.
+    evidence:
+      - coco_lab/test/test_movebundle.py::test_a_metric_that_does_not_reproduce_is_refused
+      - coco_lab/test/test_movemetrics.py::test_box_clearance_axis_aligned_and_rotated
+    v1: ['catalog.move.claims[metrics]']
+  - id: run15-quoted
+    label: SIMULATION RESULT
+    text: >-
+      Run 15's log, quoted verbatim: "DWBLocalPlanner: No valid trajectories out of
+      819!" Told it is 3.4 m from where it is, every controller failed with
+      INVALID_PATH (103), 3 of 3 on the stack and 5 of 5 in the Arena: the path was
+      fine; the robot's idea of where it stood was not.
+    evidence:
+      - 'docs/RESULTS.md "The one failure: run 15, and it is a localisation failure"'
+      - docs/RESULTS.md "COCO Lab Phase 6"
+      - docs/v2/M2_MOVE_COMPARISON.md
+    v1: ['catalog.move.drive.bundles[mislocalised]', 'ui:lab_web/src/ui/move/MoveLab.tsx:83']
+  - id: stack-drives
+    label: SIMULATION RESULT
+    text: >-
+      54 Lab 5 drives, converted to coco.v1 with every array rebuilt from the
+      channels and the content hash re-checked by the lab's own decoder; the
+      recording's rosbag hash and code commit travel with each.
+    evidence:
+      - lab_web/test/convert_lab5.test.ts
+      - lab_web/tools/build_v2_runs.mjs
+      - docs/v2/data/m2/m27/browser/stack_drive_check.json
+    v1: ['ui:lab_web/src/ui/move/DriveView.tsx:290']

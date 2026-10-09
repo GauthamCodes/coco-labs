@@ -7,8 +7,8 @@ import { createRoot } from 'react-dom/client';
 import { chooseApp } from './landing';
 import './ui/style.css';
 
-// Two apps, code-split: the Arena (M1) never downloads the v1 labs' code,
-// and the v1 labs never download the Arena's.
+// Three apps, code-split: the Arena (M1) never downloads the v1 labs' code,
+// the v1 labs never download the Arena's, and Learn (M2.8) is its own.
 const root = createRoot(document.getElementById('root')!);
 const render = (node: ReactNode) => root.render(<StrictMode>{node}</StrictMode>);
 
@@ -17,8 +17,11 @@ const render = (node: ReactNode) => root.render(<StrictMode>{node}</StrictMode>)
 // site.config.ts). Every v1 link either names its view (`?view=plan`,
 // `?view=live`, ...) or is a v1 share link (`?bundle=`, `?v=`), and keeps
 // opening v1 exactly as before.
-if (chooseApp(window.location.search, __LANDING__) === 'arena') {
+const app = chooseApp(window.location.search, __LANDING__);
+if (app === 'arena') {
   void import('./arena/ArenaApp').then(({ ArenaApp }) => render(<ArenaApp />));
+} else if (app === 'learn') {
+  void import('./learn/LearnApp').then(({ LearnApp }) => render(<LearnApp />));
 } else {
   void import('./ui/App').then(({ App }) => render(<App />));
 }

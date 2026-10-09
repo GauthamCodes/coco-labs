@@ -1,0 +1,123 @@
+# Learn mission 2 (M2.8). Data, not code.
+schema: coco.mission.v1
+id: world-changes
+number: 2
+title: What if the world changes?
+question: The robot planned on the map it had. The world disagrees. Plan again from scratch, or repair the plan?
+lens: plan
+v1: "?view=move"
+beats:
+  - beat: hook
+    text: >-
+      COCO's plan is only as good as its map. A door it thought was open is shut; a
+      person stops in the way. Click a goal, then -- while it is still searching --
+      click another, or switch the planner.
+    arena: {lens: plan, level: watch}
+    claims: [arena-replans]
+  - beat: predict
+    question: >-
+      A robot walks a map with gaps in it and repairs its plan with D* Lite whenever
+      it sees something new. Against A* replanning from scratch each time, does D*
+      Lite find shorter paths?
+    options:
+      - Yes -- repairing keeps more information
+      - No -- after every change both plans cost exactly the same
+      - Sometimes
+    answer: 1
+    claims: [dstar-optimal]
+  - beat: reveal
+    text: >-
+      Same answer, every round, on every map the property tests try. The difference
+      is the work: D* Lite repairs only what the change touched -- usually.
+    claims: [dstar-optimal, dstar-arrives, sketch-replans]
+  - beat: manipulate
+    text: >-
+      In the Arena, change the goal or the planner mid-search: the search in flight
+      is cancelled and the new one starts in the same tick.
+    arena: {lens: plan, level: explain}
+    claims: [arena-replans]
+  - beat: explain
+    text: >-
+      Repairing is not always less work. Over two hundred Sketch worlds D* Lite won
+      on total work most of the time, and lost on single replans now and then -- and
+      on a real costmap change it lost badly.
+    claims: [dstar-work]
+  - beat: stack
+    text: >-
+      Experiment C: two of Nav2's own global costmaps from Gazebo, before and after a
+      person stopped on the apron. D* Lite repairs one into the other; A* searches the
+      second from scratch.
+    claims: [experiment-c]
+  - beat: challenge
+    stub: true
+    text: Arrives in M3.
+claims:
+  - id: arena-replans
+    label: MEASURED
+    text: >-
+      In the Arena a goal or planner change made while a search is running cancels
+      that search and plans again in the same tick. Measured: the new goal's search
+      drawn a median 35.2 ms after a planner change, at most 65.5 ms, 25 of 25 under
+      100 ms (desktop GPU).
+    evidence:
+      - docs/v2/data/m2/m20/responsiveness/responsiveness_gpu_planner_then_goal.json
+      - docs/v2/data/m2/m20/arena_equivalence.json
+    v1: []
+  - id: dstar-optimal
+    label: TESTED
+    text: >-
+      After every change and every move, D* Lite's plan costs exactly what Dijkstra
+      finds from scratch on the new map.
+    evidence:
+      - coco_lab/test/test_dstarlite.py::test_dstar_lite_is_optimal_after_every_change_and_move
+      - coco_lab/test/test_replan.py::test_every_round_agrees_with_astar_from_scratch
+    v1: ['catalog.move.claims[dstar_optimal]']
+  - id: dstar-arrives
+    label: TESTED
+    text: >-
+      A robot whose map only lacks obstacles (never invents them) reaches the goal
+      whenever the world has a route, and never steps into a cell it could have
+      known was blocked.
+    evidence:
+      - coco_lab/test/test_replan.py::test_an_optimistic_robot_arrives_iff_the_world_has_a_route
+    v1: ['catalog.move.claims[dstar_arrives]']
+  - id: sketch-replans
+    label: MEASURED
+    text: >-
+      Three Sketch worlds with a closed door on the direct route and obstacles
+      missing from the map; the robot sees 2.5 cells around itself. It reached the
+      goal in all three, repairing 18, 14 and 10 times; D* Lite's expansions were 447,
+      341 and 213 against A*-from-scratch's 861, 857 and 407, and every round's cost
+      agreed.
+    evidence:
+      - coco_lab/test/test_replan.py::test_the_closed_door_forces_at_least_one_replan
+      - coco_lab/test/test_replan.py::test_every_round_agrees_with_astar_from_scratch
+      - docs/RESULTS.md "COCO Lab Phase 6"
+    v1: ['catalog.move.replan.bundles[sketch_0]', 'catalog.move.replan.bundles[sketch_1]', 'catalog.move.replan.bundles[sketch_2]',
+         'ui:lab_web/src/ui/move/ReplanView.tsx:176']
+  - id: dstar-work
+    label: MEASURED
+    text: >-
+      Same answer, not always less work. Over 200 seeded Sketch worlds D* Lite's total
+      work was below A* from scratch in 191 (median 0.59 of A*'s), yet in 188 of 2,204
+      single replans it did more; and on the real costmap change of Experiment C it
+      touched 3,209 cells where A* from scratch touched 1,114.
+    evidence:
+      - docs/data/lab5/replan_sketch_stats.json
+      - docs/data/lab5/replan_c.json
+      - docs/RESULTS.md "COCO Lab Phase 6"
+      - coco_lab/test/test_replan.py::test_every_round_agrees_with_astar_from_scratch
+    v1: ['catalog.move.claims[dstar_work]', 'ui:lab_web/src/ui/move/ReplanView.tsx:202']
+  - id: experiment-c
+    label: MEASURED
+    text: >-
+      Experiment C used two of Nav2's own global costmaps, saved from Gazebo before
+      and after a person stopped on the apron (the inputs are the stack's; the search
+      is coco_lab's). D* Lite planned on the first, was handed the second and
+      repaired; A* searched the second from scratch. Both reached the goal at the
+      same cost.
+    evidence:
+      - docs/RESULTS.md "COCO Lab Phase 6"
+      - docs/data/lab5/README.md
+      - docs/data/lab5/replan_c.json
+    v1: ['catalog.move.replan.bundles[arena_c]']

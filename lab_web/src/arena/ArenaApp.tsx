@@ -42,6 +42,7 @@ import './lens/move';
 import { defaultLayers, LENS_BY_ID, LENSES, LEVELS, packForConfig, type LensId, type Level } from './lens/registry';
 import { LensLayers } from './render/lensLayers';
 import { sha256Hex } from '../bundle/sha256';
+import { cfgFromParams, missionBackLink } from '../learn/links';
 
 declare global {
   interface Window {
@@ -69,6 +70,10 @@ export function ArenaApp() {
   const attractPolicy: AttractPolicy = ATTRACT_POLICIES.includes(params.get('attract') as AttractPolicy)
     ? params.get('attract') as AttractPolicy : DEFAULT_ATTRACT_POLICY;
   const recId = replayParam && /^[a-z0-9_]{1,64}$/.test(replayParam) ? replayParam : null;
+  // a Learn mission's beat (M2.8): its settings, sent once the live model is up, in place of the lens's defaults
+  const cfgLines = cfgFromParams(params);
+  const missionBack = missionBackLink(params);
+  const cfgInitial = Object.fromEntries(cfgLines.map((c) => [c.slice(0, c.indexOf('=')), c.slice(c.indexOf('=') + 1)]));
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const [world, setWorld] = useState<World | null>(null);
   const [liveReady, setLiveReady] = useState(false);
@@ -154,9 +159,10 @@ export function ArenaApp() {
     }
     queue.current.push({ kind: 'config', choice });
   }, [takeOver]);
-  const locOn = useRef(false);
-  const mapOn = useRef(false);
-  const moveOn = useRef(false);
+  const locOn = useRef(cfgLines.length > 0);
+  const mapOn = useRef(cfgLines.length > 0);
+  const moveOn = useRef(cfgLines.length > 0);
+  const cfgSent = useRef(false);
 
   const goal = useCallback((x: number, y: number) => {
     takeOver();
@@ -519,6 +525,12 @@ export function ArenaApp() {
     moveOn.current = true;
     sendConfig('move.controller=dwa');
   }, [lens, packs, mode, sendConfig]);
+  // a mission's settings: once, when the live model is ready (sendConfig waits for each pack)
+  useEffect(() => {
+    if (!cfgLines.length || cfgSent.current || !liveReady || mode === 'replay' || mode === 'recording') return;
+    cfgSent.current = true;
+    for (const c of cfgLines) sendConfig(c);
+  }, [liveReady, mode, sendConfig]); // eslint-disable-line react-hooks/exhaustive-deps -- cfgLines is the URL's, fixed
   // Focus: everything outside the lens dims (the robot and truth never do)
   useEffect(() => {
     r.current?.setFocusDim(!focus || lens === 'plan' ? 1 : 0.25, focus ? 0.5 : 1);
@@ -561,8 +573,11 @@ export function ArenaApp() {
         <span className={`evidence-badge ${evidence.toLowerCase()}`} data-testid="evidence-badge"
           title={evidence === 'STACK' ? 'Recorded from the full ROS 2 stack in Gazebo (simulation), not a robot'
             : 'A model in your browser: coco_lab, not the robot'}>{evidence}</span>
+        <a href={`${import.meta.env.BASE_URL}?view=learn`} data-testid="learn-link">Learn</a>
         <a href={`${import.meta.env.BASE_URL}?view=plan`} data-testid="v1-labs-link">v1 labs</a>
       </header>
+      {missionBack && <p className="mission-back"><a href={`${import.meta.env.BASE_URL}${missionBack}`} data-testid="mission-back">
+        ← Back to the mission</a></p>}
       {error && <p className="error" role="alert">{error}</p>}
       <p className={`arena-banner ${mode}`} data-testid="arena-mode" data-mode={mode}>
         {mode === 'attract' && (liveReady
@@ -577,12 +592,12 @@ export function ArenaApp() {
       <LensBar lens={lens} level={level} focus={focus}
         available={new Set(LENSES.filter((l) => l.id === 'plan' || packs.has(l.pack) || (converted?.headers ?? []).some((h) => l.families.some((f) => h.channel.includes(f)))).map((l) => l.id))}
         onLens={setLens} onLevel={setLevel} onFocus={setFocus} />
-      {lens === 'localise' && <LocaliseControls send={sendConfig} live={mode === 'live'} />}
-      {lens === 'map' && <MapControls send={sendConfig} live={mode === 'live'} />}
+      {lens === 'localise' && <LocaliseControls send={sendConfig} live={mode === 'live'} initial={cfgInitial} />}
+      {lens === 'map' && <MapControls send={sendConfig} live={mode === 'live'} initial={cfgInitial} />}
       {lens === 'move' && (converted?.headers?.some((h) => h.channel === 'coco.control.local.header.v1')
         ? <p className="lens-hint" data-testid="move-recorded">Recorded (STACK): Nav2's own candidates as it logged them and the trajectory it chose each cycle — nothing here is computed by the model.</p>
-        : <MoveControls send={sendConfig} live={mode === 'live'} />)}
-      {lens === 'decide' && <DecideControls send={sendConfig} live={mode === 'live'} />}
+        : <MoveControls send={sendConfig} live={mode === 'live'} initial={cfgInitial} />)}
+      {lens === 'decide' && <DecideControls send={sendConfig} live={mode === 'live'} initial={cfgInitial} />}
       {lens === 'decide' && session && <MissionPanel session={session} tick={tick?.tick ?? 0} />}
       {level !== 'watch' && session && (() => { const c = caption(lens, session.families, tick?.tick ?? 0);
         return c ? <p className="lens-caption" data-testid="lens-caption" role="status">{c}</p> : null; })()}

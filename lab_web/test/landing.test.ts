@@ -28,6 +28,8 @@ describe('the landing switch (LANDING=arena|v1, M1 review fix)', () => {
       // a hand-trimmed Arena link (no view=arena) is still the Arena's
       expect(chooseApp('?run=abc', landing)).toBe('arena');
       expect(chooseApp('?replay=lab1c_astar', landing)).toBe('arena');
+      // Learn (M2.8) opens only by name, whatever the switch
+      for (const q of ['?view=learn', '?view=learn&mission=find-a-path&beat=2']) expect(chooseApp(q, landing), q).toBe('learn');
     });
   }
 

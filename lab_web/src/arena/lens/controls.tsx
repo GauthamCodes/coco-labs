@@ -11,14 +11,18 @@
 import { useState } from 'react';
 
 export type Send = (choice: string) => void;
+/** Settings the page was opened with (a Learn beat's cfg lines, M2.8): key -> value. The controls start there. */
+export type Initial = Record<string, string>;
+const str = (i: Initial | undefined, k: string, d: string) => i?.[k] ?? d;
+const num = (i: Initial | undefined, k: string, d: number) => (i?.[k] !== undefined && Number.isFinite(Number(i[k])) ? Number(i[k]) : d);
 
-export function LocaliseControls({ send, live }: { send: Send; live: boolean }) {
-  const [filter, setFilter] = useState('both');
-  const [particles, setParticles] = useState(300);
-  const [injection, setInjection] = useState('none');
+export function LocaliseControls({ send, live, initial }: { send: Send; live: boolean; initial?: Initial }) {
+  const [filter, setFilter] = useState(str(initial, 'localise.filter', 'both'));
+  const [particles, setParticles] = useState(num(initial, 'localise.mcl.particles', 300));
+  const [injection, setInjection] = useState(str(initial, 'localise.mcl.injection', 'none'));
   const [motion, setMotion] = useState(0.02);
-  const [sensor, setSensor] = useState(0.02);
-  const [slip, setSlip] = useState(false);
+  const [sensor, setSensor] = useState(num(initial, 'arena.range_sigma', 0.02));
+  const [slip, setSlip] = useState(str(initial, 'arena.slip', 'off') === 'on');
   if (!live) return <p className="lens-empty">The Localise lens runs on the live model: click the map to take over.</p>;
   return (
     <div className="lens-controls" data-testid="localise-controls" role="group" aria-label="Localisation settings">
@@ -50,11 +54,11 @@ export function LocaliseControls({ send, live }: { send: Send; live: boolean }) 
   );
 }
 
-export function MapControls({ send, live }: { send: Send; live: boolean }) {
-  const [algorithm, setAlgorithm] = useState('occupancy');
-  const [poses, setPoses] = useState('truth');
-  const [particles, setParticles] = useState(20);
-  const [loops, setLoops] = useState(true);
+export function MapControls({ send, live, initial }: { send: Send; live: boolean; initial?: Initial }) {
+  const [algorithm, setAlgorithm] = useState(str(initial, 'map.algorithm', 'occupancy'));
+  const [poses, setPoses] = useState(str(initial, 'map.poses', 'truth'));
+  const [particles, setParticles] = useState(num(initial, 'map.fastslam.particles', 20));
+  const [loops, setLoops] = useState(str(initial, 'map.pose_graph.loop_closure', 'on') !== 'off');
   if (!live) return <p className="lens-empty">The Map lens runs on the live model: click the map to take over.</p>;
   return (
     <div className="lens-controls" data-testid="map-controls" role="group" aria-label="Mapping settings">
@@ -89,9 +93,9 @@ const SCENARIO_TITLES: [string, string][] = [
   ['mislocalised', 'Lab 5: run 15 — believes it is 3.4 m away'],
 ];
 
-export function MoveControls({ send, live }: { send: Send; live: boolean }) {
-  const [controller, setController] = useState('dwa');
-  const [scenario, setScenario] = useState('none');
+export function MoveControls({ send, live, initial }: { send: Send; live: boolean; initial?: Initial }) {
+  const [controller, setController] = useState(str(initial, 'move.controller', 'dwa'));
+  const [scenario, setScenario] = useState(str(initial, 'move.scenario', 'none'));
   if (!live) return <p className="lens-empty">The Move lens runs on the live model: click the map to take over.</p>;
   return (
     <div className="lens-controls" data-testid="move-controls" role="group" aria-label="Local control settings">
@@ -109,10 +113,10 @@ export function MoveControls({ send, live }: { send: Send; live: boolean }) {
   );
 }
 
-export function DecideControls({ send, live }: { send: Send; live: boolean }) {
-  const [colour, setColour] = useState('red');
-  const [truth, setTruth] = useState('layout');
-  const [detect, setDetect] = useState(0.9);
+export function DecideControls({ send, live, initial }: { send: Send; live: boolean; initial?: Initial }) {
+  const [colour, setColour] = useState(str(initial, 'mission.start', 'red'));
+  const [truth, setTruth] = useState(str(initial, 'mission.truth', 'layout'));
+  const [detect, setDetect] = useState(num(initial, 'mission.detect', 0.9));
   if (!live) return <p className="lens-empty">The Decide lens runs on the live model: click the map to take over.</p>;
   return (
     <div className="lens-controls" data-testid="decide-controls" role="group" aria-label="Fetch mission settings">

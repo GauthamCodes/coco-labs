@@ -15,7 +15,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M1 | **Closed 2026-10-09 — agent-measurable criteria**: independent review [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md) (MERGE AFTER FIXES, every fix done); PR #20 merged into `main` as **`0a2516a`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena, a goal click drew its search, all six v1 views 0 console / 0 page errors ([`v2/data/m1/exit/public_after_merge.json`](v2/data/m1/exit/public_after_merge.json)). **Still pending Gautham:** phone performance, phone cold start, usability |
 | Branch | `v2/m2-whole-loop` (from `main` = `0a2516a`), worked in the worktree `.claude/worktrees/v2-m2-whole-loop`, overlay `~/coco_lab_m2_ws` |
 | Milestone | **M2 · The whole loop** ([`v2/M2_PROMPT.md`](v2/M2_PROMPT.md)) |
-| Checkpoint | **B.1 preflight done** (below). Next: M2.0 |
+| Checkpoint | **M2.8 done** (M2 checkpoint log below). Next: M2.9 |
 | Merge to `main` | M2 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #20 only) |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows — never marked done by the agent |
 
@@ -824,6 +824,69 @@ only. Read order for agents (README §9): `README.md`, this file,
     check), vitest **450 / 0 / 0** (+26: the five converter test files),
     build tools **143 / 0 / 0** (+1: the conditions check of
     `stack_drive_check.mjs`). Next: M2.8 (Learn missions).
+- **M2.8 Learn missions 1–6 (2026-10-10).** Evidence: `v2/data/m2/m28/`;
+  coverage table [`v2/M2_CLAIMS_COVERAGE.md`](v2/M2_CLAIMS_COVERAGE.md).
+  - **Six missions as data** (`lab_web/missions/NN-<id>.yaml`, schema
+    `coco.mission.v1`): find a path, what if the world changes, where am I,
+    build a map, avoid things, where to look. Each has the seven beats in
+    order — hook, predict, reveal, manipulate ("Try it"), explain, check
+    against the Stack, challenge (a stub until M3) — and **61 claims**, each
+    with a learner label and evidence references.
+  - **The evidence check** (`lab_web/tools/missions.py`, CI test
+    `lab_web/tools/test_missions.py`, 20 tests): a reference is
+    `docs/RESULTS.md "<heading prefix>"` resolving to **exactly one**
+    heading, a committed file, or `file::function` (the function must
+    exist). Any claim with no evidence, an unresolvable reference, an
+    unknown label, or a claim no beat shows fails. `build_catalog.py`
+    refuses to write the site if any fails; `build_v2_runs.mjs` refuses a
+    replay link to a run it did not build. Every beat's Arena `cfg` lines
+    are applied to the Python Arena in the test (an unknown key raises).
+  - **Coverage: 98 of 98 v1 claims** (`v2/data/m2/m28/v1_claims.json`:
+    every `cite`/`cites`/`citation` object of the v1 site data and every
+    `className="cite"` element of the v1 views, made by `v1_claims.py`),
+    including the negative and unresolved results (the AMCL kidnap A/B
+    p = 0.24, the backends' loop closure making maps worse, DWB's 0/5
+    hairpin, D* Lite doing more work on Experiment C, run 15). Each number
+    a mission quotes was re-read from its committed source in this session.
+  - **Two v1 citations did not resolve as written**, found by the check:
+    v1 cited `"A — SmacPlanner2D and the evidence for it"` (the heading is
+    `A\* — SmacPlanner2D, and the evidence for it`) and `"Global
+    relocalization converges to an unplannable pose on this map"`, which is
+    a bold paragraph, not a heading — the mission cites its enclosing
+    heading, "What the recovery cannot fix, and why". A test pins the second.
+  - **The player** (`?view=learn[&mission=<id>&beat=<n>]`, its own
+    code-split app, 6.18 kB): predict-then-reveal (evidence hidden until an
+    answer is committed; the options lock; a wrong answer is told the right
+    one), each claim with its label, the label's meaning and links to its
+    committed evidence, a link to the mission's v1 page. A beat opens the
+    Arena with `lens`, `level`, `replay` and the new `cfg` lines; the Arena
+    applies exactly those settings in place of the lens's defaults, its
+    controls start from them, and "← Back to the mission" returns to the
+    beat. Browser check (`browser/learn_check.json`, Chromium): all 6
+    missions × 7 beats, all 61 claims shown with a label and ≥ 1 evidence
+    link, 0 console errors; the Map beat's four settings applied exactly
+    and shown on its controls; the Stack beat plays `lab5_static_room_dwb_1`
+    as STACK; mission list and a beat at 390 px: 0 px sideways overflow.
+  - **Fixed on the way**: a mission's settings were overridden by the lens
+    defaults and the controls showed their own defaults rather than what
+    the model was told (both measured in the browser check before the fix);
+    the Move caption printed the Lab 5 converter's record marker ("Controller:
+    eval.") on every recorded cycle — it now says "Nav2 scored N candidates
+    this cycle; M were valid" (test `captions.test.ts`).
+  - **Label vocabulary — a deviation for Gautham to rule on**: missions use
+    README's MEASURED, ASSUMPTION, SIMPLIFIED MODEL, SIMULATION RESULT,
+    INFERENCE, plus UNRESOLVED (the evidence class, for the unresolved
+    results the prompt requires) and **TESTED** (a property test proves it)
+    for the theorem-like claims none of README's labels fits. REAL ROBOT
+    RESULT is never used (a test forbids it).
+  - Not done here: the converted Labs 2–4 runs and Lab 5's replanning are
+    still not served in the viewer (Mission 6's Stack beat shows the Phase 5
+    matrix as cited claims, not a replay); the challenge beats are stubs.
+  - Tests: packages **3,432 / 0 / 0** (unchanged), vitest **458 / 0 / 0**
+    (+8: `learn.test.ts` 6, `captions.test.ts` 2; the landing test covers
+    `?view=learn`), build tools **164 / 0 / 0** (+21: `test_missions.py`
+    20, the conditions check of `learn_check.mjs`). Next: M2.9 (fidelity
+    report v1).
 
 ## Capabilities (README §2), with evidence class
 

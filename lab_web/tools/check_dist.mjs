@@ -40,6 +40,9 @@ const NOT_FETCHED = [
   // no session is live (site.config DOCKER_QUICKSTART_URL). Navigation, not
   // a request the page makes.
   /^https:\/\/github\.com\/GauthamCodes\/coco-labs\/blob\/main\/docs\/DOCKER\.md$/,
+  // M2.8: the prefix of Learn's evidence hyperlinks (a claim's committed
+  // file); followed by a visitor, never requested by the page
+  /^https:\/\/github\.com\/GauthamCodes\/coco-labs\/blob\/main\/$/,
   // M1.6: three.js 0.186.0 keeps a citation of a graphics paper (JCGT) in a
   // shader-chunk string; it is text, never requested.
   /^https:\/\/jcgt\.org\/published\/0007\/04\/01\/$/,

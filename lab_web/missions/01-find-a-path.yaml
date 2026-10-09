@@ -1,0 +1,180 @@
+# Learn mission 1 (M2.8). Data, not code: lab_web/tools/missions.py checks it
+# and test_missions.py fails CI if any claim's evidence does not resolve.
+schema: coco.mission.v1
+id: find-a-path
+number: 1
+title: How does a robot find a path?
+question: Out of every way across the arena, how does COCO pick one -- and is it the shortest?
+lens: plan
+v1: "?view=plan"
+beats:
+  - beat: hook
+    text: >-
+      COCO stands at its start. Click anywhere in the arena: before it moves, it
+      searches. The coloured cells are that search, in the order it looked.
+    arena: {lens: plan, level: watch}
+  - beat: predict
+    question: A* and Dijkstra both find a path across COCO's arena. Which path is cheaper?
+    options:
+      - A*'s, because it is guided towards the goal
+      - Dijkstra's, because it searches everywhere
+      - Neither -- with an admissible heuristic they cost exactly the same
+      - It depends on the map
+    answer: 2
+    claims: [astar-equals-dijkstra]
+  - beat: reveal
+    text: >-
+      Pick "Compare" and race the two on the same goal. Same cost -- but watch how
+      many cells each one opens. A* is not cheaper; it is less work.
+    arena: {lens: plan, level: explain}
+    claims: [astar-equals-dijkstra, real-stack-50, race-optimum]
+  - beat: manipulate
+    text: >-
+      Change the planner and the heuristic, and weight A* up. Greedy best-first and
+      a heavy weight open fewer cells and can return a longer path; the bound on how
+      much longer is shown, and it is tested.
+    arena: {lens: plan, level: inspect}
+    claims: [bounds, predictions, teaching-traces, arena-traces]
+  - beat: explain
+    text: >-
+      COCO's own planners agree with these searches: Nav2's SmacPlanner2D finds the
+      same optimum, NavFn a slightly different path. And an old report's figures,
+      reconstructed, show why the graph you search on matters as much as the search.
+    claims: [smac-agrees, m3-six-percent, isro-reconstruction]
+  - beat: stack
+    text: >-
+      Three searches COCO actually drove on the full ROS 2 stack in Gazebo: A*,
+      Dijkstra and greedy best-first, planned on Nav2's costmap, then followed.
+    arena: {replay: lab1c_astar, level: explain}
+    claims: [lab1c-runs]
+  - beat: challenge
+    stub: true
+    text: Arrives in M3.
+claims:
+  - id: astar-equals-dijkstra
+    label: TESTED
+    text: >-
+      With an admissible heuristic A* returns exactly Dijkstra's cost, on every map
+      the property tests generate -- it can only open fewer cells, never find a
+      cheaper path.
+    evidence:
+      - coco_lab/test/test_properties.py::test_astar_cost_equals_dijkstra_with_admissible_heuristic
+      - coco_lab/test/test_properties.py::test_astar_expands_a_subset_of_dijkstra_up_to_ties
+    v1: ['ui:lab_web/src/ui/Exhibit.tsx:123']
+  - id: real-stack-50
+    label: MEASURED
+    text: >-
+      On COCO's real costmap, over 50 start/goal pairs, A* returned Dijkstra's (C1)
+      optimum in 50 of 50.
+    evidence:
+      - docs/RESULTS.md "COCO Lab Phase 1C"
+      - docs/data/lab1c/conformance/conformance.json
+    v1: ['exhibit.a.real_stack', 'ui:lab_web/src/ui/Exhibit.tsx:123']
+  - id: race-optimum
+    label: TESTED
+    text: >-
+      The optimum a race is scored against is coco_lab's Dijkstra on the same map
+      and costs.
+    evidence:
+      - coco_lab/test/test_properties.py::test_bfs_is_optimal_under_unit_costs
+      - coco_lab/test/test_properties.py::test_astar_cost_equals_dijkstra_with_admissible_heuristic
+    v1: ['ui:lab_web/src/ui/Race.tsx:122']
+  - id: bounds
+    label: TESTED
+    text: >-
+      Whether a heuristic is admissible and consistent, and how far each planner may
+      be from optimal, is computed by coco_lab and tested: weighted A* stays within
+      w times the optimum; w = 0 is Dijkstra and w = 1 is A*; greedy never beats the
+      optimum and on the committed counterexample is strictly worse.
+    evidence:
+      - coco_lab/test/test_properties.py::test_the_reported_suboptimality_bound_holds
+      - coco_lab/test/test_properties.py::test_weighted_astar_is_within_w_of_optimal
+      - coco_lab/test/test_properties.py::test_weight_zero_reproduces_dijkstra
+      - coco_lab/test/test_properties.py::test_weight_one_reproduces_astar
+      - coco_lab/test/test_properties.py::test_greedy_is_strictly_worse_on_the_committed_counterexample
+      - coco_lab/test/test_heuristics.py
+    v1: ['catalog.settings', 'ui:lab_web/src/ui/SettingsPanel.tsx:106', 'ui:lab_web/src/ui/SettingsPanel.tsx:114']
+  - id: predictions
+    label: TESTED
+    text: >-
+      Every "predict" answer is read from the trace summary coco_lab wrote for that
+      run, not from the page; the five planners agree when there is no path at all.
+    evidence:
+      - coco_lab/test/test_bundle.py::test_golden_bundles_load_validate_and_replay
+      - coco_lab/test/test_properties.py::test_all_five_agree_on_no_path
+    v1: ['ui:lab_web/src/ui/Predict.tsx:44', 'catalog.bundles[bfs_no_path]']
+  - id: teaching-traces
+    label: TESTED
+    text: >-
+      The teaching searches -- A* on an open grid, Dijkstra across a cost field,
+      weighted A* in the greedy trap, BFS with no path, A* on a (cell, heading)
+      graph -- are coco_lab's own traces, reloaded and replayed event for event
+      when the site is built (178, 747, 405, 750 and 130 events, all identical).
+    evidence:
+      - coco_lab/test/test_bundle.py::test_golden_bundles_load_validate_and_replay
+      - coco_lab/test/golden_bundles.py
+    v1: ['catalog.bundles[astar_open]', 'catalog.bundles[dijkstra_cost_field_gz]', 'catalog.bundles[weighted_astar_greedy_trap]',
+         'catalog.bundles[bfs_no_path]', 'catalog.bundles[astar_turn_trap_heading]', 'ui:lab_web/src/ui/panels.tsx:88']
+  - id: arena-traces
+    label: MEASURED
+    text: >-
+      Searches across COCO's own arena -- its Nav2 map at 0.10 m and 0.05 m, and
+      Nav2's inflated costmap at 0.10 m -- are computed by coco_lab and replay
+      identically (70,319, 283,378 and 4,693 events).
+    evidence:
+      - docs/RESULTS.md "COCO Lab Phase 1B"
+      - docs/data/lab1b/resolution.py
+      - docs/RESULTS.md "COCO Lab Phase 1C"
+    v1: ['catalog.bundles[arena_0_10m]', 'catalog.bundles[arena_native]', 'catalog.bundles[costmap_0_10m]']
+  - id: smac-agrees
+    label: MEASURED
+    text: >-
+      Over the same 50 pairs, SmacPlanner2D's raw search cost equalled coco_lab's
+      optimum (within 1e-15) in all 36 pairs where the comparison applies. NavFn's
+      path length against Smac's returned path: median +0.57 %, from -3.1 % to
+      +11.1 %; Smac's returned (smoothed) path is a median 2.9 % shorter than the
+      cell-path optimum.
+    evidence:
+      - docs/RESULTS.md "COCO Lab Phase 1C"
+      - docs/data/lab1c/conformance/conformance.json
+    v1: ['exhibit.b', 'exhibit.b.fifty', 'ui:lab_web/src/ui/Exhibit.tsx:162']
+  - id: m3-six-percent
+    label: MEASURED
+    text: >-
+      The old "6.2 %": SmacPlanner2D 3.165 m against NavFn 3.373 m on the same start
+      and goal (6.2 % shorter, derived). Those paths' coordinates were never
+      recorded, so an analogue on today's arena stands in -- start (0, 0), goal
+      (2.5, 6.0): Smac returned 7.785 m, NavFn 7.894 m and 7.916 m, the cell-path
+      optimum 8.002 m.
+    evidence:
+      - 'docs/RESULTS.md "A\* — SmacPlanner2D, and the evidence for it"'
+      - gazebo_models/scripts/plan_compare.py
+      - docs/RESULTS.md "COCO Lab Phase 1C"
+      - docs/data/lab1c/conformance/conformance.json
+    v1: ['exhibit.b.m3', 'exhibit.b.analogue', 'ui:lab_web/src/ui/Exhibit.tsx:138']
+  - id: isro-reconstruction
+    label: MEASURED
+    text: >-
+      An internship report's Table 1 put A* at 2.64 "steps" and 1.2 ms, Dijkstra at
+      2.55 and 6.0 ms. No original file survives: Phase 1B rebuilt the simulator from
+      the report's code listing, and measured on that RECONSTRUCTION that searching
+      cells without the robot's heading gives paths a turning robot cannot drive.
+      The corrected search, on a (cell, heading) graph, is the turn-trap trace.
+    evidence:
+      - docs/labs/ISRO_INVESTIGATION.md
+      - docs/data/lab1b/isro_experiment.json
+      - docs/RESULTS.md "COCO Lab Phase 1B"
+    v1: ['exhibit.c', 'exhibit.c.table1', 'ui:lab_web/src/ui/Exhibit.tsx:174', 'ui:lab_web/src/ui/Exhibit.tsx:197']
+  - id: lab1c-runs
+    label: SIMULATION RESULT
+    text: >-
+      Three runs recorded on the full ROS 2 stack in Gazebo: A*, Dijkstra and greedy
+      best-first each planned on Nav2's costmap and COCO drove the result. Their
+      tracking error -- how far the robot's ground truth stayed from the path -- is
+      shown as Phase 1C measured it. A recorded run cannot be replayed: it does not
+      record every input of its search.
+    evidence:
+      - docs/RESULTS.md "COCO Lab Phase 1C"
+      - docs/data/lab1c/runs.json
+    v1: ['catalog.bundles[lab1c_astar]', 'catalog.bundles[lab1c_dijkstra]', 'catalog.bundles[lab1c_greedy]',
+         'ui:lab_web/src/ui/panels.tsx:134', 'ui:lab_web/src/ui/TrackingPlot.tsx:165']

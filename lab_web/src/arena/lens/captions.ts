@@ -40,6 +40,12 @@ export function caption(lens: LensId, store: FamilyStore, tick: number): string 
   if (lens === 'move') {
     const c = at('coco.control.local.command.v1');
     const st = str(c, 'status');
+    // a recorded Lab 5 cycle (M2.7): 'eval' carries Nav2's own counts, 'rollout*' only a drawing
+    if (st === 'eval') {
+      const nv = num(c, 'n_valid'); const nc = num(c, 'n_candidates');
+      return nv === null || nv < 0 ? `Nav2 scored ${nc} candidates this cycle.` : `Nav2 scored ${nc} candidates this cycle; ${nv} were valid.`;
+    }
+    if (st?.startsWith('rollout')) return null;
     if (st && st !== 'ok') {
       const nv = num(c, 'n_valid'); const nc = num(c, 'n_candidates');
       return st === 'no_valid_candidate' ? `No valid candidate: all ${nc} trajectories were rejected (${nv} valid), so the controller stops.`
