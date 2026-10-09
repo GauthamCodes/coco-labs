@@ -42,6 +42,7 @@ import './lens/move';
 import { defaultLayers, LENS_BY_ID, LENSES, LEVELS, packForConfig, type LensId, type Level } from './lens/registry';
 import { LensLayers } from './render/lensLayers';
 import { sha256Hex } from '../bundle/sha256';
+import { GapChips, useGaps } from '../learn/gaps';
 import { cfgFromParams, missionBackLink } from '../learn/links';
 
 declare global {
@@ -73,6 +74,7 @@ export function ArenaApp() {
   // a Learn mission's beat (M2.8): its settings, sent once the live model is up, in place of the lens's defaults
   const cfgLines = cfgFromParams(params);
   const missionBack = missionBackLink(params);
+  const gaps = useGaps(import.meta.env.BASE_URL);
   const cfgInitial = Object.fromEntries(cfgLines.map((c) => [c.slice(0, c.indexOf('=')), c.slice(c.indexOf('=') + 1)]));
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const [world, setWorld] = useState<World | null>(null);
@@ -592,6 +594,8 @@ export function ArenaApp() {
       <LensBar lens={lens} level={level} focus={focus}
         available={new Set(LENSES.filter((l) => l.id === 'plan' || packs.has(l.pack) || (converted?.headers ?? []).some((h) => l.families.some((f) => h.channel.includes(f)))).map((l) => l.id))}
         onLens={setLens} onLevel={setLevel} onFocus={setFocus} />
+      {/* M2.9: the measured gaps between this lens's model and the Stack */}
+      <GapChips ids={LENS_BY_ID[lens].gaps} gaps={gaps} />
       {lens === 'localise' && <LocaliseControls send={sendConfig} live={mode === 'live'} initial={cfgInitial} />}
       {lens === 'map' && <MapControls send={sendConfig} live={mode === 'live'} initial={cfgInitial} />}
       {lens === 'move' && (converted?.headers?.some((h) => h.channel === 'coco.control.local.header.v1')

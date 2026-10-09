@@ -14,7 +14,9 @@
  * MCL filter's belief) -- the model must apply exactly the beat's config lines,
  * with no lens default -- and a recording beat, and comes back by the
  * mission link. The mission list and one beat are also drawn at phone width
- * (390 px), which must not scroll sideways.
+ * (390 px), which must not scroll sideways. M2.9: the "model gap" chips --
+ * none on the planning missions, the right ones on the others and on the
+ * Map lens, and the LiDAR chip opens to its measured text.
  * Exit 0 only with 0 console errors and every step.
  */
 
@@ -78,9 +80,16 @@ try {
       if (i < 6) { await page.getByTestId('next').click(); await page.waitForFunction((k) => document.querySelector('[data-testid="mission"]')?.dataset.beat !== k, beat); }
     }
     rec.v1 = await page.getByTestId('v1-page').getAttribute('href');
+    rec.gaps = await page.$$eval('details.gap-chip', (ds) => ds.map((d) => d.dataset.testid.replace('gap-', '')));
     rec.claims_shown = new Set(rec.beats.flatMap((b) => b.claims.map((c) => c.id))).size;
     out.missions.push(rec);
   }
+
+  // M2.9 chips: the missions that depend on a model gap show it, the ones that do not show none
+  const gapsOf = (id) => out.missions.find((m) => m.id === id).gaps;
+  if (gapsOf('find-a-path').length || gapsOf('world-changes').length) fail('a planning mission shows a model gap chip');
+  if (JSON.stringify(gapsOf('where-it-is')) !== '["lidar","odometry"]') fail(`where-it-is chips ${gapsOf('where-it-is')}`);
+  if (JSON.stringify(gapsOf('avoid-things')) !== '["lidar","tracking"]') fail(`avoid-things chips ${gapsOf('avoid-things')}`);
 
   // a settings beat: the Map lens with the pose graph on the filter's belief
   const mapBeat = out.missions.find((m) => m.id === 'build-a-map').beats.find((b) => b.beat === 'manipulate');
@@ -97,6 +106,13 @@ try {
   };
   const want = new URLSearchParams(mapBeat.arena.split('?')[1]).getAll('cfg');
   if (JSON.stringify(out.steps.settings_beat.applied) !== JSON.stringify(want)) fail(`applied ${out.steps.settings_beat.applied} != ${want}`);
+  // the Map lens shows its chips; one opens to the measured text
+  out.steps.settings_beat.gaps = await page.$$eval('details.gap-chip', (ds) => ds.map((d) => d.dataset.testid.replace('gap-', '')));
+  await page.locator('[data-testid="gap-lidar"] summary').click();
+  out.steps.settings_beat.lidar_chip = await page.getByTestId('gap-lidar').textContent();
+  if (JSON.stringify(out.steps.settings_beat.gaps) !== '["lidar","odometry"]' || !/median 2\.2 mm/.test(out.steps.settings_beat.lidar_chip)) {
+    fail(`map lens chips ${out.steps.settings_beat.gaps}: ${out.steps.settings_beat.lidar_chip}`);
+  }
   const shown = out.steps.settings_beat.shown;
   if (shown.algorithm !== 'occupancy' || shown.poses !== 'belief') fail(`controls show ${JSON.stringify(shown)}`);
   await page.screenshot({ path: join(OUT, 'learn_arena_settings.png') });

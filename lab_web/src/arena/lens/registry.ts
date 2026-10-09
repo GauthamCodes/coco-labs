@@ -24,6 +24,9 @@ import type { Palette } from '../render/palette';
 export type LensId = 'plan' | 'localise' | 'map' | 'move' | 'decide';
 export type Level = 'watch' | 'explain' | 'inspect';
 export type Role = 'computation' | 'uncertainty' | 'truth' | 'world';
+/** A measured gap between the model and the Stack (docs/v2/FIDELITY_v1.md, M2.9). */
+export type GapId = 'lidar' | 'odometry' | 'tracking';
+export const GAP_IDS: readonly GapId[] = ['lidar', 'odometry', 'tracking'];
 
 export const LEVELS: readonly Level[] = ['watch', 'explain', 'inspect'];
 export const LEVEL_TITLES: Record<Level, string> = { watch: 'Watch', explain: 'Explain', inspect: 'Inspect' };
@@ -53,11 +56,13 @@ export interface Lens {
   pack: string;
   /** The lowest milestone checkpoint its live computation arrives in. */
   since: string;
+  /** The model gaps its lessons depend on: each shows a "model gap" chip (M2.9). */
+  gaps: GapId[];
 }
 
 export const LENSES: readonly Lens[] = [
   {
-    id: 'plan', title: 'Plan', question: 'How does a robot find a path?', pack: 'core', since: 'M1',
+    id: 'plan', title: 'Plan', question: 'How does a robot find a path?', pack: 'core', since: 'M1', gaps: [],
     families: ['plan.search', 'plan.incremental', 'plan.path'],
     charts: ['expansions', 'path_cost'],
     layers: [
@@ -68,7 +73,7 @@ export const LENSES: readonly Lens[] = [
     ],
   },
   {
-    id: 'localise', title: 'Localise', question: 'How does a robot know where it is?', pack: 'localise', since: 'M2.3',
+    id: 'localise', title: 'Localise', question: 'How does a robot know where it is?', pack: 'localise', since: 'M2.3', gaps: ['lidar', 'odometry'],
     families: ['estimate', 'localise.particles', 'localise.ekf'],
     charts: ['err_xy.mcl', 'err_xy.ekf', 'err_xy.odometry', 'n_eff'],
     layers: [
@@ -79,7 +84,7 @@ export const LENSES: readonly Lens[] = [
     ],
   },
   {
-    id: 'map', title: 'Map', question: 'How does it build a map?', pack: 'map', since: 'M2.4',
+    id: 'map', title: 'Map', question: 'How does it build a map?', pack: 'map', since: 'M2.4', gaps: ['lidar', 'odometry'],
     families: ['map.grid', 'map.slam', 'estimate'],
     charts: ['ate', 'f1'],
     layers: [
@@ -91,7 +96,7 @@ export const LENSES: readonly Lens[] = [
     ],
   },
   {
-    id: 'move', title: 'Move', question: 'How does it avoid things while following a path?', pack: 'move', since: 'M2.5',
+    id: 'move', title: 'Move', question: 'How does it avoid things while following a path?', pack: 'move', since: 'M2.5', gaps: ['lidar', 'tracking'],
     families: ['control.local'],
     charts: ['n_valid', 'cmd_v', 'tracking_error'],
     layers: [
@@ -105,7 +110,7 @@ export const LENSES: readonly Lens[] = [
     ],
   },
   {
-    id: 'decide', title: 'Decide', question: 'How does it decide where to look?', pack: 'decide', since: 'M2.6',
+    id: 'decide', title: 'Decide', question: 'How does it decide where to look?', pack: 'decide', since: 'M2.6', gaps: ['lidar', 'odometry', 'tracking'],
     families: ['decide.search', 'sensor.detect', 'mission.fsm', 'arm'],
     charts: ['expected_cost', 'p_max', 'loc_error'],
     layers: [

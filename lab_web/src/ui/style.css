@@ -506,3 +506,15 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   .claim-label.assumption, .claim-label.inference { color: #f0a050; }
   .claim-label.unresolved { color: #ff8a80; }
 }
+
+/* "Model gap" chips (M2.9): a measured gap between the model and the Stack */
+.gap-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.gap-chip { border: 1px solid #a35200; border-radius: 6px; background: var(--panel); max-width: 100%; }
+.gap-chip summary { cursor: pointer; padding: 4px 10px; min-height: 32px; display: flex; align-items: center;
+  font: 600 0.8rem/1.2 system-ui, sans-serif; color: #a35200; list-style-position: inside; }
+.gap-chip[open] { flex-basis: 100%; }
+.gap-chip p { margin: 0; padding: 0 10px 8px; font-size: 0.85rem; }
+@media (prefers-color-scheme: dark) {
+  .gap-chip { border-color: #f0a050; }
+  .gap-chip summary { color: #f0a050; }
+}

@@ -5,6 +5,7 @@ number: 4
 title: How does a robot build a map?
 question: To map a room you need to know where you are; to know where you are you need a map. How does COCO do both?
 lens: map
+gaps: [lidar, odometry]
 v1: "?view=map"
 beats:
   - beat: hook

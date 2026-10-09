@@ -14,6 +14,7 @@
 import { useEffect, useState } from 'react';
 
 import { REPO_BLOB_URL as REPO } from '../../site.config';
+import { GapChips, useGaps, type Gaps } from './gaps';
 import { arenaHref, type ArenaLink } from './links';
 
 interface Claim { id: string; text: string; label: string; evidence: string[]; resolved: string[]; v1: string[] }
@@ -21,7 +22,11 @@ interface Beat {
   beat: string; text?: string; question?: string; options?: string[]; answer?: number;
   arena?: ArenaLink; claims?: string[]; stub?: boolean;
 }
-interface Mission { id: string; number: number; title: string; question: string; lens: string; v1: string; beats: Beat[]; claims: Claim[] }
+interface Mission {
+  id: string; number: number; title: string; question: string; lens: string; v1: string; beats: Beat[]; claims: Claim[];
+  /** the model gaps its lessons depend on (M2.9) */
+  gaps?: string[];
+}
 
 const BEAT_TITLE: Record<string, string> = {
   hook: 'Hook', predict: 'Predict', reveal: 'Reveal', manipulate: 'Try it', explain: 'Explain',
@@ -61,6 +66,7 @@ export function LearnApp() {
   const [missions, setMissions] = useState<Mission[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [{ mission, beat }, setWhere] = useState(readQuery);
+  const gaps = useGaps(BASE);
 
   useEffect(() => {
     fetch(`${BASE}generated/missions.json`, { credentials: 'omit', cache: 'no-cache' })
@@ -90,7 +96,7 @@ export function LearnApp() {
       {!missions && !error && <p className="note">Loading the missions…</p>}
       {missions && mission && !current && <p className="error" role="alert">No mission &ldquo;{mission}&rdquo;.</p>}
       {missions && !current && <MissionIndex missions={missions} go={go} />}
-      {current && <MissionPlayer key={current.id} m={current} beat={beat} go={go} />}
+      {current && <MissionPlayer key={current.id} m={current} beat={beat} go={go} gaps={gaps} />}
     </main>
   );
 }
@@ -116,7 +122,7 @@ function MissionIndex({ missions, go }: { missions: Mission[]; go: (m: string, b
   );
 }
 
-function MissionPlayer({ m, beat, go }: { m: Mission; beat: number; go: (m: string, b?: number) => void }) {
+function MissionPlayer({ m, beat, go, gaps }: { m: Mission; beat: number; go: (m: string, b?: number) => void; gaps: Gaps }) {
   const b = m.beats[beat];
   const [picked, setPicked] = useState<number | null>(null);
   useEffect(() => setPicked(null), [beat]);
@@ -128,6 +134,7 @@ function MissionPlayer({ m, beat, go }: { m: Mission; beat: number; go: (m: stri
       <p className="note">Mission {m.number} of 6</p>
       <h2>{m.title}</h2>
       <p className="learn-lead">{m.question}</p>
+      <GapChips ids={m.gaps ?? []} gaps={gaps} />
       <nav className="beats" aria-label="Beats">
         {m.beats.map((x, i) => (
           <button key={x.beat} type="button" className={i === beat ? 'on' : ''} aria-current={i === beat ? 'step' : undefined}

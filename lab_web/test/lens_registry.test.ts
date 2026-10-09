@@ -20,7 +20,7 @@ import { join } from 'node:path';
 import * as THREE from 'three';
 import { describe, expect, it } from 'vitest';
 
-import { defaultLayers, LENSES, LEVELS } from '../src/arena/lens/registry';
+import { defaultLayers, GAP_IDS, LENSES, LEVELS } from '../src/arena/lens/registry';
 import { familyOf, FamilyStore } from '../src/arena/lens/store';
 import { ellipseAxes, LensLayers } from '../src/arena/render/lensLayers';
 import { PALETTES, type Palette } from '../src/arena/render/palette';
@@ -80,6 +80,17 @@ describe('the lens registry', () => {
 
   it('loads each lens from a pack the build knows', () => {
     for (const l of LENSES) expect(l.pack === 'core' || l.pack in PACKS, l.id).toBe(true);
+  });
+
+  it('names the measured model gaps its lessons depend on (M2.9, docs/v2/FIDELITY_v1.md)', () => {
+    // the ids are the report's: lab_web/tools/fidelity.py GAP_IDS
+    const py = readFileSync(join(REPO, 'lab_web', 'tools', 'fidelity.py'), 'utf-8');
+    const pyIds = [...py.match(/ANCHORS = \{([^}]+)\}/)![1].matchAll(/'(\w+)': /g)].map((m) => m[1]);
+    expect([...GAP_IDS]).toEqual(pyIds);
+    for (const l of LENSES) for (const g of l.gaps) expect(GAP_IDS, l.id).toContain(g);
+    // every lens that senses, estimates or drives through the model shows a chip; Plan searches the true map
+    expect(LENSES.find((l) => l.id === 'plan')!.gaps).toEqual([]);
+    for (const id of ['localise', 'map', 'move', 'decide']) expect(LENSES.find((l) => l.id === id)!.gaps.length, id).toBeGreaterThan(0);
   });
 });
 

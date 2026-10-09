@@ -39,6 +39,7 @@ import os
 import re
 from typing import Dict, List, Tuple
 
+import fidelity
 import yaml
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -106,6 +107,9 @@ def check(m: Dict[str, object], name: str) -> None:
         raise MissionError(f'{name}: schema must be coco.mission.v1')
     if m['lens'] not in LENSES:
         raise MissionError(f'{name}: lens {m["lens"]}')
+    for g in m.get('gaps', []):
+        if g not in fidelity.GAP_IDS:
+            raise MissionError(f'{name}: no model gap {g!r} (docs/v2/FIDELITY_v1.md has {fidelity.GAP_IDS})')
     beats = [b['beat'] for b in m['beats']]
     if tuple(beats) != BEATS:
         raise MissionError(f'{name}: the beats must be {BEATS}, in order (got {beats})')

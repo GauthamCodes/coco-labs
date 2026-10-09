@@ -5,6 +5,7 @@ number: 3
 title: How does a robot know where it is?
 question: The wheels say one thing, the LiDAR another. Where is COCO -- and what happens when it is wrong?
 lens: localise
+gaps: [lidar, odometry]
 v1: "?view=localise"
 beats:
   - beat: hook

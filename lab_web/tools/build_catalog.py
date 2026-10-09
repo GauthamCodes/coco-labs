@@ -65,6 +65,7 @@ import build_map  # noqa: E402
 import build_move  # noqa: E402
 import build_search  # noqa: E402
 import common  # noqa: E402
+import fidelity  # noqa: E402
 import missions  # noqa: E402
 
 OUT = os.path.join(common.LAB_WEB, 'public', 'generated')
@@ -595,6 +596,10 @@ def build(out=OUT, wheel='build', with_benchmark=True, with_localise=True,
         raise SystemExit('missions: ' + '; '.join(bad + uncovered + unknown))
     with open(os.path.join(out, 'missions.json'), 'w') as f:
         f.write(json.dumps(missions.site_json(ms), indent=1, sort_keys=True) + '\n')
+    # M2.9: the "model gap" chips, rendered from the committed fidelity measurement
+    with open(os.path.join(out, 'fidelity.json'), 'w') as f:
+        f.write(json.dumps({'schema': 'lab_web.fidelity', 'version': '1.0', 'report': 'docs/v2/FIDELITY_v1.md',
+                            'gaps': fidelity.gaps()}, indent=1, sort_keys=True) + '\n')
     with open(os.path.join(out, 'exhibit.json'), 'w') as f:
         f.write(json.dumps(exhibit_data(), indent=1, sort_keys=True) + '\n')
     with open(os.path.join(out, 'catalog.json'), 'w') as f:
