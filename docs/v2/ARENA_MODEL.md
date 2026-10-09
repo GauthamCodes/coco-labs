@@ -131,8 +131,9 @@ From the first loop input the Arena keeps:
   and the square and badly hurts on the other tour, so it stays off
   (`docs/v2/data/m2/m23/slip_fidelity.json`; `FIDELITY_v1.md`);
 - **subsystems**, each registered in `SUBSYSTEMS` by its own Python pack
-  (`coco_lab.loc_arena` registers `localise`); a `config` for a subsystem
-  whose pack is not loaded is refused.
+  (`coco_lab.loc_arena` registers `localise`, `coco_lab.map_arena`
+  registers `map`); a `config` for a subsystem whose pack is not loaded is
+  refused.
 
 **Planning and driving use the BELIEF** (`Arena.belief()`: the localiser's
 estimate, MCL's when both run), never the truth: a localisation error
@@ -151,3 +152,37 @@ subsystem's state: filter u8; its stream (4 × u64); for MCL the particle
 count u32, w_slow and w_fast (int64, ×10¹²), then x, y, θ, weight per
 particle (int64 micro-units); for the EKF μ (3) and P (9) as int64
 micro-units; the last update's odometry (3 × int64) and the update count u32.
+The map subsystem's state: algorithm u8 and pose source u8 (indices into
+`map_arena.ALGORITHMS` / `POSES`), the update count u32, its two streams
+(8 × u64: FastSLAM's, the idealised landmark sensor's); the last mapping
+estimate (3 × int64 micro-units); for FastSLAM x, y, θ, weight per particle
+(int64 micro-units); for EKF-SLAM the whole state vector μ (int64
+micro-units); for the pose graph the edge count u32. The built grid itself
+is not hashed: it is a function of the hashed poses and the hashed scans.
+
+### The map subsystem (M2.4)
+
+`config` keys: `map.algorithm=occupancy|ekf_slam|fastslam|pose_graph|off`,
+`map.poses=truth|odometry|belief` (whose poses an occupancy grid is built
+from), `map.fastslam.particles=1..200`, `map.pose_graph.loop_closure=on|off`.
+Each restarts the map from the current belief. The algorithms are Lab 3's
+classes (`OccupancyGrid`, `EKFSlam`, `FastSlam`, `PoseGraph`), fed the
+Arena's wheel odometry and LiDAR at Lab 3's update rule (0.1 m or 0.2 rad of
+odometry); known-pose mapping is tested to give the grid Lab 3's class gives
+on the same scans, and FastSLAM to give the class's estimate draw for draw.
+
+- The grid is the arena at **0.10 m** (Lab 3's arena challenge resolution).
+  The whole grid goes out as a float32 keyframe every 4th update
+  (`coco.map.grid.snapshot.v1`) and after every pose-graph closure.
+- **EKF-SLAM reads the IDEALISED landmark sensor** (`coco_lab.landmarks`:
+  obstacle corners with known identities, no misses, no false detections;
+  placed as Lab 3's arena challenge places them). COCO has none; the
+  `coco.map.slam.header.v1` header says so in `sensor_label`, and the lens
+  shows it.
+- The pose graph emits its nodes and edges at each closure **twice**: the
+  graph before optimising (`stage` `raw`, its χ²) and after (`optimised`);
+  the lens keeps the last closure's before-graph, faint, until the next.
+- Every 10 updates the subsystem scores itself against the truth the way
+  Lab 3 scored: ATE (RMSE, aligned for SLAMs) and F1 / precision / recall
+  of the map (`coco.metrics.values.v1`). The truth is used only for those
+  scores and for the idealised sensor's observations (Lab 3's rule).

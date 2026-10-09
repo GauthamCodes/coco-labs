@@ -25,7 +25,7 @@ const Z = 0.035;
 
 type Obj = THREE.Mesh | THREE.LineSegments | THREE.InstancedMesh | THREE.Group;
 
-interface Entry { obj: Obj; baseOpacity: number[]; colour: keyof Palette }
+interface Entry { obj: Obj; baseOpacity: number[]; baseTransparent: boolean[]; colour: keyof Palette }
 
 function materials(o: THREE.Object3D): THREE.Material[] {
   const out: THREE.Material[] = [];
@@ -77,7 +77,7 @@ export class LensLayers {
     this.remove(id);
     obj.position.z = Z;
     obj.renderOrder = 2;
-    const e: Entry = { obj, colour, baseOpacity: materials(obj).map((m) => m.opacity) };
+    const e: Entry = { obj, colour, baseOpacity: materials(obj).map((m) => m.opacity), baseTransparent: materials(obj).map((m) => m.transparent) };
     this.entries.set(id, e);
     this.scene.add(obj);
     this.applyOpacity(id, e);
@@ -87,7 +87,8 @@ export class LensLayers {
     const f = this.dim.get(id) ?? 1;
     materials(e.obj).forEach((m, i) => {
       m.opacity = (e.baseOpacity[i] ?? 1) * f;
-      m.transparent = m.opacity < 1 || e.baseOpacity[i] < 1;
+      // a material drawn transparent stays so at full opacity: a texture's own alpha needs it (the built map drew unknown as black)
+      m.transparent = m.opacity < 1 || (e.baseTransparent[i] ?? false);
     });
     e.obj.visible = this.visible.get(id) ?? true;
   }
@@ -222,19 +223,21 @@ export class LensLayers {
   /**
    * A scalar grid as a texture: log-odds per cell (row 0 at the bottom
    * unless `row0IsBottom` is false), shaded from the palette's mapFree (l << 0) to mapOccupied (l >> 0);
-   * unknown (l == 0) is transparent. One plane over the map's extent.
+   * unknown (l == 0) is transparent, or the palette's `unknown` at `unknownAlpha` (a veil over what has not been seen). One plane over the map's extent.
    */
   mapTexture(id: string, width: number, height: number, resolution: number, origin: [number, number],
-    logodds: ArrayLike<number>, row0IsBottom = true) {
+    logodds: ArrayLike<number>, row0IsBottom = true, unknownAlpha = 0) {
     const rgba = new Uint8Array(width * height * 4);
     const free = new THREE.Color(this.palette.mapFree);
     const occ = new THREE.Color(this.palette.mapOccupied);
     const t = new THREE.Color();
+    const unk = new THREE.Color(this.palette.unknown);
+    const veil = [Math.round(unk.r * 255), Math.round(unk.g * 255), Math.round(unk.b * 255), Math.round(255 * unknownAlpha)];
     for (let i = 0; i < width * height; i += 1) {
       // texture rows go bottom-up; a top-down grid (a LabMap's) is flipped
       const src = row0IsBottom ? i : (height - 1 - Math.floor(i / width)) * width + (i % width);
       const l = logodds[src];
-      if (l === 0) continue;
+      if (l === 0) { if (unknownAlpha > 0) rgba.set(veil, i * 4); continue; }
       const p = 1 / (1 + Math.exp(-l));
       t.copy(free).lerp(occ, p);
       rgba.set([Math.round(t.r * 255), Math.round(t.g * 255), Math.round(t.b * 255), Math.round(255 * Math.min(1, 0.25 + Math.abs(p - 0.5) * 1.5))], i * 4);

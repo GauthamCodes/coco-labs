@@ -69,6 +69,14 @@ export class FamilyStore {
     return list[lo];
   }
 
+  /** Every batch of `channel` with tick <= `tick`, oldest first (a trajectory). */
+  before(channel: string, tick: number): FamilyBatch[] {
+    const list = this.byChannel.get(channel) ?? [];
+    let n = list.length;
+    while (n > 0 && list[n - 1].tick > tick) n -= 1;
+    return list.slice(0, n);
+  }
+
   /** Every batch of `channel` at exactly `tick`, in arrival order. */
   at(channel: string, tick: number): FamilyBatch[] {
     return (this.byChannel.get(channel) ?? []).filter((b) => b.tick === tick);

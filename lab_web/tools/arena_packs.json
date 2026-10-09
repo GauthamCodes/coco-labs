@@ -7,7 +7,7 @@
   },
   "map": {
    "requires": ["localise"],
-   "modules": ["ekfslam.py", "fastslam.py", "landmarks.py", "map_teaching.py", "mapeval.py", "mapping.py", "mapworld.py", "occgrid.py", "posegraph.py", "slam.py", "slambundle.py"]
+   "modules": ["ekfslam.py", "fastslam.py", "landmarks.py", "map_arena.py", "map_teaching.py", "mapeval.py", "mapping.py", "mapworld.py", "occgrid.py", "posegraph.py", "slam.py", "slambundle.py"]
   },
   "move": {
    "requires": [],

@@ -599,6 +599,70 @@ only. Read order for agents (README §9): `README.md`, this file,
     `test_loc_arena.py` 11; `coco_schemas` 209 → 211), vitest **417 / 0 / 0**,
     build tools **137 / 0 / 0**. Next: M2.4 (Map lens).
 
+- **M2.4 Map lens (2026-10-09).** Evidence: `v2/data/m2/m24/`.
+  - **Lab 3's algorithms, step-wise and live (MODEL):** `fastslam.FastSlam`
+    and `posegraph.PoseGraph` are Lab 3's SLAMs one update at a time;
+    `run_fastslam` / `run_pose_graph` now consume them (Lab 3's tests and
+    bundles pass unchanged). `coco_lab/map_arena.py` (map pack) runs
+    occupancy mapping (from true poses, dead reckoning or the belief),
+    EKF-SLAM, FastSLAM and the pose graph in the Arena on its odometry and
+    LiDAR at Lab 3's update rule, on a 0.10 m grid; `config` keys
+    `map.algorithm|poses|fastslam.particles|pose_graph.loop_closure`.
+    Tests: known-pose mapping gives the grid Lab 3's `OccupancyGrid` gives
+    on the same scans; FastSLAM gives the standalone class's estimates draw
+    for draw. Documented in [`v2/ARENA_MODEL.md`](v2/ARENA_MODEL.md) "The
+    map subsystem", with its hash section.
+  - **EKF-SLAM's landmark sensor is labelled IDEALISED** in the data
+    (`coco.map.slam.header.v1` `sensor_label`: "... COCO has none") and on
+    screen (controls and hover).
+  - **Loop closure before and after:** at each closure the graph goes out
+    twice, `raw` and `optimised`, each with its χ² (tested: after ≤
+    before); the lens keeps the last closure's before-graph, faint.
+  - **ATE and F1** (`mapeval`, as Lab 3 scores) every 10 updates, as
+    metrics charted at Inspect.
+  - **The map-the-arena scenario in the new engine (MODEL;
+    `map_arena_scenario.json`):** Lab 3's scenario (start, six waypoints,
+    seed 21, alphas 0.02, range σ 0.02 m) through Lab 3's engine and
+    through the Arena. Lab 3 → Arena: known poses F1 **0.694 → 0.755**;
+    dead reckoning ATE 1.795 → 0.708 m, F1 0.236 → 0.208; FastSLAM ATE
+    0.380 → 0.190 m, F1 0.427 → 0.374; pose graph ATE **1.722 → 0.119 m**,
+    F1 **0.218 → 0.642** (3 loop closures in the Arena run). The engines do
+    not drive the same path — Sketch drives straight lines by the TRUE
+    pose, the Arena plans each leg and drives it by its belief — so these
+    are side by side, not expected equal; the pose graph's difference is
+    **not attributed** (Lab 3's closure count on this drive was not
+    extracted). The Arena scores F1 without moving the map by the ATE
+    alignment; Lab 3 moves it.
+  - **Lens (browser, `browser/map_check.json`):** the built map (log-odds,
+    unknown veiled so the world shows faintly beneath), the SLAM
+    trajectory, landmarks with 95 % ellipses, FastSLAM particles, the pose
+    graph with loop edges in their own colour and the before-graph;
+    controls as `config` inputs. Chromium: the map's header arrived
+    877 ms after selecting the lens (power-saver, battery); a 2 m square driven by clicks closed
+    **3 loops**, drawn before and after; EKF-SLAM's IDEALISED label
+    visible; **0 console errors, 0 three.js warnings**.
+  - **Two renderer defects found and fixed on the way.** (1) M1's planned
+    path line was updated with `setFromPoints` on a reused geometry, which
+    in three r186 only overwrites in place: **every replanned path after
+    the first was drawn cut to the first path's length or with its old
+    tail** (three.js warned; nothing failed). Now a new geometry each time
+    (`setLinePoints`, tested, including a test that the old way truncates).
+    (2) `LensLayers.applyOpacity` reset `transparent` from opacity alone,
+    so a texture's own alpha was ignored and the built map drew unknown
+    cells opaque black over the whole world (tested).
+  - **Determinism with mapping on:** 10 sessions × 150 ticks
+    (`determinism.mjs make --loop 1 --map 1`; every algorithm drawn: pose
+    graph 4, EKF-SLAM 3, occupancy 2, FastSLAM 1) × Pyodide-in-Node,
+    Chromium, Firefox, WebKit: **0 mismatched of 1,500 ticks each**
+    (`determinism_map/`); native CPython 3.12.3 against the Pyodide hashes:
+    **0 of 1,500** (`determinism_map/cpython.json`).
+  - Tests: packages **3,391 / 0 / 0** (`coco_lab` 681 → 697:
+    `test_map_arena.py` 16), vitest **424 / 0 / 0** (+7: `lens_layers`,
+    `renderer_path`), build tools **138 / 0 / 0**. (The first vitest run
+    failed `site.test.ts` on a `__pycache__` the CPython check wrote under
+    `lab_web/src`; removed, and the check no longer writes bytecode.) Next:
+    M2.5 (Move lens).
+
 ## Capabilities (README §2), with evidence class
 
 Classes as README §3 defines them: MODEL, STACK, REMOTE, HARDWARE (none

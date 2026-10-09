@@ -68,6 +68,13 @@ function rows(family: string, b: FamilyBatch): [string, string][] {
         ['NIS', fmt(last(b, 'nis'))], ['predicted σx', fmt(Math.sqrt(Number(last(b, 'pred_cov_xx'))))],
         ['posterior σx', fmt(Math.sqrt(Number(last(b, 'post_cov_xx'))))]];
     case 'map.grid':
+      if (b.channel.endsWith('.snapshot.v1')) {
+        const lo = b.columns.logodds_f32 as ArrayLike<number> | undefined;
+        let seen = 0;
+        if (lo) for (let i = 0; i < lo.length; i += 1) if (lo[i] !== 0) seen += 1;
+        return [['map', String(b.scalars.map_id ?? '—')], ['update', fmt(b.scalars.update)],
+          ['keyframe', `whole grid, ${fmt(lo?.length ?? 0)} cells`], ['cells observed', fmt(seen)]];
+      }
       return [['map', String(b.scalars.map_id ?? '—')], ['update', fmt(b.scalars.update)],
         ['cells changed', fmt((b.columns.seq as ArrayLike<unknown>).length)]];
     case 'map.slam':

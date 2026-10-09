@@ -71,6 +71,7 @@ function make() {
   // --loop 1 (M2): every session also switches on the whole loop -- range
   // noise, a localisation filter with random knobs -- and may be kidnapped
   const LOOP = args.loop === '1';
+  const MAP = args.map === '1';
   const sessions = [];
   for (let s = 0; s < n; s += 1) {
     const inputs = [];
@@ -82,6 +83,14 @@ function make() {
       inputs.push({ tick: 0, kind: 'config', choice: `localise.mcl.injection=${['none', 'augmented', 'fixed'][Math.floor(r() * 3)]}` });
       if (r() < 0.3) inputs.push({ tick: 0, kind: 'config', choice: 'arena.slip=on' });
       inputs.push({ tick: 0, kind: 'config', choice: `localise.filter=${filt}` });
+    }
+    // --map 1 (M2.4): a mapping algorithm too (its own draws, so --loop 1's sessions are unchanged)
+    if (MAP) {
+      const alg = ['occupancy', 'ekf_slam', 'fastslam', 'pose_graph'][Math.floor(r() * 4)];
+      if (alg === 'occupancy') inputs.push({ tick: 0, kind: 'config', choice: `map.poses=${['truth', 'odometry', 'belief'][Math.floor(r() * 3)]}` });
+      if (alg === 'fastslam') inputs.push({ tick: 0, kind: 'config', choice: `map.fastslam.particles=${5 + Math.floor(r() * 16)}` });
+      if (alg === 'pose_graph' && r() < 0.5) inputs.push({ tick: 0, kind: 'config', choice: 'map.pose_graph.loop_closure=off' });
+      inputs.push({ tick: 0, kind: 'config', choice: `map.algorithm=${alg}` });
     }
     while (true) {
       t += 1 + Math.floor(r() * 30);

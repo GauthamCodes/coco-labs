@@ -33,8 +33,9 @@ import { Timeline } from './Timeline';
 import { caption } from './lens/captions';
 import { drawLenses, HOVERS } from './lens/draw';
 import { EventLog, LensBar, LensCharts, LensInspector } from './lens/panels';
-import { LocaliseControls } from './lens/controls';
+import { LocaliseControls, MapControls } from './lens/controls';
 import './lens/localise';
+import './lens/map';
 import { defaultLayers, LENS_BY_ID, LENSES, LEVELS, packForConfig, type LensId, type Level } from './lens/registry';
 import { LensLayers } from './render/lensLayers';
 import { sha256Hex } from '../bundle/sha256';
@@ -45,7 +46,7 @@ declare global {
     __cocoArena?: {
       client: ArenaClient | null; queue: Omit<InputRow, 'tick'>[]; last: Tick | null;
       renderer: ArenaRenderer | null; session: () => ArenaSession | null; goal: (x: number, y: number) => void;
-      mode: () => string; log: () => InputRow[];
+      mode: () => string; log: () => InputRow[]; layerIds: () => string[];
     };
   }
 }
@@ -142,6 +143,7 @@ export function ArenaApp() {
     queue.current.push({ kind: 'config', choice });
   }, [takeOver]);
   const locOn = useRef(false);
+  const mapOn = useRef(false);
 
   const goal = useCallback((x: number, y: number) => {
     takeOver();
@@ -348,7 +350,7 @@ export function ArenaApp() {
 
     window.__cocoArena = {
       client: client.current, queue: queue.current, last: null, renderer: rr, session: active, goal,
-      mode: () => modeRef.current, log: () => log.current,
+      mode: () => modeRef.current, log: () => log.current, layerIds: () => ll.current?.ids() ?? [],
     };
     void client.current?.whenReady().then(() => { if (params.has('stress')) rr?.addStress(50_000, 20_000); }, () => {});
     const ui = setInterval(() => setFrame((n) => n + 1), 200);
@@ -483,6 +485,13 @@ export function ArenaApp() {
     sendConfig('arena.range_sigma=0.02');
     sendConfig('localise.filter=both');
   }, [lens, packs, mode, sendConfig]);
+  // the Map lens starts an occupancy grid from known poses (Lab 3's first lesson), once (M2.4)
+  useEffect(() => {
+    if (lens !== 'map' || mapOn.current || !packs.has('map') || mode === 'replay' || mode === 'recording') return;
+    mapOn.current = true;
+    sendConfig('arena.range_sigma=0.02');
+    sendConfig('map.algorithm=occupancy');
+  }, [lens, packs, mode, sendConfig]);
   // Focus: everything outside the lens dims (the robot and truth never do)
   useEffect(() => {
     r.current?.setFocusDim(!focus || lens === 'plan' ? 1 : 0.25, focus ? 0.5 : 1);
@@ -542,6 +551,7 @@ export function ArenaApp() {
         available={new Set(LENSES.filter((l) => l.id === 'plan' || packs.has(l.pack)).map((l) => l.id))}
         onLens={setLens} onLevel={setLevel} onFocus={setFocus} />
       {lens === 'localise' && <LocaliseControls send={sendConfig} live={mode === 'live'} />}
+      {lens === 'map' && <MapControls send={sendConfig} live={mode === 'live'} />}
       {level !== 'watch' && session && (() => { const c = caption(lens, session.families, tick?.tick ?? 0);
         return c ? <p className="lens-caption" data-testid="lens-caption" role="status">{c}</p> : null; })()}
       <div className="arena-stage">

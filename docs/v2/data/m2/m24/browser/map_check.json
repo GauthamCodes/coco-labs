@@ -1,0 +1,97 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-09T12:11:10.047Z",
+   "power_profile": "power-saver",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 74
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.72,
+    "5m": 2.6,
+    "15m": 2.78
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  },
+  "end": {
+   "at_utc": "2026-10-09T12:13:23.428Z",
+   "power_profile": "power-saver",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 71
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 4.45,
+    "5m": 3.76,
+    "15m": 3.21
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ },
+ "site": "http://127.0.0.1:4194/coco-labs/",
+ "steps": {
+  "map_started_ms": 877,
+  "controls": true,
+  "occupancy_channels": [
+   "coco.estimate.pose.v1",
+   "coco.map.grid.snapshot.v1",
+   "coco.metrics.values.v1"
+  ],
+  "occupancy_layers": [
+   "built_map",
+   "slam_pose"
+  ],
+  "closures": [
+   {
+    "tick": 354,
+    "chi2_after": 1.0872694134822682
+   },
+   {
+    "tick": 490,
+    "chi2_after": 19.75393056835133
+   },
+   {
+    "tick": 657,
+    "chi2_after": 32.7289892340852
+   }
+  ],
+  "pose_graph_layers": [
+   "built_map",
+   "slam_pose",
+   "graph",
+   "graph_loops",
+   "graph_before"
+  ],
+  "ate_f1": {
+   "ate": {
+    "tick": 627,
+    "value": 0.07001125063978453
+   },
+   "f1": {
+    "tick": 627,
+    "value": 0.3497112815435246
+   }
+  },
+  "idealised_on_screen": true,
+  "ekf_slam_layers": [
+   "built_map",
+   "slam_pose",
+   "landmarks",
+   "graph",
+   "graph_loops",
+   "graph_before"
+  ]
+ },
+ "errors": [],
+ "warnings": [],
+ "pass": true
+}

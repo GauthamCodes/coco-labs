@@ -28,6 +28,18 @@
 import * as THREE from 'three';
 
 import type { World } from '../protocol';
+
+/**
+ * Give a line new points. `geometry.setFromPoints` on a geometry that
+ * already has positions only overwrites them in place (three r186): a
+ * longer path was cut to the old length and a shorter one kept the old
+ * tail, so every replanned path after the first was drawn wrong (found in
+ * M2.4). A new geometry each time is always right.
+ */
+export function setLinePoints(line: THREE.Line, pts: THREE.Vector3[]) {
+  line.geometry.dispose();
+  line.geometry = new THREE.BufferGeometry().setFromPoints(pts);
+}
 import { PALETTES, VIRIDIS, type Palette, type Theme } from './palette';
 import { CLOSED, FRONTIER, PATH, type PlanStore } from './planStore';
 
@@ -273,7 +285,7 @@ export class ArenaRenderer {
       this.stateData.fill(0);
       this.stateTex.needsUpdate = true;
       if (this.frontier) this.frontier.count = 0;
-      this.pathLine?.geometry.setFromPoints([]);
+      if (this.pathLine) setLinePoints(this.pathLine, []);
     }
   }
 
@@ -311,7 +323,7 @@ export class ArenaRenderer {
     this.frontier.instanceMatrix.needsUpdate = true;
     // path, in event order
     const pts = st.pathCells.map((i) => new THREE.Vector3(origin[0] + ((i % W) + 0.5) * r, origin[1] + (H - 1 - Math.floor(i / W) + 0.5) * r, 0));
-    this.pathLine?.geometry.setFromPoints(pts);
+    if (this.pathLine) setLinePoints(this.pathLine, pts);
     st.dirty = false;
   }
 

@@ -49,3 +49,34 @@ export function LocaliseControls({ send, live }: { send: Send; live: boolean }) 
     </div>
   );
 }
+
+export function MapControls({ send, live }: { send: Send; live: boolean }) {
+  const [algorithm, setAlgorithm] = useState('occupancy');
+  const [poses, setPoses] = useState('truth');
+  const [particles, setParticles] = useState(20);
+  const [loops, setLoops] = useState(true);
+  if (!live) return <p className="lens-empty">The Map lens runs on the live model: click the map to take over.</p>;
+  return (
+    <div className="lens-controls" data-testid="map-controls" role="group" aria-label="Mapping settings">
+      <label>algorithm <select value={algorithm} data-testid="map-algorithm"
+        onChange={(e) => { setAlgorithm(e.target.value); send(`map.algorithm=${e.target.value}`); }}>
+        <option value="occupancy">occupancy grid (poses given)</option>
+        <option value="ekf_slam">EKF-SLAM (IDEALISED landmark sensor)</option>
+        <option value="fastslam">FastSLAM</option>
+        <option value="pose_graph">pose graph</option>
+        <option value="off">off</option>
+      </select></label>
+      {algorithm === 'occupancy' && <label title="whose poses the grid is built from">poses <select value={poses} data-testid="map-poses"
+        onChange={(e) => { setPoses(e.target.value); send(`map.poses=${e.target.value}`); }}>
+        <option value="truth">true (known poses)</option><option value="odometry">dead reckoning</option><option value="belief">the robot's belief</option>
+      </select></label>}
+      {algorithm === 'fastslam' && <label>particles <input type="number" min={1} max={200} value={particles} data-testid="map-particles"
+        onChange={(e) => setParticles(Number(e.target.value))}
+        onBlur={() => send(`map.fastslam.particles=${Math.max(1, Math.min(200, Math.round(particles)))}`)} /></label>}
+      {algorithm === 'pose_graph' && <label className="layer-toggle"><input type="checkbox" checked={loops} data-testid="map-loops"
+        onChange={(e) => { setLoops(e.target.checked); send(`map.pose_graph.loop_closure=${e.target.checked ? 'on' : 'off'}`); }} />loop closure</label>}
+      {algorithm === 'ekf_slam' && <span className="lens-hint">The landmark sensor is IDEALISED: obstacle corners with known identities. COCO has none.</span>}
+      <span className="lens-hint">Changing a setting starts the map again. Drive somewhere: the map is built as COCO moves.</span>
+    </div>
+  );
+}

@@ -620,43 +620,52 @@ def _rebuild(like, grid_params, poses, inp, angles, upto) -> OccupancyGrid:
     return g
 
 
-def run_pose_graph(inp: slam.SlamInputs, like: LabMap,
-                   params: Optional[PoseGraphParams] = None,
-                   grid_params: Optional[GridParams] = None) -> slam.SlamTrace:
-    """Run pose-graph SLAM over ``inp``; return its trace."""
-    p = params or PoseGraphParams()
-    p.check()
-    angles = inp.angles()
-    li = inp.lidar
-    pts = [scan_points(z, angles, li.mount, li.range_min, li.range_max)
-           for z in inp.ranges]
-    poses: List[Pose] = [tuple(inp.start)]
-    edges: List[Edge] = []
-    grid = OccupancyGrid.like(like, grid_params)
-    grid.integrate(poses[0], inp.ranges[0], angles, li.mount, li.range_min,
-                   li.range_max)
-    cols = {c: [] for c in slam.COMMON_COLUMNS + COLUMNS}
-    loop_events = []  # (update k, node j)
-    opt = {'k': [], 'iterations': [], 'chi2_before': [], 'chi2_after': []}
-    last_closure = -10 ** 9
-    stale = False
-    snaps = set(slam.snapshot_updates(len(inp), p.snapshots))
-    snapshots, maps = [], []
-    w_icp = 1.0 / p.icp_sigma ** 2
+class PoseGraph:
+    """
+    Pose-graph SLAM, one update at a time (M2.4).
 
-    def record(k, icp_ok, loops, optimised):
-        e = poses[k]
-        for name, v in zip(slam.COMMON_COLUMNS + COLUMNS,
-                           (inp.rows[k], inp.t[k], e[0], e[1], e[2],
-                            icp_ok, loops, optimised)):
-            cols[name].append(v)
+    Exactly :func:`run_pose_graph`'s front end, loop closure and optimiser,
+    which is this class run over a world's updates. It keeps every scan:
+    after an optimisation every past pose has moved, and the map is rebuilt
+    from the scans at their new poses (lazily, on :meth:`grid`).
+    """
 
-    record(0, 0, 0, 0)
-    if 0 in snaps:
-        snapshots.append(0)
-        maps.append(grid.to_u8())
-    for k in range(1, len(inp)):
-        d = odom_delta(inp.odom[k - 1], inp.odom[k])
+    def __init__(self, start, lidar, like: LabMap, params: PoseGraphParams,
+                 grid_params: Optional[GridParams]):
+        """Prepare an empty graph; the first update is its first node."""
+        params.check()
+        self.p, self.lidar, self.like = params, lidar, like
+        self.grid_params = grid_params
+        self.start = tuple(start)
+        self.angles = lidar.angles()
+        self.poses: List[Pose] = []
+        self.edges: List[Edge] = []
+        self.pts: List[List[Tuple[float, float]]] = []
+        self.scans: List[List[float]] = []
+        self.odom: List[Pose] = []
+        self.loop_events: List[Tuple[int, int]] = []
+        self.last_closure = -10 ** 9
+        self.stale = False
+        self._grid: Optional[OccupancyGrid] = None
+        self.w_icp = 1.0 / params.icp_sigma ** 2
+
+    def update(self, odom, ranges) -> Dict[str, object]:
+        """Add a node (scan matched to the last); try loop closures."""
+        p, li, angles = self.p, self.lidar, self.angles
+        k = len(self.poses)
+        self.pts.append(scan_points(ranges, angles, li.mount, li.range_min,
+                                    li.range_max))
+        self.scans.append(list(ranges))
+        self.odom.append(odom)
+        if k == 0:
+            self.poses.append(self.start)
+            self._grid = OccupancyGrid.like(self.like, self.grid_params)
+            self._grid.integrate(self.start, ranges, angles, li.mount,
+                                 li.range_min, li.range_max)
+            return {'est': self.start, 'icp_ok': 0, 'loops': 0,
+                    'optimised': 0, 'opt': None}
+        pts, poses, edges = self.pts, self.poses, self.edges
+        d = odom_delta(self.odom[k - 1], odom)
         guess = apply_delta((0.0, 0.0, 0.0), *d)
         odom_info = odometry_information(*d, p)
         r = icp(pts[k - 1], pts[k], guess, max_dist=p.icp_max_dist,
@@ -664,7 +673,7 @@ def run_pose_graph(inp: slam.SlamInputs, like: LabMap,
         ok = (r.converged and r.rmse <= p.icp_max_rmse and
               r.inliers >= p.icp_min_inliers)
         if ok:
-            wn = w_icp / max(1, r._n)
+            wn = self.w_icp / max(1, r._n)
             info = [[wn * r.hessian[a][b] + odom_info[a][b]
                      for b in range(3)] for a in range(3)]
             edges.append(Edge(k - 1, k, r.pose, info, 'icp'))
@@ -673,8 +682,9 @@ def run_pose_graph(inp: slam.SlamInputs, like: LabMap,
         poses.append(compose(poses[k - 1], edges[-1].z))
         loops = 0
         optimised = 0
+        opt = None
         if p.loop_closure and k >= p.loop_min_gap and \
-                k - last_closure >= p.loop_cooldown:
+                k - self.last_closure >= p.loop_cooldown:
             here = poses[k]
             cands = sorted(
                 (math.hypot(poses[j][0] - here[0], poses[j][1] - here[1]), j)
@@ -687,39 +697,72 @@ def run_pose_graph(inp: slam.SlamInputs, like: LabMap,
                         lr.inliers >= p.loop_min_inliers and
                         lr.min_eig_per_point() >= p.loop_min_eig):
                     continue
-                wn = w_icp / max(1, lr._n)
+                wn = self.w_icp / max(1, lr._n)
                 info = [[wn * lr.hessian[a][b] for b in range(3)]
                         for a in range(3)]
                 edges.append(Edge(j, k, lr.pose, info, 'loop'))
-                loop_events.append((k, j))
+                self.loop_events.append((k, j))
                 loops += 1
             if loops:
-                last_closure = k
-                stale = True
-                poses, hist = optimise(poses, edges, p.iterations)
-                opt['k'].append(k)
-                opt['iterations'].append(len(hist) - 1)
-                opt['chi2_before'].append(hist[0])
-                opt['chi2_after'].append(hist[-1])
+                self.last_closure = k
+                self.stale = True
+                before = list(poses)
+                new, hist = optimise(poses, edges, p.iterations)
+                self.poses = poses = new
+                opt = {'k': k, 'iterations': len(hist) - 1,
+                       'chi2_before': hist[0], 'chi2_after': hist[-1],
+                       'poses_before': before}
                 optimised = 1
-        if not stale:
-            grid.integrate(poses[k], inp.ranges[k], angles, li.mount,
-                           li.range_min, li.range_max)
-        record(k, int(ok), loops, optimised)
+        if not self.stale:
+            self._grid.integrate(poses[k], ranges, angles, li.mount,
+                                 li.range_min, li.range_max)
+        return {'est': poses[k], 'icp_ok': int(ok), 'loops': loops,
+                'optimised': optimised, 'opt': opt}
+
+    def grid(self) -> OccupancyGrid:
+        """Return the map: rebuilt from every scan if the poses moved."""
+        if self.stale:
+            li = self.lidar
+            g = OccupancyGrid.like(self.like, self.grid_params)
+            for pose, z in zip(self.poses, self.scans):
+                g.integrate(pose, z, self.angles, li.mount, li.range_min,
+                            li.range_max)
+            self._grid = g
+            self.stale = False
+        return self._grid
+
+
+def run_pose_graph(inp: slam.SlamInputs, like: LabMap,
+                   params: Optional[PoseGraphParams] = None,
+                   grid_params: Optional[GridParams] = None) -> slam.SlamTrace:
+    """Run pose-graph SLAM over ``inp``; return its trace."""
+    p = params or PoseGraphParams()
+    p.check()
+    g = PoseGraph(inp.start, inp.lidar, like, p, grid_params)
+    cols = {c: [] for c in slam.COMMON_COLUMNS + COLUMNS}
+    opt = {'k': [], 'iterations': [], 'chi2_before': [], 'chi2_after': []}
+    snaps = set(slam.snapshot_updates(len(inp), p.snapshots))
+    snapshots, maps = [], []
+    for k in range(len(inp)):
+        u = g.update(inp.odom[k], inp.ranges[k])
+        e = u['est']
+        for name, v in zip(slam.COMMON_COLUMNS + COLUMNS,
+                           (inp.rows[k], inp.t[k], e[0], e[1], e[2],
+                            u['icp_ok'], u['loops'], u['optimised'])):
+            cols[name].append(v)
+        if u['opt'] is not None:
+            for name in ('k', 'iterations', 'chi2_before', 'chi2_after'):
+                opt[name].append(u['opt'][name])
         if k in snaps:
-            # after an optimisation every past pose moved: the map is
-            # rebuilt from the scans at their current estimates, lazily
-            if stale:
-                grid = _rebuild(like, grid_params, poses, inp, angles, k)
-                stale = False
             snapshots.append(k)
-            maps.append(grid.to_u8())
+            maps.append(g.grid().to_u8())
+    edges, poses = g.edges, g.poses
     arrays = {
         'edges.i': ('i32', [e.i for e in edges]),
         'edges.j': ('i32', [e.j for e in edges]),
         'edges.kind': ('i32', [EDGE_KINDS.index(e.kind) for e in edges]),
-        'loops.k': ('i32', [a for a, _ in loop_events]),
-        'loops.j': ('i32', [b for _, b in loop_events]),
+        'loops.k': ('i32', [a for a, _ in g.loop_events]),
+        'loops.j': ('i32', [b for _, b in g.loop_events]),
         'opt.k': ('i32', opt['k']),
         'opt.iterations': ('i32', opt['iterations']),
         'opt.chi2_before': ('f64', opt['chi2_before']),
@@ -727,6 +770,7 @@ def run_pose_graph(inp: slam.SlamInputs, like: LabMap,
     }
     for c, i in (('x', 0), ('y', 1), ('yaw', 2)):
         arrays[f'final.{c}'] = ('f64', [q[i] for q in poses])
+    grid = g.grid()
     hdr = slam.header('pose_graph', p.to_dict(), slam.grid_header(
         grid.width, grid.height, grid.resolution, grid.origin), inp)
     hdr['grid_params'] = grid.params.to_dict()

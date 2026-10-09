@@ -37,7 +37,7 @@ export interface Palette {
   covarianceAlpha: number;
   odometry: string;     // dead reckoning's pose
   mapFree: string;      // the BUILT map: log-odds ramp from free ...
-  mapOccupied: string;  // ... to occupied (unknown is transparent)
+  mapOccupied: string;  // ... to occupied (unknown: a veil of `unknown`)
   landmark: string;     // EKF-SLAM landmark means (on the IDEALISED sensor)
   landmarkAlpha: number;
   graphNode: string;    // pose-graph nodes

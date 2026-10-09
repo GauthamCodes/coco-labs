@@ -1,0 +1,125 @@
+{
+ "tool": "docs/v2/data/m2/m24/map_arena_scenario.py",
+ "evidence": "MODEL",
+ "scenario": {
+  "start": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "route": [
+   [
+    6.0,
+    0.0
+   ],
+   [
+    11.45,
+    2.15
+   ],
+   [
+    11.45,
+    7.75
+   ],
+   [
+    -1.45,
+    7.5
+   ],
+   [
+    -1.25,
+    0.5
+   ],
+   [
+    1.0,
+    0.0
+   ]
+  ],
+  "seed": 21,
+  "odom_alphas": [
+   0.02,
+   0.02,
+   0.02,
+   0.02
+  ],
+  "range_sigma": 0.02
+ },
+ "lab3_engine": {
+  "drive_status": "route_done",
+  "runs": {
+   "known": {
+    "ate_final_rmse_m": 0.0,
+    "f1": 0.693632,
+    "precision": 1.0,
+    "recall": 0.530962,
+    "updates": 192
+   },
+   "odometry": {
+    "ate_final_rmse_m": 1.795176,
+    "f1": 0.235984,
+    "precision": 0.396445,
+    "recall": 0.16799,
+    "updates": 192
+   },
+   "fastslam": {
+    "ate_final_rmse_m": 0.380338,
+    "f1": 0.427202,
+    "precision": 0.655172,
+    "recall": 0.316926,
+    "updates": 192
+   },
+   "pose_graph": {
+    "ate_final_rmse_m": 1.721547,
+    "f1": 0.217779,
+    "precision": 0.364438,
+    "recall": 0.155287,
+    "updates": 192
+   }
+  }
+ },
+ "arena_engine": {
+  "known": {
+   "ate_rmse_m": 0.0,
+   "f1": 0.7548438117833135,
+   "precision": 1.0,
+   "recall": 0.6062241981581454,
+   "updates": 189,
+   "ticks": 1429,
+   "waypoints_reached": 6,
+   "loop_closures": null,
+   "seconds": 16.6
+  },
+  "odometry": {
+   "ate_rmse_m": 0.7082789550244197,
+   "f1": 0.20844830367891315,
+   "precision": 0.31053864168618267,
+   "recall": 0.15687519847570658,
+   "updates": 189,
+   "ticks": 1429,
+   "waypoints_reached": 6,
+   "loop_closures": null,
+   "seconds": 16.8
+  },
+  "fastslam": {
+   "ate_rmse_m": 0.19021943384044562,
+   "f1": 0.3742297754927924,
+   "precision": 0.5265888456549935,
+   "recall": 0.29025087329310895,
+   "updates": 189,
+   "ticks": 1429,
+   "waypoints_reached": 6,
+   "loop_closures": null,
+   "seconds": 40.1
+  },
+  "pose_graph": {
+   "ate_rmse_m": 0.1186933694697725,
+   "f1": 0.6417976505792198,
+   "precision": 0.9057097957045573,
+   "recall": 0.49698316926008257,
+   "updates": 189,
+   "ticks": 1429,
+   "waypoints_reached": 6,
+   "loop_closures": 3,
+   "seconds": 33.7
+  }
+ },
+ "python": "3.12.3"
+}
