@@ -23,6 +23,21 @@ import { readRun } from '../schemas/mcap';
 import type { PlanInfo, SearchColumns, Tick, World } from './protocol';
 import type { ArenaSession } from './session';
 
+/**
+ * When attract mode starts fetching and playing its recording (M2.0). The
+ * recording competes with the live model's download for the link; which
+ * policy is the default is decided by measurement (docs/v2/M2_RESULTS.md).
+ * `?attract=` selects one for a measurement.
+ *
+ * - `eager`: at once (M1);
+ * - `low`: at once, but the fetch at low network priority;
+ * - `after_pyodide`: once the worker has Pyodide (its largest download);
+ * - `after_live`: once the live model is ready.
+ */
+export const ATTRACT_POLICIES = ['eager', 'low', 'after_pyodide', 'after_live'] as const;
+export type AttractPolicy = typeof ATTRACT_POLICIES[number];
+export const DEFAULT_ATTRACT_POLICY: AttractPolicy = 'eager';
+
 export interface Recording {
   world: World;
   occupancy: Uint8Array;

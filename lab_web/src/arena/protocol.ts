@@ -22,9 +22,17 @@ export interface BootRequest {
 }
 
 export interface StepRequest { type: 'step'; inputs: InputRow[] }
+/**
+ * Inputs sent while a step is in flight (M2.0). The worker handles them at
+ * once, not behind the step: if that step is still planning they join its
+ * tick (the search in flight is cancelled); otherwise they open the next
+ * tick. The worker stamps every input with the model's tick and reports it
+ * in `Tick.inputs`, which is the run's input log.
+ */
+export interface AmendRequest { type: 'amend'; inputs: InputRow[] }
 /** Two planners from the robot's cell to (x, y); the model is not changed (M1.8). */
 export interface CompareRequest { type: 'compare'; a: string; b: string; x: number; y: number }
-export type ToWorker = BootRequest | StepRequest | CompareRequest;
+export type ToWorker = BootRequest | StepRequest | AmendRequest | CompareRequest;
 
 export interface CompareSide { planner: string; status: string; summary: Record<string, number | string | null>; resolution: number }
 
@@ -49,6 +57,8 @@ export interface Tick {
   /** Ground truth when it differs from `pose` (a recorded stack run: pose = its belief). */
   truth?: [number, number, number];
   mode: string; blocked: boolean; arrived: boolean; hash: string; chain: string; plans: PlanInfo[];
+  /** The inputs this tick applied, stamped by the model (M2.0; absent in recordings made before). */
+  inputs?: InputRow[];
 }
 
 /** SearchEventBatch columns (coco.plan.search.events.v1), as typed arrays. */
@@ -61,7 +71,9 @@ export interface SearchColumns {
 export type FromWorker =
   | { type: 'mark'; name: string; at: number }
   | { type: 'world'; world: World; occupancy: Uint8Array; at: number }
-  | { type: 'plan_batch'; meta: { search_id: number; planner: string; tick: number; final: boolean; compare?: 'A' | 'B' };
+  | { type: 'plan_batch'; meta: { search_id: number; planner: string; tick: number; final: boolean; compare?: 'A' | 'B';
+    /** M2.0: the search was cancelled by an input that joined its tick; drop what was shown of it. */
+    cancelled?: boolean };
       columns: SearchColumns; at: number }
   | { type: 'tick'; tick: Tick; ranges: Float32Array; stepMs: number; at: number }
   | { type: 'compare_done'; result: { A: CompareSide; B: CompareSide } }

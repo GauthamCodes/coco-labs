@@ -83,6 +83,16 @@ export class ArenaClient {
     return rows;
   }
 
+  /**
+   * Inputs made while a step is in flight (M2.0): they join that step's
+   * tick if it is still planning (cancelling its search), otherwise the next.
+   * The model stamps them; `Tick.inputs` reports where they landed.
+   */
+  amend(inputs: Omit<InputRow, 'tick'>[]): void {
+    const rows = inputs.map((i) => ({ ...i, tick: this.tick }) as InputRow);
+    this.worker.postMessage({ type: 'amend', inputs: rows });
+  }
+
   /** Two planners on the same start, goal and seed; the model is unchanged. */
   compare(a: string, b: string, x: number, y: number): void {
     this.worker.postMessage({ type: 'compare', a, b, x, y });

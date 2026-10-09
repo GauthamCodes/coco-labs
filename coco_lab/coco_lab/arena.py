@@ -35,6 +35,16 @@ labelled); a step whose end would bring the robot's centre within
   (:meth:`Arena.state_bytes`, ``docs/v2/ARENA_MODEL.md``).
 
 The same spec, seed and input log give the same hashes, tick for tick.
+
+**Planning happens once per tick, after all of the tick's inputs** (M2.0):
+a goal, a planner change or both in one tick give one search, on the state
+the inputs leave. A step can run in slices -- :meth:`Arena.begin_step`,
+:meth:`Arena.advance`, :meth:`Arena.finish_step` -- and an input that
+arrives while a slice-run step is still planning joins that tick through
+:meth:`Arena.amend`, which cancels the search in flight and starts the one
+the amended inputs call for. The result depends only on the tick's final
+input list, so :meth:`Arena.step` (all in one go) gives the same state and
+hashes; M1's hash layout is unchanged (a search's id is not state).
 """
 
 from dataclasses import dataclass, field
@@ -46,7 +56,7 @@ from typing import Dict, List, Optional, Sequence, Tuple
 from .events import SearchEventColumns
 from .maps import OCCUPIED
 from .rng import Rng
-from .search import collect, search_events, SearchResult
+from .search import Collector, search_events, SearchResult
 from .sketch import (_inflated_grid_map, _nearest_free, drive_command,
                      LidarSpec, SketchMap, step_pose, wrap)
 from .worldspec import arena_map, normalize, to_map_frame
@@ -181,6 +191,11 @@ class Arena:
         self.plan_batch_size = plan_batch_size
         self.plans_made = 0
         self.tick = 0
+        self._in_step = False
+        self._pending: List[InputEvent] = []
+        self._collector: Optional[Collector] = None
+        self._stream = None
+        self._want_plan = False
         self._chain = hashlib.sha256(STATE_LAYOUT).digest()
         self._reset_robot()
         self.ranges = self._scan()
@@ -204,12 +219,12 @@ class Arena:
 
     # -- inputs ----------------------------------------------------------------
 
-    def _apply(self, e: InputEvent, plans: List[Plan]):
+    def _apply(self, e: InputEvent):
         lim = self.limits
         if e.kind == 'goal':
             self.goal = (e.x, e.y)
             self.teleop = (0.0, 0.0)
-            plans.append(self._plan())
+            self._want_plan = True
         elif e.kind == 'teleop':
             self.goal, self.waypoints, self.wp_index = None, [], 0
             self.mode = 'teleop'
@@ -227,12 +242,12 @@ class Arena:
                 raise ArenaError(f'unknown planner {e.choice!r}')
             self.planner = e.choice
             if self.goal is not None:      # a running goal is re-planned
-                plans.append(self._plan())
+                self._want_plan = True
         elif e.kind == 'reset':
             self._reset_robot()
 
-    def _plan(self) -> Plan:
-        """Plan from the current pose to the goal with the chosen planner."""
+    def _plan_begin(self):
+        """Start the search from the current pose to the goal (not run yet)."""
         g = self.grid
         s_cell = self.plan_map.cell_at(self.pose[0], self.pose[1])
         t_cell = self.plan_map.cell_at(*self.goal)
@@ -242,11 +257,11 @@ class Arena:
         t = _nearest_free(g, t_cell)
         if s is None or t is None:
             raise ArenaError(f'no free cell near the robot or {self.goal}')
-        goal = self.goal
         events = search_events(g, s, t, **PLANNERS[self.planner])
-        if self.on_plan_batch is None:
-            res = collect(events)
-        else:
+        self._plan_ctx = (self.planner, self.goal, self.tick)
+        self._stream = None
+        sink = None
+        if self.on_plan_batch is not None:
             # stream the search to the renderer while it runs (M1.5);
             # the search, and so the state, is the same either way
             cols = SearchEventColumns(search_id=self.plans_made,
@@ -254,13 +269,36 @@ class Arena:
             meta = {'search_id': self.plans_made, 'planner': self.planner,
                     'tick': self.tick}
             size, hook = self.plan_batch_size, self.on_plan_batch
+            self._stream = (cols, meta)
 
-            def sink(row):
+            def _sink(row):
                 cols.add(row)
                 if len(cols) >= size:
                     hook(cols.drain(), dict(meta, final=False))
-            res = collect(events, sink)
-            hook(cols.drain(), dict(meta, final=True))
+            sink = _sink
+        self._collector = Collector(events, sink)
+
+    def _plan_cancel(self):
+        """Drop the search in flight; it keeps its id, so ids never repeat."""
+        if self._collector is None:
+            return
+        if self._stream is not None:
+            cols, meta = self._stream
+            self.on_plan_batch(cols.drain(),
+                               dict(meta, final=True, cancelled=True))
+        self._collector = self._stream = None
+        self.plans_made += 1
+
+    def _plan_finish(self) -> Plan:
+        """Run the search to its end; turn its path into waypoints."""
+        c = self._collector
+        c.advance()
+        res = c.result
+        if self._stream is not None:
+            cols, meta = self._stream
+            self.on_plan_batch(cols.drain(), dict(meta, final=True))
+        self._collector = self._stream = None
+        planner, goal, tick = self._plan_ctx
         self.plans_made += 1
         waypoints = []
         if res.path:
@@ -278,7 +316,7 @@ class Arena:
         self.mode = 'goal' if waypoints else 'idle'
         if not waypoints:
             self.goal = None
-        return Plan(self.planner, goal, res, list(waypoints), self.tick)
+        return Plan(planner, goal, res, list(waypoints), tick)
 
     # -- the step --------------------------------------------------------------
 
@@ -309,16 +347,89 @@ class Arena:
             out.append(z if lo <= z <= hi else math.inf)
         return out
 
-    def step(self, events: Sequence[InputEvent] = ()) -> Tick:
-        """Apply this tick's inputs, advance one ``dt``, scan, hash."""
-        plans: List[Plan] = []
-        applied = []
+    # -- a step, whole or in slices -------------------------------------------
+
+    def _snapshot(self):
+        return (self.pose, self.v, self.w, self.mode, self.goal,
+                list(self.waypoints), self.wp_index, self.teleop,
+                self.planner)
+
+    def _restore(self, snap):
+        (self.pose, self.v, self.w, self.mode, self.goal, waypoints,
+         self.wp_index, self.teleop, self.planner) = snap
+        self.waypoints = list(waypoints)
+
+    def _check_ticks(self, events: Sequence[InputEvent]):
         for e in events:
             if e.tick != self.tick:
                 raise ArenaError(f'input for tick {e.tick} given at tick '
                                  f'{self.tick}')
-            self._apply(e, plans)
-            applied.append(e)
+
+    def _prepare(self):
+        """Apply the pending inputs to the snapshot; start the one search."""
+        self._want_plan = False
+        for e in self._pending:
+            self._apply(e)
+        if self._want_plan and self.goal is not None:
+            self._plan_begin()
+
+    def begin_step(self, events: Sequence[InputEvent] = ()):
+        """Apply this tick's inputs and start its search, if it needs one."""
+        if self._in_step:
+            raise ArenaError('a step is already in progress')
+        self._check_ticks(events)
+        self._snap = self._snapshot()
+        self._pending = list(events)
+        self._in_step = True
+        try:
+            self._prepare()
+        except Exception:
+            self._restore(self._snap)
+            self._pending = []
+            self._in_step = False
+            raise
+
+    def advance(self, n: Optional[int] = None) -> bool:
+        """Take up to ``n`` events of the tick's search; return whether done."""
+        if not self._in_step:
+            raise ArenaError('advance outside a step')
+        return self._collector is None or self._collector.advance(n)
+
+    def amend(self, events: Sequence[InputEvent]):
+        """
+        Add inputs to the tick in progress (they arrived while it planned).
+
+        The search in flight is cancelled and the tick is prepared again
+        from its snapshot with every input so far, in order -- exactly what
+        :meth:`step` would do with the whole list. An amendment the Arena
+        cannot honour is refused and the tick goes on with what it had.
+        """
+        if not self._in_step:
+            raise ArenaError('amend outside a step')
+        self._check_ticks(events)
+        self._plan_cancel()
+        self._restore(self._snap)
+        before = len(self._pending)
+        self._pending.extend(events)
+        try:
+            self._prepare()
+        except Exception:
+            self._plan_cancel()
+            self._restore(self._snap)
+            del self._pending[before:]
+            self._prepare()
+            raise
+
+    def finish_step(self) -> Tick:
+        """Finish the tick's search, advance one ``dt``, scan, hash."""
+        if not self._in_step:
+            raise ArenaError('finish_step outside a step')
+        plans: List[Plan] = []
+        if self._collector is not None:
+            plans.append(self._plan_finish())
+        applied = self._pending
+        self._pending = []
+        self._in_step = False
         tv, tw, arrived = self._command()
         lim, dt = self.limits, self.dt
         dv = lim['linear_accel'] * dt
@@ -339,6 +450,11 @@ class Arena:
         return Tick(self.tick, self.t_world, self.pose, self.v, self.w,
                     self.mode, list(self.ranges), plans, applied, blocked,
                     arrived, h)
+
+    def step(self, events: Sequence[InputEvent] = ()) -> Tick:
+        """Apply this tick's inputs, plan once, advance ``dt``, scan, hash."""
+        self.begin_step(events)
+        return self.finish_step()
 
     # -- the per-tick state hash -------------------------------------------------
 

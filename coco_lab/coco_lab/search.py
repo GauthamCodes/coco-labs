@@ -160,19 +160,54 @@ def collect(events, sink: Optional[Callable[[EventRow], None]] = None
     ``sink``, if given, sees every row as it is made (the Arena hands rows
     to the renderer in batches while the search runs).
     """
-    tb = TraceBuilder()
-    add = tb.add
-    try:
-        while True:
-            e = next(events)
-            add(e[0], e[1:4], e[4], e[5], e[6], e[7:10])
-            if sink is not None:
-                sink(e)
-    except StopIteration as stop:
-        out: SearchOutcome = stop.value
-    trace = Trace(out.header, tb.columns, out.summary)
-    trace.validate()
-    return SearchResult(out.status, out.path, out.cost, trace)
+    c = Collector(events, sink)
+    c.advance()
+    return c.result
+
+
+class Collector:
+    """
+    :func:`collect`, a slice at a time (M2.0: cancellable planning).
+
+    :meth:`advance` takes at most ``n`` events from the generator and
+    returns whether the search has finished; :attr:`result` is then its
+    :class:`SearchResult`, exactly what :func:`collect` returns (which is
+    this class run in one slice). Dropping a Collector cancels the search:
+    nothing outside it has seen a result.
+    """
+
+    def __init__(self, events, sink: Optional[Callable[[EventRow], None]]
+                 = None):
+        """Wrap a :func:`search_events` generator."""
+        self._events = events
+        self._sink = sink
+        self._tb = TraceBuilder()
+        #: events taken so far
+        self.taken = 0
+        self.result: Optional[SearchResult] = None
+
+    def advance(self, n: Optional[int] = None) -> bool:
+        """Take up to ``n`` events (all, if None); return whether done."""
+        if self.result is not None:
+            return True
+        add, sink, events = self._tb.add, self._sink, self._events
+        k = 0
+        try:
+            while n is None or k < n:
+                e = next(events)
+                add(e[0], e[1:4], e[4], e[5], e[6], e[7:10])
+                if sink is not None:
+                    sink(e)
+                k += 1
+        except StopIteration as stop:
+            self.taken += k
+            out: SearchOutcome = stop.value
+            trace = Trace(out.header, self._tb.columns, out.summary)
+            trace.validate()
+            self.result = SearchResult(out.status, out.path, out.cost, trace)
+            return True
+        self.taken += k
+        return False
 
 
 def search_events(graph: SearchGraph, start: State, goal: State,

@@ -86,15 +86,14 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048):
     return json.dumps(out)
 
 
-def step(inputs_json):
-    """Step one tick; return (tick JSON, ranges as float32)."""
-    events = [InputEvent(**e) for e in json.loads(inputs_json)]
-    t = _arena.step(events)
-    tick = {
+def _tick_json(t, inputs):
+    return json.dumps({
         'tick': t.tick, 't_world': t.t_world, 'pose': list(t.pose),
         'v': t.v, 'w': t.w, 'mode': t.mode, 'blocked': t.blocked,
         'arrived': t.arrived, 'hash': t.state_hash,
         'chain': _arena.chain,
+        # the inputs this tick applied: the run's input log (share links)
+        'inputs': inputs,
         'plans': [{
             'search_id': k,
             'planner': p.planner, 'goal': list(p.goal), 'tick': p.tick,
@@ -102,5 +101,51 @@ def step(inputs_json):
             'summary': p.result.trace.summary,
             'waypoints': [list(w) for w in p.waypoints],
         } for k, p in enumerate(t.plans, _arena.plans_made - len(t.plans))],
-    }
-    return json.dumps(tick), array('f', t.ranges)
+    })
+
+
+def step(inputs_json):
+    """Step one tick; return (tick JSON, ranges as float32)."""
+    rows = json.loads(inputs_json)
+    t = _arena.step([InputEvent(**e) for e in rows])
+    return _tick_json(t, rows), array('f', t.ranges)
+
+
+# -- a step in slices (M2.0): the worker yields between them, so an input
+# -- that arrives while the tick plans can join it (amend) ----------------
+
+_pending_rows = []
+
+
+def _stamp(inputs_json):
+    """Stamp every row with the model's tick: the worker owns the input log."""
+    rows = json.loads(inputs_json)
+    for r in rows:
+        r['tick'] = _arena.tick
+    return rows
+
+
+def begin(inputs_json):
+    """Apply this tick's inputs and start its search; nothing runs yet."""
+    global _pending_rows
+    rows = _stamp(inputs_json)
+    _arena.begin_step([InputEvent(**e) for e in rows])
+    _pending_rows = rows
+
+
+def advance(n):
+    """Take up to n events of the tick's search; return whether it is done."""
+    return _arena.advance(int(n))
+
+
+def amend(inputs_json):
+    """Inputs that arrived while the tick planned: they join this tick."""
+    rows = _stamp(inputs_json)
+    _arena.amend([InputEvent(**e) for e in rows])
+    _pending_rows.extend(rows)
+
+
+def finish():
+    """Finish the tick; return (tick JSON, ranges as float32)."""
+    t = _arena.finish_step()
+    return _tick_json(t, _pending_rows), array('f', t.ranges)

@@ -57,7 +57,13 @@ export class ArenaSession {
     if (drop >= 0) this.history[drop].ranges = null;
   }
 
-  onPlanBatch(meta: { search_id: number; planner: string; tick: number; final: boolean }, cols: SearchColumns) {
+  onPlanBatch(meta: { search_id: number; planner: string; tick: number; final: boolean; cancelled?: boolean }, cols: SearchColumns) {
+    if (meta.cancelled) {
+      // M2.0: an input joined this search's tick and the model dropped it; so does the track
+      this.searches.delete(meta.search_id);
+      this.searchesAt = this.searchesAt.filter(([, sid]) => sid !== meta.search_id);
+      return;
+    }
     let s = this.searches.get(meta.search_id);
     if (!s) {
       s = new PlanStore(this.width, this.height);

@@ -18,7 +18,7 @@
  */
 
 import glueSource from './arena_glue.py?raw';
-import { wallMs, type FromWorker, type SearchColumns, type ToWorker } from './protocol';
+import { wallMs, type FromWorker, type InputRow, type SearchColumns, type ToWorker } from './protocol';
 
 interface PyBuf { data: ArrayBufferView & ArrayLike<number | bigint>; release(): void }
 interface PyProxy {
@@ -32,8 +32,16 @@ interface Pyodide {
   unpackArchive(buf: Uint8Array, format: string, opts: { extractDir: string }): void;
   runPython(code: string): unknown;
   pyimport(name: string): { init: (...a: unknown[]) => PyProxy; step: (s: string) => PyProxy;
-    compare: (...a: unknown[]) => string };
+    compare: (...a: unknown[]) => string;
+    begin: (s: string) => void; advance: (n: number) => boolean; amend: (s: string) => void; finish: () => PyProxy };
 }
+
+/**
+ * Events of the tick's search taken per slice (M2.0). Between slices the
+ * worker yields to its event loop, so an `amend` posted by the page is seen
+ * within about one slice; the plan itself does not depend on the slicing.
+ */
+const SLICE_EVENTS = 4096;
 
 const post = (msg: FromWorker, transfer: Transferable[] = []) =>
   (self as unknown as { postMessage(m: unknown, t: Transferable[]): void }).postMessage(msg, transfer);
@@ -102,10 +110,36 @@ async function boot(req: Extract<ToWorker, { type: 'boot' }>) {
   mark('arena_ready');
 }
 
-function step(req: Extract<ToWorker, { type: 'step' }>) {
+// A yield to the event loop with no timer clamp (setTimeout(0) waits >= 4 ms once nested).
+const yieldChannel = new MessageChannel();
+const yielded: (() => void)[] = [];
+yieldChannel.port1.onmessage = () => yielded.shift()?.();
+const yieldNow = () => new Promise<void>((resolve) => { yielded.push(resolve); yieldChannel.port2.postMessage(0); });
+
+/** Inputs that arrived by `amend`: they join the tick in flight, or open the next one. */
+const amends: InputRow[] = [];
+
+async function step(req: Extract<ToWorker, { type: 'step' }>) {
   if (!glue) throw new Error('step before boot');
   const t0 = performance.now();
-  const out = glue.step(JSON.stringify(req.inputs));
+  glue.begin(JSON.stringify([...amends.splice(0), ...req.inputs]));
+  for (;;) {
+    if (!glue.advance(SLICE_EVENTS)) { await yieldNow(); }
+    else {
+      // a last look: an input that arrived during the final slice still joins this tick
+      await yieldNow();
+      if (amends.length === 0) break;
+    }
+    if (amends.length) {
+      try {
+        glue.amend(JSON.stringify(amends.splice(0)));
+      } catch (e) {
+        // refused (the model said why); the tick goes on with what it had
+        post({ type: 'error', stage: 'amend', message: e instanceof Error ? e.message : String(e) });
+      }
+    }
+  }
+  const out = glue.finish();
   const tick = JSON.parse(out.get(0) as unknown as string);
   const r = out.get(1);
   const b = r.getBuffer('f32');
@@ -125,11 +159,13 @@ function compare(req: Extract<ToWorker, { type: 'compare' }>) {
 let queue: Promise<void> = Promise.resolve();
 self.onmessage = (ev: MessageEvent<ToWorker>) => {
   const req = ev.data;
+  // not queued behind a step: the step in flight picks these up between slices
+  if (req.type === 'amend') { amends.push(...req.inputs); return; }
   queue = queue.then(async () => {
     try {
       if (req.type === 'boot') await boot(req);
       else if (req.type === 'compare') compare(req);
-      else step(req);
+      else await step(req);
     } catch (e) {
       post({ type: 'error', stage: req.type, message: e instanceof Error ? e.message : String(e) });
     }

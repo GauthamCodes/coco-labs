@@ -16,7 +16,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { AttractPlayer, parseRecording, type Recording } from './attract';
+import { ATTRACT_POLICIES, AttractPlayer, DEFAULT_ATTRACT_POLICY, parseRecording, type AttractPolicy, type Recording } from './attract';
 import { ArenaClient, type PyodideSource } from './client';
 import { Compare, type CompareState } from './Compare';
 import { Joystick } from './Joystick';
@@ -55,6 +55,8 @@ export function ArenaApp() {
   const source: PyodideSource = params.get('pyodide') === 'cdn' ? 'cdn' : 'self';
   const runParam = params.get('run');
   const replayParam = params.get('replay');
+  const attractPolicy: AttractPolicy = ATTRACT_POLICIES.includes(params.get('attract') as AttractPolicy)
+    ? params.get('attract') as AttractPolicy : DEFAULT_ATTRACT_POLICY;
   const recId = replayParam && /^[a-z0-9_]{1,64}$/.test(replayParam) ? replayParam : null;
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const [world, setWorld] = useState<World | null>(null);
@@ -155,7 +157,7 @@ export function ArenaApp() {
         queue.current.push(...replayRun.inputs.filter((x) => x.tick === c.tick));
       }
       inFlight = true;
-      log.current.push(...c.step(queue.current.splice(0)));
+      c.step(queue.current.splice(0)); // the log is what the model reports it applied (onTick)
     };
 
     const outlineP = fetch(`${import.meta.env.BASE_URL}generated/arena/robot_outline.json`, { credentials: 'omit' })
@@ -182,9 +184,13 @@ export function ArenaApp() {
         })
         .catch((e) => setError(`recorded run: ${(e as Error).message}`));
     }
-    // attract: the recording, at once (not in a replay)
+    // attract: the recording (not in a replay), started as the policy says (M2.0, measured)
     if (!runParam && !recId) {
-      void fetch(`${import.meta.env.BASE_URL}generated/arena/attract.mcap`, { credentials: 'omit' })
+      const startAttract = attractPolicy === 'after_live' ? perf.when('arena_ready')
+        : attractPolicy === 'after_pyodide' ? perf.when('pyodide_ready') : Promise.resolve(0);
+      void startAttract
+        .then(() => fetch(`${import.meta.env.BASE_URL}generated/arena/attract.mcap`,
+          { credentials: 'omit', priority: attractPolicy === 'low' ? 'low' : 'auto' }))
         .then((x) => x.arrayBuffer()).then((b) => parseRecording(new Uint8Array(b)))
         .then(async (rec) => {
           await outlineP;
@@ -217,6 +223,8 @@ export function ArenaApp() {
           owed = Math.min(4, owed + live.current.frame(dt));
           if (queue.current.length) owed = Math.max(owed, 1); // an input is applied at once
           if (owed > 0 && !inFlight) { owed -= 1; stepLive(); }
+          // M2.0: an input made while a step is planning joins that step (its search is cancelled), not the next one
+          else if (inFlight && queue.current.length && modeRef.current !== 'replay') client.current?.amend(queue.current.splice(0));
         }
         const s = active();
         if (!s) return;
@@ -273,6 +281,7 @@ export function ArenaApp() {
       onCompareDone: (result) => setCompare((c) => (c ? { ...c, result } : c)),
       onTick: (t, ranges) => {
         inFlight = false;
+        if (t.inputs) log.current.push(...t.inputs);
         lastTick.current = t;
         live.current?.onTick(t, ranges);
         if (window.__cocoArena) window.__cocoArena.last = t;
@@ -288,7 +297,8 @@ export function ArenaApp() {
             : `DIFFERS: the hash chain after tick ${t.tick} is not the link's` });
         }
       },
-      onError: (stage, message) => { inFlight = false; setError(`${stage}: ${message}`); },
+      // a refused amendment leaves its step running; any other failure ends the step
+      onError: (stage, message) => { if (stage !== 'amend') inFlight = false; setError(`${stage}: ${message}`); },
     }, { pyodide: source, seed: replayRun?.seed ?? Number(params.get('seed') ?? 1) });
 
     window.__cocoArena = {
