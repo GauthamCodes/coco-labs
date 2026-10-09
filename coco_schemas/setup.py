@@ -44,6 +44,10 @@ setup(
         ('share/' + package_name + '/compat', ['compat/v1.binpb']),
     ] + _proto_files(),
     install_requires=['protobuf'],
+    # colcon runs pytest only when the package declares it; without this it
+    # fell back to unittest, found 0 tests and exited 5, so CI's
+    # build-and-test never ran this suite (M1 review, 2026-10-09).
+    tests_require=['pytest'],
     python_requires='>=3.10',
     zip_safe=True,
     maintainer='gautham',
