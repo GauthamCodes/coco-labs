@@ -36,7 +36,15 @@ import type { ArenaSession } from './session';
  */
 export const ATTRACT_POLICIES = ['eager', 'low', 'after_pyodide', 'after_live'] as const;
 export type AttractPolicy = typeof ATTRACT_POLICIES[number];
-export const DEFAULT_ATTRACT_POLICY: AttractPolicy = 'eager';
+/**
+ * `low`, by measurement (M2.0, balanced on AC, n = 10, docs/v2/data/m2/m20/):
+ * the same first visible computation as `eager` (619 / 3,142 ms unthrottled /
+ * emulated 4G) with the live model ready sooner on 4G (7,895 vs 8,130 ms).
+ * `after_live` readied the live model in 7,486 ms but moved the first visible
+ * computation to the live model's own, and README 5.5 has attract mode play
+ * WHILE Pyodide loads.
+ */
+export const DEFAULT_ATTRACT_POLICY: AttractPolicy = 'low';
 
 export interface Recording {
   world: World;
