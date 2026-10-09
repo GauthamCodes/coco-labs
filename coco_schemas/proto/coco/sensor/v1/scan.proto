@@ -1,0 +1,24 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// 2D LiDAR scans. One row per scan; the ranges of every scan in the batch
+// are concatenated in `ranges`, scan k owning `count[k]` values in order.
+// Channel: coco.sensor.scan.lidar.v1 (ScanBatch).
+
+syntax = "proto3";
+
+package coco.sensor.v1;
+
+message ScanBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated double angle_min = 4;        // rad, robot frame
+  repeated double angle_increment = 5;  // rad
+  repeated float range_min = 6;         // m
+  repeated float range_max = 7;         // m
+  repeated uint32 count = 8;            // beams in this scan
+  // Every beam of every scan, scan by scan. A beam with no return is +inf
+  // (the sensor saw nothing within range_max), never range_max itself.
+  repeated float ranges = 9;
+}

@@ -1,0 +1,65 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// The envelope: one Manifest per recorded run (README section 5.2).
+// In an MCAP file it is the first record, on channel coco.envelope.manifest.v1.
+
+syntax = "proto3";
+
+package coco.envelope.v1;
+
+// Where a run came from (README section 3, "Evidence classes").
+enum EvidenceClass {
+  EVIDENCE_CLASS_UNSPECIFIED = 0;
+  EVIDENCE_CLASS_MODEL = 1;       // coco_lab, the Arena model, the browser
+  EVIDENCE_CLASS_STACK = 2;       // the full ROS 2 stack in Gazebo, recorded
+  EVIDENCE_CLASS_REMOTE = 3;      // over the public internet, robot simulated
+  EVIDENCE_CLASS_HARDWARE = 4;    // a physical robot; none exist
+  EVIDENCE_CLASS_UNRESOLVED = 5;  // reproduced but unexplained, or untested
+  EVIDENCE_CLASS_CONCEPT = 6;     // discussed, not built
+}
+
+// Which simulation tier produced the events (README section 5.1).
+enum Tier {
+  TIER_UNSPECIFIED = 0;
+  TIER_ARENA = 1;  // Tier 1: the deterministic Arena model (Pyodide + coco_lab)
+  TIER_STACK = 2;  // Tier 2: ROS 2 + Gazebo
+  TIER_TRACE = 3;  // no world simulation: a bare algorithm trace (Lab 1)
+}
+
+// One engine or library that took part, at an exact version.
+message Engine {
+  string name = 1;     // e.g. "coco_lab", "pyodide", "python"
+  string version = 2;  // a version string or a git SHA
+}
+
+// One channel present in the file.
+message ChannelInfo {
+  string name = 1;     // coco.<family>.<name>.v<major>, e.g. coco.plan.search.events.v1
+  string message = 2;  // the protobuf message, e.g. coco.plan.v1.SearchEventBatch
+}
+
+message Provenance {
+  string created_utc = 1;  // ISO 8601, UTC
+  string tool = 2;         // what wrote the file
+  string git_sha = 3;      // the repository commit that produced it
+  bool git_dirty = 4;
+  string source = 5;       // e.g. the v1 bundle or recording it was converted from
+  string note = 6;
+}
+
+message Manifest {
+  // sha256 hex of the canonical run identity: canonical spec bytes, seed and
+  // engine versions (docs/v2/SCHEMAS.md, "run_id"). Same inputs, same id.
+  string run_id = 1;
+  string spec_format = 2;     // e.g. "coco.world_spec.v1+json"
+  bytes spec = 3;             // the canonical spec bytes the run_id hashes
+  string spec_sha256 = 4;
+  uint64 seed = 5;
+  Tier tier = 6;
+  EvidenceClass evidence_class = 7;
+  repeated Engine engines = 8;  // library and engine versions/SHAs
+  repeated ChannelInfo channels = 9;
+  Provenance provenance = 10;
+  string schema_package_version = 11;  // coco_schemas' version
+}

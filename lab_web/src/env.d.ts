@@ -7,3 +7,5 @@
 declare const __BUILD_COMMIT__: string;
 /** The pinned Pyodide version, from site.config.ts. */
 declare const __PYODIDE_VERSION__: string;
+/** What the bare URL opens: `LANDING`, else site.config.ts `DEFAULT_LANDING`. */
+declare const __LANDING__: 'arena' | 'v1';

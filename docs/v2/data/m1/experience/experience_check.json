@@ -1,0 +1,76 @@
+{
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "steps": {
+  "attract_plays": {
+   "pass": true,
+   "panel": {
+    "recording": "501 ms",
+    "computation": "731 ms"
+   },
+   "attract_ready_ms": 501,
+   "first_computation_ms": 731,
+   "arena_ready_yet": false
+  },
+  "click_takes_over": {
+   "pass": true,
+   "clicked": [
+    640,
+    273
+   ]
+  },
+  "goal_arrives_with_totals": {
+   "pass": true,
+   "totals": "38,496 expansions · path cost 177.74 · path length 8.89 m",
+   "heatmap": true,
+   "end": [
+    5.904580462780059,
+    4.001230953103582,
+    -0.012896468984148868
+   ]
+  },
+  "keyboard_teleop": {
+   "pass": true,
+   "moved_m": 0.39
+  },
+  "joystick_teleop": {
+   "pass": true,
+   "moved_m": 0.5165204198689507,
+   "turned_rad": -0.9080000000000008
+  },
+  "compare_two_planners": {
+   "pass": true,
+   "A": "astar · found · 3,904 expansions · path cost 175.18 · length 8.76 m",
+   "B": "bfs · found · 37,324 expansions · path cost 175.18 · length 8.76 m"
+  },
+  "share_link_made": {
+   "pass": true,
+   "url_chars": 490,
+   "tick": 404,
+   "chain": "5a8ccdad80141ecdd2150777633388e6dbcf5a73e719b69c7bad1f902e87a712",
+   "inputs": 10
+  },
+  "share_link_reproduces": {
+   "pass": true,
+   "verdict": "Shared run: reproduced exactly: the hash chain after tick 404 matches the link",
+   "after": {
+    "tick": 404,
+    "chain": "5a8ccdad80141ecdd2150777633388e6dbcf5a73e719b69c7bad1f902e87a712"
+   }
+  },
+  "phone_tap_goal": {
+   "pass": true,
+   "mode": "live",
+   "goal": {
+    "kind": "goal",
+    "x": 6,
+    "y": 3.999999975415485,
+    "tick": 0
+   },
+   "width": 412,
+   "vw": 412
+  }
+ },
+ "errors": [],
+ "laptop_ms": 95283,
+ "pass": true
+}

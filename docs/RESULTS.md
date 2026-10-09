@@ -8761,3 +8761,135 @@ in this file ran on hardware (README §2, corrections 1 and 3). The result
 itself stands as written: all 16 recorded Gazebo searches rebuild from
 their looks alone through `replay_search`, byte for byte.
 
+
+## COCO Lab v2 · M1.3 — the Arena model's LiDAR against Gazebo (measured 2026-10-08)
+
+Append-only. Evidence class **MODEL vs STACK**. Tool:
+`docs/v2/data/m1/lidar/arena_lidar_fidelity.py`; output:
+`docs/v2/data/m1/lidar/arena_lidar_fidelity.json`; inputs: the Lab 2
+Gazebo recordings `~/coco_lab_runs/lab2/fidelity_1` and `fidelity_s1`
+(the full ROS 2 stack, simulated), the same as Lab 2's figure.
+
+- **What changed since Lab 2:** the model's world is no longer the saved
+  Nav2 map but the Arena world GENERATED from `worlds/coco_arena_v1.yaml`
+  (`coco_lab.worldspec.arena_map`), and the LiDAR is the one the spec
+  declares, cast by `coco_lab.arena.Arena`.
+- **Result (measured):** 237 scans used of 240 recorded (3 excluded, tilt
+  over 2°), 113,760 beams: 111,804 both returned, 12 Gazebo only, 123
+  model only, 1,821 neither. **86.73 % of beams within 5 cm**
+  (0.8673124396264892), 74.82 % within 1 cm, 95.48 % within 10 cm —
+  **identical** to Lab 2's Sketch figures (`docs/data/lab2/fidelity/
+  fidelity.json`), to the last digit.
+- **Why identical (measured):** the Arena's ranges equal Lab 2's Sketch
+  ranges on every one of the 113,760 beams (0 differ), because the
+  spec-generated world equals `gazebo_models/maps/coco_navigation.pgm` cell
+  for cell (`coco_lab/test/test_worldspec.py`) and the ray-caster and LiDAR
+  are the same.
+- Conditions: CPython 3.12.3 (not Pyodide), development laptop
+  (i5-13420H); the figure is a property of the data, not of the machine.
+
+## COCO Lab v2 · M1.5 — the Arena's cold start and runtime (measured 2026-10-08)
+
+Append-only. Evidence class **MODEL**. Device: the development laptop
+(Intel i5-13420H), headless Chromium 156 (Playwright), Node 24.21.0,
+Pyodide 314.0.7. Reference: `docs/v2/COLDSTART.md`; evidence:
+`docs/v2/data/m1/coldstart/`.
+
+- **Arena ready** (Pyodide + coco_lab + the World built), ms since
+  navigation, n = 10 fresh browsers each, served gzip-encoded like GitHub
+  Pages (`lab_web/tools/perf/serve_dist.mjs`), self-hosted Pyodide with the
+  trimmed stdlib: **2,087** (2,055–2,182) unthrottled; **3,605**
+  (3,569–3,669) on an emulated 30 Mbit/s, 20 ms link; **7,301**
+  (7,185–7,411) on an emulated 9 Mbit/s, 170 ms "4G" link. 4,944,244 B
+  transferred. 0 console errors in all runs.
+- **Trimmed stdlib** (142 of the zip's files, 2,545,637 → 775,763 B): with
+  the full stdlib, self-hosted, the same links gave 4,026 (3,987–4,137) and
+  8,948 (8,892–9,046): trimming saved 421 ms and 1,647 ms. Same per-tick
+  hashes on both (`lab_web/test/arena_runtime.test.ts`).
+- **jsDelivr CDN instead** (v1's way, full stdlib, real internet plus the
+  same emulation): 76,046 (4,484–90,958) and 9,124 (8,734–80,346); 11 of 20
+  runs took over 20 s to make Pyodide ready. Stalls not attributed; not a
+  controlled comparison.
+- **Inside Pyodide-in-Node:** Arena world rasterisation 780.7 → 9.8 ms after
+  rasterising per rectangle (identical output, tested); Arena init 1,036.8 →
+  274.5 ms; one tick 7.5 ms (480-beam scan 6.8 ms); an A* plan across the
+  arena 86.4 ms (4,402 expansions, 13,422 events).
+- **Goal to first plan events reaching the page** (warm): median 89–104 ms
+  across configurations (68–133 ms), including up to one 100 ms tick wait.
+- Not measured here: the phone (Gautham, `docs/v2/PHONE_MEASURE.md`), and
+  first VISIBLE computation (needs the renderer; M1.10).
+
+## COCO Lab v2 · M1.6 — the Arena renderer's frame rate (measured 2026-10-08)
+
+Append-only. Evidence class **MODEL**. `lab_web/tools/perf/render_fps.mjs`,
+`docs/v2/data/m1/render/fps_stress_gpu.json` (+ screenshot): the Arena view
+with a live A* search, the LiDAR fan and `?stress` = 50,000 instanced points
++ 20,000 line segments over the grid texture, 1280 × 900, headless Chromium
+156 on the laptop's **NVIDIA RTX 4050 via ANGLE (OpenGL ES 3.2)**: rAF
+60–61 fps in every one of 10 seconds, p95 frame 16.9–17.0 ms (the display
+cap), 0 console errors. The same load on SwiftShader (software GL): 1–2
+fps. Not measured: a phone (Gautham, `?perf`).
+
+## COCO Lab v2 · M1.10 — the Glass-box Arena against its acceptance criteria (measured 2026-10-09)
+
+Append-only. Evidence class **MODEL** (the Arena model, `coco_lab`, the
+browser). Full table, conditions and files: `docs/v2/M1_RESULTS.md`; data
+under `docs/v2/data/m1/`. Laptop: Intel Core i5-13420H, RTX 4050 laptop
+GPU, Ubuntu 24.04, in its **power-saver** profile (recorded); M1.5's
+profile was not recorded, so M1.5 → M1.10 timings are not a controlled
+comparison.
+
+- **Determinism (met):** 100 recorded sessions (416 goals, 337 teleop
+  commands, 84 planner switches, 79 stops) × 150 ticks replayed in
+  Chromium 156, Firefox 157, WebKit 27.2 (the site's own worker) and
+  Pyodide 314.0.7 on Node 24: 15,000 ticks per engine, **0 differing**.
+- **Correctness (met):** all 5,000 golden searches (1,000 maps × 5
+  algorithms) reproduce Lab 1 exactly.
+- **Laptop performance (met):** 60–61 fps, p95 frame 17.3–17.9 ms, with
+  50,000 points + 20,000 segments over the grid (GPU via ANGLE).
+- **Responsiveness (met):** goal click → first frame drawing that goal's
+  search, warm, n = 25: median 40.4 ms, p95 70.8, max 71.5, 25/25 under
+  100 ms. Seek ≤ 0.6 ms on an 81,593-event search. Before an M1.10 fix the
+  same measurement read median 414 ms, p95 2,690 ms (a search was hidden
+  until it finished); the earlier "47–73 ms" figures timed first goals only.
+- **Laptop cold start, self-hosted, n = 10 each (unthrottled / emulated
+  Wi-Fi / emulated 4G):** first visible computation 754 / 1,629 / 3,299 ms
+  (medians); live model ready 5,023 / 6,603 / **10,782** ms. M0 baseline:
+  12,857 ms median cold first computation (CDN, real network, n = 5).
+  Under 10 s for the first visible computation on every link; the live
+  model on emulated 4G is over.
+- **Not an M1 criterion, reported:** a goal clicked right after a planner
+  change waits for the re-plan — median 293 ms, max 4,029 ms (parked, M2).
+  Attract mode costs the live model's load 155–575 ms (A/B, n = 10 each).
+- **Pending Gautham, not measured here:** phone fps, phone cold start on
+  mobile data, the 5-person usability test.
+- **WebAssembly (ADR 0002):** nothing ported; no agent-measured budget fails.
+
+## COCO Lab v2 · M1 review — M1 budgets re-measured in the balanced profile on AC (measured 2026-10-09)
+
+Append-only. Evidence class **MODEL**. Measured by the independent M1
+review session from a fresh clone (`~/review/coco-labs-m1`, branch
+`v2/m1-arena-core` at `4b4bef8`: M1's code plus the review's harness
+fixes, no behaviour change), production build served as GitHub Pages
+serves it. Laptop: Intel Core i5-13420H, RTX 4050 laptop GPU (ANGLE,
+OpenGL ES 3.2), Ubuntu 24.04, **balanced** profile **on AC** (the owner's
+standard since 2026-10-09; switched from power-saver for the run and
+restored after), governor `powersave` (intel_pstate), 1-min load 1.0–3.6
+(the owner's desktop browser was open). Every file records these
+conditions. Network profiles are M1's own, for comparability: "desktop" =
+unthrottled, "fast-4G" = M1's "Wi-Fi" profile (30 Mbit/s, 20 ms),
+"emulated 4G" = 9 Mbit/s, 170 ms. Files: `docs/v2/data/m1/balanced/`.
+The M1.10 power-saver numbers above stand as the worst-case row.
+
+| Budget | Balanced, on AC (n) | M1.10, power-saver |
+|---|---|---|
+| Laptop fps, 50k points + 20k segments + grid | 60–61 in all 100 one-second samples (10 runs × 10 s), p95 frame 16.8–17.6 ms | 60–61, p95 17.3–17.9 ms |
+| Goal click → first frame of that goal's search (warm) | median **42.9 ms**, p95 61.9, max 63.2, 25/25 under 100 ms (n = 25; first goal 45.9 ms) | median 40.4, p95 70.8, max 71.5, 25/25 |
+| Seek | max **0.7 ms**, median 0.2 ms (70 seeks in 10 runs, 81,593-event search) | ≤ 0.6 ms |
+| First visible computation, desktop / fast-4G / emulated 4G | **631** (415–651) / **1,366** (1,123–1,374) / **3,381** (2,985–3,403) ms (n = 10 each) | 754 / 1,629 / 3,299 |
+| Live model ready, desktop / fast-4G / emulated 4G | **2,683** (2,191–2,789) / **4,061** (3,781–4,243) / **8,191** (7,933–8,296) ms (n = 10 each) | 5,023 / 6,603 / 10,782 |
+| Goal clicked right after a planner change (not an M1 criterion) | median 138.6 ms, p95 1,436.5, max 1,708.4, 10/25 under 100 ms | median 293, p95 3,193, max 4,029, 7/25 |
+
+0 console errors in every run. In balanced mode the live model is ready
+under 10 s on emulated 4G (8.2 s); in power-saver it was not (10.8 s).
+The goal-after-planner-change queue remains (M2.0).

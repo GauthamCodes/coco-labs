@@ -1,0 +1,56 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// Shared value types. Every channel in coco_schemas builds on these.
+// docs/v2/SCHEMAS.md is the reference.
+
+syntax = "proto3";
+
+package coco.common.v1;
+
+// A typed scalar. Keeps int, float, bool and string apart, so a flat
+// parameter dict (a v1 trace header's "graph", say) round-trips exactly.
+message Scalar {
+  oneof value {
+    bool bool_value = 1;
+    sint64 int_value = 2;
+    double double_value = 3;
+    string string_value = 4;
+  }
+}
+
+// A flat, ordered parameter set: a dict whose values are scalars.
+// Order is kept (repeated, not map), so a re-encoded record is
+// byte-identical to the original.
+message Params {
+  repeated Param items = 1;
+}
+
+message Param {
+  string key = 1;
+  Scalar value = 2;
+}
+
+// A search state's location: grid row and column, plus the sub-state
+// (a heading index for heading lattices; 0 for plain grids).
+message Loc {
+  sint32 row = 1;
+  sint32 col = 2;
+  sint32 sub = 3;
+}
+
+// A 2D pose in the world frame: metres and radians.
+message Pose2D {
+  double x = 1;
+  double y = 2;
+  double theta = 3;
+}
+
+message Point2D {
+  double x = 1;
+  double y = 2;
+}
+
+message Polygon2D {
+  repeated Point2D points = 1;
+}

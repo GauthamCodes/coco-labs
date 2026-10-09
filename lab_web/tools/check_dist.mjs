@@ -40,6 +40,9 @@ const NOT_FETCHED = [
   // no session is live (site.config DOCKER_QUICKSTART_URL). Navigation, not
   // a request the page makes.
   /^https:\/\/github\.com\/GauthamCodes\/coco-labs\/blob\/main\/docs\/DOCKER\.md$/,
+  // M1.6: three.js 0.186.0 keeps a citation of a graphics paper (JCGT) in a
+  // shader-chunk string; it is text, never requested.
+  /^https:\/\/jcgt\.org\/published\/0007\/04\/01\/$/,
 ];
 
 const failures = [];
@@ -109,8 +112,16 @@ for (const f of files) {
 // the worker builds its URL from the pinned constant; make sure it is in the bundle
 const workerFile = files.find((f) => /pyodide\.worker-.*\.js$/.test(f));
 if (!workerFile) failures.push('no pyodide worker chunk in dist');
-const mainJs = files.filter((f) => /assets\/index-.*\.js$/.test(f)).map((f) => readFileSync(f, 'utf-8')).join('');
-if (!mainJs.includes(pyodide)) failures.push(`the page bundle does not contain the pinned ${pyodide}`);
+// M1.5: the page is code-split (main.tsx loads the v1 App or the Arena), so
+// the pinned URL lives in an app chunk, not necessarily in index-*.js.
+const pageJs = files.filter((f) => /assets\/[^/]+\.js$/.test(f) && !/\.worker-/.test(f))
+  .map((f) => readFileSync(f, 'utf-8')).join('');
+if (!pageJs.includes(pyodide)) failures.push(`the page bundle does not contain the pinned ${pyodide}`);
+// M1.5: the Arena runs on the SELF-HOSTED Pyodide copy, which must be here
+for (const f of ['pyodide.mjs', 'pyodide.asm.mjs', 'pyodide.asm.wasm', 'pyodide-lock.json', 'python_stdlib.zip']) {
+  if (!files.some((p) => p.endsWith(`generated/pyodide/${f}`))) failures.push(`self-hosted Pyodide lacks ${f}`);
+}
+if (!files.some((f) => /arena\.worker-.*\.js$/.test(f))) failures.push('no arena worker chunk in dist');
 if (/document\.cookie\s*=|localStorage\.setItem|sessionStorage\.setItem|indexedDB\.open/.test(
   files.filter((f) => f.endsWith('.js')).map((f) => readFileSync(f, 'utf-8')).join(''))) {
   failures.push('the build writes a cookie or browser storage');

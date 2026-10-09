@@ -1,0 +1,157 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-09T05:05:26.170Z",
+   "power_profile": "power-saver",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.93,
+    "5m": 1.56,
+    "15m": 1.77
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  },
+  "end": {
+   "at_utc": "2026-10-09T05:05:52.129Z",
+   "power_profile": "power-saver",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.54,
+    "5m": 1.5,
+    "15m": 1.75
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ },
+ "site": "http://127.0.0.1:4184/coco-labs/",
+ "cases": [
+  {
+   "query": "(bare)",
+   "want": "arena",
+   "got": "arena",
+   "v1_link_opens": "v1",
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?perf",
+   "want": "arena",
+   "got": "arena",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=arena",
+   "want": "arena",
+   "got": "arena",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=arena&replay=lab1c_astar",
+   "want": "arena",
+   "got": "arena",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=plan",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=live",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=localise",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=map",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=search",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=move",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?view=exhibit",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?bundle=astar_open",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?bundle=astar_open&v=1",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  },
+  {
+   "query": "?v=1",
+   "want": "v1",
+   "got": "v1",
+   "v1_link_opens": null,
+   "errors": [],
+   "pass": true
+  }
+ ],
+ "errors": [],
+ "pass": true
+}

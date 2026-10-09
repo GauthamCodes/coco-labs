@@ -10,6 +10,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const SITE = arg('site', 'http://127.0.0.1:4173/coco-labs/');
@@ -42,4 +44,4 @@ for (const [w, h] of [[1400, 1000], [390, 844]]) {
   await page.close();
 }
 await browser.close();
-writeFileSync(join(OUT, 'copycheck.json'), `${JSON.stringify(out, null, 1)}\n`);
+writeFileSync(join(OUT, 'copycheck.json'), `${JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...out }, null, 1)}\n`);

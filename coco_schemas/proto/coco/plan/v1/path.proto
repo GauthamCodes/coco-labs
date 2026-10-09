@@ -1,0 +1,24 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// A path as metric poses: what a planner PUBLISHED (e.g. the full stack's
+// /lab/plan, nav_msgs/Path), as opposed to the search's own `path` events
+// (grid cells). Added in M1.9 so a recorded run's plan converts without
+// loss. One batch per published path; every row shares its clocks. Poses
+// are in the map frame, like every metric channel; which topic the path
+// came from is the file's provenance.
+// Channel: coco.plan.path.poses.v1 (PathBatch).
+
+syntax = "proto3";
+
+package coco.plan.v1;
+
+message PathBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated double x = 4;      // m, map frame
+  repeated double y = 5;
+  repeated double theta = 6;  // rad
+  uint64 search_id = 7;       // the search that produced it
+}

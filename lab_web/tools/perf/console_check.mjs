@@ -25,6 +25,8 @@ import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => {
   if (a.startsWith('--')) acc.push([a.slice(2), all[i + 1]]);
@@ -35,7 +37,7 @@ const OUT = args.out ?? 'console-out';
 const SETTLE_MS = Number(args.settle ?? 8000);
 const PORT = args['recovery-port'] ? Number(args['recovery-port']) : null;
 const STUB = args.stub ?? join(new URL('.', import.meta.url).pathname, 'stub_stack.py');
-const VIEWS = ['plan', 'live', 'localise', 'map', 'search', 'move'];
+const VIEWS = ['plan', 'live', 'localise', 'map', 'search', 'move', 'arena'];
 mkdirSync(OUT, { recursive: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const origin = new URL(SITE).origin;
@@ -134,5 +136,5 @@ result.summary = {
   total_page_errors: result.views.reduce((n, v) => n + v.page_errors.length, 0),
   live_websockets_on_load: result.views.find((v) => v.view === 'live')?.websockets.length ?? null,
 };
-writeFileSync(join(OUT, 'console_check.json'), JSON.stringify(result, null, 1));
+writeFileSync(join(OUT, 'console_check.json'), JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...result }, null, 1));
 console.log('summary', JSON.stringify(result.summary));

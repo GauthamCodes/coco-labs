@@ -9,13 +9,14 @@ only. Read order for agents (README §9): `README.md`, this file,
 
 | | |
 |---|---|
-| Repository | `GauthamCodes/coco-labs` (remote `labs` in the working checkout; see [`v2/data/m0/START_STATE.md`](v2/data/m0/START_STATE.md)) |
-| v1 | **Frozen** at tag `coco-lab-v1-final` = `3571169` (coco-labs `main` = `2b6f8ad` fast-forwarded to `lab5`) |
-| Branch | `v2/m0-transition` (from `3571169`) |
-| Current SHA | the head of `v2/m0-transition`; each checkpoint commit is listed below |
-| Milestone | **M0 · Transition** |
-| Checkpoint | M0.1–M0.8 done. The independent review (2026-10-08) found one exit criterion unmet (Live console errors) and five overstatements; fixes A.1–A.5 are applied (below). Merge under the owner's one-off permission once the M0-close conditions hold (suites, CI, 0 console errors in all six views, README = owner's file) |
-| Merge to `main` | not merged yet; the owner granted a one-off permission to merge PR #19 when the M0-close conditions hold (plan-change log, 2026-10-08) |
+| Repository | `GauthamCodes/coco-labs`; canonical checkout `~/coco_labs_ws/src/coco-labs` ([`v2/CHECKOUTS.md`](v2/CHECKOUTS.md)) |
+| v1 | **Frozen** at tag `coco-lab-v1-final` = `3571169` |
+| M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
+| Branch | `v2/m1-arena-core` (from `main` = `9f58b83`), worked in the worktree `.claude/worktrees/v2-m1-arena-core`, overlay `~/coco_lab_m1_ws` |
+| Milestone | **M1 · Glass-box Arena core** ([`v2/M1_PROMPT.md`](v2/M1_PROMPT.md)) |
+| Checkpoint | **M1.1–M1.10 done; independent review done (2026-10-09, [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md)), its fixes applied.** Every agent-measurable B.4 criterion met ([`v2/M1_RESULTS.md`](v2/M1_RESULTS.md)); the Arena is the landing page for the bare URL; PR into `main` opened, **not merged** (Gautham). M1 closes after a fresh review session (README §9) and the three Gautham criteria |
+| Merge to `main` | M1 opens a PR when every agent-measurable criterion passes; it is **not** merged by the agent |
+| Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance** and **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)) — never marked done by the agent; the M1 PR's merge |
 
 ## Checkpoint log
 
@@ -123,6 +124,300 @@ only. Read order for agents (README §9): `README.md`, this file,
   failed), `coco_lab in a plain venv` pass, `lab_web` pass, Pages deploy
   skipped (PR run).
 
+- **M0 closed (2026-10-08).** PR #19 merged at `9f58b83` (`gh pr merge
+  --merge`, branch kept) after every M0-close condition held on the final
+  head `21d94a8`: packages 3,081 / 0 / 0, vitest 320 / 0 / 0, tools
+  117 / 0 / 0; CI `build-and-test`, `coco_lab in a plain venv`, `lab_web`
+  pass (Pages deploy skipped on the PR run); 0 console errors in all six
+  views; `README.md` byte-identical to the owner's file. The `main` run
+  then deployed Pages (success), and the public site was checked:
+  [`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json).
+
+## M1 checkpoint log
+
+- **B.1 Preflight (2026-10-08).** Canonical checkout
+  `~/coco_labs_ws/src/coco-labs`: clean, `origin` = `GauthamCodes/coco-labs`,
+  no local-only commits; `main` fast-forwarded `6249e7d` → `9f58b83`
+  (contains the PR #19 merge; `coco-lab-v1-final` → `3571169`).
+  [`v2/CHECKOUTS.md`](v2/CHECKOUTS.md) written. Overlay `~/coco_labs_ws`
+  rebuilt from that checkout; M1 builds its worktree into
+  `~/coco_lab_m1_ws`. **Incident:** the session first built into
+  `~/coco_m1_ws`, which is the robot project's overlay (`~/coco-isaac-21`);
+  with Gautham's approval it was restored the same day by re-running its
+  recorded build, and no COCO Lab path remains in it (CHECKOUTS.md).
+  **Toolchain:** Node 24.21.0 (`lab_web/.nvmrc`; binary from
+  `~/coco_v2_ws/node`), npm lockfile (`npm ci`); Python 3.12.3 test venv
+  `~/coco_labs_ws/test_venv` (system site packages: pytest 7.4.4,
+  hypothesis 6.98.15, numpy 1.26.4, protobuf 4.21.12; `protoc` 3.21.12);
+  Pyodide 314.0.7 (`site.config.ts`; Python 3.14.2 inside, whose lock lists
+  protobuf 7.34.1, zstandard 0.25.0, numpy 2.4.6). **M1 baseline** on
+  `9f58b83`: packages **3,081 / 0 / 0**, vitest **320 / 0 / 0**, tools
+  **117 / 0 / 0**. Next: M1.1.
+
+- **M1.1 `coco_schemas` (2026-10-08).** Transport settled first,
+  measured: [ADR 0001](v2/adr/0001-event-transport.md) — Python emits
+  columnar typed arrays, TypeScript encodes protobuf for storage
+  (Pyodide-in-Node, 258,263 events: columnar 75.3 ms + 8.4 ms;
+  protobuf-in-Python 92.2 + 4.4 ms and a 248 KB wheel; JS encode 41.1 ms,
+  byte-identical; MODEL, laptop). New package `coco_schemas`: envelope
+  (`Manifest`, `run_id`) and the nine families as 15 channels
+  `coco.<family>.<name>.v1`, every batch carrying `seq`/`tick`/`t_world`;
+  generated Python (protoc 3.21.12) and TypeScript (protoc-gen-es 2.15.0);
+  within-major compatibility rules against `compat/v1.binpb`; lossless
+  v1-trace converter (all 9 Lab 1 bundles incl. the 3 recorded full-stack
+  runs, and 1,000 maps × 5 algorithms, byte-identical canonical JSON);
+  MCAP + zstd container (`lab_web/src/schemas/mcap.ts`); Python ↔
+  TypeScript byte and `run_id` parity vectors. CI: `coco_schemas` built
+  and tested in `ci.yml` *(M1 review correction: built, but `colcon test` collected 0 of its tests until `[M1-fix]` `b3dc8a0`, so the claim was false through M1.10)*, TypeScript generation checked in `lab.yml`.
+  Reference: [`v2/SCHEMAS.md`](v2/SCHEMAS.md). Tests: packages
+  **3,169 / 0 / 0** (3,081 + 86 `coco_schemas` + 2 `gazebo_models`
+  per-package checks), vitest **332 / 0 / 0** (+12), tools **117 / 0 / 0**.
+  Stop condition "schemas cannot express a Lab 1 trace without loss": not
+  hit. Next: M1.2.
+
+- **M1.2 World Spec v1 (2026-10-08).** `worlds/coco_arena_v1.yaml`,
+  generated by `worlds/tools/make_coco_arena_v1.py` from
+  `gazebo_models/config/navigation_world.json`, `coco_config/robot.py`,
+  `coco_lab/sketch.py`, `coco_web/safety.py` and `nav2_params.yaml` (each
+  number from its source; `--check` in tests). `coco_lab/worldspec.py`
+  (standard library only): strict v1 validator, canonical bytes (what
+  `run_id` hashes), and the Arena generator. Evidence (tests,
+  `coco_lab/test/test_worldspec.py`): the Arena world equals the Stack's
+  saved map `coco_navigation.pgm` **cell for cell** (500 × 380, same
+  resolution and origin), and all 70 boxes equal the Gazebo world's models
+  in pose and size — the SDF is designed for, not built. Reference:
+  [`v2/WORLD_SPEC.md`](v2/WORLD_SPEC.md). `coco_lab` gains a pinned test
+  dependency, `pyyaml==6.0.1` (= apt python3-yaml). The dispatched `Lab`
+  CI run on the M1.1 commit caught a stale generated TypeScript file
+  (`scan_pb.ts`, a comment edited after generation); regenerated, and the
+  local helper now runs the same check. Tests: packages **3,187 / 0 / 0**
+  (`coco_lab` 604 → 622; `gazebo_models`' known `TestTheOldLoopIsDetected`
+  node-creation flake errored once and passed 25/25 and 231/231 on re-run),
+  vitest **332 / 0 / 0**, tools **117 / 0 / 0**. Next: M1.3.
+
+- **M1.3 Arena model core (2026-10-08).** `coco_lab/arena.py`: the
+  World Spec's world, Sketch's ray-caster and motion law, fixed
+  `dt` = 0.1 s, accel-limited commands, teleop / goal / STOP / planner /
+  reset as input events at the start of their tick, the five planners on
+  the radius-inflated map, and a per-tick SHA-256 over a documented,
+  quantized layout plus a run hash chain. `coco_lab/rng.py`: xoshiro256**
+  seeded by SplitMix64, equal to the authors' reference C (gcc 13.3) on
+  five seeds. Reference: [`v2/ARENA_MODEL.md`](v2/ARENA_MODEL.md).
+  **LiDAR re-confirmed (MODEL vs STACK):** on Lab 2's 237 recorded poses
+  the Arena gives **86.73 % of beams within 5 cm — identical to Lab 2**,
+  and its ranges equal Lab 2's Sketch ranges on all 113,760 beams (the
+  spec-generated world equals the saved map; same caster and LiDAR).
+  Evidence: [`v2/data/m1/lidar/arena_lidar_fidelity.json`](v2/data/m1/lidar/arena_lidar_fidelity.json);
+  appended to `docs/RESULTS.md`. The dispatched `Lab` CI run on the M1.2
+  commit passed (run 37782383206). Tests: packages **3,214 / 0 / 0**
+  (`coco_lab` 622 → 649), vitest **332 / 0 / 0**, tools **117 / 0 / 0**.
+  Not claimed: native CPython and Pyodide hash equality (different `libm`);
+  cross-browser equality is measured in M1.5/M1.10. Next: M1.4.
+
+- **M1.4 Planners emit events (2026-10-08).** First, before
+  `search.py` changed: Lab 1's traces frozen on the 1,000-map corpus of
+  `test_all_five_agree_on_no_path` (all five algorithms per map, with the
+  property's own heuristic, tie-break and weight; 5,000 searches, 1,950
+  found) as map parameters plus each trace's sha256 —
+  `coco_lab/test/golden_traces_v1.json.gz` (`e801785`), made at a commit
+  whose search stack equals the tag `coco-lab-v1-final`. Then
+  `coco_lab.search.search_events()`: a generator yielding each push /
+  expand / relax / path event as the search makes it (validated at the
+  call), with `search()` now its consumer; `coco_lab/events.py` turns rows
+  into `SearchEventBatch` columns in batches (ADR 0001). **Golden traces:
+  all 5,000 searches reproduce Lab 1 exactly** — same expansion order,
+  g/h/f, parents, path, summary (sha256 of the canonical trace), through
+  both `search_events` and `search` (`coco_lab/test/test_golden_traces.py`,
+  in CI with `coco_lab`'s suite); the emitted columns encode to the same
+  protobuf bytes as the converter's (`coco_schemas/test/test_columns.py`).
+  D\* Lite's `plan.incremental` (optional) is not done. Tests: packages
+  **3,230 / 0 / 0** (`coco_lab` 649 → 663, `coco_schemas` 86 → 88),
+  vitest **332 / 0 / 0**, tools **117 / 0 / 0**. Next: M1.5.
+
+- **M1.5 Worker runtime + cold start (2026-10-08).** `?view=arena` (code-
+  split from the v1 labs): a Web Worker runs Pyodide + coco_lab +
+  `lab_web/src/arena/arena_glue.py`; the Arena streams plan events WHILE it
+  plans (`Arena(on_plan_batch=...)`, `coco_lab.search.collect`), posted as
+  transferable typed-array batches (ADR 0001), then each tick with its
+  ranges. Cold-start work, each measured before/after
+  ([`v2/COLDSTART.md`](v2/COLDSTART.md)): Pyodide **self-hosted** from the
+  pinned npm package; stdlib **trimmed** to the 142 files the Arena imports
+  (2.55 → 0.78 MB, identical hashes); no micropip/wheel (a sha-checked
+  `coco_lab.zip`); Arena world rasterised per rectangle (780.7 → 9.8 ms in
+  Pyodide, identical output); the worker starts when the page opens.
+  Laptop, n = 10, Pages-like gzip: **Arena ready 2,087 ms** (2,055–2,182)
+  unthrottled, **3,605** on emulated Wi-Fi, **7,301** on emulated 4G;
+  jsDelivr instead: 76,046 / 9,124 ms medians with 11 of 20 runs stalling
+  (not attributed). Goal → first plan events 89–104 ms medians. `?perf`
+  overlay (stage times, fps, event throughput, step cost) and
+  [`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md) for Gautham. Console: 0
+  errors in all seven views incl. `arena`, which makes 0 cross-origin
+  requests. Appended to `docs/RESULTS.md`. Tests: packages
+  **3,232 / 0 / 0**, vitest **336 / 0 / 0** (`arena_runtime.test.ts`: trimmed
+  = full stdlib, hash for hash), tools **117 / 0 / 0**. Not yet: first
+  VISIBLE computation (needs M1.6), attract-mode recording (M1.8), phone
+  numbers (Gautham). Next: M1.6.
+
+- **M1.6 Renderer (2026-10-08).** `lab_web/src/arena/render/`: Three.js
+  0.186.0 on WebGL 2, beside React (React draws panels only); orthographic
+  top-down with mouse, wheel and touch (pan, pinch) control. Layers:
+  occupancy + closed set / expansion heatmap (two data textures, one
+  shader), frontier (instanced), path, LiDAR fan (one merged line buffer),
+  footprint, COCO's outline from the Gazebo chassis mesh (`base.stl` →
+  convex hull at build time), truth as a dashed outline, goal, picked cell.
+  Inspector: state, expansion order, g, h, f, parent, latest event, from
+  coco_lab's events (`PlanStore`, 5 tests on a real search). Visual system
+  v1, light and dark: [`v2/VISUAL_SYSTEM.md`](v2/VISUAL_SYSTEM.md). The
+  plan reveals over about 90 frames; a goal steps the model at once. Laptop
+  GPU (RTX 4050 via ANGLE/OpenGL ES 3.2, headless Chromium): Arena + 50,000
+  points + 20,000 segments at **60–61 fps**, p95 frame 16.9–17.0 ms (10 s);
+  on SwiftShader the same load is 1–2 fps, so fps numbers always name the
+  renderer (`docs/v2/data/m1/render/`). Screens at 1280 light/dark and 390 px:
+  0 console errors, no horizontal overflow, the inspector works
+  (`render/shots/`); the `?perf` overlay no longer blocks taps on phones.
+  Tests: packages **3,232 / 0 / 0**, vitest **341 / 0 / 0**, tools
+  **117 / 0 / 0**. Next: M1.7.
+
+- **M1.7 Timeline (2026-10-08).** `lab_web/src/arena/session.ts`
+  (pure, tested): the world track keeps every tick the model reports (pose,
+  ranges for the last 12,000, mode, hash, plans) and the computation track
+  is the search planned at or before the shown tick, one keyframed
+  `PlanStore` per search (a keyframe every 16,384 events). Play / pause /
+  speed (0.25–4×) drive the WORLD clock (`frame()` says when a model step is
+  due; pausing stops the simulation); history replays then rejoins live.
+  `Timeline.tsx`: play, ±1 tick, speed, live, world and computation
+  scrubbers, ±1 event. **Seek budget:** on a 380k-event search (Lab 1 arena
+  size), every seek < 100 ms and equal to a fresh replay
+  (`test/session.test.ts`); in the browser on a real 81,593-event Dijkstra,
+  world and computation seeks took ≤ 2 ms
+  (`docs/v2/data/m1/timeline/timeline_check.json` + screenshots).
+  Tests: packages **3,232 / 0 / 0**, vitest **347 / 0 / 0** (+6), tools
+  **117 / 0 / 0**. Next: M1.8.
+
+- **M1.8 Experience (2026-10-08).** `?view=arena` now opens on a
+  **recording** (attract mode): `tools/build_attract.mjs` runs the real
+  coco_lab + `arena_glue.py` in Pyodide-in-Node at build time (three goals,
+  astar / dijkstra / greedy) and writes `generated/arena/attract.mcap` with
+  the site's own protobuf encoders (the first v2-container file the page
+  reads; 688,717 B, byte-identical across two builds, sha256 d3d18d8e…). It plays while
+  Pyodide loads, labelled a MODEL recording; the first click, key, joystick
+  move or planner choice hands over to the live model. Also: keyboard teleop
+  (W A S D / arrows, space = STOP), an on-screen joystick (mouse, pen,
+  touch), side-by-side **compare** of two planners on the same map, start,
+  goal and seed (the worker's `compare` changes no model state: same hash
+  chain after, tested), an end-of-run card with expansions / path cost /
+  path length and the heatmap switched on, and a **share link**
+  (`?run=`: spec sha256, seed, input log, final tick and hash chain) that
+  replays the run and says whether the chain matched, rather than claiming
+  it. `WorldGrid` gained an additive `occupancy` field (11).
+  **Browser check** (`tools/perf/experience_check.mjs`, Chromium + GPU,
+  0 console errors, all 9 steps pass; `docs/v2/data/m1/experience/`):
+  attract moving at 674 ms, first computation shown at 961 ms (live model
+  not yet ready); click → live → arrival with totals; W held 1.2 s moved
+  0.39 m; joystick drag moved 0.52 m; compare astar 3,904 vs bfs 37,324
+  expansions, both path cost 175.18; a shared link replayed to the **same
+  chain** at tick 404; a Pixel 7 tap gave a goal with no horizontal scroll.
+  Fixed on the way: compare captured the planners chosen at first render,
+  and side A's id (−1) collided with an empty PlanStore's; the phone stage
+  letterboxed. Tests: packages **3,232 / 0 / 0**, vitest **357 / 0 / 0**
+  (+10), tools **117 / 0 / 0**. Next: M1.9.
+
+- **M1.9 Converters (2026-10-09).** All eleven Lab 1 bundles the site
+  serves — the five teaching traces, the three arena/costmap traces and
+  the **three recorded full-stack runs** (Phase 1C) — convert to v2 run
+  files (`lab_web/src/convert/lab1.ts`; built by
+  `tools/build_v2_runs.mjs` into `generated/v2/`) and play in the Arena
+  viewer at `?view=arena&replay=<id>`, with the timeline and inspector.
+  Recorded runs are labelled **STACK** (`TIER_STACK`): the robot is drawn
+  where the stack believed it was (AMCL) with ground truth beside it,
+  0.1 s of sim time per tick, the search at FollowPath acceptance, the
+  arbiter / collision-monitor annotations on the timeline, and the run's
+  measured results quoted from the bundle (never recomputed). Traces are
+  MODEL (`TIER_TRACE`). No model worker starts for a replay. The old Lab 1
+  view is unchanged and still reads the v1 bundles.
+  **Lossless, checked strictly:** the v1 arrays are rebuilt from the v2
+  CHANNELS alone and the v1 decoder must accept them with the original
+  content hash — at every build (a failure stops the build) and in
+  `test/convert_lab1.test.ts` (11/11; one flipped ground-truth bit is
+  caught; byte-deterministic). Schema: new additive
+  `coco.plan.path.poses.v1` / `PathBatch` for the stack's published
+  `/lab/plan` (SCHEMAS.md, "Whole bundles"). **Browser check**
+  (`tools/perf/replay_check.mjs`; `docs/v2/data/m1/replay/`): 3 STACK runs
+  played to the end (760 / 777 / 670 ticks) and 2 traces (incl. the
+  283,378-event arena benchmark) fully revealed, first frame 223–539 ms,
+  0 workers, 0 console errors; all seven views 0 console errors
+  (`console_check.json`). Tests: packages **3,235 / 0 / 0** (the first
+  run had 2 `gazebo_models` live-graph tests error with rclpy
+  `RCLError: error creating node`; M1.9 touches no ROS package and the
+  re-run passed 231 / 0), vitest **374 / 0 / 0** (+17), tools
+  **117 / 0 / 0**. Next: M1.10.
+
+- **M1.10 Measure and decide (2026-10-09).** Every B.4 budget measured on
+  the final build, laptop in its **power-saver** profile (recorded; M1.5's
+  was not, so M1.5 → M1.10 timings are not a controlled comparison). Full
+  table: [`v2/M1_RESULTS.md`](v2/M1_RESULTS.md); decision:
+  [`v2/adr/0002-wasm-gate.md`](v2/adr/0002-wasm-gate.md) — **port nothing**.
+  - **Determinism — met:** 100 recorded sessions (random goals, teleop,
+    stops, planner switches) × 150 ticks in Chromium 156, Firefox 157,
+    WebKit 27.2 (the site's own worker) and Pyodide-in-Node: 15,000 ticks
+    each, **0 differing** (`v2/data/m1/determinism/`). WebKit runs here
+    without sudo via `~/coco_lab_m1_ws/bin/webkit_run.sh` (four media
+    libraries unpacked privately; nothing system-wide changed).
+  - **Correctness — met:** 5,000/5,000 golden searches (1,000 maps).
+  - **Laptop performance — met:** 60–61 fps, 50k points + 20k segments.
+  - **Responsiveness — met:** warm goal click → first frame drawing that
+    goal's search: median **40.4 ms**, max 71.5, 25/25 under 100; seek
+    ≤ 0.6 ms. Two bugs found and fixed first: the timer stopped on the
+    previous search (earlier "47–73 ms" timed first goals only), and the
+    session hid a streaming search until it finished (honest measurement
+    before the fix: median 414 ms, p95 2,690 ms). A vitest pins the fix.
+  - **Laptop cold start — met for the first visible computation:** 754 /
+    1,629 / 3,299 ms (unthrottled / emulated Wi-Fi / 4G, n = 10 each,
+    self-hosted); live model ready 5,023 / 6,603 / **10,782** ms (4G over
+    10 s). M0 baseline: 12,857 ms.
+  - **Hygiene — met:** 0 console errors in all seven views and every
+    harness; phone width checked; CI gains a `lab-web-browsers` job
+    (determinism in 3 browsers, 5 screenshot scenes with a self-test) and
+    a determinism vitest.
+  - **Pending Gautham:** phone performance, phone cold start, usability.
+  - Also: the `?perf` panel's stale "first frontier node shown" row
+    replaced; landing route checked 9/9 (`v2/data/m1/landing/`); two
+    findings parked for M2 (`docs/IDEAS.md`): a goal right after a planner
+    change waits for the re-plan (median 293 ms, max 4.0 s); attract mode
+    costs the live model's load 155–575 ms.
+  - Tests: packages **3,235 / 0 / 0**, vitest **381 / 0 / 0** (+7), tools
+    **117 / 0 / 0**.
+  - **CI** (Lab run 37850645657 on `1abe73f`, all jobs green): the new
+    browser job replayed 10 recorded sessions (1,500 ticks each) in
+    Chromium, Firefox and WebKit on GitHub's runner — **0 mismatched**
+    against the committed Pyodide-in-Node hashes — and all 5 screenshot
+    scenes matched the laptop-made baselines **pixel for pixel** (self-test:
+    two different scenes differ by 3.1 % of pixels, so the check can fail).
+  - The re-runs on the final build replaced `v2/data/m1/timeline/`,
+    `experience/` and `replay/`'s files in place; the files the M1.7–M1.9
+    entries above quote are in git at `0f90e35` (M1.9) and its parents.
+
+- **M1 independent review (2026-10-09, README §9.9).** A fresh session that
+  did not build M1 reviewed PR #20 from a fresh clone (`~/review/coco-labs-m1`,
+  head `4e06942`); report: [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md).
+  Verified: no deleted files, RESULTS.md append-only, suites 3,235 / 381 /
+  117, golden traces 5,000/5,000, determinism re-run (25 sessions × 4
+  engines, 0 mismatched, 0 against the committed hashes), both schema
+  changes backward-compatible (an M1.1 reader parses M1.10 bytes), the
+  responsiveness fix pinned by a test that fails without it, 0 console
+  errors in all seven views, 14/14 URL forms. **Found:** CI's
+  `build-and-test` failed on PR #20 — `coco_schemas` collected 0 tests
+  under `colcon test` — so M1's "schema tests in CI" was false; fixed under
+  a one-off owner permission (plan-change log). Overstated: "a new Pyodide
+  in Node" per determinism session; "every v1 link 9/9" (3 of the 9 are
+  Arena URLs). M1 budgets re-measured in the **balanced** profile on AC
+  (owner's standard): warm goal → frontier median 42.9 ms; first visible
+  computation 631 / 1,366 / 3,381 ms; live model ready 2,683 / 4,061 /
+  8,191 ms (desktop / fast-4G / emulated 4G); power-saver rows kept
+  (`v2/M1_RESULTS.md`, `docs/RESULTS.md`). `[M1-fix]` commits:
+  `setup_webkit_libs.sh`, power state in every harness, `LANDING=arena|v1`,
+  the plan-change log, the `coco_schemas` CI fix, this evidence.
+
 ## Capabilities (README §2), with evidence class
 
 Classes as README §3 defines them: MODEL, STACK, REMOTE, HARDWARE (none
@@ -142,6 +437,9 @@ exist), UNRESOLVED, CONCEPT.
 | Latched STOP; drive command p50 4.6 ms; STOP 6.2 ms | STACK | Local network | `docs/live/LIVE.md` |
 | Phone on mobile data drove the robot; RTT about 282–293 ms; disconnect stop about 0.54 s | REMOTE | Robot simulated | `docs/live/PART_C_REPORT.md` |
 | v1 site baseline (cold start, warm edit, frame rate, sizes) — laptop | MODEL | Phone not yet measured | `docs/v2/BASELINE.md` |
+| The Arena: identical per-tick hashes in Chromium, Firefox, WebKit and Pyodide-in-Node (100 sessions, 15,000 ticks each) | MODEL | Laptop; not yet on a phone | `docs/v2/data/m1/determinism/` |
+| The Arena: 60 fps at 50k points + 20k segments; goal → computation on screen in 40 ms median (warm); first visible computation 0.75–3.3 s cold | MODEL | Laptop, power-saver; phone pending Gautham | `docs/v2/M1_RESULTS.md` |
+| Lab 1's three recorded full-stack runs played in the Arena viewer | STACK | Played, not re-measured | `docs/v2/data/m1/replay/` |
 
 **Unresolved, kept labelled** (README §2): DWB's hairpin stall; why no
 controller swerved; D\* Lite's extra work on the real costmap; loop-closure
@@ -174,3 +472,8 @@ as a dated entry here (README §0).
 | 2026-10-08 | **One-off permission to edit three published release texts** (`live-v1.0`, `lab1-v1.0`, `lab4-v1.0`): wording only, never assets, tags or targets. | Their "real robot" wording describes the Gazebo stack; agents otherwise never edit releases. | Gautham (prompt §0.3) |
 | 2026-10-08 | **One-off permission to merge PR #19** once the fixes are pushed, CI is green and the M0-close conditions hold. Merging deploys Pages. | Closes M0 (README §9.9 review done). | Gautham (prompt §0.4) |
 | 2026-10-08 | **Canonical checkout from M1 on is `~/coco_labs_ws/src/coco-labs`**, fast-forwarded to the merged `main`. `~/ros2_ws(personal)` and its worktrees are left untouched and no longer used for COCO Lab. | `CLAUDE.md` and the scripts already default to that path; the review flagged the stale clone as a risk of building the wrong tree. | Gautham (prompt §0.5) |
+| 2026-10-09 | **Measurement conditions.** The standard is the **balanced** power profile **on AC power**. An agent may `powerprofilesctl set balanced` before measuring and must restore the original profile afterwards. Every harness records the power profile, AC or battery, CPU governor and load average next to its results (`lab_web/tools/perf/conditions.mjs`). Power-saver numbers already measured are **kept** as a worst-case row, never deleted or replaced. "Laptop cold start" = time to **first visible computation** (README's definition; M1 met it). "Live model ready" is reported separately as a secondary metric; in M2 it becomes a budget: **≤ 10 s on emulated 4G for the Plan lens**, because the new lenses need the live model. | M1.10 measured in power-saver without a stated standard; M1.5 recorded no profile, so the two were not comparable. | Gautham (M1-review / M2 prompt §0.1) |
+| 2026-10-09 | **WebKit libraries stay private** in `~/coco_lab_m1_ws/webkit_libs` (four `.deb`s unpacked with `dpkg -x`); no sudo, nothing installed system-wide. `lab_web/tools/setup_webkit_libs.sh` re-creates them from pinned versions with sha256 checksums; documented in `docs/v2/CHECKOUTS.md`. | Cross-browser determinism needs WebKit; the host lacks four of its media libraries and agents do not use sudo. | Gautham (prompt §0.2) |
+| 2026-10-09 | **One-off permission to merge PR #20** (M1), only under the M1-review conditions (prompt A.5: recommendation MERGE, or MERGE AFTER FIXES with every fix done; the three suites pass; every CI check on PR #20 passes after the last push; 0 console errors in all views of a production build). Merge commit, no squash or rebase, branch kept. Merging deploys Pages and makes the Arena the bare URL's landing page — expected. A build-time switch (`LANDING=arena\|v1`, default `arena`, `lab_web/site.config.ts`) lets the landing page be reverted in one commit if the phone results are bad. | Closes M1's agent-measurable part after an independent review (README §9.9). | Gautham (prompt §0.3) |
+| 2026-10-09 | **"Retiring the v1 lab views" (M2) means:** their code is removed from `main` while a **frozen build of v1**, built from the tag `coco-lab-v1-final`, is served at **`/v1/`**. Every old URL (`?view=…`, `?bundle=…`, `?v=…`) keeps working, by redirecting either to `/v1/` or to its v2 equivalent. Removing working public views is otherwise forbidden; this is how M2 retires them without breaking a link. | README §7 M2 exit criterion "the old per-lab views are retired; their release tags remain", reconciled with "never break a public URL". | Gautham (prompt §0.4) |
+| 2026-10-09 | **One-off permission for one fix outside the M1 review's allowed list:** `coco_schemas/setup.py` gains `tests_require=['pytest']`, so CI's `build-and-test` actually runs the `coco_schemas` suite (it collected 0 tests and failed on PR #20). Then merge PR #20 under the A.5 conditions. | The review found the schema and compatibility tests had never run in CI (M1's "schema tests in CI" was false); the fix is test discovery only, no behaviour change. | Gautham (answer to the reviewer's question, 2026-10-09) |

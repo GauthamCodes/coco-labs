@@ -8202,3 +8202,38 @@ Firefox numbers; CI on the PR at the time of writing.
 NEXT: the owner reviews the PR `v2/m0-transition` → `main` and approves the
 merge; a fresh review session verifies the M0 report (README §9.9); then
 M1 · Glass-box Arena core (README §7), starting with M1.1 `coco_schemas`.
+
+## COCO Lab v2 · M1 Glass-box Arena core — M1.7 to M1.10 (2026-10-08 → 2026-10-09)
+
+**Built:** the timeline (world and computation tracks, keyframed seek); the
+experience (attract recording made at build time by the real model,
+click/tap goals, keyboard and joystick teleop, planner compare, end-of-run
+heatmap with totals, share links that report whether the hash chain
+reproduced); converters (Lab 1's eleven bundles as v2 runs, lossless and
+hash-checked at every build; the three recorded full-stack runs played as
+STACK); M1.10's harnesses (cross-engine determinism, responsiveness, cold
+start with the power state recorded, screenshots with a self-test, landing
+route) and the CI browser job; ADR 0002 (no WebAssembly port);
+`docs/v2/M1_RESULTS.md`; the Arena as the bare URL's landing page.
+
+**Measured (this session; MODEL; laptop i5-13420H + RTX 4050 in
+power-saver):** determinism 4 engines × 100 sessions × 150 ticks, 0
+differing (CI: 3 browsers × 10 sessions, 0 differing); warm goal → its
+search on screen median 40.4 ms, max 71.5, 25/25 under 100; seek ≤ 0.6 ms;
+60–61 fps under the 50k/20k stress; first visible computation 754 / 1,629 /
+3,299 ms and live model ready 5,023 / 6,603 / 10,782 ms (unthrottled /
+emulated Wi-Fi / 4G, n = 10 each). Found and fixed: a goal timer that
+stopped on the previous search, a session that hid a streaming search until
+it finished (median 414 ms before), a `?perf` row naming a mark nobody
+recorded. Tests: packages 3,235 / 0 / 0, vitest 381 / 0 / 0, tools
+117 / 0 / 0.
+
+**Unverified:** phone fps and cold start on mobile data, the usability
+test (all Gautham); live-model load on emulated 4G is over 10 s; a goal
+right after a planner change waits for the re-plan (median 293 ms, max
+4.0 s); attract mode costs the live model 155–575 ms (both parked for M2).
+
+NEXT: Gautham reviews the M1 PR (`v2/m1-arena-core` → `main`) and measures
+the phone and usability criteria (`docs/v2/PHONE_MEASURE.md`,
+`docs/v2/USABILITY_TEST.md`); a fresh review session verifies the M1 report
+(README §9); then M2.

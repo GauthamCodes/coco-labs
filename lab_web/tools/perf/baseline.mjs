@@ -29,6 +29,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) => {
   if (a.startsWith('--')) acc.push([a.slice(2), all[i + 1]]);
@@ -266,10 +268,10 @@ if (ONLY.includes('fps')) {
 if (ONLY.includes('weight')) {
   const w = await weightRun();
   console.log('weight', JSON.stringify({ initial: w.initial_load, edit: w.through_first_edit, cdn: { requests: w.pyodide_cdn.requests, body_bytes: w.pyodide_cdn.body_bytes } }));
-  writeFileSync(join(OUT, 'weight.json'), `${JSON.stringify({ meta, ...w }, null, 1)}\n`);
+  writeFileSync(join(OUT, 'weight.json'), `${JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...{ meta, ...w } }, null, 1)}\n`);
 }
 meta.finished_utc = new Date().toISOString();
 if (ONLY.some((o) => o !== 'weight')) {
-  writeFileSync(join(OUT, 'baseline.json'), `${JSON.stringify(result, null, 1)}\n`);
+  writeFileSync(join(OUT, 'baseline.json'), `${JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...result }, null, 1)}\n`);
   console.log('wrote', join(OUT, 'baseline.json'));
 }

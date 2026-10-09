@@ -106,11 +106,18 @@ jobs:
       - name: Install (lockfile, exact pins)
         working-directory: lab_web
         run: npm ci
+      - name: coco_schemas' TypeScript is what protoc generates today
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y --no-install-recommends protobuf-compiler
+          python3 coco_schemas/scripts/generate.py --lang ts --check
       - name: Typecheck and the TypeScript tests
         working-directory: lab_web
         run: |
           node --version && npm --version
           npm run typecheck
+          # the Arena runtime test boots Pyodide on these (M1.5)
+          npm run arena-assets
           npm test
       - name: Build twice; the two builds must be identical
         working-directory: lab_web
@@ -122,6 +129,57 @@ jobs:
       - uses: actions/upload-pages-artifact@v5
         with:
           path: lab_web/dist
+
+  lab-web-browsers:
+    # M1 B.4: cross-engine determinism and screenshot tests, in real browsers.
+    # The first 10 recorded sessions (docs/v2/data/m1/determinism/) replayed by
+    # the built site's own worker in Chromium, Firefox and WebKit must give the
+    # committed Pyodide-in-Node per-tick hashes; the Arena's fixed scenes must
+    # match the committed canvas screenshots (lab_web/test/screenshots/).
+    name: lab_web in Chromium, Firefox and WebKit (determinism, screenshots)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Python environment (coco_lab; no ROS)
+        run: |
+          python -m venv "$RUNNER_TEMP/venv"
+          cp -r coco_lab "$RUNNER_TEMP/coco_lab_src"
+          "$RUNNER_TEMP/venv/bin/pip" install "$RUNNER_TEMP/coco_lab_src" -r coco_lab/requirements-test.txt
+      - name: Site data
+        run: "$RUNNER_TEMP/venv/bin/python lab_web/tools/build_catalog.py"
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: lab_web/.nvmrc
+          cache: npm
+          cache-dependency-path: lab_web/package-lock.json
+      - name: Install, build, and the three browsers (with their system libraries)
+        working-directory: lab_web
+        run: |
+          npm ci
+          npm run build
+          npx playwright install --with-deps chromium firefox webkit
+      - name: Serve the built site as Pages does (gzip, /coco-labs/)
+        working-directory: lab_web
+        run: |
+          nohup node tools/perf/serve_dist.mjs --port 4174 > "$RUNNER_TEMP/serve.log" 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:4174/coco-labs/ > /dev/null && break; sleep 1; done
+          curl -sf http://127.0.0.1:4174/coco-labs/ > /dev/null
+      - name: Determinism across engines (10 recorded sessions, every tick)
+        working-directory: lab_web
+        run: |
+          rec=../docs/v2/data/m1/determinism
+          for b in chromium firefox webkit; do
+            node tools/perf/determinism.mjs "$b" --sessions "$rec/sessions.json" --limit 10 --out "$RUNNER_TEMP/det"
+          done
+          node tools/perf/determinism.mjs compare --sessions "$rec/sessions.json" --limit 10 --ref "$rec" --out "$RUNNER_TEMP/det"
+          cat "$RUNNER_TEMP/det/determinism.json"
+      - name: Screenshot tests (the Arena's fixed scenes, canvas only)
+        working-directory: lab_web
+        run: node tools/perf/screenshots.mjs check --out "$RUNNER_TEMP/shots"
 
   deploy:
     name: deploy to GitHub Pages (main only)

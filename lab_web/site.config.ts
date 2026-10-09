@@ -16,6 +16,16 @@
 export const DEFAULT_BASE = '/coco-labs/';
 
 /**
+ * What the BARE URL opens: the Arena (M1.10) or the v1 labs. A build-time
+ * switch, so the landing page can be reverted in one commit (change this
+ * line) or for one build (`LANDING=v1 npm run build`) if the phone results
+ * are bad (owner's decision, 2026-10-09, docs/STATUS.md plan-change log).
+ * Named views and v1 share links (`?view=`, `?bundle=`, `?v=`) are not
+ * affected either way. `vite.config.ts` refuses any other value.
+ */
+export const DEFAULT_LANDING: 'arena' | 'v1' = 'arena';
+
+/**
  * Where the Live tab may open a coco.v1 WebSocket, and ask the same host's
  * /healthz before it does (the CSP's connect-src).
  * The local stack, plus the one remote endpoint below when it is set --

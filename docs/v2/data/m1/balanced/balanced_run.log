@@ -1,0 +1,29 @@
+original profile: power-saver
+now: balanced governor powersave AC 1 load 3.62 2.80 2.22
+{"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+{"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+{"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+{"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+{"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+{"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+{"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+{"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+{"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+{"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+{"first":45.900146484375,"n":25,"median":42.89990234375,"p95":61.900146484375,"max":63.199951171875,"under_100":25,"renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)","errors":0}
+{"first":42.60009765625,"n":25,"median":138.599853515625,"p95":1436.5,"max":1708.39990234375,"under_100":10,"renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)","errors":0}
+{"events":81593,"seek_ms_max":0.29999999701976776,"seeks":[0.2,0.3,0,0.1,0.2,0.2],"rejoined":{"live":true,"head":104},"errors":0}
+{"events":81593,"seek_ms_max":0.5999999977648258,"seeks":[0.3,0.6,0.1,0.3,0.4,0.2],"rejoined":{"live":true,"head":105},"errors":0}
+{"events":81593,"seek_ms_max":0.30000000074505806,"seeks":[0.3,0.3,0.1,0.2,0.2,0.1],"rejoined":{"live":true,"head":104},"errors":0}
+{"events":81593,"seek_ms_max":0.30000000074505806,"seeks":[0.3,0.3,0.1,0.2,0.2,0.1],"rejoined":{"live":true,"head":104},"errors":0}
+{"events":81593,"seek_ms_max":0.5,"seeks":[0.4,0.5,0.1,0.2,0.2,0.3],"rejoined":{"live":true,"head":105},"errors":0}
+{"events":81593,"seek_ms_max":0.6999999992549419,"seeks":[0.2,0.7,0.1,0.3,0.3,0.3],"rejoined":{"live":true,"head":105},"errors":0}
+{"events":81593,"seek_ms_max":0.5,"seeks":[0.4,0.5,0.1,0.4,0.4,0.2],"rejoined":{"live":true,"head":104},"errors":0}
+{"events":81593,"seek_ms_max":0.20000000298023224,"seeks":[0.2,0.2,0.1,0.2,0.1,0.2],"rejoined":{"live":true,"head":105},"errors":0}
+{"events":81593,"seek_ms_max":0.4000000022351742,"seeks":[0.1,0.4,0,0.2,0.1,0.1],"rejoined":{"live":true,"head":105},"errors":0}
+{"events":81593,"seek_ms_max":0.30000000074505806,"seeks":[0.2,0.3,0,0.1,0.2,0.2],"rejoined":{"live":true,"head":104},"errors":0}
+{"first_computation_ms":{"n":10,"median":631,"min":415,"max":651},"arena_ready_ms":{"n":10,"median":2683,"min":2191,"max":2789},"goal_to_first":{"n":10,"median":34,"min":20,"max":42}}
+{"first_computation_ms":{"n":10,"median":1366,"min":1123,"max":1374},"arena_ready_ms":{"n":10,"median":4061,"min":3781,"max":4243},"goal_to_first":{"n":10,"median":36,"min":21,"max":45}}
+{"first_computation_ms":{"n":10,"median":3381,"min":2985,"max":3403},"arena_ready_ms":{"n":10,"median":8191,"min":7933,"max":8296},"goal_to_first":{"n":10,"median":35,"min":26,"max":41}}
+end: balanced load 3.28 3.06 2.59
+profile restored to power-saver

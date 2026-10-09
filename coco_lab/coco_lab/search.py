@@ -69,7 +69,7 @@ from collections import deque
 from dataclasses import dataclass
 import heapq
 import math
-from typing import Callable, Dict, List, Optional
+from typing import Callable, Dict, Generator, List, Optional, Tuple
 
 from .graph import HEURISTICS, SearchGraph, State
 from .trace import (EXPAND, MAJOR, NO_PARENT, PATH, PUSH, RELAX, SCHEMA,
@@ -115,6 +115,22 @@ def _priority(algorithm: str, weight: float) -> Callable[[float, float],
     raise AssertionError(algorithm)  # pragma: no cover
 
 
+#: One event, in the v1 trace's column order (``coco_lab.trace.COLUMNS``):
+#: ``(kind, row, col, sub, g, h, f, parent_row, parent_col, parent_sub)``.
+EventRow = Tuple[int, int, int, int, float, float, float, int, int, int]
+
+
+@dataclass
+class SearchOutcome:
+    """What :func:`search_events` returns once it is exhausted."""
+
+    status: str
+    path: List[State]
+    cost: Optional[float]
+    header: Dict[str, object]
+    summary: Dict[str, object]
+
+
 def search(graph: SearchGraph, start: State, goal: State,
            algorithm: str, heuristic: str = 'zero',
            weight: Optional[float] = None,
@@ -127,7 +143,67 @@ def search(graph: SearchGraph, start: State, goal: State,
     that did nothing. Raises :class:`ValueError` for an unknown algorithm,
     heuristic or tie-break, and for an invalid start or goal -- a blocked
     start is a mistake to report, not a "no path" result.
+
+    Since M1.4 this collects :func:`search_events` into a v1 trace; the
+    traces are byte-identical to Lab 1's on the 1,000-map corpus
+    (``test/test_golden_traces.py``).
     """
+    return collect(search_events(graph, start, goal, algorithm, heuristic,
+                                 weight, tie_break))
+
+
+def collect(events, sink: Optional[Callable[[EventRow], None]] = None
+            ) -> SearchResult:
+    """
+    Run a :func:`search_events` generator to the end into a v1 trace.
+
+    ``sink``, if given, sees every row as it is made (the Arena hands rows
+    to the renderer in batches while the search runs).
+    """
+    tb = TraceBuilder()
+    add = tb.add
+    try:
+        while True:
+            e = next(events)
+            add(e[0], e[1:4], e[4], e[5], e[6], e[7:10])
+            if sink is not None:
+                sink(e)
+    except StopIteration as stop:
+        out: SearchOutcome = stop.value
+    trace = Trace(out.header, tb.columns, out.summary)
+    trace.validate()
+    return SearchResult(out.status, out.path, out.cost, trace)
+
+
+def search_events(graph: SearchGraph, start: State, goal: State,
+                  algorithm: str, heuristic: str = 'zero',
+                  weight: Optional[float] = None,
+                  tie_break: str = 'low_h'
+                  ) -> Generator[EventRow, None, SearchOutcome]:
+    """
+    Search, yielding each event AS THE SEARCH MAKES IT (M1.4).
+
+    The same search as :func:`search`, one :data:`EventRow` per push,
+    expand, relax and path event, in order; the caller decides how many to
+    take before rendering (the Arena streams them in batches, so the
+    planner visibly computes). The generator's return value
+    (``StopIteration.value``, or ``outcome = yield from ...``) is a
+    :class:`SearchOutcome` with the v1 header and summary. Arguments are
+    validated now, at the call, not at the first ``next()``.
+    """
+    weight = _checked(graph, start, goal, algorithm, heuristic, weight,
+                      tie_break)
+    return _events(graph, start, goal, algorithm, heuristic, weight,
+                   tie_break)
+
+
+def _row(kind, loc, g, h, f, parent=NO_PARENT) -> EventRow:
+    return (kind, loc[0], loc[1], loc[2], g, h, f,
+            parent[0], parent[1], parent[2])
+
+
+def _checked(graph, start, goal, algorithm, heuristic, weight, tie_break):
+    """Validate a search request; return the weight to use."""
     if algorithm not in ALGORITHMS:
         raise ValueError(
             f'unknown algorithm {algorithm!r}; expected one of {ALGORITHMS}')
@@ -150,11 +226,14 @@ def search(graph: SearchGraph, start: State, goal: State,
         raise ValueError(f'start {start!r} is blocked or outside the map')
     if not graph.is_valid(goal):
         raise ValueError(f'goal {goal!r} is blocked or outside the map')
+    return weight
 
+
+def _events(graph, start, goal, algorithm, heuristic, weight, tie_break):
+    """Run the search itself, as a generator (validated by the caller)."""
     def h_of(s):
         return graph.heuristic(heuristic, s, goal)
 
-    tb = TraceBuilder()
     g: Dict[State, float] = {start: 0.0}
     parent: Dict[State, Optional[State]] = {start: None}
     counts = {'push': 0, 'relax': 0, 'expand': 0}
@@ -163,11 +242,13 @@ def search(graph: SearchGraph, start: State, goal: State,
         return graph.locate(s) if s is not None else NO_PARENT
 
     if algorithm == 'bfs':
-        reached = _bfs(graph, start, goal, g, parent, tb, counts, h_of, loc)
+        reached = yield from _bfs(graph, start, goal, g, parent, counts,
+                                  h_of, loc)
     else:
-        reached = _best_first(graph, start, goal, g, parent, tb, counts,
-                              h_of, loc, _priority(algorithm, weight),
-                              tie_break)
+        reached = yield from _best_first(graph, start, goal, g, parent,
+                                         counts, h_of, loc,
+                                         _priority(algorithm, weight),
+                                         tie_break)
 
     header = {
         'schema': SCHEMA,
@@ -186,9 +267,7 @@ def search(graph: SearchGraph, start: State, goal: State,
                    'pushes': counts['push'], 'relaxes': counts['relax'],
                    'path_cost': None, 'path_length': None,
                    'path_steps': None}
-        trace = Trace(header, tb.columns, summary)
-        trace.validate()
-        return SearchResult('no_path', [], None, trace)
+        return SearchOutcome('no_path', [], None, header, summary)
 
     path = [goal]
     while parent[path[-1]] is not None:
@@ -197,7 +276,7 @@ def search(graph: SearchGraph, start: State, goal: State,
     length = 0.0
     for i, s in enumerate(path):
         p = path[i - 1] if i else None
-        tb.add(PATH, loc(s), g[s], h_of(s), g[s], loc(p))
+        yield _row(PATH, loc(s), g[s], h_of(s), g[s], loc(p))
         if p is not None:
             (r0, c0, _), (r1, c1, _) = loc(p), loc(s)
             length += math.hypot(r1 - r0, c1 - c0)
@@ -205,9 +284,7 @@ def search(graph: SearchGraph, start: State, goal: State,
                'pushes': counts['push'], 'relaxes': counts['relax'],
                'path_cost': g[goal], 'path_length': length,
                'path_steps': len(path) - 1}
-    trace = Trace(header, tb.columns, summary)
-    trace.validate()
-    return SearchResult('found', path, g[goal], trace)
+    return SearchOutcome('found', path, g[goal], header, summary)
 
 
 def suboptimality_bound(algorithm: str, report,
@@ -263,14 +340,15 @@ def _edge(graph, a, b) -> float:
     return c
 
 
-def _bfs(graph, start, goal, g, parent, tb, counts, h_of, loc) -> bool:
+def _bfs(graph, start, goal, g, parent, counts, h_of, loc):
+    """Yield BFS's events; return whether the goal was expanded."""
     depth = {start: 0}
     queue = deque([start])
-    tb.add(PUSH, loc(start), 0.0, h_of(start), 0.0)
+    yield _row(PUSH, loc(start), 0.0, h_of(start), 0.0)
     counts['push'] += 1
     while queue:
         s = queue.popleft()
-        tb.add(EXPAND, loc(s), g[s], h_of(s), depth[s], loc(parent[s]))
+        yield _row(EXPAND, loc(s), g[s], h_of(s), depth[s], loc(parent[s]))
         counts['expand'] += 1
         if s == goal:
             return True
@@ -281,13 +359,14 @@ def _bfs(graph, start, goal, g, parent, tb, counts, h_of, loc) -> bool:
             g[n] = g[s] + _edge(graph, s, n)
             parent[n] = s
             queue.append(n)
-            tb.add(PUSH, loc(n), g[n], h_of(n), depth[n], loc(s))
+            yield _row(PUSH, loc(n), g[n], h_of(n), depth[n], loc(s))
             counts['push'] += 1
     return False
 
 
-def _best_first(graph, start, goal, g, parent, tb, counts, h_of, loc,
-                priority, tie_break) -> bool:
+def _best_first(graph, start, goal, g, parent, counts, h_of, loc,
+                priority, tie_break):
+    """Yield a best-first search's events; return whether it reached goal."""
     use_tie = tie_break == 'low_h'
     heap = []
     latest: Dict[State, int] = {}  # seq of each open state's live entry
@@ -303,7 +382,7 @@ def _best_first(graph, start, goal, g, parent, tb, counts, h_of, loc,
         return f
 
     h0 = h_of(start)
-    tb.add(PUSH, loc(start), 0.0, h0, push(start, h0))
+    yield _row(PUSH, loc(start), 0.0, h0, push(start, h0))
     counts['push'] += 1
     while heap:
         f, _, entry, s = heapq.heappop(heap)
@@ -311,7 +390,7 @@ def _best_first(graph, start, goal, g, parent, tb, counts, h_of, loc,
             continue  # superseded by a relax; the live entry is still queued
         del latest[s]
         closed.add(s)
-        tb.add(EXPAND, loc(s), g[s], h_of(s), f, loc(parent[s]))
+        yield _row(EXPAND, loc(s), g[s], h_of(s), f, loc(parent[s]))
         counts['expand'] += 1
         if s == goal:
             return True
@@ -328,6 +407,6 @@ def _best_first(graph, start, goal, g, parent, tb, counts, h_of, loc,
             g[n] = ng
             parent[n] = s
             hn = h_of(n)
-            tb.add(kind, loc(n), ng, hn, push(n, hn), loc(s))
+            yield _row(kind, loc(n), ng, hn, push(n, hn), loc(s))
             counts['push' if kind == PUSH else 'relax'] += 1
     return False

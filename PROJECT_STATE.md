@@ -1,6 +1,6 @@
-# COCO STATUS: COCO Lab v1 FROZEN at `coco-lab-v1-final`; v2 in progress (M0 · Transition)
+# COCO STATUS: COCO Lab v1 FROZEN at `coco-lab-v1-final`; v2 in progress (M0 closed; M1 · Glass-box Arena core built, PR awaiting Gautham)
 
-## COCO LAB v2 — CURRENT STATE (2026-10-08)
+## COCO LAB v2 — CURRENT STATE (2026-10-09)
 
 **The authority is [`README.md`](README.md)** — the COCO Lab v2 master plan
 ("the Glass-box Arena"), installed byte for byte on 2026-10-08. Where the
@@ -11,8 +11,8 @@ work stands, open questions G1–G6 and the plan-change log:
 | | |
 |---|---|
 | **v1** | **Frozen** at annotated tag `coco-lab-v1-final` = `3571169` (coco-labs `main` `2b6f8ad` fast-forwarded to `lab5`). Six releases published: `lab1-v1.0`, `live-v1.0`, `lab2-v1.0`, `lab3-v1.0`, `lab4-v1.0`, `lab5-v1.0` (checked, `docs/v2/data/m0/FREEZE.md`). The public site keeps serving v1 until M1–M2 replace its views (`docs/v2/DEPRECATIONS.md`) |
-| **v2** | **In progress: M0 · Transition** on branch `v2/m0-transition` (README §7). No v2 feature exists yet; M1 (the Glass-box Arena core) has not started |
-| **Tests** | (measured, `3571169`, clean overlay build) packages **3,081 / 0 / 0**, `lab_web` vitest **308 / 0 / 0**, build tools **117 / 0 / 0** (`docs/v2/data/m0/START_STATE.md`) |
+| **v2** | **M0 closed** (PR #19 → `main` `9f58b83`). **M1 · Glass-box Arena core built** on branch `v2/m1-arena-core` (M1.1–M1.10): `coco_schemas`, World Spec v1, the deterministic Arena model, `?view=arena` (the landing page for the bare URL), Lab 1's runs in the viewer. Every agent-measured M1 criterion met (`docs/v2/M1_RESULTS.md`); phone and usability **pending Gautham**; the PR into `main` awaits his review and is not merged by the agent |
+| **Tests** | (measured, M1.10 `1abe73f`, overlay `~/coco_lab_m1_ws`) packages **3,235 / 0 / 0**, `lab_web` vitest **381 / 0 / 0**, build tools **117 / 0 / 0**. v1 start: 3,081 / 308 / 117 at `3571169` (`docs/v2/data/m0/START_STATE.md`) |
 | **Baseline** | (measured, laptop, MODEL) Pyodide cold first edit median 12,857 ms, warm edit median 1,445 ms, every playing view 60 fps; phone **not yet measured** (`docs/v2/BASELINE.md`) |
 | **Robot-stack packages** | **Frozen** inside this repository (`FROZEN.md` in each): kept because Live and the recordings depend on them, no new features, decision G3 pending. The COCO robot project itself (Isaac / P03D line) is a separate repository and is never modified from COCO Lab work |
 | **Wording** | No physical robot exists. "Real" in COCO Lab means the full ROS 2 stack in Gazebo; Live is "Live Stack (simulated)"; the gripper has two fingers and a magnet; the magnet holds the object (README §2 corrections) |

@@ -114,7 +114,46 @@ def cases(draw, connectivity: Optional[int] = None,
     weight = draw(st.sampled_from([0.5, 2.0, 10.0])) if layer else 0.0
     wall = (not reachable and width >= 3
             and draw(st.floats(0, 1)) < wall_probability)
+    params = {'seed': seed, 'width': width, 'height': height,
+              'density': density, 'connectivity': conn,
+              'diagonal_cost': diag, 'corner_cutting': corner,
+              'cost_layer': layer, 'cost_weight': weight, 'wall': wall,
+              'reachable': reachable}
+    case = build_case(**params)
+    # A zero-length path tests nothing: discard it, so every one of
+    # the MAPS_PER_PROPERTY valid examples has start != goal.
+    assume(case is not None)
+    if CASE_LOG is not None:
+        CASE_LOG.append(params)
+    event(f'move model: {conn}-connected'
+          + (f', diagonal {diag:.3f}' if conn == 8 else ''))
+    event(f'cost layer: {"yes" if layer and weight else "no"}')
+    side = max(width, height)
+    event('size: ' + ('<=10' if side <= 10 else '11-20' if side <= 20
+                      else '21-30'))
+    return case
 
+
+#: When a list, every case :func:`cases` returns appends its parameters
+#: here (``make_golden_traces.py`` freezes a corpus this way).
+CASE_LOG: Optional[list] = None
+
+
+def build_case(seed: int, width: int, height: int, density: float,
+               connectivity: int, diagonal_cost: float,
+               corner_cutting: bool, cost_layer: bool, cost_weight: float,
+               wall: bool, reachable: bool) -> Optional[Case]:
+    """
+    Generate one map from its drawn parameters, without hypothesis.
+
+    Exactly the body :func:`cases` ran inline before M1.4, unchanged, so a
+    frozen corpus of parameters rebuilds the same maps. Returns ``None``
+    where :func:`cases` discards the example (a reachable case whose only
+    goal would be its start).
+    """
+    conn, diag, corner, layer, weight = (connectivity, diagonal_cost,
+                                         corner_cutting, cost_layer,
+                                         cost_weight)
     rng = random.Random(seed)
     blocked = [rng.random() < density for _ in range(width * height)]
     cost = [float(rng.randrange(0, 253)) for _ in range(width * height)] \
@@ -155,15 +194,8 @@ def cases(draw, connectivity: Optional[int] = None,
             frontier = nxt
         others = component[1:] or component  # never the start, if able
         goal = others[rng.randrange(len(others))]
-        # A zero-length path tests nothing: discard it, so every one of
-        # the MAPS_PER_PROPERTY valid examples has start != goal.
-        assume(goal != start)
-    event(f'move model: {conn}-connected'
-          + (f', diagonal {diag:.3f}' if conn == 8 else ''))
-    event(f'cost layer: {"yes" if layer and weight else "no"}')
-    side = max(width, height)
-    event('size: ' + ('<=10' if side <= 10 else '11-20' if side <= 20
-                      else '21-30'))
+        if goal == start:
+            return None
     return Case(grid, start, goal, seed)
 
 

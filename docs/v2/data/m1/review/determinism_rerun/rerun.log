@@ -1,0 +1,16 @@
+pyodide-node: 25 sessions, 3750 ticks
+chromium: 10 sessions, 96 s
+chromium: 20 sessions, 201 s
+chromium: 25 sessions, 3750 ticks
+firefox: 10 sessions, 117 s
+firefox: 20 sessions, 249 s
+firefox: 25 sessions, 3750 ticks
+webkit: 10 sessions, 89 s
+webkit: 20 sessions, 193 s
+webkit: 25 sessions, 3750 ticks
+{"chromium":[3750,0,"3c061fa4a253"],"firefox":[3750,0,"3c061fa4a253"],"pyodide-node":[3750,0,"3c061fa4a253"],"webkit":[3750,0,"3c061fa4a253"]} pass true
+compare exit=0
+vs committed reference: pyodide-node  Pyodide 314.0.7, Node v24.21.0   sessions=25 ticks=3750 mismatched=0
+vs committed reference: chromium      chromium 156.0.8078.4            sessions=25 ticks=3750 mismatched=0
+vs committed reference: firefox       firefox 157.0                    sessions=25 ticks=3750 mismatched=0
+vs committed reference: webkit        webkit 27.2                      sessions=25 ticks=3750 mismatched=0

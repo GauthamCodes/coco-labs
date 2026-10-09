@@ -1,0 +1,80 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-09T05:15:38.486Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.74,
+    "5m": 2.49,
+    "15m": 2.22
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-09T05:16:49.725Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.47,
+    "5m": 2.48,
+    "15m": 2.24
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4184/coco-labs/",
+ "gpu": true,
+ "n": 25,
+ "immediate": false,
+ "errors": [],
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "first_goal_ms": 45.900146484375,
+ "warm_ms": [
+  45.2001953125,
+  26.599853515625,
+  43.199951171875,
+  61.900146484375,
+  40.89990234375,
+  42.89990234375,
+  44.10009765625,
+  25,
+  42.800048828125,
+  21.7998046875,
+  44.60009765625,
+  45.699951171875,
+  40.60009765625,
+  45.89990234375,
+  41.89990234375,
+  42.300048828125,
+  33.60009765625,
+  45.900146484375,
+  28.300048828125,
+  45,
+  41.699951171875,
+  63.199951171875,
+  42.60009765625,
+  47.7001953125,
+  44.800048828125
+ ],
+ "warm_n": 25,
+ "median_ms": 42.89990234375,
+ "p95_ms": 61.900146484375,
+ "max_ms": 63.199951171875,
+ "min_ms": 21.7998046875,
+ "under_100": 25
+}

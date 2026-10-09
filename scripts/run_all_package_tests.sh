@@ -88,6 +88,7 @@ PACKAGES=(
     "custom_teleop"
     "coco_lab"
     "coco_lab_ros"
+    "coco_schemas"
 )
 # Optional: name packages to run only those, same interpreter and env.
 if [ "$#" -gt 0 ]; then

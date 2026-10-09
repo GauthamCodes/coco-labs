@@ -1,0 +1,67 @@
+{
+ "meta": {
+  "at_utc": "2026-10-08T12:15:44.939Z",
+  "node": "v24.21.0",
+  "pyodide": "314.0.7",
+  "protobuf_python": "7.34.1",
+  "protobuf_impl": "upb",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "cores": 12,
+  "load1": 2.5,
+  "reps": 7,
+  "workload": "coco_lab dijkstra, 400x400 grid, 20% blocked (random.Random(7)), 8-connected, (0,0)->(399,399)"
+ },
+ "events": 258263,
+ "search_ms_in_pyodide": 1284.7,
+ "load_pyodide_ms": 1433.5,
+ "load_protobuf_package_ms": 130.3,
+ "import_protobuf_ms": 206.7,
+ "A_columnar": {
+  "python": {
+   "median_ms": 75.3,
+   "min_ms": 73.6,
+   "max_ms": 88.8
+  },
+  "to_js": {
+   "median_ms": 8.4,
+   "min_ms": 6.3,
+   "max_ms": 9.8
+  },
+  "bytes": 19627988
+ },
+ "B_protobuf_columnar_in_python": {
+  "python": {
+   "median_ms": 92.2,
+   "min_ms": 90.8,
+   "max_ms": 96.4
+  },
+  "to_js": {
+   "median_ms": 4.4,
+   "min_ms": 1.9,
+   "max_ms": 5.2
+  },
+  "bytes": 11791140
+ },
+ "C_protobuf_rowwise_in_python": {
+  "python": {
+   "median_ms": 606,
+   "min_ms": 603.7,
+   "max_ms": 612.7
+  },
+  "to_js": {
+   "median_ms": 3.5,
+   "min_ms": 1.6,
+   "max_ms": 4
+  },
+  "bytes": 9207407
+ },
+ "D_js_encode_of_A": {
+  "js": {
+   "median_ms": 41.1,
+   "min_ms": 39.4,
+   "max_ms": 45.6
+  },
+  "bytes": 11791140,
+  "identical_to_B": true
+ }
+}

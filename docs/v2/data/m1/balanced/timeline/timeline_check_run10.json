@@ -1,0 +1,87 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-09T05:19:59.217Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.87,
+    "5m": 2.76,
+    "15m": 2.4
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-09T05:20:13.843Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.19,
+    "5m": 2.83,
+    "15m": 2.43
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4184/coco-labs/",
+ "planner": "dijkstra",
+ "errors": [],
+ "events": 81593,
+ "head_before": 89,
+ "seek_world": {
+  "ms": 0.19999999925494194,
+  "shown": 15,
+  "pose": [
+   0,
+   0,
+   1.0200000000000014
+  ],
+  "live": false
+ },
+ "seek_computation": [
+  {
+   "to": 8159,
+   "ms": 0.19999999925494194
+  },
+  {
+   "to": 73433,
+   "ms": 0.30000000074505806
+  },
+  {
+   "to": 3,
+   "ms": 0
+  },
+  {
+   "to": 40796,
+   "ms": 0.09999999776482582
+  },
+  {
+   "to": 81592,
+   "ms": 0.20000000298023224
+  },
+  {
+   "to": 20398,
+   "ms": 0.19999999925494194
+  }
+ ],
+ "after_step_cursor": 20399,
+ "rejoined": {
+  "live": true,
+  "head": 104
+ },
+ "seek_ms_max": 0.30000000074505806
+}

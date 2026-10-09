@@ -1,0 +1,29 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// Text attached to a moment (and optionally a place): captions, notes,
+// "replanning because the door closed".
+// Channel: coco.annotation.text.v1 (AnnotationBatch).
+
+syntax = "proto3";
+
+package coco.annotation.v1;
+
+enum Level {
+  LEVEL_UNSPECIFIED = 0;
+  LEVEL_INFO = 1;
+  LEVEL_NOTICE = 2;
+  LEVEL_WARNING = 3;
+}
+
+message AnnotationBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated string text = 4;
+  repeated Level level = 5;
+  repeated bool has_position = 6;
+  repeated double x = 7;
+  repeated double y = 8;
+  repeated string source = 9;  // who wrote it: "coco_lab", "lens", "author"
+}
