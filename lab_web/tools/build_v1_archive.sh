@@ -19,8 +19,11 @@ set -euo pipefail
 
 TAG=coco-lab-v1-final
 FROZEN=35711693d11da99218fa85050db60c6e10462bd2
-OUT=${1:?usage: build_v1_archive.sh OUT_DIR [WORK_DIR]}
-WORK=${2:-$(mktemp -d)}
+# absolute paths: the build below changes directory (a relative OUT_DIR once
+# landed inside the clone, measured on PR #21's first CI run)
+OUT=$(realpath -m "${1:?usage: build_v1_archive.sh OUT_DIR [WORK_DIR]}")
+WORK=$(realpath -m "${2:-$(mktemp -d)}")
+mkdir -p "$WORK"
 PY=${PYTHON:-python3}
 REPO=$(git rev-parse --show-toplevel)
 
@@ -50,4 +53,5 @@ node tools/check_dist.mjs > "$WORK/v1_check_dist.json"
 rm -rf "$OUT"
 mkdir -p "$(dirname "$OUT")"
 cp -r dist "$OUT"
+test -f "$OUT/index.html" || { echo "refusing: no $OUT/index.html after the copy" >&2; exit 3; }
 echo "v1 archive: $TAG = $SHA -> $OUT ($(du -sh "$OUT" | cut -f1))"

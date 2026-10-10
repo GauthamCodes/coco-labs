@@ -1009,6 +1009,12 @@ only. Read order for agents (README §9): `README.md`, this file,
     In the seek recording 1 of 4 fetches completed: later fetches inherit the
     pose where DWA stalled (reproduced in Python; M2.6's DWA weakness, parked
     in IDEAS). Fixed: the mission state label ("Go To_bay").
+  - **CI on PR #21 caught a defect in `build_v1_archive.sh`:** given a
+    RELATIVE output path (as `lab.yml` passes it), the copy landed inside the
+    tag's clone, so the Pages artifact had no `v1/` and 10 of the 22 URL
+    forms failed in CI with 404s (locally the path was always absolute). The
+    script now resolves its paths first and refuses to finish without
+    `OUT/index.html`; re-checked locally with CI's relative path.
   - Tests: packages **3,432 / 0 / 0**, vitest **343 / 0 / 0**, build tools
     **127 / 0 / 0** (+1: the conditions check of `seek_check.mjs`). Next:
     the pull request into `main` (not merged by the agent), Gautham's phone
