@@ -1,0 +1,143 @@
+{
+ "a": {
+  "counter": "coco_lab/test/test_heuristics.py::test_an_inadmissible_heuristic_makes_astar_suboptimal",
+  "live": {
+   "bundle": "weighted_astar_greedy_trap",
+   "connectivity": 8,
+   "heuristic": "octile"
+  },
+  "property": "coco_lab/test/test_properties.py::test_astar_cost_equals_dijkstra_with_admissible_heuristic",
+  "property_maps": 1000,
+  "real_stack": {
+   "astar_equals_dijkstra_C1": 50,
+   "cite": "docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"Conformance: coco_lab vs SmacPlanner2D vs NavFn\"",
+   "of": 50
+  }
+ },
+ "b": {
+  "analogue": {
+   "cite": "docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"NavFn and M3 (the 6.2 %)\"; docs/data/lab1c/conformance/conformance.json (m3_analogue)",
+   "goal_world": [
+    2.5,
+    6.0
+   ],
+   "paths_recorded": false,
+   "rows": [
+    {
+     "L": 7.785166622246619,
+     "path": "SmacPlanner2D, returned (smoothed)",
+     "poses": 154
+    },
+    {
+     "L": 7.893981077339028,
+     "path": "NavFn, use_astar: false",
+     "poses": 314
+    },
+    {
+     "L": 7.916306781896112,
+     "path": "NavFn, use_astar: true",
+     "poses": 315
+    },
+    {
+     "E": 160.04163056034264,
+     "L": 8.002081647257437,
+     "path": "SmacPlanner2D raw A* (unsmoothed_plan)",
+     "poses": 154
+    },
+    {
+     "E": 160.04163056034258,
+     "L": 8.002081528017131,
+     "path": "coco_lab C1 optimum (cell path)",
+     "poses": 154
+    }
+   ],
+   "start_world": [
+    0.0,
+    0.0
+   ]
+  },
+  "fifty": {
+   "cite": "docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"Conformance: coco_lab vs SmacPlanner2D vs NavFn\"; docs/data/lab1c/conformance/conformance_summary.json",
+   "e_applies": 36,
+   "e_gap_max": 1.0848820720240031e-15,
+   "e_within": 36,
+   "n": 50,
+   "navfn_vs_smac_L": {
+    "max": 0.11074025543374025,
+    "median": 0.005696041895368082,
+    "min": -0.03134468291667052,
+    "n": 50,
+    "p25": -0.0017244357118423707,
+    "p75": 0.01610404772700045
+   },
+   "smac_vs_c1_L": {
+    "max": -0.010519176863443369,
+    "median": -0.028834121919550773,
+    "min": -0.06736654472228416,
+    "n": 50,
+    "p25": -0.0359955965204507,
+    "p75": -0.023311116768865936
+   }
+  },
+  "m3": {
+   "cite": "docs/RESULTS.md, \"A \u2014 SmacPlanner2D and the evidence for it\"; gazebo_models/scripts/plan_compare.py",
+   "navfn_m": 3.373,
+   "smac_m": 3.165,
+   "status": "docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"NavFn and M3 (the 6.2 %)\""
+  },
+  "mechanism_cite": "docs/DESIGN_DECISIONS.md (NavFn calcPath); docs/archive/v1/README_v1.md \"What the 6.2 % is, and what it is not\""
+ },
+ "c": {
+  "cite": "docs/labs/ISRO_INVESTIGATION.md \u00a75 (MEASURED); docs/data/lab1b/isro_experiment.json; docs/RESULTS.md, \"COCO Lab Phase 1B\"",
+  "label": "reconstruction",
+  "label_why": "Phase 1B examined a faithful recreation of the simulator, transcribed from the internship report's code listing (commit 5aad7b3); no internship-era file or metrics CSV exists. 1B recorded the result as a reconstruction.",
+  "live": {
+   "bundle": "astar_turn_trap_heading"
+  },
+  "m1_cost": {
+   "a_higher": 82,
+   "a_lower": 66,
+   "differ": 148,
+   "max_pct": 1.871733583751801,
+   "mean_pct": 0.0066468213309566915,
+   "mean_pct_where_differ": 0.05380332401679994,
+   "min_pct": -1.9886934327411008,
+   "of": 1198
+  },
+  "m1_vs_optimum": {
+   "a_higher": 201,
+   "a_lower": 0,
+   "differ": 201,
+   "max_pct": 2.3689270621825,
+   "mean_pct": 0.11181605618543308,
+   "mean_pct_where_differ": 0.666445946816655,
+   "min_pct": -2.1921056511702608e-14,
+   "of": 1198
+  },
+  "m2_cost": {
+   "a_higher": 0,
+   "a_lower": 0,
+   "differ": 0,
+   "max_pct": 3.735655696185903e-14,
+   "mean_pct": 2.372349670063078e-16,
+   "mean_pct_where_differ": null,
+   "min_pct": 0.0,
+   "of": 1198
+  },
+  "steps_ratio_long": 0.9992559523809524,
+  "steps_ratio_short": 0.9966292134831461,
+  "table1": {
+   "astar_ms": 1.2,
+   "astar_steps": 2.64,
+   "cite": "docs/labs/ISRO_INVESTIGATION.md \u00a76 (report \u00a7VIII, Table 1)",
+   "dijkstra_ms": 6.0,
+   "dijkstra_steps": 2.55
+  },
+  "time_ratio_long": [
+   4.469751809687702,
+   5.408146726414715
+  ]
+ },
+ "schema": "lab_web.exhibit",
+ "version": "1.0"
+}
