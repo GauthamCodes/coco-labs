@@ -1,0 +1,31 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// What an estimator BELIEVES the robot's pose is (M2.1): a localisation
+// filter, a SLAM, or dead reckoning. One row per estimate, with its
+// covariance (the upper triangle of the 3x3 over x, y, theta). Ground truth
+// is NOT here: it is coco.truth (README section 3, invariant 4); an error is
+// computed against it by whoever compares, never stored as if measured.
+// Which estimator produced the rows is the batch's `estimator` (e.g. "mcl",
+// "ekf", "ekf_slam", "fastslam", "pose_graph", "odometry").
+// Channel: coco.estimate.pose.v1 (EstimateBatch).
+
+syntax = "proto3";
+
+package coco.estimate.v1;
+
+message EstimateBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated double x = 4;        // m, map frame
+  repeated double y = 5;
+  repeated double theta = 6;    // rad
+  repeated double cov_xx = 7;   // m^2
+  repeated double cov_xy = 8;
+  repeated double cov_xt = 9;   // m rad
+  repeated double cov_yy = 10;
+  repeated double cov_yt = 11;
+  repeated double cov_tt = 12;  // rad^2
+  string estimator = 13;        // which estimator, see above
+}

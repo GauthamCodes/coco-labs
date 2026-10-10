@@ -1,0 +1,10 @@
+{
+ "tool": "docs/v2/data/m2/m24/cpython_vs_pyodide.py",
+ "evidence": "MODEL",
+ "engine": "CPython 3.12.3",
+ "sessions": 10,
+ "ticks": 1500,
+ "mismatched": 0,
+ "first_mismatches": [],
+ "seconds": 51.8
+}

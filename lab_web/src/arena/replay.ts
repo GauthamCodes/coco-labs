@@ -24,6 +24,7 @@ import { RobotStateBatchSchema } from '../schemas/gen/coco/robot/v1/robot_pb';
 import { TruthPoseBatchSchema } from '../schemas/gen/coco/truth/v1/truth_pb';
 import { WorldGridSchema } from '../schemas/gen/coco/world/v1/world_pb';
 import { readRun } from '../schemas/mcap';
+import { isDrive, parseDrive } from './replay_drive';
 import type { Recording } from './attract';
 import type { PlanInfo, SearchColumns, Tick, World } from './protocol';
 
@@ -36,6 +37,8 @@ export interface ConvertedRun extends Recording {
   results: Record<string, unknown> | null;
   /** The v1 bundle it came from (content hash). */
   bundle: string;
+  /** M2.7: one line of what was measured in this recording, when the run's lab says it so. */
+  card?: string;
 }
 
 type Pose = [number, number, number];
@@ -43,6 +46,8 @@ const DT = 0.1;
 
 export async function parseConverted(bytes: Uint8Array): Promise<ConvertedRun> {
   const { manifest, messages } = await readRun(bytes);
+  // M2.7: a converted Lab 5 drive (one controller run on the full stack)
+  if (isDrive(manifest)) return parseDrive(manifest, messages);
   const v1 = JSON.parse(new TextDecoder().decode(manifest.spec));
   const stack = manifest.evidenceClass === EvidenceClass.STACK;
   const on = (ch: string) => messages.filter((m) => m.channel === ch);

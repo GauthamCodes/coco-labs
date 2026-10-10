@@ -1,0 +1,850 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-10T00:26:36.710Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.5,
+    "5m": 2.37,
+    "15m": 1.82
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-10T00:26:48.773Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.34,
+    "5m": 2.35,
+    "15m": 1.81
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4194/coco-labs/",
+ "steps": {
+  "list": [
+   "find-a-path",
+   "world-changes",
+   "where-it-is",
+   "build-a-map",
+   "avoid-things",
+   "where-to-look"
+  ],
+  "settings_beat": {
+   "href": "/coco-labs/?view=arena&lens=map&level=explain&cfg=arena.range_sigma%3D0.02&cfg=localise.filter%3Dmcl&cfg=map.algorithm%3Doccupancy&cfg=map.poses%3Dbelief&mission=build-a-map&beat=3",
+   "applied": [
+    "arena.range_sigma=0.02",
+    "localise.filter=mcl",
+    "map.algorithm=occupancy",
+    "map.poses=belief"
+   ],
+   "shown": {
+    "algorithm": "occupancy",
+    "poses": "belief"
+   },
+   "gaps": [
+    "lidar",
+    "odometry"
+   ],
+   "lidar_chip": "Model gap: LiDARThe model's LiDAR is 2D: it sees the bays' 3D ramps only as footprints. Against Gazebo at the same 237 poses, 111,804 beams: |error| median 2.2 mm, 95th percentile 9.3 cm, 99th 1.43 m. Fidelity report"
+  },
+  "back": {
+   "url": "?view=learn&mission=build-a-map&beat=3",
+   "beat": "manipulate"
+  },
+  "recording_beat": {
+   "href": "/coco-labs/?view=arena&replay=lab5_static_room_dwb_1&level=explain&mission=avoid-things&beat=5",
+   "banner": "Recorded run (STACK): COCO driven by the full ROS 2 stack in Gazebo — Lab 5 · Around a wall end and into a room · DWB run DWB_1. The solid robot is where the stack believed it was (AMCL); the outline is ground truth.",
+   "converter_marker_shown": false
+  },
+  "phone": {
+   "list_overflow_px": 0,
+   "beat_overflow_px": 0
+  }
+ },
+ "missions": [
+  {
+   "id": "find-a-path",
+   "beats": [
+    {
+     "beat": "hook",
+     "url": "?view=learn&mission=find-a-path&beat=0",
+     "claims": [],
+     "arena": "/coco-labs/?view=arena&lens=plan&level=watch&mission=find-a-path&beat=0"
+    },
+    {
+     "beat": "predict",
+     "url": "?view=learn&mission=find-a-path&beat=1",
+     "claims_before_answer": 0,
+     "picked": 0,
+     "verdict": "Not quite: the answer is \"Neither -- with an admissible heuristic they cost exactly the same\". The evidence:",
+     "options_locked": true,
+     "claims": [
+      {
+       "id": "astar-equals-dijkstra",
+       "label": "TESTED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "reveal",
+     "url": "?view=learn&mission=find-a-path&beat=2",
+     "claims": [
+      {
+       "id": "astar-equals-dijkstra",
+       "label": "TESTED",
+       "evidence_links": 2
+      },
+      {
+       "id": "real-stack-50",
+       "label": "MEASURED",
+       "evidence_links": 2
+      },
+      {
+       "id": "race-optimum",
+       "label": "TESTED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&lens=plan&level=explain&mission=find-a-path&beat=2"
+    },
+    {
+     "beat": "manipulate",
+     "url": "?view=learn&mission=find-a-path&beat=3",
+     "claims": [
+      {
+       "id": "bounds",
+       "label": "TESTED",
+       "evidence_links": 6
+      },
+      {
+       "id": "predictions",
+       "label": "TESTED",
+       "evidence_links": 2
+      },
+      {
+       "id": "teaching-traces",
+       "label": "TESTED",
+       "evidence_links": 2
+      },
+      {
+       "id": "arena-traces",
+       "label": "MEASURED",
+       "evidence_links": 3
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&lens=plan&level=inspect&mission=find-a-path&beat=3"
+    },
+    {
+     "beat": "explain",
+     "url": "?view=learn&mission=find-a-path&beat=4",
+     "claims": [
+      {
+       "id": "smac-agrees",
+       "label": "MEASURED",
+       "evidence_links": 2
+      },
+      {
+       "id": "m3-six-percent",
+       "label": "MEASURED",
+       "evidence_links": 4
+      },
+      {
+       "id": "isro-reconstruction",
+       "label": "MEASURED",
+       "evidence_links": 3
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "stack",
+     "url": "?view=learn&mission=find-a-path&beat=5",
+     "claims": [
+      {
+       "id": "lab1c-runs",
+       "label": "SIMULATION RESULT",
+       "evidence_links": 2
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&replay=lab1c_astar&level=explain&mission=find-a-path&beat=5"
+    },
+    {
+     "beat": "challenge",
+     "url": "?view=learn&mission=find-a-path&beat=6",
+     "claims": [],
+     "arena": null
+    }
+   ],
+   "v1": "/coco-labs/v1/?view=plan",
+   "gaps": [],
+   "claims_shown": 11
+  },
+  {
+   "id": "world-changes",
+   "beats": [
+    {
+     "beat": "hook",
+     "url": "?view=learn&mission=world-changes&beat=0",
+     "claims": [
+      {
+       "id": "arena-replans",
+       "label": "MEASURED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&lens=plan&level=watch&mission=world-changes&beat=0"
+    },
+    {
+     "beat": "predict",
+     "url": "?view=learn&mission=world-changes&beat=1",
+     "claims_before_answer": 0,
+     "picked": 0,
+     "verdict": "Not quite: the answer is \"No -- after every change both plans cost exactly the same\". The evidence:",
+     "options_locked": true,
+     "claims": [
+      {
+       "id": "dstar-optimal",
+       "label": "TESTED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "reveal",
+     "url": "?view=learn&mission=world-changes&beat=2",
+     "claims": [
+      {
+       "id": "dstar-optimal",
+       "label": "TESTED",
+       "evidence_links": 2
+      },
+      {
+       "id": "dstar-arrives",
+       "label": "TESTED",
+       "evidence_links": 1
+      },
+      {
+       "id": "sketch-replans",
+       "label": "MEASURED",
+       "evidence_links": 3
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "manipulate",
+     "url": "?view=learn&mission=world-changes&beat=3",
+     "claims": [
+      {
+       "id": "arena-replans",
+       "label": "MEASURED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&lens=plan&level=explain&mission=world-changes&beat=3"
+    },
+    {
+     "beat": "explain",
+     "url": "?view=learn&mission=world-changes&beat=4",
+     "claims": [
+      {
+       "id": "dstar-work",
+       "label": "MEASURED",
+       "evidence_links": 4
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "stack",
+     "url": "?view=learn&mission=world-changes&beat=5",
+     "claims": [
+      {
+       "id": "experiment-c",
+       "label": "MEASURED",
+       "evidence_links": 3
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "challenge",
+     "url": "?view=learn&mission=world-changes&beat=6",
+     "claims": [],
+     "arena": null
+    }
+   ],
+   "v1": "/coco-labs/v1/?view=move&move=replan",
+   "gaps": [],
+   "claims_shown": 6
+  },
+  {
+   "id": "where-it-is",
+   "beats": [
+    {
+     "beat": "hook",
+     "url": "?view=learn&mission=where-it-is&beat=0",
+     "claims": [
+      {
+       "id": "tracking",
+       "label": "TESTED",
+       "evidence_links": 1
+      },
+      {
+       "id": "lidar-subset",
+       "label": "SIMPLIFIED MODEL",
+       "evidence_links": 2
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&lens=localise&level=watch&cfg=arena.range_sigma%3D0.02&cfg=localise.filter%3Dboth&mission=where-it-is&beat=0"
+    },
+    {
+     "beat": "predict",
+     "url": "?view=learn&mission=where-it-is&beat=1",
+     "claims_before_answer": 0,
+     "picked": 0,
+     "verdict": "Not quite: the answer is \"MCL with random particles injected when the scans stop fitting\". The evidence:",
+     "options_locked": true,
+     "claims": [
+      {
+       "id": "kidnap",
+       "label": "TESTED",
+       "evidence_links": 4
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "reveal",
+     "url": "?view=learn&mission=where-it-is&beat=2",
+     "claims": [
+      {
+       "id": "kidnap",
+       "label": "TESTED",
+       "evidence_links": 4
+      },
+      {
+       "id": "global",
+       "label": "TESTED",
+       "evidence_links": 2
+      },
+      {
+       "id": "twins",
+       "label": "TESTED",
+       "evidence_links": 3
+      },
+      {
+       "id": "arena-kidnap-sketch",
+       "label": "TESTED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "manipulate",
+     "url": "?view=learn&mission=where-it-is&beat=3",
+     "claims": [
+      {
+       "id": "arena-kidnap-closed-loop",
+       "label": "SIMPLIFIED MODEL",
+       "evidence_links": 2
+      },
+      {
+       "id": "odometry-model",
+       "label": "MEASURED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&lens=localise&level=explain&cfg=arena.range_sigma%3D0.02&cfg=localise.filter%3Dboth&cfg=localise.mcl.injection%3Daugmented&mission=where-it-is&beat=3"
+    },
+    {
+     "beat": "explain",
+     "url": "?view=learn&mission=where-it-is&beat=4",
+     "claims": [
+      {
+       "id": "covariance",
+       "label": "SIMULATION RESULT",
+       "evidence_links": 3
+      },
+      {
+       "id": "kidnap-ab",
+       "label": "UNRESOLVED",
+       "evidence_links": 2
+      },
+      {
+       "id": "recovery-historical",
+       "label": "SIMULATION RESULT",
+       "evidence_links": 1
+      },
+      {
+       "id": "aliasing",
+       "label": "SIMULATION RESULT",
+       "evidence_links": 2
+      },
+      {
+       "id": "ekf-drift",
+       "label": "SIMULATION RESULT",
+       "evidence_links": 2
+      },
+      {
+       "id": "amcl-odom",
+       "label": "SIMULATION RESULT",
+       "evidence_links": 2
+      },
+      {
+       "id": "lidar-fidelity",
+       "label": "MEASURED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "stack",
+     "url": "?view=learn&mission=where-it-is&beat=5",
+     "claims": [
+      {
+       "id": "run15",
+       "label": "SIMULATION RESULT",
+       "evidence_links": 1
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&replay=lab5_mislocalised_dwb_1&level=explain&mission=where-it-is&beat=5"
+    },
+    {
+     "beat": "challenge",
+     "url": "?view=learn&mission=where-it-is&beat=6",
+     "claims": [],
+     "arena": null
+    }
+   ],
+   "v1": "/coco-labs/v1/?view=localise",
+   "gaps": [
+    "lidar",
+    "odometry"
+   ],
+   "claims_shown": 16
+  },
+  {
+   "id": "build-a-map",
+   "beats": [
+    {
+     "beat": "hook",
+     "url": "?view=learn&mission=build-a-map&beat=0",
+     "claims": [
+      {
+       "id": "arena-scenario",
+       "label": "SIMPLIFIED MODEL",
+       "evidence_links": 3
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&lens=map&level=watch&cfg=arena.range_sigma%3D0.02&cfg=map.algorithm%3Doccupancy&cfg=map.poses%3Dodometry&mission=build-a-map&beat=0"
+    },
+    {
+     "beat": "predict",
+     "url": "?view=learn&mission=build-a-map&beat=1",
+     "claims_before_answer": 0,
+     "picked": 0,
+     "verdict": "Not quite: the answer is \"Usually in coco_lab's model -- but slam_toolbox and Cartographer made some maps much worse\". The evidence:",
+     "options_locked": true,
+     "claims": [
+      {
+       "id": "loop-sketch",
+       "label": "TESTED",
+       "evidence_links": 3
+      },
+      {
+       "id": "loop-backends",
+       "label": "UNRESOLVED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "reveal",
+     "url": "?view=learn&mission=build-a-map&beat=2",
+     "claims": [
+      {
+       "id": "loop-sketch",
+       "label": "TESTED",
+       "evidence_links": 3
+      },
+      {
+       "id": "loop-backends",
+       "label": "UNRESOLVED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "manipulate",
+     "url": "?view=learn&mission=build-a-map&beat=3",
+     "claims": [
+      {
+       "id": "arena-scenario",
+       "label": "SIMPLIFIED MODEL",
+       "evidence_links": 3
+      },
+      {
+       "id": "corridor",
+       "label": "TESTED",
+       "evidence_links": 4
+      },
+      {
+       "id": "landmarks",
+       "label": "ASSUMPTION",
+       "evidence_links": 4
+      },
+      {
+       "id": "score",
+       "label": "TESTED",
+       "evidence_links": 3
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&lens=map&level=explain&cfg=arena.range_sigma%3D0.02&cfg=localise.filter%3Dmcl&cfg=map.algorithm%3Doccupancy&cfg=map.poses%3Dbelief&mission=build-a-map&beat=3"
+    },
+    {
+     "beat": "explain",
+     "url": "?view=learn&mission=build-a-map&beat=4",
+     "claims": [
+      {
+       "id": "corridor",
+       "label": "TESTED",
+       "evidence_links": 4
+      },
+      {
+       "id": "landmarks",
+       "label": "ASSUMPTION",
+       "evidence_links": 4
+      },
+      {
+       "id": "sensor-fidelity",
+       "label": "MEASURED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "stack",
+     "url": "?view=learn&mission=build-a-map&beat=5",
+     "claims": [
+      {
+       "id": "s1-tour",
+       "label": "SIMULATION RESULT",
+       "evidence_links": 4
+      },
+      {
+       "id": "loop-backends",
+       "label": "UNRESOLVED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "challenge",
+     "url": "?view=learn&mission=build-a-map&beat=6",
+     "claims": [
+      {
+       "id": "score",
+       "label": "TESTED",
+       "evidence_links": 3
+      }
+     ],
+     "arena": null
+    }
+   ],
+   "v1": "/coco-labs/v1/?view=map",
+   "gaps": [
+    "lidar",
+    "odometry"
+   ],
+   "claims_shown": 8
+  },
+  {
+   "id": "avoid-things",
+   "beats": [
+    {
+     "beat": "hook",
+     "url": "?view=learn&mission=avoid-things&beat=0",
+     "claims": [
+      {
+       "id": "controllers",
+       "label": "SIMPLIFIED MODEL",
+       "evidence_links": 5
+      },
+      {
+       "id": "same-inputs",
+       "label": "TESTED",
+       "evidence_links": 3
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&lens=move&level=watch&cfg=move.controller%3Ddwa&cfg=move.scenario%3Dcrossing&mission=avoid-things&beat=0"
+    },
+    {
+     "beat": "predict",
+     "url": "?view=learn&mission=avoid-things&beat=1",
+     "claims_before_answer": 0,
+     "picked": 0,
+     "verdict": "Yes. The evidence:",
+     "options_locked": true,
+     "claims": [
+      {
+       "id": "hairpin",
+       "label": "SIMULATION RESULT",
+       "evidence_links": 3
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "reveal",
+     "url": "?view=learn&mission=avoid-things&beat=2",
+     "claims": [
+      {
+       "id": "hairpin",
+       "label": "SIMULATION RESULT",
+       "evidence_links": 3
+      },
+      {
+       "id": "agreement",
+       "label": "SIMPLIFIED MODEL",
+       "evidence_links": 2
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "manipulate",
+     "url": "?view=learn&mission=avoid-things&beat=3",
+     "claims": [
+      {
+       "id": "controllers",
+       "label": "SIMPLIFIED MODEL",
+       "evidence_links": 5
+      },
+      {
+       "id": "head-on",
+       "label": "SIMPLIFIED MODEL",
+       "evidence_links": 3
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&lens=move&level=explain&cfg=move.controller%3Dmppi&cfg=move.scenario%3Doncoming&mission=avoid-things&beat=3"
+    },
+    {
+     "beat": "explain",
+     "url": "?view=learn&mission=avoid-things&beat=4",
+     "claims": [
+      {
+       "id": "head-on",
+       "label": "SIMPLIFIED MODEL",
+       "evidence_links": 3
+      },
+      {
+       "id": "actor",
+       "label": "TESTED",
+       "evidence_links": 3
+      },
+      {
+       "id": "run15-quoted",
+       "label": "SIMULATION RESULT",
+       "evidence_links": 3
+      },
+      {
+       "id": "metrics",
+       "label": "TESTED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "stack",
+     "url": "?view=learn&mission=avoid-things&beat=5",
+     "claims": [
+      {
+       "id": "stack-drives",
+       "label": "SIMULATION RESULT",
+       "evidence_links": 3
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&replay=lab5_static_room_dwb_1&level=explain&mission=avoid-things&beat=5"
+    },
+    {
+     "beat": "challenge",
+     "url": "?view=learn&mission=avoid-things&beat=6",
+     "claims": [],
+     "arena": null
+    }
+   ],
+   "v1": "/coco-labs/v1/?view=move",
+   "gaps": [
+    "lidar",
+    "tracking"
+   ],
+   "claims_shown": 9
+  },
+  {
+   "id": "where-to-look",
+   "beats": [
+    {
+     "beat": "hook",
+     "url": "?view=learn&mission=where-to-look&beat=0",
+     "claims": [
+      {
+       "id": "told-only-colour",
+       "label": "ASSUMPTION",
+       "evidence_links": 3
+      },
+      {
+       "id": "fetch-matrix",
+       "label": "SIMPLIFIED MODEL",
+       "evidence_links": 3
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&lens=decide&level=watch&cfg=mission.start%3Dred&mission=where-to-look&beat=0"
+    },
+    {
+     "beat": "predict",
+     "url": "?view=learn&mission=where-to-look&beat=1",
+     "claims_before_answer": 0,
+     "picked": 0,
+     "verdict": "Not quite: the answer is \"No -- a search that finds nothing drives the whole tour, so the tour's length counts\". The evidence:",
+     "options_locked": true,
+     "claims": [
+      {
+       "id": "counterexample",
+       "label": "TESTED",
+       "evidence_links": 3
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "reveal",
+     "url": "?view=learn&mission=where-to-look&beat=2",
+     "claims": [
+      {
+       "id": "counterexample",
+       "label": "TESTED",
+       "evidence_links": 3
+      },
+      {
+       "id": "bayes",
+       "label": "TESTED",
+       "evidence_links": 2
+      },
+      {
+       "id": "index-rule",
+       "label": "TESTED",
+       "evidence_links": 2
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "manipulate",
+     "url": "?view=learn&mission=where-to-look&beat=3",
+     "claims": [
+      {
+       "id": "fetch-matrix",
+       "label": "SIMPLIFIED MODEL",
+       "evidence_links": 3
+      },
+      {
+       "id": "mislocalised-look",
+       "label": "SIMPLIFIED MODEL",
+       "evidence_links": 1
+      }
+     ],
+     "arena": "/coco-labs/?view=arena&lens=decide&level=explain&cfg=arena.range_sigma%3D0.02&cfg=localise.filter%3Dmcl&cfg=mission.start%3Dred&mission=where-to-look&beat=3"
+    },
+    {
+     "beat": "explain",
+     "url": "?view=learn&mission=where-to-look&beat=4",
+     "claims": [
+      {
+       "id": "negative",
+       "label": "TESTED",
+       "evidence_links": 4
+      },
+      {
+       "id": "silence",
+       "label": "TESTED",
+       "evidence_links": 1
+      },
+      {
+       "id": "anticheat",
+       "label": "TESTED",
+       "evidence_links": 4
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "stack",
+     "url": "?view=learn&mission=where-to-look&beat=5",
+     "claims": [
+      {
+       "id": "p05-matrix",
+       "label": "SIMULATION RESULT",
+       "evidence_links": 3
+      },
+      {
+       "id": "p05-replay",
+       "label": "TESTED",
+       "evidence_links": 3
+      }
+     ],
+     "arena": null
+    },
+    {
+     "beat": "challenge",
+     "url": "?view=learn&mission=where-to-look&beat=6",
+     "claims": [
+      {
+       "id": "negative",
+       "label": "TESTED",
+       "evidence_links": 4
+      }
+     ],
+     "arena": null
+    }
+   ],
+   "v1": "/coco-labs/v1/?view=search",
+   "gaps": [
+    "lidar",
+    "odometry",
+    "tracking"
+   ],
+   "claims_shown": 11
+  }
+ ],
+ "errors": [],
+ "ok": true
+}

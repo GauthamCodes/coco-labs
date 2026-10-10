@@ -39,6 +39,8 @@ const GL = args.gl === 'gpu' ? 'gpu' : 'swiftshader';
 // --no-attract 1: an A/B arm, the attract recording's request refused, so the
 // page boots as it did before M1.8 (it logs that one failed fetch)
 const NO_ATTRACT = args['no-attract'] === '1';
+// --attract POLICY (M2.0): when the page starts its attract recording (eager, low, after_pyodide, after_live)
+const ATTRACT = args.attract ?? null;
 const LAUNCH = GL === 'gpu' ? { args: ['--use-angle=gl-egl', '--ignore-gpu-blocklist', '--enable-gpu'] } : {};
 const SOURCE = args.pyodide ?? 'self';
 const THROTTLE = args.throttle ?? 'none';
@@ -85,7 +87,7 @@ async function run(i) {
   // workers' requests are not page requests: count them from the worker side
   context.on('requestfinished', () => {});
   try {
-    await page.goto(`${SITE}?view=arena&perf${SOURCE === 'cdn' ? '&pyodide=cdn' : ''}`);
+    await page.goto(`${SITE}?view=arena&perf${SOURCE === 'cdn' ? '&pyodide=cdn' : ''}${ATTRACT ? `&attract=${ATTRACT}` : ''}`);
     const t0 = Date.now();
     await page.waitForFunction(() => !!window.__cocoPerf?.marks.arena_ready, null, { timeout: 180_000, polling: 50 });
     const readyMarks = await page.evaluate(() => ({ ...window.__cocoPerf.marks, navStart: window.__cocoPerf.navStart }));
@@ -132,7 +134,7 @@ for (let i = 0; i < RUNS; i += 1) {
 const b = await chromium.launch();
 const result = {
   meta: {
-    site: SITE, runs: RUNS, pyodide: SOURCE, throttle: THROTTLE, profile: PROFILES[THROTTLE], gl: GL, no_attract: NO_ATTRACT,
+    site: SITE, runs: RUNS, pyodide: SOURCE, throttle: THROTTLE, profile: PROFILES[THROTTLE], gl: GL, no_attract: NO_ATTRACT, attract: ATTRACT ?? 'default',
     browser: `chromium ${b.version()} (Playwright, headless)`, cpu: os.cpus()[0].model,
     at_utc: new Date().toISOString(), load1: Math.round(os.loadavg()[0] * 10) / 10,
     // CPU speed decides these numbers: record the laptop's power state (M1.10 found power-saver)

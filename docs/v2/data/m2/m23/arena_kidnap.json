@@ -1,0 +1,412 @@
+{
+ "tool": "docs/v2/data/m2/m23/arena_kidnap.py",
+ "evidence": "MODEL (the Arena, closed loop)",
+ "world": "worlds/coco_arena_v1.yaml",
+ "particles": 500,
+ "kidnap_tick": 120,
+ "kidnap_to": [
+  9.0,
+  -4.0,
+  1.2
+ ],
+ "ticks": 700,
+ "goals": [
+  [
+   6.0,
+   4.0
+  ],
+  [
+   2.5,
+   2.0
+  ],
+  [
+   0.5,
+   -2.5
+  ],
+  [
+   12.0,
+   5.5
+  ]
+ ],
+ "definition": {
+  "ok_xy_m": 0.5,
+  "ok_yaw_rad": 0.3,
+  "hold_updates": 5
+ },
+ "seconds": 390.7,
+ "python": "3.12.3",
+ "arms": {
+  "none": {
+   "recovered": 0,
+   "n": 20,
+   "runs": [
+    {
+     "seed": 0,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 81,
+     "err_just_after_m": 10.763,
+     "final_err_m": 7.494,
+     "blocked_ticks_after_kidnap": 162
+    },
+    {
+     "seed": 1,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 8,
+     "err_just_after_m": 10.79,
+     "final_err_m": 10.842,
+     "blocked_ticks_after_kidnap": 521
+    },
+    {
+     "seed": 2,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 91,
+     "err_just_after_m": 10.467,
+     "final_err_m": 7.792,
+     "blocked_ticks_after_kidnap": 112
+    },
+    {
+     "seed": 3,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 16,
+     "err_just_after_m": 10.75,
+     "final_err_m": 10.626,
+     "blocked_ticks_after_kidnap": 464
+    },
+    {
+     "seed": 4,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 63,
+     "err_just_after_m": 10.795,
+     "final_err_m": 11.426,
+     "blocked_ticks_after_kidnap": 322
+    },
+    {
+     "seed": 5,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 70,
+     "err_just_after_m": 10.751,
+     "final_err_m": 9.962,
+     "blocked_ticks_after_kidnap": 189
+    },
+    {
+     "seed": 6,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 47,
+     "err_just_after_m": 10.414,
+     "final_err_m": 11.33,
+     "blocked_ticks_after_kidnap": 387
+    },
+    {
+     "seed": 7,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 8,
+     "err_just_after_m": 10.647,
+     "final_err_m": 11.211,
+     "blocked_ticks_after_kidnap": 524
+    },
+    {
+     "seed": 8,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 35,
+     "err_just_after_m": 10.835,
+     "final_err_m": 12.129,
+     "blocked_ticks_after_kidnap": 441
+    },
+    {
+     "seed": 9,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 92,
+     "err_just_after_m": 10.722,
+     "final_err_m": 8.671,
+     "blocked_ticks_after_kidnap": 89
+    },
+    {
+     "seed": 10,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 53,
+     "err_just_after_m": 10.338,
+     "final_err_m": 11.343,
+     "blocked_ticks_after_kidnap": 361
+    },
+    {
+     "seed": 11,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 24,
+     "err_just_after_m": 10.501,
+     "final_err_m": 9.61,
+     "blocked_ticks_after_kidnap": 496
+    },
+    {
+     "seed": 12,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 33,
+     "err_just_after_m": 10.522,
+     "final_err_m": 11.922,
+     "blocked_ticks_after_kidnap": 427
+    },
+    {
+     "seed": 13,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 27,
+     "err_just_after_m": 10.462,
+     "final_err_m": 9.869,
+     "blocked_ticks_after_kidnap": 490
+    },
+    {
+     "seed": 14,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 71,
+     "err_just_after_m": 10.771,
+     "final_err_m": 8.751,
+     "blocked_ticks_after_kidnap": 162
+    },
+    {
+     "seed": 15,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 29,
+     "err_just_after_m": 10.549,
+     "final_err_m": 12.051,
+     "blocked_ticks_after_kidnap": 466
+    },
+    {
+     "seed": 16,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 128,
+     "err_just_after_m": 10.639,
+     "final_err_m": 8.427,
+     "blocked_ticks_after_kidnap": 0
+    },
+    {
+     "seed": 17,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 10,
+     "err_just_after_m": 10.536,
+     "final_err_m": 11.187,
+     "blocked_ticks_after_kidnap": 516
+    },
+    {
+     "seed": 18,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 9,
+     "err_just_after_m": 10.554,
+     "final_err_m": 11.165,
+     "blocked_ticks_after_kidnap": 517
+    },
+    {
+     "seed": 19,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 68,
+     "err_just_after_m": 10.654,
+     "final_err_m": 6.118,
+     "blocked_ticks_after_kidnap": 166
+    }
+   ]
+  },
+  "augmented": {
+   "recovered": 0,
+   "n": 20,
+   "runs": [
+    {
+     "seed": 0,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 65,
+     "err_just_after_m": 10.727,
+     "final_err_m": 11.087,
+     "blocked_ticks_after_kidnap": 219
+    },
+    {
+     "seed": 1,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 8,
+     "err_just_after_m": 10.79,
+     "final_err_m": 10.842,
+     "blocked_ticks_after_kidnap": 521
+    },
+    {
+     "seed": 2,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 23,
+     "err_just_after_m": 10.467,
+     "final_err_m": 2.662,
+     "blocked_ticks_after_kidnap": 470
+    },
+    {
+     "seed": 3,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 16,
+     "err_just_after_m": 10.75,
+     "final_err_m": 10.638,
+     "blocked_ticks_after_kidnap": 464
+    },
+    {
+     "seed": 4,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 30,
+     "err_just_after_m": 10.795,
+     "final_err_m": 7.685,
+     "blocked_ticks_after_kidnap": 459
+    },
+    {
+     "seed": 5,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 125,
+     "err_just_after_m": 10.751,
+     "final_err_m": 5.105,
+     "blocked_ticks_after_kidnap": 0
+    },
+    {
+     "seed": 6,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 49,
+     "err_just_after_m": 10.414,
+     "final_err_m": 6.449,
+     "blocked_ticks_after_kidnap": 375
+    },
+    {
+     "seed": 7,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 8,
+     "err_just_after_m": 10.647,
+     "final_err_m": 11.211,
+     "blocked_ticks_after_kidnap": 524
+    },
+    {
+     "seed": 8,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 41,
+     "err_just_after_m": 10.835,
+     "final_err_m": 8.138,
+     "blocked_ticks_after_kidnap": 394
+    },
+    {
+     "seed": 9,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 92,
+     "err_just_after_m": 10.722,
+     "final_err_m": 8.671,
+     "blocked_ticks_after_kidnap": 89
+    },
+    {
+     "seed": 10,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 34,
+     "err_just_after_m": 10.338,
+     "final_err_m": 5.367,
+     "blocked_ticks_after_kidnap": 424
+    },
+    {
+     "seed": 11,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 30,
+     "err_just_after_m": 10.501,
+     "final_err_m": 2.523,
+     "blocked_ticks_after_kidnap": 467
+    },
+    {
+     "seed": 12,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 36,
+     "err_just_after_m": 10.522,
+     "final_err_m": 10.5,
+     "blocked_ticks_after_kidnap": 418
+    },
+    {
+     "seed": 13,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 33,
+     "err_just_after_m": 10.462,
+     "final_err_m": 7.13,
+     "blocked_ticks_after_kidnap": 463
+    },
+    {
+     "seed": 14,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 75,
+     "err_just_after_m": 10.771,
+     "final_err_m": 8.312,
+     "blocked_ticks_after_kidnap": 130
+    },
+    {
+     "seed": 15,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 27,
+     "err_just_after_m": 10.549,
+     "final_err_m": 12.004,
+     "blocked_ticks_after_kidnap": 474
+    },
+    {
+     "seed": 16,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 128,
+     "err_just_after_m": 10.639,
+     "final_err_m": 8.427,
+     "blocked_ticks_after_kidnap": 0
+    },
+    {
+     "seed": 17,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 10,
+     "err_just_after_m": 10.536,
+     "final_err_m": 11.187,
+     "blocked_ticks_after_kidnap": 516
+    },
+    {
+     "seed": 18,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 9,
+     "err_just_after_m": 10.554,
+     "final_err_m": 11.165,
+     "blocked_ticks_after_kidnap": 517
+    },
+    {
+     "seed": 19,
+     "recovered": false,
+     "recovery_s": null,
+     "updates_after_kidnap": 110,
+     "err_just_after_m": 10.654,
+     "final_err_m": 8.321,
+     "blocked_ticks_after_kidnap": 0
+    }
+   ]
+  }
+ }
+}

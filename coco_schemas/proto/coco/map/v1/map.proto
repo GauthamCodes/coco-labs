@@ -1,0 +1,128 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// Mapping and SLAM as glass boxes (M2.1). The map a robot BUILDS, as
+// opposed to coco.world.grid.v1 (the world as it is, or a saved map).
+//
+// map.grid -- log-odds occupancy mapping:
+//   coco.map.grid.header.v1    (MapGridHeader, static): geometry and the inverse sensor model
+//   coco.map.grid.snapshot.v1  (MapGridSnapshotBatch): the whole grid at a keyframe
+//   coco.map.grid.cells.v1     (MapCellBatch): cells changed by one update
+// map.slam -- what each SLAM keeps besides its trajectory (the trajectory
+// itself goes to coco.estimate.pose.v1):
+//   coco.map.slam.header.v1     (SlamHeader, static): algorithm, knobs, sensor label
+//   coco.map.slam.landmarks.v1  (LandmarkBatch): EKF-SLAM's landmark means and covariances
+//   coco.map.slam.particles.v1  (SlamParticleBatch): FastSLAM's particles
+//   coco.map.slam.nodes.v1      (GraphNodeBatch): pose-graph nodes, before or after optimising
+//   coco.map.slam.edges.v1      (GraphEdgeBatch): pose-graph edges (odometry, scan match, loop)
+
+syntax = "proto3";
+
+package coco.map.v1;
+
+import "coco/common/v1/common.proto";
+
+message MapGridHeader {
+  string map_id = 1;
+  uint32 width = 2;
+  uint32 height = 3;
+  double resolution = 4;      // m per cell
+  double origin_x = 5;        // m, map frame, of cell (0, 0)'s corner
+  double origin_y = 6;
+  bool row0_is_bottom = 7;
+  coco.common.v1.Params model = 8;  // l_occ, l_free, l_min, l_max, ...
+  string estimator = 9;       // whose poses built it: "truth", "odometry", "fastslam", ...
+}
+
+// The whole log-odds grid, row-major, as float32 little-endian bytes. One
+// snapshot per message (the clocks hold one row each).
+message MapGridSnapshotBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  string map_id = 4;
+  bytes logodds_f32 = 5;
+  uint64 update = 6;          // the update that produced it
+  // The map as nav_msgs/OccupancyGrid bytes (0..100, 255 unknown, NORTH row
+  // first) -- what map_saver writes and Lab 3's traces stored (M2.7,
+  // additive). A snapshot carries this OR logodds_f32.
+  bytes cells_u8 = 7;
+}
+
+// Cells one update changed, with their new log-odds.
+message MapCellBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint32 row = 4;
+  repeated uint32 col = 5;
+  repeated float logodds = 6;
+  uint64 update = 7;
+  string map_id = 8;
+}
+
+message SlamHeader {
+  string slam_id = 1;
+  string algorithm = 2;       // "ekf_slam", "fastslam", "pose_graph"
+  coco.common.v1.Params params = 3;
+  // The sensor this SLAM reads. EKF-SLAM reads an IDEALISED landmark sensor
+  // (coco_lab.landmarks): COCO has none, and every view of it says so.
+  string sensor = 4;
+  string sensor_label = 5;    // e.g. "IDEALISED: known identities, no misses"
+}
+
+message LandmarkBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint32 landmark_id = 4;
+  repeated double x = 5;
+  repeated double y = 6;
+  repeated double cov_xx = 7;
+  repeated double cov_xy = 8;
+  repeated double cov_yy = 9;
+  uint64 update = 10;
+  string slam_id = 11;
+}
+
+message SlamParticleBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated double x = 4;
+  repeated double y = 5;
+  repeated double theta = 6;
+  repeated double weight = 7;
+  uint32 best = 8;            // index of the highest-weight particle
+  uint64 update = 9;
+  string slam_id = 10;
+}
+
+message GraphNodeBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint32 node_id = 4;
+  repeated double x = 5;
+  repeated double y = 6;
+  repeated double theta = 7;
+  // "raw" (before optimising), "optimised" (after); a loop closure shows both
+  string stage = 8;
+  double chi2 = 9;            // the graph's total error at this stage
+  string slam_id = 10;
+}
+
+message GraphEdgeBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint32 from_node = 4;
+  repeated uint32 to_node = 5;
+  repeated string kind = 6;   // "odometry", "scan_match", "loop"
+  repeated double dx = 7;     // the measured relative pose, from's frame
+  repeated double dy = 8;
+  repeated double dtheta = 9;
+  repeated double error = 10; // the edge's chi2 contribution at `stage`
+  string stage = 11;
+  string slam_id = 12;
+}

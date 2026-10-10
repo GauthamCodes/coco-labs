@@ -156,24 +156,109 @@ def scan_log_likelihood(grid: OccupancyGrid, pose, ranges, angles, mount,
     return total
 
 
+class FastSlam:
+    """
+    Grid FastSLAM, one update at a time (M2.4).
+
+    Exactly :func:`run_fastslam`'s filter -- which is this class run over a
+    world's updates -- so the Arena maps with the same algorithm, draw for
+    draw, as Lab 3 did. ``rng``: ``random.Random(params.seed)`` for Lab 3's
+    traces, the Arena's own stream in the Arena.
+    """
+
+    def __init__(self, start, lidar, like: LabMap, params: FastSlamParams,
+                 grid_params: Optional[GridParams], rng):
+        """Prepare; the first update builds every particle's first map."""
+        params.check()
+        self.p, self.lidar, self.like, self.rng = params, lidar, like, rng
+        self.grid_params = grid_params
+        self.start = tuple(start)
+        self.angles = lidar.angles()
+        self.w_angles = self.angles[::params.beam_step]
+        n = params.particles
+        self.poses = [self.start] * n
+        self.grids: List[OccupancyGrid] = []
+        self.weights = [1.0 / n] * n
+        self.parent_of = list(range(n))
+        self.prev_odom = None
+        self.k = 0
+
+    def update(self, odom, ranges) -> Dict[str, object]:
+        """
+        Run one update: motion, weighting, record, resampling, mapping.
+
+        Returns the estimate (the heaviest particle's pose), n_eff, the best
+        index, whether it resampled, and the weighted set as recorded
+        (before resampling) with each particle's parent in the previous set.
+        """
+        p, rng, li = self.p, self.rng, self.lidar
+        n = p.particles
+        k = self.k
+        if k == 0:
+            first = OccupancyGrid.like(self.like, self.grid_params)
+            first.integrate(self.start, ranges, self.angles, li.mount,
+                            li.range_min, li.range_max)
+            self.grids = [first] + [first.copy() for _ in range(n - 1)]
+        else:
+            d = odom_delta(self.prev_odom, odom)
+            self.poses = [apply_delta(q, *sample_delta(*d, p.alphas, rng))
+                          for q in self.poses]
+            w_scan = ranges[::p.beam_step]
+            logl = [scan_log_likelihood(self.grids[i], self.poses[i], w_scan,
+                                        self.w_angles, li.mount, li.range_min,
+                                        li.range_max, p.z_hit, p.z_rand)
+                    for i in range(n)]
+            m = max(logl)
+            raw = [self.weights[i] * math.exp(p.temperature * (logl[i] - m))
+                   for i in range(n)]
+            sm = sum(raw)
+            self.weights = [v / sm for v in raw] if sm > 0 else [1.0 / n] * n
+        weights = self.weights
+        neff = 1.0 / sum(v * v for v in weights)
+        best = max(range(n), key=lambda i: weights[i])
+        out = {'est': self.poses[best], 'neff': neff, 'best': best,
+               'poses': list(self.poses), 'weights': list(weights),
+               'parents': list(self.parent_of), 'resampled': 0}
+        if k > 0 and neff < p.neff_fraction * n:
+            idx = low_variance_resample(weights, rng.random())
+            copies = {}
+            new_grids = []
+            for i in idx:
+                # the first child of a parent takes its map; others copy it
+                if i in copies:
+                    new_grids.append(self.grids[i].copy())
+                else:
+                    copies[i] = True
+                    new_grids.append(self.grids[i])
+            self.grids = new_grids
+            self.poses = [self.poses[i] for i in idx]
+            self.weights = [1.0 / n] * n
+            self.parent_of = idx
+            out['resampled'] = 1
+        else:
+            self.parent_of = list(range(n))
+        if k > 0:
+            for i in range(n):
+                self.grids[i].integrate(self.poses[i], ranges, self.angles,
+                                        li.mount, li.range_min, li.range_max)
+        self.prev_odom = odom
+        self.k += 1
+        return out
+
+    def heaviest_grid(self) -> OccupancyGrid:
+        """Return the map of the heaviest particle now."""
+        return self.grids[max(range(len(self.weights)),
+                              key=lambda i: self.weights[i])]
+
+
 def run_fastslam(inp: slam.SlamInputs, like: LabMap,
                  params: Optional[FastSlamParams] = None,
                  grid_params: Optional[GridParams] = None) -> slam.SlamTrace:
     """Run grid FastSLAM over ``inp``; return its trace."""
     p = params or FastSlamParams()
     p.check()
-    rng = random.Random(p.seed)
-    angles = inp.angles()
-    li = inp.lidar
-    w_angles = angles[::p.beam_step]
-    n = p.particles
-    first = OccupancyGrid.like(like, grid_params)
-    first.integrate(inp.start, inp.ranges[0], angles, li.mount, li.range_min,
-                    li.range_max)
-    poses = [tuple(inp.start)] * n
-    grids = [first] + [first.copy() for _ in range(n - 1)]
-    weights = [1.0 / n] * n
-    parent_of = list(range(n))  # index into the previous update's set
+    f = FastSlam(inp.start, inp.lidar, like, p, grid_params,
+                 random.Random(p.seed))
     cols = {c: [] for c in slam.COMMON_COLUMNS + COLUMNS}
     parts = {c: [] for c in PARTICLE_ARRAYS}
     offset = [0]
@@ -182,64 +267,23 @@ def run_fastslam(inp: slam.SlamInputs, like: LabMap,
     snaps = set(slam.snapshot_updates(len(inp), p.snapshots))
     snapshots, maps = [], []
     for k in range(len(inp)):
-        resampled = 0
-        if k > 0:
-            d = odom_delta(inp.odom[k - 1], inp.odom[k])
-            poses = [apply_delta(q, *sample_delta(*d, p.alphas, rng))
-                     for q in poses]
-            w_scan = inp.ranges[k][::p.beam_step]
-            logl = [scan_log_likelihood(grids[i], poses[i], w_scan, w_angles,
-                                        li.mount, li.range_min, li.range_max,
-                                        p.z_hit, p.z_rand)
-                    for i in range(n)]
-            m = max(logl)
-            raw = [weights[i] * math.exp(p.temperature * (logl[i] - m))
-                   for i in range(n)]
-            s = sum(raw)
-            weights = [v / s for v in raw] if s > 0 else [1.0 / n] * n
-        neff = 1.0 / sum(v * v for v in weights)
-        best = max(range(n), key=lambda i: weights[i])
-        # record the weighted set BEFORE resampling
-        for q, wv in zip(poses, weights):
+        u = f.update(inp.odom[k], inp.ranges[k])
+        for q, wv in zip(u['poses'], u['weights']):
             parts['x'].append(q[0])
             parts['y'].append(q[1])
             parts['yaw'].append(q[2])
             parts['w'].append(wv)
         offset.append(len(parts['x']))
-        parents.append(list(parent_of))
-        recorded.append(list(poses))
-        est = poses[best]
+        parents.append(u['parents'])
+        recorded.append(u['poses'])
+        est = u['est']
         for name, v in zip(slam.COMMON_COLUMNS + COLUMNS,
                            (inp.rows[k], inp.t[k], est[0], est[1], est[2],
-                            neff, 0, best)):
+                            u['neff'], u['resampled'], u['best'])):
             cols[name].append(v)
-        if k > 0 and neff < p.neff_fraction * n:
-            idx = low_variance_resample(weights, rng.random())
-            copies = {}
-            new_grids = []
-            for i in idx:
-                # the first child of a parent takes its map; others copy it
-                if i in copies:
-                    new_grids.append(grids[i].copy())
-                else:
-                    copies[i] = True
-                    new_grids.append(grids[i])
-            grids = new_grids
-            poses = [poses[i] for i in idx]
-            weights = [1.0 / n] * n
-            parent_of = idx
-            resampled = 1
-        else:
-            parent_of = list(range(n))
-        cols['resampled'][-1] = resampled
-        if k > 0:
-            for i in range(n):
-                grids[i].integrate(poses[i], inp.ranges[k], angles, li.mount,
-                                   li.range_min, li.range_max)
         if k in snaps:
             snapshots.append(k)
-            heaviest = max(range(n), key=lambda i: weights[i])
-            maps.append(grids[heaviest].to_u8())
+            maps.append(f.heaviest_grid().to_u8())
     # the final trajectory: the heaviest particle's ancestry
     j = cols['best'][-1]
     final = [None] * len(inp)
@@ -251,7 +295,7 @@ def run_fastslam(inp: slam.SlamInputs, like: LabMap,
         arrays[f'particles.{c}'] = ('f32', parts[c])
     for c, i in (('x', 0), ('y', 1), ('yaw', 2)):
         arrays[f'final.{c}'] = ('f64', [q[i] for q in final])
-    g = grids[0]
+    g = f.grids[0]
     hdr = slam.header('fastslam', p.to_dict(), slam.grid_header(
         g.width, g.height, g.resolution, g.origin), inp)
     hdr['grid_params'] = g.params.to_dict()

@@ -16,6 +16,8 @@ enum InputKind {
   INPUT_KIND_STOP = 3;       // stop now; clears any goal
   INPUT_KIND_PLANNER = 4;    // choice = the planner's name
   INPUT_KIND_RESET = 5;      // back to the spec's start pose
+  INPUT_KIND_KIDNAP = 6;     // x, y (theta if has_theta): the robot is carried; odometry is not told (M2.3)
+  INPUT_KIND_CONFIG = 7;     // choice = "key=value": switch on or tune a whole-loop subsystem (M2.3)
 }
 
 // One row per input, applied at the START of `tick` (before that tick's step).

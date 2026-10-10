@@ -28,6 +28,18 @@
 import * as THREE from 'three';
 
 import type { World } from '../protocol';
+
+/**
+ * Give a line new points. `geometry.setFromPoints` on a geometry that
+ * already has positions only overwrites them in place (three r186): a
+ * longer path was cut to the old length and a shorter one kept the old
+ * tail, so every replanned path after the first was drawn wrong (found in
+ * M2.4). A new geometry each time is always right.
+ */
+export function setLinePoints(line: THREE.Line, pts: THREE.Vector3[]) {
+  line.geometry.dispose();
+  line.geometry = new THREE.BufferGeometry().setFromPoints(pts);
+}
 import { PALETTES, VIRIDIS, type Palette, type Theme } from './palette';
 import { CLOSED, FRONTIER, PATH, type PlanStore } from './planStore';
 
@@ -55,6 +67,8 @@ uniform vec3 uFree, uOccupied, uUnknown, uClosed, uPath;
 uniform vec3 uViridis[5];
 uniform float uClosedAlpha, uMaxOrder;
 uniform bool uShowOcc, uShowClosed, uHeat, uShowPath;
+uniform float uPlanDim, uWorldDim;
+uniform vec3 uBg;
 varying vec2 vUv;
 vec3 viridis(float t) {
   t = clamp(t, 0.0, 1.0) * 4.0;
@@ -69,6 +83,8 @@ vec3 viridis(float t) {
 void main() {
   float occ = texture2D(uOcc, vUv).r * 255.0;
   vec3 c = uShowOcc ? (occ < 0.5 ? uFree : occ < 1.5 ? uOccupied : uUnknown) : uFree;
+  c = mix(uBg, c, uWorldDim);  // Focus (M2.2): the world, dimmed outside the lens
+  vec3 base = c;
   vec4 st = texture2D(uState, vUv) * 255.0;
   float s = st.r;
   float order = st.g * 65536.0 + st.b * 256.0 + st.a;
@@ -76,6 +92,7 @@ void main() {
   if (uHeat && expanded) c = viridis(uMaxOrder > 0.0 ? order / uMaxOrder : 0.0);
   else if (uShowClosed && s > 1.5 && s < 2.5) c = mix(c, uClosed, uClosedAlpha);
   if (uShowPath && s > 2.5) c = mix(c, uPath, uHeat ? 0.0 : 0.25);
+  c = mix(base, c, uPlanDim);  // Focus: the Plan lens's layers, dimmed outside it
   gl_FragColor = vec4(c, 1.0);
 }`;
 
@@ -105,6 +122,8 @@ export class ArenaRenderer {
   private stress: THREE.Object3D[] = [];
   private view = { cx: 0, cy: 0, scale: 50 }; // pixels per metre
   private store: PlanStore | null = null;
+  /** M2.3: while the page drags something (the robot, to kidnap it), a drag does not pan. */
+  panSuspended = false;
   private raf = 0;
   onFrame?: () => void;
   /** Called after each frame is submitted (the measurement hook for "drawn"). */
@@ -145,6 +164,7 @@ export class ArenaRenderer {
         uClosed: { value: col(p.closed) }, uPath: { value: col(p.path) },
         uViridis: { value: VIRIDIS.map(col) }, uClosedAlpha: { value: p.closedAlpha }, uMaxOrder: { value: 1 },
         uShowOcc: { value: true }, uShowClosed: { value: true }, uHeat: { value: false }, uShowPath: { value: true },
+        uPlanDim: { value: 1 }, uWorldDim: { value: 1 }, uBg: { value: col(p.background) },
       },
     });
     const plane = new THREE.Mesh(new THREE.PlaneGeometry(W * r, H * r), this.gridMat);
@@ -265,7 +285,7 @@ export class ArenaRenderer {
       this.stateData.fill(0);
       this.stateTex.needsUpdate = true;
       if (this.frontier) this.frontier.count = 0;
-      this.pathLine?.geometry.setFromPoints([]);
+      if (this.pathLine) setLinePoints(this.pathLine, []);
     }
   }
 
@@ -303,7 +323,7 @@ export class ArenaRenderer {
     this.frontier.instanceMatrix.needsUpdate = true;
     // path, in event order
     const pts = st.pathCells.map((i) => new THREE.Vector3(origin[0] + ((i % W) + 0.5) * r, origin[1] + (H - 1 - Math.floor(i / W) + 0.5) * r, 0));
-    this.pathLine?.geometry.setFromPoints(pts);
+    if (this.pathLine) setLinePoints(this.pathLine, pts);
     st.dirty = false;
   }
 
@@ -320,6 +340,25 @@ export class ArenaRenderer {
     this.robot.visible = L.robot;
     if (this.footprint) this.footprint.visible = L.footprint;
     if (this.truth) this.truth.visible = L.truth;
+  }
+
+  /**
+   * Focus (M2.2): dim the Plan lens's layers (closed set, heatmap, path,
+   * frontier) and the world (occupancy, LiDAR, footprint) by these factors
+   * (1 = as drawn). The robot and the truth outline are never dimmed.
+   */
+  setFocusDim(plan: number, world: number) {
+    if (this.gridMat) { this.gridMat.uniforms.uPlanDim.value = plan; this.gridMat.uniforms.uWorldDim.value = 0.35 + 0.65 * world; }
+    const fade = (o: THREE.Object3D | null, f: number, base: number) => {
+      const m = (o as THREE.Mesh | null)?.material as THREE.Material | undefined;
+      if (!m) return;
+      m.transparent = true;
+      m.opacity = base * f;
+    };
+    fade(this.frontier, plan, 1);
+    fade(this.pathLine, plan, 1);
+    fade(this.lidar, world, this.palette.lidarAlpha);
+    fade(this.footprint, world, 1);
   }
 
   // -- camera and input -----------------------------------------------------
@@ -383,7 +422,7 @@ export class ArenaRenderer {
       const prev = pts.get(e.pointerId);
       if (!prev) return;
       pts.set(e.pointerId, [e.clientX, e.clientY]);
-      if (pts.size === 1) {
+      if (pts.size === 1 && !this.panSuspended) {
         this.view.cx -= (e.clientX - prev[0]) / this.view.scale;
         this.view.cy += (e.clientY - prev[1]) / this.view.scale;
       } else if (pts.size === 2 && pinch0 > 0) {

@@ -1,0 +1,880 @@
+{
+ "tool": "docs/v2/data/m2/m28/v1_claims.py",
+ "n": 98,
+ "by_lab": {
+  "lab1": 31,
+  "lab2": 20,
+  "lab3": 11,
+  "lab4": 13,
+  "lab5": 23
+ },
+ "claims": [
+  {
+   "id": "catalog.bundles[astar_open]",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "A* on an open 20 x 20 grid",
+   "cites": [
+    "coco_lab/test/golden_bundles.py; coco_lab/test/test_bundle.py::test_golden_bundles_load_validate_and_replay"
+   ]
+  },
+  {
+   "id": "catalog.bundles[dijkstra_cost_field_gz]",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "Dijkstra across a cost field",
+   "cites": [
+    "coco_lab/test/golden_bundles.py; coco_lab/test/test_bundle.py::test_golden_bundles_load_validate_and_replay"
+   ]
+  },
+  {
+   "id": "catalog.bundles[weighted_astar_greedy_trap]",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "Weighted A* (w = 2) in the greedy trap",
+   "cites": [
+    "coco_lab/test/golden_bundles.py; coco_lab/test/test_bundle.py::test_golden_bundles_load_validate_and_replay"
+   ]
+  },
+  {
+   "id": "catalog.bundles[bfs_no_path]",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "BFS with no path to the goal",
+   "cites": [
+    "coco_lab/test/golden_bundles.py; coco_lab/test/test_bundle.py::test_golden_bundles_load_validate_and_replay"
+   ]
+  },
+  {
+   "id": "catalog.bundles[astar_turn_trap_heading]",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "A* on a (cell, heading) graph: the turn trap",
+   "cites": [
+    "coco_lab/test/golden_bundles.py; coco_lab/test/test_bundle.py::test_golden_bundles_load_validate_and_replay"
+   ]
+  },
+  {
+   "id": "catalog.bundles[lab1c_astar]",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "A* driven by COCO (recorded run)",
+   "cites": [
+    "docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"The three real runs (measured)\""
+   ]
+  },
+  {
+   "id": "catalog.bundles[lab1c_dijkstra]",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "Dijkstra driven by COCO (recorded run)",
+   "cites": [
+    "docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"The three real runs (measured)\""
+   ]
+  },
+  {
+   "id": "catalog.bundles[lab1c_greedy]",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "Greedy best-first driven by COCO (recorded run)",
+   "cites": [
+    "docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"The three real runs (measured)\""
+   ]
+  },
+  {
+   "id": "catalog.bundles[arena_0_10m]",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "Dijkstra across the arena at 0.10 m (edit map)",
+   "cites": [
+    "docs/RESULTS.md, \"COCO Lab Phase 1B\" > \"Bundles (measured)\"; docs/data/lab1b/resolution.py"
+   ]
+  },
+  {
+   "id": "catalog.bundles[arena_native]",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "Dijkstra across the arena at 0.05 m (benchmark)",
+   "cites": [
+    "docs/RESULTS.md, \"COCO Lab Phase 1B\" > \"Bundles (measured)\"; docs/data/lab1b/resolution.py"
+   ]
+  },
+  {
+   "id": "catalog.bundles[costmap_0_10m]",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "A* on Nav2's inflated costmap at 0.10 m",
+   "cites": [
+    "docs/data/lab1c/bundles/astar (the recorded /global_costmap/costmap_raw snapshot), downsampled x2 by coco_lab.maps.LabMap.downsample; docs/RESULTS.md, \"COCO Lab Phase 1C\""
+   ]
+  },
+  {
+   "id": "catalog.localise.amcl_odom",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "measured",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 3\"; docs/data/lab2/amcl_odom.json"
+   ]
+  },
+  {
+   "id": "catalog.localise.bundles[loc_tracking]",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "Both filters are told where the robot starts. Watch the particle cloud and the EKF ellipse stay small while the truth moves.",
+   "cites": [
+    "coco_lab/test/test_localise.py::test_both_filters_track_a_known_start"
+   ]
+  },
+  {
+   "id": "catalog.localise.bundles[loc_kidnap]",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "At t = 40 s the robot is picked up and carried 9.2 m to the far corner of the room; odometry is not told. Compare MCL with injection on, the same MCL with injection off (as COCO ships AMCL), and the EKF -- on one world.",
+   "cites": [
+    "coco_lab/test/test_localise.py::test_injection_is_what_recovers_a_kidnap",
+    "coco_lab/test/test_localise.py::test_the_ekf_cannot_recover_a_kidnap_or_start_globally",
+    "coco_lab/test/test_sketch.py::test_a_kidnap_moves_the_truth_and_not_the_odometry"
+   ]
+  },
+  {
+   "id": "catalog.localise.bundles[loc_global]",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "Nobody tells either filter where the robot starts. Particles cover the room; the EKF must start somewhere.",
+   "cites": [
+    "coco_lab/test/test_localise.py::test_mcl_converges_from_a_uniform_cloud_on_unique_features"
+   ]
+  },
+  {
+   "id": "catalog.localise.bundles[loc_twins]",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "Rotate this room 180 degrees and it is the same room: two poses see identical scans. A global start has two right answers.",
+   "cites": [
+    "coco_lab/test/test_sketch.py::test_the_twins_room_is_symmetric_to_the_ray_caster",
+    "coco_lab/test/test_localise.py::test_the_twins_room_aliases"
+   ]
+  },
+  {
+   "id": "catalog.localise.bundles[loc_arena_kidnap]",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "The same kidnap as the real-stack A/B target K1: carried from the spawn past the bays. The arena has four near-identical bays.",
+   "cites": [
+    "coco_lab/test/test_localise.py::test_injection_is_what_recovers_a_kidnap"
+   ]
+  },
+  {
+   "id": "catalog.localise.ekf_drift",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "measured",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 3\"; docs/data/lab2/ekf_drift.json"
+   ]
+  },
+  {
+   "id": "catalog.localise.fidelity",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "measured",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 3\"; docs/data/lab2/fidelity/fidelity.json"
+   ]
+  },
+  {
+   "id": "catalog.localise.kidnap_ab",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "measured",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 3\"; docs/data/lab2/kidnap_ab.json"
+   ]
+  },
+  {
+   "id": "catalog.localise.sketch_rates",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "measured",
+   "cites": [
+    "docs/data/lab2/sketch_rates.json (python3 docs/data/lab2/sketch_rates.py --seeds 20 --out docs/data/lab2/sketch_rates.json)"
+   ]
+  },
+  {
+   "id": "catalog.map.bundles[map_loop]",
+   "lab": "lab3",
+   "source": "site data",
+   "text": "Drive round the block and come back. Odometry alone bends the map; pose-graph SLAM recognises where it started and pulls the whole loop straight. Compare it with the same pose graph with loop closure switched off -- and press \"new world\": it does not always recognise the start.",
+   "cites": [
+    "coco_lab/test/test_posegraph.py::test_loop_closure_usually_closes_the_loop_room",
+    "coco_lab/test/test_map_teaching.py::test_the_loop_rooms_drive_is_a_loop"
+   ]
+  },
+  {
+   "id": "catalog.map.bundles[map_corridor]",
+   "lab": "lab3",
+   "source": "site data",
+   "text": "Two rooms joined by 18 m of perfectly smooth corridor. A scan in the corridor pins the robot sideways and its heading, but says nothing about how far along it is: every SLAM here drifts there, and only the rooms at the ends bring it back.",
+   "cites": [
+    "coco_lab/test/test_map_teaching.py::test_a_scan_mid_corridor_cannot_see_how_far_along_it_is",
+    "coco_lab/test/test_map_teaching.py::test_the_corridor_is_two_straight_featureless_walls",
+    "coco_lab/test/test_posegraph.py::test_a_corridor_constrains_nothing_along_its_axis"
+   ]
+  },
+  {
+   "id": "catalog.map.bundles[map_landmarks]",
+   "lab": "lab3",
+   "source": "site data",
+   "text": "EKF-SLAM sees the room's box corners with an IDEALISED sensor (identity known, no false detections); FastSLAM and the pose graph see only the LiDAR. Same drive, same odometry, same scans.",
+   "cites": [
+    "coco_lab/test/test_ekfslam.py::test_ekf_slam_beats_odometry_on_the_landmarks_room",
+    "coco_lab/test/test_ekfslam.py::test_the_linear_case_equals_the_exact_gaussian_posterior",
+    "coco_lab/test/test_fastslam.py::test_fastslam_beats_odometry_on_the_landmarks_room"
+   ]
+  },
+  {
+   "id": "catalog.map.bundles[map_arena]",
+   "lab": "lab3",
+   "source": "site data",
+   "text": "Drive COCO's arena in Sketch and build the best map you can. The start, the world seed, the noise (Sketch's default) and the LiDAR are fixed; you choose the drive and which SLAM maps it.",
+   "cites": [
+    "coco_lab/test/test_mapeval.py::test_a_map_scored_against_itself_is_perfect",
+    "coco_lab/test/test_mapeval.py::test_the_tolerance_forgives_one_cell_and_exact_does_not",
+    "coco_lab/test/test_mapeval.py::test_unseen_walls_are_not_counted_and_unknown_is_not_coverage"
+   ]
+  },
+  {
+   "id": "catalog.map.bundles[s1_tour]",
+   "lab": "lab3",
+   "source": "site data",
+   "text": "A drive recorded on the real stack in Gazebo, replayed into slam_toolbox and Cartographer, and into coco_lab's SLAMs -- identical scans, identical odometry. The truth is the arena rasterised from the world generator.",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 4\"",
+    "docs/data/lab3/README.md"
+   ]
+  },
+  {
+   "id": "catalog.map.challenge",
+   "lab": "lab3",
+   "source": "site data",
+   "text": "Map the arena",
+   "cites": [
+    "coco_lab/test/test_mapeval.py::test_a_map_scored_against_itself_is_perfect",
+    "coco_lab/test/test_mapeval.py::test_the_tolerance_forgives_one_cell_and_exact_does_not",
+    "coco_lab/test/test_mapeval.py::test_unseen_walls_are_not_counted_and_unknown_is_not_coverage"
+   ]
+  },
+  {
+   "id": "catalog.map.fidelity",
+   "lab": "lab3",
+   "source": "site data",
+   "text": "measured",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 3\"; docs/data/lab2/fidelity/fidelity.json"
+   ]
+  },
+  {
+   "id": "catalog.move.claims[same_inputs]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "Every controller drives the SAME global path -- one file, its hash checked in every run -- on the same robot with the same speed, turn-rate and acceleration limits.",
+   "cites": [
+    "coco_lab_ros/test/test_lab5.py::test_each_scenario_names_a_frozen_path_that_matches_it",
+    "coco_lab_ros/test/test_lab5.py::test_no_controller_gets_a_faster_or_more_agile_robot"
+   ]
+  },
+  {
+   "id": "catalog.move.claims[metrics]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "Every number in the comparison is recomputed from the recording at site build by coco_lab; a bundle whose numbers do not reproduce is refused.",
+   "cites": [
+    "coco_lab/test/test_movebundle.py::test_a_metric_that_does_not_reproduce_is_refused",
+    "coco_lab/test/test_movemetrics.py::test_box_clearance_axis_aligned_and_rotated"
+   ]
+  },
+  {
+   "id": "catalog.move.claims[actor]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "The moving person is seen by the LiDAR but has no collision geometry: it cannot push the robot. A contact is measured, from ground truth, as a clearance of zero.",
+   "cites": [
+    "coco_lab_ros/test/test_lab5.py::test_the_actor_has_no_collision_geometry",
+    "coco_lab/test/test_movemetrics.py::test_an_actor_walking_through_the_robot_is_a_contact",
+    "docs/RESULTS.md \"COCO Lab Phase 6\""
+   ]
+  },
+  {
+   "id": "catalog.move.claims[dstar_optimal]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "After every change and every move, D* Lite's plan costs exactly what Dijkstra finds from scratch on the new map.",
+   "cites": [
+    "coco_lab/test/test_dstarlite.py::test_dstar_lite_is_optimal_after_every_change_and_move",
+    "coco_lab/test/test_replan.py::test_every_round_agrees_with_astar_from_scratch"
+   ]
+  },
+  {
+   "id": "catalog.move.claims[dstar_arrives]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "A robot whose map only lacks obstacles (never invents them) reaches the goal whenever the world has a route, and never steps into a cell it could have known was blocked.",
+   "cites": [
+    "coco_lab/test/test_replan.py::test_an_optimistic_robot_arrives_iff_the_world_has_a_route"
+   ]
+  },
+  {
+   "id": "catalog.move.claims[dstar_work]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "Same answer, not always less work. Over 200 seeded Sketch worlds D* Lite's total work was below A* from scratch in 191 (median 0.59 of A*'s), yet in 188 of 2204 single replans it did more; and on the real costmap change of Experiment C it touched 3,209 cells where A* from scratch touched 1,114.",
+   "cites": [
+    "docs/data/lab5/replan_sketch_stats.json",
+    "docs/data/lab5/replan_c.json",
+    "docs/RESULTS.md \"COCO Lab Phase 6\"",
+    "coco_lab/test/test_replan.py::test_every_round_agrees_with_astar_from_scratch"
+   ]
+  },
+  {
+   "id": "catalog.move.controllers[DWB]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "colour=#1f77b4; how=Samples (v, w) pairs it can reach within one control step (819 per cycle with the mission's settings), rolls each forward 1.5 s, scores each with critics -- obstacle cost, distance to the path and the goal, alignment, oscillation -- and drives the best. A critic can reject a candidate outright.; id=DWB; name=DWB (Dynamic Window); shows=every candidate it scored (Nav2's own /evaluation), rejected ones in red",
+   "cites": [
+    "gazebo_models/config/nav2_params.yaml (controller_server.FollowPath, the mission's, unchanged)",
+    "coco_lab_ros/test/test_lab5.py::test_the_overlay_adds_two_controllers_and_changes_nothing_else"
+   ]
+  },
+  {
+   "id": "catalog.move.controllers[MPPI]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "colour=#2ca02c; how=Samples 2,000 noisy control sequences 2.8 s long, scores each whole trajectory with critics, and AVERAGES them, weighted by exp(-cost / temperature). The command is a blend of good trajectories, not the single best one.; id=MPPI; name=MPPI (Model Predictive Path Integral); shows=a fifth of its samples, as Nav2 publishes them (/trajectories) -- MPPI publishes no per-sample score",
+   "cites": [
+    "coco_lab_ros/config/nav2_move_overlay.yaml (MPPI)"
+   ]
+  },
+  {
+   "id": "catalog.move.controllers[RPP]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "colour=#d62728; how=Chases a point 0.6 m ahead on the path along the arc through it, slows on tight curves, and checks that arc for collision -- and stops rather than swerve. It has no candidates: it follows the path or stops.; id=RPP; name=Regulated Pure Pursuit; shows=its lookahead point and the arc it checked (/lookahead_point, /lookahead_collision_arc)",
+   "cites": [
+    "coco_lab_ros/config/nav2_move_overlay.yaml (RPP)"
+   ]
+  },
+  {
+   "id": "catalog.move.drive.bundles[crossing]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "The same apron path, and a person crosses it in front of the robot. The global path does not move; only the local controller (and the collision monitor under it) can react.",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 6\"",
+    "docs/data/lab5/README.md"
+   ]
+  },
+  {
+   "id": "catalog.move.drive.bundles[mislocalised]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "The robot is told it is 3.4 m from where it is (run 15's measured gap). The global path is fine; the robot's idea of where it stands is not.",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 6\"",
+    "docs/data/lab5/README.md"
+   ]
+  },
+  {
+   "id": "catalog.move.drive.bundles[oncoming]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "A person walks straight down the robot's path towards it, and does not stop. Leaving the path is the only way past.",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 6\"",
+    "docs/data/lab5/README.md"
+   ]
+  },
+  {
+   "id": "catalog.move.drive.bundles[static_room]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "One global path, frozen in a file: around the end of a wall and into a room. Three controllers drive it on the same robot with the same limits. Watch where each one leaves the line.",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 6\"",
+    "docs/data/lab5/README.md"
+   ]
+  },
+  {
+   "id": "catalog.move.replan.bundles[sketch_0]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "The robot plans on the map it has. Some obstacles are missing from it, and a door on its direct route is closed. It sees 2.5 cells around itself; each time what it sees disagrees with its map, D* Lite repairs the plan.",
+   "cites": [
+    "coco_lab/test/test_replan.py::test_the_closed_door_forces_at_least_one_replan",
+    "coco_lab/test/test_replan.py::test_every_round_agrees_with_astar_from_scratch"
+   ]
+  },
+  {
+   "id": "catalog.move.replan.bundles[sketch_1]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "The robot plans on the map it has. Some obstacles are missing from it, and a door on its direct route is closed. It sees 2.5 cells around itself; each time what it sees disagrees with its map, D* Lite repairs the plan.",
+   "cites": [
+    "coco_lab/test/test_replan.py::test_the_closed_door_forces_at_least_one_replan",
+    "coco_lab/test/test_replan.py::test_every_round_agrees_with_astar_from_scratch"
+   ]
+  },
+  {
+   "id": "catalog.move.replan.bundles[sketch_2]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "The robot plans on the map it has. Some obstacles are missing from it, and a door on its direct route is closed. It sees 2.5 cells around itself; each time what it sees disagrees with its map, D* Lite repairs the plan.",
+   "cites": [
+    "coco_lab/test/test_replan.py::test_the_closed_door_forces_at_least_one_replan",
+    "coco_lab/test/test_replan.py::test_every_round_agrees_with_astar_from_scratch"
+   ]
+  },
+  {
+   "id": "catalog.move.replan.bundles[arena_c]",
+   "lab": "lab5",
+   "source": "site data",
+   "text": "Two of Nav2's own global costmaps from Gazebo: before and after a person stopped on the apron. D* Lite plans on the first, is handed the second, and repairs; A* searches the second from scratch. Same answer, different work.",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 6\"",
+    "docs/data/lab5/README.md"
+   ]
+  },
+  {
+   "id": "catalog.search.bundles[search_arena]",
+   "lab": "lab4",
+   "source": "site data",
+   "text": "The robot is told \"red\" and nothing else. It knows its map, the four bays, what it costs to drive to each and climb its ramp, and that its camera misses a target that is there one time in ten (an ASSUMPTION, labelled). Where should it look first?",
+   "cites": [
+    "coco_lab/test/test_regionsearch.py::test_the_arena_order_when_the_camera_can_miss_is_not_nearest_first",
+    "coco_lab/test/test_regionsearch.py::test_the_arena_travel_table_is_coco_labs_astar_on_the_nav2_map",
+    "coco_mission/test/test_mission_search.py::test_the_first_bay_does_not_depend_on_the_colour"
+   ]
+  },
+  {
+   "id": "catalog.search.bundles[p05_matrix]",
+   "lab": "lab4",
+   "source": "site data",
+   "text": "Searches the real mission ran in Gazebo, told only the colour. Each is rebuilt from the robot's own looks: coco_lab chooses every bay again from the same belief, and a recording that disagreed would not load. Where the target really stood comes from the episode manifest -- the evaluator side -- and is shown only as truth.",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 5\"",
+    "docs/data/lab4/README.md",
+    "coco_lab/test/test_searchbundle.py::test_a_recording_that_disagrees_with_the_policy_is_refused"
+   ]
+  },
+  {
+   "id": "catalog.search.challenge",
+   "lab": "lab4",
+   "source": "site data",
+   "text": "Find it",
+   "cites": [
+    "coco_lab/test/test_regionsearch.py::test_giving_up_after_the_first_region_fails_the_challenge"
+   ]
+  },
+  {
+   "id": "catalog.search.claims[bayes]",
+   "lab": "lab4",
+   "source": "site data",
+   "text": "A miss is evidence, not proof: with d = 0.9 a searched bay keeps a little belief, and the others rise.",
+   "cites": [
+    "coco_lab/test/test_regionsearch.py::test_update_is_bayes_rule_against_the_enumerated_joint",
+    "coco_lab/test/test_regionsearch.py::test_a_find_is_certain_and_a_perfect_miss_is_proof"
+   ]
+  },
+  {
+   "id": "catalog.search.claims[index_rule]",
+   "lab": "lab4",
+   "source": "site data",
+   "text": "If every bay cost the same to reach from anywhere, \"most likely per metre first\" would be optimal. COCO's bays do not, so the robot costs every order.",
+   "cites": [
+    "coco_lab/test/test_regionsearch.py::test_index_rule_is_optimal_when_costs_do_not_depend_on_order",
+    "coco_lab/test/test_regionsearch.py::test_the_robot_order_is_no_worse_than_any_other_order"
+   ]
+  },
+  {
+   "id": "catalog.search.claims[counterexample]",
+   "lab": "lab4",
+   "source": "site data",
+   "text": "With a camera that can miss, nearest-first is beaten: a search that finds nothing drives the whole tour, so the tour's length counts.",
+   "cites": [
+    "coco_lab/test/test_regionsearch.py::test_the_arena_order_when_the_camera_can_miss_is_not_nearest_first",
+    "coco_lab/test/test_regionsearch.py::test_the_arena_order_with_a_perfect_camera_is_nearest_first"
+   ]
+  },
+  {
+   "id": "catalog.search.claims[negative]",
+   "lab": "lab4",
+   "source": "site data",
+   "text": "Negative search: bay A, then B, then found in C -- each miss marked before the find. Giving up after A fails the challenge, whatever it saved.",
+   "cites": [
+    "coco_lab/test/test_regionsearch.py::test_negative_search_finds_it_in_the_last_region_checked",
+    "coco_lab/test/test_regionsearch.py::test_giving_up_after_the_first_region_fails_the_challenge",
+    "coco_mission/test/test_mission_search.py::test_a_then_b_then_found_in_c",
+    "coco_mission/test/test_mission_search.py::test_aborting_after_the_first_bay_fails_with_nothing_found"
+   ]
+  },
+  {
+   "id": "catalog.search.claims[anticheat]",
+   "lab": "lab4",
+   "source": "site data",
+   "text": "The real mission is told the colour and nothing else: no bay, no pose. Moving the target, or corrupting the manifest, changes nothing the robot is given; the policy has no field that could hold the truth.",
+   "cites": [
+    "coco_sim/test/test_episode_search.py::test_moving_the_target_to_another_bay_needs_no_change",
+    "coco_sim/test/test_episode_search.py::test_corrupting_the_manifest_pose_changes_nothing_the_robot_gets",
+    "coco_lab/test/test_regionsearch.py::test_no_field_a_policy_reads_can_hold_the_truth",
+    "coco_mission/test/test_mission_search.py::test_the_told_lane_on_the_perception_line_is_never_read"
+   ]
+  },
+  {
+   "id": "catalog.search.claims[silence]",
+   "lab": "lab4",
+   "source": "site data",
+   "text": "Silence is not a miss: a look with no camera reports is a failure, never evidence that the target is absent.",
+   "cites": [
+    "coco_mission/test/test_mission_search.py::test_a_survey_with_no_perception_lines_is_not_a_miss"
+   ]
+  },
+  {
+   "id": "catalog.settings",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "by=coco_lab 0.2.0 heuristics.analyse and search.suboptimality_bound",
+   "cites": [
+    "coco_lab/test/test_heuristics.py; coco_lab/test/test_properties.py::test_the_reported_suboptimality_bound_holds"
+   ]
+  },
+  {
+   "id": "exhibit.a.real_stack",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "astar_equals_dijkstra_C1=50; of=50",
+   "cites": [
+    "docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"Conformance: coco_lab vs SmacPlanner2D vs NavFn\""
+   ]
+  },
+  {
+   "id": "exhibit.b",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "analogue.paths_recorded=False; fifty.e_applies=36; fifty.e_gap_max=1.0848820720240031e-15; fifty.e_within=36; fifty.n=50; m3.navfn_m=3.373; m3.smac_m=3.165; m3.status=docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"NavFn and M3 (the 6.2 %)\"",
+   "cites": [
+    "docs/DESIGN_DECISIONS.md (NavFn calcPath); docs/archive/v1/README_v1.md \"What the 6.2 % is, and what it is not\""
+   ]
+  },
+  {
+   "id": "exhibit.b.analogue",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "paths_recorded=False",
+   "cites": [
+    "docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"NavFn and M3 (the 6.2 %)\"; docs/data/lab1c/conformance/conformance.json (m3_analogue)"
+   ]
+  },
+  {
+   "id": "exhibit.b.fifty",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "e_applies=36; e_gap_max=1.0848820720240031e-15; e_within=36; n=50; navfn_vs_smac_L.max=0.11074025543374025; navfn_vs_smac_L.median=0.005696041895368082; navfn_vs_smac_L.min=-0.03134468291667052; navfn_vs_smac_L.n=50; navfn_vs_smac_L.p25=-0.0017244357118423707; navfn_vs_smac_L.p75=0.01610404772700045; smac_vs_c1_L.max=-0.010519176863443369; smac_vs_c1_L.median=-0.028834121919550773",
+   "cites": [
+    "docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"Conformance: coco_lab vs SmacPlanner2D vs NavFn\"; docs/data/lab1c/conformance/conformance_summary.json"
+   ]
+  },
+  {
+   "id": "exhibit.b.m3",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "docs/RESULTS.md, \"COCO Lab Phase 1C\" > \"NavFn and M3 (the 6.2 %)\"",
+   "cites": [
+    "docs/RESULTS.md, \"A \u2014 SmacPlanner2D and the evidence for it\"; gazebo_models/scripts/plan_compare.py"
+   ]
+  },
+  {
+   "id": "exhibit.c",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "label=reconstruction; label_why=Phase 1B examined a faithful recreation of the simulator, transcribed from the internship report's code listing (commit 5aad7b3); no internship-era file or metrics CSV exists. 1B recorded the result as a reconstruction.; live.bundle=astar_turn_trap_heading; m1_cost.a_higher=82; m1_cost.a_lower=66; m1_cost.differ=148; m1_cost.max_pct=1.871733583751801; m1_cost.mean_pct=0.0066468213309566915; m1_cost.mean_pct_where_differ=0.05380332401679994; m1_vs_optimum.a_higher=201; m1_vs_optimum.a_lower=0; m1_vs_optimum.differ=201",
+   "cites": [
+    "docs/labs/ISRO_INVESTIGATION.md \u00a75 (MEASURED); docs/data/lab1b/isro_experiment.json; docs/RESULTS.md, \"COCO Lab Phase 1B\""
+   ]
+  },
+  {
+   "id": "exhibit.c.table1",
+   "lab": "lab1",
+   "source": "site data",
+   "text": "astar_ms=1.2; astar_steps=2.64; dijkstra_ms=6.0; dijkstra_steps=2.55",
+   "cites": [
+    "docs/labs/ISRO_INVESTIGATION.md \u00a76 (report \u00a7VIII, Table 1)"
+   ]
+  },
+  {
+   "id": "loc_exhibits.aliasing.historical",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "C2-M5.1 asked AMCL to relocalise globally (/reinitialize_global_localization). It converged to world (2.60, -0.64) -- inside the wedge footprint. The health monitor was satisfied; the planner was not.",
+   "cites": [
+    "docs/RESULTS.md \"Global relocalization converges to an unplannable pose on this map\"; docs/data/c2m51_planner_after_recovery.txt"
+   ]
+  },
+  {
+   "id": "loc_exhibits.covariance.historical",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "At the injected 3 m divergence AMCL's sigma_xy fell to 0.070 m -- smaller than anything in the healthy run -- and took 24.5 s to climb past the healthy maximum. The scan-vs-map distance left its healthy envelope in 0.4 s.",
+   "cites": [
+    "docs/RESULTS.md \"C2-M5.0 localization health\"; docs/data/c2m5_diverged1.csv; docs/data/c2m5_analysis.py"
+   ]
+  },
+  {
+   "id": "loc_exhibits.recovery_alpha.ab",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "measured",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 3\"; docs/data/lab2/kidnap_ab.json"
+   ]
+  },
+  {
+   "id": "loc_exhibits.recovery_alpha.historical",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "COCO's AMCL ships recovery_alpha_fast/slow = 0.0. In C2-M5.1 a full 2\u03c0 spin ran for 9.1 s after an induced divergence; health came back, and the scan disagreed again 6.0 s after the mission resumed.",
+   "cites": [
+    "docs/RESULTS.md \"What the recovery cannot fix, and why\""
+   ]
+  },
+  {
+   "id": "loc_exhibits.run15.amcl",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "measured",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 3\"; docs/data/lab2/amcl_odom.json"
+   ]
+  },
+  {
+   "id": "loc_exhibits.run15.ekf",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "measured",
+   "cites": [
+    "docs/RESULTS.md \"COCO Lab Phase 3\"; docs/data/lab2/ekf_drift.json"
+   ]
+  },
+  {
+   "id": "loc_exhibits.run15.historical",
+   "lab": "lab2",
+   "source": "site data",
+   "text": "M6 run 15 picked its target, then could not be driven home: AMCL believed (7.252, -2.962) while the robot was at (8.747, 0.149), a 3.4 m gap, after dead-reckoning on skid-steer odometry through a corridor the map left blank. Across the 20 runs the gap at the end of the descent was 0.119-1.183 m; the threshold lies somewhere in (0.470, 1.183) m, nothing sampled between.",
+   "cites": [
+    "docs/RESULTS.md \"The one failure: run 15, and it is a localisation failure\""
+   ]
+  },
+  {
+   "id": "ui:lab_web/src/ui/Exhibit.tsx:123",
+   "lab": "lab1",
+   "source": "v1 view",
+   "text": "onClose={() => setLive(null)} reveal={null} /> )} Why it holds on every map, not just this one: {ex.a.property} ({ex.a.property_maps.toLocaleString('en')}{' '} random maps, costs equal to networkx's Dijkstra). What breaks it \u2014 a heuristic that overestimates: {ex.a.counter}.",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/Exhibit.tsx:138",
+   "lab": "lab1",
+   "source": "v1 view",
+   "text": " {ex.b.m3.navfn_m} m on the same start and goal: {(m3gap * 100).toFixed(1)} % shorter (derived). It was once read as A* beating Dijkstra. It is two planner implementations : NavFn does not read its path off its search but descends the gradient of a potential field ( calcPath ); SmacPlanner2D back-traces its node chain and then smooths it. ({ex.b.m3.cite}; mechanism: {ex.b.mechanism_cite}) ",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/Exhibit.tsx:162",
+   "lab": "lab1",
+   "source": "v1 view",
+   "text": "median {pct(ex.b.fifty.navfn_vs_smac_L.median, 3)} against Smac's returned path (range{' '} {pct(ex.b.fifty.navfn_vs_smac_L.min, 3)} \u2026 {pct(ex.b.fifty.navfn_vs_smac_L.max, 3)}). 1C recorded these paths' lengths, not their coordinates, so they are not drawn. {ex.b.analogue.cite};{' '} {ex.b.fifty.cite}.",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/Exhibit.tsx:174",
+   "lab": "lab1",
+   "source": "v1 view",
+   "text": " The internship report's Table 1 averaged A* at {t1.astar_steps} \u201cSteps\u201d and Dijkstra at {t1.dijkstra_steps}:{' '} {((t1.astar_steps / t1.dijkstra_steps - 1) * 100).toFixed(1)} % more (derived) \u2014 a count of smoothed waypoints, not path length or cost \u2014 and {t1.astar_ms} ms against {t1.dijkstra_ms} ms. ({t1.cite}) ",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/Exhibit.tsx:197",
+   "lab": "lab1",
+   "source": "v1 view",
+   "text": " onOpenBundle(ex.c.live.bundle)} data-testid=\"exhibit-c-open\"> Open the corrected search on the turn-trap map {ex.c.cite} ",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/Predict.tsx:44",
+   "lab": "lab1",
+   "source": "v1 view",
+   "text": " You predicted {reveal.predicted} {reveal.right ? ' \u2014 right.' : ' \u2014 not this time.'} )} Measured: {reveal.measured} (from the trace summaries coco_lab wrote for these runs) );",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/Race.tsx:122",
+   "lab": "lab1",
+   "source": "v1 view",
+   "text": "))} Optimum: {optimalCost === null ? 'no path' : optimalCost.toFixed(3)}, from coco_lab's Dijkstra on the same map, start, goal and move model. Cost and length are each trace's summary; length is in {rows[0]?.lengthUnit}.",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/SettingsPanel.tsx:106",
+   "lab": "lab1",
+   "source": "v1 view",
+   "text": "{value.algorithm !== 'weighted_astar' && ( The weight applies to weighted A* only: f = g + w\u00b7h. w = 0 is Dijkstra and w = 1 is A*, event for event (coco_lab/test/test_properties.py: test_weight_zero_reproduces_dijkstra, test_weight_one_reproduces_astar) . ",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/SettingsPanel.tsx:114",
+   "lab": "lab1",
+   "source": "v1 view",
+   "text": " Guarantee: {describeBound(value.algorithm, bound)} Verdicts: {sa.by}. Tested in {sa.cite}. {!unchanged && (",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/TrackingPlot.tsx:165",
+   "lab": "lab1",
+   "source": "v1 view",
+   "text": " {s.n} {s.mean.toFixed(3)} m {s.p95.toFixed(3)} m {s.max.toFixed(3)} m Definition: {series.definition}. Series: {series.by}. Every sample:{' '} {entry.id}.json . Evidence: {series.cite}.",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/panels.tsx:88",
+   "lab": "lab1",
+   "source": "v1 view",
+   "text": "? 'coco_lab when the site was built' : 'coco_lab in this browser'}: ${validated.detail}.` : 'Not validated by coco_lab.'} {entry && Evidence: {entry.citation} } );",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/panels.tsx:134",
+   "lab": "lab1",
+   "source": "v1 view",
+   "text": "['recoveries', m.recoveries], ['synthetic', m.synthetic], ['note', m.note], ]} /> {m.synthetic ? 'A synthetic decoder fixture, not a run.' : `Evidence: ${LAB1C_CITE}`} );",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/loc/LocExhibits.tsx:23",
+   "lab": "lab2",
+   "source": "v1 view",
+   "text": "} function Cite({ text }: { text: string }) { return Evidence: {text} ; } ",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/loc/Localise.tsx:269",
+   "lab": "lab2",
+   "source": "v1 view",
+   "text": " LiDAR {b.world.nBeams} of COCO's 480 beams, {b.scenario.lidar.range_min}\u2013{b.scenario.lidar.range_max} m inputs every filter here read the same world: one odometry, one set of scans (identical inputs) Tests: {entry.cites.join('; ')} ",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/loc/Localise.tsx:325",
+   "lab": "lab2",
+   "source": "v1 view",
+   "text": "))} (measured) {fid.cite}. Command: {fid.command} );",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/search/SearchLab.tsx:468",
+   "lab": "lab4",
+   "source": "v1 view",
+   "text": "{bag && recording rosbag2 {bag.sha256.slice(0, 12)}\u2026 , sim time {' '}{bag.sim_time_start.toFixed(1)}\u2013{bag.sim_time_end.toFixed(1)} s } Evidence: {cur.entry.cites.join('; ')} );",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/search/SearchLab.tsx:581",
+   "lab": "lab4",
+   "source": "v1 view",
+   "text": " What is proven, and where {part.claims.map((c) => ( {c.text} Tested: {c.cites.join('; ')} ))} ",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/search/SearchLab.tsx:587",
+   "lab": "lab4",
+   "source": "v1 view",
+   "text": " The real mission in Gazebo {m.status !== 'measured' ? Not yet measured. : ( <> {m.label} {m.command} run asked truth (manifest) order searched found ",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/search/SearchLab.tsx:601",
+   "lab": "lab4",
+   "source": "v1 view",
+   "text": " {m.notes.map((t, i) => {t} )} )} {part.challenge.score} \u2014 {part.challenge.cites.join('; ')} );",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/move/DriveView.tsx:290",
+   "lab": "lab5",
+   "source": "v1 view",
+   "text": "{p.rosbag && recordings rosbag2 set {p.rosbag.sha256.slice(0, 12)}\u2026 } {p.git_commit && code {p.git_commit.slice(0, 7)} {p.git_dirty ? ' (dirty)' : ''} } Evidence: {entry.cites.join('; ')} );",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/move/MoveLab.tsx:83",
+   "lab": "lab5",
+   "source": "v1 view",
+   "text": " {q.split('|').slice(1, -1).map((cell, i) => ( {cell.replace(/\\*\\*/g, '').trim()} ))} ))} Quoted verbatim (checked at site build): {part.run15.source} ",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/move/MoveLab.tsx:119",
+   "lab": "lab5",
+   "source": "v1 view",
+   "text": " What is proven, and where {part.claims.map((c) => ( {c.text} Evidence: {c.cites.join('; ')} ))} The controllers ",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/move/MoveLab.tsx:124",
+   "lab": "lab5",
+   "source": "v1 view",
+   "text": " The controllers {part.controllers.map((c) => ( {c.name}. {c.how} {c.cites.join('; ')} ))} The measurements ",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/move/ReplanView.tsx:176",
+   "lab": "lab5",
+   "source": "v1 view",
+   "text": " checked by {cur.detail} content {b.contentHash.slice(0, 19)}\u2026 Evidence: {entry.cites.join('; ')} ",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/move/ReplanView.tsx:202",
+   "lab": "lab5",
+   "source": "v1 view",
+   "text": "{' '}cells change, {c.newly_blocked} become blocked), D* Lite's repair touched {rep.dstar_expansions.toLocaleString('en')} cells and A* from scratch {rep.astar_expansions.toLocaleString('en')} \u2014 for the same cost ({fmt(rep.cost)} vs {fmt(rep.astar_cost)}). Pick \"Nav2's global costmap\u2026\" above to watch it. } Evidence: docs/data/lab5/replan_sketch_stats.json; docs/data/lab5/replan_c.json; docs/RESULT",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/map/MapLab.tsx:226",
+   "lab": "lab3",
+   "source": "v1 view",
+   "text": "{' '}{bag.sim_time_start.toFixed(1)}\u2013{bag.sim_time_end.toFixed(1)} s } {b.world.source === 'sketch' && world seed {String(p.seed)} } Evidence: {cur.entry.cites.join('; ')} );",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/map/MapLab.tsx:413",
+   "lab": "lab3",
+   "source": "v1 view",
+   "text": "of this scene (Sketch, {counts!.label}): {Object.entries(sceneCounts.runs).map(([id, c]) => `${runStyle(id).label} final error median ${fmt(c.final_ate_median)} m, F1 median ${fmt(c.f1_median)}`).join('; ')} {sceneCounts.loop_closed !== undefined && `. The pose graph closed a loop in ${sceneCounts.loop_closed} of ${sceneCounts.seeds.length} worlds, and that lowered its error in ${sceneCounts.loop_",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/map/MapLab.tsx:562",
+   "lab": "lab3",
+   "source": "v1 view",
+   "text": " How the score is computed {ch.score}. {Object.entries(ch.definition).map(([k, v]) => {k} : {v} )} Tests: {ch.cites.join('; ')} Loop closures help \u2014 coming back where you have been lets the pose graph pull its map",
+   "cites": []
+  },
+  {
+   "id": "ui:lab_web/src/ui/map/MapLab.tsx:665",
+   "lab": "lab3",
+   "source": "v1 view",
+   "text": " {real.notes.map((t) => {t} )} {real.label}. {real.command} );",
+   "cites": []
+  }
+ ]
+}

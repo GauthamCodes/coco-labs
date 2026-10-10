@@ -1,0 +1,83 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-09T09:23:27.496Z",
+   "power_profile": "power-saver",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.27,
+    "5m": 3.31,
+    "15m": 2.82
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  },
+  "end": {
+   "at_utc": "2026-10-09T09:23:52.478Z",
+   "power_profile": "power-saver",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 6.24,
+    "5m": 4.04,
+    "15m": 3.07
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ },
+ "site": "http://127.0.0.1:4194/coco-labs/",
+ "steps": {
+  "channels": [
+   "coco.estimate.pose.v1",
+   "coco.localise.ekf.update.v1",
+   "coco.localise.particles.set.v1",
+   "coco.localise.particles.update.v1",
+   "coco.metrics.values.v1"
+  ],
+  "controls": true,
+  "err_before_kidnap": {
+   "tick": 58,
+   "value": 0.0611172700195974
+  },
+  "kidnap_logged": [
+   {
+    "kind": "kidnap",
+    "x": 2.4999992993413183,
+    "y": -2.0000001362391884,
+    "theta": 1.0882214906137326,
+    "has_theta": true,
+    "tick": 94
+   }
+  ],
+  "err_after_kidnap": {
+   "tick": 109,
+   "value": 4.44637840838804
+  },
+  "truth_after": [
+   2.649645490890193,
+   -1.6739190888552204,
+   1.5691563064420357
+  ],
+  "belief_after": [
+   0.7171716557899235,
+   2.3305566355352036,
+   1.3529264917245178
+  ],
+  "inspector": "localise.particles.set tick 123particles300update23localise.particles.update tick 123update23effective sample size285.0resampledtrueinjected0p(inject)0w_slow / w_fast0 / 0estimate.pose tick 123mcl pose(1.103, 2.404) m, θ 2.689 radσx, σy0.253 m, 0.079 mσθ0.160 radestimate.pose tick 123ekf pose(0.548, 2.235) m, θ 2.958 radσx, σy0.049 m, 0.030 mσθ0.005 radestimate.pose tick 123odometry pose(0.590, 2.",
+  "kidnap_landed_m": 7.137812723428303e-7
+ },
+ "errors": [],
+ "pass": true
+}

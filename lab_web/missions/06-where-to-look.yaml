@@ -1,0 +1,177 @@
+# Learn mission 6 (M2.8). Data, not code.
+schema: coco.mission.v1
+id: where-to-look
+number: 6
+title: How does a robot decide where to look?
+question: COCO is told "fetch the red one" -- not where it is. Four bays. Which first, and what does a miss tell it?
+lens: decide
+gaps: [lidar, odometry, tracking]
+v1: "v1/?view=search"
+beats:
+  - beat: hook
+    text: >-
+      Start the fetch. COCO is told a colour and nothing else. Watch its belief over
+      the four bays: every look that finds nothing moves it.
+    arena: {lens: decide, level: watch, cfg: ['mission.start=red']}
+    claims: [told-only-colour, fetch-matrix]
+  - beat: predict
+    question: >-
+      The camera misses a target that is there one time in ten. Should COCO look in
+      the nearest bay first?
+    options:
+      - Yes -- nearest first always minimises the distance driven
+      - No -- a search that finds nothing drives the whole tour, so the tour's length counts
+      - Only if every bay is equally likely
+    answer: 1
+    claims: [counterexample]
+  - beat: reveal
+    text: >-
+      COCO costs every order and drives the cheapest in expectation: Bay 3, 4, 2, 1 --
+      not nearest-first's 3, 2, 1, 4. A miss is evidence, not proof.
+    claims: [counterexample, bayes, index-rule]
+  - beat: manipulate
+    text: >-
+      Put the target in another bay, make the camera miss, or give the robot a wrong
+      idea of where it is. Watch it look at the wrong bay and believe it looked at the
+      right one.
+    arena: {lens: decide, level: explain, cfg: ['arena.range_sigma=0.02', 'localise.filter=mcl', 'mission.start=red']}
+    claims: [fetch-matrix, mislocalised-look]
+  - beat: explain
+    text: >-
+      Giving up early fails, whatever it saved. Silence is not a miss. And the robot
+      is never told where the target is: nothing it reads could hold the answer.
+    claims: [negative, silence, anticheat]
+  - beat: stack
+    text: >-
+      The real mission searched in Gazebo, told only the colour: 16 scored runs. Each
+      search is rebuilt from the robot's own looks, and replays byte for byte through
+      coco.v1.
+    claims: [p05-matrix, p05-replay]
+  - beat: challenge
+    stub: true
+    text: Arrives in M3 (v1's "Find it" challenge is scored as below).
+    claims: [negative]
+claims:
+  - id: told-only-colour
+    label: ASSUMPTION
+    text: >-
+      The robot knows its map, the four bays, what it costs to drive to each and climb
+      its ramp, and that its camera misses a target that is there one time in ten --
+      an ASSUMPTION, not a measurement. The travel table is coco_lab's A* on the Nav2
+      map; the first bay does not depend on the colour asked for.
+    evidence:
+      - coco_lab/test/test_regionsearch.py::test_the_arena_travel_table_is_coco_labs_astar_on_the_nav2_map
+      - coco_lab/test/test_regionsearch.py::test_the_arena_order_does_not_depend_on_the_colour_asked_for
+      - coco_mission/test/test_mission_search.py::test_the_first_bay_does_not_depend_on_the_colour
+    v1: ['catalog.search.bundles[search_arena]']
+  - id: counterexample
+    label: TESTED
+    text: >-
+      With a perfect camera nearest-first is optimal here. With d = 0.9 it is beaten:
+      the robot's order Bay 3, 4, 2, 1 expects 30.45 m, nearest-first (3, 2, 1, 4)
+      30.83 m, most-likely-first (1, 2, 3, 4) 32.26 m.
+    evidence:
+      - coco_lab/test/test_regionsearch.py::test_the_arena_order_when_the_camera_can_miss_is_not_nearest_first
+      - coco_lab/test/test_regionsearch.py::test_the_arena_order_with_a_perfect_camera_is_nearest_first
+      - coco_lab/test/test_regionsearch.py::test_the_arena_plans_carry_the_counterexample_numbers
+    v1: ['catalog.search.claims[counterexample]', 'ui:lab_web/src/ui/search/SearchLab.tsx:581']
+  - id: bayes
+    label: TESTED
+    text: >-
+      A miss is evidence, not proof: with d = 0.9 a searched bay keeps a little
+      belief, and the others rise. The update is Bayes' rule, checked against the
+      enumerated joint; a find is certain, and only a perfect camera's miss is proof.
+    evidence:
+      - coco_lab/test/test_regionsearch.py::test_update_is_bayes_rule_against_the_enumerated_joint
+      - coco_lab/test/test_regionsearch.py::test_a_find_is_certain_and_a_perfect_miss_is_proof
+    v1: ['catalog.search.claims[bayes]']
+  - id: index-rule
+    label: TESTED
+    text: >-
+      If every bay cost the same to reach from anywhere, "most likely per metre first"
+      would be optimal. COCO's bays do not, so the robot costs every order -- and its
+      order is no worse than any other.
+    evidence:
+      - coco_lab/test/test_regionsearch.py::test_index_rule_is_optimal_when_costs_do_not_depend_on_order
+      - coco_lab/test/test_regionsearch.py::test_the_robot_order_is_no_worse_than_any_other_order
+    v1: ['catalog.search.claims[index_rule]']
+  - id: fetch-matrix
+    label: SIMPLIFIED MODEL
+    text: >-
+      The whole fetch in the Arena, four colours x two seeds: with no localiser 6 of 8
+      fetched; with MCL 8 of 8; MCL with RPP 4 of 8, with MPPI 7 of 8, with DWA 4 of 8.
+      A camera can miss, so some failures are "every bay searched once and the target
+      not found". The model's numbers, not the robot's.
+    evidence:
+      - docs/v2/data/m2/m26/fetch_matrix.json
+      - docs/v2/data/m2/m26/fetch_matrix.py
+      - coco_lab/test/test_mission_arena.py
+    v1: []
+  - id: mislocalised-look
+    label: SIMPLIFIED MODEL
+    text: >-
+      Started with a wrong belief of where it is, the Arena's robot fetched 1 of 4. In
+      all four runs its camera saw Bay 4 while it believed it was looking at Bay 3:
+      three marked Bay 3 searched on that look, then stopped making progress (moved
+      less than 0.1 m in 10 s); the fourth found the yellow target -- which stands in
+      Bay 4, the bay it did not think it was at.
+    evidence:
+      - docs/v2/data/m2/m26/fetch_matrix.json
+    v1: []
+  - id: negative
+    label: TESTED
+    text: >-
+      Negative search: bay A, then B, then found in C -- each miss marked before the
+      find. Pass is the target found; giving up after A fails the challenge, whatever
+      it saved. On the stack, a learner's order told to stop after Bay 3 aborted
+      SEARCH_EXHAUSTED, as designed.
+    evidence:
+      - coco_lab/test/test_regionsearch.py::test_negative_search_finds_it_in_the_last_region_checked
+      - coco_lab/test/test_regionsearch.py::test_giving_up_after_the_first_region_fails_the_challenge
+      - coco_mission/test/test_mission_search.py::test_a_then_b_then_found_in_c
+      - coco_mission/test/test_mission_search.py::test_aborting_after_the_first_bay_fails_with_nothing_found
+    v1: ['catalog.search.claims[negative]', 'catalog.search.challenge', 'ui:lab_web/src/ui/search/SearchLab.tsx:601']
+  - id: silence
+    label: TESTED
+    text: >-
+      Silence is not a miss: a look with no camera reports is a failure, never
+      evidence that the target is absent.
+    evidence:
+      - coco_mission/test/test_mission_search.py::test_a_survey_with_no_perception_lines_is_not_a_miss
+    v1: ['catalog.search.claims[silence]']
+  - id: anticheat
+    label: TESTED
+    text: >-
+      The real mission is told the colour and nothing else: no bay, no pose. Moving the
+      target, or corrupting the manifest, changes nothing the robot is given; the
+      policy has no field that could hold the truth.
+    evidence:
+      - coco_sim/test/test_episode_search.py::test_moving_the_target_to_another_bay_needs_no_change
+      - coco_sim/test/test_episode_search.py::test_corrupting_the_manifest_pose_changes_nothing_the_robot_gets
+      - coco_lab/test/test_regionsearch.py::test_no_field_a_policy_reads_can_hold_the_truth
+      - coco_mission/test/test_mission_search.py::test_the_told_lane_on_the_perception_line_is_never_read
+    v1: ['catalog.search.claims[anticheat]']
+  - id: p05-matrix
+    label: SIMULATION RESULT
+    text: >-
+      The searching mission in Gazebo, a fresh simulator per run: 14 of 16 scored runs
+      COMPLETE, 1 void (listed, never scored). One aborted RETURN_FAILED after finding
+      its target; one was a learner's order told to stop after Bay 3. Lift means the
+      object moved UP, not that it is upright. 16 runs is not a rate.
+    evidence:
+      - docs/RESULTS.md "COCO Lab Phase 5"
+      - docs/data/lab4/README.md
+      - docs/data/lab4/results.json
+    v1: ['ui:lab_web/src/ui/search/SearchLab.tsx:587', 'ui:lab_web/src/ui/search/SearchLab.tsx:468']
+  - id: p05-replay
+    label: TESTED
+    text: >-
+      Each Gazebo search is rebuilt from the robot's own looks: coco_lab chooses every
+      bay again from the same belief, and a recording that disagreed would not load.
+      Converted to coco.v1, all 16 replay byte for byte; where the target stood comes
+      from the episode manifest and is shown only as truth.
+    evidence:
+      - coco_lab/test/test_searchbundle.py::test_a_recording_that_disagrees_with_the_policy_is_refused
+      - coco_schemas/test/test_search_replay_v2.py
+      - docs/v2/data/m2/m27/p05_matrix.mcap
+    v1: ['catalog.search.bundles[p05_matrix]']

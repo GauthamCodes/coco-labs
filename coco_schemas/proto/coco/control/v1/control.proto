@@ -1,0 +1,65 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// Local control as a glass box (M2.1): every candidate a controller
+// considered in a control cycle, each critic's score, why a candidate was
+// rejected, and the command it chose. One schema for a sampler (DWA), a
+// tracker (pure pursuit: one candidate per cycle) and MPPI (samples).
+// Family control.local. Channels:
+//   coco.control.local.header.v1      (ControllerHeader, static)
+//   coco.control.local.candidates.v1  (CandidateBatch: one row per candidate per cycle)
+//   coco.control.local.command.v1     (CommandBatch: one row per cycle)
+
+syntax = "proto3";
+
+package coco.control.v1;
+
+import "coco/common/v1/common.proto";
+
+message ControllerHeader {
+  string controller_id = 1;
+  string kind = 2;                  // "dwa", "pure_pursuit", "mppi", or a recorded stack controller
+  repeated string critics = 3;      // the order of CandidateBatch.critic_scores' stride
+  coco.common.v1.Params params = 4;
+  string evidence = 5;              // "MODEL" or "STACK"
+}
+
+// Candidates of ONE cycle; every row shares its clocks. A candidate's
+// trajectory is the points traj_x[traj_offset[i] .. traj_offset[i] +
+// traj_len[i]) (map frame); its critic scores are critic_scores[i * n ..
+// i * n + n) for the header's n critics.
+message CandidateBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint32 candidate = 4;    // index within the cycle
+  repeated double v = 5;            // m/s
+  repeated double w = 6;            // rad/s
+  repeated bool valid = 7;
+  repeated string rejection = 8;    // why invalid ("" if valid): "collision", "outside_window", ...
+  repeated double cost = 9;         // total (lower is better); +inf if invalid
+  repeated double critic_scores = 10;
+  repeated uint32 traj_offset = 11;
+  repeated uint32 traj_len = 12;
+  repeated double traj_x = 13;
+  repeated double traj_y = 14;
+  uint64 cycle = 15;
+  string controller_id = 16;
+}
+
+message CommandBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint64 cycle = 4;
+  repeated sint32 chosen = 5;       // candidate index, or -1 when none was valid
+  repeated double v = 6;            // the command sent
+  repeated double w = 7;
+  // "ok", "no_valid_candidate", "goal_reached", "path_outside_window", ...
+  repeated string status = 8;
+  repeated uint32 n_candidates = 9;
+  repeated uint32 n_valid = 10;
+  repeated double lookahead_x = 11; // the path point it steered for (NaN if none)
+  repeated double lookahead_y = 12;
+  string controller_id = 13;
+}

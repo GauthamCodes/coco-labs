@@ -17,7 +17,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file coco/truth/v1/truth.proto.
  */
 export const file_coco_truth_v1_truth: GenFile = /*@__PURE__*/
-  fileDesc("Chljb2NvL3RydXRoL3YxL3RydXRoLnByb3RvEg1jb2NvLnRydXRoLnYxImEKDlRydXRoUG9zZUJhdGNoEgsKA3NlcRgBIAMoBBIMCgR0aWNrGAIgAygEEg8KB3Rfd29ybGQYAyADKAESCQoBeBgEIAMoARIJCgF5GAUgAygBEg0KBXRoZXRhGAYgAygBYgZwcm90bzM");
+  fileDesc("Chljb2NvL3RydXRoL3YxL3RydXRoLnByb3RvEg1jb2NvLnRydXRoLnYxImEKDlRydXRoUG9zZUJhdGNoEgsKA3NlcRgBIAMoBBIMCgR0aWNrGAIgAygEEg8KB3Rfd29ybGQYAyADKAESCQoBeBgEIAMoARIJCgF5GAUgAygBEg0KBXRoZXRhGAYgAygBIoMBCg5BY3RvclBvc2VCYXRjaBILCgNzZXEYASADKAQSDAoEdGljaxgCIAMoBBIPCgd0X3dvcmxkGAMgAygBEhAKCGFjdG9yX2lkGAQgAygJEgkKAXgYBSADKAESCQoBeRgGIAMoARINCgV0aGV0YRgHIAMoARIOCgZyYWRpdXMYCCADKAFiBnByb3RvMw");
 
 /**
  * @generated from message coco.truth.v1.TruthPoseBatch
@@ -60,4 +60,62 @@ export type TruthPoseBatch = Message<"coco.truth.v1.TruthPoseBatch"> & {
  */
 export const TruthPoseBatchSchema: GenMessage<TruthPoseBatch> = /*@__PURE__*/
   messageDesc(file_coco_truth_v1_truth, 0);
+
+/**
+ * Moving bodies other than the robot (M2.7, additive): Lab 5's actors as
+ * Gazebo moved them, the Arena's actors. One row per body per sample.
+ * Channel: coco.truth.actors.v1 (ActorPoseBatch).
+ *
+ * @generated from message coco.truth.v1.ActorPoseBatch
+ */
+export type ActorPoseBatch = Message<"coco.truth.v1.ActorPoseBatch"> & {
+  /**
+   * @generated from field: repeated uint64 seq = 1;
+   */
+  seq: bigint[];
+
+  /**
+   * @generated from field: repeated uint64 tick = 2;
+   */
+  tick: bigint[];
+
+  /**
+   * @generated from field: repeated double t_world = 3;
+   */
+  tWorld: number[];
+
+  /**
+   * @generated from field: repeated string actor_id = 4;
+   */
+  actorId: string[];
+
+  /**
+   * @generated from field: repeated double x = 5;
+   */
+  x: number[];
+
+  /**
+   * @generated from field: repeated double y = 6;
+   */
+  y: number[];
+
+  /**
+   * @generated from field: repeated double theta = 7;
+   */
+  theta: number[];
+
+  /**
+   * m, the body's footprint (NaN if unknown)
+   *
+   * @generated from field: repeated double radius = 8;
+   */
+  radius: number[];
+};
+
+/**
+ * Describes the message coco.truth.v1.ActorPoseBatch.
+ * Use `create(ActorPoseBatchSchema)` to create a new message.
+ */
+export const ActorPoseBatchSchema: GenMessage<ActorPoseBatch> = /*@__PURE__*/
+  messageDesc(file_coco_truth_v1_truth, 1);
 

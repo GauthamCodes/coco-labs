@@ -20,8 +20,31 @@ import { RobotStateBatchSchema } from '../schemas/gen/coco/robot/v1/robot_pb';
 import { ScanBatchSchema } from '../schemas/gen/coco/sensor/v1/scan_pb';
 import { WorldGridSchema } from '../schemas/gen/coco/world/v1/world_pb';
 import { readRun } from '../schemas/mcap';
-import type { PlanInfo, SearchColumns, Tick, World } from './protocol';
+import type { FamilyMessage, PlanInfo, SearchColumns, Tick, World } from './protocol';
 import type { ArenaSession } from './session';
+
+/**
+ * When attract mode starts fetching and playing its recording (M2.0). The
+ * recording competes with the live model's download for the link; which
+ * policy is the default is decided by measurement (docs/v2/M2_RESULTS.md).
+ * `?attract=` selects one for a measurement.
+ *
+ * - `eager`: at once (M1);
+ * - `low`: at once, but the fetch at low network priority;
+ * - `after_pyodide`: once the worker has Pyodide (its largest download);
+ * - `after_live`: once the live model is ready.
+ */
+export const ATTRACT_POLICIES = ['eager', 'low', 'after_pyodide', 'after_live'] as const;
+export type AttractPolicy = typeof ATTRACT_POLICIES[number];
+/**
+ * `low`, by measurement (M2.0, balanced on AC, n = 10, docs/v2/data/m2/m20/):
+ * the same first visible computation as `eager` (619 / 3,142 ms unthrottled /
+ * emulated 4G) with the live model ready sooner on 4G (7,895 vs 8,130 ms).
+ * `after_live` readied the live model in 7,486 ms but moved the first visible
+ * computation to the live model's own, and README 5.5 has attract mode play
+ * WHILE Pyodide loads.
+ */
+export const DEFAULT_ATTRACT_POLICY: AttractPolicy = 'low';
 
 export interface Recording {
   world: World;
@@ -32,6 +55,10 @@ export interface Recording {
   batches: Map<number, { meta: { search_id: number; planner: string; tick: number; final: boolean }; cols: SearchColumns }[]>;
   runId: string;
   source: string;
+  /** M2.7: whole-loop family batches by the tick they belong to (a converted Lab 5 drive's control.local, ...). */
+  families?: Map<number, FamilyMessage[]>;
+  /** M2.7: the channels' static headers, fed before the first tick. */
+  headers?: FamilyMessage[];
 }
 
 export function parseRecording(bytes: Uint8Array): Promise<Recording> {
@@ -120,7 +147,9 @@ export class AttractPlayer {
   step() {
     if (this.i >= this.rec.ticks.length) return false;
     const t = this.rec.ticks[this.i];
+    if (this.i === 0) for (const h of this.rec.headers ?? []) this.session.onFamily(h);
     for (const b of this.rec.batches.get(t.tick - 1) ?? []) this.session.onPlanBatch(b.meta, b.cols);
+    for (const f of this.rec.families?.get(t.tick) ?? []) this.session.onFamily(f);
     this.lastRanges = this.rec.ranges.get(t.tick) ?? this.lastRanges;
     this.session.onTick(t, this.lastRanges ?? new Float32Array(this.rec.world.lidar.samples).fill(Infinity));
     this.i += 1;

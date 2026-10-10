@@ -170,7 +170,7 @@ The intent stays the same: no silent divergence. It becomes testable, and it all
 | UNRESOLVED | Reproduced but unexplained, statistically unresolved, or untested |
 | CONCEPT | Discussed, not built |
 
-The labels shown to learners map onto these: MEASURED, ASSUMPTION, SIMPLIFIED MODEL, SIMULATION RESULT, REAL ROBOT RESULT, INFERENCE.
+The labels shown to learners map onto these: MEASURED, TESTED (a property or unit test proves it), ASSUMPTION, SIMPLIFIED MODEL, SIMULATION RESULT, REAL ROBOT RESULT, INFERENCE, UNRESOLVED.
 
 ### Integrity rules
 

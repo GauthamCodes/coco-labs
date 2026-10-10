@@ -38,6 +38,17 @@ class Perf {
     this.emit();
   }
 
+  /** Resolves once the mark `name` exists (at once if it already does). */
+  when(name: string): Promise<number> {
+    if (name in this.marks) return Promise.resolve(this.marks[name]);
+    return new Promise((resolve) => {
+      const check = () => {
+        if (name in this.marks) { this.listeners.delete(check); resolve(this.marks[name]); }
+      };
+      this.listeners.add(check);
+    });
+  }
+
   frame(now = wallMs()) {
     this.frames.push(now);
     while (this.frames.length && now - this.frames[0] > 1000) this.frames.shift();

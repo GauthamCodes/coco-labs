@@ -1,0 +1,386 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-10T04:03:52.701Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.97,
+    "5m": 1.94,
+    "15m": 1.7
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-10T04:06:35.241Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.53,
+    "5m": 2.36,
+    "15m": 1.95
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "meta": {
+  "site": "http://127.0.0.1:4204/coco-labs/",
+  "settle_ms": 8000,
+  "started_utc": "2026-10-10T04:03:52.702Z",
+  "headless": true,
+  "browser": "chromium 156.0.8078.4 (Playwright)",
+  "finished_utc": "2026-10-10T04:06:35.179Z"
+ },
+ "views": [
+  {
+   "view": "arena",
+   "query": "",
+   "ms_observed": 11808,
+   "console_errors": [],
+   "console_warnings": [
+    "[.WebGL-0x1dbc001cfe00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x1dbc001cfe00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x1dbc001cfe00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x1dbc001cfe00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+   ],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": null,
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "arena:localise",
+   "query": "?view=arena&lens=localise",
+   "ms_observed": 11487,
+   "console_errors": [],
+   "console_warnings": [
+    "[.WebGL-0x239c001c2600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x239c001c2600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x239c001c2600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x239c001c2600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+   ],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": null,
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "arena:map",
+   "query": "?view=arena&lens=map",
+   "ms_observed": 11547,
+   "console_errors": [],
+   "console_warnings": [
+    "[.WebGL-0x218c001c2600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x218c001c2600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x218c001c2600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x218c001c2600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+   ],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": null,
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "arena:move",
+   "query": "?view=arena&lens=move",
+   "ms_observed": 11349,
+   "console_errors": [],
+   "console_warnings": [
+    "[.WebGL-0x2eac001c2600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x2eac001c2600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x2eac001c2600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x2eac001c2600]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+   ],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": null,
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "arena:decide",
+   "query": "?view=arena&lens=decide",
+   "ms_observed": 11415,
+   "console_errors": [],
+   "console_warnings": [
+    "[.WebGL-0x644001c1a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x644001c1a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x644001c1a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x644001c1a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+   ],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": null,
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "learn",
+   "query": "?view=learn",
+   "ms_observed": 8572,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": null,
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "learn:find-a-path",
+   "query": "?view=learn&mission=find-a-path&beat=0",
+   "ms_observed": 8569,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": null,
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "learn:world-changes",
+   "query": "?view=learn&mission=world-changes&beat=0",
+   "ms_observed": 8575,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": null,
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "learn:where-it-is",
+   "query": "?view=learn&mission=where-it-is&beat=0",
+   "ms_observed": 8579,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": null,
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "learn:build-a-map",
+   "query": "?view=learn&mission=build-a-map&beat=0",
+   "ms_observed": 8579,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": null,
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "learn:avoid-things",
+   "query": "?view=learn&mission=avoid-things&beat=0",
+   "ms_observed": 8577,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": null,
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "learn:where-to-look",
+   "query": "?view=learn&mission=where-to-look&beat=0",
+   "ms_observed": 8560,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": null,
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  },
+  {
+   "view": "live",
+   "query": "?view=live",
+   "ms_observed": 8650,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": "Live Stack (simulated) — local",
+    "conn": "not connected",
+    "probe": "Not connected. Nothing is contacted until you press Connect (a stack on this machine: see the Docker quickstart).",
+    "status": "Live Stack (simulated) is offline — it runs during scheduled demos. No demo is scheduled.",
+    "last_check": "Last checked 09:35:51 AM: no demo is scheduled now, so nothing was contacted."
+   }
+  },
+  {
+   "view": "v1-archive",
+   "query": "v1/",
+   "ms_observed": 8600,
+   "console_errors": [],
+   "console_warnings": [],
+   "page_errors": [],
+   "websockets": [],
+   "cross_origin_requests": [],
+   "failed_requests": [],
+   "shown": {
+    "badge": "Replay — coco_lab computation (glass-box)",
+    "conn": null,
+    "probe": null,
+    "status": null,
+    "last_check": null
+   }
+  }
+ ],
+ "recovery": {
+  "url": "http://127.0.0.1:4204/coco-labs/?view=live&live=ws%3A%2F%2Flocalhost%3A8089%2Fws",
+  "offline": {
+   "at_ms": 7576,
+   "websockets": 0,
+   "shown": {
+    "badge": "Live Stack (simulated) — local",
+    "conn": "offline",
+    "probe": "Last checked 09:36:24 AM: no answer from http://localhost:8089/healthz. Next check in 8 s.",
+    "status": "Live Stack (simulated) is offline — it runs during scheduled demos. No demo is scheduled.",
+    "last_check": "Last checked 09:36:17 AM: no demo is scheduled now, so nothing was contacted."
+   },
+   "console_errors": [
+    "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+   ],
+   "healthz_requests": 3
+  },
+  "after": {
+   "stub_up_to_connected_ms": 6371,
+   "websockets": [
+    "ws://localhost:8089/ws"
+   ],
+   "shown": {
+    "badge": "Live Stack (simulated) — local",
+    "conn": "connected",
+    "probe": "Last checked 09:36:32 AM: http://localhost:8089/healthz answered.",
+    "status": "The public scheduled demo is offline; this page is connected to the stack named below.",
+    "last_check": "Last checked 09:36:17 AM: no demo is scheduled now, so nothing was contacted."
+   },
+   "healthz_requests": 4,
+   "console_errors_after_stub": [],
+   "page_errors": []
+  }
+ },
+ "live_390": {
+  "console_errors": [],
+  "console_warnings": [],
+  "page_errors": [],
+  "websockets": [],
+  "cross_origin_requests": [],
+  "failed_requests": [],
+  "shown": {
+   "badge": "Live Stack (simulated) — local",
+   "conn": "not connected",
+   "probe": "Not connected. Nothing is contacted until you press Connect (a stack on this machine: see the Docker quickstart).",
+   "status": "Live Stack (simulated) is offline — it runs during scheduled demos. No demo is scheduled.",
+   "last_check": "Last checked 09:36:09 AM: no demo is scheduled now, so nothing was contacted."
+  },
+  "scroll_width": 390
+ },
+ "summary": {
+  "views_with_console_errors": [],
+  "views_with_page_errors": [],
+  "total_console_errors": 0,
+  "total_page_errors": 0,
+  "live_websockets_on_load": 0
+ }
+}

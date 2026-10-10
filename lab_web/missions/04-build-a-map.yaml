@@ -1,0 +1,156 @@
+# Learn mission 4 (M2.8). Data, not code.
+schema: coco.mission.v1
+id: build-a-map
+number: 4
+title: How does a robot build a map?
+question: To map a room you need to know where you are; to know where you are you need a map. How does COCO do both?
+lens: map
+gaps: [lidar, odometry]
+v1: "v1/?view=map"
+beats:
+  - beat: hook
+    text: >-
+      Drive COCO round its arena with no map. Mapped from its wheel odometry alone,
+      the walls bend and double; mapped from where it truly is, they are straight.
+      Every SLAM algorithm lives between those two.
+    arena: {lens: map, level: watch, cfg: ['arena.range_sigma=0.02', 'map.algorithm=occupancy', 'map.poses=odometry']}
+    claims: [arena-scenario]
+  - beat: predict
+    question: >-
+      COCO drives round a block and comes back to where it started. A pose graph
+      notices it is home again and pulls the whole loop straight. Does closing the
+      loop always make the map better?
+    options:
+      - Yes -- more constraints, a better map
+      - Usually in coco_lab's model -- but slam_toolbox and Cartographer made some maps much worse
+      - No -- loop closure only helps with landmarks
+    answer: 1
+    claims: [loop-sketch, loop-backends]
+  - beat: reveal
+    text: >-
+      In coco_lab's pose graph closing the loop nearly always helped. Fed the same
+      recorded drive, slam_toolbox and Cartographer often made a worse map with loop
+      closure on -- measured, reproduced, and not explained.
+    claims: [loop-sketch, loop-backends]
+  - beat: manipulate
+    text: >-
+      Switch the algorithm: occupancy from the truth, from odometry, from the
+      filter's belief; EKF-SLAM on corners; FastSLAM's particles; the pose graph with
+      and without loop closure. Same drive, same scans, same odometry.
+    arena: {lens: map, level: explain, cfg: ['arena.range_sigma=0.02', 'localise.filter=mcl', 'map.algorithm=occupancy', 'map.poses=belief']}
+    claims: [arena-scenario, corridor, landmarks, score]
+  - beat: explain
+    text: >-
+      A scan in a smooth corridor says how far you are from each wall and which way
+      you face -- and nothing about how far along you are. Landmarks seen with an
+      idealised sensor make EKF-SLAM look easy; the LiDAR-only methods earn theirs.
+    claims: [corridor, landmarks, sensor-fidelity]
+  - beat: stack
+    text: >-
+      COCO's 121 m tour, recorded in Gazebo and replayed into slam_toolbox,
+      Cartographer and coco_lab's SLAMs -- identical scans, identical odometry,
+      scored against the arena the world generator drew.
+    claims: [s1-tour, loop-backends]
+  - beat: challenge
+    stub: true
+    text: Arrives in M3 (v1's "Map the arena" challenge is scored as below).
+    claims: [score]
+claims:
+  - id: arena-scenario
+    label: SIMPLIFIED MODEL
+    text: >-
+      One drive round the Arena (seed 21, six waypoints, range noise 0.02 m): mapped
+      from the truth, F1 0.755; from odometry, 0.208 with 0.71 m trajectory error;
+      FastSLAM 0.374 (0.19 m); the pose graph, which closed 3 loops, 0.642 (0.12 m).
+      Lab 3's engine on the same scenario: 0.694, 0.236, 0.427 and 0.218 -- its pose
+      graph closed no loop and ended 1.72 m off.
+    evidence:
+      - docs/v2/data/m2/m24/map_arena_scenario.json
+      - docs/v2/data/m2/m24/map_arena_scenario.py
+      - coco_lab/test/test_map_arena.py
+    v1: ['catalog.map.bundles[map_arena]', 'ui:lab_web/src/ui/map/MapLab.tsx:226']
+  - id: loop-sketch
+    label: TESTED
+    text: >-
+      Round a ring room, over 20 Sketch worlds, the pose graph closed a loop in 19
+      and that lowered its error in 19: median F1 0.807 against 0.472 with loop
+      closure off (median final error 0.22 m against 0.75 m). It does not always
+      recognise the start.
+    evidence:
+      - coco_lab/test/test_posegraph.py::test_loop_closure_usually_closes_the_loop_room
+      - coco_lab/test/test_map_teaching.py::test_the_loop_rooms_drive_is_a_loop
+      - docs/data/lab3/sketch_counts.json
+    v1: ['catalog.map.bundles[map_loop]', 'ui:lab_web/src/ui/map/MapLab.tsx:413']
+  - id: corridor
+    label: TESTED
+    text: >-
+      Two rooms joined by 18 m of smooth corridor: a scan mid-corridor cannot see how
+      far along it is, and every SLAM drifts there. Over 20 worlds the median final
+      error was 0.90 m for the pose graph, 1.10 m for EKF-SLAM, 1.70 m for FastSLAM
+      and 3.08 m for odometry alone.
+    evidence:
+      - coco_lab/test/test_map_teaching.py::test_a_scan_mid_corridor_cannot_see_how_far_along_it_is
+      - coco_lab/test/test_map_teaching.py::test_the_corridor_is_two_straight_featureless_walls
+      - coco_lab/test/test_posegraph.py::test_a_corridor_constrains_nothing_along_its_axis
+      - docs/data/lab3/sketch_counts.json
+    v1: ['catalog.map.bundles[map_corridor]', 'ui:lab_web/src/ui/map/MapLab.tsx:413']
+  - id: landmarks
+    label: ASSUMPTION
+    text: >-
+      EKF-SLAM sees the room's box corners with an IDEALISED sensor -- identity known,
+      no false detections; FastSLAM and the pose graph see only the LiDAR. Over 20
+      worlds: median F1 0.960 EKF-SLAM, 0.919 FastSLAM, 0.916 pose graph, 0.304
+      odometry. In the linear case the EKF equals the exact Gaussian posterior.
+    evidence:
+      - coco_lab/test/test_ekfslam.py::test_ekf_slam_beats_odometry_on_the_landmarks_room
+      - coco_lab/test/test_ekfslam.py::test_the_linear_case_equals_the_exact_gaussian_posterior
+      - coco_lab/test/test_fastslam.py::test_fastslam_beats_odometry_on_the_landmarks_room
+      - docs/data/lab3/sketch_counts.json
+    v1: ['catalog.map.bundles[map_landmarks]', 'ui:lab_web/src/ui/map/MapLab.tsx:413']
+  - id: score
+    label: TESTED
+    text: >-
+      A map's score is round(100 x F1) at 0.10 m against the arena it was driven in.
+      Precision: the share of the map's occupied cells within 0.10 m of a truly
+      occupied cell. Recall: the share of the arena's VISIBLE walls with a mapped cell
+      within 0.10 m. Unseen walls are not counted; unknown is not coverage.
+    evidence:
+      - coco_lab/test/test_mapeval.py::test_a_map_scored_against_itself_is_perfect
+      - coco_lab/test/test_mapeval.py::test_the_tolerance_forgives_one_cell_and_exact_does_not
+      - coco_lab/test/test_mapeval.py::test_unseen_walls_are_not_counted_and_unknown_is_not_coverage
+    v1: ['catalog.map.challenge', 'ui:lab_web/src/ui/map/MapLab.tsx:562']
+  - id: sensor-fidelity
+    label: MEASURED
+    text: >-
+      The SLAMs read the model's LiDAR, which against Gazebo's on the same poses
+      differed by a median 2.2 mm over 111,804 beams (95th percentile 9.3 cm, 99th
+      1.43 m) -- Lab 2's measurement, the same sensor model.
+    evidence:
+      - docs/RESULTS.md "COCO Lab Phase 3"
+      - docs/data/lab2/fidelity/fidelity.json
+    v1: ['catalog.map.fidelity']
+  - id: s1-tour
+    label: SIMULATION RESULT
+    text: >-
+      A drive recorded on the full stack in Gazebo, replayed into slam_toolbox,
+      Cartographer and coco_lab's SLAMs with identical scans and wheel odometry, and
+      scored against the arena rasterised from the world generator. coco_lab's own
+      loop closures were checked against the truth: 13 of 13 true.
+    evidence:
+      - docs/RESULTS.md "COCO Lab Phase 4"
+      - docs/data/lab3/README.md
+      - docs/data/lab3/results.json
+      - docs/data/lab3/loops.json
+    v1: ['catalog.map.bundles[s1_tour]']
+  - id: loop-backends
+    label: UNRESOLVED
+    text: >-
+      Loop closure ON made slam_toolbox's map much worse on one tour (F1 0.40 against
+      0.90, identical in three rounds) and Cartographer's worse on both (F1 0.17-0.20
+      against 0.88-0.92); on the other tour slam_toolbox's was unchanged (0.933 against
+      0.928). Measured and reproduced, including at low machine load; NOT attributed --
+      the backends' pose graphs were not recorded.
+    evidence:
+      - docs/RESULTS.md "COCO Lab Phase 4"
+      - docs/data/lab3/results.json
+    v1: ['ui:lab_web/src/ui/map/MapLab.tsx:665']

@@ -191,3 +191,102 @@ def test_streaming_plan_batches_changes_nothing_and_carries_the_trace():
         assert kinds == [k + 1 for k in p.result.trace.events['kind']]
         rows = [r for c in mine for r in c['row']]
         assert rows == list(p.result.trace.events['row'])
+
+
+# -- M2.0: one search per tick, after all its inputs; slices and amends -------
+
+def multi_inputs(rng, ticks, arena):
+    """Ticks with one to three inputs each (goals, planner changes, stops)."""
+    out = []
+    for k in range(0, ticks, 5):
+        for _ in range(rng.randint(1, 3)):
+            r = rng.random()
+            if r < 0.45:
+                out.append(InputEvent(k, 'goal', x=rng.uniform(-1, 8),
+                                      y=rng.uniform(-3, 5)))
+            elif r < 0.75:
+                out.append(InputEvent(k, 'planner',
+                                      choice=rng.choice(list(PLANNERS))))
+            elif r < 0.85:
+                out.append(InputEvent(k, 'stop'))
+            else:
+                out.append(InputEvent(k, 'teleop', linear=0.3, angular=0.4))
+    return safe(out, arena)
+
+
+def test_a_goal_and_a_planner_change_in_one_tick_make_one_search():
+    a = Arena(SPEC, seed=1)
+    t = a.step([InputEvent(0, 'goal', x=6.0, y=4.0),
+                InputEvent(0, 'planner', choice='dijkstra')])
+    assert [p.planner for p in t.plans] == ['dijkstra']
+    b = Arena(SPEC, seed=1)
+    u = b.step([InputEvent(0, 'planner', choice='dijkstra'),
+                InputEvent(0, 'goal', x=6.0, y=4.0)])
+    assert t.state_hash == u.state_hash
+    # a goal cancelled by a STOP in the same tick is never searched
+    c = Arena(SPEC, seed=1)
+    v = c.step([InputEvent(0, 'goal', x=6.0, y=4.0), InputEvent(0, 'stop')])
+    assert v.plans == [] and v.mode == 'idle'
+
+
+def test_sliced_and_amended_steps_equal_whole_steps(arena0):
+    """Whatever the slicing, and however a tick's inputs arrive, same hashes."""
+    rng = random.Random(11)
+    for session in range(3):
+        inputs = multi_inputs(rng, 60, arena0)
+        whole = replay(SPEC, session, inputs, 60)
+        a = Arena(SPEC, session, on_plan_batch=lambda c, m: None,
+                  plan_batch_size=64)
+        got = []
+        for _ in range(60):
+            mine = [e for e in inputs if e.tick == a.tick]
+            # first input at begin, the rest one by one as amendments,
+            # each after a few events of the search in flight
+            a.begin_step(mine[:1])
+            for e in mine[1:]:
+                a.advance(rng.randint(0, 40))
+                a.amend([e])
+            while not a.advance(rng.randint(1, 97)):
+                pass
+            got.append(a.finish_step().state_hash)
+        assert got == whole
+
+
+def test_an_amendment_cancels_the_search_in_flight_and_ids_never_repeat():
+    seen = []
+    a = Arena(SPEC, seed=2, on_plan_batch=lambda c, m: seen.append(dict(m)),
+              plan_batch_size=50)
+    a.step([InputEvent(0, 'goal', x=6.0, y=4.0)])           # search 0
+    a.begin_step([InputEvent(1, 'planner', choice='bfs')])  # re-plan: 1
+    a.advance(120)
+    a.amend([InputEvent(1, 'goal', x=2.5, y=2.0)])           # cancels 1
+    t = a.finish_step()
+    assert any(m['search_id'] == 1 and m.get('cancelled') for m in seen)
+    assert [(p.planner, p.goal) for p in t.plans] == [('bfs', (2.5, 2.0))]
+    finals = [m['search_id'] for m in seen
+              if m['final'] and not m.get('cancelled')]
+    assert finals == [0, 2]
+    assert not any(m['search_id'] == 2 and m.get('cancelled') for m in seen)
+
+
+def test_a_refused_amendment_leaves_the_tick_as_it_was():
+    a = Arena(SPEC, seed=3)
+    b = Arena(SPEC, seed=3)
+    ev = [InputEvent(0, 'goal', x=6.0, y=4.0)]
+    a.begin_step(ev)
+    with pytest.raises(ArenaError):
+        a.amend([InputEvent(0, 'planner', choice='no_such_planner')])
+    with pytest.raises(ArenaError):
+        a.amend([InputEvent(5, 'stop')])                     # wrong tick
+    assert a.finish_step().state_hash == b.step(ev).state_hash
+
+
+def test_step_calls_out_of_order_are_refused():
+    a = Arena(SPEC, seed=1)
+    for call in (lambda: a.advance(1), lambda: a.amend([]), a.finish_step):
+        with pytest.raises(ArenaError):
+            call()
+    a.begin_step([])
+    with pytest.raises(ArenaError):
+        a.begin_step([])
+    a.finish_step()

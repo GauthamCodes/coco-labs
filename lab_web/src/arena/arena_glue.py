@@ -13,20 +13,59 @@ batches WHILE the search runs (ADR 0001). Imports: coco_lab, json, array.
 from array import array
 import json
 
-from coco_lab.arena import Arena, InputEvent, PLANNERS
+from coco_lab.arena import Arena, InputEvent, LOOP_KINDS, PLANNERS
 
 _arena = None
+_post_family = None
 
 
-def init(spec_json, seed, planner, post_batch, batch_size=2048):
+def emit_family(channel, tick, columns, scalars):
+    """
+    Hand one family batch (coco_lab.columns.Batch.drain()) to JavaScript.
+
+    Numeric columns go as arrays (the worker transfers their buffers);
+    string and bool columns, and the per-batch scalars, go as JSON
+    (M2.2; ADR 0001).
+    """
+    if _post_family is None:
+        return
+    numeric, plain = {}, {}
+    for name, col in columns.items():
+        if isinstance(col, array) and col.typecode != 'B':
+            numeric[name] = col
+        elif isinstance(col, array):
+            plain[name] = [bool(v) for v in col]
+        else:
+            plain[name] = list(col)
+    _post_family(numeric, json.dumps({'channel': channel, 'tick': int(tick),
+                                      'numeric': list(numeric),
+                                      'plain': plain, 'scalars': scalars}))
+
+
+def emit_header(channel, header):
+    """Hand a static header (a dict) to JavaScript, once."""
+    if _post_family is not None:
+        _post_family({}, json.dumps({'channel': channel, 'header': header}))
+
+
+def init(spec_json, seed, planner, post_batch, batch_size=2048,
+         post_family=None):
     """Build the Arena; return (world JSON, occupancy bytes)."""
-    global _arena
+    global _arena, _post_family
+    _post_family = post_family
 
     def hook(columns, meta):
         post_batch(columns, json.dumps(meta))
 
+    def family(channel, tick, columns, scalars):
+        if columns is None:
+            emit_header(channel, scalars)
+        else:
+            emit_family(channel, tick, columns, scalars)
+
     _arena = Arena(json.loads(spec_json), int(seed), planner=planner,
-                   on_plan_batch=hook, plan_batch_size=int(batch_size))
+                   on_plan_batch=hook, plan_batch_size=int(batch_size),
+                   on_family=family)
     m = _arena.lab_map
     li = _arena.lidar
     world = {
@@ -86,15 +125,25 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048):
     return json.dumps(out)
 
 
-def step(inputs_json):
-    """Step one tick; return (tick JSON, ranges as float32)."""
-    events = [InputEvent(**e) for e in json.loads(inputs_json)]
-    t = _arena.step(events)
-    tick = {
-        'tick': t.tick, 't_world': t.t_world, 'pose': list(t.pose),
+def _tick_json(t, inputs):
+    # the whole loop (M2.3): the robot is drawn where it BELIEVES it is,
+    # the truth beside it (as a recorded stack run draws AMCL and truth)
+    extra = {} if t.belief is None else {'truth': list(t.pose)}
+    if t.actors:
+        extra['actors'] = [list(a) for a in t.actors]
+    mv = _arena.subsystems.get('move')
+    given = mv.take_path() if mv is not None else None
+    if given:
+        extra['path'] = [v for p in given for v in p]
+    return json.dumps({
+        **extra,
+        'tick': t.tick, 't_world': t.t_world,
+        'pose': list(t.belief if t.belief is not None else t.pose),
         'v': t.v, 'w': t.w, 'mode': t.mode, 'blocked': t.blocked,
         'arrived': t.arrived, 'hash': t.state_hash,
         'chain': _arena.chain,
+        # the inputs this tick applied: the run's input log (share links)
+        'inputs': inputs,
         'plans': [{
             'search_id': k,
             'planner': p.planner, 'goal': list(p.goal), 'tick': p.tick,
@@ -102,5 +151,60 @@ def step(inputs_json):
             'summary': p.result.trace.summary,
             'waypoints': [list(w) for w in p.waypoints],
         } for k, p in enumerate(t.plans, _arena.plans_made - len(t.plans))],
-    }
-    return json.dumps(tick), array('f', t.ranges)
+    })
+
+
+def step(inputs_json):
+    """Step one tick; return (tick JSON, ranges as float32)."""
+    rows = json.loads(inputs_json)
+    t = _arena.step([InputEvent(**e) for e in rows])
+    return _tick_json(t, rows), array('f', t.ranges)
+
+
+# -- a step in slices (M2.0): the worker yields between them, so an input
+# -- that arrives while the tick plans can join it (amend) ----------------
+
+_pending_rows = []
+#: loop inputs (kidnap, config) that arrived as amendments: a loop input
+#: opens a tick, so they wait for the next one (coco_lab.arena)
+_held_rows = []
+
+
+def _stamp(inputs_json):
+    """Stamp every row with the model's tick: the worker owns the input log."""
+    rows = json.loads(inputs_json)
+    for r in rows:
+        r['tick'] = _arena.tick
+    return rows
+
+
+def begin(inputs_json):
+    """Apply this tick's inputs and start its search; nothing runs yet."""
+    global _pending_rows, _held_rows
+    rows = _held_rows + json.loads(inputs_json)
+    _held_rows = []
+    for r in rows:
+        r['tick'] = _arena.tick
+    _arena.begin_step([InputEvent(**e) for e in rows])
+    _pending_rows = rows
+
+
+def advance(n):
+    """Take up to n events of the tick's search; return whether it is done."""
+    return _arena.advance(int(n))
+
+
+def amend(inputs_json):
+    """Inputs that arrived while the tick planned: they join this tick."""
+    rows = _stamp(inputs_json)
+    _held_rows.extend(r for r in rows if r['kind'] in LOOP_KINDS)
+    rows = [r for r in rows if r['kind'] not in LOOP_KINDS]
+    if rows:
+        _arena.amend([InputEvent(**e) for e in rows])
+        _pending_rows.extend(rows)
+
+
+def finish():
+    """Finish the tick; return (tick JSON, ranges as float32)."""
+    t = _arena.finish_step()
+    return _tick_json(t, _pending_rows), array('f', t.ranges)

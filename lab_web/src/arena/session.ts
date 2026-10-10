@@ -19,12 +19,15 @@
  * Pure: no DOM, no worker, no renderer -- test/session.test.ts drives it.
  */
 
-import type { PlanInfo, SearchColumns, Tick } from './protocol';
+import { FamilyStore } from './lens/store';
+import type { FamilyMessage, PlanInfo, SearchColumns, Tick } from './protocol';
 import { PlanStore } from './render/planStore';
 
 export interface TickRecord {
   tick: number; t_world: number; pose: [number, number, number]; truth?: [number, number, number]; v: number; w: number;
   mode: string; hash: string; ranges: Float32Array | null; plans: PlanInfo[];
+  /** M2.5: moving bodies (x, y, radius), when the Move pack's actors are out. */
+  actors?: [number, number, number][];
 }
 
 /** Reveal a live search over about this many frames at speed 1. */
@@ -36,6 +39,12 @@ export const SPEEDS = [0.25, 0.5, 1, 2, 4];
 export class ArenaSession {
   readonly history: TickRecord[] = [];
   readonly searches = new Map<number, PlanStore>();
+  /** M2.2: the whole loop's family batches, by channel and tick (lens/store.ts). */
+  readonly families = new FamilyStore();
+  /** M2.2: each channel's static header (FilterHeader, ControllerHeader, ...), as the model sent it. */
+  readonly headers = new Map<string, Record<string, unknown>>();
+  /** M2.5: a global path handed to the robot whole (a Lab 5 scenario's frozen path), from the tick it was given. */
+  readonly givenPaths: { tick: number; xy: number[] }[] = [];
   /** Search started at each tick (tick -> search ids), for the computation track. */
   private searchesAt: [number, number][] = [];
   /** null: follow the live head. Otherwise the tick being shown. */
@@ -48,16 +57,31 @@ export class ArenaSession {
 
   constructor(readonly width: number, readonly height: number, readonly dt: number) {}
 
+  /** A family batch or header from the model (M2.2). */
+  onFamily(m: FamilyMessage) {
+    if (m.header) { this.headers.set(m.channel, m.header); return; }
+    if (m.columns && m.tick !== undefined) {
+      this.families.add({ channel: m.channel, tick: m.tick, columns: m.columns, scalars: m.scalars ?? {} });
+    }
+  }
+
   // -- input from the worker -------------------------------------------------
 
   onTick(t: Tick, ranges: Float32Array) {
     this.history.push({ tick: t.tick, t_world: t.t_world, pose: t.pose, truth: t.truth, v: t.v, w: t.w, mode: t.mode, hash: t.hash,
-      ranges, plans: t.plans });
+      ranges, plans: t.plans, actors: t.actors });
+    if (t.path) this.givenPaths.push({ tick: t.tick, xy: t.path });
     const drop = this.history.length - 1 - KEEP_RANGES;
     if (drop >= 0) this.history[drop].ranges = null;
   }
 
-  onPlanBatch(meta: { search_id: number; planner: string; tick: number; final: boolean }, cols: SearchColumns) {
+  onPlanBatch(meta: { search_id: number; planner: string; tick: number; final: boolean; cancelled?: boolean }, cols: SearchColumns) {
+    if (meta.cancelled) {
+      // M2.0: an input joined this search's tick and the model dropped it; so does the track
+      this.searches.delete(meta.search_id);
+      this.searchesAt = this.searchesAt.filter(([, sid]) => sid !== meta.search_id);
+      return;
+    }
     let s = this.searches.get(meta.search_id);
     if (!s) {
       s = new PlanStore(this.width, this.height);

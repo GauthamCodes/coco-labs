@@ -100,7 +100,7 @@ try {
   if (mode !== 'make') {
     // a check that passes on "no difference" must first show it can see one:
     // two different scenes (two recorded runs, different ticks) must FAIL
-    await page.goto(`${SITE}?view=plan`);
+    await page.goto(`${SITE}?view=learn`); // any light page: the compare runs in it
     const a = readFileSync(join(BASE, 'stack_lab1c_astar_t400.png'));
     const b = readFileSync(join(BASE, 'stack_lab1c_greedy_t300.png'));
     const c = await compare(page, a, b);

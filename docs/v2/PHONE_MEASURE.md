@@ -70,3 +70,35 @@ laptop, gzip-compressed like GitHub Pages.
 The filled table, phone model, browser, and anything that looked wrong. The
 agent records your numbers in `docs/RESULTS.md` as **measured by Gautham**,
 with device and conditions, and closes nothing on your behalf.
+
+## M2: the fetch mission and the lenses (after the M2 merge)
+
+M2's phone rows (M2 prompt, B.3): **at least 30 fps at default detail on the
+fetch mission**, and **first visible computation within 10 s on mobile
+data** (step A above measures the second; nothing about it changed). For the
+first:
+
+1. Mobile data or Wi-Fi, a private tab, open
+   `https://gauthamcodes.github.io/coco-labs/?view=arena&perf&lens=decide`.
+2. Wait for `Arena ready`, then tap **Start the fetch** (the Decide lens's
+   controls). The robot chooses a bay, drives, looks, grasps and comes home
+   (about 2.5 minutes).
+3. While it drives to its first bay, read `fps` and the p95 frame time; read
+   them again while it drives home.
+4. Then tap **Localise**, **Map** and **Move** in turn and note, for each,
+   whether the controls appeared within about 3 s (the laptop budget is 3 s
+   with a warm cache; the phone has none, so just note it), and the `fps`
+   with that lens's layers on.
+5. Repeat steps 1–3 **three times**.
+
+| Run | Network | fps (to the bay) | p95 ms | fps (home) | p95 ms | Localise / Map / Move: controls within ~3 s? fps |
+|---|---|---|---|---|---|---|
+| 1 | | | | | | |
+| 2 | | | | | | |
+| 3 | | | | | | |
+
+Phone: ______ Browser and version: ______ Date: ______
+
+**Pass if** the fetch mission's median `fps` is 30 or more. The laptop's
+numbers for the same scene (with a heavier stress load on top) are in
+`docs/v2/M2_RESULTS.md`; they say nothing about a phone.

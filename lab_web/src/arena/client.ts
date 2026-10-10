@@ -8,7 +8,7 @@
  */
 
 import { PYODIDE_INDEX_URL } from '../../site.config.ts';
-import { wallMs, type BootRequest, type CompareSide, type FromWorker, type InputRow, type SearchColumns, type Tick, type World } from './protocol';
+import { wallMs, type BootRequest, type CompareSide, type FamilyMessage, type FromWorker, type InputRow, type SearchColumns, type Tick, type World } from './protocol';
 import { perf } from './perf';
 
 export interface ArenaEvents {
@@ -18,6 +18,10 @@ export interface ArenaEvents {
   onCompareBatch?(meta: Extract<FromWorker, { type: 'plan_batch' }>['meta'], columns: SearchColumns): void;
   onCompareDone?(result: { A: CompareSide; B: CompareSide }): void;
   onError?(stage: string, message: string): void;
+  /** M2.2: a whole-loop family batch or a channel's static header. */
+  onFamily?(msg: FamilyMessage): void;
+  /** M2.2: a lens's Python pack is loaded (ms it took; 0 if it already was). */
+  onPackReady?(pack: string, ms: number): void;
 }
 
 export type PyodideSource = 'self' | 'cdn';
@@ -36,6 +40,8 @@ export class ArenaClient {
       this.worker.onmessage = (m: MessageEvent<FromWorker>) => {
         const d = m.data;
         if (d.type === 'mark') perf.mark(d.name, d.at);
+        else if (d.type === 'family') ev.onFamily?.(d);
+        else if (d.type === 'pack_ready') { this.packs.add(d.pack); ev.onPackReady?.(d.pack, d.ms); }
         else if (d.type === 'world') {
           this.world = d.world;
           this.tick = 0;
@@ -81,6 +87,25 @@ export class ArenaClient {
     const rows = inputs.map((i) => ({ ...i, tick: this.tick }) as InputRow);
     this.worker.postMessage({ type: 'step', inputs: rows });
     return rows;
+  }
+
+  /**
+   * Inputs made while a step is in flight (M2.0): they join that step's
+   * tick if it is still planning (cancelling its search), otherwise the next.
+   * The model stamps them; `Tick.inputs` reports where they landed.
+   */
+  amend(inputs: Omit<InputRow, 'tick'>[]): void {
+    const rows = inputs.map((i) => ({ ...i, tick: this.tick }) as InputRow);
+    this.worker.postMessage({ type: 'amend', inputs: rows });
+  }
+
+  /** Packs the worker has loaded (M2.2). */
+  readonly packs = new Set<string>(['core']);
+
+  /** Load a lens's Python pack in the worker (once). */
+  loadPack(pack: string): void {
+    if (pack === 'core' || this.packs.has(pack)) return;
+    this.worker.postMessage({ type: 'load_pack', pack });
   }
 
   /** Two planners on the same start, goal and seed; the model is unchanged. */

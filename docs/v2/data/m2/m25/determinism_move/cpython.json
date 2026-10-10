@@ -1,0 +1,11 @@
+{
+ "tool": "docs/v2/data/m2/m24/cpython_vs_pyodide.py",
+ "evidence": "MODEL",
+ "sessions_dir": "docs/v2/data/m2/m25/determinism_move",
+ "engine": "CPython 3.12.3",
+ "sessions": 10,
+ "ticks": 1500,
+ "mismatched": 0,
+ "first_mismatches": [],
+ "seconds": 49.3
+}

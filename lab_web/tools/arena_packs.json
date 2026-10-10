@@ -1,0 +1,21 @@
+{
+ "about": "M2.2: coco_lab split into Python packs the Arena worker loads lazily. 'core' (coco_lab.zip, every module not listed below) is what the Plan lens needs and loads at boot; a lens's pack loads the first time the lens is selected. build_arena_assets.mjs refuses a module in two packs, and an import that crosses packs except into core or into a pack listed in 'requires'.",
+ "packs": {
+  "localise": {
+   "requires": [],
+   "modules": ["kalman.py", "loc_arena.py", "loc_teaching.py", "locbundle.py", "localise.py"]
+  },
+  "map": {
+   "requires": ["localise"],
+   "modules": ["ekfslam.py", "fastslam.py", "landmarks.py", "map_arena.py", "map_teaching.py", "mapeval.py", "mapping.py", "mapworld.py", "occgrid.py", "posegraph.py", "slam.py", "slambundle.py"]
+  },
+  "move": {
+   "requires": [],
+   "modules": ["control.py", "move_arena.py", "move_scenarios.py", "movebundle.py", "movemetrics.py"]
+  },
+  "decide": {
+   "requires": [],
+   "modules": ["arm.py", "fetch_problem.py", "mission_arena.py", "regionsearch.py", "searchbundle.py"]
+  }
+ }
+}

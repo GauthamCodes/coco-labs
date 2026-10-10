@@ -1,0 +1,89 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// Localisation filters as glass boxes (M2.1): Monte Carlo localisation's
+// particles and its per-update bookkeeping, and the EKF's predict / update.
+// Both read the same inputs (odometry and scans), never the truth. The
+// estimate each produces goes to coco.estimate.pose.v1.
+//
+// Families localise.particles and localise.ekf. Channels:
+//   coco.localise.particles.header.v1  (FilterHeader, static)
+//   coco.localise.particles.set.v1     (ParticleSetBatch: one row per particle per update)
+//   coco.localise.particles.update.v1  (ParticleUpdateBatch: one row per update)
+//   coco.localise.ekf.header.v1        (FilterHeader, static)
+//   coco.localise.ekf.update.v1        (EkfUpdateBatch: one row per update)
+
+syntax = "proto3";
+
+package coco.localise.v1;
+
+import "coco/common/v1/common.proto";
+
+// A filter's identity and knobs (particles, alphas, sigma_hit, injection...).
+message FilterHeader {
+  string filter_id = 1;               // unique within a run
+  string kind = 2;                    // "mcl" or "ekf"
+  coco.common.v1.Params params = 3;   // every knob, in order
+}
+
+// The weighted particle set after an update; every row of one update shares
+// its clocks. `update` numbers the filter's updates from 0.
+message ParticleSetBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated double x = 4;       // m, map frame
+  repeated double y = 5;
+  repeated double theta = 6;   // rad
+  repeated double weight = 7;  // normalised over the set
+  uint64 update = 8;
+  string filter_id = 9;
+}
+
+// What one MCL update did (AMCL's bookkeeping, coco_lab.localise).
+message ParticleUpdateBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint64 update = 4;
+  repeated double n_eff = 5;          // effective sample size before resampling
+  repeated bool resampled = 6;
+  repeated uint32 injected = 7;       // random particles injected
+  repeated double p_inject = 8;       // the injection probability used
+  repeated double w_avg = 9;          // mean measurement likelihood
+  repeated double w_slow = 10;
+  repeated double w_fast = 11;
+  repeated double cluster_weight = 12;
+  string filter_id = 13;
+}
+
+// One EKF update: the prediction, then the measurement update, with the
+// covariance upper triangles (x, y, theta) before and after.
+message EkfUpdateBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint64 update = 4;
+  repeated double pred_x = 5;
+  repeated double pred_y = 6;
+  repeated double pred_theta = 7;
+  repeated double pred_cov_xx = 8;
+  repeated double pred_cov_xy = 9;
+  repeated double pred_cov_xt = 10;
+  repeated double pred_cov_yy = 11;
+  repeated double pred_cov_yt = 12;
+  repeated double pred_cov_tt = 13;
+  repeated double post_x = 14;
+  repeated double post_y = 15;
+  repeated double post_theta = 16;
+  repeated double post_cov_xx = 17;
+  repeated double post_cov_xy = 18;
+  repeated double post_cov_xt = 19;
+  repeated double post_cov_yy = 20;
+  repeated double post_cov_yt = 21;
+  repeated double post_cov_tt = 22;
+  repeated uint32 beams_used = 23;
+  repeated uint32 beams_gated = 24;   // rejected by the chi-square gate
+  repeated double nis = 25;           // normalised innovation squared
+  string filter_id = 26;
+}

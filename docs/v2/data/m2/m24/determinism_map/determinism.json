@@ -1,0 +1,88 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-09T12:23:05.358Z",
+   "power_profile": "power-saver",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 60
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.08,
+    "5m": 2.07,
+    "15m": 2.54
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  },
+  "end": {
+   "at_utc": "2026-10-09T12:23:05.485Z",
+   "power_profile": "power-saver",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 60
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.08,
+    "5m": 2.07,
+    "15m": 2.54
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ },
+ "criterion": "identical per-tick hashes across engines, 100 recorded sessions (README M1 B.4)",
+ "engines": {
+  "chromium": {
+   "version": "chromium 156.0.8078.4",
+   "seconds": 145.49,
+   "sessions": 10,
+   "ticks_compared": 1500,
+   "ticks_mismatched": 0,
+   "sessions_differing": 0,
+   "first_differences": [],
+   "all_hashes_sha256": "7b2843c739860828e81dfaa2d1e5edfe57ec35cdf155674ef3b34029dfb89d92",
+   "page_errors": []
+  },
+  "firefox": {
+   "version": "firefox 157.0",
+   "seconds": 179.177,
+   "sessions": 10,
+   "ticks_compared": 1500,
+   "ticks_mismatched": 0,
+   "sessions_differing": 0,
+   "first_differences": [],
+   "all_hashes_sha256": "7b2843c739860828e81dfaa2d1e5edfe57ec35cdf155674ef3b34029dfb89d92",
+   "page_errors": []
+  },
+  "pyodide-node": {
+   "version": "Pyodide 314.0.7, Node v24.21.0",
+   "seconds": 101.635,
+   "sessions": 10,
+   "ticks_compared": 1500,
+   "ticks_mismatched": 0,
+   "sessions_differing": 0,
+   "first_differences": [],
+   "all_hashes_sha256": "7b2843c739860828e81dfaa2d1e5edfe57ec35cdf155674ef3b34029dfb89d92",
+   "page_errors": []
+  },
+  "webkit": {
+   "version": "webkit 27.2",
+   "seconds": 133.263,
+   "sessions": 10,
+   "ticks_compared": 1500,
+   "ticks_mismatched": 0,
+   "sessions_differing": 0,
+   "first_differences": [],
+   "all_hashes_sha256": "7b2843c739860828e81dfaa2d1e5edfe57ec35cdf155674ef3b34029dfb89d92",
+   "page_errors": []
+  }
+ },
+ "pass": true
+}

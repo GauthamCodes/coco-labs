@@ -1,0 +1,15 @@
+{
+  "when": "2026-10-10T04:45:32.203Z",
+  "chromium": "156.0.8078.4",
+  "flags": [
+    "--use-angle=gl-egl",
+    "--ignore-gpu-blocklist",
+    "--enable-gpu"
+  ],
+  "webgl2": true,
+  "vendor": "Google Inc. (NVIDIA Corporation)",
+  "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+  "driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+  "kernel_module": "NVRM version: NVIDIA UNIX Open Kernel Module for x86_64  580.178.04  Release Build  (dvs-builder@U22-I3-AE18-16-4)  Tue Jul  7 12:18:12 UTC 2026",
+  "software": false
+}

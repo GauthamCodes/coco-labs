@@ -42,6 +42,7 @@ channels carry one record.
 | `coco.robot.params.v1` | `coco.robot.v1.RobotParams` | static | wheel radius and separation, limits, footprint, LiDAR mount |
 | `coco.robot.state.v1` | `coco.robot.v1.RobotStateBatch` | stream | pose the model/stack believes, commanded v and ω |
 | `coco.truth.pose.v1` | `coco.truth.v1.TruthPoseBatch` | stream | ground truth: the ONE source (README §3 invariant 4), display only |
+| `coco.truth.actors.v1` | `coco.truth.v1.ActorPoseBatch` | stream | moving bodies other than the robot, by id, with their radius (M2.7, additive) |
 | `coco.sensor.scan.lidar.v1` | `coco.sensor.v1.ScanBatch` | stream | 2D LiDAR; scans concatenated, `count[k]` beams each; no return = +inf |
 | `coco.plan.search.header.v1` | `coco.plan.v1.SearchHeader` | static | algorithm, heuristic, weight, tie-break, start, goal, graph params |
 | `coco.plan.search.events.v1` | `coco.plan.v1.SearchEventBatch` | stream | push / expand / relax / path, with g, h, f and parent |
@@ -52,6 +53,53 @@ channels carry one record.
 | `coco.metrics.values.v1` | `coco.metrics.v1.MetricBatch` | stream | named numbers with units |
 | `coco.plan.path.poses.v1` | `coco.plan.v1.PathBatch` | stream | a published metric path (e.g. the stack's `/lab/plan`); added in M1.9, additive |
 | `coco.annotation.text.v1` | `coco.annotation.v1.AnnotationBatch` | stream | text at a moment, optionally a place |
+
+### The whole loop's families (M2.1, additive within v1)
+
+Ten families, 26 channels, added in M2.1 without touching an M1 message
+(`test_compat.py` checks them against the M1.1 baseline, which is
+unchanged). Every stream message is flat — repeated scalar columns plus
+per-batch scalars, no nested messages — so `coco_lab.columns` declares each
+one as a table without protobuf, and `test_columns_m2.py` holds every table
+to its generated descriptor (names, order, kinds) and round-trips a filled
+batch through protobuf. Variable-length lists inside a row are flattened
+with an `*_offset` / `*_len` pair (candidate trajectories, search orders)
+or a fixed stride (critic scores: one per critic named in the header).
+
+| Channel | Message | Kind | What |
+|---|---|---|---|
+| `coco.estimate.pose.v1` | `coco.estimate.v1.EstimateBatch` | stream | what an estimator BELIEVES the pose is (MCL, EKF, a SLAM, odometry), with the covariance's upper triangle; `estimator` names it. Never the truth |
+| `coco.localise.particles.header.v1` | `coco.localise.v1.FilterHeader` | static | MCL's id and every knob (particles, alphas, sigma_hit, injection) |
+| `coco.localise.particles.set.v1` | `coco.localise.v1.ParticleSetBatch` | stream | the weighted particle set after one update (rows share clocks) |
+| `coco.localise.particles.update.v1` | `coco.localise.v1.ParticleUpdateBatch` | stream | per update: n_eff, resampled, injected, p_inject, w_avg / w_slow / w_fast |
+| `coco.localise.ekf.header.v1` | `coco.localise.v1.FilterHeader` | static | the EKF's id and knobs |
+| `coco.localise.ekf.update.v1` | `coco.localise.v1.EkfUpdateBatch` | stream | per update: predicted and posterior mean + covariance, beams used / gated, NIS |
+| `coco.map.grid.header.v1` | `coco.map.v1.MapGridHeader` | static | the built map's geometry, inverse sensor model, and whose poses built it |
+| `coco.map.grid.snapshot.v1` | `coco.map.v1.MapGridSnapshotBatch` | stream | the whole log-odds grid at a keyframe (float32 bytes) |
+| `coco.map.grid.cells.v1` | `coco.map.v1.MapCellBatch` | stream | the cells one update changed, with their new log-odds |
+| `coco.map.slam.header.v1` | `coco.map.v1.SlamHeader` | static | algorithm, knobs, and the sensor — EKF-SLAM's landmark sensor is labelled **IDEALISED** here |
+| `coco.map.slam.landmarks.v1` | `coco.map.v1.LandmarkBatch` | stream | EKF-SLAM's landmark means and covariances |
+| `coco.map.slam.particles.v1` | `coco.map.v1.SlamParticleBatch` | stream | FastSLAM's particles and the best one |
+| `coco.map.slam.nodes.v1` | `coco.map.v1.GraphNodeBatch` | stream | pose-graph nodes at a `stage` ("raw" / "optimised") with the graph's chi² — a loop closure shows before and after |
+| `coco.map.slam.edges.v1` | `coco.map.v1.GraphEdgeBatch` | stream | pose-graph edges (odometry, scan match, loop) and each one's error |
+| `coco.control.local.header.v1` | `coco.control.v1.ControllerHeader` | static | controller kind, its critics (the stride of `critic_scores`), knobs, evidence class |
+| `coco.control.local.candidates.v1` | `coco.control.v1.CandidateBatch` | stream | every candidate of one cycle: (v, ω), valid, rejection reason, total cost, per-critic scores, trajectory |
+| `coco.control.local.command.v1` | `coco.control.v1.CommandBatch` | stream | per cycle: the chosen candidate (−1 = none valid), the command, a status ("no_valid_candidate", ...), the lookahead point |
+| `coco.decide.search.header.v1` | `coco.decide.v1.SearchProblemHeader` | static | the regions, and the detection probability **with its label** ("ASSUMPTION" for the Arena's 0.9) |
+| `coco.decide.search.belief.v1` | `coco.decide.v1.BeliefBatch` | stream | P(target in region) per region per update (update 0 = prior) |
+| `coco.decide.search.orders.v1` | `coco.decide.v1.OrderCostBatch` | stream | the expected cost of each visiting order considered |
+| `coco.decide.search.action.v1` | `coco.decide.v1.ActionBatch` | stream | the region chosen, its expected cost and the reason |
+| `coco.decide.search.observation.v1` | `coco.decide.v1.ObservationBatch` | stream | what a look found |
+| `coco.mission.fsm.header.v1` | `coco.mission.v1.MissionHeader` | static | the mission's states in order, its parameters, evidence class |
+| `coco.mission.fsm.transition.v1` | `coco.mission.v1.TransitionBatch` | stream | every transition: from, to, the event, a reason a learner can read, a terminal result |
+| `coco.sensor.detect.colour.v1` | `coco.sensor.v1.DetectionBatch` | stream | ABSTRACT colour detection (no image simulated): looked where, for what colour, detected or not; the detection probability and its label per batch |
+| `coco.arm.state.v1` | `coco.arm.v1.ArmStateBatch` | stream | the 2-DOF arm's joints and end effector (side view), the two fingers, the magnet, whether the magnet holds an object, the phase; the elbow (`elbow_x`, `elbow_z`, fields 13–14, added at M2.6) |
+
+Rules the families keep, from README §3: truth lives only in
+`coco.truth.pose.v1` (estimates, detections and SLAM never carry it); the
+idealised landmark sensor and the assumed detection probability are
+labelled in the data itself, so a view cannot show them unlabelled; the
+gripper is two fingers and a magnet, and `holding` follows the magnet.
 
 ## The three clocks
 
@@ -149,6 +197,47 @@ rosbag start, and its search sits at FollowPath acceptance.
 only when the bundle's content hash matches; the build refuses to write a
 file that fails, and `lab_web/test/convert_lab1.test.ts` checks all eleven
 bundles (and that one flipped bit in one ground-truth double is caught).
+
+### Labs 2–5, without loss (M2.7)
+
+Every Lab 2–5 bundle converts the same way (`lab_web/src/convert/lab{2,3,4,5,5replan}.ts`):
+the manifest rides byte for byte as the run's `spec`; every array goes onto
+the whole loop's families; the way back rebuilds every array from the
+CHANNELS (`convert/raw.ts`) and the lab's own v1 decoder re-checks the
+content hash; an array a converter does not know is refused, never dropped;
+every channel written is the registry's, with its message (tested).
+
+| Lab | Bundles | v2 runs | Families |
+|---|---|---|---|
+| 2 Localise | 5 (MODEL) | one per bundle | truth, `estimate` (odometry + each filter with covariance), scans, `localise.particles.*`, `localise.ekf.*`, metrics (`cmd.*`, `err_xy.<run>`) |
+| 3 Map | 5 (4 MODEL, the recorded tour STACK) | one per bundle | truth, estimates (`<run>`, `<run>:final`, `ext:<id>`), scans, `sensor.detect` (the IDEALISED landmark sightings), `map.grid.*` (snapshots and score maps as `cells_u8`), `map.slam.*` (particles, landmarks, the pose graph's edges and loop events), metrics; `SlamHeader.params.evidence` says MODEL for coco_lab's runs, STACK for slam_toolbox and Cartographer |
+| 4 Search | 2: the 16 searches recorded on the full stack (STACK), the Sketch searches (MODEL) | one per bundle, every search's rows carrying its run id | `decide.search.*`, `mission.fsm` (every event, in order), metrics (`<run>.cost`) |
+| 5 Move: drives | 4 scenarios, 54 controller runs (STACK) | one per DRIVE (a run is one robot on one timeline); the way back needs all of a bundle's runs | truth, `robot.state` (AMCL), `truth.actors`, `plan.path` (the frozen path), metrics (`cmd.*`, `wheel.*`), `control.local.*` (Nav2's own candidates, its chosen trajectory as `<run>/chosen`, DWB's per-cycle counts) |
+| 5 Move: replanning | 4 (MODEL) | one per bundle | three `world.grid`s (known, truth, known_final, with their cost layers), `plan.search` (D* Lite) |
+
+Additive changes this needed, all within v1 (`compat/v1.binpb` is the M1
+baseline; nothing was renumbered or removed): `coco.truth.v1.ActorPoseBatch`
+on a new channel `coco.truth.actors.v1` (Lab 5's actors; M1's stream rule,
+only `search_id` as a scalar, keeps the actor id a column);
+`SearchEventKind` RAISE, UPDATE, CHANGE, MOVE and `SearchEventBatch.rhs`,
+`.round` (D* Lite); `ScanBatch.ranges_f64` (a Sketch scan's noisy ranges are
+not exact in float); `MapGridSnapshotBatch.cells_u8` (Lab 3's maps are
+`nav_msgs` cells, not log-odds).
+
+**The 16 searches recorded on the full stack replay byte for byte through
+the new pipeline:** `docs/v2/data/m2/m27/p05_matrix.mcap` is their
+conversion (`lab_web/test/convert_lab4.test.ts` requires that exact file);
+`coco_schemas/test/test_search_replay_v2.py` reads it (a small reader for
+uncompressed MCAP, `coco_schemas/mcap_read.py`), takes each search's looks
+off the converted observation channel ALONE, lets `regionsearch.replay_search`
+choose every bay again, re-encodes the channels with the Python protobuf
+classes and requires every message's bytes; flipping one look is caught.
+
+**Lab 5's Nav2 candidate overlays play as STACK:** the build converts every
+drive (drawn on the map the stack localised against, Nav2's saved map) into
+`generated/v2/lab5_<scenario>_<run>.mcap`; `?view=arena&replay=<id>` plays it
+through the Move lens — Nav2's own candidates and chosen trajectory, nothing
+computed (`lab_web/tools/perf/stack_drive_check.mjs`).
 
 ## Compatibility within a major
 

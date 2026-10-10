@@ -63,6 +63,8 @@ export function liveConnectSrc(): string[] {
 
 /** Run the whole stack yourself: the Docker quickstart. */
 export const DOCKER_QUICKSTART_URL = 'https://github.com/GauthamCodes/coco-labs/blob/main/docs/DOCKER.md';
+/** Learn's evidence links (M2.8): a claim's committed file, on main. */
+export const REPO_BLOB_URL = 'https://github.com/GauthamCodes/coco-labs/blob/main/';
 
 /** Looked up 2026-09-30 (GitHub releases + npm); Python 3.14.2 inside. */
 export const PYODIDE_VERSION = '314.0.7';

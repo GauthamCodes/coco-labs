@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x19\x63oco/truth/v1/truth.proto\x12\rcoco.truth.v1\"a\n\x0eTruthPoseBatch\x12\x0b\n\x03seq\x18\x01 \x03(\x04\x12\x0c\n\x04tick\x18\x02 \x03(\x04\x12\x0f\n\x07t_world\x18\x03 \x03(\x01\x12\t\n\x01x\x18\x04 \x03(\x01\x12\t\n\x01y\x18\x05 \x03(\x01\x12\r\n\x05theta\x18\x06 \x03(\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x19\x63oco/truth/v1/truth.proto\x12\rcoco.truth.v1\"a\n\x0eTruthPoseBatch\x12\x0b\n\x03seq\x18\x01 \x03(\x04\x12\x0c\n\x04tick\x18\x02 \x03(\x04\x12\x0f\n\x07t_world\x18\x03 \x03(\x01\x12\t\n\x01x\x18\x04 \x03(\x01\x12\t\n\x01y\x18\x05 \x03(\x01\x12\r\n\x05theta\x18\x06 \x03(\x01\"\x83\x01\n\x0e\x41\x63torPoseBatch\x12\x0b\n\x03seq\x18\x01 \x03(\x04\x12\x0c\n\x04tick\x18\x02 \x03(\x04\x12\x0f\n\x07t_world\x18\x03 \x03(\x01\x12\x10\n\x08\x61\x63tor_id\x18\x04 \x03(\t\x12\t\n\x01x\x18\x05 \x03(\x01\x12\t\n\x01y\x18\x06 \x03(\x01\x12\r\n\x05theta\x18\x07 \x03(\x01\x12\x0e\n\x06radius\x18\x08 \x03(\x01\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'coco.truth.v1.truth_pb2', globals())
@@ -23,4 +23,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _TRUTHPOSEBATCH._serialized_start=44
   _TRUTHPOSEBATCH._serialized_end=141
+  _ACTORPOSEBATCH._serialized_start=144
+  _ACTORPOSEBATCH._serialized_end=275
 # @@protoc_insertion_point(module_scope)

@@ -72,8 +72,9 @@ jobs:
     # successful run on coco-labs and coco-robot-jazzy-2.0: 1.3 min
     # (median 1.0-1.1). The limit is generous so a slow mirror is not
     # killed, and finite so a hang is: two runs on 2026-10-01 sat in
-    # 'Setup ROS 2 Jazzy' for ~2 h until cancelled by hand.
-    timeout-minutes: 20
+    # 'Setup ROS 2 Jazzy' for ~2 h until cancelled by hand. M2.10 added the
+    # v1 archive build (~2 min), so 20 -> 30.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -126,6 +127,15 @@ jobs:
           first=$(node tools/check_dist.mjs | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>console.log(JSON.parse(s).tree_sha256))")
           npm run build
           node tools/check_dist.mjs --expect-hash "$first"
+      # M2.10: the v1 lab views are retired from main; the frozen v1 site is
+      # built from 9f58b83 (the M0 merge: v1's views with M0's public fixes;
+      # owner's ruling 2026-10-10) by its own tooling and served at /v1/
+      # (docs/v2/adr/0003-v1-archive.md). After the identical-build check:
+      # vite empties dist on every build. About 2 min (108 s measured locally).
+      - name: The frozen v1 site at /v1/ (built from 9f58b83, the M0 merge)
+        env:
+          PYTHON: ${{ runner.temp }}/venv/bin/python
+        run: lab_web/tools/build_v1_archive.sh lab_web/dist/v1 "$RUNNER_TEMP/v1"
       - uses: actions/upload-pages-artifact@v5
         with:
           path: lab_web/dist
@@ -162,6 +172,10 @@ jobs:
           npm ci
           npm run build
           npx playwright install --with-deps chromium firefox webkit
+      - name: The frozen v1 site at /v1/ (M2.10; the URL forms below need it)
+        env:
+          PYTHON: ${{ runner.temp }}/venv/bin/python
+        run: lab_web/tools/build_v1_archive.sh lab_web/dist/v1 "$RUNNER_TEMP/v1"
       - name: Serve the built site as Pages does (gzip, /coco-labs/)
         working-directory: lab_web
         run: |
@@ -180,6 +194,9 @@ jobs:
       - name: Screenshot tests (the Arena's fixed scenes, canvas only)
         working-directory: lab_web
         run: node tools/perf/screenshots.mjs check --out "$RUNNER_TEMP/shots"
+      - name: Every v1 URL form resolves, 0 console errors (M2.10)
+        working-directory: lab_web
+        run: node tools/perf/v1_links_check.mjs --site http://127.0.0.1:4174/coco-labs/ --out "$RUNNER_TEMP/v1links"
 
   deploy:
     name: deploy to GitHub Pages (main only)

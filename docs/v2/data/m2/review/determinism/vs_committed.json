@@ -1,0 +1,26 @@
+{
+ "pyodide-node": {
+  "version": "Pyodide 314.0.7, Node v24.21.0",
+  "sessions": 25,
+  "ticks": 3750,
+  "mismatched_vs_committed": 0
+ },
+ "chromium": {
+  "version": "chromium 156.0.8078.4",
+  "sessions": 25,
+  "ticks": 3750,
+  "mismatched_vs_committed": 0
+ },
+ "firefox": {
+  "version": "firefox 157.0",
+  "sessions": 25,
+  "ticks": 3750,
+  "mismatched_vs_committed": 0
+ },
+ "webkit": {
+  "version": "webkit 27.2",
+  "sessions": 25,
+  "ticks": 3750,
+  "mismatched_vs_committed": 0
+ }
+}

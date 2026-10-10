@@ -21,4 +21,8 @@ message ScanBatch {
   // Every beam of every scan, scan by scan. A beam with no return is +inf
   // (the sensor saw nothing within range_max), never range_max itself.
   repeated float ranges = 9;
+  // The same beams at full precision, when the source has them (M2.7,
+  // additive): a Sketch scan's noisy ranges are not exact in float.
+  // Readers that know this field prefer it; `ranges` is always filled.
+  repeated double ranges_f64 = 10;
 }

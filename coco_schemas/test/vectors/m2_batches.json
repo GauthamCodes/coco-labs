@@ -1,0 +1,2466 @@
+{
+ "method": "coco_lab.columns.Batch -> Python protobuf SerializeToString (docs/v2/SCHEMAS.md)",
+ "note": "uint64 values are decimal strings (they may exceed 2**53)",
+ "vectors": [
+  {
+   "message": "coco.arm.v1.ArmStateBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "joint1": "d",
+    "joint2": "d",
+    "ee_x": "d",
+    "ee_z": "d",
+    "finger_left": "d",
+    "finger_right": "d",
+    "magnet_on": "B",
+    "holding": "B",
+    "phase": "s",
+    "elbow_x": "d",
+    "elbow_z": "d"
+   },
+   "scalar_types": {},
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "joint1": [
+     -99.462112,
+     92.216378,
+     36.34356,
+     -45.578843,
+     45.544007,
+     -67.135742,
+     -79.251422,
+     87.368405,
+     38.727249
+    ],
+    "joint2": [
+     -13.201472,
+     -31.55856,
+     -24.718611,
+     -26.051576,
+     87.731785,
+     -2.612796,
+     -16.633171,
+     99.870741,
+     -94.054583
+    ],
+    "ee_x": [
+     46.756046,
+     -74.204845,
+     20.78295,
+     -70.977552,
+     -77.512674,
+     2.915068,
+     28.02031,
+     -18.810207,
+     84.044502
+    ],
+    "ee_z": [
+     34.507693,
+     -82.849201,
+     71.320265,
+     -42.347412,
+     28.9346,
+     -36.780671,
+     59.906069,
+     39.048326,
+     -50.427037
+    ],
+    "finger_left": [
+     37.700917,
+     45.584135,
+     0.541552,
+     -87.941663,
+     80.16542,
+     -51.237399,
+     -19.610861,
+     -34.407759,
+     66.179905
+    ],
+    "finger_right": [
+     -43.103357,
+     76.249071,
+     47.03831,
+     63.565369,
+     -58.881294,
+     -85.231099,
+     68.896331,
+     -20.414163,
+     97.014921
+    ],
+    "magnet_on": [
+     false,
+     true,
+     true,
+     true,
+     false,
+     true,
+     false,
+     false,
+     false
+    ],
+    "holding": [
+     false,
+     true,
+     false,
+     true,
+     true,
+     false,
+     false,
+     false,
+     false
+    ],
+    "phase": [
+     "bay α",
+     "",
+     "collision",
+     "collision",
+     "",
+     "bay α",
+     "collision",
+     "ASSUMPTION",
+     ""
+    ],
+    "elbow_x": [
+     -58.309401,
+     -84.28407,
+     81.267999,
+     -4.857575,
+     99.190318,
+     32.605113,
+     -24.944449,
+     -38.956465,
+     -93.880141
+    ],
+    "elbow_z": [
+     9.286737,
+     -72.132607,
+     14.223155,
+     -43.187815,
+     41.054874,
+     -30.932757,
+     60.030346,
+     4.25237,
+     28.370813
+    ]
+   },
+   "scalars": {},
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIki1xTU+k91YwLtkHCPZDVdAXBsqxvkrQkBfQgWHF8pGwMXleAWixUZAZKw2/6/IUMCt30xMF9BTwLSrkPKT11VAPIbHfhZdQ0AqSJMehlYnZyrAkNrEyf2OP8C9i/fj9rc4wC1CsRU0DTrABK3AkNXuVUD59NiWAecEwI/GoX4XojDAU5J1OLr3WEC5+rFJfoNXwDJIxCKGHcZgR0Dy7zMuHI1SwDhnRGlvyDRA7IhDNpC+UcCc4Jumz2BTwNXt7CsPUgdAIchBCTMFPECC/de5ac8ywNKm6h7ZAlVAOkg+tI8V/EBBQMCuJk9ZtlTAbEPFOH/UUUB1HhX/dyxFwHPXEvJB7zxAwvf+Bu1jQsCwdakR+vNNQPTF3osvhkNASpf+Jak2ScBCSO8a9KW32UJAeLmI78TKRkAmqyLcZFThP5w24zRE/FXArYbEPZYKVEAzjSYXY55JwOBm8WJhnDPAKNNocjE0QcDD2EKQg4tQQEpIBmhbzTqNRcBz2H3H8A9TQA2OklfnhEdAC5bqAl7IT0CcFOY9znBNwNrIdVPKTlXABtmyfF05UUCXNhyWBmo0wIPBNXf0QFhAUgkAAQEBAAEAAABaCQABAAEBAAAAAGIGYmF5IM6xYgBiCWNvbGxpc2lvbmIJY29sbGlzaW9uYgBiBmJheSDOsWIJY29sbGlzaW9uYgpBU1NVTVBUSU9OYgBqSMMstHOaJ03AlfHvMy4SVcAWF0flJlFUQAN4CyQobhPAxXWMKy7MWEA2scBXdE1AQGq932jH8TjAY2LzcW16Q8CZt+o6VHhXwHJINxsrMc+SIkAfDhKifAhSwLXgRV9BcixAYFlpUgqYRcBKs3kcBodEQHUdqinJ7j7AP8iyYOIDTkBR9wFIbQIRQIDuy5ntXjxA"
+  },
+  {
+   "message": "coco.control.v1.CandidateBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "candidate": "I",
+    "v": "d",
+    "w": "d",
+    "valid": "B",
+    "rejection": "s",
+    "cost": "d",
+    "critic_scores": "d",
+    "traj_offset": "I",
+    "traj_len": "I",
+    "traj_x": "d",
+    "traj_y": "d"
+   },
+   "scalar_types": {
+    "cycle": "Q",
+    "controller_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "candidate": [
+     59872,
+     61389,
+     48037,
+     22676,
+     56804,
+     1247,
+     5024,
+     46929,
+     20887
+    ],
+    "v": [
+     72.615539,
+     49.724831,
+     76.65431,
+     -13.600111,
+     64.586195,
+     56.395095,
+     54.876241,
+     99.606468,
+     83.490901
+    ],
+    "w": [
+     -56.828724,
+     -74.180803,
+     -10.617291,
+     -21.698388,
+     16.923697,
+     66.039157,
+     -15.629644,
+     -75.17304,
+     85.706063
+    ],
+    "valid": [
+     true,
+     true,
+     false,
+     true,
+     true,
+     false,
+     false,
+     true,
+     false
+    ],
+    "rejection": [
+     "no_valid_candidate",
+     "",
+     "collision",
+     "",
+     "no_valid_candidate",
+     "ASSUMPTION",
+     "ASSUMPTION",
+     "ok",
+     ""
+    ],
+    "cost": [
+     -51.600252,
+     13.366034,
+     -63.834973,
+     -62.346931,
+     41.773826,
+     -47.815292,
+     57.029054,
+     10.117842,
+     69.347078
+    ],
+    "critic_scores": [
+     -75.694952,
+     4.921747,
+     80.06614,
+     84.272594,
+     -72.350546,
+     -46.230462,
+     -62.705189,
+     17.851237,
+     -62.337869,
+     9.334518,
+     -51.599014,
+     -67.730195,
+     2.441178
+    ],
+    "traj_offset": [
+     11688,
+     31584,
+     67104,
+     58383,
+     24173,
+     36443,
+     10010,
+     48480,
+     33447
+    ],
+    "traj_len": [
+     26917,
+     10292,
+     59153,
+     11199,
+     15114,
+     35802,
+     53157,
+     7830,
+     65032
+    ],
+    "traj_x": [
+     -41.01614,
+     -98.350537,
+     -52.483415,
+     66.352235,
+     43.425824,
+     -92.313309,
+     11.24583,
+     -25.966795,
+     -17.373024,
+     33.661129,
+     22.171343,
+     -22.330934,
+     39.189584
+    ],
+    "traj_y": [
+     75.793048,
+     -38.613476,
+     -63.694048,
+     93.748196,
+     96.650012,
+     76.725631,
+     -68.794456,
+     -30.850155,
+     65.226346,
+     -36.762869,
+     56.587818,
+     92.256688,
+     -73.633929
+    ]
+   },
+   "scalars": {
+    "cycle": "13158",
+    "controller_id": ""
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIhng0wPN3wOl9wKUsQHkuwPfCaAn0e4Cl6MBKkhnmrD9ZCdSQEEQIEPH3EhAh9wMN+ApU0CR8L2/QTMrwAqFCDiEJVBAFOgTeZIyTEAJNUOqKHBLQISEKF/Q5lhAtyQH7GrfVEAySIW0xqATakzAMgG/RpKLUsDzOuKQDTwlwDrrU47JsjXAz2kWaHfsMEA1mlyMgYJQQMk+yLJgQi/AlzldFhPLUsCaet0iMG1VQDoJAQEAAQEAAAEAQhJub192YWxpZF9jYW5kaWRhdGVCAEIJY29sbGlzaW9uQgBCEm5vX3ZhbGlkX2NhbmRpZGF0ZUIKQVNTVU1QVElPTkIKQVNTVU1QVElPTkICb2tCAEpI5q26DtXMScC5cvbOaLsqQIEFMGXg6k/A+nspPGgsT8CyZfm6DONEQGBY/nxb6EfAtOidCriDTEDCMGDJVTwkQE/KpIY2VlFAUmiMEvQXeuxSwJS+EHLerxNARz1EozsEVEB+xRouchFVQJdvfVhvFlLAQnxgx38dR8DdPxaiQ1pPwCklBKvq2TFAhqqYSj8rT8C+2HvxRasiQE7soX2szEnA+SzPg7vuUMCut81UiIcDQFoZqFvg9gGgjASPyAPtvAHbnAKaTuD6AqeFAmIXpdIBtFCRzgO/V4p22pcCpZ8Dlj2I/ANqaCcUIuAQgkTAbsK9Mm+WWMCrsu+K4D1KwGtgqwSLllBAC+2cZoG2RUC4IjFBDRRXwFnABG7dfSZAs++K4H/3OcCEnziAfl8xwPa3BOCf1EBABmaFIt0rNkBsIjMXuFQ2wCXs20lEmENAcmggCmZMwfJSQMFwrmGGTkPAV+2akNbYT8Dfv3lx4m9XQHyA7suZKVhAr30BvXAuU0Aah/pd2DJRwOiHEcKj2T7AJuXuc3xOUEDtEP+wpWFCwAQAx549S0xApFGBk20QV0Aav/BKkmhSwHjmZg=="
+  },
+  {
+   "message": "coco.control.v1.CommandBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "cycle": "Q",
+    "chosen": "i",
+    "v": "d",
+    "w": "d",
+    "status": "s",
+    "n_candidates": "I",
+    "n_valid": "I",
+    "lookahead_x": "d",
+    "lookahead_y": "d"
+   },
+   "scalar_types": {
+    "controller_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "cycle": [
+     "19225",
+     "48718",
+     "65973",
+     "113",
+     "57104",
+     "45186",
+     "63097",
+     "27998",
+     "57075"
+    ],
+    "chosen": [
+     -34946,
+     44861,
+     15001,
+     -64279,
+     -65298,
+     -3718,
+     5465,
+     52,
+     -69461
+    ],
+    "v": [
+     -48.205128,
+     76.43505,
+     -99.209823,
+     74.476395,
+     -26.263229,
+     86.715286,
+     11.073893,
+     -79.931309,
+     69.304588
+    ],
+    "w": [
+     -68.769624,
+     39.261625,
+     -50.836276,
+     11.801498,
+     -44.611164,
+     -1.387467,
+     22.130232,
+     -71.992624,
+     5.695901
+    ],
+    "status": [
+     "ok",
+     "ASSUMPTION",
+     "ASSUMPTION",
+     "no_valid_candidate",
+     "ASSUMPTION",
+     "no_valid_candidate",
+     "collision",
+     "bay α",
+     "bay α"
+    ],
+    "n_candidates": [
+     8422,
+     49438,
+     55146,
+     4436,
+     756,
+     36752,
+     41939,
+     25744,
+     17003
+    ],
+    "n_valid": [
+     37057,
+     3536,
+     54602,
+     45672,
+     61704,
+     12708,
+     61515,
+     20863,
+     11298
+    ],
+    "lookahead_x": [
+     -26.63019,
+     -91.149484,
+     18.685912,
+     55.294602,
+     -37.312727,
+     13.252743,
+     -96.105408,
+     -22.311004,
+     7.653974
+    ],
+    "lookahead_y": [
+     27.228335,
+     67.673279,
+     -21.526612,
+     54.85208,
+     71.856524,
+     -91.574806,
+     -41.814968,
+     -49.279678,
+     -40.338825
+    ]
+   },
+   "scalars": {
+    "controller_id": "collision"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIhmZlgHO/AK1gwRxkL4DguEC+ewD3toB870DKheDogT6vAWy6gGt7Aej/AeLOrJVaKm9CDJIOL9hokEaSMD9h/Tb1xtTQLa8cr1tzVjAlj50QX2eUkDZW8r5YkM6wFlS7j7HrVVAgc6kTdUlJkAcXhCRmvtTwEKwql5+U1FAOkjejQWFQTFRwHNoke18oUNAADeLFwtrScBrniPyXZonQAw/OJ86TkbAvHfUmBAz9r+G5GTiViE2QGJO0CaH/1HAyQORRZrIFkBCAm9rQgpBU1NVTVBUSU9OQgpBU1NVTVBUSU9OQhJub192YWxpZF9jYW5kaWRhdGVCCkFTU1VNUFRJT05CEm5vX3ZhbGlkX2NhbmRpZGF0ZUIJY29sbGlzaW9uQgZiYXkgzrFCBmJheSDOsUoY5kGeggPqrgPUIvQFkJ8C08cCkMkB64QBUhjBoQLQG8qqA+jkAojiA6Rjy+AD/6IBolhaSChEwCFUoTrAntFWJZHJVsAX78ftl68yQAirsYS1pUtAwck2cAeoQsD7lc6HZ4EqQCcvMgG/BljA2exI9Z1PNsC6vDlcq50eQGJIPIidKXQ6O0BZhc0AF+tQQGCuRQvQhjXAsMka9RBtS0BNDwpK0fZRQNriGp/J5FbAraQV31DoRMCRtBt9zKNIwJoIG55eK0TAagljb2xsaXNpb24="
+  },
+  {
+   "message": "coco.decide.v1.ActionBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "region": "I",
+    "expected_cost": "d",
+    "reason": "s"
+   },
+   "scalar_types": {
+    "update": "Q",
+    "problem_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "region": [
+     68831,
+     33813,
+     43178,
+     63182,
+     54741,
+     47646,
+     18750,
+     54964,
+     38588
+    ],
+    "expected_cost": [
+     -50.94897,
+     12.71747,
+     7.778071,
+     -12.224954,
+     -56.281946,
+     97.759944,
+     6.149654,
+     -12.787026,
+     -39.109543
+    ],
+    "reason": [
+     "no_valid_candidate",
+     "",
+     "",
+     "no_valid_candidate",
+     "ASSUMPTION",
+     "",
+     "",
+     "no_valid_candidate",
+     "ASSUMPTION"
+    ]
+   },
+   "scalars": {
+    "update": "53768",
+    "problem_id": "no_valid_candidate"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIhvfmQSViAKq0QLO7QPVqwOe9AK+kgG0rQO8rQIqSExxVdl3eUnA5bhTOlhvKUAz3eukvhwfQHI1sistcyjAd554zhYkTMCnsijsonBYQMLc7uU+mRhAETRmEvWSKcC8QEmBBY5DwDISbm9fdmFsaWRfY2FuZGlkYXRlMgAyADISbm9fdmFsaWRfY2FuZGlkYXRlMgpBU1NVTVBUSU9OMgAyADISbm9fdmFsaWRfY2FuZGlkYXRlMgpBU1NVTVBUSU9OOIikA0ISbm9fdmFsaWRfY2FuZGlkYXRl"
+  },
+  {
+   "message": "coco.decide.v1.BeliefBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "region": "I",
+    "probability": "d"
+   },
+   "scalar_types": {
+    "update": "Q",
+    "problem_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "region": [
+     68461,
+     55879,
+     13304,
+     15624,
+     59442,
+     37293,
+     69696,
+     45633,
+     15196
+    ],
+    "probability": [
+     79.371755,
+     -99.469618,
+     -58.476521,
+     55.552858,
+     82.077233,
+     82.66501,
+     77.737382,
+     74.173666,
+     96.336697
+    ]
+   },
+   "scalars": {
+    "update": "10418",
+    "problem_id": "bay α"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIhjtlgTHtAP4Z4h6stADraMCwKAEweQC3HYqSPfHe9XK11NAOuenOA7eWMC5bd+j/jxNwH6qCg3ExktAAkuuYvGEVEDUYBqGj6pUQC6qRUQxb1NAVpv/Vx2LUkBT6pJxjBVYQDCyUToGYmF5IM6x"
+  },
+  {
+   "message": "coco.decide.v1.ObservationBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "region": "I",
+    "found": "B"
+   },
+   "scalar_types": {
+    "problem_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "region": [
+     66290,
+     30549,
+     459,
+     61974,
+     48739,
+     65882,
+     36400,
+     59628,
+     28184
+    ],
+    "found": [
+     false,
+     false,
+     true,
+     true,
+     true,
+     false,
+     false,
+     true,
+     false
+    ]
+   },
+   "scalars": {
+    "problem_id": "bay α"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIhryhQTV7gHLA5bkA+P8AtqCBLCcAuzRA5jcASoJAAABAQEAAAEAMgZiYXkgzrE="
+  },
+  {
+   "message": "coco.decide.v1.OrderCostBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "order_offset": "I",
+    "order_len": "I",
+    "order": "I",
+    "expected_cost": "d"
+   },
+   "scalar_types": {
+    "update": "Q",
+    "problem_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "order_offset": [
+     6958,
+     10114,
+     14406,
+     44525,
+     21683,
+     3079,
+     11966,
+     19752,
+     42184
+    ],
+    "order_len": [
+     16731,
+     1048,
+     69999,
+     55592,
+     7410,
+     29631,
+     41140,
+     41190,
+     55896
+    ],
+    "order": [
+     10082,
+     10673,
+     69416,
+     18475,
+     14941,
+     31282,
+     11411,
+     12116,
+     22330,
+     44926,
+     65880,
+     33089,
+     67716
+    ],
+    "expected_cost": [
+     68.954183,
+     15.828742,
+     -24.46217,
+     79.056615,
+     -91.149872,
+     50.172764,
+     -58.052525,
+     56.397107,
+     -37.396865
+    ]
+   },
+   "scalars": {
+    "update": "33937",
+    "problem_id": "bay α"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIhauNoJPxnDt2wKzqQGHGL5dqJoByMkCKhnbggGYCO+iBKiyA/I5v+cBtMEC5sEC2LQDMiLiTrFTqJ4Eq5AB3XSy9AGTWdReuq4B/t4C2IIEwYIChJEEOkiM2ZJVET1RQK2kFd9QqC9APDHrxVB2OMCiXYWUn8NTQIOluoCXyVbAjPZ4IR0WSUB4nKIjuQZNwJ8B9WbUMkxAqfbpeMyyQsBAkYkCSgZiYXkgzrE="
+  },
+  {
+   "message": "coco.estimate.v1.EstimateBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "x": "d",
+    "y": "d",
+    "theta": "d",
+    "cov_xx": "d",
+    "cov_xy": "d",
+    "cov_xt": "d",
+    "cov_yy": "d",
+    "cov_yt": "d",
+    "cov_tt": "d"
+   },
+   "scalar_types": {
+    "estimator": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "x": [
+     -62.011307,
+     14.143736,
+     2.91882,
+     -55.32228,
+     3.366546,
+     -41.477936,
+     25.499722,
+     93.371112,
+     -45.015292
+    ],
+    "y": [
+     -21.963093,
+     -31.929417,
+     71.811712,
+     3.982541,
+     -78.245372,
+     -52.608904,
+     35.007927,
+     -80.826556,
+     -15.639865
+    ],
+    "theta": [
+     -26.145904,
+     -27.13161,
+     80.803772,
+     -53.531872,
+     75.19454,
+     21.185923,
+     52.069755,
+     70.14098,
+     -67.053613
+    ],
+    "cov_xx": [
+     25.901375,
+     -1.623163,
+     -40.489912,
+     -24.998093,
+     -2.424557,
+     -97.232888,
+     -71.967276,
+     -94.680024,
+     51.32164
+    ],
+    "cov_xy": [
+     -63.555678,
+     -58.664686,
+     -50.818612,
+     75.628868,
+     57.829486,
+     87.674336,
+     -7.754881,
+     -81.623947,
+     90.431023
+    ],
+    "cov_xt": [
+     -81.244359,
+     -93.216694,
+     11.827834,
+     80.214694,
+     16.12687,
+     81.055309,
+     -48.184792,
+     -80.675513,
+     62.212611
+    ],
+    "cov_yy": [
+     50.93309,
+     9.612929,
+     16.789354,
+     -11.201804,
+     50.445099,
+     38.648023,
+     44.631189,
+     -26.895572,
+     14.253083
+    ],
+    "cov_yt": [
+     -35.847411,
+     9.810256,
+     42.289649,
+     -56.386527,
+     -80.539525,
+     -47.558918,
+     -34.214925,
+     48.326792,
+     53.669273
+    ],
+    "cov_tt": [
+     84.100666,
+     -43.814333,
+     2.05175,
+     -49.918051,
+     -19.492636,
+     -3.425684,
+     62.837817,
+     52.022336,
+     5.094455
+    ]
+   },
+   "scalars": {
+    "estimator": "collision"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIkiim/2BcgFPwAaE1sOXSSxAKEnXTL5ZB0DTE5Z4QKlLwEHWU6uv7gpAYMrAAS29RMB6F+/H7X85QM3Ji0zAV1dA+vGXFvWBRsAqSKwBSkON9jXAsFjDRe7tP8BUceMW8/NRQEXVr3Q+3A9AqtbCLLSPU8CpM/eQ8E1KwLHgfsADgUFAARQjS+Y0VMDItaFinEcvwDJICFvs9lklOsCZ02UxsSE7wDFcHQBxM1RAPdS2YRTESsDjcOZXc8xSQP+SVKaYLzVAwt1Zu+0ISkD3WPrQBYlRQP1oOGVuw1DAOkiYbhKDwOY5QGg8EcR5+Pm/f/W4b7U+RMDVXdkFg/84wJBN8iN+ZQPAYOgRo+dOWMAqjZjZ5/1RwLAfYoOFq1fA8IrgfyupSUBCSKiN6nQgx0/A9g1MbhRVTcB8DixHyGhJwA9gkV8/6FJAtD7lmCzqTED9oC5SKOtVQLN8XYb/BB/A/dtlv+5nVMC5NH7hlZtWQEpI7l7uk6NPVMBTz4JQ3k1XwKIIqdvZpydAbynni70NVEDx12SNeiAwQCqLwi6KQ1RA/kemQ6cXSMB2weCaOytUwIviVdY2G09AUkjBHD1+b3dJQDuKc9TROSNAf/eOGhPKMEBqZ5jaUmcmwLw9CAH5OElAJQfsavJSQ0AnTBjNylBGQJw24zRE5TrA3lhQGJSBLEBaSKWisfZ37EHAi8ba39meI0DYKOs3EyVFQLACfLd5MUzA9pfdk4ciVMCnkgGgisdHwOELk6mCG0HAFkz8UdQpSEBDjNe8qtVKQGJIbXTOT3EGVUDbhlEQPOhFwESLbOf7aQBAsYf2sYL1SMAP1ZRkHX4zwJdxUwPNZwvANIRjlj1rT0ABw/Ln2wJKQFTGv8+4YBRAagljb2xsaXNpb24="
+  },
+  {
+   "message": "coco.localise.v1.EkfUpdateBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "update": "Q",
+    "pred_x": "d",
+    "pred_y": "d",
+    "pred_theta": "d",
+    "pred_cov_xx": "d",
+    "pred_cov_xy": "d",
+    "pred_cov_xt": "d",
+    "pred_cov_yy": "d",
+    "pred_cov_yt": "d",
+    "pred_cov_tt": "d",
+    "post_x": "d",
+    "post_y": "d",
+    "post_theta": "d",
+    "post_cov_xx": "d",
+    "post_cov_xy": "d",
+    "post_cov_xt": "d",
+    "post_cov_yy": "d",
+    "post_cov_yt": "d",
+    "post_cov_tt": "d",
+    "beams_used": "I",
+    "beams_gated": "I",
+    "nis": "d"
+   },
+   "scalar_types": {
+    "filter_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "update": [
+     "44672",
+     "41432",
+     "39842",
+     "58571",
+     "64696",
+     "31505",
+     "49732",
+     "15113",
+     "10295"
+    ],
+    "pred_x": [
+     -6.958491,
+     76.484356,
+     -9.731342,
+     41.950068,
+     -0.238516,
+     56.483303,
+     -86.927093,
+     -40.615279,
+     15.686841
+    ],
+    "pred_y": [
+     -6.76048,
+     42.319782,
+     77.384983,
+     -22.944543,
+     -74.026055,
+     -22.307798,
+     72.462041,
+     -3.258099,
+     -17.582132
+    ],
+    "pred_theta": [
+     -84.793671,
+     -34.988202,
+     60.020054,
+     -11.926532,
+     23.506123,
+     -11.82513,
+     -68.659606,
+     69.56812,
+     -87.454399
+    ],
+    "pred_cov_xx": [
+     -74.177058,
+     -7.177154,
+     53.516973,
+     -59.239208,
+     30.62176,
+     35.62997,
+     -36.608953,
+     -96.662234,
+     -28.394388
+    ],
+    "pred_cov_xy": [
+     14.391205,
+     78.371193,
+     -63.336444,
+     71.235745,
+     39.807418,
+     2.011894,
+     46.456435,
+     68.797606,
+     -67.587966
+    ],
+    "pred_cov_xt": [
+     -2.25047,
+     -47.244118,
+     86.288202,
+     59.851146,
+     -62.582178,
+     -39.425504,
+     -89.084874,
+     89.470811,
+     -6.851833
+    ],
+    "pred_cov_yy": [
+     -99.442615,
+     71.507447,
+     27.667706,
+     43.259288,
+     -74.470731,
+     47.865468,
+     30.066394,
+     59.848814,
+     -20.001184
+    ],
+    "pred_cov_yt": [
+     -44.970923,
+     65.074774,
+     48.378523,
+     -17.432953,
+     14.438821,
+     68.591637,
+     64.900042,
+     -29.60415,
+     88.468831
+    ],
+    "pred_cov_tt": [
+     31.763761,
+     39.57344,
+     59.001877,
+     -66.519532,
+     51.262457,
+     -81.719041,
+     -97.509449,
+     -62.755906,
+     -45.938086
+    ],
+    "post_x": [
+     47.660443,
+     93.561375,
+     -50.51308,
+     -39.179185,
+     54.890703,
+     -63.708784,
+     39.408935,
+     -62.581309,
+     -29.805528
+    ],
+    "post_y": [
+     -8.074134,
+     3.455409,
+     3.978164,
+     -70.253306,
+     29.383927,
+     43.769104,
+     -92.3745,
+     -16.842836,
+     -40.646639
+    ],
+    "post_theta": [
+     -57.400841,
+     92.922693,
+     76.886054,
+     -10.511921,
+     -58.685902,
+     -31.868097,
+     -38.409275,
+     -62.689414,
+     63.59406
+    ],
+    "post_cov_xx": [
+     27.896511,
+     72.278738,
+     48.130439,
+     58.191112,
+     72.281629,
+     -36.145589,
+     36.330682,
+     13.333049,
+     80.155023
+    ],
+    "post_cov_xy": [
+     76.874487,
+     -25.178815,
+     -28.340764,
+     -96.446169,
+     -7.120012,
+     -97.546501,
+     73.510815,
+     -39.470615,
+     -52.246587
+    ],
+    "post_cov_xt": [
+     -65.034445,
+     -81.549739,
+     -42.613518,
+     -15.431688,
+     6.491964,
+     -52.583506,
+     8.677899,
+     -40.713969,
+     -59.597881
+    ],
+    "post_cov_yy": [
+     -96.681002,
+     67.458949,
+     23.76783,
+     -79.654987,
+     -15.972842,
+     -88.906818,
+     62.986036,
+     80.144471,
+     48.422156
+    ],
+    "post_cov_yt": [
+     -76.330653,
+     -15.47365,
+     65.456444,
+     97.894374,
+     63.986838,
+     56.308826,
+     23.449274,
+     12.875946,
+     6.8128
+    ],
+    "post_cov_tt": [
+     -68.11104,
+     -47.39771,
+     6.029273,
+     -94.654791,
+     92.336045,
+     -32.229864,
+     39.573692,
+     -51.379837,
+     -98.194857
+    ],
+    "beams_used": [
+     50630,
+     51269,
+     10135,
+     66476,
+     30581,
+     8014,
+     61587,
+     27156,
+     50449
+    ],
+    "beams_gated": [
+     42229,
+     35125,
+     54889,
+     46924,
+     68574,
+     48758,
+     41260,
+     4359,
+     7643
+    ],
+    "nis": [
+     29.933416,
+     -83.7135,
+     -1.796703,
+     -49.129915,
+     -54.778303,
+     -9.800232,
+     -77.28608,
+     58.791206,
+     -62.548201
+    ]
+   },
+   "scalars": {
+    "filter_id": "no_valid_candidate"
+   },
+   "protobuf_b64": "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"
+  },
+  {
+   "message": "coco.localise.v1.ParticleSetBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "x": "d",
+    "y": "d",
+    "theta": "d",
+    "weight": "d"
+   },
+   "scalar_types": {
+    "update": "Q",
+    "filter_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "x": [
+     80.768803,
+     20.688432,
+     -75.82385,
+     -99.61056,
+     82.146983,
+     -84.367223,
+     72.941988,
+     35.550331,
+     32.564267
+    ],
+    "y": [
+     -27.698908,
+     27.013183,
+     -86.734413,
+     18.560717,
+     17.267645,
+     65.645795,
+     92.152281,
+     -60.291981,
+     -46.803004
+    ],
+    "theta": [
+     75.832161,
+     49.015377,
+     -50.370347,
+     45.722896,
+     -5.042937,
+     3.844026,
+     -65.458562,
+     -46.735984,
+     43.542151
+    ],
+    "weight": [
+     31.818866,
+     7.456111,
+     -44.816795,
+     -88.737178,
+     -72.674179,
+     -77.620507,
+     39.479338,
+     14.702334,
+     -58.853856
+    ]
+   },
+   "scalars": {
+    "update": "16959",
+    "filter_id": "ok"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIkhFhH8RNDFUQBaFXRQ9sDRA0LNZ9bn0UsC7D0BqE+dYwFqEYitoiVRAstXllIAXVcBdTgmISTxSQMx8Bz9xxkFAJJur5jlIQEAqSKvpeqLrsjvA+dwJ9l8DO0B3MGKfAK9VwK1POSaLjzJAHPD5YYREMUDnOo20VGlQQFezzvi+CVdA1QYnol8lTsBSR8fVyGZHwDJIbQA2IEL1UkAoDqDf94FIQPuVzodnL0nAYTQr24fcRkBGJ0ut9ysUwCHKF7SQwA5ADkxuFFldUMCMMEW5NF5HwDE/NzRlxUVAOkhszsEzodE/QChiEcMO0x1ApkQSvYxoRsAqVaLsLS9WwJkprb8lK1LAGvz9YrZnU8By3ZTyWr1DQNy8cVKYZy1AJ79FJ0ttTcBAv4QBSgJvaw=="
+  },
+  {
+   "message": "coco.localise.v1.ParticleUpdateBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "update": "Q",
+    "n_eff": "d",
+    "resampled": "B",
+    "injected": "I",
+    "p_inject": "d",
+    "w_avg": "d",
+    "w_slow": "d",
+    "w_fast": "d",
+    "cluster_weight": "d"
+   },
+   "scalar_types": {
+    "filter_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "update": [
+     "51881",
+     "55478",
+     "21288",
+     "63209",
+     "68385",
+     "28392",
+     "251",
+     "19775",
+     "32861"
+    ],
+    "n_eff": [
+     -71.542816,
+     25.058061,
+     -60.685684,
+     57.310646,
+     -50.831459,
+     -61.364165,
+     49.847534,
+     32.226634,
+     56.409485
+    ],
+    "resampled": [
+     false,
+     true,
+     false,
+     true,
+     true,
+     false,
+     true,
+     false,
+     true
+    ],
+    "injected": [
+     32057,
+     17909,
+     9560,
+     42271,
+     4077,
+     67509,
+     11496,
+     11906,
+     69112
+    ],
+    "p_inject": [
+     47.612895,
+     30.365364,
+     40.796743,
+     -69.566949,
+     -29.053,
+     -38.743701,
+     85.991374,
+     -85.15955,
+     99.229838
+    ],
+    "w_avg": [
+     33.716122,
+     -36.047906,
+     -8.701182,
+     22.51103,
+     -96.300451,
+     90.99078,
+     53.019797,
+     37.261005,
+     31.909172
+    ],
+    "w_slow": [
+     94.344731,
+     63.710406,
+     40.941153,
+     22.582336,
+     27.213858,
+     79.38954,
+     -86.715408,
+     61.222948,
+     4.384875
+    ],
+    "w_fast": [
+     35.613234,
+     78.890743,
+     -58.82023,
+     -72.525891,
+     58.334636,
+     -75.059563,
+     56.397217,
+     -74.376266,
+     -14.411316
+    ],
+    "cluster_weight": [
+     65.537068,
+     68.240808,
+     -32.392388,
+     -55.850239,
+     -43.481038,
+     -48.885725,
+     97.80122,
+     -70.934913,
+     -66.918764
+    ]
+   },
+   "scalars": {
+    "filter_id": "bay α"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIhqplQO2sQOopgHp7QOhlgTo3QH7Ab+aAd2AAipIt+9Rf73iUcBNLPAV3Q45QPuxSX7EV07ADVGFP8OnTECBe54/bWpJwIasbvWcrk7AwR9+/nvsSECxFMlXAh1AQO2ZJQFqNExAMgkAAQABAQABAAE6F7n6AfWLAdhKn8oC7R+1jwToWYJd+JsEQkjjcOZXc85HQMAiv36IXT5AkSi0rPtlRED+X3XkSGRRwCGwcmiRDT3AUoAomDFfQ8CzBu+rcn9VQOoENBE2SlXAMlhxqrXOWEBKSBr5vOKp20BAHqSnyCEGQsB2Fr1TAWchwF9GsdzSgjZAO8PUljoTWMD6YYTwaL9WQIrHRbWIgkpA1ouhnGihQkBdcAZ/v+g/QFJItrqcEhCWV0DrcHSV7tpPQCLElbN3eERAkUjb+BOVNkDr/NtlvzY7QPceLjnu2FNA/tKiPsmtVcC0WmCPiZxOQCcxCKwcihFAWkjLZaNzfs5BQAWJ7e4BuVNAW5nwS/1oTcCwkLkyqCFSwDoIOlrVKk1ATkNU4c/DUsAmNbQB2DJMQDEm/b0UmFLAoKTAApjSLMBiSJrudVJfYlBAXyf1ZWkPUUDiqx3FOTJAwFJkraHU7EvADhE3p5K9RcDzH9JvX3FIwKw5QDBHc1hAvOZVndW7UcB/L4UHzbpQwGoGYmF5IM6x"
+  },
+  {
+   "message": "coco.map.v1.GraphEdgeBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "from_node": "I",
+    "to_node": "I",
+    "kind": "s",
+    "dx": "d",
+    "dy": "d",
+    "dtheta": "d",
+    "error": "d"
+   },
+   "scalar_types": {
+    "stage": "s",
+    "slam_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "from_node": [
+     7490,
+     47277,
+     17960,
+     10247,
+     14708,
+     49051,
+     20081,
+     48771,
+     14104
+    ],
+    "to_node": [
+     9517,
+     64308,
+     26232,
+     35795,
+     6689,
+     56589,
+     37529,
+     28943,
+     23524
+    ],
+    "kind": [
+     "no_valid_candidate",
+     "no_valid_candidate",
+     "no_valid_candidate",
+     "collision",
+     "ASSUMPTION",
+     "ok",
+     "collision",
+     "",
+     "collision"
+    ],
+    "dx": [
+     -31.479354,
+     52.06168,
+     -50.487985,
+     -20.693943,
+     58.751503,
+     -78.240809,
+     -94.167823,
+     38.797752,
+     11.535174
+    ],
+    "dy": [
+     -66.432677,
+     -33.237943,
+     -55.083719,
+     42.840348,
+     -5.044728,
+     39.086541,
+     -20.566106,
+     99.73886,
+     -85.43356
+    ],
+    "dtheta": [
+     41.401063,
+     -14.200906,
+     -46.666282,
+     21.494088,
+     5.402757,
+     -75.139387,
+     -43.213822,
+     -22.966686,
+     54.234724
+    ],
+    "error": [
+     -5.947174,
+     96.765877,
+     -9.939136,
+     -95.819538,
+     -37.402002,
+     82.868765,
+     36.530812,
+     5.992816,
+     -58.224263
+    ]
+   },
+   "scalars": {
+    "stage": "ASSUMPTION",
+    "slam_id": "ASSUMPTION"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIhfCOq3xAqiMAYdQ9HKb/wLxnAGD/QKYbioZrUq09gP4zAHTlwKhNI26A5mlAo/iAeS3ATISbm9fdmFsaWRfY2FuZGlkYXRlMhJub192YWxpZF9jYW5kaWRhdGUyEm5vX3ZhbGlkX2NhbmRpZGF0ZTIJY29sbGlzaW9uMgpBU1NVTVBUSU9OMgJvazIJY29sbGlzaW9uMgAyCWNvbGxpc2lvbjpI8DSZ8bZ6P8CdaFch5QdKQCP430p2PknAw0maP6axNMBG7BNAMWBNQEflJmppj1PAECGunL2KV8DIKM+8HGZDQMlWl1MCEidAQkjPLt/6sJtQwPSnjep0nkDA5IbfTbeKS8AnofSFkGtFQKncRC3NLRTArmGGxhOLQ0DDEaRS7JA0wKUUdHtJ71hApDZxcr9bVcBKSF1RSghWs0RA7iO3Jt1mLMDt9IO6SFVHwJdYGY18fjVAt/C8VGycFUA0n3O368hSwCmV8IRem0XARYDTu3j3NsAMy59vCx5LQFJIbHwm++fJF8CN8PYgBDFYQBX+DG/W4CPAEvWCT3P0V8CbdjHNdLNCwDS6g9iZt1RAhCnKpfFDQkA7yOvBpPgXQPdZZaa0HE3AWgpBU1NVTVBUSU9OYgpBU1NVTVBUSU9O"
+  },
+  {
+   "message": "coco.map.v1.GraphNodeBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "node_id": "I",
+    "x": "d",
+    "y": "d",
+    "theta": "d"
+   },
+   "scalar_types": {
+    "stage": "s",
+    "chi2": "d",
+    "slam_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "node_id": [
+     47484,
+     8150,
+     9295,
+     37382,
+     59599,
+     62331,
+     36666,
+     36306,
+     5832
+    ],
+    "x": [
+     41.120508,
+     -57.334843,
+     -8.097116,
+     70.090573,
+     51.153766,
+     -80.41608,
+     -16.565886,
+     -87.643507,
+     -76.759869
+    ],
+    "y": [
+     47.118994,
+     54.770719,
+     51.471272,
+     86.789362,
+     -83.324167,
+     -29.641366,
+     -50.496321,
+     -91.006816,
+     -89.864653
+    ],
+    "theta": [
+     66.001553,
+     -63.716227,
+     65.54146,
+     43.88432,
+     20.365868,
+     15.525937,
+     91.277468,
+     25.844334,
+     -42.826902
+    ]
+   },
+   "scalars": {
+    "stage": "collision",
+    "chi2": -2.93949,
+    "slam_id": "collision"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIhj88gLWP89IhqQCz9ED++YDup4C0psCyC0qSAR0X85sj0RAsyWrItyqTMAw1jcwuTEgwKQ5svLLhVFATZ6ymq6TSUBCIQIOoRpUwKZDp+fdkDDA0O/7Ny/pVcChD5axoTBTwDJIyjUFMjuPR0Dys5HrpmJLQKDCEaRSvElAIa0x6ISyVUBR3PEmv9RUwC/E6o8wpD3AtahPcoc/ScC7RWCsb8BWwNpYiXlWd1bAOkh8DcFxGYBQQJDBilOt20/A5gXYR6diUEBwmdNlMfFFQCandoapXTRAQYNNnUcNL0DwayQJwtFWQJ/m5EUm2DlAnX+77NdpRcBCCWNvbGxpc2lvbkkyWkdVE4QHwFIJY29sbGlzaW9u"
+  },
+  {
+   "message": "coco.map.v1.LandmarkBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "landmark_id": "I",
+    "x": "d",
+    "y": "d",
+    "cov_xx": "d",
+    "cov_xy": "d",
+    "cov_yy": "d"
+   },
+   "scalar_types": {
+    "update": "Q",
+    "slam_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "landmark_id": [
+     12091,
+     51187,
+     12491,
+     26542,
+     69811,
+     42773,
+     7055,
+     6413,
+     45149
+    ],
+    "x": [
+     48.442603,
+     -90.384274,
+     80.390726,
+     -23.910708,
+     -61.02553,
+     19.85745,
+     -76.033655,
+     -60.69338,
+     3.019452
+    ],
+    "y": [
+     -4.200419,
+     -49.376674,
+     49.660179,
+     94.108854,
+     -15.347242,
+     -38.220145,
+     80.560092,
+     13.08499,
+     -5.143144
+    ],
+    "cov_xx": [
+     -3.930974,
+     51.693713,
+     -26.912361,
+     54.49431,
+     -10.186124,
+     90.043901,
+     -27.409704,
+     -92.641662,
+     54.175046
+    ],
+    "cov_xy": [
+     8.991585,
+     -36.861137,
+     61.234033,
+     -65.747142,
+     37.505361,
+     -59.28436,
+     -10.743782,
+     -44.932714,
+     -13.783453
+    ],
+    "cov_yy": [
+     11.336144,
+     -9.757436,
+     -49.673062,
+     -56.828545,
+     -88.777993,
+     98.913565,
+     33.791591,
+     23.728327,
+     -76.503383
+    ]
+   },
+   "scalars": {
+    "update": "20893",
+    "slam_id": "collision"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIhe7XvOPA8thrs8Bs6EElc4CjzeNMt3gAipIRQ4RN6c4SEAArfnxl5hWwJrsn6cBGVRAoDTUKCTpN8CQiCmRRINOwIj029eB2zNAMxZNZycCU8Cp2QOtwFhOwP27PnPWJwhAMkj0/GmjOs0QwHOgh9o2sEjAxEDXvoDUSEB7gsR294ZXQGOYE7TJsS7AYLAbti0cQ8AUsB2M2CNUQF35LM+DKypAeXk6V5SSFMA6SBJpG3+icg/AsOdrlsvYSUBXJZF9kOk6wPoK0oxFP0tAXAAapUtfJMDA0CNGz4JWQFcKgVziaDvAgEV+/RApV8DXpUboZxZLQEJIiGh0B7H7IUASMLq8OW5CwKaXGMv0nU5A9N2tLNFvUMBB1lOrr8BCQDElkuhlpE3A+rSK/tB8JcC7Qh8sY3dGwPvnacAgkSvASkhGfv0QG6wmQEmgwabOgyPAFhdH5SbWSMDVITfDDWpMwBXhJqPKMVbATHFV2Xe6WEBqZ5jaUuVAQDbLZaNzujdAMZdUbTcgU8BQnaMBWgljb2xsaXNpb24="
+  },
+  {
+   "message": "coco.map.v1.MapCellBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "row": "I",
+    "col": "I",
+    "logodds": "f"
+   },
+   "scalar_types": {
+    "update": "Q",
+    "map_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "row": [
+     53090,
+     64745,
+     11938,
+     17948,
+     35285,
+     37088,
+     45698,
+     36944,
+     29923
+    ],
+    "col": [
+     9943,
+     27400,
+     44048,
+     38911,
+     62233,
+     36518,
+     46847,
+     48478,
+     20091
+    ],
+    "logodds": [
+     -40.125,
+     19.875,
+     -20.875,
+     -25.875,
+     -38.125,
+     18.25,
+     3.5,
+     41.0,
+     -8.625
+    ]
+   },
+   "scalars": {
+    "update": "60361",
+    "map_id": ""
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIhringPp+QOiXZyMAdWTAuChAoLlAtCgAuPpASoa102I1gGQ2AL/rwKZ5gOmnQL/7QLe+gL7nAEyJACAIMIAAJ9BAACnwQAAz8EAgBjCAACSQQAAYEAAACRCAAAKwTjJ1wM="
+  },
+  {
+   "message": "coco.map.v1.SlamParticleBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "x": "d",
+    "y": "d",
+    "theta": "d",
+    "weight": "d"
+   },
+   "scalar_types": {
+    "best": "I",
+    "update": "Q",
+    "slam_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "x": [
+     82.593108,
+     -6.863065,
+     70.720152,
+     99.24834,
+     -99.185262,
+     67.122582,
+     87.739042,
+     18.137204,
+     -41.308716
+    ],
+    "y": [
+     59.169692,
+     -17.660898,
+     64.616194,
+     84.740924,
+     -28.622277,
+     -55.905031,
+     -14.499975,
+     -12.416971,
+     83.731025
+    ],
+    "theta": [
+     -30.899946,
+     -1.370502,
+     15.661583,
+     41.162315,
+     -20.13956,
+     -11.463775,
+     -28.457058,
+     34.86292,
+     91.195614
+    ],
+    "weight": [
+     43.680626,
+     -46.16787,
+     -32.120602,
+     -83.013227,
+     -51.879413,
+     98.288289,
+     47.414473,
+     44.388805,
+     78.75487
+    ]
+   },
+   "scalars": {
+    "best": 10518,
+    "update": "32964",
+    "slam_id": "ok"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIki+v0F79aVUQPlJtU/HcxvAiQlq+BauUUB5knTN5M9YQELMJVXby1jAAkUsYtjHUEC1F9F2TO9VQGHhJM0fIzJAP+CBAYSnRMAqSEgyq3e4lU1A5/1/nDCpMcBzf/W4bydQQJQ0f0xrL1VAkQ2ki02fPMDfbkkO2PNLwJyiI7n8/yzAxsIQOX3VKMC94xQdye5UQDJIgCpu3GLmPsA4pFGBk+31v9wtyQG7Ui9AO1PovMaUREBr1EM0uiM0wKFns+pz7SbAC2DKwAF1PMA8iJ0pdG5BQPIolfCEzFZAOkhVZ7XAHtdFQGH9n8N8FUfAherm4m8PQMAmGw+22MBUwLBW7ZqQ8EnA+7K0U3OSWECaCYZzDbVHQLnCu1zEMUZA0a5Cyk+wU0BAllJIxIECUgJvaw=="
+  },
+  {
+   "message": "coco.metrics.v1.MetricBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "name": "s",
+    "value": "d",
+    "unit": "s"
+   },
+   "scalar_types": {},
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "name": [
+     "ASSUMPTION",
+     "ok",
+     "no_valid_candidate",
+     "",
+     "",
+     "no_valid_candidate",
+     "ASSUMPTION",
+     "bay α",
+     ""
+    ],
+    "value": [
+     -26.408054,
+     51.895835,
+     -75.262978,
+     23.051849,
+     -85.638525,
+     14.418658,
+     80.683106,
+     -85.800434,
+     72.366806
+    ],
+    "unit": [
+     "",
+     "",
+     "no_valid_candidate",
+     "collision",
+     "bay α",
+     "collision",
+     "",
+     "ASSUMPTION",
+     "no_valid_candidate"
+    ]
+   },
+   "scalars": {},
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIgpBU1NVTVBUSU9OIgJvayISbm9fdmFsaWRfY2FuZGlkYXRlIgAiACISbm9fdmFsaWRfY2FuZGlkYXRlIgpBU1NVTVBUSU9OIgZiYXkgzrEiACpIggAZOnZoOsBbzqW4qvJJQFJkraHU0FLAj1Tf+UUNN0BrK/aX3WhVwORqZFda1ixA42w6ArgrVEDQJodPOnNVwIB+3795F1JAMgAyADISbm9fdmFsaWRfY2FuZGlkYXRlMgljb2xsaXNpb24yBmJheSDOsTIJY29sbGlzaW9uMgAyCkFTU1VNUFRJT04yEm5vX3ZhbGlkX2NhbmRpZGF0ZQ=="
+  },
+  {
+   "message": "coco.mission.v1.TransitionBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "from_state": "s",
+    "to_state": "s",
+    "event": "s",
+    "reason": "s",
+    "result": "s"
+   },
+   "scalar_types": {
+    "mission_id": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "from_state": [
+     "ok",
+     "bay α",
+     "ok",
+     "bay α",
+     "ok",
+     "ASSUMPTION",
+     "bay α",
+     "no_valid_candidate",
+     "ok"
+    ],
+    "to_state": [
+     "bay α",
+     "",
+     "bay α",
+     "bay α",
+     "bay α",
+     "ok",
+     "ok",
+     "bay α",
+     "ASSUMPTION"
+    ],
+    "event": [
+     "ASSUMPTION",
+     "no_valid_candidate",
+     "ok",
+     "",
+     "ASSUMPTION",
+     "bay α",
+     "ASSUMPTION",
+     "",
+     ""
+    ],
+    "reason": [
+     "bay α",
+     "ASSUMPTION",
+     "bay α",
+     "no_valid_candidate",
+     "",
+     "ok",
+     "bay α",
+     "bay α",
+     "bay α"
+    ],
+    "result": [
+     "ok",
+     "",
+     "no_valid_candidate",
+     "no_valid_candidate",
+     "",
+     "collision",
+     "bay α",
+     "ok",
+     "ok"
+    ]
+   },
+   "scalars": {
+    "mission_id": ""
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIgJvayIGYmF5IM6xIgJvayIGYmF5IM6xIgJvayIKQVNTVU1QVElPTiIGYmF5IM6xIhJub192YWxpZF9jYW5kaWRhdGUiAm9rKgZiYXkgzrEqACoGYmF5IM6xKgZiYXkgzrEqBmJheSDOsSoCb2sqAm9rKgZiYXkgzrEqCkFTU1VNUFRJT04yCkFTU1VNUFRJT04yEm5vX3ZhbGlkX2NhbmRpZGF0ZTICb2syADIKQVNTVU1QVElPTjIGYmF5IM6xMgpBU1NVTVBUSU9OMgAyADoGYmF5IM6xOgpBU1NVTVBUSU9OOgZiYXkgzrE6Em5vX3ZhbGlkX2NhbmRpZGF0ZToAOgJvazoGYmF5IM6xOgZiYXkgzrE6BmJheSDOsUICb2tCAEISbm9fdmFsaWRfY2FuZGlkYXRlQhJub192YWxpZF9jYW5kaWRhdGVCAEIJY29sbGlzaW9uQgZiYXkgzrFCAm9rQgJvaw=="
+  },
+  {
+   "message": "coco.sensor.v1.DetectionBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "region_id": "s",
+    "colour": "s",
+    "detected": "B",
+    "range": "d",
+    "bearing": "d"
+   },
+   "scalar_types": {
+    "detection_probability": "d",
+    "detection_label": "s"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "region_id": [
+     "ASSUMPTION",
+     "no_valid_candidate",
+     "bay α",
+     "collision",
+     "no_valid_candidate",
+     "ok",
+     "ASSUMPTION",
+     "ok",
+     "ok"
+    ],
+    "colour": [
+     "no_valid_candidate",
+     "ok",
+     "bay α",
+     "no_valid_candidate",
+     "collision",
+     "ASSUMPTION",
+     "ASSUMPTION",
+     "ASSUMPTION",
+     "bay α"
+    ],
+    "detected": [
+     false,
+     false,
+     true,
+     true,
+     true,
+     false,
+     true,
+     true,
+     true
+    ],
+    "range": [
+     13.215804,
+     -64.951165,
+     83.619435,
+     -73.137114,
+     -75.790511,
+     -98.41089,
+     51.228977,
+     -12.150272,
+     4.323112
+    ],
+    "bearing": [
+     40.958179,
+     -76.188122,
+     -31.526198,
+     94.14073,
+     78.777933,
+     90.218543,
+     -64.579284,
+     -98.046118,
+     46.835517
+    ]
+   },
+   "scalars": {
+    "detection_probability": 15.600831,
+    "detection_label": "no_valid_candidate"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIgpBU1NVTVBUSU9OIhJub192YWxpZF9jYW5kaWRhdGUiBmJheSDOsSIJY29sbGlzaW9uIhJub192YWxpZF9jYW5kaWRhdGUiAm9rIgpBU1NVTVBUSU9OIgJvayICb2sqEm5vX3ZhbGlkX2NhbmRpZGF0ZSoCb2sqBmJheSDOsSoSbm9fdmFsaWRfY2FuZGlkYXRlKgljb2xsaXNpb24qCkFTU1VNUFRJT04qCkFTU1VNUFRJT04qCkFTU1VNUFRJT04qBmJheSDOsTIJAAABAQEAAQEBOkglsaTcfW4qQGQGKuPfPFDA27+y0qTnVEC4dMx5xkhSwDUIc7uX8lLAOBCSBUyaWMCiREseT51JQE8Cm3PwTCjA1sdD391KEUBCSGRbBpylekRAH2rbMAoMU8B6OIHptIY/wDvkZrgBiVdAq15+p8mxU0BDcceb/I1WQCbGMv0SJVDAcnDpmPOCWMBDIJc48mpHQEmQ2O4eoDMvQFISbm9fdmFsaWRfY2FuZGlkYXRl"
+  }
+ ]
+}

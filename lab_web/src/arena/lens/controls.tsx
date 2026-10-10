@@ -1,0 +1,141 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+/**
+ * Lens controls (M2.3+): each control sends a `config` input to the model
+ * (coco_lab.arena: `key=value`), so every setting is in the run's input
+ * log -- a shared link replays it, and the per-tick hashes see it. The
+ * page never changes a filter itself.
+ */
+
+import { useState } from 'react';
+
+export type Send = (choice: string) => void;
+/** Settings the page was opened with (a Learn beat's cfg lines, M2.8): key -> value. The controls start there. */
+export type Initial = Record<string, string>;
+const str = (i: Initial | undefined, k: string, d: string) => i?.[k] ?? d;
+const num = (i: Initial | undefined, k: string, d: number) => (i?.[k] !== undefined && Number.isFinite(Number(i[k])) ? Number(i[k]) : d);
+
+export function LocaliseControls({ send, live, initial }: { send: Send; live: boolean; initial?: Initial }) {
+  const [filter, setFilter] = useState(str(initial, 'localise.filter', 'both'));
+  const [particles, setParticles] = useState(num(initial, 'localise.mcl.particles', 300));
+  const [injection, setInjection] = useState(str(initial, 'localise.mcl.injection', 'none'));
+  const [motion, setMotion] = useState(0.02);
+  const [sensor, setSensor] = useState(num(initial, 'arena.range_sigma', 0.02));
+  const [slip, setSlip] = useState(str(initial, 'arena.slip', 'off') === 'on');
+  if (!live) return <p className="lens-empty">The Localise lens runs on the live model: click the map to take over.</p>;
+  return (
+    <div className="lens-controls" data-testid="localise-controls" role="group" aria-label="Localisation settings">
+      <label>filter <select value={filter} data-testid="loc-filter"
+        onChange={(e) => { setFilter(e.target.value); send(`localise.filter=${e.target.value}`); }}>
+        <option value="both">MCL and EKF</option><option value="mcl">MCL</option><option value="ekf">EKF</option><option value="off">off</option>
+      </select></label>
+      <label>particles <input type="number" min={10} max={2000} step={10} value={particles} data-testid="loc-particles"
+        onChange={(e) => setParticles(Number(e.target.value))}
+        onBlur={() => send(`localise.mcl.particles=${Math.max(10, Math.min(2000, Math.round(particles)))}`)} /></label>
+      <label title="random particles put back in when the measurements fit worse than they used to (augmented MCL)">injection <select value={injection} data-testid="loc-injection"
+        onChange={(e) => { setInjection(e.target.value); send(`localise.mcl.injection=${e.target.value}`); }}>
+        <option value="none">none (COCO's AMCL)</option><option value="augmented">augmented</option><option value="fixed">fixed 5 %</option>
+      </select></label>
+      <label title="the odometry motion model's alpha1..alpha4, for the world and for both filters">motion noise
+        <input type="range" min={0} max={0.2} step={0.01} value={motion} data-testid="loc-motion"
+          onChange={(e) => setMotion(Number(e.target.value))}
+          onPointerUp={() => { const a = [motion, motion, motion, motion].join(','); send(`arena.odom_alphas=${a}`); send(`localise.mcl.alphas=${a}`); send(`localise.ekf.alphas=${a}`); }} />
+        {motion.toFixed(2)}</label>
+      <label title="the LiDAR's Gaussian range noise (m)">sensor noise
+        <input type="range" min={0} max={0.1} step={0.005} value={sensor} data-testid="loc-sensor"
+          onChange={(e) => setSensor(Number(e.target.value))}
+          onPointerUp={() => send(`arena.range_sigma=${sensor}`)} />{sensor.toFixed(3)} m</label>
+      <label className="layer-toggle" title="MODEL OPTION: in turns the body rotates 0.775 of what the wheels report (Lab 2 measured COCO's wheel odometry at 72.5 rad of yaw against the truth's 56.2 on the recorded tour). Off by default.">
+        <input type="checkbox" checked={slip} data-testid="loc-slip"
+          onChange={(e) => { setSlip(e.target.checked); send(`arena.slip=${e.target.checked ? 'on' : 'off'}`); }} />wheel slip (model option)</label>
+      <span className="lens-hint">Drag the robot to kidnap it: the filters are not told.</span>
+    </div>
+  );
+}
+
+export function MapControls({ send, live, initial }: { send: Send; live: boolean; initial?: Initial }) {
+  const [algorithm, setAlgorithm] = useState(str(initial, 'map.algorithm', 'occupancy'));
+  const [poses, setPoses] = useState(str(initial, 'map.poses', 'truth'));
+  const [particles, setParticles] = useState(num(initial, 'map.fastslam.particles', 20));
+  const [loops, setLoops] = useState(str(initial, 'map.pose_graph.loop_closure', 'on') !== 'off');
+  if (!live) return <p className="lens-empty">The Map lens runs on the live model: click the map to take over.</p>;
+  return (
+    <div className="lens-controls" data-testid="map-controls" role="group" aria-label="Mapping settings">
+      <label>algorithm <select value={algorithm} data-testid="map-algorithm"
+        onChange={(e) => { setAlgorithm(e.target.value); send(`map.algorithm=${e.target.value}`); }}>
+        <option value="occupancy">occupancy grid (poses given)</option>
+        <option value="ekf_slam">EKF-SLAM (IDEALISED landmark sensor)</option>
+        <option value="fastslam">FastSLAM</option>
+        <option value="pose_graph">pose graph</option>
+        <option value="off">off</option>
+      </select></label>
+      {algorithm === 'occupancy' && <label title="whose poses the grid is built from">poses <select value={poses} data-testid="map-poses"
+        onChange={(e) => { setPoses(e.target.value); send(`map.poses=${e.target.value}`); }}>
+        <option value="truth">true (known poses)</option><option value="odometry">dead reckoning</option><option value="belief">the robot's belief</option>
+      </select></label>}
+      {algorithm === 'fastslam' && <label>particles <input type="number" min={1} max={200} value={particles} data-testid="map-particles"
+        onChange={(e) => setParticles(Number(e.target.value))}
+        onBlur={() => send(`map.fastslam.particles=${Math.max(1, Math.min(200, Math.round(particles)))}`)} /></label>}
+      {algorithm === 'pose_graph' && <label className="layer-toggle"><input type="checkbox" checked={loops} data-testid="map-loops"
+        onChange={(e) => { setLoops(e.target.checked); send(`map.pose_graph.loop_closure=${e.target.checked ? 'on' : 'off'}`); }} />loop closure</label>}
+      {algorithm === 'ekf_slam' && <span className="lens-hint">The landmark sensor is IDEALISED: obstacle corners with known identities. COCO has none.</span>}
+      <span className="lens-hint">Changing a setting starts the map again. Drive somewhere: the map is built as COCO moves.</span>
+    </div>
+  );
+}
+
+const SCENARIO_TITLES: [string, string][] = [
+  ['none', 'your own goals'],
+  ['static_room', 'Lab 5: the hairpin (round a wall end, into a room)'],
+  ['crossing', 'Lab 5: a person crosses the path'],
+  ['oncoming', 'Lab 5: a person walks head-on down the path'],
+  ['mislocalised', 'Lab 5: run 15 — believes it is 3.4 m away'],
+];
+
+export function MoveControls({ send, live, initial }: { send: Send; live: boolean; initial?: Initial }) {
+  const [controller, setController] = useState(str(initial, 'move.controller', 'dwa'));
+  const [scenario, setScenario] = useState(str(initial, 'move.scenario', 'none'));
+  if (!live) return <p className="lens-empty">The Move lens runs on the live model: click the map to take over.</p>;
+  return (
+    <div className="lens-controls" data-testid="move-controls" role="group" aria-label="Local control settings">
+      <label>controller <select value={controller} data-testid="move-controller"
+        onChange={(e) => { setController(e.target.value); send(`move.controller=${e.target.value}`); }}>
+        <option value="dwa">DWA (after DWB)</option><option value="rpp">regulated pure pursuit</option>
+        <option value="mppi">MPPI</option><option value="builtin">M1's waypoint driver</option>
+      </select></label>
+      <label>scenario <select value={scenario} data-testid="move-scenario"
+        onChange={(e) => { setScenario(e.target.value); send(`move.scenario=${e.target.value}`); }}>
+        {SCENARIO_TITLES.map(([id, t]) => <option key={id} value={id}>{t}</option>)}
+      </select></label>
+      <span className="lens-hint">MODEL controllers, written after Lab 5's. Here the actors are solid; in Lab 5's Gazebo runs they had no collision body.</span>
+    </div>
+  );
+}
+
+export function DecideControls({ send, live, initial }: { send: Send; live: boolean; initial?: Initial }) {
+  const [colour, setColour] = useState(str(initial, 'mission.start', 'red'));
+  const [truth, setTruth] = useState(str(initial, 'mission.truth', 'layout'));
+  const [detect, setDetect] = useState(num(initial, 'mission.detect', 0.9));
+  if (!live) return <p className="lens-empty">The Decide lens runs on the live model: click the map to take over.</p>;
+  return (
+    <div className="lens-controls" data-testid="decide-controls" role="group" aria-label="Fetch mission settings">
+      <label>fetch <select value={colour} data-testid="decide-colour" onChange={(e) => setColour(e.target.value)}>
+        {['red', 'green', 'blue', 'yellow'].map((c) => <option key={c} value={c}>{c}</option>)}
+      </select></label>
+      <label title="where the target really stands; the robot is never told">target really in <select value={truth} data-testid="decide-truth"
+        onChange={(e) => { setTruth(e.target.value); if (e.target.value !== 'layout') send(`mission.truth=${e.target.value}`); }}>
+        <option value="layout">its colour's bay (the layout)</option>
+        {['bay_1', 'bay_2', 'bay_3', 'bay_4'].map((b) => <option key={b} value={b}>{b.replace('_', ' ')}</option>)}
+      </select></label>
+      <label title="how often the camera REALLY finds a target in view; the robot always assumes 0.9 (an ASSUMPTION)">camera finds it
+        <input type="range" min={0.3} max={1} step={0.05} value={detect} data-testid="decide-detect"
+          onChange={(e) => setDetect(Number(e.target.value))} onPointerUp={() => send(`mission.detect=${detect}`)} />{detect.toFixed(2)}</label>
+      <button type="button" data-testid="decide-start" onClick={() => send(`mission.start=${colour}`)}>Start the fetch</button>
+      <button type="button" data-testid="decide-mcl" onClick={() => { send('arena.range_sigma=0.02'); send('localise.filter=mcl'); }}>localise with MCL</button>
+      <button type="button" data-testid="decide-mislocalise" title="the robot believes it is 4 m south of where it is (no localiser)"
+        onClick={() => send('move.belief_offset=0.0,-4.0,0.0')}>believe 4 m south</button>
+      <button type="button" data-testid="decide-abort" onClick={() => send('mission.abort=1')}>abort</button>
+    </div>
+  );
+}

@@ -16,21 +16,35 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { AttractPlayer, parseRecording, type Recording } from './attract';
+import { ATTRACT_POLICIES, AttractPlayer, DEFAULT_ATTRACT_POLICY, parseRecording, type AttractPolicy, type Recording } from './attract';
 import { ArenaClient, type PyodideSource } from './client';
 import { Compare, type CompareState } from './Compare';
 import { Joystick } from './Joystick';
 import { PerfOverlay } from './PerfOverlay';
 import { perf } from './perf';
 import { wallMs, type InputRow, type PlanInfo, type Tick, type World } from './protocol';
-import { currentTheme } from './render/palette';
+import { currentTheme, PALETTES } from './render/palette';
 import { PlanStore, type CellInfo } from './render/planStore';
 import { parseConverted, type ConvertedRun } from './replay';
 import { ArenaRenderer, DEFAULT_LAYERS, type LayerVisibility } from './render/Renderer';
 import { ArenaSession } from './session';
 import { decodeRun, shareUrl, type SharedRun } from './share';
 import { Timeline } from './Timeline';
+import { caption } from './lens/captions';
+import { drawLenses, HOVERS } from './lens/draw';
+import { EventLog, LensBar, LensCharts, LensInspector } from './lens/panels';
+import { DecideControls, LocaliseControls, MapControls, MoveControls } from './lens/controls';
+import { MissionPanel } from './lens/mission';
+import './lens/decide';
+import './lens/localise';
+import './lens/map';
+import './lens/move';
+import { defaultLayers, LENS_BY_ID, LENSES, LEVELS, packForConfig, type LensId, type Level } from './lens/registry';
+import { LensLayers } from './render/lensLayers';
 import { sha256Hex } from '../bundle/sha256';
+import { GapChips, useGaps } from '../learn/gaps';
+import { cfgFromParams, missionBackLink } from '../learn/links';
+import { startLensStress } from './stress';
 
 declare global {
   interface Window {
@@ -38,7 +52,7 @@ declare global {
     __cocoArena?: {
       client: ArenaClient | null; queue: Omit<InputRow, 'tick'>[]; last: Tick | null;
       renderer: ArenaRenderer | null; session: () => ArenaSession | null; goal: (x: number, y: number) => void;
-      mode: () => string; log: () => InputRow[];
+      mode: () => string; log: () => InputRow[]; layerIds: () => string[];
     };
   }
 }
@@ -55,7 +69,15 @@ export function ArenaApp() {
   const source: PyodideSource = params.get('pyodide') === 'cdn' ? 'cdn' : 'self';
   const runParam = params.get('run');
   const replayParam = params.get('replay');
+  const attractPolicy: AttractPolicy = ATTRACT_POLICIES.includes(params.get('attract') as AttractPolicy)
+    ? params.get('attract') as AttractPolicy : DEFAULT_ATTRACT_POLICY;
   const recId = replayParam && /^[a-z0-9_]{1,64}$/.test(replayParam) ? replayParam : null;
+  // a Learn mission's beat (M2.8): its settings, sent once the live model is up, in place of the lens's defaults
+  const cfgLines = cfgFromParams(params);
+  const allLayers = params.get('layers') === 'all';
+  const missionBack = missionBackLink(params);
+  const gaps = useGaps(import.meta.env.BASE_URL);
+  const cfgInitial = Object.fromEntries(cfgLines.map((c) => [c.slice(0, c.indexOf('=')), c.slice(c.indexOf('=') + 1)]));
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const [world, setWorld] = useState<World | null>(null);
   const [liveReady, setLiveReady] = useState(false);
@@ -65,6 +87,19 @@ export function ArenaApp() {
   const [inspect, setInspect] = useState(false);
   const [picked, setPicked] = useState<CellInfo | null>(null);
   const [layers, setLayers] = useState<LayerVisibility>(DEFAULT_LAYERS);
+  // M2.2 lenses: which one, how much detail, Focus, and the lens layers' toggles
+  const [lens, setLens] = useState<LensId>(LENSES.some((l) => l.id === params.get('lens')) ? params.get('lens') as LensId : 'plan');
+  // a recorded run opens at Explain: its search (closed set included) is what it is there to show
+  const [level, setLevel] = useState<Level>(LEVELS.includes(params.get('level') as Level) ? params.get('level') as Level
+    : replayParam ? 'explain' : 'watch');
+  const [focus, setFocus] = useState(params.has('focus'));
+  const [lensOn, setLensOn] = useState<Record<string, boolean>>({});
+  const [packs, setPacks] = useState<Set<string>>(new Set(['core']));
+  const [hover, setHover] = useState<{ text: string; x: number; y: number } | null>(null);
+  const levelRef = useRef<Level>(level);
+  levelRef.current = level;
+  const lensRef = useRef<LensId>(lens);
+  lensRef.current = lens;
   const [planner, setPlanner] = useState('astar');
   const [cmpPick, setCmpPick] = useState(false);
   const [cmpA, setCmpA] = useState('astar');
@@ -78,6 +113,9 @@ export function ArenaApp() {
   const [, setFrame] = useState(0);
 
   const r = useRef<ArenaRenderer | null>(null);
+  const ll = useRef<LensLayers | null>(null);
+  const lensOnRef = useRef<Record<string, boolean>>({});
+  lensOnRef.current = lensOn;
   const client = useRef<ArenaClient | null>(null);
   const modeRef = useRef<Mode>(mode);
   const live = useRef<ArenaSession | null>(null);
@@ -87,6 +125,8 @@ export function ArenaApp() {
   const occupancy = useRef<Uint8Array | null>(null);
   const outline = useRef<[number, number][]>([[0.12, 0], [-0.12, 0.137], [-0.12, -0.137]]);
   const lastTick = useRef<Tick | null>(null);
+  const worldRef = useRef<World | null>(null);
+  worldRef.current = world;
   const specSha = useRef<string>('');
   const pendingTakeover = useRef(false);
   const inspectRef = useRef(false);
@@ -109,6 +149,25 @@ export function ArenaApp() {
     return true;
   }, [setMode]);
 
+  /** A whole-loop setting: a config input, so it is in the run's log (M2.3). */
+  // a config for a pack not loaded yet waits for it: the model refuses a subsystem it has not got (M2.6)
+  const readyPacks = useRef<Set<string>>(new Set(['core']));
+  const waitingConfigs = useRef<string[]>([]);
+  const sendConfig = useCallback((choice: string) => {
+    takeOver();
+    const pack = packForConfig(choice);
+    if (!readyPacks.current.has(pack)) {
+      waitingConfigs.current.push(choice);
+      client.current?.loadPack(pack);
+      return;
+    }
+    queue.current.push({ kind: 'config', choice });
+  }, [takeOver]);
+  const locOn = useRef(cfgLines.length > 0);
+  const mapOn = useRef(cfgLines.length > 0);
+  const moveOn = useRef(cfgLines.length > 0);
+  const cfgSent = useRef(false);
+
   const goal = useCallback((x: number, y: number) => {
     takeOver();
     perf.goalSent(wallMs(), live.current?.shownSearch?.searchId ?? null);
@@ -123,6 +182,7 @@ export function ArenaApp() {
     let rr: ArenaRenderer | null = null;
     try {
       rr = new ArenaRenderer(cv, currentTheme());
+      ll.current = new LensLayers(rr.scene, PALETTES[currentTheme()]);
     } catch (e) {
       setError(`renderer: ${(e as Error).message}`);
     }
@@ -134,6 +194,8 @@ export function ArenaApp() {
     let shown: ArenaSession | null = null;
     let shownStore: PlanStore | null = null;
     let shownTick = -1;
+    let drawnVersion = -1;
+    let drawnTick = -1;
     let firstFrame = true;
     let firstComputation = true;
     const replayRun = runParam ? (() => { try { return decodeRun(runParam); } catch (e) { setError(`share link: ${(e as Error).message}`); return null; } })() : null;
@@ -152,10 +214,13 @@ export function ArenaApp() {
       if (!c?.world || inFlight) return;
       if (modeRef.current === 'replay' && replayRun) {
         if (c.tick >= replayRun.ticks) return;
+        const need = [...new Set(replayRun.inputs.filter((x) => x.kind === 'config').map((x) => packForConfig(x.choice ?? '')))];
+        const missing = need.filter((p) => !c.packs.has(p));
+        if (missing.length) { missing.forEach((p) => c.loadPack(p)); return; }
         queue.current.push(...replayRun.inputs.filter((x) => x.tick === c.tick));
       }
       inFlight = true;
-      log.current.push(...c.step(queue.current.splice(0)));
+      c.step(queue.current.splice(0)); // the log is what the model reports it applied (onTick)
     };
 
     const outlineP = fetch(`${import.meta.env.BASE_URL}generated/arena/robot_outline.json`, { credentials: 'omit' })
@@ -179,12 +244,18 @@ export function ArenaApp() {
           setSession(s);
           setConverted(rec);
           setLayers((l) => ({ ...l, lidar: false, footprint: false, ...(rec.evidence === 'MODEL' ? { robot: false, truth: false } : {}) }));
+          // a converted Lab 5 drive (M2.7) is shown through the Move lens: Nav2's own candidates
+          if (rec.headers?.some((h) => h.channel === 'coco.control.local.header.v1')) setLens('move');
         })
         .catch((e) => setError(`recorded run: ${(e as Error).message}`));
     }
-    // attract: the recording, at once (not in a replay)
+    // attract: the recording (not in a replay), started as the policy says (M2.0, measured)
     if (!runParam && !recId) {
-      void fetch(`${import.meta.env.BASE_URL}generated/arena/attract.mcap`, { credentials: 'omit' })
+      const startAttract = attractPolicy === 'after_live' ? perf.when('arena_ready')
+        : attractPolicy === 'after_pyodide' ? perf.when('pyodide_ready') : Promise.resolve(0);
+      void startAttract
+        .then(() => fetch(`${import.meta.env.BASE_URL}generated/arena/attract.mcap`,
+          { credentials: 'omit', priority: attractPolicy === 'low' ? 'low' : 'auto' }))
         .then((x) => x.arrayBuffer()).then((b) => parseRecording(new Uint8Array(b)))
         .then(async (rec) => {
           await outlineP;
@@ -217,6 +288,8 @@ export function ArenaApp() {
           owed = Math.min(4, owed + live.current.frame(dt));
           if (queue.current.length) owed = Math.max(owed, 1); // an input is applied at once
           if (owed > 0 && !inFlight) { owed -= 1; stepLive(); }
+          // M2.0: an input made while a step is planning joins that step (its search is cancelled), not the next one
+          else if (inFlight && queue.current.length && modeRef.current !== 'replay') client.current?.amend(queue.current.splice(0));
         }
         const s = active();
         if (!s) return;
@@ -224,6 +297,11 @@ export function ArenaApp() {
         const st = s.shownSearch;
         if (st !== shownStore) { shownStore = st; rr!.setPlan(st); }
         const t = s.shownTick;
+        if (ll.current && worldRef.current && (s.families.version !== drawnVersion || (t?.tick ?? 0) !== drawnTick)) {
+          drawnVersion = s.families.version; drawnTick = t?.tick ?? 0;
+          drawLenses({ layers: ll.current, session: s, tick: drawnTick, world: worldRef.current,
+            on: (id) => lensOnRef.current[id] ?? false });
+        }
         if (t && t.tick !== shownTick) {
           shownTick = t.tick;
           rr!.setPose(t.pose, t.truth ?? t.pose);
@@ -260,6 +338,14 @@ export function ArenaApp() {
         }
       },
       onPlanBatch: (meta, cols) => live.current?.onPlanBatch(meta, cols),
+      onFamily: (m) => live.current?.onFamily(m),
+      onPackReady: (pack) => {
+        readyPacks.current.add(pack);
+        const go = waitingConfigs.current.filter((c) => readyPacks.current.has(packForConfig(c)));
+        waitingConfigs.current = waitingConfigs.current.filter((c) => !readyPacks.current.has(packForConfig(c)));
+        for (const choice of go) queue.current.push({ kind: 'config', choice });
+        setPacks((p) => new Set([...p, pack]));
+      },
       onCompareBatch: (meta, cols) => {
         setCompare((c) => {
           if (!c) return c;
@@ -273,6 +359,7 @@ export function ArenaApp() {
       onCompareDone: (result) => setCompare((c) => (c ? { ...c, result } : c)),
       onTick: (t, ranges) => {
         inFlight = false;
+        if (t.inputs) log.current.push(...t.inputs);
         lastTick.current = t;
         live.current?.onTick(t, ranges);
         if (window.__cocoArena) window.__cocoArena.last = t;
@@ -288,20 +375,53 @@ export function ArenaApp() {
             : `DIFFERS: the hash chain after tick ${t.tick} is not the link's` });
         }
       },
-      onError: (stage, message) => { inFlight = false; setError(`${stage}: ${message}`); },
+      // a refused amendment leaves its step running; any other failure ends the step
+      onError: (stage, message) => { if (stage !== 'amend') inFlight = false; setError(`${stage}: ${message}`); },
     }, { pyodide: source, seed: replayRun?.seed ?? Number(params.get('seed') ?? 1) });
 
     window.__cocoArena = {
       client: client.current, queue: queue.current, last: null, renderer: rr, session: active, goal,
-      mode: () => modeRef.current, log: () => log.current,
+      mode: () => modeRef.current, log: () => log.current, layerIds: () => ll.current?.ids() ?? [],
     };
-    void client.current?.whenReady().then(() => { if (params.has('stress')) rr?.addStress(50_000, 20_000); }, () => {});
+    // ?stress: M1's renderer load; ?stress=m2: M2's lens load, rebuilt at 10 Hz (stress.ts)
+    let stopStress: (() => void) | null = null;
+    void client.current?.whenReady().then(() => {
+      if (params.get('stress') === 'm2') {
+        const wait = setInterval(() => {
+          if (!ll.current || !worldRef.current) return;
+          clearInterval(wait);
+          stopStress = startLensStress(ll.current, worldRef.current);
+        }, 100);
+      } else if (params.has('stress')) rr?.addStress(50_000, 20_000);
+    }, () => {});
     const ui = setInterval(() => setFrame((n) => n + 1), 200);
 
     // a click (not a drag): a goal, a compare goal, or an inspected cell
     let down: [number, number] | null = null;
-    const onDown = (e: PointerEvent) => { down = [e.clientX, e.clientY]; };
+    let kidnapping = false;
+    const onDown = (e: PointerEvent) => {
+      down = [e.clientX, e.clientY];
+      // Localise lens: grabbing the robot (its TRUE pose) starts a kidnap
+      const t = lastTick.current;
+      kidnapping = false;
+      if (lensRef.current === 'localise' && modeRef.current === 'live' && t && rr) {
+        const truth = t.truth ?? t.pose;
+        const [x, y] = rr.toWorld(e.clientX, e.clientY);
+        if (Math.hypot(x - truth[0], y - truth[1]) < 0.35) { kidnapping = true; rr.panSuspended = true; }
+      }
+    };
     const onUp = (e: PointerEvent) => {
+      if (rr) rr.panSuspended = false;
+      if (kidnapping && rr && down && Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) {
+        kidnapping = false;
+        down = null;
+        const [x, y] = rr.toWorld(e.clientX, e.clientY);
+        const t = lastTick.current;
+        const th = (t?.truth ?? t?.pose ?? [0, 0, 0])[2];
+        queue.current.push({ kind: 'kidnap', x, y, theta: th, has_theta: true });
+        return;
+      }
+      kidnapping = false;
       if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6 || !rr || !worldSet) return;
       down = null;
       const [x, y] = rr.toWorld(e.clientX, e.clientY);
@@ -324,6 +444,29 @@ export function ArenaApp() {
     };
     cv.addEventListener('pointerdown', onDown);
     cv.addEventListener('pointerup', onUp);
+    // Explain and Inspect: a value label under the mouse (M2.2), read from what the model emitted
+    const onMove = (e: PointerEvent) => {
+      if (levelRef.current === 'watch' || e.pointerType !== 'mouse' || !rr || !worldSet) { setHover(null); return; }
+      const [x, y] = rr.toWorld(e.clientX, e.clientY);
+      const s = active();
+      let text: string | null = null;
+      if (lensRef.current === 'plan') {
+        const cell = rr.cellAt(x, y);
+        const info = cell && s?.shownSearch ? s.shownSearch.info(cell[0], cell[1]) : null;
+        if (info && info.state !== 'none') {
+          text = `${info.state}${info.expansion !== null ? ` · expanded #${info.expansion}` : ''}`
+            + (info.g !== null ? ` · g ${info.g.toFixed(2)} h ${(info.h ?? 0).toFixed(2)} f ${(info.f ?? 0).toFixed(2)}` : '');
+        }
+      } else if (s && worldRef.current && ll.current) {
+        text = HOVERS[lensRef.current]?.({ layers: ll.current, session: s, tick: s.shownTick?.tick ?? 0, world: worldRef.current,
+          on: (id) => lensOnRef.current[id] ?? false }, x, y) ?? null;
+      }
+      const b = cv.getBoundingClientRect();
+      setHover(text ? { text, x: e.clientX - b.left + 12, y: e.clientY - b.top + 12 } : null);
+    };
+    const onLeave = () => setHover(null);
+    cv.addEventListener('pointermove', onMove);
+    cv.addEventListener('pointerleave', onLeave);
 
     // keyboard teleop: WASD / arrows, space = STOP
     const held = new Set<string>();
@@ -348,8 +491,11 @@ export function ArenaApp() {
     window.addEventListener('keyup', keyup);
     return () => {
       clearInterval(ui);
+      stopStress?.();
       cv.removeEventListener('pointerdown', onDown);
       cv.removeEventListener('pointerup', onUp);
+      cv.removeEventListener('pointermove', onMove);
+      cv.removeEventListener('pointerleave', onLeave);
       window.removeEventListener('keydown', keydown);
       window.removeEventListener('keyup', keyup);
       client.current?.close();
@@ -360,6 +506,53 @@ export function ArenaApp() {
   }, []);
 
   useEffect(() => { r.current?.setLayers(layers); }, [layers]);
+  // a lens and a level choose the default layers (Watch: at most two computation layers)
+  useEffect(() => {
+    const plan = new Set(defaultLayers(LENS_BY_ID.plan, lens === 'plan' ? level : 'watch'));
+    setLayers((l) => ({ ...l, frontier: lens === 'plan' && plan.has('frontier'), path: plan.has('path'),
+      closed: lens === 'plan' && plan.has('closed'), heatmap: lens === 'plan' && plan.has('heatmap') }));
+    const on: Record<string, boolean> = {};
+    for (const L of LENSES) if (L.id !== 'plan') for (const x of L.layers) on[x.id] = false;
+    if (lens !== 'plan') for (const id of defaultLayers(LENS_BY_ID[lens], level)) on[id] = true;
+    // ?layers=all (the M2 laptop budget): every lens's default layers at once
+    if (allLayers) for (const L of LENSES) if (L.id !== 'plan') for (const id of defaultLayers(L, level)) on[id] = true;
+    setLensOn(on);
+    client.current?.loadPack(LENS_BY_ID[lens].pack);
+  }, [lens, level]);
+  useEffect(() => {
+    for (const [id, v] of Object.entries(lensOn)) ll.current?.setVisible(id, v);
+  }, [lensOn]);
+  // the Localise lens switches localisation on, once its pack is loaded and the live model drives (M2.3)
+  useEffect(() => {
+    if (lens !== 'localise' || locOn.current || !packs.has('localise') || mode === 'replay' || mode === 'recording') return;
+    locOn.current = true;
+    sendConfig('arena.range_sigma=0.02');
+    sendConfig('localise.filter=both');
+  }, [lens, packs, mode, sendConfig]);
+  // the Map lens starts an occupancy grid from known poses (Lab 3's first lesson), once (M2.4)
+  useEffect(() => {
+    if (lens !== 'map' || mapOn.current || !packs.has('map') || mode === 'replay' || mode === 'recording') return;
+    mapOn.current = true;
+    sendConfig('arena.range_sigma=0.02');
+    sendConfig('map.algorithm=occupancy');
+  }, [lens, packs, mode, sendConfig]);
+  // the Move lens hands the wheels to the DWA sampler, once (M2.5)
+  useEffect(() => {
+    if (lens !== 'move' || moveOn.current || !packs.has('move') || mode === 'replay' || mode === 'recording') return;
+    moveOn.current = true;
+    sendConfig('move.controller=dwa');
+  }, [lens, packs, mode, sendConfig]);
+  // a mission's settings: once, when the live model is ready (sendConfig waits for each pack)
+  useEffect(() => {
+    if (!cfgLines.length || cfgSent.current || !liveReady || mode === 'replay' || mode === 'recording') return;
+    cfgSent.current = true;
+    for (const c of cfgLines) sendConfig(c);
+  }, [liveReady, mode, sendConfig]); // eslint-disable-line react-hooks/exhaustive-deps -- cfgLines is the URL's, fixed
+  // Focus: everything outside the lens dims (the robot and truth never do)
+  useEffect(() => {
+    r.current?.setFocusDim(!focus || lens === 'plan' ? 1 : 0.25, focus ? 0.5 : 1);
+    for (const L of LENSES) for (const x of L.layers) ll.current?.setDim(x.id, !focus || L.id === lens ? 1 : 0.25);
+  }, [focus, lens]);
 
   const toggle = (k: keyof LayerVisibility) => setLayers((l) => ({ ...l, [k]: !l[k] }));
   const choosePlanner = (p: string) => { setPlanner(p); takeOver(); queue.current.push({ kind: 'planner', choice: p }); };
@@ -397,8 +590,11 @@ export function ArenaApp() {
         <span className={`evidence-badge ${evidence.toLowerCase()}`} data-testid="evidence-badge"
           title={evidence === 'STACK' ? 'Recorded from the full ROS 2 stack in Gazebo (simulation), not a robot'
             : 'A model in your browser: coco_lab, not the robot'}>{evidence}</span>
-        <a href={`${import.meta.env.BASE_URL}?view=plan`} data-testid="v1-labs-link">v1 labs</a>
+        <a href={`${import.meta.env.BASE_URL}?view=learn`} data-testid="learn-link">Learn</a>
+        <a href={`${import.meta.env.BASE_URL}v1/`} data-testid="v1-labs-link">v1 labs (archive)</a>
       </header>
+      {missionBack && <p className="mission-back"><a href={`${import.meta.env.BASE_URL}${missionBack}`} data-testid="mission-back">
+        ← Back to the mission</a></p>}
       {error && <p className="error" role="alert">{error}</p>}
       <p className={`arena-banner ${mode}`} data-testid="arena-mode" data-mode={mode}>
         {mode === 'attract' && (liveReady
@@ -410,10 +606,25 @@ export function ArenaApp() {
           ? `Recorded run (STACK): COCO driven by the full ROS 2 stack in Gazebo — ${converted.title}. The solid robot is where the stack believed it was (AMCL); the outline is ground truth.`
           : `Glass-box trace (MODEL): ${converted.title}, computed by coco_lab. No world, no robot: the search alone.`)}
       </p>
+      <LensBar lens={lens} level={level} focus={focus}
+        available={new Set(LENSES.filter((l) => l.id === 'plan' || packs.has(l.pack) || (converted?.headers ?? []).some((h) => l.families.some((f) => h.channel.includes(f)))).map((l) => l.id))}
+        onLens={setLens} onLevel={setLevel} onFocus={setFocus} />
+      {/* M2.9: the measured gaps between this lens's model and the Stack */}
+      <GapChips ids={LENS_BY_ID[lens].gaps} gaps={gaps} />
+      {lens === 'localise' && <LocaliseControls send={sendConfig} live={mode === 'live'} initial={cfgInitial} />}
+      {lens === 'map' && <MapControls send={sendConfig} live={mode === 'live'} initial={cfgInitial} />}
+      {lens === 'move' && (converted?.headers?.some((h) => h.channel === 'coco.control.local.header.v1')
+        ? <p className="lens-hint" data-testid="move-recorded">Recorded (STACK): Nav2's own candidates as it logged them and the trajectory it chose each cycle — nothing here is computed by the model.</p>
+        : <MoveControls send={sendConfig} live={mode === 'live'} initial={cfgInitial} />)}
+      {lens === 'decide' && <DecideControls send={sendConfig} live={mode === 'live'} initial={cfgInitial} />}
+      {lens === 'decide' && session && <MissionPanel session={session} tick={tick?.tick ?? 0} />}
+      {level !== 'watch' && session && (() => { const c = caption(lens, session.families, tick?.tick ?? 0);
+        return c ? <p className="lens-caption" data-testid="lens-caption" role="status">{c}</p> : null; })()}
       <div className="arena-stage">
         <canvas ref={canvas} className="arena-canvas" data-testid="arena-canvas"
           aria-label="The arena: click or tap to give COCO a goal" />
         {!world && <p className="arena-loading" data-testid="arena-status">Loading…</p>}
+        {hover && <span className="hover-label" data-testid="hover-label" style={{ left: hover.x, top: hover.y }}>{hover.text}</span>}
       </div>
       {compare && world && occupancy.current && (
         <Compare state={compare} world={world} occupancy={occupancy.current} outline={outline.current} onClose={() => setCompare(null)} />
@@ -426,7 +637,12 @@ export function ArenaApp() {
           <button type="button" className="seg-btn" onClick={() => setRunCard(null)}>OK</button>
         </section>
       )}
-      {converted?.evidence === 'STACK' && stats && (
+      {converted?.card && (
+        <section className="run-card" data-testid="stack-results" aria-label="Measured in this recorded run">
+          <b>Measured in this run</b> (STACK, docs/labs/LAB5_MOVE.md): <span>{converted.card}</span>
+        </section>
+      )}
+      {converted?.evidence === 'STACK' && stats && !converted.card && (
         <section className="run-card" data-testid="stack-results" aria-label="Measured in this recorded run">
           <b>Measured in this run</b> (Phase 1C, docs/RESULTS.md):
           <span> {stats.result?.phase ?? '—'} after {typeof stats.duration_sim_s === 'number' ? stats.duration_sim_s.toFixed(1) : '—'} s sim time ·
@@ -467,6 +683,14 @@ export function ArenaApp() {
         <div className="arena-row">
           {showLive && <Joystick onChange={onJoystick} />}
           <div className="layers-and-share">
+            {lens !== 'plan' && (
+              <div className="arena-row" role="group" aria-label={`${LENS_BY_ID[lens].title} layers`}>
+                {LENS_BY_ID[lens].layers.map((x) => (
+                  <label key={x.id} className="layer-toggle" title={x.meaning}><input type="checkbox" checked={lensOn[x.id] ?? false}
+                    onChange={() => setLensOn((o) => ({ ...o, [x.id]: !o[x.id] }))} data-testid={`lens-layer-${x.id}`} data-role={x.role} />{x.label}</label>
+                ))}
+              </div>
+            )}
             <div className="arena-row" role="group" aria-label="Layers">
               {(Object.keys(layers) as (keyof LayerVisibility)[]).map((k) => (
                 <label key={k} className="layer-toggle"><input type="checkbox" checked={layers[k]} onChange={() => toggle(k)}
@@ -482,8 +706,8 @@ export function ArenaApp() {
           </div>
         </div>
         {runs.length > 0 && (
-          <nav className="arena-row recorded-runs" aria-label="Lab 1 runs in this viewer" data-testid="recorded-runs">
-            <span>Lab 1 runs in this viewer:</span>
+          <nav className="arena-row recorded-runs" aria-label="Recorded and computed runs in this viewer" data-testid="recorded-runs">
+            <span>Runs in this viewer:</span>
             {runs.map((x) => (
               <a key={x.id} href={`${import.meta.env.BASE_URL}?view=arena&replay=${x.id}`} data-testid={`replay-${x.id}`}
                 aria-current={x.id === recId ? 'page' : undefined}>{x.evidence === 'STACK' ? `${x.title} · STACK` : x.title}</a>
@@ -505,6 +729,13 @@ export function ArenaApp() {
             <dt>parent</dt><dd>{picked.parent ? `(${picked.parent[0]}, ${picked.parent[1]})` : '—'}</dd>
             <dt>latest event</dt><dd>{picked.event != null ? `#${picked.event} ${picked.kind}` : '—'}</dd>
           </dl>
+        )}
+        {level === 'inspect' && session && (
+          <section className="lens-inspect" data-testid="lens-inspect" aria-label={`${LENS_BY_ID[lens].title} lens, Inspect`}>
+            <LensInspector lens={LENS_BY_ID[lens]} store={session.families} tick={tick?.tick ?? 0} />
+            <EventLog lens={LENS_BY_ID[lens]} store={session.families} tick={tick?.tick ?? 0} />
+            <LensCharts lens={LENS_BY_ID[lens]} store={session.families} tick={tick?.tick ?? 0} />
+          </section>
         )}
       </section>
       {showPerf && <PerfOverlay />}

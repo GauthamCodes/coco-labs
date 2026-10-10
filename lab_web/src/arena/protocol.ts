@@ -5,7 +5,7 @@
 
 export interface InputRow {
   tick: number;
-  kind: 'goal' | 'teleop' | 'stop' | 'planner' | 'reset';
+  kind: 'goal' | 'teleop' | 'stop' | 'planner' | 'reset' | 'kidnap' | 'config';
   x?: number; y?: number; theta?: number; has_theta?: boolean;
   linear?: number; angular?: number; choice?: string;
 }
@@ -22,9 +22,19 @@ export interface BootRequest {
 }
 
 export interface StepRequest { type: 'step'; inputs: InputRow[] }
+/**
+ * Inputs sent while a step is in flight (M2.0). The worker handles them at
+ * once, not behind the step: if that step is still planning they join its
+ * tick (the search in flight is cancelled); otherwise they open the next
+ * tick. The worker stamps every input with the model's tick and reports it
+ * in `Tick.inputs`, which is the run's input log.
+ */
+export interface AmendRequest { type: 'amend'; inputs: InputRow[] }
 /** Two planners from the robot's cell to (x, y); the model is not changed (M1.8). */
 export interface CompareRequest { type: 'compare'; a: string; b: string; x: number; y: number }
-export type ToWorker = BootRequest | StepRequest | CompareRequest;
+/** M2.2: load a lens's Python pack (tools/arena_packs.json) if it is not loaded yet. */
+export interface LoadPackRequest { type: 'load_pack'; pack: string }
+export type ToWorker = BootRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest;
 
 export interface CompareSide { planner: string; status: string; summary: Record<string, number | string | null>; resolution: number }
 
@@ -49,6 +59,12 @@ export interface Tick {
   /** Ground truth when it differs from `pose` (a recorded stack run: pose = its belief). */
   truth?: [number, number, number];
   mode: string; blocked: boolean; arrived: boolean; hash: string; chain: string; plans: PlanInfo[];
+  /** The inputs this tick applied, stamped by the model (M2.0; absent in recordings made before). */
+  inputs?: InputRow[];
+  /** M2.5: moving bodies (x, y, radius); absent when there are none. */
+  actors?: [number, number, number][];
+  /** M2.5: a global path given whole on this tick (x0, y0, x1, y1, ...): a Lab 5 scenario's frozen path. */
+  path?: number[];
 }
 
 /** SearchEventBatch columns (coco.plan.search.events.v1), as typed arrays. */
@@ -58,10 +74,25 @@ export interface SearchColumns {
   parent_row: Int32Array; parent_col: Int32Array; parent_sub: Int32Array;
 }
 
+/** M2.2: one whole-loop family batch (coco_lab.columns), or a channel's static header. */
+export interface FamilyMessage {
+  type: 'family';
+  channel: string;
+  tick?: number;
+  /** numeric columns (transferred typed arrays) and plain ones (strings, bools) together */
+  columns?: Record<string, ArrayLike<number> | ArrayLike<bigint> | boolean[] | string[]>;
+  scalars?: Record<string, number | string | boolean>;
+  header?: Record<string, unknown>;
+}
+
 export type FromWorker =
+  | FamilyMessage
+  | { type: 'pack_ready'; pack: string; ms: number }
   | { type: 'mark'; name: string; at: number }
   | { type: 'world'; world: World; occupancy: Uint8Array; at: number }
-  | { type: 'plan_batch'; meta: { search_id: number; planner: string; tick: number; final: boolean; compare?: 'A' | 'B' };
+  | { type: 'plan_batch'; meta: { search_id: number; planner: string; tick: number; final: boolean; compare?: 'A' | 'B';
+    /** M2.0: the search was cancelled by an input that joined its tick; drop what was shown of it. */
+    cancelled?: boolean };
       columns: SearchColumns; at: number }
   | { type: 'tick'; tick: Tick; ranges: Float32Array; stepMs: number; at: number }
   | { type: 'compare_done'; result: { A: CompareSide; B: CompareSide } }

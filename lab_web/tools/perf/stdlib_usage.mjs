@@ -65,6 +65,34 @@ except Exception:
 // a Python error crossing into JavaScript is formatted by pyodide itself
 try { py.runPython("raise ValueError('probe')"); } catch { /* expected */ }
 
+// M2.2: the lens packs load later, and some imports sit inside functions;
+// import every top-level module any coco_lab source names, anywhere (the
+// scan runs here in Node, so it adds nothing to the list itself)
+const named = new Set();
+for (const f of walk(join(repo, 'coco_lab', 'coco_lab')).filter((x) => x.endsWith('.py'))) {
+  const text = readFileSync(f, 'utf-8');
+  for (const m of text.matchAll(/^\s*import ([\w.]+(?:\s*,\s*[\w.]+)*)/gm)) for (const n of m[1].split(',')) named.add(n.trim());
+  for (const m of text.matchAll(/^\s*from ([A-Za-z_][\w.]*) import /gm)) named.add(m[1]);
+}
+const stdNames = [...named].filter((n) => !n.startsWith('coco_lab')).sort();
+py.runPython(`
+import importlib
+for n in ${JSON.stringify(stdNames)}:
+    try:
+        importlib.import_module(n)
+    except ImportError:
+        pass  # a test-only third-party module (yaml, ...): not shipped
+`);
+// and every coco_lab module itself (every pack), as the worker imports them
+py.runPython(`
+import importlib, os
+for root, _, files in os.walk('/home/pyodide/coco_lab'):
+    for f in sorted(files):
+        if f.endswith('.py'):
+            rel = os.path.relpath(os.path.join(root, f), '/home/pyodide')[:-3]
+            importlib.import_module(rel.replace('/', '.').replace('.__init__', ''))
+`);
+
 const mods = py.runPython(`
 import sys
 z = ${JSON.stringify(zipName)} + '/'

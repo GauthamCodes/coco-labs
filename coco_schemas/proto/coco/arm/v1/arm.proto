@@ -1,0 +1,30 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// COCO's 2-DOF planar arm and its gripper, kinematically (M2.1): joint
+// angles, the end effector in the arm's side-view plane, the two fingers,
+// and the magnet. **The gripper has two fingers and a magnet, and the
+// magnet does the holding** (README section 2, correction 2): the magnet
+// fires before the fingers close, and `holding` follows the magnet.
+// Family arm. Channel: coco.arm.state.v1 (ArmStateBatch).
+
+syntax = "proto3";
+
+package coco.arm.v1;
+
+message ArmStateBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated double joint1 = 4;       // rad, shoulder
+  repeated double joint2 = 5;       // rad, elbow
+  repeated double ee_x = 6;         // m, forward of the shoulder, side view
+  repeated double ee_z = 7;         // m, up from the shoulder
+  repeated double finger_left = 8;  // rad, opening
+  repeated double finger_right = 9;
+  repeated bool magnet_on = 10;
+  repeated bool holding = 11;       // the magnet holds an object
+  repeated string phase = 12;       // "stow", "reach", "magnet_on", "close", "lift", "place", ...
+  repeated double elbow_x = 13;     // m, the elbow joint, forward of the shoulder (M2.6, additive)
+  repeated double elbow_z = 14;     // m, up from the shoulder
+}

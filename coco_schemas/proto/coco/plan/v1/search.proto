@@ -21,6 +21,11 @@ enum SearchEventKind {
   SEARCH_EVENT_KIND_EXPAND = 2;
   SEARCH_EVENT_KIND_RELAX = 3;
   SEARCH_EVENT_KIND_PATH = 4;
+  // D* Lite's events (M2.7, additive; Lab 5's replanning traces)
+  SEARCH_EVENT_KIND_RAISE = 5;    // a cell's g raised (underconsistent)
+  SEARCH_EVENT_KIND_UPDATE = 6;   // a cell's rhs recomputed and requeued
+  SEARCH_EVENT_KIND_CHANGE = 7;   // an edge cost the robot sensed changed
+  SEARCH_EVENT_KIND_MOVE = 8;     // the robot stepped to the next cell
 }
 
 enum SearchStatus {
@@ -60,6 +65,8 @@ message SearchEventBatch {
   repeated sint32 parent_col = 12;
   repeated sint32 parent_sub = 13;
   uint64 search_id = 14;
+  repeated double rhs = 15;       // D* Lite's one-step lookahead (M2.7, additive)
+  repeated uint32 round = 16;     // D* Lite: the replanning round (M2.7, additive)
 }
 
 message SearchSummary {

@@ -30,11 +30,17 @@ from coco_schemas.gen.coco.plan.v1 import search_pb2
 from coco_schemas.trace_v1 import search_from_v1
 
 
+#: SearchEventBatch fields only D* Lite's replanning traces fill (M2.7,
+#: additive): coco_lab's A*-family emitter never has them
+DSTAR_ONLY = ('rhs', 'round')
+
+
 def test_the_column_names_and_order_are_the_messages_fields():
     d = search_pb2.SearchEventBatch.DESCRIPTOR
     assert [n for n, _ in SEARCH_FIELDS] == \
         [f.name for f in sorted(d.fields, key=lambda f: f.number)
-         if f.name != 'search_id']
+         if f.name != 'search_id' and f.name not in DSTAR_ONLY]
+    assert [f.number for f in d.fields if f.name in DSTAR_ONLY] == [15, 16]
 
 
 def test_emitted_columns_encode_to_the_converters_bytes():

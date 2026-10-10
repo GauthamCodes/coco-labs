@@ -1,0 +1,125 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-09T06:34:17.501Z",
+   "power_profile": "power-saver",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 43
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.5,
+    "5m": 3.26,
+    "15m": 3.33
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  },
+  "end": {
+   "at_utc": "2026-10-09T06:35:34.082Z",
+   "power_profile": "power-saver",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 40
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.96,
+    "5m": 3.75,
+    "15m": 3.51
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ },
+ "site": "https://gauthamcodes.github.io/coco-labs/",
+ "bare": {
+  "opened": "arena",
+  "ms_since_navigation": {
+   "worker_create": 1321,
+   "worker_boot": 1594,
+   "attract_ready": 2066,
+   "first_frame": 2157,
+   "first_computation_shown": 2157,
+   "pyodide_module": 1857,
+   "pyodide_ready": 9346,
+   "coco_lab_ready": 9660,
+   "world_received": 11598,
+   "arena_ready": 11580
+  },
+  "wall_ms_to_ready": 13814,
+  "goal": [
+   6,
+   4
+  ],
+  "plan": {
+   "id": 0,
+   "status": "found",
+   "expansions": 4402
+  },
+  "click_to_drawn_ms": 90.7001953125,
+  "shown_cursor": 5119,
+  "mode": "live",
+  "console_errors": [],
+  "page_errors": [],
+  "cross_origin": [],
+  "pass": true
+ },
+ "views": [
+  {
+   "view": "plan",
+   "opened": "v1",
+   "console_errors": [],
+   "page_errors": [],
+   "cross_origin": [],
+   "pass": true
+  },
+  {
+   "view": "live",
+   "opened": "v1",
+   "console_errors": [],
+   "page_errors": [],
+   "cross_origin": [],
+   "pass": true
+  },
+  {
+   "view": "localise",
+   "opened": "v1",
+   "console_errors": [],
+   "page_errors": [],
+   "cross_origin": [],
+   "pass": true
+  },
+  {
+   "view": "map",
+   "opened": "v1",
+   "console_errors": [],
+   "page_errors": [],
+   "cross_origin": [],
+   "pass": true
+  },
+  {
+   "view": "search",
+   "opened": "v1",
+   "console_errors": [],
+   "page_errors": [],
+   "cross_origin": [],
+   "pass": true
+  },
+  {
+   "view": "move",
+   "opened": "v1",
+   "console_errors": [],
+   "page_errors": [],
+   "cross_origin": [],
+   "pass": true
+  }
+ ],
+ "pass": true,
+ "browser": "chromium (Playwright, headless)"
+}

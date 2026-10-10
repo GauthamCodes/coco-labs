@@ -17,3 +17,17 @@ message TruthPoseBatch {
   repeated double y = 5;
   repeated double theta = 6;
 }
+
+// Moving bodies other than the robot (M2.7, additive): Lab 5's actors as
+// Gazebo moved them, the Arena's actors. One row per body per sample.
+// Channel: coco.truth.actors.v1 (ActorPoseBatch).
+message ActorPoseBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated string actor_id = 4;
+  repeated double x = 5;
+  repeated double y = 6;
+  repeated double theta = 7;
+  repeated double radius = 8;   // m, the body's footprint (NaN if unknown)
+}

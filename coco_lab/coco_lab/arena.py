@@ -35,6 +35,29 @@ labelled); a step whose end would bring the robot's centre within
   (:meth:`Arena.state_bytes`, ``docs/v2/ARENA_MODEL.md``).
 
 The same spec, seed and input log give the same hashes, tick for tick.
+
+**The whole loop (M2).** Two more input kinds turn it on: ``kidnap`` (the
+robot is carried; odometry is not told) and ``config`` (``key=value``:
+``arena.slip=on``, ``localise.filter=mcl``, ...). From the first of them
+the Arena keeps wheel odometry (the motion model's noise, Sketch's
+``sample_delta``), an optional labelled wheel-slip model (the truth turns
+less than the wheels report, Lab 2's measured turn divergence), and the
+subsystems a ``config`` names -- each registered in :data:`SUBSYSTEMS` by
+its own pack (``coco_lab.loc_arena`` for ``localise``). Planning and
+driving then use the robot's BELIEF (a localiser's estimate when there is
+one), never the truth. Loop inputs apply first in their tick and are
+committed at once; an amendment cannot carry one. Until the first loop
+input the state, and so every hash, is exactly M1's.
+
+**Planning happens once per tick, after all of the tick's inputs** (M2.0):
+a goal, a planner change or both in one tick give one search, on the state
+the inputs leave. A step can run in slices -- :meth:`Arena.begin_step`,
+:meth:`Arena.advance`, :meth:`Arena.finish_step` -- and an input that
+arrives while a slice-run step is still planning joins that tick through
+:meth:`Arena.amend`, which cancels the search in flight and starts the one
+the amended inputs call for. The result depends only on the tick's final
+input list, so :meth:`Arena.step` (all in one go) gives the same state and
+hashes; M1's hash layout is unchanged (a search's id is not state).
 """
 
 from dataclasses import dataclass, field
@@ -46,14 +69,30 @@ from typing import Dict, List, Optional, Sequence, Tuple
 from .events import SearchEventColumns
 from .maps import OCCUPIED
 from .rng import Rng
-from .search import collect, search_events, SearchResult
-from .sketch import (_inflated_grid_map, _nearest_free, drive_command,
-                     LidarSpec, SketchMap, step_pose, wrap)
+from .search import Collector, search_events, SearchResult
+from .sketch import (_inflated_grid_map, _nearest_free, apply_delta,
+                     drive_command, LidarSpec, odom_delta, sample_delta,
+                     SketchMap, step_pose, wrap)
 from .worldspec import arena_map, normalize, to_map_frame
 
 #: The state-hash layout's name; a change to the layout changes this.
 STATE_LAYOUT = b'coco.arena.state.v1\x00'
-INPUT_KINDS = ('goal', 'teleop', 'stop', 'planner', 'reset')
+INPUT_KINDS = ('goal', 'teleop', 'stop', 'planner', 'reset', 'kidnap',
+               'config')
+#: Inputs that switch on or drive the whole loop (M2); applied first
+LOOP_KINDS = ('kidnap', 'config')
+#: The whole loop's subsystems, registered by their packs on import
+#: (name -> class taking the Arena): never imported by this module
+SUBSYSTEMS: Dict[str, type] = {}
+LOOP_LAYOUT = b'coco.arena.loop.v1\x00'
+#: The wheel-slip option (M2.3, off by default; labelled wherever shown):
+#: in turns the truth rotates this fraction of what the wheels report.
+#: COCO's skid-steer wheel odometry integrated 72.5 rad of yaw on the
+#: recorded tour where the gyro and the truth gave 56.3 / 56.2 rad
+#: (docs/labs/LAB2_LOCALISE.md section 4.1; STACK), so 56.2 / 72.5.
+SLIP_TURN = 56.2 / 72.5
+#: Sketch's default odometry noise (coco_lab.sketch.Noise)
+ODOM_ALPHAS = (0.02, 0.02, 0.02, 0.02)
 MODES = ('idle', 'teleop', 'goal')
 #: The planners a learner can choose, and how each is run on the grid.
 PLANNERS: Dict[str, Dict[str, object]] = {
@@ -100,6 +139,8 @@ class InputEvent:
         for name in ('x', 'y', 'theta', 'linear', 'angular'):
             if not math.isfinite(getattr(self, name)):
                 raise ArenaError(f'{name} must be finite')
+        if self.kind == 'config' and '=' not in self.choice:
+            raise ArenaError(f'config must be key=value, got {self.choice!r}')
 
 
 @dataclass
@@ -129,6 +170,10 @@ class Tick:
     blocked: bool = False
     arrived: bool = False
     state_hash: str = ''
+    #: the whole loop's belief (None until the loop is on: then truth is it)
+    belief: Optional[Tuple[float, float, float]] = None
+    #: moving bodies in the world, (x, y, radius) (M2.5: the Move pack's actors)
+    actors: List[Tuple[float, float, float]] = field(default_factory=list)
 
 
 def _q(v: float, scale: float) -> int:
@@ -142,7 +187,7 @@ class Arena:
     def __init__(self, spec: Dict[str, object], seed: int,
                  planner: str = 'astar', range_sigma: float = 0.0,
                  lidar_every: int = 1, on_plan_batch=None,
-                 plan_batch_size: int = 2048):
+                 plan_batch_size: int = 2048, on_family=None):
         """Build the world from ``spec`` and place the robot at its start."""
         self.spec = normalize(spec)
         if planner not in PLANNERS:
@@ -163,6 +208,7 @@ class Arena:
         self.dt = self.spec['arena']['dt']
         self.range_sigma = float(range_sigma)
         # planning: the map inflated by the robot's radius, 8-connected
+        self.plan_clearance = self.radius
         self.plan_map = _inflated_grid_map(self.smap, self.radius)
         self.grid = self.plan_map.to_grid(connectivity=8)
         self.seed = seed
@@ -181,6 +227,26 @@ class Arena:
         self.plan_batch_size = plan_batch_size
         self.plans_made = 0
         self.tick = 0
+        self._in_step = False
+        self._pending: List[InputEvent] = []
+        self._collector: Optional[Collector] = None
+        self._stream = None
+        self._want_plan = False
+        #: a goal a subsystem asked for (M2.6: the mission), taken at the
+        #: start of the next tick; ``_requested`` keeps it planned if the
+        #: tick is amended
+        self._goal_request: Optional[Tuple[float, float]] = None
+        self._requested = False
+        #: called with (channel, tick, columns, scalars) for each whole-loop
+        #: family batch (coco_lab.columns); never part of the state
+        self.on_family = on_family
+        # -- the whole loop (M2): off until the first loop input
+        self.loop = False
+        self.subsystems: Dict[str, object] = {}
+        self.slip = False
+        self.odom = (0.0, 0.0, 0.0)
+        self.odom_alphas = ODOM_ALPHAS
+        self.odom_rng: Optional[Rng] = None
         self._chain = hashlib.sha256(STATE_LAYOUT).digest()
         self._reset_robot()
         self.ranges = self._scan()
@@ -204,12 +270,12 @@ class Arena:
 
     # -- inputs ----------------------------------------------------------------
 
-    def _apply(self, e: InputEvent, plans: List[Plan]):
+    def _apply(self, e: InputEvent):
         lim = self.limits
         if e.kind == 'goal':
             self.goal = (e.x, e.y)
             self.teleop = (0.0, 0.0)
-            plans.append(self._plan())
+            self._want_plan = True
         elif e.kind == 'teleop':
             self.goal, self.waypoints, self.wp_index = None, [], 0
             self.mode = 'teleop'
@@ -227,14 +293,19 @@ class Arena:
                 raise ArenaError(f'unknown planner {e.choice!r}')
             self.planner = e.choice
             if self.goal is not None:      # a running goal is re-planned
-                plans.append(self._plan())
+                self._want_plan = True
         elif e.kind == 'reset':
             self._reset_robot()
+            if self.loop:
+                self.odom = (0.0, 0.0, 0.0)
+                for name in sorted(self.subsystems):
+                    self.subsystems[name].on_reset(self)
 
-    def _plan(self) -> Plan:
-        """Plan from the current pose to the goal with the chosen planner."""
+    def _plan_begin(self):
+        """Start the search from the current pose to the goal (not run yet)."""
         g = self.grid
-        s_cell = self.plan_map.cell_at(self.pose[0], self.pose[1])
+        here = self.belief()
+        s_cell = self.plan_map.cell_at(here[0], here[1])
         t_cell = self.plan_map.cell_at(*self.goal)
         if s_cell is None or t_cell is None:
             raise ArenaError(f'goal {self.goal} or the robot is off the map')
@@ -242,11 +313,11 @@ class Arena:
         t = _nearest_free(g, t_cell)
         if s is None or t is None:
             raise ArenaError(f'no free cell near the robot or {self.goal}')
-        goal = self.goal
         events = search_events(g, s, t, **PLANNERS[self.planner])
-        if self.on_plan_batch is None:
-            res = collect(events)
-        else:
+        self._plan_ctx = (self.planner, self.goal, self.tick)
+        self._stream = None
+        sink = None
+        if self.on_plan_batch is not None:
             # stream the search to the renderer while it runs (M1.5);
             # the search, and so the state, is the same either way
             cols = SearchEventColumns(search_id=self.plans_made,
@@ -254,13 +325,36 @@ class Arena:
             meta = {'search_id': self.plans_made, 'planner': self.planner,
                     'tick': self.tick}
             size, hook = self.plan_batch_size, self.on_plan_batch
+            self._stream = (cols, meta)
 
-            def sink(row):
+            def _sink(row):
                 cols.add(row)
                 if len(cols) >= size:
                     hook(cols.drain(), dict(meta, final=False))
-            res = collect(events, sink)
-            hook(cols.drain(), dict(meta, final=True))
+            sink = _sink
+        self._collector = Collector(events, sink)
+
+    def _plan_cancel(self):
+        """Drop the search in flight; it keeps its id, so ids never repeat."""
+        if self._collector is None:
+            return
+        if self._stream is not None:
+            cols, meta = self._stream
+            self.on_plan_batch(cols.drain(),
+                               dict(meta, final=True, cancelled=True))
+        self._collector = self._stream = None
+        self.plans_made += 1
+
+    def _plan_finish(self) -> Plan:
+        """Run the search to its end; turn its path into waypoints."""
+        c = self._collector
+        c.advance()
+        res = c.result
+        if self._stream is not None:
+            cols, meta = self._stream
+            self.on_plan_batch(cols.drain(), dict(meta, final=True))
+        self._collector = self._stream = None
+        planner, goal, tick = self._plan_ctx
         self.plans_made += 1
         waypoints = []
         if res.path:
@@ -278,7 +372,7 @@ class Arena:
         self.mode = 'goal' if waypoints else 'idle'
         if not waypoints:
             self.goal = None
-        return Plan(self.planner, goal, res, list(waypoints), self.tick)
+        return Plan(planner, goal, res, list(waypoints), tick)
 
     # -- the step --------------------------------------------------------------
 
@@ -288,8 +382,14 @@ class Arena:
         if self.mode == 'teleop':
             return self.teleop[0], self.teleop[1], False
         if self.mode == 'goal':
+            # a local controller from a subsystem drives instead (M2.5)
+            for name in sorted(self.subsystems):
+                f = getattr(self.subsystems[name], 'command', None)
+                c = f(self) if f is not None else None
+                if c is not None:
+                    return c
             while self.wp_index < len(self.waypoints):
-                c = drive_command(self.pose, self.waypoints[self.wp_index],
+                c = drive_command(self.belief(), self.waypoints[self.wp_index],
                                   lim['auto_linear'], lim['auto_angular'],
                                   self.dt)
                 if c is not None:
@@ -299,8 +399,20 @@ class Arena:
             return 0.0, 0.0, True
         return 0.0, 0.0, False
 
+    def discs(self) -> List[Tuple[float, float, float]]:
+        """Every moving body's (x, y, radius), from the subsystems (M2.5)."""
+        out: List[Tuple[float, float, float]] = []
+        for name in sorted(self.subsystems):
+            f = getattr(self.subsystems[name], 'discs', None)
+            if f is not None:
+                out.extend(f())
+        return out
+
     def _scan(self) -> List[float]:
         true = self.smap.scan(self.pose, self.lidar, self.angles)
+        discs = self.discs() if self.subsystems else []
+        if discs:
+            true = _with_discs(true, self.pose, self.lidar, self.angles, discs)
         lo, hi = self.lidar.range_min, self.lidar.range_max
         out = []
         for z in true:
@@ -309,36 +421,237 @@ class Arena:
             out.append(z if lo <= z <= hi else math.inf)
         return out
 
-    def step(self, events: Sequence[InputEvent] = ()) -> Tick:
-        """Apply this tick's inputs, advance one ``dt``, scan, hash."""
-        plans: List[Plan] = []
-        applied = []
+    # -- a step, whole or in slices -------------------------------------------
+
+    def _snapshot(self):
+        return (self.pose, self.v, self.w, self.mode, self.goal,
+                list(self.waypoints), self.wp_index, self.teleop,
+                self.planner)
+
+    def _restore(self, snap):
+        (self.pose, self.v, self.w, self.mode, self.goal, waypoints,
+         self.wp_index, self.teleop, self.planner) = snap
+        self.waypoints = list(waypoints)
+
+    def _check_ticks(self, events: Sequence[InputEvent]):
         for e in events:
             if e.tick != self.tick:
                 raise ArenaError(f'input for tick {e.tick} given at tick '
                                  f'{self.tick}')
-            self._apply(e, plans)
-            applied.append(e)
+
+    # -- the whole loop ---------------------------------------------------------
+
+    def belief(self) -> Tuple[float, float, float]:
+        """Where the robot believes it is: a localiser's estimate, or truth."""
+        for name in sorted(self.subsystems):
+            b = getattr(self.subsystems[name], 'belief', None)
+            pose = b() if b is not None else None
+            if pose is not None:
+                return pose
+        return self.pose
+
+    def _activate(self):
+        if not self.loop:
+            self.loop = True
+            self.odom = (0.0, 0.0, 0.0)
+            self.odom_rng = self.rng.split()
+
+    def _apply_loop(self, e: InputEvent):
+        self._activate()
+        if e.kind == 'kidnap':
+            th = wrap(e.theta) if e.has_theta else self.pose[2]
+            if self.smap.clearance(e.x, e.y) < self.radius * 0.5:
+                raise ArenaError(f'kidnap target ({e.x}, {e.y}) is against '
+                                 'a wall')
+            self.pose = (e.x, e.y, th)          # odometry is not told
+            self.v = self.w = 0.0
+            return
+        key, _, value = e.choice.partition('=')
+        head, _, rest = key.partition('.')
+        if head == 'arena':
+            self._config_arena(rest, value)
+            return
+        sub = self.subsystems.get(head)
+        if sub is None:
+            cls = SUBSYSTEMS.get(head)
+            if cls is None:
+                raise ArenaError(f'no subsystem {head!r} (its pack is not '
+                                 'loaded)')
+            sub = self.subsystems[head] = cls(self)
+        sub.config(rest, value)
+
+    def _config_arena(self, key: str, value: str):
+        if key == 'slip':
+            if value not in ('on', 'off'):
+                raise ArenaError(f'arena.slip must be on or off, not {value!r}')
+            self.slip = value == 'on'
+        elif key == 'range_sigma':
+            v = float(value)
+            if not (math.isfinite(v) and v >= 0):
+                raise ArenaError('arena.range_sigma must be >= 0')
+            self.range_sigma = v
+        elif key == 'plan_clearance':
+            v = float(value)
+            if not (math.isfinite(v) and self.radius <= v <= 1.0):
+                raise ArenaError(f'arena.plan_clearance must be in '
+                                 f'[{self.radius}, 1.0] m')
+            self.set_plan_clearance(v)
+        elif key == 'odom_alphas':
+            a = tuple(float(x) for x in value.split(','))
+            if len(a) != 4 or any(not (math.isfinite(x) and x >= 0)
+                                  for x in a):
+                raise ArenaError('arena.odom_alphas must be four values >= 0')
+            self.odom_alphas = a
+        else:
+            raise ArenaError(f'unknown arena setting {key!r}')
+
+    def emit(self, channel: str, batch) -> None:
+        """Hand a filled coco_lab.columns.Batch to the family hook."""
+        if self.on_family is not None and len(batch):
+            cols, scalars = batch.drain()
+            self.on_family(channel, self.tick, cols, scalars)
+
+    def emit_header(self, channel: str, header: Dict[str, object]) -> None:
+        """Hand a channel's static header to the family hook."""
+        if self.on_family is not None:
+            self.on_family(channel, self.tick, None, header)
+
+    def set_plan_clearance(self, r: float) -> None:
+        """Plan on the map inflated by ``r`` (M1: the robot's radius)."""
+        if r != self.plan_clearance:
+            self.plan_clearance = r
+            self.plan_map = _inflated_grid_map(self.smap, r)
+            self.grid = self.plan_map.to_grid(connectivity=8)
+
+    def request_goal(self, x: float, y: float) -> None:
+        """Ask for a goal from a subsystem: planned at the next tick's start."""
+        self._goal_request = (float(x), float(y))
+
+    def _prepare(self):
+        """Apply the pending inputs to the snapshot; start the one search."""
+        self._want_plan = self._requested
+        for e in self._pending:
+            self._apply(e)
+        if self._want_plan and self.goal is not None:
+            self._plan_begin()
+
+    def begin_step(self, events: Sequence[InputEvent] = ()):
+        """Apply this tick's inputs and start its search, if it needs one."""
+        if self._in_step:
+            raise ArenaError('a step is already in progress')
+        self._check_ticks(events)
+        # loop inputs first, committed now (never restored by an amendment)
+        loop = [e for e in events if e.kind in LOOP_KINDS]
+        for e in loop:
+            self._apply_loop(e)
+        self._loop_applied = loop
+        if self._goal_request is not None:
+            # committed like a loop input: an amendment re-plans it
+            self.goal, self.teleop = self._goal_request, (0.0, 0.0)
+            self._goal_request = None
+            self._requested = True
+        self._snap = self._snapshot()
+        self._pending = [e for e in events if e.kind not in LOOP_KINDS]
+        self._in_step = True
+        try:
+            self._prepare()
+        except Exception:
+            self._restore(self._snap)
+            self._pending = []
+            self._in_step = False
+            raise
+
+    def advance(self, n: Optional[int] = None) -> bool:
+        """Take up to ``n`` events of the tick's search; return whether done."""
+        if not self._in_step:
+            raise ArenaError('advance outside a step')
+        return self._collector is None or self._collector.advance(n)
+
+    def amend(self, events: Sequence[InputEvent]):
+        """
+        Add inputs to the tick in progress (they arrived while it planned).
+
+        The search in flight is cancelled and the tick is prepared again
+        from its snapshot with every input so far, in order -- exactly what
+        :meth:`step` would do with the whole list. An amendment the Arena
+        cannot honour is refused and the tick goes on with what it had.
+        """
+        if not self._in_step:
+            raise ArenaError('amend outside a step')
+        self._check_ticks(events)
+        if any(e.kind in LOOP_KINDS for e in events):
+            raise ArenaError('a loop input opens a tick; it cannot amend one')
+        self._plan_cancel()
+        self._restore(self._snap)
+        before = len(self._pending)
+        self._pending.extend(events)
+        try:
+            self._prepare()
+        except Exception:
+            self._plan_cancel()
+            self._restore(self._snap)
+            del self._pending[before:]
+            self._prepare()
+            raise
+
+    def finish_step(self) -> Tick:
+        """Finish the tick's search, advance one ``dt``, scan, hash."""
+        if not self._in_step:
+            raise ArenaError('finish_step outside a step')
+        plans: List[Plan] = []
+        if self._collector is not None:
+            plans.append(self._plan_finish())
+        applied = self._loop_applied + self._pending
+        self._requested = False
+        self._pending = []
+        self._loop_applied = []
+        self._in_step = False
         tv, tw, arrived = self._command()
         lim, dt = self.limits, self.dt
         dv = lim['linear_accel'] * dt
         dw = lim['angular_accel'] * dt
         self.v += max(-dv, min(dv, tv - self.v))
         self.w += max(-dw, min(dw, tw - self.w))
-        new = step_pose(self.pose, self.v, self.w, dt)
+        before = self.pose
+        new = step_pose(before, self.v, self.w, dt)
+        wheels = new
+        if self.loop and self.slip:
+            # the wheels did the commanded motion; the body turned less
+            new = step_pose(before, self.v, self.w * SLIP_TURN, dt)
         blocked = self.smap.clearance(new[0], new[1]) < self.radius * 0.5
+        if not blocked and self.subsystems:
+            # a moving body is solid: the robot cannot drive into one (M2.5)
+            blocked = any(math.hypot(new[0] - dx, new[1] - dy) < self.radius + r
+                          for dx, dy, r in self.discs())
         if blocked:
-            new = self.pose
+            new = wheels = before
             self.v = self.w = 0.0
         self.pose = new
+        if self.loop:
+            r1, tr, r2 = odom_delta(before, wheels)
+            n1, nt, n2 = sample_delta(r1, tr, r2, self.odom_alphas,
+                                      self.odom_rng)
+            self.odom = apply_delta(self.odom, n1, nt, n2)
         self.tick += 1
+        for name in sorted(self.subsystems):
+            f = getattr(self.subsystems[name], 'world_step', None)
+            if f is not None:
+                f(self)
         self.ranges = self._scan()
+        for name in sorted(self.subsystems):
+            self.subsystems[name].on_tick(self)
         b = self.state_bytes()
         self._chain = hashlib.sha256(self._chain + b).digest()
         h = hashlib.sha256(b).hexdigest()
         return Tick(self.tick, self.t_world, self.pose, self.v, self.w,
                     self.mode, list(self.ranges), plans, applied, blocked,
-                    arrived, h)
+                    arrived, h, belief=self.belief() if self.loop else None,
+                    actors=self.discs() if self.subsystems else [])
+
+    def step(self, events: Sequence[InputEvent] = ()) -> Tick:
+        """Apply this tick's inputs, plan once, advance ``dt``, scan, hash."""
+        self.begin_step(events)
+        return self.finish_step()
 
     # -- the per-tick state hash -------------------------------------------------
 
@@ -368,6 +681,25 @@ class Arena:
         parts.append(struct.pack(f'<{len(self.ranges)}I', *(
             NO_RETURN if r == math.inf else _q(r, Q_RANGE)
             for r in self.ranges)))
+        if self.loop:
+            # the whole loop's state (layout coco.arena.loop.v1, ARENA_MODEL.md)
+            ox, oy, oth = self.odom
+            parts += [LOOP_LAYOUT,
+                      struct.pack('<3qBq', _q(ox, Q_STATE), _q(oy, Q_STATE),
+                                  _q(oth, Q_STATE), self.slip,
+                                  _q(self.range_sigma, Q_STATE)),
+                      struct.pack('<4q', *(_q(a, Q_STATE)
+                                           for a in self.odom_alphas)),
+                      struct.pack('<4Q', *self.odom_rng.state)]
+            if self.plan_clearance != self.radius:
+                # only when set (M2.6), so earlier loop hashes are unchanged
+                parts.append(b'clearance' + struct.pack(
+                    '<q', _q(self.plan_clearance, Q_STATE)))
+            for name in sorted(self.subsystems):
+                nb = name.encode('utf-8')
+                sb = self.subsystems[name].state_bytes()
+                parts += [struct.pack('<I', len(nb)), nb,
+                          struct.pack('<I', len(sb)), sb]
         return b''.join(parts)
 
     def state_hash(self) -> str:
@@ -378,6 +710,33 @@ class Arena:
     def chain(self) -> str:
         """Return the hash chain over every tick so far (one per run)."""
         return self._chain.hex()
+
+
+def _with_discs(ranges, pose, lidar, angles, discs) -> List[float]:
+    """Return ``ranges`` shortened where a beam meets a disc first."""
+    x, y, th = pose
+    mx, my, myaw = lidar.mount
+    c, s = math.cos(th), math.sin(th)
+    sx = x + c * mx - s * my
+    sy = y + s * mx + c * my
+    out = list(ranges)
+    for k, a in enumerate(angles):
+        ux, uy = math.cos(th + myaw + a), math.sin(th + myaw + a)
+        for dx, dy, r in discs:
+            fx, fy = dx - sx, dy - sy
+            b = fx * ux + fy * uy
+            q = b * b - (fx * fx + fy * fy - r * r)
+            if q < 0:
+                continue
+            t = b - math.sqrt(q)
+            if t < 0:
+                t = b + math.sqrt(q)
+                if t < 0:
+                    continue
+                t = 0.0  # the sensor is inside the disc
+            if t < out[k]:
+                out[k] = t
+    return out
 
 
 def replay(spec: Dict[str, object], seed: int, inputs: Sequence[InputEvent],

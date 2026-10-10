@@ -1,0 +1,72 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+
+// Search decisions as a glass box (M2.1): the robot's belief over the
+// regions where a target may be, the expected cost of each visiting order,
+// the region it chose and why, and what each look observed. Lab 4's
+// coco_lab.regionsearch is the algorithm.
+// Family decide.search. Channels:
+//   coco.decide.search.header.v1       (SearchProblemHeader, static)
+//   coco.decide.search.belief.v1       (BeliefBatch: one row per region per update)
+//   coco.decide.search.orders.v1       (OrderCostBatch: one row per order considered)
+//   coco.decide.search.action.v1       (ActionBatch: one row per decision)
+//   coco.decide.search.observation.v1  (ObservationBatch: one row per look)
+
+syntax = "proto3";
+
+package coco.decide.v1;
+
+import "coco/common/v1/common.proto";
+
+message SearchProblemHeader {
+  string problem_id = 1;
+  repeated string region_ids = 2;   // the order every per-region row uses
+  double detection = 3;             // P(found | target in the surveyed region)
+  // How the detection probability is known: "ASSUMPTION" (chosen, not
+  // measured) or "MEASURED" with its evidence. Shown wherever it is used.
+  string detection_label = 4;
+  coco.common.v1.Params params = 5; // travel and look costs, prior, policy
+}
+
+message BeliefBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint32 region = 4;       // index into region_ids
+  repeated double probability = 5;
+  uint64 update = 6;                // 0 = the prior
+  string problem_id = 7;
+}
+
+// An order is region indices order[order_offset[i] .. + order_len[i]).
+message OrderCostBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint32 order_offset = 4;
+  repeated uint32 order_len = 5;
+  repeated uint32 order = 6;
+  repeated double expected_cost = 7;
+  uint64 update = 8;
+  string problem_id = 9;
+}
+
+message ActionBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint32 region = 4;       // the region chosen next
+  repeated double expected_cost = 5;
+  repeated string reason = 6;       // e.g. "first in the cheapest expected order"
+  uint64 update = 7;
+  string problem_id = 8;
+}
+
+message ObservationBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint32 region = 4;
+  repeated bool found = 5;
+  string problem_id = 6;
+}

@@ -14,7 +14,7 @@
  *   node tools/build_v2_runs.mjs
  */
 
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -51,7 +51,44 @@ try {
       run_id: run.manifest.runId, from_bundle: bundle.contentHash, citation: e.citation });
     console.log(`${e.id}: ${bytes.length} B, ${run.messages.length} messages, round trip exact`);
   }
+  // M2.7: Lab 5's drives, one v2 run per controller run, drawn on the map the stack localised against
+  const { fromLab5Drive, toLab5Drive } = await server.ssrLoadModule('/src/convert/lab5.ts');
+  const { loadDriveBytes } = await server.ssrLoadModule('/src/move/decode.ts');
+  const { create } = await import('@bufbuild/protobuf');
+  const { WorldGridSchema } = await server.ssrLoadModule('/src/schemas/gen/coco/world/v1/world_pb.ts');
+  const navDir = join(GEN, 'bundles', 'arena_native');
+  const navManifest = new Uint8Array(readFileSync(join(navDir, 'manifest.json')));
+  const nav = await loadBundleBytes(navManifest, new Uint8Array(readFileSync(join(navDir, arraysFileName(parseManifest(navManifest).compression)))));
+  const navGrid = create(WorldGridSchema, { mapId: nav.map.id, width: nav.map.width, height: nav.map.height,
+    resolution: nav.map.geo.resolution, originX: nav.map.geo.origin[0], originY: nav.map.geo.origin[1],
+    blocked: nav.map.occupancy.map((v) => (v === 0 ? 0 : 1)), occupancy: nav.map.occupancy, cost: [], specSha256: '', row0IsBottom: false });
+  const driveDir = join(GEN, 'move', 'drive');
+  for (const sc of readdirSync(driveDir).sort()) {
+    const manifest = new Uint8Array(readFileSync(join(driveDir, sc, 'manifest.json')));
+    const bundle = await loadDriveBytes(manifest, new Uint8Array(readFileSync(join(driveDir, sc, 'arrays.bin.gz'))));
+    const conv = await fromLab5Drive(bundle, manifest, navGrid);
+    const written = [];
+    for (const c of conv) written.push([c, await writeRun(c.manifest, c.records, (d) => new Uint8Array(zstdCompressSync(d)))]);
+    const back = await toLab5Drive(await Promise.all(written.map(([, bytes]) => readRun(bytes))));
+    if (back.contentHash !== bundle.contentHash) throw new Error(`lab5 ${sc}: the conversion is not lossless`);
+    for (const [c, bytes] of written) {
+      const id = `lab5_${sc}_${c.id.toLowerCase()}`; // the viewer accepts [a-z0-9_] ids
+      const r = bundle.runs.find((x) => x.id === c.id);
+      writeFileSync(join(OUT, `${id}.mcap`), bytes);
+      index.push({ id, title: `Lab 5 · ${sc} · ${r.controller} ${c.id} (${r.outcome})`, group: 'Lab 5', evidence: 'STACK',
+        algorithm: r.controller, events: 0, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'),
+        run_id: c.manifest.runId, from_bundle: bundle.contentHash, citation: 'docs/labs/LAB5_MOVE.md' });
+    }
+    console.log(`lab5 ${sc}: ${conv.length} runs, round trip exact`);
+  }
   writeFileSync(join(OUT, 'index.json'), JSON.stringify({ schema: 'lab_web.v2_runs', version: '1.0', runs: index }, null, 1) + '\n');
+  // a Learn mission (M2.8) may link only to a run this index holds (build_catalog.py wrote missions.json)
+  const ids = new Set(index.map((x) => x.id));
+  const missions = JSON.parse(readFileSync(join(GEN, 'missions.json'), 'utf-8')).missions;
+  for (const m of missions) for (const b of m.beats) {
+    if (b.arena?.replay && !ids.has(b.arena.replay)) throw new Error(`mission ${m.id} beat ${b.beat}: no recorded run "${b.arena.replay}"`);
+  }
+  console.log(`missions: ${missions.length}, every replay link names a run here`);
 } finally {
   await server.close();
 }

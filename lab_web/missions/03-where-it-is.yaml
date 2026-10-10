@@ -1,0 +1,228 @@
+# Learn mission 3 (M2.8). Data, not code.
+schema: coco.mission.v1
+id: where-it-is
+number: 3
+title: How does a robot know where it is?
+question: The wheels say one thing, the LiDAR another. Where is COCO -- and what happens when it is wrong?
+lens: localise
+gaps: [lidar, odometry]
+v1: "v1/?view=localise"
+beats:
+  - beat: hook
+    text: >-
+      COCO never sees its own position. It counts wheel turns, which drift, and it
+      matches LiDAR scans to its map, which can match the wrong place. Watch the
+      cloud of guesses follow the robot.
+    arena: {lens: localise, level: watch, cfg: ['arena.range_sigma=0.02', 'localise.filter=both']}
+    claims: [tracking, lidar-subset]
+  - beat: predict
+    question: >-
+      Pick COCO up and carry it 9 m across a room; nobody tells the filter. Which
+      filter finds it again?
+    options:
+      - The EKF -- one confident estimate corrects fastest
+      - MCL with random particles injected when the scans stop fitting
+      - MCL as COCO ships it (no injection)
+      - None of them
+    answer: 1
+    claims: [kidnap]
+  - beat: reveal
+    text: >-
+      Injection is what recovers a kidnap; the EKF and the no-injection MCL never do.
+      Starting from nowhere, MCL needs enough particles -- and a room that looks the
+      same from two places has two right answers.
+    claims: [kidnap, global, twins, arena-kidnap-sketch]
+  - beat: manipulate
+    text: >-
+      Drag the robot somewhere else. The filters are not told. Then watch what a
+      wrong belief does to the rest of the loop: COCO plans and drives from where it
+      THINKS it is.
+    arena: {lens: localise, level: explain, cfg: ['arena.range_sigma=0.02', 'localise.filter=both', 'localise.mcl.injection=augmented']}
+    claims: [arena-kidnap-closed-loop, odometry-model]
+  - beat: explain
+    text: >-
+      On the real stack, COCO's AMCL can be confidently wrong: its own uncertainty
+      shrank while it was 3 m off. Turning recovery on did not clearly help. Fusing
+      the gyro shrinks dead-reckoning drift enormously; with the LiDAR, AMCL tracked
+      about as well either way.
+    claims: [covariance, kidnap-ab, recovery-historical, aliasing, ekf-drift, amcl-odom, lidar-fidelity]
+  - beat: stack
+    text: >-
+      Run 15: after a good pick, AMCL believed the robot was 3.4 m from where it was.
+      Here is that mechanism on the full stack: the robot told it is 3.4 m away, and
+      every controller refusing the path.
+    arena: {replay: lab5_mislocalised_dwb_1, level: explain}
+    claims: [run15]
+  - beat: challenge
+    stub: true
+    text: Arrives in M3.
+claims:
+  - id: tracking
+    label: TESTED
+    text: >-
+      Told where the robot starts, both filters track it. In the world shown MCL's
+      error stayed under 0.17 m (mean 0.065 m) and the EKF's under 0.072 m (mean
+      0.021 m).
+    evidence:
+      - coco_lab/test/test_localise.py::test_both_filters_track_a_known_start
+    v1: ['catalog.localise.bundles[loc_tracking]']
+  - id: lidar-subset
+    label: SIMPLIFIED MODEL
+    text: >-
+      The filters read a subset of COCO's 480 LiDAR beams, inside the sensor's range
+      limits; the scans are the model's ray casts, with Gaussian range noise.
+    evidence:
+      - docs/labs/LAB2_LOCALISE.md
+      - docs/RESULTS.md "COCO Lab Phase 3"
+    v1: ['ui:lab_web/src/ui/loc/Localise.tsx:269']
+  - id: kidnap
+    label: TESTED
+    text: >-
+      Carried 9.2 m at t = 40 s with odometry not told: MCL with augmented injection
+      recovered in 27.2 s; the same MCL with injection off -- as COCO ships AMCL --
+      ended 9.1 m off; the EKF never recovers a kidnap. Over 20 seeds: augmented 18,
+      fixed 5 % injection 13, off 0 recovered.
+    evidence:
+      - coco_lab/test/test_localise.py::test_injection_is_what_recovers_a_kidnap
+      - coco_lab/test/test_localise.py::test_the_ekf_cannot_recover_a_kidnap_or_start_globally
+      - coco_lab/test/test_sketch.py::test_a_kidnap_moves_the_truth_and_not_the_odometry
+      - docs/data/lab2/sketch_rates.json
+    v1: ['catalog.localise.bundles[loc_kidnap]', 'catalog.localise.sketch_rates']
+  - id: global
+    label: TESTED
+    text: >-
+      Told nothing about the start, MCL with 1,000 particles reached the true pose in
+      5.2 s in the world shown, and in 15 of 20 seeds (300 particles: 9 of 20). The
+      EKF has to start somewhere, and does not recover.
+    evidence:
+      - coco_lab/test/test_localise.py::test_mcl_converges_from_a_uniform_cloud_on_unique_features
+      - docs/data/lab2/sketch_rates.json
+    v1: ['catalog.localise.bundles[loc_global]', 'catalog.localise.sketch_rates']
+  - id: twins
+    label: TESTED
+    text: >-
+      Rotate this room 180 degrees and it is the same room: two poses see identical
+      scans. Over 20 seeds global MCL reached the true pose in 13; in the world shown
+      it settled on the twin, 5.0 m and half a turn away.
+    evidence:
+      - coco_lab/test/test_sketch.py::test_the_twins_room_is_symmetric_to_the_ray_caster
+      - coco_lab/test/test_localise.py::test_the_twins_room_aliases
+      - docs/data/lab2/sketch_rates.json
+    v1: ['catalog.localise.bundles[loc_twins]', 'catalog.localise.sketch_rates']
+  - id: arena-kidnap-sketch
+    label: TESTED
+    text: >-
+      In COCO's arena, with its four near-identical bays, the same kidnap as the
+      stack's K1 target: MCL with augmented injection recovered in 2 of 20 seeds,
+      with injection off in 0 of 20, the EKF not at all.
+    evidence:
+      - coco_lab/test/test_localise.py::test_injection_is_what_recovers_a_kidnap
+      - docs/data/lab2/sketch_rates.json
+    v1: ['catalog.localise.bundles[loc_arena_kidnap]', 'catalog.localise.sketch_rates']
+  - id: arena-kidnap-closed-loop
+    label: SIMPLIFIED MODEL
+    text: >-
+      In the Arena the robot drives on its belief, so a lost robot drives into walls
+      and stops giving its filter new views: a kidnap was recovered 0 of 20 times with
+      injection off and 0 of 20 augmented. Lab 2's 18 of 20 was open loop -- its
+      driver followed the true pose.
+    evidence:
+      - docs/v2/data/m2/m23/arena_kidnap.json
+      - docs/v2/data/m2/m23/sketch_rates_new_engine.json
+    v1: []
+  - id: odometry-model
+    label: MEASURED
+    text: >-
+      Sketch's default wheel-odometry noise drifts a median 0.21 m over a 6.4 m
+      straight and 5.6-6.1 m over the 120 m tours; Gazebo's wheel odometry drifted
+      0.00015 m on the straight and 2.6 m and 17.2 m on the tours. The same order of
+      drift, not the same drift.
+    evidence:
+      - docs/data/lab2/fidelity/fidelity.json
+      - docs/RESULTS.md "COCO Lab Phase 3"
+    v1: ['catalog.localise.fidelity']
+  - id: lidar-fidelity
+    label: MEASURED
+    text: >-
+      The model's LiDAR against Gazebo's, on the same poses: of 111,804 beams both
+      returned, the median range difference was 2.2 mm, the 95th percentile 9.3 cm and
+      the 99th 1.43 m; 12 beams only Gazebo saw, 123 only the model.
+    evidence:
+      - docs/data/lab2/fidelity/fidelity.json
+      - docs/RESULTS.md "COCO Lab Phase 3"
+    v1: ['catalog.localise.fidelity', 'ui:lab_web/src/ui/loc/Localise.tsx:325']
+  - id: covariance
+    label: SIMULATION RESULT
+    text: >-
+      At an injected 3 m divergence on the full stack, AMCL's own sigma_xy fell to
+      0.070 m -- smaller than anything in the healthy run -- and took 24.5 s to climb
+      past the healthy maximum; the scan-against-map distance left its healthy
+      envelope in 0.4 s. (The injection hands AMCL a 0.05 m covariance, so the dip is
+      by construction; the 24.5 s is what is measured.)
+    evidence:
+      - docs/RESULTS.md "C2-M5.0 localization health"
+      - docs/data/c2m5_diverged1.csv
+      - docs/data/c2m5_analysis.py
+    v1: ['loc_exhibits.covariance.historical', 'ui:lab_web/src/ui/loc/LocExhibits.tsx:23']
+  - id: kidnap-ab
+    label: UNRESOLVED
+    text: >-
+      On the full stack in Gazebo, a fresh simulator per trial: AMCL with recovery
+      alphas (0.1 / 0.001) recovered 2 of 10 kidnaps (6.5 s and 36.0 s; 2 trials
+      void), as shipped (0.0 / 0.0) 0 of 10 (1 void). Fisher's one-sided p = 0.24: the
+      difference is not resolved.
+    evidence:
+      - docs/RESULTS.md "COCO Lab Phase 3"
+      - docs/data/lab2/kidnap_ab.json
+    v1: ['catalog.localise.kidnap_ab', 'loc_exhibits.recovery_alpha.ab']
+  - id: recovery-historical
+    label: SIMULATION RESULT
+    text: >-
+      COCO's AMCL ships recovery_alpha_fast/slow = 0.0. In C2-M5.1 a full 2-pi spin
+      ran for 9.1 s after an induced divergence; health came back, and the scan
+      disagreed again 6.0 s after the mission resumed.
+    evidence:
+      - docs/RESULTS.md "What the recovery cannot fix, and why"
+    v1: ['loc_exhibits.recovery_alpha.historical']
+  - id: aliasing
+    label: SIMULATION RESULT
+    text: >-
+      Asked to relocalise globally (C2-M5.1, on the v1 wedge world), AMCL converged to
+      world (2.60, -0.64) -- inside the wedge's footprint. The health monitor was
+      satisfied; the planner was not.
+    evidence:
+      - docs/RESULTS.md "What the recovery cannot fix, and why"
+      - docs/data/c2m51_planner_after_recovery.txt
+    v1: ['loc_exhibits.aliasing.historical']
+  - id: ekf-drift
+    label: SIMULATION RESULT
+    text: >-
+      Dead reckoning alone over the 120 m Gazebo tours: wheel odometry ended 2.6 m and
+      17.2 m off; robot_localization fusing the gyro's yaw rate ended 0.17 m and
+      0.078 m off. Gazebo's gyro is noiseless, so that is an upper bound for a real
+      one.
+    evidence:
+      - docs/RESULTS.md "COCO Lab Phase 3"
+      - docs/data/lab2/ekf_drift.json
+    v1: ['catalog.localise.ekf_drift', 'loc_exhibits.run15.ekf']
+  - id: amcl-odom
+    label: SIMULATION RESULT
+    text: >-
+      With the LiDAR in the loop the choice mattered far less: AMCL replayed on the
+      recorded tours tracked with mean error 0.099 m and 0.106 m on wheel odometry,
+      0.101 m and 0.088 m on the gyro-fused odometry (worst 0.41 m against 0.22 m).
+    evidence:
+      - docs/RESULTS.md "COCO Lab Phase 3"
+      - docs/data/lab2/amcl_odom.json
+    v1: ['catalog.localise.amcl_odom', 'loc_exhibits.run15.amcl']
+  - id: run15
+    label: SIMULATION RESULT
+    text: >-
+      M6 run 15 picked its target, then could not be driven home: AMCL believed
+      (7.252, -2.962) while the robot was at (8.747, 0.149) -- a 3.4 m gap, after
+      dead-reckoning through a corridor the map left blank. Across the 20 runs the gap
+      at the end of the descent was 0.119-1.183 m; the threshold lies somewhere in
+      (0.470, 1.183) m, nothing sampled between.
+    evidence:
+      - 'docs/RESULTS.md "The one failure: run 15, and it is a localisation failure"'
+    v1: ['loc_exhibits.run15.historical']
