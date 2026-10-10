@@ -13,11 +13,12 @@ only. Read order for agents (README §9): `README.md`, this file,
 | v1 | **Frozen** at tag `coco-lab-v1-final` = `3571169` |
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | M1 | **Closed 2026-10-09 — agent-measurable criteria**: independent review [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md) (MERGE AFTER FIXES, every fix done); PR #20 merged into `main` as **`0a2516a`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena, a goal click drew its search, all six v1 views 0 console / 0 page errors ([`v2/data/m1/exit/public_after_merge.json`](v2/data/m1/exit/public_after_merge.json)). **Still pending Gautham:** phone performance, phone cold start, usability |
-| Branch | `v2/m2-whole-loop` (from `main` = `0a2516a`), worked in the worktree `.claude/worktrees/v2-m2-whole-loop`, overlay `~/coco_lab_m2_ws` |
-| Milestone | **M2 · The whole loop** ([`v2/M2_PROMPT.md`](v2/M2_PROMPT.md)) |
-| Checkpoint | **M2.11 done: every agent-measured M2 criterion met** ([`v2/M2_RESULTS.md`](v2/M2_RESULTS.md)). Next: the M2 pull request (not merged by the agent), Gautham's phone and usability rows, a fresh review session |
-| Merge to `main` | M2 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #20 only) |
-| Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows — never marked done by the agent |
+| M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
+| Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
+| Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
+| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). Next: **M3.0** — the `v1-site` orphan branch (build `9f58b83` once, self-host its Pyodide, deploy copies it at a pinned commit by checksum, weekly reproducibility workflow, ADR 0003), then "reset home" for the fetch mission |
+| Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
+| Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
 
 ## Checkpoint log
 
@@ -1026,6 +1027,26 @@ only. Read order for agents (README §9): `README.md`, this file,
     **127 / 0 / 0** (+1: the conditions check of `seek_check.mjs`). Next:
     the pull request into `main` (not merged by the agent), Gautham's phone
     and usability rows, and a fresh review session.
+
+## M3 checkpoint log
+
+- **M3 setup, B.1 (2026-10-10).**
+  - **Start:** PR #21 merged into `main` as `d9ae365` (Part A, M2 review).
+    The canonical checkout was clean and fast-forwarded to it. Branch
+    `v2/m3-play-casefiles`, worktree `.claude/worktrees/v2-m3-play-casefiles`,
+    overlay `~/coco_lab_m3_ws` (helpers in its `bin/`, ROS domain 87, serve
+    port 4214).
+  - **Baseline at `d9ae365`:** packages **3,432 / 0 / 0**, `lab_web` vitest
+    **343 / 0 / 0** (31 files, typecheck clean), build tools **127 / 0 / 0**,
+    generated TypeScript current. Toolchain: Node 24.21.0, Python 3.12.3,
+    ROS 2 Jazzy, Playwright Chromium 156 / Firefox 157 / WebKit 27.2.
+    Balanced profile on AC (`~/coco_lab_m3_ws/logs/suites_m3base.out`).
+  - **Phone results in this file:** none recorded yet (`v2/PHONE_MEASURE.md`
+    tables blank), so no budget fails and there is no M3.0b.
+  - **Recorded here:** M2 closed (agent-measurable) with the merge SHA;
+    `v2/M3_PROMPT.md` (Part B of the owner's prompt); the post-merge public
+    check `v2/data/m2/exit/`.
+  - **Next:** M3.0.
 
 ## Capabilities (README §2), with evidence class
 
