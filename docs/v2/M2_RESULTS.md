@@ -75,7 +75,8 @@ is in `docs/STATUS.md` "M2 checkpoint log". The headline of each:
 - **No WebAssembly port** (ADR 0004): no budget fails.
 - **The v1 archive is built from its tag at deploy time** (ADR 0003).
 - **Learner labels:** README's set plus UNRESOLVED and TESTED — a deviation
-  for Gautham to rule on (`docs/IDEAS.md`).
+  for Gautham to rule on (`docs/IDEAS.md`). **Ruled 2026-10-10: both kept;
+  README §3 lists them** (plan-change log).
 
 ## Reproduce
 

@@ -48,8 +48,9 @@ plan changes only at a milestone boundary, by Gautham, as a dated entry in
 | UNRESOLVED | Reproduced but unexplained, statistically unresolved, or untested |
 | CONCEPT | Discussed, not built |
 
-Learner-facing labels map onto these: MEASURED, ASSUMPTION, SIMPLIFIED
-MODEL, SIMULATION RESULT, REAL ROBOT RESULT, INFERENCE. **No physical robot
+Learner-facing labels map onto these: MEASURED, TESTED (a property or
+unit test proves it), ASSUMPTION, SIMPLIFIED MODEL, SIMULATION RESULT,
+REAL ROBOT RESULT, INFERENCE, UNRESOLVED (README §3, 2026-10-10). **No physical robot
 exists**: "real" in COCO Lab means the full ROS 2 stack in Gazebo, Live is
 "Live Stack (simulated)", and the gripper has two fingers and a magnet; the
 magnet holds the object. The
