@@ -66,7 +66,7 @@ is in `docs/STATUS.md` "M2 checkpoint log". The headline of each:
 | M2.6 Decide | the fetch mission in the Arena (Bayesian bay search, arm inset); plain 6/8, MCL 8/8, MCL+MPPI 7/8, MCL+RPP 4/8, MCL+DWA 4/8, mislocalised 1/4 | `v2/data/m2/m26/` |
 | M2.7 Converters | Labs 2–5 convert losslessly; the 16 Gazebo searches replay byte for byte; 54 Lab 5 drives play as STACK | `v2/SCHEMAS.md`, `v2/data/m2/m27/` |
 | M2.8 Learn | six missions as data, 61 claims, 98 of 98 v1 claims covered, a CI evidence check | `v2/M2_CLAIMS_COVERAGE.md`, `v2/data/m2/m28/` |
-| M2.9 Fidelity | the Arena's LiDAR is beam-for-beam Lab 2's (|e| median 2.2 mm); odometry over-count Gazebo 1.22–1.27×, slip option 1.29×; model gap chips | `v2/FIDELITY_v1.md`, `v2/data/m2/m29/` |
+| M2.9 Fidelity | the Arena's LiDAR casts beam for beam as Lab 2's Sketch on the Nav2 map (agreement with the map, not with Gazebo's sensor); against Gazebo's recorded scans |e| median 2.2 mm, 86.7 % of beams within 5 cm; wheel-odometry turn over-count against Gazebo's own ground truth 1.22–1.27×, the model's slip option 1.29× (fitted on a tour; no physical robot measured); model gap chips | `v2/FIDELITY_v1.md`, `v2/data/m2/m29/` |
 | M2.10 Retire v1 | `/v1/` built from the tag at deploy time; routing; 69 v1 view files removed | `v2/adr/0003-v1-archive.md`, `v2/data/m2/m210/` |
 | M2.11 Measure | this document; ADR 0004: no WebAssembly port | `v2/adr/0004-wasm-gate-m2.md`, `v2/data/m2/m211/` |
 

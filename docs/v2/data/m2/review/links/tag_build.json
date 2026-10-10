@@ -1,0 +1,285 @@
+{
+ "conditions": null,
+ "site": "http://127.0.0.1:4204/coco-labs/",
+ "forms": [
+  {
+   "form": "",
+   "want": {
+    "kind": "arena",
+    "mode": [
+     "attract",
+     "live"
+    ]
+   },
+   "errors": [],
+   "landed": "",
+   "ok": true
+  },
+  {
+   "form": "?view=plan",
+   "want": {
+    "kind": "mission",
+    "id": "find-a-path"
+   },
+   "errors": [],
+   "landed": "?view=learn&mission=find-a-path",
+   "ok": true
+  },
+  {
+   "form": "?view=localise",
+   "want": {
+    "kind": "mission",
+    "id": "where-it-is"
+   },
+   "errors": [],
+   "landed": "?view=learn&mission=where-it-is",
+   "ok": true
+  },
+  {
+   "form": "?view=map",
+   "want": {
+    "kind": "mission",
+    "id": "build-a-map"
+   },
+   "errors": [],
+   "landed": "?view=learn&mission=build-a-map",
+   "ok": true
+  },
+  {
+   "form": "?view=search",
+   "want": {
+    "kind": "mission",
+    "id": "where-to-look"
+   },
+   "errors": [],
+   "landed": "?view=learn&mission=where-to-look",
+   "ok": true
+  },
+  {
+   "form": "?view=move",
+   "want": {
+    "kind": "mission",
+    "id": "avoid-things"
+   },
+   "errors": [],
+   "landed": "?view=learn&mission=avoid-things",
+   "ok": true
+  },
+  {
+   "form": "?view=plan&perf",
+   "want": {
+    "kind": "mission",
+    "id": "find-a-path"
+   },
+   "errors": [],
+   "landed": "?view=learn&mission=find-a-path",
+   "ok": true
+  },
+  {
+   "form": "?view=live",
+   "want": {
+    "kind": "live"
+   },
+   "errors": [],
+   "badge": "Live Stack (simulated) — local",
+   "landed": "?view=live",
+   "ok": true
+  },
+  {
+   "form": "?view=exhibit",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-exhibit"
+   },
+   "errors": [],
+   "landed": "v1/?view=exhibit",
+   "ok": true
+  },
+  {
+   "form": "?view=localise&loc=exhibits",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-localise"
+   },
+   "errors": [],
+   "landed": "v1/?view=localise&loc=exhibits",
+   "ok": true
+  },
+  {
+   "form": "?view=map&scene=map_loop",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-map"
+   },
+   "errors": [],
+   "landed": "v1/?view=map&scene=map_loop",
+   "ok": true
+  },
+  {
+   "form": "?view=move&move=replan",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-move"
+   },
+   "errors": [],
+   "landed": "v1/?view=move&move=replan",
+   "ok": true
+  },
+  {
+   "form": "?view=search&search=matrix",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-search"
+   },
+   "errors": [],
+   "landed": "v1/?view=search&search=matrix",
+   "ok": true
+  },
+  {
+   "form": "?bundle=astar_open",
+   "want": {
+    "kind": "replay",
+    "id": "astar_open"
+   },
+   "errors": [],
+   "landed": "?view=arena&replay=astar_open",
+   "ok": true
+  },
+  {
+   "form": "?bundle=astar_open&v=1",
+   "want": {
+    "kind": "replay",
+    "id": "astar_open"
+   },
+   "errors": [],
+   "landed": "?view=arena&replay=astar_open",
+   "ok": true
+  },
+  {
+   "form": "?view=plan&bundle=astar_open&v=1",
+   "want": {
+    "kind": "replay",
+    "id": "astar_open"
+   },
+   "errors": [],
+   "landed": "?view=arena&replay=astar_open",
+   "ok": true
+  },
+  {
+   "form": "?bundle=lab1c_astar",
+   "want": {
+    "kind": "replay",
+    "id": "lab1c_astar"
+   },
+   "errors": [],
+   "landed": "?view=arena&replay=lab1c_astar",
+   "ok": true
+  },
+  {
+   "form": "?v=1",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-lab"
+   },
+   "errors": [],
+   "landed": "v1/?v=1",
+   "ok": true
+  },
+  {
+   "form": "?v=1&bundle=astar_open&s=4.1.4.1.9",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-lab"
+   },
+   "errors": [],
+   "landed": "v1/?v=1&bundle=astar_open&s=4.1.4.1.9",
+   "ok": true
+  },
+  {
+   "form": "?v=1&bundle=astar_open&e=vQEB",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-lab"
+   },
+   "errors": [],
+   "landed": "v1/?v=1&bundle=astar_open&e=vQEB",
+   "ok": true
+  },
+  {
+   "form": "?bundle=not_a_bundle",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-lab"
+   },
+   "errors": [],
+   "landed": "v1/?bundle=not_a_bundle",
+   "ok": true
+  },
+  {
+   "form": "v1/",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-lab"
+   },
+   "errors": [],
+   "landed": "v1/",
+   "ok": true
+  }
+ ],
+ "archive_views": [
+  {
+   "form": "v1/",
+   "pressed": "view-lab",
+   "errors": [],
+   "real_robot": 0,
+   "live_label": "Live",
+   "ok": false
+  },
+  {
+   "form": "v1/?view=localise",
+   "pressed": "view-localise",
+   "errors": [],
+   "real_robot": 0,
+   "live_label": "Live",
+   "ok": false
+  },
+  {
+   "form": "v1/?view=map",
+   "pressed": "view-map",
+   "errors": [],
+   "real_robot": 0,
+   "live_label": "Live",
+   "ok": false
+  },
+  {
+   "form": "v1/?view=search",
+   "pressed": "view-search",
+   "errors": [],
+   "real_robot": 1,
+   "live_label": "Live",
+   "ok": false
+  },
+  {
+   "form": "v1/?view=move",
+   "pressed": "view-move",
+   "errors": [],
+   "real_robot": 0,
+   "live_label": "Live",
+   "ok": false
+  },
+  {
+   "form": "v1/?view=live",
+   "pressed": "view-live",
+   "errors": [
+    "WebSocket connection to 'ws://localhost:8080/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED",
+    "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+    "WebSocket connection to 'ws://localhost:8080/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED",
+    "WebSocket connection to 'ws://localhost:8080/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED"
+   ],
+   "real_robot": 0,
+   "live_label": "Live",
+   "ok": false
+  }
+ ],
+ "ok": false
+}

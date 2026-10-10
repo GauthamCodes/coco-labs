@@ -96,11 +96,11 @@ def gaps(a=None) -> Dict[str, Dict[str, str]]:
             'title': 'LiDAR',
             'text': (f'The model\'s LiDAR is 2D: it sees the bays\' 3D ramps only as footprints. Against Gazebo at the same '
                      f'{s["scans_used"]} poses, {s["classes"]["both"]:,} beams: |error| median {_mm(ab["median"])}, '
-                     f'95th percentile {_cm(ab["p95"])}, 99th {_m(ab["p99"], 2)} m.'),
+                     f'95th percentile {_cm(ab["p95"])}, 99th {_m(ab["p99"], 2)} m; {100 * s["frac_abs_below"]["0.05"]:.1f} % within 5 cm.'),
             'anchor': ANCHORS['lidar']},
         'odometry': {
             'title': 'odometry',
-            'text': (f'Gazebo\'s wheel odometry was exact on a straight line ({_m(max(d["gazebo"]["final_pos_err_m"] for d in straight))} m '
+            'text': (f'Against Gazebo\'s own ground truth (a simulator, not a physical robot), Gazebo\'s wheel odometry was exact on a straight line ({_m(max(d["gazebo"]["final_pos_err_m"] for d in straight))} m '
                      f'over {_m(straight[0]["distance_m"], 1)} m) and over-counted turns {min(over):.2f}–{max(over):.2f}×. '
                      f'The model\'s default noise is direction-blind (median {_rng(sk_straight, 2)} m over '
                      f'the same straight); its wheel-slip option over-counts turns {1 / a["slip_turn"]:.2f}×, a factor fitted on a '
@@ -157,8 +157,10 @@ def report(a=None, b=None) -> str:
         f'{ident["beams_different"]} different |',
         '',
         f'**The Arena\'s world is, to the LiDAR, the Stack\'s saved map**: every one of the {ident["beams_identical"]:,} '
-        'beams it casts equals the one Lab 2\'s Sketch cast on the Nav2 map. So its LiDAR gap is exactly the one Lab 2 '
-        'measured. Its JSON splits the beams by the cell the ray ended in: '
+        'beams it casts equals the one Lab 2\'s Sketch cast on the Nav2 map. That is agreement with the map, not with '
+        'Gazebo\'s sensor: against the scans Gazebo recorded at the same poses, '
+        f'{100 * s["frac_abs_below"]["0.05"]:.1f} % of beams fall within 5 cm (the table above). So its LiDAR gap is '
+        'exactly the one Lab 2 measured. Its JSON splits the beams by the cell the ray ended in: '
         f'{lab2e["occupied"]["n"]:,} of {lab2e["all"]["n"]:,} end in an OCCUPIED cell (e median {_mm(lab2e["occupied"]["median"])}, '
         f'5th–95th percentile {_mm(lab2e["occupied"]["p05"])} to {_mm(lab2e["occupied"]["p95"])}), so that split does not '
         'locate the large errors. Lab 2 located them by inspection, as beams meeting the bays\' 3D ramps and platforms, '
@@ -202,7 +204,8 @@ def report(a=None, b=None) -> str:
         '',
         '**In a straight line** Gazebo\'s skid-steer odometry is exact (the slip option changes nothing there); the '
         'Arena\'s default noise drifts anyway, because it is direction-blind. **In turns** Gazebo\'s wheels report more '
-        'rotation than the body made. That over-count is what the slip option models:',
+        'rotation than its simulated body made (\'true\' below is Gazebo\'s own ground truth, a simulator\'s, not a '
+        'physical robot\'s). That over-count is what the slip option models:',
         '',
         '| drive | true rotation | wheel odometry\'s rotation | over-count: Gazebo | Arena slip off | Arena slip on |',
         '|---|---|---|---|---|---|',

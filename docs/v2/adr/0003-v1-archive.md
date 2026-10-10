@@ -69,3 +69,40 @@ fails the deploy loudly instead of serving something else.
 - If the npm registry ever stops serving a pin in the tag's lockfile, the
   deploy fails at this step. The remedy is option B for that day, not a
   change to the tag.
+
+## Amendment, 2026-10-10 (M2 review): the source commit is `9f58b83`
+
+**What the review found.** The tag `coco-lab-v1-final` (= `3571169`) was
+cut in M0.2, *before* M0's public fixes, so the archive built from it put
+them back at `/v1/`:
+
+- every view's Live tab read plain "Live" (M0.6 renamed it "Live Stack
+  (simulated)", `dbf1f60`);
+- the Search lab said "real robot" for the Gazebo stack (also `dbf1f60`);
+- the Live view opened a WebSocket on load and logged
+  `ERR_CONNECTION_REFUSED` console errors (M0's quiet probe, `40b6dc2`,
+  opens none until `/healthz` answers).
+
+The section above left `v1/?view=live` unchecked, so none of this was seen.
+Measured on the tag's build: 22 of 22 URL forms pass, **6 of 6 archive views
+fail** (`docs/v2/data/m2/review/links/tag_build.json`).
+
+**Decision (owner's ruling, 2026-10-10).** `/v1/` is built from **`9f58b83`**,
+the M0 merge into `main`: v1's views with M0's public fixes and no M1 code.
+`build_v1_archive.sh` fetches that commit (depth 1) and runs its own tooling
+as before; it refuses nothing else because it builds nothing else. The tag
+is unchanged and stays v1's freeze point.
+
+**Measured on the `9f58b83` build:** 109 s, 23 MB; 22 of 22 URL forms and
+**6 of 6 archive views** (Lab 1 Plan, Localise, Map, Search, Move, Live
+Stack (simulated)) with 0 console errors, 0 page errors, no "real robot"
+(`docs/v2/data/m2/review/links/9f58b83_build.json`). `v1_links_check.mjs`
+now checks the six archive views too, in CI.
+
+**Superseded in M3.0.** The owner has also decided (plan-change log,
+2026-10-10) that the archive becomes a built artifact: built once from
+`9f58b83`, its Pyodide self-hosted, committed to an orphan branch `v1-site`,
+copied into the Pages artifact at a pinned commit and checked by checksum;
+the build-from-source script becomes a weekly reproducibility check. Option
+B above, chosen for the reason this ADR gave against A: a toolchain that
+ages out from under the build.

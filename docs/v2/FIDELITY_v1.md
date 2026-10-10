@@ -18,7 +18,7 @@ Each recorded scan's TRUE pose (tilt at most 2°; 237 of 240 scans used, 3 exclu
 | beams within 1 / 5 / 10 cm | 74.8 % / 86.7 % / 95.5 % |
 | the Arena against Lab 2's Sketch on the Nav2 map | 113,760 beams identical, 0 different |
 
-**The Arena's world is, to the LiDAR, the Stack's saved map**: every one of the 113,760 beams it casts equals the one Lab 2's Sketch cast on the Nav2 map. So its LiDAR gap is exactly the one Lab 2 measured. Its JSON splits the beams by the cell the ray ended in: 111,786 of 111,804 end in an OCCUPIED cell (e median 0.2 mm, 5th–95th percentile -19.3 mm to 80.4 mm), so that split does not locate the large errors. Lab 2 located them by inspection, as beams meeting the bays' 3D ramps and platforms, which a 2D map at scan height cannot hold (docs/labs/LAB2_LOCALISE.md section 4.1); that is its finding, not something measured again here.
+**The Arena's world is, to the LiDAR, the Stack's saved map**: every one of the 113,760 beams it casts equals the one Lab 2's Sketch cast on the Nav2 map. That is agreement with the map, not with Gazebo's sensor: against the scans Gazebo recorded at the same poses, 86.7 % of beams fall within 5 cm (the table above). So its LiDAR gap is exactly the one Lab 2 measured. Its JSON splits the beams by the cell the ray ended in: 111,786 of 111,804 end in an OCCUPIED cell (e median 0.2 mm, 5th–95th percentile -19.3 mm to 80.4 mm), so that split does not locate the large errors. Lab 2 located them by inspection, as beams meeting the bays' 3D ramps and platforms, which a 2D map at scan height cannot hold (docs/labs/LAB2_LOCALISE.md section 4.1); that is its finding, not something measured again here.
 
 The five poses where the Arena is worst (90th-percentile |e| over a scan's beams; the worst scan of each pose):
 
@@ -42,7 +42,7 @@ Each scripted drive's recorded command sequence is replayed tick for tick throug
 | fidelity_s1 square | 15.4 m, 11.0 rad | 2.298 m | 0.286 [0.073–0.615] m | 2.098 m | 2.091 [1.740–2.424] m |
 | fidelity_s1 tour | 120.1 m, 56.1 rad | 2.595 m | 6.062 [1.740–12.019] m | 16.297 m | 15.581 [6.348–25.234] m |
 
-**In a straight line** Gazebo's skid-steer odometry is exact (the slip option changes nothing there); the Arena's default noise drifts anyway, because it is direction-blind. **In turns** Gazebo's wheels report more rotation than the body made. That over-count is what the slip option models:
+**In a straight line** Gazebo's skid-steer odometry is exact (the slip option changes nothing there); the Arena's default noise drifts anyway, because it is direction-blind. **In turns** Gazebo's wheels report more rotation than its simulated body made ('true' below is Gazebo's own ground truth, a simulator's, not a physical robot's). That over-count is what the slip option models:
 
 | drive | true rotation | wheel odometry's rotation | over-count: Gazebo | Arena slip off | Arena slip on |
 |---|---|---|---|---|---|
@@ -79,8 +79,8 @@ In run 15 (`mislocalised`) the robot never moved in either world, so its trackin
 
 Wherever a lesson depends on one of these, the page shows a "model gap" chip that opens to this text and links here: the Arena's Localise, Map, Move and Decide lenses, and the Learn missions that use them.
 
-- **Model gap: LiDAR** — The model's LiDAR is 2D: it sees the bays' 3D ramps only as footprints. Against Gazebo at the same 237 poses, 111,804 beams: |error| median 2.2 mm, 95th percentile 9.3 cm, 99th 1.43 m.
-- **Model gap: odometry** — Gazebo's wheel odometry was exact on a straight line (0.000 m over 6.4 m) and over-counted turns 1.22–1.27×. The model's default noise is direction-blind (median 0.21 m over the same straight); its wheel-slip option over-counts turns 1.29×, a factor fitted on a recorded tour.
+- **Model gap: LiDAR** — The model's LiDAR is 2D: it sees the bays' 3D ramps only as footprints. Against Gazebo at the same 237 poses, 111,804 beams: |error| median 2.2 mm, 95th percentile 9.3 cm, 99th 1.43 m; 86.7 % within 5 cm.
+- **Model gap: odometry** — Against Gazebo's own ground truth (a simulator, not a physical robot), Gazebo's wheel odometry was exact on a straight line (0.000 m over 6.4 m) and over-counted turns 1.22–1.27×. The model's default noise is direction-blind (median 0.21 m over the same straight); its wheel-slip option over-counts turns 1.29×, a factor fitted on a recorded tour.
 - **Model gap: controllers** — The model's DWA, RPP and MPPI are smaller than Nav2's and its people are solid (Gazebo's walked through the robot). On the hairpin and the crossing, mean tracking error: model 0.020–0.043 m, stack 0.049–0.143 m.
 
 ## Reproduce

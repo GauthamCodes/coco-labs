@@ -899,10 +899,11 @@ only. Read order for agents (README §9): `README.md`, this file,
     statistics imported unchanged; controller tracking re-tabulated from
     M2.5 (a test checks every row equals M2.5's JSON).
   - **LiDAR:** 237 of 240 scans, 111,804 beams both returned: |e| median
-    2.2 mm, 95th percentile 9.3 cm, 99th 1.43 m. **The Arena's world casts
-    exactly like the Stack's saved map — 113,760 of 113,760 beams identical
-    to Lab 2's Sketch on the Nav2 map** — so its LiDAR gap is Lab 2's, not a
-    new one. Lab 2's class split cannot locate the large errors (111,786 of
+    2.2 mm, 95th percentile 9.3 cm, 99th 1.43 m; 86.7 % within 5 cm of
+    Gazebo. **The Arena's world casts exactly like the Stack's saved map —
+    113,760 of 113,760 beams identical to Lab 2's Sketch on the Nav2 map** —
+    so its LiDAR gap is Lab 2's, not a new one. (That identity is with the
+    map, not with Gazebo's sensor; the M2 review, 2026-10-10.) Lab 2's class split cannot locate the large errors (111,786 of
     111,804 beams end in OCCUPIED cells); the report says so and cites Lab
     2's own finding about the bays' 3D ramps as Lab 2's, not as re-measured.
   - **Odometry, straight and turning, slip off and on** (200 noise seeds):

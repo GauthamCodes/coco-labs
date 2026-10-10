@@ -128,10 +128,11 @@ jobs:
           npm run build
           node tools/check_dist.mjs --expect-hash "$first"
       # M2.10: the v1 lab views are retired from main; the frozen v1 site is
-      # built from the tag coco-lab-v1-final by its own tooling and served at
-      # /v1/ (docs/v2/adr/0003-v1-archive.md). After the identical-build check:
+      # built from 9f58b83 (the M0 merge: v1's views with M0's public fixes;
+      # owner's ruling 2026-10-10) by its own tooling and served at /v1/
+      # (docs/v2/adr/0003-v1-archive.md). After the identical-build check:
       # vite empties dist on every build. About 2 min (108 s measured locally).
-      - name: The frozen v1 site at /v1/ (built from its tag)
+      - name: The frozen v1 site at /v1/ (built from 9f58b83, the M0 merge)
         env:
           PYTHON: ${{ runner.temp }}/venv/bin/python
         run: lab_web/tools/build_v1_archive.sh lab_web/dist/v1 "$RUNNER_TEMP/v1"

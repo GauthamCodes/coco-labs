@@ -90,7 +90,7 @@ claims:
     text: >-
       Around a wall end and into a room, on the full stack, 5 runs each, fresh
       simulator: DWB failed 5 of 5 with FAILED_TO_MAKE_PROGRESS (105); RPP and MPPI
-      succeeded 5 of 5.
+      succeeded 5 of 5. Why DWB stalls there is not attributed beyond the logs.
     evidence:
       - docs/RESULTS.md "COCO Lab Phase 6"
       - docs/data/lab5/README.md
@@ -147,7 +147,10 @@ claims:
       Run 15's log, quoted verbatim: "DWBLocalPlanner: No valid trajectories out of
       819!" Told it is 3.4 m from where it is, every controller failed with
       INVALID_PATH (103), 3 of 3 on the stack and 5 of 5 in the Arena: the path was
-      fine; the robot's idea of where it stood was not.
+      fine; the robot's idea of where it stood was not. That reproduces run 15's
+      mechanism, not its symptom: the stack's reproductions aborted in their first
+      cycle with DWB scoring 0 candidates, not 819, and run 15 itself cannot be
+      re-run -- exactly what happened in it stays unresolved.
     evidence:
       - 'docs/RESULTS.md "The one failure: run 15, and it is a localisation failure"'
       - docs/RESULTS.md "COCO Lab Phase 6"

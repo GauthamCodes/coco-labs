@@ -216,7 +216,7 @@ def coverage_markdown(missions) -> str:
             text = re.sub(r'\s+', ' ', str(c['text']))[:140].replace('|', '\\|')
             carriers = '; '.join(f'{m} / {cid} / {beat}' for m, cid, beat in where[c['id']]) or '**NOT COVERED**'
             labels = '; '.join(sorted({claims[cid]['label'] for _, cid, _ in where[c['id']]}))
-            ev = '; '.join(sorted({e for _, cid, _ in where[c['id']] for e in claims[cid]['evidence']}))[:300]
+            ev = '; '.join(sorted({e for _, cid, _ in where[c['id']] for e in claims[cid]['evidence']}))
             lines.append(f'| `{c["id"]}` | {text} | {carriers} | {labels} | {ev.replace("|", chr(92) + "|")} |')
         lines.append('')
     return '\n'.join(lines)

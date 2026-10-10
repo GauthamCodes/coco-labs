@@ -13,6 +13,11 @@
  * or the frozen v1 build at v1/ with its query intact) and what renders
  * there, with 0 console errors and 0 page errors on every one. The site
  * must be served with the v1 archive at v1/ (lab_web/tools/build_v1_archive.sh).
+ *
+ * Then each of the archive's six views (v1/?view=..., Lab 1 Plan, Localise,
+ * Map, Search, Move, Live Stack (simulated)) opens with 0 console and 0 page
+ * errors and none of them says "real robot" (M2 review, 2026-10-10: the
+ * archive is built from 9f58b83, which carries M0's public fixes).
  */
 
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -61,13 +66,14 @@ const FORMS = [
   ['v1/', v1('view-lab')],
 ];
 
+// the archive's own six views, each opened directly
+const ARCHIVE_VIEWS = [
+  ['v1/', 'view-lab'], ['v1/?view=localise', 'view-localise'], ['v1/?view=map', 'view-map'],
+  ['v1/?view=search', 'view-search'], ['v1/?view=move', 'view-move'], ['v1/?view=live', 'view-live'],
+];
+
 const browser = await chromium.launch();
-const out = {
-  site: SITE, forms: [], conditions: null,
-  // not a v1 URL form: the legacy ?view=live stays in main (checked above). The archive's own Live tab is
-  // v1-final's code, frozen: with no stack reachable it logs its connection attempts, as v1 did.
-  not_checked: ['v1/?view=live'],
-};
+const out = { site: SITE, forms: [], archive_views: [], conditions: null };
 let failed = 0;
 for (const [form, want] of FORMS) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
@@ -107,8 +113,31 @@ for (const [form, want] of FORMS) {
   console.log(`${row.ok ? 'ok  ' : 'FAIL'} ${form || '(bare)'} -> ${row.landed}${row.failure ? ' ' + row.failure : ''}${errors.length ? ' errors: ' + errors.join(' | ') : ''}`);
   await page.close();
 }
+for (const [form, pressed] of ARCHIVE_VIEWS) {
+  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  const errors = [];
+  page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+  page.on('pageerror', (e) => errors.push(String(e)));
+  const row = { form, pressed, errors };
+  try {
+    await page.goto(`${SITE}${form}`);
+    await page.waitForSelector(`[data-testid="${pressed}"][aria-pressed="true"]`, { timeout: 60_000 });
+    await page.waitForTimeout(5000); // the Live view's probe, a lab's worker: late errors
+    const text = await page.evaluate(() => document.body.innerText);
+    row.real_robot = (text.match(/real robot/gi) ?? []).length;
+    row.live_label = await page.getByTestId('view-live').textContent();
+    row.ok = errors.length === 0 && row.real_robot === 0 && row.live_label === 'Live Stack (simulated)';
+  } catch (e) {
+    row.ok = false;
+    row.failure = String(e);
+  }
+  if (!row.ok) failed++;
+  out.archive_views.push(row);
+  console.log(`${row.ok ? 'ok  ' : 'FAIL'} ${form} [${pressed}] real_robot=${row.real_robot} live="${row.live_label}"${row.failure ? ' ' + row.failure : ''}${errors.length ? ' errors: ' + errors.join(' | ') : ''}`);
+  await page.close();
+}
 await browser.close();
 out.ok = failed === 0;
 writeFileSync(join(OUT, 'v1_links_check.json'), JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...out }, null, 1) + '\n');
-console.log(JSON.stringify({ ok: out.ok, forms: FORMS.length, failed }));
+console.log(JSON.stringify({ ok: out.ok, forms: FORMS.length, archive_views: ARCHIVE_VIEWS.length, failed }));
 process.exit(out.ok ? 0 : 1);
