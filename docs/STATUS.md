@@ -16,7 +16,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
 | Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
 | Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
-| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.1 done** (the ROS-to-event adapter). Next: **M3.2**, Case File sizes and the storage decision (ADR 0005) |
+| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.2 done** (ADR 0005: committed, zstd, lazy-loaded; about 52 MB measured-estimate). Next: **M3.3**, the Case Files |
 | Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
 
@@ -1187,6 +1187,37 @@ only. Read order for agents (README §9): `README.md`, this file,
     **347 / 0 / 0** (+4), build tools **134 / 0 / 0**. `coco_lab_ros` was
     re-run alone after the guard fix; nothing else changed.
   - **Next:** M3.2, measure Case File sizes and record ADR 0005.
+
+- **M3.2, Case File storage: ADR 0005 (2026-10-10).**
+  - **Measured first:** one recording of each kind at `summary` detail,
+    repacked with zstd as the site serves them.
+
+    | Kind | Served size |
+    |---|---|
+    | Lab 1C | 74 KB |
+    | Lab 5 | 189–337 KB |
+    | Lab 4 | 345 KB (cut at its first terminal state) |
+    | robot_localization replay | 581 KB |
+    | Lab 2 kidnap | 1.00 MB |
+    | Lab 3 tour | 1.89 MB |
+
+    Counting each kind at its largest gives about 52 MB in total, and about
+    2 MB at most per Case File, against the budgets of about 20 MB and
+    about 150 MB. **It fits, so no stop.**
+  - **Decision:** commit zstd, indexed Case Files to `lab_web/casefiles/`
+    with an `index.json`, copied into the Pages artifact and lazy-loaded
+    when opened.
+  - **Checks:** each manifest cites every source-bag file by sha256, and a
+    CI test enforces the budget.
+  - **The B.5 checksum cross-check uses each lab's own definition.** Lab 4's
+    committed `bag_sha256` is a directory hash (`p05_evidence._sha_dir`), so
+    `bag_0.mcap` alone (`538b4101…`) differs from the manifest's
+    `a2945562…`, while the directory hash equals it. Lab 5's is
+    `bag_0.mcap` (`673d7f05…`, equal). Both definitions are documented in
+    the ADR.
+  - **Evidence:** `v2/data/m3/m32/casefile_sizes.json`.
+  - **No code changed;** suites as at M3.1.
+  - **Next:** M3.3, convert and publish the Case Files.
 
 ## Capabilities (README §2), with evidence class
 
