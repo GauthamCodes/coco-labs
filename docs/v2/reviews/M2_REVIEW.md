@@ -143,4 +143,20 @@ are not affected by this merge.
 
 ## After the fixes (final head)
 
-See the final-head row below, filled in after the last push.
+Verified at **`b68c31d`**, the last commit with any code, tool or evidence
+change. The commit after it adds only this section and the `final_head/`
+logs. The fixes were pulled into the review clone, and everything below
+was re-run there.
+
+| Check | Result | Evidence |
+|---|---|---|
+| Package suites | **3,432 / 0 / 0** (12 packages) | `docs/v2/data/m2/review/final_head/packages.log` |
+| `lab_web` vitest; typecheck | **343 / 0 / 0** (31 files); clean | `final_head/vitest_summary.txt` |
+| Build tools; generated TypeScript | **127 / 0 / 0**; current | `final_head/tools_summary.txt` |
+| `/v1/` built by the branch's own `build_v1_archive.sh` | `9f58b83` → 23 MB | — |
+| 22 v1 URL forms + the six archive views | **22 / 22, 6 / 6**, 0 console / 0 page errors, no "real robot" | `final_head/v1_links_check.json` |
+| Console hygiene, all 14 public pages | 0 console errors, 0 page errors, 0 sockets on load; Live recovers to "connected" | `final_head/console_check.json` |
+| CI on PR #21 at `22be3dc` | 4 / 4 pass, including the six archive views in the browser job | `gh pr checks 21` |
+| CI on PR #21 at `b68c31d` | `coco_lab` venv, `lab_web` and browser jobs pass. `build-and-test` failed in its "Setup ROS 2 Jazzy" step: `curl: (22) … 404` fetching the ros-apt-source release, before any repository code ran. Re-run. | `gh pr checks 21` |
+
+The merge waits for every check on the PR's final head to pass (A.5).
