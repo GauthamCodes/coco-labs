@@ -253,13 +253,17 @@ class _Rows:
         self.by_tick.setdefault(tick, []).append((t, row))
 
 
-def convert(bag: str, case: dict, detail: str = 'summary',
+def convert(bag, case: dict, detail: str = 'summary',
             window: Optional[Tuple[float, float]] = None,
             world_to_map: Optional[Tuple[float, float]] = None,
             log_window: Optional[Tuple[int, int]] = None,
             source_root: Optional[str] = None, git_sha: str = '') -> Tuple[bytes, dict]:
     """
     Convert one recording; return ``(run file bytes, summary)``.
+
+    ``bag`` is a bag directory, or a list of them recorded on one simulation
+    clock (a session and a replay of it): their messages are merged in
+    ``t_world`` order and every file of every bag is cited.
 
     ``case`` is the Case File's spec (its id, title, lab, controller ...),
     written into the manifest as given. ``window`` keeps only messages with
@@ -289,7 +293,10 @@ def convert(bag: str, case: dict, detail: str = 'summary',
         'AnnotationBatch': 'coco.annotation.v1.AnnotationBatch',
     }.items()}
 
-    run_dir = os.path.dirname(os.path.abspath(bag))
+    bags = [bag] if isinstance(bag, str) else list(bag)
+    if log_window is not None and len(bags) != 1:
+        raise ValueError("a log window is one bag's log time: give one bag")
+    run_dir = os.path.dirname(os.path.abspath(bags[0]))
     if world_to_map is None:
         meta = os.path.join(run_dir, 'meta.json')
         if os.path.isfile(meta):
@@ -298,19 +305,32 @@ def convert(bag: str, case: dict, detail: str = 'summary',
         if not world_to_map:
             world_to_map = tuple(case.get('world_to_map', ()))
         if not world_to_map:
-            raise ValueError(f'no world_to_map for {bag}: none in meta.json or the case spec')
+            raise ValueError(f'no world_to_map for {bags[0]}: none in meta.json or the case spec')
     dx, dy = float(world_to_map[0]), float(world_to_map[1])
 
-    types = recorded_topics(bag)
-    used = [t for t in TOPICS if t in types]
-
-    # pass 1: the clock reference (odometry stamps against log times)
     def in_log(log_ns):
         return log_window is None or log_window[0] <= log_ns <= log_window[1]
 
-    ref = [(log_ns, stamp_s(m)) for _, m, log_ns in read_bag(bag, ['/model/coco/odometry'])
-           if stamp_s(m) > 0 and in_log(log_ns)]
-    clock = SimClock(ref) if ref else None
+    # every message of every bag, with its simulation time; per bag, a clock
+    # reference (odometry stamps against log times) for messages without stamps
+    events = []
+    used: List[str] = []
+    clocks_used = []
+    for bi, b in enumerate(bags):
+        types = recorded_topics(b)
+        mine = [t for t in TOPICS if t in types]
+        used += [t for t in mine if t not in used]
+        ref = [(log_ns, stamp_s(m)) for _, m, log_ns in read_bag(b, ['/model/coco/odometry'])
+               if stamp_s(m) > 0 and in_log(log_ns)]
+        clock = SimClock(ref) if ref else None
+        clocks_used.append(clock is not None)
+        for k, (topic, m, log_ns) in enumerate(read_bag(b, mine)):
+            if not in_log(log_ns):
+                continue
+            s_ = stamp_s(m)
+            t = s_ if s_ > 0 else (clock(log_ns) if clock is not None else log_ns * 1e-9)
+            events.append((t, bi, k, topic, m))
+    events.sort(key=lambda e: e[:3])
 
     thin = Thin(detail)
     rows: Dict[str, _Rows] = {k: _Rows() for k in CH}
@@ -320,14 +340,6 @@ def convert(bag: str, case: dict, detail: str = 'summary',
     last_state: Optional[str] = None
     states: List[str] = []
     counts: Dict[str, int] = {}
-
-    def when(msg, log_ns) -> float:
-        s = stamp_s(msg)
-        if s > 0:
-            return s
-        if clock is None:
-            return log_ns * 1e-9
-        return clock(log_ns)
 
     def put(ch: str, t: float, row: dict) -> None:
         nonlocal t0
@@ -350,10 +362,7 @@ def convert(bag: str, case: dict, detail: str = 'summary',
         c, s = math.cos(ot), math.sin(ot)
         return ox + c * x - s * y, oy + s * x + c * y, th + ot
 
-    for topic, m, log_ns in read_bag(bag, used):
-        if not in_log(log_ns):
-            continue
-        t = when(m, log_ns)
+    for t, _, _, topic, m in events:
         if window and not (window[0] <= t <= window[1]):
             if topic == '/tf':           # keep the transform current even before the window
                 pass
@@ -541,16 +550,26 @@ def convert(bag: str, case: dict, detail: str = 'summary',
 
     records.sort(key=lambda r: (r[0], r[1]))
     start = t0 if t0 is not None else 0.0
-    rel = os.path.relpath(os.path.abspath(bag), source_root) if source_root else bag
+
+    def rel(b):
+        return os.path.relpath(os.path.abspath(b), source_root) if source_root else b
+
+    if len(bags) == 1:
+        source = {'bag': rel(bags[0]), 'files': source_files(bags[0])}
+    else:
+        source = {'bags': [{'bag': rel(b), 'files': source_files(b)} for b in bags]}
     spec = {
         'case': case,
-        'source': {'bag': rel, 'files': source_files(bag)},
+        'source': source,
         'adapter': {'name': ADAPTER, 'version': ADAPTER_VERSION, 'detail': detail,
                     'topics': used, 'world_to_map': [dx, dy],
                     'window': list(window) if window else None,
                     'log_window_ns': list(log_window) if log_window else None, 't0': start,
-                    'clock': 'header stamps; log time via /model/coco/odometry'
-                             if clock else 'header stamps; log time as is'},
+                    'clock': ['header stamps; log time via /model/coco/odometry' if c
+                              else 'header stamps; log time as is' for c in clocks_used]
+                    if len(bags) > 1 else ('header stamps; log time via /model/coco/odometry'
+                                           if clocks_used[0] else
+                                           'header stamps; log time as is')},
     }
     spec_bytes = runid.canonical_json(spec)
     engines = [(ADAPTER, ADAPTER_VERSION), ('ros', 'jazzy')]
@@ -565,7 +584,8 @@ def convert(bag: str, case: dict, detail: str = 'summary',
         channels=[{'name': c, 'message': msgname_of.get(c, 'coco.envelope.v1.Manifest')}
                   for c in channels],
         provenance={'tool': f'{ADAPTER} {ADAPTER_VERSION}', 'git_sha': git_sha,
-                    'source': f'rosbag2 {rel}', 'note': f'detail={detail}'})
+                    'source': 'rosbag2 ' + ' + '.join(rel(b) for b in bags),
+                    'note': f'detail={detail}'})
     w = mcap_write.RunWriter()
     w.add(CH['manifest'], manifest, 0)
     for t, _, ch, msg in records:
@@ -573,7 +593,8 @@ def convert(bag: str, case: dict, detail: str = 'summary',
         w.add(ch, msg, int(round(max(t, 0.0) * 1e9)), sequence=seq0)
     data = w.finish(rid)
     summary = {'run_id': rid, 'bytes': len(data), 'messages': w.count, 'rows': counts,
-               't0': start, 'source_files': spec['source']['files'], 'topics': used}
+               't0': start, 'source_files': [f for b in bags for f in source_files(b)],
+               'topics': used}
     return data, summary
 
 

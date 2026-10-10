@@ -16,7 +16,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
 | Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
 | Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
-| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.2 done** (ADR 0005: committed, zstd, lazy-loaded; about 52 MB measured-estimate). Next: **M3.3**, the Case Files |
+| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.3 done** (100 Case Files, 41.4 MB, the evidence check extended, the model beside each). Next: **M3.4**, mission 7 |
 | Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
 
@@ -1218,6 +1218,69 @@ only. Read order for agents (README §9): `README.md`, this file,
   - **Evidence:** `v2/data/m3/m32/casefile_sizes.json`.
   - **No code changed;** suites as at M3.1.
   - **Next:** M3.3, convert and publish the Case Files.
+
+- **M3.3, the Case Files (2026-10-10).** [`v2/CASEFILES.md`](v2/CASEFILES.md).
+  - **100 recordings** converted by the adapter at `summary` detail and
+    packed with zstd into `lab_web/casefiles/`: **41,438,100 B**, the
+    largest 2.78 MB.
+
+    | Group | Case Files |
+    |---|---|
+    | Lab 1 runs | 3 |
+    | Lab 2 kidnaps | 20 + 3 void |
+    | robot_localization tour | 1 |
+    | Lab 3 tours | 2 |
+    | Lab 4 | 16 + the void |
+    | Lab 5 | 54 |
+
+    Plus the group-only views `astar-myth` and `run15` (the nine
+    `mislocalised_*` runs).
+  - **Every cited checksum checked** by its lab's own definition (73 / 73):
+    Lab 1 `dir_sha256`, Lab 4 `_sha_dir`, Lab 5 `bag_0.mcap`. Each
+    manifest also cites every source file by sha256.
+  - **The evidence check is extended to Case Files** (`casefiles.py`, run
+    by `build_catalog.py`, so CI):
+    - every explanation sentence carries a learner label and evidence that
+      resolves
+    - every unresolved question stays UNRESOLVED
+    - every RESULTS link resolves
+    - the inventory equals what the committed data names
+    - the ADR 0005 budget holds
+
+    Per-run facts are generated from the committed data and cite it.
+  - **Viewer:** `replay_case.ts`; `?view=arena&casefile=<id>` loads the
+    whole recording (every tick a seek away) on the Nav2 map, written once
+    as `generated/casefiles/world.grid.bin`. Its lens is chosen by what the
+    file holds.
+  - **Page:** `?view=casefiles`: the recording (STACK) beside the Arena model
+    (MODEL) on the same scenario, with `cfg=` / `goal=` / `kidnap=` taken
+    from the recording, plus gap chips, facts and the citation.
+  - **A defect found and fixed:** the Localise lens looked for the model's
+    estimator names only, so a Case File's AMCL / robot_localization /
+    wheel-odometry estimates were never drawn. Each redraw also walked back
+    up to 4,000 ticks: **seek 574 ms** on the robot_localization tour.
+    `FamilyStore` now indexes estimates by estimator (`latestWhere`,
+    `beforeWhere`, tested against the old walk at every tick), and the lens
+    draws the recorded estimators labelled as the stack's. The same seek is
+    now **31.8 ms**.
+  - **Measured** (GPU, balanced on AC, unthrottled; the emulated-4G
+    budgets are measured in M3.9):
+    - all 100 Case Files open as STACK recordings: first frame median
+      72 ms, max 279 ms; seek max 45 ms over 10 seeks each; 0 console
+      errors
+    - 9 / 9 pages, and 4 / 4 at phone width (390 px, no horizontal scroll)
+    - the model side takes, 4 / 4: Lab 5 the matching controller on the
+      scenario's path; Lab 4 the fetch starts; Lab 2 the robot is kidnapped
+      to the recorded target; Lab 1 the recorded goal is planned
+    - `console_check` (now with the Case Files): 0 errors on every page
+    - 22 / 22 URL forms and 6 / 6 `/v1/` views
+  - **Also:** `missions.py` exits 1 on an evidence problem (M2 review,
+    risk 6).
+  - **Evidence:** `v2/data/m3/m33/`.
+  - **Suites at the end of M3.3** (balanced, AC): packages
+    **3,466 / 0 / 0** (`coco_lab_ros` 143: +1, the multi-bag test), vitest
+    **358 / 0 / 0** (+11), build tools **146 / 0 / 0** (+12).
+  - **Next:** M3.4, mission 7.
 
 ## Capabilities (README §2), with evidence class
 

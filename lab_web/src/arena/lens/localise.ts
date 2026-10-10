@@ -7,6 +7,12 @@
  * (MCL's and the EKF's, translucent), and dead reckoning's pose -- all read
  * from the batches coco_lab.loc_arena emitted at the shown tick. Truth is
  * the M1 renderer's dashed outline; nothing here draws it.
+ *
+ * M3.3: a Case File (a recording of the full stack) carries the STACK's own
+ * estimators -- AMCL, robot_localization, wheel odometry -- named as
+ * recorded, with the frame they are in (`@map`, `@odom`). They are drawn the
+ * same way, labelled as theirs; an estimate still in the odom frame is not
+ * drawn on the map (it would be in the wrong place).
  */
 
 import { registerDrawer, registerHover, type DrawContext } from './draw';
@@ -14,17 +20,31 @@ import type { FamilyBatch } from './store';
 
 type Num = ArrayLike<number>;
 
-/** The latest estimate batch of one estimator at or before `tick`. */
+const CH = 'coco.estimate.pose.v1';
+/** The model's filters (coco_lab.loc_arena) and its dead reckoning. */
+const MODEL_FILTERS = ['mcl', 'ekf'];
+
+/** The latest estimate batch of one estimator at or before `tick` (indexed: a binary search). */
 export function latestEstimate(c: DrawContext, estimator: string): FamilyBatch | null {
-  for (let t = c.tick, guard = 0; guard < 4000; guard += 1) {
-    const b = c.session.families.latest('coco.estimate.pose.v1', t);
-    if (!b) return null;
-    const same = c.session.families.at('coco.estimate.pose.v1', b.tick).filter((x) => x.scalars.estimator === estimator);
-    if (same.length) return same.at(-1)!;
-    t = b.tick - 1;
-    if (t < 0) return null;
-  }
-  return null;
+  return c.session.families.latestWhere(CH, estimator, c.tick);
+}
+
+/** Pose estimators to draw: the model's filters, and any recorded one in the map frame. */
+export function poseEstimators(c: DrawContext): string[] {
+  const recorded = c.session.families.scalarValues(CH)
+    .filter((e) => !MODEL_FILTERS.includes(e) && e !== 'odometry' && !e.startsWith('wheel_odometry') && !e.endsWith('@odom'));
+  return [...MODEL_FILTERS, ...recorded];
+}
+
+/** Dead-reckoning estimators: the model's, and a recording's wheel odometry in the map frame. */
+export function odometryEstimators(c: DrawContext): string[] {
+  return ['odometry', ...c.session.families.scalarValues(CH).filter((e) => e.startsWith('wheel_odometry') && !e.endsWith('@odom'))];
+}
+
+function estimatorName(who: string): string {
+  if (who === 'odometry') return 'dead reckoning';
+  if (MODEL_FILTERS.includes(who)) return who.toUpperCase();
+  return `${who.replace(/@map$/, '')} (recorded, STACK)`;
 }
 
 function drawLocalise(c: DrawContext) {
@@ -39,7 +59,7 @@ function drawLocalise(c: DrawContext) {
   } else L.remove('particles');
   const poses: [number, number, number][] = [];
   const ells: { x: number; y: number; cxx: number; cxy: number; cyy: number }[] = [];
-  for (const who of ['mcl', 'ekf']) {
+  for (const who of poseEstimators(c)) {
     const b = latestEstimate(c, who);
     if (!b) continue;
     const g = (k: string) => (b.columns[k] as Num)[0];
@@ -48,10 +68,12 @@ function drawLocalise(c: DrawContext) {
   }
   if (poses.length) L.poses('estimate', poses, 'estimate', 0.3); else L.remove('estimate');
   if (ells.length) L.ellipses('covariance', ells, 'covariance', paletteAlpha(c, 'covarianceAlpha')); else L.remove('covariance');
-  const od = latestEstimate(c, 'odometry');
-  if (od) {
-    const g = (k: string) => (od.columns[k] as Num)[0];
-    L.poses('odometry', [[g('x'), g('y'), g('theta')]], 'odometry', 0.25);
+  const ods = odometryEstimators(c).map((who) => latestEstimate(c, who)).filter((b): b is FamilyBatch => !!b);
+  if (ods.length) {
+    L.poses('odometry', ods.map((od) => {
+      const g = (k: string) => (od.columns[k] as Num)[0];
+      return [g('x'), g('y'), g('theta')] as [number, number, number];
+    }), 'odometry', 0.25);
   } else L.remove('odometry');
   for (const id of ['particles', 'estimate', 'covariance', 'odometry']) L.setVisible(id, c.on(id));
 }
@@ -61,14 +83,15 @@ function paletteAlpha(c: DrawContext, key: 'particlesAlpha' | 'covarianceAlpha')
 }
 
 function hoverLocalise(c: DrawContext, x: number, y: number): string | null {
-  for (const who of ['mcl', 'ekf', 'odometry']) {
+  const dead = odometryEstimators(c);
+  for (const who of [...poseEstimators(c), ...dead]) {
     const b = latestEstimate(c, who);
     if (!b) continue;
     const g = (k: string) => (b.columns[k] as Num)[0];
     if (Math.hypot(g('x') - x, g('y') - y) < 0.2) {
       const sd = (k: string) => Math.sqrt(Math.max(0, g(k)));
-      return `${who === 'odometry' ? 'dead reckoning' : who.toUpperCase()} estimate (${g('x').toFixed(2)}, ${g('y').toFixed(2)}) m, θ ${g('theta').toFixed(2)}`
-        + (who !== 'odometry' ? ` · σx ${sd('cov_xx').toFixed(2)} σy ${sd('cov_yy').toFixed(2)} m` : '');
+      return `${estimatorName(who)} estimate (${g('x').toFixed(2)}, ${g('y').toFixed(2)}) m, θ ${g('theta').toFixed(2)}`
+        + (!dead.includes(who) ? ` · σx ${sd('cov_xx').toFixed(2)} σy ${sd('cov_yy').toFixed(2)} m` : '');
     }
   }
   const ps = c.session.families.latest('coco.localise.particles.set.v1', c.tick);

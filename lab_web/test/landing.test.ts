@@ -26,6 +26,15 @@ describe('routing (M2.10: v1 lab views retired, every v1 URL keeps working)', ()
     expect(route('?replay=lab1c_astar', 'arena')).toEqual({ app: 'arena' });
   });
 
+  it('opens the Case Files by name, and a Case File in the Arena (M3.3)', () => {
+    for (const q of ['?view=casefiles', '?view=casefiles&case=lab5-move', '?view=casefiles&case=run15&file=lab5_mislocalised_dwb_1']) {
+      expect(route(q, 'arena'), q).toEqual({ app: 'casefiles' });
+      expect(route(q, 'v1'), q).toEqual({ app: 'casefiles' });
+      expect(needsRunIds(q), q).toBe(false);
+    }
+    expect(route('?view=arena&casefile=lab4_b2_colours_s1_red', 'arena')).toEqual({ app: 'arena' });
+  });
+
   it('sends each bare v1 lab link to the mission that carries its claims', () => {
     expect(MISSION_FOR_VIEW).toEqual({ plan: 'find-a-path', localise: 'where-it-is', map: 'build-a-map', search: 'where-to-look', move: 'avoid-things' });
     for (const [view, mission] of Object.entries(MISSION_FOR_VIEW)) {

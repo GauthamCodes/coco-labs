@@ -252,3 +252,5 @@ if __name__ == '__main__':
             f.write(coverage_markdown(ms) + '\n')
     print(f'{len(ms)} missions, {sum(len(m["claims"]) for m in ms)} claims, {len(problems)} evidence problems, '
           f'{len(unc)} uncovered, {len(unk)} unknown')
+    # a problem is a failure here too, not only in build_catalog.py (M2 review, risk 6)
+    raise SystemExit(1 if problems or unc or unk else 0)

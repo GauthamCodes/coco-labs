@@ -9043,3 +9043,48 @@ and are not hidden.
 
 **Determinism unchanged where it was committed:** 25 of M2's 100 sessions
 (one fetch each), Pyodide-in-Node, 0 mismatched against M2's hashes.
+
+## COCO Lab v2 · M3.3: the Case Files (measured 2026-10-10)
+
+**Evidence class.** STACK: recordings of the full ROS 2 stack in Gazebo,
+converted. The timings are MODEL: the browser, on the laptop with
+NVIDIA 580.178.04, balanced on AC, headless Chromium 156 on the GPU,
+unthrottled. Evidence: `docs/v2/data/m3/m33/`; inventory and rules:
+`docs/v2/CASEFILES.md`.
+
+**What was converted.** 100 recordings from `~/coco_lab_runs` by
+`coco_lab_ros.adapter` (summary detail), repacked with zstd: **41,438,100 B**,
+the largest 2,780,072 B.
+
+| Set | Case Files |
+|---|---|
+| Lab 1 runs | 3 |
+| Lab 2 kidnaps | 23 (3 void) |
+| robot_localization tour | 1 |
+| Lab 3 tours | 2 |
+| Lab 4 | 17 (1 void) |
+| Lab 5 | 54 |
+
+**Source checksums.** 73 of 73 committed citations match, each by its
+lab's own definition: Lab 1 `export.dir_sha256` 3 / 3, Lab 4
+`p05_evidence._sha_dir` 16 / 16, Lab 5 `bag_0.mcap` 54 / 54. No recording
+was missing.
+
+**In the browser,** every Case File:
+
+| | Result |
+|---|---|
+| Opened as a STACK recording | 100 / 100 |
+| First frame (fetch, parse, every tick loaded, first drawn) | median 72 ms, max 279 ms |
+| Seek, 10 per Case File | max 45 ms |
+| Console errors | 0 |
+| Pages | 9 / 9 |
+| Phone width (390 px, no horizontal scroll) | 4 / 4 |
+| The model side takes the recording's scenario | 4 / 4 |
+
+**A defect found by the measurement.** The Localise lens knew only the
+model's estimator names. On a Case File it never drew the stack's
+estimates, and each redraw walked back up to 4,000 ticks: **seek 574 ms**
+on the robot_localization tour, **167 ms** on `lab3_s1_tour`. With
+estimates indexed by estimator, those seeks are now **31.8 ms** and
+**32.5 ms**.

@@ -518,3 +518,20 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   .gap-chip { border-color: #f0a050; }
   .gap-chip summary { color: #f0a050; }
 }
+
+/* M3.3 Case Files */
+.casefiles { max-width: 1200px; margin: 0 auto; padding: 16px; }
+.casefiles-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.casefiles-head h1 { font-size: 1.3rem; margin: 8px 0; }
+.casefile-groups, .casefile-list { list-style: none; padding: 0; }
+.casefile-groups li, .casefile-list li { padding: 6px 0; border-bottom: 1px solid var(--line, #ddd); overflow-wrap: anywhere; }
+.compare-panes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.compare-panes figure { margin: 0; min-width: 0; }
+.compare-panes figcaption { font-size: 0.85rem; margin-bottom: 4px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.compare-panes iframe { width: 100%; height: 520px; border: 1px solid var(--line, #ccc); border-radius: 6px; background: var(--bg, #fff); }
+.casefile-table { border-collapse: collapse; font-size: 0.85rem; display: block; overflow-x: auto; max-width: 100%; }
+.casefile-table th, .casefile-table td { border: 1px solid var(--line, #ddd); padding: 3px 6px; text-align: left; }
+@media (max-width: 760px) {
+  .compare-panes { grid-template-columns: 1fr; }
+  .compare-panes iframe { height: 420px; }
+}

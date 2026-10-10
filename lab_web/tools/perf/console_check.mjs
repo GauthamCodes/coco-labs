@@ -41,7 +41,10 @@ const STUB = args.stub ?? join(new URL('.', import.meta.url).pathname, 'stub_sta
 const MISSIONS = ['find-a-path', 'world-changes', 'where-it-is', 'build-a-map', 'avoid-things', 'where-to-look'];
 const VIEWS = [['arena', ''], ...['localise', 'map', 'move', 'decide'].map((l) => [`arena:${l}`, `?view=arena&lens=${l}`]),
   ['learn', '?view=learn'], ...MISSIONS.map((m) => [`learn:${m}`, `?view=learn&mission=${m}&beat=0`]),
-  ['live', '?view=live'], ['v1-archive', 'v1/']];
+  ['live', '?view=live'], ['v1-archive', 'v1/'],
+  // M3.3: the Case Files (a group page, and one opened in the Arena as a recording)
+  ['casefiles', '?view=casefiles'], ['casefiles:lab5-move', '?view=casefiles&case=lab5-move'],
+  ['casefile:lab4_b2_colours_s1_red', '?view=arena&casefile=lab4_b2_colours_s1_red']];
 mkdirSync(OUT, { recursive: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const origin = new URL(SITE).origin;

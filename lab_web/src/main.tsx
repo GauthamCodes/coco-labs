@@ -22,6 +22,8 @@ function go(r: Route) {
     void import('./arena/ArenaApp').then(({ ArenaApp }) => render(<ArenaApp />));
   } else if (r.app === 'learn') {
     void import('./learn/LearnApp').then(({ LearnApp }) => render(<LearnApp />));
+  } else if (r.app === 'casefiles') {
+    void import('./casefiles/CaseFilesApp').then(({ CaseFilesApp }) => render(<CaseFilesApp />));
   } else {
     void import('./ui/LiveApp').then(({ LiveApp }) => render(<LiveApp />));
   }

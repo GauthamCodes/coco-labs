@@ -21,9 +21,10 @@ function trajectory(c: DrawContext): number[] {
   const est = header ? String(header.estimator) : '';
   const name = est === 'truth' || est === 'odometry' || est === 'belief' ? `map:${est}` : est;
   const seg: number[] = [];
+  if (!name) return seg;
   let px = NaN; let py = NaN;
-  for (const b of c.session.families.before('coco.estimate.pose.v1', c.tick)) {
-    if (b.scalars.estimator !== name) continue;
+  // that estimator's own batches (M3.3: indexed, not every estimator's)
+  for (const b of c.session.families.beforeWhere('coco.estimate.pose.v1', name, c.tick)) {
     const x = (b.columns.x as Num)[0]; const y = (b.columns.y as Num)[0];
     if (!Number.isNaN(px)) seg.push(px, py, x, y);
     px = x; py = y;

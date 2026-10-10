@@ -26,6 +26,16 @@ import { wallMs, type InputRow, type PlanInfo, type Tick, type World } from './p
 import { currentTheme, PALETTES } from './render/palette';
 import { PlanStore, type CellInfo } from './render/planStore';
 import { parseConverted, type ConvertedRun } from './replay';
+import { caseLens } from './replay_case';
+import { fromBinary } from '@bufbuild/protobuf';
+import { WorldGridSchema } from '../schemas/gen/coco/world/v1/world_pb';
+
+/** "x,y" or "x,y,theta" from a URL parameter (M3.3: a comparison's goal or kidnap target), else null. */
+function parseXY(v: string | null, n: 2 | 3): number[] | null {
+  if (!v) return null;
+  const xs = v.split(',').map(Number);
+  return xs.length === n && xs.every(Number.isFinite) ? xs : null;
+}
 import { ArenaRenderer, DEFAULT_LAYERS, type LayerVisibility } from './render/Renderer';
 import { ArenaSession } from './session';
 import { decodeRun, shareUrl, type SharedRun } from './share';
@@ -72,6 +82,13 @@ export function ArenaApp() {
   const attractPolicy: AttractPolicy = ATTRACT_POLICIES.includes(params.get('attract') as AttractPolicy)
     ? params.get('attract') as AttractPolicy : DEFAULT_ATTRACT_POLICY;
   const recId = replayParam && /^[a-z0-9_]{1,64}$/.test(replayParam) ? replayParam : null;
+  // M3.3: a Case File (a recording of the full stack, converted by the ROS-to-event adapter)
+  const caseParam = recId ? null : params.get('casefile');
+  const caseId = caseParam && /^[a-z0-9_]{1,64}$/.test(caseParam) ? caseParam : null;
+  const recordedId = recId ?? caseId;
+  // M3.3: the model side of a Case File comparison starts from the recording's own goal or kidnap target
+  const urlGoal = parseXY(params.get('goal'), 2);
+  const urlKidnap = parseXY(params.get('kidnap'), 3);
   // a Learn mission's beat (M2.8): its settings, sent once the live model is up, in place of the lens's defaults
   const cfgLines = cfgFromParams(params);
   const allLayers = params.get('layers') === 'all';
@@ -81,7 +98,7 @@ export function ArenaApp() {
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const [world, setWorld] = useState<World | null>(null);
   const [liveReady, setLiveReady] = useState(false);
-  const [mode, setModeState] = useState<Mode>(runParam ? 'replay' : recId ? 'recording' : 'attract');
+  const [mode, setModeState] = useState<Mode>(runParam ? 'replay' : recordedId ? 'recording' : 'attract');
   const [session, setSession] = useState<ArenaSession | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [inspect, setInspect] = useState(false);
@@ -231,11 +248,19 @@ export function ArenaApp() {
     void fetch(`${import.meta.env.BASE_URL}generated/v2/index.json`, { credentials: 'omit' })
       .then((x) => (x.ok ? x.json() : { runs: [] })).then((j) => setRuns(j.runs ?? [])).catch(() => {});
     if (replayParam && !recId) setError(`no recorded run "${replayParam}"`);
-    // a converted Lab 1 run: played, never simulated
-    if (recId) {
-      void fetch(`${import.meta.env.BASE_URL}generated/v2/${recId}.mcap`, { credentials: 'omit' })
-        .then((x) => { if (!x.ok) throw new Error(`no recorded run "${recId}"`); return x.arrayBuffer(); })
-        .then((b) => parseConverted(new Uint8Array(b)))
+    if (caseParam && !caseId) setError(`no Case File "${caseParam}"`);
+    // a converted Lab 1 run, or a Case File: played, never simulated
+    if (recordedId) {
+      const base = import.meta.env.BASE_URL;
+      const fetchBytes = (url: string, what: string) => fetch(url, { credentials: 'omit' })
+        .then((x) => { if (!x.ok) throw new Error(what); return x.arrayBuffer(); }).then((b) => new Uint8Array(b));
+      if (caseId) perf.mark('casefile_fetch_start', wallMs());
+      const loaded = caseId
+        ? Promise.all([fetchBytes(`${base}generated/casefiles/${caseId}.mcap`, `no Case File "${caseId}"`),
+          fetchBytes(`${base}generated/casefiles/world.grid.bin`, 'the Case Files\' map is missing')])
+          .then(([b, g]) => parseConverted(b, fromBinary(WorldGridSchema, g)))
+        : fetchBytes(`${base}generated/v2/${recId}.mcap`, `no recorded run "${recId}"`).then((b) => parseConverted(b));
+      void loaded
         .then(async (rec) => {
           await outlineP;
           const s = new ArenaSession(rec.world.width, rec.world.height, rec.world.dt);
@@ -243,14 +268,26 @@ export function ArenaApp() {
           setWorldOnce(rec.world, rec.occupancy);
           setSession(s);
           setConverted(rec);
-          setLayers((l) => ({ ...l, lidar: false, footprint: false, ...(rec.evidence === 'MODEL' ? { robot: false, truth: false } : {}) }));
+          // a Case File's LiDAR is the stack's recorded scans: shown when it has them
+          setLayers((l) => ({ ...l, lidar: !!caseId && rec.world.lidar.samples > 0, footprint: false,
+            ...(rec.evidence === 'MODEL' ? { robot: false, truth: false } : {}) }));
+          if (caseId) {
+            setLens(caseLens(rec));
+            // a Case File is loaded whole, then played from its start: every moment is a seek away
+            // (mission 7 and the detective challenge scrub straight to one)
+            const p = attract.current.player;
+            while (p.step()) { /* every recorded tick into the session's history */ }
+            s.seekTick(rec.ticks[0]?.tick ?? 1);
+            s.playing = true;
+            perf.mark('recording_ready', wallMs());
+          }
           // a converted Lab 5 drive (M2.7) is shown through the Move lens: Nav2's own candidates
-          if (rec.headers?.some((h) => h.channel === 'coco.control.local.header.v1')) setLens('move');
+          else if (rec.headers?.some((h) => h.channel === 'coco.control.local.header.v1')) setLens('move');
         })
-        .catch((e) => setError(`recorded run: ${(e as Error).message}`));
+        .catch((e) => setError(`${caseId ? 'Case File' : 'recorded run'}: ${(e as Error).message}`));
     }
     // attract: the recording (not in a replay), started as the policy says (M2.0, measured)
-    if (!runParam && !recId) {
+    if (!runParam && !recordedId) {
       const startAttract = attractPolicy === 'after_live' ? perf.when('arena_ready')
         : attractPolicy === 'after_pyodide' ? perf.when('pyodide_ready') : Promise.resolve(0);
       void startAttract
@@ -320,7 +357,7 @@ export function ArenaApp() {
       rr.start();
     }
 
-    if (!recId) client.current = new ArenaClient({
+    if (!recordedId) client.current = new ArenaClient({
       onWorld: (w, occ) => {
         const s = new ArenaSession(w.width, w.height, w.dt);
         live.current = s;
@@ -548,6 +585,14 @@ export function ArenaApp() {
     cfgSent.current = true;
     for (const c of cfgLines) sendConfig(c);
   }, [liveReady, mode, sendConfig]); // eslint-disable-line react-hooks/exhaustive-deps -- cfgLines is the URL's, fixed
+  // M3.3: a Case File comparison's model side -- the recording's own kidnap target, then its goal, once, as inputs
+  const urlInputsSent = useRef(false);
+  useEffect(() => {
+    if ((!urlGoal && !urlKidnap) || urlInputsSent.current || !liveReady || mode === 'replay' || mode === 'recording') return;
+    urlInputsSent.current = true;
+    if (urlKidnap) queue.current.push({ kind: 'kidnap', x: urlKidnap[0], y: urlKidnap[1], theta: urlKidnap[2], has_theta: true });
+    if (urlGoal) goal(urlGoal[0], urlGoal[1]);
+  }, [liveReady, mode, goal]); // eslint-disable-line react-hooks/exhaustive-deps -- the URL's, fixed
   // Focus: everything outside the lens dims (the robot and truth never do)
   useEffect(() => {
     r.current?.setFocusDim(!focus || lens === 'plan' ? 1 : 0.25, focus ? 0.5 : 1);

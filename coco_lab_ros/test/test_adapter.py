@@ -282,6 +282,21 @@ def test_the_rl_bag_keeps_its_odom_frame_without_a_transform():
     assert sum(len(b.x) for b in est) == 50
 
 
+def test_two_bags_on_one_clock_merge_in_time_order_and_both_are_cited():
+    # a session and a replay of it (the robot_localization tour): one Case File
+    data, summary = A.convert([LAB2, RL], CASE, 'full', source_root=BAGS)
+    ch = decode(data)
+    est = collections.Counter(b.estimator for _, b in ch['coco.estimate.pose.v1'] for _ in b.x)
+    assert est['robot_localization@odom'] == 50 and sum(est.values()) == 50 + 151
+    (_, m), = ch['coco.envelope.manifest.v1']
+    spec = json.loads(m.spec)
+    assert [x['bag'] for x in spec['source']['bags']] == ['lab2_kidnap_recovery_k1',
+                                                          'lab2_rl_fidelity_s1']
+    assert len(summary['source_files']) == 4
+    with pytest.raises(ValueError, match='one bag'):
+        A.convert([LAB2, RL], CASE, 'full', log_window=(0, 1), source_root=BAGS)
+
+
 def test_a_run_without_world_to_map_is_refused():
     with pytest.raises(ValueError, match='world_to_map'):
         A.convert(RL, {'id': 'x'}, 'full', source_root=BAGS)
