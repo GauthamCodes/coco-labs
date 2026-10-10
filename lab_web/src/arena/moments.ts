@@ -9,9 +9,11 @@
  * - **divergence**: the first tick at which the stack's belief about where
  *   the robot is lies more than {@link DIVERGENCE_M} from ground truth at
  *   that tick, the belief being the latest recorded at or before the tick.
- *   The belief is the stack's map-frame estimate (AMCL) when the recording
- *   has one; when it does not, it is the first pose of each recorded global
- *   plan, which Nav2 starts at the pose it believes the robot is at.
+ *   The belief is AMCL's pose when the recording has it; else another
+ *   map-frame estimate (an odometry pose re-expressed through the recorded
+ *   map -> odom transform: what Nav2 reads as the robot's pose); else the
+ *   first pose of each recorded global plan, which Nav2 starts at the pose
+ *   it believes the robot is at. One source per recording, never a mix.
  *   Recordings that hold neither have no divergence moment, and say so.
  * - **refusal**: the first tick at which the stack recorded that it gave up:
  *   a `/lab/status` line with phase `follow_failed`, or a mission
@@ -61,6 +63,10 @@ export function findMoments(rec: MomentsInput): Moments {
       }
     }
   }
+  // one source: AMCL if recorded, else the first map-frame estimator by name
+  const names = [...new Set(beliefs.map((b) => b.source))].sort();
+  const one = names.includes('amcl') ? 'amcl' : names[0];
+  beliefs = beliefs.filter((b) => b.source === one);
   let belief_source: BeliefSource = 'estimate';
   if (!beliefs.length) {
     belief_source = 'global plan start';

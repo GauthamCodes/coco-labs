@@ -64,6 +64,16 @@ describe('findMoments', () => {
     expect(findMoments(r).divergence?.tick).toBe(12);
   });
 
+  it('uses AMCL when it is recorded, never a mix of estimators', () => {
+    // wheel odometry re-expressed in the map is off from tick 2; AMCL only from tick 6
+    const r = rec(10, () => [0, 0], { families: new Map([
+      [1, [est('amcl', 0, 0)]], [2, [est('wheel_odometry@map', 5, 0)]], [6, [est('amcl', 3, 0)]]]) });
+    expect(findMoments(r).divergence).toMatchObject({ tick: 6, source: 'amcl' });
+    // without AMCL, the map-frame estimate is the belief
+    const r2 = rec(10, () => [0, 0], { families: new Map([[2, [est('wheel_odometry@map', 5, 0)]]]) });
+    expect(findMoments(r2).divergence).toMatchObject({ tick: 2, source: 'wheel_odometry@map' });
+  });
+
   it("ignores an odometry-frame estimate: it is not a belief about the map", () => {
     const r = rec(5, () => [0, 0], { families: new Map([[2, [est('robot_localization@odom', 5, 5)]]]) });
     const m = findMoments(r);

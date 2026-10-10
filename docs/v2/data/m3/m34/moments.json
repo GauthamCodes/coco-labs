@@ -230,6 +230,66 @@
     "source": "/mission/state",
     "what": "ABORT (RETURN_FAILED)"
    }
+  },
+  "lab2_kidnap_shipped_k2": {
+   "ticks": 2776,
+   "belief_source": "estimate",
+   "beliefs": 362,
+   "divergence": {
+    "tick": 632,
+    "t_world": 64.8,
+    "error_m": 7.615773105863909,
+    "source": "amcl",
+    "belief": [
+     0,
+     0
+    ],
+    "truth": [
+     -3,
+     7
+    ]
+   },
+   "refusal": null
+  },
+  "lab2_kidnap_recovery_k3": {
+   "ticks": 2782,
+   "belief_source": "estimate",
+   "beliefs": 364,
+   "divergence": {
+    "tick": 648,
+    "t_world": 66.4,
+    "error_m": 15.43534904043313,
+    "source": "amcl",
+    "belief": [
+     0,
+     0
+    ],
+    "truth": [
+     13.999999999999998,
+     6.499999999999999
+    ]
+   },
+   "refusal": null
+  },
+  "lab2_kidnap_shipped_k5": {
+   "ticks": 2778,
+   "belief_source": "estimate",
+   "beliefs": 362,
+   "divergence": {
+    "tick": 645,
+    "t_world": 66.2,
+    "error_m": 7.76208734813001,
+    "source": "amcl",
+    "belief": [
+     0,
+     0
+    ],
+    "truth": [
+     1.9999999999999951,
+     -7.5
+    ]
+   },
+   "refusal": null
   }
  }
 }

@@ -606,6 +606,15 @@ def build(out=OUT, wheel='build', with_benchmark=True, with_localise=True,
         os.makedirs(os.path.join(out, 'casefiles'), exist_ok=True)
         with open(os.path.join(out, 'casefiles', 'cases.json'), 'w') as f:
             f.write(json.dumps(casefiles.site_json(*casefiles.load()), indent=1, sort_keys=True) + '\n')
+    # M3.5: Play's levels, as make_play_levels.py computed them (its --check, which
+    # re-simulates the reference drives, runs in test_play_levels.py, not here)
+    play_levels = os.path.join(common.LAB_WEB, 'play', 'levels.json')
+    with open(play_levels, encoding='utf-8') as f:
+        levels = json.load(f)
+    if levels.get('schema') != 'coco_lab.play.levels.v1' or set(levels.get('order', ())) != set(levels['challenges']):
+        raise SystemExit('play: lab_web/play/levels.json is not coco_lab.play.levels.v1 with every challenge in order')
+    os.makedirs(os.path.join(out, 'play'), exist_ok=True)
+    shutil.copyfile(play_levels, os.path.join(out, 'play', 'levels.json'))
     # M2.9: the "model gap" chips, rendered from the committed fidelity measurement
     with open(os.path.join(out, 'fidelity.json'), 'w') as f:
         f.write(json.dumps({'schema': 'lab_web.fidelity', 'version': '1.0', 'report': 'docs/v2/FIDELITY_v1.md',

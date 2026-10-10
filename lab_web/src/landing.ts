@@ -25,7 +25,7 @@
 /** What the bare URL opens (the build-time switch). */
 export type Landing = 'arena' | 'v1';
 /** The code-split apps this build serves. */
-export type AppId = 'arena' | 'learn' | 'live' | 'casefiles';
+export type AppId = 'arena' | 'learn' | 'live' | 'casefiles' | 'play';
 /** Open an app here, or go to a URL relative to the site root. */
 export type Route = { app: AppId } | { redirect: string };
 
@@ -53,6 +53,7 @@ export function route(search: string, landing: Landing, runIds: ReadonlySet<stri
   if (view === 'learn') return { app: 'learn' };
   if (view === 'live') return { app: 'live' };
   if (view === 'casefiles') return { app: 'casefiles' }; // M3.3
+  if (view === 'play') return { app: 'play' }; // M3.5
   if (q.has('bundle') || q.has('v')) {
     const id = q.get('bundle') ?? '';
     const plain = [...q.keys()].every((k) => PLAIN_LAB1.has(k)) && (q.get('v') ?? '1') === '1'
@@ -73,5 +74,5 @@ export function route(search: string, landing: Landing, runIds: ReadonlySet<stri
 /** Whether routing `search` needs the converted-run index first. */
 export const needsRunIds = (search: string): boolean => {
   const q = new URLSearchParams(search);
-  return !['arena', 'learn', 'live', 'casefiles'].includes(q.get('view') ?? '') && (q.has('bundle') || q.has('v'));
+  return !['arena', 'learn', 'live', 'casefiles', 'play'].includes(q.get('view') ?? '') && (q.has('bundle') || q.has('v'));
 };

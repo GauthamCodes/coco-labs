@@ -17,6 +17,10 @@ from coco_lab.arena import Arena, InputEvent, LOOP_KINDS, PLANNERS
 
 _arena = None
 _post_family = None
+#: the World Spec the Arena was built from (Play's map challenge re-simulates on it)
+_spec_json = None
+#: M3.5: a map challenge's distance budget, while one is being driven
+_budget = None
 
 
 def emit_family(channel, tick, columns, scalars):
@@ -51,8 +55,10 @@ def emit_header(channel, header):
 def init(spec_json, seed, planner, post_batch, batch_size=2048,
          post_family=None):
     """Build the Arena; return (world JSON, occupancy bytes)."""
-    global _arena, _post_family
+    global _arena, _post_family, _spec_json, _budget
     _post_family = post_family
+    _spec_json = spec_json
+    _budget = None
 
     def hook(columns, meta):
         post_batch(columns, json.dumps(meta))
@@ -131,6 +137,10 @@ def _tick_json(t, inputs):
     extra = {} if t.belief is None else {'truth': list(t.pose)}
     if t.actors:
         extra['actors'] = [list(a) for a in t.actors]
+    if _budget is not None:
+        _budget.update(t.pose)
+        extra['play'] = {'path_m': _budget.path_m, 'budget_m': _budget.budget_m,
+                         'done': _budget.done}
     mv = _arena.subsystems.get('move')
     given = mv.take_path() if mv is not None else None
     if given:
@@ -208,3 +218,29 @@ def finish():
     """Finish the tick; return (tick JSON, ranges as float32)."""
     t = _arena.finish_step()
     return _tick_json(t, _pending_rows), array('f', t.ranges)
+
+
+# -- Play (M3.5): coco_lab.play scores; this only passes JSON -------------------
+
+def play(request_json):
+    """
+    Play's one entry point: ``view`` a level, ``score`` a submission, or
+    ``map_begin`` a map challenge's budget on the live Arena.
+
+    Every score is :func:`coco_lab.play.score` -- the function ``coco
+    verify`` runs in Node -- on the submission alone: a map drive is
+    re-simulated from its input log, never read off the live Arena.
+    """
+    global _budget
+    from coco_lab import play as p
+    req = json.loads(request_json)
+    op = req.get('op')
+    if op == 'view':
+        return json.dumps(p.view(req['levels'], req['challenge'], req['level']))
+    if op == 'score':
+        return json.dumps(p.score(req['levels'], req['submission'],
+                                  json.loads(_spec_json)))
+    if op == 'map_begin':
+        _budget = p.MapBudget(float(req['budget_m']), _arena.pose)
+        return json.dumps({'path_m': 0.0, 'budget_m': _budget.budget_m})
+    raise ValueError(f'unknown play op {op!r}')

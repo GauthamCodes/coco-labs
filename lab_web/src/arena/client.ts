@@ -54,6 +54,11 @@ export class ArenaClient {
           else ev.onPlanBatch?.(d.meta, d.columns);
         } else if (d.type === 'compare_done') {
           ev.onCompareDone?.(d.result);
+        } else if (d.type === 'play_done') {
+          const w = this.playWaiting.get(d.id);
+          this.playWaiting.delete(d.id);
+          if (d.error !== undefined) w?.reject(new Error(d.error));
+          else w?.resolve(JSON.parse(d.result ?? 'null'));
         } else if (d.type === 'tick') {
           this.tick = d.tick.tick;
           perf.tick(d.stepMs);
@@ -111,6 +116,21 @@ export class ArenaClient {
   /** Two planners on the same start, goal and seed; the model is unchanged. */
   compare(a: string, b: string, x: number, y: number): void {
     this.worker.postMessage({ type: 'compare', a, b, x, y });
+  }
+
+  private playNext = 1;
+  private readonly playWaiting = new Map<number, { resolve: (v: unknown) => void; reject: (e: Error) => void }>();
+
+  /**
+   * M3.5: ask coco_lab.play (in the worker) to view a level, score a
+   * submission or begin a map budget. Queued behind any step in flight.
+   */
+  play<T>(request: Record<string, unknown>): Promise<T> {
+    const id = this.playNext++;
+    return new Promise<T>((resolve, reject) => {
+      this.playWaiting.set(id, { resolve: resolve as (v: unknown) => void, reject });
+      this.worker.postMessage({ type: 'play', id, request: JSON.stringify(request) });
+    });
   }
 
   close(): void {

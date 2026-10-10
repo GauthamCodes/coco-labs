@@ -18,6 +18,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { ATTRACT_POLICIES, AttractPlayer, DEFAULT_ATTRACT_POLICY, parseRecording, type AttractPolicy, type Recording } from './attract';
 import { ArenaClient, type PyodideSource } from './client';
+import { ArenaPlayPanel } from '../play/ArenaPlayPanel';
 import { Compare, type CompareState } from './Compare';
 import { Joystick } from './Joystick';
 import { PerfOverlay } from './PerfOverlay';
@@ -93,6 +94,11 @@ export function ArenaApp() {
   const cfgLines = cfgFromParams(params);
   const allLayers = params.get('layers') === 'all';
   const missionBack = missionBackLink(params);
+  // M3.5: a Play challenge played here (map the arena; the Case File detective)
+  const playParam = params.get('play');
+  const playLevel = params.get('pl');
+  const playOn = (playParam === 'map-the-arena' || playParam === 'case-file-detective')
+    && !!playLevel && /^[a-z0-9-]{1,64}$/.test(playLevel);
   const gaps = useGaps(import.meta.env.BASE_URL);
   const cfgInitial = Object.fromEntries(cfgLines.map((c) => [c.slice(0, c.indexOf('=')), c.slice(c.indexOf('=') + 1)]));
   const canvas = useRef<HTMLCanvasElement | null>(null);
@@ -648,6 +654,9 @@ export function ArenaApp() {
       {missionBack && <p className="mission-back"><a href={`${import.meta.env.BASE_URL}${missionBack}`} data-testid="mission-back">
         ← Back to the mission</a></p>}
       {error && <p className="error" role="alert">{error}</p>}
+      {playOn && <ArenaPlayPanel challenge={playParam!} levelId={playLevel!}
+        live={playParam === 'map-the-arena' ? client.current : null} liveReady={liveReady}
+        lastTick={() => lastTick.current} shownTick={() => session?.shownTick?.tick ?? null} log={() => log.current} />}
       <p className={`arena-banner ${mode}`} data-testid="arena-mode" data-mode={mode}>
         {mode === 'attract' && (liveReady
           ? 'A recorded demo (MODEL, made when this site was built). Click or tap the map to give COCO a goal — the live model takes over.'

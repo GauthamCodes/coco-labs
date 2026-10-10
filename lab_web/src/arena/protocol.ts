@@ -34,7 +34,9 @@ export interface AmendRequest { type: 'amend'; inputs: InputRow[] }
 export interface CompareRequest { type: 'compare'; a: string; b: string; x: number; y: number }
 /** M2.2: load a lens's Python pack (tools/arena_packs.json) if it is not loaded yet. */
 export interface LoadPackRequest { type: 'load_pack'; pack: string }
-export type ToWorker = BootRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest;
+/** M3.5: Play -- coco_lab.play, through arena_glue.play (a JSON request; the reply is JSON). */
+export interface PlayRequest { type: 'play'; id: number; request: string }
+export type ToWorker = BootRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest;
 
 export interface CompareSide { planner: string; status: string; summary: Record<string, number | string | null>; resolution: number }
 
@@ -65,6 +67,8 @@ export interface Tick {
   actors?: [number, number, number][];
   /** M2.5: a global path given whole on this tick (x0, y0, x1, y1, ...): a Lab 5 scenario's frozen path. */
   path?: number[];
+  /** M3.5: a map challenge's ground-truth distance against its budget (coco_lab.play.MapBudget). */
+  play?: { path_m: number; budget_m: number; done: boolean };
 }
 
 /** SearchEventBatch columns (coco.plan.search.events.v1), as typed arrays. */
@@ -96,4 +100,5 @@ export type FromWorker =
       columns: SearchColumns; at: number }
   | { type: 'tick'; tick: Tick; ranges: Float32Array; stepMs: number; at: number }
   | { type: 'compare_done'; result: { A: CompareSide; B: CompareSide } }
+  | { type: 'play_done'; id: number; result?: string; error?: string }
   | { type: 'error'; stage: string; message: string };
