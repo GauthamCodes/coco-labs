@@ -25,7 +25,7 @@ over, this is where it would show.
 |---|---|---|
 | 60 fps: fetch mission, all lenses' default layers, + 2,000 particles, 1,000 × 56-step rollouts, a full grid (rebuilt at 10 Hz) | median 61, minimum 60 fps over 20 s | passes |
 | Goal after a planner change: median ≤ 100 ms, max ≤ 500 ms | median 43.7, max 66.5 ms, 25/25 < 100 | passes |
-| Seek ≤ 100 ms on a 5-minute fetch-mission recording | max 33.1 ms to the redrawn frame (call ≤ 0.3 ms), 10 seeks over 3,022 ticks | passes |
+| Seek ≤ 100 ms on a 5-minute fetch-mission recording | max 33.1 ms to the redrawn frame (call ≤ 0.3 ms), 10 seeks over 3,022 ticks (a recording in which 1 of 4 fetches completed; M2_RESULTS "Found while measuring") | passes |
 | First visible computation ≤ 10 s, emulated 4G | median 3,005 ms (2,956–3,246), n = 10 | passes |
 | Live model ready ≤ 10 s (Plan lens), emulated 4G | median 7,870 ms (7,837–8,158), n = 10 | passes |
 | Other lenses ready within 3 s of selection, warm cache | slowest pack 205 ms (cold 207 ms) | passes |

@@ -8936,3 +8936,72 @@ Files: `docs/v2/data/m2/m211/`; summary and evidence per row:
   recording only the first of four fetches completed: each later fetch
   started from the pose where DWA had stalled (`no_valid_control`) and
   stalled again — M2.6's measured DWA weakness, not a restart defect.
+
+## COCO Lab v2 · M2 independent review: re-measured after the reboot (NVIDIA 580.178.04)
+
+**MODEL** (the Arena in the browser), measured 2026-10-10 by the M2 review
+session (`docs/v2/reviews/M2_REVIEW.md`). The site was the review clone's
+production build of `330df44` (PR #21 as submitted), served like Pages, with
+`/v1/` built from `9f58b83`.
+
+**Conditions:**
+- laptop: i5-13420H, 12 threads, RTX 4050 laptop GPU
+- **NVIDIA kernel module and userspace both 580.178.04**, after the reboot
+  that ended M2.11's library/module mismatch
+- balanced power profile, on AC, governor `powersave`, load 1.6–2.1
+- headless Chromium 156.0.8078.4 with the harnesses' GPU flags, renderer
+  **`ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop
+  GPU/PCIe/SSE2, OpenGL ES 3.2)`**
+- the renderer was recorded by every fps and latency run, and by a probe
+  at the start and end of the session for seek and cold start, whose
+  harnesses do not record it
+
+Evidence: `docs/v2/data/m2/review/remeasure/`.
+
+| Budget | M2.11 (before the reboot) | Re-measured (580.178.04) | Verdict |
+|---|---|---|---|
+| 60 fps: the fetch mission, all lenses' default layers, plus the M2 stress layers | 60–61 fps in each of 20 s (1 run), p95 frame 17.2–20.6 ms | **58–62 fps in every one of 200 s** (10 runs × 20 s, run medians 60–61). Per-second p95 frame median 18.6 ms, range 16.9–33.0; 43 of 200 seconds above 21 ms, clustered at seconds 12–14 and 18–19 of the scene | met (frame-time tail wider than one run showed) |
+| M1's stress scene | 60–61 fps, p95 17.1–17.4 ms | **60–61 fps in every one of 100 s** (10 runs × 10 s), p95 16.9–18.1 ms | met |
+| Goal after a planner change: median ≤ 100 ms, max ≤ 500 ms | median 43.7, p95 65.6, max 66.5 ms, 25 / 25 under 100 | **median 40.3, p95 65.6, max 66.8 ms**, 25 / 25 under 100 (min 19) | met |
+| Seek ≤ 100 ms on a 5-minute fetch-mission recording | max 33.1 ms to the redrawn frame (10 seeks) | **max 35.4 ms** over 30 seeks in 3 recordings (3,015–3,018 ticks); the seek call itself ≤ 0.3 ms | met |
+| First visible computation ≤ 10 s, emulated 4G | median 3,005 ms (2,956–3,246) | **median 3,201 ms (2,969–3,222)**, n = 10 | met |
+| Live model ready ≤ 10 s, emulated 4G | median 7,870 ms (7,837–8,158) | **median 8,062 ms (7,836–8,129)**, n = 10 | met |
+| Unthrottled: first computation / model ready | 615 / 2,628 ms | **613 (369–664) / 2,578 (2,165–2,765) ms**, n = 10 | — |
+
+**Also measured in the review:**
+- **Determinism:** the first 25 of M2's 100 committed sessions gave
+  3,750 ticks per engine and 0 mismatched across Pyodide-in-Node,
+  Chromium 156, Firefox 157 and WebKit 27.2 (digest `17208816cdd3`), and
+  0 against M2's committed hashes. WebKit ran on NVIDIA EGL.
+- **Console hygiene:** 0 console and 0 page errors on all 14 public pages.
+- **Links:** 22 / 22 v1 URL forms, plus the six `/v1/` views.
+
+**The seek recording's fetch outcomes are not a fixed property.** The
+recording is driven in real time: each next fetch starts at the tick the
+page saw the previous one end, which here was tick 1688 or 1689. That one
+tick changes whether DWA stalls.
+
+| Recording | red | green | blue | yellow |
+|---|---|---|---|---|
+| M2.11 | done | failed | failed | running at the end |
+| Review 1 | done | done | running at the end | — |
+| Review 2 | done | done | running at the end | — |
+| Review 3 | done | failed | done | running at the end |
+
+So M2.11's "1 of 4 completed" is one sample. Determinism is not affected:
+the inputs differ, not the model.
+
+**The `/v1/` archive as M2 built it** (from the tag's commit `3571169`)
+failed 6 of 6 of its own views:
+- every Live tab read plain "Live"
+- the Search lab said "real robot"
+- the Live view logged WebSocket errors on load
+
+Built from `9f58b83` (the M0 merge, owner's ruling 2026-10-10), 6 / 6 pass
+(`docs/v2/data/m2/review/links/`).
+
+**A wording correction to the M2.11 entry above.** "the Arena's LiDAR casts
+beam-for-beam as Lab 2's Sketch on the Nav2 map" is agreement with the map,
+not with Gazebo's sensor. Against Gazebo's recorded scans, 86.7 % of beams
+are within 5 cm. The wheel-odometry over-count is measured against
+Gazebo's own ground truth, a simulator's, not a physical robot's.

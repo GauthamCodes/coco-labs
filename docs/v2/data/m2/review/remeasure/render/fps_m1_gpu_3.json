@@ -1,0 +1,85 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-10T04:31:20.138Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.05,
+    "5m": 1.5,
+    "15m": 1.62
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-10T04:32:04.832Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.08,
+    "5m": 1.46,
+    "15m": 1.6
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4204/coco-labs/",
+ "gl_mode": "gpu",
+ "flags": [
+  "--use-angle=gl-egl",
+  "--ignore-gpu-blocklist",
+  "--enable-gpu"
+ ],
+ "browser": "156.0.8078.4",
+ "scene": "m1",
+ "load": {
+  "points": 50000,
+  "segments": 20000
+ },
+ "renderer": {
+  "vendor": "Google Inc. (NVIDIA Corporation)",
+  "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"
+ },
+ "renderer_error": null,
+ "fps_per_second": [
+  61,
+  61,
+  61,
+  60,
+  61,
+  61,
+  60,
+  61,
+  61,
+  60
+ ],
+ "fps_median": 61,
+ "fps_min": 60,
+ "frame_ms_p95_per_second": [
+  17.5,
+  17.4,
+  17.6,
+  17.5,
+  17.2,
+  17.4,
+  17.4,
+  17.5,
+  17.5,
+  17.5
+ ],
+ "console_errors": []
+}

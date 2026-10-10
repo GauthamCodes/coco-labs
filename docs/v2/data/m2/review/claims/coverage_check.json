@@ -1,0 +1,48 @@
+{
+ "rows": 98,
+ "labels": {
+  "TESTED": 38,
+  "SIMULATION RESULT": 21,
+  "MEASURED": 24,
+  "MEASURED; TESTED": 1,
+  "UNRESOLVED": 3,
+  "SIMPLIFIED MODEL": 8,
+  "ASSUMPTION": 2,
+  "ASSUMPTION; TESTED": 1
+ },
+ "distinct_refs": 112,
+ "unresolved": {
+  "coco_lab/test/test_localise.py::test_the_twins": [
+   false,
+   "fn"
+  ],
+  "coco_lab/test/test_map_teaching.py::test_a_s": [
+   false,
+   "fn"
+  ],
+  "coco_lab/test/test_pro": [
+   false,
+   "file"
+  ],
+  "coco_mission/test/test_mission_search.": [
+   false,
+   "file"
+  ],
+  "coco_sim/tes": [
+   false,
+   "file"
+  ]
+ },
+ "mission_yaml": {
+  "claims": 61,
+  "labels": {
+   "TESTED": 25,
+   "MEASURED": 12,
+   "SIMULATION RESULT": 12,
+   "SIMPLIFIED MODEL": 8,
+   "UNRESOLVED": 2,
+   "ASSUMPTION": 2
+  },
+  "unresolved": []
+ }
+}

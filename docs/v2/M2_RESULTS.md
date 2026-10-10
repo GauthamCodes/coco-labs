@@ -24,7 +24,7 @@ from 05:43 (local) on the final M2 build, files under
 | Correctness | Golden traces for every algorithm family on its property corpus; the 16 search runs replay byte for byte | **Met.** The package suites run each family's golden and property tests (`coco_lab` 735 / 0 / 0, `coco_schemas` 218 / 0 / 0); the 16 Gazebo searches, converted to coco.v1, replay byte for byte, 16 of 16, and one flipped look is caught (M2.7) | `coco_schemas/test/test_search_replay_v2.py`; `coco_lab/test/` |
 | Claims | Every Lab 1–5 learner-facing claim appears in a mission with resolving evidence; the CI evidence check passes | **Met.** 98 of 98 v1 claims carried by the six missions' 61 claims; every reference resolves (a RESULTS.md heading matched exactly once, a committed file, or a test function that exists); `build_catalog.py` refuses to build otherwise (M2.8) | `docs/v2/M2_CLAIMS_COVERAGE.md`; `lab_web/tools/test_missions.py` |
 | Laptop performance | 60 fps with all lenses' default layers on the fetch mission, plus 2,000 particles, 1,000 MPPI samples × 56 steps, a full occupancy grid | **Met.** The fetch mission running (MCL, occupancy map from its belief, DWA, a red fetch), every lens's default layers on, plus the stress layers rebuilt at 10 Hz: **60–61 fps in each of 20 seconds**, p95 frame 17.2–20.6 ms. The model step meanwhile: median 34.1 ms per 100 ms tick. M1's stress scene on the same build: 60–61 fps, p95 17.1–17.4 ms | `render/fps_m2_gpu.json` (+ `.png`), `render/fps_m1_gpu.json`; `lab_web/src/arena/stress.ts` |
-| Responsiveness | Goal click after a planner change: median ≤ 100 ms, max ≤ 500 ms; seek ≤ 100 ms on a 5-minute fetch-mission recording | **Met.** Goal right after a planner change, real clicks, click → that goal's search drawn: median **43.7 ms**, p95 65.6, max **66.5**, 25 / 25 under 100 (warm goal alone: median 39.5, max 68.3, 25 / 25). Seek on 3,022 ticks of fetch mission (5.0 min): the slowest of 10 seeks **33.1 ms** to the frame in which every lens has redrawn (the call itself ≤ 0.3 ms) | `responsiveness/responsiveness_gpu_planner_then_goal.json`, `responsiveness_gpu.json`; `seek/seek_check.json` |
+| Responsiveness | Goal click after a planner change: median ≤ 100 ms, max ≤ 500 ms; seek ≤ 100 ms on a 5-minute fetch-mission recording | **Met.** Goal right after a planner change, real clicks, click → that goal's search drawn: median **43.7 ms**, p95 65.6, max **66.5**, 25 / 25 under 100 (warm goal alone: median 39.5, max 68.3, 25 / 25). Seek on 3,022 ticks of fetch mission (5.0 min; only 1 of its 4 fetches completed, see "Found while measuring"): the slowest of 10 seeks **33.1 ms** to the frame in which every lens has redrawn (the call itself ≤ 0.3 ms) | `responsiveness/responsiveness_gpu_planner_then_goal.json`, `responsiveness_gpu.json`; `seek/seek_check.json` |
 | Cold start | First visible computation ≤ 10 s and live model ready ≤ 10 s (Plan lens), emulated 4G; other lenses ready within 3 s of selection, warm cache | **Met.** Emulated 4G (9 Mbit/s, 170 ms), self-hosted Pyodide, n = 10: first visible computation median **3,005 ms** (2,956–3,246); live model ready median **7,870 ms** (7,837–8,158). Unthrottled: 615 ms (386–637) and 2,628 ms (2,153–2,794). Lenses, warm cache: localise 122, map 179, move 205, decide 96 ms (cold: at most 207) | `coldstart/m211_4g_gpu.json`, `m211_none_gpu.json`; `lens/lens_check.json` |
 | Links | Every v1 URL form resolves with 0 console errors; the bare URL opens the Arena | **Met.** 22 of 22 forms (`?view=` each lab, deep links, Lab 1 bundle and share links with and without settings or edits, the archive) land where `landing.ts` routes them, 0 console and page errors; the bare URL opens the Arena (M2.10) | `links/v1_links_check.json`; `lab_web/test/landing.test.ts` |
 | Hygiene | 0 console errors in all views; phone-width layout checked; all suites and CI green | **Met.** CI green on PR #21 (`lab.yml` run 38015704616 at `0687c4f`, every job, including the v1 archive build and the 22 URL forms in the browser job; its first run caught an archive-path defect, fixed in `0687c4f`). 0 console errors and 0 page errors on all 14 public pages (the Arena and its four lenses, Learn and its six missions, Live, the v1 archive); Live opens no socket on load and recovers to "connected" when a stack appears; phone width (Pixel 7, 390 px): no horizontal scroll on the lens bar, the mission list or a beat. Suites: packages 3,432 / 0 / 0, vitest 343 / 0 / 0, build tools 127 / 0 / 0 | `console/console_check.json`; `lens/lens_check.json`; `learn/learn_check.json`; `docs/STATUS.md` |
@@ -96,3 +96,36 @@ node tools/perf/determinism.mjs node|chromium|firefox|webkit ; node tools/perf/d
 (each with `--site http://127.0.0.1:4194/coco-labs/ --out DIR`, the site
 built by `npm run build` and served by `tools/perf/serve_dist.mjs` with the
 v1 archive at `dist/v1/`).
+
+## After the independent review: re-measured on the new NVIDIA driver (2026-10-10)
+
+The M2 review session (`docs/v2/reviews/M2_REVIEW.md`) re-measured the
+agent budgets after the reboot.
+
+**Conditions:**
+- NVIDIA kernel module and userspace both **580.178.04**
+- balanced, on AC
+- headless Chromium 156 on `ANGLE (NVIDIA … RTX 4050 Laptop GPU …)`
+- n ≥ 10 each
+- the review clone's production build of `330df44`
+
+Evidence: `docs/v2/data/m2/review/remeasure/`; the full table is in
+`docs/RESULTS.md`, "COCO Lab v2 · M2 independent review".
+
+| Budget | Re-measured | Verdict |
+|---|---|---|
+| 60 fps, fetch mission + stress layers | 58–62 fps in every one of 200 s (10 runs); p95 frame median 18.6 ms, 16.9–33.0 | met |
+| M1 stress scene | 60–61 fps in every one of 100 s (10 runs) | met |
+| Goal after a planner change | median 40.3 ms, max 66.8, 25 / 25 under 100 | met |
+| Seek | max 35.4 ms over 30 seeks (3 recordings) | met |
+| First visible computation, 4G | median 3,201 ms (2,969–3,222) | met |
+| Live model ready, 4G | median 8,062 ms (7,836–8,129) | met |
+
+**Two corrections from the review:**
+- **The seek recording's fetch outcomes vary from run to run.** Each next
+  fetch starts at the tick the page saw the previous one end (1688 or
+  1689), and DWA's stall is sensitive to it. Completed fetches were red
+  and green, red and green, and red and blue in the three review
+  recordings, against red only in M2.11's.
+- **`/v1/` is built from `9f58b83`**, because the tag's build undid M0's
+  public fixes.

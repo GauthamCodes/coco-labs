@@ -1,0 +1,134 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-10T04:22:29.337Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.84,
+    "5m": 1.75,
+    "15m": 1.73
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-10T04:23:23.934Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.64,
+    "5m": 1.72,
+    "15m": 1.72
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4204/coco-labs/",
+ "gl_mode": "gpu",
+ "flags": [
+  "--use-angle=gl-egl",
+  "--ignore-gpu-blocklist",
+  "--enable-gpu"
+ ],
+ "browser": "156.0.8078.4",
+ "scene": "m2",
+ "load": {
+  "particles": 2000,
+  "rollouts": 1000,
+  "steps": 56,
+  "grid": "full world",
+  "rebuilt_hz": 10,
+  "cfg": [
+   "arena.range_sigma=0.02",
+   "localise.filter=mcl",
+   "map.algorithm=occupancy",
+   "map.poses=belief",
+   "move.controller=dwa",
+   "mission.start=red"
+  ]
+ },
+ "renderer": {
+  "vendor": "Google Inc. (NVIDIA Corporation)",
+  "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"
+ },
+ "renderer_error": null,
+ "layers_drawn": [
+  "built_map",
+  "stress_grid",
+  "bays",
+  "belief",
+  "chosen_bay",
+  "detection",
+  "particles",
+  "estimate",
+  "covariance",
+  "odometry",
+  "slam_pose",
+  "candidates",
+  "chosen",
+  "local_window",
+  "stress_particles",
+  "stress_rollouts"
+ ],
+ "fps_per_second": [
+  59,
+  61,
+  61,
+  61,
+  60,
+  61,
+  61,
+  61,
+  61,
+  61,
+  61,
+  60,
+  61,
+  61,
+  61,
+  60,
+  60,
+  61,
+  60,
+  60
+ ],
+ "fps_median": 61,
+ "fps_min": 59,
+ "frame_ms_p95_per_second": [
+  17.7,
+  18,
+  17.3,
+  18.2,
+  17.8,
+  18.1,
+  17.8,
+  20,
+  17.8,
+  18.8,
+  19.5,
+  18.3,
+  24.2,
+  24.9,
+  20.6,
+  18.1,
+  18.8,
+  18.3,
+  22,
+  22.7
+ ],
+ "console_errors": []
+}
