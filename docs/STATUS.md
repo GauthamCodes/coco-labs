@@ -15,7 +15,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M1 | **Closed 2026-10-09 — agent-measurable criteria**: independent review [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md) (MERGE AFTER FIXES, every fix done); PR #20 merged into `main` as **`0a2516a`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena, a goal click drew its search, all six v1 views 0 console / 0 page errors ([`v2/data/m1/exit/public_after_merge.json`](v2/data/m1/exit/public_after_merge.json)). **Still pending Gautham:** phone performance, phone cold start, usability |
 | Branch | `v2/m2-whole-loop` (from `main` = `0a2516a`), worked in the worktree `.claude/worktrees/v2-m2-whole-loop`, overlay `~/coco_lab_m2_ws` |
 | Milestone | **M2 · The whole loop** ([`v2/M2_PROMPT.md`](v2/M2_PROMPT.md)) |
-| Checkpoint | **M2.10 done** (M2 checkpoint log below). Next: M2.11 |
+| Checkpoint | **M2.11 done: every agent-measured M2 criterion met** ([`v2/M2_RESULTS.md`](v2/M2_RESULTS.md)). Next: the M2 pull request (not merged by the agent), Gautham's phone and usability rows, a fresh review session |
 | Merge to `main` | M2 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #20 only) |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows — never marked done by the agent |
 
@@ -982,6 +982,37 @@ only. Read order for agents (README §9): `README.md`, this file,
     12, `test_loc_glue` 13, `test_move_glue` 12, `test_map_glue` 6,
     `test_search_glue` 6; `test_lab5_site` +3, `test_missions` +1, the
     harness conditions check −1). Next: M2.11 (measure and decide).
+- **M2.11 Measure and decide (2026-10-10).** Results
+  [`v2/M2_RESULTS.md`](v2/M2_RESULTS.md) (appended to `docs/RESULTS.md`);
+  evidence `v2/data/m2/m211/`; decision record
+  [`v2/adr/0004-wasm-gate-m2.md`](v2/adr/0004-wasm-gate-m2.md).
+  - **Every agent-measured B.3 criterion is met** (balanced, on AC, the
+    final M2 build): determinism 4 engines × 100 sessions × 150 ticks, 0
+    differing (digest `6713478e0ec2…`); 60–61 fps on the fetch mission with
+    every lens's default layers plus the M2 stress (2,000 particles, 1,000 ×
+    56-step rollouts, a full grid, rebuilt at 10 Hz); goal after a planner
+    change median 43.7 ms, max 66.5; seek on a 5-minute fetch recording max
+    33.1 ms to the redrawn frame; emulated 4G first visible computation
+    median 3,005 ms and live model ready median 7,870 ms (max 8,158); lenses
+    ready ≤ 205 ms warm; 22 / 22 v1 URL forms; 0 console errors on 14 pages.
+  - New harness pieces: `?stress=m2` (`src/arena/stress.ts`) and
+    `?layers=all` in the Arena; `render_fps.mjs --scene m2`;
+    `seek_check.mjs`; `console_check.mjs` covers M2's pages.
+  - **No WebAssembly port** (ADR 0004): nothing fails a budget.
+  - `PHONE_MEASURE.md` has an M2 section (the fetch mission and lenses);
+    `USABILITY_TEST_M2.md` is the script and table for missions 1, 3 and 5.
+    Both stay **pending Gautham**.
+  - **Found:** unattended upgrades moved the NVIDIA userspace libraries to
+    580.178.04 at 06:18 with the kernel module still 580.173.02 — NVIDIA EGL
+    fails until the machine is **rebooted** (owner action). All timings were
+    written by 05:58; the WebKit determinism leg was re-run with Mesa EGL.
+    In the seek recording 1 of 4 fetches completed: later fetches inherit the
+    pose where DWA stalled (reproduced in Python; M2.6's DWA weakness, parked
+    in IDEAS). Fixed: the mission state label ("Go To_bay").
+  - Tests: packages **3,432 / 0 / 0**, vitest **343 / 0 / 0**, build tools
+    **127 / 0 / 0** (+1: the conditions check of `seek_check.mjs`). Next:
+    the pull request into `main` (not merged by the agent), Gautham's phone
+    and usability rows, and a fresh review session.
 
 ## Capabilities (README §2), with evidence class
 

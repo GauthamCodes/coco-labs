@@ -8237,3 +8237,46 @@ NEXT: Gautham reviews the M1 PR (`v2/m1-arena-core` → `main`) and measures
 the phone and usability criteria (`docs/v2/PHONE_MEASURE.md`,
 `docs/v2/USABILITY_TEST.md`); a fresh review session verifies the M1 report
 (README §9); then M2.
+
+
+## COCO Lab v2 · M2 The whole loop — M2.0 to M2.11 (2026-10-09 → 2026-10-10)
+
+**Built:** the whole loop in the Arena model and its lenses — cancellable
+planning and a deferred attract recording (M2.0); ten channel families
+within coco.v1 (M2.1); the lens framework, five lenses × three disclosure
+levels (M2.2); step-wise MCL/EKF with kidnap and config inputs (M2.3);
+occupancy, EKF-SLAM, FastSLAM and pose-graph mapping (M2.4); DWA, RPP and
+MPPI with Lab 5's scenarios (M2.5); the fetch mission with a Bayesian bay
+search and the arm inset (M2.6); lossless converters for Labs 2–5, the 16
+Gazebo searches replaying byte for byte, Lab 5's drives playing as STACK
+(M2.7); six Learn missions as data with a CI evidence check and a player,
+98 / 98 v1 claims covered (M2.8); the fidelity report v1 and "model gap"
+chips (M2.9); the v1 lab views retired to a frozen build at `/v1/` made from
+the tag at deploy time, a router keeping every v1 URL working, 69 files
+removed (M2.10); the measurements, `docs/v2/M2_RESULTS.md` and ADR 0004
+(M2.11).
+
+**Measured (MODEL unless marked; balanced, on AC; i5-13420H + RTX 4050):**
+determinism 4 engines × 100 whole-loop sessions × 150 ticks, 0 differing;
+60–61 fps on the fetch mission with every lens's layers plus the M2 stress;
+goal after a planner change median 43.7 ms, max 66.5; seek on a 5-minute
+fetch recording ≤ 33.1 ms; emulated 4G first visible computation 3,005 ms,
+live model 7,870 ms; lenses ready ≤ 205 ms warm; 22 / 22 v1 URL forms and 0
+console errors on 14 pages. Fidelity (MODEL against STACK): LiDAR identical
+to Lab 2's Sketch beam for beam (|e| median 2.2 mm); odometry yaw
+over-count Gazebo 1.22–1.27×, slip option 1.29×. Arena fetch matrix: MCL
+8/8, MCL+DWA 4/8. Tests: packages 3,432 / 0 / 0, vitest 343 / 0 / 0 (−116,
+all from listed deletions), build tools 127 / 0 / 0.
+
+**Unverified:** the phone rows and the usability test (Gautham); CI on the
+M2 pull request at the time of writing; why the model's DWA stalls before
+the hairpin's turn (M2.5, an agreement of outcome, not of mechanism); the
+learner labels TESTED and UNRESOLVED await Gautham's ruling. **The machine
+needs a reboot:** the NVIDIA userspace libraries were upgraded under a
+loaded 580.173.02 kernel module at 2026-10-10 06:18, and NVIDIA EGL fails
+until then.
+
+NEXT: Gautham reviews the M2 pull request (`v2/m2-whole-loop` → `main`),
+reboots the laptop, and measures the phone and usability rows
+(`docs/v2/PHONE_MEASURE.md` "M2", `docs/v2/USABILITY_TEST_M2.md`); a fresh
+review session verifies the M2 report (README §9); then M3.

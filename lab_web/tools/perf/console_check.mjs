@@ -8,7 +8,7 @@
  *   node tools/perf/console_check.mjs --site http://127.0.0.1:4173/coco-labs/ \
  *        --out DIR [--recovery-port 8089] [--stub tools/perf/stub_stack.py]
  *
- * Part 1, for each of plan, live, localise, map, search, move: a fresh
+ * Part 1, for each public page (since M2.10: the Arena and its lenses, Learn and its six missions, Live, the v1 archive): a fresh
  * browser loads the view, waits for network idle plus a settle window long
  * enough to cover the Live probe's first three backoff steps (2 + 4 s), and
  * records console errors and warnings, page errors, every WebSocket the page
@@ -37,7 +37,11 @@ const OUT = args.out ?? 'console-out';
 const SETTLE_MS = Number(args.settle ?? 8000);
 const PORT = args['recovery-port'] ? Number(args['recovery-port']) : null;
 const STUB = args.stub ?? join(new URL('.', import.meta.url).pathname, 'stub_stack.py');
-const VIEWS = ['plan', 'live', 'localise', 'map', 'search', 'move', 'arena'];
+// M2.11: the public pages since M2.10 (the v1 lab views are retired; the archive's front page is checked too)
+const MISSIONS = ['find-a-path', 'world-changes', 'where-it-is', 'build-a-map', 'avoid-things', 'where-to-look'];
+const VIEWS = [['arena', ''], ...['localise', 'map', 'move', 'decide'].map((l) => [`arena:${l}`, `?view=arena&lens=${l}`]),
+  ['learn', '?view=learn'], ...MISSIONS.map((m) => [`learn:${m}`, `?view=learn&mission=${m}&beat=0`]),
+  ['live', '?view=live'], ['v1-archive', 'v1/']];
 mkdirSync(OUT, { recursive: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const origin = new URL(SITE).origin;
@@ -78,13 +82,13 @@ const result = {
   await b.close();
 }
 
-for (const view of VIEWS) {
-  const { browser, page, rec, t0 } = await open(`${SITE}?view=${view}`, 1400);
+for (const [view, query] of VIEWS) {
+  const { browser, page, rec, t0 } = await open(`${SITE}${query}`, 1400);
   try {
     await sleep(SETTLE_MS);
     const shown = await texts(page);
     if (view === 'live') await page.screenshot({ path: join(OUT, 'live_1400.png'), fullPage: false });
-    result.views.push({ view, ms_observed: Date.now() - t0, ...rec, shown });
+    result.views.push({ view, query, ms_observed: Date.now() - t0, ...rec, shown });
     console.log(view, JSON.stringify({ errors: rec.console_errors.length, page_errors: rec.page_errors.length, ws: rec.websockets.length, xo: rec.cross_origin_requests.length }));
   } finally { await browser.close(); }
 }

@@ -1,0 +1,137 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-10T00:26:49.119Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.34,
+    "5m": 2.35,
+    "15m": 1.81
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-10T00:28:00.378Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.03,
+    "5m": 1.96,
+    "15m": 1.72
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4194/coco-labs/",
+ "steps": {
+  "arm_inset": "arm, side view: magnet; magnet on, holding the target",
+  "fetch": [
+   {
+    "tick": 2,
+    "to": "localise",
+    "event": "start",
+    "reason": "told to fetch the red target; it is not told which bay holds it",
+    "result": ""
+   },
+   {
+    "tick": 3,
+    "to": "choose_bay",
+    "event": "no_localiser",
+    "reason": "no localiser runs: the belief is the truth (SIMPLIFIED)",
+    "result": ""
+   },
+   {
+    "tick": 4,
+    "to": "go_to_bay",
+    "event": "bay_chosen",
+    "reason": "Bay 3 (bay_3): expected 30.4 m",
+    "result": ""
+   },
+   {
+    "tick": 138,
+    "to": "detect",
+    "event": "arrived",
+    "reason": "at the bay, looking",
+    "result": ""
+   },
+   {
+    "tick": 158,
+    "to": "grasp",
+    "event": "target_detected",
+    "reason": "the red target, seen: the camera saw Bay 3",
+    "result": ""
+   },
+   {
+    "tick": 218,
+    "to": "return",
+    "event": "grasped",
+    "reason": "the magnet holds the target; going home",
+    "result": ""
+   },
+   {
+    "tick": 372,
+    "to": "done",
+    "event": "home",
+    "reason": "home with the target",
+    "result": "fetch"
+   }
+  ],
+  "belief_table": "P(the target is in the bay) — d = 0.9 is an ASSUMPTIONBay 10.0 %Bay 20.0 %Bay 3100.0 %Bay 40.0 %",
+  "mislocalised": [
+   {
+    "tick": 380,
+    "to": "localise",
+    "event": "start",
+    "reason": "told to fetch the red target; it is not told which bay holds it",
+    "result": ""
+   },
+   {
+    "tick": 381,
+    "to": "choose_bay",
+    "event": "no_localiser",
+    "reason": "no localiser runs: the belief is the truth (SIMPLIFIED)",
+    "result": ""
+   },
+   {
+    "tick": 382,
+    "to": "go_to_bay",
+    "event": "bay_chosen",
+    "reason": "Bay 3 (bay_3): expected 30.4 m",
+    "result": ""
+   },
+   {
+    "tick": 660,
+    "to": "detect",
+    "event": "arrived",
+    "reason": "at the bay, looking",
+    "result": ""
+   },
+   {
+    "tick": 680,
+    "to": "choose_bay",
+    "event": "miss",
+    "reason": "no red target (the camera saw Bay 4 (the robot believes it is at Bay 3)); P(bay) 0.03 after the miss",
+    "result": ""
+   }
+  ],
+  "loc_text": "where it is: true error 4.00 m (you can see this; it cannot)"
+ },
+ "errors": [],
+ "warnings": [],
+ "pass": true
+}

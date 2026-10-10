@@ -63,7 +63,7 @@ export function MissionPanel({ session, tick }: { session: ArenaSession; tick: n
   return (
     <div className="mission-panel" data-testid="mission-panel">
       <div className="mission-state" role="status" aria-live="polite">
-        <strong data-testid="mission-state">{last('to_state').replace('_', ' ')}</strong>
+        <strong data-testid="mission-state">{last('to_state').replace(/_/g, ' ')}</strong>
         {last('result') && <span className="mission-result"> — {last('result')}</span>}
         <span className="mission-why"> {last('reason')}</span>
       </div>

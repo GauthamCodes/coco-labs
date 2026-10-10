@@ -1,0 +1,293 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-10T00:20:44.297Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.31,
+    "5m": 1.23,
+    "15m": 1.31
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-10T00:21:14.446Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.25,
+    "5m": 1.45,
+    "15m": 1.38
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "meta": {
+  "site": "http://127.0.0.1:4194/coco-labs/",
+  "runs": 10,
+  "pyodide": "self",
+  "throttle": "none",
+  "profile": null,
+  "gl": "gpu",
+  "no_attract": false,
+  "attract": "default",
+  "browser": "chromium 156.0.8078.4 (Playwright, headless)",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "at_utc": "2026-10-10T00:21:14.308Z",
+  "load1": 2.3,
+  "power_profile": "balanced",
+  "governor": "powersave"
+ },
+ "first_computation_shown_ms": {
+  "n": 10,
+  "median": 615,
+  "min": 386,
+  "max": 637
+ },
+ "arena_ready_ms": {
+  "n": 10,
+  "median": 2628,
+  "min": 2153,
+  "max": 2794
+ },
+ "pyodide_ready_ms": {
+  "n": 10,
+  "median": 2079,
+  "min": 1622,
+  "max": 2230
+ },
+ "goal_to_first_plan_events_ms": {
+  "n": 10,
+  "median": 32,
+  "min": 18,
+  "max": 44
+ },
+ "console_errors_total": 0,
+ "runs": [
+  {
+   "run": 1,
+   "wall_to_ready_ms": 2587,
+   "ms_since_navigation": {
+    "worker_create": 105.300048828125,
+    "pyodide_module": 157,
+    "pyodide_ready": 1692.39990234375,
+    "coco_lab_ready": 1764,
+    "arena_ready": 2229.89990234375,
+    "first_frame": 414,
+    "attract_ready": 275.800048828125,
+    "first_computation_shown": 414
+   },
+   "goal_to_first_plan_events_ms": 31,
+   "console_errors": [],
+   "page_requests": 20,
+   "page_bytes": 5765383,
+   "page_body_bytes_by_host": {
+    "127.0.0.1:4194": 5760937
+   }
+  },
+  {
+   "run": 2,
+   "wall_to_ready_ms": 3145,
+   "ms_since_navigation": {
+    "worker_create": 339.199951171875,
+    "pyodide_module": 634.599853515625,
+    "pyodide_ready": 2230.300048828125,
+    "coco_lab_ready": 2301,
+    "arena_ready": 2793.800048828125,
+    "first_frame": 623.300048828125,
+    "attract_ready": 466.699951171875,
+    "first_computation_shown": 623.300048828125
+   },
+   "goal_to_first_plan_events_ms": 29,
+   "console_errors": [],
+   "page_requests": 20,
+   "page_bytes": 5765383,
+   "page_body_bytes_by_host": {
+    "127.0.0.1:4194": 5760937
+   }
+  },
+  {
+   "run": 3,
+   "wall_to_ready_ms": 3015,
+   "ms_since_navigation": {
+    "worker_create": 353.699951171875,
+    "pyodide_module": 645.500244140625,
+    "pyodide_ready": 2100.2001953125,
+    "coco_lab_ready": 2172.000244140625,
+    "arena_ready": 2646.7001953125,
+    "first_frame": 634.10009765625,
+    "attract_ready": 482.699951171875,
+    "first_computation_shown": 634.10009765625
+   },
+   "goal_to_first_plan_events_ms": 38,
+   "console_errors": [],
+   "page_requests": 20,
+   "page_bytes": 5765383,
+   "page_body_bytes_by_host": {
+    "127.0.0.1:4194": 5760937
+   }
+  },
+  {
+   "run": 4,
+   "wall_to_ready_ms": 3016,
+   "ms_since_navigation": {
+    "worker_create": 351,
+    "pyodide_module": 644.89990234375,
+    "pyodide_ready": 2137.199951171875,
+    "coco_lab_ready": 2207.2998046875,
+    "arena_ready": 2673.89990234375,
+    "first_frame": 635.800048828125,
+    "attract_ready": 480.5,
+    "first_computation_shown": 635.800048828125
+   },
+   "goal_to_first_plan_events_ms": 44,
+   "console_errors": [],
+   "page_requests": 20,
+   "page_bytes": 5765383,
+   "page_body_bytes_by_host": {
+    "127.0.0.1:4194": 5760937
+   }
+  },
+  {
+   "run": 5,
+   "wall_to_ready_ms": 2990,
+   "ms_since_navigation": {
+    "worker_create": 342.89990234375,
+    "pyodide_module": 626,
+    "pyodide_ready": 2101.10009765625,
+    "coco_lab_ready": 2170.7001953125,
+    "arena_ready": 2634.300048828125,
+    "first_frame": 616.199951171875,
+    "attract_ready": 462.89990234375,
+    "first_computation_shown": 616.199951171875
+   },
+   "goal_to_first_plan_events_ms": 25,
+   "console_errors": [],
+   "page_requests": 20,
+   "page_bytes": 5765383,
+   "page_body_bytes_by_host": {
+    "127.0.0.1:4194": 5760937
+   }
+  },
+  {
+   "run": 6,
+   "wall_to_ready_ms": 2761,
+   "ms_since_navigation": {
+    "worker_create": 355.89990234375,
+    "pyodide_module": 479.599853515625,
+    "pyodide_ready": 1910.7998046875,
+    "coco_lab_ready": 1981.5,
+    "arena_ready": 2449.2998046875,
+    "first_frame": 607.10009765625,
+    "attract_ready": 467.199951171875,
+    "first_computation_shown": 607.10009765625
+   },
+   "goal_to_first_plan_events_ms": 18,
+   "console_errors": [],
+   "page_requests": 20,
+   "page_bytes": 5765383,
+   "page_body_bytes_by_host": {
+    "127.0.0.1:4194": 5760937
+   }
+  },
+  {
+   "run": 7,
+   "wall_to_ready_ms": 2991,
+   "ms_since_navigation": {
+    "worker_create": 340.5,
+    "pyodide_module": 625.099853515625,
+    "pyodide_ready": 2078.39990234375,
+    "coco_lab_ready": 2150.099853515625,
+    "arena_ready": 2626.5,
+    "first_frame": 612.89990234375,
+    "attract_ready": 460.199951171875,
+    "first_computation_shown": 612.89990234375
+   },
+   "goal_to_first_plan_events_ms": 33,
+   "console_errors": [],
+   "page_requests": 20,
+   "page_bytes": 5765383,
+   "page_body_bytes_by_host": {
+    "127.0.0.1:4194": 5760937
+   }
+  },
+  {
+   "run": 8,
+   "wall_to_ready_ms": 2953,
+   "ms_since_navigation": {
+    "worker_create": 361.300048828125,
+    "pyodide_module": 648.7001953125,
+    "pyodide_ready": 2079.000244140625,
+    "coco_lab_ready": 2148.800048828125,
+    "arena_ready": 2630.000244140625,
+    "first_frame": 637.199951171875,
+    "attract_ready": 480.60009765625,
+    "first_computation_shown": 637.199951171875
+   },
+   "goal_to_first_plan_events_ms": 27,
+   "console_errors": [],
+   "page_requests": 20,
+   "page_bytes": 5765383,
+   "page_body_bytes_by_host": {
+    "127.0.0.1:4194": 5760937
+   }
+  },
+  {
+   "run": 9,
+   "wall_to_ready_ms": 2477,
+   "ms_since_navigation": {
+    "worker_create": 92.5,
+    "pyodide_module": 152.39990234375,
+    "pyodide_ready": 1621.60009765625,
+    "coco_lab_ready": 1690.800048828125,
+    "arena_ready": 2153.39990234375,
+    "first_frame": 398.199951171875,
+    "attract_ready": 258.699951171875,
+    "first_computation_shown": 398.199951171875
+   },
+   "goal_to_first_plan_events_ms": 35,
+   "console_errors": [],
+   "page_requests": 20,
+   "page_bytes": 5765383,
+   "page_body_bytes_by_host": {
+    "127.0.0.1:4194": 5760937
+   }
+  },
+  {
+   "run": 10,
+   "wall_to_ready_ms": 2613,
+   "ms_since_navigation": {
+    "worker_create": 96.199951171875,
+    "pyodide_module": 253.39990234375,
+    "pyodide_ready": 1728.199951171875,
+    "coco_lab_ready": 1798.199951171875,
+    "arena_ready": 2255.199951171875,
+    "first_frame": 385.699951171875,
+    "attract_ready": 242.39990234375,
+    "first_computation_shown": 385.699951171875
+   },
+   "goal_to_first_plan_events_ms": 34,
+   "console_errors": [],
+   "page_requests": 20,
+   "page_bytes": 5765383,
+   "page_body_bytes_by_host": {
+    "127.0.0.1:4194": 5760937
+   }
+  }
+ ]
+}

@@ -44,6 +44,7 @@ import { LensLayers } from './render/lensLayers';
 import { sha256Hex } from '../bundle/sha256';
 import { GapChips, useGaps } from '../learn/gaps';
 import { cfgFromParams, missionBackLink } from '../learn/links';
+import { startLensStress } from './stress';
 
 declare global {
   interface Window {
@@ -73,6 +74,7 @@ export function ArenaApp() {
   const recId = replayParam && /^[a-z0-9_]{1,64}$/.test(replayParam) ? replayParam : null;
   // a Learn mission's beat (M2.8): its settings, sent once the live model is up, in place of the lens's defaults
   const cfgLines = cfgFromParams(params);
+  const allLayers = params.get('layers') === 'all';
   const missionBack = missionBackLink(params);
   const gaps = useGaps(import.meta.env.BASE_URL);
   const cfgInitial = Object.fromEntries(cfgLines.map((c) => [c.slice(0, c.indexOf('=')), c.slice(c.indexOf('=') + 1)]));
@@ -381,7 +383,17 @@ export function ArenaApp() {
       client: client.current, queue: queue.current, last: null, renderer: rr, session: active, goal,
       mode: () => modeRef.current, log: () => log.current, layerIds: () => ll.current?.ids() ?? [],
     };
-    void client.current?.whenReady().then(() => { if (params.has('stress')) rr?.addStress(50_000, 20_000); }, () => {});
+    // ?stress: M1's renderer load; ?stress=m2: M2's lens load, rebuilt at 10 Hz (stress.ts)
+    let stopStress: (() => void) | null = null;
+    void client.current?.whenReady().then(() => {
+      if (params.get('stress') === 'm2') {
+        const wait = setInterval(() => {
+          if (!ll.current || !worldRef.current) return;
+          clearInterval(wait);
+          stopStress = startLensStress(ll.current, worldRef.current);
+        }, 100);
+      } else if (params.has('stress')) rr?.addStress(50_000, 20_000);
+    }, () => {});
     const ui = setInterval(() => setFrame((n) => n + 1), 200);
 
     // a click (not a drag): a goal, a compare goal, or an inspected cell
@@ -479,6 +491,7 @@ export function ArenaApp() {
     window.addEventListener('keyup', keyup);
     return () => {
       clearInterval(ui);
+      stopStress?.();
       cv.removeEventListener('pointerdown', onDown);
       cv.removeEventListener('pointerup', onUp);
       cv.removeEventListener('pointermove', onMove);
@@ -501,6 +514,8 @@ export function ArenaApp() {
     const on: Record<string, boolean> = {};
     for (const L of LENSES) if (L.id !== 'plan') for (const x of L.layers) on[x.id] = false;
     if (lens !== 'plan') for (const id of defaultLayers(LENS_BY_ID[lens], level)) on[id] = true;
+    // ?layers=all (the M2 laptop budget): every lens's default layers at once
+    if (allLayers) for (const L of LENSES) if (L.id !== 'plan') for (const id of defaultLayers(L, level)) on[id] = true;
     setLensOn(on);
     client.current?.loadPack(LENS_BY_ID[lens].pack);
   }, [lens, level]);
