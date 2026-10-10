@@ -142,6 +142,15 @@ class ArenaMission:
         if key == 'start':
             if value not in COLOURS:
                 raise ArenaError(f'mission.start must be one of {COLOURS}')
+            # Every fetch starts from home (M3.0). A fetch that already ran
+            # in this session -- done, failed or still going -- left the
+            # robot wherever it ended, and a stalled pose stalls the next
+            # fetch too; so put it back home first, as a `reset` input does.
+            # A session's first fetch (mission idle) starts where it stands.
+            came_from = None
+            if self.state != 'idle':
+                came_from = a.pose[:2]
+                a.reset_home()
             self._clear()
             self.colour = value
             self.truth = self.truth_override or fetch_problem.LAYOUT[value]
@@ -149,8 +158,12 @@ class ArenaMission:
                 a.set_plan_clearance(CLEARANCE)
             self._headers(a)
             self._emit_belief(a)
-            self._go(a, 'localise', 'start', f'told to fetch the {value} '
-                     'target; it is not told which bay holds it')
+            why = (f'told to fetch the {value} target; it is not told which '
+                   'bay holds it')
+            if came_from is not None:
+                why += (f' (another fetch ran first: the robot was put back '
+                        f'home from ({came_from[0]:.2f}, {came_from[1]:.2f}))')
+            self._go(a, 'localise', 'start', why)
         elif key == 'truth':
             if value not in self.problem.ids:
                 raise ArenaError(f'mission.truth must be one of '

@@ -112,10 +112,10 @@ class ArenaLocaliser:
             raise ArenaError(f'localise.{key}: {e}') from None
         self._start()
 
-    def _start(self):
-        """(Re)start the chosen filters at the current belief (a tracking start)."""
+    def _start(self, at=None):
+        """(Re)start the chosen filters at ``at``, else the current belief (a tracking start)."""
         a = self.arena
-        start = self.belief() or a.pose
+        start = at if at is not None else (self.belief() or a.pose)
         self.mcl = self.ekf = None
         if self.filter in ('mcl', 'both'):
             self.mcl_params.seed = 0  # the Arena's own stream draws, not seed
@@ -135,8 +135,12 @@ class ArenaLocaliser:
 
     def on_reset(self, arena) -> None:
         """Restart the filters at the start pose (a reset is a new run)."""
+        # the robot is already back at the start pose (Arena.reset_home moves
+        # it first); start there, not at the old belief -- until M3.0 this
+        # restarted at the belief, so a robot reset from a stall kept
+        # believing it was still at the stall
         if self.filter != 'off':
-            self._start()
+            self._start(at=arena.pose)
 
     # -- per tick --------------------------------------------------------------
 

@@ -16,7 +16,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
 | Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
 | Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
-| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.0a done** (the `v1-site` artifact). Next: "reset home" for the fetch mission (M3.0), then M3.1 |
+| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.0 done**: the `v1-site` artifact; "reset home" for the fetch mission (plus a localisation-reset fix it exposed). Next: **M3.1**, the ROS-to-event adapter in `coco_lab_ros` |
 | Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
 
@@ -1078,6 +1078,63 @@ only. Read order for agents (README §9): `README.md`, this file,
   - **Tests:** `test_v1_site.py` 7 / 0 / 0.
   - **Evidence:** `v2/data/m3/m30/`.
   - **Next:** M3.0b, "reset home" for the fetch mission.
+
+- **M3.0b, "reset home" for the Arena fetch mission (2026-10-10).**
+  - **The rule** (`coco_lab/mission_arena.py`): a `mission.start` that
+    arrives while the mission is not idle (a fetch already ran in this
+    session: done, failed or still going) first calls
+    `Arena.reset_home()`. That is the `reset` input's behaviour, factored
+    out of `arena.py`: the robot at the start pose (= the fetch's home,
+    (0, 0) in the map frame), odometry zeroed, every subsystem told. The
+    transition's reason says where the robot was put back from.
+  - **A session's first fetch is unchanged**, so a first fetch from a
+    kidnapped pose still starts there. No new state field and no state-hash
+    change. M2's 100 committed determinism sessions each start one fetch;
+    25 replayed under Pyodide-in-Node with this `coco_lab` give **0
+    mismatched** against M2's committed hashes.
+  - **A latent bug fixed, found by the reset:** `loc_arena.on_reset`
+    restarted its filters at the *old belief*, not the start pose its
+    docstring promised. So after any `reset` input (M2's too) the robot was
+    home but believed it was still where it had stalled, and the next fetch
+    failed in about 300 ticks with "moved less than 0.1 m in 10 s
+    (blocked?)" (`fetch_sequence_reset_only.json`). Now it restarts at the
+    robot's pose. The map, which anchors at the belief, follows.
+  - **Tests:** 7 new in `test_mission_arena.py` and `test_loc_arena.py`:
+    - a fetch after another starts home
+    - a restart mid-fetch also starts home
+    - the first fetch starts where the robot stands
+    - a reset input then a start does not reset twice
+    - a two-fetch session is deterministic
+    - a reset after a kidnap forgets the old belief (MCL and EKF)
+    - **the seek recording's stall no longer poisons the next fetch**:
+      seed 1, red stalls at (1.70, 5.71), green then completes from home
+  - **Re-recorded honestly:** the 5-minute seek recording, 3 times in the
+    browser, GPU, balanced on AC, each `seek_check.mjs` run.
+
+    | Recording | red | green | blue | yellow |
+    |---|---|---|---|---|
+    | 1 | done | failed | done | running |
+    | 2 | done | done | running | — |
+    | 3 | done | failed | done | running |
+
+    Before the localisation fix, with reset only: green failed 3 / 3 and
+    blue 2 / 3 (`seek_before_fix/`). Seek stays ≤ 35.1 ms.
+  - **Still DWA's weakness, not hidden:** green fails from home in 2 of 3
+    recordings, as M2.6 measured (MCL + DWA 4 / 8).
+  - **M2's "Python Arena, seed 1" claim, now reproduced and committed**
+    (`fetch_sequence.py`): the first red stalls near (1.70, 5.71). The
+    browser recordings' first red completes. That difference between the
+    browser recording and the Python run is **not attributed** (the
+    browser's inputs arrive through the page; the Python run applies them
+    at tick 0).
+  - **Evidence:** `v2/data/m3/m30/`.
+  - **Suites at the end of M3.0** (the working tree at `9b67f13` plus
+    these changes; run on battery, which only measurements are barred
+    from):
+    - packages **3,439 / 0 / 0** (`coco_lab` 742: +7)
+    - vitest **343 / 0 / 0**
+    - build tools **134 / 0 / 0** (+7, `test_v1_site.py`)
+  - **Next:** M3.1, the ROS-to-event adapter.
 
 ## Capabilities (README §2), with evidence class
 

@@ -295,11 +295,22 @@ class Arena:
             if self.goal is not None:      # a running goal is re-planned
                 self._want_plan = True
         elif e.kind == 'reset':
-            self._reset_robot()
-            if self.loop:
-                self.odom = (0.0, 0.0, 0.0)
-                for name in sorted(self.subsystems):
-                    self.subsystems[name].on_reset(self)
+            self.reset_home()
+
+    def reset_home(self) -> None:
+        """
+        Put the robot back at the start pose and restart the loop.
+
+        What a ``reset`` input does: the robot at the start pose, stopped,
+        with no goal; odometry zeroed; every subsystem told (each restarts
+        its filter, map or scenario, the mission ends). The fetch mission
+        also calls it when a new fetch starts after another (M3.0).
+        """
+        self._reset_robot()
+        if self.loop:
+            self.odom = (0.0, 0.0, 0.0)
+            for name in sorted(self.subsystems):
+                self.subsystems[name].on_reset(self)
 
     def _plan_begin(self):
         """Start the search from the current pose to the goal (not run yet)."""

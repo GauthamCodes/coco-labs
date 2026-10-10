@@ -9005,3 +9005,41 @@ beam-for-beam as Lab 2's Sketch on the Nav2 map" is agreement with the map,
 not with Gazebo's sensor. Against Gazebo's recorded scans, 86.7 % of beams
 are within 5 cm. The wheel-odometry over-count is measured against
 Gazebo's own ground truth, a simulator's, not a physical robot's.
+
+## COCO Lab v2 · M3.0: every fetch starts from home; the seek recording re-recorded
+
+**MODEL** (the Arena), 2026-10-10, `v2/m3-play-casefiles`. Evidence:
+`docs/v2/data/m3/m30/`. Conditions: laptop, NVIDIA 580.178.04, balanced on
+AC, headless Chromium 156 on the GPU.
+
+**The change.** A fetch started after another in the same session first
+puts the robot back home, as a `reset` input does. A reset now restarts the
+localisation filter at the robot's pose. Before this, it restarted at the
+*old belief*, a latent bug in M2's `reset`.
+
+**The seek recording** (`lab_web/tools/perf/seek_check.mjs`: MCL, an
+occupancy map from the belief, DWA; red, then green, blue, yellow, each
+started when the last ended; about 3,000 ticks):
+
+| Recording | red | green | blue | yellow | Seek, slowest of 10 |
+|---|---|---|---|---|---|
+| M2.11 (before) | done | failed | failed | running | 33.1 ms |
+| M2 review 1–3 (before) | done ×3 | done, done, failed | running, running, done | —, —, running | ≤ 35.4 ms |
+| M3.0, reset only, 1–3 | done ×3 | failed ×3 | failed, failed, running | running, running, — | ≤ 36.8 ms |
+| **M3.0, reset + filter fix, 1–3** | **done ×3** | **failed, done, failed** | **done, running, done** | running, —, running | **≤ 35.1 ms** |
+
+So every M3.0 recording completes 2 fetches, against 1 to 2 before. Green's
+failures are DWA's from home, the weakness M2.6 measured (MCL + DWA 4 of 8),
+and are not hidden.
+
+**The Python Arena, seed 1, the same settings** (`fetch_sequence.py`):
+- **Red** stalls at (1.70, 5.71) with `no_valid_control`. This is M2.11's
+  "reproduced in the Python Arena" claim, now committed.
+- **Green** then completes from home at tick 1,827. With the reset but
+  without the filter fix, green failed in 286 ticks.
+- **Blue** fails with "moved less than 0.1 m in 10 s".
+- The browser recordings' red completes while this run's red stalls; that
+  difference is **not attributed**.
+
+**Determinism unchanged where it was committed:** 25 of M2's 100 sessions
+(one fetch each), Pyodide-in-Node, 0 mismatched against M2's hashes.
