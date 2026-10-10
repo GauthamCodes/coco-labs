@@ -18,7 +18,7 @@
 
 import { create, toBinary, fromBinary, type DescMessage, type Message } from '@bufbuild/protobuf';
 import { FileDescriptorSetSchema, type FileDescriptorProto } from '@bufbuild/protobuf/wkt';
-import { McapIndexedReader, McapWriter, TempBuffer } from '@mcap/core';
+import { McapIndexedReader, McapStreamReader, McapWriter, TempBuffer } from '@mcap/core';
 import { decompress as zstdDecompress } from 'fzstd';
 
 import { ManifestSchema, type Manifest } from './gen/coco/envelope/v1/manifest_pb';
@@ -108,6 +108,64 @@ export async function readRun(bytes: Uint8Array): Promise<{ manifest: Manifest; 
   const first = messages[0];
   if (!first || first.channel !== MANIFEST_CHANNEL) throw new Error('not a coco run: the manifest is not the first message');
   return { manifest: fromBinary(ManifestSchema, first.data), messages, profile: reader.header.profile };
+}
+
+/** A run file record by record, as written: what `repackRun` copies (M3.1). */
+export interface RawRun {
+  profile: string;
+  schemas: Map<number, { name: string; encoding: string; data: Uint8Array }>;
+  channels: Map<number, { topic: string; schemaId: number; messageEncoding: string; metadata: Map<string, string> }>;
+  messages: { channelId: number; sequence: number; logTime: bigint; publishTime: bigint; data: Uint8Array }[];
+  metadata: { name: string; metadata: Map<string, string> }[];
+}
+
+/**
+ * Read a run file front to back (no index needed): what the Python writer
+ * (`coco_schemas/mcap_write.py`, the ROS-to-event adapter's) produces --
+ * uncompressed, no summary section. Compressed chunks are read too.
+ */
+export function readRawStream(bytes: Uint8Array): RawRun {
+  const reader = new McapStreamReader({
+    decompressHandlers: { zstd: (data: Uint8Array, size: bigint) => zstdDecompress(data, new Uint8Array(Number(size))) },
+  });
+  reader.append(bytes);
+  const out: RawRun = { profile: '', schemas: new Map(), channels: new Map(), messages: [], metadata: [] };
+  for (let r = reader.nextRecord(); r; r = reader.nextRecord()) {
+    if (r.type === 'Header') out.profile = r.profile;
+    else if (r.type === 'Schema') out.schemas.set(r.id, { name: r.name, encoding: r.encoding, data: r.data });
+    else if (r.type === 'Channel') out.channels.set(r.id, { topic: r.topic, schemaId: r.schemaId, messageEncoding: r.messageEncoding, metadata: r.metadata });
+    else if (r.type === 'Message') out.messages.push({ channelId: r.channelId, sequence: r.sequence, logTime: r.logTime, publishTime: r.publishTime, data: r.data });
+    else if (r.type === 'Metadata') out.metadata.push({ name: r.name, metadata: r.metadata });
+  }
+  if (!reader.done()) throw new Error('not a whole MCAP file');
+  return out;
+}
+
+/**
+ * Re-chunk a run file for the site (M3.1/M3.3): the same schemas (their
+ * descriptor bytes as written), channels, messages (bytes, times, sequence)
+ * and metadata, in the same order, written with chunk indexes and, given a
+ * compressor, zstd -- so `readRun` can seek it. Nothing is re-encoded.
+ */
+export async function repackRun(bytes: Uint8Array, compress?: Compressor, library = 'lab_web/src/schemas/mcap.ts repackRun'): Promise<Uint8Array> {
+  const raw = readRawStream(bytes);
+  const buf = new TempBuffer();
+  const writer = new McapWriter({
+    writable: buf,
+    chunkSize: 1 << 20,
+    compressChunk: compress ? (data) => ({ compression: 'zstd', compressedData: compress(data) }) : undefined,
+  });
+  await writer.start({ profile: raw.profile, library });
+  const schemaIds = new Map<number, number>();
+  for (const [id, s] of raw.schemas) schemaIds.set(id, await writer.registerSchema(s));
+  const channelIds = new Map<number, number>();
+  for (const [id, c] of raw.channels) {
+    channelIds.set(id, await writer.registerChannel({ ...c, schemaId: schemaIds.get(c.schemaId)! }));
+  }
+  for (const m of raw.messages) await writer.addMessage({ ...m, channelId: channelIds.get(m.channelId)! });
+  for (const md of raw.metadata) await writer.addMetadata(md);
+  await writer.end();
+  return buf.get();
 }
 
 export type { Message };

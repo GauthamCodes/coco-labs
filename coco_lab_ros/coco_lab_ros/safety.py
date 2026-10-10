@@ -47,6 +47,13 @@ COMMAND_CHAIN = ('/cmd_vel_nav', '/cmd_vel_smoothed', '/cmd_vel')
 
 FORBIDDEN_TOPICS = (WHEEL_TOPIC,) + ARBITER_INPUTS + COMMAND_CHAIN
 
+#: The command topics a RECORDING carries, which the ROS-to-event adapter
+#: (adapter.py, M3.1) READS from a bag -- it never publishes anything. They
+#: are named here because this is the one module allowed to name a
+#: forbidden topic; test_guards checks the adapter creates no publisher.
+RECORDED_COMMANDS = {'nav': COMMAND_CHAIN[0], 'wheels': WHEEL_TOPIC,
+                     'teleop': ARBITER_INPUTS[0]}
+
 #: No lab publisher may carry a velocity command on ANY topic.
 VELOCITY_TYPES = ('geometry_msgs/msg/Twist', 'geometry_msgs/msg/TwistStamped')
 

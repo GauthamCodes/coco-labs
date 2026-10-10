@@ -23,6 +23,11 @@
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
   <exec_depend>python3-yaml</exec_depend>
+  <!-- the ROS-to-event adapter (M3.1): coco run files, and the recorded types it reads -->
+  <exec_depend>coco_schemas</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>tf2_msgs</exec_depend>
+  <exec_depend>rosidl_runtime_py</exec_depend>
   <!-- Only for lab_stack.launch.py, which composes the existing bringup.
        Nothing depends on coco_lab_ros, so the graph stays acyclic
        (CLAUDE.md rule 6). -->

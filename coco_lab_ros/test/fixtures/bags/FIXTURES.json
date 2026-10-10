@@ -1,0 +1,66 @@
+{
+ "lab2_kidnap_recovery_k1": {
+  "messages": {
+   "/diff_drive_controller/odom": 151,
+   "/model/coco/odometry": 151,
+   "/scan": 30,
+   "/tf": 241,
+   "/tf_static": 1
+  },
+  "source": "lab2/kidnap_recovery_K1/bag",
+  "source_mcap": "bag_0.mcap",
+  "source_sha256": "aab64c16fa60b082bb1a385e1ed73083983af3b3ddcc800da24d02056879f6d6",
+  "window_log_s": [
+   50.0,
+   53.0
+  ]
+ },
+ "lab2_rl_fidelity_s1": {
+  "messages": {
+   "/odometry/filtered": 50
+  },
+  "source": "lab2/rl_fidelity_s1/rl_bag",
+  "source_mcap": "rl_bag_0.mcap",
+  "source_sha256": "df083e452d8aa4186866bccae4430d341a2fc47daa888085b3b78ca88172496e",
+  "window_log_s": "first 2.0 s"
+ },
+ "lab4_a1_fixed_red": {
+  "messages": {
+   "/mission/search": 7,
+   "/mission/search_region": 2,
+   "/mission/state": 7,
+   "/model/coco/odometry": 30
+  },
+  "source": "lab4/matrix/A1_fixed_red/bag",
+  "source_mcap": "bag_0.mcap",
+  "source_sha256": "538b410188d6d7f2836bee65767be859af1c4201e900499aca471ba2c9ebc472",
+  "window_log_s": [
+   1791292200.5,
+   1791292202.5
+  ]
+ },
+ "lab5_crossing_dwb_1": {
+  "messages": {
+   "/amcl_pose": 4,
+   "/cmd_vel_arbiter/status": 6,
+   "/cmd_vel_nav": 25,
+   "/diff_drive_controller/cmd_vel": 57,
+   "/lab/actors": 41,
+   "/lab/plan": 1,
+   "/lab/status": 2,
+   "/local_plan": 25,
+   "/model/coco/odometry": 101,
+   "/received_global_plan": 26,
+   "/scan": 20,
+   "/tf": 161,
+   "/tf_static": 1
+  },
+  "source": "lab5/matrix/crossing_DWB_1/bag",
+  "source_mcap": "bag_0.mcap",
+  "source_sha256": "673d7f057b9858c26af41c10b9221c90c7df9f14d1c81334227585b36211d150",
+  "window_log_s": [
+   80.5,
+   82.5
+  ]
+ }
+}

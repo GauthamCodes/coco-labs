@@ -16,7 +16,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
 | Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
 | Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
-| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.0 done**: the `v1-site` artifact; "reset home" for the fetch mission (plus a localisation-reset fix it exposed). Next: **M3.1**, the ROS-to-event adapter in `coco_lab_ros` |
+| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.1 done** (the ROS-to-event adapter). Next: **M3.2**, Case File sizes and the storage decision (ADR 0005) |
 | Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
 
@@ -1135,6 +1135,58 @@ only. Read order for agents (README §9): `README.md`, this file,
     - vitest **343 / 0 / 0**
     - build tools **134 / 0 / 0** (+7, `test_v1_site.py`)
   - **Next:** M3.1, the ROS-to-event adapter.
+
+- **M3.1, the ROS-to-event adapter (2026-10-10).** `coco_lab_ros/coco_lab_ros/adapter.py`.
+  - **What it does:** reads a rosbag2 recording and writes it as a coco run
+    file (MCAP, protobuf, `coco_schemas` families). The families are truth
+    (`/model/coco/odometry` only), `sensor.scan`, `estimate`, `robot`,
+    `plan.path`, `control.local` (local plan, MPPI optimal trajectory,
+    `cmd_vel_nav`), `mission.fsm`, `metrics`, annotations and actors.
+  - **Pure conversion:** a test refuses any import beyond the standard
+    library, rosbag2, rclpy's deserialiser, yaml and `coco_schemas`.
+    Re-expressions only:
+    - clock: header stamp, else log time mapped through the odometry's
+      stamps
+    - frames: `world_to_map`, and `odom` to `map` by the recorded `/tf`
+    - detail: `summary` keeps recorded messages at lower rates, never
+      interpolated
+    - windows: by sim time, and by log time for Lab 4's outliving recorder
+  - **The mapping table:** [`v2/ADAPTER.md`](v2/ADAPTER.md).
+  - **A run file writer in Python,** `coco_schemas/mcap_write.py`
+    (uncompressed), round-tripping through `mcap_read`.
+    `lab_web/src/schemas/mcap.ts` gains `readRawStream` (reads it, no index
+    needed) and `repackRun` (zstd chunks plus index, the same messages byte
+    for byte).
+  - **Tests:**
+    - `test_adapter.py`, 19 tests on 4 fixture bags (1.3 MB, cut byte for
+      byte from Lab 5, Lab 4, Lab 2 and an rl replay by
+      `fixtures/make_case_bags.py`; `FIXTURES.json` carries the source
+      sha256s). Truth, scans beam for beam, AMCL with covariance, plans,
+      the local plan in `map`, commands, actors, strings, metrics, the
+      citation, reproducibility, thinning, both windows, Lab 4's wall clock
+      to sim time, odom-frame estimates, and a refusal without
+      `world_to_map`.
+    - `test_mcap_write.py`, 5 tests.
+    - `lab_web/test/casefile_adapter.test.ts`, 4 tests: TypeScript decodes
+      the Python-written golden conversion (pinned byte for byte in
+      Python) and repacks it losslessly.
+  - **Dependencies declared** in `coco_lab_ros/package.xml`:
+    `coco_schemas`, `sensor_msgs`, `tf2_msgs`, `rosidl_runtime_py`.
+  - **Risk:** CI's colcon job tests 10 packages, not `coco_lab_ros`, so the
+    adapter's Python tests run locally only. CI's vitest covers the golden
+    file.
+  - **The guard held, and still does.** The full suite failed
+    `test_guards.py::test_no_forbidden_topic_is_named_outside_safety`: the
+    adapter named the recorded command topics (`/cmd_vel_nav`, the wheel
+    topic, teleop) to READ them. Rather than loosen platform rule 3's guard,
+    `safety.py` now names them once (`RECORDED_COMMANDS`, checked to be a
+    subset of `FORBIDDEN_TOPICS`), and the adapter imports them from there.
+    A new guard test checks the adapter creates no node and no publisher.
+  - **Suites at the end of M3.1** (on battery): packages **3,465 / 0 / 0**
+    (`coco_lab_ros` 142: +21; `coco_schemas` 223: +5), vitest
+    **347 / 0 / 0** (+4), build tools **134 / 0 / 0**. `coco_lab_ros` was
+    re-run alone after the guard fix; nothing else changed.
+  - **Next:** M3.2, measure Case File sizes and record ADR 0005.
 
 ## Capabilities (README §2), with evidence class
 
