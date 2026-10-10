@@ -1015,6 +1015,10 @@ only. Read order for agents (README §9): `README.md`, this file,
     forms failed in CI with 404s (locally the path was always absolute). The
     script now resolves its paths first and refuses to finish without
     `OUT/index.html`; re-checked locally with CI's relative path.
+  - **CI green on PR #21** at `0687c4f` (`lab.yml` run 38015704616: every
+    job; the archive in the Pages artifact; 22 / 22 URL forms in CI). The PR
+    is open and **not merged** (the agent's merge permission covered PR #20
+    only).
   - Tests: packages **3,432 / 0 / 0**, vitest **343 / 0 / 0**, build tools
     **127 / 0 / 0** (+1: the conditions check of `seek_check.mjs`). Next:
     the pull request into `main` (not merged by the agent), Gautham's phone
