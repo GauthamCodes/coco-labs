@@ -1,0 +1,60 @@
+{
+ "only_in_a": [],
+ "only_in_b": [],
+ "differ": [
+  {
+   "file": "generated/loc/loc_arena_kidnap/manifest.json",
+   "only_created_utc": true
+  },
+  {
+   "file": "generated/loc/loc_global/manifest.json",
+   "only_created_utc": true
+  },
+  {
+   "file": "generated/loc/loc_kidnap/manifest.json",
+   "only_created_utc": true
+  },
+  {
+   "file": "generated/loc/loc_tracking/manifest.json",
+   "only_created_utc": true
+  },
+  {
+   "file": "generated/loc/loc_twins/manifest.json",
+   "only_created_utc": true
+  },
+  {
+   "file": "generated/map/map_arena/manifest.json",
+   "only_created_utc": true
+  },
+  {
+   "file": "generated/map/map_corridor/manifest.json",
+   "only_created_utc": true
+  },
+  {
+   "file": "generated/map/map_landmarks/manifest.json",
+   "only_created_utc": true
+  },
+  {
+   "file": "generated/map/map_loop/manifest.json",
+   "only_created_utc": true
+  },
+  {
+   "file": "generated/move/replan/sketch_0/manifest.json",
+   "only_created_utc": true
+  },
+  {
+   "file": "generated/move/replan/sketch_1/manifest.json",
+   "only_created_utc": true
+  },
+  {
+   "file": "generated/move/replan/sketch_2/manifest.json",
+   "only_created_utc": true
+  },
+  {
+   "file": "generated/search/search_arena/manifest.json",
+   "only_created_utc": true
+  }
+ ],
+ "differ_beyond_created_utc": [],
+ "same_content": true
+}

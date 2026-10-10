@@ -16,7 +16,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
 | Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
 | Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
-| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). Next: **M3.0** — the `v1-site` orphan branch (build `9f58b83` once, self-host its Pyodide, deploy copies it at a pinned commit by checksum, weekly reproducibility workflow, ADR 0003), then "reset home" for the fetch mission |
+| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.0a done** (the `v1-site` artifact). Next: "reset home" for the fetch mission (M3.0), then M3.1 |
 | Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
 
@@ -1047,6 +1047,37 @@ only. Read order for agents (README §9): `README.md`, this file,
     `v2/M3_PROMPT.md` (Part B of the owner's prompt); the post-merge public
     check `v2/data/m2/exit/`.
   - **Next:** M3.0.
+
+- **M3.0a, the v1 site as a built artifact (2026-10-10).** This is the
+  owner's decision.
+  - **Built once:** `9f58b83` with its own tooling, then made
+    self-contained by `lab_web/tools/v1_site.py assemble`:
+    - Pyodide 314.0.7 self-hosted (the npm package's five core files plus
+      micropip 0.11.1, checked against `pyodide-lock.json`)
+    - the CDN URL rewritten in the page bundle (1 occurrence) and removed
+      from the CSP (2)
+    - 84 files, 36,670,880 B, tree `6857ff56…`
+  - **Published:** committed to the new orphan branch **`v1-site`** at
+    **`36e6500`**.
+  - **Served:** both `lab.yml` jobs run `fetch_v1_site.sh`. It fetches that
+    pinned commit, verifies every file and the tree hash, and copies it;
+    nothing is built at deploy.
+  - **Checked weekly:** `.github/workflows/v1_reproducible.yml` rebuilds
+    from source and compares.
+  - **Measured:**
+    - the v1 worker's requests went from 6 CDN files to **0 third-party**,
+      with the same trace sha256 `4dddb6623b9b…` for an edited share link
+    - 22 / 22 URL forms and 6 / 6 archive views, 0 console errors
+    - a second build from source has the same content (13 files differ
+      only in `created_utc`)
+  - **Recorded:** ADR 0003 amended.
+  - **Two v1-era copy lines are kept as built and reported to the owner:**
+    - the footer's "only third-party request is Pyodide" (now
+      conservative)
+    - the meta description "…a real ROS 2 robot's maps"
+  - **Tests:** `test_v1_site.py` 7 / 0 / 0.
+  - **Evidence:** `v2/data/m3/m30/`.
+  - **Next:** M3.0b, "reset home" for the fetch mission.
 
 ## Capabilities (README §2), with evidence class
 

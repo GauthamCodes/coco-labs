@@ -106,3 +106,82 @@ copied into the Pages artifact at a pinned commit and checked by checksum;
 the build-from-source script becomes a weekly reproducibility check. Option
 B above, chosen for the reason this ADR gave against A: a toolchain that
 ages out from under the build.
+
+## Amendment, 2026-10-10 (M3.0): the archive is a built artifact on `v1-site`
+
+**Status:** accepted. This is the owner's decision (plan-change log,
+2026-10-10). It supersedes option A ("build from the tag at deploy time")
+and the 9f58b83 amendment's build-at-deploy.
+
+**Why.** A build at every deploy breaks as the toolchain ages: the old
+lockfile's pins must stay on the npm registry, Node 24.21 must stay
+installable, and the pinned Pyodide directory on jsDelivr must stay up. The
+section above named that risk and kept option B for the day it happened.
+The owner chose B now. Option C (a release asset) stays out: only the owner
+creates releases.
+
+### What was built
+
+`lab_web/tools/build_v1_site.sh`, run once in this session, did two steps:
+1. Built `9f58b83` with that commit's own tooling (`build_v1_archive.sh`,
+   unchanged).
+2. Made the result self-contained with `lab_web/tools/v1_site.py assemble`:
+   - **Pyodide 314.0.7 is self-hosted** under `v1/pyodide/`: the pinned npm
+     package's five core files, plus `micropip-0.11.1-py3-none-any.whl`.
+     The wheel was fetched once from the pinned CDN directory and checked
+     against `pyodide-lock.json`'s sha256. micropip has no dependencies,
+     and coco_lab's wheel declares none.
+   - **Two rewrites, both listed in `V1_SITE.json`.** In the page bundle,
+     the worker's `indexURL` changes from the CDN to `/coco-labs/v1/pyodide/`
+     (1 occurrence). In `index.html`'s Content-Security-Policy, the CDN
+     source is removed (2 occurrences); same-origin is `'self'`. Nothing
+     else in the build changes.
+   - **Every file is listed in `SHA256SUMS`.** The tree hash is sha256 over
+     its sorted lines.
+
+The result is 84 files, 36,670,880 B, tree **`6857ff56…2bde2b`**. It is
+committed as the root of the orphan branch **`v1-site`** at **`36e6500`**,
+which shares no history with `main` and is never merged.
+
+### How it is served and checked
+
+- **Deploy.** `lab.yml`'s Pages artifact and its browser job run
+  `lab_web/tools/fetch_v1_site.sh`. It fetches `v1-site` at the pinned
+  commit (depth 1, never the branch tip) and runs `v1_site.py verify`
+  against the pinned tree hash: every file re-hashed, no unlisted file,
+  nothing missing. Then it copies the result to `dist/v1/`. Nothing is
+  built at deploy.
+- **Weekly reproducibility** (`.github/workflows/v1_reproducible.yml`,
+  Mondays, and on demand). It rebuilds the site from `9f58b83` and runs
+  `v1_site.py compare` against the pinned commit. A failure means the
+  toolchain has aged; the deployed site is unaffected.
+- **Changing the archive** takes a new `v1-site` commit and a reviewed
+  change to the two pins in `fetch_v1_site.sh`.
+
+### Measured, this session (`docs/v2/data/m3/m30/`)
+
+**Where the v1 worker's requests go** (Lab 1 edited share link, Chromium):
+
+| Archive | Files requested | Third-party requests | Errors | Trace sha256 |
+|---|---|---|---|---|
+| CDN build | 6 files from `cdn.jsdelivr.net`: the five core files and micropip 0.11.1 | 6 | 0 | `4dddb6623b9b…` |
+| Self-hosted build | all from `/coco-labs/v1/pyodide/` | **0** | 0 | `4dddb6623b9b…`, the same |
+
+- **Links:** 22 / 22 v1 URL forms and **6 / 6 archive views**, with 0
+  console errors, 0 page errors and no "real robot"
+  (`v1_links_check_selfhosted.json`).
+- **Reproducible:** a second build from source has the same content as the
+  pinned commit. 13 files differ, each only in `created_utc`
+  (`v1_site_rebuild_compare.json`).
+- **The fetch works from a repository that lacks the commit:** it fetched
+  from origin, verified, and the copy is byte-identical to the build.
+
+### Left as v1 said it
+
+Two lines of v1-era copy in the frozen build are kept byte for byte, as
+the rest of the build is. Both are reported to the owner and not rewritten.
+
+| Line | Status |
+|---|---|
+| Footer: "The only third-party request is Pyodide 314.0.7, and only after you paint, change a setting or start a race." | Self-hosting makes it conservative: there is now no third-party request at all |
+| `<meta name="description">`: "…on a real ROS 2 robot's maps." | M0.6 did not catch it. The page never shows it, but search engines may |
