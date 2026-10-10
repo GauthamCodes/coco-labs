@@ -48,6 +48,8 @@ CASES = os.path.join(REPO, 'lab_web', 'casefiles', 'cases.yaml')
 #: seconds of recording kept before and after a Lab 5 run's recorded window (its FollowPath
 #: request to its end): the approach and the stop, as context
 LAB5_CONTEXT_S = 5.0
+#: seconds kept before a mislocalised run's recorded /initialpose (the wrong belief told to AMCL)
+INJECT_CONTEXT_S = 3.0
 sys.path.insert(0, os.path.join(REPO, 'coco_lab_ros'))
 sys.path.insert(0, os.path.join(REPO, 'coco_schemas'))
 
@@ -228,6 +230,15 @@ def main(argv=None):
         checked = check(c, a.runs)
         log_window = first_terminal_window(bags[0]) if c.get('cut') == 'first_terminal' else None
         window = tuple(c['window']) if c.get('window') else None
+        if c['case'].get('scenario') == 'mislocalised' and window:
+            # the wrong belief was told to AMCL (/initialpose) about 10 s before the run: the
+            # Case File starts INJECT_CONTEXT_S before that recorded message, so it holds the
+            # moment localisation was made wrong as well as the abort
+            told = [log for _, _, log in A.read_bag(bags[0], ['/initialpose'])]
+            told = [t * 1e-9 for t in told if t * 1e-9 <= window[0]]
+            if not told:
+                raise SystemExit(f"{c['id']}: no /initialpose before its run -- the recording is not what Lab 5 says")
+            window = (min(window[0], told[-1] - INJECT_CONTEXT_S), window[1])
         data, s = A.convert(bags if len(bags) > 1 else bags[0], c['case'], 'summary',
                             window=window, log_window=log_window, source_root=a.runs,
                             git_sha=git_sha)

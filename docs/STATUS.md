@@ -16,7 +16,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
 | Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
 | Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
-| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.3 done** (100 Case Files, 41.4 MB, the evidence check extended, the model beside each). Next: **M3.4**, mission 7 |
+| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.4 done** (mission 7, scrub targets derived from the Case Files and checked). Next: **M3.5**, Play |
 | Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
 
@@ -1281,6 +1281,53 @@ only. Read order for agents (README §9): `README.md`, this file,
     **3,466 / 0 / 0** (`coco_lab_ros` 143: +1, the multi-bag test), vitest
     **358 / 0 / 0** (+11), build tools **146 / 0 / 0** (+12).
   - **Next:** M3.4, mission 7.
+
+- **M3.4, mission 7: "Why did the robot fail?" (2026-10-10).**
+  `lab_web/missions/07-why-did-it-fail.yaml`. Its beats, MODEL and STACK
+  separated:
+  - run 15, quoted from RESULTS; it was never recorded;
+  - its nine Lab 5 reproductions, opened as Case Files;
+  - the Arena model told the same wrong pose (SIMPLIFIED MODEL, 15 / 15
+    vs the stack's 9 / 9);
+  - Lab 4's B2 return-leg abort.
+
+  **Scrub targets are derived, not typed:**
+  - `src/arena/moments.ts` finds *divergence* (belief more than 1.0 m from
+    truth) and *refusal* (the first recorded give-up) in the Case File;
+  - `tools/casefile_moments.mjs` writes `v2/data/m3/m34/moments.json`;
+  - `test/casefile_moments.test.ts` re-derives every entry (17 tests);
+  - `missions.py` refuses a beat whose tick is not its moment's, or a
+    Case File that does not exist (7 new tests; it runs in CI through
+    `build_catalog.py`).
+
+  **What the recordings hold:**
+  - The mislocalised Case Files now start 3 s before the recorded
+    `/initialpose` that told AMCL the wrong pose. The divergence is at
+    ticks 30–31 (3.40 m) and the refusal at ticks 122–130 (FollowPath 103).
+    The nine were rebuilt with their checksums re-checked; the total is now
+    41,486,529 B.
+  - **B2 recorded no belief** (its bag has no `/amcl_pose` and no plans).
+    Its Case File shows only the refusal, at tick 3093 (ABORT
+    RETURN_FAILED). The mission says so; the 4.8 m is quoted from Lab 4's
+    analysis.
+
+  **Measured** (GPU, balanced on AC):
+  - all 4 Case File beats opened from Learn, each paused on its exact tick,
+    STACK, with the way back, 0 errors (`browser/mission_casefile_check.json`
+    plus screenshots);
+  - the nine rebuilt Case Files: first frame at most 49 ms, seek at most
+    34 ms.
+
+  **Evidence:** `v2/data/m3/m34/`.
+
+  **Suites** (balanced, AC):
+  - packages **3,466 / 0 / 0**
+  - vitest **375 / 0 / 0** (+17)
+  - build tools **154 / 0 / 0** (+8). The one failure on the first run was
+    the new harness writing its conditions outside the JSON call, which the
+    perf-conditions guard refuses. Fixed and re-run.
+
+  **Next:** M3.5, Play.
 
 ## Capabilities (README §2), with evidence class
 

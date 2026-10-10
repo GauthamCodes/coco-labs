@@ -9088,3 +9088,23 @@ estimates, and each redraw walked back up to 4,000 ticks: **seek 574 ms**
 on the robot_localization tour, **167 ms** on `lab3_s1_tour`. With
 estimates indexed by estimator, those seeks are now **31.8 ms** and
 **32.5 ms**.
+
+## COCO Lab v2 · M3.4: mission 7, moments in the Case Files (measured 2026-10-10)
+
+**Evidence class.** The moments are read from STACK recordings by a stated
+rule (`lab_web/src/arena/moments.ts`: belief more than 1.0 m from truth;
+the first recorded give-up). Evidence: `docs/v2/data/m3/m34/`.
+
+| Case File | divergence (tick, gap) | refusal (tick) |
+|---|---|---|
+| `lab5_mislocalised_*` (9: DWB, MPPI, RPP × 3) | ticks 30–31, 3.40 m (AMCL told the wrong pose) | ticks 122–130, FollowPath failed, code 103 |
+| `lab4_b2_colours_s1_red` | **none: the bag recorded no belief** (no `/amcl_pose`, no plans) | tick 3093, ABORT (RETURN_FAILED) |
+
+The nine mislocalised Case Files were rebuilt to start 3 s before the
+recorded `/initialpose`, with their `bag_0.mcap` checksums re-checked, 9 / 9.
+The 100 Case Files now total **41,486,529 B**.
+
+**In the browser** (GPU, balanced on AC), each of mission 7's 4 Case File
+beats opened from Learn paused on exactly its tick, STACK, with the link
+back, and 0 errors. The nine rebuilt Case Files: first frame at most 49 ms,
+seek at most 34 ms.

@@ -47,6 +47,10 @@ REPO = os.path.normpath(os.path.join(HERE, '..', '..'))
 MISSIONS = os.path.join(REPO, 'lab_web', 'missions')
 V1_CLAIMS = os.path.join(REPO, 'docs', 'v2', 'data', 'm2', 'm28', 'v1_claims.json')
 COVERAGE = os.path.join(REPO, 'docs', 'v2', 'M2_CLAIMS_COVERAGE.md')
+#: M3.4: the Case Files a beat may open, and the moments it may open them at
+CASEFILE_INDEX = os.path.join(REPO, 'lab_web', 'casefiles', 'index.json')
+MOMENTS = os.path.join(REPO, 'docs', 'v2', 'data', 'm3', 'm34', 'moments.json')
+MOMENT_KINDS = ('divergence', 'refusal')
 BEATS = ('hook', 'predict', 'reveal', 'manipulate', 'explain', 'stack', 'challenge')
 #: the learner-facing labels (CLAUDE.md "Evidence classes"); "TESTED": a
 #: property test proves it; never REAL ROBOT RESULT -- no robot exists
@@ -158,6 +162,40 @@ def evidence_problems(missions) -> List[str]:
                     resolve(ref, heads)
                 except MissionError as e:
                     bad.append(f'{m["id"]}/{c["id"]}: {e}')
+    return bad + casefile_link_problems(missions)
+
+
+def casefile_link_problems(missions) -> List[str]:
+    """
+    Every beat link into a Case File that is not derived, as messages (M3.4).
+
+    A ``casefile:`` link must name a committed Case File and a ``moment:``,
+    and its ``tick:`` must be that moment's tick in the committed moments
+    (docs/v2/data/m3/m34/moments.json, re-derived from the Case File by
+    lab_web/test/casefile_moments.test.ts): a scrub target is never typed.
+    """
+    links = [(m['id'], b['beat'], b['arena']) for m in missions for b in m['beats']
+             if (b.get('arena') or {}).get('casefile')]
+    if not links:
+        return []
+    with open(CASEFILE_INDEX, encoding='utf-8') as f:
+        have = {c['id'] for c in json.load(f)['casefiles']}
+    with open(MOMENTS, encoding='utf-8') as f:
+        moments = json.load(f)['casefiles']
+    bad = []
+    for mid, beat, a in links:
+        where, cf, kind = f'{mid}/{beat}', a['casefile'], a.get('moment')
+        if cf not in have:
+            bad.append(f'{where}: no committed Case File {cf!r}')
+        elif kind not in MOMENT_KINDS:
+            bad.append(f'{where}: a Case File link names its moment, one of {MOMENT_KINDS}')
+        elif not (moments.get(cf) or {}).get(kind):
+            bad.append(f'{where}: {cf} has no {kind} moment in {os.path.relpath(MOMENTS, REPO)}')
+        elif a.get('tick') != moments[cf][kind]['tick']:
+            bad.append(f'{where}: tick {a.get("tick")!r} is not {cf}\'s {kind} moment, '
+                       f'tick {moments[cf][kind]["tick"]}')
+        if a.get('replay') or a.get('cfg'):
+            bad.append(f'{where}: a Case File link opens the recording alone (no replay, no cfg)')
     return bad
 
 

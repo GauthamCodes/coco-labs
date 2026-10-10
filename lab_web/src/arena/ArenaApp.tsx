@@ -277,8 +277,15 @@ export function ArenaApp() {
             // (mission 7 and the detective challenge scrub straight to one)
             const p = attract.current.player;
             while (p.step()) { /* every recorded tick into the session's history */ }
-            s.seekTick(rec.ticks[0]?.tick ?? 1);
-            s.playing = true;
+            // a mission's beat (M3.4) opens it at the moment it is about, paused there
+            const at = Number(params.get('tick'));
+            if (Number.isInteger(at) && at >= 1) {
+              s.seekTick(at);
+              s.playing = false;
+            } else {
+              s.seekTick(rec.ticks[0]?.tick ?? 1);
+              s.playing = true;
+            }
             perf.mark('recording_ready', wallMs());
           }
           // a converted Lab 5 drive (M2.7) is shown through the Move lens: Nav2's own candidates

@@ -1,0 +1,136 @@
+{
+ "site": "http://127.0.0.1:4214/coco-labs/",
+ "beats": [
+  {
+   "mission": "why-did-it-fail",
+   "beat": 0,
+   "name": "hook",
+   "arena": {
+    "casefile": "lab5_mislocalised_dwb_1",
+    "level": "explain",
+    "moment": "refusal",
+    "tick": 128
+   },
+   "errors": [],
+   "link_text": "Open the Case File at the refusal (STACK) →",
+   "href": "/coco-labs/?view=arena&casefile=lab5_mislocalised_dwb_1&tick=128&level=explain&mission=why-did-it-fail&beat=0",
+   "mode": "recording",
+   "badge": "STACK",
+   "shown": {
+    "tick": 128,
+    "playing": false
+   },
+   "back": 1,
+   "ok": true
+  },
+  {
+   "mission": "why-did-it-fail",
+   "beat": 2,
+   "name": "reveal",
+   "arena": {
+    "casefile": "lab5_mislocalised_dwb_1",
+    "level": "explain",
+    "moment": "divergence",
+    "tick": 30
+   },
+   "errors": [],
+   "link_text": "Open the Case File at the divergence (STACK) →",
+   "href": "/coco-labs/?view=arena&casefile=lab5_mislocalised_dwb_1&tick=30&level=explain&mission=why-did-it-fail&beat=2",
+   "mode": "recording",
+   "badge": "STACK",
+   "shown": {
+    "tick": 30,
+    "playing": false
+   },
+   "back": 1,
+   "ok": true
+  },
+  {
+   "mission": "why-did-it-fail",
+   "beat": 4,
+   "name": "explain",
+   "arena": {
+    "casefile": "lab4_b2_colours_s1_red",
+    "level": "explain",
+    "moment": "refusal",
+    "tick": 3093
+   },
+   "errors": [],
+   "link_text": "Open the Case File at the refusal (STACK) →",
+   "href": "/coco-labs/?view=arena&casefile=lab4_b2_colours_s1_red&tick=3093&level=explain&mission=why-did-it-fail&beat=4",
+   "mode": "recording",
+   "badge": "STACK",
+   "shown": {
+    "tick": 3093,
+    "playing": false
+   },
+   "back": 1,
+   "ok": true
+  },
+  {
+   "mission": "why-did-it-fail",
+   "beat": 5,
+   "name": "stack",
+   "arena": {
+    "casefile": "lab5_mislocalised_mppi_1",
+    "level": "explain",
+    "moment": "divergence",
+    "tick": 31
+   },
+   "errors": [],
+   "link_text": "Open the Case File at the divergence (STACK) →",
+   "href": "/coco-labs/?view=arena&casefile=lab5_mislocalised_mppi_1&tick=31&level=explain&mission=why-did-it-fail&beat=5",
+   "mode": "recording",
+   "badge": "STACK",
+   "shown": {
+    "tick": 31,
+    "playing": false
+   },
+   "back": 1,
+   "ok": true
+  }
+ ],
+ "ok": true,
+ "summary": {
+  "beats": 4,
+  "ok": 4
+ },
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-10T18:41:45.930Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 4.12,
+    "5m": 2.95,
+    "15m": 2.27
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-10T18:41:54.457Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.79,
+    "5m": 2.9,
+    "15m": 2.25
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

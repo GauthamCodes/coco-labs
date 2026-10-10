@@ -44,9 +44,10 @@ def _arena():
 
 # -- the gate ---------------------------------------------------------------
 
-def test_there_are_six_missions_numbered_in_order():
-    assert [m['number'] for m in MS] == [1, 2, 3, 4, 5, 6]
-    assert len({m['id'] for m in MS}) == 6
+def test_there_are_seven_missions_numbered_in_order():
+    # M3.4 added mission 7, "Why did the robot fail?"
+    assert [m['number'] for m in MS] == [1, 2, 3, 4, 5, 6, 7]
+    assert len({m['id'] for m in MS}) == 7
 
 
 def test_every_claims_evidence_resolves():
@@ -156,6 +157,46 @@ def _broken(edit):
     edit(m)
     with pytest.raises(missions.MissionError):
         missions.check(m, 'broken.yaml')
+
+
+# -- M3.4: a beat that opens a Case File opens it at a derived moment -----------
+
+def _m7():
+    return copy.deepcopy(next(m for m in MS if m['id'] == 'why-did-it-fail'))
+
+
+def _casefile_links(m):
+    return [b['arena'] for b in m['beats'] if (b.get('arena') or {}).get('casefile')]
+
+
+def test_mission_7_opens_case_files_at_their_derived_moments():
+    m = _m7()
+    links = _casefile_links(m)
+    assert len(links) >= 4
+    assert {a['moment'] for a in links} == {'divergence', 'refusal'}
+    assert missions.casefile_link_problems([m]) == []
+
+
+@pytest.mark.parametrize('edit, says', [
+    (lambda a: a.update(tick=a['tick'] + 1), 'is not'),
+    (lambda a: a.update(casefile='lab5_no_such_run'), 'no committed Case File'),
+    (lambda a: a.pop('moment'), 'names its moment'),
+    (lambda a: a.update(moment='somewhere'), 'names its moment'),
+    (lambda a: a.update(cfg=['move.controller=dwa']), 'opens the recording alone'),
+])
+def test_a_typed_or_unknown_scrub_target_is_refused(edit, says):
+    m = _m7()
+    edit(_casefile_links(m)[0])
+    bad = missions.casefile_link_problems([m])
+    assert bad and says in bad[0]
+
+
+def test_a_moment_the_recording_does_not_hold_is_refused():
+    # B2 recorded no belief (no AMCL pose, no plans): it has a refusal and no divergence
+    m = _m7()
+    a = next(a for a in _casefile_links(m) if a['casefile'] == 'lab4_b2_colours_s1_red')
+    a['moment'] = 'divergence'
+    assert 'has no divergence moment' in missions.casefile_link_problems([m])[0]
 
 
 def test_the_seven_beats_are_required_in_order():

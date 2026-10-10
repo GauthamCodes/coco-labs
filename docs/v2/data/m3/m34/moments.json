@@ -1,0 +1,235 @@
+{
+ "what": "Moments in Case Files: where the stack's belief first leaves the truth, and where it gives up",
+ "rule": "lab_web/src/arena/moments.ts",
+ "divergence_m": 1,
+ "tool": "lab_web/tools/casefile_moments.mjs",
+ "casefiles": {
+  "lab5_mislocalised_dwb_1": {
+   "ticks": 178,
+   "belief_source": "estimate",
+   "beliefs": 1,
+   "divergence": {
+    "tick": 30,
+    "t_world": 72.406,
+    "error_m": 3.402673792030995,
+    "source": "amcl",
+    "belief": [
+     -0.006534832133455973,
+     3.402668214317154
+    ],
+    "truth": [
+     -0.0003281069195684161,
+     8.305064603028366e-8
+    ]
+   },
+   "refusal": {
+    "tick": 128,
+    "source": "/lab/status",
+    "what": "FollowPath failed, error code 103"
+   }
+  },
+  "lab5_mislocalised_dwb_2": {
+   "ticks": 172,
+   "belief_source": "estimate",
+   "beliefs": 1,
+   "divergence": {
+    "tick": 31,
+    "t_world": 72.924,
+    "error_m": 3.4034414834298783,
+    "source": "amcl",
+    "belief": [
+     -0.006578475350047734,
+     3.403478467261928
+    ],
+    "truth": [
+     -0.00008573979499182371,
+     0.00004317692418086224
+    ]
+   },
+   "refusal": {
+    "tick": 122,
+    "source": "/lab/status",
+    "what": "FollowPath failed, error code 103"
+   }
+  },
+  "lab5_mislocalised_dwb_3": {
+   "ticks": 179,
+   "belief_source": "estimate",
+   "beliefs": 1,
+   "divergence": {
+    "tick": 31,
+    "t_world": 73.268,
+    "error_m": 3.402673792030994,
+    "source": "amcl",
+    "belief": [
+     -0.006534832132441231,
+     3.402668214317306
+    ],
+    "truth": [
+     -0.00032810691855367224,
+     8.30507988988299e-8
+    ]
+   },
+   "refusal": {
+    "tick": 129,
+    "source": "/lab/status",
+    "what": "FollowPath failed, error code 103"
+   }
+  },
+  "lab5_mislocalised_mppi_1": {
+   "ticks": 172,
+   "belief_source": "estimate",
+   "beliefs": 1,
+   "divergence": {
+    "tick": 31,
+    "t_world": 72.924,
+    "error_m": 3.402673792030995,
+    "source": "amcl",
+    "belief": [
+     -0.006534832133455973,
+     3.402668214317154
+    ],
+    "truth": [
+     -0.0003281069195684161,
+     8.3050646031478e-8
+    ]
+   },
+   "refusal": {
+    "tick": 122,
+    "source": "/lab/status",
+    "what": "FollowPath failed, error code 103"
+   }
+  },
+  "lab5_mislocalised_mppi_2": {
+   "ticks": 179,
+   "belief_source": "estimate",
+   "beliefs": 1,
+   "divergence": {
+    "tick": 31,
+    "t_world": 73.684,
+    "error_m": 3.400914000669445,
+    "source": "amcl",
+    "belief": [
+     -0.006907947548959648,
+     3.400936041941767
+    ],
+    "truth": [
+     -0.00008578857042174093,
+     0.00002888382993161534
+    ]
+   },
+   "refusal": {
+    "tick": 129,
+    "source": "/lab/status",
+    "what": "FollowPath failed, error code 103"
+   }
+  },
+  "lab5_mislocalised_mppi_3": {
+   "ticks": 178,
+   "belief_source": "estimate",
+   "beliefs": 1,
+   "divergence": {
+    "tick": 31,
+    "t_world": 73.61200000000001,
+    "error_m": 3.402673792030995,
+    "source": "amcl",
+    "belief": [
+     -0.006534832133455973,
+     3.402668214317154
+    ],
+    "truth": [
+     -0.0003281069195684161,
+     8.305064603083239e-8
+    ]
+   },
+   "refusal": {
+    "tick": 128,
+    "source": "/lab/status",
+    "what": "FollowPath failed, error code 103"
+   }
+  },
+  "lab5_mislocalised_rpp_1": {
+   "ticks": 177,
+   "belief_source": "estimate",
+   "beliefs": 1,
+   "divergence": {
+    "tick": 31,
+    "t_world": 72.712,
+    "error_m": 3.403449230600237,
+    "source": "amcl",
+    "belief": [
+     -0.006252172567610972,
+     3.4034436047541163
+    ],
+    "truth": [
+     -0.000016324285418978235,
+     8.686380972539454e-8
+    ]
+   },
+   "refusal": {
+    "tick": 127,
+    "source": "/lab/status",
+    "what": "FollowPath failed, error code 103"
+   }
+  },
+  "lab5_mislocalised_rpp_2": {
+   "ticks": 179,
+   "belief_source": "estimate",
+   "beliefs": 1,
+   "divergence": {
+    "tick": 31,
+    "t_world": 73.23400000000001,
+    "error_m": 3.402673792030995,
+    "source": "amcl",
+    "belief": [
+     -0.006534832133455973,
+     3.402668214317154
+    ],
+    "truth": [
+     -0.0003281069195684161,
+     8.305064602998681e-8
+    ]
+   },
+   "refusal": {
+    "tick": 129,
+    "source": "/lab/status",
+    "what": "FollowPath failed, error code 103"
+   }
+  },
+  "lab5_mislocalised_rpp_3": {
+   "ticks": 179,
+   "belief_source": "estimate",
+   "beliefs": 1,
+   "divergence": {
+    "tick": 31,
+    "t_world": 73.32600000000001,
+    "error_m": 3.403449230600238,
+    "source": "amcl",
+    "belief": [
+     -0.006252172592755296,
+     3.4034436048123444
+    ],
+    "truth": [
+     -0.000016324310563309297,
+     8.692203654737339e-8
+    ]
+   },
+   "refusal": {
+    "tick": 130,
+    "source": "/lab/status",
+    "what": "FollowPath failed, error code 103"
+   }
+  },
+  "lab4_b2_colours_s1_red": {
+   "ticks": 3100,
+   "belief_source": "none",
+   "beliefs": 0,
+   "divergence": null,
+   "refusal": {
+    "tick": 3093,
+    "source": "/mission/state",
+    "what": "ABORT (RETURN_FAILED)"
+   }
+  }
+ }
+}

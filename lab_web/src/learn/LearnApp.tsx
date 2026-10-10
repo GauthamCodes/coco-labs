@@ -158,7 +158,8 @@ function MissionPlayer({ m, beat, go, gaps }: { m: Mission; beat: number; go: (m
         )}
         {b.arena && (
           <p><a className="arena-go" data-testid="arena-go" href={`${BASE}${arenaHref(m.id, beat, b.arena)}`}>
-            {b.arena.replay ? 'Watch the recording in the Arena →' : 'Open this in the Arena →'}</a></p>
+            {b.arena.casefile ? `Open the Case File at the ${b.arena.moment ?? 'moment'} (STACK) →`
+              : b.arena.replay ? 'Watch the recording in the Arena →' : 'Open this in the Arena →'}</a></p>
         )}
         {showClaims && (b.claims ?? []).map((id) => <ClaimCard key={id} c={byId.get(id)!} />)}
       </section>

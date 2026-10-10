@@ -1,33 +1,34 @@
 {
- "schema": "lab_web.casefiles",
- "version": "1.0",
  "adapter": "1",
  "detail": "summary",
- "built_at_commit": "f9897dbbb9ce19a15898092f44384b3cb79f576c",
- "total_bytes": 41486529,
- "budget": {
-  "per_file": 20000000,
-  "total": 150000000
- },
- "casefiles": [
+ "git_sha": "f9897dbbb9ce19a15898092f44384b3cb79f576c",
+ "cases": [
   {
    "id": "lab1_run_astar",
    "group": "lab1-runs",
-   "title": "Lab 1 · astar",
+   "title": "Lab 1 \u00b7 astar",
+   "bags": [
+    "lab1c/run_astar/bag"
+   ],
    "case": {
     "lab": 1,
     "run": "run_astar",
     "id": "lab1_run_astar",
     "group": "lab1-runs",
-    "title": "Lab 1 · astar"
+    "title": "Lab 1 \u00b7 astar"
    },
-   "bytes": 74406,
-   "sha256": "f6427baef45b68a54842583c80dbd040c839896c6c889241df88e4b2ca1ef42d",
    "run_id": "4609fca93272d5dbfa85641d7f7e212224da29a227acd90ec6d8ae7b817d7923",
+   "bytes_uncompressed": 155111,
    "messages": 1376,
-   "bags": [
-    "lab1c/run_astar/bag"
-   ],
+   "rows": {
+    "estimate": 37,
+    "robot": 37,
+    "truth": 761,
+    "annotation": 141,
+    "path": 1,
+    "command": 157,
+    "metrics": 488
+   },
    "checksum": {
     "checked": true,
     "definition": "export_dir_sha256",
@@ -40,21 +41,29 @@
   {
    "id": "lab1_run_dijkstra",
    "group": "lab1-runs",
-   "title": "Lab 1 · dijkstra",
+   "title": "Lab 1 \u00b7 dijkstra",
+   "bags": [
+    "lab1c/run_dijkstra/bag"
+   ],
    "case": {
     "lab": 1,
     "run": "run_dijkstra",
     "id": "lab1_run_dijkstra",
     "group": "lab1-runs",
-    "title": "Lab 1 · dijkstra"
+    "title": "Lab 1 \u00b7 dijkstra"
    },
-   "bytes": 74435,
-   "sha256": "b5c58985b50cd40d2a4e2c1d9ca05fd3210dd1ca3bb0951468eb73fdbc507ffb",
    "run_id": "4b98c9d6301bbd06b35f3e681fe8ad9fbe2fd1d689e8bdeea807a848e62bb42c",
+   "bytes_uncompressed": 154912,
    "messages": 1383,
-   "bags": [
-    "lab1c/run_dijkstra/bag"
-   ],
+   "rows": {
+    "estimate": 36,
+    "robot": 36,
+    "truth": 778,
+    "annotation": 138,
+    "path": 1,
+    "command": 160,
+    "metrics": 468
+   },
    "checksum": {
     "checked": true,
     "definition": "export_dir_sha256",
@@ -67,21 +76,29 @@
   {
    "id": "lab1_run_greedy",
    "group": "lab1-runs",
-   "title": "Lab 1 · greedy",
+   "title": "Lab 1 \u00b7 greedy",
+   "bags": [
+    "lab1c/run_greedy/bag"
+   ],
    "case": {
     "lab": 1,
     "run": "run_greedy",
     "id": "lab1_run_greedy",
     "group": "lab1-runs",
-    "title": "Lab 1 · greedy"
+    "title": "Lab 1 \u00b7 greedy"
    },
-   "bytes": 60376,
-   "sha256": "352ec803b1426d078fd5b65414575ee28f2e633c6d7a0cfb42c290c01ad310b5",
    "run_id": "83c9e7f27716b2e20796d3ed7c1e2be1c6ed272add77f3a77d4c079a9096f660",
+   "bytes_uncompressed": 126059,
    "messages": 1100,
-   "bags": [
-    "lab1c/run_greedy/bag"
-   ],
+   "rows": {
+    "estimate": 11,
+    "robot": 11,
+    "truth": 671,
+    "annotation": 129,
+    "path": 1,
+    "command": 108,
+    "metrics": 344
+   },
    "checksum": {
     "checked": true,
     "definition": "export_dir_sha256",
@@ -94,22 +111,29 @@
   {
    "id": "lab2_kidnap_recovery_k1",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_recovery_K1",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K1",
+   "bags": [
+    "lab2/kidnap_recovery_K1/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_recovery_K1",
     "void": false,
     "id": "lab2_kidnap_recovery_k1",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_recovery_K1"
+    "title": "Lab 2 \u00b7 kidnap_recovery_K1"
    },
-   "bytes": 1002254,
-   "sha256": "bf30804f918896833b369cbe6eafaf50ed26941ca53a187a9fe115ae9d952dbc",
    "run_id": "955b364200cf8cba4e09defeb8fbe2b51f1b6143bf49ca87ff18ec800e96d993",
+   "bytes_uncompressed": 1971424,
    "messages": 7961,
-   "bags": [
-    "lab2/kidnap_recovery_K1/bag"
-   ],
+   "rows": {
+    "estimate": 2665,
+    "robot": 362,
+    "truth": 2327,
+    "scan": 466,
+    "annotation": 432,
+    "metrics": 6410
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -120,22 +144,29 @@
   {
    "id": "lab2_kidnap_recovery_k1_void1",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_recovery_K1.void1",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K1.void1",
+   "bags": [
+    "lab2/kidnap_recovery_K1.void1/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_recovery_K1.void1",
     "void": true,
     "id": "lab2_kidnap_recovery_k1_void1",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_recovery_K1.void1"
+    "title": "Lab 2 \u00b7 kidnap_recovery_K1.void1"
    },
-   "bytes": 126342,
-   "sha256": "b5afdb89138de7e28d70d04d958a1053507e340c244c62525113cfcc44da0da1",
    "run_id": "5a955844b2235eefe0029474b1197ddfa5399b557d97e8311a3a1249faec275a",
+   "bytes_uncompressed": 1009045,
    "messages": 3520,
-   "bags": [
-    "lab2/kidnap_recovery_K1.void1/bag"
-   ],
+   "rows": {
+    "estimate": 1515,
+    "robot": 1,
+    "scan": 307,
+    "truth": 1535,
+    "annotation": 151,
+    "metrics": 22
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -146,22 +177,29 @@
   {
    "id": "lab2_kidnap_recovery_k1_r2",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_recovery_K1_r2",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K1_r2",
+   "bags": [
+    "lab2/kidnap_recovery_K1_r2/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_recovery_K1_r2",
     "void": false,
     "id": "lab2_kidnap_recovery_k1_r2",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_recovery_K1_r2"
+    "title": "Lab 2 \u00b7 kidnap_recovery_K1_r2"
    },
-   "bytes": 1014645,
-   "sha256": "039038e39fe0fac2f772d737bbe91263e5ade7e5641161cc06eefdb58e7eb3a7",
    "run_id": "6b2517f173d66f405b3b673f45c489deb202a9a68fb67d8f1b5cef7e8af5e608",
+   "bytes_uncompressed": 1973959,
    "messages": 7972,
-   "bags": [
-    "lab2/kidnap_recovery_K1_r2/bag"
-   ],
+   "rows": {
+    "estimate": 2673,
+    "robot": 364,
+    "truth": 2340,
+    "scan": 468,
+    "annotation": 442,
+    "metrics": 6294
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -172,22 +210,29 @@
   {
    "id": "lab2_kidnap_recovery_k2",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_recovery_K2",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K2",
+   "bags": [
+    "lab2/kidnap_recovery_K2/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_recovery_K2",
     "void": false,
     "id": "lab2_kidnap_recovery_k2",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_recovery_K2"
+    "title": "Lab 2 \u00b7 kidnap_recovery_K2"
    },
-   "bytes": 1021887,
-   "sha256": "33541e15437edd3d5921868b625d2ccbfa3265b7f6b36e3038f52b4770a9b88c",
    "run_id": "b43584755292dc093f41d5f44468a3b8f97affbe727e910cf9643edfb86227b5",
+   "bytes_uncompressed": 1978672,
    "messages": 8084,
-   "bags": [
-    "lab2/kidnap_recovery_K2/bag"
-   ],
+   "rows": {
+    "estimate": 2652,
+    "robot": 362,
+    "truth": 2320,
+    "scan": 464,
+    "annotation": 487,
+    "metrics": 6448
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -198,22 +243,28 @@
   {
    "id": "lab2_kidnap_recovery_k2_void2",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_recovery_K2.void2",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K2.void2",
+   "bags": [
+    "lab2/kidnap_recovery_K2.void2/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_recovery_K2.void2",
     "void": true,
     "id": "lab2_kidnap_recovery_k2_void2",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_recovery_K2.void2"
+    "title": "Lab 2 \u00b7 kidnap_recovery_K2.void2"
    },
-   "bytes": 40442,
-   "sha256": "d95ebeb726c43b8373a3c92d07a5728632ed03a63dd9d7dda5cff839e8c0f7eb",
    "run_id": "a5e9c800b80861ee65cee86910ba3962d08a8d5cbe0c719d6037aa5e6c7efb40",
+   "bytes_uncompressed": 274456,
    "messages": 939,
-   "bags": [
-    "lab2/kidnap_recovery_K2.void2/bag"
-   ],
+   "rows": {
+    "estimate": 412,
+    "robot": 1,
+    "truth": 413,
+    "scan": 83,
+    "annotation": 29
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -224,22 +275,29 @@
   {
    "id": "lab2_kidnap_recovery_k2_r2",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_recovery_K2_r2",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K2_r2",
+   "bags": [
+    "lab2/kidnap_recovery_K2_r2/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_recovery_K2_r2",
     "void": false,
     "id": "lab2_kidnap_recovery_k2_r2",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_recovery_K2_r2"
+    "title": "Lab 2 \u00b7 kidnap_recovery_K2_r2"
    },
-   "bytes": 1015304,
-   "sha256": "84a0b03c77e8a0ca30875d694789d5602d8c619af6b621a8ebc35b10cf747f0a",
    "run_id": "baf9b5678f0db67bbca8b6a69ce63e3e54fb9ab60885fcb3d56e96f6ebe99e88",
+   "bytes_uncompressed": 1974416,
    "messages": 8006,
-   "bags": [
-    "lab2/kidnap_recovery_K2_r2/bag"
-   ],
+   "rows": {
+    "estimate": 2667,
+    "robot": 362,
+    "truth": 2335,
+    "scan": 467,
+    "annotation": 458,
+    "metrics": 6298
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -250,22 +308,29 @@
   {
    "id": "lab2_kidnap_recovery_k3",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_recovery_K3",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K3",
+   "bags": [
+    "lab2/kidnap_recovery_K3/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_recovery_K3",
     "void": false,
     "id": "lab2_kidnap_recovery_k3",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_recovery_K3"
+    "title": "Lab 2 \u00b7 kidnap_recovery_K3"
    },
-   "bytes": 1013126,
-   "sha256": "c460c28b5e1b980dd5ec732c1232e00d3a8ea61f738a0c87bce20732f06d12de",
    "run_id": "0c7bbf48dc50784815b477c65aabfe21b9331d7fb73b0568d1da81c812cd5b8c",
+   "bytes_uncompressed": 1964417,
    "messages": 7949,
-   "bags": [
-    "lab2/kidnap_recovery_K3/bag"
-   ],
+   "rows": {
+    "estimate": 2652,
+    "robot": 364,
+    "truth": 2320,
+    "annotation": 478,
+    "scan": 464,
+    "metrics": 6248
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -276,22 +341,29 @@
   {
    "id": "lab2_kidnap_recovery_k3_r2",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_recovery_K3_r2",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K3_r2",
+   "bags": [
+    "lab2/kidnap_recovery_K3_r2/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_recovery_K3_r2",
     "void": false,
     "id": "lab2_kidnap_recovery_k3_r2",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_recovery_K3_r2"
+    "title": "Lab 2 \u00b7 kidnap_recovery_K3_r2"
    },
-   "bytes": 1019933,
-   "sha256": "82fb51f1802ed97ab815f5e75ea9d3724cef748098bfd2a5f4a5f47f7008700f",
    "run_id": "7f053036a89f0428174c84f2e0397726b0f3a28a88b2817819ef946f93be5e49",
+   "bytes_uncompressed": 1969568,
    "messages": 7981,
-   "bags": [
-    "lab2/kidnap_recovery_K3_r2/bag"
-   ],
+   "rows": {
+    "estimate": 2674,
+    "robot": 364,
+    "truth": 2336,
+    "scan": 467,
+    "annotation": 434,
+    "metrics": 6250
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -302,22 +374,29 @@
   {
    "id": "lab2_kidnap_recovery_k4",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_recovery_K4",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K4",
+   "bags": [
+    "lab2/kidnap_recovery_K4/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_recovery_K4",
     "void": false,
     "id": "lab2_kidnap_recovery_k4",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_recovery_K4"
+    "title": "Lab 2 \u00b7 kidnap_recovery_K4"
    },
-   "bytes": 1012451,
-   "sha256": "c35a6351c4d17ea4847a369c167a6de94dcfbd70861d370f977fcefe41fecd50",
    "run_id": "63684cded927e7d6400feb70ab32ed8938d491d05e961bdda47eb5b8a8e8c089",
+   "bytes_uncompressed": 1965324,
    "messages": 7959,
-   "bags": [
-    "lab2/kidnap_recovery_K4/bag"
-   ],
+   "rows": {
+    "estimate": 2640,
+    "robot": 362,
+    "truth": 2311,
+    "scan": 463,
+    "annotation": 495,
+    "metrics": 6306
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -328,22 +407,29 @@
   {
    "id": "lab2_kidnap_recovery_k4_r2",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_recovery_K4_r2",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K4_r2",
+   "bags": [
+    "lab2/kidnap_recovery_K4_r2/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_recovery_K4_r2",
     "void": false,
     "id": "lab2_kidnap_recovery_k4_r2",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_recovery_K4_r2"
+    "title": "Lab 2 \u00b7 kidnap_recovery_K4_r2"
    },
-   "bytes": 1016816,
-   "sha256": "5b0ef2954ddf363e79dac8bdf3090566b867e90055e66448cb45da5dcfbe451c",
    "run_id": "10878255f1cb341250deeba5b21c934130f063dc10716c7719dd47a9d40a84b7",
+   "bytes_uncompressed": 1973412,
    "messages": 8021,
-   "bags": [
-    "lab2/kidnap_recovery_K4_r2/bag"
-   ],
+   "rows": {
+    "estimate": 2669,
+    "robot": 363,
+    "truth": 2337,
+    "scan": 468,
+    "annotation": 456,
+    "metrics": 6206
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -354,22 +440,29 @@
   {
    "id": "lab2_kidnap_recovery_k5",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_recovery_K5",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K5",
+   "bags": [
+    "lab2/kidnap_recovery_K5/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_recovery_K5",
     "void": false,
     "id": "lab2_kidnap_recovery_k5",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_recovery_K5"
+    "title": "Lab 2 \u00b7 kidnap_recovery_K5"
    },
-   "bytes": 1013893,
-   "sha256": "ea58291cda7bb7e0d3de9401f17be3fc8713f4b28948edb5536fbe046cad9965",
    "run_id": "8a496a3a68f4cec88d6a560ab15992c152f5789c886325043ecaa6f695413440",
+   "bytes_uncompressed": 1967103,
    "messages": 8002,
-   "bags": [
-    "lab2/kidnap_recovery_K5/bag"
-   ],
+   "rows": {
+    "estimate": 2644,
+    "robot": 362,
+    "truth": 2312,
+    "scan": 463,
+    "annotation": 485,
+    "metrics": 6326
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -380,22 +473,29 @@
   {
    "id": "lab2_kidnap_recovery_k5_r2",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_recovery_K5_r2",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K5_r2",
+   "bags": [
+    "lab2/kidnap_recovery_K5_r2/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_recovery_K5_r2",
     "void": false,
     "id": "lab2_kidnap_recovery_k5_r2",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_recovery_K5_r2"
+    "title": "Lab 2 \u00b7 kidnap_recovery_K5_r2"
    },
-   "bytes": 1018783,
-   "sha256": "e2d8c78d0d5a071368abd43256d5842e58b88312fcdaefed302201ff4c42315c",
    "run_id": "e8969dd8919b05458cb2bb452fabefd74dde1eff258c602287c90a909c75c2b0",
+   "bytes_uncompressed": 1970097,
    "messages": 7959,
-   "bags": [
-    "lab2/kidnap_recovery_K5_r2/bag"
-   ],
+   "rows": {
+    "estimate": 2661,
+    "robot": 362,
+    "truth": 2332,
+    "scan": 467,
+    "annotation": 455,
+    "metrics": 6266
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -406,22 +506,29 @@
   {
    "id": "lab2_kidnap_shipped_k1",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_shipped_K1",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K1",
+   "bags": [
+    "lab2/kidnap_shipped_K1/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_shipped_K1",
     "void": false,
     "id": "lab2_kidnap_shipped_k1",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_shipped_K1"
+    "title": "Lab 2 \u00b7 kidnap_shipped_K1"
    },
-   "bytes": 1005265,
-   "sha256": "6b4bc119ad8d11e89c3b09cbadf8822f6a5b6c06b38ec2c763b13d6b28c08985",
    "run_id": "7b09bf3e6c1a930f46607c522fb49e01202d38dfb8b43eed0939789ea66b7bbb",
+   "bytes_uncompressed": 1958683,
    "messages": 7937,
-   "bags": [
-    "lab2/kidnap_shipped_K1/bag"
-   ],
+   "rows": {
+    "estimate": 2641,
+    "robot": 362,
+    "truth": 2307,
+    "scan": 462,
+    "annotation": 470,
+    "metrics": 6288
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -432,22 +539,29 @@
   {
    "id": "lab2_kidnap_shipped_k1_void1",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_shipped_K1.void1",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K1.void1",
+   "bags": [
+    "lab2/kidnap_shipped_K1.void1/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_shipped_K1.void1",
     "void": true,
     "id": "lab2_kidnap_shipped_k1_void1",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_shipped_K1.void1"
+    "title": "Lab 2 \u00b7 kidnap_shipped_K1.void1"
    },
-   "bytes": 126423,
-   "sha256": "936f9b17759f49d092252ed7266e126579111bbf2c40395519617712fc2fce85",
    "run_id": "f68292e617244d8c90453fa3479b4aaf47f9a69df18d1628b0d43c615b5e8562",
+   "bytes_uncompressed": 987499,
    "messages": 3446,
-   "bags": [
-    "lab2/kidnap_shipped_K1.void1/bag"
-   ],
+   "rows": {
+    "estimate": 1483,
+    "robot": 1,
+    "scan": 300,
+    "truth": 1496,
+    "annotation": 156,
+    "metrics": 20
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -458,22 +572,29 @@
   {
    "id": "lab2_kidnap_shipped_k1_r2",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_shipped_K1_r2",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K1_r2",
+   "bags": [
+    "lab2/kidnap_shipped_K1_r2/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_shipped_K1_r2",
     "void": false,
     "id": "lab2_kidnap_shipped_k1_r2",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_shipped_K1_r2"
+    "title": "Lab 2 \u00b7 kidnap_shipped_K1_r2"
    },
-   "bytes": 1020776,
-   "sha256": "f51b527602025bf7ace19b1e72f044342d8f72b8c232b9e7cb0086cbfd3765d1",
    "run_id": "e827ce2ba14cafe1aa5eab7e9757c283d072f9164d3e71442af1083074002cab",
+   "bytes_uncompressed": 1966496,
    "messages": 8041,
-   "bags": [
-    "lab2/kidnap_shipped_K1_r2/bag"
-   ],
+   "rows": {
+    "estimate": 2659,
+    "robot": 364,
+    "truth": 2325,
+    "scan": 465,
+    "annotation": 481,
+    "metrics": 6126
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -484,22 +605,29 @@
   {
    "id": "lab2_kidnap_shipped_k2",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_shipped_K2",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K2",
+   "bags": [
+    "lab2/kidnap_shipped_K2/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_shipped_K2",
     "void": false,
     "id": "lab2_kidnap_shipped_k2",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_shipped_K2"
+    "title": "Lab 2 \u00b7 kidnap_shipped_K2"
    },
-   "bytes": 1018775,
-   "sha256": "35335d0a12616fb06ba54590a4bdb0abf58cd4ff0e882b7782886537062bf3cd",
    "run_id": "92cb22f0833a359613a2c71502ddac751cca02b678a7f1f4baf5c6eb3e5a71a7",
+   "bytes_uncompressed": 1967982,
    "messages": 7997,
-   "bags": [
-    "lab2/kidnap_shipped_K2/bag"
-   ],
+   "rows": {
+    "estimate": 2662,
+    "robot": 362,
+    "scan": 466,
+    "truth": 2328,
+    "annotation": 444,
+    "metrics": 6260
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -510,22 +638,29 @@
   {
    "id": "lab2_kidnap_shipped_k2_r2",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_shipped_K2_r2",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K2_r2",
+   "bags": [
+    "lab2/kidnap_shipped_K2_r2/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_shipped_K2_r2",
     "void": false,
     "id": "lab2_kidnap_shipped_k2_r2",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_shipped_K2_r2"
+    "title": "Lab 2 \u00b7 kidnap_shipped_K2_r2"
    },
-   "bytes": 1017045,
-   "sha256": "fba489491ff347f8d9d025623df43be2d5c2ee08b6b724af59924d5f8a1a6c62",
    "run_id": "93c23bb71a5968d21a69f8ae82088d5594e8a3f03bca487706785994a86dc4a8",
+   "bytes_uncompressed": 1969186,
    "messages": 7952,
-   "bags": [
-    "lab2/kidnap_shipped_K2_r2/bag"
-   ],
+   "rows": {
+    "estimate": 2668,
+    "robot": 362,
+    "truth": 2337,
+    "scan": 468,
+    "annotation": 454,
+    "metrics": 6178
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -536,22 +671,29 @@
   {
    "id": "lab2_kidnap_shipped_k3",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_shipped_K3",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K3",
+   "bags": [
+    "lab2/kidnap_shipped_K3/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_shipped_K3",
     "void": false,
     "id": "lab2_kidnap_shipped_k3",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_shipped_K3"
+    "title": "Lab 2 \u00b7 kidnap_shipped_K3"
    },
-   "bytes": 1014022,
-   "sha256": "48d7c9e702a59910843d00203a04d2d1462446022fc628e5aa4262bb19e3fafb",
    "run_id": "9f0fd77fd0ee51684f9c35102f48b0ab167014b66bcb85bf12c2375e72c0ef92",
+   "bytes_uncompressed": 1970530,
    "messages": 7960,
-   "bags": [
-    "lab2/kidnap_shipped_K3/bag"
-   ],
+   "rows": {
+    "estimate": 2664,
+    "robot": 362,
+    "truth": 2326,
+    "scan": 466,
+    "annotation": 459,
+    "metrics": 6310
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -562,22 +704,29 @@
   {
    "id": "lab2_kidnap_shipped_k3_r2",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_shipped_K3_r2",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K3_r2",
+   "bags": [
+    "lab2/kidnap_shipped_K3_r2/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_shipped_K3_r2",
     "void": false,
     "id": "lab2_kidnap_shipped_k3_r2",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_shipped_K3_r2"
+    "title": "Lab 2 \u00b7 kidnap_shipped_K3_r2"
    },
-   "bytes": 1007417,
-   "sha256": "bb5656f170265c7607a4ad50a4ebad68e438c5d7633c7320b70eeca0867955d3",
    "run_id": "6a9e08307a9c6e17c700ffc7a881434b83043ed979eea7e085b576da31bbfa70",
+   "bytes_uncompressed": 1974516,
    "messages": 8082,
-   "bags": [
-    "lab2/kidnap_shipped_K3_r2/bag"
-   ],
+   "rows": {
+    "estimate": 2660,
+    "robot": 363,
+    "truth": 2327,
+    "scan": 466,
+    "annotation": 471,
+    "metrics": 6264
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -588,22 +737,29 @@
   {
    "id": "lab2_kidnap_shipped_k4",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_shipped_K4",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K4",
+   "bags": [
+    "lab2/kidnap_shipped_K4/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_shipped_K4",
     "void": false,
     "id": "lab2_kidnap_shipped_k4",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_shipped_K4"
+    "title": "Lab 2 \u00b7 kidnap_shipped_K4"
    },
-   "bytes": 1018349,
-   "sha256": "dc51799717aacef13d3f3c2709b0260c5471da98edb0ec65560d1b57c686862f",
    "run_id": "b996ee9bd817cb317b207a2ac0fa935e1b5433925487a48ffa0c9774ae8d1d50",
+   "bytes_uncompressed": 1964037,
    "messages": 7976,
-   "bags": [
-    "lab2/kidnap_shipped_K4/bag"
-   ],
+   "rows": {
+    "estimate": 2642,
+    "robot": 362,
+    "truth": 2310,
+    "scan": 462,
+    "annotation": 489,
+    "metrics": 6320
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -614,22 +770,29 @@
   {
    "id": "lab2_kidnap_shipped_k4_r2",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_shipped_K4_r2",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K4_r2",
+   "bags": [
+    "lab2/kidnap_shipped_K4_r2/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_shipped_K4_r2",
     "void": false,
     "id": "lab2_kidnap_shipped_k4_r2",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_shipped_K4_r2"
+    "title": "Lab 2 \u00b7 kidnap_shipped_K4_r2"
    },
-   "bytes": 1023486,
-   "sha256": "4a28e93041f160408d90a92fc19ce30b00faeae1daa75000f355ec7578a13964",
    "run_id": "b5edc4d0df949f40079d4a54b3c3d1b5057f06f586f07fa888d09daa55c176a5",
+   "bytes_uncompressed": 1969342,
    "messages": 8044,
-   "bags": [
-    "lab2/kidnap_shipped_K4_r2/bag"
-   ],
+   "rows": {
+    "estimate": 2659,
+    "robot": 364,
+    "truth": 2325,
+    "scan": 465,
+    "annotation": 487,
+    "metrics": 6176
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -640,22 +803,29 @@
   {
    "id": "lab2_kidnap_shipped_k5",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_shipped_K5",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K5",
+   "bags": [
+    "lab2/kidnap_shipped_K5/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_shipped_K5",
     "void": false,
     "id": "lab2_kidnap_shipped_k5",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_shipped_K5"
+    "title": "Lab 2 \u00b7 kidnap_shipped_K5"
    },
-   "bytes": 1018899,
-   "sha256": "d61597dc82715d726193e55165c01251c9da9713ecb640c5b7e100e9cea2b7f5",
    "run_id": "2ce72389e400bed3b931b0707dc1bf780ad711daca0baebfbb0c2266cdb7111e",
+   "bytes_uncompressed": 1967660,
    "messages": 7999,
-   "bags": [
-    "lab2/kidnap_shipped_K5/bag"
-   ],
+   "rows": {
+    "estimate": 2647,
+    "robot": 362,
+    "truth": 2316,
+    "scan": 464,
+    "annotation": 480,
+    "metrics": 6296
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -666,22 +836,29 @@
   {
    "id": "lab2_kidnap_shipped_k5_r2",
    "group": "lab2-kidnap",
-   "title": "Lab 2 · kidnap_shipped_K5_r2",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K5_r2",
+   "bags": [
+    "lab2/kidnap_shipped_K5_r2/bag"
+   ],
    "case": {
     "lab": 2,
     "session": "kidnap_shipped_K5_r2",
     "void": false,
     "id": "lab2_kidnap_shipped_k5_r2",
     "group": "lab2-kidnap",
-    "title": "Lab 2 · kidnap_shipped_K5_r2"
+    "title": "Lab 2 \u00b7 kidnap_shipped_K5_r2"
    },
-   "bytes": 1015212,
-   "sha256": "4d5a46f86f135d82a4a901725da5c0ad90df2840400b97c04fb14829c8baf3f1",
    "run_id": "b9e183976ee4450f9429f556bb741488d1c16fc722c568e6aa69910fa5458446",
+   "bytes_uncompressed": 1968362,
    "messages": 7942,
-   "bags": [
-    "lab2/kidnap_shipped_K5_r2/bag"
-   ],
+   "rows": {
+    "estimate": 2666,
+    "robot": 363,
+    "truth": 2336,
+    "scan": 468,
+    "annotation": 474,
+    "metrics": 6112
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -693,6 +870,10 @@
    "id": "lab2_rl_fidelity_1_tour",
    "group": "lab2-rl-tour",
    "title": "fidelity_1 tour: wheel odometry and the adopted EKF",
+   "bags": [
+    "lab2/fidelity_1/bag",
+    "lab2/rlpd_fidelity_1/rl_bag"
+   ],
    "case": {
     "lab": 2,
     "world_to_map": [
@@ -703,14 +884,17 @@
     "group": "lab2-rl-tour",
     "title": "fidelity_1 tour: wheel odometry and the adopted EKF"
    },
-   "bytes": 2780072,
-   "sha256": "5ad371e0b5aa5aaf59ab1a650a8e755e5688368e6c2a960d045e5ffff4e1d91e",
    "run_id": "b751e947fec91bbae9d9421ab6a4c2f75bfbf6e03793eb16e92313e817599ca6",
+   "bytes_uncompressed": 4605807,
    "messages": 20447,
-   "bags": [
-    "lab2/fidelity_1/bag",
-    "lab2/rlpd_fidelity_1/rl_bag"
-   ],
+   "rows": {
+    "estimate": 9339,
+    "truth": 4405,
+    "metrics": 15420,
+    "scan": 881,
+    "annotation": 909,
+    "robot": 590
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -725,6 +909,9 @@
    "id": "lab3_s1_tour",
    "group": "lab3-slam",
    "title": "s1_tour (from fidelity_s1)",
+   "bags": [
+    "lab3/drives/s1_tour/bag"
+   ],
    "case": {
     "lab": 3,
     "world_to_map": [
@@ -735,13 +922,14 @@
     "group": "lab3-slam",
     "title": "s1_tour (from fidelity_s1)"
    },
-   "bytes": 1888100,
-   "sha256": "826736101606c8be2bec7a630085b8857f7cea00d9c99dc22a4461a9c6521c89",
    "run_id": "8419d7140048bd4ed4cd37981a1ce52714748735324384211856e2e74f9a88b3",
+   "bytes_uncompressed": 2828360,
    "messages": 9678,
-   "bags": [
-    "lab3/drives/s1_tour/bag"
-   ],
+   "rows": {
+    "truth": 4425,
+    "scan": 885,
+    "estimate": 4367
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -753,6 +941,9 @@
    "id": "lab3_1_tour",
    "group": "lab3-slam",
    "title": "1_tour (from fidelity_1)",
+   "bags": [
+    "lab3/drives/1_tour/bag"
+   ],
    "case": {
     "lab": 3,
     "world_to_map": [
@@ -763,13 +954,14 @@
     "group": "lab3-slam",
     "title": "1_tour (from fidelity_1)"
    },
-   "bytes": 1898046,
-   "sha256": "10aefe5c28b45ed5b0bdf500a07cc8e382aaf95f213cbefd50a308f67b4ed706",
    "run_id": "ed40918e3fb759f63007cb21f4fc05c86766711aa2a5fc8ad85a37afc3d09bc9",
+   "bytes_uncompressed": 2828036,
    "messages": 9676,
-   "bags": [
-    "lab3/drives/1_tour/bag"
-   ],
+   "rows": {
+    "estimate": 4365,
+    "truth": 4425,
+    "scan": 885
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -780,7 +972,10 @@
   {
    "id": "lab4_a1_fixed_red",
    "group": "lab4-search",
-   "title": "Lab 4 · A1_fixed_red",
+   "title": "Lab 4 \u00b7 A1_fixed_red",
+   "bags": [
+    "lab4/matrix/A1_fixed_red/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "A1_fixed_red",
@@ -790,15 +985,16 @@
     ],
     "id": "lab4_a1_fixed_red",
     "group": "lab4-search",
-    "title": "Lab 4 · A1_fixed_red"
+    "title": "Lab 4 \u00b7 A1_fixed_red"
    },
-   "bytes": 345221,
-   "sha256": "e32926590b9d6de504a58079b486d644dfde394540bdb22bc63439d7d5978344",
    "run_id": "d330c0639a1a638ebdf85ef98b5598dacc3424ffdb7ef5d69e59c3d3e2dd369f",
+   "bytes_uncompressed": 876528,
    "messages": 6052,
-   "bags": [
-    "lab4/matrix/A1_fixed_red/bag"
-   ],
+   "rows": {
+    "truth": 4145,
+    "transition": 41,
+    "annotation": 3254
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -808,13 +1004,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791293499242523100
+    1791293499242523241
    ]
   },
   {
    "id": "lab4_a2_fixed_green",
    "group": "lab4-search",
-   "title": "Lab 4 · A2_fixed_green",
+   "title": "Lab 4 \u00b7 A2_fixed_green",
+   "bags": [
+    "lab4/matrix/A2_fixed_green/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "A2_fixed_green",
@@ -824,15 +1023,16 @@
     ],
     "id": "lab4_a2_fixed_green",
     "group": "lab4-search",
-    "title": "Lab 4 · A2_fixed_green"
+    "title": "Lab 4 \u00b7 A2_fixed_green"
    },
-   "bytes": 266091,
-   "sha256": "bb5c7a58256d79f736a93bf577cc2e69108417b7e60ef59d1964482d0ad1183c",
    "run_id": "7068e10dab8741f6ec0b0a7f0caaf38249b44c7dab9b6db9b2e6b43e3223d074",
+   "bytes_uncompressed": 670488,
    "messages": 4658,
-   "bags": [
-    "lab4/matrix/A2_fixed_green/bag"
-   ],
+   "rows": {
+    "transition": 33,
+    "annotation": 2455,
+    "truth": 3184
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -842,13 +1042,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791294881009389800
+    1791294881009389930
    ]
   },
   {
    "id": "lab4_a3_fixed_blue",
    "group": "lab4-search",
-   "title": "Lab 4 · A3_fixed_blue",
+   "title": "Lab 4 \u00b7 A3_fixed_blue",
+   "bags": [
+    "lab4/matrix/A3_fixed_blue/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "A3_fixed_blue",
@@ -858,15 +1061,16 @@
     ],
     "id": "lab4_a3_fixed_blue",
     "group": "lab4-search",
-    "title": "Lab 4 · A3_fixed_blue"
+    "title": "Lab 4 \u00b7 A3_fixed_blue"
    },
-   "bytes": 123776,
-   "sha256": "0df52225fa5b18443e0afa165022eeea5d8b1d86faf1959b1b13924c6979d439",
    "run_id": "4d6db5dc8b5e86bed9df2a1426c84f768ddba75f08791f35c1de8bf8159e5ffd",
+   "bytes_uncompressed": 309342,
    "messages": 2156,
-   "bags": [
-    "lab4/matrix/A3_fixed_blue/bag"
-   ],
+   "rows": {
+    "truth": 1500,
+    "transition": 17,
+    "annotation": 1093
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -876,13 +1080,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791295653482955800
+    1791295653482955861
    ]
   },
   {
    "id": "lab4_a4_fixed_yellow",
    "group": "lab4-search",
-   "title": "Lab 4 · A4_fixed_yellow",
+   "title": "Lab 4 \u00b7 A4_fixed_yellow",
+   "bags": [
+    "lab4/matrix/A4_fixed_yellow/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "A4_fixed_yellow",
@@ -892,15 +1099,16 @@
     ],
     "id": "lab4_a4_fixed_yellow",
     "group": "lab4-search",
-    "title": "Lab 4 · A4_fixed_yellow"
+    "title": "Lab 4 \u00b7 A4_fixed_yellow"
    },
-   "bytes": 195773,
-   "sha256": "381fcf6fde6aebeb12f2f4b7f97229e73590505ddd4bd3faef2adbbd29b6e9d2",
    "run_id": "56e43b9fc56d3c7ad4c6ec7c3e39de314710c28bc5822f7251702430c2b4f663",
+   "bytes_uncompressed": 497893,
    "messages": 3423,
-   "bags": [
-    "lab4/matrix/A4_fixed_yellow/bag"
-   ],
+   "rows": {
+    "transition": 25,
+    "annotation": 1825,
+    "truth": 2341
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -910,13 +1118,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791296709210771500
+    1791296709210771423
    ]
   },
   {
    "id": "lab4_b1_colours_s5_red",
    "group": "lab4-search",
-   "title": "Lab 4 · B1_colours_s5_red",
+   "title": "Lab 4 \u00b7 B1_colours_s5_red",
+   "bags": [
+    "lab4/matrix/B1_colours_s5_red/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "B1_colours_s5_red",
@@ -926,15 +1137,16 @@
     ],
     "id": "lab4_b1_colours_s5_red",
     "group": "lab4-search",
-    "title": "Lab 4 · B1_colours_s5_red"
+    "title": "Lab 4 \u00b7 B1_colours_s5_red"
    },
-   "bytes": 353001,
-   "sha256": "220840516525ef29600fb500ee4d215bd528ae94446c99dbda37a7c973876c1c",
    "run_id": "f8f6ef71c6a6d1b63db0072b921fb3c28c14d596374b3a594e73331d36560256",
+   "bytes_uncompressed": 889461,
    "messages": 6284,
-   "bags": [
-    "lab4/matrix/B1_colours_s5_red/bag"
-   ],
+   "rows": {
+    "truth": 4185,
+    "annotation": 3262,
+    "transition": 41
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -944,13 +1156,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791298316753516000
+    1791298316753515950
    ]
   },
   {
    "id": "lab4_b2_colours_s1_red",
    "group": "lab4-search",
-   "title": "Lab 4 · B2_colours_s1_red",
+   "title": "Lab 4 \u00b7 B2_colours_s1_red",
+   "bags": [
+    "lab4/matrix/B2_colours_s1_red/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "B2_colours_s1_red",
@@ -960,15 +1175,16 @@
     ],
     "id": "lab4_b2_colours_s1_red",
     "group": "lab4-search",
-    "title": "Lab 4 · B2_colours_s1_red"
+    "title": "Lab 4 \u00b7 B2_colours_s1_red"
    },
-   "bytes": 256140,
-   "sha256": "47b716903318ab59bf3926e6df0014b11ab45c150d7c7a4b0f7958578dca534e",
    "run_id": "4e40e076bda4eaedf16224d2e30356fd20c13d19f2988b354baecd8da515baff",
+   "bytes_uncompressed": 654560,
    "messages": 4592,
-   "bags": [
-    "lab4/matrix/B2_colours_s1_red/bag"
-   ],
+   "rows": {
+    "truth": 3100,
+    "annotation": 2397,
+    "transition": 36
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -978,13 +1194,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791299600429877800
+    1791299600429877843
    ]
   },
   {
    "id": "lab4_b3_colours_s7_red",
    "group": "lab4-search",
-   "title": "Lab 4 · B3_colours_s7_red",
+   "title": "Lab 4 \u00b7 B3_colours_s7_red",
+   "bags": [
+    "lab4/matrix/B3_colours_s7_red/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "B3_colours_s7_red",
@@ -994,15 +1213,16 @@
     ],
     "id": "lab4_b3_colours_s7_red",
     "group": "lab4-search",
-    "title": "Lab 4 · B3_colours_s7_red"
+    "title": "Lab 4 \u00b7 B3_colours_s7_red"
    },
-   "bytes": 131238,
-   "sha256": "1b8d007bed1777396987751e0b4dcc00ca820773990728c1ac40e612ee6491e5",
    "run_id": "c0958ca39f95a498759a6b5e38f8a8027e2abd711924c62af3102850d286a5c7",
+   "bytes_uncompressed": 326721,
    "messages": 2292,
-   "bags": [
-    "lab4/matrix/B3_colours_s7_red/bag"
-   ],
+   "rows": {
+    "truth": 1606,
+    "transition": 20,
+    "annotation": 1149
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -1012,13 +1232,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791312056402034400
+    1791312056402034352
    ]
   },
   {
    "id": "lab4_b4_colours_s2_red",
    "group": "lab4-search",
-   "title": "Lab 4 · B4_colours_s2_red",
+   "title": "Lab 4 \u00b7 B4_colours_s2_red",
+   "bags": [
+    "lab4/matrix/B4_colours_s2_red/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "B4_colours_s2_red",
@@ -1028,15 +1251,16 @@
     ],
     "id": "lab4_b4_colours_s2_red",
     "group": "lab4-search",
-    "title": "Lab 4 · B4_colours_s2_red"
+    "title": "Lab 4 \u00b7 B4_colours_s2_red"
    },
-   "bytes": 203179,
-   "sha256": "6c88b1eb30d33d0012b63970609448868701f41ca945092bdcfbce9f841545d2",
    "run_id": "282bfe7e44f9eded0433b13f6fd1a20566e9980566360c3ed2aa2a8ff7d690bf",
+   "bytes_uncompressed": 512171,
    "messages": 3529,
-   "bags": [
-    "lab4/matrix/B4_colours_s2_red/bag"
-   ],
+   "rows": {
+    "truth": 2441,
+    "transition": 25,
+    "annotation": 1888
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -1046,13 +1270,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791300993291737000
+    1791300993291737060
    ]
   },
   {
    "id": "lab4_c1_green_stop_after_bay3",
    "group": "lab4-search",
-   "title": "Lab 4 · C1_green_stop_after_bay3",
+   "title": "Lab 4 \u00b7 C1_green_stop_after_bay3",
+   "bags": [
+    "lab4/matrix/C1_green_stop_after_bay3/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "C1_green_stop_after_bay3",
@@ -1062,15 +1289,16 @@
     ],
     "id": "lab4_c1_green_stop_after_bay3",
     "group": "lab4-search",
-    "title": "Lab 4 · C1_green_stop_after_bay3"
+    "title": "Lab 4 \u00b7 C1_green_stop_after_bay3"
    },
-   "bytes": 78603,
-   "sha256": "32e88b0d14f020f3cddbb25efcb8984897170c6b5c45a1bcadead9ce1e2919d8",
    "run_id": "d1ea87548a6f232ce3ba6ec52207e1a4bbb069b01dc6b4f33ab720c08c7cfee7",
+   "bytes_uncompressed": 188482,
    "messages": 1330,
-   "bags": [
-    "lab4/matrix/C1_green_stop_after_bay3/bag"
-   ],
+   "rows": {
+    "truth": 903,
+    "transition": 12,
+    "annotation": 679
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -1080,13 +1308,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791307927718302500
+    1791307927718302429
    ]
   },
   {
    "id": "lab4_c2_green_nearest",
    "group": "lab4-search",
-   "title": "Lab 4 · C2_green_nearest",
+   "title": "Lab 4 \u00b7 C2_green_nearest",
+   "bags": [
+    "lab4/matrix/C2_green_nearest/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "C2_green_nearest",
@@ -1096,15 +1327,16 @@
     ],
     "id": "lab4_c2_green_nearest",
     "group": "lab4-search",
-    "title": "Lab 4 · C2_green_nearest"
+    "title": "Lab 4 \u00b7 C2_green_nearest"
    },
-   "bytes": 200338,
-   "sha256": "b9ec471451da86a298f93ec4c242ae0f6142b05a9a18950dc7f7d728d6732117",
    "run_id": "7c217c4b3431d6d92afc11c1a09ce847db6fd1c0551c054290a75ce88585273f",
+   "bytes_uncompressed": 501100,
    "messages": 3506,
-   "bags": [
-    "lab4/matrix/C2_green_nearest/bag"
-   ],
+   "rows": {
+    "truth": 2443,
+    "transition": 28,
+    "annotation": 1806
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -1114,13 +1346,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791308934935706400
+    1791308934935706286
    ]
   },
   {
    "id": "lab4_c3_green_most_likely",
    "group": "lab4-search",
-   "title": "Lab 4 · C3_green_most_likely",
+   "title": "Lab 4 \u00b7 C3_green_most_likely",
+   "bags": [
+    "lab4/matrix/C3_green_most_likely/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "C3_green_most_likely",
@@ -1130,15 +1365,16 @@
     ],
     "id": "lab4_c3_green_most_likely",
     "group": "lab4-search",
-    "title": "Lab 4 · C3_green_most_likely"
+    "title": "Lab 4 \u00b7 C3_green_most_likely"
    },
-   "bytes": 209099,
-   "sha256": "fac7f3c6d9aa3df90f8e90e2654a73872c8e648f54ec28640e90e356eb2bd362",
    "run_id": "594de323fc9281d74285b832c30a3d7e9ccad1cf0517319fe1e3f3432f817b19",
+   "bytes_uncompressed": 523292,
    "messages": 3670,
-   "bags": [
-    "lab4/matrix/C3_green_most_likely/bag"
-   ],
+   "rows": {
+    "annotation": 1896,
+    "truth": 2537,
+    "transition": 28
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -1148,13 +1384,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791309907836992800
+    1791309907836992886
    ]
   },
   {
    "id": "lab4_c4_green_reverse",
    "group": "lab4-search",
-   "title": "Lab 4 · C4_green_reverse",
+   "title": "Lab 4 \u00b7 C4_green_reverse",
+   "bags": [
+    "lab4/matrix/C4_green_reverse/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "C4_green_reverse",
@@ -1164,15 +1403,16 @@
     ],
     "id": "lab4_c4_green_reverse",
     "group": "lab4-search",
-    "title": "Lab 4 · C4_green_reverse"
+    "title": "Lab 4 \u00b7 C4_green_reverse"
    },
-   "bytes": 291269,
-   "sha256": "3fa3192a49bc6fe67ed4c6e99023976580803c1184a38fcdc4b1f3ddd4a98c2c",
    "run_id": "8b78f500ed22bb11f84481eb4b9ca5543580c142364571cd34c94130f70a106d",
+   "bytes_uncompressed": 731404,
    "messages": 5092,
-   "bags": [
-    "lab4/matrix/C4_green_reverse/bag"
-   ],
+   "rows": {
+    "truth": 3479,
+    "annotation": 2710,
+    "transition": 33
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -1182,13 +1422,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791311290641184300
+    1791311290641184160
    ]
   },
   {
    "id": "lab4_d1_positions_s1_red",
    "group": "lab4-search",
-   "title": "Lab 4 · D1_positions_s1_red",
+   "title": "Lab 4 \u00b7 D1_positions_s1_red",
+   "bags": [
+    "lab4/matrix/D1_positions_s1_red/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "D1_positions_s1_red",
@@ -1198,15 +1441,16 @@
     ],
     "id": "lab4_d1_positions_s1_red",
     "group": "lab4-search",
-    "title": "Lab 4 · D1_positions_s1_red"
+    "title": "Lab 4 \u00b7 D1_positions_s1_red"
    },
-   "bytes": 271638,
-   "sha256": "f09f1eb254c2d65eb230c04622d2fec8e9a954f53833964300c8b32b7ae895ae",
    "run_id": "833f77e7db457444cccbbdb19b759e605564dac930c5975c45562cfcef999f0a",
+   "bytes_uncompressed": 680141,
    "messages": 4767,
-   "bags": [
-    "lab4/matrix/D1_positions_s1_red/bag"
-   ],
+   "rows": {
+    "transition": 33,
+    "truth": 3248,
+    "annotation": 2491
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -1216,13 +1460,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791302257041803300
+    1791302257041803259
    ]
   },
   {
    "id": "lab4_d2_positions_s2_red",
    "group": "lab4-search",
-   "title": "Lab 4 · D2_positions_s2_red",
+   "title": "Lab 4 \u00b7 D2_positions_s2_red",
+   "bags": [
+    "lab4/matrix/D2_positions_s2_red/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "D2_positions_s2_red",
@@ -1232,15 +1479,16 @@
     ],
     "id": "lab4_d2_positions_s2_red",
     "group": "lab4-search",
-    "title": "Lab 4 · D2_positions_s2_red"
+    "title": "Lab 4 \u00b7 D2_positions_s2_red"
    },
-   "bytes": 199665,
-   "sha256": "2a6d6e85ff33bf309350412a17593696d81c2246531fd783fed0e61328961318",
    "run_id": "28bda67a934177616a4ce4b6e6a9fcf6832b767d5a5510224c50421ac38a4b6b",
+   "bytes_uncompressed": 504253,
    "messages": 3493,
-   "bags": [
-    "lab4/matrix/D2_positions_s2_red/bag"
-   ],
+   "rows": {
+    "truth": 2377,
+    "transition": 25,
+    "annotation": 1859
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -1250,13 +1498,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791304794526146800
+    1791304794526146927
    ]
   },
   {
    "id": "lab4_d3_positions_s3_red",
    "group": "lab4-search",
-   "title": "Lab 4 · D3_positions_s3_red",
+   "title": "Lab 4 \u00b7 D3_positions_s3_red",
+   "bags": [
+    "lab4/matrix/D3_positions_s3_red/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "D3_positions_s3_red",
@@ -1266,15 +1517,16 @@
     ],
     "id": "lab4_d3_positions_s3_red",
     "group": "lab4-search",
-    "title": "Lab 4 · D3_positions_s3_red"
+    "title": "Lab 4 \u00b7 D3_positions_s3_red"
    },
-   "bytes": 268543,
-   "sha256": "ff6ac5278f477676057673a6cf9e81f5516bfe273a3ca153366d82afcc894d91",
    "run_id": "d18d0e48bc936e8bb3f4f6ffb3f775f44b04af783dec7c5a0823f2ec60161157",
+   "bytes_uncompressed": 673021,
    "messages": 4721,
-   "bags": [
-    "lab4/matrix/D3_positions_s3_red/bag"
-   ],
+   "rows": {
+    "truth": 3202,
+    "transition": 33,
+    "annotation": 2466
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -1284,13 +1536,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791306071980045300
+    1791306071980045223
    ]
   },
   {
    "id": "lab4_d4_positions_s4_red",
    "group": "lab4-search",
-   "title": "Lab 4 · D4_positions_s4_red",
+   "title": "Lab 4 \u00b7 D4_positions_s4_red",
+   "bags": [
+    "lab4/matrix/D4_positions_s4_red/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "D4_positions_s4_red",
@@ -1300,15 +1555,16 @@
     ],
     "id": "lab4_d4_positions_s4_red",
     "group": "lab4-search",
-    "title": "Lab 4 · D4_positions_s4_red"
+    "title": "Lab 4 \u00b7 D4_positions_s4_red"
    },
-   "bytes": 268207,
-   "sha256": "507e8fddff20decf3dc47a34e1071a8bfd45919d941790ad30e8b2e8da9e384b",
    "run_id": "353bb2c0d5ba5208a9259fbd58185d584f33d4fea8c12d8dc2657037b61b4b00",
+   "bytes_uncompressed": 676151,
    "messages": 4712,
-   "bags": [
-    "lab4/matrix/D4_positions_s4_red/bag"
-   ],
+   "rows": {
+    "truth": 3229,
+    "annotation": 2483,
+    "transition": 33
+   },
    "checksum": {
     "checked": true,
     "definition": "p05_sha_dir",
@@ -1318,13 +1574,16 @@
    "window": null,
    "log_window_ns": [
     0,
-    1791307331411114200
+    1791307331411114218
    ]
   },
   {
    "id": "lab4_b3_colours_s7_red_void_1",
    "group": "lab4-search",
-   "title": "Lab 4 · B3_colours_s7_red.void-1 (void)",
+   "title": "Lab 4 \u00b7 B3_colours_s7_red.void-1 (void)",
+   "bags": [
+    "lab4/matrix/B3_colours_s7_red.void-1/bag"
+   ],
    "case": {
     "lab": 4,
     "run": "B3_colours_s7_red.void-1",
@@ -1335,15 +1594,16 @@
     ],
     "id": "lab4_b3_colours_s7_red_void_1",
     "group": "lab4-search",
-    "title": "Lab 4 · B3_colours_s7_red.void-1 (void)"
+    "title": "Lab 4 \u00b7 B3_colours_s7_red.void-1 (void)"
    },
-   "bytes": 21815,
-   "sha256": "787a937c980afc930e5d48ad858605ceaf5867fb57af8c00949077ceff702e1f",
    "run_id": "b1c7c5024662bef557093ffc0f23d92dca8a8e69c910f747dbb0352f6f78416c",
+   "bytes_uncompressed": 44091,
    "messages": 370,
-   "bags": [
-    "lab4/matrix/B3_colours_s7_red.void-1/bag"
-   ],
+   "rows": {
+    "truth": 326,
+    "annotation": 76,
+    "transition": 1
+   },
    "checksum": {
     "checked": false,
     "why": "no committed manifest cites this bag by checksum"
@@ -1354,7 +1614,10 @@
   {
    "id": "lab5_crossing_dwb_1",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · DWB DWB_1",
+   "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_1",
+   "bags": [
+    "lab5/matrix/crossing_DWB_1/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1363,15 +1626,23 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_dwb_1",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · DWB DWB_1"
+    "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_1"
    },
-   "bytes": 185839,
-   "sha256": "67f98c91d6cb52552b289d31349c540aa3d426ad214414f2744a8b316fd7d7fd",
    "run_id": "39d5fd6410b2f42010a41f7c58c3f579c5cd4c9b0db88c1dcc1b16b59325a33c",
+   "bytes_uncompressed": 323294,
    "messages": 1415,
-   "bags": [
-    "lab5/matrix/crossing_DWB_1/bag"
-   ],
+   "rows": {
+    "actors": 331,
+    "truth": 363,
+    "scan": 73,
+    "annotation": 83,
+    "path": 2,
+    "candidates": 51,
+    "command": 205,
+    "metrics": 496,
+    "estimate": 31,
+    "robot": 31
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1387,7 +1658,10 @@
   {
    "id": "lab5_crossing_dwb_2",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · DWB DWB_2",
+   "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_2",
+   "bags": [
+    "lab5/matrix/crossing_DWB_2/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1396,15 +1670,23 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_dwb_2",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · DWB DWB_2"
+    "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_2"
    },
-   "bytes": 183542,
-   "sha256": "2475bbce1288463d5328908b7426f0855460f4cf27012719b062699df6ac1a98",
    "run_id": "f98288825274588299f6bfa195db8579aa89be1cd789ad158504e0440b2f93dc",
+   "bytes_uncompressed": 320376,
    "messages": 1390,
-   "bags": [
-    "lab5/matrix/crossing_DWB_2/bag"
-   ],
+   "rows": {
+    "truth": 362,
+    "actors": 334,
+    "scan": 73,
+    "annotation": 77,
+    "path": 2,
+    "candidates": 51,
+    "command": 183,
+    "metrics": 498,
+    "estimate": 31,
+    "robot": 31
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1420,7 +1702,10 @@
   {
    "id": "lab5_crossing_dwb_3",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · DWB DWB_3",
+   "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_3",
+   "bags": [
+    "lab5/matrix/crossing_DWB_3/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1429,15 +1714,23 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_dwb_3",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · DWB DWB_3"
+    "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_3"
    },
-   "bytes": 185391,
-   "sha256": "104bb6bf1fd96d1a57464ef503ef402eecaf16c8d973cfd09bc7851f3d85688c",
    "run_id": "cefd83eeedcefb3b886e1ccd201ee55011e40d6f4ef9aea0a06e1aeff24eb2ae",
+   "bytes_uncompressed": 320977,
    "messages": 1397,
-   "bags": [
-    "lab5/matrix/crossing_DWB_3/bag"
-   ],
+   "rows": {
+    "truth": 365,
+    "actors": 334,
+    "scan": 73,
+    "annotation": 75,
+    "path": 2,
+    "candidates": 51,
+    "command": 188,
+    "metrics": 498,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1453,7 +1746,10 @@
   {
    "id": "lab5_crossing_dwb_4",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · DWB DWB_4",
+   "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_4",
+   "bags": [
+    "lab5/matrix/crossing_DWB_4/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1462,15 +1758,23 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_dwb_4",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · DWB DWB_4"
+    "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_4"
    },
-   "bytes": 183846,
-   "sha256": "f3df37dddcdf93d643d13f85c236475a2577fc87f0df946da98c6429e75e5741",
    "run_id": "b58608079ac24b12303eacdbf803dfcb7d16e3608e0fe1c5fdfb4e5204fc7c68",
+   "bytes_uncompressed": 322051,
    "messages": 1410,
-   "bags": [
-    "lab5/matrix/crossing_DWB_4/bag"
-   ],
+   "rows": {
+    "actors": 342,
+    "truth": 364,
+    "scan": 73,
+    "annotation": 78,
+    "path": 2,
+    "candidates": 50,
+    "command": 189,
+    "metrics": 504,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1486,7 +1790,10 @@
   {
    "id": "lab5_crossing_dwb_5",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · DWB DWB_5",
+   "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_5",
+   "bags": [
+    "lab5/matrix/crossing_DWB_5/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1495,15 +1802,23 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_dwb_5",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · DWB DWB_5"
+    "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_5"
    },
-   "bytes": 180623,
-   "sha256": "bc8ce7d3ca6dec3dce06e328b299a56ea8c3cd42a92b50bb3e24915bc4a35aec",
    "run_id": "525f9b0fcdfe57ed8f4fd40288042f5a5f2510dec625349209cf8e38112a05b8",
+   "bytes_uncompressed": 309083,
    "messages": 1318,
-   "bags": [
-    "lab5/matrix/crossing_DWB_5/bag"
-   ],
+   "rows": {
+    "truth": 366,
+    "actors": 336,
+    "scan": 73,
+    "annotation": 53,
+    "path": 2,
+    "candidates": 48,
+    "command": 150,
+    "metrics": 454,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1519,7 +1834,10 @@
   {
    "id": "lab5_crossing_mppi_1",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · MPPI MPPI_1",
+   "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_1",
+   "bags": [
+    "lab5/matrix/crossing_MPPI_1/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1528,15 +1846,23 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_mppi_1",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · MPPI MPPI_1"
+    "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_1"
    },
-   "bytes": 217081,
-   "sha256": "55436bb2577fd4c9efaf82d176df9d133a5f1054f4b1379d22137c60e9a4489d",
    "run_id": "3e4f342956e5886f6f50470bb3a4e0af2cbbbad8326a5f2b795e1e2072a29c94",
+   "bytes_uncompressed": 355499,
    "messages": 1539,
-   "bags": [
-    "lab5/matrix/crossing_MPPI_1/bag"
-   ],
+   "rows": {
+    "truth": 395,
+    "actors": 355,
+    "scan": 79,
+    "annotation": 94,
+    "path": 1,
+    "candidates": 56,
+    "command": 223,
+    "metrics": 536,
+    "estimate": 33,
+    "robot": 33
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1552,7 +1878,10 @@
   {
    "id": "lab5_crossing_mppi_2",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · MPPI MPPI_2",
+   "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_2",
+   "bags": [
+    "lab5/matrix/crossing_MPPI_2/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1561,15 +1890,23 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_mppi_2",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · MPPI MPPI_2"
+    "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_2"
    },
-   "bytes": 218629,
-   "sha256": "be021a7b2b570c143b3e3853faaf07d8a94eeee4b7a5d94f9f0aedeb02f0a28c",
    "run_id": "b452dc346b7b64be6826543f6c1da3315359de25b0419184e4fbf68cf4464f5a",
+   "bytes_uncompressed": 355384,
    "messages": 1521,
-   "bags": [
-    "lab5/matrix/crossing_MPPI_2/bag"
-   ],
+   "rows": {
+    "truth": 398,
+    "actors": 362,
+    "scan": 80,
+    "annotation": 84,
+    "path": 1,
+    "candidates": 58,
+    "command": 203,
+    "metrics": 538,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1585,7 +1922,10 @@
   {
    "id": "lab5_crossing_mppi_3",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · MPPI MPPI_3",
+   "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_3",
+   "bags": [
+    "lab5/matrix/crossing_MPPI_3/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1594,15 +1934,23 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_mppi_3",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · MPPI MPPI_3"
+    "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_3"
    },
-   "bytes": 214393,
-   "sha256": "6684e739093a432d4648f11a9b9f209062ddf35bfd627308920c82b5a90a8a04",
    "run_id": "96283c35e39822cecdf8102cfecd7fe44af9e22f9461f0c770c5ed9d95d69b20",
+   "bytes_uncompressed": 352647,
    "messages": 1520,
-   "bags": [
-    "lab5/matrix/crossing_MPPI_3/bag"
-   ],
+   "rows": {
+    "actors": 362,
+    "truth": 394,
+    "scan": 79,
+    "annotation": 83,
+    "path": 1,
+    "candidates": 56,
+    "command": 213,
+    "metrics": 532,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1618,7 +1966,10 @@
   {
    "id": "lab5_crossing_mppi_4",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · MPPI MPPI_4",
+   "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_4",
+   "bags": [
+    "lab5/matrix/crossing_MPPI_4/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1627,15 +1978,23 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_mppi_4",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · MPPI MPPI_4"
+    "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_4"
    },
-   "bytes": 220178,
-   "sha256": "b63ae3c50d525c95839a18aa732d294ae69aa575465eb9c66bd01327a615536b",
    "run_id": "aa819c823422f04d67b1b57fe21fdfadb73612a8e4077bd4a3bded7d0f05ef84",
+   "bytes_uncompressed": 364120,
    "messages": 1600,
-   "bags": [
-    "lab5/matrix/crossing_MPPI_4/bag"
-   ],
+   "rows": {
+    "truth": 395,
+    "annotation": 112,
+    "scan": 79,
+    "actors": 361,
+    "path": 1,
+    "candidates": 57,
+    "command": 255,
+    "metrics": 548,
+    "estimate": 33,
+    "robot": 33
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1651,7 +2010,10 @@
   {
    "id": "lab5_crossing_mppi_5",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · MPPI MPPI_5",
+   "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_5",
+   "bags": [
+    "lab5/matrix/crossing_MPPI_5/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1660,15 +2022,23 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_mppi_5",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · MPPI MPPI_5"
+    "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_5"
    },
-   "bytes": 213898,
-   "sha256": "3a383c1f7041de4014a5208119edc9f43687a88fab8f80bd9eb9560d3a33cd51",
    "run_id": "08e05637d431674d4afc3863bb57e79b7c5087e3d69bbec8ec2b5b1fea46a496",
+   "bytes_uncompressed": 349975,
    "messages": 1490,
-   "bags": [
-    "lab5/matrix/crossing_MPPI_5/bag"
-   ],
+   "rows": {
+    "actors": 378,
+    "truth": 399,
+    "scan": 80,
+    "annotation": 65,
+    "path": 1,
+    "candidates": 57,
+    "command": 183,
+    "metrics": 518,
+    "estimate": 33,
+    "robot": 33
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1684,7 +2054,10 @@
   {
    "id": "lab5_crossing_rpp_1",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · RPP RPP_1",
+   "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_1",
+   "bags": [
+    "lab5/matrix/crossing_RPP_1/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1693,15 +2066,22 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_rpp_1",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · RPP RPP_1"
+    "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_1"
    },
-   "bytes": 194212,
-   "sha256": "c799105605015ddfad868c3e99dfa6e967b2f47abcc7597f9cf2be779cd710ff",
    "run_id": "ed484c5484f38cbce97d655f958b3ec720244737111472c237440a62d37dc2cc",
+   "bytes_uncompressed": 340834,
    "messages": 1446,
-   "bags": [
-    "lab5/matrix/crossing_RPP_1/bag"
-   ],
+   "rows": {
+    "actors": 356,
+    "truth": 389,
+    "scan": 78,
+    "annotation": 75,
+    "path": 30,
+    "command": 193,
+    "metrics": 524,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1717,7 +2097,10 @@
   {
    "id": "lab5_crossing_rpp_2",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · RPP RPP_2",
+   "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_2",
+   "bags": [
+    "lab5/matrix/crossing_RPP_2/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1726,15 +2109,22 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_rpp_2",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · RPP RPP_2"
+    "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_2"
    },
-   "bytes": 195114,
-   "sha256": "3cd601866591a9d0376c77e2913a0bf6953142da2ca18dcc49243a5a5a32d2a9",
    "run_id": "334c2e4413150a7f8e9ea333f397f51dd6ee0018a218c771a0674bc4939d3235",
+   "bytes_uncompressed": 343985,
    "messages": 1468,
-   "bags": [
-    "lab5/matrix/crossing_RPP_2/bag"
-   ],
+   "rows": {
+    "truth": 387,
+    "scan": 78,
+    "actors": 356,
+    "annotation": 79,
+    "path": 30,
+    "command": 212,
+    "metrics": 526,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1750,7 +2140,10 @@
   {
    "id": "lab5_crossing_rpp_3",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · RPP RPP_3",
+   "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_3",
+   "bags": [
+    "lab5/matrix/crossing_RPP_3/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1759,15 +2152,22 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_rpp_3",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · RPP RPP_3"
+    "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_3"
    },
-   "bytes": 197892,
-   "sha256": "cb4f8bda6ee1aa94f6e786f90fe1fccac9af98eb4e04f0c8c26bc4702772bec5",
    "run_id": "c0291b3008ff6b6bb878735527a3d095d7d47da4717f1ba943cf4458e7fbfb7d",
+   "bytes_uncompressed": 341245,
    "messages": 1451,
-   "bags": [
-    "lab5/matrix/crossing_RPP_3/bag"
-   ],
+   "rows": {
+    "truth": 389,
+    "actors": 357,
+    "scan": 78,
+    "annotation": 72,
+    "path": 29,
+    "command": 199,
+    "metrics": 530,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1783,7 +2183,10 @@
   {
    "id": "lab5_crossing_rpp_4",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · RPP RPP_4",
+   "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_4",
+   "bags": [
+    "lab5/matrix/crossing_RPP_4/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1792,15 +2195,22 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_rpp_4",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · RPP RPP_4"
+    "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_4"
    },
-   "bytes": 201417,
-   "sha256": "f8a6a74d6a47a87ccd2bebc33e61679755e936824260e7becb36877b8f4d5c71",
    "run_id": "119a4da1a6095cf85270f9a06ed562762440ad8e47d06813cfd362037daad1e0",
+   "bytes_uncompressed": 353211,
    "messages": 1548,
-   "bags": [
-    "lab5/matrix/crossing_RPP_4/bag"
-   ],
+   "rows": {
+    "truth": 385,
+    "scan": 77,
+    "annotation": 110,
+    "actors": 351,
+    "path": 30,
+    "command": 262,
+    "metrics": 544,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1816,7 +2226,10 @@
   {
    "id": "lab5_crossing_rpp_5",
    "group": "lab5-move",
-   "title": "Lab 5 · crossing · RPP RPP_5",
+   "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_5",
+   "bags": [
+    "lab5/matrix/crossing_RPP_5/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "crossing",
@@ -1825,15 +2238,22 @@
     "actor_radius": 0.25,
     "id": "lab5_crossing_rpp_5",
     "group": "lab5-move",
-    "title": "Lab 5 · crossing · RPP RPP_5"
+    "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_5"
    },
-   "bytes": 191718,
-   "sha256": "dcb231b65d80b7a075ece4c1c4a2933abc02e3328686f46bf55ebd6093f8642c",
    "run_id": "22de20028b9030a3cf5432450c789bb36c3664dfb6275855f11b368292d9b3b1",
+   "bytes_uncompressed": 334476,
    "messages": 1413,
-   "bags": [
-    "lab5/matrix/crossing_RPP_5/bag"
-   ],
+   "rows": {
+    "truth": 385,
+    "actors": 354,
+    "scan": 77,
+    "annotation": 73,
+    "path": 29,
+    "command": 177,
+    "metrics": 506,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1841,7 +2261,7 @@
     "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
    },
    "window": [
-    76,
+    76.0,
     114.46400000000001
    ],
    "log_window_ns": null
@@ -1849,7 +2269,10 @@
   {
    "id": "lab5_mislocalised_dwb_1",
    "group": "lab5-move",
-   "title": "Lab 5 · mislocalised · DWB DWB_1",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 DWB DWB_1",
+   "bags": [
+    "lab5/matrix/mislocalised_DWB_1/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "mislocalised",
@@ -1857,15 +2280,21 @@
     "run": "mislocalised_DWB_1",
     "id": "lab5_mislocalised_dwb_1",
     "group": "lab5-move",
-    "title": "Lab 5 · mislocalised · DWB DWB_1"
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 DWB DWB_1"
    },
-   "bytes": 23939,
-   "sha256": "14d98e838c62b8d95107b5221378c90ceeb85e132660ef4c000fc20a3819822b",
    "run_id": "a9250f7dd5d92f630027d23c09a41b294ac8b38c926cc392ef38d7f740fc0e09",
+   "bytes_uncompressed": 111895,
    "messages": 259,
-   "bags": [
-    "lab5/matrix/mislocalised_DWB_1/bag"
-   ],
+   "rows": {
+    "truth": 178,
+    "scan": 36,
+    "annotation": 23,
+    "estimate": 1,
+    "robot": 1,
+    "path": 2,
+    "command": 1,
+    "metrics": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1881,7 +2310,10 @@
   {
    "id": "lab5_mislocalised_dwb_2",
    "group": "lab5-move",
-   "title": "Lab 5 · mislocalised · DWB DWB_2",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 DWB DWB_2",
+   "bags": [
+    "lab5/matrix/mislocalised_DWB_2/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "mislocalised",
@@ -1889,15 +2321,21 @@
     "run": "mislocalised_DWB_2",
     "id": "lab5_mislocalised_dwb_2",
     "group": "lab5-move",
-    "title": "Lab 5 · mislocalised · DWB DWB_2"
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 DWB DWB_2"
    },
-   "bytes": 23659,
-   "sha256": "638aa6b05b7a08f39ffe5e2f3393e0051e36d9a5fd03668ef8f58534cab0612a",
    "run_id": "6213e8e47536544a19309a73b1a41f3b991dc8f820086920bfbe02cd89b4b44d",
+   "bytes_uncompressed": 109142,
    "messages": 250,
-   "bags": [
-    "lab5/matrix/mislocalised_DWB_2/bag"
-   ],
+   "rows": {
+    "truth": 172,
+    "scan": 35,
+    "annotation": 22,
+    "estimate": 1,
+    "robot": 1,
+    "path": 2,
+    "command": 1,
+    "metrics": 30
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1913,7 +2351,10 @@
   {
    "id": "lab5_mislocalised_dwb_3",
    "group": "lab5-move",
-   "title": "Lab 5 · mislocalised · DWB DWB_3",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 DWB DWB_3",
+   "bags": [
+    "lab5/matrix/mislocalised_DWB_3/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "mislocalised",
@@ -1921,15 +2362,21 @@
     "run": "mislocalised_DWB_3",
     "id": "lab5_mislocalised_dwb_3",
     "group": "lab5-move",
-    "title": "Lab 5 · mislocalised · DWB DWB_3"
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 DWB DWB_3"
    },
-   "bytes": 23864,
-   "sha256": "dec25dff41853f89424149fcff5ff77f1f898e98808b3694115c89b041e39777",
    "run_id": "be1ed63591463b9c6a755660970e32b1f213f8cb1298827320e4d36304edc8b9",
+   "bytes_uncompressed": 111701,
    "messages": 258,
-   "bags": [
-    "lab5/matrix/mislocalised_DWB_3/bag"
-   ],
+   "rows": {
+    "truth": 179,
+    "scan": 36,
+    "annotation": 21,
+    "estimate": 1,
+    "robot": 1,
+    "path": 2,
+    "command": 1,
+    "metrics": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1945,7 +2392,10 @@
   {
    "id": "lab5_mislocalised_mppi_1",
    "group": "lab5-move",
-   "title": "Lab 5 · mislocalised · MPPI MPPI_1",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 MPPI MPPI_1",
+   "bags": [
+    "lab5/matrix/mislocalised_MPPI_1/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "mislocalised",
@@ -1953,15 +2403,21 @@
     "run": "mislocalised_MPPI_1",
     "id": "lab5_mislocalised_mppi_1",
     "group": "lab5-move",
-    "title": "Lab 5 · mislocalised · MPPI MPPI_1"
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 MPPI MPPI_1"
    },
-   "bytes": 23571,
-   "sha256": "ab72ac263c71f1bcf3a5f1b6ca0ca275fe174d91a52054d709dbbc718029e20a",
    "run_id": "5f266d4875e2c58d23d5409cb0600f60863b8881cd1f6380e42874318df95c81",
+   "bytes_uncompressed": 103990,
    "messages": 249,
-   "bags": [
-    "lab5/matrix/mislocalised_MPPI_1/bag"
-   ],
+   "rows": {
+    "truth": 172,
+    "annotation": 22,
+    "scan": 35,
+    "estimate": 1,
+    "robot": 1,
+    "path": 1,
+    "command": 1,
+    "metrics": 30
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -1977,7 +2433,10 @@
   {
    "id": "lab5_mislocalised_mppi_2",
    "group": "lab5-move",
-   "title": "Lab 5 · mislocalised · MPPI MPPI_2",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 MPPI MPPI_2",
+   "bags": [
+    "lab5/matrix/mislocalised_MPPI_2/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "mislocalised",
@@ -1985,15 +2444,21 @@
     "run": "mislocalised_MPPI_2",
     "id": "lab5_mislocalised_mppi_2",
     "group": "lab5-move",
-    "title": "Lab 5 · mislocalised · MPPI MPPI_2"
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 MPPI MPPI_2"
    },
-   "bytes": 23545,
-   "sha256": "dfe24f75cebe20ddd2966611d1a6ab2701d5f2a0407f15f283e129222c2f9bb3",
    "run_id": "2728c3c9432330c7e23fb59d93e9cecf7e0a336eb10de94d173fc3a521d89a92",
+   "bytes_uncompressed": 106670,
    "messages": 256,
-   "bags": [
-    "lab5/matrix/mislocalised_MPPI_2/bag"
-   ],
+   "rows": {
+    "truth": 179,
+    "scan": 36,
+    "annotation": 22,
+    "estimate": 1,
+    "robot": 1,
+    "path": 1,
+    "command": 1,
+    "metrics": 30
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2009,7 +2474,10 @@
   {
    "id": "lab5_mislocalised_mppi_3",
    "group": "lab5-move",
-   "title": "Lab 5 · mislocalised · MPPI MPPI_3",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 MPPI MPPI_3",
+   "bags": [
+    "lab5/matrix/mislocalised_MPPI_3/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "mislocalised",
@@ -2017,15 +2485,21 @@
     "run": "mislocalised_MPPI_3",
     "id": "lab5_mislocalised_mppi_3",
     "group": "lab5-move",
-    "title": "Lab 5 · mislocalised · MPPI MPPI_3"
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 MPPI MPPI_3"
    },
-   "bytes": 23898,
-   "sha256": "0327be595d96cfa19a604940c84284674d637f92683a3c85531ce438810d2726",
    "run_id": "521f40201c1aeb6def64cb8464dec2ba219bbe9239beb9510ec37af95e944284",
+   "bytes_uncompressed": 106671,
    "messages": 257,
-   "bags": [
-    "lab5/matrix/mislocalised_MPPI_3/bag"
-   ],
+   "rows": {
+    "truth": 178,
+    "scan": 36,
+    "annotation": 23,
+    "estimate": 1,
+    "robot": 1,
+    "path": 1,
+    "command": 1,
+    "metrics": 30
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2041,7 +2515,10 @@
   {
    "id": "lab5_mislocalised_rpp_1",
    "group": "lab5-move",
-   "title": "Lab 5 · mislocalised · RPP RPP_1",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 RPP RPP_1",
+   "bags": [
+    "lab5/matrix/mislocalised_RPP_1/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "mislocalised",
@@ -2049,15 +2526,21 @@
     "run": "mislocalised_RPP_1",
     "id": "lab5_mislocalised_rpp_1",
     "group": "lab5-move",
-    "title": "Lab 5 · mislocalised · RPP RPP_1"
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 RPP RPP_1"
    },
-   "bytes": 23734,
-   "sha256": "93b6b45a520b6e767642cc7cae3358e95e24029a87980ceecaa95cdc7e5872ff",
    "run_id": "34418cd4948f574122ada4f3df016a0073ee58642f6c1f2f9644649a8d3aa6a7",
+   "bytes_uncompressed": 106318,
    "messages": 254,
-   "bags": [
-    "lab5/matrix/mislocalised_RPP_1/bag"
-   ],
+   "rows": {
+    "truth": 177,
+    "scan": 36,
+    "annotation": 22,
+    "estimate": 1,
+    "robot": 1,
+    "path": 1,
+    "command": 1,
+    "metrics": 30
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2073,7 +2556,10 @@
   {
    "id": "lab5_mislocalised_rpp_2",
    "group": "lab5-move",
-   "title": "Lab 5 · mislocalised · RPP RPP_2",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 RPP RPP_2",
+   "bags": [
+    "lab5/matrix/mislocalised_RPP_2/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "mislocalised",
@@ -2081,15 +2567,21 @@
     "run": "mislocalised_RPP_2",
     "id": "lab5_mislocalised_rpp_2",
     "group": "lab5-move",
-    "title": "Lab 5 · mislocalised · RPP RPP_2"
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 RPP RPP_2"
    },
-   "bytes": 23884,
-   "sha256": "53a9ea8b165153c0d773e1825d9f8736b03fb4f727187e6f8113bd3cf806d5d8",
    "run_id": "61198b483f222aa618229840b7d35548c74baab78dd04b50cfe632b4bebd6822",
+   "bytes_uncompressed": 106825,
    "messages": 259,
-   "bags": [
-    "lab5/matrix/mislocalised_RPP_2/bag"
-   ],
+   "rows": {
+    "truth": 179,
+    "scan": 36,
+    "annotation": 23,
+    "estimate": 1,
+    "robot": 1,
+    "path": 1,
+    "command": 1,
+    "metrics": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2105,7 +2597,10 @@
   {
    "id": "lab5_mislocalised_rpp_3",
    "group": "lab5-move",
-   "title": "Lab 5 · mislocalised · RPP RPP_3",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 RPP RPP_3",
+   "bags": [
+    "lab5/matrix/mislocalised_RPP_3/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "mislocalised",
@@ -2113,15 +2608,21 @@
     "run": "mislocalised_RPP_3",
     "id": "lab5_mislocalised_rpp_3",
     "group": "lab5-move",
-    "title": "Lab 5 · mislocalised · RPP RPP_3"
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 RPP RPP_3"
    },
-   "bytes": 23789,
-   "sha256": "e9484e5593571a4e816f362b88a771955da1143d0bd830bd97632731c156aa8b",
    "run_id": "c64ecaced59b1d45a9e19fa3f6bd3bb9c0ed65a5bcc4bd7ddd3a218a9c343c66",
+   "bytes_uncompressed": 106523,
    "messages": 256,
-   "bags": [
-    "lab5/matrix/mislocalised_RPP_3/bag"
-   ],
+   "rows": {
+    "truth": 179,
+    "scan": 36,
+    "annotation": 21,
+    "estimate": 1,
+    "robot": 1,
+    "path": 1,
+    "command": 1,
+    "metrics": 30
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2137,7 +2638,10 @@
   {
    "id": "lab5_oncoming_dwb_1",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · DWB DWB_1",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_1",
+   "bags": [
+    "lab5/matrix/oncoming_DWB_1/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2146,15 +2650,23 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_dwb_1",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · DWB DWB_1"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_1"
    },
-   "bytes": 189253,
-   "sha256": "3007fa892412568fa7a28e8a46a4e4abae9c028036d5c3fddf948f1e62cf5da1",
    "run_id": "92e24e3bd7fc8266c45376a5d30b9bb3ef9eb756f34424da318551596feb9d64",
+   "bytes_uncompressed": 328788,
    "messages": 1414,
-   "bags": [
-    "lab5/matrix/oncoming_DWB_1/bag"
-   ],
+   "rows": {
+    "truth": 383,
+    "scan": 77,
+    "actors": 358,
+    "annotation": 62,
+    "path": 2,
+    "candidates": 52,
+    "command": 169,
+    "metrics": 493,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2170,7 +2682,10 @@
   {
    "id": "lab5_oncoming_dwb_2",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · DWB DWB_2",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_2",
+   "bags": [
+    "lab5/matrix/oncoming_DWB_2/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2179,15 +2694,23 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_dwb_2",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · DWB DWB_2"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_2"
    },
-   "bytes": 189965,
-   "sha256": "ea5901957605cd52e9716c144a9038a43570a0c990e07ce7f64d9240975b259c",
    "run_id": "2f158606f32e0e3ad67a62e81b3c6c5b83f4b0d363341fee64f8528b00431cb7",
+   "bytes_uncompressed": 326884,
    "messages": 1407,
-   "bags": [
-    "lab5/matrix/oncoming_DWB_2/bag"
-   ],
+   "rows": {
+    "truth": 384,
+    "annotation": 56,
+    "actors": 366,
+    "scan": 77,
+    "path": 2,
+    "candidates": 53,
+    "command": 161,
+    "metrics": 494,
+    "estimate": 31,
+    "robot": 31
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2203,7 +2726,10 @@
   {
    "id": "lab5_oncoming_dwb_3",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · DWB DWB_3",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_3",
+   "bags": [
+    "lab5/matrix/oncoming_DWB_3/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2212,15 +2738,23 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_dwb_3",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · DWB DWB_3"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_3"
    },
-   "bytes": 188586,
-   "sha256": "a3ca2202cc187e7cb0fdc8d1687d9f8ef4acff1220490bebae7627651f005d71",
    "run_id": "ee7f604fbf80e4546accb8ca765bc1e37592f63d27134ab4e9ac40004a2f6779",
+   "bytes_uncompressed": 328618,
    "messages": 1409,
-   "bags": [
-    "lab5/matrix/oncoming_DWB_3/bag"
-   ],
+   "rows": {
+    "truth": 381,
+    "actors": 363,
+    "scan": 77,
+    "annotation": 64,
+    "path": 2,
+    "candidates": 53,
+    "command": 161,
+    "metrics": 493,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2236,7 +2770,10 @@
   {
    "id": "lab5_oncoming_dwb_4",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · DWB DWB_4",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_4",
+   "bags": [
+    "lab5/matrix/oncoming_DWB_4/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2245,15 +2782,23 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_dwb_4",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · DWB DWB_4"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_4"
    },
-   "bytes": 188618,
-   "sha256": "bb773b477ed01fa790a6c2d1765d79d5f52647832a137446d27286901414556d",
    "run_id": "aa2f782c5982d50a07b4719f41b8b934deeb7a1bf6807776fb21c5308bcfaa7c",
+   "bytes_uncompressed": 327710,
    "messages": 1412,
-   "bags": [
-    "lab5/matrix/oncoming_DWB_4/bag"
-   ],
+   "rows": {
+    "truth": 383,
+    "actors": 361,
+    "scan": 77,
+    "annotation": 67,
+    "path": 2,
+    "candidates": 53,
+    "command": 160,
+    "metrics": 491,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2269,7 +2814,10 @@
   {
    "id": "lab5_oncoming_dwb_5",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · DWB DWB_5",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_5",
+   "bags": [
+    "lab5/matrix/oncoming_DWB_5/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2278,15 +2826,23 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_dwb_5",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · DWB DWB_5"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_5"
    },
-   "bytes": 187686,
-   "sha256": "402a6b2f0dba2114e92555aa98abb157bc2974d67b804d41adeb32c81147efd4",
    "run_id": "c9070d6e648968c389a7f7d4eff290822ce89540c94d9888bcfeb443e821760a",
+   "bytes_uncompressed": 330865,
    "messages": 1421,
-   "bags": [
-    "lab5/matrix/oncoming_DWB_5/bag"
-   ],
+   "rows": {
+    "actors": 362,
+    "truth": 386,
+    "scan": 78,
+    "annotation": 66,
+    "path": 2,
+    "candidates": 54,
+    "command": 163,
+    "metrics": 497,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2302,7 +2858,10 @@
   {
    "id": "lab5_oncoming_mppi_1",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · MPPI MPPI_1",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_1",
+   "bags": [
+    "lab5/matrix/oncoming_MPPI_1/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2311,15 +2870,23 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_mppi_1",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · MPPI MPPI_1"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_1"
    },
-   "bytes": 227208,
-   "sha256": "5ab97710bb69e587c9526a75882e0d998631b45ccba079ff6e5be4b9c4fb2a13",
    "run_id": "10ff21950ee1f196105d537758b552d0cb33aa0717edda257a0133b968cf3337",
+   "bytes_uncompressed": 365470,
    "messages": 1560,
-   "bags": [
-    "lab5/matrix/oncoming_MPPI_1/bag"
-   ],
+   "rows": {
+    "truth": 420,
+    "actors": 405,
+    "scan": 84,
+    "annotation": 61,
+    "path": 1,
+    "candidates": 59,
+    "command": 193,
+    "metrics": 541,
+    "estimate": 33,
+    "robot": 33
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2335,7 +2902,10 @@
   {
    "id": "lab5_oncoming_mppi_2",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · MPPI MPPI_2",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_2",
+   "bags": [
+    "lab5/matrix/oncoming_MPPI_2/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2344,15 +2914,23 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_mppi_2",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · MPPI MPPI_2"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_2"
    },
-   "bytes": 227189,
-   "sha256": "e74ba48ef5dd4f924e3348ac8c44077456aaa6397519392fc3dabe74d5ee9644",
    "run_id": "963389ebf8a740c65aaeeae12ee41ac8476278790599b6f069d987dd19f5900d",
+   "bytes_uncompressed": 368555,
    "messages": 1569,
-   "bags": [
-    "lab5/matrix/oncoming_MPPI_2/bag"
-   ],
+   "rows": {
+    "truth": 424,
+    "actors": 400,
+    "scan": 85,
+    "annotation": 62,
+    "path": 1,
+    "candidates": 59,
+    "command": 197,
+    "metrics": 543,
+    "estimate": 35,
+    "robot": 35
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2368,7 +2946,10 @@
   {
    "id": "lab5_oncoming_mppi_3",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · MPPI MPPI_3",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_3",
+   "bags": [
+    "lab5/matrix/oncoming_MPPI_3/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2377,15 +2958,23 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_mppi_3",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · MPPI MPPI_3"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_3"
    },
-   "bytes": 223781,
-   "sha256": "23933d722739508bf014f21fbbe3e759845a917ebb4d8415816bafc9879304ea",
    "run_id": "22aefbe80853547604112027fa30a1d94f60dbf5ec1236985242fb10f851befc",
+   "bytes_uncompressed": 364378,
    "messages": 1548,
-   "bags": [
-    "lab5/matrix/oncoming_MPPI_3/bag"
-   ],
+   "rows": {
+    "actors": 391,
+    "truth": 420,
+    "scan": 84,
+    "annotation": 63,
+    "path": 1,
+    "candidates": 59,
+    "command": 195,
+    "metrics": 540,
+    "estimate": 32,
+    "robot": 32
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2401,7 +2990,10 @@
   {
    "id": "lab5_oncoming_mppi_4",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · MPPI MPPI_4",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_4",
+   "bags": [
+    "lab5/matrix/oncoming_MPPI_4/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2410,15 +3002,23 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_mppi_4",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · MPPI MPPI_4"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_4"
    },
-   "bytes": 229266,
-   "sha256": "a2b9d70a42eff666b60881a09db3a049db577bcb172bcb6e19978b0b82b91352",
    "run_id": "b4beed48fa2c2b9ebfcd617ad1bb41ae43f6152e67facb1fb9ca92ee9014c43c",
+   "bytes_uncompressed": 372016,
    "messages": 1586,
-   "bags": [
-    "lab5/matrix/oncoming_MPPI_4/bag"
-   ],
+   "rows": {
+    "truth": 425,
+    "actors": 402,
+    "scan": 85,
+    "annotation": 66,
+    "path": 1,
+    "candidates": 62,
+    "command": 195,
+    "metrics": 557,
+    "estimate": 36,
+    "robot": 36
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2434,7 +3034,10 @@
   {
    "id": "lab5_oncoming_mppi_5",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · MPPI MPPI_5",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_5",
+   "bags": [
+    "lab5/matrix/oncoming_MPPI_5/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2443,15 +3046,23 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_mppi_5",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · MPPI MPPI_5"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_5"
    },
-   "bytes": 227219,
-   "sha256": "1a6db390dabc1cf989ccabe44e5e7f8da0db5733e964923494b870f0314cd993",
    "run_id": "7569a2ad533fc643bad762aff227f2bbb6c02511b353f1337f7aa0f5f366815c",
+   "bytes_uncompressed": 367759,
    "messages": 1562,
-   "bags": [
-    "lab5/matrix/oncoming_MPPI_5/bag"
-   ],
+   "rows": {
+    "actors": 391,
+    "truth": 419,
+    "scan": 84,
+    "annotation": 70,
+    "path": 1,
+    "candidates": 62,
+    "command": 195,
+    "metrics": 547,
+    "estimate": 33,
+    "robot": 33
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2467,7 +3078,10 @@
   {
    "id": "lab5_oncoming_rpp_1",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · RPP RPP_1",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_1",
+   "bags": [
+    "lab5/matrix/oncoming_RPP_1/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2476,15 +3090,22 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_rpp_1",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · RPP RPP_1"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_1"
    },
-   "bytes": 134480,
-   "sha256": "01e6b1d19cb28b1aa568afb63179b7806b9bf55635144ad018fedb410efb3864",
    "run_id": "3612aed4371b7dd489e7ef340d0098a144cf1d3acc3f8b60977ad0b95d626a88",
+   "bytes_uncompressed": 246026,
    "messages": 998,
-   "bags": [
-    "lab5/matrix/oncoming_RPP_1/bag"
-   ],
+   "rows": {
+    "truth": 288,
+    "scan": 58,
+    "actors": 274,
+    "annotation": 43,
+    "path": 20,
+    "command": 104,
+    "metrics": 331,
+    "estimate": 22,
+    "robot": 22
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2492,7 +3113,7 @@
     "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
    },
    "window": [
-    72,
+    72.0,
     100.75200000000001
    ],
    "log_window_ns": null
@@ -2500,7 +3121,10 @@
   {
    "id": "lab5_oncoming_rpp_2",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · RPP RPP_2",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_2",
+   "bags": [
+    "lab5/matrix/oncoming_RPP_2/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2509,15 +3133,22 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_rpp_2",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · RPP RPP_2"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_2"
    },
-   "bytes": 137573,
-   "sha256": "ef0d374c826f06b7be3d6fc73fa4e24fd581030a92f0c29125e19e9f5a022fcd",
    "run_id": "2afeb09c480b48ebafe12117fbbea6e2d9451bd74308a6c03aaa013909621304",
+   "bytes_uncompressed": 246258,
    "messages": 997,
-   "bags": [
-    "lab5/matrix/oncoming_RPP_2/bag"
-   ],
+   "rows": {
+    "truth": 288,
+    "actors": 270,
+    "scan": 58,
+    "annotation": 47,
+    "path": 20,
+    "command": 103,
+    "metrics": 333,
+    "estimate": 22,
+    "robot": 22
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2533,7 +3164,10 @@
   {
    "id": "lab5_oncoming_rpp_3",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · RPP RPP_3",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_3",
+   "bags": [
+    "lab5/matrix/oncoming_RPP_3/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2542,15 +3176,22 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_rpp_3",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · RPP RPP_3"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_3"
    },
-   "bytes": 137471,
-   "sha256": "0e7b8562f314782bb3701fcf49a9b41949b276a4cbc7fd18f024a4e38381ad0f",
    "run_id": "868a5f0e548bfbf228909e68753809ceed51d3f4ad7583181de88c66f3666625",
+   "bytes_uncompressed": 247070,
    "messages": 1005,
-   "bags": [
-    "lab5/matrix/oncoming_RPP_3/bag"
-   ],
+   "rows": {
+    "truth": 289,
+    "actors": 273,
+    "scan": 58,
+    "annotation": 47,
+    "path": 20,
+    "command": 107,
+    "metrics": 333,
+    "estimate": 22,
+    "robot": 22
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2566,7 +3207,10 @@
   {
    "id": "lab5_oncoming_rpp_4",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · RPP RPP_4",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_4",
+   "bags": [
+    "lab5/matrix/oncoming_RPP_4/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2575,15 +3219,22 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_rpp_4",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · RPP RPP_4"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_4"
    },
-   "bytes": 134551,
-   "sha256": "1be71fee7dd98e39638a69fa6c57f3d87e5fdad552f87761ab3e3d050242c21c",
    "run_id": "c7958cd85250d9ec5666c6cabfddbe9dc731a7ddcf1cd559f3ae4e815139edb5",
+   "bytes_uncompressed": 247897,
    "messages": 1013,
-   "bags": [
-    "lab5/matrix/oncoming_RPP_4/bag"
-   ],
+   "rows": {
+    "actors": 279,
+    "truth": 289,
+    "scan": 58,
+    "annotation": 49,
+    "path": 20,
+    "command": 106,
+    "metrics": 333,
+    "estimate": 22,
+    "robot": 22
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2599,7 +3250,10 @@
   {
    "id": "lab5_oncoming_rpp_5",
    "group": "lab5-move",
-   "title": "Lab 5 · oncoming · RPP RPP_5",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_5",
+   "bags": [
+    "lab5/matrix/oncoming_RPP_5/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "oncoming",
@@ -2608,15 +3262,22 @@
     "actor_radius": 0.25,
     "id": "lab5_oncoming_rpp_5",
     "group": "lab5-move",
-    "title": "Lab 5 · oncoming · RPP RPP_5"
+    "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_5"
    },
-   "bytes": 137980,
-   "sha256": "b0f9d5cab7f952bcbf263e7f8c06ac76cae8d69f0c97f16284a5d66c19d12b2a",
    "run_id": "47bd17b54c3e38d4aab6db59e75ad7a31537cee4085dc1271c5eb611059db25d",
+   "bytes_uncompressed": 247048,
    "messages": 1002,
-   "bags": [
-    "lab5/matrix/oncoming_RPP_5/bag"
-   ],
+   "rows": {
+    "truth": 288,
+    "actors": 267,
+    "scan": 58,
+    "annotation": 50,
+    "path": 20,
+    "command": 109,
+    "metrics": 331,
+    "estimate": 22,
+    "robot": 22
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2632,7 +3293,10 @@
   {
    "id": "lab5_static_room_dwb_1",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · DWB DWB_1",
+   "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_1",
+   "bags": [
+    "lab5/matrix/static_room_DWB_1/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -2640,15 +3304,22 @@
     "run": "static_room_DWB_1",
     "id": "lab5_static_room_dwb_1",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · DWB DWB_1"
+    "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_1"
    },
-   "bytes": 241582,
-   "sha256": "5377153543aaf3071a88f0c886632640d3bfd05d43971aa2d40cd3ec53674e81",
    "run_id": "0384dc3da483bc791ad2bd2cefdf6218d10fb713f7d69b88f334cb15eaf82e1e",
+   "bytes_uncompressed": 392609,
    "messages": 1449,
-   "bags": [
-    "lab5/matrix/static_room_DWB_1/bag"
-   ],
+   "rows": {
+    "truth": 500,
+    "scan": 100,
+    "annotation": 86,
+    "path": 2,
+    "candidates": 76,
+    "command": 258,
+    "metrics": 698,
+    "estimate": 38,
+    "robot": 38
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2664,7 +3335,10 @@
   {
    "id": "lab5_static_room_dwb_2",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · DWB DWB_2",
+   "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_2",
+   "bags": [
+    "lab5/matrix/static_room_DWB_2/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -2672,15 +3346,22 @@
     "run": "static_room_DWB_2",
     "id": "lab5_static_room_dwb_2",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · DWB DWB_2"
+    "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_2"
    },
-   "bytes": 228530,
-   "sha256": "3fda7202b079a318f98c10f5d751ff5c865cc3a038df4d91741689feced7bbab",
    "run_id": "037c840cfde74625c7018ae1698ab53646fc96e439420978ed9b8e2239327b20",
+   "bytes_uncompressed": 370701,
    "messages": 1352,
-   "bags": [
-    "lab5/matrix/static_room_DWB_2/bag"
-   ],
+   "rows": {
+    "truth": 476,
+    "scan": 95,
+    "annotation": 79,
+    "path": 2,
+    "candidates": 70,
+    "command": 227,
+    "metrics": 642,
+    "estimate": 40,
+    "robot": 40
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2696,7 +3377,10 @@
   {
    "id": "lab5_static_room_dwb_3",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · DWB DWB_3",
+   "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_3",
+   "bags": [
+    "lab5/matrix/static_room_DWB_3/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -2704,15 +3388,22 @@
     "run": "static_room_DWB_3",
     "id": "lab5_static_room_dwb_3",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · DWB DWB_3"
+    "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_3"
    },
-   "bytes": 234051,
-   "sha256": "83da8cd35178bd74008ca261c75dc4bda6d6a2b9a35a360ad26fc71e72a670d0",
    "run_id": "3deb751ebc96f4b6401cf44f14fffba6762e28aa18e04a466b56602c5a216a54",
+   "bytes_uncompressed": 385385,
    "messages": 1391,
-   "bags": [
-    "lab5/matrix/static_room_DWB_3/bag"
-   ],
+   "rows": {
+    "truth": 482,
+    "scan": 97,
+    "annotation": 68,
+    "path": 2,
+    "candidates": 71,
+    "command": 232,
+    "metrics": 680,
+    "estimate": 50,
+    "robot": 50
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2728,7 +3419,10 @@
   {
    "id": "lab5_static_room_dwb_4",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · DWB DWB_4",
+   "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_4",
+   "bags": [
+    "lab5/matrix/static_room_DWB_4/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -2736,15 +3430,22 @@
     "run": "static_room_DWB_4",
     "id": "lab5_static_room_dwb_4",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · DWB DWB_4"
+    "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_4"
    },
-   "bytes": 243013,
-   "sha256": "31d29ee696d09a6166d5fb59ba3f854b73fc2e819af6ed5eccb2f5870a11f856",
    "run_id": "46b3d59f23af68b9089c2a7e932def82be872f62e323e44cb677ea910eb482f5",
+   "bytes_uncompressed": 392412,
    "messages": 1423,
-   "bags": [
-    "lab5/matrix/static_room_DWB_4/bag"
-   ],
+   "rows": {
+    "truth": 510,
+    "scan": 102,
+    "annotation": 71,
+    "path": 2,
+    "candidates": 75,
+    "command": 236,
+    "metrics": 686,
+    "estimate": 41,
+    "robot": 41
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2760,7 +3461,10 @@
   {
    "id": "lab5_static_room_dwb_5",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · DWB DWB_5",
+   "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_5",
+   "bags": [
+    "lab5/matrix/static_room_DWB_5/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -2768,15 +3472,22 @@
     "run": "static_room_DWB_5",
     "id": "lab5_static_room_dwb_5",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · DWB DWB_5"
+    "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_5"
    },
-   "bytes": 242385,
-   "sha256": "66ad04a022138829d8a6dffe287342f6e87d8ab7d4d634d84ee360893298760c",
    "run_id": "52ceb6e32a0b40da95876e04b3a67288c630826283e7b644744de4d9d82a6ea3",
+   "bytes_uncompressed": 391651,
    "messages": 1422,
-   "bags": [
-    "lab5/matrix/static_room_DWB_5/bag"
-   ],
+   "rows": {
+    "truth": 496,
+    "scan": 99,
+    "annotation": 87,
+    "path": 2,
+    "candidates": 74,
+    "command": 231,
+    "metrics": 674,
+    "estimate": 47,
+    "robot": 47
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2792,7 +3503,10 @@
   {
    "id": "lab5_static_room_mppi_1",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · MPPI MPPI_1",
+   "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_1",
+   "bags": [
+    "lab5/matrix/static_room_MPPI_1/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -2800,15 +3514,22 @@
     "run": "static_room_MPPI_1",
     "id": "lab5_static_room_mppi_1",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · MPPI MPPI_1"
+    "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_1"
    },
-   "bytes": 332059,
-   "sha256": "b190862f5ff2b31f5f9a13d5dd80d4e258cf7bbe2ab935858cd7f5da4488a5f4",
    "run_id": "c80553dcd3db85e624b73becddcf975a5ca28acd904fa7eb8fc7c2e1c83dc63b",
+   "bytes_uncompressed": 488840,
    "messages": 1795,
-   "bags": [
-    "lab5/matrix/static_room_MPPI_1/bag"
-   ],
+   "rows": {
+    "truth": 615,
+    "scan": 123,
+    "annotation": 87,
+    "path": 1,
+    "candidates": 94,
+    "command": 317,
+    "metrics": 860,
+    "estimate": 63,
+    "robot": 63
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2824,7 +3545,10 @@
   {
    "id": "lab5_static_room_mppi_2",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · MPPI MPPI_2",
+   "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_2",
+   "bags": [
+    "lab5/matrix/static_room_MPPI_2/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -2832,15 +3556,22 @@
     "run": "static_room_MPPI_2",
     "id": "lab5_static_room_mppi_2",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · MPPI MPPI_2"
+    "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_2"
    },
-   "bytes": 334713,
-   "sha256": "1828bcb73bfa6a0c54deccdf1c191b65638c9839fdd9830db52a066556c35a8e",
    "run_id": "e6bfc2b2710cc1642f40ae9b41952d6cffb861ffaa543d8ec0822056ec6018e5",
+   "bytes_uncompressed": 499572,
    "messages": 1852,
-   "bags": [
-    "lab5/matrix/static_room_MPPI_2/bag"
-   ],
+   "rows": {
+    "truth": 616,
+    "scan": 124,
+    "annotation": 118,
+    "path": 1,
+    "candidates": 96,
+    "command": 323,
+    "metrics": 892,
+    "estimate": 63,
+    "robot": 63
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2856,7 +3587,10 @@
   {
    "id": "lab5_static_room_mppi_3",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · MPPI MPPI_3",
+   "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_3",
+   "bags": [
+    "lab5/matrix/static_room_MPPI_3/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -2864,15 +3598,22 @@
     "run": "static_room_MPPI_3",
     "id": "lab5_static_room_mppi_3",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · MPPI MPPI_3"
+    "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_3"
    },
-   "bytes": 333132,
-   "sha256": "fb713d8e7810030cca7b6ddb70fc8c4918b85fb43d20ef6fb3e7396745159633",
    "run_id": "8ac565c6d5c3f160ed9d4ab5a33c4ed610c94a13ef81b6732905617c85c74fe9",
+   "bytes_uncompressed": 491659,
    "messages": 1800,
-   "bags": [
-    "lab5/matrix/static_room_MPPI_3/bag"
-   ],
+   "rows": {
+    "truth": 618,
+    "annotation": 80,
+    "scan": 124,
+    "path": 1,
+    "candidates": 95,
+    "command": 322,
+    "metrics": 868,
+    "estimate": 63,
+    "robot": 63
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2888,7 +3629,10 @@
   {
    "id": "lab5_static_room_mppi_4",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · MPPI MPPI_4",
+   "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_4",
+   "bags": [
+    "lab5/matrix/static_room_MPPI_4/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -2896,15 +3640,22 @@
     "run": "static_room_MPPI_4",
     "id": "lab5_static_room_mppi_4",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · MPPI MPPI_4"
+    "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_4"
    },
-   "bytes": 335256,
-   "sha256": "4b00fae80da5c8c9649ac5467b18a1727c305455373a2b6e8be8bc22af58e093",
    "run_id": "8c63123a5f11715e15c667bf0d29900d561b6b2fc515b6598de9e3e655b70ca4",
+   "bytes_uncompressed": 494583,
    "messages": 1820,
-   "bags": [
-    "lab5/matrix/static_room_MPPI_4/bag"
-   ],
+   "rows": {
+    "truth": 620,
+    "scan": 124,
+    "annotation": 103,
+    "path": 1,
+    "candidates": 95,
+    "command": 320,
+    "metrics": 858,
+    "estimate": 63,
+    "robot": 63
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2920,7 +3671,10 @@
   {
    "id": "lab5_static_room_mppi_5",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · MPPI MPPI_5",
+   "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_5",
+   "bags": [
+    "lab5/matrix/static_room_MPPI_5/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -2928,15 +3682,22 @@
     "run": "static_room_MPPI_5",
     "id": "lab5_static_room_mppi_5",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · MPPI MPPI_5"
+    "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_5"
    },
-   "bytes": 341791,
-   "sha256": "99a8d856fb704392a5227350037483a81e7430b8d9df1518eefa404f1c80deaa",
    "run_id": "520b4518af2c7373439f909a323f4eb32c9effcaa9b8bad46ca4a84a93b22051",
+   "bytes_uncompressed": 506135,
    "messages": 1871,
-   "bags": [
-    "lab5/matrix/static_room_MPPI_5/bag"
-   ],
+   "rows": {
+    "truth": 628,
+    "scan": 126,
+    "annotation": 109,
+    "path": 1,
+    "candidates": 98,
+    "command": 334,
+    "metrics": 896,
+    "estimate": 64,
+    "robot": 64
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2952,7 +3713,10 @@
   {
    "id": "lab5_static_room_rpp_1",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · RPP RPP_1",
+   "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_1",
+   "bags": [
+    "lab5/matrix/static_room_RPP_1/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -2960,15 +3724,21 @@
     "run": "static_room_RPP_1",
     "id": "lab5_static_room_rpp_1",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · RPP RPP_1"
+    "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_1"
    },
-   "bytes": 321154,
-   "sha256": "1e07fd3a7d91c25d700d2be03d78fff52eb8f03e0dfce9e355c8967a70dac6af",
    "run_id": "4f87cd954893917b6abf9c22a91b126229e586c5a11047c8ddf3f96b59101459",
+   "bytes_uncompressed": 489472,
    "messages": 1773,
-   "bags": [
-    "lab5/matrix/static_room_RPP_1/bag"
-   ],
+   "rows": {
+    "truth": 614,
+    "scan": 123,
+    "annotation": 97,
+    "path": 51,
+    "command": 325,
+    "metrics": 874,
+    "estimate": 62,
+    "robot": 62
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -2984,7 +3754,10 @@
   {
    "id": "lab5_static_room_rpp_2",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · RPP RPP_2",
+   "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_2",
+   "bags": [
+    "lab5/matrix/static_room_RPP_2/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -2992,15 +3765,21 @@
     "run": "static_room_RPP_2",
     "id": "lab5_static_room_rpp_2",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · RPP RPP_2"
+    "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_2"
    },
-   "bytes": 318580,
-   "sha256": "fdc2599e810829872c538e47757311d278fd97e93ede15a5ed8e3211bc6e04fb",
    "run_id": "039465c744f4c612580af6770b85a27650b7c0d1078d4ec02d33851c1e080540",
+   "bytes_uncompressed": 486354,
    "messages": 1749,
-   "bags": [
-    "lab5/matrix/static_room_RPP_2/bag"
-   ],
+   "rows": {
+    "truth": 612,
+    "scan": 123,
+    "annotation": 98,
+    "path": 51,
+    "command": 306,
+    "metrics": 866,
+    "estimate": 62,
+    "robot": 62
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -3016,7 +3795,10 @@
   {
    "id": "lab5_static_room_rpp_3",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · RPP RPP_3",
+   "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_3",
+   "bags": [
+    "lab5/matrix/static_room_RPP_3/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -3024,15 +3806,21 @@
     "run": "static_room_RPP_3",
     "id": "lab5_static_room_rpp_3",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · RPP RPP_3"
+    "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_3"
    },
-   "bytes": 318509,
-   "sha256": "f084960da93c2ffb0e865c11a68f87b27e759fe6d1ee170c881d6194ce084797",
    "run_id": "a4b42576ed8a52a3bd9435b5f4e23451937271940ba0ff7c4b5b88a23dc8013b",
+   "bytes_uncompressed": 481154,
    "messages": 1701,
-   "bags": [
-    "lab5/matrix/static_room_RPP_3/bag"
-   ],
+   "rows": {
+    "truth": 611,
+    "scan": 123,
+    "annotation": 87,
+    "path": 51,
+    "command": 286,
+    "metrics": 836,
+    "estimate": 62,
+    "robot": 62
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -3048,7 +3836,10 @@
   {
    "id": "lab5_static_room_rpp_4",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · RPP RPP_4",
+   "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_4",
+   "bags": [
+    "lab5/matrix/static_room_RPP_4/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -3056,15 +3847,21 @@
     "run": "static_room_RPP_4",
     "id": "lab5_static_room_rpp_4",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · RPP RPP_4"
+    "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_4"
    },
-   "bytes": 318583,
-   "sha256": "c059aa319dd74d6d82c4923bc20e299fa322cf9a2c5debf57bb4a9918253872e",
    "run_id": "efc88fa02ea57b517092feef4cfe52571a84fa7034fee2fc220f8606467c38e7",
+   "bytes_uncompressed": 479656,
    "messages": 1707,
-   "bags": [
-    "lab5/matrix/static_room_RPP_4/bag"
-   ],
+   "rows": {
+    "truth": 611,
+    "scan": 122,
+    "annotation": 94,
+    "path": 51,
+    "command": 286,
+    "metrics": 832,
+    "estimate": 63,
+    "robot": 63
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
@@ -3080,7 +3877,10 @@
   {
    "id": "lab5_static_room_rpp_5",
    "group": "lab5-move",
-   "title": "Lab 5 · static_room · RPP RPP_5",
+   "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_5",
+   "bags": [
+    "lab5/matrix/static_room_RPP_5/bag"
+   ],
    "case": {
     "lab": 5,
     "scenario": "static_room",
@@ -3088,15 +3888,21 @@
     "run": "static_room_RPP_5",
     "id": "lab5_static_room_rpp_5",
     "group": "lab5-move",
-    "title": "Lab 5 · static_room · RPP RPP_5"
+    "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_5"
    },
-   "bytes": 324133,
-   "sha256": "2eacd687f572cd4bd565eb227b21d9e45b3ffae5dd5d750130f603216c4cf6ba",
    "run_id": "23d84b505579f82478fe043fa99a40994c0fe6105f5b565e884891625bc822d9",
+   "bytes_uncompressed": 504193,
    "messages": 1886,
-   "bags": [
-    "lab5/matrix/static_room_RPP_5/bag"
-   ],
+   "rows": {
+    "truth": 613,
+    "scan": 123,
+    "annotation": 126,
+    "path": 52,
+    "command": 378,
+    "metrics": 932,
+    "estimate": 63,
+    "robot": 63
+   },
    "checksum": {
     "checked": true,
     "definition": "lab5_bag_0",
