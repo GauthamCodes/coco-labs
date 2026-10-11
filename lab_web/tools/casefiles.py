@@ -153,6 +153,10 @@ def expected(doc) -> Dict[str, List[str]]:
 
 def inventory_problems(doc, index) -> List[str]:
     out = []
+    # D6: every Case File's scans come after everything else (ADR 0005, amendment D6;
+    # test/casefile_layout.test.ts checks each file's content and order)
+    if index.get('layout') != 'ordered':
+        out.append(f"the Case Files' layout is {index.get('layout')!r}, not 'ordered' (scans after the first frame)")
     by_group: Dict[str, List[dict]] = {}
     for e in index['casefiles']:
         by_group.setdefault(e['group'], []).append(e)

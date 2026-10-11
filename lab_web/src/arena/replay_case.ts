@@ -68,22 +68,8 @@ export function parseCase(manifest: Manifest, messages: ReadMessage[], grid: Wor
   const t0 = typeof spec.adapter?.t0 === 'number' ? Math.min(spec.adapter.t0, gt.t[0]) : gt.t[0];
   const tickOf = (t: number) => Math.max(1, Math.floor((t - t0) / DT + 1e-9) + 1);
 
-  // the recorded scans, by the tick they belong to (the latest wins)
-  const scans: { t: number; ranges: Float32Array }[] = [];
-  let lidar: World['lidar'] = { samples: 0, angle_min: 0, angle_max: 0, range_max: 0, mount: [0, 0, 0] };
-  for (const m of on('coco.sensor.scan.lidar.v1')) {
-    const b = fromBinary(ScanBatchSchema, m.data);
-    let off = 0;
-    b.count.forEach((n, i) => {
-      if (!lidar.samples) {
-        lidar = { samples: n, angle_min: b.angleMin[i], angle_max: b.angleMin[i] + b.angleIncrement[i] * (n - 1),
-          range_max: b.rangeMax[i], mount: [0, 0, 0] };
-      }
-      scans.push({ t: b.tWorld[i], ranges: Float32Array.from(b.ranges.slice(off, off + n)) });
-      off += n;
-    });
-  }
-  scans.sort((a, b) => a.t - b.t);
+  // the recorded scans, when the file holds them (a Case File's first part does not: D6)
+  const { lidar, scans } = readScans(on(SCAN_CHANNEL));
   // the recorded global paths, by search id (1 the lab's own plan, 2 Nav2's received plan, 3 Nav2's)
   const paths: { t: number; xy: number[] }[] = [];
   for (const m of on('coco.plan.path.poses.v1')) {
@@ -107,16 +93,13 @@ export function parseCase(manifest: Manifest, messages: ReadMessage[], grid: Wor
     planners: [], planner: '', hash: '',
   };
   const ticks: Tick[] = [];
-  const ranges = new Map<number, Float32Array>();
   const tEnd = gt.t[gt.t.length - 1];
-  let ig = 0; let ib = -1; let is = -1; let ip = -1; let iact = 0;
+  let ig = 0; let ib = -1; let ip = -1; let iact = 0;
   const actorsNow = new Map<string, [number, number, number]>();
   for (let k = 1; t0 + (k - 1) * DT <= tEnd + 1e-9; k += 1) {
     const t = t0 + (k - 1) * DT;
     while (ig + 1 < gt.t.length && gt.t[ig + 1] <= t) ig += 1;
     while (ib + 1 < belief.t.length && belief.t[ib + 1] <= t) ib += 1;
-    let newScan = false;
-    while (is + 1 < scans.length && scans[is + 1].t <= t) { is += 1; newScan = true; }
     let newPath = false;
     while (ip + 1 < paths.length && paths[ip + 1].t <= t) { ip += 1; newPath = true; }
     while (iact < actorRows.length && actorRows[iact].t <= t) {
@@ -128,9 +111,9 @@ export function parseCase(manifest: Manifest, messages: ReadMessage[], grid: Wor
     const tk: Tick = { tick: k, t_world: t, pose: ib >= 0 ? belief.p[ib] : truth, truth, v: 0, w: 0, mode: 'goal', blocked: false,
       arrived: false, hash: '', chain: '', plans: [], actors: actorsNow.size ? [...actorsNow.values()] : undefined };
     if (newPath) tk.path = paths[ip].xy;
-    if (is >= 0 && (newScan || k === 1)) ranges.set(k, scans[is].ranges);
     ticks.push(tk);
   }
+  const ranges = scanRanges(scans, t0, ticks.length);
 
   const families = new Map<number, FamilyMessage[]>();
   const add = (tick: number, f: FamilyMessage) => (families.get(tick) ?? families.set(tick, []).get(tick)!).push(f);
@@ -204,7 +187,62 @@ export function parseCase(manifest: Manifest, messages: ReadMessage[], grid: Wor
   return {
     world, occupancy: grid.occupancy, ticks, ranges, batches: new Map(), runId: manifest.runId,
     source: manifest.provenance?.source ?? '', evidence: 'STACK', title: spec.case?.title ?? manifest.runId, notes,
-    results: null, bundle: '', families, headers,
+    results: null, bundle: '', families, headers, caseT0: t0,
     card: `Recorded on the full ROS 2 stack in Gazebo · ${src} · converted by ${spec.adapter?.name ?? 'the adapter'} ${spec.adapter?.version ?? ''} (${spec.adapter?.detail ?? ''} detail)`,
   };
+}
+
+/** The channel of the recorded LiDAR scans: what a Case File loads after its first frame (D6). */
+export const SCAN_CHANNEL = 'coco.sensor.scan.lidar.v1';
+
+/** The recorded scans in time order, and the LiDAR they describe (no samples: none recorded). */
+export function readScans(messages: ReadMessage[]): { lidar: World['lidar']; scans: { t: number; ranges: Float32Array }[] } {
+  const scans: { t: number; ranges: Float32Array }[] = [];
+  let lidar: World['lidar'] = { samples: 0, angle_min: 0, angle_max: 0, range_max: 0, mount: [0, 0, 0] };
+  for (const m of messages) {
+    const b = fromBinary(ScanBatchSchema, m.data);
+    let off = 0;
+    b.count.forEach((n, i) => {
+      if (!lidar.samples) {
+        lidar = { samples: n, angle_min: b.angleMin[i], angle_max: b.angleMin[i] + b.angleIncrement[i] * (n - 1),
+          range_max: b.rangeMax[i], mount: [0, 0, 0] };
+      }
+      scans.push({ t: b.tWorld[i], ranges: Float32Array.from(b.ranges.slice(off, off + n)) });
+      off += n;
+    });
+  }
+  scans.sort((a, b) => a.t - b.t);
+  return { lidar, scans };
+}
+
+/** Each tick's scan: the latest recorded at or before it, set on the tick it first applies to (and tick 1). */
+export function scanRanges(scans: { t: number; ranges: Float32Array }[], t0: number, nTicks: number): Map<number, Float32Array> {
+  const ranges = new Map<number, Float32Array>();
+  let is = -1;
+  for (let k = 1; k <= nTicks; k += 1) {
+    const t = t0 + (k - 1) * DT;
+    let newScan = false;
+    while (is + 1 < scans.length && scans[is + 1].t <= t) { is += 1; newScan = true; }
+    if (is >= 0 && (newScan || k === 1)) ranges.set(k, scans[is].ranges);
+  }
+  return ranges;
+}
+
+/**
+ * Scans that arrived after the first frame (D6): onto the recording, and onto every tick
+ * the session already holds -- each tick shows the latest scan at or before it, exactly
+ * what it would have shown had the scans been loaded first.
+ */
+export function attachScans(rec: ConvertedRun, session: { history: { tick: number; ranges: Float32Array | null }[] },
+  messages: ReadMessage[]): boolean {
+  const { lidar, scans } = readScans(messages);
+  if (!lidar.samples || rec.caseT0 === undefined) return false;
+  rec.world.lidar = lidar;
+  rec.ranges = scanRanges(scans, rec.caseT0, rec.ticks.length);
+  let last: Float32Array | null = null;
+  for (const h of session.history) {
+    last = rec.ranges.get(h.tick) ?? last;
+    h.ranges = last ?? new Float32Array(lidar.samples).fill(Infinity);
+  }
+  return true;
 }

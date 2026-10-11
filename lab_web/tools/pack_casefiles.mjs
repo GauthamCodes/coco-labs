@@ -6,10 +6,11 @@
  *
  *   node tools/pack_casefiles.mjs RAW_DIR      (from lab_web; RAW_DIR = build_casefiles.py's output)
  *
- * Repacks each uncompressed run file with zstd chunks and an index
- * (src/schemas/mcap.ts repackRun: the same messages, byte for byte), writes
- * it to lab_web/casefiles/<id>.mcap, checks it reads back with every message
- * equal, and writes lab_web/casefiles/index.json: id, group, title, bytes,
+ * Repacks each uncompressed run file with zstd chunks and an index, its scans
+ * after everything else (src/schemas/mcap.ts orderCase; ADR 0005, amendment
+ * D6: the same messages, byte for byte), writes it to
+ * lab_web/casefiles/<id>.mcap, checks its content digest equals the
+ * adapter's file's, and writes lab_web/casefiles/index.json: id, group, title, bytes,
  * sha256, run id and the source citation of each. Refuses a Case File over
  * the per-file budget or a set over the total budget (ADR 0005).
  */
@@ -30,7 +31,8 @@ const RAW = process.argv[2];
 if (!RAW) throw new Error('usage: node tools/pack_casefiles.mjs RAW_DIR');
 
 const server = await createServer({ root: WEB, server: { middlewareMode: true }, appType: 'custom', logLevel: 'error' });
-const { repackRun, readRun, readRawStream } = await server.ssrLoadModule('/src/schemas/mcap.ts');
+const { orderCase, readRun, readRawStream, contentDigest } = await server.ssrLoadModule('/src/schemas/mcap.ts');
+const sha = (b) => createHash('sha256').update(b).digest('hex');
 const build = JSON.parse(readFileSync(join(RAW, 'build.json'), 'utf-8'));
 mkdirSync(OUT, { recursive: true });
 const keep = new Set(build.cases.map((c) => `${c.id}.mcap`));
@@ -40,17 +42,14 @@ const entries = [];
 let total = 0;
 for (const c of build.cases) {
   const raw = new Uint8Array(readFileSync(join(RAW, `${c.id}.mcap`)));
-  const packed = await repackRun(raw, (d) => new Uint8Array(zstdCompressSync(d)), 'lab_web/tools/pack_casefiles.mjs');
-  // the same messages, byte for byte
-  const before = readRawStream(raw).messages;
+  // D6 (ADR 0005, amendment D6): the scans after everything else, so the first frame loads first
+  const rawRun = readRawStream(raw);
+  const packed = await orderCase(rawRun, (d) => new Uint8Array(zstdCompressSync(d)), 1 << 18, 'lab_web/tools/pack_casefiles.mjs');
+  // the same messages, byte for byte: every channel's, in its order, with its schema
+  if (JSON.stringify(contentDigest(readRawStream(packed), sha)) !== JSON.stringify(contentDigest(rawRun, sha))) {
+    throw new Error(`${c.id}: the packed file does not hold exactly the adapter's messages`);
+  }
   const after = (await readRun(packed)).messages;
-  if (before.length !== after.length) throw new Error(`${c.id}: ${before.length} messages became ${after.length}`);
-  const sorted = [...before].sort((a, b) => (a.logTime < b.logTime ? -1 : a.logTime > b.logTime ? 1 : 0));
-  after.forEach((m, i) => {
-    if (m.logTime !== sorted[i].logTime || Buffer.compare(Buffer.from(m.data), Buffer.from(sorted[i].data)) !== 0) {
-      throw new Error(`${c.id}: message ${i} changed in the repack`);
-    }
-  });
   if (packed.byteLength > PER_FILE_BUDGET) throw new Error(`${c.id}: ${packed.byteLength} B is over the ${PER_FILE_BUDGET} B budget (ADR 0005)`);
   total += packed.byteLength;
   writeFileSync(join(OUT, `${c.id}.mcap`), packed);
@@ -63,7 +62,7 @@ for (const c of build.cases) {
 }
 if (total > TOTAL_BUDGET) throw new Error(`the Case Files total ${total} B, over the ${TOTAL_BUDGET} B budget (ADR 0005)`);
 writeFileSync(join(OUT, 'index.json'), JSON.stringify({
-  schema: 'lab_web.casefiles', version: '1.0', adapter: build.adapter, detail: build.detail,
+  schema: 'lab_web.casefiles', version: '1.1', layout: 'ordered', adapter: build.adapter, detail: build.detail,
   built_at_commit: build.git_sha, total_bytes: total, budget: { per_file: PER_FILE_BUDGET, total: TOTAL_BUDGET },
   casefiles: entries,
 }, null, 1) + '\n');

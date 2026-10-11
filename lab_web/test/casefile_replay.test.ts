@@ -14,9 +14,9 @@ import { join } from 'node:path';
 import { create, fromBinary } from '@bufbuild/protobuf';
 import { describe, expect, it } from 'vitest';
 
-import { caseLens, isCaseFile } from '../src/arena/replay_case';
-import { parseConverted } from '../src/arena/replay';
-import { readRun } from '../src/schemas/mcap';
+import { attachScans, caseLens, isCaseFile, parseCase } from '../src/arena/replay_case';
+import { parseConverted, type ConvertedRun } from '../src/arena/replay';
+import { readRun, streamCase } from '../src/schemas/mcap';
 import { WorldGridSchema } from '../src/schemas/gen/coco/world/v1/world_pb';
 import { TruthPoseBatchSchema } from '../src/schemas/gen/coco/truth/v1/truth_pb';
 import { REPO } from './helpers';
@@ -69,6 +69,31 @@ describe('a Case File in the viewer', () => {
     expect(states.slice(0, 3)).toEqual(['IDLE', 'LOCALIZE', 'SELECT_SEARCH_REGION']);
     expect(states).toContain('COMPLETE');
     expect(caseLens(rec)).toBe('decide');
+  });
+
+  it('draws its first frame without the scans, then every tick shows exactly the scan it would have had (D6)', async () => {
+    const id = 'lab5_crossing_dwb_1';
+    const b = bytes(id);
+    // what M3 drew: the whole Case File parsed at once
+    const whole = await parseConverted(b, grid);
+    expect(whole.ranges.size).toBeGreaterThan(0);
+    // what D6 draws first: the messages before the scans, as the file arrives
+    let first: ConvertedRun | null = null;
+    const scans = await streamCase(new Blob([b]).stream(), (run) => { first = parseCase(run.manifest, run.messages, grid); });
+    const rec = first! as ConvertedRun;
+    expect(rec.world.lidar.samples).toBe(0);
+    expect(rec.ranges.size).toBe(0);
+    expect(rec.ticks).toEqual(whole.ticks);
+    // the session as the first frame left it: every tick loaded, no scans; then the scans arrive
+    const history = rec.ticks.map((t) => ({ tick: t.tick, ranges: null as Float32Array | null }));
+    expect(attachScans(rec, { history }, scans)).toBe(true);
+    expect(rec.world.lidar).toEqual(whole.world.lidar);
+    expect([...rec.ranges.keys()]).toEqual([...whole.ranges.keys()]);
+    let held: Float32Array | null = null;
+    for (const h of history) {
+      held = whole.ranges.get(h.tick) ?? held;
+      expect(h.ranges).toEqual(held ?? new Float32Array(whole.world.lidar.samples).fill(Infinity));
+    }
   });
 
   it('refuses to draw a Case File without its map', async () => {

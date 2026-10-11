@@ -37,8 +37,15 @@ Gazebo, recorded. No physical robot exists.
 | `lab5-move` | 54 | `lab5/matrix/<run>/bag` | `docs/data/lab5/drive/*/manifest.json`, `bag_0.mcap`: 54 / 54 | the run's recorded window (FollowPath request to end) ± 5 s. A mislocalised run aborts within 8 ms, so its window alone is empty; its Case File starts 3 s before the recorded `/initialpose` that told AMCL the wrong pose (M3.4), so it holds that moment as well as the abort. |
 | `run15` | the nine Lab 5 `mislocalised_*` runs | — | — | — |
 
-**Totals:** 100 Case Files, **41,486,529 B** (41,438,100 B at M3.3) (ADR 0005 budget: 20 MB each,
-150 MB in all). The largest is `lab2_rl_fidelity_1_tour` at 2,780,072 B.
+**Totals:** 100 Case Files, **41,230,918 B** in the ordered layout (41,486,529 B at M3.9,
+41,438,100 B at M3.3) (ADR 0005 budget: 20 MB each, 150 MB in all). The largest is
+`lab2_rl_fidelity_1_tour` at 2,754,655 B.
+
+**Layout (M3 review, decision D6; ADR 0005, amendment D6).** Each file holds its scans after
+everything else, and the viewer reads it as it arrives: the first frame is drawn as soon as
+the last message before the scans is in, and the scans are attached to every tick when the
+file is complete (`src/arena/case_load.ts`). `lossless.json` records every M3 file's content
+digest; `test/casefile_layout.test.ts` requires each Case File to hold exactly that content.
 
 **Not a recording, and said so:**
 - **Run 15** itself was never recorded as a bag; its Case File is the
@@ -61,7 +68,7 @@ All three are the owner's rulings of 2026-10-10 (STATUS plan-change log).
   - the mission's transitions
   - the stack's own estimators
   - the annotations
-  - every tick a seek away (the whole recording is loaded, then played)
+  - every tick a seek away (every tick is loaded before the first frame; the scans follow it)
 - **Generated facts:** a few sentences from the committed data that scored
   that run (outcome, order searched, tracking error, recovery), each
   citing its file.

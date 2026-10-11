@@ -28,7 +28,9 @@ import { wallMs, type InputRow, type PlanInfo, type Tick, type World } from './p
 import { currentTheme, PALETTES } from './render/palette';
 import { PlanStore, type CellInfo } from './render/planStore';
 import { parseConverted, type ConvertedRun } from './replay';
-import { caseLens } from './replay_case';
+import { attachScans, caseLens } from './replay_case';
+import { loadCase } from './case_load';
+import type { ReadMessage } from '../schemas/mcap';
 import { fromBinary } from '@bufbuild/protobuf';
 import { WorldGridSchema } from '../schemas/gen/coco/world/v1/world_pb';
 
@@ -262,10 +264,11 @@ export function ArenaApp() {
       const fetchBytes = (url: string, what: string) => fetch(url, { credentials: 'omit' })
         .then((x) => { if (!x.ok) throw new Error(what); return x.arrayBuffer(); }).then((b) => new Uint8Array(b));
       if (caseId) perf.mark('casefile_fetch_start', wallMs());
+      // a Case File's first frame needs everything but its scans; the scans follow (D6)
+      let caseScans: Promise<ReadMessage[]> | null = null;
       const loaded = caseId
-        ? Promise.all([fetchBytes(`${base}generated/casefiles/${caseId}.mcap`, `no Case File "${caseId}"`),
-          fetchBytes(`${base}generated/casefiles/world.grid.bin`, 'the Case Files\' map is missing')])
-          .then(([b, g]) => parseConverted(b, fromBinary(WorldGridSchema, g)))
+        ? loadCase(base, caseId, fetchBytes(`${base}generated/casefiles/world.grid.bin`, 'the Case Files\' map is missing')
+          .then((g) => fromBinary(WorldGridSchema, g))).then(({ rec, scans }) => { caseScans = scans; return rec; })
         : fetchBytes(`${base}generated/v2/${recId}.mcap`, `no recorded run "${recId}"`).then((b) => parseConverted(b));
       void loaded
         .then(async (rec) => {
@@ -294,6 +297,14 @@ export function ArenaApp() {
               s.playing = true;
             }
             perf.mark('recording_ready', wallMs());
+            // the recorded scans, onto every tick already loaded; then the LiDAR layer shows them
+            void caseScans?.then((msgs) => {
+              if (attachScans(rec, s, msgs)) {
+                rr?.setLidar(rec.world.lidar);
+                setLayers((l) => ({ ...l, lidar: true }));
+              }
+              perf.mark('scans_ready', wallMs());
+            }).catch((e) => setError(`Case File: ${(e as Error).message}`));
           }
           // a converted Lab 5 drive (M2.7) is shown through the Move lens: Nav2's own candidates
           else if (rec.headers?.some((h) => h.channel === 'coco.control.local.header.v1')) setLens('move');

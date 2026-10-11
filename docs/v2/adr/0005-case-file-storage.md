@@ -115,3 +115,85 @@ of the per-file budget.
   bag checksum and `docs/RESULTS.md`.
 - If the set ever outgrows the budget (more recordings, `full` detail), the
   stop condition returns and the owner decides on release assets.
+
+## Amendment, 2026-10-11 (M3 review, decision D6): scans load after the first frame
+
+**Status:** accepted. Decision D6 is the owner's (README revision 2, §8):
+"Case File scans load after the first frame (ADR 0005 amended)". Which
+layout carries it was left to measurement; this amendment records it.
+
+**Why.** M3.9 measured the first frame on emulated 4G (9 Mbit/s down,
+1.5 up, 170 ms) for all 100 Case Files: 97 within 2 s, and the three that
+missed were the longest tours (robot_localization 3,244 ms, the two Lab 3
+tours 2,371 and 2,362 ms). The miss is transfer-bound (about 0.6 s + 0.93 s
+per MB), and scans were 44–69 % of those files' bytes, while a first frame
+needs none of them.
+
+### Options, both built and measured
+
+Both rewrite the committed Case Files without re-encoding anything: every
+message keeps its bytes, log time, publish time and sequence
+(`lab_web/tools/layout_casefiles.mjs`). Both were checked lossless for all
+100 before measuring.
+
+| | Layout | Loader |
+|---|---|---|
+| **Split** | `<id>.mcap` (the manifest and everything but the scans) + `<id>.scans.mcap` (the manifest and the scans) | fetch the first part, parse and draw; the scans part is requested the moment the first part has arrived |
+| **Ordered** (chosen) | one `<id>.mcap`, every other message first, the scans after them, 256 KiB chunks | read the file as it arrives (`mcap.ts streamCase`); draw when the first scan message appears, attach the scans when the file is complete |
+
+**Measured** (`docs/v2/data/m3/review/d6/layout_compare.json`): the same 12
+Case Files — the three that missed plus nine across every lab — on
+emulated 4G, three interleaved rounds per layout, GPU (ANGLE on the RTX
+4050, NVIDIA 580.178.04), balanced, on AC, 0 console errors in every run.
+Each cell is the median of the three rounds.
+
+| | M3 (one file, log-time order) | Split | Ordered |
+|---|---|---|---|
+| First frame, worst Case File | 3,240 ms | 1,907 ms | **1,805 ms** |
+| First frame, median Case File | 1,225 ms | 915 ms | **884 ms** |
+| Within 2 s | 9 / 12 | 12 / 12 | 12 / 12 |
+| Scans ready, worst | — | 3,229 ms | **3,008 ms** |
+| All 100 Case Files, bytes | 41,486,529 | 41,351,787 | **41,230,918** |
+
+Per file the result is mixed, and it is recorded as such. Ordered is faster
+on the worst file (the robot_localization tour, 1,805 against 1,907 ms) and
+on the Lab 2 kidnaps (about 905 against 955 ms). Split is faster where the
+first part is small: both Lab 3 tours (about 1,040 against 1,104 ms) and
+Lab 5's MPPI static room (716 against 840 ms). Split pays a second request
+for the scans after the first part has arrived; ordered pays for the chunk
+that holds both the last first-frame messages and the first scans, which
+matters more when the first part is small.
+
+### Decision
+
+**Ordered.** It has the lower worst case — the case the 2 s budget binds
+on — and the lower median, its scans arrive sooner, it is smaller, and it
+keeps this ADR's format: one file per Case File, one sha256 in the index,
+one file to cite.
+
+- **Lossless, checked in CI.** `lab_web/casefiles/lossless.json` records
+  each M3 file's sha256 and its content digest (`mcap.ts contentDigest`:
+  per channel, every message's bytes, log time, publish time and
+  sequence, in order, and the channel's schema). `test/casefile_layout.test.ts`
+  requires every Case File to have exactly that digest, its scans after
+  everything else, the sha256 its index names, and a manifest that still
+  cites its source bag by sha256. `layout_casefiles.mjs` and
+  `pack_casefiles.mjs` refuse to write a file whose digest differs.
+- **Checksums cover the whole file**, as before: `index.json` holds each
+  file's sha256, the build checks every file against it, and
+  `casefiles.py` refuses an index that is not `layout: "ordered"`.
+- **Each manifest still cites its source bag**: the manifest is the same
+  message, byte for byte, still the first in the file.
+- **What the viewer shows is unchanged once the scans arrive**: each tick
+  then holds the scan it would have held had the whole file been parsed at
+  once (`test/casefile_replay.test.ts`). Until then the LiDAR layer is off.
+- The 256 KiB chunk (M3 used 1 MiB) bounds the mixed chunk; the per-file
+  and total budgets are unchanged and still enforced.
+
+**Result, all 100** (`docs/v2/data/m3/review/d6/casefile_check_4g.json`):
+the ordered build, emulated 4G, GPU, balanced, on AC: first frame **100 /
+100 within 2 s**, worst **1,828 ms** (the robot_localization tour, 3,244 ms
+at M3.9), median 745 ms, 90th percentile 905 ms. The scans were attached by
+3,013 ms at worst; 80 Case Files have scans. Seek ≤ 35.2 ms over 10 seeks
+each. 0 console errors. Unthrottled: worst 220 ms, median 57 ms
+(`casefile_check_none.json`).

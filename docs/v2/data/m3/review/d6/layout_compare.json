@@ -1,0 +1,564 @@
+{
+ "what": "D6 layout comparison: first frame (and, for split/ordered, scans ready) on emulated 4G (9 Mbit/s down, 1.5 up, 170 ms), 12 Case Files, 3 interleaved rounds per layout, GPU, balanced, AC",
+ "layouts": {
+  "m3": {
+   "conditions_round_1": {
+    "start": {
+     "at_utc": "2026-10-11T10:23:21.676Z",
+     "power_profile": "balanced",
+     "ac_power": true,
+     "battery": {
+      "status": "Charging",
+      "capacity_pct": 58
+     },
+     "cpu_governor": "powersave",
+     "load_average": {
+      "1m": 1.94,
+      "5m": 1.73,
+      "15m": 1.32
+     },
+     "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+     "threads": 12,
+     "standard": true
+    },
+    "end": {
+     "at_utc": "2026-10-11T10:24:34.125Z",
+     "power_profile": "balanced",
+     "ac_power": true,
+     "battery": {
+      "status": "Charging",
+      "capacity_pct": 60
+     },
+     "cpu_governor": "powersave",
+     "load_average": {
+      "1m": 1.71,
+      "5m": 1.69,
+      "15m": 1.33
+     },
+     "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+     "threads": 12,
+     "standard": true
+    }
+   },
+   "first_ms_max_of_medians": 3239.8,
+   "first_ms_median_of_medians": 1225.4,
+   "within_2s": 9,
+   "casefiles": 12,
+   "errors": 0
+  },
+  "split": {
+   "conditions_round_1": {
+    "start": {
+     "at_utc": "2026-10-11T10:24:34.469Z",
+     "power_profile": "balanced",
+     "ac_power": true,
+     "battery": {
+      "status": "Charging",
+      "capacity_pct": 60
+     },
+     "cpu_governor": "powersave",
+     "load_average": {
+      "1m": 1.71,
+      "5m": 1.69,
+      "15m": 1.33
+     },
+     "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+     "threads": 12,
+     "standard": true
+    },
+    "end": {
+     "at_utc": "2026-10-11T10:25:47.243Z",
+     "power_profile": "balanced",
+     "ac_power": true,
+     "battery": {
+      "status": "Charging",
+      "capacity_pct": 62
+     },
+     "cpu_governor": "powersave",
+     "load_average": {
+      "1m": 1.32,
+      "5m": 1.57,
+      "15m": 1.32
+     },
+     "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+     "threads": 12,
+     "standard": true
+    }
+   },
+   "first_ms_max_of_medians": 1907.1,
+   "first_ms_median_of_medians": 915.4,
+   "within_2s": 12,
+   "casefiles": 12,
+   "errors": 0,
+   "scans_ms_max_of_medians": 3228.5
+  },
+  "ordered": {
+   "conditions_round_1": {
+    "start": {
+     "at_utc": "2026-10-11T10:25:47.576Z",
+     "power_profile": "balanced",
+     "ac_power": true,
+     "battery": {
+      "status": "Charging",
+      "capacity_pct": 62
+     },
+     "cpu_governor": "powersave",
+     "load_average": {
+      "1m": 1.32,
+      "5m": 1.57,
+      "15m": 1.32
+     },
+     "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+     "threads": 12,
+     "standard": true
+    },
+    "end": {
+     "at_utc": "2026-10-11T10:26:58.802Z",
+     "power_profile": "balanced",
+     "ac_power": true,
+     "battery": {
+      "status": "Charging",
+      "capacity_pct": 65
+     },
+     "cpu_governor": "powersave",
+     "load_average": {
+      "1m": 1.22,
+      "5m": 1.46,
+      "15m": 1.3
+     },
+     "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+     "threads": 12,
+     "standard": true
+    }
+   },
+   "first_ms_max_of_medians": 1805.2,
+   "first_ms_median_of_medians": 884.4,
+   "within_2s": 12,
+   "casefiles": 12,
+   "errors": 0,
+   "scans_ms_max_of_medians": 3007.8
+  }
+ },
+ "casefiles": {
+  "lab1_run_astar": {
+   "m3": {
+    "first_ms_median": 628.7,
+    "first_ms_rounds": [
+     625,
+     628.9,
+     628.7
+    ],
+    "scans_ms_median": null,
+    "errors": 0,
+    "ok": true
+   },
+   "split": {
+    "first_ms_median": 616.5,
+    "first_ms_rounds": [
+     614.7,
+     616.5,
+     628.3
+    ],
+    "scans_ms_median": 616.6,
+    "errors": 0,
+    "ok": true
+   },
+   "ordered": {
+    "first_ms_median": 616.3,
+    "first_ms_rounds": [
+     620.1,
+     614.1,
+     616.3
+    ],
+    "scans_ms_median": 616.4,
+    "errors": 0,
+    "ok": true
+   }
+  },
+  "lab2_kidnap_recovery_k1": {
+   "m3": {
+    "first_ms_median": 1543.9,
+    "first_ms_rounds": [
+     1543.9,
+     1545.8,
+     1543.1
+    ],
+    "scans_ms_median": null,
+    "errors": 0,
+    "ok": true
+   },
+   "split": {
+    "first_ms_median": 952.8,
+    "first_ms_rounds": [
+     955.6,
+     944.5,
+     952.8
+    ],
+    "scans_ms_median": 1633.9,
+    "errors": 0,
+    "ok": true
+   },
+   "ordered": {
+    "first_ms_median": 906.7,
+    "first_ms_rounds": [
+     904.3,
+     906.7,
+     909.5
+    ],
+    "scans_ms_median": 1434.9,
+    "errors": 0,
+    "ok": true
+   }
+  },
+  "lab2_kidnap_recovery_k2": {
+   "m3": {
+    "first_ms_median": 1564.6,
+    "first_ms_rounds": [
+     1597,
+     1564.6,
+     1551.3
+    ],
+    "scans_ms_median": null,
+    "errors": 0,
+    "ok": true
+   },
+   "split": {
+    "first_ms_median": 952.4,
+    "first_ms_rounds": [
+     949.6,
+     963.2,
+     952.4
+    ],
+    "scans_ms_median": 1646.9,
+    "errors": 0,
+    "ok": true
+   },
+   "ordered": {
+    "first_ms_median": 905.3,
+    "first_ms_rounds": [
+     906.2,
+     901,
+     905.3
+    ],
+    "scans_ms_median": 1440.3,
+    "errors": 0,
+    "ok": true
+   }
+  },
+  "lab2_kidnap_shipped_k4_r2": {
+   "m3": {
+    "first_ms_median": 1560.3,
+    "first_ms_rounds": [
+     1560.3,
+     1567.7,
+     1552.8
+    ],
+    "scans_ms_median": null,
+    "errors": 0,
+    "ok": true
+   },
+   "split": {
+    "first_ms_median": 961.4,
+    "first_ms_rounds": [
+     961.4,
+     965.4,
+     960.6
+    ],
+    "scans_ms_median": 1654.5,
+    "errors": 0,
+    "ok": true
+   },
+   "ordered": {
+    "first_ms_median": 906.6,
+    "first_ms_rounds": [
+     903.1,
+     912.4,
+     906.6
+    ],
+    "scans_ms_median": 1452.7,
+    "errors": 0,
+    "ok": true
+   }
+  },
+  "lab2_rl_fidelity_1_tour": {
+   "m3": {
+    "first_ms_median": 3239.8,
+    "first_ms_rounds": [
+     3236,
+     3244.5,
+     3239.8
+    ],
+    "scans_ms_median": null,
+    "errors": 0,
+    "ok": true
+   },
+   "split": {
+    "first_ms_median": 1907.1,
+    "first_ms_rounds": [
+     1896.8,
+     1907.5,
+     1907.1
+    ],
+    "scans_ms_median": 3228.5,
+    "errors": 0,
+    "ok": true
+   },
+   "ordered": {
+    "first_ms_median": 1805.2,
+    "first_ms_rounds": [
+     1805.2,
+     1806.7,
+     1802.1
+    ],
+    "scans_ms_median": 3007.8,
+    "errors": 0,
+    "ok": true
+   }
+  },
+  "lab3_s1_tour": {
+   "m3": {
+    "first_ms_median": 2356.5,
+    "first_ms_rounds": [
+     2356.5,
+     2382.5,
+     2348.1
+    ],
+    "scans_ms_median": null,
+    "errors": 0,
+    "ok": true
+   },
+   "split": {
+    "first_ms_median": 1037.2,
+    "first_ms_rounds": [
+     1034.5,
+     1037.2,
+     1042.8
+    ],
+    "scans_ms_median": 2463.1,
+    "errors": 0,
+    "ok": true
+   },
+   "ordered": {
+    "first_ms_median": 1102.9,
+    "first_ms_rounds": [
+     1112.4,
+     1102.9,
+     1102.8
+    ],
+    "scans_ms_median": 2237.3,
+    "errors": 0,
+    "ok": true
+   }
+  },
+  "lab3_1_tour": {
+   "m3": {
+    "first_ms_median": 2369.8,
+    "first_ms_rounds": [
+     2369.8,
+     2384.7,
+     2358.1
+    ],
+    "scans_ms_median": null,
+    "errors": 0,
+    "ok": true
+   },
+   "split": {
+    "first_ms_median": 1045.5,
+    "first_ms_rounds": [
+     1045.5,
+     1046.6,
+     1036.4
+    ],
+    "scans_ms_median": 2462.1,
+    "errors": 0,
+    "ok": true
+   },
+   "ordered": {
+    "first_ms_median": 1105.2,
+    "first_ms_rounds": [
+     1105.2,
+     1106.4,
+     1101.6
+    ],
+    "scans_ms_median": 2237.7,
+    "errors": 0,
+    "ok": true
+   }
+  },
+  "lab4_a1_fixed_red": {
+   "m3": {
+    "first_ms_median": 907,
+    "first_ms_rounds": [
+     916.9,
+     907,
+     901.8
+    ],
+    "scans_ms_median": null,
+    "errors": 0,
+    "ok": true
+   },
+   "split": {
+    "first_ms_median": 878.4,
+    "first_ms_rounds": [
+     885.5,
+     870.8,
+     878.4
+    ],
+    "scans_ms_median": 983.9,
+    "errors": 0,
+    "ok": true
+   },
+   "ordered": {
+    "first_ms_median": 863.5,
+    "first_ms_rounds": [
+     866.4,
+     863.5,
+     862.5
+    ],
+    "scans_ms_median": 863.6,
+    "errors": 0,
+    "ok": true
+   }
+  },
+  "lab4_b2_colours_s1_red": {
+   "m3": {
+    "first_ms_median": 814,
+    "first_ms_rounds": [
+     814,
+     825.9,
+     808.6
+    ],
+    "scans_ms_median": null,
+    "errors": 0,
+    "ok": true
+   },
+   "split": {
+    "first_ms_median": 777.8,
+    "first_ms_rounds": [
+     777.3,
+     777.8,
+     779.7
+    ],
+    "scans_ms_median": 820.9,
+    "errors": 0,
+    "ok": true
+   },
+   "ordered": {
+    "first_ms_median": 779.2,
+    "first_ms_rounds": [
+     779.2,
+     778.1,
+     781.6
+    ],
+    "scans_ms_median": 779.4,
+    "errors": 0,
+    "ok": true
+   }
+  },
+  "lab5_crossing_dwb_1": {
+   "m3": {
+    "first_ms_median": 734.1,
+    "first_ms_rounds": [
+     734.1,
+     732.3,
+     736.1
+    ],
+    "scans_ms_median": null,
+    "errors": 0,
+    "ok": true
+   },
+   "split": {
+    "first_ms_median": 719.2,
+    "first_ms_rounds": [
+     719.8,
+     710.5,
+     719.2
+    ],
+    "scans_ms_median": 742.6,
+    "errors": 0,
+    "ok": true
+   },
+   "ordered": {
+    "first_ms_median": 709.8,
+    "first_ms_rounds": [
+     710.1,
+     709.8,
+     700.2
+    ],
+    "scans_ms_median": 711.9,
+    "errors": 0,
+    "ok": true
+   }
+  },
+  "lab5_mislocalised_dwb_1": {
+   "m3": {
+    "first_ms_median": 575.6,
+    "first_ms_rounds": [
+     575.6,
+     585.3,
+     574.2
+    ],
+    "scans_ms_median": null,
+    "errors": 0,
+    "ok": true
+   },
+   "split": {
+    "first_ms_median": 568.6,
+    "first_ms_rounds": [
+     569.2,
+     565.9,
+     568.6
+    ],
+    "scans_ms_median": 569.8,
+    "errors": 0,
+    "ok": true
+   },
+   "ordered": {
+    "first_ms_median": 565.6,
+    "first_ms_rounds": [
+     567.7,
+     562,
+     565.6
+    ],
+    "scans_ms_median": 567.4,
+    "errors": 0,
+    "ok": true
+   }
+  },
+  "lab5_static_room_mppi_1": {
+   "m3": {
+    "first_ms_median": 873.3,
+    "first_ms_rounds": [
+     879.9,
+     869.3,
+     873.3
+    ],
+    "scans_ms_median": null,
+    "errors": 0,
+    "ok": true
+   },
+   "split": {
+    "first_ms_median": 715.5,
+    "first_ms_rounds": [
+     718.4,
+     712.9,
+     715.5
+    ],
+    "scans_ms_median": 840.6,
+    "errors": 0,
+    "ok": true
+   },
+   "ordered": {
+    "first_ms_median": 840.3,
+    "first_ms_rounds": [
+     840.5,
+     839,
+     840.3
+    ],
+    "scans_ms_median": 842.8,
+    "errors": 0,
+    "ok": true
+   }
+  }
+ }
+}

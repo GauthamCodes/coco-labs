@@ -251,6 +251,17 @@ export class ArenaRenderer {
     }
   }
 
+  /** The LiDAR, once it is known: a Case File's scans load after its first frame (D6). */
+  setLidar(lidar: World['lidar']) {
+    if (!this.lidar || !this.world) return;
+    this.world = { ...this.world, lidar };
+    const old = this.lidar.geometry;
+    const lg = new THREE.BufferGeometry();
+    lg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(lidar.samples * 6), 3).setUsage(THREE.DynamicDrawUsage));
+    this.lidar.geometry = lg;
+    old.dispose();
+  }
+
   setScan(pose: [number, number, number], ranges: Float32Array) {
     if (!this.lidar || !this.world) return;
     const { angle_min, angle_max, samples, mount, range_max } = this.world.lidar;

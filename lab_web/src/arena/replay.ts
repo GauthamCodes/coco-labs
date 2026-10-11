@@ -40,6 +40,8 @@ export interface ConvertedRun extends Recording {
   bundle: string;
   /** M2.7: one line of what was measured in this recording, when the run's lab says it so. */
   card?: string;
+  /** A Case File's tick 1 in simulation seconds: where scans loaded after the first frame are placed (D6). */
+  caseT0?: number;
 }
 
 type Pose = [number, number, number];

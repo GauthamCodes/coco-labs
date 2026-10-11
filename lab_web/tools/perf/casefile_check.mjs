@@ -106,8 +106,13 @@ for (const c of all.filter((x) => !only || only.has(x.id))) {
   const row = { id: c.id, group: c.group, bytes: c.bytes, errors };
   try {
     await page.waitForFunction(() => !!window.__cocoPerf?.marks?.recording_ready, null, { timeout: 120_000 });
+    row.ranges_at_first_frame = await page.evaluate(() => window.__cocoArena.session().shownTick?.ranges?.length ?? 0);
+    // D6: the scans follow the first frame; every tick then shows the scan it would have had
+    await page.waitForFunction(() => !!window.__cocoPerf?.marks?.scans_ready, null, { timeout: 120_000 });
     const marks = await page.evaluate(() => window.__cocoPerf.marks);
     row.first_frame_ms = marks.recording_ready - marks.casefile_fetch_start;
+    row.scans_ms = marks.scans_ready - marks.casefile_fetch_start;
+    row.ranges_after_scans = await page.evaluate(() => window.__cocoArena.session().shownTick?.ranges?.length ?? 0);
     row.mode = await page.evaluate(() => window.__cocoArena?.mode?.());
     row.badge = await page.getByTestId('evidence-badge').textContent();
     const last = await page.evaluate(() => window.__cocoArena.session().head);
@@ -140,6 +145,9 @@ out.summary = {
   pages_ok: out.pages.filter((r) => r.ok).length, pages: out.pages.length,
   casefiles_ok: out.casefiles.filter((r) => r.ok).length, casefiles: out.casefiles.length,
   first_frame_ms_max: Math.max(...firsts), first_frame_ms_median: firsts.sort((a, b) => a - b)[firsts.length >> 1],
+  first_frame_within_2s: firsts.filter((x) => x <= 2000).length,
+  scans_ms_max: Math.max(...out.casefiles.map((r) => r.scans_ms).filter(Number.isFinite)),
+  with_scans: out.casefiles.filter((r) => r.ranges_after_scans > 0).length,
   seek_ms_max: Math.max(...seeks), console_errors: [...out.pages, ...out.casefiles].reduce((n, r) => n + r.errors.length, 0),
 };
 out.summary.phone_ok = out.phone.filter((r) => r.ok).length;
