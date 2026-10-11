@@ -1,0 +1,509 @@
+{
+ "site": "http://127.0.0.1:4214/coco-labs/",
+ "rows": [
+  {
+   "size": "desktop",
+   "mode": "learn",
+   "page": "?view=learn",
+   "evidence": "MODEL",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Learn",
+   "badge": "MODEL",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 1280,
+   "view": 1280,
+   "ok": true
+  },
+  {
+   "size": "desktop",
+   "mode": "learn",
+   "page": "?view=learn&mission=why-did-it-fail&beat=0",
+   "evidence": "STACK",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Learn",
+   "badge": "STACK",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 1280,
+   "view": 1280,
+   "ok": true
+  },
+  {
+   "size": "desktop",
+   "mode": "learn",
+   "page": "?view=learn&mission=find-a-path&beat=0",
+   "evidence": "MODEL",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Learn",
+   "badge": "MODEL",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 1280,
+   "view": 1280,
+   "ok": true
+  },
+  {
+   "size": "desktop",
+   "mode": "play",
+   "page": "?view=play",
+   "evidence": "MODEL",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Play",
+   "badge": "MODEL",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 1280,
+   "view": 1280,
+   "ok": true
+  },
+  {
+   "size": "desktop",
+   "mode": "play",
+   "page": "?view=play&c=beat-the-planner&l=bog",
+   "evidence": "MODEL",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Play",
+   "badge": "MODEL",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 1280,
+   "view": 1280,
+   "ok": true
+  },
+  {
+   "size": "desktop",
+   "mode": "play",
+   "page": "?view=play&c=case-file-detective&l=kidnapped",
+   "evidence": "STACK",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Play",
+   "badge": "STACK",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 1280,
+   "view": 1280,
+   "ok": true
+  },
+  {
+   "size": "desktop",
+   "mode": "sandbox",
+   "page": "",
+   "evidence": "MODEL",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Sandbox",
+   "badge": "MODEL",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 1280,
+   "view": 1280,
+   "ok": true
+  },
+  {
+   "size": "desktop",
+   "mode": "sandbox",
+   "page": "?view=arena&lens=map&level=explain",
+   "evidence": "MODEL",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Sandbox",
+   "badge": "MODEL",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 1280,
+   "view": 1280,
+   "ok": true
+  },
+  {
+   "size": "desktop",
+   "mode": "casefiles",
+   "page": "?view=casefiles",
+   "evidence": "STACK",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Case Files",
+   "badge": "STACK",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 1280,
+   "view": 1280,
+   "ok": true
+  },
+  {
+   "size": "desktop",
+   "mode": "casefiles",
+   "page": "?view=casefiles&case=run15",
+   "evidence": "STACK",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Case Files",
+   "badge": "STACK",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 1280,
+   "view": 1280,
+   "ok": true
+  },
+  {
+   "size": "desktop",
+   "mode": "casefiles",
+   "page": "?view=arena&casefile=lab5_mislocalised_dwb_1",
+   "evidence": "STACK",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Case Files",
+   "badge": "STACK",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 1280,
+   "view": 1280,
+   "ok": true
+  },
+  {
+   "size": "phone",
+   "mode": "learn",
+   "page": "?view=learn",
+   "evidence": "MODEL",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Learn",
+   "badge": "MODEL",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 390,
+   "view": 390,
+   "ok": true
+  },
+  {
+   "size": "phone",
+   "mode": "learn",
+   "page": "?view=learn&mission=why-did-it-fail&beat=0",
+   "evidence": "STACK",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Learn",
+   "badge": "STACK",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 390,
+   "view": 390,
+   "ok": true
+  },
+  {
+   "size": "phone",
+   "mode": "learn",
+   "page": "?view=learn&mission=find-a-path&beat=0",
+   "evidence": "MODEL",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Learn",
+   "badge": "MODEL",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 390,
+   "view": 390,
+   "ok": true
+  },
+  {
+   "size": "phone",
+   "mode": "play",
+   "page": "?view=play",
+   "evidence": "MODEL",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Play",
+   "badge": "MODEL",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 390,
+   "view": 390,
+   "ok": true
+  },
+  {
+   "size": "phone",
+   "mode": "play",
+   "page": "?view=play&c=beat-the-planner&l=bog",
+   "evidence": "MODEL",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Play",
+   "badge": "MODEL",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 390,
+   "view": 390,
+   "ok": true
+  },
+  {
+   "size": "phone",
+   "mode": "play",
+   "page": "?view=play&c=case-file-detective&l=kidnapped",
+   "evidence": "STACK",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Play",
+   "badge": "STACK",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 390,
+   "view": 390,
+   "ok": true
+  },
+  {
+   "size": "phone",
+   "mode": "sandbox",
+   "page": "",
+   "evidence": "MODEL",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Sandbox",
+   "badge": "MODEL",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 390,
+   "view": 390,
+   "ok": true
+  },
+  {
+   "size": "phone",
+   "mode": "sandbox",
+   "page": "?view=arena&lens=map&level=explain",
+   "evidence": "MODEL",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Sandbox",
+   "badge": "MODEL",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 390,
+   "view": 390,
+   "ok": true
+  },
+  {
+   "size": "phone",
+   "mode": "casefiles",
+   "page": "?view=casefiles",
+   "evidence": "STACK",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Case Files",
+   "badge": "STACK",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 390,
+   "view": 390,
+   "ok": true
+  },
+  {
+   "size": "phone",
+   "mode": "casefiles",
+   "page": "?view=casefiles&case=run15",
+   "evidence": "STACK",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Case Files",
+   "badge": "STACK",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 390,
+   "view": 390,
+   "ok": true
+  },
+  {
+   "size": "phone",
+   "mode": "casefiles",
+   "page": "?view=arena&casefile=lab5_mislocalised_dwb_1",
+   "evidence": "STACK",
+   "errors": [],
+   "modes": [
+    "Learn",
+    "Play",
+    "Sandbox",
+    "Case Files"
+   ],
+   "current": "Case Files",
+   "badge": "STACK",
+   "badge_visible": true,
+   "live_link": true,
+   "live_is_a_mode": false,
+   "scroll": 390,
+   "view": 390,
+   "ok": true
+  }
+ ],
+ "summary": {
+  "pages": 22,
+  "ok": 22
+ },
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-11T06:24:38.492Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 0.94,
+    "5m": 1.53,
+    "15m": 1.69
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-11T06:25:38.259Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.46,
+    "5m": 1.54,
+    "15m": 1.69
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

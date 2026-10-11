@@ -9175,3 +9175,23 @@ differ by up to 1.3e-8 m in ATE and 1.7e-7 m in ground-truth distance.
   submissions were refused. Fixed in the canonical form.
 - The CPython-computed ATE thresholds were compared at 1e-9 m. They are now
   compared within 1 µm.
+
+## COCO Lab v2 · M3.7: one app, four modes (measured 2026-10-11)
+
+**Evidence class.** MODEL: the browser's layout. Evidence:
+`docs/v2/data/m3/m37/`. Chromium 156 on the GPU, balanced on AC.
+
+| Check | Result |
+|---|---|
+| Header, badge and layout: eleven pages across Learn, Play, Sandbox and Case Files, at 1280 px and at 390 px | **22 / 22** |
+| Console check | 0 console and 0 page errors on 21 views |
+| URL forms | 22 / 22, and 6 / 6 `/v1/` views |
+| Play, re-checked on this build | 15 / 15 |
+
+Each header page was checked for: the four modes in order with the right one
+current, the right evidence badge visible inside the viewport, Live Stack
+(simulated) linked but not a mode, no horizontal scroll, and 0 console
+errors.
+
+The 390 px checks measure layout, not a phone. The phone rows are Gautham's
+(`docs/v2/PHONE_MEASURE.md`).

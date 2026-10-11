@@ -18,6 +18,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { ArenaClient } from '../arena/client';
+import { ModeNav } from '../ui/ModeNav';
 import type { PlayResult } from './best';
 import { readShownBest } from './best';
 import { GridBoard, type Cell, type GridView } from './GridBoard';
@@ -55,14 +56,8 @@ export function PlayApp() {
 
   return (
     <main className="play" data-testid="play">
-      <header className="arena-head">
-        <h1>COCO Play</h1>
-        <span className="evidence-badge model" data-testid="evidence-badge" title="Scored on the Arena model and coco_lab's algorithms; the detective plays STACK recordings">MODEL</span>
-        <a href={`${BASE}?view=play`}>Challenges</a>
-        <a href={`${BASE}?view=learn`}>Learn</a>
-        <a href={`${BASE}?view=arena`}>Sandbox</a>
-        <a href={`${BASE}?view=casefiles`}>Case Files</a>
-      </header>
+      <ModeNav current="play" evidence={c === 'case-file-detective' ? 'STACK' : 'MODEL'} />
+      <h1 className="mode-title"><a href={`${BASE}?view=play`}>Play</a></h1>
       {error && <p className="error" role="alert">{error}</p>}
       {params.has('s') && !shared && <p className="error" role="alert">This challenge link is malformed; nothing was scored.</p>}
       {!levels && !error && <p>Loading the challenges…</p>}

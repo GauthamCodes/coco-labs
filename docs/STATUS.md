@@ -16,7 +16,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
 | Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
 | Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
-| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.6 done** (`coco verify`: 100/100 in Node; 100/100 links reproduce in Chromium, Firefox and WebKit). Next: **M3.7**, four modes |
+| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.7 done** (one app, four modes; badge in every mode; phone width 22/22). Next: **M3.8**, drafts |
 | Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
 
@@ -1443,6 +1443,35 @@ only. Read order for agents (README §9): `README.md`, this file,
     - build tools **168 / 0 / 0**
   - **Evidence:** `v2/data/m3/m36/`.
   - **Next:** M3.7, one app, four modes.
+
+- **M3.7, one app, four modes (2026-10-11).** `src/ui/ModeNav.tsx`: every
+  mode has the same header, **Learn · Play · Sandbox · Case Files**, with the
+  current mode marked and the evidence badge (`EvidenceBadge`, README §3's
+  classes, with what each one means on hover).
+  - **Live Stack (simulated)** and the frozen v1 labs stay linked from the
+    header, and neither is a mode.
+  - **Sandbox** is the free Arena; a Case File opened in the Arena counts as
+    Case Files.
+  - **Learn's badge** follows the beat on screen: STACK on a stack beat or a
+    recording, MODEL otherwise. Before this, Learn had no badge at all.
+  - **Play's grid** got cell lines, and the Play page the same 16 px gutter as
+    the other modes.
+  - **Measured** (Chromium on the GPU, balanced on AC):
+    - `tools/perf/modes_check.mjs`: **22 / 22**. Eleven pages
+      across the four modes, at 1280 px and at 390 px (a Pixel 7): the four
+      modes in order, the right one current, the right badge visible inside
+      the viewport, Live linked and not a mode, no horizontal scroll, 0
+      console errors. Phone screenshots are in `v2/data/m3/m37/phone/`.
+    - `console_check`: **0 console and 0 page errors on all 21 views**,
+      the Play pages included.
+    - 22 / 22 URL forms and 6 / 6 `/v1/` views.
+    - `play_check` again on this build: 15 / 15.
+  - **A local-only gap, not a site defect:** my build helper did not
+    re-fetch `/v1/` after `vite build` emptied `dist` (CI does), so a first
+    console check saw a 404 on the archive. Fetched, and the helper fixed.
+  - **Suites:** the run is in M3.6's entry (one run over both).
+  - **Evidence:** `v2/data/m3/m37/`.
+  - **Next:** M3.8, drafts.
 
 ## Capabilities (README §2), with evidence class
 

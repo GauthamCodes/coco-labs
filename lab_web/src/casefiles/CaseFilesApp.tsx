@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 
 import { GapChips, useGaps } from '../learn/gaps';
 import { evidenceHref, LABEL_MEANING } from '../learn/LearnApp';
+import { ModeNav } from '../ui/ModeNav';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -63,18 +64,19 @@ export function CaseFilesApp() {
       .then(setDoc).catch((e) => setError((e as Error).message));
   }, []);
   if (error) return <main className="casefiles"><p className="error" role="alert">{error}</p></main>;
-  if (!doc) return <main className="casefiles"><p>Loading the Case Files…</p></main>;
+  if (!doc) return <main className="casefiles"><ModeNav current="casefiles" evidence="STACK" /><p>Loading the Case Files…</p></main>;
   const group = caseId ? doc.groups.find((g) => g.id === caseId) : undefined;
-  if (caseId && !group) return <main className="casefiles"><p className="error" role="alert">No Case File "{caseId}".</p></main>;
+  if (caseId && !group) {
+    return <main className="casefiles"><ModeNav current="casefiles" evidence="STACK" />
+      <p className="error" role="alert">No Case File "{caseId}".</p></main>;
+  }
   const all = new Map(doc.groups.flatMap((g) => g.casefiles.map((c) => [c.id, { c, g }] as const)));
 
   if (!group) {
     return (
       <main className="casefiles" data-testid="casefiles">
-        <header className="casefiles-head">
-          <h1>Case Files</h1>
-          <span className="evidence-badge stack" data-testid="evidence-badge">STACK</span>
-        </header>
+        <ModeNav current="casefiles" evidence="STACK" />
+        <h1 className="mode-title">Case Files</h1>
         <p className="note">Every run recorded on the full ROS 2 stack in Gazebo, failures included, inspectable in the
           same viewer as the Arena model. No physical robot exists: these are simulation results. {all.size} recordings,{' '}
           {kb(doc.total_bytes)}, each fetched only when opened.</p>
@@ -94,11 +96,9 @@ export function CaseFilesApp() {
   const members = (group.members ?? []).map((id) => all.get(id)).filter(Boolean) as { c: CaseFile; g: Group }[];
   return (
     <main className="casefiles" data-testid="casefile-group" data-group={group.id}>
+      <ModeNav current="casefiles" evidence="STACK" />
       <nav className="casefiles-nav"><a href={`${BASE}?view=casefiles`}>← Case Files</a></nav>
-      <header className="casefiles-head">
-        <h1>{group.title}</h1>
-        <span className="evidence-badge stack" data-testid="evidence-badge">STACK</span>
-      </header>
+      <h1 className="mode-title">{group.title}</h1>
       {file && (
         <section className="casefile-compare" data-testid="casefile-compare" data-file={file.id}>
           <h2>{file.title}{file.void && ' — VOID, not counted'}</h2>

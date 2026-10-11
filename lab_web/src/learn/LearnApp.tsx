@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import { REPO_BLOB_URL as REPO } from '../../site.config';
 import { GapChips, useGaps, type Gaps } from './gaps';
 import { arenaHref, type ArenaLink } from './links';
+import { ModeNav } from '../ui/ModeNav';
 
 interface Claim { id: string; text: string; label: string; evidence: string[]; resolved: string[]; v1: string[] }
 interface Beat {
@@ -86,12 +87,13 @@ export function LearnApp() {
   };
 
   const current = missions?.find((m) => m.id === mission) ?? null;
+  // the badge says what THIS beat shows: a recording of the stack, or the model
+  const shown = current?.beats[beat];
+  const evidence = shown && (shown.beat === 'stack' || shown.arena?.casefile || shown.arena?.replay) ? 'STACK' : 'MODEL';
   return (
     <main className="learn" data-testid="learn">
-      <header className="arena-head">
-        <h1><a href={`${BASE}?view=learn`} onClick={(e) => { e.preventDefault(); go(null); }}>COCO Learn</a></h1>
-        <a href={`${BASE}?view=arena`} data-testid="arena-link">Arena</a>
-      </header>
+      <ModeNav current="learn" evidence={evidence} />
+      <h1 className="mode-title"><a href={`${BASE}?view=learn`} onClick={(e) => { e.preventDefault(); go(null); }}>Learn</a></h1>
       {error && <p className="error" role="alert">{error}</p>}
       {!missions && !error && <p className="note">Loading the missions…</p>}
       {missions && mission && !current && <p className="error" role="alert">No mission &ldquo;{mission}&rdquo;.</p>}

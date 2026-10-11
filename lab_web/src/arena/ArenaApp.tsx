@@ -19,6 +19,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { ATTRACT_POLICIES, AttractPlayer, DEFAULT_ATTRACT_POLICY, parseRecording, type AttractPolicy, type Recording } from './attract';
 import { ArenaClient, type PyodideSource } from './client';
 import { ArenaPlayPanel } from '../play/ArenaPlayPanel';
+import { ModeNav } from '../ui/ModeNav';
 import { Compare, type CompareState } from './Compare';
 import { Joystick } from './Joystick';
 import { PerfOverlay } from './PerfOverlay';
@@ -643,14 +644,7 @@ export function ArenaApp() {
 
   return (
     <main className="arena" data-testid="arena">
-      <header className="arena-head">
-        <h1>COCO Arena</h1>
-        <span className={`evidence-badge ${evidence.toLowerCase()}`} data-testid="evidence-badge"
-          title={evidence === 'STACK' ? 'Recorded from the full ROS 2 stack in Gazebo (simulation), not a robot'
-            : 'A model in your browser: coco_lab, not the robot'}>{evidence}</span>
-        <a href={`${import.meta.env.BASE_URL}?view=learn`} data-testid="learn-link">Learn</a>
-        <a href={`${import.meta.env.BASE_URL}v1/`} data-testid="v1-labs-link">v1 labs (archive)</a>
-      </header>
+      <ModeNav current={params.has('casefile') ? 'casefiles' : 'sandbox'} evidence={evidence} />
       {missionBack && <p className="mission-back"><a href={`${import.meta.env.BASE_URL}${missionBack}`} data-testid="mission-back">
         ← Back to the mission</a></p>}
       {error && <p className="error" role="alert">{error}</p>}

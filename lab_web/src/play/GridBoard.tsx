@@ -64,6 +64,12 @@ export function GridBoard({ grid, overlay, onCell, onHover, label }: {
         g.fillRect(c * px, r * px, px, px);
       }
     }
+    // faint cell lines: a path is drawn one cell at a time
+    g.strokeStyle = 'rgba(128, 128, 128, 0.25)'; g.lineWidth = 1;
+    g.beginPath();
+    for (let c = 1; c < grid.width; c += 1) { g.moveTo(c * px + 0.5, 0); g.lineTo(c * px + 0.5, grid.height * px); }
+    for (let r = 1; r < grid.height; r += 1) { g.moveTo(0, r * px + 0.5); g.lineTo(grid.width * px, r * px + 0.5); }
+    g.stroke();
     const box = (cells: Cell[] | undefined, fill: string | null, stroke: string | null, inset = 1) => {
       for (const [r, c] of cells ?? []) {
         if (fill) { g.fillStyle = fill; g.fillRect(c * px + inset, r * px + inset, px - 2 * inset, px - 2 * inset); }
