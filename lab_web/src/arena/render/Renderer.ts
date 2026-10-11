@@ -46,7 +46,9 @@ export function setLinePoints(line: THREE.Line, pts: THREE.Vector3[]) {
 }
 import { PALETTES, VIRIDIS, type Palette, type Theme } from './palette';
 import { CLOSED, FRONTIER, PATH, type PlanStore } from './planStore';
-import { Scene3D, type CameraMode, type Scene3DAssets } from './scene3d';
+import { Scene3D, WORLD_LAYER, type CameraMode, type Scene3DAssets } from './scene3d';
+import { drapedPlane, surfaces, type Elevation, type Quad } from './drape';
+import { QualityController, TIER_SETTINGS, type QualityEvent, type Tier, type TierChoice } from './quality';
 
 export interface LayerVisibility {
   occupancy: boolean; closed: boolean; heatmap: boolean; frontier: boolean; path: boolean;
@@ -136,6 +138,14 @@ export class ArenaRenderer {
   private lastFrame = 0;
   private lastPose: [number, number, number] = [0, 0, 0];
   private lastTilt: [number, number, number] | undefined;
+  /** M4.4: the 3D view's quality tier, chosen from measured frame time (render/quality.ts). */
+  quality: QualityController | null = null;
+  /** M4.4: a tier change or the fallback to top-down, for the page to say (a notice, the perf overlay). */
+  onQuality?: (e: QualityEvent) => void;
+  /** M4.4: the walkable quads decals drape over (World Spec v2), and the decals themselves. */
+  private terrain: Quad[] = [];
+  private readonly decals = new Set<THREE.Mesh>();
+  private readonly draped = new Map<string, THREE.BufferGeometry>();
   onFrame?: () => void;
   /** Called after each frame is submitted (the measurement hook for "drawn"). */
   onAfterRender?: () => void;
@@ -181,6 +191,7 @@ export class ArenaRenderer {
     const plane = new THREE.Mesh(new THREE.PlaneGeometry(W * r, H * r), this.gridMat);
     plane.position.set(origin[0] + (W * r) / 2, origin[1] + (H * r) / 2, Z.grid);
     this.scene.add(plane);
+    this.registerDecal(plane);
 
     // frontier: instanced squares, capacity grows
     this.frontier = this.makeFrontier(4096, r);
@@ -397,12 +408,20 @@ export class ArenaRenderer {
   // -- camera and input -----------------------------------------------------
 
   /** M4.1: load the 3D arena and robot; the perspective cameras become available. */
-  async enable3D(assets: Scene3DAssets, worldToMap: [number, number], targets: World['targets'] = []) {
+  async enable3D(assets: Scene3DAssets, worldToMap: [number, number], targets: World['targets'] = [],
+    elevation: Elevation[] = [], tier: TierChoice = 'auto') {
     if (this.three) return;
     const s = new Scene3D(this.scene, worldToMap);
     this.three = s;
     await s.load(assets);
     s.setTargets(targets ?? []);
+    this.terrain = surfaces(elevation, worldToMap);
+    // a phone starts a tier down; the measurement moves it from there
+    const coarse = window.matchMedia?.('(pointer: coarse)').matches ?? false;
+    this.quality = new QualityController(performance.now(), tier, coarse ? 'medium' : 'high');
+    this.applyTier(this.quality.tier);
+    // the 3D view may already be the camera (is3D turned true with `ready`): drape what exists
+    this.redrape();
     s.setPose(this.lastPose, this.lastTilt);
     this.setCameraMode(this.cameraMode);
   }
@@ -422,13 +441,63 @@ export class ArenaRenderer {
 
   /** Top-down (orthographic, the analytic view) or a perspective camera; 3D only once loaded. */
   setCameraMode(mode: CameraMode) {
+    const was = this.is3D;
     this.cameraMode = mode;
     if (this.three && mode !== 'topdown') this.three.mode = mode;
     const on = this.is3D;
     this.three?.setVisible(on);
+    if (on !== was) {
+      this.redrape();
+      // top-down keeps M1's pixel ratio; 3D takes its tier's
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, on && this.quality ? TIER_SETTINGS[this.quality.tier].pixelRatioCap : 2));
+      if (on) this.quality?.restart(performance.now());
+    }
     // in 3D the glTF robot stands for the flat outline; the footprint and truth stay as floor marks
     this.robot.visible = this.layers.robot && !on;
     if (this.three) this.three.robotHolder.visible = this.layers.robot && mode !== 'robot_eye';
+  }
+
+  /** M4.4: a person's tier choice in settings ('auto' measures). */
+  setTier(choice: TierChoice) {
+    const e = this.quality?.setChoice(choice, performance.now());
+    if (e?.kind === 'tier') { this.applyTier(e.tier); this.onQuality?.(e); }
+  }
+
+  private applyTier(tier: Tier) {
+    if (!this.three) return;
+    this.three.applyTier(tier, this.renderer, this.scene);
+    if (this.is3D) this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, TIER_SETTINGS[tier].pixelRatioCap));
+  }
+
+  /**
+   * M4.4: a computation layer drawn as a texture over the map (a PlaneGeometry centred on its mesh).
+   * In 3D on a terrain it gets the draped twin of its plane (render/drape.ts): the same material and
+   * texture over the floor, the ramps and the platform tops. Top-down, its own plane.
+   */
+  registerDecal(m: THREE.Mesh) {
+    if (!(m.geometry instanceof THREE.PlaneGeometry)) return;
+    m.userData.flat = m.geometry;
+    this.decals.add(m);
+    this.drapeOne(m);
+  }
+
+  private drapeOne(m: THREE.Mesh) {
+    const flat = m.userData.flat as THREE.PlaneGeometry;
+    if (!this.is3D || !this.terrain.length) { m.geometry = flat; return; }
+    const { width, height } = flat.parameters;
+    const key = `${width}|${height}|${m.position.x}|${m.position.y}`;
+    let g = this.draped.get(key);
+    if (!g) { g = drapedPlane(width, height, m.position.x, m.position.y, this.terrain); this.draped.set(key, g); }
+    m.geometry = g;
+  }
+
+  private redrape() {
+    for (const m of [...this.decals]) {
+      let o: THREE.Object3D | null = m;
+      while (o && o !== this.scene) o = o.parent;
+      if (!o) { this.decals.delete(m); continue; }   // removed with its layer
+      this.drapeOne(m);
+    }
   }
 
   get is3D(): boolean {
@@ -562,8 +631,29 @@ export class ArenaRenderer {
       const dt = this.lastFrame ? (now - this.lastFrame) / 1000 : 1 / 60;
       this.lastFrame = now;
       if (this.is3D) {
+        const q = this.quality?.frame(now, dt * 1000) ?? null;
+        if (q?.kind === 'tier') this.applyTier(q.tier);
+        if (q) this.onQuality?.(q);
+        if (q?.kind === 'fallback') this.setCameraMode('topdown');
+      }
+      if (this.is3D) {
+        const cam = this.three!.camera;
         this.three!.update(dt, (this.canvas.clientWidth || 1) / (this.canvas.clientHeight || 1));
-        this.renderer.render(this.scene, this.three!.camera);
+        // pass 1: the 3D world, tone-mapped and shadowed; pass 2: the computation layers over it,
+        // unlit and exact, against its depth (README §5.3)
+        this.renderer.autoClear = false;
+        this.renderer.clear();
+        cam.layers.set(WORLD_LAYER);
+        this.renderer.toneMapping = THREE.NeutralToneMapping;
+        this.renderer.render(this.scene, cam);
+        // a colour background forces a clear on every render: the overlay pass must not have one
+        const bg = this.scene.background;
+        this.scene.background = null;
+        cam.layers.set(0);
+        this.renderer.toneMapping = THREE.NoToneMapping;
+        this.renderer.render(this.scene, cam);
+        this.scene.background = bg;
+        this.renderer.autoClear = true;
       } else this.renderer.render(this.scene, this.camera);
       this.onAfterRender?.();
       this.raf = requestAnimationFrame(loop);

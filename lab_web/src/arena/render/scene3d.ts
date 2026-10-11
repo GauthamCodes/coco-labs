@@ -20,6 +20,20 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+import { TIER_SETTINGS, type Tier } from './quality';
+
+/**
+ * M4.4: the 3D world draws on its own layer, in a first pass with tone mapping, the sun's shadow and
+ * the environment; the computation layers (layer 0) draw after it, unlit and un-tone-mapped, against
+ * its depth (README §5.3: "computation layers draw unlit in an overlay pass").
+ */
+export const WORLD_LAYER = 1;
+/** Put an object and everything under it on the 3D world's layer. */
+export const onWorldLayer = (o: THREE.Object3D) => o.traverse((c) => c.layers.set(WORLD_LAYER));
+/** Half the side of the square the sun's shadow covers, centred on the robot (m). */
+const SHADOW_HALF = 3;
 
 export type CameraMode = 'topdown' | 'follow' | 'orbit' | 'robot_eye';
 export const CAMERA_MODES: CameraMode[] = ['follow', 'orbit', 'robot_eye', 'topdown'];
@@ -55,6 +69,7 @@ export class Scene3D {
   /** each wheel joint and its side (0 left, 1 right), found from where it sits in the robot */
   private wheels: { name: string; side: 0 | 1; sign: number }[] = [];
   private readonly targets = new Map<string, THREE.Mesh>();
+  private env: THREE.Texture | null = null;
   /** The camera rig's own state: sprung toward the robot (feel, not physics). */
   private rig = { x: 0, y: 0, z: 0, yaw: 0, init: false };
   private orbit = { yaw: 0, pitch: 0.38, dist: 2.6 };
@@ -68,11 +83,43 @@ export class Scene3D {
     this.camera.up.set(0, 0, 1);
     this.root.visible = false;
     scene.add(this.root);
-    const hemi = new THREE.HemisphereLight(0xf2f4f7, 0x8a8478, 1.6);
+    const hemi = new THREE.HemisphereLight(0xf2f4f7, 0x8a8478, 1.2);
     hemi.position.set(0, 0, 1);
-    this.sun = new THREE.DirectionalLight(0xffffff, 1.4);
+    this.sun = new THREE.DirectionalLight(0xffffff, 1.6);
     this.sun.position.set(-4, -6, 10);
+    // the sun's shadow follows the robot: a small square around it, so the map stays cheap
+    const sc = this.sun.shadow.camera;
+    sc.left = -SHADOW_HALF; sc.right = SHADOW_HALF; sc.top = SHADOW_HALF; sc.bottom = -SHADOW_HALF;
+    sc.near = 0.5; sc.far = 25;
+    this.sun.shadow.bias = -0.0004;
+    // the shadow map draws what its own camera's layers see: the 3D world's
+    this.sun.shadow.camera.layers.set(WORLD_LAYER);
+    this.sun.shadow.normalBias = 0.02;
     this.root.add(hemi, this.sun, this.sun.target, this.robotHolder);
+    onWorldLayer(this.root);
+  }
+
+  /**
+   * Apply a quality tier (M4.4): the sun's shadow (and its map's size) and the small environment map.
+   * The environment is a procedural room (three's RoomEnvironment through PMREM): nothing is downloaded.
+   */
+  applyTier(tier: Tier, renderer: THREE.WebGLRenderer, scene: THREE.Scene) {
+    const t = TIER_SETTINGS[tier];
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.sun.castShadow = t.shadowMapSize > 0;
+    if (t.shadowMapSize > 0 && this.sun.shadow.mapSize.x !== t.shadowMapSize) {
+      this.sun.shadow.mapSize.set(t.shadowMapSize, t.shadowMapSize);
+      this.sun.shadow.map?.dispose();
+      this.sun.shadow.map = null;
+    }
+    if (t.envMap && !this.env) {
+      const pm = new THREE.PMREMGenerator(renderer);
+      this.env = pm.fromScene(new RoomEnvironment(), 0.04).texture;
+      pm.dispose();
+    }
+    scene.environment = t.envMap ? this.env : null;
+    scene.environmentIntensity = 0.35;
   }
 
   async load(urls: Scene3DAssets) {
@@ -84,6 +131,9 @@ export class Scene3D {
     a.position.set(this.worldToMap[0], this.worldToMap[1], 0);
     this.root.add(a);
     this.robotHolder.add(zUp(robot.scene));
+    arena.scene.traverse((o) => { if ((o as THREE.Mesh).isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+    robot.scene.traverse((o) => { if ((o as THREE.Mesh).isMesh) o.castShadow = true; });
+    onWorldLayer(this.root);
     robot.scene.traverse((o) => {
       const ex = o.userData as { joint?: string; axis?: number[]; type?: string };
       if (ex.joint && ex.axis) this.joints.set(ex.joint, { q: o, axis: new THREE.Vector3(...ex.axis).normalize() });
@@ -139,6 +189,8 @@ export class Scene3D {
       m.rotation.x = Math.PI / 2;   // three's cylinder axis is y; the scene is z up
       m.position.set(t.x, t.y, t.z + t.height / 2);
       m.userData = { height: t.height, z: t.z };
+      m.castShadow = true;
+      m.layers.set(WORLD_LAYER);
       this.targets.set(t.colour, m);
       this.root.add(m);
     }
@@ -182,8 +234,8 @@ export class Scene3D {
     for (const k of [0, 1] as const) this.wheelAngle[k] += this.wheelSpeed[k] * Math.min(dt, 0.1);
     for (const w of this.wheels) this.setJoint(w.name, w.sign * this.wheelAngle[w.side]);
     this.camera.aspect = aspect;
-    this.sun.position.set(x - 4, y - 6, 10);
-    this.sun.target.position.set(x, y, 0);
+    this.sun.position.set(x - 4, y - 6, this.z + 10);
+    this.sun.target.position.set(x, y, this.z);
     if (this.mode === 'robot_eye') {
       // rendered presentation from the URDF camera link; perception stays abstract (README §5.3)
       const [cx, cy, cz] = CAMERA_LINK;

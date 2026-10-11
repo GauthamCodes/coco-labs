@@ -51,6 +51,8 @@ export class LensLayers {
   private entries = new Map<string, Entry>();
   private visible = new Map<string, boolean>();
   private dim = new Map<string, number>();
+  /** M4.4: told of every map-wide texture plane, so the renderer can drape it over the terrain. */
+  onDecal?: (m: THREE.Mesh) => void;
 
   constructor(private readonly scene: THREE.Scene, private palette: Palette) {}
 
@@ -251,6 +253,7 @@ export class LensLayers {
     const grp = new THREE.Group();
     grp.add(plane);
     this.put(id, grp, 'mapOccupied');
+    this.onDecal?.(plane);   // M4.4: in 3D it drapes over the terrain
   }
 
   ids(): string[] {

@@ -42,6 +42,8 @@ function parseXY(v: string | null, n: 2 | 3): number[] | null {
 }
 import { ArenaRenderer, DEFAULT_LAYERS, type LayerVisibility } from './render/Renderer';
 import { CAMERA_MODES, type CameraMode } from './render/scene3d';
+import type { Elevation } from './render/drape';
+import { TIER_CHOICES, type Tier, type TierChoice } from './render/quality';
 import { ArenaSession } from './session';
 import { decodeRun, shareUrl, type SharedRun } from './share';
 import { Timeline } from './Timeline';
@@ -163,6 +165,13 @@ export function ArenaApp() {
   const specSha = useRef<string>('');
   /** The World Spec's world -> map offset: where the 3D arena (in Gazebo's world frame) sits. */
   const worldToMap = useRef<[number, number]>([0, 0]);
+  /** M4.4: World Spec v2's ramps and platforms (none on v1), for decals that follow the terrain */
+  const elevation = useRef<Elevation[]>([]);
+  /** M4.4: what the quality tiers last said (a tier change, or the fallback to top-down) */
+  const [qualityNote, setQualityNote] = useState<string | null>(null);
+  /** M4.4: the tier override (settings; ?quality= for harnesses) and the tier drawing now. M4.5 persists the choice. */
+  const [tierChoice, setTierChoice] = useState<TierChoice>(TIER_CHOICES.find((t) => t === params.get('quality')) ?? 'auto');
+  const [tierNow, setTierNow] = useState<Tier | null>(null);
   // M4.1: `?camera=follow|orbit|robot_eye` opens a perspective camera; top-down otherwise (until M4.5)
   const initialCamera: CameraMode = CAMERA_MODES.find((m) => m === params.get('camera')) ?? 'topdown';
   const pendingTakeover = useRef(false);
@@ -220,8 +229,18 @@ export function ArenaApp() {
     try {
       rr = new ArenaRenderer(cv, currentTheme());
       ll.current = new LensLayers(rr.scene, PALETTES[currentTheme()]);
+      ll.current.onDecal = (m) => rr?.registerDecal(m);
+      rr.onQuality = (e) => {
+        if (e.kind === 'tier') setTierNow(e.tier);
+        if (e.kind === 'fallback') setQualityNote(`3D is too slow on this device (${e.reason}), so this is the top-down view.`);
+        perf.mark(e.kind === 'fallback' ? 'quality_fallback' : `quality_${e.tier}`, wallMs());
+      };
     } catch (e) {
-      setError(`renderer: ${(e as Error).message}`);
+      // M4.4: no WebGL 2, no view at all (three.js has no WebGL 1 path, so top-down needs it too);
+      // the model and the panels still run
+      setError((e as Error).message === 'WebGL 2 is required'
+        ? 'This browser has no WebGL 2, so the arena cannot be drawn here. The panels still run.'
+        : `renderer: ${(e as Error).message}`);
     }
     r.current = rr;
     let worldSet = false;
@@ -250,7 +269,8 @@ export function ArenaApp() {
         const lod = window.matchMedia?.('(pointer: coarse)').matches ? 'low' : 'high';
         rr.setCameraMode(initialCamera);
         void specP.then(() => rr!.enable3D({ arena: `${base}assets3d/arena.glb`, robot: `${base}assets3d/robot_${lod}.glb` },
-          worldToMap.current, w.targets)).then(() => perf.mark('world3d_ready', wallMs()))
+          worldToMap.current, w.targets, elevation.current, tierChoice))
+          .then(() => setTierNow(rr!.quality?.tier ?? null)).then(() => perf.mark('world3d_ready', wallMs()))
           .catch((e) => setError(`3D arena: ${(e as Error).message}`));
       }
     };
@@ -273,7 +293,11 @@ export function ArenaApp() {
       .then((x) => x.json()).then((j) => { outline.current = j.polygon; }).catch(() => {});
     const specP = fetch(`${import.meta.env.BASE_URL}generated/arena/${specFile}`, { credentials: 'omit' })
       .then((x) => x.arrayBuffer()).then((b) => {
-        try { worldToMap.current = JSON.parse(new TextDecoder().decode(b)).world_to_map; } catch { /* the 3D arena then sits at the world origin */ }
+        try {
+          const spec = JSON.parse(new TextDecoder().decode(b));
+          worldToMap.current = spec.world_to_map;
+          elevation.current = spec.elevation ?? [];
+        } catch { /* the 3D arena then sits at the world origin, decals flat */ }
         return sha256Hex(new Uint8Array(b));
       }).then((h) => { specSha.current = h; });
 
@@ -692,6 +716,7 @@ export function ArenaApp() {
       {missionBack && <p className="mission-back"><a href={`${import.meta.env.BASE_URL}${missionBack}`} data-testid="mission-back">
         ← Back to the mission</a></p>}
       {error && <p className="error" role="alert">{error}</p>}
+      {qualityNote && <p className="notice" role="status">{qualityNote}</p>}
       {playOn && <ArenaPlayPanel challenge={playParam!} levelId={playLevel!}
         live={playParam === 'map-the-arena' ? client.current : null} liveReady={liveReady}
         lastTick={() => lastTick.current} shownTick={() => session?.shownTick?.tick ?? null} log={() => log.current} />}
@@ -788,6 +813,20 @@ export function ArenaApp() {
                   <label key={x.id} className="layer-toggle" title={x.meaning}><input type="checkbox" checked={lensOn[x.id] ?? false}
                     onChange={() => setLensOn((o) => ({ ...o, [x.id]: !o[x.id] }))} data-testid={`lens-layer-${x.id}`} data-role={x.role} />{x.label}</label>
                 ))}
+              </div>
+            )}
+            {tierNow && (
+              <div className="arena-row">
+                <label className="layer-toggle">3D quality{' '}
+                  <select value={tierChoice} data-testid="quality-tier" onChange={(e) => {
+                    const c = e.target.value as TierChoice;
+                    setTierChoice(c);
+                    r.current?.setTier(c);
+                    setTierNow(r.current?.quality?.tier ?? null);
+                  }}>
+                    {TIER_CHOICES.map((t) => <option key={t} value={t}>{t === 'auto' ? `auto (now ${tierNow})` : t}</option>)}
+                  </select>
+                </label>
               </div>
             )}
             <div className="arena-row" role="group" aria-label="Layers">
