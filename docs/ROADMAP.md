@@ -1,13 +1,16 @@
 # COCO Lab — roadmap
 
 **The plan is [`README.md` §7](../README.md#7-roadmap)** (the master plan,
-the authority for COCO Lab since 2026-10-08). Where the work stands:
+the authority for COCO Lab since 2026-10-08; revision 2, 2026-10-11, made 3D
+the default and renumbered: M4 is the 3D Arena, cloud batch M5, interactive
+sessions M6, hardware M7 — decision D2). Where the work stands:
 [`docs/STATUS.md`](STATUS.md). This file holds only a pointer and the v1
 history.
 
 ```
-M0 Transition ─▶ M1 Glass-box Arena core ─▶ M2 Whole loop ─▶ M3 Play + Case Files (public v2 launch)
-     ─▶ M4 Stack in the cloud ─▶ [gate] M5 Interactive Stack sessions ─▶ [gate] M6 Hardware bridge
+M0 Transition ─▶ M1 Glass-box Arena core ─▶ M2 Whole loop ─▶ M3 Play + Case Files (merged quietly)
+     ─▶ M4 3D Arena (public v2.0 launch) ─▶ M5 Stack in the cloud: batch + experiments
+     ─▶ [gate] M6 Interactive Stack sessions ─▶ [gate] M7 Hardware bridge
 ```
 
 > **Old references.** Any mention of "`docs/ROADMAP.md` §N", a ROADMAP line
@@ -45,4 +48,4 @@ Release dates and targets: `gh release view` on 2026-10-08
 | Full Isaac backend / Isaac inside COCO Lab | **Removed** — out of scope permanently (README §4, §6). |
 | VLM task layer | **Removed** — out of scope permanently (README §4, §6). |
 | M7 Phase 4 policy training / browser policy training | **Removed** — out of scope permanently (README §4). |
-| Always-on hosted live robot; concurrent drivers | **Replaced** by cloud Stack sessions, M4–M5, gated (README §7). |
+| Always-on hosted live robot; concurrent drivers | **Replaced** by cloud Stack sessions, M5–M6, M6 gated (README §7, revision 2). |

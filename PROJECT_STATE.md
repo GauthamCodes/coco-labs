@@ -1,22 +1,22 @@
-# COCO STATUS: COCO Lab v1 FROZEN at `coco-lab-v1-final`; v2 in progress (M0 closed; M1 · Glass-box Arena core built, PR awaiting Gautham)
+# COCO STATUS: COCO Lab v1 FROZEN at `coco-lab-v1-final`; v2 in progress (M0–M3 merged; M4 · 3D Arena in progress)
 
-## COCO LAB v2 — CURRENT STATE (2026-10-09)
+## COCO LAB v2 — CURRENT STATE (2026-10-11)
 
-**The authority is [`README.md`](README.md)** — the COCO Lab v2 master plan
-("the Glass-box Arena"), installed byte for byte on 2026-10-08. Where the
-work stands, open questions G1–G6 and the plan-change log:
-[`docs/STATUS.md`](docs/STATUS.md). Ideas parked for later:
+**The authority is [`README.md`](README.md)** — the COCO Lab v2 master plan,
+**revision 2 (2026-10-11): "the 3D Glass-box Arena"**, installed byte for
+byte. Where the work stands, open questions G1–G6, decisions D1–D6 and the
+plan-change log: [`docs/STATUS.md`](docs/STATUS.md). Ideas parked for later:
 [`docs/IDEAS.md`](docs/IDEAS.md).
 
 | | |
 |---|---|
-| **v1** | **Frozen** at annotated tag `coco-lab-v1-final` = `3571169` (coco-labs `main` `2b6f8ad` fast-forwarded to `lab5`). Six releases published: `lab1-v1.0`, `live-v1.0`, `lab2-v1.0`, `lab3-v1.0`, `lab4-v1.0`, `lab5-v1.0` (checked, `docs/v2/data/m0/FREEZE.md`). The public site keeps serving v1 until M1–M2 replace its views (`docs/v2/DEPRECATIONS.md`) |
-| **v2** | **M0 closed** (PR #19 → `main` `9f58b83`). **M1 · Glass-box Arena core built** on branch `v2/m1-arena-core` (M1.1–M1.10): `coco_schemas`, World Spec v1, the deterministic Arena model, `?view=arena` (the landing page for the bare URL), Lab 1's runs in the viewer. Every agent-measured M1 criterion met (`docs/v2/M1_RESULTS.md`); phone and usability **pending Gautham**; the PR into `main` awaits his review and is not merged by the agent |
-| **Tests** | (measured, M1.10 `1abe73f`, overlay `~/coco_lab_m1_ws`) packages **3,235 / 0 / 0**, `lab_web` vitest **381 / 0 / 0**, build tools **117 / 0 / 0**. v1 start: 3,081 / 308 / 117 at `3571169` (`docs/v2/data/m0/START_STATE.md`) |
-| **Baseline** | (measured, laptop, MODEL) Pyodide cold first edit median 12,857 ms, warm edit median 1,445 ms, every playing view 60 fps; phone **not yet measured** (`docs/v2/BASELINE.md`) |
+| **v1** | **Frozen** at annotated tag `coco-lab-v1-final` = `3571169`. Six releases published. Served frozen at `/v1/` from the orphan branch `v1-site`; every old v1 URL still resolves |
+| **v2** | **M0, M1, M2, M3 merged** into `main` (PRs #19–#22; M3 quietly, as `bf7443f`, decision D5), each after an independent review (`docs/v2/reviews/`). **M4 · 3D Arena** — the content of the public v2.0 launch — in progress on `v2/m4-3d-arena` (`docs/v2/M4_PROMPT.md`). Cloud batch is M5, interactive sessions M6, hardware M7 (decision D2) |
+| **Tests** | (measured, M3 review at `8c87085`, fresh clone) packages **3,498 / 0 / 0**, `lab_web` vitest **403 / 0 / 0**, build tools **169 / 0 / 0**. M4's baseline: `docs/STATUS.md`, "M4 checkpoint log" |
+| **Pending Gautham** | The phone baseline (now, on the live site), M4's phone rows, and one consolidated five-person usability test at the end of M4 (D5). Never marked done by an agent |
 | **Robot-stack packages** | **Frozen** inside this repository (`FROZEN.md` in each): kept because Live and the recordings depend on them, no new features, decision G3 pending. The COCO robot project itself (Isaac / P03D line) is a separate repository and is never modified from COCO Lab work |
-| **Wording** | No physical robot exists. "Real" in COCO Lab means the full ROS 2 stack in Gazebo; Live is "Live Stack (simulated)"; the gripper has two fingers and a magnet; the magnet holds the object (README §2 corrections) |
-| **v1 planning docs** | Archived unchanged in `docs/archive/v1/` (README, ROADMAP, LAB_PHASES, retired CLAUDE.md rules). `docs/ROADMAP.md` is now a pointer to README §7 plus the v1 history |
+| **Wording** | No physical robot exists. "Real" in COCO Lab means the full ROS 2 stack in Gazebo; Live is "Live Stack (simulated)"; the gripper has two fingers and a magnet; the magnet holds the object; the Arena model is kinematic and never simulates tipping, slip, friction or contact forces (README §2 corrections) |
+| **v1 planning docs** | Archived unchanged in `docs/archive/v1/`. `docs/ROADMAP.md` is a pointer to README §7 plus the v1 history |
 
 Everything below this line is the **v1 record**, kept as written (with
 one link repointed to the archive). Where it names `docs/ROADMAP.md`

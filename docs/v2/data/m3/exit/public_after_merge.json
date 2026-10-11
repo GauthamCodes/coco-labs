@@ -1,0 +1,1877 @@
+{
+ "what": "The public site after PR #22 (M3) merged as bf7443f and Pages deployed it (Lab workflow run 38135054924, deploy success); headless Chromium 156 over the real network",
+ "site": "https://gauthamcodes.github.io/coco-labs/",
+ "merge_commit": "bf7443fe8c909b735e5d04dc94893806cd9cd0da",
+ "summary": {
+  "bare_url_and_six_v1_view_forms_pass": true,
+  "four_modes": {
+   "summary": {
+    "pages": 23,
+    "ok": 23
+   }
+  },
+  "casefiles": {
+   "pages_ok": 9,
+   "pages": 9,
+   "casefiles_ok": 5,
+   "casefiles": 5,
+   "first_frame_ms_max": 1549,
+   "first_frame_ms_median": 909.60009765625,
+   "first_frame_within_2s": 5,
+   "scans_ms_max": 4700.900146484375,
+   "with_scans": 3,
+   "seek_ms_max": 43.600000001490116,
+   "console_errors": 0,
+   "phone_ok": 4
+  },
+  "challenge_links": {
+   "links": 5,
+   "exact": 5,
+   "ok": 5
+  },
+  "old_url_forms_and_v1": {
+   "forms": [
+    {
+     "form": "",
+     "want": {
+      "kind": "arena",
+      "mode": [
+       "attract",
+       "live"
+      ]
+     },
+     "errors": [],
+     "landed": "",
+     "ok": true
+    },
+    {
+     "form": "?view=plan",
+     "want": {
+      "kind": "mission",
+      "id": "find-a-path"
+     },
+     "errors": [],
+     "landed": "?view=learn&mission=find-a-path",
+     "ok": true
+    },
+    {
+     "form": "?view=localise",
+     "want": {
+      "kind": "mission",
+      "id": "where-it-is"
+     },
+     "errors": [],
+     "landed": "?view=learn&mission=where-it-is",
+     "ok": true
+    },
+    {
+     "form": "?view=map",
+     "want": {
+      "kind": "mission",
+      "id": "build-a-map"
+     },
+     "errors": [],
+     "landed": "?view=learn&mission=build-a-map",
+     "ok": true
+    },
+    {
+     "form": "?view=search",
+     "want": {
+      "kind": "mission",
+      "id": "where-to-look"
+     },
+     "errors": [],
+     "landed": "?view=learn&mission=where-to-look",
+     "ok": true
+    },
+    {
+     "form": "?view=move",
+     "want": {
+      "kind": "mission",
+      "id": "avoid-things"
+     },
+     "errors": [],
+     "landed": "?view=learn&mission=avoid-things",
+     "ok": true
+    },
+    {
+     "form": "?view=plan&perf",
+     "want": {
+      "kind": "mission",
+      "id": "find-a-path"
+     },
+     "errors": [],
+     "landed": "?view=learn&mission=find-a-path",
+     "ok": true
+    },
+    {
+     "form": "?view=live",
+     "want": {
+      "kind": "live"
+     },
+     "errors": [],
+     "badge": "Live Stack (simulated) \u2014 local",
+     "landed": "?view=live",
+     "ok": true
+    },
+    {
+     "form": "?view=exhibit",
+     "want": {
+      "kind": "v1",
+      "pressed": "view-exhibit"
+     },
+     "errors": [],
+     "landed": "v1/?view=exhibit",
+     "ok": true
+    },
+    {
+     "form": "?view=localise&loc=exhibits",
+     "want": {
+      "kind": "v1",
+      "pressed": "view-localise"
+     },
+     "errors": [],
+     "landed": "v1/?view=localise&loc=exhibits",
+     "ok": true
+    },
+    {
+     "form": "?view=map&scene=map_loop",
+     "want": {
+      "kind": "v1",
+      "pressed": "view-map"
+     },
+     "errors": [],
+     "landed": "v1/?view=map&scene=map_loop",
+     "ok": true
+    },
+    {
+     "form": "?view=move&move=replan",
+     "want": {
+      "kind": "v1",
+      "pressed": "view-move"
+     },
+     "errors": [],
+     "landed": "v1/?view=move&move=replan",
+     "ok": true
+    },
+    {
+     "form": "?view=search&search=matrix",
+     "want": {
+      "kind": "v1",
+      "pressed": "view-search"
+     },
+     "errors": [],
+     "landed": "v1/?view=search&search=matrix",
+     "ok": true
+    },
+    {
+     "form": "?bundle=astar_open",
+     "want": {
+      "kind": "replay",
+      "id": "astar_open"
+     },
+     "errors": [],
+     "landed": "?view=arena&replay=astar_open",
+     "ok": true
+    },
+    {
+     "form": "?bundle=astar_open&v=1",
+     "want": {
+      "kind": "replay",
+      "id": "astar_open"
+     },
+     "errors": [],
+     "landed": "?view=arena&replay=astar_open",
+     "ok": true
+    },
+    {
+     "form": "?view=plan&bundle=astar_open&v=1",
+     "want": {
+      "kind": "replay",
+      "id": "astar_open"
+     },
+     "errors": [],
+     "landed": "?view=arena&replay=astar_open",
+     "ok": true
+    },
+    {
+     "form": "?bundle=lab1c_astar",
+     "want": {
+      "kind": "replay",
+      "id": "lab1c_astar"
+     },
+     "errors": [],
+     "landed": "?view=arena&replay=lab1c_astar",
+     "ok": true
+    },
+    {
+     "form": "?v=1",
+     "want": {
+      "kind": "v1",
+      "pressed": "view-lab"
+     },
+     "errors": [],
+     "landed": "v1/?v=1",
+     "ok": true
+    },
+    {
+     "form": "?v=1&bundle=astar_open&s=4.1.4.1.9",
+     "want": {
+      "kind": "v1",
+      "pressed": "view-lab"
+     },
+     "errors": [],
+     "landed": "v1/?v=1&bundle=astar_open&s=4.1.4.1.9",
+     "ok": true
+    },
+    {
+     "form": "?v=1&bundle=astar_open&e=vQEB",
+     "want": {
+      "kind": "v1",
+      "pressed": "view-lab"
+     },
+     "errors": [],
+     "landed": "v1/?v=1&bundle=astar_open&e=vQEB",
+     "ok": true
+    },
+    {
+     "form": "?bundle=not_a_bundle",
+     "want": {
+      "kind": "v1",
+      "pressed": "view-lab"
+     },
+     "errors": [],
+     "landed": "v1/?bundle=not_a_bundle",
+     "ok": true
+    },
+    {
+     "form": "v1/",
+     "want": {
+      "kind": "v1",
+      "pressed": "view-lab"
+     },
+     "errors": [],
+     "landed": "v1/",
+     "ok": true
+    }
+   ],
+   "archive_views": [
+    {
+     "form": "v1/",
+     "pressed": "view-lab",
+     "errors": [],
+     "real_robot": 0,
+     "live_label": "Live Stack (simulated)",
+     "ok": true
+    },
+    {
+     "form": "v1/?view=localise",
+     "pressed": "view-localise",
+     "errors": [],
+     "real_robot": 0,
+     "live_label": "Live Stack (simulated)",
+     "ok": true
+    },
+    {
+     "form": "v1/?view=map",
+     "pressed": "view-map",
+     "errors": [],
+     "real_robot": 0,
+     "live_label": "Live Stack (simulated)",
+     "ok": true
+    },
+    {
+     "form": "v1/?view=search",
+     "pressed": "view-search",
+     "errors": [],
+     "real_robot": 0,
+     "live_label": "Live Stack (simulated)",
+     "ok": true
+    },
+    {
+     "form": "v1/?view=move",
+     "pressed": "view-move",
+     "errors": [],
+     "real_robot": 0,
+     "live_label": "Live Stack (simulated)",
+     "ok": true
+    },
+    {
+     "form": "v1/?view=live",
+     "pressed": "view-live",
+     "errors": [],
+     "real_robot": 0,
+     "live_label": "Live Stack (simulated)",
+     "ok": true
+    }
+   ],
+   "failed": null,
+   "ok": true
+  }
+ },
+ "public_check": {
+  "conditions": {
+   "start": {
+    "at_utc": "2026-10-11T11:33:25.424Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Full",
+     "capacity_pct": 100
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 0.63,
+     "5m": 0.58,
+     "15m": 1.12
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   },
+   "end": {
+    "at_utc": "2026-10-11T11:34:31.797Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Full",
+     "capacity_pct": 100
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 1.44,
+     "5m": 0.96,
+     "15m": 1.22
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   }
+  },
+  "site": "https://gauthamcodes.github.io/coco-labs/",
+  "bare": {
+   "opened": "arena",
+   "ms_since_navigation": {
+    "worker_create": 1360,
+    "worker_boot": 1707,
+    "pyodide_module": 1982,
+    "attract_ready": 2615,
+    "first_frame": 2658,
+    "first_computation_shown": 2658,
+    "pyodide_ready": 7094,
+    "coco_lab_ready": 7215,
+    "world_received": 7979,
+    "arena_ready": 7960
+   },
+   "wall_ms_to_ready": 9887,
+   "goal": [
+    6,
+    4
+   ],
+   "plan": {
+    "id": 0,
+    "status": "found",
+    "expansions": 4402
+   },
+   "click_to_drawn_ms": 35.39990234375,
+   "shown_cursor": 9827,
+   "mode": "live",
+   "console_errors": [],
+   "page_errors": [],
+   "cross_origin": [],
+   "pass": true
+  },
+  "views": [
+   {
+    "view": "plan",
+    "opened": "mission:find-a-path",
+    "url": "https://gauthamcodes.github.io/coco-labs/?view=learn&mission=find-a-path",
+    "console_errors": [],
+    "page_errors": [],
+    "cross_origin": [],
+    "pass": true
+   },
+   {
+    "view": "live",
+    "opened": "live",
+    "url": "https://gauthamcodes.github.io/coco-labs/?view=live",
+    "console_errors": [],
+    "page_errors": [],
+    "cross_origin": [],
+    "pass": true
+   },
+   {
+    "view": "localise",
+    "opened": "mission:where-it-is",
+    "url": "https://gauthamcodes.github.io/coco-labs/?view=learn&mission=where-it-is",
+    "console_errors": [],
+    "page_errors": [],
+    "cross_origin": [],
+    "pass": true
+   },
+   {
+    "view": "map",
+    "opened": "mission:build-a-map",
+    "url": "https://gauthamcodes.github.io/coco-labs/?view=learn&mission=build-a-map",
+    "console_errors": [],
+    "page_errors": [],
+    "cross_origin": [],
+    "pass": true
+   },
+   {
+    "view": "search",
+    "opened": "mission:where-to-look",
+    "url": "https://gauthamcodes.github.io/coco-labs/?view=learn&mission=where-to-look",
+    "console_errors": [],
+    "page_errors": [],
+    "cross_origin": [],
+    "pass": true
+   },
+   {
+    "view": "move",
+    "opened": "mission:avoid-things",
+    "url": "https://gauthamcodes.github.io/coco-labs/?view=learn&mission=avoid-things",
+    "console_errors": [],
+    "page_errors": [],
+    "cross_origin": [],
+    "pass": true
+   }
+  ],
+  "pass": true,
+  "browser": "chromium (Playwright, headless)"
+ },
+ "modes": {
+  "site": "https://gauthamcodes.github.io/coco-labs/",
+  "rows": [
+   {
+    "size": "desktop",
+    "mode": "learn",
+    "page": "?view=learn",
+    "evidence": "MODEL",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Learn",
+    "badge": "MODEL",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 1280,
+    "view": 1280,
+    "ok": true
+   },
+   {
+    "size": "desktop",
+    "mode": "learn",
+    "page": "?view=learn&mission=why-did-it-fail&beat=0",
+    "evidence": "STACK",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Learn",
+    "badge": "STACK",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 1280,
+    "view": 1280,
+    "ok": true
+   },
+   {
+    "size": "desktop",
+    "mode": "learn",
+    "page": "?view=learn&mission=find-a-path&beat=0",
+    "evidence": "MODEL",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Learn",
+    "badge": "MODEL",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 1280,
+    "view": 1280,
+    "ok": true
+   },
+   {
+    "size": "desktop",
+    "mode": "play",
+    "page": "?view=play",
+    "evidence": "MODEL",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Play",
+    "badge": "MODEL",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 1280,
+    "view": 1280,
+    "ok": true
+   },
+   {
+    "size": "desktop",
+    "mode": "play",
+    "page": "?view=play&c=beat-the-planner&l=bog",
+    "evidence": "MODEL",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Play",
+    "badge": "MODEL",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 1280,
+    "view": 1280,
+    "ok": true
+   },
+   {
+    "size": "desktop",
+    "mode": "play",
+    "page": "?view=play&c=case-file-detective&l=kidnapped",
+    "evidence": "STACK",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Play",
+    "badge": "STACK",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 1280,
+    "view": 1280,
+    "ok": true
+   },
+   {
+    "size": "desktop",
+    "mode": "sandbox",
+    "page": "",
+    "evidence": "MODEL",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Sandbox",
+    "badge": "MODEL",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 1280,
+    "view": 1280,
+    "ok": true
+   },
+   {
+    "size": "desktop",
+    "mode": "sandbox",
+    "page": "?view=arena&lens=map&level=explain",
+    "evidence": "MODEL",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Sandbox",
+    "badge": "MODEL",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 1280,
+    "view": 1280,
+    "ok": true
+   },
+   {
+    "size": "desktop",
+    "mode": "casefiles",
+    "page": "?view=casefiles",
+    "evidence": "STACK",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Case Files",
+    "badge": "STACK",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 1280,
+    "view": 1280,
+    "ok": true
+   },
+   {
+    "size": "desktop",
+    "mode": "casefiles",
+    "page": "?view=casefiles&case=run15",
+    "evidence": "STACK",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Case Files",
+    "badge": "STACK",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 1280,
+    "view": 1280,
+    "ok": true
+   },
+   {
+    "size": "desktop",
+    "mode": "casefiles",
+    "page": "?view=arena&casefile=lab5_mislocalised_dwb_1",
+    "evidence": "STACK",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Case Files",
+    "badge": "STACK",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 1280,
+    "view": 1280,
+    "ok": true
+   },
+   {
+    "size": "phone",
+    "mode": "learn",
+    "page": "?view=learn",
+    "evidence": "MODEL",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Learn",
+    "badge": "MODEL",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 390,
+    "view": 390,
+    "ok": true
+   },
+   {
+    "size": "phone",
+    "mode": "learn",
+    "page": "?view=learn&mission=why-did-it-fail&beat=0",
+    "evidence": "STACK",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Learn",
+    "badge": "STACK",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 390,
+    "view": 390,
+    "ok": true
+   },
+   {
+    "size": "phone",
+    "mode": "learn",
+    "page": "?view=learn&mission=find-a-path&beat=0",
+    "evidence": "MODEL",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Learn",
+    "badge": "MODEL",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 390,
+    "view": 390,
+    "ok": true
+   },
+   {
+    "size": "phone",
+    "mode": "play",
+    "page": "?view=play",
+    "evidence": "MODEL",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Play",
+    "badge": "MODEL",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 390,
+    "view": 390,
+    "ok": true
+   },
+   {
+    "size": "phone",
+    "mode": "play",
+    "page": "?view=play&c=beat-the-planner&l=bog",
+    "evidence": "MODEL",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Play",
+    "badge": "MODEL",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 390,
+    "view": 390,
+    "ok": true
+   },
+   {
+    "size": "phone",
+    "mode": "play",
+    "page": "?view=play&c=case-file-detective&l=kidnapped",
+    "evidence": "STACK",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Play",
+    "badge": "STACK",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 390,
+    "view": 390,
+    "ok": true
+   },
+   {
+    "size": "phone",
+    "mode": "sandbox",
+    "page": "",
+    "evidence": "MODEL",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Sandbox",
+    "badge": "MODEL",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 390,
+    "view": 390,
+    "ok": true
+   },
+   {
+    "size": "phone",
+    "mode": "sandbox",
+    "page": "?view=arena&lens=map&level=explain",
+    "evidence": "MODEL",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Sandbox",
+    "badge": "MODEL",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 390,
+    "view": 390,
+    "ok": true
+   },
+   {
+    "size": "phone",
+    "mode": "casefiles",
+    "page": "?view=casefiles",
+    "evidence": "STACK",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Case Files",
+    "badge": "STACK",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 390,
+    "view": 390,
+    "ok": true
+   },
+   {
+    "size": "phone",
+    "mode": "casefiles",
+    "page": "?view=casefiles&case=run15",
+    "evidence": "STACK",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Case Files",
+    "badge": "STACK",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 390,
+    "view": 390,
+    "ok": true
+   },
+   {
+    "size": "phone",
+    "mode": "casefiles",
+    "page": "?view=arena&casefile=lab5_mislocalised_dwb_1",
+    "evidence": "STACK",
+    "errors": [],
+    "modes": [
+     "Learn",
+     "Play",
+     "Sandbox",
+     "Case Files"
+    ],
+    "current": "Case Files",
+    "badge": "STACK",
+    "badge_visible": true,
+    "live_link": true,
+    "live_is_a_mode": false,
+    "scroll": 390,
+    "view": 390,
+    "ok": true
+   },
+   {
+    "size": "desktop",
+    "mode": "casefiles",
+    "page": "?view=casefiles&case=run15&file=lab5_mislocalised_dwb_1 (panes)",
+    "heads": 1,
+    "panes": [
+     {
+      "heads": 0,
+      "badge": "STACK"
+     },
+     {
+      "heads": 0,
+      "badge": "MODEL"
+     }
+    ],
+    "errors": [],
+    "ok": true
+   }
+  ],
+  "summary": {
+   "pages": 23,
+   "ok": 23
+  },
+  "conditions": {
+   "start": {
+    "at_utc": "2026-10-11T11:34:32.113Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Full",
+     "capacity_pct": 100
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 1.44,
+     "5m": 0.96,
+     "15m": 1.22
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   },
+   "end": {
+    "at_utc": "2026-10-11T11:36:24.650Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Full",
+     "capacity_pct": 100
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 1.98,
+     "5m": 1.13,
+     "15m": 1.24
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   }
+  }
+ },
+ "casefiles": {
+  "conditions": {
+   "start": {
+    "at_utc": "2026-10-11T11:36:24.960Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Full",
+     "capacity_pct": 100
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 1.98,
+     "5m": 1.13,
+     "15m": 1.24
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   },
+   "end": {
+    "at_utc": "2026-10-11T11:37:21.131Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Full",
+     "capacity_pct": 100
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 2.64,
+     "5m": 1.37,
+     "15m": 1.31
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   }
+  },
+  "site": "https://gauthamcodes.github.io/coco-labs/",
+  "throttle": "none",
+  "profile": null,
+  "pages": [
+   {
+    "page": "(list)",
+    "errors": [],
+    "badge": "STACK",
+    "ok": true
+   },
+   {
+    "page": "lab1-runs",
+    "errors": [],
+    "badge": "STACK",
+    "explained": 3,
+    "unresolved": [
+     "UNRESOLVED"
+    ],
+    "listed": 3,
+    "ok": true
+   },
+   {
+    "page": "astar-myth",
+    "errors": [],
+    "badge": "STACK",
+    "explained": 4,
+    "unresolved": [
+     "UNRESOLVED"
+    ],
+    "listed": 3,
+    "ok": true
+   },
+   {
+    "page": "lab2-kidnap",
+    "errors": [],
+    "badge": "STACK",
+    "explained": 3,
+    "unresolved": [
+     "UNRESOLVED",
+     "UNRESOLVED"
+    ],
+    "listed": 23,
+    "ok": true
+   },
+   {
+    "page": "lab2-rl-tour",
+    "errors": [],
+    "badge": "STACK",
+    "explained": 2,
+    "unresolved": [
+     "UNRESOLVED"
+    ],
+    "listed": 1,
+    "ok": true
+   },
+   {
+    "page": "lab3-slam",
+    "errors": [],
+    "badge": "STACK",
+    "explained": 3,
+    "unresolved": [
+     "UNRESOLVED"
+    ],
+    "listed": 2,
+    "ok": true
+   },
+   {
+    "page": "lab4-search",
+    "errors": [],
+    "badge": "STACK",
+    "explained": 5,
+    "unresolved": [
+     "UNRESOLVED"
+    ],
+    "listed": 17,
+    "ok": true
+   },
+   {
+    "page": "lab5-move",
+    "errors": [],
+    "badge": "STACK",
+    "explained": 4,
+    "unresolved": [
+     "UNRESOLVED",
+     "UNRESOLVED"
+    ],
+    "listed": 54,
+    "ok": true
+   },
+   {
+    "page": "run15",
+    "errors": [],
+    "badge": "STACK",
+    "explained": 3,
+    "unresolved": [
+     "UNRESOLVED"
+    ],
+    "listed": 9,
+    "ok": true
+   }
+  ],
+  "casefiles": [
+   {
+    "id": "lab1_run_astar",
+    "group": "lab1-runs",
+    "bytes": 74408,
+    "errors": [],
+    "ranges_at_first_frame": 0,
+    "first_frame_ms": 1148,
+    "scans_ms": 1148,
+    "ranges_after_scans": 0,
+    "mode": "recording",
+    "badge": "STACK",
+    "ticks": 1233,
+    "seeks": [
+     {
+      "to": 616,
+      "to_frame_ms": 43,
+      "view_tick": 616
+     },
+     {
+      "to": 61,
+      "to_frame_ms": 36.399999998509884,
+      "view_tick": 61
+     },
+     {
+      "to": 1171,
+      "to_frame_ms": 43.600000001490116,
+      "view_tick": 1171
+     },
+     {
+      "to": 308,
+      "to_frame_ms": 34.399999998509884,
+      "view_tick": 308
+     },
+     {
+      "to": 924,
+      "to_frame_ms": 34.29999999701977,
+      "view_tick": 924
+     },
+     {
+      "to": 123,
+      "to_frame_ms": 31.5,
+      "view_tick": 123
+     },
+     {
+      "to": 1109,
+      "to_frame_ms": 32.29999999701977,
+      "view_tick": 1109
+     },
+     {
+      "to": 406,
+      "to_frame_ms": 28.600000001490116,
+      "view_tick": 406
+     },
+     {
+      "to": 813,
+      "to_frame_ms": 24,
+      "view_tick": 813
+     },
+     {
+      "to": 1,
+      "to_frame_ms": 34,
+      "view_tick": 1
+     }
+    ],
+    "seek_max_ms": 43.600000001490116,
+    "ok": true
+   },
+   {
+    "id": "lab2_rl_fidelity_1_tour",
+    "group": "lab2-rl-tour",
+    "bytes": 2754655,
+    "errors": [],
+    "ranges_at_first_frame": 0,
+    "first_frame_ms": 1549,
+    "scans_ms": 2319.7001953125,
+    "ranges_after_scans": 480,
+    "mode": "recording",
+    "badge": "STACK",
+    "ticks": 4405,
+    "seeks": [
+     {
+      "to": 2202,
+      "to_frame_ms": 41.100000001490116,
+      "view_tick": 2202
+     },
+     {
+      "to": 220,
+      "to_frame_ms": 39.099999994039536,
+      "view_tick": 220
+     },
+     {
+      "to": 4184,
+      "to_frame_ms": 38.600000001490116,
+      "view_tick": 4184
+     },
+     {
+      "to": 1101,
+      "to_frame_ms": 35.29999999701977,
+      "view_tick": 1101
+     },
+     {
+      "to": 3303,
+      "to_frame_ms": 38,
+      "view_tick": 3303
+     },
+     {
+      "to": 440,
+      "to_frame_ms": 40,
+      "view_tick": 440
+     },
+     {
+      "to": 3964,
+      "to_frame_ms": 39.899999998509884,
+      "view_tick": 3964
+     },
+     {
+      "to": 1453,
+      "to_frame_ms": 39.29999999701977,
+      "view_tick": 1453
+     },
+     {
+      "to": 2907,
+      "to_frame_ms": 33.19999999552965,
+      "view_tick": 2907
+     },
+     {
+      "to": 1,
+      "to_frame_ms": 31.700000002980232,
+      "view_tick": 1
+     }
+    ],
+    "seek_max_ms": 41.100000001490116,
+    "ok": true
+   },
+   {
+    "id": "lab3_s1_tour",
+    "group": "lab3-slam",
+    "bytes": 1882498,
+    "errors": [],
+    "ranges_at_first_frame": 0,
+    "first_frame_ms": 909.60009765625,
+    "scans_ms": 4700.900146484375,
+    "ranges_after_scans": 480,
+    "mode": "recording",
+    "badge": "STACK",
+    "ticks": 4425,
+    "seeks": [
+     {
+      "to": 2212,
+      "to_frame_ms": 26,
+      "view_tick": 2212
+     },
+     {
+      "to": 221,
+      "to_frame_ms": 24.899999998509884,
+      "view_tick": 221
+     },
+     {
+      "to": 4203,
+      "to_frame_ms": 19.899999998509884,
+      "view_tick": 4203
+     },
+     {
+      "to": 1106,
+      "to_frame_ms": 18.299999997019768,
+      "view_tick": 1106
+     },
+     {
+      "to": 3318,
+      "to_frame_ms": 21.69999999552965,
+      "view_tick": 3318
+     },
+     {
+      "to": 442,
+      "to_frame_ms": 23.69999999552965,
+      "view_tick": 442
+     },
+     {
+      "to": 3982,
+      "to_frame_ms": 17,
+      "view_tick": 3982
+     },
+     {
+      "to": 1460,
+      "to_frame_ms": 17.600000001490116,
+      "view_tick": 1460
+     },
+     {
+      "to": 2920,
+      "to_frame_ms": 20,
+      "view_tick": 2920
+     },
+     {
+      "to": 1,
+      "to_frame_ms": 31.5,
+      "view_tick": 1
+     }
+    ],
+    "seek_max_ms": 31.5,
+    "ok": true
+   },
+   {
+    "id": "lab4_a1_fixed_red",
+    "group": "lab4-search",
+    "bytes": 346917,
+    "errors": [],
+    "ranges_at_first_frame": 0,
+    "first_frame_ms": 690.699951171875,
+    "scans_ms": 690.699951171875,
+    "ranges_after_scans": 0,
+    "mode": "recording",
+    "badge": "STACK",
+    "ticks": 4145,
+    "seeks": [
+     {
+      "to": 2072,
+      "to_frame_ms": 14.700000002980232,
+      "view_tick": 2072
+     },
+     {
+      "to": 207,
+      "to_frame_ms": 18.299999997019768,
+      "view_tick": 207
+     },
+     {
+      "to": 3937,
+      "to_frame_ms": 18.099999994039536,
+      "view_tick": 3937
+     },
+     {
+      "to": 1036,
+      "to_frame_ms": 18.5,
+      "view_tick": 1036
+     },
+     {
+      "to": 3108,
+      "to_frame_ms": 19.30000000447035,
+      "view_tick": 3108
+     },
+     {
+      "to": 414,
+      "to_frame_ms": 19.200000002980232,
+      "view_tick": 414
+     },
+     {
+      "to": 3730,
+      "to_frame_ms": 20,
+      "view_tick": 3730
+     },
+     {
+      "to": 1367,
+      "to_frame_ms": 14.400000005960464,
+      "view_tick": 1367
+     },
+     {
+      "to": 2735,
+      "to_frame_ms": 14.799999997019768,
+      "view_tick": 2735
+     },
+     {
+      "to": 1,
+      "to_frame_ms": 18.399999998509884,
+      "view_tick": 1
+     }
+    ],
+    "seek_max_ms": 20,
+    "ok": true
+   },
+   {
+    "id": "lab5_mislocalised_dwb_1",
+    "group": "lab5-move",
+    "bytes": 23839,
+    "errors": [],
+    "ranges_at_first_frame": 480,
+    "first_frame_ms": 321.39990234375,
+    "scans_ms": 322.89990234375,
+    "ranges_after_scans": 480,
+    "mode": "recording",
+    "badge": "STACK",
+    "ticks": 178,
+    "seeks": [
+     {
+      "to": 89,
+      "to_frame_ms": 34.5,
+      "view_tick": 89
+     },
+     {
+      "to": 8,
+      "to_frame_ms": 18.299999997019768,
+      "view_tick": 8
+     },
+     {
+      "to": 169,
+      "to_frame_ms": 33.79999999701977,
+      "view_tick": 169
+     },
+     {
+      "to": 44,
+      "to_frame_ms": 30.69999999552965,
+      "view_tick": 44
+     },
+     {
+      "to": 133,
+      "to_frame_ms": 30.600000001490116,
+      "view_tick": 133
+     },
+     {
+      "to": 17,
+      "to_frame_ms": 16.69999999552965,
+      "view_tick": 17
+     },
+     {
+      "to": 160,
+      "to_frame_ms": 37.899999998509884,
+      "view_tick": 160
+     },
+     {
+      "to": 58,
+      "to_frame_ms": 36.600000001490116,
+      "view_tick": 58
+     },
+     {
+      "to": 117,
+      "to_frame_ms": 35.899999998509884,
+      "view_tick": 117
+     },
+     {
+      "to": 1,
+      "to_frame_ms": 17.099999994039536,
+      "view_tick": 1
+     }
+    ],
+    "seek_max_ms": 37.899999998509884,
+    "ok": true
+   }
+  ],
+  "phone": [
+   {
+    "page": "?view=casefiles",
+    "scroll": 390,
+    "view": 390,
+    "errors": [],
+    "ok": true
+   },
+   {
+    "page": "?view=casefiles&case=lab5-move",
+    "scroll": 390,
+    "view": 390,
+    "errors": [],
+    "ok": true
+   },
+   {
+    "page": "?view=casefiles&case=lab5-move&file=lab5_crossing_dwb_1",
+    "scroll": 390,
+    "view": 390,
+    "errors": [],
+    "ok": true
+   },
+   {
+    "page": "?view=casefiles&case=lab3-slam",
+    "scroll": 390,
+    "view": 390,
+    "errors": [],
+    "ok": true
+   }
+  ],
+  "summary": {
+   "pages_ok": 9,
+   "pages": 9,
+   "casefiles_ok": 5,
+   "casefiles": 5,
+   "first_frame_ms_max": 1549,
+   "first_frame_ms_median": 909.60009765625,
+   "first_frame_within_2s": 5,
+   "scans_ms_max": 4700.900146484375,
+   "with_scans": 3,
+   "seek_ms_max": 43.600000001490116,
+   "console_errors": 0,
+   "phone_ok": 4
+  },
+  "ok": true
+ },
+ "challenge_links": {
+  "browser": "chromium",
+  "version": "156.0.8078.4",
+  "site": "https://gauthamcodes.github.io/coco-labs/",
+  "seconds": 38.233,
+  "exact": 5,
+  "ok": 5,
+  "links": 5,
+  "rows": [
+   {
+    "challenge": "beat-the-planner",
+    "level": "two-fields",
+    "expected": "db3dc0c66af069f7b52b81e967f9dcea69299bb105a820d92d00559b8f398c8a",
+    "errors": [],
+    "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+    "hash": "db3dc0c66af069f7b52b81e967f9dcea69299bb105a820d92d00559b8f398c8a",
+    "exact": true,
+    "ms": 7546,
+    "ok": true
+   },
+   {
+    "challenge": "next-node",
+    "level": "wall",
+    "expected": "1f46a35b3dd30905a03f8b1319b9562c1590920a383f1adab8ac01b666a1013b",
+    "errors": [],
+    "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+    "hash": "1f46a35b3dd30905a03f8b1319b9562c1590920a383f1adab8ac01b666a1013b",
+    "exact": true,
+    "ms": 5592,
+    "ok": true
+   },
+   {
+    "challenge": "search-the-bays",
+    "level": "no-idea",
+    "expected": "32d6afbed8b0f9eec6dfc07b59ce7116a40c79aeed670e88867b6e56d05409d1",
+    "errors": [],
+    "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+    "hash": "32d6afbed8b0f9eec6dfc07b59ce7116a40c79aeed670e88867b6e56d05409d1",
+    "exact": true,
+    "ms": 5589,
+    "ok": true
+   },
+   {
+    "challenge": "map-the-arena",
+    "level": "forty-metres",
+    "expected": "ee918c943ce7860caa9914698ebada98c0a0eb7d3e429d832a1c07653d937dea",
+    "errors": [],
+    "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+    "hash": "ee918c943ce7860caa9914698ebada98c0a0eb7d3e429d832a1c07653d937dea",
+    "exact": true,
+    "ms": 11698,
+    "ok": true
+   },
+   {
+    "challenge": "case-file-detective",
+    "level": "told-wrong",
+    "expected": "23a456bf770d46d5d772da545702df6d0ef09901eb835706e1279e524a8eb11c",
+    "errors": [],
+    "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+    "hash": "23a456bf770d46d5d772da545702df6d0ef09901eb835706e1279e524a8eb11c",
+    "exact": true,
+    "ms": 7608,
+    "ok": true
+   }
+  ],
+  "conditions": {
+   "start": {
+    "at_utc": "2026-10-11T11:37:21.466Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Full",
+     "capacity_pct": 100
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 2.64,
+     "5m": 1.37,
+     "15m": 1.31
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   },
+   "end": {
+    "at_utc": "2026-10-11T11:37:59.815Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Full",
+     "capacity_pct": 100
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 1.7,
+     "5m": 1.29,
+     "15m": 1.28
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   }
+  }
+ },
+ "v1_links": {
+  "conditions": null,
+  "site": "https://gauthamcodes.github.io/coco-labs/",
+  "forms": [
+   {
+    "form": "",
+    "want": {
+     "kind": "arena",
+     "mode": [
+      "attract",
+      "live"
+     ]
+    },
+    "errors": [],
+    "landed": "",
+    "ok": true
+   },
+   {
+    "form": "?view=plan",
+    "want": {
+     "kind": "mission",
+     "id": "find-a-path"
+    },
+    "errors": [],
+    "landed": "?view=learn&mission=find-a-path",
+    "ok": true
+   },
+   {
+    "form": "?view=localise",
+    "want": {
+     "kind": "mission",
+     "id": "where-it-is"
+    },
+    "errors": [],
+    "landed": "?view=learn&mission=where-it-is",
+    "ok": true
+   },
+   {
+    "form": "?view=map",
+    "want": {
+     "kind": "mission",
+     "id": "build-a-map"
+    },
+    "errors": [],
+    "landed": "?view=learn&mission=build-a-map",
+    "ok": true
+   },
+   {
+    "form": "?view=search",
+    "want": {
+     "kind": "mission",
+     "id": "where-to-look"
+    },
+    "errors": [],
+    "landed": "?view=learn&mission=where-to-look",
+    "ok": true
+   },
+   {
+    "form": "?view=move",
+    "want": {
+     "kind": "mission",
+     "id": "avoid-things"
+    },
+    "errors": [],
+    "landed": "?view=learn&mission=avoid-things",
+    "ok": true
+   },
+   {
+    "form": "?view=plan&perf",
+    "want": {
+     "kind": "mission",
+     "id": "find-a-path"
+    },
+    "errors": [],
+    "landed": "?view=learn&mission=find-a-path",
+    "ok": true
+   },
+   {
+    "form": "?view=live",
+    "want": {
+     "kind": "live"
+    },
+    "errors": [],
+    "badge": "Live Stack (simulated) \u2014 local",
+    "landed": "?view=live",
+    "ok": true
+   },
+   {
+    "form": "?view=exhibit",
+    "want": {
+     "kind": "v1",
+     "pressed": "view-exhibit"
+    },
+    "errors": [],
+    "landed": "v1/?view=exhibit",
+    "ok": true
+   },
+   {
+    "form": "?view=localise&loc=exhibits",
+    "want": {
+     "kind": "v1",
+     "pressed": "view-localise"
+    },
+    "errors": [],
+    "landed": "v1/?view=localise&loc=exhibits",
+    "ok": true
+   },
+   {
+    "form": "?view=map&scene=map_loop",
+    "want": {
+     "kind": "v1",
+     "pressed": "view-map"
+    },
+    "errors": [],
+    "landed": "v1/?view=map&scene=map_loop",
+    "ok": true
+   },
+   {
+    "form": "?view=move&move=replan",
+    "want": {
+     "kind": "v1",
+     "pressed": "view-move"
+    },
+    "errors": [],
+    "landed": "v1/?view=move&move=replan",
+    "ok": true
+   },
+   {
+    "form": "?view=search&search=matrix",
+    "want": {
+     "kind": "v1",
+     "pressed": "view-search"
+    },
+    "errors": [],
+    "landed": "v1/?view=search&search=matrix",
+    "ok": true
+   },
+   {
+    "form": "?bundle=astar_open",
+    "want": {
+     "kind": "replay",
+     "id": "astar_open"
+    },
+    "errors": [],
+    "landed": "?view=arena&replay=astar_open",
+    "ok": true
+   },
+   {
+    "form": "?bundle=astar_open&v=1",
+    "want": {
+     "kind": "replay",
+     "id": "astar_open"
+    },
+    "errors": [],
+    "landed": "?view=arena&replay=astar_open",
+    "ok": true
+   },
+   {
+    "form": "?view=plan&bundle=astar_open&v=1",
+    "want": {
+     "kind": "replay",
+     "id": "astar_open"
+    },
+    "errors": [],
+    "landed": "?view=arena&replay=astar_open",
+    "ok": true
+   },
+   {
+    "form": "?bundle=lab1c_astar",
+    "want": {
+     "kind": "replay",
+     "id": "lab1c_astar"
+    },
+    "errors": [],
+    "landed": "?view=arena&replay=lab1c_astar",
+    "ok": true
+   },
+   {
+    "form": "?v=1",
+    "want": {
+     "kind": "v1",
+     "pressed": "view-lab"
+    },
+    "errors": [],
+    "landed": "v1/?v=1",
+    "ok": true
+   },
+   {
+    "form": "?v=1&bundle=astar_open&s=4.1.4.1.9",
+    "want": {
+     "kind": "v1",
+     "pressed": "view-lab"
+    },
+    "errors": [],
+    "landed": "v1/?v=1&bundle=astar_open&s=4.1.4.1.9",
+    "ok": true
+   },
+   {
+    "form": "?v=1&bundle=astar_open&e=vQEB",
+    "want": {
+     "kind": "v1",
+     "pressed": "view-lab"
+    },
+    "errors": [],
+    "landed": "v1/?v=1&bundle=astar_open&e=vQEB",
+    "ok": true
+   },
+   {
+    "form": "?bundle=not_a_bundle",
+    "want": {
+     "kind": "v1",
+     "pressed": "view-lab"
+    },
+    "errors": [],
+    "landed": "v1/?bundle=not_a_bundle",
+    "ok": true
+   },
+   {
+    "form": "v1/",
+    "want": {
+     "kind": "v1",
+     "pressed": "view-lab"
+    },
+    "errors": [],
+    "landed": "v1/",
+    "ok": true
+   }
+  ],
+  "archive_views": [
+   {
+    "form": "v1/",
+    "pressed": "view-lab",
+    "errors": [],
+    "real_robot": 0,
+    "live_label": "Live Stack (simulated)",
+    "ok": true
+   },
+   {
+    "form": "v1/?view=localise",
+    "pressed": "view-localise",
+    "errors": [],
+    "real_robot": 0,
+    "live_label": "Live Stack (simulated)",
+    "ok": true
+   },
+   {
+    "form": "v1/?view=map",
+    "pressed": "view-map",
+    "errors": [],
+    "real_robot": 0,
+    "live_label": "Live Stack (simulated)",
+    "ok": true
+   },
+   {
+    "form": "v1/?view=search",
+    "pressed": "view-search",
+    "errors": [],
+    "real_robot": 0,
+    "live_label": "Live Stack (simulated)",
+    "ok": true
+   },
+   {
+    "form": "v1/?view=move",
+    "pressed": "view-move",
+    "errors": [],
+    "real_robot": 0,
+    "live_label": "Live Stack (simulated)",
+    "ok": true
+   },
+   {
+    "form": "v1/?view=live",
+    "pressed": "view-live",
+    "errors": [],
+    "real_robot": 0,
+    "live_label": "Live Stack (simulated)",
+    "ok": true
+   }
+  ],
+  "ok": true
+ }
+}

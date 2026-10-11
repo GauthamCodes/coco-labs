@@ -1,0 +1,25 @@
+label m4base at bf7443f 2026-10-11T17:15:31+05:30
+profile balanced AC 1 battery 100% governor powersave load 0.75 0.91 1.11
+node v24.21.0 python Python 3.12.3 driver 580.178.04
+==================================================
+coco_config          ok   93 passed in 0.42s
+coco_sim             ok   323 passed in 1.89s
+coco_mission         ok   371 passed in 9.46s
+coco_web             ok   863 passed, 12 warnings in 21.17s
+gazebo_models        ok   231 passed in 12.32s
+coco_rl              ok   251 passed in 8.01s
+coco_perception      ok   139 passed, 12 warnings in 1.60s
+coco_moveit_config   ok   12 passed in 0.44s
+custom_teleop        ok   75 passed, 12 warnings in 1.35s
+coco_lab             ok   774 passed in 253.14s (0:04:13)
+coco_lab_ros         ok   143 passed, 15 warnings in 20.92s
+coco_schemas         ok   223 passed, 3 warnings in 6.36s
+==================================================
+[tests] all 12 packages passed
+packages exit=0
+169 passed in 255.24s (0:04:15)
+generated code is current
+ Test Files  38 passed (38)
+      Tests  403 passed (403)
+tools exit=0 vitest exit=0
+web exit=0

@@ -14,11 +14,12 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | M1 | **Closed 2026-10-09 — agent-measurable criteria**: independent review [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md) (MERGE AFTER FIXES, every fix done); PR #20 merged into `main` as **`0a2516a`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena, a goal click drew its search, all six v1 views 0 console / 0 page errors ([`v2/data/m1/exit/public_after_merge.json`](v2/data/m1/exit/public_after_merge.json)). **Still pending Gautham:** phone performance, phone cold start, usability |
 | M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
-| Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
-| Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
-| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.9 measured** (B.3: 4 met; Case File first frame 97/100 within 2 s on 4G; the regression re-measure is partial, AC lost). PR open, not merged. Next: AC re-measure; Gautham's phone and usability rows; an independent M3 review |
-| Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
-| Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
+| M3 | **Closed 2026-10-11 — agent-measurable criteria**: independent review [`v2/reviews/M3_REVIEW.md`](v2/reviews/M3_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: D6, Case File scans after the first frame, which took the first frame on emulated 4G from 97 / 100 to **100 / 100 within 2 s**); the outstanding re-measurement completed on AC, every M2 budget met; PR #22 merged into `main` **quietly** as **`bf7443f`** (merge commit, owner's one-off permission, branch kept, no release, tag or announcement); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search, the four modes 23 / 23 pages, 5 / 5 Case Files, 5 / 5 challenge links reproduced, all 22 v1 URL forms and `/v1/`'s six views, 0 console errors ([`v2/data/m3/exit/public_after_merge.json`](v2/data/m3/exit/public_after_merge.json)) |
+| Branch | `v2/m4-3d-arena` (from `main` = `bf7443f`), worked in the worktree `.claude/worktrees/v2-m4-3d-arena` |
+| Milestone | **M4 · 3D Arena** ([`v2/M4_PROMPT.md`](v2/M4_PROMPT.md)) — the content of the public v2.0 launch, which Gautham publishes after M4 merges and his rows pass |
+| Checkpoint | **M4.0 setup** (see "M4 checkpoint log") |
+| Merge to `main` | M4 opens a PR; it is **not** merged by the agent (the merge permission covered PR #22 only) |
+| Pending Gautham | **The phone baseline, now**, on the live site ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md), [`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)); M4's phone rows (frame rate, cold start, touch and stability; `v2/PHONE_GATE_M4.md` from M4.1); **the consolidated five-person usability test at the end of M4** (decision D5; it replaces M1–M3's usability tests). M1–M3's phone rows are covered by the phone baseline and M4's gate. Never marked done by the agent |
 
 ## Checkpoint log
 
@@ -1544,6 +1545,35 @@ only. Read order for agents (README §9): `README.md`, this file,
     budget met.
   - **Next:** the quiet merge of PR #22 (A.6), then M4.
 
+## M4 checkpoint log
+
+- **M4.0 setup (2026-10-11).** Branch `v2/m4-3d-arena` from `main` =
+  `bf7443f` (M3's quiet merge), worktree `.claude/worktrees/v2-m4-3d-arena`,
+  overlay `~/coco_lab_m4_ws` (helpers in its `bin/`, ROS domain 89).
+  - `README.md` = the owner's revision 2, byte for byte (`cmp`), sha256
+    `cf53bb8c…48c8799`; plan-change log entries for it, D1–D6 and this
+    prompt's one-off permissions.
+  - M3 closed in "Position" (merge `bf7443f`); pending Gautham: the phone
+    baseline now, M4's phone rows, the consolidated usability test.
+  - `docs/ROADMAP.md`, `PROJECT_STATE.md`, `docs/v2/DEPRECATIONS.md`
+    renumbered (cloud batch M5, sessions M6, hardware M7); two new
+    DEPRECATIONS rows (the robot sprite; the 2.5D view repurposed).
+    `CLAUDE.md`: invariants 9–11, integrity rules 7–8, agent rules 6–7.
+    `docs/IDEAS.md`: gamepad, a second world, perception on pixels, the
+    four later challenges. Part B saved as `docs/v2/M4_PROMPT.md`.
+  - The M3 exit: `docs/v2/data/m3/exit/public_after_merge.json`; the
+    review's "After the fixes" section; `PHONE_MEASURE.md` and
+    `PHONE_BASELINE.md` corrected for the live site.
+  - **Baseline suites** (measured, `bf7443f`, AC, balanced, Node 24.21.0,
+    Python 3.12.3, NVIDIA 580.178.04): packages **3,498 / 0 / 0**, build
+    tools **169 / 0 / 0**, vitest **403 / 0 / 0** (38 files)
+    (`docs/v2/data/m4/m40/suites_baseline.txt`).
+  - **Deviation:** the canonical checkout `~/coco_labs_ws/src/coco-labs`
+    still has `main` at `d9ae365`; this session is isolated to its worktrees
+    and cannot fast-forward it. Gautham: `git -C ~/coco_labs_ws/src/coco-labs pull --ff-only`.
+  - Screenshots awaiting review: none (no visual change).
+  - **Next:** M4.1, the feasibility gate.
+
 ## Capabilities (README §2), with evidence class
 
 Classes as README §3 defines them: MODEL, STACK, REMOTE, HARDWARE (none
@@ -1582,7 +1612,7 @@ label).
 | G1 | Primary audience | Learners first |
 | G2 | Priority against the robot project and job hunt | Not an agent decision; agents respect announced robot batch windows |
 | G3 | Canonical robot stack | The robot repo is canonical; `coco-labs` robot packages are frozen, not deleted |
-| G4 | Monthly cloud budget | Zero; no cloud resources are created before M4 and an explicit budget |
+| G4 | Monthly cloud budget | Zero; no cloud resources are created before M5 and an explicit budget |
 | G5 | Will a physical robot exist within a year? | Assume no; no "real robot" wording anywhere |
 | G6 | License and outside contributions | Unchanged from the current repo |
 
@@ -1609,3 +1639,11 @@ as a dated entry here (README §0).
 | 2026-10-10 | **Release texts and the v2.0 release remain Gautham's to publish.** Agents prepare drafts only. | — | Gautham (M3 prompt §0.4) |
 | 2026-10-10 | **`/v1/` is built from `9f58b83`, not from the tag's commit `3571169`.** `9f58b83` is the M0 merge: the v1 views with M0's public fixes — no "real robot" for the Gazebo stack, "Live Stack (simulated)" (`dbf1f60`), and the quiet Live probe that opens no socket until `/healthz` answers (`40b6dc2`) — and no M1 code. A one-off M2 fix outside the review's allowed list; M3.0's `v1-site` is built from the same commit. The tag `coco-lab-v1-final` is unchanged and remains v1's freeze point. | The M2 review found that the tag's build undoes M0.6 at `/v1/` ("real robot" in `LiveView.tsx` and `SearchLab.tsx`, the tab named plain "Live") and that its Live view opens a socket on load; ADR 0003 had left `v1/?view=live` unchecked. | Gautham (answer to the reviewer's question, 2026-10-10) |
 | 2026-10-10 | **Case Files without a source bag are built from what exists** (M3.3). Run 15: the 9 Lab 5 `mislocalised_*` reproduction bags (STACK), with the historical run quoted from `docs/RESULTS.md` and labelled "original not recorded; exact Run 15 UNRESOLVED". The A\* myth: the committed conformance JSON plus the three Lab 1C bags. SLAM: the two tour drive bags plus each backend run's `record.json`. Every manifest cites the checksum of what it actually uses; the robot repo is not searched. | Run 15 was a robot-project traverse_demo run never recorded as a COCO Lab bag; the exhibit and the SLAM backend runs kept no bags (B.5 "a recording is missing"). | Gautham (answer to the reviewer's question, 2026-10-10) |
+| 2026-10-11 | **README revision 2: 3D becomes the default experience.** Copied byte for byte from the owner's `~/Downloads/README.md` (checked with `cmp`): sha256 `20376086…911e86` → `cf53bb8c…48c8799`. M4 is now "3D Arena" and the public v2.0 launch; cloud batch moves to M5, interactive sessions M6, hardware M7. New invariants 9–11, integrity rules 7–8, agent rules 6–7. | The owner's revision of the plan at the M3/M4 boundary. | Gautham (M4 prompt §0) |
+| 2026-10-11 | **D1:** 3D is the default experience. Top-down is a camera mode and the automatic fallback. If the phone fails the M4 feasibility gate, phones default to top-down and desktops to 3D. | README rev 2 §8. | Gautham |
+| 2026-10-11 | **D2:** "M4 · 3D Arena" comes before cloud work. Cloud batch is M5, interactive sessions M6, hardware M7. | README rev 2 §8. | Gautham |
+| 2026-10-11 | **D3:** the first world is COCO's Gazebo arena converted from its SDF, with dressing outside the operating area. | README rev 2 §8. | Gautham |
+| 2026-10-11 | **D4:** the Arena stays planar kinematics plus kinematic terrain following; no physics engine in the browser. | README rev 2 §8. | Gautham |
+| 2026-10-11 | **D5:** M3 merges quietly; the public v2.0 launch waits for M4; the phone baseline is measured now; one consolidated five-person usability test at the end of M4 replaces the M1–M3 usability tests. | README rev 2 §8. | Gautham |
+| 2026-10-11 | **D6:** Case File scans load after the first frame (ADR 0005 amended: the ordered layout, chosen by measurement); the narrowed storage guard is accepted and generalised into one preferences module (M4.5). | README rev 2 §8; M3.9's one failed criterion. | Gautham |
+| 2026-10-11 | **One-off permissions for the M3-close / M4 session:** implement D6 in the M3 review; merge PR #22 quietly (merge commit, branch kept, no release, tag or announcement) under the A.6 conditions; stop leftover M3-session processes that would skew measurements (listed in the review; never robot-project processes); a temporary phone preview through Tailscale Funnel in M4.1 (static files only, no collision with Live's `/ws` and `/healthz`, turns itself off after 2 hours, recorded here). | Closes M3 and starts M4. | Gautham (M4 prompt §0) |
