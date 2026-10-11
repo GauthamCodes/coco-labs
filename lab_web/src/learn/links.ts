@@ -19,6 +19,10 @@ export interface ArenaLink {
   level?: string;
   replay?: string;
   cfg?: string[];
+  /** M3.4: a Case File, opened at `tick` (paused there): the tick of `moment`, derived and checked */
+  casefile?: string;
+  moment?: 'divergence' | 'refusal';
+  tick?: number;
 }
 
 const CFG = /^[a-z_]+(\.[a-z_]+)+=[A-Za-z0-9_.,+-]{1,64}$/;
@@ -42,6 +46,8 @@ export function missionBackLink(params: URLSearchParams): string | null {
 export function arenaHref(missionId: string, beat: number, link: ArenaLink): string {
   const q = new URLSearchParams({ view: 'arena' });
   if (link.replay) q.set('replay', link.replay);
+  if (link.casefile) q.set('casefile', link.casefile);
+  if (link.casefile && Number.isInteger(link.tick)) q.set('tick', String(link.tick));
   if (link.lens) q.set('lens', link.lens);
   if (link.level) q.set('level', link.level);
   for (const c of link.cfg ?? []) q.append('cfg', c);

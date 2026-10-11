@@ -1,0 +1,6554 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-10T17:48:34.773Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 56
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.39,
+    "5m": 2.41,
+    "15m": 1.45
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-10T17:50:44.613Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 60
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 4.28,
+    "5m": 2.89,
+    "15m": 1.74
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4214/coco-labs/",
+ "throttle": "none",
+ "profile": null,
+ "pages": [
+  {
+   "page": "(list)",
+   "errors": [],
+   "badge": "STACK",
+   "ok": true
+  },
+  {
+   "page": "lab1-runs",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 3,
+   "unresolved": [
+    "UNRESOLVED"
+   ],
+   "listed": 3,
+   "ok": true
+  },
+  {
+   "page": "astar-myth",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 4,
+   "unresolved": [
+    "UNRESOLVED"
+   ],
+   "listed": 3,
+   "ok": true
+  },
+  {
+   "page": "lab2-kidnap",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 3,
+   "unresolved": [
+    "UNRESOLVED",
+    "UNRESOLVED"
+   ],
+   "listed": 23,
+   "ok": true
+  },
+  {
+   "page": "lab2-rl-tour",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 2,
+   "unresolved": [
+    "UNRESOLVED"
+   ],
+   "listed": 1,
+   "ok": true
+  },
+  {
+   "page": "lab3-slam",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 3,
+   "unresolved": [
+    "UNRESOLVED"
+   ],
+   "listed": 2,
+   "ok": true
+  },
+  {
+   "page": "lab4-search",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 5,
+   "unresolved": [
+    "UNRESOLVED"
+   ],
+   "listed": 17,
+   "ok": true
+  },
+  {
+   "page": "lab5-move",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 4,
+   "unresolved": [
+    "UNRESOLVED",
+    "UNRESOLVED"
+   ],
+   "listed": 54,
+   "ok": true
+  },
+  {
+   "page": "run15",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 3,
+   "unresolved": [
+    "UNRESOLVED"
+   ],
+   "listed": 9,
+   "ok": true
+  }
+ ],
+ "casefiles": [
+  {
+   "id": "lab1_run_astar",
+   "group": "lab1-runs",
+   "bytes": 74406,
+   "errors": [],
+   "first_frame_ms": 68.099853515625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 1233,
+   "seeks": [
+    {
+     "to": 616,
+     "to_frame_ms": 33,
+     "view_tick": 616
+    },
+    {
+     "to": 61,
+     "to_frame_ms": 23.9000000001397,
+     "view_tick": 61
+    },
+    {
+     "to": 1171,
+     "to_frame_ms": 31.0999999998603,
+     "view_tick": 1171
+    },
+    {
+     "to": 308,
+     "to_frame_ms": 29.4000000001397,
+     "view_tick": 308
+    },
+    {
+     "to": 924,
+     "to_frame_ms": 28.9000000001397,
+     "view_tick": 924
+    },
+    {
+     "to": 123,
+     "to_frame_ms": 29.699999999953434,
+     "view_tick": 123
+    },
+    {
+     "to": 1109,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 1109
+    },
+    {
+     "to": 406,
+     "to_frame_ms": 29.399999999906868,
+     "view_tick": 406
+    },
+    {
+     "to": 813,
+     "to_frame_ms": 29.899999999906868,
+     "view_tick": 813
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.899999999906868,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33,
+   "ok": true
+  },
+  {
+   "id": "lab1_run_dijkstra",
+   "group": "lab1-runs",
+   "bytes": 74435,
+   "errors": [],
+   "first_frame_ms": 66.800048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 1246,
+   "seeks": [
+    {
+     "to": 623,
+     "to_frame_ms": 23.800000000046566,
+     "view_tick": 623
+    },
+    {
+     "to": 62,
+     "to_frame_ms": 31.9000000001397,
+     "view_tick": 62
+    },
+    {
+     "to": 1183,
+     "to_frame_ms": 31.9000000001397,
+     "view_tick": 1183
+    },
+    {
+     "to": 311,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 311
+    },
+    {
+     "to": 934,
+     "to_frame_ms": 32.0999999998603,
+     "view_tick": 934
+    },
+    {
+     "to": 124,
+     "to_frame_ms": 32.5,
+     "view_tick": 124
+    },
+    {
+     "to": 1121,
+     "to_frame_ms": 29.300000000046566,
+     "view_tick": 1121
+    },
+    {
+     "to": 411,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 411
+    },
+    {
+     "to": 822,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 822
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.299999999813735,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.5,
+   "ok": true
+  },
+  {
+   "id": "lab1_run_greedy",
+   "group": "lab1-runs",
+   "bytes": 60376,
+   "errors": [],
+   "first_frame_ms": 62.89990234375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 1153,
+   "seeks": [
+    {
+     "to": 576,
+     "to_frame_ms": 33,
+     "view_tick": 576
+    },
+    {
+     "to": 57,
+     "to_frame_ms": 30.5,
+     "view_tick": 57
+    },
+    {
+     "to": 1095,
+     "to_frame_ms": 31.299999999813735,
+     "view_tick": 1095
+    },
+    {
+     "to": 288,
+     "to_frame_ms": 31.700000000186265,
+     "view_tick": 288
+    },
+    {
+     "to": 864,
+     "to_frame_ms": 30.5,
+     "view_tick": 864
+    },
+    {
+     "to": 115,
+     "to_frame_ms": 30,
+     "view_tick": 115
+    },
+    {
+     "to": 1037,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 1037
+    },
+    {
+     "to": 380,
+     "to_frame_ms": 30.100000000093132,
+     "view_tick": 380
+    },
+    {
+     "to": 760,
+     "to_frame_ms": 31.5,
+     "view_tick": 760
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.700000000186265,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_recovery_k1",
+   "group": "lab2-kidnap",
+   "bytes": 1002254,
+   "errors": [],
+   "first_frame_ms": 156.199951171875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2777,
+   "seeks": [
+    {
+     "to": 1388,
+     "to_frame_ms": 25.100000000093132,
+     "view_tick": 1388
+    },
+    {
+     "to": 138,
+     "to_frame_ms": 30.5,
+     "view_tick": 138
+    },
+    {
+     "to": 2638,
+     "to_frame_ms": 28.699999999953434,
+     "view_tick": 2638
+    },
+    {
+     "to": 694,
+     "to_frame_ms": 30.299999999813735,
+     "view_tick": 694
+    },
+    {
+     "to": 2082,
+     "to_frame_ms": 30.899999999906868,
+     "view_tick": 2082
+    },
+    {
+     "to": 277,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 277
+    },
+    {
+     "to": 2499,
+     "to_frame_ms": 30.399999999906868,
+     "view_tick": 2499
+    },
+    {
+     "to": 916,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 916
+    },
+    {
+     "to": 1832,
+     "to_frame_ms": 30,
+     "view_tick": 1832
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.200000000186265,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 30.899999999906868,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_recovery_k1_void1",
+   "group": "lab2-kidnap",
+   "bytes": 126342,
+   "errors": [],
+   "first_frame_ms": 82.199951171875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2002,
+   "seeks": [
+    {
+     "to": 1001,
+     "to_frame_ms": 18,
+     "view_tick": 1001
+    },
+    {
+     "to": 100,
+     "to_frame_ms": 33,
+     "view_tick": 100
+    },
+    {
+     "to": 1901,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 1901
+    },
+    {
+     "to": 500,
+     "to_frame_ms": 28.100000000093132,
+     "view_tick": 500
+    },
+    {
+     "to": 1501,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 1501
+    },
+    {
+     "to": 200,
+     "to_frame_ms": 30.899999999906868,
+     "view_tick": 200
+    },
+    {
+     "to": 1801,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 1801
+    },
+    {
+     "to": 660,
+     "to_frame_ms": 30.9000000001397,
+     "view_tick": 660
+    },
+    {
+     "to": 1321,
+     "to_frame_ms": 30.399999999906868,
+     "view_tick": 1321
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.300000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_recovery_k1_r2",
+   "group": "lab2-kidnap",
+   "bytes": 1014645,
+   "errors": [],
+   "first_frame_ms": 131,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2809,
+   "seeks": [
+    {
+     "to": 1404,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 1404
+    },
+    {
+     "to": 140,
+     "to_frame_ms": 29.0999999998603,
+     "view_tick": 140
+    },
+    {
+     "to": 2668,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 2668
+    },
+    {
+     "to": 702,
+     "to_frame_ms": 29.600000000093132,
+     "view_tick": 702
+    },
+    {
+     "to": 2106,
+     "to_frame_ms": 31.0999999998603,
+     "view_tick": 2106
+    },
+    {
+     "to": 280,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 280
+    },
+    {
+     "to": 2528,
+     "to_frame_ms": 30.399999999906868,
+     "view_tick": 2528
+    },
+    {
+     "to": 926,
+     "to_frame_ms": 31.200000000186265,
+     "view_tick": 926
+    },
+    {
+     "to": 1853,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 1853
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.100000000093132,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 31.800000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_recovery_k2",
+   "group": "lab2-kidnap",
+   "bytes": 1021887,
+   "errors": [],
+   "first_frame_ms": 133.900146484375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2780,
+   "seeks": [
+    {
+     "to": 1390,
+     "to_frame_ms": 30.899999999906868,
+     "view_tick": 1390
+    },
+    {
+     "to": 139,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 139
+    },
+    {
+     "to": 2641,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 2641
+    },
+    {
+     "to": 695,
+     "to_frame_ms": 31,
+     "view_tick": 695
+    },
+    {
+     "to": 2085,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 2085
+    },
+    {
+     "to": 278,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 278
+    },
+    {
+     "to": 2502,
+     "to_frame_ms": 29.199999999953434,
+     "view_tick": 2502
+    },
+    {
+     "to": 917,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 917
+    },
+    {
+     "to": 1834,
+     "to_frame_ms": 30.5,
+     "view_tick": 1834
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 31.4000000001397,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_recovery_k2_void2",
+   "group": "lab2-kidnap",
+   "bytes": 40442,
+   "errors": [],
+   "first_frame_ms": 45.60009765625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 862,
+   "seeks": [
+    {
+     "to": 431,
+     "to_frame_ms": 18.5,
+     "view_tick": 431
+    },
+    {
+     "to": 43,
+     "to_frame_ms": 32.0999999998603,
+     "view_tick": 43
+    },
+    {
+     "to": 818,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 818
+    },
+    {
+     "to": 215,
+     "to_frame_ms": 29.699999999953434,
+     "view_tick": 215
+    },
+    {
+     "to": 646,
+     "to_frame_ms": 30.5,
+     "view_tick": 646
+    },
+    {
+     "to": 86,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 86
+    },
+    {
+     "to": 775,
+     "to_frame_ms": 29.200000000186265,
+     "view_tick": 775
+    },
+    {
+     "to": 284,
+     "to_frame_ms": 30.0999999998603,
+     "view_tick": 284
+    },
+    {
+     "to": 568,
+     "to_frame_ms": 30.4000000001397,
+     "view_tick": 568
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_recovery_k2_r2",
+   "group": "lab2-kidnap",
+   "bytes": 1015304,
+   "errors": [],
+   "first_frame_ms": 129.099853515625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2816,
+   "seeks": [
+    {
+     "to": 1408,
+     "to_frame_ms": 33.9000000001397,
+     "view_tick": 1408
+    },
+    {
+     "to": 140,
+     "to_frame_ms": 28.300000000046566,
+     "view_tick": 140
+    },
+    {
+     "to": 2675,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 2675
+    },
+    {
+     "to": 704,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 704
+    },
+    {
+     "to": 2112,
+     "to_frame_ms": 30.0999999998603,
+     "view_tick": 2112
+    },
+    {
+     "to": 281,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 281
+    },
+    {
+     "to": 2534,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 2534
+    },
+    {
+     "to": 929,
+     "to_frame_ms": 28.5,
+     "view_tick": 929
+    },
+    {
+     "to": 1858,
+     "to_frame_ms": 31,
+     "view_tick": 1858
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.200000000186265,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.9000000001397,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_recovery_k3",
+   "group": "lab2-kidnap",
+   "bytes": 1013126,
+   "errors": [],
+   "first_frame_ms": 123.599853515625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2782,
+   "seeks": [
+    {
+     "to": 1391,
+     "to_frame_ms": 24.200000000186265,
+     "view_tick": 1391
+    },
+    {
+     "to": 139,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 139
+    },
+    {
+     "to": 2642,
+     "to_frame_ms": 31,
+     "view_tick": 2642
+    },
+    {
+     "to": 695,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 695
+    },
+    {
+     "to": 2086,
+     "to_frame_ms": 25.800000000046566,
+     "view_tick": 2086
+    },
+    {
+     "to": 278,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 278
+    },
+    {
+     "to": 2503,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 2503
+    },
+    {
+     "to": 918,
+     "to_frame_ms": 29.300000000046566,
+     "view_tick": 918
+    },
+    {
+     "to": 1836,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 1836
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.699999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 31.800000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_recovery_k3_r2",
+   "group": "lab2-kidnap",
+   "bytes": 1019933,
+   "errors": [],
+   "first_frame_ms": 129.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2826,
+   "seeks": [
+    {
+     "to": 1413,
+     "to_frame_ms": 27.4000000001397,
+     "view_tick": 1413
+    },
+    {
+     "to": 141,
+     "to_frame_ms": 28.5,
+     "view_tick": 141
+    },
+    {
+     "to": 2684,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 2684
+    },
+    {
+     "to": 706,
+     "to_frame_ms": 31.700000000186265,
+     "view_tick": 706
+    },
+    {
+     "to": 2119,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 2119
+    },
+    {
+     "to": 282,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 282
+    },
+    {
+     "to": 2543,
+     "to_frame_ms": 31.5,
+     "view_tick": 2543
+    },
+    {
+     "to": 932,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 932
+    },
+    {
+     "to": 1865,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 1865
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.899999999906868,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 31.700000000186265,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_recovery_k4",
+   "group": "lab2-kidnap",
+   "bytes": 1012451,
+   "errors": [],
+   "first_frame_ms": 131.7001953125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2771,
+   "seeks": [
+    {
+     "to": 1385,
+     "to_frame_ms": 26.699999999953434,
+     "view_tick": 1385
+    },
+    {
+     "to": 138,
+     "to_frame_ms": 28,
+     "view_tick": 138
+    },
+    {
+     "to": 2632,
+     "to_frame_ms": 30.399999999906868,
+     "view_tick": 2632
+    },
+    {
+     "to": 692,
+     "to_frame_ms": 30.100000000093132,
+     "view_tick": 692
+    },
+    {
+     "to": 2078,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 2078
+    },
+    {
+     "to": 277,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 277
+    },
+    {
+     "to": 2493,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 2493
+    },
+    {
+     "to": 914,
+     "to_frame_ms": 29.600000000093132,
+     "view_tick": 914
+    },
+    {
+     "to": 1828,
+     "to_frame_ms": 31.5,
+     "view_tick": 1828
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.199999999953434,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_recovery_k4_r2",
+   "group": "lab2-kidnap",
+   "bytes": 1016816,
+   "errors": [],
+   "first_frame_ms": 127.400146484375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2837,
+   "seeks": [
+    {
+     "to": 1418,
+     "to_frame_ms": 18.4000000001397,
+     "view_tick": 1418
+    },
+    {
+     "to": 141,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 141
+    },
+    {
+     "to": 2695,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 2695
+    },
+    {
+     "to": 709,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 709
+    },
+    {
+     "to": 2127,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 2127
+    },
+    {
+     "to": 283,
+     "to_frame_ms": 30,
+     "view_tick": 283
+    },
+    {
+     "to": 2553,
+     "to_frame_ms": 32.0999999998603,
+     "view_tick": 2553
+    },
+    {
+     "to": 936,
+     "to_frame_ms": 32,
+     "view_tick": 936
+    },
+    {
+     "to": 1872,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 1872
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.199999999953434,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_recovery_k5",
+   "group": "lab2-kidnap",
+   "bytes": 1013893,
+   "errors": [],
+   "first_frame_ms": 147.10009765625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2779,
+   "seeks": [
+    {
+     "to": 1389,
+     "to_frame_ms": 27.5,
+     "view_tick": 1389
+    },
+    {
+     "to": 138,
+     "to_frame_ms": 30.899999999906868,
+     "view_tick": 138
+    },
+    {
+     "to": 2640,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 2640
+    },
+    {
+     "to": 694,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 694
+    },
+    {
+     "to": 2084,
+     "to_frame_ms": 32.5,
+     "view_tick": 2084
+    },
+    {
+     "to": 277,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 277
+    },
+    {
+     "to": 2501,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 2501
+    },
+    {
+     "to": 917,
+     "to_frame_ms": 31.5,
+     "view_tick": 917
+    },
+    {
+     "to": 1834,
+     "to_frame_ms": 31,
+     "view_tick": 1834
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.5,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_recovery_k5_r2",
+   "group": "lab2-kidnap",
+   "bytes": 1018783,
+   "errors": [],
+   "first_frame_ms": 141,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2823,
+   "seeks": [
+    {
+     "to": 1411,
+     "to_frame_ms": 29.399999999906868,
+     "view_tick": 1411
+    },
+    {
+     "to": 141,
+     "to_frame_ms": 29.5,
+     "view_tick": 141
+    },
+    {
+     "to": 2681,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 2681
+    },
+    {
+     "to": 705,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 705
+    },
+    {
+     "to": 2117,
+     "to_frame_ms": 30,
+     "view_tick": 2117
+    },
+    {
+     "to": 282,
+     "to_frame_ms": 31,
+     "view_tick": 282
+    },
+    {
+     "to": 2540,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 2540
+    },
+    {
+     "to": 931,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 931
+    },
+    {
+     "to": 1863,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 1863
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.199999999953434,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_shipped_k1",
+   "group": "lab2-kidnap",
+   "bytes": 1005265,
+   "errors": [],
+   "first_frame_ms": 131.60009765625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2759,
+   "seeks": [
+    {
+     "to": 1379,
+     "to_frame_ms": 26.5999999998603,
+     "view_tick": 1379
+    },
+    {
+     "to": 137,
+     "to_frame_ms": 29.5,
+     "view_tick": 137
+    },
+    {
+     "to": 2621,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 2621
+    },
+    {
+     "to": 689,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 689
+    },
+    {
+     "to": 2069,
+     "to_frame_ms": 29.899999999906868,
+     "view_tick": 2069
+    },
+    {
+     "to": 275,
+     "to_frame_ms": 31.0999999998603,
+     "view_tick": 275
+    },
+    {
+     "to": 2483,
+     "to_frame_ms": 31.5,
+     "view_tick": 2483
+    },
+    {
+     "to": 910,
+     "to_frame_ms": 30.899999999906868,
+     "view_tick": 910
+    },
+    {
+     "to": 1820,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 1820
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.5999999998603,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 31.5999999998603,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_shipped_k1_void1",
+   "group": "lab2-kidnap",
+   "bytes": 126423,
+   "errors": [],
+   "first_frame_ms": 79.10009765625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 1963,
+   "seeks": [
+    {
+     "to": 981,
+     "to_frame_ms": 27.699999999953434,
+     "view_tick": 981
+    },
+    {
+     "to": 98,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 98
+    },
+    {
+     "to": 1864,
+     "to_frame_ms": 28.9000000001397,
+     "view_tick": 1864
+    },
+    {
+     "to": 490,
+     "to_frame_ms": 32.699999999953434,
+     "view_tick": 490
+    },
+    {
+     "to": 1472,
+     "to_frame_ms": 30.399999999906868,
+     "view_tick": 1472
+    },
+    {
+     "to": 196,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 196
+    },
+    {
+     "to": 1766,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 1766
+    },
+    {
+     "to": 647,
+     "to_frame_ms": 33.10000000009313,
+     "view_tick": 647
+    },
+    {
+     "to": 1295,
+     "to_frame_ms": 28.399999999906868,
+     "view_tick": 1295
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.10000000009313,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_shipped_k1_r2",
+   "group": "lab2-kidnap",
+   "bytes": 1020776,
+   "errors": [],
+   "first_frame_ms": 128.199951171875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2796,
+   "seeks": [
+    {
+     "to": 1398,
+     "to_frame_ms": 33.699999999953434,
+     "view_tick": 1398
+    },
+    {
+     "to": 139,
+     "to_frame_ms": 28.5999999998603,
+     "view_tick": 139
+    },
+    {
+     "to": 2656,
+     "to_frame_ms": 31.5,
+     "view_tick": 2656
+    },
+    {
+     "to": 699,
+     "to_frame_ms": 30.100000000093132,
+     "view_tick": 699
+    },
+    {
+     "to": 2097,
+     "to_frame_ms": 30.5,
+     "view_tick": 2097
+    },
+    {
+     "to": 279,
+     "to_frame_ms": 31.0999999998603,
+     "view_tick": 279
+    },
+    {
+     "to": 2516,
+     "to_frame_ms": 31.0999999998603,
+     "view_tick": 2516
+    },
+    {
+     "to": 922,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 922
+    },
+    {
+     "to": 1845,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 1845
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 28.899999999906868,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.699999999953434,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_shipped_k2",
+   "group": "lab2-kidnap",
+   "bytes": 1018775,
+   "errors": [],
+   "first_frame_ms": 143,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2776,
+   "seeks": [
+    {
+     "to": 1388,
+     "to_frame_ms": 19.399999999906868,
+     "view_tick": 1388
+    },
+    {
+     "to": 138,
+     "to_frame_ms": 31.5,
+     "view_tick": 138
+    },
+    {
+     "to": 2637,
+     "to_frame_ms": 31,
+     "view_tick": 2637
+    },
+    {
+     "to": 694,
+     "to_frame_ms": 29.100000000093132,
+     "view_tick": 694
+    },
+    {
+     "to": 2082,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 2082
+    },
+    {
+     "to": 277,
+     "to_frame_ms": 32.5,
+     "view_tick": 277
+    },
+    {
+     "to": 2498,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 2498
+    },
+    {
+     "to": 916,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 916
+    },
+    {
+     "to": 1832,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 1832
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32.699999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.699999999953434,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_shipped_k2_r2",
+   "group": "lab2-kidnap",
+   "bytes": 1017045,
+   "errors": [],
+   "first_frame_ms": 143.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2809,
+   "seeks": [
+    {
+     "to": 1404,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 1404
+    },
+    {
+     "to": 140,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 140
+    },
+    {
+     "to": 2668,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 2668
+    },
+    {
+     "to": 702,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 702
+    },
+    {
+     "to": 2106,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 2106
+    },
+    {
+     "to": 280,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 280
+    },
+    {
+     "to": 2528,
+     "to_frame_ms": 32.200000000186265,
+     "view_tick": 2528
+    },
+    {
+     "to": 926,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 926
+    },
+    {
+     "to": 1853,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 1853
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.39999999990687,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_shipped_k3",
+   "group": "lab2-kidnap",
+   "bytes": 1014022,
+   "errors": [],
+   "first_frame_ms": 147.800048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2774,
+   "seeks": [
+    {
+     "to": 1387,
+     "to_frame_ms": 23.300000000046566,
+     "view_tick": 1387
+    },
+    {
+     "to": 138,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 138
+    },
+    {
+     "to": 2635,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 2635
+    },
+    {
+     "to": 693,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 693
+    },
+    {
+     "to": 2080,
+     "to_frame_ms": 29.199999999953434,
+     "view_tick": 2080
+    },
+    {
+     "to": 277,
+     "to_frame_ms": 32.89999999990687,
+     "view_tick": 277
+    },
+    {
+     "to": 2496,
+     "to_frame_ms": 30.899999999906868,
+     "view_tick": 2496
+    },
+    {
+     "to": 915,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 915
+    },
+    {
+     "to": 1830,
+     "to_frame_ms": 32.699999999953434,
+     "view_tick": 1830
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.399999999906868,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.89999999990687,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_shipped_k3_r2",
+   "group": "lab2-kidnap",
+   "bytes": 1007417,
+   "errors": [],
+   "first_frame_ms": 128.39990234375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2823,
+   "seeks": [
+    {
+     "to": 1411,
+     "to_frame_ms": 22.699999999953434,
+     "view_tick": 1411
+    },
+    {
+     "to": 141,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 141
+    },
+    {
+     "to": 2681,
+     "to_frame_ms": 31,
+     "view_tick": 2681
+    },
+    {
+     "to": 705,
+     "to_frame_ms": 30.899999999906868,
+     "view_tick": 705
+    },
+    {
+     "to": 2117,
+     "to_frame_ms": 30,
+     "view_tick": 2117
+    },
+    {
+     "to": 282,
+     "to_frame_ms": 30.899999999906868,
+     "view_tick": 282
+    },
+    {
+     "to": 2540,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 2540
+    },
+    {
+     "to": 931,
+     "to_frame_ms": 29.100000000093132,
+     "view_tick": 931
+    },
+    {
+     "to": 1863,
+     "to_frame_ms": 31.5,
+     "view_tick": 1863
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.5,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.199999999953434,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_shipped_k4",
+   "group": "lab2-kidnap",
+   "bytes": 1018349,
+   "errors": [],
+   "first_frame_ms": 148.39990234375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2766,
+   "seeks": [
+    {
+     "to": 1383,
+     "to_frame_ms": 31.299999999813735,
+     "view_tick": 1383
+    },
+    {
+     "to": 138,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 138
+    },
+    {
+     "to": 2627,
+     "to_frame_ms": 30.399999999906868,
+     "view_tick": 2627
+    },
+    {
+     "to": 691,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 691
+    },
+    {
+     "to": 2074,
+     "to_frame_ms": 29.699999999953434,
+     "view_tick": 2074
+    },
+    {
+     "to": 276,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 276
+    },
+    {
+     "to": 2489,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 2489
+    },
+    {
+     "to": 912,
+     "to_frame_ms": 32,
+     "view_tick": 912
+    },
+    {
+     "to": 1825,
+     "to_frame_ms": 30,
+     "view_tick": 1825
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_shipped_k4_r2",
+   "group": "lab2-kidnap",
+   "bytes": 1023486,
+   "errors": [],
+   "first_frame_ms": 148.199951171875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2824,
+   "seeks": [
+    {
+     "to": 1412,
+     "to_frame_ms": 19.5,
+     "view_tick": 1412
+    },
+    {
+     "to": 141,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 141
+    },
+    {
+     "to": 2682,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 2682
+    },
+    {
+     "to": 706,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 706
+    },
+    {
+     "to": 2118,
+     "to_frame_ms": 32.200000000186265,
+     "view_tick": 2118
+    },
+    {
+     "to": 282,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 282
+    },
+    {
+     "to": 2541,
+     "to_frame_ms": 32.0999999998603,
+     "view_tick": 2541
+    },
+    {
+     "to": 931,
+     "to_frame_ms": 31.700000000186265,
+     "view_tick": 931
+    },
+    {
+     "to": 1863,
+     "to_frame_ms": 31.200000000186265,
+     "view_tick": 1863
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.200000000186265,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_shipped_k5",
+   "group": "lab2-kidnap",
+   "bytes": 1018899,
+   "errors": [],
+   "first_frame_ms": 142.10009765625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2778,
+   "seeks": [
+    {
+     "to": 1389,
+     "to_frame_ms": 29.299999999813735,
+     "view_tick": 1389
+    },
+    {
+     "to": 138,
+     "to_frame_ms": 32,
+     "view_tick": 138
+    },
+    {
+     "to": 2639,
+     "to_frame_ms": 31.299999999813735,
+     "view_tick": 2639
+    },
+    {
+     "to": 694,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 694
+    },
+    {
+     "to": 2083,
+     "to_frame_ms": 31,
+     "view_tick": 2083
+    },
+    {
+     "to": 277,
+     "to_frame_ms": 31.200000000186265,
+     "view_tick": 277
+    },
+    {
+     "to": 2500,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 2500
+    },
+    {
+     "to": 916,
+     "to_frame_ms": 31.0999999998603,
+     "view_tick": 916
+    },
+    {
+     "to": 1833,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 1833
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.200000000186265,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32,
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_shipped_k5_r2",
+   "group": "lab2-kidnap",
+   "bytes": 1015212,
+   "errors": [],
+   "first_frame_ms": 132.2998046875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2834,
+   "seeks": [
+    {
+     "to": 1417,
+     "to_frame_ms": 20.5,
+     "view_tick": 1417
+    },
+    {
+     "to": 141,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 141
+    },
+    {
+     "to": 2692,
+     "to_frame_ms": 29.399999999906868,
+     "view_tick": 2692
+    },
+    {
+     "to": 708,
+     "to_frame_ms": 31.5,
+     "view_tick": 708
+    },
+    {
+     "to": 2125,
+     "to_frame_ms": 31.9000000001397,
+     "view_tick": 2125
+    },
+    {
+     "to": 283,
+     "to_frame_ms": 29.300000000046566,
+     "view_tick": 283
+    },
+    {
+     "to": 2550,
+     "to_frame_ms": 31,
+     "view_tick": 2550
+    },
+    {
+     "to": 935,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 935
+    },
+    {
+     "to": 1870,
+     "to_frame_ms": 31.9000000001397,
+     "view_tick": 1870
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32.60000000009313,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.60000000009313,
+   "ok": true
+  },
+  {
+   "id": "lab2_rl_fidelity_1_tour",
+   "group": "lab2-rl-tour",
+   "bytes": 2780072,
+   "errors": [],
+   "first_frame_ms": 278.900146484375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 4405,
+   "seeks": [
+    {
+     "to": 2202,
+     "to_frame_ms": 27.399999999906868,
+     "view_tick": 2202
+    },
+    {
+     "to": 220,
+     "to_frame_ms": 31.799999999813735,
+     "view_tick": 220
+    },
+    {
+     "to": 4184,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 4184
+    },
+    {
+     "to": 1101,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 1101
+    },
+    {
+     "to": 3303,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 3303
+    },
+    {
+     "to": 440,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 440
+    },
+    {
+     "to": 3964,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 3964
+    },
+    {
+     "to": 1453,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 1453
+    },
+    {
+     "to": 2907,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 2907
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.39999999990687,
+   "ok": true
+  },
+  {
+   "id": "lab3_s1_tour",
+   "group": "lab3-slam",
+   "bytes": 1888100,
+   "errors": [],
+   "first_frame_ms": 190.400146484375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 4425,
+   "seeks": [
+    {
+     "to": 2212,
+     "to_frame_ms": 32.9000000001397,
+     "view_tick": 2212
+    },
+    {
+     "to": 221,
+     "to_frame_ms": 29.5,
+     "view_tick": 221
+    },
+    {
+     "to": 4203,
+     "to_frame_ms": 31.200000000186265,
+     "view_tick": 4203
+    },
+    {
+     "to": 1106,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 1106
+    },
+    {
+     "to": 3318,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 3318
+    },
+    {
+     "to": 442,
+     "to_frame_ms": 28.300000000046566,
+     "view_tick": 442
+    },
+    {
+     "to": 3982,
+     "to_frame_ms": 30,
+     "view_tick": 3982
+    },
+    {
+     "to": 1460,
+     "to_frame_ms": 30,
+     "view_tick": 1460
+    },
+    {
+     "to": 2920,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 2920
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.9000000001397,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.9000000001397,
+   "ok": true
+  },
+  {
+   "id": "lab3_1_tour",
+   "group": "lab3-slam",
+   "bytes": 1898046,
+   "errors": [],
+   "first_frame_ms": 199.10009765625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 4425,
+   "seeks": [
+    {
+     "to": 2212,
+     "to_frame_ms": 27.300000000046566,
+     "view_tick": 2212
+    },
+    {
+     "to": 221,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 221
+    },
+    {
+     "to": 4203,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 4203
+    },
+    {
+     "to": 1106,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 1106
+    },
+    {
+     "to": 3318,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 3318
+    },
+    {
+     "to": 442,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 442
+    },
+    {
+     "to": 3982,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 3982
+    },
+    {
+     "to": 1460,
+     "to_frame_ms": 30,
+     "view_tick": 1460
+    },
+    {
+     "to": 2920,
+     "to_frame_ms": 33,
+     "view_tick": 2920
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33,
+   "ok": true
+  },
+  {
+   "id": "lab4_a1_fixed_red",
+   "group": "lab4-search",
+   "bytes": 345221,
+   "errors": [],
+   "first_frame_ms": 95.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 4145,
+   "seeks": [
+    {
+     "to": 2072,
+     "to_frame_ms": 25.199999999953434,
+     "view_tick": 2072
+    },
+    {
+     "to": 207,
+     "to_frame_ms": 31.5,
+     "view_tick": 207
+    },
+    {
+     "to": 3937,
+     "to_frame_ms": 27.699999999953434,
+     "view_tick": 3937
+    },
+    {
+     "to": 1036,
+     "to_frame_ms": 30.9000000001397,
+     "view_tick": 1036
+    },
+    {
+     "to": 3108,
+     "to_frame_ms": 32.299999999813735,
+     "view_tick": 3108
+    },
+    {
+     "to": 414,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 414
+    },
+    {
+     "to": 3730,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 3730
+    },
+    {
+     "to": 1367,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 1367
+    },
+    {
+     "to": 2735,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 2735
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.299999999813735,
+   "ok": true
+  },
+  {
+   "id": "lab4_a2_fixed_green",
+   "group": "lab4-search",
+   "bytes": 266091,
+   "errors": [],
+   "first_frame_ms": 89.5,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 3184,
+   "seeks": [
+    {
+     "to": 1592,
+     "to_frame_ms": 20.300000000046566,
+     "view_tick": 1592
+    },
+    {
+     "to": 159,
+     "to_frame_ms": 32.5,
+     "view_tick": 159
+    },
+    {
+     "to": 3024,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 3024
+    },
+    {
+     "to": 796,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 796
+    },
+    {
+     "to": 2388,
+     "to_frame_ms": 30.4000000001397,
+     "view_tick": 2388
+    },
+    {
+     "to": 318,
+     "to_frame_ms": 31.0999999998603,
+     "view_tick": 318
+    },
+    {
+     "to": 2865,
+     "to_frame_ms": 29.199999999953434,
+     "view_tick": 2865
+    },
+    {
+     "to": 1050,
+     "to_frame_ms": 30.4000000001397,
+     "view_tick": 1050
+    },
+    {
+     "to": 2101,
+     "to_frame_ms": 31,
+     "view_tick": 2101
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.5,
+   "ok": true
+  },
+  {
+   "id": "lab4_a3_fixed_blue",
+   "group": "lab4-search",
+   "bytes": 123776,
+   "errors": [],
+   "first_frame_ms": 52.7001953125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 1500,
+   "seeks": [
+    {
+     "to": 750,
+     "to_frame_ms": 18.699999999953434,
+     "view_tick": 750
+    },
+    {
+     "to": 75,
+     "to_frame_ms": 32.699999999953434,
+     "view_tick": 75
+    },
+    {
+     "to": 1425,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 1425
+    },
+    {
+     "to": 375,
+     "to_frame_ms": 29.600000000093132,
+     "view_tick": 375
+    },
+    {
+     "to": 1125,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 1125
+    },
+    {
+     "to": 150,
+     "to_frame_ms": 30.399999999906868,
+     "view_tick": 150
+    },
+    {
+     "to": 1350,
+     "to_frame_ms": 31,
+     "view_tick": 1350
+    },
+    {
+     "to": 495,
+     "to_frame_ms": 29.199999999953434,
+     "view_tick": 495
+    },
+    {
+     "to": 990,
+     "to_frame_ms": 31.5,
+     "view_tick": 990
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.299999999813735,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.699999999953434,
+   "ok": true
+  },
+  {
+   "id": "lab4_a4_fixed_yellow",
+   "group": "lab4-search",
+   "bytes": 195773,
+   "errors": [],
+   "first_frame_ms": 71.5,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2342,
+   "seeks": [
+    {
+     "to": 1171,
+     "to_frame_ms": 23.399999999906868,
+     "view_tick": 1171
+    },
+    {
+     "to": 117,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 117
+    },
+    {
+     "to": 2224,
+     "to_frame_ms": 32,
+     "view_tick": 2224
+    },
+    {
+     "to": 585,
+     "to_frame_ms": 29.0999999998603,
+     "view_tick": 585
+    },
+    {
+     "to": 1756,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 1756
+    },
+    {
+     "to": 234,
+     "to_frame_ms": 29.700000000186265,
+     "view_tick": 234
+    },
+    {
+     "to": 2107,
+     "to_frame_ms": 31.200000000186265,
+     "view_tick": 2107
+    },
+    {
+     "to": 772,
+     "to_frame_ms": 29.9000000001397,
+     "view_tick": 772
+    },
+    {
+     "to": 1545,
+     "to_frame_ms": 30.100000000093132,
+     "view_tick": 1545
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.4000000001397,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.10000000009313,
+   "ok": true
+  },
+  {
+   "id": "lab4_b1_colours_s5_red",
+   "group": "lab4-search",
+   "bytes": 353001,
+   "errors": [],
+   "first_frame_ms": 93.800048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 4185,
+   "seeks": [
+    {
+     "to": 2092,
+     "to_frame_ms": 19,
+     "view_tick": 2092
+    },
+    {
+     "to": 209,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 209
+    },
+    {
+     "to": 3975,
+     "to_frame_ms": 29.700000000186265,
+     "view_tick": 3975
+    },
+    {
+     "to": 1046,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 1046
+    },
+    {
+     "to": 3138,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 3138
+    },
+    {
+     "to": 418,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 418
+    },
+    {
+     "to": 3766,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 3766
+    },
+    {
+     "to": 1381,
+     "to_frame_ms": 32.5999999998603,
+     "view_tick": 1381
+    },
+    {
+     "to": 2762,
+     "to_frame_ms": 29,
+     "view_tick": 2762
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.5999999998603,
+   "ok": true
+  },
+  {
+   "id": "lab4_b2_colours_s1_red",
+   "group": "lab4-search",
+   "bytes": 256140,
+   "errors": [],
+   "first_frame_ms": 74.599853515625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 3100,
+   "seeks": [
+    {
+     "to": 1550,
+     "to_frame_ms": 32.9000000001397,
+     "view_tick": 1550
+    },
+    {
+     "to": 155,
+     "to_frame_ms": 32,
+     "view_tick": 155
+    },
+    {
+     "to": 2945,
+     "to_frame_ms": 28.800000000046566,
+     "view_tick": 2945
+    },
+    {
+     "to": 775,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 775
+    },
+    {
+     "to": 2325,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 2325
+    },
+    {
+     "to": 310,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 310
+    },
+    {
+     "to": 2790,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 2790
+    },
+    {
+     "to": 1023,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 1023
+    },
+    {
+     "to": 2046,
+     "to_frame_ms": 29.0999999998603,
+     "view_tick": 2046
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.9000000001397,
+   "ok": true
+  },
+  {
+   "id": "lab4_b3_colours_s7_red",
+   "group": "lab4-search",
+   "bytes": 131238,
+   "errors": [],
+   "first_frame_ms": 73.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 1606,
+   "seeks": [
+    {
+     "to": 803,
+     "to_frame_ms": 33.5,
+     "view_tick": 803
+    },
+    {
+     "to": 80,
+     "to_frame_ms": 32.0999999998603,
+     "view_tick": 80
+    },
+    {
+     "to": 1525,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 1525
+    },
+    {
+     "to": 401,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 401
+    },
+    {
+     "to": 1204,
+     "to_frame_ms": 31.799999999813735,
+     "view_tick": 1204
+    },
+    {
+     "to": 160,
+     "to_frame_ms": 30.5,
+     "view_tick": 160
+    },
+    {
+     "to": 1445,
+     "to_frame_ms": 31.5,
+     "view_tick": 1445
+    },
+    {
+     "to": 529,
+     "to_frame_ms": 29.5,
+     "view_tick": 529
+    },
+    {
+     "to": 1059,
+     "to_frame_ms": 30.200000000186265,
+     "view_tick": 1059
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 33.39999999990687,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.5,
+   "ok": true
+  },
+  {
+   "id": "lab4_b4_colours_s2_red",
+   "group": "lab4-search",
+   "bytes": 203179,
+   "errors": [],
+   "first_frame_ms": 74.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2441,
+   "seeks": [
+    {
+     "to": 1220,
+     "to_frame_ms": 26.800000000046566,
+     "view_tick": 1220
+    },
+    {
+     "to": 122,
+     "to_frame_ms": 29.100000000093132,
+     "view_tick": 122
+    },
+    {
+     "to": 2318,
+     "to_frame_ms": 30.5,
+     "view_tick": 2318
+    },
+    {
+     "to": 610,
+     "to_frame_ms": 30.5,
+     "view_tick": 610
+    },
+    {
+     "to": 1830,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 1830
+    },
+    {
+     "to": 244,
+     "to_frame_ms": 32.200000000186265,
+     "view_tick": 244
+    },
+    {
+     "to": 2196,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 2196
+    },
+    {
+     "to": 805,
+     "to_frame_ms": 31,
+     "view_tick": 805
+    },
+    {
+     "to": 1611,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 1611
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.200000000186265,
+   "ok": true
+  },
+  {
+   "id": "lab4_c1_green_stop_after_bay3",
+   "group": "lab4-search",
+   "bytes": 78603,
+   "errors": [],
+   "first_frame_ms": 40.599853515625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 903,
+   "seeks": [
+    {
+     "to": 451,
+     "to_frame_ms": 29.799999999813735,
+     "view_tick": 451
+    },
+    {
+     "to": 45,
+     "to_frame_ms": 30.9000000001397,
+     "view_tick": 45
+    },
+    {
+     "to": 857,
+     "to_frame_ms": 32,
+     "view_tick": 857
+    },
+    {
+     "to": 225,
+     "to_frame_ms": 36.89999999990687,
+     "view_tick": 225
+    },
+    {
+     "to": 677,
+     "to_frame_ms": 24.300000000046566,
+     "view_tick": 677
+    },
+    {
+     "to": 90,
+     "to_frame_ms": 30.5,
+     "view_tick": 90
+    },
+    {
+     "to": 812,
+     "to_frame_ms": 29.5,
+     "view_tick": 812
+    },
+    {
+     "to": 297,
+     "to_frame_ms": 29.899999999906868,
+     "view_tick": 297
+    },
+    {
+     "to": 595,
+     "to_frame_ms": 30.4000000001397,
+     "view_tick": 595
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 36.89999999990687,
+   "ok": true
+  },
+  {
+   "id": "lab4_c2_green_nearest",
+   "group": "lab4-search",
+   "bytes": 200338,
+   "errors": [],
+   "first_frame_ms": 71.5,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2443,
+   "seeks": [
+    {
+     "to": 1221,
+     "to_frame_ms": 22.699999999953434,
+     "view_tick": 1221
+    },
+    {
+     "to": 122,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 122
+    },
+    {
+     "to": 2320,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 2320
+    },
+    {
+     "to": 610,
+     "to_frame_ms": 30.299999999813735,
+     "view_tick": 610
+    },
+    {
+     "to": 1832,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 1832
+    },
+    {
+     "to": 244,
+     "to_frame_ms": 29.199999999953434,
+     "view_tick": 244
+    },
+    {
+     "to": 2198,
+     "to_frame_ms": 29.5,
+     "view_tick": 2198
+    },
+    {
+     "to": 806,
+     "to_frame_ms": 30,
+     "view_tick": 806
+    },
+    {
+     "to": 1612,
+     "to_frame_ms": 32,
+     "view_tick": 1612
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 28.699999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32,
+   "ok": true
+  },
+  {
+   "id": "lab4_c3_green_most_likely",
+   "group": "lab4-search",
+   "bytes": 209099,
+   "errors": [],
+   "first_frame_ms": 69.199951171875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2537,
+   "seeks": [
+    {
+     "to": 1268,
+     "to_frame_ms": 24.5999999998603,
+     "view_tick": 1268
+    },
+    {
+     "to": 126,
+     "to_frame_ms": 32.5999999998603,
+     "view_tick": 126
+    },
+    {
+     "to": 2410,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 2410
+    },
+    {
+     "to": 634,
+     "to_frame_ms": 26.600000000093132,
+     "view_tick": 634
+    },
+    {
+     "to": 1902,
+     "to_frame_ms": 32.5999999998603,
+     "view_tick": 1902
+    },
+    {
+     "to": 253,
+     "to_frame_ms": 29.9000000001397,
+     "view_tick": 253
+    },
+    {
+     "to": 2283,
+     "to_frame_ms": 30.100000000093132,
+     "view_tick": 2283
+    },
+    {
+     "to": 837,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 837
+    },
+    {
+     "to": 1674,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 1674
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.5999999998603,
+   "ok": true
+  },
+  {
+   "id": "lab4_c4_green_reverse",
+   "group": "lab4-search",
+   "bytes": 291269,
+   "errors": [],
+   "first_frame_ms": 105,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 3479,
+   "seeks": [
+    {
+     "to": 1739,
+     "to_frame_ms": 19.399999999906868,
+     "view_tick": 1739
+    },
+    {
+     "to": 173,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 173
+    },
+    {
+     "to": 3305,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 3305
+    },
+    {
+     "to": 869,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 869
+    },
+    {
+     "to": 2609,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 2609
+    },
+    {
+     "to": 347,
+     "to_frame_ms": 32,
+     "view_tick": 347
+    },
+    {
+     "to": 3131,
+     "to_frame_ms": 32.5,
+     "view_tick": 3131
+    },
+    {
+     "to": 1148,
+     "to_frame_ms": 31.9000000001397,
+     "view_tick": 1148
+    },
+    {
+     "to": 2296,
+     "to_frame_ms": 31,
+     "view_tick": 2296
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.5,
+   "ok": true
+  },
+  {
+   "id": "lab4_d1_positions_s1_red",
+   "group": "lab4-search",
+   "bytes": 271638,
+   "errors": [],
+   "first_frame_ms": 84.699951171875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 3248,
+   "seeks": [
+    {
+     "to": 1624,
+     "to_frame_ms": 19,
+     "view_tick": 1624
+    },
+    {
+     "to": 162,
+     "to_frame_ms": 31.5,
+     "view_tick": 162
+    },
+    {
+     "to": 3085,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 3085
+    },
+    {
+     "to": 812,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 812
+    },
+    {
+     "to": 2436,
+     "to_frame_ms": 31.5,
+     "view_tick": 2436
+    },
+    {
+     "to": 324,
+     "to_frame_ms": 30.100000000093132,
+     "view_tick": 324
+    },
+    {
+     "to": 2923,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 2923
+    },
+    {
+     "to": 1071,
+     "to_frame_ms": 32,
+     "view_tick": 1071
+    },
+    {
+     "to": 2143,
+     "to_frame_ms": 32,
+     "view_tick": 2143
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32,
+   "ok": true
+  },
+  {
+   "id": "lab4_d2_positions_s2_red",
+   "group": "lab4-search",
+   "bytes": 199665,
+   "errors": [],
+   "first_frame_ms": 71.5,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 2377,
+   "seeks": [
+    {
+     "to": 1188,
+     "to_frame_ms": 31.799999999813735,
+     "view_tick": 1188
+    },
+    {
+     "to": 118,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 118
+    },
+    {
+     "to": 2258,
+     "to_frame_ms": 27.800000000046566,
+     "view_tick": 2258
+    },
+    {
+     "to": 594,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 594
+    },
+    {
+     "to": 1782,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 1782
+    },
+    {
+     "to": 237,
+     "to_frame_ms": 30,
+     "view_tick": 237
+    },
+    {
+     "to": 2139,
+     "to_frame_ms": 29.9000000001397,
+     "view_tick": 2139
+    },
+    {
+     "to": 784,
+     "to_frame_ms": 32,
+     "view_tick": 784
+    },
+    {
+     "to": 1568,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 1568
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32.299999999813735,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.39999999990687,
+   "ok": true
+  },
+  {
+   "id": "lab4_d3_positions_s3_red",
+   "group": "lab4-search",
+   "bytes": 268543,
+   "errors": [],
+   "first_frame_ms": 88.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 3202,
+   "seeks": [
+    {
+     "to": 1601,
+     "to_frame_ms": 25.600000000093132,
+     "view_tick": 1601
+    },
+    {
+     "to": 160,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 160
+    },
+    {
+     "to": 3041,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 3041
+    },
+    {
+     "to": 800,
+     "to_frame_ms": 31,
+     "view_tick": 800
+    },
+    {
+     "to": 2401,
+     "to_frame_ms": 30.399999999906868,
+     "view_tick": 2401
+    },
+    {
+     "to": 320,
+     "to_frame_ms": 29.799999999813735,
+     "view_tick": 320
+    },
+    {
+     "to": 2881,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 2881
+    },
+    {
+     "to": 1056,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 1056
+    },
+    {
+     "to": 2113,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 2113
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.0999999998603,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 31.899999999906868,
+   "ok": true
+  },
+  {
+   "id": "lab4_d4_positions_s4_red",
+   "group": "lab4-search",
+   "bytes": 268207,
+   "errors": [],
+   "first_frame_ms": 83,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 3229,
+   "seeks": [
+    {
+     "to": 1614,
+     "to_frame_ms": 21,
+     "view_tick": 1614
+    },
+    {
+     "to": 161,
+     "to_frame_ms": 32.800000000046566,
+     "view_tick": 161
+    },
+    {
+     "to": 3067,
+     "to_frame_ms": 29.399999999906868,
+     "view_tick": 3067
+    },
+    {
+     "to": 807,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 807
+    },
+    {
+     "to": 2421,
+     "to_frame_ms": 29.399999999906868,
+     "view_tick": 2421
+    },
+    {
+     "to": 322,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 322
+    },
+    {
+     "to": 2906,
+     "to_frame_ms": 31.299999999813735,
+     "view_tick": 2906
+    },
+    {
+     "to": 1065,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 1065
+    },
+    {
+     "to": 2131,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 2131
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.800000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab4_b3_colours_s7_red_void_1",
+   "group": "lab4-search",
+   "bytes": 21815,
+   "errors": [],
+   "first_frame_ms": 48.89990234375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 1072,
+   "seeks": [
+    {
+     "to": 536,
+     "to_frame_ms": 23.600000000093132,
+     "view_tick": 536
+    },
+    {
+     "to": 53,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 53
+    },
+    {
+     "to": 1018,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 1018
+    },
+    {
+     "to": 268,
+     "to_frame_ms": 32.5,
+     "view_tick": 268
+    },
+    {
+     "to": 804,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 804
+    },
+    {
+     "to": 107,
+     "to_frame_ms": 29.899999999906868,
+     "view_tick": 107
+    },
+    {
+     "to": 964,
+     "to_frame_ms": 31,
+     "view_tick": 964
+    },
+    {
+     "to": 353,
+     "to_frame_ms": 31.0999999998603,
+     "view_tick": 353
+    },
+    {
+     "to": 707,
+     "to_frame_ms": 32.60000000009313,
+     "view_tick": 707
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.60000000009313,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_dwb_1",
+   "group": "lab5-move",
+   "bytes": 185839,
+   "errors": [],
+   "first_frame_ms": 52.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 363,
+   "seeks": [
+    {
+     "to": 181,
+     "to_frame_ms": 28.899999999906868,
+     "view_tick": 181
+    },
+    {
+     "to": 18,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 18
+    },
+    {
+     "to": 344,
+     "to_frame_ms": 29.799999999813735,
+     "view_tick": 344
+    },
+    {
+     "to": 90,
+     "to_frame_ms": 30.399999999906868,
+     "view_tick": 90
+    },
+    {
+     "to": 272,
+     "to_frame_ms": 31.5,
+     "view_tick": 272
+    },
+    {
+     "to": 36,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 36
+    },
+    {
+     "to": 326,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 326
+    },
+    {
+     "to": 119,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 119
+    },
+    {
+     "to": 239,
+     "to_frame_ms": 30.5,
+     "view_tick": 239
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.39999999990687,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_dwb_2",
+   "group": "lab5-move",
+   "bytes": 183542,
+   "errors": [],
+   "first_frame_ms": 57.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 362,
+   "seeks": [
+    {
+     "to": 181,
+     "to_frame_ms": 17.5999999998603,
+     "view_tick": 181
+    },
+    {
+     "to": 18,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 18
+    },
+    {
+     "to": 343,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 343
+    },
+    {
+     "to": 90,
+     "to_frame_ms": 32,
+     "view_tick": 90
+    },
+    {
+     "to": 271,
+     "to_frame_ms": 32,
+     "view_tick": 271
+    },
+    {
+     "to": 36,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 36
+    },
+    {
+     "to": 325,
+     "to_frame_ms": 29.600000000093132,
+     "view_tick": 325
+    },
+    {
+     "to": 119,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 119
+    },
+    {
+     "to": 238,
+     "to_frame_ms": 30.200000000186265,
+     "view_tick": 238
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_dwb_3",
+   "group": "lab5-move",
+   "bytes": 185391,
+   "errors": [],
+   "first_frame_ms": 52.5,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 365,
+   "seeks": [
+    {
+     "to": 182,
+     "to_frame_ms": 17.5999999998603,
+     "view_tick": 182
+    },
+    {
+     "to": 18,
+     "to_frame_ms": 33.199999999953434,
+     "view_tick": 18
+    },
+    {
+     "to": 346,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 346
+    },
+    {
+     "to": 91,
+     "to_frame_ms": 32.5,
+     "view_tick": 91
+    },
+    {
+     "to": 273,
+     "to_frame_ms": 28.600000000093132,
+     "view_tick": 273
+    },
+    {
+     "to": 36,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 36
+    },
+    {
+     "to": 328,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 328
+    },
+    {
+     "to": 120,
+     "to_frame_ms": 30,
+     "view_tick": 120
+    },
+    {
+     "to": 240,
+     "to_frame_ms": 33.300000000046566,
+     "view_tick": 240
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.4000000001397,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_dwb_4",
+   "group": "lab5-move",
+   "bytes": 183846,
+   "errors": [],
+   "first_frame_ms": 55.2998046875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 364,
+   "seeks": [
+    {
+     "to": 182,
+     "to_frame_ms": 24.100000000093132,
+     "view_tick": 182
+    },
+    {
+     "to": 18,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 18
+    },
+    {
+     "to": 345,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 345
+    },
+    {
+     "to": 91,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 91
+    },
+    {
+     "to": 273,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 273
+    },
+    {
+     "to": 36,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 36
+    },
+    {
+     "to": 327,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 327
+    },
+    {
+     "to": 120,
+     "to_frame_ms": 30.9000000001397,
+     "view_tick": 120
+    },
+    {
+     "to": 240,
+     "to_frame_ms": 30.700000000186265,
+     "view_tick": 240
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 28.5999999998603,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 31.699999999953434,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_dwb_5",
+   "group": "lab5-move",
+   "bytes": 180623,
+   "errors": [],
+   "first_frame_ms": 54.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 366,
+   "seeks": [
+    {
+     "to": 183,
+     "to_frame_ms": 33.60000000009313,
+     "view_tick": 183
+    },
+    {
+     "to": 18,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 18
+    },
+    {
+     "to": 347,
+     "to_frame_ms": 33.5999999998603,
+     "view_tick": 347
+    },
+    {
+     "to": 91,
+     "to_frame_ms": 29.799999999813735,
+     "view_tick": 91
+    },
+    {
+     "to": 274,
+     "to_frame_ms": 29.0999999998603,
+     "view_tick": 274
+    },
+    {
+     "to": 36,
+     "to_frame_ms": 30,
+     "view_tick": 36
+    },
+    {
+     "to": 329,
+     "to_frame_ms": 32.60000000009313,
+     "view_tick": 329
+    },
+    {
+     "to": 120,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 120
+    },
+    {
+     "to": 241,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 241
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.60000000009313,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_mppi_1",
+   "group": "lab5-move",
+   "bytes": 217081,
+   "errors": [],
+   "first_frame_ms": 53,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 395,
+   "seeks": [
+    {
+     "to": 197,
+     "to_frame_ms": 27.300000000046566,
+     "view_tick": 197
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 19
+    },
+    {
+     "to": 375,
+     "to_frame_ms": 29.899999999906868,
+     "view_tick": 375
+    },
+    {
+     "to": 98,
+     "to_frame_ms": 45.39999999990687,
+     "view_tick": 98
+    },
+    {
+     "to": 296,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 296
+    },
+    {
+     "to": 39,
+     "to_frame_ms": 30.4000000001397,
+     "view_tick": 39
+    },
+    {
+     "to": 355,
+     "to_frame_ms": 30,
+     "view_tick": 355
+    },
+    {
+     "to": 130,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 130
+    },
+    {
+     "to": 260,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 260
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 45.39999999990687,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_mppi_2",
+   "group": "lab5-move",
+   "bytes": 218629,
+   "errors": [],
+   "first_frame_ms": 65.39990234375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 398,
+   "seeks": [
+    {
+     "to": 199,
+     "to_frame_ms": 18.299999999813735,
+     "view_tick": 199
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 19
+    },
+    {
+     "to": 378,
+     "to_frame_ms": 33.799999999813735,
+     "view_tick": 378
+    },
+    {
+     "to": 99,
+     "to_frame_ms": 28.9000000001397,
+     "view_tick": 99
+    },
+    {
+     "to": 298,
+     "to_frame_ms": 32,
+     "view_tick": 298
+    },
+    {
+     "to": 39,
+     "to_frame_ms": 32,
+     "view_tick": 39
+    },
+    {
+     "to": 358,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 358
+    },
+    {
+     "to": 131,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 131
+    },
+    {
+     "to": 262,
+     "to_frame_ms": 32.5,
+     "view_tick": 262
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32.200000000186265,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.799999999813735,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_mppi_3",
+   "group": "lab5-move",
+   "bytes": 214393,
+   "errors": [],
+   "first_frame_ms": 62,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 394,
+   "seeks": [
+    {
+     "to": 197,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 197
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 32.5,
+     "view_tick": 19
+    },
+    {
+     "to": 374,
+     "to_frame_ms": 32.799999999813735,
+     "view_tick": 374
+    },
+    {
+     "to": 98,
+     "to_frame_ms": 25.600000000093132,
+     "view_tick": 98
+    },
+    {
+     "to": 295,
+     "to_frame_ms": 32,
+     "view_tick": 295
+    },
+    {
+     "to": 39,
+     "to_frame_ms": 29,
+     "view_tick": 39
+    },
+    {
+     "to": 354,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 354
+    },
+    {
+     "to": 130,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 130
+    },
+    {
+     "to": 260,
+     "to_frame_ms": 29.4000000001397,
+     "view_tick": 260
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.799999999813735,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_mppi_4",
+   "group": "lab5-move",
+   "bytes": 220178,
+   "errors": [],
+   "first_frame_ms": 54.800048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 395,
+   "seeks": [
+    {
+     "to": 197,
+     "to_frame_ms": 19.600000000093132,
+     "view_tick": 197
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 33.200000000186265,
+     "view_tick": 19
+    },
+    {
+     "to": 375,
+     "to_frame_ms": 29.199999999953434,
+     "view_tick": 375
+    },
+    {
+     "to": 98,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 98
+    },
+    {
+     "to": 296,
+     "to_frame_ms": 31.5,
+     "view_tick": 296
+    },
+    {
+     "to": 39,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 39
+    },
+    {
+     "to": 355,
+     "to_frame_ms": 29.600000000093132,
+     "view_tick": 355
+    },
+    {
+     "to": 130,
+     "to_frame_ms": 30.700000000186265,
+     "view_tick": 130
+    },
+    {
+     "to": 260,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 260
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.100000000093132,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.200000000186265,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_mppi_5",
+   "group": "lab5-move",
+   "bytes": 213898,
+   "errors": [],
+   "first_frame_ms": 54.800048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 399,
+   "seeks": [
+    {
+     "to": 199,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 199
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 29,
+     "view_tick": 19
+    },
+    {
+     "to": 379,
+     "to_frame_ms": 32.9000000001397,
+     "view_tick": 379
+    },
+    {
+     "to": 99,
+     "to_frame_ms": 29.600000000093132,
+     "view_tick": 99
+    },
+    {
+     "to": 299,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 299
+    },
+    {
+     "to": 39,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 39
+    },
+    {
+     "to": 359,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 359
+    },
+    {
+     "to": 131,
+     "to_frame_ms": 31.299999999813735,
+     "view_tick": 131
+    },
+    {
+     "to": 263,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 263
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.0999999998603,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.9000000001397,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_rpp_1",
+   "group": "lab5-move",
+   "bytes": 194212,
+   "errors": [],
+   "first_frame_ms": 59.89990234375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 389,
+   "seeks": [
+    {
+     "to": 194,
+     "to_frame_ms": 25,
+     "view_tick": 194
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 32.60000000009313,
+     "view_tick": 19
+    },
+    {
+     "to": 369,
+     "to_frame_ms": 31.5,
+     "view_tick": 369
+    },
+    {
+     "to": 97,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 97
+    },
+    {
+     "to": 291,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 291
+    },
+    {
+     "to": 38,
+     "to_frame_ms": 29.5999999998603,
+     "view_tick": 38
+    },
+    {
+     "to": 350,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 350
+    },
+    {
+     "to": 128,
+     "to_frame_ms": 30.899999999906868,
+     "view_tick": 128
+    },
+    {
+     "to": 256,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 256
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.300000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.60000000009313,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_rpp_2",
+   "group": "lab5-move",
+   "bytes": 195114,
+   "errors": [],
+   "first_frame_ms": 62.2998046875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 387,
+   "seeks": [
+    {
+     "to": 193,
+     "to_frame_ms": 21.5999999998603,
+     "view_tick": 193
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 31.700000000186265,
+     "view_tick": 19
+    },
+    {
+     "to": 367,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 367
+    },
+    {
+     "to": 96,
+     "to_frame_ms": 31.700000000186265,
+     "view_tick": 96
+    },
+    {
+     "to": 290,
+     "to_frame_ms": 31.799999999813735,
+     "view_tick": 290
+    },
+    {
+     "to": 38,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 38
+    },
+    {
+     "to": 348,
+     "to_frame_ms": 32,
+     "view_tick": 348
+    },
+    {
+     "to": 127,
+     "to_frame_ms": 32.5,
+     "view_tick": 127
+    },
+    {
+     "to": 255,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 255
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.5,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_rpp_3",
+   "group": "lab5-move",
+   "bytes": 197892,
+   "errors": [],
+   "first_frame_ms": 65.5,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 389,
+   "seeks": [
+    {
+     "to": 194,
+     "to_frame_ms": 24.0999999998603,
+     "view_tick": 194
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 32.799999999813735,
+     "view_tick": 19
+    },
+    {
+     "to": 369,
+     "to_frame_ms": 31.5,
+     "view_tick": 369
+    },
+    {
+     "to": 97,
+     "to_frame_ms": 30.899999999906868,
+     "view_tick": 97
+    },
+    {
+     "to": 291,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 291
+    },
+    {
+     "to": 38,
+     "to_frame_ms": 32,
+     "view_tick": 38
+    },
+    {
+     "to": 350,
+     "to_frame_ms": 28.800000000046566,
+     "view_tick": 350
+    },
+    {
+     "to": 128,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 128
+    },
+    {
+     "to": 256,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 256
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.799999999813735,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_rpp_4",
+   "group": "lab5-move",
+   "bytes": 201417,
+   "errors": [],
+   "first_frame_ms": 75.699951171875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 385,
+   "seeks": [
+    {
+     "to": 192,
+     "to_frame_ms": 28.300000000046566,
+     "view_tick": 192
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 34,
+     "view_tick": 19
+    },
+    {
+     "to": 365,
+     "to_frame_ms": 28.800000000046566,
+     "view_tick": 365
+    },
+    {
+     "to": 96,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 96
+    },
+    {
+     "to": 288,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 288
+    },
+    {
+     "to": 38,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 38
+    },
+    {
+     "to": 346,
+     "to_frame_ms": 32,
+     "view_tick": 346
+    },
+    {
+     "to": 127,
+     "to_frame_ms": 32.60000000009313,
+     "view_tick": 127
+    },
+    {
+     "to": 254,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 254
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 34,
+   "ok": true
+  },
+  {
+   "id": "lab5_crossing_rpp_5",
+   "group": "lab5-move",
+   "bytes": 191718,
+   "errors": [],
+   "first_frame_ms": 69.800048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 385,
+   "seeks": [
+    {
+     "to": 192,
+     "to_frame_ms": 31.9000000001397,
+     "view_tick": 192
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 19
+    },
+    {
+     "to": 365,
+     "to_frame_ms": 32.5,
+     "view_tick": 365
+    },
+    {
+     "to": 96,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 96
+    },
+    {
+     "to": 288,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 288
+    },
+    {
+     "to": 38,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 38
+    },
+    {
+     "to": 346,
+     "to_frame_ms": 32,
+     "view_tick": 346
+    },
+    {
+     "to": 127,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 127
+    },
+    {
+     "to": 254,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 254
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.5,
+   "ok": true
+  },
+  {
+   "id": "lab5_mislocalised_dwb_1",
+   "group": "lab5-move",
+   "bytes": 18307,
+   "errors": [],
+   "first_frame_ms": 58,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 100,
+   "seeks": [
+    {
+     "to": 50,
+     "to_frame_ms": 26.699999999953434,
+     "view_tick": 50
+    },
+    {
+     "to": 5,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 5
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 32,
+     "view_tick": 95
+    },
+    {
+     "to": 25,
+     "to_frame_ms": 29.899999999906868,
+     "view_tick": 25
+    },
+    {
+     "to": 75,
+     "to_frame_ms": 32.5999999998603,
+     "view_tick": 75
+    },
+    {
+     "to": 10,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 10
+    },
+    {
+     "to": 90,
+     "to_frame_ms": 32.299999999813735,
+     "view_tick": 90
+    },
+    {
+     "to": 33,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 33
+    },
+    {
+     "to": 66,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 66
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.5999999998603,
+   "ok": true
+  },
+  {
+   "id": "lab5_mislocalised_dwb_2",
+   "group": "lab5-move",
+   "bytes": 18426,
+   "errors": [],
+   "first_frame_ms": 64.5,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 100,
+   "seeks": [
+    {
+     "to": 50,
+     "to_frame_ms": 26.399999999906868,
+     "view_tick": 50
+    },
+    {
+     "to": 5,
+     "to_frame_ms": 31.9000000001397,
+     "view_tick": 5
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 32.0999999998603,
+     "view_tick": 95
+    },
+    {
+     "to": 25,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 25
+    },
+    {
+     "to": 75,
+     "to_frame_ms": 31,
+     "view_tick": 75
+    },
+    {
+     "to": 10,
+     "to_frame_ms": 29.799999999813735,
+     "view_tick": 10
+    },
+    {
+     "to": 90,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 90
+    },
+    {
+     "to": 33,
+     "to_frame_ms": 33.300000000046566,
+     "view_tick": 33
+    },
+    {
+     "to": 66,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 66
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_mislocalised_dwb_3",
+   "group": "lab5-move",
+   "bytes": 18459,
+   "errors": [],
+   "first_frame_ms": 38.599853515625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 101,
+   "seeks": [
+    {
+     "to": 50,
+     "to_frame_ms": 18,
+     "view_tick": 50
+    },
+    {
+     "to": 5,
+     "to_frame_ms": 30.5,
+     "view_tick": 5
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 33.5,
+     "view_tick": 95
+    },
+    {
+     "to": 25,
+     "to_frame_ms": 32.4000000001397,
+     "view_tick": 25
+    },
+    {
+     "to": 75,
+     "to_frame_ms": 28.800000000046566,
+     "view_tick": 75
+    },
+    {
+     "to": 10,
+     "to_frame_ms": 32.699999999953434,
+     "view_tick": 10
+    },
+    {
+     "to": 90,
+     "to_frame_ms": 30.299999999813735,
+     "view_tick": 90
+    },
+    {
+     "to": 33,
+     "to_frame_ms": 32,
+     "view_tick": 33
+    },
+    {
+     "to": 66,
+     "to_frame_ms": 32.5,
+     "view_tick": 66
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.5,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.5,
+   "ok": true
+  },
+  {
+   "id": "lab5_mislocalised_mppi_1",
+   "group": "lab5-move",
+   "bytes": 18389,
+   "errors": [],
+   "first_frame_ms": 34.60009765625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 100,
+   "seeks": [
+    {
+     "to": 50,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 50
+    },
+    {
+     "to": 5,
+     "to_frame_ms": 30.4000000001397,
+     "view_tick": 5
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 95
+    },
+    {
+     "to": 25,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 25
+    },
+    {
+     "to": 75,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 75
+    },
+    {
+     "to": 10,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 10
+    },
+    {
+     "to": 90,
+     "to_frame_ms": 28.699999999953434,
+     "view_tick": 90
+    },
+    {
+     "to": 33,
+     "to_frame_ms": 30.899999999906868,
+     "view_tick": 33
+    },
+    {
+     "to": 66,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 66
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32.200000000186265,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_mislocalised_mppi_2",
+   "group": "lab5-move",
+   "bytes": 18425,
+   "errors": [],
+   "first_frame_ms": 34.199951171875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 101,
+   "seeks": [
+    {
+     "to": 50,
+     "to_frame_ms": 23.199999999953434,
+     "view_tick": 50
+    },
+    {
+     "to": 5,
+     "to_frame_ms": 30.799999999813735,
+     "view_tick": 5
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 32.200000000186265,
+     "view_tick": 95
+    },
+    {
+     "to": 25,
+     "to_frame_ms": 32.299999999813735,
+     "view_tick": 25
+    },
+    {
+     "to": 75,
+     "to_frame_ms": 27.600000000093132,
+     "view_tick": 75
+    },
+    {
+     "to": 10,
+     "to_frame_ms": 31.700000000186265,
+     "view_tick": 10
+    },
+    {
+     "to": 90,
+     "to_frame_ms": 29.9000000001397,
+     "view_tick": 90
+    },
+    {
+     "to": 33,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 33
+    },
+    {
+     "to": 66,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 66
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.5,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.299999999813735,
+   "ok": true
+  },
+  {
+   "id": "lab5_mislocalised_mppi_3",
+   "group": "lab5-move",
+   "bytes": 18481,
+   "errors": [],
+   "first_frame_ms": 39.5,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 101,
+   "seeks": [
+    {
+     "to": 50,
+     "to_frame_ms": 33.60000000009313,
+     "view_tick": 50
+    },
+    {
+     "to": 5,
+     "to_frame_ms": 30.9000000001397,
+     "view_tick": 5
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 95
+    },
+    {
+     "to": 25,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 25
+    },
+    {
+     "to": 75,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 75
+    },
+    {
+     "to": 10,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 10
+    },
+    {
+     "to": 90,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 90
+    },
+    {
+     "to": 33,
+     "to_frame_ms": 24.800000000046566,
+     "view_tick": 33
+    },
+    {
+     "to": 66,
+     "to_frame_ms": 23.5,
+     "view_tick": 66
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32.5,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.60000000009313,
+   "ok": true
+  },
+  {
+   "id": "lab5_mislocalised_rpp_1",
+   "group": "lab5-move",
+   "bytes": 18350,
+   "errors": [],
+   "first_frame_ms": 41.5,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 100,
+   "seeks": [
+    {
+     "to": 50,
+     "to_frame_ms": 23.199999999953434,
+     "view_tick": 50
+    },
+    {
+     "to": 5,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 5
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 32.60000000009313,
+     "view_tick": 95
+    },
+    {
+     "to": 25,
+     "to_frame_ms": 33.5,
+     "view_tick": 25
+    },
+    {
+     "to": 75,
+     "to_frame_ms": 25,
+     "view_tick": 75
+    },
+    {
+     "to": 10,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 10
+    },
+    {
+     "to": 90,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 90
+    },
+    {
+     "to": 33,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 33
+    },
+    {
+     "to": 66,
+     "to_frame_ms": 32.299999999813735,
+     "view_tick": 66
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.5,
+   "ok": true
+  },
+  {
+   "id": "lab5_mislocalised_rpp_2",
+   "group": "lab5-move",
+   "bytes": 18300,
+   "errors": [],
+   "first_frame_ms": 34.89990234375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 100,
+   "seeks": [
+    {
+     "to": 50,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 50
+    },
+    {
+     "to": 5,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 5
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 95
+    },
+    {
+     "to": 25,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 25
+    },
+    {
+     "to": 75,
+     "to_frame_ms": 31.5,
+     "view_tick": 75
+    },
+    {
+     "to": 10,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 10
+    },
+    {
+     "to": 90,
+     "to_frame_ms": 29.5,
+     "view_tick": 90
+    },
+    {
+     "to": 33,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 33
+    },
+    {
+     "to": 66,
+     "to_frame_ms": 33,
+     "view_tick": 66
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33,
+   "ok": true
+  },
+  {
+   "id": "lab5_mislocalised_rpp_3",
+   "group": "lab5-move",
+   "bytes": 18317,
+   "errors": [],
+   "first_frame_ms": 43.800048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 100,
+   "seeks": [
+    {
+     "to": 50,
+     "to_frame_ms": 26.9000000001397,
+     "view_tick": 50
+    },
+    {
+     "to": 5,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 5
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 31.799999999813735,
+     "view_tick": 95
+    },
+    {
+     "to": 25,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 25
+    },
+    {
+     "to": 75,
+     "to_frame_ms": 30,
+     "view_tick": 75
+    },
+    {
+     "to": 10,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 10
+    },
+    {
+     "to": 90,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 90
+    },
+    {
+     "to": 33,
+     "to_frame_ms": 30.100000000093132,
+     "view_tick": 33
+    },
+    {
+     "to": 66,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 66
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.39999999990687,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_dwb_1",
+   "group": "lab5-move",
+   "bytes": 189253,
+   "errors": [],
+   "first_frame_ms": 114.10009765625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 383,
+   "seeks": [
+    {
+     "to": 191,
+     "to_frame_ms": 23.5999999998603,
+     "view_tick": 191
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 28.199999999953434,
+     "view_tick": 19
+    },
+    {
+     "to": 363,
+     "to_frame_ms": 33,
+     "view_tick": 363
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 95
+    },
+    {
+     "to": 287,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 287
+    },
+    {
+     "to": 38,
+     "to_frame_ms": 33.199999999953434,
+     "view_tick": 38
+    },
+    {
+     "to": 344,
+     "to_frame_ms": 29.300000000046566,
+     "view_tick": 344
+    },
+    {
+     "to": 126,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 126
+    },
+    {
+     "to": 252,
+     "to_frame_ms": 32,
+     "view_tick": 252
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.199999999953434,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_dwb_2",
+   "group": "lab5-move",
+   "bytes": 189965,
+   "errors": [],
+   "first_frame_ms": 60.199951171875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 384,
+   "seeks": [
+    {
+     "to": 192,
+     "to_frame_ms": 23.699999999953434,
+     "view_tick": 192
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 33,
+     "view_tick": 19
+    },
+    {
+     "to": 364,
+     "to_frame_ms": 30.5,
+     "view_tick": 364
+    },
+    {
+     "to": 96,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 96
+    },
+    {
+     "to": 288,
+     "to_frame_ms": 33.800000000046566,
+     "view_tick": 288
+    },
+    {
+     "to": 38,
+     "to_frame_ms": 29.699999999953434,
+     "view_tick": 38
+    },
+    {
+     "to": 345,
+     "to_frame_ms": 31.0999999998603,
+     "view_tick": 345
+    },
+    {
+     "to": 126,
+     "to_frame_ms": 29.700000000186265,
+     "view_tick": 126
+    },
+    {
+     "to": 253,
+     "to_frame_ms": 32,
+     "view_tick": 253
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.800000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_dwb_3",
+   "group": "lab5-move",
+   "bytes": 188586,
+   "errors": [],
+   "first_frame_ms": 78.39990234375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 381,
+   "seeks": [
+    {
+     "to": 190,
+     "to_frame_ms": 43.800000000046566,
+     "view_tick": 190
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 31.5,
+     "view_tick": 19
+    },
+    {
+     "to": 361,
+     "to_frame_ms": 28.5,
+     "view_tick": 361
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 32.60000000009313,
+     "view_tick": 95
+    },
+    {
+     "to": 285,
+     "to_frame_ms": 30.5,
+     "view_tick": 285
+    },
+    {
+     "to": 38,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 38
+    },
+    {
+     "to": 342,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 342
+    },
+    {
+     "to": 125,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 125
+    },
+    {
+     "to": 251,
+     "to_frame_ms": 31.0999999998603,
+     "view_tick": 251
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 43.800000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_dwb_4",
+   "group": "lab5-move",
+   "bytes": 188618,
+   "errors": [],
+   "first_frame_ms": 98.60009765625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 383,
+   "seeks": [
+    {
+     "to": 191,
+     "to_frame_ms": 26.5,
+     "view_tick": 191
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 19
+    },
+    {
+     "to": 363,
+     "to_frame_ms": 30.399999999906868,
+     "view_tick": 363
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 31,
+     "view_tick": 95
+    },
+    {
+     "to": 287,
+     "to_frame_ms": 32,
+     "view_tick": 287
+    },
+    {
+     "to": 38,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 38
+    },
+    {
+     "to": 344,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 344
+    },
+    {
+     "to": 126,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 126
+    },
+    {
+     "to": 252,
+     "to_frame_ms": 32.200000000186265,
+     "view_tick": 252
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.39999999990687,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_dwb_5",
+   "group": "lab5-move",
+   "bytes": 187686,
+   "errors": [],
+   "first_frame_ms": 57.60009765625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 386,
+   "seeks": [
+    {
+     "to": 193,
+     "to_frame_ms": 19.800000000046566,
+     "view_tick": 193
+    },
+    {
+     "to": 19,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 19
+    },
+    {
+     "to": 366,
+     "to_frame_ms": 29.300000000046566,
+     "view_tick": 366
+    },
+    {
+     "to": 96,
+     "to_frame_ms": 28.700000000186265,
+     "view_tick": 96
+    },
+    {
+     "to": 289,
+     "to_frame_ms": 30.5,
+     "view_tick": 289
+    },
+    {
+     "to": 38,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 38
+    },
+    {
+     "to": 347,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 347
+    },
+    {
+     "to": 127,
+     "to_frame_ms": 30.100000000093132,
+     "view_tick": 127
+    },
+    {
+     "to": 254,
+     "to_frame_ms": 29.199999999953434,
+     "view_tick": 254
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 28.5,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 31.600000000093132,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_mppi_1",
+   "group": "lab5-move",
+   "bytes": 227208,
+   "errors": [],
+   "first_frame_ms": 68.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 420,
+   "seeks": [
+    {
+     "to": 210,
+     "to_frame_ms": 20.100000000093132,
+     "view_tick": 210
+    },
+    {
+     "to": 21,
+     "to_frame_ms": 32.5,
+     "view_tick": 21
+    },
+    {
+     "to": 399,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 399
+    },
+    {
+     "to": 105,
+     "to_frame_ms": 29.100000000093132,
+     "view_tick": 105
+    },
+    {
+     "to": 315,
+     "to_frame_ms": 32.5,
+     "view_tick": 315
+    },
+    {
+     "to": 42,
+     "to_frame_ms": 29.899999999906868,
+     "view_tick": 42
+    },
+    {
+     "to": 378,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 378
+    },
+    {
+     "to": 138,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 138
+    },
+    {
+     "to": 277,
+     "to_frame_ms": 31.700000000186265,
+     "view_tick": 277
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32.0999999998603,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.5,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_mppi_2",
+   "group": "lab5-move",
+   "bytes": 227189,
+   "errors": [],
+   "first_frame_ms": 76.199951171875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 424,
+   "seeks": [
+    {
+     "to": 212,
+     "to_frame_ms": 19.300000000046566,
+     "view_tick": 212
+    },
+    {
+     "to": 21,
+     "to_frame_ms": 32.200000000186265,
+     "view_tick": 21
+    },
+    {
+     "to": 402,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 402
+    },
+    {
+     "to": 106,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 106
+    },
+    {
+     "to": 318,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 318
+    },
+    {
+     "to": 42,
+     "to_frame_ms": 31.5,
+     "view_tick": 42
+    },
+    {
+     "to": 381,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 381
+    },
+    {
+     "to": 139,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 139
+    },
+    {
+     "to": 279,
+     "to_frame_ms": 30,
+     "view_tick": 279
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_mppi_3",
+   "group": "lab5-move",
+   "bytes": 223781,
+   "errors": [],
+   "first_frame_ms": 81,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 420,
+   "seeks": [
+    {
+     "to": 210,
+     "to_frame_ms": 18.199999999953434,
+     "view_tick": 210
+    },
+    {
+     "to": 21,
+     "to_frame_ms": 33,
+     "view_tick": 21
+    },
+    {
+     "to": 399,
+     "to_frame_ms": 28.899999999906868,
+     "view_tick": 399
+    },
+    {
+     "to": 105,
+     "to_frame_ms": 32.299999999813735,
+     "view_tick": 105
+    },
+    {
+     "to": 315,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 315
+    },
+    {
+     "to": 42,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 42
+    },
+    {
+     "to": 378,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 378
+    },
+    {
+     "to": 138,
+     "to_frame_ms": 30,
+     "view_tick": 138
+    },
+    {
+     "to": 277,
+     "to_frame_ms": 29.600000000093132,
+     "view_tick": 277
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 33.300000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_mppi_4",
+   "group": "lab5-move",
+   "bytes": 229266,
+   "errors": [],
+   "first_frame_ms": 72.39990234375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 425,
+   "seeks": [
+    {
+     "to": 212,
+     "to_frame_ms": 26.800000000046566,
+     "view_tick": 212
+    },
+    {
+     "to": 21,
+     "to_frame_ms": 29.300000000046566,
+     "view_tick": 21
+    },
+    {
+     "to": 403,
+     "to_frame_ms": 30.5,
+     "view_tick": 403
+    },
+    {
+     "to": 106,
+     "to_frame_ms": 28.4000000001397,
+     "view_tick": 106
+    },
+    {
+     "to": 318,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 318
+    },
+    {
+     "to": 42,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 42
+    },
+    {
+     "to": 382,
+     "to_frame_ms": 32.5,
+     "view_tick": 382
+    },
+    {
+     "to": 140,
+     "to_frame_ms": 29.4000000001397,
+     "view_tick": 140
+    },
+    {
+     "to": 280,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 280
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.5,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_mppi_5",
+   "group": "lab5-move",
+   "bytes": 227219,
+   "errors": [],
+   "first_frame_ms": 61.400146484375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 419,
+   "seeks": [
+    {
+     "to": 209,
+     "to_frame_ms": 32.200000000186265,
+     "view_tick": 209
+    },
+    {
+     "to": 20,
+     "to_frame_ms": 32.800000000046566,
+     "view_tick": 20
+    },
+    {
+     "to": 398,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 398
+    },
+    {
+     "to": 104,
+     "to_frame_ms": 28,
+     "view_tick": 104
+    },
+    {
+     "to": 314,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 314
+    },
+    {
+     "to": 41,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 41
+    },
+    {
+     "to": 377,
+     "to_frame_ms": 31,
+     "view_tick": 377
+    },
+    {
+     "to": 138,
+     "to_frame_ms": 32,
+     "view_tick": 138
+    },
+    {
+     "to": 276,
+     "to_frame_ms": 30.5,
+     "view_tick": 276
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.800000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_rpp_1",
+   "group": "lab5-move",
+   "bytes": 134480,
+   "errors": [],
+   "first_frame_ms": 60.7001953125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 288,
+   "seeks": [
+    {
+     "to": 144,
+     "to_frame_ms": 32.4000000001397,
+     "view_tick": 144
+    },
+    {
+     "to": 14,
+     "to_frame_ms": 32.5,
+     "view_tick": 14
+    },
+    {
+     "to": 273,
+     "to_frame_ms": 32.699999999953434,
+     "view_tick": 273
+    },
+    {
+     "to": 72,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 72
+    },
+    {
+     "to": 216,
+     "to_frame_ms": 32.5,
+     "view_tick": 216
+    },
+    {
+     "to": 28,
+     "to_frame_ms": 31,
+     "view_tick": 28
+    },
+    {
+     "to": 259,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 259
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 31.200000000186265,
+     "view_tick": 95
+    },
+    {
+     "to": 190,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 190
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.699999999953434,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_rpp_2",
+   "group": "lab5-move",
+   "bytes": 137573,
+   "errors": [],
+   "first_frame_ms": 59.900146484375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 288,
+   "seeks": [
+    {
+     "to": 144,
+     "to_frame_ms": 24.899999999906868,
+     "view_tick": 144
+    },
+    {
+     "to": 14,
+     "to_frame_ms": 33,
+     "view_tick": 14
+    },
+    {
+     "to": 273,
+     "to_frame_ms": 34.300000000046566,
+     "view_tick": 273
+    },
+    {
+     "to": 72,
+     "to_frame_ms": 29.0999999998603,
+     "view_tick": 72
+    },
+    {
+     "to": 216,
+     "to_frame_ms": 32.60000000009313,
+     "view_tick": 216
+    },
+    {
+     "to": 28,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 28
+    },
+    {
+     "to": 259,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 259
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 95
+    },
+    {
+     "to": 190,
+     "to_frame_ms": 32.5999999998603,
+     "view_tick": 190
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 28.399999999906868,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 34.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_rpp_3",
+   "group": "lab5-move",
+   "bytes": 137471,
+   "errors": [],
+   "first_frame_ms": 50.89990234375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 289,
+   "seeks": [
+    {
+     "to": 144,
+     "to_frame_ms": 26.399999999906868,
+     "view_tick": 144
+    },
+    {
+     "to": 14,
+     "to_frame_ms": 32.4000000001397,
+     "view_tick": 14
+    },
+    {
+     "to": 274,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 274
+    },
+    {
+     "to": 72,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 72
+    },
+    {
+     "to": 216,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 216
+    },
+    {
+     "to": 28,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 28
+    },
+    {
+     "to": 260,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 260
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 31.0999999998603,
+     "view_tick": 95
+    },
+    {
+     "to": 190,
+     "to_frame_ms": 32.5,
+     "view_tick": 190
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.299999999813735,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.5,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_rpp_4",
+   "group": "lab5-move",
+   "bytes": 134551,
+   "errors": [],
+   "first_frame_ms": 58.7001953125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 289,
+   "seeks": [
+    {
+     "to": 144,
+     "to_frame_ms": 21.800000000046566,
+     "view_tick": 144
+    },
+    {
+     "to": 14,
+     "to_frame_ms": 32.5,
+     "view_tick": 14
+    },
+    {
+     "to": 274,
+     "to_frame_ms": 32.5999999998603,
+     "view_tick": 274
+    },
+    {
+     "to": 72,
+     "to_frame_ms": 28.600000000093132,
+     "view_tick": 72
+    },
+    {
+     "to": 216,
+     "to_frame_ms": 32.699999999953434,
+     "view_tick": 216
+    },
+    {
+     "to": 28,
+     "to_frame_ms": 28.9000000001397,
+     "view_tick": 28
+    },
+    {
+     "to": 260,
+     "to_frame_ms": 31.5,
+     "view_tick": 260
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 95
+    },
+    {
+     "to": 190,
+     "to_frame_ms": 31.9000000001397,
+     "view_tick": 190
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.5,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.699999999953434,
+   "ok": true
+  },
+  {
+   "id": "lab5_oncoming_rpp_5",
+   "group": "lab5-move",
+   "bytes": 137980,
+   "errors": [],
+   "first_frame_ms": 68.2998046875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 288,
+   "seeks": [
+    {
+     "to": 144,
+     "to_frame_ms": 23.600000000093132,
+     "view_tick": 144
+    },
+    {
+     "to": 14,
+     "to_frame_ms": 32,
+     "view_tick": 14
+    },
+    {
+     "to": 273,
+     "to_frame_ms": 32.89999999990687,
+     "view_tick": 273
+    },
+    {
+     "to": 72,
+     "to_frame_ms": 30.4000000001397,
+     "view_tick": 72
+    },
+    {
+     "to": 216,
+     "to_frame_ms": 32.60000000009313,
+     "view_tick": 216
+    },
+    {
+     "to": 28,
+     "to_frame_ms": 31.5,
+     "view_tick": 28
+    },
+    {
+     "to": 259,
+     "to_frame_ms": 31.5,
+     "view_tick": 259
+    },
+    {
+     "to": 95,
+     "to_frame_ms": 32.0999999998603,
+     "view_tick": 95
+    },
+    {
+     "to": 190,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 190
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.89999999990687,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_dwb_1",
+   "group": "lab5-move",
+   "bytes": 241582,
+   "errors": [],
+   "first_frame_ms": 64.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 500,
+   "seeks": [
+    {
+     "to": 250,
+     "to_frame_ms": 21.699999999953434,
+     "view_tick": 250
+    },
+    {
+     "to": 25,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 25
+    },
+    {
+     "to": 475,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 475
+    },
+    {
+     "to": 125,
+     "to_frame_ms": 27,
+     "view_tick": 125
+    },
+    {
+     "to": 375,
+     "to_frame_ms": 30.899999999906868,
+     "view_tick": 375
+    },
+    {
+     "to": 50,
+     "to_frame_ms": 28.800000000046566,
+     "view_tick": 50
+    },
+    {
+     "to": 450,
+     "to_frame_ms": 28.899999999906868,
+     "view_tick": 450
+    },
+    {
+     "to": 165,
+     "to_frame_ms": 31,
+     "view_tick": 165
+    },
+    {
+     "to": 330,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 330
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_dwb_2",
+   "group": "lab5-move",
+   "bytes": 228530,
+   "errors": [],
+   "first_frame_ms": 92.39990234375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 476,
+   "seeks": [
+    {
+     "to": 238,
+     "to_frame_ms": 20,
+     "view_tick": 238
+    },
+    {
+     "to": 23,
+     "to_frame_ms": 36,
+     "view_tick": 23
+    },
+    {
+     "to": 452,
+     "to_frame_ms": 22.800000000046566,
+     "view_tick": 452
+    },
+    {
+     "to": 119,
+     "to_frame_ms": 32.5,
+     "view_tick": 119
+    },
+    {
+     "to": 357,
+     "to_frame_ms": 29.9000000001397,
+     "view_tick": 357
+    },
+    {
+     "to": 47,
+     "to_frame_ms": 30.0999999998603,
+     "view_tick": 47
+    },
+    {
+     "to": 428,
+     "to_frame_ms": 30.4000000001397,
+     "view_tick": 428
+    },
+    {
+     "to": 157,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 157
+    },
+    {
+     "to": 314,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 314
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 36,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_dwb_3",
+   "group": "lab5-move",
+   "bytes": 234051,
+   "errors": [],
+   "first_frame_ms": 76.099853515625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 482,
+   "seeks": [
+    {
+     "to": 241,
+     "to_frame_ms": 21.800000000046566,
+     "view_tick": 241
+    },
+    {
+     "to": 24,
+     "to_frame_ms": 33.299999999813735,
+     "view_tick": 24
+    },
+    {
+     "to": 457,
+     "to_frame_ms": 29.5,
+     "view_tick": 457
+    },
+    {
+     "to": 120,
+     "to_frame_ms": 32,
+     "view_tick": 120
+    },
+    {
+     "to": 361,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 361
+    },
+    {
+     "to": 48,
+     "to_frame_ms": 32.699999999953434,
+     "view_tick": 48
+    },
+    {
+     "to": 433,
+     "to_frame_ms": 29.5999999998603,
+     "view_tick": 433
+    },
+    {
+     "to": 159,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 159
+    },
+    {
+     "to": 318,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 318
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 32.5999999998603,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.299999999813735,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_dwb_4",
+   "group": "lab5-move",
+   "bytes": 243013,
+   "errors": [],
+   "first_frame_ms": 75.699951171875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 510,
+   "seeks": [
+    {
+     "to": 255,
+     "to_frame_ms": 26.5,
+     "view_tick": 255
+    },
+    {
+     "to": 25,
+     "to_frame_ms": 32.699999999953434,
+     "view_tick": 25
+    },
+    {
+     "to": 484,
+     "to_frame_ms": 30.200000000186265,
+     "view_tick": 484
+    },
+    {
+     "to": 127,
+     "to_frame_ms": 32.5,
+     "view_tick": 127
+    },
+    {
+     "to": 382,
+     "to_frame_ms": 29.800000000046566,
+     "view_tick": 382
+    },
+    {
+     "to": 51,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 51
+    },
+    {
+     "to": 459,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 459
+    },
+    {
+     "to": 168,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 168
+    },
+    {
+     "to": 336,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 336
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.699999999953434,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_dwb_5",
+   "group": "lab5-move",
+   "bytes": 242385,
+   "errors": [],
+   "first_frame_ms": 85.89990234375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 496,
+   "seeks": [
+    {
+     "to": 248,
+     "to_frame_ms": 18.9000000001397,
+     "view_tick": 248
+    },
+    {
+     "to": 24,
+     "to_frame_ms": 32.199999999953434,
+     "view_tick": 24
+    },
+    {
+     "to": 471,
+     "to_frame_ms": 31,
+     "view_tick": 471
+    },
+    {
+     "to": 124,
+     "to_frame_ms": 31.5,
+     "view_tick": 124
+    },
+    {
+     "to": 372,
+     "to_frame_ms": 29.699999999953434,
+     "view_tick": 372
+    },
+    {
+     "to": 49,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 49
+    },
+    {
+     "to": 446,
+     "to_frame_ms": 31,
+     "view_tick": 446
+    },
+    {
+     "to": 163,
+     "to_frame_ms": 32,
+     "view_tick": 163
+    },
+    {
+     "to": 327,
+     "to_frame_ms": 33.39999999990687,
+     "view_tick": 327
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 26.199999999953434,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.39999999990687,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_mppi_1",
+   "group": "lab5-move",
+   "bytes": 332059,
+   "errors": [],
+   "first_frame_ms": 64.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 615,
+   "seeks": [
+    {
+     "to": 307,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 307
+    },
+    {
+     "to": 30,
+     "to_frame_ms": 31,
+     "view_tick": 30
+    },
+    {
+     "to": 584,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 584
+    },
+    {
+     "to": 153,
+     "to_frame_ms": 32,
+     "view_tick": 153
+    },
+    {
+     "to": 461,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 461
+    },
+    {
+     "to": 61,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 61
+    },
+    {
+     "to": 553,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 553
+    },
+    {
+     "to": 202,
+     "to_frame_ms": 31.5,
+     "view_tick": 202
+    },
+    {
+     "to": 405,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 405
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.9000000001397,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_mppi_2",
+   "group": "lab5-move",
+   "bytes": 334713,
+   "errors": [],
+   "first_frame_ms": 78.5,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 616,
+   "seeks": [
+    {
+     "to": 308,
+     "to_frame_ms": 29.199999999953434,
+     "view_tick": 308
+    },
+    {
+     "to": 30,
+     "to_frame_ms": 33.699999999953434,
+     "view_tick": 30
+    },
+    {
+     "to": 585,
+     "to_frame_ms": 28.899999999906868,
+     "view_tick": 585
+    },
+    {
+     "to": 154,
+     "to_frame_ms": 32.5,
+     "view_tick": 154
+    },
+    {
+     "to": 462,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 462
+    },
+    {
+     "to": 61,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 61
+    },
+    {
+     "to": 554,
+     "to_frame_ms": 31.300000000046566,
+     "view_tick": 554
+    },
+    {
+     "to": 203,
+     "to_frame_ms": 31.700000000186265,
+     "view_tick": 203
+    },
+    {
+     "to": 406,
+     "to_frame_ms": 31.399999999906868,
+     "view_tick": 406
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 28.5999999998603,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.699999999953434,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_mppi_3",
+   "group": "lab5-move",
+   "bytes": 333132,
+   "errors": [],
+   "first_frame_ms": 66.599853515625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 618,
+   "seeks": [
+    {
+     "to": 309,
+     "to_frame_ms": 19.800000000046566,
+     "view_tick": 309
+    },
+    {
+     "to": 30,
+     "to_frame_ms": 33.5,
+     "view_tick": 30
+    },
+    {
+     "to": 587,
+     "to_frame_ms": 29.899999999906868,
+     "view_tick": 587
+    },
+    {
+     "to": 154,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 154
+    },
+    {
+     "to": 463,
+     "to_frame_ms": 32.5999999998603,
+     "view_tick": 463
+    },
+    {
+     "to": 61,
+     "to_frame_ms": 31.5,
+     "view_tick": 61
+    },
+    {
+     "to": 556,
+     "to_frame_ms": 32.0999999998603,
+     "view_tick": 556
+    },
+    {
+     "to": 203,
+     "to_frame_ms": 33.39999999990687,
+     "view_tick": 203
+    },
+    {
+     "to": 407,
+     "to_frame_ms": 29.0999999998603,
+     "view_tick": 407
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 28.5,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.5,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_mppi_4",
+   "group": "lab5-move",
+   "bytes": 335256,
+   "errors": [],
+   "first_frame_ms": 80,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 620,
+   "seeks": [
+    {
+     "to": 310,
+     "to_frame_ms": 19.699999999953434,
+     "view_tick": 310
+    },
+    {
+     "to": 31,
+     "to_frame_ms": 30.5,
+     "view_tick": 31
+    },
+    {
+     "to": 589,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 589
+    },
+    {
+     "to": 155,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 155
+    },
+    {
+     "to": 465,
+     "to_frame_ms": 32.0999999998603,
+     "view_tick": 465
+    },
+    {
+     "to": 62,
+     "to_frame_ms": 32.299999999813735,
+     "view_tick": 62
+    },
+    {
+     "to": 558,
+     "to_frame_ms": 31.4000000001397,
+     "view_tick": 558
+    },
+    {
+     "to": 204,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 204
+    },
+    {
+     "to": 409,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 409
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_mppi_5",
+   "group": "lab5-move",
+   "bytes": 341791,
+   "errors": [],
+   "first_frame_ms": 85,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 628,
+   "seeks": [
+    {
+     "to": 314,
+     "to_frame_ms": 31.600000000093132,
+     "view_tick": 314
+    },
+    {
+     "to": 31,
+     "to_frame_ms": 29.300000000046566,
+     "view_tick": 31
+    },
+    {
+     "to": 596,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 596
+    },
+    {
+     "to": 157,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 157
+    },
+    {
+     "to": 471,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 471
+    },
+    {
+     "to": 62,
+     "to_frame_ms": 31,
+     "view_tick": 62
+    },
+    {
+     "to": 565,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 565
+    },
+    {
+     "to": 207,
+     "to_frame_ms": 29.9000000001397,
+     "view_tick": 207
+    },
+    {
+     "to": 414,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 414
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_rpp_1",
+   "group": "lab5-move",
+   "bytes": 321154,
+   "errors": [],
+   "first_frame_ms": 62.199951171875,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 614,
+   "seeks": [
+    {
+     "to": 307,
+     "to_frame_ms": 28.100000000093132,
+     "view_tick": 307
+    },
+    {
+     "to": 30,
+     "to_frame_ms": 30.4000000001397,
+     "view_tick": 30
+    },
+    {
+     "to": 583,
+     "to_frame_ms": 31.799999999813735,
+     "view_tick": 583
+    },
+    {
+     "to": 153,
+     "to_frame_ms": 28.399999999906868,
+     "view_tick": 153
+    },
+    {
+     "to": 460,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 460
+    },
+    {
+     "to": 61,
+     "to_frame_ms": 30.100000000093132,
+     "view_tick": 61
+    },
+    {
+     "to": 552,
+     "to_frame_ms": 32.10000000009313,
+     "view_tick": 552
+    },
+    {
+     "to": 202,
+     "to_frame_ms": 30.5999999998603,
+     "view_tick": 202
+    },
+    {
+     "to": 405,
+     "to_frame_ms": 31.5,
+     "view_tick": 405
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.299999999813735,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.10000000009313,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_rpp_2",
+   "group": "lab5-move",
+   "bytes": 318580,
+   "errors": [],
+   "first_frame_ms": 59.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 612,
+   "seeks": [
+    {
+     "to": 306,
+     "to_frame_ms": 26.199999999953434,
+     "view_tick": 306
+    },
+    {
+     "to": 30,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 30
+    },
+    {
+     "to": 581,
+     "to_frame_ms": 29.5,
+     "view_tick": 581
+    },
+    {
+     "to": 153,
+     "to_frame_ms": 31.9000000001397,
+     "view_tick": 153
+    },
+    {
+     "to": 459,
+     "to_frame_ms": 31.5999999998603,
+     "view_tick": 459
+    },
+    {
+     "to": 61,
+     "to_frame_ms": 30.4000000001397,
+     "view_tick": 61
+    },
+    {
+     "to": 550,
+     "to_frame_ms": 30.899999999906868,
+     "view_tick": 550
+    },
+    {
+     "to": 201,
+     "to_frame_ms": 31.9000000001397,
+     "view_tick": 201
+    },
+    {
+     "to": 403,
+     "to_frame_ms": 32.300000000046566,
+     "view_tick": 403
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 31.899999999906868,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_rpp_3",
+   "group": "lab5-move",
+   "bytes": 318509,
+   "errors": [],
+   "first_frame_ms": 86.300048828125,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 611,
+   "seeks": [
+    {
+     "to": 305,
+     "to_frame_ms": 20.100000000093132,
+     "view_tick": 305
+    },
+    {
+     "to": 30,
+     "to_frame_ms": 35.300000000046566,
+     "view_tick": 30
+    },
+    {
+     "to": 580,
+     "to_frame_ms": 24.5,
+     "view_tick": 580
+    },
+    {
+     "to": 152,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 152
+    },
+    {
+     "to": 458,
+     "to_frame_ms": 32.39999999990687,
+     "view_tick": 458
+    },
+    {
+     "to": 61,
+     "to_frame_ms": 30.700000000186265,
+     "view_tick": 61
+    },
+    {
+     "to": 549,
+     "to_frame_ms": 31,
+     "view_tick": 549
+    },
+    {
+     "to": 201,
+     "to_frame_ms": 31.199999999953434,
+     "view_tick": 201
+    },
+    {
+     "to": 403,
+     "to_frame_ms": 30.5,
+     "view_tick": 403
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 30.700000000186265,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 35.300000000046566,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_rpp_4",
+   "group": "lab5-move",
+   "bytes": 318583,
+   "errors": [],
+   "first_frame_ms": 66.39990234375,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 611,
+   "seeks": [
+    {
+     "to": 305,
+     "to_frame_ms": 32.4000000001397,
+     "view_tick": 305
+    },
+    {
+     "to": 30,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 30
+    },
+    {
+     "to": 580,
+     "to_frame_ms": 31.800000000046566,
+     "view_tick": 580
+    },
+    {
+     "to": 152,
+     "to_frame_ms": 28,
+     "view_tick": 152
+    },
+    {
+     "to": 458,
+     "to_frame_ms": 31.0999999998603,
+     "view_tick": 458
+    },
+    {
+     "to": 61,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 61
+    },
+    {
+     "to": 549,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 549
+    },
+    {
+     "to": 201,
+     "to_frame_ms": 31.100000000093132,
+     "view_tick": 201
+    },
+    {
+     "to": 403,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 403
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.4000000001397,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.4000000001397,
+   "ok": true
+  },
+  {
+   "id": "lab5_static_room_rpp_5",
+   "group": "lab5-move",
+   "bytes": 324133,
+   "errors": [],
+   "first_frame_ms": 69,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 613,
+   "seeks": [
+    {
+     "to": 306,
+     "to_frame_ms": 29.5,
+     "view_tick": 306
+    },
+    {
+     "to": 30,
+     "to_frame_ms": 29.9000000001397,
+     "view_tick": 30
+    },
+    {
+     "to": 582,
+     "to_frame_ms": 33.800000000046566,
+     "view_tick": 582
+    },
+    {
+     "to": 153,
+     "to_frame_ms": 26.699999999953434,
+     "view_tick": 153
+    },
+    {
+     "to": 459,
+     "to_frame_ms": 30.5,
+     "view_tick": 459
+    },
+    {
+     "to": 61,
+     "to_frame_ms": 30.5,
+     "view_tick": 61
+    },
+    {
+     "to": 551,
+     "to_frame_ms": 30.199999999953434,
+     "view_tick": 551
+    },
+    {
+     "to": 202,
+     "to_frame_ms": 31.699999999953434,
+     "view_tick": 202
+    },
+    {
+     "to": 404,
+     "to_frame_ms": 30.100000000093132,
+     "view_tick": 404
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.4000000001397,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 33.800000000046566,
+   "ok": true
+  }
+ ],
+ "summary": {
+  "pages_ok": 9,
+  "pages": 9,
+  "casefiles_ok": 100,
+  "casefiles": 100,
+  "first_frame_ms_max": 278.900146484375,
+  "first_frame_ms_median": 72.39990234375,
+  "seek_ms_max": 45.39999999990687,
+  "console_errors": 0
+ },
+ "ok": true
+}

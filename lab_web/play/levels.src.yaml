@@ -1,0 +1,178 @@
+# Play's levels (M3.5), as authored. Data, not code.
+#
+# lab_web/tools/make_play_levels.py turns this into lab_web/play/levels.json:
+# every reference result the stars are measured against is COMPUTED there by
+# coco_lab.play (A*, weighted A*, greedy; the two predictors; the optimal
+# order and two simple policies; the reference drives, simulated), never
+# typed here. docs/v2/CHALLENGES.md is generated from the same file.
+schema: coco_lab.play.levels.src.v1
+challenges:
+  beat-the-planner:
+    title: Beat the planner
+    goal: >-
+      Draw a path from S to G, one cell at a time. Every move costs its length, and a
+      muddy cell costs more to enter (darker is worse). Can you match A*?
+    levels:
+      - id: two-fields
+        title: Two fields
+        weight: 2.0
+        grid:
+          - "................"
+          - "..S............."
+          - "...9999........."
+          - "...9999...4444.."
+          - "...9999...4444.."
+          - "..........4444.."
+          - "..........4444.."
+          - "................"
+          - "............G..."
+          - "................"
+      - id: bog
+        title: The bog
+        weight: 2.0
+        grid:
+          - "................"
+          - "..S............."
+          - "...777777777...."
+          - "...777777777...."
+          - "...777777777...."
+          - "...777777777...."
+          - "...777777777...."
+          - "................"
+          - "...........G...."
+          - "................"
+      - id: mud-field
+        title: The mud field
+        weight: 2.0
+        grid:
+          - "................"
+          - "..S............."
+          - "....99999999...."
+          - "....99999999...."
+          - "....99999999...."
+          - "....99999999...."
+          - "....99999999...."
+          - "....99999999...."
+          - "............G..."
+          - "................"
+  next-node:
+    title: Next node
+    goal: >-
+      A* is part-way through a search. Grey cells are closed; outlined cells are open,
+      each with g (the cost so far) and h (the estimate to G). Click the cell A* expands
+      next -- ten times.
+    levels:
+      - id: wall
+        title: Round the wall
+        after: 0
+        grid:
+          - "................"
+          - "................"
+          - "..S.......#....."
+          - "..........#....."
+          - "......#####....."
+          - "..........#....."
+          - "..........#..G.."
+          - "..........#....."
+          - "................"
+          - "................"
+      - id: mud
+        title: Into the mud
+        after: 30
+        grid:
+          - "................"
+          - "..S............."
+          - "....99999999...."
+          - "....99999999...."
+          - "....99999999...."
+          - "....99999999...."
+          - "....99999999...."
+          - "....99999999...."
+          - "............G..."
+          - "................"
+      - id: u-trap
+        title: The U-trap
+        after: 30
+        grid:
+          - ".................."
+          - ".................."
+          - "....##########...."
+          - ".............#...."
+          - "..S..........#..G."
+          - ".............#...."
+          - "....##########...."
+          - ".................."
+          - ".................."
+  search-the-bays:
+    title: Search the bays
+    goal: >-
+      The target is in one of four bays, and you know only how likely each one is.
+      Choose the order to look in. You are scored on the expected distance over where
+      it might be -- never on where it turned out to be.
+    # the Arena's own problem (coco_lab/coco_lab/fetch_problem.py), with these priors
+    base: fetch_problem.PROBLEM
+    levels:
+      - id: no-idea
+        title: No idea where it is
+        story: Every bay is equally likely -- the Arena's own prior.
+        prior: [0.25, 0.25, 0.25, 0.25]
+        detection: 0.9
+      - id: far-end
+        title: A hint at the far end
+        story: Someone thinks it was taken towards bay 4.
+        prior: [0.15, 0.15, 0.30, 0.40]
+        detection: 0.9
+      - id: ends
+        title: One of the ends
+        story: It is in bay 1 or bay 4, almost certainly.
+        prior: [0.45, 0.05, 0.05, 0.45]
+        detection: 0.9
+      - id: poor-camera
+        title: Seen in bay 3, by a poor camera
+        story: A blurry frame put it in bay 3, and the camera misses 4 times in 10.
+        prior: [0.10, 0.20, 0.55, 0.15]
+        detection: 0.6
+  map-the-arena:
+    title: Map the arena
+    goal: >-
+      Drive COCO to map the arena on wheel odometry alone, within a distance budget.
+      Covering more raises the map's F1; driving further lets the drift grow.
+    levels:
+      - id: forty-metres
+        title: Forty metres
+        seed: 1
+        budget_m: 40.0
+        max_ticks: 6000
+        config: ['map.poses=odometry', 'map.algorithm=occupancy']
+        drives:
+          out_and_back: [[10.0, 0.0], [0.0, 0.0]]
+          tour: [[2.5, 2.0], [6.0, 4.0], [10.0, 3.0], [9.0, -4.0], [3.0, -6.5], [0.5, -2.5], [0.0, 0.0]]
+      - id: twenty-five-metres
+        title: Twenty-five metres
+        seed: 1
+        budget_m: 25.0
+        max_ticks: 6000
+        config: ['map.poses=odometry', 'map.algorithm=occupancy']
+        drives:
+          out_and_back: [[10.0, 0.0], [0.0, 0.0]]
+          tour: [[2.5, 2.0], [6.0, 4.0], [10.0, 3.0], [9.0, -4.0], [3.0, -6.5], [0.5, -2.5], [0.0, 0.0]]
+  case-file-detective:
+    title: Case File detective
+    goal: >-
+      A recording of the full ROS 2 stack in Gazebo. Scrub to the moment the robot's
+      belief about where it is first leaves the truth, and mark it.
+    tolerance_s: 1.0
+    bands_s: [2.0, 1.0, 0.5]
+    levels:
+      - id: told-wrong
+        title: Told the wrong place
+        casefile: lab5_mislocalised_mppi_1
+      - id: kidnapped
+        title: Kidnapped
+        casefile: lab2_kidnap_shipped_k2
+      - id: kidnapped-far
+        title: Kidnapped, far
+        casefile: lab2_kidnap_recovery_k3
+      - id: kidnapped-again
+        title: Kidnapped again
+        casefile: lab2_kidnap_shipped_k5

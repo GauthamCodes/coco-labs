@@ -1,0 +1,27 @@
+{
+ "site": "http://127.0.0.1:4204/coco-labs/",
+ "cross_origin": [],
+ "pyodide_requests": [
+  "http://127.0.0.1:4204/coco-labs/v1/assets/pyodide.worker-BWUKgqTL.js",
+  "http://127.0.0.1:4204/coco-labs/v1/pyodide/pyodide.mjs",
+  "http://127.0.0.1:4204/coco-labs/v1/pyodide/pyodide-lock.json",
+  "http://127.0.0.1:4204/coco-labs/v1/pyodide/python_stdlib.zip",
+  "http://127.0.0.1:4204/coco-labs/v1/pyodide/pyodide.asm.wasm",
+  "http://127.0.0.1:4204/coco-labs/v1/pyodide/pyodide.asm.mjs",
+  "http://127.0.0.1:4204/coco-labs/v1/pyodide/micropip-0.11.1-py3-none-any.whl",
+  "http://127.0.0.1:4204/coco-labs/v1/generated/py/coco_lab-0.2.0-py3-none-any.whl"
+ ],
+ "failed": [],
+ "errors": [],
+ "status": [
+  "Replay — computed in your browser by coco_lab",
+  "Your edit of “A* on an open 20 x 20 grid” — computed in your browser by coco_lab",
+  "Choose Paint wall or Erase, then drag across the map. coco_lab reruns the search in your browser (Python via Pyodide) when you let go — the page never searches itself.",
+  "Recomputed from the link by coco_lab in your browser (trace sha256 4dddb6623b9b…); the link carried no digest to compare.",
+  "Done: reproducing the shared view. coco_lab: 1 search 5 ms, load 38 ms, write 3 ms · first start: Pyodide 1689 ms, install 270 ms",
+  "The weight applies to weighted A* only: f = g + w·h. w = 0 is Dijkstra and w = 1 is A*, event for event (coco_lab/test/test_properties.py: test_weight_zero_reproduces_dijkstra, test_weight_one_reproduces_astar).",
+  "Verdicts: coco_lab 0.2.0 heuristics.analyse and search.suboptimality_bound. Tested in coco_lab/test/test_heuristics.py; coco_lab/test/test_properties.py::test_the_reported_suboptimality_bound_holds.",
+  "Values are the bundle's own; this page recomputes none of them.",
+  "Built from local. No analytics, no cookies. The only third-party request is Pyodide 314.0.7, and only after you paint, change a setting or start a race."
+ ]
+}

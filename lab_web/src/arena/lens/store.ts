@@ -23,12 +23,32 @@ export interface FamilyBatch {
 
 export interface MetricPoint { tick: number; value: number }
 
+/**
+ * Channels filed a second time by one scalar (M3.3): each estimator's own
+ * batches, so "the latest estimate of estimator E at or before tick T" is a
+ * binary search, not a walk back through every other estimator's batches.
+ */
+export const INDEXED_SCALAR: Readonly<Record<string, string>> = { 'coco.estimate.pose.v1': 'estimator' };
+
+/** The last batch in tick-ordered `list` with tick <= `tick`. */
+function lastAtOrBefore(list: FamilyBatch[] | undefined, tick: number): FamilyBatch | null {
+  if (!list || list.length === 0 || list[0].tick > tick) return null;
+  let lo = 0;
+  let hi = list.length - 1;
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (list[mid].tick <= tick) lo = mid; else hi = mid - 1;
+  }
+  return list[lo];
+}
+
 /** Keep at most this many batches per channel (oldest dropped first). */
 export const MAX_BATCHES_PER_CHANNEL = 20_000;
 
 export class FamilyStore {
   private byChannel = new Map<string, FamilyBatch[]>();
   private metrics = new Map<string, MetricPoint[]>();
+  private byScalar = new Map<string, Map<string, FamilyBatch[]>>();
   /** Bumped on every add: renderers redraw only when it changed. */
   version = 0;
 
@@ -38,6 +58,16 @@ export class FamilyStore {
     // batches arrive in tick order; a recording may repeat a tick (several batches per tick)
     list.push(b);
     if (list.length > MAX_BATCHES_PER_CHANNEL) list.splice(0, list.length - MAX_BATCHES_PER_CHANNEL);
+    const key = INDEXED_SCALAR[b.channel];
+    if (key !== undefined && b.scalars[key] !== undefined) {
+      let by = this.byScalar.get(b.channel);
+      if (!by) { by = new Map(); this.byScalar.set(b.channel, by); }
+      const v = String(b.scalars[key]);
+      let own = by.get(v);
+      if (!own) { own = []; by.set(v, own); }
+      own.push(b);
+      if (own.length > MAX_BATCHES_PER_CHANNEL) own.splice(0, own.length - MAX_BATCHES_PER_CHANNEL);
+    }
     if (b.channel === 'coco.metrics.values.v1') {
       const names = b.columns.name as string[];
       const values = b.columns.value as ArrayLike<number>;
@@ -57,16 +87,25 @@ export class FamilyStore {
 
   /** The last batch of `channel` with tick <= `tick` (all batches of that tick: the last one). */
   latest(channel: string, tick: number): FamilyBatch | null {
-    const list = this.byChannel.get(channel);
-    if (!list || list.length === 0) return null;
-    let lo = 0;
-    let hi = list.length - 1;
-    if (list[0].tick > tick) return null;
-    while (lo < hi) {
-      const mid = (lo + hi + 1) >> 1;
-      if (list[mid].tick <= tick) lo = mid; else hi = mid - 1;
-    }
-    return list[lo];
+    return lastAtOrBefore(this.byChannel.get(channel), tick);
+  }
+
+  /** The last batch of `channel` whose indexed scalar equals `value`, at or before `tick` (INDEXED_SCALAR). */
+  latestWhere(channel: string, value: string, tick: number): FamilyBatch | null {
+    return lastAtOrBefore(this.byScalar.get(channel)?.get(value), tick);
+  }
+
+  /** Every batch of `channel` whose indexed scalar equals `value`, at or before `tick`, oldest first. */
+  beforeWhere(channel: string, value: string, tick: number): FamilyBatch[] {
+    const own = this.byScalar.get(channel)?.get(value);
+    if (!own) return [];
+    const last = lastAtOrBefore(own, tick);
+    return last ? own.slice(0, own.lastIndexOf(last) + 1) : [];
+  }
+
+  /** The values the indexed scalar of `channel` has taken (e.g. every estimator seen), in first-seen order. */
+  scalarValues(channel: string): string[] {
+    return [...(this.byScalar.get(channel)?.keys() ?? [])];
   }
 
   /** Every batch of `channel` with tick <= `tick`, oldest first (a trajectory). */
@@ -107,6 +146,7 @@ export class FamilyStore {
   clear() {
     this.byChannel.clear();
     this.metrics.clear();
+    this.byScalar.clear();
     this.version += 1;
   }
 }

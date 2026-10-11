@@ -1,0 +1,87 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-10T17:50:58.034Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 61
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 4,
+    "5m": 2.87,
+    "15m": 1.75
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-10T17:51:18.729Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 62
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 4.13,
+    "5m": 2.98,
+    "15m": 1.81
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4214/coco-labs/",
+ "checks": [
+  {
+   "id": "lab5_crossing_dwb_1",
+   "kind": "lab5",
+   "url": "?view=arena&lens=move&cfg=move.controller=dwa&cfg=move.scenario=crossing",
+   "errors": [],
+   "badge": "MODEL",
+   "got": {
+    "controller": "dwa",
+    "path_given": true
+   },
+   "ok": true
+  },
+  {
+   "id": "lab4_a1_fixed_red",
+   "kind": "lab4",
+   "url": "?view=arena&lens=decide&cfg=mission.truth=bay_1&cfg=mission.start=red",
+   "errors": [],
+   "badge": "MODEL",
+   "got": "choose_bay",
+   "ok": true
+  },
+  {
+   "id": "lab2_kidnap_recovery_k1",
+   "kind": "lab2",
+   "url": "?view=arena&lens=localise&cfg=localise.filter=mcl&cfg=localise.mcl.injection=augmented&kidnap=16.0,0.0,1.5708",
+   "errors": [],
+   "badge": "MODEL",
+   "got": [
+    16,
+    0,
+    1.5708000000000002
+   ],
+   "ok": true
+  },
+  {
+   "id": "lab1_run_astar",
+   "kind": "lab1",
+   "url": "?view=arena&lens=plan&goal=2.5,6.0",
+   "errors": [],
+   "badge": "MODEL",
+   "got": 1,
+   "ok": true
+  }
+ ],
+ "ok": true
+}

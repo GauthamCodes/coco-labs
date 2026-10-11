@@ -1,0 +1,249 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-10T17:51:41.624Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 62
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.41,
+    "5m": 2.9,
+    "15m": 1.82
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-10T17:52:04.962Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 63
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.81,
+    "5m": 2.79,
+    "15m": 1.81
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4214/coco-labs/",
+ "throttle": "none",
+ "profile": null,
+ "pages": [
+  {
+   "page": "(list)",
+   "errors": [],
+   "badge": "STACK",
+   "ok": true
+  },
+  {
+   "page": "lab1-runs",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 3,
+   "unresolved": [
+    "UNRESOLVED"
+   ],
+   "listed": 3,
+   "ok": true
+  },
+  {
+   "page": "astar-myth",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 4,
+   "unresolved": [
+    "UNRESOLVED"
+   ],
+   "listed": 3,
+   "ok": true
+  },
+  {
+   "page": "lab2-kidnap",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 3,
+   "unresolved": [
+    "UNRESOLVED",
+    "UNRESOLVED"
+   ],
+   "listed": 23,
+   "ok": true
+  },
+  {
+   "page": "lab2-rl-tour",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 2,
+   "unresolved": [
+    "UNRESOLVED"
+   ],
+   "listed": 1,
+   "ok": true
+  },
+  {
+   "page": "lab3-slam",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 3,
+   "unresolved": [
+    "UNRESOLVED"
+   ],
+   "listed": 2,
+   "ok": true
+  },
+  {
+   "page": "lab4-search",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 5,
+   "unresolved": [
+    "UNRESOLVED"
+   ],
+   "listed": 17,
+   "ok": true
+  },
+  {
+   "page": "lab5-move",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 4,
+   "unresolved": [
+    "UNRESOLVED",
+    "UNRESOLVED"
+   ],
+   "listed": 54,
+   "ok": true
+  },
+  {
+   "page": "run15",
+   "errors": [],
+   "badge": "STACK",
+   "explained": 3,
+   "unresolved": [
+    "UNRESOLVED"
+   ],
+   "listed": 9,
+   "ok": true
+  }
+ ],
+ "casefiles": [
+  {
+   "id": "lab1_run_astar",
+   "group": "lab1-runs",
+   "bytes": 74406,
+   "errors": [],
+   "first_frame_ms": 81.60009765625,
+   "mode": "recording",
+   "badge": "STACK",
+   "ticks": 1233,
+   "seeks": [
+    {
+     "to": 616,
+     "to_frame_ms": 30.800000000046566,
+     "view_tick": 616
+    },
+    {
+     "to": 61,
+     "to_frame_ms": 30.699999999953434,
+     "view_tick": 61
+    },
+    {
+     "to": 1171,
+     "to_frame_ms": 30.300000000046566,
+     "view_tick": 1171
+    },
+    {
+     "to": 308,
+     "to_frame_ms": 29.899999999906868,
+     "view_tick": 308
+    },
+    {
+     "to": 924,
+     "to_frame_ms": 32.699999999953434,
+     "view_tick": 924
+    },
+    {
+     "to": 123,
+     "to_frame_ms": 29.699999999953434,
+     "view_tick": 123
+    },
+    {
+     "to": 1109,
+     "to_frame_ms": 30.5,
+     "view_tick": 1109
+    },
+    {
+     "to": 406,
+     "to_frame_ms": 30.600000000093132,
+     "view_tick": 406
+    },
+    {
+     "to": 813,
+     "to_frame_ms": 31.5,
+     "view_tick": 813
+    },
+    {
+     "to": 1,
+     "to_frame_ms": 29.899999999906868,
+     "view_tick": 1
+    }
+   ],
+   "seek_max_ms": 32.699999999953434,
+   "ok": true
+  }
+ ],
+ "phone": [
+  {
+   "page": "?view=casefiles",
+   "scroll": 390,
+   "view": 390,
+   "errors": [],
+   "ok": true
+  },
+  {
+   "page": "?view=casefiles&case=lab5-move",
+   "scroll": 390,
+   "view": 390,
+   "errors": [],
+   "ok": true
+  },
+  {
+   "page": "?view=casefiles&case=lab5-move&file=lab5_crossing_dwb_1",
+   "scroll": 390,
+   "view": 390,
+   "errors": [],
+   "ok": true
+  },
+  {
+   "page": "?view=casefiles&case=lab3-slam",
+   "scroll": 390,
+   "view": 390,
+   "errors": [],
+   "ok": true
+  }
+ ],
+ "summary": {
+  "pages_ok": 9,
+  "pages": 9,
+  "casefiles_ok": 1,
+  "casefiles": 1,
+  "first_frame_ms_max": 81.60009765625,
+  "first_frame_ms_median": 81.60009765625,
+  "seek_ms_max": 32.699999999953434,
+  "console_errors": 0,
+  "phone_ok": 4
+ },
+ "ok": true
+}

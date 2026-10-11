@@ -1,0 +1,3901 @@
+{
+ "adapter": "1",
+ "detail": "summary",
+ "git_sha": "e187556d2f2d2ee7b61c5b204deb5778d712488f",
+ "cases": [
+  {
+   "id": "lab1_run_astar",
+   "group": "lab1-runs",
+   "title": "Lab 1 \u00b7 astar",
+   "bags": [
+    "lab1c/run_astar/bag"
+   ],
+   "case": {
+    "lab": 1,
+    "run": "run_astar",
+    "id": "lab1_run_astar",
+    "group": "lab1-runs",
+    "title": "Lab 1 \u00b7 astar"
+   },
+   "run_id": "4609fca93272d5dbfa85641d7f7e212224da29a227acd90ec6d8ae7b817d7923",
+   "bytes_uncompressed": 155111,
+   "messages": 1376,
+   "rows": {
+    "estimate": 37,
+    "robot": 37,
+    "truth": 761,
+    "annotation": 141,
+    "path": 1,
+    "command": 157,
+    "metrics": 488
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "export_dir_sha256",
+    "sha256": "13bc214dc78c2f3c761ca84d64a85c7fe4f5243d56b6546ad495536995a96c4f",
+    "cited_in": "docs/data/lab1c/runs.json"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab1_run_dijkstra",
+   "group": "lab1-runs",
+   "title": "Lab 1 \u00b7 dijkstra",
+   "bags": [
+    "lab1c/run_dijkstra/bag"
+   ],
+   "case": {
+    "lab": 1,
+    "run": "run_dijkstra",
+    "id": "lab1_run_dijkstra",
+    "group": "lab1-runs",
+    "title": "Lab 1 \u00b7 dijkstra"
+   },
+   "run_id": "4b98c9d6301bbd06b35f3e681fe8ad9fbe2fd1d689e8bdeea807a848e62bb42c",
+   "bytes_uncompressed": 154912,
+   "messages": 1383,
+   "rows": {
+    "estimate": 36,
+    "robot": 36,
+    "truth": 778,
+    "annotation": 138,
+    "path": 1,
+    "command": 160,
+    "metrics": 468
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "export_dir_sha256",
+    "sha256": "498253a12e277ebfe16934fc11e74dbe305a8abf1ff4bcd35664a506b6c771dc",
+    "cited_in": "docs/data/lab1c/runs.json"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab1_run_greedy",
+   "group": "lab1-runs",
+   "title": "Lab 1 \u00b7 greedy",
+   "bags": [
+    "lab1c/run_greedy/bag"
+   ],
+   "case": {
+    "lab": 1,
+    "run": "run_greedy",
+    "id": "lab1_run_greedy",
+    "group": "lab1-runs",
+    "title": "Lab 1 \u00b7 greedy"
+   },
+   "run_id": "83c9e7f27716b2e20796d3ed7c1e2be1c6ed272add77f3a77d4c079a9096f660",
+   "bytes_uncompressed": 126059,
+   "messages": 1100,
+   "rows": {
+    "estimate": 11,
+    "robot": 11,
+    "truth": 671,
+    "annotation": 129,
+    "path": 1,
+    "command": 108,
+    "metrics": 344
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "export_dir_sha256",
+    "sha256": "82b76311ee0d3ff9391f3f62cbc34bc5f7ea95e532bd814794d101870f847b7b",
+    "cited_in": "docs/data/lab1c/runs.json"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_recovery_k1",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K1",
+   "bags": [
+    "lab2/kidnap_recovery_K1/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_recovery_K1",
+    "void": false,
+    "id": "lab2_kidnap_recovery_k1",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_recovery_K1"
+   },
+   "run_id": "955b364200cf8cba4e09defeb8fbe2b51f1b6143bf49ca87ff18ec800e96d993",
+   "bytes_uncompressed": 1971424,
+   "messages": 7961,
+   "rows": {
+    "estimate": 2665,
+    "robot": 362,
+    "truth": 2327,
+    "scan": 466,
+    "annotation": 432,
+    "metrics": 6410
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_recovery_k1_void1",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K1.void1",
+   "bags": [
+    "lab2/kidnap_recovery_K1.void1/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_recovery_K1.void1",
+    "void": true,
+    "id": "lab2_kidnap_recovery_k1_void1",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_recovery_K1.void1"
+   },
+   "run_id": "5a955844b2235eefe0029474b1197ddfa5399b557d97e8311a3a1249faec275a",
+   "bytes_uncompressed": 1009045,
+   "messages": 3520,
+   "rows": {
+    "estimate": 1515,
+    "robot": 1,
+    "scan": 307,
+    "truth": 1535,
+    "annotation": 151,
+    "metrics": 22
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_recovery_k1_r2",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K1_r2",
+   "bags": [
+    "lab2/kidnap_recovery_K1_r2/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_recovery_K1_r2",
+    "void": false,
+    "id": "lab2_kidnap_recovery_k1_r2",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_recovery_K1_r2"
+   },
+   "run_id": "6b2517f173d66f405b3b673f45c489deb202a9a68fb67d8f1b5cef7e8af5e608",
+   "bytes_uncompressed": 1973959,
+   "messages": 7972,
+   "rows": {
+    "estimate": 2673,
+    "robot": 364,
+    "truth": 2340,
+    "scan": 468,
+    "annotation": 442,
+    "metrics": 6294
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_recovery_k2",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K2",
+   "bags": [
+    "lab2/kidnap_recovery_K2/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_recovery_K2",
+    "void": false,
+    "id": "lab2_kidnap_recovery_k2",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_recovery_K2"
+   },
+   "run_id": "b43584755292dc093f41d5f44468a3b8f97affbe727e910cf9643edfb86227b5",
+   "bytes_uncompressed": 1978672,
+   "messages": 8084,
+   "rows": {
+    "estimate": 2652,
+    "robot": 362,
+    "truth": 2320,
+    "scan": 464,
+    "annotation": 487,
+    "metrics": 6448
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_recovery_k2_void2",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K2.void2",
+   "bags": [
+    "lab2/kidnap_recovery_K2.void2/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_recovery_K2.void2",
+    "void": true,
+    "id": "lab2_kidnap_recovery_k2_void2",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_recovery_K2.void2"
+   },
+   "run_id": "a5e9c800b80861ee65cee86910ba3962d08a8d5cbe0c719d6037aa5e6c7efb40",
+   "bytes_uncompressed": 274456,
+   "messages": 939,
+   "rows": {
+    "estimate": 412,
+    "robot": 1,
+    "truth": 413,
+    "scan": 83,
+    "annotation": 29
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_recovery_k2_r2",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K2_r2",
+   "bags": [
+    "lab2/kidnap_recovery_K2_r2/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_recovery_K2_r2",
+    "void": false,
+    "id": "lab2_kidnap_recovery_k2_r2",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_recovery_K2_r2"
+   },
+   "run_id": "baf9b5678f0db67bbca8b6a69ce63e3e54fb9ab60885fcb3d56e96f6ebe99e88",
+   "bytes_uncompressed": 1974416,
+   "messages": 8006,
+   "rows": {
+    "estimate": 2667,
+    "robot": 362,
+    "truth": 2335,
+    "scan": 467,
+    "annotation": 458,
+    "metrics": 6298
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_recovery_k3",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K3",
+   "bags": [
+    "lab2/kidnap_recovery_K3/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_recovery_K3",
+    "void": false,
+    "id": "lab2_kidnap_recovery_k3",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_recovery_K3"
+   },
+   "run_id": "0c7bbf48dc50784815b477c65aabfe21b9331d7fb73b0568d1da81c812cd5b8c",
+   "bytes_uncompressed": 1964417,
+   "messages": 7949,
+   "rows": {
+    "estimate": 2652,
+    "robot": 364,
+    "truth": 2320,
+    "annotation": 478,
+    "scan": 464,
+    "metrics": 6248
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_recovery_k3_r2",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K3_r2",
+   "bags": [
+    "lab2/kidnap_recovery_K3_r2/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_recovery_K3_r2",
+    "void": false,
+    "id": "lab2_kidnap_recovery_k3_r2",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_recovery_K3_r2"
+   },
+   "run_id": "7f053036a89f0428174c84f2e0397726b0f3a28a88b2817819ef946f93be5e49",
+   "bytes_uncompressed": 1969568,
+   "messages": 7981,
+   "rows": {
+    "estimate": 2674,
+    "robot": 364,
+    "truth": 2336,
+    "scan": 467,
+    "annotation": 434,
+    "metrics": 6250
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_recovery_k4",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K4",
+   "bags": [
+    "lab2/kidnap_recovery_K4/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_recovery_K4",
+    "void": false,
+    "id": "lab2_kidnap_recovery_k4",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_recovery_K4"
+   },
+   "run_id": "63684cded927e7d6400feb70ab32ed8938d491d05e961bdda47eb5b8a8e8c089",
+   "bytes_uncompressed": 1965324,
+   "messages": 7959,
+   "rows": {
+    "estimate": 2640,
+    "robot": 362,
+    "truth": 2311,
+    "scan": 463,
+    "annotation": 495,
+    "metrics": 6306
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_recovery_k4_r2",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K4_r2",
+   "bags": [
+    "lab2/kidnap_recovery_K4_r2/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_recovery_K4_r2",
+    "void": false,
+    "id": "lab2_kidnap_recovery_k4_r2",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_recovery_K4_r2"
+   },
+   "run_id": "10878255f1cb341250deeba5b21c934130f063dc10716c7719dd47a9d40a84b7",
+   "bytes_uncompressed": 1973412,
+   "messages": 8021,
+   "rows": {
+    "estimate": 2669,
+    "robot": 363,
+    "truth": 2337,
+    "scan": 468,
+    "annotation": 456,
+    "metrics": 6206
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_recovery_k5",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K5",
+   "bags": [
+    "lab2/kidnap_recovery_K5/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_recovery_K5",
+    "void": false,
+    "id": "lab2_kidnap_recovery_k5",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_recovery_K5"
+   },
+   "run_id": "8a496a3a68f4cec88d6a560ab15992c152f5789c886325043ecaa6f695413440",
+   "bytes_uncompressed": 1967103,
+   "messages": 8002,
+   "rows": {
+    "estimate": 2644,
+    "robot": 362,
+    "truth": 2312,
+    "scan": 463,
+    "annotation": 485,
+    "metrics": 6326
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_recovery_k5_r2",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_recovery_K5_r2",
+   "bags": [
+    "lab2/kidnap_recovery_K5_r2/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_recovery_K5_r2",
+    "void": false,
+    "id": "lab2_kidnap_recovery_k5_r2",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_recovery_K5_r2"
+   },
+   "run_id": "e8969dd8919b05458cb2bb452fabefd74dde1eff258c602287c90a909c75c2b0",
+   "bytes_uncompressed": 1970097,
+   "messages": 7959,
+   "rows": {
+    "estimate": 2661,
+    "robot": 362,
+    "truth": 2332,
+    "scan": 467,
+    "annotation": 455,
+    "metrics": 6266
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_shipped_k1",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K1",
+   "bags": [
+    "lab2/kidnap_shipped_K1/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_shipped_K1",
+    "void": false,
+    "id": "lab2_kidnap_shipped_k1",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_shipped_K1"
+   },
+   "run_id": "7b09bf3e6c1a930f46607c522fb49e01202d38dfb8b43eed0939789ea66b7bbb",
+   "bytes_uncompressed": 1958683,
+   "messages": 7937,
+   "rows": {
+    "estimate": 2641,
+    "robot": 362,
+    "truth": 2307,
+    "scan": 462,
+    "annotation": 470,
+    "metrics": 6288
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_shipped_k1_void1",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K1.void1",
+   "bags": [
+    "lab2/kidnap_shipped_K1.void1/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_shipped_K1.void1",
+    "void": true,
+    "id": "lab2_kidnap_shipped_k1_void1",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_shipped_K1.void1"
+   },
+   "run_id": "f68292e617244d8c90453fa3479b4aaf47f9a69df18d1628b0d43c615b5e8562",
+   "bytes_uncompressed": 987499,
+   "messages": 3446,
+   "rows": {
+    "estimate": 1483,
+    "robot": 1,
+    "scan": 300,
+    "truth": 1496,
+    "annotation": 156,
+    "metrics": 20
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_shipped_k1_r2",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K1_r2",
+   "bags": [
+    "lab2/kidnap_shipped_K1_r2/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_shipped_K1_r2",
+    "void": false,
+    "id": "lab2_kidnap_shipped_k1_r2",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_shipped_K1_r2"
+   },
+   "run_id": "e827ce2ba14cafe1aa5eab7e9757c283d072f9164d3e71442af1083074002cab",
+   "bytes_uncompressed": 1966496,
+   "messages": 8041,
+   "rows": {
+    "estimate": 2659,
+    "robot": 364,
+    "truth": 2325,
+    "scan": 465,
+    "annotation": 481,
+    "metrics": 6126
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_shipped_k2",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K2",
+   "bags": [
+    "lab2/kidnap_shipped_K2/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_shipped_K2",
+    "void": false,
+    "id": "lab2_kidnap_shipped_k2",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_shipped_K2"
+   },
+   "run_id": "92cb22f0833a359613a2c71502ddac751cca02b678a7f1f4baf5c6eb3e5a71a7",
+   "bytes_uncompressed": 1967982,
+   "messages": 7997,
+   "rows": {
+    "estimate": 2662,
+    "robot": 362,
+    "scan": 466,
+    "truth": 2328,
+    "annotation": 444,
+    "metrics": 6260
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_shipped_k2_r2",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K2_r2",
+   "bags": [
+    "lab2/kidnap_shipped_K2_r2/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_shipped_K2_r2",
+    "void": false,
+    "id": "lab2_kidnap_shipped_k2_r2",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_shipped_K2_r2"
+   },
+   "run_id": "93c23bb71a5968d21a69f8ae82088d5594e8a3f03bca487706785994a86dc4a8",
+   "bytes_uncompressed": 1969186,
+   "messages": 7952,
+   "rows": {
+    "estimate": 2668,
+    "robot": 362,
+    "truth": 2337,
+    "scan": 468,
+    "annotation": 454,
+    "metrics": 6178
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_shipped_k3",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K3",
+   "bags": [
+    "lab2/kidnap_shipped_K3/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_shipped_K3",
+    "void": false,
+    "id": "lab2_kidnap_shipped_k3",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_shipped_K3"
+   },
+   "run_id": "9f0fd77fd0ee51684f9c35102f48b0ab167014b66bcb85bf12c2375e72c0ef92",
+   "bytes_uncompressed": 1970530,
+   "messages": 7960,
+   "rows": {
+    "estimate": 2664,
+    "robot": 362,
+    "truth": 2326,
+    "scan": 466,
+    "annotation": 459,
+    "metrics": 6310
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_shipped_k3_r2",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K3_r2",
+   "bags": [
+    "lab2/kidnap_shipped_K3_r2/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_shipped_K3_r2",
+    "void": false,
+    "id": "lab2_kidnap_shipped_k3_r2",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_shipped_K3_r2"
+   },
+   "run_id": "6a9e08307a9c6e17c700ffc7a881434b83043ed979eea7e085b576da31bbfa70",
+   "bytes_uncompressed": 1974516,
+   "messages": 8082,
+   "rows": {
+    "estimate": 2660,
+    "robot": 363,
+    "truth": 2327,
+    "scan": 466,
+    "annotation": 471,
+    "metrics": 6264
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_shipped_k4",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K4",
+   "bags": [
+    "lab2/kidnap_shipped_K4/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_shipped_K4",
+    "void": false,
+    "id": "lab2_kidnap_shipped_k4",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_shipped_K4"
+   },
+   "run_id": "b996ee9bd817cb317b207a2ac0fa935e1b5433925487a48ffa0c9774ae8d1d50",
+   "bytes_uncompressed": 1964037,
+   "messages": 7976,
+   "rows": {
+    "estimate": 2642,
+    "robot": 362,
+    "truth": 2310,
+    "scan": 462,
+    "annotation": 489,
+    "metrics": 6320
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_shipped_k4_r2",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K4_r2",
+   "bags": [
+    "lab2/kidnap_shipped_K4_r2/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_shipped_K4_r2",
+    "void": false,
+    "id": "lab2_kidnap_shipped_k4_r2",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_shipped_K4_r2"
+   },
+   "run_id": "b5edc4d0df949f40079d4a54b3c3d1b5057f06f586f07fa888d09daa55c176a5",
+   "bytes_uncompressed": 1969342,
+   "messages": 8044,
+   "rows": {
+    "estimate": 2659,
+    "robot": 364,
+    "truth": 2325,
+    "scan": 465,
+    "annotation": 487,
+    "metrics": 6176
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_shipped_k5",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K5",
+   "bags": [
+    "lab2/kidnap_shipped_K5/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_shipped_K5",
+    "void": false,
+    "id": "lab2_kidnap_shipped_k5",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_shipped_K5"
+   },
+   "run_id": "2ce72389e400bed3b931b0707dc1bf780ad711daca0baebfbb0c2266cdb7111e",
+   "bytes_uncompressed": 1967660,
+   "messages": 7999,
+   "rows": {
+    "estimate": 2647,
+    "robot": 362,
+    "truth": 2316,
+    "scan": 464,
+    "annotation": 480,
+    "metrics": 6296
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_kidnap_shipped_k5_r2",
+   "group": "lab2-kidnap",
+   "title": "Lab 2 \u00b7 kidnap_shipped_K5_r2",
+   "bags": [
+    "lab2/kidnap_shipped_K5_r2/bag"
+   ],
+   "case": {
+    "lab": 2,
+    "session": "kidnap_shipped_K5_r2",
+    "void": false,
+    "id": "lab2_kidnap_shipped_k5_r2",
+    "group": "lab2-kidnap",
+    "title": "Lab 2 \u00b7 kidnap_shipped_K5_r2"
+   },
+   "run_id": "b9e183976ee4450f9429f556bb741488d1c16fc722c568e6aa69910fa5458446",
+   "bytes_uncompressed": 1968362,
+   "messages": 7942,
+   "rows": {
+    "estimate": 2666,
+    "robot": 363,
+    "truth": 2336,
+    "scan": 468,
+    "annotation": 474,
+    "metrics": 6112
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab2_rl_fidelity_1_tour",
+   "group": "lab2-rl-tour",
+   "title": "fidelity_1 tour: wheel odometry and the adopted EKF",
+   "bags": [
+    "lab2/fidelity_1/bag",
+    "lab2/rlpd_fidelity_1/rl_bag"
+   ],
+   "case": {
+    "lab": 2,
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab2_rl_fidelity_1_tour",
+    "group": "lab2-rl-tour",
+    "title": "fidelity_1 tour: wheel odometry and the adopted EKF"
+   },
+   "run_id": "b751e947fec91bbae9d9421ab6a4c2f75bfbf6e03793eb16e92313e817599ca6",
+   "bytes_uncompressed": 4605807,
+   "messages": 20447,
+   "rows": {
+    "estimate": 9339,
+    "truth": 4405,
+    "metrics": 15420,
+    "scan": 881,
+    "annotation": 909,
+    "robot": 590
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": [
+    191.72,
+    632.16
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab3_s1_tour",
+   "group": "lab3-slam",
+   "title": "s1_tour (from fidelity_s1)",
+   "bags": [
+    "lab3/drives/s1_tour/bag"
+   ],
+   "case": {
+    "lab": 3,
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab3_s1_tour",
+    "group": "lab3-slam",
+    "title": "s1_tour (from fidelity_s1)"
+   },
+   "run_id": "8419d7140048bd4ed4cd37981a1ce52714748735324384211856e2e74f9a88b3",
+   "bytes_uncompressed": 2828360,
+   "messages": 9678,
+   "rows": {
+    "truth": 4425,
+    "scan": 885,
+    "estimate": 4367
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab3_1_tour",
+   "group": "lab3-slam",
+   "title": "1_tour (from fidelity_1)",
+   "bags": [
+    "lab3/drives/1_tour/bag"
+   ],
+   "case": {
+    "lab": 3,
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab3_1_tour",
+    "group": "lab3-slam",
+    "title": "1_tour (from fidelity_1)"
+   },
+   "run_id": "ed40918e3fb759f63007cb21f4fc05c86766711aa2a5fc8ad85a37afc3d09bc9",
+   "bytes_uncompressed": 2828036,
+   "messages": 9676,
+   "rows": {
+    "estimate": 4365,
+    "truth": 4425,
+    "scan": 885
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab4_a1_fixed_red",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 A1_fixed_red",
+   "bags": [
+    "lab4/matrix/A1_fixed_red/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "A1_fixed_red",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_a1_fixed_red",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 A1_fixed_red"
+   },
+   "run_id": "d330c0639a1a638ebdf85ef98b5598dacc3424ffdb7ef5d69e59c3d3e2dd369f",
+   "bytes_uncompressed": 876528,
+   "messages": 6052,
+   "rows": {
+    "truth": 4145,
+    "transition": 41,
+    "annotation": 3254
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "a29455628f1e1e7edacfccc33141a0b07bd8e7f470b14dfbb53bb60b5e68bd46",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791293499242523241
+   ]
+  },
+  {
+   "id": "lab4_a2_fixed_green",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 A2_fixed_green",
+   "bags": [
+    "lab4/matrix/A2_fixed_green/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "A2_fixed_green",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_a2_fixed_green",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 A2_fixed_green"
+   },
+   "run_id": "7068e10dab8741f6ec0b0a7f0caaf38249b44c7dab9b6db9b2e6b43e3223d074",
+   "bytes_uncompressed": 670488,
+   "messages": 4658,
+   "rows": {
+    "transition": 33,
+    "annotation": 2455,
+    "truth": 3184
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "5a7472192c618d3a4b22e8680219c9bb3b784d063c1792029364dae3dd9d47ac",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791294881009389930
+   ]
+  },
+  {
+   "id": "lab4_a3_fixed_blue",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 A3_fixed_blue",
+   "bags": [
+    "lab4/matrix/A3_fixed_blue/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "A3_fixed_blue",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_a3_fixed_blue",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 A3_fixed_blue"
+   },
+   "run_id": "4d6db5dc8b5e86bed9df2a1426c84f768ddba75f08791f35c1de8bf8159e5ffd",
+   "bytes_uncompressed": 309342,
+   "messages": 2156,
+   "rows": {
+    "truth": 1500,
+    "transition": 17,
+    "annotation": 1093
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "9eff932901f4c776ace87fd0fae18d61dd0671cd00ac62efeaf9b40ed4ac70a5",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791295653482955861
+   ]
+  },
+  {
+   "id": "lab4_a4_fixed_yellow",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 A4_fixed_yellow",
+   "bags": [
+    "lab4/matrix/A4_fixed_yellow/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "A4_fixed_yellow",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_a4_fixed_yellow",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 A4_fixed_yellow"
+   },
+   "run_id": "56e43b9fc56d3c7ad4c6ec7c3e39de314710c28bc5822f7251702430c2b4f663",
+   "bytes_uncompressed": 497893,
+   "messages": 3423,
+   "rows": {
+    "transition": 25,
+    "annotation": 1825,
+    "truth": 2341
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "911b235ab8dfc8c5af6c21a1141e90af859c5597589c4293b2ec651311e4bc3c",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791296709210771423
+   ]
+  },
+  {
+   "id": "lab4_b1_colours_s5_red",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 B1_colours_s5_red",
+   "bags": [
+    "lab4/matrix/B1_colours_s5_red/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "B1_colours_s5_red",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_b1_colours_s5_red",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 B1_colours_s5_red"
+   },
+   "run_id": "f8f6ef71c6a6d1b63db0072b921fb3c28c14d596374b3a594e73331d36560256",
+   "bytes_uncompressed": 889461,
+   "messages": 6284,
+   "rows": {
+    "truth": 4185,
+    "annotation": 3262,
+    "transition": 41
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "f5df323c72d2be5a9ed97b39113af05cb19d74fbeabaef88a3aefd1a0d256a9a",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791298316753515950
+   ]
+  },
+  {
+   "id": "lab4_b2_colours_s1_red",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 B2_colours_s1_red",
+   "bags": [
+    "lab4/matrix/B2_colours_s1_red/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "B2_colours_s1_red",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_b2_colours_s1_red",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 B2_colours_s1_red"
+   },
+   "run_id": "4e40e076bda4eaedf16224d2e30356fd20c13d19f2988b354baecd8da515baff",
+   "bytes_uncompressed": 654560,
+   "messages": 4592,
+   "rows": {
+    "truth": 3100,
+    "annotation": 2397,
+    "transition": 36
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "74b9434077210256ac0638770cc704fcacbdc4033d33641d5b11cfc497cac78c",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791299600429877843
+   ]
+  },
+  {
+   "id": "lab4_b3_colours_s7_red",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 B3_colours_s7_red",
+   "bags": [
+    "lab4/matrix/B3_colours_s7_red/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "B3_colours_s7_red",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_b3_colours_s7_red",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 B3_colours_s7_red"
+   },
+   "run_id": "c0958ca39f95a498759a6b5e38f8a8027e2abd711924c62af3102850d286a5c7",
+   "bytes_uncompressed": 326721,
+   "messages": 2292,
+   "rows": {
+    "truth": 1606,
+    "transition": 20,
+    "annotation": 1149
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "d1ef02ac083c84f77be483112d2a59ee4995d4a0b3a31c288541802d80ef7c9c",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791312056402034352
+   ]
+  },
+  {
+   "id": "lab4_b4_colours_s2_red",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 B4_colours_s2_red",
+   "bags": [
+    "lab4/matrix/B4_colours_s2_red/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "B4_colours_s2_red",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_b4_colours_s2_red",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 B4_colours_s2_red"
+   },
+   "run_id": "282bfe7e44f9eded0433b13f6fd1a20566e9980566360c3ed2aa2a8ff7d690bf",
+   "bytes_uncompressed": 512171,
+   "messages": 3529,
+   "rows": {
+    "truth": 2441,
+    "transition": 25,
+    "annotation": 1888
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "9d15027fcb846d6cb78be3ac49e508e645f5a76469b1679957ec13526bb3b03d",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791300993291737060
+   ]
+  },
+  {
+   "id": "lab4_c1_green_stop_after_bay3",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 C1_green_stop_after_bay3",
+   "bags": [
+    "lab4/matrix/C1_green_stop_after_bay3/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "C1_green_stop_after_bay3",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_c1_green_stop_after_bay3",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 C1_green_stop_after_bay3"
+   },
+   "run_id": "d1ea87548a6f232ce3ba6ec52207e1a4bbb069b01dc6b4f33ab720c08c7cfee7",
+   "bytes_uncompressed": 188482,
+   "messages": 1330,
+   "rows": {
+    "truth": 903,
+    "transition": 12,
+    "annotation": 679
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "a2e6ca7b87531458f58a356e5eccc251d74d623041671c80dfc4d5d799ee9dc1",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791307927718302429
+   ]
+  },
+  {
+   "id": "lab4_c2_green_nearest",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 C2_green_nearest",
+   "bags": [
+    "lab4/matrix/C2_green_nearest/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "C2_green_nearest",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_c2_green_nearest",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 C2_green_nearest"
+   },
+   "run_id": "7c217c4b3431d6d92afc11c1a09ce847db6fd1c0551c054290a75ce88585273f",
+   "bytes_uncompressed": 501100,
+   "messages": 3506,
+   "rows": {
+    "truth": 2443,
+    "transition": 28,
+    "annotation": 1806
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "24ab97280e6254917724115330f7acabeb2be41bfc6a27672017cafa7e002898",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791308934935706286
+   ]
+  },
+  {
+   "id": "lab4_c3_green_most_likely",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 C3_green_most_likely",
+   "bags": [
+    "lab4/matrix/C3_green_most_likely/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "C3_green_most_likely",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_c3_green_most_likely",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 C3_green_most_likely"
+   },
+   "run_id": "594de323fc9281d74285b832c30a3d7e9ccad1cf0517319fe1e3f3432f817b19",
+   "bytes_uncompressed": 523292,
+   "messages": 3670,
+   "rows": {
+    "annotation": 1896,
+    "truth": 2537,
+    "transition": 28
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "9626ebe5764579e9c38366f38c3cd78cbafe3db929e997bef5fc7da0c5d0cab3",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791309907836992886
+   ]
+  },
+  {
+   "id": "lab4_c4_green_reverse",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 C4_green_reverse",
+   "bags": [
+    "lab4/matrix/C4_green_reverse/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "C4_green_reverse",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_c4_green_reverse",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 C4_green_reverse"
+   },
+   "run_id": "8b78f500ed22bb11f84481eb4b9ca5543580c142364571cd34c94130f70a106d",
+   "bytes_uncompressed": 731404,
+   "messages": 5092,
+   "rows": {
+    "truth": 3479,
+    "annotation": 2710,
+    "transition": 33
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "30f638cf702c23d96a6e9c8e87a7122fed9aeffc3a3ba7f063f0cb226cc7ba8d",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791311290641184160
+   ]
+  },
+  {
+   "id": "lab4_d1_positions_s1_red",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 D1_positions_s1_red",
+   "bags": [
+    "lab4/matrix/D1_positions_s1_red/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "D1_positions_s1_red",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_d1_positions_s1_red",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 D1_positions_s1_red"
+   },
+   "run_id": "833f77e7db457444cccbbdb19b759e605564dac930c5975c45562cfcef999f0a",
+   "bytes_uncompressed": 680141,
+   "messages": 4767,
+   "rows": {
+    "transition": 33,
+    "truth": 3248,
+    "annotation": 2491
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "db49a8803dd4e5f3b1ee81389721775ed0390246f05b810c711b6f0f6d7dab4d",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791302257041803259
+   ]
+  },
+  {
+   "id": "lab4_d2_positions_s2_red",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 D2_positions_s2_red",
+   "bags": [
+    "lab4/matrix/D2_positions_s2_red/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "D2_positions_s2_red",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_d2_positions_s2_red",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 D2_positions_s2_red"
+   },
+   "run_id": "28bda67a934177616a4ce4b6e6a9fcf6832b767d5a5510224c50421ac38a4b6b",
+   "bytes_uncompressed": 504253,
+   "messages": 3493,
+   "rows": {
+    "truth": 2377,
+    "transition": 25,
+    "annotation": 1859
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "1e2fa980a8c5693635369cb1601444ae62962bbff70154540e6cc2188a41a35f",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791304794526146927
+   ]
+  },
+  {
+   "id": "lab4_d3_positions_s3_red",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 D3_positions_s3_red",
+   "bags": [
+    "lab4/matrix/D3_positions_s3_red/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "D3_positions_s3_red",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_d3_positions_s3_red",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 D3_positions_s3_red"
+   },
+   "run_id": "d18d0e48bc936e8bb3f4f6ffb3f775f44b04af783dec7c5a0823f2ec60161157",
+   "bytes_uncompressed": 673021,
+   "messages": 4721,
+   "rows": {
+    "truth": 3202,
+    "transition": 33,
+    "annotation": 2466
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "b65ee13ebd7acf41280a6854372285e15f76e628376840388f9606624e9fadd8",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791306071980045223
+   ]
+  },
+  {
+   "id": "lab4_d4_positions_s4_red",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 D4_positions_s4_red",
+   "bags": [
+    "lab4/matrix/D4_positions_s4_red/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "D4_positions_s4_red",
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_d4_positions_s4_red",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 D4_positions_s4_red"
+   },
+   "run_id": "353bb2c0d5ba5208a9259fbd58185d584f33d4fea8c12d8dc2657037b61b4b00",
+   "bytes_uncompressed": 676151,
+   "messages": 4712,
+   "rows": {
+    "truth": 3229,
+    "annotation": 2483,
+    "transition": 33
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "p05_sha_dir",
+    "sha256": "27ebdfab765937d56996d24f3882a2d41f7c5311c2d3dac5455fccb1685dc959",
+    "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json"
+   },
+   "window": null,
+   "log_window_ns": [
+    0,
+    1791307331411114218
+   ]
+  },
+  {
+   "id": "lab4_b3_colours_s7_red_void_1",
+   "group": "lab4-search",
+   "title": "Lab 4 \u00b7 B3_colours_s7_red.void-1 (void)",
+   "bags": [
+    "lab4/matrix/B3_colours_s7_red.void-1/bag"
+   ],
+   "case": {
+    "lab": 4,
+    "run": "B3_colours_s7_red.void-1",
+    "void": true,
+    "world_to_map": [
+     2,
+     0
+    ],
+    "id": "lab4_b3_colours_s7_red_void_1",
+    "group": "lab4-search",
+    "title": "Lab 4 \u00b7 B3_colours_s7_red.void-1 (void)"
+   },
+   "run_id": "b1c7c5024662bef557093ffc0f23d92dca8a8e69c910f747dbb0352f6f78416c",
+   "bytes_uncompressed": 44091,
+   "messages": 370,
+   "rows": {
+    "truth": 326,
+    "annotation": 76,
+    "transition": 1
+   },
+   "checksum": {
+    "checked": false,
+    "why": "no committed manifest cites this bag by checksum"
+   },
+   "window": null,
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_dwb_1",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_1",
+   "bags": [
+    "lab5/matrix/crossing_DWB_1/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "DWB",
+    "run": "crossing_DWB_1",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_dwb_1",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_1"
+   },
+   "run_id": "39d5fd6410b2f42010a41f7c58c3f579c5cd4c9b0db88c1dcc1b16b59325a33c",
+   "bytes_uncompressed": 323294,
+   "messages": 1415,
+   "rows": {
+    "actors": 331,
+    "truth": 363,
+    "scan": 73,
+    "annotation": 83,
+    "path": 2,
+    "candidates": 51,
+    "command": 205,
+    "metrics": 496,
+    "estimate": 31,
+    "robot": 31
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "673d7f057b9858c26af41c10b9221c90c7df9f14d1c81334227585b36211d150",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    75.94200000000001,
+    112.206
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_dwb_2",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_2",
+   "bags": [
+    "lab5/matrix/crossing_DWB_2/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "DWB",
+    "run": "crossing_DWB_2",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_dwb_2",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_2"
+   },
+   "run_id": "f98288825274588299f6bfa195db8579aa89be1cd789ad158504e0440b2f93dc",
+   "bytes_uncompressed": 320376,
+   "messages": 1390,
+   "rows": {
+    "truth": 362,
+    "actors": 334,
+    "scan": 73,
+    "annotation": 77,
+    "path": 2,
+    "candidates": 51,
+    "command": 183,
+    "metrics": 498,
+    "estimate": 31,
+    "robot": 31
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "1cba7e3ed765155516651dcbe974489ed570aa221a3f7cd17f83ba156c065385",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    80.53800000000001,
+    116.652
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_dwb_3",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_3",
+   "bags": [
+    "lab5/matrix/crossing_DWB_3/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "DWB",
+    "run": "crossing_DWB_3",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_dwb_3",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_3"
+   },
+   "run_id": "cefd83eeedcefb3b886e1ccd201ee55011e40d6f4ef9aea0a06e1aeff24eb2ae",
+   "bytes_uncompressed": 320977,
+   "messages": 1397,
+   "rows": {
+    "truth": 365,
+    "actors": 334,
+    "scan": 73,
+    "annotation": 75,
+    "path": 2,
+    "candidates": 51,
+    "command": 188,
+    "metrics": 498,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "ba3c11484c5f0be556ec6fe4fd72a1db8a4d8d2eb8f20f10dca0d895df353c57",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    70.06400000000001,
+    106.55000000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_dwb_4",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_4",
+   "bags": [
+    "lab5/matrix/crossing_DWB_4/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "DWB",
+    "run": "crossing_DWB_4",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_dwb_4",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_4"
+   },
+   "run_id": "b58608079ac24b12303eacdbf803dfcb7d16e3608e0fe1c5fdfb4e5204fc7c68",
+   "bytes_uncompressed": 322051,
+   "messages": 1410,
+   "rows": {
+    "actors": 342,
+    "truth": 364,
+    "scan": 73,
+    "annotation": 78,
+    "path": 2,
+    "candidates": 50,
+    "command": 189,
+    "metrics": 504,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "6a48eec22898af7845247340d95b07bd62a7f34b551d89f4ff1175902782a43d",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    74.546,
+    110.866
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_dwb_5",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_5",
+   "bags": [
+    "lab5/matrix/crossing_DWB_5/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "DWB",
+    "run": "crossing_DWB_5",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_dwb_5",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 DWB DWB_5"
+   },
+   "run_id": "525f9b0fcdfe57ed8f4fd40288042f5a5f2510dec625349209cf8e38112a05b8",
+   "bytes_uncompressed": 309083,
+   "messages": 1318,
+   "rows": {
+    "truth": 366,
+    "actors": 336,
+    "scan": 73,
+    "annotation": 53,
+    "path": 2,
+    "candidates": 48,
+    "command": 150,
+    "metrics": 454,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "d25fda241a0d6d29a9a85571d6be68aef3e840effd8cdb3777724042465c0212",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    73.072,
+    109.59400000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_mppi_1",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_1",
+   "bags": [
+    "lab5/matrix/crossing_MPPI_1/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "MPPI",
+    "run": "crossing_MPPI_1",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_mppi_1",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_1"
+   },
+   "run_id": "3e4f342956e5886f6f50470bb3a4e0af2cbbbad8326a5f2b795e1e2072a29c94",
+   "bytes_uncompressed": 355499,
+   "messages": 1539,
+   "rows": {
+    "truth": 395,
+    "actors": 355,
+    "scan": 79,
+    "annotation": 94,
+    "path": 1,
+    "candidates": 56,
+    "command": 223,
+    "metrics": 536,
+    "estimate": 33,
+    "robot": 33
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "9dabaa99254c9856b61d5168b2e358280c37a5768628cf18533eac665a2472ef",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    76.262,
+    115.74400000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_mppi_2",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_2",
+   "bags": [
+    "lab5/matrix/crossing_MPPI_2/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "MPPI",
+    "run": "crossing_MPPI_2",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_mppi_2",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_2"
+   },
+   "run_id": "b452dc346b7b64be6826543f6c1da3315359de25b0419184e4fbf68cf4464f5a",
+   "bytes_uncompressed": 355384,
+   "messages": 1521,
+   "rows": {
+    "truth": 398,
+    "actors": 362,
+    "scan": 80,
+    "annotation": 84,
+    "path": 1,
+    "candidates": 58,
+    "command": 203,
+    "metrics": 538,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "3e09ad28e2944e0ecd20cc101746e6f67a1ba908ed0c6c4ed08428652292b7dd",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    80.602,
+    120.33000000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_mppi_3",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_3",
+   "bags": [
+    "lab5/matrix/crossing_MPPI_3/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "MPPI",
+    "run": "crossing_MPPI_3",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_mppi_3",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_3"
+   },
+   "run_id": "96283c35e39822cecdf8102cfecd7fe44af9e22f9461f0c770c5ed9d95d69b20",
+   "bytes_uncompressed": 352647,
+   "messages": 1520,
+   "rows": {
+    "actors": 362,
+    "truth": 394,
+    "scan": 79,
+    "annotation": 83,
+    "path": 1,
+    "candidates": 56,
+    "command": 213,
+    "metrics": 532,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "a7d355c92792455936360fc58529f05feb1d29b333401d884aa14b0beec7fcc0",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    80.14800000000001,
+    119.558
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_mppi_4",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_4",
+   "bags": [
+    "lab5/matrix/crossing_MPPI_4/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "MPPI",
+    "run": "crossing_MPPI_4",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_mppi_4",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_4"
+   },
+   "run_id": "aa819c823422f04d67b1b57fe21fdfadb73612a8e4077bd4a3bded7d0f05ef84",
+   "bytes_uncompressed": 364120,
+   "messages": 1600,
+   "rows": {
+    "truth": 395,
+    "annotation": 112,
+    "scan": 79,
+    "actors": 361,
+    "path": 1,
+    "candidates": 57,
+    "command": 255,
+    "metrics": 548,
+    "estimate": 33,
+    "robot": 33
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "993441fcf2894373b2762a58dc8e4dfacf2fcee679890cd927c3717978b5d11b",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    67.736,
+    107.20800000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_mppi_5",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_5",
+   "bags": [
+    "lab5/matrix/crossing_MPPI_5/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "MPPI",
+    "run": "crossing_MPPI_5",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_mppi_5",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 MPPI MPPI_5"
+   },
+   "run_id": "08e05637d431674d4afc3863bb57e79b7c5087e3d69bbec8ec2b5b1fea46a496",
+   "bytes_uncompressed": 349975,
+   "messages": 1490,
+   "rows": {
+    "actors": 378,
+    "truth": 399,
+    "scan": 80,
+    "annotation": 65,
+    "path": 1,
+    "candidates": 57,
+    "command": 183,
+    "metrics": 518,
+    "estimate": 33,
+    "robot": 33
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "3af9010b79eef28de9d36bc1a27a88687c2e7276a3c14d97c5402d9643f52308",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    76.494,
+    116.388
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_rpp_1",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_1",
+   "bags": [
+    "lab5/matrix/crossing_RPP_1/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "RPP",
+    "run": "crossing_RPP_1",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_rpp_1",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_1"
+   },
+   "run_id": "ed484c5484f38cbce97d655f958b3ec720244737111472c237440a62d37dc2cc",
+   "bytes_uncompressed": 340834,
+   "messages": 1446,
+   "rows": {
+    "actors": 356,
+    "truth": 389,
+    "scan": 78,
+    "annotation": 75,
+    "path": 30,
+    "command": 193,
+    "metrics": 524,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "1d2baad40baddf9a5abf9ddcb47348bfe145085882b630928dc66e9021ef2e2a",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    81.09,
+    119.97800000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_rpp_2",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_2",
+   "bags": [
+    "lab5/matrix/crossing_RPP_2/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "RPP",
+    "run": "crossing_RPP_2",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_rpp_2",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_2"
+   },
+   "run_id": "334c2e4413150a7f8e9ea333f397f51dd6ee0018a218c771a0674bc4939d3235",
+   "bytes_uncompressed": 343985,
+   "messages": 1468,
+   "rows": {
+    "truth": 387,
+    "scan": 78,
+    "actors": 356,
+    "annotation": 79,
+    "path": 30,
+    "command": 212,
+    "metrics": 526,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "4d2109fd84e0954ce8789a64eb7e38f4b65ffd0952c298156f951a870e25f07f",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    74.19800000000001,
+    112.85000000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_rpp_3",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_3",
+   "bags": [
+    "lab5/matrix/crossing_RPP_3/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "RPP",
+    "run": "crossing_RPP_3",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_rpp_3",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_3"
+   },
+   "run_id": "c0291b3008ff6b6bb878735527a3d095d7d47da4717f1ba943cf4458e7fbfb7d",
+   "bytes_uncompressed": 341245,
+   "messages": 1451,
+   "rows": {
+    "truth": 389,
+    "actors": 357,
+    "scan": 78,
+    "annotation": 72,
+    "path": 29,
+    "command": 199,
+    "metrics": 530,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "e747a856542c786c4f5aa6b2da15331231633f85d64d066e942a8b8519850f95",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    79.70400000000001,
+    118.536
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_rpp_4",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_4",
+   "bags": [
+    "lab5/matrix/crossing_RPP_4/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "RPP",
+    "run": "crossing_RPP_4",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_rpp_4",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_4"
+   },
+   "run_id": "119a4da1a6095cf85270f9a06ed562762440ad8e47d06813cfd362037daad1e0",
+   "bytes_uncompressed": 353211,
+   "messages": 1548,
+   "rows": {
+    "truth": 385,
+    "scan": 77,
+    "annotation": 110,
+    "actors": 351,
+    "path": 30,
+    "command": 262,
+    "metrics": 544,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "ac2bc2be65437361938026ba13840020c0b7c9637287e633c717cdf4e0cbcd5f",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    67.962,
+    106.47800000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_crossing_rpp_5",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_5",
+   "bags": [
+    "lab5/matrix/crossing_RPP_5/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "crossing",
+    "controller": "RPP",
+    "run": "crossing_RPP_5",
+    "actor_radius": 0.25,
+    "id": "lab5_crossing_rpp_5",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 crossing \u00b7 RPP RPP_5"
+   },
+   "run_id": "22de20028b9030a3cf5432450c789bb36c3664dfb6275855f11b368292d9b3b1",
+   "bytes_uncompressed": 334476,
+   "messages": 1413,
+   "rows": {
+    "truth": 385,
+    "actors": 354,
+    "scan": 77,
+    "annotation": 73,
+    "path": 29,
+    "command": 177,
+    "metrics": 506,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "2aa7d88e42225e4692fcddd69b5ff8de410c27b979c588c6c2da7a1875870a0f",
+    "cited_in": "docs/data/lab5/drive/crossing/manifest.json"
+   },
+   "window": [
+    76.0,
+    114.46400000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_mislocalised_dwb_1",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 DWB DWB_1",
+   "bags": [
+    "lab5/matrix/mislocalised_DWB_1/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "mislocalised",
+    "controller": "DWB",
+    "run": "mislocalised_DWB_1",
+    "id": "lab5_mislocalised_dwb_1",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 DWB DWB_1"
+   },
+   "run_id": "5b18bfaf4c01467fb195637a43c5252fed53015d250351b935da7408607d48de",
+   "bytes_uncompressed": 71100,
+   "messages": 158,
+   "rows": {
+    "truth": 100,
+    "scan": 20,
+    "annotation": 18,
+    "path": 2,
+    "command": 1,
+    "metrics": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "967b44bdc5363857bd4cbd3dbe01e117a5a365c4ba8ea26b0107985bdfd4b220",
+    "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json"
+   },
+   "window": [
+    77.29,
+    87.298
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_mislocalised_dwb_2",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 DWB DWB_2",
+   "bags": [
+    "lab5/matrix/mislocalised_DWB_2/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "mislocalised",
+    "controller": "DWB",
+    "run": "mislocalised_DWB_2",
+    "id": "lab5_mislocalised_dwb_2",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 DWB DWB_2"
+   },
+   "run_id": "7622834517adef753ea209f04faeb6c022ab3af315d406262ab3e53cbebf08ad",
+   "bytes_uncompressed": 70688,
+   "messages": 155,
+   "rows": {
+    "truth": 100,
+    "scan": 20,
+    "annotation": 16,
+    "path": 2,
+    "command": 1,
+    "metrics": 30
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "5a50ca1d99d99406f88779e487de12e9324fe4c2c77ada4521d252529d5b8138",
+    "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json"
+   },
+   "window": [
+    77.11,
+    87.116
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_mislocalised_dwb_3",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 DWB DWB_3",
+   "bags": [
+    "lab5/matrix/mislocalised_DWB_3/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "mislocalised",
+    "controller": "DWB",
+    "run": "mislocalised_DWB_3",
+    "id": "lab5_mislocalised_dwb_3",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 DWB DWB_3"
+   },
+   "run_id": "fa0a2ad6292122548d4afcd0c5408e8ae1a12ce1c9674d47bee737a6ff52486b",
+   "bytes_uncompressed": 70905,
+   "messages": 157,
+   "rows": {
+    "truth": 101,
+    "scan": 20,
+    "annotation": 16,
+    "path": 2,
+    "command": 1,
+    "metrics": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "15556327626e526d2916bee8f0f4c502a697424b7eac7b1e72301352fe3325f7",
+    "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json"
+   },
+   "window": [
+    78.078,
+    88.08200000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_mislocalised_mppi_1",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 MPPI MPPI_1",
+   "bags": [
+    "lab5/matrix/mislocalised_MPPI_1/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "mislocalised",
+    "controller": "MPPI",
+    "run": "mislocalised_MPPI_1",
+    "id": "lab5_mislocalised_mppi_1",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 MPPI MPPI_1"
+   },
+   "run_id": "0a7ed4cfab9da2de5d316af3ca47174d80a6c97e524789108b89ad2544ef294f",
+   "bytes_uncompressed": 65717,
+   "messages": 155,
+   "rows": {
+    "truth": 100,
+    "scan": 20,
+    "annotation": 17,
+    "path": 1,
+    "command": 1,
+    "metrics": 30
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "bac3267b2a972eb4e366aef7dc659f7d7c9dec73dc6d69f8f47872cbea266de0",
+    "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json"
+   },
+   "window": [
+    77.06400000000001,
+    87.07000000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_mislocalised_mppi_2",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 MPPI MPPI_2",
+   "bags": [
+    "lab5/matrix/mislocalised_MPPI_2/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "mislocalised",
+    "controller": "MPPI",
+    "run": "mislocalised_MPPI_2",
+    "id": "lab5_mislocalised_mppi_2",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 MPPI MPPI_2"
+   },
+   "run_id": "0d38621902f3d634b3f07e341919e38bc42b11a06ee1f9314447011c091856c7",
+   "bytes_uncompressed": 65790,
+   "messages": 156,
+   "rows": {
+    "truth": 101,
+    "scan": 20,
+    "annotation": 17,
+    "path": 1,
+    "command": 1,
+    "metrics": 30
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "4540bb2540b6cef8a7ecf2ef5c1b358900a15800f3669fb14211577e1175d285",
+    "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json"
+   },
+   "window": [
+    78.55600000000001,
+    88.56400000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_mislocalised_mppi_3",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 MPPI MPPI_3",
+   "bags": [
+    "lab5/matrix/mislocalised_MPPI_3/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "mislocalised",
+    "controller": "MPPI",
+    "run": "mislocalised_MPPI_3",
+    "id": "lab5_mislocalised_mppi_3",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 MPPI MPPI_3"
+   },
+   "run_id": "1513907e72d4fbb0aaae027d1988f0d5e264ec7d55e59a332054c12b4994321a",
+   "bytes_uncompressed": 65959,
+   "messages": 157,
+   "rows": {
+    "truth": 101,
+    "scan": 20,
+    "annotation": 18,
+    "path": 1,
+    "command": 1,
+    "metrics": 30
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "20bc6c1ad7ecccfc77853e5b4e6ffb357ea811aeef4ba522f7d7823d7cd10d10",
+    "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json"
+   },
+   "window": [
+    78.36800000000001,
+    88.38000000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_mislocalised_rpp_1",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 RPP RPP_1",
+   "bags": [
+    "lab5/matrix/mislocalised_RPP_1/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "mislocalised",
+    "controller": "RPP",
+    "run": "mislocalised_RPP_1",
+    "id": "lab5_mislocalised_rpp_1",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 RPP RPP_1"
+   },
+   "run_id": "34809692e1345f4f9bc431a45c9c655c3fadd81f90e5b2dcbf3405d7dc881156",
+   "bytes_uncompressed": 65632,
+   "messages": 154,
+   "rows": {
+    "truth": 100,
+    "scan": 20,
+    "annotation": 17,
+    "path": 1,
+    "command": 1,
+    "metrics": 30
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "c9d08961d50c099950f0cf049e3896cb282d188804d6d99474932d67e1c4e842",
+    "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json"
+   },
+   "window": [
+    77.36200000000001,
+    87.366
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_mislocalised_rpp_2",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 RPP RPP_2",
+   "bags": [
+    "lab5/matrix/mislocalised_RPP_2/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "mislocalised",
+    "controller": "RPP",
+    "run": "mislocalised_RPP_2",
+    "id": "lab5_mislocalised_rpp_2",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 RPP RPP_2"
+   },
+   "run_id": "9edcb54ed3154525a0654759a244c2d6c4e7dc1737049061a0f7feb47e8db34b",
+   "bytes_uncompressed": 65950,
+   "messages": 157,
+   "rows": {
+    "truth": 100,
+    "scan": 20,
+    "annotation": 18,
+    "path": 1,
+    "command": 1,
+    "metrics": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "3f6cac5aaa64793a854cdb1503de988ac653f6b81fe7df6f2286470b0c509928",
+    "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json"
+   },
+   "window": [
+    78.08200000000001,
+    88.092
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_mislocalised_rpp_3",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 mislocalised \u00b7 RPP RPP_3",
+   "bags": [
+    "lab5/matrix/mislocalised_RPP_3/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "mislocalised",
+    "controller": "RPP",
+    "run": "mislocalised_RPP_3",
+    "id": "lab5_mislocalised_rpp_3",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 mislocalised \u00b7 RPP RPP_3"
+   },
+   "run_id": "9805c063b055b69340557711a83b2c8dcdbff3e15eef912e4977a592dbc5e036",
+   "bytes_uncompressed": 65476,
+   "messages": 154,
+   "rows": {
+    "truth": 100,
+    "scan": 20,
+    "annotation": 16,
+    "path": 1,
+    "command": 1,
+    "metrics": 30
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "bcb4626bb827f3cb9049ac54b7481ec3a7294305107287c029ea256c8fba03c0",
+    "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json"
+   },
+   "window": [
+    78.23,
+    88.238
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_dwb_1",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_1",
+   "bags": [
+    "lab5/matrix/oncoming_DWB_1/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "DWB",
+    "run": "oncoming_DWB_1",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_dwb_1",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_1"
+   },
+   "run_id": "92e24e3bd7fc8266c45376a5d30b9bb3ef9eb756f34424da318551596feb9d64",
+   "bytes_uncompressed": 328788,
+   "messages": 1414,
+   "rows": {
+    "truth": 383,
+    "scan": 77,
+    "actors": 358,
+    "annotation": 62,
+    "path": 2,
+    "candidates": 52,
+    "command": 169,
+    "metrics": 493,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "12b3ab29e2940107f7b9817482391aef8057fbdbdb5bbc70658c3afe107d3abb",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    71.16000000000001,
+    109.432
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_dwb_2",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_2",
+   "bags": [
+    "lab5/matrix/oncoming_DWB_2/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "DWB",
+    "run": "oncoming_DWB_2",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_dwb_2",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_2"
+   },
+   "run_id": "2f158606f32e0e3ad67a62e81b3c6c5b83f4b0d363341fee64f8528b00431cb7",
+   "bytes_uncompressed": 326884,
+   "messages": 1407,
+   "rows": {
+    "truth": 384,
+    "annotation": 56,
+    "actors": 366,
+    "scan": 77,
+    "path": 2,
+    "candidates": 53,
+    "command": 161,
+    "metrics": 494,
+    "estimate": 31,
+    "robot": 31
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "a9bab2273b56d7f98132d45a4e77dcd71e2a89a7c77cd83e7aab99a154e0b120",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    72.85000000000001,
+    111.238
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_dwb_3",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_3",
+   "bags": [
+    "lab5/matrix/oncoming_DWB_3/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "DWB",
+    "run": "oncoming_DWB_3",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_dwb_3",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_3"
+   },
+   "run_id": "ee7f604fbf80e4546accb8ca765bc1e37592f63d27134ab4e9ac40004a2f6779",
+   "bytes_uncompressed": 328618,
+   "messages": 1409,
+   "rows": {
+    "truth": 381,
+    "actors": 363,
+    "scan": 77,
+    "annotation": 64,
+    "path": 2,
+    "candidates": 53,
+    "command": 161,
+    "metrics": 493,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "37cdf0663cb1b591dc7760209c83e85e50bb785701b77a47713e380f0ac6b126",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    72.56400000000001,
+    110.64800000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_dwb_4",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_4",
+   "bags": [
+    "lab5/matrix/oncoming_DWB_4/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "DWB",
+    "run": "oncoming_DWB_4",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_dwb_4",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_4"
+   },
+   "run_id": "aa2f782c5982d50a07b4719f41b8b934deeb7a1bf6807776fb21c5308bcfaa7c",
+   "bytes_uncompressed": 327710,
+   "messages": 1412,
+   "rows": {
+    "truth": 383,
+    "actors": 361,
+    "scan": 77,
+    "annotation": 67,
+    "path": 2,
+    "candidates": 53,
+    "command": 160,
+    "metrics": 491,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "f7010786b626ede0611b44e435ec28892771f5693ed788c171d1c114ba264087",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    72.828,
+    111.132
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_dwb_5",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_5",
+   "bags": [
+    "lab5/matrix/oncoming_DWB_5/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "DWB",
+    "run": "oncoming_DWB_5",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_dwb_5",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 DWB DWB_5"
+   },
+   "run_id": "c9070d6e648968c389a7f7d4eff290822ce89540c94d9888bcfeb443e821760a",
+   "bytes_uncompressed": 330865,
+   "messages": 1421,
+   "rows": {
+    "actors": 362,
+    "truth": 386,
+    "scan": 78,
+    "annotation": 66,
+    "path": 2,
+    "candidates": 54,
+    "command": 163,
+    "metrics": 497,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "1196bd2523f268a33e19524d3eaab02f977b3c30146688db82466bcd0183c522",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    72.292,
+    110.85400000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_mppi_1",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_1",
+   "bags": [
+    "lab5/matrix/oncoming_MPPI_1/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "MPPI",
+    "run": "oncoming_MPPI_1",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_mppi_1",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_1"
+   },
+   "run_id": "10ff21950ee1f196105d537758b552d0cb33aa0717edda257a0133b968cf3337",
+   "bytes_uncompressed": 365470,
+   "messages": 1560,
+   "rows": {
+    "truth": 420,
+    "actors": 405,
+    "scan": 84,
+    "annotation": 61,
+    "path": 1,
+    "candidates": 59,
+    "command": 193,
+    "metrics": 541,
+    "estimate": 33,
+    "robot": 33
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "e7837f58cd442a0eb65af17f115e7f463ee4bd4d1c550847bcf8c636222652d5",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    71.108,
+    113.07400000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_mppi_2",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_2",
+   "bags": [
+    "lab5/matrix/oncoming_MPPI_2/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "MPPI",
+    "run": "oncoming_MPPI_2",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_mppi_2",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_2"
+   },
+   "run_id": "963389ebf8a740c65aaeeae12ee41ac8476278790599b6f069d987dd19f5900d",
+   "bytes_uncompressed": 368555,
+   "messages": 1569,
+   "rows": {
+    "truth": 424,
+    "actors": 400,
+    "scan": 85,
+    "annotation": 62,
+    "path": 1,
+    "candidates": 59,
+    "command": 197,
+    "metrics": 543,
+    "estimate": 35,
+    "robot": 35
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "a438ea915171010e9ebe135580af8a086348a688c728e1d4c89d1c540191b7cb",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    72.558,
+    114.94200000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_mppi_3",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_3",
+   "bags": [
+    "lab5/matrix/oncoming_MPPI_3/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "MPPI",
+    "run": "oncoming_MPPI_3",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_mppi_3",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_3"
+   },
+   "run_id": "22aefbe80853547604112027fa30a1d94f60dbf5ec1236985242fb10f851befc",
+   "bytes_uncompressed": 364378,
+   "messages": 1548,
+   "rows": {
+    "actors": 391,
+    "truth": 420,
+    "scan": 84,
+    "annotation": 63,
+    "path": 1,
+    "candidates": 59,
+    "command": 195,
+    "metrics": 540,
+    "estimate": 32,
+    "robot": 32
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "d9be5fae6a902f82b61b3ed7efbe24dea287c6ecc3998db47cd5fefbd00286e7",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    72.396,
+    114.37
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_mppi_4",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_4",
+   "bags": [
+    "lab5/matrix/oncoming_MPPI_4/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "MPPI",
+    "run": "oncoming_MPPI_4",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_mppi_4",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_4"
+   },
+   "run_id": "b4beed48fa2c2b9ebfcd617ad1bb41ae43f6152e67facb1fb9ca92ee9014c43c",
+   "bytes_uncompressed": 372016,
+   "messages": 1586,
+   "rows": {
+    "truth": 425,
+    "actors": 402,
+    "scan": 85,
+    "annotation": 66,
+    "path": 1,
+    "candidates": 62,
+    "command": 195,
+    "metrics": 557,
+    "estimate": 36,
+    "robot": 36
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "d7bce516d0e1772701e85dca8d8416c1c5b8e7b2a78786a7068cbfabd515fadc",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    72.05600000000001,
+    114.546
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_mppi_5",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_5",
+   "bags": [
+    "lab5/matrix/oncoming_MPPI_5/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "MPPI",
+    "run": "oncoming_MPPI_5",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_mppi_5",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 MPPI MPPI_5"
+   },
+   "run_id": "7569a2ad533fc643bad762aff227f2bbb6c02511b353f1337f7aa0f5f366815c",
+   "bytes_uncompressed": 367759,
+   "messages": 1562,
+   "rows": {
+    "actors": 391,
+    "truth": 419,
+    "scan": 84,
+    "annotation": 70,
+    "path": 1,
+    "candidates": 62,
+    "command": 195,
+    "metrics": 547,
+    "estimate": 33,
+    "robot": 33
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "ccf77fb1aecf17f02ba1d07b7b0656205c7b6ab2b48209041303b69f2ee9a907",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    72.354,
+    114.254
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_rpp_1",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_1",
+   "bags": [
+    "lab5/matrix/oncoming_RPP_1/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "RPP",
+    "run": "oncoming_RPP_1",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_rpp_1",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_1"
+   },
+   "run_id": "3612aed4371b7dd489e7ef340d0098a144cf1d3acc3f8b60977ad0b95d626a88",
+   "bytes_uncompressed": 246026,
+   "messages": 998,
+   "rows": {
+    "truth": 288,
+    "scan": 58,
+    "actors": 274,
+    "annotation": 43,
+    "path": 20,
+    "command": 104,
+    "metrics": 331,
+    "estimate": 22,
+    "robot": 22
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "dd47b6ded90820cb53c931b7364b5f057a3dd10230ff72d5e9fa31383b88b1c5",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    72.0,
+    100.75200000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_rpp_2",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_2",
+   "bags": [
+    "lab5/matrix/oncoming_RPP_2/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "RPP",
+    "run": "oncoming_RPP_2",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_rpp_2",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_2"
+   },
+   "run_id": "2afeb09c480b48ebafe12117fbbea6e2d9451bd74308a6c03aaa013909621304",
+   "bytes_uncompressed": 246258,
+   "messages": 997,
+   "rows": {
+    "truth": 288,
+    "actors": 270,
+    "scan": 58,
+    "annotation": 47,
+    "path": 20,
+    "command": 103,
+    "metrics": 333,
+    "estimate": 22,
+    "robot": 22
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "ced60d2b18365d9413753dbd51da16847722c3b350689170cc3762004d5f9f8b",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    72.45400000000001,
+    101.18
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_rpp_3",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_3",
+   "bags": [
+    "lab5/matrix/oncoming_RPP_3/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "RPP",
+    "run": "oncoming_RPP_3",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_rpp_3",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_3"
+   },
+   "run_id": "868a5f0e548bfbf228909e68753809ceed51d3f4ad7583181de88c66f3666625",
+   "bytes_uncompressed": 247070,
+   "messages": 1005,
+   "rows": {
+    "truth": 289,
+    "actors": 273,
+    "scan": 58,
+    "annotation": 47,
+    "path": 20,
+    "command": 107,
+    "metrics": 333,
+    "estimate": 22,
+    "robot": 22
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "14d54a6b4b0719b12d8ce447ea9abefbea84a12f2a9a64946cef9b156e2b3898",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    73.04,
+    101.87400000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_rpp_4",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_4",
+   "bags": [
+    "lab5/matrix/oncoming_RPP_4/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "RPP",
+    "run": "oncoming_RPP_4",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_rpp_4",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_4"
+   },
+   "run_id": "c7958cd85250d9ec5666c6cabfddbe9dc731a7ddcf1cd559f3ae4e815139edb5",
+   "bytes_uncompressed": 247897,
+   "messages": 1013,
+   "rows": {
+    "actors": 279,
+    "truth": 289,
+    "scan": 58,
+    "annotation": 49,
+    "path": 20,
+    "command": 106,
+    "metrics": 333,
+    "estimate": 22,
+    "robot": 22
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "3410e6c285935e25eef9d24d932ba8efd5d391518572a2eb922475edfbe51980",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    72.492,
+    101.364
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_oncoming_rpp_5",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_5",
+   "bags": [
+    "lab5/matrix/oncoming_RPP_5/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "oncoming",
+    "controller": "RPP",
+    "run": "oncoming_RPP_5",
+    "actor_radius": 0.25,
+    "id": "lab5_oncoming_rpp_5",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 oncoming \u00b7 RPP RPP_5"
+   },
+   "run_id": "47bd17b54c3e38d4aab6db59e75ad7a31537cee4085dc1271c5eb611059db25d",
+   "bytes_uncompressed": 247048,
+   "messages": 1002,
+   "rows": {
+    "truth": 288,
+    "actors": 267,
+    "scan": 58,
+    "annotation": 50,
+    "path": 20,
+    "command": 109,
+    "metrics": 331,
+    "estimate": 22,
+    "robot": 22
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "0deb465037c327a74ae0e1c876140a7c1a5dae6543bc98b03efb4f1eac66b349",
+    "cited_in": "docs/data/lab5/drive/oncoming/manifest.json"
+   },
+   "window": [
+    73.232,
+    101.96000000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_dwb_1",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_1",
+   "bags": [
+    "lab5/matrix/static_room_DWB_1/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "DWB",
+    "run": "static_room_DWB_1",
+    "id": "lab5_static_room_dwb_1",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_1"
+   },
+   "run_id": "0384dc3da483bc791ad2bd2cefdf6218d10fb713f7d69b88f334cb15eaf82e1e",
+   "bytes_uncompressed": 392609,
+   "messages": 1449,
+   "rows": {
+    "truth": 500,
+    "scan": 100,
+    "annotation": 86,
+    "path": 2,
+    "candidates": 76,
+    "command": 258,
+    "metrics": 698,
+    "estimate": 38,
+    "robot": 38
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "3d037b0602d74c937c95321fb8e55ba410ab065e8dc18495bfbcb58b696e1827",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    65.574,
+    115.552
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_dwb_2",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_2",
+   "bags": [
+    "lab5/matrix/static_room_DWB_2/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "DWB",
+    "run": "static_room_DWB_2",
+    "id": "lab5_static_room_dwb_2",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_2"
+   },
+   "run_id": "037c840cfde74625c7018ae1698ab53646fc96e439420978ed9b8e2239327b20",
+   "bytes_uncompressed": 370701,
+   "messages": 1352,
+   "rows": {
+    "truth": 476,
+    "scan": 95,
+    "annotation": 79,
+    "path": 2,
+    "candidates": 70,
+    "command": 227,
+    "metrics": 642,
+    "estimate": 40,
+    "robot": 40
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "ccbafa3fb91d2239104cffe5790d403ea1bbef864c5db230f2403d30098e2f2b",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    67.854,
+    115.36200000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_dwb_3",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_3",
+   "bags": [
+    "lab5/matrix/static_room_DWB_3/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "DWB",
+    "run": "static_room_DWB_3",
+    "id": "lab5_static_room_dwb_3",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_3"
+   },
+   "run_id": "3deb751ebc96f4b6401cf44f14fffba6762e28aa18e04a466b56602c5a216a54",
+   "bytes_uncompressed": 385385,
+   "messages": 1391,
+   "rows": {
+    "truth": 482,
+    "scan": 97,
+    "annotation": 68,
+    "path": 2,
+    "candidates": 71,
+    "command": 232,
+    "metrics": 680,
+    "estimate": 50,
+    "robot": 50
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "91c9bb9fe69e7f3c45a667379bb74c38d0251ede006d57922f585de494c292a4",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    69.866,
+    118.06
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_dwb_4",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_4",
+   "bags": [
+    "lab5/matrix/static_room_DWB_4/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "DWB",
+    "run": "static_room_DWB_4",
+    "id": "lab5_static_room_dwb_4",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_4"
+   },
+   "run_id": "46b3d59f23af68b9089c2a7e932def82be872f62e323e44cb677ea910eb482f5",
+   "bytes_uncompressed": 392412,
+   "messages": 1423,
+   "rows": {
+    "truth": 510,
+    "scan": 102,
+    "annotation": 71,
+    "path": 2,
+    "candidates": 75,
+    "command": 236,
+    "metrics": 686,
+    "estimate": 41,
+    "robot": 41
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "a51d2d435f1c98eb88a01beba3afffedff05c0b56dec947a4d654b2cd5cfa4d4",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    66.02000000000001,
+    116.95200000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_dwb_5",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_5",
+   "bags": [
+    "lab5/matrix/static_room_DWB_5/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "DWB",
+    "run": "static_room_DWB_5",
+    "id": "lab5_static_room_dwb_5",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 DWB DWB_5"
+   },
+   "run_id": "52ceb6e32a0b40da95876e04b3a67288c630826283e7b644744de4d9d82a6ea3",
+   "bytes_uncompressed": 391651,
+   "messages": 1422,
+   "rows": {
+    "truth": 496,
+    "scan": 99,
+    "annotation": 87,
+    "path": 2,
+    "candidates": 74,
+    "command": 231,
+    "metrics": 674,
+    "estimate": 47,
+    "robot": 47
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "0c0360cc311f1a005d8c9bc781ee35263a39340f805bde0324fa2496789bc6d4",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    65.30000000000001,
+    114.86000000000001
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_mppi_1",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_1",
+   "bags": [
+    "lab5/matrix/static_room_MPPI_1/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "MPPI",
+    "run": "static_room_MPPI_1",
+    "id": "lab5_static_room_mppi_1",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_1"
+   },
+   "run_id": "c80553dcd3db85e624b73becddcf975a5ca28acd904fa7eb8fc7c2e1c83dc63b",
+   "bytes_uncompressed": 488840,
+   "messages": 1795,
+   "rows": {
+    "truth": 615,
+    "scan": 123,
+    "annotation": 87,
+    "path": 1,
+    "candidates": 94,
+    "command": 317,
+    "metrics": 860,
+    "estimate": 63,
+    "robot": 63
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "ca255118ba7c8e672c5f3ec934c4ddf6dee0eafdb78ab4afb83edecef024d522",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    67.13000000000001,
+    128.604
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_mppi_2",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_2",
+   "bags": [
+    "lab5/matrix/static_room_MPPI_2/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "MPPI",
+    "run": "static_room_MPPI_2",
+    "id": "lab5_static_room_mppi_2",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_2"
+   },
+   "run_id": "e6bfc2b2710cc1642f40ae9b41952d6cffb861ffaa543d8ec0822056ec6018e5",
+   "bytes_uncompressed": 499572,
+   "messages": 1852,
+   "rows": {
+    "truth": 616,
+    "scan": 124,
+    "annotation": 118,
+    "path": 1,
+    "candidates": 96,
+    "command": 323,
+    "metrics": 892,
+    "estimate": 63,
+    "robot": 63
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "43c542a808a2365bff9f2e84de4b3592d16bb8d8ba07c00ad880d76d01bc724a",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    66.888,
+    128.454
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_mppi_3",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_3",
+   "bags": [
+    "lab5/matrix/static_room_MPPI_3/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "MPPI",
+    "run": "static_room_MPPI_3",
+    "id": "lab5_static_room_mppi_3",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_3"
+   },
+   "run_id": "8ac565c6d5c3f160ed9d4ab5a33c4ed610c94a13ef81b6732905617c85c74fe9",
+   "bytes_uncompressed": 491659,
+   "messages": 1800,
+   "rows": {
+    "truth": 618,
+    "annotation": 80,
+    "scan": 124,
+    "path": 1,
+    "candidates": 95,
+    "command": 322,
+    "metrics": 868,
+    "estimate": 63,
+    "robot": 63
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "b83d316fb2a37ad4e25e01e4d65a634499edbfaed604a5811c78fb2dfd12d799",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    70.20400000000001,
+    132.00600000000003
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_mppi_4",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_4",
+   "bags": [
+    "lab5/matrix/static_room_MPPI_4/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "MPPI",
+    "run": "static_room_MPPI_4",
+    "id": "lab5_static_room_mppi_4",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_4"
+   },
+   "run_id": "8c63123a5f11715e15c667bf0d29900d561b6b2fc515b6598de9e3e655b70ca4",
+   "bytes_uncompressed": 494583,
+   "messages": 1820,
+   "rows": {
+    "truth": 620,
+    "scan": 124,
+    "annotation": 103,
+    "path": 1,
+    "candidates": 95,
+    "command": 320,
+    "metrics": 858,
+    "estimate": 63,
+    "robot": 63
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "ef51c7ed2420353480397e7b8ff9dcae0ccb9c0784857ca1d46b36e7624a049b",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    65.66600000000001,
+    127.602
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_mppi_5",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_5",
+   "bags": [
+    "lab5/matrix/static_room_MPPI_5/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "MPPI",
+    "run": "static_room_MPPI_5",
+    "id": "lab5_static_room_mppi_5",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 MPPI MPPI_5"
+   },
+   "run_id": "520b4518af2c7373439f909a323f4eb32c9effcaa9b8bad46ca4a84a93b22051",
+   "bytes_uncompressed": 506135,
+   "messages": 1871,
+   "rows": {
+    "truth": 628,
+    "scan": 126,
+    "annotation": 109,
+    "path": 1,
+    "candidates": 98,
+    "command": 334,
+    "metrics": 896,
+    "estimate": 64,
+    "robot": 64
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "171e6f0fbb9aaf5090b6e518915fcb7d1fbb5f749459090d518f55e3fb88272d",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    65.32000000000001,
+    128.126
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_rpp_1",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_1",
+   "bags": [
+    "lab5/matrix/static_room_RPP_1/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "RPP",
+    "run": "static_room_RPP_1",
+    "id": "lab5_static_room_rpp_1",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_1"
+   },
+   "run_id": "4f87cd954893917b6abf9c22a91b126229e586c5a11047c8ddf3f96b59101459",
+   "bytes_uncompressed": 489472,
+   "messages": 1773,
+   "rows": {
+    "truth": 614,
+    "scan": 123,
+    "annotation": 97,
+    "path": 51,
+    "command": 325,
+    "metrics": 874,
+    "estimate": 62,
+    "robot": 62
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "8d4f750593c8a80a2f470a1d2098c33a1fa07e857ff2595387d985639d37d0ef",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    68.13000000000001,
+    129.52
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_rpp_2",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_2",
+   "bags": [
+    "lab5/matrix/static_room_RPP_2/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "RPP",
+    "run": "static_room_RPP_2",
+    "id": "lab5_static_room_rpp_2",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_2"
+   },
+   "run_id": "039465c744f4c612580af6770b85a27650b7c0d1078d4ec02d33851c1e080540",
+   "bytes_uncompressed": 486354,
+   "messages": 1749,
+   "rows": {
+    "truth": 612,
+    "scan": 123,
+    "annotation": 98,
+    "path": 51,
+    "command": 306,
+    "metrics": 866,
+    "estimate": 62,
+    "robot": 62
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "2f8024fbb56cf060edd264a8dee222119ca5be070800aed880c6123a264eb12e",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    64.45400000000001,
+    125.632
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_rpp_3",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_3",
+   "bags": [
+    "lab5/matrix/static_room_RPP_3/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "RPP",
+    "run": "static_room_RPP_3",
+    "id": "lab5_static_room_rpp_3",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_3"
+   },
+   "run_id": "a4b42576ed8a52a3bd9435b5f4e23451937271940ba0ff7c4b5b88a23dc8013b",
+   "bytes_uncompressed": 481154,
+   "messages": 1701,
+   "rows": {
+    "truth": 611,
+    "scan": 123,
+    "annotation": 87,
+    "path": 51,
+    "command": 286,
+    "metrics": 836,
+    "estimate": 62,
+    "robot": 62
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "7dbf0f3429d1fd00c96e2e4877a5b31fb4d4730df3a2a0a8ef296d854b70c08a",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    66.006,
+    127.114
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_rpp_4",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_4",
+   "bags": [
+    "lab5/matrix/static_room_RPP_4/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "RPP",
+    "run": "static_room_RPP_4",
+    "id": "lab5_static_room_rpp_4",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_4"
+   },
+   "run_id": "efc88fa02ea57b517092feef4cfe52571a84fa7034fee2fc220f8606467c38e7",
+   "bytes_uncompressed": 479656,
+   "messages": 1707,
+   "rows": {
+    "truth": 611,
+    "scan": 122,
+    "annotation": 94,
+    "path": 51,
+    "command": 286,
+    "metrics": 832,
+    "estimate": 63,
+    "robot": 63
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "f9da0467781f750d44d1b597193a92a7c1fbf7be8fb3894e2f8485912afaa3f7",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    65.86,
+    126.876
+   ],
+   "log_window_ns": null
+  },
+  {
+   "id": "lab5_static_room_rpp_5",
+   "group": "lab5-move",
+   "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_5",
+   "bags": [
+    "lab5/matrix/static_room_RPP_5/bag"
+   ],
+   "case": {
+    "lab": 5,
+    "scenario": "static_room",
+    "controller": "RPP",
+    "run": "static_room_RPP_5",
+    "id": "lab5_static_room_rpp_5",
+    "group": "lab5-move",
+    "title": "Lab 5 \u00b7 static_room \u00b7 RPP RPP_5"
+   },
+   "run_id": "23d84b505579f82478fe043fa99a40994c0fe6105f5b565e884891625bc822d9",
+   "bytes_uncompressed": 504193,
+   "messages": 1886,
+   "rows": {
+    "truth": 613,
+    "scan": 123,
+    "annotation": 126,
+    "path": 52,
+    "command": 378,
+    "metrics": 932,
+    "estimate": 63,
+    "robot": 63
+   },
+   "checksum": {
+    "checked": true,
+    "definition": "lab5_bag_0",
+    "sha256": "5ae031d46eb80e5b424555f0e24919b306ddad982f54e50230a97e3cbff892cc",
+    "cited_in": "docs/data/lab5/drive/static_room/manifest.json"
+   },
+   "window": [
+    71.286,
+    132.538
+   ],
+   "log_window_ns": null
+  }
+ ]
+}

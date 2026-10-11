@@ -134,6 +134,16 @@ def test_no_forbidden_topic_is_named_outside_safety():
                     (name, node.value)
 
 
+def test_the_adapter_reads_recorded_commands_and_publishes_nothing():
+    # adapter.py (M3.1) reads the command topics FROM A BAG; it must never be a node
+    with open(os.path.join(SRC, 'adapter.py'), encoding='utf-8') as f:
+        tree = ast.parse(f.read())
+    calls = {getattr(n.func, 'attr', getattr(n.func, 'id', ''))
+             for n in ast.walk(tree) if isinstance(n, ast.Call)}
+    assert not calls & {'create_publisher', 'create_node', 'Node', 'init'}
+    assert set(safety.RECORDED_COMMANDS.values()) <= set(safety.FORBIDDEN_TOPICS)
+
+
 def test_the_checker_can_fail():
     assert safety.violations([('/lab/plan', ['nav_msgs/msg/Path'])]) == []
     assert safety.violations(

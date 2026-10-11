@@ -1,0 +1,13 @@
+start: profile balanced AC 1 governor powersave load 0.96 1.00 1.41
+gpu probe start ok
+m2 1: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":60,"fps_min":59}
+m2 2: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":60,"fps_min":59}
+m2 3: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":59}
+m2 4: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+m2 5: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":59}
+m2 6: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":60,"fps_min":60}
+m2 7: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":60,"fps_min":59}
+m2 8: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":60,"fps_min":58}
+m2 9: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":55,"fps_min":33}
+AC LOST - abort
+profile restored to balanced

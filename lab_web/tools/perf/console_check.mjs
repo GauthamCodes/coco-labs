@@ -41,7 +41,14 @@ const STUB = args.stub ?? join(new URL('.', import.meta.url).pathname, 'stub_sta
 const MISSIONS = ['find-a-path', 'world-changes', 'where-it-is', 'build-a-map', 'avoid-things', 'where-to-look'];
 const VIEWS = [['arena', ''], ...['localise', 'map', 'move', 'decide'].map((l) => [`arena:${l}`, `?view=arena&lens=${l}`]),
   ['learn', '?view=learn'], ...MISSIONS.map((m) => [`learn:${m}`, `?view=learn&mission=${m}&beat=0`]),
-  ['live', '?view=live'], ['v1-archive', 'v1/']];
+  ['live', '?view=live'], ['v1-archive', 'v1/'],
+  // M3.3: the Case Files (a group page, and one opened in the Arena as a recording)
+  ['casefiles', '?view=casefiles'], ['casefiles:lab5-move', '?view=casefiles&case=lab5-move'],
+  ['casefile:lab4_b2_colours_s1_red', '?view=arena&casefile=lab4_b2_colours_s1_red'],
+  // M3.5: Play, a level played on the page, and the two played in the Arena
+  ['play', '?view=play'], ['play:next-node', '?view=play&c=next-node&l=wall'],
+  ['play:map', '?view=arena&lens=map&level=explain&cfg=map.poses%3Dodometry&cfg=map.algorithm%3Doccupancy&play=map-the-arena&pl=forty-metres'],
+  ['play:detective', '?view=arena&casefile=lab2_kidnap_shipped_k2&lens=localise&level=explain&play=case-file-detective&pl=kidnapped']];
 mkdirSync(OUT, { recursive: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const origin = new URL(SITE).origin;

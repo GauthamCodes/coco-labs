@@ -1,0 +1,622 @@
+{
+ "what": "map-the-arena: CPython vs Pyodide (Node) on the same drives",
+ "cpython": "3.12.3",
+ "pyodide": "Pyodide 314.0.7, Node v24.21.0",
+ "drives": 24,
+ "hash_same": 16,
+ "stars_same": 24,
+ "worst_abs_diff": {
+  "f1": 0.0,
+  "ate": 1.5500000005719272e-07,
+  "path_m": 1.0169999953291153e-06,
+  "ticks": 0.0
+ },
+ "reference_worst_abs_diff": {
+  "f1": 0.0,
+  "ate": 1.5500000005719272e-07,
+  "path_m": 1.0169999953291153e-06,
+  "ticks": 0
+ },
+ "rows": [
+  {
+   "name": "submission_0",
+   "level": "forty-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.243439585,
+    "ate": 0.009165578,
+    "path_m": 0.162161838,
+    "ticks": 478
+   },
+   "pyodide": {
+    "f1": 0.243439585,
+    "ate": 0.009165578,
+    "path_m": 0.162161838,
+    "ticks": 478
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_1",
+   "level": "twenty-five-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.197778142,
+    "ate": 0.11057465,
+    "path_m": 2.685425877,
+    "ticks": 589
+   },
+   "pyodide": {
+    "f1": 0.197778142,
+    "ate": 0.11057465,
+    "path_m": 2.685425877,
+    "ticks": 589
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_2",
+   "level": "forty-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.216568699,
+    "ate": 0.120624096,
+    "path_m": 5.103574296,
+    "ticks": 306
+   },
+   "pyodide": {
+    "f1": 0.216568699,
+    "ate": 0.120624096,
+    "path_m": 5.103574296,
+    "ticks": 306
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_3",
+   "level": "twenty-five-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": false,
+   "cpython": {
+    "f1": 0.243111639,
+    "ate": 0.598904207,
+    "path_m": 10.158309436,
+    "ticks": 884
+   },
+   "pyodide": {
+    "f1": 0.243111639,
+    "ate": 0.598904206,
+    "path_m": 10.158309436,
+    "ticks": 884
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 9.999999717180685e-10,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_4",
+   "level": "forty-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": false,
+   "cpython": {
+    "f1": 0.196814498,
+    "ate": 0.303304928,
+    "path_m": 9.888169949,
+    "ticks": 680
+   },
+   "pyodide": {
+    "f1": 0.196814498,
+    "ate": 0.303304926,
+    "path_m": 9.888169782,
+    "ticks": 680
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 1.9999999989472883e-09,
+    "path_m": 1.6699999960678724e-07,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_5",
+   "level": "twenty-five-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": false,
+   "cpython": {
+    "f1": 0.195354885,
+    "ate": 0.272390408,
+    "path_m": 7.931236322,
+    "ticks": 534
+   },
+   "pyodide": {
+    "f1": 0.195354885,
+    "ate": 0.272390408,
+    "path_m": 7.931236316,
+    "ticks": 534
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 6.000000496442226e-09,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_6",
+   "level": "forty-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.318173762,
+    "ate": 0.304807127,
+    "path_m": 11.338113132,
+    "ticks": 1193
+   },
+   "pyodide": {
+    "f1": 0.318173762,
+    "ate": 0.304807127,
+    "path_m": 11.338113132,
+    "ticks": 1193
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_7",
+   "level": "twenty-five-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.285519626,
+    "ate": 0.064019662,
+    "path_m": 2.843342081,
+    "ticks": 319
+   },
+   "pyodide": {
+    "f1": 0.285519626,
+    "ate": 0.064019662,
+    "path_m": 2.843342081,
+    "ticks": 319
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_8",
+   "level": "forty-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.336355252,
+    "ate": 0.16781642,
+    "path_m": 8.195002897,
+    "ticks": 378
+   },
+   "pyodide": {
+    "f1": 0.336355252,
+    "ate": 0.16781642,
+    "path_m": 8.195002897,
+    "ticks": 378
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_9",
+   "level": "twenty-five-metres",
+   "stars_cpython": 1,
+   "stars_pyodide": 1,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.348685166,
+    "ate": 0.080274697,
+    "path_m": 8.425064673,
+    "ticks": 329
+   },
+   "pyodide": {
+    "f1": 0.348685166,
+    "ate": 0.080274697,
+    "path_m": 8.425064673,
+    "ticks": 329
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_10",
+   "level": "forty-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.194079988,
+    "ate": 0.323384554,
+    "path_m": 14.453248219,
+    "ticks": 707
+   },
+   "pyodide": {
+    "f1": 0.194079988,
+    "ate": 0.323384554,
+    "path_m": 14.453248219,
+    "ticks": 707
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_11",
+   "level": "twenty-five-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.304389483,
+    "ate": 0.0237467,
+    "path_m": 0.411260663,
+    "ticks": 397
+   },
+   "pyodide": {
+    "f1": 0.304389483,
+    "ate": 0.0237467,
+    "path_m": 0.411260663,
+    "ticks": 397
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_12",
+   "level": "forty-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.301349263,
+    "ate": 0.107005685,
+    "path_m": 4.204347084,
+    "ticks": 776
+   },
+   "pyodide": {
+    "f1": 0.301349263,
+    "ate": 0.107005685,
+    "path_m": 4.204347084,
+    "ticks": 776
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_13",
+   "level": "twenty-five-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.306156261,
+    "ate": 0.048190807,
+    "path_m": 2.395805192,
+    "ticks": 799
+   },
+   "pyodide": {
+    "f1": 0.306156261,
+    "ate": 0.048190807,
+    "path_m": 2.395805192,
+    "ticks": 799
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_14",
+   "level": "forty-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.245648297,
+    "ate": 0.173516491,
+    "path_m": 7.174266725,
+    "ticks": 573
+   },
+   "pyodide": {
+    "f1": 0.245648297,
+    "ate": 0.173516491,
+    "path_m": 7.174266725,
+    "ticks": 573
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_15",
+   "level": "twenty-five-metres",
+   "stars_cpython": 1,
+   "stars_pyodide": 1,
+   "hash_same": false,
+   "cpython": {
+    "f1": 0.36104874,
+    "ate": 0.142889524,
+    "path_m": 12.529617467,
+    "ticks": 949
+   },
+   "pyodide": {
+    "f1": 0.36104874,
+    "ate": 0.142889523,
+    "path_m": 12.529617451,
+    "ticks": 949
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 9.999999994736442e-10,
+    "path_m": 1.5999999547489097e-08,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_16",
+   "level": "forty-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": false,
+   "cpython": {
+    "f1": 0.252780495,
+    "ate": 0.353740728,
+    "path_m": 12.609161886,
+    "ticks": 855
+   },
+   "pyodide": {
+    "f1": 0.252780495,
+    "ate": 0.353740732,
+    "path_m": 12.609161886,
+    "ticks": 855
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 3.999999997894577e-09,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_17",
+   "level": "twenty-five-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.210786791,
+    "ate": 0.486749139,
+    "path_m": 15.606343369,
+    "ticks": 812
+   },
+   "pyodide": {
+    "f1": 0.210786791,
+    "ate": 0.486749139,
+    "path_m": 15.606343369,
+    "ticks": 812
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_18",
+   "level": "forty-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": false,
+   "cpython": {
+    "f1": 0.256499935,
+    "ate": 0.357218042,
+    "path_m": 15.448207856,
+    "ticks": 1004
+   },
+   "pyodide": {
+    "f1": 0.256499935,
+    "ate": 0.357218029,
+    "path_m": 15.448207753,
+    "ticks": 1004
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 1.300000002091295e-08,
+    "path_m": 1.0299999964047402e-07,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "submission_19",
+   "level": "twenty-five-metres",
+   "stars_cpython": 0,
+   "stars_pyodide": 0,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.222122421,
+    "ate": 0.079775217,
+    "path_m": 3.725715781,
+    "ticks": 795
+   },
+   "pyodide": {
+    "f1": 0.222122421,
+    "ate": 0.079775217,
+    "path_m": 3.725715781,
+    "ticks": 795
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "reference_forty-metres_out_and_back",
+   "level": "forty-metres",
+   "stars_cpython": 1,
+   "stars_pyodide": 1,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.340814604,
+    "ate": 0.307423106,
+    "path_m": 19.702512351,
+    "ticks": 686
+   },
+   "pyodide": {
+    "f1": 0.340814604,
+    "ate": 0.307423106,
+    "path_m": 19.702512351,
+    "ticks": 686
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "reference_forty-metres_tour",
+   "level": "forty-metres",
+   "stars_cpython": 3,
+   "stars_pyodide": 3,
+   "hash_same": false,
+   "cpython": {
+    "f1": 0.484064969,
+    "ate": 0.86816993,
+    "path_m": 40.007891268,
+    "ticks": 1476
+   },
+   "pyodide": {
+    "f1": 0.484064969,
+    "ate": 0.868170085,
+    "path_m": 40.007892285,
+    "ticks": 1476
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 1.5500000005719272e-07,
+    "path_m": 1.0169999953291153e-06,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "reference_twenty-five-metres_out_and_back",
+   "level": "twenty-five-metres",
+   "stars_cpython": 1,
+   "stars_pyodide": 1,
+   "hash_same": true,
+   "cpython": {
+    "f1": 0.340814604,
+    "ate": 0.307423106,
+    "path_m": 19.702512351,
+    "ticks": 686
+   },
+   "pyodide": {
+    "f1": 0.340814604,
+    "ate": 0.307423106,
+    "path_m": 19.702512351,
+    "ticks": 686
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 0.0,
+    "path_m": 0.0,
+    "ticks": 0
+   }
+  },
+  {
+   "name": "reference_twenty-five-metres_tour",
+   "level": "twenty-five-metres",
+   "stars_cpython": 3,
+   "stars_pyodide": 3,
+   "hash_same": false,
+   "cpython": {
+    "f1": 0.55490654,
+    "ate": 0.154396602,
+    "path_m": 25.014524448,
+    "ticks": 921
+   },
+   "pyodide": {
+    "f1": 0.55490654,
+    "ate": 0.154396604,
+    "path_m": 25.014525443,
+    "ticks": 921
+   },
+   "abs_diff": {
+    "f1": 0.0,
+    "ate": 1.9999999989472883e-09,
+    "path_m": 9.950000006142545e-07,
+    "ticks": 0
+   }
+  }
+ ]
+}

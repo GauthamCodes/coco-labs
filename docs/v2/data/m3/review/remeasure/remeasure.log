@@ -1,0 +1,20 @@
+start 2026-10-11T15:37:26+05:30: profile balanced AC 1 battery 15% governor powersave load 0.11 0.40 0.61 driver 580.178.04
+gpu probe start ok
+m1 1: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+m1 2: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+m1 3: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+m1 4: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+m1 5: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+m1 6: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+m1 7: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":60,"fps_min":60}
+m1 8: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":60,"fps_min":60}
+m1 9: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+m1 10: {"gl":"gpu","renderer":{"vendor":"Google Inc. (NVIDIA Corporation)","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"},"fps_median":61,"fps_min":60}
+Node.js v24.21.0
+seek 1: {"ok":true,"ticks":3014,"fetches":3,"call_ms_max":0.19999999552965164,"to_frame_ms_max":34.899999998509884,"record_wall_s":108.487,"errors":0}
+seek 2: {"ok":true,"ticks":3012,"fetches":3,"call_ms_max":0.29999999701976776,"to_frame_ms_max":34.899999998509884,"record_wall_s":107.928,"errors":0}
+seek 3: {"ok":true,"ticks":3013,"fetches":3,"call_ms_max":0.19999999552965164,"to_frame_ms_max":35.100000001490116,"record_wall_s":106.744,"errors":0}
+4g: {"first_computation_ms":{"n":10,"median":3140,"min":2984,"max":3253},"arena_ready_ms":{"n":10,"median":7997,"min":7818,"max":8148},"goal_to_first":{"n":10,"median":36,"min":22,"max":45}}
+gpu probe end ok
+end 2026-10-11T15:53:00+05:30: profile balanced AC 1 load 2.21 1.76 1.32
+profile restored to balanced

@@ -1,0 +1,155 @@
+# Learn mission 7 (M3.4). Data, not code.
+#
+# Its beats open Case Files (lab_web/casefiles/, STACK) at a moment: the tick
+# is never typed by hand. Each `casefile:` link names a `moment:`, and
+# lab_web/tools/missions.py requires `tick:` to equal that moment in
+# docs/v2/data/m3/m34/moments.json, which lab_web/test/casefile_moments.test.ts
+# re-derives from the committed Case File by src/arena/moments.ts.
+schema: coco.mission.v1
+id: why-did-it-fail
+number: 7
+title: Why did the robot fail?
+question: >-
+  A robot that found its target, picked it up and held it could not drive home. Nothing
+  was broken. What went wrong, and where in the recording can you see it?
+lens: localise
+gaps: [tracking]
+v1: "v1/?view=move"
+beats:
+  - beat: hook
+    text: >-
+      M6 run 15 fetched its target and held it, then could not be driven home: the drive
+      home failed in 1.7 s. Run 15 was never recorded, so here is one of its nine
+      reproductions on the full stack, opened at the moment the controller refuses.
+    arena: {casefile: lab5_mislocalised_dwb_1, moment: refusal, tick: 128, level: explain}
+    claims: [run15-original, reproduction]
+  - beat: predict
+    question: >-
+      The controller refuses in its very first cycle with INVALID_PATH. It was handed a
+      good path, on a good map, by a controller that drives that path fine elsewhere.
+      What was wrong?
+    options:
+      - The global path
+      - The controller
+      - The robot's belief about where it was standing
+      - The map
+    answer: 2
+    claims: [reproduction]
+  - beat: reveal
+    text: >-
+      Scrub back to here. AMCL has just been told the robot is 3.4 m north of where the
+      simulator has it. The belief and the truth are two different points from now on;
+      about ten seconds later the drive starts, and the path lies nowhere near the
+      robot the controller thinks it is steering.
+    arena: {casefile: lab5_mislocalised_dwb_1, moment: divergence, tick: 30, level: explain}
+    claims: [moments, reproduction]
+  - beat: manipulate
+    text: >-
+      The Arena model, told the same wrong pose. Pick any controller: the whole path lies
+      outside the local window around the believed pose, so it is pruned to nothing and
+      every controller fails before it scores a single candidate.
+    arena: {lens: move, level: explain, cfg: ['move.scenario=mislocalised', 'move.controller=dwa']}
+    claims: [model-same]
+  - beat: explain
+    text: >-
+      The same family of failure, in another lab. Lab 4's B2 found red in bay 2 and lifted
+      it; on the way home the planner was planning from a pose 4.8 m from the truth,
+      nothing relocalised, and the mission aborted. Its recording kept the truth and the
+      mission's states, not the belief -- so here you can see where it gave up, and not
+      what it believed.
+    arena: {casefile: lab4_b2_colours_s1_red, moment: refusal, tick: 3093, level: explain}
+    claims: [b2, b2-recording]
+  - beat: stack
+    text: >-
+      MPPI, told the same wrong pose: the same two moments, the belief leaving the truth
+      and the refusal. Every reproduction looks like this; which is why they reproduce run
+      15's mechanism and not its every detail.
+    arena: {casefile: lab5_mislocalised_mppi_1, moment: divergence, tick: 31, level: explain}
+    claims: [moments, unresolved-exact, b2-aliasing]
+  - beat: challenge
+    stub: true
+    text: Arrives in M3.5, as the Case File detective.
+claims:
+  - id: run15-original
+    label: SIMULATION RESULT
+    text: >-
+      Run 15 picked its target and held it, then could not be driven home: AMCL believed
+      the robot was at (7.252, -2.962) while it was at (8.747, 0.149), 3.4 m apart, after
+      dead-reckoning through a corridor the map deliberately leaves blank. Its log:
+      "DWBLocalPlanner: No valid trajectories out of 819!"
+    evidence:
+      - 'docs/RESULTS.md "The one failure: run 15, and it is a localisation failure"'
+    v1: []
+  - id: reproduction
+    label: SIMULATION RESULT
+    text: >-
+      Run 15 was never recorded as a bag. Lab 5 reproduced its mechanism: AMCL told the
+      robot was 3.4 m from where it stood, then a good path handed to each controller.
+      DWB, MPPI and Regulated Pure Pursuit each failed 3 of 3 with INVALID_PATH (103), in
+      their first control cycle.
+    evidence:
+      - 'docs/RESULTS.md "The controller matrix"'
+      - docs/v2/M2_MOVE_COMPARISON.md
+    v1: []
+  - id: moments
+    label: MEASURED
+    text: >-
+      In all nine reproductions the recording shows the stack's belief leaving the truth
+      by 3.40 m at ticks 30-31, when the wrong pose is told, and the controller refusing
+      at ticks 122-130, when the drive is asked to start. The ticks are found by a
+      committed rule -- the belief more than 1.0 m from the truth; the first recorded
+      give-up -- and re-derived from the Case Files in CI.
+    evidence:
+      - docs/v2/data/m3/m34/moments.json
+      - lab_web/src/arena/moments.ts
+      - lab_web/test/casefile_moments.test.ts
+    v1: []
+  - id: model-same
+    label: SIMPLIFIED MODEL
+    text: >-
+      In the Arena model, told the same 3.4 m wrong pose, every controller fails in its
+      first cycle with INVALID_PATH having scored 0 candidates, 15 of 15 runs; the stack
+      did the same 9 of 9. That is an agreement of outcome and of the mechanism the model
+      draws, not proof that run 15 went the same way.
+    evidence:
+      - docs/v2/M2_MOVE_COMPARISON.md
+    v1: []
+  - id: b2
+    label: SIMULATION RESULT
+    text: >-
+      Lab 4's B2 found red in bay 2 and lifted it. On the return the planner was planning
+      from a pose 4.8 m from the truth, about one bay pitch; the localisation monitor's
+      verdict was UNKNOWN, so nothing relocalised, three plans found no path and the
+      mission aborted with RETURN_FAILED. The failure is localisation, not search.
+    evidence:
+      - 'docs/RESULTS.md "The searching mission in Gazebo"'
+    v1: []
+  - id: b2-recording
+    label: MEASURED
+    text: >-
+      B2's recording holds the simulator's ground truth and the mission's states but not
+      AMCL's pose or the plans, so its Case File shows where the robot was and when the
+      mission gave up -- tick 3093, ABORT (RETURN_FAILED) -- and not what it believed. The
+      4.8 m comes from Lab 4's analysis, not from this file.
+    evidence:
+      - docs/v2/data/m3/m34/moments.json
+      - docs/v2/CASEFILES.md
+    v1: []
+  - id: unresolved-exact
+    label: UNRESOLVED
+    text: >-
+      Exactly what happened in run 15 is unresolved: its log says DWB found no valid
+      trajectory out of 819, while every reproduction scored 0 candidates, and run 15
+      cannot be re-run.
+    evidence:
+      - 'docs/RESULTS.md "The controller matrix"'
+      - 'docs/RESULTS.md "The one failure: run 15, and it is a localisation failure"'
+    v1: []
+  - id: b2-aliasing
+    label: UNRESOLVED
+    text: >-
+      B2's belief was about one bay pitch from the truth, which suggests aliasing between
+      identical bays. That is not attributed.
+    evidence:
+      - 'docs/RESULTS.md "The searching mission in Gazebo"'
+    v1: []

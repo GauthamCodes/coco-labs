@@ -13,11 +13,12 @@ only. Read order for agents (README §9): `README.md`, this file,
 | v1 | **Frozen** at tag `coco-lab-v1-final` = `3571169` |
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | M1 | **Closed 2026-10-09 — agent-measurable criteria**: independent review [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md) (MERGE AFTER FIXES, every fix done); PR #20 merged into `main` as **`0a2516a`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena, a goal click drew its search, all six v1 views 0 console / 0 page errors ([`v2/data/m1/exit/public_after_merge.json`](v2/data/m1/exit/public_after_merge.json)). **Still pending Gautham:** phone performance, phone cold start, usability |
-| Branch | `v2/m2-whole-loop` (from `main` = `0a2516a`), worked in the worktree `.claude/worktrees/v2-m2-whole-loop`, overlay `~/coco_lab_m2_ws` |
-| Milestone | **M2 · The whole loop** ([`v2/M2_PROMPT.md`](v2/M2_PROMPT.md)) |
-| Checkpoint | **M2.11 done: every agent-measured M2 criterion met** ([`v2/M2_RESULTS.md`](v2/M2_RESULTS.md)). Next: the M2 pull request (not merged by the agent), Gautham's phone and usability rows, a fresh review session |
-| Merge to `main` | M2 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #20 only) |
-| Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows — never marked done by the agent |
+| M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
+| Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
+| Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
+| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.9 measured** (B.3: 4 met; Case File first frame 97/100 within 2 s on 4G; the regression re-measure is partial, AC lost). PR open, not merged. Next: AC re-measure; Gautham's phone and usability rows; an independent M3 review |
+| Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
+| Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
 
 ## Checkpoint log
 
@@ -1026,6 +1027,522 @@ only. Read order for agents (README §9): `README.md`, this file,
     **127 / 0 / 0** (+1: the conditions check of `seek_check.mjs`). Next:
     the pull request into `main` (not merged by the agent), Gautham's phone
     and usability rows, and a fresh review session.
+
+## M3 checkpoint log
+
+- **M3 setup, B.1 (2026-10-10).**
+  - **Start:** PR #21 merged into `main` as `d9ae365` (Part A, M2 review).
+    The canonical checkout was clean and fast-forwarded to it. Branch
+    `v2/m3-play-casefiles`, worktree `.claude/worktrees/v2-m3-play-casefiles`,
+    overlay `~/coco_lab_m3_ws` (helpers in its `bin/`, ROS domain 87, serve
+    port 4214).
+  - **Baseline at `d9ae365`:** packages **3,432 / 0 / 0**, `lab_web` vitest
+    **343 / 0 / 0** (31 files, typecheck clean), build tools **127 / 0 / 0**,
+    generated TypeScript current. Toolchain: Node 24.21.0, Python 3.12.3,
+    ROS 2 Jazzy, Playwright Chromium 156 / Firefox 157 / WebKit 27.2.
+    Balanced profile on AC (`~/coco_lab_m3_ws/logs/suites_m3base.out`).
+  - **Phone results in this file:** none recorded yet (`v2/PHONE_MEASURE.md`
+    tables blank), so no budget fails and there is no M3.0b.
+  - **Recorded here:** M2 closed (agent-measurable) with the merge SHA;
+    `v2/M3_PROMPT.md` (Part B of the owner's prompt); the post-merge public
+    check `v2/data/m2/exit/`.
+  - **Next:** M3.0.
+
+- **M3.0a, the v1 site as a built artifact (2026-10-10).** This is the
+  owner's decision.
+  - **Built once:** `9f58b83` with its own tooling, then made
+    self-contained by `lab_web/tools/v1_site.py assemble`:
+    - Pyodide 314.0.7 self-hosted (the npm package's five core files plus
+      micropip 0.11.1, checked against `pyodide-lock.json`)
+    - the CDN URL rewritten in the page bundle (1 occurrence) and removed
+      from the CSP (2)
+    - 84 files, 36,670,880 B, tree `6857ff56…`
+  - **Published:** committed to the new orphan branch **`v1-site`** at
+    **`36e6500`**.
+  - **Served:** both `lab.yml` jobs run `fetch_v1_site.sh`. It fetches that
+    pinned commit, verifies every file and the tree hash, and copies it;
+    nothing is built at deploy.
+  - **Checked weekly:** `.github/workflows/v1_reproducible.yml` rebuilds
+    from source and compares.
+  - **Measured:**
+    - the v1 worker's requests went from 6 CDN files to **0 third-party**,
+      with the same trace sha256 `4dddb6623b9b…` for an edited share link
+    - 22 / 22 URL forms and 6 / 6 archive views, 0 console errors
+    - a second build from source has the same content (13 files differ
+      only in `created_utc`)
+  - **Recorded:** ADR 0003 amended.
+  - **Two v1-era copy lines are kept as built and reported to the owner:**
+    - the footer's "only third-party request is Pyodide" (now
+      conservative)
+    - the meta description "…a real ROS 2 robot's maps"
+  - **Tests:** `test_v1_site.py` 7 / 0 / 0.
+  - **Evidence:** `v2/data/m3/m30/`.
+  - **Next:** M3.0b, "reset home" for the fetch mission.
+
+- **M3.0b, "reset home" for the Arena fetch mission (2026-10-10).**
+  - **The rule** (`coco_lab/mission_arena.py`): a `mission.start` that
+    arrives while the mission is not idle (a fetch already ran in this
+    session: done, failed or still going) first calls
+    `Arena.reset_home()`. That is the `reset` input's behaviour, factored
+    out of `arena.py`: the robot at the start pose (= the fetch's home,
+    (0, 0) in the map frame), odometry zeroed, every subsystem told. The
+    transition's reason says where the robot was put back from.
+  - **A session's first fetch is unchanged**, so a first fetch from a
+    kidnapped pose still starts there. No new state field and no state-hash
+    change. M2's 100 committed determinism sessions each start one fetch;
+    25 replayed under Pyodide-in-Node with this `coco_lab` give **0
+    mismatched** against M2's committed hashes.
+  - **A latent bug fixed, found by the reset:** `loc_arena.on_reset`
+    restarted its filters at the *old belief*, not the start pose its
+    docstring promised. So after any `reset` input (M2's too) the robot was
+    home but believed it was still where it had stalled, and the next fetch
+    failed in about 300 ticks with "moved less than 0.1 m in 10 s
+    (blocked?)" (`fetch_sequence_reset_only.json`). Now it restarts at the
+    robot's pose. The map, which anchors at the belief, follows.
+  - **Tests:** 7 new in `test_mission_arena.py` and `test_loc_arena.py`:
+    - a fetch after another starts home
+    - a restart mid-fetch also starts home
+    - the first fetch starts where the robot stands
+    - a reset input then a start does not reset twice
+    - a two-fetch session is deterministic
+    - a reset after a kidnap forgets the old belief (MCL and EKF)
+    - **the seek recording's stall no longer poisons the next fetch**:
+      seed 1, red stalls at (1.70, 5.71), green then completes from home
+  - **Re-recorded honestly:** the 5-minute seek recording, 3 times in the
+    browser, GPU, balanced on AC, each `seek_check.mjs` run.
+
+    | Recording | red | green | blue | yellow |
+    |---|---|---|---|---|
+    | 1 | done | failed | done | running |
+    | 2 | done | done | running | — |
+    | 3 | done | failed | done | running |
+
+    Before the localisation fix, with reset only: green failed 3 / 3 and
+    blue 2 / 3 (`seek_before_fix/`). Seek stays ≤ 35.1 ms.
+  - **Still DWA's weakness, not hidden:** green fails from home in 2 of 3
+    recordings, as M2.6 measured (MCL + DWA 4 / 8).
+  - **M2's "Python Arena, seed 1" claim, now reproduced and committed**
+    (`fetch_sequence.py`): the first red stalls near (1.70, 5.71). The
+    browser recordings' first red completes. That difference between the
+    browser recording and the Python run is **not attributed** (the
+    browser's inputs arrive through the page; the Python run applies them
+    at tick 0).
+  - **Evidence:** `v2/data/m3/m30/`.
+  - **Suites at the end of M3.0** (the working tree at `9b67f13` plus
+    these changes; run on battery, which only measurements are barred
+    from):
+    - packages **3,439 / 0 / 0** (`coco_lab` 742: +7)
+    - vitest **343 / 0 / 0**
+    - build tools **134 / 0 / 0** (+7, `test_v1_site.py`)
+  - **Next:** M3.1, the ROS-to-event adapter.
+
+- **M3.1, the ROS-to-event adapter (2026-10-10).** `coco_lab_ros/coco_lab_ros/adapter.py`.
+  - **What it does:** reads a rosbag2 recording and writes it as a coco run
+    file (MCAP, protobuf, `coco_schemas` families). The families are truth
+    (`/model/coco/odometry` only), `sensor.scan`, `estimate`, `robot`,
+    `plan.path`, `control.local` (local plan, MPPI optimal trajectory,
+    `cmd_vel_nav`), `mission.fsm`, `metrics`, annotations and actors.
+  - **Pure conversion:** a test refuses any import beyond the standard
+    library, rosbag2, rclpy's deserialiser, yaml and `coco_schemas`.
+    Re-expressions only:
+    - clock: header stamp, else log time mapped through the odometry's
+      stamps
+    - frames: `world_to_map`, and `odom` to `map` by the recorded `/tf`
+    - detail: `summary` keeps recorded messages at lower rates, never
+      interpolated
+    - windows: by sim time, and by log time for Lab 4's outliving recorder
+  - **The mapping table:** [`v2/ADAPTER.md`](v2/ADAPTER.md).
+  - **A run file writer in Python,** `coco_schemas/mcap_write.py`
+    (uncompressed), round-tripping through `mcap_read`.
+    `lab_web/src/schemas/mcap.ts` gains `readRawStream` (reads it, no index
+    needed) and `repackRun` (zstd chunks plus index, the same messages byte
+    for byte).
+  - **Tests:**
+    - `test_adapter.py`, 19 tests on 4 fixture bags (1.3 MB, cut byte for
+      byte from Lab 5, Lab 4, Lab 2 and an rl replay by
+      `fixtures/make_case_bags.py`; `FIXTURES.json` carries the source
+      sha256s). Truth, scans beam for beam, AMCL with covariance, plans,
+      the local plan in `map`, commands, actors, strings, metrics, the
+      citation, reproducibility, thinning, both windows, Lab 4's wall clock
+      to sim time, odom-frame estimates, and a refusal without
+      `world_to_map`.
+    - `test_mcap_write.py`, 5 tests.
+    - `lab_web/test/casefile_adapter.test.ts`, 4 tests: TypeScript decodes
+      the Python-written golden conversion (pinned byte for byte in
+      Python) and repacks it losslessly.
+  - **Dependencies declared** in `coco_lab_ros/package.xml`:
+    `coco_schemas`, `sensor_msgs`, `tf2_msgs`, `rosidl_runtime_py`.
+  - **Risk:** CI's colcon job tests 10 packages, not `coco_lab_ros`, so the
+    adapter's Python tests run locally only. CI's vitest covers the golden
+    file.
+  - **The guard held, and still does.** The full suite failed
+    `test_guards.py::test_no_forbidden_topic_is_named_outside_safety`: the
+    adapter named the recorded command topics (`/cmd_vel_nav`, the wheel
+    topic, teleop) to READ them. Rather than loosen platform rule 3's guard,
+    `safety.py` now names them once (`RECORDED_COMMANDS`, checked to be a
+    subset of `FORBIDDEN_TOPICS`), and the adapter imports them from there.
+    A new guard test checks the adapter creates no node and no publisher.
+  - **Suites at the end of M3.1** (on battery): packages **3,465 / 0 / 0**
+    (`coco_lab_ros` 142: +21; `coco_schemas` 223: +5), vitest
+    **347 / 0 / 0** (+4), build tools **134 / 0 / 0**. `coco_lab_ros` was
+    re-run alone after the guard fix; nothing else changed.
+  - **Next:** M3.2, measure Case File sizes and record ADR 0005.
+
+- **M3.2, Case File storage: ADR 0005 (2026-10-10).**
+  - **Measured first:** one recording of each kind at `summary` detail,
+    repacked with zstd as the site serves them.
+
+    | Kind | Served size |
+    |---|---|
+    | Lab 1C | 74 KB |
+    | Lab 5 | 189–337 KB |
+    | Lab 4 | 345 KB (cut at its first terminal state) |
+    | robot_localization replay | 581 KB |
+    | Lab 2 kidnap | 1.00 MB |
+    | Lab 3 tour | 1.89 MB |
+
+    Counting each kind at its largest gives about 52 MB in total, and about
+    2 MB at most per Case File, against the budgets of about 20 MB and
+    about 150 MB. **It fits, so no stop.**
+  - **Decision:** commit zstd, indexed Case Files to `lab_web/casefiles/`
+    with an `index.json`, copied into the Pages artifact and lazy-loaded
+    when opened.
+  - **Checks:** each manifest cites every source-bag file by sha256, and a
+    CI test enforces the budget.
+  - **The B.5 checksum cross-check uses each lab's own definition.** Lab 4's
+    committed `bag_sha256` is a directory hash (`p05_evidence._sha_dir`), so
+    `bag_0.mcap` alone (`538b4101…`) differs from the manifest's
+    `a2945562…`, while the directory hash equals it. Lab 5's is
+    `bag_0.mcap` (`673d7f05…`, equal). Both definitions are documented in
+    the ADR.
+  - **Evidence:** `v2/data/m3/m32/casefile_sizes.json`.
+  - **No code changed;** suites as at M3.1.
+  - **Next:** M3.3, convert and publish the Case Files.
+
+- **M3.3, the Case Files (2026-10-10).** [`v2/CASEFILES.md`](v2/CASEFILES.md).
+  - **100 recordings** converted by the adapter at `summary` detail and
+    packed with zstd into `lab_web/casefiles/`: **41,438,100 B**, the
+    largest 2.78 MB.
+
+    | Group | Case Files |
+    |---|---|
+    | Lab 1 runs | 3 |
+    | Lab 2 kidnaps | 20 + 3 void |
+    | robot_localization tour | 1 |
+    | Lab 3 tours | 2 |
+    | Lab 4 | 16 + the void |
+    | Lab 5 | 54 |
+
+    Plus the group-only views `astar-myth` and `run15` (the nine
+    `mislocalised_*` runs).
+  - **Every cited checksum checked** by its lab's own definition (73 / 73):
+    Lab 1 `dir_sha256`, Lab 4 `_sha_dir`, Lab 5 `bag_0.mcap`. Each
+    manifest also cites every source file by sha256.
+  - **The evidence check is extended to Case Files** (`casefiles.py`, run
+    by `build_catalog.py`, so CI):
+    - every explanation sentence carries a learner label and evidence that
+      resolves
+    - every unresolved question stays UNRESOLVED
+    - every RESULTS link resolves
+    - the inventory equals what the committed data names
+    - the ADR 0005 budget holds
+
+    Per-run facts are generated from the committed data and cite it.
+  - **Viewer:** `replay_case.ts`; `?view=arena&casefile=<id>` loads the
+    whole recording (every tick a seek away) on the Nav2 map, written once
+    as `generated/casefiles/world.grid.bin`. Its lens is chosen by what the
+    file holds.
+  - **Page:** `?view=casefiles`: the recording (STACK) beside the Arena model
+    (MODEL) on the same scenario, with `cfg=` / `goal=` / `kidnap=` taken
+    from the recording, plus gap chips, facts and the citation.
+  - **A defect found and fixed:** the Localise lens looked for the model's
+    estimator names only, so a Case File's AMCL / robot_localization /
+    wheel-odometry estimates were never drawn. Each redraw also walked back
+    up to 4,000 ticks: **seek 574 ms** on the robot_localization tour.
+    `FamilyStore` now indexes estimates by estimator (`latestWhere`,
+    `beforeWhere`, tested against the old walk at every tick), and the lens
+    draws the recorded estimators labelled as the stack's. The same seek is
+    now **31.8 ms**.
+  - **Measured** (GPU, balanced on AC, unthrottled; the emulated-4G
+    budgets are measured in M3.9):
+    - all 100 Case Files open as STACK recordings: first frame median
+      72 ms, max 279 ms; seek max 45 ms over 10 seeks each; 0 console
+      errors
+    - 9 / 9 pages, and 4 / 4 at phone width (390 px, no horizontal scroll)
+    - the model side takes, 4 / 4: Lab 5 the matching controller on the
+      scenario's path; Lab 4 the fetch starts; Lab 2 the robot is kidnapped
+      to the recorded target; Lab 1 the recorded goal is planned
+    - `console_check` (now with the Case Files): 0 errors on every page
+    - 22 / 22 URL forms and 6 / 6 `/v1/` views
+  - **Also:** `missions.py` exits 1 on an evidence problem (M2 review,
+    risk 6).
+  - **Evidence:** `v2/data/m3/m33/`.
+  - **Suites at the end of M3.3** (balanced, AC): packages
+    **3,466 / 0 / 0** (`coco_lab_ros` 143: +1, the multi-bag test), vitest
+    **358 / 0 / 0** (+11), build tools **146 / 0 / 0** (+12).
+  - **Next:** M3.4, mission 7.
+
+- **M3.4, mission 7: "Why did the robot fail?" (2026-10-10).**
+  `lab_web/missions/07-why-did-it-fail.yaml`. Its beats, MODEL and STACK
+  separated:
+  - run 15, quoted from RESULTS; it was never recorded;
+  - its nine Lab 5 reproductions, opened as Case Files;
+  - the Arena model told the same wrong pose (SIMPLIFIED MODEL, 15 / 15
+    vs the stack's 9 / 9);
+  - Lab 4's B2 return-leg abort.
+
+  **Scrub targets are derived, not typed:**
+  - `src/arena/moments.ts` finds *divergence* (belief more than 1.0 m from
+    truth) and *refusal* (the first recorded give-up) in the Case File;
+  - `tools/casefile_moments.mjs` writes `v2/data/m3/m34/moments.json`;
+  - `test/casefile_moments.test.ts` re-derives every entry (17 tests);
+  - `missions.py` refuses a beat whose tick is not its moment's, or a
+    Case File that does not exist (7 new tests; it runs in CI through
+    `build_catalog.py`).
+
+  **What the recordings hold:**
+  - The mislocalised Case Files now start 3 s before the recorded
+    `/initialpose` that told AMCL the wrong pose. The divergence is at
+    ticks 30–31 (3.40 m) and the refusal at ticks 122–130 (FollowPath 103).
+    The nine were rebuilt with their checksums re-checked; the total is now
+    41,486,529 B.
+  - **B2 recorded no belief** (its bag has no `/amcl_pose` and no plans).
+    Its Case File shows only the refusal, at tick 3093 (ABORT
+    RETURN_FAILED). The mission says so; the 4.8 m is quoted from Lab 4's
+    analysis.
+
+  **Measured** (GPU, balanced on AC):
+  - all 4 Case File beats opened from Learn, each paused on its exact tick,
+    STACK, with the way back, 0 errors (`browser/mission_casefile_check.json`
+    plus screenshots);
+  - the nine rebuilt Case Files: first frame at most 49 ms, seek at most
+    34 ms.
+
+  **Evidence:** `v2/data/m3/m34/`.
+
+  **Suites** (balanced, AC):
+  - packages **3,466 / 0 / 0**
+  - vitest **375 / 0 / 0** (+17)
+  - build tools **154 / 0 / 0** (+8). The one failure on the first run was
+    the new harness writing its conditions outside the JSON call, which the
+    perf-conditions guard refuses. Fixed and re-run.
+
+  **Next:** M3.5, Play.
+
+- **M3.5, Play: five challenges (2026-10-11).** `?view=play`;
+  [`v2/CHALLENGES.md`](v2/CHALLENGES.md) (generated).
+  - **One scorer:** `coco_lab/coco_lab/play.py` scores every challenge. The
+    page runs it in the Arena worker (a new `play` pack); `coco verify` runs
+    the same code in Node (M3.6). A score is a pure function of the level
+    and the input log: no random draw, no wall time. Computation is counted
+    in expansions. The page shows each score broken down into named metrics.
+  - **Levels:** 16, from `lab_web/play/levels.src.yaml`.
+    `tools/make_play_levels.py` computes every star threshold by running the
+    reference algorithms on the level:
+    - A*, weighted A* and greedy (Beat the planner)
+    - the least-g and least-h predictors (Next node)
+    - the optimal order, nearest-first and most-likely-first (Search the bays)
+    - two reference drives, simulated (Map the arena)
+    - tolerance bands around `moments.ts`'s answer (the detective, the one
+      challenge whose reference is a rule with an exact answer)
+
+    A level is refused unless its references separate the stars.
+  - **Luck:**
+    - **Next node:** a guess counts if it ties with A*'s choice on (f, h),
+      because insertion order is invisible to the learner.
+    - **Search the bays:** scored on expected cost under the prior, never on
+      the sampled outcome.
+    - **Map the arena:** the noise is fixed by the level's seed, and a drive
+      is re-simulated from its input log, never read off the live Arena. Its
+      only config lines are the level's, before any driving; no kidnap or
+      reset.
+  - **Personal bests and links:**
+    - **Bests:** `localStorage`, every access in try/catch. Tested with
+      storage that throws.
+    - **Links:** carry the level hash, the input log and the result hash,
+      and say whether a re-score reproduced exactly.
+  - **Deviation:** two privacy guards refused ANY browser storage:
+    `check_dist.mjs` (a v1 Phase 1D-6 build check) and `test/site.test.ts`'s
+    source scan. The M3 prompt requires local personal bests, so both now
+    allow exactly one exception:
+    - the build check: one `localStorage.setItem`, in the chunk holding
+      Play's key prefix;
+    - the source scan: `window.localStorage` in `src/play/best.ts` only,
+      and a new test requires every use to be inside `try`.
+
+    Cookies, sessionStorage, IndexedDB and analytics are still refused
+    everywhere.
+  - **A defect found by the browser check:** the map panel's meter never
+    updated. Its interval depended on a getter recreated every Arena render
+    (10 Hz), so it was torn down before firing. The getters are now read
+    through refs.
+  - **Measured** (Chromium on the GPU, balanced on AC):
+    - `tools/perf/play_check.mjs`: **15 / 15**. Every level of the
+      three page challenges, and every detective level, played by clicks with
+      its reference answer, scored 3 stars.
+    - A live 25 m map drive scored valid (1 star, F1 0.3528) and was
+      re-simulated in **4.3 s**.
+    - Every result's link, opened in a fresh context, said "Reproduced
+      exactly" (the same result hash), in 3.9–8.4 s.
+    - Scorer boot (Pyodide + coco_lab + the play pack): 3.8–4.2 s.
+    - Each page score: at most 34 ms.
+  - **Tests:** `coco_lab/test/test_play.py` 31; `lab_web/tools/test_play_levels.py`
+    11 (re-derives every reference and re-simulates every reference drive);
+    `test/play.test.ts` 11.
+  - **Parked in IDEAS:** the pose-graph mapping oddity (40 m tour F1 0.316
+    against a 20 m out-and-back's 0.580), and the four later challenges.
+  - **Evidence:** `v2/data/m3/m35/`.
+  - **Suites** (balanced, AC):
+    - packages **3,497 / 0 / 0** (`coco_lab` 773: +31)
+    - vitest **391 / 0 / 0** (+16)
+    - build tools **166 / 0 / 0** (+12)
+
+    The first run failed `coco_lab`'s flake8/pep257 on `play.py` and its
+    test, and the source privacy scan above; both were fixed and re-run.
+  - **Next:** M3.6, `coco verify` over 100 submissions in three browsers.
+
+- **M3.6, `coco verify` (2026-10-11).** `lab_web/tools/coco.mjs verify
+  <link>... | --file FILE` (`npx coco verify` from `lab_web`). It re-scores a
+  Play submission under Pyodide in Node with the same `coco_lab.play` the page
+  runs. No server, no accounts, no leaderboard.
+  - **100 submissions,** 20 per challenge, from a fixed seed
+    (`tools/make_play_submissions.py`): reference answers, perturbed, random,
+    and rule-breaking ones (scored `valid: false`, which must reproduce too).
+    93 of 100 were valid.
+  - **Measured** (balanced, AC):
+    - Chromium's page scored all 100 (`tools/perf/play_verify.mjs score`)
+    - `coco verify` re-scored every link: **100 of 100 result
+      hashes equal the browser's**
+    - every link, opened fresh, said "Reproduced exactly" in **Chromium
+      100 of 100 (156.0.8078.4, 365 s), Firefox 100 of 100 (157.0, 430 s), WebKit 100 of 100 (27.2, 370 s)**, with
+      0 console errors
+  - **Two defects found and fixed while measuring:**
+    - **Level hashes changed through JavaScript.** The page sends the levels
+      through JavaScript, where `2.0` becomes `2`, so the page's level hash
+      differed from Node's for every level with an integral float: 80 of 100
+      submissions were refused as "a different version of the level". Only
+      Next node, which has none, passed. `play.canonical` now writes integral
+      floats as ints (tested both ways). Hashes from before the fix no
+      longer apply; no link had been published.
+    - **CPython and Pyodide disagree in the last digits of map metrics.**
+      Native CPython reproduces 94 of 100 result hashes
+      (14 of 20 map drives). The
+      map drives agree on F1 and on the scored tick, but differ by up to
+      1.3e-8 m in ATE (*M3 review correction: and by up to 1.55e-7 m on the
+      reference drives that set the thresholds*). The star thresholds are computed in CPython, so ATE
+      is now compared within 1 µm (`MAP_ATE_EPS`).
+      `tools/play_reference_check.mjs` replays every level's reference
+      answer under Pyodide: **18 of 18 earn
+      exactly their stars**.
+  - **CI** (`lab.yml`): `coco verify` over the 100 committed links, and the
+    reference check.
+  - **Measured on a build that already holds the M3.7 header:** the scoring
+    code is the same as the commit's.
+  - **Suites:** one run covered M3.6 and M3.7 together, on the M3.7 tree:
+    - packages **3,498 / 0 / 0** (`coco_lab` 774: +1, the JavaScript round-trip test)
+    - vitest **396 / 0 / 0**
+    - build tools **168 / 0 / 0**
+  - **Evidence:** `v2/data/m3/m36/`.
+  - **Next:** M3.7, one app, four modes.
+
+- **M3.7, one app, four modes (2026-10-11).** `src/ui/ModeNav.tsx`: every
+  mode has the same header, **Learn · Play · Sandbox · Case Files**, with the
+  current mode marked and the evidence badge (`EvidenceBadge`, README §3's
+  classes, with what each one means on hover).
+  - **Live Stack (simulated)** and the frozen v1 labs stay linked from the
+    header, and neither is a mode.
+  - **Sandbox** is the free Arena; a Case File opened in the Arena counts as
+    Case Files.
+  - **Learn's badge** follows the beat on screen: STACK on a stack beat or a
+    recording, MODEL otherwise. Before this, Learn had no badge at all.
+  - **Play's grid** got cell lines, and the Play page the same 16 px gutter as
+    the other modes.
+  - **Measured** (Chromium on the GPU, balanced on AC):
+    - `tools/perf/modes_check.mjs`: **22 / 22**. Eleven pages
+      across the four modes, at 1280 px and at 390 px (a Pixel 7): the four
+      modes in order, the right one current, the right badge visible inside
+      the viewport, Live linked and not a mode, no horizontal scroll, 0
+      console errors. Phone screenshots are in `v2/data/m3/m37/phone/`.
+    - `console_check`: **0 console and 0 page errors on all 21 views**,
+      the Play pages included.
+    - 22 / 22 URL forms and 6 / 6 `/v1/` views.
+    - `play_check` again on this build: 15 / 15.
+  - **A regression found by M3.8's demo frames, fixed:** the Case Files
+    comparison's two panes each drew the whole mode header again. A pane
+    now opens with `embed=1` and shows only its badge. `modes_check` asserts
+    it: one header on the page, panes STACK and MODEL with none, **23 / 23**
+    with this check.
+  - **A local-only gap, not a site defect:** my build helper did not
+    re-fetch `/v1/` after `vite build` emptied `dist` (CI does), so a first
+    console check saw a 404 on the archive. Fetched, and the helper fixed.
+  - **Suites:** the run is in M3.6's entry (one run over both).
+  - **Evidence:** `v2/data/m3/m37/`.
+  - **Next:** M3.8, drafts.
+
+- **M3.8, launch drafts (2026-10-11). Drafts only: nothing is published.**
+  - [`releases/v2.0.md`](releases/v2.0.md): release notes, marked DRAFT.
+    Every number cites the `RESULTS.md` section it is copied from. The two
+    Gautham rows and M3.9's budgets are left blank. Releases, tags and
+    their texts stay Gautham's.
+  - `lab_web/tools/demo_record.mjs`: a Playwright recording, one
+    continuous 1280 × 720 WebM:
+    - the Arena's Plan lens at Inspect: two goals, the search spreading,
+      the expansion-order heatmap;
+    - mission 7's reveal beat, then its Case File at the divergence;
+    - Run 15's reproduction beside the model.
+
+    Recorded once to check it, **68.2 s**: kept at
+    `~/coco_lab_m3_ws/demo/coco_lab_demo.webm` (7.8 MB), not committed.
+    Four extracted frames were looked at, and they found the M3.7
+    comparison-pane regression (fixed).
+  - [`v2/USABILITY_TEST_M3.md`](v2/USABILITY_TEST_M3.md): the script and
+    the results table for five people, one challenge, one Case File and
+    mission 7 explained, unaided. Gautham's to run.
+  - [`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md): an M3 section covering
+    Case File load and seek, Play's scorer and tapping, and the four modes
+    at phone width. The pass row stays the 10 s cold start.
+  - **Next:** M3.9, measure the B.3 budgets and open the PR.
+
+- **M3.9, measure and decide (2026-10-11).** [`v2/M3_RESULTS.md`](v2/M3_RESULTS.md).
+  - **Met:** Evidence, Adapter, Reproducibility, Hygiene.
+  - **Case File loading on emulated 4G:** seek met (max 43.3 ms) and storage
+    met. **First frame ≤ 2 s met for 97 of 100, missed for 3**, the long
+    tours: 2,362, 2,371 and 3,244 ms. It is transfer-bound. The lossless
+    fix, loading scans after the first frame, changes ADR 0005's format:
+    **a question for Gautham** (`IDEAS.md`).
+  - **Regressions partly re-measured:** the laptop lost AC at 12:45 during
+    the run. 8 fps runs on AC: 58–61 fps on the M2 scene. 16 / 16 replays;
+    22 / 22 forms. **M1 stress, latency, seek and cold start are still to
+    be re-measured on AC:** `~/coco_lab_m3_ws/bin/m39_remeasure.sh`, then
+    append the results.
+  - **CI:** green on `27e1b8a` (run 38121419092), with `coco verify`
+    100 / 100 and 18 / 18 references on GitHub's runner.
+  - **Next:** a pull request into `main`, not merged.
+
+- **M3 review and D6 (2026-10-11, `[M3-fix]` commits).** An independent
+  session reviewed PR #22 from a fresh clone at `7052aa8`:
+  [`v2/reviews/M3_REVIEW.md`](v2/reviews/M3_REVIEW.md), evidence
+  `v2/data/m3/review/`. **Recommendation: MERGE AFTER FIXES, every fix
+  done.**
+  - **Verified:** the diff (0 deleted), RESULTS.md append-only, suites
+    3,498 / 396 / 168, CI, 100 Case Files and **73 / 73** cited checksums
+    recomputed, the CI evidence check, mission 7's derived ticks, 7 / 7
+    thresholds recomputed independently, luck-free scoring, 25 links ×
+    3 browsers + `coco verify`, the storage guard, 22 / 22 old URLs + `/v1/`,
+    the badge in every mode.
+  - **Corrected:** CPython–Pyodide ATE differs by up to 1.55e-7 m on the
+    reference drives (not 1.3e-8 m); the detective's stars are stated
+    bands; mission 4 now shows the pose graph's long-tour result as
+    UNRESOLVED; a test for every float that reaches a hash.
+  - **D6 (owner's decision):** Case Files load their first frame before
+    their scans. Two lossless layouts measured; **ordered** chosen (ADR 0005
+    amended). **First frame on emulated 4G: 100 / 100 within 2 s**, worst
+    1,828 ms (was 3,244 ms).
+  - **Re-measured on AC (n ≥ 10):** M1 stress 60–61 fps; goal after a
+    planner change median 48.9 ms, max 67.7; seek max 35.1 ms; 4G cold
+    start 3,140 ms to computation, 7,997 ms to the live model. Every M2
+    budget met.
+  - **Next:** the quiet merge of PR #22 (A.6), then M4.
 
 ## Capabilities (README §2), with evidence class
 

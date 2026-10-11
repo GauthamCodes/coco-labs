@@ -1,0 +1,39 @@
+{
+ "unmodified": {
+  "exit": 0,
+  "tail": [
+   "static_room                  replay        15 runs   1668760 B  every metric recomputed from the recording (movebundle.replay_drive)",
+   "wheel: {'path': 'py/coco_lab-0.2.0-py3-none-any.whl', 'sha256': '4fa9c205423d18bb54278a6b7db1c7a0764e1ee6f2a42b02cd2a1cd405a9ef2a', 'bytes': 252394}",
+   "WARNING: Skipping /usr/lib/python3/dist-packages/pytest_repeat.egg-info due to invalid metadata entry 'name'"
+  ]
+ },
+ "claim_without_evidence": {
+  "exit": 1,
+  "tail": [
+   "WARNING: Skipping /usr/lib/python3/dist-packages/pytest_repeat.egg-info due to invalid metadata entry 'name'",
+   "casefiles: lab1-runs: explain[0] cites nothing"
+  ]
+ },
+ "claim_with_unresolvable_evidence": {
+  "exit": 1,
+  "tail": [
+   "WARNING: Skipping /usr/lib/python3/dist-packages/pytest_repeat.egg-info due to invalid metadata entry 'name'",
+   "casefiles: lab1-runs: explain[0]: docs/RESULTS.md \"No Such Section\": 0 headings begin with that text"
+  ]
+ },
+ "mission7_tick_not_derived": {
+  "exit": 1,
+  "tail": [
+   "WARNING: Skipping /usr/lib/python3/dist-packages/pytest_repeat.egg-info due to invalid metadata entry 'name'",
+   "missions: why-did-it-fail/hook: tick 129 is not lab5_mislocalised_dwb_1's refusal moment, tick 128"
+  ]
+ },
+ "restored": {
+  "exit": 0,
+  "tail": [
+   "static_room                  replay        15 runs   1668760 B  every metric recomputed from the recording (movebundle.replay_drive)",
+   "wheel: {'path': 'py/coco_lab-0.2.0-py3-none-any.whl', 'sha256': '4fa9c205423d18bb54278a6b7db1c7a0764e1ee6f2a42b02cd2a1cd405a9ef2a', 'bytes': 252394}",
+   "WARNING: Skipping /usr/lib/python3/dist-packages/pytest_repeat.egg-info due to invalid metadata entry 'name'"
+  ]
+ }
+}

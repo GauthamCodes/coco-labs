@@ -9005,3 +9005,271 @@ beam-for-beam as Lab 2's Sketch on the Nav2 map" is agreement with the map,
 not with Gazebo's sensor. Against Gazebo's recorded scans, 86.7 % of beams
 are within 5 cm. The wheel-odometry over-count is measured against
 Gazebo's own ground truth, a simulator's, not a physical robot's.
+
+## COCO Lab v2 · M3.0: every fetch starts from home; the seek recording re-recorded
+
+**MODEL** (the Arena), 2026-10-10, `v2/m3-play-casefiles`. Evidence:
+`docs/v2/data/m3/m30/`. Conditions: laptop, NVIDIA 580.178.04, balanced on
+AC, headless Chromium 156 on the GPU.
+
+**The change.** A fetch started after another in the same session first
+puts the robot back home, as a `reset` input does. A reset now restarts the
+localisation filter at the robot's pose. Before this, it restarted at the
+*old belief*, a latent bug in M2's `reset`.
+
+**The seek recording** (`lab_web/tools/perf/seek_check.mjs`: MCL, an
+occupancy map from the belief, DWA; red, then green, blue, yellow, each
+started when the last ended; about 3,000 ticks):
+
+| Recording | red | green | blue | yellow | Seek, slowest of 10 |
+|---|---|---|---|---|---|
+| M2.11 (before) | done | failed | failed | running | 33.1 ms |
+| M2 review 1–3 (before) | done ×3 | done, done, failed | running, running, done | —, —, running | ≤ 35.4 ms |
+| M3.0, reset only, 1–3 | done ×3 | failed ×3 | failed, failed, running | running, running, — | ≤ 36.8 ms |
+| **M3.0, reset + filter fix, 1–3** | **done ×3** | **failed, done, failed** | **done, running, done** | running, —, running | **≤ 35.1 ms** |
+
+So every M3.0 recording completes 2 fetches, against 1 to 2 before. Green's
+failures are DWA's from home, the weakness M2.6 measured (MCL + DWA 4 of 8),
+and are not hidden.
+
+**The Python Arena, seed 1, the same settings** (`fetch_sequence.py`):
+- **Red** stalls at (1.70, 5.71) with `no_valid_control`. This is M2.11's
+  "reproduced in the Python Arena" claim, now committed.
+- **Green** then completes from home at tick 1,827. With the reset but
+  without the filter fix, green failed in 286 ticks.
+- **Blue** fails with "moved less than 0.1 m in 10 s".
+- The browser recordings' red completes while this run's red stalls; that
+  difference is **not attributed**.
+
+**Determinism unchanged where it was committed:** 25 of M2's 100 sessions
+(one fetch each), Pyodide-in-Node, 0 mismatched against M2's hashes.
+
+## COCO Lab v2 · M3.3: the Case Files (measured 2026-10-10)
+
+**Evidence class.** STACK: recordings of the full ROS 2 stack in Gazebo,
+converted. The timings are MODEL: the browser, on the laptop with
+NVIDIA 580.178.04, balanced on AC, headless Chromium 156 on the GPU,
+unthrottled. Evidence: `docs/v2/data/m3/m33/`; inventory and rules:
+`docs/v2/CASEFILES.md`.
+
+**What was converted.** 100 recordings from `~/coco_lab_runs` by
+`coco_lab_ros.adapter` (summary detail), repacked with zstd: **41,438,100 B**,
+the largest 2,780,072 B.
+
+| Set | Case Files |
+|---|---|
+| Lab 1 runs | 3 |
+| Lab 2 kidnaps | 23 (3 void) |
+| robot_localization tour | 1 |
+| Lab 3 tours | 2 |
+| Lab 4 | 17 (1 void) |
+| Lab 5 | 54 |
+
+**Source checksums.** 73 of 73 committed citations match, each by its
+lab's own definition: Lab 1 `export.dir_sha256` 3 / 3, Lab 4
+`p05_evidence._sha_dir` 16 / 16, Lab 5 `bag_0.mcap` 54 / 54. No recording
+was missing.
+
+**In the browser,** every Case File:
+
+| | Result |
+|---|---|
+| Opened as a STACK recording | 100 / 100 |
+| First frame (fetch, parse, every tick loaded, first drawn) | median 72 ms, max 279 ms |
+| Seek, 10 per Case File | max 45 ms |
+| Console errors | 0 |
+| Pages | 9 / 9 |
+| Phone width (390 px, no horizontal scroll) | 4 / 4 |
+| The model side takes the recording's scenario | 4 / 4 |
+
+**A defect found by the measurement.** The Localise lens knew only the
+model's estimator names. On a Case File it never drew the stack's
+estimates, and each redraw walked back up to 4,000 ticks: **seek 574 ms**
+on the robot_localization tour, **167 ms** on `lab3_s1_tour`. With
+estimates indexed by estimator, those seeks are now **31.8 ms** and
+**32.5 ms**.
+
+## COCO Lab v2 · M3.4: mission 7, moments in the Case Files (measured 2026-10-10)
+
+**Evidence class.** The moments are read from STACK recordings by a stated
+rule (`lab_web/src/arena/moments.ts`: belief more than 1.0 m from truth;
+the first recorded give-up). Evidence: `docs/v2/data/m3/m34/`.
+
+| Case File | divergence (tick, gap) | refusal (tick) |
+|---|---|---|
+| `lab5_mislocalised_*` (9: DWB, MPPI, RPP × 3) | ticks 30–31, 3.40 m (AMCL told the wrong pose) | ticks 122–130, FollowPath failed, code 103 |
+| `lab4_b2_colours_s1_red` | **none: the bag recorded no belief** (no `/amcl_pose`, no plans) | tick 3093, ABORT (RETURN_FAILED) |
+
+The nine mislocalised Case Files were rebuilt to start 3 s before the
+recorded `/initialpose`, with their `bag_0.mcap` checksums re-checked, 9 / 9.
+The 100 Case Files now total **41,486,529 B**.
+
+**In the browser** (GPU, balanced on AC), each of mission 7's 4 Case File
+beats opened from Learn paused on exactly its tick, STACK, with the link
+back, and 0 errors. The nine rebuilt Case Files: first frame at most 49 ms,
+seek at most 34 ms.
+
+## COCO Lab v2 · M3.5: Play (measured 2026-10-11)
+
+**Evidence class.** MODEL (coco_lab's algorithms and the Arena model, in
+the browser), plus the detective's STACK recordings. Scorer:
+`coco_lab/coco_lab/play.py`. Thresholds: `docs/v2/CHALLENGES.md`, computed
+by `lab_web/tools/make_play_levels.py`. Evidence:
+`docs/v2/data/m3/m35/play_check_chromium.json`. Chromium 156 on the GPU
+(NVIDIA 580.178.04), balanced on AC.
+
+**What the reference algorithms score** (the star thresholds, a selection;
+all 16 levels are in CHALLENGES.md):
+
+| Challenge | Example threshold |
+|---|---|
+| Beat the planner | weighted A* (w = 2) reaches cost ratios 1.0477–1.1349 and greedy best-first 1.5198–1.7084, against A*'s 1 |
+| Next node | over A*'s next 10 expansions, the least-g predictor matches 1–4 and the least-h predictor 3–7 |
+| Search the bays | nearest-first and most-likely-first cost 1.0126–1.4344 × the optimal order's expected cost |
+| Map the arena (wheel odometry only) | 40 m: out and back F1 0.3408, ATE 0.3074 m; the tour F1 0.4841, ATE 0.8682 m. 25 m: the tour F1 0.5549, ATE 0.1544 m |
+
+The 25 m tour mapped better than the 40 m one: drift grows with distance.
+
+**In the browser:**
+
+| | Result |
+|---|---|
+| Levels played by clicks with the reference answer, links re-opened in a fresh context | 15 / 15 |
+| Every link reproduced exactly (same result hash) | yes, 3.9–8.4 s per link |
+| Scorer boot | 3.8–4.2 s |
+| A page score | at most 34 ms |
+| A 25 m map drive, re-simulated from its input log | 4.3 s |
+
+Every reference answer scored 3 stars, and the live map drive scored valid.
+
+**Found while choosing the map challenge, not investigated** (seed 1,
+`pose_graph`): the 40 m tour's map F1 0.316, ATE 0.108 m, against a
+20 m out-and-back's F1 0.580, ATE 0.015 m. Parked in `docs/IDEAS.md`.
+
+## COCO Lab v2 · M3.6: `coco verify`, and links across three browsers (measured 2026-10-11)
+
+**Evidence class.** MODEL, with the detective's STACK recordings. One
+scorer, `coco_lab/coco_lab/play.py`, in three places: the page's worker,
+`coco verify` (Pyodide 314.0.7 in Node 24.21.0) and native CPython.
+Evidence: `docs/v2/data/m3/m36/`.
+
+**100 generated submissions**, 20 per challenge, from fixed seed 20261011.
+93 were valid and the rest broke a rule on purpose. Stars:
+0★ 46, 1★ 26, 2★ 16, 3★ 12.
+
+| Check | Result |
+|---|---|
+| Chromium's page scored them | 100 of 100, 0 console errors |
+| `coco verify`, re-scoring every link in Node | **100 of 100 identical result hashes** |
+| Every link, re-scored in a fresh page: Chromium | 100 of 100 (156.0.8078.4, 365 s) |
+| Firefox | 100 of 100 (157.0, 430 s) |
+| WebKit | 100 of 100 (27.2, 370 s) |
+| Native CPython, the same links | 94 of 100 identical (14 of 20 map drives) |
+| Every level's reference answer, under Pyodide | 18 of 18 earn exactly their intended stars |
+
+On map drives, CPython and Pyodide agree on F1 and the scored tick, and
+differ by up to 1.3e-8 m in ATE and 1.7e-7 m in ground-truth distance.
+
+**Found while measuring, both fixed before this run:**
+- Level hashes changed through JavaScript (`2.0` becomes `2`), so 80 of 100
+  submissions were refused. Fixed in the canonical form.
+- The CPython-computed ATE thresholds were compared at 1e-9 m. They are now
+  compared within 1 µm.
+
+## COCO Lab v2 · M3.7: one app, four modes (measured 2026-10-11)
+
+**Evidence class.** MODEL: the browser's layout. Evidence:
+`docs/v2/data/m3/m37/`. Chromium 156 on the GPU, balanced on AC.
+
+| Check | Result |
+|---|---|
+| Header, badge and layout: eleven pages across Learn, Play, Sandbox and Case Files, at 1280 px and at 390 px | **22 / 22** |
+| Console check | 0 console and 0 page errors on 21 views |
+| URL forms | 22 / 22, and 6 / 6 `/v1/` views |
+| Play, re-checked on this build | 15 / 15 |
+
+Each header page was checked for: the four modes in order with the right one
+current, the right evidence badge visible inside the viewport, Live Stack
+(simulated) linked but not a mode, no horizontal scroll, and 0 console
+errors.
+
+The 390 px checks measure layout, not a phone. The phone rows are Gautham's
+(`docs/v2/PHONE_MEASURE.md`).
+
+## COCO Lab v2 · M3: Play and Case Files against their acceptance criteria (measured 2026-10-11)
+
+**Evidence class.** MODEL unless marked STACK; no physical robot exists.
+Full table, conditions and files: `docs/v2/M3_RESULTS.md`; data under
+`docs/v2/data/m3/`. Balanced profile, on AC; i5-13420H, RTX 4050,
+NVIDIA 580.178.04.
+
+| Criterion (M3 B.3) | Result |
+|---|---|
+| Evidence | **met** (the CI checks cover Case Files and mission 7; CI run 38121419092 green) |
+| Adapter | **met** (73 / 73 cited checksums; every Case File cites its sources) |
+| Reproducibility | **met**: 100 / 100 links reproduce exactly in each of Chromium 156, Firefox 157 and WebKit 27.2; `coco verify` 100 / 100 in Node and again on CI |
+| Case File loading, emulated 4G | storage met (41.5 MB in all, at most 2.78 MB each); seek max 43.3 ms, met; **first frame ≤ 2 s for 97 of 100, NOT met for 3**: the three long tours, 2,362–3,244 ms; median 772 ms |
+| Regressions | **partly re-measured: AC was lost mid-run.** The M2 fps scene, 8 × 20 s on AC: 58–61 fps every second, per-second p95 median 18.5 ms. 16 / 16 replays; 22 / 22 URL forms. M1 stress, latency, seek and cold start not yet re-measured on AC |
+| Hygiene | **met**: 0 errors on 21 views; 390 px 23 / 23; suites 3,498 / 396 / 168, none failing |
+| Phone, usability | pending Gautham |
+
+## COCO Lab v2 · M3 review: the outstanding re-measurement, and D6 (measured 2026-10-11)
+
+**Evidence class.** MODEL (the Arena, the browser); the Case Files are
+STACK recordings. Independent review of PR #22 (`docs/v2/reviews/M3_REVIEW.md`).
+Laptop i5-13420H, RTX 4050 laptop GPU, NVIDIA 580.178.04 (kernel module and
+userspace); headless Chromium 156 rendering on
+`ANGLE (NVIDIA … RTX 4050 Laptop GPU …, OpenGL ES 3.2)` (probed at the
+start and end); balanced profile, **on AC** for every number below (each
+harness records it). Evidence: `docs/v2/data/m3/review/`.
+
+**The four M2 budgets M3.9 could not re-measure** (the review clone's
+production build of `7052aa8`, served like Pages):
+
+| Budget | n | Result | M2 review (for comparison) |
+|---|---|---|---|
+| M1 stress scene, fps | 10 × 10 s | **60–61 fps in every one of 100 s** (minimum 60) | 60–61 |
+| Goal after a planner change | 25 | median **48.9 ms**, p95 63.9, max **67.7**, 25 / 25 under 100 ms | median 40.3, max 66.8 |
+| Seek on the 5-minute fetch recording | 3 recordings × 10 seeks | max **35.1 ms** to the frame that shows it | max 35.4 |
+| Cold start, emulated 4G | 10 | first visible computation median **3,140 ms** (2,984–3,253); live model ready median **7,997 ms** (7,818–8,148) | 3,201; 8,062 |
+
+The goal-latency harness first timed out: M3.7's taller page scrolled the
+canvas out of the harness's coordinates when a planner button was clicked.
+Harness fixed (`responsiveness.mjs` scrolls the canvas into view); the
+product was not at fault. In the three seek recordings (3,000 ticks each)
+the fetch outcomes were red done, green done, blue under way at the end;
+the same twice more except that one red fetch **failed** — so even after
+M3.0's reset-home the fetch sequence is not one fixed outcome.
+
+M3.9's waiter (`m39_when_ac.sh`) never re-ran: it was stopped by the review
+before AC returned, so there is no second set to compare; its earlier
+partial (8 runs of the M2 scene, 58–61 fps) is in M3_RESULTS.
+
+**D6: Case File scans after the first frame** (ADR 0005, amendment D6).
+Two lossless layouts, 12 Case Files, emulated 4G (9 Mbit/s, 1.5 up,
+170 ms), three interleaved rounds each, medians per file:
+
+| | M3 one file | Split (two files) | Ordered (one file, scans last; chosen) |
+|---|---|---|---|
+| First frame, worst | 3,240 ms | 1,907 ms | **1,805 ms** |
+| First frame, median | 1,225 ms | 915 ms | **884 ms** |
+| Scans ready, worst | — | 3,229 ms | 3,008 ms |
+| All 100, bytes | 41,486,529 | 41,351,787 | **41,230,918** |
+
+Per file, split was faster on both Lab 3 tours (about 1,040 vs 1,104 ms)
+and on Lab 5's MPPI static room (716 vs 840 ms); ordered on the worst file
+and the Lab 2 kidnaps.
+
+**All 100 Case Files, ordered build, emulated 4G:** first frame **100 /
+100 within 2 s**, worst **1,828 ms** (robot_localization tour; 3,244 ms at
+M3.9), median 745 ms, p90 905 ms; scans attached by 3,013 ms at worst (80
+have scans); seek ≤ 35.2 ms; 0 console errors. Unthrottled: worst 220 ms.
+Every Case File's content digest equals M3's (`lab_web/casefiles/lossless.json`,
+checked in CI).
+
+**Also measured in the review:** CPython and Pyodide differ by up to
+**1.55e-7 m** in ATE (and 1.0e-6 m in distance) on the map challenge's
+reference drives — Forty metres' tour, whose ATE is the three-star
+threshold — against 1.3e-8 m over the 20 submitted drives M3.6 reported;
+F1 and the scored tick identical, stars 24 / 24 equal
+(`review/map_engines.json`).

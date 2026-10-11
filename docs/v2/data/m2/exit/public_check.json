@@ -1,0 +1,131 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-10T05:39:38.690Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.21,
+    "5m": 1.57,
+    "15m": 1.12
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-10T05:40:48.053Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.32,
+    "5m": 2.22,
+    "15m": 1.39
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "https://gauthamcodes.github.io/coco-labs/",
+ "bare": {
+  "opened": "arena",
+  "ms_since_navigation": {
+   "worker_create": 2596,
+   "worker_boot": 2888,
+   "pyodide_module": 3165,
+   "attract_ready": 3533,
+   "first_frame": 3583,
+   "first_computation_shown": 3583,
+   "pyodide_ready": 9691,
+   "coco_lab_ready": 9794,
+   "world_received": 10568,
+   "arena_ready": 10549
+  },
+  "wall_ms_to_ready": 12408,
+  "goal": [
+   6,
+   4
+  ],
+  "plan": {
+   "id": 0,
+   "status": "found",
+   "expansions": 4402
+  },
+  "click_to_drawn_ms": 57.599853515625,
+  "shown_cursor": 8617,
+  "mode": "live",
+  "console_errors": [],
+  "page_errors": [],
+  "cross_origin": [],
+  "pass": true
+ },
+ "views": [
+  {
+   "view": "plan",
+   "opened": "mission:find-a-path",
+   "url": "https://gauthamcodes.github.io/coco-labs/?view=learn&mission=find-a-path",
+   "console_errors": [],
+   "page_errors": [],
+   "cross_origin": [],
+   "pass": true
+  },
+  {
+   "view": "live",
+   "opened": "live",
+   "url": "https://gauthamcodes.github.io/coco-labs/?view=live",
+   "console_errors": [],
+   "page_errors": [],
+   "cross_origin": [],
+   "pass": true
+  },
+  {
+   "view": "localise",
+   "opened": "mission:where-it-is",
+   "url": "https://gauthamcodes.github.io/coco-labs/?view=learn&mission=where-it-is",
+   "console_errors": [],
+   "page_errors": [],
+   "cross_origin": [],
+   "pass": true
+  },
+  {
+   "view": "map",
+   "opened": "mission:build-a-map",
+   "url": "https://gauthamcodes.github.io/coco-labs/?view=learn&mission=build-a-map",
+   "console_errors": [],
+   "page_errors": [],
+   "cross_origin": [],
+   "pass": true
+  },
+  {
+   "view": "search",
+   "opened": "mission:where-to-look",
+   "url": "https://gauthamcodes.github.io/coco-labs/?view=learn&mission=where-to-look",
+   "console_errors": [],
+   "page_errors": [],
+   "cross_origin": [],
+   "pass": true
+  },
+  {
+   "view": "move",
+   "opened": "mission:avoid-things",
+   "url": "https://gauthamcodes.github.io/coco-labs/?view=learn&mission=avoid-things",
+   "console_errors": [],
+   "page_errors": [],
+   "cross_origin": [],
+   "pass": true
+  }
+ ],
+ "pass": true,
+ "browser": "chromium (Playwright, headless)"
+}

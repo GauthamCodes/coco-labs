@@ -1,0 +1,53 @@
+{
+ "what": "The frozen COCO Lab v1 site, served at /v1/ (docs/v2/adr/0003-v1-archive.md)",
+ "source_commit": "9f58b8338f3364291bc1f85414c798c0c3527c7a",
+ "built_by": "lab_web/tools/build_v1_archive.sh (the commit's own build_catalog.py, npm ci, LAB_BASE=/coco-labs/v1/ vite build, check_dist), then lab_web/tools/v1_site.py assemble",
+ "base": "/coco-labs/v1/",
+ "pyodide": {
+  "version": "314.0.7",
+  "self_hosted_at": "/coco-labs/v1/pyodide/",
+  "was": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/",
+  "files": {
+   "pyodide.mjs": {
+    "from": "npm pyodide@314.0.7",
+    "sha256": "6f1d60f7bf529beb300f0f47983c921d3982363640ba20af0e38efdddbc66109"
+   },
+   "pyodide.asm.mjs": {
+    "from": "npm pyodide@314.0.7",
+    "sha256": "f7cdc8ece80678ceb712f8e65ebe6d3a83203a180c399865f49612a051693635"
+   },
+   "pyodide.asm.wasm": {
+    "from": "npm pyodide@314.0.7",
+    "sha256": "cc36e3cab04fdfc9a63ff13eb52eae2b911bf46c025cc7b281f394bd3de1d5e6"
+   },
+   "pyodide-lock.json": {
+    "from": "npm pyodide@314.0.7",
+    "sha256": "5dc2fc119108bc148c7457dc86e7675b5c87e1cafd420b9c34c1eaef7b36c010"
+   },
+   "python_stdlib.zip": {
+    "from": "npm pyodide@314.0.7",
+    "sha256": "fa1957e5777068fc4f7437f96d860ae2fbe9c19732ba06c84e004ec16dd7dd7a"
+   },
+   "micropip-0.11.1-py3-none-any.whl": {
+    "from": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/micropip-0.11.1-py3-none-any.whl (checked against pyodide-lock.json)",
+    "sha256": "e2d52886594fd4cd0d0847110a1c34ae0134d3a970eb4496d3b5eb31ee2d8af6"
+   }
+  }
+ },
+ "rewrites": [
+  {
+   "file": "assets/index-MdCdOr10.js",
+   "occurrences": 1,
+   "what": "Pyodide indexURL -> /coco-labs/v1/pyodide/"
+  },
+  {
+   "file": "index.html",
+   "occurrences": 2,
+   "what": "CSP: the CDN source removed (same-origin is 'self')"
+  }
+ ],
+ "files": 84,
+ "bytes": 36670880,
+ "tree_sha256": "6857ff56a2646c0772a2b7780e50f2e1eb910ae289ae3a222fdab6ee9b2bde2b",
+ "tree_sha256_definition": "sha256 over the sorted \"<sha256>  <path>\" lines of SHA256SUMS, each ending in a newline"
+}

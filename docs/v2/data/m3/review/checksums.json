@@ -1,0 +1,663 @@
+{
+ "checked": 73,
+ "matching": 73,
+ "rows": [
+  {
+   "id": "lab1_run_astar",
+   "definition": "export_dir_sha256",
+   "recomputed": "13bc214dc78c2f3c761ca84d64a85c7fe4f5243d56b6546ad495536995a96c4f",
+   "index": "13bc214dc78c2f3c761ca84d64a85c7fe4f5243d56b6546ad495536995a96c4f",
+   "cited": "13bc214dc78c2f3c761ca84d64a85c7fe4f5243d56b6546ad495536995a96c4f",
+   "cited_in": "docs/data/lab1c/runs.json",
+   "match": true
+  },
+  {
+   "id": "lab1_run_dijkstra",
+   "definition": "export_dir_sha256",
+   "recomputed": "498253a12e277ebfe16934fc11e74dbe305a8abf1ff4bcd35664a506b6c771dc",
+   "index": "498253a12e277ebfe16934fc11e74dbe305a8abf1ff4bcd35664a506b6c771dc",
+   "cited": "498253a12e277ebfe16934fc11e74dbe305a8abf1ff4bcd35664a506b6c771dc",
+   "cited_in": "docs/data/lab1c/runs.json",
+   "match": true
+  },
+  {
+   "id": "lab1_run_greedy",
+   "definition": "export_dir_sha256",
+   "recomputed": "82b76311ee0d3ff9391f3f62cbc34bc5f7ea95e532bd814794d101870f847b7b",
+   "index": "82b76311ee0d3ff9391f3f62cbc34bc5f7ea95e532bd814794d101870f847b7b",
+   "cited": "82b76311ee0d3ff9391f3f62cbc34bc5f7ea95e532bd814794d101870f847b7b",
+   "cited_in": "docs/data/lab1c/runs.json",
+   "match": true
+  },
+  {
+   "id": "lab4_a1_fixed_red",
+   "definition": "p05_sha_dir",
+   "recomputed": "a29455628f1e1e7edacfccc33141a0b07bd8e7f470b14dfbb53bb60b5e68bd46",
+   "index": "a29455628f1e1e7edacfccc33141a0b07bd8e7f470b14dfbb53bb60b5e68bd46",
+   "cited": "a29455628f1e1e7edacfccc33141a0b07bd8e7f470b14dfbb53bb60b5e68bd46",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_a2_fixed_green",
+   "definition": "p05_sha_dir",
+   "recomputed": "5a7472192c618d3a4b22e8680219c9bb3b784d063c1792029364dae3dd9d47ac",
+   "index": "5a7472192c618d3a4b22e8680219c9bb3b784d063c1792029364dae3dd9d47ac",
+   "cited": "5a7472192c618d3a4b22e8680219c9bb3b784d063c1792029364dae3dd9d47ac",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_a3_fixed_blue",
+   "definition": "p05_sha_dir",
+   "recomputed": "9eff932901f4c776ace87fd0fae18d61dd0671cd00ac62efeaf9b40ed4ac70a5",
+   "index": "9eff932901f4c776ace87fd0fae18d61dd0671cd00ac62efeaf9b40ed4ac70a5",
+   "cited": "9eff932901f4c776ace87fd0fae18d61dd0671cd00ac62efeaf9b40ed4ac70a5",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_a4_fixed_yellow",
+   "definition": "p05_sha_dir",
+   "recomputed": "911b235ab8dfc8c5af6c21a1141e90af859c5597589c4293b2ec651311e4bc3c",
+   "index": "911b235ab8dfc8c5af6c21a1141e90af859c5597589c4293b2ec651311e4bc3c",
+   "cited": "911b235ab8dfc8c5af6c21a1141e90af859c5597589c4293b2ec651311e4bc3c",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_b1_colours_s5_red",
+   "definition": "p05_sha_dir",
+   "recomputed": "f5df323c72d2be5a9ed97b39113af05cb19d74fbeabaef88a3aefd1a0d256a9a",
+   "index": "f5df323c72d2be5a9ed97b39113af05cb19d74fbeabaef88a3aefd1a0d256a9a",
+   "cited": "f5df323c72d2be5a9ed97b39113af05cb19d74fbeabaef88a3aefd1a0d256a9a",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_b2_colours_s1_red",
+   "definition": "p05_sha_dir",
+   "recomputed": "74b9434077210256ac0638770cc704fcacbdc4033d33641d5b11cfc497cac78c",
+   "index": "74b9434077210256ac0638770cc704fcacbdc4033d33641d5b11cfc497cac78c",
+   "cited": "74b9434077210256ac0638770cc704fcacbdc4033d33641d5b11cfc497cac78c",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_b3_colours_s7_red",
+   "definition": "p05_sha_dir",
+   "recomputed": "d1ef02ac083c84f77be483112d2a59ee4995d4a0b3a31c288541802d80ef7c9c",
+   "index": "d1ef02ac083c84f77be483112d2a59ee4995d4a0b3a31c288541802d80ef7c9c",
+   "cited": "d1ef02ac083c84f77be483112d2a59ee4995d4a0b3a31c288541802d80ef7c9c",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_b4_colours_s2_red",
+   "definition": "p05_sha_dir",
+   "recomputed": "9d15027fcb846d6cb78be3ac49e508e645f5a76469b1679957ec13526bb3b03d",
+   "index": "9d15027fcb846d6cb78be3ac49e508e645f5a76469b1679957ec13526bb3b03d",
+   "cited": "9d15027fcb846d6cb78be3ac49e508e645f5a76469b1679957ec13526bb3b03d",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_c1_green_stop_after_bay3",
+   "definition": "p05_sha_dir",
+   "recomputed": "a2e6ca7b87531458f58a356e5eccc251d74d623041671c80dfc4d5d799ee9dc1",
+   "index": "a2e6ca7b87531458f58a356e5eccc251d74d623041671c80dfc4d5d799ee9dc1",
+   "cited": "a2e6ca7b87531458f58a356e5eccc251d74d623041671c80dfc4d5d799ee9dc1",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_c2_green_nearest",
+   "definition": "p05_sha_dir",
+   "recomputed": "24ab97280e6254917724115330f7acabeb2be41bfc6a27672017cafa7e002898",
+   "index": "24ab97280e6254917724115330f7acabeb2be41bfc6a27672017cafa7e002898",
+   "cited": "24ab97280e6254917724115330f7acabeb2be41bfc6a27672017cafa7e002898",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_c3_green_most_likely",
+   "definition": "p05_sha_dir",
+   "recomputed": "9626ebe5764579e9c38366f38c3cd78cbafe3db929e997bef5fc7da0c5d0cab3",
+   "index": "9626ebe5764579e9c38366f38c3cd78cbafe3db929e997bef5fc7da0c5d0cab3",
+   "cited": "9626ebe5764579e9c38366f38c3cd78cbafe3db929e997bef5fc7da0c5d0cab3",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_c4_green_reverse",
+   "definition": "p05_sha_dir",
+   "recomputed": "30f638cf702c23d96a6e9c8e87a7122fed9aeffc3a3ba7f063f0cb226cc7ba8d",
+   "index": "30f638cf702c23d96a6e9c8e87a7122fed9aeffc3a3ba7f063f0cb226cc7ba8d",
+   "cited": "30f638cf702c23d96a6e9c8e87a7122fed9aeffc3a3ba7f063f0cb226cc7ba8d",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_d1_positions_s1_red",
+   "definition": "p05_sha_dir",
+   "recomputed": "db49a8803dd4e5f3b1ee81389721775ed0390246f05b810c711b6f0f6d7dab4d",
+   "index": "db49a8803dd4e5f3b1ee81389721775ed0390246f05b810c711b6f0f6d7dab4d",
+   "cited": "db49a8803dd4e5f3b1ee81389721775ed0390246f05b810c711b6f0f6d7dab4d",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_d2_positions_s2_red",
+   "definition": "p05_sha_dir",
+   "recomputed": "1e2fa980a8c5693635369cb1601444ae62962bbff70154540e6cc2188a41a35f",
+   "index": "1e2fa980a8c5693635369cb1601444ae62962bbff70154540e6cc2188a41a35f",
+   "cited": "1e2fa980a8c5693635369cb1601444ae62962bbff70154540e6cc2188a41a35f",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_d3_positions_s3_red",
+   "definition": "p05_sha_dir",
+   "recomputed": "b65ee13ebd7acf41280a6854372285e15f76e628376840388f9606624e9fadd8",
+   "index": "b65ee13ebd7acf41280a6854372285e15f76e628376840388f9606624e9fadd8",
+   "cited": "b65ee13ebd7acf41280a6854372285e15f76e628376840388f9606624e9fadd8",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab4_d4_positions_s4_red",
+   "definition": "p05_sha_dir",
+   "recomputed": "27ebdfab765937d56996d24f3882a2d41f7c5311c2d3dac5455fccb1685dc959",
+   "index": "27ebdfab765937d56996d24f3882a2d41f7c5311c2d3dac5455fccb1685dc959",
+   "cited": "27ebdfab765937d56996d24f3882a2d41f7c5311c2d3dac5455fccb1685dc959",
+   "cited_in": "docs/data/lab4/replay/p05_matrix/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_dwb_1",
+   "definition": "lab5_bag_0",
+   "recomputed": "673d7f057b9858c26af41c10b9221c90c7df9f14d1c81334227585b36211d150",
+   "index": "673d7f057b9858c26af41c10b9221c90c7df9f14d1c81334227585b36211d150",
+   "cited": "673d7f057b9858c26af41c10b9221c90c7df9f14d1c81334227585b36211d150",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_dwb_2",
+   "definition": "lab5_bag_0",
+   "recomputed": "1cba7e3ed765155516651dcbe974489ed570aa221a3f7cd17f83ba156c065385",
+   "index": "1cba7e3ed765155516651dcbe974489ed570aa221a3f7cd17f83ba156c065385",
+   "cited": "1cba7e3ed765155516651dcbe974489ed570aa221a3f7cd17f83ba156c065385",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_dwb_3",
+   "definition": "lab5_bag_0",
+   "recomputed": "ba3c11484c5f0be556ec6fe4fd72a1db8a4d8d2eb8f20f10dca0d895df353c57",
+   "index": "ba3c11484c5f0be556ec6fe4fd72a1db8a4d8d2eb8f20f10dca0d895df353c57",
+   "cited": "ba3c11484c5f0be556ec6fe4fd72a1db8a4d8d2eb8f20f10dca0d895df353c57",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_dwb_4",
+   "definition": "lab5_bag_0",
+   "recomputed": "6a48eec22898af7845247340d95b07bd62a7f34b551d89f4ff1175902782a43d",
+   "index": "6a48eec22898af7845247340d95b07bd62a7f34b551d89f4ff1175902782a43d",
+   "cited": "6a48eec22898af7845247340d95b07bd62a7f34b551d89f4ff1175902782a43d",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_dwb_5",
+   "definition": "lab5_bag_0",
+   "recomputed": "d25fda241a0d6d29a9a85571d6be68aef3e840effd8cdb3777724042465c0212",
+   "index": "d25fda241a0d6d29a9a85571d6be68aef3e840effd8cdb3777724042465c0212",
+   "cited": "d25fda241a0d6d29a9a85571d6be68aef3e840effd8cdb3777724042465c0212",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_mppi_1",
+   "definition": "lab5_bag_0",
+   "recomputed": "9dabaa99254c9856b61d5168b2e358280c37a5768628cf18533eac665a2472ef",
+   "index": "9dabaa99254c9856b61d5168b2e358280c37a5768628cf18533eac665a2472ef",
+   "cited": "9dabaa99254c9856b61d5168b2e358280c37a5768628cf18533eac665a2472ef",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_mppi_2",
+   "definition": "lab5_bag_0",
+   "recomputed": "3e09ad28e2944e0ecd20cc101746e6f67a1ba908ed0c6c4ed08428652292b7dd",
+   "index": "3e09ad28e2944e0ecd20cc101746e6f67a1ba908ed0c6c4ed08428652292b7dd",
+   "cited": "3e09ad28e2944e0ecd20cc101746e6f67a1ba908ed0c6c4ed08428652292b7dd",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_mppi_3",
+   "definition": "lab5_bag_0",
+   "recomputed": "a7d355c92792455936360fc58529f05feb1d29b333401d884aa14b0beec7fcc0",
+   "index": "a7d355c92792455936360fc58529f05feb1d29b333401d884aa14b0beec7fcc0",
+   "cited": "a7d355c92792455936360fc58529f05feb1d29b333401d884aa14b0beec7fcc0",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_mppi_4",
+   "definition": "lab5_bag_0",
+   "recomputed": "993441fcf2894373b2762a58dc8e4dfacf2fcee679890cd927c3717978b5d11b",
+   "index": "993441fcf2894373b2762a58dc8e4dfacf2fcee679890cd927c3717978b5d11b",
+   "cited": "993441fcf2894373b2762a58dc8e4dfacf2fcee679890cd927c3717978b5d11b",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_mppi_5",
+   "definition": "lab5_bag_0",
+   "recomputed": "3af9010b79eef28de9d36bc1a27a88687c2e7276a3c14d97c5402d9643f52308",
+   "index": "3af9010b79eef28de9d36bc1a27a88687c2e7276a3c14d97c5402d9643f52308",
+   "cited": "3af9010b79eef28de9d36bc1a27a88687c2e7276a3c14d97c5402d9643f52308",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_rpp_1",
+   "definition": "lab5_bag_0",
+   "recomputed": "1d2baad40baddf9a5abf9ddcb47348bfe145085882b630928dc66e9021ef2e2a",
+   "index": "1d2baad40baddf9a5abf9ddcb47348bfe145085882b630928dc66e9021ef2e2a",
+   "cited": "1d2baad40baddf9a5abf9ddcb47348bfe145085882b630928dc66e9021ef2e2a",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_rpp_2",
+   "definition": "lab5_bag_0",
+   "recomputed": "4d2109fd84e0954ce8789a64eb7e38f4b65ffd0952c298156f951a870e25f07f",
+   "index": "4d2109fd84e0954ce8789a64eb7e38f4b65ffd0952c298156f951a870e25f07f",
+   "cited": "4d2109fd84e0954ce8789a64eb7e38f4b65ffd0952c298156f951a870e25f07f",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_rpp_3",
+   "definition": "lab5_bag_0",
+   "recomputed": "e747a856542c786c4f5aa6b2da15331231633f85d64d066e942a8b8519850f95",
+   "index": "e747a856542c786c4f5aa6b2da15331231633f85d64d066e942a8b8519850f95",
+   "cited": "e747a856542c786c4f5aa6b2da15331231633f85d64d066e942a8b8519850f95",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_rpp_4",
+   "definition": "lab5_bag_0",
+   "recomputed": "ac2bc2be65437361938026ba13840020c0b7c9637287e633c717cdf4e0cbcd5f",
+   "index": "ac2bc2be65437361938026ba13840020c0b7c9637287e633c717cdf4e0cbcd5f",
+   "cited": "ac2bc2be65437361938026ba13840020c0b7c9637287e633c717cdf4e0cbcd5f",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_crossing_rpp_5",
+   "definition": "lab5_bag_0",
+   "recomputed": "2aa7d88e42225e4692fcddd69b5ff8de410c27b979c588c6c2da7a1875870a0f",
+   "index": "2aa7d88e42225e4692fcddd69b5ff8de410c27b979c588c6c2da7a1875870a0f",
+   "cited": "2aa7d88e42225e4692fcddd69b5ff8de410c27b979c588c6c2da7a1875870a0f",
+   "cited_in": "docs/data/lab5/drive/crossing/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_mislocalised_dwb_1",
+   "definition": "lab5_bag_0",
+   "recomputed": "967b44bdc5363857bd4cbd3dbe01e117a5a365c4ba8ea26b0107985bdfd4b220",
+   "index": "967b44bdc5363857bd4cbd3dbe01e117a5a365c4ba8ea26b0107985bdfd4b220",
+   "cited": "967b44bdc5363857bd4cbd3dbe01e117a5a365c4ba8ea26b0107985bdfd4b220",
+   "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_mislocalised_dwb_2",
+   "definition": "lab5_bag_0",
+   "recomputed": "5a50ca1d99d99406f88779e487de12e9324fe4c2c77ada4521d252529d5b8138",
+   "index": "5a50ca1d99d99406f88779e487de12e9324fe4c2c77ada4521d252529d5b8138",
+   "cited": "5a50ca1d99d99406f88779e487de12e9324fe4c2c77ada4521d252529d5b8138",
+   "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_mislocalised_dwb_3",
+   "definition": "lab5_bag_0",
+   "recomputed": "15556327626e526d2916bee8f0f4c502a697424b7eac7b1e72301352fe3325f7",
+   "index": "15556327626e526d2916bee8f0f4c502a697424b7eac7b1e72301352fe3325f7",
+   "cited": "15556327626e526d2916bee8f0f4c502a697424b7eac7b1e72301352fe3325f7",
+   "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_mislocalised_mppi_1",
+   "definition": "lab5_bag_0",
+   "recomputed": "bac3267b2a972eb4e366aef7dc659f7d7c9dec73dc6d69f8f47872cbea266de0",
+   "index": "bac3267b2a972eb4e366aef7dc659f7d7c9dec73dc6d69f8f47872cbea266de0",
+   "cited": "bac3267b2a972eb4e366aef7dc659f7d7c9dec73dc6d69f8f47872cbea266de0",
+   "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_mislocalised_mppi_2",
+   "definition": "lab5_bag_0",
+   "recomputed": "4540bb2540b6cef8a7ecf2ef5c1b358900a15800f3669fb14211577e1175d285",
+   "index": "4540bb2540b6cef8a7ecf2ef5c1b358900a15800f3669fb14211577e1175d285",
+   "cited": "4540bb2540b6cef8a7ecf2ef5c1b358900a15800f3669fb14211577e1175d285",
+   "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_mislocalised_mppi_3",
+   "definition": "lab5_bag_0",
+   "recomputed": "20bc6c1ad7ecccfc77853e5b4e6ffb357ea811aeef4ba522f7d7823d7cd10d10",
+   "index": "20bc6c1ad7ecccfc77853e5b4e6ffb357ea811aeef4ba522f7d7823d7cd10d10",
+   "cited": "20bc6c1ad7ecccfc77853e5b4e6ffb357ea811aeef4ba522f7d7823d7cd10d10",
+   "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_mislocalised_rpp_1",
+   "definition": "lab5_bag_0",
+   "recomputed": "c9d08961d50c099950f0cf049e3896cb282d188804d6d99474932d67e1c4e842",
+   "index": "c9d08961d50c099950f0cf049e3896cb282d188804d6d99474932d67e1c4e842",
+   "cited": "c9d08961d50c099950f0cf049e3896cb282d188804d6d99474932d67e1c4e842",
+   "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_mislocalised_rpp_2",
+   "definition": "lab5_bag_0",
+   "recomputed": "3f6cac5aaa64793a854cdb1503de988ac653f6b81fe7df6f2286470b0c509928",
+   "index": "3f6cac5aaa64793a854cdb1503de988ac653f6b81fe7df6f2286470b0c509928",
+   "cited": "3f6cac5aaa64793a854cdb1503de988ac653f6b81fe7df6f2286470b0c509928",
+   "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_mislocalised_rpp_3",
+   "definition": "lab5_bag_0",
+   "recomputed": "bcb4626bb827f3cb9049ac54b7481ec3a7294305107287c029ea256c8fba03c0",
+   "index": "bcb4626bb827f3cb9049ac54b7481ec3a7294305107287c029ea256c8fba03c0",
+   "cited": "bcb4626bb827f3cb9049ac54b7481ec3a7294305107287c029ea256c8fba03c0",
+   "cited_in": "docs/data/lab5/drive/mislocalised/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_dwb_1",
+   "definition": "lab5_bag_0",
+   "recomputed": "12b3ab29e2940107f7b9817482391aef8057fbdbdb5bbc70658c3afe107d3abb",
+   "index": "12b3ab29e2940107f7b9817482391aef8057fbdbdb5bbc70658c3afe107d3abb",
+   "cited": "12b3ab29e2940107f7b9817482391aef8057fbdbdb5bbc70658c3afe107d3abb",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_dwb_2",
+   "definition": "lab5_bag_0",
+   "recomputed": "a9bab2273b56d7f98132d45a4e77dcd71e2a89a7c77cd83e7aab99a154e0b120",
+   "index": "a9bab2273b56d7f98132d45a4e77dcd71e2a89a7c77cd83e7aab99a154e0b120",
+   "cited": "a9bab2273b56d7f98132d45a4e77dcd71e2a89a7c77cd83e7aab99a154e0b120",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_dwb_3",
+   "definition": "lab5_bag_0",
+   "recomputed": "37cdf0663cb1b591dc7760209c83e85e50bb785701b77a47713e380f0ac6b126",
+   "index": "37cdf0663cb1b591dc7760209c83e85e50bb785701b77a47713e380f0ac6b126",
+   "cited": "37cdf0663cb1b591dc7760209c83e85e50bb785701b77a47713e380f0ac6b126",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_dwb_4",
+   "definition": "lab5_bag_0",
+   "recomputed": "f7010786b626ede0611b44e435ec28892771f5693ed788c171d1c114ba264087",
+   "index": "f7010786b626ede0611b44e435ec28892771f5693ed788c171d1c114ba264087",
+   "cited": "f7010786b626ede0611b44e435ec28892771f5693ed788c171d1c114ba264087",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_dwb_5",
+   "definition": "lab5_bag_0",
+   "recomputed": "1196bd2523f268a33e19524d3eaab02f977b3c30146688db82466bcd0183c522",
+   "index": "1196bd2523f268a33e19524d3eaab02f977b3c30146688db82466bcd0183c522",
+   "cited": "1196bd2523f268a33e19524d3eaab02f977b3c30146688db82466bcd0183c522",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_mppi_1",
+   "definition": "lab5_bag_0",
+   "recomputed": "e7837f58cd442a0eb65af17f115e7f463ee4bd4d1c550847bcf8c636222652d5",
+   "index": "e7837f58cd442a0eb65af17f115e7f463ee4bd4d1c550847bcf8c636222652d5",
+   "cited": "e7837f58cd442a0eb65af17f115e7f463ee4bd4d1c550847bcf8c636222652d5",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_mppi_2",
+   "definition": "lab5_bag_0",
+   "recomputed": "a438ea915171010e9ebe135580af8a086348a688c728e1d4c89d1c540191b7cb",
+   "index": "a438ea915171010e9ebe135580af8a086348a688c728e1d4c89d1c540191b7cb",
+   "cited": "a438ea915171010e9ebe135580af8a086348a688c728e1d4c89d1c540191b7cb",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_mppi_3",
+   "definition": "lab5_bag_0",
+   "recomputed": "d9be5fae6a902f82b61b3ed7efbe24dea287c6ecc3998db47cd5fefbd00286e7",
+   "index": "d9be5fae6a902f82b61b3ed7efbe24dea287c6ecc3998db47cd5fefbd00286e7",
+   "cited": "d9be5fae6a902f82b61b3ed7efbe24dea287c6ecc3998db47cd5fefbd00286e7",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_mppi_4",
+   "definition": "lab5_bag_0",
+   "recomputed": "d7bce516d0e1772701e85dca8d8416c1c5b8e7b2a78786a7068cbfabd515fadc",
+   "index": "d7bce516d0e1772701e85dca8d8416c1c5b8e7b2a78786a7068cbfabd515fadc",
+   "cited": "d7bce516d0e1772701e85dca8d8416c1c5b8e7b2a78786a7068cbfabd515fadc",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_mppi_5",
+   "definition": "lab5_bag_0",
+   "recomputed": "ccf77fb1aecf17f02ba1d07b7b0656205c7b6ab2b48209041303b69f2ee9a907",
+   "index": "ccf77fb1aecf17f02ba1d07b7b0656205c7b6ab2b48209041303b69f2ee9a907",
+   "cited": "ccf77fb1aecf17f02ba1d07b7b0656205c7b6ab2b48209041303b69f2ee9a907",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_rpp_1",
+   "definition": "lab5_bag_0",
+   "recomputed": "dd47b6ded90820cb53c931b7364b5f057a3dd10230ff72d5e9fa31383b88b1c5",
+   "index": "dd47b6ded90820cb53c931b7364b5f057a3dd10230ff72d5e9fa31383b88b1c5",
+   "cited": "dd47b6ded90820cb53c931b7364b5f057a3dd10230ff72d5e9fa31383b88b1c5",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_rpp_2",
+   "definition": "lab5_bag_0",
+   "recomputed": "ced60d2b18365d9413753dbd51da16847722c3b350689170cc3762004d5f9f8b",
+   "index": "ced60d2b18365d9413753dbd51da16847722c3b350689170cc3762004d5f9f8b",
+   "cited": "ced60d2b18365d9413753dbd51da16847722c3b350689170cc3762004d5f9f8b",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_rpp_3",
+   "definition": "lab5_bag_0",
+   "recomputed": "14d54a6b4b0719b12d8ce447ea9abefbea84a12f2a9a64946cef9b156e2b3898",
+   "index": "14d54a6b4b0719b12d8ce447ea9abefbea84a12f2a9a64946cef9b156e2b3898",
+   "cited": "14d54a6b4b0719b12d8ce447ea9abefbea84a12f2a9a64946cef9b156e2b3898",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_rpp_4",
+   "definition": "lab5_bag_0",
+   "recomputed": "3410e6c285935e25eef9d24d932ba8efd5d391518572a2eb922475edfbe51980",
+   "index": "3410e6c285935e25eef9d24d932ba8efd5d391518572a2eb922475edfbe51980",
+   "cited": "3410e6c285935e25eef9d24d932ba8efd5d391518572a2eb922475edfbe51980",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_oncoming_rpp_5",
+   "definition": "lab5_bag_0",
+   "recomputed": "0deb465037c327a74ae0e1c876140a7c1a5dae6543bc98b03efb4f1eac66b349",
+   "index": "0deb465037c327a74ae0e1c876140a7c1a5dae6543bc98b03efb4f1eac66b349",
+   "cited": "0deb465037c327a74ae0e1c876140a7c1a5dae6543bc98b03efb4f1eac66b349",
+   "cited_in": "docs/data/lab5/drive/oncoming/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_dwb_1",
+   "definition": "lab5_bag_0",
+   "recomputed": "3d037b0602d74c937c95321fb8e55ba410ab065e8dc18495bfbcb58b696e1827",
+   "index": "3d037b0602d74c937c95321fb8e55ba410ab065e8dc18495bfbcb58b696e1827",
+   "cited": "3d037b0602d74c937c95321fb8e55ba410ab065e8dc18495bfbcb58b696e1827",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_dwb_2",
+   "definition": "lab5_bag_0",
+   "recomputed": "ccbafa3fb91d2239104cffe5790d403ea1bbef864c5db230f2403d30098e2f2b",
+   "index": "ccbafa3fb91d2239104cffe5790d403ea1bbef864c5db230f2403d30098e2f2b",
+   "cited": "ccbafa3fb91d2239104cffe5790d403ea1bbef864c5db230f2403d30098e2f2b",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_dwb_3",
+   "definition": "lab5_bag_0",
+   "recomputed": "91c9bb9fe69e7f3c45a667379bb74c38d0251ede006d57922f585de494c292a4",
+   "index": "91c9bb9fe69e7f3c45a667379bb74c38d0251ede006d57922f585de494c292a4",
+   "cited": "91c9bb9fe69e7f3c45a667379bb74c38d0251ede006d57922f585de494c292a4",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_dwb_4",
+   "definition": "lab5_bag_0",
+   "recomputed": "a51d2d435f1c98eb88a01beba3afffedff05c0b56dec947a4d654b2cd5cfa4d4",
+   "index": "a51d2d435f1c98eb88a01beba3afffedff05c0b56dec947a4d654b2cd5cfa4d4",
+   "cited": "a51d2d435f1c98eb88a01beba3afffedff05c0b56dec947a4d654b2cd5cfa4d4",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_dwb_5",
+   "definition": "lab5_bag_0",
+   "recomputed": "0c0360cc311f1a005d8c9bc781ee35263a39340f805bde0324fa2496789bc6d4",
+   "index": "0c0360cc311f1a005d8c9bc781ee35263a39340f805bde0324fa2496789bc6d4",
+   "cited": "0c0360cc311f1a005d8c9bc781ee35263a39340f805bde0324fa2496789bc6d4",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_mppi_1",
+   "definition": "lab5_bag_0",
+   "recomputed": "ca255118ba7c8e672c5f3ec934c4ddf6dee0eafdb78ab4afb83edecef024d522",
+   "index": "ca255118ba7c8e672c5f3ec934c4ddf6dee0eafdb78ab4afb83edecef024d522",
+   "cited": "ca255118ba7c8e672c5f3ec934c4ddf6dee0eafdb78ab4afb83edecef024d522",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_mppi_2",
+   "definition": "lab5_bag_0",
+   "recomputed": "43c542a808a2365bff9f2e84de4b3592d16bb8d8ba07c00ad880d76d01bc724a",
+   "index": "43c542a808a2365bff9f2e84de4b3592d16bb8d8ba07c00ad880d76d01bc724a",
+   "cited": "43c542a808a2365bff9f2e84de4b3592d16bb8d8ba07c00ad880d76d01bc724a",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_mppi_3",
+   "definition": "lab5_bag_0",
+   "recomputed": "b83d316fb2a37ad4e25e01e4d65a634499edbfaed604a5811c78fb2dfd12d799",
+   "index": "b83d316fb2a37ad4e25e01e4d65a634499edbfaed604a5811c78fb2dfd12d799",
+   "cited": "b83d316fb2a37ad4e25e01e4d65a634499edbfaed604a5811c78fb2dfd12d799",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_mppi_4",
+   "definition": "lab5_bag_0",
+   "recomputed": "ef51c7ed2420353480397e7b8ff9dcae0ccb9c0784857ca1d46b36e7624a049b",
+   "index": "ef51c7ed2420353480397e7b8ff9dcae0ccb9c0784857ca1d46b36e7624a049b",
+   "cited": "ef51c7ed2420353480397e7b8ff9dcae0ccb9c0784857ca1d46b36e7624a049b",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_mppi_5",
+   "definition": "lab5_bag_0",
+   "recomputed": "171e6f0fbb9aaf5090b6e518915fcb7d1fbb5f749459090d518f55e3fb88272d",
+   "index": "171e6f0fbb9aaf5090b6e518915fcb7d1fbb5f749459090d518f55e3fb88272d",
+   "cited": "171e6f0fbb9aaf5090b6e518915fcb7d1fbb5f749459090d518f55e3fb88272d",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_rpp_1",
+   "definition": "lab5_bag_0",
+   "recomputed": "8d4f750593c8a80a2f470a1d2098c33a1fa07e857ff2595387d985639d37d0ef",
+   "index": "8d4f750593c8a80a2f470a1d2098c33a1fa07e857ff2595387d985639d37d0ef",
+   "cited": "8d4f750593c8a80a2f470a1d2098c33a1fa07e857ff2595387d985639d37d0ef",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_rpp_2",
+   "definition": "lab5_bag_0",
+   "recomputed": "2f8024fbb56cf060edd264a8dee222119ca5be070800aed880c6123a264eb12e",
+   "index": "2f8024fbb56cf060edd264a8dee222119ca5be070800aed880c6123a264eb12e",
+   "cited": "2f8024fbb56cf060edd264a8dee222119ca5be070800aed880c6123a264eb12e",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_rpp_3",
+   "definition": "lab5_bag_0",
+   "recomputed": "7dbf0f3429d1fd00c96e2e4877a5b31fb4d4730df3a2a0a8ef296d854b70c08a",
+   "index": "7dbf0f3429d1fd00c96e2e4877a5b31fb4d4730df3a2a0a8ef296d854b70c08a",
+   "cited": "7dbf0f3429d1fd00c96e2e4877a5b31fb4d4730df3a2a0a8ef296d854b70c08a",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_rpp_4",
+   "definition": "lab5_bag_0",
+   "recomputed": "f9da0467781f750d44d1b597193a92a7c1fbf7be8fb3894e2f8485912afaa3f7",
+   "index": "f9da0467781f750d44d1b597193a92a7c1fbf7be8fb3894e2f8485912afaa3f7",
+   "cited": "f9da0467781f750d44d1b597193a92a7c1fbf7be8fb3894e2f8485912afaa3f7",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  },
+  {
+   "id": "lab5_static_room_rpp_5",
+   "definition": "lab5_bag_0",
+   "recomputed": "5ae031d46eb80e5b424555f0e24919b306ddad982f54e50230a97e3cbff892cc",
+   "index": "5ae031d46eb80e5b424555f0e24919b306ddad982f54e50230a97e3cbff892cc",
+   "cited": "5ae031d46eb80e5b424555f0e24919b306ddad982f54e50230a97e3cbff892cc",
+   "cited_in": "docs/data/lab5/drive/static_room/manifest.json",
+   "match": true
+  }
+ ]
+}

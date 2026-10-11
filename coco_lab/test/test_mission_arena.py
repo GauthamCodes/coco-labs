@@ -208,6 +208,105 @@ def test_a_mislocalised_robot_searches_the_wrong_bay_and_believes_it():
     assert m.state == 'failed' and 'moved less than' in m.result
 
 
+def spy_reset_home(a):
+    calls = []
+    original = a.reset_home
+
+    def spy():
+        original()
+        calls.append((a.pose, a.odom, a.mode, a.goal))
+    a.reset_home = spy
+    return calls
+
+
+def test_a_fetch_after_another_starts_from_home():
+    # M3.0 "reset home": the mislocalised fetch fails away from home (M2.6's
+    # stall); the next fetch must not inherit that pose -- it starts home
+    a, m, seen = fetch('red', 'move.belief_offset=0.0,-4.0,0.0', ticks=1500)
+    assert m.state == 'failed'
+    stuck = a.pose[:2]
+    assert math.hypot(stuck[0] - a.start[0], stuck[1] - a.start[1]) > 1.0
+    calls = spy_reset_home(a)
+    a.step([CFG(a.tick, 'mission.start=green')])
+    assert calls == [(a.start, (0.0, 0.0, 0.0), 'idle', None)]
+    assert m.colour == 'green' and m.state not in ('idle', 'done', 'failed')
+    # the move scenario's belief offset went with the reset (a reset is a new run)
+    assert a.subsystems['move'].offset is None
+    reasons = [r for _, cols, _ in seen['coco.mission.fsm.transition.v1']
+               for r in cols['reason']]
+    start = [r for r in reasons if r.startswith('told to fetch the green')]
+    assert len(start) == 1 and start[0].endswith(
+        f'put back home from ({stuck[0]:.2f}, {stuck[1]:.2f}))')
+    # the first fetch's start said nothing of the kind
+    assert [r for r in reasons if 'put back home' in r] == start
+
+
+def test_a_stall_no_longer_poisons_the_next_fetch():
+    # M2's seek recording (lab_web/tools/perf/seek_check.mjs settings, seed
+    # 1): MCL + an occupancy map from the belief + DWA. Red's fetch stalls
+    # near (1.7, 5.7) -- M2.6's measured DWA weakness. Before M3.0 every
+    # later fetch started there and stalled again; now green starts home,
+    # with its filter restarted at home too, and completes.
+    import coco_lab.loc_arena  # noqa: F401 -- registers localise
+    import coco_lab.map_arena  # noqa: F401 -- registers map
+    a = Arena(SPEC, 1)
+    a.step([CFG(0, c) for c in (
+        'arena.range_sigma=0.02', 'localise.filter=mcl',
+        'map.algorithm=occupancy', 'map.poses=belief', 'move.controller=dwa',
+        'mission.start=red')])
+    m = a.subsystems['mission']
+    while m.state not in ('done', 'failed'):
+        a.step(())
+    assert m.state == 'failed' and 'no_valid_control' in m.result
+    assert a.pose[:2] == pytest.approx((1.70, 5.71), abs=0.01)
+    a.step([CFG(a.tick, 'mission.start=green')])
+    assert a.belief()[:2] == pytest.approx((0.0, 0.0), abs=0.2)
+    while m.state not in ('done', 'failed') and a.tick < 3000:
+        a.step(())
+    assert m.state == 'done' and m.result == 'fetch'
+
+
+def test_a_restart_mid_fetch_also_starts_from_home():
+    a = Arena(SPEC, 1)
+    a.step([CFG(0, 'mission.start=red')])
+    for _ in range(200):
+        a.step(())
+    m = a.subsystems['mission']
+    assert m.state not in ('idle', 'done', 'failed')
+    calls = spy_reset_home(a)
+    a.step([CFG(a.tick, 'mission.start=blue')])
+    assert [c[0] for c in calls] == [a.start] and m.colour == 'blue'
+
+
+def test_a_sessions_first_fetch_starts_where_the_robot_stands():
+    # the mislocalised experiments put the robot somewhere first: a first
+    # fetch must not undo that
+    a = Arena(SPEC, 1)
+    a.step([InputEvent(0, 'kidnap', x=6.0, y=4.0, theta=0.0, has_theta=True)])
+    calls = spy_reset_home(a)
+    a.step([CFG(a.tick, 'mission.start=red')])
+    assert calls == []
+    assert math.hypot(a.pose[0] - 6.0, a.pose[1] - 4.0) < 0.1
+
+
+def test_after_a_reset_input_the_next_fetch_is_not_reset_twice():
+    a = Arena(SPEC, 1)
+    a.step([CFG(0, 'mission.start=red')])
+    for _ in range(50):
+        a.step(())
+    calls = spy_reset_home(a)
+    a.step([InputEvent(a.tick, 'reset')])
+    a.step([CFG(a.tick, 'mission.start=yellow')])
+    assert len(calls) == 1   # the reset input's own
+
+
+def test_a_two_fetch_session_is_deterministic():
+    ins = [CFG(0, 'mission.start=red'), CFG(300, 'mission.start=green')]
+    h = replay(SPEC, 5, ins, 400)
+    assert h == replay(SPEC, 5, ins, 400)
+    assert h != replay(SPEC, 5, ins[:1], 400)
+
+
 def test_a_bad_setting_is_refused():
     for bad in ('mission.start=purple', 'mission.truth=bay_9',
                 'mission.detect=0', 'mission.speed=1'):

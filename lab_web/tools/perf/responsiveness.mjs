@@ -53,6 +53,9 @@ const out = { site: SITE, gpu: GPU, n: N, immediate: IMMEDIATE, errors };
 async function screenOf(x, y) {
   return page.evaluate(([x, y]) => {
     const r = window.__cocoArena.renderer;
+    // M3 review: clicking a planner button scrolls the (taller, M3.7) page, leaving the canvas partly
+    // above the viewport, so a goal's point fell outside it and no click reached the canvas
+    r.canvas.scrollIntoView({ block: 'center', behavior: 'instant' });
     const b = r.canvas.getBoundingClientRect();
     const cx = b.left + b.width / 2; const cy = b.top + b.height / 2;
     const p0 = r.toWorld(cx, cy); const px = r.toWorld(cx + 100, cy); const py = r.toWorld(cx, cy + 100);

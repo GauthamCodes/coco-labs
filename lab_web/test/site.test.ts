@@ -44,9 +44,24 @@ describe('deployment constants', () => {
 
 describe('privacy', () => {
   it('src sets no cookie, uses no browser storage and sends no analytics', () => {
+    // one exception (M3.5, the M3 prompt: Play's personal bests "are stored locally"):
+    // src/play/best.ts, local storage only, every access inside try/catch
+    const BEST = join('play', 'best.ts');
     for (const { p, text } of src) {
-      expect(/document\.cookie|localStorage|sessionStorage|indexedDB|sendBeacon|navigator\.userAgent/.test(text), p)
+      const allowed = relative(join(LAB_WEB, 'src'), p) === BEST ? text.replace(/window\.localStorage/g, '') : text;
+      expect(/document\.cookie|localStorage|sessionStorage|indexedDB|sendBeacon|navigator\.userAgent/.test(allowed), p)
         .toBe(false);
+    }
+  });
+
+  it("Play's personal bests touch local storage only inside try/catch", () => {
+    const text = readFileSync(join(LAB_WEB, 'src', 'play', 'best.ts'), 'utf-8');
+    const uses = [...text.matchAll(/window\.localStorage/g)].map((m) => m.index!);
+    expect(uses.length).toBeGreaterThan(0);
+    for (const i of uses) {
+      const before = text.slice(0, i);
+      // the nearest enclosing block opened by `try {` and not yet closed by `} catch`
+      expect(before.lastIndexOf('try {')).toBeGreaterThan(before.lastIndexOf('} catch'));
     }
   });
 

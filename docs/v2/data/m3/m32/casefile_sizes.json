@@ -1,0 +1,167 @@
+{
+ "what": "M3.2: Case File sizes, one sample per recording kind, summary detail, repacked with zstd as the site serves them",
+ "conditions": "laptop; coco_lab_ros adapter 1; lab_web mcap.ts repackRun, node:zlib zstd defaults",
+ "samples": [
+  {
+   "case": "lab5_static_room_mppi_1",
+   "bag": "lab5/matrix/static_room_MPPI_1/bag",
+   "bag_bytes": 13445268,
+   "summary_uncompressed_bytes": 535183,
+   "site_zstd_bytes": 336747,
+   "messages": 1920,
+   "rows": {
+    "estimate": 64,
+    "robot": 64,
+    "truth": 706,
+    "scan": 141,
+    "annotation": 102,
+    "path": 1,
+    "candidates": 94,
+    "command": 317,
+    "metrics": 860
+   },
+   "convert_seconds": 2.1,
+   "log_window_ns": null
+  },
+  {
+   "case": "lab5_crossing_dwb_1",
+   "bag": "lab5/matrix/crossing_DWB_1/bag",
+   "bag_bytes": 13274180,
+   "summary_uncompressed_bytes": 392678,
+   "site_zstd_bytes": 189493,
+   "messages": 1639,
+   "rows": {
+    "estimate": 32,
+    "robot": 32,
+    "truth": 487,
+    "scan": 98,
+    "annotation": 105,
+    "actors": 383,
+    "path": 2,
+    "candidates": 51,
+    "command": 205,
+    "metrics": 496
+   },
+   "convert_seconds": 1.9,
+   "log_window_ns": null
+  },
+  {
+   "case": "lab4_a1_fixed_red",
+   "bag": "lab4/matrix/A1_fixed_red/bag",
+   "bag_bytes": 115349924,
+   "summary_uncompressed_bytes": 876537,
+   "site_zstd_bytes": 345417,
+   "messages": 6054,
+   "rows": {
+    "transition": 41,
+    "annotation": 3254,
+    "truth": 4145
+   },
+   "convert_seconds": 16.8,
+   "log_window_ns": [
+    1791292191640541875,
+    1791293499242523241
+   ]
+  },
+  {
+   "case": "lab2_kidnap_recovery_k1",
+   "bag": "lab2/kidnap_recovery_K1/bag",
+   "bag_bytes": 45029498,
+   "summary_uncompressed_bytes": 1971300,
+   "site_zstd_bytes": 1002339,
+   "messages": 7961,
+   "rows": {
+    "estimate": 2665,
+    "robot": 362,
+    "truth": 2327,
+    "scan": 466,
+    "annotation": 432,
+    "metrics": 6410
+   },
+   "convert_seconds": 4.2,
+   "log_window_ns": null
+  },
+  {
+   "case": "lab3_s1_tour",
+   "bag": "lab3/drives/s1_tour/bag",
+   "bag_bytes": 83305398,
+   "summary_uncompressed_bytes": 2828276,
+   "site_zstd_bytes": 1888118,
+   "messages": 9678,
+   "rows": {
+    "truth": 4425,
+    "scan": 885,
+    "estimate": 4367
+   },
+   "convert_seconds": 7.0,
+   "log_window_ns": null
+  },
+  {
+   "case": "lab1c_run_astar",
+   "bag": "lab1c/run_astar/bag",
+   "bag_bytes": 8127558,
+   "summary_uncompressed_bytes": 155021,
+   "site_zstd_bytes": 74330,
+   "messages": 1376,
+   "rows": {
+    "estimate": 37,
+    "robot": 37,
+    "truth": 761,
+    "annotation": 141,
+    "path": 1,
+    "command": 157,
+    "metrics": 488
+   },
+   "convert_seconds": 1.1,
+   "log_window_ns": null
+  },
+  {
+   "case": "lab2_rl_fidelity_s1",
+   "bag": "lab2/rl_fidelity_s1/rl_bag",
+   "bag_bytes": 13058137,
+   "summary_uncompressed_bytes": 930176,
+   "site_zstd_bytes": 581296,
+   "messages": 5658,
+   "rows": {
+    "estimate": 5657
+   },
+   "convert_seconds": 1.2,
+   "log_window_ns": null
+  }
+ ],
+ "estimate": {
+  "method": "count x the largest sample of its kind; the real sizes are measured on every Case File in M3.3",
+  "counts": {
+   "lab5": 54,
+   "lab4": 16,
+   "lab2_kidnap": 20,
+   "lab3_tour": 2,
+   "lab1c": 3,
+   "rl": 5,
+   "run15_mislocalised": 9
+  },
+  "per_case_bytes": {
+   "lab5": 336747,
+   "lab4": 345417,
+   "lab2_kidnap": 1002339,
+   "lab3_tour": 1888118,
+   "lab1c": 74330,
+   "rl": 581296,
+   "run15_mislocalised": 189493
+  },
+  "bytes": {
+   "lab5": 18184338,
+   "lab4": 5526672,
+   "lab2_kidnap": 20046780,
+   "lab3_tour": 3776236,
+   "lab1c": 222990,
+   "rl": 2906480,
+   "run15_mislocalised": 1705437
+  },
+  "total_bytes": 52368933
+ },
+ "budget": {
+  "per_case_bytes": 20000000,
+  "total_bytes": 150000000
+ }
+}

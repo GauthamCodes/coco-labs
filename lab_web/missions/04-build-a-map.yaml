@@ -38,7 +38,7 @@ beats:
       filter's belief; EKF-SLAM on corners; FastSLAM's particles; the pose graph with
       and without loop closure. Same drive, same scans, same odometry.
     arena: {lens: map, level: explain, cfg: ['arena.range_sigma=0.02', 'localise.filter=mcl', 'map.algorithm=occupancy', 'map.poses=belief']}
-    claims: [arena-scenario, corridor, landmarks, score]
+    claims: [arena-scenario, corridor, landmarks, score, arena-long-tour]
   - beat: explain
     text: >-
       A scan in a smooth corridor says how far you are from each wall and which way
@@ -69,6 +69,16 @@ claims:
       - docs/v2/data/m2/m24/map_arena_scenario.py
       - coco_lab/test/test_map_arena.py
     v1: ['catalog.map.bundles[map_arena]', 'ui:lab_web/src/ui/map/MapLab.tsx:226']
+  - id: arena-long-tour
+    label: UNRESOLVED
+    text: >-
+      On a longer drive the Arena's pose graph did worse, not better: a 40 m tour mapped
+      to F1 0.316 (trajectory error 0.108 m) against a 20 m out-and-back's 0.580
+      (0.015 m), seed 1. Found in M3 and not investigated -- why is not known.
+    evidence:
+      - 'docs/RESULTS.md "COCO Lab v2 · M3.5: Play"'
+      - docs/IDEAS.md
+    v1: []
   - id: loop-sketch
     label: TESTED
     text: >-

@@ -185,3 +185,18 @@ def test_reset_restarts_the_filters_at_the_start():
     loc = a.subsystems['localise']
     assert a.odom == pytest.approx((0.0, 0.0, 0.0), abs=0.02)
     assert loc.ekf is not None and loc.ekf.updates <= 1
+    # ...at the START pose, not where the belief was before the reset (M3.0)
+    assert loc.belief() == pytest.approx(a.start, abs=0.05)
+
+
+def test_a_reset_after_a_kidnap_forgets_the_old_belief():
+    # odometry is not told of a kidnap, so the belief stays put; a reset is
+    # a new run, and must start the filter where the robot now is (home)
+    for filt in ('mcl', 'ekf'):
+        a = Arena(SPEC, seed=1)
+        drive(a, [CFG(0, f'localise.filter={filt}'),
+                  InputEvent(0, 'kidnap', x=6.0, y=4.0, theta=0.0, has_theta=True)], 5)
+        assert math.hypot(*(b - s for b, s in zip(a.belief()[:2], a.start[:2]))) < 0.5
+        a.step([InputEvent(a.tick, 'reset')])
+        assert a.pose == pytest.approx(a.start, abs=0.02)
+        assert a.belief()[:2] == pytest.approx(a.start[:2], abs=0.15), filt

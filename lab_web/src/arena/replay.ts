@@ -22,9 +22,10 @@ import { EvidenceClass } from '../schemas/gen/coco/envelope/v1/manifest_pb';
 import { SearchEventBatchSchema, SearchHeaderSchema, SearchStatus, SearchSummarySchema } from '../schemas/gen/coco/plan/v1/search_pb';
 import { RobotStateBatchSchema } from '../schemas/gen/coco/robot/v1/robot_pb';
 import { TruthPoseBatchSchema } from '../schemas/gen/coco/truth/v1/truth_pb';
-import { WorldGridSchema } from '../schemas/gen/coco/world/v1/world_pb';
+import { WorldGridSchema, type WorldGrid } from '../schemas/gen/coco/world/v1/world_pb';
 import { readRun } from '../schemas/mcap';
 import { isDrive, parseDrive } from './replay_drive';
+import { isCaseFile, parseCase } from './replay_case';
 import type { Recording } from './attract';
 import type { PlanInfo, SearchColumns, Tick, World } from './protocol';
 
@@ -39,13 +40,20 @@ export interface ConvertedRun extends Recording {
   bundle: string;
   /** M2.7: one line of what was measured in this recording, when the run's lab says it so. */
   card?: string;
+  /** A Case File's tick 1 in simulation seconds: where scans loaded after the first frame are placed (D6). */
+  caseT0?: number;
 }
 
 type Pose = [number, number, number];
 const DT = 0.1;
 
-export async function parseConverted(bytes: Uint8Array): Promise<ConvertedRun> {
+export async function parseConverted(bytes: Uint8Array, caseGrid?: WorldGrid): Promise<ConvertedRun> {
   const { manifest, messages } = await readRun(bytes);
+  // M3.3: a Case File, drawn on the Nav2 map its recordings share (passed in: written once, not per file)
+  if (isCaseFile(manifest)) {
+    if (!caseGrid) throw new Error("a Case File needs the map it was recorded on");
+    return parseCase(manifest, messages, caseGrid);
+  }
   // M2.7: a converted Lab 5 drive (one controller run on the full stack)
   if (isDrive(manifest)) return parseDrive(manifest, messages);
   const v1 = JSON.parse(new TextDecoder().decode(manifest.spec));

@@ -1,0 +1,54 @@
+# Is the frozen v1 site still reproducible from its source? (M3.0; owner's
+# decision 2026-10-10; docs/v2/adr/0003-v1-archive.md)
+#
+# The Pages deploy no longer builds /v1/: it copies the orphan branch v1-site
+# at the commit pinned in lab_web/tools/fetch_v1_site.sh. This workflow
+# rebuilds that site from 9f58b83 with lab_web/tools/build_v1_site.sh -- the
+# commit's own build_catalog.py, npm ci and vite build, then the same
+# self-hosting step -- and compares it with the pinned v1-site commit
+# (lab_web/tools/v1_site.py compare: every file equal except the build-time
+# stamp `created_utc`). A failure means the toolchain has aged under the
+# build (a pin the npm registry no longer serves, a changed CDN file); the
+# deployed site is unaffected, because nothing is built at deploy.
+name: v1 site reproducible
+
+on:
+  schedule:
+    - cron: '17 3 * * 1'   # weekly, Monday 03:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rebuild-and-compare:
+    name: rebuild v1 from 9f58b83 and compare with v1-site
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Python environment (coco_lab's requirements; no ROS)
+        run: |
+          python -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install -r coco_lab/requirements-test.txt
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: lab_web/.nvmrc
+      - name: Install lab_web (for the pinned npm pyodide package)
+        working-directory: lab_web
+        run: npm ci
+      - name: Rebuild the v1 site from source
+        env:
+          PYTHON: ${{ runner.temp }}/venv/bin/python
+        run: lab_web/tools/build_v1_site.sh "$RUNNER_TEMP/rebuilt" "$RUNNER_TEMP/work"
+      - name: The pinned v1-site commit, verified
+        env:
+          PYTHON: ${{ runner.temp }}/venv/bin/python
+        run: lab_web/tools/fetch_v1_site.sh "$RUNNER_TEMP/pinned"
+      - name: Same content (only created_utc may differ)
+        run: |
+          "$RUNNER_TEMP/venv/bin/python" lab_web/tools/v1_site.py compare \
+            "$RUNNER_TEMP/pinned" "$RUNNER_TEMP/rebuilt" --out "$RUNNER_TEMP/compare.json"

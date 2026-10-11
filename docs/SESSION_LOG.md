@@ -8280,3 +8280,51 @@ NEXT: Gautham reviews the M2 pull request (`v2/m2-whole-loop` → `main`),
 reboots the laptop, and measures the phone and usability rows
 (`docs/v2/PHONE_MEASURE.md` "M2", `docs/v2/USABILITY_TEST_M2.md`); a fresh
 review session verifies the M2 report (README §9); then M3.
+
+## COCO Lab v2 · M2 review and merge; M3 Play and Case Files, M3.0 to M3.9 (2026-10-10 → 2026-10-11)
+
+**Built:**
+- **The M2 review.** PR #21 independently reviewed, fixed and merged
+  (`d9ae365`); `/v1/` built from `9f58b83` (Gautham's ruling).
+- **M3.0.** The v1 site as a verified built artifact (orphan `v1-site`);
+  every fetch after the first starts from home.
+- **M3.1–M3.3.** The ROS-bag-to-coco.v1 adapter (M3.1). ADR 0005 (M3.2).
+  100 STACK Case Files beside the model, with the evidence check extended to
+  them (M3.3).
+- **M3.4.** Mission 7, with scrub targets derived from the recordings.
+- **M3.5.** Play: five challenges, 16 levels, stars from reference
+  algorithms, local personal bests, challenge links.
+- **M3.6.** `coco verify`.
+- **M3.7.** One app, four modes.
+- **M3.8.** Drafts: v2.0 release notes, the demo script, the M3 usability
+  and phone guides.
+- **M3.9.** `docs/v2/M3_RESULTS.md`.
+
+**Measured** (MODEL unless marked; balanced, on AC):
+- **Case Files.** 100 STACK recordings, 73 / 73 cited checksums. In the
+  browser: first frame ≤ 279 ms, seek ≤ 45 ms. On emulated 4G: median
+  772 ms, 97 / 100 ≤ 2 s, seek ≤ 43 ms.
+- **Play and `coco verify`.** 100 submissions reproduce exactly in
+  Chromium, Firefox and WebKit, 100 / 100 each. `coco verify` gives
+  100 / 100 in Node and on CI. CPython gives 94 / 100: the map drives differ
+  at 1e-8 m.
+- **Layout.** Four modes at 390 px, 23 / 23; 0 console errors on 21 views.
+- **fps.** M2 scene 58–61 fps (8 runs on AC).
+- **Suites.** 3,498 / 396 / 168, none failing.
+
+**Unverified:**
+- Gautham's phone and usability rows.
+- The M1-stress, latency, seek and cold-start re-measure: AC was lost at
+  12:45.
+- Why the Arena's pose-graph mapping does worse on a long tour.
+- Why the browser's seek recording completes a red fetch that the Python
+  Arena with seed 1 stalls on.
+
+**Open question for Gautham:** the 3 long Case Files over the 2 s
+first-frame budget on 4G. Load scans after the first frame? It changes ADR
+0005.
+
+NEXT: on AC, run `bash ~/coco_lab_m3_ws/bin/m39_remeasure.sh` and append its
+numbers to `docs/v2/M3_RESULTS.md` and `docs/RESULTS.md`. Then Gautham
+reviews the M3 pull request, and a fresh review session verifies the M3
+report (README §9).

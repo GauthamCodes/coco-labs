@@ -33,7 +33,7 @@ interface Pyodide {
   runPython(code: string): unknown;
   pyimport(name: string): { init: (...a: unknown[]) => PyProxy; step: (s: string) => PyProxy;
     compare: (...a: unknown[]) => string;
-    begin: (s: string) => void; advance: (n: number) => boolean; amend: (s: string) => void; finish: () => PyProxy };
+    begin: (s: string) => void; advance: (n: number) => boolean; amend: (s: string) => void; finish: () => PyProxy; play: (s: string) => string };
 }
 
 /**
@@ -196,6 +196,17 @@ async function step(req: Extract<ToWorker, { type: 'step' }>) {
   post({ type: 'tick', tick, ranges, stepMs: performance.now() - t0, at: wallMs() }, [ranges.buffer]);
 }
 
+/** M3.5: Play, after the play pack (and the packs it needs) has loaded. */
+async function play(req: Extract<ToWorker, { type: 'play' }>) {
+  try {
+    if (!glue) throw new Error('play before boot');
+    await loadPack('play');
+    post({ type: 'play_done', id: req.id, result: glue.play(req.request) as string });
+  } catch (e) {
+    post({ type: 'play_done', id: req.id, error: e instanceof Error ? e.message : String(e) });
+  }
+}
+
 function compare(req: Extract<ToWorker, { type: 'compare' }>) {
   if (!glue || !onBatchFn) throw new Error('compare before boot');
   const result = JSON.parse(glue.compare(req.a, req.b, req.x, req.y, onBatchFn, 2048));
@@ -218,6 +229,7 @@ self.onmessage = (ev: MessageEvent<ToWorker>) => {
     try {
       if (req.type === 'boot') await boot(req);
       else if (req.type === 'compare') compare(req);
+      else if (req.type === 'play') await play(req);
       else await step(req);
     } catch (e) {
       post({ type: 'error', stage: req.type, message: e instanceof Error ? e.message : String(e) });

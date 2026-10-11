@@ -102,3 +102,39 @@ Phone: ______ Browser and version: ______ Date: ______
 **Pass if** the fetch mission's median `fps` is 30 or more. The laptop's
 numbers for the same scene (with a heavier stress load on top) are in
 `docs/v2/M2_RESULTS.md`; they say nothing about a phone.
+
+## M3: Play, the Case Files and the four modes (after the M3 merge)
+
+M3's phone row (M3 prompt, B.3) is the same cold start as before: **a cold
+visitor sees computation within 10 s on a mid-range phone over mobile
+data** (step A). Measure it again on the M3 site: the landing page now also
+carries the mode bar. The steps below are what M3 added; note them while you
+are there.
+
+1. **Case Files** (mobile data, a private tab):
+   `https://gauthamcodes.github.io/coco-labs/?view=arena&casefile=lab5_mislocalised_dwb_1&perf`.
+   Read `recording ready`: the Case File fetched, parsed and drawn. The
+   agent's budget on emulated 4G is 2 s after the app is loaded
+   (`docs/v2/M3_RESULTS.md`). Then drag the timeline back and forth: does it
+   follow your finger?
+2. **Play**: `?view=play&c=beat-the-planner&l=bog`. Note how long until the
+   grid appears: that is the scorer loading, Pyodide and coco_lab. Draw a
+   path by tapping cells, then press **Score my path**. Can you tap one cell
+   at a time? Is the result readable without zooming?
+3. **The four modes**: tap Learn, Play, Sandbox and Case Files in turn. For
+   each, note whether anything is cut off or scrolls sideways, and whether
+   the MODEL / STACK badge is visible without scrolling.
+4. Repeat step 1 **three times**, closing the tab completely between runs.
+
+| Run | Network | Case File `recording ready` | Timeline follows the finger? | Play: grid shown after | Tapping cells OK? | Modes: anything cut off? |
+|---|---|---|---|---|---|---|
+| 1 | | | | | | |
+| 2 | | | | | | |
+| 3 | | | | | | |
+
+Phone: ______ Browser and version: ______ Date: ______
+
+**Pass if** the cold start (step A) is under 10 s. The rest are notes; the
+agent turns anything that looked wrong into a line in `docs/IDEAS.md`. The
+agent's emulated-phone checks at 390 px are in `docs/v2/data/m3/m37/`: they
+measure the layout, not a phone.

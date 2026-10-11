@@ -1,0 +1,1265 @@
+{
+ "challenges": {
+  "beat-the-planner": {
+   "goal": "Draw a path from S to G, one cell at a time. Every move costs its length, and a muddy cell costs more to enter (darker is worse). Can you match A*?",
+   "levels": [
+    {
+     "grid": [
+      "................",
+      "..S.............",
+      "...9999.........",
+      "...9999...4444..",
+      "...9999...4444..",
+      "..........4444..",
+      "..........4444..",
+      "................",
+      "............G...",
+      "................"
+     ],
+     "id": "two-fields",
+     "reference": {
+      "astar_expansions": 24,
+      "greedy_ratio": 1.51976926,
+      "optimal_cost": 14.071067812,
+      "weighted_astar_ratio": 1.047707274
+     },
+     "title": "Two fields",
+     "weight": 2.0
+    },
+    {
+     "grid": [
+      "................",
+      "..S.............",
+      "...777777777....",
+      "...777777777....",
+      "...777777777....",
+      "...777777777....",
+      "...777777777....",
+      "................",
+      "...........G....",
+      "................"
+     ],
+     "id": "bog",
+     "reference": {
+      "astar_expansions": 36,
+      "greedy_ratio": 1.544259115,
+      "optimal_cost": 14.828427125,
+      "weighted_astar_ratio": 1.134876072
+     },
+     "title": "The bog",
+     "weight": 2.0
+    },
+    {
+     "grid": [
+      "................",
+      "..S.............",
+      "....99999999....",
+      "....99999999....",
+      "....99999999....",
+      "....99999999....",
+      "....99999999....",
+      "....99999999....",
+      "............G...",
+      "................"
+     ],
+     "id": "mud-field",
+     "reference": {
+      "astar_expansions": 43,
+      "greedy_ratio": 1.708421838,
+      "optimal_cost": 15.828427125,
+      "weighted_astar_ratio": 1.089346437
+     },
+     "title": "The mud field",
+     "weight": 2.0
+    }
+   ],
+   "title": "Beat the planner"
+  },
+  "case-file-detective": {
+   "goal": "A recording of the full ROS 2 stack in Gazebo. Scrub to the moment the robot's belief about where it is first leaves the truth, and mark it.",
+   "levels": [
+    {
+     "bands_s": [
+      2.0,
+      1.0,
+      0.5
+     ],
+     "casefile": "lab5_mislocalised_mppi_1",
+     "divergence_m": 1,
+     "id": "told-wrong",
+     "moment": {
+      "error_m": 3.402673792,
+      "source": "amcl",
+      "t_world": 72.924,
+      "tick": 31
+     },
+     "tick_s": 0.1,
+     "ticks": 172,
+     "title": "Told the wrong place",
+     "tolerance_s": 1.0
+    },
+    {
+     "bands_s": [
+      2.0,
+      1.0,
+      0.5
+     ],
+     "casefile": "lab2_kidnap_shipped_k2",
+     "divergence_m": 1,
+     "id": "kidnapped",
+     "moment": {
+      "error_m": 7.615773106,
+      "source": "amcl",
+      "t_world": 64.8,
+      "tick": 632
+     },
+     "tick_s": 0.1,
+     "ticks": 2776,
+     "title": "Kidnapped",
+     "tolerance_s": 1.0
+    },
+    {
+     "bands_s": [
+      2.0,
+      1.0,
+      0.5
+     ],
+     "casefile": "lab2_kidnap_recovery_k3",
+     "divergence_m": 1,
+     "id": "kidnapped-far",
+     "moment": {
+      "error_m": 15.43534904,
+      "source": "amcl",
+      "t_world": 66.4,
+      "tick": 648
+     },
+     "tick_s": 0.1,
+     "ticks": 2782,
+     "title": "Kidnapped, far",
+     "tolerance_s": 1.0
+    },
+    {
+     "bands_s": [
+      2.0,
+      1.0,
+      0.5
+     ],
+     "casefile": "lab2_kidnap_shipped_k5",
+     "divergence_m": 1,
+     "id": "kidnapped-again",
+     "moment": {
+      "error_m": 7.762087348,
+      "source": "amcl",
+      "t_world": 66.2,
+      "tick": 645
+     },
+     "tick_s": 0.1,
+     "ticks": 2778,
+     "title": "Kidnapped again",
+     "tolerance_s": 1.0
+    }
+   ],
+   "title": "Case File detective"
+  },
+  "map-the-arena": {
+   "goal": "Drive COCO to map the arena on wheel odometry alone, within a distance budget. Covering more raises the map's F1; driving further lets the drift grow.",
+   "levels": [
+    {
+     "budget_m": 40.0,
+     "config": [
+      "map.poses=odometry",
+      "map.algorithm=occupancy"
+     ],
+     "drives": {
+      "out_and_back": {
+       "goals": [
+        [
+         10.0,
+         0.0
+        ],
+        [
+         0.0,
+         0.0
+        ]
+       ],
+       "inputs": [
+        {
+         "choice": "map.poses=odometry",
+         "kind": "config",
+         "tick": 0
+        },
+        {
+         "choice": "map.algorithm=occupancy",
+         "kind": "config",
+         "tick": 0
+        },
+        {
+         "kind": "goal",
+         "tick": 0,
+         "x": 10.0,
+         "y": 0.0
+        },
+        {
+         "kind": "goal",
+         "tick": 331,
+         "x": 0.0,
+         "y": 0.0
+        }
+       ],
+       "ticks": 686
+      },
+      "tour": {
+       "goals": [
+        [
+         2.5,
+         2.0
+        ],
+        [
+         6.0,
+         4.0
+        ],
+        [
+         10.0,
+         3.0
+        ],
+        [
+         9.0,
+         -4.0
+        ],
+        [
+         3.0,
+         -6.5
+        ],
+        [
+         0.5,
+         -2.5
+        ],
+        [
+         0.0,
+         0.0
+        ]
+       ],
+       "inputs": [
+        {
+         "choice": "map.poses=odometry",
+         "kind": "config",
+         "tick": 0
+        },
+        {
+         "choice": "map.algorithm=occupancy",
+         "kind": "config",
+         "tick": 0
+        },
+        {
+         "kind": "goal",
+         "tick": 0,
+         "x": 2.5,
+         "y": 2.0
+        },
+        {
+         "kind": "goal",
+         "tick": 133,
+         "x": 6.0,
+         "y": 4.0
+        },
+        {
+         "kind": "goal",
+         "tick": 428,
+         "x": 10.0,
+         "y": 3.0
+        },
+        {
+         "kind": "goal",
+         "tick": 585,
+         "x": 9.0,
+         "y": -4.0
+        },
+        {
+         "kind": "goal",
+         "tick": 845,
+         "x": 3.0,
+         "y": -6.5
+        },
+        {
+         "kind": "goal",
+         "tick": 1268,
+         "x": 0.5,
+         "y": -2.5
+        }
+       ],
+       "ticks": 1476
+      }
+     },
+     "id": "forty-metres",
+     "max_ticks": 6000,
+     "reference": {
+      "out_and_back": {
+       "ate": 0.307423106,
+       "f1": 0.340814604,
+       "path_m": 19.702512351
+      },
+      "tour": {
+       "ate": 0.86816993,
+       "f1": 0.484064969,
+       "path_m": 40.007891268
+      }
+     },
+     "seed": 1,
+     "spec": "69c843a1376fe75be87c078e54641c96407c6dc1c35a5e1f2c863b47225e269f",
+     "title": "Forty metres"
+    },
+    {
+     "budget_m": 25.0,
+     "config": [
+      "map.poses=odometry",
+      "map.algorithm=occupancy"
+     ],
+     "drives": {
+      "out_and_back": {
+       "goals": [
+        [
+         10.0,
+         0.0
+        ],
+        [
+         0.0,
+         0.0
+        ]
+       ],
+       "inputs": [
+        {
+         "choice": "map.poses=odometry",
+         "kind": "config",
+         "tick": 0
+        },
+        {
+         "choice": "map.algorithm=occupancy",
+         "kind": "config",
+         "tick": 0
+        },
+        {
+         "kind": "goal",
+         "tick": 0,
+         "x": 10.0,
+         "y": 0.0
+        },
+        {
+         "kind": "goal",
+         "tick": 331,
+         "x": 0.0,
+         "y": 0.0
+        }
+       ],
+       "ticks": 686
+      },
+      "tour": {
+       "goals": [
+        [
+         2.5,
+         2.0
+        ],
+        [
+         6.0,
+         4.0
+        ],
+        [
+         10.0,
+         3.0
+        ],
+        [
+         9.0,
+         -4.0
+        ],
+        [
+         3.0,
+         -6.5
+        ],
+        [
+         0.5,
+         -2.5
+        ],
+        [
+         0.0,
+         0.0
+        ]
+       ],
+       "inputs": [
+        {
+         "choice": "map.poses=odometry",
+         "kind": "config",
+         "tick": 0
+        },
+        {
+         "choice": "map.algorithm=occupancy",
+         "kind": "config",
+         "tick": 0
+        },
+        {
+         "kind": "goal",
+         "tick": 0,
+         "x": 2.5,
+         "y": 2.0
+        },
+        {
+         "kind": "goal",
+         "tick": 133,
+         "x": 6.0,
+         "y": 4.0
+        },
+        {
+         "kind": "goal",
+         "tick": 428,
+         "x": 10.0,
+         "y": 3.0
+        },
+        {
+         "kind": "goal",
+         "tick": 585,
+         "x": 9.0,
+         "y": -4.0
+        },
+        {
+         "kind": "goal",
+         "tick": 845,
+         "x": 3.0,
+         "y": -6.5
+        }
+       ],
+       "ticks": 921
+      }
+     },
+     "id": "twenty-five-metres",
+     "max_ticks": 6000,
+     "reference": {
+      "out_and_back": {
+       "ate": 0.307423106,
+       "f1": 0.340814604,
+       "path_m": 19.702512351
+      },
+      "tour": {
+       "ate": 0.154396602,
+       "f1": 0.55490654,
+       "path_m": 25.014524448
+      }
+     },
+     "seed": 1,
+     "spec": "69c843a1376fe75be87c078e54641c96407c6dc1c35a5e1f2c863b47225e269f",
+     "title": "Twenty-five metres"
+    }
+   ],
+   "title": "Map the arena"
+  },
+  "next-node": {
+   "goal": "A* is part-way through a search. Grey cells are closed; outlined cells are open, each with g (the cost so far) and h (the estimate to G). Click the cell A* expands next -- ten times.",
+   "levels": [
+    {
+     "after": 0,
+     "grid": [
+      "................",
+      "................",
+      "..S.......#.....",
+      "..........#.....",
+      "......#####.....",
+      "..........#.....",
+      "..........#..G..",
+      "..........#.....",
+      "................",
+      "................"
+     ],
+     "id": "wall",
+     "reference": {
+      "min_g_matches": 1,
+      "min_h_matches": 7
+     },
+     "title": "Round the wall"
+    },
+    {
+     "after": 30,
+     "grid": [
+      "................",
+      "..S.............",
+      "....99999999....",
+      "....99999999....",
+      "....99999999....",
+      "....99999999....",
+      "....99999999....",
+      "....99999999....",
+      "............G...",
+      "................"
+     ],
+     "id": "mud",
+     "reference": {
+      "min_g_matches": 1,
+      "min_h_matches": 4
+     },
+     "title": "Into the mud"
+    },
+    {
+     "after": 30,
+     "grid": [
+      "..................",
+      "..................",
+      "....##########....",
+      ".............#....",
+      "..S..........#..G.",
+      ".............#....",
+      "....##########....",
+      "..................",
+      ".................."
+     ],
+     "id": "u-trap",
+     "reference": {
+      "min_g_matches": 4,
+      "min_h_matches": 3
+     },
+     "title": "The U-trap"
+    }
+   ],
+   "title": "Next node"
+  },
+  "search-the-bays": {
+   "goal": "The target is in one of four bays, and you know only how likely each one is. Choose the order to look in. You are scored on the expected distance over where it might be -- never on where it turned out to be.",
+   "levels": [
+    {
+     "id": "no-idea",
+     "problem": {
+      "detection": [
+       0.9,
+       0.9,
+       0.9,
+       0.9
+      ],
+      "meta": {
+       "detection_is": "assumed",
+       "frame": "world",
+       "map": "coco_navigation.yaml"
+      },
+      "prior": [
+       0.25,
+       0.25,
+       0.25,
+       0.25
+      ],
+      "regions": [
+       {
+        "approach": [
+         0.5,
+         -6.0
+        ],
+        "exit": [
+         0.5,
+         -6.0
+        ],
+        "id": "bay_1",
+        "label": "Bay 1",
+        "platform": [
+         3.0,
+         4.2,
+         -7.25,
+         -4.75
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         -6.0,
+         0.0
+        ]
+       },
+       {
+        "approach": [
+         0.5,
+         -2.0
+        ],
+        "exit": [
+         0.5,
+         -2.0
+        ],
+        "id": "bay_2",
+        "label": "Bay 2",
+        "platform": [
+         3.0,
+         4.2,
+         -3.25,
+         -0.75
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         -2.0,
+         0.0
+        ]
+       },
+       {
+        "approach": [
+         0.5,
+         2.0
+        ],
+        "exit": [
+         0.5,
+         2.0
+        ],
+        "id": "bay_3",
+        "label": "Bay 3",
+        "platform": [
+         3.0,
+         4.2,
+         0.75,
+         3.25
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         2.0,
+         0.0
+        ]
+       },
+       {
+        "approach": [
+         0.5,
+         6.0
+        ],
+        "exit": [
+         0.5,
+         6.0
+        ],
+        "id": "bay_4",
+        "label": "Bay 4",
+        "platform": [
+         3.0,
+         4.2,
+         4.75,
+         7.25
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         6.0,
+         0.0
+        ]
+       }
+      ],
+      "start": "home",
+      "start_xy": [
+       -2.0,
+       0.0
+      ],
+      "travel": {
+       "bay_1": {
+        "bay_1": 0.0,
+        "bay_2": 6.943503,
+        "bay_3": 10.943503,
+        "bay_4": 14.943503
+       },
+       "bay_2": {
+        "bay_1": 6.943503,
+        "bay_2": 0.0,
+        "bay_3": 6.972792,
+        "bay_4": 10.972792
+       },
+       "bay_3": {
+        "bay_1": 10.943503,
+        "bay_2": 6.972792,
+        "bay_3": 0.0,
+        "bay_4": 6.972792
+       },
+       "bay_4": {
+        "bay_1": 14.943503,
+        "bay_2": 10.972792,
+        "bay_3": 6.972792,
+        "bay_4": 0.0
+       },
+       "home": {
+        "bay_1": 7.797056,
+        "bay_2": 3.826346,
+        "bay_3": 3.767767,
+        "bay_4": 7.767767
+       }
+      }
+     },
+     "reference": {
+      "most_likely_order": [
+       0,
+       1,
+       2,
+       3
+      ],
+      "most_likely_ratio": 1.059645553,
+      "nearest_order": [
+       2,
+       1,
+       0,
+       3
+      ],
+      "nearest_ratio": 1.012607941,
+      "optimal_expected": 30.448354875,
+      "optimal_order": [
+       2,
+       3,
+       1,
+       0
+      ]
+     },
+     "story": "Every bay is equally likely -- the Arena's own prior.",
+     "title": "No idea where it is"
+    },
+    {
+     "id": "far-end",
+     "problem": {
+      "detection": [
+       0.9,
+       0.9,
+       0.9,
+       0.9
+      ],
+      "meta": {
+       "detection_is": "assumed",
+       "frame": "world",
+       "map": "coco_navigation.yaml"
+      },
+      "prior": [
+       0.15,
+       0.15,
+       0.3,
+       0.4
+      ],
+      "regions": [
+       {
+        "approach": [
+         0.5,
+         -6.0
+        ],
+        "exit": [
+         0.5,
+         -6.0
+        ],
+        "id": "bay_1",
+        "label": "Bay 1",
+        "platform": [
+         3.0,
+         4.2,
+         -7.25,
+         -4.75
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         -6.0,
+         0.0
+        ]
+       },
+       {
+        "approach": [
+         0.5,
+         -2.0
+        ],
+        "exit": [
+         0.5,
+         -2.0
+        ],
+        "id": "bay_2",
+        "label": "Bay 2",
+        "platform": [
+         3.0,
+         4.2,
+         -3.25,
+         -0.75
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         -2.0,
+         0.0
+        ]
+       },
+       {
+        "approach": [
+         0.5,
+         2.0
+        ],
+        "exit": [
+         0.5,
+         2.0
+        ],
+        "id": "bay_3",
+        "label": "Bay 3",
+        "platform": [
+         3.0,
+         4.2,
+         0.75,
+         3.25
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         2.0,
+         0.0
+        ]
+       },
+       {
+        "approach": [
+         0.5,
+         6.0
+        ],
+        "exit": [
+         0.5,
+         6.0
+        ],
+        "id": "bay_4",
+        "label": "Bay 4",
+        "platform": [
+         3.0,
+         4.2,
+         4.75,
+         7.25
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         6.0,
+         0.0
+        ]
+       }
+      ],
+      "start": "home",
+      "start_xy": [
+       -2.0,
+       0.0
+      ],
+      "travel": {
+       "bay_1": {
+        "bay_1": 0.0,
+        "bay_2": 6.943503,
+        "bay_3": 10.943503,
+        "bay_4": 14.943503
+       },
+       "bay_2": {
+        "bay_1": 6.943503,
+        "bay_2": 0.0,
+        "bay_3": 6.972792,
+        "bay_4": 10.972792
+       },
+       "bay_3": {
+        "bay_1": 10.943503,
+        "bay_2": 6.972792,
+        "bay_3": 0.0,
+        "bay_4": 6.972792
+       },
+       "bay_4": {
+        "bay_1": 14.943503,
+        "bay_2": 10.972792,
+        "bay_3": 6.972792,
+        "bay_4": 0.0
+       },
+       "home": {
+        "bay_1": 7.797056,
+        "bay_2": 3.826346,
+        "bay_3": 3.767767,
+        "bay_4": 7.767767
+       }
+      }
+     },
+     "reference": {
+      "most_likely_order": [
+       3,
+       2,
+       0,
+       1
+      ],
+      "most_likely_ratio": 1.112369855,
+      "nearest_order": [
+       2,
+       1,
+       0,
+       3
+      ],
+      "nearest_ratio": 1.289281738,
+      "optimal_expected": 25.991061405,
+      "optimal_order": [
+       2,
+       3,
+       1,
+       0
+      ]
+     },
+     "story": "Someone thinks it was taken towards bay 4.",
+     "title": "A hint at the far end"
+    },
+    {
+     "id": "ends",
+     "problem": {
+      "detection": [
+       0.9,
+       0.9,
+       0.9,
+       0.9
+      ],
+      "meta": {
+       "detection_is": "assumed",
+       "frame": "world",
+       "map": "coco_navigation.yaml"
+      },
+      "prior": [
+       0.45,
+       0.05,
+       0.05,
+       0.45
+      ],
+      "regions": [
+       {
+        "approach": [
+         0.5,
+         -6.0
+        ],
+        "exit": [
+         0.5,
+         -6.0
+        ],
+        "id": "bay_1",
+        "label": "Bay 1",
+        "platform": [
+         3.0,
+         4.2,
+         -7.25,
+         -4.75
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         -6.0,
+         0.0
+        ]
+       },
+       {
+        "approach": [
+         0.5,
+         -2.0
+        ],
+        "exit": [
+         0.5,
+         -2.0
+        ],
+        "id": "bay_2",
+        "label": "Bay 2",
+        "platform": [
+         3.0,
+         4.2,
+         -3.25,
+         -0.75
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         -2.0,
+         0.0
+        ]
+       },
+       {
+        "approach": [
+         0.5,
+         2.0
+        ],
+        "exit": [
+         0.5,
+         2.0
+        ],
+        "id": "bay_3",
+        "label": "Bay 3",
+        "platform": [
+         3.0,
+         4.2,
+         0.75,
+         3.25
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         2.0,
+         0.0
+        ]
+       },
+       {
+        "approach": [
+         0.5,
+         6.0
+        ],
+        "exit": [
+         0.5,
+         6.0
+        ],
+        "id": "bay_4",
+        "label": "Bay 4",
+        "platform": [
+         3.0,
+         4.2,
+         4.75,
+         7.25
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         6.0,
+         0.0
+        ]
+       }
+      ],
+      "start": "home",
+      "start_xy": [
+       -2.0,
+       0.0
+      ],
+      "travel": {
+       "bay_1": {
+        "bay_1": 0.0,
+        "bay_2": 6.943503,
+        "bay_3": 10.943503,
+        "bay_4": 14.943503
+       },
+       "bay_2": {
+        "bay_1": 6.943503,
+        "bay_2": 0.0,
+        "bay_3": 6.972792,
+        "bay_4": 10.972792
+       },
+       "bay_3": {
+        "bay_1": 10.943503,
+        "bay_2": 6.972792,
+        "bay_3": 0.0,
+        "bay_4": 6.972792
+       },
+       "bay_4": {
+        "bay_1": 14.943503,
+        "bay_2": 10.972792,
+        "bay_3": 6.972792,
+        "bay_4": 0.0
+       },
+       "home": {
+        "bay_1": 7.797056,
+        "bay_2": 3.826346,
+        "bay_3": 3.767767,
+        "bay_4": 7.767767
+       }
+      }
+     },
+     "reference": {
+      "most_likely_order": [
+       0,
+       3,
+       1,
+       2
+      ],
+      "most_likely_ratio": 1.027942091,
+      "nearest_order": [
+       2,
+       1,
+       0,
+       3
+      ],
+      "nearest_ratio": 1.434442926,
+      "optimal_expected": 28.446471695,
+      "optimal_order": [
+       3,
+       0,
+       1,
+       2
+      ]
+     },
+     "story": "It is in bay 1 or bay 4, almost certainly.",
+     "title": "One of the ends"
+    },
+    {
+     "id": "poor-camera",
+     "problem": {
+      "detection": [
+       0.6,
+       0.6,
+       0.6,
+       0.6
+      ],
+      "meta": {
+       "detection_is": "assumed",
+       "frame": "world",
+       "map": "coco_navigation.yaml"
+      },
+      "prior": [
+       0.1,
+       0.2,
+       0.55,
+       0.15
+      ],
+      "regions": [
+       {
+        "approach": [
+         0.5,
+         -6.0
+        ],
+        "exit": [
+         0.5,
+         -6.0
+        ],
+        "id": "bay_1",
+        "label": "Bay 1",
+        "platform": [
+         3.0,
+         4.2,
+         -7.25,
+         -4.75
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         -6.0,
+         0.0
+        ]
+       },
+       {
+        "approach": [
+         0.5,
+         -2.0
+        ],
+        "exit": [
+         0.5,
+         -2.0
+        ],
+        "id": "bay_2",
+        "label": "Bay 2",
+        "platform": [
+         3.0,
+         4.2,
+         -3.25,
+         -0.75
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         -2.0,
+         0.0
+        ]
+       },
+       {
+        "approach": [
+         0.5,
+         2.0
+        ],
+        "exit": [
+         0.5,
+         2.0
+        ],
+        "id": "bay_3",
+        "label": "Bay 3",
+        "platform": [
+         3.0,
+         4.2,
+         0.75,
+         3.25
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         2.0,
+         0.0
+        ]
+       },
+       {
+        "approach": [
+         0.5,
+         6.0
+        ],
+        "exit": [
+         0.5,
+         6.0
+        ],
+        "id": "bay_4",
+        "label": "Bay 4",
+        "platform": [
+         3.0,
+         4.2,
+         4.75,
+         7.25
+        ],
+        "survey_cost": 4.9,
+        "survey_pose": [
+         2.95,
+         6.0,
+         0.0
+        ]
+       }
+      ],
+      "start": "home",
+      "start_xy": [
+       -2.0,
+       0.0
+      ],
+      "travel": {
+       "bay_1": {
+        "bay_1": 0.0,
+        "bay_2": 6.943503,
+        "bay_3": 10.943503,
+        "bay_4": 14.943503
+       },
+       "bay_2": {
+        "bay_1": 6.943503,
+        "bay_2": 0.0,
+        "bay_3": 6.972792,
+        "bay_4": 10.972792
+       },
+       "bay_3": {
+        "bay_1": 10.943503,
+        "bay_2": 6.972792,
+        "bay_3": 0.0,
+        "bay_4": 6.972792
+       },
+       "bay_4": {
+        "bay_1": 14.943503,
+        "bay_2": 10.972792,
+        "bay_3": 6.972792,
+        "bay_4": 0.0
+       },
+       "home": {
+        "bay_1": 7.797056,
+        "bay_2": 3.826346,
+        "bay_3": 3.767767,
+        "bay_4": 7.767767
+       }
+      }
+     },
+     "reference": {
+      "most_likely_order": [
+       2,
+       1,
+       3,
+       0
+      ],
+      "most_likely_ratio": 1.102434376,
+      "nearest_order": [
+       2,
+       1,
+       0,
+       3
+      ],
+      "nearest_ratio": 1.050613042,
+      "optimal_expected": 31.27676838,
+      "optimal_order": [
+       2,
+       3,
+       1,
+       0
+      ]
+     },
+     "story": "A blurry frame put it in bay 3, and the camera misses 4 times in 10.",
+     "title": "Seen in bay 3, by a poor camera"
+    }
+   ],
+   "title": "Search the bays"
+  }
+ },
+ "order": [
+  "beat-the-planner",
+  "next-node",
+  "search-the-bays",
+  "map-the-arena",
+  "case-file-detective"
+ ],
+ "schema": "coco_lab.play.levels.v1",
+ "source": "lab_web/play/levels.src.yaml",
+ "tool": "lab_web/tools/make_play_levels.py"
+}

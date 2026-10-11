@@ -1,0 +1,166 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-10T06:16:50.731Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.82,
+    "5m": 1.68,
+    "15m": 1.63
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-10T06:18:41.502Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.03,
+    "5m": 1.81,
+    "15m": 1.68
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4214/coco-labs/",
+ "ticks_wanted": 3000,
+ "cfg": [
+  "arena.range_sigma=0.02",
+  "localise.filter=mcl",
+  "map.algorithm=occupancy",
+  "map.poses=belief",
+  "move.controller=dwa",
+  "mission.start=red"
+ ],
+ "errors": [],
+ "record_wall_s": 109.159,
+ "fetches": [
+  {
+   "colour": "red",
+   "started_tick": 0,
+   "ended": {
+    "tick": 1676,
+    "state": "done"
+   }
+  },
+  {
+   "colour": "green",
+   "started_tick": 1676,
+   "ended": {
+    "tick": 1988,
+    "state": "failed"
+   }
+  },
+  {
+   "colour": "blue",
+   "started_tick": 1988,
+   "ended": {
+    "tick": 2576,
+    "state": "failed"
+   }
+  },
+  {
+   "colour": "yellow",
+   "started_tick": 2576
+  }
+ ],
+ "recorded": {
+  "latest_tick": 3019,
+  "family_batches": {
+   "coco.decide.search.belief.v1": 10,
+   "coco.mission.fsm.transition.v1": 39,
+   "coco.localise.particles.set.v1": 365,
+   "coco.localise.particles.update.v1": 365,
+   "coco.estimate.pose.v1": 1095,
+   "coco.metrics.values.v1": 3298,
+   "coco.decide.search.orders.v1": 9,
+   "coco.decide.search.action.v1": 9,
+   "coco.control.local.candidates.v1": 2581,
+   "coco.control.local.command.v1": 2581,
+   "coco.map.grid.snapshot.v1": 92,
+   "coco.sensor.detect.colour.v1": 6,
+   "coco.decide.search.observation.v1": 6,
+   "coco.arm.state.v1": 60
+  }
+ },
+ "seeks": [
+  {
+   "to": 1509,
+   "call_ms": 0.30000000074505806,
+   "to_frame_ms": 30,
+   "view_tick": 1509
+  },
+  {
+   "to": 150,
+   "call_ms": 0,
+   "to_frame_ms": 28.90000000037253,
+   "view_tick": 150
+  },
+  {
+   "to": 2868,
+   "call_ms": 0,
+   "to_frame_ms": 29.899999998509884,
+   "view_tick": 2868
+  },
+  {
+   "to": 754,
+   "call_ms": 0,
+   "to_frame_ms": 32.40000000037253,
+   "view_tick": 754
+  },
+  {
+   "to": 2264,
+   "call_ms": 0,
+   "to_frame_ms": 30.800000000745058,
+   "view_tick": 2264
+  },
+  {
+   "to": 301,
+   "call_ms": 0.09999999962747097,
+   "to_frame_ms": 32.09999999962747,
+   "view_tick": 301
+  },
+  {
+   "to": 2717,
+   "call_ms": 0,
+   "to_frame_ms": 32.69999999925494,
+   "view_tick": 2717
+  },
+  {
+   "to": 996,
+   "call_ms": 0,
+   "to_frame_ms": 31.90000000037253,
+   "view_tick": 996
+  },
+  {
+   "to": 1992,
+   "call_ms": 0.09999999962747097,
+   "to_frame_ms": 29.5,
+   "view_tick": 1992
+  },
+  {
+   "to": 1,
+   "call_ms": 0.09999999962747097,
+   "to_frame_ms": 30.799999998882413,
+   "view_tick": 1
+  }
+ ],
+ "call_ms_max": 0.30000000074505806,
+ "to_frame_ms_max": 32.69999999925494,
+ "ok": true
+}

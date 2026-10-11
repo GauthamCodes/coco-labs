@@ -1,0 +1,169 @@
+{
+ "tool": "lab_web/tools/play_reference_check.mjs",
+ "engine": "Pyodide 314.0.7, Node v24.21.0",
+ "ok": true,
+ "rows": [
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "what": "A*'s path",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "what": "A*'s path",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "what": "A*'s path",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "what": "A*'s expansions",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "what": "A*'s expansions",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "what": "A*'s expansions",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "what": "the optimal order",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "what": "the optimal order",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "what": "the optimal order",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "what": "the optimal order",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "what": "the divergence tick",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "what": "the divergence tick",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "what": "the divergence tick",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "what": "the divergence tick",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "what": "the out_and_back drive",
+   "stars": 1,
+   "want": 1,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "what": "the tour drive",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "what": "the out_and_back drive",
+   "stars": 1,
+   "want": 1,
+   "ok": true,
+   "why": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "what": "the tour drive",
+   "stars": 3,
+   "want": 3,
+   "ok": true,
+   "why": null
+  }
+ ]
+}

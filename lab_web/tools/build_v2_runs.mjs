@@ -14,7 +14,7 @@
  *   node tools/build_v2_runs.mjs
  */
 
-import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -82,6 +82,24 @@ try {
     console.log(`lab5 ${sc}: ${conv.length} runs, round trip exact`);
   }
   writeFileSync(join(OUT, 'index.json'), JSON.stringify({ schema: 'lab_web.v2_runs', version: '1.0', runs: index }, null, 1) + '\n');
+  // M3.3: the Case Files (ADR 0005) -- committed in lab_web/casefiles/, copied as they are (each
+  // checked against its index sha256), and the map they are drawn on written ONCE beside them
+  const caseDir = join(web, 'casefiles');
+  const caseIndexPath = join(caseDir, 'index.json');
+  if (existsSync(caseIndexPath)) {
+    const { toBinary } = await import('@bufbuild/protobuf');
+    const CASE_OUT = join(GEN, 'casefiles');
+    mkdirSync(CASE_OUT, { recursive: true });
+    const caseIndex = JSON.parse(readFileSync(caseIndexPath, 'utf-8'));
+    for (const e of caseIndex.casefiles) {
+      const bytes = readFileSync(join(caseDir, `${e.id}.mcap`));
+      const sha = createHash('sha256').update(bytes).digest('hex');
+      if (sha !== e.sha256) throw new Error(`Case File ${e.id}: sha256 ${sha} is not the index's ${e.sha256}`);
+      writeFileSync(join(CASE_OUT, `${e.id}.mcap`), bytes);
+    }
+    writeFileSync(join(CASE_OUT, 'world.grid.bin'), toBinary(WorldGridSchema, navGrid));
+    console.log(`casefiles: ${caseIndex.casefiles.length} copied, ${caseIndex.total_bytes} B, the map once`);
+  }
   // a Learn mission (M2.8) may link only to a run this index holds (build_catalog.py wrote missions.json)
   const ids = new Set(index.map((x) => x.id));
   const missions = JSON.parse(readFileSync(join(GEN, 'missions.json'), 'utf-8')).missions;

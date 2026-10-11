@@ -1,0 +1,318 @@
+# Case Files (M3.3): every recorded full-stack run, inspectable in the Arena viewer.
+#
+# Source of truth for the Case Files' TEXT and for which recordings they are.
+# lab_web/tools/build_casefiles.py converts the recordings (needs the bags in
+# ~/coco_lab_runs and ROS); lab_web/tools/casefiles.py checks this file (every
+# sentence has a label and evidence that resolves, every unresolved question
+# is labelled UNRESOLVED) and writes the site's generated/casefiles/cases.json.
+#
+# Labels are the learner labels (README section 3). Everything recorded on the
+# full ROS 2 stack in Gazebo is SIMULATION RESULT (evidence class STACK); no
+# physical robot exists. Per-run facts are generated from the committed data
+# named in `facts` and cite it.
+
+schema: coco.casefiles.v1
+
+groups:
+
+  - id: lab1-runs
+    title: "Lab 1 · Plan: three planners driven on the full stack"
+    lab: 1
+    source: {kind: lab1c, runs: [run_astar, run_dijkstra, run_greedy]}
+    checksum: {file: docs/data/lab1c/runs.json, definition: export_dir_sha256}
+    facts: docs/data/lab1c/runs.json
+    compare:
+      what: "The Arena model plans the same goal on its own map with the same planner."
+      params: {lens: plan}
+      per_run_goal_from: meta.goal_map
+    gaps: [lidar, odometry, tracking]
+    explain:
+      - label: SIMULATION RESULT
+        text: >-
+          Each run planned once with a coco_lab algorithm on a snapshot of Nav2's own costmap and
+          sent that one path to Nav2's FollowPath; nothing else planned and nothing replanned.
+        evidence: ['docs/RESULTS.md "COCO Lab Phase 1C"']
+      - label: SIMULATION RESULT
+        text: >-
+          A* and Dijkstra reached the goal; greedy best-first stalled 1.27 m along its 11.25 m plan
+          and controller_server aborted with FAILED_TO_MAKE_PROGRESS.
+        evidence: ['docs/RESULTS.md "COCO Lab Phase 1C"', docs/data/lab1c/runs.json]
+      - label: SIMULATION RESULT
+        text: >-
+          In every run the wheel topic's only publisher was cmd_vel_arbiter, at start, end and in
+          every one-second sample between.
+        evidence: ['docs/RESULTS.md "COCO Lab Phase 1C"']
+    unresolved:
+      - text: >-
+          One run of each planner is not a rate: whether greedy fails here every time, or A* and
+          Dijkstra always succeed, is not measured.
+        evidence: ['docs/RESULTS.md "COCO Lab Phase 1C"']
+    results: ['docs/RESULTS.md "COCO Lab Phase 1C"']
+
+  - id: astar-myth
+    title: "The A* myth: does Nav2's planner find the same optimum as the textbook?"
+    lab: 1
+    source: {kind: group, cases: [lab1_run_astar, lab1_run_dijkstra, lab1_run_greedy]}
+    data: [docs/data/lab1c/conformance/conformance.json, docs/data/lab1c/conformance/conformance_summary.json]
+    compare:
+      what: "The Arena model runs A*, Dijkstra and greedy on its own map: open the planner comparison."
+      params: {lens: plan}
+    gaps: []
+    explain:
+      - label: MEASURED
+        text: >-
+          On one snapshot of Nav2's global costmap, SmacPlanner2D's raw A* path had exactly
+          coco_lab's optimal cell cost on 36 of the 36 pairs where it reached the goal cell.
+        evidence: ['docs/RESULTS.md "Conformance: coco_lab vs SmacPlanner2D vs NavFn"',
+                   docs/data/lab1c/conformance/conformance_summary.json]
+      - label: MEASURED
+        text: >-
+          On the other 14 of 50 pairs Smac's raw path stopped one or two cells short of the goal; to
+          where it stopped, each was the optimum.
+        evidence: ['docs/RESULTS.md "Conformance: coco_lab vs SmacPlanner2D vs NavFn"']
+      - label: TESTED
+        text: >-
+          With an admissible heuristic A* returns exactly Dijkstra's cost: it can only open fewer
+          cells, never find a cheaper path.
+        evidence: [coco_lab/test/test_properties.py::test_astar_cost_equals_dijkstra_with_admissible_heuristic]
+      - label: SIMULATION RESULT
+        text: >-
+          The three runs below drove A*, Dijkstra and greedy plans on the full stack: A* and Dijkstra
+          arrived, greedy stalled.
+        evidence: ['docs/RESULTS.md "COCO Lab Phase 1C"']
+    unresolved:
+      - text: >-
+          Why 14 Smac paths stopped short is consistent with its on-approach exit, a hypothesis
+          made after the sweep; the binary was not instrumented.
+        evidence: ['docs/RESULTS.md "Conformance: coco_lab vs SmacPlanner2D vs NavFn"']
+    results: ['docs/RESULTS.md "Conformance: coco_lab vs SmacPlanner2D vs NavFn"']
+
+  - id: lab2-kidnap
+    title: "Lab 2 · Localise: AMCL kidnapped, injection on and off"
+    lab: 2
+    source: {kind: lab2_kidnap, root: lab2, prefix: kidnap_}
+    checksum: null   # docs/data/lab2/kidnap_ab.json names sessions, not bag checksums
+    facts: docs/data/lab2/kidnap_ab.json
+    compare:
+      what: "The Arena model runs MCL with injection on; it is kidnapped to the same target."
+      params: {lens: localise, cfg: ['localise.filter=mcl', 'localise.mcl.injection=augmented']}
+      per_run_kidnap_from: meta.kidnap_to_map
+    gaps: [lidar, odometry]
+    explain:
+      - label: SIMULATION RESULT
+        text: >-
+          AMCL localised at the spawn, then the robot was teleported to one of five targets with
+          odometry not told, and rotated in place for 180 s of simulation time.
+        evidence: ['docs/RESULTS.md "The kidnap A/B on the real stack"']
+      - label: SIMULATION RESULT
+        text: >-
+          As shipped (no injection) AMCL recovered 0 of 10 kidnaps; with Nav2's suggested injection
+          on, 2 of 10, at 6.5 s and 36.0 s.
+        evidence: ['docs/RESULTS.md "The kidnap A/B on the real stack"', docs/data/lab2/kidnap_ab.json]
+      - label: SIMULATION RESULT
+        text: >-
+          Three sessions are void and kept, not counted: two where the probe did not read AMCL's
+          latched pose, one where the target was read as an option.
+        evidence: ['docs/RESULTS.md "The kidnap A/B on the real stack"']
+    unresolved:
+      - text: >-
+          2 of 10 against 0 of 10 has a one-sided Fisher exact p of 0.237: the difference between
+          the arms is not resolved.
+        evidence: ['docs/RESULTS.md "The kidnap A/B on the real stack"']
+      - text: >-
+          Recovery from a confident wrong AMCL pose is not reliable on this stack; how to make it so
+          is open.
+        evidence: ['docs/RESULTS.md "The kidnap A/B on the real stack"']
+    results: ['docs/RESULTS.md "The kidnap A/B on the real stack"']
+
+  - id: lab2-rl-tour
+    title: "Lab 2 · robot_localization on the recorded tour"
+    lab: 2
+    source:
+      kind: multi
+      cases:
+        - {id: lab2_rl_fidelity_1_tour, bags: [lab2/fidelity_1/bag, lab2/rlpd_fidelity_1/rl_bag],
+           title: "fidelity_1 tour: wheel odometry and the adopted EKF",
+           window_from: {file: docs/data/lab2/ekf_drift.json, session: fidelity_1, drive: tour}}
+    checksum: null
+    data: [docs/data/lab2/ekf_drift.json]
+    compare:
+      what: "The Arena model's odometry noise and slip on the same kind of drive."
+      params: {lens: localise}
+    gaps: [odometry]
+    explain:
+      - label: SIMULATION RESULT
+        text: >-
+          robot_localization's EKF was fed the recorded wheel pose (differentiated) and gyro of the
+          same drive; on the fidelity_1 tour it ended 0.078 m from the truth where wheel odometry
+          ended 17.237 m off.
+        evidence: ['docs/RESULTS.md "robot_localization: wheel odometry and IMU"', docs/data/lab2/ekf_drift.json]
+      - label: ASSUMPTION
+        text: >-
+          Gazebo's gyro is noiseless, so these are an upper bound for a real gyro.
+        evidence: ['docs/RESULTS.md "robot_localization: wheel odometry and IMU"']
+    unresolved:
+      - text: >-
+          Whether the EKF would have saved run 15, which dead-reckoned through a corridor the old map
+          left blank, is unverified: this arena has no such stretch.
+        evidence: ['docs/RESULTS.md "robot_localization: wheel odometry and IMU"']
+    results: ['docs/RESULTS.md "robot_localization: wheel odometry and IMU"']
+
+  - id: lab3-slam
+    title: "Lab 3 · Map: two recorded tours, slam_toolbox and Cartographer, loop closure on and off"
+    lab: 3
+    source:
+      kind: multi
+      cases:
+        - {id: lab3_s1_tour, bags: [lab3/drives/s1_tour/bag], title: "s1_tour (from fidelity_s1)"}
+        - {id: lab3_1_tour, bags: [lab3/drives/1_tour/bag], title: "1_tour (from fidelity_1)"}
+    checksum: null
+    data: [docs/data/lab3/results.json]
+    backends: docs/data/lab3/results.json
+    compare:
+      what: "The Arena model maps the arena with its own algorithms; loop closure on and off."
+      params: {lens: map, cfg: ['map.algorithm=pose_graph']}
+    gaps: [lidar, odometry]
+    explain:
+      - label: SIMULATION RESULT
+        text: >-
+          Each tour was cut from a Lab 2 recording and replayed offline into slam_toolbox and
+          Cartographer with identical scans and wheel odometry, loop closure on and off.
+        evidence: ['docs/RESULTS.md "COCO Lab Phase 4"', docs/data/lab3/results.json]
+      - label: SIMULATION RESULT
+        text: >-
+          With global SLAM on, Cartographer drew sheared, rotated maps on both tours (F1 0.17 to
+          0.19); with it off, it mapped them well (F1 0.88 to 0.92).
+        evidence: ['docs/RESULTS.md "COCO Lab Phase 4"']
+      - label: SIMULATION RESULT
+        text: >-
+          slam_toolbox's loop closing was harmless on s1_tour and wrecked 1_tour (F1 0.40 against
+          0.90 off), identically in all three rounds.
+        evidence: ['docs/RESULTS.md "COCO Lab Phase 4"']
+    unresolved:
+      - text: >-
+          Why loop closure damaged the backends' maps is not attributed: their pose graphs were not
+          recorded.
+        evidence: ['docs/RESULTS.md "COCO Lab Phase 4"']
+    results: ['docs/RESULTS.md "COCO Lab Phase 4"']
+
+  - id: lab4-search
+    title: "Lab 4 · Search: the fetch mission's bay search, 16 runs"
+    lab: 4
+    source: {kind: lab4, manifest: docs/data/lab4/replay/p05_matrix/manifest.json, root: lab4/matrix,
+             void: [B3_colours_s7_red.void-1]}
+    checksum: {file: docs/data/lab4/replay/p05_matrix/manifest.json, definition: p05_sha_dir}
+    facts: docs/data/lab4/replay/p05_matrix/manifest.json
+    compare:
+      what: "The Arena model runs the same fetch: same colour, the target in the same bay."
+      params: {lens: decide}
+      per_run_cfg_from: fetch
+    gaps: [lidar, odometry, tracking]
+    explain:
+      - label: SIMULATION RESULT
+        text: >-
+          The robot was told only the colour; it searched the four bays in the order that minimised
+          the expected cost, marking each miss before the find.
+        evidence: ['docs/RESULTS.md "The searching mission in Gazebo"']
+      - label: SIMULATION RESULT
+        text: >-
+          14 of 16 runs completed; B2 aborted with RETURN_FAILED and C1 with SEARCH_EXHAUSTED, the
+          deliberate give-up-after-one-bay order.
+        evidence: ['docs/RESULTS.md "The searching mission in Gazebo"']
+      - label: SIMULATION RESULT
+        text: >-
+          Every one of the 39 looks agreed with the truth: 24 misses and 15 finds.
+        evidence: ['docs/RESULTS.md "The searching mission in Gazebo"']
+      - label: TESTED
+        text: >-
+          All 16 recorded searches are rebuilt from their looks alone by coco_lab and reproduce byte
+          for byte.
+        evidence: [coco_schemas/test/test_search_replay_v2.py::test_the_16_searches_replay_byte_for_byte]
+      - label: SIMULATION RESULT
+        text: >-
+          B3's first attempt is void and kept: the harness could not join its DDS domain because
+          earlier recorders had outlived their runs; B3 was rerun.
+        evidence: ['docs/RESULTS.md "The searching mission in Gazebo"']
+    unresolved:
+      - text: >-
+          B2 failed on the return because AMCL believed it was 4.8 m from the truth, about one bay
+          pitch across; aliasing between identical bays is suggested and not attributed.
+        evidence: ['docs/RESULTS.md "The searching mission in Gazebo"']
+    results: ['docs/RESULTS.md "The searching mission in Gazebo"']
+
+  - id: lab5-move
+    title: "Lab 5 · Move: DWB, MPPI and Regulated Pure Pursuit, 54 runs"
+    lab: 5
+    source: {kind: lab5, manifests: docs/data/lab5/drive, root: lab5/matrix}
+    checksum: {file: docs/data/lab5/drive, definition: lab5_bag_0}
+    facts: docs/data/lab5/drive
+    compare:
+      what: "The Arena model runs its teaching DWA, Pure Pursuit or MPPI on the same scenario: same path, start and goal."
+      params: {lens: move}
+      per_run_cfg_from: move
+    gaps: [lidar, tracking]
+    explain:
+      - label: SIMULATION RESULT
+        text: >-
+          One frozen global path per route, the same start, costmaps, collision monitor and arbiter
+          for every controller; a fresh simulator per run; 54 valid, 0 void.
+        evidence: ['docs/RESULTS.md "COCO Lab Phase 6"', 'docs/RESULTS.md "The controller matrix"']
+      - label: SIMULATION RESULT
+        text: >-
+          Into the room past the hairpin, DWB reached the goal 0 of 5 times (no progress, stalled
+          before the hairpin); MPPI and RPP 5 of 5.
+        evidence: ['docs/RESULTS.md "The controller matrix"']
+      - label: SIMULATION RESULT
+        text: >-
+          With a person walking down the path, DWB and MPPI 'reached' the goal only because the
+          actor has no collision body and walked through the robot; RPP failed 5 of 5; nobody swerved.
+        evidence: ['docs/RESULTS.md "The controller matrix"']
+      - label: SIMULATION RESULT
+        text: >-
+          Told it was 3.4 m from where it was, every controller aborted in its first control cycle
+          with INVALID_PATH, 9 of 9: run 15's mechanism, not its symptom.
+        evidence: ['docs/RESULTS.md "The controller matrix"']
+    unresolved:
+      - text: >-
+          Why DWB stalls before the hairpin is not attributed beyond the logs.
+        evidence: ['docs/RESULTS.md "The controller matrix"']
+      - text: >-
+          Why no controller swerved from the oncoming person is open.
+        evidence: ['docs/RESULTS.md "The controller matrix"']
+    results: ['docs/RESULTS.md "The controller matrix"']
+
+  - id: run15
+    title: "Run 15: the robot that fetched the target and could not come home"
+    lab: 5
+    source: {kind: group, select: {group: lab5-move, scenario: mislocalised}}
+    data: []
+    compare:
+      what: "The Arena model's controllers, told the same 3.4 m wrong pose."
+      params: {lens: move, cfg: ['move.scenario=mislocalised']}
+    gaps: [tracking]
+    explain:
+      - label: SIMULATION RESULT
+        text: >-
+          M6 run 15 picked its target and held it, then could not be driven home: AMCL believed
+          (7.252, -2.962) while the robot was at (8.747, 0.149), 3.4 m off, after dead-reckoning
+          through a corridor the map left blank.
+        evidence: ['docs/RESULTS.md "The one failure: run 15, and it is a localisation failure"']
+      - label: SIMULATION RESULT
+        text: >-
+          Run 15 itself was never recorded as a bag; these Case Files are its reproduction, the nine
+          Lab 5 runs told the same 3.4 m wrong pose.
+        evidence: ['docs/RESULTS.md "The controller matrix"']
+      - label: SIMULATION RESULT
+        text: >-
+          In all nine, the controller aborted in its first cycle with INVALID_PATH: the path was
+          fine; the robot's idea of where it stood was not.
+        evidence: ['docs/RESULTS.md "The controller matrix"']
+    unresolved:
+      - text: >-
+          Exactly what happened in run 15 is unresolved: its log says DWB found 'no valid
+          trajectories out of 819', while the reproductions scored 0 candidates, and run 15 cannot be
+          re-run.
+        evidence: ['docs/RESULTS.md "The controller matrix"',
+                   'docs/RESULTS.md "The one failure: run 15, and it is a localisation failure"']
+    results: ['docs/RESULTS.md "The one failure: run 15, and it is a localisation failure"',
+              'docs/RESULTS.md "The controller matrix"']
