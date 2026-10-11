@@ -41,6 +41,7 @@ function parseXY(v: string | null, n: 2 | 3): number[] | null {
   return xs.length === n && xs.every(Number.isFinite) ? xs : null;
 }
 import { ArenaRenderer, DEFAULT_LAYERS, type LayerVisibility } from './render/Renderer';
+import { CAMERA_MODES, type CameraMode } from './render/scene3d';
 import { ArenaSession } from './session';
 import { decodeRun, shareUrl, type SharedRun } from './share';
 import { Timeline } from './Timeline';
@@ -154,6 +155,10 @@ export function ArenaApp() {
   const worldRef = useRef<World | null>(null);
   worldRef.current = world;
   const specSha = useRef<string>('');
+  /** The World Spec's world -> map offset: where the 3D arena (in Gazebo's world frame) sits. */
+  const worldToMap = useRef<[number, number]>([0, 0]);
+  // M4.1: `?camera=follow|orbit|robot_eye` opens a perspective camera; top-down otherwise (until M4.5)
+  const initialCamera: CameraMode = CAMERA_MODES.find((m) => m === params.get('camera')) ?? 'topdown';
   const pendingTakeover = useRef(false);
   const inspectRef = useRef(false);
   const cmpPickRef = useRef(false);
@@ -233,6 +238,15 @@ export function ArenaApp() {
       occupancy.current = occ;
       rr.setWorld(w, occ, outline.current);
       setWorld(w);
+      // M4.1: the 3D arena, behind ?camera=follow until the default changes (M4.5, decision D1)
+      if (initialCamera !== 'topdown') {
+        const base = import.meta.env.BASE_URL;
+        const lod = window.matchMedia?.('(pointer: coarse)').matches ? 'low' : 'high';
+        rr.setCameraMode(initialCamera);
+        void specP.then(() => rr!.enable3D({ arena: `${base}assets3d/arena.glb`, robot: `${base}assets3d/robot_${lod}.glb` },
+          worldToMap.current)).then(() => perf.mark('world3d_ready', wallMs()))
+          .catch((e) => setError(`3D arena: ${(e as Error).message}`));
+      }
     };
 
     const stepLive = () => {
@@ -252,7 +266,10 @@ export function ArenaApp() {
     const outlineP = fetch(`${import.meta.env.BASE_URL}generated/arena/robot_outline.json`, { credentials: 'omit' })
       .then((x) => x.json()).then((j) => { outline.current = j.polygon; }).catch(() => {});
     const specP = fetch(`${import.meta.env.BASE_URL}generated/arena/coco_arena_v1.json`, { credentials: 'omit' })
-      .then((x) => x.arrayBuffer()).then((b) => sha256Hex(new Uint8Array(b))).then((h) => { specSha.current = h; });
+      .then((x) => x.arrayBuffer()).then((b) => {
+        try { worldToMap.current = JSON.parse(new TextDecoder().decode(b)).world_to_map; } catch { /* the 3D arena then sits at the world origin */ }
+        return sha256Hex(new Uint8Array(b));
+      }).then((h) => { specSha.current = h; });
 
     void fetch(`${import.meta.env.BASE_URL}generated/v2/index.json`, { credentials: 'omit' })
       .then((x) => (x.ok ? x.json() : { runs: [] })).then((j) => setRuns(j.runs ?? [])).catch(() => {});

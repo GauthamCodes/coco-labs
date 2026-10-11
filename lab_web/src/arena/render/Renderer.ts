@@ -42,6 +42,7 @@ export function setLinePoints(line: THREE.Line, pts: THREE.Vector3[]) {
 }
 import { PALETTES, VIRIDIS, type Palette, type Theme } from './palette';
 import { CLOSED, FRONTIER, PATH, type PlanStore } from './planStore';
+import { Scene3D, type CameraMode, type Scene3DAssets } from './scene3d';
 
 export interface LayerVisibility {
   occupancy: boolean; closed: boolean; heatmap: boolean; frontier: boolean; path: boolean;
@@ -125,6 +126,11 @@ export class ArenaRenderer {
   /** M2.3: while the page drags something (the robot, to kidnap it), a drag does not pan. */
   panSuspended = false;
   private raf = 0;
+  /** M4.1: the 3D scene (perspective camera, glTF arena and robot), once enabled. */
+  three: Scene3D | null = null;
+  cameraMode: CameraMode = 'topdown';
+  private lastFrame = 0;
+  private lastPose: [number, number, number] = [0, 0, 0];
   onFrame?: () => void;
   /** Called after each frame is submitted (the measurement hook for "drawn"). */
   onAfterRender?: () => void;
@@ -242,6 +248,8 @@ export class ArenaRenderer {
 
   /** COCO's pose (map frame): the robot, its footprint and the truth outline. */
   setPose(pose: [number, number, number], truth: [number, number, number] = pose) {
+    this.lastPose = pose;
+    this.three?.setPose(pose);
     this.robot.position.set(pose[0], pose[1], Z.robot);
     this.robot.rotation.z = pose[2];
     this.footprint?.position.set(pose[0], pose[1], Z.footprint);
@@ -348,7 +356,8 @@ export class ArenaRenderer {
     if (this.frontier) this.frontier.visible = L.frontier;
     if (this.pathLine) this.pathLine.visible = L.path;
     if (this.lidar) this.lidar.visible = L.lidar;
-    this.robot.visible = L.robot;
+    this.robot.visible = L.robot && !this.is3D;
+    if (this.three) this.three.robotHolder.visible = L.robot && this.cameraMode !== 'robot_eye';
     if (this.footprint) this.footprint.visible = L.footprint;
     if (this.truth) this.truth.visible = L.truth;
   }
@@ -374,6 +383,31 @@ export class ArenaRenderer {
 
   // -- camera and input -----------------------------------------------------
 
+  /** M4.1: load the 3D arena and robot; the perspective cameras become available. */
+  async enable3D(assets: Scene3DAssets, worldToMap: [number, number]) {
+    if (this.three) return;
+    const s = new Scene3D(this.scene, worldToMap);
+    this.three = s;
+    await s.load(assets);
+    s.setPose(this.lastPose);
+    this.setCameraMode(this.cameraMode);
+  }
+
+  /** Top-down (orthographic, the analytic view) or a perspective camera; 3D only once loaded. */
+  setCameraMode(mode: CameraMode) {
+    this.cameraMode = mode;
+    if (this.three && mode !== 'topdown') this.three.mode = mode;
+    const on = this.is3D;
+    this.three?.setVisible(on);
+    // in 3D the glTF robot stands for the flat outline; the footprint and truth stay as floor marks
+    this.robot.visible = this.layers.robot && !on;
+    if (this.three) this.three.robotHolder.visible = this.layers.robot && mode !== 'robot_eye';
+  }
+
+  get is3D(): boolean {
+    return this.cameraMode !== 'topdown' && !!this.three?.ready;
+  }
+
   fit() {
     if (!this.world) return;
     const { width: W, height: H, resolution: r, origin } = this.world;
@@ -397,9 +431,22 @@ export class ArenaRenderer {
   /** Screen (client) coordinates to map-frame metres. */
   toWorld(clientX: number, clientY: number): [number, number] {
     const rect = this.canvas.getBoundingClientRect();
+    if (this.is3D) {
+      // the floor point under the pointer (README §5.3: picking uses a floor ray for grids)
+      const hit = this.three!.toFloor(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
+      return hit ?? [this.lastPose[0], this.lastPose[1]];
+    }
     const x = this.view.cx + (clientX - rect.left - rect.width / 2) / this.view.scale;
     const y = this.view.cy - (clientY - rect.top - rect.height / 2) / this.view.scale;
     return [x, y];
+  }
+
+  /** Map-frame metres on the floor to client (screen) pixels: the inverse of toWorld, in either camera (harnesses use it). */
+  screenOf(x: number, y: number): [number, number] {
+    const rect = this.canvas.getBoundingClientRect();
+    const cam = this.is3D ? this.three!.camera : this.camera;
+    const v = new THREE.Vector3(x, y, 0).project(cam);
+    return [rect.left + ((v.x + 1) / 2) * rect.width, rect.top + ((1 - v.y) / 2) * rect.height];
   }
 
   /** Map-frame metres to the grid cell (row, col), or null off the map. */
@@ -433,6 +480,17 @@ export class ArenaRenderer {
       const prev = pts.get(e.pointerId);
       if (!prev) return;
       pts.set(e.pointerId, [e.clientX, e.clientY]);
+      if (this.is3D) {
+        // 3D: one pointer orbits the camera about the robot, two pinch to zoom
+        if (pts.size === 1 && !this.panSuspended) this.three!.orbitBy(e.clientX - prev[0], e.clientY - prev[1]);
+        else if (pts.size === 2 && pinch0 > 0) {
+          const [a, b] = [...pts.values()];
+          const d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+          this.three!.zoomBy(pinch0 / Math.max(1, d));
+          pinch0 = d;
+        }
+        return;
+      }
       if (pts.size === 1 && !this.panSuspended) {
         this.view.cx -= (e.clientX - prev[0]) / this.view.scale;
         this.view.cy += (e.clientY - prev[1]) / this.view.scale;
@@ -447,6 +505,7 @@ export class ArenaRenderer {
     c.addEventListener('pointercancel', up);
     c.addEventListener('wheel', (e) => {
       e.preventDefault();
+      if (this.is3D) { this.three!.zoomBy(Math.exp(e.deltaY * 0.0015)); return; }
       const before = this.toWorld(e.clientX, e.clientY);
       this.view.scale = Math.max(2, Math.min(2000, this.view.scale * Math.exp(-e.deltaY * 0.0015)));
       this.applyView();
@@ -469,11 +528,16 @@ export class ArenaRenderer {
   }
 
   start() {
-    const loop = () => {
+    const loop = (now: number) => {
       this.resize();
       this.onFrame?.();
       this.syncPlan();
-      this.renderer.render(this.scene, this.camera);
+      const dt = this.lastFrame ? (now - this.lastFrame) / 1000 : 1 / 60;
+      this.lastFrame = now;
+      if (this.is3D) {
+        this.three!.update(dt, (this.canvas.clientWidth || 1) / (this.canvas.clientHeight || 1));
+        this.renderer.render(this.scene, this.three!.camera);
+      } else this.renderer.render(this.scene, this.camera);
       this.onAfterRender?.();
       this.raf = requestAnimationFrame(loop);
     };

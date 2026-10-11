@@ -1,0 +1,230 @@
+{
+ "levels": {
+  "high": {
+   "budget": 20000,
+   "bytes": 856968,
+   "file": "robot_high.glb",
+   "triangles": 18680,
+   "visuals": [
+    {
+     "cluster_cell_m": 0.0,
+     "link": "chassis_link",
+     "source": "base.stl",
+     "source_tris": 608,
+     "tris": 608,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.009095,
+     "link": "wheel1",
+     "source": "wheel1.stl",
+     "source_tris": 87790,
+     "tris": 3252,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.009095,
+     "link": "wheel2",
+     "source": "wheel2.stl",
+     "source_tris": 87790,
+     "tris": 3252,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.009095,
+     "link": "wheel3",
+     "source": "wheel3.stl",
+     "source_tris": 87790,
+     "tris": 3252,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.009095,
+     "link": "wheel4",
+     "source": "wheel4.stl",
+     "source_tris": 87790,
+     "tris": 3252,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.0,
+     "link": "m_link1",
+     "source": "m_link1.stl",
+     "source_tris": 1898,
+     "tris": 1898,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.0,
+     "link": "m_link2",
+     "source": "m_link2.stl",
+     "source_tris": 1806,
+     "tris": 1806,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.0,
+     "link": "m_link3",
+     "source": "m_link3.stl",
+     "source_tris": 548,
+     "tris": 548,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.0,
+     "link": "grip1",
+     "source": "grip1.stl",
+     "source_tris": 304,
+     "tris": 304,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.0,
+     "link": "grip2",
+     "source": "grip2.stl",
+     "source_tris": 304,
+     "tris": 304,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.0,
+     "link": "lidar_link",
+     "source": "cylinder",
+     "source_tris": 96,
+     "tris": 96,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.0,
+     "link": "lidar_link",
+     "source": "cylinder",
+     "source_tris": 96,
+     "tris": 96,
+     "visual": 1
+    },
+    {
+     "cluster_cell_m": 0.0,
+     "link": "camera_link",
+     "source": "box",
+     "source_tris": 12,
+     "tris": 12,
+     "visual": 0
+    }
+   ]
+  },
+  "low": {
+   "budget": 4500,
+   "bytes": 189372,
+   "file": "robot_low.glb",
+   "triangles": 3908,
+   "visuals": [
+    {
+     "cluster_cell_m": 0.002384,
+     "link": "chassis_link",
+     "source": "base.stl",
+     "source_tris": 608,
+     "tris": 416,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.027756,
+     "link": "wheel1",
+     "source": "wheel1.stl",
+     "source_tris": 87790,
+     "tris": 362,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.027756,
+     "link": "wheel2",
+     "source": "wheel2.stl",
+     "source_tris": 87790,
+     "tris": 362,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.027756,
+     "link": "wheel3",
+     "source": "wheel3.stl",
+     "source_tris": 87790,
+     "tris": 362,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.027756,
+     "link": "wheel4",
+     "source": "wheel4.stl",
+     "source_tris": 87790,
+     "tris": 362,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.007276,
+     "link": "m_link1",
+     "source": "m_link1.stl",
+     "source_tris": 1898,
+     "tris": 396,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.005821,
+     "link": "m_link2",
+     "source": "m_link2.stl",
+     "source_tris": 1806,
+     "tris": 396,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.000781,
+     "link": "m_link3",
+     "source": "m_link3.stl",
+     "source_tris": 548,
+     "tris": 440,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.0,
+     "link": "grip1",
+     "source": "grip1.stl",
+     "source_tris": 304,
+     "tris": 304,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.0,
+     "link": "grip2",
+     "source": "grip2.stl",
+     "source_tris": 304,
+     "tris": 304,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.0,
+     "link": "lidar_link",
+     "source": "cylinder",
+     "source_tris": 96,
+     "tris": 96,
+     "visual": 0
+    },
+    {
+     "cluster_cell_m": 0.0,
+     "link": "lidar_link",
+     "source": "cylinder",
+     "source_tris": 96,
+     "tris": 96,
+     "visual": 1
+    },
+    {
+     "cluster_cell_m": 0.0,
+     "link": "camera_link",
+     "source": "box",
+     "source_tris": 12,
+     "tris": 12,
+     "visual": 0
+    }
+   ]
+  }
+ },
+ "meshes_dir": "gazebo_models/meshes",
+ "source": "gazebo_models/urdf/coco_robo2.xacro"
+}

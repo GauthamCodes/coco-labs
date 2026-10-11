@@ -26,6 +26,14 @@ export const DEFAULT_BASE = '/coco-labs/';
 export const DEFAULT_LANDING: 'arena' | 'v1' = 'arena';
 
 /**
+ * The camera a PHONE opens on (README rev 2, decision D1; M4.1). 3D is the
+ * default experience; if Gautham's phone fails the M4 feasibility gate
+ * (docs/v2/PHONE_GATE_M4.md), this becomes 'topdown' for phones and desktops
+ * stay 3D. Changed only when his recorded results say so (docs/STATUS.md).
+ */
+export const PHONE_DEFAULT_CAMERA: '3d' | 'topdown' = '3d';
+
+/**
  * Where the Live tab may open a coco.v1 WebSocket, and ask the same host's
  * /healthz before it does (the CSP's connect-src).
  * The local stack, plus the one remote endpoint below when it is set --
