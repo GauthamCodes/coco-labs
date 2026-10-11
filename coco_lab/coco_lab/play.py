@@ -64,8 +64,10 @@ CHALLENGES = ('beat-the-planner', 'next-node', 'search-the-bays',
 EPS = 1e-9
 #: a map drive's ATE is compared with its threshold within 1 micrometre: the
 #: thresholds are computed in CPython (make_play_levels.py), drives are scored
-#: in Pyodide, and the two differ by up to 1.3e-8 m in ATE over 20 drives
-#: (measured, M3.6; F1 and the scored tick were identical)
+#: in Pyodide, and the two differ by up to 1.3e-8 m in ATE over 20 submitted
+#: drives (M3.6) and by up to 1.55e-7 m over the four reference drives, which
+#: set the thresholds (M3 review, docs/v2/data/m3/review/map_engines.json);
+#: F1 and the scored tick were identical in every one
 MAP_ATE_EPS = 1e-6
 #: a cost-layer digit d costs d * COST_PER_DIGIT: '9' is the cost layer's scale
 COST_PER_DIGIT = 28.0

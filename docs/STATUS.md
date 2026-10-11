@@ -1428,7 +1428,8 @@ only. Read order for agents (README §9): `README.md`, this file,
       Native CPython reproduces 94 of 100 result hashes
       (14 of 20 map drives). The
       map drives agree on F1 and on the scored tick, but differ by up to
-      1.3e-8 m in ATE. The star thresholds are computed in CPython, so ATE
+      1.3e-8 m in ATE (*M3 review correction: and by up to 1.55e-7 m on the
+      reference drives that set the thresholds*). The star thresholds are computed in CPython, so ATE
       is now compared within 1 µm (`MAP_ATE_EPS`).
       `tools/play_reference_check.mjs` replays every level's reference
       answer under Pyodide: **18 of 18 earn

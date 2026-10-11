@@ -59,7 +59,10 @@ named. Measured 2026-10-10 and 2026-10-11 on the M3 branch; files are under
   by a stated rule, never typed. Lab 4's B2 recorded no belief, so its
   Case File marks only where the mission gave up, and the mission says so.
 - **Play (M3.5):** five challenges, 16 levels, every star threshold a
-  reference algorithm's result on the level (`docs/v2/CHALLENGES.md`).
+  reference algorithm's result on the level (`docs/v2/CHALLENGES.md`)
+  *(corrected in the M3 review: in four challenges; the Case File
+  detective's stars are stated bands, 2, 1 and 0.5 s, around a rule's
+  exact answer, as CHALLENGES.md's detective section always said)*.
   Luck is designed out:
   - **Next node:** ties on (f, h) count, since insertion order can't be
     seen.
@@ -79,7 +82,11 @@ named. Measured 2026-10-10 and 2026-10-11 on the M3 branch; files are under
 - **CPython and Pyodide differ in the last digits of map metrics (M3.6,
   measured).** CPython reproduced 94 of 100 result hashes. The 6 were map
   drives: the same F1 and scored tick, ATE up to 1.3e-8 m apart, distance
-  up to 1.7e-7 m. The thresholds come from CPython, so ATE is compared
+  up to 1.7e-7 m. *(Corrected in the M3 review: those are the 20 submitted
+  drives. On the four reference drives, which set the thresholds, ATE
+  differs by up to 1.55e-7 m and distance by up to 1.0e-6 m, the larger on
+  Forty metres' tour, whose ATE is the three-star threshold;
+  `data/m3/review/map_engines.json`.)* The thresholds come from CPython, so ATE is compared
   within 1 µm, and CI replays every reference under Pyodide: 18 of 18 earn
   exactly their stars.
 - **The map meter never updated (M3.5, fixed).** Its interval depended on a
