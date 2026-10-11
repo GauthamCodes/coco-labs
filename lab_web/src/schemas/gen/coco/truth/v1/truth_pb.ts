@@ -17,7 +17,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file coco/truth/v1/truth.proto.
  */
 export const file_coco_truth_v1_truth: GenFile = /*@__PURE__*/
-  fileDesc("Chljb2NvL3RydXRoL3YxL3RydXRoLnByb3RvEg1jb2NvLnRydXRoLnYxImEKDlRydXRoUG9zZUJhdGNoEgsKA3NlcRgBIAMoBBIMCgR0aWNrGAIgAygEEg8KB3Rfd29ybGQYAyADKAESCQoBeBgEIAMoARIJCgF5GAUgAygBEg0KBXRoZXRhGAYgAygBIoMBCg5BY3RvclBvc2VCYXRjaBILCgNzZXEYASADKAQSDAoEdGljaxgCIAMoBBIPCgd0X3dvcmxkGAMgAygBEhAKCGFjdG9yX2lkGAQgAygJEgkKAXgYBSADKAESCQoBeRgGIAMoARINCgV0aGV0YRgHIAMoARIOCgZyYWRpdXMYCCADKAFiBnByb3RvMw");
+  fileDesc("Chljb2NvL3RydXRoL3YxL3RydXRoLnByb3RvEg1jb2NvLnRydXRoLnYxIokBCg5UcnV0aFBvc2VCYXRjaBILCgNzZXEYASADKAQSDAoEdGljaxgCIAMoBBIPCgd0X3dvcmxkGAMgAygBEgkKAXgYBCADKAESCQoBeRgFIAMoARINCgV0aGV0YRgGIAMoARIJCgF6GAcgAygBEgwKBHJvbGwYCCADKAESDQoFcGl0Y2gYCSADKAEigwEKDkFjdG9yUG9zZUJhdGNoEgsKA3NlcRgBIAMoBBIMCgR0aWNrGAIgAygEEg8KB3Rfd29ybGQYAyADKAESEAoIYWN0b3JfaWQYBCADKAkSCQoBeBgFIAMoARIJCgF5GAYgAygBEg0KBXRoZXRhGAcgAygBEg4KBnJhZGl1cxgIIAMoAWIGcHJvdG8z");
 
 /**
  * @generated from message coco.truth.v1.TruthPoseBatch
@@ -52,6 +52,31 @@ export type TruthPoseBatch = Message<"coco.truth.v1.TruthPoseBatch"> & {
    * @generated from field: repeated double theta = 6;
    */
   theta: number[];
+
+  /**
+   * M4.3, additive: the full 3D truth, ONLY where it was recorded or modelled
+   * (README section 3, invariant 4: height, roll and pitch are never invented
+   * for a Stack recording that did not record them). Empty otherwise.
+   *
+   * m
+   *
+   * @generated from field: repeated double z = 7;
+   */
+  z: number[];
+
+  /**
+   * rad, REP-103
+   *
+   * @generated from field: repeated double roll = 8;
+   */
+  roll: number[];
+
+  /**
+   * rad, REP-103
+   *
+   * @generated from field: repeated double pitch = 9;
+   */
+  pitch: number[];
 };
 
 /**

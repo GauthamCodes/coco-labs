@@ -1,0 +1,26 @@
+{
+ "docs/v2/data/m1/determinism/sessions.json": {
+  "sessions": 100,
+  "with_goal_and_teleop": 98
+ },
+ "docs/v2/data/m2/m211/determinism/sessions.json": {
+  "sessions": 100,
+  "with_goal_and_teleop": 97
+ },
+ "docs/v2/data/m2/m23/determinism_loop/sessions.json": {
+  "sessions": 10,
+  "with_goal_and_teleop": 10
+ },
+ "docs/v2/data/m2/m24/determinism_map/sessions.json": {
+  "sessions": 10,
+  "with_goal_and_teleop": 10
+ },
+ "docs/v2/data/m2/m25/determinism_move/sessions.json": {
+  "sessions": 10,
+  "with_goal_and_teleop": 9
+ },
+ "docs/v2/data/m2/m26/determinism_mission/sessions.json": {
+  "sessions": 10,
+  "with_goal_and_teleop": 10
+ }
+}

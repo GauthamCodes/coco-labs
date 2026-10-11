@@ -28,6 +28,8 @@ export interface TickRecord {
   mode: string; hash: string; ranges: Float32Array | null; plans: PlanInfo[];
   /** M2.5: moving bodies (x, y, radius), when the Move pack's actors are out. */
   actors?: [number, number, number][];
+  /** M4.3: on the terrain, [z, pitch, roll]; the wheels' speeds; who drove; the grasp. */
+  tilt?: [number, number, number]; wheels?: [number, number]; source?: Tick['source']; grasp?: Tick['grasp'];
 }
 
 /** Reveal a live search over about this many frames at speed 1. */
@@ -69,7 +71,7 @@ export class ArenaSession {
 
   onTick(t: Tick, ranges: Float32Array) {
     this.history.push({ tick: t.tick, t_world: t.t_world, pose: t.pose, truth: t.truth, v: t.v, w: t.w, mode: t.mode, hash: t.hash,
-      ranges, plans: t.plans, actors: t.actors });
+      ranges, plans: t.plans, actors: t.actors, tilt: t.tilt, wheels: t.wheels, source: t.source, grasp: t.grasp });
     if (t.path) this.givenPaths.push({ tick: t.tick, xy: t.path });
     const drop = this.history.length - 1 - KEEP_RANGES;
     if (drop >= 0) this.history[drop].ranges = null;

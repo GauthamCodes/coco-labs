@@ -27,7 +27,11 @@
 
 import * as THREE from 'three';
 
-import type { World } from '../protocol';
+import type { Tick, World } from '../protocol';
+
+/** coco_lab.arm's names for the arm's joints, and the URDF's (coco_robo2.urdf). */
+const ARM_JOINTS: [string, string][] = [['joint1', 'm_link1_Revolute-6'], ['joint2', 'm_link2_Revolute-7'],
+  ['finger_left', 'm_link3_Revolute-8'], ['finger_right', 'm_link3_Revolute-9']];
 
 /**
  * Give a line new points. `geometry.setFromPoints` on a geometry that
@@ -131,6 +135,7 @@ export class ArenaRenderer {
   cameraMode: CameraMode = 'topdown';
   private lastFrame = 0;
   private lastPose: [number, number, number] = [0, 0, 0];
+  private lastTilt: [number, number, number] | undefined;
   onFrame?: () => void;
   /** Called after each frame is submitted (the measurement hook for "drawn"). */
   onAfterRender?: () => void;
@@ -189,6 +194,9 @@ export class ArenaRenderer {
     lg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(beams * 6), 3).setUsage(THREE.DynamicDrawUsage));
     this.lidar = new THREE.LineSegments(lg, new THREE.LineBasicMaterial({ color: p.lidar, transparent: true, opacity: p.lidarAlpha }));
     this.lidar.position.z = Z.lidar;
+    // its vertices are rewritten every tick and the bounding sphere is computed once: never cull it
+    // (in 3D the camera follows the robot away from where the first scan was drawn; M4.3)
+    this.lidar.frustumCulled = false;
     this.scene.add(this.lidar);
 
     // the robot, from the chassis mesh outline (base_link frame)
@@ -247,14 +255,19 @@ export class ArenaRenderer {
   // -- state from the model -------------------------------------------------
 
   /** COCO's pose (map frame): the robot, its footprint and the truth outline. */
-  setPose(pose: [number, number, number], truth: [number, number, number] = pose) {
+  setPose(pose: [number, number, number], truth: [number, number, number] = pose, tilt?: [number, number, number]) {
     this.lastPose = pose;
-    this.three?.setPose(pose);
+    this.lastTilt = tilt;
+    this.three?.setPose(pose, tilt);
     this.robot.position.set(pose[0], pose[1], Z.robot);
     this.robot.rotation.z = pose[2];
-    this.footprint?.position.set(pose[0], pose[1], Z.footprint);
+    // M4.3: in 3D the marks that belong to the robot stand on its surface (a platform's top, not
+    // the floor beneath it); top-down keeps the layer order. The scan is horizontal, as the model's is.
+    const lift = this.is3D ? tilt?.[0] ?? 0 : 0;
+    this.footprint?.position.set(pose[0], pose[1], Z.footprint + lift);
+    if (this.lidar) this.lidar.position.z = Z.lidar + lift;
     if (this.truth) {
-      this.truth.position.set(truth[0], truth[1], Z.truth);
+      this.truth.position.set(truth[0], truth[1], Z.truth + lift);
       this.truth.rotation.z = truth[2];
     }
   }
@@ -384,13 +397,27 @@ export class ArenaRenderer {
   // -- camera and input -----------------------------------------------------
 
   /** M4.1: load the 3D arena and robot; the perspective cameras become available. */
-  async enable3D(assets: Scene3DAssets, worldToMap: [number, number]) {
+  async enable3D(assets: Scene3DAssets, worldToMap: [number, number], targets: World['targets'] = []) {
     if (this.three) return;
     const s = new Scene3D(this.scene, worldToMap);
     this.three = s;
     await s.load(assets);
-    s.setPose(this.lastPose);
+    s.setTargets(targets ?? []);
+    s.setPose(this.lastPose, this.lastTilt);
     this.setCameraMode(this.cameraMode);
+  }
+
+  /** M4.3: the wheels' speeds (rad/s, left and right): the 3D robot's wheels turn at them. */
+  setWheels(w: [number, number]) {
+    this.three?.setWheelSpeeds(w);
+  }
+
+  /** M4.3: the targets where the model has them (a tick's grasp state); the carried one rides. */
+  setGrasp(g: Tick['grasp']) {
+    if (g?.targets) this.three?.moveTargets(g.targets, g.phase === 'carry' || g.phase === 'release' ? g.target ?? null : null);
+    // the pick's joints (coco_lab.arm: URDF joint angles) on the URDF's joints
+    const a = (g?.arm ?? {}) as Record<string, unknown>;
+    for (const [k, joint] of ARM_JOINTS) if (typeof a[k] === 'number') this.three?.setJoint(joint, a[k] as number);
   }
 
   /** Top-down (orthographic, the analytic view) or a perspective camera; 3D only once loaded. */

@@ -5,7 +5,7 @@
 
 export interface InputRow {
   tick: number;
-  kind: 'goal' | 'teleop' | 'stop' | 'planner' | 'reset' | 'kidnap' | 'config';
+  kind: 'goal' | 'teleop' | 'stop' | 'planner' | 'reset' | 'kidnap' | 'config' | 'autonomy' | 'grasp';
   x?: number; y?: number; theta?: number; has_theta?: boolean;
   linear?: number; angular?: number; choice?: string;
 }
@@ -19,7 +19,15 @@ export interface BootRequest {
   seed: number;
   planner: string;
   batchSize: number;
+  /** M4.3: the World Spec to build (a file in generated/arena/); absent = coco_arena_v1.json. */
+  spec?: SpecFile;
 }
+
+/** The World Specs the site ships (tools/build_arena_assets.mjs); v1 is every default. */
+export const SPEC_FILES = { v1: 'coco_arena_v1.json', v2: 'coco_arena_v2.json' } as const;
+export type SpecFile = (typeof SPEC_FILES)[keyof typeof SPEC_FILES];
+/** `?world=v2` picks World Spec v2; anything else (or nothing) is v1. */
+export const specFileFor = (world: string | null): SpecFile => (world === 'v2' ? SPEC_FILES.v2 : SPEC_FILES.v1);
 
 export interface StepRequest { type: 'step'; inputs: InputRow[] }
 /**
@@ -49,6 +57,8 @@ export interface World {
   dt: number; radius: number; limits: Record<string, number>;
   lidar: { samples: number; angle_min: number; angle_max: number; range_max: number; mount: number[] };
   planners: string[]; planner: string; hash: string;
+  /** M4.3: the fetch targets on the platforms (World Spec v2 only); map frame, z the surface under each. */
+  targets?: { colour: string; x: number; y: number; z: number; diameter: number; height: number }[];
 }
 
 export interface PlanInfo {
@@ -69,6 +79,15 @@ export interface Tick {
   path?: number[];
   /** M3.5: a map challenge's ground-truth distance against its budget (coco_lab.play.MapBudget). */
   play?: { path_m: number; budget_m: number; done: boolean };
+  /** M4.3: [z, pitch, roll] on the terrain (World Spec v2 sessions only; ROS signs). */
+  tilt?: [number, number, number];
+  /** M4.3: left and right wheel speeds (rad/s). */
+  wheels?: [number, number];
+  /** M4.3: who the wheels obeyed (STOP > TELEOP > MISSION or PLANNER; coco_lab.arena.COMMAND_SOURCES). */
+  source?: 'idle' | 'stop' | 'teleop' | 'mission' | 'planner';
+  /** M4.3: the gated grasp, once there is one (coco_lab.arena.Arena.grasp_view). */
+  grasp?: { phase: string; target?: string | null; reason: string; targets?: Record<string, [number, number]>;
+    arm?: Record<string, number | boolean | string> | null };
 }
 
 /** SearchEventBatch columns (coco.plan.search.events.v1), as typed arrays. */

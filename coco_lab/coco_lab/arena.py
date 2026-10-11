@@ -60,6 +60,7 @@ input list, so :meth:`Arena.step` (all in one go) gives the same state and
 hashes; M1's hash layout is unchanged (a search's id is not state).
 """
 
+import copy
 from dataclasses import dataclass, field
 import hashlib
 import math
@@ -67,18 +68,33 @@ import struct
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .events import SearchEventColumns
+from .grasp import Grasp
 from .maps import OCCUPIED
 from .rng import Rng
 from .search import Collector, search_events, SearchResult
 from .sketch import (_inflated_grid_map, _nearest_free, apply_delta,
                      drive_command, LidarSpec, odom_delta, sample_delta,
                      SketchMap, step_pose, wrap)
-from .worldspec import arena_map, normalize, to_map_frame
+from .terrain import ray_rect, Terrain
+from .worldspec import (arena_map, normalize, scan_height, SPEC_VERSION_V2,
+                        terrain_map, to_map_frame)
 
 #: The state-hash layout's name; a change to the layout changes this.
 STATE_LAYOUT = b'coco.arena.state.v1\x00'
+#: M4.3: 'autonomy' hands control back to the last autonomous goal (the 3D
+#: Arena's Tab), 'grasp' is the gated grasp or release (its E; coco_lab.grasp);
+#: appended, so every earlier input keeps its meaning
 INPUT_KINDS = ('goal', 'teleop', 'stop', 'planner', 'reset', 'kidnap',
-               'config')
+               'config', 'autonomy', 'grasp')
+#: M4.3: a World Spec v2 session's terrain block in the state hash (only
+#: there: a flat, v1 session's state bytes are exactly M3's)
+TERRAIN_LAYOUT = b'coco.arena.terrain.v1\x00'
+#: COCO's wheel base, front to rear (m): coco_config.robot.WHEELBASE, pinned
+#: by coco_lab_ros/test/test_sketch_constants.py
+WHEELBASE = 0.18
+#: Who the wheels are obeying this tick, by the arbiter's priority (README §3
+#: invariant 3): STOP over TELEOP (a person) over MISSION or PLANNER (autonomy)
+COMMAND_SOURCES = ('idle', 'stop', 'teleop', 'mission', 'planner')
 #: Inputs that switch on or drive the whole loop (M2); applied first
 LOOP_KINDS = ('kidnap', 'config')
 #: The whole loop's subsystems, registered by their packs on import
@@ -174,6 +190,19 @@ class Tick:
     belief: Optional[Tuple[float, float, float]] = None
     #: moving bodies in the world, (x, y, radius) (M2.5: the Move pack's actors)
     actors: List[Tuple[float, float, float]] = field(default_factory=list)
+    #: M4.3, presentation and events (never in the hash on a flat world):
+    #: height, pitch and roll on the terrain (0 on a flat world; ROS signs)
+    z: float = 0.0
+    pitch: float = 0.0
+    roll: float = 0.0
+    #: left and right wheel speeds (rad/s) from (v, w): what the wheels turn at
+    wheels: Tuple[float, float] = (0.0, 0.0)
+    #: who the wheels obey (COMMAND_SOURCES), and whether this tick made contact
+    source: str = 'idle'
+    contact: bool = False
+    #: the gated grasp (coco_lab.grasp), once there is one: phase, target,
+    #: reason, every target's (x, y), the arm during a pick
+    grasp: Optional[Dict[str, object]] = None
 
 
 def _q(v: float, scale: float) -> int:
@@ -196,7 +225,22 @@ class Arena:
             raise ArenaError(f'range_sigma must be >= 0, got {range_sigma!r}')
         self.lab_map = arena_map(self.spec)
         self.smap = SketchMap(self.lab_map)
+        # M4.3: kinematic terrain following on a World Spec v2 (ADR 0007); a
+        # v1 (flat) world has none, and everything below is exactly M3's
+        self.terrain = Terrain(self.spec) \
+            if self.spec['spec_version'] == SPEC_VERSION_V2 else None
+        #: what the LiDAR meets: on terrain the boxes alone (the ramps are met
+        #: analytically, above the beam); on a flat world the one map
+        self.scan_smap = SketchMap(terrain_map(self.spec, scan_only=True)) \
+            if self.terrain is not None else self.smap
+        self.beam_height = scan_height(self.spec)
+        #: the gated grasp (M4.3): None until the first grasp input
+        self.grasp: Optional[Grasp] = None
+        #: why the last grasp input did nothing on a flat world
+        self.grasp_notice = ''
         rb = self.spec['robot']
+        self.wheel_radius = rb['wheel_radius']
+        self.wheel_separation = rb['wheel_separation']
         li = rb['lidar']
         lidar = LidarSpec(li['samples'], li['angle_min'], li['angle_max'],
                           li['range_min'], li['range_max'],
@@ -262,6 +306,38 @@ class Arena:
         self.waypoints: List[Tuple[float, float]] = []
         self.wp_index = 0
         self.teleop = (0.0, 0.0)
+        # M4.3 bookkeeping for the command source and the hand-back: who set
+        # the goal ('planner' a person's click, 'mission' a subsystem), whether
+        # a PERSON is driving, and the last autonomous goal. Never in the hash.
+        self.goal_source: Optional[str] = None
+        self.user_teleop = False
+        self.last_auto_goal: Optional[Tuple[str, Tuple[float, float]]] = None
+
+    def tilt(self) -> Tuple[float, float, float]:
+        """``(z, pitch, roll)`` on the terrain (M4.3), zeros on a flat world."""
+        if self.terrain is None:
+            return (0.0, 0.0, 0.0)
+        x, y, th = self.pose
+        return self.terrain.pose(x, y, th, WHEELBASE / 2, self.wheel_separation / 2)
+
+    def wheel_speeds(self) -> Tuple[float, float]:
+        """Left and right wheel speeds (rad/s) of a differential drive doing (v, w)."""
+        half = self.wheel_separation / 2
+        return ((self.v - self.w * half) / self.wheel_radius,
+                (self.v + self.w * half) / self.wheel_radius)
+
+    def command_source(self, applied: Sequence['InputEvent']) -> str:
+        """Who the wheels obeyed this tick (COMMAND_SOURCES): STOP > TELEOP > autonomy."""
+        if any(e.kind == 'stop' for e in applied):
+            return 'stop'
+        if self.grasp is not None and self.grasp.phase == 'approach':
+            return 'mission'   # the grasp's approach is autonomy acting for the person
+        if self.mode == 'teleop':
+            # the mission backs up in teleop mode itself: that is autonomy
+            return 'teleop' if self.user_teleop else 'mission'
+        if self.mode == 'goal':
+            return 'mission' if self.goal_source == 'mission' else 'planner'
+        return 'idle'
 
     @property
     def t_world(self) -> float:
@@ -276,9 +352,14 @@ class Arena:
             self.goal = (e.x, e.y)
             self.teleop = (0.0, 0.0)
             self._want_plan = True
+            self.goal_source, self.user_teleop = 'planner', False
+            self.last_auto_goal = ('planner', (e.x, e.y))
         elif e.kind == 'teleop':
             self.goal, self.waypoints, self.wp_index = None, [], 0
+            self.user_teleop = True
             self.mode = 'teleop'
+            if self.grasp is not None and self.grasp.phase == 'approach':
+                self.grasp.phase, self.grasp.target = 'idle', None   # a person takes over
             self.teleop = (
                 max(-lim['teleop_linear'], min(lim['teleop_linear'], e.linear)),
                 max(-lim['teleop_angular'],
@@ -288,6 +369,9 @@ class Arena:
             self.mode = 'idle'
             self.teleop = (0.0, 0.0)
             self.v = self.w = 0.0          # STOP is immediate in the model
+            self.user_teleop = False
+            if self.grasp is not None and self.grasp.phase == 'approach':
+                self.grasp.phase, self.grasp.target = 'idle', None
         elif e.kind == 'planner':
             if e.choice not in PLANNERS:
                 raise ArenaError(f'unknown planner {e.choice!r}')
@@ -296,6 +380,42 @@ class Arena:
                 self._want_plan = True
         elif e.kind == 'reset':
             self.reset_home()
+        elif e.kind == 'autonomy':
+            self._hand_back()
+        elif e.kind == 'grasp':
+            if self.terrain is None:
+                self.grasp_notice = ('no targets on a flat world: the grasp is on the 3D '
+                                     "arena's platforms (World Spec v2)")
+                return
+            if self.grasp is None:
+                self.grasp = Grasp(self.spec['world_to_map'])
+            self.goal, self.waypoints, self.wp_index = None, [], 0
+            self.mode, self.teleop, self.user_teleop = 'idle', (0.0, 0.0), False
+            self.grasp.press(self)
+
+    def _hand_back(self) -> None:
+        """
+        Hand the wheels back to autonomy (M4.3; the 3D Arena's Tab).
+
+        Teleop already overrides autonomy the moment it arrives (M1's rule,
+        kept: every M1-M3 session replays byte for byte). Handing back resumes
+        the last autonomous goal: the mission's (it is asked to re-request
+        its leg, if it is still running one) or the person's own last goal.
+        With neither, the robot stops and waits.
+        """
+        self.user_teleop = False
+        self.teleop = (0.0, 0.0)
+        src = self.last_auto_goal
+        mission = self.subsystems.get('mission')
+        if src is not None and src[0] == 'mission' and mission is not None \
+                and hasattr(mission, 'resume'):
+            self.mode = 'idle'
+            mission.resume(self)
+        elif src is not None and src[0] == 'planner':
+            self.goal, self.goal_source = src[1], 'planner'
+            self._want_plan = True
+        else:
+            self.mode = 'idle'
 
     def reset_home(self) -> None:
         """
@@ -307,6 +427,8 @@ class Arena:
         also calls it when a new fetch starts after another (M3.0).
         """
         self._reset_robot()
+        if self.grasp is not None:
+            self.grasp = Grasp(self.spec['world_to_map'])   # the targets back on their stands
         if self.loop:
             self.odom = (0.0, 0.0, 0.0)
             for name in sorted(self.subsystems):
@@ -390,6 +512,10 @@ class Arena:
     def _command(self) -> Tuple[float, float, bool]:
         """Return the target ``(v, w)`` and whether the goal was reached."""
         lim = self.limits
+        if self.grasp is not None and self.grasp.phase in ('approach', 'pick', 'release'):
+            # the grasp's own approach drives; a pick or a release holds still
+            c = self.grasp.command(self)
+            return (c[0], c[1], False) if c is not None else (0.0, 0.0, False)
         if self.mode == 'teleop':
             return self.teleop[0], self.teleop[1], False
         if self.mode == 'goal':
@@ -420,7 +546,14 @@ class Arena:
         return out
 
     def _scan(self) -> List[float]:
-        true = self.smap.scan(self.pose, self.lidar, self.angles)
+        true = self.scan_smap.scan(self.pose, self.lidar, self.angles)
+        if self.terrain is not None:
+            # SIMPLIFIED (ARENA_MODEL.md): the beam is horizontal at the sensor's
+            # height above the surface under the robot; it stops where the ramp
+            # rises above it
+            rects = self.terrain.rects_above(self.tilt()[0] + self.beam_height)
+            if rects:
+                true = _with_rects(true, self.pose, self.lidar, self.angles, rects)
         discs = self.discs() if self.subsystems else []
         if discs:
             true = _with_discs(true, self.pose, self.lidar, self.angles, discs)
@@ -437,11 +570,14 @@ class Arena:
     def _snapshot(self):
         return (self.pose, self.v, self.w, self.mode, self.goal,
                 list(self.waypoints), self.wp_index, self.teleop,
-                self.planner)
+                self.planner, self.goal_source, self.user_teleop,
+                self.last_auto_goal, copy.deepcopy(self.grasp), self.grasp_notice)
 
     def _restore(self, snap):
         (self.pose, self.v, self.w, self.mode, self.goal, waypoints,
-         self.wp_index, self.teleop, self.planner) = snap
+         self.wp_index, self.teleop, self.planner, self.goal_source,
+         self.user_teleop, self.last_auto_goal, grasp, self.grasp_notice) = snap
+        self.grasp = copy.deepcopy(grasp)
         self.waypoints = list(waypoints)
 
     def _check_ticks(self, events: Sequence[InputEvent]):
@@ -559,6 +695,8 @@ class Arena:
         if self._goal_request is not None:
             # committed like a loop input: an amendment re-plans it
             self.goal, self.teleop = self._goal_request, (0.0, 0.0)
+            self.goal_source, self.user_teleop = 'mission', False
+            self.last_auto_goal = ('mission', self._goal_request)
             self._goal_request = None
             self._requested = True
         self._snap = self._snapshot()
@@ -638,6 +776,8 @@ class Arena:
             new = wheels = before
             self.v = self.w = 0.0
         self.pose = new
+        if self.grasp is not None:
+            self.grasp.step(self)
         if self.loop:
             r1, tr, r2 = odom_delta(before, wheels)
             n1, nt, n2 = sample_delta(r1, tr, r2, self.odom_alphas,
@@ -654,10 +794,14 @@ class Arena:
         b = self.state_bytes()
         self._chain = hashlib.sha256(self._chain + b).digest()
         h = hashlib.sha256(b).hexdigest()
+        z, pitch, roll = self.tilt()
         return Tick(self.tick, self.t_world, self.pose, self.v, self.w,
                     self.mode, list(self.ranges), plans, applied, blocked,
                     arrived, h, belief=self.belief() if self.loop else None,
-                    actors=self.discs() if self.subsystems else [])
+                    actors=self.discs() if self.subsystems else [],
+                    z=z, pitch=pitch, roll=roll, wheels=self.wheel_speeds(),
+                    source=self.command_source(applied), contact=blocked,
+                    grasp=self.grasp_view())
 
     def step(self, events: Sequence[InputEvent] = ()) -> Tick:
         """Apply this tick's inputs, plan once, advance ``dt``, scan, hash."""
@@ -711,7 +855,24 @@ class Arena:
                 sb = self.subsystems[name].state_bytes()
                 parts += [struct.pack('<I', len(nb)), nb,
                           struct.pack('<I', len(sb)), sb]
+        if self.grasp is not None:
+            # M4.3: only once there is a grasp (layout coco.arena.grasp.v1)
+            parts.append(self.grasp.state_bytes(lambda v: _q(v, Q_STATE)))
+        if self.terrain is not None:
+            # M4.3: only on terrain (layout coco.arena.terrain.v1, ARENA_MODEL.md)
+            z, pitch, roll = self.tilt()
+            parts += [TERRAIN_LAYOUT, struct.pack('<3q', _q(z, Q_STATE), _q(pitch, Q_STATE),
+                                                  _q(roll, Q_STATE))]
         return b''.join(parts)
+
+    def grasp_view(self) -> Optional[Dict[str, object]]:
+        """Return what the renderer and the panels show of the grasp (M4.3)."""
+        if self.grasp is None:
+            return {'phase': 'idle', 'reason': self.grasp_notice} if self.grasp_notice else None
+        g = self.grasp
+        return {'phase': g.phase, 'target': g.target, 'reason': g.reason,
+                'targets': {k: list(v) for k, v in sorted(g.targets.items())},
+                'arm': g.arm_state(self)}
 
     def state_hash(self) -> str:
         """Return sha256 of the current state bytes (hex)."""
@@ -746,6 +907,23 @@ def _with_discs(ranges, pose, lidar, angles, discs) -> List[float]:
                     continue
                 t = 0.0  # the sensor is inside the disc
             if t < out[k]:
+                out[k] = t
+    return out
+
+
+def _with_rects(ranges, pose, lidar, angles, rects) -> List[float]:
+    """Return ``ranges`` shortened where a beam meets one of ``rects`` first (M4.3)."""
+    x, y, th = pose
+    mx, my, myaw = lidar.mount
+    c, s = math.cos(th), math.sin(th)
+    sx = x + c * mx - s * my
+    sy = y + s * mx + c * my
+    out = list(ranges)
+    for k, a in enumerate(angles):
+        ux, uy = math.cos(th + myaw + a), math.sin(th + myaw + a)
+        for r in rects:
+            t = ray_rect(sx, sy, ux, uy, r)
+            if t is not None and t < out[k]:
                 out[k] = t
     return out
 

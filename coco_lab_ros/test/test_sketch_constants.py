@@ -105,3 +105,23 @@ def test_the_default_scan_is_cocos_decimated():
     assert re.search(r'decimated\(8\)', open(sketch.__file__).read())
     assert sketch.Scenario((0, 0, 0), [(1, 0)]).lidar == \
         sketch.COCO_LIDAR.decimated(8)
+
+
+def test_the_arenas_terrain_and_grasp_constants_are_cocos():
+    # M4.3: coco_lab copies these (no coco_config in the browser); they must stay COCO's
+    from coco_lab import arena, fetch_problem, grasp
+    assert arena.WHEELBASE == robot.WHEELBASE
+    for t in robot.TARGETS:
+        assert robot.approach_window(t.colour) == grasp.WINDOW      # identical for every colour
+    assert grasp.MAX_LATERAL == robot.GRASP_MAX_LATERAL
+    assert grasp.TARGET_DIAMETER == {t.colour: t.diameter for t in robot.TARGETS}
+    assert grasp.TARGET_HEIGHT == robot.TARGET_HEIGHT
+    # the approach's creep speed is the Stack's (approach_server is a script: read its source)
+    src = os.path.join(os.path.dirname(__file__), '..', '..', 'custom_teleop', 'custom_teleop',
+                       'approach_server.py')
+    with open(src, encoding='utf-8') as f:
+        m = re.search(r'^CREEP_SPEED = ([0-9.]+)', f.read(), re.M)
+    assert m and float(m.group(1)) == grasp.CREEP
+    for colour, bay in fetch_problem.LAYOUT.items():
+        tx, ty = fetch_problem.TARGET_NOMINAL[bay][:2]
+        assert (tx, ty) == (robot.TARGET_ROW_X, robot.target_by_colour(colour).lane_y)

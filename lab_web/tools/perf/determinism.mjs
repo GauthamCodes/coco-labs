@@ -7,7 +7,7 @@
  * and Pyodide-in-Node, over 100 recorded sessions with random goals and
  * teleop.
  *
- *   node tools/perf/determinism.mjs make   --out DIR [--n 100 --ticks 150]
+ *   node tools/perf/determinism.mjs make   --out DIR [--n 100 --ticks 150] [--terrain 1]
  *   node tools/perf/determinism.mjs node   --out DIR
  *   node tools/perf/determinism.mjs chromium|firefox|webkit --out DIR --site URL [--webkit-exe PATH]
  *   node tools/perf/determinism.mjs compare --out DIR
@@ -27,6 +27,11 @@
  * DIR/hashes_<engine>.json.gz: every tick's state hash, every session's
  * final hash chain. `compare` checks every tick of every session against
  * the Node reference and writes DIR/determinism.json.
+ *
+ * `--terrain 1` (M4.3): World Spec v2 (the ramps and platforms), 700 ticks;
+ * most sessions drive to a platform and grasp there, among teleop, hand-backs
+ * (`autonomy`), stops, planner switches and random goals. sessions.json
+ * names its spec file; every engine builds that one.
  */
 
 import { createHash } from 'node:crypto';
@@ -61,6 +66,8 @@ function rng(seed) {
 }
 
 function make() {
+  const TERRAIN = args.terrain === '1';
+  if (TERRAIN) return makeTerrain();
   const spec = JSON.parse(readFileSync(join(GEN, 'arena', 'coco_arena_v1.json'), 'utf-8'));
   const { x_min, x_max, y_min, y_max } = spec.bounds;
   const [dx, dy] = spec.world_to_map;
@@ -132,8 +139,74 @@ function make() {
   console.log(`${n} sessions x ${ticks} ticks; inputs ${JSON.stringify(counts)}`);
 }
 
-const load = () => JSON.parse(readFileSync(args.sessions ?? join(OUT, 'sessions.json'), 'utf-8')).sessions
-  .slice(0, Number(args.limit ?? Infinity));
+function makeTerrain() {
+  const file = 'coco_arena_v2.json';
+  const spec = JSON.parse(readFileSync(join(GEN, 'arena', file), 'utf-8'));
+  const { x_min, x_max, y_min, y_max } = spec.bounds;
+  const [dx, dy] = spec.world_to_map;
+  const lim = spec.robot.limits;
+  const n = Number(args.n ?? 100);
+  const ticks = Number(args.ticks ?? 700);
+  const r = rng(Number(args['gen-seed'] ?? 20261011));
+  // the platforms' centres in the MAP frame (World Spec v2's elevation)
+  const platforms = spec.elevation.filter((e) => e.kind === 'platform').map((e) => [e.center[0] + dx, e.center[1] + dy]);
+  const sessions = [];
+  for (let s = 0; s < n; s += 1) {
+    const inputs = [];
+    let t = 0;
+    if (r() < 0.7) {
+      // a fetch: a goal on a platform, then the grasp once the climb is over -- the planned
+      // drive arrives on an inner platform (|y| = 2) by about tick 240 and an outer one by
+      // about 370 (CPython, M4.3) -- then time for the approach and the pick, sometimes a
+      // release; the random inputs follow (a few grasps are pressed early on purpose)
+      const [px, py] = platforms[Math.floor(r() * platforms.length)];
+      inputs.push({ tick: 1, kind: 'goal', x: px - 0.05 + 0.1 * r(), y: py - 0.05 + 0.1 * r() });
+      const arrive = Math.abs(py) < 4 ? 250 : 380;
+      const g = r() < 0.1 ? arrive - 60 : arrive + Math.floor(r() * 30);
+      inputs.push({ tick: g, kind: 'grasp' });
+      t = g + 230;
+      if (r() < 0.5) {
+        inputs.push({ tick: t, kind: 'teleop', linear: -0.2, angular: 0 });
+        inputs.push({ tick: t + 10, kind: 'stop' });
+        inputs.push({ tick: t + 12, kind: 'grasp' });
+        t += 40;
+      }
+    }
+    while (true) {
+      t += 15 + Math.floor(r() * 50);
+      if (t >= ticks - 5) break;
+      const u = r();
+      if (u < 0.25) {
+        inputs.push({ tick: t, kind: 'teleop', linear: (2 * r() - 1) * lim.teleop_linear, angular: (2 * r() - 1) * lim.teleop_angular });
+      } else if (u < 0.45) {
+        const onPlatform = r() < 0.5;
+        const [px, py] = platforms[Math.floor(r() * platforms.length)];
+        inputs.push(onPlatform ? { tick: t, kind: 'goal', x: px, y: py }
+          : { tick: t, kind: 'goal', x: x_min + dx + 0.5 + r() * (x_max - x_min - 1), y: y_min + dy + 0.5 + r() * (y_max - y_min - 1) });
+      } else if (u < 0.65) {
+        inputs.push({ tick: t, kind: 'autonomy' });
+      } else if (u < 0.85) {
+        inputs.push({ tick: t, kind: 'grasp' });
+      } else if (u < 0.92) {
+        inputs.push({ tick: t, kind: 'stop' });
+      } else {
+        inputs.push({ tick: t, kind: 'planner', choice: PLANNERS[Math.floor(r() * PLANNERS.length)] });
+      }
+    }
+    inputs.sort((a, b) => a.tick - b.tick);
+    sessions.push({ id: s, seed: 1 + Math.floor(r() * 2 ** 31), ticks, planner: PLANNERS[Math.floor(r() * PLANNERS.length)], inputs });
+  }
+  writeFileSync(join(OUT, 'sessions.json'), JSON.stringify({ schema: 'lab_web.determinism_sessions', version: '1.1',
+    generator: 'mulberry32(20261011)', spec_id: spec.id, spec_file: file, sessions }, null, 0) + '\n');
+  const counts = {};
+  for (const s of sessions) for (const i of s.inputs) counts[i.kind] = (counts[i.kind] ?? 0) + 1;
+  console.log(`${n} terrain sessions x ${ticks} ticks; inputs ${JSON.stringify(counts)}`);
+}
+
+const sessionsFile = () => JSON.parse(readFileSync(args.sessions ?? join(OUT, 'sessions.json'), 'utf-8'));
+/** The spec the sessions were made on (version 1.1 names it; 1.0 is always v1). */
+const specFile = () => sessionsFile().spec_file ?? 'coco_arena_v1.json';
+const load = () => sessionsFile().sessions.slice(0, Number(args.limit ?? Infinity));
 const save = (engine, info, res) => {
   writeFileSync(join(OUT, `hashes_${engine}.json.gz`), gzipSync(JSON.stringify({ engine, conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...info, sessions: res })));
   console.log(`${engine}: ${res.length} sessions, ${res.reduce((n, x) => n + x.hashes.length, 0)} ticks`);
@@ -142,7 +215,7 @@ const save = (engine, info, res) => {
 async function node() {
   const { loadPyodide } = await import('pyodide');
   const py = await loadPyodide({ indexURL: join(web, 'node_modules', 'pyodide') + '/', stdLibURL: join(GEN, 'pyodide', 'python_stdlib.zip') });
-  const spec = readFileSync(join(GEN, 'arena', 'coco_arena_v1.json'), 'utf-8');
+  const spec = readFileSync(join(GEN, 'arena', specFile()), 'utf-8');
   const res = [];
   const t0 = Date.now();
   for (const s of load()) {
@@ -189,8 +262,9 @@ async function browser(name) {
   const version = `${name} ${b.version()}`;
   const res = [];
   const t0 = Date.now();
+  const SPEC = specFile();
   for (const s of load()) {
-    const r = await page.evaluate(async ([url, base, s, PACKS]) => {
+    const r = await page.evaluate(async ([url, base, s, PACKS, spec]) => {
       const w = new Worker(url, { type: 'module' });
       let packs = 0;
       const hashes = [];
@@ -213,13 +287,13 @@ async function browser(name) {
           };
           w.onerror = (e) => reject(new Error(e.message));
           w.postMessage({ type: 'boot', pyodideBase: `${base}generated/pyodide/`, assetsBase: `${base}generated/`, seed: s.seed,
-            planner: s.planner, batchSize: 4096 });
+            planner: s.planner, batchSize: 4096, ...(spec === 'coco_arena_v1.json' ? {} : { spec }) });
         });
       } finally {
         w.terminate();
       }
       return { hashes, chain };
-    }, [`${SITE}assets/${worker}`, new URL(SITE).pathname, s, PACK_NAMES]);
+    }, [`${SITE}assets/${worker}`, new URL(SITE).pathname, s, PACK_NAMES, SPEC]);
     res.push({ id: s.id, ...r });
     if (s.id % 10 === 9) console.log(`${name}: ${s.id + 1} sessions, ${Math.round((Date.now() - t0) / 1000)} s`);
   }
@@ -235,7 +309,8 @@ function compare() {
   const ref = runs['pyodide-node'];
   if (!ref) throw new Error('no Pyodide-in-Node reference');
   const sessions = load();
-  const out = { criterion: 'identical per-tick hashes across engines, 100 recorded sessions (README M1 B.4)', engines: {} };
+  const out = { criterion: specFile() === 'coco_arena_v1.json' ? 'identical per-tick hashes across engines, 100 recorded sessions (README M1 B.4)'
+    : 'identical per-tick hashes across engines, 100 recorded terrain sessions on World Spec v2 (M4.3)', spec_file: specFile(), engines: {} };
   for (const [engine, d] of Object.entries(runs)) {
     let ticks = 0; let mismatched = 0; const firstDiffs = [];
     for (const s of sessions) {

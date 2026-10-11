@@ -323,12 +323,59 @@ def arena_map(spec: Dict[str, object], map_id: str = '') -> LabMap:
     ox, oy = b['x_min'] - m, b['y_min'] - m
     width = round((b['x_max'] - b['x_min'] + 2 * m) / res)
     height = round((b['y_max'] - b['y_min'] + 2 * m) / res)
+    dx, dy = spec['world_to_map']
+    if spec['spec_version'] == SPEC_VERSION_V2:
+        return terrain_map(spec, map_id, scan_only=False)
     occ = _rasterise(b, res, ox, oy, width, height, ramp_rectangles(spec),
                      box_rectangles(spec))
-    dx, dy = spec['world_to_map']
     return LabMap(width, height, bytes(occ), map_id=map_id or spec['id'],
                   resolution=res, origin=(ox + dx, oy + dy), frame='map',
                   meta={'world_spec': spec['id']})
+
+
+def terrain_map(spec: Dict[str, object], map_id: str = '', scan_only: bool = False) -> LabMap:
+    """
+    Rasterise a World Spec v2 arena (M4.3; ADR 0007), in the MAP frame.
+
+    The ramps are not obstacles here: the robot drives up them
+    (coco_lab.terrain). Boxes are rasterised as in v1. Unless
+    ``scan_only``, each cell where the surface drops by more than
+    no slope explains (``Terrain.drop_threshold``) to a neighbour -- the sides
+    of a wedge or a platform --
+    is occupied: the robot cannot drive off (or onto) a ledge. The LiDAR
+    scans the ``scan_only`` map (boxes alone) and meets the ramps
+    analytically, wherever the surface stands above its beam.
+    """
+    from .terrain import Terrain
+    spec = normalize(spec)
+    b, res = spec['bounds'], spec['arena']['resolution']
+    m = spec['arena']['margin']
+    ox, oy = b['x_min'] - m, b['y_min'] - m
+    width = round((b['x_max'] - b['x_min'] + 2 * m) / res)
+    height = round((b['y_max'] - b['y_min'] + 2 * m) / res)
+    occ = _rasterise(b, res, ox, oy, width, height, [], box_rectangles(spec))
+    if not scan_only:
+        # the solids in the WORLD frame, where this grid is built
+        t = Terrain(dict(spec, world_to_map=[0.0, 0.0]))
+        drop = t.drop_threshold(res)
+        for x0, x1, y0, y1 in t.bounds():
+            c0 = max(1, math.floor((x0 - ox) / res) - 2)
+            c1 = min(width - 2, math.ceil((x1 - ox) / res) + 2)
+            r0 = max(1, math.floor(height - (y1 - oy) / res) - 2)
+            r1 = min(height - 2, math.ceil(height - (y0 - oy) / res) + 2)
+            for r in range(r0, r1 + 1):
+                y = oy + (height - r - 0.5) * res
+                for col in range(c0, c1 + 1):
+                    x = ox + (col + 0.5) * res
+                    hc = t.height(x, y)
+                    if any(abs(hc - t.height(x + ex, y + ey)) > drop
+                           for ex, ey in ((res, 0.0), (-res, 0.0), (0.0, res), (0.0, -res))) \
+                            and occ[r * width + col] == FREE:
+                        occ[r * width + col] = OCCUPIED
+    dx, dy = spec['world_to_map']
+    return LabMap(width, height, bytes(occ), map_id=map_id or spec['id'],
+                  resolution=res, origin=(ox + dx, oy + dy), frame='map',
+                  meta={'world_spec': spec['id'], 'terrain': 'scan' if scan_only else 'drive'})
 
 
 def _rasterise(b, res, ox, oy, width, height, ramps, boxes) -> bytearray:

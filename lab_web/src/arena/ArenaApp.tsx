@@ -24,7 +24,7 @@ import { Compare, type CompareState } from './Compare';
 import { Joystick } from './Joystick';
 import { PerfOverlay } from './PerfOverlay';
 import { perf } from './perf';
-import { wallMs, type InputRow, type PlanInfo, type Tick, type World } from './protocol';
+import { SPEC_FILES, specFileFor, wallMs, type InputRow, type PlanInfo, type Tick, type World } from './protocol';
 import { currentTheme, PALETTES } from './render/palette';
 import { PlanStore, type CellInfo } from './render/planStore';
 import { parseConverted, type ConvertedRun } from './replay';
@@ -80,6 +80,12 @@ const KEYS: Record<string, [number, number]> = {
 
 export function ArenaApp() {
   const params = new URLSearchParams(window.location.search);
+  /**
+   * M4.3: ?world=v2 is the terrain (World Spec v2); v1 stays the default for every existing link.
+   * The attract recording was made on v1, so a v2 page has none (M4.9 makes the 3D landing): it
+   * opens live, and the live v2 world is the one drawn.
+   */
+  const specFile = specFileFor(params.get('world'));
   const showPerf = params.has('perf');
   const source: PyodideSource = params.get('pyodide') === 'cdn' ? 'cdn' : 'self';
   const runParam = params.get('run');
@@ -108,7 +114,7 @@ export function ArenaApp() {
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const [world, setWorld] = useState<World | null>(null);
   const [liveReady, setLiveReady] = useState(false);
-  const [mode, setModeState] = useState<Mode>(runParam ? 'replay' : recordedId ? 'recording' : 'attract');
+  const [mode, setModeState] = useState<Mode>(runParam ? 'replay' : recordedId ? 'recording' : specFile === SPEC_FILES.v2 ? 'live' : 'attract');
   const [session, setSession] = useState<ArenaSession | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [inspect, setInspect] = useState(false);
@@ -244,7 +250,7 @@ export function ArenaApp() {
         const lod = window.matchMedia?.('(pointer: coarse)').matches ? 'low' : 'high';
         rr.setCameraMode(initialCamera);
         void specP.then(() => rr!.enable3D({ arena: `${base}assets3d/arena.glb`, robot: `${base}assets3d/robot_${lod}.glb` },
-          worldToMap.current)).then(() => perf.mark('world3d_ready', wallMs()))
+          worldToMap.current, w.targets)).then(() => perf.mark('world3d_ready', wallMs()))
           .catch((e) => setError(`3D arena: ${(e as Error).message}`));
       }
     };
@@ -265,7 +271,7 @@ export function ArenaApp() {
 
     const outlineP = fetch(`${import.meta.env.BASE_URL}generated/arena/robot_outline.json`, { credentials: 'omit' })
       .then((x) => x.json()).then((j) => { outline.current = j.polygon; }).catch(() => {});
-    const specP = fetch(`${import.meta.env.BASE_URL}generated/arena/coco_arena_v1.json`, { credentials: 'omit' })
+    const specP = fetch(`${import.meta.env.BASE_URL}generated/arena/${specFile}`, { credentials: 'omit' })
       .then((x) => x.arrayBuffer()).then((b) => {
         try { worldToMap.current = JSON.parse(new TextDecoder().decode(b)).world_to_map; } catch { /* the 3D arena then sits at the world origin */ }
         return sha256Hex(new Uint8Array(b));
@@ -329,7 +335,7 @@ export function ArenaApp() {
         .catch((e) => setError(`${caseId ? 'Case File' : 'recorded run'}: ${(e as Error).message}`));
     }
     // attract: the recording (not in a replay), started as the policy says (M2.0, measured)
-    if (!runParam && !recordedId) {
+    if (!runParam && !recordedId && specFile === SPEC_FILES.v1) {
       const startAttract = attractPolicy === 'after_live' ? perf.when('arena_ready')
         : attractPolicy === 'after_pyodide' ? perf.when('pyodide_ready') : Promise.resolve(0);
       void startAttract
@@ -383,7 +389,9 @@ export function ArenaApp() {
         }
         if (t && t.tick !== shownTick) {
           shownTick = t.tick;
-          rr!.setPose(t.pose, t.truth ?? t.pose);
+          rr!.setPose(t.pose, t.truth ?? t.pose, t.tilt);
+          rr!.setWheels(t.wheels ?? [0, 0]);
+          if (t.grasp) rr!.setGrasp(t.grasp);
           if (t.ranges) rr!.setScan(t.pose, t.ranges);
         }
       };
@@ -456,7 +464,7 @@ export function ArenaApp() {
       },
       // a refused amendment leaves its step running; any other failure ends the step
       onError: (stage, message) => { if (stage !== 'amend') inFlight = false; setError(`${stage}: ${message}`); },
-    }, { pyodide: source, seed: replayRun?.seed ?? Number(params.get('seed') ?? 1) });
+    }, { pyodide: source, seed: replayRun?.seed ?? Number(params.get('seed') ?? 1), spec: specFile });
 
     window.__cocoArena = {
       client: client.current, queue: queue.current, last: null, renderer: rr, session: active, goal,
@@ -560,6 +568,11 @@ export function ArenaApp() {
     const keydown = (e: KeyboardEvent) => {
       if ((e.target as HTMLElement)?.matches?.('input, select, textarea') || ['replay', 'recording'].includes(modeRef.current)) return;
       if (e.code === 'Space') { e.preventDefault(); held.clear(); takeOver(); queue.current.push({ kind: 'stop' }); return; }
+      // M4.3 (README §5.5): E grasps or releases through the proximity gate; Tab hands the wheels
+      // back to autonomy -- only when focus is on the page or the canvas, so Tab still walks the controls
+      if (e.code === 'KeyE' && !e.repeat) { e.preventDefault(); takeOver(); queue.current.push({ kind: 'grasp' }); return; }
+      const onPage = document.activeElement === document.body || document.activeElement === cv;
+      if (e.key === 'Tab' && !e.shiftKey && onPage && !e.repeat) { e.preventDefault(); held.clear(); takeOver(); queue.current.push({ kind: 'autonomy' }); return; }
       if (!(e.key in KEYS) || e.repeat) return;
       e.preventDefault();
       held.add(e.key);
@@ -658,7 +671,7 @@ export function ArenaApp() {
     const t = lastTick.current;
     if (!t || !specSha.current) return;
     setShare(shareUrl({ v: 1, spec: specSha.current, seed: Number(params.get('seed') ?? 1), ticks: t.tick, chain: t.chain,
-      inputs: log.current }, import.meta.env.BASE_URL));
+      inputs: log.current }, import.meta.env.BASE_URL) + (specFile === SPEC_FILES.v2 ? '&world=v2' : ''));
   };
 
   const tick = session?.shownTick ?? null;

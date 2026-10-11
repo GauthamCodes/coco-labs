@@ -10,8 +10,8 @@
 // @generated from file coco/robot/v1/robot.proto (package coco.robot.v1, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv2";
-import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
+import type { GenEnum, GenFile, GenMessage } from "@bufbuild/protobuf/codegenv2";
+import { enumDesc, fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv2";
 import type { Polygon2D, Pose2D } from "../../common/v1/common_pb";
 import { file_coco_common_v1_common } from "../../common/v1/common_pb";
 import type { Message } from "@bufbuild/protobuf";
@@ -20,7 +20,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file coco/robot/v1/robot.proto.
  */
 export const file_coco_robot_v1_robot: GenFile = /*@__PURE__*/
-  fileDesc("Chljb2NvL3JvYm90L3YxL3JvYm90LnByb3RvEg1jb2NvLnJvYm90LnYxIvMBCgtSb2JvdFBhcmFtcxIQCghyb2JvdF9pZBgBIAEoCRIUCgx3aGVlbF9yYWRpdXMYAiABKAESGAoQd2hlZWxfc2VwYXJhdGlvbhgDIAEoARISCgptYXhfbGluZWFyGAQgASgBEhMKC21heF9hbmd1bGFyGAUgASgBEiwKCWZvb3RwcmludBgGIAEoCzIZLmNvY28uY29tbW9uLnYxLlBvbHlnb24yRBIOCgZyYWRpdXMYByABKAESKwoLbGlkYXJfbW91bnQYCCABKAsyFi5jb2NvLmNvbW1vbi52MS5Qb3NlMkQSDgoGc291cmNlGAkgASgJInwKD1JvYm90U3RhdGVCYXRjaBILCgNzZXEYASADKAQSDAoEdGljaxgCIAMoBBIPCgd0X3dvcmxkGAMgAygBEgkKAXgYBCADKAESCQoBeRgFIAMoARINCgV0aGV0YRgGIAMoARIJCgF2GAcgAygBEg0KBW9tZWdhGAggAygBYgZwcm90bzM", [file_coco_common_v1_common]);
+  fileDesc("Chljb2NvL3JvYm90L3YxL3JvYm90LnByb3RvEg1jb2NvLnJvYm90LnYxIvMBCgtSb2JvdFBhcmFtcxIQCghyb2JvdF9pZBgBIAEoCRIUCgx3aGVlbF9yYWRpdXMYAiABKAESGAoQd2hlZWxfc2VwYXJhdGlvbhgDIAEoARISCgptYXhfbGluZWFyGAQgASgBEhMKC21heF9hbmd1bGFyGAUgASgBEiwKCWZvb3RwcmludBgGIAEoCzIZLmNvY28uY29tbW9uLnYxLlBvbHlnb24yRBIOCgZyYWRpdXMYByABKAESKwoLbGlkYXJfbW91bnQYCCABKAsyFi5jb2NvLmNvbW1vbi52MS5Qb3NlMkQSDgoGc291cmNlGAkgASgJIowCCg9Sb2JvdFN0YXRlQmF0Y2gSCwoDc2VxGAEgAygEEgwKBHRpY2sYAiADKAQSDwoHdF93b3JsZBgDIAMoARIJCgF4GAQgAygBEgkKAXkYBSADKAESDQoFdGhldGEYBiADKAESCQoBdhgHIAMoARINCgVvbWVnYRgIIAMoARIJCgF6GAkgAygBEg0KBXBpdGNoGAogAygBEgwKBHJvbGwYCyADKAESEgoKd2hlZWxfbGVmdBgMIAMoARITCgt3aGVlbF9yaWdodBgNIAMoARIsCgZzb3VyY2UYDiADKA4yHC5jb2NvLnJvYm90LnYxLkNvbW1hbmRTb3VyY2USDwoHY29udGFjdBgPIAMoCCq0AQoNQ29tbWFuZFNvdXJjZRIeChpDT01NQU5EX1NPVVJDRV9VTlNQRUNJRklFRBAAEhcKE0NPTU1BTkRfU09VUkNFX0lETEUQARIXChNDT01NQU5EX1NPVVJDRV9TVE9QEAISGQoVQ09NTUFORF9TT1VSQ0VfVEVMRU9QEAMSGgoWQ09NTUFORF9TT1VSQ0VfTUlTU0lPThAEEhoKFkNPTU1BTkRfU09VUkNFX1BMQU5ORVIQBWIGcHJvdG8z", [file_coco_common_v1_common]);
 
 /**
  * @generated from message coco.robot.v1.RobotParams
@@ -144,6 +144,58 @@ export type RobotStateBatch = Message<"coco.robot.v1.RobotStateBatch"> & {
    * @generated from field: repeated double omega = 8;
    */
   omega: number[];
+
+  /**
+   * M4.3, additive (README section 5.2: "3D fields"). Empty when not produced
+   * (a flat-world writer before M4, or a recording that did not carry them).
+   *
+   * m, height of the surface under the robot (map frame, z up)
+   *
+   * @generated from field: repeated double z = 9;
+   */
+  z: number[];
+
+  /**
+   * rad, REP-103: positive nose DOWN
+   *
+   * @generated from field: repeated double pitch = 10;
+   */
+  pitch: number[];
+
+  /**
+   * rad, REP-103: positive left side UP
+   *
+   * @generated from field: repeated double roll = 11;
+   */
+  roll: number[];
+
+  /**
+   * rad/s, the left wheels' speed
+   *
+   * @generated from field: repeated double wheel_left = 12;
+   */
+  wheelLeft: number[];
+
+  /**
+   * rad/s
+   *
+   * @generated from field: repeated double wheel_right = 13;
+   */
+  wheelRight: number[];
+
+  /**
+   * who the wheels obeyed this tick
+   *
+   * @generated from field: repeated coco.robot.v1.CommandSource source = 14;
+   */
+  source: CommandSource[];
+
+  /**
+   * the robot stopped against a wall, a ledge or an actor
+   *
+   * @generated from field: repeated bool contact = 15;
+   */
+  contact: boolean[];
 };
 
 /**
@@ -152,4 +204,48 @@ export type RobotStateBatch = Message<"coco.robot.v1.RobotStateBatch"> & {
  */
 export const RobotStateBatchSchema: GenMessage<RobotStateBatch> = /*@__PURE__*/
   messageDesc(file_coco_robot_v1_robot, 1);
+
+/**
+ * The arbiter's priority (README section 3, invariant 3): STOP over TELEOP
+ * (a person) over MISSION or PLANNER (autonomy). IDLE: nothing is driving.
+ *
+ * @generated from enum coco.robot.v1.CommandSource
+ */
+export enum CommandSource {
+  /**
+   * @generated from enum value: COMMAND_SOURCE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: COMMAND_SOURCE_IDLE = 1;
+   */
+  IDLE = 1,
+
+  /**
+   * @generated from enum value: COMMAND_SOURCE_STOP = 2;
+   */
+  STOP = 2,
+
+  /**
+   * @generated from enum value: COMMAND_SOURCE_TELEOP = 3;
+   */
+  TELEOP = 3,
+
+  /**
+   * @generated from enum value: COMMAND_SOURCE_MISSION = 4;
+   */
+  MISSION = 4,
+
+  /**
+   * @generated from enum value: COMMAND_SOURCE_PLANNER = 5;
+   */
+  PLANNER = 5,
+}
+
+/**
+ * Describes the enum coco.robot.v1.CommandSource.
+ */
+export const CommandSourceSchema: GenEnum<CommandSource> = /*@__PURE__*/
+  enumDesc(file_coco_robot_v1_robot, 0);
 

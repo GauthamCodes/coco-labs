@@ -43,6 +43,8 @@ applied at the **start** of its `tick`, in order:
 | `stop` | `v = w = 0` at once; clears the goal |
 | `planner` | choose a planner; a running goal is re-planned |
 | `reset` | back to the spec's start pose, idle |
+| `autonomy` | M4.3: hand the wheels back to the last autonomous goal (below) |
+| `grasp` | M4.3: grasp, approach then grasp, or release, through the Stack's proximity gate (World Spec v2 only; below) |
 
 A run is fully reproduced by **spec + seed + input log** (README §5.2).
 
@@ -288,3 +290,89 @@ believes it searched).
 - Every 10 ticks it emits `loc_error` (the true error, which the learner can
   see and the robot cannot) and, with a localiser, `loc_sigma` (the robot's
   own uncertainty).
+
+## Terrain, the command source and the grasp (M4.3)
+
+M4.3 adds three things to the model. A World Spec v1 (flat) session never
+meets any of them: its state bytes, and so every hash, golden trace and
+share link made before M4, are unchanged (every flat golden-trace and hash
+test passes unedited).
+
+**Terrain (World Spec v2 only; ADR 0007).** The arena's ramps and platforms
+(`elevation`: wedges and platforms) are `coco_lab.terrain.Terrain`, in the
+map frame. Following is **kinematic**: each tick the robot moves in (x, y, θ)
+exactly as on the flat, then stands on the surface. Its height is the
+surface under the wheel base's centre; its pitch and roll come from the
+surface under its four corners (half the wheel base, 0.09 m, front and back;
+half the track left and right): pitch = atan2(h_back − h_front, 2 × 0.09),
+positive nose **down**, roll = atan2(h_left − h_right, track), positive left
+side **up** (REP-103). SIMPLIFIED MODEL: no suspension, no contact forces, no
+slip on a slope, no tip-over. Where it can drive: `worldspec.terrain_map`
+rasterises the surface and marks a cell occupied where its height steps from
+a neighbour's by more than any slope here explains (`Terrain.drop_threshold`:
+the steepest wedge's rise over one cell, plus 2 cm). So a ramp's slope is
+free and its sides, a platform's sides and a ramp's raised end seen from
+below are walls; driving into one is a **contact** (the tick's `contact`
+flag), and the robot stops, as at any wall. The LiDAR sees the scan-height
+silhouette (`Terrain.rects_above` at the beam's height): a horizontal beam
+meets a ramp where the ramp rises above it. Measured against Gazebo's ground
+truth over Lab 4's 17 recorded fetches: `docs/v2/FIDELITY_v1.md` §4.
+
+**The command source.** Each tick reports who the wheels obeyed, by the
+arbiter's priority (README §3 invariant 3): `stop` (a STOP applied this
+tick) over `teleop` (a person driving) over `mission` or `planner`
+(autonomy: the mission's legs and the grasp's approach, or a goal a person
+set); `idle` when nothing drives. It is derived, not state: it is not in the
+hash. Teleop preempts autonomy the moment it arrives, as in M1–M3 (that rule
+is kept exactly: 98 of M1's 100 and 97 of M2.11's 100 committed determinism
+sessions contain both a goal and a teleop, `docs/v2/data/m4/m43/
+mixed_sessions.json`).
+The new input `autonomy` (the 3D Arena's Tab) hands the wheels back: it
+resumes the last autonomous goal, the mission's leg (`MissionArena.resume`
+re-requests it if the fetch is still on a leg) or the person's own last
+goal; with neither, the robot stops and waits.
+
+**The gated grasp** (`coco_lab.grasp`; World Spec v2 only, where the targets
+stand on the platforms at the frozen layout, `fetch_problem.TARGET_NOMINAL`).
+The input `grasp` (the 3D Arena's E) is the Stack's proximity gate: a target
+can be picked only when its axis is 0.151–0.1565 m ahead of `base_footprint`
+and within 10 mm of the centreline (`coco_config.robot.approach_window`,
+`GRASP_MAX_LATERAL`; copied and pinned by `test_sketch_constants.py`). With a
+target already in that window the press picks; with one up to 0.6 m ahead and
+within 30° of the nose it **approaches** first, as `approach_server` does:
+turns to face it, creeps at 0.03 m/s (`approach_server.CREEP_SPEED`), and in
+the last step proportionally (the model's 10 Hz tick would move 3 mm, more
+than half the 5.5 mm window); then the gate decides, and says why when it
+refuses. A teleop or a STOP cancels an approach. The pick is `coco_lab.arm`'s
+kinematic script; afterwards the target rides with the robot (the magnet
+holds it); a second press releases it in front of the robot. On a flat world
+the press does nothing and says so (no state is created). SIMPLIFIED MODEL:
+no contact, no forces, the target is assumed upright and where the gate saw
+it.
+
+### The terrain and grasp sections of the state hash
+
+Appended after everything above, little-endian, `Q_STATE` micro-units:
+
+- `coco.arena.grasp.v1\0`, only once a grasp input has created the grasp
+  state: phase u8 (idle, approach, pick, carry, release), target u8 (0 =
+  none, else 1 + the colour's index in name order), the phase's start time
+  int64, the approach's creep count u32, then each target's x and y (int64,
+  colours in name order: blue, green, red, yellow);
+- `coco.arena.terrain.v1\0`, only on a World Spec v2 session: z, pitch and
+  roll (3 × int64).
+
+Every tick also reports (not hashed: derived from hashed state) `z`,
+`pitch`, `roll`, the left and right wheel speeds (rad/s), the command source
+and the contact flag; `coco.robot.state.v1` gained them as additive fields
+9–15 and `coco.truth.pose.v1` gained z, roll and pitch (7–9), empty where
+nothing produced them (a Stack recording that did not record height is
+never given one).
+
+### Determinism on the terrain
+
+Measured in M4.3 over 100 recorded terrain sessions (`tools/perf/
+determinism.mjs make --terrain 1`: 700 ticks each, most driving to a
+platform and grasping there, among teleop, hand-backs, stops, planner
+switches and random goals) on Chromium, Firefox, WebKit and Pyodide-in-Node:
+`docs/v2/data/m4/m43/determinism/`.

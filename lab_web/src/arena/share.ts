@@ -25,8 +25,8 @@ export interface SharedRun {
   inputs: InputRow[];
 }
 
-// M2.3 appends kidnap and config: an M1 link's kind indices are unchanged
-const KINDS = ['goal', 'teleop', 'stop', 'planner', 'reset', 'kidnap', 'config'] as const;
+// M2.3 appends kidnap and config, M4.3 autonomy and grasp: an older link's kind indices are unchanged
+const KINDS = ['goal', 'teleop', 'stop', 'planner', 'reset', 'kidnap', 'config', 'autonomy', 'grasp'] as const;
 type Row = [number, number, ...(number | string)[]];
 
 function toRow(r: InputRow): Row {

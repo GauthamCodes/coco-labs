@@ -32,6 +32,9 @@ const ARENA_CENTRE_WORLD: [number, number] = [4, 0];
 
 export interface Scene3DAssets { arena: string; robot: string }
 
+/** The targets' colours as drawn (coco_config's names; the hues are the page's, not the SDF's). */
+const TARGET_COLOURS: Record<string, number> = { red: 0xd03a2f, green: 0x2f9e44, blue: 0x2f6fd0, yellow: 0xe0b020 };
+
 interface Joint { q: THREE.Object3D; axis: THREE.Vector3 }
 
 /** Exponential approach: the fraction of the remaining distance covered in dt at rate k (1/s). */
@@ -46,8 +49,14 @@ export class Scene3D {
   /** Triangles of the loaded assets (what the frame rate is measured against). */
   triangles = 0;
   private pose: [number, number, number] = [0, 0, 0];
+  private z = 0;
+  private wheelSpeed: [number, number] = [0, 0];
+  private wheelAngle: [number, number] = [0, 0];
+  /** each wheel joint and its side (0 left, 1 right), found from where it sits in the robot */
+  private wheels: { name: string; side: 0 | 1; sign: number }[] = [];
+  private readonly targets = new Map<string, THREE.Mesh>();
   /** The camera rig's own state: sprung toward the robot (feel, not physics). */
-  private rig = { x: 0, y: 0, yaw: 0, init: false };
+  private rig = { x: 0, y: 0, z: 0, yaw: 0, init: false };
   private orbit = { yaw: 0, pitch: 0.38, dist: 2.6 };
   private wide = { yaw: -2.2, pitch: 0.72, dist: 24 };
   mode: Exclude<CameraMode, 'topdown'> = 'follow';
@@ -76,9 +85,23 @@ export class Scene3D {
     this.root.add(a);
     this.robotHolder.add(zUp(robot.scene));
     robot.scene.traverse((o) => {
-      const ex = o.userData as { joint?: string; axis?: number[] };
+      const ex = o.userData as { joint?: string; axis?: number[]; type?: string };
       if (ex.joint && ex.axis) this.joints.set(ex.joint, { q: o, axis: new THREE.Vector3(...ex.axis).normalize() });
     });
+    // the wheels: continuous joints; their side from where each sits (robot frame: +y is left), and
+    // the sign that makes a positive wheel speed roll the robot forward (its axis, in the robot frame)
+    robot.scene.updateMatrixWorld(true);
+    const inv = new THREE.Matrix4().copy(robot.scene.matrixWorld).invert();
+    for (const [name, j] of this.joints) {
+      if ((j.q.userData as { type?: string }).type !== 'continuous') continue;
+      const p = new THREE.Vector3().setFromMatrixPosition(j.q.matrixWorld).applyMatrix4(inv);
+      // glTF y-up: the robot's left (+y in ROS) is -z here
+      const left = p.z < 0;
+      const ax = j.axis.clone().transformDirection(new THREE.Matrix4().extractRotation(j.q.matrixWorld)).applyMatrix4(
+        new THREE.Matrix4().extractRotation(inv));
+      // forward roll is a rotation about the robot's +y (ROS) = -z here
+      this.wheels.push({ name, side: left ? 0 : 1, sign: ax.z < 0 ? 1 : -1 });
+    }
     for (const s of [arena.scene, robot.scene]) {
       s.traverse((o) => {
         const m = o as THREE.Mesh;
@@ -92,11 +115,48 @@ export class Scene3D {
     this.root.visible = v && this.ready;
   }
 
-  /** The robot where the model (or the recording) says it is: on the flat floor until M4.3's terrain. */
-  setPose(pose: [number, number, number]) {
+  /**
+   * The robot where the model (or the recording) says it is. On the terrain (M4.3) it stands at the
+   * surface's height with its wheel base's pitch and roll (ROS signs: pitch positive nose down, roll
+   * positive left up; applied yaw, then pitch, then roll); on a flat world, on the floor.
+   */
+  setPose(pose: [number, number, number], tilt?: [number, number, number]) {
     this.pose = pose;
-    this.robotHolder.position.set(pose[0], pose[1], 0);
-    this.robotHolder.rotation.set(0, 0, pose[2]);
+    const [z, pitch, roll] = tilt ?? [0, 0, 0];
+    this.z = z;
+    this.robotHolder.position.set(pose[0], pose[1], z);
+    this.robotHolder.rotation.set(roll, pitch, pose[2], 'ZYX');
+  }
+
+  /**
+   * M4.3: the fetch targets, drawn as their cylinders where the model says they stand. A carried
+   * target is drawn under the gripper (presentation: the model carries it in x, y only).
+   */
+  setTargets(targets: { colour: string; x: number; y: number; z: number; diameter: number; height: number }[]) {
+    for (const t of targets) {
+      const m = new THREE.Mesh(new THREE.CylinderGeometry(t.diameter / 2, t.diameter / 2, t.height, 24),
+        new THREE.MeshStandardMaterial({ color: TARGET_COLOURS[t.colour] ?? 0x888888, roughness: 0.55 }));
+      m.rotation.x = Math.PI / 2;   // three's cylinder axis is y; the scene is z up
+      m.position.set(t.x, t.y, t.z + t.height / 2);
+      m.userData = { height: t.height, z: t.z };
+      this.targets.set(t.colour, m);
+      this.root.add(m);
+    }
+  }
+
+  /** Move the targets to the model's positions (each tick's grasp state); `carried` rides the robot. */
+  moveTargets(positions: Record<string, [number, number]>, carried: string | null) {
+    for (const [c, [x, y]] of Object.entries(positions)) {
+      const m = this.targets.get(c);
+      if (!m) continue;
+      const { height, z } = m.userData as { height: number; z: number };
+      m.position.set(x, y, (c === carried ? this.z + 0.06 : z) + height / 2);
+    }
+  }
+
+  /** The wheels' speeds (rad/s); the wheels turn at them in the render loop (presentation only). */
+  setWheelSpeeds(w: [number, number]) {
+    this.wheelSpeed = w;
   }
 
   /** A joint's angle (rad) about its URDF axis. */
@@ -119,16 +179,21 @@ export class Scene3D {
   /** The follow rig (README §5.3: sprung, with look-ahead). dt in seconds. */
   update(dt: number, aspect: number) {
     const [x, y, th] = this.pose;
+    for (const k of [0, 1] as const) this.wheelAngle[k] += this.wheelSpeed[k] * Math.min(dt, 0.1);
+    for (const w of this.wheels) this.setJoint(w.name, w.sign * this.wheelAngle[w.side]);
     this.camera.aspect = aspect;
     this.sun.position.set(x - 4, y - 6, 10);
     this.sun.target.position.set(x, y, 0);
     if (this.mode === 'robot_eye') {
       // rendered presentation from the URDF camera link; perception stays abstract (README §5.3)
-      const c = Math.cos(th), s = Math.sin(th);
       const [cx, cy, cz] = CAMERA_LINK;
       this.camera.fov = CAMERA_VFOV_DEG;
-      this.camera.position.set(x + c * cx - s * cy, y + s * cx + c * cy, cz);
-      this.camera.lookAt(x + c * (cx + 1), y + s * (cx + 1), cz);
+      // on the terrain the camera link tilts with the base: the robot's own camera, transformed
+      this.robotHolder.updateMatrixWorld(true);
+      const eye = new THREE.Vector3(cx, cy, cz).applyMatrix4(this.robotHolder.matrixWorld);
+      const at = new THREE.Vector3(cx + 1, cy, cz).applyMatrix4(this.robotHolder.matrixWorld);
+      this.camera.position.copy(eye);
+      this.camera.lookAt(at);
       this.camera.updateProjectionMatrix();
       return;
     }
@@ -143,10 +208,11 @@ export class Scene3D {
       return;
     }
     const r = this.rig;
-    if (!r.init) { r.x = x; r.y = y; r.yaw = th; r.init = true; }
+    if (!r.init) { r.x = x; r.y = y; r.z = this.z; r.yaw = th; r.init = true; }
     const k = approach(Math.min(dt, 0.1), 6);
     r.x += (x - r.x) * k;
     r.y += (y - r.y) * k;
+    r.z += (this.z - r.z) * k;
     let dyaw = th - r.yaw;
     dyaw = Math.atan2(Math.sin(dyaw), Math.cos(dyaw));
     r.yaw += dyaw * approach(Math.min(dt, 0.1), 3);
@@ -154,8 +220,8 @@ export class Scene3D {
     const { pitch, dist } = this.orbit;
     const ahead = 0.6;
     this.camera.position.set(r.x - Math.cos(yaw) * Math.cos(pitch) * dist, r.y - Math.sin(yaw) * Math.cos(pitch) * dist,
-      0.15 + Math.sin(pitch) * dist);
-    this.camera.lookAt(r.x + Math.cos(r.yaw) * ahead, r.y + Math.sin(r.yaw) * ahead, 0.15);
+      r.z + 0.15 + Math.sin(pitch) * dist);
+    this.camera.lookAt(r.x + Math.cos(r.yaw) * ahead, r.y + Math.sin(r.yaw) * ahead, r.z + 0.15);
     this.camera.updateProjectionMatrix();
   }
 
