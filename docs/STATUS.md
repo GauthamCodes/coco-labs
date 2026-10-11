@@ -17,9 +17,9 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M3 | **Closed 2026-10-11 — agent-measurable criteria**: independent review [`v2/reviews/M3_REVIEW.md`](v2/reviews/M3_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: D6, Case File scans after the first frame, which took the first frame on emulated 4G from 97 / 100 to **100 / 100 within 2 s**); the outstanding re-measurement completed on AC, every M2 budget met; PR #22 merged into `main` **quietly** as **`bf7443f`** (merge commit, owner's one-off permission, branch kept, no release, tag or announcement); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search, the four modes 23 / 23 pages, 5 / 5 Case Files, 5 / 5 challenge links reproduced, all 22 v1 URL forms and `/v1/`'s six views, 0 console errors ([`v2/data/m3/exit/public_after_merge.json`](v2/data/m3/exit/public_after_merge.json)) |
 | Branch | `v2/m4-3d-arena` (from `main` = `bf7443f`), worked in the worktree `.claude/worktrees/v2-m4-3d-arena` |
 | Milestone | **M4 · 3D Arena** ([`v2/M4_PROMPT.md`](v2/M4_PROMPT.md)) — the content of the public v2.0 launch, which Gautham publishes after M4 merges and his rows pass |
-| Checkpoint | **M4.0 setup** (see "M4 checkpoint log") |
+| Checkpoint | **M4.1 feasibility gate** done (see "M4 checkpoint log"); next M4.2 |
 | Merge to `main` | M4 opens a PR; it is **not** merged by the agent (the merge permission covered PR #22 only) |
-| Pending Gautham | **The phone baseline, now**, on the live site ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md), [`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)); M4's phone rows (frame rate, cold start, touch and stability; `v2/PHONE_GATE_M4.md` from M4.1); **the consolidated five-person usability test at the end of M4** (decision D5; it replaces M1–M3's usability tests). M1–M3's phone rows are covered by the phone baseline and M4's gate. Never marked done by the agent |
+| Pending Gautham | **The phone baseline, now**, on the live site ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md), [`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)); **the M4 feasibility gate on the phone** ([`v2/PHONE_GATE_M4.md`](v2/PHONE_GATE_M4.md); preview via `lab_web/tools/preview_phone.sh`) and M4's phone rows; **the consolidated five-person usability test at the end of M4** (decision D5; it replaces M1–M3's usability tests). M1–M3's phone rows are covered by the phone baseline and M4's gate. Never marked done by the agent |
 
 ## Checkpoint log
 
@@ -1573,6 +1573,48 @@ only. Read order for agents (README §9): `README.md`, this file,
     and cannot fast-forward it. Gautham: `git -C ~/coco_labs_ws/src/coco-labs pull --ff-only`.
   - Screenshots awaiting review: none (no visual change).
   - **Next:** M4.1, the feasibility gate.
+- **M4.1 feasibility gate (2026-10-11).** `b1fc5fe` + this checkpoint's evidence commit.
+  - **Sources and the recorded world.** Robot: `gazebo_models/urdf/coco_robo2.xacro`
+    + `gazebo_models/meshes/*.stl` (read-only). World: Labs 1, 4 and 5 ran
+    `full_world_robo.launch.py traverse:=true` on the default
+    `gazebo_models/worlds/coco_navigation.world`, sha256 `cbe9415a…` = the world
+    Lab 1C's run metadata records; the ramps and platforms are spawned by the
+    launch file (4 bays: up-wedge `ramp_wedge_18.stl`, platform, down-wedge),
+    not in the SDF. Lab 5's scenarios are the same world plus actors, not other
+    SDF worlds (`coco_lab_ros/config/lab5_scenarios.json`); variants for M4.7:
+    the actors, and episode targets.
+  - **First conversion** (`lab_web/tools/assets/`, Python + numpy; rough by
+    design, M4.2 replaces the decimation): `arena.glb` 60,220 B, 964 triangles,
+    82 footprints; `robot_high.glb` 856,968 B, 18,680 triangles; `robot_low.glb`
+    189,372 B, 3,908 triangles; joints kept (4 wheels, 2 arm joints, 2 fingers).
+    World Spec v1 agrees with the converted SDF exactly (70 / 70 boxes; ramps).
+  - **3D in the page** (`render/scene3d.ts`): follow (sprung, look-ahead),
+    orbit and robot-eye cameras, the Plan lens on the floor, floor picking.
+    Opt-in `?camera=follow|orbit|robot_eye`; the default flips in M4.5 (D1).
+  - **Measured** (laptop and **emulated**, all on AC; `docs/RESULTS.md` "M4.1",
+    `v2/data/m4/m41/`): 60 fps (the display cap) in every run — RTX 4050 (all
+    cameras, the fetch mission with every layer), Intel integrated GPU,
+    emulated phone at 4× and 6× CPU; p95 frame 17.0–19.5 ms. Emulated 4G:
+    first computation 3.2 s, 3D world 5.1 s, live model 8.9 s.
+  - **Phone preview (permission 4):** `lab_web/tools/preview_phone.sh`
+    (Tailscale Funnel, static build, `/coco-labs/` only, off after 2 h).
+    Started 17:48 IST, **off at 19:48 IST**:
+    `https://coco-live.taile7cb60.ts.net/coco-labs/?view=arena&camera=follow&perf`.
+    Re-run `lab_web/tools/preview_phone.sh start` for another 2 h. Guide:
+    [`v2/PHONE_GATE_M4.md`](v2/PHONE_GATE_M4.md).
+  - **Phone default flag:** `PHONE_DEFAULT_CAMERA = '3d'` (`lab_web/site.config.ts`);
+    D1 applies when Gautham records his results.
+  - **Screenshots awaiting Gautham's review** (the visual target, first pass):
+    `v2/data/m4/screens/reference/follow_toward_ramp.png`, `orbit_wide.png`,
+    `robot_eye.png`. Known: flat lighting, everything the SDF's greys (the ramps
+    are low-contrast), the LiDAR fan aliases on the floor — M4.4 and M4.6.
+  - **Tests at the checkpoint's end** (`b1fc5fe`, AC): packages 3,498 / 0 / 0,
+    build tools 175 / 0 / 0 (+6), vitest 403 / 0 / 0 (`v2/data/m4/m41/suites.txt`).
+    **Known for M4.2:** CI's tool job has no numpy and fails on any skipped test;
+    `test_assets3d.py` needs numpy and skips the robot without ROS's xacro.
+    M4.2's pipeline removes both before the PR.
+  - **Next:** M4.2, the asset pipeline (ADR 0006), the manifest, size budgets in
+    CI, World Spec v2 (ADR 0007 drafted) and the agreement check.
 
 ## Capabilities (README §2), with evidence class
 

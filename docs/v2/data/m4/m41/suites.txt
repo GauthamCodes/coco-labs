@@ -1,0 +1,25 @@
+label m41 at b1fc5fe 2026-10-11T18:18:00+05:30
+profile balanced AC 1 battery 100% governor powersave load 0.26 0.51 0.63
+node v24.21.0 python Python 3.12.3 driver 580.178.04
+==================================================
+coco_config          ok   93 passed in 0.42s
+coco_sim             ok   323 passed in 1.90s
+coco_mission         ok   371 passed in 9.46s
+coco_web             ok   863 passed, 12 warnings in 21.34s
+gazebo_models        ok   231 passed in 12.48s
+coco_rl              ok   251 passed in 8.07s
+coco_perception      ok   139 passed, 12 warnings in 1.56s
+coco_moveit_config   ok   12 passed in 0.44s
+custom_teleop        ok   75 passed, 12 warnings in 1.40s
+coco_lab             ok   774 passed in 252.83s (0:04:12)
+coco_lab_ros         ok   143 passed, 15 warnings in 21.59s
+coco_schemas         ok   223 passed, 3 warnings in 6.59s
+==================================================
+[tests] all 12 packages passed
+packages exit=0
+175 passed in 262.30s (0:04:22)
+generated code is current
+ Test Files  38 passed (38)
+      Tests  403 passed (403)
+tools exit=0 vitest exit=0
+web exit=0

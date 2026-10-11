@@ -1,0 +1,118 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-11T12:37:51.731Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 98
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 0.25,
+    "5m": 0.45,
+    "15m": 0.7
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-11T12:38:16.796Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 98
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 0.45,
+    "5m": 0.48,
+    "15m": 0.7
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4244/coco-labs/",
+ "camera": "follow",
+ "gpu": "intel",
+ "flags": [
+  "--use-angle=vulkan",
+  "--enable-features=Vulkan",
+  "--ignore-gpu-blocklist",
+  "--enable-gpu"
+ ],
+ "vk_icd": "/usr/share/vulkan/icd.d/intel_icd.json",
+ "emulated": false,
+ "net": "none",
+ "phone_viewport": null,
+ "cpu_throttle": 1,
+ "scene": "m2",
+ "browser": "156.0.8078.4",
+ "renderer": "ANGLE (Intel, Vulkan 1.4.318 (Intel(R) Graphics (RPL-P) (0x0000A7A8)), Intel open-source Mesa driver)",
+ "triangles": 19644,
+ "marks_ms": {
+  "worker_create": 124,
+  "attract_ready": 235,
+  "first_frame": 265,
+  "first_computation_shown": 265,
+  "worker_boot": 269,
+  "pyodide_module": 273,
+  "world3d_ready": 295,
+  "pyodide_ready": 1723,
+  "coco_lab_ready": 1795,
+  "world_received": 2264,
+  "arena_ready": 2264
+ },
+ "fps_per_second": [
+  61,
+  61,
+  60,
+  61,
+  60,
+  61,
+  61,
+  60,
+  61,
+  60,
+  61,
+  61,
+  61,
+  60,
+  61,
+  61,
+  60,
+  60,
+  61,
+  61
+ ],
+ "fps_median": 61,
+ "fps_min": 60,
+ "frame_ms_p95_per_second": [
+  17.2,
+  17,
+  17,
+  17.3,
+  17.3,
+  17,
+  17.1,
+  17.1,
+  17.1,
+  17.2,
+  17.7,
+  17.6,
+  17.2,
+  17.2,
+  17.1,
+  17.2,
+  17.5,
+  17.5,
+  17.1,
+  17.1
+ ],
+ "console_errors": []
+}

@@ -9273,3 +9273,31 @@ reference drives — Forty metres' tour, whose ATE is the three-star
 threshold — against 1.3e-8 m over the 20 submitted drives M3.6 reported;
 F1 and the scored tick identical, stars 24 / 24 equal
 (`review/map_engines.json`).
+
+## COCO Lab v2 · M4.1: the 3D feasibility gate, laptop and emulated (measured 2026-10-11)
+
+**Evidence class.** MODEL (the browser). Laptop i5-13420H; RTX 4050 laptop
+GPU, NVIDIA 580.178.04; Intel Raptor Lake-P integrated graphics through
+ANGLE-Vulkan, Mesa 25.2.8; headless Chromium 156; balanced profile **on AC
+for every kept run** (each run's conditions record it; a run whose AC
+dropped would have been repeated — none was). Build `b1fc5fe`'s code
+(the first conversion: arena 964 triangles, robot 18,680 high / 3,908
+low). Evidence: `docs/v2/data/m4/m41/`.
+
+| Condition | Camera / scene | n | fps (median / min) | p95 frame, per second |
+|---|---|---|---|---|
+| RTX 4050 | follow, a goal driving, Plan lens | 3 × 20 s | 60–61 / 60 | 17.1–17.6 ms |
+| RTX 4050 | orbit; robot-eye; top-down | 1 × 20 s each | 60–61 / 60 | 17.2–17.9 ms |
+| RTX 4050 | follow, the fetch mission with every lens's layers | 3 × 20 s | 61 / 60 | 17.1–19.5 ms |
+| Intel integrated | follow, Plan lens | 3 × 20 s | 60–61 / 60 | 17.1–18.0 ms |
+| Intel integrated | follow, the fetch mission, every layer | 2 × 20 s | 61 / 60 | 17.0–17.7 ms |
+| **Emulated** phone (412 × 915, DPR 2.625, touch; Intel GPU; low-detail robot) | follow, CPU 4× | 2 × 20 s | 61 / 60 | 17.3–17.9 ms |
+| **Emulated** phone, as above | follow, CPU 6× | 2 × 20 s | 61 / 60 | 17.5–18.5 ms |
+
+Every run held the display's 60 fps cap, so these say there was headroom
+at M4.1's load, not how much. Emulated results are not a phone.
+
+**Cold start with the 3D world, emulated 4G** (9 Mbit/s, 1.5 up, 170 ms;
+RTX 4050; n = 3): first visible computation 3,232–3,275 ms; the 3D world
+ready 5,084–5,113 ms; the live model ready 8,928–8,964 ms (top-down, M3
+review: 7,997 ms median — the uncompressed 3D assets share the link).
