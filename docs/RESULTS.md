@@ -9108,3 +9108,40 @@ The 100 Case Files now total **41,486,529 B**.
 beats opened from Learn paused on exactly its tick, STACK, with the link
 back, and 0 errors. The nine rebuilt Case Files: first frame at most 49 ms,
 seek at most 34 ms.
+
+## COCO Lab v2 · M3.5: Play (measured 2026-10-11)
+
+**Evidence class.** MODEL (coco_lab's algorithms and the Arena model, in
+the browser), plus the detective's STACK recordings. Scorer:
+`coco_lab/coco_lab/play.py`. Thresholds: `docs/v2/CHALLENGES.md`, computed
+by `lab_web/tools/make_play_levels.py`. Evidence:
+`docs/v2/data/m3/m35/play_check_chromium.json`. Chromium 156 on the GPU
+(NVIDIA 580.178.04), balanced on AC.
+
+**What the reference algorithms score** (the star thresholds, a selection;
+all 16 levels are in CHALLENGES.md):
+
+| Challenge | Example threshold |
+|---|---|
+| Beat the planner | weighted A* (w = 2) reaches cost ratios 1.0477–1.1349 and greedy best-first 1.5198–1.7084, against A*'s 1 |
+| Next node | over A*'s next 10 expansions, the least-g predictor matches 1–4 and the least-h predictor 3–7 |
+| Search the bays | nearest-first and most-likely-first cost 1.0126–1.4344 × the optimal order's expected cost |
+| Map the arena (wheel odometry only) | 40 m: out and back F1 0.3408, ATE 0.3074 m; the tour F1 0.4841, ATE 0.8682 m. 25 m: the tour F1 0.5549, ATE 0.1544 m |
+
+The 25 m tour mapped better than the 40 m one: drift grows with distance.
+
+**In the browser:**
+
+| | Result |
+|---|---|
+| Levels played by clicks with the reference answer, links re-opened in a fresh context | 15 / 15 |
+| Every link reproduced exactly (same result hash) | yes, 3.9–8.4 s per link |
+| Scorer boot | 3.8–4.2 s |
+| A page score | at most 34 ms |
+| A 25 m map drive, re-simulated from its input log | 4.3 s |
+
+Every reference answer scored 3 stars, and the live map drive scored valid.
+
+**Found while choosing the map challenge, not investigated** (seed 1,
+`pose_graph`): the 40 m tour's map F1 0.316, ATE 0.108 m, against a
+20 m out-and-back's F1 0.580, ATE 0.015 m. Parked in `docs/IDEAS.md`.

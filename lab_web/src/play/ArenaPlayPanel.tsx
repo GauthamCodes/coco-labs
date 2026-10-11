@@ -39,6 +39,10 @@ export function ArenaPlayPanel({ challenge, levelId, live, liveReady, lastTick, 
   const [busy, setBusy] = useState<string | null>(null);
   const [fail, setFail] = useState<string | null>(null);
   const own = useRef<ArenaClient | null>(null);
+  // the Arena re-renders every tick with new getters: read them through refs, so the
+  // meter's interval is not torn down (and never fires) on every render
+  const get = useRef({ lastTick, shownTick, log });
+  get.current = { lastTick, shownTick, log };
   const scorer = () => live ?? own.current;
 
   useEffect(() => {
@@ -72,9 +76,9 @@ export function ArenaPlayPanel({ challenge, levelId, live, liveReady, lastTick, 
   }, [levels, level, live, liveReady]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (challenge !== 'map-the-arena') return;
-    const id = window.setInterval(() => { const p = lastTick()?.play; if (p) setMeter(p); }, 250);
+    const id = window.setInterval(() => { const p = get.current.lastTick()?.play; if (p) setMeter(p); }, 250);
     return () => window.clearInterval(id);
-  }, [challenge, lastTick]);
+  }, [challenge]);
 
   const score = (inputs: unknown) => {
     const c = scorer();
@@ -87,8 +91,8 @@ export function ArenaPlayPanel({ challenge, levelId, live, liveReady, lastTick, 
       .catch((e) => setFail(e instanceof Error ? e.message : String(e)))
       .finally(() => setBusy(null));
   };
-  const finishMap = () => { const t = lastTick(); if (t) score({ ticks: t.tick, log: log() }); };
-  const mark = () => { const t = shownTick(); if (t !== null) score([t]); };
+  const finishMap = () => { const t = get.current.lastTick(); if (t) score({ ticks: t.tick, log: get.current.log() }); };
+  const mark = () => { const t = get.current.shownTick(); if (t !== null) score([t]); };
 
   if (!level) return fail ? <p className="error" role="alert">{fail}</p> : null;
   return (

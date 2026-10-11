@@ -53,7 +53,7 @@ import math
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .grid import Grid
-from .search import search_events, collect
+from .search import collect, search_events
 from .trace import EXPAND, PUSH, RELAX
 
 SCHEMA = 'coco_lab.play.v1'
@@ -196,7 +196,8 @@ def _score_beat(level, inputs):
                                   ratio <= 1.0 + EPS])
     return why, stars, {'name': 'cost ratio', 'value': _r(ratio)}, [
         _metric('your_cost', cost, 'cost', 'the summed move costs of your path'),
-        _metric('optimal_cost', ref['optimal_cost'], 'cost', "A*'s path, which is optimal on this grid"),
+        _metric('optimal_cost', ref['optimal_cost'], 'cost',
+                "A*'s path, which is optimal on this grid"),
         _metric('ratio', ratio, '', 'your cost / optimal cost (1 is optimal)'),
         _metric('moves', max(0, len(path) - 1), '', 'moves in your path'),
         _metric('astar_expansions', ref['astar_expansions'], 'expansions',
@@ -253,7 +254,7 @@ def _predictor(frames, key) -> int:
 
 
 def next_references(level) -> Dict[str, object]:
-    """The matches of two simple predictors: least g (Dijkstra's), least h (greedy's)."""
+    """Count two simple predictors' matches: least g (Dijkstra's), least h (greedy's)."""
     fr = next_node_frames(level)
     return {'min_g_matches': _predictor(fr, lambda o: o[2]),
             'min_h_matches': _predictor(fr, lambda o: o[3])}
@@ -271,8 +272,10 @@ def _score_next(level, inputs):
     return why, stars, {'name': 'matches', 'value': n}, [
         _metric('matches', n, f'of {NEXT_N}', 'predictions A* could have expanded next'),
         _metric('per_step', hits, '', 'each prediction, in order'),
-        _metric('min_h_predictor', ref['min_h_matches'], f'of {NEXT_N}', 'always the open cell nearest the goal (greedy)'),
-        _metric('min_g_predictor', ref['min_g_matches'], f'of {NEXT_N}', 'always the open cell nearest the start (Dijkstra)'),
+        _metric('min_h_predictor', ref['min_h_matches'], f'of {NEXT_N}',
+                'always the open cell nearest the goal (greedy)'),
+        _metric('min_g_predictor', ref['min_g_matches'], f'of {NEXT_N}',
+                'always the open cell nearest the start (Dijkstra)'),
     ], [f'the weaker predictor: >= {lo}', f'the stronger predictor: >= {hi}',
         f'A* itself: {NEXT_N} of {NEXT_N}']
 
@@ -285,7 +288,7 @@ def _problem(level):
 
 
 def bays_references(level) -> Dict[str, object]:
-    """The optimal order and two simple policies' orders, with expected costs."""
+    """Return the optimal order and two simple policies' orders, with expected costs."""
     from .regionsearch import optimal_order, plan_cost, policy_plan
     p = _problem(level)
     opt = optimal_order(p, p.prior, p.start, range(p.n))
@@ -312,10 +315,13 @@ def _score_bays(level, inputs):
     stars = 0 if why else _stars([ratio <= lo + EPS, ratio <= hi + EPS, ratio <= 1.0 + EPS])
     return why, stars, {'name': 'expected cost ratio', 'value': _r(ratio)}, [
         _metric('expected_cost', None if why else c['expected'], 'm',
-                'the expected distance driven by your order, over where the target might be (the prior)'),
-        _metric('optimal_expected_cost', ref['optimal_expected'], 'm', 'the least expected cost of any order'),
+                'the expected distance driven by your order, over where the target might be '
+                '(the prior)'),
+        _metric('optimal_expected_cost', ref['optimal_expected'], 'm',
+                'the least expected cost of any order'),
         _metric('ratio', ratio, '', 'yours / optimal (1 is optimal); never the sampled outcome'),
-        _metric('p_find', None if why else c['p_find'], '', 'the chance the order finds the target'),
+        _metric('p_find', None if why else c['p_find'], '',
+                'the chance the order finds the target'),
     ], ['the worse of nearest-first and most-likely-first: ratio <= %.4f' % lo,
         'the better of them: ratio <= %.4f' % hi, 'the optimal order: ratio = 1']
 
@@ -360,7 +366,8 @@ def map_drive(spec, level, inputs, ticks) -> Dict[str, object]:
     """
     from .arena import Arena, InputEvent
     from . import loc_arena, map_arena, move_arena, mission_arena  # noqa: F401 -- subsystems
-    if not isinstance(ticks, int) or isinstance(ticks, bool) or not 0 < ticks <= level['max_ticks']:
+    if not isinstance(ticks, int) or isinstance(ticks, bool) \
+            or not 0 < ticks <= level['max_ticks']:
         raise PlayError(f"ticks must be 1..{level['max_ticks']}")
     rows = _map_inputs(level, inputs)
     a = Arena(spec, int(level['seed']))
@@ -382,7 +389,8 @@ def _map_inputs(level, inputs) -> List[Dict[str, object]]:
     if not isinstance(inputs, list) or len(inputs) > MAX_INPUTS:
         raise PlayError('an input log is a list')
     for r in inputs:
-        if not isinstance(r, dict) or (r.get('kind') != 'config' and r.get('kind') not in MAP_KINDS):
+        if not isinstance(r, dict) \
+                or (r.get('kind') != 'config' and r.get('kind') not in MAP_KINDS):
             raise PlayError(f'{r!r}: a map drive may only drive (goal, teleop, stop, planner)')
     cfg = [r for r in inputs if r.get('kind') == 'config']
     if [r.get('choice') for r in cfg] != list(level['config']):
@@ -420,7 +428,8 @@ def _score_map(level, inputs, spec):
     return None, stars, {'name': 'map F1', 'value': _r(f1)}, [
         _metric('f1', f1, '', "the map's F1 against the truth's visible walls (Lab 3's score)"),
         _metric('ate', ate, 'm', "the trajectory's RMS error against the truth (ATE)"),
-        _metric('path_m', r['path_m'], 'm', f"ground-truth distance driven (budget {level['budget_m']:g} m)"),
+        _metric('path_m', r['path_m'], 'm',
+                f"ground-truth distance driven (budget {level['budget_m']:g} m)"),
         _metric('ticks', r['ticks'], '', 'the tick the drive was scored at'),
     ], ['the weaker reference drive: F1 >= %.4f' % weak['f1'],
         'the stronger reference drive: F1 >= %.4f' % strong['f1'],
@@ -438,10 +447,11 @@ def _score_detective(level, inputs):
     m = level['moment']
     err = None if why else abs(tick - m['tick']) * level['tick_s']
     bands = level['bands_s']
-    stars = 0 if why else _stars([err <= bands[0] + EPS, err <= bands[1] + EPS, err <= bands[2] + EPS])
+    stars = 0 if why else _stars([err <= b + EPS for b in bands])
     return why, stars, {'name': 'error', 'value': _r(err)}, [
         _metric('your_tick', tick, '', 'the tick you marked'),
-        _metric('divergence_tick', m['tick'], '', "where the stack's belief first left the truth by more than "
+        _metric('divergence_tick', m['tick'], '',
+                "where the stack's belief first left the truth by more than "
                 f"{level['divergence_m']:g} m (src/arena/moments.ts)"),
         _metric('error_s', err, 's', 'how far apart, in recorded time'),
         _metric('found', None if why else err <= level['tolerance_s'] + EPS, '',
@@ -498,7 +508,7 @@ def score(levels, submission, spec=None) -> Dict[str, object]:
 
 
 def references(level, challenge: str, spec=None) -> Dict[str, object]:
-    """A level's reference results, the stars' thresholds (without ``reference``)."""
+    """Compute a level's reference results: its stars' thresholds (ignoring ``reference``)."""
     lv = {k: v for k, v in level.items() if k != 'reference'}
     if challenge == 'beat-the-planner':
         return beat_references(lv)
@@ -512,14 +522,15 @@ def references(level, challenge: str, spec=None) -> Dict[str, object]:
 
 
 def view(levels, challenge: str, level_id: str) -> Dict[str, object]:
-    """What the page draws for a level (the grid, A*'s frames, the bays)."""
+    """Return what the page draws for a level (the grid, A*'s frames, the bays)."""
     level = find_level(levels, challenge, level_id)
     out = {'challenge': challenge, 'level': level, 'level_hash': level_hash(level)}
     if challenge in ('beat-the-planner', 'next-node'):
         grid, m = parse_grid(level['grid'])
+        cells = [(r, c) for r in range(grid.height) for c in range(grid.width)]
         out['grid'] = {'width': grid.width, 'height': grid.height,
-                       'blocked': [grid.is_blocked((r, c)) for r in range(grid.height) for c in range(grid.width)],
-                       'cost': [grid.cost_at((r, c)) for r in range(grid.height) for c in range(grid.width)],
+                       'blocked': [grid.is_blocked(k) for k in cells],
+                       'cost': [grid.cost_at(k) for k in cells],
                        'marks': {k: list(v) for k, v in m.items()}}
     if challenge == 'beat-the-planner':
         grid, m = parse_grid(level['grid'])

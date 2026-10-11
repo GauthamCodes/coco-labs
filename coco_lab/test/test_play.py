@@ -21,30 +21,29 @@ re-simulation are tested in lab_web/tools/test_play_levels.py.
 import copy
 import itertools
 
-import pytest
-
 from coco_lab import play
 from coco_lab.fetch_problem import PROBLEM
+import pytest
 
-GRID = ["................",
-        "..S.............",
-        "...9999.........",
-        "...9999...4444..",
-        "...9999...4444..",
-        "..........4444..",
-        "..........4444..",
-        "................",
-        "............G...",
-        "................"]
-UTRAP = ["..................",
-         "..................",
-         "....##########....",
-         ".............#....",
-         "..S..........#..G.",
-         ".............#....",
-         "....##########....",
-         "..................",
-         ".................."]
+GRID = ['................',
+        '..S.............',
+        '...9999.........',
+        '...9999...4444..',
+        '...9999...4444..',
+        '..........4444..',
+        '..........4444..',
+        '................',
+        '............G...',
+        '................']
+UTRAP = ['..................',
+         '..................',
+         '....##########....',
+         '.............#....',
+         '..S..........#..G.',
+         '.............#....',
+         '....##########....',
+         '..................',
+         '..................']
 
 
 def _levels(**extra):
@@ -56,10 +55,12 @@ def _levels(**extra):
     p['prior'] = [0.15, 0.15, 0.30, 0.40]
     bays = {'id': 's', 'title': 's', 'problem': p}
     bays['reference'] = play.references(bays, 'search-the-bays')
-    det = {'id': 'd', 'title': 'd', 'casefile': 'x', 'ticks': 100, 'tick_s': 0.1, 'tolerance_s': 1.0,
+    det = {'id': 'd', 'title': 'd', 'casefile': 'x', 'ticks': 100, 'tick_s': 0.1,
+           'tolerance_s': 1.0,
            'bands_s': [2.0, 1.0, 0.5], 'divergence_m': 1.0,
            'moment': {'tick': 40, 't_world': 4.0, 'error_m': 3.4, 'source': 'amcl'}}
-    lv = {'beat-the-planner': beat, 'next-node': nxt, 'search-the-bays': bays, 'case-file-detective': det}
+    lv = {'beat-the-planner': beat, 'next-node': nxt, 'search-the-bays': bays,
+          'case-file-detective': det}
     lv.update(extra)
     return {'schema': play.LEVELS_SCHEMA,
             'challenges': {c: {'levels': [v]} for c, v in lv.items()}}
@@ -70,7 +71,8 @@ LEVELS = _levels()
 
 def _sub(challenge, inputs, levels=LEVELS):
     lv = levels['challenges'][challenge]['levels'][0]
-    return {'v': 1, 'challenge': challenge, 'level': lv['id'], 'level_hash': play.level_hash(lv), 'inputs': inputs}
+    return {'v': 1, 'challenge': challenge, 'level': lv['id'], 'level_hash': play.level_hash(lv),
+            'inputs': inputs}
 
 
 def _score(challenge, inputs):
@@ -90,7 +92,8 @@ def test_astars_own_path_is_optimal_and_three_stars():
     assert _value(r, 'ratio') == 1.0
 
 
-@pytest.mark.parametrize('algorithm, weight, stars', [('greedy', None, 1), ('weighted_astar', 2.0, 2)])
+@pytest.mark.parametrize('algorithm, weight, stars',
+                         [('greedy', None, 1), ('weighted_astar', 2.0, 2)])
 def test_a_reference_planners_path_earns_exactly_its_star(algorithm, weight, stars):
     from coco_lab.search import collect, search_events
     grid, m = play.parse_grid(GRID)
@@ -145,7 +148,8 @@ def test_the_predictors_references_are_what_they_score():
     lv = LEVELS['challenges']['next-node']['levels'][0]
     frames = play.next_node_frames(lv)
     for key, name in ((2, 'min_g_matches'), (3, 'min_h_matches')):
-        guesses = [list(min(f['open'], key=lambda o, k=key: (o[k], o[0], o[1]))[:2]) for f in frames]
+        guesses = [list(min(f['open'], key=lambda o, k=key: (o[k], o[0], o[1]))[:2])
+                   for f in frames]
         assert _value(_score('next-node', guesses), 'matches') == lv['reference'][name]
 
 
@@ -159,11 +163,13 @@ def test_the_score_is_the_expected_cost_never_an_outcome():
     from coco_lab.regionsearch import SearchProblem, plan_cost
     lv = LEVELS['challenges']['search-the-bays']['levels'][0]
     p = SearchProblem.from_dict(lv['problem'])
-    best = min(plan_cost(p, p.prior, p.start, o)['expected'] for o in itertools.permutations(range(4)))
+    best = min(plan_cost(p, p.prior, p.start, o)['expected']
+               for o in itertools.permutations(range(4)))
     ratios = []
     for o in itertools.permutations(range(4)):
         r = _score('search-the-bays', list(o))
-        assert _value(r, 'expected_cost') == round(plan_cost(p, p.prior, p.start, o)['expected'], 9)
+        e = plan_cost(p, p.prior, p.start, o)['expected']
+        assert _value(r, 'expected_cost') == round(e, 9)
         ratios.append(_value(r, 'ratio'))
     assert min(ratios) == 1.0 and lv['reference']['optimal_expected'] == round(best, 9)
 
@@ -184,7 +190,8 @@ def test_an_order_names_every_bay_once(order):
 
 # -- case file detective --------------------------------------------------------------
 
-@pytest.mark.parametrize('tick, err, stars', [(40, 0.0, 3), (45, 0.5, 3), (46, 0.6, 2), (50, 1.0, 2),
+@pytest.mark.parametrize('tick, err, stars', [(40, 0.0, 3), (45, 0.5, 3), (46, 0.6, 2),
+                                              (50, 1.0, 2),
                                               (60, 2.0, 1), (61, 2.1, 0), (20, 2.0, 1)])
 def test_the_detective_is_scored_by_seconds_from_the_divergence(tick, err, stars):
     r = _score('case-file-detective', [tick])
@@ -207,7 +214,8 @@ def test_a_submission_for_another_version_of_the_level_is_refused():
         play.score(LEVELS, s)
 
 
-@pytest.mark.parametrize('edit', [lambda s: s.update(v=2), lambda s: s.update(challenge='lost-robot'),
+@pytest.mark.parametrize('edit', [lambda s: s.update(v=2),
+                                  lambda s: s.update(challenge='lost-robot'),
                                   lambda s: s.update(level='nope')])
 def test_what_is_not_a_submission_is_refused(edit):
     s = _sub('search-the-bays', [0, 1, 2, 3])
@@ -231,7 +239,9 @@ def test_the_map_budget_counts_ground_truth_distance():
 
 
 def test_every_score_names_its_metrics_and_thresholds():
-    for c, inputs in (('beat-the-planner', play.view(LEVELS, 'beat-the-planner', 'b')['optimal_path']),
+    best = play.view(LEVELS, 'beat-the-planner', 'b')['optimal_path']
+    for c, inputs in (('beat-the-planner', best),
                       ('search-the-bays', [0, 1, 2, 3]), ('case-file-detective', [40])):
         r = _score(c, inputs)
-        assert len(r['thresholds']) == 3 and all({'name', 'value', 'unit', 'meaning'} <= set(m) for m in r['metrics'])
+        assert len(r['thresholds']) == 3
+        assert all({'name', 'value', 'unit', 'meaning'} <= set(m) for m in r['metrics'])

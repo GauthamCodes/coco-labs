@@ -123,7 +123,11 @@ function LevelPage({ challenge, level, levels, shared }: {
   useEffect(() => {
     if (!ready || !client) return;
     void client.play<Record<string, unknown>>({ op: 'view', levels, challenge, level: level.id })
-      .then(setView).catch((e) => setFail(String(e)));
+      .then((v) => {
+        setView(v);
+        // for the browser harnesses (tools/perf/play_check.mjs), as window.__cocoArena is for the Arena's
+        (window as unknown as { __cocoPlay?: unknown }).__cocoPlay = { view: v };
+      }).catch((e) => setFail(String(e)));
   }, [ready, client, levels, challenge, level.id]);
 
   const score = (inputs: unknown, reproduce?: string) => {

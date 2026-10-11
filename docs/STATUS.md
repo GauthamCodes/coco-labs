@@ -16,7 +16,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
 | Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
 | Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
-| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.4 done** (mission 7, scrub targets derived from the Case Files and checked). Next: **M3.5**, Play |
+| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.5 done** (Play: five challenges, 16 levels, stars from reference algorithms, links reproduce). Next: **M3.6**, `coco verify` |
 | Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
 
@@ -1328,6 +1328,78 @@ only. Read order for agents (README §9): `README.md`, this file,
     perf-conditions guard refuses. Fixed and re-run.
 
   **Next:** M3.5, Play.
+
+- **M3.5, Play: five challenges (2026-10-11).** `?view=play`;
+  [`v2/CHALLENGES.md`](v2/CHALLENGES.md) (generated).
+  - **One scorer:** `coco_lab/coco_lab/play.py` scores every challenge. The
+    page runs it in the Arena worker (a new `play` pack); `coco verify` runs
+    the same code in Node (M3.6). A score is a pure function of the level
+    and the input log: no random draw, no wall time. Computation is counted
+    in expansions. The page shows each score broken down into named metrics.
+  - **Levels:** 16, from `lab_web/play/levels.src.yaml`.
+    `tools/make_play_levels.py` computes every star threshold by running the
+    reference algorithms on the level:
+    - A*, weighted A* and greedy (Beat the planner)
+    - the least-g and least-h predictors (Next node)
+    - the optimal order, nearest-first and most-likely-first (Search the bays)
+    - two reference drives, simulated (Map the arena)
+    - tolerance bands around `moments.ts`'s answer (the detective, the one
+      challenge whose reference is a rule with an exact answer)
+
+    A level is refused unless its references separate the stars.
+  - **Luck:**
+    - **Next node:** a guess counts if it ties with A*'s choice on (f, h),
+      because insertion order is invisible to the learner.
+    - **Search the bays:** scored on expected cost under the prior, never on
+      the sampled outcome.
+    - **Map the arena:** the noise is fixed by the level's seed, and a drive
+      is re-simulated from its input log, never read off the live Arena. Its
+      only config lines are the level's, before any driving; no kidnap or
+      reset.
+  - **Personal bests and links:**
+    - **Bests:** `localStorage`, every access in try/catch. Tested with
+      storage that throws.
+    - **Links:** carry the level hash, the input log and the result hash,
+      and say whether a re-score reproduced exactly.
+  - **Deviation:** two privacy guards refused ANY browser storage:
+    `check_dist.mjs` (a v1 Phase 1D-6 build check) and `test/site.test.ts`'s
+    source scan. The M3 prompt requires local personal bests, so both now
+    allow exactly one exception:
+    - the build check: one `localStorage.setItem`, in the chunk holding
+      Play's key prefix;
+    - the source scan: `window.localStorage` in `src/play/best.ts` only,
+      and a new test requires every use to be inside `try`.
+
+    Cookies, sessionStorage, IndexedDB and analytics are still refused
+    everywhere.
+  - **A defect found by the browser check:** the map panel's meter never
+    updated. Its interval depended on a getter recreated every Arena render
+    (10 Hz), so it was torn down before firing. The getters are now read
+    through refs.
+  - **Measured** (Chromium on the GPU, balanced on AC):
+    - `tools/perf/play_check.mjs`: **15 / 15**. Every level of the
+      three page challenges, and every detective level, played by clicks with
+      its reference answer, scored 3 stars.
+    - A live 25 m map drive scored valid (1 star, F1 0.3528) and was
+      re-simulated in **4.3 s**.
+    - Every result's link, opened in a fresh context, said "Reproduced
+      exactly" (the same result hash), in 3.9–8.4 s.
+    - Scorer boot (Pyodide + coco_lab + the play pack): 3.8–4.2 s.
+    - Each page score: at most 34 ms.
+  - **Tests:** `coco_lab/test/test_play.py` 31; `lab_web/tools/test_play_levels.py`
+    11 (re-derives every reference and re-simulates every reference drive);
+    `test/play.test.ts` 11.
+  - **Parked in IDEAS:** the pose-graph mapping oddity (40 m tour F1 0.316
+    against a 20 m out-and-back's 0.580), and the four later challenges.
+  - **Evidence:** `v2/data/m3/m35/`.
+  - **Suites** (balanced, AC):
+    - packages **3,497 / 0 / 0** (`coco_lab` 773: +31)
+    - vitest **391 / 0 / 0** (+16)
+    - build tools **166 / 0 / 0** (+12)
+
+    The first run failed `coco_lab`'s flake8/pep257 on `play.py` and its
+    test, and the source privacy scan above; both were fixed and re-run.
+  - **Next:** M3.6, `coco verify` over 100 submissions in three browsers.
 
 ## Capabilities (README §2), with evidence class
 
