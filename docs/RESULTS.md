@@ -9145,3 +9145,33 @@ Every reference answer scored 3 stars, and the live map drive scored valid.
 **Found while choosing the map challenge, not investigated** (seed 1,
 `pose_graph`): the 40 m tour's map F1 0.316, ATE 0.108 m, against a
 20 m out-and-back's F1 0.580, ATE 0.015 m. Parked in `docs/IDEAS.md`.
+
+## COCO Lab v2 · M3.6: `coco verify`, and links across three browsers (measured 2026-10-11)
+
+**Evidence class.** MODEL, with the detective's STACK recordings. One
+scorer, `coco_lab/coco_lab/play.py`, in three places: the page's worker,
+`coco verify` (Pyodide 314.0.7 in Node 24.21.0) and native CPython.
+Evidence: `docs/v2/data/m3/m36/`.
+
+**100 generated submissions**, 20 per challenge, from fixed seed 20261011.
+93 were valid and the rest broke a rule on purpose. Stars:
+0★ 46, 1★ 26, 2★ 16, 3★ 12.
+
+| Check | Result |
+|---|---|
+| Chromium's page scored them | 100 of 100, 0 console errors |
+| `coco verify`, re-scoring every link in Node | **100 of 100 identical result hashes** |
+| Every link, re-scored in a fresh page: Chromium | 100 of 100 (156.0.8078.4, 365 s) |
+| Firefox | 100 of 100 (157.0, 430 s) |
+| WebKit | 100 of 100 (27.2, 370 s) |
+| Native CPython, the same links | 94 of 100 identical (14 of 20 map drives) |
+| Every level's reference answer, under Pyodide | 18 of 18 earn exactly their intended stars |
+
+On map drives, CPython and Pyodide agree on F1 and the scored tick, and
+differ by up to 1.3e-8 m in ATE and 1.7e-7 m in ground-truth distance.
+
+**Found while measuring, both fixed before this run:**
+- Level hashes changed through JavaScript (`2.0` becomes `2`), so 80 of 100
+  submissions were refused. Fixed in the canonical form.
+- The CPython-computed ATE thresholds were compared at 1e-9 m. They are now
+  compared within 1 µm.

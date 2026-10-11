@@ -120,6 +120,15 @@ jobs:
           # the Arena runtime test boots Pyodide on these (M1.5)
           npm run arena-assets
           npm test
+      # M3.6: every committed Play link (scored by Chromium's page, docs/v2/data/m3/m36/)
+      # re-scored in Node by `coco verify` -- the same coco_lab.play, under Pyodide -- must
+      # give exactly the result hash the browser gave
+      - name: coco verify, the 100 committed Play links
+        working-directory: lab_web
+        run: |
+          node tools/coco.mjs verify --file ../docs/v2/data/m3/m36/links.json
+          # the thresholds are computed in CPython; every reference must earn its stars in Pyodide
+          node tools/play_reference_check.mjs
       - name: Build twice; the two builds must be identical
         working-directory: lab_web
         run: |

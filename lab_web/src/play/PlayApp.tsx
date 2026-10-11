@@ -126,7 +126,10 @@ function LevelPage({ challenge, level, levels, shared }: {
       .then((v) => {
         setView(v);
         // for the browser harnesses (tools/perf/play_check.mjs), as window.__cocoArena is for the Arena's
-        (window as unknown as { __cocoPlay?: unknown }).__cocoPlay = { view: v };
+        // (score: the page's own scorer, for tools/perf/play_verify.mjs -- M3.6)
+        (window as unknown as { __cocoPlay?: unknown }).__cocoPlay = {
+          view: v, score: (submission: Submission) => client.play<PlayResult>({ op: 'score', levels, submission }),
+        };
       }).catch((e) => setFail(String(e)));
   }, [ready, client, levels, challenge, level.id]);
 

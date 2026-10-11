@@ -16,7 +16,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
 | Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
 | Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
-| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.5 done** (Play: five challenges, 16 levels, stars from reference algorithms, links reproduce). Next: **M3.6**, `coco verify` |
+| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.6 done** (`coco verify`: 100/100 in Node; 100/100 links reproduce in Chromium, Firefox and WebKit). Next: **M3.7**, four modes |
 | Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
 
@@ -1400,6 +1400,49 @@ only. Read order for agents (README §9): `README.md`, this file,
     The first run failed `coco_lab`'s flake8/pep257 on `play.py` and its
     test, and the source privacy scan above; both were fixed and re-run.
   - **Next:** M3.6, `coco verify` over 100 submissions in three browsers.
+
+- **M3.6, `coco verify` (2026-10-11).** `lab_web/tools/coco.mjs verify
+  <link>... | --file FILE` (`npx coco verify` from `lab_web`). It re-scores a
+  Play submission under Pyodide in Node with the same `coco_lab.play` the page
+  runs. No server, no accounts, no leaderboard.
+  - **100 submissions,** 20 per challenge, from a fixed seed
+    (`tools/make_play_submissions.py`): reference answers, perturbed, random,
+    and rule-breaking ones (scored `valid: false`, which must reproduce too).
+    93 of 100 were valid.
+  - **Measured** (balanced, AC):
+    - Chromium's page scored all 100 (`tools/perf/play_verify.mjs score`)
+    - `coco verify` re-scored every link: **100 of 100 result
+      hashes equal the browser's**
+    - every link, opened fresh, said "Reproduced exactly" in **Chromium
+      100 of 100 (156.0.8078.4, 365 s), Firefox 100 of 100 (157.0, 430 s), WebKit 100 of 100 (27.2, 370 s)**, with
+      0 console errors
+  - **Two defects found and fixed while measuring:**
+    - **Level hashes changed through JavaScript.** The page sends the levels
+      through JavaScript, where `2.0` becomes `2`, so the page's level hash
+      differed from Node's for every level with an integral float: 80 of 100
+      submissions were refused as "a different version of the level". Only
+      Next node, which has none, passed. `play.canonical` now writes integral
+      floats as ints (tested both ways). Hashes from before the fix no
+      longer apply; no link had been published.
+    - **CPython and Pyodide disagree in the last digits of map metrics.**
+      Native CPython reproduces 94 of 100 result hashes
+      (14 of 20 map drives). The
+      map drives agree on F1 and on the scored tick, but differ by up to
+      1.3e-8 m in ATE. The star thresholds are computed in CPython, so ATE
+      is now compared within 1 µm (`MAP_ATE_EPS`).
+      `tools/play_reference_check.mjs` replays every level's reference
+      answer under Pyodide: **18 of 18 earn
+      exactly their stars**.
+  - **CI** (`lab.yml`): `coco verify` over the 100 committed links, and the
+    reference check.
+  - **Measured on a build that already holds the M3.7 header:** the scoring
+    code is the same as the commit's.
+  - **Suites:** one run covered M3.6 and M3.7 together, on the M3.7 tree:
+    - packages **3,498 / 0 / 0** (`coco_lab` 774: +1, the JavaScript round-trip test)
+    - vitest **396 / 0 / 0**
+    - build tools **168 / 0 / 0**
+  - **Evidence:** `v2/data/m3/m36/`.
+  - **Next:** M3.7, one app, four modes.
 
 ## Capabilities (README §2), with evidence class
 

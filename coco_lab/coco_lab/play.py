@@ -62,6 +62,11 @@ CHALLENGES = ('beat-the-planner', 'next-node', 'search-the-bays',
               'map-the-arena', 'case-file-detective')
 #: two floats this close are the same number (a sum taken in another order)
 EPS = 1e-9
+#: a map drive's ATE is compared with its threshold within 1 micrometre: the
+#: thresholds are computed in CPython (make_play_levels.py), drives are scored
+#: in Pyodide, and the two differ by up to 1.3e-8 m in ATE over 20 drives
+#: (measured, M3.6; F1 and the scored tick were identical)
+MAP_ATE_EPS = 1e-6
 #: a cost-layer digit d costs d * COST_PER_DIGIT: '9' is the cost layer's scale
 COST_PER_DIGIT = 28.0
 #: Next node: how many expansions the learner predicts
@@ -80,9 +85,27 @@ class PlayError(ValueError):
 
 # -- hashing ------------------------------------------------------------------
 
+def _plain(x):
+    """Write an integral float as an int (1.0 -> 1, -0.0 -> 0), everywhere in ``x``."""
+    if isinstance(x, float) and x.is_integer():
+        return int(x)
+    if isinstance(x, dict):
+        return {k: _plain(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [_plain(v) for v in x]
+    return x
+
+
 def canonical(obj) -> bytes:
-    """Return the canonical JSON bytes of ``obj`` (sorted keys, no spaces)."""
-    return json.dumps(obj, sort_keys=True, separators=(',', ':'),
+    """
+    Return the canonical JSON bytes of ``obj`` (sorted keys, no spaces).
+
+    Integral floats are written as ints: a level or a result that passed
+    through JavaScript (where ``1.0`` and ``1`` are one number) hashes the
+    same as the file it came from. Measured in M3.6: without this, 80 of 100
+    browser submissions named a level hash Node did not recognise.
+    """
+    return json.dumps(_plain(obj), sort_keys=True, separators=(',', ':'),
                       allow_nan=False).encode('utf-8')
 
 
@@ -424,7 +447,7 @@ def _score_map(level, inputs, spec):
     # the references ranked by what they scored, not by their names
     weak, strong = sorted((ref['out_and_back'], ref['tour']), key=lambda d: d['f1'])
     stars = _stars([f1 >= weak['f1'] - EPS, f1 >= strong['f1'] - EPS,
-                    f1 >= strong['f1'] - EPS and ate <= strong['ate'] + EPS])
+                    f1 >= strong['f1'] - EPS and ate <= strong['ate'] + MAP_ATE_EPS])
     return None, stars, {'name': 'map F1', 'value': _r(f1)}, [
         _metric('f1', f1, '', "the map's F1 against the truth's visible walls (Lab 3's score)"),
         _metric('ate', ate, 'm', "the trajectory's RMS error against the truth (ATE)"),

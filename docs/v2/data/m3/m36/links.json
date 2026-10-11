@@ -1,0 +1,1447 @@
+{
+ "what": "Play submissions scored in Chromium by the page (window.__cocoPlay.score)",
+ "site": "http://127.0.0.1:4214/coco-labs/",
+ "errors": [],
+ "rows": [
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "hash": "db3dc0c66af069f7b52b81e967f9dcea69299bb105a820d92d00559b8f398c8a",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.51976926
+   },
+   "ms": 1.8999999985098839,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbNSw2XSxbNiw3XSxbNyw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiJkYjNkYzBjNjZhZjA2OWY3YjUyYjgxZTk2N2Y5ZGNlYTY5Mjk5YmIxMDVhODIwZDkyZDAwNTU5YjhmMzk4YzhhIn0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "hash": "ee94eb41ee57887c0afe5214e8d91880537743530a1db9a6a5606213551e4135",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.473975751
+   },
+   "ms": 1.800000000745058,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMiwyXSxbMSwyXSxbMiwyXSxbMywyXSxbNCwyXSxbNSwyXSxbNiwyXSxbNSwzXSxbNiwyXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdXSwiciI6ImVlOTRlYjQxZWU1Nzg4N2MwYWZlNTIxNGU4ZDkxODgwNTM3NzQzNTMwYTFkYjlhNmE1NjA2MjEzNTUxZTQxMzUifQ"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "hash": "2252af419ce271c404ab9c5fa8faca80cc9e3fb31565e8558e0f094beebdf4e6",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.252709885
+   },
+   "ms": 7.699999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=mud-field&s=eyJ2IjoxLCJoIjoiNzk2OGVhNjg1ZjgzZWQ0ZGFjZjgwNjI5YmQ3YWYxYjNiZjUzNDY0YTBiODY3YjkxNGFhM2M3NmJiMDFiYzA3OSIsImkiOltbMSwyXSxbMiwzXSxbMSwzXSxbMiwzXSxbMywzXSxbNCwzXSxbNSwzXSxbNiwzXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiIyMjUyYWY0MTljZTI3MWM0MDRhYjljNWZhOGZhY2E4MGNjOWUzZmIzMTU2NWU4NTU4ZTBmMDk0YmVlYmRmNGU2In0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "hash": "71c57003a942142045fe1500089066f7ec5dd058f989d555195f975ec0dfabf5",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "cost ratio",
+    "value": null
+   },
+   "ms": 6.599999997764826,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMSw2XSxbMiw3XSxbMyw4XSxbNCw5XSxbNSw5XV0sInIiOiI3MWM1NzAwM2E5NDIxNDIwNDVmZTE1MDAwODkwNjZmN2VjNWRkMDU4Zjk4OWQ1NTUxOTVmOTc1ZWMwZGZhYmY1In0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "hash": "850e1b317ed446559aaeceaf0e0cc935f687673464cd16cfa2be6c75f7a5cb91",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.134876072
+   },
+   "ms": 3.699999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMSw2XSxbMSw3XSxbMSw4XSxbMSw5XSxbMSwxMF0sWzEsMTFdLFsyLDEyXSxbMywxMl0sWzQsMTJdLFs1LDEyXSxbNiwxMl0sWzcsMTFdLFs4LDExXV0sInIiOiI4NTBlMWIzMTdlZDQ0NjU1OWFhZWNlYWYwZTBjYzkzNWY2ODc2NzM0NjRjZDE2Y2ZhMmJlNmM3NWY3YTVjYjkxIn0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "hash": "2252af419ce271c404ab9c5fa8faca80cc9e3fb31565e8558e0f094beebdf4e6",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.252709885
+   },
+   "ms": 2,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=mud-field&s=eyJ2IjoxLCJoIjoiNzk2OGVhNjg1ZjgzZWQ0ZGFjZjgwNjI5YmQ3YWYxYjNiZjUzNDY0YTBiODY3YjkxNGFhM2M3NmJiMDFiYzA3OSIsImkiOltbMSwyXSxbMCwyXSxbMSwyXSxbMiwzXSxbMywzXSxbNCwzXSxbNSwzXSxbNiwzXSxbNiwyXSxbNiwzXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiIyMjUyYWY0MTljZTI3MWM0MDRhYjljNWZhOGZhY2E4MGNjOWUzZmIzMTU2NWU4NTU4ZTBmMDk0YmVlYmRmNGU2In0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "hash": "754248820d02f8ff574c32c271d7069702dfc0755ee316b294b04e399a3b4fc7",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.201010127
+   },
+   "ms": 2.099999997764826,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMSw2XSxbMiw3XSxbMSw2XSxbMiw3XSxbMyw4XSxbNCw5XSxbNSw5XSxbNiw5XSxbNywxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiI3NTQyNDg4MjBkMDJmOGZmNTc0YzMyYzI3MWQ3MDY5NzAyZGZjMDc1NWVlMzE2YjI5NGIwNGUzOTlhM2I0ZmM3In0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "hash": "850e1b317ed446559aaeceaf0e0cc935f687673464cd16cfa2be6c75f7a5cb91",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.134876072
+   },
+   "ms": 2,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMSw2XSxbMSw3XSxbMSw4XSxbMSw5XSxbMSwxMF0sWzEsMTFdLFsyLDEyXSxbMywxMl0sWzQsMTJdLFs1LDEyXSxbNiwxMl0sWzcsMTFdLFs4LDExXV0sInIiOiI4NTBlMWIzMTdlZDQ0NjU1OWFhZWNlYWYwZTBjYzkzNWY2ODc2NzM0NjRjZDE2Y2ZhMmJlNmM3NWY3YTVjYjkxIn0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "hash": "42026ee6640716e81fd73a5cb6183d06995333e0069936239c5abedb8b9ec3c6",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.357385747
+   },
+   "ms": 3,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=mud-field&s=eyJ2IjoxLCJoIjoiNzk2OGVhNjg1ZjgzZWQ0ZGFjZjgwNjI5YmQ3YWYxYjNiZjUzNDY0YTBiODY3YjkxNGFhM2M3NmJiMDFiYzA3OSIsImkiOltbMSwyXSxbMiwzXSxbMywzXSxbNCwzXSxbNSwzXSxbNCw0XSxbNSwzXSxbNiwzXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiI0MjAyNmVlNjY0MDcxNmU4MWZkNzNhNWNiNjE4M2QwNjk5NTMzM2UwMDY5OTM2MjM5YzVhYmVkYjhiOWVjM2M2In0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "hash": "db3dc0c66af069f7b52b81e967f9dcea69299bb105a820d92d00559b8f398c8a",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.51976926
+   },
+   "ms": 2.100000001490116,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbNSw2XSxbNiw3XSxbNyw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiJkYjNkYzBjNjZhZjA2OWY3YjUyYjgxZTk2N2Y5ZGNlYTY5Mjk5YmIxMDVhODIwZDkyZDAwNTU5YjhmMzk4YzhhIn0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "hash": "9512436e7c8bc178df20125593f049a12cae278528d3a93782faae1923037065",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "cost ratio",
+    "value": null
+   },
+   "ms": 1.9000000022351742,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMiwyXSxbMywyXSxbNCwyXSxbNSwyXSxbNiwyXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XV0sInIiOiI5NTEyNDM2ZTdjOGJjMTc4ZGYyMDEyNTU5M2YwNDlhMTJjYWUyNzg1MjhkM2E5Mzc4MmZhYWUxOTIzMDM3MDY1In0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "hash": "bc213d488a3e9c337f4cc8c28bed256b5ac15f83ee7d3567657e7a9fcb2cf1a0",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "cost ratio",
+    "value": null
+   },
+   "ms": 1.800000000745058,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=mud-field&s=eyJ2IjoxLCJoIjoiNzk2OGVhNjg1ZjgzZWQ0ZGFjZjgwNjI5YmQ3YWYxYjNiZjUzNDY0YTBiODY3YjkxNGFhM2M3NmJiMDFiYzA3OSIsImkiOltbMSwyXSxbMiwzXSxbMywzXSxbNCwzXSxbNSwzXSxbNiwzXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XSxbOCwxMF1dLCJyIjoiYmMyMTNkNDg4YTNlOWMzMzdmNGNjOGMyOGJlZDI1NmI1YWMxNWY4M2VlN2QzNTY3NjU3ZTdhOWZjYjJjZjFhMCJ9"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "hash": "c0f6ba2910d646b230bad480b69697e3196ca1d00e0c14908810abe547d8a9fa",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.142135624
+   },
+   "ms": 2,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMSw2XSxbMiw3XSxbMiw4XSxbMiw3XSxbMyw4XSxbNCw5XSxbNSw5XSxbNiw5XSxbNywxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiJjMGY2YmEyOTEwZDY0NmIyMzBiYWQ0ODBiNjk2OTdlMzE5NmNhMWQwMGUwYzE0OTA4ODEwYWJlNTQ3ZDhhOWZhIn0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "hash": "e7e00ec751121db739c622b65da3327d81fe87e7824fc1e13d518047beb83294",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "cost ratio",
+    "value": null
+   },
+   "ms": 1.4000000022351742,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMiwyXSxbMywyXSxbNCwyXSxbNSwyXSxbNiwyXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XV0sInIiOiJlN2UwMGVjNzUxMTIxZGI3MzljNjIyYjY1ZGEzMzI3ZDgxZmU4N2U3ODI0ZmMxZTEzZDUxODA0N2JlYjgzMjk0In0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "hash": "f48812d0f40dbcb2269f3e438dc05b6466390e5fceba0da51fddaf8105c260e8",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "cost ratio",
+    "value": null
+   },
+   "ms": 1.5,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=mud-field&s=eyJ2IjoxLCJoIjoiNzk2OGVhNjg1ZjgzZWQ0ZGFjZjgwNjI5YmQ3YWYxYjNiZjUzNDY0YTBiODY3YjkxNGFhM2M3NmJiMDFiYzA3OSIsImkiOltbMSwyXSxbMiwzXSxbMywzXSxbNCwzXSxbNSwzXSxbNiwzXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XV0sInIiOiJmNDg4MTJkMGY0MGRiY2IyMjY5ZjNlNDM4ZGMwNWI2NDY2MzkwZTVmY2ViYTBkYTUxZmRkYWY4MTA1YzI2MGU4In0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1
+   },
+   "ms": 2.199999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMSw2XSxbMiw3XSxbMyw4XSxbNCw5XSxbNSw5XSxbNiw5XSxbNywxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiJkYTBjNTMzNjk3MTA5OWE5MzgwMDE0N2M3YWY0ZGE3YzhlMTI4OTk0M2I2Njc1NTQ0MTk0MTQwNzcxMjAzYTE2In0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "hash": "2fee3a794ebc521983a7066094bde69dfc92bd93016d0c2a88593cee82d05551",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.544259115
+   },
+   "ms": 2,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbNSw2XSxbNiw3XSxbNyw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdXSwiciI6IjJmZWUzYTc5NGViYzUyMTk4M2E3MDY2MDk0YmRlNjlkZmM5MmJkOTMwMTZkMGMyYTg4NTkzY2VlODJkMDU1NTEifQ"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "hash": "02ca1b9f7436630e630e35dbad25bbef749e41cfa54febf5f6a048585d58a651",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.714771494
+   },
+   "ms": 3.199999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=mud-field&s=eyJ2IjoxLCJoIjoiNzk2OGVhNjg1ZjgzZWQ0ZGFjZjgwNjI5YmQ3YWYxYjNiZjUzNDY0YTBiODY3YjkxNGFhM2M3NmJiMDFiYzA3OSIsImkiOltbMSwyXSxbMiwzXSxbMywzXSxbNCwzXSxbNSwzXSxbNiwzXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbNyw2XSxbOCw3XSxbOCw4XSxbNyw5XSxbOCw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiIwMmNhMWI5Zjc0MzY2MzBlNjMwZTM1ZGJhZDI1YmJlZjc0OWU0MWNmYTU0ZmViZjVmNmEwNDg1ODVkNThhNjUxIn0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "hash": "028f50cd40a8529168786f50f65a06b1943f2ee49ef6d9c05644aacc2c26ead2",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.426406871
+   },
+   "ms": 3,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMSwxXSxbMSwyXSxbMSwzXSxbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMCw1XSxbMSw1XSxbMSw2XSxbMiw3XSxbMyw4XSxbNCw5XSxbNSw5XSxbNiw5XSxbNywxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiIwMjhmNTBjZDQwYTg1MjkxNjg3ODZmNTBmNjVhMDZiMTk0M2YyZWU0OWVmNmQ5YzA1NjQ0YWFjYzJjMjZlYWQyIn0"
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "hash": "2fee3a794ebc521983a7066094bde69dfc92bd93016d0c2a88593cee82d05551",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.544259115
+   },
+   "ms": 3.2000000029802322,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbNSw2XSxbNiw3XSxbNyw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdXSwiciI6IjJmZWUzYTc5NGViYzUyMTk4M2E3MDY2MDk0YmRlNjlkZmM5MmJkOTMwMTZkMGMyYTg4NTkzY2VlODJkMDU1NTEifQ"
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "hash": "1f46a35b3dd30905a03f8b1319b9562c1590920a383f1adab8ac01b666a1013b",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 10
+   },
+   "ms": 4.399999998509884,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbMyw1XSxbMyw2XSxbMyw3XSxbMyw4XSxbMyw5XSxbMiw0XV0sInIiOiIxZjQ2YTM1YjNkZDMwOTA1YTAzZjhiMTMxOWI5NTYyYzE1OTA5MjBhMzgzZjFhZGFiOGFjMDFiNjY2YTEwMTNiIn0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "hash": "21e6c530fef4a26d81ee398dbdd4a5b0bad30720e35910dc63390c0f41d34b15",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 9
+   },
+   "ms": 5,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbMCwxXSxbMSwxMF0sWzYsMl0sWzcsM10sWzQsNF0sWzgsNV0sWzgsNl0sWzgsN10sWzgsOF0sWzgsOV1dLCJyIjoiMjFlNmM1MzBmZWY0YTI2ZDgxZWUzOThkYmRkNGE1YjBiYWQzMDcyMGUzNTkxMGRjNjMzOTBjMGY0MWQzNGIxNSJ9"
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "hash": "c38b2e308ac291032009d043edeee9127f9f0474552ec7ab0acff5e9a659af86",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 8
+   },
+   "ms": 2.600000001490116,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=u-trap&s=eyJ2IjoxLCJoIjoiMWM2ODQ1NmRmYTliMmU1OThhYmIxOGZiMWEwZmRhNjk1YWUxOWRiZGNiZDkyYmQzNGQwMmQyZmMwZGNhNjZhOCIsImkiOltbNSwzXSxbMywyXSxbNSwyXSxbNCwxXSxbMywwXSxbNiwzXSxbMiwyXSxbNiwyXSxbMSwyXSxbMywxXV0sInIiOiJjMzhiMmUzMDhhYzI5MTAzMjAwOWQwNDNlZGVlZTkxMjdmOWYwNDc0NTUyZWM3YWIwYWNmZjVlOWE2NTlhZjg2In0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "hash": "b1e49cd8636e154b6766c8660b23fd9fc92f4c3d3e1868480217d5d713d686c7",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 3
+   },
+   "ms": 1.800000000745058,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMiwzXSxbMSw0XSxbMiwxXSxbMSwxXSxbMSwyXSxbNCw0XSxbNSw0XSxbMiw1XSxbMiw0XV0sInIiOiJiMWU0OWNkODYzNmUxNTRiNjc2NmM4NjYwYjIzZmQ5ZmM5MmY0YzNkM2UxODY4NDgwMjE3ZDVkNzEzZDY4NmM3In0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "hash": "586eb2784d4e5ad085dc582dde029af26dde9c9485b891b43388a10fef5ee56a",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 5
+   },
+   "ms": 2.800000000745058,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbNCw0XSxbMSwxMF0sWzQsNF0sWzEsMTFdLFs4LDRdLFs0LDRdLFszLDddLFs4LDddLFs4LDhdLFs4LDldXSwiciI6IjU4NmViMjc4NGQ0ZTVhZDA4NWRjNTgyZGRlMDI5YWYyNmRkZTljOTQ4NWI4OTFiNDMzODhhMTBmZWY1ZWU1NmEifQ"
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "hash": "4bce47ef750abe78f4966afd4b585539694fe8024b261b47fae8b1668861908a",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 9
+   },
+   "ms": 2.100000001490116,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=u-trap&s=eyJ2IjoxLCJoIjoiMWM2ODQ1NmRmYTliMmU1OThhYmIxOGZiMWEwZmRhNjk1YWUxOWRiZGNiZDkyYmQzNGQwMmQyZmMwZGNhNjZhOCIsImkiOltbNSwzXSxbMywyXSxbNSwyXSxbNCwxXSxbMiwzXSxbNiwzXSxbMiwyXSxbNiwyXSxbNSwxXSxbMSwzXV0sInIiOiI0YmNlNDdlZjc1MGFiZTc4ZjQ5NjZhZmQ0YjU4NTUzOTY5NGZlODAyNGIyNjFiNDdmYWU4YjE2Njg4NjE5MDhhIn0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "hash": "d0da6ff27f6c6ec73d411d030cadcce5fa53648e4684cd2d991a65b5bb24d46f",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 8
+   },
+   "ms": 1.5999999977648258,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbMyw1XSxbMyw2XSxbMSwzXSxbMyw4XSxbMyw5XSxbMywyXV0sInIiOiJkMGRhNmZmMjdmNmM2ZWM3M2Q0MTFkMDMwY2FkY2NlNWZhNTM2NDhlNDY4NGNkMmQ5OTFhNjViNWJiMjRkNDZmIn0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "hash": "172096e076a5839c9810502f202a91d5ef4653dadaf1abda3a089e1aeee37ff4",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 3
+   },
+   "ms": 2.800000000745058,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbMyw2XSxbMSwxMF0sWzYsMl0sWzAsMTFdLFs3LDFdLFs5LDRdLFszLDZdLFs4LDddLFs3LDddLFsyLDldXSwiciI6IjE3MjA5NmUwNzZhNTgzOWM5ODEwNTAyZjIwMmE5MWQ1ZWY0NjUzZGFkYWYxYWJkYTNhMDg5ZTFhZWVlMzdmZjQifQ"
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "hash": "d2407ad44843ca8a26374a54e1a5c370153e845940a98236ff72cb0ddd11f196",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 2
+   },
+   "ms": 2.199999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=u-trap&s=eyJ2IjoxLCJoIjoiMWM2ODQ1NmRmYTliMmU1OThhYmIxOGZiMWEwZmRhNjk1YWUxOWRiZGNiZDkyYmQzNGQwMmQyZmMwZGNhNjZhOCIsImkiOltbNCwxXSxbNiwzXSxbNCwxXSxbMiwzXSxbMiwzXSxbMSwyXSxbNiwxXSxbNiwxXSxbMywxXSxbMSwyXV0sInIiOiJkMjQwN2FkNDQ4NDNjYThhMjYzNzRhNTRlMWE1YzM3MDE1M2U4NDU5NDBhOTgyMzZmZjcyY2IwZGRkMTFmMTk2In0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "hash": "1f46a35b3dd30905a03f8b1319b9562c1590920a383f1adab8ac01b666a1013b",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 10
+   },
+   "ms": 1.9000000022351742,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbMyw1XSxbMyw2XSxbMyw3XSxbMyw4XSxbMyw5XSxbMiw0XV0sInIiOiIxZjQ2YTM1YjNkZDMwOTA1YTAzZjhiMTMxOWI5NTYyYzE1OTA5MjBhMzgzZjFhZGFiOGFjMDFiNjY2YTEwMTNiIn0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "hash": "adaee2cedefa786458daddf135e1bf4f53a3edfcd071c7be28c0b689cba7635f",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 9
+   },
+   "ms": 3.800000000745058,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbMCwxXSxbMyw1XSxbNiwyXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XV0sInIiOiJhZGFlZTJjZWRlZmE3ODY0NThkYWRkZjEzNWUxYmY0ZjUzYTNlZGZjZDA3MWM3YmUyOGMwYjY4OWNiYTc2MzVmIn0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "hash": "dfb5f15ddd7931918a8e25545c1f082233cf00e87fbdd9c263d8547284fce882",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 10
+   },
+   "ms": 3.699999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=u-trap&s=eyJ2IjoxLCJoIjoiMWM2ODQ1NmRmYTliMmU1OThhYmIxOGZiMWEwZmRhNjk1YWUxOWRiZGNiZDkyYmQzNGQwMmQyZmMwZGNhNjZhOCIsImkiOltbNSwzXSxbMywyXSxbNSwyXSxbNCwxXSxbMiwzXSxbNiwzXSxbMiwyXSxbNiwyXSxbNSwxXSxbMywxXV0sInIiOiJkZmI1ZjE1ZGRkNzkzMTkxOGE4ZTI1NTQ1YzFmMDgyMjMzY2YwMGU4N2ZiZGQ5YzI2M2Q4NTQ3Mjg0ZmNlODgyIn0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "hash": "b1e49cd8636e154b6766c8660b23fd9fc92f4c3d3e1868480217d5d713d686c7",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 3
+   },
+   "ms": 3.699999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMiwzXSxbMywxXSxbNCw0XSxbNSw1XSxbMywyXSxbNCwzXSxbMSwyXSxbMiw2XSxbMiw0XV0sInIiOiJiMWU0OWNkODYzNmUxNTRiNjc2NmM4NjYwYjIzZmQ5ZmM5MmY0YzNkM2UxODY4NDgwMjE3ZDVkNzEzZDY4NmM3In0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "hash": "a031532652b626c645d123fd4ba494f32922fdd153ea4931971a09e2e02b926c",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 5
+   },
+   "ms": 5.5,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbMCwxXSxbMSwwXSxbNiwyXSxbMCw4XSxbMyw2XSxbOCw1XSxbMyw2XSxbOCw3XSxbOCw4XSxbOCwzXV0sInIiOiJhMDMxNTMyNjUyYjYyNmM2NDVkMTIzZmQ0YmE0OTRmMzI5MjJmZGQxNTNlYTQ5MzE5NzFhMDllMmUwMmI5MjZjIn0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "hash": "6839988e5ffb4ac21648bdf21aaa2c37492cdb2bac46af47ba73b1db6da67a2d",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 5
+   },
+   "ms": 3.7000000029802322,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=u-trap&s=eyJ2IjoxLCJoIjoiMWM2ODQ1NmRmYTliMmU1OThhYmIxOGZiMWEwZmRhNjk1YWUxOWRiZGNiZDkyYmQzNGQwMmQyZmMwZGNhNjZhOCIsImkiOltbNSwzXSxbNiwzXSxbMiwxXSxbNCwxXSxbMiwzXSxbMywxXSxbMiwxXSxbMSwzXSxbNSwxXSxbMywxXV0sInIiOiI2ODM5OTg4ZTVmZmI0YWMyMTY0OGJkZjIxYWFhMmMzNzQ5MmNkYjJiYWM0NmFmNDdiYTczYjFkYjZkYTY3YTJkIn0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "hash": "7384472a4bed1d3d0e20c669c237f374ccc69707414873a251bac9a0eeec6458",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 4
+   },
+   "ms": 3.399999998509884,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMywyXSxbMSwxXSxbMiwxXSxbNCw0XSxbMSwxXSxbMyw3XSxbMyw4XSxbMiwxXSxbMiw0XV0sInIiOiI3Mzg0NDcyYTRiZWQxZDNkMGUyMGM2NjljMjM3ZjM3NGNjYzY5NzA3NDE0ODczYTI1MWJhYzlhMGVlZWM2NDU4In0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "hash": "acf841382fbf51c7b8adb1beb8e8477a248eaf8cc9e648a56cb3c8b10ea457ef",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 5
+   },
+   "ms": 5.699999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbMiw4XSxbMiw3XSxbNCw1XSxbNywzXSxbMyw3XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCwyXV0sInIiOiJhY2Y4NDEzODJmYmY1MWM3YjhhZGIxYmViOGU4NDc3YTI0OGVhZjhjYzllNjQ4YTU2Y2IzYzhiMTBlYTQ1N2VmIn0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "hash": "a2a3824d116da1a13beb9650234cdf01910b62a12cc8884ad9fa0b5ebed74fce",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 6
+   },
+   "ms": 4.300000000745058,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=u-trap&s=eyJ2IjoxLCJoIjoiMWM2ODQ1NmRmYTliMmU1OThhYmIxOGZiMWEwZmRhNjk1YWUxOWRiZGNiZDkyYmQzNGQwMmQyZmMwZGNhNjZhOCIsImkiOltbNSwxXSxbMywxXSxbNSwyXSxbNCwxXSxbNCwwXSxbNiwzXSxbMiwyXSxbNiwyXSxbNSwwXSxbMywxXV0sInIiOiJhMmEzODI0ZDExNmRhMWExM2JlYjk2NTAyMzRjZGYwMTkxMGI2MmExMmNjODg4NGFkOWZhMGI1ZWJlZDc0ZmNlIn0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "hash": "01cad25d1a4db17f6cef835fac6816ad96a6d0d63e27cd13b12dabe70b25549f",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 1
+   },
+   "ms": 4.099999997764826,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMiwxXSxbMiwxXSxbMSw0XSxbMSw0XSxbMiwxXSxbMiw3XSxbNCw0XSxbMywyXSxbMiw2XV0sInIiOiIwMWNhZDI1ZDFhNGRiMTdmNmNlZjgzNWZhYzY4MTZhZDk2YTZkMGQ2M2UyN2NkMTNiMTJkYWJlNzBiMjU1NDlmIn0"
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "hash": "d9903e8397ed66bc216316511b165cd39d2cae779fabfd23b17bc0f4a2eb310f",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 3
+   },
+   "ms": 7.900000002235174,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbMywwXSxbMCwxMF0sWzQsNF0sWzQsMV0sWzgsM10sWzgsNV0sWzAsMTFdLFs4LDddLFs5LDZdLFs4LDldXSwiciI6ImQ5OTAzZTgzOTdlZDY2YmMyMTYzMTY1MTFiMTY1Y2QzOWQyY2FlNzc5ZmFiZmQyM2IxN2JjMGY0YTJlYjMxMGYifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "hash": "32d6afbed8b0f9eec6dfc07b59ce7116a40c79aeed670e88867b6e56d05409d1",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.204152539
+   },
+   "ms": 3.900000002235174,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=no-idea&s=eyJ2IjoxLCJoIjoiYzU5N2M3OTBhN2NmODgzN2U1NzFjZTJhNmU4YzE1N2JmOTcwZmQyMzYzMWFmOGNkMjJiMDBjM2U0OWY1YzhkMiIsImkiOlswLDIsMywxXSwiciI6IjMyZDZhZmJlZDhiMGY5ZWVjNmRmYzA3YjU5Y2U3MTE2YTQwYzc5YWVlZDY3MGU4ODg2N2I2ZTU2ZDA1NDA5ZDEifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "hash": "855ec05c725cbf0c610a56449c93b7a975315865e15a834d8c2ffb3eab2013be",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.42627144
+   },
+   "ms": 2.5,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=far-end&s=eyJ2IjoxLCJoIjoiMGYzMzBjNTBhODhmZmM5MDc2NDlmOTg4YjA2MWM4MzUzYzAwODg1OGEyMDczM2ZiMWRkOTA5YzI5YzE1NTI5ZiIsImkiOlswLDEsMiwzXSwiciI6Ijg1NWVjMDVjNzI1Y2JmMGM2MTBhNTY0NDljOTNiN2E5NzUzMTU4NjVlMTVhODM0ZDhjMmZmYjNlYWIyMDEzYmUifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "hash": "fd77b62eaebd07eb4a1a6a74ea2269388df683eb5323eeb01a7fede13055d822",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.060353395
+   },
+   "ms": 1.5,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlszLDIsMCwxXSwiciI6ImZkNzdiNjJlYWViZDA3ZWI0YTFhNmE3NGVhMjI2OTM4OGRmNjgzZWI1MzIzZWViMDFhN2ZlZGUxMzA1NWQ4MjIifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "hash": "11b3efeeebb8ec0fd7b149279b2137384eb3be95193b4b5441233b4faa95b466",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.58134849
+   },
+   "ms": 1.300000000745058,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=poor-camera&s=eyJ2IjoxLCJoIjoiNjJkZjQ4NTBjZTU1YWJkODk2ZWNjYzAzZDgzNjAzZTQxNDE3MTY2OTFiZDg1OGYyMThiMDc2OWYxYWI5YzM4ZiIsImkiOlszLDAsMSwyXSwiciI6IjExYjNlZmVlZWJiOGVjMGZkN2IxNDkyNzliMjEzNzM4NGViM2JlOTUxOTNiNGI1NDQxMjMzYjRmYWE5NWI0NjYifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "hash": "da07269006583455fab448cc610aed09c29e7b4fc25c08750108163909b0ec69",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.059116494
+   },
+   "ms": 1.3999999985098839,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=no-idea&s=eyJ2IjoxLCJoIjoiYzU5N2M3OTBhN2NmODgzN2U1NzFjZTJhNmU4YzE1N2JmOTcwZmQyMzYzMWFmOGNkMjJiMDBjM2U0OWY1YzhkMiIsImkiOlszLDIsMSwwXSwiciI6ImRhMDcyNjkwMDY1ODM0NTVmYWI0NDhjYzYxMGFlZDA5YzI5ZTdiNGZjMjVjMDg3NTAxMDgxNjM5MDliMGVjNjkifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "hash": "7abb30f9b086779ef324f09b7c3109431cff5e9aee25e5d572f2359e2a05d0e6",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.25217422
+   },
+   "ms": 1.8999999985098839,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=far-end&s=eyJ2IjoxLCJoIjoiMGYzMzBjNTBhODhmZmM5MDc2NDlmOTg4YjA2MWM4MzUzYzAwODg1OGEyMDczM2ZiMWRkOTA5YzI5YzE1NTI5ZiIsImkiOlszLDEsMiwwXSwiciI6IjdhYmIzMGY5YjA4Njc3OWVmMzI0ZjA5YjdjMzEwOTQzMWNmZjVlOWFlZTI1ZTVkNTcyZjIzNTllMmEwNWQwZTYifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "hash": "4b0a28fa1f2e3aef117b4f7ab489e9925510f4d300c432565bf6c0cbdbb9b379",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.133465099
+   },
+   "ms": 2.5,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlszLDIsMSwwXSwiciI6IjRiMGEyOGZhMWYyZTNhZWYxMTdiNGY3YWI0ODllOTkyNTUxMGY0ZDMwMGM0MzI1NjViZjZjMGNiZGJiOWIzNzkifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "hash": "9ee4db72248dbebb2849f0e7328a0a1c3f47dfee3a23c06f66eae5abd5eb98df",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "expected cost ratio",
+    "value": null
+   },
+   "ms": 1.300000000745058,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=poor-camera&s=eyJ2IjoxLCJoIjoiNjJkZjQ4NTBjZTU1YWJkODk2ZWNjYzAzZDgzNjAzZTQxNDE3MTY2OTFiZDg1OGYyMThiMDc2OWYxYWI5YzM4ZiIsImkiOlszLDEsMCwzXSwiciI6IjllZTRkYjcyMjQ4ZGJlYmIyODQ5ZjBlNzMyOGEwYTFjM2Y0N2RmZWUzYTIzYzA2ZjY2ZWFlNWFiZDVlYjk4ZGYifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "hash": "4b229da3ddf0fc6db61545966312cba8ad5878bb8bf41ea00527671f9e3353aa",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.261778051
+   },
+   "ms": 1.699999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=no-idea&s=eyJ2IjoxLCJoIjoiYzU5N2M3OTBhN2NmODgzN2U1NzFjZTJhNmU4YzE1N2JmOTcwZmQyMzYzMWFmOGNkMjJiMDBjM2U0OWY1YzhkMiIsImkiOlszLDAsMSwyXSwiciI6IjRiMjI5ZGEzZGRmMGZjNmRiNjE1NDU5NjYzMTJjYmE4YWQ1ODc4YmI4YmY0MWVhMDA1Mjc2NzFmOWUzMzUzYWEifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "hash": "121584bb9a9fbc24ddefafdc48e8ddf681b4c702f4cac300a2dc8bf89f839020",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1
+   },
+   "ms": 2,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=far-end&s=eyJ2IjoxLCJoIjoiMGYzMzBjNTBhODhmZmM5MDc2NDlmOTg4YjA2MWM4MzUzYzAwODg1OGEyMDczM2ZiMWRkOTA5YzI5YzE1NTI5ZiIsImkiOlsyLDMsMSwwXSwiciI6IjEyMTU4NGJiOWE5ZmJjMjRkZGVmYWZkYzQ4ZThkZGY2ODFiNGM3MDJmNGNhYzMwMGEyZGM4YmY4OWY4MzkwMjAifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "hash": "b0c65ae84e62323e3524f23a450b25bc8d0fe9154d1173839a36f870e3924cc5",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.147330969
+   },
+   "ms": 2.199999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlsyLDMsMCwxXSwiciI6ImIwYzY1YWU4NGU2MjMyM2UzNTI0ZjIzYTQ1MGIyNWJjOGQwZmU5MTU0ZDExNzM4MzlhMzZmODcwZTM5MjRjYzUifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "hash": "66441d0b0d8989a2aeb358aec78c54a180f164572ddc5fe5c7d3a0b6353749bf",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.535776705
+   },
+   "ms": 3,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=poor-camera&s=eyJ2IjoxLCJoIjoiNjJkZjQ4NTBjZTU1YWJkODk2ZWNjYzAzZDgzNjAzZTQxNDE3MTY2OTFiZDg1OGYyMThiMDc2OWYxYWI5YzM4ZiIsImkiOlszLDEsMCwyXSwiciI6IjY2NDQxZDBiMGQ4OTg5YTJhZWIzNThhZWM3OGM1NGExODBmMTY0NTcyZGRjNWZlNWM3ZDNhMGI2MzUzNzQ5YmYifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "hash": "8e7d326e48c30ee359ddadf5eb5bbcef05dcc18b0a868b9c0830939742c72ab0",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.215798556
+   },
+   "ms": 2.199999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=no-idea&s=eyJ2IjoxLCJoIjoiYzU5N2M3OTBhN2NmODgzN2U1NzFjZTJhNmU4YzE1N2JmOTcwZmQyMzYzMWFmOGNkMjJiMDBjM2U0OWY1YzhkMiIsImkiOlsyLDAsMywxXSwiciI6IjhlN2QzMjZlNDhjMzBlZTM1OWRkYWRmNWViNWJiY2VmMDVkY2MxOGIwYTg2OGI5YzA4MzA5Mzk3NDJjNzJhYjAifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "hash": "605a98b42b460d7e07c79b553139986a586e43606fafcff8b3509df682b85f53",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.333897776
+   },
+   "ms": 2.300000000745058,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=far-end&s=eyJ2IjoxLCJoIjoiMGYzMzBjNTBhODhmZmM5MDc2NDlmOTg4YjA2MWM4MzUzYzAwODg1OGEyMDczM2ZiMWRkOTA5YzI5YzE1NTI5ZiIsImkiOlszLDEsMCwyXSwiciI6IjYwNWE5OGI0MmI0NjBkN2UwN2M3OWI1NTMxMzk5ODZhNTg2ZTQzNjA2ZmFmY2ZmOGIzNTA5ZGY2ODJiODVmNTMifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "hash": "847d60591911b43552bb2d76c187b8797fba342ab2c7a41ec1e6c7c210ed8c03",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.563339509
+   },
+   "ms": 3.5,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlsyLDEsMywwXSwiciI6Ijg0N2Q2MDU5MTkxMWI0MzU1MmJiMmQ3NmMxODdiODc5N2ZiYTM0MmFiMmM3YTQxZWMxZTZjN2MyMTBlZDhjMDMifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "hash": "8646d0f304ecab95c18b31efcbb8660d8a7f7f7def7d3b682cee14fef13798b3",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.399745787
+   },
+   "ms": 2.699999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=poor-camera&s=eyJ2IjoxLCJoIjoiNjJkZjQ4NTBjZTU1YWJkODk2ZWNjYzAzZDgzNjAzZTQxNDE3MTY2OTFiZDg1OGYyMThiMDc2OWYxYWI5YzM4ZiIsImkiOlszLDEsMiwwXSwiciI6Ijg2NDZkMGYzMDRlY2FiOTVjMThiMzFlZmNiYjg2NjBkOGE3ZjdmN2RlZjdkM2I2ODJjZWUxNGZlZjEzNzk4YjMifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "hash": "34b4f09134c75f219c7812584af38aff96399534ae0c32b6a123f003a9cb0a7d",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.000961957
+   },
+   "ms": 3.699999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=no-idea&s=eyJ2IjoxLCJoIjoiYzU5N2M3OTBhN2NmODgzN2U1NzFjZTJhNmU4YzE1N2JmOTcwZmQyMzYzMWFmOGNkMjJiMDBjM2U0OWY1YzhkMiIsImkiOlsxLDAsMiwzXSwiciI6IjM0YjRmMDkxMzRjNzVmMjE5Yzc4MTI1ODRhZjM4YWZmOTYzOTk1MzRhZTBjMzJiNmExMjNmMDAzYTljYjBhN2QifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "hash": "81c129cb0c7e472b1c334c5c87273ab881cc6ef246f6c7f0e7adbeccadc6963c",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.497505496
+   },
+   "ms": 4.699999999254942,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=far-end&s=eyJ2IjoxLCJoIjoiMGYzMzBjNTBhODhmZmM5MDc2NDlmOTg4YjA2MWM4MzUzYzAwODg1OGEyMDczM2ZiMWRkOTA5YzI5YzE1NTI5ZiIsImkiOlswLDEsMywyXSwiciI6IjgxYzEyOWNiMGM3ZTQ3MmIxYzMzNGM1Yzg3MjczYWI4ODFjYzZlZjI0NmY2YzdmMGU3YWRiZWNjYWRjNjk2M2MifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "hash": "7b10cbd89aaa2fce90272e38c6174d96b7357d866b45dd46312b50109be4746d",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.288141575
+   },
+   "ms": 4.700000002980232,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlszLDEsMiwwXSwiciI6IjdiMTBjYmQ4OWFhYTJmY2U5MDI3MmUzOGM2MTc0ZDk2YjczNTdkODY2YjQ1ZGQ0NjMxMmI1MDEwOWJlNDc0NmQifQ"
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "hash": "82b0ea77842d5509e55b60a3cb715088795569359234380c8b5b49de44ec7917",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.213615445
+   },
+   "ms": 4.599999997764826,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=poor-camera&s=eyJ2IjoxLCJoIjoiNjJkZjQ4NTBjZTU1YWJkODk2ZWNjYzAzZDgzNjAzZTQxNDE3MTY2OTFiZDg1OGYyMThiMDc2OWYxYWI5YzM4ZiIsImkiOlsxLDAsMiwzXSwiciI6IjgyYjBlYTc3ODQyZDU1MDllNTViNjBhM2NiNzE1MDg4Nzk1NTY5MzU5MjM0MzgwYzhiNWI0OWRlNDRlYzc5MTcifQ"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "hash": "ee918c943ce7860caa9914698ebada98c0a0eb7d3e429d832a1c07653d937dea",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.243439585
+   },
+   "ms": 5054.5,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjQ3OCwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjI2Nywia2luZCI6ImdvYWwiLCJ4IjowLjA5MDI4MjM3MDIzODk0MzcsInkiOjAuMjI4NTU2NTkzNTQ0NzQ4Nn1dfSwiciI6ImVlOTE4Yzk0M2NlNzg2MGNhYTk5MTQ2OThlYmFkYTk4YzBhMGViN2QzZTQyOWQ4MzJhMWMwNzY1M2Q5MzdkZWEifQ"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "hash": "058e9b36ab9c1d4e2ac812a1e30348a476adfe794b77eef4a05d32ab21f65ed0",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.197778142
+   },
+   "ms": 5786.70000000298,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjU4OSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjExNCwia2luZCI6ImdvYWwiLCJ4IjowLjMyNjE1Nzc2MTgyMDEyMjQsInkiOi0yLjcxMTI2NzcyOTU2ODI4ODh9XX0sInIiOiIwNThlOWIzNmFiOWMxZDRlMmFjODEyYTFlMzAzNDhhNDc2YWRmZTc5NGI3N2VlZjRhMDVkMzJhYjIxZjY1ZWQwIn0"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "hash": "d4f34b3e8edfe034c0504f775de1cbcbfbffa4fc77ef907110ef6d45ae596635",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.216568699
+   },
+   "ms": 3019.5,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjMwNiwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjEzNCwia2luZCI6ImdvYWwiLCJ4Ijo5Ljk0OTQzMjExNzUxMTE0NCwieSI6My4yMjMwMTIyNDgwODM5NTk0fV19LCJyIjoiZDRmMzRiM2U4ZWRmZTAzNGMwNTA0Zjc3NWRlMWNiY2JmYmZmYTRmYzc3ZWY5MDcxMTBlZjZkNDVhZTU5NjYzNSJ9"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "hash": "86d5e947fc84b78db6a42ae54c85910b85355403c9eaff13d08356a3e3a289f5",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.243111639
+   },
+   "ms": 8695.099999997765,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjg4NCwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjk1LCJraW5kIjoiZ29hbCIsIngiOi0wLjE5NTQwMzU2OTgxNDE0NDM2LCJ5IjowLjExNjcxMzk1MDQyNjU1ODY5fSx7InRpY2siOjI3Nywia2luZCI6ImdvYWwiLCJ4IjowLjA5NzIwNTUyNjA2NzYxNzU2LCJ5IjowLjAwNDQ0OTYzNDYwNzQ3MzIxODV9LHsidGljayI6NDcyLCJraW5kIjoiZ29hbCIsIngiOjIuNzI2Mjc4NjIyODc2MTgyNCwieSI6MS44MjkzMTY0MjA0NDY1MTY0fSx7InRpY2siOjQ5OSwia2luZCI6ImdvYWwiLCJ4Ijo5Ljc1Nzg3Mjg5MjMyNjAzLCJ5IjowLjA2NDMzNDc0NjI3MzU0NjAyfV19LCJyIjoiODZkNWU5NDdmYzg0Yjc4ZGI2YTQyYWU1NGM4NTkxMGI4NTM1NTQwM2M5ZWFmZjEzZDA4MzU2YTNlM2EyODlmNSJ9"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "hash": "19f5d3b5862245c9bb33c3fdc065c62cb6bf20e63c5536efc6dd8f1733189af4",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.196814498
+   },
+   "ms": 5827.39999999851,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjY4MCwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjE4Mywia2luZCI6ImdvYWwiLCJ4IjoyLjc5OTgwNDM1MzkzNzc5OCwieSI6Mi4yMDI5NDMyNjIxMzc0NTY1fSx7InRpY2siOjQ2MSwia2luZCI6ImdvYWwiLCJ4IjoxMC4yMDQ4MjMwMTc4NzMyNywieSI6LTAuMDQzMDUzMzQ0NTkwMTU3NjR9LHsidGljayI6NDg4LCJraW5kIjoiZ29hbCIsIngiOjMuMTIwODM4MDYyOTY5NDE2LCJ5IjotNi4yNTUyMzM0ODk5NjcxMTF9XX0sInIiOiIxOWY1ZDNiNTg2MjI0NWM5YmIzM2MzZmRjMDY1YzYyY2I2YmYyMGU2M2M1NTM2ZWZjNmRkOGYxNzMzMTg5YWY0In0"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "hash": "b1d95608c68dc55fa38537f4662084b6cf3c12e192be0b05723c9087a5d4f688",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.195354885
+   },
+   "ms": 5536,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjUzNCwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjEyLCJraW5kIjoiZ29hbCIsIngiOjEwLjI3ODUzMDY3NDg5OTUwNywieSI6LTAuMjkxNzUyMzMyNTYyNDA1OX0seyJ0aWNrIjoxNDQsImtpbmQiOiJnb2FsIiwieCI6LTAuMDcyOTM1NDEwNTU1MjM0NjcsInkiOjAuMjUyMjUzMTkzOTQwNjM0NDV9XX0sInIiOiJiMWQ5NTYwOGM2OGRjNTVmYTM4NTM3ZjQ2NjIwODRiNmNmM2MxMmUxOTJiZTBiMDU3MjNjOTA4N2E1ZDRmNjg4In0"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "hash": "ad89c47ce2d21ec3cd86898c9c08d2f7dae37d0126e594cf5312ead06b776d67",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.318173762
+   },
+   "ms": 7319.10000000149,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjExOTMsImxvZyI6W3sidGljayI6MCwia2luZCI6ImNvbmZpZyIsImNob2ljZSI6Im1hcC5wb3Nlcz1vZG9tZXRyeSJ9LHsidGljayI6MCwia2luZCI6ImNvbmZpZyIsImNob2ljZSI6Im1hcC5hbGdvcml0aG09b2NjdXBhbmN5In0seyJ0aWNrIjoyMjUsImtpbmQiOiJnb2FsIiwieCI6Mi43MDcxMTYwMjQ1MTEyMzMsInkiOi02LjMwMDA4MTM3NDMzMTM0OTV9LHsidGljayI6NTIxLCJraW5kIjoiZ29hbCIsIngiOjIuNzY5Mzk2NDk2NDYxMjk3NCwieSI6LTYuNTMxNDAwNDcwNjg4NTE1fSx7InRpY2siOjc5Nywia2luZCI6ImdvYWwiLCJ4IjowLjI1NDQwNjc3NDQwNTYwOTMsInkiOi0yLjc3MzkzMDc2ODYyMjQ5OH0seyJ0aWNrIjo4NzgsImtpbmQiOiJnb2FsIiwieCI6Mi45NjM3ODc4NDcyNjQyMjYzLCJ5IjotNi41MjAzMDk1NjQwNTg1MjQ1fV19LCJyIjoiYWQ4OWM0N2NlMmQyMWVjM2NkODY4OThjOWMwOGQyZjdkYWUzN2QwMTI2ZTU5NGNmNTMxMmVhZDA2Yjc3NmQ2NyJ9"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "hash": "c44e343948e80f87d35c5185e7424c11786eff36f57dbe2065650214beaa0cad",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.285519626
+   },
+   "ms": 4042.10000000149,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjMxOSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjE1Miwia2luZCI6ImdvYWwiLCJ4IjowLjI4MzQ3MTI1MzI5MzA5NDg2LCJ5IjotMi4yNzAwMTA2NTUxMjkyODY1fSx7InRpY2siOjIwOCwia2luZCI6ImdvYWwiLCJ4IjotMC4yMTg3NTAzMzQxNDkwNDc2NSwieSI6LTAuMTMzNjMzNzc5NTM2NDc3MTJ9XX0sInIiOiJjNDRlMzQzOTQ4ZTgwZjg3ZDM1YzUxODVlNzQyNGMxMTc4NmVmZjM2ZjU3ZGJlMjA2NTY1MDIxNGJlYWEwY2FkIn0"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "hash": "563ba4f2504e2f6f2624844a90d555babefbcd3cf319266fcef584d70097eb4f",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.336355252
+   },
+   "ms": 3632.400000002235,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjM3OCwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjk2LCJraW5kIjoiZ29hbCIsIngiOjYuMTI5Njg2ODA1NTYxMjA4LCJ5IjozLjgzOTAzMjgyMzk5NjQyNTh9XX0sInIiOiI1NjNiYTRmMjUwNGUyZjZmMjYyNDg0NGE5MGQ1NTViYWJlZmJjZDNjZjMxOTI2NmZjZWY1ODRkNzAwOTdlYjRmIn0"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "hash": "aef47553d21e19266bb6a5b31d0ed3ba3dd27e0f2c3d0c85e2ee31148abb853e",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.348685166
+   },
+   "ms": 2731.10000000149,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjMyOSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjQwLCJraW5kIjoiZ29hbCIsIngiOjkuODg1MTA5NzAzMzEzNDksInkiOi0wLjIyNTQ4NTExMTQxNTQ2MDAyfV19LCJyIjoiYWVmNDc1NTNkMjFlMTkyNjZiYjZhNWIzMWQwZWQzYmEzZGQyN2UwZjJjM2QwYzg1ZTJlZTMxMTQ4YWJiODUzZSJ9"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "hash": "f8e74d80940cf4470d37b5a5d0a683d0bf0ae87f55a7f6c5ab0f8ccca6f17ae6",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.194079988
+   },
+   "ms": 5819.39999999851,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjcwNywibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjIxLCJraW5kIjoiZ29hbCIsIngiOjIuNTI5MTIwNzI1ODM4NjQ0LCJ5IjoyLjI0MjM0OTQ2NzE0ODIwNn0seyJ0aWNrIjoyODYsImtpbmQiOiJnb2FsIiwieCI6NS44MDEyMTUxODAwMDYxNDMsInkiOjQuMDM4NTY3ODk2ODc2ODY4fSx7InRpY2siOjUwNSwia2luZCI6ImdvYWwiLCJ4IjotMC4wMzYzMDUwODIxMzgyNzk4NzYsInkiOi0wLjIwODkwMDQ2ODg1NTIwNTU4fSx7InRpY2siOjU0NCwia2luZCI6ImdvYWwiLCJ4IjoyLjk3NTk5NzgwNjQxMTI3MzgsInkiOi02LjQ3ODkyOTQwNTMxMDUxM31dfSwiciI6ImY4ZTc0ZDgwOTQwY2Y0NDcwZDM3YjVhNWQwYTY4M2QwYmYwYWU4N2Y1NWE3ZjZjNWFiMGY4Y2NjYTZmMTdhZTYifQ"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "hash": "0be8fcc9f621a1ce17e418e1da45f4df81d7417ffda85c28a39d7586d4e48db6",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.304389483
+   },
+   "ms": 5008,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjM5NywibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjM1LCJraW5kIjoiZ29hbCIsIngiOjkuMDk3MzQ1MDg4MDQ4ODAxLCJ5IjotNC4wNDQ0MTg4MDQwNjU1MDN9LHsidGljayI6NDIsImtpbmQiOiJnb2FsIiwieCI6LTAuMTg2NjM5MDgyMTIwOTI4NTYsInkiOi0wLjE4Mzc2Njk0ODI4MTc3Mjd9XX0sInIiOiIwYmU4ZmNjOWY2MjFhMWNlMTdlNDE4ZTFkYTQ1ZjRkZjgxZDc0MTdmZmRhODVjMjhhMzlkNzU4NmQ0ZTQ4ZGI2In0"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "hash": "f6a7cac727a5faadecde79243c3b33402d503d8c74decc61e23d9390d370f2f9",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.301349263
+   },
+   "ms": 7146,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjc3NiwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjExOSwia2luZCI6ImdvYWwiLCJ4IjotMC4yOTgzMzA5ODE2NDExNzA4LCJ5IjotMC4yMTE0MDI3NzUxNjM4MDg4NH0seyJ0aWNrIjozMzgsImtpbmQiOiJnb2FsIiwieCI6LTAuMjM1MzYxNTgzODc3NTAzNiwieSI6LTAuMTI1NDQ3NjMyNzUxMTMzNjN9LHsidGljayI6NDQ2LCJraW5kIjoiZ29hbCIsIngiOjIuNTI3NDg4MTE4NjkyNzIxLCJ5IjoxLjg3NjQxMzI0MDk2MzAwNzR9XX0sInIiOiJmNmE3Y2FjNzI3YTVmYWFkZWNkZTc5MjQzYzNiMzM0MDJkNTAzZDhjNzRkZWNjNjFlMjNkOTM5MGQzNzBmMmY5In0"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "hash": "d855c6bcfb40e4deb960aab96b059f35ed8a9b97b21c43cc6337366d2330c588",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.306156261
+   },
+   "ms": 6834.099999997765,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjc5OSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjIxNCwia2luZCI6ImdvYWwiLCJ4IjowLjY5NzgzMzA5NTMyMTIyNTQsInkiOi0yLjIwODY3MDQ4MTcxMzM0OTN9XX0sInIiOiJkODU1YzZiY2ZiNDBlNGRlYjk2MGFhYjk2YjA1OWYzNWVkOGE5Yjk3YjIxYzQzY2M2MzM3MzY2ZDIzMzBjNTg4In0"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "hash": "5020088a86e42529e2794d3b6896463913a4ceb8e2eee9a55f4d3423eb1527b3",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.245648297
+   },
+   "ms": 5314.10000000149,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjU3MywibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjI5Niwia2luZCI6ImdvYWwiLCJ4Ijo5Ljk4Mzc3NTE5NTk0OTI4NSwieSI6My4wNTk5MTk3MzM0MDU1Nzd9LHsidGljayI6NDkyLCJraW5kIjoiZ29hbCIsIngiOjAuMTE3NTc2OTk3NTA4NDIwOTksInkiOjAuMjAxMTY5Mzk4MDgwMjQ5MDh9XX0sInIiOiI1MDIwMDg4YTg2ZTQyNTI5ZTI3OTRkM2I2ODk2NDYzOTEzYTRjZWI4ZTJlZWU5YTU1ZjRkMzQyM2ViMTUyN2IzIn0"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "hash": "278c15439371dc91928fbfbd840ed263afaac1ff2a18c134670c3b5b1fdede56",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.36104874
+   },
+   "ms": 8203.5,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjk0OSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjIxOSwia2luZCI6ImdvYWwiLCJ4Ijo5Ljg1MDMxNDE5MzUwNjA3NiwieSI6MC4yODExNTgyMTUzNzU3MjI1NX0seyJ0aWNrIjozMDIsImtpbmQiOiJnb2FsIiwieCI6OS45MjU3NDU3NTAyMzE0NTgsInkiOjIuNzg5MzE1MDkwNzUyNjkyN30seyJ0aWNrIjo0MzIsImtpbmQiOiJnb2FsIiwieCI6OC45NzQ1ODUwOTYwMzY2ODYsInkiOi0zLjgyNDMwNjY5Nzc0MDcxMn0seyJ0aWNrIjo2MzksImtpbmQiOiJnb2FsIiwieCI6OS4xODYwNzg4ODQxNzQ0NjIsInkiOi0zLjg4ODY0MTIwMjk5MTU0NTZ9XX0sInIiOiIyNzhjMTU0MzkzNzFkYzkxOTI4ZmJmYmQ4NDBlZDI2M2FmYWFjMWZmMmExOGMxMzQ2NzBjM2I1YjFmZGVkZTU2In0"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "hash": "f8582d101b0ceb8cc699056e2dfb7c1d8eaebedd8c691d55df12bb8aebff7953",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.252780495
+   },
+   "ms": 7802.300000000745,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjg1NSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjg0LCJraW5kIjoiZ29hbCIsIngiOjAuMTQ1Njg3NTExODIzNjEwMjgsInkiOi0wLjI4MDM5NDgyMTE5MTM4NzZ9LHsidGljayI6Mzc4LCJraW5kIjoiZ29hbCIsIngiOjkuMDMyODUzMDUxOTk2NywieSI6LTMuODQwNjQ0OTkxNzM3MDc1M30seyJ0aWNrIjo1MTEsImtpbmQiOiJnb2FsIiwieCI6MC41OTkyNzU1Mzg2MzA0NTI1LCJ5IjotMi40NjY4NTg5ODQ2MTc4MjZ9LHsidGljayI6NTQ3LCJraW5kIjoiZ29hbCIsIngiOjkuMjEyMjI3NDYwMTQ0ODUsInkiOi0zLjgxODk0MDAyMDk3MzkyMTN9XX0sInIiOiJmODU4MmQxMDFiMGNlYjhjYzY5OTA1NmUyZGZiN2MxZDhlYWViZWRkOGM2OTFkNTVkZjEyYmI4YWViZmY3OTUzIn0"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "hash": "c4515fe05637addc625ac13ac7da63bb072122fff2257fcee71c65f4b857fa00",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.210786791
+   },
+   "ms": 6792.099999997765,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjgxMiwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjE4MSwia2luZCI6ImdvYWwiLCJ4IjoyLjk3NDY1NDE1ODgyNzQyMzMsInkiOi02Ljc5ODg5NTg4MzQ3MzYwOH0seyJ0aWNrIjoyNDIsImtpbmQiOiJnb2FsIiwieCI6OC43MzYzMTI1MzQyMjU5ODIsInkiOi0zLjc2MzcxOTcyNDgxNzE5MjV9LHsidGljayI6NDcxLCJraW5kIjoiZ29hbCIsIngiOjMuMTIzMTI2NTQ2NjY1MTg2LCJ5IjotNi40Nzg5NTI2MzIwNjAxMzZ9XX0sInIiOiJjNDUxNWZlMDU2MzdhZGRjNjI1YWMxM2FjN2RhNjNiYjA3MjEyMmZmZjIyNTdmY2VlNzFjNjVmNGI4NTdmYTAwIn0"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "hash": "89d9f2359401ca96d9e1f50e643f835b5bc3991e74d4cba869ab6cf4a335026a",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.256499935
+   },
+   "ms": 10431.60000000149,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjEwMDQsImxvZyI6W3sidGljayI6MCwia2luZCI6ImNvbmZpZyIsImNob2ljZSI6Im1hcC5wb3Nlcz1vZG9tZXRyeSJ9LHsidGljayI6MCwia2luZCI6ImNvbmZpZyIsImNob2ljZSI6Im1hcC5hbGdvcml0aG09b2NjdXBhbmN5In0seyJ0aWNrIjo5Nywia2luZCI6ImdvYWwiLCJ4IjozLjI3MDgyMTczNzk0Mzk1MzcsInkiOi02LjUwMjM3MDY5MDc5NDg2Mn0seyJ0aWNrIjozNjMsImtpbmQiOiJnb2FsIiwieCI6MC4xMTQ3NzM4OTA2NzA5NDAwMiwieSI6MC4wNjE1Mzk4NDQxOTIwNzk1ODV9LHsidGljayI6NTgyLCJraW5kIjoiZ29hbCIsIngiOjAuMTY0OTgwNDk1NDMzMTcxNzgsInkiOjAuMjc1NjYyMTE4NTM2MzgzNX0seyJ0aWNrIjo4NDYsImtpbmQiOiJnb2FsIiwieCI6LTAuMDg0NTg3MTYzNDQxMDU0OTQsInkiOi0wLjAyOTI0MjY4NjkxMTE3NDk4N31dfSwiciI6Ijg5ZDlmMjM1OTQwMWNhOTZkOWUxZjUwZTY0M2Y4MzViNWJjMzk5MWU3NGQ0Y2JhODY5YWI2Y2Y0YTMzNTAyNmEifQ"
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "hash": "1eb3e2680482c9234417db4a441bdec64bc409da463ee9bc33bb468662cd14f2",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.222122421
+   },
+   "ms": 4771.5,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjc5NSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjEyNSwia2luZCI6ImdvYWwiLCJ4IjowLjIzNjEyNzg4OTQ4MDk0NjQ4LCJ5IjowLjA5NjkwMDkzNTI3NzEyNzY4fSx7InRpY2siOjIzMSwia2luZCI6ImdvYWwiLCJ4IjowLjA0NzE4OTQ4Mjg1ODI3MjczNSwieSI6MC4xMDQ1NDQxODc0MTU0Nzg2Nn0seyJ0aWNrIjoyMzQsImtpbmQiOiJnb2FsIiwieCI6Ni4xNzQ2MTIxNjk4Mzk0OCwieSI6NC4xMTc2NDA1MzgyMDY5MjV9LHsidGljayI6MjQwLCJraW5kIjoiZ29hbCIsIngiOjIuNTI1ODYxNzg4NjAwMTMxMywieSI6MS44MTM0NzY5NTkwNjMzNDc1fV19LCJyIjoiMWViM2UyNjgwNDgyYzkyMzQ0MTdkYjRhNDQxYmRlYzY0YmM0MDlkYTQ2M2VlOWJjMzNiYjQ2ODY2MmNkMTRmMiJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "hash": "23a456bf770d46d5d772da545702df6d0ef09901eb835706e1279e524a8eb11c",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 3
+   },
+   "ms": 1.1000000014901161,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=told-wrong&s=eyJ2IjoxLCJoIjoiN2Q4MmY1YTczNDM2Mjg0ZDllOTA4ZWM3OWYwMDQyNjgzMDA1NDNlY2VlZmJhM2U5ZjlkYzE3ZTcwYmJlNWUxOSIsImkiOlsxXSwiciI6IjIzYTQ1NmJmNzcwZDQ2ZDVkNzcyZGE1NDU3MDJkZjZkMGVmMDk5MDFlYjgzNTcwNmUxMjc5ZTUyNGE4ZWIxMWMifQ"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "hash": "92ae33333d9efa9aaab9c4c3512beba406fa66f40e207e5454a5f795c085f310",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 3.4
+   },
+   "ms": 1,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped&s=eyJ2IjoxLCJoIjoiNzY0MWU0MTUxZjYyNWNlYjQyNTk1ZWJmMzdjMjczM2UzMDBiMzQ1OWY2ZjhiNDk5MTgzOGFhOGJjMjQ0NmRmOCIsImkiOls2NjZdLCJyIjoiOTJhZTMzMzMzZDllZmE5YWFhYjljNGMzNTEyYmViYTQwNmZhNjZmNDBlMjA3ZTU0NTRhNWY3OTVjMDg1ZjMxMCJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "hash": "2e5a3a27ab2d0a06357a1d4f40be097a4f33c154af9fee02d5fd956047e1c126",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.7
+   },
+   "ms": 1,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-far&s=eyJ2IjoxLCJoIjoiOTI4OTY0MmJlYzI3Y2U3MmUzMGM1NjNkNGIwNmU3MWFkNDRmMTRlZDAzMjk0YmZhMjc4ODM3Zjg5NjI3NDY3NiIsImkiOls2NTVdLCJyIjoiMmU1YTNhMjdhYjJkMGEwNjM1N2ExZDRmNDBiZTA5N2E0ZjMzYzE1NGFmOWZlZTAyZDVmZDk1NjA0N2UxYzEyNiJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "hash": "0f1bd7b6b28f792c58ffaff1ee4d06aeaf334a54892d3f5e96eeb719d741dd2b",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 2.6
+   },
+   "ms": 1,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-again&s=eyJ2IjoxLCJoIjoiYWUyMDE4NjFhOTg4MjIwM2EyYTUwYTk3MzlmMmVkYWUzY2ZiNDg0ZGVmMDBjOWNjMzdkZTVkMTk1YjlmZTAxMSIsImkiOls2NzFdLCJyIjoiMGYxYmQ3YjZiMjhmNzkyYzU4ZmZhZmYxZWU0ZDA2YWVhZjMzNGE1NDg5MmQzZjVlOTZlZWI3MTlkNzQxZGQyYiJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "hash": "92661d690d3e517d45387fc8a507786ab60edc3855cdcf2b879810b46a55634c",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.5
+   },
+   "ms": 1,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=told-wrong&s=eyJ2IjoxLCJoIjoiN2Q4MmY1YTczNDM2Mjg0ZDllOTA4ZWM3OWYwMDQyNjgzMDA1NDNlY2VlZmJhM2U5ZjlkYzE3ZTcwYmJlNWUxOSIsImkiOlsyNl0sInIiOiI5MjY2MWQ2OTBkM2U1MTdkNDUzODdmYzhhNTA3Nzg2YWI2MGVkYzM4NTVjZGNmMmI4Nzk4MTBiNDZhNTU2MzRjIn0"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "hash": "848c931a2fe7a5731e58beee1e05e39a41ca2844c5ae49aee4ebba38ae8443d5",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 2.2
+   },
+   "ms": 1,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped&s=eyJ2IjoxLCJoIjoiNzY0MWU0MTUxZjYyNWNlYjQyNTk1ZWJmMzdjMjczM2UzMDBiMzQ1OWY2ZjhiNDk5MTgzOGFhOGJjMjQ0NmRmOCIsImkiOls2NTRdLCJyIjoiODQ4YzkzMWEyZmU3YTU3MzFlNThiZWVlMWUwNWUzOWE0MWNhMjg0NGM1YWU0OWFlZTRlYmJhMzhhZTg0NDNkNSJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "hash": "5e130cabd47688f7e511e7757b11ed1595e7892be6078e277b52a9258d22f404",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.1
+   },
+   "ms": 0.9000000022351742,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-far&s=eyJ2IjoxLCJoIjoiOTI4OTY0MmJlYzI3Y2U3MmUzMGM1NjNkNGIwNmU3MWFkNDRmMTRlZDAzMjk0YmZhMjc4ODM3Zjg5NjI3NDY3NiIsImkiOls2NDddLCJyIjoiNWUxMzBjYWJkNDc2ODhmN2U1MTFlNzc1N2IxMWVkMTU5NWU3ODkyYmU2MDc4ZTI3N2I1MmE5MjU4ZDIyZjQwNCJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "hash": "f7b1f1a56a65073dfc6882cd9adab1167b86b61095f50157f949412f8ab1db3e",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.4
+   },
+   "ms": 1,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-again&s=eyJ2IjoxLCJoIjoiYWUyMDE4NjFhOTg4MjIwM2EyYTUwYTk3MzlmMmVkYWUzY2ZiNDg0ZGVmMDBjOWNjMzdkZTVkMTk1YjlmZTAxMSIsImkiOls2NDFdLCJyIjoiZjdiMWYxYTU2YTY1MDczZGZjNjg4MmNkOWFkYWIxMTY3Yjg2YjYxMDk1ZjUwMTU3Zjk0OTQxMmY4YWIxZGIzZSJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "hash": "711ece4a6fae2de801a6e8bacd6bca27464b120dd4a8e25ba9cc6b8e5d1efb9f",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "error",
+    "value": null
+   },
+   "ms": 1,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=told-wrong&s=eyJ2IjoxLCJoIjoiN2Q4MmY1YTczNDM2Mjg0ZDllOTA4ZWM3OWYwMDQyNjgzMDA1NDNlY2VlZmJhM2U5ZjlkYzE3ZTcwYmJlNWUxOSIsImkiOlsxOTJdLCJyIjoiNzExZWNlNGE2ZmFlMmRlODAxYTZlOGJhY2Q2YmNhMjc0NjRiMTIwZGQ0YThlMjViYTljYzZiOGU1ZDFlZmI5ZiJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "hash": "298c6667ec2cef47c4fed0991768b2593c633ebd005a8cdcd80cbc796b376100",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.8
+   },
+   "ms": 0.8999999985098839,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped&s=eyJ2IjoxLCJoIjoiNzY0MWU0MTUxZjYyNWNlYjQyNTk1ZWJmMzdjMjczM2UzMDBiMzQ1OWY2ZjhiNDk5MTgzOGFhOGJjMjQ0NmRmOCIsImkiOls2MjRdLCJyIjoiMjk4YzY2NjdlYzJjZWY0N2M0ZmVkMDk5MTc2OGIyNTkzYzYzM2ViZDAwNWE4Y2RjZDgwY2JjNzk2YjM3NjEwMCJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "hash": "560bf9be96da0c0ecfd45a0f20500ab9188792062163bbbf263b20ef8dc3ef6a",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.2
+   },
+   "ms": 1,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-far&s=eyJ2IjoxLCJoIjoiOTI4OTY0MmJlYzI3Y2U3MmUzMGM1NjNkNGIwNmU3MWFkNDRmMTRlZDAzMjk0YmZhMjc4ODM3Zjg5NjI3NDY3NiIsImkiOls2NTBdLCJyIjoiNTYwYmY5YmU5NmRhMGMwZWNmZDQ1YTBmMjA1MDBhYjkxODg3OTIwNjIxNjNiYmJmMjYzYjIwZWY4ZGMzZWY2YSJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "hash": "ad7da02cb222e26ca52919e09386732efdeec1c8351200a561a870eeee73f526",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 2.3
+   },
+   "ms": 1,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-again&s=eyJ2IjoxLCJoIjoiYWUyMDE4NjFhOTg4MjIwM2EyYTUwYTk3MzlmMmVkYWUzY2ZiNDg0ZGVmMDBjOWNjMzdkZTVkMTk1YjlmZTAxMSIsImkiOls2NjhdLCJyIjoiYWQ3ZGEwMmNiMjIyZTI2Y2E1MjkxOWUwOTM4NjczMmVmZGVlYzFjODM1MTIwMGE1NjFhODcwZWVlZTczZjUyNiJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "hash": "e4a345b27836f644f59f66f554398f80401ffd800e9c1db7d765bf913d9b47a2",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.5
+   },
+   "ms": 1,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=told-wrong&s=eyJ2IjoxLCJoIjoiN2Q4MmY1YTczNDM2Mjg0ZDllOTA4ZWM3OWYwMDQyNjgzMDA1NDNlY2VlZmJhM2U5ZjlkYzE3ZTcwYmJlNWUxOSIsImkiOlszNl0sInIiOiJlNGEzNDViMjc4MzZmNjQ0ZjU5ZjY2ZjU1NDM5OGY4MDQwMWZmZDgwMGU5YzFkYjdkNzY1YmY5MTNkOWI0N2EyIn0"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "hash": "eeb84f1d4f7072896e8b02f9901907b119db59d2ec2b39088906e51dbd94f510",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 2.7
+   },
+   "ms": 1.300000000745058,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped&s=eyJ2IjoxLCJoIjoiNzY0MWU0MTUxZjYyNWNlYjQyNTk1ZWJmMzdjMjczM2UzMDBiMzQ1OWY2ZjhiNDk5MTgzOGFhOGJjMjQ0NmRmOCIsImkiOls2MDVdLCJyIjoiZWViODRmMWQ0ZjcwNzI4OTZlOGIwMmY5OTAxOTA3YjExOWRiNTlkMmVjMmIzOTA4ODkwNmU1MWRiZDk0ZjUxMCJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "hash": "55d173e299ff1e7a6319ef4de881ff623b9c49490112679149d2fea781e4877d",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 2.5
+   },
+   "ms": 1.300000000745058,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-far&s=eyJ2IjoxLCJoIjoiOTI4OTY0MmJlYzI3Y2U3MmUzMGM1NjNkNGIwNmU3MWFkNDRmMTRlZDAzMjk0YmZhMjc4ODM3Zjg5NjI3NDY3NiIsImkiOls2NzNdLCJyIjoiNTVkMTczZTI5OWZmMWU3YTYzMTllZjRkZTg4MWZmNjIzYjljNDk0OTAxMTI2NzkxNDlkMmZlYTc4MWU0ODc3ZCJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "hash": "5543842627db2f022532f4eb11a255506cb4eeb1d08ae1594440c35dd9c3f3ac",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 4.6
+   },
+   "ms": 1.5,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-again&s=eyJ2IjoxLCJoIjoiYWUyMDE4NjFhOTg4MjIwM2EyYTUwYTk3MzlmMmVkYWUzY2ZiNDg0ZGVmMDBjOWNjMzdkZTVkMTk1YjlmZTAxMSIsImkiOls1OTldLCJyIjoiNTU0Mzg0MjYyN2RiMmYwMjI1MzJmNGViMTFhMjU1NTA2Y2I0ZWViMWQwOGFlMTU5NDQ0MGMzNWRkOWMzZjNhYyJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "hash": "25d6467f9ad1f9ea643f1cadecc24ef2c61cea7f7ecc3ac430126e166f798483",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.6
+   },
+   "ms": 1.300000000745058,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=told-wrong&s=eyJ2IjoxLCJoIjoiN2Q4MmY1YTczNDM2Mjg0ZDllOTA4ZWM3OWYwMDQyNjgzMDA1NDNlY2VlZmJhM2U5ZjlkYzE3ZTcwYmJlNWUxOSIsImkiOlsyNV0sInIiOiIyNWQ2NDY3ZjlhZDFmOWVhNjQzZjFjYWRlY2MyNGVmMmM2MWNlYTdmN2VjYzNhYzQzMDEyNmUxNjZmNzk4NDgzIn0"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "hash": "e990d6383b6893e3a6d756c331c75b3bb37dc6775231a8d2e45411c0a6d60cba",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.5
+   },
+   "ms": 1.4000000022351742,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped&s=eyJ2IjoxLCJoIjoiNzY0MWU0MTUxZjYyNWNlYjQyNTk1ZWJmMzdjMjczM2UzMDBiMzQ1OWY2ZjhiNDk5MTgzOGFhOGJjMjQ0NmRmOCIsImkiOls2MjddLCJyIjoiZTk5MGQ2MzgzYjY4OTNlM2E2ZDc1NmMzMzFjNzViM2JiMzdkYzY3NzUyMzFhOGQyZTQ1NDExYzBhNmQ2MGNiYSJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "hash": "a4652f31790f2a8acecd519634987067f6af9c78aae4965b02f5a4e26972488e",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 1.2
+   },
+   "ms": 1.5,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-far&s=eyJ2IjoxLCJoIjoiOTI4OTY0MmJlYzI3Y2U3MmUzMGM1NjNkNGIwNmU3MWFkNDRmMTRlZDAzMjk0YmZhMjc4ODM3Zjg5NjI3NDY3NiIsImkiOls2NjBdLCJyIjoiYTQ2NTJmMzE3OTBmMmE4YWNlY2Q1MTk2MzQ5ODcwNjdmNmFmOWM3OGFhZTQ5NjViMDJmNWE0ZTI2OTcyNDg4ZSJ9"
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "hash": "86dd5986d6792f8ad139ddbb711d968842560ad02b363d911ed5fcedb033e55e",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.4
+   },
+   "ms": 1.5999999977648258,
+   "link": "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-again&s=eyJ2IjoxLCJoIjoiYWUyMDE4NjFhOTg4MjIwM2EyYTUwYTk3MzlmMmVkYWUzY2ZiNDg0ZGVmMDBjOWNjMzdkZTVkMTk1YjlmZTAxMSIsImkiOls2NDldLCJyIjoiODZkZDU5ODZkNjc5MmY4YWQxMzlkZGJiNzExZDk2ODg0MjU2MGFkMDJiMzYzZDkxMWVkNWZjZWRiMDMzZTU1ZSJ9"
+  }
+ ],
+ "links": [
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbNSw2XSxbNiw3XSxbNyw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiJkYjNkYzBjNjZhZjA2OWY3YjUyYjgxZTk2N2Y5ZGNlYTY5Mjk5YmIxMDVhODIwZDkyZDAwNTU5YjhmMzk4YzhhIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMiwyXSxbMSwyXSxbMiwyXSxbMywyXSxbNCwyXSxbNSwyXSxbNiwyXSxbNSwzXSxbNiwyXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdXSwiciI6ImVlOTRlYjQxZWU1Nzg4N2MwYWZlNTIxNGU4ZDkxODgwNTM3NzQzNTMwYTFkYjlhNmE1NjA2MjEzNTUxZTQxMzUifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=mud-field&s=eyJ2IjoxLCJoIjoiNzk2OGVhNjg1ZjgzZWQ0ZGFjZjgwNjI5YmQ3YWYxYjNiZjUzNDY0YTBiODY3YjkxNGFhM2M3NmJiMDFiYzA3OSIsImkiOltbMSwyXSxbMiwzXSxbMSwzXSxbMiwzXSxbMywzXSxbNCwzXSxbNSwzXSxbNiwzXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiIyMjUyYWY0MTljZTI3MWM0MDRhYjljNWZhOGZhY2E4MGNjOWUzZmIzMTU2NWU4NTU4ZTBmMDk0YmVlYmRmNGU2In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMSw2XSxbMiw3XSxbMyw4XSxbNCw5XSxbNSw5XV0sInIiOiI3MWM1NzAwM2E5NDIxNDIwNDVmZTE1MDAwODkwNjZmN2VjNWRkMDU4Zjk4OWQ1NTUxOTVmOTc1ZWMwZGZhYmY1In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMSw2XSxbMSw3XSxbMSw4XSxbMSw5XSxbMSwxMF0sWzEsMTFdLFsyLDEyXSxbMywxMl0sWzQsMTJdLFs1LDEyXSxbNiwxMl0sWzcsMTFdLFs4LDExXV0sInIiOiI4NTBlMWIzMTdlZDQ0NjU1OWFhZWNlYWYwZTBjYzkzNWY2ODc2NzM0NjRjZDE2Y2ZhMmJlNmM3NWY3YTVjYjkxIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=mud-field&s=eyJ2IjoxLCJoIjoiNzk2OGVhNjg1ZjgzZWQ0ZGFjZjgwNjI5YmQ3YWYxYjNiZjUzNDY0YTBiODY3YjkxNGFhM2M3NmJiMDFiYzA3OSIsImkiOltbMSwyXSxbMCwyXSxbMSwyXSxbMiwzXSxbMywzXSxbNCwzXSxbNSwzXSxbNiwzXSxbNiwyXSxbNiwzXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiIyMjUyYWY0MTljZTI3MWM0MDRhYjljNWZhOGZhY2E4MGNjOWUzZmIzMTU2NWU4NTU4ZTBmMDk0YmVlYmRmNGU2In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMSw2XSxbMiw3XSxbMSw2XSxbMiw3XSxbMyw4XSxbNCw5XSxbNSw5XSxbNiw5XSxbNywxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiI3NTQyNDg4MjBkMDJmOGZmNTc0YzMyYzI3MWQ3MDY5NzAyZGZjMDc1NWVlMzE2YjI5NGIwNGUzOTlhM2I0ZmM3In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMSw2XSxbMSw3XSxbMSw4XSxbMSw5XSxbMSwxMF0sWzEsMTFdLFsyLDEyXSxbMywxMl0sWzQsMTJdLFs1LDEyXSxbNiwxMl0sWzcsMTFdLFs4LDExXV0sInIiOiI4NTBlMWIzMTdlZDQ0NjU1OWFhZWNlYWYwZTBjYzkzNWY2ODc2NzM0NjRjZDE2Y2ZhMmJlNmM3NWY3YTVjYjkxIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=mud-field&s=eyJ2IjoxLCJoIjoiNzk2OGVhNjg1ZjgzZWQ0ZGFjZjgwNjI5YmQ3YWYxYjNiZjUzNDY0YTBiODY3YjkxNGFhM2M3NmJiMDFiYzA3OSIsImkiOltbMSwyXSxbMiwzXSxbMywzXSxbNCwzXSxbNSwzXSxbNCw0XSxbNSwzXSxbNiwzXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiI0MjAyNmVlNjY0MDcxNmU4MWZkNzNhNWNiNjE4M2QwNjk5NTMzM2UwMDY5OTM2MjM5YzVhYmVkYjhiOWVjM2M2In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbNSw2XSxbNiw3XSxbNyw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiJkYjNkYzBjNjZhZjA2OWY3YjUyYjgxZTk2N2Y5ZGNlYTY5Mjk5YmIxMDVhODIwZDkyZDAwNTU5YjhmMzk4YzhhIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMiwyXSxbMywyXSxbNCwyXSxbNSwyXSxbNiwyXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XV0sInIiOiI5NTEyNDM2ZTdjOGJjMTc4ZGYyMDEyNTU5M2YwNDlhMTJjYWUyNzg1MjhkM2E5Mzc4MmZhYWUxOTIzMDM3MDY1In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=mud-field&s=eyJ2IjoxLCJoIjoiNzk2OGVhNjg1ZjgzZWQ0ZGFjZjgwNjI5YmQ3YWYxYjNiZjUzNDY0YTBiODY3YjkxNGFhM2M3NmJiMDFiYzA3OSIsImkiOltbMSwyXSxbMiwzXSxbMywzXSxbNCwzXSxbNSwzXSxbNiwzXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XSxbOCwxMF1dLCJyIjoiYmMyMTNkNDg4YTNlOWMzMzdmNGNjOGMyOGJlZDI1NmI1YWMxNWY4M2VlN2QzNTY3NjU3ZTdhOWZjYjJjZjFhMCJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMSw2XSxbMiw3XSxbMiw4XSxbMiw3XSxbMyw4XSxbNCw5XSxbNSw5XSxbNiw5XSxbNywxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiJjMGY2YmEyOTEwZDY0NmIyMzBiYWQ0ODBiNjk2OTdlMzE5NmNhMWQwMGUwYzE0OTA4ODEwYWJlNTQ3ZDhhOWZhIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMiwyXSxbMywyXSxbNCwyXSxbNSwyXSxbNiwyXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XV0sInIiOiJlN2UwMGVjNzUxMTIxZGI3MzljNjIyYjY1ZGEzMzI3ZDgxZmU4N2U3ODI0ZmMxZTEzZDUxODA0N2JlYjgzMjk0In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=mud-field&s=eyJ2IjoxLCJoIjoiNzk2OGVhNjg1ZjgzZWQ0ZGFjZjgwNjI5YmQ3YWYxYjNiZjUzNDY0YTBiODY3YjkxNGFhM2M3NmJiMDFiYzA3OSIsImkiOltbMSwyXSxbMiwzXSxbMywzXSxbNCwzXSxbNSwzXSxbNiwzXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XV0sInIiOiJmNDg4MTJkMGY0MGRiY2IyMjY5ZjNlNDM4ZGMwNWI2NDY2MzkwZTVmY2ViYTBkYTUxZmRkYWY4MTA1YzI2MGU4In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMSw2XSxbMiw3XSxbMyw4XSxbNCw5XSxbNSw5XSxbNiw5XSxbNywxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiJkYTBjNTMzNjk3MTA5OWE5MzgwMDE0N2M3YWY0ZGE3YzhlMTI4OTk0M2I2Njc1NTQ0MTk0MTQwNzcxMjAzYTE2In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbNSw2XSxbNiw3XSxbNyw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdXSwiciI6IjJmZWUzYTc5NGViYzUyMTk4M2E3MDY2MDk0YmRlNjlkZmM5MmJkOTMwMTZkMGMyYTg4NTkzY2VlODJkMDU1NTEifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=mud-field&s=eyJ2IjoxLCJoIjoiNzk2OGVhNjg1ZjgzZWQ0ZGFjZjgwNjI5YmQ3YWYxYjNiZjUzNDY0YTBiODY3YjkxNGFhM2M3NmJiMDFiYzA3OSIsImkiOltbMSwyXSxbMiwzXSxbMywzXSxbNCwzXSxbNSwzXSxbNiwzXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbNyw2XSxbOCw3XSxbOCw4XSxbNyw5XSxbOCw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiIwMmNhMWI5Zjc0MzY2MzBlNjMwZTM1ZGJhZDI1YmJlZjc0OWU0MWNmYTU0ZmViZjVmNmEwNDg1ODVkNThhNjUxIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMSwxXSxbMSwyXSxbMSwzXSxbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMCw1XSxbMSw1XSxbMSw2XSxbMiw3XSxbMyw4XSxbNCw5XSxbNSw5XSxbNiw5XSxbNywxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiIwMjhmNTBjZDQwYTg1MjkxNjg3ODZmNTBmNjVhMDZiMTk0M2YyZWU0OWVmNmQ5YzA1NjQ0YWFjYzJjMjZlYWQyIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbNSw2XSxbNiw3XSxbNyw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdXSwiciI6IjJmZWUzYTc5NGViYzUyMTk4M2E3MDY2MDk0YmRlNjlkZmM5MmJkOTMwMTZkMGMyYTg4NTkzY2VlODJkMDU1NTEifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbMyw1XSxbMyw2XSxbMyw3XSxbMyw4XSxbMyw5XSxbMiw0XV0sInIiOiIxZjQ2YTM1YjNkZDMwOTA1YTAzZjhiMTMxOWI5NTYyYzE1OTA5MjBhMzgzZjFhZGFiOGFjMDFiNjY2YTEwMTNiIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbMCwxXSxbMSwxMF0sWzYsMl0sWzcsM10sWzQsNF0sWzgsNV0sWzgsNl0sWzgsN10sWzgsOF0sWzgsOV1dLCJyIjoiMjFlNmM1MzBmZWY0YTI2ZDgxZWUzOThkYmRkNGE1YjBiYWQzMDcyMGUzNTkxMGRjNjMzOTBjMGY0MWQzNGIxNSJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=u-trap&s=eyJ2IjoxLCJoIjoiMWM2ODQ1NmRmYTliMmU1OThhYmIxOGZiMWEwZmRhNjk1YWUxOWRiZGNiZDkyYmQzNGQwMmQyZmMwZGNhNjZhOCIsImkiOltbNSwzXSxbMywyXSxbNSwyXSxbNCwxXSxbMywwXSxbNiwzXSxbMiwyXSxbNiwyXSxbMSwyXSxbMywxXV0sInIiOiJjMzhiMmUzMDhhYzI5MTAzMjAwOWQwNDNlZGVlZTkxMjdmOWYwNDc0NTUyZWM3YWIwYWNmZjVlOWE2NTlhZjg2In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMiwzXSxbMSw0XSxbMiwxXSxbMSwxXSxbMSwyXSxbNCw0XSxbNSw0XSxbMiw1XSxbMiw0XV0sInIiOiJiMWU0OWNkODYzNmUxNTRiNjc2NmM4NjYwYjIzZmQ5ZmM5MmY0YzNkM2UxODY4NDgwMjE3ZDVkNzEzZDY4NmM3In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbNCw0XSxbMSwxMF0sWzQsNF0sWzEsMTFdLFs4LDRdLFs0LDRdLFszLDddLFs4LDddLFs4LDhdLFs4LDldXSwiciI6IjU4NmViMjc4NGQ0ZTVhZDA4NWRjNTgyZGRlMDI5YWYyNmRkZTljOTQ4NWI4OTFiNDMzODhhMTBmZWY1ZWU1NmEifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=u-trap&s=eyJ2IjoxLCJoIjoiMWM2ODQ1NmRmYTliMmU1OThhYmIxOGZiMWEwZmRhNjk1YWUxOWRiZGNiZDkyYmQzNGQwMmQyZmMwZGNhNjZhOCIsImkiOltbNSwzXSxbMywyXSxbNSwyXSxbNCwxXSxbMiwzXSxbNiwzXSxbMiwyXSxbNiwyXSxbNSwxXSxbMSwzXV0sInIiOiI0YmNlNDdlZjc1MGFiZTc4ZjQ5NjZhZmQ0YjU4NTUzOTY5NGZlODAyNGIyNjFiNDdmYWU4YjE2Njg4NjE5MDhhIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbMyw1XSxbMyw2XSxbMSwzXSxbMyw4XSxbMyw5XSxbMywyXV0sInIiOiJkMGRhNmZmMjdmNmM2ZWM3M2Q0MTFkMDMwY2FkY2NlNWZhNTM2NDhlNDY4NGNkMmQ5OTFhNjViNWJiMjRkNDZmIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbMyw2XSxbMSwxMF0sWzYsMl0sWzAsMTFdLFs3LDFdLFs5LDRdLFszLDZdLFs4LDddLFs3LDddLFsyLDldXSwiciI6IjE3MjA5NmUwNzZhNTgzOWM5ODEwNTAyZjIwMmE5MWQ1ZWY0NjUzZGFkYWYxYWJkYTNhMDg5ZTFhZWVlMzdmZjQifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=u-trap&s=eyJ2IjoxLCJoIjoiMWM2ODQ1NmRmYTliMmU1OThhYmIxOGZiMWEwZmRhNjk1YWUxOWRiZGNiZDkyYmQzNGQwMmQyZmMwZGNhNjZhOCIsImkiOltbNCwxXSxbNiwzXSxbNCwxXSxbMiwzXSxbMiwzXSxbMSwyXSxbNiwxXSxbNiwxXSxbMywxXSxbMSwyXV0sInIiOiJkMjQwN2FkNDQ4NDNjYThhMjYzNzRhNTRlMWE1YzM3MDE1M2U4NDU5NDBhOTgyMzZmZjcyY2IwZGRkMTFmMTk2In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMiwzXSxbMyw0XSxbNCw1XSxbMyw1XSxbMyw2XSxbMyw3XSxbMyw4XSxbMyw5XSxbMiw0XV0sInIiOiIxZjQ2YTM1YjNkZDMwOTA1YTAzZjhiMTMxOWI5NTYyYzE1OTA5MjBhMzgzZjFhZGFiOGFjMDFiNjY2YTEwMTNiIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbMCwxXSxbMyw1XSxbNiwyXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XV0sInIiOiJhZGFlZTJjZWRlZmE3ODY0NThkYWRkZjEzNWUxYmY0ZjUzYTNlZGZjZDA3MWM3YmUyOGMwYjY4OWNiYTc2MzVmIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=u-trap&s=eyJ2IjoxLCJoIjoiMWM2ODQ1NmRmYTliMmU1OThhYmIxOGZiMWEwZmRhNjk1YWUxOWRiZGNiZDkyYmQzNGQwMmQyZmMwZGNhNjZhOCIsImkiOltbNSwzXSxbMywyXSxbNSwyXSxbNCwxXSxbMiwzXSxbNiwzXSxbMiwyXSxbNiwyXSxbNSwxXSxbMywxXV0sInIiOiJkZmI1ZjE1ZGRkNzkzMTkxOGE4ZTI1NTQ1YzFmMDgyMjMzY2YwMGU4N2ZiZGQ5YzI2M2Q4NTQ3Mjg0ZmNlODgyIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMiwzXSxbMywxXSxbNCw0XSxbNSw1XSxbMywyXSxbNCwzXSxbMSwyXSxbMiw2XSxbMiw0XV0sInIiOiJiMWU0OWNkODYzNmUxNTRiNjc2NmM4NjYwYjIzZmQ5ZmM5MmY0YzNkM2UxODY4NDgwMjE3ZDVkNzEzZDY4NmM3In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbMCwxXSxbMSwwXSxbNiwyXSxbMCw4XSxbMyw2XSxbOCw1XSxbMyw2XSxbOCw3XSxbOCw4XSxbOCwzXV0sInIiOiJhMDMxNTMyNjUyYjYyNmM2NDVkMTIzZmQ0YmE0OTRmMzI5MjJmZGQxNTNlYTQ5MzE5NzFhMDllMmUwMmI5MjZjIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=u-trap&s=eyJ2IjoxLCJoIjoiMWM2ODQ1NmRmYTliMmU1OThhYmIxOGZiMWEwZmRhNjk1YWUxOWRiZGNiZDkyYmQzNGQwMmQyZmMwZGNhNjZhOCIsImkiOltbNSwzXSxbNiwzXSxbMiwxXSxbNCwxXSxbMiwzXSxbMywxXSxbMiwxXSxbMSwzXSxbNSwxXSxbMywxXV0sInIiOiI2ODM5OTg4ZTVmZmI0YWMyMTY0OGJkZjIxYWFhMmMzNzQ5MmNkYjJiYWM0NmFmNDdiYTczYjFkYjZkYTY3YTJkIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMywyXSxbMSwxXSxbMiwxXSxbNCw0XSxbMSwxXSxbMyw3XSxbMyw4XSxbMiwxXSxbMiw0XV0sInIiOiI3Mzg0NDcyYTRiZWQxZDNkMGUyMGM2NjljMjM3ZjM3NGNjYzY5NzA3NDE0ODczYTI1MWJhYzlhMGVlZWM2NDU4In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbMiw4XSxbMiw3XSxbNCw1XSxbNywzXSxbMyw3XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCwyXV0sInIiOiJhY2Y4NDEzODJmYmY1MWM3YjhhZGIxYmViOGU4NDc3YTI0OGVhZjhjYzllNjQ4YTU2Y2IzYzhiMTBlYTQ1N2VmIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=u-trap&s=eyJ2IjoxLCJoIjoiMWM2ODQ1NmRmYTliMmU1OThhYmIxOGZiMWEwZmRhNjk1YWUxOWRiZGNiZDkyYmQzNGQwMmQyZmMwZGNhNjZhOCIsImkiOltbNSwxXSxbMywxXSxbNSwyXSxbNCwxXSxbNCwwXSxbNiwzXSxbMiwyXSxbNiwyXSxbNSwwXSxbMywxXV0sInIiOiJhMmEzODI0ZDExNmRhMWExM2JlYjk2NTAyMzRjZGYwMTkxMGI2MmExMmNjODg4NGFkOWZhMGI1ZWJlZDc0ZmNlIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=wall&s=eyJ2IjoxLCJoIjoiOTFlNTA4ZTY1YzM1ODhhOTIwZjFjMzhmYmUyNWI3MGExMDk1MzY5OGQ0YTc4MzMzMWM3YzA0MjcwNTY5ZDI1NyIsImkiOltbMiwyXSxbMiwxXSxbMiwxXSxbMSw0XSxbMSw0XSxbMiwxXSxbMiw3XSxbNCw0XSxbMywyXSxbMiw2XV0sInIiOiIwMWNhZDI1ZDFhNGRiMTdmNmNlZjgzNWZhYzY4MTZhZDk2YTZkMGQ2M2UyN2NkMTNiMTJkYWJlNzBiMjU1NDlmIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=next-node&l=mud&s=eyJ2IjoxLCJoIjoiYWE1MTMwZDUzMWFjMWE3OWFiZDc0YzA4MTA2YjdjZjViOWVlMjIxZDkzMzA5ZmRmNzRhMmU3ZWUxOGUyMDE0NCIsImkiOltbMywwXSxbMCwxMF0sWzQsNF0sWzQsMV0sWzgsM10sWzgsNV0sWzAsMTFdLFs4LDddLFs5LDZdLFs4LDldXSwiciI6ImQ5OTAzZTgzOTdlZDY2YmMyMTYzMTY1MTFiMTY1Y2QzOWQyY2FlNzc5ZmFiZmQyM2IxN2JjMGY0YTJlYjMxMGYifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=no-idea&s=eyJ2IjoxLCJoIjoiYzU5N2M3OTBhN2NmODgzN2U1NzFjZTJhNmU4YzE1N2JmOTcwZmQyMzYzMWFmOGNkMjJiMDBjM2U0OWY1YzhkMiIsImkiOlswLDIsMywxXSwiciI6IjMyZDZhZmJlZDhiMGY5ZWVjNmRmYzA3YjU5Y2U3MTE2YTQwYzc5YWVlZDY3MGU4ODg2N2I2ZTU2ZDA1NDA5ZDEifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=far-end&s=eyJ2IjoxLCJoIjoiMGYzMzBjNTBhODhmZmM5MDc2NDlmOTg4YjA2MWM4MzUzYzAwODg1OGEyMDczM2ZiMWRkOTA5YzI5YzE1NTI5ZiIsImkiOlswLDEsMiwzXSwiciI6Ijg1NWVjMDVjNzI1Y2JmMGM2MTBhNTY0NDljOTNiN2E5NzUzMTU4NjVlMTVhODM0ZDhjMmZmYjNlYWIyMDEzYmUifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlszLDIsMCwxXSwiciI6ImZkNzdiNjJlYWViZDA3ZWI0YTFhNmE3NGVhMjI2OTM4OGRmNjgzZWI1MzIzZWViMDFhN2ZlZGUxMzA1NWQ4MjIifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=poor-camera&s=eyJ2IjoxLCJoIjoiNjJkZjQ4NTBjZTU1YWJkODk2ZWNjYzAzZDgzNjAzZTQxNDE3MTY2OTFiZDg1OGYyMThiMDc2OWYxYWI5YzM4ZiIsImkiOlszLDAsMSwyXSwiciI6IjExYjNlZmVlZWJiOGVjMGZkN2IxNDkyNzliMjEzNzM4NGViM2JlOTUxOTNiNGI1NDQxMjMzYjRmYWE5NWI0NjYifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=no-idea&s=eyJ2IjoxLCJoIjoiYzU5N2M3OTBhN2NmODgzN2U1NzFjZTJhNmU4YzE1N2JmOTcwZmQyMzYzMWFmOGNkMjJiMDBjM2U0OWY1YzhkMiIsImkiOlszLDIsMSwwXSwiciI6ImRhMDcyNjkwMDY1ODM0NTVmYWI0NDhjYzYxMGFlZDA5YzI5ZTdiNGZjMjVjMDg3NTAxMDgxNjM5MDliMGVjNjkifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=far-end&s=eyJ2IjoxLCJoIjoiMGYzMzBjNTBhODhmZmM5MDc2NDlmOTg4YjA2MWM4MzUzYzAwODg1OGEyMDczM2ZiMWRkOTA5YzI5YzE1NTI5ZiIsImkiOlszLDEsMiwwXSwiciI6IjdhYmIzMGY5YjA4Njc3OWVmMzI0ZjA5YjdjMzEwOTQzMWNmZjVlOWFlZTI1ZTVkNTcyZjIzNTllMmEwNWQwZTYifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlszLDIsMSwwXSwiciI6IjRiMGEyOGZhMWYyZTNhZWYxMTdiNGY3YWI0ODllOTkyNTUxMGY0ZDMwMGM0MzI1NjViZjZjMGNiZGJiOWIzNzkifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=poor-camera&s=eyJ2IjoxLCJoIjoiNjJkZjQ4NTBjZTU1YWJkODk2ZWNjYzAzZDgzNjAzZTQxNDE3MTY2OTFiZDg1OGYyMThiMDc2OWYxYWI5YzM4ZiIsImkiOlszLDEsMCwzXSwiciI6IjllZTRkYjcyMjQ4ZGJlYmIyODQ5ZjBlNzMyOGEwYTFjM2Y0N2RmZWUzYTIzYzA2ZjY2ZWFlNWFiZDVlYjk4ZGYifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=no-idea&s=eyJ2IjoxLCJoIjoiYzU5N2M3OTBhN2NmODgzN2U1NzFjZTJhNmU4YzE1N2JmOTcwZmQyMzYzMWFmOGNkMjJiMDBjM2U0OWY1YzhkMiIsImkiOlszLDAsMSwyXSwiciI6IjRiMjI5ZGEzZGRmMGZjNmRiNjE1NDU5NjYzMTJjYmE4YWQ1ODc4YmI4YmY0MWVhMDA1Mjc2NzFmOWUzMzUzYWEifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=far-end&s=eyJ2IjoxLCJoIjoiMGYzMzBjNTBhODhmZmM5MDc2NDlmOTg4YjA2MWM4MzUzYzAwODg1OGEyMDczM2ZiMWRkOTA5YzI5YzE1NTI5ZiIsImkiOlsyLDMsMSwwXSwiciI6IjEyMTU4NGJiOWE5ZmJjMjRkZGVmYWZkYzQ4ZThkZGY2ODFiNGM3MDJmNGNhYzMwMGEyZGM4YmY4OWY4MzkwMjAifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlsyLDMsMCwxXSwiciI6ImIwYzY1YWU4NGU2MjMyM2UzNTI0ZjIzYTQ1MGIyNWJjOGQwZmU5MTU0ZDExNzM4MzlhMzZmODcwZTM5MjRjYzUifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=poor-camera&s=eyJ2IjoxLCJoIjoiNjJkZjQ4NTBjZTU1YWJkODk2ZWNjYzAzZDgzNjAzZTQxNDE3MTY2OTFiZDg1OGYyMThiMDc2OWYxYWI5YzM4ZiIsImkiOlszLDEsMCwyXSwiciI6IjY2NDQxZDBiMGQ4OTg5YTJhZWIzNThhZWM3OGM1NGExODBmMTY0NTcyZGRjNWZlNWM3ZDNhMGI2MzUzNzQ5YmYifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=no-idea&s=eyJ2IjoxLCJoIjoiYzU5N2M3OTBhN2NmODgzN2U1NzFjZTJhNmU4YzE1N2JmOTcwZmQyMzYzMWFmOGNkMjJiMDBjM2U0OWY1YzhkMiIsImkiOlsyLDAsMywxXSwiciI6IjhlN2QzMjZlNDhjMzBlZTM1OWRkYWRmNWViNWJiY2VmMDVkY2MxOGIwYTg2OGI5YzA4MzA5Mzk3NDJjNzJhYjAifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=far-end&s=eyJ2IjoxLCJoIjoiMGYzMzBjNTBhODhmZmM5MDc2NDlmOTg4YjA2MWM4MzUzYzAwODg1OGEyMDczM2ZiMWRkOTA5YzI5YzE1NTI5ZiIsImkiOlszLDEsMCwyXSwiciI6IjYwNWE5OGI0MmI0NjBkN2UwN2M3OWI1NTMxMzk5ODZhNTg2ZTQzNjA2ZmFmY2ZmOGIzNTA5ZGY2ODJiODVmNTMifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlsyLDEsMywwXSwiciI6Ijg0N2Q2MDU5MTkxMWI0MzU1MmJiMmQ3NmMxODdiODc5N2ZiYTM0MmFiMmM3YTQxZWMxZTZjN2MyMTBlZDhjMDMifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=poor-camera&s=eyJ2IjoxLCJoIjoiNjJkZjQ4NTBjZTU1YWJkODk2ZWNjYzAzZDgzNjAzZTQxNDE3MTY2OTFiZDg1OGYyMThiMDc2OWYxYWI5YzM4ZiIsImkiOlszLDEsMiwwXSwiciI6Ijg2NDZkMGYzMDRlY2FiOTVjMThiMzFlZmNiYjg2NjBkOGE3ZjdmN2RlZjdkM2I2ODJjZWUxNGZlZjEzNzk4YjMifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=no-idea&s=eyJ2IjoxLCJoIjoiYzU5N2M3OTBhN2NmODgzN2U1NzFjZTJhNmU4YzE1N2JmOTcwZmQyMzYzMWFmOGNkMjJiMDBjM2U0OWY1YzhkMiIsImkiOlsxLDAsMiwzXSwiciI6IjM0YjRmMDkxMzRjNzVmMjE5Yzc4MTI1ODRhZjM4YWZmOTYzOTk1MzRhZTBjMzJiNmExMjNmMDAzYTljYjBhN2QifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=far-end&s=eyJ2IjoxLCJoIjoiMGYzMzBjNTBhODhmZmM5MDc2NDlmOTg4YjA2MWM4MzUzYzAwODg1OGEyMDczM2ZiMWRkOTA5YzI5YzE1NTI5ZiIsImkiOlswLDEsMywyXSwiciI6IjgxYzEyOWNiMGM3ZTQ3MmIxYzMzNGM1Yzg3MjczYWI4ODFjYzZlZjI0NmY2YzdmMGU3YWRiZWNjYWRjNjk2M2MifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlszLDEsMiwwXSwiciI6IjdiMTBjYmQ4OWFhYTJmY2U5MDI3MmUzOGM2MTc0ZDk2YjczNTdkODY2YjQ1ZGQ0NjMxMmI1MDEwOWJlNDc0NmQifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=poor-camera&s=eyJ2IjoxLCJoIjoiNjJkZjQ4NTBjZTU1YWJkODk2ZWNjYzAzZDgzNjAzZTQxNDE3MTY2OTFiZDg1OGYyMThiMDc2OWYxYWI5YzM4ZiIsImkiOlsxLDAsMiwzXSwiciI6IjgyYjBlYTc3ODQyZDU1MDllNTViNjBhM2NiNzE1MDg4Nzk1NTY5MzU5MjM0MzgwYzhiNWI0OWRlNDRlYzc5MTcifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjQ3OCwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjI2Nywia2luZCI6ImdvYWwiLCJ4IjowLjA5MDI4MjM3MDIzODk0MzcsInkiOjAuMjI4NTU2NTkzNTQ0NzQ4Nn1dfSwiciI6ImVlOTE4Yzk0M2NlNzg2MGNhYTk5MTQ2OThlYmFkYTk4YzBhMGViN2QzZTQyOWQ4MzJhMWMwNzY1M2Q5MzdkZWEifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjU4OSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjExNCwia2luZCI6ImdvYWwiLCJ4IjowLjMyNjE1Nzc2MTgyMDEyMjQsInkiOi0yLjcxMTI2NzcyOTU2ODI4ODh9XX0sInIiOiIwNThlOWIzNmFiOWMxZDRlMmFjODEyYTFlMzAzNDhhNDc2YWRmZTc5NGI3N2VlZjRhMDVkMzJhYjIxZjY1ZWQwIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjMwNiwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjEzNCwia2luZCI6ImdvYWwiLCJ4Ijo5Ljk0OTQzMjExNzUxMTE0NCwieSI6My4yMjMwMTIyNDgwODM5NTk0fV19LCJyIjoiZDRmMzRiM2U4ZWRmZTAzNGMwNTA0Zjc3NWRlMWNiY2JmYmZmYTRmYzc3ZWY5MDcxMTBlZjZkNDVhZTU5NjYzNSJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjg4NCwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjk1LCJraW5kIjoiZ29hbCIsIngiOi0wLjE5NTQwMzU2OTgxNDE0NDM2LCJ5IjowLjExNjcxMzk1MDQyNjU1ODY5fSx7InRpY2siOjI3Nywia2luZCI6ImdvYWwiLCJ4IjowLjA5NzIwNTUyNjA2NzYxNzU2LCJ5IjowLjAwNDQ0OTYzNDYwNzQ3MzIxODV9LHsidGljayI6NDcyLCJraW5kIjoiZ29hbCIsIngiOjIuNzI2Mjc4NjIyODc2MTgyNCwieSI6MS44MjkzMTY0MjA0NDY1MTY0fSx7InRpY2siOjQ5OSwia2luZCI6ImdvYWwiLCJ4Ijo5Ljc1Nzg3Mjg5MjMyNjAzLCJ5IjowLjA2NDMzNDc0NjI3MzU0NjAyfV19LCJyIjoiODZkNWU5NDdmYzg0Yjc4ZGI2YTQyYWU1NGM4NTkxMGI4NTM1NTQwM2M5ZWFmZjEzZDA4MzU2YTNlM2EyODlmNSJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjY4MCwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjE4Mywia2luZCI6ImdvYWwiLCJ4IjoyLjc5OTgwNDM1MzkzNzc5OCwieSI6Mi4yMDI5NDMyNjIxMzc0NTY1fSx7InRpY2siOjQ2MSwia2luZCI6ImdvYWwiLCJ4IjoxMC4yMDQ4MjMwMTc4NzMyNywieSI6LTAuMDQzMDUzMzQ0NTkwMTU3NjR9LHsidGljayI6NDg4LCJraW5kIjoiZ29hbCIsIngiOjMuMTIwODM4MDYyOTY5NDE2LCJ5IjotNi4yNTUyMzM0ODk5NjcxMTF9XX0sInIiOiIxOWY1ZDNiNTg2MjI0NWM5YmIzM2MzZmRjMDY1YzYyY2I2YmYyMGU2M2M1NTM2ZWZjNmRkOGYxNzMzMTg5YWY0In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjUzNCwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjEyLCJraW5kIjoiZ29hbCIsIngiOjEwLjI3ODUzMDY3NDg5OTUwNywieSI6LTAuMjkxNzUyMzMyNTYyNDA1OX0seyJ0aWNrIjoxNDQsImtpbmQiOiJnb2FsIiwieCI6LTAuMDcyOTM1NDEwNTU1MjM0NjcsInkiOjAuMjUyMjUzMTkzOTQwNjM0NDV9XX0sInIiOiJiMWQ5NTYwOGM2OGRjNTVmYTM4NTM3ZjQ2NjIwODRiNmNmM2MxMmUxOTJiZTBiMDU3MjNjOTA4N2E1ZDRmNjg4In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjExOTMsImxvZyI6W3sidGljayI6MCwia2luZCI6ImNvbmZpZyIsImNob2ljZSI6Im1hcC5wb3Nlcz1vZG9tZXRyeSJ9LHsidGljayI6MCwia2luZCI6ImNvbmZpZyIsImNob2ljZSI6Im1hcC5hbGdvcml0aG09b2NjdXBhbmN5In0seyJ0aWNrIjoyMjUsImtpbmQiOiJnb2FsIiwieCI6Mi43MDcxMTYwMjQ1MTEyMzMsInkiOi02LjMwMDA4MTM3NDMzMTM0OTV9LHsidGljayI6NTIxLCJraW5kIjoiZ29hbCIsIngiOjIuNzY5Mzk2NDk2NDYxMjk3NCwieSI6LTYuNTMxNDAwNDcwNjg4NTE1fSx7InRpY2siOjc5Nywia2luZCI6ImdvYWwiLCJ4IjowLjI1NDQwNjc3NDQwNTYwOTMsInkiOi0yLjc3MzkzMDc2ODYyMjQ5OH0seyJ0aWNrIjo4NzgsImtpbmQiOiJnb2FsIiwieCI6Mi45NjM3ODc4NDcyNjQyMjYzLCJ5IjotNi41MjAzMDk1NjQwNTg1MjQ1fV19LCJyIjoiYWQ4OWM0N2NlMmQyMWVjM2NkODY4OThjOWMwOGQyZjdkYWUzN2QwMTI2ZTU5NGNmNTMxMmVhZDA2Yjc3NmQ2NyJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjMxOSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjE1Miwia2luZCI6ImdvYWwiLCJ4IjowLjI4MzQ3MTI1MzI5MzA5NDg2LCJ5IjotMi4yNzAwMTA2NTUxMjkyODY1fSx7InRpY2siOjIwOCwia2luZCI6ImdvYWwiLCJ4IjotMC4yMTg3NTAzMzQxNDkwNDc2NSwieSI6LTAuMTMzNjMzNzc5NTM2NDc3MTJ9XX0sInIiOiJjNDRlMzQzOTQ4ZTgwZjg3ZDM1YzUxODVlNzQyNGMxMTc4NmVmZjM2ZjU3ZGJlMjA2NTY1MDIxNGJlYWEwY2FkIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjM3OCwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjk2LCJraW5kIjoiZ29hbCIsIngiOjYuMTI5Njg2ODA1NTYxMjA4LCJ5IjozLjgzOTAzMjgyMzk5NjQyNTh9XX0sInIiOiI1NjNiYTRmMjUwNGUyZjZmMjYyNDg0NGE5MGQ1NTViYWJlZmJjZDNjZjMxOTI2NmZjZWY1ODRkNzAwOTdlYjRmIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjMyOSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjQwLCJraW5kIjoiZ29hbCIsIngiOjkuODg1MTA5NzAzMzEzNDksInkiOi0wLjIyNTQ4NTExMTQxNTQ2MDAyfV19LCJyIjoiYWVmNDc1NTNkMjFlMTkyNjZiYjZhNWIzMWQwZWQzYmEzZGQyN2UwZjJjM2QwYzg1ZTJlZTMxMTQ4YWJiODUzZSJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjcwNywibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjIxLCJraW5kIjoiZ29hbCIsIngiOjIuNTI5MTIwNzI1ODM4NjQ0LCJ5IjoyLjI0MjM0OTQ2NzE0ODIwNn0seyJ0aWNrIjoyODYsImtpbmQiOiJnb2FsIiwieCI6NS44MDEyMTUxODAwMDYxNDMsInkiOjQuMDM4NTY3ODk2ODc2ODY4fSx7InRpY2siOjUwNSwia2luZCI6ImdvYWwiLCJ4IjotMC4wMzYzMDUwODIxMzgyNzk4NzYsInkiOi0wLjIwODkwMDQ2ODg1NTIwNTU4fSx7InRpY2siOjU0NCwia2luZCI6ImdvYWwiLCJ4IjoyLjk3NTk5NzgwNjQxMTI3MzgsInkiOi02LjQ3ODkyOTQwNTMxMDUxM31dfSwiciI6ImY4ZTc0ZDgwOTQwY2Y0NDcwZDM3YjVhNWQwYTY4M2QwYmYwYWU4N2Y1NWE3ZjZjNWFiMGY4Y2NjYTZmMTdhZTYifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjM5NywibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjM1LCJraW5kIjoiZ29hbCIsIngiOjkuMDk3MzQ1MDg4MDQ4ODAxLCJ5IjotNC4wNDQ0MTg4MDQwNjU1MDN9LHsidGljayI6NDIsImtpbmQiOiJnb2FsIiwieCI6LTAuMTg2NjM5MDgyMTIwOTI4NTYsInkiOi0wLjE4Mzc2Njk0ODI4MTc3Mjd9XX0sInIiOiIwYmU4ZmNjOWY2MjFhMWNlMTdlNDE4ZTFkYTQ1ZjRkZjgxZDc0MTdmZmRhODVjMjhhMzlkNzU4NmQ0ZTQ4ZGI2In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjc3NiwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjExOSwia2luZCI6ImdvYWwiLCJ4IjotMC4yOTgzMzA5ODE2NDExNzA4LCJ5IjotMC4yMTE0MDI3NzUxNjM4MDg4NH0seyJ0aWNrIjozMzgsImtpbmQiOiJnb2FsIiwieCI6LTAuMjM1MzYxNTgzODc3NTAzNiwieSI6LTAuMTI1NDQ3NjMyNzUxMTMzNjN9LHsidGljayI6NDQ2LCJraW5kIjoiZ29hbCIsIngiOjIuNTI3NDg4MTE4NjkyNzIxLCJ5IjoxLjg3NjQxMzI0MDk2MzAwNzR9XX0sInIiOiJmNmE3Y2FjNzI3YTVmYWFkZWNkZTc5MjQzYzNiMzM0MDJkNTAzZDhjNzRkZWNjNjFlMjNkOTM5MGQzNzBmMmY5In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjc5OSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjIxNCwia2luZCI6ImdvYWwiLCJ4IjowLjY5NzgzMzA5NTMyMTIyNTQsInkiOi0yLjIwODY3MDQ4MTcxMzM0OTN9XX0sInIiOiJkODU1YzZiY2ZiNDBlNGRlYjk2MGFhYjk2YjA1OWYzNWVkOGE5Yjk3YjIxYzQzY2M2MzM3MzY2ZDIzMzBjNTg4In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjU3MywibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjI5Niwia2luZCI6ImdvYWwiLCJ4Ijo5Ljk4Mzc3NTE5NTk0OTI4NSwieSI6My4wNTk5MTk3MzM0MDU1Nzd9LHsidGljayI6NDkyLCJraW5kIjoiZ29hbCIsIngiOjAuMTE3NTc2OTk3NTA4NDIwOTksInkiOjAuMjAxMTY5Mzk4MDgwMjQ5MDh9XX0sInIiOiI1MDIwMDg4YTg2ZTQyNTI5ZTI3OTRkM2I2ODk2NDYzOTEzYTRjZWI4ZTJlZWU5YTU1ZjRkMzQyM2ViMTUyN2IzIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjk0OSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjIxOSwia2luZCI6ImdvYWwiLCJ4Ijo5Ljg1MDMxNDE5MzUwNjA3NiwieSI6MC4yODExNTgyMTUzNzU3MjI1NX0seyJ0aWNrIjozMDIsImtpbmQiOiJnb2FsIiwieCI6OS45MjU3NDU3NTAyMzE0NTgsInkiOjIuNzg5MzE1MDkwNzUyNjkyN30seyJ0aWNrIjo0MzIsImtpbmQiOiJnb2FsIiwieCI6OC45NzQ1ODUwOTYwMzY2ODYsInkiOi0zLjgyNDMwNjY5Nzc0MDcxMn0seyJ0aWNrIjo2MzksImtpbmQiOiJnb2FsIiwieCI6OS4xODYwNzg4ODQxNzQ0NjIsInkiOi0zLjg4ODY0MTIwMjk5MTU0NTZ9XX0sInIiOiIyNzhjMTU0MzkzNzFkYzkxOTI4ZmJmYmQ4NDBlZDI2M2FmYWFjMWZmMmExOGMxMzQ2NzBjM2I1YjFmZGVkZTU2In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjg1NSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjg0LCJraW5kIjoiZ29hbCIsIngiOjAuMTQ1Njg3NTExODIzNjEwMjgsInkiOi0wLjI4MDM5NDgyMTE5MTM4NzZ9LHsidGljayI6Mzc4LCJraW5kIjoiZ29hbCIsIngiOjkuMDMyODUzMDUxOTk2NywieSI6LTMuODQwNjQ0OTkxNzM3MDc1M30seyJ0aWNrIjo1MTEsImtpbmQiOiJnb2FsIiwieCI6MC41OTkyNzU1Mzg2MzA0NTI1LCJ5IjotMi40NjY4NTg5ODQ2MTc4MjZ9LHsidGljayI6NTQ3LCJraW5kIjoiZ29hbCIsIngiOjkuMjEyMjI3NDYwMTQ0ODUsInkiOi0zLjgxODk0MDAyMDk3MzkyMTN9XX0sInIiOiJmODU4MmQxMDFiMGNlYjhjYzY5OTA1NmUyZGZiN2MxZDhlYWViZWRkOGM2OTFkNTVkZjEyYmI4YWViZmY3OTUzIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjgxMiwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjE4MSwia2luZCI6ImdvYWwiLCJ4IjoyLjk3NDY1NDE1ODgyNzQyMzMsInkiOi02Ljc5ODg5NTg4MzQ3MzYwOH0seyJ0aWNrIjoyNDIsImtpbmQiOiJnb2FsIiwieCI6OC43MzYzMTI1MzQyMjU5ODIsInkiOi0zLjc2MzcxOTcyNDgxNzE5MjV9LHsidGljayI6NDcxLCJraW5kIjoiZ29hbCIsIngiOjMuMTIzMTI2NTQ2NjY1MTg2LCJ5IjotNi40Nzg5NTI2MzIwNjAxMzZ9XX0sInIiOiJjNDUxNWZlMDU2MzdhZGRjNjI1YWMxM2FjN2RhNjNiYjA3MjEyMmZmZjIyNTdmY2VlNzFjNjVmNGI4NTdmYTAwIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=forty-metres&s=eyJ2IjoxLCJoIjoiNDcwNjJhMjMyZTU1OTBiZDkyMWJlZGNmNjA3ZTUyZTA1Mzk0NWQxNDBlYzU4NWYxZTRhOTk3MTM3OTZhY2E2NiIsImkiOnsidGlja3MiOjEwMDQsImxvZyI6W3sidGljayI6MCwia2luZCI6ImNvbmZpZyIsImNob2ljZSI6Im1hcC5wb3Nlcz1vZG9tZXRyeSJ9LHsidGljayI6MCwia2luZCI6ImNvbmZpZyIsImNob2ljZSI6Im1hcC5hbGdvcml0aG09b2NjdXBhbmN5In0seyJ0aWNrIjo5Nywia2luZCI6ImdvYWwiLCJ4IjozLjI3MDgyMTczNzk0Mzk1MzcsInkiOi02LjUwMjM3MDY5MDc5NDg2Mn0seyJ0aWNrIjozNjMsImtpbmQiOiJnb2FsIiwieCI6MC4xMTQ3NzM4OTA2NzA5NDAwMiwieSI6MC4wNjE1Mzk4NDQxOTIwNzk1ODV9LHsidGljayI6NTgyLCJraW5kIjoiZ29hbCIsIngiOjAuMTY0OTgwNDk1NDMzMTcxNzgsInkiOjAuMjc1NjYyMTE4NTM2MzgzNX0seyJ0aWNrIjo4NDYsImtpbmQiOiJnb2FsIiwieCI6LTAuMDg0NTg3MTYzNDQxMDU0OTQsInkiOi0wLjAyOTI0MjY4NjkxMTE3NDk4N31dfSwiciI6Ijg5ZDlmMjM1OTQwMWNhOTZkOWUxZjUwZTY0M2Y4MzViNWJjMzk5MWU3NGQ0Y2JhODY5YWI2Y2Y0YTMzNTAyNmEifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=map-the-arena&l=twenty-five-metres&s=eyJ2IjoxLCJoIjoiMTRiMGRhYTVhNjM2MTk1MjcwYjEzYWIwNjFlOWY5ZGY4N2UwNWJmYzc0MzcyN2JlNzAwYzFkOTZjOTRlYzE3MCIsImkiOnsidGlja3MiOjc5NSwibG9nIjpbeyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLnBvc2VzPW9kb21ldHJ5In0seyJ0aWNrIjowLCJraW5kIjoiY29uZmlnIiwiY2hvaWNlIjoibWFwLmFsZ29yaXRobT1vY2N1cGFuY3kifSx7InRpY2siOjEyNSwia2luZCI6ImdvYWwiLCJ4IjowLjIzNjEyNzg4OTQ4MDk0NjQ4LCJ5IjowLjA5NjkwMDkzNTI3NzEyNzY4fSx7InRpY2siOjIzMSwia2luZCI6ImdvYWwiLCJ4IjowLjA0NzE4OTQ4Mjg1ODI3MjczNSwieSI6MC4xMDQ1NDQxODc0MTU0Nzg2Nn0seyJ0aWNrIjoyMzQsImtpbmQiOiJnb2FsIiwieCI6Ni4xNzQ2MTIxNjk4Mzk0OCwieSI6NC4xMTc2NDA1MzgyMDY5MjV9LHsidGljayI6MjQwLCJraW5kIjoiZ29hbCIsIngiOjIuNTI1ODYxNzg4NjAwMTMxMywieSI6MS44MTM0NzY5NTkwNjMzNDc1fV19LCJyIjoiMWViM2UyNjgwNDgyYzkyMzQ0MTdkYjRhNDQxYmRlYzY0YmM0MDlkYTQ2M2VlOWJjMzNiYjQ2ODY2MmNkMTRmMiJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=told-wrong&s=eyJ2IjoxLCJoIjoiN2Q4MmY1YTczNDM2Mjg0ZDllOTA4ZWM3OWYwMDQyNjgzMDA1NDNlY2VlZmJhM2U5ZjlkYzE3ZTcwYmJlNWUxOSIsImkiOlsxXSwiciI6IjIzYTQ1NmJmNzcwZDQ2ZDVkNzcyZGE1NDU3MDJkZjZkMGVmMDk5MDFlYjgzNTcwNmUxMjc5ZTUyNGE4ZWIxMWMifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped&s=eyJ2IjoxLCJoIjoiNzY0MWU0MTUxZjYyNWNlYjQyNTk1ZWJmMzdjMjczM2UzMDBiMzQ1OWY2ZjhiNDk5MTgzOGFhOGJjMjQ0NmRmOCIsImkiOls2NjZdLCJyIjoiOTJhZTMzMzMzZDllZmE5YWFhYjljNGMzNTEyYmViYTQwNmZhNjZmNDBlMjA3ZTU0NTRhNWY3OTVjMDg1ZjMxMCJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-far&s=eyJ2IjoxLCJoIjoiOTI4OTY0MmJlYzI3Y2U3MmUzMGM1NjNkNGIwNmU3MWFkNDRmMTRlZDAzMjk0YmZhMjc4ODM3Zjg5NjI3NDY3NiIsImkiOls2NTVdLCJyIjoiMmU1YTNhMjdhYjJkMGEwNjM1N2ExZDRmNDBiZTA5N2E0ZjMzYzE1NGFmOWZlZTAyZDVmZDk1NjA0N2UxYzEyNiJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-again&s=eyJ2IjoxLCJoIjoiYWUyMDE4NjFhOTg4MjIwM2EyYTUwYTk3MzlmMmVkYWUzY2ZiNDg0ZGVmMDBjOWNjMzdkZTVkMTk1YjlmZTAxMSIsImkiOls2NzFdLCJyIjoiMGYxYmQ3YjZiMjhmNzkyYzU4ZmZhZmYxZWU0ZDA2YWVhZjMzNGE1NDg5MmQzZjVlOTZlZWI3MTlkNzQxZGQyYiJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=told-wrong&s=eyJ2IjoxLCJoIjoiN2Q4MmY1YTczNDM2Mjg0ZDllOTA4ZWM3OWYwMDQyNjgzMDA1NDNlY2VlZmJhM2U5ZjlkYzE3ZTcwYmJlNWUxOSIsImkiOlsyNl0sInIiOiI5MjY2MWQ2OTBkM2U1MTdkNDUzODdmYzhhNTA3Nzg2YWI2MGVkYzM4NTVjZGNmMmI4Nzk4MTBiNDZhNTU2MzRjIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped&s=eyJ2IjoxLCJoIjoiNzY0MWU0MTUxZjYyNWNlYjQyNTk1ZWJmMzdjMjczM2UzMDBiMzQ1OWY2ZjhiNDk5MTgzOGFhOGJjMjQ0NmRmOCIsImkiOls2NTRdLCJyIjoiODQ4YzkzMWEyZmU3YTU3MzFlNThiZWVlMWUwNWUzOWE0MWNhMjg0NGM1YWU0OWFlZTRlYmJhMzhhZTg0NDNkNSJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-far&s=eyJ2IjoxLCJoIjoiOTI4OTY0MmJlYzI3Y2U3MmUzMGM1NjNkNGIwNmU3MWFkNDRmMTRlZDAzMjk0YmZhMjc4ODM3Zjg5NjI3NDY3NiIsImkiOls2NDddLCJyIjoiNWUxMzBjYWJkNDc2ODhmN2U1MTFlNzc1N2IxMWVkMTU5NWU3ODkyYmU2MDc4ZTI3N2I1MmE5MjU4ZDIyZjQwNCJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-again&s=eyJ2IjoxLCJoIjoiYWUyMDE4NjFhOTg4MjIwM2EyYTUwYTk3MzlmMmVkYWUzY2ZiNDg0ZGVmMDBjOWNjMzdkZTVkMTk1YjlmZTAxMSIsImkiOls2NDFdLCJyIjoiZjdiMWYxYTU2YTY1MDczZGZjNjg4MmNkOWFkYWIxMTY3Yjg2YjYxMDk1ZjUwMTU3Zjk0OTQxMmY4YWIxZGIzZSJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=told-wrong&s=eyJ2IjoxLCJoIjoiN2Q4MmY1YTczNDM2Mjg0ZDllOTA4ZWM3OWYwMDQyNjgzMDA1NDNlY2VlZmJhM2U5ZjlkYzE3ZTcwYmJlNWUxOSIsImkiOlsxOTJdLCJyIjoiNzExZWNlNGE2ZmFlMmRlODAxYTZlOGJhY2Q2YmNhMjc0NjRiMTIwZGQ0YThlMjViYTljYzZiOGU1ZDFlZmI5ZiJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped&s=eyJ2IjoxLCJoIjoiNzY0MWU0MTUxZjYyNWNlYjQyNTk1ZWJmMzdjMjczM2UzMDBiMzQ1OWY2ZjhiNDk5MTgzOGFhOGJjMjQ0NmRmOCIsImkiOls2MjRdLCJyIjoiMjk4YzY2NjdlYzJjZWY0N2M0ZmVkMDk5MTc2OGIyNTkzYzYzM2ViZDAwNWE4Y2RjZDgwY2JjNzk2YjM3NjEwMCJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-far&s=eyJ2IjoxLCJoIjoiOTI4OTY0MmJlYzI3Y2U3MmUzMGM1NjNkNGIwNmU3MWFkNDRmMTRlZDAzMjk0YmZhMjc4ODM3Zjg5NjI3NDY3NiIsImkiOls2NTBdLCJyIjoiNTYwYmY5YmU5NmRhMGMwZWNmZDQ1YTBmMjA1MDBhYjkxODg3OTIwNjIxNjNiYmJmMjYzYjIwZWY4ZGMzZWY2YSJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-again&s=eyJ2IjoxLCJoIjoiYWUyMDE4NjFhOTg4MjIwM2EyYTUwYTk3MzlmMmVkYWUzY2ZiNDg0ZGVmMDBjOWNjMzdkZTVkMTk1YjlmZTAxMSIsImkiOls2NjhdLCJyIjoiYWQ3ZGEwMmNiMjIyZTI2Y2E1MjkxOWUwOTM4NjczMmVmZGVlYzFjODM1MTIwMGE1NjFhODcwZWVlZTczZjUyNiJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=told-wrong&s=eyJ2IjoxLCJoIjoiN2Q4MmY1YTczNDM2Mjg0ZDllOTA4ZWM3OWYwMDQyNjgzMDA1NDNlY2VlZmJhM2U5ZjlkYzE3ZTcwYmJlNWUxOSIsImkiOlszNl0sInIiOiJlNGEzNDViMjc4MzZmNjQ0ZjU5ZjY2ZjU1NDM5OGY4MDQwMWZmZDgwMGU5YzFkYjdkNzY1YmY5MTNkOWI0N2EyIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped&s=eyJ2IjoxLCJoIjoiNzY0MWU0MTUxZjYyNWNlYjQyNTk1ZWJmMzdjMjczM2UzMDBiMzQ1OWY2ZjhiNDk5MTgzOGFhOGJjMjQ0NmRmOCIsImkiOls2MDVdLCJyIjoiZWViODRmMWQ0ZjcwNzI4OTZlOGIwMmY5OTAxOTA3YjExOWRiNTlkMmVjMmIzOTA4ODkwNmU1MWRiZDk0ZjUxMCJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-far&s=eyJ2IjoxLCJoIjoiOTI4OTY0MmJlYzI3Y2U3MmUzMGM1NjNkNGIwNmU3MWFkNDRmMTRlZDAzMjk0YmZhMjc4ODM3Zjg5NjI3NDY3NiIsImkiOls2NzNdLCJyIjoiNTVkMTczZTI5OWZmMWU3YTYzMTllZjRkZTg4MWZmNjIzYjljNDk0OTAxMTI2NzkxNDlkMmZlYTc4MWU0ODc3ZCJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-again&s=eyJ2IjoxLCJoIjoiYWUyMDE4NjFhOTg4MjIwM2EyYTUwYTk3MzlmMmVkYWUzY2ZiNDg0ZGVmMDBjOWNjMzdkZTVkMTk1YjlmZTAxMSIsImkiOls1OTldLCJyIjoiNTU0Mzg0MjYyN2RiMmYwMjI1MzJmNGViMTFhMjU1NTA2Y2I0ZWViMWQwOGFlMTU5NDQ0MGMzNWRkOWMzZjNhYyJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=told-wrong&s=eyJ2IjoxLCJoIjoiN2Q4MmY1YTczNDM2Mjg0ZDllOTA4ZWM3OWYwMDQyNjgzMDA1NDNlY2VlZmJhM2U5ZjlkYzE3ZTcwYmJlNWUxOSIsImkiOlsyNV0sInIiOiIyNWQ2NDY3ZjlhZDFmOWVhNjQzZjFjYWRlY2MyNGVmMmM2MWNlYTdmN2VjYzNhYzQzMDEyNmUxNjZmNzk4NDgzIn0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped&s=eyJ2IjoxLCJoIjoiNzY0MWU0MTUxZjYyNWNlYjQyNTk1ZWJmMzdjMjczM2UzMDBiMzQ1OWY2ZjhiNDk5MTgzOGFhOGJjMjQ0NmRmOCIsImkiOls2MjddLCJyIjoiZTk5MGQ2MzgzYjY4OTNlM2E2ZDc1NmMzMzFjNzViM2JiMzdkYzY3NzUyMzFhOGQyZTQ1NDExYzBhNmQ2MGNiYSJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-far&s=eyJ2IjoxLCJoIjoiOTI4OTY0MmJlYzI3Y2U3MmUzMGM1NjNkNGIwNmU3MWFkNDRmMTRlZDAzMjk0YmZhMjc4ODM3Zjg5NjI3NDY3NiIsImkiOls2NjBdLCJyIjoiYTQ2NTJmMzE3OTBmMmE4YWNlY2Q1MTk2MzQ5ODcwNjdmNmFmOWM3OGFhZTQ5NjViMDJmNWE0ZTI2OTcyNDg4ZSJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-again&s=eyJ2IjoxLCJoIjoiYWUyMDE4NjFhOTg4MjIwM2EyYTUwYTk3MzlmMmVkYWUzY2ZiNDg0ZGVmMDBjOWNjMzdkZTVkMTk1YjlmZTAxMSIsImkiOls2NDldLCJyIjoiODZkZDU5ODZkNjc5MmY4YWQxMzlkZGJiNzExZDk2ODg0MjU2MGFkMDJiMzYzZDkxMWVkNWZjZWRiMDMzZTU1ZSJ9"
+ ],
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-11T05:59:41.900Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 85
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.77,
+    "5m": 2.11,
+    "15m": 2
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-11T06:01:44.911Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 87
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.72,
+    "5m": 2.01,
+    "15m": 1.98
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

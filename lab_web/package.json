@@ -5,6 +5,9 @@
   "description": "COCO Lab in the browser: renders coco_lab bundles and asks coco_lab (Pyodide) to recompute. It never implements a search.",
   "license": "Apache-2.0",
   "type": "module",
+  "bin": {
+    "coco": "tools/coco.mjs"
+  },
   "engines": {
     "node": ">=24.21.0 <25"
   },

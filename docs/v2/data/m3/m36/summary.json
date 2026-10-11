@@ -1,0 +1,28 @@
+{
+ "submissions": 100,
+ "browser_scored": 100,
+ "valid": 93,
+ "stars": {
+  "1": 26,
+  "0": 46,
+  "2": 16,
+  "3": 12
+ },
+ "coco_verify": "100 of 100",
+ "coco_verify_engine": "Pyodide 314.0.7, Node v24.21.0",
+ "coco_verify_seconds": 109.821,
+ "reproduced": {
+  "chromium": "100 of 100 (156.0.8078.4, 365 s)",
+  "firefox": "100 of 100 (157.0, 430 s)",
+  "webkit": "100 of 100 (27.2, 370 s)"
+ },
+ "cpython_identical": "94 of 100",
+ "cpython_by_challenge": {
+  "beat-the-planner": "20 of 20",
+  "next-node": "20 of 20",
+  "search-the-bays": "20 of 20",
+  "map-the-arena": "14 of 20",
+  "case-file-detective": "20 of 20"
+ },
+ "references_under_pyodide": "18 of 18"
+}

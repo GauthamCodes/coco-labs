@@ -20,6 +20,7 @@ re-simulation are tested in lab_web/tools/test_play_levels.py.
 
 import copy
 import itertools
+import json
 
 from coco_lab import play
 from coco_lab.fetch_problem import PROBLEM
@@ -245,3 +246,26 @@ def test_every_score_names_its_metrics_and_thresholds():
         r = _score(c, inputs)
         assert len(r['thresholds']) == 3
         assert all({'name', 'value', 'unit', 'meaning'} <= set(m) for m in r['metrics'])
+
+
+def _as_javascript_would(x):
+    # JSON through JavaScript: 1.0 and 1 are one number, written 1
+    if isinstance(x, float) and x.is_integer():
+        return int(x)
+    if isinstance(x, dict):
+        return {k: _as_javascript_would(v) for k, v in x.items()}
+    if isinstance(x, list):
+        return [_as_javascript_would(v) for v in x]
+    return x
+
+
+def test_a_level_that_passed_through_javascript_has_the_same_hash_and_scores():
+    for c in ('beat-the-planner', 'search-the-bays', 'case-file-detective'):
+        lv = LEVELS['challenges'][c]['levels'][0]
+        js = _as_javascript_would(lv)
+        # integral floats were there to lose (2 == 2.0 in Python: compare the JSON text)
+        assert json.dumps(js, sort_keys=True) != json.dumps(lv, sort_keys=True)
+        assert play.level_hash(js) == play.level_hash(lv)
+    via_js = _as_javascript_would(LEVELS)
+    for c, inputs in (('search-the-bays', [2, 3, 1, 0]), ('case-file-detective', [45])):
+        assert play.score(via_js, _sub(c, inputs)) == play.score(LEVELS, _sub(c, inputs))

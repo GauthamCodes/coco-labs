@@ -74,9 +74,17 @@ Drive COCO to map the arena on wheel odometry alone, within a distance budget. C
 **Score:** the map's F1 and the trajectory's ATE (Lab 3's scores,
 `coco_lab.mapeval`, as the Arena's Map lens computes them), at the tick the
 ground-truth distance driven reaches the budget, or when you finish. Your drive is
-re-simulated from its input log; the only config lines it may hold are the level's, at
-tick 0, and it may not kidnap or reset. The noise is fixed by the level's seed, so a
+re-simulated from its input log; the only config lines it may hold are the level's, in
+order, before it first drives, and it may not kidnap or reset. The noise is fixed by the
+level's seed, so a
 drive scores the same every time.
+
+**One tolerance, measured.** These thresholds are computed in CPython; the page and
+`coco verify` score in Pyodide. Over 20 drives the two gave the same F1 and the same
+scored tick, and ATEs up to 1.3e-8 m apart (M3.6). So ATE is compared with its
+threshold within 1 micrometre (`coco_lab.play.MAP_ATE_EPS`), and
+`lab_web/tools/play_reference_check.mjs` (CI) requires every reference drive to earn its
+stars in Pyodide.
 
 | level | budget | config | ★ the weaker drive's F1 | ★★ the stronger's F1 | ★★★ the stronger's F1 and ATE |
 |---|---|---|---|---|---|

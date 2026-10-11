@@ -1,0 +1,3457 @@
+{
+ "what": "Play submissions for verification (M3.6): inputs only",
+ "tool": "lab_web/tools/make_play_submissions.py",
+ "seed": 20261011,
+ "submissions": [
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "level_hash": "d4d46222d0d970eeb8e51fc4d34b85cfb98c54933cedcc5582ec063b889abfac",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     6,
+     7
+    ],
+    [
+     7,
+     8
+    ],
+    [
+     8,
+     9
+    ],
+    [
+     8,
+     10
+    ],
+    [
+     8,
+     11
+    ],
+    [
+     8,
+     12
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "level_hash": "fe48a9c80b0b55a05f141b803c986992d1ac13620004212a8e676706b28b8f35",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     9
+    ],
+    [
+     8,
+     10
+    ],
+    [
+     8,
+     11
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "level_hash": "7968ea685f83ed4dacf80629bd7af1b3bf53464a0b867b914aa3c76bb01bc079",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     9
+    ],
+    [
+     8,
+     10
+    ],
+    [
+     8,
+     11
+    ],
+    [
+     8,
+     12
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "level_hash": "d4d46222d0d970eeb8e51fc4d34b85cfb98c54933cedcc5582ec063b889abfac",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     5,
+     9
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "level_hash": "fe48a9c80b0b55a05f141b803c986992d1ac13620004212a8e676706b28b8f35",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     1,
+     9
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     1,
+     11
+    ],
+    [
+     2,
+     12
+    ],
+    [
+     3,
+     12
+    ],
+    [
+     4,
+     12
+    ],
+    [
+     5,
+     12
+    ],
+    [
+     6,
+     12
+    ],
+    [
+     7,
+     11
+    ],
+    [
+     8,
+     11
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "level_hash": "7968ea685f83ed4dacf80629bd7af1b3bf53464a0b867b914aa3c76bb01bc079",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     9
+    ],
+    [
+     8,
+     10
+    ],
+    [
+     8,
+     11
+    ],
+    [
+     8,
+     12
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "level_hash": "d4d46222d0d970eeb8e51fc4d34b85cfb98c54933cedcc5582ec063b889abfac",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     5,
+     9
+    ],
+    [
+     6,
+     9
+    ],
+    [
+     7,
+     10
+    ],
+    [
+     8,
+     11
+    ],
+    [
+     8,
+     12
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "level_hash": "fe48a9c80b0b55a05f141b803c986992d1ac13620004212a8e676706b28b8f35",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     1,
+     7
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     1,
+     9
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     1,
+     11
+    ],
+    [
+     2,
+     12
+    ],
+    [
+     3,
+     12
+    ],
+    [
+     4,
+     12
+    ],
+    [
+     5,
+     12
+    ],
+    [
+     6,
+     12
+    ],
+    [
+     7,
+     11
+    ],
+    [
+     8,
+     11
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "level_hash": "7968ea685f83ed4dacf80629bd7af1b3bf53464a0b867b914aa3c76bb01bc079",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     9
+    ],
+    [
+     8,
+     10
+    ],
+    [
+     8,
+     11
+    ],
+    [
+     8,
+     12
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "level_hash": "d4d46222d0d970eeb8e51fc4d34b85cfb98c54933cedcc5582ec063b889abfac",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     6,
+     7
+    ],
+    [
+     7,
+     8
+    ],
+    [
+     8,
+     9
+    ],
+    [
+     8,
+     10
+    ],
+    [
+     8,
+     11
+    ],
+    [
+     8,
+     12
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "level_hash": "fe48a9c80b0b55a05f141b803c986992d1ac13620004212a8e676706b28b8f35",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "level_hash": "7968ea685f83ed4dacf80629bd7af1b3bf53464a0b867b914aa3c76bb01bc079",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     9
+    ],
+    [
+     8,
+     10
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "level_hash": "d4d46222d0d970eeb8e51fc4d34b85cfb98c54933cedcc5582ec063b889abfac",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     5,
+     9
+    ],
+    [
+     6,
+     9
+    ],
+    [
+     7,
+     10
+    ],
+    [
+     8,
+     11
+    ],
+    [
+     8,
+     12
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "level_hash": "fe48a9c80b0b55a05f141b803c986992d1ac13620004212a8e676706b28b8f35",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     9
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "level_hash": "7968ea685f83ed4dacf80629bd7af1b3bf53464a0b867b914aa3c76bb01bc079",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     9
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "level_hash": "d4d46222d0d970eeb8e51fc4d34b85cfb98c54933cedcc5582ec063b889abfac",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     5,
+     9
+    ],
+    [
+     6,
+     9
+    ],
+    [
+     7,
+     10
+    ],
+    [
+     8,
+     11
+    ],
+    [
+     8,
+     12
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "level_hash": "fe48a9c80b0b55a05f141b803c986992d1ac13620004212a8e676706b28b8f35",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     6,
+     7
+    ],
+    [
+     7,
+     8
+    ],
+    [
+     8,
+     9
+    ],
+    [
+     8,
+     10
+    ],
+    [
+     8,
+     11
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "level_hash": "7968ea685f83ed4dacf80629bd7af1b3bf53464a0b867b914aa3c76bb01bc079",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     7,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     7,
+     9
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     9
+    ],
+    [
+     8,
+     10
+    ],
+    [
+     8,
+     11
+    ],
+    [
+     8,
+     12
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "level_hash": "d4d46222d0d970eeb8e51fc4d34b85cfb98c54933cedcc5582ec063b889abfac",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     0,
+     5
+    ],
+    [
+     1,
+     5
+    ],
+    [
+     1,
+     6
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     5,
+     9
+    ],
+    [
+     6,
+     9
+    ],
+    [
+     7,
+     10
+    ],
+    [
+     8,
+     11
+    ],
+    [
+     8,
+     12
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "level_hash": "fe48a9c80b0b55a05f141b803c986992d1ac13620004212a8e676706b28b8f35",
+   "inputs": [
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     5,
+     6
+    ],
+    [
+     6,
+     7
+    ],
+    [
+     7,
+     8
+    ],
+    [
+     8,
+     9
+    ],
+    [
+     8,
+     10
+    ],
+    [
+     8,
+     11
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "wall",
+   "level_hash": "91e508e65c3588a920f1c38fbe25b70a10953698d4a783331c7c04270569d257",
+   "inputs": [
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     2,
+     4
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "mud",
+   "level_hash": "aa5130d531ac1a79abd74c08106b7cf5b9ee221d93309fdf74a2e7ee18e20144",
+   "inputs": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     9
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "u-trap",
+   "level_hash": "1c68456dfa9b2e598abb18fb1a0fda695ae19dbdcbd92bd34d02d2fc0dca66a8",
+   "inputs": [
+    [
+     5,
+     3
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     3,
+     1
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "wall",
+   "level_hash": "91e508e65c3588a920f1c38fbe25b70a10953698d4a783331c7c04270569d257",
+   "inputs": [
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     4
+    ],
+    [
+     2,
+     5
+    ],
+    [
+     2,
+     4
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "mud",
+   "level_hash": "aa5130d531ac1a79abd74c08106b7cf5b9ee221d93309fdf74a2e7ee18e20144",
+   "inputs": [
+    [
+     4,
+     4
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     1,
+     11
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     9
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "u-trap",
+   "level_hash": "1c68456dfa9b2e598abb18fb1a0fda695ae19dbdcbd92bd34d02d2fc0dca66a8",
+   "inputs": [
+    [
+     5,
+     3
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     1,
+     3
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "wall",
+   "level_hash": "91e508e65c3588a920f1c38fbe25b70a10953698d4a783331c7c04270569d257",
+   "inputs": [
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     3,
+     2
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "mud",
+   "level_hash": "aa5130d531ac1a79abd74c08106b7cf5b9ee221d93309fdf74a2e7ee18e20144",
+   "inputs": [
+    [
+     3,
+     6
+    ],
+    [
+     1,
+     10
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     0,
+     11
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     9,
+     4
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     7,
+     7
+    ],
+    [
+     2,
+     9
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "u-trap",
+   "level_hash": "1c68456dfa9b2e598abb18fb1a0fda695ae19dbdcbd92bd34d02d2fc0dca66a8",
+   "inputs": [
+    [
+     4,
+     1
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     6,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     1,
+     2
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "wall",
+   "level_hash": "91e508e65c3588a920f1c38fbe25b70a10953698d4a783331c7c04270569d257",
+   "inputs": [
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     2,
+     4
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "mud",
+   "level_hash": "aa5130d531ac1a79abd74c08106b7cf5b9ee221d93309fdf74a2e7ee18e20144",
+   "inputs": [
+    [
+     0,
+     1
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     8,
+     4
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     9
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "u-trap",
+   "level_hash": "1c68456dfa9b2e598abb18fb1a0fda695ae19dbdcbd92bd34d02d2fc0dca66a8",
+   "inputs": [
+    [
+     5,
+     3
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     3,
+     1
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "wall",
+   "level_hash": "91e508e65c3588a920f1c38fbe25b70a10953698d4a783331c7c04270569d257",
+   "inputs": [
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     5,
+     5
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     6
+    ],
+    [
+     2,
+     4
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "mud",
+   "level_hash": "aa5130d531ac1a79abd74c08106b7cf5b9ee221d93309fdf74a2e7ee18e20144",
+   "inputs": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     0,
+     8
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     3,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     3
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "u-trap",
+   "level_hash": "1c68456dfa9b2e598abb18fb1a0fda695ae19dbdcbd92bd34d02d2fc0dca66a8",
+   "inputs": [
+    [
+     5,
+     3
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     1,
+     3
+    ],
+    [
+     5,
+     1
+    ],
+    [
+     3,
+     1
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "wall",
+   "level_hash": "91e508e65c3588a920f1c38fbe25b70a10953698d4a783331c7c04270569d257",
+   "inputs": [
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     3,
+     8
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     4
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "mud",
+   "level_hash": "aa5130d531ac1a79abd74c08106b7cf5b9ee221d93309fdf74a2e7ee18e20144",
+   "inputs": [
+    [
+     2,
+     8
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     4,
+     5
+    ],
+    [
+     7,
+     3
+    ],
+    [
+     3,
+     7
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     2
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "u-trap",
+   "level_hash": "1c68456dfa9b2e598abb18fb1a0fda695ae19dbdcbd92bd34d02d2fc0dca66a8",
+   "inputs": [
+    [
+     5,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     3,
+     1
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "wall",
+   "level_hash": "91e508e65c3588a920f1c38fbe25b70a10953698d4a783331c7c04270569d257",
+   "inputs": [
+    [
+     2,
+     2
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     1,
+     4
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     2,
+     7
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     3,
+     2
+    ],
+    [
+     2,
+     6
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "next-node",
+   "level": "mud",
+   "level_hash": "aa5130d531ac1a79abd74c08106b7cf5b9ee221d93309fdf74a2e7ee18e20144",
+   "inputs": [
+    [
+     3,
+     0
+    ],
+    [
+     0,
+     10
+    ],
+    [
+     4,
+     4
+    ],
+    [
+     4,
+     1
+    ],
+    [
+     8,
+     3
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     0,
+     11
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     9,
+     6
+    ],
+    [
+     8,
+     9
+    ]
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "level_hash": "c597c790a7cf8837e571ce2a6e8c157bf970fd23631af8cd22b00c3e49f5c8d2",
+   "inputs": [
+    0,
+    2,
+    3,
+    1
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "level_hash": "0f330c50a88ffc907649f988b061c8353c008858a20733fb1dd909c29c15529f",
+   "inputs": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "level_hash": "43b129093acec897c94f1269e4a43d1c1f60df910bb3a71dadf41b81d4e197f5",
+   "inputs": [
+    3,
+    2,
+    0,
+    1
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "level_hash": "62df4850ce55abd896eccc03d83603e4141716691bd858f218b0769f1ab9c38f",
+   "inputs": [
+    3,
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "level_hash": "c597c790a7cf8837e571ce2a6e8c157bf970fd23631af8cd22b00c3e49f5c8d2",
+   "inputs": [
+    3,
+    2,
+    1,
+    0
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "level_hash": "0f330c50a88ffc907649f988b061c8353c008858a20733fb1dd909c29c15529f",
+   "inputs": [
+    3,
+    1,
+    2,
+    0
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "level_hash": "43b129093acec897c94f1269e4a43d1c1f60df910bb3a71dadf41b81d4e197f5",
+   "inputs": [
+    3,
+    2,
+    1,
+    0
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "level_hash": "62df4850ce55abd896eccc03d83603e4141716691bd858f218b0769f1ab9c38f",
+   "inputs": [
+    3,
+    1,
+    0,
+    3
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "level_hash": "c597c790a7cf8837e571ce2a6e8c157bf970fd23631af8cd22b00c3e49f5c8d2",
+   "inputs": [
+    3,
+    0,
+    1,
+    2
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "level_hash": "0f330c50a88ffc907649f988b061c8353c008858a20733fb1dd909c29c15529f",
+   "inputs": [
+    2,
+    3,
+    1,
+    0
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "level_hash": "43b129093acec897c94f1269e4a43d1c1f60df910bb3a71dadf41b81d4e197f5",
+   "inputs": [
+    2,
+    3,
+    0,
+    1
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "level_hash": "62df4850ce55abd896eccc03d83603e4141716691bd858f218b0769f1ab9c38f",
+   "inputs": [
+    3,
+    1,
+    0,
+    2
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "level_hash": "c597c790a7cf8837e571ce2a6e8c157bf970fd23631af8cd22b00c3e49f5c8d2",
+   "inputs": [
+    2,
+    0,
+    3,
+    1
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "level_hash": "0f330c50a88ffc907649f988b061c8353c008858a20733fb1dd909c29c15529f",
+   "inputs": [
+    3,
+    1,
+    0,
+    2
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "level_hash": "43b129093acec897c94f1269e4a43d1c1f60df910bb3a71dadf41b81d4e197f5",
+   "inputs": [
+    2,
+    1,
+    3,
+    0
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "level_hash": "62df4850ce55abd896eccc03d83603e4141716691bd858f218b0769f1ab9c38f",
+   "inputs": [
+    3,
+    1,
+    2,
+    0
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "level_hash": "c597c790a7cf8837e571ce2a6e8c157bf970fd23631af8cd22b00c3e49f5c8d2",
+   "inputs": [
+    1,
+    0,
+    2,
+    3
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "level_hash": "0f330c50a88ffc907649f988b061c8353c008858a20733fb1dd909c29c15529f",
+   "inputs": [
+    0,
+    1,
+    3,
+    2
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "level_hash": "43b129093acec897c94f1269e4a43d1c1f60df910bb3a71dadf41b81d4e197f5",
+   "inputs": [
+    3,
+    1,
+    2,
+    0
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "level_hash": "62df4850ce55abd896eccc03d83603e4141716691bd858f218b0769f1ab9c38f",
+   "inputs": [
+    1,
+    0,
+    2,
+    3
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "level_hash": "47062a232e5590bd921bedcf607e52e053945d140ec585f1e4a99713796aca66",
+   "inputs": {
+    "ticks": 478,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 267,
+      "kind": "goal",
+      "x": 0.0902823702389437,
+      "y": 0.2285565935447486
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "level_hash": "14b0daa5a636195270b13ab061e9f9df87e05bfc743727be700c1d96c94ec170",
+   "inputs": {
+    "ticks": 589,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 114,
+      "kind": "goal",
+      "x": 0.3261577618201224,
+      "y": -2.7112677295682888
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "level_hash": "47062a232e5590bd921bedcf607e52e053945d140ec585f1e4a99713796aca66",
+   "inputs": {
+    "ticks": 306,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 134,
+      "kind": "goal",
+      "x": 9.949432117511144,
+      "y": 3.2230122480839594
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "level_hash": "14b0daa5a636195270b13ab061e9f9df87e05bfc743727be700c1d96c94ec170",
+   "inputs": {
+    "ticks": 884,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 95,
+      "kind": "goal",
+      "x": -0.19540356981414436,
+      "y": 0.11671395042655869
+     },
+     {
+      "tick": 277,
+      "kind": "goal",
+      "x": 0.09720552606761756,
+      "y": 0.0044496346074732185
+     },
+     {
+      "tick": 472,
+      "kind": "goal",
+      "x": 2.7262786228761824,
+      "y": 1.8293164204465164
+     },
+     {
+      "tick": 499,
+      "kind": "goal",
+      "x": 9.75787289232603,
+      "y": 0.06433474627354602
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "level_hash": "47062a232e5590bd921bedcf607e52e053945d140ec585f1e4a99713796aca66",
+   "inputs": {
+    "ticks": 680,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 183,
+      "kind": "goal",
+      "x": 2.799804353937798,
+      "y": 2.2029432621374565
+     },
+     {
+      "tick": 461,
+      "kind": "goal",
+      "x": 10.20482301787327,
+      "y": -0.04305334459015764
+     },
+     {
+      "tick": 488,
+      "kind": "goal",
+      "x": 3.120838062969416,
+      "y": -6.255233489967111
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "level_hash": "14b0daa5a636195270b13ab061e9f9df87e05bfc743727be700c1d96c94ec170",
+   "inputs": {
+    "ticks": 534,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 12,
+      "kind": "goal",
+      "x": 10.278530674899507,
+      "y": -0.2917523325624059
+     },
+     {
+      "tick": 144,
+      "kind": "goal",
+      "x": -0.07293541055523467,
+      "y": 0.25225319394063445
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "level_hash": "47062a232e5590bd921bedcf607e52e053945d140ec585f1e4a99713796aca66",
+   "inputs": {
+    "ticks": 1193,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 225,
+      "kind": "goal",
+      "x": 2.707116024511233,
+      "y": -6.3000813743313495
+     },
+     {
+      "tick": 521,
+      "kind": "goal",
+      "x": 2.7693964964612974,
+      "y": -6.531400470688515
+     },
+     {
+      "tick": 797,
+      "kind": "goal",
+      "x": 0.2544067744056093,
+      "y": -2.773930768622498
+     },
+     {
+      "tick": 878,
+      "kind": "goal",
+      "x": 2.9637878472642263,
+      "y": -6.5203095640585245
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "level_hash": "14b0daa5a636195270b13ab061e9f9df87e05bfc743727be700c1d96c94ec170",
+   "inputs": {
+    "ticks": 319,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 152,
+      "kind": "goal",
+      "x": 0.28347125329309486,
+      "y": -2.2700106551292865
+     },
+     {
+      "tick": 208,
+      "kind": "goal",
+      "x": -0.21875033414904765,
+      "y": -0.13363377953647712
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "level_hash": "47062a232e5590bd921bedcf607e52e053945d140ec585f1e4a99713796aca66",
+   "inputs": {
+    "ticks": 378,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 96,
+      "kind": "goal",
+      "x": 6.129686805561208,
+      "y": 3.8390328239964258
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "level_hash": "14b0daa5a636195270b13ab061e9f9df87e05bfc743727be700c1d96c94ec170",
+   "inputs": {
+    "ticks": 329,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 40,
+      "kind": "goal",
+      "x": 9.88510970331349,
+      "y": -0.22548511141546002
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "level_hash": "47062a232e5590bd921bedcf607e52e053945d140ec585f1e4a99713796aca66",
+   "inputs": {
+    "ticks": 707,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 21,
+      "kind": "goal",
+      "x": 2.529120725838644,
+      "y": 2.242349467148206
+     },
+     {
+      "tick": 286,
+      "kind": "goal",
+      "x": 5.801215180006143,
+      "y": 4.038567896876868
+     },
+     {
+      "tick": 505,
+      "kind": "goal",
+      "x": -0.036305082138279876,
+      "y": -0.20890046885520558
+     },
+     {
+      "tick": 544,
+      "kind": "goal",
+      "x": 2.9759978064112738,
+      "y": -6.478929405310513
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "level_hash": "14b0daa5a636195270b13ab061e9f9df87e05bfc743727be700c1d96c94ec170",
+   "inputs": {
+    "ticks": 397,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 35,
+      "kind": "goal",
+      "x": 9.097345088048801,
+      "y": -4.044418804065503
+     },
+     {
+      "tick": 42,
+      "kind": "goal",
+      "x": -0.18663908212092856,
+      "y": -0.1837669482817727
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "level_hash": "47062a232e5590bd921bedcf607e52e053945d140ec585f1e4a99713796aca66",
+   "inputs": {
+    "ticks": 776,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 119,
+      "kind": "goal",
+      "x": -0.2983309816411708,
+      "y": -0.21140277516380884
+     },
+     {
+      "tick": 338,
+      "kind": "goal",
+      "x": -0.2353615838775036,
+      "y": -0.12544763275113363
+     },
+     {
+      "tick": 446,
+      "kind": "goal",
+      "x": 2.527488118692721,
+      "y": 1.8764132409630074
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "level_hash": "14b0daa5a636195270b13ab061e9f9df87e05bfc743727be700c1d96c94ec170",
+   "inputs": {
+    "ticks": 799,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 214,
+      "kind": "goal",
+      "x": 0.6978330953212254,
+      "y": -2.2086704817133493
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "level_hash": "47062a232e5590bd921bedcf607e52e053945d140ec585f1e4a99713796aca66",
+   "inputs": {
+    "ticks": 573,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 296,
+      "kind": "goal",
+      "x": 9.983775195949285,
+      "y": 3.059919733405577
+     },
+     {
+      "tick": 492,
+      "kind": "goal",
+      "x": 0.11757699750842099,
+      "y": 0.20116939808024908
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "level_hash": "14b0daa5a636195270b13ab061e9f9df87e05bfc743727be700c1d96c94ec170",
+   "inputs": {
+    "ticks": 949,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 219,
+      "kind": "goal",
+      "x": 9.850314193506076,
+      "y": 0.28115821537572255
+     },
+     {
+      "tick": 302,
+      "kind": "goal",
+      "x": 9.925745750231458,
+      "y": 2.7893150907526927
+     },
+     {
+      "tick": 432,
+      "kind": "goal",
+      "x": 8.974585096036686,
+      "y": -3.824306697740712
+     },
+     {
+      "tick": 639,
+      "kind": "goal",
+      "x": 9.186078884174462,
+      "y": -3.8886412029915456
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "level_hash": "47062a232e5590bd921bedcf607e52e053945d140ec585f1e4a99713796aca66",
+   "inputs": {
+    "ticks": 855,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 84,
+      "kind": "goal",
+      "x": 0.14568751182361028,
+      "y": -0.2803948211913876
+     },
+     {
+      "tick": 378,
+      "kind": "goal",
+      "x": 9.0328530519967,
+      "y": -3.8406449917370753
+     },
+     {
+      "tick": 511,
+      "kind": "goal",
+      "x": 0.5992755386304525,
+      "y": -2.466858984617826
+     },
+     {
+      "tick": 547,
+      "kind": "goal",
+      "x": 9.21222746014485,
+      "y": -3.8189400209739213
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "level_hash": "14b0daa5a636195270b13ab061e9f9df87e05bfc743727be700c1d96c94ec170",
+   "inputs": {
+    "ticks": 812,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 181,
+      "kind": "goal",
+      "x": 2.9746541588274233,
+      "y": -6.798895883473608
+     },
+     {
+      "tick": 242,
+      "kind": "goal",
+      "x": 8.736312534225982,
+      "y": -3.7637197248171925
+     },
+     {
+      "tick": 471,
+      "kind": "goal",
+      "x": 3.123126546665186,
+      "y": -6.478952632060136
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "level_hash": "47062a232e5590bd921bedcf607e52e053945d140ec585f1e4a99713796aca66",
+   "inputs": {
+    "ticks": 1004,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 97,
+      "kind": "goal",
+      "x": 3.2708217379439537,
+      "y": -6.502370690794862
+     },
+     {
+      "tick": 363,
+      "kind": "goal",
+      "x": 0.11477389067094002,
+      "y": 0.061539844192079585
+     },
+     {
+      "tick": 582,
+      "kind": "goal",
+      "x": 0.16498049543317178,
+      "y": 0.2756621185363835
+     },
+     {
+      "tick": 846,
+      "kind": "goal",
+      "x": -0.08458716344105494,
+      "y": -0.029242686911174987
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "level_hash": "14b0daa5a636195270b13ab061e9f9df87e05bfc743727be700c1d96c94ec170",
+   "inputs": {
+    "ticks": 795,
+    "log": [
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.poses=odometry"
+     },
+     {
+      "tick": 0,
+      "kind": "config",
+      "choice": "map.algorithm=occupancy"
+     },
+     {
+      "tick": 125,
+      "kind": "goal",
+      "x": 0.23612788948094648,
+      "y": 0.09690093527712768
+     },
+     {
+      "tick": 231,
+      "kind": "goal",
+      "x": 0.047189482858272735,
+      "y": 0.10454418741547866
+     },
+     {
+      "tick": 234,
+      "kind": "goal",
+      "x": 6.17461216983948,
+      "y": 4.117640538206925
+     },
+     {
+      "tick": 240,
+      "kind": "goal",
+      "x": 2.5258617886001313,
+      "y": 1.8134769590633475
+     }
+    ]
+   }
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "level_hash": "7d82f5a73436284d9e908ec79f004268300543eceefba3e9f9dc17e70bbe5e19",
+   "inputs": [
+    1
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "level_hash": "7641e4151f625ceb42595ebf37c2733e300b3459f6f8b4991838aa8bc2446df8",
+   "inputs": [
+    666
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "level_hash": "9289642bec27ce72e30c563d4b06e71ad44f14ed03294bfa278837f896274676",
+   "inputs": [
+    655
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "level_hash": "ae201861a9882203a2a50a9739f2edae3cfb484def00c9cc37de5d195b9fe011",
+   "inputs": [
+    671
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "level_hash": "7d82f5a73436284d9e908ec79f004268300543eceefba3e9f9dc17e70bbe5e19",
+   "inputs": [
+    26
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "level_hash": "7641e4151f625ceb42595ebf37c2733e300b3459f6f8b4991838aa8bc2446df8",
+   "inputs": [
+    654
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "level_hash": "9289642bec27ce72e30c563d4b06e71ad44f14ed03294bfa278837f896274676",
+   "inputs": [
+    647
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "level_hash": "ae201861a9882203a2a50a9739f2edae3cfb484def00c9cc37de5d195b9fe011",
+   "inputs": [
+    641
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "level_hash": "7d82f5a73436284d9e908ec79f004268300543eceefba3e9f9dc17e70bbe5e19",
+   "inputs": [
+    192
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "level_hash": "7641e4151f625ceb42595ebf37c2733e300b3459f6f8b4991838aa8bc2446df8",
+   "inputs": [
+    624
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "level_hash": "9289642bec27ce72e30c563d4b06e71ad44f14ed03294bfa278837f896274676",
+   "inputs": [
+    650
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "level_hash": "ae201861a9882203a2a50a9739f2edae3cfb484def00c9cc37de5d195b9fe011",
+   "inputs": [
+    668
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "level_hash": "7d82f5a73436284d9e908ec79f004268300543eceefba3e9f9dc17e70bbe5e19",
+   "inputs": [
+    36
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "level_hash": "7641e4151f625ceb42595ebf37c2733e300b3459f6f8b4991838aa8bc2446df8",
+   "inputs": [
+    605
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "level_hash": "9289642bec27ce72e30c563d4b06e71ad44f14ed03294bfa278837f896274676",
+   "inputs": [
+    673
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "level_hash": "ae201861a9882203a2a50a9739f2edae3cfb484def00c9cc37de5d195b9fe011",
+   "inputs": [
+    599
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "level_hash": "7d82f5a73436284d9e908ec79f004268300543eceefba3e9f9dc17e70bbe5e19",
+   "inputs": [
+    25
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "level_hash": "7641e4151f625ceb42595ebf37c2733e300b3459f6f8b4991838aa8bc2446df8",
+   "inputs": [
+    627
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "level_hash": "9289642bec27ce72e30c563d4b06e71ad44f14ed03294bfa278837f896274676",
+   "inputs": [
+    660
+   ]
+  },
+  {
+   "v": 1,
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "level_hash": "ae201861a9882203a2a50a9739f2edae3cfb484def00c9cc37de5d195b9fe011",
+   "inputs": [
+    649
+   ]
+  }
+ ]
+}
