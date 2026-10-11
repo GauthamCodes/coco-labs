@@ -19,7 +19,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { ATTRACT_POLICIES, AttractPlayer, DEFAULT_ATTRACT_POLICY, parseRecording, type AttractPolicy, type Recording } from './attract';
 import { ArenaClient, type PyodideSource } from './client';
 import { ArenaPlayPanel } from '../play/ArenaPlayPanel';
-import { ModeNav } from '../ui/ModeNav';
+import { EvidenceBadge, ModeNav } from '../ui/ModeNav';
 import { Compare, type CompareState } from './Compare';
 import { Joystick } from './Joystick';
 import { PerfOverlay } from './PerfOverlay';
@@ -644,7 +644,10 @@ export function ArenaApp() {
 
   return (
     <main className="arena" data-testid="arena">
-      <ModeNav current={params.has('casefile') ? 'casefiles' : 'sandbox'} evidence={evidence} />
+      {/* a pane inside the Case Files comparison (embed=1) shows its badge, not the modes again */}
+      {params.get('embed') === '1'
+        ? <p className="embed-head"><EvidenceBadge evidence={evidence} /></p>
+        : <ModeNav current={params.has('casefile') ? 'casefiles' : 'sandbox'} evidence={evidence} />}
       {missionBack && <p className="mission-back"><a href={`${import.meta.env.BASE_URL}${missionBack}`} data-testid="mission-back">
         ← Back to the mission</a></p>}
       {error && <p className="error" role="alert">{error}</p>}

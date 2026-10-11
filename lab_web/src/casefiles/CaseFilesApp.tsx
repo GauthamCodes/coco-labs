@@ -105,12 +105,12 @@ export function CaseFilesApp() {
           <div className="compare-panes">
             <figure>
               <figcaption><span className="evidence-badge stack">STACK</span> the recording, as the stack ran it</figcaption>
-              <iframe title={`recording ${file.id}`} src={`${BASE}?view=arena&casefile=${file.id}`} data-testid="pane-stack" />
+              <iframe title={`recording ${file.id}`} src={`${BASE}?view=arena&casefile=${file.id}&embed=1`} data-testid="pane-stack" />
             </figure>
             {!file.void && (
               <figure>
                 <figcaption><span className="evidence-badge model">MODEL</span> {group.compare.what}</figcaption>
-                <iframe title={`model ${file.id}`} src={`${BASE}${file.compare}`} data-testid="pane-model" />
+                <iframe title={`model ${file.id}`} src={`${BASE}${file.compare}&embed=1`} data-testid="pane-model" />
               </figure>
             )}
           </div>

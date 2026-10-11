@@ -1466,6 +1466,11 @@ only. Read order for agents (README §9): `README.md`, this file,
       the Play pages included.
     - 22 / 22 URL forms and 6 / 6 `/v1/` views.
     - `play_check` again on this build: 15 / 15.
+  - **A regression found by M3.8's demo frames, fixed:** the Case Files
+    comparison's two panes each drew the whole mode header again. A pane
+    now opens with `embed=1` and shows only its badge. `modes_check` asserts
+    it: one header on the page, panes STACK and MODEL with none, **23 / 23**
+    with this check.
   - **A local-only gap, not a site defect:** my build helper did not
     re-fetch `/v1/` after `vite build` emptied `dist` (CI does), so a first
     console check saw a 404 on the archive. Fetched, and the helper fixed.

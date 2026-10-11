@@ -462,15 +462,33 @@
    "scroll": 390,
    "view": 390,
    "ok": true
+  },
+  {
+   "size": "desktop",
+   "mode": "casefiles",
+   "page": "?view=casefiles&case=run15&file=lab5_mislocalised_dwb_1 (panes)",
+   "heads": 1,
+   "panes": [
+    {
+     "heads": 0,
+     "badge": "STACK"
+    },
+    {
+     "heads": 0,
+     "badge": "MODEL"
+    }
+   ],
+   "errors": [],
+   "ok": true
   }
  ],
  "summary": {
-  "pages": 22,
-  "ok": 22
+  "pages": 23,
+  "ok": 23
  },
  "conditions": {
   "start": {
-   "at_utc": "2026-10-11T06:24:38.492Z",
+   "at_utc": "2026-10-11T06:55:45.273Z",
    "power_profile": "balanced",
    "ac_power": true,
    "battery": {
@@ -479,16 +497,16 @@
    },
    "cpu_governor": "powersave",
    "load_average": {
-    "1m": 0.94,
-    "5m": 1.53,
-    "15m": 1.69
+    "1m": 1.42,
+    "5m": 1.68,
+    "15m": 1.97
    },
    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
    "threads": 12,
    "standard": true
   },
   "end": {
-   "at_utc": "2026-10-11T06:25:38.259Z",
+   "at_utc": "2026-10-11T06:56:53.001Z",
    "power_profile": "balanced",
    "ac_power": true,
    "battery": {
@@ -497,9 +515,9 @@
    },
    "cpu_governor": "powersave",
    "load_average": {
-    "1m": 1.46,
-    "5m": 1.54,
-    "15m": 1.69
+    "1m": 1.49,
+    "5m": 1.61,
+    "15m": 1.92
    },
    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
    "threads": 12,

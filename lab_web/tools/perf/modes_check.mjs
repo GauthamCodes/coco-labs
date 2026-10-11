@@ -82,6 +82,27 @@ for (const [size, ctx] of Object.entries(SIZES)) {
     await context.close();
   }
 }
+// the Case Files comparison: one header on the page; each pane shows only its badge
+{
+  const context = await browser.newContext(SIZES.desktop);
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(String(e)));
+  const q = '?view=casefiles&case=run15&file=lab5_mislocalised_dwb_1';
+  await page.goto(`${SITE}${q}`);
+  await page.waitForTimeout(8000);
+  const panes = [];
+  for (const f of page.frames().filter((x) => x !== page.mainFrame())) {
+    panes.push(await f.evaluate(() => ({ heads: document.querySelectorAll('[data-testid=mode-head]').length,
+      badge: document.querySelector('[data-testid=evidence-badge]')?.textContent ?? null })));
+  }
+  const heads = await page.locator('[data-testid=mode-head]').count();
+  const row = { size: 'desktop', mode: 'casefiles', page: `${q} (panes)`, heads, panes, errors,
+    ok: heads === 1 && panes.length === 2 && panes.every((p) => p.heads === 0) && panes.map((p) => p.badge).sort().join() === 'MODEL,STACK' && !errors.length };
+  rows.push(row);
+  console.log(`${row.ok ? 'ok  ' : 'FAIL'} comparison: ${heads} header on the page, panes ${JSON.stringify(panes)}`);
+  await context.close();
+}
 await browser.close();
 const out = { site: SITE, rows, summary: { pages: rows.length, ok: rows.filter((r) => r.ok).length } };
 writeFileSync(join(OUT, 'modes_check.json'), JSON.stringify({ ...out, conditions: { start: CONDITIONS_AT_START, end: conditions() } }, null, 1) + '\n');
