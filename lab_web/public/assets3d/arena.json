@@ -1,5 +1,4 @@
 {
- "bytes": 60220,
  "footprints": [
   {
    "center": [
@@ -1229,7 +1228,6 @@
  "ramp_angle_deg": 18,
  "rise_m": 0.6498393924658126,
  "spawned": "full_world_robo.launch.py traverse:=true",
- "triangles": 964,
  "world": "gazebo_models/worlds/coco_navigation.world",
  "world_sha256": "cbe9415ab6b029c759a4dcceb67042b70e73d0569e2d98391bca5921a54d58bd"
 }

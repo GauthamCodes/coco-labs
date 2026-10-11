@@ -1,104 +1,49 @@
 # Copyright 2026 Gautham Anil
 # SPDX-License-Identifier: Apache-2.0
 """
-Triangle meshes for the asset converters (M4.1): read STL, weld, decimate by
-vertex clustering, normals, boxes, and rigid transforms. numpy only.
+Triangle meshes for the asset converters (M4.2): read STL and weld it, boxes,
+rigid transforms, flat normals. Standard library only (CI has no numpy).
 
-Vertex clustering (Rossignac-Borrel) snaps every vertex to a grid of cell
-`cell` metres and merges what lands together; it is crude but deterministic
-and fast, and enough for M4.1's first conversion. M4.2's pipeline replaces
-it (docs/v2/adr/0006-asset-pipeline.md).
+A mesh here is (positions, indices): a flat list [x0, y0, z0, x1, ...] and a
+flat list of vertex indices, three per triangle. Simplification and
+smooth normals happen later, in compress.mjs (meshoptimizer; ADR 0006).
 """
 
+import math
 import struct
 
-import numpy as np
 
-
-def read_stl(path):
-    """Return (V, 3) float64 vertices and (T, 3) int triangles, welded exactly."""
+def read_stl(path, scale=(1.0, 1.0, 1.0)):
+    """A binary or ASCII STL, welded on exact coordinates: (positions, indices)."""
     data = open(path, 'rb').read()
-    n = struct.unpack_from('<I', data, 80)[0] if len(data) >= 84 else 0
+    n = struct.unpack_from('<I', data, 80)[0] if len(data) >= 84 else -1
     if len(data) == 84 + 50 * n:
-        rec = np.frombuffer(data, dtype=np.dtype([('n', '<f4', 3), ('v', '<f4', (3, 3)), ('a', '<u2')]), count=n, offset=84)
-        tri = rec['v'].reshape(-1, 3).astype(np.float64)
-    else:  # ASCII
-        vs = [list(map(float, ln.split()[1:4])) for ln in data.decode('ascii', 'replace').splitlines()
-              if ln.strip().startswith('vertex')]
-        tri = np.array(vs, dtype=np.float64)
-    v, inv = np.unique(tri, axis=0, return_inverse=True)
-    return v, inv.reshape(-1, 3)
-
-
-def cluster(v, t, cell):
-    """Vertex-clustering decimation at `cell` metres. Returns (V', T')."""
-    if cell <= 0:
-        return v, t
-    key = np.floor(v / cell).astype(np.int64)
-    _, rep, inv = np.unique(key, axis=0, return_index=True, return_inverse=True)
-    inv = inv.reshape(-1)
-    # each cluster's vertex: the mean of its members
-    nv = np.zeros((rep.shape[0], 3))
-    np.add.at(nv, inv, v)
-    nv /= np.bincount(inv, minlength=rep.shape[0])[:, None]
-    nt = inv[t]
-    keep = (nt[:, 0] != nt[:, 1]) & (nt[:, 1] != nt[:, 2]) & (nt[:, 0] != nt[:, 2])
-    nt = nt[keep]
-    # drop duplicate triangles (same three vertices, any order)
-    s = np.sort(nt, axis=1)
-    _, first = np.unique(s, axis=0, return_index=True)
-    nt = nt[np.sort(first)]
-    used = np.unique(nt)
-    remap = -np.ones(nv.shape[0], np.int64)
-    remap[used] = np.arange(used.shape[0])
-    return nv[used], remap[nt]
-
-
-def decimate_to(v, t, max_tris, start_cell=0.0005):
-    """Grow the cluster cell until the mesh has at most `max_tris` triangles."""
-    if t.shape[0] <= max_tris:
-        return v, t, 0.0
-    cell = start_cell
-    while True:
-        nv, nt = cluster(v, t, cell)
-        if nt.shape[0] <= max_tris:
-            return nv, nt, cell
-        cell *= 1.25
-
-
-def flat(v, t):
-    """Unweld for flat shading: each triangle its own three vertices and face normal."""
-    p = v[t].reshape(-1, 3)
-    a, b, c = v[t[:, 0]], v[t[:, 1]], v[t[:, 2]]
-    fn = np.cross(b - a, c - a)
-    ln = np.linalg.norm(fn, axis=1, keepdims=True)
-    fn = np.divide(fn, ln, out=np.zeros_like(fn), where=ln > 0)
-    return p, np.repeat(fn, 3, axis=0), np.arange(p.shape[0])
-
-
-def smooth(v, t, crease_deg=40.0):
-    """Normals smoothed across edges flatter than `crease_deg`, split where sharper (CAD edges stay crisp)."""
-    a, b, c = v[t[:, 0]], v[t[:, 1]], v[t[:, 2]]
-    fn = np.cross(b - a, c - a)
-    ln = np.linalg.norm(fn, axis=1, keepdims=True)
-    fnu = np.divide(fn, ln, out=np.zeros_like(fn), where=ln > 0)
-    # per corner: the area-weighted mean of the faces at that vertex whose normal is within the crease
-    acc = np.zeros((v.shape[0], 3))
-    np.add.at(acc, t.reshape(-1), np.repeat(fn, 3, axis=0))
-    vn = acc / np.maximum(np.linalg.norm(acc, axis=1, keepdims=True), 1e-12)
-    corner_face = np.repeat(fnu, 3, axis=0)
-    corner_vn = vn[t.reshape(-1)]
-    sharp = (corner_face * corner_vn).sum(axis=1) < np.cos(np.radians(crease_deg))
-    n = np.where(sharp[:, None], corner_face, corner_vn)
-    # corners that disagree with their vertex's normal get their own vertex
-    key = np.concatenate([t.reshape(-1)[:, None].astype(np.float64), np.round(n, 3)], axis=1)
-    _, first, inv = np.unique(key, axis=0, return_index=True, return_inverse=True)
-    p = v[t.reshape(-1)][first]
-    return p, n[first], inv.reshape(-1)
+        corners = []
+        for k in range(n):
+            v = struct.unpack_from('<9f', data, 84 + 50 * k + 12)
+            corners += [v[0:3], v[3:6], v[6:9]]
+    else:
+        corners = [tuple(map(float, ln.split()[1:4])) for ln in data.decode('ascii', 'replace').splitlines()
+                   if ln.strip().startswith('vertex')]
+    index, pos, ind = {}, [], []
+    sx, sy, sz = scale
+    for c in corners:
+        k = index.get(c)
+        if k is None:
+            k = index[c] = len(pos) // 3
+            pos += [c[0] * sx, c[1] * sy, c[2] * sz]
+        ind.append(k)
+    # drop triangles that welding made degenerate
+    out = []
+    for t in range(0, len(ind), 3):
+        a, b, c = ind[t:t + 3]
+        if a != b and b != c and a != c:
+            out += [a, b, c]
+    return pos, out
 
 
 def box(size):
-    """An axis-aligned box centred on the origin: (V, 3), (T, 3), 24 vertices for crisp faces."""
+    """An axis-aligned box centred on the origin: 24 vertices (crisp faces), normals, 12 triangles."""
     sx, sy, sz = (s / 2 for s in size)
     faces = [((1, 0, 0), [(sx, -sy, -sz), (sx, sy, -sz), (sx, sy, sz), (sx, -sy, sz)]),
              ((-1, 0, 0), [(-sx, sy, -sz), (-sx, -sy, -sz), (-sx, -sy, sz), (-sx, sy, sz)]),
@@ -108,22 +53,47 @@ def box(size):
              ((0, 0, -1), [(-sx, sy, -sz), (sx, sy, -sz), (sx, -sy, -sz), (-sx, -sy, -sz)])]
     p, n, t = [], [], []
     for nrm, quad in faces:
-        k = len(p)
-        p += quad
-        n += [nrm] * 4
-        t += [(k, k + 1, k + 2), (k, k + 2, k + 3)]
-    return np.array(p, float), np.array(n, float), np.array(t, np.int64)
+        k = len(p) // 3
+        for q in quad:
+            p += list(q)
+            n += list(nrm)
+        t += [k, k + 1, k + 2, k, k + 2, k + 3]
+    return p, n, t
+
+
+def flat(positions, indices):
+    """Unweld for flat shading: each triangle its own three vertices and its face normal."""
+    p, n, t = [], [], []
+    for k in range(0, len(indices), 3):
+        a, b, c = (positions[3 * i:3 * i + 3] for i in indices[k:k + 3])
+        u = [b[j] - a[j] for j in range(3)]
+        v = [c[j] - a[j] for j in range(3)]
+        f = [u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0]]
+        ln = math.sqrt(sum(x * x for x in f)) or 1.0
+        f = [x / ln for x in f]
+        base = len(p) // 3
+        p += a + b + c
+        n += f * 3
+        t += [base, base + 1, base + 2]
+    return p, n, t
 
 
 def rot_rpy(r, p, y):
-    cr, sr, cp, sp, cy, sy = np.cos(r), np.sin(r), np.cos(p), np.sin(p), np.cos(y), np.sin(y)
-    rx = np.array([[1, 0, 0], [0, cr, -sr], [0, sr, cr]])
-    ry = np.array([[cp, 0, sp], [0, 1, 0], [-sp, 0, cp]])
-    rz = np.array([[cy, -sy, 0], [sy, cy, 0], [0, 0, 1]])
-    return rz @ ry @ rx
+    cr, sr, cp, sp, cy, sy = math.cos(r), math.sin(r), math.cos(p), math.sin(p), math.cos(y), math.sin(y)
+    return [[cy * cp, cy * sp * sr - sy * cr, cy * sp * cr + sy * sr],
+            [sy * cp, sy * sp * sr + cy * cr, sy * sp * cr - cy * sr],
+            [-sp, cp * sr, cp * cr]]
 
 
-def transform(p, n, xyz, rpy):
-    """Apply a rigid transform (fixed-axis rpy, then translate) to points and normals."""
+def transform(positions, normals, xyz, rpy):
+    """Apply a rigid transform (fixed-axis rpy, then translate) to flat point and normal lists."""
     R = rot_rpy(*rpy)
-    return p @ R.T + np.asarray(xyz, float), n @ R.T
+
+    def rot(flat_, add):
+        out = []
+        for k in range(0, len(flat_), 3):
+            x, y, z = flat_[k:k + 3]
+            out += [R[i][0] * x + R[i][1] * y + R[i][2] * z + add[i] for i in range(3)]
+        return out
+
+    return rot(positions, list(xyz)), (rot(normals, [0.0, 0.0, 0.0]) if normals is not None else None)

@@ -1,0 +1,36 @@
+label m42 at 512ec7c 2026-10-11T19:23:10+05:30
+profile balanced AC 1 battery 100% governor powersave load 0.93 0.77 0.64
+node v24.21.0 python Python 3.12.3 driver 580.178.04
+=========================== short test summary info ============================
+FAILED test/test_flake8.py::test_flake8 - AssertionError: Found 3 code style ...
+1 failed, 775 passed in 251.54s (0:04:11)
+--- Testing coco_lab_ros ---
+........................................................................ [ 50%]
+.......................................................................  [100%]
+143 passed, 15 warnings in 22.03s
+--- Testing coco_schemas ---
+........................................................................ [ 96%]
+.......                                                                  [100%]
+223 passed, 3 warnings in 6.82s
+==================================================
+coco_config          ok   93 passed in 0.41s
+coco_sim             ok   323 passed in 1.89s
+coco_mission         ok   371 passed in 9.38s
+coco_web             ok   863 passed, 12 warnings in 21.23s
+gazebo_models        ok   231 passed in 12.56s
+coco_rl              ok   251 passed in 7.98s
+coco_perception      ok   139 passed, 12 warnings in 1.55s
+coco_moveit_config   ok   12 passed in 0.44s
+custom_teleop        ok   75 passed, 12 warnings in 1.38s
+coco_lab             FAIL (pytest exit 1) 1 failed, 775 passed in 251.54s (0:04:11)
+coco_lab_ros         ok   143 passed, 15 warnings in 22.03s
+coco_schemas         ok   223 passed, 3 warnings in 6.82s
+==================================================
+[tests] FAILED: at least one package did not pass
+packages exit=1
+181 passed in 259.68s (0:04:19)
+generated code is current
+ Test Files  39 passed (39)
+      Tests  404 passed (404)
+tools exit=0 vitest exit=0
+web exit=0

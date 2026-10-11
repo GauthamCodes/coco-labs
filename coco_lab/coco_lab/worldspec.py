@@ -43,7 +43,13 @@ from typing import Dict, List, Tuple
 from .maps import FREE, LabMap, OCCUPIED, UNKNOWN
 
 SPEC_VERSION = 'coco.world_spec.v1'
+#: World Spec v2 (M4.2; docs/v2/adr/0007-world-spec-elevation.md): v1's fields
+#: unchanged, plus `elevation`, a list of ramp primitives. A v1 spec's canonical
+#: form, and so every hash made from it, is exactly what it was.
+SPEC_VERSION_V2 = 'coco.world_spec.v2'
+SPEC_VERSIONS = (SPEC_VERSION, SPEC_VERSION_V2)
 BOX_KINDS = ('wall', 'obstacle', 'landmark', 'guard')
+ELEVATION_KINDS = ('wedge', 'platform')
 
 
 class SpecError(ValueError):
@@ -101,14 +107,17 @@ def _sources(d, where):
 
 def normalize(spec: Dict[str, object]) -> Dict[str, object]:
     """Validate ``spec`` and return its canonical form (a new dict)."""
+    version = spec.get('spec_version') if isinstance(spec, dict) else None
+    if version not in SPEC_VERSIONS:
+        raise SpecError(f'spec_version is {version!r}, this reader '
+                        f'knows {SPEC_VERSIONS!r}')
+    v2 = version == SPEC_VERSION_V2
     s = _keys(spec, ('spec_version', 'id', 'title', 'frame', 'world_to_map',
-                     'bounds', 'boxes', 'ramps', 'robot', 'start', 'arena'),
+                     'bounds', 'boxes', 'ramps', 'robot', 'start', 'arena')
+              + (('elevation',) if v2 else ()),
               ('sources', 'notes'), 'spec')
-    if s['spec_version'] != SPEC_VERSION:
-        raise SpecError(f'spec_version is {s["spec_version"]!r}, this reader '
-                        f'knows {SPEC_VERSION!r}')
     out: Dict[str, object] = {
-        'spec_version': SPEC_VERSION,
+        'spec_version': version,
         'id': _str(s['id'], 'id'),
         'title': _str(s['title'], 'title'),
     }
@@ -213,10 +222,46 @@ def normalize(spec: Dict[str, object]) -> Dict[str, object]:
                     'margin': _num(ar['margin'], 'arena.margin', nonneg=True),
                     'dt': _num(ar['dt'], 'arena.dt', positive=True),
                     'unknown': ar['unknown']}
+    if v2:
+        out['elevation'] = _elevation(s['elevation'])
     if 'sources' in s:
         out['sources'] = _sources(s['sources'], 'sources')
     if 'notes' in s:
         out['notes'] = _str(s['notes'], 'notes')
+    return out
+
+
+def _elevation(items) -> List[Dict[str, object]]:
+    """v2's ramp primitives (ADR 0007), in the world frame: wedges and platforms."""
+    if not isinstance(items, list) or not items:
+        raise SpecError('elevation: expected a non-empty list')
+    out, ids = [], set()
+    for i, e in enumerate(items):
+        w = f'elevation[{i}]'
+        if not isinstance(e, dict) or e.get('kind') not in ELEVATION_KINDS:
+            raise SpecError(f'{w}.kind: expected one of {ELEVATION_KINDS}')
+        if e['kind'] == 'wedge':
+            # a right triangular prism: its foot edge at `foot` (a point on the edge's
+            # midline), rising along `yaw` over `run` to `rise`, `width` across
+            _keys(e, ('id', 'kind', 'foot', 'yaw', 'run', 'rise', 'width'), (), w)
+            item = {'id': _str(e['id'], f'{w}.id'), 'kind': 'wedge',
+                    'foot': _vec(e['foot'], 2, f'{w}.foot'),
+                    'yaw': _num(e['yaw'], f'{w}.yaw'),
+                    'run': _num(e['run'], f'{w}.run', positive=True),
+                    'rise': _num(e['rise'], f'{w}.rise', positive=True),
+                    'width': _num(e['width'], f'{w}.width', positive=True)}
+        else:
+            # a flat-topped box standing on the ground, axis-aligned: its top is size[2]
+            _keys(e, ('id', 'kind', 'center', 'size'), (), w)
+            size = _vec(e['size'], 3, f'{w}.size')
+            if min(size) <= 0:
+                raise SpecError(f'{w}.size: must be > 0, got {size}')
+            item = {'id': _str(e['id'], f'{w}.id'), 'kind': 'platform',
+                    'center': _vec(e['center'], 2, f'{w}.center'), 'size': size}
+        if item['id'] in ids:
+            raise SpecError(f'{w}.id: {item["id"]!r} used twice')
+        ids.add(item['id'])
+        out.append(item)
     return out
 
 

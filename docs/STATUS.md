@@ -17,7 +17,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M3 | **Closed 2026-10-11 — agent-measurable criteria**: independent review [`v2/reviews/M3_REVIEW.md`](v2/reviews/M3_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: D6, Case File scans after the first frame, which took the first frame on emulated 4G from 97 / 100 to **100 / 100 within 2 s**); the outstanding re-measurement completed on AC, every M2 budget met; PR #22 merged into `main` **quietly** as **`bf7443f`** (merge commit, owner's one-off permission, branch kept, no release, tag or announcement); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search, the four modes 23 / 23 pages, 5 / 5 Case Files, 5 / 5 challenge links reproduced, all 22 v1 URL forms and `/v1/`'s six views, 0 console errors ([`v2/data/m3/exit/public_after_merge.json`](v2/data/m3/exit/public_after_merge.json)) |
 | Branch | `v2/m4-3d-arena` (from `main` = `bf7443f`), worked in the worktree `.claude/worktrees/v2-m4-3d-arena` |
 | Milestone | **M4 · 3D Arena** ([`v2/M4_PROMPT.md`](v2/M4_PROMPT.md)) — the content of the public v2.0 launch, which Gautham publishes after M4 merges and his rows pass |
-| Checkpoint | **M4.1 feasibility gate** done (see "M4 checkpoint log"); next M4.2 |
+| Checkpoint | **M4.2 asset pipeline** done (see "M4 checkpoint log"); next M4.3 |
 | Merge to `main` | M4 opens a PR; it is **not** merged by the agent (the merge permission covered PR #22 only) |
 | Pending Gautham | **The phone baseline, now**, on the live site ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md), [`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)); **the M4 feasibility gate on the phone** ([`v2/PHONE_GATE_M4.md`](v2/PHONE_GATE_M4.md); preview via `lab_web/tools/preview_phone.sh`) and M4's phone rows; **the consolidated five-person usability test at the end of M4** (decision D5; it replaces M1–M3's usability tests). M1–M3's phone rows are covered by the phone baseline and M4's gate. Never marked done by the agent |
 
@@ -1615,6 +1615,41 @@ only. Read order for agents (README §9): `README.md`, this file,
     M4.2's pipeline removes both before the PR.
   - **Next:** M4.2, the asset pipeline (ADR 0006), the manifest, size budgets in
     CI, World Spec v2 (ADR 0007 drafted) and the agreement check.
+- **M4.2 asset pipeline (2026-10-11).**
+  - **Pipeline** ([ADR 0006](v2/adr/0006-asset-pipeline.md)): standard-library
+    Python converters (`convert_world.py`, `convert_robot.py` from the committed
+    expanded `coco_robo2.urdf`, which records the xacro's sha256) write
+    full-resolution sources; `compress.mjs` (meshoptimizer 1.2.0, the one new,
+    pinned dev dependency) shares each level's triangle budget by water-filling,
+    simplifies, computes 40° crease normals and writes `EXT_meshopt_compression`;
+    `build_assets.mjs` writes the manifest and `--check` regenerates byte for
+    byte. `@gltf-transform` was tried and removed: it pulled `sharp` and 30
+    libvips builds for textures we do not have. No textures, so no KTX2 (the
+    ADR says when it would join). The page decodes with three's `MeshoptDecoder`.
+  - **Measured:** `arena.glb` 27,640 B (964 triangles), `robot_high.glb` 540,152 B
+    (20,000), `robot_low.glb` 143,892 B (4,412). **First scene 567,792 B desktop,
+    171,532 B phone** (budget 5 MB); robot 540,152 B (budget 1.5 MB). Manifest:
+    `lab_web/public/assets3d/manifest.json`, [`v2/ASSETS.md`](v2/ASSETS.md) — every
+    file's sources (sha256), licence (Gautham's own work, Apache-2.0; no
+    third-party assets), checksum, size.
+  - **World Spec v2** ([ADR 0007](v2/adr/0007-world-spec-elevation.md)):
+    `worlds/coco_arena_v2.yaml` = v1 + `elevation` (8 wedges, 4 platforms, derived
+    from v1's `ramps`); `worldspec.normalize` reads v1 and v2; v1's files and
+    canonical bytes unchanged (its generator's `--check` passes).
+  - **In CI:** `lab_web/tools/test_worldspec_sdf.py` — v1's 70 boxes and v2's 12
+    primitives against the converted recorded SDF within 1 mm (a 2 mm change to a
+    box or a wedge is caught); `test_assets3d.py` (budgets, licences, sources,
+    compression, joints; no numpy, no ROS, no skips); `test/assets3d.test.ts`
+    (byte-for-byte regeneration). M4.1's CI blockers are gone.
+  - **Tests at the checkpoint's end** (AC): packages **3,500 / 0 / 0** (coco_lab
+    776: +2 World Spec cases; the first full run caught three over-long lines in
+    `worldspec.py`, fixed, and `coco_lab` re-run alone), build tools **181 / 0 / 0**
+    (+6), vitest **404 / 0 / 0** (+1) (`v2/data/m4/m42/`).
+  - Screenshots awaiting review: none new (the compressed assets render as the
+    M4.1 references).
+  - **Next:** M4.3, the Arena model: kinematic terrain following on v2, contact
+    events, teleop preemption with the command source, the gated grasp, reset
+    home, additive schema fields; flat-scene hashes byte-identical.
 
 ## Capabilities (README §2), with evidence class
 

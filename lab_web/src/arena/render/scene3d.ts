@@ -19,6 +19,7 @@
 
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 
 export type CameraMode = 'topdown' | 'follow' | 'orbit' | 'robot_eye';
 export const CAMERA_MODES: CameraMode[] = ['follow', 'orbit', 'robot_eye', 'topdown'];
@@ -66,7 +67,8 @@ export class Scene3D {
   }
 
   async load(urls: Scene3DAssets) {
-    const loader = new GLTFLoader();
+    // the assets are meshopt-compressed (EXT_meshopt_compression; ADR 0006)
+    const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     const [arena, robot] = await Promise.all([loader.loadAsync(urls.arena), loader.loadAsync(urls.robot)]);
     const zUp = (o: THREE.Object3D) => { const g = new THREE.Group(); g.rotation.x = Math.PI / 2; g.add(o); return g; };
     const a = zUp(arena.scene);

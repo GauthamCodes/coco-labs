@@ -1,21 +1,23 @@
 # Copyright 2026 Gautham Anil
 # SPDX-License-Identifier: Apache-2.0
 """
-A small, deterministic glTF 2.0 binary (GLB) writer (M4.1).
+A small, deterministic glTF 2.0 binary (GLB) writer (M4.1, M4.2). Standard
+library only, so it runs wherever the site's tools do (CI has no numpy).
 
-Only what COCO's converted assets need: triangle meshes (POSITION, NORMAL,
-uint32 or uint16 indices), metallic-roughness materials with a base colour,
+Only what COCO's converted assets need: triangle meshes (POSITION, optional
+NORMAL, uint32 indices), metallic-roughness materials with a base colour,
 and a node hierarchy with translation / rotation (quaternion xyzw) and
-`extras`. No timestamps or random ids: the same input gives the same bytes,
-so an asset's checksum is a property of its source.
+`extras`. No timestamps or random ids: the same input gives the same bytes.
+These are the SOURCE files of the pipeline (ADR 0006); compress.mjs turns
+them into what the site serves.
 """
 
 import json
+import math
 import struct
+from array import array
 
-import numpy as np
-
-FLOAT, UINT16, UINT32 = 5126, 5123, 5125
+FLOAT, UINT32 = 5126, 5125
 ARRAY_BUFFER, ELEMENT_ARRAY_BUFFER = 34962, 34963
 
 
@@ -34,35 +36,40 @@ class GLB:
         self.bin.extend(data)
         return len(self.j['bufferViews']) - 1
 
-    def _accessor(self, arr: np.ndarray, kind: str, target, minmax=False):
-        ctype = {np.dtype('float32'): FLOAT, np.dtype('uint16'): UINT16, np.dtype('uint32'): UINT32}[arr.dtype]
-        acc = {'bufferView': self._view(np.ascontiguousarray(arr).tobytes(), target), 'componentType': ctype,
-               'count': int(arr.shape[0]), 'type': kind}
-        if minmax:
-            acc['min'] = [float(v) for v in arr.min(axis=0)]
-            acc['max'] = [float(v) for v in arr.max(axis=0)]
+    def _vec3(self, flat):
+        a = array('f', flat)
+        acc = {'bufferView': self._view(a.tobytes(), ARRAY_BUFFER), 'componentType': FLOAT,
+               'count': len(a) // 3, 'type': 'VEC3'}
         self.j['accessors'].append(acc)
-        return len(self.j['accessors']) - 1
+        return acc, len(self.j['accessors']) - 1
 
     def material(self, name, rgba, metallic=0.0, roughness=0.85):
-        key = (name, tuple(round(float(c), 4) for c in rgba), metallic, roughness)
+        rgba = [round(float(c), 4) for c in rgba]
+        key = (name, tuple(rgba), metallic, roughness)
         if key in self._materials:
             return self._materials[key]
         self.j['materials'].append({'name': name, 'pbrMetallicRoughness': {
-            'baseColorFactor': [round(float(c), 4) for c in rgba], 'metallicFactor': metallic, 'roughnessFactor': roughness}})
+            'baseColorFactor': rgba, 'metallicFactor': metallic, 'roughnessFactor': roughness}})
         self._materials[key] = len(self.j['materials']) - 1
         return self._materials[key]
 
-    def mesh(self, name, positions, normals, indices, material):
-        """One triangle primitive. positions, normals: (N, 3); indices: (M,) or (M/3, 3)."""
-        p = np.asarray(positions, np.float32).reshape(-1, 3)
-        n = np.asarray(normals, np.float32).reshape(-1, 3)
-        i = np.asarray(indices).reshape(-1)
-        i = i.astype(np.uint16 if p.shape[0] < 65536 else np.uint32)
-        prim = {'attributes': {'POSITION': self._accessor(p, 'VEC3', ARRAY_BUFFER, minmax=True),
-                               'NORMAL': self._accessor(n, 'VEC3', ARRAY_BUFFER)},
-                'indices': self._accessor(i, 'SCALAR', ELEMENT_ARRAY_BUFFER), 'material': material, 'mode': 4}
-        self.j['meshes'].append({'name': name, 'primitives': [prim]})
+    def mesh(self, name, positions, indices, material, normals=None, extras=None):
+        """One triangle primitive. positions (and normals): flat [x, y, z, ...]; indices: flat."""
+        acc, pi = self._vec3(positions)
+        p = array('f', positions)
+        acc['min'] = [min(p[k::3]) for k in range(3)]
+        acc['max'] = [max(p[k::3]) for k in range(3)]
+        attrs = {'POSITION': pi}
+        if normals is not None:
+            attrs['NORMAL'] = self._vec3(normals)[1]
+        ia = array('I', indices)
+        self.j['accessors'].append({'bufferView': self._view(ia.tobytes(), ELEMENT_ARRAY_BUFFER),
+                                    'componentType': UINT32, 'count': len(ia), 'type': 'SCALAR'})
+        prim = {'attributes': attrs, 'indices': len(self.j['accessors']) - 1, 'material': material, 'mode': 4}
+        m = {'name': name, 'primitives': [prim]}
+        if extras:
+            m['extras'] = extras
+        self.j['meshes'].append(m)
         return len(self.j['meshes']) - 1
 
     def node(self, name, mesh=None, translation=None, rotation=None, children=(), extras=None, root=False):
@@ -96,18 +103,11 @@ class GLB:
         return (struct.pack('<4sII', b'glTF', 2, total) + struct.pack('<I4s', len(js), b'JSON') + js
                 + struct.pack('<I4s', len(self.bin), b'BIN\x00') + bytes(self.bin))
 
-    def triangles(self) -> int:
-        n = 0
-        for m in self.j['meshes']:
-            for p in m['primitives']:
-                n += self.j['accessors'][p['indices']]['count'] // 3
-        return n
-
 
 def rpy_to_quat(r, p, y):
     """URDF / SDF fixed-axis roll-pitch-yaw to a quaternion (x, y, z, w)."""
-    cr, sr = np.cos(r / 2), np.sin(r / 2)
-    cp, sp = np.cos(p / 2), np.sin(p / 2)
-    cy, sy = np.cos(y / 2), np.sin(y / 2)
+    cr, sr = math.cos(r / 2), math.sin(r / 2)
+    cp, sp = math.cos(p / 2), math.sin(p / 2)
+    cy, sy = math.cos(y / 2), math.sin(y / 2)
     return [sr * cp * cy - cr * sp * sy, cr * sp * cy + sr * cp * sy,
             cr * cp * sy - sr * sp * cy, cr * cp * cy + sr * sp * sy]

@@ -1,4 +1,4 @@
-# World Spec v1 (`coco.world_spec.v1`)
+# World Spec v1 and v2 (`coco.world_spec.v1`, `.v2`)
 
 One versioned YAML describes a world and its robot (README §5.1); every
 simulator tier is generated from it. M1.2 builds the spec, its validator
@@ -101,3 +101,32 @@ carry yet, recorded so nothing is assumed: materials, lights, physics and
 plugin settings (the generator keeps `coco_world.world`'s), and the target
 cylinders (episode-specific; `coco_sim`'s EpisodeSpec owns them). Building
 the generator, and switching the Stack to it, is outside M1 (README §6).
+
+## World Spec v2 (`coco.world_spec.v2`, M4.2): elevation
+
+[ADR 0007](adr/0007-world-spec-elevation.md). v2 is v1's fields, unchanged,
+plus one required block, `elevation`: the ramp primitives the Arena's
+kinematic terrain following reads (M4.3), in the world frame.
+
+```yaml
+elevation:
+  - {id: bay1_up, kind: wedge, foot: [x, y], yaw: 0, run: 2, rise: 0.6498, width: 2.5}
+  - {id: bay1_platform, kind: platform, center: [x, y], size: [1.2, 2.5, 0.6498]}
+  - {id: bay1_down, kind: wedge, foot: [x, y], yaw: 3.1416, run: 2, rise: 0.6498, width: 2.5}
+```
+
+- **wedge:** a right triangular prism; its foot edge's midpoint is `foot`;
+  it rises along `yaw` over `run` to `rise`, `width` across.
+- **platform:** a flat-topped box standing on the ground, axis-aligned, its
+  top at `size[2]`.
+
+| What | Where |
+|---|---|
+| The arena, v2 | [`worlds/coco_arena_v2.yaml`](../../worlds/coco_arena_v2.yaml) and its canonical JSON |
+| How it is made | [`worlds/tools/make_coco_arena_v2.py`](../../worlds/tools/make_coco_arena_v2.py) (`--check`): v1 plus `elevation`, derived from v1's own `ramps` |
+| Reader | `coco_lab.worldspec.normalize` reads v1 and v2; a v1 spec's canonical form is unchanged |
+| Agreement with the recorded Gazebo world, in CI | [`lab_web/tools/test_worldspec_sdf.py`](../../lab_web/tools/test_worldspec_sdf.py): v1's 70 boxes and v2's 8 wedges and 4 platforms against the converted SDF (`lab_web/public/assets3d/arena.json`), within 1 mm |
+
+**Flat scenes keep v1.** Every M1–M3 session, golden trace, Play level and
+link names the v1 spec and its hash; terrain sessions name v2. The SDF is
+the reference: on a disagreement the World Spec is fixed, never the SDF.
