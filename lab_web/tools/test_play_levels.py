@@ -68,6 +68,54 @@ def test_a_reference_drive_scores_exactly_its_reference_and_its_stars():
         assert r['stars'] == stars
 
 
+def _as_javascript_would(x):
+    # JSON.parse(JSON.stringify(x)): 2.0 and 2 are one number in JavaScript, written 2
+    if isinstance(x, float) and x.is_integer():
+        return int(x)
+    if isinstance(x, dict):
+        return {k: _as_javascript_would(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [_as_javascript_would(v) for v in x]
+    return x
+
+
+def _a_valid_input(cid, lv):
+    if cid == 'beat-the-planner':
+        return play.view(LEVELS, cid, lv['id'])['optimal_path']
+    if cid == 'next-node':
+        return [f['expanded'] for f in play.next_node_frames(lv)]
+    if cid == 'search-the-bays':
+        return lv['reference']['optimal_order']
+    if cid == 'case-file-detective':
+        return [lv['moment']['tick']]
+    d = lv['drives']['out_and_back']
+    return {'ticks': d['ticks'], 'log': d['inputs']}
+
+
+def test_every_float_that_reaches_a_hash_survives_javascript():
+    # M3 review (A.2.6). The page hands levels, the World Spec and inputs to the
+    # worker through JavaScript. Every hash a link or `coco verify` compares is
+    # checked here after that round trip: all 16 level hashes, the World Spec
+    # hash a map level names, and one result hash per challenge.
+    js_levels = _as_javascript_would(LEVELS)
+    assert json.dumps(js_levels, sort_keys=True) != json.dumps(LEVELS, sort_keys=True)
+    n = 0
+    for cid, c in LEVELS['challenges'].items():
+        for lv, jv in zip(c['levels'], js_levels['challenges'][cid]['levels']):
+            assert play.level_hash(jv) == play.level_hash(lv), (cid, lv['id'])
+            n += 1
+    assert n == 16
+    js_spec = _as_javascript_would(SPEC)
+    assert json.dumps(js_spec, sort_keys=True) != json.dumps(SPEC, sort_keys=True)
+    assert play._spec_hash(js_spec) == play._spec_hash(SPEC) == MAP[0]['spec']
+    for cid, c in LEVELS['challenges'].items():
+        lv = c['levels'][-1]
+        sub = _sub(cid, lv, _a_valid_input(cid, lv))
+        here = play.score(LEVELS, sub, SPEC)
+        assert here['valid'], (cid, here['why'])
+        assert play.score(js_levels, _as_javascript_would(sub), js_spec) == here, cid
+
+
 def test_inputs_after_the_budget_is_spent_change_nothing():
     lv = MAP[1]
     d = lv['drives']['tour']
