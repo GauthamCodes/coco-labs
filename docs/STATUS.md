@@ -1519,6 +1519,31 @@ only. Read order for agents (README §9): `README.md`, this file,
     100 / 100 and 18 / 18 references on GitHub's runner.
   - **Next:** a pull request into `main`, not merged.
 
+- **M3 review and D6 (2026-10-11, `[M3-fix]` commits).** An independent
+  session reviewed PR #22 from a fresh clone at `7052aa8`:
+  [`v2/reviews/M3_REVIEW.md`](v2/reviews/M3_REVIEW.md), evidence
+  `v2/data/m3/review/`. **Recommendation: MERGE AFTER FIXES, every fix
+  done.**
+  - **Verified:** the diff (0 deleted), RESULTS.md append-only, suites
+    3,498 / 396 / 168, CI, 100 Case Files and **73 / 73** cited checksums
+    recomputed, the CI evidence check, mission 7's derived ticks, 7 / 7
+    thresholds recomputed independently, luck-free scoring, 25 links ×
+    3 browsers + `coco verify`, the storage guard, 22 / 22 old URLs + `/v1/`,
+    the badge in every mode.
+  - **Corrected:** CPython–Pyodide ATE differs by up to 1.55e-7 m on the
+    reference drives (not 1.3e-8 m); the detective's stars are stated
+    bands; mission 4 now shows the pose graph's long-tour result as
+    UNRESOLVED; a test for every float that reaches a hash.
+  - **D6 (owner's decision):** Case Files load their first frame before
+    their scans. Two lossless layouts measured; **ordered** chosen (ADR 0005
+    amended). **First frame on emulated 4G: 100 / 100 within 2 s**, worst
+    1,828 ms (was 3,244 ms).
+  - **Re-measured on AC (n ≥ 10):** M1 stress 60–61 fps; goal after a
+    planner change median 48.9 ms, max 67.7; seek max 35.1 ms; 4G cold
+    start 3,140 ms to computation, 7,997 ms to the live model. Every M2
+    budget met.
+  - **Next:** the quiet merge of PR #22 (A.6), then M4.
+
 ## Capabilities (README §2), with evidence class
 
 Classes as README §3 defines them: MODEL, STACK, REMOTE, HARDWARE (none

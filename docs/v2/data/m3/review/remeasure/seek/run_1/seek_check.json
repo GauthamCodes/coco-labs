@@ -1,0 +1,158 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-11T10:16:06.660Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 40
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.98,
+    "5m": 1.34,
+    "15m": 1.01
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-11T10:17:56.774Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 45
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.72,
+    "5m": 1.49,
+    "15m": 1.1
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4224/coco-labs/",
+ "ticks_wanted": 3000,
+ "cfg": [
+  "arena.range_sigma=0.02",
+  "localise.filter=mcl",
+  "map.algorithm=occupancy",
+  "map.poses=belief",
+  "move.controller=dwa",
+  "mission.start=red"
+ ],
+ "errors": [],
+ "record_wall_s": 108.487,
+ "fetches": [
+  {
+   "colour": "red",
+   "started_tick": 0,
+   "ended": {
+    "tick": 1684,
+    "state": "done"
+   }
+  },
+  {
+   "colour": "green",
+   "started_tick": 1684,
+   "ended": {
+    "tick": 2821,
+    "state": "done"
+   }
+  },
+  {
+   "colour": "blue",
+   "started_tick": 2821
+  }
+ ],
+ "recorded": {
+  "latest_tick": 3014,
+  "family_batches": {
+   "coco.decide.search.belief.v1": 10,
+   "coco.mission.fsm.transition.v1": 37,
+   "coco.localise.particles.set.v1": 386,
+   "coco.localise.particles.update.v1": 386,
+   "coco.estimate.pose.v1": 1158,
+   "coco.metrics.values.v1": 3299,
+   "coco.decide.search.orders.v1": 8,
+   "coco.decide.search.action.v1": 8,
+   "coco.control.local.candidates.v1": 2558,
+   "coco.control.local.command.v1": 2558,
+   "coco.map.grid.snapshot.v1": 97,
+   "coco.sensor.detect.colour.v1": 7,
+   "coco.decide.search.observation.v1": 7,
+   "coco.arm.state.v1": 120
+  }
+ },
+ "seeks": [
+  {
+   "to": 1507,
+   "call_ms": 0.19999999552965164,
+   "to_frame_ms": 34.899999998509884,
+   "view_tick": 1507
+  },
+  {
+   "to": 150,
+   "call_ms": 0,
+   "to_frame_ms": 29.600000001490116,
+   "view_tick": 150
+  },
+  {
+   "to": 2863,
+   "call_ms": 0,
+   "to_frame_ms": 29.899999998509884,
+   "view_tick": 2863
+  },
+  {
+   "to": 753,
+   "call_ms": 0,
+   "to_frame_ms": 29.80000000447035,
+   "view_tick": 753
+  },
+  {
+   "to": 2260,
+   "call_ms": 0.10000000149011612,
+   "to_frame_ms": 33.399999998509884,
+   "view_tick": 2260
+  },
+  {
+   "to": 301,
+   "call_ms": 0,
+   "to_frame_ms": 31.299999997019768,
+   "view_tick": 301
+  },
+  {
+   "to": 2712,
+   "call_ms": 0,
+   "to_frame_ms": 34.20000000298023,
+   "view_tick": 2712
+  },
+  {
+   "to": 994,
+   "call_ms": 0,
+   "to_frame_ms": 25,
+   "view_tick": 994
+  },
+  {
+   "to": 1989,
+   "call_ms": 0,
+   "to_frame_ms": 31.899999998509884,
+   "view_tick": 1989
+  },
+  {
+   "to": 1,
+   "call_ms": 0,
+   "to_frame_ms": 33.099999994039536,
+   "view_tick": 1
+  }
+ ],
+ "call_ms_max": 0.19999999552965164,
+ "to_frame_ms_max": 34.899999998509884,
+ "ok": true
+}

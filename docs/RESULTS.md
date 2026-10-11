@@ -9212,3 +9212,64 @@ NVIDIA 580.178.04.
 | Regressions | **partly re-measured: AC was lost mid-run.** The M2 fps scene, 8 × 20 s on AC: 58–61 fps every second, per-second p95 median 18.5 ms. 16 / 16 replays; 22 / 22 URL forms. M1 stress, latency, seek and cold start not yet re-measured on AC |
 | Hygiene | **met**: 0 errors on 21 views; 390 px 23 / 23; suites 3,498 / 396 / 168, none failing |
 | Phone, usability | pending Gautham |
+
+## COCO Lab v2 · M3 review: the outstanding re-measurement, and D6 (measured 2026-10-11)
+
+**Evidence class.** MODEL (the Arena, the browser); the Case Files are
+STACK recordings. Independent review of PR #22 (`docs/v2/reviews/M3_REVIEW.md`).
+Laptop i5-13420H, RTX 4050 laptop GPU, NVIDIA 580.178.04 (kernel module and
+userspace); headless Chromium 156 rendering on
+`ANGLE (NVIDIA … RTX 4050 Laptop GPU …, OpenGL ES 3.2)` (probed at the
+start and end); balanced profile, **on AC** for every number below (each
+harness records it). Evidence: `docs/v2/data/m3/review/`.
+
+**The four M2 budgets M3.9 could not re-measure** (the review clone's
+production build of `7052aa8`, served like Pages):
+
+| Budget | n | Result | M2 review (for comparison) |
+|---|---|---|---|
+| M1 stress scene, fps | 10 × 10 s | **60–61 fps in every one of 100 s** (minimum 60) | 60–61 |
+| Goal after a planner change | 25 | median **48.9 ms**, p95 63.9, max **67.7**, 25 / 25 under 100 ms | median 40.3, max 66.8 |
+| Seek on the 5-minute fetch recording | 3 recordings × 10 seeks | max **35.1 ms** to the frame that shows it | max 35.4 |
+| Cold start, emulated 4G | 10 | first visible computation median **3,140 ms** (2,984–3,253); live model ready median **7,997 ms** (7,818–8,148) | 3,201; 8,062 |
+
+The goal-latency harness first timed out: M3.7's taller page scrolled the
+canvas out of the harness's coordinates when a planner button was clicked.
+Harness fixed (`responsiveness.mjs` scrolls the canvas into view); the
+product was not at fault. In the three seek recordings (3,000 ticks each)
+the fetch outcomes were red done, green done, blue under way at the end;
+the same twice more except that one red fetch **failed** — so even after
+M3.0's reset-home the fetch sequence is not one fixed outcome.
+
+M3.9's waiter (`m39_when_ac.sh`) never re-ran: it was stopped by the review
+before AC returned, so there is no second set to compare; its earlier
+partial (8 runs of the M2 scene, 58–61 fps) is in M3_RESULTS.
+
+**D6: Case File scans after the first frame** (ADR 0005, amendment D6).
+Two lossless layouts, 12 Case Files, emulated 4G (9 Mbit/s, 1.5 up,
+170 ms), three interleaved rounds each, medians per file:
+
+| | M3 one file | Split (two files) | Ordered (one file, scans last; chosen) |
+|---|---|---|---|
+| First frame, worst | 3,240 ms | 1,907 ms | **1,805 ms** |
+| First frame, median | 1,225 ms | 915 ms | **884 ms** |
+| Scans ready, worst | — | 3,229 ms | 3,008 ms |
+| All 100, bytes | 41,486,529 | 41,351,787 | **41,230,918** |
+
+Per file, split was faster on both Lab 3 tours (about 1,040 vs 1,104 ms)
+and on Lab 5's MPPI static room (716 vs 840 ms); ordered on the worst file
+and the Lab 2 kidnaps.
+
+**All 100 Case Files, ordered build, emulated 4G:** first frame **100 /
+100 within 2 s**, worst **1,828 ms** (robot_localization tour; 3,244 ms at
+M3.9), median 745 ms, p90 905 ms; scans attached by 3,013 ms at worst (80
+have scans); seek ≤ 35.2 ms; 0 console errors. Unthrottled: worst 220 ms.
+Every Case File's content digest equals M3's (`lab_web/casefiles/lossless.json`,
+checked in CI).
+
+**Also measured in the review:** CPython and Pyodide differ by up to
+**1.55e-7 m** in ATE (and 1.0e-6 m in distance) on the map challenge's
+reference drives — Forty metres' tour, whose ATE is the three-star
+threshold — against 1.3e-8 m over the 20 submitted drives M3.6 reported;
+F1 and the scored tick identical, stars 24 / 24 equal
+(`review/map_engines.json`).

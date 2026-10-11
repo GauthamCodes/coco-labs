@@ -1,0 +1,25 @@
+label review at 7052aa8 2026-10-11T14:01:44+05:30
+profile balanced AC 1 battery 27% governor powersave load 0.90 1.00 1.18
+node v24.21.0 python Python 3.12.3 driver 580.178.04
+==================================================
+coco_config          ok   93 passed in 0.44s
+coco_sim             ok   323 passed in 1.95s
+coco_mission         ok   371 passed in 9.35s
+coco_web             ok   863 passed, 12 warnings in 21.34s
+gazebo_models        ok   231 passed in 12.23s
+coco_rl              ok   251 passed in 8.35s
+coco_perception      ok   139 passed, 12 warnings in 2.01s
+coco_moveit_config   ok   5 passed, 7 skipped in 0.15s
+custom_teleop        ok   75 passed, 12 warnings in 1.59s
+coco_lab             ok   774 passed in 278.37s (0:04:38)
+coco_lab_ros         ok   143 passed, 15 warnings in 20.66s
+coco_schemas         ok   223 passed, 3 warnings in 6.40s
+==================================================
+[tests] all 12 packages passed
+packages exit=0
+168 passed in 247.17s (0:04:07)
+generated code is current
+ Test Files  37 passed (37)
+      Tests  396 passed (396)
+tools exit=0 vitest exit=0
+web exit=0

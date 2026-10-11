@@ -1,0 +1,57 @@
+{
+ "ok": 7,
+ "total": 7,
+ "levels": {
+  "beat/two-fields": {
+   "optimal_mine": 14.071067812,
+   "optimal_ref": 14.071067812,
+   "match": true
+  },
+  "beat/bog": {
+   "optimal_mine": 14.828427125,
+   "optimal_ref": 14.828427125,
+   "match": true
+  },
+  "beat/mud-field": {
+   "optimal_mine": 15.828427125,
+   "optimal_ref": 15.828427125,
+   "match": true
+  },
+  "bays/no-idea": {
+   "optimal_mine": 30.448354875,
+   "optimal_ref": 30.448354875,
+   "nearest_mine": 1.012607941,
+   "nearest_ref": 1.012607941,
+   "most_likely_mine": 1.059645553,
+   "most_likely_ref": 1.059645553,
+   "match": true
+  },
+  "bays/far-end": {
+   "optimal_mine": 25.991061405,
+   "optimal_ref": 25.991061405,
+   "nearest_mine": 1.289281738,
+   "nearest_ref": 1.289281738,
+   "most_likely_mine": 1.112369855,
+   "most_likely_ref": 1.112369855,
+   "match": true
+  },
+  "bays/ends": {
+   "optimal_mine": 28.446471695,
+   "optimal_ref": 28.446471695,
+   "nearest_mine": 1.434442926,
+   "nearest_ref": 1.434442926,
+   "most_likely_mine": 1.027942091,
+   "most_likely_ref": 1.027942091,
+   "match": true
+  },
+  "bays/poor-camera": {
+   "optimal_mine": 31.27676838,
+   "optimal_ref": 31.27676838,
+   "nearest_mine": 1.050613042,
+   "nearest_ref": 1.050613042,
+   "most_likely_mine": 1.102434376,
+   "most_likely_ref": 1.102434376,
+   "match": true
+  }
+ }
+}
