@@ -1,0 +1,134 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-11T07:14:21.481Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.91,
+    "5m": 1.35,
+    "15m": 1.4
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-11T07:15:16.591Z",
+   "power_profile": "balanced",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 99
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.05,
+    "5m": 1.73,
+    "15m": 1.53
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ },
+ "site": "http://127.0.0.1:4214/coco-labs/",
+ "gl_mode": "gpu",
+ "flags": [
+  "--use-angle=gl-egl",
+  "--ignore-gpu-blocklist",
+  "--enable-gpu"
+ ],
+ "browser": "156.0.8078.4",
+ "scene": "m2",
+ "load": {
+  "particles": 2000,
+  "rollouts": 1000,
+  "steps": 56,
+  "grid": "full world",
+  "rebuilt_hz": 10,
+  "cfg": [
+   "arena.range_sigma=0.02",
+   "localise.filter=mcl",
+   "map.algorithm=occupancy",
+   "map.poses=belief",
+   "move.controller=dwa",
+   "mission.start=red"
+  ]
+ },
+ "renderer": {
+  "vendor": "Google Inc. (NVIDIA Corporation)",
+  "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"
+ },
+ "renderer_error": null,
+ "layers_drawn": [
+  "built_map",
+  "stress_grid",
+  "bays",
+  "belief",
+  "chosen_bay",
+  "detection",
+  "particles",
+  "estimate",
+  "covariance",
+  "odometry",
+  "slam_pose",
+  "candidates",
+  "chosen",
+  "local_window",
+  "stress_particles",
+  "stress_rollouts"
+ ],
+ "fps_per_second": [
+  61,
+  59,
+  39,
+  33,
+  59,
+  57,
+  57,
+  60,
+  60,
+  57,
+  55,
+  58,
+  50,
+  45,
+  55,
+  55,
+  52,
+  53,
+  51,
+  50
+ ],
+ "fps_median": 55,
+ "fps_min": 33,
+ "frame_ms_p95_per_second": [
+  21.5,
+  22.7,
+  94.9,
+  78.1,
+  25,
+  38.1,
+  30.3,
+  27.9,
+  30.6,
+  27.1,
+  37,
+  32.2,
+  47.1,
+  63.9,
+  41.7,
+  31.5,
+  45.7,
+  36.5,
+  39.8,
+  31
+ ],
+ "console_errors": []
+}

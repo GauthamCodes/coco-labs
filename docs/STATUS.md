@@ -16,7 +16,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
 | Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
 | Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
-| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.8 done** (drafts: release notes, demo script, usability and phone guides; nothing published). Next: **M3.9**, measure and open the PR |
+| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.9 measured** (B.3: 4 met; Case File first frame 97/100 within 2 s on 4G; the regression re-measure is partial, AC lost). PR open, not merged. Next: AC re-measure; Gautham's phone and usability rows; an independent M3 review |
 | Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
 | Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
 
@@ -1501,6 +1501,22 @@ only. Read order for agents (README §9): `README.md`, this file,
     Case File load and seek, Play's scorer and tapping, and the four modes
     at phone width. The pass row stays the 10 s cold start.
   - **Next:** M3.9, measure the B.3 budgets and open the PR.
+
+- **M3.9, measure and decide (2026-10-11).** [`v2/M3_RESULTS.md`](v2/M3_RESULTS.md).
+  - **Met:** Evidence, Adapter, Reproducibility, Hygiene.
+  - **Case File loading on emulated 4G:** seek met (max 43.3 ms) and storage
+    met. **First frame ≤ 2 s met for 97 of 100, missed for 3**, the long
+    tours: 2,362, 2,371 and 3,244 ms. It is transfer-bound. The lossless
+    fix, loading scans after the first frame, changes ADR 0005's format:
+    **a question for Gautham** (`IDEAS.md`).
+  - **Regressions partly re-measured:** the laptop lost AC at 12:45 during
+    the run. 8 fps runs on AC: 58–61 fps on the M2 scene. 16 / 16 replays;
+    22 / 22 forms. **M1 stress, latency, seek and cold start are still to
+    be re-measured on AC:** `~/coco_lab_m3_ws/bin/m39_remeasure.sh`, then
+    append the results.
+  - **CI:** green on `27e1b8a` (run 38121419092), with `coco verify`
+    100 / 100 and 18 / 18 references on GitHub's runner.
+  - **Next:** a pull request into `main`, not merged.
 
 ## Capabilities (README §2), with evidence class
 

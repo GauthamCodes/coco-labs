@@ -9195,3 +9195,20 @@ errors.
 
 The 390 px checks measure layout, not a phone. The phone rows are Gautham's
 (`docs/v2/PHONE_MEASURE.md`).
+
+## COCO Lab v2 · M3: Play and Case Files against their acceptance criteria (measured 2026-10-11)
+
+**Evidence class.** MODEL unless marked STACK; no physical robot exists.
+Full table, conditions and files: `docs/v2/M3_RESULTS.md`; data under
+`docs/v2/data/m3/`. Balanced profile, on AC; i5-13420H, RTX 4050,
+NVIDIA 580.178.04.
+
+| Criterion (M3 B.3) | Result |
+|---|---|
+| Evidence | **met** (the CI checks cover Case Files and mission 7; CI run 38121419092 green) |
+| Adapter | **met** (73 / 73 cited checksums; every Case File cites its sources) |
+| Reproducibility | **met**: 100 / 100 links reproduce exactly in each of Chromium 156, Firefox 157 and WebKit 27.2; `coco verify` 100 / 100 in Node and again on CI |
+| Case File loading, emulated 4G | storage met (41.5 MB in all, at most 2.78 MB each); seek max 43.3 ms, met; **first frame ≤ 2 s for 97 of 100, NOT met for 3**: the three long tours, 2,362–3,244 ms; median 772 ms |
+| Regressions | **partly re-measured: AC was lost mid-run.** The M2 fps scene, 8 × 20 s on AC: 58–61 fps every second, per-second p95 median 18.5 ms. 16 / 16 replays; 22 / 22 URL forms. M1 stress, latency, seek and cold start not yet re-measured on AC |
+| Hygiene | **met**: 0 errors on 21 views; 390 px 23 / 23; suites 3,498 / 396 / 168, none failing |
+| Phone, usability | pending Gautham |
