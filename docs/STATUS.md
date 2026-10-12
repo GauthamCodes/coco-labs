@@ -17,7 +17,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M3 | **Closed 2026-10-11 — agent-measurable criteria**: independent review [`v2/reviews/M3_REVIEW.md`](v2/reviews/M3_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: D6, Case File scans after the first frame, which took the first frame on emulated 4G from 97 / 100 to **100 / 100 within 2 s**); the outstanding re-measurement completed on AC, every M2 budget met; PR #22 merged into `main` **quietly** as **`bf7443f`** (merge commit, owner's one-off permission, branch kept, no release, tag or announcement); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search, the four modes 23 / 23 pages, 5 / 5 Case Files, 5 / 5 challenge links reproduced, all 22 v1 URL forms and `/v1/`'s six views, 0 console errors ([`v2/data/m3/exit/public_after_merge.json`](v2/data/m3/exit/public_after_merge.json)) |
 | Branch | `v2/m4-3d-arena` (from `main` = `bf7443f`), worked in the worktree `.claude/worktrees/v2-m4-3d-arena` |
 | Milestone | **M4 · 3D Arena** ([`v2/M4_PROMPT.md`](v2/M4_PROMPT.md)) — the content of the public v2.0 launch, which Gautham publishes after M4 merges and his rows pass |
-| Checkpoint | **M4.3–M4.9** done (see "M4 checkpoint log"); **M4.10** in progress: every agent-owned criterion re-measured on the final build (`m410_measure.sh`), then `v2/M4_RESULTS.md`, `RESULTS.md`, the PR |
+| Checkpoint | **M4.10 done: every agent-owned M4 criterion met** ([`v2/M4_RESULTS.md`](v2/M4_RESULTS.md)); the M4 pull request is open for review, **not merged** (see "M4 checkpoint log") |
 | Merge to `main` | M4 opens a PR; it is **not** merged by the agent (the merge permission covered PR #22 only) |
 | Pending Gautham | **The phone baseline, now**, on the live site ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md), [`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)); **the M4 feasibility gate on the phone** ([`v2/PHONE_GATE_M4.md`](v2/PHONE_GATE_M4.md); preview via `lab_web/tools/preview_phone.sh`) and M4's phone rows; **the consolidated five-person usability test at the end of M4** (decision D5; it replaces M1–M3's usability tests). M1–M3's phone rows are covered by the phone baseline and M4's gate. Never marked done by the agent |
 
@@ -1773,6 +1773,40 @@ only. Read order for agents (README §9): `README.md`, this file,
   pixels; the baselines were remade from the **public M3 site**, not from the
   code under test, and this build matches them with **0 differing pixels** in all
   five scenes.
+
+- **M4.10 measure and close (2026-10-12 → 13).** [`v2/M4_RESULTS.md`](v2/M4_RESULTS.md);
+  `docs/RESULTS.md` "COCO Lab v2 · M4.3" and "COCO Lab v2 · M4"; evidence
+  [`v2/data/m4/m410/`](v2/data/m4/m410/) (every harness JSON, the run logs and the three
+  runner scripts). Balanced, on AC at the start and end of every kept run.
+  - **Every agent-owned criterion met:** RTX high tier, fetch mission: median 61 fps, slowest
+    second 60 (3 × 30 s); M2 stress at medium: median 60–61, slowest second 56 / 59 / 60;
+    Intel integrated, medium: 61 / 60; key → motion median 45.1 ms (follow), 44.0 ms
+    (top-down); camera moves' longest frame 16.8 ms; cold start on emulated 4G: first
+    computation ≤ 3,694 ms, 3D world ≤ 3,605 ms, live model ≤ 8,521 ms (n = 5); Case Files
+    100 / 100 within 2 s on emulated 4G (max 1,773 ms; the robot's mesh follows its
+    placeholder body — **Gautham to judge** whether that is "including 3D geometry"); race
+    links 18 / 18 in three browsers and `coco verify`; 30 minutes: 0 context losses, 0
+    errors, 0 long tasks (the observer proven to see one); phone widths (emulated) 21 / 21;
+    fallback with its notice.
+  - **Found and fixed by the measurement:** the Play page ignored every deflated `z=` link
+    (`62f6338`); replay pages had lost their runs list (`7e72010`; CI now runs
+    `replay_check.mjs`); the screenshot test failed on a one-pixel layout shift (it now reads
+    the canvas; baselines from the public M3 site, 0 differing pixels); `test_play_levels`
+    had no race input. Also: `?perf` shows "3D world drawn", "3D robot in it" and
+    "input → motion" so the phone rows can be read on the phone.
+  - **Case Files repacked at zstd level 19:** 40,019,390 B for all 100 (same messages).
+  - **Suites:** packages **3,523 / 0 / 0** (`b4624d9`; no package changed after it);
+    build tools and vitest on the final head (see the M4 PR and below).
+  - **Release notes** (`releases/v2.0.md`) updated for the 3D launch from `RESULTS.md`
+    only; `CHALLENGES.md` regenerated (six challenges); the phone guide
+    (`v2/PHONE_GATE_M4.md`) describes the build M4 ships.
+  - **Screenshots awaiting Gautham's review:** [`v2/data/m4/screens/m410/`](v2/data/m4/screens/m410/)
+    (`terrain/`, `reference/`, four phone layouts), with `m43/`, `m44/`, `m46/`. Known: the
+    LiDAR fan's moiré in 3D; cut walls as grey slabs; on a portrait phone the 3D view is
+    short and the joystick sits below the timeline.
+  - **Next (Gautham):** review the PR and the screenshots; the phone gate
+    (`v2/PHONE_GATE_M4.md`, preview: `lab_web/tools/preview_phone.sh start`); the
+    consolidated usability test (`v2/USABILITY_TEST_M4.md`); then merge and publish v2.0.
 
 ## Capabilities (README §2), with evidence class
 

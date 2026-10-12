@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Play (M3.5): five challenges, each scored by a robotics metric.
+Play (M3.5): five challenges, each scored by a robotics metric; a sixth,
+race-the-ghost, since M4.8.
 
 One implementation, run three ways: by the page (the Arena worker, in
 Pyodide), by ``coco verify`` (Pyodide in Node, lab_web/tools/verify.mjs)
