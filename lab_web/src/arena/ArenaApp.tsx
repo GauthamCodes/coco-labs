@@ -391,8 +391,9 @@ export function ArenaApp() {
       void specP.then(() => r3.prepare3D(assets3d(landingLight ? 'low' : robotLod), worldToMap.current, tierChoice)).catch(() => {});
     }
 
-    // the runs list is for the nav: on a recording's page it waits for the first frame (M4.7, 4G)
-    void (recordedId ? perf.when('recording_ready') : Promise.resolve(0))
+    // the runs list is for the nav: on a Case File's page it waits for the first frame (M4.7, 4G).
+    // Only a Case File marks recording_ready: gating a replay on it hid the list (M4.10, replay_check)
+    void (caseId ? perf.when('recording_ready') : Promise.resolve(0))
       .then(() => fetch(`${import.meta.env.BASE_URL}generated/v2/index.json`, { credentials: 'omit' }))
       .then((x) => (x.ok ? x.json() : { runs: [] })).then((j) => setRuns(j.runs ?? [])).catch(() => {});
     if (replayParam && !recId) setError(`no recorded run "${replayParam}"`);

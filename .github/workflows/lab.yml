@@ -217,6 +217,10 @@ jobs:
       - name: Every v1 URL form resolves, 0 console errors (M2.10)
         working-directory: lab_web
         run: node tools/perf/v1_links_check.mjs --site http://127.0.0.1:4174/coco-labs/ --out "$RUNNER_TEMP/v1links"
+      # M4.10: an M4.7 change hid the runs list on every replay page, and no CI step looked
+      - name: Every replay plays to its end with its badge, results and runs list (M2, M3 regressions)
+        working-directory: lab_web
+        run: node tools/perf/replay_check.mjs --site http://127.0.0.1:4174/coco-labs/ --out "$RUNNER_TEMP/replays"
 
   deploy:
     name: deploy to GitHub Pages (main only)
