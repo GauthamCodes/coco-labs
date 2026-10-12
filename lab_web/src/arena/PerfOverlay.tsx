@@ -20,6 +20,9 @@ const STAGES: [string, string][] = [
   ['first_frame', 'first frame drawn'],
   ['attract_ready', 'recording ready (attract)'],
   ['first_computation_shown', 'first computation shown'],
+  // M4.10: the 3D rows, so a cold start on a phone is read off the panel, not timed by eye
+  ['world3d_ready', '3D world drawn'],
+  ['world3d_robot', '3D robot in it'],
 ];
 
 export function PerfOverlay() {

@@ -49,30 +49,33 @@ version, the network (4G / 5G, bars).
    panel read:
    - **`first computation shown`** — the first visible computation;
    - **`Arena ready`** — the live model;
-   - the time the 3D world appears with the robot in it (until M4.4 adds a
-     `3D world ready` row to the panel, note it by eye: count seconds from
-     the tap that opened the link).
+   - **`3D world drawn`** and **`3D robot in it`** — the 3D world on screen,
+     then with the robot in it (rows added at M4.10; until then this was
+     timed by eye).
    Close the tab completely; repeat **five times**.
 2. **Frame rate over 10 minutes** (≥ 30 fps on the automatic tier with the
    world and default layers). In one tab: tap a goal on the floor, let
    COCO drive; tap another goal whenever it arrives, for **10 minutes**.
    Read `fps` and the p95 frame time at 1, 5 and 10 minutes. Note any
    reload, crash, blank or frozen canvas (context loss).
-3. **Touch feel.** Drag one finger to orbit the camera, pinch to zoom, tap
-   the floor to set a goal. Does the camera respond immediately? Does a
-   tap on the floor put the goal where you tapped? Anything uncomfortable
-   to watch (motion discomfort)? *(The joystick, tank mode and their
-   ~100 ms `?perf` reading arrive with M4.5; until then, note the feel.)*
+3. **Touch feel.** Drive with the on-screen joystick; try tank mode (two
+   sliders: the "Controls (H)" button → settings) once. Two fingers orbit and pinch to
+   zoom; tap the floor to set a goal; the corner buttons are STOP, grasp
+   (E), camera and autonomy. Does the robot respond immediately to the
+   joystick? Does a tap on the floor put the goal where you tapped? Is STOP
+   always in reach of a thumb? Anything uncomfortable to watch (motion
+   discomfort; reduced motion — the phone's own setting, or "Controls (H)" → settings — makes camera moves
+   cut instead of glide)?
 
 ## Record it here, then in STATUS
 
-| Run | Network | First computation shown | Arena ready | 3D world on screen (by eye) |
-|---|---|---|---|---|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
-| 4 | | | | |
-| 5 | | | | |
+| Run | Network | First computation shown | Arena ready | 3D world drawn | 3D robot in it |
+|---|---|---|---|---|---|
+| 1 | | | | | |
+| 2 | | | | | |
+| 3 | | | | | |
+| 4 | | | | | |
+| 5 | | | | | |
 
 | Minute | fps | p95 frame ms | Anything wrong? |
 |---|---|---|---|
@@ -80,7 +83,7 @@ version, the network (4G / 5G, bars).
 | 5 | | | |
 | 10 | | | |
 
-Touch feel (orbit, pinch, tap-to-goal, discomfort): ______
+Touch feel (joystick, tank mode, orbit, pinch, tap-to-goal, STOP in reach, discomfort): ______
 
 Phone: ______ Browser and version: ______ Date: ______
 
@@ -98,11 +101,16 @@ feasibility gate"** in `docs/STATUS.md`. The agent then records them in
 
 ## What the preview is and is not
 
-- It is the **feasibility build** (M4.1): a first, rough conversion of the
-  arena and the robot, the follow camera, the Plan lens on the floor,
-  flat lighting. It is not the look M4 ships (M4.4), and there is no
-  terrain yet (M4.3: the robot does not climb the ramps).
-- `?camera=follow` opens it in 3D; without it the page opens top-down, as
-  the public site does today. `?camera=orbit` and `?camera=robot_eye` also
-  work (the robot-eye view is a rendered presentation, not the robot's
-  perception).
+- Since M4.10 it is **the build M4 ships**: the lit, shadowed arena with
+  quality tiers, the terrain (`?world=v2`: the robot climbs the ramps and
+  grasps), the HUD and touch controls, every lens in 3D, the ghost race and
+  Case Files in 3D. (Until M4.3 it was the M4.1 feasibility build: a rough
+  conversion, flat lighting, no terrain.)
+- The plain Arena opens in **follow** (3D) by itself since M4.5;
+  `?camera=topdown`, `?camera=orbit` and `?camera=robot_eye` choose another
+  camera (the robot-eye view is a rendered presentation, not the robot's
+  perception). If the low tier cannot hold about 24 fps the page drops to
+  top-down with a notice saying so — note it if that happens: it is a fail
+  on frame rate.
+- The agent's own phone-like numbers (a phone viewport with CPU throttling
+  and emulated 4G) are in `docs/v2/M4_RESULTS.md`, labelled **emulated**.
