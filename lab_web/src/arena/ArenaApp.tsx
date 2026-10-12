@@ -193,6 +193,9 @@ export function ArenaApp() {
   const initialCamera: CameraMode = CAMERA_MODES.find((m) => m === params.get('camera'))
     ?? (plainArena && !precision ? storedCamera : null) ?? defaultCamera;
   const [camera, setCamera] = useState<CameraMode>(initialCamera);
+  /** the robot's level of detail: low on a touch screen, else high; ?lod= overrides (harnesses) */
+  const robotLod: 'low' | 'high' = params.get('lod') === 'low' || params.get('lod') === 'high'
+    ? params.get('lod') as 'low' | 'high' : coarse ? 'low' : 'high';
   /** M4.5: STOP is latched until R releases it; holding R resets the robot home */
   const [latched, setLatched] = useState(false);
   const latchedRef = useRef(false);
@@ -313,7 +316,7 @@ export function ArenaApp() {
       start3D.current = () => {
         if (started) return started;
         const base = import.meta.env.BASE_URL;
-        const lod = coarse ? 'low' : 'high';
+        const lod = robotLod;
         started = specP.then(() => rr!.enable3D({ arena: `${base}assets3d/arena.glb`, robot: `${base}assets3d/robot_${lod}.glb`,
           buffers: early3D ?? undefined },
           worldToMap.current, w.targets, elevation.current, tierChoice))
@@ -346,7 +349,7 @@ export function ArenaApp() {
     const bytes = (u: string) => fetch(u, { credentials: 'omit' }).then((x) => { if (!x.ok) throw new Error(u); return x.arrayBuffer(); });
     const early3D = initialCamera === 'topdown' ? null : {
       arena: bytes(`${import.meta.env.BASE_URL}assets3d/arena.glb`),
-      robot: bytes(`${import.meta.env.BASE_URL}assets3d/robot_${coarse ? 'low' : 'high'}.glb`),
+      robot: bytes(`${import.meta.env.BASE_URL}assets3d/robot_${robotLod}.glb`),
     };
     if (early3D) void Promise.all([early3D.arena, early3D.robot]).then(() => perf.mark('world3d_assets', wallMs())).catch(() => {});
     const outlineP = fetch(`${import.meta.env.BASE_URL}generated/arena/robot_outline.json`, { credentials: 'omit' })

@@ -108,7 +108,7 @@ for (const q of ['?view=casefiles', '?view=casefiles&case=lab5-move',
 
 // 2. every Case File in the viewer
 for (const c of all.filter((x) => !only || only.has(x.id))) {
-  const { context, page, errors } = await open(`${SITE}?view=arena&casefile=${c.id}${TOPDOWN ? '&camera=topdown' : ''}`);
+  const { context, page, errors } = await open(`${SITE}?view=arena&casefile=${c.id}${TOPDOWN ? "&camera=topdown" : ""}${args.lod ? `&lod=${args.lod}` : ""}`);
   const row = { id: c.id, group: c.group, bytes: c.bytes, errors };
   try {
     await page.waitForFunction(() => !!window.__cocoPerf?.marks?.recording_ready, null, { timeout: 120_000 });
