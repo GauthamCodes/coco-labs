@@ -138,6 +138,7 @@ export class ArenaRenderer {
   private lastFrame = 0;
   private lastPose: [number, number, number] = [0, 0, 0];
   private lastTilt: [number, number, number] | undefined;
+  private enabled3D = false;
   /** M4.4: the 3D view's quality tier, chosen from measured frame time (render/quality.ts). */
   quality: QualityController | null = null;
   /** M4.4: a tier change or the fallback to top-down, for the page to say (a notice, the perf overlay). */
@@ -422,18 +423,44 @@ export class ArenaRenderer {
   // -- camera and input -----------------------------------------------------
 
   /** M4.1: load the 3D arena and robot; the perspective cameras become available. */
+  /**
+   * M4.7: everything the 3D view needs that the world does not: the scene, the arena parsed, the quality
+   * tier, the shaders compiled. A page starts it as soon as the spec is known, so a Case File's first 3D
+   * frame waits for its recording only, not for this work after it. `enable3D` finishes the rest.
+   */
+  prepare3D(assets: Scene3DAssets, worldToMap: [number, number], tier: TierChoice = 'auto'): Promise<void> {
+    this.prepared ??= (async () => {
+      const s = new Scene3D(this.scene, worldToMap);
+      await s.load(assets);
+      // a phone starts a tier down; the measurement moves it from there
+      const coarse = window.matchMedia?.('(pointer: coarse)').matches ?? false;
+      this.quality = new QualityController(performance.now(), tier, coarse ? 'medium' : 'high');
+      s.applyTier(this.quality.tier, this.renderer, this.scene);
+      // compile the world pass's programs now (its layer, its tone mapping), not on the first 3D frame
+      const was = s.root.visible;
+      s.root.visible = true;
+      s.camera.layers.set(WORLD_LAYER);
+      this.renderer.toneMapping = THREE.NeutralToneMapping;
+      try { await this.renderer.compileAsync(this.scene, s.camera); } catch { /* compiled on first use instead */ }
+      this.renderer.toneMapping = THREE.NoToneMapping;
+      s.camera.layers.set(0);
+      s.root.visible = was;
+      this.three = s;
+    })();
+    return this.prepared;
+  }
+
+  private prepared: Promise<void> | null = null;
+
   async enable3D(assets: Scene3DAssets, worldToMap: [number, number], targets: World['targets'] = [],
     elevation: Elevation[] = [], tier: TierChoice = 'auto') {
-    if (this.three) return;
-    const s = new Scene3D(this.scene, worldToMap);
-    this.three = s;
-    await s.load(assets);
+    if (this.enabled3D) return;
+    this.enabled3D = true;
+    await this.prepare3D(assets, worldToMap, tier);
+    const s = this.three!;
     s.setTargets(targets ?? []);
     this.terrain = surfaces(elevation, worldToMap);
-    // a phone starts a tier down; the measurement moves it from there
-    const coarse = window.matchMedia?.('(pointer: coarse)').matches ?? false;
-    this.quality = new QualityController(performance.now(), tier, coarse ? 'medium' : 'high');
-    this.applyTier(this.quality.tier);
+    this.applyTier(this.quality!.tier);
     // the 3D view may already be the camera (is3D turned true with `ready`): drape what exists
     this.redrape();
     this.setPlan(this.store);

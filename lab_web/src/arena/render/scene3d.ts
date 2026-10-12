@@ -206,6 +206,23 @@ if (uCut > 0.5) {
   /** M4.7: the robot's file has been added (the placeholder is gone). */
   robotReady: Promise<void> = Promise.resolve();
 
+  /**
+   * M4.9: replace the robot with another level of detail (the landing starts light; the person's
+   * takeover brings the high one). Its joints and wheels are wired afresh; the pose is unchanged.
+   */
+  async swapRobot(url: string) {
+    const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+    const g = await loader.loadAsync(url);
+    await this.robotReady;
+    for (const c of [...this.robotHolder.children]) this.robotHolder.remove(c);
+    this.joints.clear();
+    this.wheels = [];
+    this.triangles -= this.robotTriangles;
+    this.addRobot(g.scene);
+  }
+
+  private robotTriangles = 0;
+
   private addRobot(scene: THREE.Group) {
     this.robotHolder.add(zUp(scene));
     const robot = { scene };
@@ -229,10 +246,13 @@ if (uCut > 0.5) {
       // forward roll is a rotation about the robot's +y (ROS) = -z here
       this.wheels.push({ name, side: left ? 0 : 1, sign: ax.z < 0 ? 1 : -1 });
     }
+    let tri = 0;
     robot.scene.traverse((o) => {
       const m = o as THREE.Mesh;
-      if (m.isMesh) this.triangles += (m.geometry.index ? m.geometry.index.count : m.geometry.attributes.position.count) / 3;
+      if (m.isMesh) tri += (m.geometry.index ? m.geometry.index.count : m.geometry.attributes.position.count) / 3;
     });
+    this.robotTriangles = tri;
+    this.triangles += tri;
   }
 
   setVisible(v: boolean) {

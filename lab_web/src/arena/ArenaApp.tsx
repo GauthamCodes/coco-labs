@@ -198,6 +198,12 @@ export function ArenaApp() {
   /** the robot's level of detail: low on a touch screen, else high; ?lod= overrides (harnesses) */
   const robotLod: 'low' | 'high' = params.get('lod') === 'low' || params.get('lod') === 'high'
     ? params.get('lod') as 'low' | 'high' : coarse ? 'low' : 'high';
+  /**
+   * M4.9: the landing (the plain Arena, opening on its attract recording) starts light -- the low-detail
+   * robot -- so cold start holds; the person's takeover brings the high one on a desktop
+   */
+  const landingLight = plainArena && specFile === SPEC_FILES.v1 && !params.get('lod') && robotLod === 'high';
+  const upgradePending = useRef(landingLight);
   /** M4.5: STOP is latched until R releases it; holding R resets the robot home */
   const [latched, setLatched] = useState(false);
   const latchedRef = useRef(false);
@@ -238,6 +244,11 @@ export function ArenaApp() {
     if (!live.current) { pendingTakeover.current = true; return false; }
     setMode('live');
     setSession(live.current);
+    if (upgradePending.current) {
+      upgradePending.current = false;
+      void r.current?.three?.swapRobot(`${import.meta.env.BASE_URL}assets3d/robot_high.glb`)
+        .then(() => perf.mark('robot_high_ready', wallMs())).catch(() => {});
+    }
     return true;
   }, [setMode]);
 
@@ -317,10 +328,8 @@ export function ArenaApp() {
       let started: Promise<void> | null = null;
       start3D.current = () => {
         if (started) return started;
-        const base = import.meta.env.BASE_URL;
-        const lod = robotLod;
-        started = specP.then(() => rr!.enable3D({ arena: `${base}assets3d/arena.glb`, robot: `${base}assets3d/robot_${lod}.glb`,
-          buffers: early3D ?? undefined },
+        const lod = landingLight ? 'low' : robotLod;
+        started = specP.then(() => rr!.enable3D(assets3d(lod),
           worldToMap.current, w.targets, elevation.current, tierChoice))
           .then(() => {
             setTierNow(rr!.quality?.tier ?? null);
@@ -355,12 +364,15 @@ export function ArenaApp() {
     const bytes = (u: string) => fetch(u, { credentials: 'omit' }).then((x) => { if (!x.ok) throw new Error(u); return x.arrayBuffer(); });
     // a recording's first frame comes first: there the robot's file waits for it (the arena is 28 KB; the
     // body is a placeholder until the robot lands), so on 4G it does not share the line with the recording
-    const robotUrl = `${import.meta.env.BASE_URL}assets3d/robot_${robotLod}.glb`;
+    const robotUrl = `${import.meta.env.BASE_URL}assets3d/robot_${landingLight ? 'low' : robotLod}.glb`;
     const early3D = initialCamera === 'topdown' ? null : {
       arena: bytes(`${import.meta.env.BASE_URL}assets3d/arena.glb`),
       robot: recordedId ? perf.when('recording_ready').then(() => bytes(robotUrl)) : bytes(robotUrl),
+      // (on the landing the URL below is the light robot's: robotUrl follows landingLight)
     };
     if (early3D) void Promise.all([early3D.arena, early3D.robot]).then(() => perf.mark('world3d_assets', wallMs())).catch(() => {});
+    const assets3d = (lod: string) => ({ arena: `${import.meta.env.BASE_URL}assets3d/arena.glb`,
+      robot: `${import.meta.env.BASE_URL}assets3d/robot_${lod}.glb`, buffers: early3D ?? undefined });
     const outlineP = fetch(`${import.meta.env.BASE_URL}generated/arena/robot_outline.json`, { credentials: 'omit' })
       .then((x) => x.json()).then((j) => { outline.current = j.polygon; }).catch(() => {});
     const specP = fetch(`${import.meta.env.BASE_URL}generated/arena/${specFile}`, { credentials: 'omit' })
@@ -373,6 +385,11 @@ export function ArenaApp() {
         } catch { /* the 3D arena then sits at the world origin, decals flat */ }
         return sha256Hex(new Uint8Array(b));
       }).then((h) => { specSha.current = h; });
+    // M4.7: the 3D scene is prepared (parsed, shaders compiled) while the recording or the model loads
+    if (early3D && rr) {
+      const r3 = rr;
+      void specP.then(() => r3.prepare3D(assets3d(landingLight ? 'low' : robotLod), worldToMap.current, tierChoice)).catch(() => {});
+    }
 
     // the runs list is for the nav: on a recording's page it waits for the first frame (M4.7, 4G)
     void (recordedId ? perf.when('recording_ready') : Promise.resolve(0))
