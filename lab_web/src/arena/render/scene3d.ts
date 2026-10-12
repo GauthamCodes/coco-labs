@@ -34,6 +34,14 @@ export const WORLD_LAYER = 1;
 export const onWorldLayer = (o: THREE.Object3D) => o.traverse((c) => c.layers.set(WORLD_LAYER));
 /** Half the side of the square the sun's shadow covers, centred on the robot (m). */
 const SHADOW_HALF = 3;
+/**
+ * M4.4: the arena's tall kinds (convert_world.py's node names), which cutaway and low walls may open.
+ * Ramps, platforms and the ground are never cut: they are what the robot stands on.
+ */
+const CUTTABLE = new Set(['walls', 'obstacles', 'landmarks', 'bay_guards', 'bay_columns', 'bay_approaches']);
+/** Low walls stop here (m); the cutaway opens this far around the camera-to-robot line (m). */
+export const LOW_WALL_Z = 0.35;
+const CUT_RADIUS = 0.7;
 
 export type CameraMode = 'topdown' | 'follow' | 'orbit' | 'robot_eye';
 export const CAMERA_MODES: CameraMode[] = ['follow', 'orbit', 'robot_eye', 'topdown'];
@@ -70,6 +78,12 @@ export class Scene3D {
   private wheels: { name: string; side: 0 | 1; sign: number }[] = [];
   private readonly targets = new Map<string, THREE.Mesh>();
   private env: THREE.Texture | null = null;
+  /** M4.4: cutaway and low walls, shared by every tall kind's material (see CUTTABLE) */
+  readonly walls = {
+    uRobot: { value: new THREE.Vector3() }, uCam: { value: new THREE.Vector3() },
+    uCut: { value: 0 }, uLow: { value: 0 }, uLowZ: { value: LOW_WALL_Z }, uCutR: { value: CUT_RADIUS },
+  };
+  lowWalls = false;
   /** The camera rig's own state: sprung toward the robot (feel, not physics). */
   private rig = { x: 0, y: 0, z: 0, yaw: 0, init: false };
   private orbit = { yaw: 0, pitch: 0.38, dist: 2.6 };
@@ -136,6 +150,33 @@ export class Scene3D {
     this.root.add(a);
     this.robotHolder.add(zUp(robot.scene));
     arena.scene.traverse((o) => { if ((o as THREE.Mesh).isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+    // the tall kinds learn to open (cutaway) and to stop low (low walls)
+    for (const node of arena.scene.children.flatMap((c) => [c, ...c.children])) {
+      if (!CUTTABLE.has(node.name)) continue;
+      node.traverse((o) => {
+        const m = o as THREE.Mesh;
+        if (!m.isMesh) return;
+        const mat = (m.material as THREE.MeshStandardMaterial).clone();
+        mat.side = THREE.DoubleSide;   // an opened wall shows its inside, not a hole into nothing
+        mat.onBeforeCompile = (sh) => {
+          Object.assign(sh.uniforms, this.walls);
+          sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vCocoWorld;')
+            .replace('#include <begin_vertex>', '#include <begin_vertex>\nvCocoWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+          sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
+varying vec3 vCocoWorld;
+uniform vec3 uRobot; uniform vec3 uCam; uniform float uCut; uniform float uLow; uniform float uLowZ; uniform float uCutR;`)
+            .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
+if (uLow > 0.5 && vCocoWorld.z > uLowZ) discard;
+if (uCut > 0.5) {
+  vec3 d = uRobot - uCam;
+  float t = clamp(dot(vCocoWorld - uCam, d) / max(dot(d, d), 1e-6), 0.0, 1.0);
+  if (t < 0.95 && distance(vCocoWorld, uCam + t * d) < uCutR && vCocoWorld.z > uRobot.z - 0.2) discard;
+}`);
+        };
+        mat.customProgramCacheKey = () => 'coco-walls';
+        m.material = mat;
+      });
+    }
     robot.scene.traverse((o) => { if ((o as THREE.Mesh).isMesh) o.castShadow = true; });
     onWorldLayer(this.root);
     robot.scene.traverse((o) => {
@@ -267,6 +308,11 @@ export class Scene3D {
     this.sun.position.set(x - 4, y - 6, this.z + 10);
     this.sun.target.position.set(x, y, this.z);
     this.aim(dt);
+    // cutaway: in the follow and orbit cameras the walls between the camera and the robot open
+    this.walls.uRobot.value.set(x, y, this.z + 0.15);
+    this.walls.uCam.value.copy(this.camera.position);
+    this.walls.uCut.value = this.mode === 'follow' || this.mode === 'orbit' ? 1 : 0;
+    this.walls.uLow.value = this.lowWalls ? 1 : 0;
     const b = this.blend;
     if (b) {
       b.t += Math.min(dt, 0.1);

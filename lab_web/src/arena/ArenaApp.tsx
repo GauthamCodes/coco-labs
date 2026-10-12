@@ -974,6 +974,10 @@ export function ArenaApp() {
                     {TIER_CHOICES.map((t) => <option key={t} value={t}>{t === 'auto' ? `auto (now ${tierNow})` : t}</option>)}
                   </select>
                 </label>
+                <label className="layer-toggle" title="Walls, columns and landmarks stop at 0.35 m, so every layer stays in view">
+                  <input type="checkbox" data-testid="low-walls" onChange={(e) => { if (r.current?.three) r.current.three.lowWalls = e.target.checked; }} />
+                  low walls
+                </label>
               </div>
             )}
             <div className="arena-row" role="group" aria-label="Layers">

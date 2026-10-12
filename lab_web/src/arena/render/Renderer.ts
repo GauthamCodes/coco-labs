@@ -146,6 +146,9 @@ export class ArenaRenderer {
   private terrain: Quad[] = [];
   private readonly decals = new Set<THREE.Mesh>();
   private readonly draped = new Map<string, THREE.BufferGeometry>();
+  /** M4.4: the walkable surface (floor, ramps, platform tops) that pointer rays pick on in 3D; never drawn */
+  private pickSurface: THREE.Mesh | null = null;
+  private readonly picker = new THREE.Raycaster();
   onFrame?: () => void;
   /** Called after each frame is submitted (the measurement hook for "drawn"). */
   onAfterRender?: () => void;
@@ -422,6 +425,13 @@ export class ArenaRenderer {
     this.applyTier(this.quality.tier);
     // the 3D view may already be the camera (is3D turned true with `ready`): drape what exists
     this.redrape();
+    if (this.world && this.terrain.length) {
+      const { width: W, height: H, resolution: r, origin } = this.world;
+      const cx = origin[0] + (W * r) / 2, cy = origin[1] + (H * r) / 2;
+      this.pickSurface = new THREE.Mesh(drapedPlane(W * r, H * r, cx, cy, this.terrain), new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }));
+      this.pickSurface.position.set(cx, cy, 0);
+      this.pickSurface.updateMatrixWorld(true);
+    }
     s.setPose(this.lastPose, this.lastTilt);
     this.setCameraMode(this.cameraMode);
   }
@@ -557,8 +567,15 @@ export class ArenaRenderer {
   toWorld(clientX: number, clientY: number): [number, number] {
     const rect = this.canvas.getBoundingClientRect();
     if (this.is3D) {
-      // the floor point under the pointer (README §5.3: picking uses a floor ray for grids)
-      const hit = this.three!.toFloor(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
+      // the floor point under the pointer (README §5.3: picking uses a floor ray for grids); on a terrain
+      // the ray stops at the walkable surface first, so a click on a platform is a point on the platform
+      const ndc = new THREE.Vector2(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
+      if (this.pickSurface) {
+        this.picker.setFromCamera(ndc, this.three!.camera);
+        const hit = this.picker.intersectObject(this.pickSurface, false)[0];
+        if (hit) return [hit.point.x, hit.point.y];
+      }
+      const hit = this.three!.toFloor(ndc.x, ndc.y);
       return hit ?? [this.lastPose[0], this.lastPose[1]];
     }
     const x = this.view.cx + (clientX - rect.left - rect.width / 2) / this.view.scale;
@@ -570,8 +587,16 @@ export class ArenaRenderer {
   screenOf(x: number, y: number): [number, number] {
     const rect = this.canvas.getBoundingClientRect();
     const cam = this.is3D ? this.three!.camera : this.camera;
-    const v = new THREE.Vector3(x, y, 0).project(cam);
+    const v = new THREE.Vector3(x, y, this.is3D ? this.surfaceZ(x, y) : 0).project(cam);
     return [rect.left + ((v.x + 1) / 2) * rect.width, rect.top + ((1 - v.y) / 2) * rect.height];
+  }
+
+  /** M4.4: the walkable surface's height under (x, y): a vertical ray onto the drawn surface; 0 off it. */
+  surfaceZ(x: number, y: number): number {
+    if (!this.pickSurface) return 0;
+    this.picker.set(new THREE.Vector3(x, y, 50), new THREE.Vector3(0, 0, -1));
+    const hit = this.picker.intersectObject(this.pickSurface, false)[0];
+    return hit ? hit.point.z : 0;
   }
 
   /** Map-frame metres to the grid cell (row, col), or null off the map. */
