@@ -121,6 +121,8 @@ for (const c of all.filter((x) => !only || only.has(x.id))) {
     row.first_frame_2d_ms = marks.recording_ready - marks.casefile_fetch_start;
     row.world3d_ms = TOPDOWN ? null : marks.world3d_ready - marks.casefile_fetch_start;
     row.assets3d_ms = TOPDOWN || !marks.world3d_assets ? null : marks.world3d_assets - marks.casefile_fetch_start;
+    if (!TOPDOWN) await page.waitForFunction(() => !!window.__cocoPerf?.marks?.world3d_robot, null, { timeout: 120_000 });
+    row.robot3d_ms = TOPDOWN ? null : (await page.evaluate(() => window.__cocoPerf.marks.world3d_robot)) - marks.casefile_fetch_start;
     row.first_frame_ms = Math.max(row.first_frame_2d_ms, row.world3d_ms ?? 0);
     row.pose3d_body = TOPDOWN ? null : await page.evaluate(() => !!window.__cocoArena.session().shownTick?.truth_tilt);
     row.scans_ms = marks.scans_ready - marks.casefile_fetch_start;
@@ -147,7 +149,7 @@ for (const c of all.filter((x) => !only || only.has(x.id))) {
       && row.seeks.every((x) => x.view_tick === x.to || (x.to >= last && x.view_tick === last));
   } catch (e) { row.ok = false; row.failure = String(e); }
   out.casefiles.push(row);
-  console.log(`${row.ok ? 'ok  ' : 'FAIL'} ${c.id} first ${Math.round(row.first_frame_ms)} ms (2D ${Math.round(row.first_frame_2d_ms)}, 3D ${Math.round(row.world3d_ms)}), seek max ${row.seek_max_ms?.toFixed(1)} ms, ${row.ticks} ticks${row.failure ? ' ' + row.failure : ''}${errors.length ? ' errors: ' + errors.join(' | ') : ''}`);
+  console.log(`${row.ok ? 'ok  ' : 'FAIL'} ${c.id} first ${Math.round(row.first_frame_ms)} ms (2D ${Math.round(row.first_frame_2d_ms)}, 3D ${Math.round(row.world3d_ms)}, robot ${Math.round(row.robot3d_ms)}), seek max ${row.seek_max_ms?.toFixed(1)} ms, ${row.ticks} ticks${row.failure ? ' ' + row.failure : ''}${errors.length ? ' errors: ' + errors.join(' | ') : ''}`);
   await (WARM ? page.close() : context.close());
 }
 await browser.close();

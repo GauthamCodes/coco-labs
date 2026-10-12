@@ -320,7 +320,11 @@ export function ArenaApp() {
         started = specP.then(() => rr!.enable3D({ arena: `${base}assets3d/arena.glb`, robot: `${base}assets3d/robot_${lod}.glb`,
           buffers: early3D ?? undefined },
           worldToMap.current, w.targets, elevation.current, tierChoice))
-          .then(() => { setTierNow(rr!.quality?.tier ?? null); perf.mark('world3d_ready', wallMs()); })
+          .then(() => {
+            setTierNow(rr!.quality?.tier ?? null);
+            perf.mark('world3d_ready', wallMs());   // the arena drawn (the robot may still be its placeholder)
+            void rr!.three?.robotReady.then(() => perf.mark('world3d_robot', wallMs()));
+          })
           .catch((e) => { setError(`3D arena: ${(e as Error).message}`); rr!.setCameraMode('topdown'); setCamera('topdown'); });
         return started;
       };

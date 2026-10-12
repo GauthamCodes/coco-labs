@@ -4,8 +4,8 @@
  "layout": "ordered",
  "adapter": "1",
  "detail": "summary",
- "built_at_commit": "e7a233e79ab7638ac69b0711fb933c9e1c3fe75a",
- "total_bytes": 43582138,
+ "built_at_commit": "f5170c97296a822bef65e14f704f29fbe93d7aec",
+ "total_bytes": 42506085,
  "budget": {
   "per_file": 20000000,
   "total": 150000000
@@ -22,8 +22,8 @@
     "group": "lab1-runs",
     "title": "Lab 1 · astar"
    },
-   "bytes": 81790,
-   "sha256": "d5e0def929c21031be0c17cb12a8e8626cc520fb1177af44275c19819d53bde7",
+   "bytes": 78658,
+   "sha256": "b1c6f8041675776dd81dfa0ff3565eabedf698bf4ed265855fa9429b8e81138d",
    "run_id": "4609fca93272d5dbfa85641d7f7e212224da29a227acd90ec6d8ae7b817d7923",
    "messages": 1376,
    "bags": [
@@ -49,8 +49,8 @@
     "group": "lab1-runs",
     "title": "Lab 1 · dijkstra"
    },
-   "bytes": 81747,
-   "sha256": "889a039c33644e09e95e6115bd95e1c0ae69e9dc898bb85d4c57caa837459563",
+   "bytes": 78677,
+   "sha256": "d36549de5d797beeda5208051c39fac139ad1b7fba5be5958d306bf15d355878",
    "run_id": "4b98c9d6301bbd06b35f3e681fe8ad9fbe2fd1d689e8bdeea807a848e62bb42c",
    "messages": 1383,
    "bags": [
@@ -76,8 +76,8 @@
     "group": "lab1-runs",
     "title": "Lab 1 · greedy"
    },
-   "bytes": 64557,
-   "sha256": "2b9e10a7bb164f0d788eab8bfb62220eaab0eede13589d1cb0ca576e6afc717b",
+   "bytes": 62527,
+   "sha256": "9bf137aeafdf89f836e807c9208a8b04c80405b0c680c711e2261f605493c816",
    "run_id": "83c9e7f27716b2e20796d3ed7c1e2be1c6ed272add77f3a77d4c079a9096f660",
    "messages": 1100,
    "bags": [
@@ -104,8 +104,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_recovery_K1"
    },
-   "bytes": 1039434,
-   "sha256": "43bfbd0127481e2209d3c2a8e7db403ee513c94b3c8c19dd93b6132127eaa8ba",
+   "bytes": 1020681,
+   "sha256": "f3d92d06ea5f38ec632b96c41e953b06d1088964451ef56b0e574a77f96a9e0b",
    "run_id": "955b364200cf8cba4e09defeb8fbe2b51f1b6143bf49ca87ff18ec800e96d993",
    "messages": 7961,
    "bags": [
@@ -130,8 +130,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_recovery_K1.void1"
    },
-   "bytes": 132742,
-   "sha256": "df795cd8ffa15c47f80e5d655951bfa981887ef41d1391d2a55b8ad960c61809",
+   "bytes": 130683,
+   "sha256": "bcf40564e0e6d10e19b226364a882d1e71b238778ba8595b509573d5582b2a44",
    "run_id": "5a955844b2235eefe0029474b1197ddfa5399b557d97e8311a3a1249faec275a",
    "messages": 3520,
    "bags": [
@@ -156,8 +156,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_recovery_K1_r2"
    },
-   "bytes": 1047728,
-   "sha256": "498730f4bb4127ac99c6c2ee77f08a906895caa6f206b1c2c29d5debe81d85f2",
+   "bytes": 1028747,
+   "sha256": "7a3333e453d0c4046e64c58a7d8c01ab5402054790ea0474e5fcfffad8885b61",
    "run_id": "6b2517f173d66f405b3b673f45c489deb202a9a68fb67d8f1b5cef7e8af5e608",
    "messages": 7972,
    "bags": [
@@ -182,8 +182,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_recovery_K2"
    },
-   "bytes": 1057506,
-   "sha256": "41e0049c422f3d01c8e7d63c2b63caa37e237e16823e76d418f2253edd24d041",
+   "bytes": 1038402,
+   "sha256": "5d952ea526067a9b15546234cd8e950ce9a8ea638b89994b1a564396e093c154",
    "run_id": "b43584755292dc093f41d5f44468a3b8f97affbe727e910cf9643edfb86227b5",
    "messages": 8084,
    "bags": [
@@ -208,8 +208,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_recovery_K2.void2"
    },
-   "bytes": 42875,
-   "sha256": "bfb9de51899941c6f66cbfc112f31fcbf0ac3cca3461474cd059ed15c10e67bd",
+   "bytes": 42849,
+   "sha256": "7b337f91c9398e1d0c23a61adf84ab66cee100f93007778660c8ae7dd833f154",
    "run_id": "a5e9c800b80861ee65cee86910ba3962d08a8d5cbe0c719d6037aa5e6c7efb40",
    "messages": 939,
    "bags": [
@@ -234,8 +234,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_recovery_K2_r2"
    },
-   "bytes": 1051865,
-   "sha256": "7a940f11006f7fb4ceb105e3311b1ad50bae80dec6f1e1e2ffbff1877bd4b0bb",
+   "bytes": 1032724,
+   "sha256": "5c99a4189901bce7b73a96087e9a73ecc745dff04df62b5570a5210ccdec6878",
    "run_id": "baf9b5678f0db67bbca8b6a69ce63e3e54fb9ab60885fcb3d56e96f6ebe99e88",
    "messages": 8006,
    "bags": [
@@ -260,8 +260,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_recovery_K3"
    },
-   "bytes": 1048610,
-   "sha256": "4ef1f59fcd6961ea891c6421749291ca5a31739c98f963f13561c152f808d7eb",
+   "bytes": 1029662,
+   "sha256": "8f98238f70a468a9bf4d0c74f149653c0eb9b256957bbbfe1de7884a2ace6ad5",
    "run_id": "0c7bbf48dc50784815b477c65aabfe21b9331d7fb73b0568d1da81c812cd5b8c",
    "messages": 7949,
    "bags": [
@@ -286,8 +286,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_recovery_K3_r2"
    },
-   "bytes": 1054558,
-   "sha256": "2dfd250a25e68acc603116b122a87c0d19c65ee24e5a23824ccf10f1ce25eb92",
+   "bytes": 1035281,
+   "sha256": "5cdbf0f1828ae4f44a36097e87b6a440603a116a6b474b7ee30ad40c6edf0334",
    "run_id": "7f053036a89f0428174c84f2e0397726b0f3a28a88b2817819ef946f93be5e49",
    "messages": 7981,
    "bags": [
@@ -312,8 +312,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_recovery_K4"
    },
-   "bytes": 1050695,
-   "sha256": "d8370c29364ce0ca76481651ed42bfa963637fa266263b69ddc87c68d9581f15",
+   "bytes": 1031706,
+   "sha256": "b30107250807577c23722ef026d1d69fc41a38f95285059fb2bed6ffb45ece7f",
    "run_id": "63684cded927e7d6400feb70ab32ed8938d491d05e961bdda47eb5b8a8e8c089",
    "messages": 7959,
    "bags": [
@@ -338,8 +338,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_recovery_K4_r2"
    },
-   "bytes": 1051816,
-   "sha256": "9a0c855682959eb0dff9c60382f045f58b365865514ff21cf75df8f2fa43ac86",
+   "bytes": 1032810,
+   "sha256": "c23d62243358b02e1f1f6dc484005a7daf2a199b60abc9df2e8ca648bdb83346",
    "run_id": "10878255f1cb341250deeba5b21c934130f063dc10716c7719dd47a9d40a84b7",
    "messages": 8021,
    "bags": [
@@ -364,8 +364,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_recovery_K5"
    },
-   "bytes": 1050082,
-   "sha256": "18f9ace3f4fa2ac3c701bbe6898157cd220fc676e3b1e5de0854344c93ebaa48",
+   "bytes": 1030771,
+   "sha256": "6e677796b72c76e984f3a8fad6eb8ca2fbde2f26319565e99f1ca97427e5a492",
    "run_id": "8a496a3a68f4cec88d6a560ab15992c152f5789c886325043ecaa6f695413440",
    "messages": 8002,
    "bags": [
@@ -390,8 +390,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_recovery_K5_r2"
    },
-   "bytes": 1054540,
-   "sha256": "7055a83ca96077af38f5a412bf9f6bc43ccad197230b6a24284f0a4bb5676a5a",
+   "bytes": 1035437,
+   "sha256": "1353a85195023af7938a3a2a101754e872db4f5a024f7d9a6b4ec71046604780",
    "run_id": "e8969dd8919b05458cb2bb452fabefd74dde1eff258c602287c90a909c75c2b0",
    "messages": 7959,
    "bags": [
@@ -416,8 +416,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_shipped_K1"
    },
-   "bytes": 1041751,
-   "sha256": "35cb719cd30ea9841f38aa74dfb05685ec637f3cf9c225a48850cda470629df3",
+   "bytes": 1023125,
+   "sha256": "bf6757ddc973acd2b2082db98b37193789676c500d37c25531fba98e743718c0",
    "run_id": "7b09bf3e6c1a930f46607c522fb49e01202d38dfb8b43eed0939789ea66b7bbb",
    "messages": 7937,
    "bags": [
@@ -442,8 +442,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_shipped_K1.void1"
    },
-   "bytes": 130182,
-   "sha256": "8d694a5bfcde9cb5d52f36f73f8284fceb2d55a00b4bc81e53557774304b80f2",
+   "bytes": 130068,
+   "sha256": "8cf6fbc72d309a63ebfcf3051efda49957b4000ccba4af4fdaf796419c0389fc",
    "run_id": "f68292e617244d8c90453fa3479b4aaf47f9a69df18d1628b0d43c615b5e8562",
    "messages": 3446,
    "bags": [
@@ -468,8 +468,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_shipped_K1_r2"
    },
-   "bytes": 1053844,
-   "sha256": "728c48a34dde4c3cb18719ecb1ee1809f6e7250e1afdeedaf5161319d46a42c9",
+   "bytes": 1034323,
+   "sha256": "c5f83d8d204346ecc69bbe49807ce5675fec2a207840e0ec15139532287ad355",
    "run_id": "e827ce2ba14cafe1aa5eab7e9757c283d072f9164d3e71442af1083074002cab",
    "messages": 8041,
    "bags": [
@@ -494,8 +494,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_shipped_K2"
    },
-   "bytes": 1054709,
-   "sha256": "2bd740fbd044d7bc7f2aaa5cc477576aab6946fe5fc41100b260273c656d9da0",
+   "bytes": 1035589,
+   "sha256": "d2876db2d66078742c902bc3159341d29fbb669a7b7802ad3a36e2be46a47d2f",
    "run_id": "92cb22f0833a359613a2c71502ddac751cca02b678a7f1f4baf5c6eb3e5a71a7",
    "messages": 7997,
    "bags": [
@@ -520,8 +520,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_shipped_K2_r2"
    },
-   "bytes": 1053957,
-   "sha256": "b8944c4e3896094857079022a6a27a79924de1bb958edf0f230797d2e22663b6",
+   "bytes": 1034805,
+   "sha256": "032cdaa91f723d6b415b3f79eb14dd6263ff927ac3aed2b8cbcfde0b6057b37d",
    "run_id": "93c23bb71a5968d21a69f8ae82088d5594e8a3f03bca487706785994a86dc4a8",
    "messages": 7952,
    "bags": [
@@ -546,8 +546,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_shipped_K3"
    },
-   "bytes": 1048716,
-   "sha256": "be780fb6cf5d30de24bad69eb0623e070cc64c831744a6d65ad74a60dfbba5c6",
+   "bytes": 1029742,
+   "sha256": "d286e17a523e9916d40cc4ddab9f0db5ad6cc53c6dfb2fa1f6af6a245091652a",
    "run_id": "9f0fd77fd0ee51684f9c35102f48b0ab167014b66bcb85bf12c2375e72c0ef92",
    "messages": 7960,
    "bags": [
@@ -572,8 +572,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_shipped_K3_r2"
    },
-   "bytes": 1046084,
-   "sha256": "244e2b0e301c7951f31797ce00b7c6495b55285d73cc1b09510aca02637685b5",
+   "bytes": 1026725,
+   "sha256": "4394d7a89c854df234ab05ef205fd63786a68d638b7d02e3b59a2a5df2fb8755",
    "run_id": "6a9e08307a9c6e17c700ffc7a881434b83043ed979eea7e085b576da31bbfa70",
    "messages": 8082,
    "bags": [
@@ -598,8 +598,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_shipped_K4"
    },
-   "bytes": 1054233,
-   "sha256": "2658fcb7d0d74d8487515863481e14f962b76ba4fb1f35a2bfa98532cda99814",
+   "bytes": 1035260,
+   "sha256": "b69930750defe69b0d692d922ca0e81e22bf16d714b7eecdc31448f687dd831e",
    "run_id": "b996ee9bd817cb317b207a2ac0fa935e1b5433925487a48ffa0c9774ae8d1d50",
    "messages": 7976,
    "bags": [
@@ -624,8 +624,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_shipped_K4_r2"
    },
-   "bytes": 1060991,
-   "sha256": "b29ab73c61e39b4c9ddcb2f0bc7934c30893ae250ba88a09a34f1edb32d615ea",
+   "bytes": 1041945,
+   "sha256": "2bfa1020973c83afce77f7c8ca008d1efae224c961a800ebdd54098005126297",
    "run_id": "b5edc4d0df949f40079d4a54b3c3d1b5057f06f586f07fa888d09daa55c176a5",
    "messages": 8044,
    "bags": [
@@ -650,8 +650,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_shipped_K5"
    },
-   "bytes": 1054751,
-   "sha256": "5a8ea7a4233f54fd5884835f2c7dda26f1ec852fbdd182daaa71c1c7e8c3ff33",
+   "bytes": 1035804,
+   "sha256": "6d754df694cfaf89d3f763e154b3d798a0e2829339103d23cd80beaf6ae2b096",
    "run_id": "2ce72389e400bed3b931b0707dc1bf780ad711daca0baebfbb0c2266cdb7111e",
    "messages": 7999,
    "bags": [
@@ -676,8 +676,8 @@
     "group": "lab2-kidnap",
     "title": "Lab 2 · kidnap_shipped_K5_r2"
    },
-   "bytes": 1051164,
-   "sha256": "8bcb2cbd0c43c676d06cc032c518af439f745c93a89b743f6e1c9e5dc704632d",
+   "bytes": 1031907,
+   "sha256": "ca1bb5b7697c07b2b7edb7d1473d2bb5d3b4672a80adfae1c1dbb8afb166a679",
    "run_id": "b9e183976ee4450f9429f556bb741488d1c16fc722c568e6aa69910fa5458446",
    "messages": 7942,
    "bags": [
@@ -704,8 +704,8 @@
     "group": "lab2-rl-tour",
     "title": "fidelity_1 tour: wheel odometry and the adopted EKF"
    },
-   "bytes": 2849852,
-   "sha256": "c74c3da891b98ae30bebde9e48ff3443c708ef7c976d41f20ab3ad50758aeffd",
+   "bytes": 2795409,
+   "sha256": "bd846eb359bf8e778b286626c2ee4519672253beea1489f3064021078064b303",
    "run_id": "b751e947fec91bbae9d9421ab6a4c2f75bfbf6e03793eb16e92313e817599ca6",
    "messages": 20447,
    "bags": [
@@ -736,8 +736,8 @@
     "group": "lab3-slam",
     "title": "s1_tour (from fidelity_s1)"
    },
-   "bytes": 1976488,
-   "sha256": "8e450d770c362b36a47865f486bcba9744e00f40e1607ab6d1eb76d435cac9ea",
+   "bytes": 1922055,
+   "sha256": "83bb1f90d47e5330c4fba5d76509df607ef6e6cc74b2586f3a8d4c50d5a4edc9",
    "run_id": "8419d7140048bd4ed4cd37981a1ce52714748735324384211856e2e74f9a88b3",
    "messages": 9678,
    "bags": [
@@ -764,8 +764,8 @@
     "group": "lab3-slam",
     "title": "1_tour (from fidelity_1)"
    },
-   "bytes": 1978360,
-   "sha256": "0f45765304b23c925a6dfd7b923fa8f8862a7ac57c673cefe8c0fb656e4744bc",
+   "bytes": 1924345,
+   "sha256": "aafef13b8fdd027e07c3d18b56e96f75d5ceb98dec51683dffdb08df7c893fa9",
    "run_id": "ed40918e3fb759f63007cb21f4fc05c86766711aa2a5fc8ad85a37afc3d09bc9",
    "messages": 9676,
    "bags": [
@@ -793,8 +793,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · A1_fixed_red"
    },
-   "bytes": 421588,
-   "sha256": "ea98ddba150bd5216875dd8f4d435209d5b3b5e079f2628d90dbf6ba6af25402",
+   "bytes": 387770,
+   "sha256": "686f44a69756266bf28f60b89d6c566956226df29ef3cf0533f836b83d8dad8f",
    "run_id": "d330c0639a1a638ebdf85ef98b5598dacc3424ffdb7ef5d69e59c3d3e2dd369f",
    "messages": 6052,
    "bags": [
@@ -827,8 +827,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · A2_fixed_green"
    },
-   "bytes": 323044,
-   "sha256": "dd615d99ff77c0f6236995bf0defbec8c3ad53fa1d4f156a30512f37b2d3a5ac",
+   "bytes": 297731,
+   "sha256": "ca99316414b841511ab1d1d2016334666e38118a981cd4ae9baf3a1ddbe2109c",
    "run_id": "7068e10dab8741f6ec0b0a7f0caaf38249b44c7dab9b6db9b2e6b43e3223d074",
    "messages": 4658,
    "bags": [
@@ -861,8 +861,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · A3_fixed_blue"
    },
-   "bytes": 148003,
-   "sha256": "63e35e5d9ac720d4e4b3be1d947fab55f732ebe15348612cfb153b72c124bb7e",
+   "bytes": 137320,
+   "sha256": "466617cff0f2fdd6abb58f8bf66d0a38d81c1bb19b7e89faa6f1c8b85d7ad2a1",
    "run_id": "4d6db5dc8b5e86bed9df2a1426c84f768ddba75f08791f35c1de8bf8159e5ffd",
    "messages": 2156,
    "bags": [
@@ -895,8 +895,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · A4_fixed_yellow"
    },
-   "bytes": 237427,
-   "sha256": "5f221a5f1212f2a5ae163571b8ec62edc2fe6ef5ea6c18da840930fb7fd81043",
+   "bytes": 219145,
+   "sha256": "435902f1a2ff527f50f3a29d2aa5ba9605fc06dd9df5efe814a0e4ce8f19a092",
    "run_id": "56e43b9fc56d3c7ad4c6ec7c3e39de314710c28bc5822f7251702430c2b4f663",
    "messages": 3423,
    "bags": [
@@ -929,8 +929,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · B1_colours_s5_red"
    },
-   "bytes": 429096,
-   "sha256": "c0870dec62f6ec7710c9d5ec7627c70fa5f9352e4979a16bde6fdcc717822ea5",
+   "bytes": 395356,
+   "sha256": "360dd57f6e1f2a16672b93bac0ed76613e19916815fff2176eaf2d53c1b509e3",
    "run_id": "f8f6ef71c6a6d1b63db0072b921fb3c28c14d596374b3a594e73331d36560256",
    "messages": 6284,
    "bags": [
@@ -963,8 +963,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · B2_colours_s1_red"
    },
-   "bytes": 308312,
-   "sha256": "b970f911b6d2597c9954a8b7d7d6859d687bd15a15620712775a301b0823918e",
+   "bytes": 285436,
+   "sha256": "0c4f2da463b75cf504d10475fbb2425604ddf559bb8f6e46982e102a6cb4ecca",
    "run_id": "4e40e076bda4eaedf16224d2e30356fd20c13d19f2988b354baecd8da515baff",
    "messages": 4592,
    "bags": [
@@ -997,8 +997,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · B3_colours_s7_red"
    },
-   "bytes": 157394,
-   "sha256": "cabd8c9a2f4d3f04b62fabee7fb8feb7d165a866157e0bb67c4a60c3b716bf5a",
+   "bytes": 145811,
+   "sha256": "264f1d693f2ffb1e1f026d4914c74ceb478f1d78d77ed23918dabdc8ec403294",
    "run_id": "c0958ca39f95a498759a6b5e38f8a8027e2abd711924c62af3102850d286a5c7",
    "messages": 2292,
    "bags": [
@@ -1031,8 +1031,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · B4_colours_s2_red"
    },
-   "bytes": 247466,
-   "sha256": "b423538df8279534954fc5052aa8119aa6ffcc983de7a1ccc9fcb611ade6496e",
+   "bytes": 227972,
+   "sha256": "f056227216330053b8781addc3ab0d54fdab4ef5b6c6737035e506aed6f347bf",
    "run_id": "282bfe7e44f9eded0433b13f6fd1a20566e9980566360c3ed2aa2a8ff7d690bf",
    "messages": 3529,
    "bags": [
@@ -1065,8 +1065,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · C1_green_stop_after_bay3"
    },
-   "bytes": 93540,
-   "sha256": "854596d79be4dd90e97791d71081425eb7a55f0a78a8221b6a19dc28a5e7afdf",
+   "bytes": 86861,
+   "sha256": "d9d8b69ae5045ddee9a8b4609ba2cd1b5205aef9d24427985c9137a8cf9818a3",
    "run_id": "d1ea87548a6f232ce3ba6ec52207e1a4bbb069b01dc6b4f33ab720c08c7cfee7",
    "messages": 1330,
    "bags": [
@@ -1099,8 +1099,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · C2_green_nearest"
    },
-   "bytes": 242939,
-   "sha256": "7da5cc04b8668f60c4c81fcb0e67b08b189194a7551bbe7dc2d55a26d76ffb67",
+   "bytes": 224486,
+   "sha256": "9a06037b3822fb91d439ce5f8bf0bcf248994e0fd474d744e82e8af754eee8b2",
    "run_id": "7c217c4b3431d6d92afc11c1a09ce847db6fd1c0551c054290a75ce88585273f",
    "messages": 3506,
    "bags": [
@@ -1133,8 +1133,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · C3_green_most_likely"
    },
-   "bytes": 254334,
-   "sha256": "476c75fe034f736d88fb4d0598192c4659589fc5b178181435286bf3382cb8a5",
+   "bytes": 234343,
+   "sha256": "5fc8d87d3e8d5efb12559b66ac34124ed50545334a755c2275c1bbe2148d06fa",
    "run_id": "594de323fc9281d74285b832c30a3d7e9ccad1cf0517319fe1e3f3432f817b19",
    "messages": 3670,
    "bags": [
@@ -1167,8 +1167,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · C4_green_reverse"
    },
-   "bytes": 357582,
-   "sha256": "b7b59cdd3ddfa8e4565005cbf599dce004053044fa880014a342dfbf3232d483",
+   "bytes": 328656,
+   "sha256": "d818d762d80442b0887e8e790157afbd242040c5a330dc7ec4aa0c20d8501c7d",
    "run_id": "8b78f500ed22bb11f84481eb4b9ca5543580c142364571cd34c94130f70a106d",
    "messages": 5092,
    "bags": [
@@ -1201,8 +1201,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · D1_positions_s1_red"
    },
-   "bytes": 330264,
-   "sha256": "13a21d4dfa440583c928c7e3a872c576b482450d0d66889f811452fc7515d973",
+   "bytes": 304359,
+   "sha256": "44e41a214e7f36951776d0639c3dcab0e50b08f4633474571ed1e7a4b91b2346",
    "run_id": "833f77e7db457444cccbbdb19b759e605564dac930c5975c45562cfcef999f0a",
    "messages": 4767,
    "bags": [
@@ -1235,8 +1235,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · D2_positions_s2_red"
    },
-   "bytes": 242566,
-   "sha256": "72e1a09a74b749f74addfb84e791de8b423de29f8c726afb8399490d640b2a7b",
+   "bytes": 224205,
+   "sha256": "e4d3dd328dc32e3d6b224ef17bc031d5268edc3e0579425029fdbc8b54dd34c4",
    "run_id": "28bda67a934177616a4ce4b6e6a9fcf6832b767d5a5510224c50421ac38a4b6b",
    "messages": 3493,
    "bags": [
@@ -1269,8 +1269,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · D3_positions_s3_red"
    },
-   "bytes": 325508,
-   "sha256": "176440b1c67a0c3d8dc92756a536469095170273e2668946b699d8e3b760425e",
+   "bytes": 300356,
+   "sha256": "a7b3d673a47818aeaf0363df981751ae62fcb973e330c107ed8628060e21083e",
    "run_id": "d18d0e48bc936e8bb3f4f6ffb3f775f44b04af783dec7c5a0823f2ec60161157",
    "messages": 4721,
    "bags": [
@@ -1303,8 +1303,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · D4_positions_s4_red"
    },
-   "bytes": 325174,
-   "sha256": "a4e67351facb54976167275c1b4bfb1d26633b570feaa57a99dc0f30ea8b7f53",
+   "bytes": 299883,
+   "sha256": "e8b3c152c234b72b1de60c7708193f750fba793d4def011c19be629a772b078f",
    "run_id": "353bb2c0d5ba5208a9259fbd58185d584f33d4fea8c12d8dc2657037b61b4b00",
    "messages": 4712,
    "bags": [
@@ -1338,8 +1338,8 @@
     "group": "lab4-search",
     "title": "Lab 4 · B3_colours_s7_red.void-1 (void)"
    },
-   "bytes": 22965,
-   "sha256": "08aa26bb8bec79cb9811e3c510feb052a172ce67e32e8445b29efa35e275a525",
+   "bytes": 22524,
+   "sha256": "3b82a7013cf2282e6afad918c69b5e2a89717a62d0606f25fd0405539dd94863",
    "run_id": "b1c7c5024662bef557093ffc0f23d92dca8a8e69c910f747dbb0352f6f78416c",
    "messages": 370,
    "bags": [
@@ -1366,8 +1366,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · DWB DWB_1"
    },
-   "bytes": 190785,
-   "sha256": "4916059c6939f8269e2dc95453cbe9a87733172baaa2f2d1a1a610424bc10c12",
+   "bytes": 187784,
+   "sha256": "7f421c8f5c75ffb993061e805764ae55a86c020a45a57d61d0815be536cf40c4",
    "run_id": "39d5fd6410b2f42010a41f7c58c3f579c5cd4c9b0db88c1dcc1b16b59325a33c",
    "messages": 1415,
    "bags": [
@@ -1399,8 +1399,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · DWB DWB_2"
    },
-   "bytes": 188732,
-   "sha256": "cf387a1c2ede9d76b0bd67a78dcae3dd09a52c90cfdcfad1b2aa3a3109cf7bab",
+   "bytes": 185648,
+   "sha256": "6ebc74b3f6216587d42a88b48628be6445f03fcfe47ba4c45a1c168700634b2f",
    "run_id": "f98288825274588299f6bfa195db8579aa89be1cd789ad158504e0440b2f93dc",
    "messages": 1390,
    "bags": [
@@ -1432,8 +1432,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · DWB DWB_3"
    },
-   "bytes": 190727,
-   "sha256": "2de0c7a3fd3f9f2098984eb0c19cd4d534d324f569c2bc041c8a5bb0de4aadd1",
+   "bytes": 187567,
+   "sha256": "aecf9c722798b0dccd3fc934a9fce5ac656c43d9880176c4ad85b630916e18cc",
    "run_id": "cefd83eeedcefb3b886e1ccd201ee55011e40d6f4ef9aea0a06e1aeff24eb2ae",
    "messages": 1397,
    "bags": [
@@ -1465,8 +1465,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · DWB DWB_4"
    },
-   "bytes": 189257,
-   "sha256": "4964665dec9cee70319390412d69b72af6bcc73f8920545915283e14a00c1d80",
+   "bytes": 186103,
+   "sha256": "bb41471e8b67365ac0e0f91e271e80608d1e922425829f915b6f7c5e44014034",
    "run_id": "b58608079ac24b12303eacdbf803dfcb7d16e3608e0fe1c5fdfb4e5204fc7c68",
    "messages": 1410,
    "bags": [
@@ -1498,8 +1498,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · DWB DWB_5"
    },
-   "bytes": 185999,
-   "sha256": "b23fe3fe015067038da64016327ae38691ea9bcf54222804fb3aad2ebffd7bca",
+   "bytes": 182938,
+   "sha256": "0d7e6a32ecdddfa431097d7ef23b495dea7dc2a6bb1d7ea0a4b9ef3417c0d2af",
    "run_id": "525f9b0fcdfe57ed8f4fd40288042f5a5f2510dec625349209cf8e38112a05b8",
    "messages": 1318,
    "bags": [
@@ -1531,8 +1531,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · MPPI MPPI_1"
    },
-   "bytes": 222646,
-   "sha256": "90fd90215e52acbee6b9eed1400f6937eb5b51b331040b301b7fece7e7b0bbf3",
+   "bytes": 219718,
+   "sha256": "9224eae5dd974ef5dc659979338c0b390362933a4abd2c04023e782c63f33191",
    "run_id": "3e4f342956e5886f6f50470bb3a4e0af2cbbbad8326a5f2b795e1e2072a29c94",
    "messages": 1539,
    "bags": [
@@ -1564,8 +1564,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · MPPI MPPI_2"
    },
-   "bytes": 224566,
-   "sha256": "f08ab44b7ccaf5ef4d46c414c9163e4b7c700763db44e7e2e0198c6724354def",
+   "bytes": 221147,
+   "sha256": "ac3e7d96213d4c83fc46b951bd36631d65e529f485509950dd8c9691efcfc3f5",
    "run_id": "b452dc346b7b64be6826543f6c1da3315359de25b0419184e4fbf68cf4464f5a",
    "messages": 1521,
    "bags": [
@@ -1597,8 +1597,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · MPPI MPPI_3"
    },
-   "bytes": 220040,
-   "sha256": "cf0b68fb4d3e41602d7dd45cd9390001ed63d17a2c016e1d6d0b48b171e4ce54",
+   "bytes": 216719,
+   "sha256": "e1d2e13fcb6ebe997b3f74d8bd1ce98326e9c8d0d1ce519d3a27a48b5610e083",
    "run_id": "96283c35e39822cecdf8102cfecd7fe44af9e22f9461f0c770c5ed9d95d69b20",
    "messages": 1520,
    "bags": [
@@ -1630,8 +1630,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · MPPI MPPI_4"
    },
-   "bytes": 225733,
-   "sha256": "3d5450e6deb673af794c32155cc6a3129dc4c3a64bf3db21b730fa41e88a2d93",
+   "bytes": 222214,
+   "sha256": "b6b035089d257c79cc38ca9794ce5ff29c6cbe4fa47665643e2287329f60619f",
    "run_id": "aa819c823422f04d67b1b57fe21fdfadb73612a8e4077bd4a3bded7d0f05ef84",
    "messages": 1600,
    "bags": [
@@ -1663,8 +1663,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · MPPI MPPI_5"
    },
-   "bytes": 220056,
-   "sha256": "84c34128ff009ea5d8838b4ac8083e1ad48e9519fbdf52a3847697a998305270",
+   "bytes": 216475,
+   "sha256": "b77a47f4c0a6859d94fd7eae04c151f216e02cd580e0ef1d4a57c888e8a73588",
    "run_id": "08e05637d431674d4afc3863bb57e79b7c5087e3d69bbec8ec2b5b1fea46a496",
    "messages": 1490,
    "bags": [
@@ -1696,8 +1696,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · RPP RPP_1"
    },
-   "bytes": 200085,
-   "sha256": "f54b78db395166117e36940e9918e157c88d8675c8c1915189caee31431e787e",
+   "bytes": 196756,
+   "sha256": "186374ad5d4e7cb955dd49bde5abf94d242c439eead74c10d26e3c177506e110",
    "run_id": "ed484c5484f38cbce97d655f958b3ec720244737111472c237440a62d37dc2cc",
    "messages": 1446,
    "bags": [
@@ -1729,8 +1729,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · RPP RPP_2"
    },
-   "bytes": 200899,
-   "sha256": "af2e1f27a97573cecb751f2440a993a0fe326df5bd89b8e4dc0aff00f8121698",
+   "bytes": 197619,
+   "sha256": "110a9326cb7373636fcf71a7d0c4a0191b9a776a137ab98ba55461273a6238bc",
    "run_id": "334c2e4413150a7f8e9ea333f397f51dd6ee0018a218c771a0674bc4939d3235",
    "messages": 1468,
    "bags": [
@@ -1762,8 +1762,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · RPP RPP_3"
    },
-   "bytes": 203539,
-   "sha256": "af525fb3eea995e8e75772d8dc99f2a71b5890ae2a7859c2a1c43212fbe35415",
+   "bytes": 200143,
+   "sha256": "8e678de6f6d76213dae3627cf8f17549c2b14261b99b9d8da860713949bedfa8",
    "run_id": "c0291b3008ff6b6bb878735527a3d095d7d47da4717f1ba943cf4458e7fbfb7d",
    "messages": 1451,
    "bags": [
@@ -1795,8 +1795,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · RPP RPP_4"
    },
-   "bytes": 206965,
-   "sha256": "e3ecf4bb1d026248554bbb21b9d23a3e062b199150a97d73010d6a3564a9f5dc",
+   "bytes": 203693,
+   "sha256": "fdd4368e588ec27eb950be89c9bf15d8b187c498baa4eb5da0f41388affc4778",
    "run_id": "119a4da1a6095cf85270f9a06ed562762440ad8e47d06813cfd362037daad1e0",
    "messages": 1548,
    "bags": [
@@ -1828,8 +1828,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · crossing · RPP RPP_5"
    },
-   "bytes": 198055,
-   "sha256": "fb6ed33b26206e6203e13622083e96c5fc1a5b13a795886022bbee81338223a1",
+   "bytes": 194248,
+   "sha256": "4062ad8ed4ec7187629c51d1381616abc8f0bcd3af4a62a22154e9cf130665b4",
    "run_id": "22de20028b9030a3cf5432450c789bb36c3664dfb6275855f11b368292d9b3b1",
    "messages": 1413,
    "bags": [
@@ -1860,8 +1860,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · mislocalised · DWB DWB_1"
    },
-   "bytes": 24472,
-   "sha256": "e2d3f1fa3d3b6b4e304337500fd426cb7f3fc02ff8adc6c708769e6582499bfc",
+   "bytes": 24453,
+   "sha256": "cb62c931a1e2c1a45715f5c9d0c65228ca3a2f871bc48dd162138805bea2dcc1",
    "run_id": "a9250f7dd5d92f630027d23c09a41b294ac8b38c926cc392ef38d7f740fc0e09",
    "messages": 259,
    "bags": [
@@ -1892,8 +1892,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · mislocalised · DWB DWB_2"
    },
-   "bytes": 24199,
-   "sha256": "9d54aa4f108d64b821c1e010a17f3d05a0ec750c3199a2852cc1165ff59caf1e",
+   "bytes": 24178,
+   "sha256": "1b052855e850be1ade15b3ce3699fb9b2d10fb7844d7536854b4369ba9fabd72",
    "run_id": "6213e8e47536544a19309a73b1a41f3b991dc8f820086920bfbe02cd89b4b44d",
    "messages": 250,
    "bags": [
@@ -1924,8 +1924,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · mislocalised · DWB DWB_3"
    },
-   "bytes": 24424,
-   "sha256": "43661a5e43f97338de69317251fdc7bc03a71b84ba5af39fd6b964dad7b091c6",
+   "bytes": 24410,
+   "sha256": "ca37bba7f11fb09561fbf883c6bc5c9b1025fef24b8f5fca05f2f36c8e634690",
    "run_id": "be1ed63591463b9c6a755660970e32b1f213f8cb1298827320e4d36304edc8b9",
    "messages": 258,
    "bags": [
@@ -1956,8 +1956,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · mislocalised · MPPI MPPI_1"
    },
-   "bytes": 24094,
-   "sha256": "4106317336bc3dbe22ab5e6852312ba3e04fcba450d5974d64c10e470c0d178c",
+   "bytes": 24077,
+   "sha256": "c3ee4e3fb1bcb239273599f222fc852c73ad98948a5d871d193c35440152ca1e",
    "run_id": "5f266d4875e2c58d23d5409cb0600f60863b8881cd1f6380e42874318df95c81",
    "messages": 249,
    "bags": [
@@ -1988,8 +1988,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · mislocalised · MPPI MPPI_2"
    },
-   "bytes": 24107,
-   "sha256": "3b76e7dbe7c57074a28298fb5cea40b247e426cf7f1b9ee9c383ce4935ee62c3",
+   "bytes": 24093,
+   "sha256": "0cd6176097ac8abad796a85372c714a4c0f13e700e4f8334084f0d589ae86d05",
    "run_id": "2728c3c9432330c7e23fb59d93e9cecf7e0a336eb10de94d173fc3a521d89a92",
    "messages": 256,
    "bags": [
@@ -2020,8 +2020,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · mislocalised · MPPI MPPI_3"
    },
-   "bytes": 24455,
-   "sha256": "2ae1b5d9e1b9e58c5203c49c80aa20de498643aadfce82f7990cc450900abeff",
+   "bytes": 24436,
+   "sha256": "4e279b05bcc600b2b4ce905e77d08f51f52e3f6a35e7ae4f654dbdb3056330ee",
    "run_id": "521f40201c1aeb6def64cb8464dec2ba219bbe9239beb9510ec37af95e944284",
    "messages": 257,
    "bags": [
@@ -2052,8 +2052,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · mislocalised · RPP RPP_1"
    },
-   "bytes": 24269,
-   "sha256": "74fc28502c73d4f2b7bac70566181b3b851f3957dc7359c21bfcee1b1e6eeb51",
+   "bytes": 24248,
+   "sha256": "1dabd5b75c0c4467c5d532090af88c1ba7ddd49f7ea26d6cdba64b48cbfed6aa",
    "run_id": "34418cd4948f574122ada4f3df016a0073ee58642f6c1f2f9644649a8d3aa6a7",
    "messages": 254,
    "bags": [
@@ -2084,8 +2084,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · mislocalised · RPP RPP_2"
    },
-   "bytes": 24434,
-   "sha256": "211b479f158e12f71190a232b2d11eb3d27ee3ea1c1cbc7e813fdd07be0fa5ef",
+   "bytes": 24421,
+   "sha256": "e838c1357abe60d32f7b0e483f093e0938251d68309c636564f3dad293140337",
    "run_id": "61198b483f222aa618229840b7d35548c74baab78dd04b50cfe632b4bebd6822",
    "messages": 259,
    "bags": [
@@ -2116,8 +2116,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · mislocalised · RPP RPP_3"
    },
-   "bytes": 24333,
-   "sha256": "510dde62c55a0c2a1a5d1a43b7923f2d5b7becf4307060c0c21b04a9c5386e70",
+   "bytes": 24314,
+   "sha256": "93dde00334e16b4dd16b1bb098fc498710c71214ff090191c4845adc79620425",
    "run_id": "c64ecaced59b1d45a9e19fa3f6bd3bb9c0ed65a5bcc4bd7ddd3a218a9c343c66",
    "messages": 256,
    "bags": [
@@ -2149,8 +2149,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · DWB DWB_1"
    },
-   "bytes": 194720,
-   "sha256": "0e8ed62733ffd9453d901160c64b520c9e5d673dc132fe4e503efa9f2006f255",
+   "bytes": 191517,
+   "sha256": "fde47416f4962fa6a9de23d8b81954ca37873ef5ff6f0f10678204c28c57f2e5",
    "run_id": "92e24e3bd7fc8266c45376a5d30b9bb3ef9eb756f34424da318551596feb9d64",
    "messages": 1414,
    "bags": [
@@ -2182,8 +2182,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · DWB DWB_2"
    },
-   "bytes": 195321,
-   "sha256": "a71ade31e3c7927d62eb6717fcba22979f248902f6f0e6f9ddfbe7e0504290d5",
+   "bytes": 192160,
+   "sha256": "8145af3e9ef24d9aead91bdd18538314f1329002ebe76eee4ff0973ddecf0bc1",
    "run_id": "2f158606f32e0e3ad67a62e81b3c6c5b83f4b0d363341fee64f8528b00431cb7",
    "messages": 1407,
    "bags": [
@@ -2215,8 +2215,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · DWB DWB_3"
    },
-   "bytes": 194082,
-   "sha256": "3f2b00ea3e614ff98d4863803ad17c34916a54ea1482892ca52c7084b515366c",
+   "bytes": 190909,
+   "sha256": "42b7c33624d538f0c1f938dc18c9e6f5974524fba029fb631a0eeb8d78558959",
    "run_id": "ee7f604fbf80e4546accb8ca765bc1e37592f63d27134ab4e9ac40004a2f6779",
    "messages": 1409,
    "bags": [
@@ -2248,8 +2248,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · DWB DWB_4"
    },
-   "bytes": 194112,
-   "sha256": "8e7e23216ecf504deb1a794b575cc1bef7c9cd93de7f7f6edc8f420b12b8c610",
+   "bytes": 190874,
+   "sha256": "1e8b43f1e3bfdc7894424d4e28a96fe5ba953a2aeacf44bda3766130d1248639",
    "run_id": "aa2f782c5982d50a07b4719f41b8b934deeb7a1bf6807776fb21c5308bcfaa7c",
    "messages": 1412,
    "bags": [
@@ -2281,8 +2281,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · DWB DWB_5"
    },
-   "bytes": 193381,
-   "sha256": "186820f097a4c366844a1d1793137643b3c22a59a6d3c74e0aec20c3852ba3ca",
+   "bytes": 190086,
+   "sha256": "15f56e0c4ce808462e146f6a2ba1ed23c634ba71910a3737bd73a4b3b3678836",
    "run_id": "c9070d6e648968c389a7f7d4eff290822ce89540c94d9888bcfeb443e821760a",
    "messages": 1421,
    "bags": [
@@ -2314,8 +2314,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · MPPI MPPI_1"
    },
-   "bytes": 233273,
-   "sha256": "1eea1e86580e180c54dd60210a757fddf77b974c61a0d584128045a19450339d",
+   "bytes": 229542,
+   "sha256": "56ed77a1a98858e8a73f23c9f3d709496cdefc9004b8802a2fa6985b434b790f",
    "run_id": "10ff21950ee1f196105d537758b552d0cb33aa0717edda257a0133b968cf3337",
    "messages": 1560,
    "bags": [
@@ -2347,8 +2347,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · MPPI MPPI_2"
    },
-   "bytes": 233677,
-   "sha256": "dde12118872f7c99bdd7a3b11c05e866f97b30b60c2e75589b7cec8b8167ea0b",
+   "bytes": 229294,
+   "sha256": "bb257d3efc7d56459e84aa6193b1ca2a41c467debb18daa2ff4facc2ba3c01d0",
    "run_id": "963389ebf8a740c65aaeeae12ee41ac8476278790599b6f069d987dd19f5900d",
    "messages": 1569,
    "bags": [
@@ -2380,8 +2380,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · MPPI MPPI_3"
    },
-   "bytes": 229794,
-   "sha256": "559064acf9f6c0f54dcaa01962328e798bce01b078678c25723507ae8256194b",
+   "bytes": 226265,
+   "sha256": "4723b706d35d49f2b9ee1f7a841b303b4485420381f5b53356ee1fb4613aceb2",
    "run_id": "22aefbe80853547604112027fa30a1d94f60dbf5ec1236985242fb10f851befc",
    "messages": 1548,
    "bags": [
@@ -2413,8 +2413,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · MPPI MPPI_4"
    },
-   "bytes": 235305,
-   "sha256": "a6452b7bcaf42d0021317c9e38287fc140633c6945be800852f956bdd96bb0c0",
+   "bytes": 231587,
+   "sha256": "7a5d0c5f3050ca5ca79ffe184d1a72715289aa423b0fc82b24e1c9c2c13bf110",
    "run_id": "b4beed48fa2c2b9ebfcd617ad1bb41ae43f6152e67facb1fb9ca92ee9014c43c",
    "messages": 1586,
    "bags": [
@@ -2446,8 +2446,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · MPPI MPPI_5"
    },
-   "bytes": 233055,
-   "sha256": "d68f526cf0f5e9751554b57020fb6e4cae509f132c900b734e98ec9f0e7bec47",
+   "bytes": 229402,
+   "sha256": "9b1b35de459dccb297f3bfae493190bdc4525b323d1b2dca01ca9443a20f459e",
    "run_id": "7569a2ad533fc643bad762aff227f2bbb6c02511b353f1337f7aa0f5f366815c",
    "messages": 1562,
    "bags": [
@@ -2479,8 +2479,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · RPP RPP_1"
    },
-   "bytes": 138079,
-   "sha256": "dfc8b15b7e82cbac33d7951ed06915745f624ff1f6dbb7d491054fd9c6747682",
+   "bytes": 135981,
+   "sha256": "66ad71ef41c4975c75d3967406afb667950b9a5167208a913deb524870457246",
    "run_id": "3612aed4371b7dd489e7ef340d0098a144cf1d3acc3f8b60977ad0b95d626a88",
    "messages": 998,
    "bags": [
@@ -2512,8 +2512,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · RPP RPP_2"
    },
-   "bytes": 141223,
-   "sha256": "436051ac6cfddc75b63a73c1226d53ef1a9a409ae76b34e8a32efb7f9b2591e6",
+   "bytes": 139129,
+   "sha256": "2690fb587cf70e22847e267a4f2069e3ae545cedaaef37650c4833c32202431d",
    "run_id": "2afeb09c480b48ebafe12117fbbea6e2d9451bd74308a6c03aaa013909621304",
    "messages": 997,
    "bags": [
@@ -2545,8 +2545,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · RPP RPP_3"
    },
-   "bytes": 141096,
-   "sha256": "473dca0fefe9c5774e4af67fc95d8a9c8f8332878c8b64827525ec2f3bd2de73",
+   "bytes": 139014,
+   "sha256": "307da7520d49342f951efcecc0473f66b501ecf41daea78587a0baae3e3a0cfe",
    "run_id": "868a5f0e548bfbf228909e68753809ceed51d3f4ad7583181de88c66f3666625",
    "messages": 1005,
    "bags": [
@@ -2578,8 +2578,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · RPP RPP_4"
    },
-   "bytes": 138374,
-   "sha256": "e502de84bad5d3e45258c7ef9a265d4310a7f9760c4d7395f94df53220185c01",
+   "bytes": 136219,
+   "sha256": "67dc1002d56ab3fe3e58d7f2e291d219e61305a226fcd64b310560e76c3675eb",
    "run_id": "c7958cd85250d9ec5666c6cabfddbe9dc731a7ddcf1cd559f3ae4e815139edb5",
    "messages": 1013,
    "bags": [
@@ -2611,8 +2611,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · oncoming · RPP RPP_5"
    },
-   "bytes": 141647,
-   "sha256": "37a24b4b58184d786d8e3496bd04ff60125f0a4d6643d08edd1d7c3a02470edf",
+   "bytes": 139515,
+   "sha256": "03d229c33a155a1cd95e772dd227ebbd7eff548a21ad44507314f713fa23dece",
    "run_id": "47bd17b54c3e38d4aab6db59e75ad7a31537cee4085dc1271c5eb611059db25d",
    "messages": 1002,
    "bags": [
@@ -2643,8 +2643,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · DWB DWB_1"
    },
-   "bytes": 249815,
-   "sha256": "66ca4084d7aa041487eb6cb4d41db7d7f376097920059d9328ad264e42c43416",
+   "bytes": 245089,
+   "sha256": "f62311a0b12ac631ad7faa8a818be6258a716609e3ce84fa78f8906dae64f710",
    "run_id": "0384dc3da483bc791ad2bd2cefdf6218d10fb713f7d69b88f334cb15eaf82e1e",
    "messages": 1449,
    "bags": [
@@ -2675,8 +2675,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · DWB DWB_2"
    },
-   "bytes": 236251,
-   "sha256": "6a1a8d214b05a3474751456a60a895d3493c07848420baa2171ec23ad25bbab4",
+   "bytes": 231812,
+   "sha256": "9700f3caff136744422bb6231e1833918827c0b261cf8a9b7270de7a2c8297ca",
    "run_id": "037c840cfde74625c7018ae1698ab53646fc96e439420978ed9b8e2239327b20",
    "messages": 1352,
    "bags": [
@@ -2707,8 +2707,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · DWB DWB_3"
    },
-   "bytes": 243085,
-   "sha256": "e2397440fb0940de64b2e58b7cb79cd841879482534253d47669033c7a8a0b44",
+   "bytes": 237870,
+   "sha256": "487f785696d3b2883c34db34f6d672ffdaa35b426163115c0b92c0f0fa887f23",
    "run_id": "3deb751ebc96f4b6401cf44f14fffba6762e28aa18e04a466b56602c5a216a54",
    "messages": 1391,
    "bags": [
@@ -2739,8 +2739,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · DWB DWB_4"
    },
-   "bytes": 251531,
-   "sha256": "b299f2c7358ee68b79bda9904d731ad31f067676369ea8e2ceb447812b717582",
+   "bytes": 247061,
+   "sha256": "18b3bcfa9571a08bf6fe3b98b792d70fe46b4e1cd4a0d18eaa130bb6438756ef",
    "run_id": "46b3d59f23af68b9089c2a7e932def82be872f62e323e44cb677ea910eb482f5",
    "messages": 1423,
    "bags": [
@@ -2771,8 +2771,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · DWB DWB_5"
    },
-   "bytes": 250716,
-   "sha256": "5765efe332b208a4a20a15994f1bb2f40c661b8fcca638eafdd08c85f963a58a",
+   "bytes": 246500,
+   "sha256": "304bbf506e05dbfb9a0b0f4d04967e339a8225ad5f8890eead141da79000a789",
    "run_id": "52ceb6e32a0b40da95876e04b3a67288c630826283e7b644744de4d9d82a6ea3",
    "messages": 1422,
    "bags": [
@@ -2803,8 +2803,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · MPPI MPPI_1"
    },
-   "bytes": 343754,
-   "sha256": "4f1ed363ddedf3c25293b6e3f70c6863b2c98ff4aa93764a49301ef88ed91020",
+   "bytes": 337709,
+   "sha256": "d95b2ba842a0f26829513fe373491dbcc481b84a5840a2c9680a7158849498eb",
    "run_id": "c80553dcd3db85e624b73becddcf975a5ca28acd904fa7eb8fc7c2e1c83dc63b",
    "messages": 1795,
    "bags": [
@@ -2835,8 +2835,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · MPPI MPPI_2"
    },
-   "bytes": 346025,
-   "sha256": "60aa6d27dcbe86aa6ecd7f7c3b883826a66f2068e64e6da6a242af62ee9ae2f7",
+   "bytes": 341182,
+   "sha256": "4492e956ba1803c3ab95b888dbe3ffc8636dc37a411d62c85fa51b97afef6424",
    "run_id": "e6bfc2b2710cc1642f40ae9b41952d6cffb861ffaa543d8ec0822056ec6018e5",
    "messages": 1852,
    "bags": [
@@ -2867,8 +2867,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · MPPI MPPI_3"
    },
-   "bytes": 345170,
-   "sha256": "858f6988150334b4c4cb5295f12fb9060108a5be41a0bb90e9f4b41bb6ad4016",
+   "bytes": 339194,
+   "sha256": "5982fb55353a083c6e1b5455615ab6312df7cc1a9861f35b7608baaedec489b2",
    "run_id": "8ac565c6d5c3f160ed9d4ab5a33c4ed610c94a13ef81b6732905617c85c74fe9",
    "messages": 1800,
    "bags": [
@@ -2899,8 +2899,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · MPPI MPPI_4"
    },
-   "bytes": 345876,
-   "sha256": "90902d04c7a9cef65dfc694c8c631a80fd916323f56b971a96036d79021256c1",
+   "bytes": 341135,
+   "sha256": "9fa2edb66fbc53de56507c0782c810256541ae60d57d68e16f4411d76638054d",
    "run_id": "8c63123a5f11715e15c667bf0d29900d561b6b2fc515b6598de9e3e655b70ca4",
    "messages": 1820,
    "bags": [
@@ -2931,8 +2931,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · MPPI MPPI_5"
    },
-   "bytes": 352692,
-   "sha256": "2092463d9a71b27ae4833381fb33464ae7fce0292a5fe8681bea2bc6f20374ac",
+   "bytes": 346281,
+   "sha256": "e21a2ee3dc05f008d20d88d4a5b60ebd9463859527607ec7e957c5a1671cbc30",
    "run_id": "520b4518af2c7373439f909a323f4eb32c9effcaa9b8bad46ca4a84a93b22051",
    "messages": 1871,
    "bags": [
@@ -2963,8 +2963,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · RPP RPP_1"
    },
-   "bytes": 332951,
-   "sha256": "6167d5cd9eaf720f0728a232c94e4e6dff1471eda60ab8419d730d27fa7cb97b",
+   "bytes": 326990,
+   "sha256": "1d0b8c4f281bb920518267487b5ac233cb9b7ffb573c9a39dd33e800da1c1a43",
    "run_id": "4f87cd954893917b6abf9c22a91b126229e586c5a11047c8ddf3f96b59101459",
    "messages": 1773,
    "bags": [
@@ -2995,8 +2995,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · RPP RPP_2"
    },
-   "bytes": 330653,
-   "sha256": "954dede4eaddac4f98c5210137d9b39c7edca3ca53b774fee99a38fe5d649008",
+   "bytes": 324737,
+   "sha256": "955ebe84fc1bcf092c1808aa5924299ebd366091e9aea1ab1e1c6af833f6bd41",
    "run_id": "039465c744f4c612580af6770b85a27650b7c0d1078d4ec02d33851c1e080540",
    "messages": 1749,
    "bags": [
@@ -3027,8 +3027,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · RPP RPP_3"
    },
-   "bytes": 330521,
-   "sha256": "33b490408c4ab930f9e0757d172c310c56f05b67d3be6524274e101f958a310e",
+   "bytes": 324605,
+   "sha256": "c24b78e1d2219a5475770109101a22a696ab25c7ae48bb2f42844844a3ee480e",
    "run_id": "a4b42576ed8a52a3bd9435b5f4e23451937271940ba0ff7c4b5b88a23dc8013b",
    "messages": 1701,
    "bags": [
@@ -3059,8 +3059,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · RPP RPP_4"
    },
-   "bytes": 330578,
-   "sha256": "855b150d1cc9788d46773b3281405b6da555b58fa9bc681f11e81d10fd0e33eb",
+   "bytes": 324586,
+   "sha256": "5b84e1846845773a73fad2ff04b54409bf09527a738a252d0f303846c5d661c5",
    "run_id": "efc88fa02ea57b517092feef4cfe52571a84fa7034fee2fc220f8606467c38e7",
    "messages": 1707,
    "bags": [
@@ -3091,8 +3091,8 @@
     "group": "lab5-move",
     "title": "Lab 5 · static_room · RPP RPP_5"
    },
-   "bytes": 335681,
-   "sha256": "91d7325f6612200d210da3af597507aab6c6739e76d4ed84a520f7d767374551",
+   "bytes": 329507,
+   "sha256": "79c898fc4e703da36bb999cd9f037ce5e45d21d62e130d3ab2ccbcfd1be5c4d3",
    "run_id": "23d84b505579f82478fe043fa99a40994c0fe6105f5b565e884891625bc822d9",
    "messages": 1886,
    "bags": [

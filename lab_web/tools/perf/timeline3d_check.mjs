@@ -26,7 +26,7 @@ const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) =>
 const SITE = args.site ?? 'http://127.0.0.1:4244/coco-labs/';
 const OUT = args.out ?? 'timeline3d-check';
 mkdirSync(OUT, { recursive: true });
-const start = conditions();
+const CONDITIONS_AT_START = conditions();
 const targets = [['replay', args.replay ?? 'lab5_crossing_dwb_1'], ...(args.casefile ? [['casefile', args.casefile]] : [])];
 
 const b = await chromium.launch({ args: ['--use-angle=gl-egl', '--ignore-gpu-blocklist', '--enable-gpu'] });
@@ -93,6 +93,6 @@ const verdict = {
   step_keys: rows.every((r) => r.step_forward === 1),
   no_page_errors: rows.every((r) => r.errors.length === 0),
 };
-writeFileSync(join(OUT, 'timeline3d.json'), JSON.stringify({ criterion: 'M4.6: the timeline in every camera, including follow during replay',
-  verdict, rows, conditions: { start, end: conditions() } }, null, 1) + '\n');
+const result = { criterion: 'M4.6: the timeline in every camera, including follow during replay', verdict, rows };
+writeFileSync(join(OUT, 'timeline3d.json'), JSON.stringify({ ...result, conditions: { start: CONDITIONS_AT_START, end: conditions() } }, null, 1) + '\n');
 console.log(JSON.stringify(verdict));

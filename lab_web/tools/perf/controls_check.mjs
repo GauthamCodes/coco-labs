@@ -29,7 +29,7 @@ const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) =>
 const SITE = args.site ?? 'http://127.0.0.1:4244/coco-labs/';
 const OUT = args.out ?? 'controls-check';
 mkdirSync(OUT, { recursive: true });
-const start = conditions();
+const CONDITIONS_AT_START = conditions();
 
 const b = await chromium.launch({ args: ['--use-angle=gl-egl', '--ignore-gpu-blocklist', '--enable-gpu'] });
 const ctx = await b.newContext({ viewport: { width: 1400, height: 900 } });
@@ -149,6 +149,6 @@ const verdict = {
   tab_hands_back: checks.tab_hands_back === true,
   no_page_errors: errors.length === 0,
 };
-writeFileSync(join(OUT, 'controls_check.json'), JSON.stringify({ criterion: 'M4.5: README 5.5 controls in a real browser',
-  verdict, checks, errors, conditions: { start, end: conditions() } }, null, 1) + '\n');
+const result = { criterion: 'M4.5: README 5.5 controls in a real browser', verdict, checks, errors };
+writeFileSync(join(OUT, 'controls_check.json'), JSON.stringify({ ...result, conditions: { start: CONDITIONS_AT_START, end: conditions() } }, null, 1) + '\n');
 console.log(JSON.stringify({ verdict, cameras: checks.cameras, errors: errors.slice(0, 3) }));

@@ -31,7 +31,7 @@ const OUT = args.out ?? 'control-latency';
 const N = Number(args.presses ?? 100);
 const CAMERA = args.camera ?? 'follow';
 mkdirSync(OUT, { recursive: true });
-const start = conditions();
+const CONDITIONS_AT_START = conditions();
 
 const b = await chromium.launch({ args: ['--use-angle=gl-egl', '--ignore-gpu-blocklist', '--enable-gpu'] });
 const page = await b.newPage({ viewport: { width: 1400, height: 900 } });
@@ -80,6 +80,6 @@ const s = [...ms].sort((a, c) => a - c);
 const q = (p) => s[Math.min(s.length - 1, Math.round(p * (s.length - 1)))];
 const res = { criterion: 'key press to visible motion, median over 100 presses: about 50 ms or less (README 7, M4)',
   camera: CAMERA, presses: ms.length, median_ms: q(0.5), p95_ms: q(0.95), max_ms: s.at(-1), min_ms: s[0],
-  pass: ms.length === N && q(0.5) <= 50, latencies_ms: ms, errors, conditions: { start, end: conditions() } };
-writeFileSync(join(OUT, `control_latency_${CAMERA}.json`), JSON.stringify(res, null, 1) + '\n');
+  pass: ms.length === N && q(0.5) <= 50, latencies_ms: ms, errors };
+writeFileSync(join(OUT, `control_latency_${CAMERA}.json`), JSON.stringify({ ...res, conditions: { start: CONDITIONS_AT_START, end: conditions() } }, null, 1) + '\n');
 console.log(JSON.stringify({ camera: CAMERA, presses: res.presses, median_ms: res.median_ms, p95_ms: res.p95_ms, max_ms: res.max_ms, pass: res.pass, errors: errors.length }));

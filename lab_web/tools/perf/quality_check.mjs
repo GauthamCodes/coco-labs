@@ -30,6 +30,7 @@ const SITE = args.site ?? 'http://127.0.0.1:4244/coco-labs/';
 const OUT = args.out ?? 'quality-check';
 const SECONDS = Number(args.seconds ?? 20);
 mkdirSync(OUT, { recursive: true });
+const CONDITIONS_AT_START = conditions();
 
 async function run(name, launchArgs, query, throttle) {
   const start = conditions();
@@ -82,6 +83,6 @@ const verdict = {
   cannot_draw_falls_back_with_notice: runs[1].fell_back === true && runs[1].camera === 'topdown' && !!runs[1].notice,
   no_page_errors: runs.every((r) => r.errors.length === 0),
 };
-writeFileSync(join(OUT, 'quality_check.json'), JSON.stringify({ criterion: 'M4.4: tiers from measured frame time; '
-  + 'automatic top-down fallback with a notice when the low tier cannot hold about 24 fps', verdict, runs }, null, 1) + '\n');
+const result = { criterion: 'M4.4: tiers from measured frame time; automatic top-down fallback with a notice when the low tier cannot hold about 24 fps', verdict, runs };
+writeFileSync(join(OUT, 'quality_check.json'), JSON.stringify({ ...result, conditions: { start: CONDITIONS_AT_START, end: conditions() } }, null, 1) + '\n');
 console.log(JSON.stringify({ verdict, runs: runs.map((r) => [r.name, r.tier, r.camera, r.fell_back, r.interval_ms, r.marks]) }));

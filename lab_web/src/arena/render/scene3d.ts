@@ -63,6 +63,9 @@ const TARGET_COLOURS: Record<string, number> = { red: 0xd03a2f, green: 0x2f9e44,
 
 interface Joint { q: THREE.Object3D; axis: THREE.Vector3 }
 
+/** glTF is y up; the scene is z up: one rotation at a group above each asset's root. */
+const zUp = (o: THREE.Object3D) => { const g = new THREE.Group(); g.rotation.x = Math.PI / 2; g.add(o); return g; };
+
 /** Exponential approach: the fraction of the remaining distance covered in dt at rate k (1/s). */
 const approach = (dt: number, k: number) => 1 - Math.exp(-k * dt);
 
@@ -147,14 +150,18 @@ export class Scene3D {
   async load(urls: Scene3DAssets) {
     // the assets are meshopt-compressed (EXT_meshopt_compression; ADR 0006)
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-    const [arena, robot] = urls.buffers
-      ? await Promise.all([urls.buffers.arena.then((b) => loader.parseAsync(b, '')), urls.buffers.robot.then((b) => loader.parseAsync(b, ''))])
-      : await Promise.all([loader.loadAsync(urls.arena), loader.loadAsync(urls.robot)]);
-    const zUp = (o: THREE.Object3D) => { const g = new THREE.Group(); g.rotation.x = Math.PI / 2; g.add(o); return g; };
+    // M4.7: the arena first (28 KB) with a placeholder body, the robot when its file lands: on 4G a Case File's
+    // first 3D frame then waits for the recording and the arena only (the robot follows in a few hundred ms)
+    const robotP = urls.buffers ? urls.buffers.robot.then((b) => loader.parseAsync(b, '')) : loader.loadAsync(urls.robot);
+    const arena = urls.buffers ? await urls.buffers.arena.then((b) => loader.parseAsync(b, '')) : await loader.loadAsync(urls.arena);
     const a = zUp(arena.scene);
     a.position.set(this.worldToMap[0], this.worldToMap[1], 0);
     this.root.add(a);
-    this.robotHolder.add(zUp(robot.scene));
+    const placeholder = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.26, 0.12), new THREE.MeshStandardMaterial({ color: 0x8a8d91, roughness: 0.8 }));
+    placeholder.position.z = 0.0135 + 0.06;   // its belly at COCO's ground clearance
+    placeholder.castShadow = true;
+    placeholder.name = 'placeholder';
+    this.robotHolder.add(placeholder);
     arena.scene.traverse((o) => { if ((o as THREE.Mesh).isMesh) { o.castShadow = true; o.receiveShadow = true; } });
     // the tall kinds learn to open (cutaway) and to stop low (low walls)
     for (const node of arena.scene.children.flatMap((c) => [c, ...c.children])) {
@@ -183,8 +190,27 @@ if (uCut > 0.5) {
         m.material = mat;
       });
     }
-    robot.scene.traverse((o) => { if ((o as THREE.Mesh).isMesh) o.castShadow = true; });
     onWorldLayer(this.root);
+    arena.scene.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (m.isMesh) this.triangles += (m.geometry.index ? m.geometry.index.count : m.geometry.attributes.position.count) / 3;
+    });
+    this.ready = true;
+    this.robotReady = robotP.then((robot) => {
+      this.robotHolder.remove(placeholder);
+      placeholder.geometry.dispose();
+      this.addRobot(robot.scene);
+    });
+  }
+
+  /** M4.7: the robot's file has been added (the placeholder is gone). */
+  robotReady: Promise<void> = Promise.resolve();
+
+  private addRobot(scene: THREE.Group) {
+    this.robotHolder.add(zUp(scene));
+    const robot = { scene };
+    robot.scene.traverse((o) => { if ((o as THREE.Mesh).isMesh) o.castShadow = true; });
+    onWorldLayer(this.robotHolder);
     robot.scene.traverse((o) => {
       const ex = o.userData as { joint?: string; axis?: number[]; type?: string };
       if (ex.joint && ex.axis) this.joints.set(ex.joint, { q: o, axis: new THREE.Vector3(...ex.axis).normalize() });
@@ -203,13 +229,10 @@ if (uCut > 0.5) {
       // forward roll is a rotation about the robot's +y (ROS) = -z here
       this.wheels.push({ name, side: left ? 0 : 1, sign: ax.z < 0 ? 1 : -1 });
     }
-    for (const s of [arena.scene, robot.scene]) {
-      s.traverse((o) => {
-        const m = o as THREE.Mesh;
-        if (m.isMesh) this.triangles += (m.geometry.index ? m.geometry.index.count : m.geometry.attributes.position.count) / 3;
-      });
-    }
-    this.ready = true;
+    robot.scene.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (m.isMesh) this.triangles += (m.geometry.index ? m.geometry.index.count : m.geometry.attributes.position.count) / 3;
+    });
   }
 
   setVisible(v: boolean) {

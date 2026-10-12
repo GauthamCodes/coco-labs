@@ -29,7 +29,7 @@ const OUT = args.out ?? 'lens3d-check';
 const CAMERA = args.camera ?? 'follow';
 const WORLD = args.world ?? 'v1';
 mkdirSync(join(OUT, 'shots'), { recursive: true });
-const start = conditions();
+const CONDITIONS_AT_START = conditions();
 /** What switches each lens's subsystem on (as render3d_fps.mjs's M2 scene does). */
 const CFG = {
   plan: [], localise: ['arena.range_sigma=0.02', 'localise.filter=mcl'],
@@ -96,6 +96,6 @@ const verdict = {
   watch_at_most_two_computation_layers: rows.filter((r) => r.level === 'watch' && r.lens !== 'plan').every((r) => r.computation_on <= 2),
   no_page_errors: rows.every((r) => r.errors.length === 0),
 };
-writeFileSync(join(OUT, `lens3d_${WORLD}_${CAMERA}.json`), JSON.stringify({ criterion: 'M4.6: Plan, Localise, Map, Move, Decide at Watch, Explain, Inspect in 3D',
-  camera: CAMERA, world: WORLD, verdict, rows, conditions: { start, end: conditions() } }, null, 1) + '\n');
+const result = { criterion: 'M4.6: Plan, Localise, Map, Move, Decide at Watch, Explain, Inspect in 3D', camera: CAMERA, world: WORLD, verdict, rows };
+writeFileSync(join(OUT, `lens3d_${WORLD}_${CAMERA}.json`), JSON.stringify({ ...result, conditions: { start: CONDITIONS_AT_START, end: conditions() } }, null, 1) + '\n');
 console.log(JSON.stringify(verdict));
