@@ -445,19 +445,23 @@ export class ArenaRenderer {
       this.renderer.toneMapping = THREE.NoToneMapping;
       s.camera.layers.set(0);
       s.root.visible = was;
-      this.three = s;
+      // held aside, not drawn: until enable3D the page renders its cheap top-down frame, so a
+      // recording's download and parse do not share the main thread with shadowed 3D frames
+      this.preparedScene = s;
     })();
     return this.prepared;
   }
 
   private prepared: Promise<void> | null = null;
+  private preparedScene: Scene3D | null = null;
 
   async enable3D(assets: Scene3DAssets, worldToMap: [number, number], targets: World['targets'] = [],
     elevation: Elevation[] = [], tier: TierChoice = 'auto') {
     if (this.enabled3D) return;
     this.enabled3D = true;
     await this.prepare3D(assets, worldToMap, tier);
-    const s = this.three!;
+    const s = this.preparedScene!;
+    this.three = s;
     s.setTargets(targets ?? []);
     this.terrain = surfaces(elevation, worldToMap);
     this.applyTier(this.quality!.tier);
