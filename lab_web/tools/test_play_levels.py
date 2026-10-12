@@ -24,6 +24,8 @@ from coco_lab import play  # noqa: E402
 with open(mk.OUT, encoding='utf-8') as f:
     LEVELS = json.load(f)
 SPEC = mk.spec()
+with open(os.path.join(HERE, '..', '..', 'docs', 'v2', 'data', 'm4', 'm48', 'race_submissions.json'), encoding='utf-8') as f:
+    RACE = json.load(f)
 MAP = LEVELS['challenges']['map-the-arena']['levels']
 
 
@@ -88,6 +90,9 @@ def _a_valid_input(cid, lv):
         return lv['reference']['optimal_order']
     if cid == 'case-file-detective':
         return [lv['moment']['tick']]
+    if cid == 'race-the-ghost':
+        # M4.8's committed submissions: the one that drives the ghost's own way
+        return next(s['inputs'] for s in RACE['submissions'] if s['name'] == f"{lv['id']}/ghost")
     d = lv['drives']['out_and_back']
     return {'ticks': d['ticks'], 'log': d['inputs']}
 
