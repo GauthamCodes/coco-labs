@@ -280,6 +280,23 @@ if (uCut > 0.5) {
     }
   }
 
+  /** M4.8: the race's ghost: a translucent body at `pose` (null hides it); z is the surface under it. */
+  setGhost(pose: [number, number, number] | null, z = 0) {
+    if (!this.ghostBody) {
+      this.ghostBody = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.26, 0.14),
+        new THREE.MeshStandardMaterial({ color: 0x5aa0e6, transparent: true, opacity: 0.35, depthWrite: false }));
+      this.ghostBody.layers.set(WORLD_LAYER);
+      this.root.add(this.ghostBody);
+    }
+    this.ghostBody.visible = !!pose;
+    if (pose) {
+      this.ghostBody.position.set(pose[0], pose[1], z + 0.0135 + 0.07);
+      this.ghostBody.rotation.set(0, 0, pose[2]);
+    }
+  }
+
+  private ghostBody: THREE.Mesh | null = null;
+
   /** The wheels' speeds (rad/s); the wheels turn at them in the render loop (presentation only). */
   setWheelSpeeds(w: [number, number]) {
     this.wheelSpeed = w;

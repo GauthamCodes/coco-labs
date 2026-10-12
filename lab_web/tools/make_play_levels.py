@@ -20,7 +20,9 @@ algorithms run on the level -- and nothing is typed:
   log recorded), each re-simulated by coco_lab.play.map_drive and scored;
 - case-file-detective: the divergence moment, from the committed
   docs/v2/data/m3/m34/moments.json (re-derived from the Case File by
-  lab_web/test/casefile_moments.test.ts).
+  lab_web/test/casefile_moments.test.ts);
+- race-the-ghost (M4.8): the ghost's own result (coco_lab.race: the model
+  following A*'s path with pure pursuit), and its track for drawing.
 
 ``--check`` writes nothing and exits 1 if the committed files differ from
 what this would write. Each level is refused unless its references set
@@ -39,7 +41,7 @@ sys.path.insert(0, os.path.join(REPO, 'coco_lab'))
 
 import yaml  # noqa: E402
 
-from coco_lab import play  # noqa: E402
+from coco_lab import play, race  # noqa: E402
 from coco_lab.fetch_problem import PROBLEM  # noqa: E402
 
 SRC = os.path.join(REPO, 'lab_web', 'play', 'levels.src.yaml')
@@ -109,6 +111,8 @@ def build():
             if cid == 'map-the-arena':
                 lv['spec'] = play._spec_hash(sp)
                 lv['drives'] = {k: drive_log(sp, lv, g) for k, g in lv['drives'].items()}
+            if cid == 'race-the-ghost':
+                lv['spec'] = play._spec_hash(sp)
             if cid == 'case-file-detective':
                 m = moments['casefiles'].get(lv['casefile'])
                 if not m or not m.get('divergence'):
@@ -119,6 +123,9 @@ def build():
                           bands_s=c['bands_s'], divergence_m=moments['divergence_m'])
             else:
                 lv['reference'] = play.references(lv, cid, sp)
+            if cid == 'race-the-ghost':
+                # the ghost drawn beside the person (presentation; the score never reads it)
+                lv['ghost_track'] = race.ghost_track(sp, lv)
             check(cid, lv)
             levels.append(lv)
         out['challenges'][cid] = {'title': c['title'], 'goal': ' '.join(c['goal'].split()), 'levels': levels}
@@ -139,6 +146,12 @@ def check(cid, lv):
     elif cid == 'map-the-arena':
         a, b = sorted((r['out_and_back']['f1'], r['tour']['f1']))
         ok = 0 < a < b
+    elif cid == 'race-the-ghost':
+        # the ghost finishes, and its own drive earns exactly two stars: three is for beating it
+        g = r['ghost']
+        n, _, _ = race.stars(lv, {'finish_tick': g['finish_tick'], 'path_m': g['path_m'],
+                                  'contacts': g['contacts'], 'dt': g['time_s'] / g['finish_tick']})
+        ok = g['finish_tick'] < lv['max_ticks'] and n == 2
     else:
         b = lv['bands_s']
         ok = b[0] > b[1] > b[2] > 0 and lv['tolerance_s'] in b
@@ -255,9 +268,28 @@ def doc(levels):
         b = lv['bands_s']
         L.append(f"| {lv['title']} | `{lv['casefile']}` | {lv['moment']['tick']} | {fmt(lv['moment']['error_m'])} m | "
                  f"within {b[0]:g} s | within {b[1]:g} s | within {b[2]:g} s |")
+    c = ch['race-the-ghost']
+    L += ['', "## Race the planner's ghost (M4.8)", '', c['goal'], '',
+          '**Score:** time to the flag (the robot within the level\'s finish radius of the goal), and',
+          'beside it the ground-truth path length and the contacts (ticks stopped against',
+          'something), each shown. A drive is its input log (teleop and STOP only), re-simulated by',
+          '`coco_lab.race.drive`: a link reproduces it, and `coco verify` scores it.', '',
+          '**The ghost** (`coco_lab/race.py`): the Arena model following A*\'s path with pure pursuit',
+          f'(lookahead {race.LOOKAHEAD:g} m, turning on the spot beyond {round(race.SPIN * 180 / 3.141592653589793)}°, '
+          'slowing within the lookahead of the goal) under the same teleop limits as a person.',
+          'It plans once and drives with teleop inputs only, so its result is deterministic. The',
+          'stars come from its own result, below; the ghost itself earns two.', '',
+          '| level | goal | finish radius | ghost time | ghost path | ghost contacts | ★ | ★★ | ★★★ |',
+          '|---|---|---|---|---|---|---|---|---|']
+    for lv in c['levels']:
+        g = lv['reference']['ghost']
+        L.append(f"| {lv['title']} | ({lv['goal'][0]:g}, {lv['goal'][1]:g}) | {lv['finish_m']:g} m | {g['time_s']:.1f} s | "
+                 f"{fmt(g['path_m'])} m | {g['contacts']} | finish within {lv['max_ticks'] / 10:g} s | "
+                 f"≤ {race.SLOW * g['time_s']:.1f} s, ≤ {g['contacts']} contacts | < {g['time_s']:.1f} s, "
+                 f"≤ {g['contacts']} contacts, path ≤ {fmt(race.LONG * g['path_m'])} m |")
     L += ['', '## What is not here', '',
           'Lost robot, Gauntlet, Drive it yourself and Trade-off frontier are later ideas',
-          '(`docs/IDEAS.md`), not M3 challenges.', '']
+          '(`docs/IDEAS.md`), not M3 or M4 challenges.', '']
     return '\n'.join(L)
 
 

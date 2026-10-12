@@ -176,3 +176,31 @@ challenges:
       - id: kidnapped-again
         title: Kidnapped again
         casefile: lab2_kidnap_shipped_k5
+  race-the-ghost:
+    title: Race the planner's ghost
+    goal: >-
+      Drive COCO to the flag yourself, at the same speed limits the ghost has. The ghost is the
+      model following A*'s path with a pure-pursuit tracker. Beat its time without hitting more
+      than it does.
+    levels:
+      - id: warm-up
+        title: Warm-up
+        seed: 1
+        planner: astar
+        goal: [2.5, 2.0]
+        finish_m: 0.3
+        max_ticks: 600
+      - id: into-the-room
+        title: Into the room
+        seed: 1
+        planner: astar
+        goal: [6.0, 4.0]
+        finish_m: 0.3
+        max_ticks: 900
+      - id: the-long-way
+        title: The long way
+        seed: 1
+        planner: astar
+        goal: [9.0, -4.0]
+        finish_m: 0.3
+        max_ticks: 1200

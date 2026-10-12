@@ -12,7 +12,7 @@ beats:
       COCO's plan is only as good as its map. A door it thought was open is shut; a
       person stops in the way. Click a goal, then -- while it is still searching --
       click another, or switch the planner.
-    arena: {lens: plan, level: watch}
+    arena: {lens: plan, level: watch, camera: follow}
     claims: [arena-replans]
   - beat: predict
     question: >-
@@ -34,7 +34,7 @@ beats:
     text: >-
       In the Arena, change the goal or the planner mid-search: the search in flight
       is cancelled and the new one starts in the same tick.
-    arena: {lens: plan, level: explain}
+    arena: {lens: plan, level: explain, camera: orbit}
     claims: [arena-replans]
   - beat: explain
     text: >-

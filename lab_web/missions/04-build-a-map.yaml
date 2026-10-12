@@ -13,7 +13,7 @@ beats:
       Drive COCO round its arena with no map. Mapped from its wheel odometry alone,
       the walls bend and double; mapped from where it truly is, they are straight.
       Every SLAM algorithm lives between those two.
-    arena: {lens: map, level: watch, cfg: ['arena.range_sigma=0.02', 'map.algorithm=occupancy', 'map.poses=odometry']}
+    arena: {lens: map, level: watch, cfg: ['arena.range_sigma=0.02', 'map.algorithm=occupancy', 'map.poses=odometry'], camera: orbit}
     claims: [arena-scenario]
   - beat: predict
     question: >-
@@ -37,7 +37,7 @@ beats:
       Switch the algorithm: occupancy from the truth, from odometry, from the
       filter's belief; EKF-SLAM on corners; FastSLAM's particles; the pose graph with
       and without loop closure. Same drive, same scans, same odometry.
-    arena: {lens: map, level: explain, cfg: ['arena.range_sigma=0.02', 'localise.filter=mcl', 'map.algorithm=occupancy', 'map.poses=belief']}
+    arena: {lens: map, level: explain, cfg: ['arena.range_sigma=0.02', 'localise.filter=mcl', 'map.algorithm=occupancy', 'map.poses=belief'], camera: orbit}
     claims: [arena-scenario, corridor, landmarks, score, arena-long-tour]
   - beat: explain
     text: >-

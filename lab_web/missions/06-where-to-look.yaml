@@ -12,7 +12,7 @@ beats:
     text: >-
       Start the fetch. COCO is told a colour and nothing else. Watch its belief over
       the four bays: every look that finds nothing moves it.
-    arena: {lens: decide, level: watch, cfg: ['mission.start=red']}
+    arena: {lens: decide, level: watch, cfg: ['mission.start=red'], camera: orbit}
     claims: [told-only-colour, fetch-matrix]
   - beat: predict
     question: >-
@@ -34,7 +34,7 @@ beats:
       Put the target in another bay, make the camera miss, or give the robot a wrong
       idea of where it is. Watch it look at the wrong bay and believe it looked at the
       right one.
-    arena: {lens: decide, level: explain, cfg: ['arena.range_sigma=0.02', 'localise.filter=mcl', 'mission.start=red']}
+    arena: {lens: decide, level: explain, cfg: ['arena.range_sigma=0.02', 'localise.filter=mcl', 'mission.start=red'], camera: orbit}
     claims: [fetch-matrix, mislocalised-look]
   - beat: explain
     text: >-

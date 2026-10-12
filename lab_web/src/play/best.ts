@@ -22,7 +22,7 @@ export interface Best { stars: number; score: number; hash: string; level_hash: 
 /** Whether a higher score is better, per challenge's primary score. */
 const HIGHER_IS_BETTER: Record<string, boolean> = {
   'beat-the-planner': false, 'next-node': true, 'search-the-bays': false,
-  'map-the-arena': true, 'case-file-detective': false,
+  'map-the-arena': true, 'case-file-detective': false, 'race-the-ghost': false,
 };
 
 const key = (challenge: string, level: string) => `coco.play.best.v1.${challenge}.${level}`;

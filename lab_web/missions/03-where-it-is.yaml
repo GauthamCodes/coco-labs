@@ -13,7 +13,7 @@ beats:
       COCO never sees its own position. It counts wheel turns, which drift, and it
       matches LiDAR scans to its map, which can match the wrong place. Watch the
       cloud of guesses follow the robot.
-    arena: {lens: localise, level: watch, cfg: ['arena.range_sigma=0.02', 'localise.filter=both']}
+    arena: {lens: localise, level: watch, cfg: ['arena.range_sigma=0.02', 'localise.filter=both'], camera: follow}
     claims: [tracking, lidar-subset]
   - beat: predict
     question: >-
@@ -37,7 +37,7 @@ beats:
       Drag the robot somewhere else. The filters are not told. Then watch what a
       wrong belief does to the rest of the loop: COCO plans and drives from where it
       THINKS it is.
-    arena: {lens: localise, level: explain, cfg: ['arena.range_sigma=0.02', 'localise.filter=both', 'localise.mcl.injection=augmented']}
+    arena: {lens: localise, level: explain, cfg: ['arena.range_sigma=0.02', 'localise.filter=both', 'localise.mcl.injection=augmented'], camera: orbit}
     claims: [arena-kidnap-closed-loop, odometry-model]
   - beat: explain
     text: >-
@@ -51,7 +51,7 @@ beats:
       Run 15: after a good pick, AMCL believed the robot was 3.4 m from where it was.
       Here is that mechanism on the full stack: the robot told it is 3.4 m away, and
       every controller refusing the path.
-    arena: {replay: lab5_mislocalised_dwb_1, level: explain}
+    arena: {replay: lab5_mislocalised_dwb_1, level: explain, camera: follow}
     claims: [run15]
   - beat: challenge
     stub: true

@@ -55,6 +55,8 @@ BEATS = ('hook', 'predict', 'reveal', 'manipulate', 'explain', 'stack', 'challen
 #: the learner-facing labels (CLAUDE.md "Evidence classes"); "TESTED": a
 #: property test proves it; never REAL ROBOT RESULT -- no robot exists
 LABELS = ('MEASURED', 'TESTED', 'SIMULATION RESULT', 'SIMPLIFIED MODEL', 'ASSUMPTION', 'INFERENCE', 'UNRESOLVED')
+#: M4.8: the Arena's cameras a beat may open in (lab_web/src/arena/render/scene3d.ts CAMERA_MODES)
+CAMERAS = ('follow', 'orbit', 'robot_eye', 'topdown')
 LENSES = ('plan', 'localise', 'map', 'move', 'decide')
 
 
@@ -147,6 +149,13 @@ def check(m: Dict[str, object], name: str) -> None:
                 raise MissionError(f'{name}: predict needs options and an answer index')
         if b['beat'] == 'challenge' and not b.get('stub'):
             raise MissionError(f'{name}: the challenge beat is a stub until M3')
+        a = b.get('arena')
+        if a is not None:
+            # M4.8: every beat that opens the Arena names its camera; precision (Inspect) is top-down
+            if a.get('camera') not in CAMERAS:
+                raise MissionError(f'{name}: beat {b["beat"]} opens the Arena with no camera preset, one of {CAMERAS}')
+            if a.get('level') == 'inspect' and a['camera'] != 'topdown':
+                raise MissionError(f'{name}: beat {b["beat"]} is at Inspect, a precision task: its camera is topdown')
     if ids - used:
         raise MissionError(f'{name}: claims no beat shows: {sorted(ids - used)}')
 

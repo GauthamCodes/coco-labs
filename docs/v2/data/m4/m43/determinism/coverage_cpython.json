@@ -1,0 +1,1737 @@
+{
+ "sessions": 100,
+ "per_session": [
+  {
+   "id": 0,
+   "z_max": 0.2672,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 322,
+    "planner": 378
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 410,
+   "final_hash": "0e0c05865cecfbcb365305a7323934fcef5c6d535df105695718d97b7e0a7d64"
+  },
+  {
+   "id": 1,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 187,
+    "planner": 377,
+    "mission": 124,
+    "teleop": 10,
+    "stop": 2
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "be3538bf56b8c3c235d6ccdde78de6c0f9bba4b528a97e2712c150f54e3b996d"
+  },
+  {
+   "id": 2,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 187,
+    "planner": 290,
+    "mission": 149,
+    "teleop": 73,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 241,
+   "final_hash": "3b8cd56213693a16eead949335e3449ea82f0c146d3263eced0bc1b47144a413"
+  },
+  {
+   "id": 3,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 321,
+    "teleop": 228,
+    "planner": 151
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "851a7a1450b2ad5a0c6bf74f51072146de77fc421b97432189d50dbf68df93fe"
+  },
+  {
+   "id": 4,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 122,
+    "planner": 333,
+    "teleop": 245
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "b78a8ab90b8bc027f1da655319dec13ce4bd60046cdbcbe0aefeaa6d8b31184a"
+  },
+  {
+   "id": 5,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 199,
+    "planner": 380,
+    "mission": 121
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "e2dfd2b6a2a7b961846c01356c1c539f594edf38ef74cbab18488912f60a0ec3"
+  },
+  {
+   "id": 6,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 294,
+    "planner": 287,
+    "stop": 4,
+    "teleop": 115
+   },
+   "contact_ticks": 102,
+   "tilted_ticks": 0,
+   "final_hash": "dbdccb3538a8c44ed761f7cc42e973d061797d2973913f82d3bcef8800f60faf"
+  },
+  {
+   "id": 7,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 560,
+    "teleop": 123,
+    "planner": 17
+   },
+   "contact_ticks": 50,
+   "tilted_ticks": 0,
+   "final_hash": "38ed7c7d20ca7c594d46f3d33d35b0c626b96df7f2dd3efe1a153d875ed84a72"
+  },
+  {
+   "id": 8,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 290,
+    "teleop": 189,
+    "planner": 221
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "205a099d4f41e0aeda706ae6575435b8187cfc0c5c8b454c8a9957e75e94dd4a"
+  },
+  {
+   "id": 9,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 208,
+    "planner": 241,
+    "mission": 143,
+    "teleop": 107,
+    "stop": 1
+   },
+   "contact_ticks": 17,
+   "tilted_ticks": 79,
+   "final_hash": "f7571c8c9cbc6a16948e63450765f319a9c20555072728b0f69faf55e535e086"
+  },
+  {
+   "id": 10,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 402,
+    "planner": 183,
+    "teleop": 114,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "8f5f9f7ab8de4cbd30bd247ea200f0b51219b8adafc7774cc4be9f3272f6231e"
+  },
+  {
+   "id": 11,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 189,
+    "planner": 376,
+    "mission": 124,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 72,
+   "final_hash": "e26aa7cd55a3befd4a4f0e86334e39acb6f23ef38b4ee1c47f42b0a55e501b56"
+  },
+  {
+   "id": 12,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 173,
+    "planner": 391,
+    "mission": 125,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 72,
+   "final_hash": "1ce504157d5cb4b31d9bd65542a0d10b7a40e83ceeceb3b26396b4798d747ea7"
+  },
+  {
+   "id": 13,
+   "z_max": 0.2012,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 292,
+    "planner": 397,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 335,
+   "final_hash": "680a836050688c4a389c834e3e5b4913fc44843d5822d06cc137fd7e0cb13c62"
+  },
+  {
+   "id": 14,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 325,
+    "planner": 375
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "1f56f0ac2be2b09c71a3201c2c7e144b507f86e1687490e198e4e8bc65795782"
+  },
+  {
+   "id": 15,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 197,
+    "planner": 366,
+    "mission": 137
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "f1700fee89f3545cc3b223751db6f6888f19c1d15859230b112c53ee7ea444d7"
+  },
+  {
+   "id": 16,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 261,
+    "planner": 338,
+    "teleop": 101
+   },
+   "contact_ticks": 3,
+   "tilted_ticks": 0,
+   "final_hash": "a79bacec36b8673ba5194f38c47e67416817c32c487285fc493fc96f00c3b12a"
+  },
+  {
+   "id": 17,
+   "z_max": 0.1873,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 246,
+    "planner": 454
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 321,
+   "final_hash": "07c8a0d625f927be6dcc5513d366a0740743c6d40c0939b52f36faf1e1bb599f"
+  },
+  {
+   "id": 18,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 227,
+    "planner": 312,
+    "mission": 129,
+    "teleop": 32
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 126,
+   "final_hash": "f89730395262aa865c6609a45ad6e5110009ab6f384a0989a07b2b2a2c00be83"
+  },
+  {
+   "id": 19,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 231,
+    "stop": 2,
+    "planner": 387,
+    "teleop": 80
+   },
+   "contact_ticks": 68,
+   "tilted_ticks": 0,
+   "final_hash": "2fe7e3a8b848126297f91bb4d7559d42ba48510f07abaea95acadb3808d9dcca"
+  },
+  {
+   "id": 20,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 406,
+    "teleop": 122,
+    "planner": 169,
+    "stop": 3
+   },
+   "contact_ticks": 52,
+   "tilted_ticks": 0,
+   "final_hash": "bb98828132e1b80569fe3e9ffa34be09bcd68ba9d276f4fe482c5f50e49f318e"
+  },
+  {
+   "id": 21,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 238,
+    "planner": 318,
+    "mission": 143,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 171,
+   "final_hash": "d7100c28218a30cad7e2213f223604028036b87bb127b46add2f87a8f685d7cc"
+  },
+  {
+   "id": 22,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 217,
+    "planner": 283,
+    "mission": 139,
+    "teleop": 60,
+    "stop": 1
+   },
+   "contact_ticks": 26,
+   "tilted_ticks": 79,
+   "final_hash": "13359f7ab10142d148edb794891c15b605a29d17153400194ba8df363508bbad"
+  },
+  {
+   "id": 23,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 115,
+    "teleop": 302,
+    "planner": 283
+   },
+   "contact_ticks": 16,
+   "tilted_ticks": 0,
+   "final_hash": "bfc722b717554f6fdb447a07ebd26df403cdef492525b6528306b3f53709a8ea"
+  },
+  {
+   "id": 24,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 176,
+    "planner": 377,
+    "mission": 147
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "21bafe4ccec952996b441b9bd5d4d42383fc976b0212e773315efba00cadaefb"
+  },
+  {
+   "id": 25,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 282,
+    "planner": 244,
+    "mission": 116,
+    "teleop": 57,
+    "stop": 1
+   },
+   "contact_ticks": 12,
+   "tilted_ticks": 97,
+   "final_hash": "246296a0c527acf7c790f3d34d2c12864ac50d332e3882d72166b525fd6b9811"
+  },
+  {
+   "id": 26,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "pick"
+   ],
+   "sources": {
+    "idle": 152,
+    "planner": 389,
+    "mission": 124,
+    "teleop": 35
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 96,
+   "final_hash": "54207efa1c588ace456f6a07a43e6ce64a21187d3b1967e3d55c77bb05a500f4"
+  },
+  {
+   "id": 27,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 171,
+    "planner": 375,
+    "mission": 143,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "077b6ae784e991559f6a4c907fd82611d3582173b8900017c51bf502b7e62558"
+  },
+  {
+   "id": 28,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 244,
+    "teleop": 265,
+    "planner": 190,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "f74f1214d49cb9b3ddb36c497e8ada766715d8ad44a9bfe83b09431a1b7fbd8c"
+  },
+  {
+   "id": 29,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 391,
+    "planner": 286,
+    "teleop": 23
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 191,
+   "final_hash": "264ce24460a9d13ea252e718fbc03291048799f8d91c2ff92b9e1e2882011258"
+  },
+  {
+   "id": 30,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 359,
+    "planner": 340,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 201,
+   "final_hash": "f1a73bf5315209e1c67bc3bb780a7dfdcff94167e6ff7852b8bb8d4e6f0a992e"
+  },
+  {
+   "id": 31,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 251,
+    "planner": 253,
+    "mission": 116,
+    "teleop": 80
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "dd5bfc78846bb091985b4e1e802321813d2ee5474c974f256cd144c4b0199f4c"
+  },
+  {
+   "id": 32,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 374,
+    "planner": 315,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 162,
+   "final_hash": "6f3e74b684d7a6681cb13a86f7322222515cd42b295be7b8f73aa56c5a549c54"
+  },
+  {
+   "id": 33,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 208,
+    "planner": 259,
+    "mission": 125,
+    "teleop": 107,
+    "stop": 1
+   },
+   "contact_ticks": 29,
+   "tilted_ticks": 143,
+   "final_hash": "dee2e0c2465ea010a969d235b30b0441beca7c2348bb0b774807d1e5e99340ae"
+  },
+  {
+   "id": 34,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 346,
+    "planner": 332,
+    "stop": 1,
+    "teleop": 21
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "c2bedd8735d0b1c4c6135190f69cbe2a6fcbe55e2827aa7bfaa64eb7a5fb47a2"
+  },
+  {
+   "id": 35,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 284,
+    "planner": 247,
+    "mission": 119,
+    "teleop": 48,
+    "stop": 2
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 76,
+   "final_hash": "e5e3bbada9aed32a10336ac136e7e0a2bea6b00f68059ab1ca9b3a73553c583d"
+  },
+  {
+   "id": 36,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 199,
+    "planner": 246,
+    "mission": 127,
+    "teleop": 127,
+    "stop": 1
+   },
+   "contact_ticks": 11,
+   "tilted_ticks": 73,
+   "final_hash": "5ba43839a10ef90bde7300fd84018bfe48324e497c017fe7c4df748462fe83f0"
+  },
+  {
+   "id": 37,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 237,
+    "planner": 329,
+    "mission": 134
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 173,
+   "final_hash": "8d5ba552c184c104a0aa5734530420ec322e345b0713fa1b7e322567e576da23"
+  },
+  {
+   "id": 38,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 221,
+    "planner": 300,
+    "mission": 124,
+    "teleop": 55
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 205,
+   "final_hash": "08d6269fd29982adf1261014be7b4e5644431d435801ec5d25ab8b7dd0574efa"
+  },
+  {
+   "id": 39,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 318,
+    "planner": 354,
+    "teleop": 28
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "96790005da25a634e2a070977c24e2e45957591c36aa3ef2d8b70f94fa29fe57"
+  },
+  {
+   "id": 40,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 362,
+    "planner": 276,
+    "teleop": 61,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 103,
+   "final_hash": "158e0d65247c4cfb2b6559f350404ec9fceb17822ef44d0736edd66c20fefc63"
+  },
+  {
+   "id": 41,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 422,
+    "teleop": 105,
+    "planner": 173
+   },
+   "contact_ticks": 4,
+   "tilted_ticks": 0,
+   "final_hash": "aece43d341af0517d0a189f1c1cc295a9cca324a9f62594a640d499d4aeb54f4"
+  },
+  {
+   "id": 42,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 331,
+    "planner": 148,
+    "teleop": 220,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "aa6abfb5013fff69a95593f8f69e6c7b391295321a49dad60e10cee264e25463"
+  },
+  {
+   "id": 43,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 278,
+    "planner": 244,
+    "mission": 121,
+    "teleop": 55,
+    "stop": 2
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 175,
+   "final_hash": "cb13027712915e6ac7a6ea207a0c89343303f7f72c0cbcabd0cfde48d798b1d6"
+  },
+  {
+   "id": 44,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "pick"
+   ],
+   "sources": {
+    "idle": 194,
+    "planner": 301,
+    "mission": 125,
+    "teleop": 80
+   },
+   "contact_ticks": 15,
+   "tilted_ticks": 172,
+   "final_hash": "da8c9dd857fa23acf12e400e8542d62f099a1d3c990a3b51a4862609440027a6"
+  },
+  {
+   "id": 45,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 364,
+    "planner": 325,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "b3d740029febb7afba71c14a2df9038c4d1cd1d25745cee32d1829ff3d9c69f0"
+  },
+  {
+   "id": 46,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 391,
+    "planner": 298,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 94,
+   "final_hash": "679fbaf6d9ddc7aa12092fb1e1c4fa212476c5e138d5915222b6fe5952b55a4b"
+  },
+  {
+   "id": 47,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 214,
+    "planner": 262,
+    "mission": 140,
+    "teleop": 83,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "6c9e19a00d7c67ac9c974d33d4b75e93c3711b1acde69ac24ec2f2d697b002f1"
+  },
+  {
+   "id": 48,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 292,
+    "planner": 254,
+    "mission": 142,
+    "teleop": 10,
+    "stop": 2
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 78,
+   "final_hash": "638cf46044113d4862615c89b9b0612998e30bb30f5e93a87086f1bbade4eee7"
+  },
+  {
+   "id": 49,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 295,
+    "planner": 376,
+    "teleop": 29
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "d9379c5b1646722c68a8dc4272b111f19dc7c64d5c1aeca9d82e860b5f022488"
+  },
+  {
+   "id": 50,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "pick"
+   ],
+   "sources": {
+    "idle": 192,
+    "planner": 376,
+    "mission": 126,
+    "teleop": 6
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "d7abbb72167ac2da1cef06eb8d7f3a4a4aedafc68b4cb0e4b46e936d726b1cff"
+  },
+  {
+   "id": 51,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 232,
+    "teleop": 197,
+    "planner": 271
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "371331d7dfd72035a0ffa5e4b825cbff9f057b2b67e4affde1dac6a274a0c8ce"
+  },
+  {
+   "id": 52,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 172,
+    "planner": 376,
+    "mission": 141,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "30e57fe3d77e7781eab38db583163f886592551e6570b52dc9025f0246e8d29f"
+  },
+  {
+   "id": 53,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 271,
+    "teleop": 152,
+    "planner": 275,
+    "stop": 2
+   },
+   "contact_ticks": 32,
+   "tilted_ticks": 0,
+   "final_hash": "aaa43f00381dbafeb4e362bd944dfcace0ae8d56e64d73f3280cc85e5cbb1e84"
+  },
+  {
+   "id": 54,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 195,
+    "planner": 377,
+    "mission": 117,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "8bf49b7bd8c3ed9d49b3792258919b9645dbb355e1f00198b077e620768bbad9"
+  },
+  {
+   "id": 55,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 234,
+    "teleop": 346,
+    "stop": 2,
+    "planner": 118
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "2e1f3c3b1aed1008fb82527bf519eed647055c52f850fdc8117d8ac4ca7892f5"
+  },
+  {
+   "id": 56,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 270,
+    "planner": 394,
+    "teleop": 36
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 106,
+   "final_hash": "38624002d03b1ef4ac5effa37ad55bff167f4c4103f067e459201e28a4b2edd3"
+  },
+  {
+   "id": 57,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 272,
+    "planner": 294,
+    "mission": 123,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 114,
+   "final_hash": "91a096ee799c61ff4da5a430e45ca034e82b6d8b82fef75a17a2b73406c7664c"
+  },
+  {
+   "id": 58,
+   "z_max": 0.0962,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 307,
+    "planner": 382,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 335,
+   "final_hash": "093a072b1027bf03a1282133343f97bb64ccb516dd8c90d21ee8107615b514af"
+  },
+  {
+   "id": 59,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 404,
+    "planner": 279,
+    "teleop": 16,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 72,
+   "final_hash": "c7253bd6c5f5884d0617ffdbfb2d3c496621b184ed41ba9359d6e170597e0636"
+  },
+  {
+   "id": 60,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 353,
+    "planner": 297,
+    "teleop": 50
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 118,
+   "final_hash": "9d7f55e5902f1de92cc2baeedde7d1f74bf83b8852853628397a5586297ae173"
+  },
+  {
+   "id": 61,
+   "z_max": 0.2362,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 292,
+    "planner": 402,
+    "teleop": 6
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 335,
+   "final_hash": "27ce2367a760740a9f8119abce36ab958a8891df04b9277bd3c3e0f024b56fd2"
+  },
+  {
+   "id": 62,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 196,
+    "planner": 345,
+    "mission": 148,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 100,
+   "final_hash": "3145bd305a248296bde52243889178bebc680efa348a13e59e48ad9dea5303ac"
+  },
+  {
+   "id": 63,
+   "z_max": 0.2503,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 295,
+    "planner": 405
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 334,
+   "final_hash": "e0a9982fdc037fa1f7cfcff7a707ae7b4535091e5b1e50fd0d2268fa6f7842f7"
+  },
+  {
+   "id": 64,
+   "z_max": 0.1411,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 145,
+    "planner": 359,
+    "teleop": 196
+   },
+   "contact_ticks": 146,
+   "tilted_ticks": 279,
+   "final_hash": "d429972f199ce1a41997985dfa7a37dd0a2b1092357492e9542b2a75ccb93817"
+  },
+  {
+   "id": 65,
+   "z_max": 0.0359,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 319,
+    "teleop": 212,
+    "stop": 1,
+    "planner": 168
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 7,
+   "final_hash": "cc7df65c9a14e87932f490e50885779f1711dbe818bd355a30962ac18db7b532"
+  },
+  {
+   "id": 66,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 195,
+    "planner": 374,
+    "mission": 120,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 72,
+   "final_hash": "265c9976df1d41aa32805a7712532d1686ec273b58761c5d1317fb1a6c9c1627"
+  },
+  {
+   "id": 67,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 313,
+    "planner": 376,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "e57ee31dac2d406763a58964e73adb8fb546486b9798521c816dfaca794e704a"
+  },
+  {
+   "id": 68,
+   "z_max": 0.5827,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 293,
+    "planner": 319,
+    "teleop": 87,
+    "stop": 1
+   },
+   "contact_ticks": 15,
+   "tilted_ticks": 416,
+   "final_hash": "4a803036e8b00cc2cec906729b052f609a7b564ea53fbcfc916d27de2b32c42b"
+  },
+  {
+   "id": 69,
+   "z_max": 0.2012,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 292,
+    "planner": 397,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 335,
+   "final_hash": "b84f91c1b2819b5eedd1fe6852b85d3f24985445916b9557202c73be8b869db2"
+  },
+  {
+   "id": 70,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 375,
+    "planner": 250,
+    "teleop": 74,
+    "stop": 1
+   },
+   "contact_ticks": 36,
+   "tilted_ticks": 113,
+   "final_hash": "7670f3049e8d13c83b929c3147375487ae2372a58dc3b3c4e6fa3c32e447df76"
+  },
+  {
+   "id": 71,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "pick"
+   ],
+   "sources": {
+    "idle": 154,
+    "planner": 421,
+    "mission": 125
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 72,
+   "final_hash": "c8bb08cb52e389dd17f60c06c85c1f3db4832bd36ec1800f6531309e8c15f361"
+  },
+  {
+   "id": 72,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 358,
+    "planner": 330,
+    "teleop": 10,
+    "stop": 2
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 161,
+   "final_hash": "a2ce3eeba0395c4d53b164e17295e98cc5d477f22375a5fada23badda89d4292"
+  },
+  {
+   "id": 73,
+   "z_max": 0.2153,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 289,
+    "planner": 400,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 334,
+   "final_hash": "b77dfb40537382e73284b7ae515fc51c67c09fb790bbc2839e11f4b4147a95d5"
+  },
+  {
+   "id": 74,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 415,
+    "teleop": 203,
+    "planner": 81,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "eb4d06970c6efc9d1abeb79e76c355c792c5e2001623e43d7cf045d1baf23e4d"
+  },
+  {
+   "id": 75,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 199,
+    "planner": 295,
+    "mission": 122,
+    "teleop": 83,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 192,
+   "final_hash": "eacea924e7a87f8831830f8f8c6ae4a9dc9957a5025f9418c5597ac4f43ab53f"
+  },
+  {
+   "id": 76,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 312,
+    "planner": 247,
+    "mission": 130,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "4b28ac627ce7150ab778c7c48c71cb1aa4b90e33f6e0b0e58b6af6ab7c01d233"
+  },
+  {
+   "id": 77,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 258,
+    "teleop": 306,
+    "planner": 136
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "eb6bd2271602296a890963608f92cb1141f25d57c9d3f5a90445990f064ae743"
+  },
+  {
+   "id": 78,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 329,
+    "stop": 2,
+    "teleop": 212,
+    "planner": 157
+   },
+   "contact_ticks": 48,
+   "tilted_ticks": 0,
+   "final_hash": "8bf040254add58becd993137e4431030c619b910dbd1f2a671a1a30af879ce25"
+  },
+  {
+   "id": 79,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 271,
+    "planner": 249,
+    "mission": 123,
+    "teleop": 56,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 73,
+   "final_hash": "57502e5b534a0811d7350f4986edfff352a3fd81944b9a1f27fdc6568e29050b"
+  },
+  {
+   "id": 80,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 427,
+    "stop": 3,
+    "teleop": 106,
+    "planner": 164
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "39ef57e9e6b1b5e3992836d9f666d517b61b25032af140489b73fa0ed32fd8e3"
+  },
+  {
+   "id": 81,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 178,
+    "planner": 383,
+    "mission": 128,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 72,
+   "final_hash": "6dd30bd249339d6bc207cc2b377599417afe9b2994637a78c2a869ecb300b2b6"
+  },
+  {
+   "id": 82,
+   "z_max": 0.2293,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 298,
+    "planner": 402
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 334,
+   "final_hash": "3fb3b383c280f770d96926e4e16115ea7ecea658106cc98653df5f4e195a43f7"
+  },
+  {
+   "id": 83,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 305,
+    "teleop": 158,
+    "planner": 235,
+    "stop": 2
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "17b55e1ad541bcc0ae8cbd28517d7dbe306e7e59eeac72d64abe2073d2ec018d"
+  },
+  {
+   "id": 84,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 355,
+    "planner": 270,
+    "teleop": 73,
+    "stop": 2
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 110,
+   "final_hash": "cde7d939d4cda1eafc8b4548fe39d399b2c93e192e18d20fbee81131b823fb07"
+  },
+  {
+   "id": 85,
+   "z_max": 0.251,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 370,
+    "planner": 319,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 409,
+   "final_hash": "8a21abfe66d376acd5e83a87a80c8bdc71ef9e0521e0b13ac5f181d5492d8f5c"
+  },
+  {
+   "id": 86,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 336,
+    "teleop": 179,
+    "stop": 3,
+    "planner": 182
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "c65fe42418a02cd3dd90b0378d23398c1a7812d303fd4696d14ef624d29e3f1b"
+  },
+  {
+   "id": 87,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 221,
+    "planner": 315,
+    "mission": 120,
+    "teleop": 44
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 108,
+   "final_hash": "fae198bc64aed05f2c4c24c29f37fd18c8e54e59f6fee169ed1e4e5be5d73179"
+  },
+  {
+   "id": 88,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 360,
+    "planner": 274,
+    "teleop": 65,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 110,
+   "final_hash": "92b29061a95dfe7d51ad662a965084fee627fc9d998a4c1798de4a400285d3e6"
+  },
+  {
+   "id": 89,
+   "z_max": 0.6498,
+   "phases": [
+    "approach",
+    "carry",
+    "idle",
+    "pick",
+    "release"
+   ],
+   "sources": {
+    "idle": 236,
+    "planner": 276,
+    "mission": 124,
+    "teleop": 64
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 130,
+   "final_hash": "13fb5d1e7bb41d3c2be939aac14edeaaf60069bee5da911b674880c9c84b535a"
+  },
+  {
+   "id": 90,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 296,
+    "stop": 1,
+    "planner": 254,
+    "teleop": 149
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "73c972db2a00caa7a76b0cd936c51e2d0d6dbc2ceeecd0f6eb5283611089a0f1"
+  },
+  {
+   "id": 91,
+   "z_max": 0.3332,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 341,
+    "planner": 319,
+    "teleop": 38,
+    "stop": 2
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 416,
+   "final_hash": "e95c30c0e2278915e492558129daab42edee99e1fba1305ba0395b3ab3706ba9"
+  },
+  {
+   "id": 92,
+   "z_max": 0.6498,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 317,
+    "planner": 383
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 408,
+   "final_hash": "f8f310d005e731517cfecc495c0cd06aac8b759fe0b5cdb1bb9811b037e40184"
+  },
+  {
+   "id": 93,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 248,
+    "teleop": 340,
+    "planner": 111,
+    "stop": 1
+   },
+   "contact_ticks": 4,
+   "tilted_ticks": 0,
+   "final_hash": "0b438c3bd9898cd10b68ad2ed5517d0909b03977a0ffd44ef557339ffc5d5697"
+  },
+  {
+   "id": 94,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 373,
+    "teleop": 262,
+    "planner": 63,
+    "stop": 2
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "10284ea8dc6221d5ed12c2aa0bc2cde68e1054db4811574dd5634770e25b8c9b"
+  },
+  {
+   "id": 95,
+   "z_max": 0.3134,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 264,
+    "planner": 414,
+    "teleop": 22
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 71,
+   "final_hash": "40d18b2fff02591d120c53a2ef8264afc3597a9d15d949e84abccdab136f0c8d"
+  },
+  {
+   "id": 96,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 311,
+    "planner": 325,
+    "teleop": 63,
+    "stop": 1
+   },
+   "contact_ticks": 9,
+   "tilted_ticks": 0,
+   "final_hash": "682dc2f737ae47a4b65eccaf6fcd45f07b0b7c15192774fc9848faa034dc3a28"
+  },
+  {
+   "id": 97,
+   "z_max": 0.2013,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 291,
+    "planner": 398,
+    "teleop": 10,
+    "stop": 1
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 334,
+   "final_hash": "6a9a358d45d75dad47e52cf1a4a1f53b7340688a09a13182fc8848aebde0b6fa"
+  },
+  {
+   "id": 98,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 294,
+    "teleop": 168,
+    "planner": 238
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "b7b1fd7f62efdd04dbbda9be5744b34e833f2b78d10a6002c017ec0e75f8782c"
+  },
+  {
+   "id": 99,
+   "z_max": 0.0,
+   "phases": [
+    "idle"
+   ],
+   "sources": {
+    "idle": 346,
+    "teleop": 74,
+    "planner": 280
+   },
+   "contact_ticks": 0,
+   "tilted_ticks": 0,
+   "final_hash": "b3a396768c802053a5034844f85b21a15862044a4173df779228dab393360b1a"
+  }
+ ],
+ "totals": {
+  "reached_platform": 53,
+  "climbed_any": 69,
+  "grasp_carry": 37,
+  "grasp_approach": 37,
+  "grasp_release": 33,
+  "any_contact": 20,
+  "source_idle": 100,
+  "source_planner": 100,
+  "source_mission": 37,
+  "source_teleop": 87,
+  "source_stop": 62
+ }
+}

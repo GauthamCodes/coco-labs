@@ -101,7 +101,7 @@ function ChallengePage({ id, levels, compact }: { id: string; levels: Levels; co
   );
 }
 
-const IN_ARENA = new Set(['map-the-arena', 'case-file-detective']);
+const IN_ARENA = new Set(['map-the-arena', 'case-file-detective', 'race-the-ghost']);
 
 function LevelPage({ challenge, level, levels, shared }: {
   challenge: string; level: Level; levels: Levels; shared: ReturnType<typeof decodeScore>;
@@ -162,7 +162,7 @@ function LevelPage({ challenge, level, levels, shared }: {
       {isShared && <p className="play-shared">A challenge link: its inputs are re-scored here.</p>}
       {!isShared && IN_ARENA.has(challenge) && (
         <p><a className="arena-go" data-testid="play-arena-go" href={`${BASE}${arenaPlayHref(challenge, level)}`}>
-          {challenge === 'map-the-arena' ? 'Drive in the Arena →' : 'Open the Case File →'}</a></p>
+          {challenge === 'map-the-arena' ? 'Drive in the Arena →' : challenge === 'race-the-ghost' ? 'Race in the Arena →' : 'Open the Case File →'}</a></p>
       )}
       {!isShared && view && challenge === 'beat-the-planner' && <BeatThePlanner view={view} onScore={score} result={result?.r ?? null} />}
       {!isShared && view && challenge === 'next-node' && <NextNode view={view} onScore={score} />}

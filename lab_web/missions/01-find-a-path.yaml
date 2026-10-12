@@ -12,7 +12,7 @@ beats:
     text: >-
       COCO stands at its start. Click anywhere in the arena: before it moves, it
       searches. The coloured cells are that search, in the order it looked.
-    arena: {lens: plan, level: watch}
+    arena: {lens: plan, level: watch, camera: orbit}
   - beat: predict
     question: A* and Dijkstra both find a path across COCO's arena. Which path is cheaper?
     options:
@@ -26,14 +26,14 @@ beats:
     text: >-
       Pick "Compare" and race the two on the same goal. Same cost -- but watch how
       many cells each one opens. A* is not cheaper; it is less work.
-    arena: {lens: plan, level: explain}
+    arena: {lens: plan, level: explain, camera: orbit}
     claims: [astar-equals-dijkstra, real-stack-50, race-optimum]
   - beat: manipulate
     text: >-
       Change the planner and the heuristic, and weight A* up. Greedy best-first and
       a heavy weight open fewer cells and can return a longer path; the bound on how
       much longer is shown, and it is tested.
-    arena: {lens: plan, level: inspect}
+    arena: {lens: plan, level: inspect, camera: topdown}
     claims: [bounds, predictions, teaching-traces, arena-traces]
   - beat: explain
     text: >-
@@ -45,7 +45,7 @@ beats:
     text: >-
       Three searches COCO actually drove on the full ROS 2 stack in Gazebo: A*,
       Dijkstra and greedy best-first, planned on Nav2's costmap, then followed.
-    arena: {replay: lab1c_astar, level: explain}
+    arena: {replay: lab1c_astar, level: explain, camera: follow}
     claims: [lab1c-runs]
   - beat: challenge
     stub: true

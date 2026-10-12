@@ -112,8 +112,10 @@ export function ArenaApp() {
   // M3.5: a Play challenge played here (map the arena; the Case File detective)
   const playParam = params.get('play');
   const playLevel = params.get('pl');
-  const playOn = (playParam === 'map-the-arena' || playParam === 'case-file-detective')
+  const playOn = (playParam === 'map-the-arena' || playParam === 'case-file-detective' || playParam === 'race-the-ghost')
     && !!playLevel && /^[a-z0-9-]{1,64}$/.test(playLevel);
+  /** M4.8: a race takes only teleop and STOP (coco_lab.race): goals, grasps, hand-backs and resets are off */
+  const raceOn = playOn && playParam === 'race-the-ghost';
   const gaps = useGaps(import.meta.env.BASE_URL);
   const cfgInitial = Object.fromEntries(cfgLines.map((c) => [c.slice(0, c.indexOf('=')), c.slice(c.indexOf('=') + 1)]));
   const canvas = useRef<HTMLCanvasElement | null>(null);
@@ -259,7 +261,7 @@ export function ArenaApp() {
   const cfgSent = useRef(false);
 
   const goal = useCallback((x: number, y: number) => {
-    if (latchedRef.current) return;   // STOP is latched: R releases it (M4.5)
+    if (latchedRef.current || raceOn) return;   // STOP is latched: R releases it (M4.5); no goals in a race (M4.8)
     takeOver();
     perf.goalSent(wallMs(), live.current?.shownSearch?.searchId ?? null);
     r.current?.setGoal([x, y]);
@@ -372,7 +374,9 @@ export function ArenaApp() {
         return sha256Hex(new Uint8Array(b));
       }).then((h) => { specSha.current = h; });
 
-    void fetch(`${import.meta.env.BASE_URL}generated/v2/index.json`, { credentials: 'omit' })
+    // the runs list is for the nav: on a recording's page it waits for the first frame (M4.7, 4G)
+    void (recordedId ? perf.when('recording_ready') : Promise.resolve(0))
+      .then(() => fetch(`${import.meta.env.BASE_URL}generated/v2/index.json`, { credentials: 'omit' }))
       .then((x) => (x.ok ? x.json() : { runs: [] })).then((j) => setRuns(j.runs ?? [])).catch(() => {});
     if (replayParam && !recId) setError(`no recorded run "${replayParam}"`);
     if (caseParam && !caseId) setError(`no Case File "${caseParam}"`);
@@ -708,12 +712,12 @@ export function ArenaApp() {
         if (e.repeat) return;
         latchedRef.current = false; setLatched(false);
         clearTimeout(resetTimer);
-        resetTimer = window.setTimeout(() => { takeOver(); queue.current.push({ kind: 'reset' }); }, HOLD_TO_RESET_MS);
+        if (!raceOn) resetTimer = window.setTimeout(() => { takeOver(); queue.current.push({ kind: 'reset' }); }, HOLD_TO_RESET_MS);
         return;
       }
       if (a === 'context' || a === 'autonomy') {
         e.preventDefault();
-        if (e.repeat || latchedRef.current) return;
+        if (e.repeat || latchedRef.current || raceOn) return;
         held.clear(); takeOver();
         queue.current.push({ kind: a === 'context' ? 'grasp' : 'autonomy' });
         return;
@@ -882,8 +886,9 @@ export function ArenaApp() {
           onSetting={changeSetting} onClose={() => setHelpOpen(false)} />
       )}
       {playOn && <ArenaPlayPanel challenge={playParam!} levelId={playLevel!}
-        live={playParam === 'map-the-arena' ? client.current : null} liveReady={liveReady}
-        lastTick={() => lastTick.current} shownTick={() => session?.shownTick?.tick ?? null} log={() => log.current} />}
+        live={playParam === 'map-the-arena' || raceOn ? client.current : null} liveReady={liveReady}
+        lastTick={() => lastTick.current} shownTick={() => session?.shownTick?.tick ?? null} log={() => log.current}
+        onGhost={(flag, ghost) => r.current?.setRace(flag, ghost)} />}
       <p className={`arena-banner ${mode}`} data-testid="arena-mode" data-mode={mode}>
         {mode === 'attract' && (liveReady
           ? 'A recorded demo (MODEL, made when this site was built). Click or tap the map to give COCO a goal — the live model takes over.'

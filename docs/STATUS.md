@@ -1650,6 +1650,42 @@ only. Read order for agents (README §9): `README.md`, this file,
   - **Next:** M4.3, the Arena model: kinematic terrain following on v2, contact
     events, teleop preemption with the command source, the gated grasp, reset
     home, additive schema fields; flat-scene hashes byte-identical.
+- **M4.3 Arena model (2026-10-11 → 12).** [`v2/ARENA_MODEL.md`](v2/ARENA_MODEL.md)
+  "Terrain, the command source and the grasp".
+  - **Terrain** (`coco_lab/terrain.py`; World Spec v2 only): kinematic following —
+    height from the surface under the wheel base, pitch and roll from its four
+    corners (REP-103); slopes free, rims and a platform's sides walls
+    (`worldspec.terrain_map`); a contact stops the robot; the LiDAR meets a ramp
+    where it rises above the beam. SIMPLIFIED MODEL: no suspension, forces, slip
+    or tip-over (invariant 10).
+  - **Command source** STOP > TELEOP > MISSION | PLANNER on every tick (derived,
+    not hashed); M1's teleop-preempts-autonomy rule kept exactly (98 of M1's and
+    97 of M2.11's 100 committed sessions mix goals and teleop,
+    `v2/data/m4/m43/mixed_sessions.json`); the new `autonomy` input hands back.
+  - **Gated grasp** (`coco_lab/grasp.py`): the Stack's gate (0.151–0.1565 m ahead,
+    10 mm lateral), an approach_server-like approach (CREEP_SPEED 0.03 m/s,
+    proportional last step), pick, carry, release; reset puts the targets back.
+    Constants pinned to `coco_config` and `approach_server` in
+    `coco_lab_ros/test/test_sketch_constants.py`. All four colours drive up their
+    ramp under the planner and pick (test).
+  - **Additive schema fields:** `coco.robot.state.v1` 9–15 (z, pitch, roll, wheel
+    speeds, command source, contact); `coco.truth.pose.v1` 7–9 (z, roll, pitch,
+    float32 since M4.7).
+  - **Flat scenes byte-identical:** every flat golden-trace and hash test passes
+    unedited; CI keeps replaying M1's committed sessions (every tick).
+  - **Measured — determinism** ([`v2/data/m4/m43/determinism/`](v2/data/m4/m43/determinism/)):
+    100 recorded terrain sessions × 700 ticks, Chromium 156, Firefox 157, WebKit
+    27.2 and Pyodide-in-Node: **70,000 ticks per engine, 0 mismatched**. The
+    sessions exercise (in CPython): 53 reach a platform, 37 grasps reach carry, 33
+    releases, 20 contact sessions, every command source. CI now replays 3 of them
+    in all three browsers on every pull request.
+  - **Measured — fidelity** (`v2/FIDELITY_v1.md` §4, `v2/data/m4/m43/`): the
+    Arena's terrain against Gazebo's ground truth at every recorded pose of Lab
+    4's 17 fetches (52,751 rows; 15 climbed onto a platform): height |e| p95 0.0 /
+    7.4 / 0.0 mm (flat / slope / platform), max 15.1 mm at a ramp's foot; pitch
+    max 1.37°. Not compared: the v2 LiDAR against Gazebo's scans (UNRESOLVED).
+  - **In the page:** `?world=v2`; E grasps, Tab hands back; the targets, the
+    wheels and the arm in 3D. Screenshots: `v2/data/m4/screens/m43/`.
 
 ## Capabilities (README §2), with evidence class
 

@@ -1,0 +1,40 @@
+start 2026-10-12T10:13:30+05:30 profile balanced AC 1 load 3.16 3.52 3.77 driver NVRM version: NVIDIA UNIX Open Kernel Module for x86_64  580.178.04  Release Bui
+chromium: 10 sessions, 120 s
+chromium: 20 sessions, 225 s
+chromium: 30 sessions, 330 s
+chromium: 40 sessions, 418 s
+chromium: 50 sessions, 513 s
+chromium: 60 sessions, 617 s
+chromium: 70 sessions, 723 s
+chromium: 80 sessions, 823 s
+chromium: 90 sessions, 929 s
+chromium: 100 sessions, 1055 s
+chromium: 100 sessions, 70000 ticks
+chromium exit=0
+firefox: 10 sessions, 164 s
+firefox: 20 sessions, 304 s
+firefox: 30 sessions, 448 s
+firefox: 40 sessions, 568 s
+firefox: 50 sessions, 697 s
+firefox: 60 sessions, 846 s
+firefox: 70 sessions, 1004 s
+firefox: 80 sessions, 1146 s
+firefox: 90 sessions, 1302 s
+firefox: 100 sessions, 1481 s
+firefox: 100 sessions, 70000 ticks
+firefox exit=0
+webkit: 10 sessions, 119 s
+webkit: 20 sessions, 215 s
+webkit: 30 sessions, 317 s
+webkit: 40 sessions, 413 s
+webkit: 50 sessions, 510 s
+webkit: 60 sessions, 624 s
+webkit: 70 sessions, 750 s
+webkit: 80 sessions, 856 s
+webkit: 90 sessions, 976 s
+webkit: 100 sessions, 1120 s
+webkit: 100 sessions, 70000 ticks
+webkit exit=0
+{"chromium":[70000,0,"ba8729a014c6"],"firefox":[70000,0,"ba8729a014c6"],"pyodide-node":[70000,0,"ba8729a014c6"],"webkit":[70000,0,"ba8729a014c6"]} pass true
+compare exit=0
+end 2026-10-12T11:14:29+05:30 profile balanced AC 1 load 2.80 3.11 2.70

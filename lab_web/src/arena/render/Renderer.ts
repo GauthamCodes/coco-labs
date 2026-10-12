@@ -511,6 +511,33 @@ export class ArenaRenderer {
     if (this.three) this.three.robotHolder.visible = this.layers.robot && mode !== 'robot_eye';
   }
 
+  /**
+   * M4.8: the race: the flag (x, y, finish radius) as a ring on the surface, and the ghost (the level's
+   * committed track, coco_lab.race) as a dashed outline and, in 3D, a translucent body. Nulls hide them.
+   */
+  setRace(flag: [number, number, number] | null, ghost: [number, number, number] | null) {
+    if (!this.world) return;
+    if (!this.flag) {
+      this.flag = new THREE.Mesh(new THREE.RingGeometry(0.9, 1.0, 48), new THREE.MeshBasicMaterial({ color: this.palette.goal, transparent: true, opacity: 0.85 }));
+      this.ghost = this.dashedLoop(this.circle(this.world.radius, 48), this.palette.truth, 0.03);
+      this.scene.add(this.flag, this.ghost);
+    }
+    this.flag.visible = !!flag;
+    if (flag) {
+      this.flag.scale.set(flag[2], flag[2], 1);
+      this.flag.position.set(flag[0], flag[1], Z.marker + this.liftAt(flag[0], flag[1]));
+    }
+    this.ghost!.visible = !!ghost;
+    if (ghost) {
+      this.ghost!.position.set(ghost[0], ghost[1], Z.truth + this.liftAt(ghost[0], ghost[1]));
+      this.ghost!.rotation.z = ghost[2];
+    }
+    this.three?.setGhost(ghost, ghost ? this.liftAt(ghost[0], ghost[1]) : 0);
+  }
+
+  private flag: THREE.Mesh | null = null;
+  private ghost: THREE.LineLoop | null = null;
+
   /** M4.4: a person's tier choice in settings ('auto' measures). */
   setTier(choice: TierChoice) {
     const e = this.quality?.setChoice(choice, performance.now());

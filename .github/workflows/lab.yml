@@ -202,6 +202,15 @@ jobs:
           done
           node tools/perf/determinism.mjs compare --sessions "$rec/sessions.json" --limit 10 --ref "$rec" --out "$RUNNER_TEMP/det"
           cat "$RUNNER_TEMP/det/determinism.json"
+      - name: Terrain determinism across engines (M4.3; 3 recorded World Spec v2 sessions, every tick)
+        working-directory: lab_web
+        run: |
+          rec=../docs/v2/data/m4/m43/determinism
+          for b in chromium firefox webkit; do
+            node tools/perf/determinism.mjs "$b" --sessions "$rec/sessions.json" --limit 3 --out "$RUNNER_TEMP/det_terrain"
+          done
+          node tools/perf/determinism.mjs compare --sessions "$rec/sessions.json" --limit 3 --ref "$rec" --out "$RUNNER_TEMP/det_terrain"
+          cat "$RUNNER_TEMP/det_terrain/determinism.json"
       - name: Screenshot tests (the Arena's fixed scenes, canvas only)
         working-directory: lab_web
         run: node tools/perf/screenshots.mjs check --out "$RUNNER_TEMP/shots"

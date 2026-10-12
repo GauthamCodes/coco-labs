@@ -19,7 +19,7 @@
   },
   "play": {
    "requires": ["localise", "map", "move", "decide"],
-   "modules": ["play.py"]
+   "modules": ["play.py", "race.py"]
   }
  }
 }

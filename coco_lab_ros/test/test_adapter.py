@@ -308,7 +308,7 @@ def test_truth_carries_the_recorded_3d_pose(lab5_full):
     rows = [(b.z, b.roll, b.pitch, b.x) for _, b in ch['coco.truth.pose.v1']]
     assert rows and all(len(z) == len(x) for z, _, _, x in rows)
     zs = [v for z, _, _, _ in rows for v in z]
-    # a flat drive: recorded heights are small and not all exactly 0 (they are Gazebo's, not filled in)
+    # a flat drive: the recorded heights are small and not all exactly 0 (Gazebo's, not filled in)
     assert max(abs(v) for v in zs) < 0.1 and any(v != 0.0 for v in zs)
     assert A.roll_pitch(NS(x=0.0, y=0.0, z=0.0, w=1.0)) == (0.0, 0.0)
     r, p = A.roll_pitch(NS(x=0.0, y=math.sin(-0.1575), z=0.0, w=math.cos(-0.1575)))
