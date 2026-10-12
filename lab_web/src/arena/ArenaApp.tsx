@@ -859,7 +859,9 @@ export function ArenaApp() {
         {mode === 'attract' && (liveReady
           ? 'A recorded demo (MODEL, made when this site was built). Click or tap the map to give COCO a goal — the live model takes over.'
           : 'A recorded demo (MODEL, made when this site was built) while the live model loads… Click or tap the map to take over.')}
-        {mode === 'live' && 'Live model: coco_lab running in your browser. Click a goal, drive with W A S D / arrows or the joystick; Space is a latched STOP (R releases it). H shows every control.'}
+        {mode === 'live' && (coarse
+          ? 'Live model: coco_lab running in your browser. Tap the floor for a goal, drive with the joystick; STOP latches until you release it. Two fingers orbit and zoom.'
+          : 'Live model: coco_lab running in your browser. Click a goal, drive with W A S D / arrows or the joystick; Space is a latched STOP (R releases it). H shows every control.')}
         {mode === 'replay' && `Shared run: ${replay.status}`}
         {mode === 'recording' && converted && (converted.evidence === 'STACK'
           ? `Recorded run (STACK): COCO driven by the full ROS 2 stack in Gazebo — ${converted.title}. The solid robot is where the stack believed it was (AMCL); the outline is ground truth.`

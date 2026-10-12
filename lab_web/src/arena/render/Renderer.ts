@@ -631,12 +631,14 @@ export class ArenaRenderer {
       if (!prev) return;
       pts.set(e.pointerId, [e.clientX, e.clientY]);
       if (this.is3D) {
-        // 3D: one pointer orbits the camera about the robot, two pinch to zoom
-        if (pts.size === 1 && !this.panSuspended) this.three!.orbitBy(e.clientX - prev[0], e.clientY - prev[1]);
+        // 3D (README §5.5): the mouse orbits with one button held; on a touch screen one finger is a tap
+        // (a goal), and two fingers orbit (their midpoint moving: half each finger's share) and pinch to zoom
+        if (pts.size === 1 && !this.panSuspended && e.pointerType !== 'touch') this.three!.orbitBy(e.clientX - prev[0], e.clientY - prev[1]);
         else if (pts.size === 2 && pinch0 > 0) {
           const [a, b] = [...pts.values()];
           const d = Math.hypot(a[0] - b[0], a[1] - b[1]);
           this.three!.zoomBy(pinch0 / Math.max(1, d));
+          this.three!.orbitBy((e.clientX - prev[0]) / 2, (e.clientY - prev[1]) / 2);
           pinch0 = d;
         }
         return;
