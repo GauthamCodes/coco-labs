@@ -62,7 +62,9 @@ version, the network (4G / 5G, bars).
    sliders: the "Controls (H)" button → settings) once. Two fingers orbit and pinch to
    zoom; tap the floor to set a goal; the corner buttons are STOP, grasp
    (E), camera and autonomy. Does the robot respond immediately to the
-   joystick? Does a tap on the floor put the goal where you tapped? Is STOP
+   joystick? Read **`input → motion`** in the `?perf` panel after a few
+   pushes from standstill (median of the last 20; the budget is about
+   100 ms). Does a tap on the floor put the goal where you tapped? Is STOP
    always in reach of a thumb? Anything uncomfortable to watch (motion
    discomfort; reduced motion — the phone's own setting, or "Controls (H)" → settings — makes camera moves
    cut instead of glide)?
@@ -82,6 +84,8 @@ version, the network (4G / 5G, bars).
 | 1 | | | |
 | 5 | | | |
 | 10 | | | |
+
+`input → motion` median after 10 joystick pushes from standstill: ______ ms
 
 Touch feel (joystick, tank mode, orbit, pinch, tap-to-goal, STOP in reach, discomfort): ______
 
