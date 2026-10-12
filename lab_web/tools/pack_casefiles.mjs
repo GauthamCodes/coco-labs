@@ -19,7 +19,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, unlinkSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { zstdCompressSync } from 'node:zlib';
+import { constants as zlibConstants, zstdCompressSync } from 'node:zlib';
 import { createServer } from 'vite';
 
 export const PER_FILE_BUDGET = 20_000_000;
@@ -44,7 +44,10 @@ for (const c of build.cases) {
   const raw = new Uint8Array(readFileSync(join(RAW, `${c.id}.mcap`)));
   // D6 (ADR 0005, amendment D6): the scans after everything else, so the first frame loads first
   const rawRun = readRawStream(raw);
-  const packed = await orderCase(rawRun, (d) => new Uint8Array(zstdCompressSync(d)), 1 << 18, 'lab_web/tools/pack_casefiles.mjs');
+  // zstd level 19 (M4.7): 8 % fewer bytes than the default 3 on the largest Case File, the same
+  // messages, decompressed as fast; it kept that file's 3D first frame within 2 s on emulated 4G
+  const packed = await orderCase(rawRun, (d) => new Uint8Array(zstdCompressSync(d, { params: { [zlibConstants.ZSTD_c_compressionLevel]: 19 } })),
+    1 << 18, 'lab_web/tools/pack_casefiles.mjs');
   // the same messages, byte for byte: every channel's, in its order, with its schema
   if (JSON.stringify(contentDigest(readRawStream(packed), sha)) !== JSON.stringify(contentDigest(rawRun, sha))) {
     throw new Error(`${c.id}: the packed file does not hold exactly the adapter's messages`);
