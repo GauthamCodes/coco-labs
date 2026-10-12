@@ -1,0 +1,255 @@
+{
+ "criterion": "M4.10: phone-width layout (EMULATED viewports)",
+ "verdict": {
+  "no_horizontal_scroll": true,
+  "stop_reachable_on_touch": true,
+  "no_page_errors": true
+ },
+ "rows": [
+  {
+   "viewport": "phone_portrait",
+   "view": "arena (3D)",
+   "scroll_width": 390,
+   "inner_width": 390,
+   "stop": {
+    "visible": true,
+    "within": true
+   },
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "phone_portrait",
+   "view": "arena terrain",
+   "scroll_width": 390,
+   "inner_width": 390,
+   "stop": {
+    "visible": true,
+    "within": true
+   },
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "phone_portrait",
+   "view": "race",
+   "scroll_width": 390,
+   "inner_width": 390,
+   "stop": {
+    "visible": true,
+    "within": true
+   },
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "phone_portrait",
+   "view": "case file (3D)",
+   "scroll_width": 390,
+   "inner_width": 390,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "phone_portrait",
+   "view": "learn",
+   "scroll_width": 390,
+   "inner_width": 390,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "phone_portrait",
+   "view": "play",
+   "scroll_width": 390,
+   "inner_width": 390,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "phone_portrait",
+   "view": "case files",
+   "scroll_width": 390,
+   "inner_width": 390,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "phone_landscape",
+   "view": "arena (3D)",
+   "scroll_width": 844,
+   "inner_width": 844,
+   "stop": {
+    "visible": true,
+    "within": true
+   },
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "phone_landscape",
+   "view": "arena terrain",
+   "scroll_width": 844,
+   "inner_width": 844,
+   "stop": {
+    "visible": true,
+    "within": true
+   },
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "phone_landscape",
+   "view": "race",
+   "scroll_width": 844,
+   "inner_width": 844,
+   "stop": {
+    "visible": true,
+    "within": true
+   },
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "phone_landscape",
+   "view": "case file (3D)",
+   "scroll_width": 844,
+   "inner_width": 844,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "phone_landscape",
+   "view": "learn",
+   "scroll_width": 844,
+   "inner_width": 844,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "phone_landscape",
+   "view": "play",
+   "scroll_width": 844,
+   "inner_width": 844,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "phone_landscape",
+   "view": "case files",
+   "scroll_width": 844,
+   "inner_width": 844,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "laptop",
+   "view": "arena (3D)",
+   "scroll_width": 1280,
+   "inner_width": 1280,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "laptop",
+   "view": "arena terrain",
+   "scroll_width": 1280,
+   "inner_width": 1280,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "laptop",
+   "view": "race",
+   "scroll_width": 1280,
+   "inner_width": 1280,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "laptop",
+   "view": "case file (3D)",
+   "scroll_width": 1280,
+   "inner_width": 1280,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "laptop",
+   "view": "learn",
+   "scroll_width": 1280,
+   "inner_width": 1280,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "laptop",
+   "view": "play",
+   "scroll_width": 1280,
+   "inner_width": 1280,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  },
+  {
+   "viewport": "laptop",
+   "view": "case files",
+   "scroll_width": 1280,
+   "inner_width": 1280,
+   "stop": null,
+   "no_horizontal_scroll": true,
+   "errors": []
+  }
+ ],
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-12T19:07:30.658Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.85,
+    "5m": 3.17,
+    "15m": 2.49
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-12T19:09:17.258Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.02,
+    "5m": 3.05,
+    "15m": 2.51
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

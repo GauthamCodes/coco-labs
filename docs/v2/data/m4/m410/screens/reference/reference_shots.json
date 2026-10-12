@@ -1,0 +1,63 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-12T19:41:53.751Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.09,
+    "5m": 2.32,
+    "15m": 2.33
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-12T19:42:04.564Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2,
+    "5m": 2.3,
+    "15m": 2.32
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4244/coco-labs/",
+ "goal": [
+  2.6,
+  2
+ ],
+ "shots": [
+  {
+   "file": "follow_toward_ramp.png",
+   "camera": "follow",
+   "after_goal_ms": 5000
+  },
+  {
+   "file": "orbit_wide.png",
+   "camera": "orbit"
+  },
+  {
+   "file": "robot_eye.png",
+   "camera": "robot_eye"
+  }
+ ],
+ "errors": [],
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "triangles": 20964
+}

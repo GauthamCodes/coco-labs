@@ -1,0 +1,69 @@
+final 2026-10-13T01:14:24+05:30 at 7e72010
+== replays 2026-10-13T01:14:54+05:30 AC 1 load 2.93 2.52 2.39
+PASS lab1c_astar {"badge":"STACK","ticks":760,"events":18660,"first_shown_ms":473,"workers":0,"errors":0}
+PASS lab1c_dijkstra {"badge":"STACK","ticks":777,"events":71900,"first_shown_ms":391,"workers":0,"errors":0}
+PASS lab1c_greedy {"badge":"STACK","ticks":670,"events":4368,"first_shown_ms":255,"workers":0,"errors":0}
+PASS bfs_no_path {"badge":"MODEL","ticks":1,"events":750,"first_shown_ms":260,"workers":0,"errors":0}
+PASS arena_native {"badge":"MODEL","ticks":1,"events":283378,"first_shown_ms":767,"workers":0,"errors":0}
+{"pass":true,"errors":0}
+== replays exit=0 AC 1 2026-10-13T01:16:01+05:30
+== v1_links 2026-10-13T01:16:31+05:30 AC 1 load 2.33 2.38 2.35
+ok   (bare) -> 
+ok   ?view=plan -> ?view=learn&mission=find-a-path
+ok   ?view=localise -> ?view=learn&mission=where-it-is
+ok   ?view=map -> ?view=learn&mission=build-a-map
+ok   ?view=search -> ?view=learn&mission=where-to-look
+ok   ?view=move -> ?view=learn&mission=avoid-things
+ok   ?view=plan&perf -> ?view=learn&mission=find-a-path
+ok   ?view=live -> ?view=live
+ok   ?view=exhibit -> v1/?view=exhibit
+ok   ?view=localise&loc=exhibits -> v1/?view=localise&loc=exhibits
+ok   ?view=map&scene=map_loop -> v1/?view=map&scene=map_loop
+ok   ?view=move&move=replan -> v1/?view=move&move=replan
+ok   ?view=search&search=matrix -> v1/?view=search&search=matrix
+ok   ?bundle=astar_open -> ?view=arena&replay=astar_open
+ok   ?bundle=astar_open&v=1 -> ?view=arena&replay=astar_open
+ok   ?view=plan&bundle=astar_open&v=1 -> ?view=arena&replay=astar_open
+ok   ?bundle=lab1c_astar -> ?view=arena&replay=lab1c_astar
+ok   ?v=1 -> v1/?v=1
+ok   ?v=1&bundle=astar_open&s=4.1.4.1.9 -> v1/?v=1&bundle=astar_open&s=4.1.4.1.9
+ok   ?v=1&bundle=astar_open&e=vQEB -> v1/?v=1&bundle=astar_open&e=vQEB
+ok   ?bundle=not_a_bundle -> v1/?bundle=not_a_bundle
+ok   v1/ -> v1/
+ok   v1/ [view-lab] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=localise [view-localise] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=map [view-map] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=search [view-search] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=move [view-move] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=live [view-live] real_robot=0 live="Live Stack (simulated)"
+{"ok":true,"forms":22,"archive_views":6,"failed":0}
+== v1_links exit=0 AC 1 2026-10-13T01:18:04+05:30
+== console 2026-10-13T01:18:34+05:30 AC 1 load 2.59 2.58 2.43
+arena {"errors":0,"page_errors":0,"ws":0,"xo":0}
+arena:localise {"errors":0,"page_errors":0,"ws":0,"xo":0}
+arena:map {"errors":0,"page_errors":0,"ws":0,"xo":0}
+arena:move {"errors":0,"page_errors":0,"ws":0,"xo":0}
+arena:decide {"errors":0,"page_errors":0,"ws":0,"xo":0}
+learn {"errors":0,"page_errors":0,"ws":0,"xo":0}
+learn:find-a-path {"errors":0,"page_errors":0,"ws":0,"xo":0}
+learn:world-changes {"errors":0,"page_errors":0,"ws":0,"xo":0}
+learn:where-it-is {"errors":0,"page_errors":0,"ws":0,"xo":0}
+learn:build-a-map {"errors":0,"page_errors":0,"ws":0,"xo":0}
+learn:avoid-things {"errors":0,"page_errors":0,"ws":0,"xo":0}
+learn:where-to-look {"errors":0,"page_errors":0,"ws":0,"xo":0}
+live {"errors":0,"page_errors":0,"ws":0,"xo":0}
+v1-archive {"errors":0,"page_errors":0,"ws":0,"xo":0}
+casefiles {"errors":0,"page_errors":0,"ws":0,"xo":0}
+casefiles:lab5-move {"errors":0,"page_errors":0,"ws":0,"xo":0}
+casefile:lab4_b2_colours_s1_red {"errors":0,"page_errors":0,"ws":0,"xo":0}
+play {"errors":0,"page_errors":0,"ws":0,"xo":0}
+play:next-node {"errors":0,"page_errors":0,"ws":0,"xo":0}
+play:map {"errors":0,"page_errors":0,"ws":0,"xo":0}
+play:detective {"errors":0,"page_errors":0,"ws":0,"xo":0}
+summary {"views_with_console_errors":[],"views_with_page_errors":[],"total_console_errors":0,"total_page_errors":0,"live_websockets_on_load":0}
+== console exit=0 AC 1 2026-10-13T01:22:14+05:30
+== longtask_selfcheck 2026-10-13T01:22:44+05:30 AC 1 load 4.47 4.38 3.30
+{"observer_sees_a_long_task":false,"before":0,"recorded_ms":[]}
+== longtask_selfcheck exit=0 AC 1 2026-10-13T01:22:52+05:30
+end 2026-10-13T01:22:52+05:30
+profile restored to balanced

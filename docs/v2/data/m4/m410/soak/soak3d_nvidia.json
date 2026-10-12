@@ -1,0 +1,56 @@
+{
+ "criterion": "M4.10: no WebGL context loss and 0 console errors in a 30-minute scripted session; no long tasks while driving",
+ "minutes": 30.234716666666667,
+ "rounds": 34,
+ "gpu": "nvidia",
+ "context_lost": 0,
+ "context_restored": 0,
+ "errors": 0,
+ "error_samples": [],
+ "long_tasks_while_driving": 0,
+ "long_tasks_while_driving_max_ms": 0,
+ "long_tasks_other": 0,
+ "long_tasks_other_max_ms": 0,
+ "fps_p05": 59.99803285138467,
+ "fps_median": 60.00393468423609,
+ "fps_seconds": 1797,
+ "pass": true,
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-12T19:09:47.708Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.8,
+    "5m": 2.98,
+    "15m": 2.5
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-12T19:40:04.821Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.39,
+    "5m": 2.42,
+    "15m": 2.35
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

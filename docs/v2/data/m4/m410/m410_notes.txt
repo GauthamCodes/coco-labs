@@ -1,0 +1,2 @@
+fps_nvidia_high_m2_1 overlapped a 74 s pytest run (23:30:31-23:31:37): discard, re-take
+v1_links (resume run) started before dist/v1 was fetched (00:26-ish): re-run alone after the chain
