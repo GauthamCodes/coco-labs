@@ -1,0 +1,117 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-11T16:06:19.553Z",
+   "power_profile": "power-saver",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 77
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 4.28,
+    "5m": 3.49,
+    "15m": 2.9
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  },
+  "end": {
+   "at_utc": "2026-10-11T16:07:16.403Z",
+   "power_profile": "power-saver",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 76
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 4.71,
+    "5m": 3.74,
+    "15m": 3.02
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ },
+ "site": "http://127.0.0.1:4245/coco-labs/",
+ "goal": [
+  5.6,
+  2
+ ],
+ "shots": [
+  {
+   "file": "climbing_ramp.png",
+   "note": "the model has the robot nose-up on the blue bay's ramp",
+   "tick": 173,
+   "pose": [
+    3.1864977969189336,
+    2.0186934680468065,
+    -0.0077449849345012645
+   ],
+   "tilt": [
+    0.06059680752302364,
+    -0.31415045083390986,
+    0.0025164676817708022
+   ],
+   "source": "planner",
+   "grasp": null
+  },
+  {
+   "file": "on_platform.png",
+   "note": "arrived on the platform, facing the target row",
+   "tick": 255,
+   "pose": [
+    5.506428210074658,
+    2.0007247559585486,
+    -0.007745232068388841
+   ],
+   "tilt": [
+    0.649839392466,
+    0,
+    0
+   ],
+   "source": "idle",
+   "grasp": null
+  },
+  {
+   "file": "carrying.png",
+   "note": "after E: approached, picked through the gate, carrying",
+   "tick": 453,
+   "pose": [
+    5.896257391782154,
+    1.9984923798973209,
+    0.009805816348471108
+   ],
+   "tilt": [
+    0.649839392466,
+    0,
+    0
+   ],
+   "source": "idle",
+   "grasp": "carry"
+  },
+  {
+   "file": "orbit_wide.png",
+   "note": "the wide orbit camera, the robot on the platform",
+   "tick": 459,
+   "pose": [
+    5.896257391782154,
+    1.9984923798973209,
+    0.009805816348471108
+   ],
+   "tilt": [
+    0.649839392466,
+    0,
+    0
+   ],
+   "source": "idle",
+   "grasp": "carry"
+  }
+ ],
+ "errors": [],
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"
+}

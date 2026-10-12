@@ -1,0 +1,326 @@
+{
+ "criterion": "M4.6: the timeline in every camera, including follow during replay",
+ "verdict": {
+  "timeline_moves_the_robot_in_every_camera": true,
+  "follow_camera_follows_in_replay": true,
+  "camera_kept_while_seeking": true,
+  "step_keys": true,
+  "no_page_errors": true
+ },
+ "rows": [
+  {
+   "kind": "replay",
+   "id": "lab5_crossing_dwb_1",
+   "camera": "follow",
+   "at25": {
+    "pose": [
+     0.178112,
+     -0.300984,
+     -1.455452
+    ],
+    "rig": [
+     -0.047062793729902686,
+     1.9856765873324957
+    ],
+    "mode": "follow",
+    "tick": 31
+   },
+   "at75": {
+    "pose": [
+     0.016614,
+     -1.894249,
+     -1.54071
+    ],
+    "rig": [
+     -0.07958928530403647,
+     0.5845157976076736
+    ],
+    "mode": "follow",
+    "tick": 91
+   },
+   "robot_moved": true,
+   "camera_followed": true,
+   "camera_kept": true,
+   "step_forward": 1,
+   "errors": []
+  },
+  {
+   "kind": "replay",
+   "id": "lab5_crossing_dwb_1",
+   "camera": "orbit",
+   "at25": {
+    "pose": [
+     0.178112,
+     -0.300984,
+     -1.455452
+    ],
+    "rig": [
+     -4.61852427740128,
+     -14.587973481153082
+    ],
+    "mode": "orbit",
+    "tick": 31
+   },
+   "at75": {
+    "pose": [
+     0.016614,
+     -1.894249,
+     -1.54071
+    ],
+    "rig": [
+     -4.61852427740128,
+     -14.587973481153082
+    ],
+    "mode": "orbit",
+    "tick": 92
+   },
+   "robot_moved": true,
+   "camera_followed": true,
+   "camera_kept": true,
+   "step_forward": 1,
+   "errors": []
+  },
+  {
+   "kind": "replay",
+   "id": "lab5_crossing_dwb_1",
+   "camera": "robot_eye",
+   "at25": {
+    "pose": [
+     0.178112,
+     -0.300984,
+     -1.455452
+    ],
+    "rig": [
+     0.19249809175335214,
+     -0.42515340188333084
+    ],
+    "mode": "robot_eye",
+    "tick": 31
+   },
+   "at75": {
+    "pose": [
+     0.016614,
+     -1.894249,
+     -1.54071
+    ],
+    "rig": [
+     0.020374223505171606,
+     -2.0191924300761395
+    ],
+    "mode": "robot_eye",
+    "tick": 92
+   },
+   "robot_moved": true,
+   "camera_followed": true,
+   "camera_kept": true,
+   "step_forward": 1,
+   "errors": []
+  },
+  {
+   "kind": "replay",
+   "id": "lab5_crossing_dwb_1",
+   "camera": "topdown",
+   "at25": {
+    "pose": [
+     0.178112,
+     -0.300984,
+     -1.455452
+    ],
+    "rig": null,
+    "mode": "topdown",
+    "tick": 31
+   },
+   "at75": {
+    "pose": [
+     0.016614,
+     -1.894249,
+     -1.54071
+    ],
+    "rig": null,
+    "mode": "topdown",
+    "tick": 93
+   },
+   "robot_moved": true,
+   "camera_followed": true,
+   "camera_kept": true,
+   "step_forward": 1,
+   "errors": []
+  },
+  {
+   "kind": "casefile",
+   "id": "lab4_b1_colours_s5_red",
+   "camera": "follow",
+   "at25": {
+    "pose": [
+     4.0900457932703915,
+     6.0836325704665315,
+     -0.006439660185019664
+    ],
+    "rig": [
+     1.4719002360866709,
+     5.792825397258633
+    ],
+    "mode": "follow",
+    "tick": 1047
+   },
+   "at75": {
+    "pose": [
+     5.895609652732812,
+     -6.000926126978848,
+     0.009324075618980411
+    ],
+    "rig": [
+     3.3820011588931336,
+     -5.4273149146024915
+    ],
+    "mode": "follow",
+    "tick": 3139
+   },
+   "robot_moved": true,
+   "camera_followed": true,
+   "camera_kept": true,
+   "step_forward": 1,
+   "errors": []
+  },
+  {
+   "kind": "casefile",
+   "id": "lab4_b1_colours_s5_red",
+   "camera": "orbit",
+   "at25": {
+    "pose": [
+     4.0900457932703915,
+     6.0836325704665315,
+     -0.006439660185019664
+    ],
+    "rig": [
+     -4.61852427740128,
+     -14.587973481153082
+    ],
+    "mode": "orbit",
+    "tick": 1047
+   },
+   "at75": {
+    "pose": [
+     5.895609652732812,
+     -6.000926126978848,
+     0.009324075618980411
+    ],
+    "rig": [
+     -4.61852427740128,
+     -14.587973481153082
+    ],
+    "mode": "orbit",
+    "tick": 3139
+   },
+   "robot_moved": true,
+   "camera_followed": true,
+   "camera_kept": true,
+   "step_forward": 1,
+   "errors": []
+  },
+  {
+   "kind": "casefile",
+   "id": "lab4_b1_colours_s5_red",
+   "camera": "robot_eye",
+   "at25": {
+    "pose": [
+     4.0900457932703915,
+     6.0836325704665315,
+     -0.006439660185019664
+    ],
+    "rig": [
+     4.187757958645421,
+     6.082867014302815
+    ],
+    "mode": "robot_eye",
+    "tick": 1047
+   },
+   "at75": {
+    "pose": [
+     5.895609652732812,
+     -6.000926126978848,
+     0.009324075618980411
+    ],
+    "rig": [
+     6.020604219181847,
+     -5.999760634354291
+    ],
+    "mode": "robot_eye",
+    "tick": 3139
+   },
+   "robot_moved": true,
+   "camera_followed": true,
+   "camera_kept": true,
+   "step_forward": 1,
+   "errors": []
+  },
+  {
+   "kind": "casefile",
+   "id": "lab4_b1_colours_s5_red",
+   "camera": "topdown",
+   "at25": {
+    "pose": [
+     4.0900457932703915,
+     6.0836325704665315,
+     -0.006439660185019664
+    ],
+    "rig": null,
+    "mode": "topdown",
+    "tick": 1047
+   },
+   "at75": {
+    "pose": [
+     5.895609652732812,
+     -6.000926126978848,
+     0.009324075618980411
+    ],
+    "rig": null,
+    "mode": "topdown",
+    "tick": 3139
+   },
+   "robot_moved": true,
+   "camera_followed": true,
+   "camera_kept": true,
+   "step_forward": 1,
+   "errors": []
+  }
+ ],
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-12T06:21:17.876Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.01,
+    "5m": 1.42,
+    "15m": 1.89
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-12T06:21:50.479Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.31,
+    "5m": 1.45,
+    "15m": 1.88
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

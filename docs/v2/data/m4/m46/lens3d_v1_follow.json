@@ -1,0 +1,301 @@
+{
+ "criterion": "M4.6: Plan, Localise, Map, Move, Decide at Watch, Explain, Inspect in 3D",
+ "camera": "follow",
+ "world": "v1",
+ "verdict": {
+  "every_lens_every_level_ran_in_3d": true,
+  "watch_at_most_two_computation_layers": true,
+  "no_page_errors": true
+ },
+ "rows": [
+  {
+   "lens": "plan",
+   "level": "watch",
+   "url": "?view=arena&camera=follow&lens=plan&level=watch",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [],
+   "computation_on": 0,
+   "overlay_objects": 10,
+   "overlay_zmax": 0.07,
+   "errors": []
+  },
+  {
+   "lens": "plan",
+   "level": "explain",
+   "url": "?view=arena&camera=follow&lens=plan&level=explain",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [],
+   "computation_on": 0,
+   "overlay_objects": 10,
+   "overlay_zmax": 0.07,
+   "errors": []
+  },
+  {
+   "lens": "plan",
+   "level": "inspect",
+   "url": "?view=arena&camera=follow&lens=plan&level=inspect",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [],
+   "computation_on": 0,
+   "overlay_objects": 10,
+   "overlay_zmax": 0.07,
+   "errors": []
+  },
+  {
+   "lens": "localise",
+   "level": "watch",
+   "url": "?view=arena&camera=follow&lens=localise&level=watch&cfg=arena.range_sigma%3D0.02&cfg=localise.filter%3Dmcl",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [
+    "particles",
+    "estimate"
+   ],
+   "computation_on": 1,
+   "overlay_objects": 15,
+   "overlay_zmax": 0.07,
+   "errors": []
+  },
+  {
+   "lens": "localise",
+   "level": "explain",
+   "url": "?view=arena&camera=follow&lens=localise&level=explain&cfg=arena.range_sigma%3D0.02&cfg=localise.filter%3Dmcl",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [
+    "particles",
+    "estimate",
+    "covariance"
+   ],
+   "computation_on": 1,
+   "overlay_objects": 15,
+   "overlay_zmax": 0.07,
+   "errors": []
+  },
+  {
+   "lens": "localise",
+   "level": "inspect",
+   "url": "?view=arena&camera=follow&lens=localise&level=inspect&cfg=arena.range_sigma%3D0.02&cfg=localise.filter%3Dmcl",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [
+    "particles",
+    "estimate",
+    "covariance",
+    "odometry"
+   ],
+   "computation_on": 2,
+   "overlay_objects": 15,
+   "overlay_zmax": 0.07,
+   "errors": []
+  },
+  {
+   "lens": "map",
+   "level": "watch",
+   "url": "?view=arena&camera=follow&lens=map&level=watch&cfg=arena.range_sigma%3D0.02&cfg=localise.filter%3Dmcl&cfg=map.algorithm%3Doccupancy&cfg=map.poses%3Dbelief",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [
+    "built_map",
+    "slam_pose"
+   ],
+   "computation_on": 2,
+   "overlay_objects": 17,
+   "overlay_zmax": 0.07,
+   "errors": []
+  },
+  {
+   "lens": "map",
+   "level": "explain",
+   "url": "?view=arena&camera=follow&lens=map&level=explain&cfg=arena.range_sigma%3D0.02&cfg=localise.filter%3Dmcl&cfg=map.algorithm%3Doccupancy&cfg=map.poses%3Dbelief",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [
+    "built_map",
+    "slam_pose",
+    "landmarks",
+    "slam_particles"
+   ],
+   "computation_on": 2,
+   "overlay_objects": 17,
+   "overlay_zmax": 0.07,
+   "errors": []
+  },
+  {
+   "lens": "map",
+   "level": "inspect",
+   "url": "?view=arena&camera=follow&lens=map&level=inspect&cfg=arena.range_sigma%3D0.02&cfg=localise.filter%3Dmcl&cfg=map.algorithm%3Doccupancy&cfg=map.poses%3Dbelief",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [
+    "built_map",
+    "slam_pose",
+    "landmarks",
+    "slam_particles",
+    "graph"
+   ],
+   "computation_on": 3,
+   "overlay_objects": 17,
+   "overlay_zmax": 0.07,
+   "errors": []
+  },
+  {
+   "lens": "move",
+   "level": "watch",
+   "url": "?view=arena&camera=follow&lens=move&level=watch&cfg=move.controller%3Ddwa",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [
+    "chosen",
+    "candidates",
+    "actors"
+   ],
+   "computation_on": 2,
+   "overlay_objects": 13,
+   "overlay_zmax": 0.07,
+   "errors": []
+  },
+  {
+   "lens": "move",
+   "level": "explain",
+   "url": "?view=arena&camera=follow&lens=move&level=explain&cfg=move.controller%3Ddwa",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [
+    "chosen",
+    "candidates",
+    "rejected",
+    "local_window",
+    "given_path",
+    "actors"
+   ],
+   "computation_on": 5,
+   "overlay_objects": 13,
+   "overlay_zmax": 0.07,
+   "errors": []
+  },
+  {
+   "lens": "move",
+   "level": "inspect",
+   "url": "?view=arena&camera=follow&lens=move&level=inspect&cfg=move.controller%3Ddwa",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [
+    "chosen",
+    "candidates",
+    "rejected",
+    "local_window",
+    "lookahead",
+    "given_path",
+    "actors"
+   ],
+   "computation_on": 6,
+   "overlay_objects": 13,
+   "overlay_zmax": 0.07,
+   "errors": []
+  },
+  {
+   "lens": "decide",
+   "level": "watch",
+   "url": "?view=arena&camera=follow&lens=decide&level=watch&cfg=mission.start%3Dred",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [
+    "belief",
+    "detection"
+   ],
+   "computation_on": 2,
+   "overlay_objects": 20,
+   "overlay_zmax": 0.28500000000000003,
+   "errors": []
+  },
+  {
+   "lens": "decide",
+   "level": "explain",
+   "url": "?view=arena&camera=follow&lens=decide&level=explain&cfg=mission.start%3Dred",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [
+    "belief",
+    "detection",
+    "bays"
+   ],
+   "computation_on": 2,
+   "overlay_objects": 20,
+   "overlay_zmax": 0.28500000000000003,
+   "errors": []
+  },
+  {
+   "lens": "decide",
+   "level": "inspect",
+   "url": "?view=arena&camera=follow&lens=decide&level=inspect&cfg=mission.start%3Dred",
+   "camera": "follow",
+   "is3d": true,
+   "tick": 69,
+   "layers_on": [
+    "belief",
+    "detection",
+    "bays"
+   ],
+   "computation_on": 2,
+   "overlay_objects": 20,
+   "overlay_zmax": 0.28500000000000003,
+   "errors": []
+  }
+ ],
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-12T06:16:26.895Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 0.84,
+    "5m": 1.61,
+    "15m": 2.08
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-12T06:18:49.288Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.05,
+    "5m": 1.54,
+    "15m": 1.99
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

@@ -1,0 +1,246 @@
+{
+ "browser": "firefox",
+ "version": "157.0",
+ "site": "http://127.0.0.1:4244/coco-labs/",
+ "seconds": 137.525,
+ "exact": 17,
+ "ok": 17,
+ "links": 18,
+ "rows": [
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "expected": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "exact": true,
+   "ms": 3628,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "expected": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "exact": true,
+   "ms": 4442,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "expected": "28586af380b7e9041a562cc8adf2b50028133972dc9581919d99cd9bef1297b9",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "28586af380b7e9041a562cc8adf2b50028133972dc9581919d99cd9bef1297b9",
+   "exact": true,
+   "ms": 3929,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "expected": "1d404acf8b988a8fcf4cdebd84cd37cd6a288b0dfb11e76eeb711e9623840cdf",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "1d404acf8b988a8fcf4cdebd84cd37cd6a288b0dfb11e76eeb711e9623840cdf",
+   "exact": true,
+   "ms": 3421,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "expected": "3f212665205921923613d95229887f5f360b5e4c08102e45def1d64968d90b88",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "3f212665205921923613d95229887f5f360b5e4c08102e45def1d64968d90b88",
+   "exact": true,
+   "ms": 8475,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "expected": "360b1ae75f1bad079d07107706ea054cf636549f394bf309dcc2b22b02690849",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "360b1ae75f1bad079d07107706ea054cf636549f394bf309dcc2b22b02690849",
+   "exact": true,
+   "ms": 8989,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "expected": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "exact": true,
+   "ms": 4434,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "expected": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "exact": true,
+   "ms": 4938,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "expected": "74e982b3191fcd1c48909a4f1170f57b51383072958af5f7a06a6d33a1acc238",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "74e982b3191fcd1c48909a4f1170f57b51383072958af5f7a06a6d33a1acc238",
+   "exact": true,
+   "ms": 4987,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "expected": "106055cf0e4b1033ab4aba071d5297d59df04deb93b0a1ebdb463747603362dd",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "106055cf0e4b1033ab4aba071d5297d59df04deb93b0a1ebdb463747603362dd",
+   "exact": true,
+   "ms": 4478,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "expected": "d725360830483a471b1f15bec9c612ac608fb65751f339a43de410f0f7556dd7",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "d725360830483a471b1f15bec9c612ac608fb65751f339a43de410f0f7556dd7",
+   "exact": true,
+   "ms": 5955,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "expected": "c131213e6e518603b8494f0e13a1caef3c5f1537dbc3d74aa2716f19598e29e9",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "c131213e6e518603b8494f0e13a1caef3c5f1537dbc3d74aa2716f19598e29e9",
+   "exact": true,
+   "ms": 12015,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "expected": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "exact": true,
+   "ms": 4442,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "expected": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "exact": true,
+   "ms": 5453,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "expected": "6f08d781107c4fbb8c451697fe6c352533c7f0085aa952dc04079eb119816165",
+   "errors": [],
+   "exact": false,
+   "failure": "TimeoutError: page.goto: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:4244/coco-labs/?view=play&c=race-the-ghost&l=the-long-way&s=eyJ2IjoxLCJoIjoiZmRlNWIzNjQyZjQzNzYzNDhkODZhMjg2OGM3N2VmNzgzYTQwN2I4ZTgxMDNmZDI4ZWYzZGEzNmU2NmFhY2UyZiIsImkiOlt7InRpY2siOjAsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMjYsImFuZ3VsYXIiOi0wLjc3fSx7InRpY2siOjEsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMjcsImFuZ3VsYXIiOi0wLjc3fSx7InRpY2siOjIsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMjgsImFuZ3VsYXIiOi0wLjc1fSx7InRpY2siOjMsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMjcsImFuZ3VsYXIiOi0wLjc2fSx7InRpY2siOjQsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMjgsImFuZ3VsYXIiOi0wLjc1fSx7InRpY2siOjUsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMjcsImFuZ3VsYXIiOi0wLjc2fSx7InRpY2siOjcsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMjgsImFuZ3VsYXIiOi0wLjc1fSx7InRpY2siOjgsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMjgsImFuZ3VsYXIiOi0wLjc0fSx7InRpY2siOjksImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMjksImFuZ3VsYXIiOi0wLjcyfSx7InRpY2siOjExLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjMsImFuZ3VsYXIiOi0wLjY5MDAwMDAwMDAwMDAwMDF9LHsidGljayI6MTIsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMywiYW5ndWxhciI6LTAuNjh9LHsidGljayI6MTMsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzEsImFuZ3VsYXIiOi0wLjY1fSx7InRpY2siOjE0LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjMxLCJhbmd1bGFyIjotMC42M30seyJ0aWNrIjoxNSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zMiwiYW5ndWxhciI6LTAuNn0seyJ0aWNrIjoxNiwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zMiwiYW5ndWxhciI6LTAuNTh9LHsidGljayI6MTcsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzIsImFuZ3VsYXIiOi0wLjU0fSx7InRpY2siOjE4LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjMzLCJhbmd1bGFyIjotMC41MX0seyJ0aWNrIjoxOSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zMywiYW5ndWxhciI6LTAuNDh9LHsidGljayI6MjAsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzMsImFuZ3VsYXIiOi0wLjQ0fSx7InRpY2siOjIxLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjotMC40fSx7InRpY2siOjIyLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjotMC4zNn0seyJ0aWNrIjoyMywia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6LTAuMzJ9LHsidGljayI6MjQsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOi0wLjN9LHsidGljayI6MjUsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOi0wLjI2fSx7InRpY2siOjI2LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjotMC4yMn0seyJ0aWNrIjoyNywia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6LTAuMjF9LHsidGljayI6MjgsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOi0wLjE3fSx7InRpY2siOjI5LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjotMC4xNH0seyJ0aWNrIjozMCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6LTAuMTF9LHsidGljayI6MzEsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOi0wLjF9LHsidGljayI6MzIsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOi0wLjA3fSx7InRpY2siOjMzLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjotMC4wNX0seyJ0aWNrIjozNCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6LTAuMDN9LHsidGljayI6MzYsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOi0wLjAxfSx7InRpY2siOjM3LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowfSx7InRpY2siOjM5LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjAxfSx7InRpY2siOjQwLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjAyfSx7InRpY2siOjQxLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjExfSx7InRpY2siOjQyLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjE4fSx7InRpY2siOjQzLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjE2fSx7InRpY2siOjQ0LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjE0fSx7InRpY2siOjQ1LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjEyfSx7InRpY2siOjQ2LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjF9LHsidGljayI6NDcsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMDh9LHsidGljayI6NDgsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMTV9LHsidGljayI6NDksImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMjF9LHsidGljayI6NTAsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMTh9LHsidGljayI6NTEsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMjJ9LHsidGljayI6NTIsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOjAuMjZ9LHsidGljayI6NTMsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMn0seyJ0aWNrIjo1NCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4xNn0seyJ0aWNrIjo1NSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4xMX0seyJ0aWNrIjo1Niwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4xfSx7InRpY2siOjU3LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjA2fSx7InRpY2siOjU4LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjAzfSx7InRpY2siOjU5LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjA5fSx7InRpY2siOjYwLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjF9LHsidGljayI6NjIsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMDR9LHsidGljayI6NjMsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMX0seyJ0aWNrIjo2NCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4xNX0seyJ0aWNrIjo2NSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4wOX0seyJ0aWNrIjo2Niwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4wNX0seyJ0aWNrIjo2Nywia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4wMX0seyJ0aWNrIjo2OCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6LTAuMDN9LHsidGljayI6NjksImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOi0wLjA1fSx7InRpY2siOjcxLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjA4fSx7InRpY2siOjcyLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjA1fSx7InRpY2siOjczLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjAyfSx7InRpY2siOjc0LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjA4fSx7InRpY2siOjc1LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjA3fSx7InRpY2siOjc3LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjAxfSx7InRpY2siOjc4LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjA2fSx7InRpY2siOjc5LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjExfSx7InRpY2siOjgwLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjA3fSx7InRpY2siOjgxLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjF9LHsidGljayI6ODIsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMDl9LHsidGljayI6ODMsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMTV9LHsidGljayI6ODQsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMTl9LHsidGljayI6ODUsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMjJ9LHsidGljayI6ODYsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMjR9LHsidGljayI6ODcsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMjJ9LHsidGljayI6ODgsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMjR9LHsidGljayI6ODksImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMjV9LHsidGljayI6OTEsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMjN9LHsidGljayI6OTQsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMjJ9LHsidGljayI6OTUsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMn0seyJ0aWNrIjo5Nywia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6MC4yOX0seyJ0aWNrIjo5OCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6MC4zN30seyJ0aWNrIjo5OSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6MC40Mn0seyJ0aWNrIjoxMDAsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzMsImFuZ3VsYXIiOjAuNDZ9LHsidGljayI6MTAxLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjowLjQzfSx7InRpY2siOjEwMiwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zMywiYW5ndWxhciI6MC40Nn0seyJ0aWNrIjoxMDMsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzMsImFuZ3VsYXIiOjAuNDh9LHsidGljayI6MTA0LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjMzLCJhbmd1bGFyIjowLjQ1fSx7InRpY2siOjEwNSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zMywiYW5ndWxhciI6MC40Nn0seyJ0aWNrIjoxMDgsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOjAuNDJ9LHsidGljayI6MTEwLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjowLjR9LHsidGljayI6MTExLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjowLjM3fSx7InRpY2siOjExMiwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6MC4zNn0seyJ0aWNrIjoxMTMsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOjAuMzR9LHsidGljayI6MTE0LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjowLjMxfSx7InRpY2siOjExNSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6MC4yOX0seyJ0aWNrIjoxMTYsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOjAuMjd9LHsidGljayI6MTE3LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjI0fSx7InRpY2siOjExOCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4yMn0seyJ0aWNrIjoxMTksImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMn0seyJ0aWNrIjoxMjAsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMTh9LHsidGljayI6MTIxLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjE2fSx7InRpY2siOjEyMiwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4xNH0seyJ0aWNrIjoxMjMsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMTJ9LHsidGljayI6MTI0LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjExfSx7InRpY2siOjEyNSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4xfSx7InRpY2siOjEyNiwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4wOH0seyJ0aWNrIjoxMjcsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMDZ9LHsidGljayI6MTI5LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjA1fSx7InRpY2siOjEzMCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4wM30seyJ0aWNrIjoxMzIsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMDJ9LHsidGljayI6MTMzLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjAxfSx7InRpY2siOjEzNCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MH0seyJ0aWNrIjoxMzcsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOi0wLjEyfSx7InRpY2siOjEzOCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6LTAuMjJ9LHsidGljayI6MTM5LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjotMC4yOX0seyJ0aWNrIjoxNDAsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOi0wLjM1MDAwMDAwMDAwMDAwMDAzfSx7InRpY2siOjE0MSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6LTAuMzN9LHsidGljayI6MTQyLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjotMC4zN30seyJ0aWNrIjoxNDMsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOi0wLjR9LHsidGljayI6MTQ0LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjotMC40Mn0seyJ0aWNrIjoxNDUsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOi0wLjM5fSx7InRpY2siOjE0Niwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6LTAuNDEwMDAwMDAwMDAwMDAwMDN9LHsidGljayI6MTQ4LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjotMC4zOH0seyJ0aWNrIjoxNTAsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOi0wLjM3fSx7InRpY2siOjE1MSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6LTAuMzR9LHsidGljayI6MTUyLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjotMC4zM30seyJ0aWNrIjoxNTMsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOi0wLjMyfSx7InRpY2siOjE1NCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6LTAuMjl9LHsidGljayI6MTU1LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjotMC4yOH0seyJ0aWNrIjoxNTYsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOi0wLjI2fSx7InRpY2siOjE1Nywia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6LTAuMjR9LHsidGljayI6MTU4LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjotMC4yMn0seyJ0aWNrIjoxNTksImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOi0wLjJ9LHsidGljayI6MTYwLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjotMC4xOH0seyJ0aWNrIjoxNjEsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOi0wLjE2fSx7InRpY2siOjE2Miwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6LTAuMTR9LHsidGljayI6MTYzLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjotMC4xMn0seyJ0aWNrIjoxNjQsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOi0wLjExfSx7InRpY2siOjE2NSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4wMn0seyJ0aWNrIjoxNjYsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMTN9LHsidGljayI6MTY3LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjIyfSx7InRpY2siOjE2OCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6MC4yOX0seyJ0aWNrIjoxNjksImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDN9LHsidGljayI6MTcwLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjowLjM4fSx7InRpY2siOjE3MSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6MC4zNTAwMDAwMDAwMDAwMDAwM30seyJ0aWNrIjoxNzIsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOjAuMzh9LHsidGljayI6MTczLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjowLjR9LHsidGljayI6MTc0LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjowLjM3fSx7InRpY2siOjE3NSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6MC4zOH0seyJ0aWNrIjoxNzcsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDN9LHsidGljayI6MTc5LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjowLjM0fSx7InRpY2siOjE4MCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6MC4zMX0seyJ0aWNrIjoxODEsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOjAuM30seyJ0aWNrIjoxODIsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzQsImFuZ3VsYXIiOjAuMjl9LHsidGljayI6MTgzLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM0LCJhbmd1bGFyIjowLjI2fSx7InRpY2siOjE4NCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4yNX0seyJ0aWNrIjoxODUsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMjN9LHsidGljayI6MTg2LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjIxfSx7InRpY2siOjE4Nywia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4xOX0seyJ0aWNrIjoxODgsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMTd9LHsidGljayI6MTg5LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjE1fSx7InRpY2siOjE5MCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4xNH0seyJ0aWNrIjoxOTEsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMTN9LHsidGljayI6MTkyLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjExfSx7InRpY2siOjE5Mywia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4xfSx7InRpY2siOjE5NCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4wOH0seyJ0aWNrIjoxOTUsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMDd9LHsidGljayI6MTk2LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjA2fSx7InRpY2siOjE5Nywia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4wNX0seyJ0aWNrIjoxOTgsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMDR9LHsidGljayI6MTk5LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowLjAzfSx7InRpY2siOjIwMSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6MC4wMn0seyJ0aWNrIjoyMDIsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOjAuMDF9LHsidGljayI6MjA0LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowfSx7InRpY2siOjIwNiwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6LTAuMDF9LHsidGljayI6MjEzLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjotMC4wMn0seyJ0aWNrIjoyMTQsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOi0wLjAxfSx7InRpY2siOjIxNSwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6LTAuMDJ9LHsidGljayI6MjE2LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjotMC4wMX0seyJ0aWNrIjoyMTksImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzUwMDAwMDAwMDAwMDAwMDMsImFuZ3VsYXIiOi0wLjAyfSx7InRpY2siOjIyMCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6LTAuMDF9LHsidGljayI6MjMyLCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowfSx7InRpY2siOjI2NCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNTAwMDAwMDAwMDAwMDAwMywiYW5ndWxhciI6LTAuMDF9LHsidGljayI6MjY1LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjM1MDAwMDAwMDAwMDAwMDAzLCJhbmd1bGFyIjowfSx7InRpY2siOjMyNywia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4zNCwiYW5ndWxhciI6MH0seyJ0aWNrIjozMjgsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMzIsImFuZ3VsYXIiOjB9LHsidGljayI6MzI5LCJraW5kIjoidGVsZW9wIiwibGluZWFyIjowLjI5LCJhbmd1bGFyIjowfSx7InRpY2siOjMzMCwia2luZCI6InRlbGVvcCIsImxpbmVhciI6MC4yNywiYW5ndWxhciI6MH0seyJ0aWNrIjozMzEsImtpbmQiOiJ0ZWxlb3AiLCJsaW5lYXIiOjAuMjUsImFuZ3VsYXIiOjB9XSwiciI6IjZmMDhkNzgxMTA3YzRmYmI4YzQ1MTY5N2ZlNmMzNTI1MzNjN2YwMDg1YWE5NTJkYzA0MDc5ZWIxMTk4MTYxNjUifQ\", waiting until \"load\"\u001b[22m\n",
+   "ms": 30014,
+   "ok": false
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "expected": "3bc4d92076fc9d4eb9af6afa181d03847da4621f3962d7d21bada6f3e087f0e1",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "3bc4d92076fc9d4eb9af6afa181d03847da4621f3962d7d21bada6f3e087f0e1",
+   "exact": true,
+   "ms": 4941,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "expected": "925797d41195fb1333866258b8d12cbe152b9f72ea8081677a1cc37e9b6faa47",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "925797d41195fb1333866258b8d12cbe152b9f72ea8081677a1cc37e9b6faa47",
+   "exact": true,
+   "ms": 6940,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "expected": "c736b3ecc0ee0cde9b1b5faf71a0a92500caf1e6f5643ad140fc2958628dcdd9",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "c736b3ecc0ee0cde9b1b5faf71a0a92500caf1e6f5643ad140fc2958628dcdd9",
+   "exact": true,
+   "ms": 12529,
+   "ok": true
+  }
+ ],
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-12T06:29:55.841Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 0.77,
+    "5m": 0.77,
+    "15m": 1.35
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-12T06:32:13.771Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 0.84,
+    "5m": 0.84,
+    "15m": 1.3
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

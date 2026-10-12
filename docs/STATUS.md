@@ -17,7 +17,7 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M3 | **Closed 2026-10-11 — agent-measurable criteria**: independent review [`v2/reviews/M3_REVIEW.md`](v2/reviews/M3_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: D6, Case File scans after the first frame, which took the first frame on emulated 4G from 97 / 100 to **100 / 100 within 2 s**); the outstanding re-measurement completed on AC, every M2 budget met; PR #22 merged into `main` **quietly** as **`bf7443f`** (merge commit, owner's one-off permission, branch kept, no release, tag or announcement); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search, the four modes 23 / 23 pages, 5 / 5 Case Files, 5 / 5 challenge links reproduced, all 22 v1 URL forms and `/v1/`'s six views, 0 console errors ([`v2/data/m3/exit/public_after_merge.json`](v2/data/m3/exit/public_after_merge.json)) |
 | Branch | `v2/m4-3d-arena` (from `main` = `bf7443f`), worked in the worktree `.claude/worktrees/v2-m4-3d-arena` |
 | Milestone | **M4 · 3D Arena** ([`v2/M4_PROMPT.md`](v2/M4_PROMPT.md)) — the content of the public v2.0 launch, which Gautham publishes after M4 merges and his rows pass |
-| Checkpoint | **M4.2 asset pipeline** done (see "M4 checkpoint log"); next M4.3 |
+| Checkpoint | **M4.3–M4.9** done (see "M4 checkpoint log"); **M4.10** in progress: every agent-owned criterion re-measured on the final build (`m410_measure.sh`), then `v2/M4_RESULTS.md`, `RESULTS.md`, the PR |
 | Merge to `main` | M4 opens a PR; it is **not** merged by the agent (the merge permission covered PR #22 only) |
 | Pending Gautham | **The phone baseline, now**, on the live site ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md), [`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)); **the M4 feasibility gate on the phone** ([`v2/PHONE_GATE_M4.md`](v2/PHONE_GATE_M4.md); preview via `lab_web/tools/preview_phone.sh`) and M4's phone rows; **the consolidated five-person usability test at the end of M4** (decision D5; it replaces M1–M3's usability tests). M1–M3's phone rows are covered by the phone baseline and M4's gate. Never marked done by the agent |
 
@@ -1686,6 +1686,93 @@ only. Read order for agents (README §9): `README.md`, this file,
     max 1.37°. Not compared: the v2 LiDAR against Gazebo's scans (UNRESOLVED).
   - **In the page:** `?world=v2`; E grasps, Tab hands back; the targets, the
     wheels and the arm in 3D. Screenshots: `v2/data/m4/screens/m43/`.
+
+- **M4.4 3D renderer (2026-10-12).** `lab_web/src/arena/render/` (`quality.ts`,
+  `drape.ts`, the overlay pass in `Renderer.ts`).
+  - **Quality tiers** (high / medium / low) chosen from measured frame time, with
+    settling and hysteresis; below about 24 fps on the low tier the page falls back
+    to top-down with a notice; a quality select and `?quality=` override it.
+  - **Two passes** (README §5.3): the world tone-mapped (Neutral), lit by a
+    `RoomEnvironment` and shadowed (the shadow camera follows the robot); the
+    computation layers over it, unlit and exact. Decals are draped over the
+    terrain. Walls between the camera and the robot are cut away; "low walls"
+    (0.35 m) is a toggle. Picking hits the walkable surface.
+  - **Measured** ([`v2/data/m4/m44/quality_check.json`](v2/data/m4/m44/quality_check.json),
+    balanced, AC): on the RTX 4050 the page stays on the **high** tier, frame
+    interval p50 16.7 ms, p90 16.7 ms over 20 s; on SwiftShader at 20× CPU
+    throttling the low tier drew 20 fps and the page **fell back to top-down with
+    the notice**; 0 page errors.
+  - **Deviations:** no baked ambient occlusion (owed); instance picking uses the
+    floor ray, not GPU ids; without WebGL 2 the page shows its panels and a notice
+    (a Canvas 2D view is parked in `IDEAS.md`).
+  - **For Gautham to look at** ([`v2/data/m4/screens/m44/`](v2/data/m4/screens/m44/)):
+    `cutaway_side.png` (the cut walls read as large grey slabs with dark inner
+    faces), `low_walls_orbit.png`, `phone_landscape.png`.
+- **M4.5 cameras and controls (2026-10-12).** `src/prefs.ts` (integrity rule 7's one
+  storage module), `src/arena/controls.ts`, `Hud.tsx`, `Help.tsx`, `motor.ts`.
+  - Remappable keys (`KeyboardEvent.code`); latched STOP (R releases; hold R 1 s
+    resets home); Shift precision; E grasp; Tab autonomy; C / V cameras; 1–5
+    lenses; P, [ ] pause and step; H help. Camera moves of 0.4 s through an
+    overhead pose; reduced motion cuts. "MODEL · kinematic" badge in the HUD.
+    Tank mode; touch buttons; two-finger orbit and zoom. The plain Arena opens in
+    **follow** (D1); mission, play, replay and run pages stay top-down.
+  - **Measured** ([`v2/data/m4/m45/`](v2/data/m4/m45/), balanced, AC):
+    `controls_check` **9 / 9** checks (default follow, drive and HUD, STOP latches
+    with 0 m moved, hold R resets, cameras cycle, transitions' longest frame
+    16.8 ms, help and remap, Tab hands back, 0 page errors). Key press to visible
+    motion over 100 presses: follow median **44.2 ms** (p95 48.1, max 50.2);
+    top-down median **43.2 ms** (p95 46.7, max 59.9). Budget about 50 ms: met.
+- **M4.6 lenses in 3D (2026-10-12).** Layers lift onto the terrain; belief as
+  columns (1 m = certain); the scan at the LiDAR's height; Watch shows at most two
+  computation layers; Inspect opens top-down.
+  - **Measured** ([`v2/data/m4/m46/`](v2/data/m4/m46/)): all **15** lens × level
+    combinations ran in 3D on World Spec v1 and on v2, Watch ≤ 2 computation
+    layers, 0 page errors; the timeline moves the robot in every camera, follow
+    follows in a replay, the camera is kept while seeking, step keys work, 0 page
+    errors (replay `lab5_crossing_dwb_1`, Case File `lab4_b1_colours_s5_red`).
+  - **For Gautham** ([`v2/data/m4/screens/m46/`](v2/data/m4/screens/m46/)), one
+    shot per lens and level: the LiDAR fan's sheet and moiré are heavy in 3D
+    (`decide_watch.png`).
+- **M4.7 Case Files in 3D (2026-10-12).** The adapter carries truth z, roll and
+  pitch (float32); all 100 Case Files re-converted from the raw runs (the same
+  messages plus the 3D truth columns), packed at zstd level 19: **40,019,390 B**
+  for all 100 (`lossless.json` regenerated from the adapter's output; the derived
+  `moments.json` re-derived identical, so Play and Learn are unchanged). A
+  recording without 3D truth (the 16 older replays) shows the **planar recording**
+  chip and is never given an invented height (invariant 11). In 3D the body stands
+  at recorded truth; the belief is the footprint. The 3D scene is prepared during
+  the download and held aside until the world is set.
+  - **Measured** (emulated 4G, RTX, balanced, AC;
+    [`v2/data/m4/m47/casefile_check_4g_at_26b6259.json`](v2/data/m4/m47/casefile_check_4g_at_26b6259.json),
+    at `26b6259`, before zstd 19): 100 / 100 open, **99 / 100** first frame
+    (including 3D) within 2 s, median 828 ms, max 2,007 ms
+    (`lab2_rl_fidelity_1_tour`), seek max 38.2 ms, 0 console errors. After zstd
+    19 (`a28b587`) that file measured 1,843 / 1,836 / 1,826 ms in three runs; the
+    full 100 are re-measured in M4.10.
+- **M4.8 missions and the ghost race (2026-10-12).** Every arena beat of the
+  mission YAML names a camera (validated). `coco_lab/race.py`: Race the planner's
+  ghost — pure pursuit on the A* path, teleop inputs only, three levels
+  (warm-up, into-the-room, the-long-way: ghost 7.3 / 17.5 / 23.4 s); stars by time
+  against the ghost, contacts and path length (`docs/v2/CHALLENGES.md`); every M3
+  level hash unchanged. 18 generated submissions
+  ([`v2/data/m4/m48/race_submissions.json`](v2/data/m4/m48/race_submissions.json)).
+  - **Measured at the checkpoint** ([`v2/data/m4/m48/checkpoint_run/`](v2/data/m4/m48/checkpoint_run/)):
+    `coco verify` (Node, no browser) **18 / 18** matched; reproduced exactly in
+    Chromium 156, Firefox 157 and WebKit 27.2, **17 / 18** each — the 18th,
+    `the-long-way/slow`, was a 17.9 KB link the server refused (HTTP 431).
+    Fixed: links carry their inputs deflated (`z=`); re-measured in M4.10.
+- **M4.9 the launch, drafts (2026-10-12).** A light landing (the low-detail robot
+  first, the full one on takeover); `tools/demo_record.mjs` rewritten for 3D (the
+  recording itself is Gautham's to approve); `v2/USABILITY_TEST_M4.md` written
+  (decision D5's five-person test, Gautham's). Release notes
+  (`releases/v2.0.md`) updated in M4.10 from `RESULTS.md` only.
+- **M4.10 screenshot tests (2026-10-12).** CI's screenshot step failed on two replay
+  scenes (2.2 % of pixels): the planar-recording chip moved the canvas to a
+  different fraction of a pixel and the photo of the page region shifted by one
+  pixel, every drawn pixel unchanged. The harness now reads the canvas's own
+  pixels; the baselines were remade from the **public M3 site**, not from the
+  code under test, and this build matches them with **0 differing pixels** in all
+  five scenes.
 
 ## Capabilities (README §2), with evidence class
 
