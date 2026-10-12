@@ -138,6 +138,8 @@ export class ArenaRenderer {
   private lastFrame = 0;
   private lastPose: [number, number, number] = [0, 0, 0];
   private lastTilt: [number, number, number] | undefined;
+  /** The robot pose the last frame drew (perf's input-to-motion, M4.10). */
+  get drawnPose(): readonly number[] { return this.lastPose; }
   private enabled3D = false;
   /** M4.4: the 3D view's quality tier, chosen from measured frame time (render/quality.ts). */
   quality: QualityController | null = null;

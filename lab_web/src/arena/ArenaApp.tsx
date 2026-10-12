@@ -515,6 +515,7 @@ export function ArenaApp() {
       };
       rr.onAfterRender = () => {
         if (firstFrame && worldSet) { firstFrame = false; perf.mark('first_frame', wallMs()); }
+        perf.drawnPose(rr!.drawnPose);
         const st = active()?.shownSearch;
         if (st && st.cursor > 0) {
           if (firstComputation) { firstComputation = false; perf.mark('first_computation_shown', wallMs()); }
@@ -742,6 +743,7 @@ export function ArenaApp() {
       if (DRIVE.includes(a)) {
         e.preventDefault();
         if (e.repeat) return;
+        if (a !== 'precision') perf.driveInput(e.timeStamp);
         held.add(a);
         sendTeleop();
       }
@@ -829,12 +831,13 @@ export function ArenaApp() {
   const toggle = (k: keyof LayerVisibility) => setLayers((l) => ({ ...l, [k]: !l[k] }));
   const choosePlanner = (p: string) => { setPlanner(p); takeOver(); queue.current.push({ kind: 'planner', choice: p }); };
   const lastJoy = useRef<[number, number]>([0, 0]);
-  const onJoystick = (dx: number, dy: number) => {
+  const onJoystick = (dx: number, dy: number, at?: number) => {
     const lim = client.current?.world?.limits;
     if (!lim || ['replay', 'recording'].includes(modeRef.current) || latchedRef.current) return;
     const lin = Math.round(dy * 10) / 10;
     const ang = Math.round(-dx * 10) / 10;
     if (lin === lastJoy.current[0] && ang === lastJoy.current[1]) return;
+    if ((lin !== 0 || ang !== 0) && lastJoy.current[0] === 0 && lastJoy.current[1] === 0) perf.driveInput(at);
     lastJoy.current = [lin, ang];
     takeOver();
     queue.current.push({ kind: 'teleop', linear: lin * lim.teleop_linear, angular: ang * lim.teleop_angular });
