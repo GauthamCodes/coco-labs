@@ -95,8 +95,9 @@ def _a_valid_input(cid, lv):
 def test_every_float_that_reaches_a_hash_survives_javascript():
     # M3 review (A.2.6). The page hands levels, the World Spec and inputs to the
     # worker through JavaScript. Every hash a link or `coco verify` compares is
-    # checked here after that round trip: all 16 level hashes, the World Spec
-    # hash a map level names, and one result hash per challenge.
+    # checked here after that round trip: every level hash (16 at M3, 19 since
+    # M4.8's race levels), the World Spec hash a map level names, and one result
+    # hash per challenge.
     js_levels = _as_javascript_would(LEVELS)
     assert json.dumps(js_levels, sort_keys=True) != json.dumps(LEVELS, sort_keys=True)
     n = 0
@@ -104,7 +105,7 @@ def test_every_float_that_reaches_a_hash_survives_javascript():
         for lv, jv in zip(c['levels'], js_levels['challenges'][cid]['levels']):
             assert play.level_hash(jv) == play.level_hash(lv), (cid, lv['id'])
             n += 1
-    assert n == 16
+    assert n == sum(len(c['levels']) for c in LEVELS['challenges'].values()) == 19
     js_spec = _as_javascript_would(SPEC)
     assert json.dumps(js_spec, sort_keys=True) != json.dumps(SPEC, sort_keys=True)
     assert play._spec_hash(js_spec) == play._spec_hash(SPEC) == MAP[0]['spec']

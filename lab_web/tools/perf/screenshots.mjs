@@ -64,7 +64,17 @@ async function shoot(page, query, tick) {
     if (st) s.seekSeq(st.received);
   }, tick);
   await page.waitForTimeout(3000); // a few frames, even on software GL
-  return page.getByTestId('arena-canvas').screenshot();
+  // The canvas's own pixels, not the page's region over it (M4.10): a photo of the region moved by a
+  // pixel whenever the layout above the canvas ended at a different fraction of a pixel (the M4.7
+  // planar-recording chip did, with every drawn pixel unchanged). Rendered and read in one task, so
+  // the drawing buffer is still there; top-down only, the scenes' single pass.
+  const b64 = await page.evaluate(() => {
+    const R = window.__cocoArena.renderer;
+    if (R.is3D) throw new Error('screenshot scenes are top-down');
+    R.renderer.render(R.scene, R.camera);
+    return R.renderer.domElement.toDataURL('image/png').split(',')[1];
+  });
+  return Buffer.from(b64, 'base64');
 }
 
 async function compare(page, a, b) {
