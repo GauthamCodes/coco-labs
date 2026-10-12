@@ -8,7 +8,7 @@
  *        [--runs 10] [--pyodide self|cdn] [--throttle none|wifi|4g] [--gl swiftshader|gpu]
  *        [--out FILE.json]
  *
- * Each run: a new browser and context (empty cache), open `?view=arena&perf`,
+ * Each run: a new browser and context (empty cache), open `?view=arena&camera=topdown&perf`,
  * read the page's own marks (window.__cocoPerf: wall-clock ms), then send a
  * goal and time the first plan batch to reach the page. Also: console
  * errors, page errors, every request's bytes (encoded, as transferred).
@@ -87,7 +87,7 @@ async function run(i) {
   // workers' requests are not page requests: count them from the worker side
   context.on('requestfinished', () => {});
   try {
-    await page.goto(`${SITE}?view=arena&perf${SOURCE === 'cdn' ? '&pyodide=cdn' : ''}${ATTRACT ? `&attract=${ATTRACT}` : ''}`);
+    await page.goto(`${SITE}?view=arena&camera=topdown&perf${SOURCE === 'cdn' ? '&pyodide=cdn' : ''}${ATTRACT ? `&attract=${ATTRACT}` : ''}`);
     const t0 = Date.now();
     await page.waitForFunction(() => !!window.__cocoPerf?.marks.arena_ready, null, { timeout: 180_000, polling: 50 });
     const readyMarks = await page.evaluate(() => ({ ...window.__cocoPerf.marks, navStart: window.__cocoPerf.navStart }));

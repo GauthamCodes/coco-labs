@@ -30,6 +30,8 @@ export interface TickRecord {
   actors?: [number, number, number][];
   /** M4.3: on the terrain, [z, pitch, roll]; the wheels' speeds; who drove; the grasp. */
   tilt?: [number, number, number]; wheels?: [number, number]; source?: Tick['source']; grasp?: Tick['grasp'];
+  /** M4.5: the robot stopped against something this tick (the HUD's contact note) */
+  blocked?: boolean;
 }
 
 /** Reveal a live search over about this many frames at speed 1. */
@@ -71,7 +73,8 @@ export class ArenaSession {
 
   onTick(t: Tick, ranges: Float32Array) {
     this.history.push({ tick: t.tick, t_world: t.t_world, pose: t.pose, truth: t.truth, v: t.v, w: t.w, mode: t.mode, hash: t.hash,
-      ranges, plans: t.plans, actors: t.actors, tilt: t.tilt, wheels: t.wheels, source: t.source, grasp: t.grasp });
+      ranges, plans: t.plans, actors: t.actors, tilt: t.tilt, wheels: t.wheels, source: t.source, grasp: t.grasp,
+      blocked: t.blocked });
     if (t.path) this.givenPaths.push({ tick: t.tick, xy: t.path });
     const drop = this.history.length - 1 - KEEP_RANGES;
     if (drop >= 0) this.history[drop].ranges = null;

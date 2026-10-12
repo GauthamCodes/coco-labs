@@ -48,7 +48,7 @@ const SCENES = [
 ];
 
 async function shoot(page, query, tick) {
-  await page.goto(`${SITE}?view=arena${query ? `&${query}` : ''}`);
+  await page.goto(`${SITE}?view=arena&camera=topdown${query ? `&${query}` : ''}`);
   await page.waitForFunction(() => !!window.__cocoArena?.session()?.shownTick, null, { timeout: 120_000 });
   await page.evaluate(() => window.__cocoArena.session().setSpeed(4));
   await page.waitForFunction((t) => {

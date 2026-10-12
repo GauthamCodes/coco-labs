@@ -440,11 +440,40 @@ export class ArenaRenderer {
   }
 
   /** Top-down (orthographic, the analytic view) or a perspective camera; 3D only once loaded. */
-  setCameraMode(mode: CameraMode) {
+  /**
+   * Change camera. `dur` (s) is the transition (M4.5; 0 cuts: reduced motion, the fallback). 3D to 3D
+   * blends; 3D to top-down blends to the overhead pose above the top-down view, then cuts to the
+   * orthographic camera, where the two coincide; top-down to 3D starts from that pose.
+   */
+  setCameraMode(mode: CameraMode, dur = 0) {
+    this.pendingTopdown = 0;
+    const t = this.three;
+    if (t?.ready && dur > 0) {
+      const h = (this.canvas.clientHeight || 1) / this.view.scale;
+      t.setOverhead(this.view.cx, this.view.cy, h);
+      if (mode === 'topdown' && this.is3D) {
+        t.setMode('overhead', dur);
+        this.pendingTopdown = performance.now() + dur * 1000;   // the loop cuts to top-down then
+        return;
+      }
+      if (mode !== 'topdown' && !this.is3D) t.startFromOverhead(mode, dur);
+      else if (mode !== 'topdown') t.setMode(mode, dur);
+    } else if (t && mode !== 'topdown') t.setMode(mode, 0);
+    this.applyCamera(mode);
+  }
+
+  /** Top-down's own camera, when a transition to it is over. */
+  private pendingTopdown = 0;
+
+  private applyCamera(mode: CameraMode) {
     const was = this.is3D;
     this.cameraMode = mode;
-    if (this.three && mode !== 'topdown') this.three.mode = mode;
     const on = this.is3D;
+    // a person choosing 3D again after the fallback: measure afresh, from the low tier
+    if (on && !was && this.quality?.fellBack) {
+      this.quality = new QualityController(performance.now(), this.quality.choice, 'low');
+      this.applyTier('low');
+    }
     this.three?.setVisible(on);
     if (on !== was) {
       this.redrape();
@@ -630,6 +659,7 @@ export class ArenaRenderer {
       this.syncPlan();
       const dt = this.lastFrame ? (now - this.lastFrame) / 1000 : 1 / 60;
       this.lastFrame = now;
+      if (this.pendingTopdown && now >= this.pendingTopdown) { this.pendingTopdown = 0; this.applyCamera('topdown'); }
       if (this.is3D) {
         const q = this.quality?.frame(now, dt * 1000) ?? null;
         if (q?.kind === 'tier') this.applyTier(q.tier);

@@ -74,7 +74,11 @@ export class Scene3D {
   private rig = { x: 0, y: 0, z: 0, yaw: 0, init: false };
   private orbit = { yaw: 0, pitch: 0.38, dist: 2.6 };
   private wide = { yaw: -2.2, pitch: 0.72, dist: 24 };
-  mode: Exclude<CameraMode, 'topdown'> = 'follow';
+  mode: Exclude<CameraMode, 'topdown'> | 'overhead' = 'follow';
+  /** M4.5: the top-down view's centre and the height that frames it, for the 'overhead' pose */
+  private overheadAt = { x: 0, y: 0, h: 20 };
+  /** M4.5: a camera transition in progress: where it started, how far along (s), how long (s) */
+  private blend: { pos: THREE.Vector3; quat: THREE.Quaternion; fov: number; t: number; dur: number } | null = null;
   private readonly floor = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
   private readonly ray = new THREE.Raycaster();
   private readonly sun: THREE.DirectionalLight;
@@ -228,14 +232,66 @@ export class Scene3D {
     o.dist = Math.min(60, Math.max(0.8, o.dist * factor));
   }
 
-  /** The follow rig (README §5.3: sprung, with look-ahead). dt in seconds. */
+  /**
+   * Change camera (M4.5; README §5.3: transitions take about 0.4 s). The camera moves from where it is
+   * to the new mode's pose over `dur` seconds, eased; 0 cuts (reduced motion).
+   */
+  setMode(mode: Exclude<CameraMode, 'topdown'> | 'overhead', dur: number) {
+    if (mode === this.mode && !this.blend) return;
+    this.mode = mode;
+    this.blend = dur > 0 ? { pos: this.camera.position.clone(), quat: this.camera.quaternion.clone(), fov: this.camera.fov, t: 0, dur } : null;
+  }
+
+  /** Where the top-down view looks: the 'overhead' pose stands above it, framing the same ground. */
+  setOverhead(x: number, y: number, viewHeight: number) {
+    this.overheadAt = { x, y, h: viewHeight / 2 / Math.tan(((50 * Math.PI) / 180) / 2) };
+  }
+
+  /** Start from the overhead pose (coming from top-down): the camera is put there, then blends to `mode`. */
+  startFromOverhead(mode: Exclude<CameraMode, 'topdown'>, dur: number) {
+    this.mode = 'overhead';
+    this.aim(0);
+    this.setMode(mode, dur);
+  }
+
+  get transitioning(): boolean {
+    return this.blend !== null;
+  }
+
+  /** The camera for this frame: the mode's pose, blended from the last pose while a transition runs. dt in seconds. */
   update(dt: number, aspect: number) {
-    const [x, y, th] = this.pose;
+    const [x, y] = this.pose;
     for (const k of [0, 1] as const) this.wheelAngle[k] += this.wheelSpeed[k] * Math.min(dt, 0.1);
     for (const w of this.wheels) this.setJoint(w.name, w.sign * this.wheelAngle[w.side]);
     this.camera.aspect = aspect;
     this.sun.position.set(x - 4, y - 6, this.z + 10);
     this.sun.target.position.set(x, y, this.z);
+    this.aim(dt);
+    const b = this.blend;
+    if (b) {
+      b.t += Math.min(dt, 0.1);
+      const f = b.t >= b.dur ? 1 : 0.5 - 0.5 * Math.cos((Math.PI * b.t) / b.dur);   // ease in-out
+      this.camera.position.lerpVectors(b.pos, this.camera.position, f);
+      this.camera.quaternion.slerpQuaternions(b.quat, this.camera.quaternion, f);
+      this.camera.fov = b.fov + (this.camera.fov - b.fov) * f;
+      this.camera.updateProjectionMatrix();
+      if (b.t >= b.dur) this.blend = null;
+    }
+  }
+
+  /** The current mode's own camera pose (no blending). The follow rig: README §5.3, sprung, with look-ahead. */
+  private aim(dt: number) {
+    const [x, y, th] = this.pose;
+    if (this.mode === 'overhead') {
+      const o = this.overheadAt;
+      this.camera.fov = 50;
+      this.camera.up.set(0, 1, 0);           // map +y up the screen, as top-down draws it
+      this.camera.position.set(o.x, o.y, o.h);
+      this.camera.lookAt(o.x, o.y, 0);
+      this.camera.up.set(0, 0, 1);
+      this.camera.updateProjectionMatrix();
+      return;
+    }
     if (this.mode === 'robot_eye') {
       // rendered presentation from the URDF camera link; perception stays abstract (README §5.3)
       const [cx, cy, cz] = CAMERA_LINK;

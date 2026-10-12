@@ -31,7 +31,7 @@ page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
 page.on('pageerror', (e) => errors.push(String(e)));
 const out = { site: SITE, planner: PLANNER, errors };
 try {
-  await page.goto(`${SITE}?view=arena&perf`);
+  await page.goto(`${SITE}?view=arena&camera=topdown&perf`);
   await page.waitForFunction(() => !!window.__cocoPerf?.marks.arena_ready, null, { timeout: 120_000 });
   await page.getByTestId(`planner-${PLANNER}`).click();
   await page.waitForTimeout(300);

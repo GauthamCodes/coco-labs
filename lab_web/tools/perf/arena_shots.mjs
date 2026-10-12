@@ -31,7 +31,7 @@ for (const [w, h, theme] of [[1280, 900, 'light'], [1280, 900, 'dark'], [390, 84
   const errors = [];
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
   page.on('pageerror', (e) => errors.push(String(e)));
-  await page.goto(`${SITE}?view=arena&perf&theme=${theme}`);
+  await page.goto(`${SITE}?view=arena&camera=topdown&perf&theme=${theme}`);
   await page.waitForFunction(() => !!window.__cocoPerf?.marks.arena_ready, null, { timeout: 120_000 });
   await sleep(500);
   await page.screenshot({ path: join(OUT, `arena_${w}_${theme}_ready.png`) });

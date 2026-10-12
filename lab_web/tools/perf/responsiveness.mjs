@@ -65,7 +65,7 @@ async function screenOf(x, y) {
 
 const lat = [];
 try {
-  await page.goto(`${SITE}?view=arena&perf`);
+  await page.goto(`${SITE}?view=arena&camera=topdown&perf`);
   await page.waitForFunction(() => !!window.__cocoPerf?.marks.arena_ready, null, { timeout: 120_000 });
   out.renderer = await page.evaluate(() => {
     const gl = document.createElement('canvas').getContext('webgl2');

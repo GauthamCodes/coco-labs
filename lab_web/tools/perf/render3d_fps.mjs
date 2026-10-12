@@ -74,7 +74,7 @@ const out = { site: SITE, camera: CAMERA, gpu: GPU, flags, vk_icd: env.VK_ICD_FI
   emulated: PHONE || CPU > 1 || !!NET, net: NET ? '4g' : 'none', phone_viewport: PHONE ? { width: 412, height: 915, dpr: 2.625 } : null, cpu_throttle: CPU,
   scene: SCENE, browser: browser.version() };
 try {
-  const cam = CAMERA === 'topdown' ? '' : `&camera=${CAMERA}`;
+  const cam = `&camera=${CAMERA}`;   // explicit: the Arena's default camera became follow in M4.5 (D1)
   const q = SCENE === 'm2'
     ? `?view=arena&perf&lens=decide&layers=all${cam}&${M2_CFG.map((c) => `cfg=${encodeURIComponent(c)}`).join('&')}`
     : `?view=arena&perf${cam}`;

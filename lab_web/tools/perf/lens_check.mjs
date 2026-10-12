@@ -43,7 +43,7 @@ async function open() {
   const page = await ctx.newPage();
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
   page.on('pageerror', (e) => errors.push(String(e)));
-  await page.goto(`${SITE}?view=arena&perf`);
+  await page.goto(`${SITE}?view=arena&camera=topdown&perf`);
   await page.waitForFunction(() => !!window.__cocoPerf?.marks.arena_ready, null, { timeout: 120_000 });
   return page;
 }
@@ -115,7 +115,7 @@ try {
   const p3 = await phone.newPage();
   p3.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
   p3.on('pageerror', (e) => errors.push(String(e)));
-  await p3.goto(`${SITE}?view=arena`);
+  await p3.goto(`${SITE}?view=arena&camera=topdown`);
   await p3.waitForSelector('[data-testid="lens-bar"]');
   await p3.waitForTimeout(1500);
   out.phone = await p3.evaluate(() => ({ overflow_x: document.documentElement.scrollWidth > window.innerWidth + 1,

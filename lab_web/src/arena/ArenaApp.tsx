@@ -44,6 +44,12 @@ import { ArenaRenderer, DEFAULT_LAYERS, type LayerVisibility } from './render/Re
 import { CAMERA_MODES, type CameraMode } from './render/scene3d';
 import type { Elevation } from './render/drape';
 import { TIER_CHOICES, type Tier, type TierChoice } from './render/quality';
+import { actionFor, HOLD_TO_RESET_MS, loadBindings, rebind, resetBindings, type Action, type Bindings } from './controls';
+import { Help, type Settings } from './Help';
+import { Hud } from './Hud';
+import { MotorSound } from './motor';
+import { isBool, readPref, reducedMotion, writePref } from '../prefs';
+import { PHONE_DEFAULT_CAMERA } from '../../site.config';
 import { ArenaSession } from './session';
 import { decodeRun, shareUrl, type SharedRun } from './share';
 import { Timeline } from './Timeline';
@@ -76,9 +82,6 @@ declare global {
 
 type Mode = 'attract' | 'live' | 'replay' | 'recording';
 interface RunEntry { id: string; title: string; group: string; evidence: string }
-const KEYS: Record<string, [number, number]> = {
-  w: [1, 0], ArrowUp: [1, 0], s: [-1, 0], ArrowDown: [-1, 0], a: [0, 1], ArrowLeft: [0, 1], d: [0, -1], ArrowRight: [0, -1],
-};
 
 export function ArenaApp() {
   const params = new URLSearchParams(window.location.search);
@@ -173,7 +176,39 @@ export function ArenaApp() {
   const [tierChoice, setTierChoice] = useState<TierChoice>(TIER_CHOICES.find((t) => t === params.get('quality')) ?? 'auto');
   const [tierNow, setTierNow] = useState<Tier | null>(null);
   // M4.1: `?camera=follow|orbit|robot_eye` opens a perspective camera; top-down otherwise (until M4.5)
-  const initialCamera: CameraMode = CAMERA_MODES.find((m) => m === params.get('camera')) ?? 'topdown';
+  /**
+   * M4.5 (D1): 3D is the default experience on the plain Arena; a page opened for a mission, a challenge,
+   * a Case File, a replay or a run link stays top-down until M4.6-M4.8 bring those into 3D. A phone follows
+   * PHONE_DEFAULT_CAMERA (site.config.ts: the feasibility gate's verdict). ?camera= wins, then the
+   * camera the person last chose (the preferences module).
+   */
+  const coarse = (() => { try { return window.matchMedia?.('(pointer: coarse)').matches ?? false; } catch { return false; } })();
+  const plainArena = !runParam && !replayParam && !recordedId && !playParam && !params.get('mission');
+  const storedCamera = readPref<CameraMode | null>('camera', null, (v): v is CameraMode | null => v === null || CAMERA_MODES.includes(v as CameraMode));
+  const defaultCamera: CameraMode = !plainArena || (coarse && PHONE_DEFAULT_CAMERA === 'topdown') ? 'topdown' : 'follow';
+  const initialCamera: CameraMode = CAMERA_MODES.find((m) => m === params.get('camera'))
+    ?? (plainArena ? storedCamera : null) ?? defaultCamera;
+  const [camera, setCamera] = useState<CameraMode>(initialCamera);
+  /** M4.5: STOP is latched until R releases it; holding R resets the robot home */
+  const [latched, setLatched] = useState(false);
+  const latchedRef = useRef(false);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [bindings, setBindings] = useState<Bindings>(() => loadBindings());
+  const bindingsRef = useRef(bindings);
+  bindingsRef.current = bindings;
+  const [settings, setSettings] = useState<Settings>(() => ({
+    motion: reducedMotion(), sound: false,   // the sound is off by default, and starts only on a click
+    bars: readPref('bars', false, isBool), tank: readPref('tank', false, isBool),
+  }));
+  const settingsRef = useRef(settings);
+  settingsRef.current = settings;
+  const motor = useRef(new MotorSound());
+  /** M4.5: starts the 3D view (its assets load once); set when the world is known */
+  const start3D = useRef<(() => Promise<void>) | null>(null);
+  /** the lenses keys 1-5 can open now (as the lens bar offers them) */
+  const lensesNow = useRef<Set<string>>(new Set(['plan']));
+  /** wheel speed that fills a HUD bar: the teleop maximum over the spec's wheel radius (rad/s) */
+  const fullWheel = useRef(1);
   const pendingTakeover = useRef(false);
   const inspectRef = useRef(false);
   const cmpPickRef = useRef(false);
@@ -215,6 +250,7 @@ export function ArenaApp() {
   const cfgSent = useRef(false);
 
   const goal = useCallback((x: number, y: number) => {
+    if (latchedRef.current) return;   // STOP is latched: R releases it (M4.5)
     takeOver();
     perf.goalSent(wallMs(), live.current?.shownSearch?.searchId ?? null);
     r.current?.setGoal([x, y]);
@@ -263,15 +299,21 @@ export function ArenaApp() {
       occupancy.current = occ;
       rr.setWorld(w, occ, outline.current);
       setWorld(w);
-      // M4.1: the 3D arena, behind ?camera=follow until the default changes (M4.5, decision D1)
-      if (initialCamera !== 'topdown') {
+      // the 3D arena (M4.1): loaded once, when a 3D camera is first wanted (D1: at once on the plain Arena)
+      let started: Promise<void> | null = null;
+      start3D.current = () => {
+        if (started) return started;
         const base = import.meta.env.BASE_URL;
-        const lod = window.matchMedia?.('(pointer: coarse)').matches ? 'low' : 'high';
-        rr.setCameraMode(initialCamera);
-        void specP.then(() => rr!.enable3D({ arena: `${base}assets3d/arena.glb`, robot: `${base}assets3d/robot_${lod}.glb` },
+        const lod = coarse ? 'low' : 'high';
+        started = specP.then(() => rr!.enable3D({ arena: `${base}assets3d/arena.glb`, robot: `${base}assets3d/robot_${lod}.glb` },
           worldToMap.current, w.targets, elevation.current, tierChoice))
-          .then(() => setTierNow(rr!.quality?.tier ?? null)).then(() => perf.mark('world3d_ready', wallMs()))
-          .catch((e) => setError(`3D arena: ${(e as Error).message}`));
+          .then(() => { setTierNow(rr!.quality?.tier ?? null); perf.mark('world3d_ready', wallMs()); })
+          .catch((e) => { setError(`3D arena: ${(e as Error).message}`); rr!.setCameraMode('topdown'); setCamera('topdown'); });
+        return started;
+      };
+      if (initialCamera !== 'topdown') {
+        rr.setCameraMode(initialCamera);
+        void start3D.current();
       }
     };
 
@@ -297,6 +339,7 @@ export function ArenaApp() {
           const spec = JSON.parse(new TextDecoder().decode(b));
           worldToMap.current = spec.world_to_map;
           elevation.current = spec.elevation ?? [];
+          fullWheel.current = spec.robot.limits.teleop_linear / spec.robot.wheel_radius;
         } catch { /* the 3D arena then sits at the world origin, decals flat */ }
         return sha256Hex(new Uint8Array(b));
       }).then((h) => { specSha.current = h; });
@@ -415,6 +458,7 @@ export function ArenaApp() {
           shownTick = t.tick;
           rr!.setPose(t.pose, t.truth ?? t.pose, t.tilt);
           rr!.setWheels(t.wheels ?? [0, 0]);
+          motor.current.update(t.wheels ?? [0, 0], fullWheel.current);
           if (t.grasp) rr!.setGrasp(t.grasp);
           if (t.ranges) rr!.setScan(t.pose, t.ranges);
         }
@@ -579,30 +623,84 @@ export function ArenaApp() {
     cv.addEventListener('pointermove', onMove);
     cv.addEventListener('pointerleave', onLeave);
 
-    // keyboard teleop: WASD / arrows, space = STOP
-    const held = new Set<string>();
+    // the keyboard (M4.5; README §5.5): every action through the remappable bindings (./controls)
+    const held = new Set<Action>();
+    let resetTimer = 0;
     const sendTeleop = () => {
       const lim = client.current?.world?.limits;
-      if (!lim) return;
+      if (!lim || latchedRef.current) return;
       let f = 0; let turn = 0;
-      for (const k of held) { f += KEYS[k][0]; turn += KEYS[k][1]; }
+      if (held.has('forward')) f += 1;
+      if (held.has('reverse')) f -= 1;
+      if (held.has('left')) turn += 1;
+      if (held.has('right')) turn -= 1;
+      // precision halves the speed, never above the real maximum
+      const k = 0.6 * (held.has('precision') ? 0.5 : 1);
       takeOver();
-      queue.current.push({ kind: 'teleop', linear: Math.sign(f) * lim.teleop_linear * 0.6, angular: Math.sign(turn) * lim.teleop_angular * 0.6 });
+      queue.current.push({ kind: 'teleop', linear: Math.sign(f) * lim.teleop_linear * k, angular: Math.sign(turn) * lim.teleop_angular * k });
     };
+    const DRIVE: Action[] = ['forward', 'reverse', 'left', 'right', 'precision'];
     const keydown = (e: KeyboardEvent) => {
-      if ((e.target as HTMLElement)?.matches?.('input, select, textarea') || ['replay', 'recording'].includes(modeRef.current)) return;
-      if (e.code === 'Space') { e.preventDefault(); held.clear(); takeOver(); queue.current.push({ kind: 'stop' }); return; }
-      // M4.3 (README §5.5): E grasps or releases through the proximity gate; Tab hands the wheels
-      // back to autonomy -- only when focus is on the page or the canvas, so Tab still walks the controls
-      if (e.code === 'KeyE' && !e.repeat) { e.preventDefault(); takeOver(); queue.current.push({ kind: 'grasp' }); return; }
+      if ((e.target as HTMLElement)?.matches?.('input, select, textarea, button')) return;
+      const a = actionFor(e.code, bindingsRef.current);
+      if (!a) return;
       const onPage = document.activeElement === document.body || document.activeElement === cv;
-      if (e.key === 'Tab' && !e.shiftKey && onPage && !e.repeat) { e.preventDefault(); held.clear(); takeOver(); queue.current.push({ kind: 'autonomy' }); return; }
-      if (!(e.key in KEYS) || e.repeat) return;
-      e.preventDefault();
-      held.add(e.key);
-      sendTeleop();
+      // Tab keeps walking the controls unless the page itself has focus
+      if (a === 'autonomy' && (e.shiftKey || !onPage)) return;
+      if (a === 'help') { e.preventDefault(); if (!e.repeat) setHelpOpen((o) => !o); return; }
+      if (a === 'camera_next' || a === 'camera_follow') {
+        e.preventDefault();
+        if (!e.repeat) chooseCameraRef.current(a === 'camera_follow' ? 'follow' : 'next');
+        return;
+      }
+      if (a.startsWith('lens_')) {
+        const L = LENSES[Number(a.slice(5)) - 1];
+        if (L && lensesNow.current.has(L.id) && !e.repeat) { e.preventDefault(); setLens(L.id); }
+        return;
+      }
+      const s = active();
+      if (a === 'pause' || a === 'step_back' || a === 'step_forward') {
+        e.preventDefault();
+        if (!s) return;
+        if (a === 'pause') { if (!e.repeat) s.playing = !s.playing; return; }
+        s.playing = false;
+        const at = s.shownTick?.tick ?? 0;
+        s.seekTick(Math.max(0, at + (a === 'step_back' ? -1 : 1)));
+        return;
+      }
+      if (['replay', 'recording'].includes(modeRef.current)) return;
+      if (a === 'stop') {
+        e.preventDefault(); held.clear(); takeOver(); queue.current.push({ kind: 'stop' });
+        latchedRef.current = true; setLatched(true);
+        return;
+      }
+      if (a === 'release') {
+        e.preventDefault();
+        if (e.repeat) return;
+        latchedRef.current = false; setLatched(false);
+        clearTimeout(resetTimer);
+        resetTimer = window.setTimeout(() => { takeOver(); queue.current.push({ kind: 'reset' }); }, HOLD_TO_RESET_MS);
+        return;
+      }
+      if (a === 'context' || a === 'autonomy') {
+        e.preventDefault();
+        if (e.repeat || latchedRef.current) return;
+        held.clear(); takeOver();
+        queue.current.push({ kind: a === 'context' ? 'grasp' : 'autonomy' });
+        return;
+      }
+      if (DRIVE.includes(a)) {
+        e.preventDefault();
+        if (e.repeat) return;
+        held.add(a);
+        sendTeleop();
+      }
     };
-    const keyup = (e: KeyboardEvent) => { if (held.delete(e.key)) sendTeleop(); };
+    const keyup = (e: KeyboardEvent) => {
+      const a = actionFor(e.code, bindingsRef.current);
+      if (a === 'release') clearTimeout(resetTimer);   // released before the hold: release only
+      if (a && held.delete(a)) sendTeleop();
+    };
     window.addEventListener('keydown', keydown);
     window.addEventListener('keyup', keyup);
     return () => {
@@ -683,13 +781,41 @@ export function ArenaApp() {
   const lastJoy = useRef<[number, number]>([0, 0]);
   const onJoystick = (dx: number, dy: number) => {
     const lim = client.current?.world?.limits;
-    if (!lim || ['replay', 'recording'].includes(modeRef.current)) return;
+    if (!lim || ['replay', 'recording'].includes(modeRef.current) || latchedRef.current) return;
     const lin = Math.round(dy * 10) / 10;
     const ang = Math.round(-dx * 10) / 10;
     if (lin === lastJoy.current[0] && ang === lastJoy.current[1]) return;
     lastJoy.current = [lin, ang];
     takeOver();
     queue.current.push({ kind: 'teleop', linear: lin * lim.teleop_linear, angular: ang * lim.teleop_angular });
+  };
+  /** M4.5: a camera by name, 'next' (C: follow, orbit, robot-eye, top-down, around) or back to follow (V). */
+  const chooseCamera = (want: CameraMode | 'next') => {
+    const order: CameraMode[] = ['follow', 'orbit', 'robot_eye', 'topdown'];
+    const mode = want === 'next' ? order[(order.indexOf(camera) + 1) % order.length] : want;
+    const dur = settingsRef.current.motion ? 0 : 0.4;
+    setCamera(mode);
+    setQualityNote(null);
+    writePref('camera', mode);
+    if (mode === 'topdown') { r.current?.setCameraMode('topdown', dur); return; }
+    const go = start3D.current?.();
+    if (go) void go.then(() => r.current?.setCameraMode(mode, dur));
+  };
+  const chooseCameraRef = useRef(chooseCamera);
+  chooseCameraRef.current = chooseCamera;
+  /** M4.5: tank mode: a slider per side, as wheel speeds; the command is the (v, w) they make */
+  const onTank = (left: number, right: number) => {
+    const lim = client.current?.world?.limits;
+    if (!lim || latchedRef.current || ['replay', 'recording'].includes(modeRef.current)) return;
+    const v = ((left + right) / 2) * lim.teleop_linear;
+    const w = ((right - left) / 2) * lim.teleop_angular;
+    takeOver();
+    queue.current.push({ kind: 'teleop', linear: v, angular: w });
+  };
+  const changeSetting = (k: keyof Settings, v: boolean) => {
+    setSettings((o) => ({ ...o, [k]: v }));
+    if (k === 'sound') { if (v) motor.current.start(); else motor.current.stop(); }
+    else writePref(k, v);
   };
   const makeShare = () => {
     const t = lastTick.current;
@@ -699,6 +825,9 @@ export function ArenaApp() {
   };
 
   const tick = session?.shownTick ?? null;
+  const lensesAvailable = new Set<LensId>(LENSES.filter((l) => l.id === 'plan' || packs.has(l.pack)
+    || (converted?.headers ?? []).some((h) => l.families.some((f) => h.channel.includes(f)))).map((l) => l.id));
+  lensesNow.current = lensesAvailable;
   const plan = tick ? [...(session?.history ?? [])].reverse().find((h) => h.tick <= tick.tick && h.plans.length)?.plans.at(-1) ?? null : null;
   const res = world?.resolution ?? 0.05;
   const evidence = converted?.evidence ?? 'MODEL';
@@ -717,6 +846,12 @@ export function ArenaApp() {
         ← Back to the mission</a></p>}
       {error && <p className="error" role="alert">{error}</p>}
       {qualityNote && <p className="notice" role="status">{qualityNote}</p>}
+      {helpOpen && (
+        <Help bindings={bindings} settings={settings} coarse={coarse}
+          onRebind={(a, code) => setBindings((b) => rebind(b, a, code))}
+          onReset={() => setBindings(resetBindings())}
+          onSetting={changeSetting} onClose={() => setHelpOpen(false)} />
+      )}
       {playOn && <ArenaPlayPanel challenge={playParam!} levelId={playLevel!}
         live={playParam === 'map-the-arena' ? client.current : null} liveReady={liveReady}
         lastTick={() => lastTick.current} shownTick={() => session?.shownTick?.tick ?? null} log={() => log.current} />}
@@ -724,14 +859,13 @@ export function ArenaApp() {
         {mode === 'attract' && (liveReady
           ? 'A recorded demo (MODEL, made when this site was built). Click or tap the map to give COCO a goal — the live model takes over.'
           : 'A recorded demo (MODEL, made when this site was built) while the live model loads… Click or tap the map to take over.')}
-        {mode === 'live' && 'Live model: coco_lab running in your browser. Click a goal, drive with W A S D / arrows (space = STOP) or the joystick.'}
+        {mode === 'live' && 'Live model: coco_lab running in your browser. Click a goal, drive with W A S D / arrows or the joystick; Space is a latched STOP (R releases it). H shows every control.'}
         {mode === 'replay' && `Shared run: ${replay.status}`}
         {mode === 'recording' && converted && (converted.evidence === 'STACK'
           ? `Recorded run (STACK): COCO driven by the full ROS 2 stack in Gazebo — ${converted.title}. The solid robot is where the stack believed it was (AMCL); the outline is ground truth.`
           : `Glass-box trace (MODEL): ${converted.title}, computed by coco_lab. No world, no robot: the search alone.`)}
       </p>
-      <LensBar lens={lens} level={level} focus={focus}
-        available={new Set(LENSES.filter((l) => l.id === 'plan' || packs.has(l.pack) || (converted?.headers ?? []).some((h) => l.families.some((f) => h.channel.includes(f)))).map((l) => l.id))}
+      <LensBar lens={lens} level={level} focus={focus} available={lensesAvailable}
         onLens={setLens} onLevel={setLevel} onFocus={setFocus} />
       {/* M2.9: the measured gaps between this lens's model and the Stack */}
       <GapChips ids={LENS_BY_ID[lens].gaps} gaps={gaps} />
@@ -748,6 +882,19 @@ export function ArenaApp() {
         <canvas ref={canvas} className="arena-canvas" data-testid="arena-canvas"
           aria-label="The arena: click or tap to give COCO a goal" />
         {!world && <p className="arena-loading" data-testid="arena-status">Loading…</p>}
+        {world && mode === 'live' && (
+          <Hud tick={tick} latched={latched} fullWheel={fullWheel.current} showBars={settings.bars} camera={camera} coarse={coarse}
+            tank={settings.tank}
+            onStop={() => { takeOver(); queue.current.push({ kind: 'stop' }); latchedRef.current = true; setLatched(true); }}
+            onContext={() => { if (!latchedRef.current) { takeOver(); queue.current.push({ kind: 'grasp' }); } }}
+            onCamera={() => chooseCamera('next')}
+            onAutonomy={() => { if (!latchedRef.current) { takeOver(); queue.current.push({ kind: 'autonomy' }); } }}
+            onTank={onTank} />
+        )}
+        {latched && coarse && (
+          <button type="button" className="hud-release" onClick={() => { latchedRef.current = false; setLatched(false); }}
+            data-testid="hud-release">Release STOP</button>
+        )}
         {hover && <span className="hover-label" data-testid="hover-label" style={{ left: hover.x, top: hover.y }}>{hover.text}</span>}
       </div>
       {compare && world && occupancy.current && (
@@ -837,6 +984,7 @@ export function ArenaApp() {
             </div>
             {mode === 'live' && (
               <div className="arena-row">
+                <button type="button" className="seg-btn" data-testid="help-open" onClick={() => setHelpOpen(true)}>Controls (H)</button>
                 <button type="button" className="seg-btn" data-testid="share-make" onClick={makeShare}>Share this run</button>
                 {share && <input className="share-url" readOnly value={share} data-testid="share-url" onFocus={(e) => e.target.select()} />}
               </div>

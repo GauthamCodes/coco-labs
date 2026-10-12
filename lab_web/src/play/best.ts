@@ -2,10 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /**
- * Personal bests (M3.5), kept in this browser only. Every storage access is
- * wrapped: in a private window, with storage blocked, or in a preview the
- * page plays exactly the same and simply remembers nothing.
+ * Personal bests (M3.5), kept in this browser only, through the preferences
+ * module (M4.5: src/prefs.ts, the one module that touches storage): in a
+ * private window, with storage blocked, or in a preview the page plays
+ * exactly the same and simply remembers nothing.
  */
+
+import { readRaw, writeRaw } from '../prefs';
 
 export interface PlayResult {
   challenge: string; level: string; level_hash: string; valid: boolean; why: string | null;
@@ -26,7 +29,7 @@ const key = (challenge: string, level: string) => `coco.play.best.v1.${challenge
 
 export function readBest(challenge: string, level: string, levelHash: string): Best | null {
   try {
-    const raw = window.localStorage.getItem(key(challenge, level));
+    const raw = readRaw(key(challenge, level));
     if (!raw) return null;
     const b = JSON.parse(raw) as Best;
     // a best set on another version of the level is not a best on this one
@@ -39,7 +42,7 @@ export function readBest(challenge: string, level: string, levelHash: string): B
 /** A best to SHOW beside a level's name (whatever version of the level it was set on). */
 export function readShownBest(challenge: string, level: string): Best | null {
   try {
-    const raw = window.localStorage.getItem(key(challenge, level));
+    const raw = readRaw(key(challenge, level));
     return raw ? (JSON.parse(raw) as Best) : null;
   } catch {
     return null;
@@ -59,10 +62,5 @@ export function keepBest(r: PlayResult): Best | null {
   const old = readBest(r.challenge, r.level, r.level_hash);
   if (!beats(r, old)) return old;
   const b: Best = { stars: r.stars, score: r.score.value as number, hash: r.hash, level_hash: r.level_hash };
-  try {
-    window.localStorage.setItem(key(r.challenge, r.level), JSON.stringify(b));
-    return b;
-  } catch {
-    return null;
-  }
+  return writeRaw(key(r.challenge, r.level), JSON.stringify(b)) ? b : null;
 }

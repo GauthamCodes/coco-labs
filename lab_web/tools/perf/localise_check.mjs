@@ -45,7 +45,7 @@ const toScreen = (x, y) => page.evaluate(([x, y]) => {
 const series = (name) => page.evaluate((n) => window.__cocoArena.session().families.series(n, 1e9), name);
 
 try {
-  await page.goto(`${SITE}?view=arena&perf`);
+  await page.goto(`${SITE}?view=arena&camera=topdown&perf`);
   await page.waitForFunction(() => !!window.__cocoPerf?.marks.arena_ready, null, { timeout: 120_000 });
   const [gx, gy] = await toScreen(6.0, 4.0);
   await page.mouse.click(gx, gy);

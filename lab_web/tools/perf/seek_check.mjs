@@ -45,7 +45,7 @@ page.on('pageerror', (e) => errors.push(String(e)));
 const out = { site: SITE, ticks_wanted: TICKS, cfg: CFG, errors };
 const t0 = Date.now();
 try {
-  await page.goto(`${SITE}?view=arena&perf&lens=decide&${CFG.map((c) => `cfg=${encodeURIComponent(c)}`).join('&')}`);
+  await page.goto(`${SITE}?view=arena&camera=topdown&perf&lens=decide&${CFG.map((c) => `cfg=${encodeURIComponent(c)}`).join('&')}`);
   await page.waitForFunction(() => !!window.__cocoPerf?.marks.arena_ready, null, { timeout: 120_000 });
   await page.waitForFunction(() => window.__cocoArena.mode() === 'live', null, { timeout: 60_000 });
   await page.getByTestId('tl-speed').selectOption('4');

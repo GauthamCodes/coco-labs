@@ -53,7 +53,7 @@ const commandsSince = (tick) => page.evaluate((t) => window.__cocoArena.session(
   .filter((b) => b.tick > t).map((b) => ({ tick: b.tick, status: b.columns.status[0], n: b.columns.n_candidates[0], controller: b.scalars.controller_id })), tick);
 
 try {
-  await page.goto(`${SITE}?view=arena&perf`);
+  await page.goto(`${SITE}?view=arena&camera=topdown&perf`);
   await page.waitForFunction(() => !!window.__cocoPerf?.marks.arena_ready, null, { timeout: 120_000 });
   const [gx, gy] = await toScreen(2.0, 0.0);
   await page.mouse.click(gx, gy);
