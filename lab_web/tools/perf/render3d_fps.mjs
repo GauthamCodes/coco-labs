@@ -6,7 +6,7 @@
  *
  *   node tools/perf/render3d_fps.mjs --site URL [--camera follow|orbit|robot_eye|topdown]
  *        [--gpu nvidia|intel|software] [--phone 1] [--cpu 1|4|6] [--seconds 20]
- *        [--scene plain|m2] [--out FILE.json] [--shot FILE.png]
+ *        [--scene plain|m2|stress] [--quality auto|high|medium|low] [--out FILE.json] [--shot FILE.png]
  *
  * - `--gpu nvidia`: ANGLE on EGL, the default EGL vendor (the laptop's RTX 4050).
  *   `--gpu intel`: ANGLE on Vulkan with Mesa's Intel driver (`VK_ICD_FILENAMES`), i.e. the
@@ -19,6 +19,9 @@
  *   Arena model runs in one). Results under `--phone`/`--cpu` are EMULATED, never a phone.
  * - `--scene plain`: a goal is set, so the robot drives with the Plan lens's layers on the
  *   floor. `--scene m2`: the fetch mission with every lens's layers (M2's laptop scene).
+ *   `--scene stress` (M4.10): the m2 scene plus M2's stress load (`stress=m2`).
+ * - `--quality` (M4.10): the 3D view's tier, forced (`?quality=`); the tier the page drew at
+ *   is recorded (`tier`).
  *
  * After the 3D world and the live model are ready and the robot is moving, rAF frames per
  * second are sampled every second for `--seconds`, with the 95th-percentile frame time.
@@ -70,13 +73,14 @@ if (CPU > 1 || NET) {
   await throttle(page);
   page.on('worker', (w) => { void throttle(w).catch(() => {}); });
 }
-const out = { site: SITE, camera: CAMERA, gpu: GPU, flags, vk_icd: env.VK_ICD_FILENAMES ?? 'default',
+const QUALITY = args.quality ?? 'auto';
+const out = { site: SITE, camera: CAMERA, gpu: GPU, quality: QUALITY, flags, vk_icd: env.VK_ICD_FILENAMES ?? 'default',
   emulated: PHONE || CPU > 1 || !!NET, net: NET ? '4g' : 'none', phone_viewport: PHONE ? { width: 412, height: 915, dpr: 2.625 } : null, cpu_throttle: CPU,
   scene: SCENE, browser: browser.version() };
 try {
-  const cam = `&camera=${CAMERA}`;   // explicit: the Arena's default camera became follow in M4.5 (D1)
-  const q = SCENE === 'm2'
-    ? `?view=arena&perf&lens=decide&layers=all${cam}&${M2_CFG.map((c) => `cfg=${encodeURIComponent(c)}`).join('&')}`
+  const cam = `&camera=${CAMERA}&quality=${QUALITY}`;   // explicit: the Arena's default camera became follow in M4.5 (D1)
+  const q = SCENE === 'm2' || SCENE === 'stress'
+    ? `?view=arena&perf&lens=decide&layers=all${cam}${SCENE === 'stress' ? '&stress=m2' : ''}&${M2_CFG.map((c) => `cfg=${encodeURIComponent(c)}`).join('&')}`
     : `?view=arena&perf${cam}`;
   await page.goto(`${SITE}${q}`);
   await page.waitForFunction((want3d) => !!window.__cocoPerf?.marks?.arena_ready && (!want3d || !!window.__cocoPerf.marks.world3d_ready),
@@ -87,6 +91,7 @@ try {
     return gl ? gl.getParameter(ext ? ext.UNMASKED_RENDERER_WEBGL : gl.RENDERER) : null;
   });
   out.triangles = await page.evaluate(() => window.__cocoArena.renderer.three?.triangles ?? null);
+  out.tier = await page.evaluate(() => window.__cocoArena.renderer.quality?.tier ?? null);
   // load marks, ms since navigation (perf.ts records wall time; navigationStart is its zero)
   out.marks_ms = await page.evaluate(() => {
     const t0 = performance.timeOrigin;
@@ -117,6 +122,6 @@ try {
   out.console_errors = errors;
   await browser.close();
 }
-console.log(JSON.stringify({ camera: CAMERA, gpu: GPU, phone: PHONE, cpu: CPU, renderer: out.renderer, fps_median: out.fps_median,
+console.log(JSON.stringify({ camera: CAMERA, gpu: GPU, quality: QUALITY, tier: out.tier, scene: SCENE, phone: PHONE, cpu: CPU, renderer: out.renderer, fps_median: out.fps_median,
   fps_min: out.fps_min, errors: errors.length }));
 if (args.out) writeFileSync(args.out, JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...out }, null, 1) + '\n');
