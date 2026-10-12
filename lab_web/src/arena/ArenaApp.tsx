@@ -187,7 +187,9 @@ export function ArenaApp() {
   const storedCamera = readPref<CameraMode | null>('camera', null, (v): v is CameraMode | null => v === null || CAMERA_MODES.includes(v as CameraMode));
   // M4.6: precision tasks open in top-down: the Inspect level (cell by cell, value by value)
   const precision = params.get('level') === 'inspect';
-  const defaultCamera: CameraMode = !plainArena || precision || (coarse && PHONE_DEFAULT_CAMERA === 'topdown') ? 'topdown' : 'follow';
+  // M4.7: a Case File opens in 3D too (its recording carries Gazebo's 3D truth), as does its MODEL pane
+  const threeD = (plainArena || !!caseId) && !precision && !(coarse && PHONE_DEFAULT_CAMERA === 'topdown');
+  const defaultCamera: CameraMode = threeD ? 'follow' : 'topdown';
   const initialCamera: CameraMode = CAMERA_MODES.find((m) => m === params.get('camera'))
     ?? (plainArena && !precision ? storedCamera : null) ?? defaultCamera;
   const [camera, setCamera] = useState<CameraMode>(initialCamera);
@@ -464,7 +466,7 @@ export function ArenaApp() {
         }
         if (t && t.tick !== shownTick) {
           shownTick = t.tick;
-          rr!.setPose(t.pose, t.truth ?? t.pose, t.tilt);
+          rr!.setPose(t.pose, t.truth ?? t.pose, t.tilt, t.truth_tilt);
           rr!.setWheels(t.wheels ?? [0, 0]);
           motor.current.update(t.wheels ?? [0, 0], fullWheel.current);
           if (t.grasp) rr!.setGrasp(t.grasp);
@@ -873,8 +875,14 @@ export function ArenaApp() {
         {mode === 'replay' && `Shared run: ${replay.status}`}
         {mode === 'recording' && converted && (converted.evidence === 'STACK'
           ? `Recorded run (STACK): COCO driven by the full ROS 2 stack in Gazebo — ${converted.title}. The solid robot is where the stack believed it was (AMCL); the outline is ground truth.`
+            + (converted.pose3d ? ' In 3D the robot\'s body is Gazebo\'s ground truth, with the height and tilt it recorded; the solid footprint is the belief.' : '')
           : `Glass-box trace (MODEL): ${converted.title}, computed by coco_lab. No world, no robot: the search alone.`)}
       </p>
+      {mode === 'recording' && converted && converted.evidence === 'STACK' && !converted.pose3d && (
+        <p className="chip planar" data-testid="planar-chip" title="This recording kept only x, y and heading: its height, roll and pitch were never recorded, so they are not drawn or guessed">
+          planar recording · no height or tilt recorded
+        </p>
+      )}
       <LensBar lens={lens} level={level} focus={focus} available={lensesAvailable}
         onLens={setLens} onLevel={setLevel} onFocus={setFocus} />
       {/* M2.9: the measured gaps between this lens's model and the Stack */}

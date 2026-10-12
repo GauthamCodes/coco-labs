@@ -269,15 +269,21 @@ export class ArenaRenderer {
   // -- state from the model -------------------------------------------------
 
   /** COCO's pose (map frame): the robot, its footprint and the truth outline. */
-  setPose(pose: [number, number, number], truth: [number, number, number] = pose, tilt?: [number, number, number]) {
+  setPose(pose: [number, number, number], truth: [number, number, number] = pose, tilt?: [number, number, number],
+    truthTilt?: [number, number, number]) {
     this.lastPose = pose;
     this.lastTilt = tilt;
-    this.three?.setPose(pose, tilt);
+    // M4.7: a recording with 3D ground truth puts the 3D body where Gazebo had it (pose and tilt as recorded);
+    // the belief stays the solid footprint mark. Without it the body is the belief, on the floor (planar).
+    if (truthTilt) this.three?.setPose(truth, truthTilt);
+    else this.three?.setPose(pose, tilt);
     this.robot.position.set(pose[0], pose[1], Z.robot);
     this.robot.rotation.z = pose[2];
     // M4.3: in 3D the marks that belong to the robot stand on its surface (a platform's top, not
     // the floor beneath it); top-down keeps the layer order. The scan is horizontal, as the model's is.
-    const lift = this.is3D ? tilt?.[0] ?? 0 : 0;
+    // a recording's marks stand at the recorded truth's height (where the robot was), so they stay visible on a
+    // ramp; this places the marks, it does not give the belief a height
+    const lift = this.is3D ? (truthTilt ?? tilt)?.[0] ?? 0 : 0;
     this.footprint?.position.set(pose[0], pose[1], Z.footprint + lift);
     // M4.6: in 3D the scan is drawn where the model casts it, at the sensor's height over the surface
     if (this.lidar) this.lidar.position.z = this.is3D ? lift + (this.world?.beam_height ?? Z.lidar) : Z.lidar;

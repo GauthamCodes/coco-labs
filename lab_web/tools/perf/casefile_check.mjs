@@ -33,6 +33,11 @@ const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) =>
 const SITE = args.site ?? 'http://127.0.0.1:4214/coco-labs/';
 const OUT = args.out ?? 'casefile-out';
 const THROTTLE = args.throttle ?? 'none';
+/** M4.7: --topdown 1 opens Case Files top-down (as M3 did); --warm 1 keeps one browser context, so the
+ *  shared 3D world assets stay in the HTTP cache between Case Files (each recording is still fetched) */
+const TOPDOWN = args.topdown === '1';
+const WARM = args.warm === '1';
+let shared = null;
 const PROFILES = { none: null, '4g': { downloadThroughput: 9e6 / 8, uploadThroughput: 1.5e6 / 8, latency: 170 } };
 const LAUNCH = args.gpu === '1' ? { args: ['--use-angle=gl-egl', '--ignore-gpu-blocklist', '--enable-gpu'] } : {};
 mkdirSync(OUT, { recursive: true });
@@ -44,7 +49,8 @@ const only = args.only ? new Set(args.only.split(',')) : null;
 const out = { site: SITE, throttle: THROTTLE, profile: PROFILES[THROTTLE], pages: [], casefiles: [] };
 
 async function open(url) {
-  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const context = WARM ? (shared ??= await browser.newContext({ viewport: { width: 1280, height: 900 } }))
+    : await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const page = await context.newPage();
   const errors = [];
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
@@ -78,7 +84,7 @@ for (const g of [null, ...cases.groups]) {
   } catch (e) { row.ok = false; row.failure = String(e); }
   out.pages.push(row);
   console.log(`${row.ok ? 'ok  ' : 'FAIL'} page ${row.page}${row.failure ? ' ' + row.failure : ''}${errors.length ? ' errors: ' + errors.join(' | ') : ''}`);
-  await context.close();
+  await (WARM ? page.close() : context.close());
 }
 
 // 1b. phone width (390 px, a Pixel 7): no horizontal scroll on the list, a group, a comparison
@@ -97,20 +103,25 @@ for (const q of ['?view=casefiles', '?view=casefiles&case=lab5-move',
   const row = { page: q, ...w, errors, ok: w.scroll <= w.view && errors.length === 0 };
   out.phone.push(row);
   console.log(`${row.ok ? 'ok  ' : 'FAIL'} phone ${q} scroll ${w.scroll} / ${w.view}${errors.length ? ' errors: ' + errors.join(' | ') : ''}`);
-  await context.close();
+  await (WARM ? page.close() : context.close());
 }
 
 // 2. every Case File in the viewer
 for (const c of all.filter((x) => !only || only.has(x.id))) {
-  const { context, page, errors } = await open(`${SITE}?view=arena&casefile=${c.id}`);
+  const { context, page, errors } = await open(`${SITE}?view=arena&casefile=${c.id}${TOPDOWN ? '&camera=topdown' : ''}`);
   const row = { id: c.id, group: c.group, bytes: c.bytes, errors };
   try {
     await page.waitForFunction(() => !!window.__cocoPerf?.marks?.recording_ready, null, { timeout: 120_000 });
     row.ranges_at_first_frame = await page.evaluate(() => window.__cocoArena.session().shownTick?.ranges?.length ?? 0);
     // D6: the scans follow the first frame; every tick then shows the scan it would have had
     await page.waitForFunction(() => !!window.__cocoPerf?.marks?.scans_ready, null, { timeout: 120_000 });
+    // M4.7: a Case File opens in 3D: its first frame counts only once the 3D world is drawn too
+    if (!TOPDOWN) await page.waitForFunction(() => !!window.__cocoPerf?.marks?.world3d_ready, null, { timeout: 120_000 });
     const marks = await page.evaluate(() => window.__cocoPerf.marks);
-    row.first_frame_ms = marks.recording_ready - marks.casefile_fetch_start;
+    row.first_frame_2d_ms = marks.recording_ready - marks.casefile_fetch_start;
+    row.world3d_ms = TOPDOWN ? null : marks.world3d_ready - marks.casefile_fetch_start;
+    row.first_frame_ms = Math.max(row.first_frame_2d_ms, row.world3d_ms ?? 0);
+    row.pose3d_body = TOPDOWN ? null : await page.evaluate(() => !!window.__cocoArena.session().shownTick?.truth_tilt);
     row.scans_ms = marks.scans_ready - marks.casefile_fetch_start;
     row.ranges_after_scans = await page.evaluate(() => window.__cocoArena.session().shownTick?.ranges?.length ?? 0);
     row.mode = await page.evaluate(() => window.__cocoArena?.mode?.());
@@ -135,8 +146,8 @@ for (const c of all.filter((x) => !only || only.has(x.id))) {
       && row.seeks.every((x) => x.view_tick === x.to || (x.to >= last && x.view_tick === last));
   } catch (e) { row.ok = false; row.failure = String(e); }
   out.casefiles.push(row);
-  console.log(`${row.ok ? 'ok  ' : 'FAIL'} ${c.id} first ${Math.round(row.first_frame_ms)} ms, seek max ${row.seek_max_ms?.toFixed(1)} ms, ${row.ticks} ticks${row.failure ? ' ' + row.failure : ''}${errors.length ? ' errors: ' + errors.join(' | ') : ''}`);
-  await context.close();
+  console.log(`${row.ok ? 'ok  ' : 'FAIL'} ${c.id} first ${Math.round(row.first_frame_ms)} ms (2D ${Math.round(row.first_frame_2d_ms)}, 3D ${Math.round(row.world3d_ms)}), seek max ${row.seek_max_ms?.toFixed(1)} ms, ${row.ticks} ticks${row.failure ? ' ' + row.failure : ''}${errors.length ? ' errors: ' + errors.join(' | ') : ''}`);
+  await (WARM ? page.close() : context.close());
 }
 await browser.close();
 const firsts = out.casefiles.map((r) => r.first_frame_ms).filter(Number.isFinite);

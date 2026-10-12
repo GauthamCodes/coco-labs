@@ -42,6 +42,8 @@ export interface ConvertedRun extends Recording {
   card?: string;
   /** A Case File's tick 1 in simulation seconds: where scans loaded after the first frame are placed (D6). */
   caseT0?: number;
+  /** M4.7: the ground truth carries height, pitch and roll (else a "planar recording": drawn flat, never lifted). */
+  pose3d?: boolean;
 }
 
 type Pose = [number, number, number];

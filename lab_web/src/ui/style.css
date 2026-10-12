@@ -515,6 +515,7 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   font: 600 0.8rem/1.2 system-ui, sans-serif; color: #a35200; list-style-position: inside; }
 .gap-chip[open] { flex-basis: 100%; }
 .gap-chip p { margin: 0; padding: 0 10px 8px; font-size: 0.85rem; }
+.chip.planar { display: inline-block; border: 1px solid #a35200; border-radius: 6px; background: var(--panel); color: var(--fg); padding: 4px 10px; font-size: 0.85rem; margin: 6px 0; }
 @media (prefers-color-scheme: dark) {
   .gap-chip { border-color: #f0a050; }
   .gap-chip summary { color: #f0a050; }

@@ -64,6 +64,17 @@ export function parseCase(manifest: Manifest, messages: ReadMessage[], grid: Wor
   };
   const gt = series('coco.truth.pose.v1', TruthPoseBatchSchema);
   const belief = series('coco.robot.state.v1', RobotStateBatchSchema);
+  // M4.7: the truth's height, pitch and roll, where the recording carries them (every row of every batch;
+  // a recording made before M4.7, or without them, is planar: nothing is inferred)
+  const tilt: { t: number; v: [number, number, number] }[] = [];
+  let pose3d = true;
+  for (const m of on('coco.truth.pose.v1')) {
+    const b = fromBinary(TruthPoseBatchSchema, m.data);
+    if (b.z.length !== b.tWorld.length || b.roll.length !== b.tWorld.length || b.pitch.length !== b.tWorld.length) { pose3d = false; break; }
+    b.tWorld.forEach((tw, i) => tilt.push({ t: tw, v: [b.z[i], b.pitch[i], b.roll[i]] }));
+  }
+  tilt.sort((a, b) => a.t - b.t);
+  if (!tilt.length) pose3d = false;
   if (!gt.t.length) throw new Error('a Case File with no ground truth');
   const t0 = typeof spec.adapter?.t0 === 'number' ? Math.min(spec.adapter.t0, gt.t[0]) : gt.t[0];
   const tickOf = (t: number) => Math.max(1, Math.floor((t - t0) / DT + 1e-9) + 1);
@@ -110,6 +121,7 @@ export function parseCase(manifest: Manifest, messages: ReadMessage[], grid: Wor
     const truth = gt.p[ig];
     const tk: Tick = { tick: k, t_world: t, pose: ib >= 0 ? belief.p[ib] : truth, truth, v: 0, w: 0, mode: 'goal', blocked: false,
       arrived: false, hash: '', chain: '', plans: [], actors: actorsNow.size ? [...actorsNow.values()] : undefined };
+    if (pose3d) tk.truth_tilt = tilt[ig]?.v;   // the same sample as `truth` (one row each)
     if (newPath) tk.path = paths[ip].xy;
     ticks.push(tk);
   }
@@ -186,7 +198,7 @@ export function parseCase(manifest: Manifest, messages: ReadMessage[], grid: Wor
   const src = spec.source?.bag ?? (spec.source?.bags ?? []).map((x: { bag: string }) => x.bag).join(' + ');
   return {
     world, occupancy: grid.occupancy, ticks, ranges, batches: new Map(), runId: manifest.runId,
-    source: manifest.provenance?.source ?? '', evidence: 'STACK', title: spec.case?.title ?? manifest.runId, notes,
+    source: manifest.provenance?.source ?? '', evidence: 'STACK', title: spec.case?.title ?? manifest.runId, notes, pose3d,
     results: null, bundle: '', families, headers, caseT0: t0,
     card: `Recorded on the full ROS 2 stack in Gazebo · ${src} · converted by ${spec.adapter?.name ?? 'the adapter'} ${spec.adapter?.version ?? ''} (${spec.adapter?.detail ?? ''} detail)`,
   };

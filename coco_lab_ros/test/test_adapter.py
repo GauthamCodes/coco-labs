@@ -300,3 +300,16 @@ def test_two_bags_on_one_clock_merge_in_time_order_and_both_are_cited():
 def test_a_run_without_world_to_map_is_refused():
     with pytest.raises(ValueError, match='world_to_map'):
         A.convert(RL, {'id': 'x'}, 'full', source_root=BAGS)
+
+
+def test_truth_carries_the_recorded_3d_pose(lab5_full):
+    # M4.7: z, roll and pitch come from the same /model/coco/odometry message as x, y and yaw
+    _, _, ch = lab5_full
+    rows = [(b.z, b.roll, b.pitch, b.x) for _, b in ch['coco.truth.pose.v1']]
+    assert rows and all(len(z) == len(x) for z, _, _, x in rows)
+    zs = [v for z, _, _, _ in rows for v in z]
+    # a flat drive: recorded heights are small and not all exactly 0 (they are Gazebo's, not filled in)
+    assert max(abs(v) for v in zs) < 0.1 and any(v != 0.0 for v in zs)
+    assert A.roll_pitch(NS(x=0.0, y=0.0, z=0.0, w=1.0)) == (0.0, 0.0)
+    r, p = A.roll_pitch(NS(x=0.0, y=math.sin(-0.1575), z=0.0, w=math.cos(-0.1575)))
+    assert r == pytest.approx(0.0, abs=1e-12) and p == pytest.approx(-0.315, abs=1e-12)

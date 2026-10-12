@@ -81,6 +81,8 @@ export interface Tick {
   path?: number[];
   /** M3.5: a map challenge's ground-truth distance against its budget (coco_lab.play.MapBudget). */
   play?: { path_m: number; budget_m: number; done: boolean };
+  /** M4.7: a recording's ground truth [z, pitch, roll] (REP-103), where it recorded them; never inferred. */
+  truth_tilt?: [number, number, number];
   /** M4.3: [z, pitch, roll] on the terrain (World Spec v2 sessions only; ROS signs). */
   tilt?: [number, number, number];
   /** M4.3: left and right wheel speeds (rad/s). */

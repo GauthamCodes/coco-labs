@@ -47,7 +47,7 @@ describe('the Case Files, laid out for a first frame before the scans (D6)', () 
     }
   });
 
-  it('every Case File holds exactly its M3 content', () => {
+  it('every Case File holds exactly what the adapter wrote (lossless.json; M4.7 re-conversion)', () => {
     for (const e of index.casefiles) {
       expect(contentDigest(readRawStream(read(e.id)), sha), e.id).toEqual(lossless.casefiles[e.id].digest);
     }
