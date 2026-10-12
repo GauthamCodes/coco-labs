@@ -52,7 +52,11 @@ const CAMERA_VFOV_DEG = (2 * Math.atan(Math.tan(1.25 / 2) * 0.75) * 180) / Math.
 /** The arena's centre in the WORLD frame and its half-extent (convert_world.py's footprints: x -8..16, y -9..9). */
 const ARENA_CENTRE_WORLD: [number, number] = [4, 0];
 
-export interface Scene3DAssets { arena: string; robot: string }
+export interface Scene3DAssets {
+  arena: string; robot: string;
+  /** M4.7: the same files already being fetched (the page starts them at once, beside the recording) */
+  buffers?: { arena: Promise<ArrayBuffer>; robot: Promise<ArrayBuffer> };
+}
 
 /** The targets' colours as drawn (coco_config's names; the hues are the page's, not the SDF's). */
 const TARGET_COLOURS: Record<string, number> = { red: 0xd03a2f, green: 0x2f9e44, blue: 0x2f6fd0, yellow: 0xe0b020 };
@@ -143,7 +147,9 @@ export class Scene3D {
   async load(urls: Scene3DAssets) {
     // the assets are meshopt-compressed (EXT_meshopt_compression; ADR 0006)
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-    const [arena, robot] = await Promise.all([loader.loadAsync(urls.arena), loader.loadAsync(urls.robot)]);
+    const [arena, robot] = urls.buffers
+      ? await Promise.all([urls.buffers.arena.then((b) => loader.parseAsync(b, '')), urls.buffers.robot.then((b) => loader.parseAsync(b, ''))])
+      : await Promise.all([loader.loadAsync(urls.arena), loader.loadAsync(urls.robot)]);
     const zUp = (o: THREE.Object3D) => { const g = new THREE.Group(); g.rotation.x = Math.PI / 2; g.add(o); return g; };
     const a = zUp(arena.scene);
     a.position.set(this.worldToMap[0], this.worldToMap[1], 0);

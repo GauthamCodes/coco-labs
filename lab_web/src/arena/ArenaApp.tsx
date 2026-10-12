@@ -314,7 +314,8 @@ export function ArenaApp() {
         if (started) return started;
         const base = import.meta.env.BASE_URL;
         const lod = coarse ? 'low' : 'high';
-        started = specP.then(() => rr!.enable3D({ arena: `${base}assets3d/arena.glb`, robot: `${base}assets3d/robot_${lod}.glb` },
+        started = specP.then(() => rr!.enable3D({ arena: `${base}assets3d/arena.glb`, robot: `${base}assets3d/robot_${lod}.glb`,
+          buffers: early3D ?? undefined },
           worldToMap.current, w.targets, elevation.current, tierChoice))
           .then(() => { setTierNow(rr!.quality?.tier ?? null); perf.mark('world3d_ready', wallMs()); })
           .catch((e) => { setError(`3D arena: ${(e as Error).message}`); rr!.setCameraMode('topdown'); setCamera('topdown'); });
@@ -340,6 +341,14 @@ export function ArenaApp() {
       c.step(queue.current.splice(0)); // the log is what the model reports it applied (onTick)
     };
 
+    // M4.7: a page that opens in 3D starts its 3D assets at once, beside the recording or the model, so the
+    // first 3D frame waits for the slower of the two, not for both in turn
+    const bytes = (u: string) => fetch(u, { credentials: 'omit' }).then((x) => { if (!x.ok) throw new Error(u); return x.arrayBuffer(); });
+    const early3D = initialCamera === 'topdown' ? null : {
+      arena: bytes(`${import.meta.env.BASE_URL}assets3d/arena.glb`),
+      robot: bytes(`${import.meta.env.BASE_URL}assets3d/robot_${coarse ? 'low' : 'high'}.glb`),
+    };
+    if (early3D) void Promise.all([early3D.arena, early3D.robot]).then(() => perf.mark('world3d_assets', wallMs())).catch(() => {});
     const outlineP = fetch(`${import.meta.env.BASE_URL}generated/arena/robot_outline.json`, { credentials: 'omit' })
       .then((x) => x.json()).then((j) => { outline.current = j.polygon; }).catch(() => {});
     const specP = fetch(`${import.meta.env.BASE_URL}generated/arena/${specFile}`, { credentials: 'omit' })
