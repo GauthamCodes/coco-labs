@@ -47,7 +47,7 @@ export function setLinePoints(line: THREE.Line, pts: THREE.Vector3[]) {
 import { PALETTES, VIRIDIS, type Palette, type Theme } from './palette';
 import { CLOSED, FRONTIER, PATH, type PlanStore } from './planStore';
 import { Scene3D, WORLD_LAYER, type CameraMode, type Scene3DAssets } from './scene3d';
-import { drapedPlane, surfaces, type Elevation, type Quad } from './drape';
+import { DRAPE_LIFT, drapedPlane, surfaces, type Elevation, type Quad } from './drape';
 import { QualityController, TIER_SETTINGS, type QualityEvent, type Tier, type TierChoice } from './quality';
 
 export interface LayerVisibility {
@@ -279,7 +279,8 @@ export class ArenaRenderer {
     // the floor beneath it); top-down keeps the layer order. The scan is horizontal, as the model's is.
     const lift = this.is3D ? tilt?.[0] ?? 0 : 0;
     this.footprint?.position.set(pose[0], pose[1], Z.footprint + lift);
-    if (this.lidar) this.lidar.position.z = Z.lidar + lift;
+    // M4.6: in 3D the scan is drawn where the model casts it, at the sensor's height over the surface
+    if (this.lidar) this.lidar.position.z = this.is3D ? lift + (this.world?.beam_height ?? Z.lidar) : Z.lidar;
     if (this.truth) {
       this.truth.position.set(truth[0], truth[1], Z.truth + lift);
       this.truth.rotation.z = truth[2];
@@ -320,7 +321,7 @@ export class ArenaRenderer {
   setGoal(goal: [number, number] | null) {
     if (!this.goal) return;
     this.goal.visible = goal !== null;
-    if (goal) this.goal.position.set(goal[0], goal[1], Z.marker);
+    if (goal) this.goal.position.set(goal[0], goal[1], Z.marker + this.liftAt(goal[0], goal[1]));
   }
 
   /** The search layers read this store; call after it changes. */
@@ -362,13 +363,17 @@ export class ArenaRenderer {
     for (let k = 0; k < cells.length; k += 1) {
       const row = Math.floor(cells[k] / W);
       const c = cells[k] % W;
-      m.makeTranslation(origin[0] + (c + 0.5) * r, origin[1] + (H - 1 - row + 0.5) * r, 0);
+      const fx = origin[0] + (c + 0.5) * r, fy = origin[1] + (H - 1 - row + 0.5) * r;
+      m.makeTranslation(fx, fy, this.liftAt(fx, fy));
       this.frontier.setMatrixAt(k, m);
     }
     this.frontier.count = fcount;
     this.frontier.instanceMatrix.needsUpdate = true;
     // path, in event order
-    const pts = st.pathCells.map((i) => new THREE.Vector3(origin[0] + ((i % W) + 0.5) * r, origin[1] + (H - 1 - Math.floor(i / W) + 0.5) * r, 0));
+    const pts = st.pathCells.map((i) => {
+      const px = origin[0] + ((i % W) + 0.5) * r, py = origin[1] + (H - 1 - Math.floor(i / W) + 0.5) * r;
+      return new THREE.Vector3(px, py, this.liftAt(px, py));
+    });
     if (this.pathLine) setLinePoints(this.pathLine, pts);
     st.dirty = false;
   }
@@ -425,6 +430,8 @@ export class ArenaRenderer {
     this.applyTier(this.quality.tier);
     // the 3D view may already be the camera (is3D turned true with `ready`): drape what exists
     this.redrape();
+    this.setPlan(this.store);
+    this.onViewChange?.(this.is3D);
     if (this.world && this.terrain.length) {
       const { width: W, height: H, resolution: r, origin } = this.world;
       const cx = origin[0] + (W * r) / 2, cy = origin[1] + (H * r) / 2;
@@ -487,6 +494,8 @@ export class ArenaRenderer {
     this.three?.setVisible(on);
     if (on !== was) {
       this.redrape();
+      this.setPlan(this.store);           // the frontier and the path redrawn at the new height
+      this.onViewChange?.(on);
       // top-down keeps M1's pixel ratio; 3D takes its tier's
       this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, on && this.quality ? TIER_SETTINGS[this.quality.tier].pixelRatioCap : 2));
       if (on) this.quality?.restart(performance.now());
@@ -590,6 +599,26 @@ export class ArenaRenderer {
     const v = new THREE.Vector3(x, y, this.is3D ? this.surfaceZ(x, y) : 0).project(cam);
     return [rect.left + ((v.x + 1) / 2) * rect.width, rect.top + ((1 - v.y) / 2) * rect.height];
   }
+
+  /**
+   * M4.6: where a mark at (x, y) stands: in 3D on a terrain, the drawn walkable surface (the drape quads:
+   * axis-aligned, z linear along x) plus the decal lift; top-down or on a flat world, 0.
+   */
+  liftAt(x: number, y: number): number {
+    if (!this.is3D || !this.terrain.length) return 0;
+    let z = 0;
+    for (const q of this.terrain) {
+      const xa = Math.min(q[0][0], q[1][0]), xb = Math.max(q[0][0], q[1][0]);
+      const ya = Math.min(q[0][1], q[2][1]), yb = Math.max(q[0][1], q[2][1]);
+      if (x < xa || x > xb || y < ya || y > yb) continue;
+      const f = q[1][0] === q[0][0] ? 0 : (x - q[0][0]) / (q[1][0] - q[0][0]);
+      z = Math.max(z, q[0][2] + f * (q[1][2] - q[0][2]) + DRAPE_LIFT);
+    }
+    return z;
+  }
+
+  /** M4.6: told when the view turns 3D or top-down, so the page redraws its layers at the right height. */
+  onViewChange?: (is3D: boolean) => void;
 
   /** M4.4: the walkable surface's height under (x, y): a vertical ray onto the drawn surface; 0 off it. */
   surfaceZ(x: number, y: number): number {

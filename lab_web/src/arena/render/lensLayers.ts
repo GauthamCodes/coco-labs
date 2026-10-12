@@ -53,6 +53,13 @@ export class LensLayers {
   private dim = new Map<string, number>();
   /** M4.4: told of every map-wide texture plane, so the renderer can drape it over the terrain. */
   onDecal?: (m: THREE.Mesh) => void;
+  /**
+   * M4.6: the height a mark at (x, y) stands at: the walkable surface in 3D on a terrain (the renderer's
+   * liftAt), 0 top-down. Every primitive below puts its points there, so a lens reads on a ramp.
+   */
+  lift: (x: number, y: number) => number = () => 0;
+  /** M4.6: in 3D, a belief over regions is a translucent column (height = probability), not a floor patch. */
+  columns = false;
 
   constructor(private readonly scene: THREE.Scene, private palette: Palette) {}
 
@@ -132,7 +139,7 @@ export class LensLayers {
     const m = new THREE.Matrix4();
     for (let i = 0; i < n; i += 1) {
       const s = r ? r[i] : r0;
-      m.makeScale(s, s, 1).setPosition(xs[i], ys[i], 0);
+      m.makeScale(s, s, 1).setPosition(xs[i], ys[i], this.lift(xs[i], ys[i]));
       mesh.setMatrixAt(i, m);
     }
     mesh.count = n;
@@ -145,8 +152,9 @@ export class LensLayers {
     const pos: number[] = [];
     for (const [x, y, t] of poses) {
       const hx = x + len * Math.cos(t); const hy = y + len * Math.sin(t);
-      pos.push(x, y, 0, hx, hy, 0);
-      for (const s of [2.6, -2.6]) pos.push(hx, hy, 0, hx + 0.35 * len * Math.cos(t + s), hy + 0.35 * len * Math.sin(t + s), 0);
+      const z = this.lift(x, y);
+      pos.push(x, y, z, hx, hy, z);
+      for (const s of [2.6, -2.6]) pos.push(hx, hy, z, hx + 0.35 * len * Math.cos(t + s), hy + 0.35 * len * Math.sin(t + s), z);
     }
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
@@ -171,10 +179,11 @@ export class LensLayers {
         const px = a * Math.cos(u); const py = b * Math.sin(u);
         return [e.x + ca * px - sa * py, e.y + sa * px + ca * py];
       };
+      const z = this.lift(e.x, e.y);
       for (let k = 0; k < N; k += 1) {
         const [x0, y0] = pt(k); const [x1, y1] = pt(k + 1);
-        tri.push(e.x, e.y, 0, x0, y0, 0, x1, y1, 0);
-        line.push(x0, y0, 0, x1, y1, 0);
+        tri.push(e.x, e.y, z, x0, y0, z, x1, y1, z);
+        line.push(x0, y0, z, x1, y1, z);
       }
     }
     const grp = new THREE.Group();
@@ -199,7 +208,8 @@ export class LensLayers {
     const bg = new THREE.Color(this.palette.background);
     const tmp = new THREE.Color();
     for (let i = 0; i < n; i += 1) {
-      p.set([pos[4 * i], pos[4 * i + 1], 0, pos[4 * i + 2], pos[4 * i + 3], 0], 6 * i);
+      const [x0, y0, x1, y1] = [pos[4 * i], pos[4 * i + 1], pos[4 * i + 2], pos[4 * i + 3]];
+      p.set([x0, y0, this.lift(x0, y0), x1, y1, this.lift(x1, y1)], 6 * i);
       tmp.copy(fg).lerp(bg, shade ? Math.min(0.85, Math.max(0, shade[i])) : 0);
       c.set([tmp.r, tmp.g, tmp.b, tmp.r, tmp.g, tmp.b], 6 * i);
     }
@@ -209,9 +219,29 @@ export class LensLayers {
     this.put(id, new THREE.LineSegments(g, new THREE.LineBasicMaterial({ vertexColors: true, transparent: alpha < 1, opacity: alpha })), colour);
   }
 
-  /** Filled polygons, each at its own alpha (e.g. a belief: alpha = probability x the palette's). */
-  polygons(id: string, polys: [number, number][][], colour: keyof Palette, alphas: number[]) {
+  /**
+   * Filled polygons, each at its own alpha (e.g. a belief: alpha = probability x the palette's). With
+   * `columns` on (3D) and `heights` given, each is a translucent column over the surface instead,
+   * `heights[i]` metres tall (README 5.3: "search beliefs are translucent columns over the bays").
+   */
+  polygons(id: string, polys: [number, number][][], colour: keyof Palette, alphas: number[], heights?: number[]) {
     const grp = new THREE.Group();
+    if (this.columns && heights) {
+      polys.forEach((poly, i) => {
+        const cx = poly.reduce((s, q) => s + q[0], 0) / poly.length;
+        const cy = poly.reduce((s, q) => s + q[1], 0) / poly.length;
+        const h = Math.max(0.02, heights[i]);
+        const geo = new THREE.ExtrudeGeometry(new THREE.Shape(poly.map(([x, y]) => new THREE.Vector2(x, y))), { depth: h, bevelEnabled: false });
+        const a = Math.max(0.08, Math.min(0.6, alphas[i] ?? 0.3));
+        const m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: this.palette[colour] as string, transparent: true, opacity: a, depthWrite: false }));
+        m.position.z = this.lift(cx, cy);
+        const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({ color: this.palette[colour] as string }));
+        edges.position.z = m.position.z;
+        grp.add(m, edges);
+      });
+      this.put(id, grp, colour);
+      return;
+    }
     polys.forEach((poly, i) => {
       const shape = new THREE.Shape(poly.map(([x, y]) => new THREE.Vector2(x, y)));
       const a = Math.max(0, Math.min(0.95, alphas[i] ?? 0.5));

@@ -185,9 +185,11 @@ export function ArenaApp() {
   const coarse = (() => { try { return window.matchMedia?.('(pointer: coarse)').matches ?? false; } catch { return false; } })();
   const plainArena = !runParam && !replayParam && !recordedId && !playParam && !params.get('mission');
   const storedCamera = readPref<CameraMode | null>('camera', null, (v): v is CameraMode | null => v === null || CAMERA_MODES.includes(v as CameraMode));
-  const defaultCamera: CameraMode = !plainArena || (coarse && PHONE_DEFAULT_CAMERA === 'topdown') ? 'topdown' : 'follow';
+  // M4.6: precision tasks open in top-down: the Inspect level (cell by cell, value by value)
+  const precision = params.get('level') === 'inspect';
+  const defaultCamera: CameraMode = !plainArena || precision || (coarse && PHONE_DEFAULT_CAMERA === 'topdown') ? 'topdown' : 'follow';
   const initialCamera: CameraMode = CAMERA_MODES.find((m) => m === params.get('camera'))
-    ?? (plainArena ? storedCamera : null) ?? defaultCamera;
+    ?? (plainArena && !precision ? storedCamera : null) ?? defaultCamera;
   const [camera, setCamera] = useState<CameraMode>(initialCamera);
   /** M4.5: STOP is latched until R releases it; holding R resets the robot home */
   const [latched, setLatched] = useState(false);
@@ -209,6 +211,8 @@ export function ArenaApp() {
   const lensesNow = useRef<Set<string>>(new Set(['plan']));
   /** wheel speed that fills a HUD bar: the teleop maximum over the spec's wheel radius (rad/s) */
   const fullWheel = useRef(1);
+  /** M4.6: the view turned 3D or top-down: redraw the lens layers at their new height */
+  const lensRedraw = useRef(false);
   const pendingTakeover = useRef(false);
   const inspectRef = useRef(false);
   const cmpPickRef = useRef(false);
@@ -266,6 +270,9 @@ export function ArenaApp() {
       rr = new ArenaRenderer(cv, currentTheme());
       ll.current = new LensLayers(rr.scene, PALETTES[currentTheme()]);
       ll.current.onDecal = (m) => rr?.registerDecal(m);
+      // M4.6: in 3D every lens mark stands on the walkable surface, and beliefs are columns
+      ll.current.lift = (x, y) => rr?.liftAt(x, y) ?? 0;
+      rr.onViewChange = (on) => { if (ll.current) ll.current.columns = on; lensRedraw.current = true; };
       rr.onQuality = (e) => {
         if (e.kind === 'tier') setTierNow(e.tier);
         if (e.kind === 'fallback') setQualityNote(`3D is too slow on this device (${e.reason}), so this is the top-down view.`);
@@ -449,7 +456,8 @@ export function ArenaApp() {
         const st = s.shownSearch;
         if (st !== shownStore) { shownStore = st; rr!.setPlan(st); }
         const t = s.shownTick;
-        if (ll.current && worldRef.current && (s.families.version !== drawnVersion || (t?.tick ?? 0) !== drawnTick)) {
+        if (ll.current && worldRef.current && (lensRedraw.current || s.families.version !== drawnVersion || (t?.tick ?? 0) !== drawnTick)) {
+          lensRedraw.current = false;
           drawnVersion = s.families.version; drawnTick = t?.tick ?? 0;
           drawLenses({ layers: ll.current, session: s, tick: drawnTick, world: worldRef.current,
             on: (id) => lensOnRef.current[id] ?? false });

@@ -11,6 +11,9 @@
 
 import { registerDrawer, registerHover, type DrawContext } from './draw';
 
+/** M4.6: a certain bay's belief column is this tall (m); top-down draws no column. */
+const BELIEF_COLUMN_M = 1.0;
+
 type Num = ArrayLike<number>;
 
 interface Bay { id: string; label: string; rect: [number, number, number, number]; approach: [number, number] }
@@ -45,7 +48,9 @@ function drawDecide(c: DrawContext) {
   const bel = c.session.families.latest('coco.decide.search.belief.v1', c.tick);
   if (bel) {
     const p = bel.columns.probability as Num;
-    L.polygons('belief', bs.map((b) => square(b.rect)), 'belief', bs.map((_, i) => Math.max(0.03, p[i] * L.alpha('beliefAlpha') * 1.6)));
+    // in 3D a column per bay, its height the probability (1 m = certain); top-down, the same patches as before
+    L.polygons('belief', bs.map((b) => square(b.rect)), 'belief', bs.map((_, i) => Math.max(0.03, p[i] * L.alpha('beliefAlpha') * 1.6)),
+      bs.map((_, i) => p[i] * BELIEF_COLUMN_M));
   } else L.remove('belief');
   const act = c.session.families.latest('coco.decide.search.action.v1', c.tick);
   if (act) {

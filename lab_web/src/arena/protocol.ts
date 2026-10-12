@@ -57,6 +57,8 @@ export interface World {
   dt: number; radius: number; limits: Record<string, number>;
   lidar: { samples: number; angle_min: number; angle_max: number; range_max: number; mount: number[] };
   planners: string[]; planner: string; hash: string;
+  /** M4.6: the LiDAR's beam height over the surface the robot stands on (m; coco_lab.worldspec.scan_height). */
+  beam_height?: number;
   /** M4.3: the fetch targets on the platforms (World Spec v2 only); map frame, z the surface under each. */
   targets?: { colour: string; x: number; y: number; z: number; diameter: number; height: number }[];
 }

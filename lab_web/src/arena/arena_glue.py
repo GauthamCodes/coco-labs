@@ -85,6 +85,8 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
                   'mount': list(li.mount)},
         'planners': list(PLANNERS), 'planner': _arena.planner,
         'hash': _arena.state_hash(),
+        # M4.6: where the scan is drawn in 3D (presentation; the model casts at this height)
+        'beam_height': _arena.beam_height,
     }
     if _arena.terrain is not None:
         # M4.3: where the targets stand (the frozen layout, on the platforms), to draw them
