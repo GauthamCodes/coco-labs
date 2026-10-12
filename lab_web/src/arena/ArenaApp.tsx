@@ -351,9 +351,12 @@ export function ArenaApp() {
     // M4.7: a page that opens in 3D starts its 3D assets at once, beside the recording or the model, so the
     // first 3D frame waits for the slower of the two, not for both in turn
     const bytes = (u: string) => fetch(u, { credentials: 'omit' }).then((x) => { if (!x.ok) throw new Error(u); return x.arrayBuffer(); });
+    // a recording's first frame comes first: there the robot's file waits for it (the arena is 28 KB; the
+    // body is a placeholder until the robot lands), so on 4G it does not share the line with the recording
+    const robotUrl = `${import.meta.env.BASE_URL}assets3d/robot_${robotLod}.glb`;
     const early3D = initialCamera === 'topdown' ? null : {
       arena: bytes(`${import.meta.env.BASE_URL}assets3d/arena.glb`),
-      robot: bytes(`${import.meta.env.BASE_URL}assets3d/robot_${robotLod}.glb`),
+      robot: recordedId ? perf.when('recording_ready').then(() => bytes(robotUrl)) : bytes(robotUrl),
     };
     if (early3D) void Promise.all([early3D.arena, early3D.robot]).then(() => perf.mark('world3d_assets', wallMs())).catch(() => {});
     const outlineP = fetch(`${import.meta.env.BASE_URL}generated/arena/robot_outline.json`, { credentials: 'omit' })
