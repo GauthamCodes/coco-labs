@@ -14,6 +14,9 @@
  */
 import { writeFileSync } from 'node:fs';
 import { chromium } from 'playwright';
+import { conditions } from './conditions.mjs';
+
+const CONDITIONS_AT_START = conditions();
 const b = await chromium.launch({ args: ['--use-angle=gl-egl', '--ignore-gpu-blocklist', '--enable-gpu'] });
 const p = await b.newPage({ viewport: { width: 1400, height: 900 } });
 await p.goto(`${process.argv[3] ?? 'http://127.0.0.1:4244/coco-labs/'}?view=arena&world=v2&camera=follow`);
@@ -28,6 +31,6 @@ await p.evaluate(() => { setTimeout(() => { const t = performance.now(); while (
 await p.waitForTimeout(1000);
 const after = await p.evaluate(() => window.__lt.slice());
 const out = { observer_sees_a_long_task: after.length > before, before, recorded_ms: after };
-writeFileSync(process.argv[2], JSON.stringify(out, null, 1) + '\n');
+writeFileSync(process.argv[2], JSON.stringify({ ...out, conditions: { start: CONDITIONS_AT_START, end: conditions() } }, null, 1) + '\n');
 console.log(JSON.stringify(out));
 await b.close();

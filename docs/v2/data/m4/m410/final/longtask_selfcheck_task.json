@@ -3,5 +3,43 @@
  "before": 0,
  "recorded_ms": [
   120
- ]
+ ],
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-12T20:01:29.848Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.85,
+    "5m": 3.17,
+    "15m": 3.02
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-12T20:01:37.485Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.86,
+    "5m": 3.18,
+    "15m": 3.03
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
 }
