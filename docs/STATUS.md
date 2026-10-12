@@ -1795,8 +1795,12 @@ only. Read order for agents (README §9): `README.md`, this file,
     had no race input. Also: `?perf` shows "3D world drawn", "3D robot in it" and
     "input → motion" so the phone rows can be read on the phone.
   - **Case Files repacked at zstd level 19:** 40,019,390 B for all 100 (same messages).
-  - **Suites:** packages **3,523 / 0 / 0** (`b4624d9`; no package changed after it);
-    build tools and vitest on the final head (see the M4 PR and below).
+  - **Suites at the close** (`23ad3b2` + a docstring fix; balanced, AC, Node 24.21.0,
+    Python 3.12.3, NVIDIA 580.178.04): packages **3,523 / 0 / 0** (coco_lab 797, re-run
+    alone after its two lint failures — the `play.py` docstring this checkpoint edited —
+    were fixed), build tools **192 / 0 / 0**, vitest **436 / 0 / 0** (46 files). M4.0's
+    baseline: 3,498 / 169 / 403; every count higher, none removed
+    (`v2/data/m4/m410/suites_m4final.out`).
   - **Release notes** (`releases/v2.0.md`) updated for the 3D launch from `RESULTS.md`
     only; `CHALLENGES.md` regenerated (six challenges); the phone guide
     (`v2/PHONE_GATE_M4.md`) describes the build M4 ships.
