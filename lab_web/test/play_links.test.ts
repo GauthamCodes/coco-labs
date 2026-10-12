@@ -8,7 +8,7 @@ import { join } from 'node:path';
 
 import { describe, expect, it } from 'vitest';
 
-import { decodeScore, encodeScore, LIMITS, type SharedScore } from '../src/play/share';
+import { decodeScore, encodeScore, hasSharedScore, LIMITS, type SharedScore } from '../src/play/share';
 // @ts-expect-error -- a Node tool, plain JavaScript
 import { decodeLink } from '../tools/verify.mjs';
 import { REPO } from './helpers';
@@ -27,6 +27,15 @@ describe('challenge links', () => {
     expect(q).toContain('&z=');
     expect(q.length).toBeLessThan(6000);          // the plain form was 17.9 KB (HTTP 431)
     expect(decodeScore(params(q))).toEqual(shared);
+  });
+
+  it('the page sees a submission in a z= link as in an s= link, and none without either (M4.10)', () => {
+    // the Play page tested s= alone and ignored every z= link (measured: a race link sat on the level's intro, 300 s)
+    expect(hasSharedScore(params(encodeScore(shared)))).toBe(true);
+    expect(hasSharedScore(params('?view=play&c=next-node&l=a&s=e30'))).toBe(true);
+    expect(hasSharedScore(params('?view=play&c=next-node&l=a'))).toBe(false);
+    const page = readFileSync(join(REPO, 'lab_web', 'src', 'play', 'PlayApp.tsx'), 'utf-8');
+    expect(page).not.toMatch(/params\.has\('[sz]'\)/);
   });
 
   it("an M3 link (s=, the plain JSON) still decodes", () => {

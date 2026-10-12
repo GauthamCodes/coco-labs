@@ -51,6 +51,14 @@ export function encodeScore(x: SharedScore): string {
   return `?view=play&c=${s.challenge}&l=${s.level}&z=${bytesB64(deflateSync(new TextEncoder().encode(json), { level: 9 }))}`;
 }
 
+/**
+ * Whether a URL carries a shared submission at all, in either form (M3's `s=`, M4.8's deflated `z=`).
+ * Kept beside decodeScore: the page once tested `s=` alone and ignored every `z=` link (M4.10).
+ */
+export function hasSharedScore(params: URLSearchParams): boolean {
+  return params.has('s') || params.has('z');
+}
+
 export function decodeScore(params: URLSearchParams): SharedScore | null {
   const c = params.get('c'); const l = params.get('l'); const s = params.get('s'); const z = params.get('z');
   if (!c || !l || !(s || z) || !ID.test(c) || !ID.test(l)) return null;
