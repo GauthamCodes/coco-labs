@@ -125,16 +125,16 @@ for (const f of ['pyodide.mjs', 'pyodide.asm.mjs', 'pyodide.asm.wasm', 'pyodide-
   if (!files.some((p) => p.endsWith(`generated/pyodide/${f}`))) failures.push(`self-hosted Pyodide lacks ${f}`);
 }
 if (!files.some((f) => /arena\.worker-.*\.js$/.test(f))) failures.push('no arena worker chunk in dist');
-// No cookie, no session storage, no IndexedDB. ONE localStorage write is allowed
-// (M3.5, the M3 prompt: Play's personal bests "are stored locally"): it must be
-// alone, in the chunk that holds Play's key prefix (lab_web/src/play/best.ts).
+// No cookie, no session storage, no IndexedDB. ONE localStorage write is allowed:
+// the preferences module's (lab_web/src/prefs.ts; M4.5 generalised M3.5's personal
+// bests into it), alone, in the chunk that holds its key prefixes.
 const js = files.filter((f) => f.endsWith('.js')).map((f) => [f, readFileSync(f, 'utf-8')]);
 if (js.some(([, s]) => /document\.cookie\s*=|sessionStorage\.setItem|indexedDB\.open/.test(s))) {
   failures.push('the build writes a cookie or browser storage');
 }
 const writes = js.flatMap(([f, s]) => (s.match(/localStorage\.setItem/g) ?? []).map(() => [f, s]));
-if (writes.length > 1 || (writes.length === 1 && !writes[0][1].includes('coco.play.best.v1.'))) {
-  failures.push(`the build writes localStorage other than Play's personal bests (${writes.length} writes)`);
+if (writes.length > 1 || (writes.length === 1 && !(writes[0][1].includes('coco.play.best.v1.') && writes[0][1].includes('coco.prefs.v1.')))) {
+  failures.push(`the build writes localStorage other than the preferences module's (${writes.length} writes)`);
 }
 
 // 4: tree hash

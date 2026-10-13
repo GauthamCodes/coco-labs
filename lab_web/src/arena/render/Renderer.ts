@@ -27,7 +27,11 @@
 
 import * as THREE from 'three';
 
-import type { World } from '../protocol';
+import type { Tick, World } from '../protocol';
+
+/** coco_lab.arm's names for the arm's joints, and the URDF's (coco_robo2.urdf). */
+const ARM_JOINTS: [string, string][] = [['joint1', 'm_link1_Revolute-6'], ['joint2', 'm_link2_Revolute-7'],
+  ['finger_left', 'm_link3_Revolute-8'], ['finger_right', 'm_link3_Revolute-9']];
 
 /**
  * Give a line new points. `geometry.setFromPoints` on a geometry that
@@ -42,6 +46,9 @@ export function setLinePoints(line: THREE.Line, pts: THREE.Vector3[]) {
 }
 import { PALETTES, VIRIDIS, type Palette, type Theme } from './palette';
 import { CLOSED, FRONTIER, PATH, type PlanStore } from './planStore';
+import { Scene3D, WORLD_LAYER, type CameraMode, type Scene3DAssets } from './scene3d';
+import { DRAPE_LIFT, drapedPlane, surfaces, type Elevation, type Quad } from './drape';
+import { QualityController, TIER_SETTINGS, type QualityEvent, type Tier, type TierChoice } from './quality';
 
 export interface LayerVisibility {
   occupancy: boolean; closed: boolean; heatmap: boolean; frontier: boolean; path: boolean;
@@ -125,6 +132,26 @@ export class ArenaRenderer {
   /** M2.3: while the page drags something (the robot, to kidnap it), a drag does not pan. */
   panSuspended = false;
   private raf = 0;
+  /** M4.1: the 3D scene (perspective camera, glTF arena and robot), once enabled. */
+  three: Scene3D | null = null;
+  cameraMode: CameraMode = 'topdown';
+  private lastFrame = 0;
+  private lastPose: [number, number, number] = [0, 0, 0];
+  private lastTilt: [number, number, number] | undefined;
+  /** The robot pose the last frame drew (perf's input-to-motion, M4.10). */
+  get drawnPose(): readonly number[] { return this.lastPose; }
+  private enabled3D = false;
+  /** M4.4: the 3D view's quality tier, chosen from measured frame time (render/quality.ts). */
+  quality: QualityController | null = null;
+  /** M4.4: a tier change or the fallback to top-down, for the page to say (a notice, the perf overlay). */
+  onQuality?: (e: QualityEvent) => void;
+  /** M4.4: the walkable quads decals drape over (World Spec v2), and the decals themselves. */
+  private terrain: Quad[] = [];
+  private readonly decals = new Set<THREE.Mesh>();
+  private readonly draped = new Map<string, THREE.BufferGeometry>();
+  /** M4.4: the walkable surface (floor, ramps, platform tops) that pointer rays pick on in 3D; never drawn */
+  private pickSurface: THREE.Mesh | null = null;
+  private readonly picker = new THREE.Raycaster();
   onFrame?: () => void;
   /** Called after each frame is submitted (the measurement hook for "drawn"). */
   onAfterRender?: () => void;
@@ -170,6 +197,7 @@ export class ArenaRenderer {
     const plane = new THREE.Mesh(new THREE.PlaneGeometry(W * r, H * r), this.gridMat);
     plane.position.set(origin[0] + (W * r) / 2, origin[1] + (H * r) / 2, Z.grid);
     this.scene.add(plane);
+    this.registerDecal(plane);
 
     // frontier: instanced squares, capacity grows
     this.frontier = this.makeFrontier(4096, r);
@@ -183,6 +211,9 @@ export class ArenaRenderer {
     lg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(beams * 6), 3).setUsage(THREE.DynamicDrawUsage));
     this.lidar = new THREE.LineSegments(lg, new THREE.LineBasicMaterial({ color: p.lidar, transparent: true, opacity: p.lidarAlpha }));
     this.lidar.position.z = Z.lidar;
+    // its vertices are rewritten every tick and the bounding sphere is computed once: never cull it
+    // (in 3D the camera follows the robot away from where the first scan was drawn; M4.3)
+    this.lidar.frustumCulled = false;
     this.scene.add(this.lidar);
 
     // the robot, from the chassis mesh outline (base_link frame)
@@ -241,12 +272,26 @@ export class ArenaRenderer {
   // -- state from the model -------------------------------------------------
 
   /** COCO's pose (map frame): the robot, its footprint and the truth outline. */
-  setPose(pose: [number, number, number], truth: [number, number, number] = pose) {
+  setPose(pose: [number, number, number], truth: [number, number, number] = pose, tilt?: [number, number, number],
+    truthTilt?: [number, number, number]) {
+    this.lastPose = pose;
+    this.lastTilt = tilt;
+    // M4.7: a recording with 3D ground truth puts the 3D body where Gazebo had it (pose and tilt as recorded);
+    // the belief stays the solid footprint mark. Without it the body is the belief, on the floor (planar).
+    if (truthTilt) this.three?.setPose(truth, truthTilt);
+    else this.three?.setPose(pose, tilt);
     this.robot.position.set(pose[0], pose[1], Z.robot);
     this.robot.rotation.z = pose[2];
-    this.footprint?.position.set(pose[0], pose[1], Z.footprint);
+    // M4.3: in 3D the marks that belong to the robot stand on its surface (a platform's top, not
+    // the floor beneath it); top-down keeps the layer order. The scan is horizontal, as the model's is.
+    // a recording's marks stand at the recorded truth's height (where the robot was), so they stay visible on a
+    // ramp; this places the marks, it does not give the belief a height
+    const lift = this.is3D ? (truthTilt ?? tilt)?.[0] ?? 0 : 0;
+    this.footprint?.position.set(pose[0], pose[1], Z.footprint + lift);
+    // M4.6: in 3D the scan is drawn where the model casts it, at the sensor's height over the surface
+    if (this.lidar) this.lidar.position.z = this.is3D ? lift + (this.world?.beam_height ?? Z.lidar) : Z.lidar;
     if (this.truth) {
-      this.truth.position.set(truth[0], truth[1], Z.truth);
+      this.truth.position.set(truth[0], truth[1], Z.truth + lift);
       this.truth.rotation.z = truth[2];
     }
   }
@@ -285,7 +330,7 @@ export class ArenaRenderer {
   setGoal(goal: [number, number] | null) {
     if (!this.goal) return;
     this.goal.visible = goal !== null;
-    if (goal) this.goal.position.set(goal[0], goal[1], Z.marker);
+    if (goal) this.goal.position.set(goal[0], goal[1], Z.marker + this.liftAt(goal[0], goal[1]));
   }
 
   /** The search layers read this store; call after it changes. */
@@ -327,13 +372,17 @@ export class ArenaRenderer {
     for (let k = 0; k < cells.length; k += 1) {
       const row = Math.floor(cells[k] / W);
       const c = cells[k] % W;
-      m.makeTranslation(origin[0] + (c + 0.5) * r, origin[1] + (H - 1 - row + 0.5) * r, 0);
+      const fx = origin[0] + (c + 0.5) * r, fy = origin[1] + (H - 1 - row + 0.5) * r;
+      m.makeTranslation(fx, fy, this.liftAt(fx, fy));
       this.frontier.setMatrixAt(k, m);
     }
     this.frontier.count = fcount;
     this.frontier.instanceMatrix.needsUpdate = true;
     // path, in event order
-    const pts = st.pathCells.map((i) => new THREE.Vector3(origin[0] + ((i % W) + 0.5) * r, origin[1] + (H - 1 - Math.floor(i / W) + 0.5) * r, 0));
+    const pts = st.pathCells.map((i) => {
+      const px = origin[0] + ((i % W) + 0.5) * r, py = origin[1] + (H - 1 - Math.floor(i / W) + 0.5) * r;
+      return new THREE.Vector3(px, py, this.liftAt(px, py));
+    });
     if (this.pathLine) setLinePoints(this.pathLine, pts);
     st.dirty = false;
   }
@@ -348,7 +397,8 @@ export class ArenaRenderer {
     if (this.frontier) this.frontier.visible = L.frontier;
     if (this.pathLine) this.pathLine.visible = L.path;
     if (this.lidar) this.lidar.visible = L.lidar;
-    this.robot.visible = L.robot;
+    this.robot.visible = L.robot && !this.is3D;
+    if (this.three) this.three.robotHolder.visible = L.robot && this.cameraMode !== 'robot_eye';
     if (this.footprint) this.footprint.visible = L.footprint;
     if (this.truth) this.truth.visible = L.truth;
   }
@@ -374,6 +424,200 @@ export class ArenaRenderer {
 
   // -- camera and input -----------------------------------------------------
 
+  /** M4.1: load the 3D arena and robot; the perspective cameras become available. */
+  /**
+   * M4.7: everything the 3D view needs that the world does not: the scene, the arena parsed, the quality
+   * tier, the shaders compiled. A page starts it as soon as the spec is known, so a Case File's first 3D
+   * frame waits for its recording only, not for this work after it. `enable3D` finishes the rest.
+   */
+  prepare3D(assets: Scene3DAssets, worldToMap: [number, number], tier: TierChoice = 'auto'): Promise<void> {
+    this.prepared ??= (async () => {
+      const s = new Scene3D(this.scene, worldToMap);
+      await s.load(assets);
+      // a phone starts a tier down; the measurement moves it from there
+      const coarse = window.matchMedia?.('(pointer: coarse)').matches ?? false;
+      this.quality = new QualityController(performance.now(), tier, coarse ? 'medium' : 'high');
+      s.applyTier(this.quality.tier, this.renderer, this.scene);
+      // compile the world pass's programs now (its layer, its tone mapping), not on the first 3D frame
+      const was = s.root.visible;
+      s.root.visible = true;
+      s.camera.layers.set(WORLD_LAYER);
+      this.renderer.toneMapping = THREE.NeutralToneMapping;
+      try { await this.renderer.compileAsync(this.scene, s.camera); } catch { /* compiled on first use instead */ }
+      this.renderer.toneMapping = THREE.NoToneMapping;
+      s.camera.layers.set(0);
+      s.root.visible = was;
+      // held aside, not drawn: until enable3D the page renders its cheap top-down frame, so a
+      // recording's download and parse do not share the main thread with shadowed 3D frames
+      this.preparedScene = s;
+    })();
+    return this.prepared;
+  }
+
+  private prepared: Promise<void> | null = null;
+  private preparedScene: Scene3D | null = null;
+
+  async enable3D(assets: Scene3DAssets, worldToMap: [number, number], targets: World['targets'] = [],
+    elevation: Elevation[] = [], tier: TierChoice = 'auto') {
+    if (this.enabled3D) return;
+    this.enabled3D = true;
+    await this.prepare3D(assets, worldToMap, tier);
+    const s = this.preparedScene!;
+    this.three = s;
+    s.setTargets(targets ?? []);
+    this.terrain = surfaces(elevation, worldToMap);
+    this.applyTier(this.quality!.tier);
+    // the 3D view may already be the camera (is3D turned true with `ready`): drape what exists
+    this.redrape();
+    this.setPlan(this.store);
+    this.onViewChange?.(this.is3D);
+    if (this.world && this.terrain.length) {
+      const { width: W, height: H, resolution: r, origin } = this.world;
+      const cx = origin[0] + (W * r) / 2, cy = origin[1] + (H * r) / 2;
+      this.pickSurface = new THREE.Mesh(drapedPlane(W * r, H * r, cx, cy, this.terrain), new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }));
+      this.pickSurface.position.set(cx, cy, 0);
+      this.pickSurface.updateMatrixWorld(true);
+    }
+    s.setPose(this.lastPose, this.lastTilt);
+    this.setCameraMode(this.cameraMode);
+  }
+
+  /** M4.3: the wheels' speeds (rad/s, left and right): the 3D robot's wheels turn at them. */
+  setWheels(w: [number, number]) {
+    this.three?.setWheelSpeeds(w);
+  }
+
+  /** M4.3: the targets where the model has them (a tick's grasp state); the carried one rides. */
+  setGrasp(g: Tick['grasp']) {
+    if (g?.targets) this.three?.moveTargets(g.targets, g.phase === 'carry' || g.phase === 'release' ? g.target ?? null : null);
+    // the pick's joints (coco_lab.arm: URDF joint angles) on the URDF's joints
+    const a = (g?.arm ?? {}) as Record<string, unknown>;
+    for (const [k, joint] of ARM_JOINTS) if (typeof a[k] === 'number') this.three?.setJoint(joint, a[k] as number);
+  }
+
+  /** Top-down (orthographic, the analytic view) or a perspective camera; 3D only once loaded. */
+  /**
+   * Change camera. `dur` (s) is the transition (M4.5; 0 cuts: reduced motion, the fallback). 3D to 3D
+   * blends; 3D to top-down blends to the overhead pose above the top-down view, then cuts to the
+   * orthographic camera, where the two coincide; top-down to 3D starts from that pose.
+   */
+  setCameraMode(mode: CameraMode, dur = 0) {
+    this.pendingTopdown = 0;
+    const t = this.three;
+    if (t?.ready && dur > 0) {
+      const h = (this.canvas.clientHeight || 1) / this.view.scale;
+      t.setOverhead(this.view.cx, this.view.cy, h);
+      if (mode === 'topdown' && this.is3D) {
+        t.setMode('overhead', dur);
+        this.pendingTopdown = performance.now() + dur * 1000;   // the loop cuts to top-down then
+        return;
+      }
+      if (mode !== 'topdown' && !this.is3D) t.startFromOverhead(mode, dur);
+      else if (mode !== 'topdown') t.setMode(mode, dur);
+    } else if (t && mode !== 'topdown') t.setMode(mode, 0);
+    this.applyCamera(mode);
+  }
+
+  /** Top-down's own camera, when a transition to it is over. */
+  private pendingTopdown = 0;
+
+  private applyCamera(mode: CameraMode) {
+    const was = this.is3D;
+    this.cameraMode = mode;
+    const on = this.is3D;
+    // a person choosing 3D again after the fallback: measure afresh, from the low tier
+    if (on && !was && this.quality?.fellBack) {
+      this.quality = new QualityController(performance.now(), this.quality.choice, 'low');
+      this.applyTier('low');
+    }
+    this.three?.setVisible(on);
+    if (on !== was) {
+      this.redrape();
+      this.setPlan(this.store);           // the frontier and the path redrawn at the new height
+      this.onViewChange?.(on);
+      // top-down keeps M1's pixel ratio; 3D takes its tier's
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, on && this.quality ? TIER_SETTINGS[this.quality.tier].pixelRatioCap : 2));
+      if (on) this.quality?.restart(performance.now());
+    }
+    // in 3D the glTF robot stands for the flat outline; the footprint and truth stay as floor marks
+    this.robot.visible = this.layers.robot && !on;
+    if (this.three) this.three.robotHolder.visible = this.layers.robot && mode !== 'robot_eye';
+  }
+
+  /**
+   * M4.8: the race: the flag (x, y, finish radius) as a ring on the surface, and the ghost (the level's
+   * committed track, coco_lab.race) as a dashed outline and, in 3D, a translucent body. Nulls hide them.
+   */
+  setRace(flag: [number, number, number] | null, ghost: [number, number, number] | null) {
+    if (!this.world) return;
+    if (!this.flag) {
+      this.flag = new THREE.Mesh(new THREE.RingGeometry(0.9, 1.0, 48), new THREE.MeshBasicMaterial({ color: this.palette.goal, transparent: true, opacity: 0.85 }));
+      this.ghost = this.dashedLoop(this.circle(this.world.radius, 48), this.palette.truth, 0.03);
+      this.scene.add(this.flag, this.ghost);
+    }
+    this.flag.visible = !!flag;
+    if (flag) {
+      this.flag.scale.set(flag[2], flag[2], 1);
+      this.flag.position.set(flag[0], flag[1], Z.marker + this.liftAt(flag[0], flag[1]));
+    }
+    this.ghost!.visible = !!ghost;
+    if (ghost) {
+      this.ghost!.position.set(ghost[0], ghost[1], Z.truth + this.liftAt(ghost[0], ghost[1]));
+      this.ghost!.rotation.z = ghost[2];
+    }
+    this.three?.setGhost(ghost, ghost ? this.liftAt(ghost[0], ghost[1]) : 0);
+  }
+
+  private flag: THREE.Mesh | null = null;
+  private ghost: THREE.LineLoop | null = null;
+
+  /** M4.4: a person's tier choice in settings ('auto' measures). */
+  setTier(choice: TierChoice) {
+    const e = this.quality?.setChoice(choice, performance.now());
+    if (e?.kind === 'tier') { this.applyTier(e.tier); this.onQuality?.(e); }
+  }
+
+  private applyTier(tier: Tier) {
+    if (!this.three) return;
+    this.three.applyTier(tier, this.renderer, this.scene);
+    if (this.is3D) this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, TIER_SETTINGS[tier].pixelRatioCap));
+  }
+
+  /**
+   * M4.4: a computation layer drawn as a texture over the map (a PlaneGeometry centred on its mesh).
+   * In 3D on a terrain it gets the draped twin of its plane (render/drape.ts): the same material and
+   * texture over the floor, the ramps and the platform tops. Top-down, its own plane.
+   */
+  registerDecal(m: THREE.Mesh) {
+    if (!(m.geometry instanceof THREE.PlaneGeometry)) return;
+    m.userData.flat = m.geometry;
+    this.decals.add(m);
+    this.drapeOne(m);
+  }
+
+  private drapeOne(m: THREE.Mesh) {
+    const flat = m.userData.flat as THREE.PlaneGeometry;
+    if (!this.is3D || !this.terrain.length) { m.geometry = flat; return; }
+    const { width, height } = flat.parameters;
+    const key = `${width}|${height}|${m.position.x}|${m.position.y}`;
+    let g = this.draped.get(key);
+    if (!g) { g = drapedPlane(width, height, m.position.x, m.position.y, this.terrain); this.draped.set(key, g); }
+    m.geometry = g;
+  }
+
+  private redrape() {
+    for (const m of [...this.decals]) {
+      let o: THREE.Object3D | null = m;
+      while (o && o !== this.scene) o = o.parent;
+      if (!o) { this.decals.delete(m); continue; }   // removed with its layer
+      this.drapeOne(m);
+    }
+  }
+
+  get is3D(): boolean {
+    return this.cameraMode !== 'topdown' && !!this.three?.ready;
+  }
+
   fit() {
     if (!this.world) return;
     const { width: W, height: H, resolution: r, origin } = this.world;
@@ -397,9 +641,57 @@ export class ArenaRenderer {
   /** Screen (client) coordinates to map-frame metres. */
   toWorld(clientX: number, clientY: number): [number, number] {
     const rect = this.canvas.getBoundingClientRect();
+    if (this.is3D) {
+      // the floor point under the pointer (README §5.3: picking uses a floor ray for grids); on a terrain
+      // the ray stops at the walkable surface first, so a click on a platform is a point on the platform
+      const ndc = new THREE.Vector2(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
+      if (this.pickSurface) {
+        this.picker.setFromCamera(ndc, this.three!.camera);
+        const hit = this.picker.intersectObject(this.pickSurface, false)[0];
+        if (hit) return [hit.point.x, hit.point.y];
+      }
+      const hit = this.three!.toFloor(ndc.x, ndc.y);
+      return hit ?? [this.lastPose[0], this.lastPose[1]];
+    }
     const x = this.view.cx + (clientX - rect.left - rect.width / 2) / this.view.scale;
     const y = this.view.cy - (clientY - rect.top - rect.height / 2) / this.view.scale;
     return [x, y];
+  }
+
+  /** Map-frame metres on the floor to client (screen) pixels: the inverse of toWorld, in either camera (harnesses use it). */
+  screenOf(x: number, y: number): [number, number] {
+    const rect = this.canvas.getBoundingClientRect();
+    const cam = this.is3D ? this.three!.camera : this.camera;
+    const v = new THREE.Vector3(x, y, this.is3D ? this.surfaceZ(x, y) : 0).project(cam);
+    return [rect.left + ((v.x + 1) / 2) * rect.width, rect.top + ((1 - v.y) / 2) * rect.height];
+  }
+
+  /**
+   * M4.6: where a mark at (x, y) stands: in 3D on a terrain, the drawn walkable surface (the drape quads:
+   * axis-aligned, z linear along x) plus the decal lift; top-down or on a flat world, 0.
+   */
+  liftAt(x: number, y: number): number {
+    if (!this.is3D || !this.terrain.length) return 0;
+    let z = 0;
+    for (const q of this.terrain) {
+      const xa = Math.min(q[0][0], q[1][0]), xb = Math.max(q[0][0], q[1][0]);
+      const ya = Math.min(q[0][1], q[2][1]), yb = Math.max(q[0][1], q[2][1]);
+      if (x < xa || x > xb || y < ya || y > yb) continue;
+      const f = q[1][0] === q[0][0] ? 0 : (x - q[0][0]) / (q[1][0] - q[0][0]);
+      z = Math.max(z, q[0][2] + f * (q[1][2] - q[0][2]) + DRAPE_LIFT);
+    }
+    return z;
+  }
+
+  /** M4.6: told when the view turns 3D or top-down, so the page redraws its layers at the right height. */
+  onViewChange?: (is3D: boolean) => void;
+
+  /** M4.4: the walkable surface's height under (x, y): a vertical ray onto the drawn surface; 0 off it. */
+  surfaceZ(x: number, y: number): number {
+    if (!this.pickSurface) return 0;
+    this.picker.set(new THREE.Vector3(x, y, 50), new THREE.Vector3(0, 0, -1));
+    const hit = this.picker.intersectObject(this.pickSurface, false)[0];
+    return hit ? hit.point.z : 0;
   }
 
   /** Map-frame metres to the grid cell (row, col), or null off the map. */
@@ -433,6 +725,19 @@ export class ArenaRenderer {
       const prev = pts.get(e.pointerId);
       if (!prev) return;
       pts.set(e.pointerId, [e.clientX, e.clientY]);
+      if (this.is3D) {
+        // 3D (README §5.5): the mouse orbits with one button held; on a touch screen one finger is a tap
+        // (a goal), and two fingers orbit (their midpoint moving: half each finger's share) and pinch to zoom
+        if (pts.size === 1 && !this.panSuspended && e.pointerType !== 'touch') this.three!.orbitBy(e.clientX - prev[0], e.clientY - prev[1]);
+        else if (pts.size === 2 && pinch0 > 0) {
+          const [a, b] = [...pts.values()];
+          const d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+          this.three!.zoomBy(pinch0 / Math.max(1, d));
+          this.three!.orbitBy((e.clientX - prev[0]) / 2, (e.clientY - prev[1]) / 2);
+          pinch0 = d;
+        }
+        return;
+      }
       if (pts.size === 1 && !this.panSuspended) {
         this.view.cx -= (e.clientX - prev[0]) / this.view.scale;
         this.view.cy += (e.clientY - prev[1]) / this.view.scale;
@@ -447,6 +752,7 @@ export class ArenaRenderer {
     c.addEventListener('pointercancel', up);
     c.addEventListener('wheel', (e) => {
       e.preventDefault();
+      if (this.is3D) { this.three!.zoomBy(Math.exp(e.deltaY * 0.0015)); return; }
       const before = this.toWorld(e.clientX, e.clientY);
       this.view.scale = Math.max(2, Math.min(2000, this.view.scale * Math.exp(-e.deltaY * 0.0015)));
       this.applyView();
@@ -469,11 +775,38 @@ export class ArenaRenderer {
   }
 
   start() {
-    const loop = () => {
+    const loop = (now: number) => {
       this.resize();
       this.onFrame?.();
       this.syncPlan();
-      this.renderer.render(this.scene, this.camera);
+      const dt = this.lastFrame ? (now - this.lastFrame) / 1000 : 1 / 60;
+      this.lastFrame = now;
+      if (this.pendingTopdown && now >= this.pendingTopdown) { this.pendingTopdown = 0; this.applyCamera('topdown'); }
+      if (this.is3D) {
+        const q = this.quality?.frame(now, dt * 1000) ?? null;
+        if (q?.kind === 'tier') this.applyTier(q.tier);
+        if (q) this.onQuality?.(q);
+        if (q?.kind === 'fallback') this.setCameraMode('topdown');
+      }
+      if (this.is3D) {
+        const cam = this.three!.camera;
+        this.three!.update(dt, (this.canvas.clientWidth || 1) / (this.canvas.clientHeight || 1));
+        // pass 1: the 3D world, tone-mapped and shadowed; pass 2: the computation layers over it,
+        // unlit and exact, against its depth (README §5.3)
+        this.renderer.autoClear = false;
+        this.renderer.clear();
+        cam.layers.set(WORLD_LAYER);
+        this.renderer.toneMapping = THREE.NeutralToneMapping;
+        this.renderer.render(this.scene, cam);
+        // a colour background forces a clear on every render: the overlay pass must not have one
+        const bg = this.scene.background;
+        this.scene.background = null;
+        cam.layers.set(0);
+        this.renderer.toneMapping = THREE.NoToneMapping;
+        this.renderer.render(this.scene, cam);
+        this.scene.background = bg;
+        this.renderer.autoClear = true;
+      } else this.renderer.render(this.scene, this.camera);
       this.onAfterRender?.();
       this.raf = requestAnimationFrame(loop);
     };

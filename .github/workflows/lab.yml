@@ -202,12 +202,25 @@ jobs:
           done
           node tools/perf/determinism.mjs compare --sessions "$rec/sessions.json" --limit 10 --ref "$rec" --out "$RUNNER_TEMP/det"
           cat "$RUNNER_TEMP/det/determinism.json"
+      - name: Terrain determinism across engines (M4.3; 3 recorded World Spec v2 sessions, every tick)
+        working-directory: lab_web
+        run: |
+          rec=../docs/v2/data/m4/m43/determinism
+          for b in chromium firefox webkit; do
+            node tools/perf/determinism.mjs "$b" --sessions "$rec/sessions.json" --limit 3 --out "$RUNNER_TEMP/det_terrain"
+          done
+          node tools/perf/determinism.mjs compare --sessions "$rec/sessions.json" --limit 3 --ref "$rec" --out "$RUNNER_TEMP/det_terrain"
+          cat "$RUNNER_TEMP/det_terrain/determinism.json"
       - name: Screenshot tests (the Arena's fixed scenes, canvas only)
         working-directory: lab_web
         run: node tools/perf/screenshots.mjs check --out "$RUNNER_TEMP/shots"
       - name: Every v1 URL form resolves, 0 console errors (M2.10)
         working-directory: lab_web
         run: node tools/perf/v1_links_check.mjs --site http://127.0.0.1:4174/coco-labs/ --out "$RUNNER_TEMP/v1links"
+      # M4.10: an M4.7 change hid the runs list on every replay page, and no CI step looked
+      - name: Every replay plays to its end with its badge, results and runs list (M2, M3 regressions)
+        working-directory: lab_web
+        run: node tools/perf/replay_check.mjs --site http://127.0.0.1:4174/coco-labs/ --out "$RUNNER_TEMP/replays"
 
   deploy:
     name: deploy to GitHub Pages (main only)

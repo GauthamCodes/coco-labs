@@ -8,7 +8,7 @@
  */
 
 import { PYODIDE_INDEX_URL } from '../../site.config.ts';
-import { wallMs, type BootRequest, type CompareSide, type FamilyMessage, type FromWorker, type InputRow, type SearchColumns, type Tick, type World } from './protocol';
+import { wallMs, type BootRequest, type CompareSide, type FamilyMessage, type FromWorker, type InputRow, type SearchColumns, type SpecFile, type Tick, type World } from './protocol';
 import { perf } from './perf';
 
 export interface ArenaEvents {
@@ -32,7 +32,7 @@ export class ArenaClient {
   tick = 0;
   private readonly ready: Promise<World>;
 
-  constructor(ev: ArenaEvents, opts: { seed?: number; planner?: string; pyodide?: PyodideSource } = {}) {
+  constructor(ev: ArenaEvents, opts: { seed?: number; planner?: string; pyodide?: PyodideSource; spec?: SpecFile } = {}) {
     const base = import.meta.env.BASE_URL;
     perf.mark('worker_create', wallMs());
     this.worker = new Worker(new URL('./arena.worker.ts', import.meta.url), { type: 'module' });
@@ -76,6 +76,7 @@ export class ArenaClient {
       seed: opts.seed ?? 1,
       planner: opts.planner ?? 'astar',
       batchSize: 2048,
+      ...(opts.spec ? { spec: opts.spec } : {}),
     };
     this.worker.postMessage(boot);
   }

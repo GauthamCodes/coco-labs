@@ -16,6 +16,14 @@ message TruthPoseBatch {
   repeated double x = 4;
   repeated double y = 5;
   repeated double theta = 6;
+  // M4.3, additive: the full 3D truth, ONLY where it was recorded or modelled
+  // (README section 3, invariant 4: height, roll and pitch are never invented
+  // for a Stack recording that did not record them). Empty otherwise.
+  // float32: about 0.04 um at 0.65 m and 1e-8 rad, a fraction of Gazebo's own noise; half the bytes
+  // of a double, which a Case File's first frame on 4G needs (M4.7)
+  repeated float z = 7;      // m
+  repeated float roll = 8;   // rad, REP-103
+  repeated float pitch = 9;  // rad, REP-103
 }
 
 // Moving bodies other than the robot (M2.7, additive): Lab 5's actors as

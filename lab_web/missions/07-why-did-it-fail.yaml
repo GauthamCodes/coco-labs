@@ -21,7 +21,7 @@ beats:
       M6 run 15 fetched its target and held it, then could not be driven home: the drive
       home failed in 1.7 s. Run 15 was never recorded, so here is one of its nine
       reproductions on the full stack, opened at the moment the controller refuses.
-    arena: {casefile: lab5_mislocalised_dwb_1, moment: refusal, tick: 128, level: explain}
+    arena: {casefile: lab5_mislocalised_dwb_1, moment: refusal, tick: 128, level: explain, camera: follow}
     claims: [run15-original, reproduction]
   - beat: predict
     question: >-
@@ -41,14 +41,14 @@ beats:
       simulator has it. The belief and the truth are two different points from now on;
       about ten seconds later the drive starts, and the path lies nowhere near the
       robot the controller thinks it is steering.
-    arena: {casefile: lab5_mislocalised_dwb_1, moment: divergence, tick: 30, level: explain}
+    arena: {casefile: lab5_mislocalised_dwb_1, moment: divergence, tick: 30, level: explain, camera: follow}
     claims: [moments, reproduction]
   - beat: manipulate
     text: >-
       The Arena model, told the same wrong pose. Pick any controller: the whole path lies
       outside the local window around the believed pose, so it is pruned to nothing and
       every controller fails before it scores a single candidate.
-    arena: {lens: move, level: explain, cfg: ['move.scenario=mislocalised', 'move.controller=dwa']}
+    arena: {lens: move, level: explain, cfg: ['move.scenario=mislocalised', 'move.controller=dwa'], camera: follow}
     claims: [model-same]
   - beat: explain
     text: >-
@@ -57,14 +57,14 @@ beats:
       nothing relocalised, and the mission aborted. Its recording kept the truth and the
       mission's states, not the belief -- so here you can see where it gave up, and not
       what it believed.
-    arena: {casefile: lab4_b2_colours_s1_red, moment: refusal, tick: 3093, level: explain}
+    arena: {casefile: lab4_b2_colours_s1_red, moment: refusal, tick: 3093, level: explain, camera: follow}
     claims: [b2, b2-recording]
   - beat: stack
     text: >-
       MPPI, told the same wrong pose: the same two moments, the belief leaving the truth
       and the refusal. Every reproduction looks like this; which is why they reproduce run
       15's mechanism and not its every detail.
-    arena: {casefile: lab5_mislocalised_mppi_1, moment: divergence, tick: 31, level: explain}
+    arena: {casefile: lab5_mislocalised_mppi_1, moment: divergence, tick: 31, level: explain, camera: follow}
     claims: [moments, unresolved-exact, b2-aliasing]
   - beat: challenge
     stub: true

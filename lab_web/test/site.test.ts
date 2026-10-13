@@ -46,16 +46,17 @@ describe('privacy', () => {
   it('src sets no cookie, uses no browser storage and sends no analytics', () => {
     // one exception (M3.5, the M3 prompt: Play's personal bests "are stored locally"):
     // src/play/best.ts, local storage only, every access inside try/catch
-    const BEST = join('play', 'best.ts');
+    // M4.5: the preferences module is the one place that touches storage (Play's bests go through it)
+    const PREFS = 'prefs.ts';
     for (const { p, text } of src) {
-      const allowed = relative(join(LAB_WEB, 'src'), p) === BEST ? text.replace(/window\.localStorage/g, '') : text;
+      const allowed = relative(join(LAB_WEB, 'src'), p) === PREFS ? text.replace(/window\.localStorage/g, '') : text;
       expect(/document\.cookie|localStorage|sessionStorage|indexedDB|sendBeacon|navigator\.userAgent/.test(allowed), p)
         .toBe(false);
     }
   });
 
-  it("Play's personal bests touch local storage only inside try/catch", () => {
-    const text = readFileSync(join(LAB_WEB, 'src', 'play', 'best.ts'), 'utf-8');
+  it('the preferences module touches local storage only inside try/catch', () => {
+    const text = readFileSync(join(LAB_WEB, 'src', 'prefs.ts'), 'utf-8');
     const uses = [...text.matchAll(/window\.localStorage/g)].map((m) => m.index!);
     expect(uses.length).toBeGreaterThan(0);
     for (const i of uses) {

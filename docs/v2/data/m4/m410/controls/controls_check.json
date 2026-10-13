@@ -1,0 +1,99 @@
+{
+ "criterion": "M4.5: README 5.5 controls in a real browser",
+ "verdict": {
+  "default_follow": true,
+  "drive_and_hud": true,
+  "stop_latches": true,
+  "hold_r_resets": true,
+  "cameras_cycle": true,
+  "transitions_under_50ms": true,
+  "help_and_remap": true,
+  "tab_hands_back": true,
+  "no_page_errors": true
+ },
+ "checks": {
+  "default_camera": "follow",
+  "w_drives": true,
+  "hud_while_driving": "You are driving",
+  "hud_after_stop": {
+   "source": "You are driving",
+   "latched": true
+  },
+  "latched_moved_m": 0,
+  "hud_after_release": {
+   "source": "Idle",
+   "latched": false
+  },
+  "release_drives": true,
+  "hold_r_resets_home": true,
+  "cameras": [
+   {
+    "want": "orbit",
+    "mode": "orbit",
+    "three": "orbit",
+    "max_frame_ms": 16.800000000000182
+   },
+   {
+    "want": "robot_eye",
+    "mode": "robot_eye",
+    "three": "robot_eye",
+    "max_frame_ms": 16.800000000000182
+   },
+   {
+    "want": "topdown",
+    "mode": "topdown",
+    "three": "overhead",
+    "max_frame_ms": 16.799999999999272
+   },
+   {
+    "want": "follow",
+    "mode": "follow",
+    "three": "follow",
+    "max_frame_ms": 16.80000000000109
+   }
+  ],
+  "help_opens": true,
+  "remap_works": true,
+  "remap_survives_reload": true,
+  "tab_hands_back": true
+ },
+ "errors": [],
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-12T18:17:54.768Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 92
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 0.82,
+    "5m": 1.46,
+    "15m": 1.87
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-12T18:18:09.126Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 92
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 0.93,
+    "5m": 1.45,
+    "15m": 1.86
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

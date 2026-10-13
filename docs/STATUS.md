@@ -14,11 +14,12 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M0 | **Closed 2026-10-08**: PR #19 merged into `main` as `9f58b83` (merge commit, owner's one-off permission); independent review [`v2/data/m0/REVIEW_2026-10-08.md`](v2/data/m0/REVIEW_2026-10-08.md), its findings resolved below; public site after the Pages deploy: 0 console errors, 0 page errors in all six views, Live shows the offline state ([`v2/data/m0/exit/public_after_merge.json`](v2/data/m0/exit/public_after_merge.json)) |
 | M1 | **Closed 2026-10-09 — agent-measurable criteria**: independent review [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md) (MERGE AFTER FIXES, every fix done); PR #20 merged into `main` as **`0a2516a`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena, a goal click drew its search, all six v1 views 0 console / 0 page errors ([`v2/data/m1/exit/public_after_merge.json`](v2/data/m1/exit/public_after_merge.json)). **Still pending Gautham:** phone performance, phone cold start, usability |
 | M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
-| Branch | `v2/m3-play-casefiles` (from `main` = `d9ae365`), worked in the worktree `.claude/worktrees/v2-m3-play-casefiles`, overlay `~/coco_lab_m3_ws` |
-| Milestone | **M3 · Play and Case Files** ([`v2/M3_PROMPT.md`](v2/M3_PROMPT.md)) — the content of the public v2 launch, which stays gated on Gautham's phone and usability rows |
-| Checkpoint | **M3 setup (B.1)**: `main` fast-forwarded to `d9ae365`, branch created, baseline suites run (see "M3 checkpoint log"). **M3.9 measured** (B.3: 4 met; Case File first frame 97/100 within 2 s on 4G; the regression re-measure is partial, AC lost). PR open, not merged. Next: AC re-measure; Gautham's phone and usability rows; an independent M3 review |
-| Merge to `main` | M3 opens a PR when every agent-measurable B.3 criterion passes; it is **not** merged by the agent (the merge permission covered PR #21 only) |
-| Pending Gautham | Phone baseline ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md)); M1 **phone performance**, **phone cold start** ([`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)) and **usability** ([`v2/USABILITY_TEST.md`](v2/USABILITY_TEST.md)); M2's phone and usability rows; M3's phone cold start and usability rows — never marked done by the agent |
+| M3 | **Closed 2026-10-11 — agent-measurable criteria**: independent review [`v2/reviews/M3_REVIEW.md`](v2/reviews/M3_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: D6, Case File scans after the first frame, which took the first frame on emulated 4G from 97 / 100 to **100 / 100 within 2 s**); the outstanding re-measurement completed on AC, every M2 budget met; PR #22 merged into `main` **quietly** as **`bf7443f`** (merge commit, owner's one-off permission, branch kept, no release, tag or announcement); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search, the four modes 23 / 23 pages, 5 / 5 Case Files, 5 / 5 challenge links reproduced, all 22 v1 URL forms and `/v1/`'s six views, 0 console errors ([`v2/data/m3/exit/public_after_merge.json`](v2/data/m3/exit/public_after_merge.json)) |
+| Branch | `v2/m4-3d-arena` (from `main` = `bf7443f`), worked in the worktree `.claude/worktrees/v2-m4-3d-arena` |
+| Milestone | **M4 · 3D Arena** ([`v2/M4_PROMPT.md`](v2/M4_PROMPT.md)) — the content of the public v2.0 launch, which Gautham publishes after M4 merges and his rows pass |
+| Checkpoint | **M4.10 done: every agent-owned M4 criterion met** ([`v2/M4_RESULTS.md`](v2/M4_RESULTS.md)); the M4 pull request is open for review, **not merged** (see "M4 checkpoint log") |
+| Merge to `main` | M4 opens a PR; it is **not** merged by the agent (the merge permission covered PR #22 only) |
+| Pending Gautham | **The phone baseline, now**, on the live site ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md), [`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)); **the M4 feasibility gate on the phone** ([`v2/PHONE_GATE_M4.md`](v2/PHONE_GATE_M4.md); preview via `lab_web/tools/preview_phone.sh`) and M4's phone rows; **the consolidated five-person usability test at the end of M4** (decision D5; it replaces M1–M3's usability tests). M1–M3's phone rows are covered by the phone baseline and M4's gate. Never marked done by the agent |
 
 ## Checkpoint log
 
@@ -1544,6 +1545,273 @@ only. Read order for agents (README §9): `README.md`, this file,
     budget met.
   - **Next:** the quiet merge of PR #22 (A.6), then M4.
 
+## M4 checkpoint log
+
+- **M4.0 setup (2026-10-11).** Branch `v2/m4-3d-arena` from `main` =
+  `bf7443f` (M3's quiet merge), worktree `.claude/worktrees/v2-m4-3d-arena`,
+  overlay `~/coco_lab_m4_ws` (helpers in its `bin/`, ROS domain 89).
+  - `README.md` = the owner's revision 2, byte for byte (`cmp`), sha256
+    `cf53bb8c…48c8799`; plan-change log entries for it, D1–D6 and this
+    prompt's one-off permissions.
+  - M3 closed in "Position" (merge `bf7443f`); pending Gautham: the phone
+    baseline now, M4's phone rows, the consolidated usability test.
+  - `docs/ROADMAP.md`, `PROJECT_STATE.md`, `docs/v2/DEPRECATIONS.md`
+    renumbered (cloud batch M5, sessions M6, hardware M7); two new
+    DEPRECATIONS rows (the robot sprite; the 2.5D view repurposed).
+    `CLAUDE.md`: invariants 9–11, integrity rules 7–8, agent rules 6–7.
+    `docs/IDEAS.md`: gamepad, a second world, perception on pixels, the
+    four later challenges. Part B saved as `docs/v2/M4_PROMPT.md`.
+  - The M3 exit: `docs/v2/data/m3/exit/public_after_merge.json`; the
+    review's "After the fixes" section; `PHONE_MEASURE.md` and
+    `PHONE_BASELINE.md` corrected for the live site.
+  - **Baseline suites** (measured, `bf7443f`, AC, balanced, Node 24.21.0,
+    Python 3.12.3, NVIDIA 580.178.04): packages **3,498 / 0 / 0**, build
+    tools **169 / 0 / 0**, vitest **403 / 0 / 0** (38 files)
+    (`docs/v2/data/m4/m40/suites_baseline.txt`).
+  - **Deviation:** the canonical checkout `~/coco_labs_ws/src/coco-labs`
+    still has `main` at `d9ae365`; this session is isolated to its worktrees
+    and cannot fast-forward it. Gautham: `git -C ~/coco_labs_ws/src/coco-labs pull --ff-only`.
+  - Screenshots awaiting review: none (no visual change).
+  - **Next:** M4.1, the feasibility gate.
+- **M4.1 feasibility gate (2026-10-11).** `b1fc5fe` + this checkpoint's evidence commit.
+  - **Sources and the recorded world.** Robot: `gazebo_models/urdf/coco_robo2.xacro`
+    + `gazebo_models/meshes/*.stl` (read-only). World: Labs 1, 4 and 5 ran
+    `full_world_robo.launch.py traverse:=true` on the default
+    `gazebo_models/worlds/coco_navigation.world`, sha256 `cbe9415a…` = the world
+    Lab 1C's run metadata records; the ramps and platforms are spawned by the
+    launch file (4 bays: up-wedge `ramp_wedge_18.stl`, platform, down-wedge),
+    not in the SDF. Lab 5's scenarios are the same world plus actors, not other
+    SDF worlds (`coco_lab_ros/config/lab5_scenarios.json`); variants for M4.7:
+    the actors, and episode targets.
+  - **First conversion** (`lab_web/tools/assets/`, Python + numpy; rough by
+    design, M4.2 replaces the decimation): `arena.glb` 60,220 B, 964 triangles,
+    82 footprints; `robot_high.glb` 856,968 B, 18,680 triangles; `robot_low.glb`
+    189,372 B, 3,908 triangles; joints kept (4 wheels, 2 arm joints, 2 fingers).
+    World Spec v1 agrees with the converted SDF exactly (70 / 70 boxes; ramps).
+  - **3D in the page** (`render/scene3d.ts`): follow (sprung, look-ahead),
+    orbit and robot-eye cameras, the Plan lens on the floor, floor picking.
+    Opt-in `?camera=follow|orbit|robot_eye`; the default flips in M4.5 (D1).
+  - **Measured** (laptop and **emulated**, all on AC; `docs/RESULTS.md` "M4.1",
+    `v2/data/m4/m41/`): 60 fps (the display cap) in every run — RTX 4050 (all
+    cameras, the fetch mission with every layer), Intel integrated GPU,
+    emulated phone at 4× and 6× CPU; p95 frame 17.0–19.5 ms. Emulated 4G:
+    first computation 3.2 s, 3D world 5.1 s, live model 8.9 s.
+  - **Phone preview (permission 4):** `lab_web/tools/preview_phone.sh`
+    (Tailscale Funnel, static build, `/coco-labs/` only, off after 2 h).
+    Started 17:48 IST, **off at 19:48 IST**:
+    `https://coco-live.taile7cb60.ts.net/coco-labs/?view=arena&camera=follow&perf`.
+    Re-run `lab_web/tools/preview_phone.sh start` for another 2 h. Guide:
+    [`v2/PHONE_GATE_M4.md`](v2/PHONE_GATE_M4.md).
+  - **Phone default flag:** `PHONE_DEFAULT_CAMERA = '3d'` (`lab_web/site.config.ts`);
+    D1 applies when Gautham records his results.
+  - **Screenshots awaiting Gautham's review** (the visual target, first pass):
+    `v2/data/m4/screens/reference/follow_toward_ramp.png`, `orbit_wide.png`,
+    `robot_eye.png`. Known: flat lighting, everything the SDF's greys (the ramps
+    are low-contrast), the LiDAR fan aliases on the floor — M4.4 and M4.6.
+  - **Tests at the checkpoint's end** (`b1fc5fe`, AC): packages 3,498 / 0 / 0,
+    build tools 175 / 0 / 0 (+6), vitest 403 / 0 / 0 (`v2/data/m4/m41/suites.txt`).
+    **Known for M4.2:** CI's tool job has no numpy and fails on any skipped test;
+    `test_assets3d.py` needs numpy and skips the robot without ROS's xacro.
+    M4.2's pipeline removes both before the PR.
+  - **Next:** M4.2, the asset pipeline (ADR 0006), the manifest, size budgets in
+    CI, World Spec v2 (ADR 0007 drafted) and the agreement check.
+- **M4.2 asset pipeline (2026-10-11).**
+  - **Pipeline** ([ADR 0006](v2/adr/0006-asset-pipeline.md)): standard-library
+    Python converters (`convert_world.py`, `convert_robot.py` from the committed
+    expanded `coco_robo2.urdf`, which records the xacro's sha256) write
+    full-resolution sources; `compress.mjs` (meshoptimizer 1.2.0, the one new,
+    pinned dev dependency) shares each level's triangle budget by water-filling,
+    simplifies, computes 40° crease normals and writes `EXT_meshopt_compression`;
+    `build_assets.mjs` writes the manifest and `--check` regenerates byte for
+    byte. `@gltf-transform` was tried and removed: it pulled `sharp` and 30
+    libvips builds for textures we do not have. No textures, so no KTX2 (the
+    ADR says when it would join). The page decodes with three's `MeshoptDecoder`.
+  - **Measured:** `arena.glb` 27,640 B (964 triangles), `robot_high.glb` 540,152 B
+    (20,000), `robot_low.glb` 143,892 B (4,412). **First scene 567,792 B desktop,
+    171,532 B phone** (budget 5 MB); robot 540,152 B (budget 1.5 MB). Manifest:
+    `lab_web/public/assets3d/manifest.json`, [`v2/ASSETS.md`](v2/ASSETS.md) — every
+    file's sources (sha256), licence (Gautham's own work, Apache-2.0; no
+    third-party assets), checksum, size.
+  - **World Spec v2** ([ADR 0007](v2/adr/0007-world-spec-elevation.md)):
+    `worlds/coco_arena_v2.yaml` = v1 + `elevation` (8 wedges, 4 platforms, derived
+    from v1's `ramps`); `worldspec.normalize` reads v1 and v2; v1's files and
+    canonical bytes unchanged (its generator's `--check` passes).
+  - **In CI:** `lab_web/tools/test_worldspec_sdf.py` — v1's 70 boxes and v2's 12
+    primitives against the converted recorded SDF within 1 mm (a 2 mm change to a
+    box or a wedge is caught); `test_assets3d.py` (budgets, licences, sources,
+    compression, joints; no numpy, no ROS, no skips); `test/assets3d.test.ts`
+    (byte-for-byte regeneration). M4.1's CI blockers are gone.
+  - **Tests at the checkpoint's end** (AC): packages **3,500 / 0 / 0** (coco_lab
+    776: +2 World Spec cases; the first full run caught three over-long lines in
+    `worldspec.py`, fixed, and `coco_lab` re-run alone), build tools **181 / 0 / 0**
+    (+6), vitest **404 / 0 / 0** (+1) (`v2/data/m4/m42/`).
+  - Screenshots awaiting review: none new (the compressed assets render as the
+    M4.1 references).
+  - **Next:** M4.3, the Arena model: kinematic terrain following on v2, contact
+    events, teleop preemption with the command source, the gated grasp, reset
+    home, additive schema fields; flat-scene hashes byte-identical.
+- **M4.3 Arena model (2026-10-11 → 12).** [`v2/ARENA_MODEL.md`](v2/ARENA_MODEL.md)
+  "Terrain, the command source and the grasp".
+  - **Terrain** (`coco_lab/terrain.py`; World Spec v2 only): kinematic following —
+    height from the surface under the wheel base, pitch and roll from its four
+    corners (REP-103); slopes free, rims and a platform's sides walls
+    (`worldspec.terrain_map`); a contact stops the robot; the LiDAR meets a ramp
+    where it rises above the beam. SIMPLIFIED MODEL: no suspension, forces, slip
+    or tip-over (invariant 10).
+  - **Command source** STOP > TELEOP > MISSION | PLANNER on every tick (derived,
+    not hashed); M1's teleop-preempts-autonomy rule kept exactly (98 of M1's and
+    97 of M2.11's 100 committed sessions mix goals and teleop,
+    `v2/data/m4/m43/mixed_sessions.json`); the new `autonomy` input hands back.
+  - **Gated grasp** (`coco_lab/grasp.py`): the Stack's gate (0.151–0.1565 m ahead,
+    10 mm lateral), an approach_server-like approach (CREEP_SPEED 0.03 m/s,
+    proportional last step), pick, carry, release; reset puts the targets back.
+    Constants pinned to `coco_config` and `approach_server` in
+    `coco_lab_ros/test/test_sketch_constants.py`. All four colours drive up their
+    ramp under the planner and pick (test).
+  - **Additive schema fields:** `coco.robot.state.v1` 9–15 (z, pitch, roll, wheel
+    speeds, command source, contact); `coco.truth.pose.v1` 7–9 (z, roll, pitch,
+    float32 since M4.7).
+  - **Flat scenes byte-identical:** every flat golden-trace and hash test passes
+    unedited; CI keeps replaying M1's committed sessions (every tick).
+  - **Measured — determinism** ([`v2/data/m4/m43/determinism/`](v2/data/m4/m43/determinism/)):
+    100 recorded terrain sessions × 700 ticks, Chromium 156, Firefox 157, WebKit
+    27.2 and Pyodide-in-Node: **70,000 ticks per engine, 0 mismatched**. The
+    sessions exercise (in CPython): 53 reach a platform, 37 grasps reach carry, 33
+    releases, 20 contact sessions, every command source. CI now replays 3 of them
+    in all three browsers on every pull request.
+  - **Measured — fidelity** (`v2/FIDELITY_v1.md` §4, `v2/data/m4/m43/`): the
+    Arena's terrain against Gazebo's ground truth at every recorded pose of Lab
+    4's 17 fetches (52,751 rows; 15 climbed onto a platform): height |e| p95 0.0 /
+    7.4 / 0.0 mm (flat / slope / platform), max 15.1 mm at a ramp's foot; pitch
+    max 1.37°. Not compared: the v2 LiDAR against Gazebo's scans (UNRESOLVED).
+  - **In the page:** `?world=v2`; E grasps, Tab hands back; the targets, the
+    wheels and the arm in 3D. Screenshots: `v2/data/m4/screens/m43/`.
+
+- **M4.4 3D renderer (2026-10-12).** `lab_web/src/arena/render/` (`quality.ts`,
+  `drape.ts`, the overlay pass in `Renderer.ts`).
+  - **Quality tiers** (high / medium / low) chosen from measured frame time, with
+    settling and hysteresis; below about 24 fps on the low tier the page falls back
+    to top-down with a notice; a quality select and `?quality=` override it.
+  - **Two passes** (README §5.3): the world tone-mapped (Neutral), lit by a
+    `RoomEnvironment` and shadowed (the shadow camera follows the robot); the
+    computation layers over it, unlit and exact. Decals are draped over the
+    terrain. Walls between the camera and the robot are cut away; "low walls"
+    (0.35 m) is a toggle. Picking hits the walkable surface.
+  - **Measured** ([`v2/data/m4/m44/quality_check.json`](v2/data/m4/m44/quality_check.json),
+    balanced, AC): on the RTX 4050 the page stays on the **high** tier, frame
+    interval p50 16.7 ms, p90 16.7 ms over 20 s; on SwiftShader at 20× CPU
+    throttling the low tier drew 20 fps and the page **fell back to top-down with
+    the notice**; 0 page errors.
+  - **Deviations:** no baked ambient occlusion (owed); instance picking uses the
+    floor ray, not GPU ids; without WebGL 2 the page shows its panels and a notice
+    (a Canvas 2D view is parked in `IDEAS.md`).
+  - **For Gautham to look at** ([`v2/data/m4/screens/m44/`](v2/data/m4/screens/m44/)):
+    `cutaway_side.png` (the cut walls read as large grey slabs with dark inner
+    faces), `low_walls_orbit.png`, `phone_landscape.png`.
+- **M4.5 cameras and controls (2026-10-12).** `src/prefs.ts` (integrity rule 7's one
+  storage module), `src/arena/controls.ts`, `Hud.tsx`, `Help.tsx`, `motor.ts`.
+  - Remappable keys (`KeyboardEvent.code`); latched STOP (R releases; hold R 1 s
+    resets home); Shift precision; E grasp; Tab autonomy; C / V cameras; 1–5
+    lenses; P, [ ] pause and step; H help. Camera moves of 0.4 s through an
+    overhead pose; reduced motion cuts. "MODEL · kinematic" badge in the HUD.
+    Tank mode; touch buttons; two-finger orbit and zoom. The plain Arena opens in
+    **follow** (D1); mission, play, replay and run pages stay top-down.
+  - **Measured** ([`v2/data/m4/m45/`](v2/data/m4/m45/), balanced, AC):
+    `controls_check` **9 / 9** checks (default follow, drive and HUD, STOP latches
+    with 0 m moved, hold R resets, cameras cycle, transitions' longest frame
+    16.8 ms, help and remap, Tab hands back, 0 page errors). Key press to visible
+    motion over 100 presses: follow median **44.2 ms** (p95 48.1, max 50.2);
+    top-down median **43.2 ms** (p95 46.7, max 59.9). Budget about 50 ms: met.
+- **M4.6 lenses in 3D (2026-10-12).** Layers lift onto the terrain; belief as
+  columns (1 m = certain); the scan at the LiDAR's height; Watch shows at most two
+  computation layers; Inspect opens top-down.
+  - **Measured** ([`v2/data/m4/m46/`](v2/data/m4/m46/)): all **15** lens × level
+    combinations ran in 3D on World Spec v1 and on v2, Watch ≤ 2 computation
+    layers, 0 page errors; the timeline moves the robot in every camera, follow
+    follows in a replay, the camera is kept while seeking, step keys work, 0 page
+    errors (replay `lab5_crossing_dwb_1`, Case File `lab4_b1_colours_s5_red`).
+  - **For Gautham** ([`v2/data/m4/screens/m46/`](v2/data/m4/screens/m46/)), one
+    shot per lens and level: the LiDAR fan's sheet and moiré are heavy in 3D
+    (`decide_watch.png`).
+- **M4.7 Case Files in 3D (2026-10-12).** The adapter carries truth z, roll and
+  pitch (float32); all 100 Case Files re-converted from the raw runs (the same
+  messages plus the 3D truth columns), packed at zstd level 19: **40,019,390 B**
+  for all 100 (`lossless.json` regenerated from the adapter's output; the derived
+  `moments.json` re-derived identical, so Play and Learn are unchanged). A
+  recording without 3D truth (the 16 older replays) shows the **planar recording**
+  chip and is never given an invented height (invariant 11). In 3D the body stands
+  at recorded truth; the belief is the footprint. The 3D scene is prepared during
+  the download and held aside until the world is set.
+  - **Measured** (emulated 4G, RTX, balanced, AC;
+    [`v2/data/m4/m47/casefile_check_4g_at_26b6259.json`](v2/data/m4/m47/casefile_check_4g_at_26b6259.json),
+    at `26b6259`, before zstd 19): 100 / 100 open, **99 / 100** first frame
+    (including 3D) within 2 s, median 828 ms, max 2,007 ms
+    (`lab2_rl_fidelity_1_tour`), seek max 38.2 ms, 0 console errors. After zstd
+    19 (`a28b587`) that file measured 1,843 / 1,836 / 1,826 ms in three runs; the
+    full 100 are re-measured in M4.10.
+- **M4.8 missions and the ghost race (2026-10-12).** Every arena beat of the
+  mission YAML names a camera (validated). `coco_lab/race.py`: Race the planner's
+  ghost — pure pursuit on the A* path, teleop inputs only, three levels
+  (warm-up, into-the-room, the-long-way: ghost 7.3 / 17.5 / 23.4 s); stars by time
+  against the ghost, contacts and path length (`docs/v2/CHALLENGES.md`); every M3
+  level hash unchanged. 18 generated submissions
+  ([`v2/data/m4/m48/race_submissions.json`](v2/data/m4/m48/race_submissions.json)).
+  - **Measured at the checkpoint** ([`v2/data/m4/m48/checkpoint_run/`](v2/data/m4/m48/checkpoint_run/)):
+    `coco verify` (Node, no browser) **18 / 18** matched; reproduced exactly in
+    Chromium 156, Firefox 157 and WebKit 27.2, **17 / 18** each — the 18th,
+    `the-long-way/slow`, was a 17.9 KB link the server refused (HTTP 431).
+    Fixed: links carry their inputs deflated (`z=`); re-measured in M4.10.
+- **M4.9 the launch, drafts (2026-10-12).** A light landing (the low-detail robot
+  first, the full one on takeover); `tools/demo_record.mjs` rewritten for 3D (the
+  recording itself is Gautham's to approve); `v2/USABILITY_TEST_M4.md` written
+  (decision D5's five-person test, Gautham's). Release notes
+  (`releases/v2.0.md`) updated in M4.10 from `RESULTS.md` only.
+- **M4.10 screenshot tests (2026-10-12).** CI's screenshot step failed on two replay
+  scenes (2.2 % of pixels): the planar-recording chip moved the canvas to a
+  different fraction of a pixel and the photo of the page region shifted by one
+  pixel, every drawn pixel unchanged. The harness now reads the canvas's own
+  pixels; the baselines were remade from the **public M3 site**, not from the
+  code under test, and this build matches them with **0 differing pixels** in all
+  five scenes.
+
+- **M4.10 measure and close (2026-10-12 → 13).** [`v2/M4_RESULTS.md`](v2/M4_RESULTS.md);
+  `docs/RESULTS.md` "COCO Lab v2 · M4.3" and "COCO Lab v2 · M4"; evidence
+  [`v2/data/m4/m410/`](v2/data/m4/m410/) (every harness JSON, the run logs and the three
+  runner scripts). Balanced, on AC at the start and end of every kept run.
+  - **Every agent-owned criterion met:** RTX high tier, fetch mission: median 61 fps, slowest
+    second 60 (3 × 30 s); M2 stress at medium: median 60–61, slowest second 56 / 59 / 60;
+    Intel integrated, medium: 61 / 60; key → motion median 45.1 ms (follow), 44.0 ms
+    (top-down); camera moves' longest frame 16.8 ms; cold start on emulated 4G: first
+    computation ≤ 3,694 ms, 3D world ≤ 3,605 ms, live model ≤ 8,521 ms (n = 5); Case Files
+    100 / 100 within 2 s on emulated 4G (max 1,773 ms; the robot's mesh follows its
+    placeholder body — **Gautham to judge** whether that is "including 3D geometry"); race
+    links 18 / 18 in three browsers and `coco verify`; 30 minutes: 0 context losses, 0
+    errors, 0 long tasks (the observer proven to see one); phone widths (emulated) 21 / 21;
+    fallback with its notice.
+  - **Found and fixed by the measurement:** the Play page ignored every deflated `z=` link
+    (`62f6338`); replay pages had lost their runs list (`7e72010`; CI now runs
+    `replay_check.mjs`); the screenshot test failed on a one-pixel layout shift (it now reads
+    the canvas; baselines from the public M3 site, 0 differing pixels); `test_play_levels`
+    had no race input. Also: `?perf` shows "3D world drawn", "3D robot in it" and
+    "input → motion" so the phone rows can be read on the phone.
+  - **Case Files repacked at zstd level 19:** 40,019,390 B for all 100 (same messages).
+  - **Suites at the close** (`23ad3b2` + a docstring fix; balanced, AC, Node 24.21.0,
+    Python 3.12.3, NVIDIA 580.178.04): packages **3,523 / 0 / 0** (coco_lab 797, re-run
+    alone after its two lint failures — the `play.py` docstring this checkpoint edited —
+    were fixed), build tools **192 / 0 / 0**, vitest **436 / 0 / 0** (46 files). M4.0's
+    baseline: 3,498 / 169 / 403; every count higher, none removed
+    (`v2/data/m4/m410/suites_m4final.out`).
+  - **Release notes** (`releases/v2.0.md`) updated for the 3D launch from `RESULTS.md`
+    only; `CHALLENGES.md` regenerated (six challenges); the phone guide
+    (`v2/PHONE_GATE_M4.md`) describes the build M4 ships.
+  - **Screenshots awaiting Gautham's review:** [`v2/data/m4/screens/m410/`](v2/data/m4/screens/m410/)
+    (`terrain/`, `reference/`, four phone layouts), with `m43/`, `m44/`, `m46/`. Known: the
+    LiDAR fan's moiré in 3D; cut walls as grey slabs; on a portrait phone the 3D view is
+    short and the joystick sits below the timeline.
+  - **Next (Gautham):** review the PR and the screenshots; the phone gate
+    (`v2/PHONE_GATE_M4.md`, preview: `lab_web/tools/preview_phone.sh start`); the
+    consolidated usability test (`v2/USABILITY_TEST_M4.md`); then merge and publish v2.0.
+
 ## Capabilities (README §2), with evidence class
 
 Classes as README §3 defines them: MODEL, STACK, REMOTE, HARDWARE (none
@@ -1582,7 +1850,7 @@ label).
 | G1 | Primary audience | Learners first |
 | G2 | Priority against the robot project and job hunt | Not an agent decision; agents respect announced robot batch windows |
 | G3 | Canonical robot stack | The robot repo is canonical; `coco-labs` robot packages are frozen, not deleted |
-| G4 | Monthly cloud budget | Zero; no cloud resources are created before M4 and an explicit budget |
+| G4 | Monthly cloud budget | Zero; no cloud resources are created before M5 and an explicit budget |
 | G5 | Will a physical robot exist within a year? | Assume no; no "real robot" wording anywhere |
 | G6 | License and outside contributions | Unchanged from the current repo |
 
@@ -1609,3 +1877,11 @@ as a dated entry here (README §0).
 | 2026-10-10 | **Release texts and the v2.0 release remain Gautham's to publish.** Agents prepare drafts only. | — | Gautham (M3 prompt §0.4) |
 | 2026-10-10 | **`/v1/` is built from `9f58b83`, not from the tag's commit `3571169`.** `9f58b83` is the M0 merge: the v1 views with M0's public fixes — no "real robot" for the Gazebo stack, "Live Stack (simulated)" (`dbf1f60`), and the quiet Live probe that opens no socket until `/healthz` answers (`40b6dc2`) — and no M1 code. A one-off M2 fix outside the review's allowed list; M3.0's `v1-site` is built from the same commit. The tag `coco-lab-v1-final` is unchanged and remains v1's freeze point. | The M2 review found that the tag's build undoes M0.6 at `/v1/` ("real robot" in `LiveView.tsx` and `SearchLab.tsx`, the tab named plain "Live") and that its Live view opens a socket on load; ADR 0003 had left `v1/?view=live` unchecked. | Gautham (answer to the reviewer's question, 2026-10-10) |
 | 2026-10-10 | **Case Files without a source bag are built from what exists** (M3.3). Run 15: the 9 Lab 5 `mislocalised_*` reproduction bags (STACK), with the historical run quoted from `docs/RESULTS.md` and labelled "original not recorded; exact Run 15 UNRESOLVED". The A\* myth: the committed conformance JSON plus the three Lab 1C bags. SLAM: the two tour drive bags plus each backend run's `record.json`. Every manifest cites the checksum of what it actually uses; the robot repo is not searched. | Run 15 was a robot-project traverse_demo run never recorded as a COCO Lab bag; the exhibit and the SLAM backend runs kept no bags (B.5 "a recording is missing"). | Gautham (answer to the reviewer's question, 2026-10-10) |
+| 2026-10-11 | **README revision 2: 3D becomes the default experience.** Copied byte for byte from the owner's `~/Downloads/README.md` (checked with `cmp`): sha256 `20376086…911e86` → `cf53bb8c…48c8799`. M4 is now "3D Arena" and the public v2.0 launch; cloud batch moves to M5, interactive sessions M6, hardware M7. New invariants 9–11, integrity rules 7–8, agent rules 6–7. | The owner's revision of the plan at the M3/M4 boundary. | Gautham (M4 prompt §0) |
+| 2026-10-11 | **D1:** 3D is the default experience. Top-down is a camera mode and the automatic fallback. If the phone fails the M4 feasibility gate, phones default to top-down and desktops to 3D. | README rev 2 §8. | Gautham |
+| 2026-10-11 | **D2:** "M4 · 3D Arena" comes before cloud work. Cloud batch is M5, interactive sessions M6, hardware M7. | README rev 2 §8. | Gautham |
+| 2026-10-11 | **D3:** the first world is COCO's Gazebo arena converted from its SDF, with dressing outside the operating area. | README rev 2 §8. | Gautham |
+| 2026-10-11 | **D4:** the Arena stays planar kinematics plus kinematic terrain following; no physics engine in the browser. | README rev 2 §8. | Gautham |
+| 2026-10-11 | **D5:** M3 merges quietly; the public v2.0 launch waits for M4; the phone baseline is measured now; one consolidated five-person usability test at the end of M4 replaces the M1–M3 usability tests. | README rev 2 §8. | Gautham |
+| 2026-10-11 | **D6:** Case File scans load after the first frame (ADR 0005 amended: the ordered layout, chosen by measurement); the narrowed storage guard is accepted and generalised into one preferences module (M4.5). | README rev 2 §8; M3.9's one failed criterion. | Gautham |
+| 2026-10-11 | **One-off permissions for the M3-close / M4 session:** implement D6 in the M3 review; merge PR #22 quietly (merge commit, branch kept, no release, tag or announcement) under the A.6 conditions; stop leftover M3-session processes that would skew measurements (listed in the review; never robot-project processes); a temporary phone preview through Tailscale Funnel in M4.1 (static files only, no collision with Live's `/ws` and `/healthz`, turns itself off after 2 hours, recorded here). | Closes M3 and starts M4. | Gautham (M4 prompt §0) |

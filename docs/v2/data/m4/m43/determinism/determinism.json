@@ -1,0 +1,89 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-12T05:44:29.247Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.8,
+    "5m": 3.11,
+    "15m": 2.7
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-12T05:44:29.535Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.8,
+    "5m": 3.11,
+    "15m": 2.7
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "criterion": "identical per-tick hashes across engines, 100 recorded terrain sessions on World Spec v2 (M4.3)",
+ "spec_file": "coco_arena_v2.json",
+ "engines": {
+  "chromium": {
+   "version": "chromium 156.0.8078.4",
+   "seconds": 1054.529,
+   "sessions": 100,
+   "ticks_compared": 70000,
+   "ticks_mismatched": 0,
+   "sessions_differing": 0,
+   "first_differences": [],
+   "all_hashes_sha256": "ba8729a014c6a0ac70ca94fda80b6119f39e590d3e5447118bbcce3bc1ddeaca",
+   "page_errors": []
+  },
+  "firefox": {
+   "version": "firefox 157.0",
+   "seconds": 1480.963,
+   "sessions": 100,
+   "ticks_compared": 70000,
+   "ticks_mismatched": 0,
+   "sessions_differing": 0,
+   "first_differences": [],
+   "all_hashes_sha256": "ba8729a014c6a0ac70ca94fda80b6119f39e590d3e5447118bbcce3bc1ddeaca",
+   "page_errors": []
+  },
+  "pyodide-node": {
+   "version": "Pyodide 314.0.7, Node v24.21.0",
+   "seconds": 3494.23,
+   "sessions": 100,
+   "ticks_compared": 70000,
+   "ticks_mismatched": 0,
+   "sessions_differing": 0,
+   "first_differences": [],
+   "all_hashes_sha256": "ba8729a014c6a0ac70ca94fda80b6119f39e590d3e5447118bbcce3bc1ddeaca",
+   "page_errors": []
+  },
+  "webkit": {
+   "version": "webkit 27.2",
+   "seconds": 1120.15,
+   "sessions": 100,
+   "ticks_compared": 70000,
+   "ticks_mismatched": 0,
+   "sessions_differing": 0,
+   "first_differences": [],
+   "all_hashes_sha256": "ba8729a014c6a0ac70ca94fda80b6119f39e590d3e5447118bbcce3bc1ddeaca",
+   "page_errors": []
+  }
+ },
+ "pass": true
+}

@@ -6,7 +6,7 @@
 import { useRef, useState } from 'react';
 
 /** dx, dy in [-1, 1]: up is forward, right turns right. Released: (0, 0). */
-export function Joystick({ onChange }: { onChange(dx: number, dy: number): void }) {
+export function Joystick({ onChange }: { onChange(dx: number, dy: number, at?: number): void }) {
   const pad = useRef<HTMLDivElement | null>(null);
   const [knob, setKnob] = useState<[number, number]>([0, 0]);
   const at = (e: React.PointerEvent) => {
@@ -17,7 +17,7 @@ export function Joystick({ onChange }: { onChange(dx: number, dy: number): void 
     const n = Math.hypot(dx, dy);
     if (n > 1) { dx /= n; dy /= n; }
     setKnob([dx, dy]);
-    onChange(dx, dy);
+    onChange(dx, dy, e.timeStamp);   // the event's own time (perf's input-to-motion)
   };
   const end = () => { setKnob([0, 0]); onChange(0, 0); };
   return (

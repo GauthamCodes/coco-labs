@@ -1,11 +1,11 @@
 {
  "schema": "lab_web.casefiles.lossless",
- "version": "1.0",
- "what": "Each Case File's content as M3 committed it (one file each, all messages in log-time order): the file's sha256 and bytes, and its contentDigest (lab_web/src/schemas/mcap.ts). The ordered layout (ADR 0005, amendment D6) must have exactly these digests.",
+ "version": "1.1",
+ "what": "Each Case File's content as the adapter wrote it (M4.7: re-converted with the recorded 3D truth; version 1.0 held M3's): that file's sha256 and bytes, and its contentDigest (lab_web/src/schemas/mcap.ts). The committed, ordered file (ADR 0005, amendment D6) must have exactly these digests.",
  "casefiles": {
   "lab1_run_astar": {
-   "sha256": "f6427baef45b68a54842583c80dbd040c839896c6c889241df88e4b2ca1ef42d",
-   "bytes": 74406,
+   "sha256": "db18bcd6dff01fbd39d28f00500225331787d40e2b5d2935e54a9896525a08af",
+   "bytes": 169178,
    "digest": {
     "profile": "coco",
     "messages": 1376,
@@ -37,7 +37,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "f11cabf66989e2af88f6cb9181a33f865585df7d8faf4898d22fa88fbcdeb8e9",
+      "sha256": "1c3eb68840a02366f0368f92c0a140b5f937353c30eae5032e6fa816c7deb2d1",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -73,22 +73,22 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.truth.pose.v1": {
       "messages": 761,
-      "sha256": "f69e61251baa875adbd71563d765191234244c6638b53d0ae9d421b0da0febfb",
+      "sha256": "989346dfe25632eda7d8afa5ae7b6c9b9514d5cd896cc832a53b9cf6a5845297",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab1_run_dijkstra": {
-   "sha256": "b5c58985b50cd40d2a4e2c1d9ca05fd3210dd1ca3bb0951468eb73fdbc507ffb",
-   "bytes": 74435,
+   "sha256": "d4ffcd00122186263251b1cfe61edd6d224e0fcd5f4c7646a9654fc1ed38365d",
+   "bytes": 169285,
    "digest": {
     "profile": "coco",
     "messages": 1383,
@@ -120,7 +120,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "370ada2e0644c3a2f827b4e95b9593281798a76d39ebb6c441b192954cb14c2c",
+      "sha256": "a96a28572eecbe8935af27dad678c38dd53d80f850d4b2f2a37f8a165b6bd3ff",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -156,22 +156,22 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.truth.pose.v1": {
       "messages": 778,
-      "sha256": "785c31c91fa6daac9660d23a2590cf97cff86337f63053be08ac469aa461b302",
+      "sha256": "9e999ba3893cf2d979cd9c0a8254af4dda76ce207cc7cfaad497cd5783f4a26d",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab1_run_greedy": {
-   "sha256": "352ec803b1426d078fd5b65414575ee28f2e633c6d7a0cfb42c290c01ad310b5",
-   "bytes": 60376,
+   "sha256": "d0623cbeba79555cc209bfe88e68282f285ce4d999f0277fcf82d78a960e5f61",
+   "bytes": 138506,
    "digest": {
     "profile": "coco",
     "messages": 1100,
@@ -203,7 +203,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "5d63397e907368c62462820958121b30a856eeb5f31b1843efd6ffebec4a4b3c",
+      "sha256": "cbe582601006120543c5ed0b71f0b45087abd3c91e58f81f709a516673a782b2",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -239,22 +239,22 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.truth.pose.v1": {
       "messages": 671,
-      "sha256": "3542ec543e5fc4a5baeeedb2b713f4b0dc2fe54c3f7a9b95371021e7b79cfdfd",
+      "sha256": "4b5b49e5bc8929d6f20fd66a1a725210ea7ddd7d14b34789f14fe57c50e81eb3",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_recovery_k1": {
-   "sha256": "bf30804f918896833b369cbe6eafaf50ed26941ca53a187a9fe115ae9d952dbc",
-   "bytes": 1002254,
+   "sha256": "7985af08050d9a2bde7164b8d3f5cf3c823bcd72392671fb508732182f2ca427",
+   "bytes": 2013679,
    "digest": {
     "profile": "coco",
     "messages": 7961,
@@ -270,7 +270,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "daf4af0e3f675c53b155275650fffffd21798d9af9bdaee441e0f57e1927498e",
+      "sha256": "5656af385f58d22a641b06a3848a0dc2a5ea07da5f60225ea234f98a0e1087c5",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -298,7 +298,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 466,
@@ -310,18 +310,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2327,
-      "sha256": "9ceae29f67b0520abf38c267d9c67a6835464a07dbe03aaaaac03f7f8e6effc9",
+      "sha256": "4eb59539139705e8066263f4db0cda410a6f013973ab67a78f914129ffefb4a4",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_recovery_k1_void1": {
-   "sha256": "b5afdb89138de7e28d70d04d958a1053507e340c244c62525113cfcc44da0da1",
-   "bytes": 126342,
+   "sha256": "22084f42510902f1323e1d7ce89ea0a48c68255dec62dbf0af62168c240208e0",
+   "bytes": 1037044,
    "digest": {
     "profile": "coco",
     "messages": 3520,
@@ -337,7 +337,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "5155dbc1ccc9f85b4ec1b201d8d88894c861df57f492fc7b928e32714ae3b201",
+      "sha256": "af9a14fc43d03bfecc2acf280482b5cbc2fc8deb744aff93427d18439121c599",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -365,7 +365,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 307,
@@ -377,18 +377,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 1535,
-      "sha256": "27cae4c6fbc0521ad37fcd13816ea92e0257df83d1094603bec77fe67777f92d",
+      "sha256": "494675ae762593af01f927b7ea72bae04064c2f7c7a233d215d8db09fe981a70",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_recovery_k1_r2": {
-   "sha256": "039038e39fe0fac2f772d737bbe91263e5ade7e5641161cc06eefdb58e7eb3a7",
-   "bytes": 1014645,
+   "sha256": "d6aac16c646ea72f1b7bfc8dbae507792622f0706d8136463f30bf1cbe61703a",
+   "bytes": 2016448,
    "digest": {
     "profile": "coco",
     "messages": 7972,
@@ -404,7 +404,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "becdf6e780c61845823bcb6601fe22258bb20b6625c928f3a2f409125469d1b0",
+      "sha256": "e62c3ffb3c5caf18de4e85fc4dc1e1bf96b0d10b0df330c92fe43ef810281f99",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -432,7 +432,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 468,
@@ -444,18 +444,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2340,
-      "sha256": "ac24268ed16ef500a13fbbc0a860ed50f076ccd7f19fc9f330744954141409ef",
+      "sha256": "376a3a21ada56c7878f76516e96c457c6b7dc1a59e231e2c62a666deb42cb501",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_recovery_k2": {
-   "sha256": "33541e15437edd3d5921868b625d2ccbfa3265b7f6b36e3038f52b4770a9b88c",
-   "bytes": 1021887,
+   "sha256": "e85407fa085d9b24b63a1a0f6a3027dbe226e3e67e08df64bf2db8dc98f14f1a",
+   "bytes": 2020801,
    "digest": {
     "profile": "coco",
     "messages": 8084,
@@ -471,7 +471,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "1e101821fef4dbb9fe4c66498e71375fe4af8cd762e7f4b80b0ad63d26cccc83",
+      "sha256": "ede9e25528c0ae18d0fef9b9a8c3146fc179d490bc9df692ffa25841b7caf45e",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -499,7 +499,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 464,
@@ -511,18 +511,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2320,
-      "sha256": "a12e8daf916211a6b497a626c06f3c0e4df8bacc66eb59c98080292cc8542edf",
+      "sha256": "05eca61f93f35c15e3a8de406fea7db1fdd77e125d41712364497ada690f932a",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_recovery_k2_void2": {
-   "sha256": "d95ebeb726c43b8373a3c92d07a5728632ed03a63dd9d7dda5cff839e8c0f7eb",
-   "bytes": 40442,
+   "sha256": "f9b5be5cae3f85db023a0f8e59504ce29c72711d7400e3c606c48961cbe79192",
+   "bytes": 282259,
    "digest": {
     "profile": "coco",
     "messages": 939,
@@ -538,7 +538,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "db91f7b5cf11cae97ea83f017d040e4378c2e68ca4e3bb443d7ab54518873d99",
+      "sha256": "e6e174e1f36309309feb8df0d27c2061988ea5c25bf56b81854b8db6d2021d11",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -558,7 +558,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 83,
@@ -570,18 +570,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 413,
-      "sha256": "d63a5bda550f6f3418fa88c531a5117befbfef9e2cc1772041d9380c39f0d10d",
+      "sha256": "06ba46d54d2102abf1c188eb5546369967b5d650a8c188bc373a6866bb23d419",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_recovery_k2_r2": {
-   "sha256": "84a0b03c77e8a0ca30875d694789d5602d8c619af6b621a8ebc35b10cf747f0a",
-   "bytes": 1015304,
+   "sha256": "3eeddb80cdd489889ce1bd4adcb9e917077a83367c18ec026189953496611dfe",
+   "bytes": 2016815,
    "digest": {
     "profile": "coco",
     "messages": 8006,
@@ -597,7 +597,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "4f32c64f4af2e4531bd95ffd3d7ee46c695ab65b4f826b54c57f70a14a2b6bfc",
+      "sha256": "a01f7779d7b10d56af1337f5832733712d22df4558a2ff69e37e81de50765aec",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -625,7 +625,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 467,
@@ -637,18 +637,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2335,
-      "sha256": "57d58e6f332108e86053ffe760f1e300c39abefc29a7c628f46574611c92f1eb",
+      "sha256": "4b82287806c6754c2390cbe4852cc24d429d09fa999ef320e37f5aef521ad911",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_recovery_k3": {
-   "sha256": "c460c28b5e1b980dd5ec732c1232e00d3a8ea61f738a0c87bce20732f06d12de",
-   "bytes": 1013126,
+   "sha256": "fcd1b21ceda61701591dce33fa61a6fb0a8abef67e10633e65c0a8a86cf66f13",
+   "bytes": 2006546,
    "digest": {
     "profile": "coco",
     "messages": 7949,
@@ -664,7 +664,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "bc54dad9fd7fb419ab645bfc25b0ba2964e6227f3aa39ad8baefb6695637ff30",
+      "sha256": "776b618450ad1d2fca7578f217bc27a475fb2f3b17994ca8c4ceb18405463617",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -692,7 +692,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 464,
@@ -704,18 +704,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2320,
-      "sha256": "d3930296a4da81cde2b7e2372227a67231f3532e5a366cf7d06265c36681aca8",
+      "sha256": "be3fc150826123c97a1b642b58202d05971cee21a572f313b7e965e53e4f6452",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_recovery_k3_r2": {
-   "sha256": "82fb51f1802ed97ab815f5e75ea9d3724cef748098bfd2a5f4a5f47f7008700f",
-   "bytes": 1019933,
+   "sha256": "3e484d26510506326f82754470af6a29d506d551af7ba7a1ce02180b839ca7c8",
+   "bytes": 2011985,
    "digest": {
     "profile": "coco",
     "messages": 7981,
@@ -731,7 +731,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "ac70c953daf4fe958b48cec1a211dcb575979292a25fd1fea4ed324fb69c5d28",
+      "sha256": "fe7105907ff647d61360b715bb4cf07c6e322ecb88839e3471f7377bec548b04",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -759,7 +759,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 467,
@@ -771,18 +771,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2336,
-      "sha256": "9c1aa1adf70eb5d5fc227712e02187a9a124b10345658bb7058dd908274135f6",
+      "sha256": "9f08e70e4a59d9bd05217929e5c9f92ea9414eb047ab420cfa783fe9b220a9f1",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_recovery_k4": {
-   "sha256": "c35a6351c4d17ea4847a369c167a6de94dcfbd70861d370f977fcefe41fecd50",
-   "bytes": 1012451,
+   "sha256": "c4cf545db0d0262bd7a215af5b897dc973a44ef549b5de9d6a5ebea8b3a6aa6d",
+   "bytes": 2007291,
    "digest": {
     "profile": "coco",
     "messages": 7959,
@@ -798,7 +798,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "4c5b2720f8483aaf5612a524915f75f7dae8c9ec2de21acb60764df6f7bd31b9",
+      "sha256": "83fcce852d70e8f7498ab19cf8a944606d7ad675e60c6737f7fddc539b666833",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -826,7 +826,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 463,
@@ -838,18 +838,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2311,
-      "sha256": "6631a546dacf9228ad426767b0d530e79ae6de938a9c7ee28b9ed445bd1b52a8",
+      "sha256": "d91e227a25ab5ee6f58b46d06b1da7fdd6c310b4e4b0ee0e6e2998528df8dd7b",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_recovery_k4_r2": {
-   "sha256": "5b0ef2954ddf363e79dac8bdf3090566b867e90055e66448cb45da5dcfbe451c",
-   "bytes": 1016816,
+   "sha256": "da38850fc08dc7ce09b2cb5024b954786675e8270ed387f35db3571a35cb2b3f",
+   "bytes": 2015847,
    "digest": {
     "profile": "coco",
     "messages": 8021,
@@ -865,7 +865,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "4321aa8b4e292d347fa9f4b7498f721ab8ba02e6bab956c39a2d9c92f0a1c3db",
+      "sha256": "44f49fa834d0f8fc2c0c0bfca8c8e896e1b08618222fd126b06960d91cc02898",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -893,7 +893,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 468,
@@ -905,18 +905,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2337,
-      "sha256": "c5f23ffb4227a2152ba03617b2631aebd0f4f46d13cda6e90972f109f18806d3",
+      "sha256": "ec87a15a9de1541441d8f592382776690873a3fe33555e770fbb41d706749de4",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_recovery_k5": {
-   "sha256": "ea58291cda7bb7e0d3de9401f17be3fc8713f4b28948edb5536fbe046cad9965",
-   "bytes": 1013893,
+   "sha256": "3f7edb3dcd7aefd42ec25b7afd11300c1f630fdc82a7235d800c53612696fdda",
+   "bytes": 2009088,
    "digest": {
     "profile": "coco",
     "messages": 8002,
@@ -932,7 +932,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "2e6d23d25d5bf0cc0afdb945c91ef431d12ccacdb4f237b5d1cca6928be97123",
+      "sha256": "f00c4de59902da3e30fad82b2ab81f7ab28eb4c03596398ac8daf40c741d76e7",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -960,7 +960,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 463,
@@ -972,18 +972,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2312,
-      "sha256": "94f5a5479958b05d2b2c9077645fb5e3d1170a07a62d9e890b7ee4ad72dc9d8a",
+      "sha256": "0f6ba87945564b04eeb09af10372b978cba1931b1e8d80b68f444e1fecee1b84",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_recovery_k5_r2": {
-   "sha256": "e2d8c78d0d5a071368abd43256d5842e58b88312fcdaefed302201ff4c42315c",
-   "bytes": 1018783,
+   "sha256": "942b96093e4f3654ce3c73accfbc98638e35eae4be0b973e67db3d3a123b38d0",
+   "bytes": 2012442,
    "digest": {
     "profile": "coco",
     "messages": 7959,
@@ -999,7 +999,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "781cc54ba765fefee64f69d8df3fd1e800d420cf11bc6f445fde0be3046503c8",
+      "sha256": "9183b3c559bc89230839a53f19069211bc6795958a9829c577470b678ee0ed2a",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1027,7 +1027,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 467,
@@ -1039,18 +1039,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2332,
-      "sha256": "e04c3f092d56fd186412759de31a4a87bfbd5bc3809c4f8430d0b3ba9237a28a",
+      "sha256": "1e3cbd2800e8b54c80b07534169ebcb0a5c127ab14e31079d7a8c88f63ede72b",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_shipped_k1": {
-   "sha256": "6b4bc119ad8d11e89c3b09cbadf8822f6a5b6c06b38ec2c763b13d6b28c08985",
-   "bytes": 1005265,
+   "sha256": "4ede94425be143531b7cdbb565f705859dbf6e116b703cf3edd99d5bec448393",
+   "bytes": 2000578,
    "digest": {
     "profile": "coco",
     "messages": 7937,
@@ -1066,7 +1066,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "80e2598f607abd6d46b6a1e6c4d0fd737af50fac71bcf6ef3025c0ead51cd9d8",
+      "sha256": "81741bb3659ca6cc255018b96a0fdf8642b28d925ace6d7f8e63d7c2a9ae1167",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1094,7 +1094,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 462,
@@ -1106,18 +1106,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2307,
-      "sha256": "809a91b9247b0f7d6bc0845996470eac231b7a57ef9ba37f6aa704ea70edb406",
+      "sha256": "e071684823541e023e8414ad6110255021336fba4a46020d3c06e712dd21dd38",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_shipped_k1_void1": {
-   "sha256": "936f9b17759f49d092252ed7266e126579111bbf2c40395519617712fc2fce85",
-   "bytes": 126423,
+   "sha256": "ed68d12a25bb394b67f19a55cef5b2c3504f24d9447a8298787927652d6f1209",
+   "bytes": 1014796,
    "digest": {
     "profile": "coco",
     "messages": 3446,
@@ -1133,7 +1133,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "88f467fa9f9caf8252b7c5178ec2570f0beb57b25aa01bac3635c0d79eb450a5",
+      "sha256": "36f68bc8e92b80b0488b7aa1f80272aad992989f82aaf766184199a9522bdf1e",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1161,7 +1161,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 300,
@@ -1173,18 +1173,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 1496,
-      "sha256": "f352bbd433e7e101037bf2aabddccc49ec5ce3c54284bc0e22a94451c4548b4d",
+      "sha256": "6b841e37864e2d8a7adf34e32f62131d8a223c5d4e513ffe5c8c9ea3b4273ab1",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_shipped_k1_r2": {
-   "sha256": "f51b527602025bf7ace19b1e72f044342d8f72b8c232b9e7cb0086cbfd3765d1",
-   "bytes": 1020776,
+   "sha256": "594aa50e65443c3337ecc955254fe1cd7d70514a1f46d853b235be49964e6575",
+   "bytes": 2008715,
    "digest": {
     "profile": "coco",
     "messages": 8041,
@@ -1200,7 +1200,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "d81ecf011e82ae791240a1ce57a23b0652d5c0fe3b18f736b5bbb742138b7e0e",
+      "sha256": "935080455b12c40d8f7a995593c0428494a14fef6ac499b2048663cd1a5a5c39",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1228,7 +1228,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 465,
@@ -1240,18 +1240,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2325,
-      "sha256": "3f808071df487133df8609eb84ecb8e39b8488456093cf4c9a5a108933a316a8",
+      "sha256": "c6865de2e2f035d8b5d9b5d78fd1c713742b19ca3f2e8ec8ea0e8e3939d34cb3",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_shipped_k2": {
-   "sha256": "35335d0a12616fb06ba54590a4bdb0abf58cd4ff0e882b7782886537062bf3cd",
-   "bytes": 1018775,
+   "sha256": "cc13005b70d5bc8b325a14ad5a03f10832212e926febebc65ac1c21dcc28bafc",
+   "bytes": 2010255,
    "digest": {
     "profile": "coco",
     "messages": 7997,
@@ -1267,7 +1267,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "d85bc38437a18b10d194e744ef44381510b8f2c0d4b211053649b251ea9bf0f5",
+      "sha256": "2a5e98744a8dc5e3c68f5c4e51650305999114953da9c34b174f00e0d61a65f1",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1295,7 +1295,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 466,
@@ -1307,18 +1307,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2328,
-      "sha256": "75a9923a292aa56f40470d646199afc0399d8770ac92a6e5a8b4de0a1dbfce3e",
+      "sha256": "ea0faa957d7e620b38a38d07c8f138476a5fb21450a610c0a6ca4c4283b8a8eb",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_shipped_k2_r2": {
-   "sha256": "fba489491ff347f8d9d025623df43be2d5c2ee08b6b724af59924d5f8a1a6c62",
-   "bytes": 1017045,
+   "sha256": "dbee61b6abbb671799d19b3a467200cb23a2a77bafe13e9bb340f39ac1340692",
+   "bytes": 2011621,
    "digest": {
     "profile": "coco",
     "messages": 7952,
@@ -1334,7 +1334,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "a750cc2eaa16651d6795fdf3484c84855986b0e2d3af9096a2cd7d3dcc1ee86f",
+      "sha256": "5c5c7a3adaa5d9c7a2adc433f660ae8fe748ba82ca6f87ae6ce9010a65edcc4b",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1362,7 +1362,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 468,
@@ -1374,18 +1374,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2337,
-      "sha256": "d87ca0515eaeb9d25db23d54890f8d12a20afe7e5db956908f247c55ae85504f",
+      "sha256": "9076cd995e4483d2f36d4fcf8cb2d63e352d77f6d6426edad824ad814b4bf9c9",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_shipped_k3": {
-   "sha256": "48d7c9e702a59910843d00203a04d2d1462446022fc628e5aa4262bb19e3fafb",
-   "bytes": 1014022,
+   "sha256": "07fe851e8da7e22dd7ee710a92df157202f1ce543e5289aa6edf2806e09e1108",
+   "bytes": 2012767,
    "digest": {
     "profile": "coco",
     "messages": 7960,
@@ -1401,7 +1401,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "52ab3b16ef96df054c95571ecf299d9a48c540b721d2d46dcf72ce33e82179e4",
+      "sha256": "066c7e7cb156f07761a1609455900312d335564acc6a22b8ae8729047a27707e",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1429,7 +1429,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 466,
@@ -1441,18 +1441,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2326,
-      "sha256": "1f6d9eca07987423c941fab86fe688987f34703009223868d04ac8faed8ac121",
+      "sha256": "7db57941fc96fc90554ca3313bccb8e661d5600e566bd09ff3c6f3c2ebc7464d",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_shipped_k3_r2": {
-   "sha256": "bb5656f170265c7607a4ad50a4ebad68e438c5d7633c7320b70eeca0867955d3",
-   "bytes": 1007417,
+   "sha256": "28ffddf87ab1efbb906a58bbd0e5a17fc38f9b1165ad10d05cea8039b1c930ba",
+   "bytes": 2016771,
    "digest": {
     "profile": "coco",
     "messages": 8082,
@@ -1468,7 +1468,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "f8b637e824b8111ecd539fc93cf6c98b59c55599341ab6aba0e16213704cddd0",
+      "sha256": "ecfad3f5b20091f7123fcf3ffb43c3eee8691824870a4992c923e7fa60ff1fa8",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1496,7 +1496,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 466,
@@ -1508,18 +1508,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2327,
-      "sha256": "69cdb1fc4a5d8415b0dc6b0f410cb27682b8f2dee50c198dd8dcb11c1a86aa99",
+      "sha256": "74bd382c5908a02bdfe2ac8f508807d87b300deaabf145046e82e62063a5f49b",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_shipped_k4": {
-   "sha256": "dc51799717aacef13d3f3c2709b0260c5471da98edb0ec65560d1b57c686862f",
-   "bytes": 1018349,
+   "sha256": "e68f451dd99051f4c35069b0ea6a65c01220f749598bbeb784d61c62aaad10a4",
+   "bytes": 2005986,
    "digest": {
     "profile": "coco",
     "messages": 7976,
@@ -1535,7 +1535,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "26598652e00815a487dc4c9826e8fe3ee4a8707b993270aa2e827efeaf0eb009",
+      "sha256": "7982c3a225cfe7e7a5d6191fd36ce9397340d2e0e6fdafa18a0422a759d8036c",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1563,7 +1563,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 462,
@@ -1575,18 +1575,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2310,
-      "sha256": "651c456106c146be0d67165ffe94989b1b7e9910310e76b7938c18e41b8efc68",
+      "sha256": "3b917404c784c644f051d6c5d12d4db85b29886495284a1176adb329bc8537f0",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_shipped_k4_r2": {
-   "sha256": "4a28e93041f160408d90a92fc19ce30b00faeae1daa75000f355ec7578a13964",
-   "bytes": 1023486,
+   "sha256": "cac4c99c5531dcaeeb6022542082aa058ee2b9cb07f96ead4517cee4e0dfd0a9",
+   "bytes": 2011561,
    "digest": {
     "profile": "coco",
     "messages": 8044,
@@ -1602,7 +1602,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "5c5ea0d381bcbe4369d3fba09ed70846b2ea52cb7c3a2502b847cb9f8725ae2c",
+      "sha256": "d24f2b0048d370aedc111cf624ff7185843cd97a473f1cf8ebb65df147b03838",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1630,7 +1630,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 465,
@@ -1642,18 +1642,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2325,
-      "sha256": "853cee01a4c487b8b1fd3f855ceaa6bc1aa539b81fc4de6253b0005f4051a947",
+      "sha256": "7ceb4420a30f8ed0065790379a5e2cd887d2e54fe98bd85654cee9c96da26078",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_shipped_k5": {
-   "sha256": "d61597dc82715d726193e55165c01251c9da9713ecb640c5b7e100e9cea2b7f5",
-   "bytes": 1018899,
+   "sha256": "4b21d9ed13726b279de2d8f17c39d6d905b6d73bb7156efcd5406bd962384c83",
+   "bytes": 2009717,
    "digest": {
     "profile": "coco",
     "messages": 7999,
@@ -1669,7 +1669,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "523a269724faa746161375dcd563a707c328b5adfc7b76ffb2fef9755d3e7e50",
+      "sha256": "b0a96c361c587562b2d8119571ab61421bcae4dc42d434ae60ec16a9df1e1be9",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1697,7 +1697,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 464,
@@ -1709,18 +1709,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2316,
-      "sha256": "c182838a77c06537a2a0b8fdcdbd101e45129351def9c60ac6dc7146b81f7944",
+      "sha256": "bcf648238aa432192031673e2c0e5686711f77f168084f65b87f52edc51ea80a",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_kidnap_shipped_k5_r2": {
-   "sha256": "4d5a46f86f135d82a4a901725da5c0ad90df2840400b97c04fb14829c8baf3f1",
-   "bytes": 1015212,
+   "sha256": "653942cd1ea190d13ef10da4889b1ac4d157a88185f739e8182238ec38a01ef0",
+   "bytes": 2010779,
    "digest": {
     "profile": "coco",
     "messages": 7942,
@@ -1736,7 +1736,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "0804901d815c32b131f3922ad84ced92e5cb6466ed6492d801735c155f04baed",
+      "sha256": "c8e064639b711b80a4d8efe5fdd50c6a599c066d06c6212870970edbc04d9803",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1764,7 +1764,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 468,
@@ -1776,18 +1776,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2336,
-      "sha256": "16d337f141468d8a50c43a6cffe8c605088c639aa717ea6fa033003ddd9893a9",
+      "sha256": "07f49a061e4a4a6cb232ce3991f52db97c7eec97fc85ff099fcc1b5fdb63559f",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab2_rl_fidelity_1_tour": {
-   "sha256": "5ad371e0b5aa5aaf59ab1a650a8e755e5688368e6c2a960d045e5ffff4e1d91e",
-   "bytes": 2780072,
+   "sha256": "e4cc606c13cc7b2e39baea3ec22f9309d734071988c0590ea063faf18edadba6",
+   "bytes": 4685466,
    "digest": {
     "profile": "coco",
     "messages": 20447,
@@ -1803,7 +1803,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "7c5d12548d79981364e6610d525ad23d4eedcd2134b47ea464208191e1994c95",
+      "sha256": "2c6b444b914b357b94c6e17858c7ded91ca40b431e23216ae408ba821e29d5b3",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1831,7 +1831,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 881,
@@ -1843,18 +1843,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 4405,
-      "sha256": "a9f94de14029ef785eefabadd05302d027ac1ade0e51f908dac4aa1dfbdbb8bb",
+      "sha256": "e1cf04869c550cb92aa0a8b6024b10c3f8a4037afe266cf2dbb46987f39a04d1",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab3_s1_tour": {
-   "sha256": "826736101606c8be2bec7a630085b8857f7cea00d9c99dc22a4461a9c6521c89",
-   "bytes": 1888100,
+   "sha256": "0c7cdd7d3187a436701c76e3942e1c6a8dce1118b3458beab84518b6e1e79ba8",
+   "bytes": 2908051,
    "digest": {
     "profile": "coco",
     "messages": 9678,
@@ -1862,7 +1862,7 @@
     "channels": {
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "d5eff641450fccba9c76c361d78dbb0114fbd293287f799dcc9e276648798f07",
+      "sha256": "7e3efe170062e901a659ee199cbce45be05714de554d4f91f9e8a9028d90c170",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1886,18 +1886,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 4425,
-      "sha256": "84d865344457b320b5507bedcede97963663eb860ef406de2452a5d2f7b1651a",
+      "sha256": "3a11ddc26259a1990640f59f1c2fdee6ea4939561f30dd1d33ca65e534a50113",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab3_1_tour": {
-   "sha256": "10aefe5c28b45ed5b0bdf500a07cc8e382aaf95f213cbefd50a308f67b4ed706",
-   "bytes": 1898046,
+   "sha256": "a2f57e161d55cf579d49774595c8a695f504987ac6518997222565baa0d71c08",
+   "bytes": 2907727,
    "digest": {
     "profile": "coco",
     "messages": 9676,
@@ -1905,7 +1905,7 @@
     "channels": {
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "ba6ab40089ce60df355a143cf17d31e411958385b0d6e4df533f95031411f023",
+      "sha256": "c279e43f9cc115e6603c2c80a7b9bef4f7b8f9219cf1c0a6885561999eba9c57",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1929,18 +1929,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 4425,
-      "sha256": "3c8adc6894b8aef9f29822b5626f35861426fb043794a2fe172bcdd9fdcf3652",
+      "sha256": "09b4f963cb1577eafbde6acfb4438f99053afa4b59dd58e388275fbb52e3f740",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_a1_fixed_red": {
-   "sha256": "e32926590b9d6de504a58079b486d644dfde394540bdb22bc63439d7d5978344",
-   "bytes": 345221,
+   "sha256": "286ed90078a9b58392f15fb8d4025d188245a1837e8fb6414477c1c065e992ed",
+   "bytes": 951179,
    "digest": {
     "profile": "coco",
     "messages": 6052,
@@ -1956,7 +1956,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "a937ff4e5f71c7f39712e1dd45435f7ea24d1536dc8aecf84910e0fc6a3971db",
+      "sha256": "615a68da836b086fed3895db43253ebfe500047358d13aa8f9844d2661fcfaa3",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -1980,18 +1980,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 4145,
-      "sha256": "7afe4917c448adcb10196cc063ec35ce7ab01e215b0020752c1bf7e3dca464fd",
+      "sha256": "38f144c8e76692372419706a5a9035c4e6193fcdf6c6e7dd89d0d38b062bc036",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_a2_fixed_green": {
-   "sha256": "bb5c7a58256d79f736a93bf577cc2e69108417b7e60ef59d1964482d0ad1183c",
-   "bytes": 266091,
+   "sha256": "e300c07930d01bf988c61ec07e641f89fa58713530ceedc8f4a9bac07fc1da80",
+   "bytes": 727841,
    "digest": {
     "profile": "coco",
     "messages": 4658,
@@ -2007,7 +2007,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "0c9dab4c9b187400b48640f45ffe0e99cfabd93e454e37d3a3079f8ae158252b",
+      "sha256": "4804b81f6abd54f1d945800255b5719aa283495e10fc5d22e6ab1bc3feb510ee",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2031,18 +2031,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 3184,
-      "sha256": "0d5c9e285b76b8c16e91f4ec3eab3b7c4109c86f1394ac4eec8df877ca475f6a",
+      "sha256": "29db026778dac2dc244a180e598b61e51f89baba5733ec27fdcc1111edaacef9",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_a3_fixed_blue": {
-   "sha256": "0df52225fa5b18443e0afa165022eeea5d8b1d86faf1959b1b13924c6979d439",
-   "bytes": 123776,
+   "sha256": "9f0b88426706272cd1f1eef47a366147ab758f9e8d8d995fe00205e1afc9ddb7",
+   "bytes": 336383,
    "digest": {
     "profile": "coco",
     "messages": 2156,
@@ -2058,7 +2058,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "3d3ae95578751917c58f0e823962013abc8d295801e101fe5480568f3aea3f8f",
+      "sha256": "0495dfd2624a8f18c4134f88aa7709a4108eaed50c4ed63ab292678c3202680e",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2082,18 +2082,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 1500,
-      "sha256": "f0ce8ff930c951186896092cdee56a98cc71e9d5335c6bef38bbc9d4136d6081",
+      "sha256": "d37cf2007f7f38a008811951f672d859d7d6adfd9839b42d68018206868bd855",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_a4_fixed_yellow": {
-   "sha256": "381fcf6fde6aebeb12f2f4b7f97229e73590505ddd4bd3faef2adbbd29b6e9d2",
-   "bytes": 195773,
+   "sha256": "631c72334d0d8a9b6c80eebfb46aa7d66b6209f3d2b883689558fef079614474",
+   "bytes": 540072,
    "digest": {
     "profile": "coco",
     "messages": 3423,
@@ -2109,7 +2109,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "abd0b1765b998ad200fa4a3ec977152d154f33ec09d6fb09b8abc06a5791a3d0",
+      "sha256": "2a65ba00b7712266b54e5912d10dc5523e9a59bf64e8d8a8023372d50114ef15",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2133,18 +2133,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2341,
-      "sha256": "a37572e777752bcbf48e7f342f771037663d9967c972c4f32e73e77569c1b860",
+      "sha256": "3585fb8f8a53ba3980cc4a1bb9b3aa940d9fa48e4f7c16678ae4ff46222ed072",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_b1_colours_s5_red": {
-   "sha256": "220840516525ef29600fb500ee4d215bd528ae94446c99dbda37a7c973876c1c",
-   "bytes": 353001,
+   "sha256": "30127629ecc0506b1152084984b3ad4cd91615206c59c3aedc6557674681e115",
+   "bytes": 964832,
    "digest": {
     "profile": "coco",
     "messages": 6284,
@@ -2160,7 +2160,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "b37612cc6ca11c536e2bc6062471ce65ce4a314cf9601503a582449afa12017a",
+      "sha256": "8fe8ff801ac0daefa75e1175e3f6e4918fd2901f058506909bbeb52398501700",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2184,18 +2184,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 4185,
-      "sha256": "5b60e1bb86e551c2d9f97e08b80c1d0451e59e395ef48a9dbebbfb2f3135c7fa",
+      "sha256": "8c284b459e400646c780b152386c6873b3d46f7ec3cc69df4c5746cc25bbf16d",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_b2_colours_s1_red": {
-   "sha256": "47b716903318ab59bf3926e6df0014b11ab45c150d7c7a4b0f7958578dca534e",
-   "bytes": 256140,
+   "sha256": "f97a77019efc9c24a4dbd91e9f52d07cdb22950c4d62f00e125ab6d663101498",
+   "bytes": 710401,
    "digest": {
     "profile": "coco",
     "messages": 4592,
@@ -2211,7 +2211,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "406f98d0a3fe59405616d109fc3ebb9302390cb9f15b9e36f322f59836e659e6",
+      "sha256": "f351a86cacf539058d2d93664bf39a9a4cbd478ebbdddff4211c91f6b88690c7",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2235,18 +2235,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 3100,
-      "sha256": "4a0298a78248adb17528a46015253705007d116c90df4f5d0f56aefc65308113",
+      "sha256": "6dba05e3df08fa48710337ca77082cf416842a9db11517ec3b9e47dd22243c0c",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_b3_colours_s7_red": {
-   "sha256": "1b8d007bed1777396987751e0b4dcc00ca820773990728c1ac40e612ee6491e5",
-   "bytes": 131238,
+   "sha256": "d2a31e3b97f8102bb7f4238f56a46719c44393dae817ec22ca8745cf06c20a28",
+   "bytes": 355670,
    "digest": {
     "profile": "coco",
     "messages": 2292,
@@ -2262,7 +2262,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "554756fb83e88f2b8d8c64e2b1d0df98e478249f1f4279c4f1cbd9dae917713e",
+      "sha256": "ccc784523a0c93bdab2ac26e5865e1287095d34d6c42d2425a929369bfd21ce7",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2286,18 +2286,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 1606,
-      "sha256": "5d976494c8cbbeda2bb17db785a768f5eb367061200de50ef1b4bbebac9a209d",
+      "sha256": "0cf374625d9db3cd3db11dddd2f296a6870f00da69935ad1300d1090d65ca840",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_b4_colours_s2_red": {
-   "sha256": "6c88b1eb30d33d0012b63970609448868701f41ca945092bdcfbce9f841545d2",
-   "bytes": 203179,
+   "sha256": "9675261ed2fb5bac2d6c52d073f88a9f69caa99d49eba38fed0b3a7d2dd981a6",
+   "bytes": 556150,
    "digest": {
     "profile": "coco",
     "messages": 3529,
@@ -2313,7 +2313,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "1d764fac5a4086b0ffa4d4e4b3e07aef544de699c03e88d3f5229ae38c47b895",
+      "sha256": "0fd772059b0ec101d2761b9e38a6ffb9493769c16efe40346c6e549b4cb5a113",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2337,18 +2337,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2441,
-      "sha256": "569299f5ab8c2868c593c3f1a07eb488c2d4ea00bd5e5fe8f0e3e9857c85b74c",
+      "sha256": "2a9e88f26451392a10e48e5e4e8e93536d39486c9a94fb70267716be3e4d5502",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_c1_green_stop_after_bay3": {
-   "sha256": "32e88b0d14f020f3cddbb25efcb8984897170c6b5c45a1bcadead9ce1e2919d8",
-   "bytes": 78603,
+   "sha256": "f4daf719d32fdfd83c8abefe2c926e3a8b2a3152dbb332c7c638042f44bc30be",
+   "bytes": 204777,
    "digest": {
     "profile": "coco",
     "messages": 1330,
@@ -2364,7 +2364,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "a6f2e7922c29e97a495b30f9b41bf5f35399011255236cb40b62af3a6196522d",
+      "sha256": "e719563abf4926951b65bf91ee89f7f032da7b3f59c08b9e6be133d16bfc4cbf",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2388,18 +2388,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 903,
-      "sha256": "f9b45b67bd1fd91acc4d1090e47751812c988e95fc8fc1cbee842bbdaf6ad05c",
+      "sha256": "859b3a32e455dde2b558ea92336d13c38c9ff481eea0d25e7514825b0e2fbb73",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_c2_green_nearest": {
-   "sha256": "b9ec471451da86a298f93ec4c242ae0f6142b05a9a18950dc7f7d728d6732117",
-   "bytes": 200338,
+   "sha256": "7c85c6e2c7fc6abcc3cdbb9c955e5e8fe49939ae6cd0b1aa90e916e4c394beca",
+   "bytes": 545115,
    "digest": {
     "profile": "coco",
     "messages": 3506,
@@ -2415,7 +2415,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "7e4b389d9cbcda54f54854aa23f454b925ba2cd8a147f4d610ff366d34820f47",
+      "sha256": "af0eb160db28e00fb3ff194693a345dec1f24afd70567689316d308e359228b9",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2439,18 +2439,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2443,
-      "sha256": "c6ca7fdde414b1b35294665960dcae794d614cab4003297ebd88adf65fbb16d0",
+      "sha256": "dca9c41e872b706bcf709952b2f92da6419f7f6e21c0ccd17e7b64dec9035d32",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_c3_green_most_likely": {
-   "sha256": "fac7f3c6d9aa3df90f8e90e2654a73872c8e648f54ec28640e90e356eb2bd362",
-   "bytes": 209099,
+   "sha256": "c8d13b8cf7275ea7bb2c17fa869d4b40ca55e0de6649a3fac5c33c609a365387",
+   "bytes": 568999,
    "digest": {
     "profile": "coco",
     "messages": 3670,
@@ -2466,7 +2466,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "6acc339cf134419f0f94cb8348d5a969d02beafc0f9501dc1e658088fcb4052a",
+      "sha256": "741a5981be94b473cd72983ac539f14ef6ba1620b4993e21af5d9b1c5a547445",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2490,18 +2490,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2537,
-      "sha256": "ef4c6b1b0d454bc84aee7ab1a419dc58390e15fa2d05b50bc7faca5e572b5001",
+      "sha256": "8ae01eb1ad62a70268cc51b416a8716bca1427d8d6052a16d06b408f533ca751",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_c4_green_reverse": {
-   "sha256": "3fa3192a49bc6fe67ed4c6e99023976580803c1184a38fcdc4b1f3ddd4a98c2c",
-   "bytes": 291269,
+   "sha256": "17e10d9a6141796ca672b054f51e74997cfb221463cab0113a1888f503072c78",
+   "bytes": 794067,
    "digest": {
     "profile": "coco",
     "messages": 5092,
@@ -2517,7 +2517,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "435264c97a88294978a1f3e70689166914934afd7c3d0bdbf24eda142bbc197e",
+      "sha256": "370dc9effed703a5c52e3188044ad03300150cfc26c94e41c505f84266776c19",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2541,18 +2541,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 3479,
-      "sha256": "318c956a0e7f314c45c88dc7cfcead08d80553cfc889da3f3dfd8784b1a52ba1",
+      "sha256": "c31950bf8f67acc41d8a73e064052c1b18bbad29ae1b664ab92a7d810c5c2e66",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_d1_positions_s1_red": {
-   "sha256": "f09f1eb254c2d65eb230c04622d2fec8e9a954f53833964300c8b32b7ae895ae",
-   "bytes": 271638,
+   "sha256": "38a7edb493bd4de9360e2dc2686448d883f7adb1ae93517522cf66958ebfe9aa",
+   "bytes": 738646,
    "digest": {
     "profile": "coco",
     "messages": 4767,
@@ -2568,7 +2568,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "072efc63838bc6cb04d648e717b25a35ab2339a355de233658a327b1906d5ea4",
+      "sha256": "bc2d30c67b293b0b906cb99fb84b60bc628c8224870efbbd29d955e1d68a57e3",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2592,18 +2592,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 3248,
-      "sha256": "7674ccb0c1e754217e70657c5d79639062007a06541a0a0cb2f7145bf52f9a58",
+      "sha256": "37ff19520c5162ed995cec84d95dc44289504f66909a23c6108c87195de712a0",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_d2_positions_s2_red": {
-   "sha256": "2a6d6e85ff33bf309350412a17593696d81c2246531fd783fed0e61328961318",
-   "bytes": 199665,
+   "sha256": "c8abf7bd963cd04a21dc9f9e11b6640b9e31e7497772187991c8aa02a95bf853",
+   "bytes": 547080,
    "digest": {
     "profile": "coco",
     "messages": 3493,
@@ -2619,7 +2619,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "ca9a3ff7dc1dca2844cc49b9d52fd07ead14bcda8fc3e1a5090efc187bcd3cad",
+      "sha256": "425d64d072351193d3feb675ca974fe576a434ee38b50dc57a2058603cffc55e",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2643,18 +2643,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 2377,
-      "sha256": "c2ed3d3e33cc94deb8aa778e6f8169872e227f60f8a1169b3921a83a7ce79d89",
+      "sha256": "b5f30db1e22915524c7aaab120642b074696c8737132937f9e65666ef6d92862",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_d3_positions_s3_red": {
-   "sha256": "ff6ac5278f477676057673a6cf9e81f5516bfe273a3ca153366d82afcc894d91",
-   "bytes": 268543,
+   "sha256": "ecfeb28c2e5e08590597df04d00a99c491bd102e2ac57ae8ee23901b1c70baa0",
+   "bytes": 730698,
    "digest": {
     "profile": "coco",
     "messages": 4721,
@@ -2670,7 +2670,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "685755572d3c48eee9bfe010f338eee628cdce14cf3645b82ad38c7e46b65108",
+      "sha256": "47817374a9beef8be52ed1fb7b77a414e40cff73070a1fbbf2f4e6dcb00d2c25",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2694,18 +2694,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 3202,
-      "sha256": "00f7a5c326ae9d4d3246fe043bad10129d0fb0282c395f94a6ae544068a4b2c2",
+      "sha256": "403d6fd5c7ba03cd33ca62d933daa116fbf72e43bad0266d62faf3e8fed47f91",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_d4_positions_s4_red": {
-   "sha256": "507e8fddff20decf3dc47a34e1071a8bfd45919d941790ad30e8b2e8da9e384b",
-   "bytes": 268207,
+   "sha256": "67fbf5a998398750e2bb220a08f8b87945e18571cf9b042f66b91170766a5307",
+   "bytes": 734314,
    "digest": {
     "profile": "coco",
     "messages": 4712,
@@ -2721,7 +2721,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "77aa7b785a2a0cf089eacabd0f035f5bdc71e6bab80c7d7df3881480ae9ea302",
+      "sha256": "b90e1e9a44893a92752f879325d053de94c3470e7c2dd5c9787be6af1ecb9b44",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2745,18 +2745,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 3229,
-      "sha256": "b4fafe1c94582e24f23389668b91837d9fc9eb85eeb46b05335f6f0b607ac2b4",
+      "sha256": "6ec9a76b41b3d51341a9c6ceac6cba4de713f972f215425261770815581f2dc9",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab4_b3_colours_s7_red_void_1": {
-   "sha256": "787a937c980afc930e5d48ad858605ceaf5867fb57af8c00949077ceff702e1f",
-   "bytes": 21815,
+   "sha256": "6edd8eacfbca74e668525d2e89283e00d69b2033ca12ad18d04cdcda585a35d0",
+   "bytes": 50000,
    "digest": {
     "profile": "coco",
     "messages": 370,
@@ -2772,7 +2772,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "37d8f646d253ccb181c4aaf52098a94109813caf2d1b90b8dc948fc3f007ebf3",
+      "sha256": "91e7471a46d80cb168a560584d0eb635eb9a0751d432808c5877e94e2153bad5",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2796,18 +2796,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 326,
-      "sha256": "95687818247e0fdac8b237fba9fa56e72bebc60386a90d738b4ad3ff9806b555",
+      "sha256": "7e3bcfda6565f55b19228b7c64d3ff0db3ec5836049e86accd4c7362f08b951f",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_dwb_1": {
-   "sha256": "67f98c91d6cb52552b289d31349c540aa3d426ad214414f2744a8b316fd7d7fd",
-   "bytes": 185839,
+   "sha256": "c1a20f0ac4b648959dc3306058ee93aaee99ea2f1db7b14a88f2081f450caca9",
+   "bytes": 330238,
    "digest": {
     "profile": "coco",
     "messages": 1415,
@@ -2847,7 +2847,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "4a48b502640b36f320021e3c7ff736b949b6f7207ecba8278f97d12bc15b0088",
+      "sha256": "bfbaed55280061e1168c5d7fcb7e792daea3d107a0d82986d3583ae10fa0cf3a",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2883,7 +2883,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 73,
@@ -2899,22 +2899,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 363,
-      "sha256": "f9d6cc13a3b9036ca49c7a89bf074698241c8beb2b6708264b37e8997c7541ae",
+      "sha256": "a254850b444a6aa5031d64c3d758b04079d093ecfb47af644e60cd62a8726140",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_dwb_2": {
-   "sha256": "2475bbce1288463d5328908b7426f0855460f4cf27012719b062699df6ac1a98",
-   "bytes": 183542,
+   "sha256": "3f825d370041609696ef4f01bf6fddc7d374a193245729b7b94d9a72be8c825d",
+   "bytes": 327302,
    "digest": {
     "profile": "coco",
     "messages": 1390,
@@ -2954,7 +2954,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "1c60d0626fe1974911aa0a5508efe75178c93b0fdd511a9d155f1448c9e066e6",
+      "sha256": "ff3dc9b9d308cb36683674d63da1eca01ea8bc2f14ac8cb9653f35b93907d9ac",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -2990,7 +2990,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 73,
@@ -3006,22 +3006,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 362,
-      "sha256": "c1d85827c7e50b2a1ad5b2656ffe96a1442fea3a9c70e322c3c43ccd6930dde8",
+      "sha256": "33a5830c0dd02a1a7c7fb464c3ce826feb1b2795bea6e0a3094fb29e0568c6e7",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_dwb_3": {
-   "sha256": "104bb6bf1fd96d1a57464ef503ef402eecaf16c8d973cfd09bc7851f3d85688c",
-   "bytes": 185391,
+   "sha256": "b2db7951e3d740cb3b22f026c0ba518f5545ac6b260dc2af3cce9541535ac268",
+   "bytes": 327957,
    "digest": {
     "profile": "coco",
     "messages": 1397,
@@ -3061,7 +3061,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "53e45fd22b6a3feea556626e556b833ab59f094e9bcd0b9742ccb814ed3c8453",
+      "sha256": "b3e9573faa2b12ede2e03c9af04cd5d55142dfa7c4ec8fdd3a303b5bf3e9c12b",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -3097,7 +3097,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 73,
@@ -3113,22 +3113,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 365,
-      "sha256": "a677c9f43f3fa0ee847bdfa002f33fb6e19127adb084e163d3a0a614e2611f36",
+      "sha256": "787e151d03408c049c850c8dae22b318968ed01ff9f21b979e5a24774e763e0f",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_dwb_4": {
-   "sha256": "f3df37dddcdf93d643d13f85c236475a2577fc87f0df946da98c6429e75e5741",
-   "bytes": 183846,
+   "sha256": "98b289a5b486f27f757d24cc6f98e8c9783a36eba9999854a264b9bea4fec7b9",
+   "bytes": 329013,
    "digest": {
     "profile": "coco",
     "messages": 1410,
@@ -3168,7 +3168,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "7bbae66bb8acc64fa193fd3c967a7da7259c20a299f9d82ab0252f9cb84ba16e",
+      "sha256": "c471e72dacf65b91f2e3e55a1a53cb7c5e320192cee4ac4489a6d8be632ef657",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -3204,7 +3204,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 73,
@@ -3220,22 +3220,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 364,
-      "sha256": "c5517314fcf81bc201c6703ed15240e5c8464a6fdbfc66da471bdcdee10f6c5d",
+      "sha256": "e8861d2bc36b05c34dac2c13fa33cc111f72bc32dfc8b3d7f157155f5c746b2b",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_dwb_5": {
-   "sha256": "bc8ce7d3ca6dec3dce06e328b299a56ea8c3cd42a92b50bb3e24915bc4a35aec",
-   "bytes": 180623,
+   "sha256": "265b39930d1a5d39d3d62fdcea16f6af9322ed84c2562574aa04a9f4f7ab8d79",
+   "bytes": 316081,
    "digest": {
     "profile": "coco",
     "messages": 1318,
@@ -3275,7 +3275,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "dede8a7545ad2ec74b4143f1a4c98bc4bbd3d1a3fbfcccf212611fd4c8def49f",
+      "sha256": "500b73bb36d6da70451e9907e9a7fb95a19befc8a022196c19f24ef5bd0a1565",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -3311,7 +3311,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 73,
@@ -3327,22 +3327,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 366,
-      "sha256": "477a1cd952a7b31b191913f4a6539e721b0dcd8e60ec1acf1f32340e780ebc01",
+      "sha256": "96c41f8202fda31ce2bbc492478a32a6dec6079d191f45bb307e4d0f49087a33",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_mppi_1": {
-   "sha256": "55436bb2577fd4c9efaf82d176df9d133a5f1054f4b1379d22137c60e9a4489d",
-   "bytes": 217081,
+   "sha256": "5e78b4df38105c9ea304ba33bc3daaf82749de04e45898a2542614e73854aee3",
+   "bytes": 363019,
    "digest": {
     "profile": "coco",
     "messages": 1539,
@@ -3382,7 +3382,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "172df8ac65215dcaa1df2d13a45a774aec0d0d7cb0b35847165b14ce2f6d883e",
+      "sha256": "de3c29dc95508e00c6a0dde97164f0a3cf11e8a580dab1adc026cd0d8236a518",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -3418,7 +3418,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 79,
@@ -3434,22 +3434,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 395,
-      "sha256": "133d0e6cf0e8cc1590e73e56e1ec5fc4e66289bbf2ef83156f2db5e6adf15ea7",
+      "sha256": "29dd4301a96749e5bdeb8e65acdb27488bec597fdc0fd7aee7d1b4ee613c2968",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_mppi_2": {
-   "sha256": "be021a7b2b570c143b3e3853faaf07d8a94eeee4b7a5d94f9f0aedeb02f0a28c",
-   "bytes": 218629,
+   "sha256": "7d6f5af799f2dea964508a5c8e3fa7aa2b140462b0fcb2854a4365d331912bde",
+   "bytes": 362958,
    "digest": {
     "profile": "coco",
     "messages": 1521,
@@ -3489,7 +3489,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "917675857eb475e4ce4b3c08be448dc4c0e22a5f88022c544803615fb21036e0",
+      "sha256": "ba8d5000be75138a3419d09be153f0f80421cdb3f573637bd900f28a69c2a0eb",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -3525,7 +3525,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 80,
@@ -3541,22 +3541,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 398,
-      "sha256": "febcf0cb75c0822617cd9dc6251475f5d3019cd11df8ffea8c92aa741d1ed632",
+      "sha256": "67c1f40138f6faa05d0dba1e21cf97bef5fa5ab3794e38657690d79ce6393f1c",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_mppi_3": {
-   "sha256": "6684e739093a432d4648f11a9b9f209062ddf35bfd627308920c82b5a90a8a04",
-   "bytes": 214393,
+   "sha256": "8203e4309bce2e2ed148290c59694624f64fa7cf01e5296be5f19744613f15dd",
+   "bytes": 360149,
    "digest": {
     "profile": "coco",
     "messages": 1520,
@@ -3596,7 +3596,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "dc8760bdf1cdbba35a5d4b00964a17b68fc00c4d0a7c063688343acee95bce27",
+      "sha256": "80ef2136b935dfc26a48271cdf8bb2467a1eafe27b36d5e1aa7fef3cd524ce48",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -3632,7 +3632,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 79,
@@ -3648,22 +3648,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 394,
-      "sha256": "45e7c1ad49812f1489ef8af60c4080120e82b68ef9514894a3e51c3065550a58",
+      "sha256": "8d6d0f403fc586c0d2c7e3285566b3ef557081e0989da23cd559b979c145b993",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_mppi_4": {
-   "sha256": "b63ae3c50d525c95839a18aa732d294ae69aa575465eb9c66bd01327a615536b",
-   "bytes": 220178,
+   "sha256": "520e4f99030d95ed237184813f28848df5fd92fc5f1363a7d0a0218edf2b0d71",
+   "bytes": 371640,
    "digest": {
     "profile": "coco",
     "messages": 1600,
@@ -3703,7 +3703,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "7a43eca6c67b59d2d1e04ab26203f901ae8b186e1fd16bd46a61d79e4eed3e81",
+      "sha256": "433c4e348daf0e23392dac45ec4031962994d62cd144d690cca71589fc3a1b81",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -3739,7 +3739,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 79,
@@ -3755,22 +3755,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 395,
-      "sha256": "8178ed9d053db1bd730618348e59dc4430d39bf76be5a520a498f539eeba24cf",
+      "sha256": "93164de22a3179492fa2adf443dd229d7314ace11721c3d8925a74dd49506ba0",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_mppi_5": {
-   "sha256": "3a383c1f7041de4014a5208119edc9f43687a88fab8f80bd9eb9560d3a33cd51",
-   "bytes": 213898,
+   "sha256": "d190623247a7b06f65f3fcca8bc9d741437b3f514a4b0af7dae16c8007c4fb8b",
+   "bytes": 357567,
    "digest": {
     "profile": "coco",
     "messages": 1490,
@@ -3810,7 +3810,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "67186a39c4edb97270315f6932bf9df19e626277412a8f3567336afc4fd65da9",
+      "sha256": "f6d9d6a2174150447b27267c410afe4def8af7e14bf0e2992db999a59cb16d1d",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -3846,7 +3846,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 80,
@@ -3862,22 +3862,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 399,
-      "sha256": "cc77d55f50e7bf97e9d928f4832997199b444e712d97852d2f7590cf951c3652",
+      "sha256": "a12997e6f95e1424e2f7a61f87c96f467c9a77a36b68665a57ec019d3e8bda49",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_rpp_1": {
-   "sha256": "c799105605015ddfad868c3e99dfa6e967b2f47abcc7597f9cf2be779cd710ff",
-   "bytes": 194212,
+   "sha256": "d159769f10f84daf96bc05b196ea1f877d6d09adf5bee18eb617b367f45aac5e",
+   "bytes": 348246,
    "digest": {
     "profile": "coco",
     "messages": 1446,
@@ -3909,7 +3909,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "21c7ff0b9a78c99fda4e586848741c6cea022e757db57c0e41eca53b1e4ac5fe",
+      "sha256": "46ae833f53fa4e1d56b4a42d8ca8dfaf597c3e0bbdfb61f378ac8fd5c3322928",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -3945,7 +3945,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 78,
@@ -3961,22 +3961,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 389,
-      "sha256": "5b71fba3ca62810f0190ed9248b481059bac354165ab247c4022ac6b8208a848",
+      "sha256": "a56a7b9f9f7540c6ae99f80396d483413d053d3666cd207fdf17b48b1e7e7f73",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_rpp_2": {
-   "sha256": "3cd601866591a9d0376c77e2913a0bf6953142da2ca18dcc49243a5a5a32d2a9",
-   "bytes": 195114,
+   "sha256": "5dc9105fe805e8d15ec1b99e9ebaa11c9d7663d9dd65309566b98160d7a4c6a1",
+   "bytes": 351361,
    "digest": {
     "profile": "coco",
     "messages": 1468,
@@ -4008,7 +4008,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "6fab7454c98bb1159669a42dc0da10987cd5bd51fea15c6e0ccc69eb28a1fb82",
+      "sha256": "04479bbcccb004d028d6da46c17362f6108d9aa65b9803ff5ab30548e586396c",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -4044,7 +4044,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 78,
@@ -4060,22 +4060,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 387,
-      "sha256": "01d19e4b7b96c23554c626a704a2946863ae4fc4f7bf68963ea6e5d11df9cad2",
+      "sha256": "3afe54e5387359e5dfb1466013a5714495feef0afe67e228cdc908b74ab509eb",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_rpp_3": {
-   "sha256": "cb4f8bda6ee1aa94f6e786f90fe1fccac9af98eb4e04f0c8c26bc4702772bec5",
-   "bytes": 197892,
+   "sha256": "771c1709d530df783f1036d6e8b4b1704822e2c8d46bc4b25b54f8c08c6fe024",
+   "bytes": 348657,
    "digest": {
     "profile": "coco",
     "messages": 1451,
@@ -4107,7 +4107,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "53cea17c2edae56c6b5435679f457a31eae57f2d46a63a4cdacaf2e015b40583",
+      "sha256": "fb90cb9bd60101a952c21b2e444d41b08de28d75940fdb866479cbe4de94a1fb",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -4143,7 +4143,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 78,
@@ -4159,22 +4159,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 389,
-      "sha256": "e89e5dbef29794ad0af711a533fed8c5a1266866c95e432b39d29aa34cdd80ad",
+      "sha256": "372ef07ddfaba43f0eb93832561513a2f1cf8bcd744503e4236ab91d4c39404d",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_rpp_4": {
-   "sha256": "f8a6a74d6a47a87ccd2bebc33e61679755e936824260e7becb36877b8f4d5c71",
-   "bytes": 201417,
+   "sha256": "358dcb07d16b745327e84688767adf6fbad02b5a9106fd3f61524ab59141a9a9",
+   "bytes": 360551,
    "digest": {
     "profile": "coco",
     "messages": 1548,
@@ -4206,7 +4206,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "c0d03efe1b6e950fec9ba572ba9461217097306af785d5f452ff801537d94a14",
+      "sha256": "ecb2e25734078ca58d91232a0681263e33a7608763bfa5224dab23f6b0aafaa1",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -4242,7 +4242,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 77,
@@ -4258,22 +4258,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 385,
-      "sha256": "fcde8e9f031280d1a98f8af5a4f5b2a859f741ca2a6fa6eec7c5227ebe23964c",
+      "sha256": "83d57d2f99f03d074f4a8d77090557f805b833a86a1b4bc4659bf4d14ec76a25",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_crossing_rpp_5": {
-   "sha256": "dcb231b65d80b7a075ece4c1c4a2933abc02e3328686f46bf55ebd6093f8642c",
-   "bytes": 191718,
+   "sha256": "83cbb33a66e96cdf4a0d57b649482265ab35cd0f06a51ac4167b1d47d851069e",
+   "bytes": 341816,
    "digest": {
     "profile": "coco",
     "messages": 1413,
@@ -4305,7 +4305,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "ef3c95c915c6bff839112cfb586bed4945bf01b986c4359010013cbd418c3871",
+      "sha256": "d74ffc327b20ec985848837e14db2a374bba510838fdbfe29db64a48813aa77b",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -4341,7 +4341,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 77,
@@ -4357,22 +4357,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 385,
-      "sha256": "3b15b42c5497c84089715149d961b992a0371c87e11e973e0b97104134ae1c5f",
+      "sha256": "b0dc47669002365e4d7aa7663265572033555b3b3ca351723c20f55301889768",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_mislocalised_dwb_1": {
-   "sha256": "14d98e838c62b8d95107b5221378c90ceeb85e132660ef4c000fc20a3819822b",
-   "bytes": 23939,
+   "sha256": "b42f291bdeebd54498f574c4d6abe3f9e31b424860443b7a99ca463f71f53bb3",
+   "bytes": 115468,
    "digest": {
     "profile": "coco",
     "messages": 259,
@@ -4404,7 +4404,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "74a3b32264368bee8c11f6bc56231805fd0f778d955726be87d4b63284d47778",
+      "sha256": "3e71a64ef9ec6a1a140182ea89f4d8b985543481d3886c9581f36d031bc71eed",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -4440,7 +4440,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 36,
@@ -4452,18 +4452,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 178,
-      "sha256": "fa141f5197be90f0c4e0f57252e0f2f0be70a0714a051d9b5d0189524f5677a7",
+      "sha256": "cc1a686f1b9b65eee3496cb8a175019b417968b89f9f9df7c29dfdd2bb34c9f1",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_mislocalised_dwb_2": {
-   "sha256": "638aa6b05b7a08f39ffe5e2f3393e0051e36d9a5fd03668ef8f58534cab0612a",
-   "bytes": 23659,
+   "sha256": "6501f1e08bff0f27832935b48ce6cd37e10584b68adccb27ac414c6b5031da28",
+   "bytes": 112607,
    "digest": {
     "profile": "coco",
     "messages": 250,
@@ -4495,7 +4495,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "ab0390f151e0aba735fc9d0fc54e65b6ca21af0269a085e166764aa0fb1b9edb",
+      "sha256": "f660133b5d6b71a51e7d349dfaf43d95c6cbf641114d6c832e73aaf3860c8d83",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -4531,7 +4531,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 35,
@@ -4543,18 +4543,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 172,
-      "sha256": "16d005ce381f3595747a9aceed2ee241517f422b4f70872651537f2eaa79be80",
+      "sha256": "a360e8b044caa18b91dae60adce68c1656dc18d7ce3c081c547f140fd70d5b30",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_mislocalised_dwb_3": {
-   "sha256": "dec25dff41853f89424149fcff5ff77f1f898e98808b3694115c89b041e39777",
-   "bytes": 23864,
+   "sha256": "efa7f5c7d5b44a8d5973b32e79561d61c90ed717e318008dc63972f754dc6fdd",
+   "bytes": 115292,
    "digest": {
     "profile": "coco",
     "messages": 258,
@@ -4586,7 +4586,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "576f3ba045aee7d9ae0b164d0a103f3458f6e7725755b2fec84f6f1aef5ca8cb",
+      "sha256": "fcc0743d75e3d7d39cdf81f8fe531a164f41cad7fed8f8032dbdb4465601733f",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -4622,7 +4622,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 36,
@@ -4634,18 +4634,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 179,
-      "sha256": "34fa9d2d254375123fb310d5ddcc5b8f46d1ec317998ff1e8099569c24244ebf",
+      "sha256": "0adbfc769dc3985881b7ada83f98148b18a9988f0aa001cf06d96d889066399c",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_mislocalised_mppi_1": {
-   "sha256": "ab72ac263c71f1bcf3a5f1b6ca0ca275fe174d91a52054d709dbbc718029e20a",
-   "bytes": 23571,
+   "sha256": "653b43b845297f043990be38c403e2a0a3f3d8364668282da4c1cfd27c30b49a",
+   "bytes": 107455,
    "digest": {
     "profile": "coco",
     "messages": 249,
@@ -4677,7 +4677,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "cc7acdd33b2e24bd10f37f0caeb86b58c4b1d0cafab57dc9e2f438dfac1454a0",
+      "sha256": "a39a91c55df14c45e604597d6b568ae705f751791abf2741bfdfc12b052e408d",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -4713,7 +4713,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 35,
@@ -4725,18 +4725,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 172,
-      "sha256": "cd2f6fbd2f9151bb784e24436dac8e3f8105f935c3044adf0bedc3b6a7aa6303",
+      "sha256": "b8d24809f86a691977c3d2ddf1dba328f0d05890ccdfaccb4c247dbc665c35a1",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_mislocalised_mppi_2": {
-   "sha256": "dfe24f75cebe20ddd2966611d1a6ab2701d5f2a0407f15f283e129222c2f9bb3",
-   "bytes": 23545,
+   "sha256": "ccf63a81839edf35e3a05250694206a79322f74d3834ae407d700f048beecbee",
+   "bytes": 110261,
    "digest": {
     "profile": "coco",
     "messages": 256,
@@ -4768,7 +4768,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "eef1d8b3f991ba49b1388ea005e248cc4b4c6bd5a8fd7c966a6919acbb748998",
+      "sha256": "0e489d205fcb6c905725cb08277701aca523cc70904834e24f0f9f20afa7ce62",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -4804,7 +4804,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 36,
@@ -4816,18 +4816,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 179,
-      "sha256": "5fa6460704c5fa4ef35739097a3e5d3bd446967316906c153d8d9039a04bd7b7",
+      "sha256": "684d7dd2e9686b5c9e3dd1fddfeb81deed98a460d21f08e6399bef688111624b",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_mislocalised_mppi_3": {
-   "sha256": "0327be595d96cfa19a604940c84284674d637f92683a3c85531ce438810d2726",
-   "bytes": 23898,
+   "sha256": "4d9855922aeb311bb60dc06dad123896acf33c3f9536fbc59ebb9e0169b22525",
+   "bytes": 110244,
    "digest": {
     "profile": "coco",
     "messages": 257,
@@ -4859,7 +4859,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "a689f0b43d9e53958fce8de4a34d142e5318bd04e76a49250a542a231ecf5d71",
+      "sha256": "64324e5a4da300e8b90f70dad2d348fd5e3799cc9b93eed05bf5a2a5e3a46b63",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -4895,7 +4895,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 36,
@@ -4907,18 +4907,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 178,
-      "sha256": "1e4b30c9bea78e2f00edebc00efaa127b248b58558956946eacc6db2188011fc",
+      "sha256": "3df617b02117bae4f54ccf82e9194e333e09a526e0970771948551c2355be76d",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_mislocalised_rpp_1": {
-   "sha256": "93b6b45a520b6e767642cc7cae3358e95e24029a87980ceecaa95cdc7e5872ff",
-   "bytes": 23734,
+   "sha256": "d4ec47e055167adc45b7a3ae43383284dcb90aa58b48c0dbb6fcff875515d6bf",
+   "bytes": 109873,
    "digest": {
     "profile": "coco",
     "messages": 254,
@@ -4950,7 +4950,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "f5f87a65a500b286e114169bf36ef07d069e54f1841f7a30a6366e803eb59799",
+      "sha256": "6942524fd0ae7c7147e42c47ab71741644eeb73f814ae99dd5806a93b4666fff",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -4986,7 +4986,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 36,
@@ -4998,18 +4998,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 177,
-      "sha256": "76a16b6e227d1ff367434d54dd8e8b31ecbfc19b4032b7b36070efa55f9f7acc",
+      "sha256": "e75af365ff060230f7dc87965295aac6810b1396dcfc04068948ee9703227235",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_mislocalised_rpp_2": {
-   "sha256": "53a9ea8b165153c0d773e1825d9f8736b03fb4f727187e6f8113bd3cf806d5d8",
-   "bytes": 23884,
+   "sha256": "5f88991dff14ccbbc993a8615470b8833ecb443d46fce765e49ec4cbe0a511fd",
+   "bytes": 110416,
    "digest": {
     "profile": "coco",
     "messages": 259,
@@ -5041,7 +5041,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "61b1ab3b57bf5d279d7bf7eb434edbaf2025fdf5b91e32696cd417fae2fe523a",
+      "sha256": "53b7b1ef011e812cd387875efe72562288142fbdb3d58b8cfe2bb054bd7b5476",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -5077,7 +5077,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 36,
@@ -5089,18 +5089,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 179,
-      "sha256": "5c5069ddf3ccb4ea2f61b770d81d624d1c7c037ef1e4aec61f8cd5147ec0bc19",
+      "sha256": "1f75612660cadbfa223f703a7b76f98d212727dcaa066431d5432b0c19e02d20",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_mislocalised_rpp_3": {
-   "sha256": "e9484e5593571a4e816f362b88a771955da1143d0bd830bd97632731c156aa8b",
-   "bytes": 23789,
+   "sha256": "43f9519ef5ac3beb2871a253a89f7bb331959b6d1782804873f45d104df0544f",
+   "bytes": 110114,
    "digest": {
     "profile": "coco",
     "messages": 256,
@@ -5132,7 +5132,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "f34afb9dce3d0ce615fd0a34fd22a062694cca74b854be83ec9e00524bbfc6eb",
+      "sha256": "977811acee0cc9d4af1da9c2a5e751b3327ec19eeba36cc6f6a83d03beb2515c",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -5168,7 +5168,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 36,
@@ -5180,18 +5180,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 179,
-      "sha256": "ccff109bc67c03b79611a7f4293e22f9f599d71d7333039523afe096e209461d",
+      "sha256": "557ea8ffee4a0877159875e8e21f79d5304f75d35f576f9afed2ec4c1b0065d6",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_dwb_1": {
-   "sha256": "3007fa892412568fa7a28e8a46a4e4abae9c028036d5c3fddf948f1e62cf5da1",
-   "bytes": 189253,
+   "sha256": "f20950ed4878001ef07330ae46b10c17c9d9b1e3883b0934e2def00ee62dfa67",
+   "bytes": 336092,
    "digest": {
     "profile": "coco",
     "messages": 1414,
@@ -5231,7 +5231,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "b0f32d9c4836c0ce44c4e9b457088bd5632db90b88dc5f10e1382142cf0e5790",
+      "sha256": "57cdcfbeeb539e193cbd796748cd7014823fc9b446a873401ab98e387926aab0",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -5267,7 +5267,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 77,
@@ -5283,22 +5283,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 383,
-      "sha256": "43d508b9a084f387405312db989eabcf0f50fec2c7a412f225f7bffefe6516d0",
+      "sha256": "39d1ce4dd5c8b51fb4bd9093ca702666aea79dc7404e01ee98dcc43e074d9583",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_dwb_2": {
-   "sha256": "ea5901957605cd52e9716c144a9038a43570a0c990e07ce7f64d9240975b259c",
-   "bytes": 189965,
+   "sha256": "0dae7948362aab8ed1af1ef06484aa078ff79fd33c058b9860eabf9917ec3a6f",
+   "bytes": 334206,
    "digest": {
     "profile": "coco",
     "messages": 1407,
@@ -5338,7 +5338,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "0474de384e87079ecb691b65f8f4c0030c102762d198a0d0dc7ad3156da48d45",
+      "sha256": "111dde8f4756b424c4a6626d98c5a87269504243a27ead843f742e37d5d25b45",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -5374,7 +5374,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 77,
@@ -5390,22 +5390,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 384,
-      "sha256": "4f35a23ac08d11679a689b56514d13b555bfb07ec2b58c9a9a9ef6ecda702d6f",
+      "sha256": "8585593dd3495220c2b6c0abf366ae3c5a383da3b16fdae44c85e4f529224ee5",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_dwb_3": {
-   "sha256": "a3ca2202cc187e7cb0fdc8d1687d9f8ef4acff1220490bebae7627651f005d71",
-   "bytes": 188586,
+   "sha256": "b4e2320fad0506b1ab4db9347e04145294f9e7362870472980664f92695d940a",
+   "bytes": 335886,
    "digest": {
     "profile": "coco",
     "messages": 1409,
@@ -5445,7 +5445,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "39239fb473209438dea4d996284491e113696f068b0f824c148847cde9213ca4",
+      "sha256": "7b7125b058adbd96e1af26140896aa81eb15268f365982d04c0d740f0488f12d",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -5481,7 +5481,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 77,
@@ -5497,22 +5497,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 381,
-      "sha256": "d549c0990430a2a09cc670e4517171bb1ff3f43e7a10f88caac606f21b83cc28",
+      "sha256": "62b7252ee40a71aff2fa4945b6caa9819563c12656ecad289f2dc6139586949f",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_dwb_4": {
-   "sha256": "bb773b477ed01fa790a6c2d1765d79d5f52647832a137446d27286901414556d",
-   "bytes": 188618,
+   "sha256": "bfc60cf813c06f4fad21ebfff029b22947d55f51727c983ff196a1183cf6cbd3",
+   "bytes": 335014,
    "digest": {
     "profile": "coco",
     "messages": 1412,
@@ -5552,7 +5552,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "6d885f42c4c399a224aadda1777ca7c1333b0aa8675b68c440d4e52dbe718bce",
+      "sha256": "f1098f18950b6c2c83e21d75e113634ce5ce7a1d25039068aa686718dc33a53e",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -5588,7 +5588,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 77,
@@ -5604,22 +5604,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 383,
-      "sha256": "374f55645d18f7c3a725e4894a63ed7f602312b22ffc6b02a16585e18c91ea97",
+      "sha256": "583096ca772d44a805ffb41a7e24623109ca8c3e83b4ee5addd951a36b646c48",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_dwb_5": {
-   "sha256": "402a6b2f0dba2114e92555aa98abb157bc2974d67b804d41adeb32c81147efd4",
-   "bytes": 187686,
+   "sha256": "9ab9a86a44587460323576d452e6d956f80250d5983060c23dd20581a249bc4b",
+   "bytes": 338223,
    "digest": {
     "profile": "coco",
     "messages": 1421,
@@ -5659,7 +5659,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "359d0947f0d7040eed323cf7d40115f99f5bb04c610cae2e767e137b0ec97c9a",
+      "sha256": "8af9ac0f26655b56cfaf46565e5d00bcb00a2ce81091fc7f2530195360a9130f",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -5695,7 +5695,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 78,
@@ -5711,22 +5711,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 386,
-      "sha256": "eab70acb3167a608443d51111bc9c583afef2e7e855daa94e462e0fa4052575d",
+      "sha256": "9518eacf9995321d6f27dda443d058c59a60d8119e1bdf917993317ce1e1bcf1",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_mppi_1": {
-   "sha256": "5ab97710bb69e587c9526a75882e0d998631b45ccba079ff6e5be4b9c4fb2a13",
-   "bytes": 227208,
+   "sha256": "24e09e78c13855359b39399ca1d71489614bff2b0d6a64299559b1c8eccd4222",
+   "bytes": 373440,
    "digest": {
     "profile": "coco",
     "messages": 1560,
@@ -5766,7 +5766,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "cc66e25c9cbdc98eddf1a672fddbb38f7469de2d30c6ab25711378b61a591773",
+      "sha256": "e5e080f6fe509e8a386bd480f1d11598a62d3b6c6b5370a0b2ee288d526c3f51",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -5802,7 +5802,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 84,
@@ -5818,22 +5818,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 420,
-      "sha256": "af64c90fa1e986569b3d5b7e7253be7098fe7c63a0f00628a1f2d60a1e30be4c",
+      "sha256": "2ad80baf09a9e005fb083f7c65a66875bd39501b3c7e678d663577975e38b62d",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_mppi_2": {
-   "sha256": "e74ba48ef5dd4f924e3348ac8c44077456aaa6397519392fc3dabe74d5ee9644",
-   "bytes": 227189,
+   "sha256": "fab81c86db66b755ae4054edbe9623040747336f6ae8bbd2fbaeb80ca5b95ac6",
+   "bytes": 376597,
    "digest": {
     "profile": "coco",
     "messages": 1569,
@@ -5873,7 +5873,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "4e4cf98a548fd7317f2e8f7927d8ed6aba7b4ff9bcf64474f69d157bdae644ce",
+      "sha256": "3fda710bce53f65b55d826ede2d68117cfda962488f1be7ecc85791967b7cbda",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -5909,7 +5909,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 85,
@@ -5925,22 +5925,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 424,
-      "sha256": "45f3aa142a5309c6566ce3b3bd6197038930e7341e7b222666f12e0618004b4b",
+      "sha256": "2f407603411e19adba98893edc89617b641e99210457ca27bd959588fa84ee32",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_mppi_3": {
-   "sha256": "23933d722739508bf014f21fbbe3e759845a917ebb4d8415816bafc9879304ea",
-   "bytes": 223781,
+   "sha256": "d774e39fb3627678f77b73d10eaec027ee7d7a3cf87acf9724928f414a2f5c52",
+   "bytes": 372348,
    "digest": {
     "profile": "coco",
     "messages": 1548,
@@ -5980,7 +5980,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "a3fe984d60455162636827f672ce8ec581f7dfd4e00ca1f846fe74f668c2bef4",
+      "sha256": "3ffb3ef5efec599bfb9a81bab604a2660cf2d0e0a269adf481396ba3da2ed94f",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -6016,7 +6016,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 84,
@@ -6032,22 +6032,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 420,
-      "sha256": "fd6b51cedaebe3b00d18f62f322814ebd1ed67d88f7e7642843fe83f61733478",
+      "sha256": "c458cbf3a1b9510dd4236c35038cc6f7b168582dff5d318c6521969b04a9ea12",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_mppi_4": {
-   "sha256": "a2b9d70a42eff666b60881a09db3a049db577bcb172bcb6e19978b0b82b91352",
-   "bytes": 229266,
+   "sha256": "1db5919d702ba6b13c353f920f407a1a7d5b97c44d16da74ef0cf3b9b4c518dd",
+   "bytes": 380076,
    "digest": {
     "profile": "coco",
     "messages": 1586,
@@ -6087,7 +6087,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "3d9ff0daf510cd47e34890e0cbfa3133d3819b91afc8c7360a99c0b92cc11f0d",
+      "sha256": "2f66644f8bebc9e5e5d3dc691c110e2d1e185238a84dbafb2279acfc45efcd4d",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -6123,7 +6123,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 85,
@@ -6139,22 +6139,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 425,
-      "sha256": "3e499ea60d29e591100ac319dcfc02cb2f14f85deeaf714aa43f92337a6686b9",
+      "sha256": "e70c538b77f43f41468d726d5d82d13e5f9e86af44de24bd1d4e9b751e5f4247",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_mppi_5": {
-   "sha256": "1a6db390dabc1cf989ccabe44e5e7f8da0db5733e964923494b870f0314cd993",
-   "bytes": 227219,
+   "sha256": "29cc42c4694a281c09f45da2a310845b13034f6750c3f0a314827a60bf822df0",
+   "bytes": 375711,
    "digest": {
     "profile": "coco",
     "messages": 1562,
@@ -6194,7 +6194,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "f77733242eea0ee36364ed83f0ee2af01b145af9cca20be7242997925b164515",
+      "sha256": "faa5b4c70d47a520225bb07a1433cde6f5b34ee05091ad62198b1d2263c154d0",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -6230,7 +6230,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 84,
@@ -6246,22 +6246,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 419,
-      "sha256": "2f9272337ee2d11460aceab5073f3513b240e9f47c52607439f8e8649f8e5fe9",
+      "sha256": "4fcb493af19ffd03712600de7eab6673c8c02ea5b870be02f04a1680b1632722",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_rpp_1": {
-   "sha256": "01e6b1d19cb28b1aa568afb63179b7806b9bf55635144ad018fedb410efb3864",
-   "bytes": 134480,
+   "sha256": "e4164bc0ccb0413f257f7291b6cf17f76cd92af86314b575029a9e4f4a9ce401",
+   "bytes": 251620,
    "digest": {
     "profile": "coco",
     "messages": 998,
@@ -6293,7 +6293,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "4af0b3503047fb545e6219043ce1fd843386204081be0173d573c5438f5fe711",
+      "sha256": "1f5d27f6a866ef3de54fdfa359b84b38ce4e1f51f598e0bd54b37cc2056e99e6",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -6329,7 +6329,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 58,
@@ -6345,22 +6345,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 288,
-      "sha256": "820e7b6ee955516573d1c9127949e72583d4843a70cd2b151c9e613133a464c0",
+      "sha256": "217dafc2d80037b7a1c344f4ae71fa9c04ac19a22038fddf49586104beff7d8d",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_rpp_2": {
-   "sha256": "ef0d374c826f06b7be3d6fc73fa4e24fd581030a92f0c29125e19e9f5a022fcd",
-   "bytes": 137573,
+   "sha256": "9280de8cecf6f8b38097450f6d70758215744982ca08c7654c063bb34127e786",
+   "bytes": 251852,
    "digest": {
     "profile": "coco",
     "messages": 997,
@@ -6392,7 +6392,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "aa84916ac350370e836c52a5c0605ea4e99fba92272d1fc79d5d536c36195bd1",
+      "sha256": "7b36b18ee730ef4c07583ee0b842d7feb78963384a9dfd3ccae50c9c30fbf960",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -6428,7 +6428,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 58,
@@ -6444,22 +6444,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 288,
-      "sha256": "815c71042b4634f53dfa9756db1270af7b82b5a64b8f65a3a4e8b5d6eda5285b",
+      "sha256": "99ec2558c26e2f15b94b474dfdf2aeb1ddd181ba1772a2bf76ea1aabd6324d64",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_rpp_3": {
-   "sha256": "0e7b8562f314782bb3701fcf49a9b41949b276a4cbc7fd18f024a4e38381ad0f",
-   "bytes": 137471,
+   "sha256": "9116564dd8ac64284e62d45bef4c9c38f8453581c7b49c3d5897a4ce3509f655",
+   "bytes": 252682,
    "digest": {
     "profile": "coco",
     "messages": 1005,
@@ -6491,7 +6491,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "8c7dda0a06404ff91d5b3362a983e52b1e6651c79fd9ad2c341684d47a4f0c5c",
+      "sha256": "6897cc7fcbf990479e4d5e0d4d38a3152b3fbc02fb0457f011412579ae472229",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -6527,7 +6527,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 58,
@@ -6543,22 +6543,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 289,
-      "sha256": "acef085dc23defd093dba74c233fcc7baa4daada13aab3bddeeedd0d544448f7",
+      "sha256": "31566c81c29c9ef056a71132c7fb22f1ec24d0c1ed5a651a0b7caa27fe5d523b",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_rpp_4": {
-   "sha256": "1be71fee7dd98e39638a69fa6c57f3d87e5fdad552f87761ab3e3d050242c21c",
-   "bytes": 134551,
+   "sha256": "94a2c7d52e02454ce5e6331152629f16e7d8dd1d9dfe2f269a9e0d08a21eb7eb",
+   "bytes": 253509,
    "digest": {
     "profile": "coco",
     "messages": 1013,
@@ -6590,7 +6590,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "c76729582fc6b16c6b1facc1c329814af26f83bbb5f46caffcf520b649f7d124",
+      "sha256": "beae9a037f956d3c0de0666fbccb76b748716fcca7dbeb1c12274bf10d874eef",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -6626,7 +6626,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 58,
@@ -6642,22 +6642,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 289,
-      "sha256": "bd91279f7a8e6355bafb4b0bfeacd9098cbc4f61610293384f8a1d7b82c1aba7",
+      "sha256": "210846c684ea0315a77cae6aa4bc8c4e7aec9e224ddb4048bba63d1240469cf1",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_oncoming_rpp_5": {
-   "sha256": "b0f9d5cab7f952bcbf263e7f8c06ac76cae8d69f0c97f16284a5d66c19d12b2a",
-   "bytes": 137980,
+   "sha256": "29fdede60944a27a88d53f93ac64ddf65aeec80ab6e162ed8da05dc1f2e742d9",
+   "bytes": 252642,
    "digest": {
     "profile": "coco",
     "messages": 1002,
@@ -6689,7 +6689,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "ac26ec228fdf3737cfb5b0a3662345503b8be5e1b3bfea4d09c48ffb773e2ec2",
+      "sha256": "1a2ec749a5779c751bd785623922b8f6f90e0c276cd235939701699d61cc08b5",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -6725,7 +6725,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 58,
@@ -6741,22 +6741,22 @@
       "encoding": "protobuf",
       "schema": "coco.truth.v1.ActorPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      },
      "coco.truth.pose.v1": {
       "messages": 288,
-      "sha256": "65d95439d070a235cf83ae785f41c873966f73828f66dc4a4c8288e147b54dca",
+      "sha256": "733d3c51474f1df5f71d81d8786bd3c7832c14f5a6aa3569a6a4ad5798f1d859",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_dwb_1": {
-   "sha256": "5377153543aaf3071a88f0c886632640d3bfd05d43971aa2d40cd3ec53674e81",
-   "bytes": 241582,
+   "sha256": "3fdb129e49183d6b9ca06a2accbae609e0e2ae18a4d47c535306d73cee77964e",
+   "bytes": 401978,
    "digest": {
     "profile": "coco",
     "messages": 1449,
@@ -6796,7 +6796,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "3486595494ed88aec636a6eeaf0fce47d99eac8c6ffa90d4f3f9554185fbbbde",
+      "sha256": "809faea977cd353cc4303414d41325aee192d297a5dc7dfd82f3116679b276ff",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -6832,7 +6832,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 100,
@@ -6844,18 +6844,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 500,
-      "sha256": "8d5d1a8e66a804268b65eed8b84355c7cf20261825d29cb8c559c4f87e083f46",
+      "sha256": "d57e176b5105b7dc6bfdd95fb440e1eb89cb214af78ff243b1a47b9d47eb059d",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_dwb_2": {
-   "sha256": "3fda7202b079a318f98c10f5d751ff5c865cc3a038df4d91741689feced7bbab",
-   "bytes": 228530,
+   "sha256": "5cb3d8878d02e5b3d072881971c14300ebf805de730ed35953cb602882921fa7",
+   "bytes": 379638,
    "digest": {
     "profile": "coco",
     "messages": 1352,
@@ -6895,7 +6895,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "5dc0c536a3825c443e475585fbd7c6e23999a54ffadff4c263f620d1c35afa86",
+      "sha256": "4e80853cd0c10ee3c5292b708d884313f1cbc20a04a68bb86c3ccdf5a551036a",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -6931,7 +6931,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 95,
@@ -6943,18 +6943,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 476,
-      "sha256": "acef0e5e5d1fee88dab946bb3fcc9ec143f3ac1a93f31ad9aef11bc8b8bad0f0",
+      "sha256": "a92de02d8738b3b4b9b75c98efb280b6e304a1a0370cabe06991c9a6dc618dd5",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_dwb_3": {
-   "sha256": "83da8cd35178bd74008ca261c75dc4bda6d6a2b9a35a360ad26fc71e72a670d0",
-   "bytes": 234051,
+   "sha256": "4cb4e24ccdc1eb64d3312d2dfbbc67e734a3a14b1e6ce6fc51b439c0da5e9e6f",
+   "bytes": 394430,
    "digest": {
     "profile": "coco",
     "messages": 1391,
@@ -6994,7 +6994,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "1b3c39a07b08d0d1dbf5fc31ad6bf5db1fa9d801f8a7b97a5f28e400732d41f0",
+      "sha256": "6ba845b9e2b15f51ff9be29b26a243925ee718f4503b4e99ac487c3b6c0510fc",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -7030,7 +7030,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 97,
@@ -7042,18 +7042,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 482,
-      "sha256": "af7837f7bfe2680801d6ada2ef7ef05a9324e77452d8b9150a8a7ffa3eaf1122",
+      "sha256": "7121a698709c478ad37dd3455f2479afca65b0533124332f274e70809050d25d",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_dwb_4": {
-   "sha256": "31d29ee696d09a6166d5fb59ba3f854b73fc2e819af6ed5eccb2f5870a11f856",
-   "bytes": 243013,
+   "sha256": "49d12dd7eef0d93bb128b799021b17177ec549581ee362208e0b8945813ad739",
+   "bytes": 401961,
    "digest": {
     "profile": "coco",
     "messages": 1423,
@@ -7093,7 +7093,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "5178ff152ed8f0e9e1973a14294d759298cbfac7b48bfdae6694f389fa3824fd",
+      "sha256": "dc5e479e4415c340adfbac401bd49b9d2ed24f2aa25e41dbb2573c4399820188",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -7129,7 +7129,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 102,
@@ -7141,18 +7141,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 510,
-      "sha256": "9817bf0e1389ce22942c71751d96ec41b403af197898a8a692865e12383aee15",
+      "sha256": "120dc7ebd0aa6438eb500618fb0f1aa7ee7ea37c45b4d7b4e28dcade41eed46f",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_dwb_5": {
-   "sha256": "66ad04a022138829d8a6dffe287342f6e87d8ab7d4d634d84ee360893298760c",
-   "bytes": 242385,
+   "sha256": "b8cb1a66fe908b71e343b7001290f2df2cfb5405bdfd6a4921da9bab67e252d4",
+   "bytes": 400948,
    "digest": {
     "profile": "coco",
     "messages": 1422,
@@ -7192,7 +7192,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "c51f8871097963769ef349cc45257ea438c31cf77b1f8b6b4d8d732a01028a08",
+      "sha256": "06ae224cca27b39680bd342d2d4d8d5087a34acda8f9829da952c4cd0c754a6b",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -7228,7 +7228,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 99,
@@ -7240,18 +7240,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 496,
-      "sha256": "ccac1744c7a1a84104e4279c0da9ada4ed5fc02928b4a33e76a4813c72cc09c2",
+      "sha256": "853316a15b9110530db0ffcdbaa3afcdcaec796db1ee075a2ac2cc397019b1bc",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_mppi_1": {
-   "sha256": "b190862f5ff2b31f5f9a13d5dd80d4e258cf7bbe2ab935858cd7f5da4488a5f4",
-   "bytes": 332059,
+   "sha256": "fd21f228c20c1a047b01c7ef75d743e14b613335dba7dcd287049ccdd1c01530",
+   "bytes": 500279,
    "digest": {
     "profile": "coco",
     "messages": 1795,
@@ -7291,7 +7291,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "e3dea5d9480682f6cfc956d8594f2822ba80eb60f79ae09a9ee79cfd690adfce",
+      "sha256": "1c677de6e1cbce7637035c20ea2cf9cf7e3662cfb98f50d9379f09d36b9e07dd",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -7327,7 +7327,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 123,
@@ -7339,18 +7339,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 615,
-      "sha256": "a5551dc42e1b7f21524264e603f802de8e0044488ed5cd5c72a74258731a4204",
+      "sha256": "c358d9815ac7449a27a921220935322552a6ff974f35a45619ea154ee58123ea",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_mppi_2": {
-   "sha256": "1828bcb73bfa6a0c54deccdf1c191b65638c9839fdd9830db52a066556c35a8e",
-   "bytes": 334713,
+   "sha256": "d50dc791f68d559ecbe16cbc67dfed2b37d229ea351194513548ca97b6c460aa",
+   "bytes": 511029,
    "digest": {
     "profile": "coco",
     "messages": 1852,
@@ -7390,7 +7390,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "76868ce0cd8f35e597a26ee010b7a40b8b1ac60ae1a01e060f3a4e3d4cf984f8",
+      "sha256": "d908d8d923af5e1aeb8dc3a66f2aa9fdcecaab3173600adadcc45b8d7aa48d39",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -7426,7 +7426,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 124,
@@ -7438,18 +7438,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 616,
-      "sha256": "25f91809e67600a123ce55cdb3bf9326c1a4d5c5deb7bd2f5f80546988db5a89",
+      "sha256": "b913fd9919d1dec31c058ea63a71d73effbd1b641ad386b85a60891f43ba28cd",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_mppi_3": {
-   "sha256": "fb713d8e7810030cca7b6ddb70fc8c4918b85fb43d20ef6fb3e7396745159633",
-   "bytes": 333132,
+   "sha256": "3aca77782f04f62843ea5619e6fe08e7f357bf304808ec3bf2829d6111a4a493",
+   "bytes": 503152,
    "digest": {
     "profile": "coco",
     "messages": 1800,
@@ -7489,7 +7489,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "a9ad0aa045ed2f14976e306e11acb3b82f070347b7a19ac0101938800d5e8bb9",
+      "sha256": "5ff18f1dffa3db1d9e56cbcd83e3f738aadb32f6eb7e6d8fd8058d2f8b50c7c6",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -7525,7 +7525,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 124,
@@ -7537,18 +7537,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 618,
-      "sha256": "88b32d15b101aabf64d985faaaec6a3d641ea1668e67067fe49c5abed40c4f3a",
+      "sha256": "b3369d96e1447f37e17714130a44cf6d294cc028a9bb6ff3a034c02dc9bfbbe3",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_mppi_4": {
-   "sha256": "4b00fae80da5c8c9649ac5467b18a1727c305455373a2b6e8be8bc22af58e093",
-   "bytes": 335256,
+   "sha256": "15526383a5f2e85166a6e8bb5e4da132b9223e8d85a938f94c4e5762ec1390e4",
+   "bytes": 506112,
    "digest": {
     "profile": "coco",
     "messages": 1820,
@@ -7588,7 +7588,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "0846783c6a9d5c01545fc45968ab304a485fee8260e5d6cd980ec276d8d8218f",
+      "sha256": "ebaa18cc4a0438b3ddaf76596e35f4a62ff2d8424fa927dc0bca9af5ad26d5ea",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -7624,7 +7624,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 124,
@@ -7636,18 +7636,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 620,
-      "sha256": "223df3cb1addc5a5f843a687de3a6b2b5de1c03f2d3dc9963ddf60f0f683b689",
+      "sha256": "ca0858cafc4a9a7b997a14d1cac189f88ca4e6295da4ef589a5c724c83975422",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_mppi_5": {
-   "sha256": "99a8d856fb704392a5227350037483a81e7430b8d9df1518eefa404f1c80deaa",
-   "bytes": 341791,
+   "sha256": "d77b3c0c2318de15c18c369fafa08f2a040512316c031d6217c4c99dcd4ec504",
+   "bytes": 517808,
    "digest": {
     "profile": "coco",
     "messages": 1871,
@@ -7687,7 +7687,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "d813050eb03afe3b635085f4684e5fab90c5ee30643652e4a0f24fb8d5a24a82",
+      "sha256": "1b541846d2ddf31c3c076c7cd7a05894ee9d4114d799714d48cb000a3b6565b3",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -7723,7 +7723,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 126,
@@ -7735,18 +7735,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 628,
-      "sha256": "b830d340167dc6841a05c0d81984245feec8d280ad5adb57e9062336f2b5a0b0",
+      "sha256": "805b38d654d58d30829e8b38121d92323f64a6202f90372807cd96217262cac0",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_rpp_1": {
-   "sha256": "1e07fd3a7d91c25d700d2be03d78fff52eb8f03e0dfce9e355c8967a70dac6af",
-   "bytes": 321154,
+   "sha256": "c5bfa450f62f4796f1637dce85c061b2fb97b470049738bb9144716671723f49",
+   "bytes": 500893,
    "digest": {
     "profile": "coco",
     "messages": 1773,
@@ -7778,7 +7778,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "b1fd3cf6d1ac3240a6e798b10320652ef27ec818c3aa804e54a21caa11438f2f",
+      "sha256": "11dd2253135416706cebf03400d187e38d89e65f619910beb0003ff4ea707bee",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -7814,7 +7814,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 123,
@@ -7826,18 +7826,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 614,
-      "sha256": "70021f170e02d80408240f6ebd22a55c8bb544aa2e4aa19c9c436cecbdda1a1a",
+      "sha256": "baaa6da741a84a8ef80d814a8c06f6c1a752c202b880f35b02f7b10085019eb6",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_rpp_2": {
-   "sha256": "fdc2599e810829872c538e47757311d278fd97e93ede15a5ed8e3211bc6e04fb",
-   "bytes": 318580,
+   "sha256": "7a25d06a637c09ad1cc33d91a988244375d31a4edf496558c3ab1667313ef1ba",
+   "bytes": 497739,
    "digest": {
     "profile": "coco",
     "messages": 1749,
@@ -7869,7 +7869,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "8291bf6340ec240710ac1040440efdb85512caaf5f368ff8659cd3cc4a376fc8",
+      "sha256": "6df2b7314a578e10f36969400183c2308a72ec96dbcddd2feaabcdfdee6b8545",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -7905,7 +7905,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 123,
@@ -7917,18 +7917,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 612,
-      "sha256": "a97d7f9022bf03463d7da6d1a05a8d06a7ea61738dc12cc659c3da0d3bfc46ca",
+      "sha256": "36072861d03c8b3597dfd544c7ac590d849ef3d3e5c73fd1a868e4df7bf5c5c6",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_rpp_3": {
-   "sha256": "f084960da93c2ffb0e865c11a68f87b27e759fe6d1ee170c881d6194ce084797",
-   "bytes": 318509,
+   "sha256": "b772cf5d6ba00a13e11294b9d4293a9f77e6c6a0d26445df792c89c61811d205",
+   "bytes": 492521,
    "digest": {
     "profile": "coco",
     "messages": 1701,
@@ -7960,7 +7960,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "ac8e66e193fb6e976d754ed7f5a5b3e1e304ac54f456a816a20103ecd3b836ff",
+      "sha256": "2f876340408eb95e1f2a34e6c14c0b19091bb2993e54de1de496f0f381c537b9",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -7996,7 +7996,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 123,
@@ -8008,18 +8008,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 611,
-      "sha256": "614e91243818e6181d6b523dd79db10dde342eb7d483dbb4fd86664658b9a3f2",
+      "sha256": "90756f7b7cd4b93cb01c620aba5a3c04d0bbc90827246af399b3d9c868592dfa",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_rpp_4": {
-   "sha256": "c059aa319dd74d6d82c4923bc20e299fa322cf9a2c5debf57bb4a9918253872e",
-   "bytes": 318583,
+   "sha256": "26d3248e22be03a010410adb376ab2e0602b4d2fcf76f02d6c74e73dd4bd8293",
+   "bytes": 491023,
    "digest": {
     "profile": "coco",
     "messages": 1707,
@@ -8051,7 +8051,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "aa770df137140ece12e2b060c8c0e52d47d0bd4daba369f6e0581102f87efdf5",
+      "sha256": "0365bee161b589ce428f994596c35b5cffb63ad368c49d115ebecfb0ed9f32a3",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -8087,7 +8087,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 122,
@@ -8099,18 +8099,18 @@
      },
      "coco.truth.pose.v1": {
       "messages": 611,
-      "sha256": "2ce300c2ef7829df9fb6be73075fba41f7e0d9c0606488d023a7abe872652242",
+      "sha256": "7de9af9d8d577b2815fa296fb42758f9cc3bf8796618c3a0e3f19e3628e3a9e7",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }
   },
   "lab5_static_room_rpp_5": {
-   "sha256": "2eacd687f572cd4bd565eb227b21d9e45b3ffae5dd5d750130f603216c4cf6ba",
-   "bytes": 324133,
+   "sha256": "6485fb63f2726b8df62587df7b279014e7d9e4debea173f262241d3cfaf6eecd",
+   "bytes": 515596,
    "digest": {
     "profile": "coco",
     "messages": 1886,
@@ -8142,7 +8142,7 @@
      },
      "coco.envelope.manifest.v1": {
       "messages": 1,
-      "sha256": "600bf331fd0167443d12ed84d7a7ebfecc0acddc154178f07ba215db49a977d1",
+      "sha256": "5c5970b51e3e6277f45d4529607fcd5b57e190b231f6f64725612c7e55433f6b",
       "encoding": "protobuf",
       "schema": "coco.envelope.v1.Manifest",
       "schema_encoding": "protobuf",
@@ -8178,7 +8178,7 @@
       "encoding": "protobuf",
       "schema": "coco.robot.v1.RobotStateBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "9b49c9e5904b92b5631cff74df647f79b16fbb3460095f39c7321694800988f7"
+      "schema_sha256": "458210e6d0515e7728180f2f38ab30cd151322781d3ed14208270fbda884aee0"
      },
      "coco.sensor.scan.lidar.v1": {
       "messages": 123,
@@ -8190,11 +8190,11 @@
      },
      "coco.truth.pose.v1": {
       "messages": 613,
-      "sha256": "c7de1d9eaa45d1bd88abe3b765b1df16e0124c0988467b6854cb165d06a1c9df",
+      "sha256": "8dbfa38953bb5c5d2277d0944c783350fbb774c218fd3774f479e0440ddac6c0",
       "encoding": "protobuf",
       "schema": "coco.truth.v1.TruthPoseBatch",
       "schema_encoding": "protobuf",
-      "schema_sha256": "b52b82f37e5675de1a46165716ee97bcb2d571d6f8ccf999ed04b5804b45293b"
+      "schema_sha256": "3410e02af8e72b4b49c88772876b44303dc2d4fa3d766c350e00b5aa327b84f2"
      }
     }
    }

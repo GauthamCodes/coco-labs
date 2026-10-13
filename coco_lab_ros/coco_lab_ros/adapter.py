@@ -113,6 +113,13 @@ def yaw(q) -> float:
     return math.atan2(2.0 * (q.w * q.z + q.x * q.y), 1.0 - 2.0 * (q.y * q.y + q.z * q.z))
 
 
+def roll_pitch(q) -> Tuple[float, float]:
+    """Return the REP-103 roll and pitch of a quaternion with fields x, y, z, w."""
+    roll = math.atan2(2.0 * (q.w * q.x + q.y * q.z), 1.0 - 2.0 * (q.x * q.x + q.y * q.y))
+    pitch = math.asin(max(-1.0, min(1.0, 2.0 * (q.w * q.y - q.z * q.x))))
+    return roll, pitch
+
+
 def stamp_s(msg) -> float:
     """Return a message's header stamp in seconds (0.0 if it has none or it is zero)."""
     h = getattr(msg, 'header', None)
@@ -379,7 +386,12 @@ def convert(bag, case: dict, detail: str = 'summary',
                 continue
             p = m.pose.pose
             x, y = to_map(p.position.x, p.position.y)
-            put('truth', t, {'x': x, 'y': y, 'theta': yaw(p.orientation)})
+            # M4.7: the full 3D truth, as Gazebo recorded it (README section 3 invariant 4:
+            # height is carried where it was recorded, never inferred); z needs no map
+            # offset (world_to_map is planar)
+            ro, pi = roll_pitch(p.orientation)
+            put('truth', t, {'x': x, 'y': y, 'theta': yaw(p.orientation), 'z': p.position.z,
+                             'roll': ro, 'pitch': pi})
         elif topic == '/amcl_pose':
             p = m.pose.pose
             c = m.pose.covariance
@@ -485,7 +497,7 @@ def convert(bag, case: dict, detail: str = 'summary',
         return {n: [r[n] for _, r in rs] for n in names}
 
     simple = {
-        'truth': ('TruthPoseBatch', ('x', 'y', 'theta')),
+        'truth': ('TruthPoseBatch', ('x', 'y', 'theta', 'z', 'roll', 'pitch')),
         'robot': ('RobotStateBatch', ('x', 'y', 'theta', 'v', 'omega')),
         'actors': ('ActorPoseBatch', ('actor_id', 'x', 'y', 'theta', 'radius')),
         'metrics': ('MetricBatch', ('name', 'value', 'unit')),

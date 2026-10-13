@@ -1,0 +1,247 @@
+{
+ "browser": "webkit",
+ "version": "27.2",
+ "site": "http://127.0.0.1:4244/coco-labs/",
+ "seconds": 91.323,
+ "exact": 18,
+ "ok": 18,
+ "links": 18,
+ "rows": [
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "expected": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "exact": true,
+   "ms": 3444,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "expected": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "exact": true,
+   "ms": 3459,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "expected": "28586af380b7e9041a562cc8adf2b50028133972dc9581919d99cd9bef1297b9",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "28586af380b7e9041a562cc8adf2b50028133972dc9581919d99cd9bef1297b9",
+   "exact": true,
+   "ms": 3441,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "expected": "1d404acf8b988a8fcf4cdebd84cd37cd6a288b0dfb11e76eeb711e9623840cdf",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "1d404acf8b988a8fcf4cdebd84cd37cd6a288b0dfb11e76eeb711e9623840cdf",
+   "exact": true,
+   "ms": 3427,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "expected": "3f212665205921923613d95229887f5f360b5e4c08102e45def1d64968d90b88",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "3f212665205921923613d95229887f5f360b5e4c08102e45def1d64968d90b88",
+   "exact": true,
+   "ms": 6455,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "expected": "360b1ae75f1bad079d07107706ea054cf636549f394bf309dcc2b22b02690849",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "360b1ae75f1bad079d07107706ea054cf636549f394bf309dcc2b22b02690849",
+   "exact": true,
+   "ms": 6950,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "expected": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "exact": true,
+   "ms": 3933,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "expected": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "exact": true,
+   "ms": 4431,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "expected": "74e982b3191fcd1c48909a4f1170f57b51383072958af5f7a06a6d33a1acc238",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "74e982b3191fcd1c48909a4f1170f57b51383072958af5f7a06a6d33a1acc238",
+   "exact": true,
+   "ms": 3941,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "expected": "106055cf0e4b1033ab4aba071d5297d59df04deb93b0a1ebdb463747603362dd",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "106055cf0e4b1033ab4aba071d5297d59df04deb93b0a1ebdb463747603362dd",
+   "exact": true,
+   "ms": 3505,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "expected": "d725360830483a471b1f15bec9c612ac608fb65751f339a43de410f0f7556dd7",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "d725360830483a471b1f15bec9c612ac608fb65751f339a43de410f0f7556dd7",
+   "exact": true,
+   "ms": 4947,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "expected": "c131213e6e518603b8494f0e13a1caef3c5f1537dbc3d74aa2716f19598e29e9",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "c131213e6e518603b8494f0e13a1caef3c5f1537dbc3d74aa2716f19598e29e9",
+   "exact": true,
+   "ms": 8981,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "expected": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "exact": true,
+   "ms": 3938,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "expected": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "exact": true,
+   "ms": 4436,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "expected": "6f08d781107c4fbb8c451697fe6c352533c7f0085aa952dc04079eb119816165",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "6f08d781107c4fbb8c451697fe6c352533c7f0085aa952dc04079eb119816165",
+   "exact": true,
+   "ms": 4429,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "expected": "3bc4d92076fc9d4eb9af6afa181d03847da4621f3962d7d21bada6f3e087f0e1",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "3bc4d92076fc9d4eb9af6afa181d03847da4621f3962d7d21bada6f3e087f0e1",
+   "exact": true,
+   "ms": 3934,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "expected": "925797d41195fb1333866258b8d12cbe152b9f72ea8081677a1cc37e9b6faa47",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "925797d41195fb1333866258b8d12cbe152b9f72ea8081677a1cc37e9b6faa47",
+   "exact": true,
+   "ms": 5440,
+   "ok": true
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "expected": "c736b3ecc0ee0cde9b1b5faf71a0a92500caf1e6f5643ad140fc2958628dcdd9",
+   "errors": [],
+   "text": "Reproduced exactly: re-scored from the link's inputs, the same result hash.",
+   "hash": "c736b3ecc0ee0cde9b1b5faf71a0a92500caf1e6f5643ad140fc2958628dcdd9",
+   "exact": true,
+   "ms": 9000,
+   "ok": true
+  }
+ ],
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-12T18:53:01.037Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.99,
+    "5m": 1.86,
+    "15m": 1.65
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-12T18:54:32.473Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.36,
+    "5m": 2.05,
+    "15m": 1.74
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

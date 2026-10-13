@@ -186,6 +186,17 @@ class ArenaMission:
         """End the mission on a reset."""
         self._clear()
 
+    def resume(self, a) -> None:
+        """
+        Re-request the leg being driven, when a person hands the wheels back.
+
+        M4.3, ``autonomy``: only if the mission is still driving a leg. A
+        person's driving usually ends the fetch first (the leg is "stopped
+        short", as in M1-M3); then there is nothing to resume.
+        """
+        if self.state in ('go_to_bay', 'return'):
+            self._request_leg(a)
+
     # -- emitting --------------------------------------------------------------
 
     def _headers(self, a):

@@ -73,6 +73,46 @@ converter); comparisons hold every non-compared variable fixed; remote
 control is exclusive and interruptible and STOP always wins; Gazebo
 `--fast` stays banned.
 
+### README revision 2 (2026-10-11): 3D by default — the rules it adds
+
+README §3 now numbers the invariants 1–11 and the integrity rules 1–8; §9
+the agent rules. The new ones, verbatim in substance:
+
+- **Invariant 9.** Any second implementation of an algorithm (WebAssembly,
+  TypeScript) must be trace-equivalent to the Python reference on the
+  property-test corpus, checked in CI (the replaced invariant above).
+- **Invariant 10. No physics engine in the browser.** The Arena model is
+  planar kinematics plus kinematic terrain following. Adding rigid-body
+  physics requires a new decision by Gautham (decision D4). Tipping, slip,
+  friction and contact forces come only from Gazebo (Case Files, later
+  cloud runs). Whenever the Arena model drives the robot, a
+  **"MODEL · kinematic"** badge is on screen.
+- **Invariant 11. Rendering never changes the model.** Cameras, lighting,
+  interpolation and visual effects are outside the per-tick state hash.
+  Flat-scene hashes stay byte-identical across renderer changes — a
+  changed flat-scene hash is an M4 stop condition. Height, roll and pitch
+  are never invented for a Stack recording that did not record them
+  (invariant 4): such a Case File shows a "planar recording" chip.
+- **Integrity rule 7. Browser storage is per-viewer convenience only:**
+  `localStorage` only, through **one preferences module**, every access
+  inside `try`; the page works without it; no cookies, `sessionStorage`,
+  IndexedDB or analytics (decision D6 generalises M3's narrowed guard).
+- **Integrity rule 8. Every asset has a recorded licence.** Third-party
+  textures, environment maps and props must be CC0 or equivalent, listed in
+  the asset manifest with source and checksum. COCO's own CAD meshes are
+  Gautham's own work.
+- **Agent rule 6. Resources and measurement.** RTX 4050 laptop GPU (6 GB),
+  Intel integrated GPU, 16 GB RAM, Ubuntu 24.04, ROS 2 Jazzy. Never two
+  simulators at once; respect robot batch windows. Measure on the
+  **balanced** profile **on AC** (switch and restore the profile); every
+  harness records power state and GPU driver version. Emulated results are
+  labelled "emulated", never "phone".
+- **Agent rule 7. Visual review.** Agents cannot judge looks reliably;
+  screenshot tests catch regressions only. At each M4 checkpoint that
+  changes the look, commit screenshots to `docs/v2/data/m4/screens/` and
+  list them in `docs/STATUS.md` for Gautham; carry on without waiting, and
+  apply his recorded feedback at the next checkpoint.
+
 ### The robot-batch-window rule
 
 **The machine is shared with the robot project, whose overnight batch runs

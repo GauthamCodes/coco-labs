@@ -21,6 +21,7 @@ export interface PerfSnapshot {
   ticks: number;
   stepMsMedian: number | null;
   goalToFrontierMs: number[];
+  inputToMotionMs: number[];            // M4.10: drive input -> the robot drawn moved
 }
 
 class Perf {
@@ -85,6 +86,35 @@ class Perf {
     this.emit();
   }
 
+  /**
+   * M4.10 (README §7 M4, the phone touch row: "joystick response ... about 100 ms or less in
+   * `?perf`"): a drive input (a key or the joystick) given with the robot at rest -> the end of
+   * the first frame that draws the robot somewhere else; control_latency.mjs's definition, kept
+   * in the page so a phone can read it. At rest = the drawn pose unchanged for 3 frames, so a
+   * robot still coasting or driven by autonomy never yields a short reading. `performance.now()`
+   * time, the clock an event's `timeStamp` is on. The last 20 are kept.
+   */
+  readonly inputToMotion: number[] = [];
+  private inputAt: number | null = null;
+  private inputPose: [number, number, number] = [0, 0, 0];
+  private stillPose: [number, number, number] = [NaN, NaN, NaN];
+  private stillFrames = 0;
+  driveInput(at = performance.now()) {
+    if (this.inputAt !== null || this.stillFrames < 3) return;
+    this.inputAt = at;
+    this.inputPose = [...this.stillPose];
+  }
+  drawnPose(p: readonly number[], now = performance.now()) {
+    const moved = p[0] !== this.stillPose[0] || p[1] !== this.stillPose[1] || p[2] !== this.stillPose[2];
+    if (this.inputAt !== null && (p[0] !== this.inputPose[0] || p[1] !== this.inputPose[1] || p[2] !== this.inputPose[2])) {
+      this.inputToMotion.push(now - this.inputAt);
+      if (this.inputToMotion.length > 20) this.inputToMotion.shift();
+      this.inputAt = null;
+      this.emit();
+    }
+    if (moved) { this.stillPose = [p[0], p[1], p[2]]; this.stillFrames = 0; } else this.stillFrames += 1;
+  }
+
   tick(stepMs: number) {
     this.steps.push(stepMs);
     if (this.steps.length > 600) this.steps.splice(0, 300);
@@ -106,6 +136,7 @@ class Perf {
       ticks: this.steps.length,
       stepMsMedian: s.length ? s[s.length >> 1] : null,
       goalToFrontierMs: [...this.goalToFrontier],
+      inputToMotionMs: [...this.inputToMotion],
     };
   }
 

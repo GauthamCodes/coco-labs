@@ -1,0 +1,338 @@
+{
+ "schema": "lab_web.assets3d",
+ "version": "1.0",
+ "pipeline": "docs/v2/adr/0006-asset-pipeline.md",
+ "tools": {
+  "meshoptimizer": "1.2.0",
+  "compression": "EXT_meshopt_compression (codec version 0)"
+ },
+ "budget": {
+  "first_scene_bytes": 5000000,
+  "robot_bytes": 1500000
+ },
+ "first_scene": {
+  "desktop_bytes": 567792,
+  "phone_bytes": 171532
+ },
+ "levels": {
+  "high": {
+   "file": "robot_high.glb",
+   "bytes": 540152,
+   "triangles": 20000,
+   "budget": 20000,
+   "meshes": [
+    {
+     "mesh": "chassis_link:0",
+     "source_tris": 608,
+     "share": 608,
+     "tris": 608
+    },
+    {
+     "mesh": "wheel1:0",
+     "source_tris": 87790,
+     "share": 3582,
+     "tris": 3582
+    },
+    {
+     "mesh": "wheel2:0",
+     "source_tris": 87790,
+     "share": 3582,
+     "tris": 3582
+    },
+    {
+     "mesh": "wheel3:0",
+     "source_tris": 87790,
+     "share": 3582,
+     "tris": 3582
+    },
+    {
+     "mesh": "wheel4:0",
+     "source_tris": 87790,
+     "share": 3582,
+     "tris": 3582
+    },
+    {
+     "mesh": "m_link1:0",
+     "source_tris": 1898,
+     "share": 1898,
+     "tris": 1898
+    },
+    {
+     "mesh": "m_link2:0",
+     "source_tris": 1806,
+     "share": 1806,
+     "tris": 1806
+    },
+    {
+     "mesh": "m_link3:0",
+     "source_tris": 548,
+     "share": 548,
+     "tris": 548
+    },
+    {
+     "mesh": "grip1:0",
+     "source_tris": 304,
+     "share": 304,
+     "tris": 304
+    },
+    {
+     "mesh": "grip2:0",
+     "source_tris": 304,
+     "share": 304,
+     "tris": 304
+    },
+    {
+     "mesh": "lidar_link:0",
+     "source_tris": 96,
+     "share": 96,
+     "tris": 96
+    },
+    {
+     "mesh": "lidar_link:1",
+     "source_tris": 96,
+     "share": 96,
+     "tris": 96
+    },
+    {
+     "mesh": "camera_link:0",
+     "source_tris": 12,
+     "share": 12,
+     "tris": 12
+    }
+   ]
+  },
+  "low": {
+   "file": "robot_low.glb",
+   "bytes": 143892,
+   "triangles": 4412,
+   "budget": 4500,
+   "meshes": [
+    {
+     "mesh": "chassis_link:0",
+     "source_tris": 608,
+     "share": 461,
+     "tris": 460
+    },
+    {
+     "mesh": "wheel1:0",
+     "source_tris": 87790,
+     "share": 461,
+     "tris": 440
+    },
+    {
+     "mesh": "wheel2:0",
+     "source_tris": 87790,
+     "share": 461,
+     "tris": 440
+    },
+    {
+     "mesh": "wheel3:0",
+     "source_tris": 87790,
+     "share": 461,
+     "tris": 440
+    },
+    {
+     "mesh": "wheel4:0",
+     "source_tris": 87790,
+     "share": 461,
+     "tris": 440
+    },
+    {
+     "mesh": "m_link1:0",
+     "source_tris": 1898,
+     "share": 461,
+     "tris": 460
+    },
+    {
+     "mesh": "m_link2:0",
+     "source_tris": 1806,
+     "share": 461,
+     "tris": 460
+    },
+    {
+     "mesh": "m_link3:0",
+     "source_tris": 548,
+     "share": 461,
+     "tris": 460
+    },
+    {
+     "mesh": "grip1:0",
+     "source_tris": 304,
+     "share": 304,
+     "tris": 304
+    },
+    {
+     "mesh": "grip2:0",
+     "source_tris": 304,
+     "share": 304,
+     "tris": 304
+    },
+    {
+     "mesh": "lidar_link:0",
+     "source_tris": 96,
+     "share": 96,
+     "tris": 96
+    },
+    {
+     "mesh": "lidar_link:1",
+     "source_tris": 96,
+     "share": 96,
+     "tris": 96
+    },
+    {
+     "mesh": "camera_link:0",
+     "source_tris": 12,
+     "share": 12,
+     "tris": 12
+    }
+   ]
+  }
+ },
+ "assets": [
+  {
+   "file": "arena.glb",
+   "kind": "world",
+   "bytes": 27640,
+   "sha256": "36d5fe22079453cf969ebfa25b7b1815f04a41a09c2fdcce9b29f2e6fdd5721b",
+   "triangles": 964,
+   "first_scene": "always",
+   "licence": "Gautham Anil's own work (COCO's CAD, Fusion 360, and its Gazebo world); Apache-2.0, the repository's licence",
+   "sources": [
+    {
+     "path": "gazebo_models/worlds/coco_navigation.world",
+     "sha256": "cbe9415ab6b029c759a4dcceb67042b70e73d0569e2d98391bca5921a54d58bd"
+    },
+    {
+     "path": "gazebo_models/urdf/ramp.sdf",
+     "sha256": "d24bcbbec60216f54971cf4891ec4bf7eb26de56d43bc184a49e838b4e410f6b"
+    },
+    {
+     "path": "gazebo_models/meshes/ramp_wedge_18.stl",
+     "sha256": "afcc5c4ab5cab6b4c9ecab0c2b7804db10e182332b82ac57fa531a2654e2c800"
+    },
+    {
+     "path": "coco_config/coco_config/robot.py",
+     "sha256": "9099f37cade849c9ff98a4f72cf1187c3fc0bc49b256d29dfe43da26f1641ffd"
+    }
+   ]
+  },
+  {
+   "file": "robot_high.glb",
+   "kind": "robot",
+   "bytes": 540152,
+   "sha256": "71269a169d7e7239751385a7b0f3491e389620529c29b4963746352e796270a4",
+   "triangles": 20000,
+   "first_scene": "desktop",
+   "licence": "Gautham Anil's own work (COCO's CAD, Fusion 360, and its Gazebo world); Apache-2.0, the repository's licence",
+   "sources": [
+    {
+     "path": "gazebo_models/urdf/coco_robo2.xacro",
+     "sha256": "914b418827d58c7810eebd86351d658e2aa3493f48755b6e7a936ab732bde8b0"
+    },
+    {
+     "path": "lab_web/tools/assets/coco_robo2.urdf",
+     "sha256": "1f3f38e8760c79139d49844190513fa8e212effebd1ed0f4b578c46ad6d991b9"
+    },
+    {
+     "path": "gazebo_models/meshes/base.stl",
+     "sha256": "7129b1b85a4e512a290749a6dbf8dee2d181525e2e8147f893d1543bd1c7b256"
+    },
+    {
+     "path": "gazebo_models/meshes/grip1.stl",
+     "sha256": "ad2af4c6fad16b53d5620d3a6db5605e0d869109dc65efe7a7425f1b09198088"
+    },
+    {
+     "path": "gazebo_models/meshes/grip2.stl",
+     "sha256": "ad2af4c6fad16b53d5620d3a6db5605e0d869109dc65efe7a7425f1b09198088"
+    },
+    {
+     "path": "gazebo_models/meshes/m_link1.stl",
+     "sha256": "4bbdfb5b0c61fbfe3dc3a6a2771a27c302443e19760e54b69336127f375cb08a"
+    },
+    {
+     "path": "gazebo_models/meshes/m_link2.stl",
+     "sha256": "aac4ba7a810ff81d191e6f11ff4206f65984933665c8e9536f4a966eac14129b"
+    },
+    {
+     "path": "gazebo_models/meshes/m_link3.stl",
+     "sha256": "a5e596bb3709e42cbdf0c2a6dd28b6a32866a82fdf7cd676f1650a7c53937bb1"
+    },
+    {
+     "path": "gazebo_models/meshes/wheel1.stl",
+     "sha256": "2a0794d5ca01baf5ab4ef466403101005c0d05a794c99386ae254dffac7bd99f"
+    },
+    {
+     "path": "gazebo_models/meshes/wheel2.stl",
+     "sha256": "2a0794d5ca01baf5ab4ef466403101005c0d05a794c99386ae254dffac7bd99f"
+    },
+    {
+     "path": "gazebo_models/meshes/wheel3.stl",
+     "sha256": "2a0794d5ca01baf5ab4ef466403101005c0d05a794c99386ae254dffac7bd99f"
+    },
+    {
+     "path": "gazebo_models/meshes/wheel4.stl",
+     "sha256": "2a0794d5ca01baf5ab4ef466403101005c0d05a794c99386ae254dffac7bd99f"
+    }
+   ]
+  },
+  {
+   "file": "robot_low.glb",
+   "kind": "robot",
+   "bytes": 143892,
+   "sha256": "ae764ad679cb84c4837f227a6fd04d0fa4d914ee5629aa0de2592f3145913a5e",
+   "triangles": 4412,
+   "first_scene": "phone (coarse pointer)",
+   "licence": "Gautham Anil's own work (COCO's CAD, Fusion 360, and its Gazebo world); Apache-2.0, the repository's licence",
+   "sources": [
+    {
+     "path": "gazebo_models/urdf/coco_robo2.xacro",
+     "sha256": "914b418827d58c7810eebd86351d658e2aa3493f48755b6e7a936ab732bde8b0"
+    },
+    {
+     "path": "lab_web/tools/assets/coco_robo2.urdf",
+     "sha256": "1f3f38e8760c79139d49844190513fa8e212effebd1ed0f4b578c46ad6d991b9"
+    },
+    {
+     "path": "gazebo_models/meshes/base.stl",
+     "sha256": "7129b1b85a4e512a290749a6dbf8dee2d181525e2e8147f893d1543bd1c7b256"
+    },
+    {
+     "path": "gazebo_models/meshes/grip1.stl",
+     "sha256": "ad2af4c6fad16b53d5620d3a6db5605e0d869109dc65efe7a7425f1b09198088"
+    },
+    {
+     "path": "gazebo_models/meshes/grip2.stl",
+     "sha256": "ad2af4c6fad16b53d5620d3a6db5605e0d869109dc65efe7a7425f1b09198088"
+    },
+    {
+     "path": "gazebo_models/meshes/m_link1.stl",
+     "sha256": "4bbdfb5b0c61fbfe3dc3a6a2771a27c302443e19760e54b69336127f375cb08a"
+    },
+    {
+     "path": "gazebo_models/meshes/m_link2.stl",
+     "sha256": "aac4ba7a810ff81d191e6f11ff4206f65984933665c8e9536f4a966eac14129b"
+    },
+    {
+     "path": "gazebo_models/meshes/m_link3.stl",
+     "sha256": "a5e596bb3709e42cbdf0c2a6dd28b6a32866a82fdf7cd676f1650a7c53937bb1"
+    },
+    {
+     "path": "gazebo_models/meshes/wheel1.stl",
+     "sha256": "2a0794d5ca01baf5ab4ef466403101005c0d05a794c99386ae254dffac7bd99f"
+    },
+    {
+     "path": "gazebo_models/meshes/wheel2.stl",
+     "sha256": "2a0794d5ca01baf5ab4ef466403101005c0d05a794c99386ae254dffac7bd99f"
+    },
+    {
+     "path": "gazebo_models/meshes/wheel3.stl",
+     "sha256": "2a0794d5ca01baf5ab4ef466403101005c0d05a794c99386ae254dffac7bd99f"
+    },
+    {
+     "path": "gazebo_models/meshes/wheel4.stl",
+     "sha256": "2a0794d5ca01baf5ab4ef466403101005c0d05a794c99386ae254dffac7bd99f"
+    }
+   ]
+  }
+ ]
+}

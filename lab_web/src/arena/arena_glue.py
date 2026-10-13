@@ -85,7 +85,16 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
                   'mount': list(li.mount)},
         'planners': list(PLANNERS), 'planner': _arena.planner,
         'hash': _arena.state_hash(),
+        # M4.6: where the scan is drawn in 3D (presentation; the model casts at this height)
+        'beam_height': _arena.beam_height,
     }
+    if _arena.terrain is not None:
+        # M4.3: where the targets stand (the frozen layout, on the platforms), to draw them
+        from coco_lab.grasp import Grasp, TARGET_DIAMETER, TARGET_HEIGHT
+        world['targets'] = [
+            {'colour': c, 'x': x, 'y': y, 'z': _arena.terrain.height(x, y),
+             'diameter': TARGET_DIAMETER[c], 'height': TARGET_HEIGHT}
+            for c, (x, y) in sorted(Grasp(_arena.spec['world_to_map']).targets.items())]
     return json.dumps(world), m.occupancy
 
 
@@ -145,8 +154,14 @@ def _tick_json(t, inputs):
     given = mv.take_path() if mv is not None else None
     if given:
         extra['path'] = [v for p in given for v in p]
+    # M4.3: the 3D fields (presentation; the state hash is the model's own)
+    if _arena.terrain is not None:
+        extra['tilt'] = [t.z, t.pitch, t.roll]
+    if t.grasp is not None:
+        extra['grasp'] = t.grasp
     return json.dumps({
         **extra,
+        'wheels': list(t.wheels), 'source': t.source,
         'tick': t.tick, 't_world': t.t_world,
         'pose': list(t.belief if t.belief is not None else t.pose),
         'v': t.v, 'w': t.w, 'mode': t.mode, 'blocked': t.blocked,

@@ -1,0 +1,280 @@
+{
+ "tool": "coco verify (lab_web/tools/verify.mjs)",
+ "engine": "Pyodide 314.0.7, Node v24.21.0",
+ "seconds": 42.639,
+ "checked": 18,
+ "matched": 18,
+ "failures": 0,
+ "rows": [
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "ms": 784,
+   "hash": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 7.3
+   },
+   "expected": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "ms": 1137,
+   "hash": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 7.3
+   },
+   "expected": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "ms": 887,
+   "hash": "28586af380b7e9041a562cc8adf2b50028133972dc9581919d99cd9bef1297b9",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 10.4
+   },
+   "expected": "28586af380b7e9041a562cc8adf2b50028133972dc9581919d99cd9bef1297b9",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "ms": 690,
+   "hash": "1d404acf8b988a8fcf4cdebd84cd37cd6a288b0dfb11e76eeb711e9623840cdf",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 7.1
+   },
+   "expected": "1d404acf8b988a8fcf4cdebd84cd37cd6a288b0dfb11e76eeb711e9623840cdf",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "ms": 4118,
+   "hash": "3f212665205921923613d95229887f5f360b5e4c08102e45def1d64968d90b88",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "time",
+    "value": null
+   },
+   "expected": "3f212665205921923613d95229887f5f360b5e4c08102e45def1d64968d90b88",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "ms": 4507,
+   "hash": "360b1ae75f1bad079d07107706ea054cf636549f394bf309dcc2b22b02690849",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "time",
+    "value": null
+   },
+   "expected": "360b1ae75f1bad079d07107706ea054cf636549f394bf309dcc2b22b02690849",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "ms": 1233,
+   "hash": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 17.5
+   },
+   "expected": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "ms": 1691,
+   "hash": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 17.5
+   },
+   "expected": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "ms": 1656,
+   "hash": "74e982b3191fcd1c48909a4f1170f57b51383072958af5f7a06a6d33a1acc238",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 24.9
+   },
+   "expected": "74e982b3191fcd1c48909a4f1170f57b51383072958af5f7a06a6d33a1acc238",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "ms": 1188,
+   "hash": "106055cf0e4b1033ab4aba071d5297d59df04deb93b0a1ebdb463747603362dd",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 16.9
+   },
+   "expected": "106055cf0e4b1033ab4aba071d5297d59df04deb93b0a1ebdb463747603362dd",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "ms": 2330,
+   "hash": "d725360830483a471b1f15bec9c612ac608fb65751f339a43de410f0f7556dd7",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "time",
+    "value": null
+   },
+   "expected": "d725360830483a471b1f15bec9c612ac608fb65751f339a43de410f0f7556dd7",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "ms": 6295,
+   "hash": "c131213e6e518603b8494f0e13a1caef3c5f1537dbc3d74aa2716f19598e29e9",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "time",
+    "value": null
+   },
+   "expected": "c131213e6e518603b8494f0e13a1caef3c5f1537dbc3d74aa2716f19598e29e9",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "ms": 1435,
+   "hash": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 23.4
+   },
+   "expected": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "ms": 1866,
+   "hash": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 23.4
+   },
+   "expected": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "ms": 1913,
+   "hash": "6f08d781107c4fbb8c451697fe6c352533c7f0085aa952dc04079eb119816165",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 33.2
+   },
+   "expected": "6f08d781107c4fbb8c451697fe6c352533c7f0085aa952dc04079eb119816165",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "ms": 1412,
+   "hash": "3bc4d92076fc9d4eb9af6afa181d03847da4621f3962d7d21bada6f3e087f0e1",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 22.9
+   },
+   "expected": "3bc4d92076fc9d4eb9af6afa181d03847da4621f3962d7d21bada6f3e087f0e1",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "ms": 2779,
+   "hash": "925797d41195fb1333866258b8d12cbe152b9f72ea8081677a1cc37e9b6faa47",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "time",
+    "value": null
+   },
+   "expected": "925797d41195fb1333866258b8d12cbe152b9f72ea8081677a1cc37e9b6faa47",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "ms": 6715,
+   "hash": "c736b3ecc0ee0cde9b1b5faf71a0a92500caf1e6f5643ad140fc2958628dcdd9",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "time",
+    "value": null
+   },
+   "expected": "c736b3ecc0ee0cde9b1b5faf71a0a92500caf1e6f5643ad140fc2958628dcdd9",
+   "matches": true,
+   "error": null
+  }
+ ]
+}

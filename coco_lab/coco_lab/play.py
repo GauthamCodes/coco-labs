@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Play (M3.5): five challenges, each scored by a robotics metric.
+Play: six challenges, each scored by a robotics metric.
+
+Five since M3.5; the sixth, race-the-ghost, since M4.8.
 
 One implementation, run three ways: by the page (the Arena worker, in
 Pyodide), by ``coco verify`` (Pyodide in Node, lab_web/tools/verify.mjs)
@@ -41,6 +43,8 @@ map-the-arena          map F1 and ATE within a          two reference drives: th
                        path-length budget               out and back
 case-file-detective    |your tick - the divergence|     the stated tolerance bands around
                        in seconds                       src/arena/moments.ts's answer
+race-the-ghost         time to the flag, path length    the ghost: the model following A*'s
+                       and contacts (coco_lab.race)     path with pure pursuit (M4.8)
 =====================  ===============================  ====================================
 
 **Computation is counted in expansions**, within this one implementation,
@@ -59,7 +63,7 @@ from .trace import EXPAND, PUSH, RELAX
 SCHEMA = 'coco_lab.play.v1'
 LEVELS_SCHEMA = 'coco_lab.play.levels.v1'
 CHALLENGES = ('beat-the-planner', 'next-node', 'search-the-bays',
-              'map-the-arena', 'case-file-detective')
+              'map-the-arena', 'case-file-detective', 'race-the-ghost')
 #: two floats this close are the same number (a sum taken in another order)
 EPS = 1e-9
 #: a map drive's ATE is compared with its threshold within 1 micrometre: the
@@ -461,6 +465,29 @@ def _score_map(level, inputs, spec):
         'the stronger on both: F1 >= %.4f and ATE <= %.4f m' % (strong['f1'], strong['ate'])]
 
 
+# -- race the planner's ghost (M4.8) ---------------------------------------------
+
+def _score_race(level, inputs, spec):
+    from . import race
+    if spec is None or _spec_hash(spec) != level['spec']:
+        raise PlayError('the race needs the World Spec it was made for')
+    try:
+        r = race.drive(spec, level, inputs)
+    except race.RaceError as e:
+        raise PlayError(str(e)) from None
+    n, _, thresholds = race.stars(level, r)
+    g = level['reference']['ghost']
+    why = None if r['finish_tick'] is not None else (
+        f"did not reach the flag within {level['max_ticks']} ticks")
+    return why, (n if why is None else 0), {'name': 'time', 'value': _r(r['time_s'])}, [
+        _metric('time_s', r['time_s'], 's', f"time to the flag (the ghost: {g['time_s']:.1f} s)"),
+        _metric('path_m', r['path_m'], 'm',
+                f"ground-truth distance driven (the ghost: {g['path_m']:.2f} m)"),
+        _metric('contacts', r['contacts'], '',
+                f"ticks stopped against something (the ghost: {g['contacts']})"),
+    ], thresholds
+
+
 # -- case file detective -------------------------------------------------------------
 
 def _score_detective(level, inputs):
@@ -523,6 +550,8 @@ def score(levels, submission, spec=None) -> Dict[str, object]:
         out = _score_bays(level, inputs)
     elif ch == 'map-the-arena':
         out = _score_map(level, inputs, spec)
+    elif ch == 'race-the-ghost':
+        out = _score_race(level, inputs, spec)
     else:
         out = _score_detective(level, inputs)
     why, stars, primary, metrics, thresholds = out
@@ -543,6 +572,9 @@ def references(level, challenge: str, spec=None) -> Dict[str, object]:
         return bays_references(lv)
     if challenge == 'map-the-arena':
         return map_references(spec, lv)
+    if challenge == 'race-the-ghost':
+        from . import race
+        return race.references(spec, {k: v for k, v in lv.items() if k != 'ghost_track'})
     raise PlayError(f'{challenge} has no computed references')
 
 

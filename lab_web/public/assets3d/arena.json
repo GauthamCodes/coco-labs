@@ -1,0 +1,1233 @@
+{
+ "footprints": [
+  {
+   "center": [
+    4.0,
+    9.0,
+    0.5
+   ],
+   "kind": "walls",
+   "name": "wall_north",
+   "size": [
+    24.2,
+    0.2,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    4.0,
+    -9.0,
+    0.5
+   ],
+   "kind": "walls",
+   "name": "wall_south",
+   "size": [
+    24.2,
+    0.2,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    -8.0,
+    0.0,
+    0.5
+   ],
+   "kind": "walls",
+   "name": "wall_west",
+   "size": [
+    0.2,
+    18.0,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    16.0,
+    0.0,
+    0.5
+   ],
+   "kind": "walls",
+   "name": "wall_east",
+   "size": [
+    0.2,
+    18.0,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    -4.0,
+    -5.0,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "west_spine_south",
+   "size": [
+    0.2,
+    5.0,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    -4.0,
+    5.0,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "west_spine_north",
+   "size": [
+    0.2,
+    5.0,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    -6.0,
+    -2.5,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "west_room_south",
+   "size": [
+    4.0,
+    0.2,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    -6.0,
+    2.5,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "west_room_north",
+   "size": [
+    4.0,
+    0.2,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    10.0,
+    -5.0,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "east_spine_south",
+   "size": [
+    0.2,
+    5.0,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    10.0,
+    5.0,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "east_spine_north",
+   "size": [
+    0.2,
+    5.0,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    13.0,
+    -2.5,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "east_room_south",
+   "size": [
+    6.0,
+    0.2,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    13.0,
+    2.5,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "east_room_north",
+   "size": [
+    6.0,
+    0.2,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    13.0,
+    5.0,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "east_dead_end_side",
+   "size": [
+    0.2,
+    3.0,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    14.5,
+    6.5,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "east_dead_end_cap",
+   "size": [
+    3.0,
+    0.2,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    12.0,
+    -6.0,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "cluster_a",
+   "size": [
+    0.8,
+    0.8,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    14.0,
+    -5.0,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "cluster_b",
+   "size": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    12.4,
+    -3.8,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "cluster_c",
+   "size": [
+    0.6,
+    0.6,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    8.0,
+    7.7,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "offset_north",
+   "size": [
+    0.6,
+    0.8,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    8.0,
+    -7.4,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "offset_south",
+   "size": [
+    0.6,
+    0.8,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    -6.0,
+    5.0,
+    0.5
+   ],
+   "kind": "landmarks",
+   "name": "west_landmark",
+   "size": [
+    0.7,
+    1.1,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    -6.5,
+    -5.5,
+    0.5
+   ],
+   "kind": "obstacles",
+   "name": "west_offset",
+   "size": [
+    0.8,
+    0.6,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    3.75,
+    -7.3,
+    1.0
+   ],
+   "kind": "bay_guards",
+   "name": "red_bay_guard_south",
+   "size": [
+    5.5,
+    0.1,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    3.75,
+    -4.7,
+    1.0
+   ],
+   "kind": "bay_guards",
+   "name": "red_bay_guard_north",
+   "size": [
+    5.5,
+    0.1,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    3.75,
+    -3.3,
+    1.0
+   ],
+   "kind": "bay_guards",
+   "name": "green_bay_guard_south",
+   "size": [
+    5.5,
+    0.1,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    3.75,
+    -0.7,
+    1.0
+   ],
+   "kind": "bay_guards",
+   "name": "green_bay_guard_north",
+   "size": [
+    5.5,
+    0.1,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    3.75,
+    0.7,
+    1.0
+   ],
+   "kind": "bay_guards",
+   "name": "blue_bay_guard_south",
+   "size": [
+    5.5,
+    0.1,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    3.75,
+    3.3,
+    1.0
+   ],
+   "kind": "bay_guards",
+   "name": "blue_bay_guard_north",
+   "size": [
+    5.5,
+    0.1,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    3.75,
+    4.7,
+    1.0
+   ],
+   "kind": "bay_guards",
+   "name": "yellow_bay_guard_south",
+   "size": [
+    5.5,
+    0.1,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    3.75,
+    7.3,
+    1.0
+   ],
+   "kind": "bay_guards",
+   "name": "yellow_bay_guard_north",
+   "size": [
+    5.5,
+    0.1,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    0.4,
+    -6.65,
+    0.5
+   ],
+   "kind": "bay_approaches",
+   "name": "red_approach_south",
+   "size": [
+    2.8,
+    0.1,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    0.4,
+    -5.35,
+    0.5
+   ],
+   "kind": "bay_approaches",
+   "name": "red_approach_north",
+   "size": [
+    2.8,
+    0.1,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    0.4,
+    -2.65,
+    0.5
+   ],
+   "kind": "bay_approaches",
+   "name": "green_approach_south",
+   "size": [
+    2.8,
+    0.1,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    0.4,
+    -1.35,
+    0.5
+   ],
+   "kind": "bay_approaches",
+   "name": "green_approach_north",
+   "size": [
+    2.8,
+    0.1,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    0.4,
+    1.35,
+    0.5
+   ],
+   "kind": "bay_approaches",
+   "name": "blue_approach_south",
+   "size": [
+    2.8,
+    0.1,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    0.4,
+    2.65,
+    0.5
+   ],
+   "kind": "bay_approaches",
+   "name": "blue_approach_north",
+   "size": [
+    2.8,
+    0.1,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    0.4,
+    5.35,
+    0.5
+   ],
+   "kind": "bay_approaches",
+   "name": "yellow_approach_south",
+   "size": [
+    2.8,
+    0.1,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    0.4,
+    6.65,
+    0.5
+   ],
+   "kind": "bay_approaches",
+   "name": "yellow_approach_north",
+   "size": [
+    2.8,
+    0.1,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    -3.8,
+    -6.3,
+    0.5
+   ],
+   "kind": "landmarks",
+   "name": "west_corridor_landmark_0",
+   "size": [
+    0.2,
+    0.35,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    -3.8,
+    -3.6,
+    0.5
+   ],
+   "kind": "landmarks",
+   "name": "west_corridor_landmark_1",
+   "size": [
+    0.2,
+    0.44999999999999996,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    -3.8,
+    4.7,
+    0.5
+   ],
+   "kind": "landmarks",
+   "name": "west_corridor_landmark_2",
+   "size": [
+    0.2,
+    0.55,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    -3.8,
+    6.5,
+    0.5
+   ],
+   "kind": "landmarks",
+   "name": "west_corridor_landmark_3",
+   "size": [
+    0.2,
+    0.65,
+    1.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    1.6,
+    -7.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "red_bay_landmark_south_0",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    3.4,
+    -7.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "red_bay_landmark_south_1",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    5.9,
+    -7.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "red_bay_landmark_south_2",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    2.3,
+    -5.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "red_bay_landmark_north_0",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    4.9,
+    -5.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "red_bay_landmark_north_1",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    2.1,
+    -3.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "green_bay_landmark_south_0",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    4.7,
+    -3.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "green_bay_landmark_south_1",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    1.8,
+    -1.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "green_bay_landmark_north_0",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    3.8,
+    -1.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "green_bay_landmark_north_1",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    5.6,
+    -1.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "green_bay_landmark_north_2",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    1.9,
+    1.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "blue_bay_landmark_south_0",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    3.1,
+    1.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "blue_bay_landmark_south_1",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    5.4,
+    1.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "blue_bay_landmark_south_2",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    2.7,
+    3.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "blue_bay_landmark_north_0",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    4.5,
+    3.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "blue_bay_landmark_north_1",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    2.4,
+    5.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "yellow_bay_landmark_south_0",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    4.0,
+    5.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "yellow_bay_landmark_south_1",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    5.8,
+    5.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "yellow_bay_landmark_south_2",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    1.7,
+    7.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "yellow_bay_landmark_north_0",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    3.3,
+    7.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "yellow_bay_landmark_north_1",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    5.0,
+    7.0,
+    1.0
+   ],
+   "kind": "landmarks",
+   "name": "yellow_bay_landmark_north_2",
+   "size": [
+    0.35,
+    0.6,
+    2.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    8.0,
+    -7.0,
+    0.9
+   ],
+   "kind": "bay_columns",
+   "name": "red_exit_column_south",
+   "size": [
+    0.4,
+    0.4,
+    1.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    8.7,
+    -5.0,
+    0.9
+   ],
+   "kind": "bay_columns",
+   "name": "red_exit_column_north",
+   "size": [
+    0.4,
+    0.4,
+    1.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    8.6,
+    -3.0,
+    0.9
+   ],
+   "kind": "bay_columns",
+   "name": "green_exit_column_south",
+   "size": [
+    0.4,
+    0.4,
+    1.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    7.9,
+    -1.0,
+    0.9
+   ],
+   "kind": "bay_columns",
+   "name": "green_exit_column_north",
+   "size": [
+    0.4,
+    0.4,
+    1.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    8.2,
+    1.0,
+    0.9
+   ],
+   "kind": "bay_columns",
+   "name": "blue_exit_column_south",
+   "size": [
+    0.4,
+    0.4,
+    1.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    8.8,
+    3.0,
+    0.9
+   ],
+   "kind": "bay_columns",
+   "name": "blue_exit_column_north",
+   "size": [
+    0.4,
+    0.4,
+    1.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    8.7,
+    5.0,
+    0.9
+   ],
+   "kind": "bay_columns",
+   "name": "yellow_exit_column_south",
+   "size": [
+    0.4,
+    0.4,
+    1.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "center": [
+    8.1,
+    7.0,
+    0.9
+   ],
+   "kind": "bay_columns",
+   "name": "yellow_exit_column_north",
+   "size": [
+    0.4,
+    0.4,
+    1.8
+   ],
+   "yaw": 0.0
+  },
+  {
+   "foot": [
+    1.0,
+    -6.0,
+    0.0
+   ],
+   "kind": "ramps",
+   "name": "ramp_up_red",
+   "rise": 0.6498393924658126,
+   "run": 2.0,
+   "width": 2.5,
+   "yaw": 0.0
+  },
+  {
+   "foot": [
+    6.2,
+    -6.0,
+    0.0
+   ],
+   "kind": "ramps",
+   "name": "ramp_down_red",
+   "rise": 0.6498393924658126,
+   "run": 2.0,
+   "width": 2.5,
+   "yaw": 3.141592653589793
+  },
+  {
+   "center": [
+    3.6,
+    -6.0,
+    0.3249196962329063
+   ],
+   "kind": "platforms",
+   "name": "ramp_platform_red",
+   "size": [
+    1.2,
+    2.5,
+    0.6498393924658126
+   ],
+   "yaw": 0.0
+  },
+  {
+   "foot": [
+    1.0,
+    -2.0,
+    0.0
+   ],
+   "kind": "ramps",
+   "name": "ramp_up_green",
+   "rise": 0.6498393924658126,
+   "run": 2.0,
+   "width": 2.5,
+   "yaw": 0.0
+  },
+  {
+   "foot": [
+    6.2,
+    -2.0,
+    0.0
+   ],
+   "kind": "ramps",
+   "name": "ramp_down_green",
+   "rise": 0.6498393924658126,
+   "run": 2.0,
+   "width": 2.5,
+   "yaw": 3.141592653589793
+  },
+  {
+   "center": [
+    3.6,
+    -2.0,
+    0.3249196962329063
+   ],
+   "kind": "platforms",
+   "name": "ramp_platform_green",
+   "size": [
+    1.2,
+    2.5,
+    0.6498393924658126
+   ],
+   "yaw": 0.0
+  },
+  {
+   "foot": [
+    1.0,
+    2.0,
+    0.0
+   ],
+   "kind": "ramps",
+   "name": "ramp_up_blue",
+   "rise": 0.6498393924658126,
+   "run": 2.0,
+   "width": 2.5,
+   "yaw": 0.0
+  },
+  {
+   "foot": [
+    6.2,
+    2.0,
+    0.0
+   ],
+   "kind": "ramps",
+   "name": "ramp_down_blue",
+   "rise": 0.6498393924658126,
+   "run": 2.0,
+   "width": 2.5,
+   "yaw": 3.141592653589793
+  },
+  {
+   "center": [
+    3.6,
+    2.0,
+    0.3249196962329063
+   ],
+   "kind": "platforms",
+   "name": "ramp_platform_blue",
+   "size": [
+    1.2,
+    2.5,
+    0.6498393924658126
+   ],
+   "yaw": 0.0
+  },
+  {
+   "foot": [
+    1.0,
+    6.0,
+    0.0
+   ],
+   "kind": "ramps",
+   "name": "ramp_up_yellow",
+   "rise": 0.6498393924658126,
+   "run": 2.0,
+   "width": 2.5,
+   "yaw": 0.0
+  },
+  {
+   "foot": [
+    6.2,
+    6.0,
+    0.0
+   ],
+   "kind": "ramps",
+   "name": "ramp_down_yellow",
+   "rise": 0.6498393924658126,
+   "run": 2.0,
+   "width": 2.5,
+   "yaw": 3.141592653589793
+  },
+  {
+   "center": [
+    3.6,
+    6.0,
+    0.3249196962329063
+   ],
+   "kind": "platforms",
+   "name": "ramp_platform_yellow",
+   "size": [
+    1.2,
+    2.5,
+    0.6498393924658126
+   ],
+   "yaw": 0.0
+  }
+ ],
+ "kinds": {
+  "bay_approaches": 8,
+  "bay_columns": 8,
+  "bay_guards": 8,
+  "landmarks": 26,
+  "obstacles": 16,
+  "platforms": 4,
+  "ramps": 8,
+  "walls": 4
+ },
+ "ramp_angle_deg": 18,
+ "rise_m": 0.6498393924658126,
+ "spawned": "full_world_robo.launch.py traverse:=true",
+ "world": "gazebo_models/worlds/coco_navigation.world",
+ "world_sha256": "cbe9415ab6b029c759a4dcceb67042b70e73d0569e2d98391bca5921a54d58bd"
+}

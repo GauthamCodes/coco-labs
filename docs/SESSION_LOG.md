@@ -8328,3 +8328,53 @@ NEXT: on AC, run `bash ~/coco_lab_m3_ws/bin/m39_remeasure.sh` and append its
 numbers to `docs/v2/M3_RESULTS.md` and `docs/RESULTS.md`. Then Gautham
 reviews the M3 pull request, and a fresh review session verifies the M3
 report (README §9).
+
+## COCO Lab v2 · M3 review and quiet merge; M4 3D Arena, M4.0 to M4.10 (2026-10-11 → 2026-10-13)
+
+**Built:**
+- **The M3 review.** PR #22 independently reviewed; D6 (Case File scans after the
+  first frame); merged quietly as `bf7443f` (owner's one-off permission).
+- **M4.0–M4.2.** README revision 2 in force; the feasibility gate (3D in the page);
+  the asset pipeline (ADR 0006: meshopt, a licensed, checksummed manifest, budgets
+  in CI); World Spec v2 (ADR 0007) and its SDF agreement check.
+- **M4.3.** Kinematic terrain following, contacts, the command source, the gated
+  grasp; additive schema fields; flat hashes unchanged.
+- **M4.4–M4.6.** The renderer (tiers, two passes, cutaway, the fallback); cameras
+  and controls (follow by default, HUD, help, remapping, touch; `prefs.ts`); every
+  lens in 3D.
+- **M4.7.** Case Files in 3D at the stack's recorded truth; the planar chip; all
+  100 re-converted and packed at zstd level 19.
+- **M4.8.** Mission cameras; Race the planner's ghost (`coco_lab/race.py`).
+- **M4.9.** A light landing; the 3D demo script; the usability test; the phone guide.
+- **M4.10.** `docs/v2/M4_RESULTS.md`; the measurement found and fixed three
+  regressions (deflated `z=` links ignored by the Play page; replay pages without
+  their runs list; a screenshot test broken by a one-pixel layout shift). CI now
+  runs the replay check. `?perf` shows the 3D marks and input → motion.
+
+**Measured** (MODEL; balanced, on AC; `docs/RESULTS.md` "M4.1", "M4.3", "M4"):
+- **Frame rate.** RTX high tier, fetch mission: 61 / 60 fps; M2 stress at medium:
+  slowest second 56–60; Intel integrated, medium: 61 / 60.
+- **Latency.** Key → motion median 45.1 ms (follow), 44.0 (top-down).
+- **Cold start, emulated 4G.** First computation ≤ 3,694 ms; 3D world ≤ 3,605 ms;
+  live model ≤ 8,521 ms.
+- **Case Files, emulated 4G.** 100 / 100 within 2 s (max 1,773 ms; placeholder
+  robot body, its mesh by 2,924 ms).
+- **Determinism.** Terrain: 70,000 ticks per engine, 0 mismatched, in four engines.
+- **Fidelity.** Terrain against Lab 4's Gazebo fetches: slope height p95 7.4 mm,
+  pitch max 1.37°.
+- **Regressions.** Race links 18 / 18 in three browsers and `coco verify`; old URL
+  forms 22 / 22; 0 console errors on 21 views; 30 min with 0 context losses.
+- **Suites.** 3,523 / 192 / 436, none failing.
+
+**Unverified:**
+- Gautham's rows: the phone gate (frame rate, cold start, touch) and the
+  consolidated five-person usability test.
+- The look: screenshots in `docs/v2/data/m4/screens/` await his review.
+- The Arena's LiDAR on terrain against Gazebo's scans (UNRESOLVED).
+- Whether a placeholder robot body counts as "including 3D geometry" in the Case
+  File criterion (his call).
+
+NEXT: Gautham reviews PR #23 and the screenshots; runs the phone gate
+(`lab_web/tools/preview_phone.sh start`, then `docs/v2/PHONE_GATE_M4.md`) and the
+usability test (`docs/v2/USABILITY_TEST_M4.md`). A fresh review session verifies
+the M4 report (README §9) before the merge.

@@ -18,7 +18,7 @@ import { loadPyodide, type PyodideInterface } from 'pyodide';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 import { parseRecording } from '../src/arena/attract';
-import type { InputRow } from '../src/arena/protocol';
+import { SPEC_FILES, specFileFor, type InputRow } from '../src/arena/protocol';
 import { decodeRun, encodeRun, type SharedRun } from '../src/arena/share';
 import { LAB_WEB } from './helpers';
 
@@ -31,6 +31,21 @@ describe('share links', () => {
       { tick: 3, kind: 'planner', choice: 'dijkstra' }, { tick: 9, kind: 'teleop', linear: 0.30000000000000004, angular: -1.2 },
       { tick: 12, kind: 'stop' }, { tick: 40, kind: 'reset' }],
   };
+
+  it('keeps every older kind index: kinds are only ever appended (M2.3, M4.3)', () => {
+    // a link written by M3's encoder, by hand: kind 5 = kidnap, 6 = config
+    const old = { v: 1, s: 'a'.repeat(64), e: 1, t: 10, c: 'b'.repeat(64),
+      i: [[0, 0, 1, 2], [1, 1, 0.1, 0], [2, 2], [3, 3, 'bfs'], [4, 4], [5, 5, 1, 2, 0.5, 1], [6, 6, 'arena.slip=on']] };
+    const b = btoa(JSON.stringify(old)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    expect(decodeRun(b).inputs.map((r) => r.kind)).toEqual(['goal', 'teleop', 'stop', 'planner', 'reset', 'kidnap', 'config']);
+    const now: SharedRun = { ...run, inputs: [{ tick: 0, kind: 'grasp' }, { tick: 2, kind: 'autonomy' }] };
+    expect(decodeRun(encodeRun(now))).toEqual(now);
+  });
+
+  it('a page picks only a World Spec the site ships (?world=v2, else v1)', () => {
+    expect(specFileFor('v2')).toBe(SPEC_FILES.v2);
+    for (const w of [null, '', 'v1', 'V2', '../../etc/passwd', 'coco_arena_v2.json']) expect(specFileFor(w)).toBe(SPEC_FILES.v1);
+  });
 
   it('round-trips exactly, doubles included', () => {
     expect(decodeRun(encodeRun(run))).toEqual(run);

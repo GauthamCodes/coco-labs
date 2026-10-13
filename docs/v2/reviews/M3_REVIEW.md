@@ -169,3 +169,51 @@ frame, is met 100 / 100 after the owner's D6 change.
 
 The phone baseline, M1–M3's phone rows and the usability test remain
 **pending Gautham** (decision D5: usability is consolidated into M4).
+
+## After the fixes (final head), the merge, and the public site
+
+Verified at **`8c87085`**, the last commit on `v2/m3-play-casefiles`. The
+fixes were pulled into the review clone, its overlay rebuilt, and
+everything below re-run there, on AC.
+
+| Check | Result |
+|---|---|
+| Package suites | **3,498 / 0 / 0** (12 packages, MoveIt prefix present) |
+| `lab_web` vitest; typecheck | **403 / 0 / 0** (38 files; +7: `casefile_layout.test.ts` 6, the D6 test in `casefile_replay.test.ts` 1); clean |
+| Build tools; generated TypeScript | **169 / 0 / 0** (+1: the float test); current |
+| 22 v1 URL forms + `/v1/`'s six views | **22 / 22, 6 / 6**, 0 console / 0 page errors |
+| The four modes, desktop and phone width | **23 / 23** pages, badge visible, 0 console errors |
+| Console hygiene, every public view | 0 console errors, 0 page errors, 0 sockets on load |
+| All 100 Case Files in the viewer | **100 / 100** ok, 0 console errors (unthrottled) |
+| Mission 4's UNRESOLVED claim in the built site | present, on the `manipulate` beat |
+| CI on PR #22 at `8c87085` | `build-and-test`, `coco_lab in a plain venv`, `lab_web`, `lab_web in Chromium, Firefox and WebKit` pass; Pages deploy skipped (main only) |
+
+Every A.6 condition held, so PR #22 was merged with a merge commit
+(`gh pr merge 22 --merge`), quietly: **`bf7443f`**, branch kept, no
+release, tag or announcement. The `main` runs passed (CI and Lab), and Lab
+deployed Pages.
+
+**The public site after the deploy** (headless Chromium 156, real network;
+`docs/v2/data/m3/exit/public_after_merge.json`):
+- the bare URL opens the Arena, and a real click on the floor drew that
+  goal's search; the six `?view=` forms land where `landing.ts` routes them;
+- the four modes: **23 / 23** pages;
+- Case Files: **5 / 5** open (the robot_localization tour, a Run 15
+  reproduction, a Lab 4 search, a Lab 3 tour, a Lab 1 run), first frame
+  ≤ 1.55 s over the real network;
+- challenge links, one per challenge: **5 / 5** reproduced exactly;
+- all **22** v1 URL forms and `/v1/`'s **6** views;
+- **0 console errors** throughout.
+
+**The phone guides were corrected for the live site** before Gautham
+measures on it: `PHONE_MEASURE.md` told him to read a Case File's
+"recording ready" in `?perf`, but the panel has no such row — its
+"recording ready (attract)" is the attract demo's, a different number.
+`PHONE_BASELINE.md`'s v1 URL now redirects into Learn; it points at
+`/v1/` instead (checked live: the Plan lab, paint tool, 0 errors).
+
+**Not done by this session:** the canonical checkout
+`~/coco_labs_ws/src/coco-labs` still has `main` checked out at `d9ae365`.
+This session is isolated to its worktree and cannot touch the shared
+checkout; `git -C ~/coco_labs_ws/src/coco-labs pull --ff-only` brings it
+to `bf7443f`.

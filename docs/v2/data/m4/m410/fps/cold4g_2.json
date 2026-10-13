@@ -1,0 +1,91 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-12T18:11:44.783Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 88
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.55,
+    "5m": 2.16,
+    "15m": 2.18
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-12T18:12:00.542Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 88
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.7,
+    "5m": 2.22,
+    "15m": 2.19
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "site": "http://127.0.0.1:4244/coco-labs/",
+ "camera": "follow",
+ "gpu": "nvidia",
+ "quality": "auto",
+ "flags": [
+  "--use-angle=gl-egl",
+  "--ignore-gpu-blocklist",
+  "--enable-gpu"
+ ],
+ "vk_icd": "default",
+ "emulated": true,
+ "net": "4g",
+ "phone_viewport": null,
+ "cpu_throttle": 1,
+ "scene": "plain",
+ "browser": "156.0.8078.4",
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "triangles": 5376,
+ "tier": "high",
+ "marks_ms": {
+  "worker_create": 1239,
+  "worker_boot": 1445,
+  "pyodide_module": 1653,
+  "world3d_assets": 1769,
+  "attract_ready": 3577,
+  "world3d_ready": 3580,
+  "world3d_robot": 3580,
+  "first_frame": 3685,
+  "first_computation_shown": 3685,
+  "pyodide_ready": 7893,
+  "coco_lab_ready": 7978,
+  "world_received": 8443,
+  "arena_ready": 8440
+ },
+ "fps_per_second": [
+  61,
+  60,
+  61,
+  61,
+  61
+ ],
+ "fps_median": 61,
+ "fps_min": 60,
+ "frame_ms_p95_per_second": [
+  17.8,
+  18.1,
+  17.7,
+  18,
+  18.2
+ ],
+ "console_errors": []
+}

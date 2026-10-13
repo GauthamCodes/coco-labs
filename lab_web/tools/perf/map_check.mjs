@@ -54,7 +54,7 @@ const goTo = async (x, y) => {
 const layers = () => page.evaluate(() => window.__cocoArena.layerIds());
 
 try {
-  await page.goto(`${SITE}?view=arena&perf`);
+  await page.goto(`${SITE}?view=arena&camera=topdown&perf`);
   await page.waitForFunction(() => !!window.__cocoPerf?.marks.arena_ready, null, { timeout: 120_000 });
   await goTo(2.0, 0.0);
   await page.getByTestId('lens-map').click();

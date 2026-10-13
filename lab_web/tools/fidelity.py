@@ -25,6 +25,7 @@ report is stale; ``build_catalog.py`` writes the chips to
 """
 
 import json
+import math
 import os
 from typing import Dict, List
 
@@ -32,6 +33,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.normpath(os.path.join(HERE, '..', '..'))
 SOURCE = 'docs/v2/data/m2/m29/fidelity_v1.json'
 LAB2 = 'docs/data/lab2/fidelity/fidelity.json'
+#: M4.3: the Arena's terrain against Lab 4's recorded climbs (docs/v2/data/m4/m43/terrain_fidelity.py)
+TERRAIN = 'docs/v2/data/m4/m43/terrain_fidelity.json'
 REPORT = os.path.join(REPO, 'docs', 'v2', 'FIDELITY_v1.md')
 #: the report's section each chip links to (GitHub anchors of its headings)
 ANCHORS = {'lidar': '1-lidar-at-identical-poses', 'odometry': '2-odometry-straight-and-turning',
@@ -258,6 +261,9 @@ def report(a=None, b=None) -> str:
         '(DWA 11 × 21 samples against DWB\'s 819 per cycle, MPPI 128 rollouts against 2,000), so agreement of outcome is '
         'not agreement of mechanism.',
         '',
+    ]
+    L += _terrain()
+    L += [
         '## The chips',
         '',
         'Wherever a lesson depends on one of these, the page shows a "model gap" chip that opens to this text and links '
@@ -273,6 +279,10 @@ def report(a=None, b=None) -> str:
         '```',
         'python3 docs/v2/data/m2/m29/arena_fidelity.py ~/coco_lab_runs/lab2/fidelity_1 ~/coco_lab_runs/lab2/fidelity_s1 \\',
         f'    --out {SOURCE}',
+        'source /opt/ros/jazzy/setup.bash   # only the extraction reads the bags',
+        'python3 docs/v2/data/m4/m43/extract_lab4_truth.py ~/coco_lab_runs/lab4/matrix \\',
+        '    --out docs/v2/data/m4/m43/lab4_truth.json.gz',
+        f'python3 docs/v2/data/m4/m43/terrain_fidelity.py --out {TERRAIN}',
         'python3 lab_web/tools/fidelity.py --write',
         '```',
         '',
@@ -280,6 +290,53 @@ def report(a=None, b=None) -> str:
         'number this report shows.',
     ]
     return '\n'.join(L) + '\n'
+
+
+def _terrain() -> List[str]:
+    """Section 4 (M4.3): the terrain, from TERRAIN."""
+    with open(os.path.join(REPO, TERRAIN), encoding='utf-8') as f:
+        t = json.load(f)
+    deg = 180 / math.pi
+    rows = []
+    for c in ('flat', 'slope', 'platform'):
+        d = t['by_class'][c]
+        rows.append(f'| {c} | {d["z"]["n"]:,} | {_mm(d["z"]["median_abs"])} / {_mm(d["z"]["p95_abs"])} / '
+                    f'{_mm(d["z"]["max_abs"])} | '
+                    + ' | '.join(f'{d[k]["median_abs"] * deg:.2f}° / {d[k]["p95_abs"] * deg:.2f}° / '
+                                 f'{d[k]["max_abs"] * deg:.2f}°' for k in ('pitch', 'roll')) + ' |')
+    w = t['worst']
+    onto = sum(1 for r in t['per_run'] if r['onto_platform'])
+    part = [r['run'] for r in t['per_run'] if not r['onto_platform'] and r['gazebo_z_max'] > 0.05]
+    flat = [r['run'] for r in t['per_run'] if r['gazebo_z_max'] <= 0.05]
+
+    def where(k):
+        n = w[k]['nearest_edge']
+        return f'{_cm(n["distance_m"])} from `{n["edge"]}`'
+    return [
+        '## 4. Terrain following against the Lab 4 climbs',
+        '',
+        f'M4.3, from `{TERRAIN}` (made by `docs/v2/data/m4/m43/terrain_fidelity.py` from Gazebo\'s ground truth in '
+        f'Lab 4\'s {len(t["bags"])} recorded fetches: {onto} climbed a bay\'s ramp onto its platform, '
+        f'{", ".join(f"`{r}`" for r in part) or "none"} stopped part way up, {", ".join(f"`{r}`" for r in flat) or "none"} '
+        'never left the floor). '
+        'At every recorded TRUE (x, y, yaw), one row per 0.1 s, the Arena on World Spec v2 gives the height and tilt '
+        'of its wheel base from the surface under the four corners (kinematic: no suspension, no contact, no slip); '
+        'e = Gazebo − Arena. Rows are classed by where the Arena puts the robot.',
+        '',
+        '| Arena class | rows | \\|e\\| z: median / p95 / max | pitch | roll |',
+        '| --- | ---: | --- | --- | --- |',
+        *rows,
+        '',
+        f'Largest height difference {_mm(abs(w["z"]["e"]))} (`{w["z"]["run"]}`, t = {w["z"]["t"]} s, {where("z")}: '
+        f'Gazebo {_mm(w["z"]["gazebo"])}, Arena {_mm(w["z"]["arena"])}); largest pitch difference '
+        f'{abs(w["pitch"]["e"]) * deg:.2f}° (`{w["pitch"]["run"]}`, t = {w["pitch"]["t"]} s, {where("pitch")}); '
+        f'largest roll difference {abs(w["roll"]["e"]) * deg:.2f}° (`{w["roll"]["run"]}`, {where("roll")}). '
+        'Every row is a pose the Stack actually drove, so what the Arena does off those poses (a climb at an angle, '
+        'driving off a platform\'s side, which it stops as a contact) is not compared. Not measured either: on World '
+        'Spec v2 the Arena\'s LiDAR meets a ramp where the ramp rises above the beam\'s height; that has not been '
+        'compared with Gazebo\'s scans (UNRESOLVED).',
+        '',
+    ]
 
 
 def _outc(o):

@@ -9273,3 +9273,77 @@ reference drives — Forty metres' tour, whose ATE is the three-star
 threshold — against 1.3e-8 m over the 20 submitted drives M3.6 reported;
 F1 and the scored tick identical, stars 24 / 24 equal
 (`review/map_engines.json`).
+
+## COCO Lab v2 · M4.1: the 3D feasibility gate, laptop and emulated (measured 2026-10-11)
+
+**Evidence class.** MODEL (the browser). Laptop i5-13420H; RTX 4050 laptop
+GPU, NVIDIA 580.178.04; Intel Raptor Lake-P integrated graphics through
+ANGLE-Vulkan, Mesa 25.2.8; headless Chromium 156; balanced profile **on AC
+for every kept run** (each run's conditions record it; a run whose AC
+dropped would have been repeated — none was). Build `b1fc5fe`'s code
+(the first conversion: arena 964 triangles, robot 18,680 high / 3,908
+low). Evidence: `docs/v2/data/m4/m41/`.
+
+| Condition | Camera / scene | n | fps (median / min) | p95 frame, per second |
+|---|---|---|---|---|
+| RTX 4050 | follow, a goal driving, Plan lens | 3 × 20 s | 60–61 / 60 | 17.1–17.6 ms |
+| RTX 4050 | orbit; robot-eye; top-down | 1 × 20 s each | 60–61 / 60 | 17.2–17.9 ms |
+| RTX 4050 | follow, the fetch mission with every lens's layers | 3 × 20 s | 61 / 60 | 17.1–19.5 ms |
+| Intel integrated | follow, Plan lens | 3 × 20 s | 60–61 / 60 | 17.1–18.0 ms |
+| Intel integrated | follow, the fetch mission, every layer | 2 × 20 s | 61 / 60 | 17.0–17.7 ms |
+| **Emulated** phone (412 × 915, DPR 2.625, touch; Intel GPU; low-detail robot) | follow, CPU 4× | 2 × 20 s | 61 / 60 | 17.3–17.9 ms |
+| **Emulated** phone, as above | follow, CPU 6× | 2 × 20 s | 61 / 60 | 17.5–18.5 ms |
+
+Every run held the display's 60 fps cap, so these say there was headroom
+at M4.1's load, not how much. Emulated results are not a phone.
+
+**Cold start with the 3D world, emulated 4G** (9 Mbit/s, 1.5 up, 170 ms;
+RTX 4050; n = 3): first visible computation 3,232–3,275 ms; the 3D world
+ready 5,084–5,113 ms; the live model ready 8,928–8,964 ms (top-down, M3
+review: 7,997 ms median — the uncompressed 3D assets share the link).
+
+## COCO Lab v2 · M4.3: terrain determinism and fidelity (measured 2026-10-12)
+
+**Evidence class.** MODEL (the Arena model), against STACK (Gazebo's ground truth, recorded).
+Evidence: `docs/v2/data/m4/m43/`.
+
+- **Determinism.** 100 recorded World Spec v2 sessions × 700 ticks, replayed in Chromium 156,
+  Firefox 157, WebKit 27.2 and Pyodide 314.0.7 in Node 24.21.0: 70,000 ticks per engine, **0
+  mismatched**. Coverage (CPython): 53 sessions reach a platform, 37 grasps reach carry, 33
+  releases, 20 sessions with a contact, every command source. CPython and Pyodide agree on 84
+  of 100 final hashes (libm; not claimed).
+- **Fidelity** of kinematic terrain following against Lab 4's 17 Gazebo fetches (52,751
+  recorded poses; 15 climbed onto a platform): height |e| p95 **0.0 / 7.4 / 0.0 mm** (flat /
+  slope / platform), max 15.1 mm at a ramp's foot; pitch max difference **1.37°**, roll max
+  0.60°. Not compared: the LiDAR on terrain (UNRESOLVED). `docs/v2/FIDELITY_v1.md` §4.
+- **Mixed sessions.** 98 of M1's 100 and 97 of M2.11's 100 committed sessions mix goals and
+  teleop (`mixed_sessions.json`), which is why teleop-preempts-autonomy was kept exactly.
+
+## COCO Lab v2 · M4: the 3D Arena against its acceptance criteria (measured 2026-10-12 and 13)
+
+**Evidence class.** MODEL (the browser), unless STACK. Laptop i5-13420H; RTX 4050 laptop GPU,
+NVIDIA 580.178.04; Intel Raptor Lake-P through ANGLE-Vulkan, Mesa 25.2.8; headless Chromium
+156 unless named; balanced profile **on AC at the start and end of every kept run** (each JSON
+records it). Builds `dbdea9c`, `62f6338`, `7e72010` (which criterion on which:
+`docs/v2/M4_RESULTS.md`). Evidence: `docs/v2/data/m4/m410/`.
+
+| Criterion | Measured |
+|---|---|
+| RTX 4050, high tier, fetch mission with every layer, follow | 3 × 30 s: median 61 fps, slowest second 60, in every run; p95 frame ≤ 24.1 ms |
+| RTX 4050, medium tier, M2 stress scene | 3 × 30 s: median 60 / 61 / 61 fps; slowest second 56 / 59 / 60; p95 frame ≤ 25.7 ms |
+| Intel integrated, medium tier, fetch mission | 3 × 30 s: median 61, slowest second 60, in every run; p95 frame ≤ 19.5 ms |
+| Key press → visible motion, 100 presses | follow median 45.1 ms (p95 48.8, max 62.4); top-down median 44.0 ms (p95 49.2, max 62.4) |
+| Camera transitions | longest frame 16.8 ms in each of four 0.4 s moves |
+| 30-minute scripted session | 0 WebGL context losses, 0 console errors, 0 long tasks (0 while driving); 60.0 fps median over 1,797 s. The long-task observer recorded a planted 120 ms task as 120 ms |
+| Cold start, **emulated** 4G, n = 5 | first visible computation 3,639–3,694 ms; 3D world with the robot 3,562–3,605 ms; live model 8,372–8,521 ms |
+| First-scene download (meshopt) | 567,792 B desktop, 171,532 B phone; robot 540,152 B (high), 143,892 B (low) |
+| Case Files, all 100, cold, **emulated** 4G | 100 / 100 first frame within 2 s (3D arena, placeholder robot body); median 762 ms, max 1,773 ms; the robot's mesh by 2,924 ms on the slowest; seek max 39.5 ms; 0 console errors |
+| Case File storage | 40,019,390 B for all 100 (zstd level 19; the same messages) |
+| Race the planner's ghost: 18 submissions | reproduced exactly in Chromium 156, Firefox 157, WebKit 27.2: 18 / 18 each; `coco verify` (Node) 18 / 18 |
+| Regressions | replay page check 5 / 5; old URL forms 22 / 22, `/v1/` views 6 / 6; 0 console and page errors on 21 views; screenshot scenes 0 differing pixels against baselines from the public M3 site |
+| Phone width, **emulated** viewports (390, 844, 1280 px) | 21 / 21 without horizontal scroll; STOP visible and on screen on every live touch view |
+| Fallback, **emulated** (SwiftShader, 20× CPU) | low tier at 20 fps → top-down with its notice; the RTX stays on high |
+
+Found and fixed by this measurement (not counted above until fixed): the Play page ignored
+deflated `z=` links; replay pages had lost their runs list; the screenshot test failed on a
+one-pixel layout shift. The phone rows and the usability test are Gautham's; not measured.

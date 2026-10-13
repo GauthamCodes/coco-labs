@@ -59,6 +59,7 @@ body { overflow-x: hidden; }
 .picker select { min-height: var(--touch); max-width: 100%; font-size: 1rem; flex: 1 1 260px; }
 
 .error { background: var(--error-bg); color: var(--error-fg); padding: 10px 12px; border-radius: 6px; margin: 8px 0; }
+.notice { background: var(--panel); color: var(--fg); border: 1px solid var(--line); padding: 10px 12px; border-radius: 6px; margin: 8px 0; }
 .loading { color: var(--muted); }
 
 .stage { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 16px; align-items: start; }
@@ -514,6 +515,7 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   font: 600 0.8rem/1.2 system-ui, sans-serif; color: #a35200; list-style-position: inside; }
 .gap-chip[open] { flex-basis: 100%; }
 .gap-chip p { margin: 0; padding: 0 10px 8px; font-size: 0.85rem; }
+.chip.planar { display: inline-block; border: 1px solid #a35200; border-radius: 6px; background: var(--panel); color: var(--fg); padding: 4px 10px; font-size: 0.85rem; margin: 6px 0; }
 @media (prefers-color-scheme: dark) {
   .gap-chip { border-color: #f0a050; }
   .gap-chip summary { color: #f0a050; }
@@ -585,3 +587,31 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 }
 .play { max-width: 980px; margin: 0 auto; padding: 12px 16px 48px; }
 .embed-head { margin: 0 0 6px; }
+
+/* M4.5: the head-up display over the arena, and the help overlay */
+.hud { position: absolute; inset: 8px; pointer-events: none; z-index: 2; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.hud-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.hud-source, .hud-camera, .hud .badge.model { pointer-events: auto; background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; font-size: 0.85rem; margin: 0; }
+.hud-source.src-teleop { border-color: var(--accent); }
+.hud-source.src-stop { border-color: #d55e00; color: #d55e00; font-weight: 600; }
+.hud-source.src-mission, .hud-source.src-planner { border-color: var(--browser); }
+.hud-camera { color: var(--muted); }
+.hud-latched { background: #d55e00; color: #fff; border-radius: 6px; padding: 4px 8px; font-size: 0.85rem; }
+.hud-note { background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; font-size: 0.8rem; max-width: 60ch; }
+.hud-bars { display: flex; gap: 4px; }
+.hud-bar { position: relative; width: 10px; height: 64px; background: var(--panel); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+.hud-bar span { position: absolute; left: 0; right: 0; }
+.hud-bar span.fwd { background: var(--browser); }
+.hud-bar span.rev { background: #d55e00; }
+.hud-buttons { position: absolute; right: 0; bottom: 0; display: flex; gap: 6px; pointer-events: auto; }
+.hud-buttons button, .hud-release { min-width: var(--touch); min-height: var(--touch); border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); font-weight: 600; }
+.hud-buttons .hud-stop { background: #d55e00; color: #fff; border-color: #d55e00; }
+.hud-release { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 3; padding: 0 16px; }
+.hud-tank { pointer-events: auto; display: flex; gap: 24px; }
+.tank-slider { writing-mode: vertical-lr; direction: rtl; height: 120px; width: var(--touch); }
+.help-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 20; display: flex; align-items: flex-start; justify-content: center; overflow: auto; padding: 16px; }
+.help-card { background: var(--panel); color: var(--fg); border-radius: 8px; padding: 12px 16px; max-width: 640px; width: 100%; }
+.help-head { display: flex; justify-content: space-between; align-items: center; }
+.help-keys { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.help-keys td { padding: 3px 6px; border-bottom: 1px solid var(--line); }
+.help-setting { display: block; margin: 4px 0; }

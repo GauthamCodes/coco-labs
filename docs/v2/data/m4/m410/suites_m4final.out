@@ -1,0 +1,25 @@
+label m4final at 23ad3b2 2026-10-13T01:31:49+05:30
+profile balanced AC 1 battery 100% governor powersave load 3.45 3.12 3.01
+node v24.21.0 python Python 3.12.3 driver 580.178.04
+==================================================
+coco_config          ok   93 passed in 0.44s
+coco_sim             ok   323 passed in 1.96s
+coco_mission         ok   371 passed in 9.72s
+coco_web             ok   863 passed, 12 warnings in 21.91s
+gazebo_models        ok   231 passed in 12.76s
+coco_rl              ok   251 passed in 8.50s
+coco_perception      ok   139 passed, 12 warnings in 1.70s
+coco_moveit_config   ok   12 passed in 0.49s
+custom_teleop        ok   75 passed, 12 warnings in 1.48s
+coco_lab             FAIL (pytest exit 1) 2 failed, 795 passed in 280.87s (0:04:40)
+coco_lab_ros         ok   145 passed, 15 warnings in 20.80s
+coco_schemas         ok   223 passed, 3 warnings in 6.41s
+==================================================
+[tests] FAILED: at least one package did not pass
+packages exit=1
+192 passed in 267.27s (0:04:27)
+generated code is current
+ Test Files  46 passed (46)
+      Tests  436 passed (436)
+tools exit=0 vitest exit=0
+web exit=0

@@ -18,6 +18,7 @@
  * Needs the site's generated assets (npm run arena-assets, or the build).
  */
 
+import { inflateRawSync } from 'node:zlib';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -28,9 +29,11 @@ const GEN = join(WEB, 'public', 'generated');
 /** Decode a challenge link (the inverse of src/play/share.ts's encodeScore). */
 export function decodeLink(link) {
   const q = new URL(link, 'https://x/').searchParams;
-  const c = q.get('c'); const l = q.get('l'); const s = q.get('s');
-  if (!c || !l || !s) throw new Error(`not a Play challenge link: ${link.slice(0, 80)}`);
-  const j = JSON.parse(Buffer.from(s.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf-8'));
+  const c = q.get('c'); const l = q.get('l'); const s = q.get('s'); const z = q.get('z');
+  if (!c || !l || !(s || z)) throw new Error(`not a Play challenge link: ${link.slice(0, 80)}`);
+  // z (M4.8): the payload deflated (src/play/share.ts); s: the same JSON, plain
+  const raw = Buffer.from((z ?? s).replace(/-/g, '+').replace(/_/g, '/'), 'base64');
+  const j = JSON.parse(Buffer.from(z ? inflateRawSync(raw, { maxOutputLength: 4 * 1024 * 1024 }) : raw).toString('utf-8'));
   if (j.v !== 1 || !/^[0-9a-f]{64}$/.test(j.h ?? '') || !/^[0-9a-f]{64}$/.test(j.r ?? '')) throw new Error('a malformed challenge link');
   return { submission: { v: 1, challenge: c, level: l, level_hash: j.h, inputs: j.i }, result_hash: j.r };
 }

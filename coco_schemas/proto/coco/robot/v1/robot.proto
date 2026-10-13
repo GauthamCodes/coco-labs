@@ -34,4 +34,24 @@ message RobotStateBatch {
   repeated double theta = 6;
   repeated double v = 7;      // commanded linear velocity, m/s
   repeated double omega = 8;  // commanded angular velocity, rad/s
+  // M4.3, additive (README section 5.2: "3D fields"). Empty when not produced
+  // (a flat-world writer before M4, or a recording that did not carry them).
+  repeated double z = 9;            // m, height of the surface under the robot (map frame, z up)
+  repeated double pitch = 10;       // rad, REP-103: positive nose DOWN
+  repeated double roll = 11;        // rad, REP-103: positive left side UP
+  repeated double wheel_left = 12;  // rad/s, the left wheels' speed
+  repeated double wheel_right = 13; // rad/s
+  repeated CommandSource source = 14;  // who the wheels obeyed this tick
+  repeated bool contact = 15;       // the robot stopped against a wall, a ledge or an actor
+}
+
+// The arbiter's priority (README section 3, invariant 3): STOP over TELEOP
+// (a person) over MISSION or PLANNER (autonomy). IDLE: nothing is driving.
+enum CommandSource {
+  COMMAND_SOURCE_UNSPECIFIED = 0;
+  COMMAND_SOURCE_IDLE = 1;
+  COMMAND_SOURCE_STOP = 2;
+  COMMAND_SOURCE_TELEOP = 3;
+  COMMAND_SOURCE_MISSION = 4;
+  COMMAND_SOURCE_PLANNER = 5;
 }

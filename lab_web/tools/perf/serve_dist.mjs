@@ -38,6 +38,13 @@ const TYPES = {
 };
 const COMPRESS = new Set(['.html', '.js', '.mjs', '.css', '.json', '.svg', '.wasm', '.txt']);
 const cache = new Map();
+/**
+ * --pages 1 (M4.7): cache like GitHub Pages does (measured on the live site, 2026-10-12:
+ * `cache-control: max-age=600`, an ETag and Last-Modified; a matching If-None-Match gets 304), so a
+ * run that keeps its browser context sees what a visitor's browser would. The default stays
+ * `no-cache` (every cold measurement since M1 used it).
+ */
+const PAGES = args.pages === '1';
 
 createServer((req, res) => {
   const url = decodeURIComponent((req.url ?? '/').split('?')[0]);
@@ -47,7 +54,14 @@ createServer((req, res) => {
   if (existsSync(file) && statSync(file).isDirectory()) file = join(file, 'index.html');
   if (!existsSync(file)) { res.writeHead(404).end(); return; }
   const ext = extname(file);
-  const headers = { 'Content-Type': TYPES[ext] ?? 'application/octet-stream', 'Cache-Control': 'no-cache' };
+  const headers = { 'Content-Type': TYPES[ext] ?? 'application/octet-stream', 'Cache-Control': PAGES ? 'max-age=600' : 'no-cache' };
+  if (PAGES) {
+    const st = statSync(file);
+    const etag = `"${Math.floor(st.mtimeMs).toString(16)}-${st.size.toString(16)}"`;
+    headers.ETag = etag;
+    headers['Last-Modified'] = new Date(st.mtimeMs).toUTCString();
+    if (req.headers['if-none-match'] === etag) { res.writeHead(304, headers).end(); return; }
+  }
   let body = readFileSync(file);
   if (COMPRESS.has(ext) && /\bgzip\b/.test(req.headers['accept-encoding'] ?? '')) {
     const st = statSync(file);

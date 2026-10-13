@@ -1,0 +1,172 @@
+{
+ "criterion": "M4.4: tiers from measured frame time; automatic top-down fallback with a notice when the low tier cannot hold about 24 fps",
+ "verdict": {
+  "gpu_stays_3d": true,
+  "cannot_draw_falls_back_with_notice": true,
+  "no_page_errors": true
+ },
+ "runs": [
+  {
+   "name": "gpu",
+   "query": "",
+   "throttle": 1,
+   "seconds": 20,
+   "wall_s": 20.382,
+   "tier": "high",
+   "choice": "auto",
+   "fell_back": false,
+   "camera": "follow",
+   "is3d": true,
+   "pixel_ratio": 1,
+   "notice": null,
+   "frames": 1204,
+   "interval_ms": {
+    "p50": 16.69999999999891,
+    "p90": 16.700000000000728
+   },
+   "marks": {},
+   "model_tick": 201,
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "errors": [],
+   "conditions": {
+    "start": {
+     "at_utc": "2026-10-12T18:18:39.632Z",
+     "power_profile": "balanced",
+     "ac_power": true,
+     "battery": {
+      "status": "Charging",
+      "capacity_pct": 92
+     },
+     "cpu_governor": "powersave",
+     "load_average": {
+      "1m": 1.23,
+      "5m": 1.47,
+      "15m": 1.86
+     },
+     "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+     "threads": 12,
+     "standard": true
+    },
+    "end": {
+     "at_utc": "2026-10-12T18:19:03.514Z",
+     "power_profile": "balanced",
+     "ac_power": true,
+     "battery": {
+      "status": "Charging",
+      "capacity_pct": 92
+     },
+     "cpu_governor": "powersave",
+     "load_average": {
+      "1m": 1.66,
+      "5m": 1.56,
+      "15m": 1.88
+     },
+     "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+     "threads": 12,
+     "standard": true
+    }
+   }
+  },
+  {
+   "name": "cannot_draw",
+   "query": "&quality=low",
+   "throttle": 20,
+   "seconds": 20,
+   "wall_s": 20.281,
+   "tier": "low",
+   "choice": "low",
+   "fell_back": true,
+   "camera": "topdown",
+   "is3d": false,
+   "pixel_ratio": 1,
+   "notice": "3D is too slow on this device (the low tier drew at 20 fps, under 24), so this is the top-down view.",
+   "frames": 937,
+   "interval_ms": {
+    "p50": 16.700000000000728,
+    "p90": 33.39999999999782
+   },
+   "marks": {
+    "quality_fallback": 1791829151026.2002
+   },
+   "model_tick": 201,
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "errors": [],
+   "conditions": {
+    "start": {
+     "at_utc": "2026-10-12T18:19:03.579Z",
+     "power_profile": "balanced",
+     "ac_power": true,
+     "battery": {
+      "status": "Charging",
+      "capacity_pct": 92
+     },
+     "cpu_governor": "powersave",
+     "load_average": {
+      "1m": 1.66,
+      "5m": 1.56,
+      "15m": 1.88
+     },
+     "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+     "threads": 12,
+     "standard": true
+    },
+    "end": {
+     "at_utc": "2026-10-12T18:19:27.461Z",
+     "power_profile": "balanced",
+     "ac_power": true,
+     "battery": {
+      "status": "Charging",
+      "capacity_pct": 92
+     },
+     "cpu_governor": "powersave",
+     "load_average": {
+      "1m": 5.6,
+      "5m": 2.49,
+      "15m": 2.18
+     },
+     "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+     "threads": 12,
+     "standard": true
+    }
+   }
+  }
+ ],
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-12T18:18:39.569Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 92
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.23,
+    "5m": 1.47,
+    "15m": 1.86
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "at_utc": "2026-10-12T18:19:27.528Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 92
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 5.6,
+    "5m": 2.49,
+    "15m": 2.18
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

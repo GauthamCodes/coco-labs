@@ -62,7 +62,7 @@ try {
   const page = await ctx.newPage();
   watch(page);
   const t0 = Date.now();
-  await page.goto(`${SITE}?view=arena&perf`);
+  await page.goto(`${SITE}?view=arena&camera=topdown&perf`);
   await page.waitForFunction(() => !!window.__cocoPerf?.marks.attract_ready, null, { timeout: 60_000 });
   const marks0 = await page.evaluate(() => ({ ...window.__cocoPerf.marks, nav_start: window.__cocoPerf.navStart }));
   await page.waitForTimeout(1500);
@@ -159,7 +159,7 @@ try {
   const phone = await browser.newContext({ ...devices['Pixel 7'] });
   const pp = await phone.newPage();
   watch(pp);
-  await pp.goto(`${SITE}?view=arena`);
+  await pp.goto(`${SITE}?view=arena&camera=topdown`);
   await pp.waitForFunction(() => window.__cocoArena?.client.world, null, { timeout: 120_000 });
   await pp.waitForTimeout(500);
   const [tx, ty] = await screenOf(pp, 6.0, 4.0);

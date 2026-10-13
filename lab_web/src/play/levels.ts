@@ -20,12 +20,15 @@ export function loadLevels(): Promise<Levels> {
   return levelsP;
 }
 
-/** The Arena URL a challenge played in the Arena opens (map, detective). */
+/** The Arena URL a challenge played in the Arena opens (map, detective, race). */
 export function arenaPlayHref(challenge: string, lv: Level): string {
   const q = new URLSearchParams({ view: 'arena' });
   if (challenge === 'map-the-arena') {
     q.set('lens', 'map'); q.set('level', 'explain');
     for (const c of lv.config as string[]) q.append('cfg', c);
+  } else if (challenge === 'race-the-ghost') {
+    // M4.8: the race is driven in 3D, behind the robot; the model's seed is the level's
+    q.set('lens', 'plan'); q.set('level', 'watch'); q.set('camera', 'follow'); q.set('seed', String(lv.seed));
   } else {
     q.set('casefile', String(lv.casefile)); q.set('lens', 'localise'); q.set('level', 'explain');
   }

@@ -18,6 +18,7 @@
  *       Re-scores every link in Node.
  */
 
+import { deflateRawSync } from 'node:zlib';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium, firefox, webkit } from 'playwright';
@@ -33,9 +34,9 @@ const SITE = args.site ?? 'http://127.0.0.1:4214/coco-labs/';
 const OUT = args.out ?? 'play-verify-out';
 mkdirSync(OUT, { recursive: true });
 
-// the same encoding as src/play/share.ts's encodeScore
-const b64url = (s) => Buffer.from(s, 'utf-8').toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-const link = (s, r) => `${SITE}?view=play&c=${s.challenge}&l=${s.level}&s=${b64url(JSON.stringify({ v: 1, h: s.level_hash, i: s.inputs, r }))}`;
+// the same encoding as src/play/share.ts's encodeScore (M4.8: the payload deflated, z=)
+const b64url = (b) => Buffer.from(b).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const link = (s, r) => `${SITE}?view=play&c=${s.challenge}&l=${s.level}&z=${b64url(deflateRawSync(Buffer.from(JSON.stringify({ v: 1, h: s.level_hash, i: s.inputs, r }), 'utf-8'), { level: 9 }))}`;
 
 if (mode === 'score') {
   const subs = JSON.parse(readFileSync(args.subs, 'utf-8')).submissions;

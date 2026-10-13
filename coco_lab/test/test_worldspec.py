@@ -178,7 +178,10 @@ def test_the_fast_rasteriser_equals_the_cell_by_cell_rules(spec):
 
 
 @pytest.mark.parametrize('mutate,match', [
-    (lambda s: s.update(spec_version='coco.world_spec.v2'), 'knows'),
+    (lambda s: s.update(spec_version='coco.world_spec.v9'), 'knows'),
+    # v2 (M4.2, ADR 0007) is v1 plus `elevation`: a v1 spec relabelled v2 lacks it
+    (lambda s: s.update(spec_version='coco.world_spec.v2'), 'missing'),
+    (lambda s: s.update(elevation=[]), 'unknown keys'),
     (lambda s: s.update(colour='red'), 'unknown keys'),
     (lambda s: s.pop('robot'), 'missing'),
     (lambda s: s['boxes'][0].update(kind='lava'), 'kind'),

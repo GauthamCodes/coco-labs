@@ -49,8 +49,8 @@ const out = { site: SITE, gl_mode: GL, flags, browser: browser.version(), scene:
     : { points: 50000, segments: 20000 } };
 try {
   const q = SCENE === 'm2'
-    ? `?view=arena&perf&lens=decide&layers=all&stress=m2&${M2_CFG.map((c) => `cfg=${encodeURIComponent(c)}`).join('&')}`
-    : '?view=arena&perf&stress';
+    ? `?view=arena&camera=topdown&perf&lens=decide&layers=all&stress=m2&${M2_CFG.map((c) => `cfg=${encodeURIComponent(c)}`).join('&')}`
+    : '?view=arena&camera=topdown&perf&stress';
   await page.goto(`${SITE}${q}`);
   await page.waitForFunction(() => !!window.__cocoPerf?.marks.arena_ready, null, { timeout: 120_000 });
   // the Arena's OWN context: what actually draws (null = the renderer failed)

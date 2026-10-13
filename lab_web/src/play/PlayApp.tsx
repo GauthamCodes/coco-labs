@@ -24,7 +24,7 @@ import { readShownBest } from './best';
 import { GridBoard, type Cell, type GridView } from './GridBoard';
 import { arenaPlayHref, loadLevels, type Level, type Levels } from './levels';
 import { ResultView, stars } from './Result';
-import { decodeScore, type Submission } from './share';
+import { decodeScore, hasSharedScore, type Submission } from './share';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -47,7 +47,7 @@ export function PlayApp() {
   const params = new URLSearchParams(window.location.search);
   const c = params.get('c');
   const l = params.get('l');
-  const shared = useMemo(() => (params.has('s') ? decodeScore(params) : null), []); // eslint-disable-line react-hooks/exhaustive-deps
+  const shared = useMemo(() => (hasSharedScore(params) ? decodeScore(params) : null), []); // eslint-disable-line react-hooks/exhaustive-deps
   const [levels, setLevels] = useState<Levels | null>(null);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => { loadLevels().then(setLevels).catch((e) => setError(String(e))); }, []);
@@ -59,7 +59,7 @@ export function PlayApp() {
       <ModeNav current="play" evidence={c === 'case-file-detective' ? 'STACK' : 'MODEL'} />
       <h1 className="mode-title"><a href={`${BASE}?view=play`}>Play</a></h1>
       {error && <p className="error" role="alert">{error}</p>}
-      {params.has('s') && !shared && <p className="error" role="alert">This challenge link is malformed; nothing was scored.</p>}
+      {hasSharedScore(params) && !shared && <p className="error" role="alert">This challenge link is malformed; nothing was scored.</p>}
       {!levels && !error && <p>Loading the challenges…</p>}
       {levels && !c && <ChallengeList levels={levels} />}
       {levels && c && !ch && <p className="error" role="alert">There is no challenge called {c}.</p>}
@@ -101,7 +101,7 @@ function ChallengePage({ id, levels, compact }: { id: string; levels: Levels; co
   );
 }
 
-const IN_ARENA = new Set(['map-the-arena', 'case-file-detective']);
+const IN_ARENA = new Set(['map-the-arena', 'case-file-detective', 'race-the-ghost']);
 
 function LevelPage({ challenge, level, levels, shared }: {
   challenge: string; level: Level; levels: Levels; shared: ReturnType<typeof decodeScore>;
@@ -162,7 +162,7 @@ function LevelPage({ challenge, level, levels, shared }: {
       {isShared && <p className="play-shared">A challenge link: its inputs are re-scored here.</p>}
       {!isShared && IN_ARENA.has(challenge) && (
         <p><a className="arena-go" data-testid="play-arena-go" href={`${BASE}${arenaPlayHref(challenge, level)}`}>
-          {challenge === 'map-the-arena' ? 'Drive in the Arena →' : 'Open the Case File →'}</a></p>
+          {challenge === 'map-the-arena' ? 'Drive in the Arena →' : challenge === 'race-the-ghost' ? 'Race in the Arena →' : 'Open the Case File →'}</a></p>
       )}
       {!isShared && view && challenge === 'beat-the-planner' && <BeatThePlanner view={view} onScore={score} result={result?.r ?? null} />}
       {!isShared && view && challenge === 'next-node' && <NextNode view={view} onScore={score} />}

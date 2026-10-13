@@ -18,7 +18,7 @@
  */
 
 import glueSource from './arena_glue.py?raw';
-import { wallMs, type FromWorker, type InputRow, type SearchColumns, type ToWorker } from './protocol';
+import { SPEC_FILES, wallMs, type FromWorker, type InputRow, type SearchColumns, type ToWorker } from './protocol';
 
 interface PyBuf { data: ArrayBufferView & ArrayLike<number | bigint>; release(): void }
 interface PyProxy {
@@ -104,7 +104,9 @@ async function boot(req: Extract<ToWorker, { type: 'boot' }>) {
   const files = Promise.all([
     fetch(`${req.assetsBase}arena/manifest.json`, { credentials: 'omit' }).then((r) => r.json()),
     fetch(`${req.assetsBase}arena/coco_lab.zip`, { credentials: 'omit' }).then((r) => r.arrayBuffer()),
-    fetch(`${req.assetsBase}arena/coco_arena_v1.json`, { credentials: 'omit' }).then((r) => r.text()),
+    // only a file the site ships (protocol.SPEC_FILES): a boot request never names a path
+    fetch(`${req.assetsBase}arena/${Object.values(SPEC_FILES).find((f) => f === req.spec) ?? SPEC_FILES.v1}`,
+      { credentials: 'omit' }).then((r) => r.text()),
   ]);
   const mod = await import(/* @vite-ignore */ `${req.pyodideBase}pyodide.mjs`);
   mark('pyodide_module');

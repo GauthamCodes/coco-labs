@@ -19,6 +19,8 @@ export interface ArenaLink {
   level?: string;
   replay?: string;
   cfg?: string[];
+  /** M4.8: the camera the beat opens in (follow, orbit, robot_eye, topdown; Inspect is always topdown) */
+  camera?: string;
   /** M3.4: a Case File, opened at `tick` (paused there): the tick of `moment`, derived and checked */
   casefile?: string;
   moment?: 'divergence' | 'refusal';
@@ -50,6 +52,7 @@ export function arenaHref(missionId: string, beat: number, link: ArenaLink): str
   if (link.casefile && Number.isInteger(link.tick)) q.set('tick', String(link.tick));
   if (link.lens) q.set('lens', link.lens);
   if (link.level) q.set('level', link.level);
+  if (link.camera) q.set('camera', link.camera);
   for (const c of link.cfg ?? []) q.append('cfg', c);
   q.set('mission', missionId);
   q.set('beat', String(beat));

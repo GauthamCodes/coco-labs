@@ -15,11 +15,11 @@
   },
   "decide": {
    "requires": [],
-   "modules": ["arm.py", "fetch_problem.py", "mission_arena.py", "regionsearch.py", "searchbundle.py"]
+   "modules": ["mission_arena.py", "regionsearch.py", "searchbundle.py"]
   },
   "play": {
    "requires": ["localise", "map", "move", "decide"],
-   "modules": ["play.py"]
+   "modules": ["play.py", "race.py"]
   }
  }
 }

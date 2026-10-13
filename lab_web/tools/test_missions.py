@@ -237,3 +237,26 @@ def test_the_site_json_carries_each_resolved_reference():
     for m in s['missions']:
         for c in m['claims']:
             assert len(c['resolved']) == len(c['evidence'])
+
+
+# -- M4.8: every beat that opens the Arena names its camera ------------------------
+
+def test_every_arena_beat_names_a_camera_and_inspect_is_top_down():
+    for m in MS:
+        for b in m['beats']:
+            if 'arena' in b:
+                assert b['arena']['camera'] in missions.CAMERAS, (m['id'], b['beat'])
+                if b['arena'].get('level') == 'inspect':
+                    assert b['arena']['camera'] == 'topdown', (m['id'], b['beat'])
+
+
+def test_a_beat_without_a_camera_or_inspect_in_3d_is_refused():
+    def no_camera(m):
+        next(b for b in m['beats'] if 'arena' in b)['arena'].pop('camera')
+
+    def inspect_in_3d(m):
+        a = next(b for b in m['beats'] if 'arena' in b)['arena']
+        a.update(level='inspect', camera='follow')
+
+    _broken(no_camera)
+    _broken(inspect_in_3d)

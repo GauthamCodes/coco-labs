@@ -13,7 +13,7 @@ beats:
       The planner hands COCO one path. Turning that path into wheel speeds, ten times
       a second, around things the map never knew, is the local controller's job.
       Watch DWA's candidate arcs fan out ahead of the robot.
-    arena: {lens: move, level: watch, cfg: ['move.controller=dwa', 'move.scenario=crossing']}
+    arena: {lens: move, level: watch, cfg: ['move.controller=dwa', 'move.scenario=crossing'], camera: follow}
     claims: [controllers, same-inputs]
   - beat: predict
     question: >-
@@ -38,7 +38,7 @@ beats:
       Pick the controller and the scenario: a person crossing, a person walking
       straight at the robot, the hairpin, run 15's 3.4 m mislocalisation. MPPI shows a
       sample of its 128 rollouts and the blend it drives; RPP shows the arc it checks.
-    arena: {lens: move, level: explain, cfg: ['move.controller=mppi', 'move.scenario=oncoming']}
+    arena: {lens: move, level: explain, cfg: ['move.controller=mppi', 'move.scenario=oncoming'], camera: follow}
     claims: [controllers, head-on]
   - beat: explain
     text: >-
@@ -51,7 +51,7 @@ beats:
       Lab 5's drives, recorded on the full ROS 2 stack in Gazebo and converted without
       loss: watch DWB stall at the wall end, with the critics' chosen trajectory drawn
       each cycle.
-    arena: {replay: lab5_static_room_dwb_1, level: explain}
+    arena: {replay: lab5_static_room_dwb_1, level: explain, camera: follow}
     claims: [stack-drives]
   - beat: challenge
     stub: true

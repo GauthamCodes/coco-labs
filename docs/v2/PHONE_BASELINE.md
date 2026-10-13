@@ -1,5 +1,14 @@
 # Phone baseline — how to measure v1 on your phone (M0.3)
 
+> **Correction, 2026-10-11 (the live site after M3's merge).** Since M2.10 the
+> bare `?view=plan…` URL opens Learn mission 1, not v1's Plan lab. v1 is served
+> frozen at **`/v1/`**, so the flow below uses
+> `https://gauthamcodes.github.io/coco-labs/v1/?view=plan&perf&bundle=arena_0_10m`
+> (checked on the live site: v1's Plan lab with the paint tool, 0 console
+> errors). The v2 phone baseline — the Arena's cold start and frame rate, and
+> M2's and M3's notes — is [`PHONE_MEASURE.md`](PHONE_MEASURE.md); do both,
+> on mobile data (decision D5: the phone baseline is measured now).
+
 The laptop numbers are in [`BASELINE.md`](BASELINE.md). On the laptop
 every view holds 60 fps, so the phone is the device that decides v2's
 budgets (M1: "30 fps or better on Gautham's phone", "first visible
@@ -19,7 +28,7 @@ baseline measured.
 1. Open a **new private / incognito tab** (empty cache — that is what makes
    the first edit cold).
 2. Go to
-   `https://gauthamcodes.github.io/coco-labs/?view=plan&perf&bundle=arena_0_10m`
+   `https://gauthamcodes.github.io/coco-labs/v1/?view=plan&perf&bundle=arena_0_10m`
    and wait for the arena to draw.
 3. Tap **Paint wall** (the paint tool), brush 1 × 1 (the default).
 4. Tap **one free cell** near the middle of the map. The status line says

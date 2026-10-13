@@ -6,14 +6,16 @@ computation within 10 s on mobile data). The agent never marks them done.
 `?perf` puts every number you need on the screen, so no USB cable or remote
 DevTools is needed.
 
-## Where
+## Where (updated 2026-10-11, after the M3 merge)
 
-The Arena (`?view=arena`) reaches the public site only when the M1 pull
-request is merged and Pages deploys. Until then you can measure on Wi-Fi
-against your laptop (step B), but **cold start on mobile data needs the
-public URL** (step A).
+**Everything below is live on the public site now**: M1, M2 and M3 are merged
+(`main` = `bf7443f`, deployed by GitHub Pages). Decision D5: the **phone
+baseline is measured now, on the live site** — sections A, M2 and M3 below,
+on mobile data. Record the results where "Send back" says; the agent adds
+them to `docs/RESULTS.md` as measured by Gautham and lists them in
+`docs/STATUS.md`. M4's own phone rows come later, in `docs/v2/PHONE_GATE_M4.md`.
 
-## A. Public site, mobile data (after the M1 merge)
+## A. Public site, mobile data
 
 1. On the phone, turn **Wi-Fi off** (mobile data only). Note the network
    type the phone shows (4G / 5G) and the signal bars.
@@ -53,10 +55,11 @@ performance). Report the numbers either way; a miss is a result.
 
 ## B. Your laptop over Wi-Fi (possible now)
 
-On the laptop, in the canonical checkout's M1 worktree:
+On the laptop, in the canonical checkout (`~/coco_labs_ws/src/coco-labs`,
+fast-forwarded to `main`):
 
 ```bash
-cd lab_web && npm run build
+cd lab_web && npm ci && npm run build
 node tools/perf/serve_dist.mjs --port 4174 --host 0.0.0.0
 ```
 
@@ -113,10 +116,15 @@ are there.
 
 1. **Case Files** (mobile data, a private tab):
    `https://gauthamcodes.github.io/coco-labs/?view=arena&casefile=lab5_mislocalised_dwb_1&perf`.
-   Read `recording ready`: the Case File fetched, parsed and drawn. The
-   agent's budget on emulated 4G is 2 s after the app is loaded
-   (`docs/v2/M3_RESULTS.md`). Then drag the timeline back and forth: does it
-   follow your finger?
+   **The `?perf` panel does not show a Case File's own load time** on the
+   live site: its "recording ready (attract)" row is the attract demo's, not
+   the Case File's — do not record it as the Case File. Note by eye how long
+   until the recorded robot and the timeline appear, and whether the LiDAR
+   rays appear a moment later (since the M3 review, decision D6, a Case File
+   draws its first frame before its scans arrive). The agent's measurement on
+   emulated 4G: 100 / 100 Case Files within 2 s, worst 1.83 s
+   (`docs/v2/reviews/M3_REVIEW.md`). Then drag the timeline back and forth:
+   does it follow your finger?
 2. **Play**: `?view=play&c=beat-the-planner&l=bog`. Note how long until the
    grid appears: that is the scorer loading, Pyodide and coco_lab. Draw a
    path by tapping cells, then press **Score my path**. Can you tap one cell
@@ -126,7 +134,7 @@ are there.
    the MODEL / STACK badge is visible without scrolling.
 4. Repeat step 1 **three times**, closing the tab completely between runs.
 
-| Run | Network | Case File `recording ready` | Timeline follows the finger? | Play: grid shown after | Tapping cells OK? | Modes: anything cut off? |
+| Run | Network | Case File on screen after (by eye) | Timeline follows the finger? | Play: grid shown after | Tapping cells OK? | Modes: anything cut off? |
 |---|---|---|---|---|---|---|
 | 1 | | | | | | |
 | 2 | | | | | | |

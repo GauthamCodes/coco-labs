@@ -75,6 +75,18 @@ From `docs/v2/data/m2/m25/move_comparison.json` (M2.5, docs/v2/M2_MOVE_COMPARISO
 
 In run 15 (`mislocalised`) the robot never moved in either world, so its tracking error is 0 by construction; one STACK RPP cell has no tracking samples at all (—). Outcomes agree in the hairpin, the crossing and run 15. They differ head-on by construction: Gazebo's person had no collision geometry and was driven through, the Arena's is solid. The model's controllers are smaller (DWA 11 × 21 samples against DWB's 819 per cycle, MPPI 128 rollouts against 2,000), so agreement of outcome is not agreement of mechanism.
 
+## 4. Terrain following against the Lab 4 climbs
+
+M4.3, from `docs/v2/data/m4/m43/terrain_fidelity.json` (made by `docs/v2/data/m4/m43/terrain_fidelity.py` from Gazebo's ground truth in Lab 4's 17 recorded fetches: 15 climbed a bay's ramp onto its platform, `C1_green_stop_after_bay3` stopped part way up, `B3_colours_s7_red.void-1` never left the floor). At every recorded TRUE (x, y, yaw), one row per 0.1 s, the Arena on World Spec v2 gives the height and tilt of its wheel base from the surface under the four corners (kinematic: no suspension, no contact, no slip); e = Gazebo − Arena. Rows are classed by where the Arena puts the robot.
+
+| Arena class | rows | \|e\| z: median / p95 / max | pitch | roll |
+| --- | ---: | --- | --- | --- |
+| flat | 32,898 | 0.0 mm / 0.0 mm / 1.3 mm | 0.00° / 0.00° / 0.83° | 0.00° / 0.00° / 0.15° |
+| slope | 13,207 | 0.0 mm / 7.4 mm / 15.1 mm | 0.00° / 0.27° / 1.37° | 0.00° / 0.01° / 0.60° |
+| platform | 6,646 | 0.0 mm / 0.0 mm / 0.0 mm | 0.00° / 0.00° / 0.01° | 0.00° / 0.00° / 0.01° |
+
+Largest height difference 15.1 mm (`A2_fixed_green`, t = 192.8 s, 0.1 cm from `bay2_up foot`: Gazebo 15.4 mm, Arena 0.4 mm); largest pitch difference 1.37° (`D3_positions_s3_red`, t = 242.0 s, 6.7 cm from `bay2_down top`); largest roll difference 0.60° (`D3_positions_s3_red`, 3.2 cm from `bay2_down top`). Every row is a pose the Stack actually drove, so what the Arena does off those poses (a climb at an angle, driving off a platform's side, which it stops as a contact) is not compared. Not measured either: on World Spec v2 the Arena's LiDAR meets a ramp where the ramp rises above the beam's height; that has not been compared with Gazebo's scans (UNRESOLVED).
+
 ## The chips
 
 Wherever a lesson depends on one of these, the page shows a "model gap" chip that opens to this text and links here: the Arena's Localise, Map, Move and Decide lenses, and the Learn missions that use them.
@@ -88,6 +100,10 @@ Wherever a lesson depends on one of these, the page shows a "model gap" chip tha
 ```
 python3 docs/v2/data/m2/m29/arena_fidelity.py ~/coco_lab_runs/lab2/fidelity_1 ~/coco_lab_runs/lab2/fidelity_s1 \
     --out docs/v2/data/m2/m29/fidelity_v1.json
+source /opt/ros/jazzy/setup.bash   # only the extraction reads the bags
+python3 docs/v2/data/m4/m43/extract_lab4_truth.py ~/coco_lab_runs/lab4/matrix \
+    --out docs/v2/data/m4/m43/lab4_truth.json.gz
+python3 docs/v2/data/m4/m43/terrain_fidelity.py --out docs/v2/data/m4/m43/terrain_fidelity.json
 python3 lab_web/tools/fidelity.py --write
 ```
 
