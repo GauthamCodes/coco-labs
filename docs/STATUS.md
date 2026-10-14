@@ -15,11 +15,11 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M1 | **Closed 2026-10-09 — agent-measurable criteria**: independent review [`v2/reviews/M1_REVIEW.md`](v2/reviews/M1_REVIEW.md) (MERGE AFTER FIXES, every fix done); PR #20 merged into `main` as **`0a2516a`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena, a goal click drew its search, all six v1 views 0 console / 0 page errors ([`v2/data/m1/exit/public_after_merge.json`](v2/data/m1/exit/public_after_merge.json)). **Still pending Gautham:** phone performance, phone cold start, usability |
 | M2 | **Closed 2026-10-10 — agent-measurable criteria**: independent review [`v2/reviews/M2_REVIEW.md`](v2/reviews/M2_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: `/v1/` rebuilt from `9f58b83` because the tag's build undid M0's public fixes); post-reboot re-measurement on NVIDIA 580.178.04, every budget met; PR #21 merged into `main` as **`d9ae365`** (merge commit, owner's one-off permission, branch kept); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search in 57.6 ms, `?view=learn` and all 14 pages 0 console / 0 page errors, all 22 v1 URL forms and `/v1/`'s six views pass, no "real robot" ([`v2/data/m2/exit/public_after_merge.json`](v2/data/m2/exit/public_after_merge.json)). **Still pending Gautham:** M2's phone and usability rows |
 | M3 | **Closed 2026-10-11 — agent-measurable criteria**: independent review [`v2/reviews/M3_REVIEW.md`](v2/reviews/M3_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: D6, Case File scans after the first frame, which took the first frame on emulated 4G from 97 / 100 to **100 / 100 within 2 s**); the outstanding re-measurement completed on AC, every M2 budget met; PR #22 merged into `main` **quietly** as **`bf7443f`** (merge commit, owner's one-off permission, branch kept, no release, tag or announcement); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search, the four modes 23 / 23 pages, 5 / 5 Case Files, 5 / 5 challenge links reproduced, all 22 v1 URL forms and `/v1/`'s six views, 0 console errors ([`v2/data/m3/exit/public_after_merge.json`](v2/data/m3/exit/public_after_merge.json)) |
-| Branch | `v2/m4-3d-arena` (from `main` = `bf7443f`), worked in the worktree `.claude/worktrees/v2-m4-3d-arena` |
-| Milestone | **M4 · 3D Arena** ([`v2/M4_PROMPT.md`](v2/M4_PROMPT.md)) — the content of the public v2.0 launch, which Gautham publishes after M4 merges and his rows pass |
-| Checkpoint | **M4.10 done: every agent-owned M4 criterion met** ([`v2/M4_RESULTS.md`](v2/M4_RESULTS.md)); the M4 pull request is open for review, **not merged** (see "M4 checkpoint log") |
-| Merge to `main` | M4 opens a PR; it is **not** merged by the agent (the merge permission covered PR #22 only) |
-| Pending Gautham | **The phone baseline, now**, on the live site ([`v2/PHONE_BASELINE.md`](v2/PHONE_BASELINE.md), [`v2/PHONE_MEASURE.md`](v2/PHONE_MEASURE.md)); **the M4 feasibility gate on the phone** ([`v2/PHONE_GATE_M4.md`](v2/PHONE_GATE_M4.md); preview via `lab_web/tools/preview_phone.sh`) and M4's phone rows; **the consolidated five-person usability test at the end of M4** (decision D5; it replaces M1–M3's usability tests). M1–M3's phone rows are covered by the phone baseline and M4's gate. Never marked done by the agent |
+| Branch | `v2/m5-focus`, canonical checkout `~/coco_labs_ws/src/coco-labs`; source `6c286b7c51c9b550bfb90cdf96e2f53ba3b31cf2` |
+| Milestone | **M5 · Focus and polish** ([`v2/M5_PROMPT.md`](v2/M5_PROMPT.md)); revision 3 installed |
+| Checkpoint | **M5.0 setup complete**; baseline in `v2/data/m5/setup/BASELINE.md`. M5.1 audit started, no defect fixed yet. Pre-M5 owner gate unresolved |
+| Merge to `main` | M5 opens a PR at M5.11; never merged by the agent. Release drafts only; Gautham publishes after his gates pass |
+| Pending Gautham | Nothing Phone (1), **recorded by Gautham** on 2026-10-14; all phone performance and cold-start results missing. Downloaded pre-M5 notes are blank. README §7 pre-design phone/three-person gate awaits results or explicit waiver; final M5 phone/five-person rows stay pending |
 
 ## Checkpoint log
 
@@ -1885,3 +1885,31 @@ as a dated entry here (README §0).
 | 2026-10-11 | **D5:** M3 merges quietly; the public v2.0 launch waits for M4; the phone baseline is measured now; one consolidated five-person usability test at the end of M4 replaces the M1–M3 usability tests. | README rev 2 §8. | Gautham |
 | 2026-10-11 | **D6:** Case File scans load after the first frame (ADR 0005 amended: the ordered layout, chosen by measurement); the narrowed storage guard is accepted and generalised into one preferences module (M4.5). | README rev 2 §8; M3.9's one failed criterion. | Gautham |
 | 2026-10-11 | **One-off permissions for the M3-close / M4 session:** implement D6 in the M3 review; merge PR #22 quietly (merge commit, branch kept, no release, tag or announcement) under the A.6 conditions; stop leftover M3-session processes that would skew measurements (listed in the review; never robot-project processes); a temporary phone preview through Tailscale Funnel in M4.1 (static files only, no collision with Live's `/ws` and `/healthz`, turns itself off after 2 hours, recorded here). | Closes M3 and starts M4. | Gautham (M4 prompt §0) |
+
+
+## M5.0 setup complete — 2026-10-14
+
+- Milestone M5 · Focus and polish; checkpoint M5.0; exit criterion: install revision 3 and establish the baseline before defects.
+- Initial checkout clean, no local-only commits; fetched origin; main fast-forwarded `d9ae36539747c25215151ade84587950204ed100` → `6c286b7`; M4 merge is the main head. Branch `v2/m5-focus` created.
+- README copied byte for byte from `~/Downloads/README.md`; `cmp` passed; line 1 is `# COCO Lab v2 — Master Plan: Play, Compare, Research`; sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
+- Gautham's notes found and preserved at `docs/v2/usability/2026-10-pre-m5.md`, but every result field and usability response is blank. Phone: Nothing Phone (1), **recorded by Gautham** in the session; phone result not supplied, pending Gautham. No inferred pass/fail; D1 fallback not applied. Inputs: `docs/v2/M5_DESIGN_INPUTS.md`.
+- Baseline: packages **3523 / 0 / 0**, web **436 / 0 / 0** and typecheck passed, tools **192 / 0 / 0**. Evidence `docs/v2/data/m5/setup/BASELINE.md` and its logs. Initial setup failures retained and corrected without product/test changes. Conditions: balanced (original profile, unchanged), AC online, NVIDIA RTX 4050 driver 580.178.04; no simulator or robot batch active.
+- Screenshots awaiting review: no new M5 screenshots yet.
+- Full operational prompt saved verbatim at `docs/v2/M5_PROMPT.md`. Preliminary M5.1 audit: `docs/v2/data/m5/defects/`; no source fix, hash change or workflow disablement.
+- Next: M5.1 defects. The README §7 roadmap places `[Gautham: 3-person test + phone measurement]` before M5, and §2 says those results are due before design work. Completed notes or an explicit waiver remain requested; the Nothing Phone (1) reply provides the model only. No M5 design work may proceed on inferred results or inferred waiver.
+- Session report: `docs/v2/data/m5/setup/SESSION_REPORT.md`. No files moved or removed, no ADR, no new parked idea, no M5 screenshots. No enumerated stop condition was hit; the owner prerequisite remains unresolved.
+
+### M5 approved plan-change log
+
+The owner approved E1–E8 by issuing the M5 prompt. Decision wording and rationale follow README §8 and its referenced architecture; M6+ items are recorded only, never implemented in M5.
+
+| Date | Change | Reason | By |
+| --- | --- | --- | --- |
+| 2026-10-14 | E1: Play, Compare, Research; title and About replace the four-mode navigation. | Three purposes, three modes; focus the existing dashboard surface. | Gautham (M5 prompt) |
+| 2026-10-14 | E2: Depot from World Spec v3; browser, Gazebo SDF and Nav2 map; arena retained as Proving Ground (M6). | Author worlds once and retain the reference for existing recordings. | Gautham (M5 prompt) |
+| 2026-10-14 | E3: ROS-shaped model, graph panel, Gazebo worlds, ROS ghosts; own-ROS bridge M7; invariant 2 narrowed to control boundary. | Make “ROS 2 at its core” concrete without per-player cloud cost; keep Stack control behind coco.v1. | Gautham (M5 prompt) |
+| 2026-10-14 | E4: glass-box MoveIt-style Grasp Assist in the model, explicitly badged (M6). | Show the manipulation decisions honestly within the kinematic model. | Gautham (M5 prompt) |
+| 2026-10-14 | E5: public v2.0 after M5 and owner gates; Depot games as v2.1. | Polish and launch what exists before adding worlds and games. | Gautham (M5 prompt) |
+| 2026-10-14 | E6: service-worker static asset cache allowed. | Cache app, Pyodide and assets for returning visitors; never personal data. | Gautham (M5 prompt) |
+| 2026-10-14 | E7: one cookieless aggregate counter allowed, off until owner configures it. | Aggregate visits without personal data, fingerprinting or per-user tracking. | Gautham (M5 prompt) |
+| 2026-10-14 | E8: slim/archive agent files; AGENTS.md canonical; nothing deleted except committed test cache. | Reduce startup overhead while preserving history and engineering rules. | Gautham (M5 prompt) |

@@ -1,0 +1,10 @@
+[tests] interpreter: /home/gautham/coco_labs_ws/test_venv/bin/python (3.12.3 pytest 7.4.4 hypothesis 6.98.15 networkx 2.8.8)
+[tests] workspace:   /home/gautham/coco_labs_ws   ROS_DOMAIN_ID=78
+--- Testing coco_lab_ros ---
+........................................................................ [ 99%]
+.                                                                        [100%]
+145 passed, 15 warnings in 20.86s
+==================================================
+coco_lab_ros         ok   145 passed, 15 warnings in 20.86s
+==================================================
+[tests] all 1 packages passed

@@ -1,7 +1,7 @@
-# COCO Lab v2 — Master Plan: the 3D Glass-box Arena
+# COCO Lab v2 — Master Plan: Play, Compare, Research
 
-> **Authority file for all COCO Lab work. Revision 2, 11 October 2026: 3D becomes the default experience.**
-> Every coding agent reads this file and `docs/STATUS.md` before touching anything.
+> **Authority file for all COCO Lab work. Revision 3, 14 October 2026: three purposes, three modes.**
+> Every coding agent (Claude Code, Codex or any other) reads this file, `AGENTS.md` and `docs/STATUS.md` before touching anything.
 > Repository: [`GauthamCodes/coco-labs`](https://github.com/GauthamCodes/coco-labs) · Public site: <https://gauthamcodes.github.io/coco-labs/>
 
 ---
@@ -27,36 +27,42 @@
 
 ## 1. What COCO Lab is becoming
 
-**COCO Lab is one browser app: a 3D glass-box robot arena.**
+**COCO Lab is one browser app with three purposes, and one mode for each.**
 
-You enter COCO's own arena in 3D, the world the full ROS 2 stack was recorded in, rendered in the browser. You can:
+| Mode | Purpose | Who it's for | First thing a visitor does |
+| --- | --- | --- | --- |
+| **Play** | A fun robot game anyone can play, anywhere, anytime, with ROS 2 at its core | Everyone | Picks a mini-game card, gets a 20-second tutorial, plays |
+| **Compare** | See how algorithms differ, through the costmaps they actually work on | Learners, instructors | Picks two algorithms and a goal, watches both search the same costmap side by side |
+| **Research** | Reproducible experiments and real ROS 2 recordings | Students, researchers | Builds an experiment, runs many seeds, exports results, or opens a recorded ROS 2 run |
 
-- drive COCO yourself with keyboard, mouse or touch
-- hand it over to autonomy
-- follow it, orbit it, or ride on its camera
-
-All the while you see everything it computes, live and anchored in the world:
-
-- search frontiers and expansion heatmaps
-- LiDAR rays at the sensor's real height
-- particles and their weights
-- the evolving map
-- candidate trajectories and their scores
-- beliefs over search regions
-
-You can pause, step, inspect any decision, drop to the top-down analytic view, and replay. Then you compare with what the full ROS 2 stack did in Gazebo, failures included.
+The first screen is a **title screen**: COCO idling in its world at night under a work light, the logo, and three large cards, Play · Compare · Research. Everything else is behind one of those doors or on a quiet About page.
 
 - **Tagline:** *See what the robot computes.*
 - **The design question every feature answers:** what is the robot computing right now, and how can the user see and understand it?
-- **The core moment:** the ISRO Pygame simulator, grown into a 3D game. The user drives or sends COCO to a goal, watches the planner's search spread across the floor as the robot moves, and at the end sees a heatmap of every node the algorithm computed.
+- **The core moment:** the ISRO Pygame simulator grown into a 3D game. You drive COCO, or send it, through a warehouse; its planner's search spreads across the floor; it finds, picks up and delivers objects with its arm; and at the end you see the heatmap of everything it computed.
+
+### What "ROS 2 at its core" means
+
+A full ROS 2 stack cannot run inside a phone's browser, and cloud ROS sessions for every player would cost money per player. So ROS 2 is at the core in these five ways, in order of cost:
+
+| Layer | What it means | When |
+| --- | --- | --- |
+| **ROS-shaped model** | The browser robot speaks ROS 2 message shapes internally (`LaserScan`, `OccupancyGrid`, `Twist`, `Path`, TF frames). A "ROS graph" panel shows the topics flowing between nodes (`/scan`, `/odom`, `/map`, `/plan`, `/cmd_vel`) | M6 |
+| **Every level is a real Gazebo world** | One level file compiles to the browser world *and* a Gazebo SDF world with a Nav2 map and params, validated by launching it in Gazebo | M6 |
+| **The real ROS 2 ghost** | For each level and objective, the real stack (Nav2, MoveIt, Gazebo) is recorded doing it on Gautham's laptop. In the game, that recording races you as a translucent ghost labelled STACK | M6 |
+| **Connect your own ROS 2** | Researchers connect their own ROS 2 nodes to the browser robot over a local WebSocket bridge | M7 |
+| **Cloud ROS 2 sessions** | Live Gazebo and Nav2 in the cloud | M9, gated |
+
+The first three make the claim true for every player, at no running cost.
 
 ### Pillars
 
 | Pillar | Promise | Test a feature must pass |
 | --- | --- | --- |
-| Glass box | Internal computation is the main view, in 3D and top-down | Does it make some computation visible or understandable? |
-| Honest | Model, Stack and hardware results are labelled, never conflated; 3D looks never imply physics the model doesn't have; failures stay on display | Is every on-screen claim traceable to evidence, with its class? |
-| Playable | Zero install, instant response, game-like feel | Does it work in a phone browser at first click, and does driving feel immediate? |
+| Glass box | The robot's computation is visible and inspectable | Does it make some computation visible or understandable? |
+| Honest | Model, Stack and hardware results are labelled, never conflated; good looks never imply physics the model doesn't have; failures stay on display | Is every on-screen claim traceable to evidence, with its class? |
+| Playable | Zero install, instant response, game-like feel, good-looking | Would a non-roboticist enjoy the first two minutes on a phone? |
+| Focused | Every screen serves Play, Compare or Research; nothing else is on screen | Can a newcomer tell what to do first? |
 | Reproducible | Every run is a spec plus a seed anyone can rerun | Can someone reproduce what they see from a link? |
 
 ### Who it is for, in priority order
@@ -65,20 +71,13 @@ You can pause, step, inspect any decision, drop to the top-down analytic view, a
 2. Instructors.
 3. Researchers and practitioners.
 
-### Four modes in one app
-
-| Mode | What it is |
-| --- | --- |
-| **Learn** | Guided missions organized around the robot's questions |
-| **Play** | Challenges scored only with real robotics metrics |
-| **Sandbox** | Free driving and autonomy in the 3D arena, comparisons, and "Run N seeds" experiments |
-| **Case Files** | Recorded full-stack runs and failures, inspectable in the same 3D world |
+Everyone else comes for the game.
 
 ### What COCO Lab is not
 
-- a physics-accurate simulator (physics comes from Gazebo, through Case Files and later cloud runs)
+- a physics-accurate simulator (physics comes from Gazebo, through recordings and later cloud runs)
 - a cloud ROS IDE
-- a course website
+- a course website or a dashboard
 - a VLM, LLM or RL showcase
 
 ---
@@ -98,20 +97,30 @@ The v1 site is served frozen at `/v1/` from the orphan branch `v1-site`. Every o
 | M0 Transition | Merged (PR #19); independently reviewed |
 | M1 Glass-box Arena core | Merged (PR #20); independently reviewed |
 | M2 The whole loop | Merged (PR #21); independently reviewed |
-| M3 Play and Case Files | Built (PR #22); review, one fix and part of the measurement outstanding; closes before M4 starts |
-| Gautham's phone and usability rows, M1–M3 | Not run. Phone baseline due now; usability consolidated into M4 (decision D5) |
+| M3 Play and Case Files | Merged quietly (PR #22, `bf7443f`); independently reviewed |
+| M4 3D Arena | Merged (PR #23, `6c286b7`) and live; reviewed at merge; Gautham's rows pending |
+| Gautham's phone and usability rows | Not run since M1. The phone measurement and a 3-person test are due before M5's design work |
 
 **Architecture today.**
 
-- `lab_web` (Vite, TypeScript, React) on GitHub Pages, with a Three.js WebGL 2 renderer and an orthographic 2.5D camera.
+- `lab_web` (Vite, TypeScript, React) on GitHub Pages: a Three.js WebGL 2 renderer, 3D by default with a top-down analytic camera.
 - `coco_lab` (pure Python, no `rclpy`) runs in a Pyodide worker as the Arena model and every algorithm.
 - `coco_schemas` defines the event families, stored in MCAP.
 - `coco_lab_ros` converts ROS recordings into Case Files.
-- `platform_server` (in `coco_web`) is the only web-to-ROS bridge, speaking `coco.v1`.
+- `platform_server` (in `coco_web`) is the only web-to-ROS bridge for Live, speaking `coco.v1`.
 - `cmd_vel_arbiter` is the only wheel publisher.
-- The Gazebo Harmonic + ROS 2 Jazzy stack runs locally. Live reaches it through Tailscale Funnel.
 
 `docs/STATUS.md` holds the current SHAs and test counts.
+
+### What the October 13 assessment found
+
+- **The core is strong:** deterministic simulation, glass-box algorithms, a working 3D pipeline, honest evidence, about 4,100 passing tests.
+- **The surface is a dashboard, not a game.** The Arena page is 1,817 px tall, with 13 rows of controls and about 70 run links under the 3D view.
+- **The 3D view is unflattering.** It has heavy LiDAR moiré, and the low camera turns the walls into grey slabs.
+- **Phones get a 250-pixel strip.**
+- **Play, Learn and Case Files are lists of links.**
+- **Defects remain from M4:** an unbounded race-link input, a state-hash gap, race controls left enabled, a placeholder robot in Case Files, and a failing v1 workflow.
+- **Agent overhead is high:** `CLAUDE.md`, `STATUS.md` and `PROJECT_STATE.md` total about 4,800 lines, read at the start of every session.
 
 ### Evidence worth keeping forever
 
@@ -128,6 +137,7 @@ Each item is labelled with its evidence class (defined in section 3).
 | Lab 5: 54 runs, 0 void | STACK | DWB 0/5 at the hairpin; nobody swerved head-on |
 | Run 15 mechanism reproduced 9/9 | STACK | Exact "0 of 819" not reproduced |
 | D\* Lite less work than A\* in 191/200 teaching worlds | MODEL | 2.9× *more* work on one real costmap |
+| The 44 mm band: `robot_radius` 0.20 → 0.25 closed a gap between the local costmap and the collision monitor | STACK | Mechanism not exercised in the 12/12 re-run |
 | Latched STOP; drive command p50 4.6 ms; STOP 6.2 ms | STACK | Local network |
 | Phone on mobile data drove the robot; RTT about 282–293 ms; disconnect stop about 0.54 s | REMOTE | Robot simulated |
 
@@ -137,7 +147,8 @@ Each item is labelled with its evidence class (defined in section 3).
 2. **The gripper has two fingers and a magnet, and the magnet does the holding** (it fires before the fingers close). Describe it that way, never as fingers alone and never as a magnet alone.
 3. **Live drives the simulated stack** on Gautham's machine. Its name and copy must not imply hardware.
 4. **Lab 5, head-on scenario.** The actor walked into an already-stopped robot in all 15 runs. DWB's and MPPI's "reached" exists only because the actor has no collision body.
-5. **The Arena model is kinematic.** In 3D it can climb a ramp visibly, but it never simulates tipping, slip, friction or contact forces. Those lessons come from Gazebo.
+5. **The Arena model is kinematic.** In 3D it can climb a ramp visibly, but it never simulates tipping, slip, friction or contact forces.
+6. **COCO is a 4-wheel skid-steer base modelled as differential drive.** It turns in place and never strafes.
 
 ### Unresolved, and kept labelled as unresolved
 
@@ -148,7 +159,8 @@ Each item is labelled with its evidence class (defined in section 3).
 - exact Run 15
 - recovery from confident AMCL divergence
 - the collision-monitor residual
-- the Arena pose graph's poor score on a long tour (F1 0.316 against 0.580), reported in M3 and not investigated
+- the Arena pose graph's poor score on a long tour (F1 0.316 against 0.580)
+- the terrain LiDAR, never compared with Gazebo
 - untested remote behaviours: phone STOP, second spectator, mid-mission preemption, remote mission completion, idle and session caps, the cause of the disconnect, and the stale Nav2 "executing" label
 
 ---
@@ -158,16 +170,20 @@ Each item is labelled with its evidence class (defined in section 3).
 ### Invariants
 
 1. `coco_lab` never imports `rclpy`.
-2. Browser code never names a ROS topic. It speaks `coco.v1`, which only grows additively unless a major version is declared.
-3. `cmd_vel_arbiter` is the sole wheel publisher, in every tier, forever. In the browser, the same priority rule holds: manual input overrides autonomy, and STOP overrides everything.
+2. **The control boundary.** Browser code that controls COCO's Stack (Live, cloud sessions) never names a ROS topic; it speaks `coco.v1`, which only grows additively unless a major version is declared. Two things are outside this boundary:
+    - The ROS-shaped model and the ROS graph panel may *show* ROS names, because they teach.
+    - The "Connect your ROS 2" bridge (M7) talks only to the visitor's own local ROS 2, never to COCO's Stack, and its runs carry the EXTERNAL evidence class.
+3. `cmd_vel_arbiter` is the sole wheel publisher, in every tier, forever. In the browser the same priority rule holds: STOP > the person driving > assists and autonomy.
 4. Ground truth has one authoritative source: the `truth` channel. Nothing fabricates truth elsewhere. Height, roll and pitch are never invented for a Stack recording that didn't record them.
-5. Data formats are versioned. A breaking change means a major version plus a converter.
+5. Data formats are versioned. A breaking change means a major version plus a converter. **State hashes are versioned too:** a new hash version never invalidates links made under an older one.
 6. Comparisons hold every non-compared variable fixed.
 7. Remote control is exclusive and interruptible, and STOP always wins.
 8. Gazebo `--fast` stays banned. It produced 531/533 tip-overs.
-9. **Any second implementation of an algorithm** (WebAssembly, TypeScript) must be trace-equivalent to the Python reference on the property-test corpus, checked in CI.
+9. Any second implementation of an algorithm (WebAssembly, TypeScript) must be trace-equivalent to the Python reference on the property-test corpus, checked in CI.
 10. **No physics engine in the browser.** The Arena model is planar kinematics plus kinematic terrain following. Adding rigid-body physics requires a new decision by Gautham.
-11. **Rendering never changes the model.** Cameras, lighting, interpolation and visual effects are outside the per-tick state hash. Flat-scene hashes stay byte-identical across renderer changes.
+11. **Rendering never changes the model.** Cameras, lighting, interpolation, wall display height and visual effects are outside the per-tick state hash.
+12. **Every world is a real Gazebo world** (from M6). A level is authored once as a World Spec and compiled to the browser world, a Gazebo SDF and a Nav2 map. The original COCO arena remains the reference for every existing recording.
+13. **Game rules are not physics.** A rule such as "fragile cargo" is a scoring rule about how the player drives, measured and labelled as a rule. It never claims the model simulates breakage, damage or forces.
 
 ### Evidence classes, used in code, docs and UI
 
@@ -176,33 +192,39 @@ Each item is labelled with its evidence class (defined in section 3).
 | MODEL | `coco_lab`, the Arena model, the browser |
 | STACK | Full ROS 2 stack in Gazebo, recorded |
 | REMOTE | Over the public internet, robot simulated |
+| EXTERNAL | Driven by a visitor's own ROS 2 through the bridge (M7) |
 | HARDWARE | A physical robot. **None exist.** |
 | UNRESOLVED | Reproduced but unexplained, statistically unresolved, or untested |
 | CONCEPT | Discussed, not built |
 
 The labels shown to learners map onto these: MEASURED, TESTED (a property or unit test proves it), ASSUMPTION, SIMPLIFIED MODEL, SIMULATION RESULT, REAL ROBOT RESULT, INFERENCE, UNRESOLVED.
 
-Whenever the Arena model drives the robot, a **"MODEL · kinematic"** badge is on screen.
+Whenever the Arena model drives the robot, a small "MODEL · kinematic" badge is visible in the HUD corner. Grasp Assist shows "MODEL · MoveIt-style".
 
 ### Integrity rules
 
-1. **Every learner-facing claim cites committed evidence.** Mission and Case File content without evidence references fails CI.
+1. **Every learner-facing claim cites committed evidence.** Missions, tours and Case File text without evidence references fail CI.
 2. **Negative results stay visible.** Nothing is removed to make a lesson look cleaner.
 3. **Never delete evidence:**
     - recordings in `~/coco_lab_runs/`
     - the contents of `docs/RESULTS.md`, which is append-only
     - release tags
     - GitHub releases
-4. **No game mechanic changes robot behaviour or rewards luck.** Scores use real metrics or decision quality in expectation. Controls map to what COCO can physically do: it turns in place but never strafes, and never exceeds its real speed or acceleration limits.
+
+    Moving documentation into archives is allowed; deleting it is not.
+4. **No game mechanic changes robot behaviour or rewards luck.**
+    - Scores use real metrics or decision quality in expectation.
+    - Controls map to what COCO can physically do: it turns in place but never strafes, and never exceeds its real speed or acceleration limits.
 5. **Git safety.**
     - No `git clean`, `git reset --hard`, force-push, branch deletion or tag deletion without Gautham's explicit approval.
     - Work happens on `v2/...` branches, merged to `main` only with green CI and Gautham's approval.
-6. **The machine is shared with the robot project.** That project's overnight batch runs need an idle machine, so no heavy COCO Lab jobs (Gazebo, long builds, benchmarks) run during an announced robot batch window.
-7. **Browser storage is per-viewer convenience only:**
-    - `localStorage` only, through one preferences module, every access inside `try`
-    - the page works without it
-    - no cookies, `sessionStorage`, IndexedDB or analytics
-8. **Every asset has a recorded licence.** Third-party textures, environment maps and props must be CC0 or equivalent, listed in the asset manifest with source and checksum.
+6. **The machine is shared with the robot project.** No heavy COCO Lab jobs (Gazebo, long builds, benchmarks) run during an announced robot batch window.
+7. **Browser storage and telemetry.**
+    - Per-viewer preferences and progress live in `localStorage`, through one preferences module, every access inside `try`. The page works without it.
+    - A **service-worker cache** may hold static assets only (the app, Pyodide, the `coco_lab` wheel, 3D assets, recordings), versioned by content hash, never personal data.
+    - **One cookieless, aggregate-only visit counter** may run when Gautham switches it on in the site config. No personal data, no fingerprinting, no per-user tracking.
+    - No cookies, no `sessionStorage`, no IndexedDB for personal data, no other analytics.
+8. **Every asset has a recorded licence.** Third-party textures, environment maps, props, fonts and icons must be CC0, OFL or an equivalent permissive licence, listed in the asset manifest with source and checksum. COCO's own CAD meshes are Gautham's own work.
 
 ---
 
@@ -210,71 +232,75 @@ Whenever the Arena model drives the robot, a **"MODEL · kinematic"** badge is o
 
 | Component | Verdict | What happens |
 | --- | --- | --- |
-| `coco_lab` Python library and Arena model | Keep, extend | Gains kinematic terrain following, teleop preemption, the gated grasp action (M4) |
-| Pyodide in a Web Worker | Keep | A kernel moves to WebAssembly only if it misses a measured budget |
-| `coco_schemas`, MCAP, keyframes | Keep, extend | Additive: optional z, roll and pitch; wheel speeds; command source (M4) |
-| Three.js WebGL 2 renderer | Keep, adapt | Becomes a 3D renderer: perspective camera rig, lighting, overlay pass, cutaways, quality tiers (M4) |
-| Orthographic 2.5D view | Keep, repurpose | Becomes the top-down analytic camera *and* the automatic low-end fallback |
-| React + Vite + TypeScript shell | Keep, redesign layout | Full-bleed world with HUD and slide-in panels |
-| Robot sprite | Replace | Articulated glTF robot converted from the URDF meshes |
-| World Spec | Keep, extend | Gains elevation data; checked against COCO's Gazebo SDF world in CI |
-| Asset pipeline (SDF and URDF to glTF) | New | Offline conversion, meshopt and KTX2 compression, levels of detail, licence manifest (M4) |
-| Camera and controls module | New | Follow, orbit, robot-eye, top-down; keyboard, mouse, touch, tank mode (M4) |
-| GitHub Pages hosting; `/v1/` from `v1-site` | Keep | Browser tier |
-| Learn missions, challenges, `coco verify`, Case Files | Keep, extend | Camera presets per mission step; one new challenge; adapter carries 3D pose where recorded |
-| `coco.v1` | Keep, extend | Additive event channel and session handshake (M6) |
-| `platform_server` | Keep, redesign | Gateway inside each cloud Stack container (M5–M6) |
-| Live through Tailscale Funnel | Replace (public) | "Live Stack (simulated)"; Gautham's private bench; replaced publicly by cloud sessions (M6) |
-| Docker image | Keep, redesign | Basis of the cloud worker (M5) |
+| `coco_lab` and the Arena model | Keep, extend | Nav2-style costmap layers (M5); World Spec v3 worlds, Grasp Assist, mini-game rules (M6–M7) |
+| Pyodide in a Web Worker | Keep | WebAssembly only for a kernel that misses a measured budget, trace-equivalent |
+| `coco_schemas`, MCAP, keyframes | Keep, extend | Versioned state hash v2 (M5); `manip.grasp` and game families (M6) |
+| Three.js renderer | Keep, restyle | "Night Shift" look; LiDAR as a scan area; three-quarter camera; dollhouse walls in Play; multi-pane rendering for Compare |
+| `ArenaApp.tsx` (1,097 lines) | Split | A shared scene core plus three thin shells: Play, Compare, Research (M5) |
+| Mode navigation (Learn, Play, Sandbox, Case Files) | Replace | Title screen plus Play, Compare, Research (M5) |
+| Learn missions 1–7 | Move | Guided tours inside Compare, claims and evidence intact (M5) |
+| Sandbox | Move | Play › Free roam (M5) |
+| Case Files and the run list | Move | Research › Recordings library; Play's "real ROS 2 ghost" (M5–M6) |
+| Five challenges and Race the ghost | Keep, restyle | Game cards and a scorecard in Play (M5) |
+| Lens bar, levels, layer checkboxes, planner buttons | Move | Compare's side panel or the Settings drawer; Play gets one "Robot vision" toggle |
+| Live Stack (simulated), v1 archive links | Move | About page |
+| World Spec | Extend | v3: a modular level kit compiled to browser, Gazebo SDF and Nav2 map (M6) |
+| COCO arena | Keep | The "Proving Ground" level and the home of existing recordings |
+| COCO Depot | New | The game world, about 48 × 32 m (M6) |
+| Grasp Assist | New | A glass-box, MoveIt-style pick pipeline in the model (M6) |
+| Research mode | New | Recordings library (M5); experiments, exports, "Run it in ROS 2", the ROS 2 bridge (M7) |
+| `CLAUDE.md` (935 lines) | Replace | `AGENTS.md`, about 200 lines, read by every agent; `CLAUDE.md` points to it; robot-stack lore archived (M5) |
+| `docs/STATUS.md` (1,887 lines), `PROJECT_STATE.md` (1,990 lines) | Slim | Current state only; history moved to archive files (M5) |
+| RL-era scripts at the repo root | Move | Under `coco_rl/` (frozen) (M5) |
+| `coco.v1`, `platform_server`, Docker image | Keep | Live and future cloud (M8–M9) |
 | Arbiter, latched STOP, caps, kill switch | Keep | Unchanged in every tier |
-| Robot-stack ROS packages inside `coco-labs` | Freeze | Not deleted; no new features; G3 decides long-term |
-| Old roadmap "Learn" (RL), "Many Robots", global leaderboard | Defer | See section 6 |
-| Isaac integration inside COCO Lab, VLM layer, browser policy training, browser physics engine, engine switch | Remove | Out of scope |
+| Robot-stack ROS packages inside `coco-labs` | Freeze | Not deleted; no new features |
+| Isaac inside COCO Lab, VLM layer, browser policy training, browser physics engine, engine switch | Remove | Out of scope |
 
 ---
 
 ## 5. Target architecture
 
-### 5.1 Two simulation tiers, one world
+### 5.1 Two simulation tiers, real worlds
 
-**Tier 1: the Arena model.** A deterministic simulator running beside the algorithms in a Web Worker (Pyodide + `coco_lab`). It is the main experience and costs nothing per user.
+**Tier 1: the Arena model.** A deterministic simulator running beside the algorithms in a Web Worker (Pyodide + `coco_lab`). It costs nothing per user.
 
 It is deterministic by construction:
 
 - fixed time step
 - single-threaded loop
 - seeded in-library RNG
-- per-tick state hash
+- versioned per-tick state hash
 
 What it simulates:
 
-- **Planar differential-drive kinematics** with the real speed and acceleration limits from `coco_config`.
-- **2D LiDAR** cast in the plane at the sensor's real mounting height.
-- **Kinematic terrain following:** height and pitch read from the World Spec's elevation data, so the robot visibly climbs the ramp onto the platform. No tipping, slip, friction or contact forces.
-- **Contact:** the robot stops on contact with a wall or actor, and the contact is recorded as an event. Nothing bounces.
-- **The grasp:** a gated kinematic action using the same proximity gate as the Stack.
+- **Planar differential-drive kinematics** with the real speed and acceleration limits.
+- **2D LiDAR** at the sensor's real mounting height.
+- **Kinematic terrain following:** height and pitch from the world's elevation data. No tipping, slip or forces.
+- **Contact:** the robot stops on contact and the contact is recorded as an event.
+- **Grasping:** the gated grasp, extended in M6 into Grasp Assist.
 
-**Tier 2: the Stack.** The existing ROS 2 + Gazebo Harmonic system. It is the source of everything physical:
+**Tier 2: the Stack.** The ROS 2 Jazzy + Gazebo Harmonic system. It is the source of everything physical (tipping, slip, friction, contact, MoveIt, camera perception). Its recordings are its replays.
 
-- tipping and the PPO ramp policy
-- slip and skid-steer yaw response
-- friction and contact
-- camera perception on rendered images
+- Today it reaches users as recordings.
+- From M6, as real ROS 2 ghosts for every Depot level.
+- From M8, as cloud batch runs; from M9, gated interactive sessions.
 
-Today it reaches users as recorded Case Files. From M5 it adds cloud batch runs; from M6, gated interactive sessions. It is not bitwise deterministic, so its recordings are its replays.
+**Worlds.**
 
-**One world.** The 3D world is COCO's actual Gazebo arena, converted offline from its SDF file, so Arena runs and Stack recordings share one scene. The World Spec (YAML) must agree with the converted SDF geometry within a stated tolerance, checked in CI. Lab dressing sits only *outside* the robot's operating area.
+- **World Spec v3** (M6) is a modular level kit: walls, doors, racks, benches, pallets, ramps, docks, drop zones, object spawns and actor lanes.
+- Each level compiles to:
+    - the browser world and its glTF scene
+    - a Gazebo SDF world (moving actors as models *with* collision bodies)
+    - a Nav2 map (PGM + YAML) and parameters
+- **CI checks schema and geometry.** Gazebo and Nav2 validation runs on the laptop and is recorded as STACK evidence.
+- The original COCO arena (SDF-derived, World Spec v2) stays as the Proving Ground.
 
-**Fidelity report.** Each release ships one, shown in the UI as "model gap" chips. It covers:
-
-- LiDAR agreement against Gazebo
-- odometry in turns
-- controller tracking
-- from M4, terrain following
+**Fidelity report.** Each release ships one, shown in the UI as "model gap" chips. It covers LiDAR against Gazebo, odometry in turns, controller tracking and terrain, and from M6, Grasp Assist against recorded MoveIt picks.
 
 ### 5.2 One trace system
 
-A **family of typed schemas under one envelope**: neither one flat universal event list nor separate per-lab formats.
+A **family of typed schemas under one envelope**.
 
 - **Envelope (manifest):**
     - `run_id` = hash of canonical spec + seed + engine versions
@@ -286,137 +312,212 @@ A **family of typed schemas under one envelope**: neither one flat universal eve
     - `map.grid`, `map.slam`
     - `control.local`, `decide.search`, `mission.fsm`
     - metrics, annotation, input
-- **3D fields (from M4):** optional z, roll and pitch on robot and truth poses, wheel speeds, and the command source (TELEOP, PLANNER, MISSION, STOP). All additive.
-- **Visual primitives.** The renderer's whole vocabulary: instanced points, poses, line sets, ribbons, polygons, scalar grids, graphs, region distributions, sparse labels. Each primitive carries a pick ID back to its semantic event.
-- **Lenses.** One per family. A lens maps events to primitives and defines inspector templates, default level of detail, captions and aggregates. It lays out and aggregates; it never computes the algorithm.
-- **Three clocks on every event:**
-    - `t_world` (simulation seconds)
-    - `tick` (control cycle)
-    - `seq` (computation step)
-
-    The timeline has a world track and a computation track.
-- **Storage.** MCAP container, protobuf messages, zstd-compressed indexed chunks, and keyframes every few seconds for seeking. Arena-model replays can be spec + seed + input log, re-simulated. Case Files load their first frame before their bulky scan data.
+    - `costmap.layers` (M5)
+    - `manip.grasp` and `game` (M6)
+- **3D fields:** optional z, roll and pitch on poses; wheel speeds; command source.
+- **Visual primitives.** Instanced points, poses, line sets, ribbons, polygons, scalar grids, graphs, region distributions, sparse labels. Each carries a pick ID back to its semantic event.
+- **Lenses.** One per family. A lens maps events to primitives and defines inspector templates, level of detail, captions and aggregates; it never computes the algorithm.
+- **Three clocks on every event:** `t_world`, `tick`, `seq`.
+- **State hash, versioned.** v1 (through M4) and v2 (M5: adds the planner's hand-back goal and every other input that can change behaviour). Every link records its hash version and verifies under it.
+- **Storage.** MCAP with zstd-compressed indexed chunks and keyframes. Case Files load their first frame and the robot model before scan data.
 - **Golden traces.** The property corpus produces golden traces, diffed in CI.
 
-### 5.3 Rendering
+### 5.3 The product shell
 
-**Three.js on WebGL 2, 3D by default.** Cameras:
+- **Title screen.** It is the attract mode: a light 3D scene that loads first while Pyodide warms up behind it, with three mode cards and an About link.
+- **Play.**
+    - The 3D world fills the screen, with a HUD in the corners.
+    - Contents: game cards, a first-run tutorial, the mini-games, free roam, a scorecard and a 10-second instant replay.
+    - In landscape on phones, a full-screen layout; in portrait, a "rotate your phone" card.
+- **Compare.** Synced panes, the layered costmap, the side panel with algorithms and parameters, a lockstep timeline, a difference view, a results strip and guided tours. It works in portrait with stacked top-down panes.
+- **Research.** The Recordings library (M5), then the experiment builder, runner, results, exports and "Run it in ROS 2" (M7).
+- **About.** What COCO Lab is, the evidence classes, Live Stack (simulated), the v1 archive, credits and licences.
+- **Settings drawer** (gear icon, in every mode): quality tier, wall height, sound, key bindings, theme, reduced motion.
+- **Code shape.**
+    - One scene core: renderer, cameras, controls, session, and the worker client.
+    - Three shells: Play, Compare, Research, each lazy-loaded.
+    - three.js in its own long-cached chunk.
 
-- **follow:** the default; sprung, with look-ahead, collision-aware
-- **orbit**
-- **robot-eye:** from the URDF camera link, labelled as rendered presentation; perception stays abstract
-- **top-down:** the orthographic analytic view
+### 5.4 Rendering and look ("Night Shift")
 
-Transitions take about 0.4 s, with a reduced-motion setting.
+- **Engine:** Three.js on WebGL 2. Compare's panes render as scissored viewports in **one** WebGL context, never one context per pane.
+- **Art direction:** a dark, calm robot warehouse after hours, with graphite floors, matte racks and warm work lights. **The robot's computation is the only thing that glows.**
+    - The computation colours keep fixed meanings (frontier, visited, chosen path, rejected candidates, uncertainty, truth always as an outline), tuned for a dark background and checked against colour-blindness simulations.
+    - A light theme remains for classrooms and projectors.
+- **Design tokens** live in one file: colours, type, spacing, radius, motion. Restyling is one change.
+    - One display face and one UI face, self-hosted and licensed.
+    - One icon set.
+    - Motion: 150–250 ms eased, a single pulse on decisions, reduced motion honoured.
+- **Cameras:**
+    - **Follow (default):** a three-quarter view, about 4–6 m back and pitched down 35–45°, sprung and collision-aware.
+    - **Orbit.**
+    - **Robot-eye:** labelled as rendered presentation.
+    - **Top-down:** the analytic view.
 
-**Look.** A clean, muted lab style:
+    Transitions take about 0.4 s.
+- **LiDAR** is drawn as a filled, translucent "what COCO can see" area with bright hit points. Individual rays appear only at Compare's Inspect level, thinned.
+- **Walls** have lighter top caps, darker sides and edge lines. In Play they display at half height ("dollhouse") by default. This is a display choice that changes nothing the model uses.
+- **Computation in 3D:**
+    - grids, costmaps, frontiers and heatmaps are floor decals following terrain
+    - paths and trajectories are ribbons
+    - particles are instanced floor arrows
+    - beliefs are translucent columns over regions
+- **Quality tiers** (high, medium, low) are chosen automatically from frame time, with a manual override. A device that can't hold the low tier, or lacks WebGL 2, falls back to the top-down renderer with a notice.
+- **Rejected:** switching engines, pixel streaming, WebGPU directly (later through Three.js only if budgets fail), photorealism.
 
-- matte physically based materials
-- hemisphere light plus one directional light whose shadow follows the robot
-- baked ambient occlusion and a small environment map
-- tone mapping and adaptive anti-aliasing
+### 5.5 Assets
 
-**The computation layers are the brightest thing on screen.** No bloom everywhere, screen-space reflections, ray tracing or photorealism.
-
-**Computation in 3D:**
-
-- grids, costmaps, frontiers and heatmaps are floor decals following the terrain
-- paths and candidate trajectories are ribbons slightly above the floor
-- particles are instanced floor arrows
-- search beliefs are translucent columns over the bays
-- the mission state and command source sit in the head-up display (HUD)
-- computation layers draw unlit in an overlay pass
-- cutaway walls and a low-walls mode keep layers visible
-- picking uses a floor ray for grids and GPU IDs for instances
-
-**Quality tiers:** high, medium and low, chosen automatically from measured frame time, with a manual override. A device that can't hold the low tier, or lacks WebGL 2, falls back automatically to the top-down renderer, with a notice.
-
-**Threads:** the simulation and algorithms run in a worker and post transferable buffers. The renderer owns the main thread; React draws only panels and the HUD.
-
-**Rejected:**
-
-- switching engines (Unity, Unreal, Godot, Babylon.js, PlayCanvas)
-- pixel streaming, which can't be inspected
-- WebGPU directly; later, through Three.js's WebGPU path, only if budgets fail
-
-### 5.4 Assets
-
-- **Robot:** the URDF meshes, which come from the Fusion 360 CAD, converted to glTF. The joint hierarchy is kept: wheels, both arm joints, both fingers, and a magnet indicator.
-    - Every joint moves from events.
-    - Two levels of detail: about 20k triangles near the camera, and well under 5k for phones and distant views.
-- **World:** COCO's Gazebo arena from its SDF, converted to glTF, plus a small set of CC0 props outside the operating area.
+- **Robot:** the URDF meshes converted to glTF, with the joint hierarchy kept (wheels, arm joints, fingers, magnet indicator) and two levels of detail. **The low-detail robot (about 144 kB) always loads first.**
+- **Worlds:** generated from World Spec, built from a modular kit of CC0 or own-made pieces (instanced). The kit and textures live in an asset manifest with licences, sources and checksums.
 - **Compression:** meshopt geometry and KTX2 textures.
-- **Budget:** 5 MB or less compressed for the first scene, of which the robot is 1.5 MB or less. Larger detail streams in afterwards.
-- **Asset manifest:** every file's source, licence, checksum and size. Size budgets are checked in CI.
+- **Budget:** the first scene is 5 MB or less compressed. Larger detail, and other Depot zones, stream in afterwards.
+- **Service-worker cache:** static assets only, content-hashed (integrity rule 7).
 
-### 5.5 Controls and game feel
+### 5.6 Controls and game feel
 
-- **Desktop keys:**
+**Desktop:**
 
-    | Key | Action |
-    | --- | --- |
-    | W / S | Forward or reverse velocity, ramped by the real acceleration limits |
-    | A / D | Yaw rate (turns in place at rest) |
-    | Shift | Precision mode: half speed, never above the real maximum |
-    | Space | Latched STOP |
-    | R | Release STOP; hold to reset home |
-    | E | Context action: grasp or release through the proximity gate, otherwise inspect |
-    | Tab | Switch between driving yourself and autonomy |
-    | C / V | Cycle camera / back to follow |
-    | 1–5 | Lenses |
-    | P, [ , ] | Pause, step back, step forward |
-    | H | Help |
+| Key | Action |
+| --- | --- |
+| W / S | Forward or reverse velocity, with the real acceleration limits |
+| A / D | Yaw rate (turns in place at rest) |
+| Shift | Precision mode: half speed, never above the real maximum |
+| Space | Latched STOP |
+| R | Release STOP; hold to reset home |
+| G | Grasp Assist (from M6) |
+| E | The gated grasp or release (today), then an alias of G |
+| Tab | Switch between driving yourself and autonomy |
+| C / V | Cycle camera / back to follow |
+| X | Robot vision: cycle Play's overlays |
+| P, [ , ] | Pause, step back, step forward |
+| H | Help |
 
-    The mouse orbits and zooms, and a click on the floor sets an autonomous goal. Every binding is remappable and stored through the preferences module.
-- **Phone and tablet:**
-    - landscape, full screen
-    - a left virtual joystick for velocity and yaw rate
-    - buttons for STOP, E, camera and autonomy
-    - tap the floor to set a goal; two fingers orbit and zoom
-    - an optional tank mode: left and right wheel sliders
-- **The arbiter as a game mechanic.** Manual input during autonomy takes control, and the HUD always shows the command source.
-- **Feel from truth:**
-    - instant local input
-    - the real acceleration limits, felt through the sprung camera
-    - wheels turning at the true wheel speed
-    - optional wheel-speed bars
-    - an optional motor sound, off by default, pitched to the wheel speed
-- **Never:** strafing, a boost beyond the real maximum, fake suspension, camera shake or bob.
+The mouse orbits and zooms, and a click on the floor sets an autonomous goal. Every binding is remappable and stored through the preferences module.
 
-### 5.6 Cloud (from M5 only)
+**Phone and tablet:**
 
-Three things, in order of cost:
+- landscape, full screen
+- a left virtual joystick
+- right-hand buttons: STOP, Grasp, Autonomy, Camera
+- tap the floor for a goal; two fingers orbit and zoom
+- an optional tank mode
 
-1. **CDN:** the app, assets, the replay library, Case Files.
-2. **Batch Stack runs:** API, queue, one fresh container per job, MCAP to object storage. Recordings include full 3D pose from the first run.
-3. **Interactive Stack sessions:** gated (M6). They use the same 3D client with client-side prediction.
+**The arbiter is a game mechanic.** Manual input takes over from autonomy. The HUD always shows the command source: YOU, PLANNER, ASSIST or STOP.
 
-Rules for the cloud:
+**Feel from truth:**
 
-- No Kubernetes or microservices until there are several worker hosts.
-- Each container gets its own network and localhost-range ROS 2 discovery.
-- No user code ever runs server-side.
-- Sign-in is required for Stack compute.
-- A global daily spend cap.
+- instant local input
+- real acceleration limits, felt through the sprung camera
+- wheels turning at the true wheel speed
+- an optional motor sound and soft UI sounds, off by default
 
-### 5.7 Latency rules
+**Never:** strafing, boost beyond the real maximum, fake suspension, camera shake or bob.
 
-- **In the browser:** every pedagogical interaction (scrub, inspect, layers, paint, predict, compare) and all driving of the Arena model.
-- **Control latency:** key press to visible motion within one model tick plus one frame.
-- **Stack sessions:** client-side prediction, interpolation, latest-state-wins delivery, and "pause the view, not the robot".
-- **Safety stays server-side:** STOP latches in the arbiter path, and a disconnect stops the robot.
-- **Cold start:** attract mode plays a light recorded scene while Pyodide and the 3D assets load.
+### 5.7 Compare
 
-### 5.8 Experiments
+- **Panes:** 2 or 4, synced camera (top-down by default, 3D toggle), each running one algorithm on the same map, start, goal and seed.
+- **Costmap layers, Nav2-style:**
+    - static
+    - inflation: a gradient with the lethal and inscribed bands outlined; sliders for inflation radius, cost-scaling factor and robot radius
+    - obstacle (live LiDAR)
+    - combined
+    - hover shows any cell's cost
 
-- **One spec format** (`spec_version`, world, scenario, robot, sensors, tier, arms, seeds, trials, metrics with one primary, budget), run identically in the browser, the cloud, or locally with `coco run spec.yaml`.
-- **Results:**
+    The inflation formula follows Nav2's documented one and is tested against it.
+- **Families:**
+    - global planning: BFS, Dijkstra, A\*, greedy, weighted A\*, D\* Lite
+    - local control: DWA-style sampler, pure pursuit, MPPI
+    - localization: MCL with and without injection, EKF
+    - mapping: occupancy, EKF-SLAM, FastSLAM, pose graph
+- **Difference view:** cells only A expanded, only B, or both; both paths drawn.
+- **Lockstep timeline:** one scrubber steps every pane together.
+- **Results strip:** expansions, path length, path cost, minimum clearance, compute time (with the device named), success.
+- **Guided tours:**
+    - Learn's missions 1–7, claims and evidence intact
+    - real-story tours: the 44 mm band, the A\* myth, D\* Lite's 2.9×, the Lab 5 hairpin, Run 15
+
+### 5.8 Grasp Assist (M6)
+
+One button (G) runs a visible, MoveIt-style pipeline in the model, badged "MODEL · MoveIt-style", emitting `manip.grasp` events.
+
+1. **Detect** objects in sensor range (camera view plus a short radius) and outline them.
+2. **Check** each object as graspable or not, with the reason:
+    - too wide for the fingers
+    - out of the arm's reach envelope
+    - not magnetic
+    - blocked
+
+    The reach envelope is drawn on the floor.
+3. **Choose** the best candidate (reachable, cheapest approach). The ranking shows on hover.
+4. **Approach:** the global planner to the pre-grasp pose, then the local controller into the approach window, which is the Stack's proximity gate.
+5. **Reach:** the arm's IK solution as a ghost arm, then the joint trajectory.
+6. **Grip and verify:** the fingers close, the magnet holds, the object attaches; on failure, the reason is shown.
+
+The real MoveIt doing real picks appears through STACK recordings and ghosts. The Depot's object catalog holds graspable items within COCO's gripper envelope plus deliberately ungraspable ones that teach the reasons.
+
+### 5.9 Play: the COCO Depot and the mini-games (M6–M7)
+
+**COCO Depot:** a night-shift warehouse of about 48 × 32 m.
+
+- Its zones:
+    - loading dock
+    - high-bay aisles
+    - mezzanine with a ramp
+    - office block
+    - workshop maze
+    - forklift lanes with moving forklifts and walkers that have collision bodies
+- **Planning resolution:** 0.1 m in the game (480 × 320 cells, close to today's arena at 0.05 m). Research may choose 0.05 m.
+
+**Mini-games.** Every one uses both the wheels and the arm, is scored only on real metrics, and races the planner ghost and the real ROS 2 ghost where one is recorded.
+
+| Game | Milestone | Player does | Score | Teaches |
+| --- | --- | --- | --- | --- |
+| Fetch Rush | M6 | Fill pick-and-deliver orders for three minutes, driving or dispatching, using Grasp Assist | Deliveries, then time and path efficiency against the ghosts; contacts subtract | Planning, docking, the pick pipeline |
+| Rush Hour | M6 | Carry a canister across the forklift lanes, with a chosen driving assist (DWA, pure pursuit, MPPI) or none | Time, minimum clearance, contacts; jerk under the "fragile cargo" rule; the assist used is on the scorecard | Local planners, the local costmap |
+| Fog Scout | M7 | The map starts dark (only what COCO's LiDAR has seen); find a requested item in an office and bring it back | Time, map F1, search-decision quality in expectation | Mapping, frontiers, Bayesian search |
+| Lost & Found | M7 | COCO wakes up somewhere unknown; localize, then pick up and deliver a parcel | Time to localize, pose error at pickup, delivery time | Localization, kidnapping |
+
+Free roam, the five existing challenges and Race the ghost stay in Play. Progress (best scores, stars) is stored locally.
+
+### 5.10 Research (M5, M7)
+
+- **Recordings library (M5).** Every Case File and later Depot recordings, searchable by level, algorithm and outcome, with failures easy to find.
+- **Experiment builder (M7).** Pick a level, arms, parameters, seeds and one primary metric. Saved as a spec with a hash ID.
+- **Runner (M7).** Every arm × seed runs in the browser, in background workers if the device allows (measured first).
+- **Results (M7):**
     - k/n with Wilson 95% intervals
     - median and IQR with bootstrap intervals
-    - McNemar or Wilcoxon for paired comparisons
-- **Exports:** YAML, CSV, Parquet, MCAP.
+    - paired tests on shared seeds
+    - every row opens its replay
+- **Reproduce (M7).** Identical numbers from the link, and from `coco run spec.yaml` in Python.
+- **Export (M7).** Spec (YAML), results (CSV and JSON), runs (MCAP), and a citation snippet.
+- **Run it in ROS 2 (M7).** Download the level's SDF, Nav2 map and params, the spec, and the exact command for a local ROS 2 Jazzy.
+- **Connect your ROS 2 (M7).** The browser robot publishes and subscribes ROS-shaped messages through a bridge to the visitor's own local ROS 2 (rosbridge or a Foxglove WebSocket bridge). EXTERNAL evidence class; never connected to COCO's Stack.
 
-### 5.9 Hardware contract (gated, not built)
+### 5.11 Cloud (from M8 only)
+
+Unchanged in content from revision 2:
+
+- CDN first
+- then batch Stack runs (API, queue, one fresh container per job, MCAP to object storage, recordings with full 3D pose)
+- then gated interactive sessions with the same 3D client
+
+**Rules:**
+
+- no Kubernetes or microservices until there are several worker hosts
+- per-container networks and localhost-range ROS 2 discovery
+- no user code server-side
+- sign-in for Stack compute
+- a global daily spend cap
+
+### 5.12 Latency rules
+
+- **Everything in the browser:** every pedagogical interaction and all driving of the Arena model.
+- **Control latency:** key press to visible motion within one model tick plus one frame.
+- **Stack sessions:** client-side prediction, interpolation, latest-state-wins delivery, and "pause the view, not the robot". Safety stays server-side.
+- **Cold start:** the title screen draws first; Pyodide and assets load behind it; returning visitors load from the service-worker cache.
+
+### 5.13 Hardware contract (gated, not built)
 
 A future physical robot is a third backend behind the same gateway and event families, with:
 
@@ -425,8 +526,6 @@ A future physical robot is a third backend behind the same gateway and event fam
 - firmware limits
 - a supervisor
 - a reservation system
-
-Any participant can press STOP; only the driver drives.
 
 ---
 
@@ -443,15 +542,13 @@ If it cannot name all three, the task is out of scope.
 **Non-goals until further notice** (rejected without discussion):
 
 - Vision-language models, LLM planners, natural-language robot commands
-- Multi-robot behaviour
+- Multi-robot behaviour, multiplayer, accounts, global leaderboards
 - RL lessons or policy training, until the robot project shows where learning beats classical control
-- A third simulator (MuJoCo, Webots, Isaac) inside COCO Lab, or a physics engine in the browser
-- Switching rendering engines
-- Photoreal or ray-traced rendering; a world or level editor; a second world before the first is excellent
+- A third simulator inside COCO Lab, or a physics engine in the browser
+- Switching rendering engines; photoreal or ray-traced rendering; a level editor UI
 - Perception on rendered pixels in the browser
-- Gamepad, VR or AR, multiplayer
+- Gamepad, VR or AR
 - A physical-robot mode before a robot exists
-- A global leaderboard before deterministic server-side score verification exists
 - Kubernetes, multi-region, microservices
 - XP, levels, streaks, loot, or any score that rewards luck
 - Package renames or restructures done for aesthetics
@@ -462,194 +559,246 @@ If it cannot name all three, the task is out of scope.
 ## 7. Roadmap
 
 ```
-M0 ─▶ M1 ─▶ M2 ─▶ M3 (done or closing)
-   ─▶ M4 3D Arena  ── first checkpoint: feasibility gate on Gautham's phone ──  public v2.0 launch
-   ─▶ M5 Stack in the cloud: batch + experiments
-   ─▶ [gate: cost per slot-hour fits budget AND demand shown] ─▶ M6 Interactive Stack sessions
-   ─▶ [gate: a physical robot exists] ─▶ M7 Hardware bridge
+M0 ─▶ M1 ─▶ M2 ─▶ M3 ─▶ M4 (done)
+   ─▶ [Gautham: 3-person test + phone measurement]
+   ─▶ M5 Focus and polish ─▶ [gate: 5-person test + phone pass] ─▶ public v2.0
+   ─▶ M6 COCO Depot: world, Grasp Assist, Fetch Rush, Rush Hour, ROS 2 ghosts ─▶ v2.1 game launch
+   ─▶ M7 Fog Scout, Lost & Found, Research mode, Connect your ROS 2
+   ─▶ M8 Stack in the cloud: batch and experiments
+   ─▶ [gate: cost fits budget AND demand shown] ─▶ M9 Interactive cloud ROS 2 sessions
+   ─▶ [gate: a physical robot exists] ─▶ M10 Hardware bridge
 ```
 
 Effort ranges are rough estimates for part-time, agent-assisted work.
 
 ### Completed milestones
 
-Details live in their prompts (`docs/v2/M*_PROMPT.md`), results (`docs/v2/M*_RESULTS.md`) and reviews (`docs/v2/reviews/`).
+Details live in `docs/v2/M*_PROMPT.md`, `docs/v2/M*_RESULTS.md` and `docs/v2/reviews/`.
 
 | Milestone | What it delivered |
 | --- | --- |
-| M0 Transition | v1 frozen and tagged; baseline measured; plan installed; honesty fixes; robot-stack packages frozen |
-| M1 Glass-box Arena core | `coco_schemas`, World Spec v1, Arena model, planners emitting events, Pyodide worker, Three.js renderer (2.5D), timeline, share links, 4-engine determinism |
-| M2 The whole loop | Localise, Map, Move and Decide lenses; the teaching controllers; the Arena fetch mission; Run 15 in the model; fidelity report v1; Learn missions 1–6; the CI claims check; v1 retired to `/v1/` |
-| M3 Play and Case Files | ROS-to-event adapter; 100 Case Files; mission 7; five challenges; `coco verify`; the four-mode app; v2.0 drafts. Closes with: a review, scans loaded after the first frame, the outstanding re-measurement, and a quiet merge (no announcement) |
+| M0 Transition | v1 frozen and tagged; baseline; plan installed; honesty fixes; robot-stack packages frozen |
+| M1 Glass-box Arena core | `coco_schemas`, World Spec v1, Arena model, planner events, Pyodide worker, renderer, timeline, share links, 4-engine determinism |
+| M2 The whole loop | Localise, Map, Move and Decide lenses; teaching controllers; fetch mission; Run 15 in the model; fidelity report; Learn missions; claims check; v1 at `/v1/` |
+| M3 Play and Case Files | ROS-to-event adapter; 100 Case Files; mission 7; five challenges; `coco verify`; four modes |
+| M4 3D Arena | Asset pipeline (URDF and SDF to glTF); World Spec v2 with elevation; kinematic terrain; 3D renderer, cameras, controls, quality tiers; every lens in 3D; Case Files in 3D; Race the ghost |
 
-### M4 · 3D Arena: the public v2.0 launch (about 5–7 weeks)
+### M5 · Focus and polish: the public v2.0 launch (about 4–5 weeks)
 
-**Objective:** a visitor opens the site and is inside COCO's arena in 3D. They drive the robot with keys or touch, hand it to autonomy, watch every algorithm compute in the world, drop to top-down to inspect, race the planner's ghost, and open a Case File in the same world. Everything stays deterministic, measured, honest about being kinematic, and fast on a phone.
+**Objective:** turn what exists into a focused, good-looking product with three doors (Play, Compare, Research), fix the known defects, cut the agents' overhead, and launch. No new world and no new mini-games yet.
 
 **Checkpoints:**
 
-1. **M4.1 Feasibility gate.**
-    - A first conversion of the robot (URDF) and the world (SDF) to glTF.
-    - A perspective scene with the follow camera, driving on the flat floor, and the Plan lens on the floor.
-    - Measured on the laptop and under emulated weak-device conditions.
-    - A preview Gautham can open on his phone over mobile data, plus a measurement guide.
-    - Three reference screenshots that fix the visual target.
-
-    The gate decides only the phone default (3D or top-down). The milestone continues either way, and the agent does not wait for the result.
-2. **M4.2 Asset pipeline.**
-    - SDF and URDF to glTF, meshopt, KTX2, levels of detail.
-    - The asset manifest with licences and checksums.
-    - Size budgets in CI.
-    - World Spec v2 with elevation, and the World Spec ↔ SDF agreement check in CI.
-3. **M4.3 Arena model.**
-    - Kinematic terrain following.
-    - Contact stop and contact events.
-    - Teleop preempting autonomy, with the command source as an event.
-    - The gated grasp action; reset home.
-    - Additive schema fields.
-    - Flat-scene golden traces and hashes byte-identical to M3; new terrain sessions deterministic across all four engines.
-    - A terrain section in the fidelity report.
-4. **M4.4 3D renderer.**
-    - Lighting, materials, shadows, environment map, tone mapping, anti-aliasing.
-    - The overlay pass, cutaway walls and low-walls mode.
-    - Floor decals that follow the terrain; 3D picking.
-    - Quality tiers and the automatic top-down fallback.
-5. **M4.5 Cameras and controls.**
-    - The four cameras and their transitions, with reduced motion.
-    - The remappable key map and the generalised preferences module.
-    - Touch joystick and tank mode.
-    - The HUD: command source, wheel-speed bars, the MODEL · kinematic badge.
-    - The optional motor sound and the help overlay.
-6. **M4.6 Every lens in 3D.**
-    - Plan, Localise, Map, Move, Decide, at the Watch, Explain and Inspect levels.
-    - LiDAR at the sensor's height; belief columns.
-    - The timeline in every camera, including the follow camera during replay.
-7. **M4.7 Case Files in 3D.**
-    - The adapter carries full 3D pose wherever recordings contain it, and a "planar recording" chip otherwise.
-    - Case Files reconverted within budget, citing their source checksums.
-    - Model-vs-Stack side by side in 3D.
-8. **M4.8 Learn and Play in 3D.**
-    - Camera presets per mission step.
-    - Precision challenges open in top-down.
-    - **Race the planner's ghost:** time, path length and contacts against a ghost following the planner's path under the same limits. Thresholds come from a reference; the links reproduce; `coco verify` supports it.
-9. **M4.9 Launch preparation** (drafts only; Gautham publishes):
-    - the landing page becomes 3D attract mode
-    - updated v2.0 release notes and a demo-recording script shot in 3D
-    - `docs/v2/USABILITY_TEST_M4.md`, the consolidated test
-    - the phone guide
-10. **M4.10 Measure and close.** Every budget measured; `docs/v2/M4_RESULTS.md`; a pull request.
+1. **M5.0 Setup.** Branch and README install; plan-change log entries for E1–E8; Gautham's test and phone notes read and committed.
+2. **M5.1 Defects:**
+    - every share-link field bounded and validated (ticks, inputs, size), in the browser and in `coco verify`
+    - state hash v2, versioned so v1 links still verify
+    - race runs either lock planner, grasp and autonomy, or score as "assisted"
+    - Case Files load the low-detail robot first, cached
+    - goal picking in the perspective camera tested
+    - the "v1 site reproducible" workflow fixed, or documented and disabled
+3. **M5.2 Agent overhead.**
+    - `AGENTS.md` becomes the canonical agent rules file, about 200 lines or fewer, for Claude Code and Codex alike.
+    - `CLAUDE.md` points to it.
+    - Robot-stack lore moves to `docs/archive/robot_stack/`.
+    - `docs/STATUS.md` keeps current state only (200 lines or fewer), with history moved to `docs/v2/STATUS_HISTORY.md`.
+    - `PROJECT_STATE.md` becomes a short pointer page; its old content is archived.
+    - RL-era root scripts move under `coco_rl/`, with references updated.
+    - The committed `node_modules/` cache is removed and ignored.
+    - Nothing is deleted except that cache.
+4. **M5.3 Code shape.**
+    - The scene core plus three shells.
+    - Bundle splitting: three.js in its own chunk; modes lazy-loaded.
+    - Behaviour is unchanged, proven by the existing suites.
+5. **M5.4 Design system.**
+    - Night Shift tokens; dark and light themes; fonts and icons licensed and self-hosted.
+    - **Three reference mock screenshots** (title, Play HUD, Compare), committed for Gautham's review. This is a soft gate: carry on, and apply his recorded feedback at the next checkpoint.
+6. **M5.5 App shell.**
+    - The title screen (attract), the three modes, About and the Settings drawer.
+    - Route migration: every old URL form redirects to its new home; Learn missions open as Compare tours; Case Files open in Research; Sandbox opens Play's Free roam; Live is reachable from About.
+7. **M5.6 Play.**
+    - The full-screen 3D HUD:
+        - objective and timer
+        - minimap (COCO's own occupancy map)
+        - speed, wheel bars and command source
+        - action buttons
+        - the badge
+        - toasts
+    - The three-quarter follow camera, dollhouse walls, LiDAR as a scan area, the Robot vision toggle (X).
+    - Game cards for the five challenges and Race the ghost; a scorecard; a 10-second instant replay; a first-run tutorial; Free roam.
+    - Phone landscape full-screen, and a portrait "rotate" card.
+8. **M5.7 Compare.**
+    - Panes in one WebGL context.
+    - Nav2-style costmap layers with sliders and hover values; the inflation formula tested against Nav2's documented formula.
+    - Global planning, local control and localization comparisons; mapping if it fits the time box, otherwise parked in `IDEAS.md`.
+    - The difference view, the lockstep timeline and the results strip.
+    - Guided tours: missions 1–7 plus the five real-story tours, all passing the claims check.
+9. **M5.8 Research, first piece.** The Recordings library replacing the run-link list: search, filters, a failure filter, open in the viewer.
+10. **M5.9 Caching and counter.**
+    - A service-worker asset cache (content-hashed, versioned, safe to clear).
+    - The cookieless aggregate counter, wired but **off** until Gautham adds his counter ID in the site config.
+11. **M5.10 Launch preparation** (drafts only):
+    - v2.0 release notes, every number traced to `docs/RESULTS.md`
+    - a 60–90 s demo script: title → Play → Compare → Research
+    - `docs/v2/USABILITY_TEST_M5.md`
+    - an updated phone guide
+12. **M5.11 Measure and close.** Every budget measured; `docs/v2/M5_RESULTS.md`; a pull request.
 
 **Acceptance criteria:**
 
 | Area | Criterion | Who measures |
 | --- | --- | --- |
-| Frame rate (RTX 4050, balanced, AC) | 60 fps on high tier with the world, robot and fetch-mission default layers; 60 fps on the M2 stress scene at medium tier | Agent |
-| Frame rate (laptop integrated GPU) | 60 fps on medium tier with default layers | Agent |
-| Control latency | Key press to visible motion within one model tick plus one frame (about 50 ms or less), median over 100 presses | Agent |
-| Camera | No frame over 50 ms during transitions; no long tasks while driving | Agent |
-| Cold start (emulated 4G) | First visible computation 10 s or less; live model ready 10 s or less; 3D world interactive 12 s or less | Agent |
-| Download | First-scene assets 5 MB or less compressed; robot 1.5 MB or less | Agent (CI) |
-| Case Files | First frame 2 s or less on emulated 4G for 100 of 100, including 3D geometry | Agent |
-| Determinism | Flat-scene hashes and golden traces byte-identical to M3; terrain sessions identical across Chromium, Firefox, WebKit and Pyodide-in-Node (100 sessions) | Agent (CI) |
-| Regressions | Every M3 criterion still met: challenge links, `coco verify`, the 16 replays, every old URL form, the claims check | Agent (CI) |
-| Assets | World Spec ↔ SDF agreement within tolerance; every asset licensed, with checksum, in the manifest | Agent (CI) |
-| Hygiene | 0 console errors; no WebGL context loss in a 30-minute scripted session; phone-width layout checked | Agent |
-| Fallback | A device forced below the low tier gets the top-down renderer automatically, with a notice | Agent (emulated) |
-| Phone frame rate | 30 fps or more on the automatic tier with world and default layers, across a 10-minute session | Gautham |
-| Phone cold start | First visible computation 10 s or less on mobile data; 3D world interactive within 15 s | Gautham |
-| Phone touch and stability | Joystick response feels immediate (about 100 ms or less in `?perf`); no reload, crash or context loss in 10 minutes | Gautham |
-| Usability | 5 people new to robotics, unaided: at least 4 of 5 drive to a marked spot within 60 s, point at the planner's search in 3D, explain the top-down heatmap, and say why they won or lost against the ghost. "Felt like a game" and "I could see what the robot was computing" both median 4/5 or more. Nobody reports motion discomfort | Gautham |
+| Focus | In Play at 1440 × 900 and at 844 × 390 landscape: no page scroll, and at most 8 always-visible on-screen controls (HUD buttons included; keyboard excluded) | Agent |
+| Title screen | Visible 3 s or less on emulated 4G (cold) | Agent |
+| Cold start | Live model ready 10 s or less, 3D world interactive 12 s or less, on emulated 4G (cold) | Agent |
+| Warm start | Live model ready 3 s or less on emulated 4G with the service-worker cache warm | Agent |
+| JavaScript | Title-screen JavaScript 350 kB or less gzipped, with three.js in its own chunk | Agent (CI) |
+| Frame rate | Play at 60 fps on the RTX 4050 (high tier) and the Intel integrated GPU (medium tier); Compare with 4 panes at 30 fps or more top-down on the integrated GPU | Agent |
+| Determinism | Every flat-scene v1 hash and golden trace unchanged; v2 hash defined and tested across all four engines; every committed link verifies under its own hash version | Agent (CI) |
+| Defects | Each M5.1 defect has a regression test | Agent (CI) |
+| Links | Every old URL form resolves to its new home with 0 console errors; the `/v1/` archive works | Agent (CI) |
+| Claims | Every mission, tour and Case File claim resolves to evidence (CI check) | Agent (CI) |
+| Agent files | `AGENTS.md` 250 lines or fewer; `docs/STATUS.md` 200 lines or fewer; nothing deleted except the cache | Agent |
+| Accessibility | Every control keyboard-reachable; text contrast WCAG AA; computation colours distinguishable under deuteranopia and protanopia simulation; reduced motion honoured | Agent |
+| Hygiene | 0 console errors; no WebGL context loss in a 30-minute scripted session | Agent |
+| Phone | Play in landscape at 30 fps or more on the automatic tier; first visible computation 10 s or less on mobile data | Gautham |
+| Usability | 5 people new to robotics, unaided. At least 4 of 5 each: start a game within 30 s; in Compare, say why A\* expanded fewer cells than Dijkstra; find a recorded ROS 2 run in Research. Median 4/5 or more on "looks good" and on "easy to understand" | Gautham |
 
-**Not in M4:**
+**Not in M5:**
 
-- a physics engine
-- a second world
-- perception on pixels
-- gamepad, VR, multiplayer
-- WebGPU
-- photorealism, a world editor
-- any cloud, server or account
-- the four later challenges
-- RL, multi-robot, VLM
+- the Depot
+- Grasp Assist
+- new mini-games
+- the experiment builder
+- the ROS 2 bridge
+- cloud work, accounts
+- new algorithms (apart from the costmap inflation layer)
 
 **Stop and escalate if:**
 
-- Flat-scene hashes change.
-- The first-scene download can't fit 5 MB.
-- The converted world can't be made to agree with the World Spec.
-- A Stack recording would need invented 3D pose.
-- Any step would require deleting evidence or breaking a public URL.
+- A v1 hash or golden trace changes.
+- An old URL can't be given a new home.
+- A claim loses its evidence in the move.
+- The Focus criterion can't be met without removing a capability (rather than moving it).
 
-**Launch.** The public v2.0 release and announcement happen after M4 is merged, the Gautham rows pass, and Gautham publishes them.
+**Launch.** The public v2.0 release and announcement happen after M5 merges and the two Gautham rows pass. Gautham publishes them.
 
-### M5 · The Stack in the cloud: batch runs and experiments (about 4–6 weeks)
+### M6 · COCO Depot: the game world (about 6–7 weeks)
+
+**Objective:** the Depot exists in the browser *and* as a real Gazebo world. COCO can find and pick up objects with one button. Two mini-games (Fetch Rush, Rush Hour) are playable against the planner ghost and a recorded real ROS 2 ghost.
+
+**Contents:**
+
+- World Spec v3 and the modular level kit, with generators for the browser world and glTF, the Gazebo SDF, and the Nav2 map and params.
+- The Depot level (about 48 × 32 m, six zones) and its zone streaming.
+- The object catalog with grasp affordances; moving forklifts and walkers with collision bodies in both tiers.
+- Grasp Assist (section 5.8) and `manip.grasp` events.
+- The ROS-shaped message model and the ROS graph panel.
+- Fetch Rush and Rush Hour, with scoring, stars from reference results, reproducible links and `coco verify` support.
+- On the laptop, respecting batch windows:
+    - each generated world launched in Gazebo with Nav2
+    - a planning smoke test
+    - recorded real ROS 2 runs of each game objective (Nav2 + MoveIt), converted into ghosts and Research recordings
+- Deterministic sessions for the Depot and both games.
+- v2.1 release notes and demo (drafts).
+
+**Acceptance (summary):**
+
+| Area | Criterion | Who measures |
+| --- | --- | --- |
+| Download | Depot first scene 5 MB or less compressed | Agent |
+| Frame rate | 60 fps on the RTX 4050, 60 on the integrated GPU at medium | Agent |
+| Planning | Depot planning time at 0.1 m measured; any planner over its budget goes through the WebAssembly gate | Agent |
+| Gazebo | Every generated world launches in Gazebo and Nav2 plans on its map (STACK evidence) | Agent |
+| Ghosts | A recorded ROS 2 ghost exists for each Fetch Rush and Rush Hour level | Agent |
+| Grasp Assist | Gives a reason for every refusal, and its picks pass the Stack's proximity gate | Agent |
+| Reproducibility | Game links reproduce in all four engines and in `coco verify` | Agent (CI) |
+| People | Phone and 5-person usability: start and finish a Fetch Rush run unaided; "fun" median 4/5 or more | Gautham |
+
+### M7 · Two more games, and Research (about 5–6 weeks)
+
+**Objective:** complete the game with Fog Scout and Lost & Found, and make Research a real tool.
+
+**Contents:**
+
+- Fog Scout and Lost & Found
+- the experiment builder, runner and statistics
+- exports and "Run it in ROS 2"
+- `coco run` parity
+- the "Connect your ROS 2" bridge (EXTERNAL class; tested against a local ROS 2 Jazzy with rosbridge or a Foxglove bridge)
+- mapping in Compare, if it was parked in M5
+
+**Acceptance (summary):**
+
+| Area | Criterion |
+| --- | --- |
+| Experiments | A 30-seed, two-arm experiment runs in the browser and gives identical numbers to `coco run` |
+| Exports | Load in Python and Foxglove |
+| ROS 2 bundle | A level's ROS 2 bundle launches in Gazebo and Nav2 on the laptop |
+| Bridge | Drives the browser robot from a local ROS 2 node with STOP precedence intact |
+| Games | Both new games have reproducible links and ghosts |
+| People | Usability for one Research task and both games |
+
+### M8 · Stack in the cloud: batch and experiments (about 4–6 weeks)
 
 **Built:**
 
-- pinned headless Stack image
+- a pinned headless Stack image
 - worker and queue
-- small API with sign-in and quotas
+- an API with sign-in and quotas
 - object storage
-- pre-run replay library (recordings with full 3D pose)
-- "Run N seeds"
-- the `coco run` command line
-- global spend cap
+- Research specs run on real ROS 2
+- a global spend cap
 
-**Measured:**
+**Measured:** real-time factor, start-up time, CPU against GPU, cost per run.
 
-- Stack real-time factor in cloud containers
-- start-up time
-- CPU-only (software rendering) against GPU
-- cost per run and per slot-hour
+### M9 · Interactive cloud ROS 2 sessions (gated, about 4–6 weeks)
 
-### M6 · Interactive Stack sessions (gated, about 4–6 weeks)
+**Gate:** M8's cost fits the budget (G4), and demand is shown.
 
-**Gate:**
+**Built:** session manager, gateway, the additive `coco.v1` event channel, the 3D client with prediction. Remote STOP, preemption, spectators, caps and disconnect are measured.
 
-- M5's cost per slot-hour fits the budget (G4).
-- Demand shown after the v2.0 launch.
+**Then:** the public Live tab retires.
 
-**Built:**
-
-- session manager, warm pool, gateway
-- additive `coco.v1` event channel
-- the 3D client with client-side prediction and interpolation
-
-**Measured remotely:** STOP, preemption, spectators, caps, disconnect.
-
-**Then:** retire the public Tailscale Live tab.
-
-### M7 · Hardware bridge (gated)
+### M10 · Hardware bridge (gated)
 
 Gated on:
 
 - a physical robot existing (G5)
 - the robot project's sim-to-real gate
-- M6's remote-safety measurements
+- M9's remote-safety measurements
 
 ---
 
 ## 8. Decisions
 
-### Recorded decisions (11 October 2026)
+### Recorded decisions
 
-| ID | Decision |
-| --- | --- |
-| D1 | 3D is the default experience. Top-down is a camera mode and the automatic fallback. If the phone fails the M4 feasibility gate, phones default to top-down and desktops to 3D |
-| D2 | "M4 · 3D Arena" comes before cloud work. Cloud batch is M5, interactive sessions M6, hardware M7 |
-| D3 | The first world is COCO's Gazebo arena converted from its SDF, with dressing outside the operating area |
-| D4 | The Arena stays planar kinematics plus kinematic terrain following; no physics engine in the browser |
-| D5 | M3 merges quietly; the public v2.0 launch waits for M4; the phone baseline is measured now; one consolidated five-person usability test at the end of M4 replaces the M1–M3 tests |
-| D6 | Case File scans load after the first frame (ADR 0005 amended); the narrowed storage guard is accepted and generalised into one preferences module |
+| ID | Date | Decision |
+| --- | --- | --- |
+| D1 | 11 Oct | 3D is the default experience; top-down is a camera mode and the automatic fallback |
+| D2 | 11 Oct | The 3D Arena came before cloud work (done as M4) |
+| D3 | 11 Oct | The first 3D world is COCO's Gazebo arena converted from its SDF (extended by E2) |
+| D4 | 11 Oct | No physics engine in the browser |
+| D5 | 11 Oct | M3 merged quietly; one consolidated usability test replaces the M1–M3 tests |
+| D6 | 11 Oct | Case File scans load after the first frame; one preferences module |
+| E1 | 14 Oct | Three modes (Play, Compare, Research), the title screen and About replace Learn, Play, Sandbox and Case Files |
+| E2 | 14 Oct | COCO Depot from World Spec v3; every world compiles to browser, Gazebo SDF and Nav2 map; the arena stays as the Proving Ground |
+| E3 | 14 Oct | "ROS 2 at its core": a ROS-shaped model and graph panel, real Gazebo worlds, real ROS 2 ghosts; the "Connect your ROS 2" bridge in M7, with invariant 2 narrowed to the control boundary |
+| E4 | 14 Oct | Grasp Assist is a glass-box, MoveIt-style pipeline in the model, badged as such |
+| E5 | 14 Oct | Public v2.0 after M5; the Depot games launch as v2.1 |
+| E6 | 14 Oct | A service-worker cache for static assets is allowed |
+| E7 | 14 Oct | One cookieless, aggregate-only visit counter is allowed, off until Gautham configures it |
+| E8 | 14 Oct | Slim and archive the agent files; `AGENTS.md` becomes canonical; nothing deleted |
 
 ### Pending decisions, and the defaults agents use until Gautham decides
 
 | ID | Decision | Default until decided |
 | --- | --- | --- |
-| G1 | Primary audience | Learners first |
+| G1 | Primary audience | Learners first; everyone for the game |
 | G2 | Priority against the robot project and job hunt | Not an agent decision; agents respect announced robot batch windows |
 | G3 | Canonical robot stack | The robot repo is canonical; `coco-labs` robot packages are frozen, not deleted |
-| G4 | Monthly cloud budget | Zero; no cloud resources are created before M5 and an explicit budget |
+| G4 | Monthly cloud budget | Zero; no cloud resources before M8 and an explicit budget |
 | G5 | Will a physical robot exist within a year? | Assume no; no "real robot" wording anywhere |
 | G6 | License and outside contributions | Unchanged from the current repo |
 
@@ -657,23 +806,27 @@ Gated on:
 
 ## 9. Rules for coding agents
 
-1. **One prompt per milestone.** Work through every checkpoint without pausing, unless a stop condition fires.
-2. **Read first:** `README.md`, `docs/STATUS.md`, `CLAUDE.md`, `PROJECT_STATE.md`.
+These apply to every agent: Claude Code, Codex or any other.
+
+1. **One prompt per milestone.** Work through every checkpoint without pausing, unless a stop condition fires. Commit at every checkpoint, so any session can resume from `docs/STATUS.md`.
+2. **Read first:** `README.md`, `AGENTS.md` (or `CLAUDE.md` until M5.2 creates `AGENTS.md`), `docs/STATUS.md`.
 3. **Apply the drift test** before each task. Anything outside the checkpoint list goes to `docs/IDEAS.md`, never into code.
 4. **Branch and commits.**
-    - Branch `v2/<milestone>` (for example `v2/m4-3d-arena`).
-    - Commits are prefixed with the checkpoint, for example `[M4.3]`.
-    - `docs/STATUS.md` is updated at every checkpoint.
-5. **Testing.** Focused tests during work; the full suites (`run_all_package_tests.sh`, web tests, build-tool tests) at each checkpoint's end.
+    - Branch `v2/<milestone>` (for example `v2/m5-focus`).
+    - Commits are prefixed with the checkpoint, for example `[M5.3]`.
+    - `docs/STATUS.md` is updated at every checkpoint, in its short form: current state and next step. History is appended to `docs/v2/STATUS_HISTORY.md`.
+5. **Testing.** Focused tests during work; the full suites (package tests, `lab_web` vitest, build-tool tests) at each checkpoint's end.
 6. **Resources and measurement.**
     - Hardware: RTX 4050 laptop GPU (6 GB VRAM), Intel integrated GPU, 16 GB RAM, Ubuntu 24.04, ROS 2 Jazzy.
-    - Never run two simulators at once. Respect robot batch windows.
-    - Measure on the balanced power profile, on AC. You may switch the profile and must restore it.
-    - Every harness records power state and GPU driver version.
-7. **Visual review.** Agents cannot judge looks reliably. Screenshot tests catch regressions only.
-    - At each M4 checkpoint that changes the look, commit screenshots to `docs/v2/data/m4/screens/` and list them in `STATUS.md` for Gautham's review.
-    - Carry on without waiting. Apply Gautham's recorded feedback at the next checkpoint.
-8. **Never:**
+    - Never two simulators at once. Respect robot batch windows.
+    - Measure on the balanced power profile, on AC. Switch the profile if needed and restore it.
+    - Record power state and GPU driver version.
+    - Emulated results are labelled "emulated", never "phone".
+7. **Sandboxed agents.** An agent without access to the laptop's GPU, `~/coco_lab_runs/`, Gazebo or the network records the affected measurements as *pending, needs the laptop*. It never estimates them.
+8. **Visual review.** Agents cannot judge looks reliably; screenshot tests catch regressions only.
+    - At each checkpoint that changes the look, commit screenshots to `docs/v2/data/<milestone>/screens/` and list them in `STATUS.md`.
+    - Carry on without waiting, and apply Gautham's recorded feedback at the next checkpoint.
+9. **Never:**
     - delete evidence, tags or releases
     - create or edit releases
     - run destructive git commands without approval
@@ -681,17 +834,18 @@ Gated on:
     - invent numbers
     - mark anything MEASURED without committed data
     - mark a Gautham-owned row as done
-9. **Final report**, in this form:
+    - merge a milestone pull request without Gautham's explicit permission
+10. **Final report**, in this form:
 
 ```
 Milestone / checkpoints completed:
 Start SHA → end SHA, branch, worktree clean (y/n):
 Per checkpoint: what changed | evidence file(s) | evidence class
 Tests: suite → passed / failed / skipped (before vs after)
-Measurements taken (device, power profile, driver, conditions):
-Acceptance criteria: each → met / not met / pending Gautham, with evidence:
+Measurements taken (device or emulation, power profile, driver, conditions):
+Acceptance criteria: each → met / not met / pending Gautham / pending laptop, with evidence:
 Screenshots awaiting Gautham's review:
-Files removed (full list) and why:
+Files moved or removed (full list) and why:
 Decisions recorded (ADRs) and plan-change log entries:
 Deviations from the plan, and why:
 Ideas parked in docs/IDEAS.md:
@@ -700,7 +854,7 @@ Questions for Gautham:
 Next step according to README.md:
 ```
 
-10. **Independent review.** A milestone closes in `STATUS.md` only after a fresh review session, given only the repo, this README and the report, has verified that:
+11. **Independent review.** A milestone closes in `STATUS.md` only after a fresh review session, given only the repo, this README and the report, has verified that:
     - the commits exist
     - a sample of the tests pass
     - every evidence file named in the report exists and supports its claim
@@ -712,12 +866,14 @@ Next step according to README.md:
 | File | Role |
 | --- | --- |
 | `README.md` | This plan: the authority |
-| `docs/STATUS.md` | Current position, open questions, plan-change log |
+| `AGENTS.md` | Canonical rules for every coding agent (from M5.2) |
+| `CLAUDE.md` | Points to `AGENTS.md` (from M5.2) |
+| `docs/STATUS.md` | Current position, open questions, plan-change log (short) |
+| `docs/v2/STATUS_HISTORY.md` | Checkpoint history (append-only) |
 | `docs/IDEAS.md` | Parked ideas |
 | `docs/ROADMAP.md` | Pointer to section 7, plus the v1 history |
 | `docs/RESULTS.md` | Every measured number, append-only |
-| `docs/v2/` | Prompts, results, reviews, ADRs, schemas, fidelity reports, asset manifest |
-| `docs/archive/v1/` | Archived v1 README, roadmap and other retired docs |
-| `CLAUDE.md` | Engineering rules for agents |
-| `PROJECT_STATE.md` | Authoritative current state |
+| `docs/v2/` | Prompts, results, reviews, ADRs, schemas, fidelity reports, asset manifest, usability notes |
+| `docs/archive/` | Archived v1 docs and the robot-stack record |
+| `PROJECT_STATE.md` | Short pointer to the current state (from M5.2) |
 | `~/coco_lab_runs/` | Raw evidence recordings (outside git; never delete) |
