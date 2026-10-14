@@ -645,13 +645,14 @@ export class ArenaRenderer {
       // the floor point under the pointer (README §5.3: picking uses a floor ray for grids); on a terrain
       // the ray stops at the walkable surface first, so a click on a platform is a point on the platform
       const ndc = new THREE.Vector2(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
+      this.three!.camera.updateMatrixWorld(true);
       if (this.pickSurface) {
         this.picker.setFromCamera(ndc, this.three!.camera);
         const hit = this.picker.intersectObject(this.pickSurface, false)[0];
         if (hit) return [hit.point.x, hit.point.y];
       }
       const hit = this.three!.toFloor(ndc.x, ndc.y);
-      return hit ?? [this.lastPose[0], this.lastPose[1]];
+      return hit ?? [Number.NaN, Number.NaN];
     }
     const x = this.view.cx + (clientX - rect.left - rect.width / 2) / this.view.scale;
     const y = this.view.cy - (clientY - rect.top - rect.height / 2) / this.view.scale;

@@ -1,0 +1,9 @@
+
+ RUN  v5.0.2 /home/gautham/coco_labs_ws/src/coco-labs/lab_web
+
+
+ Test Files  3 passed (3)
+      Tests  28 passed (28)
+   Start at  15:54:54
+   Duration  303ms (tests 46%, transform 34%, import 16%, worker 4%)
+

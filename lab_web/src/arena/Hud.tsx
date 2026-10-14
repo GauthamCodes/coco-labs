@@ -29,6 +29,7 @@ export interface HudProps {
   coarse: boolean;
   tank: boolean;
   onStop: () => void;
+  assistsLocked?: boolean;
   onContext: () => void;
   onCamera: () => void;
   onAutonomy: () => void;
@@ -68,9 +69,9 @@ export function Hud(p: HudProps) {
       {p.coarse && (
         <div className="hud-buttons">
           <button type="button" className="hud-stop" onClick={p.onStop} data-testid="hud-stop-btn">STOP</button>
-          <button type="button" onClick={p.onContext} aria-label="Grasp or release">E</button>
+          <button type="button" disabled={p.assistsLocked} title={p.assistsLocked ? "Race: teleop and STOP only" : undefined} onClick={p.onContext} aria-label="Grasp or release">E</button>
           <button type="button" onClick={p.onCamera} aria-label="Next camera">Camera</button>
-          <button type="button" onClick={p.onAutonomy} aria-label="Hand back to autonomy">Auto</button>
+          <button type="button" disabled={p.assistsLocked} title={p.assistsLocked ? "Race: teleop and STOP only" : undefined} onClick={p.onAutonomy} aria-label="Hand back to autonomy">Auto</button>
         </div>
       )}
       {p.coarse && p.tank && <Tank onChange={p.onTank} />}

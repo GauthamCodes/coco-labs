@@ -14,10 +14,13 @@
  * is not a well-formed v1 run; it never guesses.
  */
 
+import { boundedJson, boundedTick, boundedInputs } from '../links/bounds.mjs';
+
 import type { InputRow } from './protocol';
 
 export interface SharedRun {
   v: 1;
+  hash_version?: 1 | 2;
   spec: string;        // sha256 hex of the World Spec's canonical bytes
   seed: number;
   ticks: number;       // the run ended after this many ticks
@@ -52,21 +55,20 @@ function fromRow(a: unknown): InputRow {
 }
 
 const b64url = (s: string) => btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-const unb64url = (s: string) => atob(s.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - (s.length % 4)) % 4));
 
 export function encodeRun(r: SharedRun): string {
-  const json = JSON.stringify({ v: 1, s: r.spec, e: r.seed, t: r.ticks, c: r.chain, i: r.inputs.map(toRow) });
-  return b64url(String.fromCharCode(...new TextEncoder().encode(json)));
+  const json = JSON.stringify({ v: 1, ...(r.hash_version ? { hv: r.hash_version } : {}), s: r.spec, e: r.seed, t: r.ticks, c: r.chain, i: r.inputs.map(toRow) });
+  const bytes = new TextEncoder().encode(json);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return b64url(bin);
 }
 
 export function decodeRun(param: string): SharedRun {
-  let d: Record<string, unknown>;
-  try {
-    const bin = unb64url(param);
-    d = JSON.parse(new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0))));
-  } catch {
-    throw new Error('the run link is not readable');
-  }
+  const d = boundedJson(param);
+  if (![1, 2].includes(d.hv ?? 1)) throw new Error('unknown hash version');
+  boundedTick(d.t, 'ticks');
+  boundedInputs(d.i, true, d.t as number);
   if (d.v !== 1) throw new Error(`run link version ${String(d.v)} is not 1`);
   if (typeof d.s !== 'string' || !/^[0-9a-f]{64}$/.test(d.s)) throw new Error('the run link has no spec hash');
   if (!Number.isSafeInteger(d.e) || (d.e as number) < 0) throw new Error('the run link has no seed');
@@ -75,7 +77,7 @@ export function decodeRun(param: string): SharedRun {
   if (!Array.isArray(d.i)) throw new Error('the run link has no inputs');
   const inputs = d.i.map(fromRow);
   for (let k = 1; k < inputs.length; k += 1) if (inputs[k].tick < inputs[k - 1].tick) throw new Error('inputs out of order');
-  return { v: 1, spec: d.s, seed: d.e as number, ticks: d.t as number, chain: d.c, inputs };
+  return { v: 1, ...(d.hv ? { hash_version: d.hv as 1 | 2 } : {}), spec: d.s, seed: d.e as number, ticks: d.t as number, chain: d.c, inputs };
 }
 
 /** The share URL for a run, on this page's origin and base. */

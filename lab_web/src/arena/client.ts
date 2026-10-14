@@ -32,7 +32,7 @@ export class ArenaClient {
   tick = 0;
   private readonly ready: Promise<World>;
 
-  constructor(ev: ArenaEvents, opts: { seed?: number; planner?: string; pyodide?: PyodideSource; spec?: SpecFile } = {}) {
+  constructor(ev: ArenaEvents, opts: { hashVersion?: 1 | 2; seed?: number; planner?: string; pyodide?: PyodideSource; spec?: SpecFile } = {}) {
     const base = import.meta.env.BASE_URL;
     perf.mark('worker_create', wallMs());
     this.worker = new Worker(new URL('./arena.worker.ts', import.meta.url), { type: 'module' });
@@ -76,6 +76,7 @@ export class ArenaClient {
       seed: opts.seed ?? 1,
       planner: opts.planner ?? 'astar',
       batchSize: 2048,
+      hashVersion: opts.hashVersion ?? 1,
       ...(opts.spec ? { spec: opts.spec } : {}),
     };
     this.worker.postMessage(boot);

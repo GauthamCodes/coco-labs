@@ -24,7 +24,7 @@ import { readShownBest } from './best';
 import { GridBoard, type Cell, type GridView } from './GridBoard';
 import { arenaPlayHref, loadLevels, type Level, type Levels } from './levels';
 import { ResultView, stars } from './Result';
-import { decodeScore, hasSharedScore, type Submission } from './share';
+import { decodeScore, hasSharedScore, scoreLinkError, type Submission } from './share';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -51,6 +51,8 @@ export function PlayApp() {
   const [levels, setLevels] = useState<Levels | null>(null);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => { loadLevels().then(setLevels).catch((e) => setError(String(e))); }, []);
+  const linkError = scoreLinkError(params);
+  if (linkError) return <main className="play"><p role="alert">Share link refused: {linkError}</p></main>;
   const ch = c && levels ? levels.challenges[c] : null;
   const lv = ch && l ? ch.levels.find((x) => x.id === l) ?? null : null;
 
@@ -130,11 +132,11 @@ function LevelPage({ challenge, level, levels, shared }: {
 
   const score = (inputs: unknown, reproduce?: string) => {
     if (!client || !view) return;
-    const s: Submission = { v: 1, challenge, level: level.id, level_hash: String(view.level_hash), inputs };
+    const s: Submission = { v: 1, hash_version: shared?.submission.hash_version ?? (shared ? 1 : 2), challenge, level: level.id, level_hash: String(view.level_hash), inputs };
     setBusy(challenge === 'map-the-arena' ? 'Re-simulating the drive from its input log…' : 'Scoring…');
     setFail(null);
-    void client.play<PlayResult>({ op: 'score', levels, submission: s })
-      .then((r) => setResult({ r, s, reproduced: reproduce === undefined ? undefined : r.hash === reproduce }))
+    void client.play<PlayResult>({ op: 'score', levels, submission: s, expected_hash: reproduce })
+      .then((r) => setResult({ r, s, reproduced: reproduce === undefined ? undefined : (r.hash === reproduce || r.verified_hash === reproduce) }))
       .catch((e) => setFail(e instanceof Error ? e.message : String(e)))
       .finally(() => setBusy(null));
   };

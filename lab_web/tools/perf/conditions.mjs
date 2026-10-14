@@ -34,7 +34,10 @@ export function conditions() {
     if (g) governors.add(g);
   }
   const load = os.loadavg().map((x) => Math.round(x * 100) / 100);
+  let gpuDriver = 'unavailable';
+  try { gpuDriver = execFileSync('nvidia-smi', ['--query-gpu=name,driver_version', '--format=csv,noheader'], {stdio:['ignore','pipe','ignore']}).toString().trim(); } catch {}
   return {
+    gpu_driver: gpuDriver,
     at_utc: new Date().toISOString(),
     power_profile: profile,
     ac_power: ac,

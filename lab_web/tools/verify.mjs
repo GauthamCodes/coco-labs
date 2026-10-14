@@ -18,7 +18,7 @@
  * Needs the site's generated assets (npm run arena-assets, or the build).
  */
 
-import { inflateRawSync } from 'node:zlib';
+import { decodeChallenge, validateSubmission, LIMITS } from '../src/links/bounds.mjs';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -28,14 +28,8 @@ const GEN = join(WEB, 'public', 'generated');
 
 /** Decode a challenge link (the inverse of src/play/share.ts's encodeScore). */
 export function decodeLink(link) {
-  const q = new URL(link, 'https://x/').searchParams;
-  const c = q.get('c'); const l = q.get('l'); const s = q.get('s'); const z = q.get('z');
-  if (!c || !l || !(s || z)) throw new Error(`not a Play challenge link: ${link.slice(0, 80)}`);
-  // z (M4.8): the payload deflated (src/play/share.ts); s: the same JSON, plain
-  const raw = Buffer.from((z ?? s).replace(/-/g, '+').replace(/_/g, '/'), 'base64');
-  const j = JSON.parse(Buffer.from(z ? inflateRawSync(raw, { maxOutputLength: 4 * 1024 * 1024 }) : raw).toString('utf-8'));
-  if (j.v !== 1 || !/^[0-9a-f]{64}$/.test(j.h ?? '') || !/^[0-9a-f]{64}$/.test(j.r ?? '')) throw new Error('a malformed challenge link');
-  return { submission: { v: 1, challenge: c, level: l, level_hash: j.h, inputs: j.i }, result_hash: j.r };
+  if (link.length > LIMITS.encoded * 3 + 4096) throw new Error('Share URL exceeds the encoded size limit');
+  return decodeChallenge(new URL(link, 'https://x/').searchParams);
 }
 
 /** Boot Pyodide in Node with coco_lab and every pack; return score(submission). */
@@ -53,9 +47,11 @@ export async function scorer() {
   py.runPython('LEVELS = json.loads(LEVELS_JSON)\nSPEC = json.loads(SPEC_JSON)');
   const run = py.runPython('lambda s: json.dumps(play.score(LEVELS, json.loads(s), SPEC))');
   const view = py.runPython('lambda c, l: json.dumps(play.view(LEVELS, c, l))');
+  const proof = py.runPython("lambda s: (lambda r: json.dumps({'result':r,'hashes':play.verification_hashes(r)}))(play.score(LEVELS,json.loads(s),SPEC))");
   return {
     version: `Pyodide ${py.version}, Node ${process.version}`,
     levels: JSON.parse(levels),
+    scoreWithProof(submission) { return JSON.parse(proof(JSON.stringify(submission))); },
     score(submission) { return JSON.parse(run(JSON.stringify(submission))); },
     /** coco_lab.play.view: the level, its hash and what the page draws */
     view(challenge, level) { return JSON.parse(view(challenge, level)); },
@@ -74,16 +70,17 @@ export async function main(argv) {
     items = argv.filter((a) => !a.startsWith('--') && a !== opt('--out')).map((l) => ({ link: l, ...decodeLink(l) }));
   }
   if (!items.length) { console.error('usage: coco verify <link>... | --file FILE.json [--out OUT.json]'); return 2; }
+  for (const item of items) validateSubmission(item.submission);
   const s = await scorer();
   const t0 = Date.now();
   const rows = [];
   for (const it of items) {
     const t = Date.now();
-    let r; let error = null;
-    try { r = s.score(it.submission); } catch (e) { error = String(e.message ?? e).split('\n').slice(-2).join(' '); }
+    let r; let hashes = {}; let error = null;
+    try { const scored = s.scoreWithProof(it.submission); r = scored.result; hashes = (it.submission.hash_version ?? 1) === 1 ? scored.hashes : { canonical: r.hash }; } catch (e) { error = String(e.message ?? e).split('\n').slice(-2).join(' '); }
     const row = { challenge: it.submission.challenge, level: it.submission.level, ms: Date.now() - t,
       hash: r?.hash ?? null, stars: r?.stars ?? null, valid: r?.valid ?? null, score: r?.score ?? null,
-      expected: it.result_hash, matches: it.result_hash ? r?.hash === it.result_hash : null, error };
+      expected: it.result_hash, matches: it.result_hash ? Object.values(hashes).includes(it.result_hash) : null, verification_layout: Object.keys(hashes).find(k => hashes[k] === it.result_hash) ?? null, error };
     rows.push(row);
     console.log(`${row.matches === false || error ? 'MISMATCH' : row.matches ? 'verified' : 'scored  '} ${row.challenge}/${row.level}: `
       + `${error ?? `${row.score?.name} ${row.score?.value}, ${row.stars} stars, hash ${row.hash.slice(0, 12)}`} (${row.ms} ms)`);

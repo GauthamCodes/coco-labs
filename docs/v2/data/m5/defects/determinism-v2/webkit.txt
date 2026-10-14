@@ -1,0 +1,11 @@
+webkit: 10 sessions, 114 s
+webkit: 20 sessions, 235 s
+webkit: 30 sessions, 375 s
+webkit: 40 sessions, 508 s
+webkit: 50 sessions, 651 s
+webkit: 60 sessions, 748 s
+webkit: 70 sessions, 868 s
+webkit: 80 sessions, 967 s
+webkit: 90 sessions, 1060 s
+webkit: 100 sessions, 1167 s
+webkit: 100 sessions, 15000 ticks

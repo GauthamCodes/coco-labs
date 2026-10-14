@@ -17,9 +17,9 @@ only. Read order for agents (README §9): `README.md`, this file,
 | M3 | **Closed 2026-10-11 — agent-measurable criteria**: independent review [`v2/reviews/M3_REVIEW.md`](v2/reviews/M3_REVIEW.md) (MERGE AFTER FIXES, every fix done — the substantive one: D6, Case File scans after the first frame, which took the first frame on emulated 4G from 97 / 100 to **100 / 100 within 2 s**); the outstanding re-measurement completed on AC, every M2 budget met; PR #22 merged into `main` **quietly** as **`bf7443f`** (merge commit, owner's one-off permission, branch kept, no release, tag or announcement); public site after the Pages deploy: bare URL opens the Arena and a real goal click drew its search, the four modes 23 / 23 pages, 5 / 5 Case Files, 5 / 5 challenge links reproduced, all 22 v1 URL forms and `/v1/`'s six views, 0 console errors ([`v2/data/m3/exit/public_after_merge.json`](v2/data/m3/exit/public_after_merge.json)) |
 | Branch | `v2/m5-focus`, canonical checkout `~/coco_labs_ws/src/coco-labs`; source `6c286b7c51c9b550bfb90cdf96e2f53ba3b31cf2` |
 | Milestone | **M5 · Focus and polish** ([`v2/M5_PROMPT.md`](v2/M5_PROMPT.md)); revision 3 installed |
-| Checkpoint | **M5.0 setup complete**; baseline in `v2/data/m5/setup/BASELINE.md`. M5.1 audit started, no defect fixed yet. Pre-M5 owner gate unresolved |
+| Checkpoint | **M5.0 setup complete**; baseline in `v2/data/m5/setup/BASELINE.md`. M5.1 defects complete; next M5.2 agent overhead. Owner prerequisite waived |
 | Merge to `main` | M5 opens a PR at M5.11; never merged by the agent. Release drafts only; Gautham publishes after his gates pass |
-| Pending Gautham | Nothing Phone (1), **recorded by Gautham** on 2026-10-14; all phone performance and cold-start results missing. Downloaded pre-M5 notes are blank. README §7 pre-design phone/three-person gate awaits results or explicit waiver; final M5 phone/five-person rows stay pending |
+| Pending Gautham | Nothing Phone (1), **recorded by Gautham** on 2026-10-14; all phone performance and cold-start results missing. Downloaded pre-M5 notes are blank. Pre-design gate waived (2026-10-14). Phone is now agent-owned and requires real USB measurements; emulation alone is insufficient. Five-person usability stays Gautham-owned and gates public launch only |
 
 ## Checkpoint log
 
@@ -1913,3 +1913,30 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 | 2026-10-14 | E6: service-worker static asset cache allowed. | Cache app, Pyodide and assets for returning visitors; never personal data. | Gautham (M5 prompt) |
 | 2026-10-14 | E7: one cookieless aggregate counter allowed, off until owner configures it. | Aggregate visits without personal data, fingerprinting or per-user tracking. | Gautham (M5 prompt) |
 | 2026-10-14 | E8: slim/archive agent files; AGENTS.md canonical; nothing deleted except committed test cache. | Reduce startup overhead while preserving history and engineering rules. | Gautham (M5 prompt) |
+
+
+## M5 continuation decisions — 2026-10-14
+
+| Date | Change | Reason / scope | By |
+| --- | --- | --- | --- |
+| 2026-10-14 | Pre-design phone/three-person prerequisite explicitly waived. | No waiting for observations; implement M5.1–M5.11. The blank committed template stays unchanged. | Gautham (continuation prompt) |
+| 2026-10-14 | Nothing Phone (1) is the primary phone design target; other phones remain supported. | Landscape Play, safe areas, thumb controls, portrait Compare/Research; hardware facts assumed until measured. | Gautham |
+| 2026-10-14 | M5 Phone criterion moves from Gautham to agent. | Measure real USB-debugging phone with CDP when connected; emulated Nothing Phone (1) checks always, labelled emulated and insufficient alone to meet Phone. If absent: pending, connect phone over USB. | Gautham |
+| 2026-10-14 | Five-person usability remains Gautham-owned, public-launch gate only. | Does not block implementation or pull request. | Gautham |
+| 2026-10-14 | Add 60 fps phone cap (optional 120), tier pixel-ratio cap, installable manifest and haptics. | Ten-minute real-phone heat run determines defaults; unsupported APIs fail silently. Add phone connection question once at M5.4 without waiting. | Gautham |
+
+Current checkpoint: M5.1 defects resumed from c11bf9e. The old prerequisite is waived; no implementation blocker remains. adb is not installed at preflight; real-phone checks pending, connect phone over USB and provide adb access. No simulator/batch active.
+
+
+## M5.1 defects — 2026-10-14
+
+- Shared browser/CLI/reference limits: `coco_lab/coco_lab/link_limits.json`, 10× valid committed-payload maxima measured by `lab_web/tools/link_inventory.mjs`; encoded 177780 chars, JSON 133330 bytes, 11930 ticks, 1960 inputs, first tick 500, IDs 240 chars. JSON string parsing fixes the preliminary audit's escaped-log artifact. Clear refusal and <50 ms regression checks cover z, s, c/l, replay IDs and run fields, compression bombs and the crafted 10^12 first tick.
+- State hash v2 covers mutable nested behaviour; v1 default/layout preserved. ADR `docs/v2/adr/0008-state-hash-v2.md`. V2: 100 sessions ×150 ticks in each of Chromium, Firefox, WebKit and Pyodide-in-Node, 0 differences (`data/m5/defects/determinism-v2/`). Original v1 flat corpus: 100 sessions, 15000 hashes/chain unchanged (`data/m5/defects/v1-flat/check.json`). Golden traces in the package suite unchanged.
+- 137 distinct committed Play links verified under their layouts (`data/m5/defects/committed-play-verified-final.json`). Eleven early M3 raw-JSON hashes already differed at c11bf9e, with no M5 change; their documented legacy verification is restored without changing canonical score hashes (`v1-mismatch-baseline.json`, `legacy-play-verified.json`). No v1 stop condition fired.
+- Race planner/Grasp/Autonomy locked with explanatory toast; central input filtering admits teleop/STOP only. Unit and browser checks cover desktop and both emulated Nothing Phone (1) orientations. Goal picking: six physical canvas clicks, applied goal cells within one cell in follow/orbit; stale matrices refreshed and a missed floor ray no longer creates a goal at the robot (`data/m5/defects/browser-goal-applied/check.json`).
+- Case Files fetch/cache robot_low first; 3D readiness awaits actual mesh. Emulated 4G, shared browser cache, **100/100 <=2 s** with real mesh; maximum **1871.39990234375 ms** from fetch start to rendered mesh frame (`data/m5/defects/casefile-first-frame/first-frame.json`), balanced on AC, driver 580.178.04. Earlier battery browser evidence is retained and not used as a performance-budget result.
+- Frozen v1 reproducibility job explicitly disabled, full recipe kept; wheel/catalog/index metadata do not reproduce. Strict pinned archive fetch/deployment untouched. Explanation `data/m5/defects/V1_WORKFLOW.md`; regression in `lab_web/tools/test_m5_workflow.py`.
+- Suites: packages **3534 passed / 0 failed / 0 skipped** (`packages-verified.txt`); web typecheck passed, **456 / 0 / 0** (`vitest-final.txt`); tools **193 / 0 / 0** (`tools.txt`). Initial lint failures retained, corrected and re-run. Focused close: 42 web, 14 Python lint/hash tests pass.
+- Screenshots awaiting Gautham: `data/m5/screens/defects/race-desktop.png`, `race-nothing-landscape.png`, `race-nothing-portrait.png` (emulated, 4× CPU proxy).
+- Phone: local adb provisioned without system changes; no connected device (`data/m5/phone/ADB_CHECK_M51.txt`). Real Phone criterion pending: connect phone over USB. Assumptions and provisional settings in `docs/v2/PHONE_PROFILE.md`. Blank usability template unchanged; pre-design gate waived.
+- Files moved: screenshots from defect harness output to `docs/v2/data/m5/screens/defects/`; no deletion. No new ideas. Next: **M5.2 agent overhead**, archives and slim current-state files; retain all history. M5 is not closed.

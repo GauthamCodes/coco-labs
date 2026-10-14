@@ -19,6 +19,7 @@ export interface BootRequest {
   seed: number;
   planner: string;
   batchSize: number;
+  hashVersion?: 1 | 2;
   /** M4.3: the World Spec to build (a file in generated/arena/); absent = coco_arena_v1.json. */
   spec?: SpecFile;
 }

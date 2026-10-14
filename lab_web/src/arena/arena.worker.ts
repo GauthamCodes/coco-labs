@@ -148,7 +148,7 @@ async function boot(req: Extract<ToWorker, { type: 'boot' }>) {
     for (const [name, v] of Object.entries(d.plain ?? {})) columns[name] = v as boolean[] | string[];
     post({ type: 'family', channel: d.channel, tick: d.tick, columns, scalars: d.scalars }, buffers);
   };
-  const out = glue.init(spec, req.seed, req.planner, onBatch, req.batchSize, onFamily);
+  const out = glue.init(spec, req.seed, req.planner, onBatch, req.batchSize, onFamily, req.hashVersion ?? 1);
   const world = JSON.parse(out.get(0) as unknown as string);
   const occ = out.get(1);
   const occupancy = (occ.toJs() as Uint8Array).slice();

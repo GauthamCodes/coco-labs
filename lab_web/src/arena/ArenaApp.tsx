@@ -1,3 +1,5 @@
+import { raceInputs } from './race_integrity';
+import { urlFieldError } from '../links/bounds.mjs';
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
 
@@ -29,6 +31,7 @@ import { currentTheme, PALETTES } from './render/palette';
 import { PlanStore, type CellInfo } from './render/planStore';
 import { parseConverted, type ConvertedRun } from './replay';
 import { attachScans, caseLens } from './replay_case';
+import { loadAssetBytes } from './mesh_cache';
 import { loadCase } from './case_load';
 import type { ReadMessage } from '../schemas/mcap';
 import { fromBinary } from '@bufbuild/protobuf';
@@ -93,6 +96,7 @@ export function ArenaApp() {
   const specFile = specFileFor(params.get('world'));
   const showPerf = params.has('perf');
   const source: PyodideSource = params.get('pyodide') === 'cdn' ? 'cdn' : 'self';
+  const linkFieldError = urlFieldError(params);
   const runParam = params.get('run');
   const replayParam = params.get('replay');
   const attractPolicy: AttractPolicy = ATTRACT_POLICIES.includes(params.get('attract') as AttractPolicy)
@@ -116,6 +120,8 @@ export function ArenaApp() {
     && !!playLevel && /^[a-z0-9-]{1,64}$/.test(playLevel);
   /** M4.8: a race takes only teleop and STOP (coco_lab.race): goals, grasps, hand-backs and resets are off */
   const raceOn = playOn && playParam === 'race-the-ghost';
+  const [raceNotice, setRaceNotice] = useState('');
+  useEffect(() => { if (!raceOn) return; setRaceNotice('Race controls are locked: drive with teleop and STOP only.'); const t = setTimeout(() => setRaceNotice(''), 5000); return () => clearTimeout(t); }, [raceOn]);
   const gaps = useGaps(import.meta.env.BASE_URL);
   const cfgInitial = Object.fromEntries(cfgLines.map((c) => [c.slice(0, c.indexOf('=')), c.slice(c.indexOf('=') + 1)]));
   const canvas = useRef<HTMLCanvasElement | null>(null);
@@ -123,7 +129,7 @@ export function ArenaApp() {
   const [liveReady, setLiveReady] = useState(false);
   const [mode, setModeState] = useState<Mode>(runParam ? 'replay' : recordedId ? 'recording' : specFile === SPEC_FILES.v2 ? 'live' : 'attract');
   const [session, setSession] = useState<ArenaSession | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(linkFieldError);
   const [inspect, setInspect] = useState(false);
   const [picked, setPicked] = useState<CellInfo | null>(null);
   const [layers, setLayers] = useState<LayerVisibility>(DEFAULT_LAYERS);
@@ -272,7 +278,7 @@ export function ArenaApp() {
   const cfgSent = useRef(false);
 
   const goal = useCallback((x: number, y: number) => {
-    if (latchedRef.current || raceOn) return;   // STOP is latched: R releases it (M4.5); no goals in a race (M4.8)
+    if (!Number.isFinite(x) || !Number.isFinite(y) || latchedRef.current || raceOn) return;   // STOP is latched: R releases it (M4.5); no goals in a race (M4.8)
     takeOver();
     perf.goalSent(wallMs(), live.current?.shownSearch?.searchId ?? null);
     r.current?.setGoal([x, y]);
@@ -314,6 +320,7 @@ export function ArenaApp() {
     let drawnVersion = -1;
     let drawnTick = -1;
     let firstFrame = true;
+    let firstRobotFrame = true;
     let firstComputation = true;
     const replayRun = runParam ? (() => { try { return decodeRun(runParam); } catch (e) { setError(`share link: ${(e as Error).message}`); return null; } })() : null;
     setReplay({ run: replayRun, status: replayRun ? 'waiting for the live model' : '' });
@@ -328,7 +335,7 @@ export function ArenaApp() {
       let started: Promise<void> | null = null;
       start3D.current = () => {
         if (started) return started;
-        const lod = landingLight ? 'low' : robotLod;
+        const lod = recordedId || landingLight ? 'low' : robotLod;
         started = specP.then(() => rr!.enable3D(assets3d(lod),
           worldToMap.current, w.targets, elevation.current, tierChoice))
           .then(() => {
@@ -356,18 +363,18 @@ export function ArenaApp() {
         queue.current.push(...replayRun.inputs.filter((x) => x.tick === c.tick));
       }
       inFlight = true;
-      c.step(queue.current.splice(0)); // the log is what the model reports it applied (onTick)
+      c.step(raceInputs(queue.current.splice(0), raceOn)); // the log is what the model reports it applied (onTick)
     };
 
     // M4.7: a page that opens in 3D starts its 3D assets at once, beside the recording or the model, so the
     // first 3D frame waits for the slower of the two, not for both in turn
-    const bytes = (u: string) => fetch(u, { credentials: 'omit' }).then((x) => { if (!x.ok) throw new Error(u); return x.arrayBuffer(); });
+    const bytes = loadAssetBytes;
     // a recording's first frame comes first: there the robot's file waits for it (the arena is 28 KB; the
     // body is a placeholder until the robot lands), so on 4G it does not share the line with the recording
-    const robotUrl = `${import.meta.env.BASE_URL}assets3d/robot_${landingLight ? 'low' : robotLod}.glb`;
+    const robotUrl = `${import.meta.env.BASE_URL}assets3d/robot_${recordedId || landingLight ? 'low' : robotLod}.glb`;
     const early3D = initialCamera === 'topdown' ? null : {
       arena: bytes(`${import.meta.env.BASE_URL}assets3d/arena.glb`),
-      robot: recordedId ? perf.when('recording_ready').then(() => bytes(robotUrl)) : bytes(robotUrl),
+      robot: bytes(robotUrl),
       // (on the landing the URL below is the light robot's: robotUrl follows landingLight)
     };
     if (early3D) void Promise.all([early3D.arena, early3D.robot]).then(() => perf.mark('world3d_assets', wallMs())).catch(() => {});
@@ -388,7 +395,7 @@ export function ArenaApp() {
     // M4.7: the 3D scene is prepared (parsed, shaders compiled) while the recording or the model loads
     if (early3D && rr) {
       const r3 = rr;
-      void specP.then(() => r3.prepare3D(assets3d(landingLight ? 'low' : robotLod), worldToMap.current, tierChoice)).catch(() => {});
+      void specP.then(() => r3.prepare3D(assets3d(recordedId || landingLight ? 'low' : robotLod), worldToMap.current, tierChoice)).catch(() => {});
     }
 
     // the runs list is for the nav: on a Case File's page it waits for the first frame (M4.7, 4G).
@@ -407,8 +414,8 @@ export function ArenaApp() {
       // a Case File's first frame needs everything but its scans; the scans follow (D6)
       let caseScans: Promise<ReadMessage[]> | null = null;
       const loaded = caseId
-        ? loadCase(base, caseId, fetchBytes(`${base}generated/casefiles/world.grid.bin`, 'the Case Files\' map is missing')
-          .then((g) => fromBinary(WorldGridSchema, g))).then(({ rec, scans }) => { caseScans = scans; return rec; })
+        ? bytes(robotUrl).then(() => loadCase(base, caseId, fetchBytes(`${base}generated/casefiles/world.grid.bin`, 'the Case Files\' map is missing')
+          .then((g) => fromBinary(WorldGridSchema, g)))).then(({ rec, scans }) => { caseScans = scans; return rec; })
         : fetchBytes(`${base}generated/v2/${recId}.mcap`, `no recorded run "${recId}"`).then((b) => parseConverted(b));
       void loaded
         .then(async (rec) => {
@@ -491,7 +498,7 @@ export function ArenaApp() {
           if (queue.current.length) owed = Math.max(owed, 1); // an input is applied at once
           if (owed > 0 && !inFlight) { owed -= 1; stepLive(); }
           // M2.0: an input made while a step is planning joins that step (its search is cancelled), not the next one
-          else if (inFlight && queue.current.length && modeRef.current !== 'replay') client.current?.amend(queue.current.splice(0));
+          else if (inFlight && queue.current.length && modeRef.current !== 'replay') client.current?.amend(raceInputs(queue.current.splice(0), raceOn));
         }
         const s = active();
         if (!s) return;
@@ -516,6 +523,7 @@ export function ArenaApp() {
       };
       rr.onAfterRender = () => {
         if (firstFrame && worldSet) { firstFrame = false; perf.mark('first_frame', wallMs()); }
+        if (firstRobotFrame && recordedId && rr!.is3D && rr!.three?.ready && active()?.shownTick) { firstRobotFrame = false; perf.mark('first_robot_frame', wallMs()); }
         perf.drawnPose(rr!.drawnPose);
         const st = active()?.shownSearch;
         if (st && st.cursor > 0) {
@@ -584,7 +592,7 @@ export function ArenaApp() {
       },
       // a refused amendment leaves its step running; any other failure ends the step
       onError: (stage, message) => { if (stage !== 'amend') inFlight = false; setError(`${stage}: ${message}`); },
-    }, { pyodide: source, seed: replayRun?.seed ?? Number(params.get('seed') ?? 1), spec: specFile });
+    }, { hashVersion: replayRun?.hash_version ?? (replayRun ? 1 : 2), pyodide: source, seed: replayRun?.seed ?? Number(params.get('seed') ?? 1), spec: specFile });
 
     window.__cocoArena = {
       client: client.current, queue: queue.current, last: null, renderer: rr, session: active, goal,
@@ -736,7 +744,8 @@ export function ArenaApp() {
       }
       if (a === 'context' || a === 'autonomy') {
         e.preventDefault();
-        if (e.repeat || latchedRef.current || raceOn) return;
+        if (raceOn) { setRaceNotice('Race controls are locked: drive with teleop and STOP only.'); return; }
+        if (e.repeat || latchedRef.current) return;
         held.clear(); takeOver();
         queue.current.push({ kind: a === 'context' ? 'grasp' : 'autonomy' });
         return;
@@ -830,7 +839,7 @@ export function ArenaApp() {
   }, [focus, lens]);
 
   const toggle = (k: keyof LayerVisibility) => setLayers((l) => ({ ...l, [k]: !l[k] }));
-  const choosePlanner = (p: string) => { setPlanner(p); takeOver(); queue.current.push({ kind: 'planner', choice: p }); };
+  const choosePlanner = (p: string) => { if (raceOn) { setRaceNotice('Race controls are locked: drive with teleop and STOP only.'); return; } setPlanner(p); takeOver(); queue.current.push({ kind: 'planner', choice: p }); };
   const lastJoy = useRef<[number, number]>([0, 0]);
   const onJoystick = (dx: number, dy: number, at?: number) => {
     const lim = client.current?.world?.limits;
@@ -875,7 +884,7 @@ export function ArenaApp() {
     const t = lastTick.current;
     if (!t || !specSha.current) return;
     setShare(shareUrl({ v: 1, spec: specSha.current, seed: Number(params.get('seed') ?? 1), ticks: t.tick, chain: t.chain,
-      inputs: log.current }, import.meta.env.BASE_URL) + (specFile === SPEC_FILES.v2 ? '&world=v2' : ''));
+      inputs: log.current, hash_version: replay.run?.hash_version ?? (replay.run ? 1 : 2) }, import.meta.env.BASE_URL) + (specFile === SPEC_FILES.v2 ? '&world=v2' : ''));
   };
 
   const tick = session?.shownTick ?? null;
@@ -898,6 +907,7 @@ export function ArenaApp() {
         : <ModeNav current={params.has('casefile') ? 'casefiles' : 'sandbox'} evidence={evidence} />}
       {missionBack && <p className="mission-back"><a href={`${import.meta.env.BASE_URL}${missionBack}`} data-testid="mission-back">
         ← Back to the mission</a></p>}
+      {raceNotice && <p role="status" className="arena-toast">{raceNotice}</p>}
       {error && <p className="error" role="alert">{error}</p>}
       {qualityNote && <p className="notice" role="status">{qualityNote}</p>}
       {helpOpen && (
@@ -949,9 +959,10 @@ export function ArenaApp() {
           <Hud tick={tick} latched={latched} fullWheel={fullWheel.current} showBars={settings.bars} camera={camera} coarse={coarse}
             tank={settings.tank}
             onStop={() => { takeOver(); queue.current.push({ kind: 'stop' }); latchedRef.current = true; setLatched(true); }}
-            onContext={() => { if (!latchedRef.current) { takeOver(); queue.current.push({ kind: 'grasp' }); } }}
+            assistsLocked={raceOn}
+            onContext={() => { if (!raceOn && !latchedRef.current) { takeOver(); queue.current.push({ kind: 'grasp' }); } }}
             onCamera={() => chooseCamera('next')}
-            onAutonomy={() => { if (!latchedRef.current) { takeOver(); queue.current.push({ kind: 'autonomy' }); } }}
+            onAutonomy={() => { if (!raceOn && !latchedRef.current) { takeOver(); queue.current.push({ kind: 'autonomy' }); } }}
             onTank={onTank} />
         )}
         {latched && coarse && (
@@ -991,7 +1002,7 @@ export function ArenaApp() {
         <div className="arena-row" role="group" aria-label="Planner">
           {(world?.planners ?? []).map((p) => (
             <button key={p} type="button" className={p === planner ? 'seg-btn active' : 'seg-btn'}
-              aria-pressed={p === planner} data-testid={`planner-${p}`} onClick={() => choosePlanner(p)}>{p}</button>
+              disabled={raceOn} aria-pressed={p === planner} data-testid={`planner-${p}`} onClick={() => choosePlanner(p)}>{p}</button>
           ))}
           <button type="button" className={inspect ? 'seg-btn active' : 'seg-btn'} aria-pressed={inspect}
             data-testid="inspect-toggle" onClick={() => setInspect((v) => !v)}>Inspect a cell</button>

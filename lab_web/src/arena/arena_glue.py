@@ -53,7 +53,7 @@ def emit_header(channel, header):
 
 
 def init(spec_json, seed, planner, post_batch, batch_size=2048,
-         post_family=None):
+         post_family=None, hash_version=1):
     """Build the Arena; return (world JSON, occupancy bytes)."""
     global _arena, _post_family, _spec_json, _budget
     _post_family = post_family
@@ -71,7 +71,7 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
 
     _arena = Arena(json.loads(spec_json), int(seed), planner=planner,
                    on_plan_batch=hook, plan_batch_size=int(batch_size),
-                   on_family=family)
+                   on_family=family, hash_version=int(hash_version))
     m = _arena.lab_map
     li = _arena.lidar
     world = {
@@ -253,8 +253,18 @@ def play(request_json):
     if op == 'view':
         return json.dumps(p.view(req['levels'], req['challenge'], req['level']))
     if op == 'score':
-        return json.dumps(p.score(req['levels'], req['submission'],
-                                  json.loads(_spec_json)))
+        result = p.score(req['levels'], req['submission'], json.loads(_spec_json))
+        expected = req.get('expected_hash')
+        if expected:
+            candidates = p.verification_hashes(result)
+            if req['submission'].get('hash_version', 1) != 1:
+                candidates = {'canonical': result['hash']}
+            for layout, digest in candidates.items():
+                if expected == digest:
+                    result['verified_hash'] = digest
+                    result['verification_layout'] = layout
+                    break
+        return json.dumps(result)
     if op == 'map_begin':
         _budget = p.MapBudget(float(req['budget_m']), _arena.pose)
         return json.dumps({'path_m': 0.0, 'budget_m': _budget.budget_m})

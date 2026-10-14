@@ -1,0 +1,1 @@
+pyodide-node: 100 sessions, 15000 ticks

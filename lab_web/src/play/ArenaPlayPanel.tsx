@@ -91,7 +91,7 @@ export function ArenaPlayPanel({ challenge, levelId, live, liveReady, lastTick, 
   const score = (inputs: unknown) => {
     const c = scorer();
     if (!c || !levels || !level || !hash) return;
-    const s: Submission = { v: 1, challenge, level: level.id, level_hash: hash, inputs };
+    const s: Submission = { v: 1, hash_version: 2, challenge, level: level.id, level_hash: hash, inputs };
     setBusy(challenge === 'map-the-arena' ? 'Re-simulating your drive from its input log…' : 'Scoring…');
     setFail(null);
     void c.play<PlayResult>({ op: 'score', levels, submission: s })

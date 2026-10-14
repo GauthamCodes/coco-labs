@@ -216,8 +216,11 @@ class Arena:
     def __init__(self, spec: Dict[str, object], seed: int,
                  planner: str = 'astar', range_sigma: float = 0.0,
                  lidar_every: int = 1, on_plan_batch=None,
-                 plan_batch_size: int = 2048, on_family=None):
+                 plan_batch_size: int = 2048, on_family=None, hash_version: int = 1):
         """Build the world from ``spec`` and place the robot at its start."""
+        if hash_version not in (1, 2):
+            raise ArenaError('hash_version must be 1 or 2')
+        self.hash_version = hash_version
         self.spec = normalize(spec)
         if planner not in PLANNERS:
             raise ArenaError(f'unknown planner {planner!r}')
@@ -294,6 +297,10 @@ class Arena:
         self._chain = hashlib.sha256(STATE_LAYOUT).digest()
         self._reset_robot()
         self.ranges = self._scan()
+        if self.hash_version == 2:
+            from .state_v2 import world_hash
+            self._v2_world = world_hash(self.spec, self.lidar)
+            self._chain = hashlib.sha256(b'coco.arena.state.v2').digest()
 
     # -- state -----------------------------------------------------------------
 
@@ -863,6 +870,9 @@ class Arena:
             z, pitch, roll = self.tilt()
             parts += [TERRAIN_LAYOUT, struct.pack('<3q', _q(z, Q_STATE), _q(pitch, Q_STATE),
                                                   _q(roll, Q_STATE))]
+        if self.hash_version == 2:
+            from .state_v2 import snapshot
+            return b'coco.arena.state.v2\0' + snapshot(self)
         return b''.join(parts)
 
     def grasp_view(self) -> Optional[Dict[str, object]]:

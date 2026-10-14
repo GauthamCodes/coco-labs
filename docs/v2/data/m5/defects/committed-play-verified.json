@@ -1,0 +1,2065 @@
+{
+ "tool": "coco verify (lab_web/tools/verify.mjs)",
+ "engine": "Pyodide 314.0.7, Node v24.21.0",
+ "seconds": 328.823,
+ "checked": 137,
+ "matched": 126,
+ "failures": 11,
+ "rows": [
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "ms": 6,
+   "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1
+   },
+   "expected": "4d2fcdde2a5d4e744ef43ff8e5478dd8a4ea7bf3470cedf1a295864a00df94e9",
+   "matches": false,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "ms": 1,
+   "hash": "d593ad6634a85527cbe30f0be5921cc26e03afe9a65fb1a74dc58d70c35efcb3",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1
+   },
+   "expected": "0ba3a323340b946ac5edb2354e1c5c4c34928be9f14d57500e34aa15a88ce3b0",
+   "matches": false,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "ms": 2,
+   "hash": "873ad7357dea2d2dc23a70ba0bc3fb1c7cc1ffc25889a93a1bb90328352396cc",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1
+   },
+   "expected": "99269073280b3e5c24dc0be653aa58c8f536bf7a3a11ca1666d7382ad5e32ab9",
+   "matches": false,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "ms": 3,
+   "hash": "1f46a35b3dd30905a03f8b1319b9562c1590920a383f1adab8ac01b666a1013b",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 10
+   },
+   "expected": "1f46a35b3dd30905a03f8b1319b9562c1590920a383f1adab8ac01b666a1013b",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "ms": 7,
+   "hash": "585980ba24f66f3d663ae75cd0d477db9b8e86dca00c2d764402cd36d981d648",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 10
+   },
+   "expected": "585980ba24f66f3d663ae75cd0d477db9b8e86dca00c2d764402cd36d981d648",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "ms": 3,
+   "hash": "dfb5f15ddd7931918a8e25545c1f082233cf00e87fbdd9c263d8547284fce882",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 10
+   },
+   "expected": "dfb5f15ddd7931918a8e25545c1f082233cf00e87fbdd9c263d8547284fce882",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "ms": 41,
+   "hash": "68f63a399a25626b99adc47099547a88c66ad46a7c97233587eebb5f8d730251",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1
+   },
+   "expected": "77b066eca1113721761bb40997a76069d1fd185fbfcab134aba65f87b9c389e7",
+   "matches": false,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "ms": 1,
+   "hash": "121584bb9a9fbc24ddefafdc48e8ddf681b4c702f4cac300a2dc8bf89f839020",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1
+   },
+   "expected": "2aade2745f061705edc109a7caafacd7e16c02e6ea0ff62759ba9fb64ea6afba",
+   "matches": false,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "ms": 2,
+   "hash": "dc31bf9c19bb474a024c566b91ea3f4965f9c6cc918ef547fbad57d5a5b6d9b9",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1
+   },
+   "expected": "4c3a8bb9a4a5d02e0ef9f0103180c2cd87e155b3cad6c1d3bc2ea7c7f6332e84",
+   "matches": false,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "ms": 4,
+   "hash": "e8b7107011901884e491daf3f23ce18a40eb51bac5e9a7e3a498fd77b7eb89f3",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1
+   },
+   "expected": "fbef34d1d25cd4152bb015c7f97233e15cb098646975a207f767fd61fa2df175",
+   "matches": false,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "ms": 1,
+   "hash": "64ba11acf0e26d9c664ad220921e7231cfc23e5d7752d3e3c1b8cbf8d0c4c3f4",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0
+   },
+   "expected": "91387e6ab600c4394ac6c319b1c5b3ca61b02a01b57fac558988d99083c74a66",
+   "matches": false,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "ms": 1,
+   "hash": "85ae2d73002cf2e3ee078c243983f11a5273f8396d94491d2fdbf79ae57bb33b",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0
+   },
+   "expected": "be87aa6123d8fdaf80588a143cee1e4dc904c91058750f4c1375e7facbcad44f",
+   "matches": false,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "ms": 0,
+   "hash": "1dcb0cdbbec6bb84c08e18d1353ce558a9e6ac08a37be3805a3cddc19b28cdf6",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0
+   },
+   "expected": "5b8ad85d075eb908d4f2d2c3f25b25657f9026b94c8cecb685de7c4391553337",
+   "matches": false,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "ms": 1,
+   "hash": "1338a4aa3252d662197de332c9d134dbdaa9527ab15707dab3a966e176dbda8b",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0
+   },
+   "expected": "2a3bc0ca9f092c0e937023a32c43c5dbe9fb909955c6f86f58e084f3dbc21184",
+   "matches": false,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "ms": 5272,
+   "hash": "6eecf52b2f280cbeda38feb430d1d800fa70ee4076ed432a456dd24bf74eefd2",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.352835089
+   },
+   "expected": "6eecf52b2f280cbeda38feb430d1d800fa70ee4076ed432a456dd24bf74eefd2",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "ms": 1,
+   "hash": "db3dc0c66af069f7b52b81e967f9dcea69299bb105a820d92d00559b8f398c8a",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.51976926
+   },
+   "expected": "db3dc0c66af069f7b52b81e967f9dcea69299bb105a820d92d00559b8f398c8a",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "ms": 11,
+   "hash": "ee94eb41ee57887c0afe5214e8d91880537743530a1db9a6a5606213551e4135",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.473975751
+   },
+   "expected": "ee94eb41ee57887c0afe5214e8d91880537743530a1db9a6a5606213551e4135",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "ms": 1,
+   "hash": "2252af419ce271c404ab9c5fa8faca80cc9e3fb31565e8558e0f094beebdf4e6",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.252709885
+   },
+   "expected": "2252af419ce271c404ab9c5fa8faca80cc9e3fb31565e8558e0f094beebdf4e6",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "ms": 6,
+   "hash": "71c57003a942142045fe1500089066f7ec5dd058f989d555195f975ec0dfabf5",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "cost ratio",
+    "value": null
+   },
+   "expected": "71c57003a942142045fe1500089066f7ec5dd058f989d555195f975ec0dfabf5",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "ms": 3,
+   "hash": "850e1b317ed446559aaeceaf0e0cc935f687673464cd16cfa2be6c75f7a5cb91",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.134876072
+   },
+   "expected": "850e1b317ed446559aaeceaf0e0cc935f687673464cd16cfa2be6c75f7a5cb91",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "ms": 2,
+   "hash": "2252af419ce271c404ab9c5fa8faca80cc9e3fb31565e8558e0f094beebdf4e6",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.252709885
+   },
+   "expected": "2252af419ce271c404ab9c5fa8faca80cc9e3fb31565e8558e0f094beebdf4e6",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "ms": 1,
+   "hash": "754248820d02f8ff574c32c271d7069702dfc0755ee316b294b04e399a3b4fc7",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.201010127
+   },
+   "expected": "754248820d02f8ff574c32c271d7069702dfc0755ee316b294b04e399a3b4fc7",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "ms": 2,
+   "hash": "42026ee6640716e81fd73a5cb6183d06995333e0069936239c5abedb8b9ec3c6",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.357385747
+   },
+   "expected": "42026ee6640716e81fd73a5cb6183d06995333e0069936239c5abedb8b9ec3c6",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "ms": 0,
+   "hash": "9512436e7c8bc178df20125593f049a12cae278528d3a93782faae1923037065",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "cost ratio",
+    "value": null
+   },
+   "expected": "9512436e7c8bc178df20125593f049a12cae278528d3a93782faae1923037065",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "ms": 1,
+   "hash": "bc213d488a3e9c337f4cc8c28bed256b5ac15f83ee7d3567657e7a9fcb2cf1a0",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "cost ratio",
+    "value": null
+   },
+   "expected": "bc213d488a3e9c337f4cc8c28bed256b5ac15f83ee7d3567657e7a9fcb2cf1a0",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "ms": 4,
+   "hash": "c0f6ba2910d646b230bad480b69697e3196ca1d00e0c14908810abe547d8a9fa",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.142135624
+   },
+   "expected": "c0f6ba2910d646b230bad480b69697e3196ca1d00e0c14908810abe547d8a9fa",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "ms": 1,
+   "hash": "e7e00ec751121db739c622b65da3327d81fe87e7824fc1e13d518047beb83294",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "cost ratio",
+    "value": null
+   },
+   "expected": "e7e00ec751121db739c622b65da3327d81fe87e7824fc1e13d518047beb83294",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "ms": 2,
+   "hash": "f48812d0f40dbcb2269f3e438dc05b6466390e5fceba0da51fddaf8105c260e8",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "cost ratio",
+    "value": null
+   },
+   "expected": "f48812d0f40dbcb2269f3e438dc05b6466390e5fceba0da51fddaf8105c260e8",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "ms": 4,
+   "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1
+   },
+   "expected": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "ms": 3,
+   "hash": "2fee3a794ebc521983a7066094bde69dfc92bd93016d0c2a88593cee82d05551",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.544259115
+   },
+   "expected": "2fee3a794ebc521983a7066094bde69dfc92bd93016d0c2a88593cee82d05551",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "ms": 1,
+   "hash": "02ca1b9f7436630e630e35dbad25bbef749e41cfa54febf5f6a048585d58a651",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.714771494
+   },
+   "expected": "02ca1b9f7436630e630e35dbad25bbef749e41cfa54febf5f6a048585d58a651",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "ms": 1,
+   "hash": "028f50cd40a8529168786f50f65a06b1943f2ee49ef6d9c05644aacc2c26ead2",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1.426406871
+   },
+   "expected": "028f50cd40a8529168786f50f65a06b1943f2ee49ef6d9c05644aacc2c26ead2",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "ms": 3,
+   "hash": "21e6c530fef4a26d81ee398dbdd4a5b0bad30720e35910dc63390c0f41d34b15",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 9
+   },
+   "expected": "21e6c530fef4a26d81ee398dbdd4a5b0bad30720e35910dc63390c0f41d34b15",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "ms": 2,
+   "hash": "c38b2e308ac291032009d043edeee9127f9f0474552ec7ab0acff5e9a659af86",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 8
+   },
+   "expected": "c38b2e308ac291032009d043edeee9127f9f0474552ec7ab0acff5e9a659af86",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "ms": 2,
+   "hash": "b1e49cd8636e154b6766c8660b23fd9fc92f4c3d3e1868480217d5d713d686c7",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 3
+   },
+   "expected": "b1e49cd8636e154b6766c8660b23fd9fc92f4c3d3e1868480217d5d713d686c7",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "ms": 4,
+   "hash": "586eb2784d4e5ad085dc582dde029af26dde9c9485b891b43388a10fef5ee56a",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 5
+   },
+   "expected": "586eb2784d4e5ad085dc582dde029af26dde9c9485b891b43388a10fef5ee56a",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "ms": 2,
+   "hash": "4bce47ef750abe78f4966afd4b585539694fe8024b261b47fae8b1668861908a",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 9
+   },
+   "expected": "4bce47ef750abe78f4966afd4b585539694fe8024b261b47fae8b1668861908a",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "ms": 1,
+   "hash": "d0da6ff27f6c6ec73d411d030cadcce5fa53648e4684cd2d991a65b5bb24d46f",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 8
+   },
+   "expected": "d0da6ff27f6c6ec73d411d030cadcce5fa53648e4684cd2d991a65b5bb24d46f",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "ms": 2,
+   "hash": "172096e076a5839c9810502f202a91d5ef4653dadaf1abda3a089e1aeee37ff4",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 3
+   },
+   "expected": "172096e076a5839c9810502f202a91d5ef4653dadaf1abda3a089e1aeee37ff4",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "ms": 2,
+   "hash": "d2407ad44843ca8a26374a54e1a5c370153e845940a98236ff72cb0ddd11f196",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 2
+   },
+   "expected": "d2407ad44843ca8a26374a54e1a5c370153e845940a98236ff72cb0ddd11f196",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "ms": 3,
+   "hash": "adaee2cedefa786458daddf135e1bf4f53a3edfcd071c7be28c0b689cba7635f",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 9
+   },
+   "expected": "adaee2cedefa786458daddf135e1bf4f53a3edfcd071c7be28c0b689cba7635f",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "ms": 1,
+   "hash": "b1e49cd8636e154b6766c8660b23fd9fc92f4c3d3e1868480217d5d713d686c7",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 3
+   },
+   "expected": "b1e49cd8636e154b6766c8660b23fd9fc92f4c3d3e1868480217d5d713d686c7",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "ms": 3,
+   "hash": "a031532652b626c645d123fd4ba494f32922fdd153ea4931971a09e2e02b926c",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 5
+   },
+   "expected": "a031532652b626c645d123fd4ba494f32922fdd153ea4931971a09e2e02b926c",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "ms": 2,
+   "hash": "6839988e5ffb4ac21648bdf21aaa2c37492cdb2bac46af47ba73b1db6da67a2d",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 5
+   },
+   "expected": "6839988e5ffb4ac21648bdf21aaa2c37492cdb2bac46af47ba73b1db6da67a2d",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "ms": 1,
+   "hash": "7384472a4bed1d3d0e20c669c237f374ccc69707414873a251bac9a0eeec6458",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 4
+   },
+   "expected": "7384472a4bed1d3d0e20c669c237f374ccc69707414873a251bac9a0eeec6458",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "ms": 2,
+   "hash": "acf841382fbf51c7b8adb1beb8e8477a248eaf8cc9e648a56cb3c8b10ea457ef",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 5
+   },
+   "expected": "acf841382fbf51c7b8adb1beb8e8477a248eaf8cc9e648a56cb3c8b10ea457ef",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "ms": 3,
+   "hash": "a2a3824d116da1a13beb9650234cdf01910b62a12cc8884ad9fa0b5ebed74fce",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 6
+   },
+   "expected": "a2a3824d116da1a13beb9650234cdf01910b62a12cc8884ad9fa0b5ebed74fce",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "ms": 1,
+   "hash": "01cad25d1a4db17f6cef835fac6816ad96a6d0d63e27cd13b12dabe70b25549f",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 1
+   },
+   "expected": "01cad25d1a4db17f6cef835fac6816ad96a6d0d63e27cd13b12dabe70b25549f",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "ms": 3,
+   "hash": "d9903e8397ed66bc216316511b165cd39d2cae779fabfd23b17bc0f4a2eb310f",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "matches",
+    "value": 3
+   },
+   "expected": "d9903e8397ed66bc216316511b165cd39d2cae779fabfd23b17bc0f4a2eb310f",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "ms": 0,
+   "hash": "32d6afbed8b0f9eec6dfc07b59ce7116a40c79aeed670e88867b6e56d05409d1",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.204152539
+   },
+   "expected": "32d6afbed8b0f9eec6dfc07b59ce7116a40c79aeed670e88867b6e56d05409d1",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "ms": 1,
+   "hash": "855ec05c725cbf0c610a56449c93b7a975315865e15a834d8c2ffb3eab2013be",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.42627144
+   },
+   "expected": "855ec05c725cbf0c610a56449c93b7a975315865e15a834d8c2ffb3eab2013be",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "ms": 1,
+   "hash": "fd77b62eaebd07eb4a1a6a74ea2269388df683eb5323eeb01a7fede13055d822",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.060353395
+   },
+   "expected": "fd77b62eaebd07eb4a1a6a74ea2269388df683eb5323eeb01a7fede13055d822",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "ms": 1,
+   "hash": "11b3efeeebb8ec0fd7b149279b2137384eb3be95193b4b5441233b4faa95b466",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.58134849
+   },
+   "expected": "11b3efeeebb8ec0fd7b149279b2137384eb3be95193b4b5441233b4faa95b466",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "ms": 1,
+   "hash": "da07269006583455fab448cc610aed09c29e7b4fc25c08750108163909b0ec69",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.059116494
+   },
+   "expected": "da07269006583455fab448cc610aed09c29e7b4fc25c08750108163909b0ec69",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "ms": 1,
+   "hash": "7abb30f9b086779ef324f09b7c3109431cff5e9aee25e5d572f2359e2a05d0e6",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.25217422
+   },
+   "expected": "7abb30f9b086779ef324f09b7c3109431cff5e9aee25e5d572f2359e2a05d0e6",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "ms": 1,
+   "hash": "4b0a28fa1f2e3aef117b4f7ab489e9925510f4d300c432565bf6c0cbdbb9b379",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.133465099
+   },
+   "expected": "4b0a28fa1f2e3aef117b4f7ab489e9925510f4d300c432565bf6c0cbdbb9b379",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "ms": 1,
+   "hash": "9ee4db72248dbebb2849f0e7328a0a1c3f47dfee3a23c06f66eae5abd5eb98df",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "expected cost ratio",
+    "value": null
+   },
+   "expected": "9ee4db72248dbebb2849f0e7328a0a1c3f47dfee3a23c06f66eae5abd5eb98df",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "ms": 1,
+   "hash": "4b229da3ddf0fc6db61545966312cba8ad5878bb8bf41ea00527671f9e3353aa",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.261778051
+   },
+   "expected": "4b229da3ddf0fc6db61545966312cba8ad5878bb8bf41ea00527671f9e3353aa",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "ms": 3,
+   "hash": "121584bb9a9fbc24ddefafdc48e8ddf681b4c702f4cac300a2dc8bf89f839020",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1
+   },
+   "expected": "121584bb9a9fbc24ddefafdc48e8ddf681b4c702f4cac300a2dc8bf89f839020",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "ms": 0,
+   "hash": "b0c65ae84e62323e3524f23a450b25bc8d0fe9154d1173839a36f870e3924cc5",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.147330969
+   },
+   "expected": "b0c65ae84e62323e3524f23a450b25bc8d0fe9154d1173839a36f870e3924cc5",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "ms": 1,
+   "hash": "66441d0b0d8989a2aeb358aec78c54a180f164572ddc5fe5c7d3a0b6353749bf",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.535776705
+   },
+   "expected": "66441d0b0d8989a2aeb358aec78c54a180f164572ddc5fe5c7d3a0b6353749bf",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "ms": 0,
+   "hash": "8e7d326e48c30ee359ddadf5eb5bbcef05dcc18b0a868b9c0830939742c72ab0",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.215798556
+   },
+   "expected": "8e7d326e48c30ee359ddadf5eb5bbcef05dcc18b0a868b9c0830939742c72ab0",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "ms": 1,
+   "hash": "605a98b42b460d7e07c79b553139986a586e43606fafcff8b3509df682b85f53",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.333897776
+   },
+   "expected": "605a98b42b460d7e07c79b553139986a586e43606fafcff8b3509df682b85f53",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "ms": 1,
+   "hash": "847d60591911b43552bb2d76c187b8797fba342ab2c7a41ec1e6c7c210ed8c03",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.563339509
+   },
+   "expected": "847d60591911b43552bb2d76c187b8797fba342ab2c7a41ec1e6c7c210ed8c03",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "ms": 1,
+   "hash": "8646d0f304ecab95c18b31efcbb8660d8a7f7f7def7d3b682cee14fef13798b3",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.399745787
+   },
+   "expected": "8646d0f304ecab95c18b31efcbb8660d8a7f7f7def7d3b682cee14fef13798b3",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "ms": 1,
+   "hash": "34b4f09134c75f219c7812584af38aff96399534ae0c32b6a123f003a9cb0a7d",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.000961957
+   },
+   "expected": "34b4f09134c75f219c7812584af38aff96399534ae0c32b6a123f003a9cb0a7d",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "ms": 1,
+   "hash": "81c129cb0c7e472b1c334c5c87273ab881cc6ef246f6c7f0e7adbeccadc6963c",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.497505496
+   },
+   "expected": "81c129cb0c7e472b1c334c5c87273ab881cc6ef246f6c7f0e7adbeccadc6963c",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "ms": 2,
+   "hash": "7b10cbd89aaa2fce90272e38c6174d96b7357d866b45dd46312b50109be4746d",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.288141575
+   },
+   "expected": "7b10cbd89aaa2fce90272e38c6174d96b7357d866b45dd46312b50109be4746d",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "ms": 1,
+   "hash": "82b0ea77842d5509e55b60a3cb715088795569359234380c8b5b49de44ec7917",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1.213615445
+   },
+   "expected": "82b0ea77842d5509e55b60a3cb715088795569359234380c8b5b49de44ec7917",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "ms": 11032,
+   "hash": "ee918c943ce7860caa9914698ebada98c0a0eb7d3e429d832a1c07653d937dea",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.243439585
+   },
+   "expected": "ee918c943ce7860caa9914698ebada98c0a0eb7d3e429d832a1c07653d937dea",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "ms": 12648,
+   "hash": "058e9b36ab9c1d4e2ac812a1e30348a476adfe794b77eef4a05d32ab21f65ed0",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.197778142
+   },
+   "expected": "058e9b36ab9c1d4e2ac812a1e30348a476adfe794b77eef4a05d32ab21f65ed0",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "ms": 6069,
+   "hash": "d4f34b3e8edfe034c0504f775de1cbcbfbffa4fc77ef907110ef6d45ae596635",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.216568699
+   },
+   "expected": "d4f34b3e8edfe034c0504f775de1cbcbfbffa4fc77ef907110ef6d45ae596635",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "ms": 18118,
+   "hash": "86d5e947fc84b78db6a42ae54c85910b85355403c9eaff13d08356a3e3a289f5",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.243111639
+   },
+   "expected": "86d5e947fc84b78db6a42ae54c85910b85355403c9eaff13d08356a3e3a289f5",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "ms": 10635,
+   "hash": "19f5d3b5862245c9bb33c3fdc065c62cb6bf20e63c5536efc6dd8f1733189af4",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.196814498
+   },
+   "expected": "19f5d3b5862245c9bb33c3fdc065c62cb6bf20e63c5536efc6dd8f1733189af4",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "ms": 9185,
+   "hash": "b1d95608c68dc55fa38537f4662084b6cf3c12e192be0b05723c9087a5d4f688",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.195354885
+   },
+   "expected": "b1d95608c68dc55fa38537f4662084b6cf3c12e192be0b05723c9087a5d4f688",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "ms": 12882,
+   "hash": "ad89c47ce2d21ec3cd86898c9c08d2f7dae37d0126e594cf5312ead06b776d67",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.318173762
+   },
+   "expected": "ad89c47ce2d21ec3cd86898c9c08d2f7dae37d0126e594cf5312ead06b776d67",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "ms": 7343,
+   "hash": "c44e343948e80f87d35c5185e7424c11786eff36f57dbe2065650214beaa0cad",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.285519626
+   },
+   "expected": "c44e343948e80f87d35c5185e7424c11786eff36f57dbe2065650214beaa0cad",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "ms": 6034,
+   "hash": "563ba4f2504e2f6f2624844a90d555babefbcd3cf319266fcef584d70097eb4f",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.336355252
+   },
+   "expected": "563ba4f2504e2f6f2624844a90d555babefbcd3cf319266fcef584d70097eb4f",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "ms": 4807,
+   "hash": "aef47553d21e19266bb6a5b31d0ed3ba3dd27e0f2c3d0c85e2ee31148abb853e",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.348685166
+   },
+   "expected": "aef47553d21e19266bb6a5b31d0ed3ba3dd27e0f2c3d0c85e2ee31148abb853e",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "ms": 10153,
+   "hash": "f8e74d80940cf4470d37b5a5d0a683d0bf0ae87f55a7f6c5ab0f8ccca6f17ae6",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.194079988
+   },
+   "expected": "f8e74d80940cf4470d37b5a5d0a683d0bf0ae87f55a7f6c5ab0f8ccca6f17ae6",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "ms": 8364,
+   "hash": "0be8fcc9f621a1ce17e418e1da45f4df81d7417ffda85c28a39d7586d4e48db6",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.304389483
+   },
+   "expected": "0be8fcc9f621a1ce17e418e1da45f4df81d7417ffda85c28a39d7586d4e48db6",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "ms": 13729,
+   "hash": "f6a7cac727a5faadecde79243c3b33402d503d8c74decc61e23d9390d370f2f9",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.301349263
+   },
+   "expected": "f6a7cac727a5faadecde79243c3b33402d503d8c74decc61e23d9390d370f2f9",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "ms": 11542,
+   "hash": "d855c6bcfb40e4deb960aab96b059f35ed8a9b97b21c43cc6337366d2330c588",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.306156261
+   },
+   "expected": "d855c6bcfb40e4deb960aab96b059f35ed8a9b97b21c43cc6337366d2330c588",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "ms": 8898,
+   "hash": "5020088a86e42529e2794d3b6896463913a4ceb8e2eee9a55f4d3423eb1527b3",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.245648297
+   },
+   "expected": "5020088a86e42529e2794d3b6896463913a4ceb8e2eee9a55f4d3423eb1527b3",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "ms": 13733,
+   "hash": "278c15439371dc91928fbfbd840ed263afaac1ff2a18c134670c3b5b1fdede56",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.36104874
+   },
+   "expected": "278c15439371dc91928fbfbd840ed263afaac1ff2a18c134670c3b5b1fdede56",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "ms": 13789,
+   "hash": "f8582d101b0ceb8cc699056e2dfb7c1d8eaebedd8c691d55df12bb8aebff7953",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.252780495
+   },
+   "expected": "f8582d101b0ceb8cc699056e2dfb7c1d8eaebedd8c691d55df12bb8aebff7953",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "ms": 11121,
+   "hash": "c4515fe05637addc625ac13ac7da63bb072122fff2257fcee71c65f4b857fa00",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.210786791
+   },
+   "expected": "c4515fe05637addc625ac13ac7da63bb072122fff2257fcee71c65f4b857fa00",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "forty-metres",
+   "ms": 16848,
+   "hash": "89d9f2359401ca96d9e1f50e643f835b5bc3991e74d4cba869ab6cf4a335026a",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.256499935
+   },
+   "expected": "89d9f2359401ca96d9e1f50e643f835b5bc3991e74d4cba869ab6cf4a335026a",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "ms": 7957,
+   "hash": "1eb3e2680482c9234417db4a441bdec64bc409da463ee9bc33bb468662cd14f2",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.222122421
+   },
+   "expected": "1eb3e2680482c9234417db4a441bdec64bc409da463ee9bc33bb468662cd14f2",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "ms": 0,
+   "hash": "23a456bf770d46d5d772da545702df6d0ef09901eb835706e1279e524a8eb11c",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 3
+   },
+   "expected": "23a456bf770d46d5d772da545702df6d0ef09901eb835706e1279e524a8eb11c",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "ms": 1,
+   "hash": "92ae33333d9efa9aaab9c4c3512beba406fa66f40e207e5454a5f795c085f310",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 3.4
+   },
+   "expected": "92ae33333d9efa9aaab9c4c3512beba406fa66f40e207e5454a5f795c085f310",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "ms": 0,
+   "hash": "2e5a3a27ab2d0a06357a1d4f40be097a4f33c154af9fee02d5fd956047e1c126",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.7
+   },
+   "expected": "2e5a3a27ab2d0a06357a1d4f40be097a4f33c154af9fee02d5fd956047e1c126",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "ms": 0,
+   "hash": "0f1bd7b6b28f792c58ffaff1ee4d06aeaf334a54892d3f5e96eeb719d741dd2b",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 2.6
+   },
+   "expected": "0f1bd7b6b28f792c58ffaff1ee4d06aeaf334a54892d3f5e96eeb719d741dd2b",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "ms": 0,
+   "hash": "92661d690d3e517d45387fc8a507786ab60edc3855cdcf2b879810b46a55634c",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.5
+   },
+   "expected": "92661d690d3e517d45387fc8a507786ab60edc3855cdcf2b879810b46a55634c",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "ms": 0,
+   "hash": "848c931a2fe7a5731e58beee1e05e39a41ca2844c5ae49aee4ebba38ae8443d5",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 2.2
+   },
+   "expected": "848c931a2fe7a5731e58beee1e05e39a41ca2844c5ae49aee4ebba38ae8443d5",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "ms": 0,
+   "hash": "5e130cabd47688f7e511e7757b11ed1595e7892be6078e277b52a9258d22f404",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.1
+   },
+   "expected": "5e130cabd47688f7e511e7757b11ed1595e7892be6078e277b52a9258d22f404",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "ms": 0,
+   "hash": "f7b1f1a56a65073dfc6882cd9adab1167b86b61095f50157f949412f8ab1db3e",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.4
+   },
+   "expected": "f7b1f1a56a65073dfc6882cd9adab1167b86b61095f50157f949412f8ab1db3e",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "ms": 0,
+   "hash": "711ece4a6fae2de801a6e8bacd6bca27464b120dd4a8e25ba9cc6b8e5d1efb9f",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "error",
+    "value": null
+   },
+   "expected": "711ece4a6fae2de801a6e8bacd6bca27464b120dd4a8e25ba9cc6b8e5d1efb9f",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "ms": 0,
+   "hash": "298c6667ec2cef47c4fed0991768b2593c633ebd005a8cdcd80cbc796b376100",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.8
+   },
+   "expected": "298c6667ec2cef47c4fed0991768b2593c633ebd005a8cdcd80cbc796b376100",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "ms": 1,
+   "hash": "560bf9be96da0c0ecfd45a0f20500ab9188792062163bbbf263b20ef8dc3ef6a",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.2
+   },
+   "expected": "560bf9be96da0c0ecfd45a0f20500ab9188792062163bbbf263b20ef8dc3ef6a",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "ms": 0,
+   "hash": "ad7da02cb222e26ca52919e09386732efdeec1c8351200a561a870eeee73f526",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 2.3
+   },
+   "expected": "ad7da02cb222e26ca52919e09386732efdeec1c8351200a561a870eeee73f526",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "ms": 0,
+   "hash": "e4a345b27836f644f59f66f554398f80401ffd800e9c1db7d765bf913d9b47a2",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.5
+   },
+   "expected": "e4a345b27836f644f59f66f554398f80401ffd800e9c1db7d765bf913d9b47a2",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "ms": 0,
+   "hash": "eeb84f1d4f7072896e8b02f9901907b119db59d2ec2b39088906e51dbd94f510",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 2.7
+   },
+   "expected": "eeb84f1d4f7072896e8b02f9901907b119db59d2ec2b39088906e51dbd94f510",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "ms": 0,
+   "hash": "55d173e299ff1e7a6319ef4de881ff623b9c49490112679149d2fea781e4877d",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 2.5
+   },
+   "expected": "55d173e299ff1e7a6319ef4de881ff623b9c49490112679149d2fea781e4877d",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "ms": 0,
+   "hash": "5543842627db2f022532f4eb11a255506cb4eeb1d08ae1594440c35dd9c3f3ac",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 4.6
+   },
+   "expected": "5543842627db2f022532f4eb11a255506cb4eeb1d08ae1594440c35dd9c3f3ac",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "ms": 0,
+   "hash": "25d6467f9ad1f9ea643f1cadecc24ef2c61cea7f7ecc3ac430126e166f798483",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.6
+   },
+   "expected": "25d6467f9ad1f9ea643f1cadecc24ef2c61cea7f7ecc3ac430126e166f798483",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "ms": 1,
+   "hash": "e990d6383b6893e3a6d756c331c75b3bb37dc6775231a8d2e45411c0a6d60cba",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.5
+   },
+   "expected": "e990d6383b6893e3a6d756c331c75b3bb37dc6775231a8d2e45411c0a6d60cba",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "ms": 0,
+   "hash": "a4652f31790f2a8acecd519634987067f6af9c78aae4965b02f5a4e26972488e",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 1.2
+   },
+   "expected": "a4652f31790f2a8acecd519634987067f6af9c78aae4965b02f5a4e26972488e",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "ms": 0,
+   "hash": "86dd5986d6792f8ad139ddbb711d968842560ad02b363d911ed5fcedb033e55e",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0.4
+   },
+   "expected": "86dd5986d6792f8ad139ddbb711d968842560ad02b363d911ed5fcedb033e55e",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "ms": 0,
+   "hash": "d593ad6634a85527cbe30f0be5921cc26e03afe9a65fb1a74dc58d70c35efcb3",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1
+   },
+   "expected": "d593ad6634a85527cbe30f0be5921cc26e03afe9a65fb1a74dc58d70c35efcb3",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "ms": 1,
+   "hash": "873ad7357dea2d2dc23a70ba0bc3fb1c7cc1ffc25889a93a1bb90328352396cc",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1
+   },
+   "expected": "873ad7357dea2d2dc23a70ba0bc3fb1c7cc1ffc25889a93a1bb90328352396cc",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "ms": 1,
+   "hash": "68f63a399a25626b99adc47099547a88c66ad46a7c97233587eebb5f8d730251",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1
+   },
+   "expected": "68f63a399a25626b99adc47099547a88c66ad46a7c97233587eebb5f8d730251",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "ms": 1,
+   "hash": "dc31bf9c19bb474a024c566b91ea3f4965f9c6cc918ef547fbad57d5a5b6d9b9",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1
+   },
+   "expected": "dc31bf9c19bb474a024c566b91ea3f4965f9c6cc918ef547fbad57d5a5b6d9b9",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "ms": 1,
+   "hash": "e8b7107011901884e491daf3f23ce18a40eb51bac5e9a7e3a498fd77b7eb89f3",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1
+   },
+   "expected": "e8b7107011901884e491daf3f23ce18a40eb51bac5e9a7e3a498fd77b7eb89f3",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "ms": 0,
+   "hash": "64ba11acf0e26d9c664ad220921e7231cfc23e5d7752d3e3c1b8cbf8d0c4c3f4",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0
+   },
+   "expected": "64ba11acf0e26d9c664ad220921e7231cfc23e5d7752d3e3c1b8cbf8d0c4c3f4",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "ms": 0,
+   "hash": "85ae2d73002cf2e3ee078c243983f11a5273f8396d94491d2fdbf79ae57bb33b",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0
+   },
+   "expected": "85ae2d73002cf2e3ee078c243983f11a5273f8396d94491d2fdbf79ae57bb33b",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "ms": 1,
+   "hash": "1dcb0cdbbec6bb84c08e18d1353ce558a9e6ac08a37be3805a3cddc19b28cdf6",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0
+   },
+   "expected": "1dcb0cdbbec6bb84c08e18d1353ce558a9e6ac08a37be3805a3cddc19b28cdf6",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "ms": 0,
+   "hash": "1338a4aa3252d662197de332c9d134dbdaa9527ab15707dab3a966e176dbda8b",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0
+   },
+   "expected": "1338a4aa3252d662197de332c9d134dbdaa9527ab15707dab3a966e176dbda8b",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "ms": 3721,
+   "hash": "a07d2a43352659f30a46ee677e3d1e559feae0201646e97f2bc0e4402675e35d",
+   "stars": 0,
+   "valid": true,
+   "score": {
+    "name": "map F1",
+    "value": 0.33126309
+   },
+   "expected": "a07d2a43352659f30a46ee677e3d1e559feae0201646e97f2bc0e4402675e35d",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "ms": 1472,
+   "hash": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 7.3
+   },
+   "expected": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "ms": 2235,
+   "hash": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 7.3
+   },
+   "expected": "1a0928aa31d9c9aecef1573ce5cdf375f09aa67675d04dfdfe68929c030c1e0d",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "ms": 1500,
+   "hash": "28586af380b7e9041a562cc8adf2b50028133972dc9581919d99cd9bef1297b9",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 10.4
+   },
+   "expected": "28586af380b7e9041a562cc8adf2b50028133972dc9581919d99cd9bef1297b9",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "ms": 1203,
+   "hash": "1d404acf8b988a8fcf4cdebd84cd37cd6a288b0dfb11e76eeb711e9623840cdf",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 7.1
+   },
+   "expected": "1d404acf8b988a8fcf4cdebd84cd37cd6a288b0dfb11e76eeb711e9623840cdf",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "ms": 7010,
+   "hash": "3f212665205921923613d95229887f5f360b5e4c08102e45def1d64968d90b88",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "time",
+    "value": null
+   },
+   "expected": "3f212665205921923613d95229887f5f360b5e4c08102e45def1d64968d90b88",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "warm-up",
+   "ms": 10688,
+   "hash": "360b1ae75f1bad079d07107706ea054cf636549f394bf309dcc2b22b02690849",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "time",
+    "value": null
+   },
+   "expected": "360b1ae75f1bad079d07107706ea054cf636549f394bf309dcc2b22b02690849",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "ms": 4266,
+   "hash": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 17.5
+   },
+   "expected": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "ms": 5721,
+   "hash": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 17.5
+   },
+   "expected": "802d3c9fcf13f98fe1b1dd98eb67f4c634e5be3f13482ad117c0bdb0a345292a",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "ms": 5726,
+   "hash": "74e982b3191fcd1c48909a4f1170f57b51383072958af5f7a06a6d33a1acc238",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 24.9
+   },
+   "expected": "74e982b3191fcd1c48909a4f1170f57b51383072958af5f7a06a6d33a1acc238",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "ms": 4073,
+   "hash": "106055cf0e4b1033ab4aba071d5297d59df04deb93b0a1ebdb463747603362dd",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 16.9
+   },
+   "expected": "106055cf0e4b1033ab4aba071d5297d59df04deb93b0a1ebdb463747603362dd",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "ms": 7915,
+   "hash": "d725360830483a471b1f15bec9c612ac608fb65751f339a43de410f0f7556dd7",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "time",
+    "value": null
+   },
+   "expected": "d725360830483a471b1f15bec9c612ac608fb65751f339a43de410f0f7556dd7",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "into-the-room",
+   "ms": 18704,
+   "hash": "c131213e6e518603b8494f0e13a1caef3c5f1537dbc3d74aa2716f19598e29e9",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "time",
+    "value": null
+   },
+   "expected": "c131213e6e518603b8494f0e13a1caef3c5f1537dbc3d74aa2716f19598e29e9",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "ms": 3227,
+   "hash": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 23.4
+   },
+   "expected": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "ms": 6513,
+   "hash": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "stars": 2,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 23.4
+   },
+   "expected": "22ca05b5c110fb69951a7e7bcf63cda9615350731707a55545251653dbd5c93f",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "ms": 4227,
+   "hash": "6f08d781107c4fbb8c451697fe6c352533c7f0085aa952dc04079eb119816165",
+   "stars": 1,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 33.2
+   },
+   "expected": "6f08d781107c4fbb8c451697fe6c352533c7f0085aa952dc04079eb119816165",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "ms": 2449,
+   "hash": "3bc4d92076fc9d4eb9af6afa181d03847da4621f3962d7d21bada6f3e087f0e1",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "time",
+    "value": 22.9
+   },
+   "expected": "3bc4d92076fc9d4eb9af6afa181d03847da4621f3962d7d21bada6f3e087f0e1",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "ms": 4779,
+   "hash": "925797d41195fb1333866258b8d12cbe152b9f72ea8081677a1cc37e9b6faa47",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "time",
+    "value": null
+   },
+   "expected": "925797d41195fb1333866258b8d12cbe152b9f72ea8081677a1cc37e9b6faa47",
+   "matches": true,
+   "error": null
+  },
+  {
+   "challenge": "race-the-ghost",
+   "level": "the-long-way",
+   "ms": 13034,
+   "hash": "c736b3ecc0ee0cde9b1b5faf71a0a92500caf1e6f5643ad140fc2958628dcdd9",
+   "stars": 0,
+   "valid": false,
+   "score": {
+    "name": "time",
+    "value": null
+   },
+   "expected": "c736b3ecc0ee0cde9b1b5faf71a0a92500caf1e6f5643ad140fc2958628dcdd9",
+   "matches": true,
+   "error": null
+  }
+ ]
+}

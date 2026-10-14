@@ -8,3 +8,19 @@ The reproducibility workflow was inspected read-only through GitHub:
 The archived CI log is `../setup/v1-job-log.txt`. Build and pinned-archive fetch succeeded; comparison failed beyond the allowed created_utc differences in generated/catalog.json, the coco_lab wheel and index.html. This remains an unfixed M5.1 defect; no workflow has been disabled or public URL changed.
 
 No product source, hash, golden trace or recording changed during this audit.
+
+
+## Completed M5.1 validation
+
+Use `link-corpus-v2.json` (not the preliminary audit) as the limits basis.
+`committed-play-verified-final.json` combines the original current-layout
+checks and the legacy-layout re-score; baseline probe shows no M5 hash change.
+The all-engine v2 corpus and original v1 corpus checks passed. Case File
+first-frame measurement passed 100/100 at <=2s with the actual robot mesh.
+The final applied-click browser check is `browser-goal-applied/check.json`;
+earlier inverse-only/immediate-read harness output is retained, superseded.
+The immediate-read failure sampled the previous goal before the new worker
+tick finished; the final hook waits for the applied input log.
+Screenshots are in `../screens/defects/` relative to m5, not browser outputs.
+Final suites: packages-verified.txt (3534), vitest-final.txt (456), tools.txt
+(193), with typecheck-close.txt and focused-close.txt. No fixture was weakened.

@@ -31,6 +31,7 @@ def _test_requirements():
 
 
 setup(
+    package_data={'coco_lab': ['link_limits.json']},
     name=package_name,
     version='0.2.0',
     packages=find_packages(exclude=['test']),

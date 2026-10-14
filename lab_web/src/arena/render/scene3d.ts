@@ -195,12 +195,13 @@ if (uCut > 0.5) {
       const m = o as THREE.Mesh;
       if (m.isMesh) this.triangles += (m.geometry.index ? m.geometry.index.count : m.geometry.attributes.position.count) / 3;
     });
-    this.ready = true;
     this.robotReady = robotP.then((robot) => {
       this.robotHolder.remove(placeholder);
       placeholder.geometry.dispose();
       this.addRobot(robot.scene);
     });
+    await this.robotReady;
+    this.ready = true;
   }
 
   /** M4.7: the robot's file has been added (the placeholder is gone). */
