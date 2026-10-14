@@ -1,0 +1,15 @@
+{
+  "evidence": "repository line count, not startup latency",
+  "before_sha": "1d9fbdb",
+  "before": {
+    "CLAUDE.md": 935,
+    "docs/STATUS.md": 1942,
+    "PROJECT_STATE.md": 1990
+  },
+  "after": {
+    "AGENTS.md": 178,
+    "CLAUDE.md": 3,
+    "docs/STATUS.md": 81,
+    "PROJECT_STATE.md": 8
+  }
+}

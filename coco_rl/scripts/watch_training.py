@@ -18,10 +18,10 @@ watch_training.py
 =================
 Live progress display for a ``train_curriculum.sh`` run.
 
-  ./watch_training.py                  # newest run under ~/coco_rl_runs/
-  ./watch_training.py <run_dir>        # a specific run
-  ./watch_training.py --once           # print one frame and exit (for logs)
-  ./watch_training.py --interval 2     # refresh faster (default 5s)
+  ./coco_rl/scripts/watch_training.py                  # newest run under ~/coco_rl_runs/
+  ./coco_rl/scripts/watch_training.py <run_dir>        # a specific run
+  ./coco_rl/scripts/watch_training.py --once           # print one frame and exit (for logs)
+  ./coco_rl/scripts/watch_training.py --interval 2     # refresh faster (default 5s)
 
 Read-only: it only ever reads the run directory and /proc, so it can never
 disturb the training. Safe to start, stop and restart at any time; quit with

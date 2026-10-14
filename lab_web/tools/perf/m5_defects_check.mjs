@@ -3,7 +3,8 @@
 import {chromium} from 'playwright';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {resolve} from 'node:path';
-import {conditions} from './conditions.mjs';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 import {nothingPhone1,throttlePhone,DEVICE_NAME} from '../phone/nothing-phone-1.mjs';
 const out=process.argv[2] || '../../docs/v2/data/m5/defects/browser';
 const site=process.argv[3] || 'http://127.0.0.1:4175/coco-labs/';
@@ -55,6 +56,6 @@ for(const layout of ['desktop','landscape','portrait']) {
 }
 await browser.close();
 result.ok=!result.errors.length&&result.picking.every(r=>r.ok)&&result.race.every(r=>r.ok);
-writeFileSync(out+'/check.json',JSON.stringify(result,null,2)+'\n');
+writeFileSync(out+'/check.json',JSON.stringify({ ...result, conditions: { start: CONDITIONS_AT_START, end: conditions() } }, null, 1)+'\n');
 console.log(JSON.stringify(result));
 process.exitCode=result.ok?0:1;

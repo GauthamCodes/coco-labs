@@ -8,7 +8,7 @@
 #   3. `vite preview` of LAB_WEB_DIR's built dist on :4173
 #   4. live_b.py drives the Live tab in headless Firefox
 #   5. teardown: preview, recorder, ros_clean.sh; reports leftovers
-# Refuses to start if any Gazebo is running (CLAUDE.md: one at a time,
+# Refuses to start if any Gazebo is running (AGENTS.md: one at a time,
 # never kill a simulator this did not start).
 set -o pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"

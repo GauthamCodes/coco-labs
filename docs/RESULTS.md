@@ -9347,3 +9347,8 @@ records it). Builds `dbdea9c`, `62f6338`, `7e72010` (which criterion on which:
 Found and fixed by this measurement (not counted above until fixed): the Play page ignored
 deflated `z=` links; replay pages had lost their runs list; the screenshot test failed on a
 one-pixel layout shift. The phone rows and the usability test are Gautham's; not measured.
+
+
+## 2026-10-14 · M5.2 historical script paths
+
+RL-era root scripts mentioned in historical results now live under `coco_rl/scripts/`: `train_curriculum.sh`, `train_curriculum.sh.next`, `resume_curriculum.sh`, `overnight_chain.sh`, `watch_training.py`. Historical results and their evidence remain unchanged; active instructions use the new paths. This is a documentation relocation, not a new training result.

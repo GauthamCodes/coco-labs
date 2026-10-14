@@ -11,14 +11,14 @@
 # curriculum: the easy grade teaches "drive forward and stay upright", the
 # steeper ones only have to refine it.
 #
-#   ./train_curriculum.sh                       # 3 phases x 60k steps (~7 h)
-#   ./train_curriculum.sh --steps 30000         # shorter (~3.5 h)
-#   ./train_curriculum.sh --grades 18           # single grade, no curriculum
-#   ./train_curriculum.sh --randomize           # vary spawn offset/yaw
-#   ./train_curriculum.sh --eval-episodes 0     # skip the evaluations
+#   ./coco_rl/scripts/train_curriculum.sh                       # 3 phases x 60k steps (~7 h)
+#   ./coco_rl/scripts/train_curriculum.sh --steps 30000         # shorter (~3.5 h)
+#   ./coco_rl/scripts/train_curriculum.sh --grades 18           # single grade, no curriculum
+#   ./coco_rl/scripts/train_curriculum.sh --randomize           # vary spawn offset/yaw
+#   ./coco_rl/scripts/train_curriculum.sh --eval-episodes 0     # skip the evaluations
 #
 # Leave it running with:
-#   nohup ./train_curriculum.sh > /dev/null 2>&1 &
+#   nohup ./coco_rl/scripts/train_curriculum.sh > /dev/null 2>&1 &
 # (all output is tee'd into the run directory regardless, so nothing is lost)
 #
 # Progress:  tail -f ~/coco_rl_runs/<run>/curriculum.log
@@ -32,7 +32,7 @@
 # not allowed to silently abort a night of compute.
 set -o pipefail
 
-REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 WS="$(cd "$REPO/../.." 2>/dev/null && pwd || echo "$REPO")"
 [ -d "$WS/src" ] || WS="$REPO"
 
@@ -56,6 +56,11 @@ MIN_RATE=3.0
 SEED=0
 RETRIES=2       # extra attempts per phase before giving up on it
 RESUME_RUN=""   # continue an existing run directory instead of starting one
+# Seed stage 1 from an existing policy instead of random weights. Used to carry
+# a finished curriculum into a follow-up run (e.g. adding --randomize) without
+# relearning the task from scratch -- the policy already knows how to climb, and
+# randomisation only adds start-pose variation on top.
+INIT_MODEL=""
 DO_AUTORESUME=1 # install a login hook that resumes after a reboot
 
 # Kept because the parse loop below shifts "$@" empty, and this script
@@ -75,6 +80,7 @@ while [ $# -gt 0 ]; do
     --retries)        RETRIES="$2"; shift 2 ;;
     --randomize)      RANDOMIZE="--randomize"; shift ;;
     --no-inhibit)     DO_INHIBIT=0; shift ;;
+    --init-model)     INIT_MODEL="$2"; shift 2 ;;
     --resume-run)     RESUME_RUN="$2"; shift 2 ;;
     --resume-latest)  RESUME_RUN="latest"; shift ;;
     --no-autoresume)  DO_AUTORESUME=0; shift ;;
@@ -299,8 +305,12 @@ df -h "$HOME" | tail -1
 git -C "$REPO" log --oneline -1 2>/dev/null
 
 RUN_START=$(date +%s)
-PREV_MODEL=""
+PREV_MODEL="$INIT_MODEL"
 FAILED=0
+if [ -n "$INIT_MODEL" ]; then
+  [ -f "$INIT_MODEL" ] || { echo "no such --init-model: $INIT_MODEL" >&2; exit 1; }
+  echo "seeding stage 1 from $INIT_MODEL"
+fi
 
 # ── survive a reboot ─────────────────────────────────────────────────────────
 # The inhibitor lock stops idle/lid suspend, and suspend itself is now
@@ -319,7 +329,7 @@ if [ "$DO_AUTORESUME" -eq 1 ]; then
 Type=Application
 Name=Coco RL curriculum — resume interrupted run
 Comment=Restarts an interrupted PPO curriculum from its newest checkpoint
-Exec=$REPO/resume_curriculum.sh
+Exec=$REPO/coco_rl/scripts/resume_curriculum.sh
 X-GNOME-Autostart-enabled=true
 NoDisplay=true
 EOF

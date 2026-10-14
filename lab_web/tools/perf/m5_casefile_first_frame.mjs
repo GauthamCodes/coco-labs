@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import {chromium} from 'playwright';
 import {mkdirSync,writeFileSync} from 'node:fs';
-import {conditions} from './conditions.mjs';
+import { conditions } from './conditions.mjs';
+const CONDITIONS_AT_START = conditions();
 const out=process.argv[2],site=process.argv[3]||'http://127.0.0.1:4175/coco-labs/';
 mkdirSync(out,{recursive:true});
 const browser=await chromium.launch({args:['--use-angle=gl-egl','--ignore-gpu-blocklist','--enable-gpu']});
@@ -27,6 +28,6 @@ for(const id of ids) {
  if(result.rows.length%10===0)console.log(`${result.rows.length}/${ids.length}`);
 }
 result.passed=result.rows.filter(r=>r.ok).length;result.total=ids.length;
-await browser.close();writeFileSync(out+'/first-frame.json',JSON.stringify(result,null,2)+'\n');
+await browser.close();writeFileSync(out+'/first-frame.json',JSON.stringify({ ...result, conditions: { start: CONDITIONS_AT_START, end: conditions() } }, null, 1)+'\n');
 console.log(`${result.passed}/${result.total} <=2s with robot mesh`);
 process.exitCode=result.passed===result.total?0:1;

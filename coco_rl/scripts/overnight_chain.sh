@@ -27,7 +27,7 @@
 # rest of the night. Progress: tail -f ~/coco_rl_runs/overnight_chain.log
 set -o pipefail
 
-REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 WS="${COCO_WS:-$(cd "$REPO/../.." && pwd)}"
 RUNS="$HOME/coco_rl_runs"
 LOG="$RUNS/overnight_chain.log"

@@ -1,0 +1,6 @@
+PASS lab1c_astar {"badge":"STACK","ticks":760,"events":18660,"first_shown_ms":750,"workers":0,"errors":0}
+PASS lab1c_dijkstra {"badge":"STACK","ticks":777,"events":71900,"first_shown_ms":519,"workers":0,"errors":0}
+PASS lab1c_greedy {"badge":"STACK","ticks":670,"events":4368,"first_shown_ms":286,"workers":0,"errors":0}
+PASS bfs_no_path {"badge":"MODEL","ticks":1,"events":750,"first_shown_ms":281,"workers":0,"errors":0}
+PASS arena_native {"badge":"MODEL","ticks":1,"events":283378,"first_shown_ms":894,"workers":0,"errors":0}
+{"pass":true,"errors":0}

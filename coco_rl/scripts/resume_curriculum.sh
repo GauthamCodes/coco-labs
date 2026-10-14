@@ -18,11 +18,11 @@
 # Otherwise it removes the login hook and exits, so it can never turn into a
 # process that starts heavy training on every login forever.
 #
-# Run it by hand any time with:  ./resume_curriculum.sh
+# Run it by hand any time with:  ./coco_rl/scripts/resume_curriculum.sh
 # Disable the hook with:         rm ~/.config/autostart/coco-curriculum-resume.desktop
 set -o pipefail
 
-REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 RUNS_ROOT="$HOME/coco_rl_runs"
 HOOK="$HOME/.config/autostart/coco-curriculum-resume.desktop"
 LOG="$RUNS_ROOT/resume.log"
@@ -60,6 +60,6 @@ say "resuming interrupted run $RUN"
 cd "$REPO" || exit 1
 # Detached exactly like a fresh launch: own session, no controlling terminal,
 # so it survives the login shell that started it going away.
-setsid nohup ./train_curriculum.sh --resume-run "$RUN" \
+setsid nohup ./coco_rl/scripts/train_curriculum.sh --resume-run "$RUN" \
     >/dev/null 2>&1 </dev/null &
-say "relaunched (watch with ./watch_training.py)"
+say "relaunched (watch with ./coco_rl/scripts/watch_training.py)"
