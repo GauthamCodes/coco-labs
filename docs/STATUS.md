@@ -2,9 +2,9 @@
 
 ## Position
 
-- Branch: `v2/m5-focus`; checked implementation SHA: `1d9fbdb`.
-- M5 · Focus and polish: M5.0–M5.2 complete; next checkpoint M5.3 code shape.
-- M5.3–M5.11 remain. No PR, merge or release yet. Independent milestone review remains required.
+- Branch: `v2/m5-focus`; checked implementation SHA: `eb5edbc`.
+- M5 · Focus and polish: M5.0–M5.3 complete; next checkpoint M5.4 Night Shift.
+- M5.4–M5.11 remain. No PR, merge or release yet. Independent milestone review remains required.
 - Master plan revision 3, copied byte-for-byte; sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
 - Canonical agent rules: [AGENTS.md](../AGENTS.md). Historical status: [STATUS_HISTORY.md](v2/STATUS_HISTORY.md).
 - Prompts: [M5](v2/M5_PROMPT.md), [owner amendments](v2/M5_CONTINUATION.md).
@@ -25,6 +25,11 @@
 - AGENTS 178 lines; STATUS below 200; all prior history retained. Only six root cache files untracked.
 - M5.3 baseline: five pixel-identical canvas tests, five recording replays, 22 URL forms and six archive views pass.
   [Baseline artifacts](v2/data/m5/code-shape/before/).
+
+- M5.3: scene core + original presentation + three lazy shells; one Three.js engine chunk.
+  [Report](v2/data/m5/code-shape/REPORT.md): suites 3534 / 456 / 195 pass; typecheck and build pass.
+  Final five pixel-identical scenes, five replays, 22 URL forms + six archive views, 137 links all pass.
+  [Final bundle inventory](v2/data/m5/code-shape/final/bundles.json); no behaviour or model change.
 
 ## Owner rows, phone and design inputs
 
@@ -80,7 +85,8 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 ## Next step
 
-M5.3: extract the scene core and presentation, add three lazy shells and isolate Three.js.
-Keep current behaviour and routes; rerun screenshots, URLs, replay, coco verify and the suites.
-Record per-route bundle sizes. No stop condition hit; no new parked idea.
-Phone not connected; provisional settings unchanged. M5 remains open.
+M5.4 Night Shift: one token source, dark/light themes, licensed self-hosted fonts/icons,
+colour-blind checks and real title/Play/Compare reference screens at desktop and phone sizes.
+Add the phone connection question once at this first look-changing checkpoint; never wait.
+No stop condition hit; no new parked idea. Phone absent; provisional settings unchanged.
+M5 remains open; public launch still waits for phone pass and Gautham's usability gate.

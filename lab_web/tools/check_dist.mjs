@@ -125,6 +125,17 @@ for (const f of ['pyodide.mjs', 'pyodide.asm.mjs', 'pyodide.asm.wasm', 'pyodide-
   if (!files.some((p) => p.endsWith(`generated/pyodide/${f}`))) failures.push(`self-hosted Pyodide lacks ${f}`);
 }
 if (!files.some((f) => /arena\.worker-.*\.js$/.test(f))) failures.push('no arena worker chunk in dist');
+// M5.3: modes are lazy boundaries, and the engine has one content-hashed cache key.
+const appAssets = files.filter((f) => /assets\/[^/]+\.js$/.test(f) && !f.includes('/v1/'));
+if (appAssets.filter((f) => /\/three-[\w-]+\.js$/.test(f)).length !== 1) {
+  failures.push('expected one content-hashed Three.js engine chunk');
+}
+for (const shell of ['PlayScene', 'CompareScene', 'ResearchScene']) {
+  if (!appAssets.some((f) => new RegExp('/' + shell + '-[\\w-]+\\.js$').test(f))) {
+    failures.push(`missing lazy ${shell} chunk`);
+  }
+}
+
 // No cookie, no session storage, no IndexedDB. ONE localStorage write is allowed:
 // the preferences module's (lab_web/src/prefs.ts; M4.5 generalised M3.5's personal
 // bests into it), alone, in the chunk that holds its key prefixes.

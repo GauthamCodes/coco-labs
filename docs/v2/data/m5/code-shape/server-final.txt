@@ -1,0 +1,1 @@
+serving /home/gautham/coco_labs_ws/src/coco-labs/lab_web/dist at http://127.0.0.1:4177/coco-labs/ (gzip like Pages)

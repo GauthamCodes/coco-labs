@@ -91,6 +91,13 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: false,
     target: 'es2022',
+    rolldownOptions: {
+      output: {
+        // Content-hashed engine chunk stays stable across shell changes.
+        // The shared fflate utility must not pull the engine into 2D Play links.
+        codeSplitting: { groups: [{ name: 'three', test: /node_modules[\/]three[\/](?!.*fflate\.module\.js$)/ }] },
+      },
+    },
   },
   worker: {
     format: 'es',

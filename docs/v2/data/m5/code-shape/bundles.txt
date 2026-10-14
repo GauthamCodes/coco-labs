@@ -1,0 +1,5 @@
+arena: 346489 gzip bytes
+learn: 73188 gzip bytes
+play: 258073 gzip bytes
+casefiles: 75257 gzip bytes
+live: 80892 gzip bytes

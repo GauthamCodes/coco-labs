@@ -1950,3 +1950,11 @@ Current checkpoint: M5.1 defects resumed from c11bf9e. The old prerequisite is w
 - M5.3 baseline: five canvas images zero differences; five replays zero errors; 22 URL forms and six archive views zero errors. Missing local /v1 fixed by copying checksum-verified pinned archive, unchanged. Baseline bundle bytes under data/m5/code-shape/before/bundles.json.
 - Conditions: balanced on AC, original profile unchanged; NVIDIA driver 580.178.04. No new performance-budget measurement. ADB empty; real Phone pending USB. No owner row marked done. Prior defect screenshots awaiting owner review; no new look change.
 - ADR unchanged (0008); owner changes E1–E8 and continuation log retained. No new plan deviation, idea or stop condition. Next M5.3 scene core, lazy shells and unchanged-behaviour proof. M5 not closed; no PR or release.
+
+
+## M5.3 code shape — closed 2026-10-15
+
+- ArenaApp split into sceneCore, original ArenaSceneView and three lazy shells. Source-equivalence proof shows original logic/JSX byte-identical; no Python or hash/golden change. Engine isolated in one hashed chunk; fflate excluded to avoid loading engine for 2D Play. Dist check enforces boundaries.
+- Suites unchanged: packages 3534, web 456, tools 195 passed; typecheck/build/dist checks pass. Five final zero-difference canvas scenes, five replays, 22 legacy URL forms and six archive views, zero errors. coco verify: all 137 links match in one invocation. Goal/race regression checks pass including both emulated Nothing Phone (1) orientations.
+- Loaded app-asset gzip bytes before → after: Arena 346019→346348; Learn 73178→73173; Play 87413→87448; Case Files 75244→75242; Live 80877→80876. Excludes generated Pyodide JavaScript and Python/WASM, not final title-budget measurement. Full report/data: data/m5/code-shape/REPORT.md and final/.
+- Balanced on AC, driver 580.178.04; no new performance-budget claim. ADB empty; Phone pending USB. No owner row completed. No look change; prior defect screens await review. No new ADR/idea/deviation/stop. Next M5.4 Night Shift references and licence/colour checks, phone reminder once.
