@@ -6,6 +6,10 @@ import { createRoot } from 'react-dom/client';
 
 import { needsRunIds, route, type Route } from './landing';
 import './ui/style.css';
+import '@fontsource-variable/outfit';
+import '@fontsource-variable/manrope';
+import { applyTheme } from './ui/theme';
+applyTheme();
 
 // Three apps, code-split: the Arena (M1), Learn (M2.8) and the Live view
 // (kept in `main` until M5). The v1 lab views are retired (M2.10): a v1
@@ -32,7 +36,11 @@ function go(r: Route) {
 }
 
 const search = window.location.search;
-if (needsRunIds(search)) {
+const reference = new URLSearchParams(search).get('reference');
+const referenceBlocked = ['run', 'replay', 'casefile', 'play', 'c', 'l', 's', 'z'].some((key) => new URLSearchParams(search).has(key));
+if (['title', 'play', 'compare'].includes(reference ?? '') && !referenceBlocked) {
+  void import('./ui/reference/ReferenceScreens').then(({ ReferenceScreens }) => render(<ReferenceScreens />));
+} else if (needsRunIds(search)) {
   // a Lab 1 link: open its converted run if this site serves it, else v1 recomputes it
   void fetch(`${BASE}generated/v2/index.json`, { credentials: 'omit' })
     .then((r) => (r.ok ? r.json() : { runs: [] }))

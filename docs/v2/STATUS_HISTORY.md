@@ -1958,3 +1958,36 @@ Current checkpoint: M5.1 defects resumed from c11bf9e. The old prerequisite is w
 - Suites unchanged: packages 3534, web 456, tools 195 passed; typecheck/build/dist checks pass. Five final zero-difference canvas scenes, five replays, 22 legacy URL forms and six archive views, zero errors. coco verify: all 137 links match in one invocation. Goal/race regression checks pass including both emulated Nothing Phone (1) orientations.
 - Loaded app-asset gzip bytes before → after: Arena 346019→346348; Learn 73178→73173; Play 87413→87448; Case Files 75244→75242; Live 80877→80876. Excludes generated Pyodide JavaScript and Python/WASM, not final title-budget measurement. Full report/data: data/m5/code-shape/REPORT.md and final/.
 - Balanced on AC, driver 580.178.04; no new performance-budget claim. ADB empty; Phone pending USB. No owner row completed. No look change; prior defect screens await review. No new ADR/idea/deviation/stop. Next M5.4 Night Shift references and licence/colour checks, phone reminder once.
+
+
+## 2026-10-15 · M5.4 Night Shift complete
+
+Start SHA `007f749`, branch `v2/m5-focus`; checkpoint commit `[M5.4] Establish Night Shift`.
+Single TS token source supplies initial CSS and renderer palettes, dark default/light theme,
+fonts/type/spacing/radius/elevation/motion. Outfit and Manrope OFL fonts and Lucide ISC icons
+are self-hosted; source, package integrity, font files, icon-tree and licence checksums
+are in `docs/v2/DESIGN_ASSETS.json`, checked by the build. Existing CAD finishes/lighting
+are tuned; custom floor shader emits sRGB, verified against actual pixels in both themes.
+No model, geometry, hash or golden trace change. Previous canvas PNG baselines are preserved.
+
+Report: `docs/v2/data/m5/design-system/REPORT.md`; colour method/results in COLOUR_REVIEW.md
+and colours-final.json; all references under `docs/v2/data/m5/screens/reference/final/`.
+Twelve real-rendered title/Play/Compare captures cover 1440×900, 844×390 and both emulated
+Nothing Phone (1) orientations. Zero console errors, one measured GL context per reference.
+Both colour-vision simulations and both-theme swatches retained; Gautham's look review pending.
+
+Suites: 3534 packages, 461 web, 195 tools pass; typecheck/build/dist/asset manifests pass.
+Five deterministic canvas checks are pixel-identical to the intentional M5.4 baselines;
+22 legacy URL forms + six archive views and five replays pass with zero console errors.
+Interrupted tools run and stale-local-build archive failure retained; final reruns pass.
+Conditions and actual software renderer recorded; no performance budget inferred from
+CPU-heavy concurrent suites/system driver build. Balanced/AC, NVIDIA 580.178.04 reported.
+Node 24.21.0; Python 3.12.3 pinned workspace venv.
+
+Notes remain blank, prerequisite waived; N1 addressed, N2 phone reference layouts addressed
+for M5.4, mode interactions continue M5.5–M5.7. ADB reports no device: real Phone row pending
+USB. The one connection question is recorded in STATUS, without waiting. Provisional phone
+60 fps/optional120, auto tier and DPR1.5–2 target; real heat run still pending. Five-person
+usability remains owner-owned and a launch gate only. No files moved/removed, new ADR,
+parked idea or stop condition. No release, merge, cloud work or robot-project edit.
+Next: M5.5 actual title/app shell, About, Settings and route migration.

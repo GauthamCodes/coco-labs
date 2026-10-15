@@ -1,0 +1,25 @@
+{
+  "node": "v24.21.0",
+  "python": "Python 3.12.3",
+  "conditions": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-15T01:07:50.009Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+      "status": "Full",
+      "capacity_pct": 100
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+      "1m": 15.91,
+      "5m": 13.04,
+      "15m": 9.81
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+  },
+  "performance_claim": false,
+  "note": "Layout/software checks overlapped CPU-heavy tests and unattended system driver build. Performance budgets remain M5.11; see references/final/references.json for actual GL renderer."
+}

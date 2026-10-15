@@ -1,0 +1,13 @@
+
+> coco-lab-web@0.1.0 test
+> vitest run --run test/night_shift.test.ts
+
+
+ RUN  v5.0.2 /home/gautham/coco_labs_ws/src/coco-labs/lab_web
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  02:00:28
+   Duration  123ms (transform 62%, import 21%, tests 11%, worker 5%)
+

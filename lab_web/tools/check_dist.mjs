@@ -48,6 +48,13 @@ const NOT_FETCHED = [
   /^https:\/\/jcgt\.org\/published\/0007\/04\/01\/$/,
 ];
 
+// Local licence texts contain credit URLs; they never trigger a network request.
+const LICENCE_CREDITS = [
+  /^https?:\/\/scripts\.sil\.org\/OFL$/,
+  /^https?:\/\/openfontlicense\.org\/?$/,
+  /^https:\/\/github\.com\/(Outfitio\/Outfit-Fonts|sharanda\/manrope|lucide-icons\/lucide|colebemis\/feather)(\/.*)?$/,
+  /^https:\/\/feathericons\.com\/?$/,
+];
 const failures = [];
 const walk = (d) => readdirSync(d).sort().flatMap((n) => {
   const p = join(d, n);
@@ -102,7 +109,7 @@ for (const f of files) {
   for (const m of text.matchAll(/https?:\/\/[^\s"'`)<>\\]+/g)) {
     const url = m[0];
     const ok = url.startsWith(pyodide) || (url === pyodide.slice(0, -1)) ||
-      NOT_FETCHED.some((re) => re.test(url)) || url.startsWith('https://cdn.jsdelivr.net/pyodide/v${') ||
+      NOT_FETCHED.some((re) => re.test(url)) || (f.includes('/licenses/') && LICENCE_CREDITS.some((re) => re.test(url))) || url.startsWith('https://cdn.jsdelivr.net/pyodide/v${') ||
       // the configured remote session's probe origin, named in the CSP
       (remoteHttps !== null && f.endsWith('index.html') && url.replace(/;$/, '') === remoteHttps) ||
       // a local stack's /healthz origin, named in the CSP (checked above)

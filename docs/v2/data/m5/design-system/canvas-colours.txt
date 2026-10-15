@@ -1,0 +1,1 @@
+Both themes: rendered free-cell pixels match their sRGB tokens.

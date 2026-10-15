@@ -1,0 +1,618 @@
+{
+  "conditions": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-15T00:54:20.472Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+      "status": "Full",
+      "capacity_pct": 100
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+      "1m": 8.19,
+      "5m": 4.86,
+      "15m": 2.33
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+  },
+  "method": "Machado 2009 severity 100, linear RGB; opaque role swatches; CIELAB D65 deltaE76 >=10 is an engineering check, not a clinical/usability threshold",
+  "rows": [
+    {
+      "theme": "dark",
+      "kind": "protanopia",
+      "colours": {
+        "frontier": "#b9a42f",
+        "closed": "#6799f4",
+        "path": "#7b849c",
+        "rejected": "#897e52",
+        "particles": "#a0add1",
+        "truth": "#d3c174"
+      },
+      "pairs": [
+        {
+          "a": "path",
+          "b": "particles",
+          "deltaE": 16.752831132917773
+        },
+        {
+          "a": "frontier",
+          "b": "truth",
+          "deltaE": 21.594809184066815
+        },
+        {
+          "a": "rejected",
+          "b": "truth",
+          "deltaE": 29.63731343347179
+        },
+        {
+          "a": "closed",
+          "b": "particles",
+          "deltaE": 32.42465807858459
+        },
+        {
+          "a": "frontier",
+          "b": "rejected",
+          "deltaE": 37.244860479604185
+        },
+        {
+          "a": "closed",
+          "b": "path",
+          "deltaE": 38.452609449267825
+        },
+        {
+          "a": "path",
+          "b": "rejected",
+          "deltaE": 39.73435739457077
+        },
+        {
+          "a": "rejected",
+          "b": "particles",
+          "deltaE": 49.048977002794636
+        },
+        {
+          "a": "path",
+          "b": "truth",
+          "deltaE": 59.73279325844789
+        },
+        {
+          "a": "particles",
+          "b": "truth",
+          "deltaE": 61.55363375014178
+        },
+        {
+          "a": "frontier",
+          "b": "path",
+          "deltaE": 74.91637067661205
+        },
+        {
+          "a": "closed",
+          "b": "rejected",
+          "deltaE": 77.86865050394594
+        },
+        {
+          "a": "frontier",
+          "b": "particles",
+          "deltaE": 79.93076888101915
+        },
+        {
+          "a": "closed",
+          "b": "truth",
+          "deltaE": 93.76866683607314
+        },
+        {
+          "a": "frontier",
+          "b": "closed",
+          "deltaE": 111.37738972972753
+        }
+      ],
+      "minimum": {
+        "a": "path",
+        "b": "particles",
+        "deltaE": 16.752831132917773
+      }
+    },
+    {
+      "theme": "dark",
+      "kind": "deuteranopia",
+      "colours": {
+        "frontier": "#d1bb3c",
+        "closed": "#578eee",
+        "path": "#a7a396",
+        "rejected": "#a59752",
+        "particles": "#a6b0ce",
+        "truth": "#c2b580"
+      },
+      "pairs": [
+        {
+          "a": "rejected",
+          "b": "truth",
+          "deltaE": 14.625757060529047
+        },
+        {
+          "a": "path",
+          "b": "truth",
+          "deltaE": 22.58814904072838
+        },
+        {
+          "a": "path",
+          "b": "particles",
+          "deltaE": 24.42585146483552
+        },
+        {
+          "a": "frontier",
+          "b": "rejected",
+          "deltaE": 29.1092972816487
+        },
+        {
+          "a": "path",
+          "b": "rejected",
+          "deltaE": 31.233131827626394
+        },
+        {
+          "a": "frontier",
+          "b": "truth",
+          "deltaE": 35.16483625362868
+        },
+        {
+          "a": "closed",
+          "b": "particles",
+          "deltaE": 40.37894473468052
+        },
+        {
+          "a": "particles",
+          "b": "truth",
+          "deltaE": 45.52964488970151
+        },
+        {
+          "a": "rejected",
+          "b": "particles",
+          "deltaE": 55.62520388207551
+        },
+        {
+          "a": "frontier",
+          "b": "path",
+          "deltaE": 57.358496632727835
+        },
+        {
+          "a": "closed",
+          "b": "path",
+          "deltaE": 62.72538698107955
+        },
+        {
+          "a": "frontier",
+          "b": "particles",
+          "deltaE": 80.65144805561506
+        },
+        {
+          "a": "closed",
+          "b": "truth",
+          "deltaE": 84.99587079488659
+        },
+        {
+          "a": "closed",
+          "b": "rejected",
+          "deltaE": 93.11633074921829
+        },
+        {
+          "a": "frontier",
+          "b": "closed",
+          "deltaE": 119.89185425587675
+        }
+      ],
+      "minimum": {
+        "a": "rejected",
+        "b": "truth",
+        "deltaE": 14.625757060529047
+      }
+    },
+    {
+      "theme": "light",
+      "kind": "protanopia",
+      "colours": {
+        "frontier": "#887700",
+        "closed": "#4878c7",
+        "path": "#4b4f5b",
+        "rejected": "#5e5318",
+        "particles": "#0a4e97",
+        "truth": "#988839"
+      },
+      "pairs": [
+        {
+          "a": "frontier",
+          "b": "truth",
+          "deltaE": 13.827054123263638
+        },
+        {
+          "a": "closed",
+          "b": "particles",
+          "deltaE": 17.206172646174878
+        },
+        {
+          "a": "rejected",
+          "b": "truth",
+          "deltaE": 23.204595354076492
+        },
+        {
+          "a": "frontier",
+          "b": "rejected",
+          "deltaE": 25.727896136088276
+        },
+        {
+          "a": "path",
+          "b": "particles",
+          "deltaE": 38.7554048835592
+        },
+        {
+          "a": "path",
+          "b": "rejected",
+          "deltaE": 42.434926507750795
+        },
+        {
+          "a": "closed",
+          "b": "path",
+          "deltaE": 42.68108932884503
+        },
+        {
+          "a": "path",
+          "b": "truth",
+          "deltaE": 56.2998739584537
+        },
+        {
+          "a": "frontier",
+          "b": "path",
+          "deltaE": 65.54811556381803
+        },
+        {
+          "a": "rejected",
+          "b": "particles",
+          "deltaE": 81.02426617191632
+        },
+        {
+          "a": "closed",
+          "b": "rejected",
+          "deltaE": 82.91743375012409
+        },
+        {
+          "a": "closed",
+          "b": "truth",
+          "deltaE": 90.66031094247865
+        },
+        {
+          "a": "particles",
+          "b": "truth",
+          "deltaE": 92.91681389119572
+        },
+        {
+          "a": "frontier",
+          "b": "closed",
+          "deltaE": 102.50577395226867
+        },
+        {
+          "a": "frontier",
+          "b": "particles",
+          "deltaE": 103.33479753594258
+        }
+      ],
+      "minimum": {
+        "a": "frontier",
+        "b": "truth",
+        "deltaE": 13.827054123263638
+      }
+    },
+    {
+      "theme": "light",
+      "kind": "deuteranopia",
+      "colours": {
+        "frontier": "#a89500",
+        "closed": "#366dc2",
+        "path": "#777056",
+        "rejected": "#8a7b0c",
+        "particles": "#335592",
+        "truth": "#8a7f48"
+      },
+      "pairs": [
+        {
+          "a": "frontier",
+          "b": "rejected",
+          "deltaE": 14.858913166384598
+        },
+        {
+          "a": "closed",
+          "b": "particles",
+          "deltaE": 16.179197333644037
+        },
+        {
+          "a": "path",
+          "b": "truth",
+          "deltaE": 16.962019822032314
+        },
+        {
+          "a": "rejected",
+          "b": "truth",
+          "deltaE": 23.260934835187282
+        },
+        {
+          "a": "frontier",
+          "b": "truth",
+          "deltaE": 35.12454100753145
+        },
+        {
+          "a": "path",
+          "b": "rejected",
+          "deltaE": 39.344860686985925
+        },
+        {
+          "a": "frontier",
+          "b": "path",
+          "deltaE": 51.99618866666008
+        },
+        {
+          "a": "path",
+          "b": "particles",
+          "deltaE": 54.79425799797434
+        },
+        {
+          "a": "closed",
+          "b": "path",
+          "deltaE": 66.48906437693647
+        },
+        {
+          "a": "particles",
+          "b": "truth",
+          "deltaE": 71.58892830673977
+        },
+        {
+          "a": "closed",
+          "b": "truth",
+          "deltaE": 82.66176505727924
+        },
+        {
+          "a": "rejected",
+          "b": "particles",
+          "deltaE": 93.94173857350353
+        },
+        {
+          "a": "closed",
+          "b": "rejected",
+          "deltaE": 105.59184459487248
+        },
+        {
+          "a": "frontier",
+          "b": "particles",
+          "deltaE": 106.56193349941387
+        },
+        {
+          "a": "frontier",
+          "b": "closed",
+          "deltaE": 117.26792884531905
+        }
+      ],
+      "minimum": {
+        "a": "frontier",
+        "b": "rejected",
+        "deltaE": 14.858913166384598
+      }
+    }
+  ],
+  "ui": [
+    {
+      "theme": "dark",
+      "role": "fg",
+      "background": "bg",
+      "ratio": 16.034673219005303
+    },
+    {
+      "theme": "dark",
+      "role": "fg",
+      "background": "panel",
+      "ratio": 13.583594841336243
+    },
+    {
+      "theme": "dark",
+      "role": "fg",
+      "background": "panel2",
+      "ratio": 11.15063194315455
+    },
+    {
+      "theme": "dark",
+      "role": "muted",
+      "background": "bg",
+      "ratio": 8.904671409603798
+    },
+    {
+      "theme": "dark",
+      "role": "muted",
+      "background": "panel",
+      "ratio": 7.543493214437454
+    },
+    {
+      "theme": "dark",
+      "role": "muted",
+      "background": "panel2",
+      "ratio": 6.192375242517272
+    },
+    {
+      "theme": "dark",
+      "role": "accent",
+      "background": "bg",
+      "ratio": 12.991670301684783
+    },
+    {
+      "theme": "dark",
+      "role": "accent",
+      "background": "panel",
+      "ratio": 11.00574880946991
+    },
+    {
+      "theme": "dark",
+      "role": "accent",
+      "background": "panel2",
+      "ratio": 9.034504905855838
+    },
+    {
+      "theme": "dark",
+      "role": "recorded",
+      "background": "bg",
+      "ratio": 10.571746862848496
+    },
+    {
+      "theme": "dark",
+      "role": "recorded",
+      "background": "panel",
+      "ratio": 8.95573761864351
+    },
+    {
+      "theme": "dark",
+      "role": "recorded",
+      "background": "panel2",
+      "ratio": 7.351672008139311
+    },
+    {
+      "theme": "dark",
+      "role": "browser",
+      "background": "bg",
+      "ratio": 13.142816494339563
+    },
+    {
+      "theme": "dark",
+      "role": "browser",
+      "background": "panel",
+      "ratio": 11.133790623281222
+    },
+    {
+      "theme": "dark",
+      "role": "browser",
+      "background": "panel2",
+      "ratio": 9.139613101132621
+    },
+    {
+      "theme": "dark",
+      "role": "glass",
+      "background": "bg",
+      "ratio": 10.257932735896068
+    },
+    {
+      "theme": "dark",
+      "role": "glass",
+      "background": "panel",
+      "ratio": 8.689893475904325
+    },
+    {
+      "theme": "dark",
+      "role": "glass",
+      "background": "panel2",
+      "ratio": 7.133443312086972
+    },
+    {
+      "theme": "light",
+      "role": "fg",
+      "background": "bg",
+      "ratio": 12.49290350038555
+    },
+    {
+      "theme": "light",
+      "role": "fg",
+      "background": "panel",
+      "ratio": 14.045547312405112
+    },
+    {
+      "theme": "light",
+      "role": "fg",
+      "background": "panel2",
+      "ratio": 11.528639147124709
+    },
+    {
+      "theme": "light",
+      "role": "muted",
+      "background": "bg",
+      "ratio": 5.734782484784162
+    },
+    {
+      "theme": "light",
+      "role": "muted",
+      "background": "panel",
+      "ratio": 6.447513079237527
+    },
+    {
+      "theme": "light",
+      "role": "muted",
+      "background": "panel2",
+      "ratio": 5.292143483881663
+    },
+    {
+      "theme": "light",
+      "role": "accent",
+      "background": "bg",
+      "ratio": 7.5906408457077825
+    },
+    {
+      "theme": "light",
+      "role": "accent",
+      "background": "panel",
+      "ratio": 8.534021344723678
+    },
+    {
+      "theme": "light",
+      "role": "accent",
+      "background": "panel2",
+      "ratio": 7.004757477146115
+    },
+    {
+      "theme": "light",
+      "role": "recorded",
+      "background": "bg",
+      "ratio": 6.697643360112059
+    },
+    {
+      "theme": "light",
+      "role": "recorded",
+      "background": "panel",
+      "ratio": 7.530040289926731
+    },
+    {
+      "theme": "light",
+      "role": "recorded",
+      "background": "panel2",
+      "ratio": 6.180685973639738
+    },
+    {
+      "theme": "light",
+      "role": "browser",
+      "background": "bg",
+      "ratio": 8.375830658141986
+    },
+    {
+      "theme": "light",
+      "role": "browser",
+      "background": "panel",
+      "ratio": 9.416796166399259
+    },
+    {
+      "theme": "light",
+      "role": "browser",
+      "background": "panel2",
+      "ratio": 7.7293424392626555
+    },
+    {
+      "theme": "light",
+      "role": "glass",
+      "background": "bg",
+      "ratio": 5.734782484784162
+    },
+    {
+      "theme": "light",
+      "role": "glass",
+      "background": "panel",
+      "ratio": 6.447513079237527
+    },
+    {
+      "theme": "light",
+      "role": "glass",
+      "background": "panel2",
+      "ratio": 5.292143483881663
+    }
+  ]
+}

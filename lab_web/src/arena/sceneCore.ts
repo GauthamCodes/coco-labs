@@ -893,7 +893,7 @@ export function useArenaScene() {
 
     params, showPerf, recId, missionBack, playParam, playLevel, playOn,
     raceOn, raceNotice, gaps, cfgInitial, canvas, world, liveReady,
-    mode, session, error, inspect, setInspect, picked, layers,
+    mode, session, error, inspect, setInspect, picked, layers, setLayers,
     lens, setLens, level, setLevel, focus, setFocus, lensOn,
     setLensOn, hover, planner, cmpPick, setCmpPick, cmpA, setCmpA,
     cmpB, setCmpB, compare, setCompare, runCard, setRunCard, share,

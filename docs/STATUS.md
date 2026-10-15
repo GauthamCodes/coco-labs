@@ -2,9 +2,9 @@
 
 ## Position
 
-- Branch: `v2/m5-focus`; checked implementation SHA: `eb5edbc`.
-- M5 · Focus and polish: M5.0–M5.3 complete; next checkpoint M5.4 Night Shift.
-- M5.4–M5.11 remain. No PR, merge or release yet. Independent milestone review remains required.
+- Branch: `v2/m5-focus`; checked implementation SHA: `007f749`.
+- M5 · Focus and polish: M5.0–M5.4 complete; M5.5 app shell next.
+- M5.5–M5.11 remain. No PR, merge or release yet. Independent milestone review remains required.
 - Master plan revision 3, copied byte-for-byte; sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
 - Canonical agent rules: [AGENTS.md](../AGENTS.md). Historical status: [STATUS_HISTORY.md](v2/STATUS_HISTORY.md).
 - Prompts: [M5](v2/M5_PROMPT.md), [owner amendments](v2/M5_CONTINUATION.md).
@@ -31,13 +31,19 @@
   Final five pixel-identical scenes, five replays, 22 URL forms + six archive views, 137 links all pass.
   [Final bundle inventory](v2/data/m5/code-shape/final/bundles.json); no behaviour or model change.
 
+- M5.4: Night Shift tokens/themes, self-hosted Outfit/Manrope and Lucide with checksums,
+  real reference screens and colour-vision simulations. [Report](v2/data/m5/design-system/REPORT.md).
+  Packages 3534 / web 461 / tools 195 pass; typecheck, build, manifests and dist pass.
+  Five final canvas tests have zero differing pixels; 22 URL forms + six archive views and five replays pass.
+  Twelve final references: zero console errors, one GL context each. No model/hash change.
+
 ## Owner rows, phone and design inputs
 
 - Notes found: [committed blank template](v2/usability/2026-10-pre-m5.md), unchanged.
 - [Design inputs](v2/M5_DESIGN_INPUTS.md): no pre-design observations exist; prerequisite explicitly waived.
 - Target Nothing Phone (1), recorded by Gautham. [Profile](v2/PHONE_PROFILE.md): hardware facts assumed until measured.
 - Real Phone criterion is agent-owned and pending: connect phone over USB with debugging enabled.
-  [ADB check](v2/data/m5/phone/ADB_CHECK_M51.txt): no device connected.
+  [Latest ADB check](v2/data/m5/phone/ADB_CHECK_M54.txt): no device connected.
 - Emulator is labelled emulated Nothing Phone (1); CPU 4× proxy, viewport/DPR shared harness.
   It cannot satisfy the real Phone row. Provisional cap 60 fps, optional 120; automatic tier/DPR pending heat run.
 - Five-person usability remains Gautham-owned, pending, a public-launch gate only.
@@ -48,13 +54,14 @@
 - [Desktop race](v2/data/m5/screens/defects/race-desktop.png).
 - [Emulated phone landscape](v2/data/m5/screens/defects/race-nothing-landscape.png).
 - [Emulated phone portrait](v2/data/m5/screens/defects/race-nothing-portrait.png).
+- [M5.4 reference index](v2/data/m5/screens/reference/README.md): title, Play HUD and two-pane Compare at 1440×900, 844×390 and both emulated Nothing Phone (1) orientations; light theme and colour-vision simulations included.
 - No recorded feedback yet; continue without waiting.
 
 ## Open questions
 
 G1 learners first; G2 priority/batch windows owner-controlled; G3 robot repository canonical;
 G4 cloud budget zero; G5 assume no physical robot; G6 licensing/contributions unchanged.
-No implementation question blocks progress. Phone connection reminder is added once at M5.4.
+Plug in the Nothing Phone (1) with USB debugging on when convenient; the agent measures it automatically.
 
 ### M5 approved plan-change log
 
@@ -85,8 +92,8 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 ## Next step
 
-M5.4 Night Shift: one token source, dark/light themes, licensed self-hosted fonts/icons,
-colour-blind checks and real title/Play/Compare reference screens at desktop and phone sizes.
-Add the phone connection question once at this first look-changing checkpoint; never wait.
-No stop condition hit; no new parked idea. Phone absent; provisional settings unchanged.
-M5 remains open; public launch still waits for phone pass and Gautham's usability gate.
+M5.5: actual attract/title and three-mode app shell, About, Settings drawer and route migration.
+Keep every old URL form working and extend the URL checks to M3/M4 links.
+M5.4 reference screenshots await soft review; apply any recorded feedback next checkpoint.
+No stop condition hit; no new parked idea. Real phone absent; provisional settings unchanged.
+M5 remains open; public launch still waits for real-phone pass and Gautham's usability gate.

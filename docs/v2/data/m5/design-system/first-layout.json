@@ -1,0 +1,131 @@
+{
+  "conditions": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-14T20:59:09.143Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+      "status": "Full",
+      "capacity_pct": 100
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+      "1m": 1.85,
+      "5m": 1.08,
+      "15m": 0.94
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+  },
+  "rows": [
+    {
+      "screen": "title",
+      "errors": [
+        "Loading the font 'data:font/woff2;base64,d09GMgABAAAAAAn4ABMAAAAAEwQAAAmOAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGjQbgnQcLj9IVkFSgQEGYD9TVEFUgQIAgQovahEICok0h0ULIAAwhzoBNgIkAzwEIAWHJgeBDgwHG6QQUdRKTmoBFD8K42bniObKrG3LZFcMWZzFmrjTFhQ6TVTqPJcInrfrvzq3b2PGn1wwMiNYGTy9ViREYARlL1zAGcPdPqBt3gNWrfKthv4xnM+b9caw+wmjgEUVRjHXhS6jgCK6zf5HiWQacJpGdAgdrbV6g/Rf1BfxRqZVQnrxRVWSJb6RLFnyu0elilmjeoSQCKnxsmwLaddUMjnksriSYuuPl06EAl7KfAiWQjCUETz0zNZ3EII94CDQtzkMfZ/9IkkY8tZRZTDky5ZVwBAM+GYpdd4ZVAWYImnLkiTg48l79gGx3D+VBtLeyg8u7bJAd4uo0pFuQBFysE9C95l0W4Fk...cSQTBxOivHMO5QvBBY0iheJvfwWLxLOGzYKZyM4zVc2Cll46zEpeUV4MqGEWZj22SdOxhGAjgs9AEnfT+RoiMfcDb0GS5NncKVxju4Nt/mRk13O9Gz3FLct5oCD6wkwUNrCfHIUg6SMf8LwQGyVaBUqpLPW5BaMpRshEpl8nS1qw5dgnzlik8QBXmdy5UrIH74heTKZKMSilQso4hsRiGraQZRzxpNGqlEJMsXuAU7GlcR8mWSykUpVkWGyIf0a8v4qEQp5CtGsMiZa+4ESYQy+WilCiguHzxMXO54ogShooTV2bj2z1zL6DYSoImoQ8lFUWxMLBNQQgLkV2tHYgUoIbkuREz+fJHKxxWBcnvu3KQppFCxLkguB1NyVSp/TknRvNwYlCdbblWu3ze6owHdWluhE5tgQ6ej2SV65CijijoaRfSiH4Nqz1OpfEW+WeI/oU0ly60zkV9YzOQSYtZVEGYmrysTZAJkY4qZtIBD9/LYTIK7Nww3vMiYBwA=' violates the following Content Security Policy directive: \"default-src 'self'\". Note that 'font-src' was not explicitly set, so 'default-src' is used as a fallback. The action has been blocked."
+      ],
+      "body": "THE NIGHT SHIFT\nAbout\n\nA GLASS-BOX ROBOT LAB\n\nCOCO Lab\n\nSee what the robot computes.\n\nPlay\n\nDrive COCO. Race the planner.\n\nCompare\n\nOne map. Different decisions.\n\nResearch\n\nExplore recorded ROS 2 runs.\n\nPress any key to play\nMODEL\n· kinematic",
+      "snapshot": null
+    },
+    {
+      "screen": "play",
+      "errors": [
+        "Loading the font 'data:font/woff2;base64,d09GMgABAAAAAAn4ABMAAAAAEwQAAAmOAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGjQbgnQcLj9IVkFSgQEGYD9TVEFUgQIAgQovahEICok0h0ULIAAwhzoBNgIkAzwEIAWHJgeBDgwHG6QQUdRKTmoBFD8K42bniObKrG3LZFcMWZzFmrjTFhQ6TVTqPJcInrfrvzq3b2PGn1wwMiNYGTy9ViREYARlL1zAGcPdPqBt3gNWrfKthv4xnM+b9caw+wmjgEUVRjHXhS6jgCK6zf5HiWQacJpGdAgdrbV6g/Rf1BfxRqZVQnrxRVWSJb6RLFnyu0elilmjeoSQCKnxsmwLaddUMjnksriSYuuPl06EAl7KfAiWQjCUETz0zNZ3EII94CDQtzkMfZ/9IkkY8tZRZTDky5ZVwBAM+GYpdd4ZVAWYImnLkiTg48l79gGx3D+VBtLeyg8u7bJAd4uo0pFuQBFysE9C95l0W4Fk...cSQTBxOivHMO5QvBBY0iheJvfwWLxLOGzYKZyM4zVc2Cll46zEpeUV4MqGEWZj22SdOxhGAjgs9AEnfT+RoiMfcDb0GS5NncKVxju4Nt/mRk13O9Gz3FLct5oCD6wkwUNrCfHIUg6SMf8LwQGyVaBUqpLPW5BaMpRshEpl8nS1qw5dgnzlik8QBXmdy5UrIH74heTKZKMSilQso4hsRiGraQZRzxpNGqlEJMsXuAU7GlcR8mWSykUpVkWGyIf0a8v4qEQp5CtGsMiZa+4ESYQy+WilCiguHzxMXO54ogShooTV2bj2z1zL6DYSoImoQ8lFUWxMLBNQQgLkV2tHYgUoIbkuREz+fJHKxxWBcnvu3KQppFCxLkguB1NyVSp/TknRvNwYlCdbblWu3ze6owHdWluhE5tgQ6ej2SV65CijijoaRfSiH4Nqz1OpfEW+WeI/oU0ly60zkV9YzOQSYtZVEGYmrysTZAJkY4qZtIBD9/LYTIK7Nww3vMiYBwA=' violates the following Content Security Policy directive: \"default-src 'self'\". Note that 'font-src' was not explicitly set, so 'default-src' is used as a fallback. The action has been blocked."
+      ],
+      "body": "FREE ROAM\nMake your own path.\n00:01\nKNOWN MAP\nVision\n0.30 m/s\nIDLE\nSTOP\nGrasp\nAuto\nCamera\nMODEL\n· kinematic\n\nRecorded MODEL demo · tap the floor to take control.",
+      "snapshot": null
+    },
+    {
+      "screen": "compare",
+      "errors": [
+        "Loading the font 'data:font/woff2;base64,d09GMgABAAAAAAn4ABMAAAAAEwQAAAmOAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGjQbgnQcLj9IVkFSgQEGYD9TVEFUgQIAgQovahEICok0h0ULIAAwhzoBNgIkAzwEIAWHJgeBDgwHG6QQUdRKTmoBFD8K42bniObKrG3LZFcMWZzFmrjTFhQ6TVTqPJcInrfrvzq3b2PGn1wwMiNYGTy9ViREYARlL1zAGcPdPqBt3gNWrfKthv4xnM+b9caw+wmjgEUVRjHXhS6jgCK6zf5HiWQacJpGdAgdrbV6g/Rf1BfxRqZVQnrxRVWSJb6RLFnyu0elilmjeoSQCKnxsmwLaddUMjnksriSYuuPl06EAl7KfAiWQjCUETz0zNZ3EII94CDQtzkMfZ/9IkkY8tZRZTDky5ZVwBAM+GYpdd4ZVAWYImnLkiTg48l79gGx3D+VBtLeyg8u7bJAd4uo0pFuQBFysE9C95l0W4Fk...cSQTBxOivHMO5QvBBY0iheJvfwWLxLOGzYKZyM4zVc2Cll46zEpeUV4MqGEWZj22SdOxhGAjgs9AEnfT+RoiMfcDb0GS5NncKVxju4Nt/mRk13O9Gz3FLct5oCD6wkwUNrCfHIUg6SMf8LwQGyVaBUqpLPW5BaMpRshEpl8nS1qw5dgnzlik8QBXmdy5UrIH74heTKZKMSilQso4hsRiGraQZRzxpNGqlEJMsXuAU7GlcR8mWSykUpVkWGyIf0a8v4qEQp5CtGsMiZa+4ESYQy+WilCiguHzxMXO54ogShooTV2bj2z1zL6DYSoImoQ8lFUWxMLBNQQgLkV2tHYgUoIbkuREz+fJHKxxWBcnvu3KQppFCxLkguB1NyVSp/TknRvNwYlCdbblWu3ze6owHdWluhE5tgQ6ej2SV65CijijoaRfSiH4Nqz1OpfEW+WeI/oU0ly60zkV9YzOQSYtZVEGYmrysTZAJkY4qZtIBD9/LYTIK7Nww3vMiYBwA=' violates the following Content Security Policy directive: \"default-src 'self'\". Note that 'font-src' was not explicitly set, so 'default-src' is used as a fallback. The action has been blocked."
+      ],
+      "body": "COCO\nLab\nCompare\nMODEL\n· kinematic\nA\nA*\nMODEL\nB\ndijkstra\nMODEL\n3D view\nGLOBAL PLANNING\nDifferent searches.\nSame goal.\n\nSame map, start, goal and seed.\n\nPlanner A\nbfs\nDijkstra\nA*\ngreedy\nweighted_astar\nPlanner B\nbfs\nDijkstra\nA*\ngreedy\nweighted_astar\nCOCO arena\nGoal 2.5, 2.0 m\nSeed 1\nWhat you see\nFrontier\nExpanded\nPlanned path\n\nMODEL · paths and counts from coco_lab.\n\nA · A*\n1017 expansions\n3.80 m planned path\nB · dijkstra\n13124 expansions\n3.80 m planned path\nSearch complete",
+      "snapshot": {
+        "seed": 1,
+        "goal": [
+          2.5,
+          2
+        ],
+        "world": {
+          "id": "coco_arena_v1",
+          "width": 500,
+          "height": 380,
+          "resolution": 0.05,
+          "origin": [
+            -6.5,
+            -9.5
+          ],
+          "frame": "map",
+          "start": [
+            0,
+            0,
+            0
+          ],
+          "dt": 0.1,
+          "radius": 0.22,
+          "limits": {
+            "teleop_linear": 0.5,
+            "teleop_angular": 1.2,
+            "auto_linear": 0.3,
+            "auto_angular": 1,
+            "linear_accel": 2,
+            "angular_accel": 4
+          },
+          "lidar": {
+            "samples": 480,
+            "angle_min": -2.0944,
+            "angle_max": 2.0944,
+            "range_max": 12,
+            "mount": [
+              -0.09,
+              0.1,
+              0
+            ]
+          },
+          "planners": [
+            "bfs",
+            "dijkstra",
+            "astar",
+            "greedy",
+            "weighted_astar"
+          ],
+          "planner": "astar",
+          "hash": "28edaaf07103222288987dd860891049ebf0cb317325f74d0c65f8961f23cfb6",
+          "beam_height": 0.21350000000000002
+        },
+        "result": {
+          "A": {
+            "planner": "astar",
+            "status": "found",
+            "summary": {
+              "status": "found",
+              "expansions": 1017,
+              "pushes": 1245,
+              "relaxes": 918,
+              "path_cost": 75.94112549695426,
+              "path_length": 75.94112549695426,
+              "path_steps": 66
+            },
+            "resolution": 0.05
+          },
+          "B": {
+            "planner": "dijkstra",
+            "status": "found",
+            "summary": {
+              "status": "found",
+              "expansions": 13124,
+              "pushes": 13498,
+              "relaxes": 274,
+              "path_cost": 75.94112549695424,
+              "path_length": 75.94112549695424,
+              "path_steps": 66
+            },
+            "resolution": 0.05
+          }
+        },
+        "contextLayout": "one scissored WebGL context"
+      }
+    }
+  ]
+}

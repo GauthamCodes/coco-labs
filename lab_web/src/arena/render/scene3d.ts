@@ -23,6 +23,8 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 import { TIER_SETTINGS, type Tier } from './quality';
+import { TOKENS } from '../../ui/tokens';
+import { activeTheme } from '../../ui/theme';
 
 /**
  * M4.4: the 3D world draws on its own layer, in a first pass with tone mapping, the sun's shadow and
@@ -108,9 +110,10 @@ export class Scene3D {
     this.camera.up.set(0, 0, 1);
     this.root.visible = false;
     scene.add(this.root);
-    const hemi = new THREE.HemisphereLight(0xf2f4f7, 0x8a8478, 1.2);
+    const lighting = TOKENS.warehouse[activeTheme()];
+    const hemi = new THREE.HemisphereLight(lighting.sky, lighting.ground, lighting.ambient);
     hemi.position.set(0, 0, 1);
-    this.sun = new THREE.DirectionalLight(0xffffff, 1.6);
+    this.sun = new THREE.DirectionalLight(lighting.workLight, lighting.key);
     this.sun.position.set(-4, -6, 10);
     // the sun's shadow follows the robot: a small square around it, so the map stays cheap
     const sc = this.sun.shadow.camera;
@@ -162,7 +165,20 @@ export class Scene3D {
     placeholder.castShadow = true;
     placeholder.name = 'placeholder';
     this.robotHolder.add(placeholder);
-    arena.scene.traverse((o) => { if ((o as THREE.Mesh).isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+    arena.scene.traverse((o) => {
+      const mesh = o as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      mesh.castShadow = true; mesh.receiveShadow = true;
+      const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+      const tuned = materials.map((original) => {
+        const material = (original as THREE.MeshStandardMaterial).clone();
+        const finish = TOKENS.warehouse[activeTheme()];
+        material.color.set(original.name === 'ground' ? finish.floor : finish.structure);
+        material.roughness = .92; material.metalness = .02;
+        return material;
+      });
+      mesh.material = Array.isArray(mesh.material) ? tuned : tuned[0];
+    });
     // the tall kinds learn to open (cutaway) and to stop low (low walls)
     for (const node of arena.scene.children.flatMap((c) => [c, ...c.children])) {
       if (!CUTTABLE.has(node.name)) continue;
@@ -344,6 +360,12 @@ if (uCut > 0.5) {
    * Change camera (M4.5; README §5.3: transitions take about 0.4 s). The camera moves from where it is
    * to the new mode's pose over `dur` seconds, eased; 0 cuts (reduced motion).
    */
+  /** Presentation-only framing for the design references; the model is untouched. */
+  setFollowFraming(distance: number, pitch: number) {
+    this.orbit.dist = Math.max(1, Math.min(12, distance));
+    this.orbit.pitch = Math.max(.15, Math.min(1.4, pitch));
+  }
+
   setMode(mode: Exclude<CameraMode, 'topdown'> | 'overhead', dur: number) {
     if (mode === this.mode && !this.blend) return;
     this.mode = mode;
@@ -444,6 +466,19 @@ if (uCut > 0.5) {
       r.z + 0.15 + Math.sin(pitch) * dist);
     this.camera.lookAt(r.x + Math.cos(r.yaw) * ahead, r.y + Math.sin(r.yaw) * ahead, r.z + 0.15);
     this.camera.updateProjectionMatrix();
+  }
+
+  /** Release presentation resources; never affects a session or model. */
+  dispose() {
+    this.root.traverse((object) => {
+      const mesh = object as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      mesh.geometry.dispose();
+      const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+      for (const material of materials) material.dispose();
+    });
+    this.sun.shadow.map?.dispose(); this.env?.dispose();
+    this.root.removeFromParent();
   }
 
   /** The floor point (z = 0) under a canvas pixel, or null if the ray misses the floor. */

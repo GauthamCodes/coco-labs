@@ -7,6 +7,7 @@ import { resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import react from '@vitejs/plugin-react';
+import { TOKEN_CSS } from './src/ui/tokens.ts';
 import { defineConfig } from 'vitest/config';
 
 import { DEFAULT_BASE, DEFAULT_LANDING, liveConnectSrc, PYODIDE_INDEX_URL, PYODIDE_VERSION } from './site.config.ts';
@@ -46,6 +47,7 @@ export default defineConfig({
   base,
   plugins: [
     react(),
+    { name: 'coco-night-shift-tokens', transformIndexHtml: () => [{ tag: 'style', attrs: { id: 'coco-design-tokens' }, children: TOKEN_CSS, injectTo: 'head-prepend' }] },
     {
       name: 'coco-lab-gzip-as-bytes',
       configureServer: (server) => {
@@ -88,6 +90,8 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
+    // Fonts stay same-origin files, including tiny subsets; CSP forbids data fonts.
+    assetsInlineLimit: 0,
     emptyOutDir: true,
     sourcemap: false,
     target: 'es2022',

@@ -101,6 +101,9 @@ void main() {
   if (uShowPath && s > 2.5) c = mix(c, uPath, uHeat ? 0.0 : 0.25);
   c = mix(base, c, uPlanDim);  // Focus: the Plan lens's layers, dimmed outside it
   gl_FragColor = vec4(c, 1.0);
+  // Palette inputs are linear THREE.Color values. Emit sRGB like the CAD
+  // materials, otherwise the dark free-cell decal becomes almost black.
+  #include <colorspace_fragment>
 }`;
 
 function col(hex: string): THREE.Color {

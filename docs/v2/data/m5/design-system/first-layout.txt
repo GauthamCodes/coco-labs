@@ -1,0 +1,23 @@
+[
+  {
+    screen: 'title',
+    error: undefined,
+    errors: [
+      `Loading the font 'data:font/woff2;base64,d09GMgABAAAAAAn4ABMAAAAAEwQAAAmOAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGjQbgnQcLj9IVkFSgQEGYD9TVEFUgQIAgQovahEICok0h0ULIAAwhzoBNgIkAzwEIAWHJgeBDgwHG6QQUdRKTmoBFD8K42bniObKrG3LZFcMWZzFmrjTFhQ6TVTqPJcInrfrvzq3b2PGn1wwMiNYGTy9ViREYARlL1zAGcPdPqBt3gNWrfKthv4xnM+b9caw+wmjgEUVRjHXhS6jgCK6zf5HiWQacJpGdAgdrbV6g/Rf1BfxRqZVQnrxRVWSJb6RLFnyu0elilmjeoSQCKnxsmwLaddUMjnksriSYuuPl06EAl7KfAiWQjCUETz0zNZ3EII94CDQtzkMfZ/9IkkY8tZRZTDky5ZVwBAM+GYpdd4ZVAWYImnLkiTg48l79gGx3D+VBtLeyg8u7bJAd4uo0pFuQBFysE9C95l0W4Fk...cSQTBxOivHMO5QvBBY0iheJvfwWLxLOGzYKZyM4zVc2Cll46zEpeUV4MqGEWZj22SdOxhGAjgs9AEnfT+RoiMfcDb0GS5NncKVxju4Nt/mRk13O9Gz3FLct5oCD6wkwUNrCfHIUg6SMf8LwQGyVaBUqpLPW5BaMpRshEpl8nS1qw5dgnzlik8QBXmdy5UrIH74heTKZKMSilQso4hsRiGraQZRzxpNGqlEJMsXuAU7GlcR8mWSykUpVkWGyIf0a8v4qEQp5CtGsMiZa+4ESYQy+WilCiguHzxMXO54ogShooTV2bj2z1zL6DYSoImoQ8lFUWxMLBNQQgLkV2tHYgUoIbkuREz+fJHKxxWBcnvu3KQppFCxLkguB1NyVSp/TknRvNwYlCdbblWu3ze6owHdWluhE5tgQ6ej2SV65CijijoaRfSiH4Nqz1OpfEW+WeI/oU0ly60zkV9YzOQSYtZVEGYmrysTZAJkY4qZtIBD9/LYTIK7Nww3vMiYBwA=' violates the following Content Security Policy directive: "default-src 'self'". Note that 'font-src' was not explicitly set, so 'default-src' is used as a fallback. The action has been blocked.`
+    ]
+  },
+  {
+    screen: 'play',
+    error: undefined,
+    errors: [
+      `Loading the font 'data:font/woff2;base64,d09GMgABAAAAAAn4ABMAAAAAEwQAAAmOAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGjQbgnQcLj9IVkFSgQEGYD9TVEFUgQIAgQovahEICok0h0ULIAAwhzoBNgIkAzwEIAWHJgeBDgwHG6QQUdRKTmoBFD8K42bniObKrG3LZFcMWZzFmrjTFhQ6TVTqPJcInrfrvzq3b2PGn1wwMiNYGTy9ViREYARlL1zAGcPdPqBt3gNWrfKthv4xnM+b9caw+wmjgEUVRjHXhS6jgCK6zf5HiWQacJpGdAgdrbV6g/Rf1BfxRqZVQnrxRVWSJb6RLFnyu0elilmjeoSQCKnxsmwLaddUMjnksriSYuuPl06EAl7KfAiWQjCUETz0zNZ3EII94CDQtzkMfZ/9IkkY8tZRZTDky5ZVwBAM+GYpdd4ZVAWYImnLkiTg48l79gGx3D+VBtLeyg8u7bJAd4uo0pFuQBFysE9C95l0W4Fk...cSQTBxOivHMO5QvBBY0iheJvfwWLxLOGzYKZyM4zVc2Cll46zEpeUV4MqGEWZj22SdOxhGAjgs9AEnfT+RoiMfcDb0GS5NncKVxju4Nt/mRk13O9Gz3FLct5oCD6wkwUNrCfHIUg6SMf8LwQGyVaBUqpLPW5BaMpRshEpl8nS1qw5dgnzlik8QBXmdy5UrIH74heTKZKMSilQso4hsRiGraQZRzxpNGqlEJMsXuAU7GlcR8mWSykUpVkWGyIf0a8v4qEQp5CtGsMiZa+4ESYQy+WilCiguHzxMXO54ogShooTV2bj2z1zL6DYSoImoQ8lFUWxMLBNQQgLkV2tHYgUoIbkuREz+fJHKxxWBcnvu3KQppFCxLkguB1NyVSp/TknRvNwYlCdbblWu3ze6owHdWluhE5tgQ6ej2SV65CijijoaRfSiH4Nqz1OpfEW+WeI/oU0ly60zkV9YzOQSYtZVEGYmrysTZAJkY4qZtIBD9/LYTIK7Nww3vMiYBwA=' violates the following Content Security Policy directive: "default-src 'self'". Note that 'font-src' was not explicitly set, so 'default-src' is used as a fallback. The action has been blocked.`
+    ]
+  },
+  {
+    screen: 'compare',
+    error: undefined,
+    errors: [
+      `Loading the font 'data:font/woff2;base64,d09GMgABAAAAAAn4ABMAAAAAEwQAAAmOAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGjQbgnQcLj9IVkFSgQEGYD9TVEFUgQIAgQovahEICok0h0ULIAAwhzoBNgIkAzwEIAWHJgeBDgwHG6QQUdRKTmoBFD8K42bniObKrG3LZFcMWZzFmrjTFhQ6TVTqPJcInrfrvzq3b2PGn1wwMiNYGTy9ViREYARlL1zAGcPdPqBt3gNWrfKthv4xnM+b9caw+wmjgEUVRjHXhS6jgCK6zf5HiWQacJpGdAgdrbV6g/Rf1BfxRqZVQnrxRVWSJb6RLFnyu0elilmjeoSQCKnxsmwLaddUMjnksriSYuuPl06EAl7KfAiWQjCUETz0zNZ3EII94CDQtzkMfZ/9IkkY8tZRZTDky5ZVwBAM+GYpdd4ZVAWYImnLkiTg48l79gGx3D+VBtLeyg8u7bJAd4uo0pFuQBFysE9C95l0W4Fk...cSQTBxOivHMO5QvBBY0iheJvfwWLxLOGzYKZyM4zVc2Cll46zEpeUV4MqGEWZj22SdOxhGAjgs9AEnfT+RoiMfcDb0GS5NncKVxju4Nt/mRk13O9Gz3FLct5oCD6wkwUNrCfHIUg6SMf8LwQGyVaBUqpLPW5BaMpRshEpl8nS1qw5dgnzlik8QBXmdy5UrIH74heTKZKMSilQso4hsRiGraQZRzxpNGqlEJMsXuAU7GlcR8mWSykUpVkWGyIf0a8v4qEQp5CtGsMiZa+4ESYQy+WilCiguHzxMXO54ogShooTV2bj2z1zL6DYSoImoQ8lFUWxMLBNQQgLkV2tHYgUoIbkuREz+fJHKxxWBcnvu3KQppFCxLkguB1NyVSp/TknRvNwYlCdbblWu3ze6owHdWluhE5tgQ6ej2SV65CijijoaRfSiH4Nqz1OpfEW+WeI/oU0ly60zkV9YzOQSYtZVEGYmrysTZAJkY4qZtIBD9/LYTIK7Nww3vMiYBwA=' violates the following Content Security Policy directive: "default-src 'self'". Note that 'font-src' was not explicitly set, so 'default-src' is used as a fallback. The action has been blocked.`
+    ]
+  }
+]
