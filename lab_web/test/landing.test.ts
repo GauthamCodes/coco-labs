@@ -18,7 +18,7 @@ describe('routing (M2.10: v1 lab views retired, every v1 URL keeps working)', ()
 
   it('opens the three apps by name', () => {
     for (const q of ARENA_LINKS) expect(route(q, 'arena'), q).toEqual({ app: 'arena' });
-    expect(route('?view=learn&mission=find-a-path&beat=2', 'v1')).toEqual({ app: 'learn' });
+    expect(route('?view=learn&mission=find-a-path&beat=2', 'v1')).toEqual({ redirect: '?view=compare&beat=2&tour=find-a-path' });
     expect(route('?view=live', 'arena')).toEqual({ app: 'live' });
     expect(route('?view=live&live=ws://127.0.0.1:8080/ws', 'arena')).toEqual({ app: 'live' });
     // a hand-trimmed Arena link (no view=arena) is still the Arena's
@@ -28,8 +28,8 @@ describe('routing (M2.10: v1 lab views retired, every v1 URL keeps working)', ()
 
   it('opens the Case Files by name, and a Case File in the Arena (M3.3)', () => {
     for (const q of ['?view=casefiles', '?view=casefiles&case=lab5-move', '?view=casefiles&case=run15&file=lab5_mislocalised_dwb_1']) {
-      expect(route(q, 'arena'), q).toEqual({ app: 'casefiles' });
-      expect(route(q, 'v1'), q).toEqual({ app: 'casefiles' });
+      expect(route(q, 'arena'), q).toEqual({ redirect: q.replace('view=casefiles', 'view=research') });
+      expect(route(q, 'v1'), q).toEqual({ redirect: q.replace('view=casefiles', 'view=research') });
       expect(needsRunIds(q), q).toBe(false);
     }
     expect(route('?view=arena&casefile=lab4_b2_colours_s1_red', 'arena')).toEqual({ app: 'arena' });
@@ -73,8 +73,23 @@ describe('routing (M2.10: v1 lab views retired, every v1 URL keeps working)', ()
   });
 
   it('the bare URL follows the build switch: the Arena, or the v1 archive', () => {
-    expect(route('', 'arena')).toEqual({ app: 'arena' });
-    expect(route('?perf', 'arena')).toEqual({ app: 'arena' });
+    expect(route('', 'arena')).toEqual({ app: 'title' });
+    expect(route('?perf', 'arena')).toEqual({ app: 'title' });
     expect(route('', 'v1')).toEqual({ redirect: 'v1/' });
+  });
+});
+
+describe('three-mode routing', () => {
+  it('opens title, workspace, tours, recordings and About', () => {
+    expect(route('', 'arena')).toEqual({ app: 'title' });
+    expect(route('?view=compare', 'arena')).toEqual({ app: 'compare' });
+    expect(route('?view=compare&tour=find-a-path', 'arena')).toEqual({ app: 'learn' });
+    expect(route('?view=research', 'arena')).toEqual({ app: 'casefiles' });
+    expect(route('?view=research&replay=lab1c_astar', 'arena')).toEqual({ app: 'arena' });
+    expect(route('?view=about', 'arena')).toEqual({ app: 'about' });
+  });
+  it('keeps hand-trimmed model and challenge links out of title warm-up', () => {
+    for (const query of ['?camera=follow', '?seed=3', '?world=v2', '?play=race-the-ghost&pl=arena']) expect(route(query, 'arena')).toEqual({ app: 'arena' });
+    for (const query of ['?c=shortest-path&l=one', '?s=malformed', '?z=malformed']) expect(route(query, 'arena')).toEqual({ app: 'play' });
   });
 });

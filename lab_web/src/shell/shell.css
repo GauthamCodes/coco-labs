@@ -1,0 +1,33 @@
+/* Copyright 2026 Gautham Anil — SPDX-License-Identifier: Apache-2.0 */
+.settings-drawer { color:var(--fg); background:var(--panel); border:1px solid var(--line); border-radius:var(--radius-lg) 0 0 var(--radius-lg); margin:0 0 0 auto; width:min(540px,100%); max-width:100%; height:100dvh; max-height:100dvh; padding:max(var(--space-xl),env(safe-area-inset-top)) max(var(--space-xl),env(safe-area-inset-right)) max(var(--space-xl),env(safe-area-inset-bottom)) var(--space-xl); overflow:auto; box-shadow:var(--elevation-high); }
+.settings-drawer::backdrop { background:rgba(0,0,0,.65); }
+.settings-drawer header { display:flex; align-items:center; justify-content:space-between; gap:var(--space-lg); }
+.settings-drawer h1 { font-size:var(--type-section); }
+.settings-drawer label { display:grid; gap:var(--space-sm); margin:var(--space-xl) 0; font-size:var(--type-body); }
+.settings-drawer select,.settings-drawer button { min-height:var(--touch); min-width:var(--touch); font-size:var(--type-label); background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:var(--radius-sm); padding:var(--space-sm); }
+.settings-drawer .settings-check { display:flex; align-items:center; gap:var(--space-md); min-height:var(--touch); }
+.settings-check input { width:24px; height:24px; }
+.settings-drawer table { width:100%; font-size:var(--type-label); border-collapse:collapse; }
+.settings-drawer th { text-align:left; font-weight:400; }
+.settings-drawer td,.settings-drawer th { padding:var(--space-sm) var(--space-xs); border-bottom:1px solid var(--line); }
+.settings-drawer td:nth-child(2) { overflow-wrap:anywhere; }
+.about-page { max-width:850px; margin:auto; padding:var(--space-xxl) max(var(--space-xl),env(safe-area-inset-right)) var(--space-hero) max(var(--space-xl),env(safe-area-inset-left)); font-size:var(--type-body); line-height:1.7; }
+.about-page h1 { font-size:var(--type-compact-display); line-height:1.1; }
+.about-page a { color:var(--accent); }
+.about-page dt { font-weight:650; margin-top:var(--space-lg); }
+.about-page dd { margin-left:0; color:var(--muted); }
+.mode-head .settings-gear { margin-left:auto; display:inline-flex; align-items:center; justify-content:center; min-width:var(--touch); min-height:var(--touch); background:var(--panel); color:var(--fg); border:1px solid var(--line); border-radius:var(--radius-md); }
+.night-workspace-header { grid-column:1/-1; grid-row:1; background:var(--bg); padding:var(--space-sm) max(var(--space-lg),env(safe-area-inset-right)) var(--space-sm) max(var(--space-lg),env(safe-area-inset-left)); border-bottom:1px solid var(--line); }
+.night-workspace-header .mode-head { height:100%; margin:0; padding:0; gap:var(--space-md); flex-wrap:nowrap; }
+.night-workspace-header .mode-head .brand { font-family:var(--font-display); }
+.night-compare-controls > a { color:var(--accent); font-size:var(--type-label); }
+@media(max-width:700px) { .night-workspace-header .brand { display:none; } .night-workspace-header .mode-head { gap:var(--space-sm); } .night-workspace-header .modes { gap:var(--space-xs); } .night-workspace-header .modes a { padding:var(--space-xs); font-size:var(--type-label); } .night-workspace-header .evidence-badge { font-size:var(--type-label); border:0; padding:0; } }
+@media(max-width:700px) and (orientation:portrait) {
+ .night-compare { grid-template-rows:88px minmax(0,1fr) 108px 40px 164px; }
+ .night-workspace-header .mode-head { display:grid; grid-template-columns:1fr auto; grid-template-rows:48px 20px; }
+ .night-workspace-header .modes { grid-column:1; grid-row:1; flex-wrap:nowrap; }
+ .night-workspace-header .settings-gear { grid-column:2; grid-row:1; }
+ .night-workspace-header .evidence-badge { grid-column:1/-1; grid-row:2; justify-self:start; }
+}
+.night-quality-note { position:absolute; left:var(--space-lg); bottom:var(--space-lg); color:var(--fg); background:var(--panel); padding:var(--space-sm); border:1px solid var(--line); border-radius:var(--radius-sm); max-width:70%; font-size:var(--type-label); }
+.night-compare-controls > a { display:flex; align-items:center; min-height:var(--touch); color:var(--accent); font-size:var(--type-label); }

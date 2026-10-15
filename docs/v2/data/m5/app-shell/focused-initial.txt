@@ -1,0 +1,84 @@
+
+> coco-lab-web@0.1.0 test
+> vitest run test/landing.test.ts test/site.test.ts test/night_shift.test.ts
+
+
+ RUN  v5.0.2 /home/gautham/coco_labs_ws/src/coco-labs/lab_web
+
+ ❯ test/landing.test.ts (9 tests | 3 failed) 32ms
+   ❯ routing (M2.10: v1 lab views retired, every v1 URL keeps working) (9)
+     × opens the three apps by name 16ms
+     × opens the Case Files by name, and a Case File in the Arena (M3.3) 2ms
+     × the bare URL follows the build switch: the Arena, or the v1 archive 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/landing.test.ts > routing (M2.10: v1 lab views retired, every v1 URL keeps working) > opens the three apps by name
+AssertionError: expected { Object (redirect) } to deeply equal { app: 'learn' }
+
+- Expected
++ Received
+
+  {
+-   "app": "learn",
++   "redirect": "?view=compare&beat=2&tour=find-a-path",
+  }
+
+ ❯ test/landing.test.ts:21:67
+     19|   it('opens the three apps by name', () => {
+     20|     for (const q of ARENA_LINKS) expect(route(q, 'arena'), q).toEqual(…
+     21|     expect(route('?view=learn&mission=find-a-path&beat=2', 'v1')).toEq…
+       |                                                                   ^
+     22|     expect(route('?view=live', 'arena')).toEqual({ app: 'live' });
+     23|     expect(route('?view=live&live=ws://127.0.0.1:8080/ws', 'arena')).t…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  test/landing.test.ts > routing (M2.10: v1 lab views retired, every v1 URL keeps working) > opens the Case Files by name, and a Case File in the Arena (M3.3)
+AssertionError: ?view=casefiles: expected { redirect: '?view=research' } to deeply equal { app: 'casefiles' }
+
+- Expected
++ Received
+
+  {
+-   "app": "casefiles",
++   "redirect": "?view=research",
+  }
+
+ ❯ test/landing.test.ts:31:36
+     29|   it('opens the Case Files by name, and a Case File in the Arena (M3.3…
+     30|     for (const q of ['?view=casefiles', '?view=casefiles&case=lab5-mov…
+     31|       expect(route(q, 'arena'), q).toEqual({ app: 'casefiles' });
+       |                                    ^
+     32|       expect(route(q, 'v1'), q).toEqual({ app: 'casefiles' });
+     33|       expect(needsRunIds(q), q).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  test/landing.test.ts > routing (M2.10: v1 lab views retired, every v1 URL keeps working) > the bare URL follows the build switch: the Arena, or the v1 archive
+AssertionError: expected { app: 'title' } to deeply equal { app: 'arena' }
+
+- Expected
++ Received
+
+  {
+-   "app": "arena",
++   "app": "title",
+  }
+
+ ❯ test/landing.test.ts:76:32
+     74|
+     75|   it('the bare URL follows the build switch: the Arena, or the v1 arch…
+     76|     expect(route('', 'arena')).toEqual({ app: 'arena' });
+       |                                ^
+     77|     expect(route('?perf', 'arena')).toEqual({ app: 'arena' });
+     78|     expect(route('', 'v1')).toEqual({ redirect: 'v1/' });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  3 failed | 18 passed (21)
+   Start at  06:47:06
+   Duration  433ms (transform 65%, import 16%, tests 15%, worker 3%)
+

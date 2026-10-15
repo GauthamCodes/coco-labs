@@ -1,0 +1,154 @@
+{
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-15T10:55:18.620Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 53
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1,
+    "5m": 1.62,
+    "15m": 1.54
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-15T10:56:01.031Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 54
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 5.79,
+    "5m": 2.79,
+    "15m": 1.94
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "rows": [
+  {
+   "profile": "desktop",
+   "device": "laptop Chromium",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "title",
+   "viewport": [
+    1440,
+    900
+   ],
+   "dpr": 1,
+   "scroll": [
+    1440,
+    900
+   ],
+   "theme": "dark",
+   "quality": "medium",
+   "robot": "[0,0,0]",
+   "header": [],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "desktop",
+   "device": "laptop Chromium",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "play",
+   "viewport": [
+    1440,
+    900
+   ],
+   "dpr": 1,
+   "scroll": [
+    1440,
+    937
+   ],
+   "theme": "dark",
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 246,
+      "y": 30,
+      "width": 86,
+      "height": 24,
+      "top": 30,
+      "right": 332,
+      "bottom": 54,
+      "left": 246
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 346,
+      "y": 18,
+      "width": 58,
+      "height": 48,
+      "top": 18,
+      "right": 404,
+      "bottom": 66,
+      "left": 346
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 408,
+      "y": 18,
+      "width": 93,
+      "height": 48,
+      "top": 18,
+      "right": 501,
+      "bottom": 66,
+      "left": 408
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 505,
+      "y": 18,
+      "width": 96,
+      "height": 48,
+      "top": 18,
+      "right": 601,
+      "bottom": 66,
+      "left": 505
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 1146,
+      "y": 18,
+      "width": 48,
+      "height": 48,
+      "top": 18,
+      "right": 1194,
+      "bottom": 66,
+      "left": 1146
+     }
+    }
+   ],
+   "settings": null,
+   "errors": [],
+   "external": []
+  }
+ ]
+}

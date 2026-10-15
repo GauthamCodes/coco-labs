@@ -10,6 +10,7 @@
 import { PYODIDE_INDEX_URL } from '../../site.config.ts';
 import { wallMs, type BootRequest, type CompareSide, type FamilyMessage, type FromWorker, type InputRow, type SearchColumns, type SpecFile, type Tick, type World } from './protocol';
 import { perf } from './perf';
+import { claimWarmWorker } from './worker_pool';
 
 export interface ArenaEvents {
   onWorld?(world: World, occupancy: Uint8Array): void;
@@ -35,8 +36,12 @@ export class ArenaClient {
   constructor(ev: ArenaEvents, opts: { hashVersion?: 1 | 2; seed?: number; planner?: string; pyodide?: PyodideSource; spec?: SpecFile } = {}) {
     const base = import.meta.env.BASE_URL;
     perf.mark('worker_create', wallMs());
-    this.worker = new Worker(new URL('./arena.worker.ts', import.meta.url), { type: 'module' });
+    this.worker = claimWarmWorker(opts.pyodide !== 'cdn');
     this.ready = new Promise((resolve, reject) => {
+      this.worker.onerror = (event) => {
+        const message = event.message || 'The model worker could not load';
+        ev.onError?.('worker', message); reject(new Error(message));
+      };
       this.worker.onmessage = (m: MessageEvent<FromWorker>) => {
         const d = m.data;
         if (d.type === 'mark') perf.mark(d.name, d.at);
@@ -69,6 +74,9 @@ export class ArenaClient {
         }
       };
     });
+    // Event-only users report errors through onError; promise users still get
+    // the original rejection when they call whenReady().
+    void this.ready.catch(() => {});
     const boot: BootRequest = {
       type: 'boot',
       pyodideBase: opts.pyodide === 'cdn' ? PYODIDE_INDEX_URL : `${base}generated/pyodide/`,

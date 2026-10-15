@@ -47,6 +47,7 @@ import { actionFor, HOLD_TO_RESET_MS, loadBindings, type Action, type Bindings }
 import { type Settings } from './Help';
 import { MotorSound } from './motor';
 import { isBool, readPref, reducedMotion, writePref } from '../prefs';
+import { PREFERENCES_CHANGED } from '../shell/settings_events';
 import { PHONE_DEFAULT_CAMERA } from '../../site.config';
 import { ArenaSession } from './session';
 import { decodeRun, shareUrl, type SharedRun } from './share';
@@ -171,7 +172,7 @@ export function useArenaScene() {
   /** M4.4: what the quality tiers last said (a tier change, or the fallback to top-down) */
   const [qualityNote, setQualityNote] = useState<string | null>(null);
   /** M4.4: the tier override (settings; ?quality= for harnesses) and the tier drawing now. M4.5 persists the choice. */
-  const [tierChoice, setTierChoice] = useState<TierChoice>(TIER_CHOICES.find((t) => t === params.get('quality')) ?? 'auto');
+  const [tierChoice, setTierChoice] = useState<TierChoice>(TIER_CHOICES.find((t) => t === params.get('quality')) ?? readPref('quality', 'auto', (v): v is TierChoice => TIER_CHOICES.includes(v as TierChoice)));
   const [tierNow, setTierNow] = useState<Tier | null>(null);
   // M4.1: `?camera=follow|orbit|robot_eye` opens a perspective camera; top-down otherwise (until M4.5)
   /**
@@ -208,7 +209,7 @@ export function useArenaScene() {
   const bindingsRef = useRef(bindings);
   bindingsRef.current = bindings;
   const [settings, setSettings] = useState<Settings>(() => ({
-    motion: reducedMotion(), sound: false,   // the sound is off by default, and starts only on a click
+    motion: reducedMotion(), sound: readPref('sound', false, isBool), // off by default; starts only on a gesture
     bars: readPref('bars', false, isBool), tank: readPref('tank', false, isBool),
   }));
   const settingsRef = useRef(settings);
@@ -236,6 +237,7 @@ export function useArenaScene() {
 
   /** The visitor acted: switch to the live model (now, or as soon as it is ready). */
   const takeOver = useCallback(() => {
+    if (settingsRef.current.sound) motor.current.start();
     if (modeRef.current !== 'attract') return true;
     if (!live.current) { pendingTakeover.current = true; return false; }
     setMode('live');
@@ -329,6 +331,7 @@ export function useArenaScene() {
         started = specP.then(() => rr!.enable3D(assets3d(lod),
           worldToMap.current, w.targets, elevation.current, tierChoice))
           .then(() => {
+            if (rr!.three) rr!.three.lowWalls = readPref('walls', false, isBool);
             setTierNow(rr!.quality?.tier ?? null);
             perf.mark('world3d_ready', wallMs());   // the arena drawn (the robot may still be its placeholder)
             void rr!.three?.robotReady.then(() => perf.mark('world3d_robot', wallMs()));
@@ -691,6 +694,7 @@ export function useArenaScene() {
     };
     const DRIVE: Action[] = ['forward', 'reverse', 'left', 'right', 'precision'];
     const keydown = (e: KeyboardEvent) => {
+      if (document.querySelector('dialog[open]')) return;
       if ((e.target as HTMLElement)?.matches?.('input, select, textarea, button')) return;
       const a = actionFor(e.code, bindingsRef.current);
       if (!a) return;
@@ -867,9 +871,22 @@ export function useArenaScene() {
   };
   const changeSetting = (k: keyof Settings, v: boolean) => {
     setSettings((o) => ({ ...o, [k]: v }));
+    writePref(k, v);
     if (k === 'sound') { if (v) motor.current.start(); else motor.current.stop(); }
-    else writePref(k, v);
   };
+  useEffect(() => {
+    const apply = () => {
+      setBindings(loadBindings());
+      setSettings((old) => ({ ...old, motion: reducedMotion(), sound: readPref('sound', false, isBool) }));
+      if (readPref('sound', false, isBool)) motor.current.start(); else motor.current.stop();
+      const quality = readPref('quality', 'auto', (v): v is TierChoice => TIER_CHOICES.includes(v as TierChoice));
+      setTierChoice(quality); r.current?.setTier(quality);
+      if (r.current?.three) r.current.three.lowWalls = readPref('walls', false, isBool);
+      r.current?.setTheme(currentTheme()); ll.current?.setPalette(PALETTES[currentTheme()]); lensRedraw.current = true;
+    };
+    window.addEventListener(PREFERENCES_CHANGED, apply);
+    return () => window.removeEventListener(PREFERENCES_CHANGED, apply);
+  }, []);
   const makeShare = () => {
     const t = lastTick.current;
     if (!t || !specSha.current) return;

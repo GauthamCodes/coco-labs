@@ -13,12 +13,13 @@ import { Help } from '../../arena/Help';
 import { rebind, resetBindings } from '../../arena/controls';
 import { TOKENS } from '../tokens';
 import { activeTheme, applyMotion } from '../theme';
+import { ModeNav } from '../ModeNav';
 import './reference.css';
 
 const refLink = (screen: string) => `${import.meta.env.BASE_URL}?view=arena&reference=${screen}&camera=follow`;
 function Badge() { return <span className="night-badge">MODEL <span>· kinematic</span></span>; }
 function Header({ mode }: { mode: string }) {
-  return <header className="night-header"><a className="night-brand" href={refLink('title')}>COCO <span>Lab</span></a><span className="night-mode">{mode}</span><Badge /></header>;
+  return <div className="night-workspace-header" aria-label={mode}><ModeNav current="compare" evidence="MODEL" /></div>;
 }
 function TitleReference() {
   useEffect(() => {
@@ -97,7 +98,7 @@ function PlayReference() {
   </main>;
 }
 
-function CompareReference() {
+export function CompareReference() {
   const [data, setData] = useState<ComparisonData>();
   const [result, setResult] = useState<{ A: CompareSide; B: CompareSide } | null>(null);
   const [perspective, setPerspective] = useState(false);
@@ -134,7 +135,7 @@ function CompareReference() {
   return <main className="night-compare" data-testid="reference-compare" data-ready={!!result}>
     <Header mode="Compare" />
     <div className="night-compare-stage"><WorldStage kind="compare" data={data} perspective={perspective} /><div className="night-pane-labels">{(['A', 'B'] as const).map((side) => <div key={side}><span className="night-eyebrow">{side}</span><strong>{side === 'A' ? result?.A.planner === 'astar' ? 'A*' : result?.A.planner ?? 'A*' : result?.B.planner ?? 'Dijkstra'}</strong><Badge /></div>)}</div><div className="night-view-switch"><button onClick={() => setPerspective(!perspective)}>{perspective ? 'Top down' : '3D view'} <Columns2 size={16} /></button></div></div>
-    <aside className="night-compare-controls"><span className="night-eyebrow">GLOBAL PLANNING</span><h1>Different searches.<br />Same goal.</h1><p>Same map, start, goal and seed.</p>{(['A', 'B'] as const).map((side) => <label key={side}>Planner {side}<select value={result?.[side].planner ?? (side === 'A' ? 'astar' : 'dijkstra')} onChange={(event) => select(side, event.target.value)}>{(data?.world.planners ?? ['astar', 'dijkstra']).map((name) => <option value={name} key={name}>{name === 'astar' ? 'A*' : name === 'dijkstra' ? 'Dijkstra' : name}</option>)}</select></label>)}<div className="night-map-spec"><span>COCO arena</span><span>Goal 2.5, 2.0 m</span><span>Seed 1</span></div><h2>What you see</h2><ul className="night-computation-key"><li><i className="frontier" />Frontier</li><li><i className="closed" />Expanded</li><li><i className="path" />Planned path</li></ul><p className="night-small">MODEL · paths and counts from coco_lab.</p>{error && <p role="alert" className="error">{error}</p>}</aside>
+    <aside className="night-compare-controls"><span className="night-eyebrow">GLOBAL PLANNING</span><h1>Different searches.<br />Same goal.</h1><p>Same map, start, goal and seed.</p><a href={`${import.meta.env.BASE_URL}?view=compare&tour=`}>Guided tours</a><a className="night-inspect-link" href={`${import.meta.env.BASE_URL}?view=arena&lens=plan&level=inspect&camera=topdown`}>Inspect the full robot loop</a>{(['A', 'B'] as const).map((side) => <label key={side}>Planner {side}<select value={result?.[side].planner ?? (side === 'A' ? 'astar' : 'dijkstra')} onChange={(event) => select(side, event.target.value)}>{(data?.world.planners ?? ['astar', 'dijkstra']).map((name) => <option value={name} key={name}>{name === 'astar' ? 'A*' : name === 'dijkstra' ? 'Dijkstra' : name}</option>)}</select></label>)}<div className="night-map-spec"><span>COCO arena</span><span>Goal 2.5, 2.0 m</span><span>Seed 1</span></div><h2>What you see</h2><ul className="night-computation-key"><li><i className="frontier" />Frontier</li><li><i className="closed" />Expanded</li><li><i className="path" />Planned path</li></ul><p className="night-small">MODEL · paths and counts from coco_lab.</p>{error && <p role="alert" className="error">{error}</p>}</aside>
     <section className="night-results" aria-label="Planner results">{(['A', 'B'] as const).map((side) => <div key={side}><span className="night-eyebrow">{side} · {result?.[side].planner === 'astar' ? 'A*' : result?.[side].planner ?? (side === 'A' ? 'A*' : 'Dijkstra')}</span><span><strong>{result?.[side].summary.expansions ?? '—'}</strong> expansions</span><span><strong>{result?.[side].summary.path_length != null ? (Number(result[side].summary.path_length) * result[side].resolution).toFixed(2) : '—'}</strong> m planned path</span></div>)}</section>
     <div className="night-reference-timeline"><Pause size={16} /><span>{result ? 'Search complete' : 'Computing…'}</span><span className="night-timeline-track" /></div>
   </main>;

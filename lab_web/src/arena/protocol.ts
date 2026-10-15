@@ -45,7 +45,8 @@ export interface CompareRequest { type: 'compare'; a: string; b: string; x: numb
 export interface LoadPackRequest { type: 'load_pack'; pack: string }
 /** M3.5: Play -- coco_lab.play, through arena_glue.play (a JSON request; the reply is JSON). */
 export interface PlayRequest { type: 'play'; id: number; request: string }
-export type ToWorker = BootRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest;
+export type WarmRequest = Omit<BootRequest, 'type'> & { type: 'warm' };
+export type ToWorker = BootRequest | WarmRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest;
 
 export interface CompareSide { planner: string; status: string; summary: Record<string, number | string | null>; resolution: number }
 

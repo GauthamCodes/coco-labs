@@ -1,0 +1,8 @@
+file:///home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/m55_shell_check.mjs:32
+  for(let n=0;n<32;n++){await page.keyboard.press('Tab');if(!await page.evaluate(()=>!!document.activeElement?.closest('dialog')))throw Error('Keyboard focus escaped modal');}
+                                                                                                                                        ^
+
+Error: Keyboard focus escaped modal
+    at file:///home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/m55_shell_check.mjs:32:137
+
+Node.js v24.21.0

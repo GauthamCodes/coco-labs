@@ -11,6 +11,8 @@
 import { useState } from 'react';
 
 import { LiveView } from './LiveView';
+import { Settings } from 'lucide-react';
+import { openSettings } from '../shell/settings_events';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -21,9 +23,10 @@ export function LiveApp() {
       <header className="top">
         <h1>COCO Lab <span className="sub">Live Stack (simulated)</span></h1>
         <nav className="views" aria-label="Views">
-          <a className="seg-btn" href={`${BASE}?view=arena`} data-testid="nav-arena">Arena</a>
-          <a className="seg-btn" href={`${BASE}?view=learn`} data-testid="nav-learn">Learn</a>
-          <a className="seg-btn" href={`${BASE}v1/`} data-testid="nav-v1">v1 labs (archive)</a>
+          <a className="seg-btn" href={`${BASE}?view=arena`} data-testid="nav-arena">Play · Free roam</a>
+          <a className="seg-btn" href={`${BASE}?view=compare`} data-testid="nav-learn">Compare</a>
+          <a className="seg-btn" href={`${BASE}?view=about`}>About</a>
+          <button className="seg-btn" aria-label="Settings" onClick={openSettings}><Settings size={20}/></button>
         </nav>
         <span className="mode-badge mode-live" data-testid="mode-badge">{liveText}</span>
       </header>

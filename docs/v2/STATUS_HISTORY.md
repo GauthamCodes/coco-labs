@@ -1991,3 +1991,20 @@ USB. The one connection question is recorded in STATUS, without waiting. Provisi
 usability remains owner-owned and a launch gate only. No files moved/removed, new ADR,
 parked idea or stop condition. No release, merge, cloud work or robot-project edit.
 Next: M5.5 actual title/app shell, About, Settings and route migration.
+
+
+## 2026-10-15 · M5.5 app shell complete
+
+Start 592d1d9; branch v2/m5-focus. Actual title renders CAD then warms one
+self-hosted worker; three purpose routes, About, persistent live Settings and
+legacy route migration. REPORT: data/m5/app-shell/REPORT.md. Packages 3534,
+web 466 (before 461), tools 195 passed; typecheck/build/dist passed. Fifty URL
+forms plus six frozen archive views, five zero-difference canvas scenes, five
+replays pass. Both hash versions/specs warm/cold initial world and 25 hashes
+match; corrupt warm ZIP recovery passes. No model/hash/golden change.
+Twenty mode views plus four light Settings captures under screens/app-shell/
+revision3 await Gautham. Emulated Nothing Phone (1), not real measurements;
+balanced/AC, NVIDIA 580.178.04, software renderer functional checks only.
+ADB no device; Phone pending USB. Notes remain blank; N2 app-shell disposition
+updated. No files moved/removed, ADR, parked idea, stop condition or deviation.
+Next M5.6 Play; launch still gates on real phone and owner usability.

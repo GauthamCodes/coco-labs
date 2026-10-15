@@ -1,20 +1,23 @@
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
 /** Real CAD/world assets and real search events. Compare uses one scissored GL context. */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { Scene3D, WORLD_LAYER } from '../../arena/render/scene3d';
 import { loadAssetBytes } from '../../arena/mesh_cache';
 import { TOKENS } from '../tokens';
 import { activeTheme } from '../theme';
-import { reducedMotion } from '../../prefs';
+import { reducedMotion, readPref, isBool } from '../../prefs';
+import { PREFERENCES_CHANGED } from '../../shell/settings_events';
+import { QualityController, TIER_CHOICES, TIER_SETTINGS, type TierChoice } from '../../arena/render/quality';
 import type { World } from '../../arena/protocol';
 import { CLOSED, FRONTIER, PATH, type PlanStore } from '../../arena/render/planStore';
 export interface ComparisonData { world: World; occupancy: Uint8Array; stores: [PlanStore, PlanStore] }
 
-export function WorldStage({ kind, data, perspective = false }: { kind: 'title' | 'compare'; data?: ComparisonData; perspective?: boolean }) {
+export function WorldStage({ kind, data, perspective = false, onReady }: { kind: 'title' | 'compare'; data?: ComparisonData; perspective?: boolean; onReady?: () => void }) {
   const canvas = useRef<HTMLCanvasElement>(null);
-  const latest = useRef({ data, perspective }); latest.current = { data, perspective };
+  const [qualityNote, setQualityNote] = useState('');
+  const latest = useRef({ data, perspective, onReady }); latest.current = { data, perspective, onReady };
   useEffect(() => {
     const el = canvas.current!;
     let disposed = false, frame = 0;
@@ -31,6 +34,19 @@ export function WorldStage({ kind, data, perspective = false }: { kind: 'title' 
     overhead.up.set(0, 1, 0); overhead.layers.enable(WORLD_LAYER);
     const overlays: { mesh: THREE.Mesh; texture: THREE.DataTexture; pixels: Uint8Array; cursor: number }[] = [];
     let rig: Scene3D | null = null;
+    let quality = new QualityController(performance.now(), 'auto', 'medium');
+    let motion = reducedMotion(), forceTopdown = false;
+    const applyPreferences = () => {
+      renderer.setClearColor(TOKENS.colours[activeTheme()].bg);
+      rig?.setTheme(activeTheme());
+      const choice = readPref('quality', 'auto', (value): value is TierChoice => TIER_CHOICES.includes(value as TierChoice));
+      quality = new QualityController(performance.now(), choice, quality.tier);
+      motion = reducedMotion(); forceTopdown = false; setQualityNote('');
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, TIER_SETTINGS[quality.tier].pixelRatioCap));
+      if (rig) { rig.lowWalls = readPref('walls', false, isBool); rig.applyTier(quality.tier, renderer, scene); }
+      for (const overlay of overlays) overlay.cursor = -1;
+    };
+    window.addEventListener(PREFERENCES_CHANGED, applyPreferences);
     let spec: { world_to_map: [number, number]; start: { x: number; y: number; theta: number } };
     const base = import.meta.env.BASE_URL;
     const resize = () => {
@@ -45,20 +61,32 @@ export function WorldStage({ kind, data, perspective = false }: { kind: 'title' 
       await rig.load({ arena: base + 'assets3d/arena.glb', robot: base + 'assets3d/robot_low.glb', buffers: {
         arena: loadAssetBytes(base + 'assets3d/arena.glb'), robot: loadAssetBytes(base + 'assets3d/robot_low.glb'),
       } });
-      if (disposed) return;
-      rig.setVisible(true); rig.setPose([spec.start.x, spec.start.y, spec.start.theta]);
+      if (disposed) { rig.dispose(); return; }
+      rig.setVisible(true); rig.setPose([spec.start.x + spec.world_to_map[0], spec.start.y + spec.world_to_map[1], spec.start.theta]);
       rig.setMode('overhead', 0); rig.applyTier('medium', renderer, scene);
+      applyPreferences();
       const start = performance.now(); let last = 0, nextPaint = 0;
       const draw = (now: number) => {
         if (disposed) return;
         frame = requestAnimationFrame(draw);
-        if (document.hidden || now + .1 < nextPaint) return;
+        if (document.hidden) { last = 0; quality.restart(now); return; }
+        if (now + .1 < nextPaint) return;
         nextPaint += Math.max(1, Math.floor((now - nextPaint) / (1000 / 60)) + 1) * (1000 / 60);
-        const dt = last ? Math.min(.05, (now - last) / 1000) : .016; last = now;
+        const interval = last ? now - last : 0;
+        const dt = interval ? Math.min(.05, interval / 1000) : .016; last = now;
+        const change = quality.frame(now, interval);
+        if (change?.kind === 'tier') {
+          rig!.applyTier(change.tier, renderer, scene);
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, TIER_SETTINGS[change.tier].pixelRatioCap));
+        } else if (change?.kind === 'fallback' && kind === 'compare') {
+          forceTopdown = true; setQualityNote(`Top-down view: ${change.reason}.`);
+        }
+        el.dataset.qualityTier = quality.tier;
         const bounds = el.getBoundingClientRect(); const width = bounds.width, height = bounds.height;
         if (!width || !height) return;
-        rig!.update(dt, width / height);
         const current = latest.current;
+        if (kind === 'compare' && current.data) rig!.setPose(current.data.world.start);
+        rig!.update(dt, width / height);
         const portrait = width < height;
         const panes = kind === 'compare' ? 2 : 1;
         renderer.setScissorTest(true);
@@ -72,10 +100,10 @@ export function WorldStage({ kind, data, perspective = false }: { kind: 'title' 
           overlays.forEach((overlay) => { overlay.mesh.visible = false; });
           let viewCamera: THREE.Camera = camera;
           if (kind === 'title') {
-            const turn = reducedMotion() ? 0 : (now - start) / 1000 * .035;
-            const x = spec.start.x, y = spec.start.y;
+            const turn = motion ? 0 : (now - start) / 1000 * .035;
+            const x = spec.start.x + spec.world_to_map[0], y = spec.start.y + spec.world_to_map[1];
             camera.aspect = paneWidth / paneHeight; camera.updateProjectionMatrix();
-            camera.position.set(x - 1.45 * Math.cos(turn), y - 1.25 * Math.cos(turn), .95);
+            camera.position.set(x - 1.45 * Math.cos(turn) + 1.25 * Math.sin(turn), y - 1.45 * Math.sin(turn) - 1.25 * Math.cos(turn), .95);
             camera.lookAt(x, y, .18);
           } else if (current.data) {
             const { world, stores, occupancy } = current.data;
@@ -107,7 +135,7 @@ export function WorldStage({ kind, data, perspective = false }: { kind: 'title' 
             }
             const centreX = world.origin[0] + world.width * world.resolution / 2;
             const centreY = world.origin[1] + world.height * world.resolution / 2;
-            if (current.perspective) {
+            if (current.perspective && !forceTopdown) {
               camera.aspect = paneWidth / paneHeight; camera.updateProjectionMatrix();
               camera.position.set(centreX - 10, centreY - 12, 16); camera.lookAt(centreX, centreY, 0);
             } else {
@@ -120,6 +148,8 @@ export function WorldStage({ kind, data, perspective = false }: { kind: 'title' 
           }
           renderer.render(scene, viewCamera);
         }
+        if (!el.dataset.sceneReady) latest.current.onReady?.();
+        el.dataset.robotPose = JSON.stringify(rig!.robotHolder.position.toArray());
         el.dataset.sceneReady = 'true'; el.dataset.glContexts = '1';
       };
       frame = requestAnimationFrame(draw);
@@ -127,9 +157,10 @@ export function WorldStage({ kind, data, perspective = false }: { kind: 'title' 
     void initialise().catch((error) => { if (!disposed) { el.dataset.sceneError = String(error); console.error(error); } });
     return () => {
       disposed = true; cancelAnimationFrame(frame); observer.disconnect();
+      window.removeEventListener(PREFERENCES_CHANGED, applyPreferences);
       for (const overlay of overlays) { overlay.texture.dispose(); overlay.mesh.geometry.dispose(); (overlay.mesh.material as THREE.Material).dispose(); }
       rig?.dispose(); renderer.dispose();
     };
   }, [kind]);
-  return <canvas className="night-world" ref={canvas} aria-label={kind === 'title' ? 'COCO CAD mesh idling in its existing arena; rendered presentation' : 'Two real planner traces in one WebGL context'} />;
+  return <><canvas className="night-world" ref={canvas} aria-label={kind === 'title' ? 'COCO CAD mesh idling in its existing arena; rendered presentation' : 'Two real planner traces in one WebGL context'} />{qualityNote && <p className="night-quality-note" role="status">{qualityNote}</p>}</>;
 }

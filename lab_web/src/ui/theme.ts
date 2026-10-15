@@ -14,7 +14,11 @@ export function activeTheme(): Theme {
 export function applyTheme(theme = activeTheme(), remember = false) {
   document.documentElement.dataset.theme = theme;
   applyMotion();
-  if (remember) writePref('theme', theme);
+  if (remember) {
+    writePref('theme', theme);
+    const url = new URL(window.location.href);
+    if (url.searchParams.has('theme')) { url.searchParams.set('theme', theme); window.history.replaceState(null, '', url); }
+  }
 }
 
 export function applyMotion() { document.documentElement.dataset.motion = reducedMotion() ? "reduced" : "normal"; }

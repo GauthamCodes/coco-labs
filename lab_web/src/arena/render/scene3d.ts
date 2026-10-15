@@ -25,6 +25,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { TIER_SETTINGS, type Tier } from './quality';
 import { TOKENS } from '../../ui/tokens';
 import { activeTheme } from '../../ui/theme';
+import type { Theme } from '../../ui/tokens';
 
 /**
  * M4.4: the 3D world draws on its own layer, in a first pass with tone mapping, the sun's shadow and
@@ -105,14 +106,16 @@ export class Scene3D {
   private readonly floor = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
   private readonly ray = new THREE.Raycaster();
   private readonly sun: THREE.DirectionalLight;
+  private readonly hemi: THREE.HemisphereLight;
+  private warehouse: THREE.Object3D | null = null;
 
   constructor(scene: THREE.Scene, readonly worldToMap: [number, number]) {
     this.camera.up.set(0, 0, 1);
     this.root.visible = false;
     scene.add(this.root);
     const lighting = TOKENS.warehouse[activeTheme()];
-    const hemi = new THREE.HemisphereLight(lighting.sky, lighting.ground, lighting.ambient);
-    hemi.position.set(0, 0, 1);
+    this.hemi = new THREE.HemisphereLight(lighting.sky, lighting.ground, lighting.ambient);
+    this.hemi.position.set(0, 0, 1);
     this.sun = new THREE.DirectionalLight(lighting.workLight, lighting.key);
     this.sun.position.set(-4, -6, 10);
     // the sun's shadow follows the robot: a small square around it, so the map stays cheap
@@ -123,8 +126,22 @@ export class Scene3D {
     // the shadow map draws what its own camera's layers see: the 3D world's
     this.sun.shadow.camera.layers.set(WORLD_LAYER);
     this.sun.shadow.normalBias = 0.02;
-    this.root.add(hemi, this.sun, this.sun.target, this.robotHolder);
+    this.root.add(this.hemi, this.sun, this.sun.target, this.robotHolder);
     onWorldLayer(this.root);
+  }
+
+  /** Display-only palette change; keeps the running session and geometry. */
+  setTheme(theme: Theme) {
+    const finish = TOKENS.warehouse[theme];
+    this.hemi.color.set(finish.sky); this.hemi.groundColor.set(finish.ground); this.hemi.intensity = finish.ambient;
+    this.sun.color.set(finish.workLight); this.sun.intensity = finish.key;
+    this.warehouse?.traverse((object) => {
+      const mesh = object as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) {
+        (material as THREE.MeshStandardMaterial).color.set(material.name === 'ground' ? finish.floor : finish.structure);
+      }
+    });
   }
 
   /**
@@ -158,6 +175,7 @@ export class Scene3D {
     const robotP = urls.buffers ? urls.buffers.robot.then((b) => loader.parseAsync(b, '')) : loader.loadAsync(urls.robot);
     const arena = urls.buffers ? await urls.buffers.arena.then((b) => loader.parseAsync(b, '')) : await loader.loadAsync(urls.arena);
     const a = zUp(arena.scene);
+    this.warehouse = a;
     a.position.set(this.worldToMap[0], this.worldToMap[1], 0);
     this.root.add(a);
     const placeholder = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.26, 0.12), new THREE.MeshStandardMaterial({ color: 0x8a8d91, roughness: 0.8 }));

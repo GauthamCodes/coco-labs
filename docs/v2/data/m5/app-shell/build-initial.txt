@@ -1,0 +1,82 @@
+
+> coco-lab-web@0.1.0 build
+> node tools/assets/build_design_assets.mjs --check && node tools/build_arena_assets.mjs && node tools/build_attract.mjs && node tools/build_v2_runs.mjs && tsc --noEmit -p . && vite build
+
+Verified licence/source/checksums: Outfit, Manrope, Lucide
+arena assets: coco_lab.zip 113412 B (28 files), stdlib 783358 B (144 entries, full 2545637 B), pyodide 314.0.7
+attract.mcap: 690320 B, 517 ticks, 34974 plan events, chain 83d26d442bb5
+astar_open: 15469 B, 5 messages, round trip exact
+dijkstra_cost_field_gz: 20208 B, 5 messages, round trip exact
+weighted_astar_greedy_trap: 17339 B, 5 messages, round trip exact
+bfs_no_path: 17925 B, 5 messages, round trip exact
+astar_turn_trap_heading: 15049 B, 5 messages, round trip exact
+lab1c_astar: 452282 B, 1116 messages, round trip exact
+lab1c_dijkstra: 579619 B, 1129 messages, round trip exact
+lab1c_greedy: 163830 B, 907 messages, round trip exact
+arena_0_10m: 434667 B, 13 messages, round trip exact
+arena_native: 1495778 B, 39 messages, round trip exact
+costmap_0_10m: 99181 B, 5 messages, round trip exact
+lab5 crossing: 15 runs, round trip exact
+lab5 mislocalised: 9 runs, round trip exact
+lab5 oncoming: 15 runs, round trip exact
+lab5 static_room: 15 runs, round trip exact
+casefiles: 100 copied, 40019390 B, the map once
+missions: 7, every replay link names a run here
+vite v8.3.1 building client environment for production...
+transforming...
+✓ 2131 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/assets/manrope-cyrillic-ext-wght-normal-C8S-KRRz.woff2    2.55 kB
+dist/coco/frame.js                                             4.76 kB
+dist/index.html                                                6.30 kB │ gzip:   2.14 kB
+dist/assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2      8.52 kB
+dist/assets/manrope-greek-wght-normal-DL7QRZyv.woff2           9.44 kB
+dist/assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2       14.50 kB
+dist/assets/outfit-latin-ext-wght-normal-DdQaqQDo.woff2       14.80 kB
+dist/assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2      15.12 kB
+dist/assets/arena.worker-T2WtF7ws.js                          15.50 kB
+dist/assets/manrope-latin-wght-normal-DHIcAJRg.woff2          24.83 kB
+dist/assets/outfit-latin-wght-normal-Bc-8i84L.woff2           32.29 kB
+dist/assets/shell-CBVe9qrC.css                                 2.98 kB │ gzip:   0.86 kB
+dist/assets/reference-C5XSdbt7.css                            18.03 kB │ gzip:   3.26 kB
+dist/assets/index-CsiHEUpP.css                                35.46 kB │ gzip:   8.06 kB
+dist/assets/CompareScene-r-9PLsoQ.js                           0.21 kB │ gzip:   0.17 kB
+dist/assets/PlayScene-r-9PLsoQ.js                              0.21 kB │ gzip:   0.17 kB
+dist/assets/ResearchScene-r-9PLsoQ.js                          0.21 kB │ gzip:   0.17 kB
+dist/assets/worker_pool-C-fZvQnC.js                            0.45 kB │ gzip:   0.31 kB
+dist/assets/settings-BBthYzck.js                               0.77 kB │ gzip:   0.42 kB
+dist/assets/ModeNav-ERIVRM0Z.js                                1.27 kB │ gzip:   0.67 kB
+dist/assets/ArenaApp-B-vUExhz.js                               1.38 kB │ gzip:   0.67 kB
+dist/assets/links-CD0Lbr32.js                                  1.58 kB │ gzip:   0.86 kB
+dist/assets/quality-Bcy6HASB.js                                1.77 kB │ gzip:   0.79 kB
+dist/assets/controls-CYmzbqVZ.js                               2.13 kB │ gzip:   0.98 kB
+dist/assets/TitleScreen-y1qB3mMH.js                            2.15 kB │ gzip:   0.96 kB
+dist/assets/SettingsDrawer-CR_6M8yO.js                         3.00 kB │ gzip:   1.18 kB
+dist/assets/createLucideIcon-CI21Yw6D.js                       3.08 kB │ gzip:   1.48 kB
+dist/assets/AboutPage-Bch_4iuR.js                              3.45 kB │ gzip:   1.45 kB
+dist/assets/Result-B6F1ghGs.js                                 4.77 kB │ gzip:   2.11 kB
+dist/assets/reference-DwYssHsZ.js                              5.10 kB │ gzip:   2.57 kB
+dist/assets/CaseFilesApp-SLRx7Goy.js                           6.13 kB │ gzip:   2.10 kB
+dist/assets/LearnApp-BLFYEV9u.js                               6.62 kB │ gzip:   2.74 kB
+dist/assets/PlayApp-B9KJ4cvf.js                               12.90 kB │ gzip:   4.75 kB
+dist/assets/ReferenceScreens-B663InQr.js                      13.78 kB │ gzip:   4.86 kB
+dist/assets/client-BgEnnY0z.js                                15.85 kB │ gzip:   7.35 kB
+dist/assets/scene3d-BZsnws84.js                               18.01 kB │ gzip:   7.05 kB
+dist/assets/LiveApp-D6Qf3yNs.js                               31.10 kB │ gzip:  11.34 kB
+dist/assets/ArenaSceneView-DCBGKYzd.js                        49.38 kB │ gzip:  15.20 kB
+dist/assets/Help-DKyro6f9.js                                 215.20 kB │ gzip:  67.31 kB
+dist/assets/index-B3pIQvpa.js                                228.68 kB │ gzip:  71.98 kB
+dist/assets/three-CO1BJvup.js                                675.47 kB │ gzip: 171.86 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 587ms
+npm notice
+npm notice New major version of npm available! 11.19.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

@@ -40,7 +40,7 @@ export function ArenaSceneView({ model }: { model: ArenaSceneModel }) {
       {/* a pane inside the Case Files comparison (embed=1) shows its badge, not the modes again */}
       {params.get('embed') === '1'
         ? <p className="embed-head"><EvidenceBadge evidence={evidence} /></p>
-        : <ModeNav current={params.has('casefile') ? 'casefiles' : 'sandbox'} evidence={evidence} />}
+        : <ModeNav current={params.has('play') ? 'play' : params.has('casefile') || params.has('replay') || params.has('run') ? 'research' : params.has('mission') || params.has('lens') || params.has('compare') ? 'compare' : 'play'} evidence={evidence} />}
       {missionBack && <p className="mission-back"><a href={`${import.meta.env.BASE_URL}${missionBack}`} data-testid="mission-back">
         ← Back to the mission</a></p>}
       {raceNotice && <p role="status" className="arena-toast">{raceNotice}</p>}

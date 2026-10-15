@@ -172,6 +172,26 @@ export class ArenaRenderer {
 
   // -- world ---------------------------------------------------------------
 
+  setTheme(theme: Theme) {
+    const p = this.palette = PALETTES[theme];
+    this.scene.background = col(p.background);
+    const uniforms = this.gridMat?.uniforms;
+    if (uniforms) {
+      for (const [name, value] of Object.entries({ uFree:p.free, uOccupied:p.occupied, uUnknown:p.unknown, uClosed:p.closed, uPath:p.path, uBg:p.background })) uniforms[name].value.set(value);
+      uniforms.uClosedAlpha.value = p.closedAlpha;
+    }
+    const colour = (object: THREE.Object3D | null | undefined, value: string) => {
+      const material = (object as THREE.Mesh | undefined)?.material as THREE.MeshBasicMaterial | undefined;
+      material?.color?.set(value);
+    };
+    colour(this.frontier,p.frontier); colour(this.pathLine,p.path); colour(this.lidar,p.lidar);
+    colour(this.truth,p.truth); colour(this.footprint,p.footprint); colour(this.goal,p.goal); colour(this.pickBox,p.pick);
+    colour(this.robot.children[0],p.robot); colour(this.robot.children[1],p.heading);
+    colour(this.flag,p.goal); colour(this.ghost,p.truth);
+    if (this.lidar) (this.lidar.material as THREE.LineBasicMaterial).opacity = p.lidarAlpha;
+    this.three?.setTheme(theme);
+  }
+
   setWorld(world: World, occupancy: Uint8Array, robotOutline: [number, number][]) {
     this.world = world;
     const { width: W, height: H, resolution: r, origin } = world;

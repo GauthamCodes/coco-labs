@@ -9,7 +9,7 @@ const ResearchScene = lazy(() => import('./ResearchScene'));
 /** Existing Arena URLs retain their presentation; M5.5 migrates mode navigation. */
 export function ArenaApp() {
   const params = new URLSearchParams(window.location.search);
-  const Shell = params.has('casefile') || params.has('replay') || params.has('run') ? ResearchScene
+  const Shell = params.has('play') ? PlayScene : params.has('casefile') || params.has('replay') || params.has('run') ? ResearchScene
     : params.has('mission') || params.has('lens') || params.has('compare') ? CompareScene : PlayScene;
   return <Suspense fallback={null}><Shell /></Suspense>;
 }

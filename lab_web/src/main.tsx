@@ -1,52 +1,73 @@
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
-
-import { StrictMode, type ReactNode } from 'react';
+import { Fragment, StrictMode, type ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
-
-import { needsRunIds, route, type Route } from './landing';
+import { needsRunIds, route } from './landing';
+import { GlobalSettings } from './shell/GlobalSettings';
+import { navigate } from './ui/navigation';
+import { applyTheme, isTheme } from './ui/theme';
+import { decodeChallenge, urlFieldError } from './links/bounds.mjs';
 import './ui/style.css';
 import '@fontsource-variable/outfit';
 import '@fontsource-variable/manrope';
-import { applyTheme } from './ui/theme';
 applyTheme();
-
-// Three apps, code-split: the Arena (M1), Learn (M2.8) and the Live view
-// (kept in `main` until M5). The v1 lab views are retired (M2.10): a v1
-// link goes to its Learn mission, to its converted run in the Arena, or
-// to the frozen v1 build at v1/ with its query intact (landing.ts).
 const root = createRoot(document.getElementById('root')!);
-const render = (node: ReactNode) => root.render(<StrictMode>{node}</StrictMode>);
 const BASE = import.meta.env.BASE_URL;
-
-function go(r: Route) {
-  if ('redirect' in r) {
-    window.location.replace(`${BASE}${r.redirect}`);
-  } else if (r.app === 'arena') {
-    void import('./arena/ArenaApp').then(({ ArenaApp }) => render(<ArenaApp />));
-  } else if (r.app === 'learn') {
-    void import('./learn/LearnApp').then(({ LearnApp }) => render(<LearnApp />));
-  } else if (r.app === 'casefiles') {
-    void import('./casefiles/CaseFilesApp').then(({ CaseFilesApp }) => render(<CaseFilesApp />));
-  } else if (r.app === 'play') {
-    void import('./play/PlayApp').then(({ PlayApp }) => render(<PlayApp />));
+const render = (node: ReactNode) => root.render(<StrictMode><Fragment key={window.location.search}>{node}</Fragment><GlobalSettings /></StrictMode>);
+let generation = 0;
+async function display() {
+  const ownGeneration = ++generation;
+  const search = window.location.search, params = new URLSearchParams(search);
+  const requestedTheme = params.get('theme');
+  if (isTheme(requestedTheme)) applyTheme(requestedTheme);
+  const reference = params.get('reference');
+  let node: ReactNode;
+  if (['title', 'play', 'compare'].includes(reference ?? '') && !['run', 'replay', 'casefile', 'play', 'c', 'l', 's', 'z'].some(key => params.has(key))) {
+    const { ReferenceScreens } = await import('./ui/reference/ReferenceScreens'); node = <ReferenceScreens />;
   } else {
-    void import('./ui/LiveApp').then(({ LiveApp }) => render(<LiveApp />));
+    let ids: Set<string> | null = null;
+    if (needsRunIds(search)) {
+      try { const response = await fetch(`${BASE}generated/v2/index.json`, { credentials: 'omit' });
+        const data = await response.json() as { runs?: { id: string }[] }; ids = new Set((data.runs ?? []).map(run => run.id));
+      } catch { /* no index: route to the frozen archive rather than guess */ }
+    }
+    const destination = route(search, __LANDING__, ids);
+    if (ownGeneration !== generation) return;
+    if ('redirect' in destination) {
+      const target = new URL(BASE + destination.redirect, window.location.href);
+      if (target.pathname !== BASE) { window.location.replace(target.href); return; }
+      window.history.replaceState(null, '', target); await display(); return;
+    }
+    let linkError = urlFieldError(params);
+    if (!linkError && (params.has('s') || params.has('z'))) {
+      try { decodeChallenge(params); } catch (error) { linkError = String((error as Error).message); }
+    }
+    if (linkError) {
+      if (ownGeneration === generation) render(<main><p role="alert">Share link refused: {linkError}</p></main>);
+      return;
+    }
+    switch (destination.app) {
+      case 'title': { const { TitleScreen } = await import('./shell/TitleScreen'); node = <TitleScreen />; break; }
+      case 'about': { const { AboutPage } = await import('./shell/AboutPage'); node = <AboutPage />; break; }
+      case 'compare': { const { CompareReference } = await import('./ui/reference/ReferenceScreens'); node = <CompareReference />; break; }
+      case 'arena': { const { ArenaApp } = await import('./arena/ArenaApp'); node = <ArenaApp />; break; }
+      case 'learn': { const { LearnApp } = await import('./learn/LearnApp'); node = <LearnApp />; break; }
+      case 'casefiles': { const { CaseFilesApp } = await import('./casefiles/CaseFilesApp'); node = <CaseFilesApp />; break; }
+      case 'play': { const { PlayApp } = await import('./play/PlayApp'); node = <PlayApp />; break; }
+      case 'live': { const { LiveApp } = await import('./ui/LiveApp'); node = <LiveApp />; break; }
+    }
   }
+  if (ownGeneration === generation) render(node);
 }
-
-const search = window.location.search;
-const reference = new URLSearchParams(search).get('reference');
-const referenceBlocked = ['run', 'replay', 'casefile', 'play', 'c', 'l', 's', 'z'].some((key) => new URLSearchParams(search).has(key));
-if (['title', 'play', 'compare'].includes(reference ?? '') && !referenceBlocked) {
-  void import('./ui/reference/ReferenceScreens').then(({ ReferenceScreens }) => render(<ReferenceScreens />));
-} else if (needsRunIds(search)) {
-  // a Lab 1 link: open its converted run if this site serves it, else v1 recomputes it
-  void fetch(`${BASE}generated/v2/index.json`, { credentials: 'omit' })
-    .then((r) => (r.ok ? r.json() : { runs: [] }))
-    .then((j: { runs?: { id: string }[] }) => new Set((j.runs ?? []).map((x) => x.id)))
-    .catch(() => null)
-    .then((ids) => go(route(search, __LANDING__, ids)));
-} else {
-  go(route(search, __LANDING__));
-}
+const show = () => void display().catch(error => render(<main><p role="alert">Could not open COCO Lab: {String(error)}</p></main>));
+window.addEventListener('popstate', show);
+document.addEventListener('click', event => {
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
+  if (!(event.target instanceof Element)) return;
+  const anchor = event.target.closest<HTMLAnchorElement>('a[href]');
+  if (!anchor || anchor.target || anchor.hasAttribute('download')) return;
+  const url = new URL(anchor.href);
+  if (url.origin !== location.origin || url.pathname !== BASE || (url.hash && url.search === location.search)) return;
+  event.preventDefault(); navigate(url.pathname + url.search + url.hash);
+});
+show();

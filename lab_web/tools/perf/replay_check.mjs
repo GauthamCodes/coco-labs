@@ -65,7 +65,7 @@ try {
     const note = want === 'STACK' ? (await page.getByTestId('stack-note').textContent()).trim() : null;
     const links = await page.getByTestId('recorded-runs').locator('a').count();
     await page.screenshot({ path: join(OUT, `${id}.png`) });
-    const pass = badge === want && st.mode === 'recording' && st.client === null && workers === 0 && st.cursor === st.received
+    const pass = badge === (want === 'MODEL' ? 'MODEL · kinematic' : want) && st.mode === 'recording' && st.client === null && workers === 0 && st.cursor === st.received
       && (want === 'MODEL' ? st.ticks === 1 : st.ticks > 100 && !!st.truth && /tracking error/.test(results) && !!note)
       && links >= 11 && errs.length === 0;
     out.runs[id] = { pass, badge, first_shown_ms: firstMs, ...st, results, note, links, workers, errors: errs };

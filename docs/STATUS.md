@@ -2,9 +2,9 @@
 
 ## Position
 
-- Branch: `v2/m5-focus`; checked implementation SHA: `007f749`.
-- M5 · Focus and polish: M5.0–M5.4 complete; M5.5 app shell next.
-- M5.5–M5.11 remain. No PR, merge or release yet. Independent milestone review remains required.
+- Branch: `v2/m5-focus`; checked implementation SHA: `592d1d9`.
+- M5 · Focus and polish: M5.0–M5.5 complete; M5.6 Play next.
+- M5.6–M5.11 remain. No PR, merge or release yet. Independent milestone review remains required.
 - Master plan revision 3, copied byte-for-byte; sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
 - Canonical agent rules: [AGENTS.md](../AGENTS.md). Historical status: [STATUS_HISTORY.md](v2/STATUS_HISTORY.md).
 - Prompts: [M5](v2/M5_PROMPT.md), [owner amendments](v2/M5_CONTINUATION.md).
@@ -37,13 +37,18 @@
   Five final canvas tests have zero differing pixels; 22 URL forms + six archive views and five replays pass.
   Twelve final references: zero console errors, one GL context each. No model/hash change.
 
+- M5.5: actual title, warm worker, three-purpose routes, About and Settings.
+  [Report](v2/data/m5/app-shell/REPORT.md): 3534 / 466 / 195 pass; typecheck/build/dist pass.
+  50 URL forms + six archive views, five identical canvas checks and five replays pass.
+  Warm/cold hashes match both versions/specs; failed warm-up retries successfully.
+
 ## Owner rows, phone and design inputs
 
 - Notes found: [committed blank template](v2/usability/2026-10-pre-m5.md), unchanged.
 - [Design inputs](v2/M5_DESIGN_INPUTS.md): no pre-design observations exist; prerequisite explicitly waived.
 - Target Nothing Phone (1), recorded by Gautham. [Profile](v2/PHONE_PROFILE.md): hardware facts assumed until measured.
 - Real Phone criterion is agent-owned and pending: connect phone over USB with debugging enabled.
-  [Latest ADB check](v2/data/m5/phone/ADB_CHECK_M54.txt): no device connected.
+  [Latest ADB check](v2/data/m5/phone/ADB_CHECK_M55.txt): no device connected.
 - Emulator is labelled emulated Nothing Phone (1); CPU 4× proxy, viewport/DPR shared harness.
   It cannot satisfy the real Phone row. Provisional cap 60 fps, optional 120; automatic tier/DPR pending heat run.
 - Five-person usability remains Gautham-owned, pending, a public-launch gate only.
@@ -55,6 +60,7 @@
 - [Emulated phone landscape](v2/data/m5/screens/defects/race-nothing-landscape.png).
 - [Emulated phone portrait](v2/data/m5/screens/defects/race-nothing-portrait.png).
 - [M5.4 reference index](v2/data/m5/screens/reference/README.md): title, Play HUD and two-pane Compare at 1440×900, 844×390 and both emulated Nothing Phone (1) orientations; light theme and colour-vision simulations included.
+- [M5.5 app-shell review](v2/data/m5/screens/app-shell/README.md): twenty real mode views and four light Settings captures, desktop/compact and both emulated phone orientations.
 - No recorded feedback yet; continue without waiting.
 
 ## Open questions
@@ -92,8 +98,8 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 ## Next step
 
-M5.5: actual attract/title and three-mode app shell, About, Settings drawer and route migration.
-Keep every old URL form working and extend the URL checks to M3/M4 links.
-M5.4 reference screenshots await soft review; apply any recorded feedback next checkpoint.
+M5.6: full-screen Play HUD, camera/walls/vision, cards/scorecard/replay/tutorial and phone interactions.
+Preserve capabilities via Settings/Compare while meeting Focus: <=8 visible controls, no scroll.
+M5.4/M5.5 screenshots await soft review; apply any recorded feedback next checkpoint.
 No stop condition hit; no new parked idea. Real phone absent; provisional settings unchanged.
 M5 remains open; public launch still waits for real-phone pass and Gautham's usability gate.

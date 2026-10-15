@@ -60,6 +60,7 @@ export function PlayApp() {
     <main className="play" data-testid="play">
       <ModeNav current="play" evidence={c === 'case-file-detective' ? 'STACK' : 'MODEL'} />
       <h1 className="mode-title"><a href={`${BASE}?view=play`}>Play</a></h1>
+      <p><a className="arena-go" href={`${BASE}?view=arena`}>Free roam · drive or set a goal</a></p>
       {error && <p className="error" role="alert">{error}</p>}
       {hasSharedScore(params) && !shared && <p className="error" role="alert">This challenge link is malformed; nothing was scored.</p>}
       {!levels && !error && <p>Loading the challenges…</p>}

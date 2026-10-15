@@ -1,0 +1,1 @@
+Both hash versions × both shipped specs: warm/cold world and 25 state/chain hashes identical; title emitted no model world.

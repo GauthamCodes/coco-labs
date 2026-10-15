@@ -99,31 +99,40 @@ function column(cols: PyProxy, name: string): ArrayBufferView {
   return copy;
 }
 
-async function boot(req: Extract<ToWorker, { type: 'boot' }>) {
+async function boot(req: Extract<ToWorker, { type: 'boot' | 'warm' }>) {
   mark('worker_boot');
-  const files = Promise.all([
-    fetch(`${req.assetsBase}arena/manifest.json`, { credentials: 'omit' }).then((r) => r.json()),
-    fetch(`${req.assetsBase}arena/coco_lab.zip`, { credentials: 'omit' }).then((r) => r.arrayBuffer()),
-    // only a file the site ships (protocol.SPEC_FILES): a boot request never names a path
-    fetch(`${req.assetsBase}arena/${Object.values(SPEC_FILES).find((f) => f === req.spec) ?? SPEC_FILES.v1}`,
-      { credentials: 'omit' }).then((r) => r.text()),
-  ]);
-  const mod = await import(/* @vite-ignore */ `${req.pyodideBase}pyodide.mjs`);
-  mark('pyodide_module');
-  const py: Pyodide = await mod.loadPyodide({ indexURL: req.pyodideBase });
-  mark('pyodide_ready');
-  const [manifest, zipBuf, spec] = await files;
-  const zip = new Uint8Array(zipBuf);
-  const digest = await sha256(zip);
-  if (digest !== manifest.coco_lab_zip.sha256) {
-    throw new Error(`coco_lab.zip sha256 ${digest} is not the manifest's ${manifest.coco_lab_zip.sha256}`);
+  // Only allow a shipped spec; overlap its fetch with a cold interpreter boot.
+  const specP = req.type === 'boot' ? fetch(`${req.assetsBase}arena/${Object.values(SPEC_FILES).find((f) => f === req.spec) ?? SPEC_FILES.v1}`, { credentials: 'omit' }).then((r) => r.text()) : null;
+  // The title warms the interpreter, not an Arena. A claimed worker creates a
+  // fresh Arena from this request's spec/seed/hash version using the same glue.
+  if (!booted) {
+    const files = Promise.all([
+      fetch(`${req.assetsBase}arena/manifest.json`, { credentials: 'omit' }).then((r) => r.json()),
+      fetch(`${req.assetsBase}arena/coco_lab.zip`, { credentials: 'omit' }).then((r) => r.arrayBuffer()),
+    ]);
+    const runtime = import(/* @vite-ignore */ `${req.pyodideBase}pyodide.mjs`).then(async (mod) => {
+      mark('pyodide_module');
+      const py: Pyodide = await mod.loadPyodide({ indexURL: req.pyodideBase });
+      mark('pyodide_ready');
+      return py;
+    });
+    const [[manifest, zipBuf], py] = await Promise.all([files, runtime]);
+    const zip = new Uint8Array(zipBuf);
+    const digest = await sha256(zip);
+    if (digest !== manifest.coco_lab_zip.sha256) {
+      throw new Error(`coco_lab.zip sha256 ${digest} is not the manifest's ${manifest.coco_lab_zip.sha256}`);
+    }
+    py.unpackArchive(zip, 'zip', { extractDir: '/home/pyodide' });
+    booted = { py, manifest, assetsBase: req.assetsBase };
+    py.FS.writeFile('/home/pyodide/arena_glue.py', glueSource);
+    py.runPython("import sys\nsys.path.insert(0, '/home/pyodide')");
+    glue = py.pyimport('arena_glue');
+    mark('coco_lab_ready');
   }
-  py.unpackArchive(zip, 'zip', { extractDir: '/home/pyodide' });
-  booted = { py, manifest, assetsBase: req.assetsBase };
-  py.FS.writeFile('/home/pyodide/arena_glue.py', glueSource);
-  py.runPython("import sys\nsys.path.insert(0, '/home/pyodide')");
-  glue = py.pyimport('arena_glue');
-  mark('coco_lab_ready');
+  if (req.type === 'warm') { mark('model_warm'); return; }
+  if (!glue) throw new Error('Arena glue unavailable after warm-up');
+  const spec = await specP!;
+  amends.length = 0;
   const onBatch = (cols: PyProxy, metaJson: string) => {
     const columns = {} as Record<string, ArrayBufferView>;
     for (const name of Object.keys(COLUMN_TYPES)) columns[name] = column(cols, name);
@@ -229,12 +238,17 @@ self.onmessage = (ev: MessageEvent<ToWorker>) => {
   }
   queue = queue.then(async () => {
     try {
-      if (req.type === 'boot') await boot(req);
+      if (req.type === 'boot' || req.type === 'warm') await boot(req);
       else if (req.type === 'compare') compare(req);
       else if (req.type === 'play') await play(req);
       else await step(req);
     } catch (e) {
-      post({ type: 'error', stage: req.type, message: e instanceof Error ? e.message : String(e) });
+      if (req.type === 'warm') {
+        // Optional background preparation may fail (for example offline).
+        // A subsequent real boot retries normally and reports its own error.
+        try { (glue as unknown as { destroy?: () => void } | null)?.destroy?.(); } catch { /* no live model exists during warming */ }
+        glue = null; booted = null; mark('model_warm_failed');
+      } else post({ type: 'error', stage: req.type, message: e instanceof Error ? e.message : String(e) });
     }
   });
 };
