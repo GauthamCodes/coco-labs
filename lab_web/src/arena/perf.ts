@@ -13,7 +13,7 @@ import { wallMs } from './protocol';
 export interface PerfSnapshot {
   navStart: number;
   marks: Record<string, number>;        // wall ms
-  fps: number;                          // rAF frames in the last second
+  fps: number;                          // submitted renderer frames in the last second
   frameMsP95: number;
   eventsReceived: number;
   eventsPerSecond: number;              // over the last second
@@ -24,7 +24,7 @@ export interface PerfSnapshot {
   inputToMotionMs: number[];            // M4.10: drive input -> the robot drawn moved
 }
 
-class Perf {
+export class Perf {
   readonly navStart = performance.timeOrigin;
   readonly marks: Record<string, number> = {};
   private frames: number[] = [];
@@ -122,6 +122,7 @@ class Perf {
 
   snapshot(): PerfSnapshot {
     const now = wallMs();
+    while (this.frames.length && now - this.frames[0] > 1000) this.frames.shift();
     const recent = this.eventTimes.filter(([t]) => now - t <= 1000);
     const gaps = this.frames.slice(1).map((t, i) => t - this.frames[i]).sort((a, b) => a - b);
     const s = [...this.steps].sort((a, b) => a - b);

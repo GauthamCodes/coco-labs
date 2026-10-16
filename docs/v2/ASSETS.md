@@ -68,6 +68,7 @@ Source of full checksums: [DESIGN_ASSETS.json](DESIGN_ASSETS.json). Packages are
 | Outfit | display | 5.3.0 | OFL-1.1 | https://fontsource.org/fonts/outfit |
 | Manrope | UI | 5.3.0 | OFL-1.1 | https://fontsource.org/fonts/manrope |
 | Lucide | icon set | 1.57.0 | ISC (retained Feather MIT notice included) | https://lucide.dev |
+| COCO Lab app icon | installable app | 1.0 | Apache-2.0 | lab_web/public/icons/coco.svg (original repository artwork) |
 
 **Outfit**
 
@@ -89,3 +90,8 @@ Source of full checksums: [DESIGN_ASSETS.json](DESIGN_ASSETS.json). Packages are
 
 - complete distributed Lucide ESM tree: `cada8419f7862ec60fd537da6fa600c1ad293e10c3a851644394d5b5cfb706b3`
 - Licence checksum: `b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57`
+
+**COCO Lab app icon**
+
+- lab_web/public/icons/coco.svg: `cde85baf781278e56a2fa8a674b6d0bfb0eb0de5ff3ab7779013d0b2513c9c28`
+- Licence checksum: `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30`

@@ -4,7 +4,7 @@
 /**
  * `?perf`: the numbers a phone measurement needs, on screen (M1.5).
  * Times are milliseconds since navigation started, measured in this
- * browser; fps counts real animation frames over the last second.
+ * browser; fps counts submitted renderer frames over the last second.
  */
 
 import { useEffect, useState } from 'react';
@@ -28,11 +28,8 @@ const STAGES: [string, string][] = [
 export function PerfOverlay() {
   const [s, setS] = useState<PerfSnapshot>(() => perf.snapshot());
   useEffect(() => {
-    let raf = 0;
-    const loop = () => { perf.frame(); raf = requestAnimationFrame(loop); };
-    raf = requestAnimationFrame(loop);
     const t = setInterval(() => setS(perf.snapshot()), 500);
-    return () => { cancelAnimationFrame(raf); clearInterval(t); };
+    return () => clearInterval(t);
   }, []);
   const since = (at?: number | null) => (at ? `${Math.round(at - s.navStart)} ms` : '—');
   return (

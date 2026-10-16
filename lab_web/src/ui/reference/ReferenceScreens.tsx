@@ -11,8 +11,8 @@ import { useArenaScene } from '../../arena/sceneCore';
 import { Joystick } from '../../arena/Joystick';
 import { Help } from '../../arena/Help';
 import { rebind, resetBindings } from '../../arena/controls';
-import { TOKENS } from '../tokens';
-import { activeTheme, applyMotion } from '../theme';
+import { Minimap } from '../../play/Minimap';
+import { applyMotion } from '../theme';
 import { ModeNav } from '../ModeNav';
 import './reference.css';
 
@@ -40,27 +40,6 @@ function TitleReference() {
   </main>;
 }
 
-function Minimap({ model }: { model: ReturnType<typeof useArenaScene> }) {
-  const canvas = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    if (!model.world || !model.occupancy.current || !canvas.current) return;
-    const world = model.world, occupancy = model.occupancy.current, p = TOKENS.computation[activeTheme()];
-    const ctx = canvas.current.getContext('2d')!; const size = 192;
-    ctx.clearRect(0, 0, size, size); ctx.fillStyle = p.free; ctx.fillRect(0, 0, size, size);
-    const scale = Math.min(size / world.width, size / world.height);
-    const ox = (size - world.width * scale) / 2, oy = (size - world.height * scale) / 2;
-    ctx.fillStyle = p.occupied;
-    for (let row = 0; row < world.height; row++) for (let col = 0; col < world.width; col++) if (occupancy[row * world.width + col]) ctx.fillRect(ox + col * scale, oy + row * scale, Math.max(1, scale), Math.max(1, scale));
-    const pose = model.tick?.pose;
-    if (pose) {
-      const x = ox + (pose[0] - world.origin[0]) / world.resolution * scale;
-      const y = oy + (world.height - (pose[1] - world.origin[1]) / world.resolution) * scale;
-      ctx.fillStyle = p.robot; ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = p.path; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(pose[2]) * 9, y - Math.sin(pose[2]) * 9); ctx.stroke();
-    }
-  }, [model.world, model.tick]);
-  return <figure className="night-minimap"><canvas ref={canvas} width={192} height={192} aria-label="COCO's known planning occupancy map" /><figcaption>KNOWN MAP</figcaption></figure>;
-}
 
 function PlayReference() {
   const m = useArenaScene();

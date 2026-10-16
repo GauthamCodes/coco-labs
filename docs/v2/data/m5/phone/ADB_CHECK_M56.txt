@@ -1,0 +1,4 @@
+2026-10-15T23:15:23.831942+05:30 · M5.6
+List of devices attached
+
+Real Nothing Phone (1): not connected; measurements pending USB.

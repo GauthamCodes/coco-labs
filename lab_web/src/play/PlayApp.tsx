@@ -1,5 +1,6 @@
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
+import {trapDialogTab} from '../ui/dialog';
 
 /**
  * Play (M3.5): five challenges, each scored by a robotics metric.
@@ -16,9 +17,15 @@
  */
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import {createPortal} from 'react-dom';
 
 import { ArenaClient } from '../arena/client';
-import { ModeNav } from '../ui/ModeNav';
+import { EvidenceBadge } from '../ui/ModeNav';
+import { Settings } from 'lucide-react';
+import { openSettings } from '../shell/settings_events';
+import { enterPhonePlay,leavePhonePlay,isPhone } from './phone';
+import './cards.css';
+import './hud.css';
 import type { PlayResult } from './best';
 import { readShownBest } from './best';
 import { GridBoard, type Cell, type GridView } from './GridBoard';
@@ -57,10 +64,8 @@ export function PlayApp() {
   const lv = ch && l ? ch.levels.find((x) => x.id === l) ?? null : null;
 
   return (
-    <main className="play" data-testid="play">
-      <ModeNav current="play" evidence={c === 'case-file-detective' ? 'STACK' : 'MODEL'} />
-      <h1 className="mode-title"><a href={`${BASE}?view=play`}>Play</a></h1>
-      <p><a className="arena-go" href={`${BASE}?view=arena`}>Free roam · drive or set a goal</a></p>
+    <main className={`play ${isPhone()?'play-phone':''}`} data-testid="play">
+      <header className="play-header"><h1 className="mode-title">Play</h1><EvidenceBadge evidence={c === 'case-file-detective' ? 'STACK' : 'MODEL'} /><button className="night-icon-button" aria-label="Settings" onClick={openSettings}><Settings size={20}/></button></header>
       {error && <p className="error" role="alert">{error}</p>}
       {hasSharedScore(params) && !shared && <p className="error" role="alert">This challenge link is malformed; nothing was scored.</p>}
       {!levels && !error && <p>Loading the challenges…</p>}
@@ -73,14 +78,20 @@ export function PlayApp() {
 }
 
 function ChallengeList({ levels }: { levels: Levels }) {
-  return (
-    <section className="play-list">
-      <p className="lede">Five challenges, each scored by a real robotics metric, with stars set by reference algorithms
-        on the same level (<code>docs/v2/CHALLENGES.md</code>). No server, no accounts: a score is re-computed from its
-        inputs by anyone, with <code>coco verify</code>.</p>
-      {levels.order.map((id) => <ChallengePage key={id} id={id} levels={levels} compact />)}
-    </section>
-  );
+  return <section className="play-list game-cards" aria-label="Choose a game">
+    {levels.order.map((id,index)=>{
+      const ch=levels.challenges[id];
+      const bests=ch.levels.map(level=>({level,best:readShownBest(id,level.id)})).filter(row=>row.best);
+      bests.sort((a,b)=>b.best!.stars-a.best!.stars);
+      const best=bests[0];
+      return <a className="play-challenge game-card" data-testid={`challenge-${id}`} key={id} href={`${BASE}?view=play&c=${id}`}>
+        <span className="night-eyebrow">0{index+1} · {id==='race-the-ghost'?'DRIVE':'CHALLENGE'}</span>
+        <h2>{ch.title}</h2><p>{ch.goal}</p>
+        <span className="game-best">{best?`${stars(best.best!.stars)} · best ${best.best!.score} (${best.level.title})`:'☆☆☆ · Set your first best'}</span>
+      </a>;
+    })}
+    <a className="game-free" href={`${BASE}?view=arena`} onClick={()=>void enterPhonePlay()}>Free roam <span>Drive, explore, click a goal →</span></a>
+  </section>;
 }
 
 function ChallengePage({ id, levels, compact }: { id: string; levels: Levels; compact?: boolean }) {
@@ -94,7 +105,7 @@ function ChallengePage({ id, levels, compact }: { id: string; levels: Levels; co
           const best = readShownBest(id, lv.id);
           return (
             <li key={lv.id}>
-              <a href={`${BASE}?view=play&c=${id}&l=${lv.id}`} data-testid={`level-${id}-${lv.id}`}>{lv.title}</a>
+              <a href={`${BASE}?view=play&c=${id}&l=${lv.id}`} onClick={()=>void enterPhonePlay()} data-testid={`level-${id}-${lv.id}`}>{lv.title}</a>
               {best && <span className="play-best"> {stars(best.stars)}</span>}
             </li>
           );
@@ -110,6 +121,9 @@ function LevelPage({ challenge, level, levels, shared }: {
   challenge: string; level: Level; levels: Levels; shared: ReturnType<typeof decodeScore>;
 }) {
   const ch = levels.challenges[challenge];
+  useEffect(()=>{document.documentElement.classList.add('playing-coco');return()=>{document.documentElement.classList.remove('playing-coco');void leavePhonePlay();};},[]);
+  const rules=useRef<HTMLDialogElement>(null);
+  const [rulesTarget,setRulesTarget]=useState<HTMLDivElement|null>(null);
   const isShared = !!shared && shared.submission.challenge === challenge && shared.submission.level === level.id;
   const needPython = isShared || !IN_ARENA.has(challenge);
   const { client, ready, error } = useScorer(needPython);
@@ -153,32 +167,29 @@ function LevelPage({ challenge, level, levels, shared }: {
     score(shared!.submission.inputs, shared!.result_hash);
   }, [view]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return (
-    <section className="play-level" data-testid="play-level" data-challenge={challenge} data-level={level.id}>
-      <p><a href={`${BASE}?view=play&c=${challenge}`}>← {ch.title}</a></p>
-      <h2>{level.title}</h2>
-      <p>{ch.goal}</p>
-      {level.story && <p className="play-story">{level.story}</p>}
-      {error && <p className="error" role="alert">{error}</p>}
-      {fail && <p className="error" role="alert" data-testid="play-fail">{fail}</p>}
-      {needPython && !view && !error && <p data-testid="play-loading">Loading the scorer: coco_lab, in Python, in your browser…</p>}
-      {isShared && <p className="play-shared">A challenge link: its inputs are re-scored here.</p>}
-      {!isShared && IN_ARENA.has(challenge) && (
-        <p><a className="arena-go" data-testid="play-arena-go" href={`${BASE}${arenaPlayHref(challenge, level)}`}>
-          {challenge === 'map-the-arena' ? 'Drive in the Arena →' : challenge === 'race-the-ghost' ? 'Race in the Arena →' : 'Open the Case File →'}</a></p>
-      )}
-      {!isShared && view && challenge === 'beat-the-planner' && <BeatThePlanner view={view} onScore={score} result={result?.r ?? null} />}
-      {!isShared && view && challenge === 'next-node' && <NextNode view={view} onScore={score} />}
-      {!isShared && view && challenge === 'search-the-bays' && <SearchTheBays level={level} onScore={score} />}
-      {busy && <p data-testid="play-busy" role="status">{busy}</p>}
-      {result && <ResultView result={result.r} submission={result.s} reproduced={result.reproduced} />}
-    </section>
-  );
+  return <section className="play-level" data-testid="play-level" data-challenge={challenge} data-level={level.id}>
+    <section className="decision-rotate"><h2>Rotate your phone</h2><p>COCO has room to play in landscape.</p><a href={`${BASE}?view=play`}>Back to games</a></section>
+    <header className="level-top"><a href={`${BASE}?view=play&c=${challenge}`}>← Levels</a><h2>{level.title}</h2><button onClick={()=>rules.current?.showModal()}>Rules and reference</button></header>
+    <dialog className="play-rules" onKeyDown={trapDialogTab} ref={rules} aria-label="Rules and reference"><header><h2>{ch.title}</h2><button autoFocus onClick={()=>rules.current?.close()}>Back to game</button></header><p>{ch.goal}</p>{level.story&&<p>{level.story}</p>}
+    <p>{challenge==='beat-the-planner'?"Click the cell next to your path's end to extend it (diagonals too); click the end to take a step back. Dark cells are walls; coloured cells cost more to cross, brighter costing more.":challenge==='next-node'?"Hover an open cell to read its g and h; click the one A* expands next.":challenge==='search-the-bays'?"Click the bays in the order to look (each one once). Each look adds its cost, in metres of driving, to the drive there; the search stops at the first find.":'Open the robot view to play this level.'}</p><div ref={setRulesTarget}/></dialog>
+    {error&&<p className="error" role="alert">{error}</p>}
+    {fail&&<p className="error" role="alert" data-testid="play-fail">{fail}</p>}
+    {needPython&&!view&&!error&&<p data-testid="play-loading">Loading the scorer: coco_lab, in Python, in your browser…</p>}
+    {isShared&&<p className="play-shared">A challenge link: its inputs are re-scored here.</p>}
+    {!isShared&&IN_ARENA.has(challenge)&&<p><a className="arena-go" data-testid="play-arena-go" onClick={()=>void enterPhonePlay()} href={`${BASE}${arenaPlayHref(challenge,level)}`}>{challenge==='map-the-arena'?'Drive in the Arena →':challenge==='race-the-ghost'?'Race in the Arena →':'Open the Case File →'}</a></p>}
+    {!isShared&&view&&challenge==='beat-the-planner'&&<BeatThePlanner view={view} onScore={score} result={result?.r??null} rulesTarget={rulesTarget}/>}
+    {!isShared&&view&&challenge==='next-node'&&<NextNode view={view} onScore={score}/>}
+    {!isShared&&view&&challenge==='search-the-bays'&&<SearchTheBays level={level} onScore={score} rulesTarget={rulesTarget}/>}
+    {isShared&&view&&result&&<SubmissionReview view={view} level={level} submission={result.s}/>}
+    {busy&&<p data-testid="play-busy" role="status">{busy}</p>}
+    {result&&<ResultView result={result.r} submission={result.s} reproduced={result.reproduced}/>}
+  </section>;
 }
 
 // -- beat the planner ------------------------------------------------------------
 
-function BeatThePlanner({ view, onScore, result }: {
+function BeatThePlanner({ view, onScore, result, rulesTarget }: {
+  rulesTarget:HTMLElement|null;
   view: Record<string, unknown>; onScore: (inputs: unknown) => void; result: PlayResult | null;
 }) {
   const grid = view.grid as GridView;
@@ -192,12 +203,12 @@ function BeatThePlanner({ view, onScore, result }: {
   return (
     <div className="play-board">
       <p className="hint">Click the cell next to your path's end to extend it (diagonals too); click the end to take a
-        step back. Dark cells are walls; brown cells cost more to cross, darker costing more.</p>
+        step back. Dark cells are walls; coloured cells cost more to cross, brighter costing more.</p>
       <GridBoard grid={grid} label="Beat the planner: the level's grid" onCell={add}
         overlay={{ path, ghost: result ? (view.optimal_path as Cell[]) : undefined }} />
       <p className="play-controls">
         <button type="button" onClick={() => setPath(path.length > 1 ? path.slice(0, -1) : path)}>Undo</button>
-        <button type="button" onClick={() => setPath([S])}>Clear</button>
+        {rulesTarget&&createPortal(<button type="button" onClick={() => setPath([S])}>Clear path</button>,rulesTarget)}
         <button type="button" data-testid="play-submit" onClick={() => onScore(path)}>Score my path</button>
         <span> {path.length - 1} moves</span>
       </p>
@@ -227,7 +238,7 @@ function NextNode({ view, onScore }: { view: Record<string, unknown>; onScore: (
   const hit = revealed && fr.tied.some((t) => t[0] === guesses[i][0] && t[1] === guesses[i][1]);
   return (
     <div className="play-board">
-      <p className="hint">Prediction {Math.min(i + 1, 10)} of 10. Hover an open cell to read its g and h; click the one
+      <p className="play-prediction">Prediction {Math.min(i + 1, 10)} of 10. Hover an open cell to read its g and h; click the one
         A* expands next.</p>
       <GridBoard grid={grid} label="Next node: A*'s search part-way" onCell={pick} onHover={setHover}
         overlay={{ closed: fr.closed, open: fr.open.map((o) => [o[0], o[1]] as Cell), mark: revealed ? guesses[i] : null,
@@ -252,7 +263,7 @@ interface Problem {
   detection: number[]; prior: number[];
 }
 
-function SearchTheBays({ level, onScore }: { level: Level; onScore: (inputs: unknown) => void }) {
+function SearchTheBays({ level, onScore, rulesTarget }: { level: Level; onScore: (inputs: unknown) => void; rulesTarget:HTMLElement|null }) {
   const p = level.problem as Problem;
   const [order, setOrder] = useState<number[]>([]);
   const ids = p.regions.map((r) => r.id);
@@ -267,7 +278,7 @@ function SearchTheBays({ level, onScore }: { level: Level; onScore: (inputs: unk
           ))}
         </tbody>
       </table>
-      <details><summary>Driving between bays (m)</summary>
+      {rulesTarget&&createPortal(<details><summary>Driving between bays (m)</summary>
         <table className="play-bays">
           <thead><tr><th>from \ to</th>{p.regions.map((r) => <th key={r.id}>{r.label}</th>)}</tr></thead>
           <tbody>
@@ -276,7 +287,7 @@ function SearchTheBays({ level, onScore }: { level: Level; onScore: (inputs: unk
             ))}
           </tbody>
         </table>
-      </details>
+      </details>,rulesTarget)}
       <p className="hint">Click the bays in the order to look (each one once). Each look adds its cost, in metres of
         driving, to the drive there; the search stops at the first find.</p>
       <p className="play-controls">
@@ -287,9 +298,24 @@ function SearchTheBays({ level, onScore }: { level: Level; onScore: (inputs: unk
       </p>
       <p data-testid="play-order">Your order: {order.length ? order.map((i) => p.regions[i].label).join(' → ') : '—'}</p>
       <p className="play-controls">
-        <button type="button" onClick={() => setOrder([])}>Clear</button>
+        {rulesTarget&&createPortal(<button type="button" onClick={() => setOrder([])}>Clear order</button>,rulesTarget)}
         <button type="button" data-testid="play-submit" disabled={order.length !== ids.length} onClick={() => onScore(order)}>Score my order</button>
       </p>
     </div>
   );
+}
+
+/** Shared scores replay their actual submitted choices, not an editable fresh answer. */
+function SubmissionReview({view,level,submission}:{view:Record<string,unknown>;level:Level;submission:Submission}){
+ const [index,setIndex]=useState(0);
+ if(submission.challenge==='beat-the-planner')return <div className="play-board"><GridBoard grid={view.grid as GridView} label="Your recorded path and the reference path" overlay={{path:submission.inputs as Cell[],ghost:view.optimal_path as Cell[]}}/><p className="play-readout">Your submitted path · pink. A* reference · dashed green.</p></div>;
+ if(submission.challenge==='next-node'){
+  const frames=view.frames as Frame[],frame=frames[index],guesses=submission.inputs as Cell[];
+  return <div className="play-board"><GridBoard grid={view.grid as GridView} label="Your recorded prediction" overlay={{closed:frame.closed,open:frame.open.map(row=>[row[0],row[1]]),mark:guesses[index],truth:frame.expanded,tied:frame.tied}}/><label className="play-readout">Prediction {index+1} of {frames.length}<input aria-label="Recorded prediction" type="range" min={0} max={frames.length-1} value={index} onChange={event=>setIndex(Number(event.target.value))}/></label></div>;
+ }
+ if(submission.challenge==='search-the-bays'){
+  const problem=level.problem as Problem;
+  return <section><h2>Your recorded order</h2><ol>{(submission.inputs as number[]).map(i=><li key={i}>{problem.regions[i]?.label??'Unknown bay'}</li>)}</ol></section>;
+ }
+ return <p>Your score was recomputed from this link's recorded inputs.</p>;
 }

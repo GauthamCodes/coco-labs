@@ -1,5 +1,7 @@
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
+import {isBool,readPref,writePref} from '../prefs';
+import {notifySettings} from '../shell/settings_events';
 import { ArenaPlayPanel } from '../play/ArenaPlayPanel';
 import { EvidenceBadge, ModeNav } from '../ui/ModeNav';
 import { Compare } from './Compare';
@@ -19,7 +21,7 @@ import { LENS_BY_ID } from './lens/registry';
 import { GapChips } from '../learn/gaps';
 import type { ArenaSceneModel } from './sceneCore';
 
-export function ArenaSceneView({ model }: { model: ArenaSceneModel }) {
+export function ArenaSceneView({ model, controlsOnly = false }: { model: ArenaSceneModel; controlsOnly?: boolean }) {
   const {
     params, showPerf, recId, missionBack, playParam, playLevel, playOn,
     raceOn, raceNotice, gaps, cfgInitial, canvas, world, liveReady,
@@ -38,7 +40,7 @@ export function ArenaSceneView({ model }: { model: ArenaSceneModel }) {
   return (
     <main className="arena" data-testid="arena">
       {/* a pane inside the Case Files comparison (embed=1) shows its badge, not the modes again */}
-      {params.get('embed') === '1'
+      {controlsOnly ? null : params.get('embed') === '1'
         ? <p className="embed-head"><EvidenceBadge evidence={evidence} /></p>
         : <ModeNav current={params.has('play') ? 'play' : params.has('casefile') || params.has('replay') || params.has('run') ? 'research' : params.has('mission') || params.has('lens') || params.has('compare') ? 'compare' : 'play'} evidence={evidence} />}
       {missionBack && <p className="mission-back"><a href={`${import.meta.env.BASE_URL}${missionBack}`} data-testid="mission-back">
@@ -52,7 +54,7 @@ export function ArenaSceneView({ model }: { model: ArenaSceneModel }) {
           onReset={() => setBindings(resetBindings())}
           onSetting={changeSetting} onClose={() => setHelpOpen(false)} />
       )}
-      {playOn && <ArenaPlayPanel challenge={playParam!} levelId={playLevel!}
+      {!controlsOnly && playOn && <ArenaPlayPanel challenge={playParam!} levelId={playLevel!}
         live={playParam === 'map-the-arena' || raceOn ? client.current : null} liveReady={liveReady}
         lastTick={() => lastTick.current} shownTick={() => session?.shownTick?.tick ?? null} log={() => log.current}
         onGhost={(flag, ghost) => r.current?.setRace(flag, ghost)} />}
@@ -87,7 +89,7 @@ export function ArenaSceneView({ model }: { model: ArenaSceneModel }) {
       {lens === 'decide' && session && <MissionPanel session={session} tick={tick?.tick ?? 0} />}
       {level !== 'watch' && session && (() => { const c = caption(lens, session.families, tick?.tick ?? 0);
         return c ? <p className="lens-caption" data-testid="lens-caption" role="status">{c}</p> : null; })()}
-      <div className="arena-stage">
+      {!controlsOnly && <div className="arena-stage">
         <canvas ref={canvas} className="arena-canvas" data-testid="arena-canvas"
           aria-label="The arena: click or tap to give COCO a goal" />
         {!world && <p className="arena-loading" data-testid="arena-status">Loading…</p>}
@@ -107,6 +109,7 @@ export function ArenaSceneView({ model }: { model: ArenaSceneModel }) {
         )}
         {hover && <span className="hover-label" data-testid="hover-label" style={{ left: hover.x, top: hover.y }}>{hover.text}</span>}
       </div>
+      }
       {compare && world && occupancy.current && (
         <Compare state={compare} world={world} occupancy={occupancy.current} outline={outline.current} onClose={() => setCompare(null)} />
       )}
@@ -162,7 +165,7 @@ export function ArenaSceneView({ model }: { model: ArenaSceneModel }) {
           </div>
         )}
         <div className="arena-row">
-          {showLive && <Joystick onChange={onJoystick} />}
+          {showLive && coarse && <Joystick onChange={onJoystick} />}
           <div className="layers-and-share">
             {lens !== 'plan' && (
               <div className="arena-row" role="group" aria-label={`${LENS_BY_ID[lens].title} layers`}>
@@ -184,9 +187,9 @@ export function ArenaSceneView({ model }: { model: ArenaSceneModel }) {
                     {TIER_CHOICES.map((t) => <option key={t} value={t}>{t === 'auto' ? `auto (now ${tierNow})` : t}</option>)}
                   </select>
                 </label>
-                <label className="layer-toggle" title="Walls, columns and landmarks stop at 0.35 m, so every layer stays in view">
-                  <input type="checkbox" data-testid="low-walls" onChange={(e) => { if (r.current?.three) r.current.three.lowWalls = e.target.checked; }} />
-                  low walls
+                <label className="layer-toggle" title="Display walls, columns and landmarks at half height; the model geometry stays unchanged">
+                  <input type="checkbox" data-testid="low-walls" checked={r.current?.three?.lowWalls??readPref('walls',false,isBool)} onChange={(e) => { writePref('walls',e.target.checked);notifySettings(); }} />
+                  half-height walls
                 </label>
               </div>
             )}

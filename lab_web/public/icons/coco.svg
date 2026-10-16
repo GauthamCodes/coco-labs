@@ -1,0 +1,11 @@
+<!-- Copyright 2026 Gautham Anil; SPDX-License-Identifier: Apache-2.0. Original COCO Lab icon. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+ <rect width="512" height="512" rx="104" fill="#10171d"/>
+ <path d="M96 340H416M96 172H416M172 96V416M340 96V416" stroke="#26333d" stroke-width="3"/>
+ <path d="M112 320H176V244H300" fill="none" stroke="#ef9bc0" stroke-width="8" stroke-linejoin="round"/>
+ <rect x="184" y="160" width="144" height="200" rx="30" fill="#8b969b"/>
+ <g fill="#26333d" stroke="#b2bdc3" stroke-width="6"><rect x="158" y="182" width="42" height="66" rx="12"/><rect x="312" y="182" width="42" height="66" rx="12"/><rect x="158" y="280" width="42" height="66" rx="12"/><rect x="312" y="280" width="42" height="66" rx="12"/></g>
+ <path d="M250 305V208L282 164" fill="none" stroke="#e3aa53" stroke-width="22" stroke-linecap="round"/>
+ <path d="M270 154L282 164L298 162" fill="none" stroke="#e3aa53" stroke-width="9" stroke-linecap="round"/>
+ <circle cx="250" cy="305" r="16" fill="#26333d"/><circle cx="250" cy="305" r="6" fill="#e3aa53"/>
+</svg>

@@ -86,6 +86,23 @@
       "source_files": 2169,
       "licence_path": "lab_web/public/licenses/lucide.txt",
       "licence_sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"
+    },
+    {
+      "name": "COCO Lab app icon",
+      "kind": "original icon",
+      "role": "installable app",
+      "version": "1.0",
+      "licence": "Apache-2.0",
+      "source": "lab_web/public/icons/coco.svg (original repository artwork)",
+      "files": [
+        {
+          "path": "lab_web/public/icons/coco.svg",
+          "bytes": 1105,
+          "sha256": "cde85baf781278e56a2fa8a674b6d0bfb0eb0de5ff3ab7779013d0b2513c9c28"
+        }
+      ],
+      "licence_path": "LICENSE",
+      "licence_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
     }
   ]
 }

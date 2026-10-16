@@ -187,7 +187,7 @@ export function useArenaScene() {
   // M4.6: precision tasks open in top-down: the Inspect level (cell by cell, value by value)
   const precision = params.get('level') === 'inspect';
   // M4.7: a Case File opens in 3D too (its recording carries Gazebo's 3D truth), as does its MODEL pane
-  const threeD = (plainArena || !!caseId) && !precision && !(coarse && PHONE_DEFAULT_CAMERA === 'topdown');
+  const threeD = (plainArena || !!caseId || playOn) && !precision && !(coarse && PHONE_DEFAULT_CAMERA === 'topdown');
   const defaultCamera: CameraMode = threeD ? 'follow' : 'topdown';
   const initialCamera: CameraMode = CAMERA_MODES.find((m) => m === params.get('camera'))
     ?? (plainArena && !precision ? storedCamera : null) ?? defaultCamera;
@@ -331,7 +331,7 @@ export function useArenaScene() {
         started = specP.then(() => rr!.enable3D(assets3d(lod),
           worldToMap.current, w.targets, elevation.current, tierChoice))
           .then(() => {
-            if (rr!.three) rr!.three.lowWalls = readPref('walls', false, isBool);
+            if (rr!.three) rr!.three.lowWalls = readPref('walls', !params.has('lens') && !recordedId && !runParam, isBool);
             setTierNow(rr!.quality?.tier ?? null);
             perf.mark('world3d_ready', wallMs());   // the arena drawn (the robot may still be its placeholder)
             void rr!.three?.robotReady.then(() => perf.mark('world3d_robot', wallMs()));
@@ -470,6 +470,7 @@ export function useArenaScene() {
     }
 
     if (rr) {
+      rr.onResume = () => { lastFrame = performance.now(); };
       rr.onFrame = () => {
         const now = performance.now();
         const dt = now - lastFrame;
@@ -515,6 +516,7 @@ export function useArenaScene() {
         }
       };
       rr.onAfterRender = () => {
+        perf.frame();
         if (firstFrame && worldSet) { firstFrame = false; perf.mark('first_frame', wallMs()); }
         if (firstRobotFrame && recordedId && rr!.is3D && rr!.three?.ready && active()?.shownTick) { firstRobotFrame = false; perf.mark('first_robot_frame', wallMs()); }
         perf.drawnPose(rr!.drawnPose);
@@ -702,6 +704,7 @@ export function useArenaScene() {
       // Tab keeps walking the controls unless the page itself has focus
       if (a === 'autonomy' && (e.shiftKey || !onPage)) return;
       if (a === 'help') { e.preventDefault(); if (!e.repeat) setHelpOpen((o) => !o); return; }
+      if (a === 'robot_vision') { e.preventDefault(); if (!e.repeat) window.dispatchEvent(new Event('coco:robot-vision')); return; }
       if (a === 'camera_next' || a === 'camera_follow') {
         e.preventDefault();
         if (!e.repeat) chooseCameraRef.current(a === 'camera_follow' ? 'follow' : 'next');
@@ -776,6 +779,10 @@ export function useArenaScene() {
   }, []);
 
   useEffect(() => { r.current?.setLayers(layers); }, [layers]);
+  useEffect(() => {
+    const compareInspect=level==='inspect'&&!playParam&&!recordedId&&!runParam&&!replayParam&&(params.has('lens')||params.has('compare')||params.has('mission'));
+    r.current?.setScanArea(!compareInspect);
+  },[level]);
   // a lens and a level choose the default layers (Watch: at most two computation layers)
   useEffect(() => {
     const plan = new Set(defaultLayers(LENS_BY_ID.plan, lens === 'plan' ? level : 'watch'));
@@ -881,7 +888,7 @@ export function useArenaScene() {
       if (readPref('sound', false, isBool)) motor.current.start(); else motor.current.stop();
       const quality = readPref('quality', 'auto', (v): v is TierChoice => TIER_CHOICES.includes(v as TierChoice));
       setTierChoice(quality); r.current?.setTier(quality);
-      if (r.current?.three) r.current.three.lowWalls = readPref('walls', false, isBool);
+      if (r.current?.three) r.current.three.lowWalls = readPref('walls', !params.has('lens') && !recordedId && !runParam, isBool);
       r.current?.setTheme(currentTheme()); ll.current?.setPalette(PALETTES[currentTheme()]); lensRedraw.current = true;
     };
     window.addEventListener(PREFERENCES_CHANGED, apply);

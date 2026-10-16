@@ -1,0 +1,6 @@
+trace_bfs_no_path {"bytes":14608}
+trace_costmap_astar {"bytes":22816}
+stack_lab1c_astar_t400 {"bytes":24764}
+stack_lab1c_greedy_t300 {"bytes":25194}
+attract_t200 {"bytes":23540}
+{"pass":true,"errors":0}

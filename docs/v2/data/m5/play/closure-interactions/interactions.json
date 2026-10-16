@@ -1,0 +1,100 @@
+{
+  "class": "TESTED functional checks, synthetic visibility; no performance budget claim",
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-16T19:11:01.138Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Charging",
+        "capacity_pct": 47
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 14.18,
+        "5m": 9.94,
+        "15m": 9.8
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-16T19:12:10.093Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Charging",
+        "capacity_pct": 50
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 15.27,
+        "5m": 11.2,
+        "15m": 10.25
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    }
+  },
+  "result": {
+    "historyView": "top-down, to isolate functional history checks from software GL speed",
+    "vision": [
+      {
+        "label": "Robot vision (X): Scan area",
+        "hash": "f6833c29f7a3696ce4ccfc566f09bb73ed7074784ab407c9db27afce56ce16ea",
+        "log": 2,
+        "rays": false,
+        "area": true,
+        "hits": 463
+      },
+      {
+        "label": "Robot vision (X): Planner frontier and heatmap",
+        "hash": "f6833c29f7a3696ce4ccfc566f09bb73ed7074784ab407c9db27afce56ce16ea",
+        "log": 2,
+        "rays": false,
+        "area": false,
+        "hits": 463
+      },
+      {
+        "label": "Robot vision (X): Static costmap",
+        "hash": "f6833c29f7a3696ce4ccfc566f09bb73ed7074784ab407c9db27afce56ce16ea",
+        "log": 2,
+        "rays": false,
+        "area": false,
+        "hits": 463
+      },
+      {
+        "label": "Robot vision (X): Localization particles",
+        "hash": "f6833c29f7a3696ce4ccfc566f09bb73ed7074784ab407c9db27afce56ce16ea",
+        "log": 2,
+        "rays": false,
+        "area": false,
+        "hits": 463
+      },
+      {
+        "label": "Robot vision (X): Off",
+        "hash": "f6833c29f7a3696ce4ccfc566f09bb73ed7074784ab407c9db27afce56ce16ea",
+        "log": 2,
+        "rays": false,
+        "area": false,
+        "hits": 463
+      }
+    ],
+    "replay": {
+      "shown": 26,
+      "head": 115,
+      "hash": "f6833c29f7a3696ce4ccfc566f09bb73ed7074784ab407c9db27afce56ce16ea"
+    },
+    "hidden": {
+      "tick": 115,
+      "fps": 2
+    },
+    "tutorial": "Real drive to marker, real goal/search, X; completion remembered after reload. Skip exercised through Settings in the first session.",
+    "errors": []
+  },
+  "errors": []
+}

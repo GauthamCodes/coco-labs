@@ -2,9 +2,9 @@
 
 ## Position
 
-- Branch: `v2/m5-focus`; checked implementation SHA: `592d1d9`.
-- M5 · Focus and polish: M5.0–M5.5 complete; M5.6 Play next.
-- M5.6–M5.11 remain. No PR, merge or release yet. Independent milestone review remains required.
+- Branch: `v2/m5-focus`; last completed checkpoint SHA: `c5afb3d`.
+- M5 · Focus and polish: M5.0–M5.6 complete; M5.7 Compare next.
+- M5.7–M5.11 remain. No PR, merge or release yet. Independent milestone review remains required.
 - Master plan revision 3, copied byte-for-byte; sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
 - Canonical agent rules: [AGENTS.md](../AGENTS.md). Historical status: [STATUS_HISTORY.md](v2/STATUS_HISTORY.md).
 - Prompts: [M5](v2/M5_PROMPT.md), [owner amendments](v2/M5_CONTINUATION.md).
@@ -42,13 +42,27 @@
   50 URL forms + six archive views, five identical canvas checks and five replays pass.
   Warm/cold hashes match both versions/specs; failed warm-up retries successfully.
 
+## M5.6 Play complete
+
+- [Report](v2/data/m5/play/REPORT.md): full-screen HUD, camera/walls/scan,
+  cards/scorecard/replay/tutorial, phone controls/APIs and original app icon.
+- Packages 3534 / web 477 / tools 195 pass; typecheck/build/dist pass.
+- Focus: 7 desktop / 7 compact / 8 emulated landscape / 1 portrait controls,
+  world/joystick included, no exemptions and no page scroll; 24 game layouts pass.
+- 50 URL forms + six archive views; five canvas checks and five replays pass.
+  CLI 166 plus latest map delta 1/1 match. No model, v1 hash or golden MCAP change.
+- Tutorial real-drive/goal/vision completion and reload, modal focus, hidden pause,
+  frozen hashes across display changes, scan hits and race/picking regressions pass.
+- Original PNGs retained; only attract's full-screen visual baseline changes.
+  Some resumed tests on battery; closure captures balanced/AC. No performance claim.
+
 ## Owner rows, phone and design inputs
 
 - Notes found: [committed blank template](v2/usability/2026-10-pre-m5.md), unchanged.
 - [Design inputs](v2/M5_DESIGN_INPUTS.md): no pre-design observations exist; prerequisite explicitly waived.
 - Target Nothing Phone (1), recorded by Gautham. [Profile](v2/PHONE_PROFILE.md): hardware facts assumed until measured.
 - Real Phone criterion is agent-owned and pending: connect phone over USB with debugging enabled.
-  [Latest ADB check](v2/data/m5/phone/ADB_CHECK_M55.txt): no device connected.
+  [Latest ADB check](v2/data/m5/phone/ADB_CHECK_M56_2026-10-17.txt): no device connected.
 - Emulator is labelled emulated Nothing Phone (1); CPU 4× proxy, viewport/DPR shared harness.
   It cannot satisfy the real Phone row. Provisional cap 60 fps, optional 120; automatic tier/DPR pending heat run.
 - Five-person usability remains Gautham-owned, pending, a public-launch gate only.
@@ -61,6 +75,7 @@
 - [Emulated phone portrait](v2/data/m5/screens/defects/race-nothing-portrait.png).
 - [M5.4 reference index](v2/data/m5/screens/reference/README.md): title, Play HUD and two-pane Compare at 1440×900, 844×390 and both emulated Nothing Phone (1) orientations; light theme and colour-vision simulations included.
 - [M5.5 app-shell review](v2/data/m5/screens/app-shell/README.md): twenty real mode views and four light Settings captures, desktop/compact and both emulated phone orientations.
+- [M5.6 Play review](v2/data/m5/screens/play/README.md): final Free roam, game/card and scorecard captures at desktop/compact and both emulated phone orientations.
 - No recorded feedback yet; continue without waiting.
 
 ## Open questions
@@ -98,8 +113,8 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 ## Next step
 
-M5.6: full-screen Play HUD, camera/walls/vision, cards/scorecard/replay/tutorial and phone interactions.
-Preserve capabilities via Settings/Compare while meeting Focus: <=8 visible controls, no scroll.
-M5.4/M5.5 screenshots await soft review; apply any recorded feedback next checkpoint.
+M5.7: Compare with 2/4 scissored panes, existing planning/control/localization families,
+costmap layers/inflation, synchronized controls/timeline/results and evidence-backed tours.
+M5.4–M5.6 screenshots await soft review; apply any recorded feedback next checkpoint.
 No stop condition hit; no new parked idea. Real phone absent; provisional settings unchanged.
 M5 remains open; public launch still waits for real-phone pass and Gautham's usability gate.

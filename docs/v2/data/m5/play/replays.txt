@@ -1,0 +1,17 @@
+PASS lab1c_astar {"badge":"STACK","ticks":760,"events":18660,"first_shown_ms":1101,"workers":0,"errors":0}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=arena&replay=lab1c_dijkstra
+Call log:
+[2m  - navigating to "http://localhost:4199/coco-labs/?view=arena&replay=lab1c_dijkstra", waiting until "load"[22m
+
+    at /home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/perf/replay_check.mjs:40:16 {
+  log: [
+    '  - navigating to "http://localhost:4199/coco-labs/?view=arena&replay=lab1c_dijkstra", waiting until "load"'
+  ],
+  name: 'Error'
+}
+
+Node.js v24.21.0

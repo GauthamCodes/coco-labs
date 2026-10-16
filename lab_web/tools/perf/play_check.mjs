@@ -40,7 +40,7 @@ const browser = await ENGINE.launch(LAUNCH);
 const out = { site: SITE, browser: args.browser ?? 'chromium', rows: [] };
 
 async function open(url) {
-  const context = await browser.newContext({ viewport: { width: 1280, height: 1000 } });
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const page = await context.newPage();
   const errors = [];
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
@@ -85,6 +85,7 @@ async function level(challenge, lv, play) {
     await play(page, view);
     await page.getByTestId('play-submit').click();
     Object.assign(row, await result(page));
+    await page.screenshot({path:join(OUT,challenge+'-'+lv.id+'.png'),scale:'css'});
     row.link = await page.getByTestId('play-link').getAttribute('href');
     row.reproduce = await reproduce(row.link);
     row.ok = errors.length === 0 && row.valid && row.stars === 3 && row.reproduce.exact && row.reproduce.hash === row.hash
@@ -101,7 +102,7 @@ async function level(challenge, lv, play) {
   await page.getByTestId('play').waitFor();
   await page.waitForTimeout(1000);
   const n = await page.locator('[data-testid^=challenge-]').count();
-  out.list = { challenges: n, errors, ok: n === 5 && errors.length === 0 };
+  out.list = { challenges: n, errors, ok: n === levels.order.length && errors.length === 0 };
   console.log(`${out.list.ok ? 'ok  ' : 'FAIL'} list: ${n} challenges`);
   await context.close();
 }
@@ -130,9 +131,12 @@ async function inArena(challenge, lv, url, play) {
   try {
     await page.getByTestId('play-panel').waitFor({ timeout: 60_000 });
     await play(page);
+    await page.getByRole('button',{name:'Settings',exact:true}).click();
+    await page.getByRole('button',{name:'Game menu and inspection'}).click();
     await page.locator('[data-testid=play-submit]:not([disabled])').waitFor({ timeout: 180_000 });
     await page.getByTestId('play-submit').click();
     Object.assign(row, await result(page, 300_000));
+    await page.screenshot({path:join(OUT,challenge+'-'+lv.id+'.png'),scale:'css'});
     row.link = await page.getByTestId('play-link').getAttribute('href');
     row.reproduce = await reproduce(row.link);
     row.ok = errors.length === 0 && row.valid && row.reproduce.exact && row.reproduce.hash === row.hash

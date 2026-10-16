@@ -1,0 +1,35 @@
+{
+  "reason": "M5.6 full-screen Play intentionally changes attract canvas size and visible overlays; prior image evidence retained. No MCAP trace or state hash changed.",
+  "files": [
+    {
+      "path": "lab_web/test/screenshots/attract_t200.png",
+      "preserved_as": "docs/v2/data/m5/screens/pre-play-hud/attract_t200.png",
+      "sha256": "5772f574d2f9b4fe8ea406910dcc12a85189b0328fb769a179f2701dc50f9cba"
+    },
+    {
+      "path": "lab_web/test/screenshots/baselines.json",
+      "preserved_as": "docs/v2/data/m5/screens/pre-play-hud/baselines.json",
+      "sha256": "6a511b22e1b2dae0bad76b10ecc7927fceb19e294e7c584c49e577224fdc9d85"
+    },
+    {
+      "path": "lab_web/test/screenshots/stack_lab1c_astar_t400.png",
+      "preserved_as": "docs/v2/data/m5/screens/pre-play-hud/stack_lab1c_astar_t400.png",
+      "sha256": "3fa3a2acf8dae0044c9bc1a789526f767521bbc9ae03c4a3f93145efe1d1aed7"
+    },
+    {
+      "path": "lab_web/test/screenshots/stack_lab1c_greedy_t300.png",
+      "preserved_as": "docs/v2/data/m5/screens/pre-play-hud/stack_lab1c_greedy_t300.png",
+      "sha256": "8e3f8e4da2e30bc4e4ef9c1d200e9900f6e46755084a311474f415366a53660f"
+    },
+    {
+      "path": "lab_web/test/screenshots/trace_bfs_no_path.png",
+      "preserved_as": "docs/v2/data/m5/screens/pre-play-hud/trace_bfs_no_path.png",
+      "sha256": "69fc00a8bf4cb659e5e2ca2b78c03abe3f06232e3831b91b380ca0d79c172645"
+    },
+    {
+      "path": "lab_web/test/screenshots/trace_costmap_astar.png",
+      "preserved_as": "docs/v2/data/m5/screens/pre-play-hud/trace_costmap_astar.png",
+      "sha256": "1d4ffd1a39e81a06919326350d043988ffda6605a3bfb878654e6369f2865075"
+    }
+  ]
+}

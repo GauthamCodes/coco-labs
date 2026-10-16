@@ -1,0 +1,2 @@
+Model and real CAD ready; top-down history check.
+Vision/walls preserve frozen model hash and input log; scan hits, modal focus, historical replay and hidden rendering checks pass.

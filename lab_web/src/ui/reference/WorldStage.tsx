@@ -74,7 +74,7 @@ export function WorldStage({ kind, data, perspective = false, onReady }: { kind:
         nextPaint += Math.max(1, Math.floor((now - nextPaint) / (1000 / 60)) + 1) * (1000 / 60);
         const interval = last ? now - last : 0;
         const dt = interval ? Math.min(.05, interval / 1000) : .016; last = now;
-        const change = quality.frame(now, interval);
+        const change = quality.frame(now, interval, true);
         if (change?.kind === 'tier') {
           rig!.applyTier(change.tier, renderer, scene);
           renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, TIER_SETTINGS[change.tier].pixelRatioCap));

@@ -1,0 +1,8 @@
+file:///home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/m56_focus_check.mjs:26
+ if(layout.controls.length>8)throw Error(profile.name+' '+layout.controls.length+' visible controls');
+                                   ^
+
+Error: nothing-portrait 9 visible controls
+    at file:///home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/m56_focus_check.mjs:26:36
+
+Node.js v24.21.0

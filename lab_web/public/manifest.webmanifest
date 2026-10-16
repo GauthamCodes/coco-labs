@@ -1,0 +1,13 @@
+{
+ "id":"./",
+ "name":"COCO Lab",
+ "short_name":"COCO",
+ "description":"Drive, compare robot computations and explore recorded runs.",
+ "start_url":"./?view=arena",
+ "scope":"./",
+ "display":"fullscreen",
+ "orientation":"landscape",
+ "background_color":"#10171d",
+ "theme_color":"#10171d",
+ "icons":[{"src":"icons/coco.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}]
+}

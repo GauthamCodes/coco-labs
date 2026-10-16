@@ -1,0 +1,1 @@
+Four scorecards reproduce the real shared hash, retain all metrics, trap focus and reopen after replay.

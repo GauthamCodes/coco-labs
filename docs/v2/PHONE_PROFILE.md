@@ -36,3 +36,17 @@ Provisional phone defaults (subject to M5.11 measurements): 60 fps cap,
 optional 120 fps; automatic quality from measured frame time, tier pixel
 ratio cap; haptics on where supported, sound off. These are choices, not
 verified heat/performance results.
+
+## M5.6 implementation (provisional until the real heat run)
+
+Play starts automatic quality at medium: drawing-buffer DPR cap 1.5, high 2,
+low 1. The existing measured-frame controller selects tiers and can fall back
+to top-down; persistent known-visible stalls now participate in that decision.
+Phone rendering defaults to 60 submitted frames/s, with an optional 120 setting.
+Haptics default on; sound stays off. Fullscreen/orientation requests fail silently
+and the portrait rotate card remains usable. Touch travel has a 0.14 dead zone
+rescaled continuously to full travel. These are implementation settings, not
+measured device performance or heat results. The original self-hosted app icon
+and manifest are recorded in DESIGN_ASSETS.json.
+
+M5.6 ADB check: no real phone connected. Phone criterion still pending USB.

@@ -19,17 +19,22 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
+import {createPortal} from 'react-dom';
 
 import { ArenaClient } from '../arena/client';
 import type { Tick } from '../arena/protocol';
 import type { PlayResult } from './best';
 import { loadLevels, type Level, type Levels } from './levels';
 import { ResultView } from './Result';
+import { PathReview } from './PathReview';
 import type { Submission } from './share';
 
 const BASE = import.meta.env.BASE_URL;
 
-export function ArenaPlayPanel({ challenge, levelId, live, liveReady, lastTick, shownTick, log, onGhost }: {
+export function ArenaPlayPanel({ challenge, levelId, live, liveReady, lastTick, shownTick, log, onGhost, trajectory, onReplay, compact = false, controlsTarget, referenceMap }: {
+  referenceMap?:{world:import('../arena/protocol').World;occupancy:Uint8Array};
+  compact?:boolean; controlsTarget?:HTMLElement|null;
+  trajectory?:()=>[number,number][]; onReplay?:()=>void;
   challenge: string; levelId: string;
   /** the live model's client (the map challenge, the race); null for a Case File */
   live: ArenaClient | null; liveReady: boolean;
@@ -43,7 +48,7 @@ export function ArenaPlayPanel({ challenge, levelId, live, liveReady, lastTick, 
   const [meter, setMeter] = useState<{ path_m: number; budget_m: number; done: boolean } | null>(null);
   const [race, setRace] = useState<{ t_s: number; to_flag_m: number; contacts: number; started: boolean } | null>(null);
   const raced = useRef({ contacts: 0, lastTick: -1, scored: false });
-  const [result, setResult] = useState<{ r: PlayResult; s: Submission } | null>(null);
+  const [result, setResult] = useState<{ r: PlayResult; s: Submission; path?:[number,number][] } | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [fail, setFail] = useState<string | null>(null);
   const own = useRef<ArenaClient | null>(null);
@@ -94,8 +99,9 @@ export function ArenaPlayPanel({ challenge, levelId, live, liveReady, lastTick, 
     const s: Submission = { v: 1, hash_version: 2, challenge, level: level.id, level_hash: hash, inputs };
     setBusy(challenge === 'map-the-arena' ? 'Re-simulating your drive from its input log…' : 'Scoring…');
     setFail(null);
+    const path=trajectory?.();
     void c.play<PlayResult>({ op: 'score', levels, submission: s })
-      .then((r) => setResult({ r, s }))
+      .then((r) => setResult({ r, s, path }))
       .catch((e) => setFail(e instanceof Error ? e.message : String(e)))
       .finally(() => setBusy(null));
   };
@@ -133,23 +139,22 @@ export function ArenaPlayPanel({ challenge, levelId, live, liveReady, lastTick, 
   if (!level) return fail ? <p className="error" role="alert">{fail}</p> : null;
   return (
     <section className="play-panel" data-testid="play-panel" data-challenge={challenge}>
-      <p><a href={`${BASE}?view=play&c=${challenge}&l=${level.id}`}>← {level.title}</a>{' '}
-        <b>{challenge === 'map-the-arena' ? 'Map the arena' : challenge === 'race-the-ghost' ? "Race the planner's ghost" : 'Case File detective'}</b></p>
+      {!compact&&<p><a href={`${BASE}?view=play&c=${challenge}&l=${level.id}`}>← {level.title}</a>{' '}
+        <b>{challenge === 'map-the-arena' ? 'Map the arena' : challenge === 'race-the-ghost' ? "Race the planner's ghost" : 'Case File detective'}</b></p>}
       {challenge === 'map-the-arena' && (
         <>
-          <p className="hint">Drive with goals, the keys or the joystick. The map is built from what the wheels say
+          <p className={compact?"play-detail-hidden":"hint"}>Drive with goals, the keys or the joystick. The map is built from what the wheels say
             (<code>{(level.config as string[]).join(' ')}</code>); its F1 and ATE are scored when the budget is spent or you finish.</p>
           <p data-testid="play-meter">{meter ? `driven ${meter.path_m.toFixed(1)} of ${meter.budget_m} m${meter.done ? ': budget spent' : ''}` : 'waiting for the live model…'}</p>
           <progress max={1} value={meter ? Math.min(1, meter.path_m / meter.budget_m) : 0} />
-          <p className="play-controls"><button type="button" data-testid="play-submit" disabled={!hash || !!busy} onClick={finishMap}>
-            Finish and score my map</button></p>
+          {(!compact||controlsTarget)&&((compact&&controlsTarget)?createPortal(<button type="button" data-testid="play-submit" disabled={!hash||!!busy} onClick={finishMap}>Finish and score my map</button>,controlsTarget):<p className="play-controls"><button type="button" data-testid="play-submit" disabled={!hash || !!busy} onClick={finishMap}>Finish and score my map</button></p>)}
         </>
       )}
       {challenge === 'race-the-ghost' && (() => {
         const g = (level.reference as { ghost: { time_s: number; path_m: number; contacts: number } }).ghost;
         return (
           <>
-            <p className="hint">Drive to the flag with W A S D (or the joystick), at the same limits the ghost has; the
+            <p className={compact?"play-detail-hidden":"hint"}>Drive to the flag with W A S D (or the joystick), at the same limits the ghost has; the
               clock starts when you first move. The ghost (the translucent robot) is the model following A*'s path with
               pure pursuit: {g.time_s.toFixed(1)} s, {g.path_m.toFixed(2)} m, {g.contacts} contacts. Goals, grasps and
               hand-backs are off in a race.</p>
@@ -161,16 +166,15 @@ export function ArenaPlayPanel({ challenge, levelId, live, liveReady, lastTick, 
       })()}
       {challenge === 'case-file-detective' && (
         <>
-          <p className="hint">Scrub the recording to the first moment the solid robot (where the stack believed it was)
+          <p className={compact?"play-detail-hidden":"hint"}>Scrub the recording to the first moment the solid robot (where the stack believed it was)
             leaves the outline (the truth) by more than {String(level.divergence_m)} m, then mark it. Stated tolerance:
             {' '}{String(level.tolerance_s)} s.</p>
-          <p className="play-controls"><button type="button" data-testid="play-submit" disabled={!hash || !!busy} onClick={mark}>
-            Mark this moment</button></p>
+          {(!compact||controlsTarget)&&((compact&&controlsTarget)?createPortal(<button type="button" data-testid="play-submit" disabled={!hash||!!busy} onClick={mark}>Mark this moment</button>,controlsTarget):<p className="play-controls"><button type="button" data-testid="play-submit" disabled={!hash || !!busy} onClick={mark}>Mark this moment</button></p>)}
         </>
       )}
       {fail && <p className="error" role="alert" data-testid="play-fail">{fail}</p>}
       {busy && <p role="status" data-testid="play-busy">{busy}</p>}
-      {result && <ResultView result={result.r} submission={result.s} />}
+      {result && <ResultView result={result.r} submission={result.s} onReplay={onReplay} pathReview={result.path&&challenge!=='case-file-detective'&&<PathReview path={result.path} map={referenceMap} ghost={level.ghost_track as [number,number][]|undefined}/>} />}
     </section>
   );
 }

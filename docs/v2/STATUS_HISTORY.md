@@ -2008,3 +2008,48 @@ balanced/AC, NVIDIA 580.178.04, software renderer functional checks only.
 ADB no device; Phone pending USB. Notes remain blank; N2 app-shell disposition
 updated. No files moved/removed, ADR, parked idea, stop condition or deviation.
 Next M5.6 Play; launch still gates on real phone and owner usability.
+
+
+## 2026-10-17 · M5.6 Play complete
+
+Start c5afb3d, branch v2/m5-focus. Full-screen corner HUD, cached known/built
+minimap, sprung 5.2 m / 40° collision-aware follow, real half-height cap faces
+and edges, filled LiDAR/hits with rays only in Compare Inspect. Five vision
+stages read model data without enabling estimators; M5.7 adds richer costmap
+layers. Cards retain six existing games plus Free roam; full scorecard metrics,
+thresholds, scored route/ghost, existing timeline replay and real first-drive
+tutorial. Skip via Settings/Escape and completion remembered. Phones get safe
+areas, 128 px dead-zone joystick, thumb arc, fullscreen/landscape requests,
+portrait card, optional haptics, 60/optional120 cap, tier DPR caps, original icon
+and manifest. Other purposes can rotate after installed Play. Desktop has no
+joystick, including in its menu. Submitted-frame FPS replaces raw rAF counting;
+known-visible persistent stalls can downgrade the existing quality controller.
+
+Evidence: data/m5/play/REPORT.md and SOURCE.json. Packages 3534 (unchanged),
+web 477 (before 466), tools 195 (unchanged) pass; typecheck/build/dist pass.
+Fifty URL forms plus six archive views, five recordings and five canvas checks
+pass. CLI 166/166 plus latest map delta 1/1 match. Four old PNGs unchanged;
+attract's full-screen canvas/vision-off appearance intentionally updated, old
+PNGs/JSON preserved at screens/pre-play-hud with hashes. No Python model,
+World Spec, MCAP golden or v1 state hash changes. Actual six camera clicks land
+within one cell; race forbidden inputs absent in three layouts. Frozen hashes
+and logs across vision/walls, actual scan hits, focus, historical replay and
+hidden pause pass. Tutorial real drive → goal/search → X and reload pass.
+
+Strict Focus includes every visible control, the world and joystick: desktop7,
+compact7, emulated landscape8, portrait1; no scroll. Twenty-four more game/menu
+layouts pass and phone targets are >=48 px. Screens/play/README.md indexes the
+final desktop/compact and both emulated phone orientations plus scorecards;
+Gautham's soft review pending, no feedback yet. N2 disposition updated. Notes
+stay blank, prerequisite waived. No owner row marked done.
+
+Node24.21.0, Python3.12.3 pinned venv, reported NVIDIA580.178.04. Initial and
+closure captures balanced/AC; some resumed captures balanced on battery.
+Functional software-GL/CPU4× emulation is not a performance budget result or
+real Adreno measurement. ADB empty Oct17; real Phone pending USB and real heat
+run; provisional60fps/auto medium DPR1.5 (high2/low1), optional120. Five-person
+usability remains owner-owned and launch-only. Profile unchanged/restoration
+not needed. No whole files moved/removed, new ADR, plan decision, parked idea
+or stop condition. Minimap source extracted; baseline copies retained. Failed
+focus/target, stale local build and daemon-interrupted artifacts retained,
+corrected closure checks pass. Next M5.7 Compare; no merge/release/cloud work.

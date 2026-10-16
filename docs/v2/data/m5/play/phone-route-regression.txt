@@ -1,0 +1,13 @@
+
+> coco-lab-web@0.1.0 test
+> vitest run test/phone_play.test.ts
+
+
+ RUN  v5.0.2 /home/gautham/coco_labs_ws/src/coco-labs/lab_web
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  00:37:14
+   Duration  156ms (transform 56%, import 22%, tests 16%, worker 5%)
+

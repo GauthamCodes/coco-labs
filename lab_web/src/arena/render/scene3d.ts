@@ -93,10 +93,18 @@ export class Scene3D {
     uRobot: { value: new THREE.Vector3() }, uCam: { value: new THREE.Vector3() },
     uCut: { value: 0 }, uLow: { value: 0 }, uLowZ: { value: LOW_WALL_Z }, uCutR: { value: CUT_RADIUS },
   };
-  lowWalls = false;
+  private wallMeshes: THREE.Mesh[] = [];
+  private halfWalls = false;
+  get lowWalls() { return this.halfWalls; }
+  set lowWalls(value: boolean) {
+    this.halfWalls=value;
+    // Committed arena meshes are authored z-up below the glTF root's axis rotation.
+    // Scaling only display geometry preserves each original top face as a real cap.
+    for(const mesh of this.wallMeshes)mesh.scale.z=value?.5:1;
+  }
   /** The camera rig's own state: sprung toward the robot (feel, not physics). */
   private rig = { x: 0, y: 0, z: 0, yaw: 0, init: false };
-  private orbit = { yaw: 0, pitch: 0.38, dist: 2.6 };
+  private orbit = { yaw: 0, pitch: 40 * Math.PI / 180, dist: 5.2 };
   private wide = { yaw: -2.2, pitch: 0.72, dist: 24 };
   mode: Exclude<CameraMode, 'topdown'> | 'overhead' = 'follow';
   /** M4.5: the top-down view's centre and the height that frames it, for the 'overhead' pose */
@@ -204,25 +212,32 @@ export class Scene3D {
         const m = o as THREE.Mesh;
         if (!m.isMesh) return;
         const mat = (m.material as THREE.MeshStandardMaterial).clone();
+        this.wallMeshes.push(m);
+        m.scale.z=this.halfWalls?.5:1;
         mat.side = THREE.DoubleSide;   // an opened wall shows its inside, not a hole into nothing
         mat.onBeforeCompile = (sh) => {
           Object.assign(sh.uniforms, this.walls);
-          sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vCocoWorld;')
-            .replace('#include <begin_vertex>', '#include <begin_vertex>\nvCocoWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+          sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vCocoWorld; varying float vCocoUp;')
+            .replace('#include <begin_vertex>', '#include <begin_vertex>\nvCocoWorld = (modelMatrix * vec4(transformed, 1.0)).xyz; vCocoUp = abs(normalize(mat3(modelMatrix) * normal).z);');
           sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
-varying vec3 vCocoWorld;
+varying vec3 vCocoWorld; varying float vCocoUp;
 uniform vec3 uRobot; uniform vec3 uCam; uniform float uCut; uniform float uLow; uniform float uLowZ; uniform float uCutR;`)
             .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
-if (uLow > 0.5 && vCocoWorld.z > uLowZ) discard;
+
 if (uCut > 0.5) {
   vec3 d = uRobot - uCam;
   float t = clamp(dot(vCocoWorld - uCam, d) / max(dot(d, d), 1e-6), 0.0, 1.0);
   if (t < 0.95 && distance(vCocoWorld, uCam + t * d) < uCutR && vCocoWorld.z > uRobot.z - 0.2) discard;
-}`);
+}`)
+            .replace('#include <color_fragment>', '#include <color_fragment>\ndiffuseColor.rgb *= mix(0.66, 1.35, smoothstep(0.2, 0.8, vCocoUp));');
         };
         mat.customProgramCacheKey = () => 'coco-walls';
         m.material = mat;
       });
+    }
+    for(const mesh of this.wallMeshes) {
+      const edges=new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry,25),new THREE.LineBasicMaterial({color:TOKENS.warehouse[activeTheme()].structure,transparent:true,opacity:.5}));
+      mesh.add(edges);
     }
     onWorldLayer(this.root);
     arena.scene.traverse((o) => {
@@ -482,6 +497,11 @@ if (uCut > 0.5) {
     const ahead = 0.6;
     this.camera.position.set(r.x - Math.cos(yaw) * Math.cos(pitch) * dist, r.y - Math.sin(yaw) * Math.cos(pitch) * dist,
       r.z + 0.15 + Math.sin(pitch) * dist);
+    if(this.warehouse) {
+      this.root.updateMatrixWorld(true);
+      const target=new THREE.Vector3(r.x,r.y,r.z+.15);
+      this.camera.position.copy(clearCameraPosition(target,this.camera.position,this.warehouse));
+    }
     this.camera.lookAt(r.x + Math.cos(r.yaw) * ahead, r.y + Math.sin(r.yaw) * ahead, r.z + 0.15);
     this.camera.updateProjectionMatrix();
   }
@@ -490,7 +510,7 @@ if (uCut > 0.5) {
   dispose() {
     this.root.traverse((object) => {
       const mesh = object as THREE.Mesh;
-      if (!mesh.isMesh) return;
+      if (!mesh.geometry || !mesh.material) return;
       mesh.geometry.dispose();
       const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
       for (const material of materials) material.dispose();
@@ -505,4 +525,14 @@ if (uCut > 0.5) {
     const hit = new THREE.Vector3();
     return this.ray.ray.intersectPlane(this.floor, hit) ? [hit.x, hit.y] : null;
   }
+}
+
+/** Presentation collision: shorten the camera boom before the first opaque warehouse surface. */
+export function clearCameraPosition(target:THREE.Vector3,desired:THREE.Vector3,world:THREE.Object3D):THREE.Vector3 {
+ const direction=desired.clone().sub(target),distance=direction.length();
+ if(distance<.25)return desired.clone();
+ const ray=new THREE.Raycaster(target,direction.normalize(),.25,distance);
+ ray.layers.set(WORLD_LAYER);
+ const hit=ray.intersectObject(world,true).find(hit=>(hit.object as THREE.Mesh).isMesh);
+ return hit?target.clone().addScaledVector(direction,Math.max(.2,hit.distance-.15)):desired.clone();
 }
