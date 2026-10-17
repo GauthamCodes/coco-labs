@@ -7,8 +7,8 @@ the entries below are copied into it at merge.
 
 ## Current checkpoint and next step
 
-- **Current:** M6F.0 Setup — done.
-- **Next:** M6F.1 World Spec v3 and the modular level kit.
+- **Done:** M6F.0 Setup; M6F.1 World Spec v3 and the level kit.
+- **Next:** M6F.2 Generators (Arena world, Gazebo SDF, Nav2 map + params).
 
 ## Setup facts (M6F.0, 2026-10-17)
 
@@ -33,6 +33,20 @@ the entries below are copied into it at merge.
   Codex was running (`codex resume`, PID 18281, plus the Codex desktop app).
   No Gazebo, Isaac or ROS 2 process was running.
 
+## M6F.1 — World Spec v3 (2026-10-17)
+
+- `coco_lab/coco_lab/worldspec_v3.py`: the kit (wall, door, rack with aisles,
+  bench, pallet, box, ramp, platform, zone, object, actor), its validator and its
+  lowering onto v2's `boxes`/`elevation`; `from_v2`. Docs `docs/v2/m6/WORLD_SPEC_V3.md`,
+  decision `docs/v2/adr/0100-world-spec-v3-level-kit.md`. Evidence class MODEL.
+- v1/v2 unchanged, proved by `coco_lab/test/test_worldspec_v3.py` against
+  `coco_lab/test/fixtures/m6f/prechange_v1v2.json` (made at `0d1f37f`, committed in
+  `1e7b7f2` before any v3 code) and the first 10 committed M1 determinism sessions
+  (`docs/v2/data/m1/determinism/`, Pyodide hashes): canonical bytes, maps and every
+  per-tick hash identical. Every existing golden-trace and hash test passed unedited.
+- Tests: `coco_lab` 895 passed / 0 failed / 0 skipped (824 before), nice 19,
+  Codex running (`codex resume`), 381.6 s.
+
 ## Plan-change entries to copy into docs/STATUS.md at merge
 
 - **2026-10-17 — M6 foundations start in parallel with M5 (Gautham).** By
@@ -49,7 +63,14 @@ the entries below are copied into it at merge.
 (Files outside this branch's own new files that this branch changes, or that
 M5 is likely to change too. Updated at every checkpoint.)
 
-- none yet
+- `coco_lab/coco_lab/worldspec.py` (M6F.1): `SPEC_VERSION_V3`,
+  `TERRAIN_SPEC_VERSIONS`, the v3 hand-off at the top of `normalize`, and
+  `arena_map`'s terrain check (`in TERRAIN_SPEC_VERSIONS`). M5 (to `0254dea`) has not
+  touched this file.
+- `coco_lab/coco_lab/arena.py` (M6F.1): the worldspec import line, the terrain check
+  in `Arena.__init__` (`in TERRAIN_SPEC_VERSIONS`), and a 4-line refusal of the legacy
+  gated grasp on a v3 level. **M5 has edited this file** (12 lines at `0254dea`), so a
+  textual conflict is possible; both edits are small and independent.
 
 ## Pending heavy items
 
