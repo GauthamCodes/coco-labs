@@ -15,6 +15,7 @@
  */
 
 import { useEffect, useState } from 'react';
+import { RecordingsLibrary } from '../research/RecordingsLibrary';
 
 import { GapChips, useGaps } from '../learn/gaps';
 import { evidenceHref, LABEL_MEANING } from '../learn/LearnApp';
@@ -52,6 +53,11 @@ function Claim({ s, testid }: { s: Sentence; testid: string }) {
 const kb = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)} MB` : `${Math.round(n / 1e3)} KB`);
 
 export function CaseFilesApp() {
+  const q = new URLSearchParams(location.search);
+  return q.has('case') ? <CaseFileInvestigation /> : <RecordingsLibrary />;
+}
+
+function CaseFileInvestigation() {
   const params = new URLSearchParams(window.location.search);
   const caseId = params.get('case');
   const fileId = params.get('file');

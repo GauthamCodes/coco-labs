@@ -2096,3 +2096,13 @@ five replays, eight layouts and desktop/both emulated-phone family windows pass.
 Evidence: data/m5/compare/REPORT.md; screenshots: data/m5/screens/compare/README.md.
 No real USB phone connected; real Phone pending. Mapping comparison parked for M7.
 No files moved/deleted. Next: M5.8 searchable Recordings library, then M5.9–M5.11.
+
+## 2026-10-18 · M5.8 Recordings library complete
+
+100 Case Files + 65 conversions retain separate cards, original investigations and
+evidence. Search/four filters/failures and direct viewer links; native phone filter
+sheet. Web 488, tools 205, typecheck/build pass. Eleven package suites pass; affected
+ROS adapter rerun with canonical generated-schema PYTHONPATH after import failure.
+Four layouts: all 165 entries, 60 failure representations, no early recording fetch,
+zero console errors. See data/m5/recordings/REPORT.md and screens/recordings/README.md.
+No files moved/deleted or owner rows completed. Next: M5.9 cache/counter.

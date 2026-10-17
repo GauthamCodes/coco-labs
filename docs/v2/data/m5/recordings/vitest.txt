@@ -1,0 +1,356 @@
+
+> coco-lab-web@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /home/gautham/coco_labs_ws/src/coco-labs/lab_web
+
+ ❯ test/arena_runtime.test.ts (0 test)
+ ❯ test/arena_packs.test.ts (0 test)
+ ❯ test/convert_lab5.test.ts (0 test)
+ ❯ test/convert_lab2.test.ts (0 test)
+ ❯ test/convert_lab3.test.ts (0 test)
+(node:173931) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | test/compare_loop.test.ts
+Error occurred while installing the standard library:
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip'
+    at open (node:internal/fs/promises:1345:25)
+    at Module.readFile (node:internal/fs/promises:1996:14) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip'
+}
+Fatal Python error: Failed to import encodings module
+Python runtime state: core initialized
+ModuleNotFoundError: No module named 'encodings'
+
+Current thread 0x003d3b20 (most recent call first):
+  <no Python frame>
+
+ ❯ test/compare_loop.test.ts (2 tests | 2 skipped) 318ms
+(node:173959) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | test/arena_terrain.test.ts > World Spec v2 through arena_glue (Pyodide)
+Error occurred while installing the standard library:
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip'
+    at open (node:internal/fs/promises:1345:25)
+    at Module.readFile (node:internal/fs/promises:1996:14) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip'
+}
+Fatal Python error: Failed to import encodings module
+Python runtime state: core initialized
+ModuleNotFoundError: No module named 'encodings'
+
+Current thread 0x003d3b20 (most recent call first):
+  <no Python frame>
+
+ ❯ test/arena_terrain.test.ts (2 tests | 2 skipped) 500ms
+(node:173929) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | test/arena_determinism.test.ts > recorded sessions replay to the committed per-tick hashes (Pyodide-in-Node)
+Error occurred while installing the standard library:
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip'
+    at open (node:internal/fs/promises:1345:25)
+    at Module.readFile (node:internal/fs/promises:1996:14) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip'
+}
+Fatal Python error: Failed to import encodings module
+Python runtime state: core initialized
+ModuleNotFoundError: No module named 'encodings'
+
+Current thread 0x003d3b20 (most recent call first):
+  <no Python frame>
+
+ ❯ test/arena_determinism.test.ts (6 tests | 6 skipped) 539ms
+(node:173948) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 2)
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | test/arena_share.test.ts > a shared run reproduces in Pyodide (same chain)
+Error occurred while installing the standard library:
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip'
+    at open (node:internal/fs/promises:1345:25)
+    at Module.readFile (node:internal/fs/promises:1996:14) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip'
+}
+Fatal Python error: Failed to import encodings module
+Python runtime state: core initialized
+ModuleNotFoundError: No module named 'encodings'
+
+Current thread 0x003d3b20 (most recent call first):
+  <no Python frame>
+
+ ❯ test/arena_share.test.ts (12 tests | 1 failed | 2 skipped) 501ms
+   ❯ the attract recording (1)
+     × decodes into the world, every tick and every search the build recorded 5ms
+ ❯ test/convert_lab5replan.test.ts (0 test)
+ ❯ test/convert_lab4.test.ts (3 tests | 1 failed) 313ms
+   ❯ Lab 4 search bundles -> v2 runs -> Lab 4 bundles (3)
+     × the Sketch searches the site computes: lossless, MODEL 10ms
+ ❯ test/convert_lab1.test.ts (15 tests | 6 failed) 9252ms
+   ❯ Lab 1 bundles -> v2 runs -> Lab 1 bundles (11)
+     × finds the ten-plus bundles the site serves, three of them recorded runs 8ms
+     × arena_0_10m: lossless, hash-checked, labelled by evidence class 1ms
+   ❯ converted runs in the Arena viewer (replay.ts) (4)
+     × lab1c_astar plays as STACK: 0.1 s ticks, belief beside truth 37ms
+     × lab1c_dijkstra plays as STACK: 0.1 s ticks, belief beside truth 47ms
+     × lab1c_greedy plays as STACK: 0.1 s ticks, belief beside truth 26ms
+     × a glass-box trace plays as MODEL: one tick, the search, no robot motion 1ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 10 ⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/arena_determinism.test.ts > recorded sessions replay to the committed per-tick hashes (Pyodide-in-Node)
+ExitStatus: Program terminated with exit(1)
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/18]⎯
+
+ FAIL  test/arena_packs.test.ts [ test/arena_packs.test.ts ]
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/arena/manifest.json'
+ ❯ test/arena_packs.test.ts:27:29
+     25| const ARENA = join(GEN, 'arena');
+     26| const PYODIDE = join(LAB_WEB, 'node_modules', 'pyodide') + '/';
+     27| const MANIFEST = JSON.parse(readFileSync(join(ARENA, 'manifest.json'),…
+       |                             ^
+     28|   packs: Record<string, { file: string; sha256: string; requires: stri…
+     29| };
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/18]⎯
+
+ FAIL  test/arena_runtime.test.ts [ test/arena_runtime.test.ts ]
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/arena/coco_arena_v1.json'
+ ❯ test/arena_runtime.test.ts:26:14
+     24| const PYODIDE = join(LAB_WEB, 'node_modules', 'pyodide') + '/';
+     25| const GLUE = readFileSync(join(LAB_WEB, 'src', 'arena', 'arena_glue.py…
+     26| const SPEC = readFileSync(join(GEN, 'arena', 'coco_arena_v1.json'), 'u…
+       |              ^
+     27| const COCO_ZIP = new Uint8Array(readFileSync(join(GEN, 'arena', 'coco_…
+     28|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/18]⎯
+
+ FAIL  test/arena_share.test.ts > a shared run reproduces in Pyodide (same chain)
+ExitStatus: Program terminated with exit(1)
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/18]⎯
+
+ FAIL  test/arena_terrain.test.ts > World Spec v2 through arena_glue (Pyodide)
+ExitStatus: Program terminated with exit(1)
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/18]⎯
+
+ FAIL  test/compare_loop.test.ts [ test/compare_loop.test.ts ]
+ExitStatus: Program terminated with exit(1)
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/18]⎯
+
+ FAIL  test/convert_lab2.test.ts [ test/convert_lab2.test.ts ]
+Error: ENOENT: no such file or directory, scandir '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/loc'
+ ❯ test/convert_lab2.test.ts:22:13
+     20|
+     21| const DIR = join(LAB_WEB, 'public', 'generated', 'loc');
+     22| const IDS = readdirSync(DIR).filter((d) => !d.endsWith('.json')).sort(…
+       |             ^
+     23|
+     24| describe('Lab 2 loc bundles -> v2 runs -> loc bundles', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/18]⎯
+
+ FAIL  test/convert_lab3.test.ts [ test/convert_lab3.test.ts ]
+Error: ENOENT: no such file or directory, scandir '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/map'
+ ❯ test/convert_lab3.test.ts:25:13
+     23|
+     24| const DIR = join(LAB_WEB, 'public', 'generated', 'map');
+     25| const IDS = readdirSync(DIR).filter((d) => !d.endsWith('.json')).sort(…
+       |             ^
+     26|
+     27| describe('Lab 3 slam bundles -> v2 runs -> slam bundles', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/18]⎯
+
+ FAIL  test/convert_lab5.test.ts [ test/convert_lab5.test.ts ]
+Error: ENOENT: no such file or directory, scandir '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/move/drive'
+ ❯ test/convert_lab5.test.ts:26:13
+     24|
+     25| const DIR = join(LAB_WEB, 'public', 'generated', 'move', 'drive');
+     26| const IDS = readdirSync(DIR).sort();
+       |             ^
+     27|
+     28| async function convert(id: string) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/18]⎯
+
+ FAIL  test/convert_lab5replan.test.ts [ test/convert_lab5replan.test.ts ]
+Error: ENOENT: no such file or directory, scandir '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/move/replan'
+ ❯ test/convert_lab5replan.test.ts:22:13
+     20|
+     21| const DIR = join(LAB_WEB, 'public', 'generated', 'move', 'replan');
+     22| const IDS = readdirSync(DIR).sort();
+       |             ^
+     23|
+     24| describe('Lab 5 replan bundles -> v2 runs -> replan bundles', () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/18]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/arena_share.test.ts > the attract recording > decodes into the world, every tick and every search the build recorded
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/arena/attract.mcap'
+ ❯ test/arena_share.test.ts:132:53
+    130| describe('the attract recording', () => {
+    131|   it('decodes into the world, every tick and every search the build re…
+    132|     const rec = await parseRecording(new Uint8Array(readFileSync(join(…
+       |                                                     ^
+    133|     expect([rec.world.width, rec.world.height, rec.world.resolution]).…
+    134|     expect(rec.occupancy.length).toBe(500 * 380);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/18]⎯
+
+ FAIL  test/convert_lab1.test.ts > Lab 1 bundles -> v2 runs -> Lab 1 bundles > finds the ten-plus bundles the site serves, three of them recorded runs
+AssertionError: expected 9 to be greater than or equal to 10
+ ❯ test/convert_lab1.test.ts:36:24
+     34| describe('Lab 1 bundles -> v2 runs -> Lab 1 bundles', () => {
+     35|   it('finds the ten-plus bundles the site serves, three of them record…
+     36|     expect(IDS.length).toBeGreaterThanOrEqual(10);
+       |                        ^
+     37|     expect(IDS.filter((i) => i.startsWith('lab1c_'))).toEqual(['lab1c_…
+     38|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/18]⎯
+
+ FAIL  test/convert_lab1.test.ts > Lab 1 bundles -> v2 runs -> Lab 1 bundles > arena_0_10m: lossless, hash-checked, labelled by evidence class
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/bundles/arena_0_10m/manifest.json'
+ ❯ load test/convert_lab1.test.ts:29:35
+     27|
+     28| async function load(id: string) {
+     29|   const manifest = new Uint8Array(readFileSync(join(DIR, id, 'manifest…
+       |                                   ^
+     30|   const arrays = new Uint8Array(readFileSync(join(DIR, id, arraysFileN…
+     31|   return { manifest, bundle: await loadBundleBytes(manifest, arrays) };
+ ❯ test/convert_lab1.test.ts:41:40
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/18]⎯
+
+ FAIL  test/convert_lab1.test.ts > converted runs in the Arena viewer (replay.ts) > lab1c_astar plays as STACK: 0.1 s ticks, belief beside truth
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/v2/lab1c_astar.mcap'
+ ❯ parse test/convert_lab1.test.ts:83:42
+     81|   const parse = async (id: string) => {
+     82|     const { parseConverted } = await import('../src/arena/replay');
+     83|     return parseConverted(new Uint8Array(readFileSync(join(V2, `${id}.…
+       |                                          ^
+     84|   };
+     85|
+ ❯ test/convert_lab1.test.ts:88:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/18]⎯
+
+ FAIL  test/convert_lab1.test.ts > converted runs in the Arena viewer (replay.ts) > lab1c_dijkstra plays as STACK: 0.1 s ticks, belief beside truth
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/v2/lab1c_dijkstra.mcap'
+ ❯ parse test/convert_lab1.test.ts:83:42
+     81|   const parse = async (id: string) => {
+     82|     const { parseConverted } = await import('../src/arena/replay');
+     83|     return parseConverted(new Uint8Array(readFileSync(join(V2, `${id}.…
+       |                                          ^
+     84|   };
+     85|
+ ❯ test/convert_lab1.test.ts:88:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/18]⎯
+
+ FAIL  test/convert_lab1.test.ts > converted runs in the Arena viewer (replay.ts) > lab1c_greedy plays as STACK: 0.1 s ticks, belief beside truth
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/v2/lab1c_greedy.mcap'
+ ❯ parse test/convert_lab1.test.ts:83:42
+     81|   const parse = async (id: string) => {
+     82|     const { parseConverted } = await import('../src/arena/replay');
+     83|     return parseConverted(new Uint8Array(readFileSync(join(V2, `${id}.…
+       |                                          ^
+     84|   };
+     85|
+ ❯ test/convert_lab1.test.ts:88:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/18]⎯
+
+ FAIL  test/convert_lab1.test.ts > converted runs in the Arena viewer (replay.ts) > a glass-box trace plays as MODEL: one tick, the search, no robot motion
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/v2/bfs_no_path.mcap'
+ ❯ parse test/convert_lab1.test.ts:83:42
+     81|   const parse = async (id: string) => {
+     82|     const { parseConverted } = await import('../src/arena/replay');
+     83|     return parseConverted(new Uint8Array(readFileSync(join(V2, `${id}.…
+       |                                          ^
+     84|   };
+     85|
+ ❯ test/convert_lab1.test.ts:117:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/18]⎯
+
+ FAIL  test/convert_lab4.test.ts > Lab 4 search bundles -> v2 runs -> Lab 4 bundles > the Sketch searches the site computes: lossless, MODEL
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/search/search_arena/manifest.json'
+ ❯ load test/convert_lab4.test.ts:30:35
+     28|
+     29| async function load(dir: string) {
+     30|   const manifest = new Uint8Array(readFileSync(join(dir, 'manifest.jso…
+       |                                   ^
+     31|   const comp = parseSearchManifest(manifest).compression;
+     32|   const arrays = new Uint8Array(readFileSync(join(dir, comp === 'gzip'…
+ ❯ roundTrip test/convert_lab4.test.ts:37:38
+ ❯ test/convert_lab4.test.ts:74:41
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/18]⎯
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 4 unhandled errors during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip'
+ ❯ open node:internal/fs/promises:1345:25
+ ❯ Module.readFile node:internal/fs/promises:1996:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { errno: -2, code: 'ENOENT', syscall: 'open', path: '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip' }
+This error originated in "test/compare_loop.test.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip'
+ ❯ open node:internal/fs/promises:1345:25
+ ❯ Module.readFile node:internal/fs/promises:1996:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { errno: -2, code: 'ENOENT', syscall: 'open', path: '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip' }
+This error originated in "test/arena_terrain.test.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip'
+ ❯ open node:internal/fs/promises:1345:25
+ ❯ Module.readFile node:internal/fs/promises:1996:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { errno: -2, code: 'ENOENT', syscall: 'open', path: '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip' }
+This error originated in "test/arena_determinism.test.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip'
+ ❯ open node:internal/fs/promises:1345:25
+ ❯ Module.readFile node:internal/fs/promises:1996:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { errno: -2, code: 'ENOENT', syscall: 'open', path: '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/pyodide/python_stdlib.zip' }
+This error originated in "test/arena_share.test.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  12 failed | 47 passed (59)
+      Tests  8 failed | 436 passed | 12 skipped (456)
+     Errors  4 errors
+   Start at  01:08:46
+   Duration  10.42s (tests 77%, transform 11%, import 11%, worker 1%)
+
+    Isolate  59 workers spawned · ~176ms startup each (spawn + environment, per file)
+             at least ~769ms faster with isolate: false — reuses workers across files instead of one per file
+

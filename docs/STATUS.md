@@ -2,9 +2,9 @@
 
 ## Position
 
-- Branch: `v2/m5-focus`; last completed checkpoint SHA: `8b426db`.
-- M5 · Focus and polish: M5.0–M5.7 complete; M5.8 Recordings in progress.
-- M5.8–M5.11 remain. No PR, merge or release yet. Independent milestone review remains required.
+- Branch: `v2/m5-focus`; last completed checkpoint SHA: `778138b`.
+- M5 · Focus and polish: M5.0–M5.8 complete; M5.9 static caching in progress.
+- M5.9–M5.11 remain. No PR, merge or release yet. Independent milestone review remains required.
 - Master plan revision 3, copied byte-for-byte; sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
 - Canonical agent rules: [AGENTS.md](../AGENTS.md). Historical status: [STATUS_HISTORY.md](v2/STATUS_HISTORY.md).
 - Prompts: [M5](v2/M5_PROMPT.md), [owner amendments](v2/M5_CONTINUATION.md).
@@ -72,6 +72,16 @@
 - Earlier localization browser timeouts retained; final desktop and both emulated phone family checks pass.
   [Report](v2/data/m5/compare/REPORT.md); all required families and twelve tours checked.
 
+## M5.8 Recordings complete
+
+- [Report](v2/data/m5/recordings/REPORT.md): all 100 Case Files and 65 converted runs,
+  searchable/filterable with failures retained; cards open the existing viewer.
+- Web 488 and tools 205 pass; eleven package suites pass, coco_lab_ros rerun with
+  canonical schema paths after environment-only import failure. Typecheck/build pass.
+- Four layouts retain all 165 entries, 60 failure representations, zero early MCAP
+  downloads and zero console errors; native phone filter sheet restores focus.
+- [Screenshots](v2/data/m5/screens/recordings/README.md) await Gautham; no feedback recorded.
+
 ## Owner rows, phone and design inputs
 
 - Notes found: [committed blank template](v2/usability/2026-10-pre-m5.md), unchanged.
@@ -130,7 +140,7 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 ## Next step
 
-M5.8: finish searchable Recordings library, authoritative metadata, filter/viewer checks and desktop/phone captures.
+M5.9: finish static-only service worker, deploy/offline/disabled checks, warm-start measurement and disabled counter.
 M5.4–M5.6 screenshots await soft review; apply any recorded feedback next checkpoint.
 No stop condition hit; no new parked idea. Real phone absent; provisional settings unchanged.
 M5 remains open; public launch still waits for real-phone pass and Gautham's usability gate.

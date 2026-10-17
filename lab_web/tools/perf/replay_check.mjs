@@ -67,7 +67,7 @@ try {
     await page.screenshot({ path: join(OUT, `${id}.png`) });
     const pass = badge === (want === 'MODEL' ? 'MODEL · kinematic' : want) && st.mode === 'recording' && st.client === null && workers === 0 && st.cursor === st.received
       && (want === 'MODEL' ? st.ticks === 1 : st.ticks > 100 && !!st.truth && /tracking error/.test(results) && !!note)
-      && links >= 11 && errs.length === 0;
+      && links === 1 && await page.getByTestId('recorded-runs').getByRole('link', { name: 'Browse the Recordings library →' }).count() === 1 && errs.length === 0;
     out.runs[id] = { pass, badge, first_shown_ms: firstMs, ...st, results, note, links, workers, errors: errs };
     out.errors.push(...errs);
     console.log(`${pass ? 'PASS' : 'FAIL'} ${id} ${JSON.stringify({ badge, ticks: st.ticks, events: st.received, first_shown_ms: firstMs, workers, errors: errs.length })}`);

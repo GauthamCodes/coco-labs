@@ -23,7 +23,7 @@ import type { ArenaSceneModel } from './sceneCore';
 
 export function ArenaSceneView({ model, controlsOnly = false }: { model: ArenaSceneModel; controlsOnly?: boolean }) {
   const {
-    params, showPerf, recId, missionBack, playParam, playLevel, playOn,
+    params, showPerf, missionBack, playParam, playLevel, playOn,
     raceOn, raceNotice, gaps, cfgInitial, canvas, world, liveReady,
     mode, session, error, inspect, setInspect, picked, layers,
     lens, setLens, level, setLevel, focus, setFocus, lensOn,
@@ -210,11 +210,7 @@ export function ArenaSceneView({ model, controlsOnly = false }: { model: ArenaSc
         </div>
         {runs.length > 0 && (
           <nav className="arena-row recorded-runs" aria-label="Recorded and computed runs in this viewer" data-testid="recorded-runs">
-            <span>Runs in this viewer:</span>
-            {runs.map((x) => (
-              <a key={x.id} href={`${import.meta.env.BASE_URL}?view=arena&replay=${x.id}`} data-testid={`replay-${x.id}`}
-                aria-current={x.id === recId ? 'page' : undefined}>{x.evidence === 'STACK' ? `${x.title} · STACK` : x.title}</a>
-            ))}
+            <a href={`${import.meta.env.BASE_URL}?view=research`}>Browse the Recordings library →</a>
           </nav>
         )}
         <p data-testid="arena-tick">
