@@ -7,14 +7,29 @@ the entries below are copied into it at merge.
 
 ## Current checkpoint and next step
 
-- **Done:** M6F.0 Setup; M6F.1 World Spec v3; M6F.2 Generators; M6F.3 the Depot.
-- **M6F.4:** harness committed (`tools/m6/bench_planning.py`, `bench_planning_pyodide.mjs`);
-  the measurement is **pending, machine busy**.
-- **Done:** M6F.5 Grasp Assist (model side).
-- **Done:** M6F.6 Fetch Rush and Rush Hour rules (model side).
-- **Done:** M6F.7 ROS-shaped message model.
-- **M6F.8:** **pending, machine busy** (plan: `docs/v2/m6/M6F8_PLAN.md`).
-- **Next:** M6F.9 wrap up (results, merge notes, draft PR).
+- **Done:** M6F.0, M6F.1, M6F.2, M6F.3, M6F.5, M6F.6, M6F.7, M6F.9 (wrap-up:
+  `RESULTS_M6_FOUNDATIONS.md`, `MERGE_NOTES.md`, the draft PR).
+- **Pending, machine busy:** M6F.4 (Depot planning benchmark; harness committed) and
+  M6F.8 (Gazebo + Nav2; plan in `M6F8_PLAN.md`). Codex was active the whole session.
+- **Next:** when Codex is idle and no robot batch runs, on AC: build a colcon overlay of
+  this worktree (also clears the 4 overlay-dependent `coco_lab_ros` tests), run M6F.4,
+  then M6F.8 per `M6F8_PLAN.md`; then merge `v2/m5-focus` once pushed (or after M5 merges)
+  and resolve the merge points below.
+
+## Questions for Gautham
+
+1. **Fetch Rush balance.** At COCO's real auto speed (0.3 m/s) the Depot is large for
+   three minutes: the reference delivers 1, 1 and 0 on seeds 1-3 (seed 3's first order
+   has a 77.9 m ghost). Lengthen the timer, draw orders within a reachable budget, or
+   start Fetch Rush inside one zone?
+2. **The graspable band.** The fingers' "6-32 mm band" exists only as a comment in
+   `coco_config/robot.py`; Grasp Assist uses the Stack-verified 20-32 mm targets (max
+   32 mm) instead. Add a named constant to `coco_config`, or keep the verified band?
+3. **Detection range.** The camera range is the measured 1.40 m first detection of the
+   20 mm target (p03c), applied to every object. Acceptable as the model's assumption?
+4. **`origin/v2/m5-focus` did not exist**, so this branch starts from the local M5 tip
+   `0254dea`, and pushing it published M5's 9 unpushed commits inside this branch's
+   history (not as `v2/m5-focus`). Fine, or should M5 be pushed first next time?
 
 ## Setup facts (M6F.0, 2026-10-17)
 
