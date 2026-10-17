@@ -7,8 +7,8 @@ the entries below are copied into it at merge.
 
 ## Current checkpoint and next step
 
-- **Done:** M6F.0 Setup; M6F.1 World Spec v3 and the level kit.
-- **Next:** M6F.2 Generators (Arena world, Gazebo SDF, Nav2 map + params).
+- **Done:** M6F.0 Setup; M6F.1 World Spec v3; M6F.2 Generators.
+- **Next:** M6F.3 The COCO Depot level.
 
 ## Setup facts (M6F.0, 2026-10-17)
 
@@ -46,6 +46,27 @@ the entries below are copied into it at merge.
   per-tick hash identical. Every existing golden-trace and hash test passed unedited.
 - Tests: `coco_lab` 895 passed / 0 failed / 0 skipped (824 before), nice 19,
   Codex running (`codex resume`), 381.6 s.
+
+## M6F.2 — Generators (2026-10-17)
+
+- `coco_lab/coco_lab/worldgen.py` (stdlib only): the Arena model world at any
+  resolution (`arena_world`, `arena_world_json`), the Gazebo SDF world
+  (`sdf_world`: template-kept physics/systems/lights; static boxes; STL wedges;
+  platforms; dynamic objects; actors as models **with collision bodies**, kinematic,
+  plus `actors.json`), standalone spawnable objects (`object_sdf`), the Nav2 map
+  (`nav2_map`, `gen_navigation_world.py`'s rules). `tools/m6/gen_level.py` writes all
+  of it plus `nav2_params.yaml` derived from `gazebo_models/config/nav2_params.yaml`
+  (untouched; 3 keys changed, listed in `params_derivation.json`), runs `gz sdf -k`,
+  and records checksums.
+- Proving Ground (`docs/v2/m6/PROVING_GROUND.md`): the Nav2 PGM for the v1 and v2
+  arena specs is byte-identical to `gazebo_models/maps/coco_navigation.pgm`; the YAML
+  differs only in the image name; all 70 boxes and every non-model world element are
+  identical to `coco_navigation.world`; the 12 ramp/platform models match the launch
+  file's spawns (names differ; rise differs by 3.4e-13 m) and the wedge mesh equals
+  `ramp_wedge_18.stl`'s vertices to 6 decimals; `gz sdf -k`: Valid. Checksums:
+  `docs/v2/m6/data/coco_arena_v2_outputs.json`. Evidence class MODEL.
+- Tests: `coco_lab/test/test_worldgen.py` (19), incl. the SDF round trip, PGM vs the
+  model's occupancy, YAML origin/resolution, and `gz sdf -k` (gz present).
 
 ## Plan-change entries to copy into docs/STATUS.md at merge
 

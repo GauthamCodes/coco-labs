@@ -1,0 +1,28 @@
+{
+ "canonical_sha256": "920167b19a4f9428841c86725d16380ae48c7c69fe20989881a2b5cd7bf8766f",
+ "gz_sdf_check": {
+  "gazebo/coco_arena_v2.sdf": 0
+ },
+ "outputs": {
+  "arena/arena_world_0.05.json": "7a986a4d116c3b150c35db043a7eda1794394bcabba64b1a2e9b047725e26b99",
+  "arena/arena_world_0.1.json": "ecd5d60e269431c5535f74e6be69c6b14e64c179f7609993f2478c0b68477224",
+  "gazebo/coco_arena_v2.sdf": "7ff1086f61d1dccd2eef03ccdb77fd5ee4ba574a4e52afdd733a70c2076bbd46",
+  "gazebo/meshes/bay1_down.stl": "defc98a3356824f2b13f9530aefb39501f0c935a1cd8fb0664a7563f8fb29684",
+  "gazebo/meshes/bay1_up.stl": "defc98a3356824f2b13f9530aefb39501f0c935a1cd8fb0664a7563f8fb29684",
+  "gazebo/meshes/bay2_down.stl": "defc98a3356824f2b13f9530aefb39501f0c935a1cd8fb0664a7563f8fb29684",
+  "gazebo/meshes/bay2_up.stl": "defc98a3356824f2b13f9530aefb39501f0c935a1cd8fb0664a7563f8fb29684",
+  "gazebo/meshes/bay3_down.stl": "defc98a3356824f2b13f9530aefb39501f0c935a1cd8fb0664a7563f8fb29684",
+  "gazebo/meshes/bay3_up.stl": "defc98a3356824f2b13f9530aefb39501f0c935a1cd8fb0664a7563f8fb29684",
+  "gazebo/meshes/bay4_down.stl": "defc98a3356824f2b13f9530aefb39501f0c935a1cd8fb0664a7563f8fb29684",
+  "gazebo/meshes/bay4_up.stl": "defc98a3356824f2b13f9530aefb39501f0c935a1cd8fb0664a7563f8fb29684",
+  "nav2/coco_arena_v2.pgm": "44f5896d2f7519d30317961d2e4aee203814f4a55d0cdcd7e3a6d795340e2e35",
+  "nav2/coco_arena_v2.yaml": "fbf24ef7548b1c2cd74323ec32b3b93f9803e455fdba13a4a65ca7ce3403d77d",
+  "nav2/nav2_params.yaml": "9f494508e9602351975d709b7668b426ea9dc7e26b988451478c06bca0671a17",
+  "nav2/params_derivation.json": "433f126cf55a7c2392ca34fd309944ec428274c270560068d876d73faa3cf85e"
+ },
+ "schema": "coco_lab.m6f.level_outputs",
+ "spec_file": "worlds/coco_arena_v2.yaml",
+ "spec_sha256": "f6e04d089a4e7b48c848520b7b9a3a6ee4f46bd363f7cd7324ecc4270651f4cc",
+ "version": 1,
+ "world_spec": "coco_arena_v2"
+}
