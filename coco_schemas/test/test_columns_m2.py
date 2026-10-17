@@ -48,7 +48,8 @@ def test_every_m2_family_has_a_channel():
 def test_every_m2_stream_message_has_a_column_table():
     # plus M1's metrics batch, which the whole loop emits its numbers in
     assert sorted(TABLES) == sorted((set(M2_STREAMS) - NOT_COLUMNAR)
-                                    | {'coco.metrics.v1.MetricBatch'})
+                                    | {'coco.metrics.v1.MetricBatch',
+                                       'coco.costmap.v1.LayersBatch'})
 
 
 @pytest.mark.parametrize('message', sorted(TABLES))
@@ -114,7 +115,8 @@ def test_batches_refuse_unknown_scalars_and_flat_columns():
         b.extend_flat('v', [1.0])
 
 
-def test_the_committed_cross_language_vectors_are_current():
+@pytest.mark.parametrize('milestone', ['m2', 'm5'])
+def test_the_committed_cross_language_vectors_are_current(milestone):
     """make_vectors_m2.py regenerates m2_batches.json byte for byte."""
     import importlib.util
     import json
@@ -125,7 +127,8 @@ def test_the_committed_cross_language_vectors_are_current():
                                         'make_vectors_m2.py'))
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
-    text = json.dumps(mod.vectors(), indent=1, ensure_ascii=False) + '\n'
-    with open(os.path.join(here, 'vectors', 'm2_batches.json'),
+    messages = (['coco.costmap.v1.LayersBatch'] if milestone == 'm5' else None)
+    text = json.dumps(mod.vectors(messages), indent=1, ensure_ascii=False) + '\n'
+    with open(os.path.join(here, 'vectors', milestone + '_batches.json'),
               encoding='utf-8') as f:
         assert f.read() == text

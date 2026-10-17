@@ -38,6 +38,10 @@ class Channel(NamedTuple):
 
 
 CHANNELS = (
+    Channel('coco.costmap.layers.header.v1', 'costmap.layers',
+            'coco.costmap.v1.LayersHeader', False),
+    Channel('coco.costmap.layers.cells.v1', 'costmap.layers',
+            'coco.costmap.v1.LayersBatch', True),
     Channel('coco.envelope.manifest.v1', 'envelope',
             'coco.envelope.v1.Manifest', False),
     Channel('coco.world.grid.v1', 'world', 'coco.world.v1.WorldGrid', False),
@@ -133,7 +137,8 @@ M1_FAMILIES = ('world', 'robot', 'truth', 'sensor.scan', 'plan.search',
 M2_FAMILIES = ('estimate', 'localise.particles', 'localise.ekf', 'map.grid',
                'map.slam', 'control.local', 'decide.search', 'mission.fsm',
                'sensor.detect', 'arm')
-FAMILIES = M1_FAMILIES + M2_FAMILIES
+M5_FAMILIES = ('costmap.layers',)
+FAMILIES = M1_FAMILIES + M2_FAMILIES + M5_FAMILIES
 
 BY_NAME = {c.name: c for c in CHANNELS}
 

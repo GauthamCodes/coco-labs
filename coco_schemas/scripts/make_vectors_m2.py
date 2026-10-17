@@ -56,9 +56,13 @@ def _value(t, rng):
                        'ASSUMPTION', 'bay α'])
 
 
-def vectors():
+def vectors(messages=None):
     out = []
-    for message in sorted(TABLES):
+    # Keep the historical M2 corpus byte-for-byte. Additive M5 families
+    # get a separate corpus, selected with --m5.
+    if messages is None:
+        messages = [m for m in TABLES if not m.startswith('coco.costmap.')]
+    for message in sorted(messages):
         rng = random.Random('m2:' + message)
         cols, scalars = TABLES[message]
         b = Batch(message, **{n: _value(t, rng) for n, t in scalars})
@@ -90,16 +94,21 @@ def vectors():
 
 
 def main():
-    text = json.dumps(vectors(), indent=1, ensure_ascii=False) + '\n'
+    out = OUT
+    messages = None
+    if '--m5' in sys.argv:
+        out = os.path.join(PKG, 'test', 'vectors', 'm5_batches.json')
+        messages = [m for m in TABLES if m.startswith('coco.costmap.')]
+    text = json.dumps(vectors(messages), indent=1, ensure_ascii=False) + '\n'
     if '--check' in sys.argv:
-        with open(OUT, encoding='utf-8') as f:
+        with open(out, encoding='utf-8') as f:
             if f.read() != text:
-                sys.exit(f'{OUT} is stale: re-run make_vectors_m2.py')
+                sys.exit(f'{out} is stale: re-run make_vectors_m2.py')
         print('m2 vectors are current')
         return
-    with open(OUT, 'w', encoding='utf-8') as f:
+    with open(out, 'w', encoding='utf-8') as f:
         f.write(text)
-    print(f'wrote {OUT}')
+    print(f'wrote {out}')
 
 
 if __name__ == '__main__':

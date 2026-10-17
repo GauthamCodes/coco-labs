@@ -43,6 +43,10 @@ def _cov(prefix: str):
 #: message -> (repeated columns after the clocks, per-batch scalars)
 TABLES: Dict[str, Tuple[Tuple[Tuple[str, str], ...],
                         Tuple[Tuple[str, str], ...]]] = {
+    'coco.costmap.v1.LayersBatch': (
+        (('row', 'I'), ('col', 'I'), ('static_cost', 'I'),
+         ('obstacle_cost', 'I'), ('inflation_cost', 'I'), ('combined_cost', 'I')),
+        (('map_id', 's'), ('update', 'Q'))),
     'coco.estimate.v1.EstimateBatch': (
         (('x', 'd'), ('y', 'd'), ('theta', 'd')) + COV,
         (('estimator', 's'),)),

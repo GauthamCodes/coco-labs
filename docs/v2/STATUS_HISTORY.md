@@ -2053,3 +2053,28 @@ not needed. No whole files moved/removed, new ADR, plan decision, parked idea
 or stop condition. Minimap source extracted; baseline copies retained. Failed
 focus/target, stale local build and daemon-interrupted artifacts retained,
 corrected closure checks pass. Next M5.7 Compare; no merge/release/cloud work.
+
+
+## 2026-10-17 — M5.7 costmap and scissor foundations (checkpoint remains open)
+
+Start SHA 8b426db, branch v2/m5-focus. Added independent MODEL static, current
+LiDAR obstacle, Nav2-style inflation and combined layers; additive costmap.layers
+schema/transport; optional worker Compare costed graph without changing Arena
+state; 1/2/4 scissor rectangles with portrait stacking. Original request/UI still
+defaults to two panes. No new visible design, whole-file move/removal, ADR or
+owner decision. Historical M2 vectors/golden fixtures unchanged.
+
+Evidence: docs/v2/data/m5/compare/REPORT.md and its linked logs, generated M5
+cross-language vectors and recorded Stack comparison JSON. Web 482 passed
+(before 477); tools 197 (before 195); typecheck/build/schema generation pass.
+Affected-package run: coco_lab 821 passed with three new-file lint failures;
+after corrections, all 19 lint/costmap checks pass. coco_schemas 231 passed.
+Two integration checks preserve state bytes/hash/chain/graph for v1 and v2.
+No startup/FPS claim: balanced on AC, RTX 4050 driver 580.178.04, conditions
+recorded. ADB no phone; real Phone row pending USB. Existing M5.4–M5.6
+screenshots still await owner review. No pre-design observations or new
+feedback. No stop condition, no parked idea. M5.7 not complete.
+
+Next: wire 2/4 controls and costmap hover/bands, existing algorithm families,
+difference/timeline/results and evidence-backed tours; run closure checks and
+capture desktop/emulated Nothing Phone (1) landscape/portrait. Then M5.8–M5.11.

@@ -98,7 +98,8 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
     return json.dumps(world), m.occupancy
 
 
-def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048):
+def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
+            inflation_json=None):
     """
     Run two planners from the robot's cell to (gx, gy); change nothing.
 
@@ -114,11 +115,32 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048):
 
     a = _arena
     g = a.grid
+    if inflation_json is not None:
+        from coco_lab.costmap import (InflationParams, build_layers,
+                                      scan_obstacle_cells, emit_layers)
+        from coco_lab.grid import Grid
+        m, li = a.lab_map, a.lidar
+        params = InflationParams(**json.loads(inflation_json))
+        hits = scan_obstacle_cells(m, a.belief(), a.ranges, a.angles,
+                                   li.mount, li.range_min, li.range_max)
+        layers = build_layers(m.width, m.height, m.resolution,
+                              [v != 0 for v in m.occupancy], hits, params)
+        emit_layers(layers, params, m.origin,
+                    lambda channel, tick, columns, scalars:
+                    emit_header(channel, scalars) if columns is None else
+                    emit_family(channel, tick, columns, scalars),
+                    tick=a.tick, t_world=a.t_world, update=a.tick)
+        # A separate graph: never assign Arena.grid/plan_map or its radius.
+        g = Grid(m.width, m.height,
+                 blocked=[v >= 253 for v in layers.combined],
+                 cost=layers.combined, connectivity=8)
     s = _nearest_free(g, a.plan_map.cell_at(a.pose[0], a.pose[1]))
     t_cell = a.plan_map.cell_at(float(gx), float(gy))
     if s is None or t_cell is None:
         raise ValueError(f'goal ({gx}, {gy}) or the robot is off the map')
     t = _nearest_free(g, t_cell)
+    if t is None:
+        raise ValueError('costmap has no free goal cell')
     out = {}
     for side, sid, name in (('A', -101, planner_a), ('B', -102, planner_b)):
         if name not in PLANNERS:

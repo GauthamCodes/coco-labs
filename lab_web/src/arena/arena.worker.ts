@@ -220,7 +220,9 @@ async function play(req: Extract<ToWorker, { type: 'play' }>) {
 
 function compare(req: Extract<ToWorker, { type: 'compare' }>) {
   if (!glue || !onBatchFn) throw new Error('compare before boot');
-  const result = JSON.parse(glue.compare(req.a, req.b, req.x, req.y, onBatchFn, 2048));
+  const args: unknown[] = [req.a, req.b, req.x, req.y, onBatchFn, 2048];
+  if (req.inflation) args.push(JSON.stringify(req.inflation));
+  const result = JSON.parse(glue.compare(...args));
   post({ type: 'compare_done', result });
 }
 

@@ -40,7 +40,8 @@ export interface StepRequest { type: 'step'; inputs: InputRow[] }
  */
 export interface AmendRequest { type: 'amend'; inputs: InputRow[] }
 /** Two planners from the robot's cell to (x, y); the model is not changed (M1.8). */
-export interface CompareRequest { type: 'compare'; a: string; b: string; x: number; y: number }
+export interface CompareInflation { inflation_radius: number; cost_scaling_factor: number; robot_radius: number }
+export interface CompareRequest { type: 'compare'; a: string; b: string; x: number; y: number; inflation?: CompareInflation }
 /** M2.2: load a lens's Python pack (tools/arena_packs.json) if it is not loaded yet. */
 export interface LoadPackRequest { type: 'load_pack'; pack: string }
 /** M3.5: Play -- coco_lab.play, through arena_glue.play (a JSON request; the reply is JSON). */

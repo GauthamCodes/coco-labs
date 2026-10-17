@@ -12,7 +12,8 @@ import { PREFERENCES_CHANGED } from '../../shell/settings_events';
 import { QualityController, TIER_CHOICES, TIER_SETTINGS, type TierChoice } from '../../arena/render/quality';
 import type { World } from '../../arena/protocol';
 import { CLOSED, FRONTIER, PATH, type PlanStore } from '../../arena/render/planStore';
-export interface ComparisonData { world: World; occupancy: Uint8Array; stores: [PlanStore, PlanStore] }
+import { paneLayout } from './paneLayout';
+export interface ComparisonData { world: World; occupancy: Uint8Array; stores: PlanStore[] }
 
 export function WorldStage({ kind, data, perspective = false, onReady }: { kind: 'title' | 'compare'; data?: ComparisonData; perspective?: boolean; onReady?: () => void }) {
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -87,14 +88,11 @@ export function WorldStage({ kind, data, perspective = false, onReady }: { kind:
         const current = latest.current;
         if (kind === 'compare' && current.data) rig!.setPose(current.data.world.start);
         rig!.update(dt, width / height);
-        const portrait = width < height;
-        const panes = kind === 'compare' ? 2 : 1;
+        const panes = kind === 'compare' ? current.data?.stores.length === 4 ? 4 : 2 : 1;
+        const rectangles = paneLayout(panes, width, height);
         renderer.setScissorTest(true);
         for (let side = 0; side < panes; side++) {
-          const paneWidth = panes === 2 && !portrait ? width / 2 : width;
-          const paneHeight = panes === 2 && portrait ? height / 2 : height;
-          const left = !portrait ? side * paneWidth : 0;
-          const bottom = portrait && panes === 2 ? (1 - side) * paneHeight : 0;
+          const { width: paneWidth, height: paneHeight, left, bottom } = rectangles[side];
           renderer.setViewport(left, bottom, paneWidth, paneHeight); renderer.setScissor(left, bottom, paneWidth, paneHeight);
           renderer.clear();
           overlays.forEach((overlay) => { overlay.mesh.visible = false; });

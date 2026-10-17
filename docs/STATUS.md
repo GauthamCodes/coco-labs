@@ -2,8 +2,8 @@
 
 ## Position
 
-- Branch: `v2/m5-focus`; last completed checkpoint SHA: `c5afb3d`.
-- M5 · Focus and polish: M5.0–M5.6 complete; M5.7 Compare next.
+- Branch: `v2/m5-focus`; last completed checkpoint SHA: `8b426db`.
+- M5 · Focus and polish: M5.0–M5.6 complete; M5.7 Compare in progress.
 - M5.7–M5.11 remain. No PR, merge or release yet. Independent milestone review remains required.
 - Master plan revision 3, copied byte-for-byte; sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
 - Canonical agent rules: [AGENTS.md](../AGENTS.md). Historical status: [STATUS_HISTORY.md](v2/STATUS_HISTORY.md).
@@ -55,6 +55,18 @@
   frozen hashes across display changes, scan hits and race/picking regressions pass.
 - Original PNGs retained; only attract's full-screen visual baseline changes.
   Some resumed tests on battery; closure captures balanced/AC. No performance claim.
+
+## M5.7 Compare in progress
+
+- Independent static/scan/inflation/combined layers and additive schema; optional worker request.
+  [Foundation report](v2/data/m5/compare/REPORT.md); existing Arena graph/hash unaffected.
+- Hand-computed values, scan projection, column transport and 1/2/4 scissor layout tested.
+  Web 482 passed (M5.6: 477), tools 197 (before 195); typecheck/build pass; integration 2 passed.
+- Recorded Stack snapshots compared with declared parameters; differences retained and labelled.
+- Full affected-package run: 821 coco_lab passed, three new-file lint failures;
+  corrected and all 19 lint/costmap checks passed. coco_schemas 231 passed.
+- M5.7 is not complete: visible 2/4 controls, layers/hover/bands, families, difference,
+  timeline/results, tours and phone screenshots still need implementation/closure checks.
 
 ## Owner rows, phone and design inputs
 
@@ -113,8 +125,8 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 ## Next step
 
-M5.7: Compare with 2/4 scissored panes, existing planning/control/localization families,
-costmap layers/inflation, synchronized controls/timeline/results and evidence-backed tours.
+M5.7: wire the tested costmap family and 2/4 scissor layout into Compare; add the
+required existing algorithm families, synchronized timeline/results and evidence-backed tours.
 M5.4–M5.6 screenshots await soft review; apply any recorded feedback next checkpoint.
 No stop condition hit; no new parked idea. Real phone absent; provisional settings unchanged.
 M5 remains open; public launch still waits for real-phone pass and Gautham's usability gate.

@@ -1,0 +1,15 @@
+[tests] interpreter: /home/gautham/coco_labs_ws/test_venv/bin/python (3.12.3 pytest 7.4.4 hypothesis 6.98.15 networkx 2.8.8)
+[tests] workspace:   /home/gautham/coco_labs_ws   ROS_DOMAIN_ID=78
+--- Testing coco_lab ---
+FAILED test/test_flake8.py::test_flake8 - AssertionError: Found 8 code style ...
+FAILED test/test_pep257.py::test_pep257 - AssertionError: Found code style er...
+3 failed, 821 passed in 317.66s (0:05:17)
+--- Testing coco_schemas ---
+........................................................................ [ 93%]
+...............                                                          [100%]
+231 passed, 3 warnings in 6.64s
+==================================================
+coco_lab             FAIL (pytest exit 1) 3 failed, 821 passed in 317.66s (0:05:17)
+coco_schemas         ok   231 passed, 3 warnings in 6.64s
+==================================================
+[tests] FAILED: at least one package did not pass

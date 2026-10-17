@@ -1,0 +1,372 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________________ test_flake8 __________________________________
+
+    @pytest.mark.flake8
+    @pytest.mark.linter
+    def test_flake8():
+        # The vendored ISRO code keeps its original style (coco_lab/isro).
+        rc, errors = main_with_errors(argv=['--exclude', 'upstream_v3_6.py'])
+>       assert rc == 0, \
+            'Found %d code style errors / warnings:\n' % len(errors) + \
+            '\n'.join(errors)
+E       AssertionError: Found 8 code style errors / warnings:
+E         ./coco_lab/costmap.py:28:1: I100 Import statements are in the wrong order. 'from .columns import Batch' should be before 'from .sketch import edt'
+E         ./test/test_costmap.py:17:1: I201 Missing newline between import groups. 'import pytest' is identified as Third Party and 'import math' is identified as Stdlib.
+E         ./test/test_costmap.py:19:1: I101 Imported names are in the wrong order. Should be build_layers, emit_layers, inflation_cost, InflationParams, scan_obstacle_cells
+E         ./test/test_costmap.py:19:1: I100 Import statements are in the wrong order. 'from coco_lab.costmap import InflationParams, build_layers, inflation_cost, scan_obstacle_cells, emit_layers' should be before 'import pytest'
+E         ./test/test_costmap.py:49:36: E128 continuation line under-indented for visual indent
+E         ./test/test_costmap.py:85:32: E128 continuation line under-indented for visual indent
+E         ./test/test_costmap.py:86:32: E128 continuation line under-indented for visual indent
+E         ./test/test_costmap.py:87:32: E128 continuation line under-indented for visual indent
+E       assert 1 == 0
+
+test/test_flake8.py:24: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+./coco_lab/costmap.py:28:1: I100 Import statements are in the wrong order. 'from .columns import Batch' should be before 'from .sketch import edt'
+from .columns import Batch
+^
+
+./test/test_costmap.py:17:1: I201 Missing newline between import groups. 'import pytest' is identified as Third Party and 'import math' is identified as Stdlib.
+import pytest
+^
+
+./test/test_costmap.py:19:1: I101 Imported names are in the wrong order. Should be build_layers, emit_layers, inflation_cost, InflationParams, scan_obstacle_cells
+from coco_lab.costmap import (InflationParams, build_layers, inflation_cost,
+^
+
+./test/test_costmap.py:19:1: I100 Import statements are in the wrong order. 'from coco_lab.costmap import InflationParams, build_layers, inflation_cost, scan_obstacle_cells, emit_layers' should be before 'import pytest'
+from coco_lab.costmap import (InflationParams, build_layers, inflation_cost,
+^
+
+./test/test_costmap.py:49:36: E128 continuation line under-indented for visual indent
+                                   zip(layers.static, layers.obstacle,
+                                   ^
+
+./test/test_costmap.py:85:32: E128 continuation line under-indented for visual indent
+                               [1, 1, 3, math.nan, -1, 5],
+                               ^
+
+./test/test_costmap.py:86:32: E128 continuation line under-indented for visual indent
+                               [0, -math.pi / 2, 0, 0, 0, 0],
+                               ^
+
+./test/test_costmap.py:87:32: E128 continuation line under-indented for visual indent
+                               (0.5, 0, 0), 0.1, 3)
+                               ^
+
+4     E128 continuation line under-indented for visual indent
+2     I100 Import statements are in the wrong order. 'from .columns import Batch' should be before 'from .sketch import edt'
+1     I101 Imported names are in the wrong order. Should be build_layers, emit_layers, inflation_cost, InflationParams, scan_obstacle_cells
+1     I201 Missing newline between import groups. 'import pytest' is identified as Third Party and 'import math' is identified as Stdlib.
+
+111 files checked
+8 errors
+
+'E'-type errors: 4
+'I'-type errors: 4
+
+Checked files:
+
+* ./setup.py
+* ./test/test_locbundle.py
+* ./test/test_grid.py
+* ./test/test_race.py
+* ./test/test_replan.py
+* ./test/golden_loc_bundles.py
+* ./test/test_ekfslam.py
+* ./test/golden_bundles.py
+* ./test/test_play.py
+* ./test/test_golden_traces.py
+* ./test/test_movebundle.py
+* ./test/test_state_hash_v2.py
+* ./test/test_map_teaching.py
+* ./test/test_no_ros.py
+* ./test/lab_maps.py
+* ./test/make_golden_traces.py
+* ./test/conftest.py
+* ./test/test_copyright.py
+* ./test/golden_search_bundles.py
+* ./test/test_regionsearch.py
+* ./test/test_costmap.py
+* ./test/test_fastslam.py
+* ./test/test_kalman.py
+* ./test/test_dstarlite.py
+* ./test/test_search.py
+* ./test/test_isro.py
+* ./test/test_loc_arena.py
+* ./test/test_move_arena.py
+* ./test/test_trace.py
+* ./test/test_arena.py
+* ./test/test_rng.py
+* ./test/test_localise.py
+* ./test/test_teaching.py
+* ./test/test_graph_interface.py
+* ./test/test_maps.py
+* ./test/test_worldspec.py
+* ./test/test_movemetrics.py
+* ./test/test_bound.py
+* ./test/test_bundle_recording.py
+* ./test/test_heuristics.py
+* ./test/test_searchbundle.py
+* ./test/test_occgrid.py
+* ./test/test_pep257.py
+* ./test/golden_slam_bundles.py
+* ./test/test_slambundle.py
+* ./test/test_properties.py
+* ./test/test_posegraph.py
+* ./test/test_map_arena.py
+* ./test/test_terrain_grasp.py
+* ./test/golden_move_bundles.py
+* ./test/test_mapeval.py
+* ./test/test_flake8.py
+* ./test/test_dependencies.py
+* ./test/test_sketch.py
+* ./test/test_stdlib_only.py
+* ./test/test_mission_arena.py
+* ./test/test_bundle.py
+* ./coco_lab/dstarlite.py
+* ./coco_lab/map_arena.py
+* ./coco_lab/__init__.py
+* ./coco_lab/arena.py
+* ./coco_lab/state_v2.py
+* ./coco_lab/trace.py
+* ./coco_lab/heuristics.py
+* ./coco_lab/graph.py
+* ./coco_lab/terrain.py
+* ./coco_lab/rng.py
+* ./coco_lab/regionsearch.py
+* ./coco_lab/fetch_problem.py
+* ./coco_lab/loc_arena.py
+* ./coco_lab/arm.py
+* ./coco_lab/move_arena.py
+* ./coco_lab/control.py
+* ./coco_lab/link_bounds.py
+* ./coco_lab/kalman.py
+* ./coco_lab/ekfslam.py
+* ./coco_lab/searchbundle.py
+* ./coco_lab/landmarks.py
+* ./coco_lab/columns.py
+* ./coco_lab/grid.py
+* ./coco_lab/maps.py
+* ./coco_lab/mapping.py
+* ./coco_lab/slambundle.py
+* ./coco_lab/play.py
+* ./coco_lab/mapworld.py
+* ./coco_lab/search.py
+* ./coco_lab/worldspec.py
+* ./coco_lab/loc_teaching.py
+* ./coco_lab/grasp.py
+* ./coco_lab/posegraph.py
+* ./coco_lab/movemetrics.py
+* ./coco_lab/race.py
+* ./coco_lab/localise.py
+* ./coco_lab/fastslam.py
+* ./coco_lab/mapeval.py
+* ./coco_lab/slam.py
+* ./coco_lab/heading.py
+* ./coco_lab/sketch.py
+* ./coco_lab/movebundle.py
+* ./coco_lab/move_scenarios.py
+* ./coco_lab/replan.py
+* ./coco_lab/bundle.py
+* ./coco_lab/map_teaching.py
+* ./coco_lab/teaching.py
+* ./coco_lab/costmap.py
+* ./coco_lab/occgrid.py
+* ./coco_lab/locbundle.py
+* ./coco_lab/mission_arena.py
+* ./coco_lab/events.py
+* ./coco_lab/isro/__init__.py
+* ./coco_lab/isro/historical.py
+_________________________________ test_pep257 __________________________________
+
+    @pytest.mark.linter
+    @pytest.mark.pep257
+    def test_pep257():
+        # The vendored ISRO code keeps its original style (coco_lab/isro).
+        rc = main(argv=['--exclude', 'coco_lab/isro/upstream_v3_6.py', '--',
+                        '.', 'test'])
+>       assert rc == 0, 'Found code style errors / warnings'
+E       AssertionError: Found code style errors / warnings
+E       assert 1 == 0
+
+test/test_pep257.py:25: AssertionError
+----------------------------- Captured stdout call -----------------------------
+checking ./coco_lab/__init__.py
+checking ./coco_lab/arena.py
+checking ./coco_lab/arm.py
+checking ./coco_lab/bundle.py
+checking ./coco_lab/columns.py
+checking ./coco_lab/control.py
+checking ./coco_lab/costmap.py
+checking ./coco_lab/dstarlite.py
+checking ./coco_lab/ekfslam.py
+checking ./coco_lab/events.py
+checking ./coco_lab/fastslam.py
+checking ./coco_lab/fetch_problem.py
+checking ./coco_lab/graph.py
+checking ./coco_lab/grasp.py
+checking ./coco_lab/grid.py
+checking ./coco_lab/heading.py
+checking ./coco_lab/heuristics.py
+checking ./coco_lab/isro/__init__.py
+checking ./coco_lab/isro/historical.py
+checking ./coco_lab/kalman.py
+checking ./coco_lab/landmarks.py
+checking ./coco_lab/link_bounds.py
+checking ./coco_lab/loc_arena.py
+checking ./coco_lab/loc_teaching.py
+checking ./coco_lab/localise.py
+checking ./coco_lab/locbundle.py
+checking ./coco_lab/map_arena.py
+checking ./coco_lab/map_teaching.py
+checking ./coco_lab/mapeval.py
+checking ./coco_lab/mapping.py
+checking ./coco_lab/maps.py
+checking ./coco_lab/mapworld.py
+checking ./coco_lab/mission_arena.py
+checking ./coco_lab/move_arena.py
+checking ./coco_lab/move_scenarios.py
+checking ./coco_lab/movebundle.py
+checking ./coco_lab/movemetrics.py
+checking ./coco_lab/occgrid.py
+checking ./coco_lab/play.py
+checking ./coco_lab/posegraph.py
+checking ./coco_lab/race.py
+checking ./coco_lab/regionsearch.py
+checking ./coco_lab/replan.py
+checking ./coco_lab/rng.py
+checking ./coco_lab/search.py
+checking ./coco_lab/searchbundle.py
+checking ./coco_lab/sketch.py
+checking ./coco_lab/slam.py
+checking ./coco_lab/slambundle.py
+checking ./coco_lab/state_v2.py
+checking ./coco_lab/teaching.py
+checking ./coco_lab/terrain.py
+checking ./coco_lab/trace.py
+checking ./coco_lab/worldspec.py
+checking ./setup.py
+checking ./test/conftest.py
+checking ./test/golden_bundles.py
+checking ./test/golden_loc_bundles.py
+checking ./test/golden_move_bundles.py
+checking ./test/golden_search_bundles.py
+checking ./test/golden_slam_bundles.py
+checking ./test/lab_maps.py
+checking ./test/make_golden_traces.py
+checking ./test/test_arena.py
+checking ./test/test_bound.py
+checking ./test/test_bundle.py
+checking ./test/test_bundle_recording.py
+checking ./test/test_copyright.py
+checking ./test/test_costmap.py
+checking ./test/test_dependencies.py
+checking ./test/test_dstarlite.py
+checking ./test/test_ekfslam.py
+checking ./test/test_fastslam.py
+checking ./test/test_flake8.py
+checking ./test/test_golden_traces.py
+checking ./test/test_graph_interface.py
+checking ./test/test_grid.py
+checking ./test/test_heuristics.py
+checking ./test/test_isro.py
+checking ./test/test_kalman.py
+checking ./test/test_loc_arena.py
+checking ./test/test_localise.py
+checking ./test/test_locbundle.py
+checking ./test/test_map_arena.py
+checking ./test/test_map_teaching.py
+checking ./test/test_mapeval.py
+checking ./test/test_maps.py
+checking ./test/test_mission_arena.py
+checking ./test/test_move_arena.py
+checking ./test/test_movebundle.py
+checking ./test/test_movemetrics.py
+checking ./test/test_no_ros.py
+checking ./test/test_occgrid.py
+checking ./test/test_pep257.py
+checking ./test/test_play.py
+checking ./test/test_posegraph.py
+checking ./test/test_properties.py
+checking ./test/test_race.py
+checking ./test/test_regionsearch.py
+checking ./test/test_replan.py
+checking ./test/test_rng.py
+checking ./test/test_search.py
+checking ./test/test_searchbundle.py
+checking ./test/test_sketch.py
+checking ./test/test_slambundle.py
+checking ./test/test_state_hash_v2.py
+checking ./test/test_stdlib_only.py
+checking ./test/test_teaching.py
+checking ./test/test_terrain_grasp.py
+checking ./test/test_trace.py
+checking ./test/test_worldspec.py
+checking test/conftest.py
+checking test/golden_bundles.py
+checking test/golden_loc_bundles.py
+checking test/golden_move_bundles.py
+checking test/golden_search_bundles.py
+checking test/golden_slam_bundles.py
+checking test/lab_maps.py
+checking test/make_golden_traces.py
+checking test/test_arena.py
+checking test/test_bound.py
+checking test/test_bundle.py
+checking test/test_bundle_recording.py
+checking test/test_copyright.py
+checking test/test_costmap.py
+checking test/test_dependencies.py
+checking test/test_dstarlite.py
+checking test/test_ekfslam.py
+checking test/test_fastslam.py
+checking test/test_flake8.py
+checking test/test_golden_traces.py
+checking test/test_graph_interface.py
+checking test/test_grid.py
+checking test/test_heuristics.py
+checking test/test_isro.py
+checking test/test_kalman.py
+checking test/test_loc_arena.py
+checking test/test_localise.py
+checking test/test_locbundle.py
+checking test/test_map_arena.py
+checking test/test_map_teaching.py
+checking test/test_mapeval.py
+checking test/test_maps.py
+checking test/test_mission_arena.py
+checking test/test_move_arena.py
+checking test/test_movebundle.py
+checking test/test_movemetrics.py
+checking test/test_no_ros.py
+checking test/test_occgrid.py
+checking test/test_pep257.py
+checking test/test_play.py
+checking test/test_posegraph.py
+checking test/test_properties.py
+checking test/test_race.py
+checking test/test_regionsearch.py
+checking test/test_replan.py
+checking test/test_rng.py
+checking test/test_search.py
+checking test/test_searchbundle.py
+checking test/test_sketch.py
+checking test/test_slambundle.py
+checking test/test_state_hash_v2.py
+checking test/test_stdlib_only.py
+checking test/test_teaching.py
+checking test/test_terrain_grasp.py
+checking test/test_trace.py
+checking test/test_worldspec.py
+----------------------------- Captured stderr call -----------------------------
+./coco_lab/costmap.py:15 at module level: D213: Multi-line docstring summary should start at the second line
+./coco_lab/costmap.py:78 in public function `build_layers`: D213: Multi-line docstring summary should start at the second line
+./coco_lab/costmap.py:112 in public function `scan_obstacle_cells`: D213: Multi-line docstring summary should start at the second line
+3 errors
+=========================== short test summary info ============================
+FAILED test/test_flake8.py::test_flake8 - AssertionError: Found 8 code style ...
+FAILED test/test_pep257.py::test_pep257 - AssertionError: Found code style er...
+2 failed, 1 passed in 5.73s

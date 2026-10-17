@@ -124,8 +124,8 @@ export class ArenaClient {
   }
 
   /** Two planners on the same start, goal and seed; the model is unchanged. */
-  compare(a: string, b: string, x: number, y: number): void {
-    this.worker.postMessage({ type: 'compare', a, b, x, y });
+  compare(a: string, b: string, x: number, y: number, inflation?: import('./protocol').CompareInflation): void {
+    this.worker.postMessage({ type: 'compare', a, b, x, y, ...(inflation ? { inflation } : {}) });
   }
 
   private playNext = 1;
