@@ -1,0 +1,118 @@
+{
+ "site": "http://127.0.0.1:45411/coco-labs/",
+ "errors": [],
+ "thirdParty": [],
+ "warm": [
+  {
+   "profile": "desktop",
+   "device": "laptop · emulated 4G",
+   "liveModelReadyMs": 7717.699951171875,
+   "marks": {
+    "worker_create": 1792266744620.5,
+    "world3d_assets": 1792266744688.6,
+    "worker_boot": 1792266744948.8,
+    "pyodide_module": 1792266744972.9001,
+    "pyodide_ready": 1792266749310.5,
+    "coco_lab_ready": 1792266749490.3,
+    "world_received": 1792266751669.2,
+    "world3d_ready": 1792266751677.7,
+    "world3d_robot": 1792266751677.7,
+    "arena_ready": 1792266751669,
+    "first_frame": 1792266751841.2
+   },
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"
+  },
+  {
+   "profile": "landscape",
+   "device": "emulated Nothing Phone (1) · emulated 4G · CPU 4×",
+   "liveModelReadyMs": 5026.800048828125,
+   "marks": {
+    "worker_create": 1792266759844.4,
+    "world3d_assets": 1792266759896,
+    "worker_boot": 1792266760058,
+    "pyodide_module": 1792266760068.8,
+    "pyodide_ready": 1792266762740.5,
+    "coco_lab_ready": 1792266762898.4,
+    "world_received": 1792266764340.2,
+    "world3d_ready": 1792266764370.5999,
+    "world3d_robot": 1792266764370.5999,
+    "arena_ready": 1792266764339.5,
+    "first_frame": 1792266764510.7
+   },
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"
+  },
+  {
+   "profile": "portrait",
+   "device": "emulated Nothing Phone (1) · emulated 4G · CPU 4×",
+   "liveModelReadyMs": 6248.60009765625,
+   "marks": {
+    "worker_create": 1792266771433.4,
+    "world3d_assets": 1792266771488.5999,
+    "worker_boot": 1792266771701.5,
+    "pyodide_module": 1792266771708.9001,
+    "pyodide_ready": 1792266774531.8,
+    "coco_lab_ready": 1792266774780.3,
+    "world_received": 1792266777174.2998,
+    "world3d_ready": 1792266777213.0999,
+    "world3d_robot": 1792266777213.2,
+    "arena_ready": 1792266777173.5,
+    "first_frame": 1792266777401
+   },
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)"
+  }
+ ],
+ "versionA": "e08d75adc09279b48297a0a26474df673a5513a66ae1c4a0082cb4fa94f0ed48",
+ "versionB": "7d79107f2fe5a606d2456ab68cd4a6a6efe226a18187f5a7b532681e1b3e3a16",
+ "cache": {
+  "names": [
+   "coco-static-%2Fcoco-labs%2F-e08d75adc09279b48297a0a26474df673a5513a66ae1c4a0082cb4fa94f0ed48",
+   "coco-static-%2Fcoco-labs%2F-7d79107f2fe5a606d2456ab68cd4a6a6efe226a18187f5a7b532681e1b3e3a16"
+  ],
+  "entries": 241,
+  "personalUrls": 0
+ },
+ "deploy": "hard reload: new index and static bytes, old caches removed",
+ "offlineTitle": true,
+ "disabledWorks": true,
+ "passed": true,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T19:52:02.164Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.9,
+    "5m": 3.29,
+    "15m": 3.63
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T19:53:06.526Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 8.96,
+    "5m": 5.25,
+    "15m": 4.3
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

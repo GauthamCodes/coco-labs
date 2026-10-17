@@ -10,7 +10,7 @@ import react from '@vitejs/plugin-react';
 import { TOKEN_CSS } from './src/ui/tokens.ts';
 import { defineConfig } from 'vitest/config';
 
-import { DEFAULT_BASE, DEFAULT_LANDING, liveConnectSrc, PYODIDE_INDEX_URL, PYODIDE_VERSION } from './site.config.ts';
+import { DEFAULT_BASE, DEFAULT_LANDING, counterConnectSrc, liveConnectSrc, PYODIDE_INDEX_URL, PYODIDE_VERSION } from './site.config.ts';
 
 /** coco_web's own binary-frame decoder: shipped as-is, never ported. */
 const FRAME_JS = fileURLToPath(new URL('../coco_web/web/frame.js', import.meta.url));
@@ -62,7 +62,7 @@ export default defineConfig({
       // site.config.ts so the two can never disagree.
       name: 'coco-lab-csp',
       transformIndexHtml: (html: string) => html.replaceAll('%PYODIDE_INDEX_URL%', PYODIDE_INDEX_URL)
-        .replaceAll('%LIVE_CONNECT_SRC%', liveConnectSrc().join(' ')),
+        .replaceAll('%LIVE_CONNECT_SRC%', [...liveConnectSrc(), ...counterConnectSrc()].join(' ')),
     },
     {
       // The Live tab decodes binary sensor frames with coco_web/web/frame.js

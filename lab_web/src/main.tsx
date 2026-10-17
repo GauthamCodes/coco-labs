@@ -8,6 +8,9 @@ import { navigate } from './ui/navigation';
 import { applyTheme, isTheme } from './ui/theme';
 import { decodeChallenge, urlFieldError } from './links/bounds.mjs';
 import './ui/style.css';
+import { registerStaticCache } from './offline/register';
+import { countVisit } from './offline/counter';
+import { VISIT_COUNTER_ID } from '../site.config';
 import '@fontsource-variable/outfit';
 import '@fontsource-variable/manrope';
 applyTheme();
@@ -70,4 +73,6 @@ document.addEventListener('click', event => {
   if (url.origin !== location.origin || url.pathname !== BASE || (url.hash && url.search === location.search)) return;
   event.preventDefault(); navigate(url.pathname + url.search + url.hash);
 });
+registerStaticCache();
+countVisit(VISIT_COUNTER_ID);
 show();

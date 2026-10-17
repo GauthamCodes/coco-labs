@@ -14,7 +14,7 @@
   "scripts": {
     "dev": "node tools/build_arena_assets.mjs && node tools/build_attract.mjs && node tools/build_v2_runs.mjs && vite",
     "typecheck": "tsc --noEmit -p .",
-    "build": "node tools/assets/build_design_assets.mjs --check && node tools/build_arena_assets.mjs && node tools/build_attract.mjs && node tools/build_v2_runs.mjs && tsc --noEmit -p . && vite build",
+    "build": "node tools/assets/build_design_assets.mjs --check && node tools/build_arena_assets.mjs && node tools/build_attract.mjs && node tools/build_v2_runs.mjs && tsc --noEmit -p . && vite build && node tools/build_service_worker.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "tools": "python3 tools/build_catalog.py",

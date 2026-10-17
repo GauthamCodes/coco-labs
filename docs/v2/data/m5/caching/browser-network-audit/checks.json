@@ -1,0 +1,136 @@
+{
+ "site": "http://127.0.0.1:45513/coco-labs/",
+ "errors": [],
+ "thirdParty": [],
+ "warm": [
+  {
+   "profile": "desktop",
+   "device": "laptop · emulated 4G",
+   "liveModelReadyMs": 6251.39990234375,
+   "marks": {
+    "worker_create": 1792267003200.8,
+    "world3d_assets": 1792267003224.4,
+    "worker_boot": 1792267003310.4,
+    "pyodide_module": 1792267003327.9,
+    "pyodide_ready": 1792267006355.2,
+    "coco_lab_ready": 1792267006557.7,
+    "world_received": 1792267008868.7,
+    "world3d_ready": 1792267008880.0999,
+    "world3d_robot": 1792267008880.2,
+    "arena_ready": 1792267008868.5999,
+    "first_frame": 1792267008987.4
+   },
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "serverRequests": [
+    "/coco-labs/index.html",
+    "/coco-labs/sw.js",
+    "/coco-labs/sw.js"
+   ],
+   "controlled": true
+  },
+  {
+   "profile": "landscape",
+   "device": "emulated Nothing Phone (1) · emulated 4G · CPU 4×",
+   "liveModelReadyMs": 7815.300048828125,
+   "marks": {
+    "worker_create": 1792267018458.5,
+    "world3d_assets": 1792267018547.5,
+    "worker_boot": 1792267018796.4,
+    "pyodide_module": 1792267018805,
+    "pyodide_ready": 1792267022204.1,
+    "coco_lab_ready": 1792267022438.5,
+    "world_received": 1792267025601.7998,
+    "world3d_ready": 1792267025651.7998,
+    "world3d_robot": 1792267025651.7998,
+    "arena_ready": 1792267025600.2,
+    "first_frame": 1792267025898.5999
+   },
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "serverRequests": [
+    "/coco-labs/index.html",
+    "/coco-labs/sw.js",
+    "/coco-labs/sw.js"
+   ],
+   "controlled": true
+  },
+  {
+   "profile": "portrait",
+   "device": "emulated Nothing Phone (1) · emulated 4G · CPU 4×",
+   "liveModelReadyMs": 6781.300048828125,
+   "marks": {
+    "worker_create": 1792267036507,
+    "world3d_assets": 1792267036597.2,
+    "worker_boot": 1792267036935.4001,
+    "pyodide_module": 1792267036959.8,
+    "pyodide_ready": 1792267040144.3,
+    "coco_lab_ready": 1792267040299.5,
+    "world_received": 1792267042638,
+    "world3d_ready": 1792267042688.8,
+    "world3d_robot": 1792267042688.9,
+    "arena_ready": 1792267042634.3,
+    "first_frame": 1792267042883.1
+   },
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "serverRequests": [
+    "/coco-labs/index.html",
+    "/coco-labs/sw.js",
+    "/coco-labs/sw.js"
+   ],
+   "controlled": true
+  }
+ ],
+ "versionA": "e08d75adc09279b48297a0a26474df673a5513a66ae1c4a0082cb4fa94f0ed48",
+ "versionB": "7d79107f2fe5a606d2456ab68cd4a6a6efe226a18187f5a7b532681e1b3e3a16",
+ "cache": {
+  "names": [
+   "coco-static-%2Fcoco-labs%2F-e08d75adc09279b48297a0a26474df673a5513a66ae1c4a0082cb4fa94f0ed48",
+   "coco-static-%2Fcoco-labs%2F-7d79107f2fe5a606d2456ab68cd4a6a6efe226a18187f5a7b532681e1b3e3a16"
+  ],
+  "entries": 241,
+  "personalUrls": 0
+ },
+ "deploy": "hard reload: new index and static bytes, old caches removed",
+ "offlineTitle": true,
+ "disabledWorks": true,
+ "passed": true,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T19:56:28.678Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 6,
+    "5m": 5.37,
+    "15m": 4.53
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T19:57:31.328Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 9.72,
+    "5m": 6.58,
+    "15m": 5
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

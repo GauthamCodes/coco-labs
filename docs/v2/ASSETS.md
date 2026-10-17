@@ -94,4 +94,6 @@ Source of full checksums: [DESIGN_ASSETS.json](DESIGN_ASSETS.json). Packages are
 **COCO Lab app icon**
 
 - lab_web/public/icons/coco.svg: `cde85baf781278e56a2fa8a674b6d0bfb0eb0de5ff3ab7779013d0b2513c9c28`
+- lab_web/public/icons/coco-192.png: `9b0be49cc462676647c84948af89a7b14e9e572f4508402f14ea32f167edf051`
+- lab_web/public/icons/coco-512.png: `b06e472f6bcec3fc0c4f7134b9540b53a6fafe9f38c05476bdeff65171843087`
 - Licence checksum: `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30`

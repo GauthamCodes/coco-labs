@@ -2106,3 +2106,15 @@ ROS adapter rerun with canonical generated-schema PYTHONPATH after import failur
 Four layouts: all 165 entries, 60 failure representations, no early recording fetch,
 zero console errors. See data/m5/recordings/REPORT.md and screens/recordings/README.md.
 No files moved/deleted or owner rows completed. Next: M5.9 cache/counter.
+
+## 2026-10-18 · M5.9 static cache and counter implemented
+
+Static allowlist/content hashes, canonical network-first index and cache-first static
+assets; real deploy refresh, cache cleanup, offline title and worker-disabled modes
+pass. Zero third-party requests with empty counter setting; no account created.
+3569 package tests; web 490 + corrected asset-doc regression 1; tools 207 pass.
+Warm-start diagnostic misses 3 s; explicitly NOT MET, with isolated timing/profiling
+next in M5.11. Browser asset audit confirms cache hits, no model asset network fetch.
+See data/m5/caching/REPORT.md and COUNTER.md. Original PNG app icon exports added
+to licence/checksum manifest. No evidence deleted or owner gate completed.
+Next: M5.10 launch drafts, then M5.11 measurement/PR.

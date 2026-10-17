@@ -38,8 +38,7 @@ export function designManifest() {
     source: 'https://lucide.dev', npm_integrity: lock.packages['node_modules/lucide-react'].integrity,
     checksum_method: 'sha256 of sorted ESM JavaScript paths and bytes, NUL-separated', sha256: digest.digest('hex'), source_files: sources.length,
     licence_path: 'lab_web/public/licenses/lucide.txt', licence_sha256: sha(readFileSync(join(root, 'LICENSE'))) });
-  const icon=readFileSync(join(web,'public/icons/coco.svg'));
-  assets.push({name:'COCO Lab app icon',kind:'original icon',role:'installable app',version:'1.0',licence:'Apache-2.0',source:'lab_web/public/icons/coco.svg (original repository artwork)',files:[{path:'lab_web/public/icons/coco.svg',bytes:icon.length,sha256:sha(icon)}],licence_path:'LICENSE',licence_sha256:sha(readFileSync(join(repo,'LICENSE')))});
+  assets.push({name:'COCO Lab app icon',kind:'original icon',role:'installable app',version:'1.0',licence:'Apache-2.0',source:'lab_web/public/icons/coco.svg (original repository artwork)',files:['coco.svg','coco-192.png','coco-512.png'].map(name=>{const b=readFileSync(join(web,'public/icons',name));return {path:'lab_web/public/icons/'+name,bytes:b.length,sha256:sha(b)}}),licence_path:'LICENSE',licence_sha256:sha(readFileSync(join(repo,'LICENSE')))});
   return { schema: 'lab_web.design_assets', version: '1.0', hosting: 'local Vite content-hashed font assets; no font CDN or third-party script', assets };
 }
 export function designAssetDoc() {

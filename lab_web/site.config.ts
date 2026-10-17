@@ -78,3 +78,14 @@ export const REPO_BLOB_URL = 'https://github.com/GauthamCodes/coco-labs/blob/mai
 export const PYODIDE_VERSION = '314.0.7';
 export const PYODIDE_INDEX_URL =
   `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
+
+/** Empty disables counting entirely. A public, aggregate-only counter's HTTPS increment URL.
+ * It contains only Gautham's counter ID, never a visitor ID or an authentication secret.
+ * Contract and privacy requirements: docs/v2/COUNTER.md. */
+export const VISIT_COUNTER_ID = '';
+export function counterConnectSrc(): string[] {
+  if (!VISIT_COUNTER_ID) return [];
+  const endpoint = new URL(VISIT_COUNTER_ID);
+  if (endpoint.protocol !== 'https:' || endpoint.username || endpoint.password || endpoint.hash) throw new Error('Counter ID must be a public HTTPS increment URL');
+  return [endpoint.origin];
+}

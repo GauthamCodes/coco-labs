@@ -99,6 +99,16 @@
           "path": "lab_web/public/icons/coco.svg",
           "bytes": 1105,
           "sha256": "cde85baf781278e56a2fa8a674b6d0bfb0eb0de5ff3ab7779013d0b2513c9c28"
+        },
+        {
+          "path": "lab_web/public/icons/coco-192.png",
+          "bytes": 6876,
+          "sha256": "9b0be49cc462676647c84948af89a7b14e9e572f4508402f14ea32f167edf051"
+        },
+        {
+          "path": "lab_web/public/icons/coco-512.png",
+          "bytes": 20125,
+          "sha256": "b06e472f6bcec3fc0c4f7134b9540b53a6fafe9f38c05476bdeff65171843087"
         }
       ],
       "licence_path": "LICENSE",
