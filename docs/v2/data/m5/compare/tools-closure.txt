@@ -1,0 +1,18 @@
+........................................................................ [ 36%]
+.........F.............................................................. [ 72%]
+........................................................                 [100%]
+=================================== FAILURES ===================================
+_ test_every_json_output_of_the_harness_records_conditions[m57_compare_check.mjs] _
+
+name = 'm57_compare_check.mjs'
+
+    @pytest.mark.parametrize('name', _harnesses())
+    def test_every_json_output_of_the_harness_records_conditions(name):
+        src = open(os.path.join(PERF, name), encoding='utf-8').read()
+>       assert "import { conditions } from './conditions.mjs';" in src
+E       assert "import { conditions } from './conditions.mjs';" in "// Copyright 2026 Gautham Anil\n// SPDX-License-Identifier: Apache-2.0\nimport {chromium} from 'playwright';\nimport ...tions_end=conditions();writeFileSync(out+'/checks.json',JSON.stringify(report,null,2)+'\\n');await browser.close();}\n"
+
+lab_web/tools/test_perf_conditions.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED lab_web/tools/test_perf_conditions.py::test_every_json_output_of_the_harness_records_conditions[m57_compare_check.mjs]
+1 failed, 199 passed in 463.44s (0:07:43)

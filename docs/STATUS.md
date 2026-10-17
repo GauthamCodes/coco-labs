@@ -3,8 +3,8 @@
 ## Position
 
 - Branch: `v2/m5-focus`; last completed checkpoint SHA: `8b426db`.
-- M5 · Focus and polish: M5.0–M5.6 complete; M5.7 Compare in progress.
-- M5.7–M5.11 remain. No PR, merge or release yet. Independent milestone review remains required.
+- M5 · Focus and polish: M5.0–M5.7 complete; M5.8 Recordings in progress.
+- M5.8–M5.11 remain. No PR, merge or release yet. Independent milestone review remains required.
 - Master plan revision 3, copied byte-for-byte; sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
 - Canonical agent rules: [AGENTS.md](../AGENTS.md). Historical status: [STATUS_HISTORY.md](v2/STATUS_HISTORY.md).
 - Prompts: [M5](v2/M5_PROMPT.md), [owner amendments](v2/M5_CONTINUATION.md).
@@ -56,17 +56,21 @@
 - Original PNGs retained; only attract's full-screen visual baseline changes.
   Some resumed tests on battery; closure captures balanced/AC. No performance claim.
 
-## M5.7 Compare in progress
+## M5.7 Compare complete
 
-- Independent static/scan/inflation/combined layers and additive schema; optional worker request.
-  [Foundation report](v2/data/m5/compare/REPORT.md); existing Arena graph/hash unaffected.
-- Hand-computed values, scan projection, column transport and 1/2/4 scissor layout tested.
-  Web 482 passed (M5.6: 477), tools 197 (before 195); typecheck/build pass; final 2/4-pane integration 4 passed.
-- Recorded Stack snapshots compared with declared parameters; differences retained and labelled.
-- Full affected-package run: 821 coco_lab passed, three new-file lint failures;
-  corrected and all 19 lint/costmap checks passed. coco_schemas 231 passed.
-- M5.7 is not complete: visible 2/4 controls, layers/hover/bands, families, difference,
-  timeline/results, tours and phone screenshots still need implementation/closure checks.
+- 2/4 scissored panes, shared goal, costmap layers/hover/contours, difference patterns,
+  synchronized timeline/results; existing planning, control and localization references.
+- Seven original missions retained inside tours; five story tours cite committed evidence.
+  Mapping comparisons parked for M7; existing mapping/decision Inspect lessons retained.
+- Eight desktop/compact/emulated phone layouts passed with one context and no console errors;
+  final captures, 50 URL forms + six archive views and five replay checks pass.
+- Web 486 passed; all 12 package suites passed before the byte-preserving encoder optimization.
+  Affected coco_lab 834 and tools 204 pass; harness-format failure corrected (48 checks pass).
+- [ADR 0009](v2/adr/0009-v2-encoding-cache.md): v2 serialization hot path optimized,
+  coverage/version unchanged; reference bytes, mutation/alias tests and eight saved hashes match.
+- Play costmap is now a view-only model snapshot; no simulation tick or input added.
+- Earlier localization browser timeouts retained; final desktop and both emulated phone family checks pass.
+  [Report](v2/data/m5/compare/REPORT.md); all required families and twelve tours checked.
 
 ## Owner rows, phone and design inputs
 
@@ -74,7 +78,7 @@
 - [Design inputs](v2/M5_DESIGN_INPUTS.md): no pre-design observations exist; prerequisite explicitly waived.
 - Target Nothing Phone (1), recorded by Gautham. [Profile](v2/PHONE_PROFILE.md): hardware facts assumed until measured.
 - Real Phone criterion is agent-owned and pending: connect phone over USB with debugging enabled.
-  [Latest ADB check](v2/data/m5/phone/ADB_CHECK_M56_2026-10-17.txt): no device connected.
+  [Latest ADB check](v2/data/m5/phone/ADB_CHECK_M57_2026-10-18.txt): no device connected.
 - Emulator is labelled emulated Nothing Phone (1); CPU 4× proxy, viewport/DPR shared harness.
   It cannot satisfy the real Phone row. Provisional cap 60 fps, optional 120; automatic tier/DPR pending heat run.
 - Five-person usability remains Gautham-owned, pending, a public-launch gate only.
@@ -88,6 +92,7 @@
 - [M5.4 reference index](v2/data/m5/screens/reference/README.md): title, Play HUD and two-pane Compare at 1440×900, 844×390 and both emulated Nothing Phone (1) orientations; light theme and colour-vision simulations included.
 - [M5.5 app-shell review](v2/data/m5/screens/app-shell/README.md): twenty real mode views and four light Settings captures, desktop/compact and both emulated phone orientations.
 - [M5.6 Play review](v2/data/m5/screens/play/README.md): final Free roam, game/card and scorecard captures at desktop/compact and both emulated phone orientations.
+- [M5.7 Compare review](v2/data/m5/screens/compare/README.md): final two/four panes and all families, desktop and both emulated phone orientations.
 - No recorded feedback yet; continue without waiting.
 
 ## Open questions
@@ -125,8 +130,7 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 ## Next step
 
-M5.7: wire the tested costmap family and 2/4 scissor layout into Compare; add the
-required existing algorithm families, synchronized timeline/results and evidence-backed tours.
+M5.8: finish searchable Recordings library, authoritative metadata, filter/viewer checks and desktop/phone captures.
 M5.4–M5.6 screenshots await soft review; apply any recorded feedback next checkpoint.
 No stop condition hit; no new parked idea. Real phone absent; provisional settings unchanged.
 M5 remains open; public launch still waits for real-phone pass and Gautham's usability gate.

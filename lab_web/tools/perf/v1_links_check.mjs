@@ -122,7 +122,7 @@ for (const [form, want] of FORMS) {
     if (want.kind === 'title') {
       await page.waitForSelector('[data-testid="title"] canvas[data-scene-ready="true"]', { timeout:60000 });
     } else if (want.kind === 'compare') {
-      await page.waitForSelector('[data-testid="reference-compare"][data-ready="true"]', { timeout:60000 });
+      await page.waitForSelector('[data-testid="compare-workspace"][data-ready="true"]', { timeout:60000 });
     } else if (want.kind === 'about') {
       await page.waitForSelector('[data-testid="about"]');
     } else if (want.kind === 'play') {

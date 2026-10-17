@@ -83,7 +83,7 @@ describe('three-mode routing', () => {
   it('opens title, workspace, tours, recordings and About', () => {
     expect(route('', 'arena')).toEqual({ app: 'title' });
     expect(route('?view=compare', 'arena')).toEqual({ app: 'compare' });
-    expect(route('?view=compare&tour=find-a-path', 'arena')).toEqual({ app: 'learn' });
+    expect(route('?view=compare&tour=find-a-path', 'arena')).toEqual({ app: 'compare' });
     expect(route('?view=research', 'arena')).toEqual({ app: 'casefiles' });
     expect(route('?view=research&replay=lab1c_astar', 'arena')).toEqual({ app: 'arena' });
     expect(route('?view=about', 'arena')).toEqual({ app: 'about' });

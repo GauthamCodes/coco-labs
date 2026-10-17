@@ -548,7 +548,10 @@ export function useArenaScene() {
         }
       },
       onPlanBatch: (meta, cols) => live.current?.onPlanBatch(meta, cols),
-      onFamily: (m) => live.current?.onFamily(m),
+      onFamily: (m) => {
+        if (m.channel.startsWith('coco.costmap.layers.')) { r.current?.costmapMessage(m); return; }
+        live.current?.onFamily(m);
+      },
       onPackReady: (pack) => {
         readyPacks.current.add(pack);
         const go = waitingConfigs.current.filter((c) => readyPacks.current.has(packForConfig(c)));

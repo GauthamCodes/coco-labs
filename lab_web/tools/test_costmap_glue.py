@@ -48,3 +48,22 @@ def test_inflated_compare_is_independent_and_emits_all_cells(hash_version, panes
     assert max(counts) <= 2048
     assert {0, 253, 254} <= costs
     assert len(headers) == 1 and headers[0]['robot_radius'] == 0.25
+
+
+@pytest.mark.parametrize('hash_version', [1, 2])
+def test_view_only_costmap_does_not_step_or_change_the_run(hash_version):
+    spec = importlib.util.spec_from_file_location(
+        'view_costmap_test_glue', REPO / 'lab_web/src/arena/arena_glue.py')
+    glue = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(glue)
+    world = yaml.safe_load((REPO / 'worlds/coco_arena_v1.yaml').read_text())
+    messages = []
+    glue.init(json.dumps(world), 3, 'astar', lambda *_: None,
+              post_family=lambda numeric, meta: messages.append(json.loads(meta)),
+              hash_version=hash_version)
+    a = glue._arena
+    before = a.state_bytes(), a.chain, a.tick
+    glue.costmap_view()
+    assert (a.state_bytes(), a.chain, a.tick) == before
+    assert messages[0]['channel'] == 'coco.costmap.layers.header.v1'
+    assert all(m['channel'].startswith('coco.costmap.layers.') for m in messages)

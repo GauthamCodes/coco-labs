@@ -29,7 +29,7 @@ import * as THREE from 'three';
 import { scanArea } from './scanArea';
 import { FrameGate, isPhone, phoneFrameCap } from '../../play/phone';
 
-import type { Tick, World } from '../protocol';
+import type { Tick, World, FamilyMessage } from '../protocol';
 
 /** coco_lab.arm's names for the arm's joints, and the URDF's (coco_robo2.urdf). */
 const ARM_JOINTS: [string, string][] = [['joint1', 'm_link1_Revolute-6'], ['joint2', 'm_link2_Revolute-7'],
@@ -72,6 +72,8 @@ const FRAG = /* glsl */ `
 precision highp float;
 uniform sampler2D uOcc;
 uniform sampler2D uState;
+uniform sampler2D uCost;
+uniform bool uShowCost;
 uniform vec3 uFree, uOccupied, uUnknown, uClosed, uPath;
 uniform vec3 uViridis[5];
 uniform float uClosedAlpha, uMaxOrder;
@@ -93,6 +95,7 @@ void main() {
   float occ = texture2D(uOcc, vUv).r * 255.0;
   vec3 c = uShowOcc ? (occ < 0.5 ? uFree : occ < 1.5 ? uOccupied : uUnknown) : uFree;
   c = mix(uBg, c, uWorldDim);  // Focus (M2.2): the world, dimmed outside the lens
+  if (uShowCost) { float cost = texture2D(uCost, vUv).r * 255.0; if (cost > 0.5) c = viridis(cost / 254.0); }
   vec3 base = c;
   vec4 st = texture2D(uState, vUv) * 255.0;
   float s = st.r;
@@ -121,6 +124,8 @@ export class ArenaRenderer {
   private world: World | null = null;
   private occTex: THREE.DataTexture | null = null;
   private stateTex: THREE.DataTexture | null = null;
+  private costTex: THREE.DataTexture | null = null;
+  costmapTick: number | null = null;
   private stateData: Uint8Array | null = null;
   private gridMat: THREE.ShaderMaterial | null = null;
   private frontier: THREE.InstancedMesh | null = null;
@@ -207,9 +212,10 @@ export class ArenaRenderer {
     const occ = new Uint8Array(W * H);
     for (let row = 0; row < H; row += 1) occ.set(occupancy.subarray(row * W, (row + 1) * W), (H - 1 - row) * W);
     this.occTex = new THREE.DataTexture(occ, W, H, THREE.RedFormat, THREE.UnsignedByteType);
+    this.costTex = new THREE.DataTexture(new Uint8Array(W * H), W, H, THREE.RedFormat, THREE.UnsignedByteType);
     this.stateData = new Uint8Array(W * H * 4);
     this.stateTex = new THREE.DataTexture(this.stateData, W, H, THREE.RGBAFormat, THREE.UnsignedByteType);
-    for (const t of [this.occTex, this.stateTex]) {
+    for (const t of [this.occTex, this.stateTex, this.costTex]) {
       t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false;
       t.needsUpdate = true;
     }
@@ -217,7 +223,7 @@ export class ArenaRenderer {
     this.gridMat = new THREE.ShaderMaterial({
       vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
-        uOcc: { value: this.occTex }, uState: { value: this.stateTex },
+        uOcc: { value: this.occTex }, uState: { value: this.stateTex }, uCost: { value: this.costTex }, uShowCost: { value: false },
         uFree: { value: col(p.free) }, uOccupied: { value: col(p.occupied) }, uUnknown: { value: col(p.unknown) },
         uClosed: { value: col(p.closed) }, uPath: { value: col(p.path) },
         uViridis: { value: VIRIDIS.map(col) }, uClosedAlpha: { value: p.closedAlpha }, uMaxOrder: { value: 1 },
@@ -427,6 +433,26 @@ export class ArenaRenderer {
     });
     if (this.pathLine) setLinePoints(this.pathLine, pts);
     st.dirty = false;
+  }
+
+  setCostmapVisible(visible: boolean) {
+    if (this.gridMat) this.gridMat.uniforms.uShowCost.value = visible && this.costmapTick !== null;
+  }
+
+  costmapMessage(message: FamilyMessage) {
+    if (!this.world || !this.costTex) return;
+    if (message.header) { this.costmapTick = null; this.setCostmapVisible(false); return; }
+    const columns = message.columns; if (!columns) return;
+    const { width, height } = this.world;
+    const pixels = this.costTex.image.data as Uint8Array;
+    for (let i = 0; i < columns.row.length; i++) {
+      const row = Number(columns.row[i]), col = Number(columns.col[i]);
+      pixels[(height - 1 - row) * width + col] = Number(columns.combined_cost[i]);
+    }
+    if (Number(columns.seq[columns.seq.length - 1]) === width * height - 1) {
+      this.costmapTick = message.tick ?? 0; this.costTex.needsUpdate = true;
+      window.dispatchEvent(new CustomEvent('coco:costmap-ready', { detail: this.costmapTick }));
+    }
   }
 
   setLayers(v: Partial<LayerVisibility>) {
@@ -913,7 +939,7 @@ export class ArenaRenderer {
         material.dispose();
       }
     });
-    this.occTex?.dispose();this.stateTex?.dispose();this.pickSurface?.geometry.dispose();
+    this.occTex?.dispose();this.stateTex?.dispose();this.costTex?.dispose();this.pickSurface?.geometry.dispose();
     this.renderer.dispose();
   }
 }

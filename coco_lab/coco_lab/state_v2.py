@@ -14,6 +14,7 @@
 
 """Canonical behavioural snapshot for state hash v2 (ADR 0008)."""
 from array import array
+from collections import OrderedDict
 import hashlib
 import json
 import math
@@ -30,7 +31,81 @@ EXCLUDED = frozenset({
 })
 
 
-def snapshot(arena):
+# Memoize only the encoding of long, exact-float vectors. The native array
+# conversion fingerprints EVERY value on EVERY call, including signed zero.
+# Type checks exclude ints/bools/subclasses, whose canonical encodings differ.
+# Content keys let equal immutable world-derived fields share storage across
+# Compare arms. Bounded process-local cache; no model state or persistence.
+_FLOAT_ENCODINGS = OrderedDict()
+_MAX_FLOAT_ENCODINGS = 8
+
+
+class _RawVector:
+
+    def __init__(self, text):
+        self.text = text
+
+
+def _float_vector(values):
+    if len(values) < 1024 or set(map(type, values)) != {float}:
+        return None
+    fingerprint = array('d', values).tobytes()
+    text = _FLOAT_ENCODINGS.get(fingerprint)
+    if text is None:
+        encoded = [{'float': v.hex() if math.isfinite(v) else str(v)} for v in values]
+        text = json.dumps(encoded, sort_keys=True, separators=(',', ':'), ensure_ascii=True)
+        _FLOAT_ENCODINGS[fingerprint] = text
+        if len(_FLOAT_ENCODINGS) > _MAX_FLOAT_ENCODINGS:
+            _FLOAT_ENCODINGS.popitem(last=False)
+    else:
+        _FLOAT_ENCODINGS.move_to_end(fingerprint)
+    return _RawVector(text)
+
+
+def _integer_pairs(values, path, memo):
+    # Native JSON already gives the canonical encoding of integer cells.
+    # Preserve the generic encoder's alias table before bypassing recursion.
+    # Repeated/already-seen tuple identities take the original path instead.
+    if len(values) < 1024 or set(map(type, values)) != {tuple}:
+        return None
+    if not all(len(cell) == 2 and type(cell[0]) is int and type(cell[1]) is int
+               for cell in values):
+        return None
+    identities = list(map(id, values))
+    unique = set(identities)
+    if len(unique) != len(identities) or not unique.isdisjoint(memo):
+        return None
+    memo.update((identity, f'{path}/{i}') for i, identity in enumerate(identities))
+    return _RawVector(json.dumps(values, separators=(',', ':'), ensure_ascii=True))
+
+
+def _canonical_json(value):
+    # Insert already-canonical scalar-vector JSON without rebuilding hundreds
+    # of thousands of dictionaries. Tokens are temporary: collision detection
+    # guarantees a legitimate model string can never be replaced by accident.
+    prefix = '@coco-v2-vector@'
+    while True:
+        fragments = []
+
+        def default(raw):
+            if not isinstance(raw, _RawVector):
+                raise TypeError(type(raw).__name__)
+            token = prefix + str(len(fragments))
+            fragments.append((json.dumps(token), raw.text))
+            return token
+
+        text = json.dumps(value, sort_keys=True, separators=(',', ':'),
+                          ensure_ascii=True, default=default)
+        if all(text.count(token) == 1 for token, _ in fragments):
+            break
+        prefix = '@' + prefix
+    # Raw payloads contain float hex/nonfinite strings or integer pairs: no token.
+    for token, payload in fragments:
+        text = text.replace(token, payload)
+    return text.encode()
+
+
+def snapshot(arena, *, memo_vectors=True):
     """
     Encode all remaining mutable fields, nested engines and aliasing.
 
@@ -58,6 +133,12 @@ def snapshot(arena):
             return {'ref': memo[id(v)]}
         memo[id(v)] = path
         if isinstance(v, (list, tuple, array)):
+            if memo_vectors:
+                vector = _float_vector(v)
+                if vector is None:
+                    vector = _integer_pairs(v, path, memo)
+                if vector is not None:
+                    return vector
             return [encode(x, f'{path}/{i}') for i, x in enumerate(v)]
         if isinstance(v, (set, frozenset)):
             return sorted([encode(x, f'{path}/set') for x in v],
@@ -74,8 +155,7 @@ def snapshot(arena):
 
     fields = {k: encode(v, '$/' + k) for k, v in sorted(vars(arena).items())
               if k not in EXCLUDED}
-    return json.dumps({'world': arena._v2_world, 'state': fields},
-                      sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode()
+    return _canonical_json({'world': arena._v2_world, 'state': fields})
 
 
 def world_hash(spec, lidar):

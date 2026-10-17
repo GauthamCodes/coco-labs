@@ -1,7 +1,56 @@
-# M5.7 Compare — implementation in progress
+# M5.7 Compare — implementation and verification
 
-M5.6 is committed at `8b426db`. This substep establishes the costmap and
-viewport foundations; it does **not** complete M5.7 or any later checkpoint.
+M5.6 baseline: `8b426db`; foundations: `440f7e3`, `0254dea`.
+The following final implementation supersedes the foundation-only progress notes below.
+
+## Final workspace
+
+Two/four scissored viewports share one WebGL context, map, seed, start, goal, camera,
+costmap settings and timeline. Portrait panes stack; controls become a bottom sheet
+and results swipe horizontally. Floor picking and numeric goals, four costmap layers,
+cell hover, lethal/inscribed contours and A/B/both difference patterns are available.
+Blue expanded cells retain their semantic colour; stripe directions distinguish sets.
+
+All six existing global planners, three existing local controllers and MCL with/without
+injection plus EKF run their Python reference implementations. D* Lite displays its
+native first-plan trace; it does not claim to replay historical repair work. Local
+comparisons use a stated 60-tick window (optional 200), common 12-beam sensors and
+60-particle teaching profile, shared commands/relocation and unchanged non-compared
+settings. Results show actual model-window compute time, truth travel, clearance and
+window outcome. Unrecovered/window-incomplete results remain visible. Timings in
+these functional captures are not device performance claims.
+
+Seven original missions retain claims and evidence inside guided tours, with existing
+mapping/decision Inspect continuations. Five additional story tours each cite committed
+evidence and retain unresolved caveats; see TOUR_EVIDENCE.md. Mapping comparison is
+parked for M7 in docs/IDEAS.md.
+
+Play vision now requests a view-only costmap snapshot. It adds no simulation tick,
+input or hash-chain event; historical views explicitly report missing cost snapshots.
+
+### Final checks
+
+- All 12 package suites passed (`packages-closure.txt`); after the byte-preserving
+  v2 encoder optimization, affected coco_lab passed 834 (`packages-cached.txt`).
+- Web: 486 passed (`vitest-cached.txt`); tools: 204 (`tools-final.txt`); typecheck
+  and production build passed (`build-cached.txt`).
+- Eight layouts: final/checks.json under screens/compare, one context, no scroll,
+  zero console errors, desktop 1440×900/844×390 and both emulated Nothing Phone (1)
+  orientations. All desktop algorithm families: families-cached/checks.json.
+- Twelve tours and frozen Play costmap hash/input-log checks: closure-live/checks.json.
+- 50 URL forms + six archive views pass (`urls-final/v1_links_check.json`); five replays pass (`replays-final/replay_check.json`).
+- Five legacy canvases are pixel-identical (`canvases-final/screenshots.json`).
+- ADR 0009 records measured serialization overhead and byte-preserving optimization.
+  Both recursive reference encoding and optimized encoding match eight hashes saved
+  before the change, including MCL/EKF, with mutation/type/alias/cache-bound tests.
+  V1 layout and golden fixtures were not edited.
+
+Earlier failed/timeout/selector runs are retained. Localization originally exceeded
+browser timeouts because repeated v2 JSON encoding dominated the model window; the
+fix caches only exact byte-validated content, without dropping any behavioural field.
+No physical robot or real-phone performance claim is made.
+
+## Foundation history (retained)
 
 ## Implemented
 
@@ -21,8 +70,7 @@ viewport foundations; it does **not** complete M5.7 or any later checkpoint.
   pane uses the same independent graph/start/goal, with distinct trace IDs.
   Legacy scene callers retain the two-pane contract.
 - One-context scissor rectangle support for 1/2/4 views; four landscape
-  views form a two-by-two grid and portrait views stack. The current visible
-  Compare screen still requests two views; UI wiring is next.
+  views form a two-by-two grid and portrait views stack. The final workspace wires both two and four views.
 
 Formula reference: [Nav2 Jazzy InflationLayer::computeCost](https://api.nav2.org/nav2-jazzy/html/inflation__layer_8hpp_source.html).
 The upstream unsigned-byte cast truncates the positive exponential value.

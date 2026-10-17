@@ -32,7 +32,8 @@ interface Pyodide {
   unpackArchive(buf: Uint8Array, format: string, opts: { extractDir: string }): void;
   runPython(code: string): unknown;
   pyimport(name: string): { init: (...a: unknown[]) => PyProxy; step: (s: string) => PyProxy;
-    compare: (...a: unknown[]) => string;
+    compare: (...a: unknown[]) => string; costmap_view: () => void;
+    loop_compare_begin: (request: string) => void; loop_compare_advance: () => string;
     begin: (s: string) => void; advance: (n: number) => boolean; amend: (s: string) => void; finish: () => PyProxy; play: (s: string) => string };
 }
 
@@ -227,6 +228,20 @@ function compare(req: Extract<ToWorker, { type: 'compare' }>) {
   post({ type: 'compare_done', result });
 }
 
+async function compareLoop(req: Extract<ToWorker, { type: 'compare_loop' }>) {
+  if (!glue) throw new Error('Compare before boot');
+  await loadPack('compare');
+  glue.loop_compare_begin(JSON.stringify(req));
+  let frames: import('./protocol').LoopFrame[][] = [];
+  for (let tick = 0; tick < req.steps; tick++) {
+    frames.push(JSON.parse(glue.loop_compare_advance()));
+    if (frames.length === 5 || tick + 1 === req.steps) {
+      post({ type: 'compare_loop_batch', frames, done: tick + 1 === req.steps }); frames = [];
+      await new Promise(resolve => setTimeout(resolve, 0));
+    }
+  }
+}
+
 let queue: Promise<void> = Promise.resolve();
 self.onmessage = (ev: MessageEvent<ToWorker>) => {
   const req = ev.data;
@@ -243,6 +258,8 @@ self.onmessage = (ev: MessageEvent<ToWorker>) => {
     try {
       if (req.type === 'boot' || req.type === 'warm') await boot(req);
       else if (req.type === 'compare') compare(req);
+      else if (req.type === 'costmap_view') { if (!glue) throw new Error('Costmap before boot'); glue.costmap_view(); }
+      else if (req.type === 'compare_loop') await compareLoop(req);
       else if (req.type === 'play') await play(req);
       else await step(req);
     } catch (e) {

@@ -13,6 +13,7 @@ import { perf } from './perf';
 import { claimWarmWorker } from './worker_pool';
 
 export interface ArenaEvents {
+  onLoopCompareBatch?(frames: import('./protocol').LoopFrame[][], done: boolean): void;
   onWorld?(world: World, occupancy: Uint8Array): void;
   onPlanBatch?(meta: Extract<FromWorker, { type: 'plan_batch' }>['meta'], columns: SearchColumns): void;
   onTick?(tick: Tick, ranges: Float32Array): void;
@@ -57,6 +58,8 @@ export class ArenaClient {
           perf.planBatch(d.columns.seq.length, d.at);
           if (d.meta.compare) ev.onCompareBatch?.(d.meta, d.columns);
           else ev.onPlanBatch?.(d.meta, d.columns);
+        } else if (d.type === 'compare_loop_batch') {
+          ev.onLoopCompareBatch?.(d.frames, d.done);
         } else if (d.type === 'compare_done') {
           ev.onCompareDone?.(d.result);
         } else if (d.type === 'play_done') {
@@ -133,6 +136,12 @@ export class ArenaClient {
     if (planners.length !== 2 && planners.length !== 4) throw new Error('Compare needs two or four planners');
     this.worker.postMessage({ type: 'compare', a: planners[0], b: planners[1], planners, x, y, ...(inflation ? { inflation } : {}) });
   }
+
+  compareLoop(request: Omit<import('./protocol').LoopCompareRequest, 'type'>): void {
+    this.worker.postMessage({ type: 'compare_loop', ...request });
+  }
+
+  requestCostmap(): void { this.worker.postMessage({ type: 'costmap_view' }); }
 
   private playNext = 1;
   private readonly playWaiting = new Map<number, { resolve: (v: unknown) => void; reject: (e: Error) => void }>();

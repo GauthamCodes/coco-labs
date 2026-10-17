@@ -1,0 +1,58 @@
+{
+ "result": {
+  "construction_ms": 887.4996169999998,
+  "first": {
+   "Arena._scan": 34.781181000000046,
+   "ArenaLocaliser._start": 147.09041399999956,
+   "MCL.update": 1.0604309999995287,
+   "Arena.state_bytes": 2396.2195519999996
+  },
+  "total": {
+   "Arena._scan": 38.80749300000063,
+   "ArenaLocaliser._start": 147.09041399999956,
+   "MCL.update": 1.0604309999995287,
+   "Arena.state_bytes": 4783.095203
+  },
+  "particles": 60
+ },
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T11:06:46.262Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 84
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.07,
+    "5m": 1.17,
+    "15m": 1.64
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T11:06:54.195Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 84
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.07,
+    "5m": 1.17,
+    "15m": 1.63
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

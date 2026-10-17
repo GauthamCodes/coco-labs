@@ -59,7 +59,7 @@ export function route(search: string, landing: Landing, runIds: ReadonlySet<stri
   if (view === 'live') return { app: 'live' };
   if (view === 'casefiles') { q.set('view', 'research'); return { redirect: '?' + q.toString() }; }
   if (view === 'research') return { app: q.has('run') || q.has('replay') || q.has('casefile') ? 'arena' : 'casefiles' };
-  if (view === 'compare') return { app: q.has('tour') || q.has('mission') ? 'learn' : 'compare' };
+  if (view === 'compare') return { app: 'compare' };
   if (view === 'about') return { app: 'about' };
   if (view === 'play') return { app: 'play' }; // M3.5
   if (q.has('bundle') || q.has('v')) {

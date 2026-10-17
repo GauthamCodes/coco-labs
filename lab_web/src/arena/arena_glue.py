@@ -109,14 +109,15 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
     PlanStore's empty -1). The Arena's state,
     and so every hash, is untouched. Returns both summaries as JSON.
     """
+    from time import perf_counter
     from coco_lab.events import SearchEventColumns
-    from coco_lab.search import collect, search_events
+    from coco_lab.compare_planning import COMPARE_PLANNERS, run_planner
     from coco_lab.sketch import _nearest_free
 
     a = _arena
     names = json.loads(planners_json) if planners_json else [planner_a, planner_b]
     if (not isinstance(names, list) or len(names) not in (2, 4) or
-            any(not isinstance(name, str) or name not in PLANNERS
+            any(not isinstance(name, str) or name not in COMPARE_PLANNERS
                 for name in names)):
         raise ValueError('Compare needs two or four supported planners')
     g = a.grid
@@ -150,7 +151,7 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
     out = {}
     for i, name in enumerate(names):
         side, sid = 'ABCD'[i], -101 - i
-        if name not in PLANNERS:
+        if name not in COMPARE_PLANNERS:
             raise ValueError(f'unknown planner {name!r}')
         cols = SearchEventColumns(search_id=sid, tick=a.tick,
                                   t_world=a.t_world)
@@ -161,10 +162,18 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
             cols.add(row)
             if len(cols) >= int(batch_size):
                 post_batch(cols.drain(), json.dumps(dict(meta, final=False)))
-        res = collect(search_events(g, s, t, **PLANNERS[name]), sink)
+        started = perf_counter()
+        res = run_planner(g, s, t, name, sink)
+        elapsed = (perf_counter() - started) * 1000
         post_batch(cols.drain(), json.dumps(dict(meta, final=True)))
+        summary = dict(res.summary)
+        if inflation_json is not None:
+            summary['minimum_clearance_m'] = min(
+                (layers.clearance[row * g.width + col] - params.robot_radius
+                 for row, col in res.path), default=None)
+            summary['compute_ms'] = elapsed
         out[side] = {'planner': name, 'status': res.status,
-                     'summary': res.trace.summary,
+                     'summary': summary,
                      'resolution': a.plan_map.resolution}
     return json.dumps(out)
 
@@ -298,3 +307,44 @@ def play(request_json):
         _budget = p.MapBudget(float(req['budget_m']), _arena.pose)
         return json.dumps({'path_m': 0.0, 'budget_m': _budget.budget_m})
     raise ValueError(f'unknown play op {op!r}')
+
+
+_loop_comparison = None
+
+
+def loop_compare_begin(request_json):
+    """Create independent Compare arms, never replace the live Arena."""
+    global _loop_comparison
+    from coco_lab.compare_loop import LoopComparison
+    _loop_comparison = LoopComparison(json.loads(_spec_json), json.loads(request_json))
+    from coco_lab.costmap import emit_layers
+    emit_layers(_loop_comparison.layers, _loop_comparison.params,
+                _loop_comparison.arms[0].lab_map.origin,
+                lambda channel, tick, columns, scalars:
+                emit_header(channel, scalars) if columns is None else
+                emit_family(channel, tick, columns, scalars))
+
+
+def loop_compare_advance():
+    """Return one lockstep tick from the independent Compare experiment."""
+    return json.dumps(_loop_comparison.advance())
+
+
+
+def costmap_view():
+    """Emit a view-only snapshot from current model data, without a tick/input."""
+    from coco_lab.costmap import (InflationParams, build_layers,
+                                  scan_obstacle_cells, emit_layers)
+    a = _arena
+    m, li = a.lab_map, a.lidar
+    params = InflationParams(robot_radius=a.radius,
+                             inflation_radius=max(0.5, a.radius))
+    hits = scan_obstacle_cells(m, a.belief(), a.ranges, a.angles,
+                               li.mount, li.range_min, li.range_max)
+    layers = build_layers(m.width, m.height, m.resolution,
+                          [v != 0 for v in m.occupancy], hits, params)
+    emit_layers(layers, params, m.origin,
+                lambda channel, tick, columns, scalars:
+                emit_header(channel, scalars) if columns is None else
+                emit_family(channel, tick, columns, scalars),
+                tick=a.tick, t_world=a.t_world, update=a.tick)

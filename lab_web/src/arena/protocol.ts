@@ -47,7 +47,9 @@ export interface LoadPackRequest { type: 'load_pack'; pack: string }
 /** M3.5: Play -- coco_lab.play, through arena_glue.play (a JSON request; the reply is JSON). */
 export interface PlayRequest { type: 'play'; id: number; request: string }
 export type WarmRequest = Omit<BootRequest, 'type'> & { type: 'warm' };
-export type ToWorker = BootRequest | WarmRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest;
+export interface LoopCompareRequest { type: 'compare_loop'; family: 'control' | 'localise'; names: string[]; goal: [number, number]; inflation: CompareInflation; steps: number }
+export interface LoopFrame { pose: [number, number, number]; truth: [number, number, number]; particles: number[][] | null; chosen: number[][] | null; hash: string; tick: number; summary: Record<string, number | boolean | null>; status: string }
+export type ToWorker = { type: 'costmap_view' } | LoopCompareRequest | BootRequest | WarmRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest;
 
 export interface CompareSide { planner: string; status: string; summary: Record<string, number | string | null>; resolution: number }
 export interface CompareResult { A: CompareSide; B: CompareSide; C?: CompareSide; D?: CompareSide }
@@ -117,6 +119,7 @@ export interface FamilyMessage {
 }
 
 export type FromWorker =
+  | { type: 'compare_loop_batch'; frames: LoopFrame[][]; done: boolean }
   | FamilyMessage
   | { type: 'pack_ready'; pack: string; ms: number }
   | { type: 'mark'; name: string; at: number }

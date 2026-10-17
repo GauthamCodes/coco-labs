@@ -1,0 +1,64 @@
+{
+  "runtime": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "source": "0254dea:coco_lab/coco_lab/state_v2.py",
+  "cases": [
+    {
+      "request": {
+        "family": "localise",
+        "names": [
+          "mcl",
+          "mcl_augmented"
+        ],
+        "steps": 2,
+        "goal": [
+          2.5,
+          2
+        ],
+        "inflation": {
+          "inflation_radius": 0.5,
+          "cost_scaling_factor": 10,
+          "robot_radius": 0.25
+        }
+      },
+      "hashes": [
+        [
+          "7d950f3c58b81d3a13333173d41bdf9ae000bcc1dce8da349f128fc559de80ef",
+          "3ccb7c9a82082a0c7b19989fd3bfc190c6774b6a0b7d5cb81bd4129d9847895e"
+        ],
+        [
+          "282d6da7e93ecb547631e227db80d8dcc74bb711f54ddc702a5c2823b49b4e1a",
+          "b92dd881d4ebd2fb5d505b9d18c3b8c7029a13fc53b5fe09a34c7d594114f2c4"
+        ]
+      ]
+    },
+    {
+      "request": {
+        "family": "localise",
+        "names": [
+          "mcl",
+          "ekf"
+        ],
+        "steps": 2,
+        "goal": [
+          2.5,
+          2
+        ],
+        "inflation": {
+          "inflation_radius": 0.5,
+          "cost_scaling_factor": 10,
+          "robot_radius": 0.25
+        }
+      },
+      "hashes": [
+        [
+          "7d950f3c58b81d3a13333173d41bdf9ae000bcc1dce8da349f128fc559de80ef",
+          "6debc44b3ac1ae4b814f37531e81252386b34b90bf4821d6432a25f5a33fe4d1"
+        ],
+        [
+          "282d6da7e93ecb547631e227db80d8dcc74bb711f54ddc702a5c2823b49b4e1a",
+          "cfa88f59d5bdc9bc70e7be53113d9345355cb09e934cc15f15df6a303fb36afa"
+        ]
+      ]
+    }
+  ]
+}

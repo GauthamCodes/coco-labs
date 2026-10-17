@@ -3,23 +3,71 @@
  "packs": {
   "localise": {
    "requires": [],
-   "modules": ["kalman.py", "loc_arena.py", "loc_teaching.py", "locbundle.py", "localise.py"]
+   "modules": [
+    "kalman.py",
+    "loc_arena.py",
+    "loc_teaching.py",
+    "locbundle.py",
+    "localise.py"
+   ]
   },
   "map": {
-   "requires": ["localise"],
-   "modules": ["ekfslam.py", "fastslam.py", "landmarks.py", "map_arena.py", "map_teaching.py", "mapeval.py", "mapping.py", "mapworld.py", "occgrid.py", "posegraph.py", "slam.py", "slambundle.py"]
+   "requires": [
+    "localise"
+   ],
+   "modules": [
+    "ekfslam.py",
+    "fastslam.py",
+    "landmarks.py",
+    "map_arena.py",
+    "map_teaching.py",
+    "mapeval.py",
+    "mapping.py",
+    "mapworld.py",
+    "occgrid.py",
+    "posegraph.py",
+    "slam.py",
+    "slambundle.py"
+   ]
   },
   "move": {
    "requires": [],
-   "modules": ["control.py", "move_arena.py", "move_scenarios.py", "movebundle.py", "movemetrics.py"]
+   "modules": [
+    "control.py",
+    "move_arena.py",
+    "move_scenarios.py",
+    "movebundle.py",
+    "movemetrics.py"
+   ]
   },
   "decide": {
    "requires": [],
-   "modules": ["mission_arena.py", "regionsearch.py", "searchbundle.py"]
+   "modules": [
+    "mission_arena.py",
+    "regionsearch.py",
+    "searchbundle.py"
+   ]
   },
   "play": {
-   "requires": ["localise", "map", "move", "decide"],
-   "modules": ["play.py", "race.py"]
+   "requires": [
+    "localise",
+    "map",
+    "move",
+    "decide"
+   ],
+   "modules": [
+    "play.py",
+    "race.py"
+   ]
+  },
+  "compare": {
+   "requires": [
+    "localise",
+    "move"
+   ],
+   "modules": [
+    "compare_loop.py"
+   ]
   }
  }
 }

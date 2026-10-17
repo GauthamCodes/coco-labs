@@ -2083,3 +2083,16 @@ M5.7 follow-through: worker/client now accept a validated two/four-planner list,
 run every pane against the same graph/start/goal, and tag distinct traces.
 Legacy two-pane scene callbacks remain compatible. Expanded 2/4 × v1/v2
 integration checks: 4 passed, typecheck passed. UI wiring remains next.
+
+## 2026-10-18 · M5.7 Compare complete
+
+Native six global / three control / three localization references; costmap layers,
+one-context 2/4 panes, timelines, results, difference patterns and twelve evidence-backed
+tours. Play costmap snapshot preserves state/input log. ADR 0009 optimizes exact v2
+encoding; reference bytes and pre-change hashes match, v1/goldens unchanged.
+All twelve package suites pass; affected coco_lab after cache: 834. Web 486, tools 204,
+new harness checks 48. Typecheck/build pass; 50+6 URLs, five pixel-identical canvases,
+five replays, eight layouts and desktop/both emulated-phone family windows pass.
+Evidence: data/m5/compare/REPORT.md; screenshots: data/m5/screens/compare/README.md.
+No real USB phone connected; real Phone pending. Mapping comparison parked for M7.
+No files moved/deleted. Next: M5.8 searchable Recordings library, then M5.9–M5.11.

@@ -49,7 +49,7 @@ async function display() {
     switch (destination.app) {
       case 'title': { const { TitleScreen } = await import('./shell/TitleScreen'); node = <TitleScreen />; break; }
       case 'about': { const { AboutPage } = await import('./shell/AboutPage'); node = <AboutPage />; break; }
-      case 'compare': { const { CompareReference } = await import('./ui/reference/ReferenceScreens'); node = <CompareReference />; break; }
+      case 'compare': { const { CompareWorkspace } = await import('./compare/CompareWorkspace'); node = <CompareWorkspace />; break; }
       case 'arena': { const { ArenaApp } = await import('./arena/ArenaApp'); node = <ArenaApp />; break; }
       case 'learn': { const { LearnApp } = await import('./learn/LearnApp'); node = <LearnApp />; break; }
       case 'casefiles': { const { CaseFilesApp } = await import('./casefiles/CaseFilesApp'); node = <CaseFilesApp />; break; }

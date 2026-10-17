@@ -23,6 +23,7 @@ export function PlayHUD({model:m}:{model:ArenaSceneModel}){
  const menu=useRef<HTMLDialogElement>(null);
  const [controlsTarget,setControlsTarget]=useState<HTMLDivElement|null>(null);
  const [vision,setVision]=useState(0);
+ const [costmapEpoch,setCostmapEpoch]=useState(0);
  const [tutorial,setTutorial]=useState(()=>!m.playOn&&!m.params.has('replay')&&!m.params.has('run')&&!readPref('tutorial',false,isBool));
  const [replaying,setReplaying]=useState(false);
  const [intro,setIntro]=useState(true);
@@ -31,6 +32,15 @@ export function PlayHUD({model:m}:{model:ArenaSceneModel}){
  const [toast,setToast]=useState('');
  const phases=['Off','Scan area','Planner frontier and heatmap','Static costmap','Localization particles'];
  const previous=useRef({blocked:false,grasp:''});
+ useEffect(()=>{
+  const ready=(event:Event)=>{setCostmapEpoch(v=>v+1);setToast(`Costmap snapshot · tick ${(event as CustomEvent<number>).detail}`);};
+  window.addEventListener('coco:costmap-ready',ready);return()=>window.removeEventListener('coco:costmap-ready',ready);
+ },[]);
+ useEffect(()=>{
+  if(vision!==3)return;
+  if(m.mode==='live'&&m.liveReady&&m.session?.viewTick===null)m.client.current?.requestCostmap();
+  else setToast('Costmap · static map; no cost snapshot recorded at this tick');
+ },[vision,m.mode,m.liveReady]);
  useEffect(()=>{if(vision===4&&!m.session?.families.latest('coco.localise.particles.set.v1',m.tick?.tick??0))setToast('Localization particles · no active estimator');},[vision]);
  useEffect(()=>{
   document.documentElement.classList.add('playing-coco');
@@ -49,13 +59,14 @@ export function PlayHUD({model:m}:{model:ArenaSceneModel}){
   const renderer=m.r.current;
   if(renderer?.three?.ready)renderer.three.setFollowFraming(5.2,40*Math.PI/180);
   renderer?.setScanArea(true);
+  renderer?.setCostmapVisible(vision===3&&renderer.costmapTick!==null&&(m.tick?.tick??0)>=renderer.costmapTick);
   renderer?.setLayers({lidar:vision===1,frontier:vision===2,closed:vision===2,heatmap:vision===2,path:vision===2,footprint:false,truth:false,occupancy:!renderer?.is3D||vision===3});
   // Lens layers only display model-emitted data, never inferred particles.
   m.setLensOn(on=>{
    const next=Object.fromEntries(Object.keys(on).map(id=>[id,id==='particles'&&vision===4]));
    return Object.keys(next).every(id=>next[id]===on[id])?on:next;
   });
- },[vision,m.tick,m.tierNow,m.camera]);
+ },[vision,m.tick,m.tierNow,m.camera,costmapEpoch]);
  useEffect(()=>{
   if(!m.tick)return;
   const grasp=m.tick.grasp?.phase??'';

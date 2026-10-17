@@ -171,6 +171,17 @@ def evidence_problems(missions) -> List[str]:
                     resolve(ref, heads)
                 except MissionError as e:
                     bad.append(f'{m["id"]}/{c["id"]}: {e}')
+    with open(os.path.join(HERE, '..', 'tours', 'stories.json'), encoding='utf-8') as stream:
+        stories = json.load(stream)
+    for story in stories:
+        for claim in story['claims']:
+            if not claim.get('text') or not claim.get('evidence'):
+                bad.append(story['id'] + ': every story sentence needs evidence')
+            for ref in claim.get('evidence', []):
+                try:
+                    resolve(ref, heads)
+                except MissionError as error:
+                    bad.append(story['id'] + ': ' + str(error))
     return bad + casefile_link_problems(missions)
 
 

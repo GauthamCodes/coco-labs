@@ -26,3 +26,5 @@ One line per idea (README §0, change control), in the form:
 2026-10-11 | Perception on rendered pixels in the browser (the robot-eye camera feeding a detector) | M4's robot-eye view is labelled rendered presentation; perception stays abstract | after M4 (README §6 non-goal)
 2026-10-11 | The four later Play challenges (Lost robot, Gauntlet, Drive it yourself, Trade-off frontier) in 3D | M4 adds only "Race the planner's ghost" (README §7, M4: "Not in M4: the four later challenges"); see the 2026-10-11 line above | after M4
 2026-10-11 | A Canvas 2D top-down view for a browser with no WebGL 2 | README §5.3 asks for a fallback to the top-down renderer "without WebGL 2", but that renderer is Three.js on WebGL 2 too (three r163+ has no WebGL 1 path), so today such a browser gets the panels and a notice, no view (M4.4) | after M4, if a measured share of visitors lacks WebGL 2
+
+2026-10-17 | Mapping comparisons in the shared Compare panes | Retain the existing mapping tour and Inspect lens while bringing occupancy/EKF-SLAM/FastSLAM/pose-graph comparisons together | M7

@@ -63,7 +63,7 @@ function readQuery(): { mission: string | null; beat: number } {
   return { mission: q.get('tour') || q.get('mission'), beat: Number.isInteger(b) && b >= 0 && b <= 6 ? b : 0 };
 }
 
-export function LearnApp() {
+export function LearnApp({ embedded = false, onPreset }: { embedded?: boolean; onPreset?: (mission: string, lens: string) => void } = {}) {
   const [missions, setMissions] = useState<Mission[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [{ mission, beat }, setWhere] = useState(readQuery);
@@ -87,20 +87,22 @@ export function LearnApp() {
   };
 
   const current = missions?.find((m) => m.id === mission) ?? null;
+  useEffect(() => { if (current) onPreset?.(current.id, current.lens); }, [current?.id]);
+  const Root = embedded ? 'section' : 'main';
   // the badge says what THIS beat shows: a recording of the stack, or the model
   const shown = current?.beats[beat];
   const evidence = shown && (shown.beat === 'stack' || shown.arena?.casefile || shown.arena?.replay) ? 'STACK' : 'MODEL';
   return (
-    <main className="learn" data-testid="learn">
-      <ModeNav current="learn" evidence={evidence} />
+    <Root className="learn" data-testid="learn">
+      {!embedded && <ModeNav current="learn" evidence={evidence} />}
       <h1 className="mode-title"><a href={`${BASE}?view=compare&tour=`} onClick={(e) => { e.preventDefault(); go(null); }}>Compare · guided tours</a></h1>
-      <p><a href={`${BASE}?view=compare`}>Open the comparison workspace</a></p>
+      {!embedded && <p><a href={`${BASE}?view=compare`}>Open the comparison workspace</a></p>}
       {error && <p className="error" role="alert">{error}</p>}
       {!missions && !error && <p className="note">Loading the missions…</p>}
       {missions && mission && !current && <p className="error" role="alert">No mission &ldquo;{mission}&rdquo;.</p>}
       {missions && !current && <MissionIndex missions={missions} go={go} />}
       {current && <MissionPlayer key={current.id} m={current} beat={beat} go={go} gaps={gaps} />}
-    </main>
+    </Root>
   );
 }
 
@@ -134,7 +136,7 @@ function MissionPlayer({ m, beat, go, gaps }: { m: Mission; beat: number; go: (m
   const showClaims = b.beat !== 'predict' || picked !== null;
   return (
     <article className="mission" data-testid="mission" data-mission={m.id} data-beat={b.beat}>
-      <p className="note">Mission {m.number} of 6</p>
+      <p className="note">Tour {m.number} of 7</p>
       <h2>{m.title}</h2>
       <p className="learn-lead">{m.question}</p>
       <GapChips ids={m.gaps ?? []} gaps={gaps} />

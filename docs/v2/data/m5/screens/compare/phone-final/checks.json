@@ -1,0 +1,105 @@
+{
+ "class": "Functional diagnostic, not acceptance timing/FPS",
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T19:32:05.391Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 0.84,
+    "5m": 0.8,
+    "15m": 0.81
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T19:33:42.872Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 9.95,
+    "5m": 4.5,
+    "15m": 2.16
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "profile": "emulated Nothing Phone (1) landscape",
+ "cases": [
+  {
+   "name": "dstar",
+   "results": "A · D* Lite\n716 expansions\n4.00 m planned path\nCost 80.04\n0.26 m minimum clearance\n135.8 ms · This device · Linux x86_64 · search + trace\nfound\nB · Dijkstra\n13317 expansions\n4.00 m planned path\nCost 80.04\n0.25 m minimum clearance\n359.1 ms · This device · Linux x86_64 · search + trace\nfound"
+  },
+  {
+   "name": "control",
+   "results": "A · DWA-style sampler\n— expansions\n1.59 m travelled (truth)\nCost —\n0.25 m minimum clearance\n6047.7 ms · This device · Linux x86_64 · model window\nwindow_incomplete\nB · Pure pursuit\n— expansions\n1.60 m travelled (truth)\nCost —\n0.20 m minimum clearance\n2125.7 ms · This device · Linux x86_64 · model window\nwindow_incomplete"
+  },
+  {
+   "name": "mcl-injection",
+   "results": "A · MCL · no injection\n— expansions\n0.40 m travelled (truth)\nCost —\n0.30 m minimum clearance\n36008.4 ms · This device · Linux x86_64 · model window\nnot_localized\nB · MCL · injection\n— expansions\n0.40 m travelled (truth)\nCost —\n0.30 m minimum clearance\n35005.0 ms · This device · Linux x86_64 · model window\nnot_localized"
+  }
+ ],
+ "errors": [],
+ "progress": [
+  {
+   "at": "2026-10-17T19:32:27.429Z",
+   "status": "Computing 0 / 60 shared ticks…"
+  },
+  {
+   "at": "2026-10-17T19:32:42.432Z",
+   "status": "Computing 5 / 60 shared ticks…"
+  },
+  {
+   "at": "2026-10-17T19:32:57.431Z",
+   "status": "Computing 20 / 60 shared ticks…"
+  },
+  {
+   "at": "2026-10-17T19:33:12.432Z",
+   "status": "Computing 25 / 60 shared ticks…"
+  },
+  {
+   "at": "2026-10-17T19:33:27.433Z",
+   "status": "Computing 40 / 60 shared ticks…"
+  },
+  {
+   "at": "2026-10-17T19:33:42.434Z",
+   "status": "Ready"
+  }
+ ],
+ "passed": true,
+ "conditions_end": {
+  "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+  "at_utc": "2026-10-17T19:33:42.776Z",
+  "power_profile": "balanced",
+  "ac_power": true,
+  "battery": {
+   "status": "Full",
+   "capacity_pct": 100
+  },
+  "cpu_governor": "powersave",
+  "load_average": {
+   "1m": 9.95,
+   "5m": 4.5,
+   "15m": 2.16
+  },
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "threads": 12,
+  "standard": true
+ }
+}
