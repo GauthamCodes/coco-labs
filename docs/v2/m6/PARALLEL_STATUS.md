@@ -8,7 +8,9 @@ the entries below are copied into it at merge.
 ## Current checkpoint and next step
 
 - **Done:** M6F.0 Setup; M6F.1 World Spec v3; M6F.2 Generators; M6F.3 the Depot.
-- **Next:** M6F.4 planning benchmark (harness only while the machine is busy), then M6F.5.
+- **M6F.4:** harness committed (`tools/m6/bench_planning.py`, `bench_planning_pyodide.mjs`);
+  the measurement is **pending, machine busy**.
+- **Next:** M6F.5 Grasp Assist pipeline.
 
 ## Setup facts (M6F.0, 2026-10-17)
 
@@ -113,4 +115,11 @@ M5 is likely to change too. Updated at every checkpoint.)
 - **M6F.4 Depot planning benchmark (CPython and Pyodide-in-Node, nice off):
   pending, machine busy.** 2026-10-17 17:05: `codex resume` running and seven
   `lab_web/tools/perf/serve_dist.mjs` servers (ports 4200-4206) up — Codex's M5
-  measurement setup. The harness is committed; run it when Codex is idle.
+  measurement setup (8 at 17:10). The harness is committed; run it when Codex is idle:
+  `nice -n 0 python3 tools/m6/bench_planning.py --spec worlds/coco_depot_v1.yaml
+  --out docs/v2/m6/data/m6f4/cpython.json --write-json tools/m6/out/coco_depot_v1.json`,
+  then `npm install pyodide@314.0.7 --prefix ~/coco_labs_ws/worktrees/m6-node` and
+  `node tools/m6/bench_planning_pyodide.mjs --pyodide ~/coco_labs_ws/worktrees/m6-node/node_modules/pyodide
+  --spec-json tools/m6/out/coco_depot_v1.json --out docs/v2/m6/data/m6f4/pyodide_node.json`
+  (Node 24.21.0 from `~/coco_v2_ws/node`). Budget: 300 ms warm per plan; over budget -> ADR
+  proposing the WebAssembly gate (numbered 0101+).
