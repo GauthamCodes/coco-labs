@@ -11,7 +11,8 @@ the entries below are copied into it at merge.
 - **M6F.4:** harness committed (`tools/m6/bench_planning.py`, `bench_planning_pyodide.mjs`);
   the measurement is **pending, machine busy**.
 - **Done:** M6F.5 Grasp Assist (model side).
-- **Next:** M6F.6 Fetch Rush and Rush Hour rules.
+- **Done:** M6F.6 Fetch Rush and Rush Hour rules (model side).
+- **Next:** M6F.7 ROS-shaped message model.
 
 ## Setup facts (M6F.0, 2026-10-17)
 
@@ -99,6 +100,22 @@ the entries below are copied into it at merge.
   `LookupError: Could not find the resource 'gazebo_models' of type 'packages'`: they need
   a colcon overlay of this worktree (none built yet; heavy-ish, scheduled with M6F.8).
   Not caused by M6 code (they look up launch files and packages); not yet re-run on an overlay.
+
+## M6F.6 — Fetch Rush and Rush Hour, model side (2026-10-17)
+
+- `coco_lab/coco_lab/games.py`: the Arena subsystem `actors` (the Depot's forklifts and
+  walkers as discs covering their boxes: solid, seen by the LiDAR); the rules as
+  observers of the tick stream (a game = spec + seed + input log); stars from the
+  reference bot's result; the reference bots (planner + Grasp Assist, yielding to
+  actors); `verify` within M5's link limits. Doc `docs/v2/m6/GAMES.md`; references
+  `docs/v2/m6/data/games_reference.json` (all four reproduce). Evidence class MODEL.
+- Reference results (Arena seed 1, nice 19, Codex running): Fetch Rush seeds 1 and 2 —
+  1 delivery, 0 contacts, 136.7 s used, path efficiency 0.987; seed 3 — 0 deliveries (its
+  first order's ghost is 77.9 m, ~260 s at 0.3 m/s). Rush Hour `aisle_to_dispatch` —
+  delivered, 102.2 s, 0 contacts, min clearance 0.573 m, jerk RMS 3.95 m/s^3.
+- Tests: `coco_lab/test/test_games.py` (19); `coco_lab` 995 / 0 / 0.
+- Merge point: the browser HUDs and `coco verify` wiring for games (UI phase); the
+  Python side is `games.play` / `games.verify`.
 
 ## Plan-change entries to copy into docs/STATUS.md at merge
 

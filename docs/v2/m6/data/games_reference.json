@@ -1,0 +1,360 @@
+{
+ "bot": "coco_lab.games.bot_fetch_rush / bot_rush_hour (planner + Grasp Assist)",
+ "evidence": "MODEL",
+ "machine": {
+  "load_average": [
+   1.7392578125,
+   1.685546875,
+   1.50244140625
+  ],
+  "nice": 19
+ },
+ "runs": [
+  {
+   "bot_seconds": 41.5,
+   "name": "fetch_rush_seed_1",
+   "record": {
+    "arg": 1,
+    "game": "fetch_rush",
+    "inputs": [
+     {
+      "choice": "actors.on=1",
+      "kind": "config",
+      "tick": 0
+     },
+     {
+      "choice": "assist.target=any",
+      "kind": "config",
+      "tick": 0
+     },
+     {
+      "kind": "goal",
+      "tick": 1,
+      "x": 46.05653782439458,
+      "y": 7.316311952464757
+     },
+     {
+      "choice": "assist.target=obj_dock",
+      "kind": "config",
+      "tick": 804
+     },
+     {
+      "choice": "assist.grasp=go",
+      "kind": "config",
+      "tick": 804
+     },
+     {
+      "kind": "goal",
+      "tick": 1009,
+      "x": 42.0,
+      "y": 1.2999999999999998
+     },
+     {
+      "choice": "assist.grasp=go",
+      "kind": "config",
+      "tick": 1307
+     },
+     {
+      "kind": "goal",
+      "tick": 1368,
+      "x": 41.55653782439458,
+      "y": 29.81631195246476
+     },
+     {
+      "kind": "stop",
+      "tick": 1694
+     },
+     {
+      "kind": "goal",
+      "tick": 1695,
+      "x": 41.55653782439458,
+      "y": 29.81631195246476
+     },
+     {
+      "kind": "stop",
+      "tick": 1698
+     },
+     {
+      "kind": "goal",
+      "tick": 1733,
+      "x": 41.55653782439458,
+      "y": 29.81631195246476
+     }
+    ],
+    "seed": 1,
+    "ticks": 1801
+   },
+   "result": {
+    "hash_chain": "6ebd13b6049269885d5945e3ad0a8387fe1307e5790bfec613e2624c51decaa5",
+    "last_hash": "182e98ca70208d09b227093eb570b75408e338123ba274b306af7bba9a41856b",
+    "scorecard": {
+     "contact_log": [],
+     "contacts": 0,
+     "delivered": [
+      {
+       "driven": 31.69756148474934,
+       "drop": "dock_2",
+       "ghost": 31.295331880577407,
+       "object": "obj_dock",
+       "seconds": 136.70000000000002,
+       "t": 136.70000000000002
+      }
+     ],
+     "deliveries": 1,
+     "game": "fetch_rush",
+     "net_deliveries": 1,
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_mez_1",
+       "dock_3"
+      ]
+     ],
+     "path_efficiency": 0.9873103928084356,
+     "seed": 1,
+     "time_used": 136.70000000000002
+    }
+   }
+  },
+  {
+   "bot_seconds": 25.6,
+   "name": "fetch_rush_seed_2",
+   "record": {
+    "arg": 2,
+    "game": "fetch_rush",
+    "inputs": [
+     {
+      "choice": "actors.on=1",
+      "kind": "config",
+      "tick": 0
+     },
+     {
+      "choice": "assist.target=any",
+      "kind": "config",
+      "tick": 0
+     },
+     {
+      "kind": "goal",
+      "tick": 1,
+      "x": 46.05653782439458,
+      "y": 7.316311952464757
+     },
+     {
+      "choice": "assist.target=obj_dock",
+      "kind": "config",
+      "tick": 804
+     },
+     {
+      "choice": "assist.grasp=go",
+      "kind": "config",
+      "tick": 804
+     },
+     {
+      "kind": "goal",
+      "tick": 1009,
+      "x": 42.0,
+      "y": 1.2999999999999998
+     },
+     {
+      "choice": "assist.grasp=go",
+      "kind": "config",
+      "tick": 1307
+     },
+     {
+      "kind": "goal",
+      "tick": 1368,
+      "x": 10.183688047535243,
+      "y": 29.05653782439458
+     }
+    ],
+    "seed": 1,
+    "ticks": 1801
+   },
+   "result": {
+    "hash_chain": "1470e08a0886ddfbc75b26e49e95b843754bc84c33d3aa5187005306b1529ff0",
+    "last_hash": "ccb66db922e74e8df50a4c814f635cc1ceb1910223c6a34e4ed34c15f92386e3",
+    "scorecard": {
+     "contact_log": [],
+     "contacts": 0,
+     "delivered": [
+      {
+       "driven": 31.69756148474934,
+       "drop": "dock_2",
+       "ghost": 31.295331880577407,
+       "object": "obj_dock",
+       "seconds": 136.70000000000002,
+       "t": 136.70000000000002
+      }
+     ],
+     "deliveries": 1,
+     "game": "fetch_rush",
+     "net_deliveries": 1,
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_office_ne",
+       "dock_2"
+      ]
+     ],
+     "path_efficiency": 0.9873103928084356,
+     "seed": 2,
+     "time_used": 136.70000000000002
+    }
+   }
+  },
+  {
+   "bot_seconds": 19.8,
+   "name": "fetch_rush_seed_3",
+   "record": {
+    "arg": 3,
+    "game": "fetch_rush",
+    "inputs": [
+     {
+      "choice": "actors.on=1",
+      "kind": "config",
+      "tick": 0
+     },
+     {
+      "choice": "assist.target=any",
+      "kind": "config",
+      "tick": 0
+     },
+     {
+      "kind": "goal",
+      "tick": 1,
+      "x": 2.6836880475352434,
+      "y": 23.94346217560542
+     },
+     {
+      "choice": "assist.target=obj_office_sw",
+      "kind": "config",
+      "tick": 1256
+     },
+     {
+      "choice": "assist.grasp=go",
+      "kind": "config",
+      "tick": 1256
+     },
+     {
+      "kind": "goal",
+      "tick": 1466,
+      "x": 23.0,
+      "y": 1.4
+     }
+    ],
+    "seed": 1,
+    "ticks": 1801
+   },
+   "result": {
+    "hash_chain": "6824553d48f78b8f4ee309d05f06dc0ed811bd662aa97bec34f375ef7feaade2",
+    "last_hash": "f450feb251f9b4f446f9e4892906ec4d3efb9ff06f882e77435b9f71878fa9cf",
+    "scorecard": {
+     "contact_log": [],
+     "contacts": 0,
+     "delivered": [],
+     "deliveries": 0,
+     "game": "fetch_rush",
+     "net_deliveries": 0,
+     "orders": [
+      [
+       "obj_office_sw",
+       "dispatch_drop"
+      ]
+     ],
+     "path_efficiency": 0.0,
+     "seed": 3,
+     "time_used": 180.0
+    }
+   }
+  },
+  {
+   "bot_seconds": 5.6,
+   "name": "rush_hour_aisle_to_dispatch",
+   "record": {
+    "arg": "aisle_to_dispatch",
+    "game": "rush_hour",
+    "inputs": [
+     {
+      "has_theta": true,
+      "kind": "kidnap",
+      "theta": 1.5707963267948966,
+      "tick": 0,
+      "x": 20.0,
+      "y": 16.5
+     },
+     {
+      "choice": "actors.on=1",
+      "kind": "config",
+      "tick": 0
+     },
+     {
+      "choice": "assist.target=any",
+      "kind": "config",
+      "tick": 0
+     },
+     {
+      "choice": "assist.target=obj_aisle_1",
+      "kind": "config",
+      "tick": 1
+     },
+     {
+      "choice": "assist.grasp=go",
+      "kind": "config",
+      "tick": 1
+     },
+     {
+      "kind": "goal",
+      "tick": 217,
+      "x": 26.2,
+      "y": 14.0
+     },
+     {
+      "kind": "goal",
+      "tick": 487,
+      "x": 26.2,
+      "y": 8.5
+     },
+     {
+      "kind": "goal",
+      "tick": 676,
+      "x": 23.0,
+      "y": 1.4
+     },
+     {
+      "choice": "assist.grasp=go",
+      "kind": "config",
+      "tick": 962
+     }
+    ],
+    "seed": 1,
+    "ticks": 1023
+   },
+   "result": {
+    "hash_chain": "ced9a69ed2d084d9b746625c9090b3999d968bc199d10290590c25e765c808db",
+    "last_hash": "636b57b39ae0c1639fa4b1cae04df429966a698212bd4a71a4fcceffc70551cf",
+    "scorecard": {
+     "assist": "builtin",
+     "contact_log": [],
+     "contacts": 0,
+     "delivered": true,
+     "fragile_cargo": "game rule, not physics",
+     "game": "rush_hour",
+     "jerk_peak": 39.98449703760654,
+     "jerk_rms": 3.9511479889951295,
+     "min_clearance": 0.572603789922497,
+     "objective": "aisle_to_dispatch",
+     "time": 102.20000000000002
+    }
+   }
+  }
+ ],
+ "schema": "coco_lab.m6f.games_reference",
+ "spec": "worlds/coco_depot_v1.yaml",
+ "version": 1
+}
