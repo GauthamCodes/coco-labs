@@ -558,8 +558,8 @@ export function useArenaScene() {
       },
       onCompareBatch: (meta, cols) => {
         setCompare((c) => {
-          if (!c) return c;
-          const st = c.stores[meta.compare!];
+          if (!c || (meta.compare !== 'A' && meta.compare !== 'B')) return c;
+          const st = c.stores[meta.compare];
           if (st.searchId !== meta.search_id) st.begin(meta.search_id, meta.planner);
           st.append(cols, meta.final);
           if (st.cursor === 0) st.advance(1);

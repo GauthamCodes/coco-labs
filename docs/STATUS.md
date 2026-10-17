@@ -61,7 +61,7 @@
 - Independent static/scan/inflation/combined layers and additive schema; optional worker request.
   [Foundation report](v2/data/m5/compare/REPORT.md); existing Arena graph/hash unaffected.
 - Hand-computed values, scan projection, column transport and 1/2/4 scissor layout tested.
-  Web 482 passed (M5.6: 477), tools 197 (before 195); typecheck/build pass; integration 2 passed.
+  Web 482 passed (M5.6: 477), tools 197 (before 195); typecheck/build pass; final 2/4-pane integration 4 passed.
 - Recorded Stack snapshots compared with declared parameters; differences retained and labelled.
 - Full affected-package run: 821 coco_lab passed, three new-file lint failures;
   corrected and all 19 lint/costmap checks passed. coco_schemas 231 passed.

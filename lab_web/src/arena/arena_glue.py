@@ -99,7 +99,7 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
 
 
 def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
-            inflation_json=None):
+            inflation_json=None, planners_json=None):
     """
     Run two planners from the robot's cell to (gx, gy); change nothing.
 
@@ -114,6 +114,11 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
     from coco_lab.sketch import _nearest_free
 
     a = _arena
+    names = json.loads(planners_json) if planners_json else [planner_a, planner_b]
+    if (not isinstance(names, list) or len(names) not in (2, 4) or
+            any(not isinstance(name, str) or name not in PLANNERS
+                for name in names)):
+        raise ValueError('Compare needs two or four supported planners')
     g = a.grid
     if inflation_json is not None:
         from coco_lab.costmap import (InflationParams, build_layers,
@@ -134,7 +139,8 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
         g = Grid(m.width, m.height,
                  blocked=[v >= 253 for v in layers.combined],
                  cost=layers.combined, connectivity=8)
-    s = _nearest_free(g, a.plan_map.cell_at(a.pose[0], a.pose[1]))
+    here = a.belief() if inflation_json is not None else a.pose
+    s = _nearest_free(g, a.plan_map.cell_at(here[0], here[1]))
     t_cell = a.plan_map.cell_at(float(gx), float(gy))
     if s is None or t_cell is None:
         raise ValueError(f'goal ({gx}, {gy}) or the robot is off the map')
@@ -142,7 +148,8 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
     if t is None:
         raise ValueError('costmap has no free goal cell')
     out = {}
-    for side, sid, name in (('A', -101, planner_a), ('B', -102, planner_b)):
+    for i, name in enumerate(names):
+        side, sid = 'ABCD'[i], -101 - i
         if name not in PLANNERS:
             raise ValueError(f'unknown planner {name!r}')
         cols = SearchEventColumns(search_id=sid, tick=a.tick,

@@ -221,7 +221,8 @@ async function play(req: Extract<ToWorker, { type: 'play' }>) {
 function compare(req: Extract<ToWorker, { type: 'compare' }>) {
   if (!glue || !onBatchFn) throw new Error('compare before boot');
   const args: unknown[] = [req.a, req.b, req.x, req.y, onBatchFn, 2048];
-  if (req.inflation) args.push(JSON.stringify(req.inflation));
+  if (req.inflation || req.planners) args.push(req.inflation ? JSON.stringify(req.inflation) : null);
+  if (req.planners) args.push(JSON.stringify(req.planners));
   const result = JSON.parse(glue.compare(...args));
   post({ type: 'compare_done', result });
 }

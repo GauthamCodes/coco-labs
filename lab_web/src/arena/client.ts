@@ -8,7 +8,7 @@
  */
 
 import { PYODIDE_INDEX_URL } from '../../site.config.ts';
-import { wallMs, type BootRequest, type CompareSide, type FamilyMessage, type FromWorker, type InputRow, type SearchColumns, type SpecFile, type Tick, type World } from './protocol';
+import { wallMs, type BootRequest, type CompareResult, type CompareInflation, type FamilyMessage, type FromWorker, type InputRow, type SearchColumns, type SpecFile, type Tick, type World } from './protocol';
 import { perf } from './perf';
 import { claimWarmWorker } from './worker_pool';
 
@@ -17,7 +17,7 @@ export interface ArenaEvents {
   onPlanBatch?(meta: Extract<FromWorker, { type: 'plan_batch' }>['meta'], columns: SearchColumns): void;
   onTick?(tick: Tick, ranges: Float32Array): void;
   onCompareBatch?(meta: Extract<FromWorker, { type: 'plan_batch' }>['meta'], columns: SearchColumns): void;
-  onCompareDone?(result: { A: CompareSide; B: CompareSide }): void;
+  onCompareDone?(result: CompareResult): void;
   onError?(stage: string, message: string): void;
   /** M2.2: a whole-loop family batch or a channel's static header. */
   onFamily?(msg: FamilyMessage): void;
@@ -126,6 +126,12 @@ export class ArenaClient {
   /** Two planners on the same start, goal and seed; the model is unchanged. */
   compare(a: string, b: string, x: number, y: number, inflation?: import('./protocol').CompareInflation): void {
     this.worker.postMessage({ type: 'compare', a, b, x, y, ...(inflation ? { inflation } : {}) });
+  }
+
+  /** One graph/start/goal for every pane; Python validates the two/four names. */
+  compareMany(planners: string[], x: number, y: number, inflation?: CompareInflation): void {
+    if (planners.length !== 2 && planners.length !== 4) throw new Error('Compare needs two or four planners');
+    this.worker.postMessage({ type: 'compare', a: planners[0], b: planners[1], planners, x, y, ...(inflation ? { inflation } : {}) });
   }
 
   private playNext = 1;

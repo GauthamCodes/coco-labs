@@ -17,6 +17,9 @@ viewport foundations; it does **not** complete M5.7 or any later checkpoint.
 - An optional Compare worker request builds a separate costed graph, emits
   all four layers and uses it for both planners. The original request keeps
   the original graph. Neither path assigns Arena state, radius or graph.
+- Additive two/four-planner worker request, validated before execution; each
+  pane uses the same independent graph/start/goal, with distinct trace IDs.
+  Legacy scene callers retain the two-pane contract.
 - One-context scissor rectangle support for 1/2/4 views; four landscape
   views form a two-by-two grid and portrait views stack. The current visible
   Compare screen still requests two views; UI wiring is next.
@@ -29,16 +32,19 @@ The upstream unsigned-byte cast truncates the positive exponential value.
 | Check | Result | Evidence |
 | --- | --- | --- |
 | Hand-computed bands, diagonal distance, scan projection and family batching | 16 passed | `coco_lab/test/test_costmap.py`; included in package run |
-| Optional inflation preserves state bytes, hash, chain and graph for v1/v2 | 2 passed | `glue-costmap.txt`, `lab_web/tools/test_costmap_glue.py` |
+| Optional inflation preserves state bytes, hash, chain and graph for v1/v2 and 2/4 panes | 4 passed | `glue-four-panes.txt`, `lab_web/tools/test_costmap_glue.py`; earlier 2-case run retained |
 | Build-tool suite | 197 passed, before 195 | `tools-costmap.txt` |
-| Web suite | 482 passed, before 477 | `vitest-costmap.txt` |
+| Web suite | 482 passed, before 477; repeated after request extension | `vitest-four-panes.txt`; first run retained |
 | Cross-language schema subset | 22 passed | `web-schema.txt` |
 | Scissor tiling/no overlap/portrait order | 3 passed | `pane-layout.txt` |
-| Typecheck | passed | `typecheck-layout.txt` |
+| Typecheck | passed after four-pane request extension | `typecheck-four-panes.txt` |
 | Production build | passed; existing chunk-size warning retained | `build-costmap.txt` |
 | Generated schemas and legacy/new vectors | current | `schema-generation.txt`, `legacy-vectors.txt`, `m5-vectors.txt` |
 | Affected package suites | coco_lab 821 passed, 3 lint failures; coco_schemas 231 passed | `packages-costmap.txt` |
 | Corrected copyright/import/indent/docstring lint issues, plus costmap tests | 19 passed | `lints-fixed.txt`; original failures retained in `lints-initial.txt` |
+
+The 197-test tool suite preceded the request extension; the expanded four-case
+integration test was rerun after it.
 
 The affected-package run exercised all existing functional/golden tests;
 its failures were new-file copyright/style/docstring checks. Their focused

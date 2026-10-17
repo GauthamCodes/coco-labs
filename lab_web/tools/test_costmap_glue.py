@@ -12,7 +12,8 @@ REPO = Path(__file__).resolve().parents[2]
 
 
 @pytest.mark.parametrize('hash_version', [1, 2])
-def test_inflated_compare_is_independent_and_emits_all_cells(hash_version):
+@pytest.mark.parametrize('panes', [2, 4])
+def test_inflated_compare_is_independent_and_emits_all_cells(hash_version, panes):
     spec = importlib.util.spec_from_file_location(
         'costmap_test_glue', REPO / 'lab_web/src/arena/arena_glue.py')
     glue = importlib.util.module_from_spec(spec)
@@ -36,10 +37,13 @@ def test_inflated_compare_is_independent_and_emits_all_cells(hash_version):
                                     lambda *_: None, 2048, json.dumps({
                                         'inflation_radius': 0.5,
                                         'cost_scaling_factor': 10,
-                                        'robot_radius': 0.25})))
+                                        'robot_radius': 0.25}),
+                                    json.dumps(['astar', 'dijkstra', 'greedy',
+                                                'weighted_astar'][:panes])))
     assert (a.state_bytes(), a.state_hash(), a.chain, a.grid) == before
     assert result['A']['summary']['path_cost'] == pytest.approx(
         result['B']['summary']['path_cost'])
+    assert list(result) == list('ABCD'[:panes])
     assert sum(counts) == a.lab_map.width * a.lab_map.height
     assert max(counts) <= 2048
     assert {0, 253, 254} <= costs

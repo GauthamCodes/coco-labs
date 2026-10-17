@@ -2078,3 +2078,8 @@ feedback. No stop condition, no parked idea. M5.7 not complete.
 Next: wire 2/4 controls and costmap hover/bands, existing algorithm families,
 difference/timeline/results and evidence-backed tours; run closure checks and
 capture desktop/emulated Nothing Phone (1) landscape/portrait. Then M5.8–M5.11.
+
+M5.7 follow-through: worker/client now accept a validated two/four-planner list,
+run every pane against the same graph/start/goal, and tag distinct traces.
+Legacy two-pane scene callbacks remain compatible. Expanded 2/4 × v1/v2
+integration checks: 4 passed, typecheck passed. UI wiring remains next.
