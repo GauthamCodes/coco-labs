@@ -1,0 +1,33 @@
+WARNING: Skipping /usr/lib/python3/dist-packages/pytest_repeat.egg-info due to invalid metadata entry 'name'
+astar_open                   glass-box         178 events     11520 B  reproduced: all 178 events identical
+dijkstra_cost_field_gz       glass-box         747 events      7007 B  reproduced: all 747 events identical
+weighted_astar_greedy_trap   glass-box         405 events     22685 B  reproduced: all 405 events identical
+bfs_no_path                  glass-box         750 events     39535 B  reproduced: all 750 events identical
+astar_turn_trap_heading      glass-box         130 events      9197 B  reproduced: all 130 events identical
+lab1c_astar                  recorded-run    18660 events    336558 B  not replayable: a recorded-run bundle does not record every input of its search
+lab1c_dijkstra               recorded-run    71900 events    463733 B  not replayable: a recorded-run bundle does not record every input of its search
+lab1c_greedy                 recorded-run     4368 events    109089 B  not replayable: a recorded-run bundle does not record every input of its search
+arena_0_10m                  glass-box       70319 events    383889 B  reproduced: all 70319 events identical
+arena_native                 glass-box      283378 events   1444027 B  reproduced: all 283378 events identical
+costmap_0_10m                glass-box        4693 events     74919 B  reproduced: all 4693 events identical
+loc_tracking                 sketch        2 runs    805907 B  reproduced byte for byte (locbundle.replay_check)
+loc_kidnap                   sketch        3 runs   1790440 B  reproduced byte for byte (locbundle.replay_check)
+loc_global                   sketch        2 runs   1967013 B  reproduced byte for byte (locbundle.replay_check)
+loc_twins                    sketch        2 runs    505366 B  reproduced byte for byte (locbundle.replay_check)
+loc_arena_kidnap             sketch        3 runs   4171745 B  reproduced byte for byte (locbundle.replay_check)
+map_loop                     sketch        6 runs    495167 B  reproduced and re-scored byte for byte (slambundle.replay_check)
+map_corridor                 sketch        6 runs    527930 B  reproduced and re-scored byte for byte (slambundle.replay_check)
+map_landmarks                sketch        6 runs    696970 B  reproduced and re-scored byte for byte (slambundle.replay_check)
+map_arena                    challenge     4 runs    682802 B  reproduced and re-scored byte for byte (slambundle.replay_check)
+s1_tour                      replay        6 runs   2719666 B  reproduced and re-scored byte for byte (slambundle.replay_check)
+search_arena                 sketch        7 runs      9409 B  reproduced byte for byte (searchbundle.replay_check)
+p05_matrix                   replay        16 runs     44857 B  reproduced byte for byte (searchbundle.replay_check)
+sketch_0                     sketch        replan        14053 B  reproduced byte for byte (movebundle.replay_replan)
+sketch_1                     sketch        replan        12098 B  reproduced byte for byte (movebundle.replay_replan)
+sketch_2                     sketch        replan         8711 B  reproduced byte for byte (movebundle.replay_replan)
+arena_c                      glass-box     replan        55336 B  reproduced byte for byte (movebundle.replay_replan)
+crossing                     replay        15 runs   1171833 B  every metric recomputed from the recording (movebundle.replay_drive)
+mislocalised                 replay        9 runs     29626 B  every metric recomputed from the recording (movebundle.replay_drive)
+oncoming                     replay        15 runs   1036536 B  every metric recomputed from the recording (movebundle.replay_drive)
+static_room                  replay        15 runs   1668760 B  every metric recomputed from the recording (movebundle.replay_drive)
+wheel: {'path': 'py/coco_lab-0.2.0-py3-none-any.whl', 'sha256': '9ec0f8c90833802b5f4d67b7111e39add07521c98062d4f1392b4ec4b9136aed', 'bytes': 267205}

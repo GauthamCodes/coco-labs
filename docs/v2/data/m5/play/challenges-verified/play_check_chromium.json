@@ -1,0 +1,343 @@
+{
+ "site": "http://localhost:4200/coco-labs/",
+ "browser": "chromium",
+ "rows": [
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "errors": [],
+   "scorer_ready_ms": 6853,
+   "ms": 70,
+   "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+   "stars": 3,
+   "valid": true,
+   "score": "1",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=beat-the-planner&l=two-fields&z=Jc47cgQhDADRuxAT6IukucrWBCCYslMHTly-uzGbvE77p3yXC2v52KGdcpUpUxoRTZhhsNbwpfikTJbhms8IT5VgzjUzVZ1WQuPhHn08PUstn-V6vbDSXbd8lKMe25aqbbn6Vmps9diOVhF2vCK-Q_ddy9f_XYdU5haGENGDHQDF0vojs1v6QvII4dGaqYpgCAqYIQF3bOX3Dw",
+   "reproduce": {
+    "ms": 4883,
+    "exact": true,
+    "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "errors": [],
+   "scorer_ready_ms": 4522,
+   "ms": 45,
+   "hash": "d593ad6634a85527cbe30f0be5921cc26e03afe9a65fb1a74dc58d70c35efcb3",
+   "stars": 3,
+   "valid": true,
+   "score": "1",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=beat-the-planner&l=bog&z=Jc47csAgDADRu6im0AcJ4at4XICASdoUaTK5ezxK87bdH_iGiwp8vOE3cMHZ1UcPx4lTdaAeqjQdJbpb77xoBIkxIlYmHr6tWUOb7NOPKBT4hOu-qfBTbk4lrammlrYir15qqqmlLfW0p4T_oecp8PWOLu0ylpnU4arcYm7Bg3NrZ4pg2yjj7D5Mz6TR6gr11TBE94kp8PsH",
+   "reproduce": {
+    "ms": 5420,
+    "exact": true,
+    "hash": "d593ad6634a85527cbe30f0be5921cc26e03afe9a65fb1a74dc58d70c35efcb3",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "errors": [],
+   "scorer_ready_ms": 7985,
+   "ms": 72,
+   "hash": "873ad7357dea2d2dc23a70ba0bc3fb1c7cc1ffc25889a93a1bb90328352396cc",
+   "stars": 3,
+   "valid": true,
+   "score": "1",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=beat-the-planner&l=mud-field&z=Jc4xcsQwCEDRu1CrECAJ5Kt4XACyJmlTpNnZu6-Hbd5v_wv-4cACP0_oCRwgc-htQ_tWvldbFlvroOlLbKOz785tNKuuQ3xiM-OQ4V7Ro8qEAr9wnCcWuspJhR85bWlPRyqplpb2dKSSajpTrN_gN3RdBf6eXxW2Jdxl3UaLVhCbVH_-grdjSATuHdRVp002dJ-VSbkTzxEB7w8",
+   "reproduce": {
+    "ms": 8161,
+    "exact": true,
+    "hash": "873ad7357dea2d2dc23a70ba0bc3fb1c7cc1ffc25889a93a1bb90328352396cc",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "next-node",
+   "level": "wall",
+   "errors": [],
+   "scorer_ready_ms": 5419,
+   "ms": 33,
+   "hash": "1f46a35b3dd30905a03f8b1319b9562c1590920a383f1adab8ac01b666a1013b",
+   "stars": 3,
+   "valid": true,
+   "score": "10",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=next-node&l=wall&z=Jc4xEgMhCIXhu1BbgAjCXmVnC9R1kjZFmkzuHsc036Og-D_whoMSPNbkNXCA0y1ot0pnMQvPOKmzzXZnaRWD0IXVbZSoxszUa8eSK4r6yFIhwROO88wpX2nJS05lWZLs-69u69a2vv_LdSV4rRCaRYOl8RiMjhLI0xoxeXPR3EkcV12w8aQY0Sw6UlPV1Ujc4PsD",
+   "reproduce": {
+    "ms": 5365,
+    "exact": true,
+    "hash": "1f46a35b3dd30905a03f8b1319b9562c1590920a383f1adab8ac01b666a1013b",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "next-node",
+   "level": "mud",
+   "errors": [],
+   "scorer_ready_ms": 9350,
+   "ms": 54,
+   "hash": "585980ba24f66f3d663ae75cd0d477db9b8e86dca00c2d764402cd36d981d648",
+   "stars": 3,
+   "valid": true,
+   "score": "10",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=next-node&l=mud&z=Hc4xjgMhDEDRu7imsMHYZq4ymsJg0G6bIk2UuwfRvN_-D7zhogR_O3kHLnCvVDBqIR_k2ryH8kAjlK5j1d7mzJmilYJtxVL2PHVOspmRmCHBP1z3jYmedFMi3JGUt5rK1hIf61GOerRje54Er31SrTbD7pmXyCohUnxqHYHBqtFbt2kSwxFHDhVmzCOKRDMKYYPvDw",
+   "reproduce": {
+    "ms": 9021,
+    "exact": true,
+    "hash": "585980ba24f66f3d663ae75cd0d477db9b8e86dca00c2d764402cd36d981d648",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "next-node",
+   "level": "u-trap",
+   "errors": [],
+   "scorer_ready_ms": 7656,
+   "ms": 70,
+   "hash": "dfb5f15ddd7931918a8e25545c1f082233cf00e87fbdd9c263d8547284fce882",
+   "stars": 3,
+   "valid": true,
+   "score": "10",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=next-node&l=u-trap&z=Lc4xDgMxCATAv1C7MNj48H3llMKAUdKmSBPl73GsNLPSQrFveMGJCe4raAWcgNakcvMYXWlyl6GKEoojh4_WeUzsrm7qndRL9UxOYdlttDYEEjzgvC5O5ZaukmjJ25pwSbtvW9p9-__8rmV5S_BcQzyUA9ndj16wowyZxFzZMLIQlWKR85Qj1L0bteLC9SCpYVOE4PMF",
+   "reproduce": {
+    "ms": 8996,
+    "exact": true,
+    "hash": "dfb5f15ddd7931918a8e25545c1f082233cf00e87fbdd9c263d8547284fce882",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "errors": [],
+   "scorer_ready_ms": 6484,
+   "ms": 31,
+   "hash": "68f63a399a25626b99adc47099547a88c66ad46a7c97233587eebb5f8d730251",
+   "stars": 3,
+   "valid": true,
+   "score": "1",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=search-the-bays&l=no-idea&z=DY0rEkMhDADvEo2AhPzeVToVEMi0tqKm07s_1K7a_cEXrlbgdYAHcEGwa6jXoZFmpJu1xcYh26KxznStuZCE2kiLhThrDdrdk8MWQoE3XA8sVFqpzwKfExVLoUHuA1lQ5pEVXas7dx1mITJWl_N0RSI23XtOTltKFbnB_wY",
+   "reproduce": {
+    "ms": 4364,
+    "exact": true,
+    "hash": "68f63a399a25626b99adc47099547a88c66ad46a7c97233587eebb5f8d730251",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "errors": [],
+   "scorer_ready_ms": 4355,
+   "ms": 33,
+   "hash": "121584bb9a9fbc24ddefafdc48e8ddf681b4c702f4cac300a2dc8bf89f839020",
+   "stars": 3,
+   "valid": true,
+   "score": "1",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=search-the-bays&l=far-end&z=DcwrEsMwDAXAuwgb6GMnT7lKp8CWomlpQUmnd0_Qsv3Rlw5p9LrRGzqIy4xj8ASqwnnfupcDizcJ2LBgBgam8m5WSzKdPdRDxlAvavSm46HNmjR-NvrcqagM9LV8eq3QnnnWrIyOE5m1QVaPnbV6zDDmqRlYBS-YszL9Lw",
+   "reproduce": {
+    "ms": 4853,
+    "exact": true,
+    "hash": "121584bb9a9fbc24ddefafdc48e8ddf681b4c702f4cac300a2dc8bf89f839020",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "errors": [],
+   "scorer_ready_ms": 5423,
+   "ms": 31,
+   "hash": "dc31bf9c19bb474a024c566b91ea3f4965f9c6cc918ef547fbad57d5a5b6d9b9",
+   "stars": 3,
+   "valid": true,
+   "score": "1",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=search-the-bays&l=ends&z=Dcw7rkMhDEXRubim4ICB6zuVp1f4g5W0KdJEmXuoVrGl_aE33Sj0OLQD3cTd0KRKV99-yXLhRJuyWbkHHDlrpKCadV0IjWTYheANWTmo0JPuv15qQWn_hV5nGt5hKQ4x48VaG_uY0wRbe7LMceJ0F1w7B680jbFi6LAZYkLfHw",
+   "reproduce": {
+    "ms": 4875,
+    "exact": true,
+    "hash": "dc31bf9c19bb474a024c566b91ea3f4965f9c6cc918ef547fbad57d5a5b6d9b9",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "errors": [],
+   "scorer_ready_ms": 7938,
+   "ms": 87,
+   "hash": "e8b7107011901884e491daf3f23ce18a40eb51bac5e9a7e3a498fd77b7eb89f3",
+   "stars": 3,
+   "valid": true,
+   "score": "1",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=search-the-bays&l=poor-camera&z=DcwxEgMhCEDRu1BbgKjAXiWTQhQmaVOkyeTua_WKP_N_8IWLCrwO9QAXjLqzaccVvU_faiPWWshbeSBHo0ZCYxid1jUrqaMMS5puizWhwBuuRy1cqOCzwOdMQ10IBYkMSbVFM9ozOSuvIJ0Nwzv5XD1sSvBsprlFXMLVkuF_Aw",
+   "reproduce": {
+    "ms": 7011,
+    "exact": true,
+    "hash": "e8b7107011901884e491daf3f23ce18a40eb51bac5e9a7e3a498fd77b7eb89f3",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "errors": [],
+   "ms": 342,
+   "hash": "64ba11acf0e26d9c664ad220921e7231cfc23e5d7752d3e3c1b8cbf8d0c4c3f4",
+   "stars": 3,
+   "valid": true,
+   "score": "0",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=case-file-detective&l=told-wrong&z=DcwpcgQxDADAvwgP0GXLmq-kAmwdldCAkK39-w5q1i_4h5su-HngB7jBcnGPbaIyeWl6Oa4K80ZUnksQh0pFVZ8t5e0ZZGV4To0ihwt-4f4S-r7g7_mmnk20o7F4psecupMZnamMhaKDpUaaDU4pCTorTq_E0JBWeH8A",
+   "reproduce": {
+    "ms": 7978,
+    "exact": true,
+    "hash": "64ba11acf0e26d9c664ad220921e7231cfc23e5d7752d3e3c1b8cbf8d0c4c3f4",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "errors": [],
+   "ms": 284,
+   "hash": "85ae2d73002cf2e3ee078c243983f11a5273f8396d94491d2fdbf79ae57bb33b",
+   "stars": 3,
+   "valid": true,
+   "score": "0",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=case-file-detective&l=kidnapped&z=DYwpEsMwDAD_IhwQXbaUr3QKLFualhaUdPr3GC3Z3R984cIDXhu0ARf0JpiCitVIZ4aQumYU90mdOfk8g0W9WlmIOxrbGBaTRNoqgwPecD0a0_OAzx6ajqTVd0ezKDnz7LZtduNCHLq3ZextuYjjolpR3Udqj2AO-N8",
+   "reproduce": {
+    "ms": 7024,
+    "exact": true,
+    "hash": "85ae2d73002cf2e3ee078c243983f11a5273f8396d94491d2fdbf79ae57bb33b",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "errors": [],
+   "ms": 374,
+   "hash": "1dcb0cdbbec6bb84c08e18d1353ce558a9e6ac08a37be3805a3cddc19b28cdf6",
+   "stars": 3,
+   "valid": true,
+   "score": "0",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=case-file-detective&l=kidnapped-far&z=DYw7jkMxCADvQv0KGzDgd5XVFuZjJW2KNFHuHlcjjTTzgTfc_YLHAR7ADRNtCqNXoEYpFrUYQsnepLSvZN6dKxvhZN8L1Yx0nwiVRQUueML9J2z_F7zOsGd4i_RzFHfjaFbdstOgqDFszZJ15CL1ImtjUWRGn44WuQW-Pw",
+   "reproduce": {
+    "ms": 7021,
+    "exact": true,
+    "hash": "1dcb0cdbbec6bb84c08e18d1353ce558a9e6ac08a37be3805a3cddc19b28cdf6",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "errors": [],
+   "ms": 270,
+   "hash": "1338a4aa3252d662197de332c9d134dbdaa9527ab15707dab3a966e176dbda8b",
+   "stars": 3,
+   "valid": true,
+   "score": "0",
+   "link": "http://localhost:4200/coco-labs/?view=play&c=case-file-detective&l=kidnapped-again&z=FYwxEgIxCAD_Qn1FgEBCvuJYkEBGWwsbx78bqy12dj_whoEXPA7oAAZ4UsGu6NY7UWEnl-LW2DZlePLas_YauUtZtha3SAk0mbazIMIFTxg3rXK_4HWGyNy9ujMJhSqhnYKZlgVyjRnuJtR8orTSwie7qSY2_bs-4fsD",
+   "reproduce": {
+    "ms": 6474,
+    "exact": true,
+    "hash": "1338a4aa3252d662197de332c9d134dbdaa9527ab15707dab3a966e176dbda8b",
+    "stars": 3,
+    "errors": []
+   },
+   "ok": true
+  },
+  {
+   "challenge": "map-the-arena",
+   "level": "twenty-five-metres",
+   "errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "TypeError: Failed to fetch dynamically imported module: http://localhost:4200/coco-labs/assets/SettingsDrawer-Btmd3Lri.js"
+   ],
+   "ok": false,
+   "failure": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Game menu and inspection' })\u001b[22m\n"
+  }
+ ],
+ "list": {
+  "challenges": 6,
+  "errors": [],
+  "ok": true
+ },
+ "summary": {
+  "rows": 15,
+  "ok": 14,
+  "list_ok": true
+ },
+ "ok": false,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-16T18:49:34.139Z",
+   "power_profile": "balanced",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 51
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 15.36,
+    "5m": 10.45,
+    "15m": 5.45
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-16T18:55:37.611Z",
+   "power_profile": "balanced",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 38
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 8.21,
+    "5m": 12.06,
+    "15m": 8.08
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ }
+}

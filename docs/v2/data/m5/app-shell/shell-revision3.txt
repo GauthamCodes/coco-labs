@@ -1,0 +1,1 @@
+Captured 20 app views and four Settings drawers; zero console errors/external requests; focus and model continuity pass.

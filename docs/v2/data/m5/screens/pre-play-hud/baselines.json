@@ -1,0 +1,66 @@
+{
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-15T01:07:06.791Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 14.46,
+    "5m": 12.3,
+    "15m": 9.42
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-15T01:07:55.476Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 15.19,
+    "5m": 12.94,
+    "15m": 9.79
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "mode": "make",
+ "site": "http://localhost:4186/coco-labs/",
+ "renderer": "chromium default (SwiftShader)",
+ "channel_tol": 40,
+ "max_bad": 0.005,
+ "results": {
+  "trace_bfs_no_path": {
+   "bytes": 14608
+  },
+  "trace_costmap_astar": {
+   "bytes": 22816
+  },
+  "stack_lab1c_astar_t400": {
+   "bytes": 24764
+  },
+  "stack_lab1c_greedy_t300": {
+   "bytes": 25194
+  },
+  "attract_t200": {
+   "bytes": 54856
+  }
+ },
+ "errors": [],
+ "pass": true
+}

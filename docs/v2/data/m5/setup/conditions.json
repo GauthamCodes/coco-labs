@@ -1,0 +1,25 @@
+{
+  "at_utc": "2026-10-14T09:54:39.997Z",
+  "power_profile": "balanced",
+  "ac_power": true,
+  "battery": {
+    "status": "Charging",
+    "capacity_pct": 70
+  },
+  "cpu_governor": "powersave",
+  "load_average": {
+    "1m": 3.46,
+    "5m": 2.56,
+    "15m": 1.79
+  },
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "threads": 12,
+  "standard": true,
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+  "node": "v24.21.0",
+  "npm": "11.19.0",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0] pytest 7.4.4 hypothesis 6.98.15",
+  "source_sha": "6c286b7c51c9b550bfb90cdf96e2f53ba3b31cf2",
+  "original_power_profile": "balanced",
+  "profile_changed": false
+}

@@ -1,0 +1,13 @@
+
+> coco-lab-web@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /home/gautham/coco_labs_ws/src/coco-labs/lab_web
+
+
+ Test Files  48 passed (48)
+      Tests  455 passed (455)
+   Start at  15:59:38
+   Duration  40.89s (tests 95%, import 3%, transform 2%)
+

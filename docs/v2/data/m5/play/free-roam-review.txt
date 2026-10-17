@@ -1,0 +1,1 @@
+Play focus: all four viewports, <=8 visible controls, no scroll, desktop has no joystick.

@@ -1,0 +1,200 @@
+{
+  "label": "Built asset inventory; gzip level 6; excludes Python/WASM data",
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-14T19:50:30.720Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 5.95,
+        "5m": 2.71,
+        "15m": 1.62
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-14T19:50:56.488Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 6.47,
+        "5m": 3.12,
+        "15m": 1.78
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    }
+  },
+  "rows": [
+    {
+      "route": "arena",
+      "assets": [
+        {
+          "file": "index-6hWjSvBz.js",
+          "bytes": 223561,
+          "gzip_bytes": 69460
+        },
+        {
+          "file": "ArenaApp-CzWw8MHC.js",
+          "bytes": 1007,
+          "gzip_bytes": 503
+        },
+        {
+          "file": "PlayScene-JeMERMle.js",
+          "bytes": 179,
+          "gzip_bytes": 164
+        },
+        {
+          "file": "ArenaSceneView-CYtL9FvM.js",
+          "bytes": 280433,
+          "gzip_bytes": 86686
+        },
+        {
+          "file": "Result-9zdXUuga.js",
+          "bytes": 12962,
+          "gzip_bytes": 5241
+        },
+        {
+          "file": "three-CmTIr8Be.js",
+          "bytes": 684714,
+          "gzip_bytes": 174913
+        },
+        {
+          "file": "site.config-CXvBV0_S.js",
+          "bytes": 256,
+          "gzip_bytes": 185
+        },
+        {
+          "file": "LearnApp-CcIJ9iT9.js",
+          "bytes": 9078,
+          "gzip_bytes": 3543
+        },
+        {
+          "file": "arena.worker-BfZhuvkc.js",
+          "bytes": 15326,
+          "gzip_bytes": 5794
+        }
+      ],
+      "gzip_bytes": 346489
+    },
+    {
+      "route": "learn",
+      "assets": [
+        {
+          "file": "index-6hWjSvBz.js",
+          "bytes": 223561,
+          "gzip_bytes": 69460
+        },
+        {
+          "file": "LearnApp-CcIJ9iT9.js",
+          "bytes": 9078,
+          "gzip_bytes": 3543
+        },
+        {
+          "file": "site.config-CXvBV0_S.js",
+          "bytes": 256,
+          "gzip_bytes": 185
+        }
+      ],
+      "gzip_bytes": 73188
+    },
+    {
+      "route": "play",
+      "assets": [
+        {
+          "file": "index-6hWjSvBz.js",
+          "bytes": 223561,
+          "gzip_bytes": 69460
+        },
+        {
+          "file": "PlayApp-CjkQGP3Y.js",
+          "bytes": 12871,
+          "gzip_bytes": 4731
+        },
+        {
+          "file": "Result-9zdXUuga.js",
+          "bytes": 12962,
+          "gzip_bytes": 5241
+        },
+        {
+          "file": "three-CmTIr8Be.js",
+          "bytes": 684714,
+          "gzip_bytes": 174913
+        },
+        {
+          "file": "site.config-CXvBV0_S.js",
+          "bytes": 256,
+          "gzip_bytes": 185
+        },
+        {
+          "file": "LearnApp-CcIJ9iT9.js",
+          "bytes": 9078,
+          "gzip_bytes": 3543
+        }
+      ],
+      "gzip_bytes": 258073
+    },
+    {
+      "route": "casefiles",
+      "assets": [
+        {
+          "file": "index-6hWjSvBz.js",
+          "bytes": 223561,
+          "gzip_bytes": 69460
+        },
+        {
+          "file": "CaseFilesApp-DVyophOh.js",
+          "bytes": 6062,
+          "gzip_bytes": 2069
+        },
+        {
+          "file": "LearnApp-CcIJ9iT9.js",
+          "bytes": 9078,
+          "gzip_bytes": 3543
+        },
+        {
+          "file": "site.config-CXvBV0_S.js",
+          "bytes": 256,
+          "gzip_bytes": 185
+        }
+      ],
+      "gzip_bytes": 75257
+    },
+    {
+      "route": "live",
+      "assets": [
+        {
+          "file": "index-6hWjSvBz.js",
+          "bytes": 223561,
+          "gzip_bytes": 69460
+        },
+        {
+          "file": "LiveApp-CYk8A4TV.js",
+          "bytes": 30994,
+          "gzip_bytes": 11247
+        },
+        {
+          "file": "site.config-CXvBV0_S.js",
+          "bytes": 256,
+          "gzip_bytes": 185
+        }
+      ],
+      "gzip_bytes": 80892
+    }
+  ]
+}

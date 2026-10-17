@@ -1,0 +1,7 @@
+
+> coco-lab-web@0.1.0 typecheck
+> tsc --noEmit -p .
+
+src/ui/reference/ReferenceScreens.tsx(90,17): error TS2554: Expected 1 arguments, but got 0.
+src/ui/reference/ReferenceScreens.tsx(90,58): error TS2554: Expected 1 arguments, but got 0.
+src/ui/reference/ReferenceScreens.tsx(110,31): error TS2322: Type 'undefined' is not assignable to type 'ArenaClient'.

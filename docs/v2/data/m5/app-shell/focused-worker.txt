@@ -1,0 +1,13 @@
+
+> coco-lab-web@0.1.0 test
+> vitest run test/worker_pool.test.ts test/landing.test.ts test/site.test.ts
+
+
+ RUN  v5.0.2 /home/gautham/coco_labs_ws/src/coco-labs/lab_web
+
+
+ Test Files  3 passed (3)
+      Tests  21 passed (21)
+   Start at  16:17:20
+   Duration  339ms (transform 53%, tests 25%, import 17%, worker 5%)
+

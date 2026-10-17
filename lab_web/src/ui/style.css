@@ -1,40 +1,5 @@
 /* Copyright 2026 Gautham Anil — SPDX-License-Identifier: Apache-2.0 */
 
-:root {
-  color-scheme: light dark;
-  --bg: #fbfaf7;
-  --fg: #1d1d1b;
-  --muted: #5b5a55;
-  --line: #d9d6ce;
-  --panel: #ffffff;
-  --accent: #0072b2;
-  --recorded: #0072b2;
-  --browser: #009e73;
-  --glass: #5b5a55;
-  --error-bg: #fdecea;
-  --error-fg: #7a1b10;
-  --touch: 44px;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  font-size: 15px;
-  line-height: 1.45;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #161614;
-    --fg: #ecebe6;
-    --muted: #a9a79f;
-    --line: #3a3934;
-    --panel: #1f1f1c;
-    --accent: #56b4e9;
-    --recorded: #56b4e9;
-    --browser: #3fc39a;
-    --glass: #b8b6ad;
-    --error-bg: #3b1712;
-    --error-fg: #ffd3cc;
-  }
-}
-
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html, body { margin: 0; background: var(--bg); color: var(--fg); }

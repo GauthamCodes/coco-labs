@@ -1,0 +1,1 @@
+{"first_scene":{"desktop_bytes":567792,"phone_bytes":171532},"assets":[["arena.glb",27640,964],["robot_high.glb",540152,20000],["robot_low.glb",143892,4412]],"problems":[]}

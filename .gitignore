@@ -38,3 +38,6 @@ log/
 
 # hypothesis example database (local test runs)
 .hypothesis/
+
+# M5.2: root test caches are not source or evidence.
+/node_modules/

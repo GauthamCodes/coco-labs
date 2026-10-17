@@ -1,0 +1,40 @@
+fatal: pathspec 'coco_lab/coco_lab' did not match any files
+node:internal/errors:986
+  const err = new Error(message);
+              ^
+
+Error: Command failed: git archive c11bf9e coco_lab/coco_lab
+fatal: pathspec 'coco_lab/coco_lab' did not match any files
+
+    at genericNodeError (node:internal/errors:986:15)
+    at wrappedFn (node:internal/errors:540:14)
+    at checkExecSyncError (node:child_process:942:11)
+    at execFileSync (node:child_process:978:15)
+    at file:///home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/m5_hash_compat_probe.mjs:12:11 {
+  status: 128,
+  signal: null,
+  output: [
+    null,
+    Buffer(0) [Uint8Array] [],
+    Buffer(60) [Uint8Array] [
+      102,  97, 116,  97, 108,  58, 32, 112,  97, 116, 104,
+      115, 112, 101,  99,  32,  39, 99, 111,  99, 111,  95,
+      108,  97,  98,  47,  99, 111, 99, 111,  95, 108,  97,
+       98,  39,  32, 100, 105, 100, 32, 110, 111, 116,  32,
+      109,  97, 116,  99, 104,  32, 97, 110, 121,  32, 102,
+      105, 108, 101, 115,  10
+    ]
+  ],
+  pid: 56576,
+  stdout: Buffer(0) [Uint8Array] [],
+  stderr: Buffer(60) [Uint8Array] [
+    102,  97, 116,  97, 108,  58, 32, 112,  97, 116, 104,
+    115, 112, 101,  99,  32,  39, 99, 111,  99, 111,  95,
+    108,  97,  98,  47,  99, 111, 99, 111,  95, 108,  97,
+     98,  39,  32, 100, 105, 100, 32, 110, 111, 116,  32,
+    109,  97, 116,  99, 104,  32, 97, 110, 121,  32, 102,
+    105, 108, 101, 115,  10
+  ]
+}
+
+Node.js v24.21.0

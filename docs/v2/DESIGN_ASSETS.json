@@ -1,0 +1,108 @@
+{
+  "schema": "lab_web.design_assets",
+  "version": "1.0",
+  "hosting": "local Vite content-hashed font assets; no font CDN or third-party script",
+  "assets": [
+    {
+      "name": "Outfit",
+      "kind": "font",
+      "role": "display",
+      "package": "@fontsource-variable/outfit",
+      "version": "5.3.0",
+      "licence": "OFL-1.1",
+      "attribution": "Copyright 2021 The Outfit Project Authors (https://github.com/Outfitio/Outfit-Fonts)",
+      "source": "https://fontsource.org/fonts/outfit",
+      "npm_integrity": "sha512-fPb5XnYK0k7SbR++HEmm4+ZqDszmLKQ+sPRUr8oQ/KNC0vy6r6hazJFe8iYozv4cqlHbvJ/JECkJWrfDodUMVQ==",
+      "files": [
+        {
+          "path": "lab_web/node_modules/@fontsource-variable/outfit/files/outfit-latin-ext-wght-normal.woff2",
+          "bytes": 14808,
+          "sha256": "0f53d1c03b3918d744a843b5039001ee31695ca1e255e3914188df81beb461e9"
+        },
+        {
+          "path": "lab_web/node_modules/@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2",
+          "bytes": 32292,
+          "sha256": "6c18d579fd87c3776be068b762cbc83fde3acb543d49eabd3ade842eb987e887"
+        }
+      ],
+      "licence_path": "lab_web/public/licenses/outfit.txt",
+      "licence_sha256": "0e5fcef5d93bfcae273c11c00f0bb453d3b5491860e1ac8b658767b7577c938f"
+    },
+    {
+      "name": "Manrope",
+      "kind": "font",
+      "role": "UI",
+      "package": "@fontsource-variable/manrope",
+      "version": "5.3.0",
+      "licence": "OFL-1.1",
+      "attribution": "Copyright 2019 The Manrope Project Authors (https://github.com/sharanda/manrope)",
+      "source": "https://fontsource.org/fonts/manrope",
+      "npm_integrity": "sha512-6D5dgokHsWDDMtmXHznKa0hK229NN+1a4BLPmUCLqcO1Pw5EEhWY5RFt0AcXnVRAljFFPfRtLkJePQj6LSsV6g==",
+      "files": [
+        {
+          "path": "lab_web/node_modules/@fontsource-variable/manrope/files/manrope-cyrillic-ext-wght-normal.woff2",
+          "bytes": 2552,
+          "sha256": "de37de877dc17e4577341fa68bb5cb526b53d54cb29721e674208546a3c7849d"
+        },
+        {
+          "path": "lab_web/node_modules/@fontsource-variable/manrope/files/manrope-cyrillic-wght-normal.woff2",
+          "bytes": 14500,
+          "sha256": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914"
+        },
+        {
+          "path": "lab_web/node_modules/@fontsource-variable/manrope/files/manrope-greek-wght-normal.woff2",
+          "bytes": 9444,
+          "sha256": "2fb2e8cbfd52ae46179a8b6024eb162f1f9c6de3d22d6e3a30d8f395de7220be"
+        },
+        {
+          "path": "lab_web/node_modules/@fontsource-variable/manrope/files/manrope-latin-ext-wght-normal.woff2",
+          "bytes": 15120,
+          "sha256": "3911b66d9f2e005a4b989223405d0e5032619c668597ba467cc76a23c8fffcfb"
+        },
+        {
+          "path": "lab_web/node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2",
+          "bytes": 24836,
+          "sha256": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972"
+        },
+        {
+          "path": "lab_web/node_modules/@fontsource-variable/manrope/files/manrope-vietnamese-wght-normal.woff2",
+          "bytes": 8520,
+          "sha256": "6bbb044ab420e07edb0a3042d2eb314b85e83a0182e945a15ab3b9092668dfd5"
+        }
+      ],
+      "licence_path": "lab_web/public/licenses/manrope.txt",
+      "licence_sha256": "d826ab6583b12c26807d8716a545bdbbb672df04f48608a364ba9efdbe501c30"
+    },
+    {
+      "name": "Lucide",
+      "kind": "icon set",
+      "package": "lucide-react",
+      "version": "1.57.0",
+      "licence": "ISC (retained Feather MIT notice included)",
+      "source": "https://lucide.dev",
+      "npm_integrity": "sha512-bXFZEucYhAzLD62Jse76AbTR6LiSLTn3Tqir2f1n8rZrWAdLodYy7jnRZSPIT89dRLk/IseMOUWG82wJtTyTTw==",
+      "checksum_method": "sha256 of sorted ESM JavaScript paths and bytes, NUL-separated",
+      "sha256": "cada8419f7862ec60fd537da6fa600c1ad293e10c3a851644394d5b5cfb706b3",
+      "source_files": 2169,
+      "licence_path": "lab_web/public/licenses/lucide.txt",
+      "licence_sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"
+    },
+    {
+      "name": "COCO Lab app icon",
+      "kind": "original icon",
+      "role": "installable app",
+      "version": "1.0",
+      "licence": "Apache-2.0",
+      "source": "lab_web/public/icons/coco.svg (original repository artwork)",
+      "files": [
+        {
+          "path": "lab_web/public/icons/coco.svg",
+          "bytes": 1105,
+          "sha256": "cde85baf781278e56a2fa8a674b6d0bfb0eb0de5ff3ab7779013d0b2513c9c28"
+        }
+      ],
+      "licence_path": "LICENSE",
+      "licence_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    }
+  ]
+}

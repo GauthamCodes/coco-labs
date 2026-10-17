@@ -1,0 +1,1761 @@
+{
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-15T11:10:18.689Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 82
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.9,
+    "5m": 3.88,
+    "15m": 2.88
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-15T11:11:39.447Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 84
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 12.89,
+    "5m": 7.09,
+    "15m": 4.11
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "class": "MODEL / TESTED; software integration, not a startup benchmark",
+ "rows": [
+  {
+   "hashVersion": 1,
+   "spec": "coco_arena_v1.json",
+   "inputs": [
+    {
+     "tick": 0,
+     "kind": "teleop",
+     "linear": 0.3,
+     "angular": 0.2
+    },
+    {
+     "tick": 3,
+     "kind": "stop"
+    },
+    {
+     "tick": 6,
+     "kind": "goal",
+     "x": 2.5,
+     "y": 2
+    },
+    {
+     "tick": 9,
+     "kind": "grasp"
+    },
+    {
+     "tick": 12,
+     "kind": "autonomy"
+    },
+    {
+     "tick": 16,
+     "kind": "planner",
+     "choice": "greedy"
+    },
+    {
+     "tick": 20,
+     "kind": "stop"
+    }
+   ],
+   "worldsBefore": 0,
+   "warmed": {
+    "world": {
+     "id": "coco_arena_v1",
+     "width": 500,
+     "height": 380,
+     "resolution": 0.05,
+     "origin": [
+      -6.5,
+      -9.5
+     ],
+     "frame": "map",
+     "start": [
+      0,
+      0,
+      0
+     ],
+     "dt": 0.1,
+     "radius": 0.22,
+     "limits": {
+      "teleop_linear": 0.5,
+      "teleop_angular": 1.2,
+      "auto_linear": 0.3,
+      "auto_angular": 1,
+      "linear_accel": 2,
+      "angular_accel": 4
+     },
+     "lidar": {
+      "samples": 480,
+      "angle_min": -2.0944,
+      "angle_max": 2.0944,
+      "range_max": 12,
+      "mount": [
+       -0.09,
+       0.1,
+       0
+      ]
+     },
+     "planners": [
+      "bfs",
+      "dijkstra",
+      "astar",
+      "greedy",
+      "weighted_astar"
+     ],
+     "planner": "astar",
+     "hash": "691812703092f611df0d087314fe56249a73a6392a6a576e0e58421744f7eb84",
+     "beam_height": 0.21350000000000002
+    },
+    "ticks": [
+     {
+      "tick": 1,
+      "hash": "66c129a77cc4b74dd40b658bdd99e62f04bf7485c85c2a7483fddebe73a8c306",
+      "chain": "3919346a15bd83ece5af3c589c4a9bef32801fda4e68f4901a7a7e2ce498cec8"
+     },
+     {
+      "tick": 2,
+      "hash": "cdb8bffb14af9bd4c3f52280df30371405a62d4fa4f5dd76219f144318032a9d",
+      "chain": "8989b0ce9d0fa4b346071fc3c26456a14f91d27cbeb0e3c06071af7b69bbbd15"
+     },
+     {
+      "tick": 3,
+      "hash": "490bc3e490387dcf290aee1ffa7c8a3f6cdc5b3050de5d05ec01bbbb9a3d4be0",
+      "chain": "80b3854f59d9b6af16c67f761dc116dc2c8fabc11f78e9be431f3513757b8bd9"
+     },
+     {
+      "tick": 4,
+      "hash": "c5e5655aa79d98c94a823013e29c7e8a81d84774c064494cd3a0cb7ace111f8a",
+      "chain": "58a1a10fb981cbf2dc6fc3e9d9f26f78365e1fe1b702939a60fb066f9cd1e4a1"
+     },
+     {
+      "tick": 5,
+      "hash": "ed47b23f728b8f0fa58afb64070205dbd29b06daf8beb7527eb33affd3d0fb13",
+      "chain": "82a2f4d9f9ca0209cc145532508f49a7eb9a0f3e316637a7970c76045c4b0144"
+     },
+     {
+      "tick": 6,
+      "hash": "7c3e71ebe352673feaa0f6ee6bc50f4d41631986d51b82ceaa0cb67211f27bbc",
+      "chain": "77badcc83a2d85d2d693b8aa57fb07816d2e0587196e85dd35b7dc84c5d3e032"
+     },
+     {
+      "tick": 7,
+      "hash": "44e757acd6de78ce1fe29a458a42ffdbf5d1cd81f241767ba73935e9632e939b",
+      "chain": "586c25e596edb0a3d77ae105fb33b2233192f4c6b47fa24d2678b5f08b61f273"
+     },
+     {
+      "tick": 8,
+      "hash": "71544c08ac8f68651e480f875412dfc235d3d7c0a1eb8713bf16d8f3ca62bd06",
+      "chain": "ed0bc902270ce5e3f8cef71b2dd5a8f6185f715b3873db7b0e94232980f51487"
+     },
+     {
+      "tick": 9,
+      "hash": "cef4dbc884a5d4bb69c770dd70ff6692347b9d7eb524f211470c379443cc6360",
+      "chain": "217df6883bd38dd25efa5cb52be4717b7328d251cee44a049e6441da0239bf87"
+     },
+     {
+      "tick": 10,
+      "hash": "e1ea19af31265bf16e5c5f0bc804b4076c17cbadb9d296d73e2313293bf68203",
+      "chain": "541aaf6eb5db307b4e3a23398cdd362a4667c0474419209b41b08e526c058602"
+     },
+     {
+      "tick": 11,
+      "hash": "0c96d82259752ca72cc1dc0bd37ee6192ce4b0a09ea4703c6398d363f2787bae",
+      "chain": "89bbcc9ebbf118cd4873190e1863b111508da4ceb8eb9d6248761b72b76852c9"
+     },
+     {
+      "tick": 12,
+      "hash": "0294fcab05158116a947faf18d35bc1cdd059f35990e72c356dd6d3cdc40047b",
+      "chain": "1774747112f8552d8ae734ad9c92aca8ef987695163f47e88223445d9e8fce2c"
+     },
+     {
+      "tick": 13,
+      "hash": "b2c077cc4aa431af391020893063de611875be24c704eb472b91fe241ee29dd6",
+      "chain": "c8595ebc1f2f966418f9941772f53543fb1323f7467a7a97b91ba8d69cccc3e1"
+     },
+     {
+      "tick": 14,
+      "hash": "edd807ff6c2be8d74f4d3f4b783b75e304852982a0a5d2d404ce1a03da4ad477",
+      "chain": "5d069fa1959de30d8f1202232dda38d8beed1c7f47bff5f0130fed9290de1ac2"
+     },
+     {
+      "tick": 15,
+      "hash": "d6bff6a30d3cb098c074adceb6d88b987c1d3e9c935ecf94cd9a8c1b27e92ab9",
+      "chain": "bb5ace5c7e4ddaa07c94924eefd69728c6d41b454ef285159504442cbf8443e1"
+     },
+     {
+      "tick": 16,
+      "hash": "fc190e9cb61d9a612220fae47a252c50b18e6ef08c9faaa1f0d6968017420647",
+      "chain": "8de597609ea4c309fd59cf2715a8a800bb3058668f5a9afeae35d7a0f7e8967b"
+     },
+     {
+      "tick": 17,
+      "hash": "dacd5a51229ec4abebd8e4c9a20fe43df23961142cf915759fe12cd61338b1ff",
+      "chain": "f9bb6197703208f6559397d8a960e2ada3212ce8326c9b12f17b9b9e48fcf46f"
+     },
+     {
+      "tick": 18,
+      "hash": "99b420a334cdc59565d631f3ced5d39b49d314022197074c757aaa135e28bb02",
+      "chain": "26a0f47d544fc1cb7556a931ce50f35b4f03cfa3a94a4bce0ec0a2d2a4740854"
+     },
+     {
+      "tick": 19,
+      "hash": "3bb13d53b4101179493f5f2bc707494c7cfdd5d0219028299cb5b27dae4b6dee",
+      "chain": "43594bdc7039989b27e2b509965320975da0ea6071aa418447a584b63109d813"
+     },
+     {
+      "tick": 20,
+      "hash": "dcce6c2f365d8a16155eb9f3176751fae7c06875c9c67db0a82a772e90084e03",
+      "chain": "8ca392b839d5a46714b998f6e0b9a2a4f16731cab5e380c49675f3cbcfff7cae"
+     },
+     {
+      "tick": 21,
+      "hash": "285d115383b5fb11d59c729ee8702234f94501de5b3b199217be24a39ebcfea6",
+      "chain": "94690cd5ad93758b6074b7257d110096a9eb5badc3bd921474a056a71133b01a"
+     },
+     {
+      "tick": 22,
+      "hash": "659eb38ac8f1fb325cf1097ebd0bdde241c84de1a892776bb16f1ad04990bef3",
+      "chain": "727ebcf5d750639059c8a776a1f5b040d5fecd00b8649d03fcaedd557490b0c5"
+     },
+     {
+      "tick": 23,
+      "hash": "609e904f1f1b421fa3abb343a7d83e76b15ba4402a775112d41a82cd602e4745",
+      "chain": "55a0cf4cea10eb95fc313e0994cc33d4e456c309935976c684ebe5d0fc191c5e"
+     },
+     {
+      "tick": 24,
+      "hash": "65e878f188634b2be63f3e91a29f3df2853364ec91ded7b66a9bf34afd72bc74",
+      "chain": "c1242e04eed2d39816c5df82547ac81ba022c5798db6519ca9c090a28303c222"
+     },
+     {
+      "tick": 25,
+      "hash": "f757583d59d1cf530b534ef96f5351c9061400485d9f1d5465fe5c84f73c0cf2",
+      "chain": "8a91d092afd879aaa860fcd83127938abe6bcd2e9690a17e21db313e8324acdd"
+     }
+    ]
+   },
+   "cold": {
+    "world": {
+     "id": "coco_arena_v1",
+     "width": 500,
+     "height": 380,
+     "resolution": 0.05,
+     "origin": [
+      -6.5,
+      -9.5
+     ],
+     "frame": "map",
+     "start": [
+      0,
+      0,
+      0
+     ],
+     "dt": 0.1,
+     "radius": 0.22,
+     "limits": {
+      "teleop_linear": 0.5,
+      "teleop_angular": 1.2,
+      "auto_linear": 0.3,
+      "auto_angular": 1,
+      "linear_accel": 2,
+      "angular_accel": 4
+     },
+     "lidar": {
+      "samples": 480,
+      "angle_min": -2.0944,
+      "angle_max": 2.0944,
+      "range_max": 12,
+      "mount": [
+       -0.09,
+       0.1,
+       0
+      ]
+     },
+     "planners": [
+      "bfs",
+      "dijkstra",
+      "astar",
+      "greedy",
+      "weighted_astar"
+     ],
+     "planner": "astar",
+     "hash": "691812703092f611df0d087314fe56249a73a6392a6a576e0e58421744f7eb84",
+     "beam_height": 0.21350000000000002
+    },
+    "ticks": [
+     {
+      "tick": 1,
+      "hash": "66c129a77cc4b74dd40b658bdd99e62f04bf7485c85c2a7483fddebe73a8c306",
+      "chain": "3919346a15bd83ece5af3c589c4a9bef32801fda4e68f4901a7a7e2ce498cec8"
+     },
+     {
+      "tick": 2,
+      "hash": "cdb8bffb14af9bd4c3f52280df30371405a62d4fa4f5dd76219f144318032a9d",
+      "chain": "8989b0ce9d0fa4b346071fc3c26456a14f91d27cbeb0e3c06071af7b69bbbd15"
+     },
+     {
+      "tick": 3,
+      "hash": "490bc3e490387dcf290aee1ffa7c8a3f6cdc5b3050de5d05ec01bbbb9a3d4be0",
+      "chain": "80b3854f59d9b6af16c67f761dc116dc2c8fabc11f78e9be431f3513757b8bd9"
+     },
+     {
+      "tick": 4,
+      "hash": "c5e5655aa79d98c94a823013e29c7e8a81d84774c064494cd3a0cb7ace111f8a",
+      "chain": "58a1a10fb981cbf2dc6fc3e9d9f26f78365e1fe1b702939a60fb066f9cd1e4a1"
+     },
+     {
+      "tick": 5,
+      "hash": "ed47b23f728b8f0fa58afb64070205dbd29b06daf8beb7527eb33affd3d0fb13",
+      "chain": "82a2f4d9f9ca0209cc145532508f49a7eb9a0f3e316637a7970c76045c4b0144"
+     },
+     {
+      "tick": 6,
+      "hash": "7c3e71ebe352673feaa0f6ee6bc50f4d41631986d51b82ceaa0cb67211f27bbc",
+      "chain": "77badcc83a2d85d2d693b8aa57fb07816d2e0587196e85dd35b7dc84c5d3e032"
+     },
+     {
+      "tick": 7,
+      "hash": "44e757acd6de78ce1fe29a458a42ffdbf5d1cd81f241767ba73935e9632e939b",
+      "chain": "586c25e596edb0a3d77ae105fb33b2233192f4c6b47fa24d2678b5f08b61f273"
+     },
+     {
+      "tick": 8,
+      "hash": "71544c08ac8f68651e480f875412dfc235d3d7c0a1eb8713bf16d8f3ca62bd06",
+      "chain": "ed0bc902270ce5e3f8cef71b2dd5a8f6185f715b3873db7b0e94232980f51487"
+     },
+     {
+      "tick": 9,
+      "hash": "cef4dbc884a5d4bb69c770dd70ff6692347b9d7eb524f211470c379443cc6360",
+      "chain": "217df6883bd38dd25efa5cb52be4717b7328d251cee44a049e6441da0239bf87"
+     },
+     {
+      "tick": 10,
+      "hash": "e1ea19af31265bf16e5c5f0bc804b4076c17cbadb9d296d73e2313293bf68203",
+      "chain": "541aaf6eb5db307b4e3a23398cdd362a4667c0474419209b41b08e526c058602"
+     },
+     {
+      "tick": 11,
+      "hash": "0c96d82259752ca72cc1dc0bd37ee6192ce4b0a09ea4703c6398d363f2787bae",
+      "chain": "89bbcc9ebbf118cd4873190e1863b111508da4ceb8eb9d6248761b72b76852c9"
+     },
+     {
+      "tick": 12,
+      "hash": "0294fcab05158116a947faf18d35bc1cdd059f35990e72c356dd6d3cdc40047b",
+      "chain": "1774747112f8552d8ae734ad9c92aca8ef987695163f47e88223445d9e8fce2c"
+     },
+     {
+      "tick": 13,
+      "hash": "b2c077cc4aa431af391020893063de611875be24c704eb472b91fe241ee29dd6",
+      "chain": "c8595ebc1f2f966418f9941772f53543fb1323f7467a7a97b91ba8d69cccc3e1"
+     },
+     {
+      "tick": 14,
+      "hash": "edd807ff6c2be8d74f4d3f4b783b75e304852982a0a5d2d404ce1a03da4ad477",
+      "chain": "5d069fa1959de30d8f1202232dda38d8beed1c7f47bff5f0130fed9290de1ac2"
+     },
+     {
+      "tick": 15,
+      "hash": "d6bff6a30d3cb098c074adceb6d88b987c1d3e9c935ecf94cd9a8c1b27e92ab9",
+      "chain": "bb5ace5c7e4ddaa07c94924eefd69728c6d41b454ef285159504442cbf8443e1"
+     },
+     {
+      "tick": 16,
+      "hash": "fc190e9cb61d9a612220fae47a252c50b18e6ef08c9faaa1f0d6968017420647",
+      "chain": "8de597609ea4c309fd59cf2715a8a800bb3058668f5a9afeae35d7a0f7e8967b"
+     },
+     {
+      "tick": 17,
+      "hash": "dacd5a51229ec4abebd8e4c9a20fe43df23961142cf915759fe12cd61338b1ff",
+      "chain": "f9bb6197703208f6559397d8a960e2ada3212ce8326c9b12f17b9b9e48fcf46f"
+     },
+     {
+      "tick": 18,
+      "hash": "99b420a334cdc59565d631f3ced5d39b49d314022197074c757aaa135e28bb02",
+      "chain": "26a0f47d544fc1cb7556a931ce50f35b4f03cfa3a94a4bce0ec0a2d2a4740854"
+     },
+     {
+      "tick": 19,
+      "hash": "3bb13d53b4101179493f5f2bc707494c7cfdd5d0219028299cb5b27dae4b6dee",
+      "chain": "43594bdc7039989b27e2b509965320975da0ea6071aa418447a584b63109d813"
+     },
+     {
+      "tick": 20,
+      "hash": "dcce6c2f365d8a16155eb9f3176751fae7c06875c9c67db0a82a772e90084e03",
+      "chain": "8ca392b839d5a46714b998f6e0b9a2a4f16731cab5e380c49675f3cbcfff7cae"
+     },
+     {
+      "tick": 21,
+      "hash": "285d115383b5fb11d59c729ee8702234f94501de5b3b199217be24a39ebcfea6",
+      "chain": "94690cd5ad93758b6074b7257d110096a9eb5badc3bd921474a056a71133b01a"
+     },
+     {
+      "tick": 22,
+      "hash": "659eb38ac8f1fb325cf1097ebd0bdde241c84de1a892776bb16f1ad04990bef3",
+      "chain": "727ebcf5d750639059c8a776a1f5b040d5fecd00b8649d03fcaedd557490b0c5"
+     },
+     {
+      "tick": 23,
+      "hash": "609e904f1f1b421fa3abb343a7d83e76b15ba4402a775112d41a82cd602e4745",
+      "chain": "55a0cf4cea10eb95fc313e0994cc33d4e456c309935976c684ebe5d0fc191c5e"
+     },
+     {
+      "tick": 24,
+      "hash": "65e878f188634b2be63f3e91a29f3df2853364ec91ded7b66a9bf34afd72bc74",
+      "chain": "c1242e04eed2d39816c5df82547ac81ba022c5798db6519ca9c090a28303c222"
+     },
+     {
+      "tick": 25,
+      "hash": "f757583d59d1cf530b534ef96f5351c9061400485d9f1d5465fe5c84f73c0cf2",
+      "chain": "8a91d092afd879aaa860fcd83127938abe6bcd2e9690a17e21db313e8324acdd"
+     }
+    ]
+   },
+   "pass": true,
+   "link": "?view=arena&run=eyJ2IjoxLCJzIjoiNjljODQzYTEzNzZmZTc1YmU4N2MwNzhlNTQ2NDFjOTY0MDdjNmRjMWMzNWE1ZTFmMmM4NjNiNDcyMjVlMjY5ZiIsImUiOjcsInQiOjI1LCJjIjoiOGE5MWQwOTJhZmQ4NzlhYWE4NjBmY2Q4MzEyNzkzOGFiZTZiY2QyZTk2OTBhMTdlMjFkYjMxM2U4MzI0YWNkZCIsImkiOltbMCwxLDAuMywwLjJdLFszLDJdLFs2LDAsMi41LDJdLFs5LDhdLFsxMiw3XSxbMTYsMywiZ3JlZWR5Il0sWzIwLDJdXX0",
+   "errors": []
+  },
+  {
+   "hashVersion": 1,
+   "spec": "coco_arena_v2.json",
+   "inputs": [
+    {
+     "tick": 0,
+     "kind": "teleop",
+     "linear": 0.3,
+     "angular": 0.2
+    },
+    {
+     "tick": 3,
+     "kind": "stop"
+    },
+    {
+     "tick": 6,
+     "kind": "goal",
+     "x": 2.5,
+     "y": 2
+    },
+    {
+     "tick": 9,
+     "kind": "grasp"
+    },
+    {
+     "tick": 12,
+     "kind": "autonomy"
+    },
+    {
+     "tick": 16,
+     "kind": "planner",
+     "choice": "greedy"
+    },
+    {
+     "tick": 20,
+     "kind": "stop"
+    }
+   ],
+   "worldsBefore": 0,
+   "warmed": {
+    "world": {
+     "id": "coco_arena_v2",
+     "width": 500,
+     "height": 380,
+     "resolution": 0.05,
+     "origin": [
+      -6.5,
+      -9.5
+     ],
+     "frame": "map",
+     "start": [
+      0,
+      0,
+      0
+     ],
+     "dt": 0.1,
+     "radius": 0.22,
+     "limits": {
+      "teleop_linear": 0.5,
+      "teleop_angular": 1.2,
+      "auto_linear": 0.3,
+      "auto_angular": 1,
+      "linear_accel": 2,
+      "angular_accel": 4
+     },
+     "lidar": {
+      "samples": 480,
+      "angle_min": -2.0944,
+      "angle_max": 2.0944,
+      "range_max": 12,
+      "mount": [
+       -0.09,
+       0.1,
+       0
+      ]
+     },
+     "planners": [
+      "bfs",
+      "dijkstra",
+      "astar",
+      "greedy",
+      "weighted_astar"
+     ],
+     "planner": "astar",
+     "hash": "09138c1528006cf346d94a70190ab82064dc45fdaf1b53a609d88df6b329acf6",
+     "beam_height": 0.21350000000000002,
+     "targets": [
+      {
+       "colour": "blue",
+       "x": 6.05,
+       "y": 2,
+       "z": 0.649839392466,
+       "diameter": 0.028,
+       "height": 0.158
+      },
+      {
+       "colour": "green",
+       "x": 6.05,
+       "y": -2,
+       "z": 0.649839392466,
+       "diameter": 0.024,
+       "height": 0.158
+      },
+      {
+       "colour": "red",
+       "x": 6.05,
+       "y": -6,
+       "z": 0.649839392466,
+       "diameter": 0.02,
+       "height": 0.158
+      },
+      {
+       "colour": "yellow",
+       "x": 6.05,
+       "y": 6,
+       "z": 0.649839392466,
+       "diameter": 0.032,
+       "height": 0.158
+      }
+     ]
+    },
+    "ticks": [
+     {
+      "tick": 1,
+      "hash": "d9c44ad2beaa6d24958b31d2589b635cab250b972d6df1b85a4fa31ab35de55e",
+      "chain": "3a797ceddab776e9dc4c1dc6fede06a0670c78f17b2a355a154ce57ffc113316"
+     },
+     {
+      "tick": 2,
+      "hash": "957deff1c2114d6c4879063e0e15f0a207cdce94a814dd1ac74cf839ee44cc48",
+      "chain": "173f518da19f91906b463a971195da4bc4414b8fdf879ac2339c19a8f914d70f"
+     },
+     {
+      "tick": 3,
+      "hash": "fc7385c66f99fd7ee6db3d2518610f35bc05b420f5eba2f3c46b0da26b1b8616",
+      "chain": "0b3836914b00d749d049f52db1ee56e7fa626de8e4bb20e5f43a8ac9cf4ba688"
+     },
+     {
+      "tick": 4,
+      "hash": "518b151dac372ced4de37c0a24e78986ab4d51ebe328d03e1797964767ad15e4",
+      "chain": "851dfca49a932313ce7a940dc4491c2a27571620925f774bf84365a1c9545b86"
+     },
+     {
+      "tick": 5,
+      "hash": "0ee4799bd53b629d3c10aae96bac48bf3305b9b0b35c21c97fb3b30042fa49f2",
+      "chain": "4945fb90a29dfea5138103577619de963ce8b1df133e83bd0bc3a8cdb756d1a9"
+     },
+     {
+      "tick": 6,
+      "hash": "6a02ba38477b0b44808a3fdf59b4c495e1e3713c9954acb25b636dc6a7c74cd4",
+      "chain": "25a1dc4822c4bdae54b69325d60930752bb4bdbb66663b1c3b82461490f07da7"
+     },
+     {
+      "tick": 7,
+      "hash": "09e5e3e2042d5814c57b4d1a9565f02f1d519a079bc035e296c9107365a7c513",
+      "chain": "2f8a6af101911916ac41493283d552f50f733a0197af166ed456add0eb6dc47f"
+     },
+     {
+      "tick": 8,
+      "hash": "d989b8b7ef21ba74f2b7304f7823a41aea4e3a3e2c4eb715073bd406bd3c8a15",
+      "chain": "30ca550b2a40665ceb3680cdbc609916f2516c12606a685c1938403a12c5fb98"
+     },
+     {
+      "tick": 9,
+      "hash": "073465860f664ba96adfc719a49e4e072331a2ea2b0a327f1a6c9ac7310b42da",
+      "chain": "203e51ddda7d19eed49c3b08c932cd12b500bbcbc9867e788c18bc248fe18af3"
+     },
+     {
+      "tick": 10,
+      "hash": "a946a70859d3b5c949f00ea3082386dc25c807e58049ec38158141294604f391",
+      "chain": "673afa669f3d95a346da79a95a04dce9ac55b596921a045f3118f797302d04a6"
+     },
+     {
+      "tick": 11,
+      "hash": "5140a96cfe55fba8b0966f3630b1c24a199903f6749a2f2c53711ddbe0cefbe2",
+      "chain": "3af9552cfabe95a69a1e48a6b02a50d9529123973e34379f2976aeda1b72c84f"
+     },
+     {
+      "tick": 12,
+      "hash": "fc9d720bdd0c88a3a319a76f5d0d5d8558507bbc34b7e55feaa887192e0a9ef6",
+      "chain": "f21d9af796e7d17c24101bb43fd1e33b744d4dc2032d4f398039c4b0aa7a6ca9"
+     },
+     {
+      "tick": 13,
+      "hash": "478cca694ad403b9f7fd3f9c0904c87309111fcb4d49163d20d7194e65e0bbb7",
+      "chain": "3b99b2d74c77aac6588cce9cab4c2537bf40185876bd4f477fba91fb2692710e"
+     },
+     {
+      "tick": 14,
+      "hash": "b96f0d07aa6bcded024ddc0b36f25e762f2c8d35599d9f6487029d624bb97ec9",
+      "chain": "b4170e75d53d6132003f952e6b3aca28a8b16490f2a3f0eb2bacfaa4d2ee06a9"
+     },
+     {
+      "tick": 15,
+      "hash": "f2c23d5a8f2fab8295c9d56cf654aaad6e9fd01f287b2c36624d5b8077e9ca0a",
+      "chain": "b06ac8adb56eeb875c10290aefd86b1bc86f3c190343ad5babaca95b2199f35e"
+     },
+     {
+      "tick": 16,
+      "hash": "383f70f6f2a547d7d90508d4dc3aa9f4a63ef1f11504da3e2d7721aa690c9126",
+      "chain": "23c5204c83ad27eeef0e3348cf65568b92c6c3e7bb8ff504cb0ac4fe8d7f1074"
+     },
+     {
+      "tick": 17,
+      "hash": "5b0cb82052ced333945cd8d73a11498b5e6e2af7cef436c952507efde93db19b",
+      "chain": "d4ca43bbb1d1c776b0b0df767d29c5e002fe9f19b607f7be1367e4fcf54f4f98"
+     },
+     {
+      "tick": 18,
+      "hash": "4bf98e4941bed110a268235ff367f0f178493973bf0461fc56ca4565266c5757",
+      "chain": "dfcc4edd3c7b314ac412571c5a224417d17d64391b7460ebddeb04ef658a0845"
+     },
+     {
+      "tick": 19,
+      "hash": "e4e3de3f07f020f8b2dfeda3b7833385778986aa4b585be0ebfeff31244c6d46",
+      "chain": "f03108cf36e9382a2fb3dfae41aa31b50c06a1649ea029136c79b3a085da3b7c"
+     },
+     {
+      "tick": 20,
+      "hash": "019a649d7504d72eb14656a7cd37579cd2edbfacb431dd61ced08a99bfd93ae6",
+      "chain": "6d38558c53b747e9a9a7fbd5da727d77e812ff5fe5c94d2aff5bbd58c4fe157d"
+     },
+     {
+      "tick": 21,
+      "hash": "654fb2a64f8bf79310db2ab8b5f51311e40f7b313daaca2a91c176c19e6b9417",
+      "chain": "deeb49d1a0bf00216aed263764784e536d2efef506698f18b93ff2a3d6311fcb"
+     },
+     {
+      "tick": 22,
+      "hash": "558c18ed21c1157b3047a697f0ccd65813e2d589af98df8da1a478f4f6cd55e3",
+      "chain": "a89a8558a73e881462bfd76a453dbe407fedf38bc3edbfb4f711925641491db8"
+     },
+     {
+      "tick": 23,
+      "hash": "9439d7194b502c71420d988abb394b7ad02c17162b6420154d9f989e08189fbd",
+      "chain": "b39b7f74abe9e7ebe0097a66bc1e692fdabbcc5fefa9148998d68ac11e2272c8"
+     },
+     {
+      "tick": 24,
+      "hash": "ca75ba8afa275237dfbca718cc265b359d328e8d5523dd17f67e5fb14c365955",
+      "chain": "16d22b4a7057f48fff88d2e95478ab28ae4488671941996d4fd55fcb0d97411d"
+     },
+     {
+      "tick": 25,
+      "hash": "161234a0afa1ff41b82528d39099fca324f7a081ababbf00b0823d9c8eac4b88",
+      "chain": "5032e7327a53324a0864303f1b8760444b74a35b992a5d2b8246e5a97eee34c7"
+     }
+    ]
+   },
+   "cold": {
+    "world": {
+     "id": "coco_arena_v2",
+     "width": 500,
+     "height": 380,
+     "resolution": 0.05,
+     "origin": [
+      -6.5,
+      -9.5
+     ],
+     "frame": "map",
+     "start": [
+      0,
+      0,
+      0
+     ],
+     "dt": 0.1,
+     "radius": 0.22,
+     "limits": {
+      "teleop_linear": 0.5,
+      "teleop_angular": 1.2,
+      "auto_linear": 0.3,
+      "auto_angular": 1,
+      "linear_accel": 2,
+      "angular_accel": 4
+     },
+     "lidar": {
+      "samples": 480,
+      "angle_min": -2.0944,
+      "angle_max": 2.0944,
+      "range_max": 12,
+      "mount": [
+       -0.09,
+       0.1,
+       0
+      ]
+     },
+     "planners": [
+      "bfs",
+      "dijkstra",
+      "astar",
+      "greedy",
+      "weighted_astar"
+     ],
+     "planner": "astar",
+     "hash": "09138c1528006cf346d94a70190ab82064dc45fdaf1b53a609d88df6b329acf6",
+     "beam_height": 0.21350000000000002,
+     "targets": [
+      {
+       "colour": "blue",
+       "x": 6.05,
+       "y": 2,
+       "z": 0.649839392466,
+       "diameter": 0.028,
+       "height": 0.158
+      },
+      {
+       "colour": "green",
+       "x": 6.05,
+       "y": -2,
+       "z": 0.649839392466,
+       "diameter": 0.024,
+       "height": 0.158
+      },
+      {
+       "colour": "red",
+       "x": 6.05,
+       "y": -6,
+       "z": 0.649839392466,
+       "diameter": 0.02,
+       "height": 0.158
+      },
+      {
+       "colour": "yellow",
+       "x": 6.05,
+       "y": 6,
+       "z": 0.649839392466,
+       "diameter": 0.032,
+       "height": 0.158
+      }
+     ]
+    },
+    "ticks": [
+     {
+      "tick": 1,
+      "hash": "d9c44ad2beaa6d24958b31d2589b635cab250b972d6df1b85a4fa31ab35de55e",
+      "chain": "3a797ceddab776e9dc4c1dc6fede06a0670c78f17b2a355a154ce57ffc113316"
+     },
+     {
+      "tick": 2,
+      "hash": "957deff1c2114d6c4879063e0e15f0a207cdce94a814dd1ac74cf839ee44cc48",
+      "chain": "173f518da19f91906b463a971195da4bc4414b8fdf879ac2339c19a8f914d70f"
+     },
+     {
+      "tick": 3,
+      "hash": "fc7385c66f99fd7ee6db3d2518610f35bc05b420f5eba2f3c46b0da26b1b8616",
+      "chain": "0b3836914b00d749d049f52db1ee56e7fa626de8e4bb20e5f43a8ac9cf4ba688"
+     },
+     {
+      "tick": 4,
+      "hash": "518b151dac372ced4de37c0a24e78986ab4d51ebe328d03e1797964767ad15e4",
+      "chain": "851dfca49a932313ce7a940dc4491c2a27571620925f774bf84365a1c9545b86"
+     },
+     {
+      "tick": 5,
+      "hash": "0ee4799bd53b629d3c10aae96bac48bf3305b9b0b35c21c97fb3b30042fa49f2",
+      "chain": "4945fb90a29dfea5138103577619de963ce8b1df133e83bd0bc3a8cdb756d1a9"
+     },
+     {
+      "tick": 6,
+      "hash": "6a02ba38477b0b44808a3fdf59b4c495e1e3713c9954acb25b636dc6a7c74cd4",
+      "chain": "25a1dc4822c4bdae54b69325d60930752bb4bdbb66663b1c3b82461490f07da7"
+     },
+     {
+      "tick": 7,
+      "hash": "09e5e3e2042d5814c57b4d1a9565f02f1d519a079bc035e296c9107365a7c513",
+      "chain": "2f8a6af101911916ac41493283d552f50f733a0197af166ed456add0eb6dc47f"
+     },
+     {
+      "tick": 8,
+      "hash": "d989b8b7ef21ba74f2b7304f7823a41aea4e3a3e2c4eb715073bd406bd3c8a15",
+      "chain": "30ca550b2a40665ceb3680cdbc609916f2516c12606a685c1938403a12c5fb98"
+     },
+     {
+      "tick": 9,
+      "hash": "073465860f664ba96adfc719a49e4e072331a2ea2b0a327f1a6c9ac7310b42da",
+      "chain": "203e51ddda7d19eed49c3b08c932cd12b500bbcbc9867e788c18bc248fe18af3"
+     },
+     {
+      "tick": 10,
+      "hash": "a946a70859d3b5c949f00ea3082386dc25c807e58049ec38158141294604f391",
+      "chain": "673afa669f3d95a346da79a95a04dce9ac55b596921a045f3118f797302d04a6"
+     },
+     {
+      "tick": 11,
+      "hash": "5140a96cfe55fba8b0966f3630b1c24a199903f6749a2f2c53711ddbe0cefbe2",
+      "chain": "3af9552cfabe95a69a1e48a6b02a50d9529123973e34379f2976aeda1b72c84f"
+     },
+     {
+      "tick": 12,
+      "hash": "fc9d720bdd0c88a3a319a76f5d0d5d8558507bbc34b7e55feaa887192e0a9ef6",
+      "chain": "f21d9af796e7d17c24101bb43fd1e33b744d4dc2032d4f398039c4b0aa7a6ca9"
+     },
+     {
+      "tick": 13,
+      "hash": "478cca694ad403b9f7fd3f9c0904c87309111fcb4d49163d20d7194e65e0bbb7",
+      "chain": "3b99b2d74c77aac6588cce9cab4c2537bf40185876bd4f477fba91fb2692710e"
+     },
+     {
+      "tick": 14,
+      "hash": "b96f0d07aa6bcded024ddc0b36f25e762f2c8d35599d9f6487029d624bb97ec9",
+      "chain": "b4170e75d53d6132003f952e6b3aca28a8b16490f2a3f0eb2bacfaa4d2ee06a9"
+     },
+     {
+      "tick": 15,
+      "hash": "f2c23d5a8f2fab8295c9d56cf654aaad6e9fd01f287b2c36624d5b8077e9ca0a",
+      "chain": "b06ac8adb56eeb875c10290aefd86b1bc86f3c190343ad5babaca95b2199f35e"
+     },
+     {
+      "tick": 16,
+      "hash": "383f70f6f2a547d7d90508d4dc3aa9f4a63ef1f11504da3e2d7721aa690c9126",
+      "chain": "23c5204c83ad27eeef0e3348cf65568b92c6c3e7bb8ff504cb0ac4fe8d7f1074"
+     },
+     {
+      "tick": 17,
+      "hash": "5b0cb82052ced333945cd8d73a11498b5e6e2af7cef436c952507efde93db19b",
+      "chain": "d4ca43bbb1d1c776b0b0df767d29c5e002fe9f19b607f7be1367e4fcf54f4f98"
+     },
+     {
+      "tick": 18,
+      "hash": "4bf98e4941bed110a268235ff367f0f178493973bf0461fc56ca4565266c5757",
+      "chain": "dfcc4edd3c7b314ac412571c5a224417d17d64391b7460ebddeb04ef658a0845"
+     },
+     {
+      "tick": 19,
+      "hash": "e4e3de3f07f020f8b2dfeda3b7833385778986aa4b585be0ebfeff31244c6d46",
+      "chain": "f03108cf36e9382a2fb3dfae41aa31b50c06a1649ea029136c79b3a085da3b7c"
+     },
+     {
+      "tick": 20,
+      "hash": "019a649d7504d72eb14656a7cd37579cd2edbfacb431dd61ced08a99bfd93ae6",
+      "chain": "6d38558c53b747e9a9a7fbd5da727d77e812ff5fe5c94d2aff5bbd58c4fe157d"
+     },
+     {
+      "tick": 21,
+      "hash": "654fb2a64f8bf79310db2ab8b5f51311e40f7b313daaca2a91c176c19e6b9417",
+      "chain": "deeb49d1a0bf00216aed263764784e536d2efef506698f18b93ff2a3d6311fcb"
+     },
+     {
+      "tick": 22,
+      "hash": "558c18ed21c1157b3047a697f0ccd65813e2d589af98df8da1a478f4f6cd55e3",
+      "chain": "a89a8558a73e881462bfd76a453dbe407fedf38bc3edbfb4f711925641491db8"
+     },
+     {
+      "tick": 23,
+      "hash": "9439d7194b502c71420d988abb394b7ad02c17162b6420154d9f989e08189fbd",
+      "chain": "b39b7f74abe9e7ebe0097a66bc1e692fdabbcc5fefa9148998d68ac11e2272c8"
+     },
+     {
+      "tick": 24,
+      "hash": "ca75ba8afa275237dfbca718cc265b359d328e8d5523dd17f67e5fb14c365955",
+      "chain": "16d22b4a7057f48fff88d2e95478ab28ae4488671941996d4fd55fcb0d97411d"
+     },
+     {
+      "tick": 25,
+      "hash": "161234a0afa1ff41b82528d39099fca324f7a081ababbf00b0823d9c8eac4b88",
+      "chain": "5032e7327a53324a0864303f1b8760444b74a35b992a5d2b8246e5a97eee34c7"
+     }
+    ]
+   },
+   "pass": true,
+   "link": "?view=arena&run=eyJ2IjoxLCJzIjoiOTIwMTY3YjE5YTRmOTQyODg0MWM4NjcyNWQxNjM4MGFlNDhjN2M2OWZlMjA5ODk4ODFhMmI1Y2Q3YmY4NzY2ZiIsImUiOjcsInQiOjI1LCJjIjoiNTAzMmU3MzI3YTUzMzI0YTA4NjQzMDNmMWI4NzYwNDQ0Yjc0YTM1Yjk5MmE1ZDJiODI0NmU1YTk3ZWVlMzRjNyIsImkiOltbMCwxLDAuMywwLjJdLFszLDJdLFs2LDAsMi41LDJdLFs5LDhdLFsxMiw3XSxbMTYsMywiZ3JlZWR5Il0sWzIwLDJdXX0&world=v2",
+   "errors": []
+  },
+  {
+   "hashVersion": 2,
+   "spec": "coco_arena_v1.json",
+   "inputs": [
+    {
+     "tick": 0,
+     "kind": "teleop",
+     "linear": 0.3,
+     "angular": 0.2
+    },
+    {
+     "tick": 3,
+     "kind": "stop"
+    },
+    {
+     "tick": 6,
+     "kind": "goal",
+     "x": 2.5,
+     "y": 2
+    },
+    {
+     "tick": 9,
+     "kind": "grasp"
+    },
+    {
+     "tick": 12,
+     "kind": "autonomy"
+    },
+    {
+     "tick": 16,
+     "kind": "planner",
+     "choice": "greedy"
+    },
+    {
+     "tick": 20,
+     "kind": "stop"
+    }
+   ],
+   "worldsBefore": 0,
+   "warmed": {
+    "world": {
+     "id": "coco_arena_v1",
+     "width": 500,
+     "height": 380,
+     "resolution": 0.05,
+     "origin": [
+      -6.5,
+      -9.5
+     ],
+     "frame": "map",
+     "start": [
+      0,
+      0,
+      0
+     ],
+     "dt": 0.1,
+     "radius": 0.22,
+     "limits": {
+      "teleop_linear": 0.5,
+      "teleop_angular": 1.2,
+      "auto_linear": 0.3,
+      "auto_angular": 1,
+      "linear_accel": 2,
+      "angular_accel": 4
+     },
+     "lidar": {
+      "samples": 480,
+      "angle_min": -2.0944,
+      "angle_max": 2.0944,
+      "range_max": 12,
+      "mount": [
+       -0.09,
+       0.1,
+       0
+      ]
+     },
+     "planners": [
+      "bfs",
+      "dijkstra",
+      "astar",
+      "greedy",
+      "weighted_astar"
+     ],
+     "planner": "astar",
+     "hash": "62e6d63e1f8b2d911242e6f025dd64944de11bcb34d726b9a40a0d89b7ae9f0f",
+     "beam_height": 0.21350000000000002
+    },
+    "ticks": [
+     {
+      "tick": 1,
+      "hash": "4e29169b13bdbdb8981ef99adfdba7c3f56049e9e28eb60c303481739cf7614d",
+      "chain": "6065f676b4dd7f8f1312ba35ee915ae9af989144dd7db9aa0bf1c6233447ab1c"
+     },
+     {
+      "tick": 2,
+      "hash": "9c88cd4ed873f1cadf8436e32619baf565d6819b831f791a64ae7082884d8cd4",
+      "chain": "d3fcbb63df2836cd93e2808e4ccf3bb9f20e9973803d36f9765d752dc2742f06"
+     },
+     {
+      "tick": 3,
+      "hash": "ab5c20ce0e7bf62b0913c659e0022dc1572c0955930577e8871da6ccc5d9c202",
+      "chain": "89def2e3967dfe3481c717e217823b1f44d372fd471d65dce6137bf7d10b81c8"
+     },
+     {
+      "tick": 4,
+      "hash": "2de9bbd468e95b93dd57e58fca6c6a632145c120a98382509e51a532c82443a2",
+      "chain": "85f2db757f22aaa1c6b548da5f79aab17bc623cc6c156576ce8f3d8876480b3d"
+     },
+     {
+      "tick": 5,
+      "hash": "9a359bb539b475d16d1364b903d035b5fdf8e6cef702c8b046034722e771d303",
+      "chain": "43e4b6507c6f3e0aa78aefef591fe13b6bed2efec2329ffb8d17d0cfd8d61645"
+     },
+     {
+      "tick": 6,
+      "hash": "d80aadd5c0cff8921dce9e32d1035a0aac65b3763c9da7c696a805b04cd88fe5",
+      "chain": "84fbe1d0aa31e12e25fa9a975c0422c51266084184e124dbef5de231091299a8"
+     },
+     {
+      "tick": 7,
+      "hash": "2f456b4fe059884ad6f0c1ac3d785e7adb602272d26161e9ead3e04ddfb2466f",
+      "chain": "7fef0e57ae7a4fe18c9c6809cb1177209627b67a11b1e4ba5d04b23655b832ec"
+     },
+     {
+      "tick": 8,
+      "hash": "4136af01173c3b614f64c9d45d1b59198d00e06214190d406ee597b053b29fa8",
+      "chain": "11d03c499328a50d8f965c06d6e6e7423f31111951b88233c612954cbf855e5b"
+     },
+     {
+      "tick": 9,
+      "hash": "8dc9767cd7a20ab3c386ce0487b53d775db4685f9f707dedd3e099604909f362",
+      "chain": "0627dcf0b00d5eb856e16faa189b0ab15638356f6f742adbb71fe39b6ded007a"
+     },
+     {
+      "tick": 10,
+      "hash": "cc77a63a08fac536060f9734832932bd6478f3f5d1b7333f5cdc112f11830d5e",
+      "chain": "f8eed0d13e57f6614a8c149997a7ded070e4945bb9d5101b6638fe2b220fa184"
+     },
+     {
+      "tick": 11,
+      "hash": "edb7e4e5cb86d829fb490aea7612409a44afe178b23e451e4f1525818753d68a",
+      "chain": "c725d2e1cf9c61b0fd8a2fe5fd8f34f28729a5f1500982c520615e4fbac9f58e"
+     },
+     {
+      "tick": 12,
+      "hash": "0ee81960716f2ed1e3e88c9daa91115cc8dc7510d4fe5354c4e6cca983cf1c62",
+      "chain": "13a45bcbf28dcb5bd1c0e6a76798e335cb0d9547392221ffea95882744dcd439"
+     },
+     {
+      "tick": 13,
+      "hash": "77e59621ddc31310209ccc9d954626f2ce42e149e48aeaf7230068b10db08e54",
+      "chain": "3c1f38c1ea8eee74a565f46b6def6ee74da128f3447ec79ca1236d7dc258b39a"
+     },
+     {
+      "tick": 14,
+      "hash": "8fb2e7f700391552572f9cd05e83fd5c9639c498c894d033b8231d2e17bcfe43",
+      "chain": "d5131976aac7213a040323b793da859b285ed20d6f670df1243a56c4e95b70bf"
+     },
+     {
+      "tick": 15,
+      "hash": "e50be33eb4b4018387fbc4dd5a32a97445637c5e5630b59146e9c53b7545536c",
+      "chain": "17c8c3d6f160370377c3873ce400b027b2fcc8609e04d7d613578fe1719ba5b2"
+     },
+     {
+      "tick": 16,
+      "hash": "5c09cc5e7079087a6b58b216299c72607565ec0775eb8dbb6b6c974ad27139ba",
+      "chain": "eb0a6949fe0983b63e9b41b964ebd0be62ba91bf577151c4b98d9c07f90eed93"
+     },
+     {
+      "tick": 17,
+      "hash": "c3eb5ddc16513a05a7f404d36f2bf44635dbb8d781232611e7f4ee399f61de2f",
+      "chain": "66dca67c42feda8d2c4007d0da105c948aceee11fd16b396c5b5ff08fce513ab"
+     },
+     {
+      "tick": 18,
+      "hash": "78b656fbd930cd719418503dd97496db984b1d3be1981e720d62456187d4135d",
+      "chain": "e872a3f131404be67fd4b47feaf68a4d2d30787f75f3e7ff618c4d96d26c0278"
+     },
+     {
+      "tick": 19,
+      "hash": "149db6a8689ad039673330e18d5a0e2dd2894b885b2b6e5c0595d19a4aa24ea6",
+      "chain": "2f8641c1c277a2755d37b15adc4dda334cae2626bc0eeb354dd19e2dff6b6b81"
+     },
+     {
+      "tick": 20,
+      "hash": "b759466f411067c658dde617258f98e2f4f2c0eca674a85849751d605f501dc4",
+      "chain": "96847b792b0862aa673fa9eb53103391f0c8d9e6945adb54edaafeb201ea8204"
+     },
+     {
+      "tick": 21,
+      "hash": "aaa7834eb329182ae361ead8093b5890a96a9d1282c245159863264186ef6149",
+      "chain": "3664b6fbf7b23c0e1fb3f890f6858f27ec4df9d3fb334b2863b9c9aba1bdf9c8"
+     },
+     {
+      "tick": 22,
+      "hash": "054b97f1887bd2bdf595a3bb85d3cc254945fd56ece103f6f70bb61aee37ea29",
+      "chain": "c0e262edd232903f240456613dd4f6e5db8573ff4d18aca4477c65718405b771"
+     },
+     {
+      "tick": 23,
+      "hash": "c7e9419de3d70d1b2d4a039e0a12991844d3f6433e70840e0e0da6c8f26f632c",
+      "chain": "1a33bf97e69b773f2b7cd0918bb1849161f041b859586d9c1e6393b1e58bbee7"
+     },
+     {
+      "tick": 24,
+      "hash": "db728b15eb3cc320b3a050cac5c1ea6f1221b373cb8b4d3fc3184f932eb61a49",
+      "chain": "441f0cd77123ac0617f5aec49d666ae657013af6512c7cf13933d0b4a2251700"
+     },
+     {
+      "tick": 25,
+      "hash": "351f68846b00b0aeb1f2771dc73bbec088a9d90cbd4382ecec6804c7ba251ccb",
+      "chain": "722ae5dab2ac8d81aa8aa2c7a010e8564bf588ed5615abfcb9c2369628cc693b"
+     }
+    ]
+   },
+   "cold": {
+    "world": {
+     "id": "coco_arena_v1",
+     "width": 500,
+     "height": 380,
+     "resolution": 0.05,
+     "origin": [
+      -6.5,
+      -9.5
+     ],
+     "frame": "map",
+     "start": [
+      0,
+      0,
+      0
+     ],
+     "dt": 0.1,
+     "radius": 0.22,
+     "limits": {
+      "teleop_linear": 0.5,
+      "teleop_angular": 1.2,
+      "auto_linear": 0.3,
+      "auto_angular": 1,
+      "linear_accel": 2,
+      "angular_accel": 4
+     },
+     "lidar": {
+      "samples": 480,
+      "angle_min": -2.0944,
+      "angle_max": 2.0944,
+      "range_max": 12,
+      "mount": [
+       -0.09,
+       0.1,
+       0
+      ]
+     },
+     "planners": [
+      "bfs",
+      "dijkstra",
+      "astar",
+      "greedy",
+      "weighted_astar"
+     ],
+     "planner": "astar",
+     "hash": "62e6d63e1f8b2d911242e6f025dd64944de11bcb34d726b9a40a0d89b7ae9f0f",
+     "beam_height": 0.21350000000000002
+    },
+    "ticks": [
+     {
+      "tick": 1,
+      "hash": "4e29169b13bdbdb8981ef99adfdba7c3f56049e9e28eb60c303481739cf7614d",
+      "chain": "6065f676b4dd7f8f1312ba35ee915ae9af989144dd7db9aa0bf1c6233447ab1c"
+     },
+     {
+      "tick": 2,
+      "hash": "9c88cd4ed873f1cadf8436e32619baf565d6819b831f791a64ae7082884d8cd4",
+      "chain": "d3fcbb63df2836cd93e2808e4ccf3bb9f20e9973803d36f9765d752dc2742f06"
+     },
+     {
+      "tick": 3,
+      "hash": "ab5c20ce0e7bf62b0913c659e0022dc1572c0955930577e8871da6ccc5d9c202",
+      "chain": "89def2e3967dfe3481c717e217823b1f44d372fd471d65dce6137bf7d10b81c8"
+     },
+     {
+      "tick": 4,
+      "hash": "2de9bbd468e95b93dd57e58fca6c6a632145c120a98382509e51a532c82443a2",
+      "chain": "85f2db757f22aaa1c6b548da5f79aab17bc623cc6c156576ce8f3d8876480b3d"
+     },
+     {
+      "tick": 5,
+      "hash": "9a359bb539b475d16d1364b903d035b5fdf8e6cef702c8b046034722e771d303",
+      "chain": "43e4b6507c6f3e0aa78aefef591fe13b6bed2efec2329ffb8d17d0cfd8d61645"
+     },
+     {
+      "tick": 6,
+      "hash": "d80aadd5c0cff8921dce9e32d1035a0aac65b3763c9da7c696a805b04cd88fe5",
+      "chain": "84fbe1d0aa31e12e25fa9a975c0422c51266084184e124dbef5de231091299a8"
+     },
+     {
+      "tick": 7,
+      "hash": "2f456b4fe059884ad6f0c1ac3d785e7adb602272d26161e9ead3e04ddfb2466f",
+      "chain": "7fef0e57ae7a4fe18c9c6809cb1177209627b67a11b1e4ba5d04b23655b832ec"
+     },
+     {
+      "tick": 8,
+      "hash": "4136af01173c3b614f64c9d45d1b59198d00e06214190d406ee597b053b29fa8",
+      "chain": "11d03c499328a50d8f965c06d6e6e7423f31111951b88233c612954cbf855e5b"
+     },
+     {
+      "tick": 9,
+      "hash": "8dc9767cd7a20ab3c386ce0487b53d775db4685f9f707dedd3e099604909f362",
+      "chain": "0627dcf0b00d5eb856e16faa189b0ab15638356f6f742adbb71fe39b6ded007a"
+     },
+     {
+      "tick": 10,
+      "hash": "cc77a63a08fac536060f9734832932bd6478f3f5d1b7333f5cdc112f11830d5e",
+      "chain": "f8eed0d13e57f6614a8c149997a7ded070e4945bb9d5101b6638fe2b220fa184"
+     },
+     {
+      "tick": 11,
+      "hash": "edb7e4e5cb86d829fb490aea7612409a44afe178b23e451e4f1525818753d68a",
+      "chain": "c725d2e1cf9c61b0fd8a2fe5fd8f34f28729a5f1500982c520615e4fbac9f58e"
+     },
+     {
+      "tick": 12,
+      "hash": "0ee81960716f2ed1e3e88c9daa91115cc8dc7510d4fe5354c4e6cca983cf1c62",
+      "chain": "13a45bcbf28dcb5bd1c0e6a76798e335cb0d9547392221ffea95882744dcd439"
+     },
+     {
+      "tick": 13,
+      "hash": "77e59621ddc31310209ccc9d954626f2ce42e149e48aeaf7230068b10db08e54",
+      "chain": "3c1f38c1ea8eee74a565f46b6def6ee74da128f3447ec79ca1236d7dc258b39a"
+     },
+     {
+      "tick": 14,
+      "hash": "8fb2e7f700391552572f9cd05e83fd5c9639c498c894d033b8231d2e17bcfe43",
+      "chain": "d5131976aac7213a040323b793da859b285ed20d6f670df1243a56c4e95b70bf"
+     },
+     {
+      "tick": 15,
+      "hash": "e50be33eb4b4018387fbc4dd5a32a97445637c5e5630b59146e9c53b7545536c",
+      "chain": "17c8c3d6f160370377c3873ce400b027b2fcc8609e04d7d613578fe1719ba5b2"
+     },
+     {
+      "tick": 16,
+      "hash": "5c09cc5e7079087a6b58b216299c72607565ec0775eb8dbb6b6c974ad27139ba",
+      "chain": "eb0a6949fe0983b63e9b41b964ebd0be62ba91bf577151c4b98d9c07f90eed93"
+     },
+     {
+      "tick": 17,
+      "hash": "c3eb5ddc16513a05a7f404d36f2bf44635dbb8d781232611e7f4ee399f61de2f",
+      "chain": "66dca67c42feda8d2c4007d0da105c948aceee11fd16b396c5b5ff08fce513ab"
+     },
+     {
+      "tick": 18,
+      "hash": "78b656fbd930cd719418503dd97496db984b1d3be1981e720d62456187d4135d",
+      "chain": "e872a3f131404be67fd4b47feaf68a4d2d30787f75f3e7ff618c4d96d26c0278"
+     },
+     {
+      "tick": 19,
+      "hash": "149db6a8689ad039673330e18d5a0e2dd2894b885b2b6e5c0595d19a4aa24ea6",
+      "chain": "2f8641c1c277a2755d37b15adc4dda334cae2626bc0eeb354dd19e2dff6b6b81"
+     },
+     {
+      "tick": 20,
+      "hash": "b759466f411067c658dde617258f98e2f4f2c0eca674a85849751d605f501dc4",
+      "chain": "96847b792b0862aa673fa9eb53103391f0c8d9e6945adb54edaafeb201ea8204"
+     },
+     {
+      "tick": 21,
+      "hash": "aaa7834eb329182ae361ead8093b5890a96a9d1282c245159863264186ef6149",
+      "chain": "3664b6fbf7b23c0e1fb3f890f6858f27ec4df9d3fb334b2863b9c9aba1bdf9c8"
+     },
+     {
+      "tick": 22,
+      "hash": "054b97f1887bd2bdf595a3bb85d3cc254945fd56ece103f6f70bb61aee37ea29",
+      "chain": "c0e262edd232903f240456613dd4f6e5db8573ff4d18aca4477c65718405b771"
+     },
+     {
+      "tick": 23,
+      "hash": "c7e9419de3d70d1b2d4a039e0a12991844d3f6433e70840e0e0da6c8f26f632c",
+      "chain": "1a33bf97e69b773f2b7cd0918bb1849161f041b859586d9c1e6393b1e58bbee7"
+     },
+     {
+      "tick": 24,
+      "hash": "db728b15eb3cc320b3a050cac5c1ea6f1221b373cb8b4d3fc3184f932eb61a49",
+      "chain": "441f0cd77123ac0617f5aec49d666ae657013af6512c7cf13933d0b4a2251700"
+     },
+     {
+      "tick": 25,
+      "hash": "351f68846b00b0aeb1f2771dc73bbec088a9d90cbd4382ecec6804c7ba251ccb",
+      "chain": "722ae5dab2ac8d81aa8aa2c7a010e8564bf588ed5615abfcb9c2369628cc693b"
+     }
+    ]
+   },
+   "pass": true,
+   "link": "?view=arena&run=eyJ2IjoxLCJodiI6MiwicyI6IjY5Yzg0M2ExMzc2ZmU3NWJlODdjMDc4ZTU0NjQxYzk2NDA3YzZkYzFjMzVhNWUxZjJjODYzYjQ3MjI1ZTI2OWYiLCJlIjo3LCJ0IjoyNSwiYyI6IjcyMmFlNWRhYjJhYzhkODFhYThhYTJjN2EwMTBlODU2NGJmNTg4ZWQ1NjE1YWJmY2I5YzIzNjk2MjhjYzY5M2IiLCJpIjpbWzAsMSwwLjMsMC4yXSxbMywyXSxbNiwwLDIuNSwyXSxbOSw4XSxbMTIsN10sWzE2LDMsImdyZWVkeSJdLFsyMCwyXV19",
+   "errors": []
+  },
+  {
+   "hashVersion": 2,
+   "spec": "coco_arena_v2.json",
+   "inputs": [
+    {
+     "tick": 0,
+     "kind": "teleop",
+     "linear": 0.3,
+     "angular": 0.2
+    },
+    {
+     "tick": 3,
+     "kind": "stop"
+    },
+    {
+     "tick": 6,
+     "kind": "goal",
+     "x": 2.5,
+     "y": 2
+    },
+    {
+     "tick": 9,
+     "kind": "grasp"
+    },
+    {
+     "tick": 12,
+     "kind": "autonomy"
+    },
+    {
+     "tick": 16,
+     "kind": "planner",
+     "choice": "greedy"
+    },
+    {
+     "tick": 20,
+     "kind": "stop"
+    }
+   ],
+   "worldsBefore": 0,
+   "warmed": {
+    "world": {
+     "id": "coco_arena_v2",
+     "width": 500,
+     "height": 380,
+     "resolution": 0.05,
+     "origin": [
+      -6.5,
+      -9.5
+     ],
+     "frame": "map",
+     "start": [
+      0,
+      0,
+      0
+     ],
+     "dt": 0.1,
+     "radius": 0.22,
+     "limits": {
+      "teleop_linear": 0.5,
+      "teleop_angular": 1.2,
+      "auto_linear": 0.3,
+      "auto_angular": 1,
+      "linear_accel": 2,
+      "angular_accel": 4
+     },
+     "lidar": {
+      "samples": 480,
+      "angle_min": -2.0944,
+      "angle_max": 2.0944,
+      "range_max": 12,
+      "mount": [
+       -0.09,
+       0.1,
+       0
+      ]
+     },
+     "planners": [
+      "bfs",
+      "dijkstra",
+      "astar",
+      "greedy",
+      "weighted_astar"
+     ],
+     "planner": "astar",
+     "hash": "db40a0752b8395b702da504ce90d345223af7bd7784daeefa652ba9e346facd5",
+     "beam_height": 0.21350000000000002,
+     "targets": [
+      {
+       "colour": "blue",
+       "x": 6.05,
+       "y": 2,
+       "z": 0.649839392466,
+       "diameter": 0.028,
+       "height": 0.158
+      },
+      {
+       "colour": "green",
+       "x": 6.05,
+       "y": -2,
+       "z": 0.649839392466,
+       "diameter": 0.024,
+       "height": 0.158
+      },
+      {
+       "colour": "red",
+       "x": 6.05,
+       "y": -6,
+       "z": 0.649839392466,
+       "diameter": 0.02,
+       "height": 0.158
+      },
+      {
+       "colour": "yellow",
+       "x": 6.05,
+       "y": 6,
+       "z": 0.649839392466,
+       "diameter": 0.032,
+       "height": 0.158
+      }
+     ]
+    },
+    "ticks": [
+     {
+      "tick": 1,
+      "hash": "d5dfb96a367ce06a8e4e2fa29e440b5af4d692261d59a62120e7a47974194474",
+      "chain": "cfc8c4cff9a0b7abf0e247e08042130df68cd5c57c4635e3c6a34b89938646bd"
+     },
+     {
+      "tick": 2,
+      "hash": "63a530bca6dbcbf3c4f8a51e4ee887d537b620064650fa35b418f0c0b00b7fca",
+      "chain": "6f3da2f80a938b80e5ac457f6b3974e0e75142a1a45a331d66febb0f9518dae9"
+     },
+     {
+      "tick": 3,
+      "hash": "67dfa6ccfaa7032f0ec0987f553b6c329dde18add4b263c18b002fad6d24fc99",
+      "chain": "e21f6996a7e5617669aa2e28b1a485994653e02fb0ae37953de663b901567830"
+     },
+     {
+      "tick": 4,
+      "hash": "dd7e1d338ae3f488bc585dcd17f7d7f63e4af1b01c5ffc5b6b2ee3748b458268",
+      "chain": "f79ceaa7b4296730877e8ec7ef6a9cf831873d8e73bbd626079e487e6b369af4"
+     },
+     {
+      "tick": 5,
+      "hash": "d852901031b385c38054eefda6dcdb045a191ec758ec7752d100dc75f7692dc9",
+      "chain": "d60566e60b11d501ccff5fa36554137d56fee3a21eea79739e252c676156a7c5"
+     },
+     {
+      "tick": 6,
+      "hash": "b4edb11ececf15b543e764e89045ec2f40a995b511a80c16671200dda9d39f4a",
+      "chain": "448b5d8b05e0178aabc9c9b928a699f19edc06019a01a0ecad70cc3d6347dd35"
+     },
+     {
+      "tick": 7,
+      "hash": "18e95aac6928fcd1a7c92308552621211e012a0d14fa741aed8c520d3aa49fc6",
+      "chain": "62b4a9d5425b6bf400a15edfcadf9e03d8e7da6bd40de5642238ec3d1e8645e9"
+     },
+     {
+      "tick": 8,
+      "hash": "5e51c3bad00e9c41ec7be9c311ee8a5dd4bac3e57ea1dd2727c6c8859d3a601f",
+      "chain": "c18e18135734ab4cf1fc8579bc050632967cb27dd2147c6484ba87a179230072"
+     },
+     {
+      "tick": 9,
+      "hash": "54c8a5ae168d51ed25e38c59c9a153dec4a03bce0317e8a90d35b53e2e42832b",
+      "chain": "2313ee8a8311bc49cddc020635cada31bffb52ea6f9042f4bffc4ee872638a78"
+     },
+     {
+      "tick": 10,
+      "hash": "6ef1ddc56c873ccbcad32dcd60102f19cc61332aee9551e65f9443df9f8699cf",
+      "chain": "99108f310ade3f3e7cdd6889886e714768cc3a8350702ecdab2feb909971d9b3"
+     },
+     {
+      "tick": 11,
+      "hash": "789e307fa663afdd38cc407e7d9c8bf0afff1b4dbb681b4ea382c20f5518e7cf",
+      "chain": "bcbdd4fa1d67017cc06e151c154ea5f74e96701c826c2068ba4ed0ff7e754c7c"
+     },
+     {
+      "tick": 12,
+      "hash": "3f7f3b33779573426a41f22ef483986f0a7e55a93b0011a6ee67399ffc0c60e2",
+      "chain": "b27b68315b247bb3ea1220e285695f3bc798dffb2c1408353d036db546341800"
+     },
+     {
+      "tick": 13,
+      "hash": "f118d87bf928e637c27689c25edcb17c8d34f7accf0014278a21fa6f9141ca54",
+      "chain": "d9adebde5362a2aaa75212012bccd8edd5e6e95304cd50f84c7f8935bbb182cf"
+     },
+     {
+      "tick": 14,
+      "hash": "d32d14cb2273c1c5e05c54c5cf09930fb202bd8195444785c13505294c365caf",
+      "chain": "174e630858cedeafe00abaa24ad3c693b68fed6dc847d742580df96f3f6d0964"
+     },
+     {
+      "tick": 15,
+      "hash": "37676235c07ed9e820811d603b9f5fd011abad6086942dc3586c185001ce1675",
+      "chain": "d0f384a2494a3e2c7eb0ee2ad5ecd48518ea07e086a0ea09d5a5b9bc7ac7595f"
+     },
+     {
+      "tick": 16,
+      "hash": "afe3750ffbd2951ced137db12786e4ceef4d0bbb45b157f842970f1f183a3e53",
+      "chain": "b1cf725024c17727a177bd1080808784420e857179e3659ade1aab11f97e4075"
+     },
+     {
+      "tick": 17,
+      "hash": "d00118cb22b4ea6aebe558b037860e430d6b1105bd574d751069f43f892b0262",
+      "chain": "c253e19bc31600fb3d893b8a8929e5365f72a70a346ca5d257cbecc5e5067ce8"
+     },
+     {
+      "tick": 18,
+      "hash": "d289e93a06fd43dac5b80281bc75183e3376636f9872f8d2a0a01842d98255aa",
+      "chain": "69d9d6535e95f65f5bc6c228d6b6b56cccc0d1a2961d1250709c66d81f7860f9"
+     },
+     {
+      "tick": 19,
+      "hash": "d1b581b07813f105699be1576bf6a667ceffbf594e722333845ffc9c2e340112",
+      "chain": "ef6b6a63c220ea3515c74f30f051957aacf79c76957794a0b3cfdbcba64f0106"
+     },
+     {
+      "tick": 20,
+      "hash": "ff72e0fdc3d712c505f083439d0db3af06cd955ad4597327509bbb6d03b68c21",
+      "chain": "c408d0df3767420d13efd538bbe781461e06a0c975f6951fa0f7782f20a44165"
+     },
+     {
+      "tick": 21,
+      "hash": "0ff6a43053471dd059133c06da49f25e2b9ac8ea5186a9cb07b3c0fceed19535",
+      "chain": "b51212a34f1f4530a3b197ffdf75ff78ef8418744e0100d163e8d239ebf5d59a"
+     },
+     {
+      "tick": 22,
+      "hash": "eb42296e6c5fffefa0bafe854cd2f67bdc7d973172b7ed6fb9e5fd52e847af83",
+      "chain": "a17d1370b074da31a44b260ccee96715e8802c0a705b457e30e137b79c49e4db"
+     },
+     {
+      "tick": 23,
+      "hash": "aadee11d46ecc53f3b8354464e501d015485545097c4f137b65677fb686b55db",
+      "chain": "91f052cdddcafbe84705cdc9efd240e2b7a73743653fba7ae82d1f78ca2feaac"
+     },
+     {
+      "tick": 24,
+      "hash": "e4bf52dfb0f8a907cb611a37093b9d33eaea2a83e37140d5a6696fb72d43594a",
+      "chain": "8ac039808b300a23db859dccedb6dcf20b8eb2bcf0ee42209cfdb7a0cb09d21e"
+     },
+     {
+      "tick": 25,
+      "hash": "72e6cf81e6d6726dda0bb33c6cdbbd857d599e8017840871c93ee7367e372ef9",
+      "chain": "4b4e540cd4eb13bd5093a1c1c5fdc9fd6ce3a1690cbd9aaafebeaad5260fc0ae"
+     }
+    ]
+   },
+   "cold": {
+    "world": {
+     "id": "coco_arena_v2",
+     "width": 500,
+     "height": 380,
+     "resolution": 0.05,
+     "origin": [
+      -6.5,
+      -9.5
+     ],
+     "frame": "map",
+     "start": [
+      0,
+      0,
+      0
+     ],
+     "dt": 0.1,
+     "radius": 0.22,
+     "limits": {
+      "teleop_linear": 0.5,
+      "teleop_angular": 1.2,
+      "auto_linear": 0.3,
+      "auto_angular": 1,
+      "linear_accel": 2,
+      "angular_accel": 4
+     },
+     "lidar": {
+      "samples": 480,
+      "angle_min": -2.0944,
+      "angle_max": 2.0944,
+      "range_max": 12,
+      "mount": [
+       -0.09,
+       0.1,
+       0
+      ]
+     },
+     "planners": [
+      "bfs",
+      "dijkstra",
+      "astar",
+      "greedy",
+      "weighted_astar"
+     ],
+     "planner": "astar",
+     "hash": "db40a0752b8395b702da504ce90d345223af7bd7784daeefa652ba9e346facd5",
+     "beam_height": 0.21350000000000002,
+     "targets": [
+      {
+       "colour": "blue",
+       "x": 6.05,
+       "y": 2,
+       "z": 0.649839392466,
+       "diameter": 0.028,
+       "height": 0.158
+      },
+      {
+       "colour": "green",
+       "x": 6.05,
+       "y": -2,
+       "z": 0.649839392466,
+       "diameter": 0.024,
+       "height": 0.158
+      },
+      {
+       "colour": "red",
+       "x": 6.05,
+       "y": -6,
+       "z": 0.649839392466,
+       "diameter": 0.02,
+       "height": 0.158
+      },
+      {
+       "colour": "yellow",
+       "x": 6.05,
+       "y": 6,
+       "z": 0.649839392466,
+       "diameter": 0.032,
+       "height": 0.158
+      }
+     ]
+    },
+    "ticks": [
+     {
+      "tick": 1,
+      "hash": "d5dfb96a367ce06a8e4e2fa29e440b5af4d692261d59a62120e7a47974194474",
+      "chain": "cfc8c4cff9a0b7abf0e247e08042130df68cd5c57c4635e3c6a34b89938646bd"
+     },
+     {
+      "tick": 2,
+      "hash": "63a530bca6dbcbf3c4f8a51e4ee887d537b620064650fa35b418f0c0b00b7fca",
+      "chain": "6f3da2f80a938b80e5ac457f6b3974e0e75142a1a45a331d66febb0f9518dae9"
+     },
+     {
+      "tick": 3,
+      "hash": "67dfa6ccfaa7032f0ec0987f553b6c329dde18add4b263c18b002fad6d24fc99",
+      "chain": "e21f6996a7e5617669aa2e28b1a485994653e02fb0ae37953de663b901567830"
+     },
+     {
+      "tick": 4,
+      "hash": "dd7e1d338ae3f488bc585dcd17f7d7f63e4af1b01c5ffc5b6b2ee3748b458268",
+      "chain": "f79ceaa7b4296730877e8ec7ef6a9cf831873d8e73bbd626079e487e6b369af4"
+     },
+     {
+      "tick": 5,
+      "hash": "d852901031b385c38054eefda6dcdb045a191ec758ec7752d100dc75f7692dc9",
+      "chain": "d60566e60b11d501ccff5fa36554137d56fee3a21eea79739e252c676156a7c5"
+     },
+     {
+      "tick": 6,
+      "hash": "b4edb11ececf15b543e764e89045ec2f40a995b511a80c16671200dda9d39f4a",
+      "chain": "448b5d8b05e0178aabc9c9b928a699f19edc06019a01a0ecad70cc3d6347dd35"
+     },
+     {
+      "tick": 7,
+      "hash": "18e95aac6928fcd1a7c92308552621211e012a0d14fa741aed8c520d3aa49fc6",
+      "chain": "62b4a9d5425b6bf400a15edfcadf9e03d8e7da6bd40de5642238ec3d1e8645e9"
+     },
+     {
+      "tick": 8,
+      "hash": "5e51c3bad00e9c41ec7be9c311ee8a5dd4bac3e57ea1dd2727c6c8859d3a601f",
+      "chain": "c18e18135734ab4cf1fc8579bc050632967cb27dd2147c6484ba87a179230072"
+     },
+     {
+      "tick": 9,
+      "hash": "54c8a5ae168d51ed25e38c59c9a153dec4a03bce0317e8a90d35b53e2e42832b",
+      "chain": "2313ee8a8311bc49cddc020635cada31bffb52ea6f9042f4bffc4ee872638a78"
+     },
+     {
+      "tick": 10,
+      "hash": "6ef1ddc56c873ccbcad32dcd60102f19cc61332aee9551e65f9443df9f8699cf",
+      "chain": "99108f310ade3f3e7cdd6889886e714768cc3a8350702ecdab2feb909971d9b3"
+     },
+     {
+      "tick": 11,
+      "hash": "789e307fa663afdd38cc407e7d9c8bf0afff1b4dbb681b4ea382c20f5518e7cf",
+      "chain": "bcbdd4fa1d67017cc06e151c154ea5f74e96701c826c2068ba4ed0ff7e754c7c"
+     },
+     {
+      "tick": 12,
+      "hash": "3f7f3b33779573426a41f22ef483986f0a7e55a93b0011a6ee67399ffc0c60e2",
+      "chain": "b27b68315b247bb3ea1220e285695f3bc798dffb2c1408353d036db546341800"
+     },
+     {
+      "tick": 13,
+      "hash": "f118d87bf928e637c27689c25edcb17c8d34f7accf0014278a21fa6f9141ca54",
+      "chain": "d9adebde5362a2aaa75212012bccd8edd5e6e95304cd50f84c7f8935bbb182cf"
+     },
+     {
+      "tick": 14,
+      "hash": "d32d14cb2273c1c5e05c54c5cf09930fb202bd8195444785c13505294c365caf",
+      "chain": "174e630858cedeafe00abaa24ad3c693b68fed6dc847d742580df96f3f6d0964"
+     },
+     {
+      "tick": 15,
+      "hash": "37676235c07ed9e820811d603b9f5fd011abad6086942dc3586c185001ce1675",
+      "chain": "d0f384a2494a3e2c7eb0ee2ad5ecd48518ea07e086a0ea09d5a5b9bc7ac7595f"
+     },
+     {
+      "tick": 16,
+      "hash": "afe3750ffbd2951ced137db12786e4ceef4d0bbb45b157f842970f1f183a3e53",
+      "chain": "b1cf725024c17727a177bd1080808784420e857179e3659ade1aab11f97e4075"
+     },
+     {
+      "tick": 17,
+      "hash": "d00118cb22b4ea6aebe558b037860e430d6b1105bd574d751069f43f892b0262",
+      "chain": "c253e19bc31600fb3d893b8a8929e5365f72a70a346ca5d257cbecc5e5067ce8"
+     },
+     {
+      "tick": 18,
+      "hash": "d289e93a06fd43dac5b80281bc75183e3376636f9872f8d2a0a01842d98255aa",
+      "chain": "69d9d6535e95f65f5bc6c228d6b6b56cccc0d1a2961d1250709c66d81f7860f9"
+     },
+     {
+      "tick": 19,
+      "hash": "d1b581b07813f105699be1576bf6a667ceffbf594e722333845ffc9c2e340112",
+      "chain": "ef6b6a63c220ea3515c74f30f051957aacf79c76957794a0b3cfdbcba64f0106"
+     },
+     {
+      "tick": 20,
+      "hash": "ff72e0fdc3d712c505f083439d0db3af06cd955ad4597327509bbb6d03b68c21",
+      "chain": "c408d0df3767420d13efd538bbe781461e06a0c975f6951fa0f7782f20a44165"
+     },
+     {
+      "tick": 21,
+      "hash": "0ff6a43053471dd059133c06da49f25e2b9ac8ea5186a9cb07b3c0fceed19535",
+      "chain": "b51212a34f1f4530a3b197ffdf75ff78ef8418744e0100d163e8d239ebf5d59a"
+     },
+     {
+      "tick": 22,
+      "hash": "eb42296e6c5fffefa0bafe854cd2f67bdc7d973172b7ed6fb9e5fd52e847af83",
+      "chain": "a17d1370b074da31a44b260ccee96715e8802c0a705b457e30e137b79c49e4db"
+     },
+     {
+      "tick": 23,
+      "hash": "aadee11d46ecc53f3b8354464e501d015485545097c4f137b65677fb686b55db",
+      "chain": "91f052cdddcafbe84705cdc9efd240e2b7a73743653fba7ae82d1f78ca2feaac"
+     },
+     {
+      "tick": 24,
+      "hash": "e4bf52dfb0f8a907cb611a37093b9d33eaea2a83e37140d5a6696fb72d43594a",
+      "chain": "8ac039808b300a23db859dccedb6dcf20b8eb2bcf0ee42209cfdb7a0cb09d21e"
+     },
+     {
+      "tick": 25,
+      "hash": "72e6cf81e6d6726dda0bb33c6cdbbd857d599e8017840871c93ee7367e372ef9",
+      "chain": "4b4e540cd4eb13bd5093a1c1c5fdc9fd6ce3a1690cbd9aaafebeaad5260fc0ae"
+     }
+    ]
+   },
+   "pass": true,
+   "link": "?view=arena&run=eyJ2IjoxLCJodiI6MiwicyI6IjkyMDE2N2IxOWE0Zjk0Mjg4NDFjODY3MjVkMTYzODBhZTQ4YzdjNjlmZTIwOTg5ODgxYTJiNWNkN2JmODc2NmYiLCJlIjo3LCJ0IjoyNSwiYyI6IjRiNGU1NDBjZDRlYjEzYmQ1MDkzYTFjMWM1ZmRjOWZkNmNlM2ExNjkwY2JkOWFhYWZlYmVhYWQ1MjYwZmMwYWUiLCJpIjpbWzAsMSwwLjMsMC4yXSxbMywyXSxbNiwwLDIuNSwyXSxbOSw4XSxbMTIsN10sWzE2LDMsImdyZWVkeSJdLFsyMCwyXV19&world=v2",
+   "errors": []
+  }
+ ]
+}

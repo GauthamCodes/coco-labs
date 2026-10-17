@@ -1,0 +1,26 @@
+ok   (bare) -> 
+ok   ?view=plan -> ?view=learn&mission=find-a-path
+ok   ?view=localise -> ?view=learn&mission=where-it-is
+ok   ?view=map -> ?view=learn&mission=build-a-map
+ok   ?view=search -> ?view=learn&mission=where-to-look
+ok   ?view=move -> ?view=learn&mission=avoid-things
+ok   ?view=plan&perf -> ?view=learn&mission=find-a-path
+ok   ?view=live -> ?view=live
+FAIL ?view=exhibit -> v1/?view=exhibit TimeoutError: page.waitForSelector: Timeout 60000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-testid="view-exhibit"][aria-pressed="true"]') to be visible[22m
+ errors: Failed to load resource: the server responded with a status of 404 (Not Found)
+FAIL ?view=localise&loc=exhibits -> v1/?view=localise&loc=exhibits Error: page.waitForSelector: Target page, context or browser has been closed
+Call log:
+[2m  - waiting for locator('[data-testid="view-localise"][aria-pressed="true"]') to be visible[22m
+ errors: Failed to load resource: the server responded with a status of 404 (Not Found)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browser.newPage: Target page, context or browser has been closed
+    at /home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/perf/v1_links_check.mjs:79:30 {
+  log: []
+}
+
+Node.js v24.21.0

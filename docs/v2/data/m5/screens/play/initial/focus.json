@@ -1,0 +1,388 @@
+{
+  "class": "TESTED layout; not a frame-rate measurement",
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-15T17:20:52.473Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 2,
+        "5m": 1.79,
+        "15m": 1.53
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-15T17:21:27.294Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 5.74,
+        "5m": 2.78,
+        "15m": 1.87
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    }
+  },
+  "rows": [
+    {
+      "name": "desktop",
+      "device": "laptop Chromium",
+      "layout": {
+        "viewport": [
+          1440,
+          900
+        ],
+        "scroll": [
+          1440,
+          900
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 1224,
+              "y": 24,
+              "width": 48,
+              "height": 48,
+              "top": 24,
+              "right": 1272,
+              "bottom": 72,
+              "left": 1224
+            }
+          },
+          {
+            "name": "Game menu and inspection",
+            "box": {
+              "x": 1168,
+              "y": 24,
+              "width": 48,
+              "height": 48,
+              "top": 24,
+              "right": 1216,
+              "bottom": 72,
+              "left": 1168
+            }
+          },
+          {
+            "name": "Robot vision (X): Off",
+            "box": {
+              "x": 1325,
+              "y": 198,
+              "width": 91,
+              "height": 48,
+              "top": 198,
+              "right": 1416,
+              "bottom": 246,
+              "left": 1325
+            }
+          },
+          {
+            "name": "STOP",
+            "box": {
+              "x": 1064,
+              "y": 796,
+              "width": 88,
+              "height": 80,
+              "top": 796,
+              "right": 1152,
+              "bottom": 876,
+              "left": 1064
+            }
+          },
+          {
+            "name": "Grasp",
+            "box": {
+              "x": 1160,
+              "y": 804,
+              "width": 80,
+              "height": 72,
+              "top": 804,
+              "right": 1240,
+              "bottom": 876,
+              "left": 1160
+            }
+          },
+          {
+            "name": "Auto",
+            "box": {
+              "x": 1248,
+              "y": 804,
+              "width": 80,
+              "height": 72,
+              "top": 804,
+              "right": 1328,
+              "bottom": 876,
+              "left": 1248
+            }
+          },
+          {
+            "name": "Camera",
+            "box": {
+              "x": 1336,
+              "y": 804,
+              "width": 80,
+              "height": 72,
+              "top": 804,
+              "right": 1416,
+              "bottom": 876,
+              "left": 1336
+            }
+          }
+        ],
+        "joysticks": 0,
+        "rotate": "none"
+      },
+      "errors": []
+    },
+    {
+      "name": "compact",
+      "device": "laptop Chromium compact",
+      "layout": {
+        "viewport": [
+          844,
+          390
+        ],
+        "scroll": [
+          844,
+          390
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 628,
+              "y": 24,
+              "width": 48,
+              "height": 48,
+              "top": 24,
+              "right": 676,
+              "bottom": 72,
+              "left": 628
+            }
+          },
+          {
+            "name": "Game menu and inspection",
+            "box": {
+              "x": 572,
+              "y": 24,
+              "width": 48,
+              "height": 48,
+              "top": 24,
+              "right": 620,
+              "bottom": 72,
+              "left": 572
+            }
+          },
+          {
+            "name": "Robot vision (X): Off",
+            "box": {
+              "x": 729,
+              "y": 198,
+              "width": 91,
+              "height": 48,
+              "top": 198,
+              "right": 820,
+              "bottom": 246,
+              "left": 729
+            }
+          },
+          {
+            "name": "STOP",
+            "box": {
+              "x": 468,
+              "y": 286,
+              "width": 88,
+              "height": 80,
+              "top": 286,
+              "right": 556,
+              "bottom": 366,
+              "left": 468
+            }
+          },
+          {
+            "name": "Grasp",
+            "box": {
+              "x": 564,
+              "y": 294,
+              "width": 80,
+              "height": 72,
+              "top": 294,
+              "right": 644,
+              "bottom": 366,
+              "left": 564
+            }
+          },
+          {
+            "name": "Auto",
+            "box": {
+              "x": 652,
+              "y": 294,
+              "width": 80,
+              "height": 72,
+              "top": 294,
+              "right": 732,
+              "bottom": 366,
+              "left": 652
+            }
+          },
+          {
+            "name": "Camera",
+            "box": {
+              "x": 740,
+              "y": 294,
+              "width": 80,
+              "height": 72,
+              "top": 294,
+              "right": 820,
+              "bottom": 366,
+              "left": 740
+            }
+          }
+        ],
+        "joysticks": 0,
+        "rotate": "none"
+      },
+      "errors": []
+    },
+    {
+      "name": "nothing-landscape",
+      "device": "emulated Nothing Phone (1)",
+      "layout": {
+        "viewport": [
+          915,
+          412
+        ],
+        "scroll": [
+          915,
+          412
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 743,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 791,
+              "bottom": 60,
+              "left": 743
+            }
+          },
+          {
+            "name": "Game menu and inspection",
+            "box": {
+              "x": 687,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 735,
+              "bottom": 60,
+              "left": 687
+            }
+          },
+          {
+            "name": "Robot vision (X): Off",
+            "box": {
+              "x": 743,
+              "y": 68,
+              "width": 48,
+              "height": 48,
+              "top": 68,
+              "right": 791,
+              "bottom": 116,
+              "left": 743
+            }
+          },
+          {
+            "name": "Drive COCO (joystick)",
+            "box": {
+              "x": 32,
+              "y": 256,
+              "width": 128,
+              "height": 128,
+              "top": 256,
+              "right": 160,
+              "bottom": 384,
+              "left": 32
+            }
+          },
+          {
+            "name": "STOP",
+            "box": {
+              "x": 731,
+              "y": 312,
+              "width": 64,
+              "height": 64,
+              "top": 312,
+              "right": 795,
+              "bottom": 376,
+              "left": 731
+            }
+          },
+          {
+            "name": "Grasp",
+            "box": {
+              "x": 803,
+              "y": 332,
+              "width": 56,
+              "height": 56,
+              "top": 332,
+              "right": 859,
+              "bottom": 388,
+              "left": 803
+            }
+          },
+          {
+            "name": "Auto",
+            "box": {
+              "x": 835,
+              "y": 276,
+              "width": 48,
+              "height": 48,
+              "top": 276,
+              "right": 883,
+              "bottom": 324,
+              "left": 835
+            }
+          },
+          {
+            "name": "Camera",
+            "box": {
+              "x": 775,
+              "y": 248,
+              "width": 48,
+              "height": 48,
+              "top": 248,
+              "right": 823,
+              "bottom": 296,
+              "left": 775
+            }
+          }
+        ],
+        "joysticks": 1,
+        "rotate": "none"
+      },
+      "errors": []
+    }
+  ]
+}

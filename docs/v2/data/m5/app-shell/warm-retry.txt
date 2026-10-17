@@ -1,0 +1,1 @@
+Corrupt optional warm ZIP refused; subsequent real boot verifies the normal ZIP and completes both searches, zero console errors.

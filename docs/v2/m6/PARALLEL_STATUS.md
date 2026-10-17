@@ -1,0 +1,204 @@
+# M6 foundations — parallel status
+
+The short status for branch `v2/m6-foundations` (worktree
+`~/coco_labs_ws/worktrees/m6-foundations`), built in parallel with Codex's M5
+under `PARALLEL_PROMPT.md`. `docs/STATUS.md` is **not** edited on this branch;
+the entries below are copied into it at merge.
+
+## Current checkpoint and next step
+
+- **Done:** M6F.0, M6F.1, M6F.2, M6F.3, M6F.5, M6F.6, M6F.7, M6F.9 (wrap-up:
+  `RESULTS_M6_FOUNDATIONS.md`, `MERGE_NOTES.md`, the draft PR).
+- **Pending, machine busy:** M6F.4 (Depot planning benchmark; harness committed) and
+  M6F.8 (Gazebo + Nav2; plan in `M6F8_PLAN.md`). Codex was active the whole session.
+- **Next:** when Codex is idle and no robot batch runs, on AC: build a colcon overlay of
+  this worktree (also clears the 4 overlay-dependent `coco_lab_ros` tests), run M6F.4,
+  then M6F.8 per `M6F8_PLAN.md`; then merge `v2/m5-focus` once pushed (or after M5 merges)
+  and resolve the merge points below.
+
+## Questions for Gautham
+
+1. **Fetch Rush balance.** At COCO's real auto speed (0.3 m/s) the Depot is large for
+   three minutes: the reference delivers 1, 1 and 0 on seeds 1-3 (seed 3's first order
+   has a 77.9 m ghost). Lengthen the timer, draw orders within a reachable budget, or
+   start Fetch Rush inside one zone?
+2. **The graspable band.** The fingers' "6-32 mm band" exists only as a comment in
+   `coco_config/robot.py`; Grasp Assist uses the Stack-verified 20-32 mm targets (max
+   32 mm) instead. Add a named constant to `coco_config`, or keep the verified band?
+3. **Detection range.** The camera range is the measured 1.40 m first detection of the
+   20 mm target (p03c), applied to every object. Acceptable as the model's assumption?
+4. **`origin/v2/m5-focus` did not exist**, so this branch starts from the local M5 tip
+   `0254dea`, and pushing it published M5's 9 unpushed commits inside this branch's
+   history (not as `v2/m5-focus`). Fine, or should M5 be pushed first next time?
+
+## Setup facts (M6F.0, 2026-10-17)
+
+- Branch `v2/m6-foundations` was created from the **local** `v2/m5-focus` at
+  `0254dea` ("[M5.7] Support four planners in the shared Compare worker").
+  `origin/v2/m5-focus` **does not exist**: Codex has not pushed M5, so the
+  prompt's `origin/v2/m5-focus` could not be used (deviation, recorded).
+  Picking up newer M5 work means `git merge v2/m5-focus` (the local ref,
+  read-only for Codex) or `origin/v2/m5-focus` once it exists.
+- Python environment: `~/coco_labs_ws/worktrees/m6-venv` (Python 3.12.3,
+  `--system-site-packages --without-pip`, made like `~/coco_labs_ws/test_venv`,
+  with that venv's pinned hypothesis 6.98.15, networkx 2.8.8 and
+  sortedcontainers 2.4.0 copied in). PYTHONPATH points at this worktree's
+  `coco_schemas`, `coco_schemas/coco_schemas/gen`, `coco_lab`, `coco_config`
+  and `/opt/ros/jazzy/lib/python3.12/site-packages` (the ament linters).
+- Baseline, on the untouched branch at `0254dea`, under `nice -n 19` with
+  Codex active (load average 4.2 on 12 cores):
+  - `coco_lab`: **824 passed**, 0 failed, 0 skipped (290.7 s)
+  - `coco_schemas`: **232 passed**, 0 failed, 0 skipped (6.5 s)
+- Machine at setup: AC online, profile `balanced`, NVIDIA driver 580.178.04
+  (RTX 4050 Laptop GPU), `gz` CLI present (`/opt/ros/jazzy/opt/gz_tools_vendor/bin/gz`).
+  Codex was running (`codex resume`, PID 18281, plus the Codex desktop app).
+  No Gazebo, Isaac or ROS 2 process was running.
+
+## M6F.1 — World Spec v3 (2026-10-17)
+
+- `coco_lab/coco_lab/worldspec_v3.py`: the kit (wall, door, rack with aisles,
+  bench, pallet, box, ramp, platform, zone, object, actor), its validator and its
+  lowering onto v2's `boxes`/`elevation`; `from_v2`. Docs `docs/v2/m6/WORLD_SPEC_V3.md`,
+  decision `docs/v2/adr/0100-world-spec-v3-level-kit.md`. Evidence class MODEL.
+- v1/v2 unchanged, proved by `coco_lab/test/test_worldspec_v3.py` against
+  `coco_lab/test/fixtures/m6f/prechange_v1v2.json` (made at `0d1f37f`, committed in
+  `1e7b7f2` before any v3 code) and the first 10 committed M1 determinism sessions
+  (`docs/v2/data/m1/determinism/`, Pyodide hashes): canonical bytes, maps and every
+  per-tick hash identical. Every existing golden-trace and hash test passed unedited.
+- Tests: `coco_lab` 895 passed / 0 failed / 0 skipped (824 before), nice 19,
+  Codex running (`codex resume`), 381.6 s.
+
+## M6F.2 — Generators (2026-10-17)
+
+- `coco_lab/coco_lab/worldgen.py` (stdlib only): the Arena model world at any
+  resolution (`arena_world`, `arena_world_json`), the Gazebo SDF world
+  (`sdf_world`: template-kept physics/systems/lights; static boxes; STL wedges;
+  platforms; dynamic objects; actors as models **with collision bodies**, kinematic,
+  plus `actors.json`), standalone spawnable objects (`object_sdf`), the Nav2 map
+  (`nav2_map`, `gen_navigation_world.py`'s rules). `tools/m6/gen_level.py` writes all
+  of it plus `nav2_params.yaml` derived from `gazebo_models/config/nav2_params.yaml`
+  (untouched; 3 keys changed, listed in `params_derivation.json`), runs `gz sdf -k`,
+  and records checksums.
+- Proving Ground (`docs/v2/m6/PROVING_GROUND.md`): the Nav2 PGM for the v1 and v2
+  arena specs is byte-identical to `gazebo_models/maps/coco_navigation.pgm`; the YAML
+  differs only in the image name; all 70 boxes and every non-model world element are
+  identical to `coco_navigation.world`; the 12 ramp/platform models match the launch
+  file's spawns (names differ; rise differs by 3.4e-13 m) and the wedge mesh equals
+  `ramp_wedge_18.stl`'s vertices to 6 decimals; `gz sdf -k`: Valid. Checksums:
+  `docs/v2/m6/data/coco_arena_v2_outputs.json`. Evidence class MODEL.
+- Tests: `coco_lab/test/test_worldgen.py` (19), incl. the SDF round trip, PGM vs the
+  model's occupancy, YAML origin/resolution, and `gz sdf -k` (gz present).
+
+## M6F.3 — The COCO Depot (2026-10-17)
+
+- `worlds/coco_depot_v1.yaml` (48 x 32 m, six zones, 72 boxes, ramp + mezzanine deck,
+  18 objects, 4 actors), generated by `worlds/tools/make_coco_depot_v1.py` (seeded maze,
+  actor phases searched so no two actors meet in 600 s, robot block copied from v2).
+  Design notes per zone and the cited envelope: `docs/v2/m6/DEPOT_DESIGN.md`.
+- `coco_lab/coco_lab/grasp_assist.py` (static part): reasons, envelope from
+  `grasp.WINDOW`, `grasp.TARGET_DIAMETER`, `grasp.TARGET_HEIGHT`, `arm.ik`,
+  `arm.HOVER_CLEARANCE`; derived reach band 0.099-0.128 m.
+- Outputs: 27 files; `gz sdf -k` Valid on all 19 SDFs; checksums in
+  `docs/v2/m6/data/coco_depot_v1_outputs.json` (reproduced by a test).
+- Tests: `coco_lab/test/test_depot.py` (18); `coco_lab` 932 / 0 / 0, nice 19, Codex running.
+
+## M6F.5 — Grasp Assist, model side (2026-10-17)
+
+- `coco_lab/coco_lab/grasp_assist.py`: the Arena subsystem `assist` (detect, check,
+  choose, approach, align, creep, reach by IK, grip, verify, carry, release), events on
+  the new additive family `manip.grasp` (`coco_schemas/proto/coco/manip/v1/grasp.proto`:
+  GraspEnvelope, CandidateBatch, StageBatch; Python and TypeScript generated) and the arm
+  on `coco.arm.state.v1`. Doc `docs/v2/m6/GRASP_ASSIST.md`. Evidence class MODEL.
+- 13 Depot scenarios with golden traces (`coco_lab/test/fixtures/m6f/grasp_*.json`):
+  every refusal reason; every pick ends inside the Stack's window (0.15375-0.154 m ahead).
+- Tests: `coco_lab` 976 / 0 / 0; `coco_schemas` 241 / 0 / 0 (232 before);
+  `coco_lab_ros` 150 passed / **4 failed** — `test_lab5.py::test_lab_stack_knows_both_overlays_and_refuses_others`,
+  `test_launch.py` (2), `test_static_smoke.py::test_the_pipeline_on_real_planners`: each
+  looks up a package in the ament index — `gazebo_models`, `custom_teleop` or
+  `coco_lab_ros` (`PackageNotFoundError`; the smoke test's `planner_server` cannot start
+  without it). They need a colcon overlay of this worktree (none built yet; scheduled with
+  M6F.8). Not caused by M6 code; not yet re-run on an overlay. (These runs' shell also
+  inherited `~/ros2_ws/install` prefixes from the environment; stripped from later runs.)
+
+## M6F.6 — Fetch Rush and Rush Hour, model side (2026-10-17)
+
+- `coco_lab/coco_lab/games.py`: the Arena subsystem `actors` (the Depot's forklifts and
+  walkers as discs covering their boxes: solid, seen by the LiDAR); the rules as
+  observers of the tick stream (a game = spec + seed + input log); stars from the
+  reference bot's result; the reference bots (planner + Grasp Assist, yielding to
+  actors); `verify` within M5's link limits. Doc `docs/v2/m6/GAMES.md`; references
+  `docs/v2/m6/data/games_reference.json` (all four reproduce). Evidence class MODEL.
+- Reference results (Arena seed 1, nice 19, Codex running): Fetch Rush seeds 1 and 2 —
+  1 delivery, 0 contacts, 136.7 s used, path efficiency 0.987; seed 3 — 0 deliveries (its
+  first order's ghost is 77.9 m, ~260 s at 0.3 m/s). Rush Hour `aisle_to_dispatch` —
+  delivered, 102.2 s, 0 contacts, min clearance 0.573 m, jerk RMS 3.95 m/s^3.
+- Tests: `coco_lab/test/test_games.py` (19); `coco_lab` 995 / 0 / 0.
+- Merge point: the browser HUDs and `coco verify` wiring for games (UI phase); the
+  Python side is `games.play` / `games.verify`.
+
+## M6F.7 — the ROS-shaped model (2026-10-17)
+
+- `coco_lab/coco_lab/ros_shapes.py`: LaserScan, OccupancyGrid, Twist/TwistStamped, Path,
+  Odometry, TF (`map -> odom -> base_footprint -> base_link -> lidar_link`, COCO's URDF
+  names as the Stack records them), and `ros_graph()` (`docs/v2/m6/data/ros_graph.json`).
+  Doc `docs/v2/m6/ROS_SHAPES.md`. Evidence class MODEL; the comparison is MODEL vs STACK.
+- Field by field against the real Jazzy messages (`coco_lab_ros/test/test_m6f_ros_shapes.py`,
+  8 tests); against two committed Stack bags: every shape agrees but intensities (model 0,
+  Stack 480); scan values over 30 recorded scans, 13,890 beams: median |d| 0.0495 m,
+  p90 0.147 m, 50.1 % within 0.05 m (`docs/v2/m6/data/ros_shapes_vs_stack.json`).
+- Tests: `coco_lab` 1,001 / 0 / 0; `coco_lab_ros` 158 passed / 4 failed (the same four
+  overlay-dependent tests as M6F.5).
+
+## Plan-change entries to copy into docs/STATUS.md at merge
+
+- **2026-10-17 — M6 foundations start in parallel with M5 (Gautham).** By
+  issuing `docs/v2/m6/PARALLEL_PROMPT.md`, Gautham authorised one plan change:
+  M6's foundations (World Spec v3 and the level kit, the generators, the Depot
+  level, the Depot planning benchmark, Grasp Assist on the model side, the
+  Fetch Rush and Rush Hour rules engines, the ROS-shaped message model, and
+  the Gazebo/Nav2 validation) start now on branch `v2/m6-foundations`,
+  without any user interface, in parallel with M5. They merge only after M5
+  merges.
+
+## Known merge points with M5
+
+(Files outside this branch's own new files that this branch changes, or that
+M5 is likely to change too. Updated at every checkpoint.)
+
+- `coco_lab/coco_lab/worldspec.py` (M6F.1): `SPEC_VERSION_V3`,
+  `TERRAIN_SPEC_VERSIONS`, the v3 hand-off at the top of `normalize`, and
+  `arena_map`'s terrain check (`in TERRAIN_SPEC_VERSIONS`). M5 (to `0254dea`) has not
+  touched this file.
+- `coco_lab/coco_lab/arena.py` (M6F.1): the worldspec import line, the terrain check
+  in `Arena.__init__` (`in TERRAIN_SPEC_VERSIONS`), and a 4-line refusal of the legacy
+  gated grasp on a v3 level. **M5 has edited this file** (12 lines at `0254dea`), so a
+  textual conflict is possible; both edits are small and independent.
+- `coco_schemas/coco_schemas/channels.py` (M6F.5): three `manip.grasp` channels and
+  `M6_FAMILIES`. **M5 edited this file** (`costmap.layers`, `M5_FAMILIES`): a textual
+  conflict on the `FAMILIES = ...` line is likely; resolve as
+  `M1_FAMILIES + M2_FAMILIES + M5_FAMILIES + M6_FAMILIES`.
+- `lab_web/src/schemas/gen/coco/manip/v1/grasp_pb.ts` (new generated file only; no
+  existing generated index or barrel changed — `generate.py --check` reproduces every
+  existing file byte for byte with the pinned protoc-gen-es 2.15.0).
+- Not changed, deliberately: `coco_lab/coco_lab/columns.py` (its TABLES are enumerated by
+  `coco_schemas/test/test_columns_m2.py`; Grasp Assist keeps its own tables, held to the
+  proto by `coco_lab_ros/test/test_m6f_manip_schema.py`). At merge, M5 and M6 may prefer
+  to move them into `columns.TABLES` with the vectors regenerated.
+
+## Pending heavy items
+
+(Heavy jobs wait for an idle machine: Codex not running, no robot batch, AC.)
+
+- **M6F.8 Gazebo + Nav2 validation of the Depot: pending, machine busy.** Codex active
+  all session. Plan, with the facts it depends on: `docs/v2/m6/M6F8_PLAN.md`.
+- **M6F.4 Depot planning benchmark (CPython and Pyodide-in-Node, nice off):
+  pending, machine busy.** 2026-10-17 17:05: `codex resume` running and seven
+  `lab_web/tools/perf/serve_dist.mjs` servers (ports 4200-4206) up — Codex's M5
+  measurement setup (8 at 17:10). The harness is committed; run it when Codex is idle:
+  `nice -n 0 python3 tools/m6/bench_planning.py --spec worlds/coco_depot_v1.yaml
+  --out docs/v2/m6/data/m6f4/cpython.json --write-json tools/m6/out/coco_depot_v1.json`,
+  then `npm install pyodide@314.0.7 --prefix ~/coco_labs_ws/worktrees/m6-node` and
+  `node tools/m6/bench_planning_pyodide.mjs --pyodide ~/coco_labs_ws/worktrees/m6-node/node_modules/pyodide
+  --spec-json tools/m6/out/coco_depot_v1.json --out docs/v2/m6/data/m6f4/pyodide_node.json`
+  (Node 24.21.0 from `~/coco_v2_ws/node`). Budget: 300 ms warm per plan; over budget -> ADR
+  proposing the WebAssembly gate (numbered 0101+).

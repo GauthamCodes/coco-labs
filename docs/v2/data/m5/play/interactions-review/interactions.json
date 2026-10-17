@@ -1,0 +1,45 @@
+{
+  "class": "TESTED functional checks, synthetic visibility; no performance budget claim",
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-16T19:05:24.865Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Charging",
+        "capacity_pct": 32
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 12.17,
+        "5m": 14.31,
+        "15m": 10.96
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-16T19:06:05.408Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Charging",
+        "capacity_pct": 34
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 12.92,
+        "5m": 14.17,
+        "15m": 11.07
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    }
+  },
+  "result": {},
+  "errors": []
+}

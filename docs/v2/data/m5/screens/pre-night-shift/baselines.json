@@ -1,0 +1,64 @@
+{
+ "conditions": {
+  "start": {
+   "at_utc": "2026-10-12T17:40:24.211Z",
+   "power_profile": "balanced",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 49
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 5.1,
+    "5m": 3.34,
+    "15m": 2.3
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  },
+  "end": {
+   "at_utc": "2026-10-12T17:41:19.153Z",
+   "power_profile": "balanced",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 47
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 7.09,
+    "5m": 4.09,
+    "15m": 2.61
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ },
+ "mode": "make",
+ "site": "https://gauthamcodes.github.io/coco-labs/",
+ "renderer": "chromium default (SwiftShader)",
+ "channel_tol": 40,
+ "max_bad": 0.005,
+ "results": {
+  "trace_bfs_no_path": {
+   "bytes": 14603
+  },
+  "trace_costmap_astar": {
+   "bytes": 22611
+  },
+  "stack_lab1c_astar_t400": {
+   "bytes": 24378
+  },
+  "stack_lab1c_greedy_t300": {
+   "bytes": 24978
+  },
+  "attract_t200": {
+   "bytes": 55449
+  }
+ },
+ "errors": [],
+ "pass": true
+}

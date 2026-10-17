@@ -1,9 +1,10 @@
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
+import {trapDialogTab} from '../ui/dialog';
 
 /** A Play score on screen (M3.5): the stars, every named metric, the thresholds, the link. */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, type ReactNode } from 'react';
 
 import { evidenceHref } from '../learn/LearnApp';
 import { keepBest, type Best, type PlayResult } from './best';
@@ -20,9 +21,18 @@ function show(v: unknown): string {
   return v === null || v === undefined ? '—' : String(v);
 }
 
-export function ResultView({ result, submission, reproduced }: {
-  result: PlayResult; submission: Submission; reproduced?: boolean | null;
+export function ResultView({ result, submission, reproduced, onReplay, pathReview }: {
+  result: PlayResult; submission: Submission; reproduced?: boolean | null; onReplay?:()=>void; pathReview?:ReactNode;
 }) {
+  const dialog=useRef<HTMLDialogElement>(null);
+  const heading=useRef<HTMLHeadingElement>(null);
+  const [review,setReview]=useState(false);
+  useEffect(()=>{if(dialog.current&&!dialog.current.open){dialog.current.showModal();heading.current?.focus({preventScroll:true});dialog.current.scrollTop=0;}},[result]);
+  const replay=()=>{dialog.current?.close();setReview(true);onReplay?.();};
+  const retry=()=>{
+    const query=new URLSearchParams(window.location.search);query.delete('s');query.delete('z');
+    window.location.assign(`${window.location.pathname}?${query}`);
+  };
   const [best, setBest] = useState<Best | null>(null);
   const [copied, setCopied] = useState(false);
   useEffect(() => { if (reproduced === undefined) setBest(keepBest(result)); }, [result, reproduced]);
@@ -31,8 +41,12 @@ export function ResultView({ result, submission, reproduced }: {
     void navigator.clipboard?.writeText(link).then(() => setCopied(true)).catch(() => setCopied(false));
   };
   return (
+    <><button className="score-return" hidden={!review} onClick={()=>{setReview(false);dialog.current?.showModal();heading.current?.focus({preventScroll:true});if(dialog.current)dialog.current.scrollTop=0;}}>Back to scorecard</button>
+    <dialog className="play-scorecard" onKeyDown={trapDialogTab} ref={dialog} aria-label="Scorecard" onCancel={()=>setReview(true)}>
     <section className="play-result" data-testid="play-result" data-hash={result.hash} data-stars={result.stars}
       data-valid={String(result.valid)}>
+      <header><h1 ref={heading} tabIndex={-1}>{result.valid?'Your result':'Run not scored'}</h1><span>MODEL · kinematic</span></header>
+      {pathReview}
       {reproduced !== undefined && reproduced !== null && (
         <p className={reproduced ? 'reproduced' : 'not-reproduced'} data-testid="play-reproduced" role="status">
           {reproduced ? 'Reproduced exactly: re-scored from the link\'s inputs, the same result hash.'
@@ -58,6 +72,7 @@ export function ResultView({ result, submission, reproduced }: {
       <p className="cite">Stars come from reference algorithms on this level:{' '}
         <a href={evidenceHref('docs/v2/CHALLENGES.md')} target="_blank" rel="noreferrer">docs/v2/CHALLENGES.md</a>.
         Result hash <code>{result.hash.slice(0, 12)}</code>.</p>
+      <div className="score-actions"><button onClick={replay}>Replay</button><button onClick={retry}>Try again</button><button onClick={copy}>Share</button></div>
       {reproduced === undefined && (
         <p className="play-share">
           <button type="button" onClick={copy} data-testid="play-copy">Copy a challenge link</button>{' '}
@@ -65,6 +80,6 @@ export function ResultView({ result, submission, reproduced }: {
           {best && <span className="play-best" data-testid="play-best"> · your best here: {stars(best.stars)} {show(best.score)}</span>}
         </p>
       )}
-    </section>
+    </section></dialog></>
   );
 }

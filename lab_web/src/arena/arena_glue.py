@@ -53,7 +53,7 @@ def emit_header(channel, header):
 
 
 def init(spec_json, seed, planner, post_batch, batch_size=2048,
-         post_family=None):
+         post_family=None, hash_version=1):
     """Build the Arena; return (world JSON, occupancy bytes)."""
     global _arena, _post_family, _spec_json, _budget
     _post_family = post_family
@@ -71,7 +71,7 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
 
     _arena = Arena(json.loads(spec_json), int(seed), planner=planner,
                    on_plan_batch=hook, plan_batch_size=int(batch_size),
-                   on_family=family)
+                   on_family=family, hash_version=int(hash_version))
     m = _arena.lab_map
     li = _arena.lidar
     world = {
@@ -98,7 +98,8 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
     return json.dumps(world), m.occupancy
 
 
-def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048):
+def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
+            inflation_json=None, planners_json=None):
     """
     Run two planners from the robot's cell to (gx, gy); change nothing.
 
@@ -113,14 +114,42 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048):
     from coco_lab.sketch import _nearest_free
 
     a = _arena
+    names = json.loads(planners_json) if planners_json else [planner_a, planner_b]
+    if (not isinstance(names, list) or len(names) not in (2, 4) or
+            any(not isinstance(name, str) or name not in PLANNERS
+                for name in names)):
+        raise ValueError('Compare needs two or four supported planners')
     g = a.grid
-    s = _nearest_free(g, a.plan_map.cell_at(a.pose[0], a.pose[1]))
+    if inflation_json is not None:
+        from coco_lab.costmap import (InflationParams, build_layers,
+                                      scan_obstacle_cells, emit_layers)
+        from coco_lab.grid import Grid
+        m, li = a.lab_map, a.lidar
+        params = InflationParams(**json.loads(inflation_json))
+        hits = scan_obstacle_cells(m, a.belief(), a.ranges, a.angles,
+                                   li.mount, li.range_min, li.range_max)
+        layers = build_layers(m.width, m.height, m.resolution,
+                              [v != 0 for v in m.occupancy], hits, params)
+        emit_layers(layers, params, m.origin,
+                    lambda channel, tick, columns, scalars:
+                    emit_header(channel, scalars) if columns is None else
+                    emit_family(channel, tick, columns, scalars),
+                    tick=a.tick, t_world=a.t_world, update=a.tick)
+        # A separate graph: never assign Arena.grid/plan_map or its radius.
+        g = Grid(m.width, m.height,
+                 blocked=[v >= 253 for v in layers.combined],
+                 cost=layers.combined, connectivity=8)
+    here = a.belief() if inflation_json is not None else a.pose
+    s = _nearest_free(g, a.plan_map.cell_at(here[0], here[1]))
     t_cell = a.plan_map.cell_at(float(gx), float(gy))
     if s is None or t_cell is None:
         raise ValueError(f'goal ({gx}, {gy}) or the robot is off the map')
     t = _nearest_free(g, t_cell)
+    if t is None:
+        raise ValueError('costmap has no free goal cell')
     out = {}
-    for side, sid, name in (('A', -101, planner_a), ('B', -102, planner_b)):
+    for i, name in enumerate(names):
+        side, sid = 'ABCD'[i], -101 - i
         if name not in PLANNERS:
             raise ValueError(f'unknown planner {name!r}')
         cols = SearchEventColumns(search_id=sid, tick=a.tick,
@@ -253,8 +282,18 @@ def play(request_json):
     if op == 'view':
         return json.dumps(p.view(req['levels'], req['challenge'], req['level']))
     if op == 'score':
-        return json.dumps(p.score(req['levels'], req['submission'],
-                                  json.loads(_spec_json)))
+        result = p.score(req['levels'], req['submission'], json.loads(_spec_json))
+        expected = req.get('expected_hash')
+        if expected:
+            candidates = p.verification_hashes(result)
+            if req['submission'].get('hash_version', 1) != 1:
+                candidates = {'canonical': result['hash']}
+            for layout, digest in candidates.items():
+                if expected == digest:
+                    result['verified_hash'] = digest
+                    result['verification_layout'] = layout
+                    break
+        return json.dumps(result)
     if op == 'map_begin':
         _budget = p.MapBudget(float(req['budget_m']), _arena.pose)
         return json.dumps({'path_m': 0.0, 'budget_m': _budget.budget_m})

@@ -20,7 +20,7 @@
  * archive is built from 9f58b83, which carries M0's public fixes).
  */
 
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
 import { conditions } from './conditions.mjs';
@@ -42,7 +42,7 @@ const EDIT = Buffer.from([0xbd, 0x01, 0x01]).toString('base64url');
 const mission = (id) => ({ kind: 'mission', id });
 const v1 = (pressed) => ({ kind: 'v1', pressed });
 const FORMS = [
-  ['', { kind: 'arena', mode: ['attract', 'live'] }],
+  ['', { kind: 'title' }],
   ['?view=plan', mission('find-a-path')],
   ['?view=localise', mission('where-it-is')],
   ['?view=map', mission('build-a-map')],
@@ -66,6 +66,42 @@ const FORMS = [
   ['v1/', v1('view-lab')],
 ];
 
+// M5.5 keeps the original 22 forms above and adds all M3/M4 link families.
+const corpus = JSON.parse(readFileSync(new URL('../../../docs/v2/data/m5/defects/link-corpus-v2.json', import.meta.url)));
+const publicQuery = (link) => new URL(link, SITE).search;
+for (const field of ['s', 'z']) {
+  const candidates = corpus.links.map(row => row.link).filter(link => new URL(link, SITE).searchParams.has(field)).sort((a,b) => a.length-b.length);
+  if (!candidates.length) throw new Error('No committed '+field+' link');
+  FORMS.push([publicQuery(candidates[0]), { kind:'shared', field }]);
+}
+const levels = JSON.parse(readFileSync(new URL('../../public/generated/play/levels.json', import.meta.url)));
+FORMS.push(['?view=play', { kind:'play' }], ['?view=arena', { kind:'arena' }],
+ ['?view=arena&world=v2&camera=follow', { kind:'arena' }],
+ ['?view=arena&lens=localise&level=inspect&camera=topdown', { kind:'arena' }],
+ ['?view=compare', { kind:'compare' }], ['?view=about', { kind:'about' }],
+ ['?view=learn&mission=find-a-path', mission('find-a-path')],
+ ['?view=compare&tour=find-a-path', mission('find-a-path')]);
+for (const [challenge, data] of Object.entries(levels.challenges)) FORMS.push([`?view=play&c=${challenge}&l=${data.levels[0].id}`, { kind:'play' }]);
+for (const challenge of ['map-the-arena','case-file-detective','race-the-ghost']) {
+ const level=levels.challenges[challenge].levels[0];
+ const query=new URLSearchParams({view:'arena',play:challenge,pl:level.id});
+ if(challenge==='race-the-ghost'){query.set('camera','follow');query.set('seed',String(level.seed));query.set('lens','plan');}
+ else if(challenge==='map-the-arena'){query.set('lens','map');for(const cfg of level.config)query.append('cfg',cfg);}
+ else {query.set('casefile',level.casefile);query.set('lens','localise');}
+ FORMS.push(['?'+query.toString(),{kind:challenge==='case-file-detective'?'recording':'arena'}]);
+}
+const cases = JSON.parse(readFileSync(new URL('../../public/generated/casefiles/cases.json', import.meta.url)));
+const group = cases.groups.find(group => group.casefiles.some(file => !file.void));
+const file = group.casefiles.find(file => !file.void);
+FORMS.push(['?view=casefiles', { kind:'library' }], ['?view=research', { kind:'library' }],
+ [`?view=casefiles&case=${group.id}`, { kind:'case-group' }],
+ [`?view=casefiles&case=${group.id}&file=${file.id}`, { kind:'case-detail' }],
+ [`?view=arena&casefile=${file.id}`, { kind:'recording' }]);
+{
+ const runs = JSON.parse(readFileSync(args.runs ?? new URL('../../../docs/v2/data/m5/app-shell/warm-model.json', import.meta.url)));
+ for (const row of runs.rows) FORMS.push([row.link,{kind:'run',hashVersion:row.hashVersion,spec:row.spec}]);
+}
+
 // the archive's own six views, each opened directly
 const ARCHIVE_VIEWS = [
   ['v1/', 'view-lab'], ['v1/?view=localise', 'view-localise'], ['v1/?view=map', 'view-map'],
@@ -83,13 +119,38 @@ for (const [form, want] of FORMS) {
   const row = { form, want, errors };
   try {
     await page.goto(`${SITE}${form}`);
-    if (want.kind === 'mission') {
+    if (want.kind === 'title') {
+      await page.waitForSelector('[data-testid="title"] canvas[data-scene-ready="true"]', { timeout:60000 });
+    } else if (want.kind === 'compare') {
+      await page.waitForSelector('[data-testid="reference-compare"][data-ready="true"]', { timeout:60000 });
+    } else if (want.kind === 'about') {
+      await page.waitForSelector('[data-testid="about"]');
+    } else if (want.kind === 'play') {
+      await page.waitForSelector('[data-testid="play"]', { timeout:60000 });
+    } else if (want.kind === 'shared') {
+      await page.waitForSelector('[data-testid="play-reproduced"]', { timeout:120000 });
+      row.reproduced = await page.getByTestId('play-reproduced').textContent();
+      if (!row.reproduced.startsWith('Reproduced exactly')) throw new Error(row.reproduced);
+    } else if (want.kind === 'library') {
+      await page.waitForSelector('[data-testid="casefiles"]', { timeout:60000 });
+    } else if (want.kind === 'case-group') {
+      await page.waitForSelector('[data-testid="casefile-group"]', { timeout:60000 });
+    } else if (want.kind === 'case-detail') {
+      await page.waitForSelector('[data-testid="casefile-compare"]', { timeout:60000 });
+    } else if (want.kind === 'recording') {
+      await page.waitForFunction(() => document.querySelector('[data-testid="arena-mode"]')?.dataset.mode === 'recording', null, { timeout:60000 });
+    } else if (want.kind === 'run') {
+      await page.waitForFunction(() => document.querySelector('[data-testid="arena-mode"]')?.textContent?.includes('reproduced exactly'), null, { timeout:120000 });
+      row.reproduced = await page.getByTestId('arena-mode').textContent();
+    } else if (want.kind === 'mission') {
       await page.waitForSelector(`[data-testid="mission"][data-mission="${want.id}"]`, { timeout: 30_000 });
     } else if (want.kind === 'replay') {
       await page.waitForFunction(() => document.querySelector('[data-testid="arena-mode"]')?.dataset.mode === 'recording', null, { timeout: 60_000 });
+      await page.waitForFunction(() => !!window.__cocoArena?.session()?.shownTick, null, { timeout:120000 });
       if (!page.url().includes(`replay=${want.id}`)) throw new Error(`landed on ${page.url()}`);
     } else if (want.kind === 'arena') {
       await page.waitForSelector('[data-testid="arena"]', { timeout: 60_000 });
+      await page.waitForFunction(() => !!window.__cocoArena?.client?.world, null, { timeout:120000 });
     } else if (want.kind === 'live') {
       await page.waitForSelector('[data-testid="nav-arena"]', { timeout: 30_000 });
       row.badge = await page.getByTestId('mode-badge').textContent();

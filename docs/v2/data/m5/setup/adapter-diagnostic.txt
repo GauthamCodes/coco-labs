@@ -1,0 +1,45 @@
+.....E
+==================================== ERRORS ====================================
+_ ERROR at setup of test_lab5_truth_is_the_simulators_odometry_moved_to_the_map_frame _
+
+    @pytest.fixture(scope='module')
+    def lab5_full():
+>       data, summary = A.convert(LAB5, CASE, 'full', source_root=BAGS)
+
+test/test_adapter.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+bag = '/home/gautham/coco_labs_ws/src/coco-labs/coco_lab_ros/test/fixtures/bags/lab5_crossing_dwb_1'
+case = {'controller': 'DWB', 'id': 'fixture', 'title': 'a fixture', 'world_to_map': [2, 0]}
+detail = 'full', window = None, world_to_map = None, log_window = None
+source_root = '/home/gautham/coco_labs_ws/src/coco-labs/coco_lab_ros/test/fixtures/bags'
+git_sha = ''
+
+    def convert(bag, case: dict, detail: str = 'summary',
+                window: Optional[Tuple[float, float]] = None,
+                world_to_map: Optional[Tuple[float, float]] = None,
+                log_window: Optional[Tuple[int, int]] = None,
+                source_root: Optional[str] = None, git_sha: str = '') -> Tuple[bytes, dict]:
+        """
+        Convert one recording; return ``(run file bytes, summary)``.
+    
+        ``bag`` is a bag directory, or a list of them recorded on one simulation
+        clock (a session and a replay of it): their messages are merged in
+        ``t_world`` order and every file of every bag is cited.
+    
+        ``case`` is the Case File's spec (its id, title, lab, controller ...),
+        written into the manifest as given. ``window`` keeps only messages with
+        ``t_world`` in ``[start, end]`` (simulation seconds). ``log_window``
+        first keeps only messages, and clock-reference pairs, with a bag LOG time
+        in ``[start, end]`` (ns): a recorder that outlived its run and caught the
+        next run's fresh simulator (whose clock restarts) is cut by it.
+        ``world_to_map`` defaults to the run directory's ``meta.json``.
+        """
+>       from coco_schemas import mcap_write, runid
+E       ModuleNotFoundError: No module named 'coco_schemas'
+
+coco_lab_ros/adapter.py:283: ModuleNotFoundError
+=========================== short test summary info ============================
+ERROR test/test_adapter.py::test_lab5_truth_is_the_simulators_odometry_moved_to_the_map_frame
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+5 passed, 1 error in 0.16s

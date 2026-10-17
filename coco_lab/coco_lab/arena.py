@@ -76,8 +76,8 @@ from .sketch import (_inflated_grid_map, _nearest_free, apply_delta,
                      drive_command, LidarSpec, odom_delta, sample_delta,
                      SketchMap, step_pose, wrap)
 from .terrain import ray_rect, Terrain
-from .worldspec import (arena_map, normalize, scan_height, SPEC_VERSION_V2,
-                        terrain_map, to_map_frame)
+from .worldspec import (arena_map, normalize, scan_height, SPEC_VERSION_V3,
+                        terrain_map, TERRAIN_SPEC_VERSIONS, to_map_frame)
 
 #: The state-hash layout's name; a change to the layout changes this.
 STATE_LAYOUT = b'coco.arena.state.v1\x00'
@@ -216,8 +216,11 @@ class Arena:
     def __init__(self, spec: Dict[str, object], seed: int,
                  planner: str = 'astar', range_sigma: float = 0.0,
                  lidar_every: int = 1, on_plan_batch=None,
-                 plan_batch_size: int = 2048, on_family=None):
+                 plan_batch_size: int = 2048, on_family=None, hash_version: int = 1):
         """Build the world from ``spec`` and place the robot at its start."""
+        if hash_version not in (1, 2):
+            raise ArenaError('hash_version must be 1 or 2')
+        self.hash_version = hash_version
         self.spec = normalize(spec)
         if planner not in PLANNERS:
             raise ArenaError(f'unknown planner {planner!r}')
@@ -228,7 +231,7 @@ class Arena:
         # M4.3: kinematic terrain following on a World Spec v2 (ADR 0007); a
         # v1 (flat) world has none, and everything below is exactly M3's
         self.terrain = Terrain(self.spec) \
-            if self.spec['spec_version'] == SPEC_VERSION_V2 else None
+            if self.spec['spec_version'] in TERRAIN_SPEC_VERSIONS else None
         #: what the LiDAR meets: on terrain the boxes alone (the ramps are met
         #: analytically, above the beam); on a flat world the one map
         self.scan_smap = SketchMap(terrain_map(self.spec, scan_only=True)) \
@@ -294,6 +297,10 @@ class Arena:
         self._chain = hashlib.sha256(STATE_LAYOUT).digest()
         self._reset_robot()
         self.ranges = self._scan()
+        if self.hash_version == 2:
+            from .state_v2 import world_hash
+            self._v2_world = world_hash(self.spec, self.lidar)
+            self._chain = hashlib.sha256(b'coco.arena.state.v2').digest()
 
     # -- state -----------------------------------------------------------------
 
@@ -386,6 +393,10 @@ class Arena:
             if self.terrain is None:
                 self.grasp_notice = ('no targets on a flat world: the grasp is on the 3D '
                                      "arena's platforms (World Spec v2)")
+                return
+            if self.spec['spec_version'] == SPEC_VERSION_V3:   # M6F.5: Grasp Assist instead
+                self.grasp_notice = ("the gated grasp holds the COCO arena's targets; a "
+                                     'World Spec v3 level picks with Grasp Assist')
                 return
             if self.grasp is None:
                 self.grasp = Grasp(self.spec['world_to_map'])
@@ -863,6 +874,9 @@ class Arena:
             z, pitch, roll = self.tilt()
             parts += [TERRAIN_LAYOUT, struct.pack('<3q', _q(z, Q_STATE), _q(pitch, Q_STATE),
                                                   _q(roll, Q_STATE))]
+        if self.hash_version == 2:
+            from .state_v2 import snapshot
+            return b'coco.arena.state.v2\0' + snapshot(self)
         return b''.join(parts)
 
     def grasp_view(self) -> Optional[Dict[str, object]]:

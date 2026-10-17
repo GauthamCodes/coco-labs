@@ -1,0 +1,17 @@
+ok   list: 6 challenges
+ok   beat-the-planner/two-fields stars 3 score 1 scorer 4069 ms, scored in 109 ms, reproduced true in 4363 ms
+ok   beat-the-planner/bog stars 3 score 1 scorer 3894 ms, scored in 31 ms, reproduced true in 4365 ms
+ok   beat-the-planner/mud-field stars 3 score 1 scorer 4672 ms, scored in 43 ms, reproduced true in 5426 ms
+ok   next-node/wall stars 3 score 10 scorer 4475 ms, scored in 29 ms, reproduced true in 2831 ms
+ok   next-node/mud stars 3 score 10 scorer 2266 ms, scored in 28 ms, reproduced true in 2827 ms
+ok   next-node/u-trap stars 3 score 10 scorer 2403 ms, scored in 31 ms, reproduced true in 2824 ms
+ok   search-the-bays/no-idea stars 3 score 1 scorer 2308 ms, scored in 35 ms, reproduced true in 2841 ms
+ok   search-the-bays/far-end stars 3 score 1 scorer 2332 ms, scored in 31 ms, reproduced true in 2831 ms
+ok   search-the-bays/ends stars 3 score 1 scorer 2285 ms, scored in 26 ms, reproduced true in 2841 ms
+ok   search-the-bays/poor-camera stars 3 score 1 scorer 2342 ms, scored in 29 ms, reproduced true in 2825 ms
+ok   case-file-detective/told-wrong stars 3 score 0 scored in 850 ms, reproduced true in 6456 ms
+ok   case-file-detective/kidnapped stars 3 score 0 scored in 941 ms, reproduced true in 7512 ms
+ok   case-file-detective/kidnapped-far stars 3 score 0 scored in 939 ms, reproduced true in 7415 ms
+ok   case-file-detective/kidnapped-again stars 3 score 0 scored in 1012 ms, reproduced true in 8524 ms
+ok   map-the-arena/twenty-five-metres stars 1 score 0.3460 scored in 11332 ms, reproduced true in 17736 ms
+{"rows":15,"ok":15,"list_ok":true}

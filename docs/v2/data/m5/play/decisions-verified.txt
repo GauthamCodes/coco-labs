@@ -1,0 +1,8 @@
+file:///home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/m56_decisions_check.mjs:41
+ if(profile.device===DEVICE_NAME&&layout.controls.some(control=>control.box.width<47.9||control.box.height<47.9))throw Error(`${profile.name} ${game.name}: touch target below 48 CSS px`);
+                                                                                                                       ^
+
+Error: nothing-portrait map-the-arena: touch target below 48 CSS px
+    at file:///home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/m56_decisions_check.mjs:41:120
+
+Node.js v24.21.0

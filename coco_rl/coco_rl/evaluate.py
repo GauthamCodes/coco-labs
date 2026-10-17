@@ -60,7 +60,7 @@ def main():
     ap.add_argument('--start-progress', type=float, default=0.0, metavar='M',
                     help='begin each episode this many metres along +x from '
                          'spawn, matching train_ppo --start-progress. Default 0 '
-                         'is the FULL task. Note train_curriculum.sh does not '
+                         'is the FULL task. Note coco_rl/scripts/train_curriculum.sh does not '
                          'pass this, so a staged run evaluates every stage on '
                          'the full task even though the stage trained from '
                          'further along — that is the more meaningful number, '

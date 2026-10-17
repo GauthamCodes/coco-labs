@@ -70,6 +70,7 @@ export class QualityController {
   private intervals: number[] = [];
   private good = 0;
   private slow = 0;
+  private visibleStalls = 0;
   /** how many times this session stepped down FROM each tier */
   private downsFrom: Record<Tier, number> = { high: 0, medium: 0, low: 0 };
 
@@ -97,12 +98,17 @@ export class QualityController {
     this.windowStart = this.settleUntil;
     this.intervals = [];
     this.good = 0;
-    this.slow = 0;
+    this.slow = 0; this.visibleStalls = 0;
   }
 
   /** One frame: `interval` ms since the previous one, at time `now` (ms). */
-  frame(now: number, interval: number): QualityEvent | null {
-    if (this.fellBack || now < this.settleUntil || interval > STALL_MS || interval <= 0) return null;
+  frame(now: number, interval: number, continuouslyVisible = false): QualityEvent | null {
+    if (this.fellBack || now < this.settleUntil || interval <= 0) return null;
+    if (interval > STALL_MS) {
+      // Known-visible sustained sub-4-fps rendering is a real slow tier,
+      // not an endless sequence of hidden-tab stalls. Ignore one isolated gap.
+      if (!continuouslyVisible || ++this.visibleStalls < 2) return null;
+    } else this.visibleStalls = 0;
     this.intervals.push(interval);
     if (now - this.windowStart < WINDOW_MS) return null;
     const p90 = pct(this.intervals, 0.9);

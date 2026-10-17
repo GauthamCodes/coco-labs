@@ -1,0 +1,21 @@
+
+> coco-lab-web@0.1.0 arena-assets
+> node tools/build_arena_assets.mjs && node tools/build_attract.mjs && node tools/build_v2_runs.mjs
+
+arena assets: coco_lab.zip 110346 B (25 files), stdlib 783358 B (144 entries, full 2545637 B), pyodide 314.0.7
+node:fs:621
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/arena/coco_lab.zip'
+    at Object.openSync (node:fs:621:18)
+    at readFileSync (node:fs:487:35)
+    at record (file:///home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/build_attract.mjs:42:35)
+    at async file:///home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/build_attract.mjs:180:13 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/gautham/coco_labs_ws/src/coco-labs/lab_web/public/generated/arena/coco_lab.zip'
+}
+
+Node.js v24.21.0

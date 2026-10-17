@@ -60,7 +60,7 @@ export function evidenceHref(resolved: string): string {
 function readQuery(): { mission: string | null; beat: number } {
   const q = new URLSearchParams(window.location.search);
   const b = Number(q.get('beat') ?? 0);
-  return { mission: q.get('mission'), beat: Number.isInteger(b) && b >= 0 && b <= 6 ? b : 0 };
+  return { mission: q.get('tour') || q.get('mission'), beat: Number.isInteger(b) && b >= 0 && b <= 6 ? b : 0 };
 }
 
 export function LearnApp() {
@@ -80,7 +80,7 @@ export function LearnApp() {
   }, []);
 
   const go = (m: string | null, b = 0) => {
-    const url = m ? `?view=learn&mission=${m}&beat=${b}` : '?view=learn';
+    const url = m ? `?view=compare&tour=${m}&beat=${b}` : '?view=compare&tour=';
     window.history.pushState(null, '', `${BASE}${url}`);
     setWhere({ mission: m, beat: b });
     window.scrollTo(0, 0);
@@ -93,7 +93,8 @@ export function LearnApp() {
   return (
     <main className="learn" data-testid="learn">
       <ModeNav current="learn" evidence={evidence} />
-      <h1 className="mode-title"><a href={`${BASE}?view=learn`} onClick={(e) => { e.preventDefault(); go(null); }}>Learn</a></h1>
+      <h1 className="mode-title"><a href={`${BASE}?view=compare&tour=`} onClick={(e) => { e.preventDefault(); go(null); }}>Compare · guided tours</a></h1>
+      <p><a href={`${BASE}?view=compare`}>Open the comparison workspace</a></p>
       {error && <p className="error" role="alert">{error}</p>}
       {!missions && !error && <p className="note">Loading the missions…</p>}
       {missions && mission && !current && <p className="error" role="alert">No mission &ldquo;{mission}&rdquo;.</p>}

@@ -1,0 +1,23 @@
+
+> coco-lab-web@0.1.0 arena-assets
+> node tools/build_arena_assets.mjs && node tools/build_attract.mjs && node tools/build_v2_runs.mjs
+
+arena assets: coco_lab.zip 110346 B (25 files), stdlib 783358 B (144 entries, full 2545637 B), pyodide 314.0.7
+attract.mcap: 690321 B, 517 ticks, 34974 plan events, chain 83d26d442bb5
+astar_open: 15469 B, 5 messages, round trip exact
+dijkstra_cost_field_gz: 20208 B, 5 messages, round trip exact
+weighted_astar_greedy_trap: 17339 B, 5 messages, round trip exact
+bfs_no_path: 17925 B, 5 messages, round trip exact
+astar_turn_trap_heading: 15049 B, 5 messages, round trip exact
+lab1c_astar: 452282 B, 1116 messages, round trip exact
+lab1c_dijkstra: 579619 B, 1129 messages, round trip exact
+lab1c_greedy: 163830 B, 907 messages, round trip exact
+arena_0_10m: 434667 B, 13 messages, round trip exact
+arena_native: 1495778 B, 39 messages, round trip exact
+costmap_0_10m: 99181 B, 5 messages, round trip exact
+lab5 crossing: 15 runs, round trip exact
+lab5 mislocalised: 9 runs, round trip exact
+lab5 oncoming: 15 runs, round trip exact
+lab5 static_room: 15 runs, round trip exact
+casefiles: 100 copied, 40019390 B, the map once
+missions: 7, every replay link names a run here

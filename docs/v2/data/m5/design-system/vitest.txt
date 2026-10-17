@@ -1,0 +1,59 @@
+
+> coco-lab-web@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /home/gautham/coco_labs_ws/src/coco-labs/lab_web
+
+ ❯ test/site.test.ts (7 tests | 2 failed) 46ms
+   ❯ deployment constants (3)
+     × the base path is the repository name, defined once 20ms
+   ❯ privacy (4)
+     × src sets no cookie, uses no browser storage and sends no analytics 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/site.test.ts > deployment constants > the base path is the repository name, defined once
+AssertionError: /home/gautham/coco_labs_ws/src/coco-labs/lab_web/src/ui/reference/ReferenceScreens.tsx: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ test/site.test.ts:22:74
+     20|   it('the base path is the repository name, defined once', () => {
+     21|     expect(DEFAULT_BASE).toBe('/coco-labs/');
+     22|     for (const { p, text } of src) expect(text.includes('coco-labs'), …
+       |                                                                          ^
+     23|     const vite = readFileSync(join(LAB_WEB, 'vite.config.ts'), 'utf-8'…
+     24|     expect(vite).toMatch(/process\.env\.LAB_BASE \?\? DEFAULT_BASE/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/site.test.ts > privacy > src sets no cookie, uses no browser storage and sends no analytics
+AssertionError: /home/gautham/coco_labs_ws/src/coco-labs/lab_web/src/ui/reference/ReferenceScreens.tsx: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ test/site.test.ts:54:10
+     52|       const allowed = relative(join(LAB_WEB, 'src'), p) === PREFS ? te…
+     53|       expect(/document\.cookie|localStorage|sessionStorage|indexedDB|s…
+     54|         .toBe(false);
+       |          ^
+     55|     }
+     56|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 49 passed (50)
+      Tests  2 failed | 459 passed (461)
+   Start at  06:22:24
+   Duration  37.31s (tests 94%, import 3%, transform 3%)
+

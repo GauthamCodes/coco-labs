@@ -1,0 +1,140 @@
+{
+  "label": "built asset inventory; gzip level 6; excludes runtime Python/WASM data",
+  "rows": [
+    {
+      "route": "arena",
+      "assets": [
+        {
+          "file": "index-CWqO7enC.js",
+          "bytes": 223579,
+          "gzip_bytes": 69448
+        },
+        {
+          "file": "ArenaApp-qsfyeo-p.js",
+          "bytes": 954106,
+          "gzip_bytes": 257630
+        },
+        {
+          "file": "Result-Dpa0HEmk.js",
+          "bytes": 21673,
+          "gzip_bytes": 9551
+        },
+        {
+          "file": "site.config-CXvBV0_S.js",
+          "bytes": 256,
+          "gzip_bytes": 185
+        },
+        {
+          "file": "LearnApp-B72itHNl.js",
+          "bytes": 9078,
+          "gzip_bytes": 3545
+        },
+        {
+          "file": "arena.worker-Ccp1sNe9.js",
+          "bytes": 14864,
+          "gzip_bytes": 5660
+        }
+      ],
+      "gzip_bytes": 346019
+    },
+    {
+      "route": "learn",
+      "assets": [
+        {
+          "file": "index-CWqO7enC.js",
+          "bytes": 223579,
+          "gzip_bytes": 69448
+        },
+        {
+          "file": "LearnApp-B72itHNl.js",
+          "bytes": 9078,
+          "gzip_bytes": 3545
+        },
+        {
+          "file": "site.config-CXvBV0_S.js",
+          "bytes": 256,
+          "gzip_bytes": 185
+        }
+      ],
+      "gzip_bytes": 73178
+    },
+    {
+      "route": "play",
+      "assets": [
+        {
+          "file": "index-CWqO7enC.js",
+          "bytes": 223579,
+          "gzip_bytes": 69448
+        },
+        {
+          "file": "PlayApp-D_sjopvA.js",
+          "bytes": 12780,
+          "gzip_bytes": 4684
+        },
+        {
+          "file": "Result-Dpa0HEmk.js",
+          "bytes": 21673,
+          "gzip_bytes": 9551
+        },
+        {
+          "file": "site.config-CXvBV0_S.js",
+          "bytes": 256,
+          "gzip_bytes": 185
+        },
+        {
+          "file": "LearnApp-B72itHNl.js",
+          "bytes": 9078,
+          "gzip_bytes": 3545
+        }
+      ],
+      "gzip_bytes": 87413
+    },
+    {
+      "route": "casefiles",
+      "assets": [
+        {
+          "file": "index-CWqO7enC.js",
+          "bytes": 223579,
+          "gzip_bytes": 69448
+        },
+        {
+          "file": "CaseFilesApp-o4kiv3P0.js",
+          "bytes": 6057,
+          "gzip_bytes": 2066
+        },
+        {
+          "file": "LearnApp-B72itHNl.js",
+          "bytes": 9078,
+          "gzip_bytes": 3545
+        },
+        {
+          "file": "site.config-CXvBV0_S.js",
+          "bytes": 256,
+          "gzip_bytes": 185
+        }
+      ],
+      "gzip_bytes": 75244
+    },
+    {
+      "route": "live",
+      "assets": [
+        {
+          "file": "index-CWqO7enC.js",
+          "bytes": 223579,
+          "gzip_bytes": 69448
+        },
+        {
+          "file": "LiveApp-DE7XfU3H.js",
+          "bytes": 30989,
+          "gzip_bytes": 11244
+        },
+        {
+          "file": "site.config-CXvBV0_S.js",
+          "bytes": 256,
+          "gzip_bytes": 185
+        }
+      ],
+      "gzip_bytes": 80877
+    }
+  ]
+}

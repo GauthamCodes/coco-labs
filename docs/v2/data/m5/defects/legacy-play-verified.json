@@ -1,0 +1,186 @@
+{
+ "tool": "coco verify (lab_web/tools/verify.mjs)",
+ "engine": "Pyodide 314.0.7, Node v24.21.0",
+ "seconds": 0.029,
+ "checked": 11,
+ "matched": 11,
+ "failures": 0,
+ "rows": [
+  {
+   "challenge": "beat-the-planner",
+   "level": "two-fields",
+   "ms": 2,
+   "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1
+   },
+   "expected": "4d2fcdde2a5d4e744ef43ff8e5478dd8a4ea7bf3470cedf1a295864a00df94e9",
+   "matches": true,
+   "verification_layout": "legacy_json_before_m36",
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "bog",
+   "ms": 0,
+   "hash": "d593ad6634a85527cbe30f0be5921cc26e03afe9a65fb1a74dc58d70c35efcb3",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1
+   },
+   "expected": "0ba3a323340b946ac5edb2354e1c5c4c34928be9f14d57500e34aa15a88ce3b0",
+   "matches": true,
+   "verification_layout": "legacy_json_before_m36",
+   "error": null
+  },
+  {
+   "challenge": "beat-the-planner",
+   "level": "mud-field",
+   "ms": 1,
+   "hash": "873ad7357dea2d2dc23a70ba0bc3fb1c7cc1ffc25889a93a1bb90328352396cc",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "cost ratio",
+    "value": 1
+   },
+   "expected": "99269073280b3e5c24dc0be653aa58c8f536bf7a3a11ca1666d7382ad5e32ab9",
+   "matches": true,
+   "verification_layout": "legacy_json_before_m36",
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "no-idea",
+   "ms": 19,
+   "hash": "68f63a399a25626b99adc47099547a88c66ad46a7c97233587eebb5f8d730251",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1
+   },
+   "expected": "77b066eca1113721761bb40997a76069d1fd185fbfcab134aba65f87b9c389e7",
+   "matches": true,
+   "verification_layout": "legacy_json_before_m36",
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "far-end",
+   "ms": 1,
+   "hash": "121584bb9a9fbc24ddefafdc48e8ddf681b4c702f4cac300a2dc8bf89f839020",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1
+   },
+   "expected": "2aade2745f061705edc109a7caafacd7e16c02e6ea0ff62759ba9fb64ea6afba",
+   "matches": true,
+   "verification_layout": "legacy_json_before_m36",
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "ends",
+   "ms": 1,
+   "hash": "dc31bf9c19bb474a024c566b91ea3f4965f9c6cc918ef547fbad57d5a5b6d9b9",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1
+   },
+   "expected": "4c3a8bb9a4a5d02e0ef9f0103180c2cd87e155b3cad6c1d3bc2ea7c7f6332e84",
+   "matches": true,
+   "verification_layout": "legacy_json_before_m36",
+   "error": null
+  },
+  {
+   "challenge": "search-the-bays",
+   "level": "poor-camera",
+   "ms": 1,
+   "hash": "e8b7107011901884e491daf3f23ce18a40eb51bac5e9a7e3a498fd77b7eb89f3",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "expected cost ratio",
+    "value": 1
+   },
+   "expected": "fbef34d1d25cd4152bb015c7f97233e15cb098646975a207f767fd61fa2df175",
+   "matches": true,
+   "verification_layout": "legacy_json_before_m36",
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "told-wrong",
+   "ms": 1,
+   "hash": "64ba11acf0e26d9c664ad220921e7231cfc23e5d7752d3e3c1b8cbf8d0c4c3f4",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0
+   },
+   "expected": "91387e6ab600c4394ac6c319b1c5b3ca61b02a01b57fac558988d99083c74a66",
+   "matches": true,
+   "verification_layout": "legacy_json_before_m36",
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped",
+   "ms": 0,
+   "hash": "85ae2d73002cf2e3ee078c243983f11a5273f8396d94491d2fdbf79ae57bb33b",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0
+   },
+   "expected": "be87aa6123d8fdaf80588a143cee1e4dc904c91058750f4c1375e7facbcad44f",
+   "matches": true,
+   "verification_layout": "legacy_json_before_m36",
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-far",
+   "ms": 0,
+   "hash": "1dcb0cdbbec6bb84c08e18d1353ce558a9e6ac08a37be3805a3cddc19b28cdf6",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0
+   },
+   "expected": "5b8ad85d075eb908d4f2d2c3f25b25657f9026b94c8cecb685de7c4391553337",
+   "matches": true,
+   "verification_layout": "legacy_json_before_m36",
+   "error": null
+  },
+  {
+   "challenge": "case-file-detective",
+   "level": "kidnapped-again",
+   "ms": 0,
+   "hash": "1338a4aa3252d662197de332c9d134dbdaa9527ab15707dab3a966e176dbda8b",
+   "stars": 3,
+   "valid": true,
+   "score": {
+    "name": "error",
+    "value": 0
+   },
+   "expected": "2a3bc0ca9f092c0e937023a32c43c5dbe9fb909955c6f86f58e084f3dbc21184",
+   "matches": true,
+   "verification_layout": "legacy_json_before_m36",
+   "error": null
+  }
+ ]
+}

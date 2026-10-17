@@ -1,0 +1,7 @@
+{
+  "at": "2026-10-17T00:39:38.007643+05:30",
+  "implementation_base": "c5afb3d",
+  "paths": "lab_web/src/** plus index.html, manifest.webmanifest and icons/coco.svg",
+  "method": "sha256 of sorted path, NUL, bytes, NUL",
+  "sha256": "ed196076b8b4a2ddc86f9f1920d13e4302ccd675cebba203ffe522dd38f372ec"
+}

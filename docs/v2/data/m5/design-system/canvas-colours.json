@@ -1,0 +1,75 @@
+{
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-15T01:07:04.840Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 14.46,
+    "5m": 12.3,
+    "15m": 9.42
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-15T01:07:07.807Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 14.46,
+    "5m": 12.3,
+    "15m": 9.42
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "threshold": "At least 10% of this known mostly-free scene must match the free-cell token within one sRGB channel value; not a performance measurement",
+ "rows": [
+  {
+   "theme": "dark",
+   "expected": "#1a242c",
+   "target": [
+    26,
+    36,
+    44
+   ],
+   "width": 968,
+   "height": 630,
+   "matching": 380934,
+   "total": 609840,
+   "pass": true,
+   "errors": []
+  },
+  {
+   "theme": "light",
+   "expected": "#fbfbfa",
+   "target": [
+    251,
+    251,
+    250
+   ],
+   "width": 968,
+   "height": 630,
+   "matching": 380934,
+   "total": 609840,
+   "pass": true,
+   "errors": []
+  }
+ ]
+}

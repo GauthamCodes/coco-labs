@@ -1,0 +1,69 @@
+{
+  "class": "TESTED shared inputs replay and layout; no performance-budget claim",
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-16T18:44:42.100Z",
+      "power_profile": "balanced",
+      "ac_power": false,
+      "battery": {
+        "status": "Discharging",
+        "capacity_pct": 62
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 2.18,
+        "5m": 2.38,
+        "15m": 1.53
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": false
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-16T18:45:48.890Z",
+      "power_profile": "balanced",
+      "ac_power": false,
+      "battery": {
+        "status": "Discharging",
+        "capacity_pct": 59
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 23.44,
+        "5m": 8.13,
+        "15m": 3.54
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": false
+    }
+  },
+  "rows": [
+    {
+      "profile": "desktop",
+      "device": "laptop Chromium",
+      "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+      "stars": 3,
+      "metrics": 5,
+      "errors": []
+    },
+    {
+      "profile": "compact",
+      "device": "laptop Chromium compact",
+      "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+      "stars": 3,
+      "metrics": 5,
+      "errors": []
+    },
+    {
+      "profile": "nothing-landscape",
+      "device": "emulated Nothing Phone (1)",
+      "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+      "stars": 3,
+      "metrics": 5,
+      "errors": []
+    }
+  ]
+}

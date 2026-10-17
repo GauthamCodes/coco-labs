@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # run_all_package_tests.sh -- every package's tests, per package, with cwd
-# set to the package directory (CLAUDE.md §8), and a non-zero exit if ANY
+# set to the package directory (AGENTS.md: Build and tests), and a non-zero exit if ANY
 # package fails, errors, fails to collect, or collects nothing.
 #
 #   scripts/run_all_package_tests.sh               run them all

@@ -1,0 +1,20 @@
+ok   list: 6 challenges
+ok   beat-the-planner/two-fields stars 3 score 1 scorer 6853 ms, scored in 70 ms, reproduced true in 4883 ms
+ok   beat-the-planner/bog stars 3 score 1 scorer 4522 ms, scored in 45 ms, reproduced true in 5420 ms
+ok   beat-the-planner/mud-field stars 3 score 1 scorer 7985 ms, scored in 72 ms, reproduced true in 8161 ms
+ok   next-node/wall stars 3 score 10 scorer 5419 ms, scored in 33 ms, reproduced true in 5365 ms
+ok   next-node/mud stars 3 score 10 scorer 9350 ms, scored in 54 ms, reproduced true in 9021 ms
+ok   next-node/u-trap stars 3 score 10 scorer 7656 ms, scored in 70 ms, reproduced true in 8996 ms
+ok   search-the-bays/no-idea stars 3 score 1 scorer 6484 ms, scored in 31 ms, reproduced true in 4364 ms
+ok   search-the-bays/far-end stars 3 score 1 scorer 4355 ms, scored in 33 ms, reproduced true in 4853 ms
+ok   search-the-bays/ends stars 3 score 1 scorer 5423 ms, scored in 31 ms, reproduced true in 4875 ms
+ok   search-the-bays/poor-camera stars 3 score 1 scorer 7938 ms, scored in 87 ms, reproduced true in 7011 ms
+ok   case-file-detective/told-wrong stars 3 score 0 scored in 342 ms, reproduced true in 7978 ms
+ok   case-file-detective/kidnapped stars 3 score 0 scored in 284 ms, reproduced true in 7024 ms
+ok   case-file-detective/kidnapped-far stars 3 score 0 scored in 374 ms, reproduced true in 7021 ms
+ok   case-file-detective/kidnapped-again stars 3 score 0 scored in 270 ms, reproduced true in 6474 ms
+FAIL map-the-arena/twenty-five-metres stars undefined score undefined scored in undefined ms, reproduced undefined in undefined ms TimeoutError: locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: 'Game menu and inspection' })[22m
+ errors: Failed to load resource: the server responded with a status of 404 (Not Found) | TypeError: Failed to fetch dynamically imported module: http://localhost:4200/coco-labs/assets/SettingsDrawer-Btmd3Lri.js
+{"rows":15,"ok":14,"list_ok":true}

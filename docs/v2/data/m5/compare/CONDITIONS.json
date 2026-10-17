@@ -1,0 +1,20 @@
+{
+  "recorded_at": "2026-10-17T05:23:20.751724+05:30",
+  "class": "MODEL vs committed STACK, numeric comparison; no timing/FPS measurement",
+  "system": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "power_profile": {
+    "exit": 0,
+    "stdout": "balanced",
+    "stderr": ""
+  },
+  "gpu": {
+    "exit": 0,
+    "stdout": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "stderr": ""
+  },
+  "ac_online": {
+    "/sys/class/power_supply/ACAD/online": "1"
+  },
+  "real_phone": "adb devices returned an empty device list; real-phone criterion pending USB",
+  "profile_changed": false
+}

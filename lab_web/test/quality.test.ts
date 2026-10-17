@@ -83,3 +83,10 @@ describe('quality tiers', () => {
     expect(q.tier).toBe('low');
   });
 });
+
+it('sustained stalls on a known-visible canvas reach the low-tier fallback',()=>{
+ const q=new QualityController(0);const events=[];
+ for(let now=500;now<50000;now+=500){const event=q.frame(now,500,true);if(event)events.push(event);}
+ expect(events.map(event=>event.kind)).toEqual(['tier','tier','fallback']);
+ expect(q.fellBack).toBe(true);
+});

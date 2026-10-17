@@ -1,0 +1,9 @@
+
+> coco-lab-web@0.1.0 typecheck
+> tsc --noEmit -p .
+
+src/arena/ArenaSceneView.tsx(23,422): error TS6133: 'live' is declared but its value is never read.
+src/arena/ArenaSceneView.tsx(23,428): error TS6133: 'attract' is declared but its value is never read.
+src/arena/ArenaSceneView.tsx(23,656): error TS6133: 'recorded' is declared but its value is never read.
+src/arena/ArenaSceneView.tsx(23,666): error TS6133: 'active' is declared but its value is never read.
+src/arena/ArenaSceneView.tsx(23,696): error TS6133: 'goal' is declared but its value is never read.

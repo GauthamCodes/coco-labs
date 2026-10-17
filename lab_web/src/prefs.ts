@@ -18,8 +18,11 @@
 export const PREF_PREFIXES = ['coco.play.best.v1.', 'coco.prefs.v1.'] as const;
 
 /** The named preferences (one key each). */
-export type PrefName = 'keys' | 'camera' | 'quality' | 'sound' | 'motion' | 'bars' | 'tank';
+export type PrefName = 'keys' | 'camera' | 'quality' | 'sound' | 'motion' | 'bars' | 'tank' | 'theme' | 'walls' | 'phone120' | 'haptics' | 'tutorial';
 const KEY: Record<PrefName, string> = {
+  phone120: 'coco.prefs.v1.phone120', haptics: 'coco.prefs.v1.haptics', tutorial: 'coco.prefs.v1.tutorial',
+  theme: 'coco.prefs.v1.theme',
+  walls: 'coco.prefs.v1.walls',
   keys: 'coco.prefs.v1.keys', camera: 'coco.prefs.v1.camera', quality: 'coco.prefs.v1.quality',
   sound: 'coco.prefs.v1.sound', motion: 'coco.prefs.v1.motion', bars: 'coco.prefs.v1.bars', tank: 'coco.prefs.v1.tank',
 };

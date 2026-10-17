@@ -115,6 +115,15 @@ def canonical(obj) -> bytes:
                       allow_nan=False).encode('utf-8')
 
 
+def verification_hashes(result: Dict[str, object]) -> Dict[str, str]:
+    """Return current and pre-M3.6 hashes without changing the score result."""
+    raw = {k: v for k, v in result.items() if k != 'hash'}
+    data = json.dumps(raw, sort_keys=True, separators=(',', ':'),
+                      allow_nan=False).encode('utf-8')
+    legacy = hashlib.sha256(data).hexdigest()
+    return {'canonical': result['hash'], 'legacy_json_before_m36': legacy}
+
+
 def level_hash(level: Dict[str, object]) -> str:
     """Return the sha256 of a level's canonical bytes: a link names it."""
     return hashlib.sha256(canonical(level)).hexdigest()

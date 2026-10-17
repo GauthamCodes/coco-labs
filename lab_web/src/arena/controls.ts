@@ -13,7 +13,7 @@ import { readPref, resetPref, writePref } from '../prefs';
 export type Action =
   | 'forward' | 'reverse' | 'left' | 'right' | 'precision'
   | 'stop' | 'release' | 'context' | 'autonomy'
-  | 'camera_next' | 'camera_follow'
+  | 'camera_next' | 'camera_follow' | 'robot_vision'
   | 'lens_1' | 'lens_2' | 'lens_3' | 'lens_4' | 'lens_5'
   | 'pause' | 'step_back' | 'step_forward' | 'help';
 
@@ -28,6 +28,7 @@ export const ACTIONS: { id: Action; label: string }[] = [
   { id: 'release', label: 'Release STOP; hold to reset home' },
   { id: 'context', label: 'Grasp or release (through the proximity gate)' },
   { id: 'autonomy', label: 'Hand the wheels back to autonomy' },
+  { id: 'robot_vision', label: 'Robot vision overlays (Play)' },
   { id: 'camera_next', label: 'Next camera' },
   { id: 'camera_follow', label: 'Back to the follow camera' },
   { id: 'lens_1', label: 'Lens 1' }, { id: 'lens_2', label: 'Lens 2' }, { id: 'lens_3', label: 'Lens 3' },
@@ -44,7 +45,7 @@ export const DEFAULT_BINDINGS: Bindings = {
   forward: ['KeyW', 'ArrowUp'], reverse: ['KeyS', 'ArrowDown'], left: ['KeyA', 'ArrowLeft'], right: ['KeyD', 'ArrowRight'],
   precision: ['ShiftLeft', 'ShiftRight'],
   stop: ['Space'], release: ['KeyR'], context: ['KeyE'], autonomy: ['Tab'],
-  camera_next: ['KeyC'], camera_follow: ['KeyV'],
+  robot_vision: ['KeyX'], camera_next: ['KeyC'], camera_follow: ['KeyV'],
   lens_1: ['Digit1'], lens_2: ['Digit2'], lens_3: ['Digit3'], lens_4: ['Digit4'], lens_5: ['Digit5'],
   pause: ['KeyP'], step_back: ['BracketLeft'], step_forward: ['BracketRight'], help: ['KeyH'],
 };

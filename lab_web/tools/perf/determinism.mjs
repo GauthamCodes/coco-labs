@@ -229,7 +229,7 @@ async function node() {
     py.FS.writeFile('/home/pyodide/arena_glue.py', readFileSync(join(web, 'src', 'arena', 'arena_glue.py'), 'utf-8'));
     py.runPython("import sys\nif '/home/pyodide' not in sys.path: sys.path.insert(0, '/home/pyodide')\nimport importlib, arena_glue\nimportlib.reload(arena_glue)");
     const glue = py.pyimport('arena_glue');
-    glue.init(spec, s.seed, s.planner, () => {}, 4096).destroy();
+    glue.init(spec, s.seed, s.planner, () => {}, 4096, null, Number(args['hash-version'] ?? 1)).destroy();
     const hashes = [];
     let chain = '';
     for (let k = 0; k < s.ticks; k += 1) {
@@ -264,7 +264,7 @@ async function browser(name) {
   const t0 = Date.now();
   const SPEC = specFile();
   for (const s of load()) {
-    const r = await page.evaluate(async ([url, base, s, PACKS, spec]) => {
+    const r = await page.evaluate(async ([url, base, s, PACKS, spec, hashVersion]) => {
       const w = new Worker(url, { type: 'module' });
       let packs = 0;
       const hashes = [];
@@ -287,13 +287,13 @@ async function browser(name) {
           };
           w.onerror = (e) => reject(new Error(e.message));
           w.postMessage({ type: 'boot', pyodideBase: `${base}generated/pyodide/`, assetsBase: `${base}generated/`, seed: s.seed,
-            planner: s.planner, batchSize: 4096, ...(spec === 'coco_arena_v1.json' ? {} : { spec }) });
+            planner: s.planner, batchSize: 4096, hashVersion: hashVersion, ...(spec === 'coco_arena_v1.json' ? {} : { spec }) });
         });
       } finally {
         w.terminate();
       }
       return { hashes, chain };
-    }, [`${SITE}assets/${worker}`, new URL(SITE).pathname, s, PACK_NAMES, SPEC]);
+    }, [`${SITE}assets/${worker}`, new URL(SITE).pathname, s, PACK_NAMES, SPEC, Number(args['hash-version'] ?? 1)]);
     res.push({ id: s.id, ...r });
     if (s.id % 10 === 9) console.log(`${name}: ${s.id + 1} sessions, ${Math.round((Date.now() - t0) / 1000)} s`);
   }

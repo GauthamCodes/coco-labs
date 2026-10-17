@@ -14,7 +14,7 @@ export interface PlayResult {
   challenge: string; level: string; level_hash: string; valid: boolean; why: string | null;
   score: { name: string; value: number | null }; stars: number;
   metrics: { name: string; value: unknown; unit: string; meaning: string }[];
-  thresholds: string[]; hash: string;
+  thresholds: string[]; hash: string; verified_hash?: string; verification_layout?: string;
 }
 
 export interface Best { stars: number; score: number; hash: string; level_hash: string }

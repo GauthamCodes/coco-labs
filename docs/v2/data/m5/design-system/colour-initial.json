@@ -1,0 +1,326 @@
+[
+  {
+    "theme": "dark",
+    "kind": "protanopia",
+    "rows": [
+      {
+        "a": "path",
+        "b": "particles",
+        "deltaE": 16.752831132917773
+      },
+      {
+        "a": "frontier",
+        "b": "truth",
+        "deltaE": 21.594809184066815
+      },
+      {
+        "a": "path",
+        "b": "rejected",
+        "deltaE": 31.44039685376017
+      },
+      {
+        "a": "rejected",
+        "b": "truth",
+        "deltaE": 31.982591107232373
+      },
+      {
+        "a": "closed",
+        "b": "particles",
+        "deltaE": 32.42465807858459
+      },
+      {
+        "a": "closed",
+        "b": "path",
+        "deltaE": 38.452609449267825
+      },
+      {
+        "a": "rejected",
+        "b": "particles",
+        "deltaE": 39.95500262885166
+      },
+      {
+        "a": "frontier",
+        "b": "rejected",
+        "deltaE": 43.87298331083778
+      },
+      {
+        "a": "path",
+        "b": "truth",
+        "deltaE": 59.73279325844789
+      },
+      {
+        "a": "particles",
+        "b": "truth",
+        "deltaE": 61.55363375014178
+      },
+      {
+        "a": "closed",
+        "b": "rejected",
+        "deltaE": 69.23815175511483
+      },
+      {
+        "a": "frontier",
+        "b": "path",
+        "deltaE": 74.91637067661205
+      },
+      {
+        "a": "frontier",
+        "b": "particles",
+        "deltaE": 79.93076888101915
+      },
+      {
+        "a": "closed",
+        "b": "truth",
+        "deltaE": 93.76866683607314
+      },
+      {
+        "a": "frontier",
+        "b": "closed",
+        "deltaE": 111.37738972972753
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "kind": "deuteranopia",
+    "rows": [
+      {
+        "a": "rejected",
+        "b": "truth",
+        "deltaE": 8.117324745411283
+      },
+      {
+        "a": "path",
+        "b": "truth",
+        "deltaE": 22.58814904072838
+      },
+      {
+        "a": "path",
+        "b": "particles",
+        "deltaE": 24.42585146483552
+      },
+      {
+        "a": "path",
+        "b": "rejected",
+        "deltaE": 27.823059626176594
+      },
+      {
+        "a": "frontier",
+        "b": "rejected",
+        "deltaE": 29.841888098052628
+      },
+      {
+        "a": "frontier",
+        "b": "truth",
+        "deltaE": 35.16483625362868
+      },
+      {
+        "a": "closed",
+        "b": "particles",
+        "deltaE": 40.37894473468052
+      },
+      {
+        "a": "particles",
+        "b": "truth",
+        "deltaE": 45.52964488970151
+      },
+      {
+        "a": "rejected",
+        "b": "particles",
+        "deltaE": 51.81728916945161
+      },
+      {
+        "a": "frontier",
+        "b": "path",
+        "deltaE": 57.358496632727835
+      },
+      {
+        "a": "closed",
+        "b": "path",
+        "deltaE": 62.72538698107955
+      },
+      {
+        "a": "frontier",
+        "b": "particles",
+        "deltaE": 80.65144805561506
+      },
+      {
+        "a": "closed",
+        "b": "truth",
+        "deltaE": 84.99587079488659
+      },
+      {
+        "a": "closed",
+        "b": "rejected",
+        "deltaE": 90.431568621568
+      },
+      {
+        "a": "frontier",
+        "b": "closed",
+        "deltaE": 119.89185425587675
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "kind": "protanopia",
+    "rows": [
+      {
+        "a": "frontier",
+        "b": "truth",
+        "deltaE": 13.827054123263638
+      },
+      {
+        "a": "closed",
+        "b": "particles",
+        "deltaE": 17.206172646174878
+      },
+      {
+        "a": "rejected",
+        "b": "truth",
+        "deltaE": 23.204595354076492
+      },
+      {
+        "a": "frontier",
+        "b": "rejected",
+        "deltaE": 25.727896136088276
+      },
+      {
+        "a": "path",
+        "b": "particles",
+        "deltaE": 38.7554048835592
+      },
+      {
+        "a": "path",
+        "b": "rejected",
+        "deltaE": 42.434926507750795
+      },
+      {
+        "a": "closed",
+        "b": "path",
+        "deltaE": 42.68108932884503
+      },
+      {
+        "a": "path",
+        "b": "truth",
+        "deltaE": 56.2998739584537
+      },
+      {
+        "a": "frontier",
+        "b": "path",
+        "deltaE": 65.54811556381803
+      },
+      {
+        "a": "rejected",
+        "b": "particles",
+        "deltaE": 81.02426617191632
+      },
+      {
+        "a": "closed",
+        "b": "rejected",
+        "deltaE": 82.91743375012409
+      },
+      {
+        "a": "closed",
+        "b": "truth",
+        "deltaE": 90.66031094247865
+      },
+      {
+        "a": "particles",
+        "b": "truth",
+        "deltaE": 92.91681389119572
+      },
+      {
+        "a": "frontier",
+        "b": "closed",
+        "deltaE": 102.50577395226867
+      },
+      {
+        "a": "frontier",
+        "b": "particles",
+        "deltaE": 103.33479753594258
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "kind": "deuteranopia",
+    "rows": [
+      {
+        "a": "frontier",
+        "b": "rejected",
+        "deltaE": 14.858913166384598
+      },
+      {
+        "a": "closed",
+        "b": "particles",
+        "deltaE": 16.179197333644037
+      },
+      {
+        "a": "path",
+        "b": "truth",
+        "deltaE": 16.962019822032314
+      },
+      {
+        "a": "rejected",
+        "b": "truth",
+        "deltaE": 23.260934835187282
+      },
+      {
+        "a": "frontier",
+        "b": "truth",
+        "deltaE": 35.12454100753145
+      },
+      {
+        "a": "path",
+        "b": "rejected",
+        "deltaE": 39.344860686985925
+      },
+      {
+        "a": "frontier",
+        "b": "path",
+        "deltaE": 51.99618866666008
+      },
+      {
+        "a": "path",
+        "b": "particles",
+        "deltaE": 54.79425799797434
+      },
+      {
+        "a": "closed",
+        "b": "path",
+        "deltaE": 66.48906437693647
+      },
+      {
+        "a": "particles",
+        "b": "truth",
+        "deltaE": 71.58892830673977
+      },
+      {
+        "a": "closed",
+        "b": "truth",
+        "deltaE": 82.66176505727924
+      },
+      {
+        "a": "rejected",
+        "b": "particles",
+        "deltaE": 93.94173857350353
+      },
+      {
+        "a": "closed",
+        "b": "rejected",
+        "deltaE": 105.59184459487248
+      },
+      {
+        "a": "frontier",
+        "b": "particles",
+        "deltaE": 106.56193349941387
+      },
+      {
+        "a": "frontier",
+        "b": "closed",
+        "deltaE": 117.26792884531905
+      }
+    ]
+  }
+]

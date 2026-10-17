@@ -1,0 +1,10 @@
+{
+  "encoded": 177780,
+  "json": 133330,
+  "ticks": 11930,
+  "inputs": 1960,
+  "first_tick": 500,
+  "id": 240,
+  "basis": "docs/v2/data/m5/defects/link-corpus-v2.json, measured committed valid payload maxima",
+  "margin": 10
+}

@@ -1,0 +1,1 @@
+100 sessions x 150 ticks; inputs {"goal":416,"teleop":337,"planner":84,"stop":79}

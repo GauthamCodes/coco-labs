@@ -18,6 +18,7 @@ import { describe, expect, it } from 'vitest';
 import { encodeBatch, type Column } from '../src/schemas/columns';
 import * as arm from '../src/schemas/gen/coco/arm/v1/arm_pb';
 import * as control from '../src/schemas/gen/coco/control/v1/control_pb';
+import * as costmap from '../src/schemas/gen/coco/costmap/v1/layers_pb';
 import * as decide from '../src/schemas/gen/coco/decide/v1/decide_pb';
 import * as estimate from '../src/schemas/gen/coco/estimate/v1/estimate_pb';
 import * as localise from '../src/schemas/gen/coco/localise/v1/localise_pb';
@@ -37,9 +38,10 @@ interface Vec {
 }
 
 const VECS: Vec[] = JSON.parse(readFileSync(join(REPO, 'coco_schemas', 'test', 'vectors', 'm2_batches.json'), 'utf-8')).vectors;
+const M5_VECS: Vec[] = JSON.parse(readFileSync(join(REPO, 'coco_schemas', 'test', 'vectors', 'm5_batches.json'), 'utf-8')).vectors;
 
 const DESCS = new Map<string, DescMessage>();
-for (const mod of [arm, control, decide, estimate, localise, map, metrics, mission, detect] as Record<string, unknown>[]) {
+for (const mod of [arm, control, costmap, decide, estimate, localise, map, metrics, mission, detect] as Record<string, unknown>[]) {
   for (const v of Object.values(mod)) {
     const d = v as DescMessage;
     if (d && typeof d === 'object' && d.kind === 'message') DESCS.set(d.typeName, d);
@@ -64,7 +66,11 @@ describe('M2 batches: TypeScript encodes what Python protobuf encodes', () => {
     for (const v of VECS) expect(DESCS.has(v.message), v.message).toBe(true);
   });
 
-  it.each(VECS.map((v) => [v.message, v] as const))('%s', (_, v) => {
+  it('covers the additive M5 costmap family separately', () => {
+    expect(M5_VECS.map((v) => v.message)).toEqual(['coco.costmap.v1.LayersBatch']);
+  });
+
+  it.each([...VECS, ...M5_VECS].map((v) => [v.message, v] as const))('%s', (_, v) => {
     const desc = DESCS.get(v.message)!;
     const cols: Record<string, Column> = {};
     for (const [n, xs] of Object.entries(v.columns)) cols[n] = column(v.types[n], xs);

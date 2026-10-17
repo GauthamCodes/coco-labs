@@ -48,6 +48,13 @@ const NOT_FETCHED = [
   /^https:\/\/jcgt\.org\/published\/0007\/04\/01\/$/,
 ];
 
+// Local licence texts contain credit URLs; they never trigger a network request.
+const LICENCE_CREDITS = [
+  /^https?:\/\/scripts\.sil\.org\/OFL$/,
+  /^https?:\/\/openfontlicense\.org\/?$/,
+  /^https:\/\/github\.com\/(Outfitio\/Outfit-Fonts|sharanda\/manrope|lucide-icons\/lucide|colebemis\/feather)(\/.*)?$/,
+  /^https:\/\/feathericons\.com\/?$/,
+];
 const failures = [];
 const walk = (d) => readdirSync(d).sort().flatMap((n) => {
   const p = join(d, n);
@@ -102,7 +109,7 @@ for (const f of files) {
   for (const m of text.matchAll(/https?:\/\/[^\s"'`)<>\\]+/g)) {
     const url = m[0];
     const ok = url.startsWith(pyodide) || (url === pyodide.slice(0, -1)) ||
-      NOT_FETCHED.some((re) => re.test(url)) || url.startsWith('https://cdn.jsdelivr.net/pyodide/v${') ||
+      NOT_FETCHED.some((re) => re.test(url)) || (f.includes('/licenses/') && LICENCE_CREDITS.some((re) => re.test(url))) || url.startsWith('https://cdn.jsdelivr.net/pyodide/v${') ||
       // the configured remote session's probe origin, named in the CSP
       (remoteHttps !== null && f.endsWith('index.html') && url.replace(/;$/, '') === remoteHttps) ||
       // a local stack's /healthz origin, named in the CSP (checked above)
@@ -125,6 +132,17 @@ for (const f of ['pyodide.mjs', 'pyodide.asm.mjs', 'pyodide.asm.wasm', 'pyodide-
   if (!files.some((p) => p.endsWith(`generated/pyodide/${f}`))) failures.push(`self-hosted Pyodide lacks ${f}`);
 }
 if (!files.some((f) => /arena\.worker-.*\.js$/.test(f))) failures.push('no arena worker chunk in dist');
+// M5.3: modes are lazy boundaries, and the engine has one content-hashed cache key.
+const appAssets = files.filter((f) => /assets\/[^/]+\.js$/.test(f) && !f.includes('/v1/'));
+if (appAssets.filter((f) => /\/three-[\w-]+\.js$/.test(f)).length !== 1) {
+  failures.push('expected one content-hashed Three.js engine chunk');
+}
+for (const shell of ['PlayScene', 'CompareScene', 'ResearchScene']) {
+  if (!appAssets.some((f) => new RegExp('/' + shell + '-[\\w-]+\\.js$').test(f))) {
+    failures.push(`missing lazy ${shell} chunk`);
+  }
+}
+
 // No cookie, no session storage, no IndexedDB. ONE localStorage write is allowed:
 // the preferences module's (lab_web/src/prefs.ts; M4.5 generalised M3.5's personal
 // bests into it), alone, in the chunk that holds its key prefixes.

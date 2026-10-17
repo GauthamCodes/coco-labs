@@ -1,36 +1,38 @@
 {
  "conditions": {
   "start": {
-   "at_utc": "2026-10-12T17:40:24.211Z",
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-16T18:55:51.414Z",
    "power_profile": "balanced",
    "ac_power": false,
    "battery": {
     "status": "Discharging",
-    "capacity_pct": 49
+    "capacity_pct": 38
    },
    "cpu_governor": "powersave",
    "load_average": {
-    "1m": 5.1,
-    "5m": 3.34,
-    "15m": 2.3
+    "1m": 6.77,
+    "5m": 11.55,
+    "15m": 7.97
    },
    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
    "threads": 12,
    "standard": false
   },
   "end": {
-   "at_utc": "2026-10-12T17:41:19.153Z",
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-16T18:56:36.010Z",
    "power_profile": "balanced",
    "ac_power": false,
    "battery": {
     "status": "Discharging",
-    "capacity_pct": 47
+    "capacity_pct": 37
    },
    "cpu_governor": "powersave",
    "load_average": {
-    "1m": 7.09,
-    "5m": 4.09,
-    "15m": 2.61
+    "1m": 9.03,
+    "5m": 11.51,
+    "15m": 8.13
    },
    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
    "threads": 12,
@@ -38,25 +40,25 @@
   }
  },
  "mode": "make",
- "site": "https://gauthamcodes.github.io/coco-labs/",
+ "site": "http://localhost:4201/coco-labs/",
  "renderer": "chromium default (SwiftShader)",
  "channel_tol": 40,
  "max_bad": 0.005,
  "results": {
   "trace_bfs_no_path": {
-   "bytes": 14603
+   "bytes": 14608
   },
   "trace_costmap_astar": {
-   "bytes": 22611
+   "bytes": 22816
   },
   "stack_lab1c_astar_t400": {
-   "bytes": 24378
+   "bytes": 24764
   },
   "stack_lab1c_greedy_t300": {
-   "bytes": 24978
+   "bytes": 25194
   },
   "attract_t200": {
-   "bytes": 55449
+   "bytes": 23540
   }
  },
  "errors": [],

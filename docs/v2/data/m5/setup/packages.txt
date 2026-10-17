@@ -1,0 +1,64 @@
+[tests] interpreter: /home/gautham/coco_labs_ws/test_venv/bin/python (3.12.3 pytest 7.4.4 hypothesis 6.98.15 networkx 3.6.1)
+[tests] workspace:   /home/gautham/coco_labs_ws   ROS_DOMAIN_ID=78
+--- Testing coco_config ---
+........................................................................ [ 77%]
+.....................                                                    [100%]
+93 passed in 0.55s
+--- Testing coco_sim ---
+........................................................................ [ 89%]
+...................................                                      [100%]
+323 passed in 2.01s
+--- Testing coco_mission ---
+........................................................................ [ 97%]
+...........                                                              [100%]
+371 passed in 9.09s
+--- Testing coco_web ---
+=========================== short test summary info ============================
+FAILED test/test_frontend_frame.py::test_the_page_decoder_agrees_with_the_python_encoder
+1 failed, 862 passed, 12 warnings in 21.75s
+--- Testing gazebo_models ---
+........................................................................ [ 93%]
+...............                                                          [100%]
+231 passed in 12.00s
+--- Testing coco_rl ---
+........................................................................ [ 86%]
+...................................                                      [100%]
+251 passed in 7.73s
+--- Testing coco_perception ---
+........................................................................ [ 51%]
+...................................................................      [100%]
+139 passed, 12 warnings in 1.57s
+--- Testing coco_moveit_config ---
+............                                                             [100%]
+12 passed in 0.48s
+--- Testing custom_teleop ---
+........................................................................ [ 96%]
+...                                                                      [100%]
+75 passed, 12 warnings in 1.41s
+--- Testing coco_lab ---
+........................................................................ [ 99%]
+.....                                                                    [100%]
+797 passed in 335.38s (0:05:35)
+--- Testing coco_lab_ros ---
+ERROR test/test_adapter.py::test_summary_detail_keeps_recorded_messages_at_lower_rates
+ERROR test/test_adapter.py::test_truth_carries_the_recorded_3d_pose - ModuleN...
+7 failed, 128 passed, 12 warnings, 10 errors in 19.85s
+--- Testing coco_schemas ---
+........................................................................ [ 96%]
+.......                                                                  [100%]
+223 passed, 3 warnings in 6.47s
+==================================================
+coco_config          ok   93 passed in 0.55s
+coco_sim             ok   323 passed in 2.01s
+coco_mission         ok   371 passed in 9.09s
+coco_web             FAIL (pytest exit 1) 1 failed, 862 passed, 12 warnings in 21.75s
+gazebo_models        ok   231 passed in 12.00s
+coco_rl              ok   251 passed in 7.73s
+coco_perception      ok   139 passed, 12 warnings in 1.57s
+coco_moveit_config   ok   12 passed in 0.48s
+custom_teleop        ok   75 passed, 12 warnings in 1.41s
+coco_lab             ok   797 passed in 335.38s (0:05:35)
+coco_lab_ros         FAIL (pytest exit 1) 7 failed, 128 passed, 12 warnings, 10 errors in 19.85s
+coco_schemas         ok   223 passed, 3 warnings in 6.47s
+==================================================
+[tests] FAILED: at least one package did not pass

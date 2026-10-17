@@ -19,6 +19,7 @@ export interface BootRequest {
   seed: number;
   planner: string;
   batchSize: number;
+  hashVersion?: 1 | 2;
   /** M4.3: the World Spec to build (a file in generated/arena/); absent = coco_arena_v1.json. */
   spec?: SpecFile;
 }
@@ -39,14 +40,17 @@ export interface StepRequest { type: 'step'; inputs: InputRow[] }
  */
 export interface AmendRequest { type: 'amend'; inputs: InputRow[] }
 /** Two planners from the robot's cell to (x, y); the model is not changed (M1.8). */
-export interface CompareRequest { type: 'compare'; a: string; b: string; x: number; y: number }
+export interface CompareInflation { inflation_radius: number; cost_scaling_factor: number; robot_radius: number }
+export interface CompareRequest { type: 'compare'; a: string; b: string; x: number; y: number; inflation?: CompareInflation; planners?: string[] }
 /** M2.2: load a lens's Python pack (tools/arena_packs.json) if it is not loaded yet. */
 export interface LoadPackRequest { type: 'load_pack'; pack: string }
 /** M3.5: Play -- coco_lab.play, through arena_glue.play (a JSON request; the reply is JSON). */
 export interface PlayRequest { type: 'play'; id: number; request: string }
-export type ToWorker = BootRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest;
+export type WarmRequest = Omit<BootRequest, 'type'> & { type: 'warm' };
+export type ToWorker = BootRequest | WarmRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest;
 
 export interface CompareSide { planner: string; status: string; summary: Record<string, number | string | null>; resolution: number }
+export interface CompareResult { A: CompareSide; B: CompareSide; C?: CompareSide; D?: CompareSide }
 
 /** Wall-clock milliseconds (timeOrigin + now), comparable across page and worker. */
 export const wallMs = () => performance.timeOrigin + performance.now();
@@ -117,11 +121,11 @@ export type FromWorker =
   | { type: 'pack_ready'; pack: string; ms: number }
   | { type: 'mark'; name: string; at: number }
   | { type: 'world'; world: World; occupancy: Uint8Array; at: number }
-  | { type: 'plan_batch'; meta: { search_id: number; planner: string; tick: number; final: boolean; compare?: 'A' | 'B';
+  | { type: 'plan_batch'; meta: { search_id: number; planner: string; tick: number; final: boolean; compare?: 'A' | 'B' | 'C' | 'D';
     /** M2.0: the search was cancelled by an input that joined its tick; drop what was shown of it. */
     cancelled?: boolean };
       columns: SearchColumns; at: number }
   | { type: 'tick'; tick: Tick; ranges: Float32Array; stepMs: number; at: number }
-  | { type: 'compare_done'; result: { A: CompareSide; B: CompareSide } }
+  | { type: 'compare_done'; result: CompareResult }
   | { type: 'play_done'; id: number; result?: string; error?: string }
   | { type: 'error'; stage: string; message: string };
