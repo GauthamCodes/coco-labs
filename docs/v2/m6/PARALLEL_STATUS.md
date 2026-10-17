@@ -10,7 +10,8 @@ the entries below are copied into it at merge.
 - **Done:** M6F.0 Setup; M6F.1 World Spec v3; M6F.2 Generators; M6F.3 the Depot.
 - **M6F.4:** harness committed (`tools/m6/bench_planning.py`, `bench_planning_pyodide.mjs`);
   the measurement is **pending, machine busy**.
-- **Next:** M6F.5 Grasp Assist pipeline.
+- **Done:** M6F.5 Grasp Assist (model side).
+- **Next:** M6F.6 Fetch Rush and Rush Hour rules.
 
 ## Setup facts (M6F.0, 2026-10-17)
 
@@ -83,6 +84,22 @@ the entries below are copied into it at merge.
   `docs/v2/m6/data/coco_depot_v1_outputs.json` (reproduced by a test).
 - Tests: `coco_lab/test/test_depot.py` (18); `coco_lab` 932 / 0 / 0, nice 19, Codex running.
 
+## M6F.5 — Grasp Assist, model side (2026-10-17)
+
+- `coco_lab/coco_lab/grasp_assist.py`: the Arena subsystem `assist` (detect, check,
+  choose, approach, align, creep, reach by IK, grip, verify, carry, release), events on
+  the new additive family `manip.grasp` (`coco_schemas/proto/coco/manip/v1/grasp.proto`:
+  GraspEnvelope, CandidateBatch, StageBatch; Python and TypeScript generated) and the arm
+  on `coco.arm.state.v1`. Doc `docs/v2/m6/GRASP_ASSIST.md`. Evidence class MODEL.
+- 13 Depot scenarios with golden traces (`coco_lab/test/fixtures/m6f/grasp_*.json`):
+  every refusal reason; every pick ends inside the Stack's window (0.15375-0.154 m ahead).
+- Tests: `coco_lab` 976 / 0 / 0; `coco_schemas` 241 / 0 / 0 (232 before);
+  `coco_lab_ros` 150 passed / **4 failed** — `test_lab5.py::test_lab_stack_knows_both_overlays_and_refuses_others`,
+  `test_launch.py` (2), `test_static_smoke.py::test_the_pipeline_on_real_planners`, all
+  `LookupError: Could not find the resource 'gazebo_models' of type 'packages'`: they need
+  a colcon overlay of this worktree (none built yet; heavy-ish, scheduled with M6F.8).
+  Not caused by M6 code (they look up launch files and packages); not yet re-run on an overlay.
+
 ## Plan-change entries to copy into docs/STATUS.md at merge
 
 - **2026-10-17 — M6 foundations start in parallel with M5 (Gautham).** By
@@ -107,6 +124,17 @@ M5 is likely to change too. Updated at every checkpoint.)
   in `Arena.__init__` (`in TERRAIN_SPEC_VERSIONS`), and a 4-line refusal of the legacy
   gated grasp on a v3 level. **M5 has edited this file** (12 lines at `0254dea`), so a
   textual conflict is possible; both edits are small and independent.
+- `coco_schemas/coco_schemas/channels.py` (M6F.5): three `manip.grasp` channels and
+  `M6_FAMILIES`. **M5 edited this file** (`costmap.layers`, `M5_FAMILIES`): a textual
+  conflict on the `FAMILIES = ...` line is likely; resolve as
+  `M1_FAMILIES + M2_FAMILIES + M5_FAMILIES + M6_FAMILIES`.
+- `lab_web/src/schemas/gen/coco/manip/v1/grasp_pb.ts` (new generated file only; no
+  existing generated index or barrel changed — `generate.py --check` reproduces every
+  existing file byte for byte with the pinned protoc-gen-es 2.15.0).
+- Not changed, deliberately: `coco_lab/coco_lab/columns.py` (its TABLES are enumerated by
+  `coco_schemas/test/test_columns_m2.py`; Grasp Assist keeps its own tables, held to the
+  proto by `coco_lab_ros/test/test_m6f_manip_schema.py`). At merge, M5 and M6 may prefer
+  to move them into `columns.TABLES` with the vectors regenerated.
 
 ## Pending heavy items
 
