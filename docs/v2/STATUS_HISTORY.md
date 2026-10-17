@@ -2118,3 +2118,13 @@ next in M5.11. Browser asset audit confirms cache hits, no model asset network f
 See data/m5/caching/REPORT.md and COUNTER.md. Original PNG app icon exports added
 to licence/checksum manifest. No evidence deleted or owner gate completed.
 Next: M5.10 launch drafts, then M5.11 measurement/PR.
+
+## 2026-10-18 · M5.10 launch drafts complete
+
+Three-mode release draft, 75-second demo narrative, 80.001-second actual silent
+local recording, owner-run usability protocol and landscape phone guide. Demo has
+zero console errors, MODEL/STACK labels retained, conditions/renderer recorded;
+initial failed take preserved. No release/deploy/announcement/account action.
+See data/m5/launch/REPORT.md. Prior functional suites apply to unchanged runtime;
+final suites/acceptance checks continue in M5.11. No owner row marked complete.
+Next: final verification, measurement, append-only results, push and PR; never merge.

@@ -1,3 +1,37 @@
+# M5 phone guide · Nothing Phone (1)
+
+This section supersedes the historical manual protocol below for M5. The agent owns
+phone measurements under Gautham's 2026-10-14 amendment. Gautham only connects the
+phone over USB with debugging enabled; no hand measurements are requested.
+
+Play is landscape and full-screen. A game start requests full-screen/orientation
+lock where the browser permits; if refused, rotate the phone using the rotate card.
+The thumb joystick is bottom left; STOP and action buttons are bottom right. Keep
+the camera cutout and gesture bar clear. Compare and Research support portrait;
+Compare panes stack and controls/recording filters open in a bottom sheet.
+
+Settings includes quality tier, wall height, sound, controls, theme, reduced motion
+and phone haptics. The provisional phone render cap is 60 fps, optional 120; tier
+pixel-ratio caps are 1 / 1.5 / 2. Auto adapts to actual frame time. These defaults
+are assumptions until the real-phone 10-minute heat run determines them; emulation
+does not establish Adreno performance or satisfy the Phone criterion.
+
+The agent checks adb devices, forwards Chrome's DevTools socket and drives a new
+Chrome tab over CDP. It records actual CSS viewport/DPR/screen/safe-area values,
+Chrome/network/battery/temperature where reported, first visible computation, 3D
+world/live model readiness, 1/10-minute rendered fps, touch-to-motion latency and
+context loss/reloads. Real measurements use the phone's own mobile network.
+Desktop power profile/driver and actual phone state are recorded together; an absent
+phone stays pending: connect over USB. Results: data/m5/phone/; assumptions: PHONE_PROFILE.md.
+
+Shared emulation: 412×915 or 915×412, DPR 2.625, Chrome Android UA, touch/mobile,
+4× CPU as a proxy and emulated 4G for starts. Every result says “emulated Nothing
+Phone (1)”; layout must not depend on those exact sizes.
+
+---
+
+## Historical M1–M4 protocol (retained; not the M5 ownership rule)
+
 # Measuring the Arena on your phone (`?perf`) — for Gautham
 
 Two M1 acceptance criteria are yours to measure: **phone performance**

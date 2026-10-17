@@ -2,9 +2,9 @@
 
 ## Position
 
-- Branch: `v2/m5-focus`; last completed checkpoint SHA: `ea0e2c3`.
-- M5 · Focus and polish: M5.0–M5.9 implemented; M5.10 launch drafts in progress.
-- M5.10–M5.11 remain; warm-start acceptance budget is open. No PR, merge or release yet. Independent milestone review remains required.
+- Branch: `v2/m5-focus`; last completed checkpoint SHA: `cf3de28`.
+- M5 · Focus and polish: M5.0–M5.10 implemented; M5.11 verification and measurement in progress.
+- M5.11 remains; warm-start acceptance budget is open. No PR, merge or release yet. Independent milestone review remains required.
 - Master plan revision 3, copied byte-for-byte; sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
 - Canonical agent rules: [AGENTS.md](../AGENTS.md). Historical status: [STATUS_HISTORY.md](v2/STATUS_HISTORY.md).
 - Prompts: [M5](v2/M5_PROMPT.md), [owner amendments](v2/M5_CONTINUATION.md).
@@ -92,6 +92,14 @@
   model assets come from cache. Isolated final timing and startup profiling remain M5.11.
 - Original PNG install icons have manifest licences/checksums. No personal data cached.
 
+## M5.10 Launch drafts complete
+
+- [Report](v2/data/m5/launch/REPORT.md): three-mode release draft, demo script,
+  owner-run usability protocol and landscape/automatic-measurement phone guide.
+- [Local silent demo](v2/data/m5/launch/demo/final/coco-m5-demo.webm): 80.001 s,
+  actual app/STACK recording, zero console errors; conditions and renderer recorded.
+- Nothing published; owner usability gate remains pending. No measurement number invented.
+
 ## Owner rows, phone and design inputs
 
 - Notes found: [committed blank template](v2/usability/2026-10-pre-m5.md), unchanged.
@@ -150,7 +158,7 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 ## Next step
 
-M5.10: close draft release/usability/phone guide/local demo; M5.11 final budgets, accessibility, hygiene and PR.
+M5.11: validate visible-computation timing and keyboard access; finish startup/FPS/contrast/determinism/30-minute hygiene checks, acceptance report, push and PR.
 M5.4–M5.6 screenshots await soft review; apply any recorded feedback next checkpoint.
 No stop condition hit; no new parked idea. Real phone absent; provisional settings unchanged.
 M5 remains open; public launch still waits for real-phone pass and Gautham's usability gate.
