@@ -1,0 +1,87 @@
+{
+ "evidence": "MODEL vs STACK (recorded)",
+ "scan_values": {
+  "bag": "lab2_kidnap_recovery_k1",
+  "beams": 13890,
+  "median_abs_m": 0.049491224849695925,
+  "p90_abs_m": 0.14742832631686653,
+  "pose": "/model/coco/odometry (Gazebo ground truth), nearest stamp",
+  "scans": 30,
+  "within_0.05_m": 0.5010799136069114,
+  "world": "worlds/coco_arena_v1.yaml"
+ },
+ "schema": "coco_lab.m6f.ros_shapes_vs_stack",
+ "shapes": {
+  "cmd_vel_frame": {
+   "model": "",
+   "stack": ""
+  },
+  "odometry_frames": {
+   "model": [
+    "odom",
+    "base_footprint"
+   ],
+   "stack": [
+    "odom",
+    "base_footprint"
+   ]
+  },
+  "plan_frame": {
+   "model": "map",
+   "stack": "map"
+  },
+  "scan": {
+   "model": {
+    "angle_increment": 0.008744885177453027,
+    "angle_max": 2.0944,
+    "angle_min": -2.0944,
+    "frame_id": "lidar_link",
+    "intensities": 0,
+    "range_max": 12.0,
+    "range_min": 0.15,
+    "ranges": 480,
+    "scan_time": 0.0,
+    "time_increment": 0.0
+   },
+   "stack": {
+    "angle_increment": 0.008744885213673115,
+    "angle_max": 2.094399929046631,
+    "angle_min": -2.094399929046631,
+    "frame_id": "lidar_link",
+    "intensities": 480,
+    "range_max": 12.0,
+    "range_min": 0.15000000596046448,
+    "ranges": 480,
+    "scan_time": 0.0,
+    "time_increment": 0.0
+   }
+  },
+  "tf_static": {
+   "model": {
+    "base_footprint->base_link": [
+     0.0,
+     0.0,
+     0.0135
+    ],
+    "base_link->lidar_link": [
+     -0.09,
+     0.1,
+     0.2
+    ]
+   },
+   "stack": {
+    "base_footprint->base_link": [
+     0.0,
+     0.0,
+     0.0135
+    ],
+    "base_link->lidar_link": [
+     -0.09,
+     0.1,
+     0.2
+    ]
+   }
+  }
+ },
+ "version": 1
+}

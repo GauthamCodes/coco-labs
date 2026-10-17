@@ -12,7 +12,9 @@ the entries below are copied into it at merge.
   the measurement is **pending, machine busy**.
 - **Done:** M6F.5 Grasp Assist (model side).
 - **Done:** M6F.6 Fetch Rush and Rush Hour rules (model side).
-- **Next:** M6F.7 ROS-shaped message model.
+- **Done:** M6F.7 ROS-shaped message model.
+- **M6F.8:** **pending, machine busy** (plan: `docs/v2/m6/M6F8_PLAN.md`).
+- **Next:** M6F.9 wrap up (results, merge notes, draft PR).
 
 ## Setup facts (M6F.0, 2026-10-17)
 
@@ -96,10 +98,12 @@ the entries below are copied into it at merge.
   every refusal reason; every pick ends inside the Stack's window (0.15375-0.154 m ahead).
 - Tests: `coco_lab` 976 / 0 / 0; `coco_schemas` 241 / 0 / 0 (232 before);
   `coco_lab_ros` 150 passed / **4 failed** — `test_lab5.py::test_lab_stack_knows_both_overlays_and_refuses_others`,
-  `test_launch.py` (2), `test_static_smoke.py::test_the_pipeline_on_real_planners`, all
-  `LookupError: Could not find the resource 'gazebo_models' of type 'packages'`: they need
-  a colcon overlay of this worktree (none built yet; heavy-ish, scheduled with M6F.8).
-  Not caused by M6 code (they look up launch files and packages); not yet re-run on an overlay.
+  `test_launch.py` (2), `test_static_smoke.py::test_the_pipeline_on_real_planners`: each
+  looks up a package in the ament index — `gazebo_models`, `custom_teleop` or
+  `coco_lab_ros` (`PackageNotFoundError`; the smoke test's `planner_server` cannot start
+  without it). They need a colcon overlay of this worktree (none built yet; scheduled with
+  M6F.8). Not caused by M6 code; not yet re-run on an overlay. (These runs' shell also
+  inherited `~/ros2_ws/install` prefixes from the environment; stripped from later runs.)
 
 ## M6F.6 — Fetch Rush and Rush Hour, model side (2026-10-17)
 
@@ -116,6 +120,19 @@ the entries below are copied into it at merge.
 - Tests: `coco_lab/test/test_games.py` (19); `coco_lab` 995 / 0 / 0.
 - Merge point: the browser HUDs and `coco verify` wiring for games (UI phase); the
   Python side is `games.play` / `games.verify`.
+
+## M6F.7 — the ROS-shaped model (2026-10-17)
+
+- `coco_lab/coco_lab/ros_shapes.py`: LaserScan, OccupancyGrid, Twist/TwistStamped, Path,
+  Odometry, TF (`map -> odom -> base_footprint -> base_link -> lidar_link`, COCO's URDF
+  names as the Stack records them), and `ros_graph()` (`docs/v2/m6/data/ros_graph.json`).
+  Doc `docs/v2/m6/ROS_SHAPES.md`. Evidence class MODEL; the comparison is MODEL vs STACK.
+- Field by field against the real Jazzy messages (`coco_lab_ros/test/test_m6f_ros_shapes.py`,
+  8 tests); against two committed Stack bags: every shape agrees but intensities (model 0,
+  Stack 480); scan values over 30 recorded scans, 13,890 beams: median |d| 0.0495 m,
+  p90 0.147 m, 50.1 % within 0.05 m (`docs/v2/m6/data/ros_shapes_vs_stack.json`).
+- Tests: `coco_lab` 1,001 / 0 / 0; `coco_lab_ros` 158 passed / 4 failed (the same four
+  overlay-dependent tests as M6F.5).
 
 ## Plan-change entries to copy into docs/STATUS.md at merge
 
@@ -157,6 +174,8 @@ M5 is likely to change too. Updated at every checkpoint.)
 
 (Heavy jobs wait for an idle machine: Codex not running, no robot batch, AC.)
 
+- **M6F.8 Gazebo + Nav2 validation of the Depot: pending, machine busy.** Codex active
+  all session. Plan, with the facts it depends on: `docs/v2/m6/M6F8_PLAN.md`.
 - **M6F.4 Depot planning benchmark (CPython and Pyodide-in-Node, nice off):
   pending, machine busy.** 2026-10-17 17:05: `codex resume` running and seven
   `lab_web/tools/perf/serve_dist.mjs` servers (ports 4200-4206) up — Codex's M5
