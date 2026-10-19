@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /**
- * One app, four modes (M3.7): Learn · Play · Sandbox · Case Files, the same
- * header in each, with the evidence badge for what is on screen (README §3's
- * classes). The Live Stack (simulated) view stays reachable here but is not
- * a mode; the frozen v1 labs likewise.
+ * Play, Compare and Research share navigation and an evidence badge.
+ * Legacy mode IDs map to their current homes. About links to Live Stack
+ * (simulated) and the frozen v1 labs.
  */
 
 import { Settings } from 'lucide-react';

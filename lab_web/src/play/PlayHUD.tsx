@@ -80,6 +80,10 @@ export function PlayHUD({model:m}:{model:ArenaSceneModel}){
  };
  const stop=()=>{m.takeOver();m.queue.current.push({kind:'stop'});m.latchedRef.current=true;m.setLatched(true);};
  const release=()=>{m.latchedRef.current=false;m.setLatched(false);};
+ useEffect(()=>{
+  window.addEventListener('coco:stop',stop);
+  return()=>window.removeEventListener('coco:stop',stop);
+ });
  const elapsed=m.tick?.t_world??0;
  const source=m.tick?.source==='teleop'?'YOU':m.tick?.source==='planner'?'PLANNER':m.tick?.source==='mission'?'ASSIST':m.tick?.source==='stop'?'STOP':m.tick?.source==='idle'?'IDLE':'—';
  return <main className={`night-play coco-play ${phone?'night-phone':''}`} data-testid="arena" onPointerDown={event=>{if((event.target as HTMLElement).closest('button,a,dialog')&&!(event.target as HTMLElement).closest('.night-actions'))return;if(phone&&!document.fullscreenElement)void enterPhonePlay();}}>
@@ -95,8 +99,8 @@ export function PlayHUD({model:m}:{model:ArenaSceneModel}){
   {(toast||m.error||m.raceNotice)&&<p className="night-toast" role={m.error?'alert':'status'}>{m.error||toast||m.raceNotice}</p>}
   <p className={`play-model-status ${intro?'':'is-hidden'}`} data-testid="arena-mode" data-mode={m.mode}>{m.mode==='replay'?m.replay.status:m.mode==='attract'?'Recorded MODEL demo · drive or click to take control.':'Live MODEL · kinematic'}</p>
   {tutorial&&<PlayTutorial model={m} vision={vision} onDone={()=>setTutorial(false)}/>}
-  <section className="night-rotate"><div><Navigation2 size={32}/><h2>Rotate your phone</h2><p>COCO has room to move in landscape.</p><a href={`${import.meta.env.BASE_URL}?view=play`}>Back to games</a></div></section>
-  <dialog className="play-tools" onKeyDown={trapDialogTab} ref={menu} aria-label="Game menu" onClick={event=>event.stopPropagation()}><header><h1>Play</h1><button autoFocus onClick={()=>menu.current?.close()}>Resume</button></header><nav><a href={`${import.meta.env.BASE_URL}?view=play`}>Games</a><a href={`${import.meta.env.BASE_URL}?view=compare`}>Compare</a><a href={`${import.meta.env.BASE_URL}?view=research`}>Research</a></nav><div ref={setControlsTarget}/><p>WASD / arrows drive · Space stops · R releases · X cycles robot vision. H shows all remappable keys.</p><button onClick={()=>{menu.current?.close();setReplaying(true);}} disabled={!m.session?.history.length}>Replay last 10 seconds</button><ArenaSceneView model={m} controlsOnly/></dialog>
+  <section className="night-rotate"><div><Navigation2 size={32}/><h2>Rotate your phone</h2><p>COCO has room to move in landscape.</p><button onClick={stop}>STOP</button><a href={`${import.meta.env.BASE_URL}?view=play`}>Back to games</a></div></section>
+  <dialog className="play-tools" onKeyDown={trapDialogTab} ref={menu} aria-label="Game menu" onClick={event=>event.stopPropagation()}><header><h1>Play</h1><button onClick={stop}>STOP</button><button autoFocus onClick={()=>menu.current?.close()}>Resume</button></header><nav><a href={`${import.meta.env.BASE_URL}?view=play`}>Games</a><a href={`${import.meta.env.BASE_URL}?view=compare`}>Compare</a><a href={`${import.meta.env.BASE_URL}?view=research`}>Research</a></nav><div ref={setControlsTarget}/><p>WASD / arrows drive · Space stops · R releases · X cycles robot vision. H shows all remappable keys.</p><button onClick={()=>{menu.current?.close();setReplaying(true);}} disabled={!m.session?.history.length}>Replay last 10 seconds</button><ArenaSceneView model={m} controlsOnly/></dialog>
   {m.showPerf&&<PerfOverlay/>}
   {replaying&&m.session&&<InstantReplay session={m.session} onClose={()=>setReplaying(false)}/>}
   {m.playOn&&<div className="play-challenge-panel"><ArenaPlayPanel referenceMap={m.world&&m.occupancy.current?{world:m.world,occupancy:m.occupancy.current}:undefined} compact controlsTarget={controlsTarget} challenge={m.playParam!} levelId={m.playLevel!} live={m.playParam==='map-the-arena'||m.raceOn?m.client.current:null} liveReady={m.liveReady} onReplay={()=>setReplaying(true)} trajectory={()=>m.session?.history.map(t=>[t.pose[0],t.pose[1]])??[]} lastTick={()=>m.lastTick.current} shownTick={()=>m.session?.shownTick?.tick??null} log={()=>m.log.current} onGhost={(flag,ghost)=>m.r.current?.setRace(flag,ghost)}/></div>}

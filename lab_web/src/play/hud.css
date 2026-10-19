@@ -40,6 +40,7 @@ html.playing-coco,html.playing-coco body { margin:0; padding:0; overflow:hidden;
 .play-challenge-panel .play-panel p { margin:0; }
 .play-model-status.is-hidden { width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
 .coco-play .night-rotate a { min-height:48px; min-width:48px; padding:8px 16px; display:inline-flex; align-items:center; justify-content:center; }
+.coco-play .night-rotate button { min-height:48px; min-width:48px; margin:8px; padding:8px 16px; }
 .play .evidence-badge,.coco-play .evidence-badge { font-size:14px; border-color:var(--line); }
 .play .evidence-badge.model,.coco-play .evidence-badge.model { color:var(--fg); }
 .play .evidence-badge.stack,.coco-play .evidence-badge.stack { color:var(--recorded); }

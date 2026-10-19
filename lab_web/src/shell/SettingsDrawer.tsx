@@ -30,6 +30,7 @@ export default function SettingsDrawer({onClose}:{onClose:()=>void}){
   {document.querySelector('.coco-play')&&<button onClick={()=>{dialog.current?.close();window.dispatchEvent(new Event('coco:play-menu'));}}>Game menu and inspection</button>}
   {document.querySelector('.play-tutorial')&&<button onClick={()=>{dialog.current?.close();window.dispatchEvent(new Event('coco:skip-tutorial'));}}>Skip tutorial</button>}
   <p className="muted">Saved on this device.</p>
+  {document.querySelector('.coco-play')&&<button onClick={()=>window.dispatchEvent(new Event('coco:stop'))}>STOP</button>}
   <label>Quality<select aria-label="Quality" value={quality} onChange={e=>{const value=e.target.value as TierChoice;setQuality(value);writePref('quality',value);notifySettings();}}>{TIER_CHOICES.map(value=><option key={value} value={value}>{value==='auto'?'Automatic (measured frame time)':value}</option>)}</select></label>
   <label>Wall display<select aria-label="Wall display" value={walls?'half':'full'} onChange={e=>{const value=e.target.value==='half';setWalls(value);writePref('walls',value);notifySettings();}}><option value="half">Half height</option><option value="full">Full height</option></select></label>
   <label>Theme<select aria-label="Theme" value={theme} onChange={e=>{const value=e.target.value==='light'?'light':'dark';setTheme(value);applyTheme(value,true);notifySettings();}}><option value="dark">Night Shift · dark</option><option value="light">Daylight · light</option></select></label>
