@@ -305,8 +305,10 @@ function compare() {
   const read = (dir, f) => JSON.parse(gunzipSync(readFileSync(join(dir, f))).toString('utf-8'));
   const runs = Object.fromEntries(readdirSync(OUT).filter((f) => /^hashes_.*\.json\.gz$/.test(f))
     .map((f) => read(OUT, f)).map((d) => [d.engine, d]));
-  if (args.ref) runs['pyodide-node'] = read(args.ref, 'hashes_pyodide-node.json.gz');
-  const ref = runs['pyodide-node'];
+  const ref = args.ref ? read(args.ref, 'hashes_pyodide-node.json.gz') : runs['pyodide-node'];
+  // CI may supply only browser runs plus a saved Node reference. When Node
+  // was rerun too, compare that fresh output instead of replacing it silently.
+  if (args.ref && !runs['pyodide-node']) runs['pyodide-node'] = ref;
   if (!ref) throw new Error('no Pyodide-in-Node reference');
   const sessions = load();
   const out = { criterion: specFile() === 'coco_arena_v1.json' ? 'identical per-tick hashes across engines, 100 recorded sessions (README M1 B.4)'
@@ -330,7 +332,7 @@ function compare() {
       ticks_mismatched: mismatched, sessions_differing: firstDiffs.length, first_differences: firstDiffs.slice(0, 10),
       all_hashes_sha256: digest, page_errors: d.page_errors ?? [] };
   }
-  out.pass = Object.keys(runs).length >= Number(args.engines ?? 4) && Object.values(out.engines).every((e) => e.ticks_mismatched === 0 && e.sessions === sessions.length);
+  out.pass = Object.keys(runs).length >= Number(args.engines ?? 4) && Object.values(out.engines).every((e) => e.ticks_mismatched === 0 && e.sessions_differing === 0 && e.sessions === sessions.length && e.page_errors.length === 0);
   writeFileSync(join(OUT, 'determinism.json'), JSON.stringify({ conditions: { start: CONDITIONS_AT_START, end: conditions() }, ...out }, null, 1) + '\n');
   console.log(JSON.stringify(Object.fromEntries(Object.entries(out.engines).map(([k, v]) => [k, [v.ticks_compared, v.ticks_mismatched, v.all_hashes_sha256.slice(0, 12)]]))), 'pass', out.pass);
   process.exit(out.pass ? 0 : 1);
