@@ -14,7 +14,7 @@ import type { World, LoopFrame } from '../../arena/protocol';
 import { type PlanStore } from '../../arena/render/planStore';
 import { paneLayout } from './paneLayout';
 import { comparisonBasePixels, comparisonPixels, type CostmapData, type CostLayer } from './comparisonPixels';
-export interface ComparisonData { world: World; occupancy: Uint8Array; stores: PlanStore[]; costs?: CostmapData; layer?: CostLayer; difference?: boolean; revision?: number; loopFrames?: LoopFrame[] }
+export interface ComparisonData { world: World; occupancy: Uint8Array; stores: PlanStore[]; costs?: CostmapData; layer?: CostLayer; difference?: boolean; revision?: number; costRevision?: number; loopFrames?: LoopFrame[] }
 
 export function WorldStage({ kind, data, perspective = false, onReady, onHover, onGoal }: { kind: 'title' | 'compare'; data?: ComparisonData; perspective?: boolean; onReady?: () => void; onHover?: (cell: [number, number] | null) => void; onGoal?: (x: number, y: number) => void }) {
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -36,7 +36,7 @@ export function WorldStage({ kind, data, perspective = false, onReady, onHover, 
     const overhead = new THREE.OrthographicCamera(-1, 1, 1, -1, .01, 150);
     overhead.up.set(0, 1, 0); overhead.layers.enable(WORLD_LAYER);
     const overlays: { mesh: THREE.Mesh; texture: THREE.DataTexture; pixels: Uint8Array; cursor: number; key?: string; store?: PlanStore }[] = [];
-    let cachedBase: { occupancy: Uint8Array; costs?: CostmapData; layer?: CostLayer; theme: string; width: number; height: number; pixels: Uint8Array; version: number } | undefined;
+    let cachedBase: { occupancy: Uint8Array; costs?: CostmapData; costRevision?: number; layer?: CostLayer; theme: string; width: number; height: number; pixels: Uint8Array; version: number } | undefined;
     const extra = new THREE.Group(); scene.add(extra);
     const dots = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({ color: TOKENS.computation[activeTheme()].particles, size: 4, sizeAttenuation: false, transparent: true, opacity: .5, depthWrite: false })); extra.add(dots);
     const chosenLine = new THREE.Line(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({ color: TOKENS.computation[activeTheme()].chosen, depthTest: false })); extra.add(chosenLine);
@@ -127,9 +127,9 @@ export function WorldStage({ kind, data, perspective = false, onReady, onHover, 
               mesh.renderOrder = 10; scene.add(mesh); overlays[side] = { mesh, texture, pixels, cursor: -1 };
             }
             const overlay = overlays[side]; overlay.mesh.visible = true;
-            const theme = activeTheme(), { costs, layer, difference } = current.data;
-            if (!cachedBase || cachedBase.occupancy !== occupancy || cachedBase.costs !== costs || cachedBase.layer !== layer || cachedBase.theme !== theme || cachedBase.width !== world.width || cachedBase.height !== world.height) {
-              cachedBase = { occupancy, costs, layer, theme, width: world.width, height: world.height,
+            const theme = activeTheme(), { costs, costRevision, layer, difference } = current.data;
+            if (!cachedBase || cachedBase.occupancy !== occupancy || cachedBase.costs !== costs || cachedBase.costRevision !== costRevision || cachedBase.layer !== layer || cachedBase.theme !== theme || cachedBase.width !== world.width || cachedBase.height !== world.height) {
+              cachedBase = { occupancy, costs, costRevision, layer, theme, width: world.width, height: world.height,
                 pixels: comparisonBasePixels(world.width, world.height, occupancy, theme, costs, layer), version: (cachedBase?.version ?? 0) + 1 };
             }
             const key = `${store.cursor}:${cachedBase.version}:${difference ? `${stores[0].cursor}:${stores[1].cursor}` : ''}`;

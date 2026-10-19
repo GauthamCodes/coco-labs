@@ -26,7 +26,7 @@ it('difference uses actual expanded history even when a cell becomes a path', ()
 import { comparisonPixels as original } from './reference/comparison_pixels_m57';
 import { comparisonBasePixels } from '../src/ui/reference/comparisonPixels';
 it('matches the previous pixels across all costs, themes, trace states and difference patterns', () => {
-  let seed = 23; const random = () => (seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0);
+  let seed = 23; const random = () => ((seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) >>> 8);
   for (const [width, height] of [[1, 1], [1, 256], [256, 1], [19, 29]]) {
     const n = width * height, occupancy = Uint8Array.from({ length: n }, () => random() % 2);
     const grid = Uint8Array.from({ length: n }, (_, i) => i % 256);

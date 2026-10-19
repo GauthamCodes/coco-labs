@@ -74,6 +74,7 @@ export function CompareWorkspace() {
       onFamily(message) {
         const d = state.current, columns = message.columns;
         if (!d || message.channel !== 'coco.costmap.layers.cells.v1' || !columns) return;
+        d.costRevision = (d.costRevision ?? 0) + 1;
         d.costs ??= Object.fromEntries(['static', 'inflation', 'obstacle', 'combined'].map(key => [key, new Uint8Array(d.world.width * d.world.height)])) as unknown as CostmapData;
         for (let k = 0; k < columns.row.length; k++) {
           const i = Number(columns.row[k]) * d.world.width + Number(columns.col[k]);
