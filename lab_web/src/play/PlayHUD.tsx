@@ -30,7 +30,7 @@ export function PlayHUD({model:m}:{model:ArenaSceneModel}){
  useEffect(()=>{const timer=setTimeout(()=>setIntro(false),5000);return()=>clearTimeout(timer);},[]);
  useEffect(()=>{if(m.qualityNote)setToast(m.qualityNote);},[m.qualityNote]);
  const [toast,setToast]=useState('');
- const phases=['Off','Scan area','Planner frontier and heatmap','Static costmap','Localization particles'];
+ const phases=['Off','Scan area','Planner frontier and heatmap','Costmap','Localization particles'];
  const previous=useRef({blocked:false,grasp:''});
  useEffect(()=>{
   const ready=(event:Event)=>{setCostmapEpoch(v=>v+1);setToast(`Costmap snapshot · tick ${(event as CustomEvent<number>).detail}`);};
@@ -83,7 +83,7 @@ export function PlayHUD({model:m}:{model:ArenaSceneModel}){
  const elapsed=m.tick?.t_world??0;
  const source=m.tick?.source==='teleop'?'YOU':m.tick?.source==='planner'?'PLANNER':m.tick?.source==='mission'?'ASSIST':m.tick?.source==='stop'?'STOP':m.tick?.source==='idle'?'IDLE':'—';
  return <main className={`night-play coco-play ${phone?'night-phone':''}`} data-testid="arena" onPointerDown={event=>{if((event.target as HTMLElement).closest('button,a,dialog')&&!(event.target as HTMLElement).closest('.night-actions'))return;if(phone&&!document.fullscreenElement)void enterPhonePlay();}}>
-  <div className="night-play-world"><canvas ref={m.canvas} className="arena-canvas night-game-canvas" data-testid="arena-canvas" aria-label="Click the floor for a goal; drive with WASD"/></div>
+  <div className="night-play-world"><canvas ref={m.canvas} className="arena-canvas night-game-canvas" data-testid="arena-canvas" tabIndex={0} role="application" aria-label="Click the floor for a goal; drive with WASD"/></div>
   <section className="night-objective night-glass"><span className="night-eyebrow">{m.playParam?.replaceAll('-',' ')??'FREE ROAM'}</span><strong>{m.raceOn?'Drive to the flag.':m.lastTick.current?.arrived?'Goal reached.':'Make your own path.'}</strong><span className="night-timer">{Math.floor(elapsed/60).toString().padStart(2,'0')}:{Math.floor(elapsed%60).toString().padStart(2,'0')}</span></section>
   <Minimap model={m}/>
   <button className="night-settings night-icon-button" aria-label="Settings" onClick={openSettings}><Settings size={20}/></button>

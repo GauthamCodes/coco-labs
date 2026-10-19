@@ -23,7 +23,7 @@ export function Joystick({ onChange }: { onChange(dx: number, dy: number, at?: n
   };
   const end = () => { setKnob([0, 0]); onChange(0, 0); };
   return (
-    <div ref={pad} className="joystick" data-testid="arena-joystick" role="application" aria-label="Drive COCO (joystick)"
+    <div ref={pad} className="joystick" data-testid="arena-joystick" role="application" tabIndex={0} aria-label="Drive COCO (joystick)"
       onPointerDown={(e) => { pad.current!.setPointerCapture(e.pointerId); at(e); }}
       onPointerMove={(e) => { if (e.buttons || e.pointerType === 'touch') at(e); }}
       onPointerUp={end} onPointerCancel={end} onLostPointerCapture={end}>

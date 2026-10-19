@@ -435,6 +435,16 @@ export class ArenaRenderer {
     st.dirty = false;
   }
 
+  /** Instrumentation reads rendered data, never an invisible event cursor. */
+  hasVisibleComputation(): boolean {
+    const drawn = (object: THREE.Object3D | null) => !!object?.visible &&
+      (((object as THREE.InstancedMesh).isInstancedMesh && (object as THREE.InstancedMesh).count > 0) ||
+       (((object as THREE.Mesh).geometry?.getAttribute('position')?.count ?? 0) > 1));
+    return (this.layers.closed && (this.store?.expansions ?? 0) > 0) ||
+      drawn(this.frontier) || drawn(this.pathLine) || drawn(this.lidar) ||
+      drawn(this.scanFill) || drawn(this.scanHits) || !!this.gridMat?.uniforms.uShowCost.value;
+  }
+
   setCostmapVisible(visible: boolean) {
     if (this.gridMat) this.gridMat.uniforms.uShowCost.value = visible && this.costmapTick !== null;
   }

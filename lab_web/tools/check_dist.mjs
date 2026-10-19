@@ -18,7 +18,8 @@
 
 import { createHash } from 'node:crypto';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { dirname, join, relative, resolve } from 'node:path';
+import { gzipSync } from 'node:zlib';
 
 const here = new URL('..', import.meta.url).pathname;
 const dist = join(here, 'dist');
@@ -143,6 +144,21 @@ for (const shell of ['PlayScene', 'CompareScene', 'ResearchScene']) {
   }
 }
 
+// M5.11: the title app (including its worker) must fit 350 kB gzip.
+// Interpreter glue warms separately; report that additional payload explicitly.
+const titleScripts = new Set();
+function titleDependencies(file) {
+  if (titleScripts.has(file)) return;
+  titleScripts.add(file);
+  const source = readFileSync(file, 'utf8');
+  const imports = /\b(?:import|export)\s*(?:\{[^}]*\}|\*\s*(?:as\s+\w+)?|[\w$]+(?:\s*,\s*\{[^}]*\})?)?\s*(?:from\s*)?["'](\.[^"']+\.js)["']/g;
+  for (const match of source.matchAll(imports)) titleDependencies(resolve(dirname(file), match[1]));
+}
+for (const file of appAssets.filter(file => /\/(?:index|TitleScreen|arena\.worker)-[\w-]+\.js$/.test(file))) titleDependencies(file);
+const titleGzipBytes = [...titleScripts].reduce((sum, file) => sum + gzipSync(readFileSync(file)).length, 0);
+const interpreterJavaScriptGzipBytes = ['pyodide.mjs', 'pyodide.asm.mjs'].reduce((sum, name) => sum + gzipSync(readFileSync(join(dist, 'generated/pyodide', name))).length, 0);
+if (!titleScripts.size || titleGzipBytes > 350000) failures.push(`title app JavaScript ${titleGzipBytes} gzip bytes exceeds 350000`);
+
 // No cookie, no session storage, no IndexedDB. ONE localStorage write is allowed:
 // the preferences module's (lab_web/src/prefs.ts; M4.5 generalised M3.5's personal
 // bests into it), alone, in the chunk that holds its key prefixes.
@@ -167,7 +183,7 @@ const expect = opt('--expect-hash');
 if (expect && expect !== tree) failures.push(`dist tree ${tree} != expected ${expect}`);
 
 console.log(JSON.stringify({
-  base, pyodide, files: files.length, bytes: files.reduce((s, f) => s + statSync(f).size, 0),
+  base, pyodide, title_app_gzip_bytes: titleGzipBytes, background_interpreter_js_gzip_bytes: interpreterJavaScriptGzipBytes, title_app_scripts: [...titleScripts].map(file => relative(dist, file)).sort(), files: files.length, bytes: files.reduce((s, f) => s + statSync(f).size, 0),
   urls: Object.fromEntries(found), tree_sha256: tree, failures,
 }, null, 1));
 process.exit(failures.length ? 1 : 0);

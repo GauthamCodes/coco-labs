@@ -5,6 +5,6 @@ import { PlayHUD } from '../play/PlayHUD';
 
 /** Play's scene shell; M5.3 retains the existing presentation. */
 export default function PlayScene() {
-  const model = useArenaScene();
+  const model = useArenaScene(true);
   return <PlayHUD model={model} />;
 }

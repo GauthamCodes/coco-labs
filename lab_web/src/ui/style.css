@@ -580,3 +580,15 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .help-keys { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
 .help-keys td { padding: 3px 6px; border-bottom: 1px solid var(--line); }
 .help-setting { display: block; margin: 4px 0; }
+
+.keyboard-goal fieldset{display:flex;flex-wrap:wrap;gap:12px;align-items:end;border:1px solid var(--line);padding:12px}.keyboard-goal label{display:grid;gap:6px}.keyboard-goal input,.keyboard-goal button{min-height:48px;font:inherit;color:var(--fg);background:var(--panel2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:8px}.keyboard-goal input{width:140px}
+
+/* Text roles use theme tokens; computation colours retain their fixed meanings. */
+a{color:var(--accent)}.evidence-badge,.claim-label{font-size:var(--type-label)}
+.evidence-badge.model,.claim-label.simplified-model{color:var(--badge-model)}
+.evidence-badge.stack,.claim-label.measured,.claim-label.simulation-result{color:var(--badge-stack)}
+.claim-label.tested{color:var(--label-success)}.claim-label.assumption,.claim-label.inference{color:var(--label-warning)}.claim-label.unresolved{color:var(--label-error)}.arena-go{color:var(--bg)}
+
+input::placeholder{color:var(--muted);opacity:1}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}

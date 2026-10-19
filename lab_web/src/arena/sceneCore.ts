@@ -77,7 +77,7 @@ declare global {
 type Mode = 'attract' | 'live' | 'replay' | 'recording';
 interface RunEntry { id: string; title: string; group: string; evidence: string }
 
-export function useArenaScene() {
+export function useArenaScene(playHud = false) {
   const params = new URLSearchParams(window.location.search);
   /**
    * M4.3: ?world=v2 is the terrain (World Spec v2); v1 stays the default for every existing link.
@@ -123,7 +123,7 @@ export function useArenaScene() {
   const [error, setError] = useState<string | null>(linkFieldError);
   const [inspect, setInspect] = useState(false);
   const [picked, setPicked] = useState<CellInfo | null>(null);
-  const [layers, setLayers] = useState<LayerVisibility>(DEFAULT_LAYERS);
+  const [layers, setLayers] = useState<LayerVisibility>(playHud ? { ...DEFAULT_LAYERS, lidar:false, closed:false, heatmap:false, frontier:false, path:false, footprint:false, truth:false } : DEFAULT_LAYERS);
   // M2.2 lenses: which one, how much detail, Focus, and the lens layers' toggles
   const [lens, setLens] = useState<LensId>(LENSES.some((l) => l.id === params.get('lens')) ? params.get('lens') as LensId : 'plan');
   // a recorded run opens at Explain: its search (closed set included) is what it is there to show
@@ -284,6 +284,7 @@ export function useArenaScene() {
     let rr: ArenaRenderer | null = null;
     try {
       rr = new ArenaRenderer(cv, currentTheme());
+      rr.setLayers(layers);
       ll.current = new LensLayers(rr.scene, PALETTES[currentTheme()]);
       ll.current.onDecal = (m) => rr?.registerDecal(m);
       // M4.6: in 3D every lens mark stands on the walkable surface, and beliefs are columns
@@ -521,8 +522,10 @@ export function useArenaScene() {
         if (firstRobotFrame && recordedId && rr!.is3D && rr!.three?.ready && active()?.shownTick) { firstRobotFrame = false; perf.mark('first_robot_frame', wallMs()); }
         perf.drawnPose(rr!.drawnPose);
         const st = active()?.shownSearch;
-        if (st && st.cursor > 0) {
-          if (firstComputation) { firstComputation = false; perf.mark('first_computation_shown', wallMs()); }
+        const rotate = cv.closest('.coco-play')?.querySelector('.night-rotate');
+        const visible = !document.hidden && (!rotate || getComputedStyle(rotate).display === 'none') && cv.getBoundingClientRect().width > 0 && (rr.hasVisibleComputation() || ll.current?.hasVisibleData());
+        if (firstComputation && visible) { firstComputation = false; perf.mark('first_computation_shown', wallMs()); }
+        if (st && st.cursor > 0 && visible) {
           // goal timing is the LIVE model's: a recording's search ids are its own
           if (active() === live.current) perf.frontierDrawn(st.searchId);
         }
@@ -700,12 +703,12 @@ export function useArenaScene() {
     const DRIVE: Action[] = ['forward', 'reverse', 'left', 'right', 'precision'];
     const keydown = (e: KeyboardEvent) => {
       if (document.querySelector('dialog[open]')) return;
-      if ((e.target as HTMLElement)?.matches?.('input, select, textarea, button')) return;
+      if ((e.target as HTMLElement)?.closest?.('input, select, textarea, button, a')) return;
       const a = actionFor(e.code, bindingsRef.current);
       if (!a) return;
       const onPage = document.activeElement === document.body || document.activeElement === cv;
       // Tab keeps walking the controls unless the page itself has focus
-      if (a === 'autonomy' && (e.shiftKey || !onPage)) return;
+      if (a === 'autonomy' && (e.shiftKey || !onPage || (e.code === 'Tab' && document.activeElement !== cv))) return;
       if (a === 'help') { e.preventDefault(); if (!e.repeat) setHelpOpen((o) => !o); return; }
       if (a === 'robot_vision') { e.preventDefault(); if (!e.repeat) window.dispatchEvent(new Event('coco:robot-vision')); return; }
       if (a === 'camera_next' || a === 'camera_follow') {
@@ -743,7 +746,7 @@ export function useArenaScene() {
         return;
       }
       if (a === 'context' || a === 'autonomy') {
-        e.preventDefault();
+        if (e.code !== 'Tab') e.preventDefault();
         if (raceOn) { setRaceNotice('Race controls are locked: drive with teleop and STOP only.'); return; }
         if (e.repeat || latchedRef.current) return;
         held.clear(); takeOver();
@@ -789,14 +792,14 @@ export function useArenaScene() {
   // a lens and a level choose the default layers (Watch: at most two computation layers)
   useEffect(() => {
     const plan = new Set(defaultLayers(LENS_BY_ID.plan, lens === 'plan' ? level : 'watch'));
-    setLayers((l) => ({ ...l, frontier: lens === 'plan' && plan.has('frontier'), path: plan.has('path'),
+    if (!playHud) setLayers((l) => ({ ...l, frontier: lens === 'plan' && plan.has('frontier'), path: plan.has('path'),
       closed: lens === 'plan' && plan.has('closed'), heatmap: lens === 'plan' && plan.has('heatmap') }));
     const on: Record<string, boolean> = {};
     for (const L of LENSES) if (L.id !== 'plan') for (const x of L.layers) on[x.id] = false;
     if (lens !== 'plan') for (const id of defaultLayers(LENS_BY_ID[lens], level)) on[id] = true;
     // ?layers=all (the M2 laptop budget): every lens's default layers at once
     if (allLayers) for (const L of LENSES) if (L.id !== 'plan') for (const id of defaultLayers(L, level)) on[id] = true;
-    setLensOn(on);
+    if (!playHud) setLensOn(on);
     client.current?.loadPack(LENS_BY_ID[lens].pack);
   }, [lens, level]);
   useEffect(() => {
@@ -930,7 +933,7 @@ export function useArenaScene() {
     setHelpOpen, bindings, setBindings, settings, fullWheel, takeOver, sendConfig,
     toggle, choosePlanner, onJoystick, chooseCamera, onTank, changeSetting, makeShare,
     tick, lensesAvailable, plan, res, evidence, note, stats,
-    m2, showLive,
+    m2, showLive, goal,
   };
 }
 

@@ -135,7 +135,7 @@ export function CompareWorkspace() {
       <WorldStage kind="compare" data={shown} perspective={perspective} onHover={setHover} onGoal={(x, y) => { if (!busy) { setGoal([x, y]); run(names, params, [x, y]); } }} />
       <div className={`compare-labels panes-${names.length}`}>{names.map((name, i) => <div key={i}><strong>{KEYS[i]} · {LABELS[name] ?? name}</strong><span>MODEL · kinematic</span></div>)}</div>
       <div className="compare-toolbar"><button onClick={() => setPerspective(!perspective)}>{perspective ? 'Top down' : '3D view'}</button><button disabled={family !== 'global'} onClick={() => setDifference(!difference)} aria-pressed={difference}>A/B difference</button><button ref={controlsToggle} className="compare-controls-toggle" onClick={() => setControls(!controls)} aria-expanded={controls}>Controls</button></div>
-      <output className={`compare-hover ${hover ? 'has-cell' : 'is-hint'}`}>{hover && data?.costs ? `Cell ${hover.join(', ')} · ${layer} cost ${data.costs[layer][hover[0] * data.world.width + hover[1]]}` : 'Hover a cell for its cost · click for the shared goal'}</output>
+      <output className={`compare-hover ${hover ? 'has-cell' : 'is-hint'}`}>{hover && data?.costs ? `Cell ${hover.join(', ')} · ${layer} cost ${data.costs[layer][hover[0] * data.world.width + hover[1]]}` : 'Hover a cell for its cost · or focus/edit goal coordinates · click for the shared goal'}</output>
     </section>
     <aside className="compare-controls" aria-label="Comparison controls"><button className="compare-close-controls" onClick={closeControls}>Close controls</button><div className="compare-mobile-view"><button onClick={() => setPerspective(!perspective)}>{perspective ? 'Top down' : '3D view'}</button><button disabled={family !== 'global'} onClick={() => setDifference(!difference)} aria-pressed={difference}>A/B difference</button></div>
       <h1>One world.<br />Different decisions.</h1><p>Same map, start, goal and seed.</p>
@@ -151,7 +151,7 @@ export function CompareWorkspace() {
       </fieldset>
       <form onSubmit={event => { event.preventDefault(); if (!busy && goal.every(Number.isFinite)) run(); }}>
         <fieldset disabled={busy}><legend>{family === 'localise' ? 'Shared relocation point' : 'Shared goal'}</legend>
-        {(['X', 'Y'] as const).map((axis, index) => <label key={axis}>{axis} (m)<input type="number" required step="any" value={goal[index]} onChange={event => setGoal(values => values.map((v, i) => i === index ? +event.target.value : v) as [number, number])} /></label>)}
+        {(['X', 'Y'] as const).map((axis, index) => <label key={axis}>{axis} (m)<input type="number" required step="any" value={goal[index]} onFocus={() => { if(data)setHover([data.world.height-1-Math.floor((goal[1]-data.world.origin[1])/data.world.resolution),Math.floor((goal[0]-data.world.origin[0])/data.world.resolution)]); }} onChange={event => { const next=goal.map((v,i)=>i===index?+event.target.value:v) as [number,number];setGoal(next);if(data){const row=data.world.height-1-Math.floor((next[1]-data.world.origin[1])/data.world.resolution),col=Math.floor((next[0]-data.world.origin[0])/data.world.resolution);setHover(row>=0&&row<data.world.height&&col>=0&&col<data.world.width?[row,col]:null);} }} /></label>)}
         <button type="submit">Apply to all panes</button></fieldset>
       </form>
       <label>Timing device (editable)<input type="text" maxLength={100} value={deviceLabel} onChange={event => setDeviceLabel(event.target.value)} /></label>

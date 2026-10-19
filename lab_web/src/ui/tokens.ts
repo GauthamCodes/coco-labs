@@ -85,8 +85,8 @@ export const TOKENS = {
     light: { sky: '#f2f4f7', ground: '#8a8478', workLight: '#fff1df', ambient: 1.2, key: 1.6, floor: '#b5bbb6', structure: '#8c9697' },
   },
   colours: {
-    dark: { bg: '#10151a', fg: '#edf0f2', muted: '#acb6be', line: '#3e4e5c', panel: '#1b252e', panel2: '#26343f', accent: '#eed6ae', recorded: '#a6c9e4', browser: '#d5dbe0', glass: '#bac3c9', errorBg: '#451b24', errorFg: '#ffd3d9' },
-    light: { bg: '#eceee9', fg: '#202a32', muted: '#505e66', line: '#a2b1b8', panel: '#fafbf7', panel2: '#e1e6df', accent: '#654316', recorded: '#225774', browser: '#36464f', glass: '#505e66', errorBg: '#f7e0df', errorFg: '#7a1b20' },
+    dark: { badgeModel:'#c4afff', badgeStack:'#a6c9e4', labelSuccess:'#92d9b9', labelWarning:'#eed6ae', labelError:'#ffb3bc', bg: '#10151a', fg: '#edf0f2', muted: '#acb6be', line: '#3e4e5c', panel: '#1b252e', panel2: '#26343f', accent: '#eed6ae', recorded: '#a6c9e4', browser: '#d5dbe0', glass: '#bac3c9', errorBg: '#451b24', errorFg: '#ffd3d9' },
+    light: { badgeModel:'#5937b4', badgeStack:'#225774', labelSuccess:'#1d6449', labelWarning:'#754313', labelError:'#9a2533', bg: '#eceee9', fg: '#202a32', muted: '#505e66', line: '#a2b1b8', panel: '#fafbf7', panel2: '#e1e6df', accent: '#654316', recorded: '#225774', browser: '#36464f', glass: '#505e66', errorBg: '#f7e0df', errorFg: '#7a1b20' },
   },
   type: { ui: "'Manrope Variable', sans-serif", display: "'Outfit Variable', sans-serif", label: 14, body: 16, lead: 18, section: 26, displaySize: 76, phoneDisplay: 52, compactDisplay: 56 },
   spacing: { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, xxl: 32, scene: 48, hero: 64 },

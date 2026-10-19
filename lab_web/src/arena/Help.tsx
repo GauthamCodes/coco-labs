@@ -68,7 +68,7 @@ export function Help(p: HelpProps) {
         </table>
         <p>
           <button type="button" className="seg-btn" onClick={p.onReset} data-testid="rebind-reset">Default keys</button>
-          {' '}The mouse orbits and zooms; a click on the floor sets an autonomous goal.
+          {' '}The mouse orbits and zooms; a click on the floor sets an autonomous goal. The game menu also accepts a goal by keyboard. Tab on the focused arena switches autonomy and continues to the next control.
           {p.coarse && ' On a touch screen: the joystick drives, a tap on the floor sets a goal, two fingers orbit and zoom.'}
         </p>
         <h2>Settings</h2>

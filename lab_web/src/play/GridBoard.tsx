@@ -32,6 +32,8 @@ export function GridBoard({ grid, overlay, onCell, onHover, label }: {
   grid: GridView; overlay: Overlay; onCell?: (c: Cell) => void; onHover?: (c: Cell | null) => void; label: string;
 }) {
   const [theme,setTheme]=useState(activeTheme);
+  const [keyboardCell,setKeyboardCell]=useState<Cell>(grid.marks.S??[0,0]);
+  const [keyboardFocus,setKeyboardFocus]=useState(false);
   useEffect(()=>{const update=()=>setTheme(activeTheme());window.addEventListener(PREFERENCES_CHANGED,update);return()=>window.removeEventListener(PREFERENCES_CHANGED,update);},[]);
   const ref = useRef<HTMLCanvasElement | null>(null);
   const wrap = useRef<HTMLDivElement | null>(null);
@@ -100,7 +102,8 @@ export function GridBoard({ grid, overlay, onCell, onHover, label }: {
     g.font = `bold ${Math.max(14,Math.round(px * 0.6))}px ${TOKENS.type.ui}`;
     g.textAlign = 'center'; g.textBaseline = 'middle';
     for (const [k, [r, c]] of Object.entries(grid.marks)) { g.strokeStyle=free;g.lineWidth=4;g.strokeText(k,c*px+px/2,r*px+px/2);g.fillStyle = ink; g.fillText(k, c * px + px / 2, r * px + px / 2); }
-  }, [grid, overlay, px,theme]);
+    if(keyboardFocus&&onCell){const [r,c]=keyboardCell;g.strokeStyle=accent;g.lineWidth=3;g.strokeRect(c*px+2,r*px+2,px-4,px-4);}
+  }, [grid, overlay, px,theme,keyboardCell,keyboardFocus]);
   const cellAt = (e: React.PointerEvent<HTMLCanvasElement>): Cell | null => {
     const b = (e.target as HTMLCanvasElement).getBoundingClientRect();
     const c = Math.floor((e.clientX - b.left) / px); const r = Math.floor((e.clientY - b.top) / px);
@@ -108,9 +111,17 @@ export function GridBoard({ grid, overlay, onCell, onHover, label }: {
   };
   return (
     <div className="grid-board" ref={wrap}>
-      <canvas ref={ref} role="img" aria-label={label} data-testid="grid-board" data-px={px}
-        onPointerDown={(e) => { const c = cellAt(e); if (c) onCell?.(c); }}
+      <canvas ref={ref} role={onCell?"application":"img"} tabIndex={onCell?0:undefined} aria-label={onCell?label+"; arrow keys choose a cell, Enter selects":label} data-testid="grid-board" data-px={px}
+        onFocus={()=>setKeyboardFocus(true)} onBlur={()=>{setKeyboardFocus(false);onHover?.(null);}}
+        onKeyDown={event=>{
+          if(!onCell)return;
+          const [r,c]=keyboardCell,delta:Record<string,Cell>={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]};
+          if(delta[event.key]){event.preventDefault();const [dr,dc]=delta[event.key],cell:Cell=[Math.max(0,Math.min(grid.height-1,r+dr)),Math.max(0,Math.min(grid.width-1,c+dc))];setKeyboardCell(cell);onHover?.(cell);}
+          else if(event.key==='Enter'||event.key===' '){event.preventDefault();onCell(keyboardCell);}
+        }}
+        onPointerDown={(e) => { const c = cellAt(e); if (c&&onCell) { setKeyboardCell(c); onCell(c); } }}
         onPointerMove={(e) => onHover?.(cellAt(e))} onPointerLeave={() => onHover?.(null)} />
+      {onCell&&<span className="sr-only" role="status">{keyboardFocus?`Cell ${keyboardCell.join(', ')}; ${grid.blocked[keyboardCell[0]*grid.width+keyboardCell[1]]?'wall':'free'}; cost ${grid.cost[keyboardCell[0]*grid.width+keyboardCell[1]]??0}`:''}</span>}
     </div>
   );
 }

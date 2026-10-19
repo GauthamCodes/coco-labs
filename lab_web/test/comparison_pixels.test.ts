@@ -21,3 +21,21 @@ it('difference uses actual expanded history even when a cell becomes a path', ()
   expect([...pixels.slice(0, 3)]).toEqual([...pixels.slice(4, 7)]);
   expect([...pixels.slice(0, 3)]).not.toEqual([...pixels.slice(8, 11)]);
 });
+
+// Retained M5.7 presentation is the byte oracle, including transparent RGB.
+import { comparisonPixels as original } from './reference/comparison_pixels_m57';
+import { comparisonBasePixels } from '../src/ui/reference/comparisonPixels';
+it('matches the previous pixels across all costs, themes, trace states and difference patterns', () => {
+  let seed = 23; const random = () => (seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0);
+  for (const [width, height] of [[1, 1], [1, 256], [256, 1], [19, 29]]) {
+    const n = width * height, occupancy = Uint8Array.from({ length: n }, () => random() % 2);
+    const grid = Uint8Array.from({ length: n }, (_, i) => i % 256);
+    const costs = { static: grid, inflation: grid, obstacle: grid, combined: grid };
+    const a = new PlanStore(width, height), b = new PlanStore(width, height);
+    for (let i = 0; i < n; i++) { a.state[i] = random() % 4; b.state[i] = random() % 4; a.order[i] = random() % 3 - 1; b.order[i] = random() % 3 - 1; }
+    for (const theme of ['dark', 'light'] as const) for (const data of [costs, undefined]) for (const difference of [undefined, [a, b] as [PlanStore, PlanStore]]) {
+      const base = comparisonBasePixels(width, height, occupancy, theme, data);
+      expect(comparisonPixels(width, height, occupancy, a, theme, data, 'combined', difference, new Uint8Array(n * 4).fill(42), base)).toEqual(original(width, height, occupancy, a, theme, data, 'combined', difference));
+    }
+  }
+});

@@ -37,8 +37,9 @@ export function ArenaSceneView({ model, controlsOnly = false }: { model: ArenaSc
     tick, lensesAvailable, plan, res, evidence, note, stats,
     m2, showLive,
   } = model;
+  const Root = controlsOnly ? 'section' : 'main';
   return (
-    <main className="arena" data-testid="arena">
+    <Root className="arena" data-testid="arena">
       {/* a pane inside the Case Files comparison (embed=1) shows its badge, not the modes again */}
       {controlsOnly ? null : params.get('embed') === '1'
         ? <p className="embed-head"><EvidenceBadge evidence={evidence} /></p>
@@ -76,6 +77,15 @@ export function ArenaSceneView({ model, controlsOnly = false }: { model: ArenaSc
           planar recording · no height or tilt recorded
         </p>
       )}
+      {(mode === 'live' || mode === 'attract') && <form className="keyboard-goal" onSubmit={event => {
+        event.preventDefault(); const data = new FormData(event.currentTarget);
+        model.goal(Number(data.get('goal-x')), Number(data.get('goal-y')));
+        event.currentTarget.closest('dialog')?.close();
+      }}><fieldset disabled={!world || raceOn || latched}><legend>Planner goal · metres in map frame</legend>
+        <label>Goal X <input required name="goal-x" type="number" step="any" min={world?.origin[0]} max={world ? world.origin[0]+world.width*world.resolution : undefined}/></label>
+        <label>Goal Y <input required name="goal-y" type="number" step="any" min={world?.origin[1]} max={world ? world.origin[1]+world.height*world.resolution : undefined}/></label>
+        <button type="submit">Send goal</button>
+      </fieldset></form>}
       <LensBar lens={lens} level={level} focus={focus} available={lensesAvailable}
         onLens={setLens} onLevel={setLevel} onFocus={setFocus} />
       {/* M2.9: the measured gaps between this lens's model and the Stack */}
@@ -238,6 +248,6 @@ export function ArenaSceneView({ model, controlsOnly = false }: { model: ArenaSc
         )}
       </section>
       {showPerf && <PerfOverlay />}
-    </main>
+    </Root>
   );
 }
