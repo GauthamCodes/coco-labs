@@ -1,0 +1,71 @@
+{
+ "cases": [
+  {
+   "profile": "desktop",
+   "device": "desktop",
+   "off": null,
+   "visibleComputationMs": 7797.199951171875,
+   "unchangedHash": "485eef98bcc17be30c68f6f04e8579da538be763078aa0f0c9d9cfb7fce0edfe",
+   "costmapTick": 9,
+   "keyboardGoal": true
+  },
+  {
+   "profile": "landscape",
+   "device": "emulated Nothing Phone (1)",
+   "off": null,
+   "visibleComputationMs": 9182.199951171875,
+   "unchangedHash": "0ce4f06a6dd9c85680f63ca0f6c8a5fd24255fa8f6da289bb6510fbf88f13cdd",
+   "costmapTick": 12,
+   "keyboardGoal": true
+  },
+  {
+   "profile": "portrait",
+   "device": "emulated Nothing Phone (1)",
+   "off": null,
+   "rotate": "no computation marker under rotate card"
+  }
+ ],
+ "errors": [],
+ "error": "Error: Keyboard path did not reproduce committed score",
+ "passed": false,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-18T01:12:45.766Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 12.68,
+    "5m": 11.25,
+    "15m": 6.6
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-18T01:13:22.709Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 10.52,
+    "5m": 10.88,
+    "15m": 6.67
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

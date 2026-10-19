@@ -1,0 +1,142 @@
+{
+ "site": "http://127.0.0.1:38921/coco-labs/",
+ "requestedWorld": "default",
+ "errors": [],
+ "thirdParty": [],
+ "warm": [
+  {
+   "profile": "desktop",
+   "device": "laptop · emulated 4G",
+   "liveModelReadyMs": 2680.5,
+   "marks": {
+    "worker_create": 1792285154049.4001,
+    "world3d_assets": 1792285154079.5,
+    "attract_ready": 1792285154210.6,
+    "first_frame": 1792285154226.8,
+    "first_computation_shown": 1792285154226.8,
+    "world3d_ready": 1792285154229.1,
+    "world3d_robot": 1792285154229.1,
+    "worker_boot": 1792285154227.7,
+    "pyodide_module": 1792285154236.8,
+    "pyodide_ready": 1792285155698.9001,
+    "coco_lab_ready": 1792285155783,
+    "world_received": 1792285156258,
+    "arena_ready": 1792285156257.8
+   },
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "serverRequests": [
+    "/coco-labs/index.html",
+    "/coco-labs/sw.js",
+    "/coco-labs/sw.js"
+   ],
+   "controlled": true
+  },
+  {
+   "profile": "landscape",
+   "device": "emulated Nothing Phone (1) · emulated 4G · CPU 4×",
+   "liveModelReadyMs": 2620.5,
+   "marks": {
+    "worker_create": 1792285160005.8,
+    "world3d_assets": 1792285160058.8,
+    "attract_ready": 1792285160531,
+    "first_frame": 1792285160586.2,
+    "first_computation_shown": 1792285160586.2,
+    "worker_boot": 1792285160171.6,
+    "pyodide_module": 1792285160179.7,
+    "world3d_ready": 1792285160602.6,
+    "world3d_robot": 1792285160602.6,
+    "pyodide_ready": 1792285161616.3,
+    "coco_lab_ready": 1792285161699.7,
+    "world_received": 1792285162190.3,
+    "arena_ready": 1792285162187.5
+   },
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "serverRequests": [
+    "/coco-labs/index.html",
+    "/coco-labs/sw.js"
+   ],
+   "controlled": true
+  },
+  {
+   "profile": "portrait",
+   "device": "emulated Nothing Phone (1) · emulated 4G · CPU 4×",
+   "liveModelReadyMs": 2694.199951171875,
+   "marks": {
+    "worker_create": 1792285165926.2,
+    "world3d_assets": 1792285165971.2,
+    "attract_ready": 1792285166437.4001,
+    "first_frame": 1792285166502.5,
+    "first_computation_shown": 1792285166502.5,
+    "worker_boot": 1792285166081,
+    "pyodide_module": 1792285166086.3,
+    "world3d_ready": 1792285166518.9001,
+    "world3d_robot": 1792285166519.4001,
+    "pyodide_ready": 1792285167629.5,
+    "coco_lab_ready": 1792285167713,
+    "world_received": 1792285168189.5,
+    "arena_ready": 1792285168186
+   },
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "serverRequests": [
+    "/coco-labs/index.html",
+    "/coco-labs/sw.js"
+   ],
+   "controlled": true
+  }
+ ],
+ "versionA": "c423ae7bf06032e2cd64616b7f4bff8912b1dc64cb0acfac2c411c4cfbbae6ad",
+ "versionB": "a75a530dc5eb55091abb4837e929200439531561fbeaade894fbc3002c25d618",
+ "cache": {
+  "names": [
+   "coco-static-%2Fcoco-labs%2F-c423ae7bf06032e2cd64616b7f4bff8912b1dc64cb0acfac2c411c4cfbbae6ad",
+   "coco-static-%2Fcoco-labs%2F-active-version",
+   "coco-static-%2Fcoco-labs%2F-a75a530dc5eb55091abb4837e929200439531561fbeaade894fbc3002c25d618"
+  ],
+  "entries": 242,
+  "personalUrls": 0
+ },
+ "deploy": "hard reload: new index and static bytes, old caches removed",
+ "offlineTitle": true,
+ "disabledWorks": true,
+ "passed": true,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-18T00:59:06.379Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 0.8,
+    "5m": 0.97,
+    "15m": 1.32
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-18T00:59:33.379Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.21,
+    "5m": 1.05,
+    "15m": 1.34
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

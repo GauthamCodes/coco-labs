@@ -2,126 +2,64 @@
 
 ## Position
 
-- Branch: `v2/m5-focus`; last completed checkpoint SHA: `cf3de28`.
-- M5 · Focus and polish: M5.0–M5.10 implemented; M5.11 verification and measurement in progress.
-- M5.11 remains; warm-start acceptance budget is open. No PR, merge or release yet. Independent milestone review remains required.
-- Master plan revision 3, copied byte-for-byte; sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
-- Canonical agent rules: [AGENTS.md](../AGENTS.md). Historical status: [STATUS_HISTORY.md](v2/STATUS_HISTORY.md).
-- Prompts: [M5](v2/M5_PROMPT.md), [owner amendments](v2/M5_CONTINUATION.md).
+- Branch `v2/m5-focus`; implementation/tested code SHA `00a42aa` (M5.11).
+- M5.0–M5.11 implemented and measured; PR submission in progress.
+- No merge, release or deployment. Public launch remains gated by unresolved budgets, real-phone pass, owner usability and independent review.
+- Master plan revision 3 sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
+- Authority/rules: [README](../README.md), [AGENTS](../AGENTS.md), [M5 prompt](v2/M5_PROMPT.md), [owner amendments](v2/M5_CONTINUATION.md).
+- [Acceptance matrix](v2/M5_RESULTS.md), [closure evidence/report](v2/data/m5/close/REPORT.md), [full history](v2/STATUS_HISTORY.md).
 
-## Evidence and tests
+## Checkpoints and evidence
 
-- Setup: [baseline](v2/data/m5/setup/BASELINE.md): packages 3523, web 436, tools 192 passed.
-- M5.1: packages 3534, web 456, tools 193 passed; typecheck passed.
-- [Defect evidence](v2/data/m5/defects/): shared link bounds, 137/137 committed Play links verify;
-  v1 flat 15000 hashes unchanged; v2 four engines ×100 sessions, zero differences.
-- [ADR 0008](v2/adr/0008-state-hash-v2.md): mutable behavioural state coverage and version compatibility.
-- Emulated 4G Case Files: 100/100 real mesh first frames <=2 s; max 1871.39990234375 ms.
-  [Data](v2/data/m5/defects/casefile-first-frame/first-frame.json), balanced on AC, NVIDIA 580.178.04.
-- [V1 workflow](v2/data/m5/defects/V1_WORKFLOW.md): source reproduction disabled; frozen archive unchanged.
-- M5.2: packages 3534, web 456, tools 195 passed; typecheck passed.
-  [Moves and checks](v2/data/m5/agent-overhead/MOVES.md), [packages](v2/data/m5/agent-overhead/packages-clean.txt),
-  [web](v2/data/m5/agent-overhead/vitest.txt), [tools](v2/data/m5/agent-overhead/tools-clean.txt).
-- AGENTS 178 lines; STATUS below 200; all prior history retained. Only six root cache files untracked.
-- M5.3 baseline: five pixel-identical canvas tests, five recording replays, 22 URL forms and six archive views pass.
-  [Baseline artifacts](v2/data/m5/code-shape/before/).
+| Checkpoint | Change / evidence | Class |
+| --- | --- | --- |
+| M5.0 | [Pinned baseline](v2/data/m5/setup/BASELINE.md); revision 3 installed byte-for-byte; E1–E8 recorded. | TESTED |
+| M5.1 | [Defect regressions](v2/data/m5/defects/): shared link bounds, v2 hash, race locks, real robot mesh, floor picking; frozen v1 intact; source-repro job documented/disabled. | MODEL / TESTED |
+| M5.2 | [Full moves/cache list](v2/data/m5/agent-overhead/MOVES.md); AGENTS 178 lines, short STATUS, archived history/lore, five RL scripts moved. Only six tracked root test-cache files removed; physical copies retained. | TESTED |
+| M5.3 | [Scene core/lazy shells](v2/data/m5/code-shape/REPORT.md); separate hashed Three.js chunk; unchanged behavior proved. | MODEL / TESTED |
+| M5.4 | [Night Shift](v2/data/m5/design-system/REPORT.md): tokens/themes, licensed fonts/icons, real references/CVD simulations. | TESTED presentation |
+| M5.5 | [Three-door shell](v2/data/m5/app-shell/REPORT.md), warm interpreter, About/Settings, old routes preserved. | MODEL / TESTED |
+| M5.6 | [Focused Play](v2/data/m5/play/REPORT.md): HUD, follow camera, walls/scan, cards/score/replay/tutorial and phone controls. | MODEL / TESTED |
+| M5.7 | [Compare](v2/data/m5/compare/REPORT.md): one-context 2/4 panes, layers, existing three algorithm families, twelve evidence-linked tours. Mapping comparisons parked for M7; Inspect lessons retained. | MODEL / TESTED; original STACK claims retained |
+| M5.8 | [Recordings library](v2/data/m5/recordings/REPORT.md): 100 Case Files +65 converted representations; all 165 searchable/filterable; failures retained. | STACK / MODEL / TESTED |
+| M5.9 | [Static caching and disabled counter](v2/data/m5/caching/REPORT.md), own install icons/manifest; no personal data cached or account created. | TESTED |
+| M5.10 | [Launch drafts/local demo](v2/data/m5/launch/REPORT.md): 80.001 s local silent demo, release draft, owner usability protocol, phone guide. Nothing published. | TESTED presentation; original STACK recording |
+| M5.11 | [Final results](v2/M5_RESULTS.md): visible-computation/keyboard/AA fixes, worker-update race, byte-identical Compare rendering optimization, measurement/PR closure. | MODEL / TESTED / MEASURED laptop; explicitly emulated phone |
 
-- M5.3: scene core + original presentation + three lazy shells; one Three.js engine chunk.
-  [Report](v2/data/m5/code-shape/REPORT.md): suites 3534 / 456 / 195 pass; typecheck and build pass.
-  Final five pixel-identical scenes, five replays, 22 URL forms + six archive views, 137 links all pass.
-  [Final bundle inventory](v2/data/m5/code-shape/final/bundles.json); no behaviour or model change.
+## Verification and measured limits
 
-- M5.4: Night Shift tokens/themes, self-hosted Outfit/Manrope and Lucide with checksums,
-  real reference screens and colour-vision simulations. [Report](v2/data/m5/design-system/REPORT.md).
-  Packages 3534 / web 461 / tools 195 pass; typecheck, build, manifests and dist pass.
-  Five final canvas tests have zero differing pixels; 22 URL forms + six archive views and five replays pass.
-  Twelve final references: zero console errors, one GL context each. No model/hash change.
-
-- M5.5: actual title, warm worker, three-purpose routes, About and Settings.
-  [Report](v2/data/m5/app-shell/REPORT.md): 3534 / 466 / 195 pass; typecheck/build/dist pass.
-  50 URL forms + six archive views, five identical canvas checks and five replays pass.
-  Warm/cold hashes match both versions/specs; failed warm-up retries successfully.
-
-## M5.6 Play complete
-
-- [Report](v2/data/m5/play/REPORT.md): full-screen HUD, camera/walls/scan,
-  cards/scorecard/replay/tutorial, phone controls/APIs and original app icon.
-- Packages 3534 / web 477 / tools 195 pass; typecheck/build/dist pass.
-- Focus: 7 desktop / 7 compact / 8 emulated landscape / 1 portrait controls,
-  world/joystick included, no exemptions and no page scroll; 24 game layouts pass.
-- 50 URL forms + six archive views; five canvas checks and five replays pass.
-  CLI 166 plus latest map delta 1/1 match. No model, v1 hash or golden MCAP change.
-- Tutorial real-drive/goal/vision completion and reload, modal focus, hidden pause,
-  frozen hashes across display changes, scan hits and race/picking regressions pass.
-- Original PNGs retained; only attract's full-screen visual baseline changes.
-  Some resumed tests on battery; closure captures balanced/AC. No performance claim.
-
-## M5.7 Compare complete
-
-- 2/4 scissored panes, shared goal, costmap layers/hover/contours, difference patterns,
-  synchronized timeline/results; existing planning, control and localization references.
-- Seven original missions retained inside tours; five story tours cite committed evidence.
-  Mapping comparisons parked for M7; existing mapping/decision Inspect lessons retained.
-- Eight desktop/compact/emulated phone layouts passed with one context and no console errors;
-  final captures, 50 URL forms + six archive views and five replay checks pass.
-- Web 486 passed; all 12 package suites passed before the byte-preserving encoder optimization.
-  Affected coco_lab 834 and tools 204 pass; harness-format failure corrected (48 checks pass).
-- [ADR 0009](v2/adr/0009-v2-encoding-cache.md): v2 serialization hot path optimized,
-  coverage/version unchanged; reference bytes, mutation/alias tests and eight saved hashes match.
-- Play costmap is now a view-only model snapshot; no simulation tick or input added.
-- Earlier localization browser timeouts retained; final desktop and both emulated phone family checks pass.
-  [Report](v2/data/m5/compare/REPORT.md); all required families and twelve tours checked.
-
-## M5.8 Recordings complete
-
-- [Report](v2/data/m5/recordings/REPORT.md): all 100 Case Files and 65 converted runs,
-  searchable/filterable with failures retained; cards open the existing viewer.
-- Web 488 and tools 205 pass; eleven package suites pass, coco_lab_ros rerun with
-  canonical schema paths after environment-only import failure. Typecheck/build pass.
-- Four layouts retain all 165 entries, 60 failure representations, zero early MCAP
-  downloads and zero console errors; native phone filter sheet restores focus.
-- [Screenshots](v2/data/m5/screens/recordings/README.md) await Gautham; no feedback recorded.
-
-## M5.9 Caching and counter implemented
-
-- [Report](v2/data/m5/caching/REPORT.md): content-checked static-only cache, canonical
-  network-first index, deploy refresh/old-cache cleanup, offline title and disabled-worker checks pass.
-- Blank [counter config](v2/COUNTER.md): zero third-party requests; no service/account created.
-- All 12 package suites (3569 tests), web 490 + corrected asset regression 1, tools 207 pass.
-- Warm-start diagnostic exceeds 3 s; NOT MET in that run. Network audit confirms
-  model assets come from cache. Isolated final timing and startup profiling remain M5.11.
-- Original PNG install icons have manifest licences/checksums. No personal data cached.
-
-## M5.10 Launch drafts complete
-
-- [Report](v2/data/m5/launch/REPORT.md): three-mode release draft, demo script,
-  owner-run usability protocol and landscape/automatic-measurement phone guide.
-- [Local silent demo](v2/data/m5/launch/demo/final/coco-m5-demo.webm): 80.001 s,
-  actual app/STACK recording, zero console errors; conditions and renderer recorded.
-- Nothing published; owner usability gate remains pending. No measurement number invented.
+- Setup packages/web/tools: 3523 /436 /192 passed. Closure web 493 (62 files), tools 209, focused harness-condition tests 56; typecheck/build/dist/licence checks pass.
+- [Final package run](v2/data/m5/close/packages-final.txt): 3569 across all 12 packages pass; no Python model change since M5.9.
+- [V1 flat](v2/data/m5/close/v1-flat/checks.json): all 15000 M1 hashes unchanged; golden fixtures untouched.
+- [V2](v2/data/m5/close/determinism-v2/determinism.json): four engines ×100 sessions ×150 ticks, zero differences against saved M5.1.
+- [166 stored links](v2/data/m5/close/links-verified.json) +[one delta](v2/data/m5/close/links-delta-verified.json) verify their own versions.
+- [URLs](v2/data/m5/close/urls/v1_links_check.json): 50 forms +six archive views, zero console errors; five replay and five pixel-identical canvas checks pass.
+- [Focus](v2/data/m5/close/focus/focus.json): 7 desktop /7 compact /8 emulated landscape /1 portrait controls, no page scroll; 24 game layouts checked.
+- [Cold starts](v2/data/m5/close/startup-immediate/checks.json): desktop title <=2028.2000000029802 ms, live/3D <=9786.999755859375 ms; emulated title <=2616.7999999970198 ms.
+- Emulated phone live model misses 10 s in 2/3 runs (max 10161.39990234375 ms); visible computation max 10236.60009765625 ms. Not relabelled passed.
+- [Warm default world](v2/data/m5/close/cache-race-fixed/checks.json): 2680.5 /2620.5 /2694.199951171875 ms desktop/landscape/portrait, all <=3 s. Optional terrain warm diagnostics exceed 3 s and remain visible.
+- [Final JS inventory](v2/data/m5/close/dist-close.txt): app+worker 271628 gzip bytes; interpreter adds 268476, total 540104. App-only check passes CI; strict all-JavaScript 350000 budget NOT MET, no waiver inferred.
+- [GPU Play](v2/data/m5/close/fps/checks.json): nominal 60 fps RTX high/Intel medium; raw interval medians 59.96230940521038 /60.01500375153408.
+- [Final Intel four-pane Compare](v2/data/m5/close/fps-final/checks.json): median 60.02508511003504 fps (initial 11.516654854743376 failure retained); pixels match retained reference.
+- [30-minute hygiene](v2/data/m5/close/soak-final/soak3d_nvidia.json): 30.162183333333335 minutes, zero errors/context loss/driving long tasks.
+- [Accessibility](v2/data/m5/close/accessibility-final/checks.json): twelve dark/light pages, AA text checks, focusability/reduced motion pass; [actual keyboard goal/grid proof](v2/data/m5/close/keyboard-proof/checks.json).
+- Measurements: balanced on AC, original balanced unchanged; RTX 4050 driver 580.178.04; Intel RPL-P through Vulkan/Mesa 25.2.8. Raw start/end conditions include load/renderer. No robot batch active.
+- [ADR 0008](v2/adr/0008-state-hash-v2.md) defines v2; [ADR 0009](v2/adr/0009-v2-encoding-cache.md) preserves its bytes while reducing encoding overhead.
 
 ## Owner rows, phone and design inputs
 
-- Notes found: [committed blank template](v2/usability/2026-10-pre-m5.md), unchanged.
-- [Design inputs](v2/M5_DESIGN_INPUTS.md): no pre-design observations exist; prerequisite explicitly waived.
-- Target Nothing Phone (1), recorded by Gautham. [Profile](v2/PHONE_PROFILE.md): hardware facts assumed until measured.
-- Real Phone criterion is agent-owned and pending: connect phone over USB with debugging enabled.
-  [Latest ADB check](v2/data/m5/phone/ADB_CHECK_M57_2026-10-18.txt): no device connected.
-- Emulator is labelled emulated Nothing Phone (1); CPU 4× proxy, viewport/DPR shared harness.
-  It cannot satisfy the real Phone row. Provisional cap 60 fps, optional 120; automatic tier/DPR pending heat run.
-- Five-person usability remains Gautham-owned, pending, a public-launch gate only.
-- Older M4 owner phone/usability rows remain unmeasured; no owner row marked done.
+- [Notes](v2/usability/2026-10-pre-m5.md) found blank and unchanged; [N1/N2 inputs](v2/M5_DESIGN_INPUTS.md) addressed without invented observations. Pre-design prerequisite waived.
+- Nothing Phone (1), recorded by Gautham; [hardware facts](v2/PHONE_PROFILE.md) remain assumptions until measured.
+- [Latest ADB check](v2/data/m5/phone/ADB_CHECK_M511_2026-10-19.txt): no device. Real Phone criterion agent-owned, pending: connect phone over USB with debugging enabled.
+- [Emulated Nothing Phone (1)](v2/data/m5/close/phone-ten-minutes-visible/checks.json): 600.225 s, median 60/minimum 58 fps, 20 touch trials median 82.90000000596046 ms, zero errors/loss/reload. CPU 4× proxy, laptop GPU, package regression background load disclosed; no thermal inference.
+- Emulation never satisfies Phone. Provisional defaults 60 fps (optional 120), auto starting medium/DPR 1.5, low 1/high 2; real ten-minute heat run finalizes them.
+- Five-person usability remains Gautham-owned, pending, public-launch gate only. Older M4 owner rows remain unmeasured. No owner row marked done.
 
 ## Screenshots awaiting Gautham
 
-- [Desktop race](v2/data/m5/screens/defects/race-desktop.png).
-- [Emulated phone landscape](v2/data/m5/screens/defects/race-nothing-landscape.png).
-- [Emulated phone portrait](v2/data/m5/screens/defects/race-nothing-portrait.png).
-- [M5.4 reference index](v2/data/m5/screens/reference/README.md): title, Play HUD and two-pane Compare at 1440×900, 844×390 and both emulated Nothing Phone (1) orientations; light theme and colour-vision simulations included.
-- [M5.5 app-shell review](v2/data/m5/screens/app-shell/README.md): twenty real mode views and four light Settings captures, desktop/compact and both emulated phone orientations.
-- [M5.6 Play review](v2/data/m5/screens/play/README.md): final Free roam, game/card and scorecard captures at desktop/compact and both emulated phone orientations.
-- [M5.7 Compare review](v2/data/m5/screens/compare/README.md): final two/four panes and all families, desktop and both emulated phone orientations.
-- No recorded feedback yet; continue without waiting.
+- [Final review index](v2/data/m5/close/SCREENSHOTS.md): desktop/compact Play, both emulated phone orientations, keyboard goals/grid and four-pane Compare.
+- [Night Shift/CVD](v2/data/m5/screens/reference/README.md), [app shell](v2/data/m5/screens/app-shell/README.md), [Play](v2/data/m5/screens/play/README.md), [Compare](v2/data/m5/screens/compare/README.md), [Recordings](v2/data/m5/screens/recordings/README.md).
+- All previous references retained. No owner feedback recorded; review is a soft gate.
 
 ## Open questions
 
@@ -158,7 +96,5 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 ## Next step
 
-M5.11: validate visible-computation timing and keyboard access; finish startup/FPS/contrast/determinism/30-minute hygiene checks, acceptance report, push and PR.
-M5.4–M5.6 screenshots await soft review; apply any recorded feedback next checkpoint.
-No stop condition hit; no new parked idea. Real phone absent; provisional settings unchanged.
-M5 remains open; public launch still waits for real-phone pass and Gautham's usability gate.
+Commit M5.11 evidence, push `v2/m5-focus` and open the PR into main. Never merge it or create/edit releases.
+Independent review and the explicit open performance/phone/usability items precede public launch. No stop condition hit; no new parked idea.

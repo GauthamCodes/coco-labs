@@ -1,0 +1,60 @@
+{
+ "site": "http://127.0.0.1:38559/coco-labs/",
+ "requestedWorld": "default",
+ "errors": [],
+ "thirdParty": [],
+ "warm": [],
+ "versionA": "f40ff3803f21033f7299ecef79a83ec1a9a88354cebb15a8377419b0acce6796",
+ "versionB": "9678124bdc0912a03e4811334fbc0fad9df35469f097acd1158891544788b709",
+ "cache": {
+  "names": [
+   "coco-static-%2Fcoco-labs%2F-f40ff3803f21033f7299ecef79a83ec1a9a88354cebb15a8377419b0acce6796",
+   "coco-static-%2Fcoco-labs%2F-9678124bdc0912a03e4811334fbc0fad9df35469f097acd1158891544788b709"
+  ],
+  "entries": 241,
+  "personalUrls": 0
+ },
+ "deploy": "hard reload: new index and static bytes, old caches removed",
+ "error": "TimeoutError: page.reload: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for navigation until \"load\"\u001b[22m\n",
+ "passed": false,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-18T00:56:40.832Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.12,
+    "5m": 1.01,
+    "15m": 1.39
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-18T00:57:13.243Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.36,
+    "5m": 1.09,
+    "15m": 1.4
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

@@ -50,3 +50,9 @@ measured device performance or heat results. The original self-hosted app icon
 and manifest are recorded in DESIGN_ASSETS.json.
 
 M5.6 ADB check: no real phone connected. Phone criterion still pending USB.
+
+## M5.11 closure
+
+[ADB check on 2026-10-19](data/m5/phone/ADB_CHECK_M511_2026-10-19.txt) still lists no device. Real viewport/safe-area/Chrome/network/battery/temperature, real touch latency and real one/ten-minute frame-rate measurements remain pending USB. The agent will measure automatically when available; no manual owner measurements requested.
+
+Default choices remain provisional: 60 fps (optional 120), automatic tier starting medium with DPR cap 1.5; high cap 2 and low cap 1. These are shipped settings, not a conclusion about phone heat. The real ten-minute heat run alone can finalize them. Emulated results and their limitations are linked from M5_RESULTS.md.

@@ -1,0 +1,405 @@
+{
+ "pages": [
+  {
+   "theme": "dark",
+   "view": "",
+   "checked": 15,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 4,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "dark",
+   "view": "?view=play",
+   "checked": 47,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 8,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "dark",
+   "view": "?view=arena&world=v2",
+   "checked": 20,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 7,
+   "reducedMotion": "reduced",
+   "tabs": [
+    "Settings",
+    "Robot vision (X): Off",
+    "STOP",
+    "Grasp",
+    "Auto",
+    "Camera",
+    "FREE ROAMMake your own path.00:00KNOWN M",
+    "Click the floor for a goal; drive with WASD",
+    "Settings",
+    "Robot vision (X): Off",
+    "STOP",
+    "Grasp"
+   ]
+  },
+  {
+   "theme": "dark",
+   "view": "?view=compare",
+   "checked": 92,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 23,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "dark",
+   "view": "?view=research",
+   "checked": 1946,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 450,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "dark",
+   "view": "?view=about",
+   "checked": 46,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 14,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "light",
+   "view": "",
+   "checked": 15,
+   "failures": [
+    {
+     "text": "Play",
+     "tag": "H2",
+     "foreground": "rgb(32, 42, 50)",
+     "background": [
+      12.731372400000012,
+      12.835098300000011,
+      12.570195650000011
+     ],
+     "contrast": 1.3332889003272843,
+     "minimum": 3,
+     "size": 26
+    },
+    {
+     "text": "Drive COCO. Race the planner.",
+     "tag": "P",
+     "foreground": "rgb(80, 94, 102)",
+     "background": [
+      12.731372400000012,
+      12.835098300000011,
+      12.570195650000011
+     ],
+     "contrast": 2.9044954388624613,
+     "minimum": 4.5,
+     "size": 14
+    },
+    {
+     "text": "Compare",
+     "tag": "H2",
+     "foreground": "rgb(32, 42, 50)",
+     "background": [
+      12.731372400000012,
+      12.835098300000011,
+      12.570195650000011
+     ],
+     "contrast": 1.3332889003272843,
+     "minimum": 3,
+     "size": 26
+    },
+    {
+     "text": "One map. Different decisions.",
+     "tag": "P",
+     "foreground": "rgb(80, 94, 102)",
+     "background": [
+      12.731372400000012,
+      12.835098300000011,
+      12.570195650000011
+     ],
+     "contrast": 2.9044954388624613,
+     "minimum": 4.5,
+     "size": 14
+    },
+    {
+     "text": "Research",
+     "tag": "H2",
+     "foreground": "rgb(32, 42, 50)",
+     "background": [
+      12.731372400000012,
+      12.835098300000011,
+      12.570195650000011
+     ],
+     "contrast": 1.3332889003272843,
+     "minimum": 3,
+     "size": 26
+    },
+    {
+     "text": "Explore recorded ROS 2 runs.",
+     "tag": "P",
+     "foreground": "rgb(80, 94, 102)",
+     "background": [
+      12.731372400000012,
+      12.835098300000011,
+      12.570195650000011
+     ],
+     "contrast": 2.9044954388624613,
+     "minimum": 4.5,
+     "size": 14
+    }
+   ],
+   "nonFocusable": [],
+   "controls": 4,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "light",
+   "view": "?view=play",
+   "checked": 47,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 8,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "light",
+   "view": "?view=arena&world=v2",
+   "checked": 20,
+   "failures": [
+    {
+     "text": "FREE ROAM",
+     "tag": "SPAN",
+     "foreground": "rgb(80, 94, 102)",
+     "background": [
+      15.081568480000012,
+      15.205255160000013,
+      14.890509380000013
+     ],
+     "contrast": 2.857491432705907,
+     "minimum": 4.5,
+     "size": 14
+    },
+    {
+     "text": "Make your own path.",
+     "tag": "STRONG",
+     "foreground": "rgb(32, 42, 50)",
+     "background": [
+      15.081568480000012,
+      15.205255160000013,
+      14.890509380000013
+     ],
+     "contrast": 1.3117120306097705,
+     "minimum": 4.5,
+     "size": 16
+    },
+    {
+     "text": "00",
+     "tag": "SPAN",
+     "foreground": "rgb(32, 42, 50)",
+     "background": [
+      15.081568480000012,
+      15.205255160000013,
+      14.890509380000013
+     ],
+     "contrast": 1.3117120306097705,
+     "minimum": 3,
+     "size": 26
+    },
+    {
+     "text": ":",
+     "tag": "SPAN",
+     "foreground": "rgb(32, 42, 50)",
+     "background": [
+      15.081568480000012,
+      15.205255160000013,
+      14.890509380000013
+     ],
+     "contrast": 1.3117120306097705,
+     "minimum": 3,
+     "size": 26
+    },
+    {
+     "text": "00",
+     "tag": "SPAN",
+     "foreground": "rgb(32, 42, 50)",
+     "background": [
+      15.081568480000012,
+      15.205255160000013,
+      14.890509380000013
+     ],
+     "contrast": 1.3117120306097705,
+     "minimum": 3,
+     "size": 26
+    },
+    {
+     "text": "—",
+     "tag": "STRONG",
+     "foreground": "rgb(32, 42, 50)",
+     "background": [
+      15.081568480000012,
+      15.205255160000013,
+      14.890509380000013
+     ],
+     "contrast": 1.3117120306097705,
+     "minimum": 3,
+     "size": 26
+    },
+    {
+     "text": "m/s",
+     "tag": "SPAN",
+     "foreground": "rgb(80, 94, 102)",
+     "background": [
+      15.081568480000012,
+      15.205255160000013,
+      14.890509380000013
+     ],
+     "contrast": 2.857491432705907,
+     "minimum": 4.5,
+     "size": 14
+    },
+    {
+     "text": "—",
+     "tag": "SPAN",
+     "foreground": "rgb(80, 94, 102)",
+     "background": [
+      15.081568480000012,
+      15.205255160000013,
+      14.890509380000013
+     ],
+     "contrast": 2.857491432705907,
+     "minimum": 4.5,
+     "size": 14
+    },
+    {
+     "text": "FIRST DRIVE · ABOUT 20 SECONDS",
+     "tag": "SPAN",
+     "foreground": "rgb(80, 94, 102)",
+     "background": [
+      15.081568480000012,
+      15.205255160000013,
+      14.890509380000013
+     ],
+     "contrast": 2.857491432705907,
+     "minimum": 4.5,
+     "size": 14
+    },
+    {
+     "text": "Drive to the glowing ring with WASD, arrows or the thumb stick.",
+     "tag": "P",
+     "foreground": "rgb(32, 42, 50)",
+     "background": [
+      15.081568480000012,
+      15.205255160000013,
+      14.890509380000013
+     ],
+     "contrast": 1.3117120306097705,
+     "minimum": 4.5,
+     "size": 14
+    },
+    {
+     "text": "Skip in Settings · Esc on a keyboard",
+     "tag": "SMALL",
+     "foreground": "rgb(32, 42, 50)",
+     "background": [
+      15.081568480000012,
+      15.205255160000013,
+      14.890509380000013
+     ],
+     "contrast": 1.3117120306097705,
+     "minimum": 4.5,
+     "size": 11.6667
+    }
+   ],
+   "nonFocusable": [],
+   "controls": 7,
+   "reducedMotion": "reduced",
+   "tabs": [
+    "Settings",
+    "Robot vision (X): Off",
+    "STOP",
+    "Grasp",
+    "Auto",
+    "Camera",
+    "FREE ROAMMake your own path.00:00KNOWN M",
+    "Click the floor for a goal; drive with WASD",
+    "Settings",
+    "Robot vision (X): Off",
+    "STOP",
+    "Grasp"
+   ]
+  },
+  {
+   "theme": "light",
+   "view": "?view=compare",
+   "checked": 92,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 23,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "light",
+   "view": "?view=research",
+   "checked": 1946,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 450,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "light",
+   "view": "?view=about",
+   "checked": 46,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 14,
+   "reducedMotion": "reduced"
+  }
+ ],
+ "errors": [],
+ "passed": false,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-18T01:03:44.859Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.71,
+    "5m": 1.19,
+    "15m": 1.3
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-18T01:04:04.147Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 5.06,
+    "5m": 1.97,
+    "15m": 1.55
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

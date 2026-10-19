@@ -1,0 +1,83 @@
+{
+  "scope": "Desktop Chrome manifest/installability check; not a real Android install",
+  "manifest": {
+    "url": "http://127.0.0.1:4215/coco-labs/manifest.webmanifest",
+    "errors": [],
+    "data": "{\n \"id\": \"./\",\n \"name\": \"COCO Lab\",\n \"short_name\": \"COCO\",\n \"description\": \"Drive, compare robot computations and explore recorded runs.\",\n \"start_url\": \"./?view=arena\",\n \"scope\": \"./\",\n \"display\": \"fullscreen\",\n \"orientation\": \"landscape\",\n \"background_color\": \"#10171d\",\n \"theme_color\": \"#10171d\",\n \"icons\": [\n  {\n   \"src\": \"icons/coco-192.png\",\n   \"sizes\": \"192x192\",\n   \"type\": \"image/png\",\n   \"purpose\": \"any maskable\"\n  },\n  {\n   \"src\": \"icons/coco-512.png\",\n   \"sizes\": \"512x512\",\n   \"type\": \"image/png\",\n   \"purpose\": \"any maskable\"\n  },\n  {\n   \"src\": \"icons/coco.svg\",\n   \"sizes\": \"512x512\",\n   \"type\": \"image/svg+xml\",\n   \"purpose\": \"any maskable\"\n  }\n ]\n}\n",
+    "parsed": {
+      "scope": "http://127.0.0.1:4215/coco-labs/"
+    },
+    "manifest": {
+      "backgroundColor": "rgba(16,23,29,1)",
+      "description": "Drive, compare robot computations and explore recorded runs.",
+      "display": "kFullscreen",
+      "icons": [
+        {
+          "url": "http://127.0.0.1:4215/coco-labs/icons/coco-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "url": "http://127.0.0.1:4215/coco-labs/icons/coco-512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        },
+        {
+          "url": "http://127.0.0.1:4215/coco-labs/icons/coco.svg",
+          "sizes": "512x512",
+          "type": "image/svg+xml"
+        }
+      ],
+      "id": "http://127.0.0.1:4215/",
+      "name": "COCO Lab",
+      "orientation": "LANDSCAPE",
+      "preferRelatedApplications": false,
+      "scope": "http://127.0.0.1:4215/coco-labs/",
+      "startUrl": "http://127.0.0.1:4215/coco-labs/?view=arena",
+      "themeColor": "rgba(16,23,29,1)"
+    }
+  },
+  "installability": {
+    "installabilityErrors": []
+  },
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-19T00:50:01.956Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Charging",
+        "capacity_pct": 91
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 3.98,
+        "5m": 3.14,
+        "15m": 2.58
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-19T00:50:08.850Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Charging",
+        "capacity_pct": 91
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 5.75,
+        "5m": 3.52,
+        "15m": 2.71
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    }
+  }
+}

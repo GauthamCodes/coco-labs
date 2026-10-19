@@ -1,0 +1,6802 @@
+{
+ "cases": [
+  {
+   "profile": "desktop",
+   "run": 0,
+   "device": "laptop · emulated 4G",
+   "errors": [],
+   "requests": [
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/?perf",
+     "timing": {
+      "startTime": 1792369835636.013,
+      "domainLookupStart": 0.326,
+      "domainLookupEnd": 0.424,
+      "connectStart": 0.424,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.689,
+      "requestStart": 0.872,
+      "responseStart": 173.273,
+      "responseEnd": 176.869
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 648,
+      "responseBodySize": 2350,
+      "responseHeadersSize": 237
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/index-DR54Gat3.css",
+     "timing": {
+      "startTime": 1792369835830.9758,
+      "domainLookupStart": 0.092,
+      "domainLookupEnd": 0.104,
+      "connectStart": 0.104,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.28,
+      "requestStart": 0.347,
+      "responseStart": 173.992,
+      "responseEnd": 195.861
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 527,
+      "responseBodySize": 8209,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/index-C03CfM20.js",
+     "timing": {
+      "startTime": 1792369835830.441,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.268,
+      "responseStart": 171.948,
+      "responseEnd": 257.447
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 512,
+      "responseBodySize": 77335,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/TitleScreen-x41AZHDN.js",
+     "timing": {
+      "startTime": 1792369836107.434,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.269,
+      "responseStart": 172.195,
+      "responseEnd": 174.09
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 518,
+      "responseBodySize": 1023,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/library-BQ8OO1cG.js",
+     "timing": {
+      "startTime": 1792369836108.161,
+      "domainLookupStart": 0.084,
+      "domainLookupEnd": 0.096,
+      "connectStart": 0.096,
+      "secureConnectionStart": -1,
+      "connectEnd": 1.508,
+      "requestStart": 1.614,
+      "responseStart": 174.779,
+      "responseEnd": 175.933
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 348,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/navigation-2-BjXWBtY5.js",
+     "timing": {
+      "startTime": 1792369836108.959,
+      "domainLookupStart": 0.374,
+      "domainLookupEnd": 0.382,
+      "connectStart": 0.382,
+      "secureConnectionStart": -1,
+      "connectEnd": 1.575,
+      "requestStart": 1.708,
+      "responseStart": 178.111,
+      "responseEnd": 179.615
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 519,
+      "responseBodySize": 180,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/createLucideIcon-CB2_vk_l.js",
+     "timing": {
+      "startTime": 1792369836108.539,
+      "domainLookupStart": 0.086,
+      "domainLookupEnd": 0.093,
+      "connectStart": 0.093,
+      "secureConnectionStart": -1,
+      "connectEnd": 1.172,
+      "requestStart": 1.334,
+      "responseStart": 175.772,
+      "responseEnd": 181.586
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 523,
+      "responseBodySize": 1473,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/tokens-DWxFG9mh.js",
+     "timing": {
+      "startTime": 1792369836107.97,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.837,
+      "responseStart": 173.601,
+      "responseEnd": 185.072
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 513,
+      "responseBodySize": 3323,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/reference-C5XSdbt7.css",
+     "timing": {
+      "startTime": 1792369836110.426,
+      "domainLookupStart": 0,
+      "domainLookupEnd": 0,
+      "connectStart": 0,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.122,
+      "requestStart": 0.174,
+      "responseStart": 175.278,
+      "responseEnd": 185.524
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 3260,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/WorldStage-DwxHRj4F.js",
+     "timing": {
+      "startTime": 1792369836109.2551,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 171.275,
+      "responseStart": 343.315,
+      "responseEnd": 347.997
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 517,
+      "responseBodySize": 4140,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/quality-j0dYhQ2P.js",
+     "timing": {
+      "startTime": 1792369836110.245,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 179.037,
+      "responseStart": 352.708,
+      "responseEnd": 355.173
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 828,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/scene3d-CQnbAx60.js",
+     "timing": {
+      "startTime": 1792369836109.568,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 174.034,
+      "responseStart": 347.672,
+      "responseEnd": 358.397
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 5474,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/three-2pgavX5U.js",
+     "timing": {
+      "startTime": 1792369836110.049,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 177.41,
+      "responseStart": 349.973,
+      "responseEnd": 507.711
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 512,
+      "responseBodySize": 170496,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/manrope-latin-wght-normal-DHIcAJRg.woff2",
+     "timing": {
+      "startTime": 1792369836675.054,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.192,
+      "responseStart": 172.484,
+      "responseEnd": 240.562
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 601,
+      "responseBodySize": 24836,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/outfit-latin-wght-normal-Bc-8i84L.woff2",
+     "timing": {
+      "startTime": 1792369836675.414,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.134,
+      "responseStart": 174.401,
+      "responseEnd": 248.089
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 600,
+      "responseBodySize": 32292,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369836920.461,
+      "domainLookupStart": 0.134,
+      "domainLookupEnd": 0.21,
+      "connectStart": 0.21,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.423,
+      "requestStart": 0.515,
+      "responseStart": 172.61,
+      "responseEnd": 175.046
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 490,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets3d/arena.glb",
+     "timing": {
+      "startTime": 1792369837097.806,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.217,
+      "responseStart": 173.202,
+      "responseEnd": 221.306
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 474,
+      "responseBodySize": 27640,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets3d/robot_low.glb",
+     "timing": {
+      "startTime": 1792369837098.203,
+      "domainLookupStart": 0.075,
+      "domainLookupEnd": 0.089,
+      "connectStart": 0.089,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.254,
+      "requestStart": 0.301,
+      "responseStart": 173.082,
+      "responseEnd": 326.262
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 478,
+      "responseBodySize": 143892,
+      "responseHeadersSize": 192
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/arena.worker-9ZjtL-ye.js",
+     "timing": {
+      "startTime": 1792369837539.116,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": -1,
+      "responseStart": 202.195,
+      "responseEnd": 202.195
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 366,
+      "responseBodySize": 0,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/manifest.json",
+     "timing": {
+      "startTime": 1792369837742.5188,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.111,
+      "responseStart": 172.27,
+      "responseEnd": 173.322
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 430,
+      "responseBodySize": 1196,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.mjs",
+     "timing": {
+      "startTime": 1792369837742.795,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.085,
+      "responseStart": 175.09,
+      "responseEnd": 185.96
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 462,
+      "responseBodySize": 7196,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_lab.zip",
+     "timing": {
+      "startTime": 1792369837742.722,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.127,
+      "responseStart": 172.477,
+      "responseEnd": 285.229
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 429,
+      "responseBodySize": 118645,
+      "responseHeadersSize": 183
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide-lock.json",
+     "timing": {
+      "startTime": 1792369837935.4438,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.192,
+      "responseStart": 171.752,
+      "responseEnd": 263.739
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 436,
+      "responseBodySize": 25716,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.asm.mjs",
+     "timing": {
+      "startTime": 1792369837937.134,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.18,
+      "responseStart": 175.33,
+      "responseEnd": 893.4
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 464,
+      "responseBodySize": 261280,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/python_stdlib.zip",
+     "timing": {
+      "startTime": 1792369837936.3489,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.149,
+      "responseStart": 173.535,
+      "responseEnd": 1823.789
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 436,
+      "responseBodySize": 783358,
+      "responseHeadersSize": 183
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.asm.wasm",
+     "timing": {
+      "startTime": 1792369837936.689,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.207,
+      "responseStart": 173.465,
+      "responseEnd": 4338.329
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 435,
+      "responseBodySize": 3600748,
+      "responseHeadersSize": 232
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/client-B1iTIrqI.js",
+     "timing": {
+      "startTime": 1792369843827.973,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.857,
+      "responseStart": 172.565,
+      "responseEnd": 173.811
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 513,
+      "responseBodySize": 1186,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/phone-BkyG0kHe.js",
+     "timing": {
+      "startTime": 1792369843828.165,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.776,
+      "responseStart": 173.865,
+      "responseEnd": 175.036
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 512,
+      "responseBodySize": 659,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/dialog-BYb0ehSK.js",
+     "timing": {
+      "startTime": 1792369843828.534,
+      "domainLookupStart": 0.054,
+      "domainLookupEnd": 0.119,
+      "connectStart": 0.119,
+      "secureConnectionStart": -1,
+      "connectEnd": 1.675,
+      "requestStart": 1.764,
+      "responseStart": 176.91,
+      "responseEnd": 178.212
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 513,
+      "responseBodySize": 304,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/shell-IyBR3GMV.css",
+     "timing": {
+      "startTime": 1792369843831.0168,
+      "domainLookupStart": 0,
+      "domainLookupEnd": 0,
+      "connectStart": 0,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.84,
+      "requestStart": 1.001,
+      "responseStart": 176.698,
+      "responseEnd": 179.801
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 527,
+      "responseBodySize": 1035,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Result-BGI1ub3k.js",
+     "timing": {
+      "startTime": 1792369843828.353,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.666,
+      "responseStart": 174.769,
+      "responseEnd": 181.293
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 513,
+      "responseBodySize": 2488,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayApp-Cx0fjclm.js",
+     "timing": {
+      "startTime": 1792369843827.3252,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.42,
+      "responseStart": 172.791,
+      "responseEnd": 186.679
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 6018,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayApp-DCk3N89r.css",
+     "timing": {
+      "startTime": 1792369843831.389,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 169.751,
+      "responseStart": 341.876,
+      "responseEnd": 347.36
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 1485,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/hud-DaQ-32yb.css",
+     "timing": {
+      "startTime": 1792369843831.637,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 170.919,
+      "responseStart": 342.383,
+      "responseEnd": 348.793
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 525,
+      "responseBodySize": 1305,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/links-BDcQNoRR.js",
+     "timing": {
+      "startTime": 1792369843829.729,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 178.389,
+      "responseStart": 349.273,
+      "responseEnd": 351.55
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 512,
+      "responseBodySize": 844,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ModeNav-Cfq1Ubrz.js",
+     "timing": {
+      "startTime": 1792369843830.026,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 178.913,
+      "responseStart": 352.027,
+      "responseEnd": 354.504
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 670,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/LearnApp-DjzYm-3e.js",
+     "timing": {
+      "startTime": 1792369843829.274,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 176.726,
+      "responseStart": 349.421,
+      "responseEnd": 356.115
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 515,
+      "responseBodySize": 2782,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/settings-D9VcX2iU.js",
+     "timing": {
+      "startTime": 1792369843830.563,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 183.045,
+      "responseStart": 355.731,
+      "responseEnd": 358.724
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 515,
+      "responseBodySize": 284,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/play/levels.json",
+     "timing": {
+      "startTime": 1792369844204.173,
+      "domainLookupStart": 0.152,
+      "domainLookupEnd": 0.166,
+      "connectStart": 0.166,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.388,
+      "requestStart": 0.476,
+      "responseStart": 172.998,
+      "responseEnd": 184.779
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 482,
+      "responseBodySize": 8195,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ArenaApp-ZwCkQ3p4.js",
+     "timing": {
+      "startTime": 1792369844655.305,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.26,
+      "responseStart": 172.547,
+      "responseEnd": 174.918
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 515,
+      "responseBodySize": 795,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/controls-Joh32PAY.js",
+     "timing": {
+      "startTime": 1792369844835.5032,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.422,
+      "responseStart": 174.069,
+      "responseEnd": 175.566
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 515,
+      "responseBodySize": 1013,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Minimap-B7tTI0Gm.js",
+     "timing": {
+      "startTime": 1792369844835.6982,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.282,
+      "responseStart": 176,
+      "responseEnd": 181.328
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 1725,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayScene-Bzh_Zso2.js",
+     "timing": {
+      "startTime": 1792369844834.635,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.254,
+      "responseStart": 172.604,
+      "responseEnd": 190.484
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 516,
+      "responseBodySize": 4442,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ArenaSceneView-CdlkE7oy.js",
+     "timing": {
+      "startTime": 1792369844836.1367,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.206,
+      "responseStart": 175.921,
+      "responseEnd": 209.821
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 521,
+      "responseBodySize": 16116,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Help-Ci0oXVEe.js",
+     "timing": {
+      "startTime": 1792369844835.161,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.661,
+      "responseStart": 173.891,
+      "responseEnd": 257.115
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 511,
+      "responseBodySize": 68328,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/fidelity.json",
+     "timing": {
+      "startTime": 1792369845144.0288,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.186,
+      "responseStart": 172.355,
+      "responseEnd": 173.632
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 479,
+      "responseBodySize": 688,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/robot_outline.json",
+     "timing": {
+      "startTime": 1792369845317.606,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.161,
+      "responseStart": 172.095,
+      "responseEnd": 173.318
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 490,
+      "responseBodySize": 192,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369845317.921,
+      "domainLookupStart": 0.079,
+      "domainLookupEnd": 0.139,
+      "connectStart": 0.139,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.257,
+      "requestStart": 0.304,
+      "responseStart": 173.85,
+      "responseEnd": 176.439
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 490,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/v2/index.json",
+     "timing": {
+      "startTime": 1792369845322.5059,
+      "domainLookupStart": 0.088,
+      "domainLookupEnd": 0.099,
+      "connectStart": 0.099,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.449,
+      "requestStart": 0.503,
+      "responseStart": 172.842,
+      "responseEnd": 186.429
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 479,
+      "responseBodySize": 7749,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369845318.909,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 173.424,
+      "responseStart": 345.181,
+      "responseEnd": 349.256
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 435,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/attract.mcap",
+     "timing": {
+      "startTime": 1792369845322.815,
+      "domainLookupStart": 0.056,
+      "domainLookupEnd": 0.061,
+      "connectStart": 0.061,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.254,
+      "requestStart": 0.284,
+      "responseStart": 173.962,
+      "responseEnd": 797.096
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 484,
+      "responseBodySize": 690319,
+      "responseHeadersSize": 192
+     }
+    }
+   ],
+   "titleVisibleMs": 2026.300000011921,
+   "titleJavaScript": [
+    {
+     "path": "assets/index-C03CfM20.js",
+     "gzipBytes": 77335
+    },
+    {
+     "path": "assets/TitleScreen-x41AZHDN.js",
+     "gzipBytes": 1023
+    },
+    {
+     "path": "assets/tokens-DWxFG9mh.js",
+     "gzipBytes": 3323
+    },
+    {
+     "path": "assets/library-BQ8OO1cG.js",
+     "gzipBytes": 348
+    },
+    {
+     "path": "assets/createLucideIcon-CB2_vk_l.js",
+     "gzipBytes": 1473
+    },
+    {
+     "path": "assets/navigation-2-BjXWBtY5.js",
+     "gzipBytes": 180
+    },
+    {
+     "path": "assets/WorldStage-DwxHRj4F.js",
+     "gzipBytes": 4140
+    },
+    {
+     "path": "assets/scene3d-CQnbAx60.js",
+     "gzipBytes": 5474
+    },
+    {
+     "path": "assets/three-2pgavX5U.js",
+     "gzipBytes": 170496
+    },
+    {
+     "path": "assets/quality-j0dYhQ2P.js",
+     "gzipBytes": 828
+    },
+    {
+     "path": "assets/arena.worker-9ZjtL-ye.js",
+     "gzipBytes": 7003
+    },
+    {
+     "path": "generated/pyodide/pyodide.mjs",
+     "gzipBytes": 7196
+    },
+    {
+     "path": "generated/pyodide/pyodide.asm.mjs",
+     "gzipBytes": 261280
+    }
+   ],
+   "titleJavaScriptGzipBytes": 540099,
+   "criticalUiJavaScriptGzipBytes": 271623,
+   "marks": {
+    "worker_boot": 1792369837741.9,
+    "pyodide_module": 1792369837934.0999,
+    "pyodide_ready": 1792369843635.3,
+    "coco_lab_ready": 1792369843719.2,
+    "model_warm": 1792369843719.2,
+    "worker_create": 1792369845318,
+    "world3d_assets": 1792369845322.5999,
+    "attract_ready": 1792369846216.5,
+    "world3d_ready": 1792369846220.5,
+    "world3d_robot": 1792369846220.5,
+    "first_frame": 1792369846311.2,
+    "world_received": 1792369846311.7,
+    "arena_ready": 1792369846160.7,
+    "first_computation_shown": 1792369846426.0999
+   },
+   "liveModelReadyMs": 10525.300048828125,
+   "worldInteractiveMs": 10585.10009765625,
+   "firstVisibleComputationMs": 10790.699951171875,
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "thirdParty": [],
+   "completed": true,
+   "conditions_end": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-19T00:30:46.565Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Charging",
+     "capacity_pct": 77
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 1.82,
+     "5m": 1.37,
+     "15m": 0.9
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 1,
+   "device": "laptop · emulated 4G",
+   "errors": [],
+   "requests": [
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/?perf",
+     "timing": {
+      "startTime": 1792369846715.116,
+      "domainLookupStart": 0.165,
+      "domainLookupEnd": 0.209,
+      "connectStart": 0.209,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.315,
+      "requestStart": 0.398,
+      "responseStart": 173.573,
+      "responseEnd": 178.82
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 648,
+      "responseBodySize": 2350,
+      "responseHeadersSize": 237
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/index-DR54Gat3.css",
+     "timing": {
+      "startTime": 1792369846910.2712,
+      "domainLookupStart": 0.095,
+      "domainLookupEnd": 0.107,
+      "connectStart": 0.107,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.27,
+      "requestStart": 0.325,
+      "responseStart": 172.842,
+      "responseEnd": 193.463
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 527,
+      "responseBodySize": 8209,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/index-C03CfM20.js",
+     "timing": {
+      "startTime": 1792369846909.71,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.283,
+      "responseStart": 172.04,
+      "responseEnd": 255.446
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 512,
+      "responseBodySize": 77335,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/TitleScreen-x41AZHDN.js",
+     "timing": {
+      "startTime": 1792369847189.4612,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.112,
+      "responseStart": 172.009,
+      "responseEnd": 173.006
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 518,
+      "responseBodySize": 1023,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/library-BQ8OO1cG.js",
+     "timing": {
+      "startTime": 1792369847190.31,
+      "domainLookupStart": 0.079,
+      "domainLookupEnd": 0.089,
+      "connectStart": 0.089,
+      "secureConnectionStart": -1,
+      "connectEnd": 1.938,
+      "requestStart": 2.061,
+      "responseStart": 173.241,
+      "responseEnd": 174.063
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 348,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/navigation-2-BjXWBtY5.js",
+     "timing": {
+      "startTime": 1792369847190.94,
+      "domainLookupStart": 0.073,
+      "domainLookupEnd": 0.079,
+      "connectStart": 0.079,
+      "secureConnectionStart": -1,
+      "connectEnd": 1.378,
+      "requestStart": 1.527,
+      "responseStart": 176.145,
+      "responseEnd": 177.365
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 519,
+      "responseBodySize": 180,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/createLucideIcon-CB2_vk_l.js",
+     "timing": {
+      "startTime": 1792369847190.647,
+      "domainLookupStart": 0.075,
+      "domainLookupEnd": 0.081,
+      "connectStart": 0.081,
+      "secureConnectionStart": -1,
+      "connectEnd": 1.655,
+      "requestStart": 1.791,
+      "responseStart": 175.156,
+      "responseEnd": 181.251
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 523,
+      "responseBodySize": 1473,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/tokens-DWxFG9mh.js",
+     "timing": {
+      "startTime": 1792369847189.955,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.153,
+      "responseStart": 173.314,
+      "responseEnd": 183.898
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 513,
+      "responseBodySize": 3323,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/WorldStage-DwxHRj4F.js",
+     "timing": {
+      "startTime": 1792369847191.23,
+      "domainLookupStart": 0.079,
+      "domainLookupEnd": 0.088,
+      "connectStart": 0.088,
+      "secureConnectionStart": -1,
+      "connectEnd": 1.09,
+      "requestStart": 1.259,
+      "responseStart": 176.929,
+      "responseEnd": 185.066
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 517,
+      "responseBodySize": 4140,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/reference-C5XSdbt7.css",
+     "timing": {
+      "startTime": 1792369847192.5881,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 169.593,
+      "responseStart": 342.276,
+      "responseEnd": 351.284
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 3260,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/quality-j0dYhQ2P.js",
+     "timing": {
+      "startTime": 1792369847192.125,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 179.278,
+      "responseStart": 353.508,
+      "responseEnd": 355.81
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 828,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/scene3d-CQnbAx60.js",
+     "timing": {
+      "startTime": 1792369847191.618,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 172.465,
+      "responseStart": 343.93,
+      "responseEnd": 357.283
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 5474,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/three-2pgavX5U.js",
+     "timing": {
+      "startTime": 1792369847191.8792,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 175.618,
+      "responseStart": 348.047,
+      "responseEnd": 509.3
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 512,
+      "responseBodySize": 170496,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/manrope-latin-wght-normal-DHIcAJRg.woff2",
+     "timing": {
+      "startTime": 1792369847756.578,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.152,
+      "responseStart": 173.255,
+      "responseEnd": 245.796
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 601,
+      "responseBodySize": 24836,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/outfit-latin-wght-normal-Bc-8i84L.woff2",
+     "timing": {
+      "startTime": 1792369847756.825,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.064,
+      "responseStart": 173.572,
+      "responseEnd": 254.081
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 600,
+      "responseBodySize": 32292,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369848002.4329,
+      "domainLookupStart": 0.099,
+      "domainLookupEnd": 0.16,
+      "connectStart": 0.16,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.313,
+      "requestStart": 0.375,
+      "responseStart": 172.585,
+      "responseEnd": 176.118
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 490,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets3d/arena.glb",
+     "timing": {
+      "startTime": 1792369848181.631,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.242,
+      "responseStart": 173.045,
+      "responseEnd": 221.986
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 474,
+      "responseBodySize": 27640,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets3d/robot_low.glb",
+     "timing": {
+      "startTime": 1792369848182.0889,
+      "domainLookupStart": 0.069,
+      "domainLookupEnd": 0.082,
+      "connectStart": 0.082,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.266,
+      "requestStart": 0.321,
+      "responseStart": 174.277,
+      "responseEnd": 326.371
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 478,
+      "responseBodySize": 143892,
+      "responseHeadersSize": 192
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/arena.worker-9ZjtL-ye.js",
+     "timing": {
+      "startTime": 1792369848643.983,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": -1,
+      "responseStart": 182.839,
+      "responseEnd": 182.839
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 366,
+      "responseBodySize": 0,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/manifest.json",
+     "timing": {
+      "startTime": 1792369848829.942,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.192,
+      "responseStart": 172.5,
+      "responseEnd": 173.414
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 430,
+      "responseBodySize": 1196,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.mjs",
+     "timing": {
+      "startTime": 1792369848830.5168,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.194,
+      "responseStart": 174.137,
+      "responseEnd": 185.559
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 462,
+      "responseBodySize": 7196,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_lab.zip",
+     "timing": {
+      "startTime": 1792369848830.352,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.29,
+      "responseStart": 173.938,
+      "responseEnd": 287.016
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 429,
+      "responseBodySize": 118645,
+      "responseHeadersSize": 183
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide-lock.json",
+     "timing": {
+      "startTime": 1792369849020.655,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.219,
+      "responseStart": 172.795,
+      "responseEnd": 263.465
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 436,
+      "responseBodySize": 25716,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.asm.mjs",
+     "timing": {
+      "startTime": 1792369849022.766,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.311,
+      "responseStart": 174.691,
+      "responseEnd": 893.899
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 464,
+      "responseBodySize": 261280,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/python_stdlib.zip",
+     "timing": {
+      "startTime": 1792369849021.483,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.273,
+      "responseStart": 173.371,
+      "responseEnd": 1820.647
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 436,
+      "responseBodySize": 783358,
+      "responseHeadersSize": 183
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.asm.wasm",
+     "timing": {
+      "startTime": 1792369849022.0908,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.328,
+      "responseStart": 173.027,
+      "responseEnd": 4342.683
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 435,
+      "responseBodySize": 3600748,
+      "responseHeadersSize": 232
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/client-B1iTIrqI.js",
+     "timing": {
+      "startTime": 1792369854872.8398,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.704,
+      "responseStart": 172.872,
+      "responseEnd": 174.235
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 513,
+      "responseBodySize": 1186,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/phone-BkyG0kHe.js",
+     "timing": {
+      "startTime": 1792369854873.025,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.58,
+      "responseStart": 174.873,
+      "responseEnd": 176.626
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 512,
+      "responseBodySize": 659,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/shell-IyBR3GMV.css",
+     "timing": {
+      "startTime": 1792369854874.426,
+      "domainLookupStart": 0,
+      "domainLookupEnd": 0,
+      "connectStart": 0,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.107,
+      "requestStart": 0.156,
+      "responseStart": 175.42,
+      "responseEnd": 177.094
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 527,
+      "responseBodySize": 1035,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Result-BGI1ub3k.js",
+     "timing": {
+      "startTime": 1792369854873.153,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.506,
+      "responseStart": 175.18,
+      "responseEnd": 181.591
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 513,
+      "responseBodySize": 2488,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayApp-DCk3N89r.css",
+     "timing": {
+      "startTime": 1792369854874.731,
+      "domainLookupStart": 0,
+      "domainLookupEnd": 0,
+      "connectStart": 0,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.258,
+      "requestStart": 0.336,
+      "responseStart": 176.427,
+      "responseEnd": 182.607
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 1485,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayApp-Cx0fjclm.js",
+     "timing": {
+      "startTime": 1792369854872.21,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.44,
+      "responseStart": 172.911,
+      "responseEnd": 188.175
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 6018,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/hud-DaQ-32yb.css",
+     "timing": {
+      "startTime": 1792369854874.8938,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 171.623,
+      "responseStart": 344.605,
+      "responseEnd": 348.26
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 525,
+      "responseBodySize": 1305,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/dialog-BYb0ehSK.js",
+     "timing": {
+      "startTime": 1792369854873.2942,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 175.674,
+      "responseStart": 347.971,
+      "responseEnd": 349.705
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 513,
+      "responseBodySize": 304,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/links-BDcQNoRR.js",
+     "timing": {
+      "startTime": 1792369854874.0261,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 179.962,
+      "responseStart": 352.114,
+      "responseEnd": 353.805
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 512,
+      "responseBodySize": 844,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/LearnApp-DjzYm-3e.js",
+     "timing": {
+      "startTime": 1792369854873.795,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 176.695,
+      "responseStart": 350.571,
+      "responseEnd": 355.353
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 515,
+      "responseBodySize": 2782,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ModeNav-Cfq1Ubrz.js",
+     "timing": {
+      "startTime": 1792369854874.1519,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 182.213,
+      "responseStart": 354.996,
+      "responseEnd": 356.796
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 670,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/settings-D9VcX2iU.js",
+     "timing": {
+      "startTime": 1792369854874.28,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 185.709,
+      "responseStart": 358.846,
+      "responseEnd": 360.634
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 515,
+      "responseBodySize": 284,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/play/levels.json",
+     "timing": {
+      "startTime": 1792369855249.848,
+      "domainLookupStart": 0.114,
+      "domainLookupEnd": 0.125,
+      "connectStart": 0.125,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.306,
+      "requestStart": 0.381,
+      "responseStart": 172.5,
+      "responseEnd": 179.963
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 482,
+      "responseBodySize": 8195,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ArenaApp-ZwCkQ3p4.js",
+     "timing": {
+      "startTime": 1792369855702.403,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.245,
+      "responseStart": 172.167,
+      "responseEnd": 174.618
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 515,
+      "responseBodySize": 795,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/controls-Joh32PAY.js",
+     "timing": {
+      "startTime": 1792369855883.6628,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.501,
+      "responseStart": 174.074,
+      "responseEnd": 175.221
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 515,
+      "responseBodySize": 1013,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Minimap-B7tTI0Gm.js",
+     "timing": {
+      "startTime": 1792369855883.947,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.377,
+      "responseStart": 175.616,
+      "responseEnd": 181.999
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 1725,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayScene-Bzh_Zso2.js",
+     "timing": {
+      "startTime": 1792369855882.593,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.302,
+      "responseStart": 172.22,
+      "responseEnd": 190.816
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 516,
+      "responseBodySize": 4442,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ArenaSceneView-CdlkE7oy.js",
+     "timing": {
+      "startTime": 1792369855884.527,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.233,
+      "responseStart": 176.407,
+      "responseEnd": 209.856
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 521,
+      "responseBodySize": 16116,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Help-Ci0oXVEe.js",
+     "timing": {
+      "startTime": 1792369855883.2,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.223,
+      "responseStart": 174.249,
+      "responseEnd": 259.978
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 511,
+      "responseBodySize": 68328,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/fidelity.json",
+     "timing": {
+      "startTime": 1792369856178.42,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.143,
+      "responseStart": 173.33,
+      "responseEnd": 175.619
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 479,
+      "responseBodySize": 688,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/robot_outline.json",
+     "timing": {
+      "startTime": 1792369856401.256,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.297,
+      "responseStart": 173.01,
+      "responseEnd": 174.593
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 490,
+      "responseBodySize": 192,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369856401.78,
+      "domainLookupStart": 0.127,
+      "domainLookupEnd": 0.2,
+      "connectStart": 0.2,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.515,
+      "requestStart": 0.622,
+      "responseStart": 172.862,
+      "responseEnd": 175.883
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 490,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/v2/index.json",
+     "timing": {
+      "startTime": 1792369856405.3718,
+      "domainLookupStart": 0.085,
+      "domainLookupEnd": 0.093,
+      "connectStart": 0.093,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.418,
+      "requestStart": 0.467,
+      "responseStart": 172.669,
+      "responseEnd": 186.04
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 479,
+      "responseBodySize": 7749,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369856402.197,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 173.129,
+      "responseStart": 346.435,
+      "responseEnd": 349.353
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 435,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/attract.mcap",
+     "timing": {
+      "startTime": 1792369856405.655,
+      "domainLookupStart": 0.051,
+      "domainLookupEnd": 0.055,
+      "connectStart": 0.055,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.235,
+      "requestStart": 0.264,
+      "responseStart": 173.808,
+      "responseEnd": 797.751
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 484,
+      "responseBodySize": 690319,
+      "responseHeadersSize": 192
+     }
+    }
+   ],
+   "titleVisibleMs": 1949.5,
+   "titleJavaScript": [
+    {
+     "path": "assets/index-C03CfM20.js",
+     "gzipBytes": 77335
+    },
+    {
+     "path": "assets/TitleScreen-x41AZHDN.js",
+     "gzipBytes": 1023
+    },
+    {
+     "path": "assets/tokens-DWxFG9mh.js",
+     "gzipBytes": 3323
+    },
+    {
+     "path": "assets/library-BQ8OO1cG.js",
+     "gzipBytes": 348
+    },
+    {
+     "path": "assets/createLucideIcon-CB2_vk_l.js",
+     "gzipBytes": 1473
+    },
+    {
+     "path": "assets/navigation-2-BjXWBtY5.js",
+     "gzipBytes": 180
+    },
+    {
+     "path": "assets/WorldStage-DwxHRj4F.js",
+     "gzipBytes": 4140
+    },
+    {
+     "path": "assets/scene3d-CQnbAx60.js",
+     "gzipBytes": 5474
+    },
+    {
+     "path": "assets/three-2pgavX5U.js",
+     "gzipBytes": 170496
+    },
+    {
+     "path": "assets/quality-j0dYhQ2P.js",
+     "gzipBytes": 828
+    },
+    {
+     "path": "assets/arena.worker-9ZjtL-ye.js",
+     "gzipBytes": 7003
+    },
+    {
+     "path": "generated/pyodide/pyodide.mjs",
+     "gzipBytes": 7196
+    },
+    {
+     "path": "generated/pyodide/pyodide.asm.mjs",
+     "gzipBytes": 261280
+    }
+   ],
+   "titleJavaScriptGzipBytes": 540099,
+   "criticalUiJavaScriptGzipBytes": 271623,
+   "marks": {
+    "worker_boot": 1792369848828.6,
+    "pyodide_module": 1792369849019.6,
+    "pyodide_ready": 1792369854698,
+    "coco_lab_ready": 1792369854782.3,
+    "model_warm": 1792369854782.3,
+    "worker_create": 1792369856401.5,
+    "world3d_assets": 1792369856405.3,
+    "attract_ready": 1792369857301.7,
+    "world3d_ready": 1792369857305.3,
+    "world3d_robot": 1792369857305.3,
+    "first_frame": 1792369857417.4,
+    "world_received": 1792369857417.8,
+    "arena_ready": 1792369857250,
+    "first_computation_shown": 1792369857523
+   },
+   "liveModelReadyMs": 10535.5,
+   "worldInteractiveMs": 10590.800048828125,
+   "firstVisibleComputationMs": 10808.5,
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "thirdParty": [],
+   "completed": true,
+   "conditions_end": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-19T00:30:57.640Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Charging",
+     "capacity_pct": 77
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 2.08,
+     "5m": 1.44,
+     "15m": 0.92
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   }
+  },
+  {
+   "profile": "desktop",
+   "run": 2,
+   "device": "laptop · emulated 4G",
+   "errors": [],
+   "requests": [
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/?perf",
+     "timing": {
+      "startTime": 1792369857827.419,
+      "domainLookupStart": 0.254,
+      "domainLookupEnd": 0.311,
+      "connectStart": 0.311,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.481,
+      "requestStart": 0.636,
+      "responseStart": 173.18,
+      "responseEnd": 177.323
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 648,
+      "responseBodySize": 2350,
+      "responseHeadersSize": 237
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/index-DR54Gat3.css",
+     "timing": {
+      "startTime": 1792369858021.775,
+      "domainLookupStart": 0.089,
+      "domainLookupEnd": 0.101,
+      "connectStart": 0.101,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.258,
+      "requestStart": 0.311,
+      "responseStart": 172.133,
+      "responseEnd": 194.108
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 527,
+      "responseBodySize": 8209,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/index-C03CfM20.js",
+     "timing": {
+      "startTime": 1792369858021.2432,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.289,
+      "responseStart": 172.296,
+      "responseEnd": 256.462
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 512,
+      "responseBodySize": 77335,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/TitleScreen-x41AZHDN.js",
+     "timing": {
+      "startTime": 1792369858302.0898,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.167,
+      "responseStart": 171.969,
+      "responseEnd": 173.084
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 518,
+      "responseBodySize": 1023,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/library-BQ8OO1cG.js",
+     "timing": {
+      "startTime": 1792369858302.5962,
+      "domainLookupStart": 0.065,
+      "domainLookupEnd": 0.075,
+      "connectStart": 0.075,
+      "secureConnectionStart": -1,
+      "connectEnd": 1.76,
+      "requestStart": 1.87,
+      "responseStart": 174.495,
+      "responseEnd": 175.586
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 348,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/navigation-2-BjXWBtY5.js",
+     "timing": {
+      "startTime": 1792369858303.229,
+      "domainLookupStart": 0.061,
+      "domainLookupEnd": 0.074,
+      "connectStart": 0.074,
+      "secureConnectionStart": -1,
+      "connectEnd": 1.18,
+      "requestStart": 1.401,
+      "responseStart": 176.577,
+      "responseEnd": 177.941
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 519,
+      "responseBodySize": 180,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/createLucideIcon-CB2_vk_l.js",
+     "timing": {
+      "startTime": 1792369858302.946,
+      "domainLookupStart": 0.077,
+      "domainLookupEnd": 0.084,
+      "connectStart": 0.084,
+      "secureConnectionStart": -1,
+      "connectEnd": 1.456,
+      "requestStart": 1.613,
+      "responseStart": 175.541,
+      "responseEnd": 182.029
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 523,
+      "responseBodySize": 1473,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/tokens-DWxFG9mh.js",
+     "timing": {
+      "startTime": 1792369858302.426,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 1.299,
+      "responseStart": 173.286,
+      "responseEnd": 184.718
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 513,
+      "responseBodySize": 3323,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/WorldStage-DwxHRj4F.js",
+     "timing": {
+      "startTime": 1792369858303.495,
+      "domainLookupStart": 0.071,
+      "domainLookupEnd": 0.076,
+      "connectStart": 0.076,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.919,
+      "requestStart": 1.202,
+      "responseStart": 177.624,
+      "responseEnd": 185.863
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 517,
+      "responseBodySize": 4140,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/reference-C5XSdbt7.css",
+     "timing": {
+      "startTime": 1792369858304.865,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 169.945,
+      "responseStart": 341.682,
+      "responseEnd": 347.564
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 3260,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/scene3d-CQnbAx60.js",
+     "timing": {
+      "startTime": 1792369858303.931,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 173.84,
+      "responseStart": 345.672,
+      "responseEnd": 354.888
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 5474,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/quality-j0dYhQ2P.js",
+     "timing": {
+      "startTime": 1792369858304.273,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 180.05,
+      "responseStart": 354.146,
+      "responseEnd": 356.345
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 828,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/three-2pgavX5U.js",
+     "timing": {
+      "startTime": 1792369858304.094,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 176.206,
+      "responseStart": 348.713,
+      "responseEnd": 507.191
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 512,
+      "responseBodySize": 170496,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369858898.072,
+      "domainLookupStart": 0.063,
+      "domainLookupEnd": 0.105,
+      "connectStart": 0.105,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.412,
+      "requestStart": 0.522,
+      "responseStart": 174.925,
+      "responseEnd": 179.369
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 490,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/manrope-latin-wght-normal-DHIcAJRg.woff2",
+     "timing": {
+      "startTime": 1792369858898.344,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.177,
+      "responseStart": 171.862,
+      "responseEnd": 250.612
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 601,
+      "responseBodySize": 24836,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/outfit-latin-wght-normal-Bc-8i84L.woff2",
+     "timing": {
+      "startTime": 1792369858898.417,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.122,
+      "responseStart": 173.283,
+      "responseEnd": 257.658
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 600,
+      "responseBodySize": 32292,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets3d/arena.glb",
+     "timing": {
+      "startTime": 1792369859079.7139,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.181,
+      "responseStart": 172.801,
+      "responseEnd": 221.674
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 474,
+      "responseBodySize": 27640,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets3d/robot_low.glb",
+     "timing": {
+      "startTime": 1792369859080.074,
+      "domainLookupStart": 0.063,
+      "domainLookupEnd": 0.076,
+      "connectStart": 0.076,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.28,
+      "requestStart": 0.328,
+      "responseStart": 175.033,
+      "responseEnd": 326.976
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 478,
+      "responseBodySize": 143892,
+      "responseHeadersSize": 192
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/arena.worker-9ZjtL-ye.js",
+     "timing": {
+      "startTime": 1792369859629.581,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": -1,
+      "responseStart": 179.473,
+      "responseEnd": 179.473
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 366,
+      "responseBodySize": 0,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/manifest.json",
+     "timing": {
+      "startTime": 1792369859811.998,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.218,
+      "responseStart": 171.982,
+      "responseEnd": 173.371
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 430,
+      "responseBodySize": 1196,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.mjs",
+     "timing": {
+      "startTime": 1792369859812.587,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.238,
+      "responseStart": 174.756,
+      "responseEnd": 185.092
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 462,
+      "responseBodySize": 7196,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_lab.zip",
+     "timing": {
+      "startTime": 1792369859812.401,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.32,
+      "responseStart": 171.981,
+      "responseEnd": 284.629
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 429,
+      "responseBodySize": 118645,
+      "responseHeadersSize": 183
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide-lock.json",
+     "timing": {
+      "startTime": 1792369860002.661,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.267,
+      "responseStart": 172.559,
+      "responseEnd": 264.33
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 436,
+      "responseBodySize": 25716,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.asm.mjs",
+     "timing": {
+      "startTime": 1792369860004.6877,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.239,
+      "responseStart": 175.165,
+      "responseEnd": 894.703
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 464,
+      "responseBodySize": 261280,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/python_stdlib.zip",
+     "timing": {
+      "startTime": 1792369860003.398,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.232,
+      "responseStart": 173.04,
+      "responseEnd": 1821.014
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 436,
+      "responseBodySize": 783358,
+      "responseHeadersSize": 183
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.asm.wasm",
+     "timing": {
+      "startTime": 1792369860003.9028,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.297,
+      "responseStart": 173.736,
+      "responseEnd": 4351.024
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 435,
+      "responseBodySize": 3600748,
+      "responseHeadersSize": 232
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/client-B1iTIrqI.js",
+     "timing": {
+      "startTime": 1792369865873.531,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.789,
+      "responseStart": 174.612,
+      "responseEnd": 176.37
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 513,
+      "responseBodySize": 1186,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/phone-BkyG0kHe.js",
+     "timing": {
+      "startTime": 1792369865873.7322,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.671,
+      "responseStart": 174.833,
+      "responseEnd": 176.514
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 512,
+      "responseBodySize": 659,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/dialog-BYb0ehSK.js",
+     "timing": {
+      "startTime": 1792369865874.0408,
+      "domainLookupStart": 0.06,
+      "domainLookupEnd": 0.116,
+      "connectStart": 0.116,
+      "secureConnectionStart": -1,
+      "connectEnd": 1.343,
+      "requestStart": 1.398,
+      "responseStart": 176.729,
+      "responseEnd": 177.914
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 513,
+      "responseBodySize": 304,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/shell-IyBR3GMV.css",
+     "timing": {
+      "startTime": 1792369865875.643,
+      "domainLookupStart": 0,
+      "domainLookupEnd": 0,
+      "connectStart": 0,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.489,
+      "requestStart": 0.629,
+      "responseStart": 178.212,
+      "responseEnd": 180.219
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 527,
+      "responseBodySize": 1035,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Result-BGI1ub3k.js",
+     "timing": {
+      "startTime": 1792369865873.874,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.592,
+      "responseStart": 176.32,
+      "responseEnd": 182.162
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 513,
+      "responseBodySize": 2488,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayApp-Cx0fjclm.js",
+     "timing": {
+      "startTime": 1792369865873.008,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.361,
+      "responseStart": 172.363,
+      "responseEnd": 186.565
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 6018,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayApp-DCk3N89r.css",
+     "timing": {
+      "startTime": 1792369865875.8262,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 173.916,
+      "responseStart": 347.756,
+      "responseEnd": 353.478
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 1485,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/hud-DaQ-32yb.css",
+     "timing": {
+      "startTime": 1792369865876.026,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 173.984,
+      "responseStart": 348.144,
+      "responseEnd": 355.185
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 525,
+      "responseBodySize": 1305,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/links-BDcQNoRR.js",
+     "timing": {
+      "startTime": 1792369865874.923,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 179.667,
+      "responseStart": 354.253,
+      "responseEnd": 356.266
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 512,
+      "responseBodySize": 844,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ModeNav-Cfq1Ubrz.js",
+     "timing": {
+      "startTime": 1792369865875.0898,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 180.386,
+      "responseStart": 356.04,
+      "responseEnd": 357.824
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 670,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/settings-D9VcX2iU.js",
+     "timing": {
+      "startTime": 1792369865875.2449,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 183.944,
+      "responseStart": 358.864,
+      "responseEnd": 360.484
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 515,
+      "responseBodySize": 284,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/LearnApp-DjzYm-3e.js",
+     "timing": {
+      "startTime": 1792369865874.647,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 176.786,
+      "responseStart": 352.618,
+      "responseEnd": 362.266
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 515,
+      "responseBodySize": 2782,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/play/levels.json",
+     "timing": {
+      "startTime": 1792369866251.997,
+      "domainLookupStart": 0.12,
+      "domainLookupEnd": 0.132,
+      "connectStart": 0.132,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.325,
+      "requestStart": 0.394,
+      "responseStart": 172.859,
+      "responseEnd": 181.348
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 482,
+      "responseBodySize": 8195,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ArenaApp-ZwCkQ3p4.js",
+     "timing": {
+      "startTime": 1792369866683.5842,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.265,
+      "responseStart": 173.004,
+      "responseEnd": 175.448
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 515,
+      "responseBodySize": 795,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/controls-Joh32PAY.js",
+     "timing": {
+      "startTime": 1792369866864.165,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.246,
+      "responseStart": 174.735,
+      "responseEnd": 175.662
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 515,
+      "responseBodySize": 1013,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Minimap-B7tTI0Gm.js",
+     "timing": {
+      "startTime": 1792369866864.323,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.153,
+      "responseStart": 176.408,
+      "responseEnd": 181.706
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 514,
+      "responseBodySize": 1725,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayScene-Bzh_Zso2.js",
+     "timing": {
+      "startTime": 1792369866863.484,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.212,
+      "responseStart": 172.43,
+      "responseEnd": 190.996
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 516,
+      "responseBodySize": 4442,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ArenaSceneView-CdlkE7oy.js",
+     "timing": {
+      "startTime": 1792369866864.616,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.134,
+      "responseStart": 177.474,
+      "responseEnd": 210.182
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 521,
+      "responseBodySize": 16116,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Help-Ci0oXVEe.js",
+     "timing": {
+      "startTime": 1792369866863.903,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.124,
+      "responseStart": 174.745,
+      "responseEnd": 257.084
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 511,
+      "responseBodySize": 68328,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/fidelity.json",
+     "timing": {
+      "startTime": 1792369867173.105,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.234,
+      "responseStart": 172.679,
+      "responseEnd": 175.629
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 479,
+      "responseBodySize": 688,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/robot_outline.json",
+     "timing": {
+      "startTime": 1792369867400.551,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.224,
+      "responseStart": 173.413,
+      "responseEnd": 175.101
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 490,
+      "responseBodySize": 192,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369867401.102,
+      "domainLookupStart": 0.136,
+      "domainLookupEnd": 0.222,
+      "connectStart": 0.222,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.414,
+      "requestStart": 0.493,
+      "responseStart": 173.366,
+      "responseEnd": 176.508
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 490,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/v2/index.json",
+     "timing": {
+      "startTime": 1792369867405.1663,
+      "domainLookupStart": 0.122,
+      "domainLookupEnd": 0.136,
+      "connectStart": 0.136,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.58,
+      "requestStart": 0.646,
+      "responseStart": 172.948,
+      "responseEnd": 186.245
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 479,
+      "responseBodySize": 7749,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369867401.938,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 173.344,
+      "responseStart": 346.619,
+      "responseEnd": 349.73
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 435,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/attract.mcap",
+     "timing": {
+      "startTime": 1792369867405.5698,
+      "domainLookupStart": 0.069,
+      "domainLookupEnd": 0.075,
+      "connectStart": 0.075,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.312,
+      "requestStart": 0.343,
+      "responseStart": 172.873,
+      "responseEnd": 796.875
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 484,
+      "responseBodySize": 690319,
+      "responseHeadersSize": 192
+     }
+    }
+   ],
+   "titleVisibleMs": 2296.2000000029802,
+   "titleJavaScript": [
+    {
+     "path": "assets/index-C03CfM20.js",
+     "gzipBytes": 77335
+    },
+    {
+     "path": "assets/TitleScreen-x41AZHDN.js",
+     "gzipBytes": 1023
+    },
+    {
+     "path": "assets/tokens-DWxFG9mh.js",
+     "gzipBytes": 3323
+    },
+    {
+     "path": "assets/library-BQ8OO1cG.js",
+     "gzipBytes": 348
+    },
+    {
+     "path": "assets/createLucideIcon-CB2_vk_l.js",
+     "gzipBytes": 1473
+    },
+    {
+     "path": "assets/navigation-2-BjXWBtY5.js",
+     "gzipBytes": 180
+    },
+    {
+     "path": "assets/WorldStage-DwxHRj4F.js",
+     "gzipBytes": 4140
+    },
+    {
+     "path": "assets/scene3d-CQnbAx60.js",
+     "gzipBytes": 5474
+    },
+    {
+     "path": "assets/three-2pgavX5U.js",
+     "gzipBytes": 170496
+    },
+    {
+     "path": "assets/quality-j0dYhQ2P.js",
+     "gzipBytes": 828
+    },
+    {
+     "path": "assets/arena.worker-9ZjtL-ye.js",
+     "gzipBytes": 7003
+    },
+    {
+     "path": "generated/pyodide/pyodide.mjs",
+     "gzipBytes": 7196
+    },
+    {
+     "path": "generated/pyodide/pyodide.asm.mjs",
+     "gzipBytes": 261280
+    }
+   ],
+   "titleJavaScriptGzipBytes": 540099,
+   "criticalUiJavaScriptGzipBytes": 271623,
+   "marks": {
+    "worker_boot": 1792369859810.2,
+    "pyodide_module": 1792369860001.2,
+    "pyodide_ready": 1792369865699.4001,
+    "coco_lab_ready": 1792369865782.1,
+    "model_warm": 1792369865782.2,
+    "worker_create": 1792369867401.1,
+    "world3d_assets": 1792369867405.1,
+    "attract_ready": 1792369868299.2002,
+    "world3d_ready": 1792369868303.1,
+    "world3d_robot": 1792369868303.2002,
+    "first_frame": 1792369868368.8,
+    "world_received": 1792369868369.3,
+    "arena_ready": 1792369868240.4001,
+    "first_computation_shown": 1792369868480.8
+   },
+   "liveModelReadyMs": 10413.800048828125,
+   "worldInteractiveMs": 10476.60009765625,
+   "firstVisibleComputationMs": 10654.199951171875,
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "thirdParty": [],
+   "completed": true,
+   "conditions_end": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-19T00:31:08.589Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Charging",
+     "capacity_pct": 77
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 1.92,
+     "5m": 1.43,
+     "15m": 0.92
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   }
+  },
+  {
+   "profile": "landscape",
+   "run": 0,
+   "device": "emulated Nothing Phone (1)",
+   "errors": [],
+   "requests": [
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/?perf",
+     "timing": {
+      "startTime": 1792369868748.6638,
+      "domainLookupStart": 0.147,
+      "domainLookupEnd": 0.187,
+      "connectStart": 0.187,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.296,
+      "requestStart": 0.395,
+      "responseStart": 173.326,
+      "responseEnd": 174.516
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 665,
+      "responseBodySize": 2350,
+      "responseHeadersSize": 237
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/index-DR54Gat3.css",
+     "timing": {
+      "startTime": 1792369868945.443,
+      "domainLookupStart": 0.044,
+      "domainLookupEnd": 0.051,
+      "connectStart": 0.051,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.129,
+      "requestStart": 0.156,
+      "responseStart": 173.288,
+      "responseEnd": 191.72
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 544,
+      "responseBodySize": 8209,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/index-C03CfM20.js",
+     "timing": {
+      "startTime": 1792369868945.171,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.145,
+      "responseStart": 172.354,
+      "responseEnd": 253.4
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 77335,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/TitleScreen-x41AZHDN.js",
+     "timing": {
+      "startTime": 1792369869268.139,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.299,
+      "responseStart": 173.572,
+      "responseEnd": 175.457
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 535,
+      "responseBodySize": 1023,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/library-BQ8OO1cG.js",
+     "timing": {
+      "startTime": 1792369869268.927,
+      "domainLookupStart": 0.078,
+      "domainLookupEnd": 0.086,
+      "connectStart": 0.086,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.533,
+      "requestStart": 0.564,
+      "responseStart": 175.179,
+      "responseEnd": 175.769
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 348,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/navigation-2-BjXWBtY5.js",
+     "timing": {
+      "startTime": 1792369869269.59,
+      "domainLookupStart": 0.034,
+      "domainLookupEnd": 0.038,
+      "connectStart": 0.038,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.142,
+      "requestStart": 0.154,
+      "responseStart": 177.394,
+      "responseEnd": 177.958
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 536,
+      "responseBodySize": 180,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/createLucideIcon-CB2_vk_l.js",
+     "timing": {
+      "startTime": 1792369869269.286,
+      "domainLookupStart": 0.063,
+      "domainLookupEnd": 0.069,
+      "connectStart": 0.069,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.398,
+      "requestStart": 0.419,
+      "responseStart": 175.507,
+      "responseEnd": 182.172
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 540,
+      "responseBodySize": 1473,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/tokens-DWxFG9mh.js",
+     "timing": {
+      "startTime": 1792369869268.327,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.206,
+      "responseStart": 174.446,
+      "responseEnd": 185.187
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 530,
+      "responseBodySize": 3323,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/WorldStage-DwxHRj4F.js",
+     "timing": {
+      "startTime": 1792369869270.027,
+      "domainLookupStart": 0.043,
+      "domainLookupEnd": 0.046,
+      "connectStart": 0.046,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.321,
+      "requestStart": 0.345,
+      "responseStart": 177.493,
+      "responseEnd": 186.283
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 534,
+      "responseBodySize": 4140,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/reference-C5XSdbt7.css",
+     "timing": {
+      "startTime": 1792369869271.0579,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 171.172,
+      "responseStart": 344.025,
+      "responseEnd": 351.106
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 548,
+      "responseBodySize": 3260,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/quality-j0dYhQ2P.js",
+     "timing": {
+      "startTime": 1792369869270.842,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 180.542,
+      "responseStart": 354.736,
+      "responseEnd": 355.266
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 828,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/scene3d-CQnbAx60.js",
+     "timing": {
+      "startTime": 1792369869270.1978,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 174.329,
+      "responseStart": 346.193,
+      "responseEnd": 357.26
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 5474,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/three-2pgavX5U.js",
+     "timing": {
+      "startTime": 1792369869270.299,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 176.861,
+      "responseStart": 350.128,
+      "responseEnd": 505.831
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 170496,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/manrope-latin-wght-normal-DHIcAJRg.woff2",
+     "timing": {
+      "startTime": 1792369869862.3792,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.169,
+      "responseStart": 173.284,
+      "responseEnd": 247.575
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 618,
+      "responseBodySize": 24836,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/outfit-latin-wght-normal-Bc-8i84L.woff2",
+     "timing": {
+      "startTime": 1792369869862.0232,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.102,
+      "responseStart": 174.253,
+      "responseEnd": 254.382
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 617,
+      "responseBodySize": 32292,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369870141.243,
+      "domainLookupStart": 0.091,
+      "domainLookupEnd": 0.141,
+      "connectStart": 0.141,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.26,
+      "requestStart": 0.314,
+      "responseStart": 172.22,
+      "responseEnd": 174.119
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 507,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets3d/arena.glb",
+     "timing": {
+      "startTime": 1792369870319.166,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.174,
+      "responseStart": 172.547,
+      "responseEnd": 220.755
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 491,
+      "responseBodySize": 27640,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets3d/robot_low.glb",
+     "timing": {
+      "startTime": 1792369870319.819,
+      "domainLookupStart": 0.066,
+      "domainLookupEnd": 0.075,
+      "connectStart": 0.075,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.21,
+      "requestStart": 0.26,
+      "responseStart": 173.229,
+      "responseEnd": 325.36
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 495,
+      "responseBodySize": 143892,
+      "responseHeadersSize": 192
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/arena.worker-9ZjtL-ye.js",
+     "timing": {
+      "startTime": 1792369870866.362,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": -1,
+      "responseStart": 178.833,
+      "responseEnd": 178.833
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 381,
+      "responseBodySize": 0,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/manifest.json",
+     "timing": {
+      "startTime": 1792369871049.153,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.131,
+      "responseStart": 173.447,
+      "responseEnd": 173.905
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 445,
+      "responseBodySize": 1196,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.mjs",
+     "timing": {
+      "startTime": 1792369871049.4832,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.11,
+      "responseStart": 175.706,
+      "responseEnd": 186.587
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 477,
+      "responseBodySize": 7196,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_lab.zip",
+     "timing": {
+      "startTime": 1792369871049.385,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.169,
+      "responseStart": 174.596,
+      "responseEnd": 286.594
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 444,
+      "responseBodySize": 118645,
+      "responseHeadersSize": 183
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide-lock.json",
+     "timing": {
+      "startTime": 1792369871239.5078,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.149,
+      "responseStart": 173.614,
+      "responseEnd": 264.725
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 451,
+      "responseBodySize": 25716,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.asm.mjs",
+     "timing": {
+      "startTime": 1792369871240.411,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.07,
+      "responseStart": 176.649,
+      "responseEnd": 895.255
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 479,
+      "responseBodySize": 261280,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/python_stdlib.zip",
+     "timing": {
+      "startTime": 1792369871239.9548,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.088,
+      "responseStart": 174.681,
+      "responseEnd": 1822.307
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 451,
+      "responseBodySize": 783358,
+      "responseHeadersSize": 183
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.asm.wasm",
+     "timing": {
+      "startTime": 1792369871240.191,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.077,
+      "responseStart": 175.645,
+      "responseEnd": 4330.921
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 450,
+      "responseBodySize": 3600748,
+      "responseHeadersSize": 232
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/client-B1iTIrqI.js",
+     "timing": {
+      "startTime": 1792369877074.921,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.465,
+      "responseStart": 174.079,
+      "responseEnd": 174.646
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 530,
+      "responseBodySize": 1186,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/phone-BkyG0kHe.js",
+     "timing": {
+      "startTime": 1792369877075.0881,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.388,
+      "responseStart": 174.804,
+      "responseEnd": 175.405
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 659,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/dialog-BYb0ehSK.js",
+     "timing": {
+      "startTime": 1792369877075.583,
+      "domainLookupStart": 0.032,
+      "domainLookupEnd": 0.064,
+      "connectStart": 0.064,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.152,
+      "requestStart": 0.171,
+      "responseStart": 177.331,
+      "responseEnd": 178.316
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 530,
+      "responseBodySize": 304,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Result-BGI1ub3k.js",
+     "timing": {
+      "startTime": 1792369877075.3079,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.197,
+      "responseStart": 176.373,
+      "responseEnd": 182.593
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 530,
+      "responseBodySize": 2488,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/LearnApp-DjzYm-3e.js",
+     "timing": {
+      "startTime": 1792369877076.1243,
+      "domainLookupStart": 0.078,
+      "domainLookupEnd": 0.084,
+      "connectStart": 0.084,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.292,
+      "requestStart": 0.317,
+      "responseStart": 177.56,
+      "responseEnd": 185.293
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 532,
+      "responseBodySize": 2782,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayApp-Cx0fjclm.js",
+     "timing": {
+      "startTime": 1792369877074.477,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.304,
+      "responseStart": 173.219,
+      "responseEnd": 189.822
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 6018,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/shell-IyBR3GMV.css",
+     "timing": {
+      "startTime": 1792369877077.785,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 171.66,
+      "responseStart": 344.561,
+      "responseEnd": 345.667
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 544,
+      "responseBodySize": 1035,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayApp-DCk3N89r.css",
+     "timing": {
+      "startTime": 1792369877078.1318,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 172.125,
+      "responseStart": 345.617,
+      "responseEnd": 348.45
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 546,
+      "responseBodySize": 1485,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/hud-DaQ-32yb.css",
+     "timing": {
+      "startTime": 1792369877078.353,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 174.944,
+      "responseStart": 346.561,
+      "responseEnd": 349.306
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 542,
+      "responseBodySize": 1305,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/links-BDcQNoRR.js",
+     "timing": {
+      "startTime": 1792369877076.3508,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 181.102,
+      "responseStart": 354.133,
+      "responseEnd": 354.625
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 844,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ModeNav-Cfq1Ubrz.js",
+     "timing": {
+      "startTime": 1792369877076.9292,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 184.014,
+      "responseStart": 356.054,
+      "responseEnd": 356.429
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 670,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/settings-D9VcX2iU.js",
+     "timing": {
+      "startTime": 1792369877077.01,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 186.64,
+      "responseStart": 358.392,
+      "responseEnd": 358.739
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 532,
+      "responseBodySize": 284,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/play/levels.json",
+     "timing": {
+      "startTime": 1792369877461.613,
+      "domainLookupStart": 0.061,
+      "domainLookupEnd": 0.068,
+      "connectStart": 0.068,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.167,
+      "requestStart": 0.205,
+      "responseStart": 172.793,
+      "responseEnd": 179.203
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 499,
+      "responseBodySize": 8195,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ArenaApp-ZwCkQ3p4.js",
+     "timing": {
+      "startTime": 1792369877915.346,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.11,
+      "responseStart": 171.721,
+      "responseEnd": 172.858
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 532,
+      "responseBodySize": 795,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/controls-Joh32PAY.js",
+     "timing": {
+      "startTime": 1792369878094.971,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.082,
+      "responseStart": 173.656,
+      "responseEnd": 174.551
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 532,
+      "responseBodySize": 1013,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Minimap-B7tTI0Gm.js",
+     "timing": {
+      "startTime": 1792369878095.149,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.056,
+      "responseStart": 174.825,
+      "responseEnd": 180.18
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 1725,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayScene-Bzh_Zso2.js",
+     "timing": {
+      "startTime": 1792369878093.248,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.125,
+      "responseStart": 173.014,
+      "responseEnd": 191.346
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 533,
+      "responseBodySize": 4442,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ArenaSceneView-CdlkE7oy.js",
+     "timing": {
+      "startTime": 1792369878095.737,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.081,
+      "responseStart": 175.473,
+      "responseEnd": 207.549
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 538,
+      "responseBodySize": 16116,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Help-Ci0oXVEe.js",
+     "timing": {
+      "startTime": 1792369878094.2559,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.096,
+      "responseStart": 173.241,
+      "responseEnd": 255.522
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 528,
+      "responseBodySize": 68328,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/fidelity.json",
+     "timing": {
+      "startTime": 1792369878415.3198,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.119,
+      "responseStart": 172.093,
+      "responseEnd": 172.856
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 496,
+      "responseBodySize": 688,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/robot_outline.json",
+     "timing": {
+      "startTime": 1792369878554.635,
+      "domainLookupStart": 0.067,
+      "domainLookupEnd": 0.108,
+      "connectStart": 0.108,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.203,
+      "requestStart": 0.242,
+      "responseStart": 172.537,
+      "responseEnd": 173.797
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 507,
+      "responseBodySize": 192,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369878555.0142,
+      "domainLookupStart": 0.052,
+      "domainLookupEnd": 0.055,
+      "connectStart": 0.055,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.1,
+      "requestStart": 0.125,
+      "responseStart": 173.556,
+      "responseEnd": 175.803
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 507,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/v2/index.json",
+     "timing": {
+      "startTime": 1792369878563.2998,
+      "domainLookupStart": 0.067,
+      "domainLookupEnd": 0.079,
+      "connectStart": 0.079,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.316,
+      "requestStart": 0.348,
+      "responseStart": 172.132,
+      "responseEnd": 186.18
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 496,
+      "responseBodySize": 7749,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369878556.0588,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 172.667,
+      "responseStart": 344.152,
+      "responseEnd": 346.912
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 450,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/attract.mcap",
+     "timing": {
+      "startTime": 1792369878563.525,
+      "domainLookupStart": 0.036,
+      "domainLookupEnd": 0.039,
+      "connectStart": 0.039,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.151,
+      "requestStart": 0.165,
+      "responseStart": 173.109,
+      "responseEnd": 796.014
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 501,
+      "responseBodySize": 690319,
+      "responseHeadersSize": 192
+     }
+    }
+   ],
+   "titleVisibleMs": 2173.2999999970198,
+   "titleJavaScript": [
+    {
+     "path": "assets/index-C03CfM20.js",
+     "gzipBytes": 77335
+    },
+    {
+     "path": "assets/TitleScreen-x41AZHDN.js",
+     "gzipBytes": 1023
+    },
+    {
+     "path": "assets/tokens-DWxFG9mh.js",
+     "gzipBytes": 3323
+    },
+    {
+     "path": "assets/library-BQ8OO1cG.js",
+     "gzipBytes": 348
+    },
+    {
+     "path": "assets/createLucideIcon-CB2_vk_l.js",
+     "gzipBytes": 1473
+    },
+    {
+     "path": "assets/navigation-2-BjXWBtY5.js",
+     "gzipBytes": 180
+    },
+    {
+     "path": "assets/WorldStage-DwxHRj4F.js",
+     "gzipBytes": 4140
+    },
+    {
+     "path": "assets/scene3d-CQnbAx60.js",
+     "gzipBytes": 5474
+    },
+    {
+     "path": "assets/three-2pgavX5U.js",
+     "gzipBytes": 170496
+    },
+    {
+     "path": "assets/quality-j0dYhQ2P.js",
+     "gzipBytes": 828
+    },
+    {
+     "path": "assets/arena.worker-9ZjtL-ye.js",
+     "gzipBytes": 7003
+    },
+    {
+     "path": "generated/pyodide/pyodide.mjs",
+     "gzipBytes": 7196
+    },
+    {
+     "path": "generated/pyodide/pyodide.asm.mjs",
+     "gzipBytes": 261280
+    }
+   ],
+   "titleJavaScriptGzipBytes": 540099,
+   "criticalUiJavaScriptGzipBytes": 271623,
+   "marks": {
+    "worker_boot": 1792369871048.5,
+    "pyodide_module": 1792369871238.7,
+    "pyodide_ready": 1792369876883.4001,
+    "coco_lab_ready": 1792369876965.4001,
+    "model_warm": 1792369876965.4001,
+    "worker_create": 1792369878555.6,
+    "world3d_assets": 1792369878563.2002,
+    "attract_ready": 1792369879702.3,
+    "world3d_ready": 1792369879729.6,
+    "world3d_robot": 1792369879730.1,
+    "first_frame": 1792369879815.2002,
+    "world_received": 1792369879816.8,
+    "arena_ready": 1792369879399.1,
+    "first_computation_shown": 1792369880088.4001
+   },
+   "liveModelReadyMs": 10651,
+   "worldInteractiveMs": 10982,
+   "firstVisibleComputationMs": 11340.300048828125,
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "thirdParty": [],
+   "completed": true,
+   "conditions_end": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-19T00:31:20.228Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Charging",
+     "capacity_pct": 77
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 1.87,
+     "5m": 1.44,
+     "15m": 0.94
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   }
+  },
+  {
+   "profile": "landscape",
+   "run": 1,
+   "device": "emulated Nothing Phone (1)",
+   "errors": [],
+   "requests": [
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/?perf",
+     "timing": {
+      "startTime": 1792369880390.924,
+      "domainLookupStart": 0.168,
+      "domainLookupEnd": 0.21,
+      "connectStart": 0.21,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.326,
+      "requestStart": 0.412,
+      "responseStart": 172.061,
+      "responseEnd": 173.79
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 665,
+      "responseBodySize": 2350,
+      "responseHeadersSize": 237
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/index-DR54Gat3.css",
+     "timing": {
+      "startTime": 1792369880586.196,
+      "domainLookupStart": 0.088,
+      "domainLookupEnd": 0.097,
+      "connectStart": 0.097,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.228,
+      "requestStart": 0.287,
+      "responseStart": 174.489,
+      "responseEnd": 192.932
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 544,
+      "responseBodySize": 8209,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/index-C03CfM20.js",
+     "timing": {
+      "startTime": 1792369880585.825,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.181,
+      "responseStart": 173.521,
+      "responseEnd": 255.003
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 77335,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/TitleScreen-x41AZHDN.js",
+     "timing": {
+      "startTime": 1792369880905.875,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.159,
+      "responseStart": 172.23,
+      "responseEnd": 174.152
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 535,
+      "responseBodySize": 1023,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/library-BQ8OO1cG.js",
+     "timing": {
+      "startTime": 1792369880906.728,
+      "domainLookupStart": 0.068,
+      "domainLookupEnd": 0.076,
+      "connectStart": 0.076,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.558,
+      "requestStart": 0.619,
+      "responseStart": 173.514,
+      "responseEnd": 174.021
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 348,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/navigation-2-BjXWBtY5.js",
+     "timing": {
+      "startTime": 1792369880907.616,
+      "domainLookupStart": 0.07,
+      "domainLookupEnd": 0.079,
+      "connectStart": 0.079,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.681,
+      "requestStart": 0.719,
+      "responseStart": 175.416,
+      "responseEnd": 176.166
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 536,
+      "responseBodySize": 180,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/createLucideIcon-CB2_vk_l.js",
+     "timing": {
+      "startTime": 1792369880907.042,
+      "domainLookupStart": 0.064,
+      "domainLookupEnd": 0.069,
+      "connectStart": 0.069,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.26,
+      "requestStart": 0.398,
+      "responseStart": 174.814,
+      "responseEnd": 180.726
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 540,
+      "responseBodySize": 1473,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/tokens-DWxFG9mh.js",
+     "timing": {
+      "startTime": 1792369880906.4373,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.125,
+      "responseStart": 171.997,
+      "responseEnd": 184.277
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 530,
+      "responseBodySize": 3323,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/WorldStage-DwxHRj4F.js",
+     "timing": {
+      "startTime": 1792369880908.2659,
+      "domainLookupStart": 0.067,
+      "domainLookupEnd": 0.072,
+      "connectStart": 0.072,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.53,
+      "requestStart": 0.567,
+      "responseStart": 175.82,
+      "responseEnd": 184.098
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 534,
+      "responseBodySize": 4140,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/reference-C5XSdbt7.css",
+     "timing": {
+      "startTime": 1792369880909.4373,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 169.264,
+      "responseStart": 341.339,
+      "responseEnd": 349.612
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 548,
+      "responseBodySize": 3260,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/quality-j0dYhQ2P.js",
+     "timing": {
+      "startTime": 1792369880908.8271,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 178.434,
+      "responseStart": 352.983,
+      "responseEnd": 353.583
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 828,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/scene3d-CQnbAx60.js",
+     "timing": {
+      "startTime": 1792369880908.1687,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 172.31,
+      "responseStart": 343.871,
+      "responseEnd": 355.509
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 5474,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/three-2pgavX5U.js",
+     "timing": {
+      "startTime": 1792369880908.643,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 174.613,
+      "responseStart": 347.157,
+      "responseEnd": 504.826
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 170496,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/manrope-latin-wght-normal-DHIcAJRg.woff2",
+     "timing": {
+      "startTime": 1792369881496.951,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.148,
+      "responseStart": 172.247,
+      "responseEnd": 243.57
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 618,
+      "responseBodySize": 24836,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/outfit-latin-wght-normal-Bc-8i84L.woff2",
+     "timing": {
+      "startTime": 1792369881496.414,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.073,
+      "responseStart": 173.241,
+      "responseEnd": 250.636
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 617,
+      "responseBodySize": 32292,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369881756.636,
+      "domainLookupStart": 0.069,
+      "domainLookupEnd": 0.109,
+      "connectStart": 0.109,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.201,
+      "requestStart": 0.239,
+      "responseStart": 173.001,
+      "responseEnd": 175.294
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 507,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets3d/arena.glb",
+     "timing": {
+      "startTime": 1792369881934.938,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.102,
+      "responseStart": 171.686,
+      "responseEnd": 219.817
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 491,
+      "responseBodySize": 27640,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets3d/robot_low.glb",
+     "timing": {
+      "startTime": 1792369881936.006,
+      "domainLookupStart": 0.058,
+      "domainLookupEnd": 0.065,
+      "connectStart": 0.065,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.17,
+      "requestStart": 0.201,
+      "responseStart": 172.506,
+      "responseEnd": 325.561
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 495,
+      "responseBodySize": 143892,
+      "responseHeadersSize": 192
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/arena.worker-9ZjtL-ye.js",
+     "timing": {
+      "startTime": 1792369882475.754,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": -1,
+      "responseStart": 179.932,
+      "responseEnd": 179.932
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 381,
+      "responseBodySize": 0,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/manifest.json",
+     "timing": {
+      "startTime": 1792369882658.175,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.156,
+      "responseStart": 172.678,
+      "responseEnd": 173.263
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 445,
+      "responseBodySize": 1196,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.mjs",
+     "timing": {
+      "startTime": 1792369882658.757,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.115,
+      "responseStart": 174.863,
+      "responseEnd": 185.882
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 477,
+      "responseBodySize": 7196,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_lab.zip",
+     "timing": {
+      "startTime": 1792369882658.4912,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.104,
+      "responseStart": 173.853,
+      "responseEnd": 286.177
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 444,
+      "responseBodySize": 118645,
+      "responseHeadersSize": 183
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide-lock.json",
+     "timing": {
+      "startTime": 1792369882847.718,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.155,
+      "responseStart": 172.083,
+      "responseEnd": 263.264
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 451,
+      "responseBodySize": 25716,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.asm.mjs",
+     "timing": {
+      "startTime": 1792369882849.075,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.117,
+      "responseStart": 174.618,
+      "responseEnd": 893.835
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 479,
+      "responseBodySize": 261280,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/python_stdlib.zip",
+     "timing": {
+      "startTime": 1792369882848.337,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.131,
+      "responseStart": 172.837,
+      "responseEnd": 1820.231
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 451,
+      "responseBodySize": 783358,
+      "responseHeadersSize": 183
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.asm.wasm",
+     "timing": {
+      "startTime": 1792369882848.696,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.133,
+      "responseStart": 173.714,
+      "responseEnd": 4327.936
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 450,
+      "responseBodySize": 3600748,
+      "responseHeadersSize": 232
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/client-B1iTIrqI.js",
+     "timing": {
+      "startTime": 1792369888674.1628,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.056,
+      "responseStart": 174.068,
+      "responseEnd": 174.859
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 530,
+      "responseBodySize": 1186,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/phone-BkyG0kHe.js",
+     "timing": {
+      "startTime": 1792369888674.329,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.039,
+      "responseStart": 174.294,
+      "responseEnd": 174.544
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 659,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/dialog-BYb0ehSK.js",
+     "timing": {
+      "startTime": 1792369888675.0479,
+      "domainLookupStart": 0.084,
+      "domainLookupEnd": 0.129,
+      "connectStart": 0.129,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.532,
+      "requestStart": 0.564,
+      "responseStart": 176.328,
+      "responseEnd": 177.309
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 530,
+      "responseBodySize": 304,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Result-BGI1ub3k.js",
+     "timing": {
+      "startTime": 1792369888674.416,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.035,
+      "responseStart": 175.755,
+      "responseEnd": 181.698
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 530,
+      "responseBodySize": 2488,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/LearnApp-DjzYm-3e.js",
+     "timing": {
+      "startTime": 1792369888675.356,
+      "domainLookupStart": 0.04,
+      "domainLookupEnd": 0.045,
+      "connectStart": 0.045,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.462,
+      "requestStart": 0.481,
+      "responseStart": 178,
+      "responseEnd": 184.901
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 532,
+      "responseBodySize": 2782,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayApp-Cx0fjclm.js",
+     "timing": {
+      "startTime": 1792369888673.912,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.199,
+      "responseStart": 172.195,
+      "responseEnd": 189.148
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 6018,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/shell-IyBR3GMV.css",
+     "timing": {
+      "startTime": 1792369888676.188,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 172.344,
+      "responseStart": 344.022,
+      "responseEnd": 344.853
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 544,
+      "responseBodySize": 1035,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayApp-DCk3N89r.css",
+     "timing": {
+      "startTime": 1792369888676.527,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 172.308,
+      "responseStart": 343.845,
+      "responseEnd": 346.546
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 546,
+      "responseBodySize": 1485,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/hud-DaQ-32yb.css",
+     "timing": {
+      "startTime": 1792369888676.6208,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 175.183,
+      "responseStart": 347.339,
+      "responseEnd": 348.803
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 542,
+      "responseBodySize": 1305,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/links-BDcQNoRR.js",
+     "timing": {
+      "startTime": 1792369888675.507,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 180.568,
+      "responseStart": 351.98,
+      "responseEnd": 352.582
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 844,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ModeNav-Cfq1Ubrz.js",
+     "timing": {
+      "startTime": 1792369888675.715,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 184.302,
+      "responseStart": 356.177,
+      "responseEnd": 356.915
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 670,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/settings-D9VcX2iU.js",
+     "timing": {
+      "startTime": 1792369888675.7942,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 186.746,
+      "responseStart": 358.469,
+      "responseEnd": 358.789
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 532,
+      "responseBodySize": 284,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/play/levels.json",
+     "timing": {
+      "startTime": 1792369889056.0889,
+      "domainLookupStart": 0.088,
+      "domainLookupEnd": 0.097,
+      "connectStart": 0.097,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.243,
+      "requestStart": 0.311,
+      "responseStart": 172.271,
+      "responseEnd": 180.445
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 499,
+      "responseBodySize": 8195,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ArenaApp-ZwCkQ3p4.js",
+     "timing": {
+      "startTime": 1792369889504.814,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.117,
+      "responseStart": 172.103,
+      "responseEnd": 173.427
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 532,
+      "responseBodySize": 795,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/controls-Joh32PAY.js",
+     "timing": {
+      "startTime": 1792369889687.466,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.127,
+      "responseStart": 175.058,
+      "responseEnd": 175.483
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 532,
+      "responseBodySize": 1013,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Minimap-B7tTI0Gm.js",
+     "timing": {
+      "startTime": 1792369889687.7449,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.29,
+      "responseStart": 176.209,
+      "responseEnd": 181.498
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 1725,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayScene-Bzh_Zso2.js",
+     "timing": {
+      "startTime": 1792369889686.5159,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.167,
+      "responseStart": 172.409,
+      "responseEnd": 192.003
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 533,
+      "responseBodySize": 4442,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ArenaSceneView-CdlkE7oy.js",
+     "timing": {
+      "startTime": 1792369889687.9011,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.208,
+      "responseStart": 177.256,
+      "responseEnd": 208.983
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 538,
+      "responseBodySize": 16116,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Help-Ci0oXVEe.js",
+     "timing": {
+      "startTime": 1792369889686.8447,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.11,
+      "responseStart": 174.466,
+      "responseEnd": 256.708
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 528,
+      "responseBodySize": 68328,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/fidelity.json",
+     "timing": {
+      "startTime": 1792369890012.811,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.149,
+      "responseStart": 172.235,
+      "responseEnd": 173.709
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 496,
+      "responseBodySize": 688,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/robot_outline.json",
+     "timing": {
+      "startTime": 1792369890144.0388,
+      "domainLookupStart": 0.1,
+      "domainLookupEnd": 0.154,
+      "connectStart": 0.154,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.292,
+      "requestStart": 0.348,
+      "responseStart": 172.771,
+      "responseEnd": 173.448
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 507,
+      "responseBodySize": 192,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369890144.899,
+      "domainLookupStart": 0.085,
+      "domainLookupEnd": 0.092,
+      "connectStart": 0.092,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.192,
+      "requestStart": 0.241,
+      "responseStart": 173.326,
+      "responseEnd": 174.362
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 507,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/v2/index.json",
+     "timing": {
+      "startTime": 1792369890153.5361,
+      "domainLookupStart": 0.076,
+      "domainLookupEnd": 0.083,
+      "connectStart": 0.083,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.45,
+      "requestStart": 0.503,
+      "responseStart": 172.844,
+      "responseEnd": 185.681
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 496,
+      "responseBodySize": 7749,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369890146.621,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 171.8,
+      "responseStart": 345.109,
+      "responseEnd": 348.071
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 450,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/attract.mcap",
+     "timing": {
+      "startTime": 1792369890153.821,
+      "domainLookupStart": 0.061,
+      "domainLookupEnd": 0.067,
+      "connectStart": 0.067,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.281,
+      "requestStart": 0.319,
+      "responseStart": 173.804,
+      "responseEnd": 796.105
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 501,
+      "responseBodySize": 690319,
+      "responseHeadersSize": 192
+     }
+    }
+   ],
+   "titleVisibleMs": 2551.5,
+   "titleJavaScript": [
+    {
+     "path": "assets/index-C03CfM20.js",
+     "gzipBytes": 77335
+    },
+    {
+     "path": "assets/TitleScreen-x41AZHDN.js",
+     "gzipBytes": 1023
+    },
+    {
+     "path": "assets/tokens-DWxFG9mh.js",
+     "gzipBytes": 3323
+    },
+    {
+     "path": "assets/library-BQ8OO1cG.js",
+     "gzipBytes": 348
+    },
+    {
+     "path": "assets/createLucideIcon-CB2_vk_l.js",
+     "gzipBytes": 1473
+    },
+    {
+     "path": "assets/navigation-2-BjXWBtY5.js",
+     "gzipBytes": 180
+    },
+    {
+     "path": "assets/WorldStage-DwxHRj4F.js",
+     "gzipBytes": 4140
+    },
+    {
+     "path": "assets/scene3d-CQnbAx60.js",
+     "gzipBytes": 5474
+    },
+    {
+     "path": "assets/three-2pgavX5U.js",
+     "gzipBytes": 170496
+    },
+    {
+     "path": "assets/quality-j0dYhQ2P.js",
+     "gzipBytes": 828
+    },
+    {
+     "path": "assets/arena.worker-9ZjtL-ye.js",
+     "gzipBytes": 7003
+    },
+    {
+     "path": "generated/pyodide/pyodide.mjs",
+     "gzipBytes": 7196
+    },
+    {
+     "path": "generated/pyodide/pyodide.asm.mjs",
+     "gzipBytes": 261280
+    }
+   ],
+   "titleJavaScriptGzipBytes": 540099,
+   "criticalUiJavaScriptGzipBytes": 271623,
+   "marks": {
+    "worker_boot": 1792369882657.4,
+    "pyodide_module": 1792369882846.9,
+    "pyodide_ready": 1792369888488,
+    "coco_lab_ready": 1792369888570,
+    "model_warm": 1792369888570,
+    "worker_create": 1792369890146.2,
+    "world3d_assets": 1792369890153.4001,
+    "attract_ready": 1792369891300.3,
+    "world3d_ready": 1792369891319.9001,
+    "world3d_robot": 1792369891319.9001,
+    "first_frame": 1792369891413.9001,
+    "world_received": 1792369891415.9001,
+    "arena_ready": 1792369890987.2998,
+    "first_computation_shown": 1792369891669.7
+   },
+   "liveModelReadyMs": 10596.999755859375,
+   "worldInteractiveMs": 10929.60009765625,
+   "firstVisibleComputationMs": 11279.39990234375,
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "thirdParty": [],
+   "completed": true,
+   "conditions_end": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-19T00:31:31.815Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Charging",
+     "capacity_pct": 77
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 1.73,
+     "5m": 1.43,
+     "15m": 0.94
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   }
+  },
+  {
+   "profile": "landscape",
+   "run": 2,
+   "device": "emulated Nothing Phone (1)",
+   "errors": [],
+   "requests": [
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/?perf",
+     "timing": {
+      "startTime": 1792369891978.2952,
+      "domainLookupStart": 0.156,
+      "domainLookupEnd": 0.195,
+      "connectStart": 0.195,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.312,
+      "requestStart": 0.398,
+      "responseStart": 172.141,
+      "responseEnd": 173.911
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 665,
+      "responseBodySize": 2350,
+      "responseHeadersSize": 237
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/index-DR54Gat3.css",
+     "timing": {
+      "startTime": 1792369892173.034,
+      "domainLookupStart": 0.039,
+      "domainLookupEnd": 0.047,
+      "connectStart": 0.047,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.126,
+      "requestStart": 0.152,
+      "responseStart": 174.036,
+      "responseEnd": 190.82
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 544,
+      "responseBodySize": 8209,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/index-C03CfM20.js",
+     "timing": {
+      "startTime": 1792369892172.15,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.139,
+      "responseStart": 173.095,
+      "responseEnd": 251.984
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 77335,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/TitleScreen-x41AZHDN.js",
+     "timing": {
+      "startTime": 1792369892486.832,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.161,
+      "responseStart": 171.696,
+      "responseEnd": 173.427
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 535,
+      "responseBodySize": 1023,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/library-BQ8OO1cG.js",
+     "timing": {
+      "startTime": 1792369892487.68,
+      "domainLookupStart": 0.052,
+      "domainLookupEnd": 0.059,
+      "connectStart": 0.059,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.374,
+      "requestStart": 0.401,
+      "responseStart": 172.907,
+      "responseEnd": 174.006
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 348,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/navigation-2-BjXWBtY5.js",
+     "timing": {
+      "startTime": 1792369892487.995,
+      "domainLookupStart": 0.03,
+      "domainLookupEnd": 0.032,
+      "connectStart": 0.032,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.122,
+      "requestStart": 0.16,
+      "responseStart": 175.288,
+      "responseEnd": 175.787
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 536,
+      "responseBodySize": 180,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/createLucideIcon-CB2_vk_l.js",
+     "timing": {
+      "startTime": 1792369892487.883,
+      "domainLookupStart": 0.033,
+      "domainLookupEnd": 0.035,
+      "connectStart": 0.035,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.23,
+      "requestStart": 0.247,
+      "responseStart": 174.23,
+      "responseEnd": 180.118
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 540,
+      "responseBodySize": 1473,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/tokens-DWxFG9mh.js",
+     "timing": {
+      "startTime": 1792369892487.154,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.121,
+      "responseStart": 172.218,
+      "responseEnd": 182.753
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 530,
+      "responseBodySize": 3323,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/WorldStage-DwxHRj4F.js",
+     "timing": {
+      "startTime": 1792369892488.762,
+      "domainLookupStart": 0.079,
+      "domainLookupEnd": 0.085,
+      "connectStart": 0.085,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.739,
+      "requestStart": 0.785,
+      "responseStart": 177.542,
+      "responseEnd": 184.204
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 534,
+      "responseBodySize": 4140,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/reference-C5XSdbt7.css",
+     "timing": {
+      "startTime": 1792369892489.9822,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 169.022,
+      "responseStart": 341.482,
+      "responseEnd": 348.727
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 548,
+      "responseBodySize": 3260,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/quality-j0dYhQ2P.js",
+     "timing": {
+      "startTime": 1792369892489.4067,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 178.417,
+      "responseStart": 352.468,
+      "responseEnd": 353.325
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 828,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/scene3d-CQnbAx60.js",
+     "timing": {
+      "startTime": 1792369892489.081,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 171.71,
+      "responseStart": 343.65,
+      "responseEnd": 354.681
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 5474,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/three-2pgavX5U.js",
+     "timing": {
+      "startTime": 1792369892489.259,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 174.272,
+      "responseStart": 347.753,
+      "responseEnd": 504.419
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 170496,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/manrope-latin-wght-normal-DHIcAJRg.woff2",
+     "timing": {
+      "startTime": 1792369893072.296,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.158,
+      "responseStart": 172.124,
+      "responseEnd": 240.865
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 618,
+      "responseBodySize": 24836,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/outfit-latin-wght-normal-Bc-8i84L.woff2",
+     "timing": {
+      "startTime": 1792369893072.608,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.122,
+      "responseStart": 174.065,
+      "responseEnd": 248.733
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 617,
+      "responseBodySize": 32292,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369893334.6138,
+      "domainLookupStart": 0.06,
+      "domainLookupEnd": 0.101,
+      "connectStart": 0.101,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.193,
+      "requestStart": 0.229,
+      "responseStart": 171.914,
+      "responseEnd": 173.488
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 507,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets3d/arena.glb",
+     "timing": {
+      "startTime": 1792369893516.044,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.146,
+      "responseStart": 171.569,
+      "responseEnd": 220.019
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 491,
+      "responseBodySize": 27640,
+      "responseHeadersSize": 191
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets3d/robot_low.glb",
+     "timing": {
+      "startTime": 1792369893516.3171,
+      "domainLookupStart": 0.041,
+      "domainLookupEnd": 0.049,
+      "connectStart": 0.049,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.155,
+      "requestStart": 0.185,
+      "responseStart": 172.568,
+      "responseEnd": 325.221
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 495,
+      "responseBodySize": 143892,
+      "responseHeadersSize": 192
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/arena.worker-9ZjtL-ye.js",
+     "timing": {
+      "startTime": 1792369894060.346,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": -1,
+      "responseStart": 180.503,
+      "responseEnd": 180.503
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 381,
+      "responseBodySize": 0,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/manifest.json",
+     "timing": {
+      "startTime": 1792369894244.921,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.215,
+      "responseStart": 171.983,
+      "responseEnd": 173.274
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 445,
+      "responseBodySize": 1196,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.mjs",
+     "timing": {
+      "startTime": 1792369894245.282,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.233,
+      "responseStart": 173.833,
+      "responseEnd": 185.075
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 477,
+      "responseBodySize": 7196,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_lab.zip",
+     "timing": {
+      "startTime": 1792369894244.879,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.155,
+      "responseStart": 172.997,
+      "responseEnd": 285.849
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 444,
+      "responseBodySize": 118645,
+      "responseHeadersSize": 183
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide-lock.json",
+     "timing": {
+      "startTime": 1792369894431.824,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.155,
+      "responseStart": 171.699,
+      "responseEnd": 262.606
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 451,
+      "responseBodySize": 25716,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.asm.mjs",
+     "timing": {
+      "startTime": 1792369894432.637,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.223,
+      "responseStart": 174.456,
+      "responseEnd": 893.727
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 479,
+      "responseBodySize": 261280,
+      "responseHeadersSize": 230
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/python_stdlib.zip",
+     "timing": {
+      "startTime": 1792369894432.159,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.124,
+      "responseStart": 172.601,
+      "responseEnd": 1820.454
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 451,
+      "responseBodySize": 783358,
+      "responseHeadersSize": 183
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/pyodide/pyodide.asm.wasm",
+     "timing": {
+      "startTime": 1792369894432.443,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.317,
+      "responseStart": 173.489,
+      "responseEnd": 4327.026
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 450,
+      "responseBodySize": 3600748,
+      "responseHeadersSize": 232
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/client-B1iTIrqI.js",
+     "timing": {
+      "startTime": 1792369900376.6,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.089,
+      "responseStart": 173.015,
+      "responseEnd": 173.702
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 530,
+      "responseBodySize": 1186,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/phone-BkyG0kHe.js",
+     "timing": {
+      "startTime": 1792369900376.992,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.084,
+      "responseStart": 173.614,
+      "responseEnd": 174.063
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 659,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/dialog-BYb0ehSK.js",
+     "timing": {
+      "startTime": 1792369900377.254,
+      "domainLookupStart": 0.028,
+      "domainLookupEnd": 0.062,
+      "connectStart": 0.062,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.194,
+      "requestStart": 0.213,
+      "responseStart": 176.534,
+      "responseEnd": 177.198
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 530,
+      "responseBodySize": 304,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Result-BGI1ub3k.js",
+     "timing": {
+      "startTime": 1792369900377.158,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.233,
+      "responseStart": 175.338,
+      "responseEnd": 180.735
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 530,
+      "responseBodySize": 2488,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/LearnApp-DjzYm-3e.js",
+     "timing": {
+      "startTime": 1792369900377.9478,
+      "domainLookupStart": 0.039,
+      "domainLookupEnd": 0.044,
+      "connectStart": 0.044,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.262,
+      "requestStart": 0.292,
+      "responseStart": 176.98,
+      "responseEnd": 184.151
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 532,
+      "responseBodySize": 2782,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayApp-Cx0fjclm.js",
+     "timing": {
+      "startTime": 1792369900375.607,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.206,
+      "responseStart": 172.637,
+      "responseEnd": 188.962
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 6018,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/shell-IyBR3GMV.css",
+     "timing": {
+      "startTime": 1792369900379.2078,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 170.843,
+      "responseStart": 344.062,
+      "responseEnd": 344.653
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 544,
+      "responseBodySize": 1035,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayApp-DCk3N89r.css",
+     "timing": {
+      "startTime": 1792369900379.4038,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 171.603,
+      "responseStart": 345.241,
+      "responseEnd": 347.993
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 546,
+      "responseBodySize": 1485,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/hud-DaQ-32yb.css",
+     "timing": {
+      "startTime": 1792369900379.7842,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 174.537,
+      "responseStart": 346.04,
+      "responseEnd": 348.687
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 542,
+      "responseBodySize": 1305,
+      "responseHeadersSize": 221
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/links-BDcQNoRR.js",
+     "timing": {
+      "startTime": 1792369900378.0962,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 179.68,
+      "responseStart": 351.26,
+      "responseEnd": 351.632
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 529,
+      "responseBodySize": 844,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ModeNav-Cfq1Ubrz.js",
+     "timing": {
+      "startTime": 1792369900378.177,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 183.151,
+      "responseStart": 355.575,
+      "responseEnd": 355.945
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 670,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/settings-D9VcX2iU.js",
+     "timing": {
+      "startTime": 1792369900378.992,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 185.407,
+      "responseStart": 357.067,
+      "responseEnd": 358.229
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 532,
+      "responseBodySize": 284,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/play/levels.json",
+     "timing": {
+      "startTime": 1792369900758.927,
+      "domainLookupStart": 0.066,
+      "domainLookupEnd": 0.073,
+      "connectStart": 0.073,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.168,
+      "requestStart": 0.208,
+      "responseStart": 171.999,
+      "responseEnd": 179.378
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 499,
+      "responseBodySize": 8195,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ArenaApp-ZwCkQ3p4.js",
+     "timing": {
+      "startTime": 1792369901203.5298,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.17,
+      "responseStart": 172.914,
+      "responseEnd": 174.328
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 532,
+      "responseBodySize": 795,
+      "responseHeadersSize": 227
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/controls-Joh32PAY.js",
+     "timing": {
+      "startTime": 1792369901383.868,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.102,
+      "responseStart": 174.268,
+      "responseEnd": 174.739
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 532,
+      "responseBodySize": 1013,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Minimap-B7tTI0Gm.js",
+     "timing": {
+      "startTime": 1792369901384.027,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.038,
+      "responseStart": 176.566,
+      "responseEnd": 181.819
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 531,
+      "responseBodySize": 1725,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/PlayScene-Bzh_Zso2.js",
+     "timing": {
+      "startTime": 1792369901382.88,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.169,
+      "responseStart": 173.636,
+      "responseEnd": 190.961
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 533,
+      "responseBodySize": 4442,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/ArenaSceneView-CdlkE7oy.js",
+     "timing": {
+      "startTime": 1792369901384.603,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.038,
+      "responseStart": 176.152,
+      "responseEnd": 209.015
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 538,
+      "responseBodySize": 16116,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/assets/Help-Ci0oXVEe.js",
+     "timing": {
+      "startTime": 1792369901383.776,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.144,
+      "responseStart": 174.182,
+      "responseEnd": 256.523
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 528,
+      "responseBodySize": 68328,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/fidelity.json",
+     "timing": {
+      "startTime": 1792369901711.944,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.139,
+      "responseStart": 171.988,
+      "responseEnd": 173.328
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 496,
+      "responseBodySize": 688,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/robot_outline.json",
+     "timing": {
+      "startTime": 1792369901948.261,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.102,
+      "responseStart": 172.043,
+      "responseEnd": 173.339
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 507,
+      "responseBodySize": 192,
+      "responseHeadersSize": 228
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369901948.516,
+      "domainLookupStart": 0.089,
+      "domainLookupEnd": 0.136,
+      "connectStart": 0.136,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.234,
+      "requestStart": 0.286,
+      "responseStart": 172.708,
+      "responseEnd": 175.188
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 507,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/v2/index.json",
+     "timing": {
+      "startTime": 1792369901956.6619,
+      "domainLookupStart": 0.064,
+      "domainLookupEnd": 0.071,
+      "connectStart": 0.071,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.287,
+      "requestStart": 0.319,
+      "responseStart": 172.458,
+      "responseEnd": 185.803
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 496,
+      "responseBodySize": 7749,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/coco_arena_v1.json",
+     "timing": {
+      "startTime": 1792369901949.584,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 171.753,
+      "responseStart": 343.648,
+      "responseEnd": 346.215
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 450,
+      "responseBodySize": 1609,
+      "responseHeadersSize": 229
+     }
+    },
+    {
+     "url": "http://127.0.0.1:4214/coco-labs/generated/arena/attract.mcap",
+     "timing": {
+      "startTime": 1792369901956.867,
+      "domainLookupStart": 0.028,
+      "domainLookupEnd": 0.03,
+      "connectStart": 0.03,
+      "secureConnectionStart": -1,
+      "connectEnd": 0.14,
+      "requestStart": 0.154,
+      "responseStart": 173.392,
+      "responseEnd": 796.193
+     },
+     "sizes": {
+      "requestBodySize": 0,
+      "requestHeadersSize": 501,
+      "responseBodySize": 690319,
+      "responseHeadersSize": 192
+     }
+    }
+   ],
+   "titleVisibleMs": 2135.9000000059605,
+   "titleJavaScript": [
+    {
+     "path": "assets/index-C03CfM20.js",
+     "gzipBytes": 77335
+    },
+    {
+     "path": "assets/TitleScreen-x41AZHDN.js",
+     "gzipBytes": 1023
+    },
+    {
+     "path": "assets/tokens-DWxFG9mh.js",
+     "gzipBytes": 3323
+    },
+    {
+     "path": "assets/library-BQ8OO1cG.js",
+     "gzipBytes": 348
+    },
+    {
+     "path": "assets/createLucideIcon-CB2_vk_l.js",
+     "gzipBytes": 1473
+    },
+    {
+     "path": "assets/navigation-2-BjXWBtY5.js",
+     "gzipBytes": 180
+    },
+    {
+     "path": "assets/WorldStage-DwxHRj4F.js",
+     "gzipBytes": 4140
+    },
+    {
+     "path": "assets/scene3d-CQnbAx60.js",
+     "gzipBytes": 5474
+    },
+    {
+     "path": "assets/three-2pgavX5U.js",
+     "gzipBytes": 170496
+    },
+    {
+     "path": "assets/quality-j0dYhQ2P.js",
+     "gzipBytes": 828
+    },
+    {
+     "path": "assets/arena.worker-9ZjtL-ye.js",
+     "gzipBytes": 7003
+    },
+    {
+     "path": "generated/pyodide/pyodide.mjs",
+     "gzipBytes": 7196
+    },
+    {
+     "path": "generated/pyodide/pyodide.asm.mjs",
+     "gzipBytes": 261280
+    }
+   ],
+   "titleJavaScriptGzipBytes": 540099,
+   "criticalUiJavaScriptGzipBytes": 271623,
+   "marks": {
+    "worker_boot": 1792369894242.5999,
+    "pyodide_module": 1792369894431.2998,
+    "pyodide_ready": 1792369900181.2,
+    "coco_lab_ready": 1792369900271.0999,
+    "model_warm": 1792369900271.2,
+    "worker_create": 1792369901949.1,
+    "world3d_assets": 1792369901956.6,
+    "attract_ready": 1792369903093.1,
+    "world3d_ready": 1792369903113.2,
+    "world3d_robot": 1792369903113.2,
+    "first_frame": 1792369903213.9,
+    "world_received": 1792369903215.7,
+    "arena_ready": 1792369902779,
+    "first_computation_shown": 1792369903454.7
+   },
+   "liveModelReadyMs": 10801.5,
+   "worldInteractiveMs": 11135.699951171875,
+   "firstVisibleComputationMs": 11477.199951171875,
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "thirdParty": [],
+   "completed": true,
+   "conditions_end": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-19T00:31:43.602Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Charging",
+     "capacity_pct": 78
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 1.86,
+     "5m": 1.46,
+     "15m": 0.95
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   }
+  }
+ ],
+ "protocol": "Fresh browser contexts; emulated 4G 9 Mbit/s down, 1.5 up, 170 ms; title warms interpreter, then immediate Play/Free roam entry; Vision selected immediately when ready. Default World Spec v1. Phone uses shared 4× CPU proxy.",
+ "passed": true,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-19T00:30:35.539Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 76
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.89,
+    "5m": 1.37,
+    "15m": 0.89
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-19T00:31:43.785Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 78
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.86,
+    "5m": 1.46,
+    "15m": 0.95
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

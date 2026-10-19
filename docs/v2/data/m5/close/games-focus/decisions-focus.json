@@ -1,0 +1,2280 @@
+{
+  "class": "TESTED functional layout; not FPS/startup measurement",
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-18T01:05:22.215Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 7.01,
+        "5m": 3.46,
+        "15m": 2.12
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-18T01:08:34.001Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 20.26,
+        "5m": 10.08,
+        "15m": 4.85
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    }
+  },
+  "rows": [
+    {
+      "profile": "desktop",
+      "device": "laptop Chromium",
+      "game": "games",
+      "layout": {
+        "viewport": [
+          1440,
+          900
+        ],
+        "scroll": [
+          1440,
+          900
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 1146,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 1194,
+              "bottom": 60,
+              "left": 1146
+            }
+          },
+          {
+            "name": "01 · CHALLENGEBeat the plannerDraw a path from S to G, one cell at a time. Every move costs its length, and a muddy cell costs more to enter (darker is worse). Can you match A*?☆☆☆ · Set your first best",
+            "box": {
+              "x": 246,
+              "y": 84,
+              "width": 305.328125,
+              "height": 278.59375,
+              "top": 84,
+              "right": 551.328125,
+              "bottom": 362.59375,
+              "left": 246
+            }
+          },
+          {
+            "name": "02 · CHALLENGENext nodeA* is part-way through a search. Grey cells are closed; outlined cells are open, each with g (the cost so far) and h (the estimate to G). Click the cell A* expands next -- ten times.☆☆☆ · Set your first best",
+            "box": {
+              "x": 567.328125,
+              "y": 84,
+              "width": 305.328125,
+              "height": 278.59375,
+              "top": 84,
+              "right": 872.65625,
+              "bottom": 362.59375,
+              "left": 567.328125
+            }
+          },
+          {
+            "name": "03 · CHALLENGESearch the baysThe target is in one of four bays, and you know only how likely each one is. Choose the order to look in. You are scored on the expected distance over where it might be -- never on where it turned out to be.☆☆☆ · Set your first best",
+            "box": {
+              "x": 888.65625,
+              "y": 84,
+              "width": 305.34375,
+              "height": 278.59375,
+              "top": 84,
+              "right": 1194,
+              "bottom": 362.59375,
+              "left": 888.65625
+            }
+          },
+          {
+            "name": "04 · CHALLENGEMap the arenaDrive COCO to map the arena on wheel odometry alone, within a distance budget. Covering more raises the map's F1; driving further lets the drift grow.☆☆☆ · Set your first best",
+            "box": {
+              "x": 246,
+              "y": 378.59375,
+              "width": 305.328125,
+              "height": 257.59375,
+              "top": 378.59375,
+              "right": 551.328125,
+              "bottom": 636.1875,
+              "left": 246
+            }
+          },
+          {
+            "name": "05 · CHALLENGECase File detectiveA recording of the full ROS 2 stack in Gazebo. Scrub to the moment the robot's belief about where it is first leaves the truth, and mark it.☆☆☆ · Set your first best",
+            "box": {
+              "x": 567.328125,
+              "y": 378.59375,
+              "width": 305.328125,
+              "height": 257.59375,
+              "top": 378.59375,
+              "right": 872.65625,
+              "bottom": 636.1875,
+              "left": 567.328125
+            }
+          },
+          {
+            "name": "06 · DRIVERace the planner's ghostDrive COCO to the flag yourself, at the same speed limits the ghost has. The ghost is the model following A*'s path with a pure-pursuit tracker. Beat its time without hitting more than it does.☆☆☆ · Set your first best",
+            "box": {
+              "x": 888.65625,
+              "y": 378.59375,
+              "width": 305.34375,
+              "height": 257.59375,
+              "top": 378.59375,
+              "right": 1194,
+              "bottom": 636.1875,
+              "left": 888.65625
+            }
+          },
+          {
+            "name": "Free roam Drive, explore, click a goal →",
+            "box": {
+              "x": 246,
+              "y": 652.1875,
+              "width": 948,
+              "height": 48,
+              "top": 652.1875,
+              "right": 1194,
+              "bottom": 700.1875,
+              "left": 246
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "desktop",
+      "device": "laptop Chromium",
+      "game": "beat-the-planner",
+      "layout": {
+        "viewport": [
+          1440,
+          900
+        ],
+        "scroll": [
+          1440,
+          900
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 1146,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 1194,
+              "bottom": 60,
+              "left": 1146
+            }
+          },
+          {
+            "name": "← Levels",
+            "box": {
+              "x": 246,
+              "y": 68,
+              "width": 57,
+              "height": 48,
+              "top": 68,
+              "right": 303,
+              "bottom": 116,
+              "left": 246
+            }
+          },
+          {
+            "name": "Rules and reference",
+            "box": {
+              "x": 1016,
+              "y": 68,
+              "width": 178,
+              "height": 48,
+              "top": 68,
+              "right": 1194,
+              "bottom": 116,
+              "left": 1016
+            }
+          },
+          {
+            "name": "Beat the planner: the level's grid; arrow keys choose a cell, Enter selects",
+            "box": {
+              "x": 278,
+              "y": 326,
+              "width": 576,
+              "height": 360,
+              "top": 326,
+              "right": 854,
+              "bottom": 686,
+              "left": 278
+            }
+          },
+          {
+            "name": "Undo",
+            "box": {
+              "x": 909.609375,
+              "y": 840,
+              "width": 69,
+              "height": 48,
+              "top": 840,
+              "right": 978.609375,
+              "bottom": 888,
+              "left": 909.609375
+            }
+          },
+          {
+            "name": "Score my path",
+            "box": {
+              "x": 986.609375,
+              "y": 840,
+              "width": 135,
+              "height": 48,
+              "top": 840,
+              "right": 1121.609375,
+              "bottom": 888,
+              "left": 986.609375
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "desktop",
+      "device": "laptop Chromium",
+      "game": "next-node",
+      "layout": {
+        "viewport": [
+          1440,
+          900
+        ],
+        "scroll": [
+          1440,
+          900
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 1146,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 1194,
+              "bottom": 60,
+              "left": 1146
+            }
+          },
+          {
+            "name": "← Levels",
+            "box": {
+              "x": 246,
+              "y": 68,
+              "width": 57,
+              "height": 48,
+              "top": 68,
+              "right": 303,
+              "bottom": 116,
+              "left": 246
+            }
+          },
+          {
+            "name": "Rules and reference",
+            "box": {
+              "x": 1016,
+              "y": 68,
+              "width": 178,
+              "height": 48,
+              "top": 68,
+              "right": 1194,
+              "bottom": 116,
+              "left": 1016
+            }
+          },
+          {
+            "name": "Next node: A*'s search part-way; arrow keys choose a cell, Enter selects",
+            "box": {
+              "x": 278,
+              "y": 326,
+              "width": 576,
+              "height": 360,
+              "top": 326,
+              "right": 854,
+              "bottom": 686,
+              "left": 278
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "desktop",
+      "device": "laptop Chromium",
+      "game": "search-the-bays",
+      "layout": {
+        "viewport": [
+          1440,
+          900
+        ],
+        "scroll": [
+          1440,
+          900
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 1146,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 1194,
+              "bottom": 60,
+              "left": 1146
+            }
+          },
+          {
+            "name": "← Levels",
+            "box": {
+              "x": 246,
+              "y": 68,
+              "width": 57,
+              "height": 48,
+              "top": 68,
+              "right": 303,
+              "bottom": 116,
+              "left": 246
+            }
+          },
+          {
+            "name": "Rules and reference",
+            "box": {
+              "x": 1016,
+              "y": 68,
+              "width": 178,
+              "height": 48,
+              "top": 68,
+              "right": 1194,
+              "bottom": 116,
+              "left": 1016
+            }
+          },
+          {
+            "name": "Bay 1",
+            "box": {
+              "x": 909.609375,
+              "y": 266.25,
+              "width": 66,
+              "height": 48,
+              "top": 266.25,
+              "right": 975.609375,
+              "bottom": 314.25,
+              "left": 909.609375
+            }
+          },
+          {
+            "name": "Bay 2",
+            "box": {
+              "x": 983.609375,
+              "y": 266.25,
+              "width": 69,
+              "height": 48,
+              "top": 266.25,
+              "right": 1052.609375,
+              "bottom": 314.25,
+              "left": 983.609375
+            }
+          },
+          {
+            "name": "Bay 3",
+            "box": {
+              "x": 1060.609375,
+              "y": 266.25,
+              "width": 69,
+              "height": 48,
+              "top": 266.25,
+              "right": 1129.609375,
+              "bottom": 314.25,
+              "left": 1060.609375
+            }
+          },
+          {
+            "name": "Bay 4",
+            "box": {
+              "x": 909.609375,
+              "y": 322.25,
+              "width": 69,
+              "height": 48,
+              "top": 322.25,
+              "right": 978.609375,
+              "bottom": 370.25,
+              "left": 909.609375
+            }
+          },
+          {
+            "name": "Score my order",
+            "box": {
+              "x": 909.609375,
+              "y": 840,
+              "width": 140,
+              "height": 48,
+              "top": 840,
+              "right": 1049.609375,
+              "bottom": 888,
+              "left": 909.609375
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "desktop",
+      "device": "laptop Chromium",
+      "game": "map-the-arena",
+      "layout": {
+        "viewport": [
+          1440,
+          900
+        ],
+        "scroll": [
+          1440,
+          900
+        ],
+        "controls": [
+          {
+            "name": "Click the floor for a goal; drive with WASD",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 900,
+              "top": 0,
+              "right": 1440,
+              "bottom": 900,
+              "left": 0
+            }
+          },
+          {
+            "name": "Settings",
+            "box": {
+              "x": 1224,
+              "y": 24,
+              "width": 48,
+              "height": 48,
+              "top": 24,
+              "right": 1272,
+              "bottom": 72,
+              "left": 1224
+            }
+          },
+          {
+            "name": "Robot vision (X): Off",
+            "box": {
+              "x": 1325,
+              "y": 198,
+              "width": 91,
+              "height": 48,
+              "top": 198,
+              "right": 1416,
+              "bottom": 246,
+              "left": 1325
+            }
+          },
+          {
+            "name": "STOP",
+            "box": {
+              "x": 1064,
+              "y": 796,
+              "width": 88,
+              "height": 80,
+              "top": 796,
+              "right": 1152,
+              "bottom": 876,
+              "left": 1064
+            }
+          },
+          {
+            "name": "Grasp",
+            "box": {
+              "x": 1160,
+              "y": 804,
+              "width": 80,
+              "height": 72,
+              "top": 804,
+              "right": 1240,
+              "bottom": 876,
+              "left": 1160
+            }
+          },
+          {
+            "name": "Auto",
+            "box": {
+              "x": 1248,
+              "y": 804,
+              "width": 80,
+              "height": 72,
+              "top": 804,
+              "right": 1328,
+              "bottom": 876,
+              "left": 1248
+            }
+          },
+          {
+            "name": "Camera",
+            "box": {
+              "x": 1336,
+              "y": 804,
+              "width": 80,
+              "height": 72,
+              "top": 804,
+              "right": 1416,
+              "bottom": 876,
+              "left": 1336
+            }
+          }
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "desktop",
+      "device": "laptop Chromium",
+      "game": "race-the-ghost",
+      "layout": {
+        "viewport": [
+          1440,
+          900
+        ],
+        "scroll": [
+          1440,
+          900
+        ],
+        "controls": [
+          {
+            "name": "Click the floor for a goal; drive with WASD",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 900,
+              "top": 0,
+              "right": 1440,
+              "bottom": 900,
+              "left": 0
+            }
+          },
+          {
+            "name": "Settings",
+            "box": {
+              "x": 1224,
+              "y": 24,
+              "width": 48,
+              "height": 48,
+              "top": 24,
+              "right": 1272,
+              "bottom": 72,
+              "left": 1224
+            }
+          },
+          {
+            "name": "Robot vision (X): Off",
+            "box": {
+              "x": 1325,
+              "y": 198,
+              "width": 91,
+              "height": 48,
+              "top": 198,
+              "right": 1416,
+              "bottom": 246,
+              "left": 1325
+            }
+          },
+          {
+            "name": "STOP",
+            "box": {
+              "x": 1064,
+              "y": 796,
+              "width": 88,
+              "height": 80,
+              "top": 796,
+              "right": 1152,
+              "bottom": 876,
+              "left": 1064
+            }
+          },
+          {
+            "name": "Grasp",
+            "box": {
+              "x": 1160,
+              "y": 804,
+              "width": 80,
+              "height": 72,
+              "top": 804,
+              "right": 1240,
+              "bottom": 876,
+              "left": 1160
+            }
+          },
+          {
+            "name": "Auto",
+            "box": {
+              "x": 1248,
+              "y": 804,
+              "width": 80,
+              "height": 72,
+              "top": 804,
+              "right": 1328,
+              "bottom": 876,
+              "left": 1248
+            }
+          },
+          {
+            "name": "Camera",
+            "box": {
+              "x": 1336,
+              "y": 804,
+              "width": 80,
+              "height": 72,
+              "top": 804,
+              "right": 1416,
+              "bottom": 876,
+              "left": 1336
+            }
+          }
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "compact",
+      "device": "laptop Chromium compact",
+      "game": "games",
+      "layout": {
+        "viewport": [
+          844,
+          390
+        ],
+        "scroll": [
+          844,
+          390
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 780,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 828,
+              "bottom": 60,
+              "left": 780
+            }
+          },
+          {
+            "name": "01 · CHALLENGEBeat the plannerDraw a path from S to G, one cell at a time. Every move costs its length, and a muddy cell costs more to enter (darker is worse). Can you match A*?☆☆☆ · Set your first best",
+            "box": {
+              "x": 16,
+              "y": 68,
+              "width": 265.328125,
+              "height": 123,
+              "top": 68,
+              "right": 281.328125,
+              "bottom": 191,
+              "left": 16
+            }
+          },
+          {
+            "name": "02 · CHALLENGENext nodeA* is part-way through a search. Grey cells are closed; outlined cells are open, each with g (the cost so far) and h (the estimate to G). Click the cell A* expands next -- ten times.☆☆☆ · Set your first best",
+            "box": {
+              "x": 289.328125,
+              "y": 68,
+              "width": 265.328125,
+              "height": 123,
+              "top": 68,
+              "right": 554.65625,
+              "bottom": 191,
+              "left": 289.328125
+            }
+          },
+          {
+            "name": "03 · CHALLENGESearch the baysThe target is in one of four bays, and you know only how likely each one is. Choose the order to look in. You are scored on the expected distance over where it might be -- never on where it turned out to be.☆☆☆ · Set your first best",
+            "box": {
+              "x": 562.65625,
+              "y": 68,
+              "width": 265.34375,
+              "height": 123,
+              "top": 68,
+              "right": 828,
+              "bottom": 191,
+              "left": 562.65625
+            }
+          },
+          {
+            "name": "04 · CHALLENGEMap the arenaDrive COCO to map the arena on wheel odometry alone, within a distance budget. Covering more raises the map's F1; driving further lets the drift grow.☆☆☆ · Set your first best",
+            "box": {
+              "x": 16,
+              "y": 199,
+              "width": 265.328125,
+              "height": 123,
+              "top": 199,
+              "right": 281.328125,
+              "bottom": 322,
+              "left": 16
+            }
+          },
+          {
+            "name": "05 · CHALLENGECase File detectiveA recording of the full ROS 2 stack in Gazebo. Scrub to the moment the robot's belief about where it is first leaves the truth, and mark it.☆☆☆ · Set your first best",
+            "box": {
+              "x": 289.328125,
+              "y": 199,
+              "width": 265.328125,
+              "height": 123,
+              "top": 199,
+              "right": 554.65625,
+              "bottom": 322,
+              "left": 289.328125
+            }
+          },
+          {
+            "name": "06 · DRIVERace the planner's ghostDrive COCO to the flag yourself, at the same speed limits the ghost has. The ghost is the model following A*'s path with a pure-pursuit tracker. Beat its time without hitting more than it does.☆☆☆ · Set your first best",
+            "box": {
+              "x": 562.65625,
+              "y": 199,
+              "width": 265.34375,
+              "height": 123,
+              "top": 199,
+              "right": 828,
+              "bottom": 322,
+              "left": 562.65625
+            }
+          },
+          {
+            "name": "Free roam Drive, explore, click a goal →",
+            "box": {
+              "x": 16,
+              "y": 330,
+              "width": 812,
+              "height": 48,
+              "top": 330,
+              "right": 828,
+              "bottom": 378,
+              "left": 16
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "compact",
+      "device": "laptop Chromium compact",
+      "game": "beat-the-planner",
+      "layout": {
+        "viewport": [
+          844,
+          390
+        ],
+        "scroll": [
+          844,
+          390
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 780,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 828,
+              "bottom": 60,
+              "left": 780
+            }
+          },
+          {
+            "name": "← Levels",
+            "box": {
+              "x": 16,
+              "y": 68,
+              "width": 57,
+              "height": 48,
+              "top": 68,
+              "right": 73,
+              "bottom": 116,
+              "left": 16
+            }
+          },
+          {
+            "name": "Rules and reference",
+            "box": {
+              "x": 650,
+              "y": 68,
+              "width": 178,
+              "height": 48,
+              "top": 68,
+              "right": 828,
+              "bottom": 116,
+              "left": 650
+            }
+          },
+          {
+            "name": "Beat the planner: the level's grid; arrow keys choose a cell, Enter selects",
+            "box": {
+              "x": 92.203125,
+              "y": 126,
+              "width": 400,
+              "height": 250,
+              "top": 126,
+              "right": 492.203125,
+              "bottom": 376,
+              "left": 92.203125
+            }
+          },
+          {
+            "name": "Undo",
+            "box": {
+              "x": 584.40625,
+              "y": 300,
+              "width": 69,
+              "height": 48,
+              "top": 300,
+              "right": 653.40625,
+              "bottom": 348,
+              "left": 584.40625
+            }
+          },
+          {
+            "name": "Score my path",
+            "box": {
+              "x": 661.40625,
+              "y": 300,
+              "width": 135,
+              "height": 48,
+              "top": 300,
+              "right": 796.40625,
+              "bottom": 348,
+              "left": 661.40625
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "compact",
+      "device": "laptop Chromium compact",
+      "game": "next-node",
+      "layout": {
+        "viewport": [
+          844,
+          390
+        ],
+        "scroll": [
+          844,
+          390
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 780,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 828,
+              "bottom": 60,
+              "left": 780
+            }
+          },
+          {
+            "name": "← Levels",
+            "box": {
+              "x": 16,
+              "y": 68,
+              "width": 57,
+              "height": 48,
+              "top": 68,
+              "right": 73,
+              "bottom": 116,
+              "left": 16
+            }
+          },
+          {
+            "name": "Rules and reference",
+            "box": {
+              "x": 650,
+              "y": 68,
+              "width": 178,
+              "height": 48,
+              "top": 68,
+              "right": 828,
+              "bottom": 116,
+              "left": 650
+            }
+          },
+          {
+            "name": "Next node: A*'s search part-way; arrow keys choose a cell, Enter selects",
+            "box": {
+              "x": 92.203125,
+              "y": 126,
+              "width": 400,
+              "height": 250,
+              "top": 126,
+              "right": 492.203125,
+              "bottom": 376,
+              "left": 92.203125
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "compact",
+      "device": "laptop Chromium compact",
+      "game": "search-the-bays",
+      "layout": {
+        "viewport": [
+          844,
+          390
+        ],
+        "scroll": [
+          844,
+          390
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 780,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 828,
+              "bottom": 60,
+              "left": 780
+            }
+          },
+          {
+            "name": "← Levels",
+            "box": {
+              "x": 16,
+              "y": 68,
+              "width": 57,
+              "height": 48,
+              "top": 68,
+              "right": 73,
+              "bottom": 116,
+              "left": 16
+            }
+          },
+          {
+            "name": "Rules and reference",
+            "box": {
+              "x": 650,
+              "y": 68,
+              "width": 178,
+              "height": 48,
+              "top": 68,
+              "right": 828,
+              "bottom": 116,
+              "left": 650
+            }
+          },
+          {
+            "name": "Bay 1",
+            "box": {
+              "x": 584.40625,
+              "y": 130.25,
+              "width": 66,
+              "height": 48,
+              "top": 130.25,
+              "right": 650.40625,
+              "bottom": 178.25,
+              "left": 584.40625
+            }
+          },
+          {
+            "name": "Bay 2",
+            "box": {
+              "x": 658.40625,
+              "y": 130.25,
+              "width": 69,
+              "height": 48,
+              "top": 130.25,
+              "right": 727.40625,
+              "bottom": 178.25,
+              "left": 658.40625
+            }
+          },
+          {
+            "name": "Bay 3",
+            "box": {
+              "x": 735.40625,
+              "y": 130.25,
+              "width": 69,
+              "height": 48,
+              "top": 130.25,
+              "right": 804.40625,
+              "bottom": 178.25,
+              "left": 735.40625
+            }
+          },
+          {
+            "name": "Bay 4",
+            "box": {
+              "x": 584.40625,
+              "y": 186.25,
+              "width": 69,
+              "height": 48,
+              "top": 186.25,
+              "right": 653.40625,
+              "bottom": 234.25,
+              "left": 584.40625
+            }
+          },
+          {
+            "name": "Score my order",
+            "box": {
+              "x": 584.40625,
+              "y": 330,
+              "width": 140,
+              "height": 48,
+              "top": 330,
+              "right": 724.40625,
+              "bottom": 378,
+              "left": 584.40625
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "compact",
+      "device": "laptop Chromium compact",
+      "game": "map-the-arena",
+      "layout": {
+        "viewport": [
+          844,
+          390
+        ],
+        "scroll": [
+          844,
+          390
+        ],
+        "controls": [
+          {
+            "name": "Click the floor for a goal; drive with WASD",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "width": 844,
+              "height": 390,
+              "top": 0,
+              "right": 844,
+              "bottom": 390,
+              "left": 0
+            }
+          },
+          {
+            "name": "Settings",
+            "box": {
+              "x": 628,
+              "y": 24,
+              "width": 48,
+              "height": 48,
+              "top": 24,
+              "right": 676,
+              "bottom": 72,
+              "left": 628
+            }
+          },
+          {
+            "name": "Robot vision (X): Off",
+            "box": {
+              "x": 729,
+              "y": 198,
+              "width": 91,
+              "height": 48,
+              "top": 198,
+              "right": 820,
+              "bottom": 246,
+              "left": 729
+            }
+          },
+          {
+            "name": "STOP",
+            "box": {
+              "x": 468,
+              "y": 286,
+              "width": 88,
+              "height": 80,
+              "top": 286,
+              "right": 556,
+              "bottom": 366,
+              "left": 468
+            }
+          },
+          {
+            "name": "Grasp",
+            "box": {
+              "x": 564,
+              "y": 294,
+              "width": 80,
+              "height": 72,
+              "top": 294,
+              "right": 644,
+              "bottom": 366,
+              "left": 564
+            }
+          },
+          {
+            "name": "Auto",
+            "box": {
+              "x": 652,
+              "y": 294,
+              "width": 80,
+              "height": 72,
+              "top": 294,
+              "right": 732,
+              "bottom": 366,
+              "left": 652
+            }
+          },
+          {
+            "name": "Camera",
+            "box": {
+              "x": 740,
+              "y": 294,
+              "width": 80,
+              "height": 72,
+              "top": 294,
+              "right": 820,
+              "bottom": 366,
+              "left": 740
+            }
+          }
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "compact",
+      "device": "laptop Chromium compact",
+      "game": "race-the-ghost",
+      "layout": {
+        "viewport": [
+          844,
+          390
+        ],
+        "scroll": [
+          844,
+          390
+        ],
+        "controls": [
+          {
+            "name": "Click the floor for a goal; drive with WASD",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "width": 844,
+              "height": 390,
+              "top": 0,
+              "right": 844,
+              "bottom": 390,
+              "left": 0
+            }
+          },
+          {
+            "name": "Settings",
+            "box": {
+              "x": 628,
+              "y": 24,
+              "width": 48,
+              "height": 48,
+              "top": 24,
+              "right": 676,
+              "bottom": 72,
+              "left": 628
+            }
+          },
+          {
+            "name": "Robot vision (X): Off",
+            "box": {
+              "x": 729,
+              "y": 198,
+              "width": 91,
+              "height": 48,
+              "top": 198,
+              "right": 820,
+              "bottom": 246,
+              "left": 729
+            }
+          },
+          {
+            "name": "STOP",
+            "box": {
+              "x": 468,
+              "y": 286,
+              "width": 88,
+              "height": 80,
+              "top": 286,
+              "right": 556,
+              "bottom": 366,
+              "left": 468
+            }
+          },
+          {
+            "name": "Grasp",
+            "box": {
+              "x": 564,
+              "y": 294,
+              "width": 80,
+              "height": 72,
+              "top": 294,
+              "right": 644,
+              "bottom": 366,
+              "left": 564
+            }
+          },
+          {
+            "name": "Auto",
+            "box": {
+              "x": 652,
+              "y": 294,
+              "width": 80,
+              "height": 72,
+              "top": 294,
+              "right": 732,
+              "bottom": 366,
+              "left": 652
+            }
+          },
+          {
+            "name": "Camera",
+            "box": {
+              "x": 740,
+              "y": 294,
+              "width": 80,
+              "height": 72,
+              "top": 294,
+              "right": 820,
+              "bottom": 366,
+              "left": 740
+            }
+          }
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "nothing-landscape",
+      "device": "emulated Nothing Phone (1)",
+      "game": "games",
+      "layout": {
+        "viewport": [
+          915,
+          412
+        ],
+        "scroll": [
+          915,
+          412
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 851,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 899,
+              "bottom": 60,
+              "left": 851
+            }
+          },
+          {
+            "name": "01 · CHALLENGEBeat the plannerDraw a path from S to G, one cell at a time. Every move costs its length, and a muddy cell costs more to enter (darker is worse). Can you match A*?☆☆☆ · Set your first best",
+            "box": {
+              "x": 16,
+              "y": 68,
+              "width": 289,
+              "height": 134,
+              "top": 68,
+              "right": 305,
+              "bottom": 202,
+              "left": 16
+            }
+          },
+          {
+            "name": "02 · CHALLENGENext nodeA* is part-way through a search. Grey cells are closed; outlined cells are open, each with g (the cost so far) and h (the estimate to G). Click the cell A* expands next -- ten times.☆☆☆ · Set your first best",
+            "box": {
+              "x": 313,
+              "y": 68,
+              "width": 289,
+              "height": 134,
+              "top": 68,
+              "right": 602,
+              "bottom": 202,
+              "left": 313
+            }
+          },
+          {
+            "name": "03 · CHALLENGESearch the baysThe target is in one of four bays, and you know only how likely each one is. Choose the order to look in. You are scored on the expected distance over where it might be -- never on where it turned out to be.☆☆☆ · Set your first best",
+            "box": {
+              "x": 610,
+              "y": 68,
+              "width": 289,
+              "height": 134,
+              "top": 68,
+              "right": 899,
+              "bottom": 202,
+              "left": 610
+            }
+          },
+          {
+            "name": "04 · CHALLENGEMap the arenaDrive COCO to map the arena on wheel odometry alone, within a distance budget. Covering more raises the map's F1; driving further lets the drift grow.☆☆☆ · Set your first best",
+            "box": {
+              "x": 16,
+              "y": 210,
+              "width": 289,
+              "height": 134,
+              "top": 210,
+              "right": 305,
+              "bottom": 344,
+              "left": 16
+            }
+          },
+          {
+            "name": "05 · CHALLENGECase File detectiveA recording of the full ROS 2 stack in Gazebo. Scrub to the moment the robot's belief about where it is first leaves the truth, and mark it.☆☆☆ · Set your first best",
+            "box": {
+              "x": 313,
+              "y": 210,
+              "width": 289,
+              "height": 134,
+              "top": 210,
+              "right": 602,
+              "bottom": 344,
+              "left": 313
+            }
+          },
+          {
+            "name": "06 · DRIVERace the planner's ghostDrive COCO to the flag yourself, at the same speed limits the ghost has. The ghost is the model following A*'s path with a pure-pursuit tracker. Beat its time without hitting more than it does.☆☆☆ · Set your first best",
+            "box": {
+              "x": 610,
+              "y": 210,
+              "width": 289,
+              "height": 134,
+              "top": 210,
+              "right": 899,
+              "bottom": 344,
+              "left": 610
+            }
+          },
+          {
+            "name": "Free roam Drive, explore, click a goal →",
+            "box": {
+              "x": 16,
+              "y": 352,
+              "width": 883,
+              "height": 48,
+              "top": 352,
+              "right": 899,
+              "bottom": 400,
+              "left": 16
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "nothing-landscape",
+      "device": "emulated Nothing Phone (1)",
+      "game": "beat-the-planner",
+      "layout": {
+        "viewport": [
+          915,
+          412
+        ],
+        "scroll": [
+          915,
+          412
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 851,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 899,
+              "bottom": 60,
+              "left": 851
+            }
+          },
+          {
+            "name": "← Levels",
+            "box": {
+              "x": 16,
+              "y": 68,
+              "width": 57,
+              "height": 48,
+              "top": 68,
+              "right": 73,
+              "bottom": 116,
+              "left": 16
+            }
+          },
+          {
+            "name": "Rules and reference",
+            "box": {
+              "x": 721,
+              "y": 68,
+              "width": 178,
+              "height": 48,
+              "top": 68,
+              "right": 899,
+              "bottom": 116,
+              "left": 721
+            }
+          },
+          {
+            "name": "Beat the planner: the level's grid; arrow keys choose a cell, Enter selects",
+            "box": {
+              "x": 101.046875,
+              "y": 127,
+              "width": 432,
+              "height": 270,
+              "top": 127,
+              "right": 533.046875,
+              "bottom": 397,
+              "left": 101.046875
+            }
+          },
+          {
+            "name": "Undo",
+            "box": {
+              "x": 634.109375,
+              "y": 322,
+              "width": 69,
+              "height": 48,
+              "top": 322,
+              "right": 703.109375,
+              "bottom": 370,
+              "left": 634.109375
+            }
+          },
+          {
+            "name": "Score my path",
+            "box": {
+              "x": 711.109375,
+              "y": 322,
+              "width": 135,
+              "height": 48,
+              "top": 322,
+              "right": 846.109375,
+              "bottom": 370,
+              "left": 711.109375
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "nothing-landscape",
+      "device": "emulated Nothing Phone (1)",
+      "game": "next-node",
+      "layout": {
+        "viewport": [
+          915,
+          412
+        ],
+        "scroll": [
+          915,
+          412
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 851,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 899,
+              "bottom": 60,
+              "left": 851
+            }
+          },
+          {
+            "name": "← Levels",
+            "box": {
+              "x": 16,
+              "y": 68,
+              "width": 57,
+              "height": 48,
+              "top": 68,
+              "right": 73,
+              "bottom": 116,
+              "left": 16
+            }
+          },
+          {
+            "name": "Rules and reference",
+            "box": {
+              "x": 721,
+              "y": 68,
+              "width": 178,
+              "height": 48,
+              "top": 68,
+              "right": 899,
+              "bottom": 116,
+              "left": 721
+            }
+          },
+          {
+            "name": "Next node: A*'s search part-way; arrow keys choose a cell, Enter selects",
+            "box": {
+              "x": 101.046875,
+              "y": 127,
+              "width": 432,
+              "height": 270,
+              "top": 127,
+              "right": 533.046875,
+              "bottom": 397,
+              "left": 101.046875
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "nothing-landscape",
+      "device": "emulated Nothing Phone (1)",
+      "game": "search-the-bays",
+      "layout": {
+        "viewport": [
+          915,
+          412
+        ],
+        "scroll": [
+          915,
+          412
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 851,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 899,
+              "bottom": 60,
+              "left": 851
+            }
+          },
+          {
+            "name": "← Levels",
+            "box": {
+              "x": 16,
+              "y": 68,
+              "width": 57,
+              "height": 48,
+              "top": 68,
+              "right": 73,
+              "bottom": 116,
+              "left": 16
+            }
+          },
+          {
+            "name": "Rules and reference",
+            "box": {
+              "x": 721,
+              "y": 68,
+              "width": 178,
+              "height": 48,
+              "top": 68,
+              "right": 899,
+              "bottom": 116,
+              "left": 721
+            }
+          },
+          {
+            "name": "Bay 1",
+            "box": {
+              "x": 634.109375,
+              "y": 144.25,
+              "width": 66,
+              "height": 48,
+              "top": 144.25,
+              "right": 700.109375,
+              "bottom": 192.25,
+              "left": 634.109375
+            }
+          },
+          {
+            "name": "Bay 2",
+            "box": {
+              "x": 708.109375,
+              "y": 144.25,
+              "width": 69,
+              "height": 48,
+              "top": 144.25,
+              "right": 777.109375,
+              "bottom": 192.25,
+              "left": 708.109375
+            }
+          },
+          {
+            "name": "Bay 3",
+            "box": {
+              "x": 785.109375,
+              "y": 144.25,
+              "width": 69,
+              "height": 48,
+              "top": 144.25,
+              "right": 854.109375,
+              "bottom": 192.25,
+              "left": 785.109375
+            }
+          },
+          {
+            "name": "Bay 4",
+            "box": {
+              "x": 634.109375,
+              "y": 200.25,
+              "width": 69,
+              "height": 48,
+              "top": 200.25,
+              "right": 703.109375,
+              "bottom": 248.25,
+              "left": 634.109375
+            }
+          },
+          {
+            "name": "Score my order",
+            "box": {
+              "x": 634.109375,
+              "y": 352,
+              "width": 140,
+              "height": 48,
+              "top": 352,
+              "right": 774.109375,
+              "bottom": 400,
+              "left": 634.109375
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "nothing-landscape",
+      "device": "emulated Nothing Phone (1)",
+      "game": "map-the-arena",
+      "layout": {
+        "viewport": [
+          915,
+          412
+        ],
+        "scroll": [
+          915,
+          412
+        ],
+        "controls": [
+          {
+            "name": "Click the floor for a goal; drive with WASD",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "width": 915,
+              "height": 412,
+              "top": 0,
+              "right": 915,
+              "bottom": 412,
+              "left": 0
+            }
+          },
+          {
+            "name": "Settings",
+            "box": {
+              "x": 743,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 791,
+              "bottom": 60,
+              "left": 743
+            }
+          },
+          {
+            "name": "Robot vision (X): Off",
+            "box": {
+              "x": 743,
+              "y": 68,
+              "width": 48,
+              "height": 48,
+              "top": 68,
+              "right": 791,
+              "bottom": 116,
+              "left": 743
+            }
+          },
+          {
+            "name": "Drive COCO (joystick)",
+            "box": {
+              "x": 32,
+              "y": 256,
+              "width": 128,
+              "height": 128,
+              "top": 256,
+              "right": 160,
+              "bottom": 384,
+              "left": 32
+            }
+          },
+          {
+            "name": "STOP",
+            "box": {
+              "x": 731,
+              "y": 312,
+              "width": 64,
+              "height": 64,
+              "top": 312,
+              "right": 795,
+              "bottom": 376,
+              "left": 731
+            }
+          },
+          {
+            "name": "Grasp",
+            "box": {
+              "x": 803,
+              "y": 332,
+              "width": 56,
+              "height": 56,
+              "top": 332,
+              "right": 859,
+              "bottom": 388,
+              "left": 803
+            }
+          },
+          {
+            "name": "Auto",
+            "box": {
+              "x": 835,
+              "y": 276,
+              "width": 48,
+              "height": 48,
+              "top": 276,
+              "right": 883,
+              "bottom": 324,
+              "left": 835
+            }
+          },
+          {
+            "name": "Camera",
+            "box": {
+              "x": 775,
+              "y": 248,
+              "width": 48,
+              "height": 48,
+              "top": 248,
+              "right": 823,
+              "bottom": 296,
+              "left": 775
+            }
+          }
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "nothing-landscape",
+      "device": "emulated Nothing Phone (1)",
+      "game": "race-the-ghost",
+      "layout": {
+        "viewport": [
+          915,
+          412
+        ],
+        "scroll": [
+          915,
+          412
+        ],
+        "controls": [
+          {
+            "name": "Click the floor for a goal; drive with WASD",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "width": 915,
+              "height": 412,
+              "top": 0,
+              "right": 915,
+              "bottom": 412,
+              "left": 0
+            }
+          },
+          {
+            "name": "Settings",
+            "box": {
+              "x": 743,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 791,
+              "bottom": 60,
+              "left": 743
+            }
+          },
+          {
+            "name": "Robot vision (X): Off",
+            "box": {
+              "x": 743,
+              "y": 68,
+              "width": 48,
+              "height": 48,
+              "top": 68,
+              "right": 791,
+              "bottom": 116,
+              "left": 743
+            }
+          },
+          {
+            "name": "Drive COCO (joystick)",
+            "box": {
+              "x": 32,
+              "y": 256,
+              "width": 128,
+              "height": 128,
+              "top": 256,
+              "right": 160,
+              "bottom": 384,
+              "left": 32
+            }
+          },
+          {
+            "name": "STOP",
+            "box": {
+              "x": 731,
+              "y": 312,
+              "width": 64,
+              "height": 64,
+              "top": 312,
+              "right": 795,
+              "bottom": 376,
+              "left": 731
+            }
+          },
+          {
+            "name": "Grasp",
+            "box": {
+              "x": 803,
+              "y": 332,
+              "width": 56,
+              "height": 56,
+              "top": 332,
+              "right": 859,
+              "bottom": 388,
+              "left": 803
+            }
+          },
+          {
+            "name": "Auto",
+            "box": {
+              "x": 835,
+              "y": 276,
+              "width": 48,
+              "height": 48,
+              "top": 276,
+              "right": 883,
+              "bottom": 324,
+              "left": 835
+            }
+          },
+          {
+            "name": "Camera",
+            "box": {
+              "x": 775,
+              "y": 248,
+              "width": 48,
+              "height": 48,
+              "top": 248,
+              "right": 823,
+              "bottom": 296,
+              "left": 775
+            }
+          }
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "nothing-portrait",
+      "device": "emulated Nothing Phone (1)",
+      "game": "games",
+      "layout": {
+        "viewport": [
+          412,
+          915
+        ],
+        "scroll": [
+          412,
+          915
+        ],
+        "controls": [
+          {
+            "name": "Settings",
+            "box": {
+              "x": 348,
+              "y": 12,
+              "width": 48,
+              "height": 48,
+              "top": 12,
+              "right": 396,
+              "bottom": 60,
+              "left": 348
+            }
+          },
+          {
+            "name": "01 · CHALLENGEBeat the plannerDraw a path from S to G, one cell at a time. Every move costs its length, and a muddy cell costs more to enter (darker is worse). Can you match A*?☆☆☆ · Set your first best",
+            "box": {
+              "x": 16,
+              "y": 84,
+              "width": 182,
+              "height": 142,
+              "top": 84,
+              "right": 198,
+              "bottom": 226,
+              "left": 16
+            }
+          },
+          {
+            "name": "02 · CHALLENGENext nodeA* is part-way through a search. Grey cells are closed; outlined cells are open, each with g (the cost so far) and h (the estimate to G). Click the cell A* expands next -- ten times.☆☆☆ · Set your first best",
+            "box": {
+              "x": 214,
+              "y": 84,
+              "width": 182,
+              "height": 142,
+              "top": 84,
+              "right": 396,
+              "bottom": 226,
+              "left": 214
+            }
+          },
+          {
+            "name": "03 · CHALLENGESearch the baysThe target is in one of four bays, and you know only how likely each one is. Choose the order to look in. You are scored on the expected distance over where it might be -- never on where it turned out to be.☆☆☆ · Set your first best",
+            "box": {
+              "x": 16,
+              "y": 242,
+              "width": 182,
+              "height": 142,
+              "top": 242,
+              "right": 198,
+              "bottom": 384,
+              "left": 16
+            }
+          },
+          {
+            "name": "04 · CHALLENGEMap the arenaDrive COCO to map the arena on wheel odometry alone, within a distance budget. Covering more raises the map's F1; driving further lets the drift grow.☆☆☆ · Set your first best",
+            "box": {
+              "x": 214,
+              "y": 242,
+              "width": 182,
+              "height": 142,
+              "top": 242,
+              "right": 396,
+              "bottom": 384,
+              "left": 214
+            }
+          },
+          {
+            "name": "05 · CHALLENGECase File detectiveA recording of the full ROS 2 stack in Gazebo. Scrub to the moment the robot's belief about where it is first leaves the truth, and mark it.☆☆☆ · Set your first best",
+            "box": {
+              "x": 16,
+              "y": 400,
+              "width": 182,
+              "height": 166,
+              "top": 400,
+              "right": 198,
+              "bottom": 566,
+              "left": 16
+            }
+          },
+          {
+            "name": "06 · DRIVERace the planner's ghostDrive COCO to the flag yourself, at the same speed limits the ghost has. The ghost is the model following A*'s path with a pure-pursuit tracker. Beat its time without hitting more than it does.☆☆☆ · Set your first best",
+            "box": {
+              "x": 214,
+              "y": 400,
+              "width": 182,
+              "height": 166,
+              "top": 400,
+              "right": 396,
+              "bottom": 566,
+              "left": 214
+            }
+          },
+          {
+            "name": "Free roam Drive, explore, click a goal →",
+            "box": {
+              "x": 16,
+              "y": 582,
+              "width": 380,
+              "height": 48,
+              "top": 582,
+              "right": 396,
+              "bottom": 630,
+              "left": 16
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "nothing-portrait",
+      "device": "emulated Nothing Phone (1)",
+      "game": "beat-the-planner",
+      "layout": {
+        "viewport": [
+          412,
+          915
+        ],
+        "scroll": [
+          412,
+          915
+        ],
+        "controls": [
+          {
+            "name": "Back to games",
+            "box": {
+              "x": 153,
+              "y": 495.40625,
+              "width": 106,
+              "height": 48,
+              "top": 495.40625,
+              "right": 259,
+              "bottom": 543.40625,
+              "left": 153
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "nothing-portrait",
+      "device": "emulated Nothing Phone (1)",
+      "game": "next-node",
+      "layout": {
+        "viewport": [
+          412,
+          915
+        ],
+        "scroll": [
+          412,
+          915
+        ],
+        "controls": [
+          {
+            "name": "Back to games",
+            "box": {
+              "x": 153,
+              "y": 495.40625,
+              "width": 106,
+              "height": 48,
+              "top": 495.40625,
+              "right": 259,
+              "bottom": 543.40625,
+              "left": 153
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "nothing-portrait",
+      "device": "emulated Nothing Phone (1)",
+      "game": "search-the-bays",
+      "layout": {
+        "viewport": [
+          412,
+          915
+        ],
+        "scroll": [
+          412,
+          915
+        ],
+        "controls": [
+          {
+            "name": "Back to games",
+            "box": {
+              "x": 153,
+              "y": 495.40625,
+              "width": 106,
+              "height": 48,
+              "top": 495.40625,
+              "right": 259,
+              "bottom": 543.40625,
+              "left": 153
+            }
+          }
+        ],
+        "renderer": null
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "nothing-portrait",
+      "device": "emulated Nothing Phone (1)",
+      "game": "map-the-arena",
+      "layout": {
+        "viewport": [
+          412,
+          915
+        ],
+        "scroll": [
+          412,
+          915
+        ],
+        "controls": [
+          {
+            "name": "Back to games",
+            "box": {
+              "x": 137,
+              "y": 506.578125,
+              "width": 138,
+              "height": 48,
+              "top": 506.578125,
+              "right": 275,
+              "bottom": 554.578125,
+              "left": 137
+            }
+          }
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "errors": [],
+      "failure": null
+    },
+    {
+      "profile": "nothing-portrait",
+      "device": "emulated Nothing Phone (1)",
+      "game": "race-the-ghost",
+      "layout": {
+        "viewport": [
+          412,
+          915
+        ],
+        "scroll": [
+          412,
+          915
+        ],
+        "controls": [
+          {
+            "name": "Back to games",
+            "box": {
+              "x": 137,
+              "y": 506.578125,
+              "width": 138,
+              "height": 48,
+              "top": 506.578125,
+              "right": 275,
+              "bottom": 554.578125,
+              "left": 137
+            }
+          }
+        ],
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "errors": [],
+      "failure": null
+    }
+  ]
+}

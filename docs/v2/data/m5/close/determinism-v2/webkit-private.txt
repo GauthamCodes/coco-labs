@@ -1,0 +1,41 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /home/gautham/.cache/ms-playwright/webkit-2370/pw_run.sh --inspector-pipe --headless --no-startup-window
+<launched> pid=231796
+[pid=231796][err] /home/gautham/.cache/ms-playwright/webkit-2370/minibrowser-wpe/bin/MiniBrowser: error while loading shared libraries: libgstcodecparsers-1.0.so.0: cannot open shared object file: No such file or directory
+Call log:
+[2m  - <launching> /home/gautham/.cache/ms-playwright/webkit-2370/pw_run.sh --inspector-pipe --headless --no-startup-window[22m
+[2m  - <launched> pid=231796[22m
+[2m  - [pid=231796][err] /home/gautham/.cache/ms-playwright/webkit-2370/minibrowser-wpe/bin/MiniBrowser: error while loading shared libraries: libgstcodecparsers-1.0.so.0: cannot open shared object file: No such file or directory[22m
+[2m  - [pid=231796] <gracefully close start>[22m
+[2m  - [pid=231796] <kill>[22m
+[2m  - [pid=231796] <will force kill>[22m
+[2m  - [pid=231796] exception while trying to kill process: Error: kill ESRCH[22m
+[2m  - [pid=231796] <process did exit: exitCode=127, signal=null>[22m
+[2m  - [pid=231796] starting temporary directories cleanup[22m
+[2m  - [pid=231796] finished temporary directories cleanup[22m
+[2m  - [pid=231796] <gracefully close end>[22m
+
+    at browser (/home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/perf/determinism.mjs:255:28)
+    at async file:///home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/perf/determinism.mjs:341:60 {
+  log: [
+    '  - <launching> /home/gautham/.cache/ms-playwright/webkit-2370/pw_run.sh --inspector-pipe --headless --no-startup-window',
+    '  - <launched> pid=231796',
+    '  - [pid=231796][err] /home/gautham/.cache/ms-playwright/webkit-2370/minibrowser-wpe/bin/MiniBrowser: error while loading shared libraries: libgstcodecparsers-1.0.so.0: cannot open shared object file: No such file or directory',
+    '  - [pid=231796] <gracefully close start>',
+    '  - [pid=231796] <kill>',
+    '  - [pid=231796] <will force kill>',
+    '  - [pid=231796] exception while trying to kill process: Error: kill ESRCH',
+    '  - [pid=231796] <process did exit: exitCode=127, signal=null>',
+    '  - [pid=231796] starting temporary directories cleanup',
+    '  - [pid=231796] finished temporary directories cleanup',
+    '  - [pid=231796] <gracefully close end>'
+  ]
+}
+
+Node.js v24.21.0

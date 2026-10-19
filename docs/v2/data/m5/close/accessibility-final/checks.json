@@ -1,0 +1,182 @@
+{
+ "pages": [
+  {
+   "theme": "dark",
+   "view": "",
+   "checked": 15,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 4,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "dark",
+   "view": "?view=play",
+   "checked": 47,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 8,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "dark",
+   "view": "?view=arena&world=v2",
+   "checked": 20,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 7,
+   "reducedMotion": "reduced",
+   "tabs": [
+    "Settings",
+    "Robot vision (X): Off",
+    "STOP",
+    "Grasp",
+    "Auto",
+    "Camera",
+    "FREE ROAMMake your own path.00:00KNOWN M",
+    "Click the floor for a goal; drive with WASD",
+    "Settings",
+    "Robot vision (X): Off",
+    "STOP",
+    "Grasp"
+   ]
+  },
+  {
+   "theme": "dark",
+   "view": "?view=compare",
+   "checked": 92,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 23,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "dark",
+   "view": "?view=research",
+   "checked": 1946,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 450,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "dark",
+   "view": "?view=about",
+   "checked": 46,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 14,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "light",
+   "view": "",
+   "checked": 15,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 4,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "light",
+   "view": "?view=play",
+   "checked": 47,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 8,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "light",
+   "view": "?view=arena&world=v2",
+   "checked": 20,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 7,
+   "reducedMotion": "reduced",
+   "tabs": [
+    "Settings",
+    "Robot vision (X): Off",
+    "STOP",
+    "Grasp",
+    "Auto",
+    "Camera",
+    "FREE ROAMMake your own path.00:00KNOWN M",
+    "Click the floor for a goal; drive with WASD",
+    "Settings",
+    "Robot vision (X): Off",
+    "STOP",
+    "Grasp"
+   ]
+  },
+  {
+   "theme": "light",
+   "view": "?view=compare",
+   "checked": 92,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 23,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "light",
+   "view": "?view=research",
+   "checked": 1946,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 450,
+   "reducedMotion": "reduced"
+  },
+  {
+   "theme": "light",
+   "view": "?view=about",
+   "checked": 46,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 14,
+   "reducedMotion": "reduced"
+  }
+ ],
+ "errors": [],
+ "passed": true,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-18T01:04:59.987Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 6.09,
+    "5m": 2.98,
+    "15m": 1.93
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-18T01:05:21.152Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 7.01,
+    "5m": 3.46,
+    "15m": 2.12
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

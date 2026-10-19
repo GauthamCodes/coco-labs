@@ -1,0 +1,5 @@
+2026-10-19T00:33:21.805930+00:00
+List of devices attached
+
+
+Real phone not connected; USB/CDP measurements pending.

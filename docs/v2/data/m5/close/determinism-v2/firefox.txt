@@ -1,0 +1,11 @@
+firefox: 10 sessions, 220 s
+firefox: 20 sessions, 397 s
+firefox: 30 sessions, 573 s
+firefox: 40 sessions, 698 s
+firefox: 50 sessions, 850 s
+firefox: 60 sessions, 960 s
+firefox: 70 sessions, 1116 s
+firefox: 80 sessions, 1254 s
+firefox: 90 sessions, 1351 s
+firefox: 100 sessions, 1456 s
+firefox: 100 sessions, 15000 ticks

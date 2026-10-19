@@ -2128,3 +2128,18 @@ initial failed take preserved. No release/deploy/announcement/account action.
 See data/m5/launch/REPORT.md. Prior functional suites apply to unchanged runtime;
 final suites/acceptance checks continue in M5.11. No owner row marked complete.
 Next: final verification, measurement, append-only results, push and PR; never merge.
+
+
+## 2026-10-19 · M5.11 measure and prepare pull request
+
+Implementation commits `50817a3`, `00a42aa`; branch `v2/m5-focus`; session began at `bf3fb3e`. Final [acceptance matrix](M5_RESULTS.md), [closure report](data/m5/close/REPORT.md), [screenshots](data/m5/close/SCREENSHOTS.md).
+
+Visible-computation instrumentation, actual keyboard goals/grid controls, theme AA text and retired-worker cache cleanup fixed. Compare static pixels shared and invalidated on cost batches; retained oracle is byte-identical over seeded grids/costs/themes/states/differences. No model/hash/scientific claim change.
+
+Packages 3569 /12 suites; web 493 /62 files; tools 209; focused conditions 56; typecheck/build/dist/licence checks pass. Four engines each 100×150 v2 ticks match old reference; 15000 v1 hashes unchanged; golden fixtures unchanged; 166+1 links verify. Fifty URL forms +six archive views, five replay and five identical canvas checks pass. Eight final Compare layouts each one context and no errors.
+
+Balanced/AC, original balanced unchanged; NVIDIA 580.178.04 and actual Intel Vulkan/Mesa renderer captured. Compare initial 11.516654854743376 fps failed; final Intel four panes median 60.02508511003504 fps passes. Play nominal 60 on both physical GPUs; 30.162183333333335-minute soak has zero errors/loss/driving long tasks. Phone emulation 600.225 s median 60/minimum 58 fps, 20 touch trials median 82.90000000596046 ms; package background load disclosed, no physical-phone or thermal inference.
+
+Default warm starts <=2694.199951171875 ms; desktop cold title <=2028.2000000029802 ms and model/3D <=9786.999755859375 ms. Emulated phone cold computation slightly misses 10 s; optional terrain warm diagnostics miss 3 s. Title app+worker 271628 gzip bytes passes app-only CI check, but background interpreter adds 268476 (540104 total), so strict all-JavaScript budget remains not met. No waiver invented.
+
+ADB available but no device; real Phone pending USB, provisional settings unchanged. Blank notes retained, N1/N2 addressed, no observations/feedback invented. Five-person owner usability and independent review pending; public launch not ready. Full moves/removals remain in M5.2 MOVES, none new. ADRs 0008/0009 and E1–E8/October14 continuation decisions retained; only mapping comparisons parked for M7. No stop condition. Next: push and open unmerged PR; never release or deploy.
