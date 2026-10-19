@@ -1,6 +1,6 @@
 # M5 · Focus and polish — acceptance results
 
-Status: M5.0–M5.11 implementation and measurement evidence on `v2/m5-focus`; PR submission is the final closure step. Implementation code `00a42aa`. No merge, release or public launch is authorized by this report. Owner usability and real-phone gates remain open.
+Status: M5.0–M5.11 implementation and measurement evidence on `v2/m5-focus`; [PR #25](https://github.com/GauthamCodes/coco-labs/pull/25) is open and unmerged; remote CI was running/queued at submission. Implementation code `00a42aa`. No merge, release or public launch is authorized by this report. Owner usability and real-phone gates remain open.
 
 ## Conditions and interpretation
 

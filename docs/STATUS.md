@@ -3,7 +3,8 @@
 ## Position
 
 - Branch `v2/m5-focus`; implementation/tested code SHA `00a42aa` (M5.11).
-- M5.0–M5.11 implemented and measured; PR submission in progress.
+- M5.0–M5.11 implemented and measured; [PR #25](https://github.com/GauthamCodes/coco-labs/pull/25) open, unmerged.
+- Acceptance evidence commit `6d984fd`; PR head tracks this branch. Remote CI is running/queued, not yet claimed green.
 - No merge, release or deployment. Public launch remains gated by unresolved budgets, real-phone pass, owner usability and independent review.
 - Master plan revision 3 sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
 - Authority/rules: [README](../README.md), [AGENTS](../AGENTS.md), [M5 prompt](v2/M5_PROMPT.md), [owner amendments](v2/M5_CONTINUATION.md).
@@ -96,5 +97,5 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 ## Next step
 
-Commit M5.11 evidence, push `v2/m5-focus` and open the PR into main. Never merge it or create/edit releases.
+Review [PR #25](https://github.com/GauthamCodes/coco-labs/pull/25), its CI and the acceptance matrix. Resolve the explicit open payload/startup limits; measure the real phone when connected; complete owner usability before public launch. Never merge automatically or create/edit releases.
 Independent review and the explicit open performance/phone/usability items precede public launch. No stop condition hit; no new parked idea.

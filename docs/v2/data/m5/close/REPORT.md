@@ -30,7 +30,7 @@ Full file relocations and the only six cache removals are listed in [M5.2 MOVES]
 
 ## Session report
 
-- Milestone/checkpoints: M5.0–M5.10 implemented previously; M5.11 final implementation code is `50817a3`, measurement evidence complete; PR submission next. Session began at `bf3fb3e`, branch `v2/m5-focus`, canonical checkout.
+- Milestone/checkpoints: M5.0–M5.10 implemented previously; M5.11 final implementation code is `50817a3`, measurement evidence complete; [PR #25](https://github.com/GauthamCodes/coco-labs/pull/25) open and unmerged. Session began at `bf3fb3e`, branch `v2/m5-focus`, canonical checkout.
 - Gautham notes: found blank, preserved; no pre-design observations, waived gate. N1/N2 design inputs addressed through current phone layouts; no phone measurement invented.
 - Changes/evidence/classes: keyboard/contrast/visible-computation fixes, worker-update race and Compare pixel-preserving performance fix; MODEL/TESTED, MEASURED laptop and explicitly emulated phone evidence. Scientific Stack/Remote classes retained.
 - Tests: setup baseline packages/web/tools 3523/436/192. Final web 493 (62 files), tools 209, focused harness-condition checks 56; typecheck/build/dist pass. Final package rerun: 3569 pass across all 12 packages; final web rerun remains 493 /62 files.
@@ -40,7 +40,7 @@ Full file relocations and the only six cache removals are listed in [M5.2 MOVES]
 - Decisions: ADRs 0008 and 0009; approved E1–E8 and five continuation entries dated 2026-10-14 retained. No new owner decision inferred.
 - Deviations: no scope/order extension. Missing USB phone leaves real measurements pending. Source v1 reproduction documented/disabled per allowed fallback. Mapping comparison parked for M7 as allowed. Strict all-JavaScript payload remains over budget.
 - Ideas: only existing mapping-comparison M7 item; none newly added. Stop condition: none.
-- Questions: one existing USB connection request, no implementation input required. Next: commit evidence, push branch and open an unmerged PR. Public launch still requires owner gates and review of open budgets.
+- Questions: one existing USB connection request, no implementation input required. Next: review the open PR/CI and resolve the recorded acceptance limits before public launch. Public launch still requires owner gates and review of open budgets.
 - Phone defaults: provisional 60 fps (optional 120), automatic tier starting medium/DPR 1.5, low 1/high 2. Emulation cannot decide real heat limits; no device connected.
 
 Final phone emulation: 600.225 seconds / 594 samples; first-minute median 60 fps; ten-minute median 60, minimum 58, p05 60; 20 touch trials median 82.90000000596046 ms; no errors, losses or reloads. Package validation ran at nice 15 restricted to cores 8–11 during the phone run; after completion the package runner/model test was permitted cores 0–7. This is not an isolated physical-phone benchmark or a heat measurement.
@@ -54,3 +54,7 @@ Final web rerun: 493 tests /62 files pass (`vitest-close.txt`); all 12 package s
 Desktop Chrome CDP reports no manifest or installability errors (`installability.json`), after installing the static service worker on localhost. This is not an actual Android installation claim. Both emulated orientations and actual low/high GPU results remain separate. Final title app/worker size is 271628 gzip bytes, interpreter JavaScript adds 268476; total 540104 remains over the strict full-JavaScript budget.
 
 No stop condition fired. Source fixes committed as `50817a3` and `00a42aa`; measurements on the first candidate remain labelled by their captured build, with final Compare and bundle checks after cost-batch invalidation. Later patch is view-only; no model/determinism bytes changed.
+
+## Submission
+
+Branch pushed; [PR #25](https://github.com/GauthamCodes/coco-labs/pull/25) open into main, not merged. Implementation `00a42aa`, evidence `6d984fd`; this documentation follow-up records submission. Remote CI jobs were running/queued, not claimed green. Local suites and all measured limits remain as recorded. No release, publication, owner-row completion or protected deletion. End-of-session repository must be clean and synchronized after this documentation commit; exact final SHA is in the user report/Git history.
