@@ -74,6 +74,9 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 | Date | Change | Reason | By |
 | --- | --- | --- | --- |
+| 2026-10-19 | Review decision 1: ≤350 kB gzip covers title-critical app plus worker (271628 bytes at fe9d544); interpreter (268476 bytes) is background work only after title interactivity, at idle or first input. | Keep the title responsive; review adds an explicit paint/idle-or-input gate. | Gautham (review prompt) |
+| 2026-10-19 | Review decision 2: 9.94–10.16 s emulated phone cold start is an accepted emulated near-miss; real Nothing Phone (1) decides Phone. | Try WASM/stdlib preload, streaming compilation and earliest safe worker fetch once; retain all three remeasurement results. | Gautham (review prompt) |
+| 2026-10-19 | Review decision 3: warm-start budget covers the default world; optional terrain starts over 3 s are accepted diagnostics. | Retain optional-world numbers without treating them as default-world failures. | Gautham (review prompt) |
 | 2026-10-14 | E1: Play, Compare, Research; title and About replace the four-mode navigation. | Three purposes, three modes; focus the existing dashboard surface. | Gautham (M5 prompt) |
 | 2026-10-14 | E2: Depot from World Spec v3; browser, Gazebo SDF and Nav2 map; arena retained as Proving Ground (M6). | Author worlds once and retain the reference for existing recordings. | Gautham (M5 prompt) |
 | 2026-10-14 | E3: ROS-shaped model, graph panel, Gazebo worlds, ROS ghosts; own-ROS bridge M7; invariant 2 narrowed to control boundary. | Make “ROS 2 at its core” concrete without per-player cloud cost; keep Stack control behind coco.v1. | Gautham (M5 prompt) |
