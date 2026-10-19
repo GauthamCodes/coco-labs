@@ -14,7 +14,10 @@ const walk = (d: string): string[] => readdirSync(d).flatMap((n) => {
   const p = join(d, n);
   return statSync(p).isDirectory() ? walk(p) : [p];
 });
-const src = walk(join(LAB_WEB, 'src')).map((p) => ({ p, text: readFileSync(p, 'utf-8') }));
+// Python tools import arena_glue and can leave bytecode containing absolute
+// checkout paths. Audit text sources, never interpreter caches or binary assets.
+const src = walk(join(LAB_WEB, 'src')).filter(p => /\.(?:[cm]?[jt]sx?|py|css|html)$/.test(p))
+  .map((p) => ({ p, text: readFileSync(p, 'utf-8') }));
 
 describe('deployment constants', () => {
   it('the base path is the repository name, defined once', () => {

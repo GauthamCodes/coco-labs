@@ -1,0 +1,668 @@
+﻿2026-10-19T00:53:13.7801565Z Current runner version: '2.337.0'
+2026-10-19T00:53:13.7836660Z ##[group]Runner Image Provisioner
+2026-10-19T00:53:13.7837576Z Hosted Compute Agent
+2026-10-19T00:53:13.7838180Z Version: 20261012.601
+2026-10-19T00:53:13.7838917Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-19T00:53:13.7839663Z Build Date: 2026-10-12T17:48:21Z
+2026-10-19T00:53:13.7840377Z Worker ID: {c5a24cc3-ce83-489c-90f6-8a6befd13499}
+2026-10-19T00:53:13.7841152Z Region: canadaeast
+2026-10-19T00:53:13.7841713Z Cloud: Azure
+2026-10-19T00:53:13.7842296Z ##[endgroup]
+2026-10-19T00:53:13.7843837Z ##[group]Operating System
+2026-10-19T00:53:13.7844554Z Ubuntu
+2026-10-19T00:53:13.7845162Z 24.04.5
+2026-10-19T00:53:13.7845689Z LTS
+2026-10-19T00:53:13.7846623Z ##[endgroup]
+2026-10-19T00:53:13.7847213Z ##[group]Runner Image
+2026-10-19T00:53:13.7847814Z Image: ubuntu-24.04
+2026-10-19T00:53:13.7848494Z Version: 20261012.334.1
+2026-10-19T00:53:13.7849773Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-19T00:53:13.7851437Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-19T00:53:13.7852424Z ##[endgroup]
+2026-10-19T00:53:13.7853663Z ##[group]GITHUB_TOKEN Permissions
+2026-10-19T00:53:13.7855809Z Contents: read
+2026-10-19T00:53:13.7856961Z Metadata: read
+2026-10-19T00:53:13.7857604Z ##[endgroup]
+2026-10-19T00:53:13.7859858Z Secret source: Actions
+2026-10-19T00:53:13.7860816Z Cache mode: write
+2026-10-19T00:53:13.7861979Z Prepare workflow directory
+2026-10-19T00:53:13.8264707Z Prepare all required actions
+2026-10-19T00:53:13.8335585Z Getting action download info
+2026-10-19T00:53:14.1115831Z Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-19T00:53:14.2061272Z Download action repository 'actions/setup-python@v7' (SHA:5fda3b95a4ea91299a34e894583c3862153e4b97)
+2026-10-19T00:53:14.3258056Z Download action repository 'actions/setup-node@v7' (SHA:949feb2413d6458794dcd2491c4babbbce0c15c1)
+2026-10-19T00:53:14.7732328Z Download action repository 'actions/upload-pages-artifact@v5' (SHA:fc324d3547104276b827a68afc52ff2a11cc49c9)
+2026-10-19T00:53:15.0483603Z Getting action download info
+2026-10-19T00:53:15.1436576Z Download action repository 'actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f' (SHA:bbbca2ddaa5d8feaa63e36b76fdaad77386f024f)
+2026-10-19T00:53:15.3242998Z Complete job name: lab_web (tools, decoder, site build)
+2026-10-19T00:53:15.4512844Z ##[group]Run actions/checkout@v7
+2026-10-19T00:53:15.4514363Z with:
+2026-10-19T00:53:15.4515272Z   repository: GauthamCodes/coco-labs
+2026-10-19T00:53:15.4526611Z   token: ***
+2026-10-19T00:53:15.4527749Z   ssh-strict: true
+2026-10-19T00:53:15.4529082Z   ssh-user: git
+2026-10-19T00:53:15.4530359Z   persist-credentials: true
+2026-10-19T00:53:15.4531501Z   clean: true
+2026-10-19T00:53:15.4532457Z   sparse-checkout-cone-mode: true
+2026-10-19T00:53:15.4533567Z   fetch-depth: 1
+2026-10-19T00:53:15.4534472Z   fetch-tags: false
+2026-10-19T00:53:15.4535439Z   show-progress: true
+2026-10-19T00:53:15.4536540Z   lfs: false
+2026-10-19T00:53:15.4537395Z   submodules: false
+2026-10-19T00:53:15.4538316Z   set-safe-directory: true
+2026-10-19T00:53:15.4539364Z   allow-unsafe-pr-checkout: false
+2026-10-19T00:53:15.4540831Z ##[endgroup]
+2026-10-19T00:53:15.5622213Z Syncing repository: GauthamCodes/coco-labs
+2026-10-19T00:53:15.5626333Z ##[group]Getting Git version info
+2026-10-19T00:53:15.5627965Z Working directory is '/home/runner/work/coco-labs/coco-labs'
+2026-10-19T00:53:15.5631108Z [command]/usr/bin/git version
+2026-10-19T00:53:15.5711379Z git version 2.55.0
+2026-10-19T00:53:15.5739361Z ##[endgroup]
+2026-10-19T00:53:15.5754430Z Temporarily overriding HOME='/home/runner/work/_temp/b71f57fc-ccde-4962-be35-3232ba0c44aa' before making global git config changes
+2026-10-19T00:53:15.5759881Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-19T00:53:15.5763982Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/coco-labs/coco-labs
+2026-10-19T00:53:15.5815322Z Deleting the contents of '/home/runner/work/coco-labs/coco-labs'
+2026-10-19T00:53:15.5819889Z ##[group]Determining repository object format
+2026-10-19T00:53:15.5822904Z ##[endgroup]
+2026-10-19T00:53:15.5825721Z ##[group]Initializing the repository
+2026-10-19T00:53:15.5828688Z [command]/usr/bin/git init /home/runner/work/coco-labs/coco-labs
+2026-10-19T00:53:15.5979681Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-19T00:53:15.5994564Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-19T00:53:15.5998319Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-19T00:53:15.6000975Z hint: call:
+2026-10-19T00:53:15.6002404Z hint:
+2026-10-19T00:53:15.6004121Z hint: 	git config --global init.defaultBranch <name>
+2026-10-19T00:53:15.6006446Z hint:
+2026-10-19T00:53:15.6008651Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-19T00:53:15.6020454Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-19T00:53:15.6023075Z hint:
+2026-10-19T00:53:15.6024464Z hint: 	git branch -m <name>
+2026-10-19T00:53:15.6026359Z hint:
+2026-10-19T00:53:15.6029313Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-19T00:53:15.6033802Z Initialized empty Git repository in /home/runner/work/coco-labs/coco-labs/.git/
+2026-10-19T00:53:15.6039978Z [command]/usr/bin/git remote add origin https://github.com/GauthamCodes/coco-labs
+2026-10-19T00:53:15.6077435Z ##[endgroup]
+2026-10-19T00:53:15.6079903Z ##[group]Disabling automatic garbage collection
+2026-10-19T00:53:15.6081751Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-19T00:53:15.6133927Z ##[endgroup]
+2026-10-19T00:53:15.6136326Z ##[group]Setting up auth
+2026-10-19T00:53:15.6138104Z Removing SSH command configuration
+2026-10-19T00:53:15.6140680Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-19T00:53:15.6179301Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-19T00:53:15.6594363Z Removing HTTP extra header
+2026-10-19T00:53:15.6600610Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-19T00:53:15.6640811Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-19T00:53:15.6862327Z Removing includeIf entries pointing to credentials config files
+2026-10-19T00:53:15.6867844Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-19T00:53:15.6905153Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-19T00:53:15.7132706Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-ef932bc4-9c6e-4cac-95d2-98848b310ee6.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-19T00:53:15.7173121Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/coco-labs/coco-labs/.git.path /home/runner/work/_temp/git-credentials-ef932bc4-9c6e-4cac-95d2-98848b310ee6.config
+2026-10-19T00:53:15.7208118Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/coco-labs/coco-labs/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-ef932bc4-9c6e-4cac-95d2-98848b310ee6.config
+2026-10-19T00:53:15.7248152Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-ef932bc4-9c6e-4cac-95d2-98848b310ee6.config
+2026-10-19T00:53:15.7287525Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-ef932bc4-9c6e-4cac-95d2-98848b310ee6.config
+2026-10-19T00:53:15.7321930Z ##[endgroup]
+2026-10-19T00:53:15.7324507Z ##[group]Fetching the repository
+2026-10-19T00:53:15.7331456Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +e1b4c6fa28bf9a20b6eadb887710581dc6727e34:refs/remotes/pull/25/merge
+2026-10-19T00:53:20.4521573Z From https://github.com/GauthamCodes/coco-labs
+2026-10-19T00:53:20.4523523Z  * [new ref]         e1b4c6fa28bf9a20b6eadb887710581dc6727e34 -> pull/25/merge
+2026-10-19T00:53:20.4526373Z ##[endgroup]
+2026-10-19T00:53:20.4527290Z ##[group]Determining the checkout info
+2026-10-19T00:53:20.4528008Z ##[endgroup]
+2026-10-19T00:53:20.4531734Z [command]/usr/bin/git sparse-checkout disable
+2026-10-19T00:53:20.4590144Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-19T00:53:20.4625325Z ##[group]Checking out the ref
+2026-10-19T00:53:20.4629970Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/25/merge
+2026-10-19T00:53:21.4456164Z Note: switching to 'refs/remotes/pull/25/merge'.
+2026-10-19T00:53:21.4456643Z 
+2026-10-19T00:53:21.4456904Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-19T00:53:21.4457481Z changes and commit them, and you can discard any commits you make in this
+2026-10-19T00:53:21.4458051Z state without impacting any branches by switching back to a branch.
+2026-10-19T00:53:21.4458394Z 
+2026-10-19T00:53:21.4458723Z If you want to create a new branch to retain commits you create, you may
+2026-10-19T00:53:21.4459234Z do so (now or later) by using -c with the switch command. Example:
+2026-10-19T00:53:21.4459518Z 
+2026-10-19T00:53:21.4459672Z   git switch -c <new-branch-name>
+2026-10-19T00:53:21.4459877Z 
+2026-10-19T00:53:21.4460012Z Or undo this operation with:
+2026-10-19T00:53:21.4460207Z 
+2026-10-19T00:53:21.4460318Z   git switch -
+2026-10-19T00:53:21.4460496Z 
+2026-10-19T00:53:21.4460780Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-19T00:53:21.4461173Z 
+2026-10-19T00:53:21.4461556Z HEAD is now at e1b4c6f Merge fe9d544faafa13f0bebe226cd0233d0dbde4a03a into 6c286b7c51c9b550bfb90cdf96e2f53ba3b31cf2
+2026-10-19T00:53:21.4477470Z ##[endgroup]
+2026-10-19T00:53:21.4538002Z [command]/usr/bin/git log -1 --format=%H
+2026-10-19T00:53:21.4589079Z e1b4c6fa28bf9a20b6eadb887710581dc6727e34
+2026-10-19T00:53:21.5007004Z ##[group]Run actions/setup-python@v7
+2026-10-19T00:53:21.5007542Z with:
+2026-10-19T00:53:21.5007924Z   python-version: 3.12
+2026-10-19T00:53:21.5008324Z   check-latest: false
+2026-10-19T00:53:21.5011989Z   token: ***
+2026-10-19T00:53:21.5012259Z   update-environment: true
+2026-10-19T00:53:21.5012538Z   allow-prereleases: false
+2026-10-19T00:53:21.5012831Z   freethreaded: false
+2026-10-19T00:53:21.5013079Z ##[endgroup]
+2026-10-19T00:53:21.6277510Z ##[group]Installed versions
+2026-10-19T00:53:21.6368867Z Successfully set up CPython (3.12.15)
+2026-10-19T00:53:21.6369632Z ##[endgroup]
+2026-10-19T00:53:21.6558468Z ##[group]Run python -m venv "$RUNNER_TEMP/venv"
+2026-10-19T00:53:21.6559165Z [36;1mpython -m venv "$RUNNER_TEMP/venv"[0m
+2026-10-19T00:53:21.6559731Z [36;1mcp -r coco_lab "$RUNNER_TEMP/coco_lab_src"[0m
+2026-10-19T00:53:21.6560622Z [36;1m"$RUNNER_TEMP/venv/bin/pip" install "$RUNNER_TEMP/coco_lab_src" -r coco_lab/requirements-test.txt[0m
+2026-10-19T00:53:21.6953735Z shell: /usr/bin/bash -e {0}
+2026-10-19T00:53:21.6954115Z env:
+2026-10-19T00:53:21.6954450Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T00:53:21.6955030Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-19T00:53:21.6955562Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T00:53:21.6956281Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T00:53:21.6956782Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T00:53:21.6957276Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-19T00:53:21.6957745Z ##[endgroup]
+2026-10-19T00:53:24.9989831Z Processing /home/runner/work/_temp/coco_lab_src
+2026-10-19T00:53:25.0004383Z   Installing build dependencies: started
+2026-10-19T00:53:26.5965751Z   Installing build dependencies: finished with status 'done'
+2026-10-19T00:53:26.5973326Z   Getting requirements to build wheel: started
+2026-10-19T00:53:27.6050696Z   Getting requirements to build wheel: finished with status 'done'
+2026-10-19T00:53:27.6063482Z   Preparing metadata (pyproject.toml): started
+2026-10-19T00:53:27.7964838Z   Preparing metadata (pyproject.toml): finished with status 'done'
+2026-10-19T00:53:28.3875161Z Collecting hypothesis==6.98.15 (from -r coco_lab/requirements-test.txt (line 7))
+2026-10-19T00:53:28.4842890Z   Downloading hypothesis-6.98.15-py3-none-any.whl.metadata (6.0 kB)
+2026-10-19T00:53:28.5388412Z Collecting networkx==2.8.8 (from -r coco_lab/requirements-test.txt (line 8))
+2026-10-19T00:53:28.5650687Z   Downloading networkx-2.8.8-py3-none-any.whl.metadata (5.1 kB)
+2026-10-19T00:53:28.6263606Z Collecting pytest==7.4.4 (from -r coco_lab/requirements-test.txt (line 9))
+2026-10-19T00:53:28.6526833Z   Downloading pytest-7.4.4-py3-none-any.whl.metadata (7.9 kB)
+2026-10-19T00:53:28.7131591Z Collecting pyyaml==6.0.1 (from -r coco_lab/requirements-test.txt (line 11))
+2026-10-19T00:53:28.7398705Z   Downloading PyYAML-6.0.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+2026-10-19T00:53:28.7804203Z Collecting attrs>=22.2.0 (from hypothesis==6.98.15->-r coco_lab/requirements-test.txt (line 7))
+2026-10-19T00:53:28.8068442Z   Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+2026-10-19T00:53:28.8447910Z Collecting sortedcontainers<3.0.0,>=2.1.0 (from hypothesis==6.98.15->-r coco_lab/requirements-test.txt (line 7))
+2026-10-19T00:53:28.8717240Z   Downloading sortedcontainers-2.4.0-py2.py3-none-any.whl.metadata (10 kB)
+2026-10-19T00:53:28.9086278Z Collecting iniconfig (from pytest==7.4.4->-r coco_lab/requirements-test.txt (line 9))
+2026-10-19T00:53:28.9343934Z   Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+2026-10-19T00:53:28.9739994Z Collecting packaging (from pytest==7.4.4->-r coco_lab/requirements-test.txt (line 9))
+2026-10-19T00:53:28.9999607Z   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+2026-10-19T00:53:29.0360701Z Collecting pluggy<2.0,>=0.12 (from pytest==7.4.4->-r coco_lab/requirements-test.txt (line 9))
+2026-10-19T00:53:29.0623988Z   Downloading pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+2026-10-19T00:53:29.0981796Z Downloading hypothesis-6.98.15-py3-none-any.whl (449 kB)
+2026-10-19T00:53:29.2295639Z Downloading networkx-2.8.8-py3-none-any.whl (2.0 MB)
+2026-10-19T00:53:29.3322934Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 18.7 MB/s eta 0:00:00
+2026-10-19T00:53:29.3579750Z Downloading pytest-7.4.4-py3-none-any.whl (325 kB)
+2026-10-19T00:53:29.3876435Z Downloading PyYAML-6.0.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (724 kB)
+2026-10-19T00:53:29.3964560Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 725.0/725.0 kB 85.5 MB/s eta 0:00:00
+2026-10-19T00:53:29.4223574Z Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+2026-10-19T00:53:29.4506078Z Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
+2026-10-19T00:53:29.4786520Z Downloading sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
+2026-10-19T00:53:29.5061308Z Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+2026-10-19T00:53:29.5340039Z Downloading packaging-26.3-py3-none-any.whl (129 kB)
+2026-10-19T00:53:29.5536871Z Building wheels for collected packages: coco_lab
+2026-10-19T00:53:29.5545945Z   Building wheel for coco_lab (pyproject.toml): started
+2026-10-19T00:53:29.8121764Z   Building wheel for coco_lab (pyproject.toml): finished with status 'done'
+2026-10-19T00:53:29.8129642Z   Created wheel for coco_lab: filename=coco_lab-0.2.0-py3-none-any.whl size=278878 sha256=7902c470dd3e63eb553b6fd613e81aa5a1986d530d59ac0667a8f18e90c35407
+2026-10-19T00:53:29.8131797Z   Stored in directory: /tmp/pip-ephem-wheel-cache-5aj7cao9/wheels/79/cf/97/b7d161c10fe662cba103a815c292bf83570c21d048776515a6
+2026-10-19T00:53:29.8150762Z Successfully built coco_lab
+2026-10-19T00:53:29.8344513Z Installing collected packages: sortedcontainers, pyyaml, pluggy, packaging, networkx, iniconfig, coco_lab, attrs, pytest, hypothesis
+2026-10-19T00:53:31.8734788Z Successfully installed attrs-26.1.0 coco_lab-0.2.0 hypothesis-6.98.15 iniconfig-2.3.1 networkx-2.8.8 packaging-26.3 pluggy-1.7.0 pytest-7.4.4 pyyaml-6.0.1 sortedcontainers-2.4.0
+2026-10-19T00:53:32.0485536Z 
+2026-10-19T00:53:32.0486018Z [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+2026-10-19T00:53:32.0487311Z [notice] To update, run: python -m pip install --upgrade pip
+2026-10-19T00:53:32.1398726Z ##[group]Run "$RUNNER_TEMP/venv/bin/python" -P -m pytest -q -p no:cacheprovider lab_web/tools \
+2026-10-19T00:53:32.1399481Z [36;1m"$RUNNER_TEMP/venv/bin/python" -P -m pytest -q -p no:cacheprovider lab_web/tools \[0m
+2026-10-19T00:53:32.1399980Z [36;1m  --junitxml="$RUNNER_TEMP/tools.xml"[0m
+2026-10-19T00:53:32.1400337Z [36;1mpython - "$RUNNER_TEMP/tools.xml" <<'PY'[0m
+2026-10-19T00:53:32.1400715Z [36;1mimport sys, xml.etree.ElementTree as ET[0m
+2026-10-19T00:53:32.1401070Z [36;1mr = ET.parse(sys.argv[1]).getroot()[0m
+2026-10-19T00:53:32.1401456Z [36;1ms = r if r.tag == 'testsuite' else next(r.iter('testsuite'))[0m
+2026-10-19T00:53:32.1401923Z [36;1mtotal, skipped = int(s.get('tests')), int(s.get('skipped', 0))[0m
+2026-10-19T00:53:32.1402399Z [36;1mprint(f'lab_web/tools: {total} collected, {skipped} skipped')[0m
+2026-10-19T00:53:32.1402822Z [36;1msys.exit(1 if total < 58 or skipped else 0)[0m
+2026-10-19T00:53:32.1403145Z [36;1mPY[0m
+2026-10-19T00:53:32.1465873Z shell: /usr/bin/bash -e {0}
+2026-10-19T00:53:32.1466291Z env:
+2026-10-19T00:53:32.1466586Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T00:53:32.1467053Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-19T00:53:32.1467512Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T00:53:32.1467933Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T00:53:32.1468364Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T00:53:32.1468776Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-19T00:53:32.1469128Z ##[endgroup]
+2026-10-19T00:55:22.6551285Z ........................................................................ [ 33%]
+2026-10-19T00:57:44.4767459Z ........................................................................ [ 67%]
+2026-10-19T01:02:20.5304782Z .....................................................................    [100%]
+2026-10-19T01:02:20.5306738Z ------------ generated xml file: /home/runner/work/_temp/tools.xml -------------
+2026-10-19T01:02:20.5307571Z 213 passed in 527.98s (0:08:47)
+2026-10-19T01:02:20.6034227Z lab_web/tools: 213 collected, 0 skipped
+2026-10-19T01:02:20.6102023Z ##[group]Run $RUNNER_TEMP/venv/bin/python lab_web/tools/build_catalog.py
+2026-10-19T01:02:20.6102595Z [36;1m$RUNNER_TEMP/venv/bin/python lab_web/tools/build_catalog.py[0m
+2026-10-19T01:02:20.6164546Z shell: /usr/bin/bash -e {0}
+2026-10-19T01:02:20.6164797Z env:
+2026-10-19T01:02:20.6165060Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:02:20.6165508Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-19T01:02:20.6166076Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:02:20.6166455Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:02:20.6166828Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:02:20.6167202Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-19T01:02:20.6167519Z ##[endgroup]
+2026-10-19T01:02:36.7022731Z 
+2026-10-19T01:02:36.7024711Z [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+2026-10-19T01:02:36.7025448Z [notice] To update, run: python -m pip install --upgrade pip
+2026-10-19T01:05:44.6386577Z astar_open                   glass-box         178 events     11520 B  reproduced: all 178 events identical
+2026-10-19T01:05:44.6388069Z dijkstra_cost_field_gz       glass-box         747 events      7007 B  reproduced: all 747 events identical
+2026-10-19T01:05:44.6389094Z weighted_astar_greedy_trap   glass-box         405 events     22685 B  reproduced: all 405 events identical
+2026-10-19T01:05:44.6390077Z bfs_no_path                  glass-box         750 events     39535 B  reproduced: all 750 events identical
+2026-10-19T01:05:44.6390982Z astar_turn_trap_heading      glass-box         130 events      9197 B  reproduced: all 130 events identical
+2026-10-19T01:05:44.6392180Z lab1c_astar                  recorded-run    18660 events    336558 B  not replayable: a recorded-run bundle does not record every input of its search
+2026-10-19T01:05:44.6393623Z lab1c_dijkstra               recorded-run    71900 events    463733 B  not replayable: a recorded-run bundle does not record every input of its search
+2026-10-19T01:05:44.6395033Z lab1c_greedy                 recorded-run     4368 events    109089 B  not replayable: a recorded-run bundle does not record every input of its search
+2026-10-19T01:05:44.6396409Z arena_0_10m                  glass-box       70319 events    383890 B  reproduced: all 70319 events identical
+2026-10-19T01:05:44.6397347Z arena_native                 glass-box      283378 events   1444028 B  reproduced: all 283378 events identical
+2026-10-19T01:05:44.6398271Z costmap_0_10m                glass-box        4693 events     74920 B  reproduced: all 4693 events identical
+2026-10-19T01:05:44.6399201Z loc_tracking                 sketch        2 runs    805908 B  reproduced byte for byte (locbundle.replay_check)
+2026-10-19T01:05:44.6400154Z loc_kidnap                   sketch        3 runs   1790441 B  reproduced byte for byte (locbundle.replay_check)
+2026-10-19T01:05:44.6401076Z loc_global                   sketch        2 runs   1967014 B  reproduced byte for byte (locbundle.replay_check)
+2026-10-19T01:05:44.6402023Z loc_twins                    sketch        2 runs    505367 B  reproduced byte for byte (locbundle.replay_check)
+2026-10-19T01:05:44.6402987Z loc_arena_kidnap             sketch        3 runs   4171746 B  reproduced byte for byte (locbundle.replay_check)
+2026-10-19T01:05:44.6404026Z map_loop                     sketch        6 runs    495168 B  reproduced and re-scored byte for byte (slambundle.replay_check)
+2026-10-19T01:05:44.6405156Z map_corridor                 sketch        6 runs    527931 B  reproduced and re-scored byte for byte (slambundle.replay_check)
+2026-10-19T01:05:44.6406479Z map_landmarks                sketch        6 runs    696971 B  reproduced and re-scored byte for byte (slambundle.replay_check)
+2026-10-19T01:05:44.6407613Z map_arena                    challenge     4 runs    682803 B  reproduced and re-scored byte for byte (slambundle.replay_check)
+2026-10-19T01:05:44.6409019Z s1_tour                      replay        6 runs   2719666 B  reproduced and re-scored byte for byte (slambundle.replay_check)
+2026-10-19T01:05:44.6410107Z search_arena                 sketch        7 runs      9410 B  reproduced byte for byte (searchbundle.replay_check)
+2026-10-19T01:05:44.6411075Z p05_matrix                   replay        16 runs     44857 B  reproduced byte for byte (searchbundle.replay_check)
+2026-10-19T01:05:44.6411997Z sketch_0                     sketch        replan        14054 B  reproduced byte for byte (movebundle.replay_replan)
+2026-10-19T01:05:44.6412898Z sketch_1                     sketch        replan        12099 B  reproduced byte for byte (movebundle.replay_replan)
+2026-10-19T01:05:44.6413789Z sketch_2                     sketch        replan         8712 B  reproduced byte for byte (movebundle.replay_replan)
+2026-10-19T01:05:44.6414686Z arena_c                      glass-box     replan        55336 B  reproduced byte for byte (movebundle.replay_replan)
+2026-10-19T01:05:44.6415791Z crossing                     replay        15 runs   1171833 B  every metric recomputed from the recording (movebundle.replay_drive)
+2026-10-19T01:05:44.6417272Z mislocalised                 replay        9 runs     29626 B  every metric recomputed from the recording (movebundle.replay_drive)
+2026-10-19T01:05:44.6418734Z oncoming                     replay        15 runs   1036536 B  every metric recomputed from the recording (movebundle.replay_drive)
+2026-10-19T01:05:44.6420008Z static_room                  replay        15 runs   1668760 B  every metric recomputed from the recording (movebundle.replay_drive)
+2026-10-19T01:05:44.6421487Z wheel: {'path': 'py/coco_lab-0.2.0-py3-none-any.whl', 'sha256': '4aa5ecb420e8ed850a4eaae8239d031dbcac69ab639381919f5f38c7376e5e4d', 'bytes': 278878}
+2026-10-19T01:05:44.6638361Z ##[group]Run actions/setup-node@v7
+2026-10-19T01:05:44.6638644Z with:
+2026-10-19T01:05:44.6638850Z   node-version-file: lab_web/.nvmrc
+2026-10-19T01:05:44.6639103Z   cache: npm
+2026-10-19T01:05:44.6639345Z   cache-dependency-path: lab_web/package-lock.json
+2026-10-19T01:05:44.6639656Z   check-latest: false
+2026-10-19T01:05:44.6642170Z   token: ***
+2026-10-19T01:05:44.6642403Z   package-manager-cache: true
+2026-10-19T01:05:44.6642642Z env:
+2026-10-19T01:05:44.6642893Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:05:44.6643318Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-19T01:05:44.6643745Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:05:44.6644124Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:05:44.6644498Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:05:44.6644880Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-19T01:05:44.6645227Z ##[endgroup]
+2026-10-19T01:05:44.7900703Z Node version file is not JSON file
+2026-10-19T01:05:44.7905768Z Node version file is not TOML file
+2026-10-19T01:05:44.7906720Z Resolved lab_web/.nvmrc as 24.21.0
+2026-10-19T01:05:44.7935756Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+2026-10-19T01:05:45.5174246Z ##[group]Environment details
+2026-10-19T01:05:46.9778790Z node: v24.21.0
+2026-10-19T01:05:46.9779079Z npm: 11.19.0
+2026-10-19T01:05:46.9779280Z yarn: 1.22.22
+2026-10-19T01:05:46.9779771Z ##[endgroup]
+2026-10-19T01:05:46.9799115Z [command]/opt/hostedtoolcache/node/24.21.0/x64/bin/npm config get cache
+2026-10-19T01:05:47.2471384Z /home/runner/.npm
+2026-10-19T01:05:47.3840303Z npm cache is not found
+2026-10-19T01:05:47.3961119Z ##[group]Run npm ci
+2026-10-19T01:05:47.3961476Z [36;1mnpm ci[0m
+2026-10-19T01:05:47.4064145Z shell: /usr/bin/bash -e {0}
+2026-10-19T01:05:47.4064640Z env:
+2026-10-19T01:05:47.4065009Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:05:47.4065598Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-19T01:05:47.4066487Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:05:47.4082786Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:05:47.4083270Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:05:47.4083675Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-19T01:05:47.4084076Z ##[endgroup]
+2026-10-19T01:05:53.3481907Z 
+2026-10-19T01:05:53.3494413Z added 75 packages in 6s
+2026-10-19T01:05:53.4096506Z ##[group]Run sudo apt-get update -q
+2026-10-19T01:05:53.4096882Z [36;1msudo apt-get update -q[0m
+2026-10-19T01:05:53.4097291Z [36;1msudo apt-get install -y --no-install-recommends protobuf-compiler[0m
+2026-10-19T01:05:53.4097800Z [36;1mpython3 coco_schemas/scripts/generate.py --lang ts --check[0m
+2026-10-19T01:05:53.4164032Z shell: /usr/bin/bash -e {0}
+2026-10-19T01:05:53.4164281Z env:
+2026-10-19T01:05:53.4164544Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:05:53.4164992Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-19T01:05:53.4165438Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:05:53.4165826Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:05:53.4166495Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:05:53.4167073Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-19T01:05:53.4167391Z ##[endgroup]
+2026-10-19T01:05:53.5069045Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-19T01:05:53.5430289Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-10-19T01:05:53.5488390Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-10-19T01:05:53.5546685Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-10-19T01:05:53.5563985Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-10-19T01:05:53.6455678Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-10-19T01:05:53.7128087Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1397 kB]
+2026-10-19T01:05:53.7268748Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [308 kB]
+2026-10-19T01:05:53.7327063Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1704 kB]
+2026-10-19T01:05:53.7472275Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [342 kB]
+2026-10-19T01:05:53.7517130Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1805 kB]
+2026-10-19T01:05:53.7607443Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [411 kB]
+2026-10-19T01:05:53.8448578Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1144 kB]
+2026-10-19T01:05:53.8488800Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [231 kB]
+2026-10-19T01:05:53.8517709Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1222 kB]
+2026-10-19T01:05:53.8577370Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [246 kB]
+2026-10-19T01:05:53.9047450Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1713 kB]
+2026-10-19T01:05:53.9172798Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [392 kB]
+2026-10-19T01:05:54.0456462Z Get:19 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [557 kB]
+2026-10-19T01:05:54.2151111Z Get:20 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [618 kB]
+2026-10-19T01:05:54.3257767Z Get:21 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [12.4 kB]
+2026-10-19T01:05:56.9432886Z Fetched 12.5 MB in 1s (9350 kB/s)
+2026-10-19T01:05:57.8655616Z Reading package lists...
+2026-10-19T01:05:57.8956512Z Reading package lists...
+2026-10-19T01:05:58.0880778Z Building dependency tree...
+2026-10-19T01:05:58.0889475Z Reading state information...
+2026-10-19T01:05:58.2305069Z The following additional packages will be installed:
+2026-10-19T01:05:58.2308415Z   libprotobuf32t64 libprotoc32t64
+2026-10-19T01:05:58.2313544Z Suggested packages:
+2026-10-19T01:05:58.2313967Z   protobuf-mode-el
+2026-10-19T01:05:58.2314299Z Recommended packages:
+2026-10-19T01:05:58.2314545Z   libprotobuf-dev
+2026-10-19T01:05:58.2537050Z The following NEW packages will be installed:
+2026-10-19T01:05:58.2540366Z   libprotobuf32t64 libprotoc32t64 protobuf-compiler
+2026-10-19T01:05:58.2715212Z 0 upgraded, 3 newly installed, 0 to remove and 44 not upgraded.
+2026-10-19T01:05:58.2716207Z Need to get 1635 kB of archives.
+2026-10-19T01:05:58.2716984Z After this operation, 5530 kB of additional disk space will be used.
+2026-10-19T01:05:58.2717503Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-19T01:05:58.3151068Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libprotobuf32t64 amd64 3.21.12-8.2ubuntu0.3 [923 kB]
+2026-10-19T01:05:58.3546898Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libprotoc32t64 amd64 3.21.12-8.2ubuntu0.3 [683 kB]
+2026-10-19T01:05:58.3901494Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 protobuf-compiler amd64 3.21.12-8.2ubuntu0.3 [29.0 kB]
+2026-10-19T01:05:58.6448111Z Fetched 1635 kB in 0s (12.5 MB/s)
+2026-10-19T01:05:58.6667991Z Selecting previously unselected package libprotobuf32t64:amd64.
+2026-10-19T01:05:58.7008071Z (Reading database ... 
+2026-10-19T01:05:58.7008694Z (Reading database ... 5%
+2026-10-19T01:05:58.7009308Z (Reading database ... 10%
+2026-10-19T01:05:58.7009855Z (Reading database ... 15%
+2026-10-19T01:05:58.7010174Z (Reading database ... 20%
+2026-10-19T01:05:58.7010630Z (Reading database ... 25%
+2026-10-19T01:05:58.7011091Z (Reading database ... 30%
+2026-10-19T01:05:58.7011562Z (Reading database ... 35%
+2026-10-19T01:05:58.7012024Z (Reading database ... 40%
+2026-10-19T01:05:58.7012330Z (Reading database ... 45%
+2026-10-19T01:05:58.7012600Z (Reading database ... 50%
+2026-10-19T01:05:58.7066296Z (Reading database ... 55%
+2026-10-19T01:05:58.8455035Z (Reading database ... 60%
+2026-10-19T01:05:59.0372986Z (Reading database ... 65%
+2026-10-19T01:05:59.2444060Z (Reading database ... 70%
+2026-10-19T01:05:59.4449496Z (Reading database ... 75%
+2026-10-19T01:05:59.5925879Z (Reading database ... 80%
+2026-10-19T01:05:59.8030127Z (Reading database ... 85%
+2026-10-19T01:05:59.9657842Z (Reading database ... 90%
+2026-10-19T01:06:00.1571325Z (Reading database ... 95%
+2026-10-19T01:06:00.1572121Z (Reading database ... 100%
+2026-10-19T01:06:00.1572849Z (Reading database ... 203540 files and directories currently installed.)
+2026-10-19T01:06:00.1618264Z Preparing to unpack .../libprotobuf32t64_3.21.12-8.2ubuntu0.3_amd64.deb ...
+2026-10-19T01:06:00.1653339Z Unpacking libprotobuf32t64:amd64 (3.21.12-8.2ubuntu0.3) ...
+2026-10-19T01:06:00.2076263Z Selecting previously unselected package libprotoc32t64:amd64.
+2026-10-19T01:06:00.2201841Z Preparing to unpack .../libprotoc32t64_3.21.12-8.2ubuntu0.3_amd64.deb ...
+2026-10-19T01:06:00.2208990Z Unpacking libprotoc32t64:amd64 (3.21.12-8.2ubuntu0.3) ...
+2026-10-19T01:06:00.2552390Z Selecting previously unselected package protobuf-compiler.
+2026-10-19T01:06:00.2678923Z Preparing to unpack .../protobuf-compiler_3.21.12-8.2ubuntu0.3_amd64.deb ...
+2026-10-19T01:06:00.2686435Z Unpacking protobuf-compiler (3.21.12-8.2ubuntu0.3) ...
+2026-10-19T01:06:00.3112340Z Setting up libprotobuf32t64:amd64 (3.21.12-8.2ubuntu0.3) ...
+2026-10-19T01:06:00.3137408Z Setting up libprotoc32t64:amd64 (3.21.12-8.2ubuntu0.3) ...
+2026-10-19T01:06:00.3158273Z Setting up protobuf-compiler (3.21.12-8.2ubuntu0.3) ...
+2026-10-19T01:06:00.3179750Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-10-19T01:06:00.3201557Z Not building database; man-db/auto-update is not 'true'.
+2026-10-19T01:06:00.3212671Z Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+2026-10-19T01:06:01.0493150Z 
+2026-10-19T01:06:01.0493940Z Running kernel seems to be up-to-date.
+2026-10-19T01:06:01.0494354Z 
+2026-10-19T01:06:01.0494625Z No services need to be restarted.
+2026-10-19T01:06:01.0494952Z 
+2026-10-19T01:06:01.0495204Z No containers need to be restarted.
+2026-10-19T01:06:01.0495552Z 
+2026-10-19T01:06:01.0495872Z No user sessions are running outdated binaries.
+2026-10-19T01:06:01.0496513Z 
+2026-10-19T01:06:01.0497362Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-10-19T01:06:02.4326606Z generated code is current
+2026-10-19T01:06:02.4417512Z ##[group]Run node --version && npm --version
+2026-10-19T01:06:02.4417888Z [36;1mnode --version && npm --version[0m
+2026-10-19T01:06:02.4418172Z [36;1mnpm run typecheck[0m
+2026-10-19T01:06:02.4418482Z [36;1m# the Arena runtime test boots Pyodide on these (M1.5)[0m
+2026-10-19T01:06:02.4418837Z [36;1mnpm run arena-assets[0m
+2026-10-19T01:06:02.4419085Z [36;1mnpm test[0m
+2026-10-19T01:06:02.4482312Z shell: /usr/bin/bash -e {0}
+2026-10-19T01:06:02.4482559Z env:
+2026-10-19T01:06:02.4482822Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:06:02.4483289Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-19T01:06:02.4483733Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:06:02.4484311Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:06:02.4484691Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-19T01:06:02.4485110Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-19T01:06:02.4485442Z ##[endgroup]
+2026-10-19T01:06:02.4599700Z v24.21.0
+2026-10-19T01:06:02.5384783Z 11.19.0
+2026-10-19T01:06:02.6488140Z 
+2026-10-19T01:06:02.6488710Z > coco-lab-web@0.1.0 typecheck
+2026-10-19T01:06:02.6489423Z > tsc --noEmit -p .
+2026-10-19T01:06:02.6489704Z 
+2026-10-19T01:06:03.6156196Z 
+2026-10-19T01:06:03.6157111Z > coco-lab-web@0.1.0 arena-assets
+2026-10-19T01:06:03.6158129Z > node tools/build_arena_assets.mjs && node tools/build_attract.mjs && node tools/build_v2_runs.mjs
+2026-10-19T01:06:03.6158726Z 
+2026-10-19T01:06:03.9735718Z arena assets: coco_lab.zip 118645 B (30 files), stdlib 783358 B (144 entries, full 2545637 B), pyodide 314.0.7
+2026-10-19T01:06:14.7327614Z attract.mcap: 690319 B, 517 ticks, 34974 plan events, chain 83d26d442bb5
+2026-10-19T01:06:15.3924402Z astar_open: 15469 B, 5 messages, round trip exact
+2026-10-19T01:06:15.4277380Z dijkstra_cost_field_gz: 20208 B, 5 messages, round trip exact
+2026-10-19T01:06:15.4394485Z weighted_astar_greedy_trap: 17339 B, 5 messages, round trip exact
+2026-10-19T01:06:15.4519046Z bfs_no_path: 17925 B, 5 messages, round trip exact
+2026-10-19T01:06:15.4591520Z astar_turn_trap_heading: 15049 B, 5 messages, round trip exact
+2026-10-19T01:06:15.7871612Z lab1c_astar: 452282 B, 1116 messages, round trip exact
+2026-10-19T01:06:16.3651634Z lab1c_dijkstra: 579619 B, 1129 messages, round trip exact
+2026-10-19T01:06:16.5066134Z lab1c_greedy: 163830 B, 907 messages, round trip exact
+2026-10-19T01:06:16.9437438Z arena_0_10m: 434618 B, 13 messages, round trip exact
+2026-10-19T01:06:18.4385652Z arena_native: 1495767 B, 39 messages, round trip exact
+2026-10-19T01:06:18.5040794Z costmap_0_10m: 99071 B, 5 messages, round trip exact
+2026-10-19T01:06:19.3251141Z lab5 crossing: 15 runs, round trip exact
+2026-10-19T01:06:19.4557392Z lab5 mislocalised: 9 runs, round trip exact
+2026-10-19T01:06:20.0524570Z lab5 oncoming: 15 runs, round trip exact
+2026-10-19T01:06:20.8335549Z lab5 static_room: 15 runs, round trip exact
+2026-10-19T01:06:20.8809874Z casefiles: 100 copied, 40019390 B, the map once
+2026-10-19T01:06:20.8813654Z missions: 7, every replay link names a run here
+2026-10-19T01:06:21.0567868Z 
+2026-10-19T01:06:21.0568495Z > coco-lab-web@0.1.0 test
+2026-10-19T01:06:21.0569045Z > vitest run
+2026-10-19T01:06:21.0569283Z 
+2026-10-19T01:06:21.3628298Z 
+2026-10-19T01:06:21.3632093Z [1m[30m[46m RUN [49m[39m[22m [36mv5.0.2 [39m[90m/home/runner/work/coco-labs/coco-labs/lab_web[39m
+2026-10-19T01:06:21.3632890Z 
+2026-10-19T01:06:21.7011837Z  [32m✓[39m test/live.test.ts [2m([22m[2m20 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+2026-10-19T01:06:21.7674261Z  [32m✓[39m test/live_gate.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 65[2mms[22m[39m
+2026-10-19T01:06:21.8087426Z  [32m✓[39m test/live_status.test.ts [2m([22m[2m40 tests[22m[2m)[22m[32m 48[2mms[22m[39m
+2026-10-19T01:06:22.1098190Z  [32m✓[39m test/lens_registry.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+2026-10-19T01:06:23.1868724Z  [32m✓[39m test/session.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 919[2mms[22m[39m
+2026-10-19T01:06:23.6175890Z  [32m✓[39m test/schemas.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 134[2mms[22m[39m
+2026-10-19T01:06:23.9618295Z  [32m✓[39m test/locdecode.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 144[2mms[22m[39m
+2026-10-19T01:06:25.6613301Z  [32m✓[39m test/casefile_replay.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 1305[2mms[22m[39m
+2026-10-19T01:06:25.6630652Z    [32m✓[39m a Case File in the viewer [2m(7)[22m
+2026-10-19T01:06:25.6632391Z      [33m[2m✓[22m[39m draws its first frame without the scans, then every tick shows exactly the scan it would have had (D6)[33m 836[2mms[22m[39m
+2026-10-19T01:06:25.9827365Z  [32m✓[39m test/slamdecode.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 139[2mms[22m[39m
+2026-10-19T01:06:26.2309417Z  [32m✓[39m test/movedecode.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 69[2mms[22m[39m
+2026-10-19T01:06:36.6208778Z  [32m✓[39m test/arena_share.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 14538[2mms[22m[39m
+2026-10-19T01:06:36.6230155Z    [32m✓[39m a shared run reproduces in Pyodide (same chain) [2m(2)[22m
+2026-10-19T01:06:36.6231081Z      [33m[2m✓[22m[39m the link's inputs, replayed, end on the link's chain; a changed input does not[33m 6898[2mms[22m[39m
+2026-10-19T01:06:36.6232037Z      [33m[2m✓[22m[39m compare runs two planners and leaves the model untouched (same chain after)[33m 4190[2mms[22m[39m
+2026-10-19T01:06:36.7704897Z  [32m✓[39m test/landing.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+2026-10-19T01:06:37.8117394Z  [32m✓[39m test/casefile_moments.test.ts [2m([22m[2m21 tests[22m[2m)[22m[33m 767[2mms[22m[39m
+2026-10-19T01:06:38.8249892Z  [32m✓[39m test/decode.test.ts [2m([22m[2m30 tests[22m[2m)[22m[33m 832[2mms[22m[39m
+2026-10-19T01:06:44.9768683Z  [32m✓[39m test/arena_runtime.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 18564[2mms[22m[39m
+2026-10-19T01:06:44.9777198Z    [32m✓[39m the Arena in Pyodide-in-Node [2m(4)[22m
+2026-10-19T01:06:44.9778668Z      [33m[2m✓[22m[39m an input error is a Python error with its message, not a crash[33m 3181[2mms[22m[39m
+2026-10-19T01:06:45.1712875Z  [31m❯[39m test/site.test.ts [2m([22m[2m7 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 27[2mms[22m[39m
+2026-10-19T01:06:45.1732359Z    [31m❯[39m deployment constants [2m(3)[22m
+2026-10-19T01:06:45.1733572Z [31m     [31m×[31m the base path is the repository name, defined once[39m[32m 9[2mms[22m[39m
+2026-10-19T01:06:45.1734892Z      [32m✓[39m Pyodide is pinned once and the CSP is filled from the pin[32m 6[2mms[22m[39m
+2026-10-19T01:06:45.1736370Z      [32m✓[39m the Node version is pinned for CI and dev[32m 1[2mms[22m[39m
+2026-10-19T01:06:45.1737270Z    [32m✓[39m privacy [2m(4)[22m
+2026-10-19T01:06:45.1738035Z      [32m✓[39m src sets no cookie, uses no browser storage and sends no analytics[32m 7[2mms[22m[39m
+2026-10-19T01:06:45.1738854Z      [32m✓[39m the preferences module touches local storage only inside try/catch[32m 0[2mms[22m[39m
+2026-10-19T01:06:45.1739714Z      [32m✓[39m the ONE cross-origin request is the Live probe, to LIVE_REMOTE's /healthz only[32m 1[2mms[22m[39m
+2026-10-19T01:06:45.1740489Z      [32m✓[39m every fetch is same-origin, relative to the base URL[32m 1[2mms[22m[39m
+2026-10-19T01:06:45.3796872Z  [32m✓[39m test/searchdecode.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 55[2mms[22m[39m
+2026-10-19T01:06:45.7202755Z  [32m✓[39m test/schemas_m2.test.ts [2m([22m[2m22 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+2026-10-19T01:06:45.9141695Z  [32m✓[39m test/quality.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+2026-10-19T01:06:46.1948088Z  [32m✓[39m test/plan_store.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+2026-10-19T01:06:46.3705830Z  [32m✓[39m test/play.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+2026-10-19T01:06:46.7567388Z  [32m✓[39m test/json.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 254[2mms[22m[39m
+2026-10-19T01:06:47.0646427Z  [32m✓[39m test/casefile_adapter.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 77[2mms[22m[39m
+2026-10-19T01:06:50.1102758Z  [32m✓[39m test/casefile_layout.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 11022[2mms[22m[39m
+2026-10-19T01:06:50.1117603Z    [32m✓[39m the Case Files, laid out for a first frame before the scans (D6) [2m(6)[22m
+2026-10-19T01:06:50.1119636Z      [33m[2m✓[22m[39m every Case File holds exactly what the adapter wrote (lossless.json; M4.7 re-conversion)[33m 2923[2mms[22m[39m
+2026-10-19T01:06:50.1121926Z      [33m[2m✓[22m[39m every Case File holds its scans after everything else[33m 3151[2mms[22m[39m
+2026-10-19T01:06:50.1123610Z      [33m[2m✓[22m[39m read as it arrives, a Case File hands over its first frame before its scans[33m 470[2mms[22m[39m
+2026-10-19T01:06:50.1125330Z      [33m[2m✓[22m[39m every Case File's manifest still cites its source bag by sha256[33m 4385[2mms[22m[39m
+2026-10-19T01:06:50.6518009Z  [32m✓[39m test/convert_lab4.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 231[2mms[22m[39m
+2026-10-19T01:06:50.9638281Z  [32m✓[39m test/invalid.test.ts [2m([22m[2m52 tests[22m[2m)[22m[32m 126[2mms[22m[39m
+2026-10-19T01:06:51.1387185Z  [32m✓[39m test/controls.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+2026-10-19T01:06:51.3996872Z  [32m✓[39m test/drape.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+2026-10-19T01:06:54.8210179Z  [32m✓[39m test/convert_lab5.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 3105[2mms[22m[39m
+2026-10-19T01:06:54.8211603Z    [32m✓[39m Lab 5 drive bundles -> v2 runs (one per drive) -> drive bundles [2m(6)[22m
+2026-10-19T01:06:54.8212932Z      [33m[2m✓[22m[39m crossing: lossless, hash-checked, every run STACK[33m 946[2mms[22m[39m
+2026-10-19T01:06:54.8214220Z      [33m[2m✓[22m[39m oncoming: lossless, hash-checked, every run STACK[33m 699[2mms[22m[39m
+2026-10-19T01:06:54.8215535Z      [33m[2m✓[22m[39m static_room: lossless, hash-checked, every run STACK[33m 808[2mms[22m[39m
+2026-10-19T01:06:54.8217438Z      [33m[2m✓[22m[39m Nav2's recorded candidates play as STACK control.local batches, valid and best as recorded[33m 582[2mms[22m[39m
+2026-10-19T01:07:00.9566748Z  [32m✓[39m test/arena_terrain.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 13706[2mms[22m[39m
+2026-10-19T01:07:00.9577574Z    [32m✓[39m World Spec v2 through arena_glue (Pyodide) [2m(2)[22m
+2026-10-19T01:07:00.9579287Z      [33m[2m✓[22m[39m the build ships both specs; a flat tick has no tilt and no targets[33m 1040[2mms[22m[39m
+2026-10-19T01:07:00.9581494Z      [33m[2m✓[22m[39m climbs onto the blue platform under the planner, then the grasp picks and carries[33m 9986[2mms[22m[39m
+2026-10-19T01:07:01.1048393Z  [32m✓[39m test/phone_play.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+2026-10-19T01:07:01.3650866Z  [32m✓[39m test/play_links.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 67[2mms[22m[39m
+2026-10-19T01:07:01.8143530Z  [32m✓[39m test/learn.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+2026-10-19T01:07:03.2850413Z  [32m✓[39m test/convert_lab1.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 40740[2mms[22m[39m
+2026-10-19T01:07:03.2852045Z    [32m✓[39m Lab 1 bundles -> v2 runs -> Lab 1 bundles [2m(13)[22m
+2026-10-19T01:07:03.2853704Z      [33m[2m✓[22m[39m arena_0_10m: lossless, hash-checked, labelled by evidence class[33m 5994[2mms[22m[39m
+2026-10-19T01:07:03.2855663Z      [33m[2m✓[22m[39m arena_native: lossless, hash-checked, labelled by evidence class[33m 20097[2mms[22m[39m
+2026-10-19T01:07:03.2857954Z      [33m[2m✓[22m[39m costmap_0_10m: lossless, hash-checked, labelled by evidence class[33m 948[2mms[22m[39m
+2026-10-19T01:07:03.2862539Z      [33m[2m✓[22m[39m lab1c_astar: lossless, hash-checked, labelled by evidence class[33m 3465[2mms[22m[39m
+2026-10-19T01:07:03.2868665Z      [33m[2m✓[22m[39m lab1c_dijkstra: lossless, hash-checked, labelled by evidence class[33m 7173[2mms[22m[39m
+2026-10-19T01:07:03.2870646Z      [33m[2m✓[22m[39m lab1c_greedy: lossless, hash-checked, labelled by evidence class[33m 1725[2mms[22m[39m
+2026-10-19T01:07:03.2872242Z    [32m✓[39m converted runs in the Arena viewer (replay.ts) [2m(4)[22m
+2026-10-19T01:07:03.2873909Z      [33m[2m✓[22m[39m lab1c_dijkstra plays as STACK: 0.1 s ticks, belief beside truth[33m 357[2mms[22m[39m
+2026-10-19T01:07:03.7147338Z  [32m✓[39m test/comparison_pixels.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 216[2mms[22m[39m
+2026-10-19T01:07:04.2541479Z  [32m✓[39m test/link_bounds.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 362[2mms[22m[39m
+2026-10-19T01:07:04.2572411Z    [32m✓[39m shared link boundaries before simulation [2m(18)[22m
+2026-10-19T01:07:04.2574097Z      [33m[2m✓[22m[39m refuses compression bombs before allocating their full output[33m 302[2mms[22m[39m
+2026-10-19T01:07:04.5881148Z  [32m✓[39m test/family_store_index.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 154[2mms[22m[39m
+2026-10-19T01:07:14.0740490Z  [32m✓[39m test/arena_packs.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 19063[2mms[22m[39m
+2026-10-19T01:07:14.0766805Z    [32m✓[39m lens packs [2m(3)[22m
+2026-10-19T01:07:14.0817667Z      [33m[2m✓[22m[39m import, every module, on the trimmed stdlib, each after only what it requires[33m 16609[2mms[22m[39m
+2026-10-19T01:07:14.0827764Z      [33m[2m✓[22m[39m are not in core[33m 2447[2mms[22m[39m
+2026-10-19T01:07:16.1877797Z  [32m✓[39m test/convert_lab3.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1839[2mms[22m[39m
+2026-10-19T01:07:16.1887608Z    [32m✓[39m Lab 3 slam bundles -> v2 runs -> slam bundles [2m(6)[22m
+2026-10-19T01:07:16.1889156Z      [33m[2m✓[22m[39m map_arena: lossless, hash-checked, labelled[33m 365[2mms[22m[39m
+2026-10-19T01:07:16.1890779Z      [33m[2m✓[22m[39m s1_tour: lossless, hash-checked, labelled[33m 820[2mms[22m[39m
+2026-10-19T01:07:16.4277409Z  [32m✓[39m test/lens_layers.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+2026-10-19T01:07:16.5644145Z  [32m✓[39m test/night_shift.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+2026-10-19T01:07:18.3120312Z  [32m✓[39m test/convert_lab2.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1492[2mms[22m[39m
+2026-10-19T01:07:18.3127402Z    [32m✓[39m Lab 2 loc bundles -> v2 runs -> loc bundles [2m(6)[22m
+2026-10-19T01:07:18.3128709Z      [33m[2m✓[22m[39m loc_arena_kidnap: lossless, hash-checked, MODEL[33m 710[2mms[22m[39m
+2026-10-19T01:07:18.8520183Z  [32m✓[39m test/convert_lab5replan.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 269[2mms[22m[39m
+2026-10-19T01:07:18.9978086Z  [32m✓[39m test/worker_pool.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+2026-10-19T01:07:19.1678702Z  [32m✓[39m test/library.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+2026-10-19T01:07:19.5037977Z  [32m✓[39m test/renderer_path.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+2026-10-19T01:07:19.6874027Z  [32m✓[39m test/service_worker.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 10[2mms[22m[39m
+2026-10-19T01:07:19.8530933Z  [32m✓[39m test/perf_input.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+2026-10-19T01:07:19.9892883Z  [32m✓[39m test/pane_layout.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+2026-10-19T01:07:20.1229704Z  [32m✓[39m test/captions.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+2026-10-19T01:07:20.2695649Z  [32m✓[39m test/verify_link.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+2026-10-19T01:07:21.9795178Z  [32m✓[39m test/assets3d.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1578[2mms[22m[39m
+2026-10-19T01:07:21.9796950Z    [32m✓[39m the 3D assets [2m(1)[22m
+2026-10-19T01:07:21.9798669Z      [33m[2m✓[22m[39m are exactly what the pipeline makes from the recorded world and the URDF, within budget[33m 1576[2mms[22m[39m
+2026-10-19T01:07:22.1119854Z  [32m✓[39m test/lens_watch.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+2026-10-19T01:07:22.3032394Z  [32m✓[39m test/counter.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 35[2mms[22m[39m
+2026-10-19T01:07:22.5409351Z  [32m✓[39m test/play_camera.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 9[2mms[22m[39m
+2026-10-19T01:07:22.7111267Z  [32m✓[39m test/mesh_cache.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+2026-10-19T01:07:22.8657910Z  [32m✓[39m test/scan_area.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+2026-10-19T01:07:23.0296566Z  [32m✓[39m test/text_roles.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 6[2mms[22m[39m
+2026-10-19T01:07:23.2061992Z  [32m✓[39m test/race_integrity.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 5[2mms[22m[39m
+2026-10-19T01:07:23.3788781Z  [32m✓[39m test/render_perf.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 5[2mms[22m[39m
+2026-10-19T01:07:24.9695614Z  [32m✓[39m test/compare_loop.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 20208[2mms[22m[39m
+2026-10-19T01:07:24.9696983Z    [33m[2m✓[22m[39m streams reference control outputs on the trimmed worker runtime without changing the live Arena[33m 3927[2mms[22m[39m
+2026-10-19T01:07:24.9698105Z    [33m[2m✓[22m[39m streams reference localise outputs on the trimmed worker runtime without changing the live Arena[33m 12951[2mms[22m[39m
+2026-10-19T01:07:35.9758190Z  [32m✓[39m test/arena_determinism.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 33947[2mms[22m[39m
+2026-10-19T01:07:35.9759828Z    [32m✓[39m recorded sessions replay to the committed per-tick hashes (Pyodide-in-Node) [2m(6)[22m
+2026-10-19T01:07:35.9769952Z      [33m[2m✓[22m[39m session 0[33m 8700[2mms[22m[39m
+2026-10-19T01:07:35.9770911Z      [33m[2m✓[22m[39m session 1[33m 7735[2mms[22m[39m
+2026-10-19T01:07:35.9771776Z      [33m[2m✓[22m[39m session 2[33m 4251[2mms[22m[39m
+2026-10-19T01:07:35.9772618Z      [33m[2m✓[22m[39m session 3[33m 3652[2mms[22m[39m
+2026-10-19T01:07:35.9773448Z      [33m[2m✓[22m[39m session 4[33m 6722[2mms[22m[39m
+2026-10-19T01:07:35.9795677Z 
+2026-10-19T01:07:35.9796730Z [31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+2026-10-19T01:07:35.9797354Z 
+2026-10-19T01:07:35.9801411Z [41m[1m FAIL [22m[49m test/site.test.ts[2m > [22mdeployment constants[2m > [22mthe base path is the repository name, defined once
+2026-10-19T01:07:35.9810031Z [31m[1mAssertionError[22m: /home/runner/work/coco-labs/coco-labs/lab_web/src/arena/__pycache__/arena_glue.cpython-312.pyc: expected true to be false // Object.is equality[39m
+2026-10-19T01:07:35.9811300Z 
+2026-10-19T01:07:35.9811625Z [32m- Expected[39m
+2026-10-19T01:07:35.9812139Z [31m+ Received[39m
+2026-10-19T01:07:35.9812396Z 
+2026-10-19T01:07:35.9812639Z [32m- false[39m
+2026-10-19T01:07:35.9813057Z [31m+ true[39m
+2026-10-19T01:07:35.9813280Z 
+2026-10-19T01:07:35.9813776Z [36m [2m❯[22m test/site.test.ts:[2m22:74[22m[39m
+2026-10-19T01:07:35.9843244Z     [90m 20|[39m   it('the base path is the repository name, defined once', () => {
+2026-10-19T01:07:35.9844569Z     [90m 21|[39m     expect(DEFAULT_BASE).toBe('/coco-labs/');
+2026-10-19T01:07:35.9845907Z     [90m 22|[39m     for (const { p, text } of src) expect(text.includes('coco-labs'), …
+2026-10-19T01:07:35.9848642Z     [90m   |[39m                                                                          [31m^[39m
+2026-10-19T01:07:35.9849751Z     [90m 23|[39m     const vite = readFileSync(join(LAB_WEB, 'vite.config.ts'), 'utf-8'…
+2026-10-19T01:07:35.9851175Z     [90m 24|[39m     expect(vite).toMatch(/process\.env\.LAB_BASE \?\? DEFAULT_BASE/);
+2026-10-19T01:07:35.9851734Z 
+2026-10-19T01:07:35.9852163Z [31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+2026-10-19T01:07:35.9852520Z 
+2026-10-19T01:07:35.9852538Z 
+2026-10-19T01:07:35.9853646Z [2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m61 passed[39m[22m[90m (62)[39m
+2026-10-19T01:07:35.9857207Z [2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m492 passed[39m[22m[90m (493)[39m
+2026-10-19T01:07:35.9858086Z [2m   Start at [22m 01:06:21
+2026-10-19T01:07:35.9861424Z [2m   Duration [22m 74.60s[2m (tests 97%, import 2%, transform 1%)[22m
+2026-10-19T01:07:35.9878275Z 
+2026-10-19T01:07:35.9898351Z 
+2026-10-19T01:07:35.9925353Z ##[error]AssertionError: /home/runner/work/coco-labs/coco-labs/lab_web/src/arena/__pycache__/arena_glue.cpython-312.pyc: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ test/site.test.ts:22:74
+
+
+2026-10-19T01:07:36.0190918Z ##[error]Process completed with exit code 1.
+2026-10-19T01:07:36.0366652Z Post job cleanup.
+2026-10-19T01:07:36.1256575Z [command]/usr/bin/git version
+2026-10-19T01:07:36.1300610Z git version 2.55.0
+2026-10-19T01:07:36.1343089Z Temporarily overriding HOME='/home/runner/work/_temp/603e68b8-6c58-4f4d-905a-274503c7e208' before making global git config changes
+2026-10-19T01:07:36.1344699Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-19T01:07:36.1347438Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/coco-labs/coco-labs
+2026-10-19T01:07:36.1381328Z Removing SSH command configuration
+2026-10-19T01:07:36.1389267Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-19T01:07:36.1433805Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-19T01:07:36.1695344Z Removing HTTP extra header
+2026-10-19T01:07:36.1697187Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-19T01:07:36.1741612Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-19T01:07:36.2018070Z Removing includeIf entries pointing to credentials config files
+2026-10-19T01:07:36.2026908Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-19T01:07:36.2067157Z includeif.gitdir:/home/runner/work/coco-labs/coco-labs/.git.path
+2026-10-19T01:07:36.2075795Z includeif.gitdir:/home/runner/work/coco-labs/coco-labs/.git/worktrees/*.path
+2026-10-19T01:07:36.2077105Z includeif.gitdir:/github/workspace/.git.path
+2026-10-19T01:07:36.2078241Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-19T01:07:36.2080506Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/coco-labs/coco-labs/.git.path
+2026-10-19T01:07:36.2097713Z /home/runner/work/_temp/git-credentials-ef932bc4-9c6e-4cac-95d2-98848b310ee6.config
+2026-10-19T01:07:36.2112903Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/coco-labs/coco-labs/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-ef932bc4\-9c6e\-4cac\-95d2\-98848b310ee6\.config
+2026-10-19T01:07:36.2167233Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/coco-labs/coco-labs/.git/worktrees/*.path
+2026-10-19T01:07:36.2199544Z /home/runner/work/_temp/git-credentials-ef932bc4-9c6e-4cac-95d2-98848b310ee6.config
+2026-10-19T01:07:36.2210206Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/coco-labs/coco-labs/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-ef932bc4\-9c6e\-4cac\-95d2\-98848b310ee6\.config
+2026-10-19T01:07:36.2265842Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-19T01:07:36.2301105Z /github/runner_temp/git-credentials-ef932bc4-9c6e-4cac-95d2-98848b310ee6.config
+2026-10-19T01:07:36.2309779Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-ef932bc4\-9c6e\-4cac\-95d2\-98848b310ee6\.config
+2026-10-19T01:07:36.2350573Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-19T01:07:36.2379151Z /github/runner_temp/git-credentials-ef932bc4-9c6e-4cac-95d2-98848b310ee6.config
+2026-10-19T01:07:36.2390826Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-ef932bc4\-9c6e\-4cac\-95d2\-98848b310ee6\.config
+2026-10-19T01:07:36.2436434Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-19T01:07:36.2690356Z Removing credentials config '/home/runner/work/_temp/git-credentials-ef932bc4-9c6e-4cac-95d2-98848b310ee6.config'
+2026-10-19T01:07:36.2835334Z Cleaning up orphan processes
