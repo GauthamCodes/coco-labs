@@ -31,7 +31,7 @@ export class GameCamera {
   mode: CamMode = 'chase';
   reducedMotion = false;
   /** the chase rig's sprung state */
-  private rig = { x: 0, y: 0, z: 0, yaw: 0, back: CHASE.back, init: false };
+  private rig = { x: 0, y: 0, z: 0, yaw: 0, back: CHASE.back, elev: Math.atan2(CHASE.up - 0.25, CHASE.back), init: false };
   /** orbit: yaw, pitch, distance about the target */
   readonly orbit = { yaw: -Math.PI / 2, pitch: 0.55, dist: 3.2 };
   /** tactical: a top-down view centred where the person dragged it (or on COCO) */
@@ -79,26 +79,51 @@ export class GameCamera {
       const r = this.rig;
       if (!r.init) { r.x = x; r.y = y; r.z = z; r.yaw = th; r.init = true; }
       // look ahead along the direction of travel (backwards when reversing)
-      const dir = v < -0.02 ? th + Math.PI : th;
+      const look = v < -0.02 ? th + Math.PI : th;
       const k = this.reducedMotion ? 1 : approach(dt, CHASE.k);
       r.x += (x - r.x) * k; r.y += (y - r.y) * k; r.z += (z - r.z) * k;
       r.yaw += wrap(th - r.yaw) * (this.reducedMotion ? 1 : approach(dt, CHASE.kYaw));
-      target.set(r.x + CHASE.ahead * Math.cos(dir) * Math.min(1, Math.abs(v) / 0.3 + 0.35), r.y + CHASE.ahead * Math.sin(dir) * Math.min(1, Math.abs(v) / 0.3 + 0.35), r.z + CHASE.lookUp);
-      const want = new THREE.Vector3(r.x - CHASE.back * Math.cos(r.yaw), r.y - CHASE.back * Math.sin(r.yaw), r.z + CHASE.up);
-      // pull in: the camera may not sit behind a wall it would see COCO through
+      target.set(r.x + CHASE.ahead * Math.cos(look) * Math.min(1, Math.abs(v) / 0.3 + 0.35), r.y + CHASE.ahead * Math.sin(look) * Math.min(1, Math.abs(v) / 0.3 + 0.35), r.z + CHASE.lookUp);
+      // the boom: from COCO's head, back along its heading and up. If a wall would come between,
+      // shorten it (keeping PAD from the wall's face, not only along the ray); if even the
+      // shortest boom has no room, swing it up toward a top-down view (never into the wall).
       const head = new THREE.Vector3(x, y, z + 0.25);
-      const to = want.clone().sub(head);
-      const len = to.length();
-      let back = len;
-      if (this.colliders.length) {
-        this.ray.set(head, to.normalize());
-        this.ray.far = len;
-        const hit = this.ray.intersectObjects(this.colliders, false)[0];
-        if (hit) back = Math.max(CHASE.minBack, hit.distance - CHASE.nearPad);
+      const len = Math.hypot(CHASE.back, CHASE.up - 0.25);
+      const base = Math.atan2(CHASE.up - 0.25, CHASE.back);
+      let best: { dir: THREE.Vector3; back: number } | null = null;
+      for (const elev of [base, 0.85, 1.05, 1.25, 1.45, 1.55]) {
+        if (elev < base) continue;
+        const dir = new THREE.Vector3(-Math.cos(elev) * Math.cos(r.yaw), -Math.cos(elev) * Math.sin(r.yaw), Math.sin(elev));
+        let back = len;
+        if (this.colliders.length) {
+          this.ray.set(head, dir);
+          this.ray.far = len + CHASE.nearPad * 4;
+          const hit = this.ray.intersectObjects(this.colliders, false)[0];
+          if (hit) {
+            const n = hit.face?.normal ?? new THREE.Vector3(0, 0, 1);
+            const cos = Math.max(0.2, Math.abs(dir.dot(n)));
+            back = Math.min(len, hit.distance - CHASE.nearPad / cos);
+          }
+        }
+        if (!best || back > best.back) best = { dir, back };
+        if (back >= CHASE.minBack) { best = { dir, back }; break; }
       }
-      r.back += (back - r.back) * (back < r.back ? 1 : (this.reducedMotion ? 1 : approach(dt, 3)));
+      // the swing: up at once (to stay clear), back down smoothly; clearance re-checked on the drawn direction
+      const want = Math.asin(Math.min(1, best!.dir.z));
+      r.elev = want >= r.elev || this.reducedMotion ? want : r.elev + (want - r.elev) * approach(dt, 2.5);
+      const dir = new THREE.Vector3(-Math.cos(r.elev) * Math.cos(r.yaw), -Math.cos(r.elev) * Math.sin(r.yaw), Math.sin(r.elev));
+      let b = len;
+      if (this.colliders.length) {
+        this.ray.set(head, dir);
+        this.ray.far = len + CHASE.nearPad * 4;
+        const hit = this.ray.intersectObjects(this.colliders, false)[0];
+        if (hit) b = Math.min(len, hit.distance - CHASE.nearPad / Math.max(0.2, Math.abs(dir.dot(hit.face?.normal ?? new THREE.Vector3(0, 0, 1)))));
+      }
+      b = Math.max(0.05, b);
+      r.back += (b - r.back) * (b < r.back ? 1 : (this.reducedMotion ? 1 : approach(dt, 3)));
+      r.back = Math.min(r.back, b);
       this.lastPull = len - r.back;
-      cam.position.copy(head).addScaledVector(want.clone().sub(head).normalize(), r.back);
+      cam.position.copy(head).addScaledVector(dir, r.back);
       cam.lookAt(target);
     } else if (this.mode === 'orbit') {
       const o = this.orbit;

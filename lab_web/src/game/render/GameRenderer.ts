@@ -70,6 +70,9 @@ export class GameRenderer {
   wheelSpeed: [number, number] = [0, 0];
   readonly stats = { triangles: 0, draws: 0 };
   private lostContext = false;
+  private ceiling = 99;
+  private overheadMeshes: THREE.Object3D[] = [];
+  private fogDensity = 0.02;
 
   constructor(readonly canvas: HTMLCanvasElement, tier: Tier) {
     this.tier = tier;
@@ -177,7 +180,10 @@ export class GameRenderer {
     this.world = buildWorld(look, this.tier, light);
     this.scene.add(this.world.group);
     this.cam.colliders = this.world.colliders;
-    this.scene.fog = new THREE.FogExp2(look.theme === 'lab' ? 0x1a2230 : 0x0b1018, look.theme === 'lab' ? 0.01 : 0.022);
+    this.fogDensity = look.theme === 'lab' ? 0.01 : 0.022;
+    this.scene.fog = new THREE.FogExp2(look.theme === 'lab' ? 0x1a2230 : 0x0b1018, this.fogDensity);
+    this.ceiling = look.ceiling;
+    this.overheadMeshes = ['box:ceiling', 'box:fixture'].map((n) => this.world!.group.getObjectByName(n)).filter((m): m is THREE.Object3D => !!m);
     this.hemi.intensity = look.theme === 'lab' ? 1.5 : 1.15;
     for (const a of look.actors) {
       const g = buildActor(a);
@@ -348,6 +354,10 @@ export class GameRenderer {
     }
     if (this.tier === 'high') { this.key.position.set(x - 5, y - 8, 14); this.key.target.position.set(x, y, 0); }
     this.cam.update(dt, this.pose, this.z, this.speed);
+    // a camera above the roof (tactical, a high orbit) sees through it; fog thins with height
+    const above = this.cam.camera.position.z > Math.min(this.ceiling, 5.4) - 0.3;
+    for (const m of this.overheadMeshes) m.visible = !above;
+    if (this.scene.fog instanceof THREE.FogExp2) this.scene.fog.density = this.fogDensity * (above ? 0.25 : 1);
     this.renderer.info.reset();
     if (this.composer) this.composer.render(dt);
     else this.renderer.render(this.scene, this.cam.camera);
