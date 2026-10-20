@@ -27,7 +27,7 @@ function occupancyImage(world: World, occ: Uint8Array): HTMLCanvasElement {
   const g = c.getContext('2d')!, img = g.createImageData(world.width, world.height);
   for (let k = 0; k < occ.length; k++) {
     const v = occ[k];
-    const rgb = v === 0 ? [30, 38, 52] : v >= 200 ? [11, 14, 19] : [96, 110, 132];
+    const rgb = v === 0 ? [24, 31, 44] : v === 1 ? [150, 166, 190] : [8, 10, 14]; // coco_lab.maps: FREE 0, OCCUPIED 1, UNKNOWN 2
     img.data.set([...rgb, 255], k * 4);
   }
   g.putImageData(img, 0, 0);

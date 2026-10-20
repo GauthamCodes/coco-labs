@@ -18,6 +18,7 @@ import { Camera, Eye, Hand, Pause, PackageCheck, Route, Navigation2, Info } from
 import type { InputRow, World } from '../arena/protocol';
 import { readPref, isBool } from '../prefs';
 import { GameRenderer, type Led } from './render/GameRenderer';
+import { perf } from '../arena/perf';
 import type { CamMode } from './render/camera';
 import { describe, type Spec, type WorldLook } from './world/describe';
 import type { Tier } from './world/build3d';
@@ -126,7 +127,7 @@ export function PlayGame(p: PlayProps) {
       rr.z = sh.z0 + (sh.z1 - sh.z0) * f;
       live.current.pollGamepad();
       live.current.applyHeld();
-      if (!document.hidden) rr.frame(dt);
+      if (!document.hidden) { rr.frame(dt); perf.drawnPose(rr.pose); }
       const fp = fps.current;
       fp.frames += 1;
       if (now - fp.t0 > 1000) { fp.fps = (fp.frames * 1000) / (now - fp.t0); fp.frames = 0; fp.t0 = now; if (p.showPerf) setPerfText(`${fp.fps.toFixed(0)} fps · ${rr.stats.draws} draws · ${(rr.stats.triangles / 1000).toFixed(0)}k tris · ${p.tier}`); }
@@ -295,7 +296,7 @@ export function PlayGame(p: PlayProps) {
       if (e.code === 'Space') { e.preventDefault(); if (!latched) stop(); return; }
       if (e.code === 'Escape') { e.preventDefault(); if (mapOpen) setMapOpen(false); else p.onPause(); return; }
       if (!started || p.paused) return;
-      if (keyMap[e.code]) { e.preventDefault(); held.current.add(keyMap[e.code]); sound.current.unlock(); return; }
+      if (keyMap[e.code]) { e.preventDefault(); if (!e.repeat && !held.current.size) perf.driveInput(e.timeStamp); held.current.add(keyMap[e.code]); sound.current.unlock(); return; }
       if (e.repeat) return;
       if (e.code === 'KeyG' || e.code === 'KeyE') doPrimary();
       else if (e.code === 'KeyF') void toggleAuto();
@@ -339,7 +340,7 @@ export function PlayGame(p: PlayProps) {
       const ax = Math.abs(gp.axes[0]) > 0.12 ? gp.axes[0] : 0, ay = Math.abs(gp.axes[1]) > 0.12 ? gp.axes[1] : 0;
       const rt = gp.buttons[7]?.value ?? 0, lt = gp.buttons[6]?.value ?? 0;
       const fwd = rt > 0.05 || lt > 0.05 ? rt - lt : -ay;
-      if (ax || ay || rt > 0.05 || lt > 0.05) { stick.current = [fwd, -ax]; s.current.drive(fwd, -ax); }
+      if (ax || ay || rt > 0.05 || lt > 0.05) { if (!stick.current[0] && !stick.current[1]) perf.driveInput(); stick.current = [fwd, -ax]; s.current.drive(fwd, -ax); }
       else if (stick.current[0] || stick.current[1]) { stick.current = [0, 0]; s.current.drive(0, 0); }
     }
     pads.current = b;
@@ -427,7 +428,7 @@ export function PlayGame(p: PlayProps) {
       {error && <p role="alert" className="g1-note" style={{ color: 'var(--g1-danger)' }}>{error}</p>}
     </section>}
     {started && <div className="g1-safe">
-      <FloatJoystick enabled={!latched && !p.paused} hint={desktop ? 'WASD / ARROWS' : 'DRAG TO DRIVE'} onChange={(f, t) => { stick.current = [f, t]; if (f || t) setAuto(false); s.current?.drive(f, t); }} />
+      <FloatJoystick enabled={!latched && !p.paused} hint={desktop ? 'WASD / ARROWS' : 'DRAG TO DRIVE'} onChange={(f, t) => { if ((f || t) && !stick.current[0] && !stick.current[1]) perf.driveInput(); stick.current = [f, t]; if (f || t) setAuto(false); s.current?.drive(f, t); }} />
       {world && occ.current && <Minimap world={world} occupancy={occ.current} marks={marks} headingUp={false} onOpen={() => setMapOpen(true)} />}
       <div className="g1-pill g1-glass" data-testid="objective">{p.game === 'fetch_rush'
         ? fr ? <><span>DELIVER {fr.deliveries}/{fr.orders}</span><span className="sep">·</span><span className={`num${fr.seconds - fr.t < 30 ? ' low' : ''}`}>⏱ {fmt(fr.seconds - fr.t)}</span>{fr.contacts > 0 && <><span className="sep">·</span><span className="num">✖ {fr.contacts}</span></>}</> : <span>FETCH RUSH</span>

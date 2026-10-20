@@ -8,8 +8,8 @@
  * Robot vision overlay. Presentation only (README §3 invariant 11): it is
  * handed poses and never computes or writes model state.
  *
- * Tiers: low (no shadows, blob shadow, 1x pixels), medium (headlight, 1.5x),
- * high (real shadow, bloom on emissives, 2x). ACES tone mapping always.
+ * Tiers: low (no shadows, blob shadow, 1x pixels), medium (1.25x pixels, roughness detail),
+ * high (real shadow, a spot-light headlight, bloom on emissives, 2x). ACES tone mapping always.
  */
 
 import * as THREE from 'three';
@@ -20,7 +20,7 @@ import type { WorldLook } from '../world/describe';
 import { buildActor, buildWorld, type BuiltWorld, type Tier } from '../world/build3d';
 import { GameCamera } from './camera';
 
-export const TIER_PIXELS: Record<Tier, number> = { low: 1, medium: 1.5, high: 2 };
+export const TIER_PIXELS: Record<Tier, number> = { low: 1, medium: 1.25, high: 2 };
 export type Led = 'manual' | 'auto' | 'stop' | 'idle';
 const LED_COLOUR: Record<Led, number> = { manual: 0x34d399, auto: 0x22d3ee, stop: 0xef4444, idle: 0x8f9bb0 };
 
@@ -73,7 +73,7 @@ export class GameRenderer {
 
   constructor(readonly canvas: HTMLCanvasElement, tier: Tier) {
     this.tier = tier;
-    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: tier !== 'low', powerPreference: 'high-performance', preserveDrawingBuffer: false });
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: tier === 'high', powerPreference: 'high-performance', preserveDrawingBuffer: false });
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.35;
     this.renderer.info.autoReset = false;
@@ -145,7 +145,7 @@ export class GameRenderer {
       this.key.shadow.mapSize.set(1024, 1024);
       this.key.shadow.bias = -0.0005;
     }
-    this.head.visible = tier !== 'low';
+    this.head.visible = tier === 'high'; // a per-pixel spot light: high only; below it the floor pool is the headlight
     this.blob.visible = tier !== 'high';
     this.robot.traverse((o) => { if ((o as THREE.Mesh).isMesh && o !== this.blob && o !== this.cone) o.castShadow = tier === 'high'; });
     this.composer?.dispose();

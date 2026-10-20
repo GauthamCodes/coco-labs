@@ -83,13 +83,19 @@ function patch(m: THREE.MeshStandardMaterial, scale: number, contact: boolean) {
 #endif
 ${contact ? 'diffuseColor.rgb *= mix(0.45, 1.0, smoothstep(0.0, 0.7, vW.z)) * mix(1.0, 0.82, step(0.5, 1.0 - abs(vWN.z)) * (1.0 - smoothstep(0.0, 1.6, vW.z)));' : ''}`);
   };
-  m.customProgramCacheKey = () => `g1w${contact ? 1 : 0}`;
+  m.customProgramCacheKey = () => `g1w${contact ? 1 : 0}${m.type}`;
 }
 
 const textures = new Map<string, THREE.Texture>();
+/**
+ * Physically based shading on the high tier; below it, Lambert (no specular term): the same
+ * colours, textures, light map and fog for a fraction of the per-pixel cost (G1.3: touch-to-motion
+ * on a frame-bound device).
+ */
 function material(mat: Mat, tier: Tier): THREE.MeshStandardMaterial {
   const s = MATS[mat];
-  const m = new THREE.MeshStandardMaterial({ color: s.color, roughness: s.rough, metalness: s.metal ?? 0 });
+  const m = (tier === 'high' ? new THREE.MeshStandardMaterial({ color: s.color, roughness: s.rough, metalness: s.metal ?? 0 })
+    : new THREE.MeshLambertMaterial({ color: s.color })) as THREE.MeshStandardMaterial;
   if (s.tex) {
     const key = s.tex;
     if (!textures.has(key)) textures.set(key, surface(s.tex, key.length * 31));
@@ -129,6 +135,26 @@ function partMatrix(p: Part): THREE.Matrix4 {
   sv.set(p.max[0] - p.min[0], p.max[1] - p.min[1], Math.max(1e-4, p.max[2] - p.min[2]));
   q.setFromAxisAngle(zAxis, p.shape === 'wedge' ? p.yaw ?? 0 : 0);
   return m4.compose(pv, q, sv);
+}
+
+/** Whether a part blocks the chase camera's boom (solids and wall fixtures taller than its lowest swing). */
+export const blocksView = (p: Part) => (p.cls === 'solid' || p.cls === 'wall') && p.max[2] > 0.3;
+
+/**
+ * The chase camera's ray-cast set without drawing anything: the same unit geometry and instance
+ * matrices buildWorld draws, for the tall parts (tests use this; the renderer uses buildWorld's).
+ */
+export function colliderMeshes(look: WorldLook): THREE.InstancedMesh[] {
+  const byShape = new Map<Shape, Part[]>();
+  for (const p of look.parts.filter(blocksView)) { if (!byShape.has(p.shape)) byShape.set(p.shape, []); byShape.get(p.shape)!.push(p); }
+  return [...byShape].map(([shape, parts]) => {
+    const mesh = new THREE.InstancedMesh(GEOMETRY[shape](), new THREE.MeshBasicMaterial(), parts.length);
+    parts.forEach((p, k) => mesh.setMatrixAt(k, partMatrix(p)));
+    mesh.instanceMatrix.needsUpdate = true;
+    mesh.computeBoundingSphere();
+    mesh.updateMatrixWorld(true);
+    return mesh;
+  });
 }
 
 export interface BuiltWorld {
@@ -173,15 +199,16 @@ export function buildWorld(look: WorldLook, tier: Tier, lightMap: THREE.Texture 
     disposables.push(geom, m);
     triangles += (geom.index ? geom.index.count : geom.attributes.position.count) / 3 * parts.length;
     draws += 1;
-    if (parts.some((p) => (p.cls === 'solid' || p.cls === 'wall') && p.max[2] > 1)) colliders.push(mesh);
+    if (parts.some(blocksView)) colliders.push(mesh);
   }
   // the floor: paint and concrete in one texture, the baked light map, a roughness detail
   const f = look.floor;
   const pxPerM = tier === 'low' ? 14 : tier === 'medium' ? 22 : 32;
   const floorMap = floorTexture(look, pxPerM);
-  const fm = new THREE.MeshStandardMaterial({ map: floorMap, roughness: look.theme === 'lab' ? 0.75 : 0.55, metalness: 0.0 });
+  const fm = (tier === 'high' ? new THREE.MeshStandardMaterial({ map: floorMap, roughness: look.theme === 'lab' ? 0.75 : 0.55, metalness: 0.0 })
+    : new THREE.MeshLambertMaterial({ map: floorMap })) as THREE.MeshStandardMaterial;
   if (lightMap) { fm.lightMap = lightMap; fm.lightMapIntensity = look.theme === 'lab' ? 1.4 : 2.6; }
-  if (tier !== 'low') {
+  if (tier === 'high') {
     const r = concreteRoughness();
     r.repeat.set((f.maxX - f.minX) / 4, (f.maxY - f.minY) / 4);
     fm.roughnessMap = r;

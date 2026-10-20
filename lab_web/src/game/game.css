@@ -60,7 +60,7 @@
   background: radial-gradient(circle at 50% 35%, #ff9a4d, #e8600a); color: #1a0e04; border-color: rgba(255,255,255,.35); box-shadow: 0 0 0 6px rgba(255,122,26,.18), 0 8px 22px rgba(0,0,0,.45); }
 .g1-primary.is-grey { background: var(--g1-s2); color: var(--g1-mute); box-shadow: none; }
 .g1-primary.is-drop { background: radial-gradient(circle at 50% 35%, #6ef0bf, #1fae7c); color: #04140d; box-shadow: 0 0 0 6px rgba(52,211,153,.2), 0 8px 22px rgba(0,0,0,.45); }
-.g1-primary .why { display: block; margin-top: calc(3px * var(--g1-s)); font: 600 calc(9px * var(--g1-s)) var(--g1-ui); letter-spacing: 0; color: var(--g1-mute); max-width: calc(76px * var(--g1-s)); }
+.g1-primary .why { display: block; margin: calc(3px * var(--g1-s)) auto 0; font: 600 calc(8px * var(--g1-s))/1.15 var(--g1-ui); letter-spacing: 0; color: var(--g1-mute); max-width: calc(62px * var(--g1-s)); white-space: normal; }
 .g1-primary .ring { position: absolute; inset: calc(-9px * var(--g1-s)); border-radius: 50%; pointer-events: none;
   -webkit-mask: radial-gradient(circle, transparent 62%, #000 63%); mask: radial-gradient(circle, transparent 62%, #000 63%); }
 .g1-small { width: calc(56px * var(--g1-s)); height: calc(56px * var(--g1-s)); background: var(--g1-glass); backdrop-filter: blur(8px); color: var(--g1-ink); }

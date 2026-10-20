@@ -129,7 +129,7 @@ function Results({ r, onAgain }: { r: GameResult; onAgain: () => void }) {
 function ModeSelect() {
   useEffect(() => { document.title = 'COCO Lab · Play'; }, []);
   const art = (pos: string) => ({ backgroundImage: `url(${BASE}g1/modes.svg)`, backgroundPosition: pos });
-  return <main className="g1 g1-screen" data-g1="modes" data-ready="true" style={{ position: 'fixed', overflow: 'auto', touchAction: 'pan-x pan-y' }}>
+  return <main className="g1 g1-screen" data-testid="play" data-g1="modes" data-ready="true" style={{ position: 'fixed', overflow: 'auto', touchAction: 'pan-x pan-y' }}>
     <a className="g1-icon g1-glass" href={BASE} aria-label="Back to the title" style={{ position: 'absolute', left: 'calc(12px + env(safe-area-inset-left))', top: 'calc(12px + env(safe-area-inset-top))', color: 'inherit' }}><ArrowLeft size={20} /></a>
     <div className="g1-eyebrow">CHOOSE A GAME</div>
     <div className="g1-modes" role="list">
