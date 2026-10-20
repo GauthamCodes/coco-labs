@@ -1,0 +1,84 @@
+{
+  "cases": [
+    {
+      "profile": "desktop, W held while STOP clicked",
+      "stage": "passed",
+      "before": {
+        "tick": 1,
+        "v": 0.2
+      },
+      "after": {
+        "tick": 5,
+        "v": 0,
+        "stops": [
+          {
+            "kind": "stop",
+            "tick": 2
+          }
+        ],
+        "latched": true
+      }
+    },
+    {
+      "profile": "emulated Nothing Phone (1), two fingers",
+      "stage": "passed",
+      "before": {
+        "tick": 1,
+        "v": 0.2
+      },
+      "after": {
+        "tick": 5,
+        "v": 0,
+        "stops": [
+          {
+            "kind": "stop",
+            "tick": 2
+          }
+        ],
+        "latched": true
+      }
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-20T01:36:54.716Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 4.37,
+        "5m": 3.39,
+        "15m": 5.86
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-20T01:37:04.588Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 4.39,
+        "5m": 3.43,
+        "15m": 5.85
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    }
+  }
+}
