@@ -114,6 +114,12 @@ gone, as on Pages), lets B take over, and checks:
 | `no_page_errors` | pass | pass |
 
 [`update_isolation/checks.json`](update_isolation/checks.json), [`update_isolation_m5_control/checks.json`](update_isolation_m5_control/checks.json) (M5's `sw.template.js`, the same checks: mixed, as M5's review found).
+Re-run on the final build, the control errored before reaching its checks
+(`page.evaluate: Resulting promise was garbage collected`, a probe promise against the old
+worker that never settled; [`rerun_final_build_errored.json`](update_isolation_m5_control/rerun_final_build_errored.json)),
+so the control above is the earlier complete run in this session. Not investigated further:
+it is the control for a worker known to fail; the G1.8 worker's run on the final build is
+complete and passes.
 
 Residual (stated, not tested): a page that loaded before any service worker controlled
 it, and whose own build's worker never installed before a newer deploy, has no cache
