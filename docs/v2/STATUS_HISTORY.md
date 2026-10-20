@@ -2145,3 +2145,15 @@ Default warm starts <=2694.199951171875 ms; desktop cold title <=2028.2000000029
 ADB available but no device; real Phone pending USB, provisional settings unchanged. Blank notes retained, N1/N2 addressed, no observations/feedback invented. Five-person owner usability and independent review pending; public launch not ready. Full moves/removals remain in M5.2 MOVES, none new. ADRs 0008/0009 and E1–E8/October14 continuation decisions retained; only mapping comparisons parked for M7. No stop condition. Next: push and open unmerged PR; never release or deploy.
 
 M5.11 submission: branch pushed, [PR #25](https://github.com/GauthamCodes/coco-labs/pull/25) open into main and unmerged. Evidence commit `6d984fd`, implementation `00a42aa`. CI running/queued at submission; not yet asserted green. Final documentation follow-up records PR and next steps. Strict payload/emulated startup misses, real-phone and owner usability gates remain explicit. No releases/deployment or merge.
+
+
+## 2026-10-20 M5 closure attempt
+
+Deploy publication separated from main merging in `51c2216`; focused gate test
+passes. Exact review-head CI requested before the one-time PR #26 merge.
+Native/Pyodide diagnosis reproduces the review's exact 0.446011142799704 m DWA
+maximum at tick 48. Selection first changes tick 47 due to obstacle-grid cost
+0 vs 22, not a near-tie. First numeric MPPI frame difference tick 1. Owner
+explicitly requires report/stop for non-tie causes; no algorithm fix, hash bump
+or golden change. Final closure remains pending. Full trace/report under
+`docs/v2/data/m5/closure-20261020/`; earlier evidence retained. Phone absent.

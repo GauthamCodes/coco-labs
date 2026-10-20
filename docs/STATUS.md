@@ -2,6 +2,10 @@
 
 ## Position
 
+- 2026-10-20 closure attempt: **M5 remains open** at the owner-requested non-tie report stop. [Diagnosis/report](v2/data/m5/closure-20261020/REPORT.md): DWA costmap rasterization divergence, not a near-tie; no model/hash/golden change.
+- Manual Pages gate implemented in `51c2216`; push/main cannot deploy (truth-table regression passed). Public site stays M4 until Gautham confirms manual deployment after real-phone and five-person gates. No deployment triggered.
+- Open-page policy/probe regression, native parity CI, final-head dual-GPU soaks and full rerun remain pending. Historical measurements below are superseded as closure-head attestations.
+
 - Branch `v2/m5-focus`; implementation/tested code SHA `00a42aa` (M5.11).
 - M5.0–M5.11 implemented and measured; [PR #25](https://github.com/GauthamCodes/coco-labs/pull/25) open, unmerged.
 - Acceptance evidence commit `6d984fd`; PR head tracks this branch. Remote CI is running/queued, not yet claimed green.
@@ -70,6 +74,15 @@ Plug in the Nothing Phone (1) with USB debugging on when convenient; the agent m
 
 ### M5 approved plan-change log
 
+| Date | Change | Reason / scope | By |
+| --- | --- | --- | --- |
+| 2026-10-20 | Merge only PR #26 into v2/m5-focus with a merge commit after exact-head CI passes; no force-push. PR #25 remains Gautham's merge. | One-time review integration permission; no other PR merge authorized. | Gautham |
+| 2026-10-20 | Main push builds/tests; Pages only through manual **Deploy site** with required `DEPLOY` confirmation. Public site stays M4 until owner runs it after real-phone and five-person usability passes. | Separate merge from publication; agent must not deploy. README §9 updated. | Gautham |
+| 2026-10-20 | Pin every runtime/data/asset URL by build or content hash; waiting update offers Save run and Reload; no automatic/mid-run reload; retain old caches until no page of their build is open. | Prevent mixed builds without losing runs; update-open-tab-ac3 must report false and enter CI. Supersedes old activation cleanup rule. | Gautham |
+| 2026-10-20 | Four-engine contract stays Pyodide; native CPython must meet explicit per-family tolerances. Trace first differing tick; deterministic tie fix requires new hash version and untouched old goldens. For a non-tie, report and stop without guessing a fix. | Research exports and native verification require portability. Non-tie stop reached: DWA obstacle cost differs by 22, changing selection at tick 47. | Gautham |
+| 2026-10-20 | Split sceneCore.ts (941 lines) and Renderer.ts (957) as the first task of M6's UI phase; portrait Compare horizontal result scroller accepted. | Keep decomposition outside M5. Recorded in README M6; no M6 worktree edits. | Gautham |
+| 2026-10-20 | Final closure requires fresh 30-minute Play soaks on both GPUs at recorded final SHA, all review checks rerun, retained/superseded earlier evidence, push and green PR #25 CI; real phone measured if ADB sees it. | Exact-head evidence; phone absent today. Deferred at explicit non-tie report stop. | Gautham |
+
 The owner approved E1–E8 by issuing the M5 prompt. Decision wording and rationale follow README §8 and its referenced architecture; M6+ items are recorded only, never implemented in M5.
 
 | Date | Change | Reason | By |
@@ -96,6 +109,8 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 
 ## Next step
+
+Resolve the reported LiDAR-to-costmap native/Pyodide boundary under an owner-approved follow-up, then implement the open-page policy and finish final-head closure checks. No PR #25 merge or deploy.
 
 Review [PR #25](https://github.com/GauthamCodes/coco-labs/pull/25), its CI and the acceptance matrix. Resolve the explicit open payload/startup limits; measure the real phone when connected; complete owner usability before public launch. Never merge automatically or create/edit releases.
 Independent review and the explicit open performance/phone/usability items precede public launch. No stop condition hit; no new parked idea.

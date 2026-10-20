@@ -9372,3 +9372,15 @@ Full criterion-by-criterion evidence: [M5_RESULTS](v2/M5_RESULTS.md), [closure r
 Conditions: balanced on AC, original profile balanced unchanged; i5-13420H, RTX 4050 NVIDIA **580.178.04**; actual Intel RPL-P through ANGLE Vulkan/Mesa **25.2.8-0ubuntu0.24.04.2** for integrated-GPU checks. Raw start/end conditions include load and renderer; no simulator/robot batch active. Phone is **not connected** in [ADB check](v2/data/m5/phone/ADB_CHECK_M511_2026-10-19.txt). Provisional phone default remains 60 fps (optional 120), automatic medium starting tier/DPR 1.5 (low 1/high 2), pending real heat run. Gautham's five-person usability and visual review remain pending. Failed diagnostics are retained; no owner row marked done.
 
 Final M5.11 candidate `00a42aa` confirmation: [Intel four-pane top-down replay](v2/data/m5/close/fps-final/checks.json), median **60.02508511003504 fps**, minimum **59.42198613471046**, 20 intervals, no errors/context loss; [eight Compare layouts](v2/data/m5/close/compare-final/checks.json), one GL context each and zero errors; [desktop Chrome manifest/installability](v2/data/m5/close/installability.json), no reported errors (not an Android install). Final web rerun **493 passed /62 files**, [log](v2/data/m5/close/vitest-close.txt).
+
+
+### 2026-10-20 M5 native portability diagnosis (MODEL)
+
+[Retained report/traces](v2/data/m5/closure-20261020/REPORT.md): original review
+control request reproduces 0.446011142799704 m chosen-trajectory Y difference at
+tick 48, DWA arm A. First numeric frame difference tick 1; first DWA selection
+difference tick 47, candidate 32 vs 12. Candidate 32 obstacle critic 0 vs 22,
+total 1679.4638041608869 vs 1855.4638041608869; candidate 12 costs
+1700.3884872002966 in both. Not a score tie: local-costmap rasterization differs.
+No model/golden/hash change; owner-requested report stop. Earlier performance
+measurements retained as historical, superseded for final closure-head claims.

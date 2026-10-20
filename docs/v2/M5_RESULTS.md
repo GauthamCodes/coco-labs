@@ -63,3 +63,24 @@ The immediate-entry protocol starts at navigation, waits only for the actual tit
 A low-priority package regression run shared the laptop during the emulation; its CPU affinity was restricted to cores 8–11 until the phone run finished. The raw start/end conditions include load. The control was held on the visible joystick; this is sustained rendering/stability evidence, not a claim about uninterrupted physical travel. Provisional phone defaults remain unchanged pending the real USB heat run.
 
 Final candidate `00a42aa`: [eight Compare layouts](data/m5/close/compare-final/checks.json) pass with one context and no errors; [Intel four-pane replay](data/m5/close/fps-final/checks.json) median 60.02508511003504 fps, minimum 59.42198613471046. [Desktop Chrome installability](data/m5/close/installability.json) reports zero manifest/installability errors; actual Android installation remains unmeasured. Earlier cold/warm and Play-soak data are from the preceding candidate; the final patch adds only Compare cost-batch cache invalidation.
+
+
+## 2026-10-20 closure attempt — not closed
+
+The previous acceptance measurements remain retained historical evidence and are
+**superseded as attestations of the eventual final closure head**. No fresh
+final-head performance pass is claimed. [Closure report and raw differential
+traces](data/m5/closure-20261020/REPORT.md).
+
+| Row / requirement | Current result |
+| --- | --- |
+| Determinism / native portability | Four-Pyodide-engine contract unchanged; native control fails proposed 1e-9 absolute tolerance. Numeric difference starts tick 1; DWA choice differs tick 47, maximum 0.446011142799704 m at tick 48. Cause: rasterized LiDAR costmap cells, not score tie. Owner-requested report stop; no hash/golden/model change. |
+| Caching / open documents | Review A/B `openDocumentMixed: true` is still latest. Pinning, waiting-update UI, cache retention and CI regression pending. |
+| Hygiene | Fresh final-head 30-minute Play soaks on both GPUs pending at non-tie stop. Earlier soak is historical. |
+| Phone | ADB 2026-10-20 empty; not connected; real row pending. |
+| Usability | Five-person owner test pending; no invented results. |
+| Publication | Manual **Deploy site** gate implemented, push/main false verified by truth-table test. No deploy. Public site remains M4 pending owner action after phone/usability gates. |
+| Full verification and measurements rerun | Pending at explicit non-tie stop; older test counts/performance are not relabelled as this head. |
+
+M5 is not ready for owner merge of PR #25. Scene-core/Renderer decomposition is
+the first task of M6 UI; portrait Compare's horizontal results row is accepted.
