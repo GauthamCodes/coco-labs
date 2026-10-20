@@ -42,6 +42,12 @@ CHANNELS = (
             'coco.costmap.v1.LayersHeader', False),
     Channel('coco.costmap.layers.cells.v1', 'costmap.layers',
             'coco.costmap.v1.LayersBatch', True),
+    Channel('coco.manip.grasp.envelope.v1', 'manip.grasp',
+            'coco.manip.v1.GraspEnvelope', False),
+    Channel('coco.manip.grasp.candidates.v1', 'manip.grasp',
+            'coco.manip.v1.CandidateBatch', True),
+    Channel('coco.manip.grasp.stages.v1', 'manip.grasp',
+            'coco.manip.v1.StageBatch', True),
     Channel('coco.envelope.manifest.v1', 'envelope',
             'coco.envelope.v1.Manifest', False),
     Channel('coco.world.grid.v1', 'world', 'coco.world.v1.WorldGrid', False),
@@ -138,7 +144,8 @@ M2_FAMILIES = ('estimate', 'localise.particles', 'localise.ekf', 'map.grid',
                'map.slam', 'control.local', 'decide.search', 'mission.fsm',
                'sensor.detect', 'arm')
 M5_FAMILIES = ('costmap.layers',)
-FAMILIES = M1_FAMILIES + M2_FAMILIES + M5_FAMILIES
+M6_FAMILIES = ('manip.grasp',)
+FAMILIES = M1_FAMILIES + M2_FAMILIES + M5_FAMILIES + M6_FAMILIES
 
 BY_NAME = {c.name: c for c in CHANNELS}
 

@@ -76,8 +76,8 @@ from .sketch import (_inflated_grid_map, _nearest_free, apply_delta,
                      drive_command, LidarSpec, odom_delta, sample_delta,
                      SketchMap, step_pose, wrap)
 from .terrain import ray_rect, Terrain
-from .worldspec import (arena_map, normalize, scan_height, SPEC_VERSION_V2,
-                        terrain_map, to_map_frame)
+from .worldspec import (arena_map, normalize, scan_height, SPEC_VERSION_V3,
+                        terrain_map, TERRAIN_SPEC_VERSIONS, to_map_frame)
 
 #: The state-hash layout's name; a change to the layout changes this.
 STATE_LAYOUT = b'coco.arena.state.v1\x00'
@@ -231,7 +231,7 @@ class Arena:
         # M4.3: kinematic terrain following on a World Spec v2 (ADR 0007); a
         # v1 (flat) world has none, and everything below is exactly M3's
         self.terrain = Terrain(self.spec) \
-            if self.spec['spec_version'] == SPEC_VERSION_V2 else None
+            if self.spec['spec_version'] in TERRAIN_SPEC_VERSIONS else None
         #: what the LiDAR meets: on terrain the boxes alone (the ramps are met
         #: analytically, above the beam); on a flat world the one map
         self.scan_smap = SketchMap(terrain_map(self.spec, scan_only=True)) \
@@ -393,6 +393,10 @@ class Arena:
             if self.terrain is None:
                 self.grasp_notice = ('no targets on a flat world: the grasp is on the 3D '
                                      "arena's platforms (World Spec v2)")
+                return
+            if self.spec['spec_version'] == SPEC_VERSION_V3:   # M6F.5: Grasp Assist instead
+                self.grasp_notice = ("the gated grasp holds the COCO arena's targets; a "
+                                     'World Spec v3 level picks with Grasp Assist')
                 return
             if self.grasp is None:
                 self.grasp = Grasp(self.spec['world_to_map'])
