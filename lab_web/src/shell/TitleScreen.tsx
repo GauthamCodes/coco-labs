@@ -14,7 +14,6 @@ export function TitleScreen() {
     // The first scene has drawn and the cards are interactive. Yield to paint
     // before doing background work; first input can start it immediately.
     let idle: number | undefined;
-    let timer: ReturnType<typeof setTimeout> | undefined;
     let started = false;
     const start = () => {
       if (started) return;
@@ -25,12 +24,11 @@ export function TitleScreen() {
     window.addEventListener('keydown', start, { once: true });
     const frame = requestAnimationFrame(() => {
       if ('requestIdleCallback' in window) idle = window.requestIdleCallback(start);
-      else timer = setTimeout(start, 0);
+      // Without idle callbacks, first input is the safe warm-up opportunity.
     });
     return () => {
       cancelAnimationFrame(frame);
       if (idle !== undefined) window.cancelIdleCallback(idle);
-      if (timer !== undefined) clearTimeout(timer);
       window.removeEventListener('pointerdown', start);
       window.removeEventListener('keydown', start);
     };

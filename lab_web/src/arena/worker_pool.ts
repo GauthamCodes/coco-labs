@@ -8,15 +8,6 @@ export function createArenaWorker(): Worker {
 }
 export function warmModel(): void {
   if (warm) return;
-  // Fetch in parallel with worker/module startup, only after title readiness.
-  // Pyodide's pinned Emscripten loader uses instantiateStreaming by default.
-  for (const file of typeof document === 'undefined' ? [] : ['pyodide.asm.wasm', 'python_stdlib.zip']) {
-    const href = `${import.meta.env.BASE_URL}generated/pyodide/${file}`;
-    if (document.querySelector(`link[rel="preload"][href="${href}"]`)) continue;
-    const link = document.createElement('link');
-    link.rel = 'preload'; link.as = 'fetch'; link.crossOrigin = 'anonymous'; link.href = href;
-    document.head.append(link);
-  }
   warm = createArenaWorker();
   warm.addEventListener('message', event => { if (event.data.type === 'mark') perf.mark(event.data.name, event.data.at); });
   const base = import.meta.env.BASE_URL;
