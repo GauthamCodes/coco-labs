@@ -74,6 +74,56 @@
       "licence_sha256": "d826ab6583b12c26807d8716a545bdbbb672df04f48608a364ba9efdbe501c30"
     },
     {
+      "name": "Chakra Petch",
+      "kind": "font",
+      "role": "game display (G1)",
+      "package": "@fontsource/chakra-petch",
+      "version": "5.3.0",
+      "licence": "OFL-1.1",
+      "attribution": "Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-LightItalic.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-Regular.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-Italic.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-Medium.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-MediumItalic.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-SemiBold.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-SemiBoldItalic.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-Bold.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git) ChakraPetch-BoldItalic.ttf: Copyright 2018 The Chakra Petch Project Authors (https://github.com/m4rc1e/Chakra-Petch.git)",
+      "source": "https://fontsource.org/fonts/chakra-petch",
+      "npm_integrity": "sha512-QZvbM/q2R6n1pg2x+TJPftZmBNS+ADU37L4Z4L/6UJIz+JZ/SRaEf8usPFRiP7Ht28sIideMu/Bm1SnGlSrwNw==",
+      "files": [
+        {
+          "path": "lab_web/node_modules/@fontsource/chakra-petch/files/chakra-petch-latin-500-normal.woff2",
+          "bytes": 9956,
+          "sha256": "36ad966cb653de70ba37355c41003b02de8940b2df6cbcd46480a6ad8cadd65d"
+        },
+        {
+          "path": "lab_web/node_modules/@fontsource/chakra-petch/files/chakra-petch-latin-700-normal.woff2",
+          "bytes": 9900,
+          "sha256": "ce5095dc1cb200aaa939e38067a0677018d10e9f26ec38cdcf1557ac524fc775"
+        }
+      ],
+      "licence_path": "lab_web/public/licenses/chakra-petch.txt",
+      "licence_sha256": "8f32c96ea465c5916489845361238b31b365414228bc2e4e45e3ae98ba1d311a"
+    },
+    {
+      "name": "Inter",
+      "kind": "font",
+      "role": "game UI (G1)",
+      "package": "@fontsource-variable/inter",
+      "version": "5.3.0",
+      "licence": "OFL-1.1",
+      "attribution": "Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter) Inter-Italic[opsz,wght].ttf: Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter)",
+      "source": "https://fontsource.org/fonts/inter",
+      "npm_integrity": "sha512-OupL48va4JNofb97w6NYeF9S7W/kHNKM0Er8Dem5nqi4jeOLrVJDoE8tZEpnMJmtkvNbB1EIPPwHcdkF6b1oUA==",
+      "files": [
+        {
+          "path": "lab_web/node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2",
+          "bytes": 85068,
+          "sha256": "34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956"
+        },
+        {
+          "path": "lab_web/node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
+          "bytes": 48256,
+          "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+        }
+      ],
+      "licence_path": "lab_web/public/licenses/inter.txt",
+      "licence_sha256": "3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345"
+    },
+    {
       "name": "Lucide",
       "kind": "icon set",
       "package": "lucide-react",

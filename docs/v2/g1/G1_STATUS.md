@@ -4,8 +4,8 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 
 ## Now
 
-- **Current checkpoint:** G1.0 Baseline — done.
-- **Next step:** G1.1 (mockups rendered to PNG), then G1.2 game shell.
+- **Current checkpoint:** G1.1 Art direction and mockups — done.
+- **Next step:** G1.2 game shell (title, loading with real stages, mode select, pause, results, settings, Recordings).
 
 ## Setup facts
 
@@ -21,10 +21,12 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 | Checkpoint | State | Evidence |
 | --- | --- | --- |
 | G1.0 Baseline | done | [`data/baseline/BASELINE.md`](data/baseline/BASELINE.md), [`screens/before/`](screens/before/) |
+| G1.1 Art direction, mockups | done | [`ART_DIRECTION.md`](ART_DIRECTION.md), [`mockups/`](mockups/) (HTML in `mockups/src/`, rendered by `lab_web/tools/g1/render_mockups.mjs`); Chakra Petch + Inter added to `docs/v2/DESIGN_ASSETS.json` (OFL-1.1, self-hosted) |
 
 ## Gautham: look at these
 
 - Before screenshots: `docs/v2/g1/screens/before/*.png`.
+- **Mockups (G1.1)**, each at 915 × 412 and 1440 × 900: `docs/v2/g1/mockups/` — `play-fetch` (Fetch Rush HUD, GRAB ring filling), `play-fetch-keys` (desktop key hints), `play-free` (Free Drive, Vision on, GO), `play-refused` (greyed GRAB "Too wide", AUTO on, contact flash, forklift toast), `title`, `loading` (real stages), `modes`, `pause`, `results` (values: the Fetch Rush seed-1 reference card). The 3D backdrop is a hand-drawn SVG stand-in, not the renderer.
 
 ## Laptop items pending
 
