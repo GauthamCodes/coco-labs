@@ -4,8 +4,8 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 
 ## Now
 
-- **Current checkpoint:** G1.6 Fetch Rush playable — done (CPython/Pyodide parity FAILS as diagnosed; G1.8 fixes it).
-- **Next step:** G1.7 Robot vision (holographic costmap layers) and the Compare restyle (incl. the Depot backdrop).
+- **Current checkpoint:** G1.7 Robot vision and Compare restyle — done.
+- **Next step:** G1.8 M5 carry-overs: deterministic LiDAR/transcendental math with hash v3 (CPython = Pyodide), the native-vs-Pyodide gate, update isolation.
 
 ## Setup facts
 
@@ -27,6 +27,7 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 | G1.4 Cameras | done | Chase (spring-damped, look-ahead, a boom that shortens with a face-distance pad and swings up toward top-down when there is no room, never into a wall), tactical (roof and fixtures hidden above them), orbit (drag/pinch/wheel), 0.4 s blends, straight cuts under reduced motion. `test/g1_camera.test.ts`: 20 scripted paths (walls, corners, reversing into a wall, spinning beside it, maze, aisles, office entrance, dock corner, Proving Ground) — no frame with the camera inside a solid or a solid between it and COCO; a non-vacuity check that the pull-in engages. [`screens/g14/`](screens/g14/) |
 | G1.5 New worlds | done | Depot from World Spec v3 (kit parts, procedural textures, baked AO + light pools, instanced props, decals, actors on their bodies), Proving Ground "test lab" restyle; every world × tier within budget (Depot low 278,534 B / 14,399 tris / 60 draws; high 674,794 B / 29,999 / 105); honesty test; generated SDF/map/world unchanged (checksums reproduce); orbit now pulls in at walls too. [`data/g15/README.md`](data/g15/README.md), [`screens/g15/`](screens/g15/) |
 | G1.6 Fetch Rush playable | done | Played through the page's own keys in Chromium: 1 delivery, 0 contacts, 141.4 s, ★★☆ from `coco_lab.games.stars` vs the reference (136.7 s); GRAB/DROP from Grasp Assist's own candidates; arm joints follow `coco.arm.state.v1`; candidates ringed in Robot vision; planner ghost (Settings); results → Compare on the Depot. Browser Pyodide = Pyodide-in-Node exactly; **CPython differs from tick 0** (2/480 LiDAR ranges differ in the last bit; hash v2 encodes them) — not hidden, G1.8. Found: the next order's ghost search stalls a tick (12.1 s CPython, 17.4 s Pyodide-in-Node). [`data/g16/README.md`](data/g16/README.md) |
+| G1.7 Robot vision, Compare | done | Vision: LiDAR as a faint cyan fan with bright hit points; the model's own costmap (`costmap_view`, every 4 s while on) as a hologram — lethal red cross-hatch, inscribed yellow stripes, inflation cyan fading with cost, a faint scanline (shape carries meaning); the plan as a magenta ribbon; Grasp Assist candidates ✓/✕. Compare: game type, cyan-edged panes, results strip, scanline overlay (chrome only; M5's CVD-tested computation colours untouched); Depot backdrop removed. Vitest incl. M5's compare_loop / comparison_pixels / pane_layout: pass. [`screens/g17/`](screens/g17/) |
 
 ## Gautham: look at these
 
@@ -40,6 +41,8 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 - **G1.5 worlds**: `docs/v2/g1/screens/g15/` — Depot overview (high, low), Depot aisle (phone, medium), Proving Ground chase and orbit.
 
 - **G1.6**: `docs/v2/g1/data/g16/results_run/results.png` (★★☆ results), `browser/after.png`, `docs/v2/g1/screens/g16-compare-depot.png`.
+
+- **G1.7**: `docs/v2/g1/screens/g17/` — Vision chase and tactical, Compare desktop (arena and Depot) and phone landscape.
 
 ## Laptop items pending
 

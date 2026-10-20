@@ -19,6 +19,7 @@ import type { EffectComposer } from 'three/addons/postprocessing/EffectComposer.
 import type { WorldLook } from '../world/describe';
 import { buildActor, buildWorld, type BuiltWorld, type Tier } from '../world/build3d';
 import { GameCamera } from './camera';
+import { CostmapHologram } from './costmap';
 
 /** coco_lab.arm's joint names and the URDF's (coco_robo2.urdf), as M4's renderer maps them. */
 const ARM_JOINTS: [string, string][] = [['joint1', 'm_link1_Revolute-6'], ['joint2', 'm_link2_Revolute-7'],
@@ -122,8 +123,8 @@ export class GameRenderer {
       new THREE.MeshBasicMaterial({ color: 0x34d399, transparent: true, opacity: 0.22, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide }));
     for (const m of [this.marker, this.ring, this.ringFill, this.beam]) { m.visible = false; this.scene.add(m); }
     // Robot vision: a holographic scanner (the scan area, its hits), the plan, the planner ghost
-    this.fan = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.13, depthWrite: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending }));
-    this.hits = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({ color: 0x7df3ff, size: 0.05, sizeAttenuation: true, transparent: true, opacity: 0.95, depthWrite: false }));
+    this.fan = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.018, depthWrite: false, side: THREE.DoubleSide }));
+    this.hits = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({ color: 0xa5f8ff, size: 0.075, sizeAttenuation: true, transparent: true, opacity: 1, depthWrite: false, blending: THREE.AdditiveBlending }));
     this.planLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0xf43f8e, transparent: true, opacity: 0.9, depthWrite: false }));
     this.ghostLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0xf9a8d4, transparent: true, opacity: 0.45, depthWrite: false }));
     this.goalPin = new THREE.Group();
@@ -356,6 +357,13 @@ export class GameRenderer {
 
   setVision(on: boolean) { this.vision.visible = on; }
 
+  costmap: CostmapHologram | null = null;
+  /** Robot vision's costmap (the model's own cells), created for the world's grid on first use. */
+  costmapCells(grid: { width: number; height: number; resolution: number; origin: [number, number] }, rows: ArrayLike<number>, cols: ArrayLike<number>, costs: ArrayLike<number>) {
+    if (!this.costmap) { this.costmap = new CostmapHologram(grid.width, grid.height, grid.resolution, grid.origin); this.vision.add(this.costmap.mesh); }
+    this.costmap.apply(rows, cols, costs);
+  }
+
   /** The LiDAR as a holographic fan: what COCO can see, at its beam height, and the bright hit points. */
   setScan(ranges: Float32Array, angles: { min: number; max: number; samples: number }, mount: [number, number, number], rangeMax: number) {
     if (!this.vision.visible) return;
@@ -384,6 +392,7 @@ export class GameRenderer {
     this.clock += dt;
     const [x, y, th] = this.pose;
     for (const m of this.world?.dropZones.values() ?? []) if (m.visible) (m.material as THREE.MeshBasicMaterial).opacity = this.dropStrong ? 0.32 + 0.18 * Math.sin(this.clock * 4) : 0.14;
+    this.costmap?.tick(this.clock);
     this.robot.position.set(x, y, this.z);
     this.robot.rotation.set(this.tilt[1], this.tilt[0], th, 'ZYX');
     // wheels turn at the model's own wheel speed

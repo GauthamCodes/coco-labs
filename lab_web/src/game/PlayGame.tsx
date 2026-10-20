@@ -111,6 +111,12 @@ export function PlayGame(p: PlayProps) {
       onTick: (t, ranges) => onTick(t, ranges),
       onError: (stg, m) => setError(`${stg}: ${m}`),
       onFamily: (msg) => {
+        // Robot vision: the model's costmap cells (coco_lab.costmap), drawn as a hologram
+        if (msg.channel === 'coco.costmap.layers.cells.v1' && msg.columns && s.current?.world) {
+          const c = msg.columns as Record<string, ArrayLike<number>>;
+          const w = s.current.world;
+          r.current?.costmapCells({ width: w.width, height: w.height, resolution: w.resolution, origin: w.origin }, c.row, c.col, c.combined_cost);
+        }
         // Grasp Assist's arm script, on COCO's real joints (presentation of the model's own state)
         if (msg.channel === 'coco.arm.state.v1' && msg.columns) {
           const cols = msg.columns as Record<string, ArrayLike<number>>;
@@ -205,6 +211,14 @@ export function PlayGame(p: PlayProps) {
     if (f?.over && !bf?.over) void finish();
     setTick(t);
   };
+
+  // Robot vision asks the model for its costmap: at once, then every 4 s while it stays on (view-only, no tick)
+  useEffect(() => {
+    if (!vision || !started) return;
+    s.current?.client.requestCostmap();
+    const t = setInterval(() => s.current?.client.requestCostmap(), 4000);
+    return () => clearInterval(t);
+  }, [vision, started]);
 
   // the planner ghost: asked once per order while it is on (an A* in the worker, read-only)
   const ghostOrder = useRef<number | null>(null);

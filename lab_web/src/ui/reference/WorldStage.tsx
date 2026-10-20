@@ -59,7 +59,7 @@ export function WorldStage({ kind, data, perspective = false, onReady, onHover, 
       for (const overlay of overlays) overlay.cursor = -1;
     };
     window.addEventListener(PREFERENCES_CHANGED, applyPreferences);
-    let spec: { world_to_map: [number, number]; start: { x: number; y: number; theta: number } };
+    let spec: { id: string; world_to_map: [number, number]; start: { x: number; y: number; theta: number } };
     const base = import.meta.env.BASE_URL;
     const resize = () => {
       const bounds = el.getBoundingClientRect();
@@ -98,6 +98,8 @@ export function WorldStage({ kind, data, perspective = false, onReady, onHover, 
         if (!width || !height) return;
         const current = latest.current;
         if (kind === 'compare' && current.data) rig!.setPose(current.data.world.start);
+        // G1.6: the arena mesh is the Proving Ground's; on another level (the Depot) it is not drawn
+        if (kind === 'compare' && current.data) rig!.setVisible(current.data.world.id === spec.id || !current.data.world.id.startsWith('coco_depot'));
         rig!.update(dt, width / height);
         const panes = kind === 'compare' ? current.data?.stores.length === 4 ? 4 : 2 : 1;
         const rectangles = paneLayout(panes, width, height);

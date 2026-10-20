@@ -9,6 +9,8 @@ import type { CostmapData, CostLayer } from '../ui/reference/comparisonPixels';
 import { ModeNav } from '../ui/ModeNav';
 import '../ui/reference/reference.css';
 import './compare.css';
+import '../game/fonts.css';
+import '../game/skin.css';
 import { Tours, type TourPreset } from './Tours';
 const BASE = import.meta.env.BASE_URL;
 const LABELS: Record<string, string> = { bfs: 'BFS', dijkstra: 'Dijkstra', astar: 'A*', greedy: 'Greedy', weighted_astar: 'Weighted A*', dstar_lite: 'D* Lite' };
