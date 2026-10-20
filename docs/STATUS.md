@@ -49,6 +49,7 @@
 
 ## Independent review — 2026-10-20
 
+- [Review-fix PR #26](https://github.com/GauthamCodes/coco-labs/pull/26) targets M5, open/unmerged; final product fixes `f22f729`.
 - [Full findings and 15-row claims audit](v2/reviews/M5_REVIEW.md); [review screenshots](v2/data/m5/review/SCREENSHOTS.md). Historical performance numbers above are not exact-head attestations.
 - Fresh reviewer runs: 3569 package, 493 web and 219 tool tests pass; schema/typecheck, two byte-identical builds and dist checks pass. [Build identity](v2/data/m5/review/BUILD.json).
 - Fresh v1: 100×150=15000 hashes, zero hash/chain differences. Four-engine v2: each 100×150, zero hash/chain differences or page errors. CLI links: 153 distinct queries, all pass. Corrected verifier no longer substitutes saved Node output or ignores chain/page errors.

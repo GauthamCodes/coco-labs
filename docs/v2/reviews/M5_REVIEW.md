@@ -9,7 +9,7 @@ No milestone merge, release, deployment, evidence deletion or M6-worktree modifi
 
 **Not ready to merge:** an already-open document can mix deployment versions.
 The real-phone and five-person usability rows also remain open, and merging #25
-publishes v2 to the public site. Small review fixes are isolated in the review-fix PR.
+publishes v2 to the public site. Small review fixes are isolated in [PR #26 — M5 review fixes](https://github.com/GauthamCodes/coco-labs/pull/26), targeting `v2/m5-focus`.
 Completed reviewer reruns and measured-artifact identity are recorded below.
 
 ## Findings
@@ -178,3 +178,7 @@ twins and [SHA256 inventory](../data/m5/review/compressed-evidence.json) are com
 the reference readers accept either form. Interrupted and failed attempts are
 retained and explicitly superseded. No generated Case File or history file was
 read wholesale. No fixture/golden or algorithm implementation changed.
+
+## Review-fix PR and commits
+
+[PR #26](https://github.com/GauthamCodes/coco-labs/pull/26), `v2/m5-review` → `v2/m5-focus`, is open and unmerged. Product fixes: `fc61545` (CI text scan), `de3c9e6` (determinism verdict), `c353234` (title gate/preload attempt), `5f3b93c` (modal/portrait STOP), `9819448` (Settings navigation), `cd2e771` (secondary-touch STOP), `f22f729` (preload rollback/real idle). Audit/evidence: `29690ee`; review-tip M6 trial: `3439730`. This final documentation commit records the PR link. No push to M5, no merge or deployment.
