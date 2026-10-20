@@ -29,6 +29,8 @@ export interface GameResult {
   game: GameKind; seed: number; world: WorldId;
   card: Record<string, unknown> | null; stars: number | null; reference: Record<string, unknown> | null;
   record: Record<string, unknown> | null;
+  /** the level's objects (map frame), to name the first order's goal for Compare */
+  objects?: { id: string; x: number; y: number }[];
 }
 
 const bestKey = (seed: number) => `coco.play.best.v1.g1-fetch-rush.seed-${seed}`;
@@ -58,6 +60,7 @@ function GameRun({ game, world, seed }: { game: GameKind; world: WorldId; seed: 
   const [restartKey, setRestartKey] = useState(0);
   const [tier, setTier] = useState<Tier>(() => pickTier());
   const [tutorialSeen, setTutorialSeen] = useState(() => readPref('tutorial', false, isBool));
+  const [ghost, setGhost] = useState(() => readPref('ghost', false, isBool));
   const showPerf = new URLSearchParams(window.location.search).has('perf');
   useEffect(() => { document.documentElement.classList.add('playing-coco'); return () => document.documentElement.classList.remove('playing-coco'); }, []);
   const onResult = (r: GameResult) => {
@@ -67,7 +70,7 @@ function GameRun({ game, world, seed }: { game: GameKind; world: WorldId; seed: 
   const restart = () => { setResult(null); setPaused(false); setRestartKey((k) => k + 1); };
   return <>
     <PlayGame key={`${restartKey}-${tier}`} world={world} game={game} seed={seed} tier={tier} paused={paused || !!result} onPause={() => setPaused((x) => !x)}
-      onResult={onResult} restartKey={restartKey} showPerf={showPerf} tutorialSeen={tutorialSeen}
+      onResult={onResult} restartKey={restartKey} showPerf={showPerf} tutorialSeen={tutorialSeen} ghost={ghost}
       onTutorialDone={() => { writePref('tutorial', true); setTutorialSeen(true); }} />
     {paused && !result && !settings && <section className="g1 g1-screen dim" data-testid="g1-pause-menu" style={{ position: 'fixed', zIndex: 25, background: 'rgba(8,10,14,.62)' }}>
       <div className="g1-eyebrow">PAUSED · {game === 'fetch_rush' ? `FETCH RUSH · SHIFT ${seed}` : `FREE DRIVE · ${world === 'depot' ? 'DEPOT' : 'PROVING GROUND'}`}</div>
@@ -78,12 +81,12 @@ function GameRun({ game, world, seed }: { game: GameKind; world: WorldId; seed: 
         <a href={`${BASE}?view=play`}>EXIT</a>
       </nav>
     </section>}
-    {settings && <Settings tier={tier} onTier={setTier} onClose={() => setSettings(false)} />}
+    {settings && <Settings tier={tier} onTier={setTier} ghost={ghost} onGhost={(g) => { writePref('ghost', g); setGhost(g); }} onClose={() => setSettings(false)} />}
     {result && <Results r={result} onAgain={restart} />}
   </>;
 }
 
-function Settings({ tier, onTier, onClose }: { tier: Tier; onTier: (t: Tier) => void; onClose: () => void }) {
+function Settings({ tier, onTier, ghost, onGhost, onClose }: { tier: Tier; onTier: (t: Tier) => void; ghost: boolean; onGhost: (g: boolean) => void; onClose: () => void }) {
   const [sound, setSound] = useState(() => readPref('sound', false, isBool));
   const [haptics, setHaptics] = useState(() => readPref('haptics', true, isBool));
   const [hz120, setHz] = useState(() => readPref('phone120', false, isBool));
@@ -98,6 +101,7 @@ function Settings({ tier, onTier, onClose }: { tier: Tier; onTier: (t: Tier) => 
       <label htmlFor="g1-s">Sound</label><input id="g1-s" type="checkbox" checked={sound} onChange={(e) => { setSound(e.target.checked); writePref('sound', e.target.checked); }} />
       <label htmlFor="g1-f">Frame-rate cap</label>
       <select id="g1-f" value={hz120 ? '120' : '60'} onChange={(e) => { setHz(e.target.value === '120'); writePref('phone120', e.target.value === '120'); }}><option value="60">60 fps</option><option value="120">120 fps</option></select>
+      <label htmlFor="g1-g">Planner ghost</label><input id="g1-g" type="checkbox" checked={ghost} onChange={(e) => onGhost(e.target.checked)} />
       <label htmlFor="g1-k">Control hints</label><input id="g1-k" type="checkbox" checked={hints} onChange={(e) => { setHints(e.target.checked); writePref('bars', e.target.checked); }} />
     </div>
     <p className="g1-note">Quality changes take effect at once and restart the drawing, not the run's rules. Saved in this browser only.</p>
@@ -109,7 +113,10 @@ function Results({ r, onAgain }: { r: GameResult; onAgain: () => void }) {
   const c = r.card ?? {};
   const delivered = (c.delivered as { ghost: number | null; driven: number }[] | undefined) ?? [];
   const driven = delivered.reduce((s, d) => s + d.driven, 0), ghost = delivered.reduce((s, d) => s + (d.ghost ?? 0), 0);
-  const compare = `${BASE}?view=compare&world=depot`;
+  // the same level and the shift's first order: the planners from COCO's start to that object
+  const first = (c.delivered as { object: string }[] | undefined)?.[0]?.object ?? ((c.orders as [string, string][] | undefined)?.[0]?.[0]);
+  const obj = first ? r.objects?.find((o) => o.id === first) : undefined;
+  const compare = `${BASE}?view=compare&world=depot${obj ? `&goal=${obj.x.toFixed(2)},${obj.y.toFixed(2)}` : ''}`;
   return <section className="g1 g1-screen dim" data-testid="g1-results" style={{ position: 'fixed', zIndex: 27, background: 'rgba(8,10,14,.8)' }}>
     <div className="g1-eyebrow">FETCH RUSH · SHIFT {r.seed} · RESULT</div>
     <div className="g1-bigstars" aria-label={`${r.stars ?? 0} of 3 stars`}>{r.stars === null ? <span className="off">☆☆☆</span> : <>{'★'.repeat(r.stars)}<span className="off">{'★'.repeat(3 - r.stars)}</span></>}</div>

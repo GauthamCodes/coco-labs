@@ -17,7 +17,7 @@
  */
 
 import { ArenaClient } from '../arena/client';
-import { SPEC_FILES, type InputRow, type SpecFile, type Tick, type World } from '../arena/protocol';
+import { SPEC_FILES, type FamilyMessage, type InputRow, type SpecFile, type Tick, type World } from '../arena/protocol';
 
 export type GameKind = 'fetch_rush' | 'free';
 export type WorldId = 'depot' | 'proving';
@@ -37,6 +37,8 @@ export interface SessionEvents {
   onTick(tick: GameTick, ranges: Float32Array): void;
   onError(stage: string, message: string): void;
   onStage?(stage: string): void;
+  /** a model family batch (Grasp Assist's arm state, candidates and stages) */
+  onFamily?(msg: FamilyMessage): void;
 }
 
 const STEP_MS = 100;
@@ -49,6 +51,7 @@ export class GameSession {
   private acc = 0;
   private last = 0;
   private timer = 0;
+  private sentAt = 0;
   paused = true;
   latched = false;
   /** the last teleop sent (normalised), so a held stick is not re-sent every tick */
@@ -61,6 +64,7 @@ export class GameSession {
       onWorld: (w, occ) => { this.world = w as World & { game: GameInfo }; ev.onWorld(this.world, occ); },
       onTick: (t, ranges) => { this.inFlight = false; this.lastTick = t as GameTick; this.ticks += 1; ev.onTick(t as GameTick, ranges); this.pump(); },
       onError: (stage, m) => { this.inFlight = false; ev.onError(stage, m); },
+      onFamily: (msg) => ev.onFamily?.(msg),
     }, { hashVersion: 2, seed: 1, spec: SPEC_FOR[world], game: { game, arg: game === 'fetch_rush' ? seed : 0 } });
   }
 
@@ -87,9 +91,13 @@ export class GameSession {
     if (!this.inFlight && (this.acc >= STEP_MS || this.queue.length)) {
       this.acc = Math.max(0, this.acc - STEP_MS);
       this.inFlight = true;
+      this.sentAt = now;
       this.client.step(this.queue.splice(0));
     }
   }
+
+  /** How long the tick in flight has taken so far (ms; 0 when none is in flight). */
+  stepAge() { return this.inFlight ? performance.now() - this.sentAt : 0; }
 
   pause() { this.paused = true; }
   resume() { this.paused = false; this.last = performance.now(); }
@@ -139,7 +147,7 @@ export class GameSession {
   }
 
   /** Ask the worker's game glue (read-only queries; nothing in the model changes). */
-  query<T>(op: 'preview' | 'auto_goal' | 'record' | 'stars', arg?: unknown): Promise<T> { return this.client.game<T>(op, arg); }
+  query<T>(op: 'preview' | 'auto_goal' | 'record' | 'stars' | 'ghost', arg?: unknown): Promise<T> { return this.client.game<T>(op, arg); }
 
   /** Take the wheels back from autonomy: a zero teleop (the person drives, standing still). */
   manual() {

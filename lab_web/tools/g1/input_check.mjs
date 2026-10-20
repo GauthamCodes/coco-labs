@@ -26,7 +26,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { nothingPhone1, throttlePhone } from '../phone/nothing-phone-1.mjs';
 
 const [site, out, ...rest] = process.argv.slice(2);
-const TRIALS = Number(rest[rest.indexOf('--latency-trials') + 1] || 10);
+const TRIALS = rest.includes('--latency-trials') ? Number(rest[rest.indexOf('--latency-trials') + 1]) : 10;
 const ONLY_LATENCY = rest.includes('--only-latency');
 mkdirSync(out, { recursive: true });
 const launch = { ...(process.env.G1_CHROMIUM ? { executablePath: process.env.G1_CHROMIUM } : {}), args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] };

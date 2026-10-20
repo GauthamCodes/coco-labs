@@ -42,6 +42,7 @@ export async function bootGlue() {
   return { py, glue: py.pyimport('arena_glue') };
 }
 
+const slow = [];
 function step(glue, rows) {
   const t0 = performance.now();
   glue.begin(JSON.stringify(rows));
@@ -49,7 +50,9 @@ function step(glue, rows) {
   const out = glue.finish();
   const tick = JSON.parse(out.get(0));
   out.destroy();
-  return { tick, ms: performance.now() - t0 };
+  const ms = performance.now() - t0;
+  if (ms > 500) slow.push({ tick: tick.tick, ms: Math.round(ms), inputs: rows.map((r) => r.kind + (r.choice ? ':' + r.choice : '')), plans: tick.plans.map((p) => ({ planner: p.planner, status: p.status, expanded: p.summary?.expanded ?? p.summary?.nodes_expanded })) });
+  return { tick, ms };
 }
 
 export async function play({ record, script }) {
@@ -57,7 +60,7 @@ export async function play({ record, script }) {
   const spec = readFileSync(join(repo, 'worlds', 'coco_depot_v1.json'), 'utf-8');
   const game = record ? record.game : 'fetch_rush';
   const arg = record ? record.arg : 1;
-  const hv = record?.hash_version ?? 2;
+  const hv = record?.hash_version ?? Number(args.hv ?? 2);
   const init = glue.game_init(spec, game, arg, record?.seed ?? 1, () => {}, 2048, () => {}, hv);
   const world = JSON.parse(init.get(0));
   init.destroy();
@@ -69,7 +72,7 @@ export async function play({ record, script }) {
     for (let k = 0; k < record.ticks; k++) { const r = step(glue, by.get(k) ?? []); ms.push(r.ms); ticks.push(r.tick.hash); }
   } else {
     // a scripted player: AUTO to the first pick, GRAB, AUTO to the drop, DROP (the same queries the page sends)
-    let t = step(glue, world.game.setup); ms.push(t.ms);
+    let t = step(glue, world.game.setup); ms.push(t.ms); ticks.push(t.tick.hash);
     const q = (op, a = null) => JSON.parse(glue.game_op(op, a));
     let phase = 'to_pick';
     for (let k = 1; k < (Number(args.ticks) || 1800); k++) {
@@ -83,17 +86,17 @@ export async function play({ record, script }) {
       else if (phase === 'grabbing' && a.phase === 'idle' && !a.carried) { phase = 'failed'; }
       else if (phase === 'to_drop' && t.tick.arrived) { rows = [{ kind: 'config', choice: 'assist.grasp=go' }]; phase = 'dropping'; }
       else if (phase === 'dropping' && a.phase === 'idle') { const g = q('auto_goal'); if (g) rows = [{ kind: 'goal', x: g.x, y: g.y }]; phase = 'to_pick'; }
-      t = step(glue, rows); ms.push(t.ms);
+      t = step(glue, rows); ms.push(t.ms); ticks.push(t.tick.hash);
     }
   }
   const rec = JSON.parse(glue.game_op('record', null));
   const stars = JSON.parse(glue.game_op('stars', null));
   py.runPython('import gc; gc.collect()');
   const sorted = [...ms].sort((a, b) => a - b);
-  return { record: rec.record, hash_chain: rec.hash_chain, last_hash: rec.last_hash, scorecard: stars.card,
+  return { record: rec.record, hash_chain: rec.hash_chain, last_hash: rec.last_hash, scorecard: stars.card, hashes: ticks,
     timing: { runtime: `Pyodide ${pyodideVersion} in Node ${process.version}`, cpu: os.cpus()[0]?.model, ticks: ms.length,
       median_ms: sorted[Math.floor(sorted.length / 2)], p95_ms: sorted[Math.floor(sorted.length * 0.95)], max_ms: sorted[sorted.length - 1],
-      note: 'wall time per tick in Pyodide-in-Node on this machine; not a phone, not a browser' } };
+      note: 'wall time per tick in Pyodide-in-Node on this machine; not a phone, not a browser', slow_ticks: slow } };
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

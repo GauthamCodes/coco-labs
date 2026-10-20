@@ -436,6 +436,8 @@ def game_finish(t, rows):
         if not r.started:
             r.start(_arena)
         r.observe(_arena, t)
+    if r is not None and getattr(r, 'started', False) and g.get('order_k') != getattr(r, 'k', None):
+        g['order_k'], g['order_pose'] = r.k, tuple(_arena.pose)
     g['chain'].update(t.state_hash.encode())
     g['ticks'] += 1
     g['inputs'].extend(rows)
@@ -481,7 +483,13 @@ def game_preview():
 
 
 def game_auto_goal():
-    """AUTO in Fetch Rush: where the planner would send COCO next (the ghost's own legs)."""
+    """
+    AUTO in Fetch Rush: where the planner sends COCO next. To the order's object
+    (the planner stops at the nearest free cell; GRAB, Grasp Assist, takes it from
+    there), or, carrying it, to the drop zone's centre. One planning call, in the
+    tick, like any goal; the 16-pose ghost search (games.best_approach) is not
+    repeated here.
+    """
     from coco_lab import games
     a = _arena
     r = _game['rules'] if _game else None
@@ -492,10 +500,42 @@ def game_auto_goal():
     if assist.carried() == oid:
         z = games.zone_rect(a.spec, drop)
         return json.dumps({'x': (z[0] + z[1]) / 2, 'y': (z[2] + z[3]) / 2, 'why': 'drop'})
-    ba = games.best_approach(a, assist, oid, a.pose[:2])
-    if not ba:
+    o = assist.objects[oid]
+    return json.dumps({'x': o['x'], 'y': o['y'], 'why': 'pick', 'object': oid})
+
+
+def game_ghost():
+    """
+    The planner ghost for the current order, drawn: the A* route from where COCO stood
+    when the order appeared to the object, then to the drop zone's centre (the planner
+    stops at the nearest free cell). Read-only; FetchRush's own ghost LENGTH (its
+    pre-grasp-pose search) is what the score uses.
+    """
+    from coco_lab import games
+    from coco_lab.search import search
+    from coco_lab.sketch import _nearest_free
+    a = _arena
+    r = _game['rules'] if _game else None
+    if not isinstance(r, games.FetchRush) or r.current() is None:
         return json.dumps(None)
-    return json.dumps({'x': ba[0][0], 'y': ba[0][1], 'why': 'pick', 'object': oid})
+    oid, drop = r.current()
+    o = a.subsystems['assist'].objects[oid]
+    z = games.zone_rect(a.spec, drop)
+    legs = [(_game.get('order_pose', a.pose)[:2], (o['x'], o['y'])),
+            ((o['x'], o['y']), ((z[0] + z[1]) / 2, (z[2] + z[3]) / 2))]
+    pts = []
+    for frm, to in legs:
+        sc, gc = a.plan_map.cell_at(*frm), a.plan_map.cell_at(*to)
+        if sc is None or gc is None:
+            return json.dumps(None)
+        s, t = _nearest_free(a.grid, sc), _nearest_free(a.grid, gc)
+        if s is None or t is None:
+            return json.dumps(None)
+        res = search(a.grid, s, t, **PLANNERS['astar'])
+        if not res.found:
+            return json.dumps(None)
+        pts += [list(a.plan_map.cell_centre(c[0], c[1])) for c in res.path]
+    return json.dumps({'order': r.k, 'points': pts[::2] + [pts[-1]]})
 
 
 def game_op(op, arg_json=None):
@@ -508,4 +548,6 @@ def game_op(op, arg_json=None):
         return game_record()
     if op == 'stars':
         return game_stars(arg_json)
+    if op == 'ghost':
+        return game_ghost()
     raise ValueError(f'unknown game op {op!r}')

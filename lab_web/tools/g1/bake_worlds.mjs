@@ -106,7 +106,12 @@ export function bakeAll() {
     worlds[name] = { spec: file, spec_sha256: sha256(specBytes), light: `${name}.light.png`, light_sha256: sha256(bytes), light_bytes: bytes.length,
       texel: TEXEL, size: [w, h], floor: look.floor, parts: look.parts.length };
   }
-  const manifest = Buffer.from(JSON.stringify({ about: 'G1.5 baked floor light maps (presentation only; tools/g1/bake_worlds.mjs)', worlds }, null, 1) + '\n');
+  // G1.6: Fetch Rush's reference cards (docs/v2/m6/data/games_reference.json), for coco_lab.games.stars in the worker
+  const ref = JSON.parse(readFileSync(join(repo, 'docs', 'v2', 'm6', 'data', 'games_reference.json'), 'utf-8'));
+  const cards = Object.fromEntries(ref.runs.filter((r) => r.record.game === 'fetch_rush').map((r) => [String(r.record.arg), r.result.scorecard]));
+  files['references.json'] = Buffer.from(JSON.stringify({ source: 'docs/v2/m6/data/games_reference.json', fetch_rush: cards }) + '\n');
+  const manifest = Buffer.from(JSON.stringify({ about: 'G1.5 baked floor light maps (presentation only; tools/g1/bake_worlds.mjs)', worlds,
+    references: { file: 'references.json', sha256: sha256(files['references.json']) } }, null, 1) + '\n');
   return { files, manifest };
 }
 

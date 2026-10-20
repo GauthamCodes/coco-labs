@@ -57,7 +57,9 @@ def test_a_played_fetch_rush_replays_to_the_same_chain(hash_version):
     preview = json.loads(glue.game_op('preview'))
     goal = json.loads(glue.game_op('auto_goal'))
     stars = json.loads(glue.game_op('stars', None))
+    ghost = json.loads(glue.game_op('ghost'))
     assert (a.state_bytes(), a.state_hash()) == before, 'a query changed the model'
+    assert ghost['order'] == 0 and len(ghost['points']) > 10
     assert isinstance(preview['rows'], list) and goal['why'] == 'pick' and stars['card']['game'] == 'fetch_rush'
     _step(glue, [{'kind': 'goal', 'x': goal['x'], 'y': goal['y']}])
     for k in range(30):

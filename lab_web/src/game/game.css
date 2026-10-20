@@ -174,3 +174,6 @@
 .g1-title-bottom { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; gap: calc(12px * var(--g1-s)); padding-bottom: calc(18px * var(--g1-s) + env(safe-area-inset-bottom)); }
 @media (max-height: 460px) { .g1-title-bottom { gap: 8px; } .g1-logo { font-size: 30px; } .g1-card p { display: none; } .g1-card { width: 120px; } }
 @media (prefers-reduced-motion: reduce) { .g1-toast, .g1-flash, .g1-thumb, .g1-stop.is-latched { animation: none; } }
+.g1-busy { position: absolute; left: 50%; top: calc(56px * var(--g1-s)); transform: translateX(-50%); margin: 0; padding: calc(6px * var(--g1-s)) calc(14px * var(--g1-s)); border-radius: 999px;
+  font: 700 calc(12px * var(--g1-s)) var(--g1-display); color: var(--g1-sensor); white-space: nowrap; pointer-events: none; }
+.g1-busy small { color: var(--g1-mute); font-weight: 500; }

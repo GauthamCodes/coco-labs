@@ -36,6 +36,8 @@ export interface PlayProps {
   world: WorldId; game: GameKind; seed: number; tier: Tier;
   onPause: () => void; paused: boolean; onResult: (r: GameResult) => void; restartKey: number;
   showPerf: boolean; tutorialSeen: boolean; onTutorialDone: () => void;
+  /** draw the planner ghost: the A* route for the current order (Settings) */
+  ghost: boolean;
 }
 
 const fmt = (s: number) => `${Math.floor(Math.max(0, s) / 60)}:${String(Math.floor(Math.max(0, s) % 60)).padStart(2, '0')}`;
@@ -66,6 +68,8 @@ export function PlayGame(p: PlayProps) {
   const [info, setInfo] = useState(false);
   const [tip, setTip] = useState(0);
   const [holdStart, setHoldStart] = useState<number | null>(null);
+  /** a tick the model is still computing after 0.8 s (the next order's planner ghost is the long one) */
+  const [busy, setBusy] = useState(false);
   const [tutorial, setTutorial] = useState(false);
   const look = useRef<WorldLook | null>(null);
   const prev = useRef<GameTick | null>(null);
@@ -106,6 +110,14 @@ export function PlayGame(p: PlayProps) {
       onWorld: (w, o) => { occ.current = o; setWorld(w); setModelReady(true); setStage('ready'); },
       onTick: (t, ranges) => onTick(t, ranges),
       onError: (stg, m) => setError(`${stg}: ${m}`),
+      onFamily: (msg) => {
+        // Grasp Assist's arm script, on COCO's real joints (presentation of the model's own state)
+        if (msg.channel === 'coco.arm.state.v1' && msg.columns) {
+          const cols = msg.columns as Record<string, ArrayLike<number>>;
+          const n = cols.joint1?.length ?? 0;
+          if (n) r.current?.setArm(Object.fromEntries(['joint1', 'joint2', 'finger_left', 'finger_right'].map((k) => [k, Number(cols[k]?.[n - 1])])));
+        }
+      },
     });
     s.current = session;
     session.client.worker.addEventListener('message', (m: MessageEvent) => {
@@ -149,7 +161,7 @@ export function PlayGame(p: PlayProps) {
   useEffect(() => { if (modelReady && sceneReady) (canvas.current!.parentElement as HTMLElement).dataset.ready = 'true'; }, [modelReady, sceneReady]);
   useEffect(() => { const t = setInterval(() => setTip((k) => (k + 1) % TIPS.length), 4000); return () => clearInterval(t); }, []);
   useEffect(() => { if (p.paused) s.current?.pause(); else if (started) s.current?.resume(); }, [p.paused, started]);
-  useEffect(() => { r.current?.setVision(vision); }, [vision]);
+  useEffect(() => { r.current?.setVision(vision); r.current?.setCandidates(vision ? cands : []); }, [vision, cands]);
 
   /** Every tick from the model: draw it, and turn its changes into toasts, flashes and sounds. */
   const onTick = (t: GameTick, ranges: Float32Array) => {
@@ -172,7 +184,7 @@ export function PlayGame(p: PlayProps) {
     if (g?.actors) rr.setActors(g.actors);
     const plan = t.plans.length ? t.plans[t.plans.length - 1].waypoints : null;
     if (plan) rr.setPlan([[t.pose[0], t.pose[1]], ...plan]);
-    if (t.arrived || (t.source === 'teleop' && before?.source !== 'teleop')) { rr.setPlan([]); setGoal(null); }
+    if (t.arrived || (t.source === 'teleop' && before?.source !== 'teleop')) { rr.setPlan([]); setGoal(null); rr.setGoal(null); setAuto(false); }
     rr.setScan(ranges, { min: w?.lidar.angle_min ?? -2.09, max: w?.lidar.angle_max ?? 2.09, samples: w?.lidar.samples ?? ranges.length }, (w?.lidar.mount ?? [0, 0, 0]) as [number, number, number], w?.lidar.range_max ?? 12);
     sound.current.motor(t.v, (w?.limits as Record<string, number> | undefined)?.teleop_linear ?? 0.5);
     // transitions
@@ -193,6 +205,23 @@ export function PlayGame(p: PlayProps) {
     if (f?.over && !bf?.over) void finish();
     setTick(t);
   };
+
+  // the planner ghost: asked once per order while it is on (an A* in the worker, read-only)
+  const ghostOrder = useRef<number | null>(null);
+  useEffect(() => {
+    const k = tick?.game?.fetch?.k;
+    if (!p.ghost || k === undefined) { if (!p.ghost) { r.current?.setGhost(null); ghostOrder.current = null; } return; }
+    if (ghostOrder.current === k) return;
+    ghostOrder.current = k;
+    void s.current?.query<{ order: number; points: [number, number][] } | null>('ghost').then((g) => r.current?.setGhost(g?.points ?? null));
+  }, [p.ghost, tick?.game?.fetch?.k]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // a long tick is shown, never hidden: the model's clock waits with it (every timer is model time)
+  useEffect(() => {
+    if (!started) return;
+    const t = setInterval(() => { const ss = s.current; setBusy(!!ss && !ss.paused && ss.stepAge() > 800); }, 200);
+    return () => clearInterval(t);
+  }, [started]);
 
   // GRAB's preview: Grasp Assist's own candidates near COCO, asked twice a second while idle
   useEffect(() => {
@@ -283,8 +312,11 @@ export function PlayGame(p: PlayProps) {
   const finish = async () => {
     const ss = s.current!;
     ss.pause();
-    const [card, rec] = await Promise.all([ss.query<{ card: Record<string, unknown>; stars: number | null; reference: Record<string, unknown> | null }>('stars', { seed: p.seed }), ss.query<Record<string, unknown>>('record')]);
-    p.onResult({ game: p.game, seed: p.seed, world: p.world, card: card?.card ?? null, stars: card?.stars ?? null, reference: card?.reference ?? null, record: rec });
+    // the reference card for this shift (committed M6 reference runs); no reference, no stars
+    const refs = await fetch(`${BASE}generated/g1/references.json`, { credentials: 'omit' }).then((x) => x.json()).catch(() => null) as { fetch_rush?: Record<string, unknown> } | null;
+    const reference = refs?.fetch_rush?.[String(p.seed)] ?? null;
+    const [card, rec] = await Promise.all([ss.query<{ card: Record<string, unknown>; stars: number | null; reference: Record<string, unknown> | null }>('stars', reference), ss.query<Record<string, unknown>>('record')]);
+    p.onResult({ game: p.game, seed: p.seed, world: p.world, card: card?.card ?? null, stars: card?.stars ?? null, reference: card?.reference ?? null, record: rec, objects: ss.world?.game.objects });
   };
 
   // keyboard: WASD/arrows drive; G grab; F auto; C camera; V vision; Space STOP; R release; M map; Esc pause
@@ -455,6 +487,7 @@ export function PlayGame(p: PlayProps) {
       </button>
       <button className={`g1-btn g1-small g1-auto ${auto ? 'is-on' : ''}`} data-testid="hud-autonomy" aria-pressed={auto} onClick={() => void toggleAuto()} aria-label="AUTO (F): the planner drives"><span><Route className="ic" size={20} />AUTO{desktop && <kbd>F</kbd>}</span></button>
       <button className="g1-btn g1-small g1-cam" data-testid="hud-camera" onClick={cycleCam} aria-label={`Camera (C): ${cam}`}><span><Camera className="ic" size={20} />CAM{desktop && <kbd>C</kbd>}</span></button>
+      {busy && <p className="g1-busy g1-glass" role="status" data-testid="g1-busy">COCO's planner is computing… <small>(the clock waits)</small></p>}
       {toast && <p key={toast.key} className="g1-toast g1-glass" role="status">{toast.text}</p>}
       {flash && <div key={flash.key} className={`g1-flash ${flash.side}`} />}
       {p.showPerf && <details className="g1-perf g1-glass"><summary>perf</summary>{perfText}</details>}

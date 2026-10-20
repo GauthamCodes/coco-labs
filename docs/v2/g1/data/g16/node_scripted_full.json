@@ -1,0 +1,125 @@
+{
+ "record": {
+  "game": "fetch_rush",
+  "arg": 1,
+  "seed": 1,
+  "ticks": 1801,
+  "inputs": [
+   {
+    "tick": 0,
+    "kind": "config",
+    "choice": "actors.on=1"
+   },
+   {
+    "tick": 0,
+    "kind": "config",
+    "choice": "assist.target=any"
+   },
+   {
+    "tick": 1,
+    "kind": "goal",
+    "x": 46.5,
+    "y": 7.5
+   },
+   {
+    "tick": 813,
+    "kind": "config",
+    "choice": "assist.target=obj_dock"
+   },
+   {
+    "tick": 813,
+    "kind": "config",
+    "choice": "assist.grasp=go"
+   },
+   {
+    "tick": 1069,
+    "kind": "goal",
+    "x": 42,
+    "y": 1.2999999999999998
+   },
+   {
+    "tick": 1369,
+    "kind": "config",
+    "choice": "assist.grasp=go"
+   },
+   {
+    "tick": 1430,
+    "kind": "goal",
+    "x": 42,
+    "y": 30
+   }
+  ],
+  "hash_version": 2
+ },
+ "hash_chain": "4e47e32777e355fd944f8b13a316321d1fd16ebed0b5fef16c90bb49557e1002",
+ "last_hash": "8f0e23d5457753ce78eb730d90f780f2a375be514cdc062094ce4c4846cb0519",
+ "scorecard": {
+  "game": "fetch_rush",
+  "seed": 1,
+  "deliveries": 1,
+  "contacts": 0,
+  "net_deliveries": 1,
+  "time_used": 142.9,
+  "path_efficiency": 0.9650034048325534,
+  "orders": [
+   [
+    "obj_dock",
+    "dock_2"
+   ],
+   [
+    "obj_mez_1",
+    "dock_3"
+   ]
+  ],
+  "delivered": [
+   {
+    "object": "obj_dock",
+    "drop": "dock_2",
+    "t": 142.9,
+    "seconds": 142.9,
+    "driven": 32.43028130663202,
+    "ghost": 31.295331880577407
+   }
+  ],
+  "contact_log": []
+ },
+ "timing": {
+  "runtime": "Pyodide 314.0.7 in Node v24.21.0",
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "ticks": 1801,
+  "median_ms": 23.614341000000422,
+  "p95_ms": 36.18662100000074,
+  "max_ms": 17403.812005,
+  "note": "wall time per tick in Pyodide-in-Node on this machine; not a phone, not a browser",
+  "slow_ticks": [
+   {
+    "tick": 1,
+    "ms": 1219,
+    "inputs": [
+     "config:actors.on=1",
+     "config:assist.target=any"
+    ],
+    "plans": []
+   },
+   {
+    "tick": 1430,
+    "ms": 17404,
+    "inputs": [],
+    "plans": []
+   },
+   {
+    "tick": 1431,
+    "ms": 1497,
+    "inputs": [
+     "goal"
+    ],
+    "plans": [
+     {
+      "planner": "astar",
+      "status": "found"
+     }
+    ]
+   }
+  ]
+ }
+}

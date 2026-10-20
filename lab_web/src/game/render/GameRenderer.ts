@@ -20,6 +20,10 @@ import type { WorldLook } from '../world/describe';
 import { buildActor, buildWorld, type BuiltWorld, type Tier } from '../world/build3d';
 import { GameCamera } from './camera';
 
+/** coco_lab.arm's joint names and the URDF's (coco_robo2.urdf), as M4's renderer maps them. */
+const ARM_JOINTS: [string, string][] = [['joint1', 'm_link1_Revolute-6'], ['joint2', 'm_link2_Revolute-7'],
+  ['finger_left', 'm_link3_Revolute-8'], ['finger_right', 'm_link3_Revolute-9']];
+
 export const TIER_PIXELS: Record<Tier, number> = { low: 1, medium: 1.25, high: 2 };
 export type Led = 'manual' | 'auto' | 'stop' | 'idle';
 const LED_COLOUR: Record<Led, number> = { manual: 0x34d399, auto: 0x22d3ee, stop: 0xef4444, idle: 0x8f9bb0 };
@@ -237,6 +241,41 @@ export class GameRenderer {
   }
 
   setLed(led: Led) { this.led.emissive.set(LED_COLOUR[led]); }
+
+  /** The arm where Grasp Assist's script puts it (URDF joint angles from coco_lab.arm). */
+  setArm(row: Record<string, number>) {
+    for (const [k, joint] of ARM_JOINTS) {
+      const j = this.joints.get(joint);
+      if (j && typeof row[k] === 'number') j.q.quaternion.setFromAxisAngle(j.axis, row[k]);
+    }
+  }
+
+  private candRings: THREE.Group = new THREE.Group();
+  /**
+   * Robot vision: Grasp Assist's candidates, each ringed by its verdict. Pickable: a green ring
+   * and a tick; refused: a red ring and a cross (shape carries the meaning, not only colour).
+   */
+  setCandidates(rows: { object_id: string; reason: string }[]) {
+    if (!this.candRings.parent) this.scene.add(this.candRings);
+    for (const c of [...this.candRings.children]) { this.candRings.remove(c); (c as THREE.Mesh).geometry?.dispose(); }
+    if (!this.vision.visible) return;
+    for (const r of rows) {
+      const m = this.objects.get(r.object_id);
+      if (!m) continue;
+      const ok = !r.reason;
+      const g = new THREE.Group();
+      const ring = new THREE.Mesh(new THREE.RingGeometry(0.11, 0.135, 32), new THREE.MeshBasicMaterial({ color: ok ? 0x34d399 : 0xef4444, transparent: true, opacity: 0.9, depthWrite: false }));
+      g.add(ring);
+      const mark = new THREE.Group();
+      const bar = (w: number, h: number, x: number, y: number, rot: number) => { const b = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: ok ? 0x34d399 : 0xef4444, depthWrite: false, side: THREE.DoubleSide })); b.position.set(x, y, 0); b.rotation.z = rot; mark.add(b); };
+      if (ok) { bar(0.05, 0.014, -0.012, -0.004, -Math.PI / 4); bar(0.09, 0.014, 0.018, 0.008, Math.PI / 4); }
+      else { bar(0.09, 0.014, 0, 0, Math.PI / 4); bar(0.09, 0.014, 0, 0, -Math.PI / 4); }
+      mark.position.set(0.19, 0, 0.003);
+      g.add(mark);
+      g.position.set(m.position.x, m.position.y, m.position.z + 0.006);
+      this.candRings.add(g);
+    }
+  }
 
   /** The catalog objects (placed or carried) where Grasp Assist says they are. */
   setObjects(catalog: Map<string, ObjectView>, rows: [string, number, number, number, string][]) {
