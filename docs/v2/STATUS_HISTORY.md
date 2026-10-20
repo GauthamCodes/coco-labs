@@ -2168,3 +2168,9 @@ maximum at tick 48. Selection first changes tick 47 due to obstacle-grid cost
 explicitly requires report/stop for non-tie causes; no algorithm fix, hash bump
 or golden change. Final closure remains pending. Full trace/report under
 `docs/v2/data/m5/closure-20261020/`; earlier evidence retained. Phone absent.
+
+
+PR #26 integration: exact head a81f8f4 passed Lab 39438277138 (all three jobs;
+deploy skipped), then merged through GitHub as d8b6d4c. Local merge d353e36
+retains both append-only RESULTS/history additions and current dated decisions.
+No force-push, PR #25 merge or deployment. Closure remains at non-tie report stop.

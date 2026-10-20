@@ -10,7 +10,8 @@
 
 - Branch `v2/m5-focus`; original implementation `00a42aa`, review product source `f22f729`, deploy gate `51c2216`; closure is report-only pending the explicit non-tie follow-up.
 - M5.0–M5.11 implemented and measured; [PR #25](https://github.com/GauthamCodes/coco-labs/pull/25) open, unmerged.
-- Original PR #25 CI failure (bytecode audit) is fixed by merged review. Updated PR #25 CI must be confirmed after push.
+- Original PR #25 CI failure (bytecode audit) is fixed by merged review. Latest remote checks are on [PR #25](https://github.com/GauthamCodes/coco-labs/pull/25); session report confirms post-push result.
+- Merged implementation `d353e36`: typecheck, 493 web tests/62 files and 5 focused deploy/verifier tests pass ([logs](v2/data/m5/closure-20261020/)). This is not the full requested measurement rerun.
 - **Not ready:** open-tab version mixing and native parity remain unresolved. Main merging no longer deploys; real-phone and owner usability gates remain open. PR #25 unmerged; no release/deployment performed.
 - Master plan revision 3 sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
 - Authority/rules: [README](../README.md), [AGENTS](../AGENTS.md), [M5 prompt](v2/M5_PROMPT.md), [owner amendments](v2/M5_CONTINUATION.md).

@@ -97,3 +97,23 @@ measurement or usability result is invented. The profile was balanced and AC
 online; no robot/simulator batch was active. No M6 worktree was modified. The
 sceneCore/Renderer decomposition is recorded as M6 UI's first task; portrait
 Compare's horizontal results row is accepted by the owner.
+
+
+## Review integration
+
+PR #26 was merged into v2/m5-focus using GitHub's merge-commit method as
+`d8b6d4c4dac7c9615c12e56b1c5085fc797999ed`, after its exact head
+`a81f8f443185f5a2ccaf8f25cc242f1f5c977cad` passed all three Lab jobs in
+[run 39438277138](https://github.com/GauthamCodes/coco-labs/actions/runs/39438277138).
+Deployment skipped. [CI snapshot](pr26-ci.json), [merge snapshot](pr26-merge.json).
+Local integration `d353e36` preserves both review and closure documentation;
+append-only RESULTS/history entries from both sides were retained. No force-push.
+PR #25 remains open and unmerged; its updated CI is checked after this push.
+
+
+Merged implementation `d353e36` locally passes [typecheck](typecheck-final.log),
+[493 web tests /62 files](web-final.log), and [five focused deploy-gate/verifier
+tests](focused-final.log). This is not a claim that every requested measurement
+was rerun. [Reproduction integrity](reproduction-integrity.json) confirms fresh
+Pyodide matches the original browser frames exactly excluding compute_ms, and
+packaged control/compare-loop sources match this checkout byte for byte.

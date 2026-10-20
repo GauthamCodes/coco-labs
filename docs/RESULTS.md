@@ -9403,3 +9403,9 @@ total 1679.4638041608869 vs 1855.4638041608869; candidate 12 costs
 1700.3884872002966 in both. Not a score tie: local-costmap rasterization differs.
 No model/golden/hash change; owner-requested report stop. Earlier performance
 measurements retained as historical, superseded for final closure-head claims.
+
+
+2026-10-20 publication correction: the review's historical automatic-deployment
+warning above is superseded by the manual Deploy site gate in 51c2216. A main
+push builds/tests but cannot deploy; the configuration truth-table test passes.
+PR #26 exact-head CI passed run 39438277138 before merge commit d8b6d4c.
