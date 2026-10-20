@@ -1,0 +1,13 @@
+
+> coco-lab-web@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /home/gautham/coco_labs_ws/worktrees/m5-review/lab_web
+
+
+ Test Files  62 passed (62)
+      Tests  493 passed (493)
+   Start at  06:49:59
+   Duration  29.36s (tests 95%, import 3%, transform 2%)
+

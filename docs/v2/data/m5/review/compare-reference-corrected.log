@@ -1,0 +1,66 @@
+[
+  {
+    "file": "compare-2-events.json",
+    "labels": [
+      "A \u00b7 A*",
+      "B \u00b7 Dijkstra"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "astar",
+        "batches": 3,
+        "events": 4158,
+        "equal": true
+      },
+      {
+        "pane": "B",
+        "algorithm": "dijkstra",
+        "batches": 14,
+        "events": 27781,
+        "equal": true
+      }
+    ],
+    "passed": true
+  },
+  {
+    "file": "compare-4-events.json",
+    "labels": [
+      "A \u00b7 A*",
+      "B \u00b7 Dijkstra",
+      "C \u00b7 Greedy",
+      "D \u00b7 Weighted A*"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "astar",
+        "batches": 3,
+        "events": 4158,
+        "equal": true
+      },
+      {
+        "pane": "B",
+        "algorithm": "dijkstra",
+        "batches": 14,
+        "events": 27781,
+        "equal": true
+      },
+      {
+        "pane": "C",
+        "algorithm": "greedy",
+        "batches": 2,
+        "events": 3041,
+        "equal": true
+      },
+      {
+        "pane": "D",
+        "algorithm": "weighted_astar",
+        "batches": 2,
+        "events": 2567,
+        "equal": true
+      }
+    ],
+    "passed": true
+  }
+]

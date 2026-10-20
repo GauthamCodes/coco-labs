@@ -1,0 +1,65 @@
+{
+  "cases": [
+    {
+      "profile": "desktop, W held while STOP clicked",
+      "before": {
+        "tick": 1,
+        "v": 0.2
+      },
+      "after": {
+        "tick": 5,
+        "v": 0,
+        "stops": [
+          {
+            "kind": "stop",
+            "tick": 2
+          }
+        ],
+        "latched": true
+      }
+    }
+  ],
+  "errors": [],
+  "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded.",
+  "passed": false,
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-20T01:11:03.132Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 18.64,
+        "5m": 18.83,
+        "15m": 12.67
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-20T01:11:54.008Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 17.35,
+        "5m": 18.41,
+        "15m": 12.88
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    }
+  }
+}

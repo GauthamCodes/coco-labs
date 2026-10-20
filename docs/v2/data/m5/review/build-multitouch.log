@@ -1,0 +1,64 @@
+vite v8.3.1 building client environment for production...
+transforming...
+✓ 2152 modules transformed.
+rendering chunks...
+computing gzip size...
+../../../../../../tmp/coco-m5-review-multitouch/assets/manrope-cyrillic-ext-wght-normal-C8S-KRRz.woff2    2.55 kB
+../../../../../../tmp/coco-m5-review-multitouch/coco/frame.js                                             4.76 kB
+../../../../../../tmp/coco-m5-review-multitouch/index.html                                                6.68 kB │ gzip:   2.27 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2      8.52 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/manrope-greek-wght-normal-DL7QRZyv.woff2           9.44 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2       14.50 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/outfit-latin-ext-wght-normal-DdQaqQDo.woff2       14.80 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2      15.12 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/arena.worker-9ZjtL-ye.js                          20.09 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/manrope-latin-wght-normal-DHIcAJRg.woff2          24.83 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/outfit-latin-wght-normal-Bc-8i84L.woff2           32.29 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/CaseFilesApp-CEk7feGm.css                          3.18 kB │ gzip:   0.97 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/shell-IyBR3GMV.css                                 3.78 kB │ gzip:   1.03 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/hud-DU8RsCNu.css                                   4.24 kB │ gzip:   1.32 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/CompareWorkspace-B5rda9Y4.css                      5.40 kB │ gzip:   1.46 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/PlayApp-DCk3N89r.css                               5.77 kB │ gzip:   1.48 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/reference-C5XSdbt7.css                            18.03 kB │ gzip:   3.26 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/index-DR54Gat3.css                                36.34 kB │ gzip:   8.25 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/navigation-2-KD2Q6Oza.js                           0.19 kB │ gzip:   0.18 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/CompareScene-CjQOXQBG.js                           0.21 kB │ gzip:   0.18 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/ResearchScene-CjQOXQBG.js                          0.21 kB │ gzip:   0.18 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/dialog-BYb0ehSK.js                                 0.41 kB │ gzip:   0.30 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/settings-DACKNJ_R.js                               0.52 kB │ gzip:   0.28 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/library-DA4pY64z.js                                0.59 kB │ gzip:   0.34 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/phone-B53-VFag.js                                  1.12 kB │ gzip:   0.66 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/ModeNav-DqEsL9Gz.js                                1.27 kB │ gzip:   0.67 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/links-Cxo_FLlk.js                                  1.54 kB │ gzip:   0.85 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/ArenaApp-B0sdv8RX.js                               1.60 kB │ gzip:   0.79 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/quality-j0dYhQ2P.js                                1.90 kB │ gzip:   0.83 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/controls-Cy_3L51Q.js                               2.21 kB │ gzip:   1.01 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/client-CeDG7P-B.js                                 2.64 kB │ gzip:   1.18 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/TitleScreen-BjsymIbj.js                            2.74 kB │ gzip:   1.18 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/createLucideIcon-VUYLvv4P.js                       3.08 kB │ gzip:   1.48 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/AboutPage-Bb8s6DMi.js                              3.41 kB │ gzip:   1.44 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/Minimap-RZ-hCfwq.js                                3.46 kB │ gzip:   1.73 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/SettingsDrawer-c3VI0Hfz.js                         4.53 kB │ gzip:   1.54 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/Result-MnF45aVM.js                                 5.93 kB │ gzip:   2.50 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/LearnApp-BnvSGRaA.js                               6.70 kB │ gzip:   2.78 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/tokens-BP5iKCTr.js                                 8.13 kB │ gzip:   3.49 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/WorldStage-CZKMHVlc.js                             9.10 kB │ gzip:   4.16 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/ReferenceScreens-DDQmPX3b.js                      11.59 kB │ gzip:   3.98 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/CaseFilesApp-DOFVULOe.js                          12.39 kB │ gzip:   4.16 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/PlayScene-BleA4u8r.js                             12.53 kB │ gzip:   4.62 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/scene3d-MwDrSdmq.js                               14.59 kB │ gzip:   5.51 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/PlayApp-BTFAgVWk.js                               17.49 kB │ gzip:   6.03 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/CompareWorkspace-CYQpBEi4.js                      18.40 kB │ gzip:   6.63 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/LiveApp-D7Y19Vg9.js                               31.10 kB │ gzip:  11.35 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/ArenaSceneView-Ed4b43qS.js                        52.02 kB │ gzip:  16.20 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/Help-D8Nak-b8.js                                 219.49 kB │ gzip:  68.68 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/index-CH6hNnKM.js                                242.15 kB │ gzip:  78.18 kB
+../../../../../../tmp/coco-m5-review-multitouch/assets/three-2pgavX5U.js                                675.49 kB │ gzip: 171.87 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1.20s
+Static cache 69763036cb3d58380cd58c48e857b8221d061160d75796b699afb169a944593c: 120 precached, 320 allowlisted

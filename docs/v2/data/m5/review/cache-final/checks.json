@@ -1,0 +1,138 @@
+{
+ "site": "http://127.0.0.1:38477/coco-labs/",
+ "requestedWorld": "default",
+ "errors": [],
+ "thirdParty": [],
+ "warm": [
+  {
+   "profile": "desktop",
+   "device": "laptop · emulated 4G",
+   "liveModelReadyMs": 2695.099853515625,
+   "marks": {
+    "worker_create": 1792459982891.4001,
+    "world3d_assets": 1792459982920.8,
+    "attract_ready": 1792459983050.4001,
+    "first_frame": 1792459983061.1,
+    "world3d_ready": 1792459983063.6,
+    "world3d_robot": 1792459983063.6,
+    "worker_boot": 1792459983062.2998,
+    "pyodide_module": 1792459983071.4,
+    "pyodide_ready": 1792459984532.5,
+    "coco_lab_ready": 1792459984617,
+    "world_received": 1792459985109.8,
+    "arena_ready": 1792459985109.7
+   },
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "serverRequests": [
+    "/coco-labs/index.html",
+    "/coco-labs/sw.js",
+    "/coco-labs/sw.js"
+   ],
+   "controlled": true
+  },
+  {
+   "profile": "landscape",
+   "device": "emulated Nothing Phone (1) · emulated 4G · CPU 4×",
+   "liveModelReadyMs": 2807.10009765625,
+   "marks": {
+    "worker_create": 1792459989183.9,
+    "world3d_assets": 1792459989235.4,
+    "attract_ready": 1792459989770.2,
+    "first_frame": 1792459989819,
+    "worker_boot": 1792459989401.5999,
+    "pyodide_module": 1792459989408.9,
+    "world3d_ready": 1792459989835.5999,
+    "world3d_robot": 1792459989835.7,
+    "pyodide_ready": 1792459990971.7,
+    "coco_lab_ready": 1792459991056.7,
+    "world_received": 1792459991542.0999,
+    "arena_ready": 1792459991542
+   },
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "serverRequests": [
+    "/coco-labs/index.html",
+    "/coco-labs/sw.js"
+   ],
+   "controlled": true
+  },
+  {
+   "profile": "portrait",
+   "device": "emulated Nothing Phone (1) · emulated 4G · CPU 4×",
+   "liveModelReadyMs": 2806.89990234375,
+   "marks": {
+    "worker_create": 1792459995368.1,
+    "world3d_assets": 1792459995418.1,
+    "attract_ready": 1792459996027.6,
+    "first_frame": 1792459996079.9001,
+    "worker_boot": 1792459995534.9001,
+    "pyodide_module": 1792459995542.6,
+    "world3d_ready": 1792459996106.8,
+    "world3d_robot": 1792459996106.9001,
+    "pyodide_ready": 1792459997115.1,
+    "coco_lab_ready": 1792459997208.9001,
+    "world_received": 1792459997719,
+    "arena_ready": 1792459997714
+   },
+   "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+   "serverRequests": [
+    "/coco-labs/index.html",
+    "/coco-labs/sw.js"
+   ],
+   "controlled": true
+  }
+ ],
+ "versionA": "839f71db7212993cee084960adac3a4cf356ca7a25c8a70297d71eb5ae7773ac",
+ "versionB": "345c5f800f2aa461c8d5874f739c7ca91605f29210f4dfdf1a588d7a78e852ab",
+ "cache": {
+  "names": [
+   "coco-static-%2Fcoco-labs%2F-active-version",
+   "coco-static-%2Fcoco-labs%2F-345c5f800f2aa461c8d5874f739c7ca91605f29210f4dfdf1a588d7a78e852ab"
+  ],
+  "entries": 121,
+  "personalUrls": 0
+ },
+ "deploy": "hard reload: new index and static bytes, old caches removed",
+ "offlineTitle": true,
+ "disabledWorks": true,
+ "passed": true,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-20T01:32:56.320Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.89,
+    "5m": 2.69,
+    "15m": 6.49
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-20T01:33:23.153Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.26,
+    "5m": 2.72,
+    "15m": 6.39
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

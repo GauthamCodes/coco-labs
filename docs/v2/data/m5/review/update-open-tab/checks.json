@@ -1,0 +1,52 @@
+{
+ "scope": "Functional deploy test on battery, not a timing measurement",
+ "errors": [],
+ "versionA": "52b4649a945019b792130d552892633499b48016e51f8c691d4d61739f7b67f8",
+ "before": {
+  "documentBuild": "52b4649a945019b792130d552892633499b48016e51f8c691d4d61739f7b67f8",
+  "asset": "A",
+  "controller": "52b4649a945019b792130d552892633499b48016e51f8c691d4d61739f7b67f8"
+ },
+ "versionB": "3a6060a4fc7595667b1a99f8a752c7c6ce76bca77e7dbf8c2b749e08b5794d5b",
+ "error": "Error: page.evaluate: Target page, context or browser has been closed",
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-19T16:40:35.439Z",
+   "power_profile": "power-saver",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 13
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 7.65,
+    "5m": 4.16,
+    "15m": 2.41
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-19T16:44:17.214Z",
+   "power_profile": "power-saver",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 7
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 18.69,
+    "5m": 12.86,
+    "15m": 6.38
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ }
+}

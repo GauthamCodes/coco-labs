@@ -1,0 +1,183 @@
+[
+  {
+    "file": "compare-2-events.json",
+    "labels": [
+      "A \u00b7 A*",
+      "B \u00b7 Dijkstra"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "astar",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      },
+      {
+        "pane": "B",
+        "algorithm": "dijkstra",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      }
+    ],
+    "passed": false
+  },
+  {
+    "file": "compare-4-events.json",
+    "labels": [
+      "A \u00b7 A*",
+      "B \u00b7 Dijkstra",
+      "C \u00b7 Greedy",
+      "D \u00b7 Weighted A*"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "astar",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      },
+      {
+        "pane": "B",
+        "algorithm": "dijkstra",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      },
+      {
+        "pane": "C",
+        "algorithm": "greedy",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      },
+      {
+        "pane": "D",
+        "algorithm": "weighted_astar",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      }
+    ],
+    "passed": false
+  },
+  {
+    "file": "compare-bfs-events.json",
+    "labels": [
+      "A \u00b7 BFS",
+      "B \u00b7 Dijkstra",
+      "C \u00b7 Greedy",
+      "D \u00b7 Weighted A*"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "bfs",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      },
+      {
+        "pane": "B",
+        "algorithm": "dijkstra",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      },
+      {
+        "pane": "C",
+        "algorithm": "greedy",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      },
+      {
+        "pane": "D",
+        "algorithm": "weighted_astar",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      }
+    ],
+    "passed": false
+  },
+  {
+    "file": "compare-control-events.json",
+    "labels": [
+      "A \u00b7 DWA-style sampler",
+      "B \u00b7 Pure pursuit",
+      "C \u00b7 MPPI",
+      "D \u00b7 DWA-style sampler"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "dwa",
+        "ticks": 60,
+        "equal": false
+      },
+      {
+        "pane": "B",
+        "algorithm": "rpp",
+        "ticks": 60,
+        "equal": false
+      },
+      {
+        "pane": "C",
+        "algorithm": "mppi",
+        "ticks": 60,
+        "equal": false
+      },
+      {
+        "pane": "D",
+        "algorithm": "dwa",
+        "ticks": 60,
+        "equal": false
+      }
+    ],
+    "excluded": "wall-clock compute_ms only",
+    "passed": false
+  },
+  {
+    "file": "compare-dstar_lite-events.json",
+    "labels": [
+      "A \u00b7 D* Lite",
+      "B \u00b7 Dijkstra",
+      "C \u00b7 Greedy",
+      "D \u00b7 Weighted A*"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "dstar_lite",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      },
+      {
+        "pane": "B",
+        "algorithm": "dijkstra",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      },
+      {
+        "pane": "C",
+        "algorithm": "greedy",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      },
+      {
+        "pane": "D",
+        "algorithm": "weighted_astar",
+        "batches": 0,
+        "events": 0,
+        "equal": false
+      }
+    ],
+    "passed": false
+  }
+]

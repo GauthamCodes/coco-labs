@@ -1,0 +1,90 @@
+{
+ "scope": "Functional deploy test, not a timing measurement",
+ "errors": [],
+ "stages": [
+  {
+   "name": "navigate A",
+   "at": "2026-10-20T00:56:50.619Z"
+  },
+  {
+   "name": "register A",
+   "at": "2026-10-20T00:56:51.555Z"
+  },
+  {
+   "name": "A controlled",
+   "at": "2026-10-20T00:57:01.254Z"
+  },
+  {
+   "name": "A snapshot",
+   "at": "2026-10-20T00:57:02.396Z"
+  },
+  {
+   "name": "update B",
+   "at": "2026-10-20T00:57:02.998Z"
+  },
+  {
+   "name": "B controlled",
+   "at": "2026-10-20T00:57:05.246Z"
+  }
+ ],
+ "versionA": "ce54e82c09e9f325e99f165449d4d37837d34e3ae74d01bf1fc1f70e813b47c4",
+ "before": {
+  "documentBuild": "ce54e82c09e9f325e99f165449d4d37837d34e3ae74d01bf1fc1f70e813b47c4",
+  "asset": "A",
+  "controller": "ce54e82c09e9f325e99f165449d4d37837d34e3ae74d01bf1fc1f70e813b47c4"
+ },
+ "versionB": "e4bf10c0445de44e7021aadc815c893a554449cf52ab9b4f55d5e4ade3f7351e",
+ "afterUpdate": {
+  "documentBuild": "ce54e82c09e9f325e99f165449d4d37837d34e3ae74d01bf1fc1f70e813b47c4",
+  "asset": "A",
+  "controller": "ce54e82c09e9f325e99f165449d4d37837d34e3ae74d01bf1fc1f70e813b47c4"
+ },
+ "openDocumentMixed": false,
+ "afterReload": {
+  "documentBuild": "e4bf10c0445de44e7021aadc815c893a554449cf52ab9b4f55d5e4ade3f7351e",
+  "asset": "B",
+  "controller": "e4bf10c0445de44e7021aadc815c893a554449cf52ab9b4f55d5e4ade3f7351e"
+ },
+ "hardReloadConsistent": true,
+ "completed": true,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-20T00:56:49.704Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 11.66,
+    "5m": 3.82,
+    "15m": 1.67
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-20T00:57:14.461Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 16.05,
+    "5m": 5.43,
+    "15m": 2.25
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}
