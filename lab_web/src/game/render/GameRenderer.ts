@@ -185,6 +185,7 @@ export class GameRenderer {
     this.ceiling = look.ceiling;
     this.overheadMeshes = ['box:ceiling', 'box:fixture'].map((n) => this.world!.group.getObjectByName(n)).filter((m): m is THREE.Object3D => !!m);
     this.hemi.intensity = look.theme === 'lab' ? 1.5 : 1.15;
+    (this.cone.material as THREE.MeshBasicMaterial).opacity = look.theme === 'lab' ? 0.18 : 0.5;
     for (const a of look.actors) {
       const g = buildActor(a);
       this.actors.set(a.id, g);

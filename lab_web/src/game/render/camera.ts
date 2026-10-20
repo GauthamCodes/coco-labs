@@ -67,6 +67,17 @@ export class GameCamera {
     else { this.orbit.dist = Math.min(30, Math.max(0.8, this.orbit.dist * factor)); if (this.mode === 'chase') this.setMode('orbit'); }
   }
 
+  /** How far a boom from `from` along `dir` may reach (at most `len`), keeping NEAR_PAD from the face it would hit. */
+  private boom(from: THREE.Vector3, dir: THREE.Vector3, len: number): number {
+    if (!this.colliders.length) return len;
+    this.ray.set(from, dir);
+    this.ray.far = len + CHASE.nearPad * 4;
+    const hit = this.ray.intersectObjects(this.colliders, false)[0];
+    if (!hit) return len;
+    const cos = Math.max(0.2, Math.abs(dir.dot(hit.face?.normal ?? new THREE.Vector3(0, 0, 1))));
+    return Math.max(0.05, Math.min(len, hit.distance - CHASE.nearPad / cos));
+  }
+
   /**
    * Place the camera for this frame. `pose` is where COCO is drawn (map frame), `z` its height,
    * `v` its signed speed (for the look-ahead).
@@ -126,9 +137,11 @@ export class GameCamera {
       cam.position.copy(head).addScaledVector(dir, r.back);
       cam.lookAt(target);
     } else if (this.mode === 'orbit') {
+      // the orbit boom has the chase boom's rule: shortened before a wall, never through it
       const o = this.orbit;
       target.set(x, y, z + 0.2);
-      cam.position.set(x + o.dist * Math.cos(o.pitch) * Math.cos(o.yaw), y + o.dist * Math.cos(o.pitch) * Math.sin(o.yaw), z + 0.2 + o.dist * Math.sin(o.pitch));
+      const dir = new THREE.Vector3(Math.cos(o.pitch) * Math.cos(o.yaw), Math.cos(o.pitch) * Math.sin(o.yaw), Math.sin(o.pitch));
+      cam.position.copy(target).addScaledVector(dir, this.boom(target, dir, o.dist));
       cam.lookAt(target);
     } else {
       const t = this.tactical;

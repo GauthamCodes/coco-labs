@@ -24,7 +24,7 @@
 .g1-joy.is-ghost { left: calc(40px * var(--g1-s) + 65px * var(--g1-s)); top: auto; bottom: calc(28px * var(--g1-s)); margin: 0 0 0 calc(-65px * var(--g1-s)); opacity: .7; }
 .g1-joy i { position: absolute; left: 29%; top: 29%; width: 42%; height: 42%; border-radius: 50%; background: rgba(255,255,255,.3); box-shadow: 0 0 0 2px rgba(255,255,255,.25); }
 .g1-joy.is-active i { background: rgba(255,122,26,.8); }
-.g1-joy-hint { position: absolute; left: 50%; top: calc(-22px * var(--g1-s)); transform: translateX(-50%); font: 700 calc(10px * var(--g1-s)) var(--g1-display); color: var(--g1-mute); white-space: nowrap; letter-spacing: .1em; }
+.g1-joy-hint { text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 8px rgba(0,0,0,.6); position: absolute; left: 50%; top: calc(-22px * var(--g1-s)); transform: translateX(-50%); font: 700 calc(10px * var(--g1-s)) var(--g1-display); color: var(--g1-mute); white-space: nowrap; letter-spacing: .1em; }
 
 /* ---- the minimap and the tactical map ---- */
 .g1-minimap { position: absolute; left: calc(12px * var(--g1-s)); top: calc(12px * var(--g1-s)); width: calc(112px * var(--g1-s)); height: calc(112px * var(--g1-s)); padding: 0;
@@ -80,7 +80,8 @@
 @keyframes g1-blink { 50% { background: #8f1515; } }
 
 /* ---- speed gauge and mode chip ---- */
-.g1-gauge { position: absolute; left: 50%; bottom: calc(8px * var(--g1-s)); transform: translateX(-50%); text-align: center; width: calc(150px * var(--g1-s)); pointer-events: none; }
+.g1-gauge { position: absolute; left: 50%; bottom: calc(8px * var(--g1-s)); transform: translateX(-50%); text-align: center; width: calc(150px * var(--g1-s)); pointer-events: none;
+  padding: calc(4px * var(--g1-s)) 0 calc(6px * var(--g1-s)); border-radius: calc(90px * var(--g1-s)) calc(90px * var(--g1-s)) calc(16px * var(--g1-s)) calc(16px * var(--g1-s)); background: radial-gradient(ellipse at 50% 100%, rgba(10,13,18,.72), rgba(10,13,18,.35) 70%, transparent 72%); }
 .g1-gauge svg { width: 100%; height: calc(66px * var(--g1-s)); display: block; }
 .g1-gauge .v { position: absolute; left: 0; right: 0; top: calc(30px * var(--g1-s)); font: 700 calc(22px * var(--g1-s))/1 var(--g1-display); font-variant-numeric: tabular-nums; }
 .g1-gauge .v small { font-size: .5em; color: var(--g1-mute); margin-left: 2px; }

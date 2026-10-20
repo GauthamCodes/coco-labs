@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 /**
  * G1: one screenshot of one URL in one profile, after a ready selector; optional
- * actions (press PLAY, hold W for N ms). A development check, not evidence.
- *   node tools/g1/shot.mjs URL OUT.png [--profile desktop|landscape|portrait] [--ready SEL] [--play] [--drive MS] [--wait MS]
+ * actions (press PLAY, hold W for N ms, run a page expression). A development check, not evidence.
+ *   node tools/g1/shot.mjs URL OUT.png [--profile desktop|landscape|portrait] [--ready SEL] [--play] [--drive MS] [--eval JS] [--keys K1,K2] [--wait MS]
  */
 import { chromium } from 'playwright';
 import { nothingPhone1 } from '../phone/nothing-phone-1.mjs';
@@ -23,6 +23,7 @@ await p.waitForSelector(opt('--ready', 'body'), { timeout: 180000 }).catch((e) =
 if (has('--play')) { await p.waitForSelector('[data-testid="g1-play"]:not([disabled])', { timeout: 180000 }); await p.click('[data-testid="g1-play"]'); await p.waitForTimeout(800); }
 const drive = Number(opt('--drive', 0));
 if (drive) { await p.keyboard.down('KeyW'); await p.waitForTimeout(drive); await p.keyboard.up('KeyW'); }
+if (opt('--eval', '')) await p.evaluate(opt('--eval', ''));
 for (const k of (opt('--keys', '') || '').split(',').filter(Boolean)) { await p.keyboard.press(k); await p.waitForTimeout(400); }
 await p.waitForTimeout(Number(opt('--wait', 1500)));
 await p.screenshot({ path: out });

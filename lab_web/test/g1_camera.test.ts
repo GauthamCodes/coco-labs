@@ -105,6 +105,21 @@ group('G1.4 chase camera: 20 scripted paths, no clipping', () => {
       expect(faults.slice(0, 5)).toEqual([]);
     });
   }
+  it('a wide orbit beside a wall stays inside the hall', () => {
+    const look = looks.depot;
+    const cam = new GameCamera();
+    cam.colliders = colliderMeshes(look);
+    cam.setMode('orbit');
+    const solids = look.parts.filter((p) => p.cls === 'solid' || p.cls === 'wall');
+    const faults: string[] = [];
+    for (let k = 0; k < 72; k++) {
+      cam.orbit.yaw = (k / 72) * Math.PI * 2; cam.orbit.dist = 13; cam.orbit.pitch = 0.42;
+      for (let f = 0; f < 30; f++) cam.update(1 / 60, [24, 0.6, 0], 0, 0);
+      const c = cam.camera.position.toArray();
+      for (const p of solids) if (inside(c, p, 0.02) || segmentHits(c, [24, 0.6, 0.2], p)) faults.push(`yaw ${k * 5}: ${p.id}`);
+    }
+    expect(faults.slice(0, 5)).toEqual([]);
+  });
   it('the pull-in really engages beside a wall (the test is not vacuous)', () => {
     const look = looks.depot;
     // facing away from the south wall: the camera's wanted spot is inside the wall
