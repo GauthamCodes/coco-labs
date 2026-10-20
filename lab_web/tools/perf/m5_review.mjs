@@ -33,13 +33,13 @@ try {
      super(...args);
      const row = { titleReady: !!document.querySelector('[data-testid="title"] canvas[data-scene-ready="true"]'), idle: window.__review.idle, input: window.__review.input, sent: [], messages: [] };
      window.__review.workers.push(row);
-     row.costs = []; 
+     row.costs = [];
      const send = this.postMessage.bind(this);
      this.postMessage = (...params) => { row.sent.push(structuredClone(params[0])); return send(...params); };
      this.addEventListener('message', event => {
       const d = event.data;
       if (d.type === 'tick' && d.tick.inputs?.some(x => x.kind === 'stop')) window.__review.stops.push({tick:d.tick.tick,source:d.tick.source,v:d.tick.v});
-      if (d.type === 'family' && d.channel.startsWith('coco.costmap.layers.')) row.costs.push(JSON.parse(JSON.stringify(d, (_, v) => ArrayBuffer.isView(v) ? Array.from(v, Number) : v))); 
+      if (d.type === 'family' && d.channel.startsWith('coco.costmap.layers.')) row.costs.push(JSON.parse(JSON.stringify(d, (_, v) => ArrayBuffer.isView(v) ? Array.from(v, Number) : v)));
       if ((d.type === 'plan_batch' && d.meta.compare) || ['compare_done', 'compare_loop_batch'].includes(d.type)) {
        const clone = JSON.parse(JSON.stringify(d, (_, v) => ArrayBuffer.isView(v) ? Array.from(v, Number) : typeof v === 'bigint' ? Number(v) : v));
        row.messages.push(clone);

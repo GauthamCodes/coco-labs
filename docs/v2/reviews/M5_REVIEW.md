@@ -160,7 +160,7 @@ Review branch remote Lab runs [39287336347](https://github.com/GauthamCodes/coco
 Original PR #25 is textually mergeable into main. Original PR #24 head `984b2cf`
 accepts a trial merge of `origin/v2/m5-focus` without conflict files; the temporary
 worktree was aborted and removed. This is textual compatibility, not M6 acceptance.
-[Trial result](../data/m5/review/m6-trial-merge.log).
+[Original-head trial](../data/m5/review/m6-trial-merge.log). A second trial with all review fixes at `29690ee` also has **no conflict files**: [review-tip trial](../data/m5/review/m6-review-tip-trial.log). Both throwaway worktrees were removed.
 
 **Merging PR #25 publishes v2 to the public site**, once the main build passes.
 First merge the review-fix PR into M5, resolve the live-update consistency policy,
