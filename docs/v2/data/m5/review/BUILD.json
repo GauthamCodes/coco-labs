@@ -1,0 +1,58 @@
+{
+  "git_head": "98194487a1f3e3b102cdc97950a9d136d300ecd3",
+  "sources": {
+    "lab_web/src/shell/TitleScreen.tsx": "b636e56b846364a109f02b3e8cc445d152835959aa5c54ebea10f40f6e57952b",
+    "lab_web/src/arena/worker_pool.ts": "98b3aa9ef86793c7bbd86ac10a404fad78fc78117a8b132468ed20ed5d389f27",
+    "lab_web/src/play/PlayHUD.tsx": "fc63ec5a36f6288ac10454afaf441cdcf24d7044168358109f3384708722d1c9",
+    "lab_web/src/shell/SettingsDrawer.tsx": "f9fc4d20bef46831597e862609875e640fe49ea9ba88c0864cda81983a9d8e07",
+    "lab_web/src/shell/GlobalSettings.tsx": "9ab9f8967b42257e28f0e8613c2faee7a23544b0c2e622f4a7d32c4462380b83",
+    "lab_web/src/arena/arena.worker.ts": "13f44e7c0b54d4bf4ed698fff33ced0c1aa41baea5d4523c0b7da889b329ee6e"
+  },
+  "inventory": {
+    "base": "/coco-labs/",
+    "pyodide": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/",
+    "title_app_gzip_bytes": 271801,
+    "background_interpreter_js_gzip_bytes": 268476,
+    "title_app_scripts": [
+      "assets/TitleScreen-BehVatd-.js",
+      "assets/WorldStage-6YODlr1y.js",
+      "assets/arena.worker-9ZjtL-ye.js",
+      "assets/createLucideIcon-JSnpN7gy.js",
+      "assets/index-CWfMub4g.js",
+      "assets/library-Dao-gCLz.js",
+      "assets/navigation-2-B0bLT0tF.js",
+      "assets/quality-j0dYhQ2P.js",
+      "assets/scene3d-C5sNQeQN.js",
+      "assets/three-2pgavX5U.js",
+      "assets/tokens-DWxFG9mh.js"
+    ],
+    "files": 322,
+    "bytes": 90290318,
+    "urls": {
+      "assets/LiveApp-DUlQ0Fpp.js: https://github.com/GauthamCodes/coco-labs/blob/main/docs/DOCKER.md": true,
+      "assets/createLucideIcon-JSnpN7gy.js: http://www.w3.org/2000/svg": true,
+      "assets/index-CWfMub4g.js: https://react.dev/errors/": true,
+      "assets/index-CWfMub4g.js: http://www.w3.org/2000/svg": true,
+      "assets/index-CWfMub4g.js: http://www.w3.org/1998/Math/MathML": true,
+      "assets/index-CWfMub4g.js: http://www.w3.org/1999/xlink": true,
+      "assets/index-CWfMub4g.js: http://www.w3.org/XML/1998/namespace": true,
+      "assets/index-CWfMub4g.js: https://github.com/GauthamCodes/coco-labs/blob/main/docs/DOCKER.md": true,
+      "assets/index-CWfMub4g.js: https://github.com/GauthamCodes/coco-labs/blob/main/": true,
+      "assets/index-CWfMub4g.js: https://cdn.jsdelivr.net/pyodide/v314.0.7/full/": true,
+      "assets/three-2pgavX5U.js: http://www.w3.org/1999/xhtml": true,
+      "assets/three-2pgavX5U.js: https://jcgt.org/published/0007/04/01/": true,
+      "index.html: https://cdn.jsdelivr.net/pyodide/v314.0.7/full/;": true,
+      "index.html: https://cdn.jsdelivr.net/pyodide/v314.0.7/full/": true,
+      "index.html: http://localhost:*": true,
+      "index.html: http://127.0.0.1:*": true,
+      "index.html: https://coco-live.taile7cb60.ts.net;": true,
+      "licenses/manrope.txt: https://github.com/sharanda/manrope": true,
+      "licenses/manrope.txt: http://scripts.sil.org/OFL": true,
+      "licenses/outfit.txt: https://github.com/Outfitio/Outfit-Fonts": true,
+      "licenses/outfit.txt: http://scripts.sil.org/OFL": true
+    },
+    "tree_sha256": "144c18049d5a0e3e00c277150366f89cd13803dbf15180087e4779dca746a2fe",
+    "failures": []
+  },
+  "frozen_v1_tree": "6857ff56a2646c0772a2b7780e50f2e1eb910ae289ae3a222fdab6ee9b2bde2b"
+}

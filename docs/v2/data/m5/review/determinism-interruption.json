@@ -1,0 +1,41 @@
+{
+  "reason": "AC absent; battery 9%, low; preserve completed correctness shards and stop owned long jobs",
+  "processes": [
+    {
+      "pid": 301880,
+      "args": "python3 docs/v2/data/m5/review/rerun_determinism.py http://127.0.0.1:4265/coco-labs/"
+    },
+    {
+      "pid": 301885,
+      "args": "/home/gautham/coco_v2_ws/node/node-v24.21.0-linux-x64/bin/node tools/perf/determinism.mjs node --sessions /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/sessions-01.json --out /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/shards/node-01 --hash-version 1 --site http://127.0.0.1:4265/coco-labs/"
+    },
+    {
+      "pid": 301887,
+      "args": "/home/gautham/coco_v2_ws/node/node-v24.21.0-linux-x64/bin/node tools/perf/determinism.mjs node --sessions /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/sessions-03.json --out /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/shards/node-03 --hash-version 1 --site http://127.0.0.1:4265/coco-labs/"
+    },
+    {
+      "pid": 301889,
+      "args": "/home/gautham/coco_v2_ws/node/node-v24.21.0-linux-x64/bin/node tools/perf/determinism.mjs node --sessions /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/sessions-02.json --out /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/shards/node-02 --hash-version 1 --site http://127.0.0.1:4265/coco-labs/"
+    },
+    {
+      "pid": 301891,
+      "args": "/home/gautham/coco_v2_ws/node/node-v24.21.0-linux-x64/bin/node tools/perf/determinism.mjs node --sessions /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/sessions-04.json --out /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/shards/node-04 --hash-version 1 --site http://127.0.0.1:4265/coco-labs/"
+    },
+    {
+      "pid": 301895,
+      "args": "/home/gautham/coco_v2_ws/node/node-v24.21.0-linux-x64/bin/node tools/perf/determinism.mjs node --sessions /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/sessions-06.json --out /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/shards/node-06 --hash-version 1 --site http://127.0.0.1:4265/coco-labs/"
+    },
+    {
+      "pid": 301896,
+      "args": "/home/gautham/coco_v2_ws/node/node-v24.21.0-linux-x64/bin/node tools/perf/determinism.mjs node --sessions /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/sessions-07.json --out /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/shards/node-07 --hash-version 1 --site http://127.0.0.1:4265/coco-labs/"
+    },
+    {
+      "pid": 302942,
+      "args": "/home/gautham/coco_v2_ws/node/node-v24.21.0-linux-x64/bin/node tools/perf/determinism.mjs node --sessions /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/sessions-08.json --out /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/shards/node-08 --hash-version 1 --site http://127.0.0.1:4265/coco-labs/"
+    },
+    {
+      "pid": 302998,
+      "args": "/home/gautham/coco_v2_ws/node/node-v24.21.0-linux-x64/bin/node tools/perf/determinism.mjs node --sessions /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/sessions-09.json --out /home/gautham/coco_labs_ws/worktrees/m5-review/docs/v2/data/m5/review/determinism-v1/shards/node-09 --hash-version 1 --site http://127.0.0.1:4265/coco-labs/"
+    }
+  ]
+}

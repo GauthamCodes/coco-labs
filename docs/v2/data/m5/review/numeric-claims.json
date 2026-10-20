@@ -1,0 +1,162 @@
+{
+  "Focus": {
+    "desktop": {
+      "controls": 7,
+      "no_scroll": true
+    },
+    "compact": {
+      "controls": 7,
+      "no_scroll": true
+    },
+    "nothing-landscape": {
+      "controls": 8,
+      "no_scroll": true
+    },
+    "nothing-portrait": {
+      "controls": 1,
+      "no_scroll": true
+    }
+  },
+  "Title / cold": {
+    "desktop": {
+      "titleVisibleMs": [
+        2002.0999999940395,
+        2028.2000000029802
+      ],
+      "liveModelReadyMs": [
+        9606,
+        9786.999755859375
+      ],
+      "worldInteractiveMs": [
+        9606,
+        9786.999755859375
+      ],
+      "firstVisibleComputationMs": [
+        9673.60009765625,
+        9862.60009765625
+      ]
+    },
+    "landscape": {
+      "titleVisibleMs": [
+        2214.5999999940395,
+        2616.7999999970198
+      ],
+      "liveModelReadyMs": [
+        9942.699951171875,
+        10161.39990234375
+      ],
+      "worldInteractiveMs": [
+        9942.699951171875,
+        10161.39990234375
+      ],
+      "firstVisibleComputationMs": [
+        10026.89990234375,
+        10236.60009765625
+      ]
+    }
+  },
+  "Warm": {
+    "desktop": 2680.5,
+    "landscape": 2620.5,
+    "portrait": 2694.199951171875
+  },
+  "Cache contradiction": {
+    "reported_removed": true,
+    "snapshot_caches": [
+      "coco-static-%2Fcoco-labs%2F-c423ae7bf06032e2cd64616b7f4bff8912b1dc64cb0acfac2c411c4cfbbae6ad",
+      "coco-static-%2Fcoco-labs%2F-active-version",
+      "coco-static-%2Fcoco-labs%2F-a75a530dc5eb55091abb4837e929200439531561fbeaade894fbc3002c25d618"
+    ],
+    "old_A_present": true
+  },
+  "JavaScript": {
+    "title_app_gzip_bytes": 271628,
+    "background_interpreter_js_gzip_bytes": 268476
+  },
+  "Frame rate": [
+    {
+      "gpu": "nvidia",
+      "mode": "play",
+      "quality": "high",
+      "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+      "actualTier": "high",
+      "median": 59.96230940521038,
+      "minimum": 59.41978329224557
+    },
+    {
+      "gpu": "intel",
+      "mode": "play",
+      "quality": "medium",
+      "renderer": "ANGLE (Intel, Vulkan 1.4.318 (Intel(R) Graphics (RPL-P) (0x0000A7A8)), Intel open-source Mesa driver)",
+      "actualTier": "medium",
+      "median": 60.01500375153408,
+      "minimum": 59.36675461756013
+    },
+    {
+      "gpu": "intel",
+      "mode": "compare",
+      "quality": "auto",
+      "renderer": "ANGLE (Intel, Vulkan 1.4.318 (Intel(R) Graphics (RPL-P) (0x0000A7A8)), Intel open-source Mesa driver)",
+      "actualTier": "low",
+      "median": 11.516654854743376,
+      "minimum": 7.044734061326162
+    }
+  ],
+  "Frame rate final": 60.02508511003504,
+  "Determinism": {
+    "reference": "docs/v2/data/m1/determinism/hashes_pyodide-node.json.gz",
+    "sessions": 100,
+    "ticks": 15000,
+    "differences": 0,
+    "passed": true
+  },
+  "V2": {
+    "chromium": {
+      "sessions": 100,
+      "ticks_compared": 15000,
+      "ticks_mismatched": 0,
+      "sessions_differing": 0
+    },
+    "firefox": {
+      "sessions": 100,
+      "ticks_compared": 15000,
+      "ticks_mismatched": 0,
+      "sessions_differing": 0
+    },
+    "pyodide-node": {
+      "sessions": 100,
+      "ticks_compared": 15000,
+      "ticks_mismatched": 0,
+      "sessions_differing": 0
+    },
+    "webkit": {
+      "sessions": 100,
+      "ticks_compared": 15000,
+      "ticks_mismatched": 0,
+      "sessions_differing": 0
+    }
+  },
+  "Links": {
+    "forms": 50,
+    "archive": 6,
+    "conditions": null,
+    "replays": 5
+  },
+  "Accessibility": {
+    "pages": 12,
+    "passed": true,
+    "keyboard": true
+  },
+  "Hygiene": {
+    "minutes": 30.162183333333335,
+    "rounds": 34,
+    "errors": 0,
+    "context_lost": 0,
+    "long_tasks_while_driving": 0
+  },
+  "Defects casefiles": {
+    "label": "emulated 4G, real robot_low.glb mesh; shared browser HTTP cache across Case Files",
+    "passed": 100,
+    "total": 100
+  }
+}

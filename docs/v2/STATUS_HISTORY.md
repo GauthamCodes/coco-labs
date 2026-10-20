@@ -2146,6 +2146,17 @@ ADB available but no device; real Phone pending USB, provisional settings unchan
 
 M5.11 submission: branch pushed, [PR #25](https://github.com/GauthamCodes/coco-labs/pull/25) open into main and unmerged. Evidence commit `6d984fd`, implementation `00a42aa`. CI running/queued at submission; not yet asserted green. Final documentation follow-up records PR and next steps. Strict payload/emulated startup misses, real-phone and owner usability gates remain explicit. No releases/deployment or merge.
 
+## 2026-10-20 · Independent M5 review
+
+Review branch v2/m5-review, original fe9d544; [report](reviews/M5_REVIEW.md).
+CI bytecode scan and determinism-verdict defects fixed; title idle/input gate,
+modal/portrait/secondary-touch STOP and Settings navigation fixed. Preload
+attempt regressed and was removed with all measurements retained. Fresh
+3569/493/219 suites, v1 15000, v2 four×15000, CLI153, URL50+6, replay5/canvas5
+pass. Balanced/AC measurements and screenshot identity retained. Open-tab cache
+version mixing remains unfixed; native CPython continuous differences reported.
+Phone absent, owner usability pending. No merge/deploy or M6 worktree changes.
+
 
 ## 2026-10-20 M5 closure attempt
 

@@ -1,0 +1,86 @@
+{
+  "rows": [
+    {
+      "noIdle": false,
+      "errors": [],
+      "requests": [
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/python_stdlib.zip",
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/pyodide.asm.wasm"
+      ],
+      "starts": [
+        {
+          "ready": true,
+          "input": false
+        }
+      ],
+      "preloads": [],
+      "streaming": {
+        "calls": 1,
+        "success": 1
+      }
+    },
+    {
+      "noIdle": true,
+      "errors": [],
+      "requests": [
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/python_stdlib.zip",
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/pyodide.asm.wasm"
+      ],
+      "beforeInput": {
+        "starts": [],
+        "api": "undefined"
+      },
+      "starts": [
+        {
+          "ready": true,
+          "input": true
+        }
+      ],
+      "preloads": [],
+      "streaming": {
+        "calls": 1,
+        "success": 1
+      }
+    }
+  ],
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-20T01:30:59.477Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 1.66,
+        "5m": 3.03,
+        "15m": 7.09
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-20T01:31:04.217Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 1.69,
+        "5m": 3.01,
+        "15m": 7.06
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    }
+  }
+}

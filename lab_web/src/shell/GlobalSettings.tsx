@@ -5,6 +5,11 @@ import {SETTINGS_OPEN} from './settings_events';
 const SettingsDrawer=lazy(()=>import('./SettingsDrawer'));
 export function GlobalSettings(){
  const [open,setOpen]=useState(false);
- useEffect(()=>{const show=()=>setOpen(true);window.addEventListener(SETTINGS_OPEN,show);return()=>window.removeEventListener(SETTINGS_OPEN,show);},[]);
+ useEffect(()=>{
+  const show=()=>setOpen(true),close=()=>setOpen(false);
+  window.addEventListener(SETTINGS_OPEN,show);
+  window.addEventListener('popstate',close);
+  return()=>{window.removeEventListener(SETTINGS_OPEN,show);window.removeEventListener('popstate',close);};
+ },[]);
  return open?<Suspense fallback={null}><SettingsDrawer onClose={()=>setOpen(false)}/></Suspense>:null;
 }

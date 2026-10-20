@@ -1,0 +1,96 @@
+{
+  "rows": [
+    {
+      "noIdle": false,
+      "errors": [],
+      "requests": [
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/pyodide.asm.wasm",
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/python_stdlib.zip",
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/python_stdlib.zip",
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/pyodide.asm.wasm"
+      ],
+      "starts": [
+        {
+          "ready": true,
+          "input": false
+        }
+      ],
+      "preloads": [
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/pyodide.asm.wasm",
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/python_stdlib.zip"
+      ],
+      "streaming": {
+        "calls": 1,
+        "success": 1
+      }
+    },
+    {
+      "noIdle": true,
+      "errors": [],
+      "requests": [
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/pyodide.asm.wasm",
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/python_stdlib.zip",
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/python_stdlib.zip",
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/pyodide.asm.wasm"
+      ],
+      "beforeInput": {
+        "starts": [],
+        "api": "undefined"
+      },
+      "starts": [
+        {
+          "ready": true,
+          "input": true
+        }
+      ],
+      "preloads": [
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/pyodide.asm.wasm",
+        "http://127.0.0.1:4265/coco-labs/generated/pyodide/python_stdlib.zip"
+      ],
+      "streaming": {
+        "calls": 1,
+        "success": 1
+      }
+    }
+  ],
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-20T01:21:38.821Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 3.14,
+        "5m": 8.87,
+        "15m": 11.21
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-20T01:21:43.696Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 3.05,
+        "5m": 8.75,
+        "15m": 11.16
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    }
+  }
+}

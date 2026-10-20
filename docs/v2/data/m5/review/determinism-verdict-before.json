@@ -1,0 +1,20 @@
+[
+  {
+    "fault": "hash",
+    "original_exit_code": 0,
+    "original_verdict": true,
+    "expected_verdict": false
+  },
+  {
+    "fault": "chain",
+    "original_exit_code": 0,
+    "original_verdict": true,
+    "expected_verdict": false
+  },
+  {
+    "fault": "page_error",
+    "original_exit_code": 0,
+    "original_verdict": true,
+    "expected_verdict": false
+  }
+]

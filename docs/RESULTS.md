@@ -9373,6 +9373,25 @@ Conditions: balanced on AC, original profile balanced unchanged; i5-13420H, RTX 
 
 Final M5.11 candidate `00a42aa` confirmation: [Intel four-pane top-down replay](v2/data/m5/close/fps-final/checks.json), median **60.02508511003504 fps**, minimum **59.42198613471046**, 20 intervals, no errors/context loss; [eight Compare layouts](v2/data/m5/close/compare-final/checks.json), one GL context each and zero errors; [desktop Chrome manifest/installability](v2/data/m5/close/installability.json), no reported errors (not an Android install). Final web rerun **493 passed /62 files**, [log](v2/data/m5/close/vitest-close.txt).
 
+## 2026-10-20 · Independent M5 review (MODEL / TESTED; emulated phone)
+
+Review of PR #25 head fe9d544; isolated v2/m5-review, no merge/deploy.
+[Full report](v2/reviews/M5_REVIEW.md), [build identity](v2/data/m5/review/BUILD.json).
+Fresh 3569 package /493 web /219 tool tests pass; two builds byte-identical.
+V1 15000 hashes unchanged; four engines each 100×150 v2 ticks, zero hash/chain
+differences/page errors. CLI153/153, old URLs50+archive6, replays5, canvases5 pass.
+Balanced/AC live cold desktop ms9997.8/9828.4/9845.3, emulated Nothing Phone (1)
+10106.3/10030.5/9964.7 (accepted near-miss, not real phone). Default warm
+2695.1/2807.1/2806.9 ms. Critical gzip271801 bytes, interpreter268476 background.
+The preload attempt regressed through duplicate WASM/stdlib downloads; all six
+failed timings retained and hints removed. Native streaming and idle/input gate
+verified. STOP/modal/second-touch and Settings navigation bugs fixed.
+Global Compare native events and seven hand-calculated inflation cells pass;
+continuous panes match headless Pyodide but differ from native CPython, reported.
+Open-document A/B static version mixing remains an unfixed merge blocker.
+Original 30-minute soak is historical, no exact-head review soak claimed.
+Real phone absent and owner usability pending. Merging #25 publishes the site.
+
 
 ### 2026-10-20 M5 native portability diagnosis (MODEL)
 

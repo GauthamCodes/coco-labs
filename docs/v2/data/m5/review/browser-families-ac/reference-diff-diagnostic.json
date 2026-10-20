@@ -1,0 +1,412 @@
+[
+  {
+    "file": "compare-control-events.json",
+    "labels": [
+      "A \u00b7 DWA-style sampler",
+      "B \u00b7 Pure pursuit",
+      "C \u00b7 MPPI",
+      "D \u00b7 DWA-style sampler"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "dwa",
+        "ticks": 60,
+        "equal": false,
+        "first_differences": [
+          {
+            "path": "/0/hash",
+            "actual": "318e59d3ca9c3eea2e66d40b2499b5e12bcebb4270bb465e1dbcb18eefe257ab",
+            "expected": "a7f75553e2d366080d725440070a4db62fc6c526c744b8a1ae863d752498f170"
+          },
+          {
+            "path": "/1/hash",
+            "actual": "dd8ee5efa4c89132200caa48dd14653dc3716fb5a91909b67c08899a9ed32516",
+            "expected": "a556d2607961f1c3ca728440807205e1503e314464e6576f9fa8b61d2fa27a98"
+          },
+          {
+            "path": "/2/hash",
+            "actual": "075736d2ed50f66c9cf43947c336c669e6a22921eb9abd1e24a54134b37a4173",
+            "expected": "a6b97cab3596b203bea1f4b7945f6fb9ec6372d2f6216a887fbcab8fcbd952f3"
+          },
+          {
+            "path": "/3/hash",
+            "actual": "73607be0efc2fc760ae026e5cf4ee892ef05d87f5ccbc927e910710e15f69975",
+            "expected": "67f5c529cf80515b07d32f685a9f11b4a2755b20cdcd66a0100a85d6ce6a9dd5"
+          },
+          {
+            "path": "/4/chosen/0/2",
+            "actual": 0.27891269710038036,
+            "expected": 0.2789126971003804
+          },
+          {
+            "path": "/4/chosen/0/3",
+            "actual": 0.3224168115122785,
+            "expected": 0.3224168115122786
+          },
+          {
+            "path": "/4/chosen/0/4",
+            "actual": 0.34495946575133307,
+            "expected": 0.3449594657513331
+          },
+          {
+            "path": "/4/hash",
+            "actual": "4d80aeca1bec572c374946c8e00966aae179ac8c481bc7f6d38a30687d2f79e6",
+            "expected": "5796067c5c55b02e47e4031bad338515af5566ea3d4fa364a2edaadca3476334"
+          }
+        ]
+      },
+      {
+        "pane": "B",
+        "algorithm": "rpp",
+        "ticks": 60,
+        "equal": false,
+        "first_differences": [
+          {
+            "path": "/0/hash",
+            "actual": "64061814c16038012d7636d46c690e6ca13297627d31e594df70a1d406435426",
+            "expected": "79799abf6d4acd565e0c82eb4d0ac7612e94b5713a814b969b1d9d18a4275c4e"
+          },
+          {
+            "path": "/1/hash",
+            "actual": "21b462575a67e094dd1dab59476b5f34feb9f3328a4f40143186a86389548d17",
+            "expected": "a3584525077d8d67eae740365f8f134d4c77596e3ef5b35dee02f5f788cce391"
+          },
+          {
+            "path": "/2/hash",
+            "actual": "ce01b420d9b28646755f33dcef8622633e0d96f6c49ca78096e5c84cfd7f3eb1",
+            "expected": "45222144ef215e35690901cdd73bbe77ee4cfcf56fd5796a28d4a7b2e062c4cd"
+          },
+          {
+            "path": "/3/chosen/1/2",
+            "actual": 0.07573615573217087,
+            "expected": 0.0757361557321709
+          },
+          {
+            "path": "/3/hash",
+            "actual": "ca6e98a87218c4270c5cb7cf7432381765b1863fa4ad7a32179997b387913650",
+            "expected": "9e208b1b3bc54665b82751610341ed268a987b424b6507c35567424e79ce6f44"
+          },
+          {
+            "path": "/4/chosen/1/2",
+            "actual": 0.09029842954141956,
+            "expected": 0.09029842954141962
+          },
+          {
+            "path": "/4/hash",
+            "actual": "950cf9ac461b813aff04fdb93d1936857a257d5f2607510b6cb6bd00f230a757",
+            "expected": "fcd1bb60e49f88795f4d13f4b2b99801a65967bf08bde3ff69c56db725971b69"
+          },
+          {
+            "path": "/5/chosen/1/1",
+            "actual": 0.062015587624623385,
+            "expected": 0.06201558762462343
+          }
+        ]
+      },
+      {
+        "pane": "C",
+        "algorithm": "mppi",
+        "ticks": 60,
+        "equal": false,
+        "first_differences": [
+          {
+            "path": "/0/hash",
+            "actual": "976bda041feee4c45b2a4a843b147e3acc825d9338b01495fb16416d604a3757",
+            "expected": "d1c6971f508cb614c995576dd1bfd4b05497c557e957dffac2de2c719796715f"
+          },
+          {
+            "path": "/1/chosen/0/0",
+            "actual": 0.015248666727243482,
+            "expected": 0.015248666727243471
+          },
+          {
+            "path": "/1/chosen/0/1",
+            "actual": 0.0342685118294745,
+            "expected": 0.03426851182947447
+          },
+          {
+            "path": "/1/chosen/0/2",
+            "actual": 0.05330113599059574,
+            "expected": 0.05330113599059566
+          },
+          {
+            "path": "/1/chosen/0/3",
+            "actual": 0.07510056984201582,
+            "expected": 0.07510056984201563
+          },
+          {
+            "path": "/1/chosen/0/4",
+            "actual": 0.09776143476717501,
+            "expected": 0.0977614347671748
+          },
+          {
+            "path": "/1/chosen/0/5",
+            "actual": 0.11776024543702564,
+            "expected": 0.11776024543702553
+          },
+          {
+            "path": "/1/chosen/0/6",
+            "actual": 0.13806312901274634,
+            "expected": 0.1380631290127462
+          }
+        ]
+      },
+      {
+        "pane": "D",
+        "algorithm": "dwa",
+        "ticks": 60,
+        "equal": false,
+        "first_differences": [
+          {
+            "path": "/0/hash",
+            "actual": "318e59d3ca9c3eea2e66d40b2499b5e12bcebb4270bb465e1dbcb18eefe257ab",
+            "expected": "a7f75553e2d366080d725440070a4db62fc6c526c744b8a1ae863d752498f170"
+          },
+          {
+            "path": "/1/hash",
+            "actual": "dd8ee5efa4c89132200caa48dd14653dc3716fb5a91909b67c08899a9ed32516",
+            "expected": "a556d2607961f1c3ca728440807205e1503e314464e6576f9fa8b61d2fa27a98"
+          },
+          {
+            "path": "/2/hash",
+            "actual": "075736d2ed50f66c9cf43947c336c669e6a22921eb9abd1e24a54134b37a4173",
+            "expected": "a6b97cab3596b203bea1f4b7945f6fb9ec6372d2f6216a887fbcab8fcbd952f3"
+          },
+          {
+            "path": "/3/hash",
+            "actual": "73607be0efc2fc760ae026e5cf4ee892ef05d87f5ccbc927e910710e15f69975",
+            "expected": "67f5c529cf80515b07d32f685a9f11b4a2755b20cdcd66a0100a85d6ce6a9dd5"
+          },
+          {
+            "path": "/4/chosen/0/2",
+            "actual": 0.27891269710038036,
+            "expected": 0.2789126971003804
+          },
+          {
+            "path": "/4/chosen/0/3",
+            "actual": 0.3224168115122785,
+            "expected": 0.3224168115122786
+          },
+          {
+            "path": "/4/chosen/0/4",
+            "actual": 0.34495946575133307,
+            "expected": 0.3449594657513331
+          },
+          {
+            "path": "/4/hash",
+            "actual": "4d80aeca1bec572c374946c8e00966aae179ac8c481bc7f6d38a30687d2f79e6",
+            "expected": "5796067c5c55b02e47e4031bad338515af5566ea3d4fa364a2edaadca3476334"
+          }
+        ]
+      }
+    ],
+    "excluded": "wall-clock compute_ms only",
+    "passed": false
+  },
+  {
+    "file": "compare-localise-events.json",
+    "labels": [
+      "A \u00b7 MCL \u00b7 no injection",
+      "B \u00b7 MCL \u00b7 injection",
+      "C \u00b7 EKF",
+      "D \u00b7 MCL \u00b7 no injection"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "mcl",
+        "ticks": 60,
+        "equal": false,
+        "first_differences": [
+          {
+            "path": "/0/hash",
+            "actual": "bac34abae0378a9bdec6b11e119676f96211ac499f64f6a39f36c31c4375f266",
+            "expected": "7d950f3c58b81d3a13333173d41bdf9ae000bcc1dce8da349f128fc559de80ef"
+          },
+          {
+            "path": "/0/particles/0/8",
+            "actual": 0.18669610106796958,
+            "expected": 0.1866961010679696
+          },
+          {
+            "path": "/0/particles/1/35",
+            "actual": 0.34472038132096,
+            "expected": 0.34472038132096006
+          },
+          {
+            "path": "/0/particles/1/59",
+            "actual": -0.14856157964542988,
+            "expected": -0.14856157964542985
+          },
+          {
+            "path": "/0/pose/1",
+            "actual": -0.027749735724999672,
+            "expected": -0.027749735724999666
+          },
+          {
+            "path": "/0/pose/2",
+            "actual": 0.035014695331131024,
+            "expected": 0.03501469533113103
+          },
+          {
+            "path": "/1/hash",
+            "actual": "96707779b4ba3977cf1c5e01667da432d6c40f727024ad44c965e42fd4a06d58",
+            "expected": "b5b192e3a0081e23df24e33a5618b6c5153bac4110439a8a0217d4efd84c1119"
+          },
+          {
+            "path": "/1/particles/0/8",
+            "actual": 0.18669610106796958,
+            "expected": 0.1866961010679696
+          }
+        ]
+      },
+      {
+        "pane": "B",
+        "algorithm": "mcl_augmented",
+        "ticks": 60,
+        "equal": false,
+        "first_differences": [
+          {
+            "path": "/0/hash",
+            "actual": "ef6f948850bab07bbe6f7efea11fc5d768bb3658056c29ad780a82420c45a7b1",
+            "expected": "3ccb7c9a82082a0c7b19989fd3bfc190c6774b6a0b7d5cb81bd4129d9847895e"
+          },
+          {
+            "path": "/0/particles/0/8",
+            "actual": 0.18669610106796958,
+            "expected": 0.1866961010679696
+          },
+          {
+            "path": "/0/particles/1/35",
+            "actual": 0.34472038132096,
+            "expected": 0.34472038132096006
+          },
+          {
+            "path": "/0/particles/1/59",
+            "actual": -0.14856157964542988,
+            "expected": -0.14856157964542985
+          },
+          {
+            "path": "/0/pose/1",
+            "actual": -0.027749735724999672,
+            "expected": -0.027749735724999666
+          },
+          {
+            "path": "/0/pose/2",
+            "actual": 0.035014695331131024,
+            "expected": 0.03501469533113103
+          },
+          {
+            "path": "/1/hash",
+            "actual": "d4b565f78664fe3aa7d749030ceb645ed1470b507f7f5c44f6d1bffd054f98dd",
+            "expected": "66dadce962a9eb2ec920dac34d509b290cf52b8c4e4f60279b60f02d9303607b"
+          },
+          {
+            "path": "/1/particles/0/8",
+            "actual": 0.18669610106796958,
+            "expected": 0.1866961010679696
+          }
+        ]
+      },
+      {
+        "pane": "C",
+        "algorithm": "ekf",
+        "ticks": 60,
+        "equal": false,
+        "first_differences": [
+          {
+            "path": "/0/hash",
+            "actual": "7ccd3ac47eb61523f3cffc4c4c6f980fe3a594e2628e4548fdf949771defe8a4",
+            "expected": "6debc44b3ac1ae4b814f37531e81252386b34b90bf4821d6432a25f5a33fe4d1"
+          },
+          {
+            "path": "/1/hash",
+            "actual": "1f4763d2d173385de6d7463661aecdda09700c0308149c82e7a52c3e758df31d",
+            "expected": "9ede1e94906b24cfe59ac62b3b8e3dd06976b7042283d512d7246c55d2a0769e"
+          },
+          {
+            "path": "/2/hash",
+            "actual": "3d3960d9adc6526a60fea2598f8b0a7631a852bb524fd70e2436d0e0c4c5d024",
+            "expected": "7711d774a17f8bde67d7485d8d109ca58a040396da3e6272bdd2d1fedebbf57c"
+          },
+          {
+            "path": "/3/hash",
+            "actual": "fa1845cf769703111954599f29675a69e3fb0cda269704027b8d84395ba2c760",
+            "expected": "ce41bfe3ef53fb20cb3b9714ce491400cffe7aee163c18c4b590790a5d7b66b6"
+          },
+          {
+            "path": "/4/hash",
+            "actual": "1c25f5ee7076afdb0571446548724e9de1f3f8e02e2584556dcebc6a61c991cf",
+            "expected": "ff8180418d420dd76c1c5adc8fbf560d4d179ced9242f44af41efa43492873ac"
+          },
+          {
+            "path": "/5/hash",
+            "actual": "89fd79b0019682901e0b017fe9a97ed4fe7b2d2b5ad1207a041d33c5f1be222f",
+            "expected": "bd1438fa0271812b3935cdfe373300fcddbd04e453735b0c3ac7c079b8f15824"
+          },
+          {
+            "path": "/6/hash",
+            "actual": "2d7d9ae6536d67bc5694149eafb27432e6d9989014df8af4feea7812021e4ad8",
+            "expected": "bc644e329d53017b86b692aa7b096968be4368ef77b23ee373dd4d764e59f14e"
+          },
+          {
+            "path": "/7/hash",
+            "actual": "c78bad4e4aa9b6b7859060b392d53b994b1d07a9aeee345d26938172489d8316",
+            "expected": "84567c1b3fa2acd431079e42d752f0dce5190709e42ac2efed9e3735860cbc77"
+          }
+        ]
+      },
+      {
+        "pane": "D",
+        "algorithm": "mcl",
+        "ticks": 60,
+        "equal": false,
+        "first_differences": [
+          {
+            "path": "/0/hash",
+            "actual": "bac34abae0378a9bdec6b11e119676f96211ac499f64f6a39f36c31c4375f266",
+            "expected": "7d950f3c58b81d3a13333173d41bdf9ae000bcc1dce8da349f128fc559de80ef"
+          },
+          {
+            "path": "/0/particles/0/8",
+            "actual": 0.18669610106796958,
+            "expected": 0.1866961010679696
+          },
+          {
+            "path": "/0/particles/1/35",
+            "actual": 0.34472038132096,
+            "expected": 0.34472038132096006
+          },
+          {
+            "path": "/0/particles/1/59",
+            "actual": -0.14856157964542988,
+            "expected": -0.14856157964542985
+          },
+          {
+            "path": "/0/pose/1",
+            "actual": -0.027749735724999672,
+            "expected": -0.027749735724999666
+          },
+          {
+            "path": "/0/pose/2",
+            "actual": 0.035014695331131024,
+            "expected": 0.03501469533113103
+          },
+          {
+            "path": "/1/hash",
+            "actual": "96707779b4ba3977cf1c5e01667da432d6c40f727024ad44c965e42fd4a06d58",
+            "expected": "b5b192e3a0081e23df24e33a5618b6c5153bac4110439a8a0217d4efd84c1119"
+          },
+          {
+            "path": "/1/particles/0/8",
+            "actual": 0.18669610106796958,
+            "expected": 0.1866961010679696
+          }
+        ]
+      }
+    ],
+    "excluded": "wall-clock compute_ms only",
+    "passed": false
+  }
+]
