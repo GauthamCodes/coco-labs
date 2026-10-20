@@ -219,6 +219,9 @@ function main() {
   // M4.3: World Spec v2 (the terrain), chosen by ?world=v2; v1 stays every default
   const specV2 = readFileSync(join(repo, 'worlds', 'coco_arena_v2.json'));
   writeFileSync(join(arenaDir, 'coco_arena_v2.json'), specV2);
+  // G1: the COCO Depot (World Spec v3), the game's level: canonical bytes from tools/g1/depot_json.py
+  const specDepot = readFileSync(join(repo, 'worlds', 'coco_depot_v1.json'));
+  writeFileSync(join(arenaDir, 'coco_depot_v1.json'), specDepot);
   const outline = robotOutline(readFileSync(join(repo, 'gazebo_models', 'meshes', 'base.stl')));
   writeFileSync(join(arenaDir, 'robot_outline.json'), JSON.stringify({
     source: 'gazebo_models/meshes/base.stl (convex hull of x-z, mm -> base_link m; build_arena_assets.mjs)',
@@ -258,6 +261,7 @@ function main() {
     specs: {
       v1: { file: 'coco_arena_v1.json', bytes: spec.length, sha256: sha256(spec) },
       v2: { file: 'coco_arena_v2.json', bytes: specV2.length, sha256: sha256(specV2) },
+      depot: { file: 'coco_depot_v1.json', bytes: specDepot.length, sha256: sha256(specDepot) },
     },
     pyodide_files: files,
     stdlib: FULL_STDLIB ? 'full' : 'trimmed (tools/arena_stdlib.txt)',

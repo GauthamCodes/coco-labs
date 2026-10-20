@@ -56,7 +56,12 @@ async function display() {
       case 'arena': { const { ArenaApp } = await import('./arena/ArenaApp'); node = <ArenaApp />; break; }
       case 'learn': { const { LearnApp } = await import('./learn/LearnApp'); node = <LearnApp />; break; }
       case 'casefiles': { const { CaseFilesApp } = await import('./casefiles/CaseFilesApp'); node = <CaseFilesApp />; break; }
-      case 'play': { const { PlayApp } = await import('./play/PlayApp'); node = <PlayApp />; break; }
+      case 'play': {
+        // G1: the game shell owns ?view=play; every M5 challenge link (c, l, s, z, list) keeps M5's Play
+        if (['c', 'l', 's', 'z', 'list'].some((key) => params.has(key))) { const { PlayApp } = await import('./play/PlayApp'); node = <PlayApp />; }
+        else { const { GameApp } = await import('./game/GameApp'); node = <GameApp />; }
+        break;
+      }
       case 'live': { const { LiveApp } = await import('./ui/LiveApp'); node = <LiveApp />; break; }
     }
   }

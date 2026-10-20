@@ -32,7 +32,7 @@ interface Pyodide {
   unpackArchive(buf: Uint8Array, format: string, opts: { extractDir: string }): void;
   runPython(code: string): unknown;
   pyimport(name: string): { init: (...a: unknown[]) => PyProxy; step: (s: string) => PyProxy;
-    compare: (...a: unknown[]) => string; costmap_view: () => void;
+    compare: (...a: unknown[]) => string; costmap_view: () => void; game_init: (...a: unknown[]) => PyProxy; game_op: (op: string, arg: string | null) => string;
     loop_compare_begin: (request: string) => void; loop_compare_advance: () => string;
     begin: (s: string) => void; advance: (n: number) => boolean; amend: (s: string) => void; finish: () => PyProxy; play: (s: string) => string };
 }
@@ -158,7 +158,13 @@ async function boot(req: Extract<ToWorker, { type: 'boot' | 'warm' }>) {
     for (const [name, v] of Object.entries(d.plain ?? {})) columns[name] = v as boolean[] | string[];
     post({ type: 'family', channel: d.channel, tick: d.tick, columns, scalars: d.scalars }, buffers);
   };
-  const out = glue.init(spec, req.seed, req.planner, onBatch, req.batchSize, onFamily, req.hashVersion ?? 1);
+  let out: PyProxy;
+  if (req.game) {
+    // G1: the game's rules and Grasp Assist load first (their pack), then the game session builds the Arena
+    await loadPack('game');
+    mark('pack_game_ready');
+    out = glue.game_init(spec, req.game.game, req.game.arg, req.seed, onBatch, req.batchSize, onFamily, req.hashVersion ?? 2);
+  } else out = glue.init(spec, req.seed, req.planner, onBatch, req.batchSize, onFamily, req.hashVersion ?? 1);
   const world = JSON.parse(out.get(0) as unknown as string);
   const occ = out.get(1);
   const occupancy = (occ.toJs() as Uint8Array).slice();
@@ -219,6 +225,16 @@ async function play(req: Extract<ToWorker, { type: 'play' }>) {
   }
 }
 
+/** G1: a game query; read-only (the glue's game_op changes nothing in the model). */
+function gameQuery(req: Extract<ToWorker, { type: 'game' }>) {
+  try {
+    if (!glue) throw new Error('game query before boot');
+    post({ type: 'game_done', id: req.id, result: glue.game_op(req.op, req.arg) });
+  } catch (e) {
+    post({ type: 'game_done', id: req.id, error: e instanceof Error ? e.message : String(e) });
+  }
+}
+
 function compare(req: Extract<ToWorker, { type: 'compare' }>) {
   if (!glue || !onBatchFn) throw new Error('compare before boot');
   const args: unknown[] = [req.a, req.b, req.x, req.y, onBatchFn, 2048];
@@ -261,6 +277,7 @@ self.onmessage = (ev: MessageEvent<ToWorker>) => {
       else if (req.type === 'costmap_view') { if (!glue) throw new Error('Costmap before boot'); glue.costmap_view(); }
       else if (req.type === 'compare_loop') await compareLoop(req);
       else if (req.type === 'play') await play(req);
+      else if (req.type === 'game') gameQuery(req);
       else await step(req);
     } catch (e) {
       if (req.type === 'warm') {

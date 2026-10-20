@@ -53,7 +53,7 @@ const NOT_FETCHED = [
 const LICENCE_CREDITS = [
   /^https?:\/\/scripts\.sil\.org\/OFL$/,
   /^https?:\/\/openfontlicense\.org\/?$/,
-  /^https:\/\/github\.com\/(Outfitio\/Outfit-Fonts|sharanda\/manrope|lucide-icons\/lucide|colebemis\/feather)(\/.*)?$/,
+  /^https:\/\/github\.com\/(Outfitio\/Outfit-Fonts|sharanda\/manrope|m4rc1e\/Chakra-Petch\.git|rsms\/inter|lucide-icons\/lucide|colebemis\/feather)(\/.*)?$/,
   /^https:\/\/feathericons\.com\/?$/,
 ];
 const failures = [];

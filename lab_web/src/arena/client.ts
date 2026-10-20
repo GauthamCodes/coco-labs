@@ -34,7 +34,7 @@ export class ArenaClient {
   tick = 0;
   private readonly ready: Promise<World>;
 
-  constructor(ev: ArenaEvents, opts: { hashVersion?: 1 | 2; seed?: number; planner?: string; pyodide?: PyodideSource; spec?: SpecFile } = {}) {
+  constructor(ev: ArenaEvents, opts: { hashVersion?: 1 | 2; seed?: number; planner?: string; pyodide?: PyodideSource; spec?: SpecFile; game?: BootRequest['game'] } = {}) {
     const base = import.meta.env.BASE_URL;
     perf.mark('worker_create', wallMs());
     this.worker = claimWarmWorker(opts.pyodide !== 'cdn');
@@ -67,6 +67,10 @@ export class ArenaClient {
           this.playWaiting.delete(d.id);
           if (d.error !== undefined) w?.reject(new Error(d.error));
           else w?.resolve(JSON.parse(d.result ?? 'null'));
+        } else if (d.type === 'game_done') {
+          const w = this.gameWaiting.get(d.id);
+          this.gameWaiting.delete(d.id);
+          w?.(d.error !== undefined ? { error: d.error } : JSON.parse(d.result ?? 'null'));
         } else if (d.type === 'tick') {
           this.tick = d.tick.tick;
           perf.tick(d.stepMs);
@@ -89,6 +93,7 @@ export class ArenaClient {
       batchSize: 2048,
       hashVersion: opts.hashVersion ?? 1,
       ...(opts.spec ? { spec: opts.spec } : {}),
+      ...(opts.game ? { game: opts.game } : {}),
     };
     this.worker.postMessage(boot);
   }
@@ -155,6 +160,18 @@ export class ArenaClient {
     return new Promise<T>((resolve, reject) => {
       this.playWaiting.set(id, { resolve: resolve as (v: unknown) => void, reject });
       this.worker.postMessage({ type: 'play', id, request: JSON.stringify(request) });
+    });
+  }
+
+  private gameNext = 1;
+  private readonly gameWaiting = new Map<number, (v: unknown) => void>();
+
+  /** G1: a read-only game query (Grasp Assist's preview, AUTO's goal, the record, the stars). */
+  game<T>(op: string, arg?: unknown): Promise<T> {
+    const id = this.gameNext++;
+    return new Promise<T>((resolve) => {
+      this.gameWaiting.set(id, resolve as (v: unknown) => void);
+      this.worker.postMessage({ type: 'game', id, op, arg: arg === undefined || arg === null ? null : JSON.stringify(arg) });
     });
   }
 

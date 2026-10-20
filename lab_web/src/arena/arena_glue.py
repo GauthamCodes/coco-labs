@@ -55,7 +55,8 @@ def emit_header(channel, header):
 def init(spec_json, seed, planner, post_batch, batch_size=2048,
          post_family=None, hash_version=1):
     """Build the Arena; return (world JSON, occupancy bytes)."""
-    global _arena, _post_family, _spec_json, _budget
+    global _arena, _post_family, _spec_json, _budget, _game
+    _game = None
     _post_family = post_family
     _spec_json = spec_json
     _budget = None
@@ -178,7 +179,7 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
     return json.dumps(out)
 
 
-def _tick_json(t, inputs):
+def _tick_json(t, inputs, game=None):
     # the whole loop (M2.3): the robot is drawn where it BELIEVES it is,
     # the truth beside it (as a recorded stack run draws AMCL and truth)
     extra = {} if t.belief is None else {'truth': list(t.pose)}
@@ -197,6 +198,8 @@ def _tick_json(t, inputs):
         extra['tilt'] = [t.z, t.pitch, t.roll]
     if t.grasp is not None:
         extra['grasp'] = t.grasp
+    if game is not None:
+        extra['game'] = game
     return json.dumps({
         **extra,
         'wheels': list(t.wheels), 'source': t.source,
@@ -221,7 +224,7 @@ def step(inputs_json):
     """Step one tick; return (tick JSON, ranges as float32)."""
     rows = json.loads(inputs_json)
     t = _arena.step([InputEvent(**e) for e in rows])
-    return _tick_json(t, rows), array('f', t.ranges)
+    return _tick_json(t, rows, game_finish(t, rows)), array('f', t.ranges)
 
 
 # -- a step in slices (M2.0): the worker yields between them, so an input
@@ -270,7 +273,7 @@ def amend(inputs_json):
 def finish():
     """Finish the tick; return (tick JSON, ranges as float32)."""
     t = _arena.finish_step()
-    return _tick_json(t, _pending_rows), array('f', t.ranges)
+    return _tick_json(t, _pending_rows, game_finish(t, _pending_rows)), array('f', t.ranges)
 
 
 # -- Play (M3.5): coco_lab.play scores; this only passes JSON -------------------
@@ -348,3 +351,161 @@ def costmap_view():
                 emit_header(channel, scalars) if columns is None else
                 emit_family(channel, tick, columns, scalars),
                 tick=a.tick, t_world=a.t_world, update=a.tick)
+
+
+# -- G1: the game (Fetch Rush, Free Drive) on a World Spec v3 level ------------
+#
+# coco_lab.games decides everything (orders, deliveries, contacts, the timer,
+# stars); Grasp Assist decides every grasp. This glue passes JSON, and keeps
+# the record a played session replays from (spec, seed, input log), with the
+# same per-tick hash chain games.play() computes in CPython.
+
+_game = None
+
+
+def game_init(spec_json, game, arg, seed, post_batch, batch_size=2048,
+              post_family=None, hash_version=2):
+    """Build the Arena on a level for ``game`` ('fetch_rush' or 'free'); return init()'s pair."""
+    global _game
+    import hashlib
+    from coco_lab import games
+    from coco_lab import worldspec_v3 as v3
+    out = init(spec_json, seed, 'astar', post_batch, batch_size, post_family, hash_version)
+    world = json.loads(out[0])
+    spec = _arena.spec
+    dx, dy = spec['world_to_map']
+    v3_level = v3.is_v3(spec)
+    rules = games._rules(game, arg) if game in games.GAMES else None
+    _game = {'rules': rules, 'game': game, 'arg': arg, 'seed': int(seed),
+             'chain': hashlib.sha256(), 'ticks': 0, 'inputs': [], 'v3': v3_level,
+             'hash_version': int(hash_version)}
+    info = {'game': game, 'arg': arg, 'v3': v3_level}
+    if v3_level:
+        info['setup'] = games.setup_inputs(game if rules else 'fetch_rush', arg)
+        info['seconds'] = games.FETCH_RUSH_SECONDS if game == 'fetch_rush' else None
+        info['objects'] = [dict(o, x=o['x'] + dx, y=o['y'] + dy) for o in v3.objects(spec)]
+        info['zones'] = [dict(z, center=[z['center'][0] + dx, z['center'][1] + dy])
+                         for z in spec['kit'] if z['kind'] == 'zone']
+        info['actors'] = [{'id': a['id'], 'actor': a['actor'], 'footprint': a['footprint'],
+                           'height': a['height']} for a in v3.elements(spec, 'actor')]
+    else:
+        info['setup'] = []
+    world['game'] = info
+    return json.dumps(world), out[1]
+
+
+def _game_block(t):
+    """The game's state after tick ``t``: what the HUD draws; read from coco_lab only."""
+    from coco_lab import games
+    from coco_lab import worldspec_v3 as v3
+    g = _game
+    a = _arena
+    out = {}
+    assist = a.subsystems.get('assist')
+    if assist is not None:
+        out['assist'] = {'phase': assist.phase, 'target': assist.target,
+                         'carried': assist.carried(), 'want': assist.want,
+                         'reason': assist.reason, 'attempt': assist.attempt}
+        out['objects'] = [[oid, o['x'], o['y'], o['z'], o['status']]
+                          for oid, o in sorted(assist.objects.items())]
+    act = a.subsystems.get('actors')
+    if act is not None:
+        dx, dy = act.offset
+        out['actors'] = []
+        for e in act.actors:
+            x, y, yaw = v3.actor_pose(e, a.t_world)
+            out['actors'].append([e['id'], x + dx, y + dy, yaw])
+        out['clearance'] = act.clearance(a.pose[0], a.pose[1], a.radius)
+    r = g['rules']
+    if isinstance(r, games.FetchRush) and r.started:
+        cur = r.current()
+        out['fetch'] = {'t': a.t_world - r.t0, 'seconds': games.FETCH_RUSH_SECONDS,
+                        'over': r.over, 'order': list(cur) if cur else None, 'k': r.k,
+                        'orders': len(r.orders), 'deliveries': len(r.delivered),
+                        'contacts': r.contacts, 'ghost': r.ghost}
+    return out
+
+
+def game_finish(t, rows):
+    """After a tick: the rules observe it, the chain grows, the log keeps its inputs."""
+    g = _game
+    if g is None:
+        return None
+    r = g['rules']
+    if r is not None and not g.get('over'):
+        if not r.started:
+            r.start(_arena)
+        r.observe(_arena, t)
+    g['chain'].update(t.state_hash.encode())
+    g['ticks'] += 1
+    g['inputs'].extend(rows)
+    return _game_block(t)
+
+
+def game_record():
+    """Return the played session as a record games.play() replays, and its chain."""
+    g = _game
+    keys = ('tick', 'kind', 'x', 'y', 'theta', 'has_theta', 'linear', 'angular', 'choice')
+    inputs = [{k: e[k] for k in keys if k in e} for e in g['inputs']]
+    return json.dumps({'record': {'game': g['game'], 'arg': g['arg'], 'seed': g['seed'],
+                                  'ticks': g['ticks'], 'inputs': inputs,
+                                  'hash_version': g['hash_version']},
+                       'hash_chain': g['chain'].hexdigest(), 'last_hash': _arena.state_hash()})
+
+
+def game_stars(reference_json):
+    """Return the scorecard, and its stars against the committed reference card when there is one."""
+    from coco_lab import games
+    g = _game
+    r = g['rules'] if g else None
+    if r is None:
+        return json.dumps({'card': None, 'stars': None, 'reference': None})
+    card = games._card(r, _arena)
+    ref = json.loads(reference_json) if reference_json else None
+    return json.dumps({'card': card, 'reference': ref,
+                       'stars': games.stars(card, ref) if ref else None})
+
+
+def game_preview():
+    """
+    What GRAB would do now, without doing it: Grasp Assist's own candidates
+    (detect, check, rank), read-only. Nothing in the model changes.
+    """
+    a = _arena
+    assist = a.subsystems.get('assist')
+    if assist is None:
+        return json.dumps({'rows': []})
+    rows = assist.candidates(a)
+    return json.dumps({'rows': [{k: (None if isinstance(v, float) and v != v else v)
+                                 for k, v in r.items()} for r in rows]})
+
+
+def game_auto_goal():
+    """AUTO in Fetch Rush: where the planner would send COCO next (the ghost's own legs)."""
+    from coco_lab import games
+    a = _arena
+    r = _game['rules'] if _game else None
+    assist = a.subsystems.get('assist')
+    if not isinstance(r, games.FetchRush) or assist is None or r.current() is None:
+        return json.dumps(None)
+    oid, drop = r.current()
+    if assist.carried() == oid:
+        z = games.zone_rect(a.spec, drop)
+        return json.dumps({'x': (z[0] + z[1]) / 2, 'y': (z[2] + z[3]) / 2, 'why': 'drop'})
+    ba = games.best_approach(a, assist, oid, a.pose[:2])
+    if not ba:
+        return json.dumps(None)
+    return json.dumps({'x': ba[0][0], 'y': ba[0][1], 'why': 'pick', 'object': oid})
+
+
+def game_op(op, arg_json=None):
+    """The worker's one entry point for game queries (none of them changes the model)."""
+    if op == 'preview':
+        return game_preview()
+    if op == 'auto_goal':
+        return game_auto_goal()
+    if op == 'record':
+        return game_record()
+    if op == 'stars':
+        return game_stars(arg_json)
+    raise ValueError(f'unknown game op {op!r}')
