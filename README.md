@@ -562,6 +562,7 @@ If it cannot name all three, the task is out of scope.
 M0 ─▶ M1 ─▶ M2 ─▶ M3 ─▶ M4 (done)
    ─▶ [Gautham: 3-person test + phone measurement]
    ─▶ M5 Focus and polish ─▶ [gate: 5-person test + phone pass] ─▶ public v2.0
+   ─▶ G1 Game Look: game shell, phone-game HUD, Night Shift Depot visuals, Fetch Rush playable
    ─▶ M6 COCO Depot: world, Grasp Assist, Fetch Rush, Rush Hour, ROS 2 ghosts ─▶ v2.1 game launch
    ─▶ M7 Fog Scout, Lost & Found, Research mode, Connect your ROS 2
    ─▶ M8 Stack in the cloud: batch and experiments
@@ -682,6 +683,18 @@ Details live in `docs/v2/M*_PROMPT.md`, `docs/v2/M*_RESULTS.md` and `docs/v2/rev
 - The Focus criterion can't be met without removing a capability (rather than moving it).
 
 **Launch.** The public v2.0 release and announcement happen after M5 merges and the two Gautham rows pass. Gautham publishes them.
+
+### G1 · Game Look (inserted 2026-10-20, before the M6 UI phase)
+
+**Objective:** when you control the robot, it looks and feels like a phone game (PUBG Mobile, a racing game), easy for anyone to pick up, in a world that has changed drastically to become attractive. Claude Code does all COCO Lab work from G1 on; Codex is no longer used.
+
+- A real game shell: title hero shot, a loading screen driven by the real load stages, mode select, first-run tutorial, pause, results, settings, and the Recordings library replacing run-link lists.
+- The phone-game Play HUD (at most 8 controls): floating joystick, context primary action (GRAB / DROP / GO), AUTO, CAM, STOP, minimap and tactical map, objective pill, Robot vision; desktop keys and gamepad.
+- Chase, tactical and orbit cameras.
+- "Night Shift Depot" visuals generated from World Spec v3, and a "test lab" restyle of the Proving Ground, within per-tier budgets; a decorative-honesty test.
+- **Absorbed from M6's UI phase:** the Depot rendering, the Grasp Assist visuals and the Fetch Rush HUD (Fetch Rush playable on the Depot).
+- Robot vision and Compare restyled; M5 carry-overs (native/Pyodide rasterization parity with a versioned hash, update isolation).
+- Prompt: `docs/v2/g1/G1_PROMPT.md`. Progress: `docs/v2/g1/G1_STATUS.md`. The invariants, integrity rules and owner gates above are unchanged.
 
 ### M6 · COCO Depot: the game world (about 6–7 weeks)
 

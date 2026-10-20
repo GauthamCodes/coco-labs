@@ -2,6 +2,7 @@
 
 ## Position
 
+- **G1 · Game Look in progress** (2026-10-20, inserted before the M6 UI phase): [G1 status](v2/g1/G1_STATUS.md), [prompt](v2/g1/G1_PROMPT.md).
 - Independent review of `fe9d544` integrated: PR #26 merged as `d8b6d4c` after exact review-head `a81f8f4` passed Lab run [39438277138](https://github.com/GauthamCodes/coco-labs/actions/runs/39438277138); all three jobs green, deploy skipped.
 
 - 2026-10-20 closure attempt: **M5 remains open** at the owner-requested non-tie report stop. [Diagnosis/report](v2/data/m5/closure-20261020/REPORT.md): DWA costmap rasterization divergence, not a near-tie; no model/hash/golden change.
@@ -91,6 +92,7 @@ Plug in the Nothing Phone (1) with USB debugging on when convenient; the agent m
 
 | Date | Change | Reason / scope | By |
 | --- | --- | --- | --- |
+| 2026-10-20 | G1 · Game Look inserted before the M6 UI phase; Claude Code replaces Codex; G1 absorbs the M6 Depot rendering, Grasp Assist visuals and Fetch Rush HUD. | Make Play look and feel like a phone game on the Depot; README §7 updated to match. Prompt `docs/v2/g1/G1_PROMPT.md`, progress `docs/v2/g1/G1_STATUS.md`. | Gautham (G1 prompt) |
 | 2026-10-20 | Merge only PR #26 into v2/m5-focus with a merge commit after exact-head CI passes; no force-push. PR #25 remains Gautham's merge. | One-time review integration permission; no other PR merge authorized. | Gautham |
 | 2026-10-20 | Main push builds/tests; Pages only through manual **Deploy site** with required `DEPLOY` confirmation. Public site stays M4 until owner runs it after real-phone and five-person usability passes. | Separate merge from publication; agent must not deploy. README §9 updated. | Gautham |
 | 2026-10-20 | Pin every runtime/data/asset URL by build or content hash; waiting update offers Save run and Reload; no automatic/mid-run reload; retain old caches until no page of their build is open. | Prevent mixed builds without losing runs; update-open-tab-ac3 must report false and enter CI. Supersedes old activation cleanup rule. | Gautham |

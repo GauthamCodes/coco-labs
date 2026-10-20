@@ -1,0 +1,12 @@
+
+ RUN  v5.0.2 /home/user/coco-labs/lab_web
+
+
+ Test Files  62 passed (62)
+      Tests  493 passed (493)
+   Start at  16:11:44
+   Duration  55.13s (tests 95%, import 3%, transform 2%)
+
+    Isolate  62 workers spawned · ~145ms startup each (spawn + environment, per file)
+             at least ~2.84s faster with isolate: false — reuses workers across files instead of one per file
+

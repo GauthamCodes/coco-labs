@@ -1,0 +1,122 @@
+{
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "when": "2026-10-20T16:13:29.679Z",
+ "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+ "shots": [
+  {
+   "profile": "desktop",
+   "surface": "title",
+   "query": "",
+   "file": "desktop-title.png",
+   "ready": true,
+   "ms": 7755,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "play",
+   "query": "?view=arena",
+   "file": "desktop-play.png",
+   "ready": false,
+   "ms": 180368,
+   "errors": [
+    "not ready: TimeoutError: page.waitForSelector: Timeout 180000ms exceeded."
+   ]
+  },
+  {
+   "profile": "desktop",
+   "surface": "compare",
+   "query": "?view=compare",
+   "file": "desktop-compare.png",
+   "ready": true,
+   "ms": 7675,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "recordings",
+   "query": "?view=research",
+   "file": "desktop-recordings.png",
+   "ready": true,
+   "ms": 1915,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "title",
+   "query": "",
+   "file": "phone-landscape-title.png",
+   "ready": true,
+   "ms": 6017,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "play",
+   "query": "?view=arena",
+   "file": "phone-landscape-play.png",
+   "ready": false,
+   "ms": 180526,
+   "errors": [
+    "not ready: TimeoutError: page.waitForSelector: Timeout 180000ms exceeded."
+   ]
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "compare",
+   "query": "?view=compare",
+   "file": "phone-landscape-compare.png",
+   "ready": true,
+   "ms": 9271,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "recordings",
+   "query": "?view=research",
+   "file": "phone-landscape-recordings.png",
+   "ready": true,
+   "ms": 2475,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "title",
+   "query": "",
+   "file": "phone-portrait-title.png",
+   "ready": true,
+   "ms": 5202,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "play",
+   "query": "?view=arena",
+   "file": "phone-portrait-play.png",
+   "ready": false,
+   "ms": 189828,
+   "errors": [
+    "not ready: TimeoutError: page.waitForSelector: Timeout 180000ms exceeded."
+   ]
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "compare",
+   "query": "?view=compare",
+   "file": "phone-portrait-compare.png",
+   "ready": true,
+   "ms": 9182,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "recordings",
+   "query": "?view=research",
+   "file": "phone-portrait-recordings.png",
+   "ready": true,
+   "ms": 2420,
+   "errors": []
+  }
+ ],
+ "note": "Emulated Nothing Phone (1): viewport, touch, 4x CPU throttle; rendered by this machine (see renderer). Not a phone measurement."
+}
