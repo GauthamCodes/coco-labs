@@ -1,0 +1,64 @@
+{
+ "scope": "Functional deploy test on battery, not a timing measurement",
+ "errors": [],
+ "versionA": "ce54e82c09e9f325e99f165449d4d37837d34e3ae74d01bf1fc1f70e813b47c4",
+ "before": {
+  "documentBuild": "ce54e82c09e9f325e99f165449d4d37837d34e3ae74d01bf1fc1f70e813b47c4",
+  "asset": "A",
+  "controller": "ce54e82c09e9f325e99f165449d4d37837d34e3ae74d01bf1fc1f70e813b47c4"
+ },
+ "versionB": "e4bf10c0445de44e7021aadc815c893a554449cf52ab9b4f55d5e4ade3f7351e",
+ "afterUpdate": {
+  "documentBuild": "ce54e82c09e9f325e99f165449d4d37837d34e3ae74d01bf1fc1f70e813b47c4",
+  "asset": "B",
+  "controller": "e4bf10c0445de44e7021aadc815c893a554449cf52ab9b4f55d5e4ade3f7351e"
+ },
+ "openDocumentMixed": true,
+ "afterReload": {
+  "documentBuild": "e4bf10c0445de44e7021aadc815c893a554449cf52ab9b4f55d5e4ade3f7351e",
+  "asset": "B",
+  "controller": "e4bf10c0445de44e7021aadc815c893a554449cf52ab9b4f55d5e4ade3f7351e"
+ },
+ "hardReloadConsistent": true,
+ "completed": true,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-20T00:56:30.939Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 7.52,
+    "5m": 2.55,
+    "15m": 1.22
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-20T00:56:41.450Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 10.23,
+    "5m": 3.29,
+    "15m": 1.47
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

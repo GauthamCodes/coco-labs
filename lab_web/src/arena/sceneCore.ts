@@ -702,9 +702,15 @@ export function useArenaScene(playHud = false) {
     };
     const DRIVE: Action[] = ['forward', 'reverse', 'left', 'right', 'precision'];
     const keydown = (e: KeyboardEvent) => {
+      const a = actionFor(e.code, bindingsRef.current);
+      // STOP remains available with a focused control or an open modal.
+      if (a === 'stop' && !['replay', 'recording'].includes(modeRef.current)) {
+        e.preventDefault(); held.clear(); takeOver(); queue.current.push({ kind: 'stop' });
+        latchedRef.current = true; setLatched(true);
+        return;
+      }
       if (document.querySelector('dialog[open]')) return;
       if ((e.target as HTMLElement)?.closest?.('input, select, textarea, button, a')) return;
-      const a = actionFor(e.code, bindingsRef.current);
       if (!a) return;
       const onPage = document.activeElement === document.body || document.activeElement === cv;
       // Tab keeps walking the controls unless the page itself has focus
@@ -732,11 +738,6 @@ export function useArenaScene(playHud = false) {
         return;
       }
       if (['replay', 'recording'].includes(modeRef.current)) return;
-      if (a === 'stop') {
-        e.preventDefault(); held.clear(); takeOver(); queue.current.push({ kind: 'stop' });
-        latchedRef.current = true; setLatched(true);
-        return;
-      }
       if (a === 'release') {
         e.preventDefault();
         if (e.repeat) return;

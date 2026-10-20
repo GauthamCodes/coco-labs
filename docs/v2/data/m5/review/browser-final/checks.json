@@ -1,0 +1,207 @@
+{
+ "class": "TESTED functionality on battery; no performance acceptance claim",
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-19T16:43:09.624Z",
+   "power_profile": "power-saver",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 8
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 21.13,
+    "5m": 11.73,
+    "15m": 5.56
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-19T16:44:11.526Z",
+   "power_profile": "power-saver",
+   "ac_power": false,
+   "battery": {
+    "status": "Discharging",
+    "capacity_pct": 7
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 18.93,
+    "5m": 12.81,
+    "15m": 6.32
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": false
+  }
+ },
+ "cases": [
+  {
+   "name": "desktop",
+   "emulated": false,
+   "errors": [
+    "TypeError: Cannot set properties of null (setting 'requestFullscreen')",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt",
+    "TypeError: Do not know how to serialize a BigInt"
+   ],
+   "thirdParty": [],
+   "titleOrdering": [
+    {
+     "titleReady": true,
+     "idle": true,
+     "input": false
+    }
+   ],
+   "stop": "latched and worker tick source=stop",
+   "layout": {
+    "viewport": [
+     1440,
+     900
+    ],
+    "scroll": [
+     1440,
+     900
+    ],
+    "controls": [
+     {
+      "name": "Click the floor for a goal; drive with WASD",
+      "box": {
+       "x": 0,
+       "y": 0,
+       "width": 1440,
+       "height": 900,
+       "top": 0,
+       "right": 1440,
+       "bottom": 900,
+       "left": 0
+      }
+     },
+     {
+      "name": "Settings",
+      "box": {
+       "x": 1224,
+       "y": 24,
+       "width": 48,
+       "height": 48,
+       "top": 24,
+       "right": 1272,
+       "bottom": 72,
+       "left": 1224
+      }
+     },
+     {
+      "name": "Robot vision (X): Off",
+      "box": {
+       "x": 1325,
+       "y": 198,
+       "width": 91,
+       "height": 48,
+       "top": 198,
+       "right": 1416,
+       "bottom": 246,
+       "left": 1325
+      }
+     },
+     {
+      "name": "Release",
+      "box": {
+       "x": 1064,
+       "y": 796,
+       "width": 88,
+       "height": 80,
+       "top": 796,
+       "right": 1152,
+       "bottom": 876,
+       "left": 1064
+      }
+     },
+     {
+      "name": "Grasp",
+      "box": {
+       "x": 1160,
+       "y": 804,
+       "width": 80,
+       "height": 72,
+       "top": 804,
+       "right": 1240,
+       "bottom": 876,
+       "left": 1160
+      }
+     },
+     {
+      "name": "Auto",
+      "box": {
+       "x": 1248,
+       "y": 804,
+       "width": 80,
+       "height": 72,
+       "top": 804,
+       "right": 1328,
+       "bottom": 876,
+       "left": 1248
+      }
+     },
+     {
+      "name": "Camera",
+      "box": {
+       "x": 1336,
+       "y": 804,
+       "width": 80,
+       "height": 72,
+       "top": 804,
+       "right": 1416,
+       "bottom": 876,
+       "left": 1336
+      }
+     }
+    ]
+   },
+   "deniedApis": [],
+   "recordings": 165,
+   "returnedToTitle": true
+  }
+ ],
+ "error": "Error: desktop: console/network errors",
+ "passed": false
+}

@@ -1,0 +1,220 @@
+[
+  {
+    "file": "compare-2-events.json",
+    "labels": [
+      "A \u00b7 A*",
+      "B \u00b7 Dijkstra"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "astar",
+        "batches": 3,
+        "events": 4158,
+        "equal": true
+      },
+      {
+        "pane": "B",
+        "algorithm": "dijkstra",
+        "batches": 14,
+        "events": 27781,
+        "equal": true
+      }
+    ],
+    "passed": true
+  },
+  {
+    "file": "compare-4-events.json",
+    "labels": [
+      "A \u00b7 A*",
+      "B \u00b7 Dijkstra",
+      "C \u00b7 Greedy",
+      "D \u00b7 Weighted A*"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "astar",
+        "batches": 3,
+        "events": 4158,
+        "equal": true
+      },
+      {
+        "pane": "B",
+        "algorithm": "dijkstra",
+        "batches": 14,
+        "events": 27781,
+        "equal": true
+      },
+      {
+        "pane": "C",
+        "algorithm": "greedy",
+        "batches": 2,
+        "events": 3041,
+        "equal": true
+      },
+      {
+        "pane": "D",
+        "algorithm": "weighted_astar",
+        "batches": 2,
+        "events": 2567,
+        "equal": true
+      }
+    ],
+    "passed": true
+  },
+  {
+    "file": "compare-bfs-events.json",
+    "labels": [
+      "A \u00b7 BFS",
+      "B \u00b7 Dijkstra",
+      "C \u00b7 Greedy",
+      "D \u00b7 Weighted A*"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "bfs",
+        "batches": 12,
+        "events": 24468,
+        "equal": true
+      },
+      {
+        "pane": "B",
+        "algorithm": "dijkstra",
+        "batches": 14,
+        "events": 27781,
+        "equal": true
+      },
+      {
+        "pane": "C",
+        "algorithm": "greedy",
+        "batches": 2,
+        "events": 3041,
+        "equal": true
+      },
+      {
+        "pane": "D",
+        "algorithm": "weighted_astar",
+        "batches": 2,
+        "events": 2567,
+        "equal": true
+      }
+    ],
+    "passed": true
+  },
+  {
+    "file": "compare-control-events.json",
+    "labels": [
+      "A \u00b7 DWA-style sampler",
+      "B \u00b7 Pure pursuit",
+      "C \u00b7 MPPI",
+      "D \u00b7 DWA-style sampler"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "dwa",
+        "ticks": 60,
+        "equal": false
+      },
+      {
+        "pane": "B",
+        "algorithm": "rpp",
+        "ticks": 60,
+        "equal": false
+      },
+      {
+        "pane": "C",
+        "algorithm": "mppi",
+        "ticks": 60,
+        "equal": false
+      },
+      {
+        "pane": "D",
+        "algorithm": "dwa",
+        "ticks": 60,
+        "equal": false
+      }
+    ],
+    "excluded": "wall-clock compute_ms only",
+    "passed": false
+  },
+  {
+    "file": "compare-dstar_lite-events.json",
+    "labels": [
+      "A \u00b7 D* Lite",
+      "B \u00b7 Dijkstra",
+      "C \u00b7 Greedy",
+      "D \u00b7 Weighted A*"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "dstar_lite",
+        "batches": 1,
+        "events": 790,
+        "equal": true
+      },
+      {
+        "pane": "B",
+        "algorithm": "dijkstra",
+        "batches": 14,
+        "events": 27781,
+        "equal": true
+      },
+      {
+        "pane": "C",
+        "algorithm": "greedy",
+        "batches": 2,
+        "events": 3041,
+        "equal": true
+      },
+      {
+        "pane": "D",
+        "algorithm": "weighted_astar",
+        "batches": 2,
+        "events": 2567,
+        "equal": true
+      }
+    ],
+    "passed": true
+  },
+  {
+    "file": "compare-localise-events.json",
+    "labels": [
+      "A \u00b7 MCL \u00b7 no injection",
+      "B \u00b7 MCL \u00b7 injection",
+      "C \u00b7 EKF",
+      "D \u00b7 MCL \u00b7 no injection"
+    ],
+    "panes": [
+      {
+        "pane": "A",
+        "algorithm": "mcl",
+        "ticks": 60,
+        "equal": false
+      },
+      {
+        "pane": "B",
+        "algorithm": "mcl_augmented",
+        "ticks": 60,
+        "equal": false
+      },
+      {
+        "pane": "C",
+        "algorithm": "ekf",
+        "ticks": 60,
+        "equal": false
+      },
+      {
+        "pane": "D",
+        "algorithm": "mcl",
+        "ticks": 60,
+        "equal": false
+      }
+    ],
+    "excluded": "wall-clock compute_ms only",
+    "passed": false
+  }
+]

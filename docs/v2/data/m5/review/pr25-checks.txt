@@ -1,0 +1,5 @@
+lab_web (tools, decoder, site build)	fail	14m25s	https://github.com/GauthamCodes/coco-labs/actions/runs/39182696101/job/117838882059	
+deploy to GitHub Pages (main only)	skipping	0	https://github.com/GauthamCodes/coco-labs/actions/runs/39182696101/job/117842174005	
+build-and-test	pass	5m45s	https://github.com/GauthamCodes/coco-labs/actions/runs/39182696134/job/117838643411	
+coco_lab in a plain venv (no ROS)	pass	9m14s	https://github.com/GauthamCodes/coco-labs/actions/runs/39182696101/job/117838881796	
+lab_web in Chromium, Firefox and WebKit (determinism, screenshots)	pass	21m10s	https://github.com/GauthamCodes/coco-labs/actions/runs/39182696101/job/117838882127	

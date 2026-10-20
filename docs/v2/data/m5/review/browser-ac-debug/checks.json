@@ -1,0 +1,736 @@
+{
+ "class": "TESTED functionality; no performance acceptance claim",
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-20T00:59:59.006Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 19.27,
+    "5m": 11.19,
+    "15m": 4.97
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-20T01:03:09.195Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 22.61,
+    "5m": 16.37,
+    "15m": 8.15
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "cases": [
+  {
+   "name": "desktop",
+   "emulated": false,
+   "errors": [],
+   "thirdParty": [],
+   "titleOrdering": [
+    {
+     "titleReady": true,
+     "idle": true,
+     "input": false
+    }
+   ],
+   "stage": "await worker STOP",
+   "stopBeforeWait": [
+    {
+     "tick": 1,
+     "source": "stop",
+     "v": 0
+    },
+    {
+     "tick": 8,
+     "source": "stop",
+     "v": 0
+    }
+   ],
+   "stop": {
+    "receipts": [
+     {
+      "tick": 1,
+      "source": "stop",
+      "v": 0
+     },
+     {
+      "tick": 8,
+      "source": "stop",
+      "v": 0
+     },
+     {
+      "tick": 14,
+      "source": "stop",
+      "v": 0
+     }
+    ],
+    "latched": true,
+    "latestVelocity": 0
+   },
+   "layout": {
+    "viewport": [
+     1440,
+     900
+    ],
+    "scroll": [
+     1440,
+     900
+    ],
+    "controls": [
+     {
+      "name": "Click the floor for a goal; drive with WASD",
+      "box": {
+       "x": 0,
+       "y": 0,
+       "width": 1440,
+       "height": 900,
+       "top": 0,
+       "right": 1440,
+       "bottom": 900,
+       "left": 0
+      }
+     },
+     {
+      "name": "Settings",
+      "box": {
+       "x": 1224,
+       "y": 24,
+       "width": 48,
+       "height": 48,
+       "top": 24,
+       "right": 1272,
+       "bottom": 72,
+       "left": 1224
+      }
+     },
+     {
+      "name": "Robot vision (X): Off",
+      "box": {
+       "x": 1325,
+       "y": 198,
+       "width": 91,
+       "height": 48,
+       "top": 198,
+       "right": 1416,
+       "bottom": 246,
+       "left": 1325
+      }
+     },
+     {
+      "name": "Release",
+      "box": {
+       "x": 1064,
+       "y": 796,
+       "width": 88,
+       "height": 80,
+       "top": 796,
+       "right": 1152,
+       "bottom": 876,
+       "left": 1064
+      }
+     },
+     {
+      "name": "Grasp",
+      "box": {
+       "x": 1160,
+       "y": 804,
+       "width": 80,
+       "height": 72,
+       "top": 804,
+       "right": 1240,
+       "bottom": 876,
+       "left": 1160
+      }
+     },
+     {
+      "name": "Auto",
+      "box": {
+       "x": 1248,
+       "y": 804,
+       "width": 80,
+       "height": 72,
+       "top": 804,
+       "right": 1328,
+       "bottom": 876,
+       "left": 1248
+      }
+     },
+     {
+      "name": "Camera",
+      "box": {
+       "x": 1336,
+       "y": 804,
+       "width": 80,
+       "height": 72,
+       "top": 804,
+       "right": 1416,
+       "bottom": 876,
+       "left": 1336
+      }
+     }
+    ]
+   },
+   "deniedApis": [],
+   "recordings": 165,
+   "returnedToTitle": true
+  },
+  {
+   "name": "compact",
+   "emulated": false,
+   "errors": [],
+   "thirdParty": [],
+   "titleOrdering": [
+    {
+     "titleReady": true,
+     "idle": true,
+     "input": false
+    }
+   ],
+   "stage": "await worker STOP",
+   "stopBeforeWait": [
+    {
+     "tick": 1,
+     "source": "stop",
+     "v": 0
+    },
+    {
+     "tick": 9,
+     "source": "stop",
+     "v": 0
+    }
+   ],
+   "stop": {
+    "receipts": [
+     {
+      "tick": 1,
+      "source": "stop",
+      "v": 0
+     },
+     {
+      "tick": 9,
+      "source": "stop",
+      "v": 0
+     },
+     {
+      "tick": 15,
+      "source": "stop",
+      "v": 0
+     }
+    ],
+    "latched": true,
+    "latestVelocity": 0
+   },
+   "layout": {
+    "viewport": [
+     844,
+     390
+    ],
+    "scroll": [
+     844,
+     390
+    ],
+    "controls": [
+     {
+      "name": "Click the floor for a goal; drive with WASD",
+      "box": {
+       "x": 0,
+       "y": 0,
+       "width": 844,
+       "height": 390,
+       "top": 0,
+       "right": 844,
+       "bottom": 390,
+       "left": 0
+      }
+     },
+     {
+      "name": "Settings",
+      "box": {
+       "x": 628,
+       "y": 24,
+       "width": 48,
+       "height": 48,
+       "top": 24,
+       "right": 676,
+       "bottom": 72,
+       "left": 628
+      }
+     },
+     {
+      "name": "Robot vision (X): Off",
+      "box": {
+       "x": 729,
+       "y": 198,
+       "width": 91,
+       "height": 48,
+       "top": 198,
+       "right": 820,
+       "bottom": 246,
+       "left": 729
+      }
+     },
+     {
+      "name": "Release",
+      "box": {
+       "x": 468,
+       "y": 286,
+       "width": 88,
+       "height": 80,
+       "top": 286,
+       "right": 556,
+       "bottom": 366,
+       "left": 468
+      }
+     },
+     {
+      "name": "Grasp",
+      "box": {
+       "x": 564,
+       "y": 294,
+       "width": 80,
+       "height": 72,
+       "top": 294,
+       "right": 644,
+       "bottom": 366,
+       "left": 564
+      }
+     },
+     {
+      "name": "Auto",
+      "box": {
+       "x": 652,
+       "y": 294,
+       "width": 80,
+       "height": 72,
+       "top": 294,
+       "right": 732,
+       "bottom": 366,
+       "left": 652
+      }
+     },
+     {
+      "name": "Camera",
+      "box": {
+       "x": 740,
+       "y": 294,
+       "width": 80,
+       "height": 72,
+       "top": 294,
+       "right": 820,
+       "bottom": 366,
+       "left": 740
+      }
+     }
+    ]
+   },
+   "deniedApis": [],
+   "recordings": 165,
+   "returnedToTitle": true
+  },
+  {
+   "name": "nothing-landscape",
+   "emulated": true,
+   "errors": [],
+   "thirdParty": [],
+   "titleOrdering": [
+    {
+     "titleReady": true,
+     "idle": true,
+     "input": false
+    }
+   ],
+   "stage": "await worker STOP",
+   "stopBeforeWait": [
+    {
+     "tick": 1,
+     "source": "stop",
+     "v": 0
+    },
+    {
+     "tick": 17,
+     "source": "stop",
+     "v": 0
+    },
+    {
+     "tick": 29,
+     "source": "stop",
+     "v": 0
+    }
+   ],
+   "stop": {
+    "receipts": [
+     {
+      "tick": 1,
+      "source": "stop",
+      "v": 0
+     },
+     {
+      "tick": 17,
+      "source": "stop",
+      "v": 0
+     },
+     {
+      "tick": 29,
+      "source": "stop",
+      "v": 0
+     }
+    ],
+    "latched": true,
+    "latestVelocity": 0
+   },
+   "layout": {
+    "viewport": [
+     915,
+     412
+    ],
+    "scroll": [
+     915,
+     412
+    ],
+    "controls": [
+     {
+      "name": "Click the floor for a goal; drive with WASD",
+      "box": {
+       "x": 0,
+       "y": 0,
+       "width": 915,
+       "height": 412,
+       "top": 0,
+       "right": 915,
+       "bottom": 412,
+       "left": 0
+      }
+     },
+     {
+      "name": "Settings",
+      "box": {
+       "x": 743,
+       "y": 12,
+       "width": 48,
+       "height": 48,
+       "top": 12,
+       "right": 791,
+       "bottom": 60,
+       "left": 743
+      }
+     },
+     {
+      "name": "Robot vision (X): Off",
+      "box": {
+       "x": 743,
+       "y": 68,
+       "width": 48,
+       "height": 48,
+       "top": 68,
+       "right": 791,
+       "bottom": 116,
+       "left": 743
+      }
+     },
+     {
+      "name": "Drive COCO (joystick)",
+      "box": {
+       "x": 32,
+       "y": 256,
+       "width": 128,
+       "height": 128,
+       "top": 256,
+       "right": 160,
+       "bottom": 384,
+       "left": 32
+      }
+     },
+     {
+      "name": "Release",
+      "box": {
+       "x": 731,
+       "y": 312,
+       "width": 64,
+       "height": 64,
+       "top": 312,
+       "right": 795,
+       "bottom": 376,
+       "left": 731
+      }
+     },
+     {
+      "name": "Grasp",
+      "box": {
+       "x": 803,
+       "y": 332,
+       "width": 56,
+       "height": 56,
+       "top": 332,
+       "right": 859,
+       "bottom": 388,
+       "left": 803
+      }
+     },
+     {
+      "name": "Auto",
+      "box": {
+       "x": 835,
+       "y": 276,
+       "width": 48,
+       "height": 48,
+       "top": 276,
+       "right": 883,
+       "bottom": 324,
+       "left": 835
+      }
+     },
+     {
+      "name": "Camera",
+      "box": {
+       "x": 775,
+       "y": 248,
+       "width": 48,
+       "height": 48,
+       "top": 248,
+       "right": 823,
+       "bottom": 296,
+       "left": 775
+      }
+     }
+    ]
+   },
+   "deniedApis": [
+    "fullscreen",
+    "orientation",
+    "fullscreen",
+    "orientation",
+    "fullscreen",
+    "orientation",
+    "fullscreen",
+    "orientation"
+   ],
+   "syntheticSafeArea": {
+    "insets": {
+     "top": 0,
+     "left": 44,
+     "right": 0,
+     "bottom": 16
+    },
+    "boxes": [
+     {
+      "class": "night-objective night-glass",
+      "box": {
+       "x": 44,
+       "y": 12,
+       "width": 249,
+       "height": 60,
+       "top": 12,
+       "right": 293,
+       "bottom": 72,
+       "left": 44
+      }
+     },
+     {
+      "class": "night-minimap",
+      "box": {
+       "x": 803,
+       "y": 12,
+       "width": 96,
+       "height": 96,
+       "top": 12,
+       "right": 899,
+       "bottom": 108,
+       "left": 803
+      }
+     },
+     {
+      "class": "night-settings night-icon-button",
+      "box": {
+       "x": 743,
+       "y": 12,
+       "width": 48,
+       "height": 48,
+       "top": 12,
+       "right": 791,
+       "bottom": 60,
+       "left": 743
+      }
+     },
+     {
+      "class": "night-vision night-icon-button ",
+      "box": {
+       "x": 743,
+       "y": 68,
+       "width": 48,
+       "height": 48,
+       "top": 68,
+       "right": 791,
+       "bottom": 116,
+       "left": 743
+      }
+     },
+     {
+      "class": "night-joystick",
+      "box": {
+       "x": 44,
+       "y": 252,
+       "width": 128,
+       "height": 136,
+       "top": 252,
+       "right": 172,
+       "bottom": 388,
+       "left": 44
+      }
+     },
+     {
+      "class": "night-actions",
+      "box": {
+       "x": 731,
+       "y": 248,
+       "width": 160,
+       "height": 148,
+       "top": 248,
+       "right": 891,
+       "bottom": 396,
+       "left": 731
+      }
+     },
+     {
+      "class": "",
+      "box": {
+       "x": 0,
+       "y": 0,
+       "width": 0,
+       "height": 0,
+       "top": 0,
+       "right": 0,
+       "bottom": 0,
+       "left": 0
+      }
+     }
+    ]
+   },
+   "recordings": 165,
+   "returnedToTitle": true
+  },
+  {
+   "name": "nothing-portrait",
+   "emulated": true,
+   "errors": [],
+   "thirdParty": [],
+   "titleOrdering": [
+    {
+     "titleReady": true,
+     "idle": true,
+     "input": false
+    }
+   ],
+   "stage": "await worker STOP",
+   "rotateVisible": true,
+   "stopBeforeWait": [],
+   "stop": {
+    "receipts": [
+     {
+      "tick": 1,
+      "source": "stop",
+      "v": 0
+     }
+    ],
+    "latched": true,
+    "latestVelocity": 0
+   },
+   "layout": {
+    "viewport": [
+     412,
+     915
+    ],
+    "scroll": [
+     412,
+     915
+    ],
+    "controls": [
+     {
+      "name": "STOP",
+      "box": {
+       "x": 102,
+       "y": 506.578125,
+       "width": 70,
+       "height": 48,
+       "top": 506.578125,
+       "right": 172,
+       "bottom": 554.578125,
+       "left": 102
+      }
+     },
+     {
+      "name": "Back to games",
+      "box": {
+       "x": 180,
+       "y": 505.578125,
+       "width": 138,
+       "height": 48,
+       "top": 505.578125,
+       "right": 318,
+       "bottom": 553.578125,
+       "left": 180
+      }
+     }
+    ]
+   },
+   "deniedApis": [
+    "fullscreen",
+    "orientation"
+   ],
+   "syntheticSafeArea": {
+    "insets": {
+     "top": 44,
+     "left": 0,
+     "right": 0,
+     "bottom": 16
+    },
+    "boxes": [
+     {
+      "class": "",
+      "box": {
+       "x": 51,
+       "y": 319.421875,
+       "width": 310,
+       "height": 276.15625,
+       "top": 319.421875,
+       "right": 361,
+       "bottom": 595.578125,
+       "left": 51
+      }
+     }
+    ]
+   }
+  }
+ ],
+ "debug": {
+  "stops": [
+   {
+    "tick": 1,
+    "source": "stop",
+    "v": 0
+   }
+  ],
+  "body": "Play\nMODEL · kinematic\n01 · CHALLENGE\nBeat the planner\n☆☆☆ · Set your first best\n02 · CHALLENGE\nNext node\n☆☆☆ · Set your first best\n03 · CHALLENGE\nSearch the bays\n☆☆☆ · Set your first best\n04 · CHALLENGE\nMap the arena\n☆☆☆ · Set your first best\n05 · CHALLENGE\nCase File detective\n☆☆☆ · Set your first best\n06 · DRIVE\nRace the planner's ghost\n☆☆☆ · Set your first best\nFree roam\nDrive, explore, click a goal →"
+ },
+ "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('mode-compare')\u001b[22m\n",
+ "passed": false
+}

@@ -2,10 +2,10 @@
 
 ## Position
 
-- Branch `v2/m5-focus`; implementation/tested code SHA `00a42aa` (M5.11).
+- Independent review of `v2/m5-focus` head `fe9d544`; fixes isolated on `v2/m5-review`, measured product source committed at `f22f729`.
 - M5.0–M5.11 implemented and measured; [PR #25](https://github.com/GauthamCodes/coco-labs/pull/25) open, unmerged.
-- Acceptance evidence commit `6d984fd`; PR head tracks this branch. Remote CI is running/queued, not yet claimed green.
-- No merge, release or deployment. Public launch remains gated by unresolved budgets, real-phone pass, owner usability and independent review.
+- PR #25 CI fails the bytecode-reading source audit; fixed here. Review branch Lab runs 39287336347 and 39350686634 passed all test jobs; deploy skipped. Later fixes have local checks below.
+- **Not ready:** open-tab deployment version mixing is reproduced and unfixed. Merging #25 publishes v2 to the public site; real-phone and owner usability gates remain open. No merge/release/deployment performed.
 - Master plan revision 3 sha256 `b6289ef9882cb864387fe6d1815fe17beec1cd49931c238748c5ca6f3c6fc663`.
 - Authority/rules: [README](../README.md), [AGENTS](../AGENTS.md), [M5 prompt](v2/M5_PROMPT.md), [owner amendments](v2/M5_CONTINUATION.md).
 - [Acceptance matrix](v2/M5_RESULTS.md), [closure evidence/report](v2/data/m5/close/REPORT.md), [full history](v2/STATUS_HISTORY.md).
@@ -35,17 +35,29 @@
 - [V2](v2/data/m5/close/determinism-v2/determinism.json): four engines ×100 sessions ×150 ticks, zero differences against saved M5.1.
 - [166 stored links](v2/data/m5/close/links-verified.json) +[one delta](v2/data/m5/close/links-delta-verified.json) verify their own versions.
 - [URLs](v2/data/m5/close/urls/v1_links_check.json): 50 forms +six archive views, zero console errors; five replay and five pixel-identical canvas checks pass.
-- [Focus](v2/data/m5/close/focus/focus.json): 7 desktop /7 compact /8 emulated landscape /1 portrait controls, no page scroll; 24 game layouts checked.
+- [Focus](v2/data/m5/close/focus/focus.json): 7 desktop /7 compact /8 emulated landscape /1 portrait controls originally; review adds reachable portrait STOP (2 controls), no page scroll; 24 game layouts checked.
 - [Cold starts](v2/data/m5/close/startup-immediate/checks.json): desktop title <=2028.2000000029802 ms, live/3D <=9786.999755859375 ms; emulated title <=2616.7999999970198 ms.
 - Emulated phone live model misses 10 s in 2/3 runs (max 10161.39990234375 ms); visible computation max 10236.60009765625 ms. Not relabelled passed.
 - [Warm default world](v2/data/m5/close/cache-race-fixed/checks.json): 2680.5 /2620.5 /2694.199951171875 ms desktop/landscape/portrait, all <=3 s. Optional terrain warm diagnostics exceed 3 s and remain visible.
-- [Final JS inventory](v2/data/m5/close/dist-close.txt): app+worker 271628 gzip bytes; interpreter adds 268476, total 540104. App-only check passes CI; strict all-JavaScript 350000 budget NOT MET, no waiver inferred.
+- [Final JS inventory](v2/data/m5/close/dist-close.txt): app+worker 271628 gzip bytes; interpreter adds 268476, total 540104. App-only check passes CI; owner decision 1 applies the ≤350000 budget to title-critical app+worker: met. Review critical bytes 271801; interpreter 268476 stays gated behind title interactivity.
 - [GPU Play](v2/data/m5/close/fps/checks.json): nominal 60 fps RTX high/Intel medium; raw interval medians 59.96230940521038 /60.01500375153408.
 - [Final Intel four-pane Compare](v2/data/m5/close/fps-final/checks.json): median 60.02508511003504 fps (initial 11.516654854743376 failure retained); pixels match retained reference.
 - [30-minute hygiene](v2/data/m5/close/soak-final/soak3d_nvidia.json): 30.162183333333335 minutes, zero errors/context loss/driving long tasks.
 - [Accessibility](v2/data/m5/close/accessibility-final/checks.json): twelve dark/light pages, AA text checks, focusability/reduced motion pass; [actual keyboard goal/grid proof](v2/data/m5/close/keyboard-proof/checks.json).
 - Measurements: balanced on AC, original balanced unchanged; RTX 4050 driver 580.178.04; Intel RPL-P through Vulkan/Mesa 25.2.8. Raw start/end conditions include load/renderer. No robot batch active.
 - [ADR 0008](v2/adr/0008-state-hash-v2.md) defines v2; [ADR 0009](v2/adr/0009-v2-encoding-cache.md) preserves its bytes while reducing encoding overhead.
+
+## Independent review — 2026-10-20
+
+- [Review-fix PR #26](https://github.com/GauthamCodes/coco-labs/pull/26) targets M5, open/unmerged; final product fixes `f22f729`.
+- [Full findings and 15-row claims audit](v2/reviews/M5_REVIEW.md); [review screenshots](v2/data/m5/review/SCREENSHOTS.md). Historical performance numbers above are not exact-head attestations.
+- Fresh reviewer runs: 3569 package, 493 web and 219 tool tests pass; schema/typecheck, two byte-identical builds and dist checks pass. [Build identity](v2/data/m5/review/BUILD.json).
+- Fresh v1: 100×150=15000 hashes, zero hash/chain differences. Four-engine v2: each 100×150, zero hash/chain differences or page errors. CLI links: 153 distinct queries, all pass. Corrected verifier no longer substitutes saved Node output or ignores chain/page errors.
+- Fixed title idle/input ordering, dialog/portrait and secondary-touch STOP, Settings navigation, and bytecode source audit. Preload attempt duplicated WASM/stdlib and regressed cold starts; removed, evidence retained. Streaming already native and execution verified.
+- Final balanced/AC desktop live ms: 9997.8 /9828.4 /9845.3. Emulated phone: 10106.3 /10030.5 /9964.7; accepted near-miss, not Phone completion. [Raw runs](v2/data/m5/review/startup-final-ac/checks.json).
+- [Open-tab A/B test](v2/data/m5/review/update-open-tab-ac3/checks.json) proves an A document receives B static bytes; hard reload passes. Update policy needs Gautham. Prefs-only storage and default-off counter pass source review.
+- Native CPython vs browser continuous Compare is not byte-identical; see review report. Global algorithms match native events; seven inflation cells match independently computed Nav2 costs.
+- Code-shape leftovers: sceneCore 941 lines, Renderer 957. Trial M6 merge has no conflict files; temporary worktree removed and real M6 worktree untouched.
 
 ## Owner rows, phone and design inputs
 
@@ -74,6 +86,9 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 | Date | Change | Reason | By |
 | --- | --- | --- | --- |
+| 2026-10-19 | Review decision 1: ≤350 kB gzip covers title-critical app plus worker (271628 bytes at fe9d544); interpreter (268476 bytes) is background work only after title interactivity, at idle or first input. | Keep the title responsive; review adds an explicit paint/idle-or-input gate. | Gautham (review prompt) |
+| 2026-10-19 | Review decision 2: 9.94–10.16 s emulated phone cold start is an accepted emulated near-miss; real Nothing Phone (1) decides Phone. | Try WASM/stdlib preload, streaming compilation and earliest safe worker fetch once; retain all three remeasurement results. | Gautham (review prompt) |
+| 2026-10-19 | Review decision 3: warm-start budget covers the default world; optional terrain starts over 3 s are accepted diagnostics. | Retain optional-world numbers without treating them as default-world failures. | Gautham (review prompt) |
 | 2026-10-14 | E1: Play, Compare, Research; title and About replace the four-mode navigation. | Three purposes, three modes; focus the existing dashboard surface. | Gautham (M5 prompt) |
 | 2026-10-14 | E2: Depot from World Spec v3; browser, Gazebo SDF and Nav2 map; arena retained as Proving Ground (M6). | Author worlds once and retain the reference for existing recordings. | Gautham (M5 prompt) |
 | 2026-10-14 | E3: ROS-shaped model, graph panel, Gazebo worlds, ROS ghosts; own-ROS bridge M7; invariant 2 narrowed to control boundary. | Make “ROS 2 at its core” concrete without per-player cloud cost; keep Stack control behind coco.v1. | Gautham (M5 prompt) |
@@ -97,5 +112,4 @@ The owner approved E1–E8 by issuing the M5 prompt. Decision wording and ration
 
 ## Next step
 
-Review [PR #25](https://github.com/GauthamCodes/coco-labs/pull/25), its CI and the acceptance matrix. Resolve the explicit open payload/startup limits; measure the real phone when connected; complete owner usability before public launch. Never merge automatically or create/edit releases.
-Independent review and the explicit open performance/phone/usability items precede public launch. No stop condition hit; no new parked idea.
+Merge review fixes into M5 after review; resolve open-tab consistency, rerun CI, measure the real phone and complete owner usability before Gautham merges #25. That merge publishes the site. Refresh/retest #24 afterwards. Never merge automatically or create/edit releases.
