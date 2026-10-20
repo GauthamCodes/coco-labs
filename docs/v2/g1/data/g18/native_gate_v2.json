@@ -5,8 +5,8 @@
  "pyodide": "Pyodide 314.0.7 in Node v24.21.0",
  "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
  "seconds": {
-  "native": 88.904,
-  "pyodide": 157.676
+  "native": 90.083,
+  "pyodide": 160.187
  },
  "cases": {
   "planners": {
