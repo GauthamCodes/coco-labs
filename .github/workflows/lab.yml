@@ -1,7 +1,8 @@
 # COCO Lab: coco_lab without ROS, the lab_web site, and its Pages deploy.
 #
 # Separate from ci.yml (the ROS workflow), which this file does not touch.
-# The deploy job runs only on a push to main, and only succeeds once the
+# The deploy job runs only on an explicitly confirmed manual dispatch on main.
+# It only succeeds once the
 # repository's Pages source is set to "GitHub Actions" (an owner action:
 # Settings -> Pages). See docs/labs/PHASE_1D_PLAN.md section I.
 name: Lab
@@ -12,6 +13,11 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Type DEPLOY after the real-phone and five-person usability gates pass'
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -223,9 +229,9 @@ jobs:
         run: node tools/perf/replay_check.mjs --site http://127.0.0.1:4174/coco-labs/ --out "$RUNNER_TEMP/replays"
 
   deploy:
-    name: deploy to GitHub Pages (main only)
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [ coco-lab-venv, lab-web ]
+    name: Deploy site
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.confirmation == 'DEPLOY'
+    needs: [ coco-lab-venv, lab-web, lab-web-browsers ]
     runs-on: ubuntu-24.04
     # Slowest GREEN run of this job, measured 2026-10-02 over every
     # successful run on coco-labs and coco-robot-jazzy-2.0: 0.2 min

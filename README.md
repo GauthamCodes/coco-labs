@@ -689,6 +689,8 @@ Details live in `docs/v2/M*_PROMPT.md`, `docs/v2/M*_RESULTS.md` and `docs/v2/rev
 
 **Contents:**
 
+- First task of the M6 UI phase: split `sceneCore.ts` (941 lines at review) and
+  `render/Renderer.ts` (957 lines at review). This decomposition is outside M5.
 - World Spec v3 and the modular level kit, with generators for the browser world and glTF, the Gazebo SDF, and the Nav2 map and params.
 - The Depot level (about 48 × 32 m, six zones) and its zone streaming.
 - The object catalog with grasp affordances; moving forklifts and walkers with collision bodies in both tiers.
@@ -805,6 +807,12 @@ Gated on:
 ---
 
 ## 9. Rules for coding agents
+
+**Publication gate (Gautham, 2026-10-20).** A push or merge to main builds and tests
+everything but does not publish Pages. The public site stays on M4 until Gautham
+runs Lab manually on main: the **Deploy site** job requires the confirmation
+`DEPLOY`, after the real-phone check and five-person usability test pass. Agents
+never trigger that deployment. PR #25 is merged only by Gautham.
 
 These apply to every agent: Claude Code, Codex or any other.
 
