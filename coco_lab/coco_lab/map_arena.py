@@ -37,7 +37,6 @@ those scores and for the idealised sensor's observations (Lab 3's rule).
 
 from array import array
 from dataclasses import replace
-import math
 import struct
 from typing import Dict, List, Optional, Tuple
 
@@ -47,6 +46,7 @@ from .columns import Batch, CLOCKS
 from .ekfslam import EKFSlam, EKFSlamParams
 from .fastslam import FastSlam, FastSlamParams
 from .mapeval import ate, score_map, Truth
+from .numerics import math
 from .occgrid import GridParams, OccupancyGrid
 from .posegraph import PoseGraph, PoseGraphParams
 from .sketch import odom_delta, UPDATE_MIN_A, UPDATE_MIN_D, wrap

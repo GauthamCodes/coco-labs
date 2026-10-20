@@ -163,7 +163,7 @@ async function boot(req: Extract<ToWorker, { type: 'boot' | 'warm' }>) {
     // G1: the game's rules and Grasp Assist load first (their pack), then the game session builds the Arena
     await loadPack('game');
     mark('pack_game_ready');
-    out = glue.game_init(spec, req.game.game, req.game.arg, req.seed, onBatch, req.batchSize, onFamily, req.hashVersion ?? 2);
+    out = glue.game_init(spec, req.game.game, req.game.arg, req.seed, onBatch, req.batchSize, onFamily, req.hashVersion ?? 3);
   } else out = glue.init(spec, req.seed, req.planner, onBatch, req.batchSize, onFamily, req.hashVersion ?? 1);
   const world = JSON.parse(out.get(0) as unknown as string);
   const occ = out.get(1);

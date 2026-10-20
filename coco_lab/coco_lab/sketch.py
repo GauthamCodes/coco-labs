@@ -44,11 +44,11 @@ frame. The LiDAR is mounted at :attr:`LidarSpec.mount` in
 """
 
 from dataclasses import dataclass, field
-import math
 import random
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .maps import FREE, LabMap, MapError
+from .numerics import math
 
 TWO_PI = 2.0 * math.pi
 INF = float('inf')

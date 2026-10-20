@@ -9,6 +9,8 @@ import { applyTheme, isTheme } from './ui/theme';
 import { decodeChallenge, urlFieldError } from './links/bounds.mjs';
 import './ui/style.css';
 import { registerStaticCache } from './offline/register';
+import { initUpdates } from './offline/updates';
+import { UpdateNotice } from './shell/UpdateNotice';
 import { countVisit } from './offline/counter';
 import { VISIT_COUNTER_ID } from '../site.config';
 import '@fontsource-variable/outfit';
@@ -16,7 +18,7 @@ import '@fontsource-variable/manrope';
 applyTheme();
 const root = createRoot(document.getElementById('root')!);
 const BASE = import.meta.env.BASE_URL;
-const render = (node: ReactNode) => root.render(<StrictMode><Fragment key={window.location.search}>{node}</Fragment><GlobalSettings /></StrictMode>);
+const render = (node: ReactNode) => root.render(<StrictMode><Fragment key={window.location.search}>{node}</Fragment><GlobalSettings /><UpdateNotice /></StrictMode>);
 let generation = 0;
 async function display() {
   const ownGeneration = ++generation;
@@ -78,6 +80,7 @@ document.addEventListener('click', event => {
   if (url.origin !== location.origin || url.pathname !== BASE || (url.hash && url.search === location.search)) return;
   event.preventDefault(); navigate(url.pathname + url.search + url.hash);
 });
+initUpdates();
 registerStaticCache();
 countVisit(VISIT_COUNTER_ID);
 show();

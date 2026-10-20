@@ -65,7 +65,7 @@ export class GameSession {
       onTick: (t, ranges) => { this.inFlight = false; this.lastTick = t as GameTick; this.ticks += 1; ev.onTick(t as GameTick, ranges); this.pump(); },
       onError: (stage, m) => { this.inFlight = false; ev.onError(stage, m); },
       onFamily: (msg) => ev.onFamily?.(msg),
-    }, { hashVersion: 2, seed: 1, spec: SPEC_FOR[world], game: { game, arg: game === 'fetch_rush' ? seed : 0 } });
+    }, { hashVersion: 3, seed: 1, spec: SPEC_FOR[world], game: { game, arg: game === 'fetch_rush' ? seed : 0 } });
   }
 
   whenReady() { return this.client.whenReady(); }

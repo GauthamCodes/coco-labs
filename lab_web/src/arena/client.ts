@@ -11,6 +11,7 @@ import { PYODIDE_INDEX_URL } from '../../site.config.ts';
 import { wallMs, type BootRequest, type CompareResult, type CompareInflation, type FamilyMessage, type FromWorker, type InputRow, type SearchColumns, type SpecFile, type Tick, type World } from './protocol';
 import { perf } from './perf';
 import { claimWarmWorker } from './worker_pool';
+import { pinnedBase } from '../offline/updates';
 
 export interface ArenaEvents {
   onLoopCompareBatch?(frames: import('./protocol').LoopFrame[][], done: boolean): void;
@@ -34,8 +35,9 @@ export class ArenaClient {
   tick = 0;
   private readonly ready: Promise<World>;
 
-  constructor(ev: ArenaEvents, opts: { hashVersion?: 1 | 2; seed?: number; planner?: string; pyodide?: PyodideSource; spec?: SpecFile; game?: BootRequest['game'] } = {}) {
-    const base = import.meta.env.BASE_URL;
+  constructor(ev: ArenaEvents, opts: { hashVersion?: 1 | 2 | 3; seed?: number; planner?: string; pyodide?: PyodideSource; spec?: SpecFile; game?: BootRequest['game'] } = {}) {
+    // G1.8: the worker loads its runtime and data pinned to this page's build
+    const pinned = pinnedBase();
     perf.mark('worker_create', wallMs());
     this.worker = claimWarmWorker(opts.pyodide !== 'cdn');
     this.ready = new Promise((resolve, reject) => {
@@ -86,8 +88,8 @@ export class ArenaClient {
     void this.ready.catch(() => {});
     const boot: BootRequest = {
       type: 'boot',
-      pyodideBase: opts.pyodide === 'cdn' ? PYODIDE_INDEX_URL : `${base}generated/pyodide/`,
-      assetsBase: `${base}generated/`,
+      pyodideBase: opts.pyodide === 'cdn' ? PYODIDE_INDEX_URL : `${pinned}generated/pyodide/`,
+      assetsBase: `${pinned}generated/`,
       seed: opts.seed ?? 1,
       planner: opts.planner ?? 'astar',
       batchSize: 2048,

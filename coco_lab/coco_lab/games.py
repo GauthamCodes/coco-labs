@@ -40,7 +40,6 @@ the canister is carried. The model simulates no breakage and no forces.
 """
 
 import hashlib
-import math
 import struct
 from typing import Dict, List, Optional, Tuple
 
@@ -48,6 +47,7 @@ from . import worldspec_v3 as v3
 from .arena import Arena, ArenaError, InputEvent, PLANNERS, SUBSYSTEMS
 from .grasp_assist import GraspAssist
 from .link_bounds import validate_log
+from .numerics import math
 from .rng import Rng
 from .search import search
 from .sketch import _nearest_free, WAYPOINT_TOL

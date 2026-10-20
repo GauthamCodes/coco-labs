@@ -20,7 +20,7 @@ import type { InputRow } from './protocol';
 
 export interface SharedRun {
   v: 1;
-  hash_version?: 1 | 2;
+  hash_version?: 1 | 2 | 3;
   spec: string;        // sha256 hex of the World Spec's canonical bytes
   seed: number;
   ticks: number;       // the run ended after this many ticks
@@ -66,7 +66,7 @@ export function encodeRun(r: SharedRun): string {
 
 export function decodeRun(param: string): SharedRun {
   const d = boundedJson(param);
-  if (![1, 2].includes(d.hv ?? 1)) throw new Error('unknown hash version');
+  if (![1, 2, 3].includes(d.hv ?? 1)) throw new Error('unknown hash version');
   boundedTick(d.t, 'ticks');
   boundedInputs(d.i, true, d.t as number);
   if (d.v !== 1) throw new Error(`run link version ${String(d.v)} is not 1`);
@@ -77,7 +77,7 @@ export function decodeRun(param: string): SharedRun {
   if (!Array.isArray(d.i)) throw new Error('the run link has no inputs');
   const inputs = d.i.map(fromRow);
   for (let k = 1; k < inputs.length; k += 1) if (inputs[k].tick < inputs[k - 1].tick) throw new Error('inputs out of order');
-  return { v: 1, ...(d.hv ? { hash_version: d.hv as 1 | 2 } : {}), spec: d.s, seed: d.e as number, ticks: d.t as number, chain: d.c, inputs };
+  return { v: 1, ...(d.hv ? { hash_version: d.hv as 1 | 2 | 3 } : {}), spec: d.s, seed: d.e as number, ticks: d.t as number, chain: d.c, inputs };
 }
 
 /** The share URL for a run, on this page's origin and base. */

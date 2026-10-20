@@ -61,11 +61,11 @@ MCL, the weighted particle set at every update.
 """
 
 from dataclasses import asdict, dataclass
-import math
 import random
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from . import kalman
+from .numerics import cube, math, sq
 from .sketch import (apply_delta, INF, odom_delta, ROBOT_RADIUS,
                      SketchMap, WorldRun, wrap)
 
@@ -384,12 +384,12 @@ class LikelihoodField:
         self.smap = smap
         floor = z_rand / range_max
         k = 1.0 / (2.0 * sigma_hit * sigma_hit)
-        self.pz = [z_hit * math.exp(-min(d, max_dist) ** 2 * k) + floor
+        self.pz = [z_hit * math.exp(-sq(min(d, max_dist)) * k) + floor
                    for d in smap.dist]
-        self.pz_off = z_hit * math.exp(-max_dist ** 2 * k) + floor
+        self.pz_off = z_hit * math.exp(-sq(max_dist) * k) + floor
         #: AMCL's per-beam term, cubed (its sum is AMCL's score)
         self.cube = [v * v * v for v in self.pz]
-        self.cube_off = self.pz_off ** 3
+        self.cube_off = cube(self.pz_off)
         #: the textbook product's per-beam term, as a log
         self.log = [math.log(v) for v in self.pz]
         self.log_off = math.log(self.pz_off)
@@ -662,7 +662,7 @@ def _cluster_estimate(P, w):
     sw = sx = sy = ss = sc = 0.0
     members = []
     for (x, y, th), wi in zip(P, w):
-        if (x - cx) ** 2 + (y - cy) ** 2 <= 1.0:
+        if sq(x - cx) + sq(y - cy) <= 1.0:
             members.append((x, y, th, wi))
             sw += wi
             sx += wi * x
@@ -716,12 +716,12 @@ class EKF:
         self.smap, self.lidar, self.params = smap, lidar, params
         self.angles = lidar.angles()
         self.beams = _beam_subset(lidar.samples, params.beams)
-        self.R1 = params.sigma_hit ** 2
+        self.R1 = sq(params.sigma_hit)
         if params.init == 'tracking':
             self.mu = list(start)
             s = params.init_sigma
-            self.P = [[s[0] ** 2, 0.0, 0.0], [0.0, s[1] ** 2, 0.0],
-                      [0.0, 0.0, s[2] ** 2]]
+            self.P = [[sq(s[0]), 0.0, 0.0], [0.0, sq(s[1]), 0.0],
+                      [0.0, 0.0, sq(s[2])]]
         else:
             # an EKF must start somewhere: the middle of the free space,
             # facing +x, with a covariance as wide as the map
@@ -730,8 +730,8 @@ class EKF:
             cy = sum(smap.cell_centre(*c)[1] for c in free) / len(free)
             self.mu = [cx, cy, 0.0]
             span = max(smap.width, smap.height) * smap.resolution / 2
-            self.P = [[span ** 2, 0.0, 0.0], [0.0, span ** 2, 0.0],
-                      [0.0, 0.0, math.pi ** 2]]
+            self.P = [[sq(span), 0.0, 0.0], [0.0, sq(span), 0.0],
+                      [0.0, 0.0, sq(math.pi)]]
         self.prev_odom = None
         self.updates = 0
 

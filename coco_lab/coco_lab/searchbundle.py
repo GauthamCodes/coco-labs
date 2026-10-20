@@ -46,13 +46,13 @@ rebuilds every recorded run from its looks alone and does not read it.
 from dataclasses import dataclass
 import gzip
 import json
-import math
 import os
 import struct
 from typing import Dict, List, Optional, Tuple
 
 from . import bundle as _b
 from . import regionsearch as rs
+from .numerics import math
 
 SCHEMA = 'coco_lab.search_bundle'
 VERSION = '1.0'

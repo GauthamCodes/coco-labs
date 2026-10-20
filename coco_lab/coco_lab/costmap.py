@@ -22,10 +22,10 @@ This is not Nav2: scan marks are rebuilt each observation, with no temporal
 obstacle persistence, unknown-space tracking or footprint polygon.
 """
 from dataclasses import dataclass
-import math
 from typing import Iterable, Sequence
 
 from .columns import Batch
+from .numerics import math
 from .sketch import edt
 
 LETHAL = 254

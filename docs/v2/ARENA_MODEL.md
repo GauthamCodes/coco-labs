@@ -87,8 +87,16 @@ browser runs the same Pyodide WebAssembly, whose `libm` is part of the
 binary, so the same inputs should give the same bits; the cross-browser
 check (Chromium, Firefox, WebKit, Pyodide-in-Node, 100 sessions) is M1's
 determinism criterion, measured in M1.5/M1.10. **Native CPython and
-Pyodide are not claimed to agree**: they link different `libm`s, and
-`sin`/`cos` may differ in the last bit.
+Pyodide are not claimed to agree under v1 or v2**: they link different
+`libm`s, and `sin`/`cos` may differ in the last bit (measured: M5's review,
+G1.6).
+
+**State hash v3 (G1.8, ADR 0010)** is v2's snapshot under its own tag
+(`coco.arena.state.v3`) with every transcendental computed by
+`coco_lab.numerics` (fdlibm in pure Python on exactly-rounded IEEE
+operations), so native CPython and Pyodide **do** agree bit for bit — a CI
+gate (`lab_web/tools/g1/native_gate.mjs`) checks it. New runs use v3; v1 and
+v2 are unchanged and replay as before.
 
 ## LiDAR fidelity, re-confirmed
 

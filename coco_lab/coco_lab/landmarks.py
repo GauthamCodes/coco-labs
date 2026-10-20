@@ -34,11 +34,11 @@ named on the page, not hidden.
 """
 
 from dataclasses import asdict, dataclass
-import math
 import random
 from typing import Dict, List, Sequence, Tuple
 
 from .maps import FREE, LabMap
+from .numerics import math, sq
 from .sketch import SketchMap, wrap
 
 #: ``(id, x, y)``
@@ -111,7 +111,7 @@ def corners(lab_map: LabMap, min_separation: float = 1.0,
                         free(ix + dx, iy + dy):
                     px = ox + (ix + (1 if dx > 0 else 0)) * res
                     py = oy + (iy + (1 if dy > 0 else 0)) * res
-                    if all((px - x) ** 2 + (py - y) ** 2 >= min2
+                    if all(sq(px - x) + sq(py - y) >= min2
                            for _, x, y in kept):
                         kept.append((len(kept), px, py))
                         if len(kept) >= max_count:

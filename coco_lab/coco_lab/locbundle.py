@@ -44,7 +44,6 @@ a bundle that does not.
 from dataclasses import dataclass
 import gzip
 import json
-import math
 import os
 import struct
 from typing import Dict, List, Optional, Tuple
@@ -53,6 +52,7 @@ from . import bundle as _b
 from . import localise
 from .localise import EKFParams, LocError, LocTrace, MCLParams
 from .maps import LabMap, MapError
+from .numerics import math
 from .sketch import Scenario, simulate, SketchMap, WorldRun
 
 SCHEMA = 'coco_lab.loc_bundle'

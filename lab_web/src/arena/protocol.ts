@@ -19,7 +19,7 @@ export interface BootRequest {
   seed: number;
   planner: string;
   batchSize: number;
-  hashVersion?: 1 | 2;
+  hashVersion?: 1 | 2 | 3;
   /** M4.3: the World Spec to build (a file in generated/arena/); absent = coco_arena_v1.json. */
   spec?: SpecFile;
   /** G1: boot a game session (coco_lab.games via the glue's game_init): 'fetch_rush' (arg = its seed) or 'free'. */
@@ -51,7 +51,7 @@ export interface PlayRequest { type: 'play'; id: number; request: string }
 /** G1: a game query (preview, auto_goal, record, stars); read-only, queued behind any step. */
 export interface GameRequest { type: 'game'; id: number; op: string; arg: string | null }
 export type WarmRequest = Omit<BootRequest, 'type'> & { type: 'warm' };
-export interface LoopCompareRequest { type: 'compare_loop'; family: 'control' | 'localise'; names: string[]; goal: [number, number]; inflation: CompareInflation; steps: number }
+export interface LoopCompareRequest { type: 'compare_loop'; family: 'control' | 'localise'; names: string[]; goal: [number, number]; inflation: CompareInflation; steps: number; hash_version?: 2 | 3 }
 export interface LoopFrame { pose: [number, number, number]; truth: [number, number, number]; particles: number[][] | null; chosen: number[][] | null; hash: string; tick: number; summary: Record<string, number | boolean | null>; status: string }
 export type ToWorker = { type: 'costmap_view' } | LoopCompareRequest | BootRequest | WarmRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest | GameRequest;
 

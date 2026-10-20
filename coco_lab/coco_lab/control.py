@@ -71,9 +71,9 @@ collides.
 """
 
 from dataclasses import asdict, dataclass, field
-import math
 from typing import Dict, List, Optional, Sequence, Tuple
 
+from .numerics import math
 from .sketch import edt, step_pose, wrap
 
 LETHAL = 254

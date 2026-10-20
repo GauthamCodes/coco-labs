@@ -37,10 +37,10 @@ module is standard-library only, so it runs under Pyodide unchanged).
 """
 
 import json
-import math
 from typing import Dict, List, Tuple
 
 from .maps import FREE, LabMap, OCCUPIED, UNKNOWN
+from .numerics import math
 
 SPEC_VERSION = 'coco.world_spec.v1'
 #: World Spec v2 (M4.2; docs/v2/adr/0007-world-spec-elevation.md): v1's fields

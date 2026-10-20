@@ -47,11 +47,11 @@ Occupied cells are not states. Lethal costs are expressed as occupancy,
 never as a large cost value.
 """
 
-import math
 from typing import Dict, Iterable, Iterator, List, Optional, Sequence, Tuple
 
 from . import heuristics
 from .heuristics import MoveModel, SQRT2
+from .numerics import math
 
 Cell = Tuple[int, int]
 

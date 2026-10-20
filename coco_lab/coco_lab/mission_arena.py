@@ -52,13 +52,13 @@ position is within :data:`VIEW_RADIUS` of its pre-ramp pose.
 """
 
 import itertools
-import math
 import struct
 from typing import List, Optional, Tuple
 
 from . import arm, fetch_problem, regionsearch as rs
 from .arena import ArenaError, Q_STATE, SUBSYSTEMS
 from .columns import Batch
+from .numerics import math
 from .sketch import wrap
 
 STATES = ('idle', 'localise', 'choose_bay', 'go_to_bay', 'detect', 'grasp',

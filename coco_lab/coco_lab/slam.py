@@ -40,10 +40,10 @@ that revise the past, the final trajectory.
 """
 
 from dataclasses import dataclass, field
-import math
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .landmarks import LandmarkSensor, Observation
+from .numerics import math
 from .sketch import apply_delta, LidarSpec, odom_delta
 
 SCHEMA = 'coco_lab.slam_trace'

@@ -116,6 +116,8 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
     from coco_lab.sketch import _nearest_free
 
     a = _arena
+    from coco_lab import numerics
+    numerics.use(a.hash_version)  # G1.8: the run's numerics, outside a step too
     names = json.loads(planners_json) if planners_json else [planner_a, planner_b]
     if (not isinstance(names, list) or len(names) not in (2, 4) or
             any(not isinstance(name, str) or name not in COMPARE_PLANNERS
@@ -364,7 +366,7 @@ _game = None
 
 
 def game_init(spec_json, game, arg, seed, post_batch, batch_size=2048,
-              post_family=None, hash_version=2):
+              post_family=None, hash_version=3):
     """Build the Arena on a level for ``game`` ('fetch_rush' or 'free'); return init()'s pair."""
     global _game
     import hashlib
@@ -540,6 +542,8 @@ def game_ghost():
 
 def game_op(op, arg_json=None):
     """The worker's one entry point for game queries (none of them changes the model)."""
+    from coco_lab import numerics
+    numerics.use(_arena.hash_version)  # G1.8: the session's numerics, outside a step too
     if op == 'preview':
         return game_preview()
     if op == 'auto_goal':

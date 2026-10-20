@@ -44,10 +44,10 @@ and :meth:`OccupancyGrid.to_u8` / :meth:`to_labmap` do that flip.
 
 from array import array
 from dataclasses import asdict, dataclass
-import math
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .maps import FREE, LabMap, OCCUPIED, UNKNOWN
+from .numerics import math
 
 #: ``nav_msgs/OccupancyGrid``'s "unknown" (-1), as an unsigned byte.
 U8_UNKNOWN = 255

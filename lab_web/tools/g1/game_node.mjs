@@ -60,7 +60,7 @@ export async function play({ record, script }) {
   const spec = readFileSync(join(repo, 'worlds', 'coco_depot_v1.json'), 'utf-8');
   const game = record ? record.game : 'fetch_rush';
   const arg = record ? record.arg : 1;
-  const hv = record?.hash_version ?? Number(args.hv ?? 2);
+  const hv = record?.hash_version ?? Number(args.hv ?? 3);
   const init = glue.game_init(spec, game, arg, record?.seed ?? 1, () => {}, 2048, () => {}, hv);
   const world = JSON.parse(init.get(0));
   init.destroy();

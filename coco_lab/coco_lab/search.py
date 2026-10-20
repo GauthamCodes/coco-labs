@@ -68,10 +68,10 @@ BFS that is the state's depth in moves.
 from collections import deque
 from dataclasses import dataclass
 import heapq
-import math
 from typing import Callable, Dict, Generator, List, Optional, Tuple
 
 from .graph import HEURISTICS, SearchGraph, State
+from .numerics import math
 from .trace import (EXPAND, MAJOR, NO_PARENT, PATH, PUSH, RELAX, SCHEMA,
                     Trace, TraceBuilder, VERSION)
 

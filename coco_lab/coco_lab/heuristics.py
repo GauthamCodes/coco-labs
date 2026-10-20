@@ -35,10 +35,10 @@ from. The TypeScript never recomputes it.
 """
 
 from dataclasses import dataclass
-import math
 from typing import Optional, Tuple
 
 from .graph import HEURISTICS
+from .numerics import math
 
 SQRT2 = math.sqrt(2.0)
 

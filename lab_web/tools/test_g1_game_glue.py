@@ -43,7 +43,7 @@ def test_the_depot_json_is_the_canonical_bytes_of_the_yaml():
     assert r.returncode == 0, r.stdout + r.stderr
 
 
-@pytest.mark.parametrize('hash_version', [1, 2])
+@pytest.mark.parametrize('hash_version', [1, 2, 3])
 def test_a_played_fetch_rush_replays_to_the_same_chain(hash_version):
     from coco_lab import games
     glue = _glue()

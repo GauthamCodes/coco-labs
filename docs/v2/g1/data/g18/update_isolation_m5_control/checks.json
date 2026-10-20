@@ -1,0 +1,168 @@
+{
+ "scope": "Functional deploy test (G1.8 update isolation), not a timing measurement",
+ "errors": [],
+ "checks": {
+  "openDocumentMixed_false": false,
+  "page_A_reads_A": false,
+  "new_version_notice": false,
+  "no_forced_reload": true,
+  "old_cache_kept_while_open": false,
+  "old_cache_deleted_once_closed": true,
+  "reload_consistent_B": false,
+  "no_page_errors": true
+ },
+ "versionA": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+ "before": {
+  "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+  "asset": "A",
+  "pinnedAsset": "HTTP 404",
+  "controller": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27"
+ },
+ "versionB": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373",
+ "observations": [
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "A",
+   "pinnedAsset": "HTTP 404",
+   "controller": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  },
+  {
+   "documentBuild": "83ce086dc44d8598615ee6318ebaf1263362baf8630f3667bbe920a19be28c27",
+   "asset": "B",
+   "pinnedAsset": "HTTP 404",
+   "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+  }
+ ],
+ "openDocumentMixed": true,
+ "stableBSeen": true,
+ "noticeShown": false,
+ "noticeButtons": [],
+ "notReloaded": true,
+ "cachesWhileAOpen": [
+  "coco-static-%2Fcoco-labs%2F-active-version",
+  "coco-static-%2Fcoco-labs%2F-31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+ ],
+ "aCacheKeptWhileOpen": false,
+ "afterReload": {
+  "documentBuild": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373",
+  "asset": "B",
+  "pinnedAsset": "HTTP 404",
+  "controller": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+ },
+ "hardReloadConsistent": false,
+ "cachesAfterReload": [
+  "coco-static-%2Fcoco-labs%2F-active-version",
+  "coco-static-%2Fcoco-labs%2F-31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373"
+ ],
+ "aCacheDeletedOnceClosed": true,
+ "controllerAfterReload": "31eb588b24900b0c23993c06bb8c847a03f25f131b33177b96ab5e72e9650373",
+ "passed": false
+}

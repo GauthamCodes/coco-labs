@@ -63,13 +63,14 @@ hashes; M1's hash layout is unchanged (a search's id is not state).
 import copy
 from dataclasses import dataclass, field
 import hashlib
-import math
 import struct
 from typing import Dict, List, Optional, Sequence, Tuple
 
+from . import numerics
 from .events import SearchEventColumns
 from .grasp import Grasp
 from .maps import OCCUPIED
+from .numerics import math
 from .rng import Rng
 from .search import Collector, search_events, SearchResult
 from .sketch import (_inflated_grid_map, _nearest_free, apply_delta,
@@ -81,6 +82,8 @@ from .worldspec import (arena_map, normalize, scan_height, SPEC_VERSION_V3,
 
 #: The state-hash layout's name; a change to the layout changes this.
 STATE_LAYOUT = b'coco.arena.state.v1\x00'
+#: the hash-chain seed and state-bytes tag of versions 2 and 3 (v3: G1.8's numerics)
+_STATE_TAG = {2: b'coco.arena.state.v2', 3: b'coco.arena.state.v3'}
 #: M4.3: 'autonomy' hands control back to the last autonomous goal (the 3D
 #: Arena's Tab), 'grasp' is the gated grasp or release (its E; coco_lab.grasp);
 #: appended, so every earlier input keeps its meaning
@@ -218,9 +221,12 @@ class Arena:
                  lidar_every: int = 1, on_plan_batch=None,
                  plan_batch_size: int = 2048, on_family=None, hash_version: int = 1):
         """Build the world from ``spec`` and place the robot at its start."""
-        if hash_version not in (1, 2):
-            raise ArenaError('hash_version must be 1 or 2')
+        if hash_version not in (1, 2, 3):
+            raise ArenaError('hash_version must be 1, 2 or 3')
         self.hash_version = hash_version
+        # G1.8: version 3 computes every transcendental deterministically
+        # (coco_lab.numerics), so CPython and Pyodide agree bit for bit
+        numerics.use(hash_version)
         self.spec = normalize(spec)
         if planner not in PLANNERS:
             raise ArenaError(f'unknown planner {planner!r}')
@@ -297,10 +303,10 @@ class Arena:
         self._chain = hashlib.sha256(STATE_LAYOUT).digest()
         self._reset_robot()
         self.ranges = self._scan()
-        if self.hash_version == 2:
+        if self.hash_version >= 2:
             from .state_v2 import world_hash
             self._v2_world = world_hash(self.spec, self.lidar)
-            self._chain = hashlib.sha256(b'coco.arena.state.v2').digest()
+            self._chain = hashlib.sha256(_STATE_TAG[self.hash_version]).digest()
 
     # -- state -----------------------------------------------------------------
 
@@ -695,6 +701,7 @@ class Arena:
 
     def begin_step(self, events: Sequence[InputEvent] = ()):
         """Apply this tick's inputs and start its search, if it needs one."""
+        numerics.use(self.hash_version)
         if self._in_step:
             raise ArenaError('a step is already in progress')
         self._check_ticks(events)
@@ -723,6 +730,7 @@ class Arena:
 
     def advance(self, n: Optional[int] = None) -> bool:
         """Take up to ``n`` events of the tick's search; return whether done."""
+        numerics.use(self.hash_version)
         if not self._in_step:
             raise ArenaError('advance outside a step')
         return self._collector is None or self._collector.advance(n)
@@ -736,6 +744,7 @@ class Arena:
         :meth:`step` would do with the whole list. An amendment the Arena
         cannot honour is refused and the tick goes on with what it had.
         """
+        numerics.use(self.hash_version)
         if not self._in_step:
             raise ArenaError('amend outside a step')
         self._check_ticks(events)
@@ -756,6 +765,7 @@ class Arena:
 
     def finish_step(self) -> Tick:
         """Finish the tick's search, advance one ``dt``, scan, hash."""
+        numerics.use(self.hash_version)
         if not self._in_step:
             raise ArenaError('finish_step outside a step')
         plans: List[Plan] = []
@@ -874,9 +884,11 @@ class Arena:
             z, pitch, roll = self.tilt()
             parts += [TERRAIN_LAYOUT, struct.pack('<3q', _q(z, Q_STATE), _q(pitch, Q_STATE),
                                                   _q(roll, Q_STATE))]
-        if self.hash_version == 2:
+        if self.hash_version >= 2:
+            # v3 is v2's snapshot under its own tag: the bytes are encoded the
+            # same way; what changed is the numerics that computed them
             from .state_v2 import snapshot
-            return b'coco.arena.state.v2\0' + snapshot(self)
+            return _STATE_TAG[self.hash_version] + b'\0' + snapshot(self)
         return b''.join(parts)
 
     def grasp_view(self) -> Optional[Dict[str, object]]:

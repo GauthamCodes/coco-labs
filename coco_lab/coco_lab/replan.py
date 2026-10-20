@@ -50,12 +50,12 @@ built from two real Nav2 costmaps (``docs/data/lab5``) makes Experiment C.
 """
 
 from dataclasses import dataclass, field
-import math
 import random
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .dstarlite import DStarLite, grid_changes, ReplanError
 from .grid import Grid
+from .numerics import math
 from .search import search
 
 Cell = Tuple[int, int]

@@ -43,13 +43,13 @@ written by ``tools/m6/gen_level.py``, which has PyYAML.
 import copy
 import io
 import json
-import math
 import struct
 from typing import Dict, List, Optional, Tuple
 import xml.etree.ElementTree as ET
 
 from . import worldspec_v3 as v3
 from .maps import FREE, LabMap, OCCUPIED, UNKNOWN
+from .numerics import math
 from .terrain import Terrain
 from .worldspec import (_rasterise, arena_map, box_rectangles, normalize, ramp_rectangles,
                         scan_height, SPEC_VERSION, terrain_map, TERRAIN_SPEC_VERSIONS)

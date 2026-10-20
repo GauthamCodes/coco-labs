@@ -17,7 +17,8 @@ from array import array
 from collections import OrderedDict
 import hashlib
 import json
-import math
+
+from .numerics import math
 
 # These are presentation/transport, hash-chain bookkeeping, immutable world
 # derivatives, or search-generator machinery. They do not survive as an input

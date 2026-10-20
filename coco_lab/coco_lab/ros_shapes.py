@@ -37,10 +37,10 @@ sits ``robot.ground_clearance`` above it and ``lidar_link`` at ``robot.lidar.mou
 in ``base_link`` (``coco_robo2.xacro``'s joints, as recorded).
 """
 
-import math
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .maps import FREE, OCCUPIED
+from .numerics import math
 
 #: the frames, as COCO's URDF and a recorded Stack bag name them
 FRAMES = ('map', 'odom', 'base_footprint', 'base_link', 'lidar_link')

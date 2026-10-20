@@ -40,7 +40,6 @@ Refusal reasons, in the order they are checked and reported (README §5.8):
 ``too_wide``, ``out_of_reach``, ``not_magnetic``, ``blocked``.
 """
 
-import math
 import struct
 from typing import Dict, List, Optional, Tuple
 
@@ -49,6 +48,7 @@ from .arena import ArenaError, SUBSYSTEMS
 from .columns import Batch, CLOCKS
 from .grasp import (ALIGNED, APPROACH_RANGE, CREEP, Grasp, MAX_CREEPS, MAX_LATERAL, SETTLED,
                     TARGET_DIAMETER, TARGET_HEIGHT, TURN, WINDOW)
+from .numerics import math, sq
 from .search import search
 from .sketch import _nearest_free, WAYPOINT_TOL
 from .terrain import ray_rect
@@ -249,7 +249,7 @@ def ik_nearest(x: float, z: float, near) -> Optional[Tuple[float, float]]:
     sols = arm.ik(x, z)
     if not sols:
         return None
-    return min(sols, key=lambda q: (q[0] - near[0]) ** 2 + (q[1] - near[1]) ** 2)
+    return min(sols, key=lambda q: sq(q[0] - near[0]) + sq(q[1] - near[1]))
 
 
 def pick_script(ahead: float, band: float):

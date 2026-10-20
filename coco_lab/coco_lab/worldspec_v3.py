@@ -45,10 +45,10 @@ from the spec's own robot and arena blocks; none is a new constant.
 Standard library only (Pyodide), like ``worldspec``.
 """
 
-import math
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from . import worldspec
+from .numerics import math
 from .worldspec import (_int, _keys, _num, _sources, _str, _vec, BOX_KINDS,
                         scan_height, SPEC_VERSION_V3, SpecError)
 

@@ -62,13 +62,13 @@ history survived (tested).
 """
 
 from dataclasses import asdict, dataclass
-import math
 import random
 from typing import Dict, List, Optional, Tuple
 
 from . import slam
 from .localise import low_variance_resample
 from .maps import LabMap
+from .numerics import math
 from .occgrid import GridParams, OccupancyGrid, sensor_pose
 from .sketch import apply_delta, odom_delta, sample_delta
 

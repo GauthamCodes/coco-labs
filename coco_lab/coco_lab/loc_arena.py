@@ -32,13 +32,13 @@ and MCL's bookkeeping, the EKF's prediction and update, each estimator's
 pose (and dead reckoning's), and the errors as metrics.
 """
 
-import math
 import struct
 from typing import Dict, Optional, Tuple
 
 from .arena import ArenaError, Q_STATE, SUBSYSTEMS
 from .columns import Batch
 from .localise import EKF, EKFParams, MCL, MCLParams
+from .numerics import math
 from .sketch import odom_delta, UPDATE_MIN_A, UPDATE_MIN_D, wrap
 
 FILTERS = ('off', 'mcl', 'ekf', 'both')

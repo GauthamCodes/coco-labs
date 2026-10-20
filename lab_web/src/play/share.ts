@@ -23,7 +23,7 @@ import { decodeChallenge } from '../links/bounds.mjs';
 
 export interface Submission {
   v: 1;
-  hash_version?: 1 | 2;
+  hash_version?: 1 | 2 | 3;
   challenge: string;
   level: string;
   level_hash: string;

@@ -53,10 +53,10 @@ never wall time.
 
 import hashlib
 import json
-import math
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .grid import Grid
+from .numerics import math
 from .search import collect, search_events
 from .trace import EXPAND, PUSH, RELAX
 

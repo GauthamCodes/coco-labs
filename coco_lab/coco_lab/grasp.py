@@ -42,12 +42,12 @@ stand is the frozen layout (``coco_lab.fetch_problem``), on the platforms,
 so the grasp exists only on a World Spec v2 (terrain) session.
 """
 
-import math
 import struct
 from typing import Dict, List, Optional, Tuple
 
 from . import arm
 from .fetch_problem import LAYOUT, TARGET_NOMINAL
+from .numerics import math
 
 #: coco_config.robot.approach_window(colour): identical for all four colours
 WINDOW = (0.151, 0.1565)

@@ -35,8 +35,9 @@ Integer arithmetic only, masked to 64 bits; the state is four 64-bit words
 Test vectors pin the first outputs (``test/test_rng.py``).
 """
 
-import math
 from typing import Tuple
+
+from .numerics import math
 
 MASK = (1 << 64) - 1
 

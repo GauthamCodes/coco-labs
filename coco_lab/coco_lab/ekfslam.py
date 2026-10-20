@@ -42,12 +42,12 @@ estimates (:mod:`occgrid`): EKF-SLAM itself builds only the landmark map.
 """
 
 from dataclasses import asdict, dataclass
-import math
 from typing import Dict, Optional, Tuple
 
 from . import slam
 from .localise import _motion_jacobians
 from .maps import LabMap
+from .numerics import math, sq
 from .occgrid import GridParams, OccupancyGrid
 from .sketch import apply_delta, odom_delta, wrap
 
@@ -97,17 +97,17 @@ class EKFSlam:
         """Start at ``start`` with the stated pose covariance, no landmarks."""
         self.p = params
         self.mu = [float(v) for v in start]
-        sxy, syaw = params.start_sigma_xy ** 2, params.start_sigma_yaw ** 2
+        sxy, syaw = sq(params.start_sigma_xy), sq(params.start_sigma_yaw)
         self.P = [[sxy, 0.0, 0.0], [0.0, sxy, 0.0], [0.0, 0.0, syaw]]
         self.slot: Dict[int, int] = {}  # landmark id -> state index of lx
         self.R = self._r()
 
     def _r(self):
         if self.p.model == 'range_bearing':
-            return ((self.p.sigma_range ** 2, 0.0),
-                    (0.0, self.p.sigma_bearing ** 2))
+            return ((sq(self.p.sigma_range), 0.0),
+                    (0.0, sq(self.p.sigma_bearing)))
         # relative_xy: the same sigma on both axes
-        s = self.p.sigma_range ** 2
+        s = sq(self.p.sigma_range)
         return ((s, 0.0), (0.0, s))
 
     @property

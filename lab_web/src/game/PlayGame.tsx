@@ -12,6 +12,7 @@
  * own phase and refusal reasons, Fetch Rush's own orders and counts.
  */
 
+import { registerRunSaver } from '../offline/updates';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Camera, Eye, Hand, Pause, PackageCheck, Route, Navigation2, Info } from 'lucide-react';
@@ -166,6 +167,12 @@ export function PlayGame(p: PlayProps) {
 
   useEffect(() => { if (modelReady && sceneReady) (canvas.current!.parentElement as HTMLElement).dataset.ready = 'true'; }, [modelReady, sceneReady]);
   useEffect(() => { const t = setInterval(() => setTip((k) => (k + 1) % TIPS.length), 4000); return () => clearInterval(t); }, []);
+  // G1.8: "Save run" on the New version notice downloads this session's record (spec, seed, input log)
+  useEffect(() => registerRunSaver(async () => {
+    const g = s.current;
+    if (!g || !g.client.world) return null;
+    return { name: `coco-${p.game}-${p.world}-seed-${p.seed}-run.json`, data: await g.query('record') };
+  }), [p.game, p.world, p.seed]);
   useEffect(() => { if (p.paused) s.current?.pause(); else if (started) s.current?.resume(); }, [p.paused, started]);
   useEffect(() => { r.current?.setVision(vision); r.current?.setCandidates(vision ? cands : []); }, [vision, cands]);
 

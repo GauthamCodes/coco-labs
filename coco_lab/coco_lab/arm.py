@@ -32,8 +32,9 @@ pose puts the pinch (``pick_place.py``'s pedestal-top target, (0.152,
 0.128) in base_footprint).
 """
 
-import math
 from typing import Dict, List, Optional, Tuple
+
+from .numerics import math
 
 S_X = -0.075
 S_Z = 0.1485

@@ -59,7 +59,7 @@ export function CompareWorkspace() {
     const next = fresh(old.world, old.occupancy, nextNames.length);
     state.current = next; setData(next); setResult(undefined); setBusy(true); setError(''); setPlaying(false); setCursor(0); history.current = []; setLoopCount(0); setLoopFrames(undefined);
     if (nextFamily === 'global') c.compareMany(nextNames, nextGoal[0], nextGoal[1], nextParams);
-    else c.compareLoop({ family: nextFamily, names: nextNames, goal: nextGoal, inflation: nextParams, steps });
+    else c.compareLoop({ family: nextFamily, names: nextNames, goal: nextGoal, inflation: nextParams, steps, hash_version: 3 });
   };
   const applyLoopCursor = (value: number) => {
     const d = state.current; if (!d) return;
@@ -108,7 +108,7 @@ export function CompareWorkspace() {
         setCursor(Math.max(...d.stores.map(store => store.received))); setData({ ...d }); setResult(done); setBusy(false);
       },
       onError(stage, message) { setError(stage + ': ' + message); setBusy(false); },
-    }, { seed: 1, hashVersion: 2, spec: urlWorld() });
+    }, { seed: 1, hashVersion: 3, spec: urlWorld() });
     client.current = c; return () => { c.close(); client.current = undefined; };
   }, []);
   cursorRef.current = cursor;
