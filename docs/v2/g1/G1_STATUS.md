@@ -4,8 +4,8 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 
 ## Now
 
-- **Current checkpoint:** G1.8 M5 carry-overs — done.
-- **Next step:** G1.9 Performance: emulated Nothing Phone (1) (4× CPU) Depot medium for 10 min (median, min, p95), title/loading timings, desktop on the cloud's software GPU (labelled), the title JS and Depot budgets, a 30-min soak for console errors and WebGL context loss; laptop items stay pending.
+- **Current checkpoint:** G1.9 Performance — done (cloud items); laptop and phone items pending.
+- **Next step:** G1.10 Close: after screenshots and BEFORE_AFTER.md, every suite plus v1 hashes, the four-engine v2 comparison, links and URLs, G1_RESULTS.md, the PR body.
 
 ## Setup facts
 
@@ -29,6 +29,7 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 | G1.6 Fetch Rush playable | done | Played through the page's own keys in Chromium: 1 delivery, 0 contacts, 141.4 s, ★★☆ from `coco_lab.games.stars` vs the reference (136.7 s); GRAB/DROP from Grasp Assist's own candidates; arm joints follow `coco.arm.state.v1`; candidates ringed in Robot vision; planner ghost (Settings); results → Compare on the Depot. Browser Pyodide = Pyodide-in-Node exactly; **CPython differs from tick 0** (2/480 LiDAR ranges differ in the last bit; hash v2 encodes them) — not hidden, G1.8. Found: the next order's ghost search stalls a tick (12.1 s CPython, 17.4 s Pyodide-in-Node). [`data/g16/README.md`](data/g16/README.md) |
 | G1.7 Robot vision, Compare | done | Vision: LiDAR as a faint cyan fan with bright hit points; the model's own costmap (`costmap_view`, every 4 s while on) as a hologram — lethal red cross-hatch, inscribed yellow stripes, inflation cyan fading with cost, a faint scanline (shape carries meaning); the plan as a magenta ribbon; Grasp Assist candidates ✓/✕. Compare: game type, cyan-edged panes, results strip, scanline overlay (chrome only; M5's CVD-tested computation colours untouched); Depot backdrop removed. Vitest incl. M5's compare_loop / comparison_pixels / pane_layout: pass. [`screens/g17/`](screens/g17/) |
 | G1.8 M5 carry-overs | done | **Hash v3** (ADR 0010): every transcendental from `coco_lab.numerics` (fdlibm in pure Python), so CPython = Pyodide bit for bit; v1/v2 unchanged (every old golden passes; coco_lab 1006 → 1026 passed, 2 skipped = the gz CLI test, as at baseline); new v3 goldens (`coco_lab/test/fixtures/v3/`); new runs (Arena page, game, Compare) use v3. **Native-vs-Pyodide CI gate** (`lab_web/tools/g1/native_gate.mjs`): under v3 every compared value identical; under v2 the same cases fail with M5's 0.446011142799704 m (the control). Browser → Pyodide-in-Node → CPython replay of a v3 Fetch Rush session: identical chain. Cost +15 % per model tick (Pyodide-in-Node). **Update isolation**: per-build caches, page→build map, build-pinned worker URLs (`__b/<build>/`), "New version ready" (Save run, Reload; never automatic), old caches deleted only when no page of that build is open; CI check `tools/update_isolation_check.mjs`: `openDocumentMixed: false` and 8 more checks pass; M5's worker fails them (the control). [`data/g18/README.md`](data/g18/README.md) |
+| G1.9 Performance | done (cloud) | Emulated Nothing Phone (1), Depot medium, 10 min: JS per frame median 7.9 ms, p95 16.0 ms (budget 16.7); drawn 4.7 fps median **on SwiftShader (software GPU), not a phone number**; desktop 10 min JS 1.8 / 5.5 ms; 30-min emulated soak: 0 errors, **0 WebGL context losses**; title JS 284,510 B gzip; every world × tier within budget. **60 fps not evaluable without a GPU — pending laptop and real phone.** [`data/g19/README.md`](data/g19/README.md) |
 
 ## Gautham: look at these
 
