@@ -4,8 +4,8 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 
 ## Now
 
-- **Current checkpoint:** G1.9 Performance — done (cloud items); laptop and phone items pending.
-- **Next step:** G1.10 Close: after screenshots and BEFORE_AFTER.md, every suite plus v1 hashes, the four-engine v2 comparison, links and URLs, G1_RESULTS.md, the PR body.
+- **Current checkpoint:** G1.10 Close — done. **G1 complete in the cloud**; results in [`G1_RESULTS.md`](G1_RESULTS.md); laptop and phone items pending.
+- **Next step:** Gautham's look review ([`BEFORE_AFTER.md`](BEFORE_AFTER.md), mockups), the gz-CLI decision for CI, then the laptop and phone items below; then the M6 UI phase (README §7).
 
 ## Setup facts
 
@@ -30,8 +30,11 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 | G1.7 Robot vision, Compare | done | Vision: LiDAR as a faint cyan fan with bright hit points; the model's own costmap (`costmap_view`, every 4 s while on) as a hologram — lethal red cross-hatch, inscribed yellow stripes, inflation cyan fading with cost, a faint scanline (shape carries meaning); the plan as a magenta ribbon; Grasp Assist candidates ✓/✕. Compare: game type, cyan-edged panes, results strip, scanline overlay (chrome only; M5's CVD-tested computation colours untouched); Depot backdrop removed. Vitest incl. M5's compare_loop / comparison_pixels / pane_layout: pass. [`screens/g17/`](screens/g17/) |
 | G1.8 M5 carry-overs | done | **Hash v3** (ADR 0010): every transcendental from `coco_lab.numerics` (fdlibm in pure Python), so CPython = Pyodide bit for bit; v1/v2 unchanged (every old golden passes; coco_lab 1006 → 1026 passed, 2 skipped = the gz CLI test, as at baseline); new v3 goldens (`coco_lab/test/fixtures/v3/`); new runs (Arena page, game, Compare) use v3. **Native-vs-Pyodide CI gate** (`lab_web/tools/g1/native_gate.mjs`): under v3 every compared value identical; under v2 the same cases fail with M5's 0.446011142799704 m (the control). Browser → Pyodide-in-Node → CPython replay of a v3 Fetch Rush session: identical chain. Cost +15 % per model tick (Pyodide-in-Node). **Update isolation**: per-build caches, page→build map, build-pinned worker URLs (`__b/<build>/`), "New version ready" (Save run, Reload; never automatic), old caches deleted only when no page of that build is open; CI check `tools/update_isolation_check.mjs`: `openDocumentMixed: false` and 8 more checks pass; M5's worker fails them (the control). [`data/g18/README.md`](data/g18/README.md) |
 | G1.9 Performance | done (cloud) | Emulated Nothing Phone (1), Depot medium, 10 min: JS per frame median 7.9 ms, p95 16.0 ms (budget 16.7); drawn 4.7 fps median **on SwiftShader (software GPU), not a phone number**; desktop 10 min JS 1.8 / 5.5 ms; 30-min emulated soak: 0 errors, **0 WebGL context losses**; title JS 284,510 B gzip; every world × tier within budget. **60 fps not evaluable without a GPU — pending laptop and real phone.** [`data/g19/README.md`](data/g19/README.md) |
+| G1.10 Close | done | After screenshots ([`BEFORE_AFTER.md`](BEFORE_AFTER.md)); coco_lab 1026/0/2, tools 230/0, vitest 532/0, typecheck, build, dist; v1 corpus 15,000 hashes and v2 corpus (Node + Chromium) 15,000 ticks each, 0 mismatches; 50 v1 URL forms + 6 archive views, 5 replays, 5 canvas scenes pass. [`G1_RESULTS.md`](G1_RESULTS.md), [`data/g110/README.md`](data/g110/README.md) |
 
 ## Gautham: look at these
+
+- **Before / after (G1.10)**: [`BEFORE_AFTER.md`](BEFORE_AFTER.md) — `screens/before/` vs `screens/after/`.
 
 - Before screenshots: `docs/v2/g1/screens/before/*.png`.
 - **Mockups (G1.1)**, each at 915 × 412 and 1440 × 900: `docs/v2/g1/mockups/` — `play-fetch` (Fetch Rush HUD, GRAB ring filling), `play-fetch-keys` (desktop key hints), `play-free` (Free Drive, Vision on, GO), `play-refused` (greyed GRAB "Too wide", AUTO on, contact flash, forklift toast), `title`, `loading` (real stages), `modes`, `pause`, `results` (values: the Fetch Rush seed-1 reference card). The 3D backdrop is a hand-drawn SVG stand-in, not the renderer.
@@ -48,6 +51,9 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 
 ## Laptop items pending
 
+- **G1.9**: real-GPU fps on both GPUs; the Nothing Phone (1) over USB/CDP with a 10-minute heat run; the default tier.
+- **G1.10**: the four-engine (Node, Chromium, Firefox, WebKit) 100-session v2 corpus (`data/g110/rerun_determinism.py`, `G1_ENGINES=node,chromium,firefox,webkit`).
+
 - Touch-to-motion on the laptop GPU (G1 vs M5, `tools/g1/input_check.mjs --only-latency`).
 
 - ROS package suites (`scripts/run_all_package_tests.sh`): not runnable in the cloud.
@@ -61,6 +67,9 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 - **Code landing order**: the Play HUD, session, cameras and Depot builder modules were written together and land with G1.2's commit; G1.3–G1.6 add their tests, evidence and fixes.
 
 ## Questions for Gautham
+
+- **CI `coco_lab in a plain venv (no ROS)` is red** only on its no-skip guard: 2 skips of the M6F.2 `gz sdf` test (no gz CLI in CI). Install the gz CLI in that job, or run that test only where gz exists? (PR comment.)
+- Accept hash v3's +15 % model cost per tick (Pyodide-in-Node)?
 
 - **Fetch Rush's next-order ghost is slow** (M6 rule `FetchRush._new_order`: up to 17 fully traced A* searches on the Depot): measured 12.1 s CPython, 17.4 s in a Pyodide tick. Model time waits (scores stay fair) and the HUD says so, but the screen pauses after each delivery. Options: compute the ghost lazily at the end, untraced searches with a test that results are identical, or M6F.4's WebAssembly gate. G1 left the rule unchanged.
 
