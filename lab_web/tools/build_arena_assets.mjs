@@ -197,7 +197,7 @@ function main() {
   rmSync(arenaDir, { recursive: true, force: true });
   mkdirSync(arenaDir, { recursive: true });
   const src = join(repo, 'coco_lab', 'coco_lab');
-  const all = walk(src).filter((f) => (f.endsWith('.py') || f.endsWith('link_limits.json')))
+  const all = walk(src).filter((f) => (f.endsWith('.py') || f.endsWith('link_limits.json') || /\/levels\/[^/]+\.json$/.test(f)))
     .map((f) => [`coco_lab/${relative(src, f)}`, readFileSync(f)]);
   // M2.2: split into packs (tools/arena_packs.json); core = everything not in a lens pack
   const { packs: packDefs } = JSON.parse(readFileSync(join(here, 'arena_packs.json'), 'utf-8'));
@@ -212,7 +212,8 @@ function main() {
     const file = `coco_lab_${name}.zip`;
     writeFileSync(join(arenaDir, file), z);
     packs[name] = { file, bytes: z.length, sha256: sha256(z), requires: packDefs[name].requires,
-      modules: files.map(([n]) => n.replace(/^coco_lab\//, '').replace(/\.py$/, '').replace(/\//g, '.')) };
+      // the modules the worker imports after unpacking: Python only (G1.11: a pack may carry data, the level's rounds)
+      modules: files.filter(([n]) => n.endsWith('.py')).map(([n]) => n.replace(/^coco_lab\//, '').replace(/\.py$/, '').replace(/\//g, '.')) };
   }
   const spec = readFileSync(join(repo, 'worlds', 'coco_arena_v1.json'));
   writeFileSync(join(arenaDir, 'coco_arena_v1.json'), spec);

@@ -22,6 +22,7 @@ import type { Tier } from './world/build3d';
 import { pickTier } from './tier';
 import './fonts.css';
 import './game.css';
+import { FETCH_RUSH_SHIFTS } from './rules_view';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -49,7 +50,9 @@ export function GameApp() {
   const game = q.get('game') as GameKind | null;
   if (game !== 'fetch_rush' && game !== 'free') return <ModeSelect />;
   const world: WorldId = game === 'fetch_rush' ? 'depot' : q.get('world') === 'proving' ? 'proving' : 'depot';
-  const seed = Math.max(1, Math.min(999, Number.parseInt(q.get('seed') ?? '1', 10) || 1));
+  // G1.11: Fetch Rush rules 2 plays only the shifts with a reference timer (rules_view); another seed opens shift 1
+  const asked = Math.max(1, Math.min(999, Number.parseInt(q.get('seed') ?? '1', 10) || 1));
+  const seed = game === 'fetch_rush' && !FETCH_RUSH_SHIFTS.includes(asked) ? FETCH_RUSH_SHIFTS[0] : asked;
   return <GameRun game={game} world={world} seed={seed} />;
 }
 
@@ -60,7 +63,8 @@ function GameRun({ game, world, seed }: { game: GameKind; world: WorldId; seed: 
   const [restartKey, setRestartKey] = useState(0);
   const [tier, setTier] = useState<Tier>(() => pickTier());
   const [tutorialSeen, setTutorialSeen] = useState(() => readPref('tutorial', false, isBool));
-  const [ghost, setGhost] = useState(() => readPref('ghost', false, isBool));
+  // G1.11: the ghost route is precomputed with the round, so it is on unless switched off
+  const [ghost, setGhost] = useState(() => readPref('ghost', true, isBool));
   const showPerf = new URLSearchParams(window.location.search).has('perf');
   useEffect(() => { document.documentElement.classList.add('playing-coco'); return () => document.documentElement.classList.remove('playing-coco'); }, []);
   const onResult = (r: GameResult) => {
@@ -141,7 +145,7 @@ function ModeSelect() {
     <div className="g1-eyebrow">CHOOSE A GAME</div>
     <div className="g1-modes" role="list">
       {[1, 2, 3].slice(0, 1).map((seed) => <a key={seed} role="listitem" className="g1-modecard hero" data-testid="mode-fetch-rush" href={`${BASE}?view=play&game=fetch_rush&seed=${seed}`} onClick={(e) => { e.preventDefault(); navigate(`${BASE}?view=play&game=fetch_rush&seed=${seed}`); }}>
-        <div className="art" style={art('0% 0%')} /><span className="g1-eyebrow" style={{ color: 'var(--g1-coco)' }}>NEW · DEPOT</span><h3>Fetch Rush</h3><p>Fill pick-and-deliver orders in 3 minutes.</p><div className="st" aria-label="best stars">{starText(readStars(seed))}</div></a>)}
+        <div className="art" style={art('0% 0%')} /><span className="g1-eyebrow" style={{ color: 'var(--g1-coco)' }}>NEW · DEPOT</span><h3>Fetch Rush</h3><p>Three pick-and-deliver orders in one zone, against the reference clock.</p><div className="st" aria-label="best stars">{starText(readStars(seed))}</div></a>)}
       <div role="listitem" className="g1-modecard" data-testid="mode-free-drive"><div className="art" style={art('50% 0%')} /><h3>Free Drive</h3><p>No clock. Drive, explore, pick things up.</p>
         <div className="opts"><a href={`${BASE}?view=play&game=free&world=depot`}>DEPOT</a><a href={`${BASE}?view=play&game=free&world=proving`}>PROVING GROUND</a></div></div>
       {[['Rush Hour', 'Cross the forklift lanes.'], ['Fog Scout', 'The map starts dark.'], ['Lost & Found', 'Where am I?']].map(([t, d]) => <div role="listitem" key={t} className="g1-modecard locked" aria-disabled="true"><div className="art" style={art('100% 0%')} /><span className="lock"><Lock size={9} /> SOON</span><h3>{t}</h3><p>{d}</p></div>)}

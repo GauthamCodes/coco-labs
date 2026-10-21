@@ -73,8 +73,10 @@ for (let k = 0; k < WANT; k++) {
   await auto(`order ${k + 1}: to the object`);
   s = await until((x) => x.f?.over || (x.tick > 5 && x.source !== 'planner' && x.enabled && /GRAB/.test(x.primary)), `order ${k + 1}: GRAB lit`);
   if (s.f?.over) break;
+  const before = (await state())?.a?.attempt ?? 0;
   await p.keyboard.press('KeyG');
-  s = await until((x) => x.f?.over || !!x.a?.carried || (x.a?.phase === 'idle' && x.a?.reason && !/ok|holds/.test(x.a.reason)), `order ${k + 1}: carried`);
+  // a refusal counts only from THIS attempt (the last order's "released ..." is still on the HUD)
+  s = await until((x) => x.f?.over || !!x.a?.carried || (x.a?.phase === 'idle' && (x.a?.attempt ?? 0) !== before && x.a?.reason && !/ok|holds|released/.test(x.a.reason)), `order ${k + 1}: carried`);
   if (!s.a?.carried) break;
   await p.waitForTimeout(500);
   await auto(`order ${k + 1}: to the drop`);

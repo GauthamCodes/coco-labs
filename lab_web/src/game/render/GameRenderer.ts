@@ -445,6 +445,23 @@ export class GameRenderer {
     const hg = new THREE.BufferGeometry(); hg.setAttribute('position', new THREE.Float32BufferAttribute(hits, 3)); this.hits.geometry = hg;
   }
 
+  /**
+   * G1.11: compile every material's program before play, hidden ones included (the target
+   * marker, the ghost's chevrons, Robot vision...): a first use in play compiled its shader
+   * in that frame (measured: one 467 ms frame when AUTO first showed the plan).
+   */
+  async precompile() {
+    const hidden: THREE.Object3D[] = [];
+    this.scene.traverse((o) => { if (!o.visible) { hidden.push(o); o.visible = true; } });
+    try {
+      const r = this.renderer as THREE.WebGLRenderer & { compileAsync?: (s: THREE.Object3D, c: THREE.Camera) => Promise<unknown> };
+      if (r.compileAsync) await r.compileAsync(this.scene, this.cam.camera);
+      else r.compile(this.scene, this.cam.camera);
+    } finally {
+      for (const o of hidden) o.visible = false;
+    }
+  }
+
   /** Draw one frame; `dt` in seconds. */
   frame(dt: number) {
     this.clock += dt;

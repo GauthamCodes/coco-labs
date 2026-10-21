@@ -10,6 +10,13 @@
 import type { Candidate, GameKind, GameTick, GameZone } from './session';
 
 /** The real load stages, in order, and the worker marks that end each (arena.worker.ts). */
+/**
+ * G1.11: Fetch Rush rules 2's playable shifts: the seeds whose round the reference bot
+ * completed (coco_lab/levels/coco_depot_v1.fetch_rush.json; seeds 2 and 4 drew a round it
+ * could not finish, so they have no timer and are not offered)
+ */
+export const FETCH_RUSH_SHIFTS = [1, 3, 5, 6];
+
 export const LOAD_STAGES = [
   { id: 'worker', label: 'WORKER', marks: ['worker_boot'] },
   { id: 'pyodide', label: 'PYODIDE', marks: ['pyodide_module', 'pyodide_ready'] },

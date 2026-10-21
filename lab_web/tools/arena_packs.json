@@ -73,7 +73,8 @@
    "requires": [],
    "modules": [
     "games.py",
-    "grasp_assist.py"
+    "grasp_assist.py",
+    "levels/coco_depot_v1.fetch_rush.json"
    ]
   }
  }

@@ -25,7 +25,9 @@ export const SPEC_FOR: Record<WorldId, SpecFile> = { depot: SPEC_FILES.depot, pr
 
 export interface GameObject { id: string; item: string; label: string; shape: 'cylinder' | 'box'; diameter?: number; height: number; size?: number[]; colour: string; magnetic: boolean; x: number; y: number; z: number }
 export interface GameZone { id: string; role: string; label?: string; center: [number, number]; size: [number, number] }
-export interface GameInfo { game: string; v3: boolean; setup: Omit<InputRow, 'tick'>[]; seconds: number | null; objects?: GameObject[]; zones?: GameZone[]; actors?: { id: string; actor: 'forklift' | 'walker'; footprint: [number, number]; height: number }[] }
+/** G1.11: a Fetch Rush rules-2 round: start zone, orders, each order's ghost length and route, the reference clock */
+export interface GameRound { region: string; label: string; orders: [string, string][]; ghost_m: number[]; routes: [number, number][][]; reference_time_s: number | null; timer_s: number | null }
+export interface GameInfo { game: string; v3: boolean; setup: Omit<InputRow, 'tick'>[]; seconds: number | null; round?: GameRound; objects?: GameObject[]; zones?: GameZone[]; actors?: { id: string; actor: 'forklift' | 'walker'; footprint: [number, number]; height: number }[] }
 export interface AssistState { phase: string; target: string | null; carried: string | null; want: string; reason: string; attempt: number }
 export interface FetchState { t: number; seconds: number; over: boolean; order: [string, string] | null; k: number; orders: number; deliveries: number; contacts: number; ghost: number | null }
 export interface GameBlock { assist?: AssistState; objects?: [string, number, number, number, string][]; actors?: [string, number, number, number][]; clearance?: number; fetch?: FetchState }

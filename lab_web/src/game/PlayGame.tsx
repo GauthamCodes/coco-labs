@@ -104,6 +104,8 @@ export function PlayGame(p: PlayProps) {
         renderer.pose = pose;
         shown.current = { from: pose, to: pose, at: 0, z0: 0, z1: 0 };
         await renderer.loadRobot(`${BASE}assets3d/robot_${p.tier === 'high' ? 'high' : 'low'}.glb`);
+        // G1.11: every shader now, behind the loading screen, not on first use in play
+        await renderer.precompile();
         if (alive) setSceneReady(true);
       } catch (e) { if (alive) setError(`The world could not load: ${String(e)}`); }
     })();

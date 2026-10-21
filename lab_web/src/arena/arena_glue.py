@@ -377,14 +377,23 @@ def game_init(spec_json, game, arg, seed, post_batch, batch_size=2048,
     spec = _arena.spec
     dx, dy = spec['world_to_map']
     v3_level = v3.is_v3(spec)
-    rules = games._rules(game, arg) if game in games.GAMES else None
+    # G1.11: Fetch Rush plays rules 2 -- a precomputed round (games.FetchRushRound), so
+    # no tick ever waits for a planner search; Rush Hour is unchanged
+    version = games.FETCH_RUSH_RULES if game == 'fetch_rush' else 1
+    rules = games._rules(game, arg, version) if game in games.GAMES else None
     _game = {'rules': rules, 'game': game, 'arg': arg, 'seed': int(seed),
              'chain': hashlib.sha256(), 'ticks': 0, 'inputs': [], 'v3': v3_level,
-             'hash_version': int(hash_version)}
+             'hash_version': int(hash_version), 'rules_version': version}
     info = {'game': game, 'arg': arg, 'v3': v3_level}
     if v3_level:
-        info['setup'] = games.setup_inputs(game if rules else 'fetch_rush', arg)
-        info['seconds'] = games.FETCH_RUSH_SECONDS if game == 'fetch_rush' else None
+        info['setup'] = games.setup_inputs(game if rules else 'fetch_rush', arg, version)
+        info['seconds'] = rules.seconds if isinstance(rules, games.FetchRush) else None
+        if isinstance(rules, games.FetchRushRound):
+            rnd = rules.round
+            label = next((z.get('label', z['id']) for z in spec['kit'] if z['id'] == rnd['region']), rnd['region'])
+            info['round'] = {'region': rnd['region'], 'label': label, 'orders': rnd['orders'],
+                             'ghost_m': rnd['ghost_m'], 'routes': rnd['routes'],
+                             'reference_time_s': rnd['reference_time_s'], 'timer_s': rnd['timer_s']}
         info['objects'] = [dict(o, x=o['x'] + dx, y=o['y'] + dy) for o in v3.objects(spec)]
         info['zones'] = [dict(z, center=[z['center'][0] + dx, z['center'][1] + dy])
                          for z in spec['kit'] if z['kind'] == 'zone']
@@ -421,7 +430,7 @@ def _game_block(t):
     r = g['rules']
     if isinstance(r, games.FetchRush) and r.started:
         cur = r.current()
-        out['fetch'] = {'t': a.t_world - r.t0, 'seconds': games.FETCH_RUSH_SECONDS,
+        out['fetch'] = {'t': a.t_world - r.t0, 'seconds': r.seconds,
                         'over': r.over, 'order': list(cur) if cur else None, 'k': r.k,
                         'orders': len(r.orders), 'deliveries': len(r.delivered),
                         'contacts': r.contacts, 'ghost': r.ghost}
@@ -451,9 +460,11 @@ def game_record():
     g = _game
     keys = ('tick', 'kind', 'x', 'y', 'theta', 'has_theta', 'linear', 'angular', 'choice')
     inputs = [{k: e[k] for k in keys if k in e} for e in g['inputs']]
-    return json.dumps({'record': {'game': g['game'], 'arg': g['arg'], 'seed': g['seed'],
-                                  'ticks': g['ticks'], 'inputs': inputs,
-                                  'hash_version': g['hash_version']},
+    rec = {'game': g['game'], 'arg': g['arg'], 'seed': g['seed'], 'ticks': g['ticks'],
+           'inputs': inputs, 'hash_version': g['hash_version']}
+    if g.get('rules_version', 1) != 1:
+        rec['rules'] = g['rules_version']
+    return json.dumps({'record': rec,
                        'hash_chain': g['chain'].hexdigest(), 'last_hash': _arena.state_hash()})
 
 
@@ -465,7 +476,11 @@ def game_stars(reference_json):
     if r is None:
         return json.dumps({'card': None, 'stars': None, 'reference': None})
     card = games._card(r, _arena)
-    ref = json.loads(reference_json) if reference_json else None
+    if isinstance(r, games.FetchRushRound):
+        # rules 2: the round's own reference (the bot's run of this round, committed with it)
+        ref = (r.round.get('reference') or {}).get('card')
+    else:
+        ref = json.loads(reference_json) if reference_json else None
     return json.dumps({'card': card, 'reference': ref,
                        'stars': games.stars(card, ref) if ref else None})
 
@@ -520,6 +535,9 @@ def game_ghost():
     r = _game['rules'] if _game else None
     if not isinstance(r, games.FetchRush) or r.current() is None:
         return json.dumps(None)
+    if isinstance(r, games.FetchRushRound):
+        # rules 2: the round's precomputed route (no search: the tick never waits)
+        return json.dumps({'order': r.k, 'points': r.round['routes'][r.k]})
     oid, drop = r.current()
     o = a.subsystems['assist'].objects[oid]
     z = games.zone_rect(a.spec, drop)

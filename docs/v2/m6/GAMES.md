@@ -99,3 +99,46 @@ reference cannot deliver it in time. Seeds 1 and 2 happen to draw the same first
 Whether to lengthen the timer, draw orders within a reachable budget, or start Fetch Rush
 in a zone is a game-design question for Gautham (in `PARALLEL_STATUS.md`). A person
 driving at the teleop limit (0.5 m/s) can beat the reference.
+
+## Fetch Rush rules 2 (G1.11, Gautham's 2026-10-18 decision)
+
+Implemented 2026-10-21 in G1.11; rules 1 above are unchanged and still verify (a record
+without `rules` is rules 1). Code: `games.draw_round`, `games.FetchRushRound`,
+`games.round_for`; data: `coco_lab/coco_lab/levels/coco_depot_v1.fetch_rush.json`, made by
+`tools/g1/make_fetch_rush_rounds.py` (Arena hash v3, CPython 3.12, cloud container);
+tests `coco_lab/test/test_fetch_rush_rounds.py`.
+
+- **A round starts inside one zone.** The start zone is drawn (seeded) among the Depot's
+  regions from which a full round fits the budget, minus the forklift lanes (a start
+  there is inside an actor's path at tick 0); COCO starts at the plan grid's free cell
+  nearest the zone's centre (a `kidnap` in the record's tick-0 inputs).
+- **Each order's planned round trip fits a budget**, **32 m**: from where the
+  order begins (the start, then the previous order's drop zone) to the object's best
+  pre-grasp pose, then to the drop zone's centre — M6F.6's ghost, measured from the
+  order's start. Orders use distinct objects; each is drawn among those that fit and
+  still let the round finish. **3 orders.** 32 m is the smallest budget that
+  gives 3-order rounds on the Depot: only two objects (`obj_dock`, `obj_dispatch`) lie
+  close to a drop zone, so every round's third order is about 32 m.
+- **Timer = the reference bot's time for the 3 deliveries × 1.5.** The bot
+  (planner + Grasp Assist, yielding to actors) plays the round first with time to spare;
+  its time for the last delivery × 1.5, rounded to 0.1 s, is the round's timer, and its
+  run under that timer is the stars' reference.
+- **Nothing is planned while a game runs.** The orders, each order's ghost length and its
+  route (for drawing) come from the file; `FetchRushRound` never calls the planner
+  (tested: a 40-tick round with the planner functions replaced by failures).
+
+| Seed | Start zone | Orders (planned round trip) | Reference bot | Timer |
+|---|---|---|---|---|
+| 1 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m), obj_maze_2 → Dispatch (31.9 m) | 327.8 s, 0 contacts, path efficiency 0.988 | **491.7 s** (8:11) |
+| 2 | High-bay aisles | obj_dispatch → Dispatch (23.4 m), obj_maze_2 → Dispatch (31.9 m), obj_dock → Dock 3 (31.8 m) | **did not finish**: 0 delivered, 214 contacts (stopped in the forklift lane) | — (not offered) |
+| 3 | Loading dock | obj_dock → Dock 2 (13.3 m), obj_dispatch → Dispatch (24.9 m), obj_maze_2 → Dispatch (31.9 m) | 330.5 s, 0 contacts, path efficiency 0.989 | **495.8 s** (8:15) |
+| 4 | High-bay aisles | obj_dispatch → Dispatch (23.4 m), obj_maze_2 → Dispatch (31.9 m), obj_dock → Dock 3 (31.8 m) | **did not finish**: 0 delivered, 214 contacts (stopped in the forklift lane) | — (not offered) |
+| 5 | High-bay aisles | obj_aisle_1 → Dock 1 (31.6 m), obj_dock → Dock 1 (21.0 m), obj_dispatch → Dock 2 (30.8 m) | 384.8 s, 1 contacts, path efficiency 0.988 | **577.2 s** (9:37) |
+| 6 | Loading dock | obj_dock → Dock 3 (11.9 m), obj_dispatch → Dispatch (28.4 m), obj_maze_2 → Dispatch (31.9 m) | 337.7 s, 0 contacts, path efficiency 0.993 | **506.5 s** (8:26) |
+
+At COCO's real autonomous speed (0.3 m/s, integrity rule 4) three budgeted orders take the
+reference 328–385 s, so the decision's formula gives timers of **8:11 to 9:37** (491.7–577.2 s), not three
+minutes. Seeds 2 and 4 drew the same round, whose first leg crosses the east–west forklift
+lane; M6F.6's reference bot stopped inside the lane and was hit repeatedly, so that round
+has no reference time and no timer: it is kept on file with its result and refused as a
+game. The game offers shifts 1, 3, 5 and 6.

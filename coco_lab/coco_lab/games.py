@@ -40,6 +40,8 @@ the canister is carried. The model simulates no breakage and no forces.
 """
 
 import hashlib
+import json
+from pathlib import Path
 import struct
 from typing import Dict, List, Optional, Tuple
 
@@ -63,6 +65,21 @@ RUSH_HOUR = {
                           'across': (26.2, 8.5)},
 }
 GAME_LAYOUT = b'coco.game.v1\x00'
+
+#: G1.11 -- Fetch Rush rules 2 (Gautham's 2026-10-18 decision, recorded 2026-10-21):
+#: a round starts inside one zone; each order's planned round trip (from where the
+#: last order ended to the object's best pre-grasp pose, then to the drop zone's
+#: centre) fits ROUND_BUDGET_M; ROUND_ORDERS orders; the timer is the reference
+#: bot's time for those deliveries x ROUND_TIMER_FACTOR. A record without ``rules``
+#: is rules 1 (M6F.6's: 10 orders, 180 s), which stays as it was.
+FETCH_RUSH_RULES = 2
+ROUND_BUDGET_M = 32.0
+ROUND_ORDERS = 3
+ROUND_TIMER_FACTOR = 1.5
+#: a round's start zones: the Depot's regions, minus the forklift lanes (a start
+#: there would be inside an actor's path at tick 0)
+ROUND_NO_START = ('zone_forklift_lanes',)
+LEVELS = Path(__file__).resolve().parent / 'levels'
 
 
 # -- the actors as collision bodies ------------------------------------------------
@@ -202,6 +219,7 @@ class FetchRush:
         self.seed = int(seed)
         self.orders: List[Tuple[str, str]] = []
         self.started = False
+        self.seconds = FETCH_RUSH_SECONDS
 
     def start(self, a: Arena) -> None:
         """Draw the orders and start the clock (call after the setup inputs' tick)."""
@@ -268,14 +286,14 @@ class FetchRush:
                                        'driven': self.driven, 'ghost': self.ghost})
                 self.k += 1
                 self._new_order(a)
-        if a.t_world - self.t0 >= FETCH_RUSH_SECONDS - 1e-9 or self.k >= len(self.orders):
+        if a.t_world - self.t0 >= self.seconds - 1e-9 or self.k >= len(self.orders):
             self.over = True
 
     def scorecard(self) -> Dict[str, object]:
         """Return the real metrics, and the ranking key (net deliveries first)."""
         eff = [d['ghost'] / d['driven'] for d in self.delivered
                if d['ghost'] is not None and d['driven'] > 0]
-        used = self.delivered[-1]['t'] if self.delivered else FETCH_RUSH_SECONDS
+        used = self.delivered[-1]['t'] if self.delivered else self.seconds
         n = len(self.delivered)
         return {'game': 'fetch_rush', 'seed': self.seed, 'deliveries': n,
                 'contacts': self.contacts, 'net_deliveries': n - self.contacts,
@@ -287,6 +305,95 @@ class FetchRush:
 def fetch_rush_key(card) -> Tuple:
     """Return the ranking key: net deliveries (contacts subtract), then time, then efficiency."""
     return (card['net_deliveries'], -card['time_used'], card['path_efficiency'])
+
+
+# -- Fetch Rush rules 2: budgeted rounds (G1.11) ----------------------------------------
+
+def load_rounds(level: str = 'coco_depot_v1') -> Dict[str, object]:
+    """Return a level's Fetch Rush rounds (``levels/<level>.fetch_rush.json``)."""
+    with open(LEVELS / f'{level}.fetch_rush.json', encoding='utf-8') as f:
+        return json.load(f)
+
+
+def _completes(trips, pos: str, used, left: int, budget: float) -> bool:
+    """Whether ``left`` more orders can follow from ``pos`` within the budget."""
+    if left == 0:
+        return True
+    return any(length <= budget and _completes(trips, drop, used | {oid}, left - 1, budget)
+               for oid, ds in sorted(trips[pos].items()) if oid not in used
+               for drop, length in sorted(ds.items()))
+
+
+def draw_round(seed: int, trips, budget: float = ROUND_BUDGET_M,
+               n: int = ROUND_ORDERS) -> Dict[str, object]:
+    """
+    Draw a round from the planned-trip table, seeded (``coco_lab.rng``).
+
+    ``trips[frm][oid][drop]`` is the planned round trip (m) from ``frm`` (a start
+    zone, or the drop zone the previous order ended at) to ``oid``'s best pre-grasp
+    pose and on to ``drop``'s centre. The start zone is drawn among those from
+    which ``n`` orders can be chained within ``budget``; each order is drawn among
+    the unused objects and drops whose trip fits and from which the rest of the
+    round still can. Pure: the same seed and table give the same round.
+    """
+    rng = Rng(int(seed))
+    starts = sorted(f for f in trips if f.startswith('zone_') and f not in ROUND_NO_START
+                    and _completes(trips, f, frozenset(), n, budget))
+    if not starts:
+        raise ArenaError('no start zone allows a round within the budget')
+    region = starts[rng.randrange(len(starts))]
+    pos, used, orders = region, frozenset(), []
+    for k in range(n):
+        cands = [(oid, drop) for oid, ds in sorted(trips[pos].items()) if oid not in used
+                 for drop, length in sorted(ds.items())
+                 if length <= budget
+                 and _completes(trips, drop, used | {oid}, n - k - 1, budget)]
+        oid, drop = cands[rng.randrange(len(cands))]
+        orders.append([oid, drop])
+        used, pos = used | {oid}, drop
+    return {'region': region, 'orders': orders}
+
+
+class FetchRushRound(FetchRush):
+    """
+    Fetch Rush rules 2: one precomputed round (``levels/<level>.fetch_rush.json``).
+
+    The orders, each order's planner ghost (the planned round trip the round was
+    drawn with) and the timer come from the round; nothing is planned while the
+    game runs, so a tick never waits for a search. Deliveries, contacts, the
+    ranking and path efficiency (ghost / distance driven) are rules 1's.
+    """
+
+    def __init__(self, seed: int, rnd: Dict[str, object], seconds: Optional[float] = None):
+        """``seconds`` overrides the round's timer (the reference bot's first run only)."""
+        super().__init__(seed)
+        self.round = rnd
+        self.seconds = float(seconds if seconds is not None else rnd['timer_s'])
+
+    def start(self, a: Arena) -> None:
+        """Take the round's orders and start the clock."""
+        self.orders = [tuple(o) for o in self.round['orders']]
+        self.t0 = a.t_world
+        self.k = 0
+        self.delivered = []
+        self.contacts = 0
+        self.contact_log = []
+        self._was = False
+        self._new_order(a)
+        self.started = True
+        self.over = False
+
+    def _new_order(self, a: Arena) -> None:
+        self.order_t0 = a.t_world
+        self.driven = 0.0
+        self.last = a.pose
+        ghosts = self.round['ghost_m']
+        self.ghost = ghosts[self.k] if self.k < len(ghosts) else None
+
+    def scorecard(self) -> Dict[str, object]:
+        """Rules 1's scorecard, plus the rules version, the round and its timer."""
+        return dict(super().scorecard(), rules=FETCH_RUSH_RULES,
+                    round=self.round['region'], timer=self.seconds)
 
 
 # -- Rush Hour -------------------------------------------------------------------------
@@ -406,20 +513,39 @@ def stars(card: Dict[str, object], reference: Dict[str, object]) -> int:
 
 # -- playing a record ------------------------------------------------------------------------
 
-def setup_inputs(game: str, arg) -> List[Dict[str, object]]:
+def setup_inputs(game: str, arg, rules: int = 1, rnd=None) -> List[Dict[str, object]]:
     """Return the tick-0 inputs every session of ``game`` starts with (in its log)."""
     out = [{'tick': 0, 'kind': 'config', 'choice': 'actors.on=1'},
            {'tick': 0, 'kind': 'config', 'choice': 'assist.target=any'}]
+    start = None
     if game == 'rush_hour':
-        x, y, th = RUSH_HOUR[arg]['start']
+        start = RUSH_HOUR[arg]['start']
+    elif game == 'fetch_rush' and rules >= 2:
+        start = (rnd or round_for(arg))['start']     # rules 2: the round's start zone
+    if start is not None:
+        x, y, th = start
         out.insert(0, {'tick': 0, 'kind': 'kidnap', 'x': x, 'y': y, 'theta': th,
                        'has_theta': True})
     return out
 
 
-def _rules(game: str, arg):
+def round_for(seed, level: str = 'coco_depot_v1') -> Dict[str, object]:
+    """Return the precomputed rules-2 round for ``seed``, or raise for a seed without one."""
+    rounds = load_rounds(level)['rounds']
+    playable = sorted(int(k) for k, r in rounds.items() if r.get('timer_s') is not None)
+    rnd = rounds.get(str(int(seed)))
+    if rnd is None:
+        raise ArenaError(f'Fetch Rush has rounds for seeds {playable}, not {seed!r}')
+    if rnd.get('timer_s') is None:
+        # no reference time, so no timer (the decision): kept on file, never played
+        raise ArenaError(f'seed {seed}: the reference bot did not complete this round, so it '
+                         f'has no timer; playable seeds: {playable}')
+    return rnd
+
+
+def _rules(game: str, arg, rules: int = 1):
     if game == 'fetch_rush':
-        return FetchRush(int(arg))
+        return FetchRushRound(int(arg), round_for(arg)) if rules >= 2 else FetchRush(int(arg))
     if game == 'rush_hour':
         return RushHour(str(arg))
     raise ArenaError(f'unknown game {game!r}')
@@ -435,7 +561,7 @@ def play(spec, record: Dict[str, object]) -> Dict[str, object]:
     by: Dict[int, list] = {}
     for e in record['inputs']:
         by.setdefault(e['tick'], []).append(InputEvent(**e))
-    rules = _rules(record['game'], record['arg'])
+    rules = _rules(record['game'], record['arg'], record.get('rules', 1))
     chain = hashlib.sha256()
     last = ''
     for _ in range(record['ticks']):
@@ -474,13 +600,16 @@ def verify(spec, record: Dict[str, object], claimed: Dict[str, object]) -> bool:
 class _Driver:
     """Step an Arena, recording every input sent (the bot's own log)."""
 
-    def __init__(self, spec, seed, game, arg):
-        self.a = Arena(spec, seed)
+    def __init__(self, spec, seed, game, arg, rules=None, version: int = 1,
+                 hash_version: int = 1):
+        self.a = Arena(spec, seed, hash_version=hash_version)
         self.inputs: List[Dict[str, object]] = []
-        self.rules = _rules(game, arg)
+        self.rules = rules if rules is not None else _rules(game, arg)
+        self.version = version
+        self.hash_version = hash_version
         self.ticks = 0
         self.chain = hashlib.sha256()
-        self.step(setup_inputs(game, arg))
+        self.step(setup_inputs(game, arg, version, getattr(self.rules, 'round', None)))
 
     def step(self, inputs=()) -> object:
         evs = []
@@ -537,11 +666,17 @@ class _Driver:
         return getattr(self.rules, 'over', False)
 
     def record(self, game, arg, seed):
-        return {'game': game, 'arg': arg, 'seed': seed, 'ticks': self.ticks,
-                'inputs': self.inputs}
+        rec = {'game': game, 'arg': arg, 'seed': seed, 'ticks': self.ticks,
+               'inputs': self.inputs}
+        if self.version != 1:
+            rec['rules'] = self.version
+        if self.hash_version != 1:
+            rec['hash_version'] = self.hash_version
+        return rec
 
 
-def bot_fetch_rush(spec, seed: int, arena_seed: int = 1) -> Tuple[Dict, Dict]:
+def bot_fetch_rush(spec, seed: int, arena_seed: int = 1, rules=None,
+                   hash_version: int = 1) -> Tuple[Dict, Dict]:
     """
     Play Fetch Rush as the reference player: the planner plus Grasp Assist.
 
@@ -550,7 +685,8 @@ def bot_fetch_rush(spec, seed: int, arena_seed: int = 1) -> Tuple[Dict, Dict]:
     press G to put it down. Returns ``(record, result)``; :func:`play` on the
     record gives the result again.
     """
-    d = _Driver(spec, arena_seed, 'fetch_rush', seed)
+    version = FETCH_RUSH_RULES if isinstance(rules, FetchRushRound) else 1
+    d = _Driver(spec, arena_seed, 'fetch_rush', seed, rules, version, hash_version)
     a, rules = d.a, d.rules
     assist = a.subsystems['assist']
     while not d.done():
