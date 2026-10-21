@@ -132,7 +132,23 @@ plan-change log. Evidence: [`data/g111/README.md`](data/g111/README.md).
 
 Tests after G1.11 (this container, the final source):
 
-*The full suite run at G1.11's close is in progress; its counts land in the next commit.*
+| Suite | G1.10 close | G1.11 close |
+| --- | --- | --- |
+| coco_lab (plain venv) | 1,026 passed | **1,037 passed**, 2 deselected (`gz`, laptop) |
+| lab_web/tools | 230 passed | **230 passed** |
+| vitest | 532 passed | **532 passed** |
+| typecheck, build, check_dist, v1 links (50 + 6) | pass | **pass** |
+| native vs Pyodide gate (v3) | every family exact | **every family exact** |
+
+Log: [`data/g111/suites.txt`](data/g111/suites.txt); CI run 39635640420 green on `dfdf4e6`.
+
+**A fix found at close.** `numerics.use()` was sticky: a hash-v3 call left the fdlibm functions
+in force for whatever ran next in the process. In CI, Lab 5's libm-era movebundle replay ran
+after the game glue's v3 tests and failed its committed metrics (`DWB_3 metrics differ`). The
+mode is now scoped (`numerics.version` / `in_run`): the Arena's entry points, the game rules,
+Compare, the glue's worker calls and the tools each run in their own run's version and put back
+the caller's. v3 goldens, the rounds' reference replay and the native gate are unchanged
+([ADR 0010](../adr/0010-state-hash-v3.md), amended).
 
 Hashes: v1, v2 and v3 goldens unchanged by G1.11 (the scan change is value-identical; checked
 by the coco_lab goldens and `tools/g1/make_v3_goldens.py --check`). Fetch Rush rules 1 records
