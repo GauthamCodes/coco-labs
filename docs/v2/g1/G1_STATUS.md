@@ -4,8 +4,8 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 
 ## Now
 
-- **Current checkpoint:** G1.10 Close — done. **G1 complete in the cloud**; results in [`G1_RESULTS.md`](G1_RESULTS.md); laptop and phone items pending.
-- **Next step:** Gautham's look review ([`BEFORE_AFTER.md`](BEFORE_AFTER.md), mockups), the gz-CLI decision for CI, then the laptop and phone items below; then the M6 UI phase (README §7).
+- **Current checkpoint:** G1.11 Gautham's follow-up — done in the cloud (Fetch Rush rules 2, no planning in play, look polish, gz marker, v3 cost); results in [`G1_RESULTS.md`](G1_RESULTS.md); laptop and phone items pending.
+- **Next step:** Gautham's look review of G1.11 ([`BEFORE_AFTER.md`](BEFORE_AFTER.md), column "After G1.11") and the Fetch Rush timers (8–9½ min by the decision's formula); then the laptop and phone items below; then the M6 UI phase (README §7).
 
 ## Setup facts
 
@@ -15,6 +15,21 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
   session may only push there). The prompt names `v2/g1-game-look`; Gautham can rename the
   branch or open the PR from it as he prefers. No force-push; nothing merged into main.
 - Environment: cloud container (Xeon 2.1 GHz × 4, SwiftShader, no GPU, no ROS, no phone).
+
+## Gautham's decisions, 2026-10-21 (G1.11)
+
+Recorded in `docs/STATUS.md`'s plan-change log, with the 2026-10-18 Fetch Rush decision.
+
+1. **gz tests:** a `gz` pytest marker on the M6F.2 test; the plain-venv CI job runs `-m "not gz"`
+   (green, zero skips); the gz tests are a laptop item; gz is not installed in CI.
+2. **Hash v3's ~15 % cost is accepted;** profile once, take a cheap win that leaves hashes unchanged.
+3. **The Fetch Rush ghost freeze is a blocker:** play never pauses for planning; reference routes
+   precomputed; no frame over 50 ms and no "clock waits" banner in normal play; before/after timings.
+4. **Fetch Rush follows the 2026-10-18 decision:** orders drawn so each planned round trip fits a
+   budget, rounds start inside one zone, timer = the reference bot's time for 3 deliveries × 1.5.
+5. **Look polish:** exposure and fill; COCO readable (rim light, brighter body, LED from the chase
+   camera); the ghost route as a thin glowing line with chevrons, a small pin; a stronger minimap
+   with the order's targets marked; after screenshots re-captured.
 
 ## Checkpoints
 
@@ -31,8 +46,11 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 | G1.8 M5 carry-overs | done | **Hash v3** (ADR 0010): every transcendental from `coco_lab.numerics` (fdlibm in pure Python), so CPython = Pyodide bit for bit; v1/v2 unchanged (every old golden passes; coco_lab 1006 → 1026 passed, 2 skipped = the gz CLI test, as at baseline); new v3 goldens (`coco_lab/test/fixtures/v3/`); new runs (Arena page, game, Compare) use v3. **Native-vs-Pyodide CI gate** (`lab_web/tools/g1/native_gate.mjs`): under v3 every compared value identical; under v2 the same cases fail with M5's 0.446011142799704 m (the control). Browser → Pyodide-in-Node → CPython replay of a v3 Fetch Rush session: identical chain. Cost +15 % per model tick (Pyodide-in-Node). **Update isolation**: per-build caches, page→build map, build-pinned worker URLs (`__b/<build>/`), "New version ready" (Save run, Reload; never automatic), old caches deleted only when no page of that build is open; CI check `tools/update_isolation_check.mjs`: `openDocumentMixed: false` and 8 more checks pass; M5's worker fails them (the control). [`data/g18/README.md`](data/g18/README.md) |
 | G1.9 Performance | done (cloud) | Emulated Nothing Phone (1), Depot medium, 10 min: JS per frame median 7.9 ms, p95 16.0 ms (budget 16.7); drawn 4.7 fps median **on SwiftShader (software GPU), not a phone number**; desktop 10 min JS 1.8 / 5.5 ms; 30-min emulated soak: 0 errors, **0 WebGL context losses**; title JS 284,510 B gzip; every world × tier within budget. **60 fps not evaluable without a GPU — pending laptop and real phone.** [`data/g19/README.md`](data/g19/README.md) |
 | G1.10 Close | done | After screenshots ([`BEFORE_AFTER.md`](BEFORE_AFTER.md)); coco_lab 1026/0/2, tools 230/0, vitest 532/0, typecheck, build, dist; v1 corpus 15,000 hashes and v2 corpus (Node + Chromium) 15,000 ticks each, 0 mismatches; 50 v1 URL forms + 6 archive views, 5 replays, 5 canvas scenes pass. [`G1_RESULTS.md`](G1_RESULTS.md), [`data/g110/README.md`](data/g110/README.md) |
+| G1.11 Gautham's follow-up | done | (1) `gz` marker, CI `-m "not gz"`: 0 skips. (2) LiDAR beam directions computed once a tick (same bits; goldens unchanged): v3/v2 per-tick cost 1.15 → **1.10**. (3) Fetch Rush rules 2 plan nothing in play: worst model-tick gap **25.8 s → 0.96 s**, "clock waits" banner 2× (26.8 s) → **never**, frames over 50 ms 1 → **0** (max 18.9 ms), 3/3 delivered in 358.2 s. (4) The decision implemented: a start zone, 3 orders within a 32 m planned round trip, timer = reference × 1.5 → **491.7 / 495.8 / 577.2 / 506.5 s** (shifts 1/3/5/6); seeds 2 and 4: the reference bot stopped in the forklift lane (0 delivered) → no timer, not offered. (5) Look polish; after shots `screens/after_g111/`. [`data/g111/README.md`](data/g111/README.md), [`docs/v2/m6/GAMES.md`](../m6/GAMES.md) |
 
 ## Gautham: look at these
+
+- **G1.11 look**: [`BEFORE_AFTER.md`](BEFORE_AFTER.md) column "After G1.11" (`screens/after_g111/`): brighter hall, COCO's rim light and LED glow, the thin ghost route with chevrons, the minimap. Shift 1 starts facing a pallet stack, which the headlight lights.
 
 - **Before / after (G1.10)**: [`BEFORE_AFTER.md`](BEFORE_AFTER.md) — `screens/before/` vs `screens/after/`.
 
@@ -51,6 +69,8 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 
 ## Laptop items pending
 
+- **G1.11**: the `gz`-marked tests (`pytest -m gz`, `test_worldgen.py` gz sdf checks on the generated worlds).
+
 - **G1.9**: real-GPU fps on both GPUs; the Nothing Phone (1) over USB/CDP with a 10-minute heat run; the default tier.
 - **G1.10**: the four-engine (Node, Chromium, Firefox, WebKit) 100-session v2 corpus (`data/g110/rerun_determinism.py`, `G1_ENGINES=node,chromium,firefox,webkit`).
 
@@ -68,9 +88,12 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 
 ## Questions for Gautham
 
-- **CI `coco_lab in a plain venv (no ROS)` is red** only on its no-skip guard: 2 skips of the M6F.2 `gz sdf` test (no gz CLI in CI). Install the gz CLI in that job, or run that test only where gz exists? (PR comment.)
-- Accept hash v3's +15 % model cost per tick (Pyodide-in-Node)?
+- ~~CI `coco_lab in a plain venv` red on the gz skips~~ — decided 2026-10-21: `gz` marker, `-m "not gz"` (G1.11).
+- ~~Accept hash v3's +15 %?~~ — accepted 2026-10-21; now 1.10× after G1.11's hash-neutral speed-up.
+- **Fetch Rush timers are 8:11–9:37** by the decision's formula (the reference needs 328–385 s for 3 budgeted orders at 0.3 m/s): keep, or fewer orders / objects nearer the docks for a shorter game?
+- **Seeds 2 and 4** (the High-bay round crossing the forklift lane) have no reference time because M6F.6's bot stops in the lane: teach the bot the Rush Hour staging crossing, or keep excluding such rounds?
+- **AUTO's route planning** still pauses the model 0.8–1.0 s per press on this machine (the Arena's own planner, as for a tapped goal; below the banner): time-slice it (M6 UI phase)?
 
-- **Fetch Rush's next-order ghost is slow** (M6 rule `FetchRush._new_order`: up to 17 fully traced A* searches on the Depot): measured 12.1 s CPython, 17.4 s in a Pyodide tick. Model time waits (scores stay fair) and the HUD says so, but the screen pauses after each delivery. Options: compute the ghost lazily at the end, untraced searches with a test that results are identical, or M6F.4's WebAssembly gate. G1 left the rule unchanged.
+- ~~Fetch Rush's next-order ghost is slow~~ — fixed in G1.11 (rules 2 precompute it). Was: (M6 rule `FetchRush._new_order`: up to 17 fully traced A* searches on the Depot): measured 12.1 s CPython, 17.4 s in a Pyodide tick. Model time waits (scores stay fair) and the HUD says so, but the screen pauses after each delivery. Options: compute the ghost lazily at the end, untraced searches with a test that results are identical, or M6F.4's WebAssembly gate. G1 left the rule unchanged.
 
-- Fetch Rush's first orders can be far (M6F.6 found seed 3's first ghost path 77.9 m, ~260 s at the 0.3 m/s autonomous limit). G1 plays the rules as committed; the game-design question in `docs/v2/m6/PARALLEL_STATUS.md` stays open.
+- ~~Fetch Rush's first orders can be far~~ — answered by the 2026-10-18 decision, implemented in G1.11. Was: (M6F.6 found seed 3's first ghost path 77.9 m, ~260 s at the 0.3 m/s autonomous limit). G1 plays the rules as committed; the game-design question in `docs/v2/m6/PARALLEL_STATUS.md` stays open.

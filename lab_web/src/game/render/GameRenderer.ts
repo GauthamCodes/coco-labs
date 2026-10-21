@@ -27,7 +27,7 @@ const ARM_JOINTS: [string, string][] = [['joint1', 'm_link1_Revolute-6'], ['join
 
 export const TIER_PIXELS: Record<Tier, number> = { low: 1, medium: 1.25, high: 2 };
 export type Led = 'manual' | 'auto' | 'stop' | 'idle';
-const LED_COLOUR: Record<Led, number> = { manual: 0x34d399, auto: 0x22d3ee, stop: 0xef4444, idle: 0x8f9bb0 };
+const LED_COLOUR: Record<Led, number> = { manual: 0x34d399, auto: 0x22d3ee, stop: 0xef4444, idle: 0xbfdbfe };
 
 /** Catalog colours as drawn (a page palette, not physics). */
 const OBJECT_COLOURS: Record<string, number> = {
@@ -50,7 +50,7 @@ function withRim(mat: THREE.MeshStandardMaterial): THREE.MeshStandardMaterial {
     sh.fragmentShader = sh.fragmentShader
       .replace('#include <common>', '#include <common>\nuniform vec3 cocoRim;')
       .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n'
-        + '{ float rim = 1.0 - clamp(abs(dot(normalize(normal), normalize(vViewPosition))), 0.0, 1.0); totalEmissiveRadiance += cocoRim * pow(rim, 2.2) * 0.85; }');
+        + '{ float rim = 1.0 - clamp(abs(dot(normalize(normal), normalize(vViewPosition))), 0.0, 1.0); totalEmissiveRadiance += cocoRim * pow(rim, 4.0) * 0.3; }');
   };
   c.customProgramCacheKey = () => 'coco-rim';
   return c;
@@ -104,12 +104,12 @@ export class GameRenderer {
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: tier === 'high', powerPreference: 'high-performance', preserveDrawingBuffer: false });
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     // G1.11: brighter, so floor, walls and racks separate (Gautham's look notes)
-    this.renderer.toneMappingExposure = 1.7;
+    this.renderer.toneMappingExposure = 1.5;
     this.renderer.info.autoReset = false;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); this.lostContext = true; });
     this.scene.background = new THREE.Color(0x0e1116);
-    this.hemi = new THREE.HemisphereLight(0xb4c2de, 0x2c333d, 1.65);
+    this.hemi = new THREE.HemisphereLight(0xb4c2de, 0x2c333d, 1.4);
     this.hemi.position.set(0, 0, 1);
     this.key = new THREE.DirectionalLight(0xffe2bd, 1.9);
     this.key.position.set(-5, -8, 14);
@@ -125,8 +125,8 @@ export class GameRenderer {
     // G1.11: the status LED as a glow the chase camera always sees (a light, never a solid)
     const glowTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d')!; const gr = g.createRadialGradient(32, 32, 2, 32, 32, 32); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.35, 'rgba(255,255,255,0.55)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return new THREE.CanvasTexture(c); })();
     this.ledGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: LED_COLOUR.idle, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
-    this.ledGlow.scale.set(0.16, 0.16, 1);
-    this.ledGlow.position.set(-0.16, 0, 0.2);
+    this.ledGlow.scale.set(0.24, 0.24, 1);
+    this.ledGlow.position.set(-0.17, 0, 0.3);
     this.robot.add(this.ledGlow);
     this.head = new THREE.SpotLight(0xfff1d6, 6, 7, 0.5, 0.6, 1.4);
     this.head.position.set(0.16, 0, 0.12);
@@ -157,10 +157,10 @@ export class GameRenderer {
     this.hits = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({ color: 0xa5f8ff, size: 0.075, sizeAttenuation: true, transparent: true, opacity: 1, depthWrite: false, blending: THREE.AdditiveBlending }));
     this.planLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0xf43f8e, transparent: true, opacity: 0.9, depthWrite: false }));
     // G1.11: the ghost route as a thin glowing line with small chevrons along it
-    this.ghostLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0x67e8f9, transparent: true, opacity: 0.5, depthWrite: false, blending: THREE.AdditiveBlending }));
+    this.ghostLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.38, depthWrite: false }));
     const chev = new THREE.BufferGeometry();
-    chev.setAttribute('position', new THREE.Float32BufferAttribute([0.06, 0, 0, -0.05, 0.07, 0, -0.03, 0, 0, 0.06, 0, 0, -0.03, 0, 0, -0.05, -0.07, 0], 3));
-    this.ghostChevrons = new THREE.InstancedMesh(chev, new THREE.MeshBasicMaterial({ color: 0xa5f3fc, transparent: true, opacity: 0.75, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide }), 400);
+    chev.setAttribute('position', new THREE.Float32BufferAttribute([0.04, 0, 0, -0.035, 0.045, 0, -0.02, 0, 0, 0.04, 0, 0, -0.02, 0, 0, -0.035, -0.045, 0], 3));
+    this.ghostChevrons = new THREE.InstancedMesh(chev, new THREE.MeshBasicMaterial({ color: 0x67e8f9, transparent: true, opacity: 0.6, depthWrite: false, side: THREE.DoubleSide }), 400);
     this.ghostChevrons.count = 0;
     this.ghostChevrons.frustumCulled = false;
     this.scene.add(this.ghostChevrons);
@@ -253,7 +253,7 @@ export class GameRenderer {
           mat.color.getHSL(hsl);
           const c = withRim(mat);
           if (hsl.l > 0.62 && hsl.s < 0.2) c.color.set(0xff7a1a);
-          else if (hsl.l < 0.4) c.color.offsetHSL(0, 0, 0.1);   // G1.11: a brighter body
+          else if (hsl.l < 0.4) c.color.offsetHSL(0, 0, 0.05);  // G1.11: a brighter body
           m.material = c;
         }
       }
@@ -397,7 +397,7 @@ export class GameRenderer {
     this.ghostLine.visible = !!pts;
     this.ghostChevrons.count = 0;
     if (!pts) return;
-    this.ribbon(this.ghostLine, pts, 0.03, 0.011);
+    this.ribbon(this.ghostLine, pts, 0.014, 0.011);
     // a chevron every 0.7 m, pointing along the route
     const m = new THREE.Matrix4(), q = new THREE.Quaternion(), z = new THREE.Vector3(0, 0, 1), one = new THREE.Vector3(1, 1, 1);
     let carry = 0.35, n = 0;

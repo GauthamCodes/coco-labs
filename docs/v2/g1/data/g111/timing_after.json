@@ -1,0 +1,160 @@
+{
+ "label": "after G1.11",
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "profile": "desktop",
+ "wall_s": 429.844,
+ "final": {
+  "tick": 3583,
+  "mode": "idle",
+  "source": "idle",
+  "a": {
+   "phase": "idle",
+   "target": null,
+   "carried": null,
+   "want": "obj_maze_2",
+   "reason": "released obj_maze_2",
+   "attempt": 3
+  },
+  "f": {
+   "t": 358.2,
+   "seconds": 491.7,
+   "over": true,
+   "order": null,
+   "k": 3,
+   "orders": 3,
+   "deliveries": 3,
+   "contacts": 0,
+   "ghost": null
+  },
+  "primary": "GRAB: Not the order (G)",
+  "enabled": false
+ },
+ "log": [
+  [
+   "started",
+   6
+  ],
+  [
+   "order 1: to the object (AUTO taken)",
+   10
+  ],
+  [
+   "order 1: GRAB lit",
+   227
+  ],
+  [
+   "order 1: carried",
+   477
+  ],
+  [
+   "order 1: to the drop (AUTO taken)",
+   485
+  ],
+  [
+   "order 1: DROP lit",
+   822
+  ],
+  [
+   "order 1: delivered",
+   883
+  ],
+  [
+   "order 2: to the object (AUTO taken) TIMEOUT",
+   988
+  ],
+  [
+   "order 2: to the object (AUTO taken)",
+   990
+  ],
+  [
+   "order 2: GRAB lit",
+   1499
+  ],
+  [
+   "order 2: carried",
+   1749
+  ],
+  [
+   "order 2: to the drop (AUTO taken)",
+   1757
+  ],
+  [
+   "order 2: DROP lit",
+   1980
+  ],
+  [
+   "order 2: delivered",
+   2042
+  ],
+  [
+   "order 3: to the object (AUTO taken) TIMEOUT",
+   2145
+  ],
+  [
+   "order 3: to the object (AUTO taken)",
+   2149
+  ],
+  [
+   "order 3: GRAB lit",
+   2732
+  ],
+  [
+   "order 3: carried",
+   2980
+  ],
+  [
+   "order 3: to the drop (AUTO taken)",
+   2987
+  ],
+  [
+   "order 3: DROP lit",
+   3521
+  ],
+  [
+   "order 3: delivered",
+   3583
+  ]
+ ],
+ "errors": [],
+ "renderer": "SwiftShader (no GPU in this container): drawn frame rates are not measured; frame times are main-thread JS",
+ "deliveries": 3,
+ "orders": 3,
+ "seconds": 491.7,
+ "tick_gap_ms": {
+  "max": 959.5,
+  "p95_single": 149.6999999997206,
+  "median_single": 100.29999999981374,
+  "over_800": [
+   {
+    "ms": 960,
+    "at_tick": 9
+   },
+   {
+    "ms": 829,
+    "at_tick": 20
+   },
+   {
+    "ms": 824,
+    "at_tick": 2148
+   }
+  ]
+ },
+ "worker_step_ms": {
+  "max": 76.29999999981374,
+  "p95": 53.89999999990687,
+  "median": 33.3000000002794,
+  "kept": 583
+ },
+ "busy_banner": {
+  "shown": 0,
+  "total_ms": 0
+ },
+ "frame_js_ms": {
+  "max": 18.899999999906868,
+  "p95": 4.300000000279397,
+  "median": 1.5,
+  "frames": 3162,
+  "over_50": 0,
+  "slow": []
+ }
+}

@@ -117,6 +117,28 @@ emulated profile, SwiftShader): G1 127.8 ms vs M5 320.2 ms median.
 GPUs) and the real Nothing Phone (1) over USB/CDP, including a 10-minute heat run and the
 default-tier choice.**
 
+## G1.11 — Gautham's follow-up (2026-10-21)
+
+Decisions: [`G1_STATUS.md`](G1_STATUS.md#gauthams-decisions-2026-10-21-g111), `docs/STATUS.md`'s
+plan-change log. Evidence: [`data/g111/README.md`](data/g111/README.md).
+
+| Decision | What changed | Measured |
+| --- | --- | --- |
+| 1. gz tests | `@pytest.mark.gz` on the M6F.2 gz test; plain-venv CI `-m "not gz"` | that job: 0 skips (2 deselected); gz tests → laptop |
+| 2. v3 cost | each LiDAR beam's direction computed once a tick (was 3×): same bits | v3/v2 per tick 1.15 → **1.10** (Pyodide-in-Node, same run); all goldens identical |
+| 3. Ghost freeze | Fetch Rush rules 2 read a precomputed round; nothing planned in play; shaders precompiled | worst model-tick gap **25.8 s → 0.96 s**; banner 2× (26.8 s) → **never**; frames > 50 ms 1 → **0** (max 18.9 ms); worker tick max 2,184 → 76 ms |
+| 4. 2026-10-18 decision | a start zone, 3 orders each ≤ 32 m planned round trip, timer = reference × 1.5 | timers **491.7 / 495.8 / 577.2 / 506.5 s** (shifts 1/3/5/6); seeds 2, 4: reference bot stopped in the forklift lane → no timer, not offered ([`GAMES.md`](../m6/GAMES.md)) |
+| 5. Look | exposure + fill, COCO rim light / body / LED glow, thin ghost route + chevrons + small pin, minimap contrast + targets + off-map arrows | [`BEFORE_AFTER.md`](BEFORE_AFTER.md) "After G1.11" — Gautham judges |
+
+Tests after G1.11 (this container, the final source):
+
+*The full suite run at G1.11's close is in progress; its counts land in the next commit.*
+
+Hashes: v1, v2 and v3 goldens unchanged by G1.11 (the scan change is value-identical; checked
+by the coco_lab goldens and `tools/g1/make_v3_goldens.py --check`). Fetch Rush rules 1 records
+(M6F.6's references) still verify; rules-2 records carry `rules: 2` and replay to the committed
+reference card and chain (`test_the_reference_record_replays_to_its_card`).
+
 ## Gautham, look at these
 
 - Before/after: [`BEFORE_AFTER.md`](BEFORE_AFTER.md) (`screens/before/`, `screens/after/`).
