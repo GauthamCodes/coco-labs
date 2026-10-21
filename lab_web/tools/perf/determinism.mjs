@@ -251,7 +251,8 @@ async function browser(name) {
   const worker = readdirSync(join(web, 'dist', 'assets')).find((f) => /^arena\.worker-.*\.js$/.test(f));
   if (!worker) throw new Error('no built arena.worker in dist/assets: build the site first');
   const PACK_NAMES = Object.keys(JSON.parse(readFileSync(join(web, 'dist', 'generated', 'arena', 'manifest.json'), 'utf-8')).packs ?? {});
-  const opts = name === 'chromium' ? {} : name === 'webkit' && args['webkit-exe'] ? { executablePath: args['webkit-exe'] } : {};
+  // G1.10: a machine whose Playwright build does not match its installed Chromium names it in G1_CHROMIUM
+  const opts = name === 'chromium' ? (process.env.G1_CHROMIUM ? { executablePath: process.env.G1_CHROMIUM } : {}) : name === 'webkit' && args['webkit-exe'] ? { executablePath: args['webkit-exe'] } : {};
   const b = await pw[name].launch(opts);
   const page = await b.newPage();
   const errors = [];

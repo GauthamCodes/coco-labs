@@ -6,7 +6,10 @@
  * Phone (1) in landscape and portrait. Screenshots catch regressions only;
  * Gautham judges the look (README §9 rule 8).
  *
- *   node tools/g1/screens.mjs SITE OUTDIR [--play QUERY] [--compare QUERY]
+ *   node tools/g1/screens.mjs SITE OUTDIR [--play QUERY] [--play-click SEL] [--compare QUERY]
+ *
+ * --play-click: a button to press once it is enabled before Play counts as ready (G1's
+ * Play opens on its mode select; G1.10's after shot presses PLAY into a running game).
  *
  * SITE is a served build (tools/perf/serve_dist.mjs). The emulated phone is
  * viewport, touch and a 4x CPU throttle; the GPU is whatever this machine
@@ -20,7 +23,7 @@ const [site, out, ...rest] = process.argv.slice(2);
 const opt = (k, d) => { const i = rest.indexOf(k); return i >= 0 ? rest[i + 1] : d; };
 const SURFACES = {
   title: { query: '', ready: '[data-testid="title"] canvas[data-scene-ready="true"], [data-g1="title"][data-ready="true"]' },
-  play: { query: opt('--play', '?view=arena'), ready: 'canvas[data-scene-ready="true"], [data-g1="play"][data-ready="true"]', settle: 4000 },
+  play: { query: opt('--play', '?view=arena'), click: opt('--play-click', null), ready: 'canvas[data-scene-ready="true"], [data-g1="play"][data-ready="true"]', settle: 4000 },
   compare: { query: opt('--compare', '?view=compare'), ready: '[data-testid="compare-workspace"][data-ready="true"]' },
   recordings: { query: opt('--recordings', '?view=research'), ready: '.recording-card' },
 };
@@ -41,6 +44,7 @@ for (const [profile, options] of PROFILES) {
     let ready = true;
     try {
       await page.goto(site + s.query, { waitUntil: 'load' });
+      if (s.click) { await page.waitForSelector(`${s.click}:not([disabled])`, { timeout: 180000 }); await page.click(s.click); }
       await page.waitForSelector(s.ready, { timeout: 180000 });
       await page.evaluate(() => window.dispatchEvent(new Event('coco:skip-tutorial')));
       await page.waitForTimeout(s.settle ?? 1500);
