@@ -33,7 +33,7 @@ import time
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.join(REPO, 'coco_lab'))
-from coco_lab import games, loc_arena  # noqa: E402,F401 -- loc_arena: the subsystem
+from coco_lab import games, loc_arena, numerics  # noqa: E402,F401 -- loc_arena: the subsystem
 from coco_lab import worldspec_v3 as v3  # noqa: E402
 from coco_lab.arena import Arena, InputEvent, PLANNERS  # noqa: E402
 from coco_lab.numerics import math  # noqa: E402
@@ -210,4 +210,6 @@ def main() -> int:
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    with numerics.version(HV):   # route()'s searches run outside the Arena's own calls
+        code = main()
+    sys.exit(code)

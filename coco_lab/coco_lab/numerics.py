@@ -29,11 +29,15 @@ the model's few uses go through :func:`sq`, :func:`cube` and :func:`root`.
 here (``from .numerics import math``): one shared namespace, holding the real
 :mod:`math` functions under hash versions 1 and 2 (unchanged, byte for byte,
 so every old golden still holds) and the functions above under version 3.
-:func:`use` -- called by the Arena on every entry point with its
-``hash_version`` -- swaps the ten entries in place, so a module imported
-mid-run (a lens's pack) is covered too. Call sites keep writing ``math.sin``.
+:func:`version` -- entered by the Arena's entry points, the game rules and the
+glue's queries with their run's ``hash_version`` -- swaps the ten entries in
+place for the call and puts back what was in force after it, so a module
+imported mid-run (a lens's pack) is covered and nothing outside a version 3
+call ever sees version 3's functions. Call sites keep writing ``math.sin``.
 """
 
+import contextlib
+import functools
 import math as _libm
 import struct
 import types
@@ -558,10 +562,37 @@ def deterministic() -> bool:
     return _det
 
 
-def use(hash_version: int) -> None:
-    """Put the numerics of ``hash_version`` in force for every ``coco_lab`` module."""
+def _set(want: bool) -> None:
     global _det
-    want = hash_version >= 3
     if want != _det:
         _det = want
         math.__dict__.update(DET if want else _LIBM)
+
+
+def use(hash_version: int) -> None:
+    """Put the numerics of ``hash_version`` in force until changed (prefer :func:`version`)."""
+    _set(hash_version >= 3)
+
+
+@contextlib.contextmanager
+def version(hash_version: int):
+    """The numerics of ``hash_version`` for the ``with`` block, then what was in force."""
+    was = _det
+    _set(hash_version >= 3)
+    try:
+        yield
+    finally:
+        _set(was)
+
+
+def in_run(method):
+    """Run ``method`` inside :func:`version` of ``self.hash_version`` (default 1)."""
+    @functools.wraps(method)
+    def run(self, *args, **kw):
+        was = _det
+        _set(getattr(self, 'hash_version', 1) >= 3)
+        try:
+            return method(self, *args, **kw)
+        finally:
+            _set(was)
+    return run

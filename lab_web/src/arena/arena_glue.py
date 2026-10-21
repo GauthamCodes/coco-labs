@@ -7,12 +7,15 @@ It computes nothing itself (README section 3: the browser never
 re-implements an algorithm): it builds coco_lab's Arena, steps it, and
 hands its outputs to JavaScript as JSON plus typed-array buffers -- the
 world's occupancy once, each tick's ranges, and plan events in columnar
-batches WHILE the search runs (ADR 0001). Imports: coco_lab, json, array.
+batches WHILE the search runs (ADR 0001). Imports: coco_lab, json, array,
+functools.
 """
 
 from array import array
+import functools
 import json
 
+from coco_lab import numerics
 from coco_lab.arena import Arena, InputEvent, LOOP_KINDS, PLANNERS
 
 _arena = None
@@ -21,6 +24,15 @@ _post_family = None
 _spec_json = None
 #: M3.5: a map challenge's distance budget, while one is being driven
 _budget = None
+
+
+def _in_run(fn):
+    """G1.8/G1.11: run a worker call in the live Arena's numerics, and only that call."""
+    @functools.wraps(fn)
+    def run(*args, **kw):
+        with numerics.version(_arena.hash_version if _arena is not None else 1):
+            return fn(*args, **kw)
+    return run
 
 
 def emit_family(channel, tick, columns, scalars):
@@ -99,6 +111,7 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
     return json.dumps(world), m.occupancy
 
 
+@_in_run
 def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
             inflation_json=None, planners_json=None):
     """
@@ -116,8 +129,6 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
     from coco_lab.sketch import _nearest_free
 
     a = _arena
-    from coco_lab import numerics
-    numerics.use(a.hash_version)  # G1.8: the run's numerics, outside a step too
     names = json.loads(planners_json) if planners_json else [planner_a, planner_b]
     if (not isinstance(names, list) or len(names) not in (2, 4) or
             any(not isinstance(name, str) or name not in COMPARE_PLANNERS
@@ -222,6 +233,7 @@ def _tick_json(t, inputs, game=None):
     })
 
 
+@_in_run
 def step(inputs_json):
     """Step one tick; return (tick JSON, ranges as float32)."""
     rows = json.loads(inputs_json)
@@ -246,6 +258,7 @@ def _stamp(inputs_json):
     return rows
 
 
+@_in_run
 def begin(inputs_json):
     """Apply this tick's inputs and start its search; nothing runs yet."""
     global _pending_rows, _held_rows
@@ -257,11 +270,13 @@ def begin(inputs_json):
     _pending_rows = rows
 
 
+@_in_run
 def advance(n):
     """Take up to n events of the tick's search; return whether it is done."""
     return _arena.advance(int(n))
 
 
+@_in_run
 def amend(inputs_json):
     """Inputs that arrived while the tick planned: they join this tick."""
     rows = _stamp(inputs_json)
@@ -272,6 +287,7 @@ def amend(inputs_json):
         _pending_rows.extend(rows)
 
 
+@_in_run
 def finish():
     """Finish the tick; return (tick JSON, ranges as float32)."""
     t = _arena.finish_step()
@@ -336,6 +352,7 @@ def loop_compare_advance():
 
 
 
+@_in_run
 def costmap_view():
     """Emit a view-only snapshot from current model data, without a tick/input."""
     from coco_lab.costmap import (InflationParams, build_layers,
@@ -558,10 +575,9 @@ def game_ghost():
     return json.dumps({'order': r.k, 'points': pts[::2] + [pts[-1]]})
 
 
+@_in_run
 def game_op(op, arg_json=None):
     """The worker's one entry point for game queries (none of them changes the model)."""
-    from coco_lab import numerics
-    numerics.use(_arena.hash_version)  # G1.8: the session's numerics, outside a step too
     if op == 'preview':
         return game_preview()
     if op == 'auto_goal':

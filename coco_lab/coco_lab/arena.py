@@ -224,9 +224,15 @@ class Arena:
         if hash_version not in (1, 2, 3):
             raise ArenaError('hash_version must be 1, 2 or 3')
         self.hash_version = hash_version
-        # G1.8: version 3 computes every transcendental deterministically
-        # (coco_lab.numerics), so CPython and Pyodide agree bit for bit
-        numerics.use(hash_version)
+        self._build(spec, seed, planner, range_sigma, lidar_every, on_plan_batch,
+                    plan_batch_size, on_family)
+
+    # G1.8: version 3 computes every transcendental deterministically
+    # (coco_lab.numerics), so CPython and Pyodide agree bit for bit; G1.11: each
+    # entry point runs in its run's version and leaves the caller's in force after
+    @numerics.in_run
+    def _build(self, spec, seed, planner, range_sigma, lidar_every, on_plan_batch,
+               plan_batch_size, on_family):
         self.spec = normalize(spec)
         if planner not in PLANNERS:
             raise ArenaError(f'unknown planner {planner!r}')
@@ -326,6 +332,7 @@ class Arena:
         self.user_teleop = False
         self.last_auto_goal: Optional[Tuple[str, Tuple[float, float]]] = None
 
+    @numerics.in_run
     def tilt(self) -> Tuple[float, float, float]:
         """``(z, pitch, roll)`` on the terrain (M4.3), zeros on a flat world."""
         if self.terrain is None:
@@ -434,6 +441,7 @@ class Arena:
         else:
             self.mode = 'idle'
 
+    @numerics.in_run
     def reset_home(self) -> None:
         """
         Put the robot back at the start pose and restart the loop.
@@ -553,6 +561,7 @@ class Arena:
             return 0.0, 0.0, True
         return 0.0, 0.0, False
 
+    @numerics.in_run
     def discs(self) -> List[Tuple[float, float, float]]:
         """Every moving body's (x, y, radius), from the subsystems (M2.5)."""
         out: List[Tuple[float, float, float]] = []
@@ -609,6 +618,7 @@ class Arena:
 
     # -- the whole loop ---------------------------------------------------------
 
+    @numerics.in_run
     def belief(self) -> Tuple[float, float, float]:
         """Where the robot believes it is: a localiser's estimate, or truth."""
         for name in sorted(self.subsystems):
@@ -703,9 +713,9 @@ class Arena:
         if self._want_plan and self.goal is not None:
             self._plan_begin()
 
+    @numerics.in_run
     def begin_step(self, events: Sequence[InputEvent] = ()):
         """Apply this tick's inputs and start its search, if it needs one."""
-        numerics.use(self.hash_version)
         if self._in_step:
             raise ArenaError('a step is already in progress')
         self._check_ticks(events)
@@ -732,13 +742,14 @@ class Arena:
             self._in_step = False
             raise
 
+    @numerics.in_run
     def advance(self, n: Optional[int] = None) -> bool:
         """Take up to ``n`` events of the tick's search; return whether done."""
-        numerics.use(self.hash_version)
         if not self._in_step:
             raise ArenaError('advance outside a step')
         return self._collector is None or self._collector.advance(n)
 
+    @numerics.in_run
     def amend(self, events: Sequence[InputEvent]):
         """
         Add inputs to the tick in progress (they arrived while it planned).
@@ -748,7 +759,6 @@ class Arena:
         :meth:`step` would do with the whole list. An amendment the Arena
         cannot honour is refused and the tick goes on with what it had.
         """
-        numerics.use(self.hash_version)
         if not self._in_step:
             raise ArenaError('amend outside a step')
         self._check_ticks(events)
@@ -767,9 +777,9 @@ class Arena:
             self._prepare()
             raise
 
+    @numerics.in_run
     def finish_step(self) -> Tick:
         """Finish the tick's search, advance one ``dt``, scan, hash."""
-        numerics.use(self.hash_version)
         if not self._in_step:
             raise ArenaError('finish_step outside a step')
         plans: List[Plan] = []
@@ -835,6 +845,7 @@ class Arena:
 
     # -- the per-tick state hash -------------------------------------------------
 
+    @numerics.in_run
     def state_bytes(self) -> bytes:
         """
         Return the canonical, quantized state (docs/v2/ARENA_MODEL.md).
@@ -895,6 +906,7 @@ class Arena:
             return _STATE_TAG[self.hash_version] + b'\0' + snapshot(self)
         return b''.join(parts)
 
+    @numerics.in_run
     def grasp_view(self) -> Optional[Dict[str, object]]:
         """Return what the renderer and the panels show of the grasp (M4.3)."""
         if self.grasp is None:

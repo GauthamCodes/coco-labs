@@ -16,7 +16,7 @@ Depot, every tick's state hash.
 """
 import json
 
-from coco_lab import games
+from coco_lab import games, numerics
 from coco_lab.arena import Arena, InputEvent
 from coco_lab.compare_loop import LoopComparison
 from coco_lab.compare_planning import COMPARE_PLANNERS, run_planner
@@ -73,10 +73,11 @@ def game_case(spec, record):
 
 
 arena_spec = json.loads(arena_json)
-result = json.dumps({
-    'hash_version': hash_version,
-    'control': loop_case(arena_spec, 'control'),
-    'localise': loop_case(arena_spec, 'localise'),
-    'planners': planner_case(arena_spec),
-    'fetch_rush': game_case(json.loads(depot_json), json.loads(record_json)),
-})
+with numerics.version(hash_version):   # the cases' out-of-step work too (G1.11: scoped)
+    result = json.dumps({
+        'hash_version': hash_version,
+        'control': loop_case(arena_spec, 'control'),
+        'localise': loop_case(arena_spec, 'localise'),
+        'planners': planner_case(arena_spec),
+        'fetch_rush': game_case(json.loads(depot_json), json.loads(record_json)),
+    })

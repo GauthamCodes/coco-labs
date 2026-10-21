@@ -34,11 +34,19 @@ the gap is between the reference and the browser.
 - `x ** 2`, `x ** 3`, `x ** 0.5` call C `pow`; the model's uses go through
   `numerics.sq / cube / root` (`x*x`, `x*x*x`, `sqrt` under v3; `**` under v1/v2).
 - Every `coco_lab` module takes `math` from `numerics` (one shared namespace).
-  `numerics.use(hash_version)` swaps ten entries in place: the real `math` functions
+  `numerics.version(hash_version)` swaps ten entries in place: the real `math` functions
   under v1/v2 — **v1 and v2 are byte for byte what they were** — and the fdlibm ones
-  under v3. The Arena calls it on every entry point (constructor, `begin_step`,
-  `amend`, `advance`, `finish_step`); the glue's out-of-step queries (game ops,
-  planner Compare) and `LoopComparison.advance` call it with their run's version.
+  under v3. The Arena enters it on every entry point (constructor, `begin_step`,
+  `amend`, `advance`, `finish_step`, and its out-of-step queries); the game rules and
+  helpers enter it with the Arena they are given; the glue's worker calls (steps, game
+  ops, planner Compare) and `LoopComparison` with their run's version.
+- *Amended 2026-10-21 (G1.11):* the switch was first sticky (`numerics.use`): a v3 call
+  left v3 in force until the next call claimed a version, and a libm-era replay run
+  after it in the same process (Lab 5's movebundle, in CI) computed with fdlibm and
+  failed its committed metrics. The mode is now scoped: each call restores what was in
+  force before it, so nothing outside a version 3 call ever sees version 3's
+  functions. Hashes of every version are unchanged (v3 goldens, rounds and the native
+  gate re-checked).
 - A small memo keeps the last 4,096 `sin`/`cos` answers (the LiDAR asks for each
   beam's direction three times a tick). The functions are pure, so a remembered
   answer is the same bits; zero is never kept (0.0 and −0.0 share a dictionary key).

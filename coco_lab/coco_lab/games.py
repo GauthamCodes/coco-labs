@@ -39,6 +39,7 @@ physics (README invariant 13): it scores the jerk of the commanded motion while
 the canister is carried. The model simulates no breakage and no forces.
 """
 
+import functools
 import hashlib
 import json
 from pathlib import Path
@@ -49,6 +50,7 @@ from . import worldspec_v3 as v3
 from .arena import Arena, ArenaError, InputEvent, PLANNERS, SUBSYSTEMS
 from .grasp_assist import GraspAssist
 from .link_bounds import validate_log
+from . import numerics
 from .numerics import math
 from .rng import Rng
 from .search import search
@@ -154,6 +156,17 @@ SUBSYSTEMS['actors'] = DepotActors
 
 # -- helpers -------------------------------------------------------------------------
 
+def _in_arena(fn):
+    """G1.11: run ``fn`` in the numerics of the Arena it is given (numerics.version)."""
+    @functools.wraps(fn)
+    def run(*args, **kw):
+        a = next(x for x in args if isinstance(x, Arena))
+        with numerics.version(a.hash_version):
+            return fn(*args, **kw)
+    return run
+
+
+@_in_arena
 def plan_length(a: Arena, frm, to) -> Optional[float]:
     """Return A*'s path length (m) on the Arena's plan grid between two points, or None."""
     g = a.grid
@@ -179,6 +192,7 @@ def _inside(xy, r) -> bool:
     return r[0] <= xy[0] <= r[1] and r[2] <= xy[1] <= r[3]
 
 
+@_in_arena
 def best_approach(a: Arena, assist: GraspAssist, oid: str, frm):
     """Return ``(pre_pose, length)``: the free pre-grasp pose nearest ``frm`` by plan."""
     best = None
@@ -189,6 +203,7 @@ def best_approach(a: Arena, assist: GraspAssist, oid: str, frm):
     return best
 
 
+@_in_arena
 def pickable(a: Arena, assist: GraspAssist) -> List[str]:
     """Return the objects Grasp Assist can pick somewhere on the level, sorted."""
     from .grasp_assist import static_check
@@ -221,6 +236,7 @@ class FetchRush:
         self.started = False
         self.seconds = FETCH_RUSH_SECONDS
 
+    @_in_arena
     def start(self, a: Arena) -> None:
         """Draw the orders and start the clock (call after the setup inputs' tick)."""
         assist = a.subsystems['assist']
@@ -242,6 +258,7 @@ class FetchRush:
         self.started = True
         self.over = False
 
+    @_in_arena
     def _new_order(self, a: Arena) -> None:
         self.order_t0 = a.t_world
         self.driven = 0.0
@@ -262,6 +279,7 @@ class FetchRush:
             return None
         return self.orders[self.k]
 
+    @_in_arena
     def observe(self, a: Arena, tick) -> None:
         """Score one tick (after the Arena stepped)."""
         if not self.started or self.over:
@@ -370,6 +388,7 @@ class FetchRushRound(FetchRush):
         self.round = rnd
         self.seconds = float(seconds if seconds is not None else rnd['timer_s'])
 
+    @_in_arena
     def start(self, a: Arena) -> None:
         """Take the round's orders and start the clock."""
         self.orders = [tuple(o) for o in self.round['orders']]
@@ -383,6 +402,7 @@ class FetchRushRound(FetchRush):
         self.started = True
         self.over = False
 
+    @_in_arena
     def _new_order(self, a: Arena) -> None:
         self.order_t0 = a.t_world
         self.driven = 0.0
@@ -419,6 +439,7 @@ class RushHour:
         self.objective = objective
         self.started = False
 
+    @_in_arena
     def start(self, a: Arena) -> None:
         """Start the clock."""
         self.t0 = a.t_world
@@ -433,6 +454,7 @@ class RushHour:
         self.started = True
         self.over = False
 
+    @_in_arena
     def observe(self, a: Arena, tick) -> None:
         """Score one tick."""
         if not self.started or self.over:
@@ -471,6 +493,7 @@ class RushHour:
                 'contact_log': self.contact_log}
 
 
+@_in_arena
 def _actor_near(a: Arena) -> bool:
     # a refused motion next to an actor's covering discs (the model's actor body)
     act = a.subsystems.get('actors')
@@ -479,6 +502,7 @@ def _actor_near(a: Arena) -> bool:
         for x, y, r in act.discs())
 
 
+@_in_arena
 def _actor_touch(a: Arena) -> bool:
     act = a.subsystems.get('actors')
     return act is not None and act.clearance(a.pose[0], a.pose[1], a.radius) <= 0.0
@@ -611,6 +635,7 @@ class _Driver:
         self.chain = hashlib.sha256()
         self.step(setup_inputs(game, arg, version, getattr(self.rules, 'round', None)))
 
+    @numerics.in_run
     def step(self, inputs=()) -> object:
         evs = []
         for e in inputs:
@@ -626,6 +651,7 @@ class _Driver:
         self.last = t.state_hash
         return t
 
+    @numerics.in_run
     def goal(self, xy, limit: int, yield_to_actors: bool = False) -> bool:
         """Drive to ``xy``; yielding, STOP when the path ahead meets an actor, then re-plan."""
         a = self.a
@@ -653,6 +679,7 @@ class _Driver:
         return math.hypot(a.pose[0] - xy[0], a.pose[1] - xy[1]) <= WAYPOINT_TOL + 1e-9 \
             or t.arrived
 
+    @numerics.in_run
     def until(self, cond, limit: int) -> bool:
         for _ in range(limit):
             if cond():
@@ -756,6 +783,7 @@ YIELD_HORIZON = 4.0
 YIELD_TICKS = 600
 
 
+@_in_arena
 def _path_points(a: Arena, xy) -> List[Tuple[float, float]]:
     """Return the path the Arena's planner would drive to ``xy`` from the robot, as points."""
     g = a.grid
@@ -770,6 +798,7 @@ def _path_points(a: Arena, xy) -> List[Tuple[float, float]]:
         else [a.pose[:2]]
 
 
+@_in_arena
 def _conflict(a: Arena, pts, horizon: float = YIELD_HORIZON) -> bool:
     """Return whether driving ``pts`` at the auto speed meets an actor within 2 x radius."""
     act = a.subsystems.get('actors')
@@ -795,6 +824,7 @@ def _conflict(a: Arena, pts, horizon: float = YIELD_HORIZON) -> bool:
     return False
 
 
+@_in_arena
 def _crossing_delay(a: Arena, frm, to, horizon_ticks: int = 1200) -> int:
     """Return the ticks to wait so a straight crossing keeps 2 x radius from every actor."""
     actors = a.subsystems['actors']

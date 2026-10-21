@@ -54,6 +54,10 @@ class LoopComparison:
         self.hash_version = request.get('hash_version', 2)
         if self.hash_version not in (2, 3):
             raise ValueError('Compare arms hash with version 2 or 3')
+        self._build(spec)
+
+    @numerics.in_run
+    def _build(self, spec):
         self.tick = 0
         self.kidnap_tick = min(50, max(1, self.steps // 3))
         self.arms, self.sensors = [], []
@@ -100,11 +104,11 @@ class LoopComparison:
                          blocked=[v >= 253 for v in self.layers.combined],
                          cost=self.layers.combined, connectivity=8)
 
+    @numerics.in_run
     def advance(self):
         """One common simulation tick; return records for every pane."""
         if self.tick >= self.steps:
             raise ValueError('Compare window is complete')
-        numerics.use(self.hash_version)
         rows = []
         arms = zip(self.arms, self.names, self.sensors)
         for i, (arm, name, sensor) in enumerate(arms):

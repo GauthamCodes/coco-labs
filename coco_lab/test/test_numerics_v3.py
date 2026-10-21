@@ -111,14 +111,32 @@ def test_no_pow_operator_on_floats_in_the_model():
                 assert ints, f'{p.name}:{node.lineno}'
 
 
-def test_the_switch_is_in_place_and_by_version():
+def test_the_switch_is_in_place_by_version_and_scoped():
     from coco_lab import arena, control
-    Arena(world('coco_arena_v1.json'), 1, hash_version=3)
     assert arena.math is numerics.math is control.math
-    assert numerics.math.sin is numerics.sin and numerics.deterministic()
-    Arena(world('coco_arena_v1.json'), 1, hash_version=2)
+    seen = {}
+
+    class Probe:
+        hash_version = 3
+
+        @numerics.in_run
+        def look(self):
+            seen['sin'] = numerics.math.sin
+            seen['det'] = numerics.deterministic()
+
+    Probe().look()
+    assert seen == {'sin': numerics.sin, 'det': True}
+    # G1.11: version 3 holds for the call only; the caller's numerics come back after it
+    Arena(world('coco_arena_v1.json'), 1, hash_version=3)
     assert numerics.math.sin is libm.sin and not numerics.deterministic()
-    assert numerics.sq(3.0) == 9.0 and numerics.root(4.0) == 2.0
+    with numerics.version(3):
+        assert numerics.math.sin is numerics.sin and numerics.sq(3.0) == 9.0
+        Arena(world('coco_arena_v1.json'), 1, hash_version=2)
+        assert numerics.math.sin is numerics.sin        # an inner v2 call restored v3
+        with numerics.version(1):
+            assert numerics.math.sin is libm.sin and numerics.root(4.0) == 2.0
+        assert numerics.deterministic()
+    assert numerics.math.sin is libm.sin and not numerics.deterministic()
     with pytest.raises(ArenaError):
         Arena(world('coco_arena_v1.json'), 1, hash_version=4)
 
