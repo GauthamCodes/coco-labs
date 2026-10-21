@@ -38,6 +38,24 @@ interface Joint { q: THREE.Object3D; axis: THREE.Vector3 }
 export interface ObjectView { id: string; shape: 'cylinder' | 'box'; diameter?: number; height: number; size?: number[]; colour: string }
 export interface VisionFrame { ranges: Float32Array | null; angles: { min: number; max: number; samples: number }; mount: [number, number, number]; beamZ: number; plan: [number, number][]; local: [number, number][] }
 
+/**
+ * G1.11: COCO's material with a rim light -- a fresnel glow on the edges facing away from
+ * the camera -- so its silhouette reads against a dark hall from the chase camera. Only
+ * COCO's own (cloned) materials get it; presentation only.
+ */
+function withRim(mat: THREE.MeshStandardMaterial): THREE.MeshStandardMaterial {
+  const c = mat.clone();
+  c.onBeforeCompile = (sh) => {
+    sh.uniforms.cocoRim = { value: new THREE.Color(0x9fdcff) };
+    sh.fragmentShader = sh.fragmentShader
+      .replace('#include <common>', '#include <common>\nuniform vec3 cocoRim;')
+      .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n'
+        + '{ float rim = 1.0 - clamp(abs(dot(normalize(normal), normalize(vViewPosition))), 0.0, 1.0); totalEmissiveRadiance += cocoRim * pow(rim, 2.2) * 0.85; }');
+  };
+  c.customProgramCacheKey = () => 'coco-rim';
+  return c;
+}
+
 export class GameRenderer {
   readonly renderer: THREE.WebGLRenderer;
   readonly scene = new THREE.Scene();
@@ -47,6 +65,7 @@ export class GameRenderer {
   private composer: EffectComposer | null = null;
   private readonly robot = new THREE.Group();
   private readonly led: THREE.MeshStandardMaterial;
+  private readonly ledGlow: THREE.Sprite;
   private readonly head: THREE.SpotLight;
   private readonly cone: THREE.Mesh;
   private readonly blob: THREE.Mesh;
@@ -66,6 +85,7 @@ export class GameRenderer {
   private readonly hits: THREE.Points;
   private readonly planLine: THREE.Mesh;
   private readonly ghostLine: THREE.Mesh;
+  private readonly ghostChevrons: THREE.InstancedMesh;
   private readonly goalPin: THREE.Group;
   private clock = 0;
   pose: [number, number, number] = [0, 0, 0];
@@ -83,21 +103,31 @@ export class GameRenderer {
     this.tier = tier;
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: tier === 'high', powerPreference: 'high-performance', preserveDrawingBuffer: false });
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.35;
+    // G1.11: brighter, so floor, walls and racks separate (Gautham's look notes)
+    this.renderer.toneMappingExposure = 1.7;
     this.renderer.info.autoReset = false;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); this.lostContext = true; });
     this.scene.background = new THREE.Color(0x0e1116);
-    this.hemi = new THREE.HemisphereLight(0x9aa8c8, 0x20262f, 1.1);
+    this.hemi = new THREE.HemisphereLight(0xb4c2de, 0x2c333d, 1.65);
     this.hemi.position.set(0, 0, 1);
-    this.key = new THREE.DirectionalLight(0xffe2bd, 1.6);
+    this.key = new THREE.DirectionalLight(0xffe2bd, 1.9);
     this.key.position.set(-5, -8, 14);
-    this.scene.add(this.hemi, this.key, this.key.target);
+    // a cool fill from the other side: vertical faces (rack uprights, walls) read against the floor
+    const fill = new THREE.DirectionalLight(0x9fc4ff, 0.75);
+    fill.position.set(9, 12, 6);
+    this.scene.add(this.hemi, this.key, this.key.target, fill);
     // COCO: its model loads into `robot`; the LED strip, headlight and shadow are ours
-    this.led = new THREE.MeshStandardMaterial({ color: 0x111111, emissive: LED_COLOUR.idle, emissiveIntensity: 2.2 });
-    const ledStrip = new THREE.Mesh(new THREE.BoxGeometry(0.012, 0.16, 0.012), this.led);
-    ledStrip.position.set(-0.15, 0, 0.115);
+    this.led = new THREE.MeshStandardMaterial({ color: 0x111111, emissive: LED_COLOUR.idle, emissiveIntensity: 3 });
+    const ledStrip = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.2, 0.02), this.led);
+    ledStrip.position.set(-0.15, 0, 0.12);
     this.robot.add(ledStrip);
+    // G1.11: the status LED as a glow the chase camera always sees (a light, never a solid)
+    const glowTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d')!; const gr = g.createRadialGradient(32, 32, 2, 32, 32, 32); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(0.35, 'rgba(255,255,255,0.55)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return new THREE.CanvasTexture(c); })();
+    this.ledGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: LED_COLOUR.idle, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+    this.ledGlow.scale.set(0.16, 0.16, 1);
+    this.ledGlow.position.set(-0.16, 0, 0.2);
+    this.robot.add(this.ledGlow);
     this.head = new THREE.SpotLight(0xfff1d6, 6, 7, 0.5, 0.6, 1.4);
     this.head.position.set(0.16, 0, 0.12);
     this.head.target.position.set(1.6, 0, -0.1);
@@ -126,11 +156,19 @@ export class GameRenderer {
     this.fan = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.018, depthWrite: false, side: THREE.DoubleSide }));
     this.hits = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({ color: 0xa5f8ff, size: 0.075, sizeAttenuation: true, transparent: true, opacity: 1, depthWrite: false, blending: THREE.AdditiveBlending }));
     this.planLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0xf43f8e, transparent: true, opacity: 0.9, depthWrite: false }));
-    this.ghostLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0xf9a8d4, transparent: true, opacity: 0.45, depthWrite: false }));
+    // G1.11: the ghost route as a thin glowing line with small chevrons along it
+    this.ghostLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0x67e8f9, transparent: true, opacity: 0.5, depthWrite: false, blending: THREE.AdditiveBlending }));
+    const chev = new THREE.BufferGeometry();
+    chev.setAttribute('position', new THREE.Float32BufferAttribute([0.06, 0, 0, -0.05, 0.07, 0, -0.03, 0, 0, 0.06, 0, 0, -0.03, 0, 0, -0.05, -0.07, 0], 3));
+    this.ghostChevrons = new THREE.InstancedMesh(chev, new THREE.MeshBasicMaterial({ color: 0xa5f3fc, transparent: true, opacity: 0.75, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide }), 400);
+    this.ghostChevrons.count = 0;
+    this.ghostChevrons.frustumCulled = false;
+    this.scene.add(this.ghostChevrons);
+    // a small pin for a goal (no flag)
     this.goalPin = new THREE.Group();
-    const pin = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.7, 8).rotateX(Math.PI / 2).translate(0, 0, 0.35), new THREE.MeshBasicMaterial({ color: 0xf43f8e }));
-    const flag = new THREE.Mesh(new THREE.PlaneGeometry(0.28, 0.18).rotateX(Math.PI / 2).translate(0.14, 0, 0.6), new THREE.MeshBasicMaterial({ color: 0xf43f8e, side: THREE.DoubleSide }));
-    this.goalPin.add(pin, flag);
+    const pin = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.32, 8).rotateX(Math.PI / 2).translate(0, 0, 0.16), new THREE.MeshBasicMaterial({ color: 0xf43f8e }));
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 8).translate(0, 0, 0.34), new THREE.MeshBasicMaterial({ color: 0xf43f8e }));
+    this.goalPin.add(pin, head);
     this.goalPin.visible = false;
     this.vision.add(this.fan, this.hits);
     this.vision.visible = false;
@@ -185,7 +223,7 @@ export class GameRenderer {
     this.world = buildWorld(look, this.tier, light);
     this.scene.add(this.world.group);
     this.cam.colliders = this.world.colliders;
-    this.fogDensity = look.theme === 'lab' ? 0.01 : 0.022;
+    this.fogDensity = look.theme === 'lab' ? 0.008 : 0.014;
     this.scene.fog = new THREE.FogExp2(look.theme === 'lab' ? 0x1a2230 : 0x0b1018, this.fogDensity);
     this.ceiling = look.ceiling;
     this.overheadMeshes = ['box:ceiling', 'box:fixture'].map((n) => this.world!.group.getObjectByName(n)).filter((m): m is THREE.Object3D => !!m);
@@ -213,7 +251,10 @@ export class GameRenderer {
         if (mat?.color) {
           const hsl = { h: 0, s: 0, l: 0 };
           mat.color.getHSL(hsl);
-          if (hsl.l > 0.62 && hsl.s < 0.2) { const c = mat.clone(); c.color.set(0xff7a1a); m.material = c; }
+          const c = withRim(mat);
+          if (hsl.l > 0.62 && hsl.s < 0.2) c.color.set(0xff7a1a);
+          else if (hsl.l < 0.4) c.color.offsetHSL(0, 0, 0.1);   // G1.11: a brighter body
+          m.material = c;
         }
       }
       const ex = o.userData as { joint?: string; axis?: number[] };
@@ -241,7 +282,7 @@ export class GameRenderer {
     this.stats.triangles = Math.round(tri);
   }
 
-  setLed(led: Led) { this.led.emissive.set(LED_COLOUR[led]); }
+  setLed(led: Led) { this.led.emissive.set(LED_COLOUR[led]); this.ledGlow.material.color.set(LED_COLOUR[led]); }
 
   /** The arm where Grasp Assist's script puts it (URDF joint angles from coco_lab.arm). */
   setArm(row: Record<string, number>) {
@@ -352,7 +393,24 @@ export class GameRenderer {
   }
 
   setPlan(pts: [number, number][]) { this.ribbon(this.planLine, pts, 0.08, 0.012); }
-  setGhost(pts: [number, number][] | null) { this.ghostLine.visible = !!pts; if (pts) this.ribbon(this.ghostLine, pts, 0.05, 0.01); }
+  setGhost(pts: [number, number][] | null) {
+    this.ghostLine.visible = !!pts;
+    this.ghostChevrons.count = 0;
+    if (!pts) return;
+    this.ribbon(this.ghostLine, pts, 0.03, 0.011);
+    // a chevron every 0.7 m, pointing along the route
+    const m = new THREE.Matrix4(), q = new THREE.Quaternion(), z = new THREE.Vector3(0, 0, 1), one = new THREE.Vector3(1, 1, 1);
+    let carry = 0.35, n = 0;
+    for (let k = 0; k + 1 < pts.length && n < 400; k++) {
+      const [a, b] = [pts[k], pts[k + 1]], dx = b[0] - a[0], dy = b[1] - a[1], l = Math.hypot(dx, dy);
+      q.setFromAxisAngle(z, Math.atan2(dy, dx));
+      let s = carry;
+      for (; s < l && n < 400; s += 0.7) this.ghostChevrons.setMatrixAt(n++, m.compose(new THREE.Vector3(a[0] + dx * s / l, a[1] + dy * s / l, 0.013), q, one));
+      carry = s - l;
+    }
+    this.ghostChevrons.count = n;
+    this.ghostChevrons.instanceMatrix.needsUpdate = true;
+  }
   setGoal(xy: [number, number] | null) { this.goalPin.visible = !!xy; if (xy) this.goalPin.position.set(xy[0], xy[1], 0); }
 
   setVision(on: boolean) { this.vision.visible = on; }

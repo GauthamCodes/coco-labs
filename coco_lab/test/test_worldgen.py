@@ -300,6 +300,7 @@ def test_nav2_params_change_only_the_level_keys_and_never_the_original(tmp_path)
         {'x': 2.0, 'y': 5.0, 'z': 0.0, 'yaw': 0.0}
 
 
+@pytest.mark.gz
 @pytest.mark.skipif(shutil.which('gz') is None, reason='the gz CLI is not installed')
 @pytest.mark.parametrize('spec', [KIT, V2], ids=['kit', 'v2'])
 def test_gz_sdf_check_passes_on_every_generated_world(spec, tmp_path):

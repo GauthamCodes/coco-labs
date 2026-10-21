@@ -69,7 +69,7 @@ export function PlayGame(p: PlayProps) {
   const [info, setInfo] = useState(false);
   const [tip, setTip] = useState(0);
   const [holdStart, setHoldStart] = useState<number | null>(null);
-  /** a tick the model is still computing after 0.8 s (the next order's planner ghost is the long one) */
+  /** a tick the model is still computing after 0.8 s (never expected in normal play since G1.11; shown if it happens) */
   const [busy, setBusy] = useState(false);
   const [tutorial, setTutorial] = useState(false);
   const look = useRef<WorldLook | null>(null);
@@ -227,14 +227,15 @@ export function PlayGame(p: PlayProps) {
     return () => clearInterval(t);
   }, [vision, started]);
 
-  // the planner ghost: asked once per order while it is on (an A* in the worker, read-only)
+  // the planner ghost: the round's precomputed route for each order (G1.11: no search while playing)
   const ghostOrder = useRef<number | null>(null);
+  const [ghostPts, setGhostPts] = useState<[number, number][] | null>(null);
   useEffect(() => {
     const k = tick?.game?.fetch?.k;
-    if (!p.ghost || k === undefined) { if (!p.ghost) { r.current?.setGhost(null); ghostOrder.current = null; } return; }
+    if (!p.ghost || k === undefined) { if (!p.ghost) { r.current?.setGhost(null); setGhostPts(null); ghostOrder.current = null; } return; }
     if (ghostOrder.current === k) return;
     ghostOrder.current = k;
-    void s.current?.query<{ order: number; points: [number, number][] } | null>('ghost').then((g) => r.current?.setGhost(g?.points ?? null));
+    void s.current?.query<{ order: number; points: [number, number][] } | null>('ghost').then((g) => { r.current?.setGhost(g?.points ?? null); setGhostPts(g?.points ?? null); });
   }, [p.ghost, tick?.game?.fetch?.k]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // a long tick is shown, never hidden: the model's clock waits with it (every timer is model time)
@@ -460,6 +461,7 @@ export function PlayGame(p: PlayProps) {
     drop: (() => { const z = order?.[1] ? zones.find((x) => x.id === order[1]) : null; return z ? { min: [z.center[0] - z.size[0] / 2, z.center[1] - z.size[1] / 2] as [number, number], max: [z.center[0] + z.size[0] / 2, z.center[1] + z.size[1] / 2] as [number, number] } : null; })(),
     goal,
     actors: (tick?.game?.actors ?? []).map((a) => [a[1], a[2]] as [number, number]),
+    ghost: ghostPts ?? undefined,
   };
   const desktop = typeof window !== 'undefined' && window.matchMedia?.('(hover: hover) and (pointer: fine)').matches;
   const loadIndex = Math.max(0, LOAD_STAGES.findIndex((x) => x.id === stage));

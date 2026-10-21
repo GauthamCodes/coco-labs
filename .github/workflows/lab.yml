@@ -55,7 +55,9 @@ jobs:
       - name: Test (the three ament linters need ament; the colcon route runs them)
         working-directory: coco_lab
         run: |
-          "$RUNNER_TEMP/venv/bin/python" -P -m pytest -q -p no:cacheprovider \
+          # G1.11 (Gautham, 2026-10-21): tests marked gz need the gz CLI, which this job does
+          # not have; they run on the laptop. Deselected, so the no-skip guard below holds.
+          "$RUNNER_TEMP/venv/bin/python" -P -m pytest -q -p no:cacheprovider -m "not gz" \
             --ignore=test/test_copyright.py --ignore=test/test_flake8.py --ignore=test/test_pep257.py \
             --junitxml="$RUNNER_TEMP/coco_lab.xml"
       - name: Fail if tests vanished or were skipped

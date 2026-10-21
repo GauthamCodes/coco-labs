@@ -18,6 +18,8 @@ export interface MapMarks {
   drop: { min: [number, number]; max: [number, number] } | null;
   goal: [number, number] | null;
   actors: [number, number][];
+  /** G1.11: the round's ghost route for this order (cyan) */
+  ghost?: [number, number][];
 }
 
 /** The occupancy as an image, once per world (row 0 is the map's top, +y). */
@@ -27,7 +29,8 @@ function occupancyImage(world: World, occ: Uint8Array): HTMLCanvasElement {
   const g = c.getContext('2d')!, img = g.createImageData(world.width, world.height);
   for (let k = 0; k < occ.length; k++) {
     const v = occ[k];
-    const rgb = v === 0 ? [24, 31, 44] : v === 1 ? [150, 166, 190] : [8, 10, 14]; // coco_lab.maps: FREE 0, OCCUPIED 1, UNKNOWN 2
+    // coco_lab.maps: FREE 0, OCCUPIED 1, UNKNOWN 2 (G1.11: stronger contrast)
+    const rgb = v === 0 ? [38, 50, 70] : v === 1 ? [226, 234, 245] : [5, 7, 10];
     img.data.set([...rgb, 255], k * 4);
   }
   g.putImageData(img, 0, 0);
@@ -39,10 +42,17 @@ const toPx = (world: World, x: number, y: number): [number, number] =>
 
 function drawMarks(g: CanvasRenderingContext2D, world: World, m: MapMarks, ppc: number) {
   const P = (x: number, y: number) => toPx(world, x, y);
+  if (m.ghost && m.ghost.length > 1) {
+    g.strokeStyle = 'rgba(103,232,249,0.85)'; g.lineWidth = 2 / ppc; g.setLineDash([5 / ppc, 4 / ppc]); g.beginPath();
+    m.ghost.forEach(([x, y], k) => { const [px, py] = P(x, y); if (k) g.lineTo(px, py); else g.moveTo(px, py); });
+    g.stroke(); g.setLineDash([]);
+  }
   if (m.drop) {
     const [x0, y0] = P(m.drop.min[0], m.drop.max[1]), [x1, y1] = P(m.drop.max[0], m.drop.min[1]);
-    g.fillStyle = 'rgba(52,211,153,0.35)'; g.fillRect(x0, y0, x1 - x0, y1 - y0);
-    g.strokeStyle = '#34D399'; g.lineWidth = 2 / ppc; g.strokeRect(x0, y0, x1 - x0, y1 - y0);
+    g.fillStyle = 'rgba(52,211,153,0.5)'; g.fillRect(x0, y0, x1 - x0, y1 - y0);
+    g.strokeStyle = '#6EE7B7'; g.lineWidth = 3 / ppc; g.strokeRect(x0, y0, x1 - x0, y1 - y0);
+    g.fillStyle = '#ECFDF5'; g.font = `700 ${11 / ppc}px "Chakra Petch", sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText('DROP', (x0 + x1) / 2, (y0 + y1) / 2);
   }
   if (m.plan.length > 1) {
     g.strokeStyle = '#F43F8E'; g.lineWidth = 3 / ppc; g.lineJoin = 'round'; g.beginPath();
@@ -51,8 +61,10 @@ function drawMarks(g: CanvasRenderingContext2D, world: World, m: MapMarks, ppc: 
   }
   for (const [x, y] of m.actors) { const [px, py] = P(x, y); g.fillStyle = '#FACC15'; g.fillRect(px - 4 / ppc, py - 4 / ppc, 8 / ppc, 8 / ppc); }
   if (m.target) {
-    const [px, py] = P(m.target[0], m.target[1]);
-    g.fillStyle = '#34D399'; g.beginPath(); g.moveTo(px, py + 5 / ppc); g.lineTo(px - 5 / ppc, py - 4 / ppc); g.lineTo(px + 5 / ppc, py - 4 / ppc); g.fill();
+    const [px, py] = P(m.target[0], m.target[1]), r = 8 / ppc;
+    g.fillStyle = 'rgba(52,211,153,0.25)'; g.beginPath(); g.arc(px, py, r * 1.6, 0, Math.PI * 2); g.fill();
+    g.fillStyle = '#34D399'; g.strokeStyle = '#fff'; g.lineWidth = 1.5 / ppc;
+    g.beginPath(); g.moveTo(px, py - r); g.lineTo(px + r, py); g.lineTo(px, py + r); g.lineTo(px - r, py); g.closePath(); g.fill(); g.stroke();
   }
   if (m.goal) { const [px, py] = P(m.goal[0], m.goal[1]); g.strokeStyle = '#F43F8E'; g.lineWidth = 2 / ppc; g.beginPath(); g.arc(px, py, 5 / ppc, 0, Math.PI * 2); g.stroke(); }
   if (m.pose) {
@@ -83,6 +95,21 @@ export function Minimap({ world, occupancy, marks, headingUp, onOpen }: { world:
     g.imageSmoothingEnabled = false;
     g.drawImage(im, 0, 0);
     drawMarks(g, world, marks, ppc);
+    // G1.11: an order target beyond the minimap's range is an arrow on its rim
+    const m = g.getTransform();
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    const edge = (x: number, y: number, colour: string) => {
+      const p = m.transformPoint(new DOMPoint(...toPx(world, x, y)));
+      const dx = p.x - S / 2, dy = p.y - S / 2, d = Math.hypot(dx, dy), R = S / 2 - 14;
+      if (d <= R) return;
+      const ux = dx / d, uy = dy / d, ex = S / 2 + ux * R, ey = S / 2 + uy * R, a = Math.atan2(uy, ux);
+      g.save(); g.translate(ex, ey); g.rotate(a);
+      g.fillStyle = colour; g.strokeStyle = '#0b0f15'; g.lineWidth = 2;
+      g.beginPath(); g.moveTo(12, 0); g.lineTo(-7, 9); g.lineTo(-3, 0); g.lineTo(-7, -9); g.closePath(); g.fill(); g.stroke();
+      g.restore();
+    };
+    if (marks.target) edge(marks.target[0], marks.target[1], '#34D399');
+    if (marks.drop) edge((marks.drop.min[0] + marks.drop.max[0]) / 2, (marks.drop.min[1] + marks.drop.max[1]) / 2, '#6EE7B7');
   });
   return <button className="g1-minimap" data-testid="minimap" aria-label="Map: tap to open the tactical map" onClick={onOpen}>
     <canvas ref={ref} width={224} height={224} />

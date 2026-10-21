@@ -563,17 +563,21 @@ class Arena:
         return out
 
     def _scan(self) -> List[float]:
-        true = self.scan_smap.scan(self.pose, self.lidar, self.angles)
+        # G1.11: each beam's direction once a tick, shared by the walls, the ramps and the
+        # discs (each used to compute cos/sin of the same th + yaw + angle: the same bits)
+        base = self.pose[2] + self.lidar.mount[2]
+        dirs = [(math.cos(base + a), math.sin(base + a)) for a in self.angles]
+        true = self.scan_smap.scan(self.pose, self.lidar, self.angles, dirs)
         if self.terrain is not None:
             # SIMPLIFIED (ARENA_MODEL.md): the beam is horizontal at the sensor's
             # height above the surface under the robot; it stops where the ramp
             # rises above it
             rects = self.terrain.rects_above(self.tilt()[0] + self.beam_height)
             if rects:
-                true = _with_rects(true, self.pose, self.lidar, self.angles, rects)
+                true = _with_rects(true, self.pose, self.lidar, self.angles, rects, dirs)
         discs = self.discs() if self.subsystems else []
         if discs:
-            true = _with_discs(true, self.pose, self.lidar, self.angles, discs)
+            true = _with_discs(true, self.pose, self.lidar, self.angles, discs, dirs)
         lo, hi = self.lidar.range_min, self.lidar.range_max
         out = []
         for z in true:
@@ -910,7 +914,7 @@ class Arena:
         return self._chain.hex()
 
 
-def _with_discs(ranges, pose, lidar, angles, discs) -> List[float]:
+def _with_discs(ranges, pose, lidar, angles, discs, dirs=None) -> List[float]:
     """Return ``ranges`` shortened where a beam meets a disc first."""
     x, y, th = pose
     mx, my, myaw = lidar.mount
@@ -919,7 +923,7 @@ def _with_discs(ranges, pose, lidar, angles, discs) -> List[float]:
     sy = y + s * mx + c * my
     out = list(ranges)
     for k, a in enumerate(angles):
-        ux, uy = math.cos(th + myaw + a), math.sin(th + myaw + a)
+        ux, uy = dirs[k] if dirs is not None else (math.cos(th + myaw + a), math.sin(th + myaw + a))
         for dx, dy, r in discs:
             fx, fy = dx - sx, dy - sy
             b = fx * ux + fy * uy
@@ -937,7 +941,7 @@ def _with_discs(ranges, pose, lidar, angles, discs) -> List[float]:
     return out
 
 
-def _with_rects(ranges, pose, lidar, angles, rects) -> List[float]:
+def _with_rects(ranges, pose, lidar, angles, rects, dirs=None) -> List[float]:
     """Return ``ranges`` shortened where a beam meets one of ``rects`` first (M4.3)."""
     x, y, th = pose
     mx, my, myaw = lidar.mount
@@ -946,7 +950,7 @@ def _with_rects(ranges, pose, lidar, angles, rects) -> List[float]:
     sy = y + s * mx + c * my
     out = list(ranges)
     for k, a in enumerate(angles):
-        ux, uy = math.cos(th + myaw + a), math.sin(th + myaw + a)
+        ux, uy = dirs[k] if dirs is not None else (math.cos(th + myaw + a), math.sin(th + myaw + a))
         for r in rects:
             t = ray_rect(sx, sy, ux, uy, r)
             if t is not None and t < out[k]:
