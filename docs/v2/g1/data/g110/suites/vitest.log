@@ -1,0 +1,9 @@
+
+ RUN  v5.0.2 /home/user/coco-labs/lab_web
+
+
+ Test Files  65 passed (65)
+      Tests  532 passed (532)
+   Start at  11:53:52
+   Duration  82.11s (tests 96%, import 2%, transform 2%)
+

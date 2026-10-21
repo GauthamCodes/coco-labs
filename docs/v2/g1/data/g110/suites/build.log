@@ -1,0 +1,103 @@
+
+> coco-lab-web@0.1.0 build
+> node tools/assets/build_design_assets.mjs --check && node tools/build_arena_assets.mjs && node tools/g1/bake_worlds.mjs && node tools/build_attract.mjs && node tools/build_v2_runs.mjs && tsc --noEmit -p . && vite build && node tools/build_service_worker.mjs
+
+Verified licence/source/checksums: Outfit, Manrope, Chakra Petch, Inter, Lucide, COCO Lab app icon
+arena assets: coco_lab.zip 147530 B (34 files), stdlib 783358 B (144 entries, full 2545637 B), pyodide 314.0.7
+depot.light.png 131126
+proving_v1.light.png 41102
+proving_v2.light.png 41102
+references.json 1026
+attract.mcap: 690321 B, 517 ticks, 34974 plan events, chain 83d26d442bb5
+astar_open: 15469 B, 5 messages, round trip exact
+dijkstra_cost_field_gz: 20208 B, 5 messages, round trip exact
+weighted_astar_greedy_trap: 17339 B, 5 messages, round trip exact
+bfs_no_path: 17925 B, 5 messages, round trip exact
+astar_turn_trap_heading: 15049 B, 5 messages, round trip exact
+lab1c_astar: 452282 B, 1116 messages, round trip exact
+lab1c_dijkstra: 579619 B, 1129 messages, round trip exact
+lab1c_greedy: 163830 B, 907 messages, round trip exact
+arena_0_10m: 434617 B, 13 messages, round trip exact
+arena_native: 1495764 B, 39 messages, round trip exact
+costmap_0_10m: 99182 B, 5 messages, round trip exact
+lab5 crossing: 15 runs, round trip exact
+lab5 mislocalised: 9 runs, round trip exact
+lab5 oncoming: 15 runs, round trip exact
+lab5 static_room: 15 runs, round trip exact
+casefiles: 100 copied, 40019390 B, the map once
+missions: 7, every replay link names a run here
+vite v8.3.1 building client environment for production...
+transforming...
+✓ 2183 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/assets/manrope-cyrillic-ext-wght-normal-C8S-KRRz.woff2    2.55 kB
+dist/coco/frame.js                                             4.76 kB
+dist/index.html                                                6.68 kB │ gzip:   2.27 kB
+dist/assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2      8.52 kB
+dist/assets/manrope-greek-wght-normal-DL7QRZyv.woff2           9.44 kB
+dist/assets/chakra-petch-latin-700-normal-CnDBPjkL.woff2       9.90 kB
+dist/assets/chakra-petch-latin-500-normal-BR1ody1F.woff2       9.95 kB
+dist/assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2       14.50 kB
+dist/assets/outfit-latin-ext-wght-normal-DdQaqQDo.woff2       14.80 kB
+dist/assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2      15.12 kB
+dist/assets/manrope-latin-wght-normal-DHIcAJRg.woff2          24.83 kB
+dist/assets/arena.worker-BZwALQuV.js                          29.32 kB
+dist/assets/outfit-latin-wght-normal-Bc-8i84L.woff2           32.29 kB
+dist/assets/inter-latin-wght-normal-Dx4kXJAl.woff2            48.25 kB
+dist/assets/inter-latin-ext-wght-normal-DO1Apj_S.woff2        85.06 kB
+dist/assets/fonts-DwHcO94P.css                                 1.05 kB │ gzip:   0.42 kB
+dist/assets/CaseFilesApp-CEk7feGm.css                          3.18 kB │ gzip:   0.97 kB
+dist/assets/skin-Ckh3LXYI.css                                  3.37 kB │ gzip:   1.09 kB
+dist/assets/shell-IyBR3GMV.css                                 3.78 kB │ gzip:   1.03 kB
+dist/assets/hud-DU8RsCNu.css                                   4.24 kB │ gzip:   1.32 kB
+dist/assets/CompareWorkspace-B5rda9Y4.css                      5.40 kB │ gzip:   1.46 kB
+dist/assets/PlayApp-DCk3N89r.css                               5.77 kB │ gzip:   1.48 kB
+dist/assets/game-BBON4_V8.css                                 17.78 kB │ gzip:   4.11 kB
+dist/assets/reference-C5XSdbt7.css                            18.03 kB │ gzip:   3.26 kB
+dist/assets/index-10A8Jo25.css                                36.90 kB │ gzip:   8.37 kB
+dist/assets/CompareScene-y6KBYAay.js                           0.21 kB │ gzip:   0.17 kB
+dist/assets/ResearchScene-y6KBYAay.js                          0.21 kB │ gzip:   0.17 kB
+dist/assets/post-D8WacuvZ.js                                   0.21 kB │ gzip:   0.17 kB
+dist/assets/pause-BGkUg4S3.js                                  0.25 kB │ gzip:   0.19 kB
+dist/assets/dialog-BYb0ehSK.js                                 0.41 kB │ gzip:   0.30 kB
+dist/assets/settings-DxiAlCmu.js                               0.52 kB │ gzip:   0.28 kB
+dist/assets/route-DSQXNGsl.js                                  1.11 kB │ gzip:   0.55 kB
+dist/assets/phone-BdmlyucU.js                                  1.12 kB │ gzip:   0.66 kB
+dist/assets/ModeNav-CbM_I3yw.js                                1.27 kB │ gzip:   0.66 kB
+dist/assets/links-Bgg2b4Yw.js                                  1.54 kB │ gzip:   0.84 kB
+dist/assets/ArenaApp-BYK5fi3a.js                               1.63 kB │ gzip:   0.81 kB
+dist/assets/quality-j0dYhQ2P.js                                1.90 kB │ gzip:   0.83 kB
+dist/assets/controls-Bc0o7UXu.js                               2.21 kB │ gzip:   1.01 kB
+dist/assets/Minimap-CSqZ-WzH.js                                2.54 kB │ gzip:   1.38 kB
+dist/assets/client-DRbzo1lt.js                                 3.03 kB │ gzip:   1.28 kB
+dist/assets/createLucideIcon-C1knIUKP.js                       3.08 kB │ gzip:   1.48 kB
+dist/assets/worker_pool-Cnc2TLQF.js                            3.23 kB │ gzip:   1.36 kB
+dist/assets/AboutPage-C0-U1Aht.js                              3.41 kB │ gzip:   1.44 kB
+dist/assets/SettingsDrawer-DMkuOCDN.js                         4.53 kB │ gzip:   1.54 kB
+dist/assets/TitleScreen-Dg3Bd337.js                            4.64 kB │ gzip:   1.98 kB
+dist/assets/tokens-CsK8nx3b.js                                 4.65 kB │ gzip:   2.05 kB
+dist/assets/Result-OXTnc_D3.js                                 5.93 kB │ gzip:   2.50 kB
+dist/assets/LearnApp-B6piONI1.js                               6.70 kB │ gzip:   2.78 kB
+dist/assets/WorldStage--IOsm71f.js                             9.20 kB │ gzip:   4.20 kB
+dist/assets/ReferenceScreens-D8-bd-Ji.js                      11.90 kB │ gzip:   4.12 kB
+dist/assets/CaseFilesApp-ZR1W_uZu.js                          12.45 kB │ gzip:   4.19 kB
+dist/assets/PlayScene-DjPnV9dj.js                             12.52 kB │ gzip:   4.61 kB
+dist/assets/scene3d-CRJsIGBQ.js                               14.59 kB │ gzip:   5.51 kB
+dist/assets/PlayApp-2-0lywGs.js                               17.49 kB │ gzip:   6.02 kB
+dist/assets/CompareWorkspace-CDGlWMfu.js                      18.81 kB │ gzip:   6.76 kB
+dist/assets/LiveApp-Be8Pr7RO.js                               31.10 kB │ gzip:  11.34 kB
+dist/assets/game-QvWZZ853.js                                  43.53 kB │ gzip:  16.11 kB
+dist/assets/GameApp-BwReVd1K.js                               46.46 kB │ gzip:  16.39 kB
+dist/assets/ArenaSceneView-TAVUwkze.js                        52.06 kB │ gzip:  16.21 kB
+dist/assets/Help-BAhlDykv.js                                 219.82 kB │ gzip:  68.75 kB
+dist/assets/index-4ZAFmct-.js                                244.89 kB │ gzip:  79.18 kB
+dist/assets/three-DBFPP6e4.js                                696.25 kB │ gzip: 176.70 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 2.98s
+Static cache a23aee4ef5876fb843ef624b1e2f60a8b2f9de8127aae5dac9f38da29a2c58aa: 135 precached, 341 allowlisted
