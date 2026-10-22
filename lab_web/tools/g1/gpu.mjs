@@ -57,5 +57,11 @@ export function machine() {
     mesa: sh('dpkg-query', ['-W', '-f', '${Version}', 'libgl1-mesa-dri']),
     kernel: sh('uname', ['-r']),
     cpu: (sh('lscpu', []).match(/Model name:\s+(.*)/) || [null, 'unavailable'])[1],
+    // what else is using the machine (other people's programs are recorded, never stopped)
+    top_cpu_now: sh('top', ['-b', '-n', '1', '-o', '%CPU', '-w', '120']).split('\n').slice(7, 13)
+      .map((l) => l.trim().split(/\s+/)).map((f) => `${f[8]} % ${f[11]} (${f[1]})`),
+    nvidia_util: sh('nvidia-smi', ['--query-gpu=utilization.gpu,memory.used', '--format=csv,noheader']),
+    nvidia_procs: sh('nvidia-smi', ['pmon', '-c', '1']).split('\n').slice(2).map((l) => l.trim().split(/\s+/))
+      .map((f) => `${f[9]} sm ${f[3]} %`),
   };
 }

@@ -44,6 +44,6 @@ Dispatch, reference 182.3 s, **timer 273.5 s (4:33.5)**. The rounds file was reg
 
 - `scripts/run_all_package_tests.sh` in `~/coco_lab_g1_ws` (ROS_DOMAIN_ID 78): every package
   passed except coco_lab's three ament linters (flake8 19 + pep257 12 + copyright 5 findings,
-  all in G1's cloud commits; the cloud and CI's plain venv never run them). Fixed in `a50ae59`
+  all in G1's cloud commits; the cloud and CI's plain venv never run them). Fixed in `9cbcea7`
   without changing code paths; the final counts are in [`suites.txt`](suites.txt).
 - `pytest -m gz` (coco_lab): [`gz_tests.txt`](gz_tests.txt) — **2 passed, 0 skipped** (gz 14.9.0).

@@ -89,3 +89,60 @@ east–west forklift, t ≈ 174 s): the yield rule is why the reference is clean
 
 **Pending, machine busy** (`docs/v2/m6/M6F8_PLAN.md`). No STACK evidence was produced on
 this branch.
+
+## M6F.8 — Gazebo and Nav2, measured on the laptop (G1.13, 2026-10-23; appended)
+
+STACK evidence (the full ROS 2 stack in Gazebo, headless, `gui:=false`, never `--fast`; no
+hardware). Laptop, balanced profile, on AC, ROS 2 Jazzy, ROS_DOMAIN_ID 79, overlay
+`~/coco_lab_g1_ws`. Raw logs and bags in `~/coco_lab_runs/m6/` (outside git); per run the
+goals, Nav2's result codes and the sha256 of every raw file in
+`docs/v2/m6/data/m6f8/smoke_summary.json` and `ghost_summary.json`
+(`tools/m6/m6f8_summary.py`). Runner: `tools/m6/m6f8_run.sh` (M6F8_PLAN.md's steps), goals
+from the model (`tools/m6/m6f8_goals.py`), NavigateToPose client `tools/m6/m6f8_nav.py`.
+
+- **Generated level:** `tools/m6/gen_level.py worlds/coco_depot_v1.yaml --nav-res 0.05
+  --gz-check --verify`: every output **identical** to `coco_depot_v1_outputs.json`; `gz sdf -k`
+  Valid on all 20 SDFs. The map is aligned with the world (south and west walls at map
+  y/x −0.125…+0.125 against the SDF's walls at 0; racks likewise).
+- **Bring-up (5 fresh simulators):** /scan after 6–7 s, all ten Nav2 lifecycle nodes active
+  after 19–20 s, AMCL pose 1–2 s later; the wheel topic has **exactly one publisher,
+  `cmd_vel_arbiter`**. `full_world_robo.launch.py` also spawns the COCO arena's `ramp` with its
+  foot at world (1.0, 0) — the Depot's south-west corner, not in the Nav2 map; no goal passes
+  there. Actors parked (as planned: no actor driver).
+- **Smoke test, goals chained (runs 1 and 2, the same result twice):** 2 of 9 —
+  the loading dock and the dock object SUCCEEDED (truth ends 0.44–0.53 m from the goal; AMCL
+  0.43–0.51 m off truth, always to the south); high-bay aisle 1 then failed (run 1:
+  FollowPath INVALID_PATH, 103, "Resulting plan has 0 poses"; run 2: START_OCCUPIED, 205)
+  with AMCL's pose inside rack cost, and every later goal was refused START_OCCUPIED (205)
+  without moving: those zones were not tested by these runs.
+- **Smoke test, each goal its own leg from the start (`--reset-each`, run 3):**
+
+  | Goal | Result | Nav2 code | sim s | driven m | truth → goal m | AMCL error m |
+  |---|---|---|---|---|---|---|
+  | Loading dock (roomiest cell) | SUCCEEDED | 0 | 69.9 | 19.97 | 0.462 | 0.476 |
+  | Dock object pre-grasp | SUCCEEDED | 0 | 94.3 | 24.03 | 0.412 | 0.486 |
+  | High-bay aisle 1 pre-grasp | SUCCEEDED | 0 | 55.6 | 14.14 | 0.112 | 0.167 |
+  | High-bay aisle 3 pre-grasp | ABORTED | 205 START_OCCUPIED | 64.9 | 18.55 | 4.555 | 0.146 |
+  | Office block (corridor) | ABORTED | 103 INVALID_PATH | 92.2 | 26.18 | 7.902 | 6.915 |
+  | Office NE room pre-grasp | ABORTED | 205 START_OCCUPIED | 81.2 | 22.46 | 6.023 | 0.108 |
+  | Workshop maze pre-grasp | SUCCEEDED | 0 | 67.8 | 15.55 | 0.110 | 0.052 |
+  | Dispatch floor | SUCCEEDED | 0 | 29.5 | 4.86 | 0.146 | 0.193 |
+  | Back to the start | SUCCEEDED (already there: 0 m) | 0 | 0.7 | 0.00 | 0.000 | 0.006 |
+
+  **5 of 8 legs that drove succeeded.** Aisle 3 and the office room failed with AMCL within
+  0.15 m of truth (the robot's pose itself in occupied cost mid-leg); the office corridor leg
+  failed with AMCL 6.9 m off. **UNRESOLVED:** why AMCL sits ~0.45–0.5 m south of truth after
+  the dock legs, and why Nav2 meets occupied cost in aisle 3 and the office where the model's
+  plan grid has a route. Not diagnosed here.
+- **Ghost of a Fetch Rush phone round (rules 3, seed 1; driving legs only), twice on fresh
+  simulators:** start (42.25, 8.45, 337.5°), AMCL seeded there. Leg 1 (to `obj_dock`'s
+  pre-grasp pose) SUCCEEDED both times (13.2 s, 3.58–3.59 m, truth 0.405 m from the goal);
+  leg 2 (to Dock 1) ABORTED both times — run 1: "Failed to make progress", then
+  START_OCCUPIED (205) at truth (40.74, 5.48) after 6.39 m; run 2: START_OCCUPIED at
+  (41.50, 5.20) after 5.65 m — and legs 3–4 were refused (205) without moving. **The model's
+  lane-free route to Dock 1 passes where Nav2's costmap is occupied (UNRESOLVED).** Both
+  recordings converted with `coco_lab_ros.adapter` (summary detail): run 1 1,335,732 bytes,
+  3,416 messages, sha256 `25a5ec80285b5627dfa760da224395ca9f51d3ae696b48abb64e9e635d12dc10`;
+  run 2 832,554 bytes, 2,111 messages, sha256
+  `c165a5e770af1dcde7d1298c6cfe4c544d2ee5fc943df651b9ea8b9234c2fd48`. A complete STACK ghost
+  of the round was not recorded.
