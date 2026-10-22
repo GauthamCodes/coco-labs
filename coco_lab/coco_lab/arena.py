@@ -463,7 +463,7 @@ class Arena:
                 self.subsystems[name].on_reset(self)
 
     def _plan_key(self, goal):
-        """The search a goal at ``goal`` starts from here: (planner, start, goal cell, grid)."""
+        """Return the search a goal at ``goal`` starts from here: (planner, start, goal, grid)."""
         g = self.grid
         here = self.belief()
         s_cell = self.plan_map.cell_at(here[0], here[1])
@@ -975,7 +975,8 @@ def _with_discs(ranges, pose, lidar, angles, discs, dirs=None) -> List[float]:
     sy = y + s * mx + c * my
     out = list(ranges)
     for k, a in enumerate(angles):
-        ux, uy = dirs[k] if dirs is not None else (math.cos(th + myaw + a), math.sin(th + myaw + a))
+        ux, uy = (dirs[k] if dirs is not None
+                  else (math.cos(th + myaw + a), math.sin(th + myaw + a)))
         for dx, dy, r in discs:
             fx, fy = dx - sx, dy - sy
             b = fx * ux + fy * uy
@@ -1002,7 +1003,8 @@ def _with_rects(ranges, pose, lidar, angles, rects, dirs=None) -> List[float]:
     sy = y + s * mx + c * my
     out = list(ranges)
     for k, a in enumerate(angles):
-        ux, uy = dirs[k] if dirs is not None else (math.cos(th + myaw + a), math.sin(th + myaw + a))
+        ux, uy = (dirs[k] if dirs is not None
+                  else (math.cos(th + myaw + a), math.sin(th + myaw + a)))
         for r in rects:
             t = ray_rect(sx, sy, ux, uy, r)
             if t is not None and t < out[k]:

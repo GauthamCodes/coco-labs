@@ -1,5 +1,17 @@
 # Copyright 2026 Gautham Anil
-# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 """
 G1.11: Fetch Rush rules 2 -- budgeted rounds, precomputed, nothing planned in play.
 
@@ -24,7 +36,8 @@ ROUNDS = DOC['rounds']
 
 def test_the_rounds_are_for_this_level():
     assert DOC['spec_sha256'] == hashlib.sha256(SPEC_PATH.read_bytes()).hexdigest()
-    assert DOC['rules'] == 2 and games.FETCH_RUSH_RULES == 3   # rules 2's file, kept for its records
+    # rules 2's file, kept for its records
+    assert DOC['rules'] == 2 and games.FETCH_RUSH_RULES == 3
     assert DOC['budget_m'] == games.ROUND_BUDGET_M
     assert DOC['orders'] == games.ROUND_ORDERS
     assert DOC['timer_factor'] == games.ROUND_TIMER_FACTOR
@@ -47,8 +60,8 @@ def test_which_rounds_are_playable():
 @pytest.mark.parametrize('seed', PLAYABLE)
 def test_each_round_is_the_draw_and_keeps_the_decision(seed):
     rnd = ROUNDS[seed]
-    assert games.draw_round(int(seed), DOC['trips']) == {'region': rnd['region'],
-                                                        'orders': rnd['orders']}
+    assert games.draw_round(int(seed), DOC['trips']) == \
+        {'region': rnd['region'], 'orders': rnd['orders']}
     # starts inside one zone, never in the forklift lanes
     assert rnd['region'].startswith('zone_') and rnd['region'] not in games.ROUND_NO_START
     assert rnd['start'][:2] == DOC['starts'][rnd['region']][:2]
@@ -111,7 +124,7 @@ def test_the_reference_record_replays_to_its_card():
 
 
 def test_a_sample_trip_recomputes():
-    """The table is the planner's: seed 1's first order, recomputed (the full table is the tool's)."""
+    """Recompute seed 1's first order: the table is the planner's (the full table, the tool's)."""
     rnd = games.round_for(1)
     a = Arena(SPEC, 1, hash_version=3)
     a.step([InputEvent(**e) for e in games.setup_inputs('fetch_rush', 1)])

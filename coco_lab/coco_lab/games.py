@@ -46,11 +46,11 @@ from pathlib import Path
 import struct
 from typing import Dict, List, Optional, Tuple
 
+from . import numerics
 from . import worldspec_v3 as v3
 from .arena import Arena, ArenaError, InputEvent, PLANNERS, SUBSYSTEMS
 from .grasp_assist import GraspAssist
 from .link_bounds import validate_log
-from . import numerics
 from .numerics import math
 from .rng import Rng
 from .search import search

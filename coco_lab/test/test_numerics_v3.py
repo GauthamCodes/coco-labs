@@ -1,5 +1,17 @@
 # Copyright 2026 Gautham Anil
-# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 """
 G1.8: state hash v3 and the deterministic numerics behind it.
 
@@ -207,4 +219,5 @@ def test_games_play_takes_version_3():
            'inputs': [e for e in g['inputs'] if e['tick'] < 50], 'hash_version': 3}
     out = games.play(world(g['world']), copy.deepcopy(rec))
     assert out == games.play(world(g['world']), rec)
-    assert out['last_hash'] != games.play(world(g['world']), dict(rec, hash_version=2))['last_hash']
+    v2 = games.play(world(g['world']), dict(rec, hash_version=2))
+    assert out['last_hash'] != v2['last_hash']

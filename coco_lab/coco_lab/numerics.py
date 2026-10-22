@@ -1,5 +1,17 @@
 # Copyright 2026 Gautham Anil
-# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 """
 Deterministic transcendental functions for state hash v3 (G1.8).
 
@@ -47,7 +59,7 @@ _UNPACK_Q = struct.Struct('<Q')
 
 
 def _hi(x: float) -> int:
-    """The high 32 bits of ``x``'s IEEE representation, as a signed int."""
+    """Return the high 32 bits of ``x``'s IEEE representation, as a signed int."""
     h = _UNPACK_Q.unpack(_PACK.pack(x))[0] >> 32
     return h - (1 << 32) if h & 0x80000000 else h
 
@@ -81,7 +93,7 @@ def _bits(q: int) -> float:
 
 
 def _bexp(v: float) -> int:
-    """The biased exponent field of ``v`` (``high word >> 20 & 0x7ff``), without packing."""
+    """Return the biased exponent field of ``v`` (``high word >> 20 & 0x7ff``), unpacked."""
     return 0 if v == 0.0 else max(_libm.frexp(v)[1] + 1022, 0)
 
 
@@ -221,7 +233,7 @@ _KEEP = 4096
 
 
 def sin(x: float) -> float:
-    """fdlibm ``sin``."""
+    """Return fdlibm's ``sin``."""
     x = float(x)
     r = _SIN.get(x)
     if r is None:
@@ -234,7 +246,7 @@ def sin(x: float) -> float:
 
 
 def cos(x: float) -> float:
-    """fdlibm ``cos``."""
+    """Return fdlibm's ``cos``."""
     x = float(x)
     r = _COS.get(x)
     if r is None:
@@ -266,7 +278,7 @@ _AT = (3.33333333333329318027e-01, -1.99999999998764832476e-01,
 
 
 def atan(x: float) -> float:
-    """fdlibm ``atan``."""
+    """Return fdlibm's ``atan``."""
     x = float(x)
     hx = _hi(x)
     ix = hx & 0x7FFFFFFF
@@ -311,7 +323,7 @@ _PI_LO = 1.2246467991473531772e-16
 
 
 def atan2(y: float, x: float) -> float:
-    """fdlibm ``atan2``."""
+    """Return fdlibm's ``atan2``."""
     y = float(y)
     x = float(x)
     if _libm.isnan(x) or _libm.isnan(y):
@@ -363,7 +375,7 @@ def _acos_r(z: float) -> float:
 
 
 def acos(x: float) -> float:
-    """fdlibm ``acos``."""
+    """Return fdlibm's ``acos``."""
     x = float(x)
     if _libm.isnan(x):
         return x
@@ -406,7 +418,7 @@ _P = (1.66666666666666019037e-01, -2.77777777770155933842e-03,
 
 
 def exp(x: float) -> float:
-    """fdlibm ``exp``; ``ldexp`` applies the power of two."""
+    """Return fdlibm's ``exp``; ``ldexp`` applies the power of two."""
     x = float(x)
     hx = _hi(x)
     xsb = 1 if hx < 0 else 0
@@ -500,7 +512,7 @@ def _log(x: float) -> float:
 
 
 def log(x: float, base: float = None) -> float:
-    """fdlibm ``log``; ``log(x, b)`` is ``log(x) / log(b)``, as in CPython."""
+    """Return fdlibm's natural logarithm; with ``base``, over that of the base (as CPython)."""
     x = float(x)
     if x <= 0.0:
         raise ValueError('math domain error')
@@ -576,7 +588,7 @@ def use(hash_version: int) -> None:
 
 @contextlib.contextmanager
 def version(hash_version: int):
-    """The numerics of ``hash_version`` for the ``with`` block, then what was in force."""
+    """Use the numerics of ``hash_version`` for the ``with`` block, then what was in force."""
     was = _det
     _set(hash_version >= 3)
     try:
