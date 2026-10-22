@@ -17,14 +17,18 @@ import pytest
 REPO = Path(__file__).resolve().parents[2]
 DEPOT = json.loads((REPO / 'worlds' / 'coco_depot_v1.json').read_text())
 REC = games.round_for(1)['reference']['record']     # rules 2, hash v3: AUTO-style goals
-#: the first two goals' searches, the big one (6,018 expansions) at tick 1879 among them
-TICKS = 2000
+#: the record's goal inputs: the first, and the big one (6,018 expansions; tick 1879 there),
+#: issued here at ticks 2 and 40 of an 80-tick run from the round's start (CI time)
+GOALS = [e for e in REC['inputs'] if e['kind'] == 'goal']
+SCRIPT = [dict(e, tick=0) for e in REC['inputs'] if e['tick'] == 0] + \
+    [dict(GOALS[0], tick=2), dict(next(g for g in GOALS if g['tick'] == 1879), tick=40)]
+TICKS = 80
 
 
 def _run(how):
     a = Arena(DEPOT, REC['seed'], hash_version=REC['hash_version'])
     by = {}
-    for e in REC['inputs']:
+    for e in SCRIPT:
         by.setdefault(e['tick'], []).append(InputEvent(**e))
     out, adopted = [], 0
     for k in range(TICKS):
@@ -46,9 +50,11 @@ def _run(how):
 
 def test_prefetch_never_changes_a_tick():
     base, _ = _run(None)
+    assert sum(len(p) for _, p in base) == 2 and all(r[0] for _, p in base for r in p)
     for how in ('full', 'part', 'stale'):
         got, adopted = _run(how)
-        assert adopted > 0, f'{how}: the test did not prefetch'
+        # a stale goal shifted onto no free cell prefetches nothing: one is enough there
+        assert adopted == 2 or (how == 'stale' and adopted >= 1), f'{how}: no prefetch'
         assert got == base, f'{how}: a prefetch changed the run'
 
 
