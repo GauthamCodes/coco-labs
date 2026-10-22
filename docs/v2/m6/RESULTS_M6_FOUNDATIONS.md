@@ -146,3 +146,13 @@ from the model (`tools/m6/m6f8_goals.py`), NavigateToPose client `tools/m6/m6f8_
   run 2 832,554 bytes, 2,111 messages, sha256
   `c165a5e770af1dcde7d1298c6cfe4c544d2ee5fc943df651b9ea8b9234c2fd48`. A complete STACK ghost
   of the round was not recorded.
+
+## M6F.4 — Depot planning at 0.1 m, measured on the laptop (G1.13, 2026-10-23; appended)
+
+MODEL. CPython 3.12.3 and Pyodide 314.0.7 in Node, 5 repeats, the same spec; laptop, balanced,
+on AC. Plan grid 490 × 330. Both engines expand the same nodes and find the same path in all
+35 planner × pair cases. Against the stated 300 ms warm budget in Pyodide: **16 of 35 over** —
+BFS 6/7, Dijkstra 7/7, A* 3/7 (start → office SW 653 ms, start → mezzanine deck 512 ms, dock →
+office NE 692 ms); greedy and weighted A* within everywhere (≤ 199 ms). Table and raw files:
+`docs/v2/m6/data/m6f4/README.md`. Over-budget planners go to the WebAssembly gate as an ADR;
+nothing ported.

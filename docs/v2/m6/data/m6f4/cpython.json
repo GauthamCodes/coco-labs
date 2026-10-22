@@ -1,0 +1,433 @@
+{
+ "spec_id": "coco_depot_v1",
+ "resolution": 0.1,
+ "grid": [
+  490,
+  330
+ ],
+ "arena_build_ms": 484.8817530000815,
+ "repeats": 5,
+ "results": [
+  {
+   "pair": "start_to_dock",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 85004,
+   "path_m": 23.707106781186553,
+   "cold_ms": 644.582253000408,
+   "warm_median_ms": 610.3122540007462,
+   "warm_max_ms": 627.571695997176,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_dock",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 71126,
+   "path_m": 23.70710678118655,
+   "cold_ms": 720.9038969995163,
+   "warm_median_ms": 713.7280560018553,
+   "warm_max_ms": 721.8770920007955,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_dock",
+   "planner": "astar",
+   "found": true,
+   "expanded": 236,
+   "path_m": 23.70710678118655,
+   "cold_ms": 9.074262998183258,
+   "warm_median_ms": 4.037040002003778,
+   "warm_max_ms": 4.322505999880377,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_dock",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 236,
+   "path_m": 23.70710678118655,
+   "cold_ms": 4.0752639979473315,
+   "warm_median_ms": 4.245334999723127,
+   "warm_max_ms": 4.393964001792483,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_dock",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 236,
+   "path_m": 23.70710678118655,
+   "cold_ms": 4.35512400144944,
+   "warm_median_ms": 4.262196998752188,
+   "warm_max_ms": 4.41318600132945,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_office_sw",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 116636,
+   "path_m": 37.549242404917514,
+   "cold_ms": 845.758958002989,
+   "warm_median_ms": 792.599774998962,
+   "warm_max_ms": 855.3751330000523,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_office_sw",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 115399,
+   "path_m": 37.5492424049175,
+   "cold_ms": 1029.218387997389,
+   "warm_median_ms": 1148.0702400003793,
+   "warm_max_ms": 1158.9538079970225,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_office_sw",
+   "planner": "astar",
+   "found": true,
+   "expanded": 36023,
+   "path_m": 37.54924240491751,
+   "cold_ms": 482.3600580020866,
+   "warm_median_ms": 458.1942029981292,
+   "warm_max_ms": 468.43973199793254,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_office_sw",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 10741,
+   "path_m": 39.01614716074875,
+   "cold_ms": 132.42923799771233,
+   "warm_median_ms": 132.831980001356,
+   "warm_max_ms": 135.36053200004972,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_office_sw",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 11313,
+   "path_m": 37.79777054234137,
+   "cold_ms": 145.3771600026812,
+   "warm_median_ms": 140.85278499987908,
+   "warm_max_ms": 147.2672000018065,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_maze_dead_end",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 47977,
+   "path_m": 17.461017305526646,
+   "cold_ms": 307.6960100006545,
+   "warm_median_ms": 305.0458270008676,
+   "warm_max_ms": 312.01882299865247,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_maze_dead_end",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 47038,
+   "path_m": 17.461017305526646,
+   "cold_ms": 405.9541230017203,
+   "warm_median_ms": 469.00067900060094,
+   "warm_max_ms": 476.4124239991361,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_maze_dead_end",
+   "planner": "astar",
+   "found": true,
+   "expanded": 10931,
+   "path_m": 17.46101730552665,
+   "cold_ms": 149.09512499798439,
+   "warm_median_ms": 148.82816699901014,
+   "warm_max_ms": 160.61402299965266,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_maze_dead_end",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 587,
+   "path_m": 18.612489168102798,
+   "cold_ms": 9.703001000161748,
+   "warm_median_ms": 7.953217998874607,
+   "warm_max_ms": 8.43077399986214,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_maze_dead_end",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 2033,
+   "path_m": 17.792388155425126,
+   "cold_ms": 28.721960999973817,
+   "warm_median_ms": 29.549655999289826,
+   "warm_max_ms": 29.834613000275567,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_mezzanine_deck",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 107565,
+   "path_m": 34.47472580451144,
+   "cold_ms": 787.8402780006581,
+   "warm_median_ms": 786.4081829975476,
+   "warm_max_ms": 794.4395619997522,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_mezzanine_deck",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 108760,
+   "path_m": 34.47472580451144,
+   "cold_ms": 1092.3563249998551,
+   "warm_median_ms": 1092.7029439990292,
+   "warm_max_ms": 1103.0158489993482,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_mezzanine_deck",
+   "planner": "astar",
+   "found": true,
+   "expanded": 23453,
+   "path_m": 34.47472580451144,
+   "cold_ms": 306.12720000135596,
+   "warm_median_ms": 349.90896100134705,
+   "warm_max_ms": 367.4077319992648,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_mezzanine_deck",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 3319,
+   "path_m": 42.37838379715747,
+   "cold_ms": 48.41073699935805,
+   "warm_median_ms": 44.73209299976588,
+   "warm_max_ms": 46.28818700075499,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_mezzanine_deck",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 5967,
+   "path_m": 36.29726547895311,
+   "cold_ms": 87.01314599966281,
+   "warm_median_ms": 87.60363799956394,
+   "warm_max_ms": 90.17751399733243,
+   "over_budget": false
+  },
+  {
+   "pair": "dock_to_office_ne",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 95632,
+   "path_m": 46.8156420973605,
+   "cold_ms": 714.6712780013331,
+   "warm_median_ms": 726.2634639992029,
+   "warm_max_ms": 739.5594510016963,
+   "over_budget": true
+  },
+  {
+   "pair": "dock_to_office_ne",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 98824,
+   "path_m": 46.815642097360495,
+   "cold_ms": 986.1306670027261,
+   "warm_median_ms": 977.5131129972578,
+   "warm_max_ms": 1018.8877649998176,
+   "over_budget": true
+  },
+  {
+   "pair": "dock_to_office_ne",
+   "planner": "astar",
+   "found": true,
+   "expanded": 28642,
+   "path_m": 46.815642097360495,
+   "cold_ms": 404.97068200056674,
+   "warm_median_ms": 412.0164460000524,
+   "warm_max_ms": 420.6903810008953,
+   "over_budget": true
+  },
+  {
+   "pair": "dock_to_office_ne",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 565,
+   "path_m": 49.46833329081864,
+   "cold_ms": 14.289060000010068,
+   "warm_median_ms": 8.347826998942764,
+   "warm_max_ms": 8.384362001379486,
+   "over_budget": false
+  },
+  {
+   "pair": "dock_to_office_ne",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 605,
+   "path_m": 47.72691193458133,
+   "cold_ms": 9.144158000708558,
+   "warm_median_ms": 9.034104998136172,
+   "warm_max_ms": 9.51963599800365,
+   "over_budget": false
+  },
+  {
+   "pair": "aisle_1_to_aisle_3",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 33832,
+   "path_m": 14.966904755831216,
+   "cold_ms": 205.72483900105,
+   "warm_median_ms": 209.8206590017071,
+   "warm_max_ms": 211.1772470016149,
+   "over_budget": false
+  },
+  {
+   "pair": "aisle_1_to_aisle_3",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 32546,
+   "path_m": 14.966904755831207,
+   "cold_ms": 288.85095300211105,
+   "warm_median_ms": 298.2363310002256,
+   "warm_max_ms": 355.2928380013327,
+   "over_budget": false
+  },
+  {
+   "pair": "aisle_1_to_aisle_3",
+   "planner": "astar",
+   "found": true,
+   "expanded": 3101,
+   "path_m": 14.966904755831207,
+   "cold_ms": 49.827669998194324,
+   "warm_median_ms": 31.68509000170161,
+   "warm_max_ms": 32.91567400083295,
+   "over_budget": false
+  },
+  {
+   "pair": "aisle_1_to_aisle_3",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 509,
+   "path_m": 19.878174593052023,
+   "cold_ms": 6.590203000087058,
+   "warm_median_ms": 6.076595997001277,
+   "warm_max_ms": 6.703177001327276,
+   "over_budget": false
+  },
+  {
+   "pair": "aisle_1_to_aisle_3",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 784,
+   "path_m": 15.712489168102772,
+   "cold_ms": 9.492683999269502,
+   "warm_median_ms": 9.849115001998143,
+   "warm_max_ms": 11.292383998807054,
+   "over_budget": false
+  },
+  {
+   "pair": "maze_entrance_to_dead_end",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 29457,
+   "path_m": 14.962741699796958,
+   "cold_ms": 183.43625900160987,
+   "warm_median_ms": 198.3070689966553,
+   "warm_max_ms": 212.64360999703058,
+   "over_budget": false
+  },
+  {
+   "pair": "maze_entrance_to_dead_end",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 26022,
+   "path_m": 14.962741699796954,
+   "cold_ms": 263.1147259999125,
+   "warm_median_ms": 220.927574999223,
+   "warm_max_ms": 247.4295339998207,
+   "over_budget": false
+  },
+  {
+   "pair": "maze_entrance_to_dead_end",
+   "planner": "astar",
+   "found": true,
+   "expanded": 204,
+   "path_m": 14.962741699796954,
+   "cold_ms": 3.849353000987321,
+   "warm_median_ms": 2.7801489995908923,
+   "warm_max_ms": 2.81479199838941,
+   "over_budget": false
+  },
+  {
+   "pair": "maze_entrance_to_dead_end",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 145,
+   "path_m": 15.045584412271575,
+   "cold_ms": 1.9289789997856133,
+   "warm_median_ms": 1.9287290015199687,
+   "warm_max_ms": 1.95594500110019,
+   "over_budget": false
+  },
+  {
+   "pair": "maze_entrance_to_dead_end",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 146,
+   "path_m": 15.045584412271575,
+   "cold_ms": 1.923645002534613,
+   "warm_median_ms": 1.9895780023944099,
+   "warm_max_ms": 2.236387001175899,
+   "over_budget": false
+  }
+ ],
+ "engine": "cpython",
+ "conditions_before": {
+  "load_average": [
+   2.76513671875,
+   3.44775390625,
+   3.615234375
+  ],
+  "ac_online": "1",
+  "power_profile": "balanced",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "nproc": 12,
+  "python": "3.12.3",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "nice": 5,
+  "codex_running": false,
+  "perf_servers_running": 2,
+  "gazebo_or_ros_running": false
+ },
+ "conditions_after": {
+  "load_average": [
+   2.54052734375,
+   3.251953125,
+   3.5341796875
+  ],
+  "ac_online": "1",
+  "power_profile": "balanced",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "nproc": 12,
+  "python": "3.12.3",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "nice": 5,
+  "codex_running": false,
+  "perf_servers_running": 2,
+  "gazebo_or_ros_running": false
+ },
+ "budget_warm_ms": 300.0
+}
