@@ -1,0 +1,76 @@
+{
+ "scene": "compare",
+ "tier": "default",
+ "quality": "default",
+ "seconds": 60,
+ "gpu": "intel",
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "machine_start": {
+  "gpu_asked": "intel",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P0, 63",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "54.5 % brave (gautham)",
+   "54.5 % brave (gautham)",
+   "45.5 % brave (gautham)",
+   "36.4 % gnome-shell (gautham)",
+   "18.2 % Xorg (gautham)",
+   "9.1 % pipewire-pulse (gautham)"
+  ],
+  "nvidia_util": "30 %, 247 MiB",
+  "nvidia_procs": [
+   "Xorg sm 12 %",
+   "gnome-shell sm 17 %",
+   "firefox sm - %"
+  ]
+ },
+ "started": "2026-10-22T21:13:32.901Z",
+ "errors": [],
+ "console_errors": [],
+ "renderer": "ANGLE (Intel, Vulkan 1.4.318 (Intel(R) Graphics (RPL-P) (0x0000A7A8)), Intel open-source Mesa driver)",
+ "canvases": 1,
+ "arena_tier": "high",
+ "fps": {
+  "median": 60.240963855333035,
+  "minimum": 59.3941793704655,
+  "windows": 60
+ },
+ "frame_interval_ms": {
+  "median": 16.699999999254942,
+  "p95": 17.099999997764826,
+  "p99": 17.5,
+  "max": 19.900000002235174,
+  "frames": 3632,
+  "over_50": 0
+ },
+ "webgl_context_lost": 0,
+ "machine_end": {
+  "gpu_asked": "intel",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P0, 64",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "69.2 % brave (gautham)",
+   "61.5 % brave (gautham)",
+   "53.8 % gnome-shell (gautham)",
+   "53.8 % brave (gautham)",
+   "30.8 % chrome-headless (gautham)",
+   "23.1 % chrome-headless (gautham)"
+  ],
+  "nvidia_util": "34 %, 247 MiB",
+  "nvidia_procs": [
+   "Xorg sm 19 %",
+   "gnome-shell sm 14 %",
+   "firefox sm - %"
+  ]
+ },
+ "ended": "2026-10-22T21:14:42.330Z",
+ "passed_no_errors": true
+}

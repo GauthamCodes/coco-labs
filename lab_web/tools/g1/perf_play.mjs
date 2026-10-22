@@ -108,8 +108,10 @@ for (let i = 0; Date.now() < end; i++) {
     await p.getByRole('button', { name: /PLAY AGAIN/ }).click();
     report.restarts++;
     await p.waitForFunction(() => !document.querySelector('[data-testid="g1-results"]'), null, { timeout: 120000 }).catch(() => {});
-    const play = p.locator('[data-testid="g1-play"]:not([disabled])');
-    if (await play.isVisible().catch(() => false)) await play.click();
+    // PLAY AGAIN remounts the game: its loading screen, then PLAY once the model and scene are ready
+    await p.waitForSelector('[data-testid="g1-play"]:not([disabled])', { timeout: 300000 });
+    await p.click('[data-testid="g1-play"]');
+    await p.waitForFunction(() => (window.__cocoGame?.tick?.tick ?? 0) > 1, null, { timeout: 300000 });
   }
   const now = await p.evaluate(() => ({ n: window.__g19.drawn, t: performance.now(), tick: window.__cocoGame?.tick?.tick ?? null }));
   samples.push({ s: (now.t - prev.t) / 1000, drawn: now.n - prev.n, fps: ((now.n - prev.n) * 1000) / (now.t - prev.t), tick: now.tick });
@@ -121,6 +123,8 @@ const sorted = (a) => [...a].sort((x, y) => x - y);
 const q = (a, f) => (a.length ? sorted(a)[Math.min(a.length - 1, Math.floor(f * a.length))] : null);
 const fps = samples.map((s) => s.fps);
 report.samples = samples;
+// G1.13: how much of the run the model was actually ticking (a window whose tick advanced)
+report.play_coverage = { windows: samples.length, ticking: samples.filter((x, i) => i > 0 && x.tick !== null && samples[i - 1].tick !== null && x.tick !== samples[i - 1].tick).length };
 report.drawn_fps = { median: q(fps, 0.5), minimum: fps.length ? Math.min(...fps) : null, windows: fps.length, note: report.software_gpu ? 'software GPU (SwiftShader): the rasteriser runs on this container\'s CPU' : 'hardware GPU' };
 report.frame_js_ms = { median: q(js, 0.5), p95: q(js, 0.95), max: js.length ? Math.max(...js) : null, frames: js.length, budget_60fps_ms: 1000 / 60 };
 report.drawn_frame_ms_p95 = (() => { const ms = fps.filter((f) => f > 0).map((f) => 1000 / f); return q(ms, 0.95); })();
@@ -135,5 +139,5 @@ report.ended = new Date().toISOString();
 report.passed_no_errors = report.errors.length === 0 && report.console_errors.length === 0 && report.webgl_context_lost === 0;
 save();
 await p.screenshot({ path: `${out}/${label}.png` });
-console.log(JSON.stringify({ label, renderer: report.renderer, restarts: report.restarts, frame_interval_ms: report.frame_interval_ms, drawn_fps: report.drawn_fps, frame_js_ms: report.frame_js_ms, lost: report.webgl_context_lost, errors: report.errors.length + report.console_errors.length, title: report.title, loading: report.loading.mode_select_to_play_enabled_ms }));
+console.log(JSON.stringify({ label, renderer: report.renderer, restarts: report.restarts, play_coverage: report.play_coverage, frame_interval_ms: report.frame_interval_ms, drawn_fps: report.drawn_fps, frame_js_ms: report.frame_js_ms, lost: report.webgl_context_lost, errors: report.errors.length + report.console_errors.length, title: report.title, loading: report.loading.mode_select_to_play_enabled_ms }));
 await browser.close();

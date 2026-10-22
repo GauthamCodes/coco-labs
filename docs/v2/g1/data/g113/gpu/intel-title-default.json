@@ -1,0 +1,76 @@
+{
+ "scene": "title",
+ "tier": "default",
+ "quality": "default",
+ "seconds": 60,
+ "gpu": "intel",
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "machine_start": {
+  "gpu_asked": "intel",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P0, 66",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "36.4 % brave (gautham)",
+   "27.3 % gnome-shell (gautham)",
+   "27.3 % brave (gautham)",
+   "9.1 % brave (gautham)",
+   "9.1 % top (gautham)",
+   "0.0 % systemd (root)"
+  ],
+  "nvidia_util": "30 %, 247 MiB",
+  "nvidia_procs": [
+   "Xorg sm 17 %",
+   "gnome-shell sm 12 %",
+   "firefox sm 3 %"
+  ]
+ },
+ "started": "2026-10-22T21:12:27.534Z",
+ "errors": [],
+ "console_errors": [],
+ "renderer": "ANGLE (Intel, Vulkan 1.4.318 (Intel(R) Graphics (RPL-P) (0x0000A7A8)), Intel open-source Mesa driver)",
+ "canvases": 1,
+ "arena_tier": null,
+ "fps": {
+  "median": 59.79073243647235,
+  "minimum": 59.447141583231655,
+  "windows": 60
+ },
+ "frame_interval_ms": {
+  "median": 16.699999999254942,
+  "p95": 17,
+  "p99": 17.299999997019768,
+  "max": 19.199999999254942,
+  "frames": 3626,
+  "over_50": 0
+ },
+ "webgl_context_lost": 0,
+ "machine_end": {
+  "gpu_asked": "intel",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P0, 63",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "63.6 % brave (gautham)",
+   "54.5 % brave (gautham)",
+   "54.5 % brave (gautham)",
+   "36.4 % gnome-shell (gautham)",
+   "18.2 % Xorg (gautham)",
+   "18.2 % chrome-headless (gautham)"
+  ],
+  "nvidia_util": "29 %, 247 MiB",
+  "nvidia_procs": [
+   "Xorg sm 18 %",
+   "gnome-shell sm 14 %",
+   "firefox sm - %"
+  ]
+ },
+ "ended": "2026-10-22T21:13:31.930Z",
+ "passed_no_errors": true
+}

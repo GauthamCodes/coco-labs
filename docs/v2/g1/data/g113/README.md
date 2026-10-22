@@ -92,3 +92,56 @@ Nothing Phone (1) viewport + touch + 4× CPU throttle, NVIDIA): after the fix, G
 M5's Play in the same run 63.1 ms. The `a4b39a6` build gave only 2 samples of 40 (36.3 ms;
 [`latency_before/checks.json`](latency_before/checks.json)) — too few to compare; M5's page
 moved 47.4 ↔ 63.1 ms between runs. No evidence of added latency; not a controlled A/B.
+
+## 4. Real-GPU frame rates (laptop)
+
+Headless Chromium (Playwright 1.64.0), desktop 1440 × 900, the built site served as Pages serves
+it; `G1_GPU=nvidia`: ANGLE on EGL → **NVIDIA GeForce RTX 4050 Laptop GPU, driver 580.178.04**
+(OpenGL ES 3.2); `G1_GPU=intel`: ANGLE on Vulkan 1.4.318 → **Intel Raptor Lake-P graphics, Mesa
+25.2.8-0ubuntu0.24.04.2**. Each file records the page's renderer string (a run on the wrong GPU
+is refused), the machine at start and end (balanced, on AC, Gautham's Brave and the desktop
+sharing the machine; the desktop is on the NVIDIA GPU). **Headless Chromium draws at most
+60 frames per second here**, so 60 fps is the ceiling of this harness, not of the GPUs; frame
+time = wall time between drawn frames (`perf_play.mjs`, `gpu_scenes.mjs`). Tiers: the game picks
+`high` on a desktop and `medium` on a touch device (`src/game/tier.ts`), so Play ran at both;
+the title hero draws at most `medium`; Compare's `quality=auto` settled on `high`.
+Title and Compare: 60 s each. Play: Fetch Rush phone round 1 in the Depot, driven by keys for
+10 minutes, the round restarted through PLAY AGAIN when its timer ended (2 restarts per run;
+the model ticked in 584–585 of ~586 one-second windows).
+
+| GPU | Scene | Tier | fps median / min (1 s windows) | Frame time median / p95 / max | Frames > 50 ms | Context lost | Errors | File |
+|---|---|---|---|---|---|---|---|---|
+| NVIDIA | Title | default (hero ≤ medium) | 59.7 / 59.3 | 16.7 / 17.0 / 18.3 ms | 0 / 3,627 | 0 | 0 | [`gpu/nvidia-title-default.json`](gpu/nvidia-title-default.json) |
+| NVIDIA | Play, 10 min | medium | 60.1 / 56.0 | 16.6 / 19.0 / 263.3 ms | 3 / 35,999 | 0 | 0 | [`gpu/nvidia-play-fetch-medium-10min.json`](gpu/nvidia-play-fetch-medium-10min.json) |
+| NVIDIA | Play, 10 min | high | 60.1 / 54.5 | 16.7 / 18.9 / 273.3 ms | 8 / 36,008 | 0 | 0 | [`gpu/nvidia-play-fetch-high-10min.json`](gpu/nvidia-play-fetch-high-10min.json) |
+| NVIDIA | Compare, 4 panes | auto (→ high) | 59.7 / 59.5 | 16.7 / 17.0 / 19.7 ms | 0 / 3,626 | 0 | 0 | [`gpu/nvidia-compare-auto.json`](gpu/nvidia-compare-auto.json) |
+| NVIDIA | Compare, 4 panes | high | 59.6 / 59.5 | 16.7 / 16.9 / 20.0 ms | 0 / 3,627 | 0 | 0 | [`gpu/nvidia-compare-high.json`](gpu/nvidia-compare-high.json) |
+| Intel | Title | default (hero ≤ medium) | 59.8 / 59.4 | 16.7 / 17.0 / 19.2 ms | 0 / 3,626 | 0 | 0 | [`gpu/intel-title-default.json`](gpu/intel-title-default.json) |
+| Intel | Play, 10 min | medium | 60.1 / 59.2 | 16.7 / 19.0 / 55.3 ms | 1 / 36,054 | 0 | 0 | [`gpu/intel-play-fetch-medium-10min.json`](gpu/intel-play-fetch-medium-10min.json) |
+| Intel | Play, 10 min | high | 60.1 / 58.6 | 16.7 / 19.1 / 62.0 ms | 3 / 36,021 | 0 | 0 | [`gpu/intel-play-fetch-high-10min.json`](gpu/intel-play-fetch-high-10min.json) |
+| Intel | Compare, 4 panes | auto (→ high) | 60.2 / 59.4 | 16.7 / 17.1 / 19.9 ms | 0 / 3,632 | 0 | 0 | [`gpu/intel-compare-auto.json`](gpu/intel-compare-auto.json) |
+| Intel | Compare, 4 panes | high | 60.3 / 59.4 | 16.7 / 17.0 / 21.3 ms | 0 / 3,632 | 0 | 0 | [`gpu/intel-compare-high.json`](gpu/intel-compare-high.json) |
+
+Main-thread JavaScript per frame in Play (p95): 5.4–7.5 ms. Title first paint 20–68 ms; mode
+select → PLAY ready 2.2–3.1 s (each Play file's `title` and `loading`). Screenshots beside each
+file. Where in the 10 minutes the frames over 50 ms fall is not recorded (counts only).
+
+**A harness defect, kept** ([`gpu/first_pass_restart_defect/`](gpu/first_pass_restart_defect/)):
+the first pass of the four Play runs did not wait for PLAY after PLAY AGAIN, so from ~288 s on
+(the phone timer) no round was running — about half of each "10 minutes" measured the loading
+screen (their `samples` show `tick: null`). `perf_play.mjs` now waits for PLAY and records
+`play_coverage`; the table above is the second pass.
+
+**Defaults:** both GPUs hold the 60 fps ceiling at `high` in Play and Compare, so the desktop
+default (`high`) stays. The phone's default tier and frame-rate cap are **pending**: the Nothing
+Phone (1) was plugged in, but in USB tethering (RNDIS) with no ADB interface (USB debugging
+off), so `adb devices` listed nothing (§5).
+
+## 5. The Nothing Phone (1)
+
+**Pending — not measured.** `lsusb`: `05c6:f00e` "Nothing / YUPIK-QRD", serial P222AD004771,
+interfaces RNDIS only; `adb devices` (system adb and `~/coco_labs_ws/m5-tools/adb`) empty all
+session. Needs USB debugging on (Developer options) and the laptop's key accepted; then M5's
+USB/CDP procedure (cold start stages, Play fps at 1 and 10 minutes, touch-to-motion, battery
+and temperature, PHONE_PROFILE.md's viewport and safe-area assumptions) and the phone's
+default tier and frame-rate cap. `PHONE_PROFILE.md`'s values stay provisional.

@@ -1,0 +1,77 @@
+{
+ "scene": "title",
+ "tier": "default",
+ "quality": "default",
+ "seconds": 60,
+ "gpu": "nvidia",
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "machine_start": {
+  "gpu_asked": "nvidia",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P0, 62",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "45.5 % brave (gautham)",
+   "36.4 % brave (gautham)",
+   "27.3 % gnome-shell (gautham)",
+   "27.3 % 2.1.308 (gautham)",
+   "27.3 % brave (gautham)",
+   "9.1 % rcu_preempt (root)"
+  ],
+  "nvidia_util": "35 %, 247 MiB",
+  "nvidia_procs": [
+   "Xorg sm 29 %",
+   "gnome-shell sm 6 %",
+   "firefox sm - %"
+  ]
+ },
+ "started": "2026-10-22T20:48:47.187Z",
+ "errors": [],
+ "console_errors": [],
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "canvases": 1,
+ "arena_tier": null,
+ "fps": {
+  "median": 59.737156511438684,
+  "minimum": 59.32957579348937,
+  "windows": 60
+ },
+ "frame_interval_ms": {
+  "median": 16.699999999254942,
+  "p95": 17,
+  "p99": 17.199999999254942,
+  "max": 18.300000000745058,
+  "frames": 3627,
+  "over_50": 0
+ },
+ "webgl_context_lost": 0,
+ "machine_end": {
+  "gpu_asked": "nvidia",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P0, 61",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "72.7 % brave (gautham)",
+   "45.5 % brave (gautham)",
+   "18.2 % gnome-shell (gautham)",
+   "18.2 % firefox (gautham)",
+   "18.2 % brave (gautham)",
+   "9.1 % Xorg (gautham)"
+  ],
+  "nvidia_util": "33 %, 335 MiB",
+  "nvidia_procs": [
+   "Xorg sm 8 %",
+   "gnome-shell sm 21 %",
+   "firefox sm - %",
+   "chrome-headless sm 4 %"
+  ]
+ },
+ "ended": "2026-10-22T20:49:51.706Z",
+ "passed_no_errors": true
+}
