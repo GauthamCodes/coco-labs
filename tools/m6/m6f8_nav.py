@@ -16,7 +16,7 @@
 """
 M6F.8: drive Nav2's NavigateToPose through a list of goals and record each result.
 
-    m6f8_nav.py GOALS.json OUT.jsonl [--timeout 420] [--initial-pose]
+    m6f8_nav.py GOALS.json OUT.jsonl [--timeout 420] [--initial-pose] [--reset-each]
 
 GOALS.json is ``tools/m6/m6f8_goals.py``'s (map frame; on the Depot map = world). Per goal,
 one JSON line: the action's status (SUCCEEDED / ABORTED / CANCELED / REJECTED / TIMEOUT),
@@ -25,10 +25,14 @@ distance driven and the final pose from Gazebo's ground truth (``/model/coco/odo
 and from AMCL (``/amcl_pose``), and their distances to the goal. Evidence class STACK (the
 full ROS 2 stack in Gazebo). It publishes nothing to the wheels: Nav2 drives through the
 arbiter; ``--initial-pose`` publishes the goal file's ``start`` once on ``/initialpose``.
+``--reset-each`` makes every goal an independent leg from the start: before each goal, COCO
+is teleported there in Gazebo (``/world/<world>/set_pose``, the simulator's own service)
+and AMCL is re-seeded with the same pose, so one failed leg cannot fail the next.
 """
 import argparse
 import json
 import math
+import subprocess
 import time
 
 from action_msgs.msg import GoalStatus
@@ -92,6 +96,15 @@ class Runner(Node):
         m.pose.covariance[35] = 0.05 ** 2
         self.init_pub.publish(m)
 
+    def teleport(self, world, x, y, yaw):
+        q = quat(yaw)
+        req = (f"name: 'coco', position: {{x: {x}, y: {y}, z: 0.05}}, "
+               f"orientation: {{x: 0, y: 0, z: {q[2]}, w: {q[3]}}}")
+        r = subprocess.run(['gz', 'service', '-s', f'/world/{world}/set_pose', '--reqtype',
+                            'gz.msgs.Pose', '--reptype', 'gz.msgs.Boolean', '--timeout', '5000',
+                            '--req', req], capture_output=True, text=True, timeout=30)
+        return 'data: true' in r.stdout
+
     def goal(self, g, timeout_s):
         x, y, yaw = g['pose']
         row = {'id': g['id'], 'label': g.get('label'), 'goal': g['pose']}
@@ -151,6 +164,8 @@ def main():
     ap.add_argument('out')
     ap.add_argument('--timeout', type=float, default=420.0, help='per goal, simulated seconds')
     ap.add_argument('--initial-pose', action='store_true')
+    ap.add_argument('--reset-each', action='store_true')
+    ap.add_argument('--world', default='coco_depot_v1')
     o = ap.parse_args()
     doc = json.load(open(o.goals))
     rclpy.init()
@@ -163,7 +178,17 @@ def main():
         n.spin_for(5.0)
     with open(o.out, 'a') as f:
         for g in doc['goals']:
+            reset = None
+            if o.reset_each:
+                reset = n.teleport(o.world, *doc['start'])
+                n.spin_for(2.0)
+                for _ in range(3):
+                    n.initial_pose(*doc['start'])
+                    n.spin_for(1.0)
+                n.spin_for(4.0)
             row = n.goal(g, o.timeout)
+            if reset is not None:
+                row['reset_to_start'] = reset
             f.write(json.dumps(row) + '\n')
             f.flush()
             print(json.dumps({k: row.get(k) for k in ('id', 'status', 'error_code', 'sim_s',

@@ -16,7 +16,7 @@
 # m6f8_run.sh -- M6F.8: the generated Depot in Gazebo (headless) with COCO and Nav2,
 # driven through a goal file (docs/v2/m6/M6F8_PLAN.md). One fresh simulator per run.
 #
-#   COCO_WS=<overlay> tools/m6/m6f8_run.sh GOALS.json OUT_DIR [--initial-pose]
+#   COCO_WS=<overlay> tools/m6/m6f8_run.sh GOALS.json OUT_DIR [m6f8_nav.py flags...]
 #
 # GEN (default ~/coco_lab_runs/m6/gen/coco_depot_v1) holds gen_level.py's outputs, and the
 # world is run from ~/coco_lab_runs/m6/gazebo_models/worlds/ (so ros_clean.sh's
@@ -28,9 +28,10 @@
 # record a bag; m6f8_nav.py through the goals; stop; ros_clean.sh. Raw logs in OUT_DIR.
 set -o pipefail
 ulimit -c 0
-GOALS="${1:?usage: m6f8_run.sh GOALS.json OUT_DIR [--initial-pose]}"
+GOALS="${1:?usage: m6f8_run.sh GOALS.json OUT_DIR [m6f8_nav.py flags]}"
 OUT="${2:?usage: m6f8_run.sh GOALS.json OUT_DIR}"
-INIT="${3:-}"
+shift 2
+NAV_FLAGS=("$@")
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 : "${COCO_WS:?set COCO_WS to the overlay built from this repo}"
 GEN="${GEN:-$HOME/coco_lab_runs/m6/gen/coco_depot_v1}"
@@ -154,7 +155,7 @@ setsid ros2 bag record --use-sim-time --include-hidden-topics -s mcap \
     -o "$OUT/bag" "${TOPICS[@]}" > "$OUT/bag.log" 2>&1 &
 BAG_PGID=$!
 sleep 5
-"$PY" "$REPO/tools/m6/m6f8_nav.py" "$GOALS" "$OUT/results.jsonl" ${INIT:+--initial-pose}
+"$PY" "$REPO/tools/m6/m6f8_nav.py" "$GOALS" "$OUT/results.jsonl" "${NAV_FLAGS[@]}"
 RC=$?
 say "goals done (rc $RC)"
 timeout 20 gz topic -e -t /world/coco_depot_v1/pose/info -n 1 > "$OUT/poses_at_end.txt" 2>&1
