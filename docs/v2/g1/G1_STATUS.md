@@ -4,8 +4,8 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 
 ## Now
 
-- **Current checkpoint:** G1.11 Gautham's follow-up — done in the cloud (Fetch Rush rules 2, no planning in play, look polish, gz marker, v3 cost); results in [`G1_RESULTS.md`](G1_RESULTS.md); laptop and phone items pending.
-- **Next step:** Gautham's look review of G1.11 ([`BEFORE_AFTER.md`](BEFORE_AFTER.md), column "After G1.11") and the Fetch Rush timers (8–9½ min by the decision's formula); then the laptop and phone items below; then the M6 UI phase (README §7).
+- **Current checkpoint:** G1.12 Gautham's decisions of 2026-10-22 — done in the cloud (Fetch Rush rules 3: phone round + Full shift with the lanes kept out; AUTO's search run ahead; the chase camera reframed and HUD-checked); results in [`G1_RESULTS.md`](G1_RESULTS.md), evidence [`data/g112/README.md`](data/g112/README.md); the phone budget is provisional (22 m: 16 m is infeasible); the AUTO tick-gap target needs the laptop.
+- **Next step:** Gautham's calls on the phone budget and the look (BEFORE_AFTER "After G1.12"); then the laptop and phone items below; then the M6 UI phase (README §7).
 
 ## Setup facts
 
@@ -64,8 +64,11 @@ Recorded in `docs/STATUS.md`'s plan-change log, with the 2026-10-18 Fetch Rush d
 | G1.9 Performance | done (cloud) | Emulated Nothing Phone (1), Depot medium, 10 min: JS per frame median 7.9 ms, p95 16.0 ms (budget 16.7); drawn 4.7 fps median **on SwiftShader (software GPU), not a phone number**; desktop 10 min JS 1.8 / 5.5 ms; 30-min emulated soak: 0 errors, **0 WebGL context losses**; title JS 284,510 B gzip; every world × tier within budget. **60 fps not evaluable without a GPU — pending laptop and real phone.** [`data/g19/README.md`](data/g19/README.md) |
 | G1.10 Close | done | After screenshots ([`BEFORE_AFTER.md`](BEFORE_AFTER.md)); coco_lab 1026/0/2, tools 230/0, vitest 532/0, typecheck, build, dist; v1 corpus 15,000 hashes and v2 corpus (Node + Chromium) 15,000 ticks each, 0 mismatches; 50 v1 URL forms + 6 archive views, 5 replays, 5 canvas scenes pass. [`G1_RESULTS.md`](G1_RESULTS.md), [`data/g110/README.md`](data/g110/README.md) |
 | G1.11 Gautham's follow-up | done | (1) `gz` marker, CI `-m "not gz"`: 0 skips. (2) LiDAR beam directions computed once a tick (same bits; goldens unchanged): v3/v2 per-tick cost 1.15 → **1.10**. (3) Fetch Rush rules 2 plan nothing in play: worst model-tick gap **25.8 s → 0.96 s**, "clock waits" banner 2× (26.8 s) → **never**, frames over 50 ms 1 → **0** (max 18.9 ms), 3/3 delivered in 358.2 s. (4) The decision implemented: a start zone, 3 orders within a 32 m planned round trip, timer = reference × 1.5 → **491.7 / 495.8 / 577.2 / 506.5 s** (shifts 1/3/5/6); seeds 2 and 4: the reference bot stopped in the forklift lane (0 delivered) → no timer, not offered. (5) Look polish; after shots `screens/after_g111/`. Found at close: hash v3's numerics mode was sticky (a v3 call left it on; CI's Lab 5 replay failed after the v3 glue tests) → now scoped per call, hashes unchanged (ADR 0010 amended). Suites: coco_lab 1,037 (+2 `gz` deselected), tools 230, vitest 532, native gate exact; CI green on `dfdf4e6` ([`data/g111/suites.txt`](data/g111/suites.txt)). [`data/g111/README.md`](data/g111/README.md), [`docs/v2/m6/GAMES.md`](../m6/GAMES.md) |
+| G1.12 Gautham's 2026-10-22 decisions | done (two items open) | (1–2) Fetch Rush rules 3: phone round (2 orders) and Full shift (3 orders, 32 m); routes kept out of the forklift lanes; a round the bot cannot finish (or where it stands in a lane) rejected at generation — none was. **16 m is infeasible on the Depot** with the lanes kept out (no 2-order round below 21.4 m): phone budget **provisional 22 m**, one round, timer **275.9 s (4:35.9)**; Full shift timers **475.7–577.5 s**. (3) `Arena.prefetch` runs AUTO's search between ticks (≤ 4 ms slices); the AUTO tick takes it over, hashes unchanged: the AUTO tick's worker step **452 → ≤ 101 ms**; the 100 ms tick-gap target is **not shown here** (this container's tick arrivals jitter p95 300–450 ms without AUTO) → laptop. (4) Chase camera: 2.1 m boom (≥ 1.7 m, ≥ 1.2 m up), COCO at 40 % down, rises over walls, keeps COCO's shoulders in view, softer headlight and bloom, spawn in the open facing the aisle; HUD overlap **0 of 40** poses (CI step). [`data/g112/README.md`](data/g112/README.md) |
 
 ## Gautham: look at these
+
+- **G1.12 look**: [`BEFORE_AFTER.md`](BEFORE_AFTER.md) column "After G1.12" (`screens/after_g112/`): the reframed chase camera (COCO upper-middle, clear of the HUD), the softer headlight, the start at the Loading dock facing the open aisle; HUD-check samples in `data/g112/chase/`.
 
 - **G1.11 look**: [`BEFORE_AFTER.md`](BEFORE_AFTER.md) column "After G1.11" (`screens/after_g111/`): brighter hall, COCO's rim light and LED glow, the thin ghost route with chevrons, the minimap. Shift 1 starts facing a pallet stack, which the headlight lights.
 
@@ -86,6 +89,8 @@ Recorded in `docs/STATUS.md`'s plan-change log, with the 2026-10-18 Fetch Rush d
 
 ## Laptop items pending
 
+- **G1.12**: AUTO press → motion tick gaps on a real GPU (`lab_web/tools/g1/fetch_timing.mjs`, before = `a4b39a6`, after = this build): the ≤ 100 ms target cannot be shown in this container.
+
 - **G1.11**: the `gz`-marked tests (`pytest -m gz`, `test_worldgen.py` gz sdf checks on the generated worlds).
 
 - **G1.9**: real-GPU fps on both GPUs; the Nothing Phone (1) over USB/CDP with a 10-minute heat run; the default tier.
@@ -105,11 +110,13 @@ Recorded in `docs/STATUS.md`'s plan-change log, with the 2026-10-18 Fetch Rush d
 
 ## Questions for Gautham
 
+- **Phone round budget (G1.12):** 16 m admits no lane-free 2-order round on the Depot (smallest 21.4 m; `data/g112/phone_budget.json`). Provisional 22 m gives one round for every seed, timer 4:35.9. Keep 22 m, take 25–30 m for 2–15 rounds (longer timers), or allow objects near the lanes / move objects in the level?
+- **Spawn heading (G1.12):** COCO starts facing the open aisle, as decided; on the phone round the first ghost route leaves behind it, so the player turns first. Prefer the clear heading closest to the first route?
+- ~~AUTO's route planning pauses the model~~ — G1.12: the search runs ahead between ticks; the AUTO tick's worker step is ≤ 101 ms here (was 452 ms); the wall-clock target is a laptop measurement.
+- ~~Fetch Rush timers 8:11–9:37 / seeds 2 and 4~~ — G1.12: the phone round (4:36) is the default, the Full shift keeps 3 orders (7:56–9:38); rounds the bot cannot finish are rejected at generation.
+
 - ~~CI `coco_lab in a plain venv` red on the gz skips~~ — decided 2026-10-21: `gz` marker, `-m "not gz"` (G1.11).
 - ~~Accept hash v3's +15 %?~~ — accepted 2026-10-21; now 1.10× after G1.11's hash-neutral speed-up.
-- **Fetch Rush timers are 8:11–9:37** by the decision's formula (the reference needs 328–385 s for 3 budgeted orders at 0.3 m/s): keep, or fewer orders / objects nearer the docks for a shorter game?
-- **Seeds 2 and 4** (the High-bay round crossing the forklift lane) have no reference time because M6F.6's bot stops in the lane: teach the bot the Rush Hour staging crossing, or keep excluding such rounds?
-- **AUTO's route planning** still pauses the model 0.8–1.0 s per press on this machine (the Arena's own planner, as for a tapped goal; below the banner): time-slice it (M6 UI phase)?
 
 - ~~Fetch Rush's next-order ghost is slow~~ — fixed in G1.11 (rules 2 precompute it). Was: (M6 rule `FetchRush._new_order`: up to 17 fully traced A* searches on the Depot): measured 12.1 s CPython, 17.4 s in a Pyodide tick. Model time waits (scores stay fair) and the HUD says so, but the screen pauses after each delivery. Options: compute the ghost lazily at the end, untraced searches with a test that results are identical, or M6F.4's WebAssembly gate. G1 left the rule unchanged.
 
