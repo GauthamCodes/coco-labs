@@ -66,7 +66,16 @@ await until((s) => s.tick > 2, 'started');
 // G1.12: tick arrivals time-stamped as the worker's message arrives (not at the next frame,
 // whose interval under a software renderer would hide the gap), with the worker's step time
 await p.evaluate(() => {
-  const g = window.__g111; g.msg = [];
+  const g = window.__g111; g.msg = []; g.sends = []; g.shown = [];
+  // G1.13: when each tick is handed to the game (the session's schedule); absent before G1.13
+  if ('presentHook' in window.__cocoGame.session) {
+    window.__cocoGame.session.presentHook = (t, at) => g.shown.push([at, t.tick, t.source, t.v, 0]);
+  }
+  // G1.13: when each step was SENT (the session's pump), to split a tick gap into the send
+  // cadence and the worker's step time
+  const client = window.__cocoGame.session.client;
+  const step = client.step.bind(client);
+  client.step = (...a) => { g.sends.push(performance.now()); return step(...a); };
   window.__cocoGame.session.client.worker.addEventListener('message', (m) => {
     const d = m.data; if (d && d.type === 'tick') g.msg.push([performance.now(), d.tick.tick, d.tick.source, d.tick.v, d.stepMs]);
   });
@@ -118,6 +127,18 @@ const auto_presses = presses.map(({ label, at }) => {
   for (let n = Math.max(1, i); n <= j; n++) { gap = Math.max(gap, T[n][0] - T[n - 1][0]); step = Math.max(step, T[n][4]); }
   return { label, motion: true, press_to_motion_ms: Math.round(T[j][0] - at), ticks: T[j][1] - T[i][1] + 1, max_tick_gap_ms: Math.round(gap), over_period_ms: Math.max(0, Math.round(gap - 100)), max_worker_step_ms: Math.round(step) };
 });
+// G1.13: the same windows on the ticks as the game receives them (the session's schedule)
+const W = g.shown ?? [];
+const windows = (rows) => presses.map(({ label, at }) => {
+  const i = rows.findIndex(([t]) => t > at);
+  const j = rows.findIndex(([t, , src, v], n) => n >= i && i >= 0 && (src === 'planner' || src === 'mission') && Math.abs(v) > 0.01);
+  if (i < 0 || j < 0) return { label, motion: false };
+  let gap = 0;
+  for (let n = Math.max(1, i); n <= j; n++) gap = Math.max(gap, rows[n][0] - rows[n - 1][0]);
+  return { label, motion: true, press_to_motion_ms: Math.round(rows[j][0] - at), ticks: rows[j][1] - rows[i][1] + 1, max_tick_gap_ms: Math.round(gap), over_period_ms: Math.max(0, Math.round(gap - 100)) };
+});
+const shownPresses = W.length ? windows(W) : null;
+const shownGaps = W.slice(1).map(([t], n) => t - W[n][0]);
 const msgGaps = T.slice(1).map(([t, k], n) => ({ ms: t - T[n][0], ticks: k - T[n][1] }));
 const msgSteps = T.map((x) => x[4]);
 const report = {
@@ -134,9 +155,18 @@ const report = {
     over_150: msgGaps.filter((x) => x.ms > 150).length, ticks: T.length },
   worker_step_all_ms: { max: msgSteps.length ? Math.max(...msgSteps) : null, p95: q(msgSteps, 0.95), median: q(msgSteps, 0.5) },
   auto_presses,
+  presented: W.length ? { note: 'G1.13: ticks time-stamped as the session hands them to the game (presentHook)',
+    gap_ms: { max: Math.max(...shownGaps), p95: q(shownGaps, 0.95), median: q(shownGaps, 0.5), over_100: shownGaps.filter((x) => x > 100).length, over_110: shownGaps.filter((x) => x > 110).length, gaps: shownGaps.length },
+    auto_presses: shownPresses, auto_max_tick_gap_ms: shownPresses.filter((x) => x.motion).reduce((m, x) => Math.max(m, x.max_tick_gap_ms), 0),
+    rows: W.map((r) => [Math.round(r[0] * 10) / 10, r[1], r[2], r[3]]) } : null,
+  // G1.13: the raw rows behind every number above: [arrival ms, tick, source, v, worker step ms],
+  // and the send times (ms, same clock)
+  tick_messages: T.map((r) => [Math.round(r[0] * 10) / 10, r[1], r[2], r[3], Math.round(r[4] * 10) / 10]),
+  sends: (g.sends ?? []).map((x) => Math.round(x * 10) / 10),
+  presses,
   auto_max_tick_gap_ms: auto_presses.filter((x) => x.motion).reduce((m, x) => Math.max(m, x.max_tick_gap_ms), 0),
   frame_js_ms: { max: g.js.length ? Math.max(...g.js) : null, p95: q(g.js, 0.95), median: q(g.js, 0.5), frames: g.js.length, over_50: g.slow.length, slow: g.slow.slice(0, 20) },
 };
 writeFileSync(out, JSON.stringify(report, null, 1) + '\n');
-console.log(JSON.stringify({ label: report.label, deliveries: report.deliveries, orders: report.orders, seconds: report.seconds, tick_gap_ms: { max: report.tick_gap_ms.max, over_800: report.tick_gap_ms.over_800.length }, busy: report.busy_banner, arrival: { max: report.tick_arrival_ms.max, p95: report.tick_arrival_ms.p95 }, step_max: report.worker_step_all_ms.max, auto_max_gap: report.auto_max_tick_gap_ms, auto: auto_presses.map((x) => x.max_tick_gap_ms), frame_js: { max: report.frame_js_ms.max, over_50: report.frame_js_ms.over_50 }, errors: errors.length }));
+console.log(JSON.stringify({ label: report.label, deliveries: report.deliveries, orders: report.orders, seconds: report.seconds, tick_gap_ms: { max: report.tick_gap_ms.max, over_800: report.tick_gap_ms.over_800.length }, busy: report.busy_banner, arrival: { max: report.tick_arrival_ms.max, p95: report.tick_arrival_ms.p95 }, step_max: report.worker_step_all_ms.max, auto_max_gap: report.auto_max_tick_gap_ms, auto: auto_presses.map((x) => x.max_tick_gap_ms), shown: report.presented ? { auto_max: report.presented.auto_max_tick_gap_ms, auto: report.presented.auto_presses.map((x) => x.max_tick_gap_ms), gap: report.presented.gap_ms } : null, frame_js: { max: report.frame_js_ms.max, over_50: report.frame_js_ms.over_50 }, errors: errors.length }));
 await b.close();

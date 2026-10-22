@@ -22,6 +22,7 @@
  * (recorded); it is never a phone measurement.
  */
 import { chromium } from 'playwright';
+import { GPU, launchOptions, renderer as rendererOf, machine } from './gpu.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { nothingPhone1, throttlePhone } from '../phone/nothing-phone-1.mjs';
 
@@ -29,9 +30,10 @@ const [site, out, ...rest] = process.argv.slice(2);
 const TRIALS = rest.includes('--latency-trials') ? Number(rest[rest.indexOf('--latency-trials') + 1]) : 10;
 const ONLY_LATENCY = rest.includes('--only-latency');
 mkdirSync(out, { recursive: true });
-const launch = { ...(process.env.G1_CHROMIUM ? { executablePath: process.env.G1_CHROMIUM } : {}), args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] };
+// G1.13: G1_GPU=nvidia|intel launches on the laptop's GPU (gpu.mjs); software is the default
+const launch = launchOptions();
 const browser = await chromium.launch(launch);
-const report = { site, when: new Date().toISOString(), class: 'TESTED (emulated profile, cloud software renderer)', cases: [], latency: {} };
+const report = { site, when: new Date().toISOString(), gpu: GPU, machine_start: machine(), class: GPU === 'software' ? 'TESTED (emulated profile, cloud software renderer)' : `TESTED (emulated phone viewport, touch and 4x CPU throttle on this laptop; real GPU: ${GPU})`, cases: [], latency: {} };
 const GAME = `${site}?view=play&game=fetch_rush&seed=1`;
 
 async function open(profile, url = GAME, { throttle = false, pad = false } = {}) {
@@ -154,6 +156,7 @@ try {
     if (name === 'g1') await startGame(p);
     else { await p.waitForFunction(() => !!window.__cocoArena?.client?.world, null, { timeout: 180000 }); await p.evaluate(() => window.dispatchEvent(new Event('coco:skip-tutorial'))); }
     await p.waitForTimeout(1500);
+    report.renderer_string = await rendererOf(p);
     const pad = await p.locator(joySel).boundingBox();
     const [x, y] = name === 'g1' ? [pad.x + 160, pad.y + pad.height * 0.6] : [pad.x + pad.width / 2, pad.y + pad.height / 2];
     const got = [];
@@ -173,7 +176,8 @@ try {
     await ctx.close();
   }
 } catch (e) { report.error = String(e); console.error(e); }
-report.renderer = 'Chromium SwiftShader (cloud container, no GPU); emulated Nothing Phone (1) = viewport + touch (+4x CPU throttle for latency)';
+report.renderer = GPU === 'software' ? 'Chromium SwiftShader (cloud container, no GPU); emulated Nothing Phone (1) = viewport + touch (+4x CPU throttle for latency)' : `${GPU} (see renderer_string); emulated Nothing Phone (1) = viewport + touch (+4x CPU throttle for latency)`;
+report.machine_end = machine();
 report.passed = report.cases.length >= 8 && report.cases.every((c) => c.ok);
 writeFileSync(`${out}/checks.json`, JSON.stringify(report, null, 1) + '\n');
 await browser.close();

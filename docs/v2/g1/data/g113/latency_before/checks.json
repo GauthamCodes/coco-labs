@@ -1,0 +1,116 @@
+{
+ "site": "http://127.0.0.1:4175/coco-labs/",
+ "when": "2026-10-22T20:42:44.120Z",
+ "gpu": "nvidia",
+ "machine_start": {
+  "gpu_asked": "nvidia",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P0, 63",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "45.5 % brave (gautham)",
+   "36.4 % brave (gautham)",
+   "27.3 % gnome-shell (gautham)",
+   "9.1 % Xorg (gautham)",
+   "9.1 % Privileged (gautham)",
+   "9.1 % brave (gautham)"
+  ],
+  "nvidia_util": "31 %, 258 MiB",
+  "nvidia_procs": [
+   "Xorg sm 6 %",
+   "gnome-shell sm 29 %",
+   "firefox sm - %",
+   "chrome-headless sm - %"
+  ]
+ },
+ "class": "TESTED (emulated phone viewport, touch and 4x CPU throttle on this laptop; real GPU: nvidia)",
+ "cases": [],
+ "latency": {
+  "g1": {
+   "url": "http://127.0.0.1:4175/coco-labs/?view=play&game=fetch_rush&seed=1",
+   "trials": 40,
+   "samples": [
+    35.20000000298023,
+    36.30000000074506
+   ],
+   "median_ms": 36.30000000074506
+  },
+  "m5": {
+   "url": "http://127.0.0.1:4175/coco-labs/?view=arena",
+   "trials": 40,
+   "samples": [
+    74.80000000074506,
+    64.10000000149012,
+    62.70000000298023,
+    77.40000000223517,
+    46.20000000298023,
+    47.099999997764826,
+    47.19999999925494,
+    63.5,
+    46,
+    47.30000000074506,
+    47.79999999701977,
+    47.80000000074506,
+    47.399999998509884,
+    47.600000001490116,
+    45.599999997764826,
+    46.900000002235174,
+    47.599999997764826,
+    46.19999999925494,
+    49.29999999701977,
+    48.400000002235174,
+    45.099999997764826,
+    47,
+    47.19999999925494,
+    46.80000000074506,
+    42.80000000074506,
+    48.100000001490116,
+    47.600000001490116,
+    47.100000001490116,
+    47.600000001490116,
+    47.69999999925494,
+    46.30000000074506,
+    51.20000000298023,
+    46.80000000074506,
+    45,
+    46.600000001490116,
+    47.399999998509884,
+    46,
+    47.600000001490116,
+    46.600000001490116,
+    67.69999999925494
+   ],
+   "median_ms": 47.399999998509884
+  }
+ },
+ "renderer_string": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "renderer": "nvidia (see renderer_string); emulated Nothing Phone (1) = viewport + touch (+4x CPU throttle for latency)",
+ "machine_end": {
+  "gpu_asked": "nvidia",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P0, 67",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "54.5 % brave (gautham)",
+   "54.5 % brave (gautham)",
+   "54.5 % brave (gautham)",
+   "36.4 % gnome-shell (gautham)",
+   "18.2 % Xorg (gautham)",
+   "18.2 % 2.1.308 (gautham)"
+  ],
+  "nvidia_util": "32 %, 298 MiB",
+  "nvidia_procs": [
+   "Xorg sm 33 %",
+   "gnome-shell sm - %",
+   "firefox sm - %",
+   "chrome-headless sm - %"
+  ]
+ },
+ "passed": false
+}
