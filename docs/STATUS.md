@@ -2,7 +2,7 @@
 
 ## Position
 
-- **G1 · Game Look: G1.0–G1.12 done in the cloud** (2026-10-22; draft PR #27 into main, not merged): [results](v2/g1/G1_RESULTS.md), [G1 status](v2/g1/G1_STATUS.md), [prompt](v2/g1/G1_PROMPT.md). Open: the phone-round budget (16 m infeasible; provisional 22 m), the AUTO tick-gap target on the laptop, Gautham's look review, laptop and phone items.
+- **G1 · Game Look: G1.0–G1.13 done** (G1.0–G1.12 in the cloud 2026-10-22; G1.13 on the laptop 2026-10-23; PR #27 into main, ready for review, not merged): [results](v2/g1/G1_RESULTS.md), [G1 status](v2/g1/G1_STATUS.md), [laptop prompt](v2/g1/G1_LAPTOP_PROMPT.md). Phone budget 22 m (no budget meets Gautham's rule); AUTO tick-gap target not met (119–141 ms after one fix); real-GPU 60 fps on both GPUs; four-engine determinism 0 mismatches; ROS 12/12; M6F.4 and M6F.8 measured. Open: the Nothing Phone (1) run, Gautham's G1.13 questions.
 - Independent review of `fe9d544` integrated: PR #26 merged as `d8b6d4c` after exact review-head `a81f8f4` passed Lab run [39438277138](https://github.com/GauthamCodes/coco-labs/actions/runs/39438277138); all three jobs green, deploy skipped.
 
 - 2026-10-20 closure attempt: **M5 remains open** at the owner-requested non-tie report stop. [Diagnosis/report](v2/data/m5/closure-20261020/REPORT.md): DWA costmap rasterization divergence, not a near-tie; no model/hash/golden change.

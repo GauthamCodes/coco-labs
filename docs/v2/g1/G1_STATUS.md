@@ -4,8 +4,8 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 
 ## Now
 
-- **Current checkpoint:** G1.13 laptop work (2026-10-22/23, `~/coco_labs_ws/worktrees/g1`): decisions applied (heading; budget 22 m — no budget qualifies); environment rebuilt; ROS suites and gz tests run; M6F.8 smoke runs done. Evidence [`data/g113/README.md`](data/g113/README.md).
-- **Next step:** build the site at head; AUTO tick gaps (before `a4b39a6` / after); real-GPU fps; four-engine determinism and the v3 gate; M6F.4; the M6F.8 ghost; the phone if `adb devices` lists it; then close.
+- **Current checkpoint:** **G1.13 laptop work — done** (2026-10-23) except the Nothing Phone (1) (not connected with ADB). Results: [`G1_RESULTS.md`](G1_RESULTS.md) § G1.13; evidence [`data/g113/README.md`](data/g113/README.md). PR #27 marked ready for review (not merged).
+- **Next step:** Gautham reviews PR #27 and answers the G1.13 questions (G1_RESULTS); plug the phone in with USB debugging on for its run; then the M6 UI phase (README §7).
 
 ## Setup facts
 
@@ -76,7 +76,7 @@ Recorded in `docs/STATUS.md`'s plan-change log, with the 2026-10-18 Fetch Rush d
 | G1.10 Close | done | After screenshots ([`BEFORE_AFTER.md`](BEFORE_AFTER.md)); coco_lab 1026/0/2, tools 230/0, vitest 532/0, typecheck, build, dist; v1 corpus 15,000 hashes and v2 corpus (Node + Chromium) 15,000 ticks each, 0 mismatches; 50 v1 URL forms + 6 archive views, 5 replays, 5 canvas scenes pass. [`G1_RESULTS.md`](G1_RESULTS.md), [`data/g110/README.md`](data/g110/README.md) |
 | G1.11 Gautham's follow-up | done | (1) `gz` marker, CI `-m "not gz"`: 0 skips. (2) LiDAR beam directions computed once a tick (same bits; goldens unchanged): v3/v2 per-tick cost 1.15 → **1.10**. (3) Fetch Rush rules 2 plan nothing in play: worst model-tick gap **25.8 s → 0.96 s**, "clock waits" banner 2× (26.8 s) → **never**, frames over 50 ms 1 → **0** (max 18.9 ms), 3/3 delivered in 358.2 s. (4) The decision implemented: a start zone, 3 orders within a 32 m planned round trip, timer = reference × 1.5 → **491.7 / 495.8 / 577.2 / 506.5 s** (shifts 1/3/5/6); seeds 2 and 4: the reference bot stopped in the forklift lane (0 delivered) → no timer, not offered. (5) Look polish; after shots `screens/after_g111/`. Found at close: hash v3's numerics mode was sticky (a v3 call left it on; CI's Lab 5 replay failed after the v3 glue tests) → now scoped per call, hashes unchanged (ADR 0010 amended). Suites: coco_lab 1,037 (+2 `gz` deselected), tools 230, vitest 532, native gate exact; CI green on `dfdf4e6` ([`data/g111/suites.txt`](data/g111/suites.txt)). [`data/g111/README.md`](data/g111/README.md), [`docs/v2/m6/GAMES.md`](../m6/GAMES.md) |
 | G1.12 Gautham's 2026-10-22 decisions | done (two items open) | (1–2) Fetch Rush rules 3: phone round (2 orders) and Full shift (3 orders, 32 m); routes kept out of the forklift lanes; a round the bot cannot finish (or where it stands in a lane) rejected at generation — none was. **16 m is infeasible on the Depot** with the lanes kept out (no 2-order round below 21.4 m): phone budget **provisional 22 m**, one round, timer **275.9 s (4:35.9)**; Full shift timers **475.7–577.5 s**. (3) `Arena.prefetch` runs AUTO's search between ticks (≤ 4 ms slices); the AUTO tick takes it over, hashes unchanged: the AUTO tick's worker step **452 → ≤ 101 ms**; the 100 ms tick-gap target is **not shown here** (this container's tick arrivals jitter p95 300–450 ms without AUTO) → laptop. (4) Chase camera: 2.1 m boom (≥ 1.7 m, ≥ 1.2 m up), COCO at 40 % down, rises over walls, keeps COCO's shoulders in view, softer headlight and bloom, spawn in the open facing the aisle; HUD overlap **0 of 40** poses (CI step). [`data/g112/README.md`](data/g112/README.md) |
-| G1.13 Laptop work | in progress | [`data/g113/README.md`](data/g113/README.md). (1) Decisions applied: spawn heading = the clear heading nearest the first route; phone budget sweep 22–82 m: **none qualifies → 22 m**, timer **273.5 s (4:33.5)**; rounds regenerated, GAMES.md updated. (2) coco_lab's ament linters fixed (`a50ae59`). (3) gz tests 2/0/0. (4) M6F.8 smoke runs (STACK) in `docs/v2/m6/data/m6f8/`. |
+| G1.13 Laptop work | done (phone pending) | [`data/g113/README.md`](data/g113/README.md), [`G1_RESULTS.md`](G1_RESULTS.md) § G1.13. Decisions applied (heading; budget **22 m**: no budget qualifies; timer **273.5 s**). AUTO gaps 269 → 162/132 ms, one fix → **119/141 ms: target not met**. Real GPU (NVIDIA, Intel): **59.6–60.3 fps** median everywhere, 0 context losses. Determinism: v2 corpus **0 mismatches in 4 engines**; v3 gate exact. ROS **12/12 packages**, gz **2/0/0**. M6F.4 first run (16/35 over 300 ms in Pyodide). M6F.8: smoke 2/9 chained, 5/8 independent; ghost **1/4 legs** twice. Linters fixed. Phone: **not measured**. |
 
 ## Gautham: look at these
 
@@ -101,18 +101,9 @@ Recorded in `docs/STATUS.md`'s plan-change log, with the 2026-10-18 Fetch Rush d
 
 ## Laptop items pending
 
-- **G1.12**: AUTO press → motion tick gaps on a real GPU (`lab_web/tools/g1/fetch_timing.mjs`, before = `a4b39a6`, after = this build): the ≤ 100 ms target cannot be shown in this container.
-
-- **G1.11**: the `gz`-marked tests (`pytest -m gz`, `test_worldgen.py` gz sdf checks on the generated worlds).
-
-- **G1.9**: real-GPU fps on both GPUs; the Nothing Phone (1) over USB/CDP with a 10-minute heat run; the default tier.
-- **G1.10**: the four-engine (Node, Chromium, Firefox, WebKit) 100-session v2 corpus (`data/g110/rerun_determinism.py`, `G1_ENGINES=node,chromium,firefox,webkit`).
-
-- Touch-to-motion on the laptop GPU (G1 vs M5, `tools/g1/input_check.mjs --only-latency`).
-
-- ROS package suites (`scripts/run_all_package_tests.sh`): not runnable in the cloud.
-- Anything needing a real GPU, `gz`, the Nothing Phone (1) over USB.
-- `gz sdf -k` on the Depot SDFs (unchanged since M6F.3, where it was Valid).
+- **The Nothing Phone (1)** (G1.9/G1.13): plugged in tethering-only on 2026-10-22 (RNDIS, no ADB
+  interface), later unplugged. Needs USB debugging on; then M5's USB/CDP run and the phone's
+  default tier and frame-rate cap. Everything else on the laptop list is done (G1.13).
 
 ## Deviations so far
 
@@ -121,6 +112,17 @@ Recorded in `docs/STATUS.md`'s plan-change log, with the 2026-10-18 Fetch Rush d
 - **Code landing order**: the Play HUD, session, cameras and Depot builder modules were written together and land with G1.2's commit; G1.3–G1.6 add their tests, evidence and fixes.
 
 ## Questions for Gautham
+
+- **AUTO tick gaps (G1.13):** target missed after one fix (119–141 ms around a press; p95 of all
+  gaps 107 ms). Accept, restate the target (e.g. ≤ 150 ms), or fund a second fix?
+- **Phone round variety (G1.13):** by the rule as written no budget qualifies → one round for every
+  shift. Count only rounds with a timer ≤ 5:00 instead, or change the level near the start zones?
+- **M6F.8 (G1.13):** Nav2 cannot follow the model's route to Dock 1 (START_OCCUPIED, twice) and
+  AMCL drifts ~0.5 m south after the dock legs. Diagnose in M6, or widen the Depot's gaps?
+- **The phone:** plug it in with USB debugging on.
+
+### Answered
+
 
 - ~~Phone round budget (G1.12)~~ — answered 2026-10-22 (decisions above). Was: 16 m admits no lane-free 2-order round on the Depot (smallest 21.4 m; `data/g112/phone_budget.json`). Provisional 22 m gives one round for every seed, timer 4:35.9. Keep 22 m, take 25–30 m for 2–15 rounds (longer timers), or allow objects near the lanes / move objects in the level?
 - ~~Spawn heading (G1.12)~~ — answered 2026-10-22 (decisions above). Was: COCO starts facing the open aisle, as decided; on the phone round the first ghost route leaves behind it, so the player turns first. Prefer the clear heading closest to the first route?

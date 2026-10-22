@@ -172,6 +172,47 @@ Tests after G1.12 ([`data/g112/suites.txt`](data/g112/suites.txt)): coco_lab **1
 build, `check_dist`, v1 links (50 + 6) pass. Hashes: v1, v2, v3 goldens unchanged; rules 1 and 2
 records still verify; rules-3 references replay to their committed cards and chains.
 
+## G1.13 — the laptop (2026-10-22/23)
+
+Gautham's laptop prompt ([`G1_LAPTOP_PROMPT.md`](G1_LAPTOP_PROMPT.md)); evidence
+[`data/g113/README.md`](data/g113/README.md). **Every number in this section is measured on the
+laptop** (i5-13420H, RTX 4050 driver 580.178.04 + Intel Raptor Lake-P Mesa 25.2.8, balanced
+profile, on AC; Gautham's Brave browser and the desktop shared the machine and are recorded).
+The sections above are the cloud container's (SwiftShader, no GPU, no ROS) and stay as they were.
+
+| Item | Result | Evidence |
+| --- | --- | --- |
+| Decisions (2026-10-22) | Spawn faces the clear heading nearest the first route (dock 337.5°, workshop 315°). Phone budget: the sweep 22–82 m found **no budget with ≥ 3 distinct rounds and every timer ≤ 5:00** → **22 m**, one round, timer **273.5 s (4:33.5)**. Camera look approved. | [`data/g113/phone_budget_sweep.json`](data/g113/phone_budget_sweep.json), [`GAMES.md`](../m6/GAMES.md) |
+| AUTO tick gaps (target: none over 100 ms) | Largest gap around a press: before (`a4b39a6`) **269 ms**; after **162 / 132 ms** (phone / Full shift). Cause: tick shown when computed, so step-time variance (28–88 ms) became gaps. One fix (ticks shown on a 0.1 s schedule): **119 / 141 ms**; all gaps p95 118 → 107 ms. **Target not met.** | README §3, `test/g1_session_pacing.test.ts` |
+| Real-GPU fps (desktop, headless Chromium ≤ 60 Hz) | NVIDIA and Intel: title, Play (Fetch Rush, 10 min, medium and high) and four-pane Compare (auto, high) all **59.6–60.3 fps median**, frame p95 16.9–19.1 ms, **0 context losses**, 0 errors; Play: 1–8 frames over 50 ms in ~36,000 | README §4, `data/g113/gpu/` |
+| Touch-to-motion (NVIDIA, emulated phone) | G1 Play median **40.8 ms** (15 samples); M5's Play 47–63 ms between runs | README §3 |
+| Nothing Phone (1) | **Not measured**: plugged in tethering-only (no ADB interface), later unplugged; defaults pending | README §5 |
+| Determinism | v2 corpus, 100 sessions × 150 ticks: **0 mismatches in Pyodide-in-Node, Chromium, Firefox and WebKit**; v1 corpus 0 mismatches; v3 native-vs-Pyodide gate **exact**; v2 control fails with 0.446 m (as designed) | README §6 |
+| ROS suites, gz tests | **all 12 packages pass** (colcon route, linters included); `pytest -m gz` **2 passed, 0 skipped** | [`data/g113/suites.txt`](data/g113/suites.txt) |
+| M6F.4 planning benchmark | first run (was "pending"): CPython = Pyodide on all 35 cases; Pyodide over 300 ms in **16 of 35** (BFS, Dijkstra, A* on long routes) | [`../m6/data/m6f4/README.md`](../m6/data/m6f4/README.md) |
+| M6F.8 Gazebo + Nav2 (STACK) | 5 fresh simulators. Smoke, chained: **2 / 9** (twice); independent legs: **5 / 8** succeed. Ghost of the phone round: leg 1 succeeds, **leg 2 (to Dock 1) fails START_OCCUPIED twice** — no complete ghost; both recordings converted (sha256 in results) | [`../m6/RESULTS_M6_FOUNDATIONS.md`](../m6/RESULTS_M6_FOUNDATIONS.md), `../m6/data/m6f8/` |
+| Look on a real GPU | BEFORE_AFTER column "After G1.13 (laptop, NVIDIA)" | [`BEFORE_AFTER.md`](BEFORE_AFTER.md) |
+
+Found and fixed on the laptop: coco_lab's ament linters (flake8, pep257, copyright) failed on
+G1's cloud commits — the cloud and CI's plain venv never run them; fixed without changing a code
+path. Two measurement-harness defects, both kept as evidence: the first 10-minute Play pass did
+not restart after PLAY AGAIN (`data/g113/gpu/first_pass_restart_defect/`); WebKit needed M1's
+no-sudo wrapper on this host.
+
+Tests at G1.13 close ([`data/g113/suites.txt`](data/g113/suites.txt)), laptop:
+
+| Suite | G1.12 close (cloud) | G1.13 close (laptop) |
+| --- | --- | --- |
+| coco_lab, CI's plain venv (`-m "not gz"`) | 1,057 passed, 2 deselected | **1,069 passed**, 2 deselected |
+| coco_lab `-m gz` | not run (no gz) | **2 passed, 0 skipped** |
+| lab_web/tools | 231 | **231 passed** |
+| vitest | 535 | **539 passed (66 files)** (+4 pacing) |
+| typecheck, build twice (identical), `check_dist`, schemas `--check` | pass (schemas: no protoc) | **pass** (schemas: generated code current) |
+| native gate (v3), `coco verify` (100 links), Play references | pass | **pass**; 18 / 18 references earn their stars |
+| update isolation, canvas screenshots, chase HUD (40 poses), v1 links (50 + 6), replays | pass | **pass** |
+| determinism: 10 v1 sessions, 3 terrain sessions × 3 browsers + Node | CI | **0 mismatches** |
+| ROS packages (`run_all_package_tests.sh`) | not run (no ROS) | **12 / 12 packages pass** (coco_lab 1,074 incl. linters and gz) |
+
 ## Gautham, look at these
 
 - Before/after: [`BEFORE_AFTER.md`](BEFORE_AFTER.md) (`screens/before/`, `screens/after/`).
@@ -179,27 +220,25 @@ records still verify; rules-3 references replay to their committed cards and cha
 - Per checkpoint: `screens/g12/`, `screens/g14/`, `screens/g15/`, `screens/g17/`,
   `screens/g16-compare-depot.png`, `data/g16/results_run/results.png`.
 
-## Laptop items pending
+## Laptop items
 
-- Real-GPU fps on both GPUs (balanced, on AC, driver recorded); the Nothing Phone (1) over
-  USB/CDP with a 10-minute heat run; the default tier.
-- Touch-to-motion on the laptop GPU (G1 vs M5, `tools/g1/input_check.mjs --only-latency`).
-- The four-engine (Node, Chromium, Firefox, WebKit) 100-session v2 corpus
-  (`data/g110/rerun_determinism.py` with `G1_ENGINES=node,chromium,firefox,webkit`).
-- ROS package suites (`scripts/run_all_package_tests.sh`) and `gz sdf -k` on the Depot SDFs.
+Done in G1.13 (above), except **the Nothing Phone (1)**: its USB/CDP run (cold start, Play fps
+at 1 and 10 minutes, touch-to-motion, battery and temperature, PHONE_PROFILE.md's viewport and
+safe-area check) and the phone's default tier and frame-rate cap remain pending.
 
 ## Questions for Gautham
 
-- **CI `coco_lab in a plain venv (no ROS)` is red on this branch** only because two tests
-  skip without the `gz` CLI (`test_worldgen.py::test_gz_sdf_check_passes_on_every_generated_world`,
-  from M6F.2 via the `v2/m6-foundations` merge; that branch is red the same way). Install the
-  gz CLI in that job, or run that test only where gz exists? (PR comment.)
-- **Fetch Rush's next-order ghost** stalls a tick after each delivery (12.1 s CPython, 17.4 s
-  Pyodide): compute it lazily, untraced searches, or WebAssembly? G1 left M6's rule as is.
-- Fetch Rush's far first orders (M6F.6) — the game-design question stays open.
-- Accept v3's +15 % model cost per tick?
+- **AUTO tick-gap target:** after the one fix, gaps around a press are 119–141 ms (game side,
+  p95 of all gaps 107 ms). Accept, set the target as "no gap over N ms" (e.g. 150), or fund a
+  second fix (a longer lead, or smoothing the worker's step time)?
+- **Phone round variety:** under the rule as written no budget qualifies, so every shift is the
+  same round. Would you take "≥ 3 distinct rounds *among those* with a timer ≤ 5:00" (offer only
+  the short ones), or a level change (objects near the start zones, not the lanes)?
+- **M6F.8:** Nav2 fails where the model's lane-free route to Dock 1 passes, and AMCL sits
+  ~0.5 m south of truth after the dock legs. Diagnose in M6, or adjust the Depot (wider gaps)?
+- **The phone:** plug it in with USB debugging on; the measurement runs without you.
 
 ## Next step
 
-Gautham's look review (before/after and mockups), the laptop and phone items above, and
-the decision on the gz CLI; then the M6 UI phase per README §7.
+Gautham's review of PR #27 (ready for review; not merged); the phone run when it is connected;
+then the M6 UI phase per README §7.
