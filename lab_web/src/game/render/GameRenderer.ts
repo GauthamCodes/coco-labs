@@ -128,16 +128,17 @@ export class GameRenderer {
     this.ledGlow.scale.set(0.24, 0.24, 1);
     this.ledGlow.position.set(-0.17, 0, 0.3);
     this.robot.add(this.ledGlow);
-    this.head = new THREE.SpotLight(0xfff1d6, 6, 7, 0.5, 0.6, 1.4);
+    // G1.12: a modest headlight -- it lights the floor ahead, never washes out the screen's centre
+    this.head = new THREE.SpotLight(0xfff1d6, 2.2, 5, 0.42, 0.7, 1.6);
     this.head.position.set(0.16, 0, 0.12);
     this.head.target.position.set(1.6, 0, -0.1);
     this.robot.add(this.head, this.head.target);
     // the headlight's pool on the floor: a flat, translucent fan (a light, never a solid)
-    const poolTex = (() => { const c = document.createElement('canvas'); c.width = 64; c.height = 128; const g = c.getContext('2d')!; const gr = g.createLinearGradient(0, 128, 0, 0); gr.addColorStop(0, 'rgba(255,241,214,0.55)'); gr.addColorStop(1, 'rgba(255,241,214,0)'); g.fillStyle = gr; g.fillRect(0, 0, 64, 128); return new THREE.CanvasTexture(c); })();
+    const poolTex = (() => { const c = document.createElement('canvas'); c.width = 64; c.height = 128; const g = c.getContext('2d')!; const gr = g.createLinearGradient(0, 128, 0, 0); gr.addColorStop(0, 'rgba(255,241,214,0.4)'); gr.addColorStop(1, 'rgba(255,241,214,0)'); g.fillStyle = gr; g.fillRect(0, 0, 64, 128); return new THREE.CanvasTexture(c); })();
     const fan = new THREE.BufferGeometry();
     fan.setAttribute('position', new THREE.Float32BufferAttribute([0.16, 0, 0.004, 2.4, -0.9, 0.004, 2.4, 0.9, 0.004], 3));
     fan.setAttribute('uv', new THREE.Float32BufferAttribute([0.5, 0, 0, 1, 1, 1], 2));
-    this.cone = new THREE.Mesh(fan, new THREE.MeshBasicMaterial({ map: poolTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0.5 }));
+    this.cone = new THREE.Mesh(fan, new THREE.MeshBasicMaterial({ map: poolTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0.25 }));
     this.robot.add(this.cone);
     const blobTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d')!; const gr = g.createRadialGradient(32, 32, 4, 32, 32, 32); gr.addColorStop(0, 'rgba(0,0,0,0.65)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return new THREE.CanvasTexture(c); })();
     this.blob = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 0.55), new THREE.MeshBasicMaterial({ map: blobTex, transparent: true, depthWrite: false }));
@@ -236,9 +237,34 @@ export class GameRenderer {
     }
   }
 
+  /** COCO's drawn model (the GLB), for its screen box */
+  private body: THREE.Object3D | null = null;
+
+  /**
+   * G1.12 (the HUD-overlap screenshot test): COCO's projected bounding box on the canvas in
+   * CSS pixels -- its model only (not the headlight's pool, the LED glow or the shadow blob).
+   */
+  robotScreenRect(): { left: number; top: number; right: number; bottom: number } | null {
+    if (!this.body) return null;
+    this.robot.updateMatrixWorld(true);
+    const cam = this.cam.camera;
+    cam.updateMatrixWorld();
+    const box = new THREE.Box3().setFromObject(this.body, true);
+    if (box.isEmpty()) return null;
+    const el = this.renderer.domElement, w = el.clientWidth, h = el.clientHeight;
+    let left = Infinity, top = Infinity, right = -Infinity, bottom = -Infinity;
+    for (let k = 0; k < 8; k++) {
+      const p = new THREE.Vector3(k & 1 ? box.max.x : box.min.x, k & 2 ? box.max.y : box.min.y, k & 4 ? box.max.z : box.min.z).project(cam);
+      const x = (p.x + 1) / 2 * w, y = (1 - p.y) / 2 * h;
+      left = Math.min(left, x); right = Math.max(right, x); top = Math.min(top, y); bottom = Math.max(bottom, y);
+    }
+    return { left, top, right, bottom };
+  }
+
   async loadRobot(url: string) {
     const g = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(url);
     const up = new THREE.Group();
+    this.body = up;
     up.rotation.x = Math.PI / 2;
     up.add(g.scene);
     this.robot.add(up);

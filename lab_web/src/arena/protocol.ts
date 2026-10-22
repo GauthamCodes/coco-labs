@@ -23,7 +23,7 @@ export interface BootRequest {
   /** M4.3: the World Spec to build (a file in generated/arena/); absent = coco_arena_v1.json. */
   spec?: SpecFile;
   /** G1: boot a game session (coco_lab.games via the glue's game_init): 'fetch_rush' (arg = its seed) or 'free'. */
-  game?: { game: 'fetch_rush' | 'free'; arg: number };
+  game?: { game: 'fetch_rush' | 'free'; arg: number; mode?: 'phone' | 'full' };
 }
 
 /** The World Specs the site ships (tools/build_arena_assets.mjs); v1 is every default. */

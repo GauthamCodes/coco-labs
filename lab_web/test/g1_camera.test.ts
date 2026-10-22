@@ -12,6 +12,8 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe as group, expect, it } from 'vitest';
 
+import * as THREE from 'three';
+
 import { GameCamera, CHASE } from '../src/game/render/camera';
 import { colliderMeshes } from '../src/game/world/build3d';
 import { describe, type Part, type Spec } from '../src/game/world/describe';
@@ -51,19 +53,25 @@ function run(look: ReturnType<typeof describe>, poses: { pose: Pose; v: number }
   const solids = look.parts.filter((p) => p.cls === 'solid' || p.cls === 'wall');
   const robotBoxes = new Set<string>();
   const faults: string[] = [];
-  let maxPull = 0;
+  let maxPull = 0, minDist = Infinity, minZ = Infinity, maxElev = 0;
+  const screenY: number[] = [];
   poses.forEach(({ pose, v }, k) => {
     cam.update(1 / 60, pose, 0, v);
     if (k < 60) return;
     const c = cam.camera.position.toArray();
     const head = [pose[0], pose[1], 0.25];
     maxPull = Math.max(maxPull, cam.lastPull);
+    maxElev = Math.max(maxElev, cam.lastElev);
+    minDist = Math.min(minDist, Math.hypot(c[0] - head[0], c[1] - head[1], c[2] - head[2]));
+    minZ = Math.min(minZ, c[2]);
+    cam.camera.updateMatrixWorld();
+    screenY.push(new THREE.Vector3(pose[0], pose[1], CHASE.bodyZ).project(cam.camera).y);
     for (const p of solids) {
       if (inside(c, p, 0.02)) faults.push(`frame ${k}: camera inside ${p.id}`);
       else if (!robotBoxes.has(p.id) && segmentHits(c, head, p)) faults.push(`frame ${k}: ${p.id} between the camera and COCO`);
     }
   });
-  return { faults, maxPull };
+  return { faults, maxPull, minDist, minZ, maxElev, screenY };
 }
 
 // Twenty paths: [world, start pose (map frame), legs of (v m/s, w rad/s, seconds)]
@@ -101,8 +109,13 @@ group('G1.4 chase camera: 20 scripted paths, no clipping', () => {
       // a path must keep COCO's circle in free space, as the model would
       const blocked = poses.flatMap(({ pose }) => solidsAt(look, pose[0], pose[1]).map((f) => f.id));
       expect(blocked, 'the scripted path itself drives into a solid').toEqual([]);
-      const { faults } = run(look, poses);
+      const { faults, minDist, minZ, screenY } = run(look, poses);
       expect(faults.slice(0, 5)).toEqual([]);
+      // G1.12: never closer than minDist nor lower than minHeight; COCO in the upper-middle third
+      expect(minDist).toBeGreaterThanOrEqual(CHASE.minDist - 1e-6);
+      expect(minZ).toBeGreaterThanOrEqual(CHASE.minHeight - 1e-6);
+      const off = screenY.filter((y) => y < 0 || y > 1 / 3);
+      expect(off.length, `COCO left the upper-middle third on ${off.length} frames (e.g. ${off[0]})`).toBe(0);
     });
   }
   it('a wide orbit beside a wall stays inside the hall', () => {
@@ -120,11 +133,17 @@ group('G1.4 chase camera: 20 scripted paths, no clipping', () => {
     }
     expect(faults.slice(0, 5)).toEqual([]);
   });
-  it('the pull-in really engages beside a wall (the test is not vacuous)', () => {
+  it('beside a wall the boom rises instead of moving in (the test is not vacuous)', () => {
     const look = looks.depot;
-    // facing away from the south wall: the camera's wanted spot is inside the wall
-    const { faults, maxPull } = run(look, path([24, 0.6, Math.PI / 2], [[0, 0, 1]]));
+    // facing away from the south wall: the camera's resting spot is inside the wall
+    const { faults, maxPull, maxElev, minDist } = run(look, path([24, 0.6, Math.PI / 2], [[0, 0, 1]]));
     expect(faults).toEqual([]);
-    expect(maxPull).toBeGreaterThan(CHASE.back * 0.3);
+    expect(maxElev).toBeGreaterThan(CHASE.elev + 0.1);
+    expect(minDist).toBeGreaterThanOrEqual(CHASE.minDist - 1e-6);
+    expect(maxPull).toBeLessThanOrEqual(CHASE.dist - CHASE.minDist + 1e-6);
+  });
+  it('at rest in the open, COCO\'s centre sits at CHASE.screenY', () => {
+    const { screenY } = run(looks.depot, path([30, 12, 0], [[0, 0, 1]]));
+    expect(Math.abs(screenY[screenY.length - 1] - CHASE.screenY)).toBeLessThan(0.01);
   });
 });

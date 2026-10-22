@@ -16,6 +16,23 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
   branch or open the PR from it as he prefers. No force-push; nothing merged into main.
 - Environment: cloud container (Xeon 2.1 GHz × 4, SwiftShader, no GPU, no ROS, no phone).
 
+## Gautham's decisions, 2026-10-22 (G1.12)
+
+Recorded in `docs/STATUS.md`'s plan-change log.
+
+1. **Fetch Rush phone rounds:** 2 orders, each planned round trip ≤ 16 m, start inside one zone,
+   timer = reference bot time × 1.5 (target 3–4 min). The 3-order rules stay as an optional
+   "Full shift" mode. Reference results regenerated; timers shown per seed.
+2. **Routes never cross forklift lanes** (lane cells excluded when drawing orders). A round the
+   reference bot cannot finish is rejected at generation, never offered.
+3. **AUTO must not pause the model clock:** precompute or time-slice the Arena planner like the
+   ghost (≤ 4 ms per frame); target AUTO press → motion with no model-tick gap over 100 ms;
+   before/after timings.
+4. **Chase camera:** COCO in the upper-middle third, never under the speed gauge or any HUD
+   element; a minimum distance and height; a wall makes the camera rise and tilt down, not move
+   closer; spawn facing the open aisle; the headlight bloom toned down; a screenshot test (COCO's
+   projected box vs every HUD rectangle, 20 scripted positions, phone landscape and desktop).
+
 ## Gautham's decisions, 2026-10-21 (G1.11)
 
 Recorded in `docs/STATUS.md`'s plan-change log, with the 2026-10-18 Fetch Rush decision.

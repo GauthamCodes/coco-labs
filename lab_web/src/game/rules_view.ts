@@ -11,11 +11,14 @@ import type { Candidate, GameKind, GameTick, GameZone } from './session';
 
 /** The real load stages, in order, and the worker marks that end each (arena.worker.ts). */
 /**
- * G1.11: Fetch Rush rules 2's playable shifts: the seeds whose round the reference bot
- * completed (coco_lab/levels/coco_depot_v1.fetch_rush.json; seeds 2 and 4 drew a round it
- * could not finish, so they have no timer and are not offered)
+ * G1.12: Fetch Rush rules 3's shifts (coco_lab/levels/coco_depot_v1.fetch_rush.r3.json).
+ * Every round on file was finished by the reference bot (a round it could not finish
+ * was rejected when the rounds were generated), so every shift is offered, in both
+ * modes: 'phone' (2 orders, the default) and 'full' (the Full shift, 3 orders).
  */
-export const FETCH_RUSH_SHIFTS = [1, 3, 5, 6];
+export const FETCH_RUSH_SHIFTS = [1, 2, 3, 4, 5, 6];
+export type FetchRushMode = 'phone' | 'full';
+export const fetchRushMode = (v: string | null): FetchRushMode => (v === 'full' ? 'full' : 'phone');
 
 export const LOAD_STAGES = [
   { id: 'worker', label: 'WORKER', marks: ['worker_boot'] },

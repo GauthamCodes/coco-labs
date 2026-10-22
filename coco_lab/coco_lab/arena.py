@@ -290,6 +290,9 @@ class Arena:
         self._pending: List[InputEvent] = []
         self._collector: Optional[Collector] = None
         self._stream = None
+        #: G1.12: a search run ahead of a goal (:meth:`prefetch`): ``(key, Collector)``;
+        #: not part of the state -- a tick adopts it only when its key is the tick's own
+        self._ahead = None
         self._want_plan = False
         #: a goal a subsystem asked for (M2.6: the mission), taken at the
         #: start of the next tick; ``_requested`` keeps it planned if the
@@ -459,20 +462,57 @@ class Arena:
             for name in sorted(self.subsystems):
                 self.subsystems[name].on_reset(self)
 
-    def _plan_begin(self):
-        """Start the search from the current pose to the goal (not run yet)."""
+    def _plan_key(self, goal):
+        """The search a goal at ``goal`` starts from here: (planner, start, goal cell, grid)."""
         g = self.grid
         here = self.belief()
         s_cell = self.plan_map.cell_at(here[0], here[1])
-        t_cell = self.plan_map.cell_at(*self.goal)
+        t_cell = self.plan_map.cell_at(*goal)
         if s_cell is None or t_cell is None:
-            raise ArenaError(f'goal {self.goal} or the robot is off the map')
+            raise ArenaError(f'goal {goal} or the robot is off the map')
         s = _nearest_free(g, s_cell)
         t = _nearest_free(g, t_cell)
         if s is None or t is None:
-            raise ArenaError(f'no free cell near the robot or {self.goal}')
-        events = search_events(g, s, t, **PLANNERS[self.planner])
+            raise ArenaError(f'no free cell near the robot or {goal}')
+        return (self.planner, s, t, g)   # the grid itself: compared by identity
+
+    @numerics.in_run
+    def prefetch(self, goal, n: Optional[int] = None) -> bool:
+        """
+        G1.12: run, ahead of time, the search a goal at ``goal`` would start now.
+
+        Takes up to ``n`` events (all, if None) between ticks; returns whether that
+        search is done. A tick whose goal search has the same key (planner, start and
+        goal cells, grid) takes it over -- finished, or where it got to -- instead of
+        starting again: the same generator, so the same events, path and state. A
+        different key starts afresh. Never part of the state; the Arena runs the same
+        with or without it (only sooner). Not while a step is in progress.
+        """
+        if self._in_step:
+            raise ArenaError('prefetch inside a step')
+        try:
+            key = self._plan_key(goal)
+        except ArenaError:
+            self._ahead = None
+            return True
+        if self._ahead is None or self._ahead[0] != key:
+            _, s, t, _ = key
+            self._ahead = (key, Collector(search_events(self.grid, s, t,
+                                                        **PLANNERS[self.planner])))
+        return self._ahead[1].advance(n)
+
+    def _plan_begin(self):
+        """Start the search from the current pose to the goal (not run yet)."""
+        key = self._plan_key(self.goal)
+        _, s, t, _ = key
         self._plan_ctx = (self.planner, self.goal, self.tick)
+        ahead, self._ahead = self._ahead, None
+        if ahead is not None and ahead[0] == key and self.on_plan_batch is None:
+            # G1.12: this very search, already run (or begun) between ticks
+            self._stream = None
+            self._collector = ahead[1]
+            return
+        events = search_events(self.grid, s, t, **PLANNERS[self.planner])
         self._stream = None
         sink = None
         if self.on_plan_batch is not None:

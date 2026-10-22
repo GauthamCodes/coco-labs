@@ -5,7 +5,7 @@
 // phase, its candidates and refusal codes, Fetch Rush's order, the drop zones).
 
 import { describe, expect, it } from 'vitest';
-import { LOAD_STAGES, REASON_SHORT, primaryAction } from '../src/game/rules_view';
+import { FETCH_RUSH_SHIFTS, LOAD_STAGES, REASON_SHORT, fetchRushMode, primaryAction } from '../src/game/rules_view';
 import type { Candidate, GameTick, GameZone } from '../src/game/session';
 
 const zones: GameZone[] = [{ id: 'dock_2', role: 'drop', label: 'Dock 2', center: [42, 1.3], size: [2.6, 2] }, { id: 'dispatch_drop', role: 'drop', label: 'Dispatch', center: [23, 1.4], size: [3, 2] }];
@@ -43,5 +43,11 @@ describe('G1 primary action', () => {
   it('the loading stages are the worker\'s real marks, in order', () => {
     expect(LOAD_STAGES.map((s) => s.id)).toEqual(['worker', 'pyodide', 'coco_lab', 'arena']);
     expect(LOAD_STAGES.flatMap((s) => s.marks)).toContain('arena_ready');
+  });
+  it('G1.12: Fetch Rush offers every shift; the phone round is the default, &mode=full the Full shift', () => {
+    expect(FETCH_RUSH_SHIFTS).toEqual([1, 2, 3, 4, 5, 6]);
+    expect(fetchRushMode(null)).toBe('phone');
+    expect(fetchRushMode('full')).toBe('full');
+    expect(fetchRushMode('marathon')).toBe('phone');
   });
 });

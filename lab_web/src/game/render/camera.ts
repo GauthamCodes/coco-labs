@@ -5,9 +5,13 @@
  * G1.4: Play's cameras. Presentation only (invariant 11): they read the pose
  * the model produced and never write anything back.
  *
- * - chase (default): behind and above COCO, spring-damped, looking a little
- *   ahead along the direction of travel, pulled in when a wall would block
- *   the view (a ray-cast against the world's render meshes);
+ * - chase (default): behind and above COCO on a boom of fixed length, spring-damped.
+ *   G1.12 (Gautham, 2026-10-22): COCO is framed in the upper-middle third of the
+ *   screen (its centre at CHASE.screenY, clear of the bottom HUD), the boom never
+ *   comes closer than CHASE.minDist nor lower than CHASE.minHeight, and when a wall
+ *   would block the view the boom swings UP (the camera tilting down) instead of
+ *   moving in -- ray-cast against the world's render meshes; only when no elevation
+ *   has room at minDist does it shorten (never through a wall);
  * - tactical: top-down, for planning (the minimap's big brother);
  * - orbit: free, two-finger orbit and pinch zoom, mouse drag and wheel.
  *
@@ -20,8 +24,16 @@ import * as THREE from 'three';
 export type CamMode = 'chase' | 'tactical' | 'orbit';
 export const CAM_MODES: CamMode[] = ['chase', 'tactical', 'orbit'];
 export const BLEND_S = 0.4;
-/** Chase framing: distance back, height, look-ahead (m) and the spring rate (1/s). */
-export const CHASE = { back: 1.55, up: 0.85, ahead: 0.7, lookUp: 0.12, k: 6, kYaw: 4.5, minBack: 0.35, nearPad: 0.12 };
+/**
+ * Chase framing (G1.12): the boom's length and its least length (m), its resting elevation
+ * (rad), the elevations it may swing up to, the camera's least height above the floor (m),
+ * where COCO's centre sits on screen (NDC y: +1 top, -1 bottom; +0.2 is 40 % down), COCO's
+ * centre and head heights (m), the springs (1/s) and the gap kept from a wall's face (m).
+ */
+export const CHASE = {
+  dist: 2.1, minDist: 1.7, elev: 0.55, elevs: [0.55, 0.7, 0.87, 1.05, 1.22, 1.4, 1.53], minHeight: 1.2,
+  screenY: 0.2, bodyZ: 0.2, headZ: 0.25, k: 6, kYaw: 4.5, nearPad: 0.12,
+};
 
 const approach = (dt: number, k: number) => 1 - Math.exp(-k * dt);
 const wrap = (a: number) => Math.atan2(Math.sin(a), Math.cos(a));
@@ -31,7 +43,7 @@ export class GameCamera {
   mode: CamMode = 'chase';
   reducedMotion = false;
   /** the chase rig's sprung state */
-  private rig = { x: 0, y: 0, z: 0, yaw: 0, back: CHASE.back, elev: Math.atan2(CHASE.up - 0.25, CHASE.back), init: false };
+  private rig = { x: 0, y: 0, z: 0, yaw: 0, back: CHASE.dist, elev: CHASE.elev, init: false };
   /** orbit: yaw, pitch, distance about the target */
   readonly orbit = { yaw: -Math.PI / 2, pitch: 0.55, dist: 3.2 };
   /** tactical: a top-down view centred where the person dragged it (or on COCO) */
@@ -40,8 +52,9 @@ export class GameCamera {
   private readonly ray = new THREE.Raycaster();
   /** what the chase camera may not see through (the world's tall render meshes) */
   colliders: THREE.Object3D[] = [];
-  /** the last chase pull-in distance (m), for tests */
+  /** the last chase pull-in distance (m) and boom elevation (rad), for tests */
   lastPull = 0;
+  lastElev: number = CHASE.elev;
 
   constructor() { this.camera.up.set(0, 0, 1); }
 
@@ -78,6 +91,17 @@ export class GameCamera {
     return Math.max(0.05, Math.min(len, hit.distance - CHASE.nearPad / cos));
   }
 
+  /** How far a boom from `from` along `dir` reaches before a wall (at most `len`), keeping nearPad from its face. */
+  private clear(from: THREE.Vector3, dir: THREE.Vector3, len: number): number {
+    if (!this.colliders.length) return len;
+    this.ray.set(from, dir);
+    this.ray.far = len + CHASE.nearPad * 4;
+    const hit = this.ray.intersectObjects(this.colliders, false)[0];
+    if (!hit) return len;
+    const cos = Math.max(0.2, Math.abs(dir.dot(hit.face?.normal ?? new THREE.Vector3(0, 0, 1))));
+    return Math.min(len, hit.distance - CHASE.nearPad / cos);
+  }
+
   /**
    * Place the camera for this frame. `pose` is where COCO is drawn (map frame), `z` its height,
    * `v` its signed speed (for the look-ahead).
@@ -89,52 +113,44 @@ export class GameCamera {
     if (this.mode === 'chase') {
       const r = this.rig;
       if (!r.init) { r.x = x; r.y = y; r.z = z; r.yaw = th; r.init = true; }
-      // look ahead along the direction of travel (backwards when reversing)
-      const look = v < -0.02 ? th + Math.PI : th;
       const k = this.reducedMotion ? 1 : approach(dt, CHASE.k);
       r.x += (x - r.x) * k; r.y += (y - r.y) * k; r.z += (z - r.z) * k;
       r.yaw += wrap(th - r.yaw) * (this.reducedMotion ? 1 : approach(dt, CHASE.kYaw));
-      target.set(r.x + CHASE.ahead * Math.cos(look) * Math.min(1, Math.abs(v) / 0.3 + 0.35), r.y + CHASE.ahead * Math.sin(look) * Math.min(1, Math.abs(v) / 0.3 + 0.35), r.z + CHASE.lookUp);
-      // the boom: from COCO's head, back along its heading and up. If a wall would come between,
-      // shorten it (keeping PAD from the wall's face, not only along the ray); if even the
-      // shortest boom has no room, swing it up toward a top-down view (never into the wall).
-      const head = new THREE.Vector3(x, y, z + 0.25);
-      const len = Math.hypot(CHASE.back, CHASE.up - 0.25);
-      const base = Math.atan2(CHASE.up - 0.25, CHASE.back);
-      let best: { dir: THREE.Vector3; back: number } | null = null;
-      for (const elev of [base, 0.85, 1.05, 1.25, 1.45, 1.55]) {
-        if (elev < base) continue;
-        const dir = new THREE.Vector3(-Math.cos(elev) * Math.cos(r.yaw), -Math.cos(elev) * Math.sin(r.yaw), Math.sin(elev));
-        let back = len;
-        if (this.colliders.length) {
-          this.ray.set(head, dir);
-          this.ray.far = len + CHASE.nearPad * 4;
-          const hit = this.ray.intersectObjects(this.colliders, false)[0];
-          if (hit) {
-            const n = hit.face?.normal ?? new THREE.Vector3(0, 0, 1);
-            const cos = Math.max(0.2, Math.abs(dir.dot(n)));
-            back = Math.min(len, hit.distance - CHASE.nearPad / cos);
-          }
-        }
-        if (!best || back > best.back) best = { dir, back };
-        if (back >= CHASE.minBack) { best = { dir, back }; break; }
-      }
-      // the swing: up at once (to stay clear), back down smoothly; clearance re-checked on the drawn direction
-      const want = Math.asin(Math.min(1, best!.dir.z));
-      r.elev = want >= r.elev || this.reducedMotion ? want : r.elev + (want - r.elev) * approach(dt, 2.5);
-      const dir = new THREE.Vector3(-Math.cos(r.elev) * Math.cos(r.yaw), -Math.cos(r.elev) * Math.sin(r.yaw), Math.sin(r.elev));
-      let b = len;
-      if (this.colliders.length) {
-        this.ray.set(head, dir);
-        this.ray.far = len + CHASE.nearPad * 4;
-        const hit = this.ray.intersectObjects(this.colliders, false)[0];
-        if (hit) b = Math.min(len, hit.distance - CHASE.nearPad / Math.max(0.2, Math.abs(dir.dot(hit.face?.normal ?? new THREE.Vector3(0, 0, 1)))));
-      }
-      b = Math.max(0.05, b);
+      void v;
+      // the boom, from COCO's head back along its heading and up: at full length at the lowest
+      // elevation with room (rising, never moving in); at minDist if none has full room; shorter
+      // only if no elevation has room even for that (never through a wall). The least height
+      // above the floor is part of the rule.
+      const head = new THREE.Vector3(x, y, z + CHASE.headZ);
+      const dirAt = (e: number) => new THREE.Vector3(-Math.cos(e) * Math.cos(r.yaw), -Math.cos(e) * Math.sin(r.yaw), Math.sin(e));
+      const lowest = Math.asin(Math.min(1, Math.max(0, (CHASE.minHeight - z - CHASE.headZ) / CHASE.dist)));
+      const room = (e: number) => this.clear(head, dirAt(e), CHASE.dist);
+      const elevs = CHASE.elevs.filter((e) => e >= lowest - 1e-9);
+      if (!elevs.length || elevs[0] > lowest + 1e-9) elevs.unshift(Math.max(lowest, CHASE.elev));
+      let pick: { e: number; len: number } | null = null;
+      const rooms = elevs.map((e) => ({ e, len: room(e) }));
+      pick = rooms.find((q) => q.len >= CHASE.dist - 1e-6) ?? null;
+      if (!pick) { const q = rooms.find((q) => q.len >= CHASE.minDist); if (q) pick = { e: q.e, len: Math.min(CHASE.dist, q.len) }; }
+      if (!pick) pick = rooms.reduce((a, b) => (b.len > a.len ? b : a));
+      // the swing: up at once (to stay clear), back down smoothly; room re-checked on the drawn direction
+      r.elev = pick.e >= r.elev || this.reducedMotion ? pick.e : r.elev + (pick.e - r.elev) * approach(dt, 2.5);
+      const dir = dirAt(r.elev);
+      const b = Math.max(0.05, Math.min(CHASE.dist, this.clear(head, dir, CHASE.dist)));
       r.back += (b - r.back) * (b < r.back ? 1 : (this.reducedMotion ? 1 : approach(dt, 3)));
       r.back = Math.min(r.back, b);
-      this.lastPull = len - r.back;
+      this.lastPull = CHASE.dist - r.back;
+      this.lastElev = r.elev;
       cam.position.copy(head).addScaledVector(dir, r.back);
+      // aim so COCO's centre lands at screenY: the camera looks down by the angle to COCO
+      // plus the angle that puts it that far above the screen's centre
+      const body = new THREE.Vector3(r.x, r.y, r.z + CHASE.bodyZ);
+      const dx = body.x - cam.position.x, dy = body.y - cam.position.y;
+      const below = Math.atan2(cam.position.z - body.z, Math.hypot(dx, dy));
+      // (along the rig's heading, and never past straight down: with the boom near vertical
+      // COCO then sits a little above the centre rather than the view flipping over)
+      const tilt = Math.min(Math.PI / 2 - 0.02, below + Math.atan(CHASE.screenY * Math.tan((cam.fov * Math.PI) / 360)));
+      const yaw = Math.hypot(dx, dy) > 0.3 ? Math.atan2(dy, dx) : r.yaw;
+      target.set(cam.position.x + Math.cos(tilt) * Math.cos(yaw), cam.position.y + Math.cos(tilt) * Math.sin(yaw), cam.position.z - Math.sin(tilt));
       cam.lookAt(target);
     } else if (this.mode === 'orbit') {
       // the orbit boom has the chase boom's rule: shortened before a wall, never through it

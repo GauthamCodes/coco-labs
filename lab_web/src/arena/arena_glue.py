@@ -83,7 +83,8 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
             emit_family(channel, tick, columns, scalars)
 
     _arena = Arena(json.loads(spec_json), int(seed), planner=planner,
-                   on_plan_batch=hook, plan_batch_size=int(batch_size),
+                   on_plan_batch=hook if post_batch is not None else None,
+                   plan_batch_size=int(batch_size),
                    on_family=family, hash_version=int(hash_version))
     m = _arena.lab_map
     li = _arena.lidar
@@ -383,27 +384,35 @@ _game = None
 
 
 def game_init(spec_json, game, arg, seed, post_batch, batch_size=2048,
-              post_family=None, hash_version=3):
+              post_family=None, hash_version=3, mode=None):
     """Build the Arena on a level for ``game`` ('fetch_rush' or 'free'); return init()'s pair."""
     global _game
     import hashlib
     from coco_lab import games
     from coco_lab import worldspec_v3 as v3
-    out = init(spec_json, seed, 'astar', post_batch, batch_size, post_family, hash_version)
+    # G1.12: the game draws no search wave, so its Arena streams none (the search, and so
+    # the state, is the same either way); a goal's search can then be run ahead (prefetch)
+    out = init(spec_json, seed, 'astar', None, batch_size, post_family, hash_version)
     world = json.loads(out[0])
     spec = _arena.spec
     dx, dy = spec['world_to_map']
     v3_level = v3.is_v3(spec)
-    # G1.11: Fetch Rush plays rules 2 -- a precomputed round (games.FetchRushRound), so
-    # no tick ever waits for a planner search; Rush Hour is unchanged
+    # G1.11: Fetch Rush plays a precomputed round (games.FetchRushRound), so no tick ever
+    # waits for a planner search; G1.12: rules 3, in the 'phone' (default) or 'full' mode.
+    # Rush Hour is unchanged
     version = games.FETCH_RUSH_RULES if game == 'fetch_rush' else 1
-    rules = games._rules(game, arg, version) if game in games.GAMES else None
+    if game == 'fetch_rush':
+        mode = mode or games.ROUND_MODE_DEFAULT
+    else:
+        mode = None
+    rules = games._rules(game, arg, version, mode) if game in games.GAMES else None
     _game = {'rules': rules, 'game': game, 'arg': arg, 'seed': int(seed),
              'chain': hashlib.sha256(), 'ticks': 0, 'inputs': [], 'v3': v3_level,
-             'hash_version': int(hash_version), 'rules_version': version}
-    info = {'game': game, 'arg': arg, 'v3': v3_level}
+             'hash_version': int(hash_version), 'rules_version': version, 'mode': mode}
+    info = {'game': game, 'arg': arg, 'v3': v3_level, 'mode': mode}
     if v3_level:
-        info['setup'] = games.setup_inputs(game if rules else 'fetch_rush', arg, version)
+        info['setup'] = games.setup_inputs(game if rules else 'fetch_rush', arg, version,
+                                           mode=mode)
         info['seconds'] = rules.seconds if isinstance(rules, games.FetchRush) else None
         if isinstance(rules, games.FetchRushRound):
             rnd = rules.round
@@ -481,6 +490,8 @@ def game_record():
            'inputs': inputs, 'hash_version': g['hash_version']}
     if g.get('rules_version', 1) != 1:
         rec['rules'] = g['rules_version']
+    if g.get('mode'):
+        rec['mode'] = g['mode']
     return json.dumps({'record': rec,
                        'hash_chain': g['chain'].hexdigest(), 'last_hash': _arena.state_hash()})
 
@@ -494,7 +505,7 @@ def game_stars(reference_json):
         return json.dumps({'card': None, 'stars': None, 'reference': None})
     card = games._card(r, _arena)
     if isinstance(r, games.FetchRushRound):
-        # rules 2: the round's own reference (the bot's run of this round, committed with it)
+        # rules 2 and 3: the round's own reference (the bot's run of this round, committed with it)
         ref = (r.round.get('reference') or {}).get('card')
     else:
         ref = json.loads(reference_json) if reference_json else None
@@ -516,26 +527,52 @@ def game_preview():
                                  for k, v in r.items()} for r in rows]})
 
 
+def _auto_goal():
+    from coco_lab import games
+    a = _arena
+    r = _game['rules'] if _game else None
+    assist = a.subsystems.get('assist')
+    if not isinstance(r, games.FetchRush) or assist is None or r.current() is None:
+        return None
+    oid, drop = r.current()
+    if assist.carried() == oid:
+        z = games.zone_rect(a.spec, drop)
+        return {'x': (z[0] + z[1]) / 2, 'y': (z[2] + z[3]) / 2, 'why': 'drop'}
+    o = assist.objects[oid]
+    return {'x': o['x'], 'y': o['y'], 'why': 'pick', 'object': oid}
+
+
 def game_auto_goal():
     """
     AUTO in Fetch Rush: where the planner sends COCO next. To the order's object
     (the planner stops at the nearest free cell; GRAB, Grasp Assist, takes it from
     there), or, carrying it, to the drop zone's centre. One planning call, in the
     tick, like any goal; the 16-pose ghost search (games.best_approach) is not
-    repeated here.
+    repeated here. G1.12: :func:`game_prefetch` has usually run that search already.
     """
-    from coco_lab import games
-    a = _arena
-    r = _game['rules'] if _game else None
-    assist = a.subsystems.get('assist')
-    if not isinstance(r, games.FetchRush) or assist is None or r.current() is None:
-        return json.dumps(None)
-    oid, drop = r.current()
-    if assist.carried() == oid:
-        z = games.zone_rect(a.spec, drop)
-        return json.dumps({'x': (z[0] + z[1]) / 2, 'y': (z[2] + z[3]) / 2, 'why': 'drop'})
-    o = assist.objects[oid]
-    return json.dumps({'x': o['x'], 'y': o['y'], 'why': 'pick', 'object': oid})
+    return json.dumps(_auto_goal())
+
+
+@_in_run
+def game_prefetch(budget_ms):
+    """
+    G1.12: between ticks, run AUTO's search ahead -- from where COCO is now to where
+    AUTO would send it (Arena.prefetch) -- for at most ``budget_ms`` of this call.
+    Return whether it is done. When AUTO is pressed, the tick takes that same search
+    over (finished, or where it got to), so pressing AUTO no longer stops the clock
+    for a whole search; the plan, and every hash, are what they would have been.
+    """
+    from time import perf_counter
+    g = _game
+    goal = _auto_goal() if g is not None and not g.get('over') and _arena is not None else None
+    if goal is None or _arena._in_step or _arena.mode == 'goal':
+        return True     # nothing to run ahead (or AUTO is already driving there)
+    end = perf_counter() + float(budget_ms) / 1000.0
+    while True:
+        if _arena.prefetch((goal['x'], goal['y']), 64):
+            return True
+        if perf_counter() >= end:
+            return False
 
 
 def game_ghost():

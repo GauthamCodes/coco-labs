@@ -61,13 +61,14 @@ export class GameSession {
   lastTick: GameTick | null = null;
   ticks = 0;
 
-  constructor(world: WorldId, readonly game: GameKind, readonly seed: number, ev: SessionEvents) {
+  constructor(world: WorldId, readonly game: GameKind, readonly seed: number, ev: SessionEvents,
+    readonly mode: 'phone' | 'full' = 'phone') {
     this.client = new ArenaClient({
       onWorld: (w, occ) => { this.world = w as World & { game: GameInfo }; ev.onWorld(this.world, occ); },
       onTick: (t, ranges) => { this.inFlight = false; this.lastTick = t as GameTick; this.ticks += 1; ev.onTick(t as GameTick, ranges); this.pump(); },
       onError: (stage, m) => { this.inFlight = false; ev.onError(stage, m); },
       onFamily: (msg) => ev.onFamily?.(msg),
-    }, { hashVersion: 3, seed: 1, spec: SPEC_FOR[world], game: { game, arg: game === 'fetch_rush' ? seed : 0 } });
+    }, { hashVersion: 3, seed: 1, spec: SPEC_FOR[world], game: { game, arg: game === 'fetch_rush' ? seed : 0, ...(game === 'fetch_rush' ? { mode } : {}) } });
   }
 
   whenReady() { return this.client.whenReady(); }

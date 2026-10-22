@@ -32,7 +32,7 @@ interface Pyodide {
   unpackArchive(buf: Uint8Array, format: string, opts: { extractDir: string }): void;
   runPython(code: string): unknown;
   pyimport(name: string): { init: (...a: unknown[]) => PyProxy; step: (s: string) => PyProxy;
-    compare: (...a: unknown[]) => string; costmap_view: () => void; game_init: (...a: unknown[]) => PyProxy; game_op: (op: string, arg: string | null) => string;
+    compare: (...a: unknown[]) => string; costmap_view: () => void; game_init: (...a: unknown[]) => PyProxy; game_op: (op: string, arg: string | null) => string; game_prefetch: (ms: number) => boolean;
     loop_compare_begin: (request: string) => void; loop_compare_advance: () => string;
     begin: (s: string) => void; advance: (n: number) => boolean; amend: (s: string) => void; finish: () => PyProxy; play: (s: string) => string };
 }
@@ -163,7 +163,9 @@ async function boot(req: Extract<ToWorker, { type: 'boot' | 'warm' }>) {
     // G1: the game's rules and Grasp Assist load first (their pack), then the game session builds the Arena
     await loadPack('game');
     mark('pack_game_ready');
-    out = glue.game_init(spec, req.game.game, req.game.arg, req.seed, onBatch, req.batchSize, onFamily, req.hashVersion ?? 3);
+    out = glue.game_init(spec, req.game.game, req.game.arg, req.seed, onBatch, req.batchSize, onFamily, req.hashVersion ?? 3,
+      req.game.mode ?? null);
+    gameMode = true;
   } else out = glue.init(spec, req.seed, req.planner, onBatch, req.batchSize, onFamily, req.hashVersion ?? 1);
   const world = JSON.parse(out.get(0) as unknown as string);
   const occ = out.get(1);
@@ -258,6 +260,28 @@ async function compareLoop(req: Extract<ToWorker, { type: 'compare_loop' }>) {
   }
 }
 
+/**
+ * G1.12: AUTO's search, run ahead while the worker is idle (arena_glue.game_prefetch):
+ * slices of at most PREFETCH_MS, yielding between them; any queued step or query goes
+ * first (a step waits at most one slice). The tick that AUTO's goal opens takes the
+ * same search over, so the plan -- and every hash -- is what it would have been.
+ */
+const PREFETCH_MS = 4;
+let gameMode = false;
+let inFlight = 0;
+let prefetching = false;
+function idlePrefetch() {
+  if (!gameMode || prefetching || !glue) return;
+  prefetching = true;
+  void (async () => {
+    try {
+      while (inFlight === 0 && glue && !glue.game_prefetch(PREFETCH_MS)) await yieldNow();
+    } catch (e) {
+      post({ type: 'error', stage: 'prefetch', message: e instanceof Error ? e.message : String(e) });
+    } finally { prefetching = false; }
+  })();
+}
+
 let queue: Promise<void> = Promise.resolve();
 self.onmessage = (ev: MessageEvent<ToWorker>) => {
   const req = ev.data;
@@ -270,6 +294,7 @@ self.onmessage = (ev: MessageEvent<ToWorker>) => {
       .catch((e) => post({ type: 'error', stage: 'load_pack', message: e instanceof Error ? e.message : String(e) }));
     return;
   }
+  inFlight++;
   queue = queue.then(async () => {
     try {
       if (req.type === 'boot' || req.type === 'warm') await boot(req);
@@ -286,6 +311,9 @@ self.onmessage = (ev: MessageEvent<ToWorker>) => {
         try { (glue as unknown as { destroy?: () => void } | null)?.destroy?.(); } catch { /* no live model exists during warming */ }
         glue = null; booted = null; mark('model_warm_failed');
       } else post({ type: 'error', stage: req.type, message: e instanceof Error ? e.message : String(e) });
+    } finally {
+      inFlight--;
+      if (inFlight === 0) idlePrefetch();
     }
   });
 };

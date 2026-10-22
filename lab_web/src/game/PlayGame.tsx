@@ -27,7 +27,7 @@ import { GameSession, SPEC_FOR, type Candidate, type GameInfo, type GameKind, ty
 import { FloatJoystick } from './hud/FloatJoystick';
 import { Minimap, TacticalMap, type MapMarks } from './hud/Maps';
 import { GameSound, haptic } from './sound';
-import { LOAD_STAGES, TIPS, primaryAction, type Primary } from './rules_view';
+import { LOAD_STAGES, TIPS, primaryAction, type FetchRushMode, type Primary } from './rules_view';
 import type { GameResult } from './GameApp';
 
 const BASE = import.meta.env.BASE_URL;
@@ -35,6 +35,8 @@ const STOP_HOLD_MS = 600;
 
 export interface PlayProps {
   world: WorldId; game: GameKind; seed: number; tier: Tier;
+  /** G1.12: Fetch Rush's mode: the phone round (2 orders) or the Full shift (3) */
+  mode?: FetchRushMode;
   onPause: () => void; paused: boolean; onResult: (r: GameResult) => void; restartKey: number;
   showPerf: boolean; tutorialSeen: boolean; onTutorialDone: () => void;
   /** draw the planner ghost: the A* route for the current order (Settings) */
@@ -127,7 +129,7 @@ export function PlayGame(p: PlayProps) {
           if (n) r.current?.setArm(Object.fromEntries(['joint1', 'joint2', 'finger_left', 'finger_right'].map((k) => [k, Number(cols[k]?.[n - 1])])));
         }
       },
-    });
+    }, p.mode ?? 'phone');
     s.current = session;
     session.client.worker.addEventListener('message', (m: MessageEvent) => {
       const d = m.data as { type: string; name?: string };

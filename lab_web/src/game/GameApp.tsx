@@ -22,7 +22,7 @@ import type { Tier } from './world/build3d';
 import { pickTier } from './tier';
 import './fonts.css';
 import './game.css';
-import { FETCH_RUSH_SHIFTS } from './rules_view';
+import { FETCH_RUSH_SHIFTS, fetchRushMode, type FetchRushMode } from './rules_view';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -34,14 +34,15 @@ export interface GameResult {
   objects?: { id: string; x: number; y: number }[];
 }
 
-const bestKey = (seed: number) => `coco.play.best.v1.g1-fetch-rush.seed-${seed}`;
-export function readStars(seed: number): number | null {
-  try { const raw = readRaw(bestKey(seed)); return raw ? (JSON.parse(raw) as { stars: number }).stars : null; } catch { return null; }
+// G1.12: rules 3; the Full shift keeps its own bests
+const bestKey = (seed: number, mode: FetchRushMode = 'phone') => `coco.play.best.v1.g1-fetch-rush.r3-${mode}.seed-${seed}`;
+export function readStars(seed: number, mode: FetchRushMode = 'phone'): number | null {
+  try { const raw = readRaw(bestKey(seed, mode)); return raw ? (JSON.parse(raw) as { stars: number }).stars : null; } catch { return null; }
 }
-function keepStars(seed: number, stars: number, net: number, time: number) {
-  const old = readStars(seed);
+function keepStars(seed: number, mode: FetchRushMode, stars: number, net: number, time: number) {
+  const old = readStars(seed, mode);
   if (old !== null && old >= stars) return;
-  writeRaw(bestKey(seed), JSON.stringify({ stars, net, time }));
+  writeRaw(bestKey(seed, mode), JSON.stringify({ stars, net, time }));
 }
 const starText = (n: number | null) => (n === null ? '☆☆☆' : '★'.repeat(n) + '☆'.repeat(3 - n));
 
@@ -50,13 +51,13 @@ export function GameApp() {
   const game = q.get('game') as GameKind | null;
   if (game !== 'fetch_rush' && game !== 'free') return <ModeSelect />;
   const world: WorldId = game === 'fetch_rush' ? 'depot' : q.get('world') === 'proving' ? 'proving' : 'depot';
-  // G1.11: Fetch Rush rules 2 plays only the shifts with a reference timer (rules_view); another seed opens shift 1
+  // Fetch Rush plays the shifts on file (rules_view); another seed opens shift 1. G1.12: &mode=full is the Full shift
   const asked = Math.max(1, Math.min(999, Number.parseInt(q.get('seed') ?? '1', 10) || 1));
   const seed = game === 'fetch_rush' && !FETCH_RUSH_SHIFTS.includes(asked) ? FETCH_RUSH_SHIFTS[0] : asked;
-  return <GameRun game={game} world={world} seed={seed} />;
+  return <GameRun game={game} world={world} seed={seed} mode={fetchRushMode(q.get('mode'))} />;
 }
 
-function GameRun({ game, world, seed }: { game: GameKind; world: WorldId; seed: number }) {
+function GameRun({ game, world, seed, mode }: { game: GameKind; world: WorldId; seed: number; mode: FetchRushMode }) {
   const [paused, setPaused] = useState(false);
   const [settings, setSettings] = useState(false);
   const [result, setResult] = useState<GameResult | null>(null);
@@ -69,15 +70,15 @@ function GameRun({ game, world, seed }: { game: GameKind; world: WorldId; seed: 
   useEffect(() => { document.documentElement.classList.add('playing-coco'); return () => document.documentElement.classList.remove('playing-coco'); }, []);
   const onResult = (r: GameResult) => {
     setResult(r);
-    if (r.stars !== null && r.card) keepStars(r.seed, r.stars, Number(r.card.net_deliveries ?? 0), Number(r.card.time_used ?? 0));
+    if (r.stars !== null && r.card) keepStars(r.seed, mode, r.stars, Number(r.card.net_deliveries ?? 0), Number(r.card.time_used ?? 0));
   };
   const restart = () => { setResult(null); setPaused(false); setRestartKey((k) => k + 1); };
   return <>
-    <PlayGame key={`${restartKey}-${tier}`} world={world} game={game} seed={seed} tier={tier} paused={paused || !!result} onPause={() => setPaused((x) => !x)}
+    <PlayGame key={`${restartKey}-${tier}`} world={world} game={game} seed={seed} mode={mode} tier={tier} paused={paused || !!result} onPause={() => setPaused((x) => !x)}
       onResult={onResult} restartKey={restartKey} showPerf={showPerf} tutorialSeen={tutorialSeen} ghost={ghost}
       onTutorialDone={() => { writePref('tutorial', true); setTutorialSeen(true); }} />
     {paused && !result && !settings && <section className="g1 g1-screen dim" data-testid="g1-pause-menu" style={{ position: 'fixed', zIndex: 25, background: 'rgba(8,10,14,.62)' }}>
-      <div className="g1-eyebrow">PAUSED · {game === 'fetch_rush' ? `FETCH RUSH · SHIFT ${seed}` : `FREE DRIVE · ${world === 'depot' ? 'DEPOT' : 'PROVING GROUND'}`}</div>
+      <div className="g1-eyebrow">PAUSED · {game === 'fetch_rush' ? `FETCH RUSH · SHIFT ${seed}${mode === 'full' ? ' · FULL' : ''}` : `FREE DRIVE · ${world === 'depot' ? 'DEPOT' : 'PROVING GROUND'}`}</div>
       <nav className="g1-menu">
         <button className="main" autoFocus onClick={() => setPaused(false)}>RESUME</button>
         <button onClick={restart}>RESTART</button>
@@ -144,8 +145,15 @@ function ModeSelect() {
     <a className="g1-icon g1-glass" href={BASE} aria-label="Back to the title" style={{ position: 'absolute', left: 'calc(12px + env(safe-area-inset-left))', top: 'calc(12px + env(safe-area-inset-top))', color: 'inherit' }}><ArrowLeft size={20} /></a>
     <div className="g1-eyebrow">CHOOSE A GAME</div>
     <div className="g1-modes" role="list">
-      {[1, 2, 3].slice(0, 1).map((seed) => <a key={seed} role="listitem" className="g1-modecard hero" data-testid="mode-fetch-rush" href={`${BASE}?view=play&game=fetch_rush&seed=${seed}`} onClick={(e) => { e.preventDefault(); navigate(`${BASE}?view=play&game=fetch_rush&seed=${seed}`); }}>
-        <div className="art" style={art('0% 0%')} /><span className="g1-eyebrow" style={{ color: 'var(--g1-coco)' }}>NEW · DEPOT</span><h3>Fetch Rush</h3><p>Three pick-and-deliver orders in one zone, against the reference clock.</p><div className="st" aria-label="best stars">{starText(readStars(seed))}</div></a>)}
+      {[1].map((seed) => {
+        const go = (mode: FetchRushMode) => (e: { preventDefault(): void }) => { e.preventDefault(); navigate(`${BASE}?view=play&game=fetch_rush&seed=${seed}${mode === 'full' ? '&mode=full' : ''}`); };
+        return <div key={seed} role="listitem" className="g1-modecard hero">
+          <div className="art" style={art('0% 0%')} /><span className="g1-eyebrow" style={{ color: 'var(--g1-coco)' }}>NEW · DEPOT</span><h3>Fetch Rush</h3>
+          <p>Pick-and-deliver orders in one zone, against the reference clock.</p><div className="st" aria-label="best stars">{starText(readStars(seed))}</div>
+          <div className="opts"><a data-testid="mode-fetch-rush" href={`${BASE}?view=play&game=fetch_rush&seed=${seed}`} onClick={go('phone')}>PLAY · 2 ORDERS</a>
+            <a data-testid="mode-fetch-rush-full" href={`${BASE}?view=play&game=fetch_rush&seed=${seed}&mode=full`} onClick={go('full')}>FULL SHIFT · 3</a></div>
+        </div>;
+      })}
       <div role="listitem" className="g1-modecard" data-testid="mode-free-drive"><div className="art" style={art('50% 0%')} /><h3>Free Drive</h3><p>No clock. Drive, explore, pick things up.</p>
         <div className="opts"><a href={`${BASE}?view=play&game=free&world=depot`}>DEPOT</a><a href={`${BASE}?view=play&game=free&world=proving`}>PROVING GROUND</a></div></div>
       {[['Rush Hour', 'Cross the forklift lanes.'], ['Fog Scout', 'The map starts dark.'], ['Lost & Found', 'Where am I?']].map(([t, d]) => <div role="listitem" key={t} className="g1-modecard locked" aria-disabled="true"><div className="art" style={art('100% 0%')} /><span className="lock"><Lock size={9} /> SOON</span><h3>{t}</h3><p>{d}</p></div>)}
