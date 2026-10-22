@@ -16,6 +16,7 @@
  * renders with (recorded in OUTDIR/shots.json), never a phone's.
  */
 import { chromium } from 'playwright';
+import { GPU, launchOptions, machine } from './gpu.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { nothingPhone1, throttlePhone } from '../phone/nothing-phone-1.mjs';
 
@@ -29,8 +30,9 @@ const SURFACES = {
 };
 const PROFILES = [['desktop', { viewport: { width: 1440, height: 900 } }], ['phone-landscape', nothingPhone1(true)], ['phone-portrait', nothingPhone1(false)]];
 mkdirSync(out, { recursive: true });
-const browser = await chromium.launch({ ...(process.env.G1_CHROMIUM ? { executablePath: process.env.G1_CHROMIUM } : {}), args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
-const report = { site, when: new Date().toISOString(), renderer: null, shots: [] };
+// G1.13: G1_GPU=nvidia|intel renders on the laptop's GPU (gpu.mjs); software is the default
+const browser = await chromium.launch(launchOptions());
+const report = { site, when: new Date().toISOString(), gpu: GPU, machine: machine(), renderer: null, shots: [] };
 for (const [profile, options] of PROFILES) {
   for (const [name, s] of Object.entries(SURFACES)) {
     const ctx = await browser.newContext({ ...options, serviceWorkers: 'block' });
