@@ -45,7 +45,10 @@ try {
   const a = buildServiceWorker(root, template); report.versionA = a.version;
   const p = await browser.newPage();
   p.on('pageerror', (e) => report.errors.push(String(e)));
-  await p.goto(site); await p.getByTestId('title').waitFor();
+  // navigations wait for the document, then for the title -- not for every subresource ('load'),
+  // which a busy CI runner has taken over 30 s to fire (twice: 05b1553, 5d3cdb2)
+  const NAV = { waitUntil: 'domcontentloaded', timeout: 90000 };
+  await p.goto(site, NAV); await p.getByTestId('title').waitFor({ timeout: 90000 });
   await p.evaluate(() => { window.__notReloaded = true; });
   await p.evaluate(async () => { await navigator.serviceWorker.register('./sw.js', { scope: './', updateViaCache: 'none' }); });
   await p.waitForFunction(() => !!navigator.serviceWorker.controller, null, { timeout: 60000 });
@@ -75,7 +78,7 @@ try {
   report.notReloaded = await p.evaluate(() => window.__notReloaded === true);
   report.cachesWhileAOpen = await cachesOf();
   report.aCacheKeptWhileOpen = report.cachesWhileAOpen.some((n) => n.endsWith('-' + a.version));
-  await p.reload(); await p.getByTestId('title').waitFor();
+  await p.reload(NAV); await p.getByTestId('title').waitFor({ timeout: 90000 });
   await p.waitForTimeout(1500);
   report.afterReload = await snapshot();
   report.hardReloadConsistent = report.afterReload.documentBuild === b.version && report.afterReload.asset === 'B' && report.afterReload.pinnedAsset === 'B';
