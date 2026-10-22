@@ -145,3 +145,33 @@ session. Needs USB debugging on (Developer options) and the laptop's key accepte
 USB/CDP procedure (cold start stages, Play fps at 1 and 10 minutes, touch-to-motion, battery
 and temperature, PHONE_PROFILE.md's viewport and safe-area assumptions) and the phone's
 default tier and frame-rate cap. `PHONE_PROFILE.md`'s values stay provisional.
+
+## 6. Determinism: four engines, and the v3 native-vs-Pyodide gate
+
+**v2 corpus (M5's 100 recorded sessions, 15,000 ticks per engine), four engines**, replayed by
+the built head site's own worker (served on 127.0.0.1:4174) — `docs/v2/g1/data/g110/rerun_determinism.py`
+with `G1_ENGINES=node,chromium,firefox,webkit`, compared with the committed reference
+(`docs/v2/data/m5/defects/determinism-v2`):
+
+| Engine | Ticks | Mismatches | Chain |
+|---|---|---|---|
+| Pyodide-in-Node | 15,000 | **0** | `8ef4340753b0` |
+| Chromium | 15,000 | **0** | `8ef4340753b0` |
+| Firefox | 15,000 | **0** | `8ef4340753b0` |
+| WebKit | 15,000 | **0** | `8ef4340753b0` |
+
+Also the v1 corpus (M1, Pyodide-in-Node): 15,000 ticks, **0 mismatches**, chain `0e43a0b5d6b9`.
+Files: [`determinism-v2/`](determinism-v2/), [`determinism-v1/`](determinism-v1/) (combined
+hashes, `compare.log`, conditions), logs [`determinism-run1.log`](determinism-run1.log),
+[`determinism-run2.log`](determinism-run2.log). Run 1: every WebKit shard failed to *launch* —
+Playwright's MiniBrowser needs `libgstcodecparsers-1.0.so.0`, which this host lacks (no sudo);
+the runner now passes `G1_WEBKIT_EXE` (`~/coco_lab_m1_ws/bin/webkit_run.sh`, M1's wrapper with
+the four media libraries unpacked in user space) and `G1_RESUME` keeps finished shards; run 2
+ran the ten WebKit shards and the comparison. Laptop, balanced, on AC (each file's conditions).
+
+**v3 native-vs-Pyodide gate** (`lab_web/tools/g1/native_gate.mjs --python ~/coco_labs_ws/g1_venv/bin/python`):
+[`native_gate_v3.json`](native_gate_v3.json) — **passed, every compared value exact**:
+planners 818,951; Fetch Rush (rules 3 phone round, the regenerated file) 1,436; control 6,440;
+localise 25,500. The control: `--hv 2` ([`native_gate_v2_control.json`](native_gate_v2_control.json))
+**fails as designed** — control 1,063 failures with max |Δ| **0.446011142799704 m** (M5's
+divergence), Fetch Rush 1,420, localise 240; planners exact.

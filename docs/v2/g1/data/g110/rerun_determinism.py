@@ -42,11 +42,18 @@ for corpus, source in corpora.items():
             target = directory / 'shards' / f'{engine}-{shard:02}'
             target.mkdir(parents=True, exist_ok=True)
             args = [node, 'tools/perf/determinism.mjs', engine, '--sessions', str(session_file), '--out', str(target), '--hash-version', corpus[-1], '--site', site]
+            # G1.13: a WebKit without the host's missing media libraries (no sudo): the wrapper
+            if engine == 'webkit' and os.environ.get('G1_WEBKIT_EXE'):
+                args += ['--webkit-exe', os.environ['G1_WEBKIT_EXE']]
             jobs.append((corpus, engine, shard, target, args))
 
 start = time.time()
 def run(job):
     corpus, engine, shard, target, args = job
+    key = 'pyodide-node' if engine == 'node' else engine
+    if os.environ.get('G1_RESUME') and (target / f'hashes_{key}.json.gz').exists():
+        print(f'{corpus} {engine} {shard:02}: kept (G1_RESUME)', flush=True)   # G1.13: a finished shard
+        return 0
     log = target / 'run.log'
     with log.open('w') as stream:
         result = subprocess.run(args, cwd=web, stdout=stream, stderr=subprocess.STDOUT)
