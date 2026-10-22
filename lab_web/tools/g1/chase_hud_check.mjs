@@ -28,12 +28,16 @@ const HUD = ['[data-testid="objective"]', '.g1-top-right > *', '.g1-chip', '[dat
   '[data-testid="hud-autonomy"]', '[data-testid="hud-camera"]', '[data-testid="hud-stop"]', '[data-testid="hud-release"]',
   '[data-testid="minimap"]', '.g1-joy'];
 
-/** Twenty map poses (x, y, heading): open floor, aisles, beside walls and racks, corners (G1.4's paths' starts and more). */
+/**
+ * Twenty map poses (x, y, heading): open floor, aisles, beside walls and racks, corners (G1.4's
+ * paths' starts and more) -- all on free plan-grid cells outside the forklift lanes (y 10-13.5 m),
+ * where a forklift could stand at the pose and the result would depend on timing.
+ */
 const POSES = [
   [30, 0.6, Math.PI], [20, 0.6, 0], [16.2, 2.0, Math.PI * 0.75], [26, 1.2, Math.PI / 2], [28, 0.55, 0],
   [16.5, 17.3, 0], [31, 21.9, Math.PI], [18, 16.4, 0], [15.2, 3, Math.PI], [15.5, 26.5, Math.PI],
-  [37.6, 3.6, 0], [37, 23.65, 0], [47.4, 12, Math.PI / 2], [45.5, 1.5, 0], [30, 12, 0],
-  [24, 8, Math.PI / 2], [40, 10, Math.PI], [35, 18, Math.PI / 4], [22, 12, -Math.PI / 2], [44, 20, -Math.PI * 0.75],
+  [37.6, 3.6, 0], [37, 23.65, 0], [47.4, 16, Math.PI / 2], [45.5, 1.5, 0], [30, 7, 0],
+  [24, 8, Math.PI / 2], [40, 7, Math.PI], [35, 18, Math.PI / 4], [22, 7, -Math.PI / 2], [44, 20, -Math.PI * 0.75],
 ];
 
 const browser = await chromium.launch({ ...(process.env.G1_CHROMIUM ? { executablePath: process.env.G1_CHROMIUM } : {}), args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
@@ -82,5 +86,6 @@ for (const [name, ctxOpts] of [['phone-landscape', nothingPhone1(true)], ['deskt
 }
 await browser.close();
 writeFileSync(out, JSON.stringify(report, null, 1) + '\n');
+for (const [name, v] of Object.entries(report.profiles)) for (const r of v.rows.filter((x) => !x.ok)) console.log(`${name} pose ${r.k + 1} failed: ${JSON.stringify(r)}`);
 console.log(JSON.stringify({ passed: report.passed, ...Object.fromEntries(Object.entries(report.profiles).map(([k, v]) => [k, { poses: v.poses, failed: v.failed, errors: v.errors.length }])) }));
 process.exit(report.passed ? 0 : 1);
