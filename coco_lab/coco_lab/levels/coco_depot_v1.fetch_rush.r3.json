@@ -300,28 +300,28 @@
       "contacts": 0,
       "delivered": [
        {
-        "driven": 26.164837719101307,
+        "driven": 26.148709104629148,
         "drop": "dispatch_drop",
         "ghost": 25.709545442950493,
         "object": "obj_maze_2",
-        "seconds": 120.4,
-        "t": 120.4
+        "seconds": 118.80000000000001,
+        "t": 118.80000000000001
        },
        {
-        "driven": 24.911682956287283,
+        "driven": 24.911682857592982,
         "drop": "dock_2",
         "ghost": 24.876450198781704,
         "object": "obj_dispatch",
         "seconds": 113.9,
-        "t": 234.3
+        "t": 232.70000000000002
        },
        {
-        "driven": 15.840737005917841,
+        "driven": 15.840736979677239,
         "drop": "dock_2",
         "ghost": 15.513708498984752,
         "object": "obj_dock",
-        "seconds": 83.80000000000004,
-        "t": 318.1
+        "seconds": 83.80000000000001,
+        "t": 316.5
        }
       ],
       "deliveries": 3,
@@ -342,14 +342,14 @@
         "dock_2"
        ]
       ],
-      "path_efficiency": 0.9868466646055625,
+      "path_efficiency": 0.9870486899717301,
       "round": "zone_workshop",
       "rules": 3,
       "seed": 1,
-      "time_used": 318.1,
-      "timer": 477.2
+      "time_used": 316.5,
+      "timer": 474.8
      },
-     "hash_chain": "3fa8aff27b0d97db6cb04b1316c46ab446fedfe21e3f96000b0b3f676b801ba6",
+     "hash_chain": "69aa675ba102bad764203c6cb153f0e284496d032ef1a39f4a57f60bf0df6995",
      "record": {
       "arg": 1,
       "game": "fetch_rush",
@@ -358,7 +358,7 @@
        {
         "has_theta": true,
         "kind": "kidnap",
-        "theta": 1.1780972450961724,
+        "theta": 5.497787143782138,
         "tick": 0,
         "x": 9.950000000000001,
         "y": 6.050000000000001
@@ -382,86 +382,86 @@
        {
         "choice": "assist.target=obj_maze_2",
         "kind": "config",
-        "tick": 357
+        "tick": 341
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 357
+        "tick": 341
        },
        {
         "kind": "goal",
-        "tick": 565,
+        "tick": 549,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1144
+        "tick": 1128
        },
        {
         "kind": "goal",
-        "tick": 1205,
+        "tick": 1189,
         "x": 26.81631195246476,
         "y": 7.056537824394582
        },
        {
         "choice": "assist.target=obj_dispatch",
         "kind": "config",
-        "tick": 1462
+        "tick": 1446
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1462
+        "tick": 1446
        },
        {
         "kind": "goal",
-        "tick": 1665,
+        "tick": 1649,
         "x": 42.0,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 2283
+        "tick": 2267
        },
        {
         "kind": "goal",
-        "tick": 2344,
+        "tick": 2328,
         "x": 46.05653782439458,
         "y": 7.316311952464757
        },
        {
         "choice": "assist.target=obj_dock",
         "kind": "config",
-        "tick": 2618
+        "tick": 2602
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 2618
+        "tick": 2602
        },
        {
         "kind": "goal",
-        "tick": 2824,
+        "tick": 2808,
         "x": 42.0,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 3121
+        "tick": 3105
        }
       ],
       "mode": "full",
       "rules": 3,
       "seed": 1,
-      "ticks": 3182
+      "ticks": 3166
      }
     },
-    "reference_time_s": 318.1,
+    "reference_time_s": 316.5,
     "region": "zone_workshop",
     "rejected": [],
     "routes": [
@@ -659,9 +659,9 @@
     "start": [
      9.950000000000001,
      6.050000000000001,
-     1.1780972450961724
+     5.497787143782138
     ],
-    "timer_s": 477.2
+    "timer_s": 474.8
    },
    "2": {
     "attempt": 0,
@@ -690,28 +690,28 @@
       "contacts": 0,
       "delivered": [
        {
-        "driven": 12.29490845063392,
+        "driven": 12.251394196579497,
         "drop": "dock_2",
         "ghost": 12.188225099390852,
         "object": "obj_dock",
-        "seconds": 72.60000000000001,
-        "t": 72.60000000000001
+        "seconds": 71.00000000000001,
+        "t": 71.00000000000001
        },
        {
-        "driven": 24.90218644666583,
+        "driven": 24.902185630694664,
         "drop": "dispatch_drop",
         "ghost": 24.949242404917488,
         "object": "obj_dispatch",
-        "seconds": 112.90000000000002,
-        "t": 185.50000000000003
+        "seconds": 112.89999999999999,
+        "t": 183.9
        },
        {
-        "driven": 32.16480188802729,
+        "driven": 32.164801938444015,
         "drop": "dispatch_drop",
         "ghost": 31.850966799187812,
         "object": "obj_maze_2",
         "seconds": 140.0,
-        "t": 325.5
+        "t": 323.9
        }
       ],
       "deliveries": 3,
@@ -732,14 +732,14 @@
         "dispatch_drop"
        ]
       ],
-      "path_efficiency": 0.9944851665559247,
+      "path_efficiency": 0.9956588305988449,
       "round": "zone_loading_dock",
       "rules": 3,
       "seed": 2,
-      "time_used": 325.5,
-      "timer": 488.2
+      "time_used": 323.9,
+      "timer": 485.8
      },
-     "hash_chain": "647b04bfd56e65a529ce46a7ac0a5f6220c9db28b584cd0b4e7b01614990991d",
+     "hash_chain": "e6d058f3174d6054f24618080774408dfa6f35c08bb71c475b49418d631a9c4f",
      "record": {
       "arg": 2,
       "game": "fetch_rush",
@@ -748,7 +748,7 @@
        {
         "has_theta": true,
         "kind": "kidnap",
-        "theta": 3.141592653589793,
+        "theta": 5.890486225480862,
         "tick": 0,
         "x": 42.25,
         "y": 8.450000000000001
@@ -772,86 +772,86 @@
        {
         "choice": "assist.target=obj_dock",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "kind": "goal",
-        "tick": 376,
+        "tick": 360,
         "x": 42.0,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 666
+        "tick": 650
        },
        {
         "kind": "goal",
-        "tick": 727,
+        "tick": 711,
         "x": 27.44346217560542,
         "y": 7.316311952464757
        },
        {
         "choice": "assist.target=obj_dispatch",
         "kind": "config",
-        "tick": 1314
+        "tick": 1298
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1314
+        "tick": 1298
        },
        {
         "kind": "goal",
-        "tick": 1523,
+        "tick": 1507,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1795
+        "tick": 1779
        },
        {
         "kind": "goal",
-        "tick": 1856,
+        "tick": 1840,
         "x": 10.556537824394582,
         "y": 2.816311952464757
        },
        {
         "choice": "assist.target=obj_maze_2",
         "kind": "config",
-        "tick": 2408
+        "tick": 2392
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 2408
+        "tick": 2392
        },
        {
         "kind": "goal",
-        "tick": 2614,
+        "tick": 2598,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 3195
+        "tick": 3179
        }
       ],
       "mode": "full",
       "rules": 3,
       "seed": 1,
-      "ticks": 3256
+      "ticks": 3240
      }
     },
-    "reference_time_s": 325.5,
+    "reference_time_s": 323.9,
     "region": "zone_loading_dock",
     "rejected": [],
     "routes": [
@@ -1061,9 +1061,9 @@
     "start": [
      42.25,
      8.450000000000001,
-     3.141592653589793
+     5.890486225480862
     ],
-    "timer_s": 488.2
+    "timer_s": 485.8
    },
    "3": {
     "attempt": 0,
@@ -1092,28 +1092,28 @@
       "contacts": 0,
       "delivered": [
        {
-        "driven": 26.164837719101307,
+        "driven": 26.148709104629148,
         "drop": "dispatch_drop",
         "ghost": 25.709545442950493,
         "object": "obj_maze_2",
-        "seconds": 120.4,
-        "t": 120.4
+        "seconds": 118.80000000000001,
+        "t": 118.80000000000001
        },
        {
-        "driven": 21.421716358778045,
+        "driven": 21.421716324693566,
         "drop": "dock_1",
         "ghost": 21.376450198781697,
         "object": "obj_dispatch",
-        "seconds": 102.10000000000002,
-        "t": 222.50000000000003
+        "seconds": 102.1,
+        "t": 220.9
        },
        {
-        "driven": 18.584715707422376,
+        "driven": 18.58471572944753,
         "drop": "dock_2",
         "ghost": 18.25218613006977,
         "object": "obj_dock",
         "seconds": 94.60000000000002,
-        "t": 317.1
+        "t": 315.5
        }
       ],
       "deliveries": 3,
@@ -1134,14 +1134,14 @@
         "dock_2"
        ]
       ],
-      "path_efficiency": 0.9875311149476599,
+      "path_efficiency": 0.9877331385956095,
       "round": "zone_workshop",
       "rules": 3,
       "seed": 3,
-      "time_used": 317.1,
-      "timer": 475.7
+      "time_used": 315.5,
+      "timer": 473.2
      },
-     "hash_chain": "0e904cd70eeefba5a824dfda0b4426aad327f40998603d8b9c09a39cc47c4bee",
+     "hash_chain": "becf2cab3a28964bfc141a503f3f562eb6f66d6905d05a8ce85c2c77cbca52b7",
      "record": {
       "arg": 3,
       "game": "fetch_rush",
@@ -1150,7 +1150,7 @@
        {
         "has_theta": true,
         "kind": "kidnap",
-        "theta": 1.1780972450961724,
+        "theta": 5.497787143782138,
         "tick": 0,
         "x": 9.950000000000001,
         "y": 6.050000000000001
@@ -1174,86 +1174,86 @@
        {
         "choice": "assist.target=obj_maze_2",
         "kind": "config",
-        "tick": 357
+        "tick": 341
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 357
+        "tick": 341
        },
        {
         "kind": "goal",
-        "tick": 565,
+        "tick": 549,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1144
+        "tick": 1128
        },
        {
         "kind": "goal",
-        "tick": 1205,
+        "tick": 1189,
         "x": 26.81631195246476,
         "y": 7.056537824394582
        },
        {
         "choice": "assist.target=obj_dispatch",
         "kind": "config",
-        "tick": 1462
+        "tick": 1446
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1462
+        "tick": 1446
        },
        {
         "kind": "goal",
-        "tick": 1665,
+        "tick": 1649,
         "x": 38.5,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 2165
+        "tick": 2149
        },
        {
         "kind": "goal",
-        "tick": 2226,
+        "tick": 2210,
         "x": 46.05653782439458,
         "y": 7.316311952464757
        },
        {
         "choice": "assist.target=obj_dock",
         "kind": "config",
-        "tick": 2605
+        "tick": 2589
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 2605
+        "tick": 2589
        },
        {
         "kind": "goal",
-        "tick": 2814,
+        "tick": 2798,
         "x": 42.0,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 3111
+        "tick": 3095
        }
       ],
       "mode": "full",
       "rules": 3,
       "seed": 1,
-      "ticks": 3172
+      "ticks": 3156
      }
     },
-    "reference_time_s": 317.1,
+    "reference_time_s": 315.5,
     "region": "zone_workshop",
     "rejected": [],
     "routes": [
@@ -1455,9 +1455,9 @@
     "start": [
      9.950000000000001,
      6.050000000000001,
-     1.1780972450961724
+     5.497787143782138
     ],
-    "timer_s": 475.7
+    "timer_s": 473.2
    },
    "4": {
     "attempt": 0,
@@ -1486,28 +1486,28 @@
       "contacts": 0,
       "delivered": [
        {
-        "driven": 10.76995888640441,
+        "driven": 10.726439026493756,
         "drop": "dock_3",
         "ghost": 10.738477631085024,
         "object": "obj_dock",
-        "seconds": 67.80000000000001,
-        "t": 67.80000000000001
+        "seconds": 66.2,
+        "t": 66.2
        },
        {
-        "driven": 28.322643755251473,
+        "driven": 28.322643908959822,
         "drop": "dispatch_drop",
         "ghost": 28.449242404917506,
         "object": "obj_dispatch",
-        "seconds": 124.6,
-        "t": 192.4
+        "seconds": 124.60000000000001,
+        "t": 190.8
        },
        {
-        "driven": 32.167970977621664,
+        "driven": 32.16797094201086,
         "drop": "dispatch_drop",
         "ghost": 31.850966799187812,
         "object": "obj_maze_2",
-        "seconds": 140.0,
-        "t": 332.4
+        "seconds": 140.00000000000003,
+        "t": 330.8
        }
       ],
       "deliveries": 3,
@@ -1528,14 +1528,14 @@
         "dispatch_drop"
        ]
       ],
-      "path_efficiency": 0.9972307198821699,
+      "path_efficiency": 0.9985791823696778,
       "round": "zone_loading_dock",
       "rules": 3,
       "seed": 4,
-      "time_used": 332.4,
-      "timer": 498.6
+      "time_used": 330.8,
+      "timer": 496.2
      },
-     "hash_chain": "247774c35adebe87abd0f44f1d7d778aa7f27396f0a377d1a215b42722ca2c7c",
+     "hash_chain": "a7d3cf23df1d7ba63c38a6b4173665dbb0c59b841adcd49a6079b3bffbafadb1",
      "record": {
       "arg": 4,
       "game": "fetch_rush",
@@ -1544,7 +1544,7 @@
        {
         "has_theta": true,
         "kind": "kidnap",
-        "theta": 3.141592653589793,
+        "theta": 5.890486225480862,
         "tick": 0,
         "x": 42.25,
         "y": 8.450000000000001
@@ -1568,86 +1568,86 @@
        {
         "choice": "assist.target=obj_dock",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "kind": "goal",
-        "tick": 376,
+        "tick": 360,
         "x": 45.5,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 618
+        "tick": 602
        },
        {
         "kind": "goal",
-        "tick": 679,
+        "tick": 663,
         "x": 27.44346217560542,
         "y": 7.316311952464757
        },
        {
         "choice": "assist.target=obj_dispatch",
         "kind": "config",
-        "tick": 1382
+        "tick": 1366
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1382
+        "tick": 1366
        },
        {
         "kind": "goal",
-        "tick": 1592,
+        "tick": 1576,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1864
+        "tick": 1848
        },
        {
         "kind": "goal",
-        "tick": 1925,
+        "tick": 1909,
         "x": 10.556537824394582,
         "y": 2.816311952464757
        },
        {
         "choice": "assist.target=obj_maze_2",
         "kind": "config",
-        "tick": 2477
+        "tick": 2461
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 2477
+        "tick": 2461
        },
        {
         "kind": "goal",
-        "tick": 2683,
+        "tick": 2667,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 3264
+        "tick": 3248
        }
       ],
       "mode": "full",
       "rules": 3,
       "seed": 1,
-      "ticks": 3325
+      "ticks": 3309
      }
     },
-    "reference_time_s": 332.4,
+    "reference_time_s": 330.8,
     "region": "zone_loading_dock",
     "rejected": [],
     "routes": [
@@ -1837,9 +1837,9 @@
     "start": [
      42.25,
      8.450000000000001,
-     3.141592653589793
+     5.890486225480862
     ],
-    "timer_s": 498.6
+    "timer_s": 496.2
    },
    "5": {
     "attempt": 0,
@@ -1868,28 +1868,28 @@
       "contacts": 0,
       "delivered": [
        {
-        "driven": 12.29490845063392,
+        "driven": 12.251394196579497,
         "drop": "dock_2",
         "ghost": 12.188225099390852,
         "object": "obj_dock",
-        "seconds": 72.60000000000001,
-        "t": 72.60000000000001
+        "seconds": 71.00000000000001,
+        "t": 71.00000000000001
        },
        {
-        "driven": 24.90218644666583,
+        "driven": 24.902185630694664,
         "drop": "dispatch_drop",
         "ghost": 24.949242404917488,
         "object": "obj_dispatch",
-        "seconds": 112.90000000000002,
-        "t": 185.50000000000003
+        "seconds": 112.89999999999999,
+        "t": 183.9
        },
        {
-        "driven": 32.16480188802729,
+        "driven": 32.164801938444015,
         "drop": "dispatch_drop",
         "ghost": 31.850966799187812,
         "object": "obj_maze_2",
         "seconds": 140.0,
-        "t": 325.5
+        "t": 323.9
        }
       ],
       "deliveries": 3,
@@ -1910,14 +1910,14 @@
         "dispatch_drop"
        ]
       ],
-      "path_efficiency": 0.9944851665559247,
+      "path_efficiency": 0.9956588305988449,
       "round": "zone_loading_dock",
       "rules": 3,
       "seed": 5,
-      "time_used": 325.5,
-      "timer": 488.2
+      "time_used": 323.9,
+      "timer": 485.8
      },
-     "hash_chain": "647b04bfd56e65a529ce46a7ac0a5f6220c9db28b584cd0b4e7b01614990991d",
+     "hash_chain": "e6d058f3174d6054f24618080774408dfa6f35c08bb71c475b49418d631a9c4f",
      "record": {
       "arg": 5,
       "game": "fetch_rush",
@@ -1926,7 +1926,7 @@
        {
         "has_theta": true,
         "kind": "kidnap",
-        "theta": 3.141592653589793,
+        "theta": 5.890486225480862,
         "tick": 0,
         "x": 42.25,
         "y": 8.450000000000001
@@ -1950,86 +1950,86 @@
        {
         "choice": "assist.target=obj_dock",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "kind": "goal",
-        "tick": 376,
+        "tick": 360,
         "x": 42.0,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 666
+        "tick": 650
        },
        {
         "kind": "goal",
-        "tick": 727,
+        "tick": 711,
         "x": 27.44346217560542,
         "y": 7.316311952464757
        },
        {
         "choice": "assist.target=obj_dispatch",
         "kind": "config",
-        "tick": 1314
+        "tick": 1298
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1314
+        "tick": 1298
        },
        {
         "kind": "goal",
-        "tick": 1523,
+        "tick": 1507,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1795
+        "tick": 1779
        },
        {
         "kind": "goal",
-        "tick": 1856,
+        "tick": 1840,
         "x": 10.556537824394582,
         "y": 2.816311952464757
        },
        {
         "choice": "assist.target=obj_maze_2",
         "kind": "config",
-        "tick": 2408
+        "tick": 2392
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 2408
+        "tick": 2392
        },
        {
         "kind": "goal",
-        "tick": 2614,
+        "tick": 2598,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 3195
+        "tick": 3179
        }
       ],
       "mode": "full",
       "rules": 3,
       "seed": 1,
-      "ticks": 3256
+      "ticks": 3240
      }
     },
-    "reference_time_s": 325.5,
+    "reference_time_s": 323.9,
     "region": "zone_loading_dock",
     "rejected": [],
     "routes": [
@@ -2239,9 +2239,9 @@
     "start": [
      42.25,
      8.450000000000001,
-     3.141592653589793
+     5.890486225480862
     ],
-    "timer_s": 488.2
+    "timer_s": 485.8
    },
    "6": {
     "attempt": 0,
@@ -2270,28 +2270,28 @@
       "contacts": 0,
       "delivered": [
        {
-        "driven": 26.164837719101307,
+        "driven": 26.148709104629148,
         "drop": "dispatch_drop",
         "ghost": 25.709545442950493,
         "object": "obj_maze_2",
-        "seconds": 120.4,
-        "t": 120.4
+        "seconds": 118.80000000000001,
+        "t": 118.80000000000001
        },
        {
-        "driven": 32.10049213471873,
+        "driven": 32.10049419839431,
         "drop": "dock_3",
         "ghost": 31.79238815542513,
         "object": "obj_dock",
-        "seconds": 138.2,
-        "t": 258.59999999999997
+        "seconds": 138.20000000000002,
+        "t": 257.0
        },
        {
-        "driven": 28.283358980078116,
+        "driven": 28.283357309385014,
         "drop": "dispatch_drop",
         "ghost": 28.449242404917506,
         "object": "obj_dispatch",
-        "seconds": 126.40000000000003,
-        "t": 385.0
+        "seconds": 126.39999999999998,
+        "t": 383.4
        }
       ],
       "deliveries": 3,
@@ -2312,14 +2312,14 @@
         "dispatch_drop"
        ]
       ],
-      "path_efficiency": 0.992955341721888,
+      "path_efficiency": 0.9931573638103419,
       "round": "zone_workshop",
       "rules": 3,
       "seed": 6,
-      "time_used": 385.0,
-      "timer": 577.5
+      "time_used": 383.4,
+      "timer": 575.1
      },
-     "hash_chain": "dc7f44018d442bfc54a1479354857d2798f2032d1beccd8e1f759c34e7765e83",
+     "hash_chain": "ee32d226915a74d73427616b6b389c18db5a0b90fa49735716c8dc6331ab456a",
      "record": {
       "arg": 6,
       "game": "fetch_rush",
@@ -2328,7 +2328,7 @@
        {
         "has_theta": true,
         "kind": "kidnap",
-        "theta": 1.1780972450961724,
+        "theta": 5.497787143782138,
         "tick": 0,
         "x": 9.950000000000001,
         "y": 6.050000000000001
@@ -2352,86 +2352,86 @@
        {
         "choice": "assist.target=obj_maze_2",
         "kind": "config",
-        "tick": 357
+        "tick": 341
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 357
+        "tick": 341
        },
        {
         "kind": "goal",
-        "tick": 565,
+        "tick": 549,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1144
+        "tick": 1128
        },
        {
         "kind": "goal",
-        "tick": 1205,
+        "tick": 1189,
         "x": 46.05653782439458,
         "y": 7.316311952464757
        },
        {
         "choice": "assist.target=obj_dock",
         "kind": "config",
-        "tick": 2073
+        "tick": 2057
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 2073
+        "tick": 2057
        },
        {
         "kind": "goal",
-        "tick": 2279,
+        "tick": 2263,
         "x": 45.5,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 2526
+        "tick": 2510
        },
        {
         "kind": "goal",
-        "tick": 2587,
+        "tick": 2571,
         "x": 27.44346217560542,
         "y": 7.316311952464757
        },
        {
         "choice": "assist.target=obj_dispatch",
         "kind": "config",
-        "tick": 3308
+        "tick": 3292
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 3308
+        "tick": 3292
        },
        {
         "kind": "goal",
-        "tick": 3518,
+        "tick": 3502,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 3790
+        "tick": 3774
        }
       ],
       "mode": "full",
       "rules": 3,
       "seed": 1,
-      "ticks": 3851
+      "ticks": 3835
      }
     },
-    "reference_time_s": 385.0,
+    "reference_time_s": 383.4,
     "region": "zone_workshop",
     "rejected": [],
     "routes": [
@@ -2613,9 +2613,9 @@
     "start": [
      9.950000000000001,
      6.050000000000001,
-     1.1780972450961724
+     5.497787143782138
     ],
-    "timer_s": 577.5
+    "timer_s": 575.1
    }
   },
   "phone": {
@@ -2641,20 +2641,20 @@
       "contacts": 0,
       "delivered": [
        {
-        "driven": 15.107406897185244,
+        "driven": 15.06389089206607,
         "drop": "dock_1",
         "ghost": 14.750966799187797,
         "object": "obj_dock",
-        "seconds": 83.30000000000001,
-        "t": 83.30000000000001
+        "seconds": 81.70000000000002,
+        "t": 81.70000000000002
        },
        {
-        "driven": 21.54343480387511,
+        "driven": 21.543435916713246,
         "drop": "dispatch_drop",
         "ghost": 21.44924240491748,
         "object": "obj_dispatch",
         "seconds": 100.6,
-        "t": 183.9
+        "t": 182.3
        }
       ],
       "deliveries": 2,
@@ -2671,14 +2671,14 @@
         "dispatch_drop"
        ]
       ],
-      "path_efficiency": 0.9860170298957786,
+      "path_efficiency": 0.9874273071529263,
       "round": "zone_loading_dock",
       "rules": 3,
       "seed": 1,
-      "time_used": 183.9,
-      "timer": 275.9
+      "time_used": 182.3,
+      "timer": 273.5
      },
-     "hash_chain": "ae217bcb962e1230c0236a5f7785e70c8826e2576824baad33707b1d892de703",
+     "hash_chain": "bcf82abe570357eb5b89e204d52f77c3f7039cad9e0a3fdb54f6a620286e6b45",
      "record": {
       "arg": 1,
       "game": "fetch_rush",
@@ -2687,7 +2687,7 @@
        {
         "has_theta": true,
         "kind": "kidnap",
-        "theta": 3.141592653589793,
+        "theta": 5.890486225480862,
         "tick": 0,
         "x": 42.25,
         "y": 8.450000000000001
@@ -2711,59 +2711,59 @@
        {
         "choice": "assist.target=obj_dock",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "kind": "goal",
-        "tick": 376,
+        "tick": 360,
         "x": 38.5,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 773
+        "tick": 757
        },
        {
         "kind": "goal",
-        "tick": 834,
+        "tick": 818,
         "x": 27.44346217560542,
         "y": 7.316311952464757
        },
        {
         "choice": "assist.target=obj_dispatch",
         "kind": "config",
-        "tick": 1301
+        "tick": 1285
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1301
+        "tick": 1285
        },
        {
         "kind": "goal",
-        "tick": 1507,
+        "tick": 1491,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1779
+        "tick": 1763
        }
       ],
       "mode": "phone",
       "rules": 3,
       "seed": 1,
-      "ticks": 1840
+      "ticks": 1824
      }
     },
-    "reference_time_s": 183.9,
+    "reference_time_s": 182.3,
     "region": "zone_loading_dock",
     "rejected": [],
     "routes": [
@@ -2891,9 +2891,9 @@
     "start": [
      42.25,
      8.450000000000001,
-     3.141592653589793
+     5.890486225480862
     ],
-    "timer_s": 275.9
+    "timer_s": 273.5
    },
    "2": {
     "attempt": 0,
@@ -2917,20 +2917,20 @@
       "contacts": 0,
       "delivered": [
        {
-        "driven": 15.107406897185244,
+        "driven": 15.06389089206607,
         "drop": "dock_1",
         "ghost": 14.750966799187797,
         "object": "obj_dock",
-        "seconds": 83.30000000000001,
-        "t": 83.30000000000001
+        "seconds": 81.70000000000002,
+        "t": 81.70000000000002
        },
        {
-        "driven": 21.54343480387511,
+        "driven": 21.543435916713246,
         "drop": "dispatch_drop",
         "ghost": 21.44924240491748,
         "object": "obj_dispatch",
         "seconds": 100.6,
-        "t": 183.9
+        "t": 182.3
        }
       ],
       "deliveries": 2,
@@ -2947,14 +2947,14 @@
         "dispatch_drop"
        ]
       ],
-      "path_efficiency": 0.9860170298957786,
+      "path_efficiency": 0.9874273071529263,
       "round": "zone_loading_dock",
       "rules": 3,
       "seed": 2,
-      "time_used": 183.9,
-      "timer": 275.9
+      "time_used": 182.3,
+      "timer": 273.5
      },
-     "hash_chain": "ae217bcb962e1230c0236a5f7785e70c8826e2576824baad33707b1d892de703",
+     "hash_chain": "bcf82abe570357eb5b89e204d52f77c3f7039cad9e0a3fdb54f6a620286e6b45",
      "record": {
       "arg": 2,
       "game": "fetch_rush",
@@ -2963,7 +2963,7 @@
        {
         "has_theta": true,
         "kind": "kidnap",
-        "theta": 3.141592653589793,
+        "theta": 5.890486225480862,
         "tick": 0,
         "x": 42.25,
         "y": 8.450000000000001
@@ -2987,59 +2987,59 @@
        {
         "choice": "assist.target=obj_dock",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "kind": "goal",
-        "tick": 376,
+        "tick": 360,
         "x": 38.5,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 773
+        "tick": 757
        },
        {
         "kind": "goal",
-        "tick": 834,
+        "tick": 818,
         "x": 27.44346217560542,
         "y": 7.316311952464757
        },
        {
         "choice": "assist.target=obj_dispatch",
         "kind": "config",
-        "tick": 1301
+        "tick": 1285
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1301
+        "tick": 1285
        },
        {
         "kind": "goal",
-        "tick": 1507,
+        "tick": 1491,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1779
+        "tick": 1763
        }
       ],
       "mode": "phone",
       "rules": 3,
       "seed": 1,
-      "ticks": 1840
+      "ticks": 1824
      }
     },
-    "reference_time_s": 183.9,
+    "reference_time_s": 182.3,
     "region": "zone_loading_dock",
     "rejected": [],
     "routes": [
@@ -3167,9 +3167,9 @@
     "start": [
      42.25,
      8.450000000000001,
-     3.141592653589793
+     5.890486225480862
     ],
-    "timer_s": 275.9
+    "timer_s": 273.5
    },
    "3": {
     "attempt": 0,
@@ -3193,20 +3193,20 @@
       "contacts": 0,
       "delivered": [
        {
-        "driven": 15.107406897185244,
+        "driven": 15.06389089206607,
         "drop": "dock_1",
         "ghost": 14.750966799187797,
         "object": "obj_dock",
-        "seconds": 83.30000000000001,
-        "t": 83.30000000000001
+        "seconds": 81.70000000000002,
+        "t": 81.70000000000002
        },
        {
-        "driven": 21.54343480387511,
+        "driven": 21.543435916713246,
         "drop": "dispatch_drop",
         "ghost": 21.44924240491748,
         "object": "obj_dispatch",
         "seconds": 100.6,
-        "t": 183.9
+        "t": 182.3
        }
       ],
       "deliveries": 2,
@@ -3223,14 +3223,14 @@
         "dispatch_drop"
        ]
       ],
-      "path_efficiency": 0.9860170298957786,
+      "path_efficiency": 0.9874273071529263,
       "round": "zone_loading_dock",
       "rules": 3,
       "seed": 3,
-      "time_used": 183.9,
-      "timer": 275.9
+      "time_used": 182.3,
+      "timer": 273.5
      },
-     "hash_chain": "ae217bcb962e1230c0236a5f7785e70c8826e2576824baad33707b1d892de703",
+     "hash_chain": "bcf82abe570357eb5b89e204d52f77c3f7039cad9e0a3fdb54f6a620286e6b45",
      "record": {
       "arg": 3,
       "game": "fetch_rush",
@@ -3239,7 +3239,7 @@
        {
         "has_theta": true,
         "kind": "kidnap",
-        "theta": 3.141592653589793,
+        "theta": 5.890486225480862,
         "tick": 0,
         "x": 42.25,
         "y": 8.450000000000001
@@ -3263,59 +3263,59 @@
        {
         "choice": "assist.target=obj_dock",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "kind": "goal",
-        "tick": 376,
+        "tick": 360,
         "x": 38.5,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 773
+        "tick": 757
        },
        {
         "kind": "goal",
-        "tick": 834,
+        "tick": 818,
         "x": 27.44346217560542,
         "y": 7.316311952464757
        },
        {
         "choice": "assist.target=obj_dispatch",
         "kind": "config",
-        "tick": 1301
+        "tick": 1285
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1301
+        "tick": 1285
        },
        {
         "kind": "goal",
-        "tick": 1507,
+        "tick": 1491,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1779
+        "tick": 1763
        }
       ],
       "mode": "phone",
       "rules": 3,
       "seed": 1,
-      "ticks": 1840
+      "ticks": 1824
      }
     },
-    "reference_time_s": 183.9,
+    "reference_time_s": 182.3,
     "region": "zone_loading_dock",
     "rejected": [],
     "routes": [
@@ -3443,9 +3443,9 @@
     "start": [
      42.25,
      8.450000000000001,
-     3.141592653589793
+     5.890486225480862
     ],
-    "timer_s": 275.9
+    "timer_s": 273.5
    },
    "4": {
     "attempt": 0,
@@ -3469,20 +3469,20 @@
       "contacts": 0,
       "delivered": [
        {
-        "driven": 15.107406897185244,
+        "driven": 15.06389089206607,
         "drop": "dock_1",
         "ghost": 14.750966799187797,
         "object": "obj_dock",
-        "seconds": 83.30000000000001,
-        "t": 83.30000000000001
+        "seconds": 81.70000000000002,
+        "t": 81.70000000000002
        },
        {
-        "driven": 21.54343480387511,
+        "driven": 21.543435916713246,
         "drop": "dispatch_drop",
         "ghost": 21.44924240491748,
         "object": "obj_dispatch",
         "seconds": 100.6,
-        "t": 183.9
+        "t": 182.3
        }
       ],
       "deliveries": 2,
@@ -3499,14 +3499,14 @@
         "dispatch_drop"
        ]
       ],
-      "path_efficiency": 0.9860170298957786,
+      "path_efficiency": 0.9874273071529263,
       "round": "zone_loading_dock",
       "rules": 3,
       "seed": 4,
-      "time_used": 183.9,
-      "timer": 275.9
+      "time_used": 182.3,
+      "timer": 273.5
      },
-     "hash_chain": "ae217bcb962e1230c0236a5f7785e70c8826e2576824baad33707b1d892de703",
+     "hash_chain": "bcf82abe570357eb5b89e204d52f77c3f7039cad9e0a3fdb54f6a620286e6b45",
      "record": {
       "arg": 4,
       "game": "fetch_rush",
@@ -3515,7 +3515,7 @@
        {
         "has_theta": true,
         "kind": "kidnap",
-        "theta": 3.141592653589793,
+        "theta": 5.890486225480862,
         "tick": 0,
         "x": 42.25,
         "y": 8.450000000000001
@@ -3539,59 +3539,59 @@
        {
         "choice": "assist.target=obj_dock",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "kind": "goal",
-        "tick": 376,
+        "tick": 360,
         "x": 38.5,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 773
+        "tick": 757
        },
        {
         "kind": "goal",
-        "tick": 834,
+        "tick": 818,
         "x": 27.44346217560542,
         "y": 7.316311952464757
        },
        {
         "choice": "assist.target=obj_dispatch",
         "kind": "config",
-        "tick": 1301
+        "tick": 1285
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1301
+        "tick": 1285
        },
        {
         "kind": "goal",
-        "tick": 1507,
+        "tick": 1491,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1779
+        "tick": 1763
        }
       ],
       "mode": "phone",
       "rules": 3,
       "seed": 1,
-      "ticks": 1840
+      "ticks": 1824
      }
     },
-    "reference_time_s": 183.9,
+    "reference_time_s": 182.3,
     "region": "zone_loading_dock",
     "rejected": [],
     "routes": [
@@ -3719,9 +3719,9 @@
     "start": [
      42.25,
      8.450000000000001,
-     3.141592653589793
+     5.890486225480862
     ],
-    "timer_s": 275.9
+    "timer_s": 273.5
    },
    "5": {
     "attempt": 0,
@@ -3745,20 +3745,20 @@
       "contacts": 0,
       "delivered": [
        {
-        "driven": 15.107406897185244,
+        "driven": 15.06389089206607,
         "drop": "dock_1",
         "ghost": 14.750966799187797,
         "object": "obj_dock",
-        "seconds": 83.30000000000001,
-        "t": 83.30000000000001
+        "seconds": 81.70000000000002,
+        "t": 81.70000000000002
        },
        {
-        "driven": 21.54343480387511,
+        "driven": 21.543435916713246,
         "drop": "dispatch_drop",
         "ghost": 21.44924240491748,
         "object": "obj_dispatch",
         "seconds": 100.6,
-        "t": 183.9
+        "t": 182.3
        }
       ],
       "deliveries": 2,
@@ -3775,14 +3775,14 @@
         "dispatch_drop"
        ]
       ],
-      "path_efficiency": 0.9860170298957786,
+      "path_efficiency": 0.9874273071529263,
       "round": "zone_loading_dock",
       "rules": 3,
       "seed": 5,
-      "time_used": 183.9,
-      "timer": 275.9
+      "time_used": 182.3,
+      "timer": 273.5
      },
-     "hash_chain": "ae217bcb962e1230c0236a5f7785e70c8826e2576824baad33707b1d892de703",
+     "hash_chain": "bcf82abe570357eb5b89e204d52f77c3f7039cad9e0a3fdb54f6a620286e6b45",
      "record": {
       "arg": 5,
       "game": "fetch_rush",
@@ -3791,7 +3791,7 @@
        {
         "has_theta": true,
         "kind": "kidnap",
-        "theta": 3.141592653589793,
+        "theta": 5.890486225480862,
         "tick": 0,
         "x": 42.25,
         "y": 8.450000000000001
@@ -3815,59 +3815,59 @@
        {
         "choice": "assist.target=obj_dock",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "kind": "goal",
-        "tick": 376,
+        "tick": 360,
         "x": 38.5,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 773
+        "tick": 757
        },
        {
         "kind": "goal",
-        "tick": 834,
+        "tick": 818,
         "x": 27.44346217560542,
         "y": 7.316311952464757
        },
        {
         "choice": "assist.target=obj_dispatch",
         "kind": "config",
-        "tick": 1301
+        "tick": 1285
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1301
+        "tick": 1285
        },
        {
         "kind": "goal",
-        "tick": 1507,
+        "tick": 1491,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1779
+        "tick": 1763
        }
       ],
       "mode": "phone",
       "rules": 3,
       "seed": 1,
-      "ticks": 1840
+      "ticks": 1824
      }
     },
-    "reference_time_s": 183.9,
+    "reference_time_s": 182.3,
     "region": "zone_loading_dock",
     "rejected": [],
     "routes": [
@@ -3995,9 +3995,9 @@
     "start": [
      42.25,
      8.450000000000001,
-     3.141592653589793
+     5.890486225480862
     ],
-    "timer_s": 275.9
+    "timer_s": 273.5
    },
    "6": {
     "attempt": 0,
@@ -4021,20 +4021,20 @@
       "contacts": 0,
       "delivered": [
        {
-        "driven": 15.107406897185244,
+        "driven": 15.06389089206607,
         "drop": "dock_1",
         "ghost": 14.750966799187797,
         "object": "obj_dock",
-        "seconds": 83.30000000000001,
-        "t": 83.30000000000001
+        "seconds": 81.70000000000002,
+        "t": 81.70000000000002
        },
        {
-        "driven": 21.54343480387511,
+        "driven": 21.543435916713246,
         "drop": "dispatch_drop",
         "ghost": 21.44924240491748,
         "object": "obj_dispatch",
         "seconds": 100.6,
-        "t": 183.9
+        "t": 182.3
        }
       ],
       "deliveries": 2,
@@ -4051,14 +4051,14 @@
         "dispatch_drop"
        ]
       ],
-      "path_efficiency": 0.9860170298957786,
+      "path_efficiency": 0.9874273071529263,
       "round": "zone_loading_dock",
       "rules": 3,
       "seed": 6,
-      "time_used": 183.9,
-      "timer": 275.9
+      "time_used": 182.3,
+      "timer": 273.5
      },
-     "hash_chain": "ae217bcb962e1230c0236a5f7785e70c8826e2576824baad33707b1d892de703",
+     "hash_chain": "bcf82abe570357eb5b89e204d52f77c3f7039cad9e0a3fdb54f6a620286e6b45",
      "record": {
       "arg": 6,
       "game": "fetch_rush",
@@ -4067,7 +4067,7 @@
        {
         "has_theta": true,
         "kind": "kidnap",
-        "theta": 3.141592653589793,
+        "theta": 5.890486225480862,
         "tick": 0,
         "x": 42.25,
         "y": 8.450000000000001
@@ -4091,59 +4091,59 @@
        {
         "choice": "assist.target=obj_dock",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 164
+        "tick": 148
        },
        {
         "kind": "goal",
-        "tick": 376,
+        "tick": 360,
         "x": 38.5,
         "y": 1.2999999999999998
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 773
+        "tick": 757
        },
        {
         "kind": "goal",
-        "tick": 834,
+        "tick": 818,
         "x": 27.44346217560542,
         "y": 7.316311952464757
        },
        {
         "choice": "assist.target=obj_dispatch",
         "kind": "config",
-        "tick": 1301
+        "tick": 1285
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1301
+        "tick": 1285
        },
        {
         "kind": "goal",
-        "tick": 1507,
+        "tick": 1491,
         "x": 23.0,
         "y": 1.4
        },
        {
         "choice": "assist.grasp=go",
         "kind": "config",
-        "tick": 1779
+        "tick": 1763
        }
       ],
       "mode": "phone",
       "rules": 3,
       "seed": 1,
-      "ticks": 1840
+      "ticks": 1824
      }
     },
-    "reference_time_s": 183.9,
+    "reference_time_s": 182.3,
     "region": "zone_loading_dock",
     "rejected": [],
     "routes": [
@@ -4271,9 +4271,9 @@
     "start": [
      42.25,
      8.450000000000001,
-     3.141592653589793
+     5.890486225480862
     ],
-    "timer_s": 275.9
+    "timer_s": 273.5
    }
   }
  },

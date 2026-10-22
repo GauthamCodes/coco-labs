@@ -1,0 +1,3238 @@
+{
+ "about": "G1.13: phone-round budget sweep (tools/g1/sweep_phone_budget.py)",
+ "budgets": [
+  {
+   "budget_m": 22,
+   "distinct_rounds": 1,
+   "drawn_distinct": 1,
+   "failed_on": "1 distinct round(s) < 3",
+   "max_timer_s": 273.5,
+   "planned_m": {
+    "1": 36.2,
+    "2": 36.2,
+    "3": 36.2,
+    "4": 36.2,
+    "5": 36.2,
+    "6": 36.2
+   },
+   "qualifies": false,
+   "seeds": {
+    "1": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "2": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "3": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "4": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "5": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "6": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    }
+   }
+  },
+  {
+   "budget_m": 23,
+   "distinct_rounds": 1,
+   "drawn_distinct": 1,
+   "failed_on": "1 distinct round(s) < 3",
+   "max_timer_s": 273.5,
+   "planned_m": {
+    "1": 36.2,
+    "2": 36.2,
+    "3": 36.2,
+    "4": 36.2,
+    "5": 36.2,
+    "6": 36.2
+   },
+   "qualifies": false,
+   "seeds": {
+    "1": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "2": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "3": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "4": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "5": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "6": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    }
+   }
+  },
+  {
+   "budget_m": 24,
+   "distinct_rounds": 1,
+   "drawn_distinct": 1,
+   "failed_on": "1 distinct round(s) < 3",
+   "max_timer_s": 273.5,
+   "planned_m": {
+    "1": 36.2,
+    "2": 36.2,
+    "3": 36.2,
+    "4": 36.2,
+    "5": 36.2,
+    "6": 36.2
+   },
+   "qualifies": false,
+   "seeds": {
+    "1": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "2": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "3": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "4": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "5": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    },
+    "6": {
+     "attempt": 0,
+     "budget_m": 22,
+     "ghost_m": [
+      14.750966799187797,
+      21.44924240491748
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 182.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 273.5
+    }
+   }
+  },
+  {
+   "budget_m": 25,
+   "distinct_rounds": 1,
+   "drawn_distinct": 1,
+   "failed_on": "1 distinct round(s) < 3",
+   "max_timer_s": 275.9,
+   "planned_m": {
+    "1": 37.1,
+    "2": 37.1,
+    "3": 37.1,
+    "4": 37.1,
+    "5": 37.1,
+    "6": 37.1
+   },
+   "qualifies": false,
+   "seeds": {
+    "1": {
+     "attempt": 0,
+     "budget_m": 25,
+     "ghost_m": [
+      12.188225099390852,
+      24.949242404917488
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 183.9,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 275.9
+    },
+    "2": {
+     "attempt": 0,
+     "budget_m": 25,
+     "ghost_m": [
+      12.188225099390852,
+      24.949242404917488
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 183.9,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 275.9
+    },
+    "3": {
+     "attempt": 0,
+     "budget_m": 25,
+     "ghost_m": [
+      12.188225099390852,
+      24.949242404917488
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 183.9,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 275.9
+    },
+    "4": {
+     "attempt": 0,
+     "budget_m": 25,
+     "ghost_m": [
+      12.188225099390852,
+      24.949242404917488
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 183.9,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 275.9
+    },
+    "5": {
+     "attempt": 0,
+     "budget_m": 25,
+     "ghost_m": [
+      12.188225099390852,
+      24.949242404917488
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 183.9,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 275.9
+    },
+    "6": {
+     "attempt": 0,
+     "budget_m": 25,
+     "ghost_m": [
+      12.188225099390852,
+      24.949242404917488
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 183.9,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 275.9
+    }
+   }
+  },
+  {
+   "budget_m": 26,
+   "drawn_distinct": 4,
+   "failed_on": "seed 6: timer 349.1 s > 300 s",
+   "max_timer_s": 349.1,
+   "planned_m": {
+    "1": 47.1,
+    "2": 37.1,
+    "3": 40.3,
+    "4": 37.1,
+    "5": 37.1,
+    "6": 50.6
+   },
+   "qualifies": false,
+   "seeds": {
+    "6": {
+     "attempt": 0,
+     "budget_m": 26,
+     "ghost_m": [
+      25.709545442950493,
+      24.876450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_2"
+      ]
+     ],
+     "reference_time_s": 232.70000000000002,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.497787143782138
+     ],
+     "timer_s": 349.1
+    }
+   }
+  },
+  {
+   "budget_m": 27,
+   "drawn_distinct": 4,
+   "failed_on": "seed 6: timer 349.1 s > 300 s",
+   "max_timer_s": 349.1,
+   "planned_m": {
+    "1": 47.1,
+    "2": 37.1,
+    "3": 40.3,
+    "4": 37.1,
+    "5": 37.1,
+    "6": 50.6
+   },
+   "qualifies": false,
+   "seeds": {
+    "6": {
+     "attempt": 0,
+     "budget_m": 26,
+     "ghost_m": [
+      25.709545442950493,
+      24.876450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_2"
+      ]
+     ],
+     "reference_time_s": 232.70000000000002,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.497787143782138
+     ],
+     "timer_s": 349.1
+    }
+   }
+  },
+  {
+   "budget_m": 28,
+   "drawn_distinct": 4,
+   "failed_on": "seed 6: timer 349.1 s > 300 s",
+   "max_timer_s": 349.1,
+   "planned_m": {
+    "1": 47.1,
+    "2": 37.1,
+    "3": 40.3,
+    "4": 37.1,
+    "5": 37.1,
+    "6": 50.6
+   },
+   "qualifies": false,
+   "seeds": {
+    "6": {
+     "attempt": 0,
+     "budget_m": 26,
+     "ghost_m": [
+      25.709545442950493,
+      24.876450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_2"
+      ]
+     ],
+     "reference_time_s": 232.70000000000002,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.497787143782138
+     ],
+     "timer_s": 349.1
+    }
+   }
+  },
+  {
+   "budget_m": 29,
+   "drawn_distinct": 5,
+   "failed_on": "seed 6: timer 365.7 s > 300 s",
+   "max_timer_s": 365.7,
+   "planned_m": {
+    "1": 50.6,
+    "2": 37.1,
+    "3": 40.3,
+    "4": 39.2,
+    "5": 37.1,
+    "6": 54.1
+   },
+   "qualifies": false,
+   "seeds": {
+    "6": {
+     "attempt": 0,
+     "budget_m": 29,
+     "ghost_m": [
+      25.709545442950493,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 243.8,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.497787143782138
+     ],
+     "timer_s": 365.7
+    }
+   }
+  },
+  {
+   "budget_m": 30,
+   "drawn_distinct": 5,
+   "failed_on": "seed 6: timer 365.7 s > 300 s",
+   "max_timer_s": 365.7,
+   "planned_m": {
+    "1": 50.6,
+    "2": 37.1,
+    "3": 40.3,
+    "4": 39.2,
+    "5": 37.1,
+    "6": 54.1
+   },
+   "qualifies": false,
+   "seeds": {
+    "6": {
+     "attempt": 0,
+     "budget_m": 29,
+     "ghost_m": [
+      25.709545442950493,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 243.8,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.497787143782138
+     ],
+     "timer_s": 365.7
+    }
+   }
+  },
+  {
+   "budget_m": 31,
+   "drawn_distinct": 6,
+   "failed_on": "seed 6: timer 365.7 s > 300 s",
+   "max_timer_s": 365.7,
+   "planned_m": {
+    "1": 50.6,
+    "2": 37.1,
+    "3": 40.3,
+    "4": 39.2,
+    "5": 42.9,
+    "6": 54.1
+   },
+   "qualifies": false,
+   "seeds": {
+    "6": {
+     "attempt": 0,
+     "budget_m": 29,
+     "ghost_m": [
+      25.709545442950493,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 243.8,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.497787143782138
+     ],
+     "timer_s": 365.7
+    }
+   }
+  },
+  {
+   "budget_m": 32,
+   "drawn_distinct": 6,
+   "failed_on": "seed 6: timer 385.5 s > 300 s",
+   "max_timer_s": 385.5,
+   "planned_m": {
+    "1": 50.6,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 39.2,
+    "5": 42.0,
+    "6": 57.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "6": {
+     "attempt": 0,
+     "budget_m": 32,
+     "ghost_m": [
+      25.709545442950493,
+      31.79238815542513
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dock",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 257.0,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.497787143782138
+     ],
+     "timer_s": 385.5
+    }
+   }
+  },
+  {
+   "budget_m": 33,
+   "drawn_distinct": 6,
+   "failed_on": "seed 6: timer 385.5 s > 300 s",
+   "max_timer_s": 385.5,
+   "planned_m": {
+    "1": 50.6,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 39.2,
+    "5": 42.0,
+    "6": 57.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "6": {
+     "attempt": 0,
+     "budget_m": 32,
+     "ghost_m": [
+      25.709545442950493,
+      31.79238815542513
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dock",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 257.0,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.497787143782138
+     ],
+     "timer_s": 385.5
+    }
+   }
+  },
+  {
+   "budget_m": 34,
+   "drawn_distinct": 6,
+   "failed_on": "seed 6: timer 385.5 s > 300 s",
+   "max_timer_s": 385.5,
+   "planned_m": {
+    "1": 52.2,
+    "2": 37.1,
+    "3": 54.9,
+    "4": 39.2,
+    "5": 42.0,
+    "6": 57.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "6": {
+     "attempt": 0,
+     "budget_m": 32,
+     "ghost_m": [
+      25.709545442950493,
+      31.79238815542513
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dock",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 257.0,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.497787143782138
+     ],
+     "timer_s": 385.5
+    }
+   }
+  },
+  {
+   "budget_m": 35,
+   "drawn_distinct": 6,
+   "failed_on": "seed 6: timer 385.5 s > 300 s",
+   "max_timer_s": 385.5,
+   "planned_m": {
+    "1": 52.2,
+    "2": 37.1,
+    "3": 54.9,
+    "4": 39.2,
+    "5": 45.5,
+    "6": 57.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "6": {
+     "attempt": 0,
+     "budget_m": 32,
+     "ghost_m": [
+      25.709545442950493,
+      31.79238815542513
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dock",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 257.0,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.497787143782138
+     ],
+     "timer_s": 385.5
+    }
+   }
+  },
+  {
+   "budget_m": 36,
+   "drawn_distinct": 6,
+   "failed_on": "seed 3: timer 446.1 s > 300 s",
+   "max_timer_s": 446.1,
+   "planned_m": {
+    "1": 52.2,
+    "2": 36.2,
+    "3": 69.9,
+    "4": 39.2,
+    "5": 58.1,
+    "6": 57.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "3": {
+     "attempt": 0,
+     "budget_m": 36,
+     "ghost_m": [
+      33.901933598375614,
+      35.980613254815985
+     ],
+     "orders": [
+      [
+       "obj_dispatch",
+       "dock_1"
+      ],
+      [
+       "obj_dock",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 297.4,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 446.1
+    }
+   }
+  },
+  {
+   "budget_m": 37,
+   "drawn_distinct": 6,
+   "failed_on": "seed 3: timer 446.1 s > 300 s",
+   "max_timer_s": 446.1,
+   "planned_m": {
+    "1": 52.2,
+    "2": 36.2,
+    "3": 69.9,
+    "4": 39.2,
+    "5": 58.1,
+    "6": 57.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "3": {
+     "attempt": 0,
+     "budget_m": 36,
+     "ghost_m": [
+      33.901933598375614,
+      35.980613254815985
+     ],
+     "orders": [
+      [
+       "obj_dispatch",
+       "dock_1"
+      ],
+      [
+       "obj_dock",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 297.4,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 446.1
+    }
+   }
+  },
+  {
+   "budget_m": 38,
+   "drawn_distinct": 6,
+   "failed_on": "seed 3: timer 447.1 s > 300 s",
+   "max_timer_s": 447.1,
+   "planned_m": {
+    "1": 52.9,
+    "2": 36.2,
+    "3": 70.6,
+    "4": 45.0,
+    "5": 58.1,
+    "6": 57.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "3": {
+     "attempt": 0,
+     "budget_m": 38,
+     "ghost_m": [
+      37.40193359837561,
+      33.24213562373097
+     ],
+     "orders": [
+      [
+       "obj_dispatch",
+       "dock_2"
+      ],
+      [
+       "obj_dock",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 298.09999999999997,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 447.1
+    }
+   }
+  },
+  {
+   "budget_m": 39,
+   "drawn_distinct": 6,
+   "failed_on": "seed 3: timer 447.1 s > 300 s",
+   "max_timer_s": 447.1,
+   "planned_m": {
+    "1": 52.9,
+    "2": 36.2,
+    "3": 70.6,
+    "4": 45.0,
+    "5": 58.1,
+    "6": 57.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "3": {
+     "attempt": 0,
+     "budget_m": 38,
+     "ghost_m": [
+      37.40193359837561,
+      33.24213562373097
+     ],
+     "orders": [
+      [
+       "obj_dispatch",
+       "dock_2"
+      ],
+      [
+       "obj_dock",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 298.09999999999997,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 447.1
+    }
+   }
+  },
+  {
+   "budget_m": 40,
+   "drawn_distinct": 6,
+   "failed_on": "seed 3: timer 447.1 s > 300 s",
+   "max_timer_s": 447.1,
+   "planned_m": {
+    "1": 52.9,
+    "2": 36.2,
+    "3": 70.6,
+    "4": 45.0,
+    "5": 58.1,
+    "6": 57.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "3": {
+     "attempt": 0,
+     "budget_m": 38,
+     "ghost_m": [
+      37.40193359837561,
+      33.24213562373097
+     ],
+     "orders": [
+      [
+       "obj_dispatch",
+       "dock_2"
+      ],
+      [
+       "obj_dock",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 298.09999999999997,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 447.1
+    }
+   }
+  },
+  {
+   "budget_m": 41,
+   "drawn_distinct": 6,
+   "failed_on": "seed 3: timer 457.3 s > 300 s",
+   "max_timer_s": 457.3,
+   "planned_m": {
+    "1": 52.9,
+    "2": 36.2,
+    "3": 72.7,
+    "4": 45.0,
+    "5": 58.1,
+    "6": 57.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "3": {
+     "attempt": 0,
+     "budget_m": 41,
+     "ghost_m": [
+      40.90193359837562,
+      31.792388155425144
+     ],
+     "orders": [
+      [
+       "obj_dispatch",
+       "dock_3"
+      ],
+      [
+       "obj_dock",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 304.9,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 457.3
+    }
+   }
+  },
+  {
+   "budget_m": 42,
+   "drawn_distinct": 6,
+   "failed_on": "seed 3: timer 457.3 s > 300 s",
+   "max_timer_s": 457.3,
+   "planned_m": {
+    "1": 55.0,
+    "2": 36.2,
+    "3": 72.7,
+    "4": 45.0,
+    "5": 58.1,
+    "6": 58.1
+   },
+   "qualifies": false,
+   "seeds": {
+    "3": {
+     "attempt": 0,
+     "budget_m": 41,
+     "ghost_m": [
+      40.90193359837562,
+      31.792388155425144
+     ],
+     "orders": [
+      [
+       "obj_dispatch",
+       "dock_3"
+      ],
+      [
+       "obj_dock",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 304.9,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 457.3
+    }
+   }
+  },
+  {
+   "budget_m": 43,
+   "drawn_distinct": 6,
+   "failed_on": "seed 3: timer 457.3 s > 300 s",
+   "max_timer_s": 457.3,
+   "planned_m": {
+    "1": 55.0,
+    "2": 36.2,
+    "3": 72.7,
+    "4": 45.0,
+    "5": 58.1,
+    "6": 58.1
+   },
+   "qualifies": false,
+   "seeds": {
+    "3": {
+     "attempt": 0,
+     "budget_m": 41,
+     "ghost_m": [
+      40.90193359837562,
+      31.792388155425144
+     ],
+     "orders": [
+      [
+       "obj_dispatch",
+       "dock_3"
+      ],
+      [
+       "obj_dock",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 304.9,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 457.3
+    }
+   }
+  },
+  {
+   "budget_m": 44,
+   "drawn_distinct": 6,
+   "failed_on": "seed 3: timer 457.3 s > 300 s",
+   "max_timer_s": 457.3,
+   "planned_m": {
+    "1": 55.0,
+    "2": 36.2,
+    "3": 72.7,
+    "4": 45.0,
+    "5": 58.1,
+    "6": 58.1
+   },
+   "qualifies": false,
+   "seeds": {
+    "3": {
+     "attempt": 0,
+     "budget_m": 41,
+     "ghost_m": [
+      40.90193359837562,
+      31.792388155425144
+     ],
+     "orders": [
+      [
+       "obj_dispatch",
+       "dock_3"
+      ],
+      [
+       "obj_dock",
+       "dispatch_drop"
+      ]
+     ],
+     "reference_time_s": 304.9,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 457.3
+    }
+   }
+  },
+  {
+   "budget_m": 45,
+   "drawn_distinct": 6,
+   "failed_on": "seed 6: timer 392.0 s > 300 s",
+   "max_timer_s": 392.0,
+   "planned_m": {
+    "1": 55.0,
+    "2": 36.2,
+    "3": 47.1,
+    "4": 45.0,
+    "5": 58.1,
+    "6": 58.8
+   },
+   "qualifies": false,
+   "seeds": {
+    "6": {
+     "attempt": 0,
+     "budget_m": 45,
+     "ghost_m": [
+      44.75096679918781,
+      14.063961030678922
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_2"
+      ],
+      [
+       "obj_dock",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 261.3,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.497787143782138
+     ],
+     "timer_s": 392.0
+    }
+   }
+  },
+  {
+   "budget_m": 46,
+   "drawn_distinct": 6,
+   "failed_on": "seed 1: timer 516.3 s > 300 s",
+   "max_timer_s": 516.3,
+   "planned_m": {
+    "1": 82.9,
+    "2": 36.2,
+    "3": 47.1,
+    "4": 45.0,
+    "5": 58.1,
+    "6": 58.8
+   },
+   "qualifies": false,
+   "seeds": {
+    "1": {
+     "attempt": 0,
+     "budget_m": 46,
+     "ghost_m": [
+      45.18233764908629,
+      37.75340546095177
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_3"
+      ],
+      [
+       "obj_dispatch",
+       "dock_2"
+      ]
+     ],
+     "reference_time_s": 344.2,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 516.3
+    }
+   }
+  },
+  {
+   "budget_m": 47,
+   "drawn_distinct": 6,
+   "failed_on": "seed 1: timer 505.5 s > 300 s",
+   "max_timer_s": 505.5,
+   "planned_m": {
+    "1": 80.9,
+    "2": 36.2,
+    "3": 73.6,
+    "4": 45.0,
+    "5": 58.1,
+    "6": 58.8
+   },
+   "qualifies": false,
+   "seeds": {
+    "1": {
+     "attempt": 0,
+     "budget_m": 47,
+     "ghost_m": [
+      46.63208511739212,
+      34.253405460951754
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_2"
+      ]
+     ],
+     "reference_time_s": 337.0,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 505.5
+    }
+   }
+  },
+  {
+   "budget_m": 48,
+   "drawn_distinct": 6,
+   "failed_on": "seed 1: timer 505.5 s > 300 s",
+   "max_timer_s": 505.5,
+   "planned_m": {
+    "1": 80.9,
+    "2": 36.2,
+    "3": 73.6,
+    "4": 45.0,
+    "5": 58.1,
+    "6": 58.8
+   },
+   "qualifies": false,
+   "seeds": {
+    "1": {
+     "attempt": 0,
+     "budget_m": 47,
+     "ghost_m": [
+      46.63208511739212,
+      34.253405460951754
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_2"
+      ]
+     ],
+     "reference_time_s": 337.0,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 505.5
+    }
+   }
+  },
+  {
+   "budget_m": 49,
+   "drawn_distinct": 6,
+   "failed_on": "seed 1: timer 516.3 s > 300 s",
+   "max_timer_s": 516.3,
+   "planned_m": {
+    "1": 82.9,
+    "2": 36.2,
+    "3": 47.1,
+    "4": 45.0,
+    "5": 58.1,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "1": {
+     "attempt": 0,
+     "budget_m": 46,
+     "ghost_m": [
+      45.18233764908629,
+      37.75340546095177
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_3"
+      ],
+      [
+       "obj_dispatch",
+       "dock_2"
+      ]
+     ],
+     "reference_time_s": 344.2,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 516.3
+    }
+   }
+  },
+  {
+   "budget_m": 50,
+   "drawn_distinct": 6,
+   "failed_on": "seed 1: timer 505.5 s > 300 s",
+   "max_timer_s": 505.5,
+   "planned_m": {
+    "1": 80.9,
+    "2": 36.2,
+    "3": 47.1,
+    "4": 45.0,
+    "5": 58.1,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "1": {
+     "attempt": 0,
+     "budget_m": 47,
+     "ghost_m": [
+      46.63208511739212,
+      34.253405460951754
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_2"
+      ]
+     ],
+     "reference_time_s": 337.0,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 505.5
+    }
+   }
+  },
+  {
+   "budget_m": 51,
+   "drawn_distinct": 6,
+   "failed_on": "seed 1: timer 505.5 s > 300 s",
+   "max_timer_s": 505.5,
+   "planned_m": {
+    "1": 80.9,
+    "2": 36.2,
+    "3": 47.1,
+    "4": 45.0,
+    "5": 61.6,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "1": {
+     "attempt": 0,
+     "budget_m": 47,
+     "ghost_m": [
+      46.63208511739212,
+      34.253405460951754
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_2"
+      ]
+     ],
+     "reference_time_s": 337.0,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 505.5
+    }
+   }
+  },
+  {
+   "budget_m": 52,
+   "drawn_distinct": 6,
+   "failed_on": "seed 1: timer 505.5 s > 300 s",
+   "max_timer_s": 505.5,
+   "planned_m": {
+    "1": 80.9,
+    "2": 36.2,
+    "3": 47.1,
+    "4": 45.0,
+    "5": 61.6,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "1": {
+     "attempt": 0,
+     "budget_m": 47,
+     "ghost_m": [
+      46.63208511739212,
+      34.253405460951754
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_2"
+      ]
+     ],
+     "reference_time_s": 337.0,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 505.5
+    }
+   }
+  },
+  {
+   "budget_m": 53,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 54,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 55,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 56,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 57,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 58,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 59,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 60,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 61,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 62,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 63,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 64,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 47.1,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 65,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 79.4,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 66,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 505.7 s > 300 s",
+   "max_timer_s": 505.7,
+   "planned_m": {
+    "1": 80.9,
+    "2": 37.1,
+    "3": 79.4,
+    "4": 81.3,
+    "5": 49.0,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 53,
+     "ghost_m": [
+      52.91492782986676,
+      28.376450198781704
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dispatch_drop"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 337.1,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 505.7
+    }
+   }
+  },
+  {
+   "budget_m": 67,
+   "drawn_distinct": 6,
+   "failed_on": "seed 1: timer 522.2 s > 300 s",
+   "max_timer_s": 522.2,
+   "planned_m": {
+    "1": 84.4,
+    "2": 42.9,
+    "3": 79.4,
+    "4": 81.3,
+    "5": 62.1,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "1": {
+     "attempt": 0,
+     "budget_m": 67,
+     "ghost_m": [
+      46.63208511739212,
+      37.753405460951754
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 348.1,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 522.2
+    }
+   }
+  },
+  {
+   "budget_m": 68,
+   "drawn_distinct": 6,
+   "failed_on": "seed 1: timer 522.2 s > 300 s",
+   "max_timer_s": 522.2,
+   "planned_m": {
+    "1": 84.4,
+    "2": 42.9,
+    "3": 79.4,
+    "4": 81.3,
+    "5": 62.1,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "1": {
+     "attempt": 0,
+     "budget_m": 67,
+     "ghost_m": [
+      46.63208511739212,
+      37.753405460951754
+     ],
+     "orders": [
+      [
+       "obj_dock",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 348.1,
+     "region": "zone_workshop",
+     "rejected": 0,
+     "start": [
+      9.950000000000001,
+      6.050000000000001,
+      5.890486225480862
+     ],
+     "timer_s": 522.2
+    }
+   }
+  },
+  {
+   "budget_m": 69,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 618.5 s > 300 s",
+   "max_timer_s": 618.5,
+   "planned_m": {
+    "1": 84.4,
+    "2": 39.2,
+    "3": 79.4,
+    "4": 102.7,
+    "5": 49.9,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 69,
+     "ghost_m": [
+      68.45634918610408,
+      34.25340546095174
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 412.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 618.5
+    }
+   }
+  },
+  {
+   "budget_m": 70,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 618.5 s > 300 s",
+   "max_timer_s": 618.5,
+   "planned_m": {
+    "1": 97.5,
+    "2": 45.0,
+    "3": 79.4,
+    "4": 102.7,
+    "5": 63.1,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 69,
+     "ghost_m": [
+      68.45634918610408,
+      34.25340546095174
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 412.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 618.5
+    }
+   }
+  },
+  {
+   "budget_m": 71,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 618.5 s > 300 s",
+   "max_timer_s": 618.5,
+   "planned_m": {
+    "1": 97.5,
+    "2": 45.0,
+    "3": 79.4,
+    "4": 102.7,
+    "5": 63.1,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 69,
+     "ghost_m": [
+      68.45634918610408,
+      34.25340546095174
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_1"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 412.3,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 618.5
+    }
+   }
+  },
+  {
+   "budget_m": 72,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 653.1 s > 300 s",
+   "max_timer_s": 653.1,
+   "planned_m": {
+    "1": 97.5,
+    "2": 45.0,
+    "3": 79.4,
+    "4": 109.7,
+    "5": 63.1,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 72,
+     "ghost_m": [
+      71.95634918610408,
+      37.753405460951754
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 435.4,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 653.1
+    }
+   }
+  },
+  {
+   "budget_m": 73,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 653.1 s > 300 s",
+   "max_timer_s": 653.1,
+   "planned_m": {
+    "1": 97.5,
+    "2": 45.0,
+    "3": 79.4,
+    "4": 109.7,
+    "5": 63.1,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 72,
+     "ghost_m": [
+      71.95634918610408,
+      37.753405460951754
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 435.4,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 653.1
+    }
+   }
+  },
+  {
+   "budget_m": 74,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 653.1 s > 300 s",
+   "max_timer_s": 653.1,
+   "planned_m": {
+    "1": 97.5,
+    "2": 45.0,
+    "3": 79.4,
+    "4": 109.7,
+    "5": 78.6,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 72,
+     "ghost_m": [
+      71.95634918610408,
+      37.753405460951754
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 435.4,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 653.1
+    }
+   }
+  },
+  {
+   "budget_m": 75,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 653.1 s > 300 s",
+   "max_timer_s": 653.1,
+   "planned_m": {
+    "1": 97.5,
+    "2": 45.0,
+    "3": 79.4,
+    "4": 109.7,
+    "5": 78.6,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 72,
+     "ghost_m": [
+      71.95634918610408,
+      37.753405460951754
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 435.4,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 653.1
+    }
+   }
+  },
+  {
+   "budget_m": 76,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 653.1 s > 300 s",
+   "max_timer_s": 653.1,
+   "planned_m": {
+    "1": 97.5,
+    "2": 74.3,
+    "3": 79.4,
+    "4": 109.7,
+    "5": 65.1,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 72,
+     "ghost_m": [
+      71.95634918610408,
+      37.753405460951754
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 435.4,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 653.1
+    }
+   }
+  },
+  {
+   "budget_m": 77,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 653.1 s > 300 s",
+   "max_timer_s": 653.1,
+   "planned_m": {
+    "1": 97.5,
+    "2": 74.3,
+    "3": 79.4,
+    "4": 109.7,
+    "5": 80.7,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 72,
+     "ghost_m": [
+      71.95634918610408,
+      37.753405460951754
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 435.4,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 653.1
+    }
+   }
+  },
+  {
+   "budget_m": 78,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 653.1 s > 300 s",
+   "max_timer_s": 653.1,
+   "planned_m": {
+    "1": 97.5,
+    "2": 74.3,
+    "3": 79.4,
+    "4": 109.7,
+    "5": 80.7,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 72,
+     "ghost_m": [
+      71.95634918610408,
+      37.753405460951754
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 435.4,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 653.1
+    }
+   }
+  },
+  {
+   "budget_m": 79,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 653.1 s > 300 s",
+   "max_timer_s": 653.1,
+   "planned_m": {
+    "1": 97.5,
+    "2": 74.3,
+    "3": 79.4,
+    "4": 109.7,
+    "5": 80.7,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 72,
+     "ghost_m": [
+      71.95634918610408,
+      37.753405460951754
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 435.4,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 653.1
+    }
+   }
+  },
+  {
+   "budget_m": 80,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 653.1 s > 300 s",
+   "max_timer_s": 653.1,
+   "planned_m": {
+    "1": 97.5,
+    "2": 74.3,
+    "3": 79.4,
+    "4": 109.7,
+    "5": 80.7,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 72,
+     "ghost_m": [
+      71.95634918610408,
+      37.753405460951754
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 435.4,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 653.1
+    }
+   }
+  },
+  {
+   "budget_m": 81,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 653.1 s > 300 s",
+   "max_timer_s": 653.1,
+   "planned_m": {
+    "1": 97.5,
+    "2": 74.3,
+    "3": 79.4,
+    "4": 109.7,
+    "5": 80.7,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 72,
+     "ghost_m": [
+      71.95634918610408,
+      37.753405460951754
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 435.4,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 653.1
+    }
+   }
+  },
+  {
+   "budget_m": 82,
+   "drawn_distinct": 6,
+   "failed_on": "seed 4: timer 653.1 s > 300 s",
+   "max_timer_s": 653.1,
+   "planned_m": {
+    "1": 97.5,
+    "2": 74.3,
+    "3": 79.4,
+    "4": 109.7,
+    "5": 80.7,
+    "6": 60.5
+   },
+   "qualifies": false,
+   "seeds": {
+    "4": {
+     "attempt": 0,
+     "budget_m": 72,
+     "ghost_m": [
+      71.95634918610408,
+      37.753405460951754
+     ],
+     "orders": [
+      [
+       "obj_maze_2",
+       "dock_2"
+      ],
+      [
+       "obj_dispatch",
+       "dock_3"
+      ]
+     ],
+     "reference_time_s": 435.4,
+     "region": "zone_loading_dock",
+     "rejected": 0,
+     "start": [
+      42.25,
+      8.450000000000001,
+      3.9269908169872414
+     ],
+     "timer_s": 653.1
+    }
+   }
+  }
+ ],
+ "chosen_budget_m": 22,
+ "longest_trip_m": 81.54,
+ "qualified": false,
+ "rule": "smallest whole-metre budget from 22 m with >= 3 distinct rounds (seeds 1-6) and every timer <= 300 s; else 22 m",
+ "swept_to_m": 82
+}
