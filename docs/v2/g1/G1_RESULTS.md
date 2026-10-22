@@ -155,6 +155,23 @@ by the coco_lab goldens and `tools/g1/make_v3_goldens.py --check`). Fetch Rush r
 (M6F.6's references) still verify; rules-2 records carry `rules: 2` and replay to the committed
 reference card and chain (`test_the_reference_record_replays_to_its_card`).
 
+## G1.12 — Gautham's decisions (2026-10-22)
+
+Decisions: [`G1_STATUS.md`](G1_STATUS.md#gauthams-decisions-2026-10-22-g112), `docs/STATUS.md`'s
+plan-change log. Evidence: [`data/g112/README.md`](data/g112/README.md).
+
+| Decision | What changed | Measured |
+| --- | --- | --- |
+| 1. Phone rounds | Fetch Rush rules 3: `phone` (default, 2 orders) and `full` (Full shift, 3 orders, 32 m); start at the zone's roomiest cell facing the open aisle | **16 m is infeasible** with the lanes kept out (no 2-order round below 21.4 m, [`phone_budget.json`](data/g112/phone_budget.json)): phone budget **provisional 22 m**, one round, reference 183.9 s → timer **275.9 s (4:35.9)**; Full shift timers **475.7–577.5 s** ([`GAMES.md`](../m6/GAMES.md)) |
+| 2. Lanes; reject unfinished | trips count only if A*'s route keeps out of `zone_forklift_lanes`; the bot's run rejects a round (redraw) if it fails a delivery or stands in a lane | no draw rejected: every round 0 contacts, all orders delivered |
+| 3. AUTO never pauses | `Arena.prefetch`: AUTO's search run between ticks in ≤ 4 ms slices, taken over by the AUTO tick (same plan, hashes unchanged — tested) | AUTO tick's worker step **452 → ≤ 101 ms** (one machine, back to back); the ≤ 100 ms tick-gap target is **not shown in this container** (tick arrivals p95 300–450 ms without AUTO) → laptop |
+| 4. Chase camera | 2.1 m boom (≥ 1.7 m, ≥ 1.2 m up); COCO at 40 % down; rises over walls; COCO's shoulders kept in view; softer headlight and bloom | HUD overlap **0 / 40** poses (phone landscape + desktop; CI step); 25 vitest camera checks |
+
+Tests after G1.12 ([`data/g112/suites.txt`](data/g112/suites.txt)): coco_lab **1,057** passed
+(2 `gz` deselected; G1.11 1,037), lab_web/tools **231** (230), vitest **535** (532); typecheck,
+build, `check_dist`, v1 links (50 + 6) pass. Hashes: v1, v2, v3 goldens unchanged; rules 1 and 2
+records still verify; rules-3 references replay to their committed cards and chains.
+
 ## Gautham, look at these
 
 - Before/after: [`BEFORE_AFTER.md`](BEFORE_AFTER.md) (`screens/before/`, `screens/after/`).
