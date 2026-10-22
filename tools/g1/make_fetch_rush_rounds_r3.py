@@ -22,8 +22,9 @@ Gautham's 2026-10-22 decisions:
   it. A round is REJECTED when the bot does not deliver every order, or when the
   robot ever stands inside a lane; the seed then draws again (``attempt`` 1, 2, ...)
   until one is accepted. Rejected draws are listed (``rejected``), never offered.
-- each accepted round: the start pose (the zone's roomiest free cell, facing the open
-  aisle: the free direction with the longest clear run on the plan grid), each order's ghost length and route,
+- each accepted round: the start pose (the zone's roomiest free cell, >= 1.5 m from the
+  lanes; G1.13: facing the clear heading closest to the first route's direction), each
+  order's ghost length and route,
   ``reference_time_s``, ``timer_s`` = that x ``games.ROUND_TIMER_FACTOR``, and the
   reference record, card and hash chain under that timer.
 """
@@ -52,6 +53,11 @@ HV = 3
 MAX_ATTEMPTS = 40
 #: a start point keeps this far (m) from the forklift lanes (an actor passing close at tick 0)
 LANE_CLEAR = 1.5
+#: G1.13: a start heading is clear when COCO can drive this far (m) along it before a blocked
+#: plan-grid cell (the chase camera's 2.1 m boom, camera.ts, so the first metres are open)
+CLEAR_RUN = 2.1
+#: G1.13: the first route's direction is taken from the start to its point this far along (m)
+ROUTE_AHEAD = 1.0
 
 
 def lanes(a):
@@ -164,20 +170,53 @@ def start_points(a):
     return out
 
 
-def facing(a, sx, sy):
-    """The heading of the longest clear run from the start (16 directions, plan grid)."""
+def clear_run(a, sx, sy, th, limit=30.0):
+    """The free run (m, 0.1 m steps on the plan grid) from ``(sx, sy)`` along heading ``th``."""
+    d = 0.0
+    while d < limit:
+        c = a.plan_map.cell_at(sx + (d + 0.1) * math.cos(th), sy + (d + 0.1) * math.sin(th))
+        if c is None or a.grid.is_blocked(c):
+            break
+        d += 0.1
+    return d
+
+
+def route_heading(route, sx, sy, ahead=ROUTE_AHEAD):
+    """The direction from the start to the first route's point ``ahead`` m along it."""
+    left = ahead
+    for (x0, y0), (x1, y1) in zip(route, route[1:]):
+        seg = math.hypot(x1 - x0, y1 - y0)
+        if seg >= left:
+            x, y = x0 + (x1 - x0) * left / seg, y0 + (y1 - y0) * left / seg
+            return math.atan2(y - sy, x - sx)
+        left -= seg
+    return math.atan2(route[-1][1] - sy, route[-1][0] - sx)
+
+
+def facing(a, sx, sy, route=None):
+    """
+    The start heading (16 directions, plan grid). G1.12: the longest clear run. G1.13
+    (Gautham, 2026-10-22): the CLEAR heading closest to the first route's direction
+    (``route_heading``) -- a heading is clear when its free run is at least CLEAR_RUN;
+    ties go to the longer run. Without a route, or with no clear heading, G1.12's rule.
+    """
+    runs = [(k * math.pi / 8, clear_run(a, sx, sy, k * math.pi / 8)) for k in range(16)]
+    longest = None
+    for th, d in runs:
+        if longest is None or d > longest[1] + 1e-9:
+            longest = (th, d)
+    if route is None:
+        return longest[0]
+    want = route_heading(route, sx, sy)
     best = None
-    for k in range(16):
-        th = k * math.pi / 8
-        d = 0.0
-        while d < 30.0:
-            c = a.plan_map.cell_at(sx + (d + 0.1) * math.cos(th), sy + (d + 0.1) * math.sin(th))
-            if c is None or a.grid.is_blocked(c):
-                break
-            d += 0.1
-        if best is None or d > best[1] + 1e-9:
-            best = (th, d)
-    return best[0]
+    for th, d in runs:
+        if d < CLEAR_RUN:
+            continue
+        off = abs(math.atan2(math.sin(th - want), math.cos(th - want)))
+        key = (round(off, 9), -d)
+        if best is None or key < best[0]:
+            best = (key, th)
+    return longest[0] if best is None else best[1]
 
 
 def drove_into_lanes(spec, record, rects) -> bool:
@@ -192,6 +231,73 @@ def drove_into_lanes(spec, record, rects) -> bool:
         if in_lanes(a.pose[:2], rects):
             return True
     return False
+
+
+def load_trips(a, assist, pool, drops, starts, rects, cache=None, t0=None):
+    """The lane-free trip table from every start and drop (``cache``: reuse or write it)."""
+    t0 = time.time() if t0 is None else t0
+    froms = dict(starts, **{d: centre(a, d) for d in drops})
+    c = json.load(open(cache)) if cache and os.path.exists(cache) else {}
+    trips, approach, routes = {}, {}, {}
+    for f, p in sorted(froms.items()):
+        if c.get('points', {}).get(f) == list(p):   # the cache, where its point is this one
+            trips[f], approach[f] = c['trips'][f], c['approach'][f]
+            routes[f] = {tuple(k.split('|')): v for k, v in c['routes'][f].items()}
+            continue
+        trips[f], approach[f], routes[f] = trips_from(a, assist, pool, drops, p, rects)
+        print(f'trips from {f}: {sum(len(v) for v in trips[f].values())} '
+              f'({time.time() - t0:.0f} s)', flush=True)
+    if cache:
+        json.dump({'points': {f: list(p) for f, p in froms.items()}, 'trips': trips,
+                   'approach': approach,
+                   'routes': {f: {'|'.join(k): v for k, v in r.items()}
+                              for f, r in routes.items()}},
+                  open(cache, 'w'))
+    return trips, approach, routes
+
+
+def make_round(spec, a, starts, trips, routes, rects, mode, m, sd):
+    """
+    One seed's accepted round in ``mode`` (``m``: its orders and budget): draw from the
+    lane-free trip table, place the start, let the reference bot play it, and draw again
+    (``attempt`` 1, 2, ...) while the bot does not deliver every order or ever stands in a
+    lane. Returns the round with its timer and reference; raises SystemExit after
+    MAX_ATTEMPTS rejected draws.
+    """
+    rejected = []
+    for attempt in range(MAX_ATTEMPTS):
+        drawn = games.draw_round(sd, trips, m['budget_m'], m['orders'], attempt)
+        sx, sy = starts[drawn['region']]
+        rnd = {'region': drawn['region'], 'orders': drawn['orders'], 'attempt': attempt,
+               'start': None, 'ghost_m': [], 'routes': []}
+        frm = drawn['region']
+        for oid, drop in drawn['orders']:
+            rnd['ghost_m'].append(trips[frm][oid][drop])
+            rnd['routes'].append(routes[frm][(oid, drop)])
+            frm = drop
+        rnd['start'] = [sx, sy, facing(a, sx, sy, rnd['routes'][0])]
+        rules = games.FetchRushRound(sd, rnd, seconds=PROVISIONAL_S, rules=3, mode=mode)
+        rec, res = games.bot_fetch_rush(spec, sd, rules=rules, hash_version=HV)
+        card = res['scorecard']
+        why = None
+        if card['deliveries'] < m['orders']:
+            why = f"the bot delivered {card['deliveries']} of {m['orders']}"
+        elif drove_into_lanes(spec, rec, rects):
+            why = 'the bot drove into a forklift lane'
+        if why:
+            rejected.append({'attempt': attempt, 'region': rnd['region'],
+                             'orders': rnd['orders'], 'why': why})
+            print(f'{mode} seed {sd} attempt {attempt}: rejected ({why})', flush=True)
+            continue
+        t_ref = card['delivered'][-1]['t']
+        rnd['reference_time_s'] = t_ref
+        rnd['timer_s'] = round(t_ref * games.ROUND_TIMER_FACTOR, 1)
+        final = replay(spec, rec, games.FetchRushRound(sd, rnd, rules=3, mode=mode))
+        rnd['reference'] = {'record': rec, 'card': final['scorecard'],
+                            'hash_chain': final['hash_chain']}
+        rnd['rejected'] = rejected
+        return rnd
+    raise SystemExit(f'{mode} seed {sd}: no accepted round in {MAX_ATTEMPTS} draws')
 
 
 def main() -> int:
@@ -211,67 +317,18 @@ def main() -> int:
     starts = start_points(a)
     rects = lanes(a)
     t0 = time.time()
-    froms = dict(starts, **{d: centre(a, d) for d in drops})
-    c = json.load(open(o.trips_cache)) if o.trips_cache and os.path.exists(o.trips_cache) else {}
-    trips, approach, routes = {}, {}, {}
-    for f, p in sorted(froms.items()):
-        if c.get('points', {}).get(f) == list(p):   # the cache, where its point is this one
-            trips[f], approach[f] = c['trips'][f], c['approach'][f]
-            routes[f] = {tuple(k.split('|')): v for k, v in c['routes'][f].items()}
-            continue
-        trips[f], approach[f], routes[f] = trips_from(a, assist, pool, drops, p, rects)
-        print(f'trips from {f}: {sum(len(v) for v in trips[f].values())} '
-              f'({time.time() - t0:.0f} s)', flush=True)
-    if o.trips_cache:
-        json.dump({'points': {f: list(p) for f, p in froms.items()}, 'trips': trips,
-                   'approach': approach,
-                   'routes': {f: {'|'.join(k): v for k, v in r.items()}
-                              for f, r in routes.items()}},
-                  open(o.trips_cache, 'w'))
+    trips, approach, routes = load_trips(a, assist, pool, drops, starts, rects, o.trips_cache, t0)
     out = {}
     for mode, m in sorted(games.ROUND_MODES.items()):
         if mode not in o.modes.split(','):
             continue
         out[mode] = {}
         for sd in seeds_arg(o.seeds):
-            rejected = []
-            for attempt in range(MAX_ATTEMPTS):
-                drawn = games.draw_round(sd, trips, m['budget_m'], m['orders'], attempt)
-                sx, sy = starts[drawn['region']]
-                rnd = {'region': drawn['region'], 'orders': drawn['orders'], 'attempt': attempt,
-                       'start': [sx, sy, facing(a, sx, sy)], 'ghost_m': [], 'routes': []}
-                frm = drawn['region']
-                for oid, drop in drawn['orders']:
-                    rnd['ghost_m'].append(trips[frm][oid][drop])
-                    rnd['routes'].append(routes[frm][(oid, drop)])
-                    frm = drop
-                rules = games.FetchRushRound(sd, rnd, seconds=PROVISIONAL_S, rules=3, mode=mode)
-                rec, res = games.bot_fetch_rush(spec, sd, rules=rules, hash_version=HV)
-                card = res['scorecard']
-                why = None
-                if card['deliveries'] < m['orders']:
-                    why = f"the bot delivered {card['deliveries']} of {m['orders']}"
-                elif drove_into_lanes(spec, rec, rects):
-                    why = 'the bot drove into a forklift lane'
-                if why:
-                    rejected.append({'attempt': attempt, 'region': rnd['region'],
-                                     'orders': rnd['orders'], 'why': why})
-                    print(f'{mode} seed {sd} attempt {attempt}: rejected ({why})', flush=True)
-                    continue
-                t_ref = card['delivered'][-1]['t']
-                rnd['reference_time_s'] = t_ref
-                rnd['timer_s'] = round(t_ref * games.ROUND_TIMER_FACTOR, 1)
-                final = replay(spec, rec, games.FetchRushRound(sd, rnd, rules=3, mode=mode))
-                rnd['reference'] = {'record': rec, 'card': final['scorecard'],
-                                    'hash_chain': final['hash_chain']}
-                rnd['rejected'] = rejected
-                out[mode][str(sd)] = rnd
-                print(f"{mode} seed {sd}: {rnd['region']} {rnd['orders']} ghost "
-                      f"{[round(g, 1) for g in rnd['ghost_m']]} ref {t_ref:.1f} s timer "
-                      f"{rnd['timer_s']} s ({time.time() - t0:.0f} s)", flush=True)
-                break
-            else:
-                raise SystemExit(f'{mode} seed {sd}: no accepted round in {MAX_ATTEMPTS} draws')
+            out[mode][str(sd)] = make_round(spec, a, starts, trips, routes, rects, mode, m, sd)
+            rnd = out[mode][str(sd)]
+            print(f"{mode} seed {sd}: {rnd['region']} {rnd['orders']} ghost "
+                  f"{[round(g, 1) for g in rnd['ghost_m']]} ref {rnd['reference_time_s']:.1f} s timer "
+                  f"{rnd['timer_s']} s ({time.time() - t0:.0f} s)", flush=True)
     doc = {'about': 'G1.12: Fetch Rush rules 3 rounds (tools/g1/make_fetch_rush_rounds_r3.py)',
            'level': LEVEL, 'spec_sha256': spec_sha, 'rules': 3,
            'modes': games.ROUND_MODES, 'default_mode': games.ROUND_MODE_DEFAULT,

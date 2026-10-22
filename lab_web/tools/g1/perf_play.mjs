@@ -4,7 +4,12 @@
  * G1.9: Play in the Depot for N minutes, driven, and what it costs per frame.
  *
  *   node tools/g1/perf_play.mjs SITE OUTDIR [--profile phone|desktop] [--tier medium]
- *        [--minutes 10] [--label NAME]
+ *        [--minutes 10] [--label NAME] [--game free|fetch_rush] [--seed 1]
+ *
+ * G1.13: G1_GPU=nvidia|intel runs on the laptop's GPU (gpu.mjs; the renderer must match);
+ * --game fetch_rush plays Fetch Rush (the round restarts through PLAY AGAIN when its timer
+ * ends; restarts counted); drawn frames are also time-stamped, so the frame time (the
+ * interval between drawn frames) has a median, p95 and maximum of its own.
  *
  * phone = the emulated Nothing Phone (1) (tools/phone/nothing-phone-1.mjs: 915 x 412
  * landscape, DPR 2.625, touch, 4x CPU throttle); desktop = 1440 x 900, no throttle.
@@ -22,22 +27,25 @@
 import { chromium } from 'playwright';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { nothingPhone1, throttlePhone } from '../phone/nothing-phone-1.mjs';
+import { GPU, launchOptions, assertGpu, machine } from './gpu.mjs';
 
 const [site, out, ...rest] = process.argv.slice(2);
 const opt = (k, d) => (rest.includes(k) ? rest[rest.indexOf(k) + 1] : d);
 const profile = opt('--profile', 'phone'), tier = opt('--tier', 'medium'), minutes = Number(opt('--minutes', '10'));
+const game = opt('--game', 'free'), seed = opt('--seed', '1');
 const label = opt('--label', `${profile}-${tier}-${minutes}min`);
 mkdirSync(out, { recursive: true });
-const browser = await chromium.launch({ ...(process.env.G1_CHROMIUM ? { executablePath: process.env.G1_CHROMIUM } : {}), args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
+// G1.13: G1_GPU=nvidia|intel launches on the laptop's GPU (gpu.mjs); software is the default
+const browser = await chromium.launch(launchOptions());
 const ctx = await browser.newContext(profile === 'phone' ? nothingPhone1(true) : { viewport: { width: 1440, height: 900 } });
 const p = await ctx.newPage();
-const report = { label, profile, tier, minutes, site, started: new Date().toISOString(), errors: [], console_errors: [], class: 'MODEL in the browser; emulated profile; software GPU (see renderer)' };
+const report = { label, profile, tier, minutes, game, seed, gpu: GPU, machine_start: machine(), site, started: new Date().toISOString(), errors: [], console_errors: [], class: GPU === 'software' ? 'MODEL in the browser; emulated profile; software GPU (see renderer)' : `MODEL in the browser; real GPU (${GPU}, see renderer); ${profile === 'phone' ? 'emulated phone viewport and CPU throttle' : 'desktop viewport'}` };
 p.on('pageerror', (e) => report.errors.push(String(e)));
 p.on('console', (m) => { if (m.type() === 'error') report.console_errors.push(m.text()); });
 const save = () => writeFileSync(`${out}/${label}.json`, JSON.stringify(report, null, 1) + '\n');
 await p.addInitScript(() => {
   try { localStorage.setItem('coco.prefs.v1.tutorial', 'true'); } catch { /* none */ }
-  const g = window.__g19 = { serial: 0, drawnAt: -1, drawn: 0, lost: 0, js: [], on: false };
+  const g = window.__g19 = { serial: 0, drawnAt: -1, drawn: 0, lost: 0, js: [], on: false, at: [] };
   const raf = window.requestAnimationFrame.bind(window);
   // one animation frame's callbacks: their total main-thread time
   let pending = 0, spent = 0;
@@ -54,7 +62,7 @@ await p.addInitScript(() => {
       gl.__g19 = true;
       this.addEventListener('webglcontextlost', () => { g.lost++; });
       const clear = gl.clear.bind(gl);
-      gl.clear = (...v) => { if (g.drawnAt !== g.serial) { g.drawnAt = g.serial; g.drawn++; } return clear(...v); };
+      gl.clear = (...v) => { if (g.drawnAt !== g.serial) { g.drawnAt = g.serial; g.drawn++; if (g.on) g.at.push(performance.now()); } return clear(...v); };
     }
     return gl;
   };
@@ -71,7 +79,7 @@ report.title = await p.evaluate(() => {
 });
 report.title.wall_ms_to_title = Date.now() - t0;
 // mode select -> PLAY -> playable
-await p.goto(`${site}?view=play&game=free&world=depot&tier=${tier}`);
+await p.goto(game === 'fetch_rush' ? `${site}?view=play&game=fetch_rush&seed=${seed}&tier=${tier}` : `${site}?view=play&game=free&world=depot&tier=${tier}`);
 await p.waitForSelector('[data-testid="g1-play"]', { timeout: 180000 });
 const tPlay = Date.now();
 await p.waitForSelector('[data-testid="g1-play"]:not([disabled])', { timeout: 300000 });
@@ -82,8 +90,10 @@ await p.waitForFunction(() => (window.__cocoGame?.tick?.tick ?? 0) > 1, null, { 
 report.loading.play_to_first_tick_ms = Date.now() - tStart;
 report.renderer = await p.evaluate(() => { const gl = document.createElement('canvas').getContext('webgl2'); const d = gl?.getExtension('WEBGL_debug_renderer_info'); return d ? gl.getParameter(d.UNMASKED_RENDERER_WEBGL) : null; });
 report.software_gpu = /swiftshader|llvmpipe|software/i.test(report.renderer ?? '');
+assertGpu(report.renderer ?? '');
+report.restarts = 0;
 // drive for `minutes`: cycle keys (forward, turns, reverse) and AUTO now and then, sampling every second
-await p.evaluate(() => { window.__g19.on = true; window.__g19.js = []; });
+await p.evaluate(() => { window.__g19.on = true; window.__g19.js = []; window.__g19.at = []; });
 const samples = [];
 let prev = await p.evaluate(() => ({ n: window.__g19.drawn, t: performance.now() }));
 const keys = ['KeyW', 'KeyW', 'KeyA', 'KeyW', 'KeyD', 'KeyW', 'KeyS', 'KeyW'];
@@ -94,6 +104,13 @@ for (let i = 0; Date.now() < end; i++) {
   await p.waitForTimeout(1000);
   await p.keyboard.up(k);
   if (i % 45 === 44) await p.keyboard.press('KeyV'); // Robot vision on/off now and then
+  if (game === 'fetch_rush' && await p.getByTestId('g1-results').isVisible().catch(() => false)) {
+    await p.getByRole('button', { name: /PLAY AGAIN/ }).click();
+    report.restarts++;
+    await p.waitForFunction(() => !document.querySelector('[data-testid="g1-results"]'), null, { timeout: 120000 }).catch(() => {});
+    const play = p.locator('[data-testid="g1-play"]:not([disabled])');
+    if (await play.isVisible().catch(() => false)) await play.click();
+  }
   const now = await p.evaluate(() => ({ n: window.__g19.drawn, t: performance.now(), tick: window.__cocoGame?.tick?.tick ?? null }));
   samples.push({ s: (now.t - prev.t) / 1000, drawn: now.n - prev.n, fps: ((now.n - prev.n) * 1000) / (now.t - prev.t), tick: now.tick });
   prev = now;
@@ -107,11 +124,16 @@ report.samples = samples;
 report.drawn_fps = { median: q(fps, 0.5), minimum: fps.length ? Math.min(...fps) : null, windows: fps.length, note: report.software_gpu ? 'software GPU (SwiftShader): the rasteriser runs on this container\'s CPU' : 'hardware GPU' };
 report.frame_js_ms = { median: q(js, 0.5), p95: q(js, 0.95), max: js.length ? Math.max(...js) : null, frames: js.length, budget_60fps_ms: 1000 / 60 };
 report.drawn_frame_ms_p95 = (() => { const ms = fps.filter((f) => f > 0).map((f) => 1000 / f); return q(ms, 0.95); })();
+const at = await p.evaluate(() => window.__g19.at);
+const iv = at.slice(1).map((t, i) => t - at[i]);
+report.frame_interval_ms = { median: q(iv, 0.5), p95: q(iv, 0.95), p99: q(iv, 0.99), max: iv.length ? Math.max(...iv) : null, frames: at.length, over_50: iv.filter((x) => x > 50).length,
+  note: 'wall time between consecutive drawn frames (first WebGL clear of an animation frame)' };
+report.machine_end = machine();
 report.webgl_context_lost = await p.evaluate(() => window.__g19.lost);
 report.last_tick = await p.evaluate(() => window.__cocoGame?.tick?.tick ?? null);
 report.ended = new Date().toISOString();
 report.passed_no_errors = report.errors.length === 0 && report.console_errors.length === 0 && report.webgl_context_lost === 0;
 save();
 await p.screenshot({ path: `${out}/${label}.png` });
-console.log(JSON.stringify({ label, drawn_fps: report.drawn_fps, frame_js_ms: report.frame_js_ms, lost: report.webgl_context_lost, errors: report.errors.length + report.console_errors.length, title: report.title, loading: report.loading.mode_select_to_play_enabled_ms }));
+console.log(JSON.stringify({ label, renderer: report.renderer, restarts: report.restarts, frame_interval_ms: report.frame_interval_ms, drawn_fps: report.drawn_fps, frame_js_ms: report.frame_js_ms, lost: report.webgl_context_lost, errors: report.errors.length + report.console_errors.length, title: report.title, loading: report.loading.mode_select_to_play_enabled_ms }));
 await browser.close();

@@ -18,12 +18,14 @@
 import { chromium } from 'playwright';
 import { writeFileSync } from 'node:fs';
 import { nothingPhone1, throttlePhone } from '../phone/nothing-phone-1.mjs';
+import { GPU, launchOptions, renderer, assertGpu, machine } from './gpu.mjs';
 
 const [site, out, ...rest] = process.argv.slice(2);
 const opt = (k, d) => (rest.includes(k) ? rest[rest.indexOf(k) + 1] : d);
 const WANT = Number(opt('--deliveries', '3'));
 const profile = opt('--profile', 'desktop');
-const b = await chromium.launch({ ...(process.env.G1_CHROMIUM ? { executablePath: process.env.G1_CHROMIUM } : {}), args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
+// G1.13: G1_GPU=nvidia|intel launches on the laptop's GPU (gpu.mjs); software is the default
+const b = await chromium.launch(launchOptions());
 const ctx = await b.newContext(profile === 'phone' ? nothingPhone1(true) : { viewport: { width: 1280, height: 720 } });
 const p = await ctx.newPage();
 const errors = [], log = [];
@@ -55,6 +57,8 @@ await p.addInitScript(() => {
 if (profile === 'phone') await throttlePhone(ctx, p);
 await p.goto(`${site}?view=play&game=fetch_rush&seed=${opt('--seed', '1')}&tier=low${opt('--mode', '') ? `&mode=${opt('--mode', '')}` : ''}`);
 await p.waitForSelector('[data-testid="g1-play"]:not([disabled])', { timeout: 300000 });
+const rendererString = await renderer(p);
+assertGpu(rendererString);
 await p.click('[data-testid="g1-play"]');
 const state = () => p.evaluate(() => { const t = window.__cocoGame.tick; const pr = document.querySelector('[data-testid="hud-primary"]'); return t ? { tick: t.tick, mode: t.mode, source: t.source, a: t.game?.assist, f: t.game?.fetch, primary: pr?.getAttribute('aria-label'), enabled: pr?.getAttribute('aria-disabled') === 'false' } : null; });
 const until = async (fn, label, ms = 900000) => { const t0 = Date.now(); for (;;) { const s = await state(); if (s && fn(s)) { log.push([label, s.tick]); return s; } if (Date.now() - t0 > ms) { log.push([label + ' TIMEOUT', s?.tick]); return s; } await p.waitForTimeout(250); } };
@@ -118,7 +122,8 @@ const msgGaps = T.slice(1).map(([t, k], n) => ({ ms: t - T[n][0], ticks: k - T[n
 const msgSteps = T.map((x) => x[4]);
 const report = {
   label: opt('--label', ''), site, profile, wall_s: (Date.now() - t0) / 1000, final: s, log, errors,
-  renderer: 'SwiftShader (no GPU in this container): drawn frame rates are not measured; frame times are main-thread JS',
+  renderer: GPU === 'software' ? `SwiftShader (no GPU): drawn frame rates are not measured; frame times are main-thread JS (${rendererString})` : rendererString,
+  gpu: GPU, machine: machine(), ended: new Date().toISOString(),
   deliveries: s?.f?.deliveries ?? null, orders: s?.f?.orders ?? null, seconds: s?.f?.seconds ?? null,
   tick_gap_ms: { max: gaps.length ? Math.max(...gaps.map((x) => x.ms)) : null, p95_single: q(perTick, 0.95), median_single: q(perTick, 0.5),
     over_800: gaps.filter((x) => x.ms > 800).map((x) => ({ ms: Math.round(x.ms), at_tick: x.at_tick })) },
