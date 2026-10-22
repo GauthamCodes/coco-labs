@@ -142,3 +142,54 @@ minutes. Seeds 2 and 4 drew the same round, whose first leg crosses the east–w
 lane; M6F.6's reference bot stopped inside the lane and was hit repeatedly, so that round
 has no reference time and no timer: it is kept on file with its result and refused as a
 game. The game offers shifts 1, 3, 5 and 6.
+
+## Fetch Rush rules 3 (G1.12, Gautham's 2026-10-22 decisions)
+
+Implemented 2026-10-22 in G1.12; rules 1 and 2 above are unchanged and their records still
+verify (rules 2 keeps its own file, `coco_depot_v1.fetch_rush.json`). Code:
+`games.ROUND_MODES`, `games.round_for(seed, rules=3, mode=...)`, `games.FetchRushRound`;
+data: `coco_lab/coco_lab/levels/coco_depot_v1.fetch_rush.r3.json`, made by
+`tools/g1/make_fetch_rush_rounds_r3.py` (Arena hash v3, CPython 3.12, cloud container);
+tests `coco_lab/test/test_fetch_rush_r3.py`. A record carries `rules: 3` and `mode`.
+
+- **Two modes.** `phone` (the default): **2 orders**; `full` (the "Full shift", offered on
+  the mode card and as `&mode=full`): rules 2's 3 orders within 32 m. Bests are kept per mode.
+- **Routes never cross the forklift lanes.** A trip counts only if A*'s route on the plan
+  grid (what AUTO and the reference bot drive) keeps every cell centre out of
+  `zone_forklift_lanes`, from the order's start to the object's nearest such pre-grasp
+  pose and on to the drop zone's centre; the drawn ghost route is that route.
+- **Every round on file was finished.** The reference bot plays each draw; a round it does
+  not finish, or where COCO ever stands inside a lane, is rejected and the seed draws again
+  (`attempt`), listed under `rejected`, never offered. None was needed: every first draw
+  was finished with 0 contacts.
+- **Start facing the open aisle:** the heading (of 16) with the longest clear run on the
+  plan grid from the start point.
+- **Timer = the reference bot's time × 1.5**, as in rules 2.
+
+**The phone budget is provisional: 22 m, not the decision's 16 m.** With the lanes kept out,
+three objects can be reached at all (`obj_dock`, `obj_dispatch`, `obj_maze_2`), every start
+zone's first order is `obj_dock` from the Loading dock (11.9–16.0 m), and every second
+order needs at least 21.4 m (`obj_dispatch` from Dock 1 to Dispatch). No 2-order round
+exists below 21.4 m; at 22 m exactly one does, at 25 m two, at 30 m seven
+(`docs/v2/g1/data/g112/phone_budget.json`, the whole trip table). At COCO's real autonomous
+speed the reference needs 187.0 s for that round, so its timer is **4:40.5**, not 3–4 min.
+Gautham's call (G1_STATUS questions).
+
+| Mode | Seed | Start zone | Orders (planned round trip) | Reference bot | Timer |
+|---|---|---|---|---|---|
+| Phone | 1 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m) | 187.0 s, 0 contacts, path efficiency 0.985 | **280.5 s** (4:40.5) |
+| Phone | 2 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m) | 187.0 s, 0 contacts, path efficiency 0.985 | **280.5 s** (4:40.5) |
+| Phone | 3 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m) | 187.0 s, 0 contacts, path efficiency 0.985 | **280.5 s** (4:40.5) |
+| Phone | 4 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m) | 187.0 s, 0 contacts, path efficiency 0.985 | **280.5 s** (4:40.5) |
+| Phone | 5 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m) | 187.0 s, 0 contacts, path efficiency 0.985 | **280.5 s** (4:40.5) |
+| Phone | 6 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m) | 187.0 s, 0 contacts, path efficiency 0.985 | **280.5 s** (4:40.5) |
+| Full shift | 1 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m), obj_maze_2 → Dispatch (31.9 m) | 327.0 s, 0 contacts, path efficiency 0.987 | **490.5 s** (8:10.5) |
+| Full shift | 2 | Loading dock | obj_dock → Dock 2 (13.3 m), obj_dispatch → Dispatch (24.9 m), obj_maze_2 → Dispatch (31.9 m) | 329.7 s, 0 contacts, path efficiency 0.988 | **494.5 s** (8:14.5) |
+| Full shift | 3 | Loading dock | obj_dock → Dock 2 (13.3 m), obj_dispatch → Dispatch (24.9 m), obj_maze_2 → Dispatch (31.9 m) | 329.7 s, 0 contacts, path efficiency 0.988 | **494.5 s** (8:14.5) |
+| Full shift | 4 | Loading dock | obj_dock → Dock 3 (11.9 m), obj_dispatch → Dispatch (28.4 m), obj_maze_2 → Dispatch (31.9 m) | 336.9 s, 0 contacts, path efficiency 0.992 | **505.3 s** (8:25.3) |
+| Full shift | 5 | Loading dock | obj_dock → Dock 2 (13.3 m), obj_dispatch → Dispatch (24.9 m), obj_maze_2 → Dispatch (31.9 m) | 329.7 s, 0 contacts, path efficiency 0.988 | **494.5 s** (8:14.5) |
+| Full shift | 6 | Loading dock | obj_dock → Dock 3 (11.9 m), obj_dispatch → Dispatch (28.4 m), obj_maze_2 → Dispatch (31.9 m) | 336.9 s, 0 contacts, path efficiency 0.992 | **505.3 s** (8:25.3) |
+
+With the lanes kept out the Depot offers little variety: every round starts at the Loading
+dock; the six phone shifts are one round, the six Full shifts three. (Rules 2's High-bay
+rounds, seeds 2, 4 and 5, all crossed a lane.)

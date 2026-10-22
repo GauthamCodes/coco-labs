@@ -59,7 +59,15 @@ await p.click('[data-testid="g1-play"]');
 const state = () => p.evaluate(() => { const t = window.__cocoGame.tick; const pr = document.querySelector('[data-testid="hud-primary"]'); return t ? { tick: t.tick, mode: t.mode, source: t.source, a: t.game?.assist, f: t.game?.fetch, primary: pr?.getAttribute('aria-label'), enabled: pr?.getAttribute('aria-disabled') === 'false' } : null; });
 const until = async (fn, label, ms = 900000) => { const t0 = Date.now(); for (;;) { const s = await state(); if (s && fn(s)) { log.push([label, s.tick]); return s; } if (Date.now() - t0 > ms) { log.push([label + ' TIMEOUT', s?.tick]); return s; } await p.waitForTimeout(250); } };
 await until((s) => s.tick > 2, 'started');
-await p.evaluate(() => { window.__g111.on = true; });
+// G1.12: tick arrivals time-stamped as the worker's message arrives (not at the next frame,
+// whose interval under a software renderer would hide the gap), with the worker's step time
+await p.evaluate(() => {
+  const g = window.__g111; g.msg = [];
+  window.__cocoGame.session.client.worker.addEventListener('message', (m) => {
+    const d = m.data; if (d && d.type === 'tick') g.msg.push([performance.now(), d.tick.tick, d.tick.source, d.tick.v, d.stepMs]);
+  });
+  g.on = true;
+});
 const t0 = Date.now();
 const presses = [];
 async function auto(label) {
@@ -97,14 +105,17 @@ const q = (a, f) => (a.length ? sorted(a)[Math.min(a.length - 1, Math.floor(f * 
 const perTick = gaps.filter((x) => x.ticks === 1).map((x) => x.ms);
 // G1.12: each AUTO press -> the first tick the planner drives (|v| > 0.01): wall time, and the
 // longest gap between tick arrivals from the press to then (the tick period is 100 ms)
+const T = g.msg;
 const auto_presses = presses.map(({ label, at }) => {
-  const i = g.tickAt.findIndex(([t]) => t > at);
-  const j = g.tickAt.findIndex(([t, , src, v], n) => n >= i && i >= 0 && (src === 'planner' || src === 'mission') && Math.abs(v) > 0.01);
+  const i = T.findIndex(([t]) => t > at);
+  const j = T.findIndex(([t, , src, v], n) => n >= i && i >= 0 && (src === 'planner' || src === 'mission') && Math.abs(v) > 0.01);
   if (i < 0 || j < 0) return { label, motion: false };
-  let gap = 0;
-  for (let n = Math.max(1, i); n <= j; n++) gap = Math.max(gap, g.tickAt[n][0] - g.tickAt[n - 1][0]);
-  return { label, motion: true, press_to_motion_ms: Math.round(g.tickAt[j][0] - at), ticks: g.tickAt[j][1] - g.tickAt[i][1] + 1, max_tick_gap_ms: Math.round(gap), over_period_ms: Math.max(0, Math.round(gap - 100)) };
+  let gap = 0, step = 0;
+  for (let n = Math.max(1, i); n <= j; n++) { gap = Math.max(gap, T[n][0] - T[n - 1][0]); step = Math.max(step, T[n][4]); }
+  return { label, motion: true, press_to_motion_ms: Math.round(T[j][0] - at), ticks: T[j][1] - T[i][1] + 1, max_tick_gap_ms: Math.round(gap), over_period_ms: Math.max(0, Math.round(gap - 100)), max_worker_step_ms: Math.round(step) };
 });
+const msgGaps = T.slice(1).map(([t, k], n) => ({ ms: t - T[n][0], ticks: k - T[n][1] }));
+const msgSteps = T.map((x) => x[4]);
 const report = {
   label: opt('--label', ''), site, profile, wall_s: (Date.now() - t0) / 1000, final: s, log, errors,
   renderer: 'SwiftShader (no GPU in this container): drawn frame rates are not measured; frame times are main-thread JS',
@@ -113,10 +124,14 @@ const report = {
     over_800: gaps.filter((x) => x.ms > 800).map((x) => ({ ms: Math.round(x.ms), at_tick: x.at_tick })) },
   worker_step_ms: { max: steps.length ? Math.max(...steps) : null, p95: q(steps, 0.95), median: q(steps, 0.5), kept: steps.length },
   busy_banner: { shown: g.busy.shown, total_ms: Math.round(g.busy.ms) },
+  tick_arrival_ms: { note: 'time-stamped on the worker message (G1.12); tick_gap_ms above is sampled per animation frame',
+    max: msgGaps.length ? Math.max(...msgGaps.map((x) => x.ms)) : null, p95: q(msgGaps.map((x) => x.ms), 0.95), median: q(msgGaps.map((x) => x.ms), 0.5),
+    over_150: msgGaps.filter((x) => x.ms > 150).length, ticks: T.length },
+  worker_step_all_ms: { max: msgSteps.length ? Math.max(...msgSteps) : null, p95: q(msgSteps, 0.95), median: q(msgSteps, 0.5) },
   auto_presses,
   auto_max_tick_gap_ms: auto_presses.filter((x) => x.motion).reduce((m, x) => Math.max(m, x.max_tick_gap_ms), 0),
   frame_js_ms: { max: g.js.length ? Math.max(...g.js) : null, p95: q(g.js, 0.95), median: q(g.js, 0.5), frames: g.js.length, over_50: g.slow.length, slow: g.slow.slice(0, 20) },
 };
 writeFileSync(out, JSON.stringify(report, null, 1) + '\n');
-console.log(JSON.stringify({ label: report.label, deliveries: report.deliveries, orders: report.orders, seconds: report.seconds, tick_gap_ms: { max: report.tick_gap_ms.max, over_800: report.tick_gap_ms.over_800.length }, busy: report.busy_banner, auto_max_gap: report.auto_max_tick_gap_ms, auto: auto_presses.map((x) => x.max_tick_gap_ms), frame_js: { max: report.frame_js_ms.max, over_50: report.frame_js_ms.over_50 }, errors: errors.length }));
+console.log(JSON.stringify({ label: report.label, deliveries: report.deliveries, orders: report.orders, seconds: report.seconds, tick_gap_ms: { max: report.tick_gap_ms.max, over_800: report.tick_gap_ms.over_800.length }, busy: report.busy_banner, arrival: { max: report.tick_arrival_ms.max, p95: report.tick_arrival_ms.p95 }, step_max: report.worker_step_all_ms.max, auto_max_gap: report.auto_max_tick_gap_ms, auto: auto_presses.map((x) => x.max_tick_gap_ms), frame_js: { max: report.frame_js_ms.max, over_50: report.frame_js_ms.over_50 }, errors: errors.length }));
 await b.close();
