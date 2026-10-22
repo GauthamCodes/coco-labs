@@ -4,8 +4,8 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 
 ## Now
 
-- **Current checkpoint:** G1.12 Gautham's decisions of 2026-10-22 — done in the cloud (Fetch Rush rules 3: phone round + Full shift with the lanes kept out; AUTO's search run ahead; the chase camera reframed and HUD-checked); results in [`G1_RESULTS.md`](G1_RESULTS.md), evidence [`data/g112/README.md`](data/g112/README.md); the phone budget is provisional (22 m: 16 m is infeasible); the AUTO tick-gap target needs the laptop.
-- **Next step:** Gautham's calls on the phone budget and the look (BEFORE_AFTER "After G1.12"); then the laptop and phone items below; then the M6 UI phase (README §7).
+- **Current checkpoint:** G1.13 laptop work (2026-10-22, `~/coco_labs_ws/worktrees/g1`): Gautham's answers to the G1.12 questions recorded; applying them (spawn heading, phone budget), then the laptop-only items of [`G1_LAPTOP_PROMPT.md`](G1_LAPTOP_PROMPT.md).
+- **Next step:** spawn heading + phone-budget sweep and regenerated rounds; then environment rebuild (overlay, `npm ci`, venv) and the laptop items in the prompt's order.
 
 ## Setup facts
 
@@ -15,6 +15,17 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
   session may only push there). The prompt names `v2/g1-game-look`; Gautham can rename the
   branch or open the PR from it as he prefers. No force-push; nothing merged into main.
 - Environment: cloud container (Xeon 2.1 GHz × 4, SwiftShader, no GPU, no ROS, no phone).
+
+## Gautham's decisions, 2026-10-22 (on the G1.12 questions; laptop prompt)
+
+Recorded in `docs/STATUS.md`'s plan-change log. Prompt: [`G1_LAPTOP_PROMPT.md`](G1_LAPTOP_PROMPT.md).
+
+1. **Phone round budget:** the smallest budget, from 22 m up, that gives at least 3 distinct
+   rounds with every timer ≤ 5:00. If none does, keep 22 m (one round, 4:36). Objects are not
+   moved next to the lanes. References regenerated; GAMES.md updated.
+2. **Spawn heading:** face the clear heading closest to the direction of the first route, still
+   ≥ 1.5 m from the lanes.
+3. **The camera look in BEFORE_AFTER "After G1.12" is approved.**
 
 ## Gautham's decisions, 2026-10-22 (G1.12)
 
@@ -110,8 +121,8 @@ Recorded in `docs/STATUS.md`'s plan-change log, with the 2026-10-18 Fetch Rush d
 
 ## Questions for Gautham
 
-- **Phone round budget (G1.12):** 16 m admits no lane-free 2-order round on the Depot (smallest 21.4 m; `data/g112/phone_budget.json`). Provisional 22 m gives one round for every seed, timer 4:35.9. Keep 22 m, take 25–30 m for 2–15 rounds (longer timers), or allow objects near the lanes / move objects in the level?
-- **Spawn heading (G1.12):** COCO starts facing the open aisle, as decided; on the phone round the first ghost route leaves behind it, so the player turns first. Prefer the clear heading closest to the first route?
+- ~~Phone round budget (G1.12)~~ — answered 2026-10-22 (decisions above). Was: 16 m admits no lane-free 2-order round on the Depot (smallest 21.4 m; `data/g112/phone_budget.json`). Provisional 22 m gives one round for every seed, timer 4:35.9. Keep 22 m, take 25–30 m for 2–15 rounds (longer timers), or allow objects near the lanes / move objects in the level?
+- ~~Spawn heading (G1.12)~~ — answered 2026-10-22 (decisions above). Was: COCO starts facing the open aisle, as decided; on the phone round the first ghost route leaves behind it, so the player turns first. Prefer the clear heading closest to the first route?
 - ~~AUTO's route planning pauses the model~~ — G1.12: the search runs ahead between ticks; the AUTO tick's worker step is ≤ 101 ms here (was 452 ms); the wall-clock target is a laptop measurement.
 - ~~Fetch Rush timers 8:11–9:37 / seeds 2 and 4~~ — G1.12: the phone round (4:36) is the default, the Full shift keeps 3 orders (7:56–9:38); rounds the bot cannot finish are rejected at generation.
 
