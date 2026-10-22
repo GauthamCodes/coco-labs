@@ -66,9 +66,13 @@ function run(look: ReturnType<typeof describe>, poses: { pose: Pose; v: number }
     minZ = Math.min(minZ, c[2]);
     cam.camera.updateMatrixWorld();
     screenY.push(new THREE.Vector3(pose[0], pose[1], CHASE.bodyZ).project(cam.camera).y);
+    // G1.12: COCO's shoulders too (a wall edge beside COCO must not hide half of it)
+    const sx = -Math.sin(pose[2]) * CHASE.shoulder, sy = Math.cos(pose[2]) * CHASE.shoulder;
+    const shoulders = [[head[0] + sx, head[1] + sy, head[2]], [head[0] - sx, head[1] - sy, head[2]]];
     for (const p of solids) {
       if (inside(c, p, 0.02)) faults.push(`frame ${k}: camera inside ${p.id}`);
       else if (!robotBoxes.has(p.id) && segmentHits(c, head, p)) faults.push(`frame ${k}: ${p.id} between the camera and COCO`);
+      else if (!robotBoxes.has(p.id) && shoulders.some((q) => segmentHits(c, q, p))) faults.push(`frame ${k}: ${p.id} hides a side of COCO`);
     }
   });
   return { faults, maxPull, minDist, minZ, maxElev, screenY };
@@ -141,6 +145,11 @@ group('G1.4 chase camera: 20 scripted paths, no clipping', () => {
     expect(maxElev).toBeGreaterThan(CHASE.elev + 0.1);
     expect(minDist).toBeGreaterThanOrEqual(CHASE.minDist - 1e-6);
     expect(maxPull).toBeLessThanOrEqual(CHASE.dist - CHASE.minDist + 1e-6);
+  });
+  it('G1.11\'s Fetch Rush spawn (beside a pallet stack): no side of COCO hidden', () => {
+    const { faults, minDist } = run(looks.depot, path([41.75, 4.75, 1.9634954084936207], [[0, 0, 1.5]]));
+    expect(faults.slice(0, 3)).toEqual([]);
+    expect(minDist).toBeGreaterThanOrEqual(CHASE.minDist - 1e-6);
   });
   it('at rest in the open, COCO\'s centre sits at CHASE.screenY', () => {
     const { screenY } = run(looks.depot, path([30, 12, 0], [[0, 0, 1]]));

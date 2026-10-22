@@ -11,6 +11,7 @@ finish was rejected at generation, never offered); timer = reference x 1.5.
 """
 import hashlib
 import json
+import math
 from pathlib import Path
 
 from coco_lab import games, loc_arena  # noqa: F401 -- loc_arena: the subsystem
@@ -123,4 +124,5 @@ def test_playing_a_phone_round_never_plans(monkeypatch):
             rules.start(a)
         rules.observe(a, t)
     assert rules.current() == tuple(rnd['orders'][0]) and rules.ghost == rnd['ghost_m'][0]
-    assert abs(a.pose[2] - rnd['start'][2]) < 1e-9, 'COCO starts facing the open aisle'
+    d = a.pose[2] - rnd['start'][2]
+    assert abs(math.atan2(math.sin(d), math.cos(d))) < 1e-9, 'COCO starts facing the open aisle'

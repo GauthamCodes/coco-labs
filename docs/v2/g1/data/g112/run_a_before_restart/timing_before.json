@@ -1,0 +1,241 @@
+{
+ "label": "before: G1.11 build a4b39a6, rules 2 seed 1",
+ "site": "http://127.0.0.1:4175/coco-labs/",
+ "profile": "desktop",
+ "wall_s": 394.003,
+ "final": {
+  "tick": 3595,
+  "mode": "idle",
+  "source": "idle",
+  "a": {
+   "phase": "idle",
+   "target": null,
+   "carried": null,
+   "want": "obj_maze_2",
+   "reason": "released obj_maze_2",
+   "attempt": 3
+  },
+  "f": {
+   "t": 359.4,
+   "seconds": 491.7,
+   "over": true,
+   "order": null,
+   "k": 3,
+   "orders": 3,
+   "deliveries": 3,
+   "contacts": 0,
+   "ghost": null
+  },
+  "primary": "GRAB: Nothing in range (G)",
+  "enabled": false
+ },
+ "log": [
+  [
+   "started",
+   3
+  ],
+  [
+   "order 1: to the object (AUTO taken)",
+   7
+  ],
+  [
+   "order 1: GRAB lit",
+   225
+  ],
+  [
+   "order 1: carried",
+   475
+  ],
+  [
+   "order 1: to the drop (AUTO taken)",
+   482
+  ],
+  [
+   "order 1: DROP lit",
+   819
+  ],
+  [
+   "order 1: delivered",
+   880
+  ],
+  [
+   "order 2: to the object (AUTO taken) TIMEOUT",
+   992
+  ],
+  [
+   "order 2: to the object (AUTO taken)",
+   994
+  ],
+  [
+   "order 2: GRAB lit",
+   1503
+  ],
+  [
+   "order 2: carried",
+   1754
+  ],
+  [
+   "order 2: to the drop (AUTO taken)",
+   1761
+  ],
+  [
+   "order 2: DROP lit",
+   1985
+  ],
+  [
+   "order 2: delivered",
+   2047
+  ],
+  [
+   "order 3: to the object (AUTO taken) TIMEOUT",
+   2155
+  ],
+  [
+   "order 3: to the object (AUTO taken)",
+   2159
+  ],
+  [
+   "order 3: GRAB lit",
+   2742
+  ],
+  [
+   "order 3: carried",
+   2991
+  ],
+  [
+   "order 3: to the drop (AUTO taken)",
+   3001
+  ],
+  [
+   "order 3: DROP lit",
+   3534
+  ],
+  [
+   "order 3: delivered",
+   3595
+  ]
+ ],
+ "errors": [],
+ "renderer": "SwiftShader (no GPU in this container): drawn frame rates are not measured; frame times are main-thread JS",
+ "deliveries": 3,
+ "orders": 3,
+ "seconds": 491.7,
+ "tick_gap_ms": {
+  "max": 757.2000000001863,
+  "p95_single": 168,
+  "median_single": 97.80000000074506,
+  "over_800": []
+ },
+ "worker_step_ms": {
+  "max": 72.79999999981374,
+  "p95": 46,
+  "median": 28.300000000745058,
+  "kept": 595
+ },
+ "busy_banner": {
+  "shown": 0,
+  "total_ms": 0
+ },
+ "tick_arrival_ms": {
+  "note": "time-stamped on the worker message (G1.12); tick_gap_ms above is sampled per animation frame",
+  "max": 642.1000000005588,
+  "p95": 328.70000000018626,
+  "median": 93,
+  "over_150": 643,
+  "ticks": 3592
+ },
+ "worker_step_all_ms": {
+  "max": 407.09999999962747,
+  "p95": 48.40000000037253,
+  "median": 28.399999999441206
+ },
+ "auto_presses": [
+  {
+   "label": "order 1: to the object",
+   "motion": true,
+   "press_to_motion_ms": 1434,
+   "ticks": 8,
+   "max_tick_gap_ms": 642,
+   "over_period_ms": 542,
+   "max_worker_step_ms": 52
+  },
+  {
+   "label": "order 1: to the drop",
+   "motion": true,
+   "press_to_motion_ms": 1963,
+   "ticks": 20,
+   "max_tick_gap_ms": 149,
+   "over_period_ms": 49,
+   "max_worker_step_ms": 64
+  },
+  {
+   "label": "order 2: to the object",
+   "motion": true,
+   "press_to_motion_ms": 8575,
+   "ticks": 87,
+   "max_tick_gap_ms": 321,
+   "over_period_ms": 221,
+   "max_worker_step_ms": 54
+  },
+  {
+   "label": "order 2: to the object",
+   "motion": true,
+   "press_to_motion_ms": 354,
+   "ticks": 5,
+   "max_tick_gap_ms": 240,
+   "over_period_ms": 140,
+   "max_worker_step_ms": 43
+  },
+  {
+   "label": "order 2: to the drop",
+   "motion": true,
+   "press_to_motion_ms": 556,
+   "ticks": 6,
+   "max_tick_gap_ms": 179,
+   "over_period_ms": 79,
+   "max_worker_step_ms": 48
+  },
+  {
+   "label": "order 3: to the object",
+   "motion": true,
+   "press_to_motion_ms": 8841,
+   "ticks": 84,
+   "max_tick_gap_ms": 410,
+   "over_period_ms": 310,
+   "max_worker_step_ms": 407
+  },
+  {
+   "label": "order 3: to the object",
+   "motion": true,
+   "press_to_motion_ms": 765,
+   "ticks": 5,
+   "max_tick_gap_ms": 410,
+   "over_period_ms": 310,
+   "max_worker_step_ms": 407
+  },
+  {
+   "label": "order 3: to the drop",
+   "motion": true,
+   "press_to_motion_ms": 3199,
+   "ticks": 28,
+   "max_tick_gap_ms": 440,
+   "over_period_ms": 340,
+   "max_worker_step_ms": 74
+  }
+ ],
+ "auto_max_tick_gap_ms": 642,
+ "frame_js_ms": {
+  "max": 159.90000000037253,
+  "p95": 2.900000000372529,
+  "median": 1.2000000001862645,
+  "frames": 3543,
+  "over_50": 1,
+  "slow": [
+   {
+    "at": 6880.799999999814,
+    "ms": 159.90000000037253,
+    "tick": 11
+   }
+  ]
+ }
+}

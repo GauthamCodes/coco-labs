@@ -1,0 +1,246 @@
+{
+ "label": "after: G1.12, Full shift seed 1",
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "profile": "desktop",
+ "wall_s": 386.879,
+ "final": {
+  "tick": 3479,
+  "mode": "idle",
+  "source": "idle",
+  "a": {
+   "phase": "idle",
+   "target": null,
+   "carried": null,
+   "want": "obj_dock",
+   "reason": "released obj_dock",
+   "attempt": 3
+  },
+  "f": {
+   "t": 347.8,
+   "seconds": 477.2,
+   "over": true,
+   "order": null,
+   "k": 3,
+   "orders": 3,
+   "deliveries": 3,
+   "contacts": 0,
+   "ghost": null
+  },
+  "primary": "GRAB: Nothing in range (G)",
+  "enabled": false
+ },
+ "log": [
+  [
+   "started",
+   3
+  ],
+  [
+   "order 1: to the object (AUTO taken)",
+   8
+  ],
+  [
+   "order 1: GRAB lit",
+   382
+  ],
+  [
+   "order 1: carried",
+   630
+  ],
+  [
+   "order 1: to the drop (AUTO taken)",
+   639
+  ],
+  [
+   "order 1: DROP lit",
+   1163
+  ],
+  [
+   "order 1: delivered",
+   1228
+  ],
+  [
+   "order 2: to the object (AUTO taken) TIMEOUT",
+   1332
+  ],
+  [
+   "order 2: to the object (AUTO taken)",
+   1336
+  ],
+  [
+   "order 2: GRAB lit",
+   1619
+  ],
+  [
+   "order 2: carried",
+   1873
+  ],
+  [
+   "order 2: to the drop (AUTO taken)",
+   1880
+  ],
+  [
+   "order 2: DROP lit",
+   2441
+  ],
+  [
+   "order 2: delivered",
+   2503
+  ],
+  [
+   "order 3: to the object (AUTO taken) TIMEOUT",
+   2602
+  ],
+  [
+   "order 3: to the object (AUTO taken)",
+   2605
+  ],
+  [
+   "order 3: GRAB lit",
+   2902
+  ],
+  [
+   "order 3: carried",
+   3151
+  ],
+  [
+   "order 3: to the drop (AUTO taken)",
+   3159
+  ],
+  [
+   "order 3: DROP lit",
+   3417
+  ],
+  [
+   "order 3: delivered",
+   3479
+  ]
+ ],
+ "errors": [],
+ "renderer": "SwiftShader (no GPU in this container): drawn frame rates are not measured; frame times are main-thread JS",
+ "deliveries": 3,
+ "orders": 3,
+ "seconds": 477.2,
+ "tick_gap_ms": {
+  "max": 846.4000000001397,
+  "p95_single": 141.39999999990687,
+  "median_single": 47.9000000001397,
+  "over_800": [
+   {
+    "ms": 846,
+    "at_tick": 7
+   }
+  ]
+ },
+ "worker_step_ms": {
+  "max": 87.9000000001397,
+  "p95": 67.70000000018626,
+  "median": 40.199999999953434,
+  "kept": 479
+ },
+ "busy_banner": {
+  "shown": 0,
+  "total_ms": 0
+ },
+ "tick_arrival_ms": {
+  "note": "time-stamped on the worker message (G1.12); tick_gap_ms above is sampled per animation frame",
+  "max": 747,
+  "p95": 333.70000000018626,
+  "median": 59.299999999813735,
+  "over_150": 765,
+  "ticks": 3476
+ },
+ "worker_step_all_ms": {
+  "max": 151.5,
+  "p95": 71.9000000001397,
+  "median": 40.800000000046566
+ },
+ "auto_presses": [
+  {
+   "label": "order 1: to the object",
+   "motion": true,
+   "press_to_motion_ms": 2450,
+   "ticks": 18,
+   "max_tick_gap_ms": 747,
+   "over_period_ms": 647,
+   "max_worker_step_ms": 56
+  },
+  {
+   "label": "order 1: to the drop",
+   "motion": true,
+   "press_to_motion_ms": 1664,
+   "ticks": 16,
+   "max_tick_gap_ms": 359,
+   "over_period_ms": 259,
+   "max_worker_step_ms": 65
+  },
+  {
+   "label": "order 2: to the object",
+   "motion": true,
+   "press_to_motion_ms": 8505,
+   "ticks": 81,
+   "max_tick_gap_ms": 368,
+   "over_period_ms": 268,
+   "max_worker_step_ms": 101
+  },
+  {
+   "label": "order 2: to the object",
+   "motion": true,
+   "press_to_motion_ms": 426,
+   "ticks": 5,
+   "max_tick_gap_ms": 264,
+   "over_period_ms": 164,
+   "max_worker_step_ms": 58
+  },
+  {
+   "label": "order 2: to the drop",
+   "motion": true,
+   "press_to_motion_ms": 1232,
+   "ticks": 12,
+   "max_tick_gap_ms": 356,
+   "over_period_ms": 256,
+   "max_worker_step_ms": 83
+  },
+  {
+   "label": "order 3: to the object",
+   "motion": true,
+   "press_to_motion_ms": 9323,
+   "ticks": 78,
+   "max_tick_gap_ms": 408,
+   "over_period_ms": 308,
+   "max_worker_step_ms": 66
+  },
+  {
+   "label": "order 3: to the object",
+   "motion": true,
+   "press_to_motion_ms": 707,
+   "ticks": 6,
+   "max_tick_gap_ms": 368,
+   "over_period_ms": 268,
+   "max_worker_step_ms": 43
+  },
+  {
+   "label": "order 3: to the drop",
+   "motion": true,
+   "press_to_motion_ms": 1496,
+   "ticks": 16,
+   "max_tick_gap_ms": 127,
+   "over_period_ms": 27,
+   "max_worker_step_ms": 58
+  }
+ ],
+ "auto_max_tick_gap_ms": 747,
+ "frame_js_ms": {
+  "max": 231.60000000009313,
+  "p95": 8.5,
+  "median": 3.9000000001396984,
+  "frames": 2909,
+  "over_50": 1,
+  "slow": [
+   {
+    "at": 7667.600000000093,
+    "ms": 231.60000000009313,
+    "tick": 4
+   }
+  ]
+ }
+}

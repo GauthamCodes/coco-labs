@@ -22,8 +22,8 @@ Gautham's 2026-10-22 decisions:
   it. A round is REJECTED when the bot does not deliver every order, or when the
   robot ever stands inside a lane; the seed then draws again (``attempt`` 1, 2, ...)
   until one is accepted. Rejected draws are listed (``rejected``), never offered.
-- each accepted round: the start pose (facing the open aisle: the free direction
-  with the longest clear run on the plan grid), each order's ghost length and route,
+- each accepted round: the start pose (the zone's roomiest free cell, facing the open
+  aisle: the free direction with the longest clear run on the plan grid), each order's ghost length and route,
   ``reference_time_s``, ``timer_s`` = that x ``games.ROUND_TIMER_FACTOR``, and the
   reference record, card and hash chain under that timer.
 """
@@ -43,13 +43,15 @@ from coco_lab.arena import PLANNERS  # noqa: E402
 from coco_lab.numerics import math  # noqa: E402
 from coco_lab.search import search  # noqa: E402
 from coco_lab.sketch import _nearest_free  # noqa: E402
-from make_fetch_rush_rounds import arena, centre, replay, seeds_arg, start_points  # noqa: E402
+from make_fetch_rush_rounds import arena, centre, replay, seeds_arg  # noqa: E402
 
 LEVEL = 'coco_depot_v1'
 OUT = str(games.rounds_file(LEVEL, 3))
 PROVISIONAL_S = 1100.0
 HV = 3
 MAX_ATTEMPTS = 40
+#: a start point keeps this far (m) from the forklift lanes (an actor passing close at tick 0)
+LANE_CLEAR = 1.5
 
 
 def lanes(a):
@@ -58,6 +60,10 @@ def lanes(a):
 
 def in_lanes(xy, rects) -> bool:
     return any(r[0] <= xy[0] <= r[1] and r[2] <= xy[1] <= r[3] for r in rects)
+
+
+def in_lanes_pad(xy, rects, pad) -> bool:
+    return any(r[0] - pad <= xy[0] <= r[1] + pad and r[2] - pad <= xy[1] <= r[3] + pad for r in rects)
 
 
 def path(a, frm, to):
@@ -112,6 +118,52 @@ def trips_from(a, assist, pool, drops, frm, rects):
     return trips, poses, routes
 
 
+def start_points(a):
+    """
+    A start zone's start point (G1.12): the free plan-grid cell inside the zone, at least
+    LANE_CLEAR from the forklift lanes, with the most room around it (8-connected distance to the nearest blocked cell; ties: nearest the zone's
+    centre), so COCO -- and the chase camera behind it -- never starts hugging a stack or a wall.
+    """
+    from collections import deque
+    g = a.grid
+    w, h = g.width, g.height
+    dist = [-1] * (w * h)
+    q = deque()
+    for i in range(w * h):
+        if g.is_blocked((i // w, i % w)):
+            dist[i] = 0
+            q.append(i)
+    while q:
+        i = q.popleft()
+        r, c = divmod(i, w)
+        for dr in (-1, 0, 1):
+            for dc in (-1, 0, 1):
+                rr, cc = r + dr, c + dc
+                if 0 <= rr < h and 0 <= cc < w and dist[rr * w + cc] < 0:
+                    dist[rr * w + cc] = dist[i] + 1
+                    q.append(rr * w + cc)
+    out = {}
+    rects = lanes(a)
+    for z in a.spec['kit']:
+        if z.get('kind') != 'zone' or z['role'] != 'region' or z['id'] in games.ROUND_NO_START:
+            continue
+        x0, x1, y0, y1 = games.zone_rect(a.spec, z['id'])
+        cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+        best = None
+        for i, d in enumerate(dist):
+            if d <= 0:
+                continue
+            x, y = a.plan_map.cell_centre(i // w, i % w)
+            if not (x0 <= x <= x1 and y0 <= y <= y1) or in_lanes_pad((x, y), rects, LANE_CLEAR):
+                continue
+            key = (-d, (x - cx) ** 2 + (y - cy) ** 2)
+            if best is None or key < best[0]:
+                best = (key, (x, y))
+        if best is not None:
+            out[z['id']] = best[1]
+    return out
+
+
 def facing(a, sx, sy):
     """The heading of the longest clear run from the start (16 directions, plan grid)."""
     best = None
@@ -159,21 +211,23 @@ def main() -> int:
     starts = start_points(a)
     rects = lanes(a)
     t0 = time.time()
-    if o.trips_cache and os.path.exists(o.trips_cache):
-        c = json.load(open(o.trips_cache))
-        trips, approach = c['trips'], c['approach']
-        routes = {f: {tuple(k.split('|')): v for k, v in r.items()} for f, r in c['routes'].items()}
-    else:
-        trips, approach, routes = {}, {}, {}
-        froms = dict(starts, **{d: centre(a, d) for d in drops})
-        for f, p in sorted(froms.items()):
-            trips[f], approach[f], routes[f] = trips_from(a, assist, pool, drops, p, rects)
-            print(f'trips from {f}: {sum(len(v) for v in trips[f].values())} '
-                  f'({time.time() - t0:.0f} s)', flush=True)
-        if o.trips_cache:
-            json.dump({'trips': trips, 'approach': approach,
-                       'routes': {f: {'|'.join(k): v for k, v in r.items()} for f, r in routes.items()}},
-                      open(o.trips_cache, 'w'))
+    froms = dict(starts, **{d: centre(a, d) for d in drops})
+    c = json.load(open(o.trips_cache)) if o.trips_cache and os.path.exists(o.trips_cache) else {}
+    trips, approach, routes = {}, {}, {}
+    for f, p in sorted(froms.items()):
+        if c.get('points', {}).get(f) == list(p):   # the cache, where its point is this one
+            trips[f], approach[f] = c['trips'][f], c['approach'][f]
+            routes[f] = {tuple(k.split('|')): v for k, v in c['routes'][f].items()}
+            continue
+        trips[f], approach[f], routes[f] = trips_from(a, assist, pool, drops, p, rects)
+        print(f'trips from {f}: {sum(len(v) for v in trips[f].values())} '
+              f'({time.time() - t0:.0f} s)', flush=True)
+    if o.trips_cache:
+        json.dump({'points': {f: list(p) for f, p in froms.items()}, 'trips': trips,
+                   'approach': approach,
+                   'routes': {f: {'|'.join(k): v for k, v in r.items()}
+                              for f, r in routes.items()}},
+                  open(o.trips_cache, 'w'))
     out = {}
     for mode, m in sorted(games.ROUND_MODES.items()):
         if mode not in o.modes.split(','):

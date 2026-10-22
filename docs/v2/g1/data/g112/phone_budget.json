@@ -1,137 +1,5 @@
 {
- "about": "G1.12: the lane-free trip table (tools/g1/make_fetch_rush_rounds_r3.py), per start/drop: every (object, drop) trip in m; and per budget, the 2-order rounds games.draw_round could draw",
- "trips": {
-  "dispatch_drop": {
-   "obj_dispatch": {
-    "dispatch_drop": 14.548,
-    "dock_1": 21.376,
-    "dock_2": 24.876,
-    "dock_3": 28.376
-   },
-   "obj_dock": {
-    "dispatch_drop": 50.971,
-    "dock_1": 35.981,
-    "dock_2": 33.242,
-    "dock_3": 31.792
-   },
-   "obj_maze_2": {
-    "dispatch_drop": 31.851,
-    "dock_1": 47.392,
-    "dock_2": 50.892,
-    "dock_3": 54.392
-   }
-  },
-  "dock_1": {
-   "obj_dispatch": {
-    "dispatch_drop": 21.449,
-    "dock_1": 27.253,
-    "dock_2": 30.753,
-    "dock_3": 34.253
-   },
-   "obj_dock": {
-    "dispatch_drop": 35.981,
-    "dock_1": 20.991,
-    "dock_2": 18.252,
-    "dock_3": 16.802
-   },
-   "obj_maze_2": {
-    "dispatch_drop": 47.392,
-    "dock_1": 62.934,
-    "dock_2": 66.434,
-    "dock_3": 69.934
-   }
-  },
-  "dock_2": {
-   "obj_dispatch": {
-    "dispatch_drop": 24.949,
-    "dock_1": 30.753,
-    "dock_2": 34.253,
-    "dock_3": 37.753
-   },
-   "obj_dock": {
-    "dispatch_drop": 33.242,
-    "dock_1": 18.252,
-    "dock_2": 15.514,
-    "dock_3": 14.064
-   },
-   "obj_maze_2": {
-    "dispatch_drop": 50.892,
-    "dock_1": 66.434,
-    "dock_2": 69.934,
-    "dock_3": 73.434
-   }
-  },
-  "dock_3": {
-   "obj_dispatch": {
-    "dispatch_drop": 28.449,
-    "dock_1": 34.253,
-    "dock_2": 37.753,
-    "dock_3": 41.253
-   },
-   "obj_dock": {
-    "dispatch_drop": 31.792,
-    "dock_1": 16.802,
-    "dock_2": 14.064,
-    "dock_3": 12.263
-   },
-   "obj_maze_2": {
-    "dispatch_drop": 54.392,
-    "dock_1": 69.934,
-    "dock_2": 73.434,
-    "dock_3": 76.934
-   }
-  },
-  "zone_high_bay": {},
-  "zone_loading_dock": {
-   "obj_dispatch": {
-    "dispatch_drop": 23.199,
-    "dock_1": 29.004,
-    "dock_2": 32.504,
-    "dock_3": 36.004
-   },
-   "obj_dock": {
-    "dispatch_drop": 31.038,
-    "dock_1": 16.048,
-    "dock_2": 13.31,
-    "dock_3": 11.86
-   },
-   "obj_maze_2": {
-    "dispatch_drop": 51.175,
-    "dock_1": 66.717,
-    "dock_2": 70.217,
-    "dock_3": 73.717
-   }
-  },
-  "zone_mezzanine": {},
-  "zone_office": {
-   "obj_maze_2": {
-    "dispatch_drop": 52.634,
-    "dock_1": 68.175,
-    "dock_2": 71.675,
-    "dock_3": 75.175
-   }
-  },
-  "zone_workshop": {
-   "obj_dispatch": {
-    "dispatch_drop": 41.192,
-    "dock_1": 48.269,
-    "dock_2": 51.769,
-    "dock_3": 55.269
-   },
-   "obj_dock": {
-    "dispatch_drop": 78.727,
-    "dock_1": 63.737,
-    "dock_2": 60.999,
-    "dock_3": 59.549
-   },
-   "obj_maze_2": {
-    "dispatch_drop": 40.545,
-    "dock_1": 56.087,
-    "dock_2": 59.587,
-    "dock_3": 63.087
-   }
-  }
- },
+ "about": "G1.12: the lane-free trip table of coco_depot_v1.fetch_rush.r3.json (tools/g1/make_fetch_rush_rounds_r3.py): per budget (m), every 2-order round games.draw_round could draw (start zone, object, drop, trip m, object, drop, trip m). The decision asked 16 m.",
  "budgets": {
   "16": [],
   "17": [],
@@ -144,7 +12,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_1",
-    16.0,
+    14.8,
     "obj_dispatch",
     "dispatch_drop",
     21.4
@@ -155,7 +23,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_1",
-    16.0,
+    14.8,
     "obj_dispatch",
     "dispatch_drop",
     21.4
@@ -166,7 +34,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_1",
-    16.0,
+    14.8,
     "obj_dispatch",
     "dispatch_drop",
     21.4
@@ -177,7 +45,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_1",
-    16.0,
+    14.8,
     "obj_dispatch",
     "dispatch_drop",
     21.4
@@ -186,7 +54,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_2",
-    13.3,
+    12.2,
     "obj_dispatch",
     "dispatch_drop",
     24.9
@@ -197,7 +65,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_1",
-    16.0,
+    14.8,
     "obj_dispatch",
     "dispatch_drop",
     21.4
@@ -206,9 +74,36 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_2",
-    13.3,
+    12.2,
     "obj_dispatch",
     "dispatch_drop",
+    24.9
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dispatch_drop",
+    14.5
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_1",
+    21.4
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_2",
     24.9
    ]
   ],
@@ -217,7 +112,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_1",
-    16.0,
+    14.8,
     "obj_dispatch",
     "dispatch_drop",
     21.4
@@ -226,9 +121,36 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_2",
-    13.3,
+    12.2,
     "obj_dispatch",
     "dispatch_drop",
+    24.9
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dispatch_drop",
+    14.5
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_1",
+    21.4
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_2",
     24.9
    ]
   ],
@@ -237,7 +159,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_1",
-    16.0,
+    14.8,
     "obj_dispatch",
     "dispatch_drop",
     21.4
@@ -246,7 +168,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_1",
-    16.0,
+    14.8,
     "obj_dispatch",
     "dock_1",
     27.3
@@ -255,18 +177,72 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_2",
-    13.3,
+    12.2,
     "obj_dispatch",
     "dispatch_drop",
+    24.9
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dispatch_drop",
+    14.5
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_1",
+    21.4
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_2",
     24.9
    ]
   ],
   "29": [
    [
     "zone_loading_dock",
+    "obj_dispatch",
+    "dock_1",
+    28.9,
     "obj_dock",
     "dock_1",
-    16.0,
+    21.0
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dispatch",
+    "dock_1",
+    28.9,
+    "obj_dock",
+    "dock_2",
+    18.3
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dispatch",
+    "dock_1",
+    28.9,
+    "obj_dock",
+    "dock_3",
+    16.8
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dock_1",
+    14.8,
     "obj_dispatch",
     "dispatch_drop",
     21.4
@@ -275,7 +251,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_1",
-    16.0,
+    14.8,
     "obj_dispatch",
     "dock_1",
     27.3
@@ -284,7 +260,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_2",
-    13.3,
+    12.2,
     "obj_dispatch",
     "dispatch_drop",
     24.9
@@ -293,9 +269,45 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_3",
-    11.9,
+    10.7,
     "obj_dispatch",
     "dispatch_drop",
+    28.4
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dispatch_drop",
+    14.5
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_1",
+    21.4
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_2",
+    24.9
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_3",
     28.4
    ]
   ],
@@ -304,7 +316,7 @@
     "zone_loading_dock",
     "obj_dispatch",
     "dock_1",
-    29.0,
+    28.9,
     "obj_dock",
     "dock_1",
     21.0
@@ -313,7 +325,7 @@
     "zone_loading_dock",
     "obj_dispatch",
     "dock_1",
-    29.0,
+    28.9,
     "obj_dock",
     "dock_2",
     18.3
@@ -322,173 +334,7 @@
     "zone_loading_dock",
     "obj_dispatch",
     "dock_1",
-    29.0,
-    "obj_dock",
-    "dock_3",
-    16.8
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dock",
-    "dock_1",
-    16.0,
-    "obj_dispatch",
-    "dispatch_drop",
-    21.4
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dock",
-    "dock_1",
-    16.0,
-    "obj_dispatch",
-    "dock_1",
-    27.3
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dock",
-    "dock_2",
-    13.3,
-    "obj_dispatch",
-    "dispatch_drop",
-    24.9
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dock",
-    "dock_3",
-    11.9,
-    "obj_dispatch",
-    "dispatch_drop",
-    28.4
-   ]
-  ],
-  "31": [
-   [
-    "zone_loading_dock",
-    "obj_dispatch",
-    "dock_1",
-    29.0,
-    "obj_dock",
-    "dock_1",
-    21.0
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dispatch",
-    "dock_1",
-    29.0,
-    "obj_dock",
-    "dock_2",
-    18.3
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dispatch",
-    "dock_1",
-    29.0,
-    "obj_dock",
-    "dock_3",
-    16.8
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dock",
-    "dock_1",
-    16.0,
-    "obj_dispatch",
-    "dispatch_drop",
-    21.4
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dock",
-    "dock_1",
-    16.0,
-    "obj_dispatch",
-    "dock_1",
-    27.3
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dock",
-    "dock_1",
-    16.0,
-    "obj_dispatch",
-    "dock_2",
-    30.8
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dock",
-    "dock_2",
-    13.3,
-    "obj_dispatch",
-    "dispatch_drop",
-    24.9
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dock",
-    "dock_2",
-    13.3,
-    "obj_dispatch",
-    "dock_1",
-    30.8
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dock",
-    "dock_3",
-    11.9,
-    "obj_dispatch",
-    "dispatch_drop",
-    28.4
-   ]
-  ],
-  "32": [
-   [
-    "zone_loading_dock",
-    "obj_dispatch",
-    "dispatch_drop",
-    23.2,
-    "obj_dock",
-    "dock_3",
-    31.8
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dispatch",
-    "dispatch_drop",
-    23.2,
-    "obj_maze_2",
-    "dispatch_drop",
-    31.9
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dispatch",
-    "dock_1",
-    29.0,
-    "obj_dock",
-    "dock_1",
-    21.0
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dispatch",
-    "dock_1",
-    29.0,
-    "obj_dock",
-    "dock_2",
-    18.3
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dispatch",
-    "dock_1",
-    29.0,
+    28.9,
     "obj_dock",
     "dock_3",
     16.8
@@ -497,7 +343,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dispatch_drop",
-    31.0,
+    29.7,
     "obj_dispatch",
     "dispatch_drop",
     14.5
@@ -506,7 +352,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dispatch_drop",
-    31.0,
+    29.7,
     "obj_dispatch",
     "dock_1",
     21.4
@@ -515,7 +361,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dispatch_drop",
-    31.0,
+    29.7,
     "obj_dispatch",
     "dock_2",
     24.9
@@ -524,7 +370,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dispatch_drop",
-    31.0,
+    29.7,
     "obj_dispatch",
     "dock_3",
     28.4
@@ -532,17 +378,8 @@
    [
     "zone_loading_dock",
     "obj_dock",
-    "dispatch_drop",
-    31.0,
-    "obj_maze_2",
-    "dispatch_drop",
-    31.9
-   ],
-   [
-    "zone_loading_dock",
-    "obj_dock",
     "dock_1",
-    16.0,
+    14.8,
     "obj_dispatch",
     "dispatch_drop",
     21.4
@@ -551,7 +388,144 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_1",
-    16.0,
+    14.8,
+    "obj_dispatch",
+    "dock_1",
+    27.3
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dock_2",
+    12.2,
+    "obj_dispatch",
+    "dispatch_drop",
+    24.9
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dock_3",
+    10.7,
+    "obj_dispatch",
+    "dispatch_drop",
+    28.4
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dispatch_drop",
+    14.5
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_1",
+    21.4
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_2",
+    24.9
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_3",
+    28.4
+   ]
+  ],
+  "31": [
+   [
+    "zone_loading_dock",
+    "obj_dispatch",
+    "dock_1",
+    28.9,
+    "obj_dock",
+    "dock_1",
+    21.0
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dispatch",
+    "dock_1",
+    28.9,
+    "obj_dock",
+    "dock_2",
+    18.3
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dispatch",
+    "dock_1",
+    28.9,
+    "obj_dock",
+    "dock_3",
+    16.8
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dispatch_drop",
+    29.7,
+    "obj_dispatch",
+    "dispatch_drop",
+    14.5
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dispatch_drop",
+    29.7,
+    "obj_dispatch",
+    "dock_1",
+    21.4
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dispatch_drop",
+    29.7,
+    "obj_dispatch",
+    "dock_2",
+    24.9
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dispatch_drop",
+    29.7,
+    "obj_dispatch",
+    "dock_3",
+    28.4
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dock_1",
+    14.8,
+    "obj_dispatch",
+    "dispatch_drop",
+    21.4
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dock_1",
+    14.8,
     "obj_dispatch",
     "dock_1",
     27.3
@@ -560,7 +534,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_1",
-    16.0,
+    14.8,
     "obj_dispatch",
     "dock_2",
     30.8
@@ -569,7 +543,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_2",
-    13.3,
+    12.2,
     "obj_dispatch",
     "dispatch_drop",
     24.9
@@ -578,7 +552,7 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_2",
-    13.3,
+    12.2,
     "obj_dispatch",
     "dock_1",
     30.8
@@ -587,11 +561,330 @@
     "zone_loading_dock",
     "obj_dock",
     "dock_3",
-    11.9,
+    10.7,
     "obj_dispatch",
     "dispatch_drop",
     28.4
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dispatch_drop",
+    14.5
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_1",
+    21.4
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_2",
+    24.9
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_3",
+    28.4
+   ]
+  ],
+  "32": [
+   [
+    "zone_loading_dock",
+    "obj_dispatch",
+    "dispatch_drop",
+    23.3,
+    "obj_dock",
+    "dock_3",
+    31.8
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dispatch",
+    "dispatch_drop",
+    23.3,
+    "obj_maze_2",
+    "dispatch_drop",
+    31.9
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dispatch",
+    "dock_1",
+    28.9,
+    "obj_dock",
+    "dock_1",
+    21.0
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dispatch",
+    "dock_1",
+    28.9,
+    "obj_dock",
+    "dock_2",
+    18.3
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dispatch",
+    "dock_1",
+    28.9,
+    "obj_dock",
+    "dock_3",
+    16.8
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dispatch_drop",
+    29.7,
+    "obj_dispatch",
+    "dispatch_drop",
+    14.5
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dispatch_drop",
+    29.7,
+    "obj_dispatch",
+    "dock_1",
+    21.4
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dispatch_drop",
+    29.7,
+    "obj_dispatch",
+    "dock_2",
+    24.9
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dispatch_drop",
+    29.7,
+    "obj_dispatch",
+    "dock_3",
+    28.4
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dispatch_drop",
+    29.7,
+    "obj_maze_2",
+    "dispatch_drop",
+    31.9
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dock_1",
+    14.8,
+    "obj_dispatch",
+    "dispatch_drop",
+    21.4
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dock_1",
+    14.8,
+    "obj_dispatch",
+    "dock_1",
+    27.3
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dock_1",
+    14.8,
+    "obj_dispatch",
+    "dock_2",
+    30.8
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dock_2",
+    12.2,
+    "obj_dispatch",
+    "dispatch_drop",
+    24.9
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dock_2",
+    12.2,
+    "obj_dispatch",
+    "dock_1",
+    30.8
+   ],
+   [
+    "zone_loading_dock",
+    "obj_dock",
+    "dock_3",
+    10.7,
+    "obj_dispatch",
+    "dispatch_drop",
+    28.4
+   ],
+   [
+    "zone_workshop",
+    "obj_dispatch",
+    "dispatch_drop",
+    26.8,
+    "obj_dock",
+    "dock_3",
+    31.8
+   ],
+   [
+    "zone_workshop",
+    "obj_dispatch",
+    "dispatch_drop",
+    26.8,
+    "obj_maze_2",
+    "dispatch_drop",
+    31.9
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dispatch_drop",
+    14.5
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_1",
+    21.4
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_2",
+    24.9
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dispatch",
+    "dock_3",
+    28.4
+   ],
+   [
+    "zone_workshop",
+    "obj_maze_2",
+    "dispatch_drop",
+    25.7,
+    "obj_dock",
+    "dock_3",
+    31.8
    ]
   ]
- }
+ },
+ "shortest_trips": [
+  [
+   10.7,
+   "zone_loading_dock",
+   "obj_dock",
+   "dock_3"
+  ],
+  [
+   12.2,
+   "zone_loading_dock",
+   "obj_dock",
+   "dock_2"
+  ],
+  [
+   12.3,
+   "dock_3",
+   "obj_dock",
+   "dock_3"
+  ],
+  [
+   14.1,
+   "dock_2",
+   "obj_dock",
+   "dock_3"
+  ],
+  [
+   14.1,
+   "dock_3",
+   "obj_dock",
+   "dock_2"
+  ],
+  [
+   14.5,
+   "dispatch_drop",
+   "obj_dispatch",
+   "dispatch_drop"
+  ],
+  [
+   14.8,
+   "zone_loading_dock",
+   "obj_dock",
+   "dock_1"
+  ],
+  [
+   15.5,
+   "dock_2",
+   "obj_dock",
+   "dock_2"
+  ],
+  [
+   16.8,
+   "dock_1",
+   "obj_dock",
+   "dock_3"
+  ],
+  [
+   16.8,
+   "dock_3",
+   "obj_dock",
+   "dock_1"
+  ],
+  [
+   18.3,
+   "dock_1",
+   "obj_dock",
+   "dock_2"
+  ],
+  [
+   18.3,
+   "dock_2",
+   "obj_dock",
+   "dock_1"
+  ]
+ ]
 }

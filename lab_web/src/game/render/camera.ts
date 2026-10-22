@@ -28,11 +28,12 @@ export const BLEND_S = 0.4;
  * Chase framing (G1.12): the boom's length and its least length (m), its resting elevation
  * (rad), the elevations it may swing up to, the camera's least height above the floor (m),
  * where COCO's centre sits on screen (NDC y: +1 top, -1 bottom; +0.2 is 40 % down), COCO's
- * centre and head heights (m), the springs (1/s) and the gap kept from a wall's face (m).
+ * centre and head heights (m), its half-width for the side rays (m), the springs (1/s) and the gap
+ * kept from a wall's face (m).
  */
 export const CHASE = {
   dist: 2.1, minDist: 1.7, elev: 0.55, elevs: [0.55, 0.7, 0.87, 1.05, 1.22, 1.4, 1.53], minHeight: 1.2,
-  screenY: 0.2, bodyZ: 0.2, headZ: 0.25, k: 6, kYaw: 4.5, nearPad: 0.12,
+  screenY: 0.2, bodyZ: 0.2, headZ: 0.25, shoulder: 0.2, k: 6, kYaw: 4.5, nearPad: 0.12,
 };
 
 const approach = (dt: number, k: number) => 1 - Math.exp(-k * dt);
@@ -124,7 +125,11 @@ export class GameCamera {
       const head = new THREE.Vector3(x, y, z + CHASE.headZ);
       const dirAt = (e: number) => new THREE.Vector3(-Math.cos(e) * Math.cos(r.yaw), -Math.cos(e) * Math.sin(r.yaw), Math.sin(e));
       const lowest = Math.asin(Math.min(1, Math.max(0, (CHASE.minHeight - z - CHASE.headZ) / CHASE.dist)));
-      const room = (e: number) => this.clear(head, dirAt(e), CHASE.dist);
+      // room for the boom: clear from COCO's centre line AND both shoulders, so a wall edge
+      // beside COCO cannot hide half of it (G1.12)
+      const side = new THREE.Vector3(-Math.sin(r.yaw), Math.cos(r.yaw), 0).multiplyScalar(CHASE.shoulder);
+      const heads = [head, head.clone().add(side), head.clone().sub(side)];
+      const room = (e: number) => Math.min(...heads.map((h) => this.clear(h, dirAt(e), CHASE.dist)));
       const elevs = CHASE.elevs.filter((e) => e >= lowest - 1e-9);
       if (!elevs.length || elevs[0] > lowest + 1e-9) elevs.unshift(Math.max(lowest, CHASE.elev));
       let pick: { e: number; len: number } | null = null;
@@ -135,7 +140,7 @@ export class GameCamera {
       // the swing: up at once (to stay clear), back down smoothly; room re-checked on the drawn direction
       r.elev = pick.e >= r.elev || this.reducedMotion ? pick.e : r.elev + (pick.e - r.elev) * approach(dt, 2.5);
       const dir = dirAt(r.elev);
-      const b = Math.max(0.05, Math.min(CHASE.dist, this.clear(head, dir, CHASE.dist)));
+      const b = Math.max(0.05, Math.min(CHASE.dist, ...heads.map((h) => this.clear(h, dir, CHASE.dist))));
       r.back += (b - r.back) * (b < r.back ? 1 : (this.reducedMotion ? 1 : approach(dt, 3)));
       r.back = Math.min(r.back, b);
       this.lastPull = CHASE.dist - r.back;

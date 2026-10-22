@@ -56,7 +56,20 @@ for (const [name, ctxOpts] of [['phone-landscape', nothingPhone1(true)], ['deskt
   for (const [k, [x, y, th]] of POSES.entries()) {
     await page.evaluate(([x, y, th]) => window.__cocoGame.session.send([{ kind: 'kidnap', x, y, theta: th, has_theta: true }]), [x, y, th]);
     await page.waitForFunction(([x, y]) => { const t = window.__cocoGame.tick; const p = t?.truth ?? t?.pose; return p && Math.hypot(p[0] - x, p[1] - y) < 0.05; }, [x, y], { timeout: 30000 }).catch(() => {});
-    await page.waitForTimeout(2200);   // the springs settle (chase k = 6/s, yaw 4.5/s)
+    // the springs settle after the teleport (chase k = 6/s, yaw 4.5/s): wait until COCO's box stops
+    // moving (< 1.5 px over two samples 300 ms apart), up to 20 s -- a slow software renderer
+    // takes longer frames, and the spring is stepped per frame
+    const t0 = Date.now();
+    let prev = null, still = 0;
+    while (Date.now() - t0 < 20000) {
+      await page.waitForTimeout(300);
+      const b = await page.evaluate(() => window.__cocoGame.renderer.robotScreenRect());
+      const moved = !b || !prev ? Infinity : Math.max(Math.abs(b.left - prev.left), Math.abs(b.top - prev.top), Math.abs(b.right - prev.right), Math.abs(b.bottom - prev.bottom));
+      still = moved < 1.5 ? still + 1 : 0;
+      prev = b;
+      if (still >= 2 && Date.now() - t0 > 1500) break;
+    }
+    const settleMs = Date.now() - t0;
     const r = await page.evaluate((sel) => {
       const g = window.__cocoGame;
       const box = g.renderer.robotScreenRect();
@@ -78,7 +91,7 @@ for (const [name, ctxOpts] of [['phone-landscape', nothingPhone1(true)], ['deskt
     const centreY = r.box ? ((r.box.top + r.box.bottom) / 2 - r.canvas.top) / (r.canvas.bottom - r.canvas.top) : null;
     const ok = overlaps.length === 0 && onCanvas && placed && r.cam === 'chase';
     if (!ok) report.passed = false;
-    rows.push({ k, want: [x, y, th], placed, cam: r.cam, box: r.box && Object.fromEntries(Object.entries(r.box).map(([a, b]) => [a, Math.round(b)])), centre_y_fraction: centreY && Math.round(centreY * 1000) / 1000, on_canvas: onCanvas, overlaps, ok });
+    rows.push({ k, want: [x, y, th], settle_ms: settleMs, placed, cam: r.cam, box: r.box && Object.fromEntries(Object.entries(r.box).map(([a, b]) => [a, Math.round(b)])), centre_y_fraction: centreY && Math.round(centreY * 1000) / 1000, on_canvas: onCanvas, overlaps, ok });
     if (shots) await page.screenshot({ path: join(shots, `${name}-${String(k + 1).padStart(2, '0')}.png`) });
   }
   report.profiles[name] = { viewport: ctxOpts.viewport, poses: rows.length, failed: rows.filter((x) => !x.ok).length, errors, rows };

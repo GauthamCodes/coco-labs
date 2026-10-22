@@ -10,6 +10,11 @@ renderer is recorded in each `shots.json`.
 - **After G1.11**: 2026-10-21, after Gautham's look notes — exposure and fill, COCO's rim
   light and LED glow, the thin ghost route with chevrons and a small pin, the stronger minimap —
   and Fetch Rush rules 2 (3 orders, the round's timer) ([`screens/after_g111/`](screens/after_g111/)).
+- **After G1.12**: 2026-10-22, after Gautham's camera notes — the chase camera frames COCO in
+  the upper-middle third on a 2.1 m boom (≥ 1.7 m, ≥ 1.2 m up), rises over walls instead of
+  moving in, keeps both of COCO's shoulders in view; a softer headlight and bloom; COCO starts
+  in the zone's roomiest spot facing the open aisle — and Fetch Rush rules 3's phone round
+  (2 orders, 4:36) ([`screens/after_g112/`](screens/after_g112/)).
 
 **Screenshots catch regressions; Gautham judges the look.**
 
@@ -18,35 +23,35 @@ Fetch Rush → the Depot at medium, PLAY pressed (`?view=play&game=fetch_rush&wo
 
 ## Title
 
-| Profile | Before | After G1.10 | After G1.11 |
-| --- | --- | --- | --- |
-| desktop | ![before](screens/before/desktop-title.png) | ![G1.10](screens/after/desktop-title.png) | ![G1.11](screens/after_g111/desktop-title.png) |
-| phone-landscape | ![before](screens/before/phone-landscape-title.png) | ![G1.10](screens/after/phone-landscape-title.png) | ![G1.11](screens/after_g111/phone-landscape-title.png) |
-| phone-portrait | ![before](screens/before/phone-portrait-title.png) | ![G1.10](screens/after/phone-portrait-title.png) | ![G1.11](screens/after_g111/phone-portrait-title.png) |
+| Profile | Before | After G1.10 | After G1.11 | After G1.12 |
+| --- | --- | --- | --- | --- |
+| desktop | ![before](screens/before/desktop-title.png) | ![G1.10](screens/after/desktop-title.png) | ![G1.11](screens/after_g111/desktop-title.png) | ![G1.12](screens/after_g112/desktop-title.png) |
+| phone-landscape | ![before](screens/before/phone-landscape-title.png) | ![G1.10](screens/after/phone-landscape-title.png) | ![G1.11](screens/after_g111/phone-landscape-title.png) | ![G1.12](screens/after_g112/phone-landscape-title.png) |
+| phone-portrait | ![before](screens/before/phone-portrait-title.png) | ![G1.10](screens/after/phone-portrait-title.png) | ![G1.11](screens/after_g111/phone-portrait-title.png) | ![G1.12](screens/after_g112/phone-portrait-title.png) |
 
 ## Play
 
-| Profile | Before | After G1.10 | After G1.11 |
-| --- | --- | --- | --- |
-| desktop | ![before](screens/before/desktop-play.png) — *not ready: not ready: TimeoutError: page.waitForSelector: Timeout 180000ms exceeded.* | ![G1.10](screens/after/desktop-play.png) | ![G1.11](screens/after_g111/desktop-play.png) |
-| phone-landscape | ![before](screens/before/phone-landscape-play.png) — *not ready: not ready: TimeoutError: page.waitForSelector: Timeout 180000ms exceeded.* | ![G1.10](screens/after/phone-landscape-play.png) | ![G1.11](screens/after_g111/phone-landscape-play.png) |
-| phone-portrait | ![before](screens/before/phone-portrait-play.png) — *not ready: not ready: TimeoutError: page.waitForSelector: Timeout 180000ms exceeded.* | ![G1.10](screens/after/phone-portrait-play.png) — *not ready: not ready: TimeoutError: page.click: Timeout 30000ms exceeded.* | ![G1.11](screens/after_g111/phone-portrait-play.png) — *not ready: not ready: TimeoutError: page.click: Timeout 30000ms exceeded.* |
+| Profile | Before | After G1.10 | After G1.11 | After G1.12 |
+| --- | --- | --- | --- | --- |
+| desktop | ![before](screens/before/desktop-play.png) — *not ready: not ready: TimeoutError: page.waitForSelector: Timeout 180000ms exceeded.* | ![G1.10](screens/after/desktop-play.png) | ![G1.11](screens/after_g111/desktop-play.png) | ![G1.12](screens/after_g112/desktop-play.png) |
+| phone-landscape | ![before](screens/before/phone-landscape-play.png) — *not ready: not ready: TimeoutError: page.waitForSelector: Timeout 180000ms exceeded.* | ![G1.10](screens/after/phone-landscape-play.png) | ![G1.11](screens/after_g111/phone-landscape-play.png) | ![G1.12](screens/after_g112/phone-landscape-play.png) |
+| phone-portrait | ![before](screens/before/phone-portrait-play.png) — *not ready: not ready: TimeoutError: page.waitForSelector: Timeout 180000ms exceeded.* | ![G1.10](screens/after/phone-portrait-play.png) — *not ready: not ready: TimeoutError: page.click: Timeout 30000ms exceeded.* | ![G1.11](screens/after_g111/phone-portrait-play.png) — *not ready: not ready: TimeoutError: page.click: Timeout 30000ms exceeded.* | ![G1.12](screens/after_g112/phone-portrait-play.png) — *not ready: the rotate card (by design)* |
 
 ## Compare
 
-| Profile | Before | After G1.10 | After G1.11 |
-| --- | --- | --- | --- |
-| desktop | ![before](screens/before/desktop-compare.png) | ![G1.10](screens/after/desktop-compare.png) | ![G1.11](screens/after_g111/desktop-compare.png) |
-| phone-landscape | ![before](screens/before/phone-landscape-compare.png) | ![G1.10](screens/after/phone-landscape-compare.png) | ![G1.11](screens/after_g111/phone-landscape-compare.png) |
-| phone-portrait | ![before](screens/before/phone-portrait-compare.png) | ![G1.10](screens/after/phone-portrait-compare.png) | ![G1.11](screens/after_g111/phone-portrait-compare.png) |
+| Profile | Before | After G1.10 | After G1.11 | After G1.12 |
+| --- | --- | --- | --- | --- |
+| desktop | ![before](screens/before/desktop-compare.png) | ![G1.10](screens/after/desktop-compare.png) | ![G1.11](screens/after_g111/desktop-compare.png) | ![G1.12](screens/after_g112/desktop-compare.png) |
+| phone-landscape | ![before](screens/before/phone-landscape-compare.png) | ![G1.10](screens/after/phone-landscape-compare.png) | ![G1.11](screens/after_g111/phone-landscape-compare.png) | ![G1.12](screens/after_g112/phone-landscape-compare.png) |
+| phone-portrait | ![before](screens/before/phone-portrait-compare.png) | ![G1.10](screens/after/phone-portrait-compare.png) | ![G1.11](screens/after_g111/phone-portrait-compare.png) | ![G1.12](screens/after_g112/phone-portrait-compare.png) |
 
 ## Recordings (Research)
 
-| Profile | Before | After G1.10 | After G1.11 |
-| --- | --- | --- | --- |
-| desktop | ![before](screens/before/desktop-recordings.png) | ![G1.10](screens/after/desktop-recordings.png) | ![G1.11](screens/after_g111/desktop-recordings.png) |
-| phone-landscape | ![before](screens/before/phone-landscape-recordings.png) | ![G1.10](screens/after/phone-landscape-recordings.png) | ![G1.11](screens/after_g111/phone-landscape-recordings.png) |
-| phone-portrait | ![before](screens/before/phone-portrait-recordings.png) | ![G1.10](screens/after/phone-portrait-recordings.png) | ![G1.11](screens/after_g111/phone-portrait-recordings.png) |
+| Profile | Before | After G1.10 | After G1.11 | After G1.12 |
+| --- | --- | --- | --- | --- |
+| desktop | ![before](screens/before/desktop-recordings.png) | ![G1.10](screens/after/desktop-recordings.png) | ![G1.11](screens/after_g111/desktop-recordings.png) | ![G1.12](screens/after_g112/desktop-recordings.png) |
+| phone-landscape | ![before](screens/before/phone-landscape-recordings.png) | ![G1.10](screens/after/phone-landscape-recordings.png) | ![G1.11](screens/after_g111/phone-landscape-recordings.png) | ![G1.12](screens/after_g112/phone-landscape-recordings.png) |
+| phone-portrait | ![before](screens/before/phone-portrait-recordings.png) | ![G1.10](screens/after/phone-portrait-recordings.png) | ![G1.11](screens/after_g111/phone-portrait-recordings.png) | ![G1.12](screens/after_g112/phone-portrait-recordings.png) |
 
 ## Notes on readiness
 
@@ -59,3 +64,8 @@ Fetch Rush → the Depot at medium, PLAY pressed (`?view=play&game=fetch_rush&wo
 - G1.11's Play starts in the round's start zone (shift 1: the Loading dock), facing its first
   object; there the headlight lights the pallet stack beside COCO. Every other after shot
   reported ready with no console or page errors.
+- G1.12's Play starts at the Loading dock's roomiest spot (1.5 m clear of the forklift lanes),
+  facing the open aisle (west); the phone round's first ghost route leaves behind COCO, so the
+  player turns first (a question for Gautham in G1_STATUS). COCO's projected box overlaps no HUD
+  element at 20 scripted poses, phone landscape and desktop (`lab_web/tools/g1/chase_hud_check.mjs`,
+  a CI step; `data/g112/chase_hud.json`).

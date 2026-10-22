@@ -162,34 +162,36 @@ tests `coco_lab/test/test_fetch_rush_r3.py`. A record carries `rules: 3` and `mo
   not finish, or where COCO ever stands inside a lane, is rejected and the seed draws again
   (`attempt`), listed under `rejected`, never offered. None was needed: every first draw
   was finished with 0 contacts.
-- **Start facing the open aisle:** the heading (of 16) with the longest clear run on the
-  plan grid from the start point.
+- **Start in the open, facing the open aisle:** the start point is the zone's free plan-grid
+  cell with the most room around it, at least 1.5 m from the forklift lanes (ties: nearest
+  the zone's centre); the heading (of 16) is the one with the longest clear run from it.
 - **Timer = the reference bot's time × 1.5**, as in rules 2.
 
 **The phone budget is provisional: 22 m, not the decision's 16 m.** With the lanes kept out,
-three objects can be reached at all (`obj_dock`, `obj_dispatch`, `obj_maze_2`), every start
-zone's first order is `obj_dock` from the Loading dock (11.9–16.0 m), and every second
-order needs at least 21.4 m (`obj_dispatch` from Dock 1 to Dispatch). No 2-order round
-exists below 21.4 m; at 22 m exactly one does, at 25 m two, at 30 m seven
-(`docs/v2/g1/data/g112/phone_budget.json`, the whole trip table). At COCO's real autonomous
-speed the reference needs 187.0 s for that round, so its timer is **4:40.5**, not 3–4 min.
+three objects can be reached at all (`obj_dock`, `obj_dispatch`, `obj_maze_2`), every first
+order within 16 m is `obj_dock` from the Loading dock (10.7–14.8 m), and every second order
+needs at least 21.4 m (`obj_dispatch` from Dock 1 to Dispatch). No 2-order round exists below
+21.4 m; at 22 m exactly one does, at 25 m two, at 30 m fifteen
+(`docs/v2/g1/data/g112/phone_budget.json`, with the whole trip table in the rounds file). At
+COCO's real autonomous speed the reference needs 183.9 s for that round, so its timer is
+**4:35.9**, not 3–4 min.
 Gautham's call (G1_STATUS questions).
 
 | Mode | Seed | Start zone | Orders (planned round trip) | Reference bot | Timer |
 |---|---|---|---|---|---|
-| Phone | 1 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m) | 187.0 s, 0 contacts, path efficiency 0.985 | **280.5 s** (4:40.5) |
-| Phone | 2 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m) | 187.0 s, 0 contacts, path efficiency 0.985 | **280.5 s** (4:40.5) |
-| Phone | 3 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m) | 187.0 s, 0 contacts, path efficiency 0.985 | **280.5 s** (4:40.5) |
-| Phone | 4 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m) | 187.0 s, 0 contacts, path efficiency 0.985 | **280.5 s** (4:40.5) |
-| Phone | 5 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m) | 187.0 s, 0 contacts, path efficiency 0.985 | **280.5 s** (4:40.5) |
-| Phone | 6 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m) | 187.0 s, 0 contacts, path efficiency 0.985 | **280.5 s** (4:40.5) |
-| Full shift | 1 | Loading dock | obj_dock → Dock 1 (16.0 m), obj_dispatch → Dispatch (21.4 m), obj_maze_2 → Dispatch (31.9 m) | 327.0 s, 0 contacts, path efficiency 0.987 | **490.5 s** (8:10.5) |
-| Full shift | 2 | Loading dock | obj_dock → Dock 2 (13.3 m), obj_dispatch → Dispatch (24.9 m), obj_maze_2 → Dispatch (31.9 m) | 329.7 s, 0 contacts, path efficiency 0.988 | **494.5 s** (8:14.5) |
-| Full shift | 3 | Loading dock | obj_dock → Dock 2 (13.3 m), obj_dispatch → Dispatch (24.9 m), obj_maze_2 → Dispatch (31.9 m) | 329.7 s, 0 contacts, path efficiency 0.988 | **494.5 s** (8:14.5) |
-| Full shift | 4 | Loading dock | obj_dock → Dock 3 (11.9 m), obj_dispatch → Dispatch (28.4 m), obj_maze_2 → Dispatch (31.9 m) | 336.9 s, 0 contacts, path efficiency 0.992 | **505.3 s** (8:25.3) |
-| Full shift | 5 | Loading dock | obj_dock → Dock 2 (13.3 m), obj_dispatch → Dispatch (24.9 m), obj_maze_2 → Dispatch (31.9 m) | 329.7 s, 0 contacts, path efficiency 0.988 | **494.5 s** (8:14.5) |
-| Full shift | 6 | Loading dock | obj_dock → Dock 3 (11.9 m), obj_dispatch → Dispatch (28.4 m), obj_maze_2 → Dispatch (31.9 m) | 336.9 s, 0 contacts, path efficiency 0.992 | **505.3 s** (8:25.3) |
+| Phone | 1 | Loading dock | obj_dock → Dock 1 (14.8 m), obj_dispatch → Dispatch (21.4 m) | 183.9 s, 0 contacts, path efficiency 0.986 | **275.9 s** (4:35.9) |
+| Phone | 2 | Loading dock | obj_dock → Dock 1 (14.8 m), obj_dispatch → Dispatch (21.4 m) | 183.9 s, 0 contacts, path efficiency 0.986 | **275.9 s** (4:35.9) |
+| Phone | 3 | Loading dock | obj_dock → Dock 1 (14.8 m), obj_dispatch → Dispatch (21.4 m) | 183.9 s, 0 contacts, path efficiency 0.986 | **275.9 s** (4:35.9) |
+| Phone | 4 | Loading dock | obj_dock → Dock 1 (14.8 m), obj_dispatch → Dispatch (21.4 m) | 183.9 s, 0 contacts, path efficiency 0.986 | **275.9 s** (4:35.9) |
+| Phone | 5 | Loading dock | obj_dock → Dock 1 (14.8 m), obj_dispatch → Dispatch (21.4 m) | 183.9 s, 0 contacts, path efficiency 0.986 | **275.9 s** (4:35.9) |
+| Phone | 6 | Loading dock | obj_dock → Dock 1 (14.8 m), obj_dispatch → Dispatch (21.4 m) | 183.9 s, 0 contacts, path efficiency 0.986 | **275.9 s** (4:35.9) |
+| Full shift | 1 | Workshop maze | obj_maze_2 → Dispatch (25.7 m), obj_dispatch → Dock 2 (24.9 m), obj_dock → Dock 2 (15.5 m) | 318.1 s, 0 contacts, path efficiency 0.987 | **477.2 s** (7:57.2) |
+| Full shift | 2 | Loading dock | obj_dock → Dock 2 (12.2 m), obj_dispatch → Dispatch (24.9 m), obj_maze_2 → Dispatch (31.9 m) | 325.5 s, 0 contacts, path efficiency 0.994 | **488.2 s** (8:08.2) |
+| Full shift | 3 | Workshop maze | obj_maze_2 → Dispatch (25.7 m), obj_dispatch → Dock 1 (21.4 m), obj_dock → Dock 2 (18.3 m) | 317.1 s, 0 contacts, path efficiency 0.988 | **475.7 s** (7:55.7) |
+| Full shift | 4 | Loading dock | obj_dock → Dock 3 (10.7 m), obj_dispatch → Dispatch (28.4 m), obj_maze_2 → Dispatch (31.9 m) | 332.4 s, 0 contacts, path efficiency 0.997 | **498.6 s** (8:18.6) |
+| Full shift | 5 | Loading dock | obj_dock → Dock 2 (12.2 m), obj_dispatch → Dispatch (24.9 m), obj_maze_2 → Dispatch (31.9 m) | 325.5 s, 0 contacts, path efficiency 0.994 | **488.2 s** (8:08.2) |
+| Full shift | 6 | Workshop maze | obj_maze_2 → Dispatch (25.7 m), obj_dock → Dock 3 (31.8 m), obj_dispatch → Dispatch (28.4 m) | 385.0 s, 0 contacts, path efficiency 0.993 | **577.5 s** (9:37.5) |
 
-With the lanes kept out the Depot offers little variety: every round starts at the Loading
-dock; the six phone shifts are one round, the six Full shifts three. (Rules 2's High-bay
-rounds, seeds 2, 4 and 5, all crossed a lane.)
+With the lanes kept out the Depot offers little variety: the six phone shifts are one round
+(from the Loading dock); the six Full shifts are five rounds, from the Loading dock or the
+Workshop. (Rules 2's High-bay rounds, seeds 2, 4 and 5, all crossed a lane.)
