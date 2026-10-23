@@ -1,0 +1,29 @@
+vite v8.3.1 building client environment for production...
+transforming...
+✓ 212 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                           1.21 kB │ gzip:   0.61 kB
+dist/coco/frame.js                        4.76 kB
+dist/assets/arena.worker-BfZhuvkc.js     15.32 kB
+dist/assets/index-CDGIIQeI.css           33.56 kB │ gzip:   7.65 kB
+dist/assets/CompareScene-BKYmoP3r.js      0.17 kB │ gzip:   0.16 kB
+dist/assets/PlayScene-BKYmoP3r.js         0.17 kB │ gzip:   0.16 kB
+dist/assets/ResearchScene-BKYmoP3r.js     0.17 kB │ gzip:   0.16 kB
+dist/assets/site.config-CXvBV0_S.js       0.25 kB │ gzip:   0.18 kB
+dist/assets/ArenaApp-BuMeLwg0.js          1.00 kB │ gzip:   0.50 kB
+dist/assets/CaseFilesApp-zNxYWNwC.js      6.06 kB │ gzip:   2.07 kB
+dist/assets/LearnApp-B1oYnD2k.js          9.07 kB │ gzip:   3.55 kB
+dist/assets/PlayApp-DYdz2AFT.js          12.87 kB │ gzip:   4.74 kB
+dist/assets/Result-CZII45B5.js           21.66 kB │ gzip:   9.58 kB
+dist/assets/LiveApp-BwgaTxEN.js          30.99 kB │ gzip:  11.31 kB
+dist/assets/index-DO7xRuZJ.js           223.53 kB │ gzip:  70.19 kB
+dist/assets/ArenaSceneView-C_z4Tuky.js  280.43 kB │ gzip:  87.23 kB
+dist/assets/three-CqyauncL.js           675.46 kB │ gzip: 171.85 kB
+
+✓ built in 459ms
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

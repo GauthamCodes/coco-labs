@@ -1,0 +1,567 @@
+{
+ "conditions": null,
+ "site": "http://localhost:4199/coco-labs/",
+ "forms": [
+  {
+   "form": "",
+   "want": {
+    "kind": "title"
+   },
+   "errors": [],
+   "landed": "",
+   "ok": true
+  },
+  {
+   "form": "?view=plan",
+   "want": {
+    "kind": "mission",
+    "id": "find-a-path"
+   },
+   "errors": [],
+   "landed": "?view=compare&tour=find-a-path",
+   "ok": true
+  },
+  {
+   "form": "?view=localise",
+   "want": {
+    "kind": "mission",
+    "id": "where-it-is"
+   },
+   "errors": [],
+   "landed": "?view=compare&tour=where-it-is",
+   "ok": true
+  },
+  {
+   "form": "?view=map",
+   "want": {
+    "kind": "mission",
+    "id": "build-a-map"
+   },
+   "errors": [],
+   "landed": "?view=compare&tour=build-a-map",
+   "ok": true
+  },
+  {
+   "form": "?view=search",
+   "want": {
+    "kind": "mission",
+    "id": "where-to-look"
+   },
+   "errors": [],
+   "landed": "?view=compare&tour=where-to-look",
+   "ok": true
+  },
+  {
+   "form": "?view=move",
+   "want": {
+    "kind": "mission",
+    "id": "avoid-things"
+   },
+   "errors": [],
+   "landed": "?view=compare&tour=avoid-things",
+   "ok": true
+  },
+  {
+   "form": "?view=plan&perf",
+   "want": {
+    "kind": "mission",
+    "id": "find-a-path"
+   },
+   "errors": [],
+   "landed": "?view=compare&tour=find-a-path",
+   "ok": true
+  },
+  {
+   "form": "?view=live",
+   "want": {
+    "kind": "live"
+   },
+   "errors": [],
+   "badge": "Live Stack (simulated) — local",
+   "landed": "?view=live",
+   "ok": true
+  },
+  {
+   "form": "?view=exhibit",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-exhibit"
+   },
+   "errors": [],
+   "landed": "v1/?view=exhibit",
+   "ok": true
+  },
+  {
+   "form": "?view=localise&loc=exhibits",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-localise"
+   },
+   "errors": [],
+   "landed": "v1/?view=localise&loc=exhibits",
+   "ok": true
+  },
+  {
+   "form": "?view=map&scene=map_loop",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-map"
+   },
+   "errors": [],
+   "landed": "v1/?view=map&scene=map_loop",
+   "ok": true
+  },
+  {
+   "form": "?view=move&move=replan",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-move"
+   },
+   "errors": [],
+   "landed": "v1/?view=move&move=replan",
+   "ok": true
+  },
+  {
+   "form": "?view=search&search=matrix",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-search"
+   },
+   "errors": [],
+   "landed": "v1/?view=search&search=matrix",
+   "ok": true
+  },
+  {
+   "form": "?bundle=astar_open",
+   "want": {
+    "kind": "replay",
+    "id": "astar_open"
+   },
+   "errors": [],
+   "landed": "?view=arena&replay=astar_open",
+   "ok": true
+  },
+  {
+   "form": "?bundle=astar_open&v=1",
+   "want": {
+    "kind": "replay",
+    "id": "astar_open"
+   },
+   "errors": [],
+   "landed": "?view=arena&replay=astar_open",
+   "ok": true
+  },
+  {
+   "form": "?view=plan&bundle=astar_open&v=1",
+   "want": {
+    "kind": "replay",
+    "id": "astar_open"
+   },
+   "errors": [],
+   "landed": "?view=arena&replay=astar_open",
+   "ok": true
+  },
+  {
+   "form": "?bundle=lab1c_astar",
+   "want": {
+    "kind": "replay",
+    "id": "lab1c_astar"
+   },
+   "errors": [],
+   "landed": "?view=arena&replay=lab1c_astar",
+   "ok": true
+  },
+  {
+   "form": "?v=1",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-lab"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?v=1\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?v=1\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?v=1&bundle=astar_open&s=4.1.4.1.9",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-lab"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?v=1&bundle=astar_open&s=4.1.4.1.9\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?v=1&bundle=astar_open&s=4.1.4.1.9\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?v=1&bundle=astar_open&e=vQEB",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-lab"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?v=1&bundle=astar_open&e=vQEB\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?v=1&bundle=astar_open&e=vQEB\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?bundle=not_a_bundle",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-lab"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?bundle=not_a_bundle\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?bundle=not_a_bundle\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "v1/",
+   "want": {
+    "kind": "v1",
+    "pressed": "view-lab"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/v1/\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/v1/\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlszLDAsMSwyXSwiciI6IjRjM2E4YmI5YTRhNWQwMmUwZWY5ZjAxMDMxODBjMmNkODdlMTU1YjNjYWQ2YzFkM2JjMmVhN2M3ZjYzMzJlODQifQ",
+   "want": {
+    "kind": "shared",
+    "field": "s"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlszLDAsMSwyXSwiciI6IjRjM2E4YmI5YTRhNWQwMmUwZWY5ZjAxMDMxODBjMmNkODdlMTU1YjNjYWQ2YzFkM2JjMmVhN2M3ZjYzMzJlODQifQ\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlszLDAsMSwyXSwiciI6IjRjM2E4YmI5YTRhNWQwMmUwZWY5ZjAxMDMxODBjMmNkODdlMTU1YjNjYWQ2YzFkM2JjMmVhN2M3ZjYzMzJlODQifQ\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=play&c=race-the-ghost&l=warm-up&z=ndXNbuQgDAfwd_E5ExkbMORVVj1AILujjqZVO9vLaN696mEVZ6VBIbmin_nwH3KHL5jMAH9gAsqeap6tl7hIkJSLhMIL5xBdkliqybww5pBicuS8Qx8oL6lyCaWigQHOMP26w-08v8KEA7yerwUmuNVLfXuHAS7na00fMOHIDjcfD5Cuv_9efkbNaMxj-FfGNMv4p46aTp46brq4cRhXZ1vOmtZ20a5lXLOMdjhGNb1vOrd1K5Mm8xsmyoWmk-e7xdGHtUxslgkb57wKRTNcNm6gVcdrTAdkDZt52p4vacf7nXHK2f1Ox9C4jnUq5vczVkx6jlMUDD0N_P_2qDrxYBCoK0GqMURHZ-QeqHpDtgcq5w42h_zBS0JyKEUUOjKr1xk7nJqPca874ajTxqYH6p8KdUCjtsj7Q3PaNJ9tF1RvK7suqd4eXnPzeXt7h8fLAB8wAXvMJlVxi8mpoMSCYlAEfU3o7Lx49s7GhaPNC2Ms80yZKCP5iMFGeHwD",
+   "want": {
+    "kind": "shared",
+    "field": "z"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=play&c=race-the-ghost&l=warm-up&z=ndXNbuQgDAfwd_E5ExkbMORVVj1AILujjqZVO9vLaN696mEVZ6VBIbmin_nwH3KHL5jMAH9gAsqeap6tl7hIkJSLhMIL5xBdkliqybww5pBicuS8Qx8oL6lyCaWigQHOMP26w-08v8KEA7yerwUmuNVLfXuHAS7na00fMOHIDjcfD5Cuv_9efkbNaMxj-FfGNMv4p46aTp46brq4cRhXZ1vOmtZ20a5lXLOMdjhGNb1vOrd1K5Mm8xsmyoWmk-e7xdGHtUxslgkb57wKRTNcNm6gVcdrTAdkDZt52p4vacf7nXHK2f1Ox9C4jnUq5vczVkx6jlMUDD0N_P_2qDrxYBCoK0GqMURHZ-QeqHpDtgcq5w42h_zBS0JyKEUUOjKr1xk7nJqPca874ajTxqYH6p8KdUCjtsj7Q3PaNJ9tF1RvK7suqd4eXnPzeXt7h8fLAB8wAXvMJlVxi8mpoMSCYlAEfU3o7Lx49s7GhaPNC2Ms80yZKCP5iMFGeHwD\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=play&c=race-the-ghost&l=warm-up&z=ndXNbuQgDAfwd_E5ExkbMORVVj1AILujjqZVO9vLaN696mEVZ6VBIbmin_nwH3KHL5jMAH9gAsqeap6tl7hIkJSLhMIL5xBdkliqybww5pBicuS8Qx8oL6lyCaWigQHOMP26w-08v8KEA7yerwUmuNVLfXuHAS7na00fMOHIDjcfD5Cuv_9efkbNaMxj-FfGNMv4p46aTp46brq4cRhXZ1vOmtZ20a5lXLOMdjhGNb1vOrd1K5Mm8xsmyoWmk-e7xdGHtUxslgkb57wKRTNcNm6gVcdrTAdkDZt52p4vacf7nXHK2f1Ox9C4jnUq5vczVkx6jlMUDD0N_P_2qDrxYBCoK0GqMURHZ-QeqHpDtgcq5w42h_zBS0JyKEUUOjKr1xk7nJqPca874ajTxqYH6p8KdUCjtsj7Q3PaNJ9tF1RvK7suqd4eXnPzeXt7h8fLAB8wAXvMJlVxi8mpoMSCYlAEfU3o7Lx49s7GhaPNC2Ms80yZKCP5iMFGeHwD\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=play",
+   "want": {
+    "kind": "play"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=play\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=play\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=arena",
+   "want": {
+    "kind": "arena"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=arena\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=arena\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=arena&world=v2&camera=follow",
+   "want": {
+    "kind": "arena"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=arena&world=v2&camera=follow\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=arena&world=v2&camera=follow\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=arena&lens=localise&level=inspect&camera=topdown",
+   "want": {
+    "kind": "arena"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=arena&lens=localise&level=inspect&camera=topdown\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=arena&lens=localise&level=inspect&camera=topdown\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=compare",
+   "want": {
+    "kind": "compare"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=compare\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=compare\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=about",
+   "want": {
+    "kind": "about"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=about\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=about\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=learn&mission=find-a-path",
+   "want": {
+    "kind": "mission",
+    "id": "find-a-path"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=learn&mission=find-a-path\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=learn&mission=find-a-path\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=compare&tour=find-a-path",
+   "want": {
+    "kind": "mission",
+    "id": "find-a-path"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=compare&tour=find-a-path\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=compare&tour=find-a-path\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=play&c=beat-the-planner&l=two-fields",
+   "want": {
+    "kind": "play"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=play&c=beat-the-planner&l=two-fields\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=play&c=beat-the-planner&l=two-fields\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=play&c=case-file-detective&l=told-wrong",
+   "want": {
+    "kind": "play"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=play&c=case-file-detective&l=told-wrong\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=play&c=case-file-detective&l=told-wrong\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=play&c=map-the-arena&l=forty-metres",
+   "want": {
+    "kind": "play"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=play&c=map-the-arena&l=forty-metres\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=play&c=map-the-arena&l=forty-metres\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=play&c=next-node&l=wall",
+   "want": {
+    "kind": "play"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=play&c=next-node&l=wall\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=play&c=next-node&l=wall\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=play&c=race-the-ghost&l=warm-up",
+   "want": {
+    "kind": "play"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=play&c=race-the-ghost&l=warm-up\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=play&c=race-the-ghost&l=warm-up\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=play&c=search-the-bays&l=no-idea",
+   "want": {
+    "kind": "play"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=play&c=search-the-bays&l=no-idea\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=play&c=search-the-bays&l=no-idea\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=arena&play=map-the-arena&pl=forty-metres&lens=map&cfg=map.poses%3Dodometry&cfg=map.algorithm%3Doccupancy",
+   "want": {
+    "kind": "arena"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=arena&play=map-the-arena&pl=forty-metres&lens=map&cfg=map.poses%3Dodometry&cfg=map.algorithm%3Doccupancy\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=arena&play=map-the-arena&pl=forty-metres&lens=map&cfg=map.poses%3Dodometry&cfg=map.algorithm%3Doccupancy\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=arena&play=case-file-detective&pl=told-wrong&casefile=lab5_mislocalised_mppi_1&lens=localise",
+   "want": {
+    "kind": "recording"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=arena&play=case-file-detective&pl=told-wrong&casefile=lab5_mislocalised_mppi_1&lens=localise\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=arena&play=case-file-detective&pl=told-wrong&casefile=lab5_mislocalised_mppi_1&lens=localise\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=arena&play=race-the-ghost&pl=warm-up&camera=follow&seed=1&lens=plan",
+   "want": {
+    "kind": "arena"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=arena&play=race-the-ghost&pl=warm-up&camera=follow&seed=1&lens=plan\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=arena&play=race-the-ghost&pl=warm-up&camera=follow&seed=1&lens=plan\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=casefiles",
+   "want": {
+    "kind": "library"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=casefiles\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=casefiles\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=research",
+   "want": {
+    "kind": "library"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=research\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=research\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=casefiles&case=lab1-runs",
+   "want": {
+    "kind": "case-group"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=casefiles&case=lab1-runs\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=casefiles&case=lab1-runs\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=casefiles&case=lab1-runs&file=lab1_run_astar",
+   "want": {
+    "kind": "case-detail"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=casefiles&case=lab1-runs&file=lab1_run_astar\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=casefiles&case=lab1-runs&file=lab1_run_astar\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=arena&casefile=lab1_run_astar",
+   "want": {
+    "kind": "recording"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=arena&casefile=lab1_run_astar\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=arena&casefile=lab1_run_astar\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=arena&run=eyJ2IjoxLCJzIjoiNjljODQzYTEzNzZmZTc1YmU4N2MwNzhlNTQ2NDFjOTY0MDdjNmRjMWMzNWE1ZTFmMmM4NjNiNDcyMjVlMjY5ZiIsImUiOjcsInQiOjI1LCJjIjoiOGE5MWQwOTJhZmQ4NzlhYWE4NjBmY2Q4MzEyNzkzOGFiZTZiY2QyZTk2OTBhMTdlMjFkYjMxM2U4MzI0YWNkZCIsImkiOltbMCwxLDAuMywwLjJdLFszLDJdLFs2LDAsMi41LDJdLFs5LDhdLFsxMiw3XSxbMTYsMywiZ3JlZWR5Il0sWzIwLDJdXX0",
+   "want": {
+    "kind": "run",
+    "hashVersion": 1,
+    "spec": "coco_arena_v1.json"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=arena&run=eyJ2IjoxLCJzIjoiNjljODQzYTEzNzZmZTc1YmU4N2MwNzhlNTQ2NDFjOTY0MDdjNmRjMWMzNWE1ZTFmMmM4NjNiNDcyMjVlMjY5ZiIsImUiOjcsInQiOjI1LCJjIjoiOGE5MWQwOTJhZmQ4NzlhYWE4NjBmY2Q4MzEyNzkzOGFiZTZiY2QyZTk2OTBhMTdlMjFkYjMxM2U4MzI0YWNkZCIsImkiOltbMCwxLDAuMywwLjJdLFszLDJdLFs2LDAsMi41LDJdLFs5LDhdLFsxMiw3XSxbMTYsMywiZ3JlZWR5Il0sWzIwLDJdXX0\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=arena&run=eyJ2IjoxLCJzIjoiNjljODQzYTEzNzZmZTc1YmU4N2MwNzhlNTQ2NDFjOTY0MDdjNmRjMWMzNWE1ZTFmMmM4NjNiNDcyMjVlMjY5ZiIsImUiOjcsInQiOjI1LCJjIjoiOGE5MWQwOTJhZmQ4NzlhYWE4NjBmY2Q4MzEyNzkzOGFiZTZiY2QyZTk2OTBhMTdlMjFkYjMxM2U4MzI0YWNkZCIsImkiOltbMCwxLDAuMywwLjJdLFszLDJdLFs2LDAsMi41LDJdLFs5LDhdLFsxMiw3XSxbMTYsMywiZ3JlZWR5Il0sWzIwLDJdXX0\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=arena&run=eyJ2IjoxLCJzIjoiOTIwMTY3YjE5YTRmOTQyODg0MWM4NjcyNWQxNjM4MGFlNDhjN2M2OWZlMjA5ODk4ODFhMmI1Y2Q3YmY4NzY2ZiIsImUiOjcsInQiOjI1LCJjIjoiNTAzMmU3MzI3YTUzMzI0YTA4NjQzMDNmMWI4NzYwNDQ0Yjc0YTM1Yjk5MmE1ZDJiODI0NmU1YTk3ZWVlMzRjNyIsImkiOltbMCwxLDAuMywwLjJdLFszLDJdLFs2LDAsMi41LDJdLFs5LDhdLFsxMiw3XSxbMTYsMywiZ3JlZWR5Il0sWzIwLDJdXX0&world=v2",
+   "want": {
+    "kind": "run",
+    "hashVersion": 1,
+    "spec": "coco_arena_v2.json"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=arena&run=eyJ2IjoxLCJzIjoiOTIwMTY3YjE5YTRmOTQyODg0MWM4NjcyNWQxNjM4MGFlNDhjN2M2OWZlMjA5ODk4ODFhMmI1Y2Q3YmY4NzY2ZiIsImUiOjcsInQiOjI1LCJjIjoiNTAzMmU3MzI3YTUzMzI0YTA4NjQzMDNmMWI4NzYwNDQ0Yjc0YTM1Yjk5MmE1ZDJiODI0NmU1YTk3ZWVlMzRjNyIsImkiOltbMCwxLDAuMywwLjJdLFszLDJdLFs2LDAsMi41LDJdLFs5LDhdLFsxMiw3XSxbMTYsMywiZ3JlZWR5Il0sWzIwLDJdXX0&world=v2\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=arena&run=eyJ2IjoxLCJzIjoiOTIwMTY3YjE5YTRmOTQyODg0MWM4NjcyNWQxNjM4MGFlNDhjN2M2OWZlMjA5ODk4ODFhMmI1Y2Q3YmY4NzY2ZiIsImUiOjcsInQiOjI1LCJjIjoiNTAzMmU3MzI3YTUzMzI0YTA4NjQzMDNmMWI4NzYwNDQ0Yjc0YTM1Yjk5MmE1ZDJiODI0NmU1YTk3ZWVlMzRjNyIsImkiOltbMCwxLDAuMywwLjJdLFszLDJdLFs2LDAsMi41LDJdLFs5LDhdLFsxMiw3XSxbMTYsMywiZ3JlZWR5Il0sWzIwLDJdXX0&world=v2\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=arena&run=eyJ2IjoxLCJodiI6MiwicyI6IjY5Yzg0M2ExMzc2ZmU3NWJlODdjMDc4ZTU0NjQxYzk2NDA3YzZkYzFjMzVhNWUxZjJjODYzYjQ3MjI1ZTI2OWYiLCJlIjo3LCJ0IjoyNSwiYyI6IjcyMmFlNWRhYjJhYzhkODFhYThhYTJjN2EwMTBlODU2NGJmNTg4ZWQ1NjE1YWJmY2I5YzIzNjk2MjhjYzY5M2IiLCJpIjpbWzAsMSwwLjMsMC4yXSxbMywyXSxbNiwwLDIuNSwyXSxbOSw4XSxbMTIsN10sWzE2LDMsImdyZWVkeSJdLFsyMCwyXV19",
+   "want": {
+    "kind": "run",
+    "hashVersion": 2,
+    "spec": "coco_arena_v1.json"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=arena&run=eyJ2IjoxLCJodiI6MiwicyI6IjY5Yzg0M2ExMzc2ZmU3NWJlODdjMDc4ZTU0NjQxYzk2NDA3YzZkYzFjMzVhNWUxZjJjODYzYjQ3MjI1ZTI2OWYiLCJlIjo3LCJ0IjoyNSwiYyI6IjcyMmFlNWRhYjJhYzhkODFhYThhYTJjN2EwMTBlODU2NGJmNTg4ZWQ1NjE1YWJmY2I5YzIzNjk2MjhjYzY5M2IiLCJpIjpbWzAsMSwwLjMsMC4yXSxbMywyXSxbNiwwLDIuNSwyXSxbOSw4XSxbMTIsN10sWzE2LDMsImdyZWVkeSJdLFsyMCwyXV19\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=arena&run=eyJ2IjoxLCJodiI6MiwicyI6IjY5Yzg0M2ExMzc2ZmU3NWJlODdjMDc4ZTU0NjQxYzk2NDA3YzZkYzFjMzVhNWUxZjJjODYzYjQ3MjI1ZTI2OWYiLCJlIjo3LCJ0IjoyNSwiYyI6IjcyMmFlNWRhYjJhYzhkODFhYThhYTJjN2EwMTBlODU2NGJmNTg4ZWQ1NjE1YWJmY2I5YzIzNjk2MjhjYzY5M2IiLCJpIjpbWzAsMSwwLjMsMC4yXSxbMywyXSxbNiwwLDIuNSwyXSxbOSw4XSxbMTIsN10sWzE2LDMsImdyZWVkeSJdLFsyMCwyXV19\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  },
+  {
+   "form": "?view=arena&run=eyJ2IjoxLCJodiI6MiwicyI6IjkyMDE2N2IxOWE0Zjk0Mjg4NDFjODY3MjVkMTYzODBhZTQ4YzdjNjlmZTIwOTg5ODgxYTJiNWNkN2JmODc2NmYiLCJlIjo3LCJ0IjoyNSwiYyI6IjRiNGU1NDBjZDRlYjEzYmQ1MDkzYTFjMWM1ZmRjOWZkNmNlM2ExNjkwY2JkOWFhYWZlYmVhYWQ1MjYwZmMwYWUiLCJpIjpbWzAsMSwwLjMsMC4yXSxbMywyXSxbNiwwLDIuNSwyXSxbOSw4XSxbMTIsN10sWzE2LDMsImdyZWVkeSJdLFsyMCwyXV19&world=v2",
+   "want": {
+    "kind": "run",
+    "hashVersion": 2,
+    "spec": "coco_arena_v2.json"
+   },
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/?view=arena&run=eyJ2IjoxLCJodiI6MiwicyI6IjkyMDE2N2IxOWE0Zjk0Mjg4NDFjODY3MjVkMTYzODBhZTQ4YzdjNjlmZTIwOTg5ODgxYTJiNWNkN2JmODc2NmYiLCJlIjo3LCJ0IjoyNSwiYyI6IjRiNGU1NDBjZDRlYjEzYmQ1MDkzYTFjMWM1ZmRjOWZkNmNlM2ExNjkwY2JkOWFhYWZlYmVhYWQ1MjYwZmMwYWUiLCJpIjpbWzAsMSwwLjMsMC4yXSxbMywyXSxbNiwwLDIuNSwyXSxbOSw4XSxbMTIsN10sWzE2LDMsImdyZWVkeSJdLFsyMCwyXV19&world=v2\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/?view=arena&run=eyJ2IjoxLCJodiI6MiwicyI6IjkyMDE2N2IxOWE0Zjk0Mjg4NDFjODY3MjVkMTYzODBhZTQ4YzdjNjlmZTIwOTg5ODgxYTJiNWNkN2JmODc2NmYiLCJlIjo3LCJ0IjoyNSwiYyI6IjRiNGU1NDBjZDRlYjEzYmQ1MDkzYTFjMWM1ZmRjOWZkNmNlM2ExNjkwY2JkOWFhYWZlYmVhYWQ1MjYwZmMwYWUiLCJpIjpbWzAsMSwwLjMsMC4yXSxbMywyXSxbNiwwLDIuNSwyXSxbOSw4XSxbMTIsN10sWzE2LDMsImdyZWVkeSJdLFsyMCwyXV19&world=v2\", waiting until \"load\"\u001b[22m\n",
+   "landed": "about:blank"
+  }
+ ],
+ "archive_views": [
+  {
+   "form": "v1/",
+   "pressed": "view-lab",
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/v1/\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/v1/\", waiting until \"load\"\u001b[22m\n"
+  },
+  {
+   "form": "v1/?view=localise",
+   "pressed": "view-localise",
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/v1/?view=localise\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/v1/?view=localise\", waiting until \"load\"\u001b[22m\n"
+  },
+  {
+   "form": "v1/?view=map",
+   "pressed": "view-map",
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/v1/?view=map\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/v1/?view=map\", waiting until \"load\"\u001b[22m\n"
+  },
+  {
+   "form": "v1/?view=search",
+   "pressed": "view-search",
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/v1/?view=search\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/v1/?view=search\", waiting until \"load\"\u001b[22m\n"
+  },
+  {
+   "form": "v1/?view=move",
+   "pressed": "view-move",
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/v1/?view=move\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/v1/?view=move\", waiting until \"load\"\u001b[22m\n"
+  },
+  {
+   "form": "v1/?view=live",
+   "pressed": "view-live",
+   "errors": [],
+   "ok": false,
+   "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:4199/coco-labs/v1/?view=live\nCall log:\n\u001b[2m  - navigating to \"http://localhost:4199/coco-labs/v1/?view=live\", waiting until \"load\"\u001b[22m\n"
+  }
+ ],
+ "ok": false
+}

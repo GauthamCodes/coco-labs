@@ -1,0 +1,16 @@
+{
+  "fresh_pyodide_matches_review_browser_exactly_excluding_compute_ms": true,
+  "ticks": 60,
+  "archive_source_checks": [
+    {
+      "file": "coco_lab/compare_loop.py",
+      "matches": true,
+      "sha256": "6f34620900a4092a55c93f8f5b76ed4252ffced6e5a8f1bf9dc0ab1136ebc3b3"
+    },
+    {
+      "file": "coco_lab/control.py",
+      "matches": true,
+      "sha256": "c2791ef55d9d72a717e25204a65ecf4dfc80a8715a06d31c86382a5d209a5366"
+    }
+  ]
+}

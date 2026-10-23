@@ -1,0 +1,117 @@
+{
+ "class": "Functional diagnostic, not acceptance timing/FPS",
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T11:22:53.511Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 95
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 5.82,
+    "5m": 3.29,
+    "15m": 2.32
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T11:24:52.832Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 96
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 5.15,
+    "5m": 4.02,
+    "15m": 2.72
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "profile": "desktop",
+ "cases": [
+  {
+   "name": "dstar",
+   "results": "A · D* Lite\n716 expansions\n4.00 m planned path\nCost 80.04\n0.26 m minimum clearance\n117.0 ms · This device · Linux x86_64 · search + trace\nfound\nB · Dijkstra\n13317 expansions\n4.00 m planned path\nCost 80.04\n0.25 m minimum clearance\n533.6 ms · This device · Linux x86_64 · search + trace\nfound"
+  },
+  {
+   "name": "control",
+   "results": "A · DWA-style sampler\n— expansions\n1.59 m travelled (truth)\nCost —\n0.25 m minimum clearance\n6501.3 ms · This device · Linux x86_64 · model window\nwindow_incomplete\nB · Pure pursuit\n— expansions\n1.60 m travelled (truth)\nCost —\n0.20 m minimum clearance\n2166.5 ms · This device · Linux x86_64 · model window\nwindow_incomplete"
+  },
+  {
+   "name": "mppi",
+   "results": "A · MPPI\n— expansions\n0.80 m travelled (truth)\nCost —\n0.60 m minimum clearance\n5105.4 ms · This device · Linux x86_64 · model window\nwindow_incomplete\nB · Pure pursuit\n— expansions\n1.60 m travelled (truth)\nCost —\n0.20 m minimum clearance\n2201.2 ms · This device · Linux x86_64 · model window\nwindow_incomplete"
+  },
+  {
+   "name": "mcl-injection",
+   "results": "A · MCL · no injection\n— expansions\n0.40 m travelled (truth)\nCost —\n0.30 m minimum clearance\n28275.2 ms · This device · Linux x86_64 · model window\nnot_localized\nB · MCL · injection\n— expansions\n0.40 m travelled (truth)\nCost —\n0.30 m minimum clearance\n27036.8 ms · This device · Linux x86_64 · model window\nnot_localized"
+  },
+  {
+   "name": "ekf",
+   "results": "A · MCL · no injection\n— expansions\n0.40 m travelled (truth)\nCost —\n0.30 m minimum clearance\n24345.5 ms · This device · Linux x86_64 · model window\nnot_localized\nB · EKF\n— expansions\n0.40 m travelled (truth)\nCost —\n0.30 m minimum clearance\n1171.3 ms · This device · Linux x86_64 · model window\nnot_localized"
+  }
+ ],
+ "errors": [],
+ "progress": [
+  {
+   "at": "2026-10-17T11:23:16.664Z",
+   "status": "Computing 0 / 60 shared ticks…"
+  },
+  {
+   "at": "2026-10-17T11:23:31.664Z",
+   "status": "Computing 0 / 60 shared ticks…"
+  },
+  {
+   "at": "2026-10-17T11:23:46.664Z",
+   "status": "Computing 10 / 60 shared ticks…"
+  },
+  {
+   "at": "2026-10-17T11:24:01.664Z",
+   "status": "Computing 30 / 60 shared ticks…"
+  },
+  {
+   "at": "2026-10-17T11:24:16.664Z",
+   "status": "Computing 50 / 60 shared ticks…"
+  },
+  {
+   "at": "2026-10-17T11:24:31.665Z",
+   "status": "Computing 10 / 60 shared ticks…"
+  },
+  {
+   "at": "2026-10-17T11:24:46.665Z",
+   "status": "Computing 45 / 60 shared ticks…"
+  }
+ ],
+ "passed": true,
+ "conditions_end": {
+  "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+  "at_utc": "2026-10-17T11:24:52.726Z",
+  "power_profile": "balanced",
+  "ac_power": true,
+  "battery": {
+   "status": "Charging",
+   "capacity_pct": 96
+  },
+  "cpu_governor": "powersave",
+  "load_average": {
+   "1m": 5.15,
+   "5m": 4.02,
+   "15m": 2.72
+  },
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "threads": 12,
+  "standard": true
+ }
+}

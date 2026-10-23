@@ -1,0 +1,5469 @@
+[
+  {
+    "path": "docs/v2/PHONE_PROFILE.md",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "selected_lines": [
+      "## Measurement status"
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/focus/focus.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "class",
+      "conditions",
+      "rows"
+    ],
+    "summary": {
+      "class": "TESTED layout; not a frame-rate measurement"
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:04:04.523Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 5.06,
+          "5m": 1.97,
+          "15m": 1.55
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:04:33.559Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 8.42,
+          "5m": 3.1,
+          "15m": 1.94
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    },
+    "rows": [
+      {
+        "name": "desktop",
+        "device": "laptop Chromium",
+        "layout": {
+          "viewport": [
+            1440,
+            900
+          ],
+          "scroll": [
+            1440,
+            900
+          ],
+          "controls": [
+            {
+              "name": "Click the floor for a goal; drive with WASD",
+              "box": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 900,
+                "top": 0,
+                "right": 1440,
+                "bottom": 900,
+                "left": 0
+              }
+            },
+            {
+              "name": "Settings",
+              "box": {
+                "x": 1224,
+                "y": 24,
+                "width": 48,
+                "height": 48,
+                "top": 24,
+                "right": 1272,
+                "bottom": 72,
+                "left": 1224
+              }
+            },
+            {
+              "name": "Robot vision (X): Off",
+              "box": {
+                "x": 1325,
+                "y": 198,
+                "width": 91,
+                "height": 48,
+                "top": 198,
+                "right": 1416,
+                "bottom": 246,
+                "left": 1325
+              }
+            },
+            {
+              "name": "STOP",
+              "box": {
+                "x": 1064,
+                "y": 796,
+                "width": 88,
+                "height": 80,
+                "top": 796,
+                "right": 1152,
+                "bottom": 876,
+                "left": 1064
+              }
+            },
+            {
+              "name": "Grasp",
+              "box": {
+                "x": 1160,
+                "y": 804,
+                "width": 80,
+                "height": 72,
+                "top": 804,
+                "right": 1240,
+                "bottom": 876,
+                "left": 1160
+              }
+            },
+            {
+              "name": "Auto",
+              "box": {
+                "x": 1248,
+                "y": 804,
+                "width": 80,
+                "height": 72,
+                "top": 804,
+                "right": 1328,
+                "bottom": 876,
+                "left": 1248
+              }
+            },
+            {
+              "name": "Camera",
+              "box": {
+                "x": 1336,
+                "y": 804,
+                "width": 80,
+                "height": 72,
+                "top": 804,
+                "right": 1416,
+                "bottom": 876,
+                "left": 1336
+              }
+            }
+          ],
+          "joysticks": 0,
+          "rotate": "none"
+        }
+      },
+      {
+        "name": "compact",
+        "device": "laptop Chromium compact",
+        "layout": {
+          "viewport": [
+            844,
+            390
+          ],
+          "scroll": [
+            844,
+            390
+          ],
+          "controls": [
+            {
+              "name": "Click the floor for a goal; drive with WASD",
+              "box": {
+                "x": 0,
+                "y": 0,
+                "width": 844,
+                "height": 390,
+                "top": 0,
+                "right": 844,
+                "bottom": 390,
+                "left": 0
+              }
+            },
+            {
+              "name": "Settings",
+              "box": {
+                "x": 628,
+                "y": 24,
+                "width": 48,
+                "height": 48,
+                "top": 24,
+                "right": 676,
+                "bottom": 72,
+                "left": 628
+              }
+            },
+            {
+              "name": "Robot vision (X): Off",
+              "box": {
+                "x": 729,
+                "y": 198,
+                "width": 91,
+                "height": 48,
+                "top": 198,
+                "right": 820,
+                "bottom": 246,
+                "left": 729
+              }
+            },
+            {
+              "name": "STOP",
+              "box": {
+                "x": 468,
+                "y": 286,
+                "width": 88,
+                "height": 80,
+                "top": 286,
+                "right": 556,
+                "bottom": 366,
+                "left": 468
+              }
+            },
+            {
+              "name": "Grasp",
+              "box": {
+                "x": 564,
+                "y": 294,
+                "width": 80,
+                "height": 72,
+                "top": 294,
+                "right": 644,
+                "bottom": 366,
+                "left": 564
+              }
+            },
+            {
+              "name": "Auto",
+              "box": {
+                "x": 652,
+                "y": 294,
+                "width": 80,
+                "height": 72,
+                "top": 294,
+                "right": 732,
+                "bottom": 366,
+                "left": 652
+              }
+            },
+            {
+              "name": "Camera",
+              "box": {
+                "x": 740,
+                "y": 294,
+                "width": 80,
+                "height": 72,
+                "top": 294,
+                "right": 820,
+                "bottom": 366,
+                "left": 740
+              }
+            }
+          ],
+          "joysticks": 0,
+          "rotate": "none"
+        }
+      },
+      {
+        "name": "nothing-landscape",
+        "device": "emulated Nothing Phone (1)",
+        "layout": {
+          "viewport": [
+            915,
+            412
+          ],
+          "scroll": [
+            915,
+            412
+          ],
+          "controls": [
+            {
+              "name": "Click the floor for a goal; drive with WASD",
+              "box": {
+                "x": 0,
+                "y": 0,
+                "width": 915,
+                "height": 412,
+                "top": 0,
+                "right": 915,
+                "bottom": 412,
+                "left": 0
+              }
+            },
+            {
+              "name": "Settings",
+              "box": {
+                "x": 743,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 791,
+                "bottom": 60,
+                "left": 743
+              }
+            },
+            {
+              "name": "Robot vision (X): Off",
+              "box": {
+                "x": 743,
+                "y": 68,
+                "width": 48,
+                "height": 48,
+                "top": 68,
+                "right": 791,
+                "bottom": 116,
+                "left": 743
+              }
+            },
+            {
+              "name": "Drive COCO (joystick)",
+              "box": {
+                "x": 32,
+                "y": 256,
+                "width": 128,
+                "height": 128,
+                "top": 256,
+                "right": 160,
+                "bottom": 384,
+                "left": 32
+              }
+            },
+            {
+              "name": "STOP",
+              "box": {
+                "x": 731,
+                "y": 312,
+                "width": 64,
+                "height": 64,
+                "top": 312,
+                "right": 795,
+                "bottom": 376,
+                "left": 731
+              }
+            },
+            {
+              "name": "Grasp",
+              "box": {
+                "x": 803,
+                "y": 332,
+                "width": 56,
+                "height": 56,
+                "top": 332,
+                "right": 859,
+                "bottom": 388,
+                "left": 803
+              }
+            },
+            {
+              "name": "Auto",
+              "box": {
+                "x": 835,
+                "y": 276,
+                "width": 48,
+                "height": 48,
+                "top": 276,
+                "right": 883,
+                "bottom": 324,
+                "left": 835
+              }
+            },
+            {
+              "name": "Camera",
+              "box": {
+                "x": 775,
+                "y": 248,
+                "width": 48,
+                "height": 48,
+                "top": 248,
+                "right": 823,
+                "bottom": 296,
+                "left": 775
+              }
+            }
+          ],
+          "joysticks": 1,
+          "rotate": "none"
+        }
+      },
+      {
+        "name": "nothing-portrait",
+        "device": "emulated Nothing Phone (1)",
+        "layout": {
+          "viewport": [
+            412,
+            915
+          ],
+          "scroll": [
+            412,
+            915
+          ],
+          "controls": [
+            {
+              "name": "Back to games",
+              "box": {
+                "x": 137,
+                "y": 506.578125,
+                "width": 138,
+                "height": 48,
+                "top": 506.578125,
+                "right": 275,
+                "bottom": 554.578125,
+                "left": 137
+              }
+            }
+          ],
+          "joysticks": 0,
+          "rotate": "flex"
+        }
+      }
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/games-focus/decisions-focus.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "class",
+      "conditions",
+      "rows"
+    ],
+    "summary": {
+      "class": "TESTED functional layout; not FPS/startup measurement"
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:05:22.215Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 7.01,
+          "5m": 3.46,
+          "15m": 2.12
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:08:34.001Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 20.26,
+          "5m": 10.08,
+          "15m": 4.85
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    },
+    "rows": [
+      {
+        "profile": "desktop",
+        "device": "laptop Chromium",
+        "game": "games",
+        "layout": {
+          "viewport": [
+            1440,
+            900
+          ],
+          "scroll": [
+            1440,
+            900
+          ],
+          "controls": [
+            {
+              "name": "Settings",
+              "box": {
+                "x": 1146,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 1194,
+                "bottom": 60,
+                "left": 1146
+              }
+            },
+            {
+              "name": "01 \u00b7 CHALLENGEBeat the plannerDraw a path from S to G, one cell at a time. Every move costs its length, and a muddy cell costs more to enter (darker is worse). Can you match A*?\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 246,
+                "y": 84,
+                "width": 305.328125,
+                "height": 278.59375,
+                "top": 84,
+                "right": 551.328125,
+                "bottom": 362.59375,
+                "left": 246
+              }
+            },
+            {
+              "name": "02 \u00b7 CHALLENGENext nodeA* is part-way through a search. Grey cells are closed; outlined cells are open, each with g (the cost so far) and h (the estimate to G). Click the cell A* expands next -- ten times.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 567.328125,
+                "y": 84,
+                "width": 305.328125,
+                "height": 278.59375,
+                "top": 84,
+                "right": 872.65625,
+                "bottom": 362.59375,
+                "left": 567.328125
+              }
+            },
+            {
+              "name": "03 \u00b7 CHALLENGESearch the baysThe target is in one of four bays, and you know only how likely each one is. Choose the order to look in. You are scored on the expected distance over where it might be -- never on where it turned out to be.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 888.65625,
+                "y": 84,
+                "width": 305.34375,
+                "height": 278.59375,
+                "top": 84,
+                "right": 1194,
+                "bottom": 362.59375,
+                "left": 888.65625
+              }
+            },
+            {
+              "name": "04 \u00b7 CHALLENGEMap the arenaDrive COCO to map the arena on wheel odometry alone, within a distance budget. Covering more raises the map's F1; driving further lets the drift grow.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 246,
+                "y": 378.59375,
+                "width": 305.328125,
+                "height": 257.59375,
+                "top": 378.59375,
+                "right": 551.328125,
+                "bottom": 636.1875,
+                "left": 246
+              }
+            },
+            {
+              "name": "05 \u00b7 CHALLENGECase File detectiveA recording of the full ROS 2 stack in Gazebo. Scrub to the moment the robot's belief about where it is first leaves the truth, and mark it.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 567.328125,
+                "y": 378.59375,
+                "width": 305.328125,
+                "height": 257.59375,
+                "top": 378.59375,
+                "right": 872.65625,
+                "bottom": 636.1875,
+                "left": 567.328125
+              }
+            },
+            {
+              "name": "06 \u00b7 DRIVERace the planner's ghostDrive COCO to the flag yourself, at the same speed limits the ghost has. The ghost is the model following A*'s path with a pure-pursuit tracker. Beat its time without hitting more than it does.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 888.65625,
+                "y": 378.59375,
+                "width": 305.34375,
+                "height": 257.59375,
+                "top": 378.59375,
+                "right": 1194,
+                "bottom": 636.1875,
+                "left": 888.65625
+              }
+            },
+            {
+              "name": "Free roam Drive, explore, click a goal \u2192",
+              "box": {
+                "x": 246,
+                "y": 652.1875,
+                "width": 948,
+                "height": 48,
+                "top": 652.1875,
+                "right": 1194,
+                "bottom": 700.1875,
+                "left": 246
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "desktop",
+        "device": "laptop Chromium",
+        "game": "beat-the-planner",
+        "layout": {
+          "viewport": [
+            1440,
+            900
+          ],
+          "scroll": [
+            1440,
+            900
+          ],
+          "controls": [
+            {
+              "name": "Settings",
+              "box": {
+                "x": 1146,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 1194,
+                "bottom": 60,
+                "left": 1146
+              }
+            },
+            {
+              "name": "\u2190 Levels",
+              "box": {
+                "x": 246,
+                "y": 68,
+                "width": 57,
+                "height": 48,
+                "top": 68,
+                "right": 303,
+                "bottom": 116,
+                "left": 246
+              }
+            },
+            {
+              "name": "Rules and reference",
+              "box": {
+                "x": 1016,
+                "y": 68,
+                "width": 178,
+                "height": 48,
+                "top": 68,
+                "right": 1194,
+                "bottom": 116,
+                "left": 1016
+              }
+            },
+            {
+              "name": "Beat the planner: the level's grid; arrow keys choose a cell, Enter selects",
+              "box": {
+                "x": 278,
+                "y": 326,
+                "width": 576,
+                "height": 360,
+                "top": 326,
+                "right": 854,
+                "bottom": 686,
+                "left": 278
+              }
+            },
+            {
+              "name": "Undo",
+              "box": {
+                "x": 909.609375,
+                "y": 840,
+                "width": 69,
+                "height": 48,
+                "top": 840,
+                "right": 978.609375,
+                "bottom": 888,
+                "left": 909.609375
+              }
+            },
+            {
+              "name": "Score my path",
+              "box": {
+                "x": 986.609375,
+                "y": 840,
+                "width": 135,
+                "height": 48,
+                "top": 840,
+                "right": 1121.609375,
+                "bottom": 888,
+                "left": 986.609375
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "desktop",
+        "device": "laptop Chromium",
+        "game": "next-node",
+        "layout": {
+          "viewport": [
+            1440,
+            900
+          ],
+          "scroll": [
+            1440,
+            900
+          ],
+          "controls": [
+            {
+              "name": "Settings",
+              "box": {
+                "x": 1146,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 1194,
+                "bottom": 60,
+                "left": 1146
+              }
+            },
+            {
+              "name": "\u2190 Levels",
+              "box": {
+                "x": 246,
+                "y": 68,
+                "width": 57,
+                "height": 48,
+                "top": 68,
+                "right": 303,
+                "bottom": 116,
+                "left": 246
+              }
+            },
+            {
+              "name": "Rules and reference",
+              "box": {
+                "x": 1016,
+                "y": 68,
+                "width": 178,
+                "height": 48,
+                "top": 68,
+                "right": 1194,
+                "bottom": 116,
+                "left": 1016
+              }
+            },
+            {
+              "name": "Next node: A*'s search part-way; arrow keys choose a cell, Enter selects",
+              "box": {
+                "x": 278,
+                "y": 326,
+                "width": 576,
+                "height": 360,
+                "top": 326,
+                "right": 854,
+                "bottom": 686,
+                "left": 278
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "desktop",
+        "device": "laptop Chromium",
+        "game": "search-the-bays",
+        "layout": {
+          "viewport": [
+            1440,
+            900
+          ],
+          "scroll": [
+            1440,
+            900
+          ],
+          "controls": [
+            {
+              "name": "Settings",
+              "box": {
+                "x": 1146,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 1194,
+                "bottom": 60,
+                "left": 1146
+              }
+            },
+            {
+              "name": "\u2190 Levels",
+              "box": {
+                "x": 246,
+                "y": 68,
+                "width": 57,
+                "height": 48,
+                "top": 68,
+                "right": 303,
+                "bottom": 116,
+                "left": 246
+              }
+            },
+            {
+              "name": "Rules and reference",
+              "box": {
+                "x": 1016,
+                "y": 68,
+                "width": 178,
+                "height": 48,
+                "top": 68,
+                "right": 1194,
+                "bottom": 116,
+                "left": 1016
+              }
+            },
+            {
+              "name": "Bay 1",
+              "box": {
+                "x": 909.609375,
+                "y": 266.25,
+                "width": 66,
+                "height": 48,
+                "top": 266.25,
+                "right": 975.609375,
+                "bottom": 314.25,
+                "left": 909.609375
+              }
+            },
+            {
+              "name": "Bay 2",
+              "box": {
+                "x": 983.609375,
+                "y": 266.25,
+                "width": 69,
+                "height": 48,
+                "top": 266.25,
+                "right": 1052.609375,
+                "bottom": 314.25,
+                "left": 983.609375
+              }
+            },
+            {
+              "name": "Bay 3",
+              "box": {
+                "x": 1060.609375,
+                "y": 266.25,
+                "width": 69,
+                "height": 48,
+                "top": 266.25,
+                "right": 1129.609375,
+                "bottom": 314.25,
+                "left": 1060.609375
+              }
+            },
+            {
+              "name": "Bay 4",
+              "box": {
+                "x": 909.609375,
+                "y": 322.25,
+                "width": 69,
+                "height": 48,
+                "top": 322.25,
+                "right": 978.609375,
+                "bottom": 370.25,
+                "left": 909.609375
+              }
+            },
+            {
+              "name": "Score my order",
+              "box": {
+                "x": 909.609375,
+                "y": 840,
+                "width": 140,
+                "height": 48,
+                "top": 840,
+                "right": 1049.609375,
+                "bottom": 888,
+                "left": 909.609375
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "desktop",
+        "device": "laptop Chromium",
+        "game": "map-the-arena",
+        "layout": {
+          "viewport": [
+            1440,
+            900
+          ],
+          "scroll": [
+            1440,
+            900
+          ],
+          "controls": [
+            {
+              "name": "Click the floor for a goal; drive with WASD",
+              "box": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 900,
+                "top": 0,
+                "right": 1440,
+                "bottom": 900,
+                "left": 0
+              }
+            },
+            {
+              "name": "Settings",
+              "box": {
+                "x": 1224,
+                "y": 24,
+                "width": 48,
+                "height": 48,
+                "top": 24,
+                "right": 1272,
+                "bottom": 72,
+                "left": 1224
+              }
+            },
+            {
+              "name": "Robot vision (X): Off",
+              "box": {
+                "x": 1325,
+                "y": 198,
+                "width": 91,
+                "height": 48,
+                "top": 198,
+                "right": 1416,
+                "bottom": 246,
+                "left": 1325
+              }
+            },
+            {
+              "name": "STOP",
+              "box": {
+                "x": 1064,
+                "y": 796,
+                "width": 88,
+                "height": 80,
+                "top": 796,
+                "right": 1152,
+                "bottom": 876,
+                "left": 1064
+              }
+            },
+            {
+              "name": "Grasp",
+              "box": {
+                "x": 1160,
+                "y": 804,
+                "width": 80,
+                "height": 72,
+                "top": 804,
+                "right": 1240,
+                "bottom": 876,
+                "left": 1160
+              }
+            },
+            {
+              "name": "Auto",
+              "box": {
+                "x": 1248,
+                "y": 804,
+                "width": 80,
+                "height": 72,
+                "top": 804,
+                "right": 1328,
+                "bottom": 876,
+                "left": 1248
+              }
+            },
+            {
+              "name": "Camera",
+              "box": {
+                "x": 1336,
+                "y": 804,
+                "width": 80,
+                "height": 72,
+                "top": 804,
+                "right": 1416,
+                "bottom": 876,
+                "left": 1336
+              }
+            }
+          ],
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+        }
+      },
+      {
+        "profile": "desktop",
+        "device": "laptop Chromium",
+        "game": "race-the-ghost",
+        "layout": {
+          "viewport": [
+            1440,
+            900
+          ],
+          "scroll": [
+            1440,
+            900
+          ],
+          "controls": [
+            {
+              "name": "Click the floor for a goal; drive with WASD",
+              "box": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 900,
+                "top": 0,
+                "right": 1440,
+                "bottom": 900,
+                "left": 0
+              }
+            },
+            {
+              "name": "Settings",
+              "box": {
+                "x": 1224,
+                "y": 24,
+                "width": 48,
+                "height": 48,
+                "top": 24,
+                "right": 1272,
+                "bottom": 72,
+                "left": 1224
+              }
+            },
+            {
+              "name": "Robot vision (X): Off",
+              "box": {
+                "x": 1325,
+                "y": 198,
+                "width": 91,
+                "height": 48,
+                "top": 198,
+                "right": 1416,
+                "bottom": 246,
+                "left": 1325
+              }
+            },
+            {
+              "name": "STOP",
+              "box": {
+                "x": 1064,
+                "y": 796,
+                "width": 88,
+                "height": 80,
+                "top": 796,
+                "right": 1152,
+                "bottom": 876,
+                "left": 1064
+              }
+            },
+            {
+              "name": "Grasp",
+              "box": {
+                "x": 1160,
+                "y": 804,
+                "width": 80,
+                "height": 72,
+                "top": 804,
+                "right": 1240,
+                "bottom": 876,
+                "left": 1160
+              }
+            },
+            {
+              "name": "Auto",
+              "box": {
+                "x": 1248,
+                "y": 804,
+                "width": 80,
+                "height": 72,
+                "top": 804,
+                "right": 1328,
+                "bottom": 876,
+                "left": 1248
+              }
+            },
+            {
+              "name": "Camera",
+              "box": {
+                "x": 1336,
+                "y": 804,
+                "width": 80,
+                "height": 72,
+                "top": 804,
+                "right": 1416,
+                "bottom": 876,
+                "left": 1336
+              }
+            }
+          ],
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+        }
+      },
+      {
+        "profile": "compact",
+        "device": "laptop Chromium compact",
+        "game": "games",
+        "layout": {
+          "viewport": [
+            844,
+            390
+          ],
+          "scroll": [
+            844,
+            390
+          ],
+          "controls": [
+            {
+              "name": "Settings",
+              "box": {
+                "x": 780,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 828,
+                "bottom": 60,
+                "left": 780
+              }
+            },
+            {
+              "name": "01 \u00b7 CHALLENGEBeat the plannerDraw a path from S to G, one cell at a time. Every move costs its length, and a muddy cell costs more to enter (darker is worse). Can you match A*?\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 16,
+                "y": 68,
+                "width": 265.328125,
+                "height": 123,
+                "top": 68,
+                "right": 281.328125,
+                "bottom": 191,
+                "left": 16
+              }
+            },
+            {
+              "name": "02 \u00b7 CHALLENGENext nodeA* is part-way through a search. Grey cells are closed; outlined cells are open, each with g (the cost so far) and h (the estimate to G). Click the cell A* expands next -- ten times.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 289.328125,
+                "y": 68,
+                "width": 265.328125,
+                "height": 123,
+                "top": 68,
+                "right": 554.65625,
+                "bottom": 191,
+                "left": 289.328125
+              }
+            },
+            {
+              "name": "03 \u00b7 CHALLENGESearch the baysThe target is in one of four bays, and you know only how likely each one is. Choose the order to look in. You are scored on the expected distance over where it might be -- never on where it turned out to be.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 562.65625,
+                "y": 68,
+                "width": 265.34375,
+                "height": 123,
+                "top": 68,
+                "right": 828,
+                "bottom": 191,
+                "left": 562.65625
+              }
+            },
+            {
+              "name": "04 \u00b7 CHALLENGEMap the arenaDrive COCO to map the arena on wheel odometry alone, within a distance budget. Covering more raises the map's F1; driving further lets the drift grow.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 16,
+                "y": 199,
+                "width": 265.328125,
+                "height": 123,
+                "top": 199,
+                "right": 281.328125,
+                "bottom": 322,
+                "left": 16
+              }
+            },
+            {
+              "name": "05 \u00b7 CHALLENGECase File detectiveA recording of the full ROS 2 stack in Gazebo. Scrub to the moment the robot's belief about where it is first leaves the truth, and mark it.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 289.328125,
+                "y": 199,
+                "width": 265.328125,
+                "height": 123,
+                "top": 199,
+                "right": 554.65625,
+                "bottom": 322,
+                "left": 289.328125
+              }
+            },
+            {
+              "name": "06 \u00b7 DRIVERace the planner's ghostDrive COCO to the flag yourself, at the same speed limits the ghost has. The ghost is the model following A*'s path with a pure-pursuit tracker. Beat its time without hitting more than it does.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 562.65625,
+                "y": 199,
+                "width": 265.34375,
+                "height": 123,
+                "top": 199,
+                "right": 828,
+                "bottom": 322,
+                "left": 562.65625
+              }
+            },
+            {
+              "name": "Free roam Drive, explore, click a goal \u2192",
+              "box": {
+                "x": 16,
+                "y": 330,
+                "width": 812,
+                "height": 48,
+                "top": 330,
+                "right": 828,
+                "bottom": 378,
+                "left": 16
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "compact",
+        "device": "laptop Chromium compact",
+        "game": "beat-the-planner",
+        "layout": {
+          "viewport": [
+            844,
+            390
+          ],
+          "scroll": [
+            844,
+            390
+          ],
+          "controls": [
+            {
+              "name": "Settings",
+              "box": {
+                "x": 780,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 828,
+                "bottom": 60,
+                "left": 780
+              }
+            },
+            {
+              "name": "\u2190 Levels",
+              "box": {
+                "x": 16,
+                "y": 68,
+                "width": 57,
+                "height": 48,
+                "top": 68,
+                "right": 73,
+                "bottom": 116,
+                "left": 16
+              }
+            },
+            {
+              "name": "Rules and reference",
+              "box": {
+                "x": 650,
+                "y": 68,
+                "width": 178,
+                "height": 48,
+                "top": 68,
+                "right": 828,
+                "bottom": 116,
+                "left": 650
+              }
+            },
+            {
+              "name": "Beat the planner: the level's grid; arrow keys choose a cell, Enter selects",
+              "box": {
+                "x": 92.203125,
+                "y": 126,
+                "width": 400,
+                "height": 250,
+                "top": 126,
+                "right": 492.203125,
+                "bottom": 376,
+                "left": 92.203125
+              }
+            },
+            {
+              "name": "Undo",
+              "box": {
+                "x": 584.40625,
+                "y": 300,
+                "width": 69,
+                "height": 48,
+                "top": 300,
+                "right": 653.40625,
+                "bottom": 348,
+                "left": 584.40625
+              }
+            },
+            {
+              "name": "Score my path",
+              "box": {
+                "x": 661.40625,
+                "y": 300,
+                "width": 135,
+                "height": 48,
+                "top": 300,
+                "right": 796.40625,
+                "bottom": 348,
+                "left": 661.40625
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "compact",
+        "device": "laptop Chromium compact",
+        "game": "next-node",
+        "layout": {
+          "viewport": [
+            844,
+            390
+          ],
+          "scroll": [
+            844,
+            390
+          ],
+          "controls": [
+            {
+              "name": "Settings",
+              "box": {
+                "x": 780,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 828,
+                "bottom": 60,
+                "left": 780
+              }
+            },
+            {
+              "name": "\u2190 Levels",
+              "box": {
+                "x": 16,
+                "y": 68,
+                "width": 57,
+                "height": 48,
+                "top": 68,
+                "right": 73,
+                "bottom": 116,
+                "left": 16
+              }
+            },
+            {
+              "name": "Rules and reference",
+              "box": {
+                "x": 650,
+                "y": 68,
+                "width": 178,
+                "height": 48,
+                "top": 68,
+                "right": 828,
+                "bottom": 116,
+                "left": 650
+              }
+            },
+            {
+              "name": "Next node: A*'s search part-way; arrow keys choose a cell, Enter selects",
+              "box": {
+                "x": 92.203125,
+                "y": 126,
+                "width": 400,
+                "height": 250,
+                "top": 126,
+                "right": 492.203125,
+                "bottom": 376,
+                "left": 92.203125
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "compact",
+        "device": "laptop Chromium compact",
+        "game": "search-the-bays",
+        "layout": {
+          "viewport": [
+            844,
+            390
+          ],
+          "scroll": [
+            844,
+            390
+          ],
+          "controls": [
+            {
+              "name": "Settings",
+              "box": {
+                "x": 780,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 828,
+                "bottom": 60,
+                "left": 780
+              }
+            },
+            {
+              "name": "\u2190 Levels",
+              "box": {
+                "x": 16,
+                "y": 68,
+                "width": 57,
+                "height": 48,
+                "top": 68,
+                "right": 73,
+                "bottom": 116,
+                "left": 16
+              }
+            },
+            {
+              "name": "Rules and reference",
+              "box": {
+                "x": 650,
+                "y": 68,
+                "width": 178,
+                "height": 48,
+                "top": 68,
+                "right": 828,
+                "bottom": 116,
+                "left": 650
+              }
+            },
+            {
+              "name": "Bay 1",
+              "box": {
+                "x": 584.40625,
+                "y": 130.25,
+                "width": 66,
+                "height": 48,
+                "top": 130.25,
+                "right": 650.40625,
+                "bottom": 178.25,
+                "left": 584.40625
+              }
+            },
+            {
+              "name": "Bay 2",
+              "box": {
+                "x": 658.40625,
+                "y": 130.25,
+                "width": 69,
+                "height": 48,
+                "top": 130.25,
+                "right": 727.40625,
+                "bottom": 178.25,
+                "left": 658.40625
+              }
+            },
+            {
+              "name": "Bay 3",
+              "box": {
+                "x": 735.40625,
+                "y": 130.25,
+                "width": 69,
+                "height": 48,
+                "top": 130.25,
+                "right": 804.40625,
+                "bottom": 178.25,
+                "left": 735.40625
+              }
+            },
+            {
+              "name": "Bay 4",
+              "box": {
+                "x": 584.40625,
+                "y": 186.25,
+                "width": 69,
+                "height": 48,
+                "top": 186.25,
+                "right": 653.40625,
+                "bottom": 234.25,
+                "left": 584.40625
+              }
+            },
+            {
+              "name": "Score my order",
+              "box": {
+                "x": 584.40625,
+                "y": 330,
+                "width": 140,
+                "height": 48,
+                "top": 330,
+                "right": 724.40625,
+                "bottom": 378,
+                "left": 584.40625
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "compact",
+        "device": "laptop Chromium compact",
+        "game": "map-the-arena",
+        "layout": {
+          "viewport": [
+            844,
+            390
+          ],
+          "scroll": [
+            844,
+            390
+          ],
+          "controls": [
+            {
+              "name": "Click the floor for a goal; drive with WASD",
+              "box": {
+                "x": 0,
+                "y": 0,
+                "width": 844,
+                "height": 390,
+                "top": 0,
+                "right": 844,
+                "bottom": 390,
+                "left": 0
+              }
+            },
+            {
+              "name": "Settings",
+              "box": {
+                "x": 628,
+                "y": 24,
+                "width": 48,
+                "height": 48,
+                "top": 24,
+                "right": 676,
+                "bottom": 72,
+                "left": 628
+              }
+            },
+            {
+              "name": "Robot vision (X): Off",
+              "box": {
+                "x": 729,
+                "y": 198,
+                "width": 91,
+                "height": 48,
+                "top": 198,
+                "right": 820,
+                "bottom": 246,
+                "left": 729
+              }
+            },
+            {
+              "name": "STOP",
+              "box": {
+                "x": 468,
+                "y": 286,
+                "width": 88,
+                "height": 80,
+                "top": 286,
+                "right": 556,
+                "bottom": 366,
+                "left": 468
+              }
+            },
+            {
+              "name": "Grasp",
+              "box": {
+                "x": 564,
+                "y": 294,
+                "width": 80,
+                "height": 72,
+                "top": 294,
+                "right": 644,
+                "bottom": 366,
+                "left": 564
+              }
+            },
+            {
+              "name": "Auto",
+              "box": {
+                "x": 652,
+                "y": 294,
+                "width": 80,
+                "height": 72,
+                "top": 294,
+                "right": 732,
+                "bottom": 366,
+                "left": 652
+              }
+            },
+            {
+              "name": "Camera",
+              "box": {
+                "x": 740,
+                "y": 294,
+                "width": 80,
+                "height": 72,
+                "top": 294,
+                "right": 820,
+                "bottom": 366,
+                "left": 740
+              }
+            }
+          ],
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+        }
+      },
+      {
+        "profile": "compact",
+        "device": "laptop Chromium compact",
+        "game": "race-the-ghost",
+        "layout": {
+          "viewport": [
+            844,
+            390
+          ],
+          "scroll": [
+            844,
+            390
+          ],
+          "controls": [
+            {
+              "name": "Click the floor for a goal; drive with WASD",
+              "box": {
+                "x": 0,
+                "y": 0,
+                "width": 844,
+                "height": 390,
+                "top": 0,
+                "right": 844,
+                "bottom": 390,
+                "left": 0
+              }
+            },
+            {
+              "name": "Settings",
+              "box": {
+                "x": 628,
+                "y": 24,
+                "width": 48,
+                "height": 48,
+                "top": 24,
+                "right": 676,
+                "bottom": 72,
+                "left": 628
+              }
+            },
+            {
+              "name": "Robot vision (X): Off",
+              "box": {
+                "x": 729,
+                "y": 198,
+                "width": 91,
+                "height": 48,
+                "top": 198,
+                "right": 820,
+                "bottom": 246,
+                "left": 729
+              }
+            },
+            {
+              "name": "STOP",
+              "box": {
+                "x": 468,
+                "y": 286,
+                "width": 88,
+                "height": 80,
+                "top": 286,
+                "right": 556,
+                "bottom": 366,
+                "left": 468
+              }
+            },
+            {
+              "name": "Grasp",
+              "box": {
+                "x": 564,
+                "y": 294,
+                "width": 80,
+                "height": 72,
+                "top": 294,
+                "right": 644,
+                "bottom": 366,
+                "left": 564
+              }
+            },
+            {
+              "name": "Auto",
+              "box": {
+                "x": 652,
+                "y": 294,
+                "width": 80,
+                "height": 72,
+                "top": 294,
+                "right": 732,
+                "bottom": 366,
+                "left": 652
+              }
+            },
+            {
+              "name": "Camera",
+              "box": {
+                "x": 740,
+                "y": 294,
+                "width": 80,
+                "height": 72,
+                "top": 294,
+                "right": 820,
+                "bottom": 366,
+                "left": 740
+              }
+            }
+          ],
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+        }
+      },
+      {
+        "profile": "nothing-landscape",
+        "device": "emulated Nothing Phone (1)",
+        "game": "games",
+        "layout": {
+          "viewport": [
+            915,
+            412
+          ],
+          "scroll": [
+            915,
+            412
+          ],
+          "controls": [
+            {
+              "name": "Settings",
+              "box": {
+                "x": 851,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 899,
+                "bottom": 60,
+                "left": 851
+              }
+            },
+            {
+              "name": "01 \u00b7 CHALLENGEBeat the plannerDraw a path from S to G, one cell at a time. Every move costs its length, and a muddy cell costs more to enter (darker is worse). Can you match A*?\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 16,
+                "y": 68,
+                "width": 289,
+                "height": 134,
+                "top": 68,
+                "right": 305,
+                "bottom": 202,
+                "left": 16
+              }
+            },
+            {
+              "name": "02 \u00b7 CHALLENGENext nodeA* is part-way through a search. Grey cells are closed; outlined cells are open, each with g (the cost so far) and h (the estimate to G). Click the cell A* expands next -- ten times.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 313,
+                "y": 68,
+                "width": 289,
+                "height": 134,
+                "top": 68,
+                "right": 602,
+                "bottom": 202,
+                "left": 313
+              }
+            },
+            {
+              "name": "03 \u00b7 CHALLENGESearch the baysThe target is in one of four bays, and you know only how likely each one is. Choose the order to look in. You are scored on the expected distance over where it might be -- never on where it turned out to be.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 610,
+                "y": 68,
+                "width": 289,
+                "height": 134,
+                "top": 68,
+                "right": 899,
+                "bottom": 202,
+                "left": 610
+              }
+            },
+            {
+              "name": "04 \u00b7 CHALLENGEMap the arenaDrive COCO to map the arena on wheel odometry alone, within a distance budget. Covering more raises the map's F1; driving further lets the drift grow.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 16,
+                "y": 210,
+                "width": 289,
+                "height": 134,
+                "top": 210,
+                "right": 305,
+                "bottom": 344,
+                "left": 16
+              }
+            },
+            {
+              "name": "05 \u00b7 CHALLENGECase File detectiveA recording of the full ROS 2 stack in Gazebo. Scrub to the moment the robot's belief about where it is first leaves the truth, and mark it.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 313,
+                "y": 210,
+                "width": 289,
+                "height": 134,
+                "top": 210,
+                "right": 602,
+                "bottom": 344,
+                "left": 313
+              }
+            },
+            {
+              "name": "06 \u00b7 DRIVERace the planner's ghostDrive COCO to the flag yourself, at the same speed limits the ghost has. The ghost is the model following A*'s path with a pure-pursuit tracker. Beat its time without hitting more than it does.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 610,
+                "y": 210,
+                "width": 289,
+                "height": 134,
+                "top": 210,
+                "right": 899,
+                "bottom": 344,
+                "left": 610
+              }
+            },
+            {
+              "name": "Free roam Drive, explore, click a goal \u2192",
+              "box": {
+                "x": 16,
+                "y": 352,
+                "width": 883,
+                "height": 48,
+                "top": 352,
+                "right": 899,
+                "bottom": 400,
+                "left": 16
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "nothing-landscape",
+        "device": "emulated Nothing Phone (1)",
+        "game": "beat-the-planner",
+        "layout": {
+          "viewport": [
+            915,
+            412
+          ],
+          "scroll": [
+            915,
+            412
+          ],
+          "controls": [
+            {
+              "name": "Settings",
+              "box": {
+                "x": 851,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 899,
+                "bottom": 60,
+                "left": 851
+              }
+            },
+            {
+              "name": "\u2190 Levels",
+              "box": {
+                "x": 16,
+                "y": 68,
+                "width": 57,
+                "height": 48,
+                "top": 68,
+                "right": 73,
+                "bottom": 116,
+                "left": 16
+              }
+            },
+            {
+              "name": "Rules and reference",
+              "box": {
+                "x": 721,
+                "y": 68,
+                "width": 178,
+                "height": 48,
+                "top": 68,
+                "right": 899,
+                "bottom": 116,
+                "left": 721
+              }
+            },
+            {
+              "name": "Beat the planner: the level's grid; arrow keys choose a cell, Enter selects",
+              "box": {
+                "x": 101.046875,
+                "y": 127,
+                "width": 432,
+                "height": 270,
+                "top": 127,
+                "right": 533.046875,
+                "bottom": 397,
+                "left": 101.046875
+              }
+            },
+            {
+              "name": "Undo",
+              "box": {
+                "x": 634.109375,
+                "y": 322,
+                "width": 69,
+                "height": 48,
+                "top": 322,
+                "right": 703.109375,
+                "bottom": 370,
+                "left": 634.109375
+              }
+            },
+            {
+              "name": "Score my path",
+              "box": {
+                "x": 711.109375,
+                "y": 322,
+                "width": 135,
+                "height": 48,
+                "top": 322,
+                "right": 846.109375,
+                "bottom": 370,
+                "left": 711.109375
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "nothing-landscape",
+        "device": "emulated Nothing Phone (1)",
+        "game": "next-node",
+        "layout": {
+          "viewport": [
+            915,
+            412
+          ],
+          "scroll": [
+            915,
+            412
+          ],
+          "controls": [
+            {
+              "name": "Settings",
+              "box": {
+                "x": 851,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 899,
+                "bottom": 60,
+                "left": 851
+              }
+            },
+            {
+              "name": "\u2190 Levels",
+              "box": {
+                "x": 16,
+                "y": 68,
+                "width": 57,
+                "height": 48,
+                "top": 68,
+                "right": 73,
+                "bottom": 116,
+                "left": 16
+              }
+            },
+            {
+              "name": "Rules and reference",
+              "box": {
+                "x": 721,
+                "y": 68,
+                "width": 178,
+                "height": 48,
+                "top": 68,
+                "right": 899,
+                "bottom": 116,
+                "left": 721
+              }
+            },
+            {
+              "name": "Next node: A*'s search part-way; arrow keys choose a cell, Enter selects",
+              "box": {
+                "x": 101.046875,
+                "y": 127,
+                "width": 432,
+                "height": 270,
+                "top": 127,
+                "right": 533.046875,
+                "bottom": 397,
+                "left": 101.046875
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "nothing-landscape",
+        "device": "emulated Nothing Phone (1)",
+        "game": "search-the-bays",
+        "layout": {
+          "viewport": [
+            915,
+            412
+          ],
+          "scroll": [
+            915,
+            412
+          ],
+          "controls": [
+            {
+              "name": "Settings",
+              "box": {
+                "x": 851,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 899,
+                "bottom": 60,
+                "left": 851
+              }
+            },
+            {
+              "name": "\u2190 Levels",
+              "box": {
+                "x": 16,
+                "y": 68,
+                "width": 57,
+                "height": 48,
+                "top": 68,
+                "right": 73,
+                "bottom": 116,
+                "left": 16
+              }
+            },
+            {
+              "name": "Rules and reference",
+              "box": {
+                "x": 721,
+                "y": 68,
+                "width": 178,
+                "height": 48,
+                "top": 68,
+                "right": 899,
+                "bottom": 116,
+                "left": 721
+              }
+            },
+            {
+              "name": "Bay 1",
+              "box": {
+                "x": 634.109375,
+                "y": 144.25,
+                "width": 66,
+                "height": 48,
+                "top": 144.25,
+                "right": 700.109375,
+                "bottom": 192.25,
+                "left": 634.109375
+              }
+            },
+            {
+              "name": "Bay 2",
+              "box": {
+                "x": 708.109375,
+                "y": 144.25,
+                "width": 69,
+                "height": 48,
+                "top": 144.25,
+                "right": 777.109375,
+                "bottom": 192.25,
+                "left": 708.109375
+              }
+            },
+            {
+              "name": "Bay 3",
+              "box": {
+                "x": 785.109375,
+                "y": 144.25,
+                "width": 69,
+                "height": 48,
+                "top": 144.25,
+                "right": 854.109375,
+                "bottom": 192.25,
+                "left": 785.109375
+              }
+            },
+            {
+              "name": "Bay 4",
+              "box": {
+                "x": 634.109375,
+                "y": 200.25,
+                "width": 69,
+                "height": 48,
+                "top": 200.25,
+                "right": 703.109375,
+                "bottom": 248.25,
+                "left": 634.109375
+              }
+            },
+            {
+              "name": "Score my order",
+              "box": {
+                "x": 634.109375,
+                "y": 352,
+                "width": 140,
+                "height": 48,
+                "top": 352,
+                "right": 774.109375,
+                "bottom": 400,
+                "left": 634.109375
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "nothing-landscape",
+        "device": "emulated Nothing Phone (1)",
+        "game": "map-the-arena",
+        "layout": {
+          "viewport": [
+            915,
+            412
+          ],
+          "scroll": [
+            915,
+            412
+          ],
+          "controls": [
+            {
+              "name": "Click the floor for a goal; drive with WASD",
+              "box": {
+                "x": 0,
+                "y": 0,
+                "width": 915,
+                "height": 412,
+                "top": 0,
+                "right": 915,
+                "bottom": 412,
+                "left": 0
+              }
+            },
+            {
+              "name": "Settings",
+              "box": {
+                "x": 743,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 791,
+                "bottom": 60,
+                "left": 743
+              }
+            },
+            {
+              "name": "Robot vision (X): Off",
+              "box": {
+                "x": 743,
+                "y": 68,
+                "width": 48,
+                "height": 48,
+                "top": 68,
+                "right": 791,
+                "bottom": 116,
+                "left": 743
+              }
+            },
+            {
+              "name": "Drive COCO (joystick)",
+              "box": {
+                "x": 32,
+                "y": 256,
+                "width": 128,
+                "height": 128,
+                "top": 256,
+                "right": 160,
+                "bottom": 384,
+                "left": 32
+              }
+            },
+            {
+              "name": "STOP",
+              "box": {
+                "x": 731,
+                "y": 312,
+                "width": 64,
+                "height": 64,
+                "top": 312,
+                "right": 795,
+                "bottom": 376,
+                "left": 731
+              }
+            },
+            {
+              "name": "Grasp",
+              "box": {
+                "x": 803,
+                "y": 332,
+                "width": 56,
+                "height": 56,
+                "top": 332,
+                "right": 859,
+                "bottom": 388,
+                "left": 803
+              }
+            },
+            {
+              "name": "Auto",
+              "box": {
+                "x": 835,
+                "y": 276,
+                "width": 48,
+                "height": 48,
+                "top": 276,
+                "right": 883,
+                "bottom": 324,
+                "left": 835
+              }
+            },
+            {
+              "name": "Camera",
+              "box": {
+                "x": 775,
+                "y": 248,
+                "width": 48,
+                "height": 48,
+                "top": 248,
+                "right": 823,
+                "bottom": 296,
+                "left": 775
+              }
+            }
+          ],
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+        }
+      },
+      {
+        "profile": "nothing-landscape",
+        "device": "emulated Nothing Phone (1)",
+        "game": "race-the-ghost",
+        "layout": {
+          "viewport": [
+            915,
+            412
+          ],
+          "scroll": [
+            915,
+            412
+          ],
+          "controls": [
+            {
+              "name": "Click the floor for a goal; drive with WASD",
+              "box": {
+                "x": 0,
+                "y": 0,
+                "width": 915,
+                "height": 412,
+                "top": 0,
+                "right": 915,
+                "bottom": 412,
+                "left": 0
+              }
+            },
+            {
+              "name": "Settings",
+              "box": {
+                "x": 743,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 791,
+                "bottom": 60,
+                "left": 743
+              }
+            },
+            {
+              "name": "Robot vision (X): Off",
+              "box": {
+                "x": 743,
+                "y": 68,
+                "width": 48,
+                "height": 48,
+                "top": 68,
+                "right": 791,
+                "bottom": 116,
+                "left": 743
+              }
+            },
+            {
+              "name": "Drive COCO (joystick)",
+              "box": {
+                "x": 32,
+                "y": 256,
+                "width": 128,
+                "height": 128,
+                "top": 256,
+                "right": 160,
+                "bottom": 384,
+                "left": 32
+              }
+            },
+            {
+              "name": "STOP",
+              "box": {
+                "x": 731,
+                "y": 312,
+                "width": 64,
+                "height": 64,
+                "top": 312,
+                "right": 795,
+                "bottom": 376,
+                "left": 731
+              }
+            },
+            {
+              "name": "Grasp",
+              "box": {
+                "x": 803,
+                "y": 332,
+                "width": 56,
+                "height": 56,
+                "top": 332,
+                "right": 859,
+                "bottom": 388,
+                "left": 803
+              }
+            },
+            {
+              "name": "Auto",
+              "box": {
+                "x": 835,
+                "y": 276,
+                "width": 48,
+                "height": 48,
+                "top": 276,
+                "right": 883,
+                "bottom": 324,
+                "left": 835
+              }
+            },
+            {
+              "name": "Camera",
+              "box": {
+                "x": 775,
+                "y": 248,
+                "width": 48,
+                "height": 48,
+                "top": 248,
+                "right": 823,
+                "bottom": 296,
+                "left": 775
+              }
+            }
+          ],
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+        }
+      },
+      {
+        "profile": "nothing-portrait",
+        "device": "emulated Nothing Phone (1)",
+        "game": "games",
+        "layout": {
+          "viewport": [
+            412,
+            915
+          ],
+          "scroll": [
+            412,
+            915
+          ],
+          "controls": [
+            {
+              "name": "Settings",
+              "box": {
+                "x": 348,
+                "y": 12,
+                "width": 48,
+                "height": 48,
+                "top": 12,
+                "right": 396,
+                "bottom": 60,
+                "left": 348
+              }
+            },
+            {
+              "name": "01 \u00b7 CHALLENGEBeat the plannerDraw a path from S to G, one cell at a time. Every move costs its length, and a muddy cell costs more to enter (darker is worse). Can you match A*?\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 16,
+                "y": 84,
+                "width": 182,
+                "height": 142,
+                "top": 84,
+                "right": 198,
+                "bottom": 226,
+                "left": 16
+              }
+            },
+            {
+              "name": "02 \u00b7 CHALLENGENext nodeA* is part-way through a search. Grey cells are closed; outlined cells are open, each with g (the cost so far) and h (the estimate to G). Click the cell A* expands next -- ten times.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 214,
+                "y": 84,
+                "width": 182,
+                "height": 142,
+                "top": 84,
+                "right": 396,
+                "bottom": 226,
+                "left": 214
+              }
+            },
+            {
+              "name": "03 \u00b7 CHALLENGESearch the baysThe target is in one of four bays, and you know only how likely each one is. Choose the order to look in. You are scored on the expected distance over where it might be -- never on where it turned out to be.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 16,
+                "y": 242,
+                "width": 182,
+                "height": 142,
+                "top": 242,
+                "right": 198,
+                "bottom": 384,
+                "left": 16
+              }
+            },
+            {
+              "name": "04 \u00b7 CHALLENGEMap the arenaDrive COCO to map the arena on wheel odometry alone, within a distance budget. Covering more raises the map's F1; driving further lets the drift grow.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 214,
+                "y": 242,
+                "width": 182,
+                "height": 142,
+                "top": 242,
+                "right": 396,
+                "bottom": 384,
+                "left": 214
+              }
+            },
+            {
+              "name": "05 \u00b7 CHALLENGECase File detectiveA recording of the full ROS 2 stack in Gazebo. Scrub to the moment the robot's belief about where it is first leaves the truth, and mark it.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 16,
+                "y": 400,
+                "width": 182,
+                "height": 166,
+                "top": 400,
+                "right": 198,
+                "bottom": 566,
+                "left": 16
+              }
+            },
+            {
+              "name": "06 \u00b7 DRIVERace the planner's ghostDrive COCO to the flag yourself, at the same speed limits the ghost has. The ghost is the model following A*'s path with a pure-pursuit tracker. Beat its time without hitting more than it does.\u2606\u2606\u2606 \u00b7 Set your first best",
+              "box": {
+                "x": 214,
+                "y": 400,
+                "width": 182,
+                "height": 166,
+                "top": 400,
+                "right": 396,
+                "bottom": 566,
+                "left": 214
+              }
+            },
+            {
+              "name": "Free roam Drive, explore, click a goal \u2192",
+              "box": {
+                "x": 16,
+                "y": 582,
+                "width": 380,
+                "height": 48,
+                "top": 582,
+                "right": 396,
+                "bottom": 630,
+                "left": 16
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "nothing-portrait",
+        "device": "emulated Nothing Phone (1)",
+        "game": "beat-the-planner",
+        "layout": {
+          "viewport": [
+            412,
+            915
+          ],
+          "scroll": [
+            412,
+            915
+          ],
+          "controls": [
+            {
+              "name": "Back to games",
+              "box": {
+                "x": 153,
+                "y": 495.40625,
+                "width": 106,
+                "height": 48,
+                "top": 495.40625,
+                "right": 259,
+                "bottom": 543.40625,
+                "left": 153
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "nothing-portrait",
+        "device": "emulated Nothing Phone (1)",
+        "game": "next-node",
+        "layout": {
+          "viewport": [
+            412,
+            915
+          ],
+          "scroll": [
+            412,
+            915
+          ],
+          "controls": [
+            {
+              "name": "Back to games",
+              "box": {
+                "x": 153,
+                "y": 495.40625,
+                "width": 106,
+                "height": 48,
+                "top": 495.40625,
+                "right": 259,
+                "bottom": 543.40625,
+                "left": 153
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "nothing-portrait",
+        "device": "emulated Nothing Phone (1)",
+        "game": "search-the-bays",
+        "layout": {
+          "viewport": [
+            412,
+            915
+          ],
+          "scroll": [
+            412,
+            915
+          ],
+          "controls": [
+            {
+              "name": "Back to games",
+              "box": {
+                "x": 153,
+                "y": 495.40625,
+                "width": 106,
+                "height": 48,
+                "top": 495.40625,
+                "right": 259,
+                "bottom": 543.40625,
+                "left": 153
+              }
+            }
+          ],
+          "renderer": null
+        }
+      },
+      {
+        "profile": "nothing-portrait",
+        "device": "emulated Nothing Phone (1)",
+        "game": "map-the-arena",
+        "layout": {
+          "viewport": [
+            412,
+            915
+          ],
+          "scroll": [
+            412,
+            915
+          ],
+          "controls": [
+            {
+              "name": "Back to games",
+              "box": {
+                "x": 137,
+                "y": 506.578125,
+                "width": 138,
+                "height": 48,
+                "top": 506.578125,
+                "right": 275,
+                "bottom": 554.578125,
+                "left": 137
+              }
+            }
+          ],
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+        }
+      },
+      {
+        "profile": "nothing-portrait",
+        "device": "emulated Nothing Phone (1)",
+        "game": "race-the-ghost",
+        "layout": {
+          "viewport": [
+            412,
+            915
+          ],
+          "scroll": [
+            412,
+            915
+          ],
+          "controls": [
+            {
+              "name": "Back to games",
+              "box": {
+                "x": 137,
+                "y": 506.578125,
+                "width": 138,
+                "height": 48,
+                "top": 506.578125,
+                "right": 275,
+                "bottom": 554.578125,
+                "left": 137
+              }
+            }
+          ],
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+        }
+      }
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/startup-immediate/checks.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "cases",
+      "protocol",
+      "passed",
+      "conditions"
+    ],
+    "summary": {
+      "protocol": "Fresh browser contexts; emulated 4G 9 Mbit/s down, 1.5 up, 170 ms; title starts warming interpreter; immediate Play/Free roam entry once title is visible; Vision selected immediately when ready. Default World Spec v1. Phone uses shared 4\u00d7 CPU proxy.",
+      "passed": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:32:58.870Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 79
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 1.46,
+          "5m": 1.38,
+          "15m": 0.96
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:34:00.505Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 80
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 2.66,
+          "5m": 1.67,
+          "15m": 1.09
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    },
+    "cases": [
+      {
+        "profile": "desktop",
+        "run": 0,
+        "device": "laptop \u00b7 emulated 4G",
+        "titleVisibleMs": 2028.2000000029802,
+        "titleJavaScriptGzipBytes": 271623,
+        "criticalUiJavaScriptGzipBytes": 271623,
+        "marks": {
+          "worker_boot": 1792369981052.7998,
+          "pyodide_module": 1792369981255.2,
+          "worker_create": 1792369982628.5,
+          "world3d_assets": 1792369982632.0999,
+          "attract_ready": 1792369984410.4,
+          "world3d_ready": 1792369984414.2,
+          "world3d_robot": 1792369984414.2,
+          "first_frame": 1792369984487.4,
+          "pyodide_ready": 1792369987807.9,
+          "coco_lab_ready": 1792369987891.4,
+          "model_warm": 1792369987891.4,
+          "world_received": 1792369988556.2,
+          "arena_ready": 1792369988555.9,
+          "first_computation_shown": 1792369988623.5
+        },
+        "liveModelReadyMs": 9606,
+        "worldInteractiveMs": 9606,
+        "firstVisibleComputationMs": 9673.60009765625,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:33:08.740Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 79
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 1.48,
+            "5m": 1.39,
+            "15m": 0.97
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "profile": "desktop",
+        "run": 1,
+        "device": "laptop \u00b7 emulated 4G",
+        "titleVisibleMs": 2002.0999999940395,
+        "titleJavaScriptGzipBytes": 271623,
+        "criticalUiJavaScriptGzipBytes": 271623,
+        "marks": {
+          "worker_boot": 1792369991009.4,
+          "pyodide_module": 1792369991523.9,
+          "worker_create": 1792369992579.0999,
+          "world3d_assets": 1792369992582.2,
+          "attract_ready": 1792369994441,
+          "world3d_ready": 1792369994446,
+          "world3d_robot": 1792369994446,
+          "first_frame": 1792369994509.3,
+          "pyodide_ready": 1792369997935.9,
+          "coco_lab_ready": 1792369998019.5999,
+          "model_warm": 1792369998019.5999,
+          "world_received": 1792369998679.4,
+          "arena_ready": 1792369998679.3,
+          "first_computation_shown": 1792369998755.0999
+        },
+        "liveModelReadyMs": 9770.60009765625,
+        "worldInteractiveMs": 9770.60009765625,
+        "firstVisibleComputationMs": 9846.39990234375,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:33:18.877Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 79
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 1.49,
+            "5m": 1.39,
+            "15m": 0.98
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "profile": "desktop",
+        "run": 2,
+        "device": "laptop \u00b7 emulated 4G",
+        "titleVisibleMs": 2023.5,
+        "titleJavaScriptGzipBytes": 271623,
+        "criticalUiJavaScriptGzipBytes": 271623,
+        "marks": {
+          "worker_boot": 1792370001155.8,
+          "pyodide_module": 1792370001665.9,
+          "worker_create": 1792370002706.6,
+          "world3d_assets": 1792370002708.5,
+          "attract_ready": 1792370004581.3,
+          "world3d_ready": 1792370004586.4001,
+          "world3d_robot": 1792370004586.5,
+          "first_frame": 1792370004692.5,
+          "pyodide_ready": 1792370008069.4,
+          "coco_lab_ready": 1792370008157.8,
+          "model_warm": 1792370008157.8,
+          "world_received": 1792370008831,
+          "arena_ready": 1792370008831.0999,
+          "first_computation_shown": 1792370008906.7002
+        },
+        "liveModelReadyMs": 9786.999755859375,
+        "worldInteractiveMs": 9786.999755859375,
+        "firstVisibleComputationMs": 9862.60009765625,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:33:29.033Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 79
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 1.26,
+            "5m": 1.34,
+            "15m": 0.97
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "profile": "landscape",
+        "run": 0,
+        "device": "emulated Nothing Phone (1)",
+        "titleVisibleMs": 2214.5999999940395,
+        "titleJavaScriptGzipBytes": 271623,
+        "criticalUiJavaScriptGzipBytes": 271623,
+        "marks": {
+          "worker_boot": 1792370011510.4001,
+          "pyodide_module": 1792370012017.5,
+          "worker_create": 1792370013190.5,
+          "world3d_assets": 1792370013198,
+          "attract_ready": 1792370015315.4,
+          "world3d_ready": 1792370015334,
+          "world3d_robot": 1792370015334,
+          "first_frame": 1792370015425.9,
+          "pyodide_ready": 1792370018474.7002,
+          "coco_lab_ready": 1792370018565.1,
+          "model_warm": 1792370018565.1,
+          "world_received": 1792370019228.5,
+          "arena_ready": 1792370019223.7002,
+          "first_computation_shown": 1792370019322.5999
+        },
+        "liveModelReadyMs": 10040.30029296875,
+        "worldInteractiveMs": 10040.30029296875,
+        "firstVisibleComputationMs": 10139.199951171875,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:33:39.449Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 80
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 1.61,
+            "5m": 1.41,
+            "15m": 0.99
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "profile": "landscape",
+        "run": 1,
+        "device": "emulated Nothing Phone (1)",
+        "titleVisibleMs": 2616.7999999970198,
+        "titleJavaScriptGzipBytes": 540099,
+        "criticalUiJavaScriptGzipBytes": 271623,
+        "marks": {
+          "worker_boot": 1792370021974.8,
+          "pyodide_module": 1792370022161.9,
+          "worker_create": 1792370024491.6,
+          "world3d_assets": 1792370024508.4001,
+          "attract_ready": 1792370026270.1,
+          "world3d_ready": 1792370026288.9001,
+          "world3d_robot": 1792370026289,
+          "first_frame": 1792370026400.4001,
+          "pyodide_ready": 1792370028765.1,
+          "coco_lab_ready": 1792370028851.6,
+          "model_warm": 1792370028851.6,
+          "world_received": 1792370029578.7002,
+          "arena_ready": 1792370029578.3,
+          "first_computation_shown": 1792370029662.5
+        },
+        "liveModelReadyMs": 9942.699951171875,
+        "worldInteractiveMs": 9942.699951171875,
+        "firstVisibleComputationMs": 10026.89990234375,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:33:49.784Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 80
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 2.42,
+            "5m": 1.6,
+            "15m": 1.06
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "profile": "landscape",
+        "run": 2,
+        "device": "emulated Nothing Phone (1)",
+        "titleVisibleMs": 2260.2999999970198,
+        "titleJavaScriptGzipBytes": 271623,
+        "criticalUiJavaScriptGzipBytes": 271623,
+        "marks": {
+          "worker_boot": 1792370032347.4,
+          "pyodide_module": 1792370032853,
+          "worker_create": 1792370033997.1,
+          "world3d_assets": 1792370034004.9,
+          "attract_ready": 1792370036086.8,
+          "world3d_ready": 1792370036108.5,
+          "world3d_robot": 1792370036108.5,
+          "first_frame": 1792370036226.2,
+          "pyodide_ready": 1792370039381,
+          "coco_lab_ready": 1792370039466.6,
+          "model_warm": 1792370039466.6,
+          "world_received": 1792370040134.3,
+          "arena_ready": 1792370040133.9,
+          "first_computation_shown": 1792370040209.1
+        },
+        "liveModelReadyMs": 10161.39990234375,
+        "worldInteractiveMs": 10161.39990234375,
+        "firstVisibleComputationMs": 10236.60009765625,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:34:00.343Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 80
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 2.66,
+            "5m": 1.67,
+            "15m": 1.09
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      }
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/startup-immediate/checks.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "cases",
+      "protocol",
+      "passed",
+      "conditions"
+    ],
+    "summary": {
+      "protocol": "Fresh browser contexts; emulated 4G 9 Mbit/s down, 1.5 up, 170 ms; title starts warming interpreter; immediate Play/Free roam entry once title is visible; Vision selected immediately when ready. Default World Spec v1. Phone uses shared 4\u00d7 CPU proxy.",
+      "passed": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:32:58.870Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 79
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 1.46,
+          "5m": 1.38,
+          "15m": 0.96
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:34:00.505Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 80
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 2.66,
+          "5m": 1.67,
+          "15m": 1.09
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    },
+    "cases": [
+      {
+        "profile": "desktop",
+        "run": 0,
+        "device": "laptop \u00b7 emulated 4G",
+        "titleVisibleMs": 2028.2000000029802,
+        "titleJavaScriptGzipBytes": 271623,
+        "criticalUiJavaScriptGzipBytes": 271623,
+        "marks": {
+          "worker_boot": 1792369981052.7998,
+          "pyodide_module": 1792369981255.2,
+          "worker_create": 1792369982628.5,
+          "world3d_assets": 1792369982632.0999,
+          "attract_ready": 1792369984410.4,
+          "world3d_ready": 1792369984414.2,
+          "world3d_robot": 1792369984414.2,
+          "first_frame": 1792369984487.4,
+          "pyodide_ready": 1792369987807.9,
+          "coco_lab_ready": 1792369987891.4,
+          "model_warm": 1792369987891.4,
+          "world_received": 1792369988556.2,
+          "arena_ready": 1792369988555.9,
+          "first_computation_shown": 1792369988623.5
+        },
+        "liveModelReadyMs": 9606,
+        "worldInteractiveMs": 9606,
+        "firstVisibleComputationMs": 9673.60009765625,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:33:08.740Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 79
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 1.48,
+            "5m": 1.39,
+            "15m": 0.97
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "profile": "desktop",
+        "run": 1,
+        "device": "laptop \u00b7 emulated 4G",
+        "titleVisibleMs": 2002.0999999940395,
+        "titleJavaScriptGzipBytes": 271623,
+        "criticalUiJavaScriptGzipBytes": 271623,
+        "marks": {
+          "worker_boot": 1792369991009.4,
+          "pyodide_module": 1792369991523.9,
+          "worker_create": 1792369992579.0999,
+          "world3d_assets": 1792369992582.2,
+          "attract_ready": 1792369994441,
+          "world3d_ready": 1792369994446,
+          "world3d_robot": 1792369994446,
+          "first_frame": 1792369994509.3,
+          "pyodide_ready": 1792369997935.9,
+          "coco_lab_ready": 1792369998019.5999,
+          "model_warm": 1792369998019.5999,
+          "world_received": 1792369998679.4,
+          "arena_ready": 1792369998679.3,
+          "first_computation_shown": 1792369998755.0999
+        },
+        "liveModelReadyMs": 9770.60009765625,
+        "worldInteractiveMs": 9770.60009765625,
+        "firstVisibleComputationMs": 9846.39990234375,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:33:18.877Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 79
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 1.49,
+            "5m": 1.39,
+            "15m": 0.98
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "profile": "desktop",
+        "run": 2,
+        "device": "laptop \u00b7 emulated 4G",
+        "titleVisibleMs": 2023.5,
+        "titleJavaScriptGzipBytes": 271623,
+        "criticalUiJavaScriptGzipBytes": 271623,
+        "marks": {
+          "worker_boot": 1792370001155.8,
+          "pyodide_module": 1792370001665.9,
+          "worker_create": 1792370002706.6,
+          "world3d_assets": 1792370002708.5,
+          "attract_ready": 1792370004581.3,
+          "world3d_ready": 1792370004586.4001,
+          "world3d_robot": 1792370004586.5,
+          "first_frame": 1792370004692.5,
+          "pyodide_ready": 1792370008069.4,
+          "coco_lab_ready": 1792370008157.8,
+          "model_warm": 1792370008157.8,
+          "world_received": 1792370008831,
+          "arena_ready": 1792370008831.0999,
+          "first_computation_shown": 1792370008906.7002
+        },
+        "liveModelReadyMs": 9786.999755859375,
+        "worldInteractiveMs": 9786.999755859375,
+        "firstVisibleComputationMs": 9862.60009765625,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:33:29.033Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 79
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 1.26,
+            "5m": 1.34,
+            "15m": 0.97
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "profile": "landscape",
+        "run": 0,
+        "device": "emulated Nothing Phone (1)",
+        "titleVisibleMs": 2214.5999999940395,
+        "titleJavaScriptGzipBytes": 271623,
+        "criticalUiJavaScriptGzipBytes": 271623,
+        "marks": {
+          "worker_boot": 1792370011510.4001,
+          "pyodide_module": 1792370012017.5,
+          "worker_create": 1792370013190.5,
+          "world3d_assets": 1792370013198,
+          "attract_ready": 1792370015315.4,
+          "world3d_ready": 1792370015334,
+          "world3d_robot": 1792370015334,
+          "first_frame": 1792370015425.9,
+          "pyodide_ready": 1792370018474.7002,
+          "coco_lab_ready": 1792370018565.1,
+          "model_warm": 1792370018565.1,
+          "world_received": 1792370019228.5,
+          "arena_ready": 1792370019223.7002,
+          "first_computation_shown": 1792370019322.5999
+        },
+        "liveModelReadyMs": 10040.30029296875,
+        "worldInteractiveMs": 10040.30029296875,
+        "firstVisibleComputationMs": 10139.199951171875,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:33:39.449Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 80
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 1.61,
+            "5m": 1.41,
+            "15m": 0.99
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "profile": "landscape",
+        "run": 1,
+        "device": "emulated Nothing Phone (1)",
+        "titleVisibleMs": 2616.7999999970198,
+        "titleJavaScriptGzipBytes": 540099,
+        "criticalUiJavaScriptGzipBytes": 271623,
+        "marks": {
+          "worker_boot": 1792370021974.8,
+          "pyodide_module": 1792370022161.9,
+          "worker_create": 1792370024491.6,
+          "world3d_assets": 1792370024508.4001,
+          "attract_ready": 1792370026270.1,
+          "world3d_ready": 1792370026288.9001,
+          "world3d_robot": 1792370026289,
+          "first_frame": 1792370026400.4001,
+          "pyodide_ready": 1792370028765.1,
+          "coco_lab_ready": 1792370028851.6,
+          "model_warm": 1792370028851.6,
+          "world_received": 1792370029578.7002,
+          "arena_ready": 1792370029578.3,
+          "first_computation_shown": 1792370029662.5
+        },
+        "liveModelReadyMs": 9942.699951171875,
+        "worldInteractiveMs": 9942.699951171875,
+        "firstVisibleComputationMs": 10026.89990234375,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:33:49.784Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 80
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 2.42,
+            "5m": 1.6,
+            "15m": 1.06
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "profile": "landscape",
+        "run": 2,
+        "device": "emulated Nothing Phone (1)",
+        "titleVisibleMs": 2260.2999999970198,
+        "titleJavaScriptGzipBytes": 271623,
+        "criticalUiJavaScriptGzipBytes": 271623,
+        "marks": {
+          "worker_boot": 1792370032347.4,
+          "pyodide_module": 1792370032853,
+          "worker_create": 1792370033997.1,
+          "world3d_assets": 1792370034004.9,
+          "attract_ready": 1792370036086.8,
+          "world3d_ready": 1792370036108.5,
+          "world3d_robot": 1792370036108.5,
+          "first_frame": 1792370036226.2,
+          "pyodide_ready": 1792370039381,
+          "coco_lab_ready": 1792370039466.6,
+          "model_warm": 1792370039466.6,
+          "world_received": 1792370040134.3,
+          "arena_ready": 1792370040133.9,
+          "first_computation_shown": 1792370040209.1
+        },
+        "liveModelReadyMs": 10161.39990234375,
+        "worldInteractiveMs": 10161.39990234375,
+        "firstVisibleComputationMs": 10236.60009765625,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:34:00.343Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 80
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 2.66,
+            "5m": 1.67,
+            "15m": 1.09
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      }
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/cache-race-fixed/checks.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "site",
+      "requestedWorld",
+      "errors",
+      "thirdParty",
+      "warm",
+      "versionA",
+      "versionB",
+      "cache",
+      "deploy",
+      "offlineTitle",
+      "disabledWorks",
+      "passed",
+      "conditions"
+    ],
+    "summary": {
+      "site": "http://127.0.0.1:38921/coco-labs/",
+      "requestedWorld": "default",
+      "versionA": "c423ae7bf06032e2cd64616b7f4bff8912b1dc64cb0acfac2c411c4cfbbae6ad",
+      "versionB": "a75a530dc5eb55091abb4837e929200439531561fbeaade894fbc3002c25d618",
+      "deploy": "hard reload: new index and static bytes, old caches removed",
+      "offlineTitle": true,
+      "disabledWorks": true,
+      "passed": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T00:59:06.379Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 0.8,
+          "5m": 0.97,
+          "15m": 1.32
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T00:59:33.379Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 1.21,
+          "5m": 1.05,
+          "15m": 1.34
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    }
+  },
+  {
+    "path": "docs/v2/data/m5/close/dist-close.txt",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "selected_lines": [
+      " \"title_app_gzip_bytes\": 271628,",
+      " \"background_interpreter_js_gzip_bytes\": 268476,",
+      " \"tree_sha256\": \"eb5807b550740f66e3b84a95a760e1cf2debed4c64c9b92cd75d4c432d17a165\","
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/fps/checks.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "cases",
+      "passed",
+      "conditions"
+    ],
+    "summary": {
+      "passed": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:14:14.968Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 10.22,
+          "5m": 10.71,
+          "15m": 6.84
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:16:01.183Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 8.47,
+          "5m": 10.07,
+          "15m": 7.05
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    },
+    "cases": [
+      {
+        "gpu": "nvidia",
+        "mode": "play",
+        "quality": "high",
+        "lost": 0,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "driverSoftware": "libgl1-mesa-dri 25.2.8-0ubuntu0.24.04.2\nmesa-vulkan-drivers 25.2.8-0ubuntu0.24.04.2",
+        "actualTier": "high",
+        "actual3D": true,
+        "median": 59.96230940521038,
+        "minimum": 59.41978329224557,
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-18T01:14:47.704Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Full",
+            "capacity_pct": 100
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 9.9,
+            "5m": 10.65,
+            "15m": 6.96
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "gpu": "intel",
+        "mode": "play",
+        "quality": "medium",
+        "lost": 0,
+        "renderer": "ANGLE (Intel, Vulkan 1.4.318 (Intel(R) Graphics (RPL-P) (0x0000A7A8)), Intel open-source Mesa driver)",
+        "driverSoftware": "libgl1-mesa-dri 25.2.8-0ubuntu0.24.04.2\nmesa-vulkan-drivers 25.2.8-0ubuntu0.24.04.2",
+        "actualTier": "medium",
+        "actual3D": true,
+        "median": 60.01500375153408,
+        "minimum": 59.36675461756013,
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-18T01:15:21.961Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Full",
+            "capacity_pct": 100
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 9.53,
+            "5m": 10.43,
+            "15m": 7.02
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "gpu": "intel",
+        "mode": "compare",
+        "quality": "auto",
+        "lost": 0,
+        "renderer": "ANGLE (Intel, Vulkan 1.4.318 (Intel(R) Graphics (RPL-P) (0x0000A7A8)), Intel open-source Mesa driver)",
+        "driverSoftware": "libgl1-mesa-dri 25.2.8-0ubuntu0.24.04.2\nmesa-vulkan-drivers 25.2.8-0ubuntu0.24.04.2",
+        "actualTier": "low",
+        "median": 11.516654854743376,
+        "minimum": 7.044734061326162,
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-18T01:16:00.911Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Full",
+            "capacity_pct": 100
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 8.69,
+            "5m": 10.14,
+            "15m": 7.05
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      }
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/fps-compare-optimized/checks.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "cases",
+      "passed",
+      "conditions"
+    ],
+    "summary": {
+      "passed": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:29:35.759Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 75
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 1.91,
+          "5m": 1.22,
+          "15m": 0.81
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:30:07.227Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 76
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 2.04,
+          "5m": 1.34,
+          "15m": 0.86
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    },
+    "cases": [
+      {
+        "gpu": "intel",
+        "mode": "compare",
+        "quality": "auto",
+        "lost": 0,
+        "renderer": "ANGLE (Intel, Vulkan 1.4.318 (Intel(R) Graphics (RPL-P) (0x0000A7A8)), Intel open-source Mesa driver)",
+        "driverSoftware": "libgl1-mesa-dri 25.2.8-0ubuntu0.24.04.2\nmesa-vulkan-drivers 25.2.8-0ubuntu0.24.04.2",
+        "actualTier": "high",
+        "median": 60.019707963969246,
+        "minimum": 59.30253142164696,
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:30:07.064Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 76
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 2.04,
+            "5m": 1.34,
+            "15m": 0.86
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      }
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/v1-flat/checks.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "reference",
+      "sessions",
+      "ticks",
+      "differences",
+      "passed"
+    ],
+    "summary": {
+      "reference": "docs/v2/data/m1/determinism/hashes_pyodide-node.json.gz",
+      "sessions": 100,
+      "ticks": 15000,
+      "differences": 0,
+      "passed": true
+    }
+  },
+  {
+    "path": "docs/v2/data/m5/close/determinism-v2/determinism.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "conditions",
+      "criterion",
+      "spec_file",
+      "engines",
+      "pass"
+    ],
+    "summary": {
+      "criterion": "identical per-tick hashes across engines, 100 recorded sessions (README M1 B.4)",
+      "spec_file": "coco_arena_v1.json",
+      "pass": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:29:31.438Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 75
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 2.07,
+          "5m": 1.24,
+          "15m": 0.81
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:29:31.597Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 75
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 2.07,
+          "5m": 1.24,
+          "15m": 0.81
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    }
+  },
+  {
+    "path": "docs/v2/data/m5/close/links-verified.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "tool",
+      "engine",
+      "seconds",
+      "checked",
+      "matched",
+      "failures",
+      "rows"
+    ],
+    "summary": {
+      "tool": "coco verify (lab_web/tools/verify.mjs)",
+      "engine": "Pyodide 314.0.7, Node v24.21.0",
+      "seconds": 445.105,
+      "checked": 166,
+      "matched": 166,
+      "failures": 0
+    },
+    "rows": [
+      {
+        "challenge": "beat-the-planner",
+        "level": "two-fields",
+        "ms": 4,
+        "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+        "stars": 3,
+        "valid": true,
+        "expected": "4d2fcdde2a5d4e744ef43ff8e5478dd8a4ea7bf3470cedf1a295864a00df94e9",
+        "matches": true,
+        "verification_layout": "legacy_json_before_m36"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "bog",
+        "ms": 1,
+        "hash": "d593ad6634a85527cbe30f0be5921cc26e03afe9a65fb1a74dc58d70c35efcb3",
+        "stars": 3,
+        "valid": true,
+        "expected": "0ba3a323340b946ac5edb2354e1c5c4c34928be9f14d57500e34aa15a88ce3b0",
+        "matches": true,
+        "verification_layout": "legacy_json_before_m36"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "mud-field",
+        "ms": 1,
+        "hash": "873ad7357dea2d2dc23a70ba0bc3fb1c7cc1ffc25889a93a1bb90328352396cc",
+        "stars": 3,
+        "valid": true,
+        "expected": "99269073280b3e5c24dc0be653aa58c8f536bf7a3a11ca1666d7382ad5e32ab9",
+        "matches": true,
+        "verification_layout": "legacy_json_before_m36"
+      },
+      {
+        "challenge": "next-node",
+        "level": "wall",
+        "ms": 5,
+        "hash": "1f46a35b3dd30905a03f8b1319b9562c1590920a383f1adab8ac01b666a1013b",
+        "stars": 3,
+        "valid": true,
+        "expected": "1f46a35b3dd30905a03f8b1319b9562c1590920a383f1adab8ac01b666a1013b",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "next-node",
+        "level": "mud",
+        "ms": 8,
+        "hash": "585980ba24f66f3d663ae75cd0d477db9b8e86dca00c2d764402cd36d981d648",
+        "stars": 3,
+        "valid": true,
+        "expected": "585980ba24f66f3d663ae75cd0d477db9b8e86dca00c2d764402cd36d981d648",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "next-node",
+        "level": "u-trap",
+        "ms": 4,
+        "hash": "dfb5f15ddd7931918a8e25545c1f082233cf00e87fbdd9c263d8547284fce882",
+        "stars": 3,
+        "valid": true,
+        "expected": "dfb5f15ddd7931918a8e25545c1f082233cf00e87fbdd9c263d8547284fce882",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "search-the-bays",
+        "level": "no-idea",
+        "ms": 30,
+        "hash": "68f63a399a25626b99adc47099547a88c66ad46a7c97233587eebb5f8d730251",
+        "stars": 3,
+        "valid": true,
+        "expected": "77b066eca1113721761bb40997a76069d1fd185fbfcab134aba65f87b9c389e7",
+        "matches": true,
+        "verification_layout": "legacy_json_before_m36"
+      },
+      {
+        "challenge": "search-the-bays",
+        "level": "far-end",
+        "ms": 2,
+        "hash": "121584bb9a9fbc24ddefafdc48e8ddf681b4c702f4cac300a2dc8bf89f839020",
+        "stars": 3,
+        "valid": true,
+        "expected": "2aade2745f061705edc109a7caafacd7e16c02e6ea0ff62759ba9fb64ea6afba",
+        "matches": true,
+        "verification_layout": "legacy_json_before_m36"
+      },
+      {
+        "challenge": "search-the-bays",
+        "level": "ends",
+        "ms": 1,
+        "hash": "dc31bf9c19bb474a024c566b91ea3f4965f9c6cc918ef547fbad57d5a5b6d9b9",
+        "stars": 3,
+        "valid": true,
+        "expected": "4c3a8bb9a4a5d02e0ef9f0103180c2cd87e155b3cad6c1d3bc2ea7c7f6332e84",
+        "matches": true,
+        "verification_layout": "legacy_json_before_m36"
+      },
+      {
+        "challenge": "search-the-bays",
+        "level": "poor-camera",
+        "ms": 1,
+        "hash": "e8b7107011901884e491daf3f23ce18a40eb51bac5e9a7e3a498fd77b7eb89f3",
+        "stars": 3,
+        "valid": true,
+        "expected": "fbef34d1d25cd4152bb015c7f97233e15cb098646975a207f767fd61fa2df175",
+        "matches": true,
+        "verification_layout": "legacy_json_before_m36"
+      },
+      {
+        "challenge": "case-file-detective",
+        "level": "told-wrong",
+        "ms": 1,
+        "hash": "64ba11acf0e26d9c664ad220921e7231cfc23e5d7752d3e3c1b8cbf8d0c4c3f4",
+        "stars": 3,
+        "valid": true,
+        "expected": "91387e6ab600c4394ac6c319b1c5b3ca61b02a01b57fac558988d99083c74a66",
+        "matches": true,
+        "verification_layout": "legacy_json_before_m36"
+      },
+      {
+        "challenge": "case-file-detective",
+        "level": "kidnapped",
+        "ms": 1,
+        "hash": "85ae2d73002cf2e3ee078c243983f11a5273f8396d94491d2fdbf79ae57bb33b",
+        "stars": 3,
+        "valid": true,
+        "expected": "be87aa6123d8fdaf80588a143cee1e4dc904c91058750f4c1375e7facbcad44f",
+        "matches": true,
+        "verification_layout": "legacy_json_before_m36"
+      },
+      {
+        "challenge": "case-file-detective",
+        "level": "kidnapped-far",
+        "ms": 0,
+        "hash": "1dcb0cdbbec6bb84c08e18d1353ce558a9e6ac08a37be3805a3cddc19b28cdf6",
+        "stars": 3,
+        "valid": true,
+        "expected": "5b8ad85d075eb908d4f2d2c3f25b25657f9026b94c8cecb685de7c4391553337",
+        "matches": true,
+        "verification_layout": "legacy_json_before_m36"
+      },
+      {
+        "challenge": "case-file-detective",
+        "level": "kidnapped-again",
+        "ms": 1,
+        "hash": "1338a4aa3252d662197de332c9d134dbdaa9527ab15707dab3a966e176dbda8b",
+        "stars": 3,
+        "valid": true,
+        "expected": "2a3bc0ca9f092c0e937023a32c43c5dbe9fb909955c6f86f58e084f3dbc21184",
+        "matches": true,
+        "verification_layout": "legacy_json_before_m36"
+      },
+      {
+        "challenge": "map-the-arena",
+        "level": "twenty-five-metres",
+        "ms": 6688,
+        "hash": "6eecf52b2f280cbeda38feb430d1d800fa70ee4076ed432a456dd24bf74eefd2",
+        "stars": 1,
+        "valid": true,
+        "expected": "6eecf52b2f280cbeda38feb430d1d800fa70ee4076ed432a456dd24bf74eefd2",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "two-fields",
+        "ms": 2,
+        "hash": "db3dc0c66af069f7b52b81e967f9dcea69299bb105a820d92d00559b8f398c8a",
+        "stars": 1,
+        "valid": true,
+        "expected": "db3dc0c66af069f7b52b81e967f9dcea69299bb105a820d92d00559b8f398c8a",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "bog",
+        "ms": 1,
+        "hash": "ee94eb41ee57887c0afe5214e8d91880537743530a1db9a6a5606213551e4135",
+        "stars": 1,
+        "valid": true,
+        "expected": "ee94eb41ee57887c0afe5214e8d91880537743530a1db9a6a5606213551e4135",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "mud-field",
+        "ms": 2,
+        "hash": "2252af419ce271c404ab9c5fa8faca80cc9e3fb31565e8558e0f094beebdf4e6",
+        "stars": 1,
+        "valid": true,
+        "expected": "2252af419ce271c404ab9c5fa8faca80cc9e3fb31565e8558e0f094beebdf4e6",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "two-fields",
+        "ms": 1,
+        "hash": "71c57003a942142045fe1500089066f7ec5dd058f989d555195f975ec0dfabf5",
+        "stars": 0,
+        "valid": false,
+        "expected": "71c57003a942142045fe1500089066f7ec5dd058f989d555195f975ec0dfabf5",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "bog",
+        "ms": 1,
+        "hash": "850e1b317ed446559aaeceaf0e0cc935f687673464cd16cfa2be6c75f7a5cb91",
+        "stars": 2,
+        "valid": true,
+        "expected": "850e1b317ed446559aaeceaf0e0cc935f687673464cd16cfa2be6c75f7a5cb91",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "mud-field",
+        "ms": 1,
+        "hash": "2252af419ce271c404ab9c5fa8faca80cc9e3fb31565e8558e0f094beebdf4e6",
+        "stars": 1,
+        "valid": true,
+        "expected": "2252af419ce271c404ab9c5fa8faca80cc9e3fb31565e8558e0f094beebdf4e6",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "two-fields",
+        "ms": 1,
+        "hash": "754248820d02f8ff574c32c271d7069702dfc0755ee316b294b04e399a3b4fc7",
+        "stars": 1,
+        "valid": true,
+        "expected": "754248820d02f8ff574c32c271d7069702dfc0755ee316b294b04e399a3b4fc7",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "mud-field",
+        "ms": 1,
+        "hash": "42026ee6640716e81fd73a5cb6183d06995333e0069936239c5abedb8b9ec3c6",
+        "stars": 1,
+        "valid": true,
+        "expected": "42026ee6640716e81fd73a5cb6183d06995333e0069936239c5abedb8b9ec3c6",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "bog",
+        "ms": 1,
+        "hash": "9512436e7c8bc178df20125593f049a12cae278528d3a93782faae1923037065",
+        "stars": 0,
+        "valid": false,
+        "expected": "9512436e7c8bc178df20125593f049a12cae278528d3a93782faae1923037065",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "mud-field",
+        "ms": 1,
+        "hash": "bc213d488a3e9c337f4cc8c28bed256b5ac15f83ee7d3567657e7a9fcb2cf1a0",
+        "stars": 0,
+        "valid": false,
+        "expected": "bc213d488a3e9c337f4cc8c28bed256b5ac15f83ee7d3567657e7a9fcb2cf1a0",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "two-fields",
+        "ms": 1,
+        "hash": "c0f6ba2910d646b230bad480b69697e3196ca1d00e0c14908810abe547d8a9fa",
+        "stars": 1,
+        "valid": true,
+        "expected": "c0f6ba2910d646b230bad480b69697e3196ca1d00e0c14908810abe547d8a9fa",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "bog",
+        "ms": 1,
+        "hash": "e7e00ec751121db739c622b65da3327d81fe87e7824fc1e13d518047beb83294",
+        "stars": 0,
+        "valid": false,
+        "expected": "e7e00ec751121db739c622b65da3327d81fe87e7824fc1e13d518047beb83294",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "mud-field",
+        "ms": 1,
+        "hash": "f48812d0f40dbcb2269f3e438dc05b6466390e5fceba0da51fddaf8105c260e8",
+        "stars": 0,
+        "valid": false,
+        "expected": "f48812d0f40dbcb2269f3e438dc05b6466390e5fceba0da51fddaf8105c260e8",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "two-fields",
+        "ms": 1,
+        "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+        "stars": 3,
+        "valid": true,
+        "expected": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+        "matches": true,
+        "verification_layout": "canonical"
+      },
+      {
+        "challenge": "beat-the-planner",
+        "level": "bog",
+        "ms": 1,
+        "hash": "2fee3a794ebc521983a7066094bde69dfc92bd93016d0c2a88593cee82d05551",
+        "stars": 1,
+        "valid": true,
+        "expected": "2fee3a794ebc521983a7066094bde69dfc92bd93016d0c2a88593cee82d05551",
+        "matches": true,
+        "verification_layout": "canonical"
+      }
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/links-delta-verified.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "tool",
+      "engine",
+      "seconds",
+      "checked",
+      "matched",
+      "failures",
+      "rows"
+    ],
+    "summary": {
+      "tool": "coco verify (lab_web/tools/verify.mjs)",
+      "engine": "Pyodide 314.0.7, Node v24.21.0",
+      "seconds": 6.998,
+      "checked": 1,
+      "matched": 1,
+      "failures": 0
+    },
+    "rows": [
+      {
+        "challenge": "map-the-arena",
+        "level": "twenty-five-metres",
+        "ms": 6997,
+        "hash": "b20b7c85779a61bd6d425c5cafdaafbad2dcd24688c5d9a966cc34fec149e0f5",
+        "stars": 1,
+        "valid": true,
+        "expected": "b20b7c85779a61bd6d425c5cafdaafbad2dcd24688c5d9a966cc34fec149e0f5",
+        "matches": true,
+        "verification_layout": "canonical"
+      }
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/defects",
+    "last_commit": "1d9fbdb [M5.1] Bound links, preserve v1 verification and close the defect regressions"
+  },
+  {
+    "path": "docs/v2/data/m5/close/urls/v1_links_check.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "conditions",
+      "site",
+      "forms",
+      "archive_views",
+      "ok"
+    ],
+    "summary": {
+      "conditions": null,
+      "site": "http://127.0.0.1:4213/coco-labs/",
+      "ok": true
+    }
+  },
+  {
+    "path": "docs/v2/data/m5/close/replays/replay_check.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "conditions",
+      "site",
+      "runs",
+      "errors",
+      "pass"
+    ],
+    "summary": {
+      "site": "http://127.0.0.1:4213/coco-labs/",
+      "pass": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:10:37.098Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 12.34,
+          "5m": 10.93,
+          "15m": 5.86
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:11:46.370Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 9.65,
+          "5m": 10.36,
+          "15m": 6.03
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    }
+  },
+  {
+    "path": "docs/v2/data/m5/close/canvases/screenshots.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "conditions",
+      "mode",
+      "site",
+      "renderer",
+      "channel_tol",
+      "max_bad",
+      "results",
+      "errors",
+      "pass"
+    ],
+    "summary": {
+      "mode": "check",
+      "site": "http://127.0.0.1:4213/coco-labs/",
+      "renderer": "chromium default (SwiftShader)",
+      "channel_tol": 40,
+      "max_bad": 0.005,
+      "pass": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:11:47.184Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 9.65,
+          "5m": 10.36,
+          "15m": 6.03
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:12:35.070Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 13.72,
+          "5m": 11.4,
+          "15m": 6.59
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    },
+    "results": [
+      "self_test",
+      "trace_bfs_no_path",
+      "trace_costmap_astar",
+      "stack_lab1c_astar_t400",
+      "stack_lab1c_greedy_t300",
+      "attract_t200"
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/compare/REPORT.md",
+    "last_commit": "778138b [M5.7] Compare existing algorithms on shared layered costmaps",
+    "selected_lines": [
+      "cell hover, lethal/inscribed contours and A/B/both difference patterns are available.",
+      "these functional captures are not device performance claims.",
+      "Seven original missions retain claims and evidence inside guided tours, with existing",
+      "mapping/decision Inspect continuations. Five additional story tours each cite committed",
+      "- All 12 package suites passed (`packages-closure.txt`); after the byte-preserving",
+      "  v2 encoder optimization, affected coco_lab passed 834 (`packages-cached.txt`).",
+      "- Web: 486 passed (`vitest-cached.txt`); tools: 204 (`tools-final.txt`); typecheck",
+      "  and production build passed (`build-cached.txt`).",
+      "- Twelve tours and frozen Play costmap hash/input-log checks: closure-live/checks.json.",
+      "| Hand-computed bands, diagonal distance, scan projection and family batching | 16 passed | `coco_lab/test/test_costmap.py`; included in package run |",
+      "| Optional inflation preserves state bytes, hash, chain and graph for v1/v2 and 2/4 panes | 4 passed | `glue-four-panes.txt`, `lab_web/tools/test_costmap_glue.py`; earlier 2-case run retained |",
+      "| Build-tool suite | 197 passed, before 195 | `tools-costmap.txt` |",
+      "| Web suite | 482 passed, before 477; repeated after request extension | `vitest-four-panes.txt`; first run retained |",
+      "| Cross-language schema subset | 22 passed | `web-schema.txt` |",
+      "| Scissor tiling/no overlap/portrait order | 3 passed | `pane-layout.txt` |",
+      "| Typecheck | passed after four-pane request extension | `typecheck-four-panes.txt` |",
+      "| Production build | passed; existing chunk-size warning retained | `build-costmap.txt` |",
+      "| Affected package suites | coco_lab 821 passed, 3 lint failures; coco_schemas 231 passed | `packages-costmap.txt` |",
+      "| Corrected copyright/import/indent/docstring lint issues, plus costmap tests | 19 passed | `lints-fixed.txt`; original failures retained in `lints-initial.txt` |",
+      "lockstep timeline, measured results and evidence-backed tours; test all old"
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/recordings/REPORT.md",
+    "last_commit": "ea0e2c3 [M5.8] Open every recording through a searchable evidence library",
+    "selected_lines": [
+      "Every static Case File (100) and converted run (65) has its own card: 165 entries,",
+      "Case File investigations preserve their original claims, members and references.",
+      "- `screens/recordings/frozen/checks.json` (relative to data/m5): all 165 source",
+      "- `vitest-frozen.txt`: 488 passed, including two library regressions.",
+      "- `tools.txt`: 205 passed; frozen rerun retained separately.",
+      "source status follow_failed initially unclassified (fixed and regression-tested),"
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/agent-overhead/MOVES.md",
+    "last_commit": "eb5edbc [M5.2] Archive agent lore and relocate frozen RL scripts",
+    "selected_lines": [
+      "Evidence class: TESTED (repository structure); historical MODEL/STACK/REMOTE claims retain their classes.",
+      "- docs/STATUS.md \u2192 docs/v2/STATUS_HISTORY.md (relative Markdown targets repaired; historical claims retained).",
+      "New small pointer pages replace root CLAUDE and PROJECT_STATE. AGENTS has 178 lines; STATUS has 81 lines at structural check. Bash root discovery traverses ../..; login hook and resume invocation follow new paths. Bash syntax checks and Python AST parsing pass; no training/simulator is run.",
+      "- PROJECT_STATE and prior STATUS compare identically after replacing only Markdown link targets with placeholders; no claim text changed.",
+      "- Active agent-rule comment references in scripts/run_all_package_tests.sh and scripts/live_check/run_b.sh now point to AGENTS.md.",
+      "- Two late M5.1 harnesses recorded conditions but failed the strict source-format check. Import/output formatting now matches its start/end convention; original data unchanged. conditions-recheck.txt: 44 passed; tools-clean.txt: 195 passed.",
+      "- The first package run passed all 3534 tests but its runner exited 2 after a comment edit while executing. This operational mistake is retained in packages.txt; the clean rerun passed all 12 packages (3534 tests), packages-clean.txt."
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/accessibility-final/checks.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "pages",
+      "errors",
+      "passed",
+      "conditions"
+    ],
+    "summary": {
+      "passed": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:04:59.987Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 6.09,
+          "5m": 2.98,
+          "15m": 1.93
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:05:21.152Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 7.01,
+          "5m": 3.46,
+          "15m": 2.12
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    }
+  },
+  {
+    "path": "docs/v2/data/m5/close/keyboard-proof/checks.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "cases",
+      "errors",
+      "grid",
+      "passed",
+      "conditions"
+    ],
+    "summary": {
+      "passed": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:15:01.555Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 9.19,
+          "5m": 10.45,
+          "15m": 6.96
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:15:39.944Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 9.64,
+          "5m": 10.41,
+          "15m": 7.07
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    },
+    "cases": [
+      {
+        "profile": "desktop",
+        "device": "desktop",
+        "visibleComputationMs": 7999.89990234375,
+        "unchangedHash": "e67e6c8d8fdcb8f7bfd2da7ccad652d3db0e22b7b43106027a833960a5ec50a5",
+        "costmapTick": 8,
+        "keyboardGoal": true
+      },
+      {
+        "profile": "landscape",
+        "device": "emulated Nothing Phone (1)",
+        "visibleComputationMs": 8844.800048828125,
+        "unchangedHash": "0ce4f06a6dd9c85680f63ca0f6c8a5fd24255fa8f6da289bb6510fbf88f13cdd",
+        "costmapTick": 12,
+        "keyboardGoal": true
+      },
+      {
+        "profile": "portrait",
+        "device": "emulated Nothing Phone (1)",
+        "rotate": "no computation marker under rotate card"
+      }
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/screens/reference/README.md",
+    "last_commit": "592d1d9 [M5.4] Establish Night Shift tokens and rendered reference screens",
+    "selected_lines": []
+  },
+  {
+    "path": "docs/v2/data/m5/close/soak-final/soak3d_nvidia.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "criterion",
+      "minutes",
+      "rounds",
+      "gpu",
+      "context_lost",
+      "context_restored",
+      "errors",
+      "error_samples",
+      "long_tasks_while_driving",
+      "long_tasks_while_driving_max_ms",
+      "long_tasks_other",
+      "long_tasks_other_max_ms",
+      "fps_p05",
+      "fps_median",
+      "fps_seconds",
+      "pass",
+      "conditions"
+    ],
+    "summary": {
+      "criterion": "M4.10: no WebGL context loss and 0 console errors in a 30-minute scripted session; no long tasks while driving",
+      "minutes": 30.162183333333335,
+      "rounds": 34,
+      "gpu": "nvidia",
+      "context_lost": 0,
+      "context_restored": 0,
+      "errors": 0,
+      "long_tasks_while_driving": 0,
+      "long_tasks_while_driving_max_ms": 0,
+      "long_tasks_other": 0,
+      "long_tasks_other_max_ms": 0,
+      "fps_p05": 59.99803285138467,
+      "fps_median": 60.00393468423609,
+      "fps_seconds": 1793,
+      "pass": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:20:17.486Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 5.76,
+          "5m": 7.49,
+          "15m": 6.68
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:50:32.960Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 1.21,
+          "5m": 1.17,
+          "15m": 2.35
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    }
+  },
+  {
+    "path": "docs/v2/USABILITY_TEST_M5.md",
+    "last_commit": "bf3fb3e [M5.10] Prepare three-mode launch drafts and record the local demo",
+    "selected_lines": [
+      "completed evidence from STATUS, M5_RESULTS and the release draft before public launch."
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/fps/checks.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "cases",
+      "passed",
+      "conditions"
+    ],
+    "summary": {
+      "passed": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:14:14.968Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 10.22,
+          "5m": 10.71,
+          "15m": 6.84
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-18T01:16:01.183Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Full",
+          "capacity_pct": 100
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 8.47,
+          "5m": 10.07,
+          "15m": 7.05
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    },
+    "cases": [
+      {
+        "gpu": "nvidia",
+        "mode": "play",
+        "quality": "high",
+        "lost": 0,
+        "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+        "driverSoftware": "libgl1-mesa-dri 25.2.8-0ubuntu0.24.04.2\nmesa-vulkan-drivers 25.2.8-0ubuntu0.24.04.2",
+        "actualTier": "high",
+        "actual3D": true,
+        "median": 59.96230940521038,
+        "minimum": 59.41978329224557,
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-18T01:14:47.704Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Full",
+            "capacity_pct": 100
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 9.9,
+            "5m": 10.65,
+            "15m": 6.96
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "gpu": "intel",
+        "mode": "play",
+        "quality": "medium",
+        "lost": 0,
+        "renderer": "ANGLE (Intel, Vulkan 1.4.318 (Intel(R) Graphics (RPL-P) (0x0000A7A8)), Intel open-source Mesa driver)",
+        "driverSoftware": "libgl1-mesa-dri 25.2.8-0ubuntu0.24.04.2\nmesa-vulkan-drivers 25.2.8-0ubuntu0.24.04.2",
+        "actualTier": "medium",
+        "actual3D": true,
+        "median": 60.01500375153408,
+        "minimum": 59.36675461756013,
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-18T01:15:21.961Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Full",
+            "capacity_pct": 100
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 9.53,
+            "5m": 10.43,
+            "15m": 7.02
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      },
+      {
+        "gpu": "intel",
+        "mode": "compare",
+        "quality": "auto",
+        "lost": 0,
+        "renderer": "ANGLE (Intel, Vulkan 1.4.318 (Intel(R) Graphics (RPL-P) (0x0000A7A8)), Intel open-source Mesa driver)",
+        "driverSoftware": "libgl1-mesa-dri 25.2.8-0ubuntu0.24.04.2\nmesa-vulkan-drivers 25.2.8-0ubuntu0.24.04.2",
+        "actualTier": "low",
+        "median": 11.516654854743376,
+        "minimum": 7.044734061326162,
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-18T01:16:00.911Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Full",
+            "capacity_pct": 100
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 8.69,
+            "5m": 10.14,
+            "15m": 7.05
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      }
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close",
+    "last_commit": "fe9d544 [M5.11] Record pull request 25 and remaining launch gates"
+  },
+  {
+    "path": "docs/v2/data/m5/close/packages-final.txt",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "selected_lines": [
+      "93 passed in 0.80s",
+      "323 passed in 3.69s",
+      "371 passed in 11.42s",
+      "863 passed, 12 warnings in 27.37s",
+      "231 passed in 19.06s",
+      "251 passed in 13.63s",
+      "139 passed, 12 warnings in 3.00s",
+      "12 passed in 0.73s",
+      "75 passed, 12 warnings in 2.64s",
+      "834 passed in 558.68s (0:09:18)",
+      "145 passed, 15 warnings in 21.67s",
+      "232 passed, 3 warnings in 6.94s",
+      "coco_config          ok   93 passed in 0.80s",
+      "coco_sim             ok   323 passed in 3.69s",
+      "coco_mission         ok   371 passed in 11.42s",
+      "coco_web             ok   863 passed, 12 warnings in 27.37s",
+      "gazebo_models        ok   231 passed in 19.06s",
+      "coco_rl              ok   251 passed in 13.63s",
+      "coco_perception      ok   139 passed, 12 warnings in 3.00s",
+      "coco_moveit_config   ok   12 passed in 0.73s",
+      "custom_teleop        ok   75 passed, 12 warnings in 2.64s",
+      "coco_lab             ok   834 passed in 558.68s (0:09:18)",
+      "coco_lab_ros         ok   145 passed, 15 warnings in 21.67s",
+      "coco_schemas         ok   232 passed, 3 warnings in 6.94s",
+      "[tests] all 12 packages passed"
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/vitest-close.txt",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "selected_lines": [
+      " Test Files  62 passed (62)",
+      "      Tests  493 passed (493)"
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/tools.txt",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "selected_lines": [
+      "209 passed in 631.80s (0:10:31)"
+    ]
+  },
+  {
+    "path": "docs/v2/adr/0008-state-hash-v2.md",
+    "last_commit": "1d9fbdb [M5.1] Bound links, preserve v1 verification and close the defect regressions",
+    "selected_lines": [
+      "run; this ADR alone does not assert those measurements passed."
+    ]
+  },
+  {
+    "path": "docs/v2/adr/0009-v2-encoding-cache.md",
+    "last_commit": "778138b [M5.7] Compare existing algorithms on shared layered costmaps",
+    "selected_lines": []
+  },
+  {
+    "path": "docs/v2/data/m5/close/phone-ten-minutes-visible/checks.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "device",
+      "scope",
+      "errors",
+      "samples",
+      "touchLatencyMs",
+      "lost",
+      "reloads",
+      "renderer",
+      "elapsedSeconds",
+      "firstMinute",
+      "tenMinutes",
+      "passed",
+      "conditions"
+    ],
+    "summary": {
+      "device": "emulated Nothing Phone (1)",
+      "scope": "Viewport/CPU/network emulation on laptop GPU; no phone heat/battery inference",
+      "lost": 0,
+      "reloads": 0,
+      "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+      "elapsedSeconds": 600.225,
+      "passed": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:34:09.045Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 80
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 2.61,
+          "5m": 1.68,
+          "15m": 1.1
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:45:00.324Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 89
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 4.06,
+          "5m": 3.79,
+          "15m": 2.56
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    }
+  },
+  {
+    "path": "docs/v2/data/m5/close/compare-final/checks.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "conditions",
+      "browser",
+      "cases",
+      "passed",
+      "conditions_end"
+    ],
+    "summary": {
+      "browser": "156.0.8078.4",
+      "passed": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:46:20.540Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 89
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 2.68,
+          "5m": 3.45,
+          "15m": 2.54
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:46:56.573Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 90
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 2.72,
+          "5m": 3.37,
+          "15m": 2.55
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    },
+    "cases": [
+      {
+        "name": "desktop",
+        "device": "desktop viewport",
+        "panes": 2,
+        "layout": {
+          "scroll": [
+            1440,
+            900
+          ],
+          "viewport": [
+            1440,
+            900
+          ],
+          "stage": {
+            "x": 0,
+            "y": 71,
+            "width": 1140,
+            "height": 621
+          },
+          "contexts": 1,
+          "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+          "labels": [
+            {
+              "x": 0,
+              "y": 71,
+              "width": 570,
+              "height": 621,
+              "top": 71,
+              "right": 570,
+              "bottom": 692,
+              "left": 0
+            },
+            {
+              "x": 570,
+              "y": 71,
+              "width": 570,
+              "height": 621,
+              "top": 71,
+              "right": 1140,
+              "bottom": 692,
+              "left": 570
+            }
+          ]
+        }
+      },
+      {
+        "name": "desktop",
+        "device": "desktop viewport",
+        "panes": 4,
+        "layout": {
+          "scroll": [
+            1440,
+            900
+          ],
+          "viewport": [
+            1440,
+            900
+          ],
+          "stage": {
+            "x": 0,
+            "y": 71,
+            "width": 1140,
+            "height": 605
+          },
+          "contexts": 1,
+          "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+          "labels": [
+            {
+              "x": 0,
+              "y": 71,
+              "width": 570,
+              "height": 302.5,
+              "top": 71,
+              "right": 570,
+              "bottom": 373.5,
+              "left": 0
+            },
+            {
+              "x": 570,
+              "y": 71,
+              "width": 570,
+              "height": 302.5,
+              "top": 71,
+              "right": 1140,
+              "bottom": 373.5,
+              "left": 570
+            },
+            {
+              "x": 0,
+              "y": 373.5,
+              "width": 570,
+              "height": 302.5,
+              "top": 373.5,
+              "right": 570,
+              "bottom": 676,
+              "left": 0
+            },
+            {
+              "x": 570,
+              "y": 373.5,
+              "width": 570,
+              "height": 302.5,
+              "top": 373.5,
+              "right": 1140,
+              "bottom": 676,
+              "left": 570
+            }
+          ]
+        }
+      },
+      {
+        "name": "compact",
+        "device": "desktop viewport",
+        "panes": 2,
+        "layout": {
+          "scroll": [
+            844,
+            390
+          ],
+          "viewport": [
+            844,
+            390
+          ],
+          "stage": {
+            "x": 0,
+            "y": 71,
+            "width": 844,
+            "height": 159
+          },
+          "contexts": 1,
+          "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+          "labels": [
+            {
+              "x": 0,
+              "y": 71,
+              "width": 422,
+              "height": 159,
+              "top": 71,
+              "right": 422,
+              "bottom": 230,
+              "left": 0
+            },
+            {
+              "x": 422,
+              "y": 71,
+              "width": 422,
+              "height": 159,
+              "top": 71,
+              "right": 844,
+              "bottom": 230,
+              "left": 422
+            }
+          ]
+        }
+      },
+      {
+        "name": "compact",
+        "device": "desktop viewport",
+        "panes": 4,
+        "layout": {
+          "scroll": [
+            844,
+            390
+          ],
+          "viewport": [
+            844,
+            390
+          ],
+          "stage": {
+            "x": 0,
+            "y": 71,
+            "width": 844,
+            "height": 159
+          },
+          "contexts": 1,
+          "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+          "labels": [
+            {
+              "x": 0,
+              "y": 71,
+              "width": 422,
+              "height": 79.5,
+              "top": 71,
+              "right": 422,
+              "bottom": 150.5,
+              "left": 0
+            },
+            {
+              "x": 422,
+              "y": 71,
+              "width": 422,
+              "height": 79.5,
+              "top": 71,
+              "right": 844,
+              "bottom": 150.5,
+              "left": 422
+            },
+            {
+              "x": 0,
+              "y": 150.5,
+              "width": 422,
+              "height": 79.5,
+              "top": 150.5,
+              "right": 422,
+              "bottom": 230,
+              "left": 0
+            },
+            {
+              "x": 422,
+              "y": 150.5,
+              "width": 422,
+              "height": 79.5,
+              "top": 150.5,
+              "right": 844,
+              "bottom": 230,
+              "left": 422
+            }
+          ]
+        }
+      },
+      {
+        "name": "nothing-landscape",
+        "device": "emulated Nothing Phone (1)",
+        "panes": 2,
+        "layout": {
+          "scroll": [
+            915,
+            412
+          ],
+          "viewport": [
+            915,
+            412
+          ],
+          "stage": {
+            "x": 0,
+            "y": 71,
+            "width": 915,
+            "height": 181
+          },
+          "contexts": 1,
+          "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+          "labels": [
+            {
+              "x": 0,
+              "y": 71,
+              "width": 457.5,
+              "height": 181,
+              "top": 71,
+              "right": 457.5,
+              "bottom": 252,
+              "left": 0
+            },
+            {
+              "x": 457.5,
+              "y": 71,
+              "width": 457.5,
+              "height": 181,
+              "top": 71,
+              "right": 915,
+              "bottom": 252,
+              "left": 457.5
+            }
+          ]
+        }
+      },
+      {
+        "name": "nothing-landscape",
+        "device": "emulated Nothing Phone (1)",
+        "panes": 4,
+        "layout": {
+          "scroll": [
+            915,
+            412
+          ],
+          "viewport": [
+            915,
+            412
+          ],
+          "stage": {
+            "x": 0,
+            "y": 71,
+            "width": 915,
+            "height": 181
+          },
+          "contexts": 1,
+          "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+          "labels": [
+            {
+              "x": 0,
+              "y": 71,
+              "width": 457.5,
+              "height": 90.5,
+              "top": 71,
+              "right": 457.5,
+              "bottom": 161.5,
+              "left": 0
+            },
+            {
+              "x": 457.5,
+              "y": 71,
+              "width": 457.5,
+              "height": 90.5,
+              "top": 71,
+              "right": 915,
+              "bottom": 161.5,
+              "left": 457.5
+            },
+            {
+              "x": 0,
+              "y": 161.5,
+              "width": 457.5,
+              "height": 90.5,
+              "top": 161.5,
+              "right": 457.5,
+              "bottom": 252,
+              "left": 0
+            },
+            {
+              "x": 457.5,
+              "y": 161.5,
+              "width": 457.5,
+              "height": 90.5,
+              "top": 161.5,
+              "right": 915,
+              "bottom": 252,
+              "left": 457.5
+            }
+          ]
+        }
+      },
+      {
+        "name": "nothing-portrait",
+        "device": "emulated Nothing Phone (1)",
+        "panes": 2,
+        "layout": {
+          "scroll": [
+            412,
+            915
+          ],
+          "viewport": [
+            412,
+            915
+          ],
+          "stage": {
+            "x": 0,
+            "y": 127,
+            "width": 412,
+            "height": 628
+          },
+          "contexts": 1,
+          "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+          "labels": [
+            {
+              "x": 0,
+              "y": 127,
+              "width": 412,
+              "height": 314,
+              "top": 127,
+              "right": 412,
+              "bottom": 441,
+              "left": 0
+            },
+            {
+              "x": 0,
+              "y": 441,
+              "width": 412,
+              "height": 314,
+              "top": 441,
+              "right": 412,
+              "bottom": 755,
+              "left": 0
+            }
+          ]
+        }
+      },
+      {
+        "name": "nothing-portrait",
+        "device": "emulated Nothing Phone (1)",
+        "panes": 4,
+        "layout": {
+          "scroll": [
+            412,
+            915
+          ],
+          "viewport": [
+            412,
+            915
+          ],
+          "stage": {
+            "x": 0,
+            "y": 127,
+            "width": 412,
+            "height": 628
+          },
+          "contexts": 1,
+          "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+          "labels": [
+            {
+              "x": 0,
+              "y": 127,
+              "width": 412,
+              "height": 157,
+              "top": 127,
+              "right": 412,
+              "bottom": 284,
+              "left": 0
+            },
+            {
+              "x": 0,
+              "y": 284,
+              "width": 412,
+              "height": 157,
+              "top": 284,
+              "right": 412,
+              "bottom": 441,
+              "left": 0
+            },
+            {
+              "x": 0,
+              "y": 441,
+              "width": 412,
+              "height": 157,
+              "top": 441,
+              "right": 412,
+              "bottom": 598,
+              "left": 0
+            },
+            {
+              "x": 0,
+              "y": 598,
+              "width": 412,
+              "height": 157,
+              "top": 598,
+              "right": 412,
+              "bottom": 755,
+              "left": 0
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/fps-final/checks.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "cases",
+      "passed",
+      "conditions"
+    ],
+    "summary": {
+      "passed": true
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:48:26.311Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 91
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 2.03,
+          "5m": 3.02,
+          "15m": 2.5
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:48:57.798Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 91
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 2.04,
+          "5m": 2.93,
+          "15m": 2.49
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    },
+    "cases": [
+      {
+        "gpu": "intel",
+        "mode": "compare",
+        "quality": "auto",
+        "lost": 0,
+        "renderer": "ANGLE (Intel, Vulkan 1.4.318 (Intel(R) Graphics (RPL-P) (0x0000A7A8)), Intel open-source Mesa driver)",
+        "driverSoftware": "libgl1-mesa-dri 25.2.8-0ubuntu0.24.04.2\nmesa-vulkan-drivers 25.2.8-0ubuntu0.24.04.2",
+        "actualTier": "high",
+        "median": 60.02508511003504,
+        "minimum": 59.42198613471046,
+        "completed": true,
+        "conditions_end": {
+          "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+          "at_utc": "2026-10-19T00:48:57.607Z",
+          "power_profile": "balanced",
+          "ac_power": true,
+          "battery": {
+            "status": "Charging",
+            "capacity_pct": 91
+          },
+          "cpu_governor": "powersave",
+          "load_average": {
+            "1m": 2.04,
+            "5m": 2.93,
+            "15m": 2.49
+          },
+          "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+          "threads": 12,
+          "standard": true
+        }
+      }
+    ]
+  },
+  {
+    "path": "docs/v2/data/m5/close/installability.json",
+    "last_commit": "6d984fd [M5.11] Record acceptance evidence and explicit launch limitations",
+    "top_keys": [
+      "scope",
+      "manifest",
+      "installability",
+      "conditions"
+    ],
+    "summary": {
+      "scope": "Desktop Chrome manifest/installability check; not a real Android install"
+    },
+    "conditions": {
+      "start": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:50:01.956Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 91
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 3.98,
+          "5m": 3.14,
+          "15m": 2.58
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      },
+      "end": {
+        "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+        "at_utc": "2026-10-19T00:50:08.850Z",
+        "power_profile": "balanced",
+        "ac_power": true,
+        "battery": {
+          "status": "Charging",
+          "capacity_pct": 91
+        },
+        "cpu_governor": "powersave",
+        "load_average": {
+          "1m": 5.75,
+          "5m": 3.52,
+          "15m": 2.71
+        },
+        "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+        "threads": 12,
+        "standard": true
+      }
+    }
+  }
+]

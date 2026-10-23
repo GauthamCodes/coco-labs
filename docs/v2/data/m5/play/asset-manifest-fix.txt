@@ -1,0 +1,13 @@
+
+> coco-lab-web@0.1.0 test
+> vitest run test/assets3d.test.ts
+
+
+ RUN  v5.0.2 /home/gautham/coco_labs_ws/src/coco-labs/lab_web
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  22:58:01
+   Duration  1.27s (tests 88%, transform 10%, import 2%)
+

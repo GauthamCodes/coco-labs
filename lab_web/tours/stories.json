@@ -1,0 +1,26 @@
+[
+ {"id":"story-44mm","title":"The 44 mm band","family":"global","names":["astar","dijkstra"],"radius":0.2,"claims":[
+  {"text":"The recorded planner/monitor mismatch left a 44 mm band legal to the local planner but terminal to the collision monitor.","evidence":["docs/agents/C2-NAV.48_RESULTS.md"]},
+  {"text":"The corrective configuration changed robot_radius from 0.20 to 0.25 m; try the radius slider here, whose circular MODEL footprint differs from the Stack's padded polygon.","evidence":["docs/agents/C2-NAV.48_RESULTS.md","coco_lab/coco_lab/costmap.py"]},
+  {"text":"The subsequent twelve-run matrix showed no recurrence or regression, but never exercised the corrective band and was not an A/B test of the fix.","evidence":["docs/agents/C2-NAV.49_RESULTS.md"]}
+ ]},
+ {"id":"story-astar","title":"The A* myth","family":"global","names":["astar","dijkstra"],"radius":0.25,"claims":[
+  {"text":"The historical 6.2% claim compared planner implementations, not a controlled A* versus Dijkstra experiment, and remains neither reproduced nor refuted.","evidence":["docs/labs/LAB1_PLAN.md","docs/RESULTS.md"]},
+  {"text":"The internship simulator's reported 4% difference was not reproduced on fixed inputs.","evidence":["docs/labs/ISRO_INVESTIGATION.md"]},
+  {"text":"This comparison holds the graph and cost function fixed while changing the search, using the existing Python references.","evidence":["coco_lab/coco_lab/compare_planning.py","lab_web/src/arena/arena_glue.py"]}
+ ]},
+ {"id":"story-dstar","title":"D* Lite's 2.9×","family":"global","names":["astar","dstar_lite"],"radius":0.25,"claims":[
+  {"text":"After the recorded costmap update, D* Lite used 3209 expansions while fresh A* used 1114, with the same path cost.","evidence":["docs/labs/LAB5_MOVE.md","docs/data/lab5/replan_c.json","docs/data/lab5/replan/arena_c/manifest.json"]},
+  {"text":"The extra work on this change remains unattributed; it does not establish that repair is always cheaper or always dearer than fresh search.","evidence":["docs/labs/LAB5_MOVE.md"]},
+  {"text":"The panes here show a first plan on the shared MODEL graph, while the linked evidence contains the recorded before/after costmap experiment.","evidence":["coco_lab/coco_lab/compare_planning.py","docs/data/lab5/replan_c.json"]}
+ ]},
+ {"id":"story-hairpin","title":"The Lab 5 hairpin","family":"control","names":["dwa","rpp"],"radius":0.25,"claims":[
+  {"text":"Recorded DWB completed zero of five static-room hairpin runs, and the stall's cause remains unresolved.","evidence":["docs/labs/LAB5_MOVE.md","docs/data/lab5/results.json"]},
+  {"text":"These panes use the DWA-style and pure-pursuit teaching controllers, not Nav2's code or a reconstruction of the recorded hairpin outcome.","evidence":["coco_lab/coco_lab/control.py","coco_lab/coco_lab/compare_loop.py"]}
+ ]},
+ {"id":"story-run15","title":"Run 15","family":"localise","names":["mcl","mcl_augmented"],"radius":0.25,"claims":[
+  {"text":"Historical Run 15 had a valid global path while the robot's localization belief was 3.4 m from truth.","evidence":["docs/labs/LAB5_MOVE.md","docs/RESULTS.md"]},
+  {"text":"Nine later Stack runs reproduced the invalid-local-path mechanism, but did not reproduce the exact historical zero-of-819 symptom.","evidence":["docs/labs/LAB5_MOVE.md"]},
+  {"text":"The shared MODEL relocation here compares localization filters and is not a replay of Run 15.","evidence":["coco_lab/coco_lab/compare_loop.py","docs/labs/LAB5_MOVE.md"]}
+ ]}
+]

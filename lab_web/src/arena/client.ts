@@ -8,15 +8,17 @@
  */
 
 import { PYODIDE_INDEX_URL } from '../../site.config.ts';
-import { wallMs, type BootRequest, type CompareSide, type FamilyMessage, type FromWorker, type InputRow, type SearchColumns, type SpecFile, type Tick, type World } from './protocol';
+import { wallMs, type BootRequest, type CompareResult, type CompareInflation, type FamilyMessage, type FromWorker, type InputRow, type SearchColumns, type SpecFile, type Tick, type World } from './protocol';
 import { perf } from './perf';
+import { claimWarmWorker } from './worker_pool';
 
 export interface ArenaEvents {
+  onLoopCompareBatch?(frames: import('./protocol').LoopFrame[][], done: boolean): void;
   onWorld?(world: World, occupancy: Uint8Array): void;
   onPlanBatch?(meta: Extract<FromWorker, { type: 'plan_batch' }>['meta'], columns: SearchColumns): void;
   onTick?(tick: Tick, ranges: Float32Array): void;
   onCompareBatch?(meta: Extract<FromWorker, { type: 'plan_batch' }>['meta'], columns: SearchColumns): void;
-  onCompareDone?(result: { A: CompareSide; B: CompareSide }): void;
+  onCompareDone?(result: CompareResult): void;
   onError?(stage: string, message: string): void;
   /** M2.2: a whole-loop family batch or a channel's static header. */
   onFamily?(msg: FamilyMessage): void;
@@ -32,11 +34,15 @@ export class ArenaClient {
   tick = 0;
   private readonly ready: Promise<World>;
 
-  constructor(ev: ArenaEvents, opts: { seed?: number; planner?: string; pyodide?: PyodideSource; spec?: SpecFile } = {}) {
+  constructor(ev: ArenaEvents, opts: { hashVersion?: 1 | 2; seed?: number; planner?: string; pyodide?: PyodideSource; spec?: SpecFile } = {}) {
     const base = import.meta.env.BASE_URL;
     perf.mark('worker_create', wallMs());
-    this.worker = new Worker(new URL('./arena.worker.ts', import.meta.url), { type: 'module' });
+    this.worker = claimWarmWorker(opts.pyodide !== 'cdn');
     this.ready = new Promise((resolve, reject) => {
+      this.worker.onerror = (event) => {
+        const message = event.message || 'The model worker could not load';
+        ev.onError?.('worker', message); reject(new Error(message));
+      };
       this.worker.onmessage = (m: MessageEvent<FromWorker>) => {
         const d = m.data;
         if (d.type === 'mark') perf.mark(d.name, d.at);
@@ -52,6 +58,8 @@ export class ArenaClient {
           perf.planBatch(d.columns.seq.length, d.at);
           if (d.meta.compare) ev.onCompareBatch?.(d.meta, d.columns);
           else ev.onPlanBatch?.(d.meta, d.columns);
+        } else if (d.type === 'compare_loop_batch') {
+          ev.onLoopCompareBatch?.(d.frames, d.done);
         } else if (d.type === 'compare_done') {
           ev.onCompareDone?.(d.result);
         } else if (d.type === 'play_done') {
@@ -69,6 +77,9 @@ export class ArenaClient {
         }
       };
     });
+    // Event-only users report errors through onError; promise users still get
+    // the original rejection when they call whenReady().
+    void this.ready.catch(() => {});
     const boot: BootRequest = {
       type: 'boot',
       pyodideBase: opts.pyodide === 'cdn' ? PYODIDE_INDEX_URL : `${base}generated/pyodide/`,
@@ -76,6 +87,7 @@ export class ArenaClient {
       seed: opts.seed ?? 1,
       planner: opts.planner ?? 'astar',
       batchSize: 2048,
+      hashVersion: opts.hashVersion ?? 1,
       ...(opts.spec ? { spec: opts.spec } : {}),
     };
     this.worker.postMessage(boot);
@@ -115,9 +127,21 @@ export class ArenaClient {
   }
 
   /** Two planners on the same start, goal and seed; the model is unchanged. */
-  compare(a: string, b: string, x: number, y: number): void {
-    this.worker.postMessage({ type: 'compare', a, b, x, y });
+  compare(a: string, b: string, x: number, y: number, inflation?: import('./protocol').CompareInflation): void {
+    this.worker.postMessage({ type: 'compare', a, b, x, y, ...(inflation ? { inflation } : {}) });
   }
+
+  /** One graph/start/goal for every pane; Python validates the two/four names. */
+  compareMany(planners: string[], x: number, y: number, inflation?: CompareInflation): void {
+    if (planners.length !== 2 && planners.length !== 4) throw new Error('Compare needs two or four planners');
+    this.worker.postMessage({ type: 'compare', a: planners[0], b: planners[1], planners, x, y, ...(inflation ? { inflation } : {}) });
+  }
+
+  compareLoop(request: Omit<import('./protocol').LoopCompareRequest, 'type'>): void {
+    this.worker.postMessage({ type: 'compare_loop', ...request });
+  }
+
+  requestCostmap(): void { this.worker.postMessage({ type: 'costmap_view' }); }
 
   private playNext = 1;
   private readonly playWaiting = new Map<number, { resolve: (v: unknown) => void; reject: (e: Error) => void }>();

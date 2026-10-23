@@ -7,9 +7,10 @@ import { resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import react from '@vitejs/plugin-react';
+import { TOKEN_CSS } from './src/ui/tokens.ts';
 import { defineConfig } from 'vitest/config';
 
-import { DEFAULT_BASE, DEFAULT_LANDING, liveConnectSrc, PYODIDE_INDEX_URL, PYODIDE_VERSION } from './site.config.ts';
+import { DEFAULT_BASE, DEFAULT_LANDING, counterConnectSrc, liveConnectSrc, PYODIDE_INDEX_URL, PYODIDE_VERSION } from './site.config.ts';
 
 /** coco_web's own binary-frame decoder: shipped as-is, never ported. */
 const FRAME_JS = fileURLToPath(new URL('../coco_web/web/frame.js', import.meta.url));
@@ -46,6 +47,7 @@ export default defineConfig({
   base,
   plugins: [
     react(),
+    { name: 'coco-night-shift-tokens', transformIndexHtml: () => [{ tag: 'style', attrs: { id: 'coco-design-tokens' }, children: TOKEN_CSS, injectTo: 'head-prepend' }] },
     {
       name: 'coco-lab-gzip-as-bytes',
       configureServer: (server) => {
@@ -60,7 +62,7 @@ export default defineConfig({
       // site.config.ts so the two can never disagree.
       name: 'coco-lab-csp',
       transformIndexHtml: (html: string) => html.replaceAll('%PYODIDE_INDEX_URL%', PYODIDE_INDEX_URL)
-        .replaceAll('%LIVE_CONNECT_SRC%', liveConnectSrc().join(' ')),
+        .replaceAll('%LIVE_CONNECT_SRC%', [...liveConnectSrc(), ...counterConnectSrc()].join(' ')),
     },
     {
       // The Live tab decodes binary sensor frames with coco_web/web/frame.js
@@ -88,9 +90,18 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
+    // Fonts stay same-origin files, including tiny subsets; CSP forbids data fonts.
+    assetsInlineLimit: 0,
     emptyOutDir: true,
     sourcemap: false,
     target: 'es2022',
+    rolldownOptions: {
+      output: {
+        // Content-hashed engine chunk stays stable across shell changes.
+        // The shared fflate utility must not pull the engine into 2D Play links.
+        codeSplitting: { groups: [{ name: 'three', test: /node_modules[\/]three[\/](?!.*fflate\.module\.js$)/ }] },
+      },
+    },
   },
   worker: {
     format: 'es',

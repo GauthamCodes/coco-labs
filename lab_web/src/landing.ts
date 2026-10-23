@@ -25,7 +25,7 @@
 /** What the bare URL opens (the build-time switch). */
 export type Landing = 'arena' | 'v1';
 /** The code-split apps this build serves. */
-export type AppId = 'arena' | 'learn' | 'live' | 'casefiles' | 'play';
+export type AppId = 'arena' | 'learn' | 'live' | 'casefiles' | 'play' | 'title' | 'about' | 'compare';
 /** Open an app here, or go to a URL relative to the site root. */
 export type Route = { app: AppId } | { redirect: string };
 
@@ -50,9 +50,17 @@ export function route(search: string, landing: Landing, runIds: ReadonlySet<stri
   const q = new URLSearchParams(search);
   const view = q.get('view');
   if (view === 'arena') return { app: 'arena' };
-  if (view === 'learn') return { app: 'learn' };
+  if (view === 'learn') {
+    q.set('view', 'compare');
+    if (q.has('mission')) { q.set('tour', q.get('mission')!); q.delete('mission'); }
+    else q.set('tour', '');
+    return { redirect: '?' + q.toString() };
+  }
   if (view === 'live') return { app: 'live' };
-  if (view === 'casefiles') return { app: 'casefiles' }; // M3.3
+  if (view === 'casefiles') { q.set('view', 'research'); return { redirect: '?' + q.toString() }; }
+  if (view === 'research') return { app: q.has('run') || q.has('replay') || q.has('casefile') ? 'arena' : 'casefiles' };
+  if (view === 'compare') return { app: 'compare' };
+  if (view === 'about') return { app: 'about' };
   if (view === 'play') return { app: 'play' }; // M3.5
   if (q.has('bundle') || q.has('v')) {
     const id = q.get('bundle') ?? '';
@@ -68,11 +76,14 @@ export function route(search: string, landing: Landing, runIds: ReadonlySet<stri
   }
   // Arena-only parameters (its links always add view=arena; a hand-trimmed one still works)
   if (q.has('run') || q.has('replay')) return { app: 'arena' };
-  return landing === 'v1' ? toV1('') : { app: 'arena' };
+  if (['c', 'l', 's', 'z', 'challenge'].some(key => q.has(key))) return { app: 'play' };
+  if (['play', 'pl', 'world', 'camera', 'seed', 'lens', 'level', 'goal', 'kidnap', 'cfg', 'attract', 'compare'].some(key => q.has(key))) return { app: 'arena' };
+  // Explicit Arena links retain Free roam; the bare site's Arena front door is now the title.
+  return landing === 'v1' ? toV1('') : { app: 'title' };
 }
 
 /** Whether routing `search` needs the converted-run index first. */
 export const needsRunIds = (search: string): boolean => {
   const q = new URLSearchParams(search);
-  return !['arena', 'learn', 'live', 'casefiles', 'play'].includes(q.get('view') ?? '') && (q.has('bundle') || q.has('v'));
+  return !['arena', 'learn', 'live', 'casefiles', 'play', 'compare', 'research', 'about'].includes(q.get('view') ?? '') && (q.has('bundle') || q.has('v'));
 };

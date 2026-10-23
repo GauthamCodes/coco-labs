@@ -1,0 +1,2 @@
+f7cdc8ece80678ceb712f8e65ebe6d3a83203a180c399865f49612a051693635  lab_web/node_modules/pyodide/pyodide.asm.mjs
+credentials:"same-origin"});var instantiationResult=await WebAssembly.instantiateStreaming(response,imports);return instantiationResult}catch(reason){err(`wasm streaming compile failed: ${reason}`);err("falling back to ArrayBuffer

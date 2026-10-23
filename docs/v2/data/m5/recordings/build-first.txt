@@ -1,0 +1,15 @@
+
+> coco-lab-web@0.1.0 build
+> node tools/assets/build_design_assets.mjs --check && node tools/build_arena_assets.mjs && node tools/build_attract.mjs && node tools/build_v2_runs.mjs && tsc --noEmit -p . && vite build
+
+Verified licence/source/checksums: Outfit, Manrope, Lucide, COCO Lab app icon
+arena assets: coco_lab.zip 118645 B (30 files), stdlib 783358 B (144 entries, full 2545637 B), pyodide 314.0.7
+attract.mcap: 690319 B, 517 ticks, 34974 plan events, chain 83d26d442bb5
+file:///home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/build_v2_runs.mjs:50
+      algorithm: e.algorithm, outcome: bundle.manifest.trace.summary.status, level: e.group, events: e.events, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'),
+                                                             ^
+
+TypeError: Cannot read properties of undefined (reading 'summary')
+    at file:///home/gautham/coco_labs_ws/src/coco-labs/lab_web/tools/build_v2_runs.mjs:50:62
+
+Node.js v24.21.0

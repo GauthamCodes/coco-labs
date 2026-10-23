@@ -2,14 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' %PYODIDE_INDEX_URL%; connect-src 'self' %PYODIDE_INDEX_URL% %LIVE_CONNECT_SRC%; worker-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'none'"
     />
     <meta name="referrer" content="no-referrer" />
     <meta name="description" content="COCO Lab: search algorithms replayed from evidence, on a real ROS 2 robot's maps." />
-    <link rel="icon" href="data:," />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%icons/coco.svg" />
+    <link rel="manifest" href="%BASE_URL%manifest.webmanifest" />
+    <meta name="theme-color" content="#10171d" />
     <title>COCO Lab</title>
   </head>
   <body>

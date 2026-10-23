@@ -1,0 +1,99 @@
+{
+  "class": "TESTED functional checks, synthetic visibility; no performance budget claim",
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-16T18:44:42.117Z",
+      "power_profile": "balanced",
+      "ac_power": false,
+      "battery": {
+        "status": "Discharging",
+        "capacity_pct": 62
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 2.18,
+        "5m": 2.38,
+        "15m": 1.53
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": false
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-16T18:45:47.454Z",
+      "power_profile": "balanced",
+      "ac_power": false,
+      "battery": {
+        "status": "Discharging",
+        "capacity_pct": 59
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 23.44,
+        "5m": 8.13,
+        "15m": 3.54
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": false
+    }
+  },
+  "result": {
+    "historyView": "top-down, to isolate functional history checks from software GL speed",
+    "vision": [
+      {
+        "label": "Robot vision (X): Scan area",
+        "hash": "d768ae8f23679f274172a4ca0c8dc812811fe8d8bb8d1fa4c3726ad851d81f6f",
+        "log": 2,
+        "rays": false,
+        "area": true,
+        "hits": 463
+      },
+      {
+        "label": "Robot vision (X): Planner frontier and heatmap",
+        "hash": "d768ae8f23679f274172a4ca0c8dc812811fe8d8bb8d1fa4c3726ad851d81f6f",
+        "log": 2,
+        "rays": false,
+        "area": false,
+        "hits": 463
+      },
+      {
+        "label": "Robot vision (X): Static costmap",
+        "hash": "d768ae8f23679f274172a4ca0c8dc812811fe8d8bb8d1fa4c3726ad851d81f6f",
+        "log": 2,
+        "rays": false,
+        "area": false,
+        "hits": 463
+      },
+      {
+        "label": "Robot vision (X): Localization particles",
+        "hash": "d768ae8f23679f274172a4ca0c8dc812811fe8d8bb8d1fa4c3726ad851d81f6f",
+        "log": 2,
+        "rays": false,
+        "area": false,
+        "hits": 463
+      },
+      {
+        "label": "Robot vision (X): Off",
+        "hash": "d768ae8f23679f274172a4ca0c8dc812811fe8d8bb8d1fa4c3726ad851d81f6f",
+        "log": 2,
+        "rays": false,
+        "area": false,
+        "hits": 463
+      }
+    ],
+    "replay": {
+      "shown": 32,
+      "head": 116,
+      "hash": "d768ae8f23679f274172a4ca0c8dc812811fe8d8bb8d1fa4c3726ad851d81f6f"
+    },
+    "hidden": {
+      "tick": 116,
+      "fps": 0
+    },
+    "errors": []
+  },
+  "errors": []
+}

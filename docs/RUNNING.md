@@ -200,7 +200,7 @@ the first CSV at the checkpoint step count before plotting both.
 
 ### The full curriculum, unattended
 
-`train_curriculum.sh` runs the whole 12° → 18° → 24° progression by itself.
+`coco_rl/scripts/train_curriculum.sh` runs the whole 12° → 18° → 24° progression by itself.
 It is the only way to run a curriculum correctly, because **the grade lives
 in the running simulator, not in a training flag** — `--ramp-angle` is
 recorded in the run header, but the geometry comes from
@@ -208,11 +208,11 @@ recorded in the run header, but the geometry comes from
 wait for its topics, train, and hand its weights to the next phase.
 
 ```bash
-./train_curriculum.sh                    # 3 phases x 60k steps, ~7 h
-./train_curriculum.sh --steps 30000      # shorter, ~3.5 h
-./train_curriculum.sh --grades 18        # one grade, no curriculum
-./train_curriculum.sh --steps 600 --grades "12 18" --eval-episodes 2  # smoke
-./train_curriculum.sh --retries 0        # fail a phase instead of retrying
+./coco_rl/scripts/train_curriculum.sh                    # 3 phases x 60k steps, ~7 h
+./coco_rl/scripts/train_curriculum.sh --steps 30000      # shorter, ~3.5 h
+./coco_rl/scripts/train_curriculum.sh --grades 18        # one grade, no curriculum
+./coco_rl/scripts/train_curriculum.sh --steps 600 --grades "12 18" --eval-episodes 2  # smoke
+./coco_rl/scripts/train_curriculum.sh --retries 0        # fail a phase instead of retrying
 ```
 
 Do not source anything first — it sources `setup_env.sh` itself, then
@@ -225,8 +225,8 @@ grade for a real success rate.
 Watch it with:
 
 ```bash
-./watch_training.py            # live bar, newest run, refreshes every 5s
-./watch_training.py --once     # one frame (for a log or a screenshot)
+./coco_rl/scripts/watch_training.py            # live bar, newest run, refreshes every 5s
+./coco_rl/scripts/watch_training.py --once     # one frame (for a log or a screenshot)
 ```
 
 ```
@@ -286,10 +286,10 @@ Two things it handles that a hand-rolled loop does not:
 cut or panic is not, so the run opts into a GNOME login hook that resumes it:
 
 ```bash
-./resume_curriculum.sh          # or just log in — the hook runs it
-./train_curriculum.sh --resume-run ~/coco_rl_runs/curriculum_<stamp>
-./train_curriculum.sh --resume-latest
-./train_curriculum.sh --no-autoresume    # don't install the hook
+./coco_rl/scripts/resume_curriculum.sh          # or just log in — the hook runs it
+./coco_rl/scripts/train_curriculum.sh --resume-run ~/coco_rl_runs/curriculum_<stamp>
+./coco_rl/scripts/train_curriculum.sh --resume-latest
+./coco_rl/scripts/train_curriculum.sh --no-autoresume    # don't install the hook
 rm ~/.config/autostart/coco-curriculum-resume.desktop   # remove it later
 ```
 

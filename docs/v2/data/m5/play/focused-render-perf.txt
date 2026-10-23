@@ -1,0 +1,13 @@
+
+> coco-lab-web@0.1.0 test
+> vitest run test/render_perf.test.ts test/phone_play.test.ts test/play_camera.test.ts test/scan_area.test.ts
+
+
+ RUN  v5.0.2 /home/gautham/coco_labs_ws/src/coco-labs/lab_web
+
+
+ Test Files  4 passed (4)
+      Tests  9 passed (9)
+   Start at  23:05:15
+   Duration  285ms (transform 48%, import 37%, tests 9%, worker 5%)
+

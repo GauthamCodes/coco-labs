@@ -9347,3 +9347,65 @@ records it). Builds `dbdea9c`, `62f6338`, `7e72010` (which criterion on which:
 Found and fixed by this measurement (not counted above until fixed): the Play page ignored
 deflated `z=` links; replay pages had lost their runs list; the screenshot test failed on a
 one-pixel layout shift. The phone rows and the usability test are Gautham's; not measured.
+
+
+## 2026-10-14 · M5.2 historical script paths
+
+RL-era root scripts mentioned in historical results now live under `coco_rl/scripts/`: `train_curriculum.sh`, `train_curriculum.sh.next`, `resume_curriculum.sh`, `overnight_chain.sh`, `watch_training.py`. Historical results and their evidence remain unchanged; active instructions use the new paths. This is a documentation relocation, not a new training result.
+
+
+## 2026-10-19 · M5.11 focus/polish closure (MODEL / TESTED; measured laptop and emulated phone)
+
+Full criterion-by-criterion evidence: [M5_RESULTS](v2/M5_RESULTS.md), [closure report](v2/data/m5/close/REPORT.md). No physical robot or real-phone hardware result is claimed. Branch `v2/m5-focus`; final implementation code `00a42aa`. No merge, release or deployment.
+
+- Final package runner: **3569 passed across all 12 packages**, [raw log](v2/data/m5/close/packages-final.txt). Web **493 passed /62 files**, tools **209 passed**, focused harness-condition tests **56 passed**; typecheck/build/dist/licence checks pass. Setup baseline: 3523 /436 /192.
+- Flat v1: **15000/15000 per-tick hashes unchanged**, 100 M1 sessions. V2: **four engines ×100 sessions ×150 ticks**, zero mismatches against M5.1's saved pre-optimization reference. Golden fixtures untouched. **166+1 stored links** verify under their own versions. [v1](v2/data/m5/close/v1-flat/checks.json), [v2](v2/data/m5/close/determinism-v2/determinism.json), [links](v2/data/m5/close/links-verified.json), [delta](v2/data/m5/close/links-delta-verified.json).
+- Focus: **7 desktop, 7 compact, 8 emulated landscape, 1 portrait** controls, counting world/joystick; no page scroll. **24 game layouts**, **50 URL forms +six archive views**, five replay checks, five pixel-identical canvas scenes pass. [Focus](v2/data/m5/close/focus/focus.json), [game layouts](v2/data/m5/close/games-focus/decisions-focus.json), [URLs](v2/data/m5/close/urls/v1_links_check.json).
+- Cold emulated 4G, three fresh contexts each: desktop title **2002.0999999940395–2028.2000000029802 ms**, live model/3D **9606–9786.999755859375 ms**. Emulated Nothing Phone (1) landscape title **2214.5999999940395–2616.7999999970198 ms**, model/3D **9942.699951171875–10161.39990234375 ms**, first visible computation **10026.89990234375–10236.60009765625 ms**. Emulated model misses 10 s in 2/3; visible computation misses in 3/3. Real Phone stays pending USB. [Raw cold runs](v2/data/m5/close/startup-immediate/checks.json).
+- Warm default World Spec v1, emulated 4G, fully constructed model: **2680.5 ms desktop, 2620.5 ms emulated phone landscape, 2694.199951171875 ms portrait**. Optional terrain diagnostics **3132.5 /3752.7 /3223.4 ms** exceed 3 s and are retained as misses. [Corrected default/deploy check](v2/data/m5/close/cache-race-fixed/checks.json).
+- Title app plus worker **271628 gzip bytes**; background interpreter JavaScript **268476**, total **540104**. App-only 350000-byte check enforced in CI; strict all-JavaScript interpretation remains **NOT MET**. Three.js has its own content-hashed chunk. [Final inventory](v2/data/m5/close/dist-close.txt).
+- Actual GPU Play: nominal 60 fps, submitted-count median 60 on RTX 4050 high and Intel medium; interval-normalized medians **59.96230940521038 /60.01500375153408 fps**. Initial Intel Compare four panes **11.516654854743376 fps** failed; byte-identical static-pixel optimization produced **60.019707963969246 fps median /59.30253142164696 minimum** in its first corrected run. [GPU samples](v2/data/m5/close/fps/checks.json), [corrected Compare](v2/data/m5/close/fps-compare-optimized/checks.json).
+- Actual-GPU hygiene: **30.162183333333335 minutes, 34 rounds, zero console errors/context losses/driving long tasks**. [Soak](v2/data/m5/close/soak-final/soak3d_nvidia.json).
+- Emulated Nothing Phone (1), 4× CPU proxy on laptop GPU, terrain, **600.225 seconds /594 samples**: first-minute median/minimum **60/60 fps**; ten-minute median/minimum/p05 **60/58/60**; **20 touch trials**, median **82.90000000596046 ms**, range **53.599999994039536–252 ms**. No errors/context loss/reload. Low-priority package validation shared the laptop; no thermal or real Adreno inference. [Raw emulation](v2/data/m5/close/phone-ten-minutes-visible/checks.json).
+- Accessibility: **12 dark/light pages**, actual CSS contrast/focus/reduced-motion checks pass; actual keyboard goal and 13-cell grid path match saved canonical score. Computation meanings unchanged, CVD references retained. [AA check](v2/data/m5/close/accessibility-final/checks.json), [keyboard proof](v2/data/m5/close/keyboard-proof/checks.json).
+
+Conditions: balanced on AC, original profile balanced unchanged; i5-13420H, RTX 4050 NVIDIA **580.178.04**; actual Intel RPL-P through ANGLE Vulkan/Mesa **25.2.8-0ubuntu0.24.04.2** for integrated-GPU checks. Raw start/end conditions include load and renderer; no simulator/robot batch active. Phone is **not connected** in [ADB check](v2/data/m5/phone/ADB_CHECK_M511_2026-10-19.txt). Provisional phone default remains 60 fps (optional 120), automatic medium starting tier/DPR 1.5 (low 1/high 2), pending real heat run. Gautham's five-person usability and visual review remain pending. Failed diagnostics are retained; no owner row marked done.
+
+Final M5.11 candidate `00a42aa` confirmation: [Intel four-pane top-down replay](v2/data/m5/close/fps-final/checks.json), median **60.02508511003504 fps**, minimum **59.42198613471046**, 20 intervals, no errors/context loss; [eight Compare layouts](v2/data/m5/close/compare-final/checks.json), one GL context each and zero errors; [desktop Chrome manifest/installability](v2/data/m5/close/installability.json), no reported errors (not an Android install). Final web rerun **493 passed /62 files**, [log](v2/data/m5/close/vitest-close.txt).
+
+## 2026-10-20 · Independent M5 review (MODEL / TESTED; emulated phone)
+
+Review of PR #25 head fe9d544; isolated v2/m5-review, no merge/deploy.
+[Full report](v2/reviews/M5_REVIEW.md), [build identity](v2/data/m5/review/BUILD.json).
+Fresh 3569 package /493 web /219 tool tests pass; two builds byte-identical.
+V1 15000 hashes unchanged; four engines each 100×150 v2 ticks, zero hash/chain
+differences/page errors. CLI153/153, old URLs50+archive6, replays5, canvases5 pass.
+Balanced/AC live cold desktop ms9997.8/9828.4/9845.3, emulated Nothing Phone (1)
+10106.3/10030.5/9964.7 (accepted near-miss, not real phone). Default warm
+2695.1/2807.1/2806.9 ms. Critical gzip271801 bytes, interpreter268476 background.
+The preload attempt regressed through duplicate WASM/stdlib downloads; all six
+failed timings retained and hints removed. Native streaming and idle/input gate
+verified. STOP/modal/second-touch and Settings navigation bugs fixed.
+Global Compare native events and seven hand-calculated inflation cells pass;
+continuous panes match headless Pyodide but differ from native CPython, reported.
+Open-document A/B static version mixing remains an unfixed merge blocker.
+Original 30-minute soak is historical, no exact-head review soak claimed.
+Real phone absent and owner usability pending. Merging #25 publishes the site.
+
+
+### 2026-10-20 M5 native portability diagnosis (MODEL)
+
+[Retained report/traces](v2/data/m5/closure-20261020/REPORT.md): original review
+control request reproduces 0.446011142799704 m chosen-trajectory Y difference at
+tick 48, DWA arm A. First numeric frame difference tick 1; first DWA selection
+difference tick 47, candidate 32 vs 12. Candidate 32 obstacle critic 0 vs 22,
+total 1679.4638041608869 vs 1855.4638041608869; candidate 12 costs
+1700.3884872002966 in both. Not a score tie: local-costmap rasterization differs.
+No model/golden/hash change; owner-requested report stop. Earlier performance
+measurements retained as historical, superseded for final closure-head claims.
+
+
+2026-10-20 publication correction: the review's historical automatic-deployment
+warning above is superseded by the manual Deploy site gate in 51c2216. A main
+push builds/tests but cannot deploy; the configuration truth-table test passes.
+PR #26 exact-head CI passed run 39438277138 before merge commit d8b6d4c.

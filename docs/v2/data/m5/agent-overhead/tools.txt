@@ -1,0 +1,30 @@
+........................................................................ [ 36%]
+.....FF................................................................. [ 73%]
+...................................................                      [100%]
+=================================== FAILURES ===================================
+_ test_every_json_output_of_the_harness_records_conditions[m5_casefile_first_frame.mjs] _
+
+name = 'm5_casefile_first_frame.mjs'
+
+    @pytest.mark.parametrize('name', _harnesses())
+    def test_every_json_output_of_the_harness_records_conditions(name):
+        src = open(os.path.join(PERF, name), encoding='utf-8').read()
+>       assert "import { conditions } from './conditions.mjs';" in src
+E       assert "import { conditions } from './conditions.mjs';" in "// Copyright 2026 Gautham Anil\n// SPDX-License-Identifier: Apache-2.0\nimport {chromium} from 'playwright';\nimport ...le.log(`${result.passed}/${result.total} <=2s with robot mesh`);\nprocess.exitCode=result.passed===result.total?0:1;\n"
+
+lab_web/tools/test_perf_conditions.py:46: AssertionError
+_ test_every_json_output_of_the_harness_records_conditions[m5_defects_check.mjs] _
+
+name = 'm5_defects_check.mjs'
+
+    @pytest.mark.parametrize('name', _harnesses())
+    def test_every_json_output_of_the_harness_records_conditions(name):
+        src = open(os.path.join(PERF, name), encoding='utf-8').read()
+>       assert "import { conditions } from './conditions.mjs';" in src
+E       assert "import { conditions } from './conditions.mjs';" in "// Copyright 2026 Gautham Anil\n// SPDX-License-Identifier: Apache-2.0\nimport {chromium} from 'playwright';\nimport ...k.json',JSON.stringify(result,null,2)+'\\n');\nconsole.log(JSON.stringify(result));\nprocess.exitCode=result.ok?0:1;\n"
+
+lab_web/tools/test_perf_conditions.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED lab_web/tools/test_perf_conditions.py::test_every_json_output_of_the_harness_records_conditions[m5_casefile_first_frame.mjs]
+FAILED lab_web/tools/test_perf_conditions.py::test_every_json_output_of_the_harness_records_conditions[m5_defects_check.mjs]
+2 failed, 193 passed in 302.38s (0:05:02)

@@ -17,7 +17,7 @@
 import ast
 import os
 
-from coco_schemas.channels import (BY_NAME, CHANNELS, FAMILIES, M2_FAMILIES,
+from coco_schemas.channels import (BY_NAME, CHANNELS, FAMILIES, M2_FAMILIES, M5_FAMILIES,
                                    message_class,
                                    parse)
 from conftest import PKG
@@ -64,7 +64,7 @@ def test_stream_messages_carry_the_three_clocks(ch):
     # M1's batches have one per-batch field, search_id; the M2 families'
     # per-batch scalars (filter_id, update, ...) are declared field for
     # field in coco_lab.columns and held there by test_columns_m2.py
-    if ch.family in M2_FAMILIES:
+    if ch.family in M2_FAMILIES + M5_FAMILIES:
         return
     for f in d.fields:
         if f.number > 3 and f.label != FD.LABEL_REPEATED:

@@ -1,0 +1,5 @@
+
+> coco-lab-web@0.1.0 typecheck
+> tsc --noEmit -p .
+
+src/arena/arena.worker.ts(249,21): error TS2339: Property 'destroy' does not exist on type '{ init: (...a: unknown[]) => PyProxy; step: (s: string) => PyProxy; compare: (...a: unknown[]) => string; begin: (s: string) => void; advance: (n: number) => boolean; amend: (s: string) => void; finish: () => PyProxy; play: (s: string) => string; }'.

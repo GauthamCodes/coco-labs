@@ -1,0 +1,130 @@
+{
+ "method": "coco_lab.columns.Batch -> Python protobuf SerializeToString (docs/v2/SCHEMAS.md)",
+ "note": "uint64 values are decimal strings (they may exceed 2**53)",
+ "vectors": [
+  {
+   "message": "coco.costmap.v1.LayersBatch",
+   "types": {
+    "seq": "Q",
+    "tick": "Q",
+    "t_world": "d",
+    "row": "I",
+    "col": "I",
+    "static_cost": "I",
+    "obstacle_cost": "I",
+    "inflation_cost": "I",
+    "combined_cost": "I"
+   },
+   "scalar_types": {
+    "map_id": "s",
+    "update": "Q"
+   },
+   "columns": {
+    "seq": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8"
+    ],
+    "tick": [
+     "100",
+     "100",
+     "101",
+     "101",
+     "102",
+     "102",
+     "103",
+     "103",
+     "104"
+    ],
+    "t_world": [
+     10.0,
+     10.1,
+     10.2,
+     10.3,
+     10.4,
+     10.5,
+     10.6,
+     10.7,
+     10.8
+    ],
+    "row": [
+     6085,
+     12511,
+     65279,
+     45659,
+     53750,
+     338,
+     36350,
+     64109,
+     44683
+    ],
+    "col": [
+     49586,
+     69473,
+     47977,
+     11856,
+     68338,
+     29115,
+     27882,
+     31927,
+     33160
+    ],
+    "static_cost": [
+     47604,
+     40128,
+     23187,
+     12720,
+     59550,
+     9783,
+     17710,
+     18342,
+     46921
+    ],
+    "obstacle_cost": [
+     59147,
+     21088,
+     10837,
+     14740,
+     5484,
+     27111,
+     44929,
+     62731,
+     45048
+    ],
+    "inflation_cost": [
+     42657,
+     8908,
+     16492,
+     33437,
+     52389,
+     45123,
+     20021,
+     5359,
+     66430
+    ],
+    "combined_cost": [
+     14617,
+     63288,
+     6040,
+     61198,
+     5440,
+     33819,
+     57688,
+     31141,
+     12932
+    ]
+   },
+   "scalars": {
+    "map_id": "bay α",
+    "update": "8264"
+   },
+   "protobuf_b64": "CgkAAQIDBAUGBwgSCWRkZWVmZmdnaBpIAAAAAAAAJEAzMzMzMzMkQGZmZmZmZiRAmpmZmZmZJEDNzMzMzMwkQAAAAAAAACVAMzMzMzMzJUBmZmZmZmYlQJqZmZmZmSVAIhjFL99h//0D2+QC9qMD0gL+mwLt9AOL3QIqGrKDA+GeBOn2AtBc8pUEu+MB6tkBt/kBiIMCMhn08wLAuQKTtQGwY57RA7dMrooBpo8Bye4COhiLzgPgpAHVVJRz7Crn0wGB3wKL6gP43wJCGaHNAsxF7IABnYUCpZkDw+ACtZwB7yn+hgRKF5lyuO4DmC+O3gPAKpuIAtjCA6XzAYRlUgZiYXkgzrFYyEA="
+  }
+ ]
+}

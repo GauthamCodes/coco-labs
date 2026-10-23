@@ -161,6 +161,8 @@ def drive(spec, level, inputs) -> Dict[str, object]:
     ``finish_m`` of the goal; ``max_ticks`` race ticks at most.
     """
     from .arena import InputEvent
+    from .link_bounds import validate_log
+    validate_log(inputs, RaceError)
     if not isinstance(inputs, list) or len(inputs) > 20000:
         raise RaceError('an input log is a list')
     by_tick: Dict[int, list] = {}

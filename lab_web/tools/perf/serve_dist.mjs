@@ -29,7 +29,7 @@ const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, all) =>
 const PORT = Number(args.port ?? 4174);
 const BASE = args.base ?? '/coco-labs/';
 const HOST = args.host ?? '127.0.0.1';
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', 'dist');
+const ROOT = args.root ? resolve(args.root) : resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', 'dist');
 const TYPES = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.mjs': 'text/javascript',
   '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.wasm': 'application/wasm',

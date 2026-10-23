@@ -1,0 +1,5 @@
+
+> coco-lab-web@0.1.0 typecheck
+> tsc --noEmit -p .
+
+src/arena/ArenaSceneView.tsx(26,23): error TS6133: 'recId' is declared but its value is never read.

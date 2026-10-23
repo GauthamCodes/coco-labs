@@ -8378,3 +8378,10 @@ NEXT: Gautham reviews PR #23 and the screenshots; runs the phone gate
 (`lab_web/tools/preview_phone.sh start`, then `docs/v2/PHONE_GATE_M4.md`) and the
 usability test (`docs/v2/USABILITY_TEST_M4.md`). A fresh review session verifies
 the M4 report (README §9) before the merge.
+
+
+## 2026-10-14 — M5.0 setup
+
+Canonical checkout fast-forwarded from d9ae365 to M4 merge 6c286b7; branch v2/m5-focus. Revision 3 README installed byte for byte, prompt and blank downloaded notes preserved, E1–E8 approved decisions logged. Nothing Phone (1) recorded by Gautham; no phone numbers or usability observations supplied. No product code changed. Baseline and retained setup failures: docs/v2/data/m5/setup/BASELINE.md. All three suites pass after generating runtime assets and selecting pinned source paths/TAP output. Power balanced (unchanged), AC online, NVIDIA 580.178.04. No simulator ran. Preliminary link and v1 workflow audits are under docs/v2/data/m5/defects; no fix claimed.
+
+Unverified: every M5 product/performance criterion, phone and usability. README §7's owner prerequisite remains unresolved; completed notes or explicit waiver requested. Next checkpoint: M5.1 defects; design must not proceed without resolving that prerequisite. Exact resume command: `cd ~/coco_labs_ws/src/coco-labs && git status --short --branch`, then read README.md, docs/STATUS.md, CLAUDE.md and docs/v2/data/m5/setup/SESSION_REPORT.md.

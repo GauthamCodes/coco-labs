@@ -1,0 +1,29 @@
+ok   (bare) -> 
+ok   ?view=plan -> ?view=learn&mission=find-a-path
+ok   ?view=localise -> ?view=learn&mission=where-it-is
+ok   ?view=map -> ?view=learn&mission=build-a-map
+ok   ?view=search -> ?view=learn&mission=where-to-look
+ok   ?view=move -> ?view=learn&mission=avoid-things
+ok   ?view=plan&perf -> ?view=learn&mission=find-a-path
+ok   ?view=live -> ?view=live
+ok   ?view=exhibit -> v1/?view=exhibit
+ok   ?view=localise&loc=exhibits -> v1/?view=localise&loc=exhibits
+ok   ?view=map&scene=map_loop -> v1/?view=map&scene=map_loop
+ok   ?view=move&move=replan -> v1/?view=move&move=replan
+ok   ?view=search&search=matrix -> v1/?view=search&search=matrix
+ok   ?bundle=astar_open -> ?view=arena&replay=astar_open
+ok   ?bundle=astar_open&v=1 -> ?view=arena&replay=astar_open
+ok   ?view=plan&bundle=astar_open&v=1 -> ?view=arena&replay=astar_open
+ok   ?bundle=lab1c_astar -> ?view=arena&replay=lab1c_astar
+ok   ?v=1 -> v1/?v=1
+ok   ?v=1&bundle=astar_open&s=4.1.4.1.9 -> v1/?v=1&bundle=astar_open&s=4.1.4.1.9
+ok   ?v=1&bundle=astar_open&e=vQEB -> v1/?v=1&bundle=astar_open&e=vQEB
+ok   ?bundle=not_a_bundle -> v1/?bundle=not_a_bundle
+ok   v1/ -> v1/
+ok   v1/ [view-lab] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=localise [view-localise] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=map [view-map] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=search [view-search] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=move [view-move] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=live [view-live] real_robot=0 live="Live Stack (simulated)"
+{"ok":true,"forms":22,"archive_views":6,"failed":0}

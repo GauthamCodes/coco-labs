@@ -1,0 +1,131 @@
+{
+  "header": {
+    "map_id": "compare",
+    "width": 500,
+    "height": 380,
+    "resolution": 0.05,
+    "origin_x": -6.5,
+    "origin_y": -9.5,
+    "row0_is_bottom": false,
+    "inflation_radius": 0.5,
+    "cost_scaling_factor": 10,
+    "robot_radius": 0.25
+  },
+  "source_cells": 46228,
+  "method": "brute-force Euclidean distance to emitted static/obstacle lethal cells; 254, 253, truncated 252*exp(-k*(d-r)); no coco_lab costmap function imported",
+  "cells": [
+    {
+      "cell": [
+        0,
+        0
+      ],
+      "distance_m": 0.0,
+      "formula": 254,
+      "emitted": {
+        "static_cost": 254,
+        "obstacle_cost": 0,
+        "inflation_cost": 0,
+        "combined_cost": 254
+      },
+      "expected_inflation": 0,
+      "passed": true
+    },
+    {
+      "cell": [
+        15,
+        15
+      ],
+      "distance_m": 0.2,
+      "formula": 253,
+      "emitted": {
+        "static_cost": 0,
+        "obstacle_cost": 0,
+        "inflation_cost": 253,
+        "combined_cost": 253
+      },
+      "expected_inflation": 253,
+      "passed": true
+    },
+    {
+      "cell": [
+        16,
+        16
+      ],
+      "distance_m": 0.25,
+      "formula": 253,
+      "emitted": {
+        "static_cost": 0,
+        "obstacle_cost": 0,
+        "inflation_cost": 253,
+        "combined_cost": 253
+      },
+      "expected_inflation": 253,
+      "passed": true
+    },
+    {
+      "cell": [
+        17,
+        17
+      ],
+      "distance_m": 0.30000000000000004,
+      "formula": 152,
+      "emitted": {
+        "static_cost": 0,
+        "obstacle_cost": 0,
+        "inflation_cost": 152,
+        "combined_cost": 152
+      },
+      "expected_inflation": 152,
+      "passed": true
+    },
+    {
+      "cell": [
+        18,
+        18
+      ],
+      "distance_m": 0.35000000000000003,
+      "formula": 92,
+      "emitted": {
+        "static_cost": 0,
+        "obstacle_cost": 0,
+        "inflation_cost": 92,
+        "combined_cost": 92
+      },
+      "expected_inflation": 92,
+      "passed": true
+    },
+    {
+      "cell": [
+        21,
+        21
+      ],
+      "distance_m": 0.5,
+      "formula": 20,
+      "emitted": {
+        "static_cost": 0,
+        "obstacle_cost": 0,
+        "inflation_cost": 20,
+        "combined_cost": 20
+      },
+      "expected_inflation": 20,
+      "passed": true
+    },
+    {
+      "cell": [
+        22,
+        22
+      ],
+      "distance_m": 0.55,
+      "formula": 0,
+      "emitted": {
+        "static_cost": 0,
+        "obstacle_cost": 0,
+        "inflation_cost": 0,
+        "combined_cost": 0
+      },
+      "expected_inflation": 0,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

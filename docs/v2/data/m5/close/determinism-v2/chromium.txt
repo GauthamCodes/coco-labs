@@ -1,0 +1,11 @@
+chromium: 10 sessions, 177 s
+chromium: 20 sessions, 314 s
+chromium: 30 sessions, 461 s
+chromium: 40 sessions, 583 s
+chromium: 50 sessions, 690 s
+chromium: 60 sessions, 773 s
+chromium: 70 sessions, 885 s
+chromium: 80 sessions, 1001 s
+chromium: 90 sessions, 1104 s
+chromium: 100 sessions, 1215 s
+chromium: 100 sessions, 15000 ticks

@@ -16,6 +16,6 @@ To run a different policy instead:
 ros2 launch coco_mission mission.launch.py policy:=/path/to/other.zip
 ```
 
-`train_curriculum.sh` in the repository root reproduces the curriculum that
+`coco_rl/scripts/train_curriculum.sh` under coco_rl/scripts reproduces the curriculum that
 produced this file. See `docs/RESULTS.md` for what it was measured to do
 (deterministic evaluation: **10/10** on both the 18° and the 24° grade).

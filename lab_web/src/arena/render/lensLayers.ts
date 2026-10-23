@@ -68,6 +68,10 @@ export class LensLayers {
     return this.palette[key];
   }
 
+  hasVisibleData(): boolean {
+    return [...this.entries.values()].some(({obj}) => obj.visible && materials(obj).some(m => m.opacity > 0));
+  }
+
   setPalette(p: Palette) {
     this.palette = p;
     for (const [id, e] of this.entries) this.recolour(id, e);

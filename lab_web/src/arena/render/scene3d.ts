@@ -23,6 +23,9 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 import { TIER_SETTINGS, type Tier } from './quality';
+import { TOKENS } from '../../ui/tokens';
+import { activeTheme } from '../../ui/theme';
+import type { Theme } from '../../ui/tokens';
 
 /**
  * M4.4: the 3D world draws on its own layer, in a first pass with tone mapping, the sun's shadow and
@@ -90,10 +93,18 @@ export class Scene3D {
     uRobot: { value: new THREE.Vector3() }, uCam: { value: new THREE.Vector3() },
     uCut: { value: 0 }, uLow: { value: 0 }, uLowZ: { value: LOW_WALL_Z }, uCutR: { value: CUT_RADIUS },
   };
-  lowWalls = false;
+  private wallMeshes: THREE.Mesh[] = [];
+  private halfWalls = false;
+  get lowWalls() { return this.halfWalls; }
+  set lowWalls(value: boolean) {
+    this.halfWalls=value;
+    // Committed arena meshes are authored z-up below the glTF root's axis rotation.
+    // Scaling only display geometry preserves each original top face as a real cap.
+    for(const mesh of this.wallMeshes)mesh.scale.z=value?.5:1;
+  }
   /** The camera rig's own state: sprung toward the robot (feel, not physics). */
   private rig = { x: 0, y: 0, z: 0, yaw: 0, init: false };
-  private orbit = { yaw: 0, pitch: 0.38, dist: 2.6 };
+  private orbit = { yaw: 0, pitch: 40 * Math.PI / 180, dist: 5.2 };
   private wide = { yaw: -2.2, pitch: 0.72, dist: 24 };
   mode: Exclude<CameraMode, 'topdown'> | 'overhead' = 'follow';
   /** M4.5: the top-down view's centre and the height that frames it, for the 'overhead' pose */
@@ -103,14 +114,17 @@ export class Scene3D {
   private readonly floor = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
   private readonly ray = new THREE.Raycaster();
   private readonly sun: THREE.DirectionalLight;
+  private readonly hemi: THREE.HemisphereLight;
+  private warehouse: THREE.Object3D | null = null;
 
   constructor(scene: THREE.Scene, readonly worldToMap: [number, number]) {
     this.camera.up.set(0, 0, 1);
     this.root.visible = false;
     scene.add(this.root);
-    const hemi = new THREE.HemisphereLight(0xf2f4f7, 0x8a8478, 1.2);
-    hemi.position.set(0, 0, 1);
-    this.sun = new THREE.DirectionalLight(0xffffff, 1.6);
+    const lighting = TOKENS.warehouse[activeTheme()];
+    this.hemi = new THREE.HemisphereLight(lighting.sky, lighting.ground, lighting.ambient);
+    this.hemi.position.set(0, 0, 1);
+    this.sun = new THREE.DirectionalLight(lighting.workLight, lighting.key);
     this.sun.position.set(-4, -6, 10);
     // the sun's shadow follows the robot: a small square around it, so the map stays cheap
     const sc = this.sun.shadow.camera;
@@ -120,8 +134,22 @@ export class Scene3D {
     // the shadow map draws what its own camera's layers see: the 3D world's
     this.sun.shadow.camera.layers.set(WORLD_LAYER);
     this.sun.shadow.normalBias = 0.02;
-    this.root.add(hemi, this.sun, this.sun.target, this.robotHolder);
+    this.root.add(this.hemi, this.sun, this.sun.target, this.robotHolder);
     onWorldLayer(this.root);
+  }
+
+  /** Display-only palette change; keeps the running session and geometry. */
+  setTheme(theme: Theme) {
+    const finish = TOKENS.warehouse[theme];
+    this.hemi.color.set(finish.sky); this.hemi.groundColor.set(finish.ground); this.hemi.intensity = finish.ambient;
+    this.sun.color.set(finish.workLight); this.sun.intensity = finish.key;
+    this.warehouse?.traverse((object) => {
+      const mesh = object as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) {
+        (material as THREE.MeshStandardMaterial).color.set(material.name === 'ground' ? finish.floor : finish.structure);
+      }
+    });
   }
 
   /**
@@ -155,6 +183,7 @@ export class Scene3D {
     const robotP = urls.buffers ? urls.buffers.robot.then((b) => loader.parseAsync(b, '')) : loader.loadAsync(urls.robot);
     const arena = urls.buffers ? await urls.buffers.arena.then((b) => loader.parseAsync(b, '')) : await loader.loadAsync(urls.arena);
     const a = zUp(arena.scene);
+    this.warehouse = a;
     a.position.set(this.worldToMap[0], this.worldToMap[1], 0);
     this.root.add(a);
     const placeholder = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.26, 0.12), new THREE.MeshStandardMaterial({ color: 0x8a8d91, roughness: 0.8 }));
@@ -162,7 +191,20 @@ export class Scene3D {
     placeholder.castShadow = true;
     placeholder.name = 'placeholder';
     this.robotHolder.add(placeholder);
-    arena.scene.traverse((o) => { if ((o as THREE.Mesh).isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+    arena.scene.traverse((o) => {
+      const mesh = o as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      mesh.castShadow = true; mesh.receiveShadow = true;
+      const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+      const tuned = materials.map((original) => {
+        const material = (original as THREE.MeshStandardMaterial).clone();
+        const finish = TOKENS.warehouse[activeTheme()];
+        material.color.set(original.name === 'ground' ? finish.floor : finish.structure);
+        material.roughness = .92; material.metalness = .02;
+        return material;
+      });
+      mesh.material = Array.isArray(mesh.material) ? tuned : tuned[0];
+    });
     // the tall kinds learn to open (cutaway) and to stop low (low walls)
     for (const node of arena.scene.children.flatMap((c) => [c, ...c.children])) {
       if (!CUTTABLE.has(node.name)) continue;
@@ -170,37 +212,45 @@ export class Scene3D {
         const m = o as THREE.Mesh;
         if (!m.isMesh) return;
         const mat = (m.material as THREE.MeshStandardMaterial).clone();
+        this.wallMeshes.push(m);
+        m.scale.z=this.halfWalls?.5:1;
         mat.side = THREE.DoubleSide;   // an opened wall shows its inside, not a hole into nothing
         mat.onBeforeCompile = (sh) => {
           Object.assign(sh.uniforms, this.walls);
-          sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vCocoWorld;')
-            .replace('#include <begin_vertex>', '#include <begin_vertex>\nvCocoWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+          sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vCocoWorld; varying float vCocoUp;')
+            .replace('#include <begin_vertex>', '#include <begin_vertex>\nvCocoWorld = (modelMatrix * vec4(transformed, 1.0)).xyz; vCocoUp = abs(normalize(mat3(modelMatrix) * normal).z);');
           sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
-varying vec3 vCocoWorld;
+varying vec3 vCocoWorld; varying float vCocoUp;
 uniform vec3 uRobot; uniform vec3 uCam; uniform float uCut; uniform float uLow; uniform float uLowZ; uniform float uCutR;`)
             .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
-if (uLow > 0.5 && vCocoWorld.z > uLowZ) discard;
+
 if (uCut > 0.5) {
   vec3 d = uRobot - uCam;
   float t = clamp(dot(vCocoWorld - uCam, d) / max(dot(d, d), 1e-6), 0.0, 1.0);
   if (t < 0.95 && distance(vCocoWorld, uCam + t * d) < uCutR && vCocoWorld.z > uRobot.z - 0.2) discard;
-}`);
+}`)
+            .replace('#include <color_fragment>', '#include <color_fragment>\ndiffuseColor.rgb *= mix(0.66, 1.35, smoothstep(0.2, 0.8, vCocoUp));');
         };
         mat.customProgramCacheKey = () => 'coco-walls';
         m.material = mat;
       });
+    }
+    for(const mesh of this.wallMeshes) {
+      const edges=new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry,25),new THREE.LineBasicMaterial({color:TOKENS.warehouse[activeTheme()].structure,transparent:true,opacity:.5}));
+      mesh.add(edges);
     }
     onWorldLayer(this.root);
     arena.scene.traverse((o) => {
       const m = o as THREE.Mesh;
       if (m.isMesh) this.triangles += (m.geometry.index ? m.geometry.index.count : m.geometry.attributes.position.count) / 3;
     });
-    this.ready = true;
     this.robotReady = robotP.then((robot) => {
       this.robotHolder.remove(placeholder);
       placeholder.geometry.dispose();
       this.addRobot(robot.scene);
     });
+    await this.robotReady;
+    this.ready = true;
   }
 
   /** M4.7: the robot's file has been added (the placeholder is gone). */
@@ -343,6 +393,12 @@ if (uCut > 0.5) {
    * Change camera (M4.5; README §5.3: transitions take about 0.4 s). The camera moves from where it is
    * to the new mode's pose over `dur` seconds, eased; 0 cuts (reduced motion).
    */
+  /** Presentation-only framing for the design references; the model is untouched. */
+  setFollowFraming(distance: number, pitch: number) {
+    this.orbit.dist = Math.max(1, Math.min(12, distance));
+    this.orbit.pitch = Math.max(.15, Math.min(1.4, pitch));
+  }
+
   setMode(mode: Exclude<CameraMode, 'topdown'> | 'overhead', dur: number) {
     if (mode === this.mode && !this.blend) return;
     this.mode = mode;
@@ -441,8 +497,26 @@ if (uCut > 0.5) {
     const ahead = 0.6;
     this.camera.position.set(r.x - Math.cos(yaw) * Math.cos(pitch) * dist, r.y - Math.sin(yaw) * Math.cos(pitch) * dist,
       r.z + 0.15 + Math.sin(pitch) * dist);
+    if(this.warehouse) {
+      this.root.updateMatrixWorld(true);
+      const target=new THREE.Vector3(r.x,r.y,r.z+.15);
+      this.camera.position.copy(clearCameraPosition(target,this.camera.position,this.warehouse));
+    }
     this.camera.lookAt(r.x + Math.cos(r.yaw) * ahead, r.y + Math.sin(r.yaw) * ahead, r.z + 0.15);
     this.camera.updateProjectionMatrix();
+  }
+
+  /** Release presentation resources; never affects a session or model. */
+  dispose() {
+    this.root.traverse((object) => {
+      const mesh = object as THREE.Mesh;
+      if (!mesh.geometry || !mesh.material) return;
+      mesh.geometry.dispose();
+      const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+      for (const material of materials) material.dispose();
+    });
+    this.sun.shadow.map?.dispose(); this.env?.dispose();
+    this.root.removeFromParent();
   }
 
   /** The floor point (z = 0) under a canvas pixel, or null if the ray misses the floor. */
@@ -451,4 +525,14 @@ if (uCut > 0.5) {
     const hit = new THREE.Vector3();
     return this.ray.ray.intersectPlane(this.floor, hit) ? [hit.x, hit.y] : null;
   }
+}
+
+/** Presentation collision: shorten the camera boom before the first opaque warehouse surface. */
+export function clearCameraPosition(target:THREE.Vector3,desired:THREE.Vector3,world:THREE.Object3D):THREE.Vector3 {
+ const direction=desired.clone().sub(target),distance=direction.length();
+ if(distance<.25)return desired.clone();
+ const ray=new THREE.Raycaster(target,direction.normalize(),.25,distance);
+ ray.layers.set(WORLD_LAYER);
+ const hit=ray.intersectObject(world,true).find(hit=>(hit.object as THREE.Mesh).isMesh);
+ return hit?target.clone().addScaledVector(direction,Math.max(.2,hit.distance-.15)):desired.clone();
 }

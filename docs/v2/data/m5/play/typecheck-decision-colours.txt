@@ -1,0 +1,5 @@
+
+> coco-lab-web@0.1.0 typecheck
+> tsc --noEmit -p .
+
+src/play/GridBoard.tsx(73,28): error TS2339: Property 'themes' does not exist on type '{ readonly computation: Record<Theme, Palette>; readonly viridis: readonly ["#440154", "#3b528b", "#21918c", "#5ec962", "#fde725"]; readonly warehouse: { readonly dark: { readonly sky: "#a2b4c2"; ... 5 more ...; readonly structure: "#45515b"; }; readonly light: { ...; }; }; ... 5 more ...; readonly motion: { ...; }; }'.

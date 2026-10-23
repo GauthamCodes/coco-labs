@@ -1,0 +1,225 @@
+{
+ "cases": [
+  {
+   "gpu": "intel",
+   "mode": "compare",
+   "quality": "auto",
+   "flags": [
+    "--use-angle=vulkan",
+    "--enable-features=Vulkan",
+    "--ignore-gpu-blocklist",
+    "--enable-gpu"
+   ],
+   "conditions": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-19T00:29:35.849Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Charging",
+     "capacity_pct": 75
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 1.91,
+     "5m": 1.22,
+     "15m": 0.81
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   },
+   "errors": [],
+   "lost": 0,
+   "samples": [
+    {
+     "seconds": 1.0035999999940395,
+     "frames": 60,
+     "fps": 59.78477481103661,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.0969000000059606,
+     "frames": 66,
+     "fps": 60.16956878443008,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1045999999940395,
+     "frames": 66,
+     "fps": 59.75013579608559,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1332000000029803,
+     "frames": 68,
+     "fps": 60.007059653919136,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.11,
+     "frames": 67,
+     "fps": 60.36036036036036,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1062000000029801,
+     "frames": 66,
+     "fps": 59.66371361401391,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1058999999910593,
+     "frames": 67,
+     "fps": 60.58413961528318,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1329000000059604,
+     "frames": 68,
+     "fps": 60.02294995113623,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1297999999970199,
+     "frames": 67,
+     "fps": 59.30253142164696,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1095,
+     "frames": 67,
+     "fps": 60.387561964849034,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1162999999970198,
+     "frames": 67,
+     "fps": 60.019707963969246,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1097000000029802,
+     "frames": 67,
+     "fps": 60.37667838138241,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1217000000029802,
+     "frames": 67,
+     "fps": 59.73076580174912,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1349000000059604,
+     "frames": 68,
+     "fps": 59.91717331892049,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1355,
+     "frames": 68,
+     "fps": 59.8855129898723,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.131699999988079,
+     "frames": 68,
+     "fps": 60.086595388103106,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1035,
+     "frames": 66,
+     "fps": 59.80969642048029,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1162000000029801,
+     "frames": 67,
+     "fps": 60.02508511003504,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.1111000000089406,
+     "frames": 67,
+     "fps": 60.300603005544836,
+     "submitted": 0
+    },
+    {
+     "seconds": 1.125199999988079,
+     "frames": 67,
+     "fps": 59.54496978378051,
+     "submitted": 0
+    }
+   ],
+   "renderer": "ANGLE (Intel, Vulkan 1.4.318 (Intel(R) Graphics (RPL-P) (0x0000A7A8)), Intel open-source Mesa driver)",
+   "driverSoftware": "libgl1-mesa-dri 25.2.8-0ubuntu0.24.04.2\nmesa-vulkan-drivers 25.2.8-0ubuntu0.24.04.2",
+   "actualTier": "high",
+   "actual3D": null,
+   "median": 60.019707963969246,
+   "minimum": 59.30253142164696,
+   "completed": true,
+   "conditions_end": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-19T00:30:07.064Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+     "status": "Charging",
+     "capacity_pct": 76
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+     "1m": 2.04,
+     "5m": 1.34,
+     "15m": 0.86
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+   }
+  }
+ ],
+ "passed": true,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-19T00:29:35.759Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 75
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.91,
+    "5m": 1.22,
+    "15m": 0.81
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-19T00:30:07.227Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 76
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.04,
+    "5m": 1.34,
+    "15m": 0.86
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

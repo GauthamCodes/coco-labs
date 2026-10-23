@@ -1,0 +1,680 @@
+{
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-15T00:51:58.555Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 1.1,
+    "5m": 0.89,
+    "15m": 0.76
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-15T00:53:30.320Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 11.91,
+    "5m": 4.83,
+    "15m": 2.19
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "rows": [
+  {
+   "file": "desktop-title.png",
+   "device": "laptop Chromium",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a cold-start measurement",
+   "theme": "dark",
+   "viewport": [
+    1440,
+    900
+   ],
+   "dpr": 1,
+   "scroll": [
+    1440,
+    900
+   ],
+   "glContexts": 1,
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1036,
+    747
+   ],
+   "result": null,
+   "text": "THE NIGHT SHIFT\nAbout\n\nA GLASS-BOX ROBOT LAB\n\nCOCO Lab\n\nSee what the robot computes.\n\nPlay\n\nDrive COCO. Race the planner.\n\nCompare\n\nOne map. Different decisions.\n\nResearch\n\nExplore recorded ROS 2 runs.\n\nPress any key to play\nMODEL\n· kinematic",
+   "errors": []
+  },
+  {
+   "file": "desktop-play.png",
+   "device": "laptop Chromium",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a cold-start measurement",
+   "theme": "dark",
+   "viewport": [
+    1440,
+    900
+   ],
+   "dpr": 1,
+   "scroll": [
+    1440,
+    900
+   ],
+   "glContexts": 1,
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1440,
+    900
+   ],
+   "result": null,
+   "text": "FREE ROAM\nMake your own path.\n00:02\nKNOWN MAP\nVision\n0.30 m/s\nIDLE\nSTOP\nGrasp\nAuto\nCamera\nMODEL\n· kinematic\n\nRecorded MODEL demo · tap the floor to take control.",
+   "errors": []
+  },
+  {
+   "file": "desktop-compare.png",
+   "device": "laptop Chromium",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a cold-start measurement",
+   "theme": "dark",
+   "viewport": [
+    1440,
+    900
+   ],
+   "dpr": 1,
+   "scroll": [
+    1440,
+    900
+   ],
+   "glContexts": 1,
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1147,
+    660
+   ],
+   "result": {
+    "seed": 1,
+    "goal": [
+     2.5,
+     2
+    ],
+    "world": {
+     "id": "coco_arena_v1",
+     "width": 500,
+     "height": 380,
+     "resolution": 0.05,
+     "origin": [
+      -6.5,
+      -9.5
+     ],
+     "frame": "map",
+     "start": [
+      0,
+      0,
+      0
+     ],
+     "dt": 0.1,
+     "radius": 0.22,
+     "limits": {
+      "teleop_linear": 0.5,
+      "teleop_angular": 1.2,
+      "auto_linear": 0.3,
+      "auto_angular": 1,
+      "linear_accel": 2,
+      "angular_accel": 4
+     },
+     "lidar": {
+      "samples": 480,
+      "angle_min": -2.0944,
+      "angle_max": 2.0944,
+      "range_max": 12,
+      "mount": [
+       -0.09,
+       0.1,
+       0
+      ]
+     },
+     "planners": [
+      "bfs",
+      "dijkstra",
+      "astar",
+      "greedy",
+      "weighted_astar"
+     ],
+     "planner": "astar",
+     "hash": "28edaaf07103222288987dd860891049ebf0cb317325f74d0c65f8961f23cfb6",
+     "beam_height": 0.21350000000000002
+    },
+    "result": {
+     "A": {
+      "planner": "astar",
+      "status": "found",
+      "summary": {
+       "status": "found",
+       "expansions": 1017,
+       "pushes": 1245,
+       "relaxes": 918,
+       "path_cost": 75.94112549695426,
+       "path_length": 75.94112549695426,
+       "path_steps": 66
+      },
+      "resolution": 0.05
+     },
+     "B": {
+      "planner": "dijkstra",
+      "status": "found",
+      "summary": {
+       "status": "found",
+       "expansions": 13124,
+       "pushes": 13498,
+       "relaxes": 274,
+       "path_cost": 75.94112549695424,
+       "path_length": 75.94112549695424,
+       "path_steps": 66
+      },
+      "resolution": 0.05
+     }
+    },
+    "contextLayout": "one scissored WebGL context"
+   },
+   "text": "COCO\nLab\nCompare\nMODEL\n· kinematic\nA\nA*\nMODEL\nB\ndijkstra\nMODEL\n3D view\nGLOBAL PLANNING\nDifferent searches.\nSame goal.\n\nSame map, start, goal and seed.\n\nPlanner A\nbfs\nDijkstra\nA*\ngreedy\nweighted_astar\nPlanner B\nbfs\nDijkstra\nA*\ngreedy\nweighted_astar\nCOCO arena\nGoal 2.5, 2.0 m\nSeed 1\nWhat you see\nFrontier\nExpanded\nPlanned path\n\nMODEL · paths and counts from coco_lab.\n\nA · A*\n1017 expansions\n3.80 m planned path\nB · dijkstra\n13124 expansions\n3.80 m planned path\nSearch complete",
+   "errors": []
+  },
+  {
+   "file": "compact-title.png",
+   "device": "laptop Chromium, compact viewport",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a cold-start measurement",
+   "theme": "dark",
+   "viewport": [
+    844,
+    390
+   ],
+   "dpr": 1,
+   "scroll": [
+    844,
+    390
+   ],
+   "glContexts": 1,
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    607,
+    323
+   ],
+   "result": null,
+   "text": "THE NIGHT SHIFT\nAbout\nCOCO Lab\n\nSee what the robot computes.\n\nPlay\n\nDrive COCO. Race the planner.\n\nCompare\n\nOne map. Different decisions.\n\nResearch\n\nExplore recorded ROS 2 runs.\n\nPress any key to play\nMODEL\n· kinematic",
+   "errors": []
+  },
+  {
+   "file": "compact-play.png",
+   "device": "laptop Chromium, compact viewport",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a cold-start measurement",
+   "theme": "dark",
+   "viewport": [
+    844,
+    390
+   ],
+   "dpr": 1,
+   "scroll": [
+    844,
+    390
+   ],
+   "glContexts": 1,
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    844,
+    390
+   ],
+   "result": null,
+   "text": "FREE ROAM\nMake your own path.\n00:02\nKNOWN MAP\nVision\n0.30 m/s\nIDLE\nSTOP\nGrasp\nAuto\nCamera\nMODEL\n· kinematic\n\nRecorded MODEL demo · tap the floor to take control.",
+   "errors": []
+  },
+  {
+   "file": "compact-compare.png",
+   "device": "laptop Chromium, compact viewport",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a cold-start measurement",
+   "theme": "dark",
+   "viewport": [
+    844,
+    390
+   ],
+   "dpr": 1,
+   "scroll": [
+    844,
+    390
+   ],
+   "glContexts": 1,
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    605,
+    202
+   ],
+   "result": {
+    "seed": 1,
+    "goal": [
+     2.5,
+     2
+    ],
+    "world": {
+     "id": "coco_arena_v1",
+     "width": 500,
+     "height": 380,
+     "resolution": 0.05,
+     "origin": [
+      -6.5,
+      -9.5
+     ],
+     "frame": "map",
+     "start": [
+      0,
+      0,
+      0
+     ],
+     "dt": 0.1,
+     "radius": 0.22,
+     "limits": {
+      "teleop_linear": 0.5,
+      "teleop_angular": 1.2,
+      "auto_linear": 0.3,
+      "auto_angular": 1,
+      "linear_accel": 2,
+      "angular_accel": 4
+     },
+     "lidar": {
+      "samples": 480,
+      "angle_min": -2.0944,
+      "angle_max": 2.0944,
+      "range_max": 12,
+      "mount": [
+       -0.09,
+       0.1,
+       0
+      ]
+     },
+     "planners": [
+      "bfs",
+      "dijkstra",
+      "astar",
+      "greedy",
+      "weighted_astar"
+     ],
+     "planner": "astar",
+     "hash": "28edaaf07103222288987dd860891049ebf0cb317325f74d0c65f8961f23cfb6",
+     "beam_height": 0.21350000000000002
+    },
+    "result": {
+     "A": {
+      "planner": "astar",
+      "status": "found",
+      "summary": {
+       "status": "found",
+       "expansions": 1017,
+       "pushes": 1245,
+       "relaxes": 918,
+       "path_cost": 75.94112549695426,
+       "path_length": 75.94112549695426,
+       "path_steps": 66
+      },
+      "resolution": 0.05
+     },
+     "B": {
+      "planner": "dijkstra",
+      "status": "found",
+      "summary": {
+       "status": "found",
+       "expansions": 13124,
+       "pushes": 13498,
+       "relaxes": 274,
+       "path_cost": 75.94112549695424,
+       "path_length": 75.94112549695424,
+       "path_steps": 66
+      },
+      "resolution": 0.05
+     }
+    },
+    "contextLayout": "one scissored WebGL context"
+   },
+   "text": "COCO\nLab\nCompare\nMODEL\n· kinematic\nA\nA*\nB\ndijkstra\n3D view\nGLOBAL PLANNING\nDifferent searches.\nSame goal.\n\nSame map, start, goal and seed.\n\nPlanner A\nbfs\nDijkstra\nA*\ngreedy\nweighted_astar\nPlanner B\nbfs\nDijkstra\nA*\ngreedy\nweighted_astar\nA · A*\n1017 expansions\n3.80 m planned path\nB · dijkstra\n13124 expansions\n3.80 m planned path\nSearch complete",
+   "errors": []
+  },
+  {
+   "file": "nothing-landscape-title.png",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a cold-start measurement",
+   "theme": "dark",
+   "viewport": [
+    915,
+    412
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    915,
+    412
+   ],
+   "glContexts": 1,
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    988,
+    512
+   ],
+   "result": null,
+   "text": "THE NIGHT SHIFT\nAbout\nCOCO Lab\n\nSee what the robot computes.\n\nPlay\n\nDrive COCO. Race the planner.\n\nCompare\n\nOne map. Different decisions.\n\nResearch\n\nExplore recorded ROS 2 runs.\n\nPress any key to play\nMODEL\n· kinematic",
+   "errors": []
+  },
+  {
+   "file": "nothing-landscape-play.png",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a cold-start measurement",
+   "theme": "dark",
+   "viewport": [
+    915,
+    412
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    915,
+    412
+   ],
+   "glContexts": 1,
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1372,
+    618
+   ],
+   "result": null,
+   "text": "FREE ROAM\nMake your own path.\n00:03\n0.30 m/s\nIDLE\nSTOP\nGrasp\nAuto\nCamera\nMODEL\n· kinematic\n\nRecorded MODEL demo · tap the floor to take control.",
+   "errors": []
+  },
+  {
+   "file": "nothing-landscape-compare.png",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a cold-start measurement",
+   "theme": "dark",
+   "viewport": [
+    915,
+    412
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    915,
+    412
+   ],
+   "glContexts": 1,
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    1014,
+    336
+   ],
+   "result": {
+    "seed": 1,
+    "goal": [
+     2.5,
+     2
+    ],
+    "world": {
+     "id": "coco_arena_v1",
+     "width": 500,
+     "height": 380,
+     "resolution": 0.05,
+     "origin": [
+      -6.5,
+      -9.5
+     ],
+     "frame": "map",
+     "start": [
+      0,
+      0,
+      0
+     ],
+     "dt": 0.1,
+     "radius": 0.22,
+     "limits": {
+      "teleop_linear": 0.5,
+      "teleop_angular": 1.2,
+      "auto_linear": 0.3,
+      "auto_angular": 1,
+      "linear_accel": 2,
+      "angular_accel": 4
+     },
+     "lidar": {
+      "samples": 480,
+      "angle_min": -2.0944,
+      "angle_max": 2.0944,
+      "range_max": 12,
+      "mount": [
+       -0.09,
+       0.1,
+       0
+      ]
+     },
+     "planners": [
+      "bfs",
+      "dijkstra",
+      "astar",
+      "greedy",
+      "weighted_astar"
+     ],
+     "planner": "astar",
+     "hash": "28edaaf07103222288987dd860891049ebf0cb317325f74d0c65f8961f23cfb6",
+     "beam_height": 0.21350000000000002
+    },
+    "result": {
+     "A": {
+      "planner": "astar",
+      "status": "found",
+      "summary": {
+       "status": "found",
+       "expansions": 1017,
+       "pushes": 1245,
+       "relaxes": 918,
+       "path_cost": 75.94112549695426,
+       "path_length": 75.94112549695426,
+       "path_steps": 66
+      },
+      "resolution": 0.05
+     },
+     "B": {
+      "planner": "dijkstra",
+      "status": "found",
+      "summary": {
+       "status": "found",
+       "expansions": 13124,
+       "pushes": 13498,
+       "relaxes": 274,
+       "path_cost": 75.94112549695424,
+       "path_length": 75.94112549695424,
+       "path_steps": 66
+      },
+      "resolution": 0.05
+     }
+    },
+    "contextLayout": "one scissored WebGL context"
+   },
+   "text": "COCO\nLab\nCompare\nMODEL\n· kinematic\nA\nA*\nB\ndijkstra\n3D view\nGLOBAL PLANNING\nDifferent searches.\nSame goal.\n\nSame map, start, goal and seed.\n\nPlanner A\nbfs\nDijkstra\nA*\ngreedy\nweighted_astar\nPlanner B\nbfs\nDijkstra\nA*\ngreedy\nweighted_astar\nA · A*\n1017 expansions\n3.80 m planned path\nB · dijkstra\n13124 expansions\n3.80 m planned path\nSearch complete",
+   "errors": []
+  },
+  {
+   "file": "nothing-portrait-title.png",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a cold-start measurement",
+   "theme": "dark",
+   "viewport": [
+    412,
+    915
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    412,
+    915
+   ],
+   "glContexts": 1,
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    618,
+    549
+   ],
+   "result": null,
+   "text": "THE NIGHT SHIFT\nAbout\nCOCO Lab\n\nSee what the robot computes.\n\nPlay\n\nDrive COCO. Race the planner.\n\nCompare\n\nOne map. Different decisions.\n\nResearch\n\nExplore recorded ROS 2 runs.\n\nPress any key to play\nMODEL",
+   "errors": []
+  },
+  {
+   "file": "nothing-portrait-play.png",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a cold-start measurement",
+   "theme": "dark",
+   "viewport": [
+    412,
+    915
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    412,
+    915
+   ],
+   "glContexts": 1,
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    618,
+    1372
+   ],
+   "result": null,
+   "text": "FREE ROAM\nMake your own path.\n00:03\nKNOWN MAP\nVision\n0.30 m/s\nIDLE\nSTOP\nGrasp\nAuto\nCamera\nMODEL\n· kinematic\n\nRecorded MODEL demo · tap the floor to take control.\n\nRotate your phone\n\nCOCO has room to move in landscape.\n\nMODEL\n· kinematic",
+   "errors": []
+  },
+  {
+   "file": "nothing-portrait-compare.png",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a cold-start measurement",
+   "theme": "dark",
+   "viewport": [
+    412,
+    915
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    412,
+    915
+   ],
+   "glContexts": 1,
+   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+   "canvas": [
+    618,
+    808
+   ],
+   "result": {
+    "seed": 1,
+    "goal": [
+     2.5,
+     2
+    ],
+    "world": {
+     "id": "coco_arena_v1",
+     "width": 500,
+     "height": 380,
+     "resolution": 0.05,
+     "origin": [
+      -6.5,
+      -9.5
+     ],
+     "frame": "map",
+     "start": [
+      0,
+      0,
+      0
+     ],
+     "dt": 0.1,
+     "radius": 0.22,
+     "limits": {
+      "teleop_linear": 0.5,
+      "teleop_angular": 1.2,
+      "auto_linear": 0.3,
+      "auto_angular": 1,
+      "linear_accel": 2,
+      "angular_accel": 4
+     },
+     "lidar": {
+      "samples": 480,
+      "angle_min": -2.0944,
+      "angle_max": 2.0944,
+      "range_max": 12,
+      "mount": [
+       -0.09,
+       0.1,
+       0
+      ]
+     },
+     "planners": [
+      "bfs",
+      "dijkstra",
+      "astar",
+      "greedy",
+      "weighted_astar"
+     ],
+     "planner": "astar",
+     "hash": "28edaaf07103222288987dd860891049ebf0cb317325f74d0c65f8961f23cfb6",
+     "beam_height": 0.21350000000000002
+    },
+    "result": {
+     "A": {
+      "planner": "astar",
+      "status": "found",
+      "summary": {
+       "status": "found",
+       "expansions": 1017,
+       "pushes": 1245,
+       "relaxes": 918,
+       "path_cost": 75.94112549695426,
+       "path_length": 75.94112549695426,
+       "path_steps": 66
+      },
+      "resolution": 0.05
+     },
+     "B": {
+      "planner": "dijkstra",
+      "status": "found",
+      "summary": {
+       "status": "found",
+       "expansions": 13124,
+       "pushes": 13498,
+       "relaxes": 274,
+       "path_cost": 75.94112549695424,
+       "path_length": 75.94112549695424,
+       "path_steps": 66
+      },
+      "resolution": 0.05
+     }
+    },
+    "contextLayout": "one scissored WebGL context"
+   },
+   "text": "COCO\nLab\nCompare\nMODEL\nA\nA*\nB\ndijkstra\n3D view\nGLOBAL PLANNING\nPlanner A\nbfs\nDijkstra\nA*\ngreedy\nweighted_astar\nPlanner B\nbfs\nDijkstra\nA*\ngreedy\nweighted_astar\nA · A*\n1017 expansions\n3.80 m planned path\nB · dijkstra\n13124 expansions\n3.80 m planned path\nSearch complete",
+   "errors": []
+  }
+ ]
+}

@@ -26,8 +26,10 @@
  */
 
 import * as THREE from 'three';
+import { scanArea } from './scanArea';
+import { FrameGate, isPhone, phoneFrameCap } from '../../play/phone';
 
-import type { Tick, World } from '../protocol';
+import type { Tick, World, FamilyMessage } from '../protocol';
 
 /** coco_lab.arm's names for the arm's joints, and the URDF's (coco_robo2.urdf). */
 const ARM_JOINTS: [string, string][] = [['joint1', 'm_link1_Revolute-6'], ['joint2', 'm_link2_Revolute-7'],
@@ -70,6 +72,8 @@ const FRAG = /* glsl */ `
 precision highp float;
 uniform sampler2D uOcc;
 uniform sampler2D uState;
+uniform sampler2D uCost;
+uniform bool uShowCost;
 uniform vec3 uFree, uOccupied, uUnknown, uClosed, uPath;
 uniform vec3 uViridis[5];
 uniform float uClosedAlpha, uMaxOrder;
@@ -91,6 +95,7 @@ void main() {
   float occ = texture2D(uOcc, vUv).r * 255.0;
   vec3 c = uShowOcc ? (occ < 0.5 ? uFree : occ < 1.5 ? uOccupied : uUnknown) : uFree;
   c = mix(uBg, c, uWorldDim);  // Focus (M2.2): the world, dimmed outside the lens
+  if (uShowCost) { float cost = texture2D(uCost, vUv).r * 255.0; if (cost > 0.5) c = viridis(cost / 254.0); }
   vec3 base = c;
   vec4 st = texture2D(uState, vUv) * 255.0;
   float s = st.r;
@@ -101,6 +106,9 @@ void main() {
   if (uShowPath && s > 2.5) c = mix(c, uPath, uHeat ? 0.0 : 0.25);
   c = mix(base, c, uPlanDim);  // Focus: the Plan lens's layers, dimmed outside it
   gl_FragColor = vec4(c, 1.0);
+  // Palette inputs are linear THREE.Color values. Emit sRGB like the CAD
+  // materials, otherwise the dark free-cell decal becomes almost black.
+  #include <colorspace_fragment>
 }`;
 
 function col(hex: string): THREE.Color {
@@ -116,11 +124,18 @@ export class ArenaRenderer {
   private world: World | null = null;
   private occTex: THREE.DataTexture | null = null;
   private stateTex: THREE.DataTexture | null = null;
+  private costTex: THREE.DataTexture | null = null;
+  costmapTick: number | null = null;
   private stateData: Uint8Array | null = null;
   private gridMat: THREE.ShaderMaterial | null = null;
   private frontier: THREE.InstancedMesh | null = null;
   private pathLine: THREE.Line | null = null;
   private lidar: THREE.LineSegments | null = null;
+  private scanFill: THREE.Mesh | null = null;
+  private scanHits: THREE.Points | null = null;
+  private scanAsArea = false;
+  setScanArea(enabled: boolean) { this.scanAsArea = enabled; this.setLayers({}); }
+
   private robot = new THREE.Group();
   private truth: THREE.LineLoop | null = null;
   private footprint: THREE.LineLoop | null = null;
@@ -153,6 +168,7 @@ export class ArenaRenderer {
   private pickSurface: THREE.Mesh | null = null;
   private readonly picker = new THREE.Raycaster();
   onFrame?: () => void;
+  onResume?: () => void;
   /** Called after each frame is submitted (the measurement hook for "drawn"). */
   onAfterRender?: () => void;
 
@@ -169,6 +185,26 @@ export class ArenaRenderer {
 
   // -- world ---------------------------------------------------------------
 
+  setTheme(theme: Theme) {
+    const p = this.palette = PALETTES[theme];
+    this.scene.background = col(p.background);
+    const uniforms = this.gridMat?.uniforms;
+    if (uniforms) {
+      for (const [name, value] of Object.entries({ uFree:p.free, uOccupied:p.occupied, uUnknown:p.unknown, uClosed:p.closed, uPath:p.path, uBg:p.background })) uniforms[name].value.set(value);
+      uniforms.uClosedAlpha.value = p.closedAlpha;
+    }
+    const colour = (object: THREE.Object3D | null | undefined, value: string) => {
+      const material = (object as THREE.Mesh | undefined)?.material as THREE.MeshBasicMaterial | undefined;
+      material?.color?.set(value);
+    };
+    colour(this.frontier,p.frontier); colour(this.pathLine,p.path); colour(this.lidar,p.lidar); colour(this.scanFill,p.lidar); colour(this.scanHits,p.lidar);
+    colour(this.truth,p.truth); colour(this.footprint,p.footprint); colour(this.goal,p.goal); colour(this.pickBox,p.pick);
+    colour(this.robot.children[0],p.robot); colour(this.robot.children[1],p.heading);
+    colour(this.flag,p.goal); colour(this.ghost,p.truth);
+    if (this.lidar) (this.lidar.material as THREE.LineBasicMaterial).opacity = p.lidarAlpha;
+    this.three?.setTheme(theme);
+  }
+
   setWorld(world: World, occupancy: Uint8Array, robotOutline: [number, number][]) {
     this.world = world;
     const { width: W, height: H, resolution: r, origin } = world;
@@ -176,9 +212,10 @@ export class ArenaRenderer {
     const occ = new Uint8Array(W * H);
     for (let row = 0; row < H; row += 1) occ.set(occupancy.subarray(row * W, (row + 1) * W), (H - 1 - row) * W);
     this.occTex = new THREE.DataTexture(occ, W, H, THREE.RedFormat, THREE.UnsignedByteType);
+    this.costTex = new THREE.DataTexture(new Uint8Array(W * H), W, H, THREE.RedFormat, THREE.UnsignedByteType);
     this.stateData = new Uint8Array(W * H * 4);
     this.stateTex = new THREE.DataTexture(this.stateData, W, H, THREE.RGBAFormat, THREE.UnsignedByteType);
-    for (const t of [this.occTex, this.stateTex]) {
+    for (const t of [this.occTex, this.stateTex, this.costTex]) {
       t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false;
       t.needsUpdate = true;
     }
@@ -186,7 +223,7 @@ export class ArenaRenderer {
     this.gridMat = new THREE.ShaderMaterial({
       vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
-        uOcc: { value: this.occTex }, uState: { value: this.stateTex },
+        uOcc: { value: this.occTex }, uState: { value: this.stateTex }, uCost: { value: this.costTex }, uShowCost: { value: false },
         uFree: { value: col(p.free) }, uOccupied: { value: col(p.occupied) }, uUnknown: { value: col(p.unknown) },
         uClosed: { value: col(p.closed) }, uPath: { value: col(p.path) },
         uViridis: { value: VIRIDIS.map(col) }, uClosedAlpha: { value: p.closedAlpha }, uMaxOrder: { value: 1 },
@@ -215,6 +252,11 @@ export class ArenaRenderer {
     // (in 3D the camera follows the robot away from where the first scan was drawn; M4.3)
     this.lidar.frustumCulled = false;
     this.scene.add(this.lidar);
+    this.scanFill = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({color:p.lidar,transparent:true,opacity:.12,depthWrite:false,side:THREE.DoubleSide}));
+    this.scanHits = new THREE.Points(new THREE.BufferGeometry(),new THREE.PointsMaterial({color:p.lidar,size:3,sizeAttenuation:false,depthWrite:false}));
+    this.scanFill.frustumCulled=false; this.scanHits.frustumCulled=false;
+    this.scene.add(this.scanFill,this.scanHits);
+    this.setLayers({});
 
     // the robot, from the chassis mesh outline (base_link frame)
     const shape = new THREE.Shape(robotOutline.map(([x, y]) => new THREE.Vector2(x, y)));
@@ -289,7 +331,8 @@ export class ArenaRenderer {
     const lift = this.is3D ? (truthTilt ?? tilt)?.[0] ?? 0 : 0;
     this.footprint?.position.set(pose[0], pose[1], Z.footprint + lift);
     // M4.6: in 3D the scan is drawn where the model casts it, at the sensor's height over the surface
-    if (this.lidar) this.lidar.position.z = this.is3D ? lift + (this.world?.beam_height ?? Z.lidar) : Z.lidar;
+    const scanZ=this.is3D ? lift + (this.world?.beam_height ?? Z.lidar) : Z.lidar;
+    for(const scan of [this.lidar,this.scanFill,this.scanHits])if(scan)scan.position.z=scanZ;
     if (this.truth) {
       this.truth.position.set(truth[0], truth[1], Z.truth + lift);
       this.truth.rotation.z = truth[2];
@@ -325,6 +368,11 @@ export class ArenaRenderer {
       a[k++] = sx + Math.cos(th) * Math.min(rr, range_max); a[k++] = sy + Math.sin(th) * Math.min(rr, range_max); a[k++] = 0;
     }
     pos.needsUpdate = true;
+    if (this.scanFill && this.scanHits) {
+      const area=scanArea(a,range_max);
+      this.scanFill.geometry.setAttribute('position',new THREE.BufferAttribute(area.triangles,3));
+      this.scanHits.geometry.setAttribute('position',new THREE.BufferAttribute(area.hits,3));
+    }
   }
 
   setGoal(goal: [number, number] | null) {
@@ -387,6 +435,36 @@ export class ArenaRenderer {
     st.dirty = false;
   }
 
+  /** Instrumentation reads rendered data, never an invisible event cursor. */
+  hasVisibleComputation(): boolean {
+    const drawn = (object: THREE.Object3D | null) => !!object?.visible &&
+      (((object as THREE.InstancedMesh).isInstancedMesh && (object as THREE.InstancedMesh).count > 0) ||
+       (((object as THREE.Mesh).geometry?.getAttribute('position')?.count ?? 0) > 1));
+    return (this.layers.closed && (this.store?.expansions ?? 0) > 0) ||
+      drawn(this.frontier) || drawn(this.pathLine) || drawn(this.lidar) ||
+      drawn(this.scanFill) || drawn(this.scanHits) || !!this.gridMat?.uniforms.uShowCost.value;
+  }
+
+  setCostmapVisible(visible: boolean) {
+    if (this.gridMat) this.gridMat.uniforms.uShowCost.value = visible && this.costmapTick !== null;
+  }
+
+  costmapMessage(message: FamilyMessage) {
+    if (!this.world || !this.costTex) return;
+    if (message.header) { this.costmapTick = null; this.setCostmapVisible(false); return; }
+    const columns = message.columns; if (!columns) return;
+    const { width, height } = this.world;
+    const pixels = this.costTex.image.data as Uint8Array;
+    for (let i = 0; i < columns.row.length; i++) {
+      const row = Number(columns.row[i]), col = Number(columns.col[i]);
+      pixels[(height - 1 - row) * width + col] = Number(columns.combined_cost[i]);
+    }
+    if (Number(columns.seq[columns.seq.length - 1]) === width * height - 1) {
+      this.costmapTick = message.tick ?? 0; this.costTex.needsUpdate = true;
+      window.dispatchEvent(new CustomEvent('coco:costmap-ready', { detail: this.costmapTick }));
+    }
+  }
+
   setLayers(v: Partial<LayerVisibility>) {
     this.layers = { ...this.layers, ...v };
     const L = this.layers;
@@ -396,7 +474,9 @@ export class ArenaRenderer {
     }
     if (this.frontier) this.frontier.visible = L.frontier;
     if (this.pathLine) this.pathLine.visible = L.path;
-    if (this.lidar) this.lidar.visible = L.lidar;
+    if (this.lidar) this.lidar.visible = L.lidar && !this.scanAsArea;
+    if (this.scanFill) this.scanFill.visible = L.lidar && this.scanAsArea;
+    if (this.scanHits) this.scanHits.visible = L.lidar && this.scanAsArea;
     this.robot.visible = L.robot && !this.is3D;
     if (this.three) this.three.robotHolder.visible = L.robot && this.cameraMode !== 'robot_eye';
     if (this.footprint) this.footprint.visible = L.footprint;
@@ -645,13 +725,14 @@ export class ArenaRenderer {
       // the floor point under the pointer (README §5.3: picking uses a floor ray for grids); on a terrain
       // the ray stops at the walkable surface first, so a click on a platform is a point on the platform
       const ndc = new THREE.Vector2(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
+      this.three!.camera.updateMatrixWorld(true);
       if (this.pickSurface) {
         this.picker.setFromCamera(ndc, this.three!.camera);
         const hit = this.picker.intersectObject(this.pickSurface, false)[0];
         if (hit) return [hit.point.x, hit.point.y];
       }
       const hit = this.three!.toFloor(ndc.x, ndc.y);
-      return hit ?? [this.lastPose[0], this.lastPose[1]];
+      return hit ?? [Number.NaN, Number.NaN];
     }
     const x = this.view.cx + (clientX - rect.left - rect.width / 2) / this.view.scale;
     const y = this.view.cy - (clientY - rect.top - rect.height / 2) / this.view.scale;
@@ -775,7 +856,23 @@ export class ArenaRenderer {
   }
 
   start() {
+    const gate = new FrameGate();
+    const phone = isPhone();
+    let wasHidden = false;
     const loop = (now: number) => {
+      if (document.hidden) {
+        wasHidden = true;
+        this.raf = requestAnimationFrame(loop);
+        return;
+      }
+      if (wasHidden) {
+        wasHidden = false; gate.reset(); this.lastFrame = now; this.onResume?.();
+        this.quality?.restart(now);
+      }
+      if (phone && !gate.due(now, phoneFrameCap())) {
+        this.raf = requestAnimationFrame(loop);
+        return;
+      }
       this.resize();
       this.onFrame?.();
       this.syncPlan();
@@ -783,7 +880,7 @@ export class ArenaRenderer {
       this.lastFrame = now;
       if (this.pendingTopdown && now >= this.pendingTopdown) { this.pendingTopdown = 0; this.applyCamera('topdown'); }
       if (this.is3D) {
-        const q = this.quality?.frame(now, dt * 1000) ?? null;
+        const q = this.quality?.frame(now, dt * 1000, true) ?? null;
         if (q?.kind === 'tier') this.applyTier(q.tier);
         if (q) this.onQuality?.(q);
         if (q?.kind === 'fallback') this.setCameraMode('topdown');
@@ -841,6 +938,18 @@ export class ArenaRenderer {
 
   dispose() {
     cancelAnimationFrame(this.raf);
+    this.three?.dispose();
+    this.scene.traverse(object=>{
+      const mesh=object as THREE.Mesh;
+      if(!mesh.geometry||!mesh.material)return;
+      mesh.geometry.dispose();
+      if((mesh as THREE.InstancedMesh).isInstancedMesh)(mesh as THREE.InstancedMesh).dispose();
+      for(const material of Array.isArray(mesh.material)?mesh.material:[mesh.material]){
+        for(const value of Object.values(material))if(value instanceof THREE.Texture)value.dispose();
+        material.dispose();
+      }
+    });
+    this.occTex?.dispose();this.stateTex?.dispose();this.costTex?.dispose();this.pickSurface?.geometry.dispose();
     this.renderer.dispose();
   }
 }

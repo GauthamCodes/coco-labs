@@ -1,0 +1,4 @@
+2026-10-15 · M5.5
+Local workspace adb devices: List of devices attached; no devices.
+Real Nothing Phone (1): not connected. Phone row pending: connect over USB
+with debugging enabled. Emulated layout checks do not satisfy this row.

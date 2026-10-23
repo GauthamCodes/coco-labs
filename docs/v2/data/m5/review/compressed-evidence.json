@@ -1,0 +1,170 @@
+[
+  {
+    "path": "browser/compare-2-events.json",
+    "bytes": 2083,
+    "sha256": "145bdad25e09067ecbc339d9f8ed86dbdf22bfdf8d690d42022be8ffaa9239dc",
+    "gzip_bytes": 574
+  },
+  {
+    "path": "browser/compare-4-events.json",
+    "bytes": 3506,
+    "sha256": "ff04c6359e09bcdc51cbbd9647ed18ea470312497eb264aa4e0e42967593ef21",
+    "gzip_bytes": 792
+  },
+  {
+    "path": "browser/compare-bfs-events.json",
+    "bytes": 4894,
+    "sha256": "e6d49ba51edcf0c692555fc5cbb3ffe59fc75cba9689e905a8784d907980237b",
+    "gzip_bytes": 884
+  },
+  {
+    "path": "browser/compare-control-events.json",
+    "bytes": 168770,
+    "sha256": "878f12d49581a31b2fcdedcd79395b503221e6434877eb5bbf60e1697b018fed",
+    "gzip_bytes": 41251
+  },
+  {
+    "path": "browser/compare-dstar_lite-events.json",
+    "bytes": 6256,
+    "sha256": "7ee307e8dd52c6f7d4f97d4b0d7d1a8e9aa969d73d3a83952d555cc4909c16b0",
+    "gzip_bytes": 970
+  },
+  {
+    "path": "browser/costmap-emitted.json",
+    "bytes": 5348984,
+    "sha256": "5c351e2b6d59af59e37a5ab8cba4a8a42b514922f0bb033e6cc6bf52197c855b",
+    "gzip_bytes": 590437
+  },
+  {
+    "path": "browser-ac/compare-2-events.json",
+    "bytes": 2266603,
+    "sha256": "64c31283a15478a561875ce5eda0e45c1307b1251843ac1449d25db68793bc35",
+    "gzip_bytes": 293151
+  },
+  {
+    "path": "browser-ac/compare-4-events.json",
+    "bytes": 5007139,
+    "sha256": "ec4e8842282394f60aa5a83865d40aba0936836516de4d14e48ca158617749c6",
+    "gzip_bytes": 665521
+  },
+  {
+    "path": "browser-ac/compare-bfs-events.json",
+    "bytes": 8719525,
+    "sha256": "42b4be8a1a6f50fbf0e3fcffe28c31509ee74500fbb5820103bf404b23e3d91a",
+    "gzip_bytes": 1129604
+  },
+  {
+    "path": "browser-ac/compare-control-events.json",
+    "bytes": 11301907,
+    "sha256": "ea4b6cb616aaa9245bf7d8ead35b8021b9a8be6df475a8ee9ad99bb1ad0298c4",
+    "gzip_bytes": 1496367
+  },
+  {
+    "path": "browser-ac/compare-dstar_lite-events.json",
+    "bytes": 11139421,
+    "sha256": "a9336e4e92c49ff33169db80293532c7da6e8ab5989e0e8aac77d8c844586a01",
+    "gzip_bytes": 1455872
+  },
+  {
+    "path": "browser-ac/costmap-emitted.json",
+    "bytes": 5348984,
+    "sha256": "5c351e2b6d59af59e37a5ab8cba4a8a42b514922f0bb033e6cc6bf52197c855b",
+    "gzip_bytes": 590437
+  },
+  {
+    "path": "browser-ac-debug/compare-2-events.json",
+    "bytes": 2266860,
+    "sha256": "2baa4f6ea0c5ea7a4bd09e9714d4ea2466aefbf2b6169c3c96ca92921e71de0b",
+    "gzip_bytes": 293148
+  },
+  {
+    "path": "browser-ac-debug/compare-4-events.json",
+    "bytes": 5007398,
+    "sha256": "14d87ab619203b8606c64a65e2df82ebfefc412140ddeef207e0bd1e7d7165ab",
+    "gzip_bytes": 665512
+  },
+  {
+    "path": "browser-ac-debug/costmap-emitted.json",
+    "bytes": 5348984,
+    "sha256": "5c351e2b6d59af59e37a5ab8cba4a8a42b514922f0bb033e6cc6bf52197c855b",
+    "gzip_bytes": 590437
+  },
+  {
+    "path": "browser-corrected/compare-2-events.json",
+    "bytes": 2266722,
+    "sha256": "73fd949f175f31b705033bc848d93ce19b4cb225c0bf64e0c3a7988d23c52081",
+    "gzip_bytes": 293166
+  },
+  {
+    "path": "browser-corrected/compare-4-events.json",
+    "bytes": 5007266,
+    "sha256": "1f4d2bce8617a8f53d9d6a60212dee749dcbea7cc739ba0df5456098ac909ef2",
+    "gzip_bytes": 665537
+  },
+  {
+    "path": "browser-corrected/costmap-emitted.json",
+    "bytes": 5348984,
+    "sha256": "5c351e2b6d59af59e37a5ab8cba4a8a42b514922f0bb033e6cc6bf52197c855b",
+    "gzip_bytes": 590437
+  },
+  {
+    "path": "browser-families-ac/compare-2-events.json",
+    "bytes": 2266987,
+    "sha256": "3e4e5522e19b81fc83aa0da541ccc4bb4a8fe4d7ba4f5265c74c33202ed1e84a",
+    "gzip_bytes": 293162
+  },
+  {
+    "path": "browser-families-ac/compare-4-events.json",
+    "bytes": 5007525,
+    "sha256": "4786b956d702b96e9332bf509efbcd30610d24b3008c7e32063bee9a82b3ba0c",
+    "gzip_bytes": 665525
+  },
+  {
+    "path": "browser-families-ac/compare-bfs-events.json",
+    "bytes": 8719910,
+    "sha256": "0e9b78c049e1e1b87fa4ad3b37b053402b9aecf6a13f9b944e56f42eab5c87dc",
+    "gzip_bytes": 1129588
+  },
+  {
+    "path": "browser-families-ac/compare-control-events.json",
+    "bytes": 11302297,
+    "sha256": "010de50196dd02218609256666233af1a724fade446e78a2e8873ecc11839555",
+    "gzip_bytes": 1496353
+  },
+  {
+    "path": "browser-families-ac/compare-dstar_lite-events.json",
+    "bytes": 11139817,
+    "sha256": "5e8cde670a88cb87c3ff5b53650b48a75b7b91b9b95f3ea51a7ef7c298c5ea55",
+    "gzip_bytes": 1455808
+  },
+  {
+    "path": "browser-families-ac/compare-localise-events.json",
+    "bytes": 11848934,
+    "sha256": "afc950e8b1ca9a55229ae2ef8c7fdac09de2cc3cc12c4dc2a1898c96003e2054",
+    "gzip_bytes": 1515259
+  },
+  {
+    "path": "browser-families-ac/costmap-emitted.json",
+    "bytes": 5348984,
+    "sha256": "5c351e2b6d59af59e37a5ab8cba4a8a42b514922f0bb033e6cc6bf52197c855b",
+    "gzip_bytes": 590437
+  },
+  {
+    "path": "browser-final/compare-2-events.json",
+    "bytes": 2083,
+    "sha256": "f3123990027d1b4da76b0ef58e8a0384d530da856645950b02a5a400fc65ad8c",
+    "gzip_bytes": 574
+  },
+  {
+    "path": "browser-final/compare-4-events.json",
+    "bytes": 3494,
+    "sha256": "fe142d126268c5a4d59d5c7bbfd58f3f9fb29bf8ee1adfe028757c99a5f761b5",
+    "gzip_bytes": 787
+  },
+  {
+    "path": "browser-final/costmap-emitted.json",
+    "bytes": 5348984,
+    "sha256": "5c351e2b6d59af59e37a5ab8cba4a8a42b514922f0bb033e6cc6bf52197c855b",
+    "gzip_bytes": 590437
+  }
+]

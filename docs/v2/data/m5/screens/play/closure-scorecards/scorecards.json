@@ -1,0 +1,77 @@
+{
+  "class": "TESTED shared inputs replay and layout; no performance-budget claim",
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-16T19:12:10.661Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Charging",
+        "capacity_pct": 50
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 14.53,
+        "5m": 11.11,
+        "15m": 10.23
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-16T19:12:34.430Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Charging",
+        "capacity_pct": 51
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 15.87,
+        "5m": 11.62,
+        "15m": 10.41
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    }
+  },
+  "rows": [
+    {
+      "profile": "desktop",
+      "device": "laptop Chromium",
+      "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+      "stars": 3,
+      "metrics": 5,
+      "errors": []
+    },
+    {
+      "profile": "compact",
+      "device": "laptop Chromium compact",
+      "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+      "stars": 3,
+      "metrics": 5,
+      "errors": []
+    },
+    {
+      "profile": "nothing-landscape",
+      "device": "emulated Nothing Phone (1)",
+      "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+      "stars": 3,
+      "metrics": 5,
+      "errors": []
+    },
+    {
+      "profile": "nothing-portrait",
+      "device": "emulated Nothing Phone (1)",
+      "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+      "stars": 3,
+      "metrics": 5,
+      "errors": []
+    }
+  ]
+}

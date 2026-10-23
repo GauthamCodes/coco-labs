@@ -8,6 +8,9 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
+import {TOKENS} from '../ui/tokens';
+import {activeTheme} from '../ui/theme';
+import {PREFERENCES_CHANGED} from '../shell/settings_events';
 
 export type Cell = [number, number];
 export interface GridView {
@@ -28,18 +31,24 @@ const COST_MAX = 252;
 export function GridBoard({ grid, overlay, onCell, onHover, label }: {
   grid: GridView; overlay: Overlay; onCell?: (c: Cell) => void; onHover?: (c: Cell | null) => void; label: string;
 }) {
+  const [theme,setTheme]=useState(activeTheme);
+  const [keyboardCell,setKeyboardCell]=useState<Cell>(grid.marks.S??[0,0]);
+  const [keyboardFocus,setKeyboardFocus]=useState(false);
+  useEffect(()=>{const update=()=>setTheme(activeTheme());window.addEventListener(PREFERENCES_CHANGED,update);return()=>window.removeEventListener(PREFERENCES_CHANGED,update);},[]);
   const ref = useRef<HTMLCanvasElement | null>(null);
   const wrap = useRef<HTMLDivElement | null>(null);
   const [px, setPx] = useState(28);
   useEffect(() => {
     const fit = () => {
       const w = wrap.current?.clientWidth ?? 448;
-      setPx(Math.max(14, Math.min(36, Math.floor(w / grid.width))));
+      const h=wrap.current?.clientHeight??0;
+      setPx(Math.max(6,Math.min(36,Math.floor(w/grid.width),h>0?Math.floor(h/grid.height):36)));
     };
     fit();
+    const observer=new ResizeObserver(fit);if(wrap.current)observer.observe(wrap.current);
     window.addEventListener('resize', fit);
-    return () => window.removeEventListener('resize', fit);
-  }, [grid.width]);
+    return () => {observer.disconnect();window.removeEventListener('resize', fit);};
+  }, [grid.width,grid.height]);
   useEffect(() => {
     const cv = ref.current;
     if (!cv) return;
@@ -51,21 +60,19 @@ export function GridBoard({ grid, overlay, onCell, onHover, label }: {
     const g = cv.getContext('2d');
     if (!g) return;
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const css = getComputedStyle(document.documentElement);
-    const v = (n: string, d: string) => css.getPropertyValue(n).trim() || d;
-    const free = v('--play-free', '#f7f5ef'); const wall = v('--play-wall', '#1d1d1f');
-    const ink = v('--ink', '#222'); const accent = v('--play-path', '#0b6e99');
+    const p=TOKENS.computation[theme];
+    const free=p.free,wall=p.occupied,ink=p.text,accent=p.path;
     for (let r = 0; r < grid.height; r += 1) {
       for (let c = 0; c < grid.width; c += 1) {
         const i = r * grid.width + c;
         if (grid.blocked[i]) g.fillStyle = wall;
-        else if (grid.cost[i] > 0) g.fillStyle = `rgba(122, 82, 40, ${0.15 + 0.6 * grid.cost[i] / COST_MAX})`;
+        else if (grid.cost[i] > 0) g.fillStyle = TOKENS.viridis[Math.min(4,Math.floor(grid.cost[i]/COST_MAX*4))];
         else g.fillStyle = free;
         g.fillRect(c * px, r * px, px, px);
       }
     }
     // faint cell lines: a path is drawn one cell at a time
-    g.strokeStyle = 'rgba(128, 128, 128, 0.25)'; g.lineWidth = 1;
+    g.strokeStyle = TOKENS.colours[theme].line; g.lineWidth = 1;
     g.beginPath();
     for (let c = 1; c < grid.width; c += 1) { g.moveTo(c * px + 0.5, 0); g.lineTo(c * px + 0.5, grid.height * px); }
     for (let r = 1; r < grid.height; r += 1) { g.moveTo(0, r * px + 0.5); g.lineTo(grid.width * px, r * px + 0.5); }
@@ -76,9 +83,9 @@ export function GridBoard({ grid, overlay, onCell, onHover, label }: {
         if (stroke) { g.strokeStyle = stroke; g.lineWidth = 2; g.strokeRect(c * px + inset + 1, r * px + inset + 1, px - 2 * inset - 2, px - 2 * inset - 2); }
       }
     };
-    box(overlay.closed, 'rgba(120, 120, 130, 0.45)', null);
-    box(overlay.open, null, 'rgba(11, 110, 153, 0.9)', 2);
-    box(overlay.tied, 'rgba(46, 160, 67, 0.25)', null, 3);
+    box(overlay.closed, p.closed+'73', null);
+    box(overlay.open, null, p.frontier, 2);
+    box(overlay.tied, null, p.truth, 3);
     const line = (cells: Cell[] | undefined, color: string, width: number, dash: number[] = []) => {
       if (!cells || cells.length < 2) return;
       g.strokeStyle = color; g.lineWidth = width; g.setLineDash(dash);
@@ -87,15 +94,16 @@ export function GridBoard({ grid, overlay, onCell, onHover, label }: {
       g.stroke();
       g.setLineDash([]);
     };
-    line(overlay.ghost, 'rgba(46, 160, 67, 0.85)', 3, [6, 4]);
+    line(overlay.ghost, p.truth, 3, [6, 4]);
     line(overlay.path, accent, 4);
     for (const [r, c] of overlay.path ?? []) { g.fillStyle = accent; g.beginPath(); g.arc(c * px + px / 2, r * px + px / 2, 3, 0, 7); g.fill(); }
-    box(overlay.truth ? [overlay.truth] : [], null, 'rgba(46, 160, 67, 1)', 0);
-    box(overlay.mark ? [overlay.mark] : [], null, 'rgba(201, 60, 32, 1)', 4);
-    g.font = `bold ${Math.round(px * 0.6)}px system-ui, sans-serif`;
+    box(overlay.truth ? [overlay.truth] : [], null, p.truth, 0);
+    box(overlay.mark ? [overlay.mark] : [], null, p.path, 4);
+    g.font = `bold ${Math.max(14,Math.round(px * 0.6))}px ${TOKENS.type.ui}`;
     g.textAlign = 'center'; g.textBaseline = 'middle';
-    for (const [k, [r, c]] of Object.entries(grid.marks)) { g.fillStyle = ink; g.fillText(k, c * px + px / 2, r * px + px / 2); }
-  }, [grid, overlay, px]);
+    for (const [k, [r, c]] of Object.entries(grid.marks)) { g.strokeStyle=free;g.lineWidth=4;g.strokeText(k,c*px+px/2,r*px+px/2);g.fillStyle = ink; g.fillText(k, c * px + px / 2, r * px + px / 2); }
+    if(keyboardFocus&&onCell){const [r,c]=keyboardCell;g.strokeStyle=accent;g.lineWidth=3;g.strokeRect(c*px+2,r*px+2,px-4,px-4);}
+  }, [grid, overlay, px,theme,keyboardCell,keyboardFocus]);
   const cellAt = (e: React.PointerEvent<HTMLCanvasElement>): Cell | null => {
     const b = (e.target as HTMLCanvasElement).getBoundingClientRect();
     const c = Math.floor((e.clientX - b.left) / px); const r = Math.floor((e.clientY - b.top) / px);
@@ -103,9 +111,17 @@ export function GridBoard({ grid, overlay, onCell, onHover, label }: {
   };
   return (
     <div className="grid-board" ref={wrap}>
-      <canvas ref={ref} role="img" aria-label={label} data-testid="grid-board" data-px={px}
-        onPointerDown={(e) => { const c = cellAt(e); if (c) onCell?.(c); }}
+      <canvas ref={ref} role={onCell?"application":"img"} tabIndex={onCell?0:undefined} aria-label={onCell?label+"; arrow keys choose a cell, Enter selects":label} data-testid="grid-board" data-px={px}
+        onFocus={()=>setKeyboardFocus(true)} onBlur={()=>{setKeyboardFocus(false);onHover?.(null);}}
+        onKeyDown={event=>{
+          if(!onCell)return;
+          const [r,c]=keyboardCell,delta:Record<string,Cell>={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]};
+          if(delta[event.key]){event.preventDefault();const [dr,dc]=delta[event.key],cell:Cell=[Math.max(0,Math.min(grid.height-1,r+dr)),Math.max(0,Math.min(grid.width-1,c+dc))];setKeyboardCell(cell);onHover?.(cell);}
+          else if(event.key==='Enter'||event.key===' '){event.preventDefault();onCell(keyboardCell);}
+        }}
+        onPointerDown={(e) => { const c = cellAt(e); if (c&&onCell) { setKeyboardCell(c); onCell(c); } }}
         onPointerMove={(e) => onHover?.(cellAt(e))} onPointerLeave={() => onHover?.(null)} />
+      {onCell&&<span className="sr-only" role="status">{keyboardFocus?`Cell ${keyboardCell.join(', ')}; ${grid.blocked[keyboardCell[0]*grid.width+keyboardCell[1]]?'wall':'free'}; cost ${grid.cost[keyboardCell[0]*grid.width+keyboardCell[1]]??0}`:''}</span>}
     </div>
   );
 }

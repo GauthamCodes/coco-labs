@@ -1,0 +1,96 @@
+{
+  "cases": [
+    {
+      "profile": "emulated Nothing Phone (1), two fingers",
+      "stage": "STOP with first finger held",
+      "before": {
+        "tick": 1,
+        "v": 0.2
+      }
+    }
+  ],
+  "errors": [],
+  "debug": {
+    "mode": "live",
+    "last": {
+      "wheels": [
+        0,
+        0
+      ],
+      "source": "teleop",
+      "tick": 307,
+      "t_world": 30.700000000000003,
+      "pose": [
+        0.21,
+        0,
+        0
+      ],
+      "v": 0,
+      "w": 0,
+      "mode": "teleop",
+      "blocked": false,
+      "arrived": false,
+      "hash": "87383221d8a8f8321a82791d1ff87d67ee2b2c49390c4bcc38904d1235ca7b59",
+      "chain": "d9cb3394d81949c5a93cbda99fe7726af634b790a6e8c91c17ad8e7ece801dcf",
+      "inputs": [],
+      "plans": []
+    },
+    "log": [
+      {
+        "kind": "teleop",
+        "linear": 0.35,
+        "angular": 0,
+        "tick": 0
+      },
+      {
+        "kind": "teleop",
+        "linear": 0,
+        "angular": 0,
+        "tick": 6
+      }
+    ],
+    "latched": false
+  },
+  "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded.",
+  "passed": false,
+  "conditions": {
+    "start": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-20T01:13:00.760Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 14.38,
+        "5m": 17.42,
+        "15m": 12.92
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    },
+    "end": {
+      "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+      "at_utc": "2026-10-20T01:13:45.475Z",
+      "power_profile": "balanced",
+      "ac_power": true,
+      "battery": {
+        "status": "Full",
+        "capacity_pct": 100
+      },
+      "cpu_governor": "powersave",
+      "load_average": {
+        "1m": 17.73,
+        "5m": 17.9,
+        "15m": 13.3
+      },
+      "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+      "threads": 12,
+      "standard": true
+    }
+  }
+}

@@ -1,0 +1,270 @@
+{
+  "conditions": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-14T15:09:20.928Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+      "status": "Full",
+      "capacity_pct": 100
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+      "1m": 1.35,
+      "5m": 1.79,
+      "15m": 1.55
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+  },
+  "browser": "156.0.8078.4",
+  "picking": [
+    {
+      "point": [
+        0.4,
+        0
+      ],
+      "pixels": [
+        720.0000000000001,
+        529.1468443691458
+      ],
+      "picked": [
+        0.4000000000000181,
+        -7.894128866831472e-16
+      ],
+      "expected": [
+        189,
+        138
+      ],
+      "actual": [
+        189,
+        138
+      ],
+      "error": 1.8113845034591024e-14,
+      "sent": {
+        "kind": "goal",
+        "x": 0.39999992466874623,
+        "y": -9.050877741642988e-17
+      },
+      "sent_cell": [
+        189,
+        137
+      ],
+      "sent_cell_error": 1,
+      "camera": "follow",
+      "cell_error": 0,
+      "ok": true
+    },
+    {
+      "point": [
+        1,
+        0.5
+      ],
+      "pixels": [
+        625.9614648450249,
+        487.5095173615892
+      ],
+      "picked": [
+        0.9999999999999991,
+        0.4999999999999984
+      ],
+      "expected": [
+        179,
+        150
+      ],
+      "actual": [
+        180,
+        149
+      ],
+      "error": 1.8385843027689748e-15,
+      "sent": {
+        "kind": "goal",
+        "x": 0.9999999293489523,
+        "y": 0.4999998738112596
+      },
+      "sent_cell": [
+        180,
+        149
+      ],
+      "sent_cell_error": 1,
+      "camera": "follow",
+      "cell_error": 1,
+      "ok": true
+    },
+    {
+      "point": [
+        -0.5,
+        0.5
+      ],
+      "pixels": [
+        563.849901886577,
+        632.8544258414043
+      ],
+      "picked": [
+        -0.5000000000000009,
+        0.4999999999999992
+      ],
+      "expected": [
+        179,
+        120
+      ],
+      "actual": [
+        179,
+        119
+      ],
+      "error": 1.1801832636420706e-15,
+      "sent": {
+        "kind": "goal",
+        "x": 0.39999992466874623,
+        "y": -9.050877741642988e-17,
+        "tick": 0
+      },
+      "sent_cell": [
+        189,
+        137
+      ],
+      "sent_cell_error": 17,
+      "camera": "follow",
+      "cell_error": 1,
+      "ok": false
+    },
+    {
+      "point": [
+        0.4,
+        0
+      ],
+      "pixels": [
+        577.8933014305001,
+        551.7685024830168
+      ],
+      "picked": [
+        0.39999999999999947,
+        5.684341886080802e-14
+      ],
+      "expected": [
+        189,
+        138
+      ],
+      "actual": [
+        189,
+        137
+      ],
+      "error": 5.684612930161882e-14,
+      "sent": {
+        "kind": "goal",
+        "x": 0.4000004110836839,
+        "y": 1.7404149588173823e-7
+      },
+      "sent_cell": [
+        189,
+        138
+      ],
+      "sent_cell_error": 0,
+      "camera": "orbit",
+      "cell_error": 1,
+      "ok": true
+    },
+    {
+      "point": [
+        1,
+        0.5
+      ],
+      "pixels": [
+        587.391595974819,
+        534.7404530399125
+      ],
+      "picked": [
+        0.9999999999999281,
+        0.4999999999999343
+      ],
+      "expected": [
+        179,
+        150
+      ],
+      "actual": [
+        180,
+        149
+      ],
+      "error": 9.744495223532781e-14,
+      "sent": {
+        "kind": "goal",
+        "x": 0.9999996020623492,
+        "y": 0.4999988511257758
+      },
+      "sent_cell": [
+        180,
+        149
+      ],
+      "sent_cell_error": 1,
+      "camera": "orbit",
+      "cell_error": 1,
+      "ok": true
+    },
+    {
+      "point": [
+        -0.5,
+        0.5
+      ],
+      "pixels": [
+        545.0527561461287,
+        554.6753536393841
+      ],
+      "picked": [
+        -0.5000000000000044,
+        0.5000000000000338
+      ],
+      "expected": [
+        179,
+        120
+      ],
+      "actual": [
+        179,
+        119
+      ],
+      "error": 3.404169017204737e-14,
+      "sent": {
+        "kind": "goal",
+        "x": -0.5000000330085435,
+        "y": 0.49999995218134263,
+        "tick": 1
+      },
+      "sent_cell": [
+        180,
+        119
+      ],
+      "sent_cell_error": 1,
+      "camera": "orbit",
+      "cell_error": 1,
+      "ok": true
+    }
+  ],
+  "race": [
+    {
+      "layout": "desktop",
+      "device": "laptop",
+      "cpu_throttle": 1,
+      "disabled": true,
+      "forbidden": [],
+      "ok": true
+    },
+    {
+      "layout": "landscape",
+      "device": "emulated Nothing Phone (1)",
+      "cpu_throttle": 4,
+      "disabled": true,
+      "forbidden": [],
+      "ok": true
+    },
+    {
+      "layout": "portrait",
+      "device": "emulated Nothing Phone (1)",
+      "cpu_throttle": 4,
+      "disabled": true,
+      "forbidden": [],
+      "ok": true
+    }
+  ],
+  "errors": [],
+  "ok": false
+}

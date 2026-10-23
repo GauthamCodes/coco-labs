@@ -1,0 +1,58 @@
+vite v8.3.1 building client environment for production...
+transforming...
+✓ 2141 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/assets/manrope-cyrillic-ext-wght-normal-C8S-KRRz.woff2    2.55 kB
+dist/coco/frame.js                                             4.76 kB
+dist/index.html                                                6.46 kB │ gzip:   2.19 kB
+dist/assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2      8.52 kB
+dist/assets/manrope-greek-wght-normal-DL7QRZyv.woff2           9.44 kB
+dist/assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2       14.50 kB
+dist/assets/outfit-latin-ext-wght-normal-DdQaqQDo.woff2       14.80 kB
+dist/assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2      15.12 kB
+dist/assets/arena.worker-B8Y8mkEQ.js                          15.62 kB
+dist/assets/manrope-latin-wght-normal-DHIcAJRg.woff2          24.83 kB
+dist/assets/outfit-latin-wght-normal-Bc-8i84L.woff2           32.29 kB
+dist/assets/shell-IyBR3GMV.css                                 3.78 kB │ gzip:   1.03 kB
+dist/assets/hud-DaQ-32yb.css                                   4.15 kB │ gzip:   1.31 kB
+dist/assets/PlayApp-DCk3N89r.css                               5.77 kB │ gzip:   1.48 kB
+dist/assets/reference-C5XSdbt7.css                            18.03 kB │ gzip:   3.26 kB
+dist/assets/index-CsiHEUpP.css                                35.46 kB │ gzip:   8.06 kB
+dist/assets/reference-D_bpS-uw.js                              0.19 kB │ gzip:   0.17 kB
+dist/assets/CompareScene-Bb7O1PeC.js                           0.21 kB │ gzip:   0.17 kB
+dist/assets/ResearchScene-Bb7O1PeC.js                          0.21 kB │ gzip:   0.17 kB
+dist/assets/dialog-BYb0ehSK.js                                 0.41 kB │ gzip:   0.30 kB
+dist/assets/settings-D46XKP91.js                               0.77 kB │ gzip:   0.42 kB
+dist/assets/ModeNav-ByzkloXq.js                                1.27 kB │ gzip:   0.67 kB
+dist/assets/ArenaApp-ORy7xNFu.js                               1.56 kB │ gzip:   0.77 kB
+dist/assets/links-42RWV61E.js                                  1.58 kB │ gzip:   0.86 kB
+dist/assets/quality-j0dYhQ2P.js                                1.90 kB │ gzip:   0.83 kB
+dist/assets/TitleScreen-B7JRU3LS.js                            2.19 kB │ gzip:   0.98 kB
+dist/assets/controls-CyEPFLPM.js                               2.21 kB │ gzip:   1.01 kB
+dist/assets/createLucideIcon-y8ZcmQde.js                       3.08 kB │ gzip:   1.48 kB
+dist/assets/phone-nS1z3ToV.js                                  3.33 kB │ gzip:   1.60 kB
+dist/assets/AboutPage-008ol2_L.js                              3.45 kB │ gzip:   1.45 kB
+dist/assets/Minimap-CgwPwHpl.js                                3.46 kB │ gzip:   1.72 kB
+dist/assets/SettingsDrawer-CJrKd4qg.js                         4.31 kB │ gzip:   1.50 kB
+dist/assets/WorldStage-CjgMTpCX.js                             5.82 kB │ gzip:   2.82 kB
+dist/assets/Result-Cd9gH6c5.js                                 5.93 kB │ gzip:   2.50 kB
+dist/assets/CaseFilesApp-BBYxFL9V.js                           6.13 kB │ gzip:   2.10 kB
+dist/assets/LearnApp-B2Psa8U6.js                               6.62 kB │ gzip:   2.74 kB
+dist/assets/tokens-DIPSEM86.js                                 7.60 kB │ gzip:   3.24 kB
+dist/assets/PlayScene-CvpHgxnC.js                             11.34 kB │ gzip:   4.28 kB
+dist/assets/ReferenceScreens-Ds3Swrez.js                      11.54 kB │ gzip:   3.94 kB
+dist/assets/scene3d-CgNCwKkH.js                               14.59 kB │ gzip:   5.51 kB
+dist/assets/PlayApp-DMNXKVff.js                               16.67 kB │ gzip:   5.65 kB
+dist/assets/LiveApp-BpbCbeiq.js                               31.10 kB │ gzip:  11.34 kB
+dist/assets/ArenaSceneView-BGRYwWS2.js                        51.39 kB │ gzip:  15.97 kB
+dist/assets/Help-Cc3ok0tu.js                                 217.44 kB │ gzip:  67.95 kB
+dist/assets/index-Dcc5Ersk.js                                241.03 kB │ gzip:  77.68 kB
+dist/assets/three-2pgavX5U.js                                675.49 kB │ gzip: 171.87 kB
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 434ms

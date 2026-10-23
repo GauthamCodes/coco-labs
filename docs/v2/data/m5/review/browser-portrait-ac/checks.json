@@ -1,0 +1,140 @@
+{
+ "class": "TESTED functionality; no performance acceptance claim",
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-20T01:03:40.919Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 20.73,
+    "5m": 16.48,
+    "15m": 8.45
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-20T01:04:25.222Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 20.98,
+    "5m": 17.16,
+    "15m": 9.06
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "cases": [
+  {
+   "name": "nothing-portrait",
+   "emulated": true,
+   "errors": [],
+   "thirdParty": [],
+   "titleOrdering": [
+    {
+     "titleReady": true,
+     "idle": true,
+     "input": false
+    }
+   ],
+   "stage": "await worker STOP",
+   "rotateVisible": true,
+   "stopBeforeWait": [],
+   "stop": {
+    "receipts": [
+     {
+      "tick": 1,
+      "source": "stop",
+      "v": 0
+     }
+    ],
+    "latched": true,
+    "latestVelocity": 0
+   },
+   "layout": {
+    "viewport": [
+     412,
+     915
+    ],
+    "scroll": [
+     412,
+     915
+    ],
+    "controls": [
+     {
+      "name": "STOP",
+      "box": {
+       "x": 102,
+       "y": 506.578125,
+       "width": 70,
+       "height": 48,
+       "top": 506.578125,
+       "right": 172,
+       "bottom": 554.578125,
+       "left": 102
+      }
+     },
+     {
+      "name": "Back to games",
+      "box": {
+       "x": 180,
+       "y": 505.578125,
+       "width": 138,
+       "height": 48,
+       "top": 505.578125,
+       "right": 318,
+       "bottom": 553.578125,
+       "left": 180
+      }
+     }
+    ]
+   },
+   "deniedApis": [
+    "fullscreen",
+    "orientation"
+   ],
+   "syntheticSafeArea": {
+    "insets": {
+     "top": 44,
+     "left": 0,
+     "right": 0,
+     "bottom": 16
+    },
+    "boxes": [
+     {
+      "class": "",
+      "box": {
+       "x": 51,
+       "y": 319.421875,
+       "width": 310,
+       "height": 276.15625,
+       "top": 319.421875,
+       "right": 361,
+       "bottom": 595.578125,
+       "left": 51
+      }
+     }
+    ]
+   },
+   "recordings": 165,
+   "returnedToTitle": true
+  }
+ ],
+ "passed": true
+}

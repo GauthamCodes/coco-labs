@@ -1,0 +1,53 @@
+{
+  "conditions": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-17T10:17:41.503Z",
+    "power_profile": "balanced",
+    "ac_power": false,
+    "battery": {
+      "status": "Discharging",
+      "capacity_pct": 82
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+      "1m": 1.7,
+      "5m": 1.13,
+      "15m": 0.9
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": false
+  },
+  "cases": [
+    {
+      "family": "global",
+      "results": "A · D* Lite\n716 expansions\n4.00 m path\nCost 80.04\n0.26 m minimum clearance\n117.1 ms · Linux x86_64 · this browser (search + trace)\nfound\nB · Dijkstra\n13317 expansions\n4.00 m path\nCost 80.04\n0.25 m minimum clearance\n403.2 ms · Linux x86_64 · this browser (search + trace)\nfound"
+    },
+    {
+      "family": "control",
+      "results": "A · DWA-style sampler\n— expansions\n3.74 m path\nCost —\n0.22 m minimum clearance\n17335.9 ms · Linux x86_64 · this browser (search + trace)\nsucceeded\nB · Pure pursuit\n— expansions\n3.73 m path\nCost —\n0.18 m minimum clearance\n5069.4 ms · Linux x86_64 · this browser (search + trace)\nsucceeded"
+    }
+  ],
+  "errors": [],
+  "error": "TimeoutError: page.waitForSelector: Timeout 600000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"compare-workspace\"][data-ready=\"true\"]') to be visible\u001b[22m\n",
+  "passed": false,
+  "conditions_end": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-17T10:28:16.518Z",
+    "power_profile": "balanced",
+    "ac_power": false,
+    "battery": {
+      "status": "Discharging",
+      "capacity_pct": 61
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+      "1m": 2.36,
+      "5m": 2.32,
+      "15m": 1.74
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": false
+  }
+}

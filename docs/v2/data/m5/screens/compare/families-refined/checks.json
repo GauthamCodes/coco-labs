@@ -1,0 +1,129 @@
+{
+  "class": "Functional diagnostic, not acceptance timing/FPS",
+  "conditions": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-17T10:35:27.934Z",
+    "power_profile": "balanced",
+    "ac_power": false,
+    "battery": {
+      "status": "Discharging",
+      "capacity_pct": 45
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+      "1m": 7.31,
+      "5m": 4.31,
+      "15m": 2.68
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": false
+  },
+  "profile": "desktop",
+  "cases": [
+    {
+      "name": "dstar",
+      "results": "A · D* Lite\n716 expansions\n4.00 m planned path\nCost 80.04\n0.26 m minimum clearance\n115.8 ms · This device · Linux x86_64 · search + trace\nfound\nB · Dijkstra\n13317 expansions\n4.00 m planned path\nCost 80.04\n0.25 m minimum clearance\n394.4 ms · This device · Linux x86_64 · search + trace\nfound"
+    },
+    {
+      "name": "control",
+      "results": "A · DWA-style sampler\n— expansions\n1.59 m travelled (truth)\nCost —\n0.25 m minimum clearance\n5804.8 ms · This device · Linux x86_64 · model window\nwindow_incomplete\nB · Pure pursuit\n— expansions\n1.60 m travelled (truth)\nCost —\n0.20 m minimum clearance\n1980.4 ms · This device · Linux x86_64 · model window\nwindow_incomplete"
+    },
+    {
+      "name": "mppi",
+      "results": "A · MPPI\n— expansions\n0.80 m travelled (truth)\nCost —\n0.60 m minimum clearance\n4557.7 ms · This device · Linux x86_64 · model window\nwindow_incomplete\nB · Pure pursuit\n— expansions\n1.60 m travelled (truth)\nCost —\n0.20 m minimum clearance\n1945.8 ms · This device · Linux x86_64 · model window\nwindow_incomplete"
+    }
+  ],
+  "errors": [],
+  "progress": [
+    {
+      "at": "2026-10-17T10:35:50.382Z",
+      "status": "Computing 0 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:36:05.382Z",
+      "status": "Computing 0 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:36:20.382Z",
+      "status": "Computing 0 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:36:35.382Z",
+      "status": "Computing 5 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:36:50.382Z",
+      "status": "Computing 10 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:37:05.382Z",
+      "status": "Computing 10 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:37:20.382Z",
+      "status": "Computing 15 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:37:35.383Z",
+      "status": "Computing 20 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:37:50.382Z",
+      "status": "Computing 20 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:38:05.382Z",
+      "status": "Computing 25 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:38:20.382Z",
+      "status": "Computing 25 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:38:35.382Z",
+      "status": "Computing 30 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:38:50.382Z",
+      "status": "Computing 35 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:39:05.382Z",
+      "status": "Computing 35 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:39:20.382Z",
+      "status": "Computing 40 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:39:35.382Z",
+      "status": "Computing 45 / 60 shared ticks…"
+    },
+    {
+      "at": "2026-10-17T10:39:50.382Z",
+      "status": "Computing 45 / 60 shared ticks…"
+    }
+  ],
+  "error": "TimeoutError: page.waitForSelector: Timeout 240000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"compare-workspace\"][data-ready=\"true\"]') to be visible\u001b[22m\n",
+  "passed": false,
+  "conditions_end": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-17T10:39:57.983Z",
+    "power_profile": "balanced",
+    "ac_power": false,
+    "battery": {
+      "status": "Discharging",
+      "capacity_pct": 34
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+      "1m": 4.77,
+      "5m": 4.52,
+      "15m": 3.19
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": false
+  }
+}

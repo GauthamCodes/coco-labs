@@ -312,7 +312,7 @@ def site_json(doc, index) -> Dict[str, object]:
                     'id': e['id'], 'title': e['title'], 'file': f"generated/casefiles/{e['id']}.mcap",
                     'bytes': e['bytes'], 'sha256': e['sha256'], 'run_id': e['run_id'], 'bags': e['bags'],
                     'checksum': e['checksum'], 'void': bool(e['case'].get('void')),
-                    'facts': facts(doc, e), 'compare': compare_url(g, e)})
+                    'facts': facts(doc, e), 'metadata': e['case'], 'compare': compare_url(g, e)})
         if g.get('backends'):
             gg['backends'] = backends(g['backends'])
         groups.append(gg)

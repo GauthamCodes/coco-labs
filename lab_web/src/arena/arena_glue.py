@@ -53,7 +53,7 @@ def emit_header(channel, header):
 
 
 def init(spec_json, seed, planner, post_batch, batch_size=2048,
-         post_family=None):
+         post_family=None, hash_version=1):
     """Build the Arena; return (world JSON, occupancy bytes)."""
     global _arena, _post_family, _spec_json, _budget
     _post_family = post_family
@@ -71,7 +71,7 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
 
     _arena = Arena(json.loads(spec_json), int(seed), planner=planner,
                    on_plan_batch=hook, plan_batch_size=int(batch_size),
-                   on_family=family)
+                   on_family=family, hash_version=int(hash_version))
     m = _arena.lab_map
     li = _arena.lidar
     world = {
@@ -98,7 +98,8 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
     return json.dumps(world), m.occupancy
 
 
-def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048):
+def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
+            inflation_json=None, planners_json=None):
     """
     Run two planners from the robot's cell to (gx, gy); change nothing.
 
@@ -108,20 +109,49 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048):
     PlanStore's empty -1). The Arena's state,
     and so every hash, is untouched. Returns both summaries as JSON.
     """
+    from time import perf_counter
     from coco_lab.events import SearchEventColumns
-    from coco_lab.search import collect, search_events
+    from coco_lab.compare_planning import COMPARE_PLANNERS, run_planner
     from coco_lab.sketch import _nearest_free
 
     a = _arena
+    names = json.loads(planners_json) if planners_json else [planner_a, planner_b]
+    if (not isinstance(names, list) or len(names) not in (2, 4) or
+            any(not isinstance(name, str) or name not in COMPARE_PLANNERS
+                for name in names)):
+        raise ValueError('Compare needs two or four supported planners')
     g = a.grid
-    s = _nearest_free(g, a.plan_map.cell_at(a.pose[0], a.pose[1]))
+    if inflation_json is not None:
+        from coco_lab.costmap import (InflationParams, build_layers,
+                                      scan_obstacle_cells, emit_layers)
+        from coco_lab.grid import Grid
+        m, li = a.lab_map, a.lidar
+        params = InflationParams(**json.loads(inflation_json))
+        hits = scan_obstacle_cells(m, a.belief(), a.ranges, a.angles,
+                                   li.mount, li.range_min, li.range_max)
+        layers = build_layers(m.width, m.height, m.resolution,
+                              [v != 0 for v in m.occupancy], hits, params)
+        emit_layers(layers, params, m.origin,
+                    lambda channel, tick, columns, scalars:
+                    emit_header(channel, scalars) if columns is None else
+                    emit_family(channel, tick, columns, scalars),
+                    tick=a.tick, t_world=a.t_world, update=a.tick)
+        # A separate graph: never assign Arena.grid/plan_map or its radius.
+        g = Grid(m.width, m.height,
+                 blocked=[v >= 253 for v in layers.combined],
+                 cost=layers.combined, connectivity=8)
+    here = a.belief() if inflation_json is not None else a.pose
+    s = _nearest_free(g, a.plan_map.cell_at(here[0], here[1]))
     t_cell = a.plan_map.cell_at(float(gx), float(gy))
     if s is None or t_cell is None:
         raise ValueError(f'goal ({gx}, {gy}) or the robot is off the map')
     t = _nearest_free(g, t_cell)
+    if t is None:
+        raise ValueError('costmap has no free goal cell')
     out = {}
-    for side, sid, name in (('A', -101, planner_a), ('B', -102, planner_b)):
-        if name not in PLANNERS:
+    for i, name in enumerate(names):
+        side, sid = 'ABCD'[i], -101 - i
+        if name not in COMPARE_PLANNERS:
             raise ValueError(f'unknown planner {name!r}')
         cols = SearchEventColumns(search_id=sid, tick=a.tick,
                                   t_world=a.t_world)
@@ -132,10 +162,18 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048):
             cols.add(row)
             if len(cols) >= int(batch_size):
                 post_batch(cols.drain(), json.dumps(dict(meta, final=False)))
-        res = collect(search_events(g, s, t, **PLANNERS[name]), sink)
+        started = perf_counter()
+        res = run_planner(g, s, t, name, sink)
+        elapsed = (perf_counter() - started) * 1000
         post_batch(cols.drain(), json.dumps(dict(meta, final=True)))
+        summary = dict(res.summary)
+        if inflation_json is not None:
+            summary['minimum_clearance_m'] = min(
+                (layers.clearance[row * g.width + col] - params.robot_radius
+                 for row, col in res.path), default=None)
+            summary['compute_ms'] = elapsed
         out[side] = {'planner': name, 'status': res.status,
-                     'summary': res.trace.summary,
+                     'summary': summary,
                      'resolution': a.plan_map.resolution}
     return json.dumps(out)
 
@@ -253,9 +291,60 @@ def play(request_json):
     if op == 'view':
         return json.dumps(p.view(req['levels'], req['challenge'], req['level']))
     if op == 'score':
-        return json.dumps(p.score(req['levels'], req['submission'],
-                                  json.loads(_spec_json)))
+        result = p.score(req['levels'], req['submission'], json.loads(_spec_json))
+        expected = req.get('expected_hash')
+        if expected:
+            candidates = p.verification_hashes(result)
+            if req['submission'].get('hash_version', 1) != 1:
+                candidates = {'canonical': result['hash']}
+            for layout, digest in candidates.items():
+                if expected == digest:
+                    result['verified_hash'] = digest
+                    result['verification_layout'] = layout
+                    break
+        return json.dumps(result)
     if op == 'map_begin':
         _budget = p.MapBudget(float(req['budget_m']), _arena.pose)
         return json.dumps({'path_m': 0.0, 'budget_m': _budget.budget_m})
     raise ValueError(f'unknown play op {op!r}')
+
+
+_loop_comparison = None
+
+
+def loop_compare_begin(request_json):
+    """Create independent Compare arms, never replace the live Arena."""
+    global _loop_comparison
+    from coco_lab.compare_loop import LoopComparison
+    _loop_comparison = LoopComparison(json.loads(_spec_json), json.loads(request_json))
+    from coco_lab.costmap import emit_layers
+    emit_layers(_loop_comparison.layers, _loop_comparison.params,
+                _loop_comparison.arms[0].lab_map.origin,
+                lambda channel, tick, columns, scalars:
+                emit_header(channel, scalars) if columns is None else
+                emit_family(channel, tick, columns, scalars))
+
+
+def loop_compare_advance():
+    """Return one lockstep tick from the independent Compare experiment."""
+    return json.dumps(_loop_comparison.advance())
+
+
+
+def costmap_view():
+    """Emit a view-only snapshot from current model data, without a tick/input."""
+    from coco_lab.costmap import (InflationParams, build_layers,
+                                  scan_obstacle_cells, emit_layers)
+    a = _arena
+    m, li = a.lab_map, a.lidar
+    params = InflationParams(robot_radius=a.radius,
+                             inflation_radius=max(0.5, a.radius))
+    hits = scan_obstacle_cells(m, a.belief(), a.ranges, a.angles,
+                               li.mount, li.range_min, li.range_max)
+    layers = build_layers(m.width, m.height, m.resolution,
+                          [v != 0 for v in m.occupancy], hits, params)
+    emit_layers(layers, params, m.origin,
+                lambda channel, tick, columns, scalars:
+                emit_header(channel, scalars) if columns is None else
+                emit_family(channel, tick, columns, scalars),
+                tick=a.tick, t_world=a.t_world, update=a.tick)

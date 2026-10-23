@@ -1,0 +1,10 @@
+[tests] interpreter: /home/gautham/coco_labs_ws/test_venv/bin/python (3.12.3 pytest 7.4.4 hypothesis 6.98.15 networkx 3.6.1)
+[tests] workspace:   /home/gautham/coco_labs_ws   ROS_DOMAIN_ID=78
+--- Testing coco_web ---
+=========================== short test summary info ============================
+FAILED test/test_frontend_frame.py::test_the_page_decoder_agrees_with_the_python_encoder
+1 failed, 862 passed, 12 warnings in 33.14s
+==================================================
+coco_web             FAIL (pytest exit 1) 1 failed, 862 passed, 12 warnings in 33.14s
+==================================================
+[tests] FAILED: at least one package did not pass

@@ -1,0 +1,78 @@
+/* Copyright 2026 Gautham Anil — SPDX-License-Identifier: Apache-2.0 */
+.play-header { display:flex; align-items:center; gap:var(--space-xl); margin-bottom:var(--space-xl); }
+.play-header h1 { margin:0; margin-right:auto; }
+.game-cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--space-lg); }
+.game-card { display:flex; flex-direction:column; min-width:0; color:var(--fg); text-decoration:none; border:1px solid var(--line); border-radius:var(--radius-md); background:var(--panel); padding:var(--space-xl); }
+.game-card:hover { border-color:var(--muted); background:var(--panel2); }
+.game-card h2 { font:500 var(--type-lead)/1.2 var(--font-display); margin:var(--space-md) 0; }
+.game-card p { font-size:14px; color:var(--muted); line-height:1.5; margin:0 0 var(--space-lg); }
+.game-best { margin-top:auto; font-size:14px; color:var(--accent); }
+.game-free { grid-column:1/-1; display:flex; gap:var(--space-xl); min-height:48px; align-items:center; justify-content:space-between; padding:var(--space-md) var(--space-xl); border:1px solid var(--line); border-radius:var(--radius-md); color:var(--fg); text-decoration:none; }
+.game-free span { color:var(--muted); font-size:14px; }
+@media(max-height:500px) and (orientation:landscape) {
+ .play:has(.game-cards) { padding:12px max(16px,env(safe-area-inset-right)) 12px max(16px,env(safe-area-inset-left)); height:100dvh; box-sizing:border-box; overflow:hidden; }
+ .play:has(.game-cards) .play-header { margin-bottom:8px; height:48px; }
+ .play:has(.game-cards) .play-header h1 { font-size:24px; }
+ .game-cards { height:calc(100dvh - 80px); grid-template-rows:1fr 1fr 48px; gap:8px; }
+ .game-card { padding:10px 14px; margin:0; }
+ .game-card h2 { font-size:18px; margin:4px 0; }
+ .game-card p { display:none; }
+ .game-card .night-eyebrow { font-size:14px; letter-spacing:.06em; }
+ .game-free { padding:4px 14px; }
+}
+@media(max-width:600px) and (orientation:portrait) {
+ .game-cards { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .game-card { padding:16px; }
+ .game-card p { display:none; }
+ .game-card h2 { font-size:20px; }
+ .play-header { gap:8px; }
+ .play-header .evidence-badge { font-size:14px; }
+}
+
+.play:has(.play-level) { height:100dvh; overflow:hidden; box-sizing:border-box; display:flex; flex-direction:column; padding:12px max(16px,env(safe-area-inset-right)) 12px max(16px,env(safe-area-inset-left)); }
+.play:has(.play-level) .play-header { flex-shrink:0; height:48px; margin-bottom:8px; }
+.play:has(.play-level) .play-header h1 { font-size:24px; }
+.play-level { flex:1; min-height:0; display:flex; flex-direction:column; }
+.level-top { display:flex; align-items:center; gap:16px; flex-shrink:0; min-height:48px; margin-bottom:8px; }
+.level-top h2 { font-size:18px; margin:0 auto 0 0; }
+.level-top a,.level-top button { min-height:48px; display:inline-flex; align-items:center; font-size:14px; }
+.play-rules { background:var(--panel); color:var(--fg); border:1px solid var(--line); border-radius:var(--radius-md); width:min(720px,90vw); max-height:85dvh; padding:24px; overflow:auto; }
+.play-rules header { display:flex; justify-content:space-between; align-items:center; gap:16px; }
+.play-rules button { min-height:48px; }
+.play-level .play-board { flex:1; min-height:0; margin:0; display:grid; grid-template-columns:minmax(0,1fr) minmax(180px,30%); grid-template-rows:auto 1fr auto; gap:8px 16px; }
+.play-level .grid-board { grid-column:1; grid-row:1/-1; height:100%; min-height:0; display:flex; align-items:center; justify-content:center; }
+.play-level .play-board > .hint { display:none; }
+.play-level .play-controls { grid-column:2; display:flex; flex-wrap:wrap; gap:8px; align-content:end; margin:0; }
+.play-level .play-readout,.play-level .play-prediction,.play-level .play-board > [role=status],.play-level [data-testid=play-order] { grid-column:2; font-size:14px; margin:0; align-self:start; }
+.play-level .play-bays { grid-column:1; grid-row:1/-1; align-self:center; width:100%; font-size:14px; }
+.play-level .play-board > .play-controls:last-child { grid-row:3; }
+@media(max-width:600px) and (orientation:portrait) {
+ .play-level .play-board { grid-template-columns:1fr; grid-template-rows:minmax(0,1fr) auto auto; }
+ .play-level .grid-board,.play-level .play-bays { grid-column:1; grid-row:1; }
+ .play-level .play-controls,.play-level .play-readout,.play-level .play-prediction,.play-level .play-board > [role=status],.play-level [data-testid=play-order] { grid-column:1; }
+ .level-top { flex-wrap:wrap; gap:8px; }
+}
+.play-level .play-board { grid-template-rows:repeat(4,minmax(0,auto)); }
+.play-level .play-prediction { grid-row:1; }
+.play-level .play-readout,.play-level [data-testid=play-order] { grid-row:2; }
+.play-level .play-board > [role=status] { grid-row:3; }
+.play-level .play-board > .play-controls:last-child { grid-row:4; }
+@media(max-width:600px) and (orientation:portrait) {
+ .play-level .play-board { grid-template-rows:minmax(0,1fr) repeat(4,auto); }
+ .play-level .play-prediction { grid-row:2; }
+ .play-level .play-readout,.play-level [data-testid=play-order] { grid-row:3; }
+ .play-level .play-board > [role=status] { grid-row:4; }
+ .play-level .play-board > .play-controls:last-child { grid-row:5; }
+}
+.decision-rotate { display:none; }
+@media(pointer:coarse) and (orientation:portrait) {
+ .play-phone:has(.play-level) .play-header,.play-phone .play-level > :not(.decision-rotate):not(dialog) { visibility:hidden; }
+ .play-phone .decision-rotate { display:flex; position:fixed; inset:0; z-index:20; align-items:center; justify-content:center; flex-direction:column; background:var(--bg); padding:24px; text-align:center; }
+ .decision-rotate a { min-height:48px; display:flex; align-items:center; }
+}
+.play button,.play-rules button,.play-scorecard button,.play-tools button,.instant-replay button { font:inherit; color:var(--fg); background:var(--panel); border:1px solid var(--line); border-radius:var(--radius-sm); padding:8px 14px; }
+.play button:hover,.play-rules button:hover,.play-scorecard button:hover,.play-tools button:hover,.instant-replay button:hover { background:var(--panel2); border-color:var(--muted); }
+.play button:disabled { opacity:.5; }
+.play-header > button { width:48px; height:48px; padding:0; display:grid; place-items:center; }
+.play:has(.play-level) { touch-action:none; overscroll-behavior:none; user-select:none; -webkit-user-select:none; }
+.play-level .grid-board { touch-action:none; }

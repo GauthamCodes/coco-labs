@@ -1,0 +1,162 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________________ test_flake8 __________________________________
+
+    @pytest.mark.flake8
+    @pytest.mark.linter
+    def test_flake8():
+        # The vendored ISRO code keeps its original style (coco_lab/isro).
+        rc, errors = main_with_errors(argv=['--exclude', 'upstream_v3_6.py'])
+>       assert rc == 0, \
+            'Found %d code style errors / warnings:\n' % len(errors) + \
+            '\n'.join(errors)
+E       AssertionError: Found 3 code style errors / warnings:
+E         ./coco_lab/compare_loop.py:131:48: E128 continuation line under-indented for visual indent
+E         ./test/test_compare_loop.py:28:12: C408 Unnecessary dict call - rewrite as a literal.
+E         ./test/test_compare_loop.py:29:27: C408 Unnecessary dict call - rewrite as a literal.
+E       assert 1 == 0
+
+test/test_flake8.py:24: AssertionError
+----------------------------- Captured stdout call -----------------------------
+
+./coco_lab/compare_loop.py:131:48: E128 continuation line under-indented for visual indent
+                                               tick.pose[1] - before[1])
+                                               ^
+
+./test/test_compare_loop.py:28:12: C408 Unnecessary dict call - rewrite as a literal.
+    return dict(family=family, names=names, steps=steps, goal=[2.5, 2],
+           ^
+
+./test/test_compare_loop.py:29:27: C408 Unnecessary dict call - rewrite as a literal.
+                inflation=dict(inflation_radius=.5, cost_scaling_factor=10,
+                          ^
+
+2     C408 Unnecessary dict call - rewrite as a literal.
+1     E128 continuation line under-indented for visual indent
+
+115 files checked
+3 errors
+
+'C'-type errors: 2
+'E'-type errors: 1
+
+Checked files:
+
+* ./setup.py
+* ./test/test_locbundle.py
+* ./test/test_grid.py
+* ./test/test_race.py
+* ./test/test_replan.py
+* ./test/golden_loc_bundles.py
+* ./test/test_ekfslam.py
+* ./test/golden_bundles.py
+* ./test/test_play.py
+* ./test/test_golden_traces.py
+* ./test/test_movebundle.py
+* ./test/test_state_hash_v2.py
+* ./test/test_map_teaching.py
+* ./test/test_no_ros.py
+* ./test/lab_maps.py
+* ./test/make_golden_traces.py
+* ./test/conftest.py
+* ./test/test_copyright.py
+* ./test/golden_search_bundles.py
+* ./test/test_regionsearch.py
+* ./test/test_compare_planning.py
+* ./test/test_costmap.py
+* ./test/test_fastslam.py
+* ./test/test_kalman.py
+* ./test/test_dstarlite.py
+* ./test/test_search.py
+* ./test/test_isro.py
+* ./test/test_loc_arena.py
+* ./test/test_move_arena.py
+* ./test/test_trace.py
+* ./test/test_arena.py
+* ./test/test_rng.py
+* ./test/test_localise.py
+* ./test/test_teaching.py
+* ./test/test_graph_interface.py
+* ./test/test_maps.py
+* ./test/test_worldspec.py
+* ./test/test_movemetrics.py
+* ./test/test_bound.py
+* ./test/test_bundle_recording.py
+* ./test/test_heuristics.py
+* ./test/test_searchbundle.py
+* ./test/test_occgrid.py
+* ./test/test_pep257.py
+* ./test/golden_slam_bundles.py
+* ./test/test_compare_loop.py
+* ./test/test_slambundle.py
+* ./test/test_properties.py
+* ./test/test_posegraph.py
+* ./test/test_map_arena.py
+* ./test/test_terrain_grasp.py
+* ./test/golden_move_bundles.py
+* ./test/test_mapeval.py
+* ./test/test_flake8.py
+* ./test/test_dependencies.py
+* ./test/test_sketch.py
+* ./test/test_stdlib_only.py
+* ./test/test_mission_arena.py
+* ./test/test_bundle.py
+* ./coco_lab/dstarlite.py
+* ./coco_lab/map_arena.py
+* ./coco_lab/__init__.py
+* ./coco_lab/arena.py
+* ./coco_lab/state_v2.py
+* ./coco_lab/trace.py
+* ./coco_lab/heuristics.py
+* ./coco_lab/graph.py
+* ./coco_lab/terrain.py
+* ./coco_lab/rng.py
+* ./coco_lab/regionsearch.py
+* ./coco_lab/fetch_problem.py
+* ./coco_lab/loc_arena.py
+* ./coco_lab/arm.py
+* ./coco_lab/move_arena.py
+* ./coco_lab/control.py
+* ./coco_lab/link_bounds.py
+* ./coco_lab/kalman.py
+* ./coco_lab/ekfslam.py
+* ./coco_lab/searchbundle.py
+* ./coco_lab/landmarks.py
+* ./coco_lab/columns.py
+* ./coco_lab/grid.py
+* ./coco_lab/maps.py
+* ./coco_lab/mapping.py
+* ./coco_lab/slambundle.py
+* ./coco_lab/play.py
+* ./coco_lab/mapworld.py
+* ./coco_lab/search.py
+* ./coco_lab/worldspec.py
+* ./coco_lab/loc_teaching.py
+* ./coco_lab/grasp.py
+* ./coco_lab/posegraph.py
+* ./coco_lab/movemetrics.py
+* ./coco_lab/race.py
+* ./coco_lab/compare_loop.py
+* ./coco_lab/compare_planning.py
+* ./coco_lab/localise.py
+* ./coco_lab/fastslam.py
+* ./coco_lab/mapeval.py
+* ./coco_lab/slam.py
+* ./coco_lab/heading.py
+* ./coco_lab/sketch.py
+* ./coco_lab/movebundle.py
+* ./coco_lab/move_scenarios.py
+* ./coco_lab/replan.py
+* ./coco_lab/bundle.py
+* ./coco_lab/map_teaching.py
+* ./coco_lab/teaching.py
+* ./coco_lab/costmap.py
+* ./coco_lab/occgrid.py
+* ./coco_lab/locbundle.py
+* ./coco_lab/mission_arena.py
+* ./coco_lab/events.py
+* ./coco_lab/isro/__init__.py
+* ./coco_lab/isro/historical.py
+=========================== short test summary info ============================
+FAILED test/test_flake8.py::test_flake8 - AssertionError: Found 3 code style ...
+1 failed, 2 passed in 5.87s

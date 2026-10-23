@@ -1,0 +1,68 @@
+{
+ "class": "Local silent demo draft, not a benchmark",
+ "errors": [],
+ "steps": [
+  {
+   "name": "Title",
+   "seconds": 0.514
+  },
+  {
+   "name": "Play cards",
+   "seconds": 6.6
+  },
+  {
+   "name": "Drive",
+   "seconds": 16.065
+  },
+  {
+   "name": "Robot vision and goal",
+   "seconds": 27.084
+  },
+  {
+   "name": "Compare",
+   "seconds": 32.92
+  }
+ ],
+ "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /Difference A/ }).first()\u001b[22m\n",
+ "passed": false,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T19:59:54.900Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 4.35,
+    "5m": 5.55,
+    "15m": 4.84
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T20:01:04.224Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 5.14,
+    "5m": 5.45,
+    "15m": 4.85
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

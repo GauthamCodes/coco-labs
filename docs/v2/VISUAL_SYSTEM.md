@@ -1,8 +1,7 @@
-# Visual design system v1 (M1.6)
+# Visual design system · Night Shift (M5.4)
 
 README §5.3: a visual design system with fixed colour semantics per layer.
-Code: [`lab_web/src/arena/render/palette.ts`](../../lab_web/src/arena/render/palette.ts)
-(the only place colours live) and
+Code: [`lab_web/src/ui/tokens.ts`](../../lab_web/src/ui/tokens.ts) is the single source for CSS variables, themes, computation colours, type, spacing, radius, elevation and motion. `render/palette.ts` re-exports the rendering values. Renderer:
 [`render/Renderer.ts`](../../lab_web/src/arena/render/Renderer.ts).
 
 ## Rules
@@ -16,16 +15,16 @@ Code: [`lab_web/src/arena/render/palette.ts`](../../lab_web/src/arena/render/pal
    and by the common colour-vision deficiencies. It is used for one thing
    in M1: the expansion order (end-of-run heatmap).
 5. **Two themes, same meaning.** Light and dark swap values, never roles.
-   `?theme=light|dark` overrides the system preference.
+   Dark is the default; `?theme=light|dark` overrides the saved theme.
 6. **The evidence badge is always visible** (MODEL in the Arena).
 
 ## Layers (bottom to top)
 
 | Layer | Meaning | Light | Dark | Drawn as |
 |---|---|---|---|---|
-| free | traversable cell | `#fbfbfa` | `#1d1d22` | grid data texture |
-| occupied | wall, obstacle | `#3a3a40` | `#b9b9c2` | grid data texture |
-| unknown | not seen; non-traversable | `#c9c9cc` | `#3a3a42` | grid data texture |
+| free | traversable cell | `#fbfbfa` | `#1a242c` | grid data texture |
+| occupied | wall, obstacle | `#3a3a40` | `#9aa6ae` | grid data texture |
+| unknown | not seen; non-traversable | `#c9c9cc` | `#35434f` | grid data texture |
 | closed set | expanded by the search | `#4b6fc4` at 42 % | `#6f8ff0` at 45 % | per-cell state texture, tinted |
 | heatmap | expansion ORDER, first → last | viridis | viridis | per-cell state texture (24-bit order) |
 | frontier | pushed, not yet expanded | `#e66100` | `#ff9a3c` | instanced squares |
@@ -57,9 +56,9 @@ the truth colour, and every **uncertainty** layer translucent (its
 | Map | landmarks | uncertainty | `#d01c8b` at 45 % | `#f1b6da` at 50 % | discs + 95 % ellipses; the sensor labelled **IDEALISED** |
 | Map | SLAM particles | uncertainty | particles' colour | particles' colour | instanced discs |
 | Map | pose graph | computation | nodes `#01665e`, edges `#80cdc1`, loops `#c51b7d` | `#5ab4ac`, `#2a7f78`, `#f1b6da` | points + line set |
-| Move | chosen | computation | `#fdae61` | `#fee090` | thick line |
+| Move | chosen | computation | `#a66200` | `#fee090` | thick line |
 | Move | candidates | computation | `#2c7bb6` at 35 %, shaded by cost | `#64b0e6` at 35 % | merged line set |
-| Move | rejected | computation | `#d7191c` at 25 % | `#ff6b6b` at 25 % | merged line set; the reason on hover |
+| Move | rejected | computation | `#d7191c` at 25 % | `#df6b54` at 25 % | merged line set; the reason on hover |
 | Move | local window | computation | `#545454`, dashed | `#9a9aa6`, dashed | square |
 | Move | lookahead | computation | `#a6611a` | `#e6b36a` | disc |
 | Move | actors | world | `#b35806` | `#f1a340` | discs at their collision radius |

@@ -1,0 +1,52 @@
+
+> coco-lab-web@0.1.0 build
+> node tools/build_arena_assets.mjs && node tools/build_attract.mjs && node tools/build_v2_runs.mjs && tsc --noEmit -p . && vite build
+
+arena assets: coco_lab.zip 113412 B (28 files), stdlib 783358 B (144 entries, full 2545637 B), pyodide 314.0.7
+attract.mcap: 690320 B, 517 ticks, 34974 plan events, chain 83d26d442bb5
+astar_open: 15469 B, 5 messages, round trip exact
+dijkstra_cost_field_gz: 20208 B, 5 messages, round trip exact
+weighted_astar_greedy_trap: 17339 B, 5 messages, round trip exact
+bfs_no_path: 17925 B, 5 messages, round trip exact
+astar_turn_trap_heading: 15049 B, 5 messages, round trip exact
+lab1c_astar: 452282 B, 1116 messages, round trip exact
+lab1c_dijkstra: 579619 B, 1129 messages, round trip exact
+lab1c_greedy: 163830 B, 907 messages, round trip exact
+arena_0_10m: 434667 B, 13 messages, round trip exact
+arena_native: 1495778 B, 39 messages, round trip exact
+costmap_0_10m: 99181 B, 5 messages, round trip exact
+lab5 crossing: 15 runs, round trip exact
+lab5 mislocalised: 9 runs, round trip exact
+lab5 oncoming: 15 runs, round trip exact
+lab5 static_room: 15 runs, round trip exact
+casefiles: 100 copied, 40019390 B, the map once
+missions: 7, every replay link names a run here
+vite v8.3.1 building client environment for production...
+transforming...
+✓ 212 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                           1.21 kB │ gzip:   0.61 kB
+dist/coco/frame.js                        4.76 kB
+dist/assets/arena.worker-BfZhuvkc.js     15.32 kB
+dist/assets/index-CDGIIQeI.css           33.56 kB │ gzip:   7.65 kB
+dist/assets/CompareScene-JeMERMle.js      0.17 kB │ gzip:   0.16 kB
+dist/assets/PlayScene-JeMERMle.js         0.17 kB │ gzip:   0.16 kB
+dist/assets/ResearchScene-JeMERMle.js     0.17 kB │ gzip:   0.16 kB
+dist/assets/site.config-CXvBV0_S.js       0.25 kB │ gzip:   0.18 kB
+dist/assets/ArenaApp-CzWw8MHC.js          1.00 kB │ gzip:   0.50 kB
+dist/assets/CaseFilesApp-DVyophOh.js      6.06 kB │ gzip:   2.07 kB
+dist/assets/LearnApp-CcIJ9iT9.js          9.07 kB │ gzip:   3.55 kB
+dist/assets/PlayApp-CjkQGP3Y.js          12.87 kB │ gzip:   4.74 kB
+dist/assets/Result-9zdXUuga.js           12.96 kB │ gzip:   5.26 kB
+dist/assets/LiveApp-CYk8A4TV.js          30.99 kB │ gzip:  11.31 kB
+dist/assets/index-6hWjSvBz.js           223.56 kB │ gzip:  70.21 kB
+dist/assets/ArenaSceneView-CYtL9FvM.js  280.43 kB │ gzip:  87.23 kB
+dist/assets/three-CmTIr8Be.js           684.71 kB │ gzip: 176.24 kB
+
+✓ built in 331ms
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

@@ -1,0 +1,11 @@
+
+> coco-lab-web@0.1.0 typecheck
+> tsc --noEmit -p .
+
+src/ui/reference/WorldStage.tsx(99,90): error TS2345: Argument of type 'Uint8ArrayConstructor' is not assignable to parameter of type 'Float32Array<ArrayBufferLike> | Int16Array<ArrayBufferLike> | Int32Array<ArrayBufferLike> | ... 4 more ... | Uint8ClampedArray<...>'.
+  Type 'Uint8ArrayConstructor' is missing the following properties from type 'Uint8ClampedArray<ArrayBufferLike>': buffer, byteLength, byteOffset, copyWithin, and 30 more.
+src/ui/reference/WorldStage.tsx(100,94): error TS2345: Argument of type 'Uint8ArrayConstructor' is not assignable to parameter of type 'Float32Array<ArrayBufferLike> | Int16Array<ArrayBufferLike> | Int32Array<ArrayBufferLike> | ... 4 more ... | Uint8ClampedArray<...>'.
+  Type 'Uint8ArrayConstructor' is missing the following properties from type 'Uint8ClampedArray<ArrayBufferLike>': buffer, byteLength, byteOffset, copyWithin, and 30 more.
+src/ui/reference/WorldStage.tsx(101,94): error TS2345: Argument of type 'Uint8ArrayConstructor' is not assignable to parameter of type 'Float32Array<ArrayBufferLike> | Int16Array<ArrayBufferLike> | Int32Array<ArrayBufferLike> | ... 4 more ... | Uint8ClampedArray<...>'.
+  Type 'Uint8ArrayConstructor' is missing the following properties from type 'Uint8ClampedArray<ArrayBufferLike>': buffer, byteLength, byteOffset, copyWithin, and 30 more.
+src/ui/reference/WorldStage.tsx(129,12): error TS2339: Property 'dispose' does not exist on type 'Scene3D'.

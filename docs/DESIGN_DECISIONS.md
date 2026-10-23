@@ -404,7 +404,7 @@ line the error did not mention. A `RuntimeError` raised at the point of
 detection describes a *symptom*; when a retry-free call sits inside a loop
 that runs thousands of times, the interesting question is never "is the peer
 alive" but "what is the per-call failure probability, and how many calls am I
-making". `train_curriculum.sh` also retries a whole phase up to twice as a
+making". `coco_rl/scripts/train_curriculum.sh` also retries a whole phase up to twice as a
 backstop, because the next transient will be a different one.
 
 ## The camera change that would have made things worse

@@ -1,0 +1,28 @@
+{
+ "links": [
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=two-fields&s=eyJ2IjoxLCJoIjoiZDRkNDYyMjJkMGQ5NzBlZWI4ZTUxZmM0ZDM0Yjg1Y2ZiOThjNTQ5MzNjZWRjYzU1ODJlYzA2M2I4ODlhYmZhYyIsImkiOltbMSwyXSxbMSwzXSxbMSw0XSxbMSw1XSxbMSw2XSxbMiw3XSxbMyw4XSxbNCw5XSxbNSw5XSxbNiw5XSxbNywxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiI0ZDJmY2RkZTJhNWQ0ZTc0NGVmNDNmZjhlNTQ3OGRkOGE0ZWE3YmYzNDcwY2VkZjFhMjk1ODY0YTAwZGY5NGU5In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=bog&s=eyJ2IjoxLCJoIjoiZmU0OGE5YzgwYjBiNTVhMDVmMTQxYjgwM2M5ODY5OTJkMWFjMTM2MjAwMDQyMTJhOGU2NzY3MDZiMjhiOGYzNSIsImkiOltbMSwyXSxbMiwyXSxbMywyXSxbNCwyXSxbNSwyXSxbNiwyXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdXSwiciI6IjBiYTNhMzIzMzQwYjk0NmFjNWVkYjIzNTRlMWM1YzRjMzQ5MjhiZTlmMTRkNTc1MDBlMzRhYTE1YTg4Y2UzYjAifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=beat-the-planner&l=mud-field&s=eyJ2IjoxLCJoIjoiNzk2OGVhNjg1ZjgzZWQ0ZGFjZjgwNjI5YmQ3YWYxYjNiZjUzNDY0YTBiODY3YjkxNGFhM2M3NmJiMDFiYzA3OSIsImkiOltbMSwyXSxbMiwzXSxbMywzXSxbNCwzXSxbNSwzXSxbNiwzXSxbNywzXSxbOCw0XSxbOCw1XSxbOCw2XSxbOCw3XSxbOCw4XSxbOCw5XSxbOCwxMF0sWzgsMTFdLFs4LDEyXV0sInIiOiI5OTI2OTA3MzI4MGIzZTVjMjRkYzBiZTY1M2FhNThjOGY1MzZiZjdhM2ExMWNhMTY2NmQ3MzgyYWQ1ZTMyYWI5In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=no-idea&s=eyJ2IjoxLCJoIjoiYzU5N2M3OTBhN2NmODgzN2U1NzFjZTJhNmU4YzE1N2JmOTcwZmQyMzYzMWFmOGNkMjJiMDBjM2U0OWY1YzhkMiIsImkiOlsyLDMsMSwwXSwiciI6Ijc3YjA2NmVjYTExMTM3MjE3NjFiYjQwOTk3YTc2MDY5ZDFmZDE4NWZiZmNhYjEzNGFiYTY1Zjg3YjljMzg5ZTcifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=far-end&s=eyJ2IjoxLCJoIjoiMGYzMzBjNTBhODhmZmM5MDc2NDlmOTg4YjA2MWM4MzUzYzAwODg1OGEyMDczM2ZiMWRkOTA5YzI5YzE1NTI5ZiIsImkiOlsyLDMsMSwwXSwiciI6IjJhYWRlMjc0NWYwNjE3MDVlZGMxMDlhN2NhYWZhY2Q3ZTE2YzAyZTZlYTBmZjYyNzU5YmE5ZmI2NGVhNmFmYmEifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlszLDAsMSwyXSwiciI6IjRjM2E4YmI5YTRhNWQwMmUwZWY5ZjAxMDMxODBjMmNkODdlMTU1YjNjYWQ2YzFkM2JjMmVhN2M3ZjYzMzJlODQifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=search-the-bays&l=poor-camera&s=eyJ2IjoxLCJoIjoiNjJkZjQ4NTBjZTU1YWJkODk2ZWNjYzAzZDgzNjAzZTQxNDE3MTY2OTFiZDg1OGYyMThiMDc2OWYxYWI5YzM4ZiIsImkiOlsyLDMsMSwwXSwiciI6ImZiZWYzNGQxZDI1Y2Q0MTUyYmIwMTVjN2Y5NzIzM2UxNWNiMDk4NjQ2OTc1YTIwN2Y3NjdmZDYxZmEyZGYxNzUifQ",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=told-wrong&s=eyJ2IjoxLCJoIjoiN2Q4MmY1YTczNDM2Mjg0ZDllOTA4ZWM3OWYwMDQyNjgzMDA1NDNlY2VlZmJhM2U5ZjlkYzE3ZTcwYmJlNWUxOSIsImkiOlszMV0sInIiOiI5MTM4N2U2YWI2MDBjNDM5NGFjNmMzMTliMWM1YjNjYTYxYjAyYTAxYjU3ZmFjNTU4OTg4ZDk5MDgzYzc0YTY2In0",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped&s=eyJ2IjoxLCJoIjoiNzY0MWU0MTUxZjYyNWNlYjQyNTk1ZWJmMzdjMjczM2UzMDBiMzQ1OWY2ZjhiNDk5MTgzOGFhOGJjMjQ0NmRmOCIsImkiOls2MzJdLCJyIjoiYmU4N2FhNjEyM2Q4ZmRhZjgwNTg4YTE0M2NlZTFlNGRjOTA0YzkxMDU4NzUwZjRjMTM3NWU3ZmFjYmNhZDQ0ZiJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-far&s=eyJ2IjoxLCJoIjoiOTI4OTY0MmJlYzI3Y2U3MmUzMGM1NjNkNGIwNmU3MWFkNDRmMTRlZDAzMjk0YmZhMjc4ODM3Zjg5NjI3NDY3NiIsImkiOls2NDhdLCJyIjoiNWI4YWQ4NWQwNzVlYjkwOGQ0ZjJkMmMzZjI1YjI1NjU3ZjkwMjZiOTRjOGNlY2I2ODVkZTdjNDM5MTU1MzMzNyJ9",
+  "http://127.0.0.1:4214/coco-labs/?view=play&c=case-file-detective&l=kidnapped-again&s=eyJ2IjoxLCJoIjoiYWUyMDE4NjFhOTg4MjIwM2EyYTUwYTk3MzlmMmVkYWUzY2ZiNDg0ZGVmMDBjOWNjMzdkZTVkMTk1YjlmZTAxMSIsImkiOls2NDVdLCJyIjoiMmEzYmMwY2E5ZjA5MmMwZTkzNzAyM2EzMmM0M2M1ZGJlOWZiOTA5OTU1YzZmODZmNThlMDg0ZjNkYmMyMTE4NCJ9"
+ ],
+ "indices": [
+  0,
+  1,
+  2,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13
+ ]
+}

@@ -1,0 +1,77 @@
+{
+ "class": "Local silent demo draft, not a benchmark",
+ "errors": [],
+ "steps": [
+  {
+   "name": "Title",
+   "seconds": 0.763
+  },
+  {
+   "name": "Play cards",
+   "seconds": 6.86
+  },
+  {
+   "name": "Drive",
+   "seconds": 16.199
+  },
+  {
+   "name": "Robot vision and goal",
+   "seconds": 27.217
+  },
+  {
+   "name": "Compare",
+   "seconds": 33.05
+  },
+  {
+   "name": "Research",
+   "seconds": 51.244
+  },
+  {
+   "name": "STACK recording",
+   "seconds": 59.295
+  }
+ ],
+ "durationSeconds": 80.001,
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "passed": true,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T20:02:23.269Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.81,
+    "5m": 4.64,
+    "15m": 4.62
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-17T20:03:43.637Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 3.56,
+    "5m": 4.48,
+    "15m": 4.56
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

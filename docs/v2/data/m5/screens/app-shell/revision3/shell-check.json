@@ -1,0 +1,1612 @@
+{
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-15T11:05:19.896Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 73
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.42,
+    "5m": 2.32,
+    "15m": 2.01
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-15T11:07:17.424Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Charging",
+    "capacity_pct": 77
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 7.91,
+    "5m": 4.53,
+    "15m": 2.86
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "rows": [
+  {
+   "profile": "desktop",
+   "device": "laptop Chromium",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "title",
+   "viewport": [
+    1440,
+    900
+   ],
+   "dpr": 1,
+   "scroll": [
+    1440,
+    900
+   ],
+   "theme": "dark",
+   "quality": "medium",
+   "robot": "[0,0,0]",
+   "header": [],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "desktop",
+   "device": "laptop Chromium",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "play",
+   "viewport": [
+    1440,
+    900
+   ],
+   "dpr": 1,
+   "scroll": [
+    1440,
+    937
+   ],
+   "theme": "dark",
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 246,
+      "y": 30,
+      "width": 86,
+      "height": 24,
+      "top": 30,
+      "right": 332,
+      "bottom": 54,
+      "left": 246
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 346,
+      "y": 18,
+      "width": 58,
+      "height": 48,
+      "top": 18,
+      "right": 404,
+      "bottom": 66,
+      "left": 346
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 408,
+      "y": 18,
+      "width": 93,
+      "height": 48,
+      "top": 18,
+      "right": 501,
+      "bottom": 66,
+      "left": 408
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 505,
+      "y": 18,
+      "width": 96,
+      "height": 48,
+      "top": 18,
+      "right": 601,
+      "bottom": 66,
+      "left": 505
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 1146,
+      "y": 18,
+      "width": 48,
+      "height": 48,
+      "top": 18,
+      "right": 1194,
+      "bottom": 66,
+      "left": 1146
+     }
+    }
+   ],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "desktop",
+   "device": "laptop Chromium",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "compare",
+   "viewport": [
+    1440,
+    900
+   ],
+   "dpr": 1,
+   "scroll": [
+    1440,
+    900
+   ],
+   "theme": "dark",
+   "quality": "medium",
+   "robot": "[0,0,0]",
+   "worldStart": [
+    0,
+    0,
+    0
+   ],
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 16,
+      "y": 27.5,
+      "width": 85,
+      "height": 23,
+      "top": 27.5,
+      "right": 101,
+      "bottom": 50.5,
+      "left": 16
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 113,
+      "y": 15,
+      "width": 57,
+      "height": 48,
+      "top": 15,
+      "right": 170,
+      "bottom": 63,
+      "left": 113
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 174,
+      "y": 15,
+      "width": 97,
+      "height": 48,
+      "top": 15,
+      "right": 271,
+      "bottom": 63,
+      "left": 174
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 275,
+      "y": 15,
+      "width": 96,
+      "height": 48,
+      "top": 15,
+      "right": 371,
+      "bottom": 63,
+      "left": 275
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 1376,
+      "y": 15,
+      "width": 48,
+      "height": 48,
+      "top": 15,
+      "right": 1424,
+      "bottom": 63,
+      "left": 1376
+     }
+    }
+   ],
+   "settings": {
+    "theme": "light",
+    "motion": "reduced",
+    "sameModel": true,
+    "box": {
+     "x": 900,
+     "y": 0,
+     "width": 540,
+     "height": 900,
+     "top": 0,
+     "right": 1440,
+     "bottom": 900,
+     "left": 900
+    }
+   },
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "desktop",
+   "device": "laptop Chromium",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "research",
+   "viewport": [
+    1440,
+    900
+   ],
+   "dpr": 1,
+   "scroll": [
+    1440,
+    900
+   ],
+   "theme": "dark",
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 136,
+      "y": 34,
+      "width": 86,
+      "height": 24,
+      "top": 34,
+      "right": 222,
+      "bottom": 58,
+      "left": 136
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 236,
+      "y": 22,
+      "width": 57,
+      "height": 48,
+      "top": 22,
+      "right": 293,
+      "bottom": 70,
+      "left": 236
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 297,
+      "y": 22,
+      "width": 93,
+      "height": 48,
+      "top": 22,
+      "right": 390,
+      "bottom": 70,
+      "left": 297
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 394,
+      "y": 22,
+      "width": 99,
+      "height": 48,
+      "top": 22,
+      "right": 493,
+      "bottom": 70,
+      "left": 394
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 1256,
+      "y": 22,
+      "width": 48,
+      "height": 48,
+      "top": 22,
+      "right": 1304,
+      "bottom": 70,
+      "left": 1256
+     }
+    }
+   ],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "desktop",
+   "device": "laptop Chromium",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "about",
+   "viewport": [
+    1440,
+    900
+   ],
+   "dpr": 1,
+   "scroll": [
+    1440,
+    1464
+   ],
+   "theme": "dark",
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 319,
+      "y": 47.046875,
+      "width": 86,
+      "height": 29.90625,
+      "top": 47.046875,
+      "right": 405,
+      "bottom": 76.953125,
+      "left": 319
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 419,
+      "y": 38,
+      "width": 57,
+      "height": 48,
+      "top": 38,
+      "right": 476,
+      "bottom": 86,
+      "left": 419
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 480,
+      "y": 38,
+      "width": 93,
+      "height": 48,
+      "top": 38,
+      "right": 573,
+      "bottom": 86,
+      "left": 480
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 577,
+      "y": 38,
+      "width": 96,
+      "height": 48,
+      "top": 38,
+      "right": 673,
+      "bottom": 86,
+      "left": 577
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 1073,
+      "y": 38,
+      "width": 48,
+      "height": 48,
+      "top": 38,
+      "right": 1121,
+      "bottom": 86,
+      "left": 1073
+     }
+    }
+   ],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "compact",
+   "device": "laptop Chromium, compact viewport",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "title",
+   "viewport": [
+    844,
+    390
+   ],
+   "dpr": 1,
+   "scroll": [
+    844,
+    390
+   ],
+   "theme": "dark",
+   "quality": "medium",
+   "robot": "[0,0,0]",
+   "header": [],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "compact",
+   "device": "laptop Chromium, compact viewport",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "play",
+   "viewport": [
+    844,
+    390
+   ],
+   "dpr": 1,
+   "scroll": [
+    844,
+    937
+   ],
+   "theme": "dark",
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 16,
+      "y": 30,
+      "width": 86,
+      "height": 24,
+      "top": 30,
+      "right": 102,
+      "bottom": 54,
+      "left": 16
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 116,
+      "y": 18,
+      "width": 58,
+      "height": 48,
+      "top": 18,
+      "right": 174,
+      "bottom": 66,
+      "left": 116
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 178,
+      "y": 18,
+      "width": 93,
+      "height": 48,
+      "top": 18,
+      "right": 271,
+      "bottom": 66,
+      "left": 178
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 275,
+      "y": 18,
+      "width": 96,
+      "height": 48,
+      "top": 18,
+      "right": 371,
+      "bottom": 66,
+      "left": 275
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 780,
+      "y": 18,
+      "width": 48,
+      "height": 48,
+      "top": 18,
+      "right": 828,
+      "bottom": 66,
+      "left": 780
+     }
+    }
+   ],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "compact",
+   "device": "laptop Chromium, compact viewport",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "compare",
+   "viewport": [
+    844,
+    390
+   ],
+   "dpr": 1,
+   "scroll": [
+    844,
+    390
+   ],
+   "theme": "dark",
+   "quality": "low",
+   "robot": "[0,0,0]",
+   "worldStart": [
+    0,
+    0,
+    0
+   ],
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 16,
+      "y": 15.5,
+      "width": 85,
+      "height": 23,
+      "top": 15.5,
+      "right": 101,
+      "bottom": 38.5,
+      "left": 16
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 113,
+      "y": 3,
+      "width": 57,
+      "height": 48,
+      "top": 3,
+      "right": 170,
+      "bottom": 51,
+      "left": 113
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 174,
+      "y": 3,
+      "width": 97,
+      "height": 48,
+      "top": 3,
+      "right": 271,
+      "bottom": 51,
+      "left": 174
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 275,
+      "y": 3,
+      "width": 96,
+      "height": 48,
+      "top": 3,
+      "right": 371,
+      "bottom": 51,
+      "left": 275
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 780,
+      "y": 3,
+      "width": 48,
+      "height": 48,
+      "top": 3,
+      "right": 828,
+      "bottom": 51,
+      "left": 780
+     }
+    }
+   ],
+   "settings": {
+    "theme": "light",
+    "motion": "reduced",
+    "sameModel": true,
+    "box": {
+     "x": 304,
+     "y": 0,
+     "width": 540,
+     "height": 390,
+     "top": 0,
+     "right": 844,
+     "bottom": 390,
+     "left": 304
+    }
+   },
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "compact",
+   "device": "laptop Chromium, compact viewport",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "research",
+   "viewport": [
+    844,
+    390
+   ],
+   "dpr": 1,
+   "scroll": [
+    844,
+    519
+   ],
+   "theme": "dark",
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 16,
+      "y": 34,
+      "width": 86,
+      "height": 24,
+      "top": 34,
+      "right": 102,
+      "bottom": 58,
+      "left": 16
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 116,
+      "y": 22,
+      "width": 57,
+      "height": 48,
+      "top": 22,
+      "right": 173,
+      "bottom": 70,
+      "left": 116
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 177,
+      "y": 22,
+      "width": 93,
+      "height": 48,
+      "top": 22,
+      "right": 270,
+      "bottom": 70,
+      "left": 177
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 274,
+      "y": 22,
+      "width": 99,
+      "height": 48,
+      "top": 22,
+      "right": 373,
+      "bottom": 70,
+      "left": 274
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 780,
+      "y": 22,
+      "width": 48,
+      "height": 48,
+      "top": 22,
+      "right": 828,
+      "bottom": 70,
+      "left": 780
+     }
+    }
+   ],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "compact",
+   "device": "laptop Chromium, compact viewport",
+   "cpuThrottle": 1,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "about",
+   "viewport": [
+    844,
+    390
+   ],
+   "dpr": 1,
+   "scroll": [
+    844,
+    1464
+   ],
+   "theme": "dark",
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 24,
+      "y": 47.046875,
+      "width": 86,
+      "height": 29.90625,
+      "top": 47.046875,
+      "right": 110,
+      "bottom": 76.953125,
+      "left": 24
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 124,
+      "y": 38,
+      "width": 57,
+      "height": 48,
+      "top": 38,
+      "right": 181,
+      "bottom": 86,
+      "left": 124
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 185,
+      "y": 38,
+      "width": 93,
+      "height": 48,
+      "top": 38,
+      "right": 278,
+      "bottom": 86,
+      "left": 185
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 282,
+      "y": 38,
+      "width": 96,
+      "height": 48,
+      "top": 38,
+      "right": 378,
+      "bottom": 86,
+      "left": 282
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 772,
+      "y": 38,
+      "width": 48,
+      "height": 48,
+      "top": 38,
+      "right": 820,
+      "bottom": 86,
+      "left": 772
+     }
+    }
+   ],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "nothing-landscape",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "title",
+   "viewport": [
+    915,
+    412
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    915,
+    412
+   ],
+   "theme": "dark",
+   "quality": "medium",
+   "robot": "[0,0,0]",
+   "header": [],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "nothing-landscape",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "play",
+   "viewport": [
+    915,
+    412
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    915,
+    937
+   ],
+   "theme": "dark",
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 16,
+      "y": 30,
+      "width": 86,
+      "height": 24,
+      "top": 30,
+      "right": 102,
+      "bottom": 54,
+      "left": 16
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 116,
+      "y": 18,
+      "width": 58,
+      "height": 48,
+      "top": 18,
+      "right": 174,
+      "bottom": 66,
+      "left": 116
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 178,
+      "y": 18,
+      "width": 93,
+      "height": 48,
+      "top": 18,
+      "right": 271,
+      "bottom": 66,
+      "left": 178
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 275,
+      "y": 18,
+      "width": 96,
+      "height": 48,
+      "top": 18,
+      "right": 371,
+      "bottom": 66,
+      "left": 275
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 851,
+      "y": 18,
+      "width": 48,
+      "height": 48,
+      "top": 18,
+      "right": 899,
+      "bottom": 66,
+      "left": 851
+     }
+    }
+   ],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "nothing-landscape",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "compare",
+   "viewport": [
+    915,
+    412
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    915,
+    412
+   ],
+   "theme": "dark",
+   "quality": "low",
+   "robot": "[0,0,0]",
+   "worldStart": [
+    0,
+    0,
+    0
+   ],
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 16,
+      "y": 15.5,
+      "width": 85,
+      "height": 23,
+      "top": 15.5,
+      "right": 101,
+      "bottom": 38.5,
+      "left": 16
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 113,
+      "y": 3,
+      "width": 57,
+      "height": 48,
+      "top": 3,
+      "right": 170,
+      "bottom": 51,
+      "left": 113
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 174,
+      "y": 3,
+      "width": 97,
+      "height": 48,
+      "top": 3,
+      "right": 271,
+      "bottom": 51,
+      "left": 174
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 275,
+      "y": 3,
+      "width": 96,
+      "height": 48,
+      "top": 3,
+      "right": 371,
+      "bottom": 51,
+      "left": 275
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 851,
+      "y": 3,
+      "width": 48,
+      "height": 48,
+      "top": 3,
+      "right": 899,
+      "bottom": 51,
+      "left": 851
+     }
+    }
+   ],
+   "settings": {
+    "theme": "light",
+    "motion": "reduced",
+    "sameModel": true,
+    "box": {
+     "x": 375,
+     "y": 0,
+     "width": 540,
+     "height": 412,
+     "top": 0,
+     "right": 915,
+     "bottom": 412,
+     "left": 375
+    }
+   },
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "nothing-landscape",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "research",
+   "viewport": [
+    915,
+    412
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    915,
+    498
+   ],
+   "theme": "dark",
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 16,
+      "y": 34,
+      "width": 86,
+      "height": 24,
+      "top": 34,
+      "right": 102,
+      "bottom": 58,
+      "left": 16
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 116,
+      "y": 22,
+      "width": 57,
+      "height": 48,
+      "top": 22,
+      "right": 173,
+      "bottom": 70,
+      "left": 116
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 177,
+      "y": 22,
+      "width": 93,
+      "height": 48,
+      "top": 22,
+      "right": 270,
+      "bottom": 70,
+      "left": 177
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 274,
+      "y": 22,
+      "width": 99,
+      "height": 48,
+      "top": 22,
+      "right": 373,
+      "bottom": 70,
+      "left": 274
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 851,
+      "y": 22,
+      "width": 48,
+      "height": 48,
+      "top": 22,
+      "right": 899,
+      "bottom": 70,
+      "left": 851
+     }
+    }
+   ],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "nothing-landscape",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "about",
+   "viewport": [
+    915,
+    412
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    915,
+    1464
+   ],
+   "theme": "dark",
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 56.5,
+      "y": 47.046875,
+      "width": 86,
+      "height": 29.90625,
+      "top": 47.046875,
+      "right": 142.5,
+      "bottom": 76.953125,
+      "left": 56.5
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 156.5,
+      "y": 38,
+      "width": 57,
+      "height": 48,
+      "top": 38,
+      "right": 213.5,
+      "bottom": 86,
+      "left": 156.5
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 217.5,
+      "y": 38,
+      "width": 93,
+      "height": 48,
+      "top": 38,
+      "right": 310.5,
+      "bottom": 86,
+      "left": 217.5
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 314.5,
+      "y": 38,
+      "width": 96,
+      "height": 48,
+      "top": 38,
+      "right": 410.5,
+      "bottom": 86,
+      "left": 314.5
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 810.5,
+      "y": 38,
+      "width": 48,
+      "height": 48,
+      "top": 38,
+      "right": 858.5,
+      "bottom": 86,
+      "left": 810.5
+     }
+    }
+   ],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "nothing-portrait",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "title",
+   "viewport": [
+    412,
+    915
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    412,
+    915
+   ],
+   "theme": "dark",
+   "quality": "medium",
+   "robot": "[0,0,0]",
+   "header": [],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "nothing-portrait",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "play",
+   "viewport": [
+    412,
+    915
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    412,
+    1145
+   ],
+   "theme": "dark",
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 16,
+      "y": 30,
+      "width": 86,
+      "height": 24,
+      "top": 30,
+      "right": 102,
+      "bottom": 54,
+      "left": 16
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 116,
+      "y": 18,
+      "width": 52,
+      "height": 48,
+      "top": 18,
+      "right": 168,
+      "bottom": 66,
+      "left": 116
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 172,
+      "y": 18,
+      "width": 87,
+      "height": 48,
+      "top": 18,
+      "right": 259,
+      "bottom": 66,
+      "left": 172
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 263,
+      "y": 18,
+      "width": 90,
+      "height": 48,
+      "top": 18,
+      "right": 353,
+      "bottom": 66,
+      "left": 263
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 348,
+      "y": 74,
+      "width": 48,
+      "height": 48,
+      "top": 74,
+      "right": 396,
+      "bottom": 122,
+      "left": 348
+     }
+    }
+   ],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "nothing-portrait",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "compare",
+   "viewport": [
+    412,
+    915
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    412,
+    915
+   ],
+   "theme": "dark",
+   "quality": "low",
+   "robot": "[0,0,0]",
+   "worldStart": [
+    0,
+    0,
+    0
+   ],
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "left": 0
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 16,
+      "y": 8,
+      "width": 36,
+      "height": 48,
+      "top": 8,
+      "right": 52,
+      "bottom": 56,
+      "left": 16
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 56,
+      "y": 8,
+      "width": 71,
+      "height": 48,
+      "top": 8,
+      "right": 127,
+      "bottom": 56,
+      "left": 56
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 131,
+      "y": 8,
+      "width": 71,
+      "height": 48,
+      "top": 8,
+      "right": 202,
+      "bottom": 56,
+      "left": 131
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 348,
+      "y": 8,
+      "width": 48,
+      "height": 48,
+      "top": 8,
+      "right": 396,
+      "bottom": 56,
+      "left": 348
+     }
+    }
+   ],
+   "settings": {
+    "theme": "light",
+    "motion": "reduced",
+    "sameModel": true,
+    "box": {
+     "x": 0,
+     "y": 0,
+     "width": 412,
+     "height": 915,
+     "top": 0,
+     "right": 412,
+     "bottom": 915,
+     "left": 0
+    }
+   },
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "nothing-portrait",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "research",
+   "viewport": [
+    412,
+    915
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    412,
+    915
+   ],
+   "theme": "dark",
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 16,
+      "y": 34,
+      "width": 86,
+      "height": 24,
+      "top": 34,
+      "right": 102,
+      "bottom": 58,
+      "left": 16
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 116,
+      "y": 22,
+      "width": 51,
+      "height": 48,
+      "top": 22,
+      "right": 167,
+      "bottom": 70,
+      "left": 116
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 171,
+      "y": 22,
+      "width": 87,
+      "height": 48,
+      "top": 22,
+      "right": 258,
+      "bottom": 70,
+      "left": 171
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 262,
+      "y": 22,
+      "width": 93,
+      "height": 48,
+      "top": 22,
+      "right": 355,
+      "bottom": 70,
+      "left": 262
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 348,
+      "y": 78,
+      "width": 48,
+      "height": 48,
+      "top": 78,
+      "right": 396,
+      "bottom": 126,
+      "left": 348
+     }
+    }
+   ],
+   "settings": null,
+   "errors": [],
+   "external": []
+  },
+  {
+   "profile": "nothing-portrait",
+   "device": "emulated Nothing Phone (1)",
+   "cpuThrottle": 4,
+   "network": "local unthrottled; not a startup benchmark",
+   "view": "about",
+   "viewport": [
+    412,
+    915
+   ],
+   "dpr": 2.625,
+   "scroll": [
+    412,
+    2186
+   ],
+   "theme": "dark",
+   "header": [
+    {
+     "text": "COCO Lab",
+     "box": {
+      "x": 24,
+      "y": 47.046875,
+      "width": 86,
+      "height": 29.90625,
+      "top": 47.046875,
+      "right": 110,
+      "bottom": 76.953125,
+      "left": 24
+     }
+    },
+    {
+     "text": "Play",
+     "box": {
+      "x": 124,
+      "y": 38,
+      "width": 51,
+      "height": 48,
+      "top": 38,
+      "right": 175,
+      "bottom": 86,
+      "left": 124
+     }
+    },
+    {
+     "text": "Compare",
+     "box": {
+      "x": 179,
+      "y": 38,
+      "width": 87,
+      "height": 48,
+      "top": 38,
+      "right": 266,
+      "bottom": 86,
+      "left": 179
+     }
+    },
+    {
+     "text": "Research",
+     "box": {
+      "x": 270,
+      "y": 38,
+      "width": 90,
+      "height": 48,
+      "top": 38,
+      "right": 360,
+      "bottom": 86,
+      "left": 270
+     }
+    },
+    {
+     "text": "Settings",
+     "box": {
+      "x": 340,
+      "y": 94,
+      "width": 48,
+      "height": 48,
+      "top": 94,
+      "right": 388,
+      "bottom": 142,
+      "left": 340
+     }
+    }
+   ],
+   "settings": null,
+   "errors": [],
+   "external": []
+  }
+ ]
+}

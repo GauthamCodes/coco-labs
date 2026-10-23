@@ -47,7 +47,7 @@ try {
     if (back.contentHash !== bundle.contentHash) throw new Error(`${e.id}: the conversion is not lossless`);
     writeFileSync(join(OUT, `${e.id}.mcap`), bytes);
     index.push({ id: e.id, title: e.title, group: e.group, evidence: e.source_kind === 'recorded-run' ? 'STACK' : 'MODEL',
-      algorithm: e.algorithm, events: e.events, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'),
+      algorithm: e.algorithm, outcome: bundle.trace.summary.status, level: e.group, events: e.events, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'),
       run_id: run.manifest.runId, from_bundle: bundle.contentHash, citation: e.citation });
     console.log(`${e.id}: ${bytes.length} B, ${run.messages.length} messages, round trip exact`);
   }
@@ -76,7 +76,7 @@ try {
       const r = bundle.runs.find((x) => x.id === c.id);
       writeFileSync(join(OUT, `${id}.mcap`), bytes);
       index.push({ id, title: `Lab 5 · ${sc} · ${r.controller} ${c.id} (${r.outcome})`, group: 'Lab 5', evidence: 'STACK',
-        algorithm: r.controller, events: 0, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'),
+        algorithm: r.controller, outcome: r.outcome, level: `Lab 5 · ${sc}`, events: 0, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'),
         run_id: c.manifest.runId, from_bundle: bundle.contentHash, citation: 'docs/labs/LAB5_MOVE.md' });
     }
     console.log(`lab5 ${sc}: ${conv.length} runs, round trip exact`);

@@ -1,0 +1,185 @@
+{
+ "cases": [
+  {
+   "profile": "desktop",
+   "device": "desktop",
+   "off": null,
+   "visibleComputationMs": 7999.89990234375,
+   "unchangedHash": "e67e6c8d8fdcb8f7bfd2da7ccad652d3db0e22b7b43106027a833960a5ec50a5",
+   "costmapTick": 8,
+   "keyboardGoal": true
+  },
+  {
+   "profile": "landscape",
+   "device": "emulated Nothing Phone (1)",
+   "off": null,
+   "visibleComputationMs": 8844.800048828125,
+   "unchangedHash": "0ce4f06a6dd9c85680f63ca0f6c8a5fd24255fa8f6da289bb6510fbf88f13cdd",
+   "costmapTick": 12,
+   "keyboardGoal": true
+  },
+  {
+   "profile": "portrait",
+   "device": "emulated Nothing Phone (1)",
+   "off": null,
+   "rotate": "no computation marker under rotate card"
+  }
+ ],
+ "errors": [],
+ "grid": {
+  "hash": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+  "expectedCanonical": "da0c5336971099a93800147c7af4da7c8e1289943b6675544194140771203a16",
+  "historicalLinkHash": "4d2fcdde2a5d4e744ef43ff8e5478dd8a4ea7bf3470cedf1a295864a00df94e9",
+  "cells": 13,
+  "actualInputs": [
+   [
+    1,
+    2
+   ],
+   [
+    1,
+    3
+   ],
+   [
+    1,
+    4
+   ],
+   [
+    1,
+    5
+   ],
+   [
+    1,
+    6
+   ],
+   [
+    2,
+    7
+   ],
+   [
+    3,
+    8
+   ],
+   [
+    4,
+    9
+   ],
+   [
+    5,
+    9
+   ],
+   [
+    6,
+    9
+   ],
+   [
+    7,
+    10
+   ],
+   [
+    8,
+    11
+   ],
+   [
+    8,
+    12
+   ]
+  ],
+  "expectedInputs": [
+   [
+    1,
+    2
+   ],
+   [
+    1,
+    3
+   ],
+   [
+    1,
+    4
+   ],
+   [
+    1,
+    5
+   ],
+   [
+    1,
+    6
+   ],
+   [
+    2,
+    7
+   ],
+   [
+    3,
+    8
+   ],
+   [
+    4,
+    9
+   ],
+   [
+    5,
+    9
+   ],
+   [
+    6,
+    9
+   ],
+   [
+    7,
+    10
+   ],
+   [
+    8,
+    11
+   ],
+   [
+    8,
+    12
+   ]
+  ],
+  "onlyKeyboard": true
+ },
+ "passed": true,
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-18T01:15:01.555Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 9.19,
+    "5m": 10.45,
+    "15m": 6.96
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-10-18T01:15:39.944Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 9.64,
+    "5m": 10.41,
+    "15m": 7.07
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ }
+}

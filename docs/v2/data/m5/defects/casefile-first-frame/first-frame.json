@@ -1,0 +1,1909 @@
+{
+  "label": "emulated 4G, real robot_low.glb mesh; shared browser HTTP cache across Case Files",
+  "conditions": {
+    "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "at_utc": "2026-10-14T14:52:42.340Z",
+    "power_profile": "balanced",
+    "ac_power": true,
+    "battery": {
+      "status": "Full",
+      "capacity_pct": 100
+    },
+    "cpu_governor": "powersave",
+    "load_average": {
+      "1m": 1.17,
+      "5m": 0.79,
+      "15m": 0.64
+    },
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+    "threads": 12,
+    "standard": true
+  },
+  "browser": "156.0.8078.4",
+  "network": {
+    "latency": 170,
+    "download_mbit": 9,
+    "upload_mbit": 1.5
+  },
+  "rows": [
+    {
+      "id": "lab1_run_astar",
+      "marks": {
+        "casefile_fetch_start": 1791989563596.1,
+        "world3d_assets": 1791989563929.9,
+        "recording_ready": 1791989564527,
+        "scans_ready": 1791989564527.4,
+        "world3d_ready": 1791989564528.7,
+        "world3d_robot": 1791989564528.7,
+        "first_frame": 1791989564601.9,
+        "first_robot_frame": 1791989564602
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1005.89990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab1_run_dijkstra",
+      "marks": {
+        "casefile_fetch_start": 1791989565694.6,
+        "world3d_assets": 1791989565715.3,
+        "recording_ready": 1791989566311.9,
+        "scans_ready": 1791989566312.2,
+        "world3d_ready": 1791989566312.8,
+        "world3d_robot": 1791989566312.8,
+        "first_frame": 1791989566389.1,
+        "first_robot_frame": 1791989566389.2
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 694.599853515625,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab1_run_greedy",
+      "marks": {
+        "casefile_fetch_start": 1791989567600.6,
+        "world3d_assets": 1791989567627.5,
+        "recording_ready": 1791989568217.8,
+        "scans_ready": 1791989568218.3,
+        "world3d_ready": 1791989568219.3,
+        "world3d_robot": 1791989568219.3,
+        "first_frame": 1791989568286.1,
+        "first_robot_frame": 1791989568286.1
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 685.5,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_recovery_k1",
+      "marks": {
+        "casefile_fetch_start": 1791989569264.2,
+        "world3d_assets": 1791989569274.7,
+        "recording_ready": 1791989570278.7,
+        "world3d_ready": 1791989570279.5999,
+        "world3d_robot": 1791989570279.5999,
+        "first_frame": 1791989570381.8,
+        "first_robot_frame": 1791989570381.8
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1117.60009765625,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_recovery_k1_void1",
+      "marks": {
+        "casefile_fetch_start": 1791989571389.1,
+        "world3d_assets": 1791989571404.9,
+        "recording_ready": 1791989572049.6,
+        "scans_ready": 1791989572056.3,
+        "world3d_ready": 1791989572056.8,
+        "world3d_robot": 1791989572056.8,
+        "first_frame": 1791989572122.5,
+        "first_robot_frame": 1791989572122.5
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 733.39990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_recovery_k1_r2",
+      "marks": {
+        "casefile_fetch_start": 1791989573188.6,
+        "world3d_assets": 1791989573204.2002,
+        "recording_ready": 1791989574208.2002,
+        "world3d_ready": 1791989574209.1,
+        "world3d_robot": 1791989574209.1,
+        "first_frame": 1791989574311.2002,
+        "first_robot_frame": 1791989574311.2002
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1122.60009765625,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_recovery_k2",
+      "marks": {
+        "casefile_fetch_start": 1791989575345.9001,
+        "world3d_assets": 1791989575365.2,
+        "recording_ready": 1791989576367.6,
+        "world3d_ready": 1791989576368.4001,
+        "world3d_robot": 1791989576368.4001,
+        "first_frame": 1791989576474.9001,
+        "first_robot_frame": 1791989576474.9001
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1129,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_recovery_k2_void2",
+      "marks": {
+        "casefile_fetch_start": 1791989577514.5,
+        "world3d_assets": 1791989577530.2002,
+        "recording_ready": 1791989578100.7002,
+        "scans_ready": 1791989578104.3,
+        "world3d_ready": 1791989578104.9001,
+        "world3d_robot": 1791989578104.9001,
+        "first_frame": 1791989578172.1,
+        "first_robot_frame": 1791989578172.2002
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 657.7001953125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_recovery_k2_r2",
+      "marks": {
+        "casefile_fetch_start": 1791989579167.8,
+        "world3d_assets": 1791989579181.7002,
+        "recording_ready": 1791989580180.5,
+        "world3d_ready": 1791989580181.3,
+        "world3d_robot": 1791989580181.4001,
+        "first_frame": 1791989580283,
+        "first_robot_frame": 1791989580283.1
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1115.300048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_recovery_k3",
+      "marks": {
+        "casefile_fetch_start": 1791989581287.1,
+        "world3d_assets": 1791989581304.1,
+        "recording_ready": 1791989582304.4,
+        "world3d_ready": 1791989582305.2,
+        "world3d_robot": 1791989582305.2,
+        "first_frame": 1791989582408.5,
+        "first_robot_frame": 1791989582408.6
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1121.5,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_recovery_k3_r2",
+      "marks": {
+        "casefile_fetch_start": 1791989583407.5,
+        "world3d_assets": 1791989583417,
+        "recording_ready": 1791989584423.1,
+        "world3d_ready": 1791989584424,
+        "world3d_robot": 1791989584424,
+        "first_frame": 1791989584488.1,
+        "first_robot_frame": 1791989584488.1
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1080.60009765625,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_recovery_k4",
+      "marks": {
+        "casefile_fetch_start": 1791989585484.7,
+        "world3d_assets": 1791989585495.4001,
+        "recording_ready": 1791989586492.4001,
+        "world3d_ready": 1791989586493.3,
+        "world3d_robot": 1791989586493.3,
+        "first_frame": 1791989586600.5,
+        "first_robot_frame": 1791989586600.5
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1115.800048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_recovery_k4_r2",
+      "marks": {
+        "casefile_fetch_start": 1791989587610.5,
+        "world3d_assets": 1791989587621.7,
+        "recording_ready": 1791989588619.7,
+        "world3d_ready": 1791989588620.5,
+        "world3d_robot": 1791989588620.5999,
+        "first_frame": 1791989588694.7998,
+        "first_robot_frame": 1791989588694.7998
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1084.2998046875,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_recovery_k5",
+      "marks": {
+        "casefile_fetch_start": 1791989589693.2,
+        "world3d_assets": 1791989589709.4001,
+        "recording_ready": 1791989590714.6,
+        "world3d_ready": 1791989590715.4001,
+        "world3d_robot": 1791989590715.4001,
+        "first_frame": 1791989590820.5,
+        "first_robot_frame": 1791989590820.6
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1127.400146484375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_recovery_k5_r2",
+      "marks": {
+        "casefile_fetch_start": 1791989591825.5999,
+        "world3d_assets": 1791989591834.5999,
+        "recording_ready": 1791989592851.7,
+        "world3d_ready": 1791989592852.5,
+        "world3d_robot": 1791989592852.5,
+        "first_frame": 1791989592920.0999,
+        "first_robot_frame": 1791989592920.0999
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1094.5,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_shipped_k1",
+      "marks": {
+        "casefile_fetch_start": 1791989593941.9001,
+        "world3d_assets": 1791989593957.8,
+        "recording_ready": 1791989594960.7,
+        "world3d_ready": 1791989594961.6,
+        "world3d_robot": 1791989594961.6,
+        "first_frame": 1791989595063.7,
+        "first_robot_frame": 1791989595063.7
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1121.7998046875,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_shipped_k1_void1",
+      "marks": {
+        "casefile_fetch_start": 1791989596073.9001,
+        "world3d_assets": 1791989596086.4001,
+        "recording_ready": 1791989596729.8,
+        "scans_ready": 1791989596737.2,
+        "world3d_ready": 1791989596737.7,
+        "world3d_robot": 1791989596737.7,
+        "first_frame": 1791989596804.8,
+        "first_robot_frame": 1791989596804.8
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 730.89990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_shipped_k1_r2",
+      "marks": {
+        "casefile_fetch_start": 1791989597802.1,
+        "world3d_assets": 1791989597813.7,
+        "recording_ready": 1791989598821.3,
+        "world3d_ready": 1791989598822.3,
+        "world3d_robot": 1791989598822.3,
+        "first_frame": 1791989598927.6,
+        "first_robot_frame": 1791989598927.6
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1125.5,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_shipped_k2",
+      "marks": {
+        "casefile_fetch_start": 1791989599956.2998,
+        "world3d_assets": 1791989599967.4,
+        "recording_ready": 1791989600966.7998,
+        "world3d_ready": 1791989600967.7998,
+        "world3d_robot": 1791989600967.7998,
+        "first_frame": 1791989601071.7,
+        "first_robot_frame": 1791989601071.7
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1115.400146484375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_shipped_k2_r2",
+      "marks": {
+        "casefile_fetch_start": 1791989602104.2,
+        "world3d_assets": 1791989602116.7,
+        "recording_ready": 1791989603128.9001,
+        "world3d_ready": 1791989603129.7,
+        "world3d_robot": 1791989603129.7,
+        "first_frame": 1791989603232.4001,
+        "first_robot_frame": 1791989603232.4001
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1128.2001953125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_shipped_k3",
+      "marks": {
+        "casefile_fetch_start": 1791989604240.7002,
+        "world3d_assets": 1791989604250.4001,
+        "recording_ready": 1791989605243.2002,
+        "world3d_ready": 1791989605244,
+        "world3d_robot": 1791989605244.1,
+        "first_frame": 1791989605309.6,
+        "first_robot_frame": 1791989605309.6
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1068.89990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_shipped_k3_r2",
+      "marks": {
+        "casefile_fetch_start": 1791989606286.6,
+        "world3d_assets": 1791989606302,
+        "recording_ready": 1791989607293,
+        "world3d_ready": 1791989607294,
+        "world3d_robot": 1791989607294,
+        "first_frame": 1791989607400.1,
+        "first_robot_frame": 1791989607400.1
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1113.5,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_shipped_k4",
+      "marks": {
+        "casefile_fetch_start": 1791989608383.6,
+        "world3d_assets": 1791989608398.7002,
+        "recording_ready": 1791989609406.6,
+        "world3d_ready": 1791989609407.4001,
+        "world3d_robot": 1791989609407.5,
+        "first_frame": 1791989609471.2002,
+        "first_robot_frame": 1791989609471.3
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1087.699951171875,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_shipped_k4_r2",
+      "marks": {
+        "casefile_fetch_start": 1791989610461.4001,
+        "world3d_assets": 1791989610471.5,
+        "recording_ready": 1791989611471.2,
+        "world3d_ready": 1791989611472.1,
+        "world3d_robot": 1791989611472.1,
+        "first_frame": 1791989611576.2,
+        "first_robot_frame": 1791989611576.2
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1114.7998046875,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_shipped_k5",
+      "marks": {
+        "casefile_fetch_start": 1791989612610.0999,
+        "world3d_assets": 1791989612628,
+        "recording_ready": 1791989613632.5,
+        "world3d_ready": 1791989613633.3,
+        "world3d_robot": 1791989613633.3,
+        "first_frame": 1791989613740.3,
+        "first_robot_frame": 1791989613740.3
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1130.2001953125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_kidnap_shipped_k5_r2",
+      "marks": {
+        "casefile_fetch_start": 1791989614751.1,
+        "world3d_assets": 1791989614766.2,
+        "recording_ready": 1791989615779.7,
+        "world3d_ready": 1791989615780.5,
+        "world3d_robot": 1791989615780.5,
+        "first_frame": 1791989615885.5,
+        "first_robot_frame": 1791989615885.6
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1134.5,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab2_rl_fidelity_1_tour",
+      "marks": {
+        "casefile_fetch_start": 1791989616890.2,
+        "world3d_assets": 1791989616902,
+        "recording_ready": 1791989618653,
+        "world3d_ready": 1791989618654.0999,
+        "world3d_robot": 1791989618654.0999,
+        "first_frame": 1791989618761.5999,
+        "first_robot_frame": 1791989618761.5999
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1871.39990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab3_s1_tour",
+      "marks": {
+        "casefile_fetch_start": 1791989619771.7,
+        "world3d_assets": 1791989619782,
+        "recording_ready": 1791989620790.4001,
+        "world3d_ready": 1791989620791.4001,
+        "world3d_robot": 1791989620791.4001,
+        "first_frame": 1791989620898.7,
+        "first_robot_frame": 1791989620898.7
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1127,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab3_1_tour",
+      "marks": {
+        "casefile_fetch_start": 1791989621933.5999,
+        "world3d_assets": 1791989621944.5999,
+        "recording_ready": 1791989622952.5999,
+        "world3d_ready": 1791989622953.5,
+        "world3d_robot": 1791989622953.5999,
+        "first_frame": 1791989623055.5,
+        "first_robot_frame": 1791989623055.5
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 1121.900146484375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_a1_fixed_red",
+      "marks": {
+        "casefile_fetch_start": 1791989624075.9,
+        "world3d_assets": 1791989624087,
+        "recording_ready": 1791989624935.0999,
+        "scans_ready": 1791989624935.4,
+        "world3d_ready": 1791989624935.9,
+        "world3d_robot": 1791989624935.9,
+        "first_frame": 1791989625043.7,
+        "first_robot_frame": 1791989625043.7
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 967.800048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_a2_fixed_green",
+      "marks": {
+        "casefile_fetch_start": 1791989626053.2,
+        "world3d_assets": 1791989626064.2,
+        "recording_ready": 1791989626836.9,
+        "scans_ready": 1791989626837.3,
+        "world3d_ready": 1791989626837.9,
+        "world3d_robot": 1791989626837.9,
+        "first_frame": 1791989626902.5,
+        "first_robot_frame": 1791989626902.5
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 849.300048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_a3_fixed_blue",
+      "marks": {
+        "casefile_fetch_start": 1791989627909.9,
+        "world3d_assets": 1791989627921.8,
+        "recording_ready": 1791989628565.6,
+        "scans_ready": 1791989628565.9,
+        "world3d_ready": 1791989628566.6,
+        "world3d_robot": 1791989628566.6,
+        "first_frame": 1791989628671.9,
+        "first_robot_frame": 1791989628671.9
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 762,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_a4_fixed_yellow",
+      "marks": {
+        "casefile_fetch_start": 1791989629747.4,
+        "world3d_assets": 1791989629774.2,
+        "recording_ready": 1791989630482.3,
+        "scans_ready": 1791989630482.6,
+        "world3d_ready": 1791989630483.3,
+        "world3d_robot": 1791989630483.3,
+        "first_frame": 1791989630569.7,
+        "first_robot_frame": 1791989630569.7
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 822.300048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_b1_colours_s5_red",
+      "marks": {
+        "casefile_fetch_start": 1791989631594.3,
+        "world3d_assets": 1791989631605.7002,
+        "recording_ready": 1791989632458.8,
+        "scans_ready": 1791989632459.2002,
+        "world3d_ready": 1791989632459.8,
+        "world3d_robot": 1791989632459.8,
+        "first_frame": 1791989632525.7002,
+        "first_robot_frame": 1791989632525.8
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 931.5,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_b2_colours_s1_red",
+      "marks": {
+        "casefile_fetch_start": 1791989633530,
+        "world3d_assets": 1791989633541.3,
+        "recording_ready": 1791989634302.9001,
+        "scans_ready": 1791989634303.4001,
+        "world3d_ready": 1791989634303.9001,
+        "world3d_robot": 1791989634303.9001,
+        "first_frame": 1791989634412.2,
+        "first_robot_frame": 1791989634412.3
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 882.300048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_b3_colours_s7_red",
+      "marks": {
+        "casefile_fetch_start": 1791989635371.1,
+        "world3d_assets": 1791989635382,
+        "recording_ready": 1791989636030.9001,
+        "scans_ready": 1791989636031.3,
+        "world3d_ready": 1791989636031.8,
+        "world3d_robot": 1791989636031.8,
+        "first_frame": 1791989636075,
+        "first_robot_frame": 1791989636075
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 703.89990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_b4_colours_s2_red",
+      "marks": {
+        "casefile_fetch_start": 1791989637077.2,
+        "world3d_assets": 1791989637088.4,
+        "recording_ready": 1791989637812.2,
+        "scans_ready": 1791989637812.5,
+        "world3d_ready": 1791989637813.2,
+        "world3d_robot": 1791989637813.2,
+        "first_frame": 1791989637886.0999,
+        "first_robot_frame": 1791989637886.0999
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 808.89990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_c1_green_stop_after_bay3",
+      "marks": {
+        "casefile_fetch_start": 1791989638899.9,
+        "world3d_assets": 1791989638911.5,
+        "recording_ready": 1791989639518.9,
+        "scans_ready": 1791989639519.2998,
+        "world3d_ready": 1791989639519.9,
+        "world3d_robot": 1791989639520,
+        "first_frame": 1791989639622,
+        "first_robot_frame": 1791989639622
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 722.10009765625,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_c2_green_nearest",
+      "marks": {
+        "casefile_fetch_start": 1791989640621.4,
+        "world3d_assets": 1791989640630.7998,
+        "recording_ready": 1791989641347.7998,
+        "scans_ready": 1791989641348.2998,
+        "world3d_ready": 1791989641348.7998,
+        "world3d_robot": 1791989641348.7998,
+        "first_frame": 1791989641392.2,
+        "first_robot_frame": 1791989641392.2998
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 770.89990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_c3_green_most_likely",
+      "marks": {
+        "casefile_fetch_start": 1791989642382.7,
+        "world3d_assets": 1791989642392.9,
+        "recording_ready": 1791989643111.2,
+        "scans_ready": 1791989643111.5,
+        "world3d_ready": 1791989643112.2,
+        "world3d_robot": 1791989643112.2,
+        "first_frame": 1791989643180.7998,
+        "first_robot_frame": 1791989643180.7998
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 798.099853515625,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_c4_green_reverse",
+      "marks": {
+        "casefile_fetch_start": 1791989644175.1,
+        "world3d_assets": 1791989644185.7002,
+        "recording_ready": 1791989644985.4001,
+        "scans_ready": 1791989644985.8,
+        "world3d_ready": 1791989644986.6,
+        "world3d_robot": 1791989644986.6,
+        "first_frame": 1791989645052.1,
+        "first_robot_frame": 1791989645052.1
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 877,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_d1_positions_s1_red",
+      "marks": {
+        "casefile_fetch_start": 1791989646095.2002,
+        "world3d_assets": 1791989646115.3,
+        "recording_ready": 1791989646890.3,
+        "scans_ready": 1791989646890.7002,
+        "world3d_ready": 1791989646891.2002,
+        "world3d_robot": 1791989646891.2002,
+        "first_frame": 1791989646993.2002,
+        "first_robot_frame": 1791989646993.2002
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 898,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_d2_positions_s2_red",
+      "marks": {
+        "casefile_fetch_start": 1791989647971.3,
+        "world3d_assets": 1791989647987.8,
+        "recording_ready": 1791989648698.3,
+        "scans_ready": 1791989648698.7,
+        "world3d_ready": 1791989648699.3,
+        "world3d_robot": 1791989648699.4,
+        "first_frame": 1791989648744.1,
+        "first_robot_frame": 1791989648744.1
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 772.800048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_d3_positions_s3_red",
+      "marks": {
+        "casefile_fetch_start": 1791989649724.8,
+        "world3d_assets": 1791989649735.2,
+        "recording_ready": 1791989650520.6,
+        "scans_ready": 1791989650520.9,
+        "world3d_ready": 1791989650521.5,
+        "world3d_robot": 1791989650521.5,
+        "first_frame": 1791989650588.7,
+        "first_robot_frame": 1791989650588.7
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 863.89990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_d4_positions_s4_red",
+      "marks": {
+        "casefile_fetch_start": 1791989651613.6,
+        "world3d_assets": 1791989651625.6,
+        "recording_ready": 1791989652413.8,
+        "scans_ready": 1791989652414.4001,
+        "world3d_ready": 1791989652415.1,
+        "world3d_robot": 1791989652415.2002,
+        "first_frame": 1791989652481.6,
+        "first_robot_frame": 1791989652481.6
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 868,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab4_b3_colours_s7_red_void_1",
+      "marks": {
+        "casefile_fetch_start": 1791989653495.7,
+        "world3d_assets": 1791989653508.6,
+        "recording_ready": 1791989654063.2,
+        "scans_ready": 1791989654064,
+        "world3d_ready": 1791989654065.1,
+        "world3d_robot": 1791989654065.2,
+        "first_frame": 1791989654169.1,
+        "first_robot_frame": 1791989654169.1
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 673.400146484375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_dwb_1",
+      "marks": {
+        "casefile_fetch_start": 1791989655175.8,
+        "world3d_assets": 1791989655185.7002,
+        "recording_ready": 1791989655878.6,
+        "scans_ready": 1791989655880.2002,
+        "world3d_ready": 1791989655880.7002,
+        "world3d_robot": 1791989655880.7002,
+        "first_frame": 1791989655948.8,
+        "first_robot_frame": 1791989655948.8
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 773,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_dwb_2",
+      "marks": {
+        "casefile_fetch_start": 1791989656971.8,
+        "world3d_assets": 1791989656983.6,
+        "recording_ready": 1791989657674,
+        "scans_ready": 1791989657675.7,
+        "world3d_ready": 1791989657676.3,
+        "world3d_robot": 1791989657676.3,
+        "first_frame": 1791989657779.6,
+        "first_robot_frame": 1791989657779.6
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 807.800048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_dwb_3",
+      "marks": {
+        "casefile_fetch_start": 1791989658784.3,
+        "world3d_assets": 1791989658794.9,
+        "recording_ready": 1791989659486.8,
+        "scans_ready": 1791989659488.5999,
+        "world3d_ready": 1791989659489.0999,
+        "world3d_robot": 1791989659489.0999,
+        "first_frame": 1791989659539.5999,
+        "first_robot_frame": 1791989659539.7
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 755.39990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_dwb_4",
+      "marks": {
+        "casefile_fetch_start": 1791989660543.1,
+        "world3d_assets": 1791989660554.4001,
+        "recording_ready": 1791989661247,
+        "scans_ready": 1791989661249.1,
+        "world3d_ready": 1791989661249.7,
+        "world3d_robot": 1791989661249.7,
+        "first_frame": 1791989661314.9001,
+        "first_robot_frame": 1791989661314.9001
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 771.800048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_dwb_5",
+      "marks": {
+        "casefile_fetch_start": 1791989662312.2998,
+        "world3d_assets": 1791989662325,
+        "recording_ready": 1791989663015.0999,
+        "scans_ready": 1791989663016.7998,
+        "world3d_ready": 1791989663017.4,
+        "world3d_robot": 1791989663017.4,
+        "first_frame": 1791989663120.7998,
+        "first_robot_frame": 1791989663120.7998
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 808.5,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_mppi_1",
+      "marks": {
+        "casefile_fetch_start": 1791989664131.5999,
+        "world3d_assets": 1791989664142.0999,
+        "recording_ready": 1791989664861.4,
+        "scans_ready": 1791989664863.3,
+        "world3d_ready": 1791989664863.8,
+        "world3d_robot": 1791989664863.8,
+        "first_frame": 1791989664930.3,
+        "first_robot_frame": 1791989664930.4
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 798.800048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_mppi_2",
+      "marks": {
+        "casefile_fetch_start": 1791989665962,
+        "world3d_assets": 1791989665980.8,
+        "recording_ready": 1791989666704.2,
+        "scans_ready": 1791989666706.4001,
+        "world3d_ready": 1791989666707.8,
+        "world3d_robot": 1791989666707.8,
+        "first_frame": 1791989666817.4001,
+        "first_robot_frame": 1791989666817.4001
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 855.400146484375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_mppi_3",
+      "marks": {
+        "casefile_fetch_start": 1791989667812.7,
+        "world3d_assets": 1791989667822.4001,
+        "recording_ready": 1791989668540.9001,
+        "scans_ready": 1791989668542.8,
+        "world3d_ready": 1791989668543.3,
+        "world3d_robot": 1791989668543.3,
+        "first_frame": 1791989668585.9001,
+        "first_robot_frame": 1791989668585.9001
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 773.2001953125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_mppi_4",
+      "marks": {
+        "casefile_fetch_start": 1791989669569.0999,
+        "world3d_assets": 1791989669580.3,
+        "recording_ready": 1791989670306.9,
+        "scans_ready": 1791989670310,
+        "world3d_ready": 1791989670310.8,
+        "world3d_robot": 1791989670310.8,
+        "first_frame": 1791989670380.7,
+        "first_robot_frame": 1791989670380.8
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 811.7001953125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_mppi_5",
+      "marks": {
+        "casefile_fetch_start": 1791989671369.1,
+        "world3d_assets": 1791989671382.5,
+        "recording_ready": 1791989672105.4001,
+        "scans_ready": 1791989672108,
+        "world3d_ready": 1791989672108.5,
+        "world3d_robot": 1791989672108.5,
+        "first_frame": 1791989672173.8,
+        "first_robot_frame": 1791989672173.8
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 804.699951171875,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_rpp_1",
+      "marks": {
+        "casefile_fetch_start": 1791989673151.7,
+        "world3d_assets": 1791989673166,
+        "recording_ready": 1791989673864.2,
+        "scans_ready": 1791989673866.2998,
+        "world3d_ready": 1791989673866.9,
+        "world3d_robot": 1791989673867,
+        "first_frame": 1791989673939,
+        "first_robot_frame": 1791989673939
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 787.300048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_rpp_2",
+      "marks": {
+        "casefile_fetch_start": 1791989674932.4,
+        "world3d_assets": 1791989674943.2,
+        "recording_ready": 1791989675642.5,
+        "scans_ready": 1791989675644.3,
+        "world3d_ready": 1791989675644.8,
+        "world3d_robot": 1791989675644.8,
+        "first_frame": 1791989675748.2,
+        "first_robot_frame": 1791989675748.2
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 815.800048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_rpp_3",
+      "marks": {
+        "casefile_fetch_start": 1791989676770.2,
+        "world3d_assets": 1791989676785.9,
+        "recording_ready": 1791989677496.2,
+        "scans_ready": 1791989677498.2998,
+        "world3d_ready": 1791989677498.9,
+        "world3d_robot": 1791989677498.9,
+        "first_frame": 1791989677564.7,
+        "first_robot_frame": 1791989677564.7
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 794.5,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_rpp_4",
+      "marks": {
+        "casefile_fetch_start": 1791989678573.0999,
+        "world3d_assets": 1791989678588.5999,
+        "recording_ready": 1791989679292,
+        "scans_ready": 1791989679293.7,
+        "world3d_ready": 1791989679294.3,
+        "world3d_robot": 1791989679294.3,
+        "first_frame": 1791989679399.2,
+        "first_robot_frame": 1791989679399.2
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 826.10009765625,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_crossing_rpp_5",
+      "marks": {
+        "casefile_fetch_start": 1791989680411.1,
+        "world3d_assets": 1791989680428,
+        "recording_ready": 1791989681127.9001,
+        "scans_ready": 1791989681129.7002,
+        "world3d_ready": 1791989681130.2002,
+        "world3d_robot": 1791989681130.2002,
+        "first_frame": 1791989681175.1,
+        "first_robot_frame": 1791989681175.1
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 764,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_mislocalised_dwb_1",
+      "marks": {
+        "casefile_fetch_start": 1791989682164.9001,
+        "world3d_assets": 1791989682178.6,
+        "recording_ready": 1791989682726.9001,
+        "scans_ready": 1791989682728.6,
+        "world3d_ready": 1791989682729.4001,
+        "world3d_robot": 1791989682729.4001,
+        "first_frame": 1791989682798.3,
+        "first_robot_frame": 1791989682798.3
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 633.39990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_mislocalised_dwb_2",
+      "marks": {
+        "casefile_fetch_start": 1791989683774.6,
+        "world3d_assets": 1791989683789.9,
+        "recording_ready": 1791989684338.9,
+        "scans_ready": 1791989684340.6,
+        "world3d_ready": 1791989684341.4,
+        "world3d_robot": 1791989684341.4,
+        "first_frame": 1791989684410.5,
+        "first_robot_frame": 1791989684410.5
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 635.89990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_mislocalised_dwb_3",
+      "marks": {
+        "casefile_fetch_start": 1791989685401.3,
+        "world3d_assets": 1791989685414.4001,
+        "recording_ready": 1791989685963.5,
+        "scans_ready": 1791989685965,
+        "world3d_ready": 1791989685965.5,
+        "world3d_robot": 1791989685965.5,
+        "first_frame": 1791989686033.6,
+        "first_robot_frame": 1791989686033.6
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 632.300048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_mislocalised_mppi_1",
+      "marks": {
+        "casefile_fetch_start": 1791989687016.1,
+        "world3d_assets": 1791989687025.9001,
+        "recording_ready": 1791989687575.6,
+        "scans_ready": 1791989687577,
+        "world3d_ready": 1791989687577.6,
+        "world3d_robot": 1791989687577.6,
+        "first_frame": 1791989687682.5,
+        "first_robot_frame": 1791989687682.5
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 666.39990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_mislocalised_mppi_2",
+      "marks": {
+        "casefile_fetch_start": 1791989688667.4,
+        "world3d_assets": 1791989688678.4,
+        "recording_ready": 1791989689228.7,
+        "scans_ready": 1791989689230.5,
+        "world3d_ready": 1791989689231.1,
+        "world3d_robot": 1791989689231.1,
+        "first_frame": 1791989689299.7,
+        "first_robot_frame": 1791989689299.7
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 632.300048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_mislocalised_mppi_3",
+      "marks": {
+        "casefile_fetch_start": 1791989690298.6,
+        "world3d_assets": 1791989690313.2,
+        "recording_ready": 1791989690861.7,
+        "scans_ready": 1791989690863.4,
+        "world3d_ready": 1791989690864.1,
+        "world3d_robot": 1791989690864.2,
+        "first_frame": 1791989690968.3,
+        "first_robot_frame": 1791989690968.3
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 669.699951171875,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_mislocalised_rpp_1",
+      "marks": {
+        "casefile_fetch_start": 1791989691974.6,
+        "world3d_assets": 1791989691984.5,
+        "recording_ready": 1791989692524.1,
+        "scans_ready": 1791989692525.5,
+        "world3d_ready": 1791989692526.2,
+        "world3d_robot": 1791989692526.2,
+        "first_frame": 1791989692573.7,
+        "first_robot_frame": 1791989692573.7
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 599.099853515625,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_mislocalised_rpp_2",
+      "marks": {
+        "casefile_fetch_start": 1791989693544.5,
+        "world3d_assets": 1791989693570.3,
+        "recording_ready": 1791989694120.1,
+        "scans_ready": 1791989694121.9,
+        "world3d_ready": 1791989694122.6,
+        "world3d_robot": 1791989694122.7,
+        "first_frame": 1791989694192.4,
+        "first_robot_frame": 1791989694192.4
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 647.89990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_mislocalised_rpp_3",
+      "marks": {
+        "casefile_fetch_start": 1791989695187.3,
+        "world3d_assets": 1791989695199,
+        "recording_ready": 1791989695748.1,
+        "scans_ready": 1791989695749.8,
+        "world3d_ready": 1791989695750.4,
+        "world3d_robot": 1791989695750.4,
+        "first_frame": 1791989695817.3,
+        "first_robot_frame": 1791989695817.3
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 630,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_dwb_1",
+      "marks": {
+        "casefile_fetch_start": 1791989696798.4,
+        "world3d_assets": 1791989696815.4,
+        "recording_ready": 1791989697502.8,
+        "scans_ready": 1791989697505.4,
+        "world3d_ready": 1791989697506,
+        "world3d_robot": 1791989697506,
+        "first_frame": 1791989697571.8,
+        "first_robot_frame": 1791989697571.8
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 773.400146484375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_dwb_2",
+      "marks": {
+        "casefile_fetch_start": 1791989698556.8,
+        "world3d_assets": 1791989698569.5,
+        "recording_ready": 1791989699267.2,
+        "scans_ready": 1791989699268.9,
+        "world3d_ready": 1791989699269.4,
+        "world3d_robot": 1791989699269.4,
+        "first_frame": 1791989699337.0999,
+        "first_robot_frame": 1791989699337.0999
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 780.2998046875,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_dwb_3",
+      "marks": {
+        "casefile_fetch_start": 1791989700327.0999,
+        "world3d_assets": 1791989700338.0999,
+        "recording_ready": 1791989701025.2,
+        "scans_ready": 1791989701027.5,
+        "world3d_ready": 1791989701028.4,
+        "world3d_robot": 1791989701028.4,
+        "first_frame": 1791989701094.5999,
+        "first_robot_frame": 1791989701094.5999
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 767.5,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_dwb_4",
+      "marks": {
+        "casefile_fetch_start": 1791989702096.1,
+        "world3d_assets": 1791989702109.8,
+        "recording_ready": 1791989702802.2,
+        "scans_ready": 1791989702803.9,
+        "world3d_ready": 1791989702804.4,
+        "world3d_robot": 1791989702804.4,
+        "first_frame": 1791989702905.7,
+        "first_robot_frame": 1791989702905.8
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 809.699951171875,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_dwb_5",
+      "marks": {
+        "casefile_fetch_start": 1791989703912.4,
+        "world3d_assets": 1791989703928.7,
+        "recording_ready": 1791989704626.0999,
+        "scans_ready": 1791989704627.7998,
+        "world3d_ready": 1791989704628.5,
+        "world3d_robot": 1791989704628.5,
+        "first_frame": 1791989704693.7998,
+        "first_robot_frame": 1791989704693.9
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 781.5,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_mppi_1",
+      "marks": {
+        "casefile_fetch_start": 1791989705676.3,
+        "world3d_assets": 1791989705686.8,
+        "recording_ready": 1791989706414.1,
+        "scans_ready": 1791989706415.9001,
+        "world3d_ready": 1791989706416.4001,
+        "world3d_robot": 1791989706416.4001,
+        "first_frame": 1791989706519.4001,
+        "first_robot_frame": 1791989706519.4001
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 843.10009765625,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_mppi_2",
+      "marks": {
+        "casefile_fetch_start": 1791989707535.2998,
+        "world3d_assets": 1791989707547.7,
+        "recording_ready": 1791989708281.2998,
+        "scans_ready": 1791989708283.9,
+        "world3d_ready": 1791989708284.7998,
+        "world3d_robot": 1791989708284.7998,
+        "first_frame": 1791989708389.0999,
+        "first_robot_frame": 1791989708389.0999
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 853.800048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_mppi_3",
+      "marks": {
+        "casefile_fetch_start": 1791989709402.2002,
+        "world3d_assets": 1791989709412,
+        "recording_ready": 1791989710147.8,
+        "scans_ready": 1791989710150,
+        "world3d_ready": 1791989710150.7002,
+        "world3d_robot": 1791989710150.7002,
+        "first_frame": 1791989710201.1,
+        "first_robot_frame": 1791989710201.1
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 798.89990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_mppi_4",
+      "marks": {
+        "casefile_fetch_start": 1791989711228.2,
+        "world3d_assets": 1791989711250.5,
+        "recording_ready": 1791989711990.5,
+        "scans_ready": 1791989711992.5999,
+        "world3d_ready": 1791989711993.0999,
+        "world3d_robot": 1791989711993.0999,
+        "first_frame": 1791989712059.9,
+        "first_robot_frame": 1791989712060
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 831.800048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_mppi_5",
+      "marks": {
+        "casefile_fetch_start": 1791989713072.5,
+        "world3d_assets": 1791989713095.7,
+        "recording_ready": 1791989713835.5,
+        "scans_ready": 1791989713838.8,
+        "world3d_ready": 1791989713839.6,
+        "world3d_robot": 1791989713839.6,
+        "first_frame": 1791989713943.2,
+        "first_robot_frame": 1791989713943.2
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 870.699951171875,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_rpp_1",
+      "marks": {
+        "casefile_fetch_start": 1791989714951.9001,
+        "world3d_assets": 1791989714964.8,
+        "recording_ready": 1791989715610.2,
+        "scans_ready": 1791989715613.3,
+        "world3d_ready": 1791989715614.6,
+        "world3d_robot": 1791989715614.6,
+        "first_frame": 1791989715687.8,
+        "first_robot_frame": 1791989715687.8
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 735.89990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_rpp_2",
+      "marks": {
+        "casefile_fetch_start": 1791989716723.7,
+        "world3d_assets": 1791989716755.8,
+        "recording_ready": 1791989717420.1,
+        "scans_ready": 1791989717424.4,
+        "world3d_ready": 1791989717425.3,
+        "world3d_robot": 1791989717425.3,
+        "first_frame": 1791989717535.6,
+        "first_robot_frame": 1791989717535.6
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 811.900146484375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_rpp_3",
+      "marks": {
+        "casefile_fetch_start": 1791989718606.4001,
+        "world3d_assets": 1791989718621.1,
+        "recording_ready": 1791989719271.5,
+        "scans_ready": 1791989719273.2002,
+        "world3d_ready": 1791989719273.8,
+        "world3d_robot": 1791989719273.9001,
+        "first_frame": 1791989719348,
+        "first_robot_frame": 1791989719348
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 741.599853515625,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_rpp_4",
+      "marks": {
+        "casefile_fetch_start": 1791989720324.6,
+        "world3d_assets": 1791989720343.8,
+        "recording_ready": 1791989720990.8,
+        "scans_ready": 1791989720992.2002,
+        "world3d_ready": 1791989720992.8,
+        "world3d_robot": 1791989720992.8,
+        "first_frame": 1791989721099.3,
+        "first_robot_frame": 1791989721099.3
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 774.699951171875,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_oncoming_rpp_5",
+      "marks": {
+        "casefile_fetch_start": 1791989722108.0999,
+        "world3d_assets": 1791989722119.9,
+        "recording_ready": 1791989722775.5999,
+        "scans_ready": 1791989722777.5999,
+        "world3d_ready": 1791989722778.4,
+        "world3d_robot": 1791989722778.4,
+        "first_frame": 1791989722843.5999,
+        "first_robot_frame": 1791989722843.5999
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 735.5,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_dwb_1",
+      "marks": {
+        "casefile_fetch_start": 1791989723859.1,
+        "world3d_assets": 1791989723877.6,
+        "recording_ready": 1791989724624.5,
+        "scans_ready": 1791989724627.5,
+        "world3d_ready": 1791989724628.1,
+        "world3d_robot": 1791989724628.1,
+        "first_frame": 1791989724702.4001,
+        "first_robot_frame": 1791989724702.5
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 843.39990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_dwb_2",
+      "marks": {
+        "casefile_fetch_start": 1791989725800.7,
+        "world3d_assets": 1791989725836.9,
+        "recording_ready": 1791989726576.9,
+        "scans_ready": 1791989726579.2,
+        "world3d_ready": 1791989726579.8,
+        "world3d_robot": 1791989726579.8,
+        "first_frame": 1791989726686.0999,
+        "first_robot_frame": 1791989726686.0999
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 885.39990234375,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_dwb_3",
+      "marks": {
+        "casefile_fetch_start": 1791989727761.3,
+        "world3d_assets": 1791989727788.3,
+        "recording_ready": 1791989728531.5,
+        "scans_ready": 1791989728533.8,
+        "world3d_ready": 1791989728534.4,
+        "world3d_robot": 1791989728534.4,
+        "first_frame": 1791989728642.4,
+        "first_robot_frame": 1791989728642.4
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 881.099853515625,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_dwb_4",
+      "marks": {
+        "casefile_fetch_start": 1791989729678.8,
+        "world3d_assets": 1791989729699.3,
+        "recording_ready": 1791989730444,
+        "scans_ready": 1791989730446.6,
+        "world3d_ready": 1791989730447.2,
+        "world3d_robot": 1791989730447.2,
+        "first_frame": 1791989730514.5,
+        "first_robot_frame": 1791989730514.5
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 835.699951171875,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_dwb_5",
+      "marks": {
+        "casefile_fetch_start": 1791989731507.1,
+        "world3d_assets": 1791989731517.7,
+        "recording_ready": 1791989732263.6,
+        "scans_ready": 1791989732268,
+        "world3d_ready": 1791989732268.8,
+        "world3d_robot": 1791989732268.8,
+        "first_frame": 1791989732336.9001,
+        "first_robot_frame": 1791989732336.9001
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 829.800048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_mppi_1",
+      "marks": {
+        "casefile_fetch_start": 1791989733326.5,
+        "world3d_assets": 1791989733337.5,
+        "recording_ready": 1791989734159.5,
+        "scans_ready": 1791989734162.5,
+        "world3d_ready": 1791989734163.1,
+        "world3d_robot": 1791989734163.1,
+        "first_frame": 1791989734227.8,
+        "first_robot_frame": 1791989734227.8
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 901.300048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_mppi_2",
+      "marks": {
+        "casefile_fetch_start": 1791989735262.5,
+        "world3d_assets": 1791989735282.0999,
+        "recording_ready": 1791989736118.9,
+        "scans_ready": 1791989736122.5999,
+        "world3d_ready": 1791989736123.0999,
+        "world3d_robot": 1791989736123.2,
+        "first_frame": 1791989736230.2998,
+        "first_robot_frame": 1791989736230.2998
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 967.7998046875,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_mppi_3",
+      "marks": {
+        "casefile_fetch_start": 1791989737253.2,
+        "world3d_assets": 1791989737264.0999,
+        "recording_ready": 1791989738086.5,
+        "scans_ready": 1791989738089.5999,
+        "world3d_ready": 1791989738090.2998,
+        "world3d_robot": 1791989738090.2998,
+        "first_frame": 1791989738193.2,
+        "first_robot_frame": 1791989738193.2
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 940,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_mppi_4",
+      "marks": {
+        "casefile_fetch_start": 1791989739204.7998,
+        "world3d_assets": 1791989739215,
+        "recording_ready": 1791989740040.5,
+        "scans_ready": 1791989740043.0999,
+        "world3d_ready": 1791989740043.5999,
+        "world3d_robot": 1791989740043.5999,
+        "first_frame": 1791989740087.9,
+        "first_robot_frame": 1791989740087.9
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 883.10009765625,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_mppi_5",
+      "marks": {
+        "casefile_fetch_start": 1791989741089.8,
+        "world3d_assets": 1791989741102.8,
+        "recording_ready": 1791989741944.6,
+        "scans_ready": 1791989741948.7,
+        "world3d_ready": 1791989741949.2,
+        "world3d_robot": 1791989741949.2,
+        "first_frame": 1791989742057.3,
+        "first_robot_frame": 1791989742057.3
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 967.5,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_rpp_1",
+      "marks": {
+        "casefile_fetch_start": 1791989743101.4,
+        "world3d_assets": 1791989743118.5999,
+        "recording_ready": 1791989743929.9,
+        "scans_ready": 1791989743932.9,
+        "world3d_ready": 1791989743933.5,
+        "world3d_robot": 1791989743933.5,
+        "first_frame": 1791989744035,
+        "first_robot_frame": 1791989744035
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 933.60009765625,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_rpp_2",
+      "marks": {
+        "casefile_fetch_start": 1791989745062.5,
+        "world3d_assets": 1791989745085.7,
+        "recording_ready": 1791989745894.4,
+        "scans_ready": 1791989745897.8,
+        "world3d_ready": 1791989745898.4,
+        "world3d_robot": 1791989745898.4,
+        "first_frame": 1791989746004.8,
+        "first_robot_frame": 1791989746004.8
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 942.300048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_rpp_3",
+      "marks": {
+        "casefile_fetch_start": 1791989747033,
+        "world3d_assets": 1791989747043.1,
+        "recording_ready": 1791989747862.3,
+        "scans_ready": 1791989747865.3,
+        "world3d_ready": 1791989747865.9001,
+        "world3d_robot": 1791989747865.9001,
+        "first_frame": 1791989747936.3,
+        "first_robot_frame": 1791989747936.3
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 903.300048828125,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_rpp_4",
+      "marks": {
+        "casefile_fetch_start": 1791989748951.5,
+        "world3d_assets": 1791989748965,
+        "recording_ready": 1791989749784.5,
+        "scans_ready": 1791989749788.2998,
+        "world3d_ready": 1791989749789,
+        "world3d_robot": 1791989749789,
+        "first_frame": 1791989749894.7,
+        "first_robot_frame": 1791989749894.7
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 943.199951171875,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "id": "lab5_static_room_rpp_5",
+      "marks": {
+        "casefile_fetch_start": 1791989750904.7,
+        "world3d_assets": 1791989750915.9,
+        "recording_ready": 1791989751732.8,
+        "scans_ready": 1791989751735.3,
+        "world3d_ready": 1791989751735.9,
+        "world3d_robot": 1791989751735.9,
+        "first_frame": 1791989751802.4,
+        "first_robot_frame": 1791989751802.4
+      },
+      "placeholder": false,
+      "mesh": 1,
+      "mode": "recording",
+      "ms": 897.699951171875,
+      "ok": true,
+      "errors": []
+    }
+  ],
+  "passed": 100,
+  "total": 100
+}

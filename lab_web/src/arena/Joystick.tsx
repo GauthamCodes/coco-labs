@@ -4,6 +4,7 @@
 /** An on-screen joystick for teleop (M1.8): mouse, pen and touch. */
 
 import { useRef, useState } from 'react';
+import { thumbTravel } from '../play/phone';
 
 /** dx, dy in [-1, 1]: up is forward, right turns right. Released: (0, 0). */
 export function Joystick({ onChange }: { onChange(dx: number, dy: number, at?: number): void }) {
@@ -17,11 +18,12 @@ export function Joystick({ onChange }: { onChange(dx: number, dy: number, at?: n
     const n = Math.hypot(dx, dy);
     if (n > 1) { dx /= n; dy /= n; }
     setKnob([dx, dy]);
-    onChange(dx, dy, e.timeStamp);   // the event's own time (perf's input-to-motion)
+    const [tx, ty] = thumbTravel(dx, dy);
+    onChange(tx, ty, e.timeStamp);   // the event's own time (perf's input-to-motion)
   };
   const end = () => { setKnob([0, 0]); onChange(0, 0); };
   return (
-    <div ref={pad} className="joystick" data-testid="arena-joystick" role="application" aria-label="Drive COCO (joystick)"
+    <div ref={pad} className="joystick" data-testid="arena-joystick" role="application" tabIndex={0} aria-label="Drive COCO (joystick)"
       onPointerDown={(e) => { pad.current!.setPointerCapture(e.pointerId); at(e); }}
       onPointerMove={(e) => { if (e.buttons || e.pointerType === 'touch') at(e); }}
       onPointerUp={end} onPointerCancel={end} onLostPointerCapture={end}>

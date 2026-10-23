@@ -1,40 +1,5 @@
 /* Copyright 2026 Gautham Anil — SPDX-License-Identifier: Apache-2.0 */
 
-:root {
-  color-scheme: light dark;
-  --bg: #fbfaf7;
-  --fg: #1d1d1b;
-  --muted: #5b5a55;
-  --line: #d9d6ce;
-  --panel: #ffffff;
-  --accent: #0072b2;
-  --recorded: #0072b2;
-  --browser: #009e73;
-  --glass: #5b5a55;
-  --error-bg: #fdecea;
-  --error-fg: #7a1b10;
-  --touch: 44px;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  font-size: 15px;
-  line-height: 1.45;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #161614;
-    --fg: #ecebe6;
-    --muted: #a9a79f;
-    --line: #3a3934;
-    --panel: #1f1f1c;
-    --accent: #56b4e9;
-    --recorded: #56b4e9;
-    --browser: #3fc39a;
-    --glass: #b8b6ad;
-    --error-bg: #3b1712;
-    --error-fg: #ffd3cc;
-  }
-}
-
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html, body { margin: 0; background: var(--bg); color: var(--fg); }
@@ -615,3 +580,15 @@ button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .help-keys { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
 .help-keys td { padding: 3px 6px; border-bottom: 1px solid var(--line); }
 .help-setting { display: block; margin: 4px 0; }
+
+.keyboard-goal fieldset{display:flex;flex-wrap:wrap;gap:12px;align-items:end;border:1px solid var(--line);padding:12px}.keyboard-goal label{display:grid;gap:6px}.keyboard-goal input,.keyboard-goal button{min-height:48px;font:inherit;color:var(--fg);background:var(--panel2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:8px}.keyboard-goal input{width:140px}
+
+/* Text roles use theme tokens; computation colours retain their fixed meanings. */
+a{color:var(--accent)}.evidence-badge,.claim-label{font-size:var(--type-label)}
+.evidence-badge.model,.claim-label.simplified-model{color:var(--badge-model)}
+.evidence-badge.stack,.claim-label.measured,.claim-label.simulation-result{color:var(--badge-stack)}
+.claim-label.tested{color:var(--label-success)}.claim-label.assumption,.claim-label.inference{color:var(--label-warning)}.claim-label.unresolved{color:var(--label-error)}.arena-go{color:var(--bg)}
+
+input::placeholder{color:var(--muted);opacity:1}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}

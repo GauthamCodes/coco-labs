@@ -197,7 +197,7 @@ function main() {
   rmSync(arenaDir, { recursive: true, force: true });
   mkdirSync(arenaDir, { recursive: true });
   const src = join(repo, 'coco_lab', 'coco_lab');
-  const all = walk(src).filter((f) => f.endsWith('.py'))
+  const all = walk(src).filter((f) => (f.endsWith('.py') || f.endsWith('link_limits.json')))
     .map((f) => [`coco_lab/${relative(src, f)}`, readFileSync(f)]);
   // M2.2: split into packs (tools/arena_packs.json); core = everything not in a lens pack
   const { packs: packDefs } = JSON.parse(readFileSync(join(here, 'arena_packs.json'), 'utf-8'));
