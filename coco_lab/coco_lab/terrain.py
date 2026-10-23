@@ -27,8 +27,9 @@ Conventions: map frame, z up; ROS (REP-103) angles -- pitch positive when
 the nose goes DOWN, roll positive when the left side goes UP.
 """
 
-import math
 from typing import List, Optional, Tuple
+
+from .numerics import math
 
 #: a height difference larger than this across a solid's edge is a drop the
 #: robot cannot drive over (m): the side of a wedge or of a platform. The

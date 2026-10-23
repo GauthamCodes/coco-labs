@@ -58,11 +58,11 @@ rises from one iteration to the next on the cases tested.
 """
 
 from dataclasses import asdict, dataclass
-import math
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from . import slam
 from .maps import LabMap
+from .numerics import math, sq
 from .occgrid import GridParams, OccupancyGrid
 from .sketch import apply_delta, odom_delta, wrap
 
@@ -166,7 +166,7 @@ class _Hash:
             for jy in (cy - 1, cy, cy + 1):
                 for i in self.b.get((jx, jy), ()):
                     px, py = self.pts[i]
-                    d = (px - x) ** 2 + (py - y) ** 2
+                    d = sq(px - x) + sq(py - y)
                     if d < bd or (d == bd and i < best):
                         best, bd = i, d
         return best
@@ -195,7 +195,7 @@ def min_eig3(A: Mat3) -> float:
     if p1 < 1e-30:
         return min(a, b, c)
     q = (a + b + c) / 3
-    p2 = (a - q) ** 2 + (b - q) ** 2 + (c - q) ** 2 + 2 * p1
+    p2 = sq(a - q) + sq(b - q) + sq(c - q) + 2 * p1
     p = math.sqrt(p2 / 6)
     B = [[(A[i][j] - (q if i == j else 0)) / p for j in range(3)]
          for i in range(3)]
@@ -600,15 +600,15 @@ def odometry_information(rot1: float, trans: float, rot2: float,
     """
     from .localise import _motion_jacobians
     _, Q = _motion_jacobians((0.0, 0.0, 0.0), rot1, trans, rot2, p.alphas)
-    Q[0][0] += p.odom_sigma_xy ** 2
-    Q[1][1] += p.odom_sigma_xy ** 2
-    Q[2][2] += p.odom_sigma_yaw ** 2
+    Q[0][0] += sq(p.odom_sigma_xy)
+    Q[1][1] += sq(p.odom_sigma_xy)
+    Q[2][2] += sq(p.odom_sigma_yaw)
     return _inv3(Q)
 
 
 def _diag(sxy, syaw) -> Mat3:
-    return [[1 / sxy ** 2, 0.0, 0.0], [0.0, 1 / sxy ** 2, 0.0],
-            [0.0, 0.0, 1 / syaw ** 2]]
+    return [[1 / sq(sxy), 0.0, 0.0], [0.0, 1 / sq(sxy), 0.0],
+            [0.0, 0.0, 1 / sq(syaw)]]
 
 
 def _rebuild(like, grid_params, poses, inp, angles, upto) -> OccupancyGrid:
@@ -647,7 +647,7 @@ class PoseGraph:
         self.last_closure = -10 ** 9
         self.stale = False
         self._grid: Optional[OccupancyGrid] = None
-        self.w_icp = 1.0 / params.icp_sigma ** 2
+        self.w_icp = 1.0 / sq(params.icp_sigma)
 
     def update(self, odom, ranges) -> Dict[str, object]:
         """Add a node (scan matched to the last); try loop closures."""

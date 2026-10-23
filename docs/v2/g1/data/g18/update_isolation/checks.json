@@ -1,0 +1,185 @@
+{
+ "scope": "Functional deploy test (G1.8 update isolation), not a timing measurement",
+ "errors": [],
+ "checks": {
+  "openDocumentMixed_false": true,
+  "page_A_reads_A": true,
+  "new_version_notice": true,
+  "no_forced_reload": true,
+  "old_cache_kept_while_open": true,
+  "old_cache_deleted_once_closed": true,
+  "reload_consistent_B": true,
+  "model_worker_pinned": true,
+  "no_page_errors": true
+ },
+ "versionA": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+ "before": {
+  "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+  "asset": "A",
+  "pinnedAsset": "A",
+  "controller": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699"
+ },
+ "versionB": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc",
+ "observations": [
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  },
+  {
+   "documentBuild": "9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+   "asset": "A",
+   "pinnedAsset": "A",
+   "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+  }
+ ],
+ "openDocumentMixed": false,
+ "stableBSeen": true,
+ "noticeShown": true,
+ "noticeButtons": [
+  "Save run",
+  "Reload"
+ ],
+ "notReloaded": true,
+ "cachesWhileAOpen": [
+  "coco-build-%2Fcoco-labs%2F-9f27f6dc5260c6451d6cf6aa93525537e565f173488b5812f7e3937987933699",
+  "coco-build-%2Fcoco-labs%2F-clients",
+  "coco-build-%2Fcoco-labs%2F-6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+ ],
+ "aCacheKeptWhileOpen": true,
+ "afterReload": {
+  "documentBuild": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc",
+  "asset": "B",
+  "pinnedAsset": "B",
+  "controller": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+ },
+ "hardReloadConsistent": true,
+ "cachesAfterReload": [
+  "coco-build-%2Fcoco-labs%2F-clients",
+  "coco-build-%2Fcoco-labs%2F-6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc"
+ ],
+ "aCacheDeletedOnceClosed": true,
+ "controllerAfterReload": "6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc",
+ "pinnedRequests": [
+  "__b/6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc/generated/arena/coco_arena_v1.json",
+  "__b/6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc/generated/arena/manifest.json",
+  "__b/6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc/generated/arena/coco_lab.zip",
+  "__b/6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc/generated/pyodide/pyodide.mjs",
+  "__b/6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc/generated/pyodide/pyodide-lock.json",
+  "__b/6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc/generated/pyodide/python_stdlib.zip",
+  "__b/6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc/generated/pyodide/pyodide.asm.wasm",
+  "__b/6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc/generated/pyodide/pyodide.asm.mjs",
+  "__b/6e4fce4214625c3c6abe39c16bf9e3972141d70275e9703f5fb0f457251b38dc/generated/arena/coco_lab_game.zip"
+ ],
+ "pinnedWorkerBoots": true,
+ "passed": true
+}

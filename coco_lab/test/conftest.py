@@ -28,3 +28,9 @@ def pytest_report_header(config):
     return [f'coco_lab {coco_lab.__version__} from {coco_lab.__file__}',
             f'hypothesis {hypothesis.__version__}, '
             f'networkx {networkx.__version__}']
+
+
+def pytest_configure(config):
+    # G1.11: tests that need the gz CLI (Gazebo); the plain-venv CI job runs -m "not gz"
+    # (no gz there), the laptop runs them (docs/v2/g1/G1_STATUS.md, laptop items)
+    config.addinivalue_line('markers', 'gz: needs the gz CLI (Gazebo); run on the laptop')

@@ -35,7 +35,9 @@ jobs:
     # (median 1.1-1.2). The limit is generous so a slow mirror is not
     # killed, and finite so a hang is: two runs on 2026-10-01 sat in
     # 'Setup ROS 2 Jazzy' for ~2 h until cancelled by hand.
-    timeout-minutes: 20
+    # G1 (2026-10-22): the game replays made the green run 16 min (run
+    # 39635640420); G1.12's rounds tests were cut off at 20, so 30.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -55,7 +57,9 @@ jobs:
       - name: Test (the three ament linters need ament; the colcon route runs them)
         working-directory: coco_lab
         run: |
-          "$RUNNER_TEMP/venv/bin/python" -P -m pytest -q -p no:cacheprovider \
+          # G1.11 (Gautham, 2026-10-21): tests marked gz need the gz CLI, which this job does
+          # not have; they run on the laptop. Deselected, so the no-skip guard below holds.
+          "$RUNNER_TEMP/venv/bin/python" -P -m pytest -q -p no:cacheprovider -m "not gz" \
             --ignore=test/test_copyright.py --ignore=test/test_flake8.py --ignore=test/test_pep257.py \
             --junitxml="$RUNNER_TEMP/coco_lab.xml"
       - name: Fail if tests vanished or were skipped
@@ -126,6 +130,13 @@ jobs:
           # the Arena runtime test boots Pyodide on these (M1.5)
           npm run arena-assets
           npm test
+      # G1.8: CPython (the installed coco_lab) and Pyodide (the shipped packs) must agree
+      # under state hash v3 -- global families exact, continuous families within 1e-9:
+      # M5's four-arm control and localisation Compare loops, every global planner, and
+      # every tick's hash of a Fetch Rush session on the Depot
+      - name: Native vs Pyodide gate (state hash v3)
+        working-directory: lab_web
+        run: node tools/g1/native_gate.mjs --python "$RUNNER_TEMP/venv/bin/python" --out "$RUNNER_TEMP/native_gate.json"
       # M3.6: every committed Play link (scored by Chromium's page, docs/v2/data/m3/m36/)
       # re-scored in Node by `coco verify` -- the same coco_lab.play, under Pyodide -- must
       # give exactly the result hash the browser gave
@@ -193,6 +204,12 @@ jobs:
         env:
           PYTHON: ${{ runner.temp }}/venv/bin/python
         run: lab_web/tools/fetch_v1_site.sh lab_web/dist/v1
+      # G1.8: an open page keeps its build across a deploy (M5 review's A/B probe, asserted):
+      # openDocumentMixed false, "New version ready" with no forced reload, the old build's
+      # cache kept while a page of it is open and deleted after, the model worker pinned
+      - name: Update isolation (open page across a deploy)
+        working-directory: lab_web
+        run: node tools/update_isolation_check.mjs dist "$RUNNER_TEMP/update-isolation"
       - name: Serve the built site as Pages does (gzip, /coco-labs/)
         working-directory: lab_web
         run: |
@@ -220,6 +237,11 @@ jobs:
       - name: Screenshot tests (the Arena's fixed scenes, canvas only)
         working-directory: lab_web
         run: node tools/perf/screenshots.mjs check --out "$RUNNER_TEMP/shots"
+      # G1.12: the chase camera never puts COCO under the HUD: COCO's projected box against every
+      # HUD element's rectangle, 20 scripted poses, phone landscape (emulated) and desktop
+      - name: Chase camera keeps COCO clear of the HUD (20 poses, phone landscape and desktop)
+        working-directory: lab_web
+        run: node tools/g1/chase_hud_check.mjs http://127.0.0.1:4174/coco-labs/ "$RUNNER_TEMP/chase_hud.json"
       - name: Every v1 URL form resolves, 0 console errors (M2.10)
         working-directory: lab_web
         run: node tools/perf/v1_links_check.mjs --site http://127.0.0.1:4174/coco-labs/ --out "$RUNNER_TEMP/v1links"

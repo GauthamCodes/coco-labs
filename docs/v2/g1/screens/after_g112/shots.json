@@ -1,0 +1,118 @@
+{
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "when": "2026-10-22T04:39:59.844Z",
+ "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+ "shots": [
+  {
+   "profile": "desktop",
+   "surface": "title",
+   "query": "",
+   "file": "desktop-title.png",
+   "ready": true,
+   "ms": 5007,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "play",
+   "query": "?view=play&game=fetch_rush&world=depot&tier=medium",
+   "file": "desktop-play.png",
+   "ready": true,
+   "ms": 10901,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "compare",
+   "query": "?view=compare",
+   "file": "desktop-compare.png",
+   "ready": true,
+   "ms": 9481,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "recordings",
+   "query": "?view=research",
+   "file": "desktop-recordings.png",
+   "ready": true,
+   "ms": 1957,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "title",
+   "query": "",
+   "file": "phone-landscape-title.png",
+   "ready": true,
+   "ms": 4606,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "play",
+   "query": "?view=play&game=fetch_rush&world=depot&tier=medium",
+   "file": "phone-landscape-play.png",
+   "ready": true,
+   "ms": 11536,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "compare",
+   "query": "?view=compare",
+   "file": "phone-landscape-compare.png",
+   "ready": true,
+   "ms": 10140,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "recordings",
+   "query": "?view=research",
+   "file": "phone-landscape-recordings.png",
+   "ready": true,
+   "ms": 2682,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "title",
+   "query": "",
+   "file": "phone-portrait-title.png",
+   "ready": true,
+   "ms": 4771,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "play",
+   "query": "?view=play&game=fetch_rush&world=depot&tier=medium",
+   "file": "phone-portrait-play.png",
+   "ready": false,
+   "ms": 36694,
+   "errors": [
+    "not ready: TimeoutError: page.click: Timeout 30000ms exceeded."
+   ]
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "compare",
+   "query": "?view=compare",
+   "file": "phone-portrait-compare.png",
+   "ready": true,
+   "ms": 10039,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "recordings",
+   "query": "?view=research",
+   "file": "phone-portrait-recordings.png",
+   "ready": true,
+   "ms": 2753,
+   "errors": []
+  }
+ ],
+ "note": "Emulated Nothing Phone (1): viewport, touch, 4x CPU throttle; rendered by this machine (see renderer). Not a phone measurement."
+}

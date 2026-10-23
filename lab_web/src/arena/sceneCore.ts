@@ -1,5 +1,6 @@
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
+import { registerRunSaver } from '../offline/updates';
 import { raceInputs } from './race_integrity';
 import { urlFieldError } from '../links/bounds.mjs';
 
@@ -593,7 +594,7 @@ export function useArenaScene(playHud = false) {
       },
       // a refused amendment leaves its step running; any other failure ends the step
       onError: (stage, message) => { if (stage !== 'amend') inFlight = false; setError(`${stage}: ${message}`); },
-    }, { hashVersion: replayRun?.hash_version ?? (replayRun ? 1 : 2), pyodide: source, seed: replayRun?.seed ?? Number(params.get('seed') ?? 1), spec: specFile });
+    }, { hashVersion: replayRun?.hash_version ?? (replayRun ? 1 : 3), pyodide: source, seed: replayRun?.seed ?? Number(params.get('seed') ?? 1), spec: specFile });
 
     window.__cocoArena = {
       client: client.current, queue: queue.current, last: null, renderer: rr, session: active, goal,
@@ -901,11 +902,18 @@ export function useArenaScene(playHud = false) {
     window.addEventListener(PREFERENCES_CHANGED, apply);
     return () => window.removeEventListener(PREFERENCES_CHANGED, apply);
   }, []);
+  // G1.8: "Save run" on the New version notice downloads this run's link data (spec, seed, input log, chain)
+  useEffect(() => registerRunSaver(() => {
+    const t = lastTick.current;
+    if (!t || !specSha.current) return null;
+    return { name: `coco-arena-run-tick-${t.tick}.json`, data: { v: 1, spec: specSha.current, seed: Number(params.get('seed') ?? 1), ticks: t.tick, chain: t.chain,
+      inputs: log.current, hash_version: replay.run?.hash_version ?? (replay.run ? 1 : 3), world: specFile } };
+  }), []);
   const makeShare = () => {
     const t = lastTick.current;
     if (!t || !specSha.current) return;
     setShare(shareUrl({ v: 1, spec: specSha.current, seed: Number(params.get('seed') ?? 1), ticks: t.tick, chain: t.chain,
-      inputs: log.current, hash_version: replay.run?.hash_version ?? (replay.run ? 1 : 2) }, import.meta.env.BASE_URL) + (specFile === SPEC_FILES.v2 ? '&world=v2' : ''));
+      inputs: log.current, hash_version: replay.run?.hash_version ?? (replay.run ? 1 : 3) }, import.meta.env.BASE_URL) + (specFile === SPEC_FILES.v2 ? '&world=v2' : ''));
   };
 
   const tick = session?.shownTick ?? null;

@@ -1,0 +1,16 @@
+{
+ "scope": "Functional deploy test (G1.8 update isolation), not a timing measurement",
+ "errors": [],
+ "checks": {},
+ "versionA": "36ec9f94268156befdfb0a3eacb6a29b806365eb1756f4f1fcce6a3683f773be",
+ "before": {
+  "documentBuild": "36ec9f94268156befdfb0a3eacb6a29b806365eb1756f4f1fcce6a3683f773be",
+  "asset": "A",
+  "pinnedAsset": "HTTP 404",
+  "controller": "36ec9f94268156befdfb0a3eacb6a29b806365eb1756f4f1fcce6a3683f773be"
+ },
+ "versionB": "d0f8717fe5119077eb29609d68d10fdb0211a772ccb029efbfc3bf213bc9cb79",
+ "observations": [],
+ "error": "Error: page.evaluate: Resulting promise was garbage collected.",
+ "passed": false
+}

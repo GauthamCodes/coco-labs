@@ -1,0 +1,170 @@
+{
+ "label": "before G1.11 (81121dc)",
+ "site": "http://127.0.0.1:4175/coco-labs/",
+ "profile": "desktop",
+ "wall_s": 274.22,
+ "final": {
+  "tick": 1801,
+  "mode": "goal",
+  "source": "planner",
+  "a": {
+   "phase": "idle",
+   "target": null,
+   "carried": null,
+   "want": "obj_dock",
+   "reason": "released obj_dock",
+   "attempt": 1
+  },
+  "f": {
+   "t": 180.00000000000003,
+   "seconds": 180,
+   "over": true,
+   "order": null,
+   "k": 1,
+   "orders": 10,
+   "deliveries": 1,
+   "contacts": 0,
+   "ghost": 76.02813126546329
+  },
+  "primary": "GRAB: Nothing in range (G)",
+  "enabled": false
+ },
+ "log": [
+  [
+   "started",
+   6
+  ],
+  [
+   "order 1: to the object (AUTO taken)",
+   10
+  ],
+  [
+   "order 1: GRAB lit",
+   821
+  ],
+  [
+   "order 1: carried",
+   1078
+  ],
+  [
+   "order 1: to the drop (AUTO taken)",
+   1085
+  ],
+  [
+   "order 1: DROP lit",
+   1353
+  ],
+  [
+   "order 1: delivered",
+   1419
+  ],
+  [
+   "order 2: to the object (AUTO taken) TIMEOUT",
+   1508
+  ],
+  [
+   "order 2: to the object (AUTO taken)",
+   1511
+  ],
+  [
+   "order 2: GRAB lit",
+   1801
+  ]
+ ],
+ "errors": [],
+ "renderer": "SwiftShader (no GPU in this container): drawn frame rates are not measured; frame times are main-thread JS",
+ "deliveries": 1,
+ "orders": 10,
+ "seconds": 180,
+ "tick_gap_ms": {
+  "max": 25808.59999999986,
+  "p95_single": 187.5,
+  "median_single": 10.800000000046566,
+  "over_800": [
+   {
+    "ms": 828,
+    "at_tick": 43
+   },
+   {
+    "ms": 889,
+    "at_tick": 497
+   },
+   {
+    "ms": 823,
+    "at_tick": 516
+   },
+   {
+    "ms": 826,
+    "at_tick": 524
+   },
+   {
+    "ms": 937,
+    "at_tick": 527
+   },
+   {
+    "ms": 940,
+    "at_tick": 533
+   },
+   {
+    "ms": 1043,
+    "at_tick": 537
+   },
+   {
+    "ms": 811,
+    "at_tick": 541
+   },
+   {
+    "ms": 814,
+    "at_tick": 548
+   },
+   {
+    "ms": 833,
+    "at_tick": 1193
+   },
+   {
+    "ms": 932,
+    "at_tick": 1217
+   },
+   {
+    "ms": 867,
+    "at_tick": 1228
+   },
+   {
+    "ms": 850,
+    "at_tick": 1250
+   },
+   {
+    "ms": 25809,
+    "at_tick": 1415
+   },
+   {
+    "ms": 2185,
+    "at_tick": 1512
+   }
+  ]
+ },
+ "worker_step_ms": {
+  "max": 2184,
+  "p95": 68.10000000009313,
+  "median": 39.10000000009313,
+  "kept": 301
+ },
+ "busy_banner": {
+  "shown": 2,
+  "total_ms": 26817
+ },
+ "frame_js_ms": {
+  "max": 407.5999999998603,
+  "p95": 4.199999999953434,
+  "median": 1.3000000000465661,
+  "frames": 1626,
+  "over_50": 1,
+  "slow": [
+   {
+    "at": 11687.199999999953,
+    "ms": 407.5999999998603,
+    "tick": 9
+   }
+  ]
+ }
+}

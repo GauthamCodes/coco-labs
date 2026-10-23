@@ -1,0 +1,92 @@
+# G1.13 close: every suite on the laptop (2026-10-22T23:44Z), tree at 90a0a27 + uncommitted docs only
+# machine: balanced, AC 1, NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, Node v24.21.0, Python 3.12.3 (~/coco_labs_ws/g1_venv: CI's pins), ROS 2 Jazzy, overlay ~/coco_lab_g1_ws
+
+STEP venv_install rc=0 
+STEP coco_lab_venv rc=0 1069 passed, 2 deselected in 626.80s (0:10:26)
+STEP coco_lab_gz rc=0 2 passed, 1069 deselected in 3.59s
+STEP lab_web_tools rc=0 231 passed in 295.69s (0:04:55)
+STEP build_catalog rc=0 wheel: {'path': 'py/coco_lab-0.2.0-py3-none-any.whl', 'sha256': '0c6c9c38e221ba67e8a1380ee01a313a67615f6030026b64a900c946377cce01', 'bytes': 348982}
+STEP schemas_check rc=0 generated code is current
+STEP typecheck rc=0 
+STEP arena_assets rc=0 missions: 7, every replay link names a run here
+STEP vitest rc=0 
+STEP native_gate rc=0 {"hash_version":3,"passed":true,"cases":{"planners":{"compared":818951,"exact":818951,"failures":0,"max_abs_diff":0},"fetch_rush":{"compared":1436,"exact":1436,"failures":0,"max_abs_diff":0},"control"
+STEP coco_verify rc=0 18 of 18 references earn their stars under Pyodide 314.0.7, Node v24.21.0
+STEP build_twice rc=0 }
+STEP fetch_v1 rc=0 v1 site: v1-site@36e65003d37d9be246110c2dd2c27944aabed193 (tree 6857ff56a2646c0772a2b7780e50f2e1eb910ae289ae3a222fdab6ee9b2bde2b) -> /home/gautham/coco_labs_ws/worktrees/g1/lab_web/dist/v1 (36M)
+STEP update_isolation rc=0 {"passed":true,"checks":{"openDocumentMixed_false":true,"page_A_reads_A":true,"new_version_notice":true,"no_forced_reload":true,"old_cache_kept_while_open":true,"old_cache_deleted_once_closed":true,"r
+STEP det_v1_10 rc=0 {"chromium":[1500,0,"9a9d582d03f4"],"firefox":[1500,0,"9a9d582d03f4"],"webkit":[1500,0,"9a9d582d03f4"],"pyodide-node":[1500,0,"9a9d582d03f4"]} pass true
+STEP det_terrain rc=0 {"chromium":[2100,0,"3a8c227eca45"],"firefox":[2100,0,"3a8c227eca45"],"webkit":[2100,0,"3a8c227eca45"],"pyodide-node":[2100,0,"3a8c227eca45"]} pass true
+STEP screenshots rc=0 {"pass":true,"errors":0}
+STEP chase_hud rc=0 {"passed":true,"phone-landscape":{"poses":20,"failed":0,"errors":0},"desktop":{"poses":20,"failed":0,"errors":0}}
+STEP v1_links rc=0 {"ok":true,"forms":50,"archive_views":6,"failed":0}
+STEP replays rc=0 {"pass":true,"errors":0}
+STEP packages rc=0 [tests] all 12 packages passed
+SUITES DONE
+
+## vitest
+ Test Files  66 passed (66)
+      Tests  539 passed (539)
+
+## scripts/run_all_package_tests.sh (colcon route: ament linters included; ROS_DOMAIN_ID 78)
+==================================================
+coco_config          ok   93 passed in 0.44s
+coco_sim             ok   323 passed in 1.94s
+coco_mission         ok   371 passed in 9.60s
+coco_web             ok   863 passed, 12 warnings in 21.71s
+gazebo_models        ok   231 passed in 12.65s
+coco_rl              ok   251 passed in 7.97s
+coco_perception      ok   139 passed, 12 warnings in 1.64s
+coco_moveit_config   ok   12 passed in 0.46s
+custom_teleop        ok   75 passed, 12 warnings in 1.46s
+coco_lab             ok   1074 passed in 609.45s (0:10:09)
+coco_lab_ros         ok   162 passed, 15 warnings in 22.99s
+coco_schemas         ok   241 passed, 3 warnings in 7.12s
+==================================================
+[tests] all 12 packages passed
+
+# --- G1.13 after the phone fixes (2026-10-23T15:58Z): the same script, then coco_lab's package route again after the lint fix
+STEP venv_install rc=0 
+STEP coco_lab_venv rc=0 1077 passed, 2 deselected in 660.98s (0:11:00)
+STEP coco_lab_gz rc=0 2 passed, 1077 deselected in 3.79s
+STEP lab_web_tools rc=0 232 passed in 305.02s (0:05:05)
+STEP build_catalog rc=0 wheel: {'path': 'py/coco_lab-0.2.0-py3-none-any.whl', 'sha256': '248c6a518b1923719483aff7c3574563b51704a0485746ead3b155b713630c84', 'bytes': 350524}
+STEP schemas_check rc=0 generated code is current
+STEP typecheck rc=0 
+STEP arena_assets rc=0 missions: 7, every replay link names a run here
+STEP vitest rc=0 
+STEP native_gate rc=0 {"hash_version":3,"passed":true,"cases":{"planners":{"compared":818951,"exact":818951,"failures":0,"max_abs_diff":0},"fetch_rush":{"compared":1436,"exact":1436,"failures":0,"max_abs_diff":0},"control"
+STEP coco_verify rc=0 18 of 18 references earn their stars under Pyodide 314.0.7, Node v24.21.0
+STEP build_twice rc=0 }
+STEP fetch_v1 rc=0 v1 site: v1-site@36e65003d37d9be246110c2dd2c27944aabed193 (tree 6857ff56a2646c0772a2b7780e50f2e1eb910ae289ae3a222fdab6ee9b2bde2b) -> /home/gautham/coco_labs_ws/worktrees/g1/lab_web/dist/v1 (36M)
+STEP update_isolation rc=0 {"passed":true,"checks":{"openDocumentMixed_false":true,"page_A_reads_A":true,"new_version_notice":true,"no_forced_reload":true,"old_cache_kept_while_open":true,"old_cache_deleted_once_closed":true,"r
+STEP det_v1_10 rc=0 {"chromium":[1500,0,"9a9d582d03f4"],"firefox":[1500,0,"9a9d582d03f4"],"webkit":[1500,0,"9a9d582d03f4"],"pyodide-node":[1500,0,"9a9d582d03f4"]} pass true
+STEP det_terrain rc=0 {"chromium":[2100,0,"3a8c227eca45"],"firefox":[2100,0,"3a8c227eca45"],"webkit":[2100,0,"3a8c227eca45"],"pyodide-node":[2100,0,"3a8c227eca45"]} pass true
+STEP screenshots rc=0 {"pass":true,"errors":0}
+STEP chase_hud rc=0 {"passed":true,"phone-landscape":{"poses":20,"failed":0,"errors":0},"desktop":{"poses":20,"failed":0,"errors":0},"real-phone-tab-710x269":{"poses":20,"failed":0,"errors":0}}
+STEP v1_links rc=0 {"ok":true,"forms":50,"archive_views":6,"failed":0}
+STEP replays rc=0 {"pass":true,"errors":0}
+STEP packages rc=1 (coco_lab: 2 failed = flake8 + pep257 on the new code; fixed, rerun below)
+SUITES DONE
+ Test Files  66 passed (66)
+      Tests  539 passed (539)
+==================================================
+coco_config          ok   93 passed in 0.48s
+coco_sim             ok   323 passed in 1.96s
+coco_mission         ok   371 passed in 9.80s
+coco_web             ok   863 passed, 12 warnings in 21.54s
+gazebo_models        ok   231 passed in 12.34s
+coco_rl              ok   251 passed in 8.12s
+coco_perception      ok   139 passed, 12 warnings in 1.60s
+coco_moveit_config   ok   12 passed in 0.49s
+custom_teleop        ok   75 passed, 12 warnings in 1.44s
+coco_lab             FAIL (pytest exit 1) 2 failed, 1080 passed in 589.43s (0:09:49)
+coco_lab_ros         ok   162 passed, 15 warnings in 22.89s
+coco_schemas         ok   241 passed, 3 warnings in 6.87s
+==================================================
+[tests] FAILED: at least one package did not pass
+## coco_lab package route after the lint fix
+coco_lab             ok   1082 passed in 585.59s (0:09:45)
+==================================================
+[tests] all 1 packages passed
+exit 0

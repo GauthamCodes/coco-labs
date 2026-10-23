@@ -58,7 +58,7 @@ export function decodeChallenge(q) {
   // Validate all present fields, even one that would otherwise be ignored.
   if (s) boundedJson(s);
   const j = boundedJson(z || s, !!z);
-  if (j.v !== 1 || !/^[0-9a-f]{64}$/.test(j.h ?? '') || !/^[0-9a-f]{64}$/.test(j.r ?? '') || ![1, 2].includes(j.hv ?? 1)) throw new Error('Malformed challenge link or hash version');
+  if (j.v !== 1 || !/^[0-9a-f]{64}$/.test(j.h ?? '') || !/^[0-9a-f]{64}$/.test(j.r ?? '') || ![1, 2, 3].includes(j.hv ?? 1)) throw new Error('Malformed challenge link or hash version');
   const submission = { v: 1, challenge: c, level: l, level_hash: j.h, inputs: j.i };
   if (j.hv !== undefined) submission.hash_version = j.hv;
   validateSubmission(submission);

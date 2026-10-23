@@ -44,11 +44,11 @@ frame. The LiDAR is mounted at :attr:`LidarSpec.mount` in
 """
 
 from dataclasses import dataclass, field
-import math
 import random
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .maps import FREE, LabMap, MapError
+from .numerics import math
 
 TWO_PI = 2.0 * math.pi
 INF = float('inf')
@@ -254,6 +254,11 @@ class SketchMap:
         ray *enters* the first blocked cell. ``inf`` means no blocked cell
         within ``max_range``. A ray that starts in a blocked cell returns 0.
         """
+        return self.cast_dir(x, y, math.cos(angle), math.sin(angle), max_range)
+
+    def cast_dir(self, x: float, y: float, dx: float, dy: float,
+                 max_range: float) -> float:
+        """:meth:`cast` along the unit direction ``(dx, dy)`` (G1.11: computed once a tick)."""
         r = self.resolution
         w = self.width
         h = self.height
@@ -264,8 +269,6 @@ class SketchMap:
         iy = math.floor(fy)
         if not (0 <= ix < w and 0 <= iy < h) or blocked[iy * w + ix]:
             return 0.0
-        dx = math.cos(angle)
-        dy = math.sin(angle)
         # a component this small is axis-parallel: 1/dy of a subnormal
         # overflows to inf, and 0 * inf at a cell boundary is NaN (found
         # by test_a_ray_stops_at_the_inner_wall_face, heading -3.4e-309)
@@ -313,7 +316,8 @@ class SketchMap:
                 return t * r
 
     def scan(self, pose: Tuple[float, float, float], lidar: LidarSpec,
-             angles: Optional[Sequence[float]] = None) -> List[float]:
+             angles: Optional[Sequence[float]] = None,
+             dirs: Optional[Sequence[Tuple[float, float]]] = None) -> List[float]:
         """
         Return noise-free ranges from ``pose`` (``base_footprint``).
 
@@ -327,6 +331,9 @@ class SketchMap:
         c, s = math.cos(th), math.sin(th)
         sx = x + c * mx - s * my
         sy = y + s * mx + c * my
+        if dirs is not None:
+            # each beam's (cos, sin) of th + yaw + angle, already computed (the same bits)
+            return [self.cast_dir(sx, sy, ux, uy, lidar.range_max) for ux, uy in dirs]
         base = th + myaw
         if angles is None:
             angles = lidar.angles()

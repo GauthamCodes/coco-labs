@@ -1,0 +1,52 @@
+v1 node 00: kept (G1_RESUME)
+v1 node 01: kept (G1_RESUME)
+v1 node 04: kept (G1_RESUME)
+v1 node 05: kept (G1_RESUME)
+v1 node 06: kept (G1_RESUME)
+v1 node 02: kept (G1_RESUME)
+v1 node 03: kept (G1_RESUME)
+v1 node 07: kept (G1_RESUME)
+v1 node 09: kept (G1_RESUME)
+v2 node 00: kept (G1_RESUME)
+v1 node 08: kept (G1_RESUME)
+v2 chromium 00: kept (G1_RESUME)
+v2 firefox 00: kept (G1_RESUME)
+v2 node 01: kept (G1_RESUME)
+v2 chromium 01: kept (G1_RESUME)
+v2 firefox 01: kept (G1_RESUME)
+v2 node 02: kept (G1_RESUME)
+v2 chromium 02: kept (G1_RESUME)
+v2 firefox 02: kept (G1_RESUME)
+v2 webkit 00: exit 0, elapsed 86.4s
+v2 node 03: kept (G1_RESUME)
+v2 chromium 03: kept (G1_RESUME)
+v2 firefox 03: kept (G1_RESUME)
+v2 webkit 01: exit 0, elapsed 95.3s
+v2 node 04: kept (G1_RESUME)
+v2 chromium 04: kept (G1_RESUME)
+v2 firefox 04: kept (G1_RESUME)
+v2 webkit 02: exit 0, elapsed 105.6s
+v2 node 05: kept (G1_RESUME)
+v2 chromium 05: kept (G1_RESUME)
+v2 firefox 05: kept (G1_RESUME)
+v2 webkit 03: exit 0, elapsed 182.1s
+v2 node 06: kept (G1_RESUME)
+v2 chromium 06: kept (G1_RESUME)
+v2 firefox 06: kept (G1_RESUME)
+v2 webkit 05: exit 0, elapsed 188.8s
+v2 node 07: kept (G1_RESUME)
+v2 chromium 07: kept (G1_RESUME)
+v2 firefox 07: kept (G1_RESUME)
+v2 webkit 04: exit 0, elapsed 205.7s
+v2 node 08: kept (G1_RESUME)
+v2 chromium 08: kept (G1_RESUME)
+v2 firefox 08: kept (G1_RESUME)
+v2 webkit 06: exit 0, elapsed 293.3s
+v2 node 09: kept (G1_RESUME)
+v2 chromium 09: kept (G1_RESUME)
+v2 firefox 09: kept (G1_RESUME)
+v2 webkit 07: exit 0, elapsed 301.7s
+v2 webkit 08: exit 0, elapsed 306.2s
+v2 webkit 09: exit 0, elapsed 384.6s
+All 100 v1 and 4x100 v2 sessions complete in 385.3s
+EXIT 0

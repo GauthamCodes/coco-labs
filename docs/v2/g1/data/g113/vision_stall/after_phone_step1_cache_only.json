@@ -1,0 +1,29 @@
+{
+ "site": "http://localhost:4174/coco-labs/",
+ "gpu": "phone (CDP)",
+ "renderer": "ANGLE (Qualcomm, Adreno (TM) 642L, OpenGL ES 3.2)",
+ "machine": null,
+ "seconds": 20,
+ "vision_off": {
+  "ticks": 80,
+  "gap_median": 98,
+  "gap_p95": 127,
+  "gap_max": 145,
+  "gaps_over_300": [],
+  "step_max": 128
+ },
+ "vision_on": {
+  "ticks": 168,
+  "gap_median": 103,
+  "gap_p95": 186,
+  "gap_max": 880,
+  "gaps_over_300": [
+   880,
+   336,
+   364
+  ],
+  "step_max": 329
+ },
+ "clock_waits_banner_samples": 5,
+ "when": "2026-10-23T14:46:36.093Z"
+}

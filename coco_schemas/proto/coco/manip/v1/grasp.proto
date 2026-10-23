@@ -1,0 +1,75 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+syntax = "proto3";
+package coco.manip.v1;
+
+// Grasp Assist (README section 5.8; M6F.5): MODEL, "MoveIt-style", deterministic and
+// kinematic. One press of G is one attempt; every row carries its attempt number.
+// Frames: the map frame for positions; base_footprint for ahead/left. The arm's
+// joint trajectory during reach and grip is on coco.arm.state.v1 (ArmStateBatch).
+// Reasons, in the order they are checked and shown: "too_wide", "out_of_reach",
+// "not_magnetic", "blocked"; "" when the object can be picked. reasons_mask has
+// one bit per reason in that order (bit 0 = too_wide).
+
+// The envelope, once per session: everything the UI draws on the floor and
+// every constant a refusal is measured against.
+message GraspEnvelope {
+  double window_near = 1;        // m ahead of base_footprint (the Stack's gate)
+  double window_far = 2;
+  double max_lateral = 3;        // m either side of the centreline
+  double finger_max = 4;         // m, the widest object the fingers have closed on
+  double finger_verified_min = 5;
+  double band_below_top = 6;     // m, where the magnet binds below an object's top
+  double reach_band_lo = 7;      // m, grasp-band heights the arm reaches (derived)
+  double reach_band_hi = 8;
+  double hover_clearance = 9;    // m
+  double detect_range = 10;      // m, camera
+  double detect_hfov = 11;       // rad, camera
+  double short_radius = 12;      // m, detected in any direction
+  double standoff = 13;          // m, the pre-grasp pose behind the object
+  uint32 headings = 14;          // approach headings tried per object
+  string badge = 15;             // "MODEL · MoveIt-style"
+}
+
+// Detect, check and choose: one row per object considered in an attempt.
+message CandidateBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint32 attempt = 4;
+  repeated string object_id = 5;
+  repeated string item = 6;
+  repeated double x = 7;              // map frame, the object's axis
+  repeated double y = 8;
+  repeated double z = 9;              // its base height
+  repeated double width = 10;         // what the fingers must span
+  repeated double band_z = 11;        // grasp band above the robot's floor
+  repeated bool magnetic = 12;
+  repeated string seen_by = 13;       // "camera" or "radius"
+  repeated string reason = 14;        // the first reason, "" if pickable
+  repeated uint32 reasons_mask = 15;
+  repeated double approach_x = 16;    // the chosen pre-grasp pose; NaN if none
+  repeated double approach_y = 17;
+  repeated double approach_theta = 18;
+  repeated double approach_cost = 19; // planned path length (m); NaN if none
+  repeated uint32 rank = 20;          // 0 = chosen; refused objects rank last
+}
+
+// Every stage transition of an attempt: detect, check, choose, approach, align,
+// creep, reach, grip, verify, carry, release, done, refused, aborted.
+message StageBatch {
+  repeated uint64 seq = 1;
+  repeated uint64 tick = 2;
+  repeated double t_world = 3;
+  repeated uint32 attempt = 4;
+  repeated string stage = 5;
+  repeated string object_id = 6;
+  repeated double robot_x = 7;        // map frame
+  repeated double robot_y = 8;
+  repeated double robot_theta = 9;
+  repeated double ahead = 10;         // the object's axis in base_footprint, m
+  repeated double left = 11;
+  repeated double ik_joint1 = 12;     // reach: the IK solution at the grasp band; NaN otherwise
+  repeated double ik_joint2 = 13;
+  repeated string outcome = 14;       // "ok", or why not
+}

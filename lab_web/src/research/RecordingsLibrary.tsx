@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ModeNav } from '../ui/ModeNav';
 import { buildLibrary, filterLibrary, type CaseGroup, type Converted, type Filters } from './library';
 import './research.css';
+import '../game/fonts.css';
+import '../game/skin.css';
 const BASE=import.meta.env.BASE_URL;
 const EMPTY:Filters={query:'',level:'',algorithm:'',outcome:'',evidence:'',failures:false};
 export function RecordingsLibrary(){

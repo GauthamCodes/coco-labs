@@ -197,7 +197,7 @@ function main() {
   rmSync(arenaDir, { recursive: true, force: true });
   mkdirSync(arenaDir, { recursive: true });
   const src = join(repo, 'coco_lab', 'coco_lab');
-  const all = walk(src).filter((f) => (f.endsWith('.py') || f.endsWith('link_limits.json')))
+  const all = walk(src).filter((f) => (f.endsWith('.py') || f.endsWith('link_limits.json') || /\/levels\/[^/]+\.json$/.test(f)))
     .map((f) => [`coco_lab/${relative(src, f)}`, readFileSync(f)]);
   // M2.2: split into packs (tools/arena_packs.json); core = everything not in a lens pack
   const { packs: packDefs } = JSON.parse(readFileSync(join(here, 'arena_packs.json'), 'utf-8'));
@@ -212,13 +212,17 @@ function main() {
     const file = `coco_lab_${name}.zip`;
     writeFileSync(join(arenaDir, file), z);
     packs[name] = { file, bytes: z.length, sha256: sha256(z), requires: packDefs[name].requires,
-      modules: files.map(([n]) => n.replace(/^coco_lab\//, '').replace(/\.py$/, '').replace(/\//g, '.')) };
+      // the modules the worker imports after unpacking: Python only (G1.11: a pack may carry data, the level's rounds)
+      modules: files.filter(([n]) => n.endsWith('.py')).map(([n]) => n.replace(/^coco_lab\//, '').replace(/\.py$/, '').replace(/\//g, '.')) };
   }
   const spec = readFileSync(join(repo, 'worlds', 'coco_arena_v1.json'));
   writeFileSync(join(arenaDir, 'coco_arena_v1.json'), spec);
   // M4.3: World Spec v2 (the terrain), chosen by ?world=v2; v1 stays every default
   const specV2 = readFileSync(join(repo, 'worlds', 'coco_arena_v2.json'));
   writeFileSync(join(arenaDir, 'coco_arena_v2.json'), specV2);
+  // G1: the COCO Depot (World Spec v3), the game's level: canonical bytes from tools/g1/depot_json.py
+  const specDepot = readFileSync(join(repo, 'worlds', 'coco_depot_v1.json'));
+  writeFileSync(join(arenaDir, 'coco_depot_v1.json'), specDepot);
   const outline = robotOutline(readFileSync(join(repo, 'gazebo_models', 'meshes', 'base.stl')));
   writeFileSync(join(arenaDir, 'robot_outline.json'), JSON.stringify({
     source: 'gazebo_models/meshes/base.stl (convex hull of x-z, mm -> base_link m; build_arena_assets.mjs)',
@@ -258,6 +262,7 @@ function main() {
     specs: {
       v1: { file: 'coco_arena_v1.json', bytes: spec.length, sha256: sha256(spec) },
       v2: { file: 'coco_arena_v2.json', bytes: specV2.length, sha256: sha256(specV2) },
+      depot: { file: 'coco_depot_v1.json', bytes: specDepot.length, sha256: sha256(specDepot) },
     },
     pyodide_files: files,
     stdlib: FULL_STDLIB ? 'full' : 'trimmed (tools/arena_stdlib.txt)',

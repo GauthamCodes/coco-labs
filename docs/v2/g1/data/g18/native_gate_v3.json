@@ -1,0 +1,52 @@
+{
+ "hash_version": 3,
+ "tolerance": 1e-9,
+ "native": "CPython 3.12.3 x86_64",
+ "pyodide": "Pyodide 314.0.7 in Node v24.21.0",
+ "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+ "seconds": {
+  "native": 96.936,
+  "pyodide": 173.805
+ },
+ "cases": {
+  "planners": {
+   "family": "global (exact)",
+   "compared": 818951,
+   "exact": 818951,
+   "max_abs_diff": 0,
+   "failures": 0,
+   "first_failures": [],
+   "passed": true
+  },
+  "fetch_rush": {
+   "family": "global (exact): every tick's state hash, the scorecard",
+   "compared": 1436,
+   "exact": 1436,
+   "max_abs_diff": 0,
+   "failures": 0,
+   "first_failures": [],
+   "ticks": 1419,
+   "first_differing_tick": null,
+   "passed": true
+  },
+  "control": {
+   "family": "continuous (1e-9); discrete fields and hashes exact; compute_ms excluded",
+   "compared": 6440,
+   "exact": 6440,
+   "max_abs_diff": 0,
+   "failures": 0,
+   "first_failures": [],
+   "passed": true
+  },
+  "localise": {
+   "family": "continuous (1e-9); discrete fields and hashes exact; compute_ms excluded",
+   "compared": 25500,
+   "exact": 25500,
+   "max_abs_diff": 0,
+   "failures": 0,
+   "first_failures": [],
+   "passed": true
+  }
+ },
+ "passed": true
+}

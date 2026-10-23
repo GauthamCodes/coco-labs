@@ -67,6 +67,8 @@ Source of full checksums: [DESIGN_ASSETS.json](DESIGN_ASSETS.json). Packages are
 | --- | --- | --- | --- | --- |
 | Outfit | display | 5.3.0 | OFL-1.1 | https://fontsource.org/fonts/outfit |
 | Manrope | UI | 5.3.0 | OFL-1.1 | https://fontsource.org/fonts/manrope |
+| Chakra Petch | game display (G1) | 5.3.0 | OFL-1.1 | https://fontsource.org/fonts/chakra-petch |
+| Inter | game UI (G1) | 5.3.0 | OFL-1.1 | https://fontsource.org/fonts/inter |
 | Lucide | icon set | 1.57.0 | ISC (retained Feather MIT notice included) | https://lucide.dev |
 | COCO Lab app icon | installable app | 1.0 | Apache-2.0 | lab_web/public/icons/coco.svg (original repository artwork) |
 
@@ -85,6 +87,18 @@ Source of full checksums: [DESIGN_ASSETS.json](DESIGN_ASSETS.json). Packages are
 - lab_web/node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2: `a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972`
 - lab_web/node_modules/@fontsource-variable/manrope/files/manrope-vietnamese-wght-normal.woff2: `6bbb044ab420e07edb0a3042d2eb314b85e83a0182e945a15ab3b9092668dfd5`
 - Licence checksum: `d826ab6583b12c26807d8716a545bdbbb672df04f48608a364ba9efdbe501c30`
+
+**Chakra Petch**
+
+- lab_web/node_modules/@fontsource/chakra-petch/files/chakra-petch-latin-500-normal.woff2: `36ad966cb653de70ba37355c41003b02de8940b2df6cbcd46480a6ad8cadd65d`
+- lab_web/node_modules/@fontsource/chakra-petch/files/chakra-petch-latin-700-normal.woff2: `ce5095dc1cb200aaa939e38067a0677018d10e9f26ec38cdcf1557ac524fc775`
+- Licence checksum: `8f32c96ea465c5916489845361238b31b365414228bc2e4e45e3ae98ba1d311a`
+
+**Inter**
+
+- lab_web/node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2: `34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956`
+- lab_web/node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2: `3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62`
+- Licence checksum: `3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345`
 
 **Lucide**
 

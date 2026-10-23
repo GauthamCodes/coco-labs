@@ -1,0 +1,25 @@
+G1.12 close: full suites on the G1.12 source (4921235; the prefetch test was then shortened in
+f0d504b, re-run alone: 3 passed in 14 s), this container (Xeon x4, SwiftShader), 2026-10-22 (UTC).
+coco_lab was installed from the checkout first (pip --no-deps), as CI does.
+
+step                                   started   exit  finished
+coco_lab pytest -m "not gz"            05:12:24  0     05:32:26
+lab_web/tools pytest                   05:32:26  0     05:41:03
+build_catalog.py                       05:41:03  0     05:44:20
+npm run arena-assets                   05:44:20  0     05:44:50
+npm run typecheck                      05:44:50  0     05:44:54
+vitest                                 05:44:54  0     05:46:07
+npm run build                          05:46:07  0     05:46:35
+check_dist                             05:46:35  0     05:46:36
+fetch_v1_site                          05:46:36  0     05:46:41
+v1 links (Chromium)                    05:46:44  0     05:52:06
+
+-- coco_lab       1057 passed, 2 deselected (the gz tests) in 1199.21s   (G1.11: 1037)
+-- lab_web/tools  231 passed in 515.72s                                  (G1.11: 230)
+-- vitest         Test Files 65 passed (65); Tests 535 passed (535)       (G1.11: 532)
+-- v1 links       {"ok":true,"forms":50,"archive_views":6,"failed":0}
+-- check_dist     failures: []
+-- chase HUD      40/40 poses, no overlap (chase_hud.json)
+-- CI (GitHub)    run 39726671282 on 4921235: lab_web and browsers (incl. the chase HUD
+                  step and the native gate) green; the plain-venv coco_lab job hit its
+                  20-minute limit -> 30 min in f0d504b

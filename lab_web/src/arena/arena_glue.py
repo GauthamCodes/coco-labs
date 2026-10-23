@@ -7,12 +7,15 @@ It computes nothing itself (README section 3: the browser never
 re-implements an algorithm): it builds coco_lab's Arena, steps it, and
 hands its outputs to JavaScript as JSON plus typed-array buffers -- the
 world's occupancy once, each tick's ranges, and plan events in columnar
-batches WHILE the search runs (ADR 0001). Imports: coco_lab, json, array.
+batches WHILE the search runs (ADR 0001). Imports: coco_lab, json, array,
+functools.
 """
 
 from array import array
+import functools
 import json
 
+from coco_lab import numerics
 from coco_lab.arena import Arena, InputEvent, LOOP_KINDS, PLANNERS
 
 _arena = None
@@ -21,6 +24,15 @@ _post_family = None
 _spec_json = None
 #: M3.5: a map challenge's distance budget, while one is being driven
 _budget = None
+
+
+def _in_run(fn):
+    """G1.8/G1.11: run a worker call in the live Arena's numerics, and only that call."""
+    @functools.wraps(fn)
+    def run(*args, **kw):
+        with numerics.version(_arena.hash_version if _arena is not None else 1):
+            return fn(*args, **kw)
+    return run
 
 
 def emit_family(channel, tick, columns, scalars):
@@ -55,7 +67,8 @@ def emit_header(channel, header):
 def init(spec_json, seed, planner, post_batch, batch_size=2048,
          post_family=None, hash_version=1):
     """Build the Arena; return (world JSON, occupancy bytes)."""
-    global _arena, _post_family, _spec_json, _budget
+    global _arena, _post_family, _spec_json, _budget, _game
+    _game = None
     _post_family = post_family
     _spec_json = spec_json
     _budget = None
@@ -70,7 +83,8 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
             emit_family(channel, tick, columns, scalars)
 
     _arena = Arena(json.loads(spec_json), int(seed), planner=planner,
-                   on_plan_batch=hook, plan_batch_size=int(batch_size),
+                   on_plan_batch=hook if post_batch is not None else None,
+                   plan_batch_size=int(batch_size),
                    on_family=family, hash_version=int(hash_version))
     m = _arena.lab_map
     li = _arena.lidar
@@ -98,6 +112,7 @@ def init(spec_json, seed, planner, post_batch, batch_size=2048,
     return json.dumps(world), m.occupancy
 
 
+@_in_run
 def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
             inflation_json=None, planners_json=None):
     """
@@ -178,7 +193,7 @@ def compare(planner_a, planner_b, gx, gy, post_batch, batch_size=2048,
     return json.dumps(out)
 
 
-def _tick_json(t, inputs):
+def _tick_json(t, inputs, game=None):
     # the whole loop (M2.3): the robot is drawn where it BELIEVES it is,
     # the truth beside it (as a recorded stack run draws AMCL and truth)
     extra = {} if t.belief is None else {'truth': list(t.pose)}
@@ -197,6 +212,8 @@ def _tick_json(t, inputs):
         extra['tilt'] = [t.z, t.pitch, t.roll]
     if t.grasp is not None:
         extra['grasp'] = t.grasp
+    if game is not None:
+        extra['game'] = game
     return json.dumps({
         **extra,
         'wheels': list(t.wheels), 'source': t.source,
@@ -217,11 +234,12 @@ def _tick_json(t, inputs):
     })
 
 
+@_in_run
 def step(inputs_json):
     """Step one tick; return (tick JSON, ranges as float32)."""
     rows = json.loads(inputs_json)
     t = _arena.step([InputEvent(**e) for e in rows])
-    return _tick_json(t, rows), array('f', t.ranges)
+    return _tick_json(t, rows, game_finish(t, rows)), array('f', t.ranges)
 
 
 # -- a step in slices (M2.0): the worker yields between them, so an input
@@ -241,6 +259,7 @@ def _stamp(inputs_json):
     return rows
 
 
+@_in_run
 def begin(inputs_json):
     """Apply this tick's inputs and start its search; nothing runs yet."""
     global _pending_rows, _held_rows
@@ -252,11 +271,13 @@ def begin(inputs_json):
     _pending_rows = rows
 
 
+@_in_run
 def advance(n):
     """Take up to n events of the tick's search; return whether it is done."""
     return _arena.advance(int(n))
 
 
+@_in_run
 def amend(inputs_json):
     """Inputs that arrived while the tick planned: they join this tick."""
     rows = _stamp(inputs_json)
@@ -267,10 +288,11 @@ def amend(inputs_json):
         _pending_rows.extend(rows)
 
 
+@_in_run
 def finish():
     """Finish the tick; return (tick JSON, ranges as float32)."""
     t = _arena.finish_step()
-    return _tick_json(t, _pending_rows), array('f', t.ranges)
+    return _tick_json(t, _pending_rows, game_finish(t, _pending_rows)), array('f', t.ranges)
 
 
 # -- Play (M3.5): coco_lab.play scores; this only passes JSON -------------------
@@ -331,8 +353,60 @@ def loop_compare_advance():
 
 
 
-def costmap_view():
-    """Emit a view-only snapshot from current model data, without a tick/input."""
+#: G1.13: Play's costmap view: the static map's layers (computed once per Arena map) and the
+#: last layers sent, so a refresh recomputes only around new scan marks and sends only changes
+_costmap = {'key': None, 'static': None, 'last': None}
+
+
+@_in_run
+def _costmap_static():
+    """The current Arena's StaticLayers (built once per map, in its numerics; G1.13)."""
+    from coco_lab.costmap import InflationParams, StaticLayers
+    a = _arena
+    m = a.lab_map
+    params = InflationParams(robot_radius=a.radius, inflation_radius=max(0.5, a.radius))
+    key = (id(a), id(m), params)
+    if _costmap['key'] != key:
+        _costmap.update(key=key, static=StaticLayers(m.width, m.height, m.resolution,
+                                                     [v != 0 for v in m.occupancy], params),
+                        last=None)
+    return _costmap['static']
+
+
+@_in_run
+def costmap_view(delta=False):
+    """
+    Emit a view-only snapshot from current model data, without a tick/input.
+
+    ``delta`` (G1.13, Play's Robot vision): the same layers, from the cached static map's
+    share (costmap.StaticLayers: byte for byte build_layers'), and only the cells whose
+    costs changed since the last view (all non-zero cells the first time). Measured: the
+    full rebuild and full emission stalled the model ~0.9 s in the browser every 4 s.
+    """
+    if delta:
+        from coco_lab.costmap import emit_cells, scan_obstacle_cells
+        a = _arena
+        m, li = a.lab_map, a.lidar
+        sl = _costmap_static()
+        hits = scan_obstacle_cells(m, a.belief(), a.ranges, a.angles,
+                                   li.mount, li.range_min, li.range_max)
+        layers = sl.layers(hits)
+        touched = sl.touched
+        last = _costmap['last']
+        if last is None:
+            cells = [i for i in range(len(layers[3])) if layers[3][i] or layers[2][i] or layers[1][i]]
+        else:
+            # outside the cells either view touched, both equal the static map's layers
+            cells = sorted(i for i in touched | last[4] if layers[1][i] != last[1][i] or
+                           layers[2][i] != last[2][i] or layers[3][i] != last[3][i])
+        _costmap['last'] = layers + (touched,)
+        emit_cells(m.width, cells, layers[:4], sl.params, m.origin,
+                   lambda channel, tick, columns, scalars:
+                   emit_header(channel, scalars) if columns is None else
+                   emit_family(channel, tick, columns, scalars),
+                   height=m.height, resolution=m.resolution,
+                   tick=a.tick, t_world=a.t_world, update=a.tick)
+        return
     from coco_lab.costmap import (InflationParams, build_layers,
                                   scan_obstacle_cells, emit_layers)
     a = _arena
@@ -348,3 +422,260 @@ def costmap_view():
                 emit_header(channel, scalars) if columns is None else
                 emit_family(channel, tick, columns, scalars),
                 tick=a.tick, t_world=a.t_world, update=a.tick)
+
+
+# -- G1: the game (Fetch Rush, Free Drive) on a World Spec v3 level ------------
+#
+# coco_lab.games decides everything (orders, deliveries, contacts, the timer,
+# stars); Grasp Assist decides every grasp. This glue passes JSON, and keeps
+# the record a played session replays from (spec, seed, input log), with the
+# same per-tick hash chain games.play() computes in CPython.
+
+_game = None
+
+
+def game_init(spec_json, game, arg, seed, post_batch, batch_size=2048,
+              post_family=None, hash_version=3, mode=None):
+    """Build the Arena on a level for ``game`` ('fetch_rush' or 'free'); return init()'s pair."""
+    global _game
+    import hashlib
+    from coco_lab import games
+    from coco_lab import worldspec_v3 as v3
+    # G1.12: the game draws no search wave, so its Arena streams none (the search, and so
+    # the state, is the same either way); a goal's search can then be run ahead (prefetch)
+    out = init(spec_json, seed, 'astar', None, batch_size, post_family, hash_version)
+    world = json.loads(out[0])
+    spec = _arena.spec
+    dx, dy = spec['world_to_map']
+    v3_level = v3.is_v3(spec)
+    # G1.11: Fetch Rush plays a precomputed round (games.FetchRushRound), so no tick ever
+    # waits for a planner search; G1.12: rules 3, in the 'phone' (default) or 'full' mode.
+    # Rush Hour is unchanged
+    version = games.FETCH_RUSH_RULES if game == 'fetch_rush' else 1
+    if game == 'fetch_rush':
+        mode = mode or games.ROUND_MODE_DEFAULT
+    else:
+        mode = None
+    rules = games._rules(game, arg, version, mode) if game in games.GAMES else None
+    _game = {'rules': rules, 'game': game, 'arg': arg, 'seed': int(seed),
+             'chain': hashlib.sha256(), 'ticks': 0, 'inputs': [], 'v3': v3_level,
+             'hash_version': int(hash_version), 'rules_version': version, 'mode': mode}
+    info = {'game': game, 'arg': arg, 'v3': v3_level, 'mode': mode}
+    if v3_level:
+        info['setup'] = games.setup_inputs(game if rules else 'fetch_rush', arg, version,
+                                           mode=mode)
+        info['seconds'] = rules.seconds if isinstance(rules, games.FetchRush) else None
+        if isinstance(rules, games.FetchRushRound):
+            rnd = rules.round
+            label = next((z.get('label', z['id']) for z in spec['kit'] if z['id'] == rnd['region']), rnd['region'])
+            info['round'] = {'region': rnd['region'], 'label': label, 'orders': rnd['orders'],
+                             'ghost_m': rnd['ghost_m'], 'routes': rnd['routes'],
+                             'reference_time_s': rnd['reference_time_s'], 'timer_s': rnd['timer_s']}
+        info['objects'] = [dict(o, x=o['x'] + dx, y=o['y'] + dy) for o in v3.objects(spec)]
+        info['zones'] = [dict(z, center=[z['center'][0] + dx, z['center'][1] + dy])
+                         for z in spec['kit'] if z['kind'] == 'zone']
+        info['actors'] = [{'id': a['id'], 'actor': a['actor'], 'footprint': a['footprint'],
+                           'height': a['height']} for a in v3.elements(spec, 'actor')]
+    else:
+        info['setup'] = []
+    world['game'] = info
+    if v3_level:
+        _costmap_static()   # G1.13: Robot vision's static costmap, built while the page loads
+    return json.dumps(world), out[1]
+
+
+def _game_block(t):
+    """The game's state after tick ``t``: what the HUD draws; read from coco_lab only."""
+    from coco_lab import games
+    from coco_lab import worldspec_v3 as v3
+    g = _game
+    a = _arena
+    out = {}
+    assist = a.subsystems.get('assist')
+    if assist is not None:
+        out['assist'] = {'phase': assist.phase, 'target': assist.target,
+                         'carried': assist.carried(), 'want': assist.want,
+                         'reason': assist.reason, 'attempt': assist.attempt}
+        out['objects'] = [[oid, o['x'], o['y'], o['z'], o['status']]
+                          for oid, o in sorted(assist.objects.items())]
+    act = a.subsystems.get('actors')
+    if act is not None:
+        dx, dy = act.offset
+        out['actors'] = []
+        for e in act.actors:
+            x, y, yaw = v3.actor_pose(e, a.t_world)
+            out['actors'].append([e['id'], x + dx, y + dy, yaw])
+        out['clearance'] = act.clearance(a.pose[0], a.pose[1], a.radius)
+    r = g['rules']
+    if isinstance(r, games.FetchRush) and r.started:
+        cur = r.current()
+        out['fetch'] = {'t': a.t_world - r.t0, 'seconds': r.seconds,
+                        'over': r.over, 'order': list(cur) if cur else None, 'k': r.k,
+                        'orders': len(r.orders), 'deliveries': len(r.delivered),
+                        'contacts': r.contacts, 'ghost': r.ghost}
+    return out
+
+
+def game_finish(t, rows):
+    """After a tick: the rules observe it, the chain grows, the log keeps its inputs."""
+    g = _game
+    if g is None:
+        return None
+    r = g['rules']
+    if r is not None and not g.get('over'):
+        if not r.started:
+            r.start(_arena)
+        r.observe(_arena, t)
+    if r is not None and getattr(r, 'started', False) and g.get('order_k') != getattr(r, 'k', None):
+        g['order_k'], g['order_pose'] = r.k, tuple(_arena.pose)
+    g['chain'].update(t.state_hash.encode())
+    g['ticks'] += 1
+    g['inputs'].extend(rows)
+    return _game_block(t)
+
+
+def game_record():
+    """Return the played session as a record games.play() replays, and its chain."""
+    g = _game
+    keys = ('tick', 'kind', 'x', 'y', 'theta', 'has_theta', 'linear', 'angular', 'choice')
+    inputs = [{k: e[k] for k in keys if k in e} for e in g['inputs']]
+    rec = {'game': g['game'], 'arg': g['arg'], 'seed': g['seed'], 'ticks': g['ticks'],
+           'inputs': inputs, 'hash_version': g['hash_version']}
+    if g.get('rules_version', 1) != 1:
+        rec['rules'] = g['rules_version']
+    if g.get('mode'):
+        rec['mode'] = g['mode']
+    return json.dumps({'record': rec,
+                       'hash_chain': g['chain'].hexdigest(), 'last_hash': _arena.state_hash()})
+
+
+def game_stars(reference_json):
+    """Return the scorecard, and its stars against the committed reference card when there is one."""
+    from coco_lab import games
+    g = _game
+    r = g['rules'] if g else None
+    if r is None:
+        return json.dumps({'card': None, 'stars': None, 'reference': None})
+    card = games._card(r, _arena)
+    if isinstance(r, games.FetchRushRound):
+        # rules 2 and 3: the round's own reference (the bot's run of this round, committed with it)
+        ref = (r.round.get('reference') or {}).get('card')
+    else:
+        ref = json.loads(reference_json) if reference_json else None
+    return json.dumps({'card': card, 'reference': ref,
+                       'stars': games.stars(card, ref) if ref else None})
+
+
+def game_preview():
+    """
+    What GRAB would do now, without doing it: Grasp Assist's own candidates
+    (detect, check, rank), read-only. Nothing in the model changes.
+    """
+    a = _arena
+    assist = a.subsystems.get('assist')
+    if assist is None:
+        return json.dumps({'rows': []})
+    rows = assist.candidates(a)
+    return json.dumps({'rows': [{k: (None if isinstance(v, float) and v != v else v)
+                                 for k, v in r.items()} for r in rows]})
+
+
+def _auto_goal():
+    from coco_lab import games
+    a = _arena
+    r = _game['rules'] if _game else None
+    assist = a.subsystems.get('assist')
+    if not isinstance(r, games.FetchRush) or assist is None or r.current() is None:
+        return None
+    oid, drop = r.current()
+    if assist.carried() == oid:
+        z = games.zone_rect(a.spec, drop)
+        return {'x': (z[0] + z[1]) / 2, 'y': (z[2] + z[3]) / 2, 'why': 'drop'}
+    o = assist.objects[oid]
+    return {'x': o['x'], 'y': o['y'], 'why': 'pick', 'object': oid}
+
+
+def game_auto_goal():
+    """
+    AUTO in Fetch Rush: where the planner sends COCO next. To the order's object
+    (the planner stops at the nearest free cell; GRAB, Grasp Assist, takes it from
+    there), or, carrying it, to the drop zone's centre. One planning call, in the
+    tick, like any goal; the 16-pose ghost search (games.best_approach) is not
+    repeated here. G1.12: :func:`game_prefetch` has usually run that search already.
+    """
+    return json.dumps(_auto_goal())
+
+
+@_in_run
+def game_prefetch(budget_ms):
+    """
+    G1.12: between ticks, run AUTO's search ahead -- from where COCO is now to where
+    AUTO would send it (Arena.prefetch) -- for at most ``budget_ms`` of this call.
+    Return whether it is done. When AUTO is pressed, the tick takes that same search
+    over (finished, or where it got to), so pressing AUTO no longer stops the clock
+    for a whole search; the plan, and every hash, are what they would have been.
+    """
+    from time import perf_counter
+    g = _game
+    goal = _auto_goal() if g is not None and not g.get('over') and _arena is not None else None
+    if goal is None or _arena._in_step or _arena.mode == 'goal':
+        return True     # nothing to run ahead (or AUTO is already driving there)
+    end = perf_counter() + float(budget_ms) / 1000.0
+    while True:
+        if _arena.prefetch((goal['x'], goal['y']), 64):
+            return True
+        if perf_counter() >= end:
+            return False
+
+
+def game_ghost():
+    """
+    The planner ghost for the current order, drawn: the A* route from where COCO stood
+    when the order appeared to the object, then to the drop zone's centre (the planner
+    stops at the nearest free cell). Read-only; FetchRush's own ghost LENGTH (its
+    pre-grasp-pose search) is what the score uses.
+    """
+    from coco_lab import games
+    from coco_lab.search import search
+    from coco_lab.sketch import _nearest_free
+    a = _arena
+    r = _game['rules'] if _game else None
+    if not isinstance(r, games.FetchRush) or r.current() is None:
+        return json.dumps(None)
+    if isinstance(r, games.FetchRushRound):
+        # rules 2: the round's precomputed route (no search: the tick never waits)
+        return json.dumps({'order': r.k, 'points': r.round['routes'][r.k]})
+    oid, drop = r.current()
+    o = a.subsystems['assist'].objects[oid]
+    z = games.zone_rect(a.spec, drop)
+    legs = [(_game.get('order_pose', a.pose)[:2], (o['x'], o['y'])),
+            ((o['x'], o['y']), ((z[0] + z[1]) / 2, (z[2] + z[3]) / 2))]
+    pts = []
+    for frm, to in legs:
+        sc, gc = a.plan_map.cell_at(*frm), a.plan_map.cell_at(*to)
+        if sc is None or gc is None:
+            return json.dumps(None)
+        s, t = _nearest_free(a.grid, sc), _nearest_free(a.grid, gc)
+        if s is None or t is None:
+            return json.dumps(None)
+        res = search(a.grid, s, t, **PLANNERS['astar'])
+        if not res.found:
+            return json.dumps(None)
+        pts += [list(a.plan_map.cell_centre(c[0], c[1])) for c in res.path]
+    return json.dumps({'order': r.k, 'points': pts[::2] + [pts[-1]]})
+
+
+@_in_run
+def game_op(op, arg_json=None):
+    """The worker's one entry point for game queries (none of them changes the model)."""
+    if op == 'preview':
+        return game_preview()
+    if op == 'auto_goal':
+        return game_auto_goal()
+    if op == 'record':
+        return game_record()
+    if op == 'stars':
+        return game_stars(arg_json)
+    if op == 'ghost':
+        return game_ghost()
+    raise ValueError(f'unknown game op {op!r}')

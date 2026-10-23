@@ -13,16 +13,19 @@ const walk = (path) => readdirSync(path, { withFileTypes: true }).sort((a, b) =>
 export function designManifest() {
   const lock = JSON.parse(readFileSync(join(web, 'package-lock.json')));
   const assets = [];
-  for (const family of ['outfit', 'manrope']) {
-    const name = '@fontsource-variable/' + family;
+  // G1.1: Chakra Petch (game display face) and Inter (small text), both OFL, self-hosted
+  for (const [name, family, role] of [['@fontsource-variable/outfit', 'outfit', 'display'], ['@fontsource-variable/manrope', 'manrope', 'UI'],
+    ['@fontsource/chakra-petch', 'chakra-petch', 'game display (G1)'], ['@fontsource-variable/inter', 'inter', 'game UI (G1)']]) {
     const root = join(web, 'node_modules', name);
     const pkg = JSON.parse(readFileSync(join(root, 'package.json')));
     const meta = JSON.parse(readFileSync(join(root, 'metadata.json')));
     if (pkg.license !== 'OFL-1.1' || meta.license.type !== 'OFL-1.1') throw new Error('Expected OFL font: ' + name);
-    const fontFiles = readdirSync(join(root, 'files')).filter((file) => file.endsWith('.woff2')).sort();
+    // only the faces the site ships: every variable axis file, and Chakra Petch's latin 500/700 normal
+    const fontFiles = readdirSync(join(root, 'files')).filter((file) => file.endsWith('.woff2') && (family !== 'chakra-petch' || /^chakra-petch-latin-(500|700)-normal\.woff2$/.test(file))
+      && (family !== 'inter' || /^inter-latin(-ext)?-wght-normal\.woff2$/.test(file))).sort();
     const files = fontFiles.map((file) => { const path = join(root, 'files', file); const bytes = readFileSync(path); return { path: relative(repo, path), bytes: bytes.length, sha256: sha(bytes) }; });
     const licence = readFileSync(join(root, 'LICENSE'));
-    assets.push({ name: meta.family, kind: 'font', role: family === 'outfit' ? 'display' : 'UI', package: name, version: pkg.version,
+    assets.push({ name: meta.family, kind: 'font', role, package: name, version: pkg.version,
       licence: pkg.license, attribution: meta.license.attribution, source: 'https://fontsource.org/fonts/' + family,
       npm_integrity: lock.packages['node_modules/' + name].integrity, files,
       licence_path: 'lab_web/public/licenses/' + family + '.txt', licence_sha256: sha(licence) });

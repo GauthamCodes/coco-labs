@@ -1,0 +1,51 @@
+{
+ "record_ticks": 1419,
+ "inputs": 7,
+ "hash_version": 2,
+ "pyodide": {
+  "hash_chain": "83fdc0098d7b492efa501ffcdbed62037a9ee0d1052079cac9de6ad02a610494",
+  "last_hash": "1f72224d16b054b7342f461fff1dd68b1e0e2ad8e7904b595f18777d387fcd4c"
+ },
+ "cpython": {
+  "hash_chain": "9c12f3f98b436b5e43011c614614a9ce2b15ec584f3bb53202476f5700199bf6",
+  "last_hash": "fcbc16c5b8e0cdc03fab83c2a74181a682ab3e415b73840db23ab1e8a7864580",
+  "python": "3.12.3"
+ },
+ "scorecard_cpython": {
+  "game": "fetch_rush",
+  "seed": 1,
+  "deliveries": 1,
+  "contacts": 0,
+  "net_deliveries": 1,
+  "time_used": 141.0,
+  "path_efficiency": 0.9916031078535071,
+  "orders": [
+   [
+    "obj_dock",
+    "dock_2"
+   ],
+   [
+    "obj_mez_1",
+    "dock_3"
+   ]
+  ],
+  "delivered": [
+   {
+    "object": "obj_dock",
+    "drop": "dock_2",
+    "t": 141.0,
+    "seconds": 141.0,
+    "driven": 31.56034065718234,
+    "ghost": 31.295331880577407
+   }
+  ],
+  "contact_log": []
+ },
+ "identical": {
+  "hash_chain": false,
+  "last_hash": false,
+  "scorecard": false
+ },
+ "first_differing_tick": 0,
+ "passed": false
+}

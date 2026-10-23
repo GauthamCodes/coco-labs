@@ -1,0 +1,176 @@
+{
+ "about": "G1.8: state hash v3 runs, per-tick sha256 chain",
+ "hash_version": 3,
+ "runs": {
+  "arena_localise_mcl": {
+   "chain": "578f3a882032afb77748999df8eff12d8537143daeafe41809a8145836c2a07d",
+   "final_pose": [
+    "-0x1.c4cf1b4b1dba9p-1",
+    "0x1.ed9873669f7e8p-4",
+    "0x1.558b5cebb8e7cp+1"
+   ],
+   "first_hash": "4268c2903e677353c3ef84ac78a264edecad98723cd3ac1c912b5b01e12e7c92",
+   "inputs": [
+    {
+     "choice": "localise.filter=mcl",
+     "kind": "config",
+     "tick": 0
+    },
+    {
+     "kind": "goal",
+     "tick": 1,
+     "x": -2.0,
+     "y": 2.0
+    },
+    {
+     "kind": "kidnap",
+     "tick": 40,
+     "x": 0.5,
+     "y": -1.0
+    }
+   ],
+   "last_hash": "580c213d3433143bab6a6186af0b3166bbb70b576af9472727748bb63b4265c6",
+   "seed": 1,
+   "ticks": 100,
+   "world": "coco_arena_v1.json"
+  },
+  "arena_teleop_goal": {
+   "chain": "b4309dd8f99706dff24428596573cff1c455acbd69cc1d4171e1e47797c739db",
+   "final_pose": [
+    "0x1.f67569d36df3bp+0",
+    "0x1.029e0b92a67bcp+1",
+    "-0x1.1fee66f2b3080p-5"
+   ],
+   "first_hash": "0b1365200d221243915ceafed01bab25a1f44e02a307db739e57e16f014579df",
+   "inputs": [
+    {
+     "angular": 0.4,
+     "kind": "teleop",
+     "linear": 0.3,
+     "tick": 0
+    },
+    {
+     "kind": "stop",
+     "tick": 15
+    },
+    {
+     "kind": "goal",
+     "tick": 16,
+     "x": 2.5,
+     "y": 2.0
+    }
+   ],
+   "last_hash": "883ddb6a7b5b0ef2040bb516bee4c21cb7e6c323e3997c239e3e589b545ad4aa",
+   "seed": 7,
+   "ticks": 120,
+   "world": "coco_arena_v1.json"
+  },
+  "depot_fetch_rush": {
+   "chain": "adf367b12b645a5782b3068beb339a2049bc8d2283cea02d0aa7248d9ba62bc2",
+   "final_pose": [
+    "0x1.503d45ee15e02p+5",
+    "0x1.20f899a8dcf80p+1",
+    "-0x1.a6466e93a43fep+0"
+   ],
+   "first_hash": "82a3e01751907534f4889bd3a80ced9c9e4182809b116f43bd6ddd8dbc345a75",
+   "game": [
+    "fetch_rush",
+    1
+   ],
+   "inputs": [
+    {
+     "choice": "actors.on=1",
+     "kind": "config",
+     "tick": 0
+    },
+    {
+     "choice": "assist.target=any",
+     "kind": "config",
+     "tick": 0
+    },
+    {
+     "kind": "goal",
+     "tick": 6,
+     "x": 46.5,
+     "y": 7.5
+    },
+    {
+     "choice": "assist.target=obj_dock",
+     "kind": "config",
+     "tick": 818
+    },
+    {
+     "choice": "assist.grasp=go",
+     "kind": "config",
+     "tick": 818
+    },
+    {
+     "kind": "goal",
+     "tick": 1081,
+     "x": 42,
+     "y": 1.2999999999999998
+    },
+    {
+     "choice": "assist.grasp=go",
+     "kind": "config",
+     "tick": 1350
+    }
+   ],
+   "last_hash": "27ae3f8fbac96e2412dd352c695c551eee17045a3f6d574a70c82a62546c79c0",
+   "scorecard": {
+    "contact_log": [],
+    "contacts": 0,
+    "delivered": [
+     {
+      "driven": 31.560340688970836,
+      "drop": "dock_2",
+      "ghost": 31.295331880577407,
+      "object": "obj_dock",
+      "seconds": 141.0,
+      "t": 141.0
+     }
+    ],
+    "deliveries": 1,
+    "game": "fetch_rush",
+    "net_deliveries": 1,
+    "orders": [
+     [
+      "obj_dock",
+      "dock_2"
+     ],
+     [
+      "obj_mez_1",
+      "dock_3"
+     ]
+    ],
+    "path_efficiency": 0.9916031068547356,
+    "seed": 1,
+    "time_used": 141.0
+   },
+   "seed": 1,
+   "ticks": 1419,
+   "world": "coco_depot_v1.json"
+  },
+  "terrain_goal": {
+   "chain": "eb99ec30ccd943bc46563cf3e5dac868c4ef90845580a6416d7dba20748703c0",
+   "final_pose": [
+    "0x1.35417a0f761c9p+1",
+    "0x1.0062469eb31d2p+1",
+    "-0x1.1e03aee406040p-5"
+   ],
+   "first_hash": "0cce0b5b7e531f09d03faf474fe30315cac7231ce8c0e85cf3c1834671020589",
+   "inputs": [
+    {
+     "kind": "goal",
+     "tick": 0,
+     "x": 2.5,
+     "y": 2.0
+    }
+   ],
+   "last_hash": "ad2112afb409502cc55a518162c3c52d1011f79913bffccc449ce954a85221a1",
+   "seed": 1,
+   "ticks": 150,
+   "world": "coco_arena_v2.json"
+  }
+ }
+}

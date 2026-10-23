@@ -1,0 +1,24 @@
+{
+ "about": "G1.8: model cost per tick, hash v2 vs v3, the same Fetch Rush record (docs/v2/g1/data/g18/browser_v3/), Pyodide in Node (lab_web/tools/g1/game_node.mjs --record), this cloud container; not a phone, not a browser",
+ "runs": {
+  "v2": {
+   "hash_chain": "2700d00c39bf833b777fa2d21c078015f6079cacada05c63de50d1c3f1f618f3",
+   "ticks": 1423,
+   "median_ms": 21.776293999999325,
+   "p95_ms": 34.970454000002064,
+   "max_ms": 15904.724203999998,
+   "runtime": "Pyodide 314.0.7 in Node v24.21.0",
+   "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz"
+  },
+  "v3": {
+   "hash_chain": "38ea10feb6de222943b9f631128d5e7297f5ba7c6ec02328b265344674cb6531",
+   "ticks": 1423,
+   "median_ms": 25.057311999999,
+   "p95_ms": 39.39741700000013,
+   "max_ms": 16846.783004999998,
+   "runtime": "Pyodide 314.0.7 in Node v24.21.0",
+   "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz"
+  }
+ },
+ "median_ratio_v3_over_v2": 1.150669255292006
+}

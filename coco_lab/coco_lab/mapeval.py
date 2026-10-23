@@ -50,10 +50,10 @@ between cell centres.
 """
 
 from collections import deque
-import math
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .maps import compare_occupied, FREE, LabMap, OCCUPIED, UNKNOWN
+from .numerics import math, sq
 from .sketch import edt, wrap
 
 Pose = Tuple[float, float, float]
@@ -142,7 +142,7 @@ def reachable(truth: LabMap, start_xy: Tuple[float, float]) -> bytearray:
         for i, v in enumerate(occ):
             if v == FREE:
                 r, c = divmod(i, w)
-                d = (r - cell[0]) ** 2 + (c - cell[1]) ** 2
+                d = sq(r - cell[0]) + sq(c - cell[1])
                 if best is None or d < best[0]:
                     best = (d, i)
         if best is None:

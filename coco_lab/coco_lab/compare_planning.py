@@ -20,10 +20,10 @@ Unknown forward-search g/h/f and parents are -1, never fabricated. Native
 D* Lite remains the reference; this adapter does not implement search.
 """
 from dataclasses import dataclass
-import math
 
 from .arena import PLANNERS
 from .dstarlite import DStarLite, EXPAND, PATH, RAISE
+from .numerics import math
 from .search import collect, search_events
 
 COMPARE_PLANNERS = tuple(PLANNERS) + ('dstar_lite',)

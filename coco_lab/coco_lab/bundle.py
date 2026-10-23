@@ -57,7 +57,6 @@ import datetime
 import gzip
 import hashlib
 import json
-import math
 import os
 import struct
 import subprocess
@@ -65,6 +64,7 @@ from typing import Dict, List, Optional, Tuple
 
 from . import __version__
 from .maps import LabMap, MapError
+from .numerics import math
 from .search import ALGORITHMS, search, TIE_BREAKS
 from .trace import COLUMNS, EVENT_KINDS, Trace, TraceError
 

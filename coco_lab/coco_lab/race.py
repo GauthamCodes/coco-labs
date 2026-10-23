@@ -46,8 +46,9 @@ clamped to the teleop limits; commands rounded to ``Q`` so the log keeps
 one input per change.
 """
 
-import math
 from typing import Dict, List, Optional, Sequence, Tuple
+
+from .numerics import math, sq
 
 LOOKAHEAD = 0.45
 #: the dense path's spacing (m) and how far ahead progress may jump in one tick (points)
@@ -107,7 +108,7 @@ def pursue(pose, path: Sequence[Tuple[float, float]], limits,
     """
     x, y, th = pose
     hi = min(len(path), done + WINDOW)
-    k = min(range(done, hi), key=lambda i: (path[i][0] - x) ** 2 + (path[i][1] - y) ** 2)
+    k = min(range(done, hi), key=lambda i: sq(path[i][0] - x) + sq(path[i][1] - y))
     target = path[-1]
     for i in range(k + 1, len(path)):
         if math.hypot(path[i][0] - x, path[i][1] - y) >= LOOKAHEAD:

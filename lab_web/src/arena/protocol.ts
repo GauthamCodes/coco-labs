@@ -19,13 +19,15 @@ export interface BootRequest {
   seed: number;
   planner: string;
   batchSize: number;
-  hashVersion?: 1 | 2;
+  hashVersion?: 1 | 2 | 3;
   /** M4.3: the World Spec to build (a file in generated/arena/); absent = coco_arena_v1.json. */
   spec?: SpecFile;
+  /** G1: boot a game session (coco_lab.games via the glue's game_init): 'fetch_rush' (arg = its seed) or 'free'. */
+  game?: { game: 'fetch_rush' | 'free'; arg: number; mode?: 'phone' | 'full' };
 }
 
 /** The World Specs the site ships (tools/build_arena_assets.mjs); v1 is every default. */
-export const SPEC_FILES = { v1: 'coco_arena_v1.json', v2: 'coco_arena_v2.json' } as const;
+export const SPEC_FILES = { v1: 'coco_arena_v1.json', v2: 'coco_arena_v2.json', depot: 'coco_depot_v1.json' } as const;
 export type SpecFile = (typeof SPEC_FILES)[keyof typeof SPEC_FILES];
 /** `?world=v2` picks World Spec v2; anything else (or nothing) is v1. */
 export const specFileFor = (world: string | null): SpecFile => (world === 'v2' ? SPEC_FILES.v2 : SPEC_FILES.v1);
@@ -46,10 +48,12 @@ export interface CompareRequest { type: 'compare'; a: string; b: string; x: numb
 export interface LoadPackRequest { type: 'load_pack'; pack: string }
 /** M3.5: Play -- coco_lab.play, through arena_glue.play (a JSON request; the reply is JSON). */
 export interface PlayRequest { type: 'play'; id: number; request: string }
+/** G1: a game query (preview, auto_goal, record, stars); read-only, queued behind any step. */
+export interface GameRequest { type: 'game'; id: number; op: string; arg: string | null }
 export type WarmRequest = Omit<BootRequest, 'type'> & { type: 'warm' };
-export interface LoopCompareRequest { type: 'compare_loop'; family: 'control' | 'localise'; names: string[]; goal: [number, number]; inflation: CompareInflation; steps: number }
+export interface LoopCompareRequest { type: 'compare_loop'; family: 'control' | 'localise'; names: string[]; goal: [number, number]; inflation: CompareInflation; steps: number; hash_version?: 2 | 3 }
 export interface LoopFrame { pose: [number, number, number]; truth: [number, number, number]; particles: number[][] | null; chosen: number[][] | null; hash: string; tick: number; summary: Record<string, number | boolean | null>; status: string }
-export type ToWorker = { type: 'costmap_view' } | LoopCompareRequest | BootRequest | WarmRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest;
+export type ToWorker = { type: 'costmap_view'; delta?: boolean } | LoopCompareRequest | BootRequest | WarmRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest | GameRequest;
 
 export interface CompareSide { planner: string; status: string; summary: Record<string, number | string | null>; resolution: number }
 export interface CompareResult { A: CompareSide; B: CompareSide; C?: CompareSide; D?: CompareSide }
@@ -131,4 +135,5 @@ export type FromWorker =
   | { type: 'tick'; tick: Tick; ranges: Float32Array; stepMs: number; at: number }
   | { type: 'compare_done'; result: CompareResult }
   | { type: 'play_done'; id: number; result?: string; error?: string }
+  | { type: 'game_done'; id: number; result?: string; error?: string }
   | { type: 'error'; stage: string; message: string };

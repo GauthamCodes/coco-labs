@@ -1,0 +1,216 @@
+{
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "when": "2026-10-20T17:25:59.082Z",
+ "class": "TESTED (emulated profile, cloud software renderer)",
+ "cases": [
+  {
+   "name": "1 one-finger drive",
+   "ok": true,
+   "tick": {
+    "tick": 28,
+    "v": 0.5,
+    "source": "teleop",
+    "mode": "teleop",
+    "plans": 0,
+    "pose": [
+     23.383333333333333,
+     6,
+     0
+    ]
+   }
+  },
+  {
+   "name": "2 second finger on STOP while driving: STOP wins",
+   "ok": true,
+   "at_stop": {
+    "tick": 32,
+    "v": 0,
+    "source": "idle",
+    "mode": "idle",
+    "plans": 0,
+    "pose": [
+     23.483333333333334,
+     6,
+     0
+    ]
+   },
+   "while_thumb_still_down": {
+    "tick": 41,
+    "v": 0,
+    "source": "idle",
+    "mode": "idle",
+    "plans": 0,
+    "pose": [
+     23.483333333333334,
+     6,
+     0
+    ]
+   }
+  },
+  {
+   "name": "2b a hold on STOP releases it",
+   "ok": true
+  },
+  {
+   "name": "3 joystick nudge: the base follows past the ring",
+   "ok": true,
+   "base": {
+    "left": 150,
+    "top": 107
+   },
+   "thumb_y_in_zone": 47,
+   "gap_px": 60,
+   "tick": {
+    "tick": 108,
+    "v": 0.5,
+    "source": "teleop",
+    "mode": "teleop",
+    "plans": 0,
+    "pose": [
+     25.530072463768143,
+     6,
+     0
+    ]
+   }
+  },
+  {
+   "name": "4 minimap goal set (tap minimap, tap map, GO)",
+   "ok": true,
+   "tick": {
+    "tick": 128,
+    "v": 0,
+    "source": "planner",
+    "mode": "goal",
+    "plans": 0,
+    "pose": [
+     25.670072463768147,
+     6,
+     0.1200000000000001
+    ]
+   }
+  },
+  {
+   "name": "1-4 no console or page errors",
+   "ok": true,
+   "errors": []
+  },
+  {
+   "name": "5 gamepad: stick drives, B is STOP",
+   "ok": true,
+   "drove": {
+    "tick": 10,
+    "v": 0.5,
+    "source": "teleop",
+    "mode": "teleop",
+    "plans": 0,
+    "pose": [
+     23.16,
+     6,
+     0
+    ]
+   },
+   "stopped": {
+    "tick": 14,
+    "v": 0,
+    "source": "idle",
+    "mode": "idle",
+    "plans": 0,
+    "pose": [
+     23.16,
+     6,
+     0
+    ]
+   },
+   "errors": []
+  },
+  {
+   "name": "6 keyboard-only playthrough",
+   "ok": true,
+   "tabbed_to_play": true,
+   "drove": {
+    "tick": 11,
+    "v": 0.5,
+    "source": "teleop",
+    "mode": "teleop",
+    "plans": 0,
+    "pose": [
+     23.21,
+     6,
+     0
+    ]
+   },
+   "stopped": {
+    "tick": 13,
+    "v": 0,
+    "source": "idle",
+    "mode": "idle",
+    "plans": 0,
+    "pose": [
+     23.21,
+     6,
+     0
+    ]
+   },
+   "latched": true,
+   "released": true,
+   "paused": true,
+   "resumed": true,
+   "errors": []
+  }
+ ],
+ "latency": {
+  "g1": {
+   "url": "http://127.0.0.1:4174/coco-labs/?view=play&game=fetch_rush&seed=1",
+   "trials": 20,
+   "samples": [
+    272.70000000018626,
+    136.29999999981374,
+    325.70000000018626,
+    133.79999999981374,
+    102.5,
+    121.70000000018626,
+    106.70000000018626,
+    104.8999999994412,
+    330.40000000037253,
+    132.19999999925494,
+    312.20000000018626,
+    97.90000000037253,
+    122.70000000018626,
+    118.3999999994412,
+    110.90000000037253,
+    116.20000000018626,
+    127.80000000074506,
+    132.90000000037253
+   ],
+   "median_ms": 127.80000000074506
+  },
+  "m5": {
+   "url": "http://127.0.0.1:4174/coco-labs/?view=arena",
+   "trials": 20,
+   "samples": [
+    299.09999999962747,
+    303.70000000018626,
+    361.40000000037253,
+    330.09999999962747,
+    392,
+    327.20000000018626,
+    304.29999999981374,
+    374.09999999962747,
+    334.90000000037253,
+    267.20000000018626,
+    320.20000000018626,
+    328.5,
+    287.29999999981374,
+    335.5,
+    311.20000000018626,
+    238.09999999962747,
+    273.40000000037253,
+    190.20000000018626,
+    382.29999999981374
+   ],
+   "median_ms": 320.20000000018626
+  }
+ },
+ "renderer": "Chromium SwiftShader (cloud container, no GPU); emulated Nothing Phone (1) = viewport + touch (+4x CPU throttle for latency)",
+ "passed": true
+}

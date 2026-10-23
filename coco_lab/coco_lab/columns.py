@@ -172,6 +172,29 @@ class Batch:
             c[n].append(int(bool(v)) if t == 'B' else v)
         self.seq += 1
 
+    def add_many(self, tick: int, t_world: float, **cols) -> None:
+        """
+        Append many rows at one tick (G1.13).
+
+        ``cols`` maps every per-event column to its values (equal lengths). The same
+        columns as that many :meth:`add` calls, built with ``array.extend`` (a costmap
+        view sends tens of thousands of cells at once).
+        """
+        names = [n for n, _ in self.fields[3:] if n not in FLAT]
+        n = len(cols[names[0]]) if names else 0
+        c = self.columns
+        c['seq'].extend(range(self.seq, self.seq + n))
+        c['tick'].extend([tick] * n)
+        c['t_world'].extend([t_world] * n)
+        for name, t in self.fields[3:]:
+            if name in FLAT:
+                continue
+            v = cols[name]
+            if len(v) != n:
+                raise ValueError('add_many: columns of different lengths')
+            c[name].extend([int(bool(x)) for x in v] if t == 'B' else v)
+        self.seq += n
+
     def extend_flat(self, name: str, values: Sequence) -> None:
         """Append to a flattened list column (``critic_scores``, ...)."""
         if name not in FLAT:

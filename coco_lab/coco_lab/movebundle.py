@@ -43,7 +43,6 @@ refuses unless they match exactly. Source kind ``recorded-run``.
 
 import gzip
 import json
-import math
 import os
 import struct
 from typing import Dict, List, Optional, Tuple
@@ -51,6 +50,7 @@ from typing import Dict, List, Optional, Tuple
 from . import bundle as _b
 from . import movemetrics as mm
 from .dstarlite import COLUMNS as TRACE_COLUMNS, ReplanError
+from .numerics import math
 from .replan import ReplanWorld, run_replan
 
 REPLAN_SCHEMA = 'coco_lab.replan_bundle'

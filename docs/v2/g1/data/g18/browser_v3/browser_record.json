@@ -1,0 +1,143 @@
+{
+ "record": {
+  "game": "fetch_rush",
+  "arg": 1,
+  "seed": 1,
+  "ticks": 1423,
+  "inputs": [
+   {
+    "tick": 0,
+    "kind": "config",
+    "choice": "actors.on=1"
+   },
+   {
+    "tick": 0,
+    "kind": "config",
+    "choice": "assist.target=any"
+   },
+   {
+    "tick": 8,
+    "kind": "goal",
+    "x": 46.5,
+    "y": 7.5
+   },
+   {
+    "tick": 821,
+    "kind": "config",
+    "choice": "assist.target=obj_dock"
+   },
+   {
+    "tick": 821,
+    "kind": "config",
+    "choice": "assist.grasp=go"
+   },
+   {
+    "tick": 1084,
+    "kind": "goal",
+    "x": 42,
+    "y": 1.2999999999999998
+   },
+   {
+    "tick": 1354,
+    "kind": "config",
+    "choice": "assist.grasp=go"
+   }
+  ],
+  "hash_version": 3
+ },
+ "hash_chain": "38ea10feb6de222943b9f631128d5e7297f5ba7c6ec02328b265344674cb6531",
+ "last_hash": "ff2af6370682a11736c6f3057bb6899c6db6ef7282536ba465b26de2f4b05f03",
+ "scorecard": {
+  "game": "fetch_rush",
+  "seed": 1,
+  "deliveries": 1,
+  "contacts": 0,
+  "net_deliveries": 1,
+  "time_used": 141.4,
+  "path_efficiency": 0.9906619889577751,
+  "orders": [
+   [
+    "obj_dock",
+    "dock_2"
+   ],
+   [
+    "obj_mez_1",
+    "dock_3"
+   ]
+  ],
+  "delivered": [
+   {
+    "object": "obj_dock",
+    "drop": "dock_2",
+    "t": 141.4,
+    "seconds": 141.4,
+    "driven": 31.590322662426594,
+    "ghost": 31.295331880577407
+   }
+  ],
+  "contact_log": []
+ },
+ "log": [
+  [
+   "started",
+   6
+  ],
+  [
+   "to the object (AUTO taken)",
+   10
+  ],
+  [
+   "at the object (GRAB lit)",
+   820
+  ],
+  [
+   "carried",
+   1078
+  ],
+  [
+   "to the drop zone (AUTO taken)",
+   1086
+  ],
+  [
+   "in the drop zone (DROP lit)",
+   1354
+  ],
+  [
+   "delivered",
+   1418
+  ]
+ ],
+ "errors": [],
+ "final": {
+  "tick": 1418,
+  "arrived": false,
+  "source": "idle",
+  "mode": "idle",
+  "a": {
+   "phase": "idle",
+   "target": null,
+   "carried": null,
+   "want": "obj_dock",
+   "reason": "released obj_dock",
+   "attempt": 1
+  },
+  "f": {
+   "t": 141.70000000000002,
+   "seconds": 180,
+   "over": false,
+   "order": [
+    "obj_mez_1",
+    "dock_3"
+   ],
+   "k": 1,
+   "orders": 10,
+   "deliveries": 1,
+   "contacts": 0,
+   "ghost": 75.92813126546329
+  },
+  "primary": "GRAB: Nothing in range (G)",
+  "enabled": false
+ },
+ "browser": "Chromium (Playwright), SwiftShader",
+ "note": "Pyodide in the browser worker; MODEL"
+}

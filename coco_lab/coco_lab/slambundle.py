@@ -45,7 +45,6 @@ for byte, and re-scores every run, external ones included.
 from dataclasses import dataclass, field
 import gzip
 import json
-import math
 import os
 import struct
 from typing import Dict, List, Optional, Tuple
@@ -54,6 +53,7 @@ from . import bundle as _b
 from . import mapeval, mapping, mapworld, slam
 from .landmarks import Observation
 from .maps import LabMap, MapError
+from .numerics import math
 from .occgrid import GridParams, u8_to_labmap
 from .sketch import LidarSpec, Scenario
 

@@ -17,14 +17,15 @@ from array import array
 from collections import OrderedDict
 import hashlib
 import json
-import math
+
+from .numerics import math
 
 # These are presentation/transport, hash-chain bookkeeping, immutable world
 # derivatives, or search-generator machinery. They do not survive as an input
 # to a completed tick's next behaviour. Queued subsystem goals DO survive.
 EXCLUDED = frozenset({
     'on_plan_batch', 'on_family', 'plan_batch_size', '_chain',
-    '_collector', '_stream', '_snapshot', '_plan_snap', '_snap',
+    '_collector', '_stream', '_snapshot', '_plan_snap', '_snap', '_ahead',
     '_pending', '_loop_applied', '_in_step', '_requested', '_want_plan', '_plan_ctx',
     'lab_map', 'smap', 'scan_smap', 'plan_map', 'grid', 'terrain',
     'angles', 'lidar', '_v2_world', 'hash_version',

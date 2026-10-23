@@ -37,10 +37,10 @@ module is standard-library only, so it runs under Pyodide unchanged).
 """
 
 import json
-import math
 from typing import Dict, List, Tuple
 
 from .maps import FREE, LabMap, OCCUPIED, UNKNOWN
+from .numerics import math
 
 SPEC_VERSION = 'coco.world_spec.v1'
 #: World Spec v2 (M4.2; docs/v2/adr/0007-world-spec-elevation.md): v1's fields
@@ -48,6 +48,11 @@ SPEC_VERSION = 'coco.world_spec.v1'
 #: form, and so every hash made from it, is exactly what it was.
 SPEC_VERSION_V2 = 'coco.world_spec.v2'
 SPEC_VERSIONS = (SPEC_VERSION, SPEC_VERSION_V2)
+#: World Spec v3 (M6F.1; docs/v2/m6/WORLD_SPEC_V3.md): the level kit, validated and
+#: lowered onto v2's boxes and elevation by coco_lab.worldspec_v3. v1 and v2 never reach it.
+SPEC_VERSION_V3 = 'coco.world_spec.v3'
+#: the versions with terrain (elevation): the Arena follows it on these
+TERRAIN_SPEC_VERSIONS = (SPEC_VERSION_V2, SPEC_VERSION_V3)
 BOX_KINDS = ('wall', 'obstacle', 'landmark', 'guard')
 ELEVATION_KINDS = ('wedge', 'platform')
 
@@ -108,6 +113,9 @@ def _sources(d, where):
 def normalize(spec: Dict[str, object]) -> Dict[str, object]:
     """Validate ``spec`` and return its canonical form (a new dict)."""
     version = spec.get('spec_version') if isinstance(spec, dict) else None
+    if version == SPEC_VERSION_V3:
+        from .worldspec_v3 import normalize_v3
+        return normalize_v3(spec)
     if version not in SPEC_VERSIONS:
         raise SpecError(f'spec_version is {version!r}, this reader '
                         f'knows {SPEC_VERSIONS!r}')
@@ -324,7 +332,7 @@ def arena_map(spec: Dict[str, object], map_id: str = '') -> LabMap:
     width = round((b['x_max'] - b['x_min'] + 2 * m) / res)
     height = round((b['y_max'] - b['y_min'] + 2 * m) / res)
     dx, dy = spec['world_to_map']
-    if spec['spec_version'] == SPEC_VERSION_V2:
+    if spec['spec_version'] in TERRAIN_SPEC_VERSIONS:
         return terrain_map(spec, map_id, scan_only=False)
     occ = _rasterise(b, res, ox, oy, width, height, ramp_rectangles(spec),
                      box_rectangles(spec))

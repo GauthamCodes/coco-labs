@@ -1,0 +1,354 @@
+{
+ "class": "REAL DEVICE, full screen, no DevTools attached while playing (Android input only)",
+ "site": "http://localhost:4174/coco-labs/",
+ "game": "free",
+ "minutes": 10,
+ "started": "2026-10-23T14:09:16.206Z",
+ "device": {
+  "model": "A063",
+  "android": "15",
+  "build": "V3.2-260618-1045",
+  "chrome": "156.0.8078.47"
+ },
+ "network_note": "served by the laptop over USB (adb reverse); not the phone's mobile network",
+ "battery": [
+  {
+   "at": "2026-10-23T14:09:16.917Z",
+   "level_pct": 93,
+   "temperature_c": 39,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:30:47.670Z",
+   "level_pct": 98,
+   "temperature_c": 38,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:31:20.614Z",
+   "level_pct": 98,
+   "temperature_c": 38,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:31:51.756Z",
+   "level_pct": 98,
+   "temperature_c": 39,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:32:22.842Z",
+   "level_pct": 98,
+   "temperature_c": 39,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:32:53.963Z",
+   "level_pct": 98,
+   "temperature_c": 39,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:33:25.087Z",
+   "level_pct": 98,
+   "temperature_c": 40,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:33:56.215Z",
+   "level_pct": 98,
+   "temperature_c": 40,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:34:27.323Z",
+   "level_pct": 98,
+   "temperature_c": 40,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:34:58.445Z",
+   "level_pct": 98,
+   "temperature_c": 40,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:35:29.555Z",
+   "level_pct": 98,
+   "temperature_c": 40,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:35:59.599Z",
+   "level_pct": 98,
+   "temperature_c": 40,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:36:30.739Z",
+   "level_pct": 98,
+   "temperature_c": 40,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:37:01.823Z",
+   "level_pct": 98,
+   "temperature_c": 40,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:37:32.920Z",
+   "level_pct": 98,
+   "temperature_c": 40,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:38:04.000Z",
+   "level_pct": 98,
+   "temperature_c": 40,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:38:35.064Z",
+   "level_pct": 98,
+   "temperature_c": 40,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:39:06.133Z",
+   "level_pct": 98,
+   "temperature_c": 41,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:39:37.230Z",
+   "level_pct": 98,
+   "temperature_c": 41,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:40:08.424Z",
+   "level_pct": 98,
+   "temperature_c": 41,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-23T14:40:17.731Z",
+   "level_pct": 98,
+   "temperature_c": 41,
+   "ac_powered": "true"
+  }
+ ],
+ "temps_start": {
+  "battery": 6,
+  "GPU0": 69.9,
+  "CPU7": 74.4,
+  "skin": 42.761,
+  "CPU5": 77.5
+ },
+ "shots": {
+  "portrait_card": [
+   1080,
+   2400
+  ],
+  "after_tap": [
+   2400,
+   1080
+  ],
+  "one_minute": [
+   2400,
+   1080
+  ],
+  "end": [
+   2400,
+   1080
+  ]
+ },
+ "settings_changed": [],
+ "cooled": {
+  "waited_s": 1203,
+  "battery": {
+   "at": "2026-10-23T14:29:19.681Z",
+   "level_pct": 98,
+   "temperature_c": 37,
+   "ac_powered": "true"
+  },
+  "temps": {
+   "battery": 5,
+   "GPU0": 39.7,
+   "CPU7": 42.4,
+   "skin": 35.981,
+   "CPU5": 41.3
+  }
+ },
+ "saved_prefs": {
+  "coco.prefs.v1.quality": "\"high\"",
+  "coco.prefs.v1.phone120": "true"
+ },
+ "before": {
+  "iw": 361,
+  "ih": 654,
+  "dpr": 2.987499952316284,
+  "o": "portrait-primary"
+ },
+ "full_screen_by_screencap": "landscape buffer",
+ "temps_1min": {
+  "battery": 6,
+  "GPU0": 59.8,
+  "CPU7": 68.1,
+  "skin": 40.255,
+  "CPU5": 69.3
+ },
+ "temps_end": {
+  "battery": 6,
+  "GPU0": 62.1,
+  "CPU7": 68.1,
+  "skin": 42.958,
+  "CPU5": 69.7
+ },
+ "prefs_restored": [
+  "\"high\"",
+  "true"
+ ],
+ "play": {
+  "one_minute": {
+   "fps_median": 60,
+   "fps_min": 56,
+   "fps_p05": 59,
+   "windows": 60,
+   "frame_ms_median": 16.700000002980232,
+   "frame_ms_p95": 18.599999994039536,
+   "frame_ms_p99": 21.599999994039536,
+   "frame_ms_max": 87.3999999910593,
+   "frames": 3596,
+   "over_50ms": 1
+  },
+  "whole": {
+   "fps_median": 60,
+   "fps_min": 44,
+   "fps_p05": 59,
+   "windows": 600,
+   "frame_ms_median": 16.700000002980232,
+   "frame_ms_p95": 19.200000002980232,
+   "frame_ms_p99": 22.599999994039536,
+   "frame_ms_max": 87.3999999910593,
+   "frames": 35931,
+   "over_50ms": 4
+  },
+  "webgl_context_lost": 0,
+  "page_errors": [],
+  "end_state": {
+   "full_screen": true,
+   "orientation": "landscape-secondary",
+   "viewport": [
+    803,
+    361
+   ],
+   "tick": 7290,
+   "tier": "medium",
+   "pixel_ratio": 1.25
+  }
+ },
+ "touch_to_motion": {
+  "samples": [
+   155.09999999403954,
+   149.5,
+   149.30000001192093,
+   99.40000000596046,
+   126.69999998807907,
+   136,
+   256.20000000298023,
+   141.20000000298023,
+   225.59999999403954,
+   125.20000000298023,
+   151.70000000298023,
+   192.70000000298023,
+   132.19999998807907,
+   191.40000000596046,
+   165.70000000298023,
+   182.69999998807907,
+   123.70000000298023,
+   148,
+   181.20000000298023,
+   2530.699999988079,
+   3804.9000000059605,
+   122.29999999701977,
+   3712.4000000059605,
+   157.70000000298023,
+   2522.7000000029802,
+   1340.699999988079,
+   139.70000000298023,
+   4953.0999999940395,
+   1299,
+   1355.7999999970198,
+   156.5,
+   3745.5,
+   130.6000000089407,
+   7,
+   1347.699999988079,
+   4931.20000000298,
+   1322.0999999940395,
+   336.30000001192093,
+   4961.29999999702,
+   4945.9000000059605,
+   6122.5999999940395,
+   140.3999999910593,
+   115.09999999403954,
+   1380.5999999940395,
+   172.3999999910593,
+   3720.9000000059605,
+   194.19999998807907,
+   2505.5999999940395,
+   4966,
+   3679.9000000059605,
+   1426,
+   3723.0999999940395,
+   149.20000000298023,
+   2507.199999988079,
+   6110.79999999702,
+   7319.5,
+   4936.79999999702,
+   2588.5999999940395,
+   5003.79999999702,
+   1308.7000000029802,
+   1315.0999999940395,
+   98.40000000596046,
+   4979.100000008941,
+   115.20000000298023,
+   3696.6000000089407,
+   4904.70000000298,
+   140.20000000298023,
+   3761,
+   77,
+   4922.4000000059605,
+   3756.7000000029802,
+   1315.7000000029802,
+   115,
+   4922.29999999702,
+   149.09999999403954,
+   13.900000005960464,
+   1347.4000000059605,
+   115.1000000089407,
+   4903.5,
+   2512.8999999910593,
+   6128,
+   4936.4000000059605,
+   4996.70000000298,
+   2588.5,
+   157.20000000298023,
+   1314.800000011921,
+   131.6000000089407,
+   1322,
+   1355.5
+  ],
+  "n": 89,
+  "median_ms": 1315.0999999940395,
+  "p90_ms": 4961.29999999702,
+  "note": "every sample from the trials and the soak (perf.inputToMotion: drive input -> the robot drawn moved)"
+ },
+ "settings_restored": {
+  "acc": "0",
+  "user": "0"
+ },
+ "ended": "2026-10-23T14:40:20.999Z"
+}

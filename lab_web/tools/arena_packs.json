@@ -1,5 +1,5 @@
 {
- "about": "M2.2: coco_lab split into Python packs the Arena worker loads lazily. 'core' (coco_lab.zip, every module not listed below) is what the Plan lens needs and loads at boot; a lens's pack loads the first time the lens is selected. build_arena_assets.mjs refuses a module in two packs, and an import that crosses packs except into core or into a pack listed in 'requires'.",
+ "about": "M2.2: coco_lab split into Python packs the Arena worker loads lazily. 'core' (coco_lab.zip, every module not listed below) is what the Plan lens needs and loads at boot; a lens's pack loads the first time the lens is selected. build_arena_assets.mjs refuses a module in two packs, and an import that crosses packs except into core or into a pack listed in 'requires'. G1: 'game' (Fetch Rush rules and Grasp Assist) loads before a game session boots;",
  "packs": {
   "localise": {
    "requires": [],
@@ -67,6 +67,14 @@
    ],
    "modules": [
     "compare_loop.py"
+   ]
+  },
+  "game": {
+   "requires": [],
+   "modules": [
+    "games.py",
+    "grasp_assist.py",
+    "levels/coco_depot_v1.fetch_rush.json", "levels/coco_depot_v1.fetch_rush.r3.json"
    ]
   }
  }

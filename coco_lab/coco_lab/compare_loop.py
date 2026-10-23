@@ -20,13 +20,14 @@ Only the declared controller/filter differs. No live Arena state is used.
 """
 import copy
 from dataclasses import replace
-import math
 from time import perf_counter
 
 from . import loc_arena, move_arena  # noqa: F401 -- register reference subsystems
+from . import numerics
 from .arena import Arena, InputEvent
 from .costmap import build_layers, InflationParams, scan_obstacle_cells
 from .grid import Grid
+from .numerics import math
 
 FAMILIES = {'control': ('dwa', 'rpp', 'mppi'),
             'localise': ('mcl', 'mcl_augmented', 'ekf')}
@@ -49,6 +50,14 @@ class LoopComparison:
         if len(self.goal) != 2 or not all(math.isfinite(v) for v in self.goal):
             raise ValueError('finite shared goal required')
         self.params = InflationParams(**request['inflation'])
+        # G1.8: a request without one is M5's (v2, as recorded); the page asks for v3
+        self.hash_version = request.get('hash_version', 2)
+        if self.hash_version not in (2, 3):
+            raise ValueError('Compare arms hash with version 2 or 3')
+        self._build(spec)
+
+    @numerics.in_run
+    def _build(self, spec):
         self.tick = 0
         self.kidnap_tick = min(50, max(1, self.steps // 3))
         self.arms, self.sensors = [], []
@@ -75,7 +84,7 @@ class LoopComparison:
                             end = offset + candidates['traj_len'][i]
                             sensor['chosen'] = [list(candidates['traj_x'][offset:end]),
                                                 list(candidates['traj_y'][offset:end])]
-            arm = Arena(spec_copy, seed=1, on_family=capture, hash_version=2)
+            arm = Arena(spec_copy, seed=1, on_family=capture, hash_version=self.hash_version)
             if arm.lab_map.cell_at(*self.goal) is None:
                 raise ValueError('goal is outside the existing arena')
             self.arms.append(arm)
@@ -95,6 +104,7 @@ class LoopComparison:
                          blocked=[v >= 253 for v in self.layers.combined],
                          cost=self.layers.combined, connectivity=8)
 
+    @numerics.in_run
     def advance(self):
         """One common simulation tick; return records for every pane."""
         if self.tick >= self.steps:

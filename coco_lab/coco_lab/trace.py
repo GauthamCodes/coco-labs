@@ -37,8 +37,9 @@ existing field bumps MAJOR, and a reader refuses a MAJOR it does not know.
 """
 
 import json
-import math
 from typing import Dict, List, Optional
+
+from .numerics import math
 
 SCHEMA = 'coco_lab.trace'
 VERSION = '1.0'

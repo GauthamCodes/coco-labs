@@ -51,9 +51,10 @@ uses it for exactly one thing: drawing a survey's outcome.
 
 from dataclasses import dataclass, field
 import itertools
-import math
 import random
 from typing import Dict, List, Optional, Sequence, Tuple
+
+from .numerics import math
 
 SCHEMA = 'coco_lab.search_trace'
 VERSION = '1.0'

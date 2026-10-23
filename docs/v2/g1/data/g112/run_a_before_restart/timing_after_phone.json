@@ -1,0 +1,191 @@
+{
+ "label": "after: G1.12, phone round seed 1",
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "profile": "desktop",
+ "wall_s": 208.211,
+ "final": {
+  "tick": 2041,
+  "mode": "idle",
+  "source": "idle",
+  "a": {
+   "phase": "idle",
+   "target": null,
+   "carried": null,
+   "want": "obj_dispatch",
+   "reason": "released obj_dispatch",
+   "attempt": 2
+  },
+  "f": {
+   "t": 204.00000000000003,
+   "seconds": 280.5,
+   "over": true,
+   "order": null,
+   "k": 2,
+   "orders": 2,
+   "deliveries": 2,
+   "contacts": 0,
+   "ghost": null
+  },
+  "primary": "GRAB: Not the order (G)",
+  "enabled": false
+ },
+ "log": [
+  [
+   "started",
+   3
+  ],
+  [
+   "order 1: to the object (AUTO taken)",
+   6
+  ],
+  [
+   "order 1: GRAB lit",
+   216
+  ],
+  [
+   "order 1: carried",
+   466
+  ],
+  [
+   "order 1: to the drop (AUTO taken)",
+   473
+  ],
+  [
+   "order 1: DROP lit",
+   809
+  ],
+  [
+   "order 1: delivered",
+   871
+  ],
+  [
+   "order 2: to the object (AUTO taken) TIMEOUT",
+   984
+  ],
+  [
+   "order 2: to the object (AUTO taken)",
+   986
+  ],
+  [
+   "order 2: GRAB lit",
+   1496
+  ],
+  [
+   "order 2: carried",
+   1748
+  ],
+  [
+   "order 2: to the drop (AUTO taken)",
+   1755
+  ],
+  [
+   "order 2: DROP lit",
+   1979
+  ],
+  [
+   "order 2: delivered",
+   2041
+  ]
+ ],
+ "errors": [],
+ "renderer": "SwiftShader (no GPU in this container): drawn frame rates are not measured; frame times are main-thread JS",
+ "deliveries": 2,
+ "orders": 2,
+ "seconds": 280.5,
+ "tick_gap_ms": {
+  "max": 616,
+  "p95_single": 165.1000000005588,
+  "median_single": 94.1000000005588,
+  "over_800": []
+ },
+ "worker_step_ms": {
+  "max": 79.70000000018626,
+  "p95": 56.10000000055879,
+  "median": 36.19999999925494,
+  "kept": 541
+ },
+ "busy_banner": {
+  "shown": 0,
+  "total_ms": 0
+ },
+ "tick_arrival_ms": {
+  "note": "time-stamped on the worker message (G1.12); tick_gap_ms above is sampled per animation frame",
+  "max": 528.1000000005588,
+  "p95": 137.20000000018626,
+  "median": 98.5,
+  "over_150": 84,
+  "ticks": 2038
+ },
+ "worker_step_all_ms": {
+  "max": 80.6000000005588,
+  "p95": 54.40000000037253,
+  "median": 33.40000000037253
+ },
+ "auto_presses": [
+  {
+   "label": "order 1: to the object",
+   "motion": true,
+   "press_to_motion_ms": 88,
+   "ticks": 2,
+   "max_tick_gap_ms": 29,
+   "over_period_ms": 0,
+   "max_worker_step_ms": 26
+  },
+  {
+   "label": "order 1: to the drop",
+   "motion": true,
+   "press_to_motion_ms": 1467,
+   "ticks": 15,
+   "max_tick_gap_ms": 121,
+   "over_period_ms": 21,
+   "max_worker_step_ms": 54
+  },
+  {
+   "label": "order 2: to the object",
+   "motion": true,
+   "press_to_motion_ms": 8906,
+   "ticks": 88,
+   "max_tick_gap_ms": 276,
+   "over_period_ms": 176,
+   "max_worker_step_ms": 63
+  },
+  {
+   "label": "order 2: to the object",
+   "motion": true,
+   "press_to_motion_ms": 597,
+   "ticks": 5,
+   "max_tick_gap_ms": 276,
+   "over_period_ms": 176,
+   "max_worker_step_ms": 42
+  },
+  {
+   "label": "order 2: to the drop",
+   "motion": true,
+   "press_to_motion_ms": 569,
+   "ticks": 6,
+   "max_tick_gap_ms": 148,
+   "over_period_ms": 48,
+   "max_worker_step_ms": 45
+  }
+ ],
+ "auto_max_tick_gap_ms": 276,
+ "frame_js_ms": {
+  "max": 180.90000000037253,
+  "p95": 2.7000000001862645,
+  "median": 1.3999999994412065,
+  "frames": 2256,
+  "over_50": 2,
+  "slow": [
+   {
+    "at": 11808.5,
+    "ms": 180.90000000037253,
+    "tick": 55
+   },
+   {
+    "at": 11896.799999999814,
+    "ms": 86.70000000018626,
+    "tick": 56
+   }
+  ]
+ }
+}

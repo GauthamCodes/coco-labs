@@ -71,8 +71,9 @@ counted.
 """
 
 import bisect
-import math
 from typing import Dict, List, Optional, Sequence, Tuple
+
+from .numerics import math
 
 #: (length along x, width along y), metres; centred on base_footprint.
 FOOTPRINT = (0.297, 0.314)

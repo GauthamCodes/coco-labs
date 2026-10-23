@@ -42,11 +42,11 @@ A search on this graph emits an ordinary v1 trace whose ``sub`` column is
 from the historical reproduction in :mod:`coco_lab.isro`.
 """
 
-import math
 from typing import Dict, Iterator, Optional, Sequence, Tuple
 
 from . import heuristics
 from .heuristics import SQRT2
+from .numerics import math
 
 #: The ISRO simulator's move directions, in its order: N, S, W, E, NW, NE,
 #: SW, SE as ``(drow, dcol)`` (``astar_simulator_final_v3_6.py`` l.107).

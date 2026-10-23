@@ -59,10 +59,10 @@ negative, so the sentinel is unambiguous).
 
 from dataclasses import dataclass, field
 import heapq
-import math
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
 from .graph import SearchGraph, State
+from .numerics import math
 
 INF = math.inf
 #: Tolerance for comparing keys. Two keys that are equal in exact

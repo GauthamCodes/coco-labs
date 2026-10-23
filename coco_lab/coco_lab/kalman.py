@@ -33,6 +33,8 @@ filter; :func:`batch_posterior` computes the same posterior in one solve
 
 from typing import Callable, List, Sequence, Tuple
 
+from .numerics import root
+
 Matrix = List[List[float]]
 Vector = List[float]
 
@@ -176,4 +178,4 @@ def random_walk_steady_variance(q: float, r: float) -> float:
     ``P = (P + q) r / (P + q + r)``, i.e. ``P^2 + q P - q r = 0``:
     ``P = (-q + sqrt(q^2 + 4 q r)) / 2``.
     """
-    return (-q + (q * q + 4.0 * q * r) ** 0.5) / 2.0
+    return (-q + root(q * q + 4.0 * q * r)) / 2.0

@@ -1,0 +1,417 @@
+{
+ "spec_id": "coco_depot_v1",
+ "resolution": 0.1,
+ "grid": [
+  490,
+  330
+ ],
+ "arena_build_ms": 818.981304,
+ "repeats": 5,
+ "results": [
+  {
+   "pair": "start_to_dock",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 85004,
+   "path_m": 23.707106781186553,
+   "cold_ms": 957.9618449999998,
+   "warm_median_ms": 859.8971520000002,
+   "warm_max_ms": 1001.0602029999998,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_dock",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 71126,
+   "path_m": 23.70710678118655,
+   "cold_ms": 1001.1894140000006,
+   "warm_median_ms": 1087.283061999999,
+   "warm_max_ms": 1136.4096229999986,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_dock",
+   "planner": "astar",
+   "found": true,
+   "expanded": 236,
+   "path_m": 23.70710678118655,
+   "cold_ms": 18.91166899999952,
+   "warm_median_ms": 6.1114060000004855,
+   "warm_max_ms": 6.292069000000566,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_dock",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 236,
+   "path_m": 23.70710678118655,
+   "cold_ms": 6.2801910000001016,
+   "warm_median_ms": 6.205192999999554,
+   "warm_max_ms": 6.363748999998364,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_dock",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 236,
+   "path_m": 23.70710678118655,
+   "cold_ms": 6.274641000000969,
+   "warm_median_ms": 6.180311999999688,
+   "warm_max_ms": 6.427253000000022,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_office_sw",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 116636,
+   "path_m": 37.549242404917514,
+   "cold_ms": 1119.5900530000013,
+   "warm_median_ms": 1315.7258239999994,
+   "warm_max_ms": 1434.365402000001,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_office_sw",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 115399,
+   "path_m": 37.5492424049175,
+   "cold_ms": 1619.5567860000003,
+   "warm_median_ms": 1599.0108870000022,
+   "warm_max_ms": 1774.1678919999977,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_office_sw",
+   "planner": "astar",
+   "found": true,
+   "expanded": 36023,
+   "path_m": 37.54924240491751,
+   "cold_ms": 655.380957999995,
+   "warm_median_ms": 653.1817130000022,
+   "warm_max_ms": 730.9246669999965,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_office_sw",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 10741,
+   "path_m": 39.01614716074875,
+   "cold_ms": 196.7486369999989,
+   "warm_median_ms": 180.14187600000042,
+   "warm_max_ms": 180.7247989999965,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_office_sw",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 11313,
+   "path_m": 37.79777054234137,
+   "cold_ms": 194.45105000000495,
+   "warm_median_ms": 199.19741300000027,
+   "warm_max_ms": 201.31077199999936,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_maze_dead_end",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 47977,
+   "path_m": 17.461017305526646,
+   "cold_ms": 469.622961000006,
+   "warm_median_ms": 485.00757400000083,
+   "warm_max_ms": 490.1714439999978,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_maze_dead_end",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 47038,
+   "path_m": 17.461017305526646,
+   "cold_ms": 666.0202859999984,
+   "warm_median_ms": 669.8859079999977,
+   "warm_max_ms": 786.1949900000056,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_maze_dead_end",
+   "planner": "astar",
+   "found": true,
+   "expanded": 10931,
+   "path_m": 17.46101730552665,
+   "cold_ms": 256.9329259999975,
+   "warm_median_ms": 258.89642299999593,
+   "warm_max_ms": 260.3289899999979,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_maze_dead_end",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 587,
+   "path_m": 18.612489168102798,
+   "cold_ms": 21.01233500000177,
+   "warm_median_ms": 14.056403000004991,
+   "warm_max_ms": 14.26640999999762,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_maze_dead_end",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 2033,
+   "path_m": 17.792388155425126,
+   "cold_ms": 50.15444400000035,
+   "warm_median_ms": 53.555717000001835,
+   "warm_max_ms": 57.13412699999765,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_mezzanine_deck",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 107565,
+   "path_m": 34.47472580451144,
+   "cold_ms": 1280.1897579999988,
+   "warm_median_ms": 1270.5649860000037,
+   "warm_max_ms": 1291.4556329999982,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_mezzanine_deck",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 108760,
+   "path_m": 34.47472580451144,
+   "cold_ms": 1790.4205399999996,
+   "warm_median_ms": 1720.2339460000005,
+   "warm_max_ms": 1753.1098050000012,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_mezzanine_deck",
+   "planner": "astar",
+   "found": true,
+   "expanded": 23453,
+   "path_m": 34.47472580451144,
+   "cold_ms": 505.5863519999946,
+   "warm_median_ms": 512.0139099999932,
+   "warm_max_ms": 526.0664079999913,
+   "over_budget": true
+  },
+  {
+   "pair": "start_to_mezzanine_deck",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 3319,
+   "path_m": 42.37838379715747,
+   "cold_ms": 78.55380600000217,
+   "warm_median_ms": 61.37464100000045,
+   "warm_max_ms": 61.825372000001266,
+   "over_budget": false
+  },
+  {
+   "pair": "start_to_mezzanine_deck",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 5967,
+   "path_m": 36.29726547895311,
+   "cold_ms": 115.70974400000011,
+   "warm_median_ms": 120.1267109999975,
+   "warm_max_ms": 121.08980399999325,
+   "over_budget": false
+  },
+  {
+   "pair": "dock_to_office_ne",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 95632,
+   "path_m": 46.8156420973605,
+   "cold_ms": 920.1996750000063,
+   "warm_median_ms": 977.7053570000049,
+   "warm_max_ms": 1162.6792859999996,
+   "over_budget": true
+  },
+  {
+   "pair": "dock_to_office_ne",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 98824,
+   "path_m": 46.815642097360495,
+   "cold_ms": 1556.271283000001,
+   "warm_median_ms": 1377.2407529999953,
+   "warm_max_ms": 1451.469860000003,
+   "over_budget": true
+  },
+  {
+   "pair": "dock_to_office_ne",
+   "planner": "astar",
+   "found": true,
+   "expanded": 28642,
+   "path_m": 46.815642097360495,
+   "cold_ms": 641.9157999999925,
+   "warm_median_ms": 691.5846719999905,
+   "warm_max_ms": 743.1703379999988,
+   "over_budget": true
+  },
+  {
+   "pair": "dock_to_office_ne",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 565,
+   "path_m": 49.46833329081864,
+   "cold_ms": 35.17340200001229,
+   "warm_median_ms": 14.099209000008273,
+   "warm_max_ms": 14.422793999997907,
+   "over_budget": false
+  },
+  {
+   "pair": "dock_to_office_ne",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 605,
+   "path_m": 47.72691193458133,
+   "cold_ms": 15.585571000002574,
+   "warm_median_ms": 15.424425999995606,
+   "warm_max_ms": 15.744550000007962,
+   "over_budget": false
+  },
+  {
+   "pair": "aisle_1_to_aisle_3",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 33832,
+   "path_m": 14.966904755831216,
+   "cold_ms": 323.7041579999982,
+   "warm_median_ms": 331.54763500000684,
+   "warm_max_ms": 337.6687049999987,
+   "over_budget": true
+  },
+  {
+   "pair": "aisle_1_to_aisle_3",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 32546,
+   "path_m": 14.966904755831207,
+   "cold_ms": 442.91065599999513,
+   "warm_median_ms": 457.0223969999887,
+   "warm_max_ms": 515.1960889999998,
+   "over_budget": true
+  },
+  {
+   "pair": "aisle_1_to_aisle_3",
+   "planner": "astar",
+   "found": true,
+   "expanded": 3101,
+   "path_m": 14.966904755831207,
+   "cold_ms": 69.81793799999991,
+   "warm_median_ms": 65.29853700000388,
+   "warm_max_ms": 66.5313310000073,
+   "over_budget": false
+  },
+  {
+   "pair": "aisle_1_to_aisle_3",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 509,
+   "path_m": 19.878174593052023,
+   "cold_ms": 13.379991999997287,
+   "warm_median_ms": 12.645220999999651,
+   "warm_max_ms": 13.068342000011057,
+   "over_budget": false
+  },
+  {
+   "pair": "aisle_1_to_aisle_3",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 784,
+   "path_m": 15.712489168102772,
+   "cold_ms": 19.238728000004812,
+   "warm_median_ms": 19.673357000002056,
+   "warm_max_ms": 19.87779300000625,
+   "over_budget": false
+  },
+  {
+   "pair": "maze_entrance_to_dead_end",
+   "planner": "bfs",
+   "found": true,
+   "expanded": 29457,
+   "path_m": 14.962741699796958,
+   "cold_ms": 314.2962849999975,
+   "warm_median_ms": 284.076553999995,
+   "warm_max_ms": 290.1930270000008,
+   "over_budget": false
+  },
+  {
+   "pair": "maze_entrance_to_dead_end",
+   "planner": "dijkstra",
+   "found": true,
+   "expanded": 26022,
+   "path_m": 14.962741699796954,
+   "cold_ms": 352.06623300000217,
+   "warm_median_ms": 341.5963369999986,
+   "warm_max_ms": 360.0303290000113,
+   "over_budget": true
+  },
+  {
+   "pair": "maze_entrance_to_dead_end",
+   "planner": "astar",
+   "found": true,
+   "expanded": 204,
+   "path_m": 14.962741699796954,
+   "cold_ms": 7.388246999994408,
+   "warm_median_ms": 4.300309000001334,
+   "warm_max_ms": 4.355676000002973,
+   "over_budget": false
+  },
+  {
+   "pair": "maze_entrance_to_dead_end",
+   "planner": "greedy",
+   "found": true,
+   "expanded": 145,
+   "path_m": 15.045584412271575,
+   "cold_ms": 3.1428080000068803,
+   "warm_median_ms": 3.133372999997164,
+   "warm_max_ms": 3.2453589999903443,
+   "over_budget": false
+  },
+  {
+   "pair": "maze_entrance_to_dead_end",
+   "planner": "weighted_astar",
+   "found": true,
+   "expanded": 146,
+   "path_m": 15.045584412271575,
+   "cold_ms": 3.2881089999960977,
+   "warm_median_ms": 3.185880000003749,
+   "warm_max_ms": 3.2547469999997247,
+   "over_budget": false
+  }
+ ],
+ "engine": "pyodide-node",
+ "pyodide": "314.0.7",
+ "node": "v24.21.0",
+ "pyodide_load_ms": 1420.65067,
+ "budget_warm_ms": 300,
+ "conditions": {
+  "load_average_before": [
+   2.5,
+   3.23,
+   3.53
+  ],
+  "load_average_after": [
+   3.62,
+   3.28,
+   3.5
+  ],
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "nproc": 12,
+  "platform": "Linux 6.8.0-147-generic"
+ }
+}

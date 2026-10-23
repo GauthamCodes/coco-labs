@@ -1,0 +1,502 @@
+{
+ "about": "M6F.8 Gazebo + Nav2 on the Depot (tools/m6/m6f8_summary.py); STACK evidence",
+ "error_codes": {
+  "0": "NONE",
+  "103": "FollowPath INVALID_PATH",
+  "205": "ComputePathToPose START_OCCUPIED"
+ },
+ "runs": [
+  {
+   "run": "m6f8_ghost_1",
+   "raw_dir": "~/coco_lab_runs/m6/m6f8_ghost_1",
+   "meta": {
+    "started_utc": "2026-10-22T19:58:12Z",
+    "evidence_class": "STACK (full ROS 2 stack in Gazebo, headless; never hardware)",
+    "git_commit": "e212e6f4681330c0bb62afb39e3a25f5fcacc40d",
+    "git_dirty_paths": 1,
+    "ros_domain_id": "79",
+    "world_to_map": [
+     0.0,
+     0.0
+    ],
+    "world": "/home/gautham/coco_lab_runs/m6/gazebo_models/worlds/coco_depot_v1.sdf",
+    "world_sha256": "11c58b460a56facf080f10500f133490497925e43b287bee69f83560aa012246",
+    "map_yaml_sha256": "2fb7d8314d6b5ff5db3b9d566ea130c7011b64439c88edda0fa4d2d3c6d40c76",
+    "map_pgm_sha256": "acd8bc01b1a794230bcff6327f884c2610022753bdd27b61dc0d29d3958e8a78",
+    "nav2_params_sha256": "0fcd787de790e25753b49fe93f3204779bff6546fad33079d05290fb939ba330",
+    "goals": "/home/gautham/coco_lab_runs/m6/m6f8_ghost_1/goals.json",
+    "goals_sha256": "55a867d82f9a0eda3a9c4c972d25404714e57b9283f80a511bb4383cb35172aa",
+    "packages": {
+     "ros-jazzy-nav2-bringup": "1.3.12-1noble.20260616.082701",
+     "ros-jazzy-nav2-amcl": "1.3.11-1noble.20260412.054619",
+     "ros-jazzy-nav2-smac-planner": "1.3.11-1noble.20260412.062222",
+     "ros-jazzy-nav2-dwb-controller": "1.3.11-1noble.20260412.065547",
+     "ros-jazzy-ros-gz-sim": "1.0.22-1noble.20260412.044601",
+     "ros-jazzy-rosbag2-py": "0.26.10-2noble.20260412.060353"
+    },
+    "power_profile": "balanced",
+    "ac_online": "1",
+    "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "launch": [
+     "gazebo_models full_world_robo.launch.py gui:=false world:=<abs> (traverse false)",
+     "custom_teleop arbiter.launch.py initial_mode:=nav use_sim_time:=true",
+     "gazebo_models nav.launch.py arbiter:=true map:=<gen> params_file:=<gen>"
+    ]
+   },
+   "goals": [
+    {
+     "id": "order1_obj_dock_pregrasp",
+     "label": "order 1: to obj_dock",
+     "goal": [
+      46.057,
+      7.684,
+      5.8905
+     ],
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "error_msg": "",
+     "sim_s": 13.23,
+     "wall_s": 21.66,
+     "driven_m": 3.588,
+     "truth_to_goal_m": 0.405,
+     "amcl_error_m": 0.128,
+     "end_truth": [
+      45.78778933301454,
+      7.986368308162576,
+      -0.4778681216620236
+     ],
+     "end_amcl": [
+      45.7584339541134,
+      7.861926800585709,
+      -0.4328816394672402
+     ],
+     "reset_to_start": null,
+     "error_name": "NONE"
+    },
+    {
+     "id": "order1_dock_1",
+     "label": "order 1: to dock_1",
+     "goal": [
+      38.5,
+      1.3,
+      0.0
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 51.28,
+     "wall_s": 84.28,
+     "driven_m": 6.394,
+     "truth_to_goal_m": 4.745,
+     "amcl_error_m": 0.347,
+     "end_truth": [
+      40.74072265752016,
+      5.482556749017081,
+      -2.9274072817055186
+     ],
+     "end_amcl": [
+      40.58306958745543,
+      5.173921326842911,
+      -2.7647439115644916
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "order2_obj_dispatch_pregrasp",
+     "label": "order 2: to obj_dispatch",
+     "goal": [
+      27.443,
+      7.316,
+      2.7489
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.68,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 13.424,
+     "amcl_error_m": 0.347,
+     "end_truth": [
+      40.74072265752016,
+      5.482556749017081,
+      -2.9274072817055186
+     ],
+     "end_amcl": [
+      40.58306958745543,
+      5.173921326842911,
+      -2.7647439115644916
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "order2_dispatch_drop",
+     "label": "order 2: to dispatch_drop",
+     "goal": [
+      23.0,
+      1.4,
+      0.0
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.67,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 18.204,
+     "amcl_error_m": 0.347,
+     "end_truth": [
+      40.74072265752016,
+      5.482556749017081,
+      -2.9274072817055186
+     ],
+     "end_amcl": [
+      40.58306958745543,
+      5.173921326842911,
+      -2.7647439115644916
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    }
+   ],
+   "succeeded": 1,
+   "of": 4,
+   "succeeded_with_driving": 1,
+   "legs_with_driving_or_failed": 4,
+   "files": {
+    "arbiter.log": {
+     "bytes": 826,
+     "sha256": "cc4d4c694163814f2367f44a6dad9b364ac1df61df6319c3cc93508215dbab20"
+    },
+    "bag.log": {
+     "bytes": 3477,
+     "sha256": "9bf51926179c2f7c01ebedb2829ddd1ddb328ca8d19df3117a46ba9a7f0e4673"
+    },
+    "case.json": {
+     "bytes": 203,
+     "sha256": "4b322bf1c38026882f91c8ae0444da80dc9dcefcb72884d6178018f167d73c18"
+    },
+    "clean_after.txt": {
+     "bytes": 38,
+     "sha256": "1a8504b77cb08f6051c092477b55cbd2dba648afeccd2aa724f16ee0a04c5f57"
+    },
+    "clean_before.txt": {
+     "bytes": 38,
+     "sha256": "4cd72afa235a03c3f5ade1742e37ae300c88aea2233c0cea6814af4814e37013"
+    },
+    "ghost_summary.mcap": {
+     "bytes": 1335732,
+     "sha256": "25a5ec80285b5627dfa760da224395ca9f51d3ae696b48abb64e9e635d12dc10"
+    },
+    "goals.json": {
+     "bytes": 1063,
+     "sha256": "55a867d82f9a0eda3a9c4c972d25404714e57b9283f80a511bb4383cb35172aa"
+    },
+    "lifecycle.txt": {
+     "bytes": 292,
+     "sha256": "08d6a5a05bbc713deaf3647eec6ad4b6e6879acd63003953d30d5287776eebb5"
+    },
+    "meta.json": {
+     "bytes": 1607,
+     "sha256": "b010a6c36f138bbe586d6601b27a080d12cd393ba76dbe2a6cd3cb77f641b4e2"
+    },
+    "models.txt": {
+     "bytes": 2597,
+     "sha256": "d2fd5f492b0ec4f863de605eecdc834175ff6870364dc2ab323ce06f12678c58"
+    },
+    "nav.log": {
+     "bytes": 69522,
+     "sha256": "a8a550fdd7860d895b0c898c4ce46410a000783a1cca6a865bdcf31c12ce0b87"
+    },
+    "poses_at_end.txt": {
+     "bytes": 35394,
+     "sha256": "79a10d1ef2a1f22447a60ad2b53a7136ce27f235da0ae6e3d80cb0a487a79a49"
+    },
+    "poses_at_launch.txt": {
+     "bytes": 35301,
+     "sha256": "3148f6ac9caf27b67bf6c1b5775084b8992bf2adc497da70d18e0958a76d88c2"
+    },
+    "results.jsonl": {
+     "bytes": 2178,
+     "sha256": "23c8b3ea6444ae56f83176f4e1c435d6f3ca1e3345418dc8cd58d42d84c7a9cf"
+    },
+    "runner.log": {
+     "bytes": 872,
+     "sha256": "412303a01c75fe7945c032d423c4c4c641f2fc0443edcc91e0b3cdf9a1d1a979"
+    },
+    "sim.log": {
+     "bytes": 20574,
+     "sha256": "9439285d1e808db4875bf278219ae4d153ac42c56428583e208c9169cf58a5e7"
+    },
+    "teleport.txt": {
+     "bytes": 12,
+     "sha256": "46eeeedc969f106320d874ff0cb0c5c1ea169952665865f64b8f5318d626c8a3"
+    },
+    "truth_after_teleport.txt": {
+     "bytes": 1082,
+     "sha256": "5fd36e2940dfb5cbd3e0391ef9731823670bcaa6e575cfb1922de74cf1275f8b"
+    },
+    "wheel_publishers.txt": {
+     "bytes": 997,
+     "sha256": "7533b40c2e19598013ee8221a83197822dea8ad53fc0d49b593d4b041d1d59d9"
+    },
+    "bag/bag_0.mcap": {
+     "bytes": 26487979,
+     "sha256": "d66eb520070bfd32fd1ea6a86815e1f8b24bed69fba19da2dc2cb904d57278ae"
+    },
+    "bag/metadata.yaml": {
+     "bytes": 19838,
+     "sha256": "4d69d0a76b2aad5453e567fb359550a2196f2c84066b18962813319b9ddbcee2"
+    }
+   }
+  },
+  {
+   "run": "m6f8_ghost_2",
+   "raw_dir": "~/coco_lab_runs/m6/m6f8_ghost_2",
+   "meta": {
+    "started_utc": "2026-10-22T20:02:42Z",
+    "evidence_class": "STACK (full ROS 2 stack in Gazebo, headless; never hardware)",
+    "git_commit": "e212e6f4681330c0bb62afb39e3a25f5fcacc40d",
+    "git_dirty_paths": 1,
+    "ros_domain_id": "79",
+    "world_to_map": [
+     0.0,
+     0.0
+    ],
+    "world": "/home/gautham/coco_lab_runs/m6/gazebo_models/worlds/coco_depot_v1.sdf",
+    "world_sha256": "11c58b460a56facf080f10500f133490497925e43b287bee69f83560aa012246",
+    "map_yaml_sha256": "2fb7d8314d6b5ff5db3b9d566ea130c7011b64439c88edda0fa4d2d3c6d40c76",
+    "map_pgm_sha256": "acd8bc01b1a794230bcff6327f884c2610022753bdd27b61dc0d29d3958e8a78",
+    "nav2_params_sha256": "0fcd787de790e25753b49fe93f3204779bff6546fad33079d05290fb939ba330",
+    "goals": "/home/gautham/coco_lab_runs/m6/m6f8_ghost_2/goals.json",
+    "goals_sha256": "55a867d82f9a0eda3a9c4c972d25404714e57b9283f80a511bb4383cb35172aa",
+    "packages": {
+     "ros-jazzy-nav2-bringup": "1.3.12-1noble.20260616.082701",
+     "ros-jazzy-nav2-amcl": "1.3.11-1noble.20260412.054619",
+     "ros-jazzy-nav2-smac-planner": "1.3.11-1noble.20260412.062222",
+     "ros-jazzy-nav2-dwb-controller": "1.3.11-1noble.20260412.065547",
+     "ros-jazzy-ros-gz-sim": "1.0.22-1noble.20260412.044601",
+     "ros-jazzy-rosbag2-py": "0.26.10-2noble.20260412.060353"
+    },
+    "power_profile": "balanced",
+    "ac_online": "1",
+    "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "launch": [
+     "gazebo_models full_world_robo.launch.py gui:=false world:=<abs> (traverse false)",
+     "custom_teleop arbiter.launch.py initial_mode:=nav use_sim_time:=true",
+     "gazebo_models nav.launch.py arbiter:=true map:=<gen> params_file:=<gen>"
+    ]
+   },
+   "goals": [
+    {
+     "id": "order1_obj_dock_pregrasp",
+     "label": "order 1: to obj_dock",
+     "goal": [
+      46.057,
+      7.684,
+      5.8905
+     ],
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "error_msg": "",
+     "sim_s": 13.21,
+     "wall_s": 24.45,
+     "driven_m": 3.584,
+     "truth_to_goal_m": 0.405,
+     "amcl_error_m": 0.158,
+     "end_truth": [
+      45.77579670444307,
+      7.975031078671733,
+      -0.44485069978440733
+     ],
+     "end_amcl": [
+      45.761347793291826,
+      7.817827744626064,
+      -0.4462550230702408
+     ],
+     "reset_to_start": null,
+     "error_name": "NONE"
+    },
+    {
+     "id": "order1_dock_1",
+     "label": "order 1: to dock_1",
+     "goal": [
+      38.5,
+      1.3,
+      0.0
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 22.69,
+     "wall_s": 41.19,
+     "driven_m": 5.647,
+     "truth_to_goal_m": 4.92,
+     "amcl_error_m": 0.304,
+     "end_truth": [
+      41.50047479260664,
+      5.199563752730035,
+      -1.6503684759241286
+     ],
+     "end_amcl": [
+      41.30112171664299,
+      4.970555312912513,
+      -1.62482546554104
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "order2_obj_dispatch_pregrasp",
+     "label": "order 2: to obj_dispatch",
+     "goal": [
+      27.443,
+      7.316,
+      2.7489
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.62,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 14.216,
+     "amcl_error_m": 0.304,
+     "end_truth": [
+      41.50047479260664,
+      5.199563752730035,
+      -1.6503684759241286
+     ],
+     "end_amcl": [
+      41.30112171664299,
+      4.970555312912513,
+      -1.62482546554104
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "order2_dispatch_drop",
+     "label": "order 2: to dispatch_drop",
+     "goal": [
+      23.0,
+      1.4,
+      0.0
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.49,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 18.887,
+     "amcl_error_m": 0.304,
+     "end_truth": [
+      41.50047479260664,
+      5.199563752730035,
+      -1.6503684759241286
+     ],
+     "end_amcl": [
+      41.30112171664299,
+      4.970555312912513,
+      -1.62482546554104
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    }
+   ],
+   "succeeded": 1,
+   "of": 4,
+   "succeeded_with_driving": 1,
+   "legs_with_driving_or_failed": 4,
+   "files": {
+    "arbiter.log": {
+     "bytes": 2857,
+     "sha256": "76cf8addebd533e7fcdbe41debfcfadeaedb77bf419baf3f848069238178d023"
+    },
+    "bag.log": {
+     "bytes": 3477,
+     "sha256": "e329f26a2100092d70c5ab404c23dc76e28912d902c385577af532ca01ac8b1f"
+    },
+    "case.json": {
+     "bytes": 203,
+     "sha256": "4b322bf1c38026882f91c8ae0444da80dc9dcefcb72884d6178018f167d73c18"
+    },
+    "clean_after.txt": {
+     "bytes": 38,
+     "sha256": "a8127ab6e52b1cce95207a2d18f6e2c6058ccb5b486aba7a0f30cd868e8a76e1"
+    },
+    "clean_before.txt": {
+     "bytes": 38,
+     "sha256": "4cd72afa235a03c3f5ade1742e37ae300c88aea2233c0cea6814af4814e37013"
+    },
+    "ghost_summary.mcap": {
+     "bytes": 832554,
+     "sha256": "c165a5e770af1dcde7d1298c6cfe4c544d2ee5fc943df651b9ea8b9234c2fd48"
+    },
+    "goals.json": {
+     "bytes": 1063,
+     "sha256": "55a867d82f9a0eda3a9c4c972d25404714e57b9283f80a511bb4383cb35172aa"
+    },
+    "lifecycle.txt": {
+     "bytes": 292,
+     "sha256": "08d6a5a05bbc713deaf3647eec6ad4b6e6879acd63003953d30d5287776eebb5"
+    },
+    "meta.json": {
+     "bytes": 1607,
+     "sha256": "041890acf75e7aecab9bba190d874f0495afa2d5f5c2f546d5918f5d3c4628a6"
+    },
+    "models.txt": {
+     "bytes": 2597,
+     "sha256": "419de22ad7c4d550e30df91e02f5ac82d8f743ba92fec0bdb2db9f06d483e7ab"
+    },
+    "nav.log": {
+     "bytes": 64131,
+     "sha256": "14c173b8debdc18653278501478ffa42b3faa157ebafd5869c904d3107faa346"
+    },
+    "poses_at_end.txt": {
+     "bytes": 35354,
+     "sha256": "7efb169528fecbad9cf4e1d09f135685f024ad4a6f057077026ff3ebe73edffe"
+    },
+    "poses_at_launch.txt": {
+     "bytes": 35300,
+     "sha256": "4d2dd5c550180425e9fc77f9d26f585339cdb2562332982d2a1027a9620d49f0"
+    },
+    "results.jsonl": {
+     "bytes": 2159,
+     "sha256": "ccf2e685e8cfe02c039450587182fca73cda78c34f2d3f71163dddc66ba89175"
+    },
+    "runner.log": {
+     "bytes": 871,
+     "sha256": "a77bf450ba745b375a9baea103ea128fdcd82510f8ec1a028fb8736beb9e2536"
+    },
+    "sim.log": {
+     "bytes": 21114,
+     "sha256": "f3198433a832b7fbf204932e95880ad867164eef8e2cf5efa7057a470612a894"
+    },
+    "teleport.txt": {
+     "bytes": 12,
+     "sha256": "46eeeedc969f106320d874ff0cb0c5c1ea169952665865f64b8f5318d626c8a3"
+    },
+    "truth_after_teleport.txt": {
+     "bytes": 1079,
+     "sha256": "ddf5f84ce3e3edb997eb4f58b82413b7ed0e7c1a641ab3d7b6ff805b3ad19526"
+    },
+    "wheel_publishers.txt": {
+     "bytes": 997,
+     "sha256": "faa1d170d3c822e5af98035e80d5b028d8e8f89e859c4a5c4e47e87ae464d737"
+    },
+    "bag/bag_0.mcap": {
+     "bytes": 16588466,
+     "sha256": "fd7ea28a8170e9d42281c64b54bd1c5fd89c5643f1b6b9f4e805ea3a6c174000"
+    },
+    "bag/metadata.yaml": {
+     "bytes": 19833,
+     "sha256": "5c9859cb2ee1277dbb4c7ae5fd0e633a9a900b93d24888585f6a29ce583b06bd"
+    }
+   }
+  }
+ ]
+}

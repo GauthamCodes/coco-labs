@@ -56,3 +56,25 @@ M5.6 ADB check: no real phone connected. Phone criterion still pending USB.
 [ADB check on 2026-10-19](data/m5/phone/ADB_CHECK_M511_2026-10-19.txt) still lists no device. Real viewport/safe-area/Chrome/network/battery/temperature, real touch latency and real one/ten-minute frame-rate measurements remain pending USB. The agent will measure automatically when available; no manual owner measurements requested.
 
 Default choices remain provisional: 60 fps (optional 120), automatic tier starting medium with DPR cap 1.5; high cap 2 and low cap 1. These are shipped settings, not a conclusion about phone heat. The real ten-minute heat run alone can finalize them. Emulated results and their limitations are linked from M5_RESULTS.md.
+
+## Measured on the real device (G1.13, 2026-10-23)
+
+Nothing Phone (1) A063, Android 15 (Nothing OS V3.2), Chrome 156.0.8078.47, Adreno 642L, over USB
+(`lab_web/tools/phone/real_phone.mjs` and the DevTools-free `real_phone_free.mjs`; evidence
+`docs/v2/g1/data/g113/README.md` §5, `docs/v2/g1/G1_REVIEW.md`). Gautham's display size is
+enlarged (density 478 against the physical 420), which changes the CSS viewport:
+
+| Fact | Assumption above | Measured |
+| --- | --- | --- |
+| CSS viewport, portrait in a tab | ~412 × 915 | 361 × 654 (screen 362 × 804) |
+| CSS viewport, landscape in a tab | ~915 × 412 | 710 × 269 (Chrome's address bar and system bars stay) |
+| CSS viewport, landscape full screen | — | 803 × 361 |
+| Device pixel ratio | ~2.625 | 2.9875 |
+| Cutout and navigation | landscape left edge; bottom gesture bar | landscape safe area left 46 px (the punch hole), others 0; 3-button navigation bar on this phone |
+| Browser full screen | requested on game start | granted on a real tap; **while DevTools is attached Chrome keeps its bars** (measure without it) |
+
+Defaults, set from the real 10-minute full-screen run: **tier medium** (drawing pixel ratio 1.25)
+and **a 60 fps cap** (60 fps median, frame p95 19.2 ms, 0 context losses; skin 36 → 43 °C while
+charging). Uncapped (120 fps) and at *high* the phone ran hotter and slower (73 fps median at high
+and 120). Layout must work down to 269 CSS px of height (iPhone Safari and refused full screen):
+the HUD scales below 320 px, checked in CI at 710 × 269.

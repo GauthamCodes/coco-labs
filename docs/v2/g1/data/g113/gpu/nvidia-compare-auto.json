@@ -1,0 +1,77 @@
+{
+ "scene": "compare",
+ "tier": "default",
+ "quality": "default",
+ "seconds": 60,
+ "gpu": "nvidia",
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "machine_start": {
+  "gpu_asked": "nvidia",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P0, 61",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "45.5 % brave (gautham)",
+   "45.5 % brave (gautham)",
+   "36.4 % gnome-shell (gautham)",
+   "9.1 % Xorg (gautham)",
+   "9.1 % brave (gautham)",
+   "9.1 % brave (gautham)"
+  ],
+  "nvidia_util": "33 %, 247 MiB",
+  "nvidia_procs": [
+   "Xorg sm 16 %",
+   "gnome-shell sm 17 %",
+   "firefox sm - %"
+  ]
+ },
+ "started": "2026-10-22T20:49:52.633Z",
+ "errors": [],
+ "console_errors": [],
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "canvases": 1,
+ "arena_tier": "high",
+ "fps": {
+  "median": 59.659938351441234,
+  "minimum": 59.47660586831452,
+  "windows": 60
+ },
+ "frame_interval_ms": {
+  "median": 16.699999999254942,
+  "p95": 17,
+  "p99": 17.299999997019768,
+  "max": 19.699999999254942,
+  "frames": 3626,
+  "over_50": 0
+ },
+ "webgl_context_lost": 0,
+ "machine_end": {
+  "gpu_asked": "nvidia",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P0, 64",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "54.5 % brave (gautham)",
+   "54.5 % brave (gautham)",
+   "45.5 % brave (gautham)",
+   "36.4 % gnome-shell (gautham)",
+   "27.3 % chrome-headless (gautham)",
+   "18.2 % Xorg (gautham)"
+  ],
+  "nvidia_util": "37 %, 436 MiB",
+  "nvidia_procs": [
+   "Xorg sm 16 %",
+   "gnome-shell sm - %",
+   "firefox sm - %",
+   "chrome-headless sm 20 %"
+  ]
+ },
+ "ended": "2026-10-22T20:51:02.802Z",
+ "passed_no_errors": true
+}

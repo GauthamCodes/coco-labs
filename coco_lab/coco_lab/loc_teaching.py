@@ -36,10 +36,10 @@ they are built at site-build time from ``gazebo_models/maps``, because
 coco_lab ships no data files.
 """
 
-import math
 from typing import Dict, List, Tuple
 
 from .maps import LabMap, OCCUPIED, Raster
+from .numerics import math
 from .sketch import Kidnap, Noise, Scenario
 
 RES = 0.10

@@ -11,7 +11,7 @@ import yaml
 REPO = Path(__file__).resolve().parents[2]
 
 
-@pytest.mark.parametrize('hash_version', [1, 2])
+@pytest.mark.parametrize('hash_version', [1, 2, 3])
 @pytest.mark.parametrize('panes', [2, 4])
 def test_inflated_compare_is_independent_and_emits_all_cells(hash_version, panes):
     spec = importlib.util.spec_from_file_location(
@@ -50,7 +50,7 @@ def test_inflated_compare_is_independent_and_emits_all_cells(hash_version, panes
     assert len(headers) == 1 and headers[0]['robot_radius'] == 0.25
 
 
-@pytest.mark.parametrize('hash_version', [1, 2])
+@pytest.mark.parametrize('hash_version', [1, 2, 3])
 def test_view_only_costmap_does_not_step_or_change_the_run(hash_version):
     spec = importlib.util.spec_from_file_location(
         'view_costmap_test_glue', REPO / 'lab_web/src/arena/arena_glue.py')

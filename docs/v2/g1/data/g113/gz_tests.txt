@@ -1,0 +1,6 @@
+2026-10-23T00:03:40+05:30
+gz: /opt/ros/jazzy/opt/gz_tools_vendor/bin/gz 14.9.0
+power: balanced, AC 1
+test/test_worldgen.py::test_gz_sdf_check_passes_on_every_generated_world[kit] PASSED [ 50%]
+test/test_worldgen.py::test_gz_sdf_check_passes_on_every_generated_world[v2] PASSED [100%]
+====================== 2 passed, 1057 deselected in 5.14s ======================

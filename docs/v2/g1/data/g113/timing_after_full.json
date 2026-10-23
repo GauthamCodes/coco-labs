@@ -1,0 +1,261 @@
+{
+ "label": "after (G1.13 head), Full shift 1, NVIDIA",
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "profile": "desktop",
+ "wall_s": 350.452,
+ "final": {
+  "tick": 3475,
+  "mode": "idle",
+  "source": "idle",
+  "a": {
+   "phase": "idle",
+   "target": null,
+   "carried": null,
+   "want": "obj_dock",
+   "reason": "released obj_dock",
+   "attempt": 3
+  },
+  "f": {
+   "t": 347.4,
+   "seconds": 474.8,
+   "over": true,
+   "order": null,
+   "k": 3,
+   "orders": 3,
+   "deliveries": 3,
+   "contacts": 0,
+   "ghost": null
+  },
+  "primary": "GRAB: Nothing in range (G)",
+  "enabled": false
+ },
+ "log": [
+  [
+   "started",
+   3
+  ],
+  [
+   "order 1: to the object (AUTO taken)",
+   6
+  ],
+  [
+   "order 1: GRAB lit",
+   364
+  ],
+  [
+   "order 1: carried",
+   614
+  ],
+  [
+   "order 1: to the drop (AUTO taken)",
+   622
+  ],
+  [
+   "order 1: DROP lit",
+   1145
+  ],
+  [
+   "order 1: delivered",
+   1206
+  ],
+  [
+   "order 2: to the object (AUTO taken) TIMEOUT",
+   1318
+  ],
+  [
+   "order 2: to the object (AUTO taken)",
+   1321
+  ],
+  [
+   "order 2: GRAB lit",
+   1605
+  ],
+  [
+   "order 2: carried",
+   1865
+  ],
+  [
+   "order 2: to the drop (AUTO taken)",
+   1873
+  ],
+  [
+   "order 2: DROP lit",
+   2432
+  ],
+  [
+   "order 2: delivered",
+   2493
+  ],
+  [
+   "order 3: to the object (AUTO taken) TIMEOUT",
+   2605
+  ],
+  [
+   "order 3: to the object (AUTO taken)",
+   2608
+  ],
+  [
+   "order 3: GRAB lit",
+   2902
+  ],
+  [
+   "order 3: carried",
+   3149
+  ],
+  [
+   "order 3: to the drop (AUTO taken)",
+   3157
+  ],
+  [
+   "order 3: DROP lit",
+   3413
+  ],
+  [
+   "order 3: delivered",
+   3475
+  ]
+ ],
+ "errors": [],
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "gpu": "nvidia",
+ "machine": {
+  "gpu_asked": "nvidia",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P0, 61",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "63.6 % brave (gautham)",
+   "36.4 % gnome-shell (gautham)",
+   "36.4 % brave (gautham)",
+   "27.3 % brave (gautham)",
+   "18.2 % chrome-headless (gautham)",
+   "18.2 % chrome-headless (gautham)"
+  ],
+  "nvidia_util": "45 %, 341 MiB",
+  "nvidia_procs": [
+   "Xorg sm 19 %",
+   "gnome-shell sm 17 %",
+   "firefox sm - %",
+   "chrome-headless sm - %"
+  ]
+ },
+ "ended": "2026-10-22T20:21:57.940Z",
+ "deliveries": 3,
+ "orders": 3,
+ "seconds": 474.8,
+ "tick_gap_ms": {
+  "max": 166.80000000074506,
+  "p95_single": 119.10000000149012,
+  "median_single": 100,
+  "over_800": []
+ },
+ "worker_step_ms": {
+  "max": 58.79999999701977,
+  "p95": 39.5,
+  "median": 26.899999998509884,
+  "kept": 475
+ },
+ "busy_banner": {
+  "shown": 0,
+  "total_ms": 0
+ },
+ "tick_arrival_ms": {
+  "note": "time-stamped on the worker message (G1.12); tick_gap_ms above is sampled per animation frame",
+  "max": 155.30000000074506,
+  "p95": 117.5,
+  "median": 100,
+  "over_150": 1,
+  "ticks": 3472
+ },
+ "worker_step_all_ms": {
+  "max": 85.79999999701977,
+  "p95": 43.79999999701977,
+  "median": 27.199999999254942
+ },
+ "auto_presses": [
+  {
+   "label": "order 1: to the object",
+   "motion": true,
+   "press_to_motion_ms": 49,
+   "ticks": 1,
+   "max_tick_gap_ms": 0,
+   "over_period_ms": 0,
+   "max_worker_step_ms": 0
+  },
+  {
+   "label": "order 1: to the drop",
+   "motion": true,
+   "press_to_motion_ms": 1442,
+   "ticks": 15,
+   "max_tick_gap_ms": 131,
+   "over_period_ms": 31,
+   "max_worker_step_ms": 58
+  },
+  {
+   "label": "order 2: to the object",
+   "motion": true,
+   "press_to_motion_ms": 8490,
+   "ticks": 86,
+   "max_tick_gap_ms": 132,
+   "over_period_ms": 32,
+   "max_worker_step_ms": 54
+  },
+  {
+   "label": "order 2: to the object",
+   "motion": true,
+   "press_to_motion_ms": 346,
+   "ticks": 4,
+   "max_tick_gap_ms": 109,
+   "over_period_ms": 9,
+   "max_worker_step_ms": 30
+  },
+  {
+   "label": "order 2: to the drop",
+   "motion": true,
+   "press_to_motion_ms": 1048,
+   "ticks": 11,
+   "max_tick_gap_ms": 119,
+   "over_period_ms": 19,
+   "max_worker_step_ms": 41
+  },
+  {
+   "label": "order 3: to the object",
+   "motion": true,
+   "press_to_motion_ms": 8486,
+   "ticks": 86,
+   "max_tick_gap_ms": 130,
+   "over_period_ms": 30,
+   "max_worker_step_ms": 54
+  },
+  {
+   "label": "order 3: to the object",
+   "motion": true,
+   "press_to_motion_ms": 351,
+   "ticks": 4,
+   "max_tick_gap_ms": 107,
+   "over_period_ms": 7,
+   "max_worker_step_ms": 47
+  },
+  {
+   "label": "order 3: to the drop",
+   "motion": true,
+   "press_to_motion_ms": 1449,
+   "ticks": 15,
+   "max_tick_gap_ms": 109,
+   "over_period_ms": 9,
+   "max_worker_step_ms": 34
+  }
+ ],
+ "auto_max_tick_gap_ms": 132,
+ "frame_js_ms": {
+  "max": 16.399999998509884,
+  "p95": 6.200000002980232,
+  "median": 3.400000002235174,
+  "frames": 21010,
+  "over_50": 0,
+  "slow": []
+ }
+}

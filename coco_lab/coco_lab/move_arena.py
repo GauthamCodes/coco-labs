@@ -48,7 +48,6 @@ command; FAILED_TO_MAKE_PROGRESS (105) when the robot moves less than
 0.1 m in 10 s.
 """
 
-import math
 import struct
 from typing import List, Optional, Tuple
 
@@ -57,6 +56,7 @@ from .arena import ArenaError, Q_STATE, SUBSYSTEMS
 from .columns import Batch
 from .control import (DWA, LocalWindow, MPPI, PathTracker, RPP,
                       WindowParams)
+from .numerics import math
 from .sketch import wrap
 
 CONTROLLERS = ('builtin', 'dwa', 'rpp', 'mppi')

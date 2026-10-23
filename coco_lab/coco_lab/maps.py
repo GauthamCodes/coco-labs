@@ -52,13 +52,13 @@ a *saved map* (pgm + yaml), not a costmap.
 
 import hashlib
 import json
-import math
 import os
 import struct
 from typing import Dict, Optional, Sequence, Tuple
 
 from .grid import DEFAULT_COST_SCALE, DEFAULT_COST_WEIGHT, Grid
 from .heuristics import SQRT2
+from .numerics import math
 
 SCHEMA = 'coco_lab.map'
 VERSION = '1.0'

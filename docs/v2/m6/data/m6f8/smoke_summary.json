@@ -1,0 +1,1159 @@
+{
+ "about": "M6F.8 Gazebo + Nav2 on the Depot (tools/m6/m6f8_summary.py); STACK evidence",
+ "error_codes": {
+  "0": "NONE",
+  "103": "FollowPath INVALID_PATH",
+  "205": "ComputePathToPose START_OCCUPIED"
+ },
+ "runs": [
+  {
+   "run": "m6f8_smoke_1",
+   "raw_dir": "~/coco_lab_runs/m6/m6f8_smoke_1",
+   "meta": {
+    "started_utc": "2026-10-22T18:53:36Z",
+    "evidence_class": "STACK (full ROS 2 stack in Gazebo, headless; never hardware)",
+    "git_commit": "cfd6acd122c8288097d880eab07aa2806317a947",
+    "git_dirty_paths": 2,
+    "ros_domain_id": "79",
+    "world_to_map": [
+     0.0,
+     0.0
+    ],
+    "world": "/home/gautham/coco_lab_runs/m6/gazebo_models/worlds/coco_depot_v1.sdf",
+    "world_sha256": "11c58b460a56facf080f10500f133490497925e43b287bee69f83560aa012246",
+    "map_yaml_sha256": "2fb7d8314d6b5ff5db3b9d566ea130c7011b64439c88edda0fa4d2d3c6d40c76",
+    "map_pgm_sha256": "acd8bc01b1a794230bcff6327f884c2610022753bdd27b61dc0d29d3958e8a78",
+    "nav2_params_sha256": "0fcd787de790e25753b49fe93f3204779bff6546fad33079d05290fb939ba330",
+    "goals": "/home/gautham/coco_lab_runs/m6/m6f8_smoke_1/goals.json",
+    "goals_sha256": "77485c3e73fe0caf2cceb2d9421cefc5ad7d358c546e149909a5b0c829a2e020",
+    "packages": {
+     "ros-jazzy-nav2-bringup": "1.3.12-1noble.20260616.082701",
+     "ros-jazzy-nav2-amcl": "1.3.11-1noble.20260412.054619",
+     "ros-jazzy-nav2-smac-planner": "1.3.11-1noble.20260412.062222",
+     "ros-jazzy-nav2-dwb-controller": "1.3.11-1noble.20260412.065547",
+     "ros-jazzy-ros-gz-sim": "1.0.22-1noble.20260412.044601",
+     "ros-jazzy-rosbag2-py": "0.26.10-2noble.20260412.060353"
+    },
+    "power_profile": "balanced",
+    "ac_online": "1",
+    "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "launch": [
+     "gazebo_models full_world_robo.launch.py gui:=false world:=<abs> (traverse false)",
+     "custom_teleop arbiter.launch.py initial_mode:=nav use_sim_time:=true",
+     "gazebo_models nav.launch.py arbiter:=true map:=<gen> params_file:=<gen>"
+    ]
+   },
+   "goals": [
+    {
+     "id": "zone_loading_dock_open",
+     "label": "loading dock (roomiest free cell)",
+     "goal": [
+      42.25,
+      8.45,
+      0.0
+     ],
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "error_msg": "",
+     "sim_s": 70.41,
+     "wall_s": 97.87,
+     "driven_m": 19.955,
+     "truth_to_goal_m": 0.473,
+     "amcl_error_m": 0.454,
+     "end_truth": [
+      42.01410288115492,
+      8.859806777079939,
+      0.4241325853161567
+     ],
+     "end_amcl": [
+      42.13221475780636,
+      8.421620233019283,
+      0.27564472787571803
+     ],
+     "reset_to_start": null,
+     "error_name": "NONE"
+    },
+    {
+     "id": "obj_dock_pregrasp",
+     "label": "loading dock object",
+     "goal": [
+      46.057,
+      7.316,
+      0.3927
+     ],
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "error_msg": "",
+     "sim_s": 19.84,
+     "wall_s": 27.76,
+     "driven_m": 4.19,
+     "truth_to_goal_m": 0.526,
+     "amcl_error_m": 0.513,
+     "end_truth": [
+      45.9642469841217,
+      7.833799964159159,
+      0.17910657673342573
+     ],
+     "end_amcl": [
+      46.05648170079297,
+      7.329273738144909,
+      0.0005757126044442345
+     ],
+     "reset_to_start": null,
+     "error_name": "NONE"
+    },
+    {
+     "id": "obj_aisle_1_pregrasp",
+     "label": "high-bay aisle 1",
+     "goal": [
+      20.443,
+      17.116,
+      2.7489
+     ],
+     "status": "ABORTED",
+     "error_code": 103,
+     "error_msg": "",
+     "sim_s": 87.63,
+     "wall_s": 123.48,
+     "driven_m": 23.985,
+     "truth_to_goal_m": 4.986,
+     "amcl_error_m": 0.484,
+     "end_truth": [
+      25.38955723225449,
+      16.488965548880454,
+      -3.097085061534302
+     ],
+     "end_amcl": [
+      25.422185569236643,
+      16.005586492344236,
+      -2.751191865242702
+     ],
+     "reset_to_start": null,
+     "error_name": "FollowPath INVALID_PATH"
+    },
+    {
+     "id": "obj_aisle_3_pregrasp",
+     "label": "high-bay aisle 3",
+     "goal": [
+      28.057,
+      26.316,
+      0.3927
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.76,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 10.183,
+     "amcl_error_m": 0.484,
+     "end_truth": [
+      25.38955723225449,
+      16.488965548880454,
+      -3.097085061534302
+     ],
+     "end_amcl": [
+      25.422185569236643,
+      16.005586492344236,
+      -2.751191865242702
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "zone_office_open",
+     "label": "office block (roomiest free cell: the corridor)",
+     "goal": [
+      4.85,
+      23.35,
+      0.0
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.76,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 21.655,
+     "amcl_error_m": 0.484,
+     "end_truth": [
+      25.38955723225449,
+      16.488965548880454,
+      -3.097085061534302
+     ],
+     "end_amcl": [
+      25.422185569236643,
+      16.005586492344236,
+      -2.751191865242702
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "obj_office_ne_pregrasp",
+     "label": "office room (north-east)",
+     "goal": [
+      10.184,
+      29.057,
+      1.9635
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.78,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 19.727,
+     "amcl_error_m": 0.484,
+     "end_truth": [
+      25.38955723225449,
+      16.488965548880454,
+      -3.097085061534302
+     ],
+     "end_amcl": [
+      25.422185569236643,
+      16.005586492344236,
+      -2.751191865242702
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "obj_maze_1_pregrasp",
+     "label": "workshop maze",
+     "goal": [
+      13.184,
+      16.557,
+      1.9635
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.76,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 12.206,
+     "amcl_error_m": 0.484,
+     "end_truth": [
+      25.38955723225449,
+      16.488965548880454,
+      -3.097085061534302
+     ],
+     "end_amcl": [
+      25.422185569236643,
+      16.005586492344236,
+      -2.751191865242702
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "dispatch_drop_centre",
+     "label": "dispatch floor",
+     "goal": [
+      23.0,
+      1.4,
+      0.0
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.78,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 15.277,
+     "amcl_error_m": 0.484,
+     "end_truth": [
+      25.38955723225449,
+      16.488965548880454,
+      -3.097085061534302
+     ],
+     "end_amcl": [
+      25.422185569236643,
+      16.005586492344236,
+      -2.751191865242702
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "level_start",
+     "label": "back to the start",
+     "goal": [
+      23.0,
+      6.0,
+      0.0
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.78,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 10.758,
+     "amcl_error_m": 0.484,
+     "end_truth": [
+      25.38955723225449,
+      16.488965548880454,
+      -3.097085061534302
+     ],
+     "end_amcl": [
+      25.422185569236643,
+      16.005586492344236,
+      -2.751191865242702
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    }
+   ],
+   "succeeded": 2,
+   "of": 9,
+   "succeeded_with_driving": 2,
+   "legs_with_driving_or_failed": 9,
+   "files": {
+    "arbiter.log": {
+     "bytes": 826,
+     "sha256": "365333348433acde8f930712fa3ee7b75e0c53a3899345156e9f12c19bd94f47"
+    },
+    "bag.log": {
+     "bytes": 3477,
+     "sha256": "640e5fc34a1135a7a24fddd8b37fdafad207276e1c77d6d505a39c688df3bd42"
+    },
+    "clean_after.txt": {
+     "bytes": 38,
+     "sha256": "fd5a6face899e3b93fe5fb35337b54f4dc0aad22e3dc4c84991c15b2f40e40e5"
+    },
+    "clean_before.txt": {
+     "bytes": 38,
+     "sha256": "4cd72afa235a03c3f5ade1742e37ae300c88aea2233c0cea6814af4814e37013"
+    },
+    "goals.json": {
+     "bytes": 1767,
+     "sha256": "77485c3e73fe0caf2cceb2d9421cefc5ad7d358c546e149909a5b0c829a2e020"
+    },
+    "lifecycle.txt": {
+     "bytes": 292,
+     "sha256": "08d6a5a05bbc713deaf3647eec6ad4b6e6879acd63003953d30d5287776eebb5"
+    },
+    "meta.json": {
+     "bytes": 1607,
+     "sha256": "41c7b0a3015d6bbf2e1cb4d034c21fa7fe2135eddef21cffd8cacb1f423a8b4b"
+    },
+    "models.txt": {
+     "bytes": 2597,
+     "sha256": "d2fd5f492b0ec4f863de605eecdc834175ff6870364dc2ab323ce06f12678c58"
+    },
+    "nav.log": {
+     "bytes": 89431,
+     "sha256": "fa446dcc9a64692a4e8151bd9173d0f15415b0622d3a0d478dfc926c971ae660"
+    },
+    "poses_at_end.txt": {
+     "bytes": 35348,
+     "sha256": "0d6c98d07244c01f08d58b9ae02de521c63f1527058e1100c088eb0f83eca37d"
+    },
+    "poses_at_launch.txt": {
+     "bytes": 35362,
+     "sha256": "6f0fcb06d7895e058716704078b4d67a3df0b48396e5dcca9dba617c40ab952d"
+    },
+    "results.jsonl": {
+     "bytes": 4844,
+     "sha256": "536bb3b263e9790d04ba36fc95a7126163099ab6c1ccc5b95895eb79f72fe414"
+    },
+    "runner.log": {
+     "bytes": 1478,
+     "sha256": "e19faa51e63089b738ded18891d922eceba0233b9abda9f659eed2a26702edc1"
+    },
+    "sim.log": {
+     "bytes": 21413,
+     "sha256": "5a6078258c2a0da5664c12069c90dd2e331ed7e029885c0b4ccc04a9cc56630d"
+    },
+    "teleport.txt": {
+     "bytes": 12,
+     "sha256": "46eeeedc969f106320d874ff0cb0c5c1ea169952665865f64b8f5318d626c8a3"
+    },
+    "truth_after_teleport.txt": {
+     "bytes": 1053,
+     "sha256": "e8a94f1caa0489f30f3c89222f2305e9080780f1bfbb51f1c8e172a4f1f54a94"
+    },
+    "wheel_publishers.txt": {
+     "bytes": 997,
+     "sha256": "71542d1dec32f13bbebfab548622637a144bb217222808e38b39164ca2aad6d0"
+    },
+    "bag/bag_0.mcap": {
+     "bytes": 88973260,
+     "sha256": "7e9d98e5435b649b667769b2f01d6b39d3748ede6da3f76b87afb79802498b9e"
+    },
+    "bag/metadata.yaml": {
+     "bytes": 19846,
+     "sha256": "5c3cefc5a917c9a9faa5eea089cee24d7334f153501339b017065d8d418fbf76"
+    }
+   }
+  },
+  {
+   "run": "m6f8_smoke_2",
+   "raw_dir": "~/coco_lab_runs/m6/m6f8_smoke_2",
+   "meta": {
+    "started_utc": "2026-10-22T19:00:41Z",
+    "evidence_class": "STACK (full ROS 2 stack in Gazebo, headless; never hardware)",
+    "git_commit": "cfd6acd122c8288097d880eab07aa2806317a947",
+    "git_dirty_paths": 2,
+    "ros_domain_id": "79",
+    "world_to_map": [
+     0.0,
+     0.0
+    ],
+    "world": "/home/gautham/coco_lab_runs/m6/gazebo_models/worlds/coco_depot_v1.sdf",
+    "world_sha256": "11c58b460a56facf080f10500f133490497925e43b287bee69f83560aa012246",
+    "map_yaml_sha256": "2fb7d8314d6b5ff5db3b9d566ea130c7011b64439c88edda0fa4d2d3c6d40c76",
+    "map_pgm_sha256": "acd8bc01b1a794230bcff6327f884c2610022753bdd27b61dc0d29d3958e8a78",
+    "nav2_params_sha256": "0fcd787de790e25753b49fe93f3204779bff6546fad33079d05290fb939ba330",
+    "goals": "/home/gautham/coco_lab_runs/m6/m6f8_smoke_2/goals.json",
+    "goals_sha256": "77485c3e73fe0caf2cceb2d9421cefc5ad7d358c546e149909a5b0c829a2e020",
+    "packages": {
+     "ros-jazzy-nav2-bringup": "1.3.12-1noble.20260616.082701",
+     "ros-jazzy-nav2-amcl": "1.3.11-1noble.20260412.054619",
+     "ros-jazzy-nav2-smac-planner": "1.3.11-1noble.20260412.062222",
+     "ros-jazzy-nav2-dwb-controller": "1.3.11-1noble.20260412.065547",
+     "ros-jazzy-ros-gz-sim": "1.0.22-1noble.20260412.044601",
+     "ros-jazzy-rosbag2-py": "0.26.10-2noble.20260412.060353"
+    },
+    "power_profile": "balanced",
+    "ac_online": "1",
+    "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "launch": [
+     "gazebo_models full_world_robo.launch.py gui:=false world:=<abs> (traverse false)",
+     "custom_teleop arbiter.launch.py initial_mode:=nav use_sim_time:=true",
+     "gazebo_models nav.launch.py arbiter:=true map:=<gen> params_file:=<gen>"
+    ]
+   },
+   "goals": [
+    {
+     "id": "zone_loading_dock_open",
+     "label": "loading dock (roomiest free cell)",
+     "goal": [
+      42.25,
+      8.45,
+      0.0
+     ],
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "error_msg": "",
+     "sim_s": 72.24,
+     "wall_s": 109.97,
+     "driven_m": 19.988,
+     "truth_to_goal_m": 0.443,
+     "amcl_error_m": 0.425,
+     "end_truth": [
+      42.07060867978356,
+      8.854954930177426,
+      0.40516284153610677
+     ],
+     "end_amcl": [
+      42.20965436386557,
+      8.452928541690783,
+      0.27477031650925926
+     ],
+     "reset_to_start": null,
+     "error_name": "NONE"
+    },
+    {
+     "id": "obj_dock_pregrasp",
+     "label": "loading dock object",
+     "goal": [
+      46.057,
+      7.316,
+      0.3927
+     ],
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "error_msg": "",
+     "sim_s": 20.5,
+     "wall_s": 33.75,
+     "driven_m": 4.223,
+     "truth_to_goal_m": 0.448,
+     "amcl_error_m": 0.5,
+     "end_truth": [
+      46.00086332955312,
+      7.760367720774502,
+      0.10708464557183207
+     ],
+     "end_amcl": [
+      46.12416624135402,
+      7.275545863278721,
+      0.01723470710386881
+     ],
+     "reset_to_start": null,
+     "error_name": "NONE"
+    },
+    {
+     "id": "obj_aisle_1_pregrasp",
+     "label": "high-bay aisle 1",
+     "goal": [
+      20.443,
+      17.116,
+      2.7489
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 91.61,
+     "wall_s": 125.54,
+     "driven_m": 24.338,
+     "truth_to_goal_m": 4.805,
+     "amcl_error_m": 2.53,
+     "end_truth": [
+      25.18607020530496,
+      16.349598928482784,
+      -2.5131548304704547
+     ],
+     "end_amcl": [
+      26.107030616086387,
+      18.706007585187777,
+      -3.0232308931686376
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "obj_aisle_3_pregrasp",
+     "label": "high-bay aisle 3",
+     "goal": [
+      28.057,
+      26.316,
+      0.3927
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.83,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 10.372,
+     "amcl_error_m": 2.53,
+     "end_truth": [
+      25.18607020530496,
+      16.349598928482784,
+      -2.5131548304704547
+     ],
+     "end_amcl": [
+      26.107030616086387,
+      18.706007585187777,
+      -3.0232308931686376
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "zone_office_open",
+     "label": "office block (roomiest free cell: the corridor)",
+     "goal": [
+      4.85,
+      23.35,
+      0.0
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.8,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 21.507,
+     "amcl_error_m": 2.53,
+     "end_truth": [
+      25.18607020530496,
+      16.349598928482784,
+      -2.5131548304704547
+     ],
+     "end_amcl": [
+      26.107030616086387,
+      18.706007585187777,
+      -3.0232308931686376
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "obj_office_ne_pregrasp",
+     "label": "office room (north-east)",
+     "goal": [
+      10.184,
+      29.057,
+      1.9635
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.83,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 19.661,
+     "amcl_error_m": 2.53,
+     "end_truth": [
+      25.18607020530496,
+      16.349598928482784,
+      -2.5131548304704547
+     ],
+     "end_amcl": [
+      26.107030616086387,
+      18.706007585187777,
+      -3.0232308931686376
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "obj_maze_1_pregrasp",
+     "label": "workshop maze",
+     "goal": [
+      13.184,
+      16.557,
+      1.9635
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.83,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 12.004,
+     "amcl_error_m": 2.53,
+     "end_truth": [
+      25.18607020530496,
+      16.349598928482784,
+      -2.5131548304704547
+     ],
+     "end_amcl": [
+      26.107030616086387,
+      18.706007585187777,
+      -3.0232308931686376
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "dispatch_drop_centre",
+     "label": "dispatch floor",
+     "goal": [
+      23.0,
+      1.4,
+      0.0
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.83,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 15.109,
+     "amcl_error_m": 2.53,
+     "end_truth": [
+      25.18607020530496,
+      16.349598928482784,
+      -2.5131548304704547
+     ],
+     "end_amcl": [
+      26.107030616086387,
+      18.706007585187777,
+      -3.0232308931686376
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "level_start",
+     "label": "back to the start",
+     "goal": [
+      23.0,
+      6.0,
+      0.0
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 0.72,
+     "wall_s": 1.03,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 10.578,
+     "amcl_error_m": 2.53,
+     "end_truth": [
+      25.18607020530496,
+      16.349598928482784,
+      -2.5131548304704547
+     ],
+     "end_amcl": [
+      26.107030616086387,
+      18.706007585187777,
+      -3.0232308931686376
+     ],
+     "reset_to_start": null,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    }
+   ],
+   "succeeded": 2,
+   "of": 9,
+   "succeeded_with_driving": 2,
+   "legs_with_driving_or_failed": 9,
+   "files": {
+    "arbiter.log": {
+     "bytes": 826,
+     "sha256": "159430ae830062102f0b1c6dcc93e6616cd863997818c7537bd7339792b4edfa"
+    },
+    "bag.log": {
+     "bytes": 3477,
+     "sha256": "60455469d2a1fc4021ce6cf961eec1d7575cb6df4b99a4a02df22d9be93afc10"
+    },
+    "clean_after.txt": {
+     "bytes": 38,
+     "sha256": "a8127ab6e52b1cce95207a2d18f6e2c6058ccb5b486aba7a0f30cd868e8a76e1"
+    },
+    "clean_before.txt": {
+     "bytes": 38,
+     "sha256": "4cd72afa235a03c3f5ade1742e37ae300c88aea2233c0cea6814af4814e37013"
+    },
+    "goals.json": {
+     "bytes": 1767,
+     "sha256": "77485c3e73fe0caf2cceb2d9421cefc5ad7d358c546e149909a5b0c829a2e020"
+    },
+    "lifecycle.txt": {
+     "bytes": 292,
+     "sha256": "08d6a5a05bbc713deaf3647eec6ad4b6e6879acd63003953d30d5287776eebb5"
+    },
+    "meta.json": {
+     "bytes": 1607,
+     "sha256": "600fc0baca63e25c208d50d8aa6dbde2813f3dd3510a72023228810bd12b4dca"
+    },
+    "models.txt": {
+     "bytes": 2597,
+     "sha256": "419de22ad7c4d550e30df91e02f5ac82d8f743ba92fec0bdb2db9f06d483e7ab"
+    },
+    "nav.log": {
+     "bytes": 88956,
+     "sha256": "4ace4455c0d8c8badbebc09679ad3f5c6fba356c816bba40ab56ee7cac6ff2c2"
+    },
+    "poses_at_end.txt": {
+     "bytes": 35363,
+     "sha256": "559aa1f700ac3b48f4039ea8828f70201725993130d0acbd8a1d74cf4e8c57e2"
+    },
+    "poses_at_launch.txt": {
+     "bytes": 35289,
+     "sha256": "86565ca8547bdbe42f3ebb39f505d9ce9e4bb01737b40338dc1614c11cfd6d1e"
+    },
+    "results.jsonl": {
+     "bytes": 4875,
+     "sha256": "a1f3516680c6dff14e182ce142e87dad5f4b39bb4be488d8eaf71bcb5e670715"
+    },
+    "runner.log": {
+     "bytes": 1477,
+     "sha256": "67c079e600577d76c56e7b916087554f90bd40baa6328074a444721d9ced575c"
+    },
+    "sim.log": {
+     "bytes": 21121,
+     "sha256": "40f22d23184f4db87899d22c61f9c3776b8a26d2c77808ab81a34384e0c3d697"
+    },
+    "teleport.txt": {
+     "bytes": 12,
+     "sha256": "46eeeedc969f106320d874ff0cb0c5c1ea169952665865f64b8f5318d626c8a3"
+    },
+    "truth_after_teleport.txt": {
+     "bytes": 1082,
+     "sha256": "8b255cb3141a9aae660b8b0a3ecc397842471814f950f513e4f75fb7af46fc55"
+    },
+    "wheel_publishers.txt": {
+     "bytes": 997,
+     "sha256": "27f423687c6c6b285f3bf1a1531b1cd294069fbf38559aa44c9e179f6c10e41b"
+    },
+    "bag/bag_0.mcap": {
+     "bytes": 92185808,
+     "sha256": "373bb189d18d60be6e42aaa5eed04c9b5bcc6d692d7eb6c9c11241deb933fed7"
+    },
+    "bag/metadata.yaml": {
+     "bytes": 19846,
+     "sha256": "3b6a7e22bee52817fbe4133238a465fdf4f13f814fb956fe3e59c6abd45826d1"
+    }
+   }
+  },
+  {
+   "run": "m6f8_smoke_3",
+   "raw_dir": "~/coco_lab_runs/m6/m6f8_smoke_3",
+   "meta": {
+    "started_utc": "2026-10-22T19:07:37Z",
+    "evidence_class": "STACK (full ROS 2 stack in Gazebo, headless; never hardware)",
+    "git_commit": "a9f27c937da816a3483c1739d5f997c10e3df9d8",
+    "git_dirty_paths": 2,
+    "ros_domain_id": "79",
+    "world_to_map": [
+     0.0,
+     0.0
+    ],
+    "world": "/home/gautham/coco_lab_runs/m6/gazebo_models/worlds/coco_depot_v1.sdf",
+    "world_sha256": "11c58b460a56facf080f10500f133490497925e43b287bee69f83560aa012246",
+    "map_yaml_sha256": "2fb7d8314d6b5ff5db3b9d566ea130c7011b64439c88edda0fa4d2d3c6d40c76",
+    "map_pgm_sha256": "acd8bc01b1a794230bcff6327f884c2610022753bdd27b61dc0d29d3958e8a78",
+    "nav2_params_sha256": "0fcd787de790e25753b49fe93f3204779bff6546fad33079d05290fb939ba330",
+    "goals": "/home/gautham/coco_lab_runs/m6/m6f8_smoke_3/goals.json",
+    "goals_sha256": "77485c3e73fe0caf2cceb2d9421cefc5ad7d358c546e149909a5b0c829a2e020",
+    "packages": {
+     "ros-jazzy-nav2-bringup": "1.3.12-1noble.20260616.082701",
+     "ros-jazzy-nav2-amcl": "1.3.11-1noble.20260412.054619",
+     "ros-jazzy-nav2-smac-planner": "1.3.11-1noble.20260412.062222",
+     "ros-jazzy-nav2-dwb-controller": "1.3.11-1noble.20260412.065547",
+     "ros-jazzy-ros-gz-sim": "1.0.22-1noble.20260412.044601",
+     "ros-jazzy-rosbag2-py": "0.26.10-2noble.20260412.060353"
+    },
+    "power_profile": "balanced",
+    "ac_online": "1",
+    "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "launch": [
+     "gazebo_models full_world_robo.launch.py gui:=false world:=<abs> (traverse false)",
+     "custom_teleop arbiter.launch.py initial_mode:=nav use_sim_time:=true",
+     "gazebo_models nav.launch.py arbiter:=true map:=<gen> params_file:=<gen>"
+    ]
+   },
+   "goals": [
+    {
+     "id": "zone_loading_dock_open",
+     "label": "loading dock (roomiest free cell)",
+     "goal": [
+      42.25,
+      8.45,
+      0.0
+     ],
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "error_msg": "",
+     "sim_s": 69.94,
+     "wall_s": 95.86,
+     "driven_m": 19.97,
+     "truth_to_goal_m": 0.462,
+     "amcl_error_m": 0.476,
+     "end_truth": [
+      42.041703170722485,
+      8.862151123659569,
+      0.37880470318057885
+     ],
+     "end_amcl": [
+      42.00988996978781,
+      8.387624924366854,
+      0.38822061544144515
+     ],
+     "reset_to_start": true,
+     "error_name": "NONE"
+    },
+    {
+     "id": "obj_dock_pregrasp",
+     "label": "loading dock object",
+     "goal": [
+      46.057,
+      7.316,
+      0.3927
+     ],
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "error_msg": "",
+     "sim_s": 94.32,
+     "wall_s": 127.77,
+     "driven_m": 24.032,
+     "truth_to_goal_m": 0.412,
+     "amcl_error_m": 0.486,
+     "end_truth": [
+      45.97849430313766,
+      7.720426257758146,
+      0.19240029478065468
+     ],
+     "end_amcl": [
+      46.10266613639643,
+      7.250112736577761,
+      0.1332805543788636
+     ],
+     "reset_to_start": true,
+     "error_name": "NONE"
+    },
+    {
+     "id": "obj_aisle_1_pregrasp",
+     "label": "high-bay aisle 1",
+     "goal": [
+      20.443,
+      17.116,
+      2.7489
+     ],
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "error_msg": "",
+     "sim_s": 55.6,
+     "wall_s": 75.16,
+     "driven_m": 14.142,
+     "truth_to_goal_m": 0.112,
+     "amcl_error_m": 0.167,
+     "end_truth": [
+      20.55006009929296,
+      17.083701084349055,
+      -3.117922009823052
+     ],
+     "end_amcl": [
+      20.396386167725556,
+      17.14924818604114,
+      3.1237679801958835
+     ],
+     "reset_to_start": true,
+     "error_name": "NONE"
+    },
+    {
+     "id": "obj_aisle_3_pregrasp",
+     "label": "high-bay aisle 3",
+     "goal": [
+      28.057,
+      26.316,
+      0.3927
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 64.88,
+     "wall_s": 88.9,
+     "driven_m": 18.554,
+     "truth_to_goal_m": 4.555,
+     "amcl_error_m": 0.146,
+     "end_truth": [
+      24.04164948624955,
+      24.165490963433076,
+      1.3807913240661809
+     ],
+     "end_amcl": [
+      24.002292934477037,
+      24.305845254171338,
+      1.3976221661469976
+     ],
+     "reset_to_start": true,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "zone_office_open",
+     "label": "office block (roomiest free cell: the corridor)",
+     "goal": [
+      4.85,
+      23.35,
+      0.0
+     ],
+     "status": "ABORTED",
+     "error_code": 103,
+     "error_msg": "",
+     "sim_s": 92.16,
+     "wall_s": 136.58,
+     "driven_m": 26.183,
+     "truth_to_goal_m": 7.902,
+     "amcl_error_m": 6.915,
+     "end_truth": [
+      12.0561228075121,
+      26.592770694003022,
+      -2.926139818310512
+     ],
+     "end_amcl": [
+      18.263014640657012,
+      23.545227483865126,
+      -1.7190019847586386
+     ],
+     "reset_to_start": true,
+     "error_name": "FollowPath INVALID_PATH"
+    },
+    {
+     "id": "obj_office_ne_pregrasp",
+     "label": "office room (north-east)",
+     "goal": [
+      10.184,
+      29.057,
+      1.9635
+     ],
+     "status": "ABORTED",
+     "error_code": 205,
+     "error_msg": "",
+     "sim_s": 81.21,
+     "wall_s": 130.3,
+     "driven_m": 22.459,
+     "truth_to_goal_m": 6.023,
+     "amcl_error_m": 0.108,
+     "end_truth": [
+      14.623891566849037,
+      24.9876042459816,
+      1.428500737441057
+     ],
+     "end_amcl": [
+      14.538390359780305,
+      24.921637822128,
+      1.6539214338544965
+     ],
+     "reset_to_start": true,
+     "error_name": "ComputePathToPose START_OCCUPIED"
+    },
+    {
+     "id": "obj_maze_1_pregrasp",
+     "label": "workshop maze",
+     "goal": [
+      13.184,
+      16.557,
+      1.9635
+     ],
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "error_msg": "",
+     "sim_s": 67.83,
+     "wall_s": 108.76,
+     "driven_m": 15.552,
+     "truth_to_goal_m": 0.11,
+     "amcl_error_m": 0.052,
+     "end_truth": [
+      13.130940342826662,
+      16.46025225322562,
+      1.71058493922661
+     ],
+     "end_amcl": [
+      13.130846246252883,
+      16.51194065646849,
+      1.5759156599869175
+     ],
+     "reset_to_start": true,
+     "error_name": "NONE"
+    },
+    {
+     "id": "dispatch_drop_centre",
+     "label": "dispatch floor",
+     "goal": [
+      23.0,
+      1.4,
+      0.0
+     ],
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "error_msg": "",
+     "sim_s": 29.51,
+     "wall_s": 47.72,
+     "driven_m": 4.858,
+     "truth_to_goal_m": 0.146,
+     "amcl_error_m": 0.193,
+     "end_truth": [
+      22.978805594413284,
+      1.5440385241612822,
+      -0.41127539239592
+     ],
+     "end_amcl": [
+      23.00452857429776,
+      1.352731018985196,
+      -0.3617352419220712
+     ],
+     "reset_to_start": true,
+     "error_name": "NONE"
+    },
+    {
+     "id": "level_start",
+     "label": "back to the start",
+     "goal": [
+      23.0,
+      6.0,
+      0.0
+     ],
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "error_msg": "",
+     "sim_s": 0.68,
+     "wall_s": 1.05,
+     "driven_m": 0.0,
+     "truth_to_goal_m": 0.0,
+     "amcl_error_m": 0.006,
+     "end_truth": [
+      23.0,
+      6.0,
+      6.729675451606272e-15
+     ],
+     "end_amcl": [
+      23.004968717339967,
+      5.996590254456095,
+      -0.004280343658602565
+     ],
+     "reset_to_start": true,
+     "error_name": "NONE"
+    }
+   ],
+   "succeeded": 6,
+   "of": 9,
+   "succeeded_with_driving": 5,
+   "legs_with_driving_or_failed": 8,
+   "files": {
+    "arbiter.log": {
+     "bytes": 2212,
+     "sha256": "e0d85e8f7249e7a75dd16e7c690d231ba102edf7dde6283894b34f2c5db14f83"
+    },
+    "bag.log": {
+     "bytes": 3477,
+     "sha256": "9c79946dd8aa97819466d28e3b936772a5f4d785793ab8d13b92c53399641ffa"
+    },
+    "clean_after.txt": {
+     "bytes": 38,
+     "sha256": "a8127ab6e52b1cce95207a2d18f6e2c6058ccb5b486aba7a0f30cd868e8a76e1"
+    },
+    "clean_before.txt": {
+     "bytes": 38,
+     "sha256": "4cd72afa235a03c3f5ade1742e37ae300c88aea2233c0cea6814af4814e37013"
+    },
+    "goals.json": {
+     "bytes": 1767,
+     "sha256": "77485c3e73fe0caf2cceb2d9421cefc5ad7d358c546e149909a5b0c829a2e020"
+    },
+    "lifecycle.txt": {
+     "bytes": 292,
+     "sha256": "08d6a5a05bbc713deaf3647eec6ad4b6e6879acd63003953d30d5287776eebb5"
+    },
+    "meta.json": {
+     "bytes": 1607,
+     "sha256": "8f13e4d006de4455d282ed2a2a083aba24ff42a25397e8565a49800ff8571025"
+    },
+    "models.txt": {
+     "bytes": 2597,
+     "sha256": "d2fd5f492b0ec4f863de605eecdc834175ff6870364dc2ab323ce06f12678c58"
+    },
+    "nav.log": {
+     "bytes": 173767,
+     "sha256": "74e0a686ccbbba3e93a25e25dd2b6cf3bc1865c5a028ff369f716c3758a6f446"
+    },
+    "poses_at_end.txt": {
+     "bytes": 35342,
+     "sha256": "9f9feae033bda52b7613b2234841e34322eff447828bc56f7b286a6b6ebe049e"
+    },
+    "poses_at_launch.txt": {
+     "bytes": 35269,
+     "sha256": "248be3ce4eb3b7306accace779ab90dce3b7b279554cb71272405a2a30de81d8"
+    },
+    "results.jsonl": {
+     "bytes": 4977,
+     "sha256": "daef82f8c18dabc67abb55afad3e8514edeace77e95498e80e55b00374f4bd42"
+    },
+    "runner.log": {
+     "bytes": 1488,
+     "sha256": "26cb18150c3ee1308ed6c0e6da88d2b4474354f64815840e215f23e547656f25"
+    },
+    "sim.log": {
+     "bytes": 21410,
+     "sha256": "e953abf9efb48e04551062cfd7915b4ecd57aef827fe53ef8f7c8c11f71e4a77"
+    },
+    "teleport.txt": {
+     "bytes": 12,
+     "sha256": "46eeeedc969f106320d874ff0cb0c5c1ea169952665865f64b8f5318d626c8a3"
+    },
+    "truth_after_teleport.txt": {
+     "bytes": 1039,
+     "sha256": "0adae1807039d1be7108ed516da3cec5c6c0ce3f3938dbd9cc957b2fbd2ebe0d"
+    },
+    "wheel_publishers.txt": {
+     "bytes": 997,
+     "sha256": "19e392b0c77ad6cf00f0c40f36198bd4cf1f005c529927a213a8bf051df6befa"
+    },
+    "bag/bag_0.mcap": {
+     "bytes": 298911648,
+     "sha256": "f73a9f07369c7aca77ba10f39e4c1f2bf63db3d34ae4d48d0c8822cab07ec104"
+    },
+    "bag/metadata.yaml": {
+     "bytes": 19856,
+     "sha256": "a41e91a4199521c05b9b52e8f2522c08790543e953c45f2af43b4f0b002e14cd"
+    }
+   }
+  }
+ ]
+}

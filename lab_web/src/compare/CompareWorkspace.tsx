@@ -3,12 +3,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArenaClient } from '../arena/client';
 import { PlanStore } from '../arena/render/planStore';
-import type { CompareInflation, CompareResult, World, LoopFrame } from '../arena/protocol';
+import { SPEC_FILES, type CompareInflation, type CompareResult, type World, type LoopFrame } from '../arena/protocol';
 import { WorldStage, type ComparisonData } from '../ui/reference/WorldStage';
 import type { CostmapData, CostLayer } from '../ui/reference/comparisonPixels';
 import { ModeNav } from '../ui/ModeNav';
 import '../ui/reference/reference.css';
 import './compare.css';
+import '../game/fonts.css';
+import '../game/skin.css';
 import { Tours, type TourPreset } from './Tours';
 const BASE = import.meta.env.BASE_URL;
 const LABELS: Record<string, string> = { bfs: 'BFS', dijkstra: 'Dijkstra', astar: 'A*', greedy: 'Greedy', weighted_astar: 'Weighted A*', dstar_lite: 'D* Lite' };
@@ -16,6 +18,12 @@ const FAMILY_NAMES = { global: ['astar', 'dijkstra', 'greedy', 'weighted_astar']
 type Family = keyof typeof FAMILY_NAMES;
 Object.assign(LABELS, { dwa: 'DWA-style sampler', rpp: 'Pure pursuit', mppi: 'MPPI', mcl: 'MCL · no injection', mcl_augmented: 'MCL · injection', ekf: 'EKF' });
 const KEYS = ['A', 'B', 'C', 'D'] as const;
+/** G1.6: `?world=depot` compares on the COCO Depot (World Spec v3); `&goal=x,y` (map frame) sets the goal. */
+const urlWorld = () => new URLSearchParams(location.search).get('world') === 'depot' ? SPEC_FILES.depot : undefined;
+const urlGoal = (): [number, number] | null => {
+  const g = (new URLSearchParams(location.search).get('goal') ?? '').split(',').map(Number);
+  return g.length === 2 && g.every(Number.isFinite) && Math.abs(g[0]) < 1e4 && Math.abs(g[1]) < 1e4 ? [g[0], g[1]] : null;
+};
 const fresh = (world: World, occupancy: Uint8Array, count: number): ComparisonData => ({ world, occupancy, stores: Array.from({ length: count }, () => new PlanStore(world.width, world.height)) });
 export function CompareWorkspace() {
   const [data, setData] = useState<ComparisonData>();
@@ -28,7 +36,7 @@ export function CompareWorkspace() {
   const [names, setNames] = useState(['astar', 'dijkstra']);
   const [params, setParams] = useState<CompareInflation>({ inflation_radius: .5, cost_scaling_factor: 10, robot_radius: .25 });
   const [deviceLabel, setDeviceLabel] = useState('This device · ' + navigator.platform);
-  const [goal, setGoal] = useState<[number, number]>([2.5, 2]);
+  const [goal, setGoal] = useState<[number, number]>(() => urlGoal() ?? [2.5, 2]);
   const [result, setResult] = useState<CompareResult>();
   const [busy, setBusy] = useState(true), [error, setError] = useState('');
   const [perspective, setPerspective] = useState(false), [difference, setDifference] = useState(false);
@@ -51,7 +59,7 @@ export function CompareWorkspace() {
     const next = fresh(old.world, old.occupancy, nextNames.length);
     state.current = next; setData(next); setResult(undefined); setBusy(true); setError(''); setPlaying(false); setCursor(0); history.current = []; setLoopCount(0); setLoopFrames(undefined);
     if (nextFamily === 'global') c.compareMany(nextNames, nextGoal[0], nextGoal[1], nextParams);
-    else c.compareLoop({ family: nextFamily, names: nextNames, goal: nextGoal, inflation: nextParams, steps });
+    else c.compareLoop({ family: nextFamily, names: nextNames, goal: nextGoal, inflation: nextParams, steps, hash_version: 3 });
   };
   const applyLoopCursor = (value: number) => {
     const d = state.current; if (!d) return;
@@ -100,7 +108,7 @@ export function CompareWorkspace() {
         setCursor(Math.max(...d.stores.map(store => store.received))); setData({ ...d }); setResult(done); setBusy(false);
       },
       onError(stage, message) { setError(stage + ': ' + message); setBusy(false); },
-    }, { seed: 1, hashVersion: 2 });
+    }, { seed: 1, hashVersion: 3, spec: urlWorld() });
     client.current = c; return () => { c.close(); client.current = undefined; };
   }, []);
   cursorRef.current = cursor;

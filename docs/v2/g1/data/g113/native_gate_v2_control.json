@@ -1,0 +1,130 @@
+{
+ "hash_version": 2,
+ "tolerance": 1e-9,
+ "native": "CPython 3.12.3 x86_64",
+ "pyodide": "Pyodide 314.0.7 in Node v24.21.0",
+ "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+ "seconds": {
+  "native": 92.231,
+  "pyodide": 181.432
+ },
+ "cases": {
+  "planners": {
+   "family": "global (exact)",
+   "compared": 818951,
+   "exact": 818951,
+   "max_abs_diff": 0,
+   "failures": 0,
+   "first_failures": [],
+   "passed": true
+  },
+  "fetch_rush": {
+   "family": "global (exact): every tick's state hash, the scorecard",
+   "compared": 1436,
+   "exact": 16,
+   "max_abs_diff": 6.7209207088581024e-9,
+   "failures": 1420,
+   "first_failures": [
+    {
+     "path": "fetch_rush.tick_hashes[0]",
+     "native": "74fb4babdf8cb55950083aae5542386ffe185f1638cb71e03a5f4280f431966c",
+     "pyodide": "bb4da1516acb5ebe661925e297aaf4c828777ed34495274e07c8802ef0adb276"
+    },
+    {
+     "path": "fetch_rush.tick_hashes[1]",
+     "native": "b53a7c23418cabb1053e667a6c37f73c867af4e8d4cddf1adcd4cd0476f4057f",
+     "pyodide": "cc23d60e94740d5ab7961d48b3146a260e6341bbe2227a8b526059bd97e81d55"
+    },
+    {
+     "path": "fetch_rush.tick_hashes[2]",
+     "native": "d693a7913792901fd44bb159b1ef44f4cc70c2adc2406f61fdc57662c4fb4500",
+     "pyodide": "23b7aebf9480a45545aca7ba0309b386a4c8b919f0d037aa79a8d7ccee6ba08e"
+    },
+    {
+     "path": "fetch_rush.tick_hashes[3]",
+     "native": "70dcb8445fbf8e83c2dd854b728a3dcb7615947de68b725d7659092a23464dff",
+     "pyodide": "becd239728ef0affc1f97047986934c84b6707210caaed1268b7a4bf929d5db9"
+    },
+    {
+     "path": "fetch_rush.tick_hashes[4]",
+     "native": "1a97bce5374e905984c407186e9727c6ad326cb2d4aee154bc727c2232c66abe",
+     "pyodide": "a35ca190dbe7c67a4aea39a95a6c615a6622dd5d8d5051c00b953ce0abca6566"
+    }
+   ],
+   "ticks": 1419,
+   "first_differing_tick": 0,
+   "passed": false
+  },
+  "control": {
+   "family": "continuous (1e-9); discrete fields and hashes exact; compute_ms excluded",
+   "compared": 6440,
+   "exact": 3047,
+   "max_abs_diff": 0.446011142799704,
+   "failures": 1063,
+   "first_failures": [
+    {
+     "path": "control[0][0].hash",
+     "native": "a7f75553e2d366080d725440070a4db62fc6c526c744b8a1ae863d752498f170",
+     "pyodide": "318e59d3ca9c3eea2e66d40b2499b5e12bcebb4270bb465e1dbcb18eefe257ab"
+    },
+    {
+     "path": "control[0][1].hash",
+     "native": "79799abf6d4acd565e0c82eb4d0ac7612e94b5713a814b969b1d9d18a4275c4e",
+     "pyodide": "64061814c16038012d7636d46c690e6ca13297627d31e594df70a1d406435426"
+    },
+    {
+     "path": "control[0][2].hash",
+     "native": "d1c6971f508cb614c995576dd1bfd4b05497c557e957dffac2de2c719796715f",
+     "pyodide": "976bda041feee4c45b2a4a843b147e3acc825d9338b01495fb16416d604a3757"
+    },
+    {
+     "path": "control[0][3].hash",
+     "native": "a7f75553e2d366080d725440070a4db62fc6c526c744b8a1ae863d752498f170",
+     "pyodide": "318e59d3ca9c3eea2e66d40b2499b5e12bcebb4270bb465e1dbcb18eefe257ab"
+    },
+    {
+     "path": "control[1][0].hash",
+     "native": "a556d2607961f1c3ca728440807205e1503e314464e6576f9fa8b61d2fa27a98",
+     "pyodide": "dd8ee5efa4c89132200caa48dd14653dc3716fb5a91909b67c08899a9ed32516"
+    }
+   ],
+   "passed": false
+  },
+  "localise": {
+   "family": "continuous (1e-9); discrete fields and hashes exact; compute_ms excluded",
+   "compared": 25500,
+   "exact": 24084,
+   "max_abs_diff": 1.1102230246251565e-16,
+   "failures": 240,
+   "first_failures": [
+    {
+     "path": "localise[0][0].hash",
+     "native": "7d950f3c58b81d3a13333173d41bdf9ae000bcc1dce8da349f128fc559de80ef",
+     "pyodide": "bac34abae0378a9bdec6b11e119676f96211ac499f64f6a39f36c31c4375f266"
+    },
+    {
+     "path": "localise[0][1].hash",
+     "native": "3ccb7c9a82082a0c7b19989fd3bfc190c6774b6a0b7d5cb81bd4129d9847895e",
+     "pyodide": "ef6f948850bab07bbe6f7efea11fc5d768bb3658056c29ad780a82420c45a7b1"
+    },
+    {
+     "path": "localise[0][2].hash",
+     "native": "6debc44b3ac1ae4b814f37531e81252386b34b90bf4821d6432a25f5a33fe4d1",
+     "pyodide": "7ccd3ac47eb61523f3cffc4c4c6f980fe3a594e2628e4548fdf949771defe8a4"
+    },
+    {
+     "path": "localise[0][3].hash",
+     "native": "7d950f3c58b81d3a13333173d41bdf9ae000bcc1dce8da349f128fc559de80ef",
+     "pyodide": "bac34abae0378a9bdec6b11e119676f96211ac499f64f6a39f36c31c4375f266"
+    },
+    {
+     "path": "localise[1][0].hash",
+     "native": "b5b192e3a0081e23df24e33a5618b6c5153bac4110439a8a0217d4efd84c1119",
+     "pyodide": "96707779b4ba3977cf1c5e01667da432d6c40f727024ad44c965e42fd4a06d58"
+    }
+   ],
+   "passed": false
+  }
+ },
+ "passed": false
+}

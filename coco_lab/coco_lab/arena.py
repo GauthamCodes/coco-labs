@@ -63,24 +63,27 @@ hashes; M1's hash layout is unchanged (a search's id is not state).
 import copy
 from dataclasses import dataclass, field
 import hashlib
-import math
 import struct
 from typing import Dict, List, Optional, Sequence, Tuple
 
+from . import numerics
 from .events import SearchEventColumns
 from .grasp import Grasp
 from .maps import OCCUPIED
+from .numerics import math
 from .rng import Rng
 from .search import Collector, search_events, SearchResult
 from .sketch import (_inflated_grid_map, _nearest_free, apply_delta,
                      drive_command, LidarSpec, odom_delta, sample_delta,
                      SketchMap, step_pose, wrap)
 from .terrain import ray_rect, Terrain
-from .worldspec import (arena_map, normalize, scan_height, SPEC_VERSION_V2,
-                        terrain_map, to_map_frame)
+from .worldspec import (arena_map, normalize, scan_height, SPEC_VERSION_V3,
+                        terrain_map, TERRAIN_SPEC_VERSIONS, to_map_frame)
 
 #: The state-hash layout's name; a change to the layout changes this.
 STATE_LAYOUT = b'coco.arena.state.v1\x00'
+#: the hash-chain seed and state-bytes tag of versions 2 and 3 (v3: G1.8's numerics)
+_STATE_TAG = {2: b'coco.arena.state.v2', 3: b'coco.arena.state.v3'}
 #: M4.3: 'autonomy' hands control back to the last autonomous goal (the 3D
 #: Arena's Tab), 'grasp' is the gated grasp or release (its E; coco_lab.grasp);
 #: appended, so every earlier input keeps its meaning
@@ -218,9 +221,18 @@ class Arena:
                  lidar_every: int = 1, on_plan_batch=None,
                  plan_batch_size: int = 2048, on_family=None, hash_version: int = 1):
         """Build the world from ``spec`` and place the robot at its start."""
-        if hash_version not in (1, 2):
-            raise ArenaError('hash_version must be 1 or 2')
+        if hash_version not in (1, 2, 3):
+            raise ArenaError('hash_version must be 1, 2 or 3')
         self.hash_version = hash_version
+        self._build(spec, seed, planner, range_sigma, lidar_every, on_plan_batch,
+                    plan_batch_size, on_family)
+
+    # G1.8: version 3 computes every transcendental deterministically
+    # (coco_lab.numerics), so CPython and Pyodide agree bit for bit; G1.11: each
+    # entry point runs in its run's version and leaves the caller's in force after
+    @numerics.in_run
+    def _build(self, spec, seed, planner, range_sigma, lidar_every, on_plan_batch,
+               plan_batch_size, on_family):
         self.spec = normalize(spec)
         if planner not in PLANNERS:
             raise ArenaError(f'unknown planner {planner!r}')
@@ -231,7 +243,7 @@ class Arena:
         # M4.3: kinematic terrain following on a World Spec v2 (ADR 0007); a
         # v1 (flat) world has none, and everything below is exactly M3's
         self.terrain = Terrain(self.spec) \
-            if self.spec['spec_version'] == SPEC_VERSION_V2 else None
+            if self.spec['spec_version'] in TERRAIN_SPEC_VERSIONS else None
         #: what the LiDAR meets: on terrain the boxes alone (the ramps are met
         #: analytically, above the beam); on a flat world the one map
         self.scan_smap = SketchMap(terrain_map(self.spec, scan_only=True)) \
@@ -278,6 +290,9 @@ class Arena:
         self._pending: List[InputEvent] = []
         self._collector: Optional[Collector] = None
         self._stream = None
+        #: G1.12: a search run ahead of a goal (:meth:`prefetch`): ``(key, Collector)``;
+        #: not part of the state -- a tick adopts it only when its key is the tick's own
+        self._ahead = None
         self._want_plan = False
         #: a goal a subsystem asked for (M2.6: the mission), taken at the
         #: start of the next tick; ``_requested`` keeps it planned if the
@@ -297,10 +312,10 @@ class Arena:
         self._chain = hashlib.sha256(STATE_LAYOUT).digest()
         self._reset_robot()
         self.ranges = self._scan()
-        if self.hash_version == 2:
+        if self.hash_version >= 2:
             from .state_v2 import world_hash
             self._v2_world = world_hash(self.spec, self.lidar)
-            self._chain = hashlib.sha256(b'coco.arena.state.v2').digest()
+            self._chain = hashlib.sha256(_STATE_TAG[self.hash_version]).digest()
 
     # -- state -----------------------------------------------------------------
 
@@ -320,6 +335,7 @@ class Arena:
         self.user_teleop = False
         self.last_auto_goal: Optional[Tuple[str, Tuple[float, float]]] = None
 
+    @numerics.in_run
     def tilt(self) -> Tuple[float, float, float]:
         """``(z, pitch, roll)`` on the terrain (M4.3), zeros on a flat world."""
         if self.terrain is None:
@@ -394,6 +410,10 @@ class Arena:
                 self.grasp_notice = ('no targets on a flat world: the grasp is on the 3D '
                                      "arena's platforms (World Spec v2)")
                 return
+            if self.spec['spec_version'] == SPEC_VERSION_V3:   # M6F.5: Grasp Assist instead
+                self.grasp_notice = ("the gated grasp holds the COCO arena's targets; a "
+                                     'World Spec v3 level picks with Grasp Assist')
+                return
             if self.grasp is None:
                 self.grasp = Grasp(self.spec['world_to_map'])
             self.goal, self.waypoints, self.wp_index = None, [], 0
@@ -424,6 +444,7 @@ class Arena:
         else:
             self.mode = 'idle'
 
+    @numerics.in_run
     def reset_home(self) -> None:
         """
         Put the robot back at the start pose and restart the loop.
@@ -441,20 +462,57 @@ class Arena:
             for name in sorted(self.subsystems):
                 self.subsystems[name].on_reset(self)
 
-    def _plan_begin(self):
-        """Start the search from the current pose to the goal (not run yet)."""
+    def _plan_key(self, goal):
+        """Return the search a goal at ``goal`` starts from here: (planner, start, goal, grid)."""
         g = self.grid
         here = self.belief()
         s_cell = self.plan_map.cell_at(here[0], here[1])
-        t_cell = self.plan_map.cell_at(*self.goal)
+        t_cell = self.plan_map.cell_at(*goal)
         if s_cell is None or t_cell is None:
-            raise ArenaError(f'goal {self.goal} or the robot is off the map')
+            raise ArenaError(f'goal {goal} or the robot is off the map')
         s = _nearest_free(g, s_cell)
         t = _nearest_free(g, t_cell)
         if s is None or t is None:
-            raise ArenaError(f'no free cell near the robot or {self.goal}')
-        events = search_events(g, s, t, **PLANNERS[self.planner])
+            raise ArenaError(f'no free cell near the robot or {goal}')
+        return (self.planner, s, t, g)   # the grid itself: compared by identity
+
+    @numerics.in_run
+    def prefetch(self, goal, n: Optional[int] = None) -> bool:
+        """
+        G1.12: run, ahead of time, the search a goal at ``goal`` would start now.
+
+        Takes up to ``n`` events (all, if None) between ticks; returns whether that
+        search is done. A tick whose goal search has the same key (planner, start and
+        goal cells, grid) takes it over -- finished, or where it got to -- instead of
+        starting again: the same generator, so the same events, path and state. A
+        different key starts afresh. Never part of the state; the Arena runs the same
+        with or without it (only sooner). Not while a step is in progress.
+        """
+        if self._in_step:
+            raise ArenaError('prefetch inside a step')
+        try:
+            key = self._plan_key(goal)
+        except ArenaError:
+            self._ahead = None
+            return True
+        if self._ahead is None or self._ahead[0] != key:
+            _, s, t, _ = key
+            self._ahead = (key, Collector(search_events(self.grid, s, t,
+                                                        **PLANNERS[self.planner])))
+        return self._ahead[1].advance(n)
+
+    def _plan_begin(self):
+        """Start the search from the current pose to the goal (not run yet)."""
+        key = self._plan_key(self.goal)
+        _, s, t, _ = key
         self._plan_ctx = (self.planner, self.goal, self.tick)
+        ahead, self._ahead = self._ahead, None
+        if ahead is not None and ahead[0] == key and self.on_plan_batch is None:
+            # G1.12: this very search, already run (or begun) between ticks
+            self._stream = None
+            self._collector = ahead[1]
+            return
+        events = search_events(self.grid, s, t, **PLANNERS[self.planner])
         self._stream = None
         sink = None
         if self.on_plan_batch is not None:
@@ -543,6 +601,7 @@ class Arena:
             return 0.0, 0.0, True
         return 0.0, 0.0, False
 
+    @numerics.in_run
     def discs(self) -> List[Tuple[float, float, float]]:
         """Every moving body's (x, y, radius), from the subsystems (M2.5)."""
         out: List[Tuple[float, float, float]] = []
@@ -553,17 +612,21 @@ class Arena:
         return out
 
     def _scan(self) -> List[float]:
-        true = self.scan_smap.scan(self.pose, self.lidar, self.angles)
+        # G1.11: each beam's direction once a tick, shared by the walls, the ramps and the
+        # discs (each used to compute cos/sin of the same th + yaw + angle: the same bits)
+        base = self.pose[2] + self.lidar.mount[2]
+        dirs = [(math.cos(base + a), math.sin(base + a)) for a in self.angles]
+        true = self.scan_smap.scan(self.pose, self.lidar, self.angles, dirs)
         if self.terrain is not None:
             # SIMPLIFIED (ARENA_MODEL.md): the beam is horizontal at the sensor's
             # height above the surface under the robot; it stops where the ramp
             # rises above it
             rects = self.terrain.rects_above(self.tilt()[0] + self.beam_height)
             if rects:
-                true = _with_rects(true, self.pose, self.lidar, self.angles, rects)
+                true = _with_rects(true, self.pose, self.lidar, self.angles, rects, dirs)
         discs = self.discs() if self.subsystems else []
         if discs:
-            true = _with_discs(true, self.pose, self.lidar, self.angles, discs)
+            true = _with_discs(true, self.pose, self.lidar, self.angles, discs, dirs)
         lo, hi = self.lidar.range_min, self.lidar.range_max
         out = []
         for z in true:
@@ -595,6 +658,7 @@ class Arena:
 
     # -- the whole loop ---------------------------------------------------------
 
+    @numerics.in_run
     def belief(self) -> Tuple[float, float, float]:
         """Where the robot believes it is: a localiser's estimate, or truth."""
         for name in sorted(self.subsystems):
@@ -689,6 +753,7 @@ class Arena:
         if self._want_plan and self.goal is not None:
             self._plan_begin()
 
+    @numerics.in_run
     def begin_step(self, events: Sequence[InputEvent] = ()):
         """Apply this tick's inputs and start its search, if it needs one."""
         if self._in_step:
@@ -717,12 +782,14 @@ class Arena:
             self._in_step = False
             raise
 
+    @numerics.in_run
     def advance(self, n: Optional[int] = None) -> bool:
         """Take up to ``n`` events of the tick's search; return whether done."""
         if not self._in_step:
             raise ArenaError('advance outside a step')
         return self._collector is None or self._collector.advance(n)
 
+    @numerics.in_run
     def amend(self, events: Sequence[InputEvent]):
         """
         Add inputs to the tick in progress (they arrived while it planned).
@@ -750,6 +817,7 @@ class Arena:
             self._prepare()
             raise
 
+    @numerics.in_run
     def finish_step(self) -> Tick:
         """Finish the tick's search, advance one ``dt``, scan, hash."""
         if not self._in_step:
@@ -817,6 +885,7 @@ class Arena:
 
     # -- the per-tick state hash -------------------------------------------------
 
+    @numerics.in_run
     def state_bytes(self) -> bytes:
         """
         Return the canonical, quantized state (docs/v2/ARENA_MODEL.md).
@@ -870,11 +939,14 @@ class Arena:
             z, pitch, roll = self.tilt()
             parts += [TERRAIN_LAYOUT, struct.pack('<3q', _q(z, Q_STATE), _q(pitch, Q_STATE),
                                                   _q(roll, Q_STATE))]
-        if self.hash_version == 2:
+        if self.hash_version >= 2:
+            # v3 is v2's snapshot under its own tag: the bytes are encoded the
+            # same way; what changed is the numerics that computed them
             from .state_v2 import snapshot
-            return b'coco.arena.state.v2\0' + snapshot(self)
+            return _STATE_TAG[self.hash_version] + b'\0' + snapshot(self)
         return b''.join(parts)
 
+    @numerics.in_run
     def grasp_view(self) -> Optional[Dict[str, object]]:
         """Return what the renderer and the panels show of the grasp (M4.3)."""
         if self.grasp is None:
@@ -894,7 +966,7 @@ class Arena:
         return self._chain.hex()
 
 
-def _with_discs(ranges, pose, lidar, angles, discs) -> List[float]:
+def _with_discs(ranges, pose, lidar, angles, discs, dirs=None) -> List[float]:
     """Return ``ranges`` shortened where a beam meets a disc first."""
     x, y, th = pose
     mx, my, myaw = lidar.mount
@@ -903,7 +975,8 @@ def _with_discs(ranges, pose, lidar, angles, discs) -> List[float]:
     sy = y + s * mx + c * my
     out = list(ranges)
     for k, a in enumerate(angles):
-        ux, uy = math.cos(th + myaw + a), math.sin(th + myaw + a)
+        ux, uy = (dirs[k] if dirs is not None
+                  else (math.cos(th + myaw + a), math.sin(th + myaw + a)))
         for dx, dy, r in discs:
             fx, fy = dx - sx, dy - sy
             b = fx * ux + fy * uy
@@ -921,7 +994,7 @@ def _with_discs(ranges, pose, lidar, angles, discs) -> List[float]:
     return out
 
 
-def _with_rects(ranges, pose, lidar, angles, rects) -> List[float]:
+def _with_rects(ranges, pose, lidar, angles, rects, dirs=None) -> List[float]:
     """Return ``ranges`` shortened where a beam meets one of ``rects`` first (M4.3)."""
     x, y, th = pose
     mx, my, myaw = lidar.mount
@@ -930,7 +1003,8 @@ def _with_rects(ranges, pose, lidar, angles, rects) -> List[float]:
     sy = y + s * mx + c * my
     out = list(ranges)
     for k, a in enumerate(angles):
-        ux, uy = math.cos(th + myaw + a), math.sin(th + myaw + a)
+        ux, uy = (dirs[k] if dirs is not None
+                  else (math.cos(th + myaw + a), math.sin(th + myaw + a)))
         for r in rects:
             t = ray_rect(sx, sy, ux, uy, r)
             if t is not None and t < out[k]:

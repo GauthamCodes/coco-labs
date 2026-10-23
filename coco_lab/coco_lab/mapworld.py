@@ -34,13 +34,13 @@ every SLAM receives -- no truth in it.
 """
 
 from dataclasses import dataclass, field
-import math
 import random
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from . import landmarks as lmk
 from . import slam
 from .maps import LabMap
+from .numerics import math
 from .sketch import (LidarSpec, Scenario, simulate, SketchMap, UPDATE_MIN_A,
                      UPDATE_MIN_D, wrap)
 

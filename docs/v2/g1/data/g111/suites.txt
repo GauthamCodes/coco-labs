@@ -1,0 +1,27 @@
+G1.11 close: full suites on the final source (dfdf4e6), this container (Xeon x4, SwiftShader), 2026-10-21 (UTC).
+coco_lab was installed from the checkout first (pip --no-deps), as CI does.
+
+step                                   started   exit  finished
+coco_lab pytest -m "not gz"            16:31:53  0     16:43:59
+lab_web/tools pytest                   16:43:59  0     16:50:14
+build_catalog.py                       16:50:14  0     16:52:36
+npm run arena-assets                   16:52:36  0     16:52:53
+npm run typecheck                      16:52:53  0     16:52:54
+vitest                                 16:52:54  0     16:53:39
+npm run build                          16:53:39  0     16:53:59
+check_dist                             16:53:59  0     16:53:59
+fetch_v1_site                          16:53:59  0     16:54:00
+v1 links (Chromium)                    16:54:03  0     16:58:36
+
+-- coco_lab       1037 passed, 2 deselected (the gz tests) in 724.84s
+-- lab_web/tools  230 passed in 375.12s
+-- vitest         Test Files 65 passed (65); Tests 532 passed (532)
+-- v1 links       {"ok":true,"forms":50,"archive_views":6,"failed":0}
+-- check_dist     failures: []
+-- native gate    v3, every family exact (native_gate_scoped.json): planners 818951/818951,
+                  fetch_rush 1436/1436, control 6440/6440, localise 25500/25500
+-- CI (GitHub)    run 39635640420 on dfdf4e6: all three jobs green; Deploy skipped
+
+A pre-fix run (pip install of 991274b's coco_lab at 16:17) overlapped this one and wrote to
+the same summary; its lab_web/tools exit 1 (the Lab 5 replay the scoped numerics fix) is the
+failure 6db9412 fixed, and is not counted here.

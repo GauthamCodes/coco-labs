@@ -1,0 +1,147 @@
+{
+ "evidence": "MODEL",
+ "frames": [
+  "map",
+  "odom",
+  "base_footprint",
+  "base_link",
+  "lidar_link"
+ ],
+ "nodes": [
+  "cmd_vel_arbiter",
+  "diff_drive",
+  "global_planner",
+  "lidar",
+  "local_controller",
+  "map_server",
+  "robot_state_publisher",
+  "slam_or_amcl",
+  "teleop"
+ ],
+ "note": "ROS-shaped: the model speaks these message shapes; nothing here is a ROS connection (README invariant 2)",
+ "schema": "coco_lab.ros_graph",
+ "tf_tree": [
+  [
+   "map",
+   "odom"
+  ],
+  [
+   "odom",
+   "base_footprint"
+  ],
+  [
+   "base_footprint",
+   "base_link"
+  ],
+  [
+   "base_link",
+   "lidar_link"
+  ]
+ ],
+ "topics": [
+  {
+   "frame_id": "lidar_link",
+   "name": "/scan",
+   "publisher": "lidar",
+   "rate_hz": 10.0,
+   "subscribers": [
+    "slam_or_amcl",
+    "local_controller"
+   ],
+   "type": "sensor_msgs/msg/LaserScan",
+   "when": "periodic"
+  },
+  {
+   "frame_id": "odom",
+   "name": "/odom",
+   "publisher": "diff_drive",
+   "rate_hz": 10.0,
+   "subscribers": [
+    "slam_or_amcl",
+    "local_controller"
+   ],
+   "type": "nav_msgs/msg/Odometry",
+   "when": "periodic"
+  },
+  {
+   "frame_id": "map",
+   "name": "/map",
+   "publisher": "map_server",
+   "rate_hz": null,
+   "subscribers": [
+    "global_planner"
+   ],
+   "type": "nav_msgs/msg/OccupancyGrid",
+   "when": "latched"
+  },
+  {
+   "frame_id": "map",
+   "name": "/plan",
+   "publisher": "global_planner",
+   "rate_hz": null,
+   "subscribers": [
+    "local_controller"
+   ],
+   "type": "nav_msgs/msg/Path",
+   "when": "on_plan"
+  },
+  {
+   "frame_id": "",
+   "name": "/cmd_vel",
+   "publisher": "cmd_vel_arbiter",
+   "rate_hz": 10.0,
+   "subscribers": [
+    "diff_drive"
+   ],
+   "type": "geometry_msgs/msg/TwistStamped",
+   "when": "periodic"
+  },
+  {
+   "frame_id": "",
+   "name": "/cmd_vel_nav",
+   "publisher": "local_controller",
+   "rate_hz": 10.0,
+   "subscribers": [
+    "cmd_vel_arbiter"
+   ],
+   "type": "geometry_msgs/msg/TwistStamped",
+   "when": "periodic"
+  },
+  {
+   "frame_id": "",
+   "name": "/cmd_vel_teleop",
+   "publisher": "teleop",
+   "rate_hz": null,
+   "subscribers": [
+    "cmd_vel_arbiter"
+   ],
+   "type": "geometry_msgs/msg/TwistStamped",
+   "when": "on_input"
+  },
+  {
+   "frame_id": null,
+   "name": "/tf",
+   "publisher": "slam_or_amcl",
+   "rate_hz": 10.0,
+   "subscribers": [
+    "global_planner",
+    "local_controller"
+   ],
+   "type": "tf2_msgs/msg/TFMessage",
+   "when": "periodic"
+  },
+  {
+   "frame_id": null,
+   "name": "/tf_static",
+   "publisher": "robot_state_publisher",
+   "rate_hz": null,
+   "subscribers": [
+    "slam_or_amcl",
+    "local_controller"
+   ],
+   "type": "tf2_msgs/msg/TFMessage",
+   "when": "latched"
+  }
+ ],
+ "version": 1
+}
