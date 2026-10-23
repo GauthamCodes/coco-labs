@@ -29,7 +29,7 @@ import { Minimap, TacticalMap, type MapMarks } from './hud/Maps';
 import { GameSound, haptic } from './sound';
 import { LOAD_STAGES, TIPS, primaryAction, type FetchRushMode, type Primary } from './rules_view';
 import type { GameResult } from './GameApp';
-import { enterPhonePlay, FrameGate, isPhone, phoneFrameCap } from '../play/phone';
+import { enterPhonePlay, FrameGate, isPhone, leavePhonePlay, phoneFrameCap } from '../play/phone';
 
 const BASE = import.meta.env.BASE_URL;
 const STOP_HOLD_MS = 600;
@@ -168,6 +168,9 @@ export function PlayGame(p: PlayProps) {
     return () => {
       alive = false;
       cancelAnimationFrame(raf);
+      // G1.13: leaving Play releases the landscape lock (M5's leavePhonePlay; it keeps the lock
+      // when the next view is Play again). Seen on the real phone: the lock outlived the game.
+      void leavePhonePlay();
       window.removeEventListener('resize', resize);
       session.close();
       renderer.dispose();
@@ -539,6 +542,10 @@ export function PlayGame(p: PlayProps) {
     {mapOpen && world && occ.current && <TacticalMap world={world} occupancy={occ.current} marks={marks} onGoal={setGoalAt} onClose={() => setMapOpen(false)} />}
     {tutorial && <Tutorial onDone={() => { setTutorial(false); p.onTutorialDone(); }} />}
     <section className="g1-rotate"><Navigation2 size={32} /><h2>Rotate your phone</h2><p className="g1-note">COCO has room to play in landscape.</p>
+      {/* G1.13: on the real Nothing Phone (1) the card covered PLAY, so nothing could ask for full
+          screen; this tap can (a user gesture): full screen + a landscape lock, then the game starts.
+          A browser that refuses (iPhone Safari) leaves this card, as before. */}
+      <button className="g1-big small" data-testid="g1-rotate-play" onClick={() => { void enterPhonePlay(); if (!started) begin(); }}>▶ PLAY IN LANDSCAPE</button>
       <button className={`g1-stop ${latched ? 'is-latched' : ''}`} onPointerDown={(e) => { e.stopPropagation(); if (!latched) stop(); }} onClick={(e) => { if (e.detail === 0 && !latched) stop(); }}>STOP</button>
       <a className="g1-big ghost small" href={`${BASE}?view=play`}>Back to games</a></section>
   </div>;

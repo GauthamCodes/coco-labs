@@ -11,7 +11,12 @@
  *
  *   node tools/g1/chase_hud_check.mjs SITE OUT.json [--shots DIR]
  *
- * Exit 0 only if every pose passes in both profiles. Software rendering (SwiftShader) is
+ * G1.13: a third profile, the REAL Nothing Phone (1)'s landscape viewport in a Chrome tab as
+ * measured over USB (710 x 269 CSS px, DPR 2.9875; docs/v2/g1/data/g113/README.md section 5), and
+ * in every profile no two HUD elements may overlap each other (STOP covered the MODEL badge
+ * and the minimap the joystick's label at 269 px before the fix).
+ *
+ * Exit 0 only if every pose passes in every profile. Software rendering (SwiftShader) is
  * fine: this is geometry, not pixels.
  */
 import { chromium } from 'playwright';
@@ -27,6 +32,8 @@ if (shots) mkdirSync(shots, { recursive: true });
 const HUD = ['[data-testid="objective"]', '.g1-top-right > *', '.g1-chip', '[data-testid="speed"]', '[data-testid="hud-primary"]',
   '[data-testid="hud-autonomy"]', '[data-testid="hud-camera"]', '[data-testid="hud-stop"]', '[data-testid="hud-release"]',
   '[data-testid="minimap"]', '.g1-joy'];
+/** G1.13: HUD elements that must not overlap one another (the joystick's label included) */
+const HUD_PAIRS = [...HUD, '.g1-joy-hint'];
 
 /**
  * Twenty map poses (x, y, heading): open floor, aisles, beside walls and racks, corners (G1.4's
@@ -42,7 +49,8 @@ const POSES = [
 
 const browser = await chromium.launch({ ...(process.env.G1_CHROMIUM ? { executablePath: process.env.G1_CHROMIUM } : {}), args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
 const report = { scope: 'G1.12: COCO\'s projected box vs every HUD rectangle, chase camera, 20 poses', site, profiles: {}, passed: true };
-for (const [name, ctxOpts] of [['phone-landscape', nothingPhone1(true)], ['desktop', { viewport: { width: 1280, height: 720 } }]]) {
+const REAL_TAB = { viewport: { width: 710, height: 269 }, deviceScaleFactor: 2.9875, isMobile: true, hasTouch: true, userAgent: nothingPhone1(true).userAgent };
+for (const [name, ctxOpts] of [['phone-landscape', nothingPhone1(true)], ['desktop', { viewport: { width: 1280, height: 720 } }], ['real-phone-tab-710x269', REAL_TAB]]) {
   const ctx = await browser.newContext(ctxOpts);
   const page = await ctx.newPage();
   const errors = [];
@@ -84,14 +92,30 @@ for (const [name, ctxOpts] of [['phone-landscape', nothingPhone1(true)], ['deskt
       const t = g.tick; const p = t?.truth ?? t?.pose;
       return { box: box && { left: box.left + canvas.left, top: box.top + canvas.top, right: box.right + canvas.left, bottom: box.bottom + canvas.top }, canvas: { left: canvas.left, top: canvas.top, right: canvas.right, bottom: canvas.bottom }, hud, pose: p, cam: g.renderer.cam.mode };
     }, HUD);
+    const clashes = await page.evaluate((sel) => {
+      const els = [];
+      for (const s of sel) for (const el of document.querySelectorAll(s)) {
+        const b = el.getBoundingClientRect(); const cs = getComputedStyle(el);
+        if (b.width < 1 || b.height < 1 || cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) continue;
+        els.push([s, el, b]);
+      }
+      const out = [];
+      for (let i = 0; i < els.length; i++) for (let j = i + 1; j < els.length; j++) {
+        const [sa, a, A] = els[i], [sb, b, B] = els[j];
+        if (a === b || a.contains(b) || b.contains(a)) continue;
+        const w = Math.min(A.right, B.right) - Math.max(A.left, B.left), h = Math.min(A.bottom, B.bottom) - Math.max(A.top, B.top);
+        if (w > 1 && h > 1) out.push(`${sa} x ${sb}`);
+      }
+      return [...new Set(out)];
+    }, HUD_PAIRS);
     const overlaps = r.box ? r.hud.filter((h) => Math.min(r.box.right, h.right) - Math.max(r.box.left, h.left) > 0 && Math.min(r.box.bottom, h.bottom) - Math.max(r.box.top, h.top) > 0)
       .map((h) => h.testid || h.cls) : ['no box'];
     const onCanvas = !!r.box && r.box.left >= r.canvas.left && r.box.right <= r.canvas.right && r.box.top >= r.canvas.top && r.box.bottom <= r.canvas.bottom;
     const placed = !!r.pose && Math.hypot(r.pose[0] - x, r.pose[1] - y) < 0.05;
     const centreY = r.box ? ((r.box.top + r.box.bottom) / 2 - r.canvas.top) / (r.canvas.bottom - r.canvas.top) : null;
-    const ok = overlaps.length === 0 && onCanvas && placed && r.cam === 'chase';
+    const ok = overlaps.length === 0 && clashes.length === 0 && onCanvas && placed && r.cam === 'chase';
     if (!ok) report.passed = false;
-    rows.push({ k, want: [x, y, th], settle_ms: settleMs, placed, cam: r.cam, box: r.box && Object.fromEntries(Object.entries(r.box).map(([a, b]) => [a, Math.round(b)])), centre_y_fraction: centreY && Math.round(centreY * 1000) / 1000, on_canvas: onCanvas, overlaps, ok });
+    rows.push({ k, hud_clashes: clashes, want: [x, y, th], settle_ms: settleMs, placed, cam: r.cam, box: r.box && Object.fromEntries(Object.entries(r.box).map(([a, b]) => [a, Math.round(b)])), centre_y_fraction: centreY && Math.round(centreY * 1000) / 1000, on_canvas: onCanvas, overlaps, ok });
     if (shots) await page.screenshot({ path: join(shots, `${name}-${String(k + 1).padStart(2, '0')}.png`) });
   }
   report.profiles[name] = { viewport: ctxOpts.viewport, poses: rows.length, failed: rows.filter((x) => !x.ok).length, errors, rows };

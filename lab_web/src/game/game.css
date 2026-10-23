@@ -6,6 +6,10 @@
   --g1-display: 'Chakra Petch', 'Outfit Variable', system-ui, sans-serif; --g1-ui: 'Inter Variable', 'Manrope Variable', system-ui, sans-serif;
 }
 @media (min-height: 640px) and (min-width: 1000px) { :root { --g1-s: 1.25; } }
+/* G1.13: a short landscape viewport (the real Nothing Phone (1) in a Chrome tab: 710 x 269 CSS px;
+   iPhone Safari has no element full screen) -- below 320 px of height the HUD shrinks so STOP never
+   covers the MODEL badge and the minimap never covers the joystick's label; STOP stays >= 44 px */
+@media (max-height: 320px) { :root { --g1-s: 0.82; } }
 .g1 { position: fixed; inset: 0; overflow: hidden; background: var(--g1-bg); color: var(--g1-ink); font: 500 calc(13px * var(--g1-s))/1.35 var(--g1-ui);
   -webkit-user-select: none; user-select: none; touch-action: none; -webkit-tap-highlight-color: transparent; }
 .g1 .num, .g1 .disp { font-family: var(--g1-display); font-variant-numeric: tabular-nums; }
