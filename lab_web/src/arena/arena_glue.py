@@ -353,9 +353,60 @@ def loop_compare_advance():
 
 
 
+#: G1.13: Play's costmap view: the static map's layers (computed once per Arena map) and the
+#: last layers sent, so a refresh recomputes only around new scan marks and sends only changes
+_costmap = {'key': None, 'static': None, 'last': None}
+
+
 @_in_run
-def costmap_view():
-    """Emit a view-only snapshot from current model data, without a tick/input."""
+def _costmap_static():
+    """The current Arena's StaticLayers (built once per map, in its numerics; G1.13)."""
+    from coco_lab.costmap import InflationParams, StaticLayers
+    a = _arena
+    m = a.lab_map
+    params = InflationParams(robot_radius=a.radius, inflation_radius=max(0.5, a.radius))
+    key = (id(a), id(m), params)
+    if _costmap['key'] != key:
+        _costmap.update(key=key, static=StaticLayers(m.width, m.height, m.resolution,
+                                                     [v != 0 for v in m.occupancy], params),
+                        last=None)
+    return _costmap['static']
+
+
+@_in_run
+def costmap_view(delta=False):
+    """
+    Emit a view-only snapshot from current model data, without a tick/input.
+
+    ``delta`` (G1.13, Play's Robot vision): the same layers, from the cached static map's
+    share (costmap.StaticLayers: byte for byte build_layers'), and only the cells whose
+    costs changed since the last view (all non-zero cells the first time). Measured: the
+    full rebuild and full emission stalled the model ~0.9 s in the browser every 4 s.
+    """
+    if delta:
+        from coco_lab.costmap import emit_cells, scan_obstacle_cells
+        a = _arena
+        m, li = a.lab_map, a.lidar
+        sl = _costmap_static()
+        hits = scan_obstacle_cells(m, a.belief(), a.ranges, a.angles,
+                                   li.mount, li.range_min, li.range_max)
+        layers = sl.layers(hits)
+        touched = sl.touched
+        last = _costmap['last']
+        if last is None:
+            cells = [i for i in range(len(layers[3])) if layers[3][i] or layers[2][i] or layers[1][i]]
+        else:
+            # outside the cells either view touched, both equal the static map's layers
+            cells = sorted(i for i in touched | last[4] if layers[1][i] != last[1][i] or
+                           layers[2][i] != last[2][i] or layers[3][i] != last[3][i])
+        _costmap['last'] = layers + (touched,)
+        emit_cells(m.width, cells, layers[:4], sl.params, m.origin,
+                   lambda channel, tick, columns, scalars:
+                   emit_header(channel, scalars) if columns is None else
+                   emit_family(channel, tick, columns, scalars),
+                   height=m.height, resolution=m.resolution,
+                   tick=a.tick, t_world=a.t_world, update=a.tick)
+        return
     from coco_lab.costmap import (InflationParams, build_layers,
                                   scan_obstacle_cells, emit_layers)
     a = _arena
@@ -428,6 +479,8 @@ def game_init(spec_json, game, arg, seed, post_batch, batch_size=2048,
     else:
         info['setup'] = []
     world['game'] = info
+    if v3_level:
+        _costmap_static()   # G1.13: Robot vision's static costmap, built while the page loads
     return json.dumps(world), out[1]
 
 

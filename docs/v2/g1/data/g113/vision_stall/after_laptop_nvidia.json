@@ -1,0 +1,48 @@
+{
+ "site": "http://127.0.0.1:4174/coco-labs/",
+ "gpu": "nvidia",
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "machine": {
+  "gpu_asked": "nvidia",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P0, 70",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "63.6 % chrome-headless (gautham)",
+   "36.4 % brave (gautham)",
+   "36.4 % chrome-headless (gautham)",
+   "27.3 % gnome-shell (gautham)",
+   "9.1 % nvidia-modeset/kthread_q (root)",
+   "9.1 % 2.1.308 (gautham)"
+  ],
+  "nvidia_util": "39 %, 520 MiB",
+  "nvidia_procs": [
+   "Xorg sm 18 %",
+   "gnome-shell sm 14 %",
+   "firefox sm - %",
+   "chrome-headless sm 4 %"
+  ]
+ },
+ "seconds": 20,
+ "vision_off": {
+  "ticks": 80,
+  "gap_median": 100,
+  "gap_p95": 110,
+  "gap_max": 117,
+  "gaps_over_300": [],
+  "step_max": 42
+ },
+ "vision_on": {
+  "ticks": 200,
+  "gap_median": 100,
+  "gap_p95": 108,
+  "gap_max": 162,
+  "gaps_over_300": [],
+  "step_max": 82
+ },
+ "clock_waits_banner_samples": 0,
+ "when": "2026-10-23T14:55:31.556Z"
+}

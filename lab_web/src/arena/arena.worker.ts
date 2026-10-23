@@ -32,7 +32,7 @@ interface Pyodide {
   unpackArchive(buf: Uint8Array, format: string, opts: { extractDir: string }): void;
   runPython(code: string): unknown;
   pyimport(name: string): { init: (...a: unknown[]) => PyProxy; step: (s: string) => PyProxy;
-    compare: (...a: unknown[]) => string; costmap_view: () => void; game_init: (...a: unknown[]) => PyProxy; game_op: (op: string, arg: string | null) => string; game_prefetch: (ms: number) => boolean;
+    compare: (...a: unknown[]) => string; costmap_view: (delta?: boolean) => void; game_init: (...a: unknown[]) => PyProxy; game_op: (op: string, arg: string | null) => string; game_prefetch: (ms: number) => boolean;
     loop_compare_begin: (request: string) => void; loop_compare_advance: () => string;
     begin: (s: string) => void; advance: (n: number) => boolean; amend: (s: string) => void; finish: () => PyProxy; play: (s: string) => string };
 }
@@ -299,7 +299,7 @@ self.onmessage = (ev: MessageEvent<ToWorker>) => {
     try {
       if (req.type === 'boot' || req.type === 'warm') await boot(req);
       else if (req.type === 'compare') compare(req);
-      else if (req.type === 'costmap_view') { if (!glue) throw new Error('Costmap before boot'); glue.costmap_view(); }
+      else if (req.type === 'costmap_view') { if (!glue) throw new Error('Costmap before boot'); glue.costmap_view(!!req.delta); }
       else if (req.type === 'compare_loop') await compareLoop(req);
       else if (req.type === 'play') await play(req);
       else if (req.type === 'game') gameQuery(req);

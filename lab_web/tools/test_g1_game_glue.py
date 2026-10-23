@@ -124,3 +124,45 @@ def test_stars_come_from_the_committed_reference(mode):
     got = json.loads(glue.game_op('stars', json.dumps({'net_deliveries': 99})))
     assert got['reference'] == card
     assert got['stars'] == games.stars(got['card'], card) == 0
+
+
+def test_robot_vision_costmap_delta_views_rebuild_the_full_costmap():
+    """
+    G1.13: Play's Robot vision asks for delta views (changed cells only, from a cached
+    static map). Applied in order over an empty grid -- as the page's hologram does -- they
+    must give exactly build_layers' combined costs at each view, and never change the model.
+    """
+    from coco_lab import numerics
+    from coco_lab.costmap import build_layers, InflationParams, scan_obstacle_cells
+    glue = _glue()
+    got = []
+    world, _occ = glue.game_init(_depot(), 'fetch_rush', 1, 1, lambda *_: None, hash_version=3,
+                                 post_family=lambda num, meta: got.append((num, json.loads(meta))))
+    info = json.loads(world)['game']
+    assert glue._costmap['static'] is not None, 'the static costmap is built while the page loads'
+    _step(glue, info['setup'])
+    a = glue._arena
+    grid = bytearray(a.lab_map.width * a.lab_map.height)
+    sizes = []
+    for k in range(4):
+        got.clear()
+        before = a.state_bytes(), a.state_hash()
+        glue.costmap_view(True)
+        assert (a.state_bytes(), a.state_hash()) == before, 'the costmap view changed the model'
+        n = 0
+        for num, meta in got:
+            if meta.get('channel') == 'coco.costmap.layers.cells.v1':
+                rows, cols, cost = num['row'], num['col'], num['combined_cost']
+                for r, c, v in zip(rows, cols, cost):
+                    grid[int(r) * a.lab_map.width + int(c)] = int(v)
+                n += len(rows)
+        sizes.append(n)
+        m, li = a.lab_map, a.lidar
+        params = InflationParams(robot_radius=a.radius, inflation_radius=max(0.5, a.radius))
+        with numerics.version(3):   # the Arena's numerics, as the glue's calls run in (rays and costs)
+            hits = scan_obstacle_cells(m, a.belief(), a.ranges, a.angles, li.mount, li.range_min, li.range_max)
+            want = build_layers(m.width, m.height, m.resolution, [v != 0 for v in m.occupancy], hits, params)
+        assert bytes(grid) == want.combined, f'view {k}: the hologram differs from build_layers'
+        for _ in range(15):
+            _step(glue, [{'kind': 'teleop', 'linear': 0.3, 'angular': 0.5}])
+    assert sizes[0] > 10000 and all(s < sizes[0] / 20 for s in sizes[1:]), f'later views send only changes: {sizes}'

@@ -235,8 +235,8 @@ export function PlayGame(p: PlayProps) {
   // Robot vision asks the model for its costmap: at once, then every 4 s while it stays on (view-only, no tick)
   useEffect(() => {
     if (!vision || !started) return;
-    s.current?.client.requestCostmap();
-    const t = setInterval(() => s.current?.client.requestCostmap(), 4000);
+    s.current?.client.requestCostmap(true);
+    const t = setInterval(() => s.current?.client.requestCostmap(true), 4000);
     return () => clearInterval(t);
   }, [vision, started]);
 

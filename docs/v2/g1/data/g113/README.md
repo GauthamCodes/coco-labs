@@ -188,9 +188,35 @@ Run 2/3's cold starts came right after 10-minute soaks (phone warmer); they are 
    [`phone_fullscreen/phone-play.png`](phone_fullscreen/phone-play.png)); full screen still leaves 269 of 362 CSS px
    (what takes the other 93 px is not yet identified — an `adb screencap` is next).
 
-**Defaults from these results:** tier **medium** stays the phone default (it held 60 fps in a tab and
-120 fps in full screen, frame p95 ≤ 18.1 ms); frame-rate cap **60** (M5's), now applied to G1's game —
-its effect on the phone is pending run 3.
+**Later the same day (Gautham's phone back):**
+- **DevTools changes what is measured.** Chrome on Android keeps its status bar, address bar and
+  navigation bar while a DevTools session is attached, even in full screen (755 × 269); with no
+  DevTools, full screen is real (2400 × 1080 px, 803 × 361 CSS) and the HUD has room
+  ([`phone_review/`](phone_review/): `fullscreen-play-*` with DevTools, `nodevtools-after-tap.png`
+  without). Every run in the table above was DevTools-driven, so it measured the smaller window.
+- Fixed: the HUD at short heights (scale 0.82 below 320 px; `chase_hud_check.mjs` checks 710 × 269 and
+  HUD-vs-HUD overlaps: 20/20 poses failed before, 60/60 pass after), **PLAY IN LANDSCAPE** on the
+  portrait rotate card (one real tap: full screen, landscape, playing —
+  `phone_review/portrait-after-play-in-landscape.png`), the landscape lock released on leaving Play.
+- **The real-player run** (`tools/phone/real_phone_free.mjs`: a recorder installed, DevTools
+  detached, Android taps and swipes, read back after; [`phone_free_defaults_10min/`](phone_free_defaults_10min/)),
+  defaults (medium, 60 fps; Gautham's saved *high*/120 fps set aside and restored), Free Drive on the
+  Depot, 10 minutes, true full screen 803 × 361: **60 fps median**, min 44, frame p95 19.2 ms, 4 of
+  35,931 frames > 50 ms, **0 context losses, 0 errors**; touch-to-motion on the 15 deliberate swipes
+  **150 ms median** (p90 193; later samples of 1.3–5 s are swipes into obstacles, not latency);
+  started after a 20-minute rest at battery 37 °C: battery 41 °C, skin 43.0 °C, GPU 62.1 °C at the end
+  (charging). With Gautham's saved *high* + 120 fps, 1 minute: 73 fps median, touch 197 ms, GPU 45 →
+  69 °C ([`phone_free_user_prefs_1min/`](phone_free_user_prefs_1min/)).
+- **Robot vision froze the model** ([`vision_stall/`](vision_stall/), `tools/g1/vision_stall.mjs`): each
+  4 s costmap refresh rebuilt and re-sent the whole costmap (161,700 cells): laptop gaps 748–935 ms,
+  **phone 18 ticks in 20 s, gaps 3.5–4.1 s**. Fixed with `costmap.StaticLayers` (the static map's
+  layers once; byte-identical to `build_layers`, property-tested) and only changed cells sent
+  (`emit_cells`, `Batch.add_many`): laptop no gap over 162 ms; phone after step 1 (cache + changed
+  cells) 168 ticks, worst gap 880 ms (the first full view); the final build's phone check is pending
+  (the phone was in use).
+
+**Defaults from these results:** tier **medium** and frame-rate cap **60** for phones
+(PHONE_PROFILE.md, "Measured on the real device").
 
 ## 6. Determinism: four engines, and the v3 native-vs-Pyodide gate
 

@@ -148,7 +148,8 @@ export class ArenaClient {
     this.worker.postMessage({ type: 'compare_loop', ...request });
   }
 
-  requestCostmap(): void { this.worker.postMessage({ type: 'costmap_view' }); }
+  /** G1.13: delta = only the cells changed since the last view, from a cached static map (Play). */
+  requestCostmap(delta = false): void { this.worker.postMessage({ type: 'costmap_view', delta }); }
 
   private playNext = 1;
   private readonly playWaiting = new Map<number, { resolve: (v: unknown) => void; reject: (e: Error) => void }>();

@@ -53,7 +53,7 @@ export interface GameRequest { type: 'game'; id: number; op: string; arg: string
 export type WarmRequest = Omit<BootRequest, 'type'> & { type: 'warm' };
 export interface LoopCompareRequest { type: 'compare_loop'; family: 'control' | 'localise'; names: string[]; goal: [number, number]; inflation: CompareInflation; steps: number; hash_version?: 2 | 3 }
 export interface LoopFrame { pose: [number, number, number]; truth: [number, number, number]; particles: number[][] | null; chosen: number[][] | null; hash: string; tick: number; summary: Record<string, number | boolean | null>; status: string }
-export type ToWorker = { type: 'costmap_view' } | LoopCompareRequest | BootRequest | WarmRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest | GameRequest;
+export type ToWorker = { type: 'costmap_view'; delta?: boolean } | LoopCompareRequest | BootRequest | WarmRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest | GameRequest;
 
 export interface CompareSide { planner: string; status: string; summary: Record<string, number | string | null>; resolution: number }
 export interface CompareResult { A: CompareSide; B: CompareSide; C?: CompareSide; D?: CompareSide }

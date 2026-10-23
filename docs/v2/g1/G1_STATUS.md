@@ -4,8 +4,8 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 
 ## Now
 
-- **Current checkpoint:** G1.13 laptop work done; **the real Nothing Phone (1) measured on 2026-10-23** over USB/CDP (data/g113/README.md §5): 61.7 fps median over 10 min in a tab, touch-to-motion 64.8 ms, 0 context losses; two device defects fixed (full screen on PLAY; M5's 60 fps phone cap); the capped run was stopped before Play (phone unplugged).
-- **Next step:** when the phone is back: the 10-minute run with the 60 fps cap (`lab_web/tools/phone/real_phone.mjs`), an `adb screencap` of full-screen Play (269 of 362 CSS px used), then decide the HUD fix at 269 px (STOP over the MODEL badge; minimap over the joystick label) with Gautham. PR #27 stays ready for review.
+- **Current checkpoint:** G1.13 done on the laptop **and the real Nothing Phone (1)** (2026-10-23). The full report with suggestions (incl. the ROS 2 / Gazebo / RViz resemblance): [`G1_REVIEW.md`](G1_REVIEW.md). Evidence [`data/g113/README.md`](data/g113/README.md). Six device-found defects, five fixed (full screen, 60 fps cap, short-height HUD, PLAY IN LANDSCAPE, Robot vision freezing the model) plus the landscape lock; the AUTO 100 ms target is not met.
+- **Next step:** Gautham reads G1_REVIEW.md and answers its questions; the 1-minute phone check of Robot vision on the final build when the phone is free; then the M6 UI phase — with G1_REVIEW §5 (RViz view, ROS graph panel, telemetry, the STACK ghost) as its proposal for keeping ROS 2 visible.
 
 ## Setup facts
 
@@ -76,7 +76,7 @@ Recorded in `docs/STATUS.md`'s plan-change log, with the 2026-10-18 Fetch Rush d
 | G1.10 Close | done | After screenshots ([`BEFORE_AFTER.md`](BEFORE_AFTER.md)); coco_lab 1026/0/2, tools 230/0, vitest 532/0, typecheck, build, dist; v1 corpus 15,000 hashes and v2 corpus (Node + Chromium) 15,000 ticks each, 0 mismatches; 50 v1 URL forms + 6 archive views, 5 replays, 5 canvas scenes pass. [`G1_RESULTS.md`](G1_RESULTS.md), [`data/g110/README.md`](data/g110/README.md) |
 | G1.11 Gautham's follow-up | done | (1) `gz` marker, CI `-m "not gz"`: 0 skips. (2) LiDAR beam directions computed once a tick (same bits; goldens unchanged): v3/v2 per-tick cost 1.15 → **1.10**. (3) Fetch Rush rules 2 plan nothing in play: worst model-tick gap **25.8 s → 0.96 s**, "clock waits" banner 2× (26.8 s) → **never**, frames over 50 ms 1 → **0** (max 18.9 ms), 3/3 delivered in 358.2 s. (4) The decision implemented: a start zone, 3 orders within a 32 m planned round trip, timer = reference × 1.5 → **491.7 / 495.8 / 577.2 / 506.5 s** (shifts 1/3/5/6); seeds 2 and 4: the reference bot stopped in the forklift lane (0 delivered) → no timer, not offered. (5) Look polish; after shots `screens/after_g111/`. Found at close: hash v3's numerics mode was sticky (a v3 call left it on; CI's Lab 5 replay failed after the v3 glue tests) → now scoped per call, hashes unchanged (ADR 0010 amended). Suites: coco_lab 1,037 (+2 `gz` deselected), tools 230, vitest 532, native gate exact; CI green on `dfdf4e6` ([`data/g111/suites.txt`](data/g111/suites.txt)). [`data/g111/README.md`](data/g111/README.md), [`docs/v2/m6/GAMES.md`](../m6/GAMES.md) |
 | G1.12 Gautham's 2026-10-22 decisions | done (two items open) | (1–2) Fetch Rush rules 3: phone round (2 orders) and Full shift (3 orders, 32 m); routes kept out of the forklift lanes; a round the bot cannot finish (or where it stands in a lane) rejected at generation — none was. **16 m is infeasible on the Depot** with the lanes kept out (no 2-order round below 21.4 m): phone budget **provisional 22 m**, one round, timer **275.9 s (4:35.9)**; Full shift timers **475.7–577.5 s**. (3) `Arena.prefetch` runs AUTO's search between ticks (≤ 4 ms slices); the AUTO tick takes it over, hashes unchanged: the AUTO tick's worker step **452 → ≤ 101 ms**; the 100 ms tick-gap target is **not shown here** (this container's tick arrivals jitter p95 300–450 ms without AUTO) → laptop. (4) Chase camera: 2.1 m boom (≥ 1.7 m, ≥ 1.2 m up), COCO at 40 % down, rises over walls, keeps COCO's shoulders in view, softer headlight and bloom, spawn in the open facing the aisle; HUD overlap **0 of 40** poses (CI step). [`data/g112/README.md`](data/g112/README.md) |
-| G1.13 Laptop work | done (phone pending) | [`data/g113/README.md`](data/g113/README.md), [`G1_RESULTS.md`](G1_RESULTS.md) § G1.13. Decisions applied (heading; budget **22 m**: no budget qualifies; timer **273.5 s**). AUTO gaps 269 → 162/132 ms, one fix → **119/141 ms: target not met**. Real GPU (NVIDIA, Intel): **59.6–60.3 fps** median everywhere, 0 context losses. Determinism: v2 corpus **0 mismatches in 4 engines**; v3 gate exact. ROS **12/12 packages**, gz **2/0/0**. M6F.4 first run (16/35 over 300 ms in Pyodide). M6F.8: smoke 2/9 chained, 5/8 independent; ghost **1/4 legs** twice. Linters fixed. Phone: **not measured**. |
+| G1.13 Laptop + phone | done (AUTO target not met; one phone check pending) | [`G1_REVIEW.md`](G1_REVIEW.md), [`data/g113/README.md`](data/g113/README.md). Decisions: budget **22 m** (no budget qualifies), timer 273.5 s; heading toward the first route. Laptop: 60 fps both GPUs, 0 context losses; determinism exact in 4 engines; ROS 12/12; gz 2/0/0; M6F.4 16/35 over budget; M6F.8 5/8 legs, ghost fails leg 2. AUTO gaps 269 → **119/141 ms** (not met). **Phone (real):** full screen 10 min **60 fps median**, frame p95 19.2 ms, 0 context losses, touch 150 ms; fixed on the device: full screen on PLAY, 60 fps cap, short-height HUD (STOP covered the MODEL badge), PLAY IN LANDSCAPE, Robot vision freezing the model (phone 18 → 168 ticks / 20 s), the landscape lock. |
 
 ## Gautham: look at these
 
@@ -101,9 +101,8 @@ Recorded in `docs/STATUS.md`'s plan-change log, with the 2026-10-18 Fetch Rush d
 
 ## Laptop items pending
 
-- **The Nothing Phone (1)**, measured 2026-10-23 (§5 of data/g113/README.md); still to do when it is
-  plugged in again: the 10-minute run with the new 60 fps cap, an `adb screencap` of full-screen Play,
-  and the portrait PLAY path (the rotate card covers PLAY, so full screen is never requested).
+- One minute on the phone: `tools/g1/vision_stall.mjs --cdp` on the final build (the bulk costmap emitter),
+  when the phone is free (it was in use). Everything else on the laptop list is done.
 
 ## Deviations so far
 
@@ -113,13 +112,11 @@ Recorded in `docs/STATUS.md`'s plan-change log, with the 2026-10-18 Fetch Rush d
 
 ## Questions for Gautham
 
-- **AUTO tick gaps (G1.13):** target missed after one fix (119–141 ms around a press; p95 of all
-  gaps 107 ms). Accept, restate the target (e.g. ≤ 150 ms), or fund a second fix?
-- **Phone round variety (G1.13):** by the rule as written no budget qualifies → one round for every
-  shift. Count only rounds with a timer ≤ 5:00 instead, or change the level near the start zones?
-- **M6F.8 (G1.13):** Nav2 cannot follow the model's route to Dock 1 (START_OCCUPIED, twice) and
-  AMCL drifts ~0.5 m south after the dock legs. Diagnose in M6, or widen the Depot's gaps?
-- **The phone:** plug it in with USB debugging on.
+- See [`G1_REVIEW.md`](G1_REVIEW.md) §3 and §5. In short: the AUTO 100 ms target (accept 119–141 ms,
+  restate, or a second fix); phone-round variety (one round under the rule as written); M6F.8's Dock-1
+  failure and AMCL drift (diagnose in M6, or widen the Depot); and which of the robotics-identity
+  suggestions (RViz view, ROS graph panel, telemetry strip, STACK ghost on the results screen) to
+  bring into the M6 UI phase first.
 
 ### Answered
 
