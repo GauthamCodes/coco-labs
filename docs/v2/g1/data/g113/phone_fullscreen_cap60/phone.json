@@ -1,0 +1,363 @@
+{
+ "class": "REAL DEVICE: Nothing Phone (1) over USB, Chrome driven over CDP (not emulation)",
+ "site": "http://localhost:4174/coco-labs/",
+ "started": "2026-10-23T02:45:06.986Z",
+ "device": {
+  "model": "A063",
+  "android": "15",
+  "build": "V3.2-260618-1045",
+  "chrome": "156.0.8078.47",
+  "wm_size": "Physical size: 1080x2400",
+  "wm_density": "Physical density: 420\nOverride density: 478",
+  "refresh": null
+ },
+ "network_note": "SITE served by the laptop over USB (adb reverse), gzip as Pages; not the phone's mobile network (this build is not deployed)",
+ "battery": [
+  {
+   "at": "2026-10-23T02:45:07.454Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:47:25.199Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:47:55.539Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:48:26.099Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:48:56.469Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:49:26.902Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:49:57.400Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:50:27.797Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:51:10.111Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:51:40.942Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:52:11.361Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:52:41.845Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:53:12.544Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:53:43.229Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:54:13.979Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  },
+  {
+   "at": "2026-10-23T02:54:44.645Z",
+   "level_pct": 100,
+   "temperature_c": 40,
+   "status": 2,
+   "ac_powered": "true",
+   "usb_powered": "false"
+  }
+ ],
+ "thermal_start": "Current temperatures from HAL:\n\tTemperature{mValue=-274000.0, mType=8, mName=socd, mStatus=0}\n\tTemperature{mValue=40.0, mType=2, mName=battery, mStatus=0}\n\tTemperature{mValue=49.4, mType=1, mName=GPU0, mStatus=0}\n\tTemperature{mValue=52.9, mType=0, mName=CPU7, mStatus=0}\n\tTemperature{mValue=47.1, mType=9, mName=nsp0, mStatus=0}\n\tTemperature{mValue=39.936, mType=3, mName=skin, mStatus=1}\n\tTemperature{mValue=52.6, mType=0, mName=CPU5, mStatus=0}\n\tTemperature{mValue=4.434, mType=6, mName=vbat, mStatus=3}\n\tTemperature{mValue=47.8, mType=1, mName=GPU1, mStatus=0}\n\tTemperature{mValue=51.0, mType=0, mName=CPU4, mStatus=0}\n\tTemperature{mValue=51.8, mType=0, mName=CPU1, mStatus=0}",
+ "cold": [
+  {
+   "run": 1,
+   "title": {
+    "paint": {
+     "first-paint": 136,
+     "first-contentful-paint": 280
+    },
+    "title_visible_ms": 831,
+    "js_bytes": 278843
+   },
+   "title_wall_ms": 886,
+   "play_url_to_play_enabled_ms": 11410,
+   "worker_marks": {
+    "worker_create": 1792723535269.5999,
+    "worker_boot": 1792723535675.4001,
+    "pyodide_module": 1792723535707.7002,
+    "pyodide_ready": 1792723541619.1,
+    "coco_lab_ready": 1792723542000.2002,
+    "pack_game_ready": 1792723542197.3,
+    "world_received": 1792723545928.5999,
+    "arena_ready": 1792723545932.3
+   },
+   "play_to_first_tick_ms": 622
+  },
+  {
+   "run": 2,
+   "title": {
+    "paint": {
+     "first-paint": 132,
+     "first-contentful-paint": 356
+    },
+    "title_visible_ms": 776,
+    "js_bytes": 278843
+   },
+   "title_wall_ms": 793,
+   "play_url_to_play_enabled_ms": 10851,
+   "worker_marks": {
+    "worker_create": 1792723548397.1,
+    "worker_boot": 1792723548471.5,
+    "pyodide_module": 1792723548505.2,
+    "pyodide_ready": 1792723554071.8,
+    "coco_lab_ready": 1792723554452.7,
+    "pack_game_ready": 1792723554641.2,
+    "world_received": 1792723558387.2002,
+    "arena_ready": 1792723558396.2
+   },
+   "play_to_first_tick_ms": 703
+  },
+  {
+   "run": 3,
+   "title": {
+    "paint": {
+     "first-paint": 144,
+     "first-contentful-paint": 268
+    },
+    "title_visible_ms": 832,
+    "js_bytes": 278843
+   },
+   "title_wall_ms": 847,
+   "play_url_to_play_enabled_ms": 10884,
+   "worker_marks": {
+    "worker_create": 1792723561161.2,
+    "worker_boot": 1792723561229.4,
+    "pyodide_module": 1792723561265.5999,
+    "pyodide_ready": 1792723567035.5,
+    "coco_lab_ready": 1792723567427.7,
+    "pack_game_ready": 1792723567621.2998,
+    "world_received": 1792723571373.7,
+    "arena_ready": 1792723571373.0999
+   },
+   "play_to_first_tick_ms": 640
+  }
+ ],
+ "touch_to_motion": {
+  "trials": 15,
+  "samples": [
+   89,
+   173.80000000447035,
+   89,
+   138.5,
+   80.60000000149012,
+   140.20000000298023
+  ],
+  "median_ms": 138.5,
+  "p90_ms": 173.80000000447035
+ },
+ "play": null,
+ "errors": [],
+ "console_errors": [],
+ "settings_changed": [
+  "system.user_rotation 1 (landscape), accelerometer_rotation 0 — restored at the end"
+ ],
+ "layout_portrait_tab": {
+  "innerWidth": 361,
+  "innerHeight": 654,
+  "visualViewport": [
+   361.50628662109375,
+   654.05859375
+  ],
+  "dpr": 2.987499952316284,
+  "screen": [
+   362,
+   804
+  ],
+  "orientation": "portrait-primary",
+  "fullscreen": false,
+  "safe_area_trbl": [
+   "0px",
+   "0px",
+   "0px",
+   "0px"
+  ],
+  "coarse": true,
+  "renderer": "ANGLE (Qualcomm, Adreno (TM) 642L, OpenGL ES 3.2)",
+  "connection": {
+   "type": "wifi",
+   "effectiveType": "4g"
+  }
+ },
+ "portrait_play_layout": {
+  "innerWidth": 361,
+  "innerHeight": 654,
+  "visualViewport": [
+   361.50628662109375,
+   654.05859375
+  ],
+  "dpr": 2.987499952316284,
+  "screen": [
+   362,
+   804
+  ],
+  "orientation": "portrait-primary",
+  "fullscreen": false,
+  "safe_area_trbl": [
+   "0px",
+   "0px",
+   "0px",
+   "0px"
+  ],
+  "coarse": true,
+  "renderer": "ANGLE (Qualcomm, Adreno (TM) 642L, OpenGL ES 3.2)",
+  "connection": {
+   "type": "wifi",
+   "effectiveType": "4g"
+  }
+ },
+ "portrait_play": {
+  "orientation": "portrait-primary",
+  "fullscreen": false,
+  "ticking": null,
+  "rotate_card_text": "Rotate your phone"
+ },
+ "orientation_set": "landscape-primary",
+ "layout_landscape_tab": {
+  "innerWidth": 710,
+  "innerHeight": 269,
+  "visualViewport": [
+   709.9581909179688,
+   269.4560852050781
+  ],
+  "dpr": 2.987499952316284,
+  "screen": [
+   804,
+   362
+  ],
+  "orientation": "landscape-primary",
+  "fullscreen": false,
+  "safe_area_trbl": [
+   "0px",
+   "0px",
+   "0px",
+   "0px"
+  ],
+  "coarse": true,
+  "renderer": "ANGLE (Qualcomm, Adreno (TM) 642L, OpenGL ES 3.2)",
+  "connection": {
+   "type": "wifi",
+   "effectiveType": "4g"
+  }
+ },
+ "orientation_in_play": "landscape-primary",
+ "layout_play": {
+  "innerWidth": 755,
+  "innerHeight": 269,
+  "visualViewport": [
+   755.481201171875,
+   269.4560852050781
+  ],
+  "dpr": 2.987499952316284,
+  "screen": [
+   804,
+   362
+  ],
+  "orientation": "landscape-primary",
+  "fullscreen": true,
+  "safe_area_trbl": [
+   "0px",
+   "0px",
+   "0px",
+   "46px"
+  ],
+  "coarse": true,
+  "renderer": "ANGLE (Qualcomm, Adreno (TM) 642L, OpenGL ES 3.2)",
+  "connection": {
+   "type": "wifi",
+   "effectiveType": "4g"
+  }
+ },
+ "render": {
+  "tier": "medium",
+  "pixel_ratio": 1.25,
+  "canvas": [
+   943,
+   336
+  ]
+ }
+}

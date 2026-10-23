@@ -186,7 +186,7 @@ The sections above are the cloud container's (SwiftShader, no GPU, no ROS) and s
 | AUTO tick gaps (target: none over 100 ms) | Largest gap around a press: before (`a4b39a6`) **269 ms**; after **162 / 132 ms** (phone / Full shift). Cause: tick shown when computed, so step-time variance (28–88 ms) became gaps. One fix (ticks shown on a 0.1 s schedule): **119 / 141 ms**; all gaps p95 118 → 107 ms. **Target not met.** | README §3, `test/g1_session_pacing.test.ts` |
 | Real-GPU fps (desktop, headless Chromium ≤ 60 Hz) | NVIDIA and Intel: title, Play (Fetch Rush, 10 min, medium and high) and four-pane Compare (auto, high) all **59.6–60.3 fps median**, frame p95 16.9–19.1 ms, **0 context losses**, 0 errors; Play: 1–8 frames over 50 ms in ~36,000 | README §4, `data/g113/gpu/` |
 | Touch-to-motion (NVIDIA, emulated phone) | G1 Play median **40.8 ms** (15 samples); M5's Play 47–63 ms between runs | README §3 |
-| Nothing Phone (1) | **Not measured**: plugged in tethering-only (no ADB interface), later unplugged; defaults pending | README §5 |
+| Nothing Phone (1) (REAL device, USB/CDP, 2026-10-23) | In a tab: **61.7 fps median over 10 min** (min 57.1, frame p95 17.9 ms), touch-to-motion **64.8 ms**, 0 context losses, cold start PLAY ready 8.1–8.7 s (served over USB, not mobile data). Viewport 361 × 654 / 710 × 269 CSS, DPR 2.99 (profile assumed 412 × 915, 2.625); landscape safe area left 46 px. Fixed: full screen on PLAY, M5's 60 fps phone cap (cap not yet measured on the phone). Open: portrait PLAY, HUD overlaps at 269 px height, one unreproduced 146 s draw gap | README §5 |
 | Determinism | v2 corpus, 100 sessions × 150 ticks: **0 mismatches in Pyodide-in-Node, Chromium, Firefox and WebKit**; v1 corpus 0 mismatches; v3 native-vs-Pyodide gate **exact**; v2 control fails with 0.446 m (as designed) | README §6 |
 | ROS suites, gz tests | **all 12 packages pass** (colcon route, linters included); `pytest -m gz` **2 passed, 0 skipped** | [`data/g113/suites.txt`](data/g113/suites.txt) |
 | M6F.4 planning benchmark | first run (was "pending"): CPython = Pyodide on all 35 cases; Pyodide over 300 ms in **16 of 35** (BFS, Dijkstra, A* on long routes) | [`../m6/data/m6f4/README.md`](../m6/data/m6f4/README.md) |
@@ -222,9 +222,8 @@ Tests at G1.13 close ([`data/g113/suites.txt`](data/g113/suites.txt)), laptop:
 
 ## Laptop items
 
-Done in G1.13 (above), except **the Nothing Phone (1)**: its USB/CDP run (cold start, Play fps
-at 1 and 10 minutes, touch-to-motion, battery and temperature, PHONE_PROFILE.md's viewport and
-safe-area check) and the phone's default tier and frame-rate cap remain pending.
+Done in G1.13, and the phone measured on 2026-10-23 (above). Still to do with the phone: the
+10-minute run with the 60 fps cap, an `adb screencap` of full-screen Play, the portrait PLAY path.
 
 ## Questions for Gautham
 
@@ -236,7 +235,8 @@ safe-area check) and the phone's default tier and frame-rate cap remain pending.
   the short ones), or a level change (objects near the start zones, not the lanes)?
 - **M6F.8:** Nav2 fails where the model's lane-free route to Dock 1 passes, and AMCL sits
   ~0.5 m south of truth after the dock legs. Diagnose in M6, or adjust the Depot (wider gaps)?
-- **The phone:** plug it in with USB debugging on; the measurement runs without you.
+- **Phone HUD at the real 269 CSS px height:** STOP covers the MODEL · kinematic badge and the minimap covers the joystick label. Fix the layout for short landscape viewports now, or with the look review?
+- **The phone:** plug it in again with USB debugging on for the capped 10-minute run; it needs nothing else.
 
 ## Next step
 

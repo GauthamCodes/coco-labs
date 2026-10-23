@@ -137,14 +137,60 @@ default (`high`) stays. The phone's default tier and frame-rate cap are **pendin
 Phone (1) was plugged in, but in USB tethering (RNDIS) with no ADB interface (USB debugging
 off), so `adb devices` listed nothing (§5).
 
-## 5. The Nothing Phone (1)
+## 5. The Nothing Phone (1) — real device, 2026-10-23
 
-**Pending — not measured.** `lsusb`: `05c6:f00e` "Nothing / YUPIK-QRD", serial P222AD004771,
-interfaces RNDIS only; `adb devices` (system adb and `~/coco_labs_ws/m5-tools/adb`) empty all
-session. Needs USB debugging on (Developer options) and the laptop's key accepted; then M5's
-USB/CDP procedure (cold start stages, Play fps at 1 and 10 minutes, touch-to-motion, battery
-and temperature, PHONE_PROFILE.md's viewport and safe-area assumptions) and the phone's
-default tier and frame-rate cap. `PHONE_PROFILE.md`'s values stay provisional.
+**REAL DEVICE** (not emulation): Nothing Phone (1) A063, Android 15 (Nothing OS V3.2-260618-1045),
+Chrome 156.0.8078.47, Adreno 642L (`ANGLE (Qualcomm, Adreno (TM) 642L, OpenGL ES 3.2)`), charging
+from the laptop (battery 93–100 %). `lab_web/tools/phone/real_phone.mjs`: Chrome on the phone driven
+over CDP (`adb forward … chrome_devtools_remote`), real CDP touches. **Network:** the head build is
+not deployed, so it was served by the laptop over USB (`adb reverse`, `http://localhost:4174`, a
+secure context like Pages, gzip) — **not the phone's mobile network**; a mobile-network cold start
+of G1 needs a deploy (Gautham's). Rotation for Play: `settings put system user_rotation 1`, restored.
+
+**Viewport and safe area vs PHONE_PROFILE.md (assumptions → measured):**
+
+| | Assumed | Measured |
+|---|---|---|
+| CSS viewport, portrait tab | ~412 × 915 | **361 × 654** (screen 362 × 804) |
+| CSS viewport, landscape tab | ~915 × 412 | **710 × 269** (screen 804 × 362) |
+| Landscape, full screen (after the fix below) | — | **755 × 269**, safe area left **46 px** (the punch hole), others 0 |
+| Device pixel ratio | ~2.625 | **2.9875** (display size enlarged: density 478, physical 420) |
+| Safe area in a tab | — | 0 / 0 / 0 / 0 |
+
+**Runs** ([`phone/`](phone/), [`phone_fullscreen/`](phone_fullscreen/), [`phone_fullscreen_diag/`](phone_fullscreen_diag/), [`phone_fullscreen_cap60/`](phone_fullscreen_cap60/)):
+
+| | 1: head as built (in a tab) | 2: + full screen on PLAY | 3: + 60 fps cap (stopped early) |
+|---|---|---|---|
+| Cold start ×3 (cache + storage cleared): title visible | 660–695 ms | 780–926 ms | 776–832 ms |
+| … PLAY ready / first tick after PLAY | 8.1–8.7 s / 0.56–0.58 s | 10.7–10.9 s / 0.64–0.73 s | 10.9–11.4 s / 0.62–0.70 s |
+| Touch-to-motion median (p90; samples) | **64.8 ms** (80.2; 5) | 147 ms (157; 14) | 138.5 ms (173.8; 6) |
+| Play 1 min: fps median / min, frame p95 | **61.8 / 57.3, 18.1 ms** | 119.9 / 0.5, 12.0 ms | not reached |
+| Play 10 min: fps median / min, frame p95, > 50 ms | **61.7 / 57.1, 17.9 ms, 9 of 36,807** | 120.0 / 0.5, 9.8 ms, 20 of 50,780 | not reached |
+| Tier / drawing pixel ratio | medium / 1.25 | medium / 1.25 | — |
+| Context losses / reloads / errors | 0 / 0 / 0 | 0 / 0 / 0 | — |
+| Battery temperature start → end; end skin / GPU / CPU | 37 → 38 °C; 39.6 / 51.7–54 / 60–63 °C | 38 → 40 °C; 41.1 / 59 / 65 °C | 40 °C throughout |
+
+Run 2's one-second window with fps 0.5 was a single 146.6 s gap in drawn frames ~55 s into the soak
+(the model kept ticking); a 5-minute diagnostic with per-window state (`phone_fullscreen_diag/`,
+120 fps median, a restart, largest frame gap 140.7 ms) **did not reproduce it: UNRESOLVED.**
+Run 2/3's cold starts came right after 10-minute soaks (phone warmer); they are not an A/B of the fixes.
+
+**Defects found on the device, two fixed (G1.13):**
+1. G1's PLAY never called M5's `enterPhonePlay()` (full screen + landscape lock): Play stayed in the
+   tab under the address bar. Fixed in `src/game/PlayGame.tsx`; run 2 shows full screen granted.
+   In **portrait**, PLAY still shows only "Rotate your phone" (no full screen, nothing ticks): the
+   rotate card covers PLAY, so the gesture never reaches `begin()` — **open**.
+2. G1's frame loop had no phone frame cap (M5's 60, optional 120): full screen drew at 120 Hz and ran
+   hotter (run 2). M5's `FrameGate`/`phoneFrameCap()` now gate drawing on phones. **Not yet measured
+   on the device** (run 3 stopped before Play; Gautham unplugged the phone).
+3. **Open (look):** at the real 269 CSS px height, STOP overlaps the "MODEL · kinematic" badge and the
+   minimap covers the joystick's "DRAG TO DRIVE" label ([`phone/phone-play.png`](phone/phone-play.png),
+   [`phone_fullscreen/phone-play.png`](phone_fullscreen/phone-play.png)); full screen still leaves 269 of 362 CSS px
+   (what takes the other 93 px is not yet identified — an `adb screencap` is next).
+
+**Defaults from these results:** tier **medium** stays the phone default (it held 60 fps in a tab and
+120 fps in full screen, frame p95 ≤ 18.1 ms); frame-rate cap **60** (M5's), now applied to G1's game —
+its effect on the phone is pending run 3.
 
 ## 6. Determinism: four engines, and the v3 native-vs-Pyodide gate
 

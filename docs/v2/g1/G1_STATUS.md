@@ -4,8 +4,8 @@ Prompt: [`G1_PROMPT.md`](G1_PROMPT.md). Art direction: [`ART_DIRECTION.md`](ART_
 
 ## Now
 
-- **Current checkpoint:** **G1.13 laptop work — done** (2026-10-23) except the Nothing Phone (1) (not connected with ADB). Results: [`G1_RESULTS.md`](G1_RESULTS.md) § G1.13; evidence [`data/g113/README.md`](data/g113/README.md). PR #27 marked ready for review (not merged).
-- **Next step:** Gautham reviews PR #27 and answers the G1.13 questions (G1_RESULTS); plug the phone in with USB debugging on for its run; then the M6 UI phase (README §7).
+- **Current checkpoint:** G1.13 laptop work done; **the real Nothing Phone (1) measured on 2026-10-23** over USB/CDP (data/g113/README.md §5): 61.7 fps median over 10 min in a tab, touch-to-motion 64.8 ms, 0 context losses; two device defects fixed (full screen on PLAY; M5's 60 fps phone cap); the capped run was stopped before Play (phone unplugged).
+- **Next step:** when the phone is back: the 10-minute run with the 60 fps cap (`lab_web/tools/phone/real_phone.mjs`), an `adb screencap` of full-screen Play (269 of 362 CSS px used), then decide the HUD fix at 269 px (STOP over the MODEL badge; minimap over the joystick label) with Gautham. PR #27 stays ready for review.
 
 ## Setup facts
 
@@ -101,9 +101,9 @@ Recorded in `docs/STATUS.md`'s plan-change log, with the 2026-10-18 Fetch Rush d
 
 ## Laptop items pending
 
-- **The Nothing Phone (1)** (G1.9/G1.13): plugged in tethering-only on 2026-10-22 (RNDIS, no ADB
-  interface), later unplugged. Needs USB debugging on; then M5's USB/CDP run and the phone's
-  default tier and frame-rate cap. Everything else on the laptop list is done (G1.13).
+- **The Nothing Phone (1)**, measured 2026-10-23 (§5 of data/g113/README.md); still to do when it is
+  plugged in again: the 10-minute run with the new 60 fps cap, an `adb screencap` of full-screen Play,
+  and the portrait PLAY path (the rotate card covers PLAY, so full screen is never requested).
 
 ## Deviations so far
 

@@ -29,6 +29,7 @@ import { Minimap, TacticalMap, type MapMarks } from './hud/Maps';
 import { GameSound, haptic } from './sound';
 import { LOAD_STAGES, TIPS, primaryAction, type FetchRushMode, type Primary } from './rules_view';
 import type { GameResult } from './GameApp';
+import { enterPhonePlay, FrameGate, isPhone, phoneFrameCap } from '../play/phone';
 
 const BASE = import.meta.env.BASE_URL;
 const STOP_HOLD_MS = 600;
@@ -139,8 +140,13 @@ export function PlayGame(p: PlayProps) {
       }
     });
     let raf = 0, last = performance.now();
+    // G1.13: on a phone, draw at most phoneFrameCap() frames a second (M5's 60, or 120 when chosen
+    // in settings), as M5's Play does. Measured on the real Nothing Phone (1): uncapped, full-screen
+    // Play drew at the display's 120 Hz. Drawing only: the model's clock never depends on it.
+    const gate = new FrameGate(), phone = isPhone();
     const frame = (now: number) => {
       raf = requestAnimationFrame(frame);
+      if (phone && !gate.due(now, phoneFrameCap())) return;
       const dt = Math.min(0.1, (now - last) / 1000);
       last = now;
       const sh = shown.current, rr = r.current!;
@@ -285,6 +291,10 @@ export function PlayGame(p: PlayProps) {
 
   const begin = () => {
     if (!modelReady || !sceneReady) return;
+    // G1.13: on a phone, PLAY (a user gesture) asks for full screen and a landscape lock, as
+    // M5's Play did (src/play/phone.ts); a refusal leaves the rotate card. Found on the real
+    // Nothing Phone (1): without it Play stayed in the tab, 710 x 269 CSS px under the address bar.
+    void enterPhonePlay();
     sound.current.unlock();
     r.current!.cam.setMode('chase');
     setCam('chase');
