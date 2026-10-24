@@ -15,7 +15,7 @@ import { describe as group, expect, it } from 'vitest';
 import { DECAL_Z, OVERHEAD_Z, WALL_SKIN, describe, footprints, honestyViolations, type Spec, type WorldLook } from '../src/game/world/describe';
 import { REPO } from './helpers';
 
-const WORLDS = ['coco_depot_v1', 'coco_arena_v1', 'coco_arena_v2'];
+const WORLDS = ['coco_depot_v1', 'coco_arena_v1', 'coco_arena_v2', 'coco_depot_colours_v1'];
 const load = (id: string) => JSON.parse(readFileSync(join(REPO, 'worlds', `${id}.json`), 'utf-8')) as Spec;
 
 group('G1.5 decorative honesty', () => {

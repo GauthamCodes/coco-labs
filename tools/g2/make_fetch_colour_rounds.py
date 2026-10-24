@@ -14,8 +14,9 @@ if the committed file differs. Per colour (``games.FETCH_COLOURS``), on
 
 - the order: the colour's rod (``games.FETCH_COLOUR_RODS``) to Dispatch
   (``games.FETCH_COLOUR_DROP``);
-- the start: COCO's start pad (the level's ``start`` x, y), facing the row (north, pi/2), so the
-  four rods are in view when the round begins; the same start for every colour;
+- the start: COCO's start pad (the level's ``start`` x, y), facing the middle of the row of rods
+  (``row_heading``), so all four rods are in the chase camera's view when the round begins; the
+  same start for every colour;
 - the pick: the rod's free pre-grasp pose nearest the start by plan (``games.best_approach``);
 - the ghost: A*'s route on the Arena's plan grid from the start to the pick, then to Dispatch's
   centre (``ghost_m`` its length; ``routes`` the cells, straight runs merged, for drawing);
@@ -46,8 +47,14 @@ OUT = str(games.colour_rounds_file(LEVEL))
 HV = 3
 #: the bot's first run plays to the delivery with this much time (under the link tick limit)
 PROVISIONAL_S = 600.0
-#: the start faces the row of rods (north)
-START_HEADING = math.pi / 2
+
+
+def row_heading(a, sx, sy):
+    """Return the heading from ``(sx, sy)`` to the middle of the row of rods (their mean xy)."""
+    rods = [a.subsystems['assist'].objects[o] for o in games.FETCH_COLOUR_RODS.values()]
+    mx = sum(o['x'] for o in rods) / len(rods)
+    my = sum(o['y'] for o in rods) / len(rods)
+    return math.atan2(my - sy, mx - sx)
 
 
 def make_round(spec, a, colour):
@@ -66,7 +73,7 @@ def make_round(spec, a, colour):
     o = assist.objects[oid]
     rnd = {'region': 'start_pad', 'colour': colour, 'object': oid, 'item': o['item'],
            'diameter': o['diameter'], 'orders': [[oid, drop]], 'attempt': 0,
-           'start': [sx, sy, START_HEADING], 'ghost_m': [leg1[0] + leg2[0]],
+           'start': [sx, sy, row_heading(a, sx, sy)], 'ghost_m': [leg1[0] + leg2[0]],
            'routes': [r3.merged(leg1[1]) + r3.merged(leg2[1])[1:]],
            'pick': [[pick[0], pick[1], pick[2]]], 'via': [[[], []]]}
     rules = games.FetchColour(colour, rnd, seconds=PROVISIONAL_S)

@@ -41,12 +41,12 @@
      "contacts": 0,
      "delivered": [
       {
-       "driven": 8.887486202956842,
+       "driven": 8.89373682067052,
        "drop": "dispatch_drop",
        "ghost": 8.445584412271572,
        "object": "rod_blue",
-       "seconds": 58.300000000000004,
-       "t": 58.300000000000004
+       "seconds": 58.800000000000004,
+       "t": 58.800000000000004
       }
      ],
      "deliveries": 1,
@@ -59,13 +59,13 @@
        "dispatch_drop"
       ]
      ],
-     "path_efficiency": 0.9502782023404717,
+     "path_efficiency": 0.9496103361910408,
      "round": "start_pad",
      "rules": 1,
-     "time_used": 58.300000000000004,
-     "timer": 87.5
+     "time_used": 58.800000000000004,
+     "timer": 88.2
     },
-    "hash_chain": "46d7dfda32dbcd5eee8b1be02d04e3698e474f29cea39fb51555c1d4d44f465c",
+    "hash_chain": "76f76e802699eef72282d55f38bbc38ac4ce939171255bd854a072e14087d730",
     "record": {
      "arg": "blue",
      "game": "fetch_colour",
@@ -74,7 +74,7 @@
       {
        "has_theta": true,
        "kind": "kidnap",
-       "theta": 1.5707963267948966,
+       "theta": 2.214297435588181,
        "tick": 0,
        "x": 23.0,
        "y": 6.0
@@ -98,32 +98,32 @@
       {
        "choice": "assist.target=rod_blue",
        "kind": "config",
-       "tick": 66
+       "tick": 67
       },
       {
        "choice": "assist.grasp=go",
        "kind": "config",
-       "tick": 66
+       "tick": 67
       },
       {
        "kind": "goal",
-       "tick": 270,
+       "tick": 275,
        "x": 23.0,
        "y": 1.4
       },
       {
        "choice": "assist.grasp=go",
        "kind": "config",
-       "tick": 523
+       "tick": 528
       }
      ],
      "level": "coco_depot_colours_v1",
      "rules": 1,
      "seed": 1,
-     "ticks": 584
+     "ticks": 589
     }
    },
-   "reference_time_s": 58.300000000000004,
+   "reference_time_s": 58.800000000000004,
    "region": "start_pad",
    "routes": [
     [
@@ -164,9 +164,9 @@
    "start": [
     23.0,
     6.0,
-    1.5707963267948966
+    2.214297435588181
    ],
-   "timer_s": 87.5,
+   "timer_s": 88.2,
    "via": [
     [
      [],
@@ -203,12 +203,12 @@
      "contacts": 0,
      "delivered": [
       {
-       "driven": 9.81795926743168,
+       "driven": 9.785472244348291,
        "drop": "dispatch_drop",
        "ghost": 9.36690475583121,
        "object": "rod_green",
-       "seconds": 62.6,
-       "t": 62.6
+       "seconds": 62.2,
+       "t": 62.2
       }
      ],
      "deliveries": 1,
@@ -221,13 +221,13 @@
        "dispatch_drop"
       ]
      ],
-     "path_efficiency": 0.954058221335597,
+     "path_efficiency": 0.9572256220174935,
      "round": "start_pad",
      "rules": 1,
-     "time_used": 62.6,
-     "timer": 93.9
+     "time_used": 62.2,
+     "timer": 93.3
     },
-    "hash_chain": "f87f3ad2654dec621b52b53e60c31446e7e7fe8ea06e885aed64c34c28e36362",
+    "hash_chain": "d953bd870a29a4e24b2b49cbbd78ab64da2c5a76cec8bc18fbe1b0084f6d6e15",
     "record": {
      "arg": "green",
      "game": "fetch_colour",
@@ -236,7 +236,7 @@
       {
        "has_theta": true,
        "kind": "kidnap",
-       "theta": 1.5707963267948966,
+       "theta": 2.214297435588181,
        "tick": 0,
        "x": 23.0,
        "y": 6.0
@@ -260,32 +260,32 @@
       {
        "choice": "assist.target=rod_green",
        "kind": "config",
-       "tick": 81
+       "tick": 78
       },
       {
        "choice": "assist.grasp=go",
        "kind": "config",
-       "tick": 81
+       "tick": 78
       },
       {
        "kind": "goal",
-       "tick": 284,
+       "tick": 280,
        "x": 23.0,
        "y": 1.4
       },
       {
        "choice": "assist.grasp=go",
        "kind": "config",
-       "tick": 566
+       "tick": 562
       }
      ],
      "level": "coco_depot_colours_v1",
      "rules": 1,
      "seed": 1,
-     "ticks": 627
+     "ticks": 623
     }
    },
-   "reference_time_s": 62.6,
+   "reference_time_s": 62.2,
    "region": "start_pad",
    "routes": [
     [
@@ -334,9 +334,9 @@
    "start": [
     23.0,
     6.0,
-    1.5707963267948966
+    2.214297435588181
    ],
-   "timer_s": 93.9,
+   "timer_s": 93.3,
    "via": [
     [
      [],
@@ -373,12 +373,12 @@
      "contacts": 0,
      "delivered": [
       {
-       "driven": 11.156609431490065,
+       "driven": 11.132867750099212,
        "drop": "dispatch_drop",
        "ghost": 10.922539674441614,
        "object": "rod_red",
-       "seconds": 68.50000000000001,
-       "t": 68.50000000000001
+       "seconds": 68.10000000000001,
+       "t": 68.10000000000001
       }
      ],
      "deliveries": 1,
@@ -391,13 +391,13 @@
        "dispatch_drop"
       ]
      ],
-     "path_efficiency": 0.9790196332957773,
+     "path_efficiency": 0.9811074666133779,
      "round": "start_pad",
      "rules": 1,
-     "time_used": 68.50000000000001,
-     "timer": 102.8
+     "time_used": 68.10000000000001,
+     "timer": 102.2
     },
-    "hash_chain": "cd6b1b28ede4affb68a73bc680ca7f7cf64cdafb85ddc6017a48098b35621e5f",
+    "hash_chain": "4404f17cf498afba114340daa8cfd7bcc0c9e583cdc9117a34e3682fd953892b",
     "record": {
      "arg": "red",
      "game": "fetch_colour",
@@ -406,7 +406,7 @@
       {
        "has_theta": true,
        "kind": "kidnap",
-       "theta": 1.5707963267948966,
+       "theta": 2.214297435588181,
        "tick": 0,
        "x": 23.0,
        "y": 6.0
@@ -430,32 +430,32 @@
       {
        "choice": "assist.target=rod_red",
        "kind": "config",
-       "tick": 117
+       "tick": 116
       },
       {
        "choice": "assist.grasp=go",
        "kind": "config",
-       "tick": 117
+       "tick": 116
       },
       {
        "kind": "goal",
-       "tick": 330,
+       "tick": 326,
        "x": 23.0,
        "y": 1.4
       },
       {
        "choice": "assist.grasp=go",
        "kind": "config",
-       "tick": 625
+       "tick": 621
       }
      ],
      "level": "coco_depot_colours_v1",
      "rules": 1,
      "seed": 1,
-     "ticks": 686
+     "ticks": 682
     }
    },
-   "reference_time_s": 68.50000000000001,
+   "reference_time_s": 68.10000000000001,
    "region": "start_pad",
    "routes": [
     [
@@ -504,9 +504,9 @@
    "start": [
     23.0,
     6.0,
-    1.5707963267948966
+    2.214297435588181
    ],
-   "timer_s": 102.8,
+   "timer_s": 102.2,
    "via": [
     [
      [],
@@ -543,12 +543,12 @@
      "contacts": 0,
      "delivered": [
       {
-       "driven": 8.198696276327437,
+       "driven": 8.207574394981313,
        "drop": "dispatch_drop",
        "ghost": 7.7,
        "object": "rod_yellow",
-       "seconds": 55.800000000000004,
-       "t": 55.800000000000004
+       "seconds": 55.7,
+       "t": 55.7
       }
      ],
      "deliveries": 1,
@@ -561,13 +561,13 @@
        "dispatch_drop"
       ]
      ],
-     "path_efficiency": 0.9391737101217725,
+     "path_efficiency": 0.9381578075866508,
      "round": "start_pad",
      "rules": 1,
-     "time_used": 55.800000000000004,
-     "timer": 83.7
+     "time_used": 55.7,
+     "timer": 83.6
     },
-    "hash_chain": "04e0d30085f8c374e2261939f7408e026c119385a5f8ffd61337fd66ec7c5983",
+    "hash_chain": "3ea09be5e67c65df08db1ec6a9c15981e72bd539db405f3c6192cd9cb3a0226e",
     "record": {
      "arg": "yellow",
      "game": "fetch_colour",
@@ -576,7 +576,7 @@
       {
        "has_theta": true,
        "kind": "kidnap",
-       "theta": 1.5707963267948966,
+       "theta": 2.214297435588181,
        "tick": 0,
        "x": 23.0,
        "y": 6.0
@@ -600,32 +600,32 @@
       {
        "choice": "assist.target=rod_yellow",
        "kind": "config",
-       "tick": 49
+       "tick": 52
       },
       {
        "choice": "assist.grasp=go",
        "kind": "config",
-       "tick": 49
+       "tick": 52
       },
       {
        "kind": "goal",
-       "tick": 258,
+       "tick": 257,
        "x": 23.0,
        "y": 1.4
       },
       {
        "choice": "assist.grasp=go",
        "kind": "config",
-       "tick": 498
+       "tick": 497
       }
      ],
      "level": "coco_depot_colours_v1",
      "rules": 1,
      "seed": 1,
-     "ticks": 559
+     "ticks": 558
     }
    },
-   "reference_time_s": 55.800000000000004,
+   "reference_time_s": 55.7,
    "region": "start_pad",
    "routes": [
     [
@@ -646,9 +646,9 @@
    "start": [
     23.0,
     6.0,
-    1.5707963267948966
+    2.214297435588181
    ],
-   "timer_s": 83.7,
+   "timer_s": 83.6,
    "via": [
     [
      [],

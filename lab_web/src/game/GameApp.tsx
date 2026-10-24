@@ -6,6 +6,7 @@
  *
  *   ?view=play&game=fetch_rush&seed=1          Fetch Rush on the Depot
  *   ?view=play&game=free&world=depot|proving   Free Drive
+ *   ?view=play&game=fetch_colour&colour=red    Fetch by colour (owner request 2026-10-24; src/game/fetch_colour.ts)
  *
  * Every M5 Play link (`&c=`, `&l=`, `&s=`, `&z=`) still opens M5's
  * challenges (main.tsx routes those to PlayApp before this shell). The
@@ -13,17 +14,18 @@
  */
 
 import { chosenPlanner, PLANNER_LABEL, PLANNER_WHAT, PLAY_PLANNERS, type PlayPlanner } from './planners';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { ArrowLeft, Lock } from 'lucide-react';
 import { isBool, readPref, readRaw, writePref, writeRaw } from '../prefs';
 import { navigate } from '../ui/navigation';
 import { PlayGame } from './PlayGame';
-import type { GameKind, WorldId } from './session';
+import type { FetchColourId, GameKind, WorldId } from './session';
+import { colourBestKey, colourFromQuery, colourHref } from './fetch_colour';
 import type { Tier } from './world/build3d';
 import { pickTier } from './tier';
 import './fonts.css';
 import './game.css';
-import { FETCH_RUSH_SHIFTS, fetchRushMode, type FetchRushMode } from './rules_view';
+import { FETCH_COLOURS, FETCH_RUSH_SHIFTS, colourChip, fetchRushMode, type FetchRushMode } from './rules_view';
 import { saveBag } from '../ros/bag_saver';
 import { PlannerInset, type InsetData } from './hud/PlannerInset';
 import { FETCH_RUSH_RULES } from './rules_view';
@@ -57,11 +59,26 @@ function keepStars(seed: number, mode: FetchRushMode, planner: PlayPlanner, star
   if (old !== null && old >= stars) return;
   writeRaw(bestKey(seed, mode, planner), JSON.stringify({ stars, net, time }));
 }
+/** Fetch by colour's bests: per colour, per AUTO planner (src/game/fetch_colour.ts) */
+export function readColourStars(colour: FetchColourId, planner: PlayPlanner = 'astar'): number | null {
+  try { const raw = readRaw(colourBestKey(colour, planner)); return raw ? (JSON.parse(raw) as { stars: number }).stars : null; } catch { return null; }
+}
+function keepColourStars(colour: FetchColourId, planner: PlayPlanner, stars: number, net: number, time: number) {
+  const old = readColourStars(colour, planner);
+  if (old !== null && old >= stars) return;
+  writeRaw(colourBestKey(colour, planner), JSON.stringify({ stars, net, time }));
+}
 const starText = (n: number | null) => (n === null ? '☆☆☆' : '★'.repeat(n) + '☆'.repeat(3 - n));
 
 export function GameApp() {
   const q = new URLSearchParams(window.location.search);
   const game = q.get('game') as GameKind | null;
+  if (game === 'fetch_colour') {
+    // owner request 2026-10-24: a missing or unknown colour opens the choice of colour
+    const colour = colourFromQuery(q), planner = chosenPlanner(q.get('planner'));
+    if (!colour) return <ColourChoice planner={planner} />;
+    return <GameRun game={game} world="depot_colours" seed={1} mode="phone" race={false} planner={planner} colour={colour} />;
+  }
   if (game !== 'fetch_rush' && game !== 'free') return <ModeSelect />;
   const world: WorldId = game === 'fetch_rush' ? 'depot' : q.get('world') === 'proving' ? 'proving' : 'depot';
   // Fetch Rush plays the shifts on file (rules_view); another seed opens shift 1. G1.12: &mode=full is the Full shift
@@ -71,7 +88,7 @@ export function GameApp() {
   return <GameRun game={game} world={world} seed={seed} mode={fetchRushMode(q.get('mode'))} race={race} planner={race ? 'astar' : chosenPlanner(q.get('planner'))} />;
 }
 
-function GameRun({ game, world, seed, mode, race, planner }: { game: GameKind; world: WorldId; seed: number; mode: FetchRushMode; race: boolean; planner: PlayPlanner }) {
+function GameRun({ game, world, seed, mode, race, planner, colour }: { game: GameKind; world: WorldId; seed: number; mode: FetchRushMode; race: boolean; planner: PlayPlanner; colour?: FetchColourId }) {
   const [paused, setPaused] = useState(false);
   const [settings, setSettings] = useState(false);
   const [result, setResult] = useState<GameResult | null>(null);
@@ -84,16 +101,17 @@ function GameRun({ game, world, seed, mode, race, planner }: { game: GameKind; w
   useEffect(() => { document.documentElement.classList.add('playing-coco'); return () => document.documentElement.classList.remove('playing-coco'); }, []);
   const onResult = (r: GameResult) => {
     setResult(r);
-    if (r.stars !== null && r.card) keepStars(r.seed, mode, planner, r.stars, Number(r.card.net_deliveries ?? 0), Number(r.card.time_used ?? 0));
+    if (r.stars !== null && r.card && game === 'fetch_colour' && colour) keepColourStars(colour, planner, r.stars, Number(r.card.net_deliveries ?? 0), Number(r.card.time_used ?? 0));
+    else if (r.stars !== null && r.card) keepStars(r.seed, mode, planner, r.stars, Number(r.card.net_deliveries ?? 0), Number(r.card.time_used ?? 0));
   };
   const restart = () => { setResult(null); setPaused(false); setRestartKey((k) => k + 1); };
   return <>
     <PlayGame key={`${restartKey}-${tier}`} world={world} game={game} seed={seed} mode={mode} tier={tier} paused={paused || !!result} onPause={() => setPaused((x) => !x)}
       onResult={onResult} restartKey={restartKey} showPerf={showPerf} tutorialSeen={tutorialSeen} ghost={ghost}
-      onTutorialDone={() => { writePref('tutorial', true); setTutorialSeen(true); }} race={race} planner={planner}
+      onTutorialDone={() => { writePref('tutorial', true); setTutorialSeen(true); }} race={race} planner={planner} colour={colour}
       onRecommended={(to) => { writePref('quality', to.quality); writePref('phone120', to.phone120); setTier(to.quality); restart(); }} />
     {paused && !result && !settings && <section className="g1 g1-screen dim" data-testid="g1-pause-menu" style={{ position: 'fixed', zIndex: 25, background: 'rgba(8,10,14,.62)' }}>
-      <div className="g1-eyebrow">PAUSED · {game === 'fetch_rush' ? `FETCH RUSH · SHIFT ${seed}${mode === 'full' ? ' · FULL' : ''}` : `FREE DRIVE · ${world === 'depot' ? 'DEPOT' : 'PROVING GROUND'}`}</div>
+      <div className="g1-eyebrow">PAUSED · {game === 'fetch_colour' ? `FETCH BY COLOUR · ${colourChip(colour ?? 'red')}` : game === 'fetch_rush' ? `FETCH RUSH · SHIFT ${seed}${mode === 'full' ? ' · FULL' : ''}` : `FREE DRIVE · ${world === 'depot' ? 'DEPOT' : 'PROVING GROUND'}`}</div>
       <nav className="g1-menu">
         <button className="main" autoFocus onClick={() => setPaused(false)}>RESUME</button>
         <button onClick={restart}>RESTART</button>
@@ -103,7 +121,7 @@ function GameRun({ game, world, seed, mode, race, planner }: { game: GameKind; w
       </nav>
     </section>}
     {settings && <Settings tier={tier} onTier={setTier} ghost={ghost} onGhost={(g) => { writePref('ghost', g); setGhost(g); }} onClose={() => setSettings(false)} />}
-    {result && <Results r={result} onAgain={restart} planner={race ? null : planner} />}
+    {result && <Results r={result} onAgain={restart} planner={race ? null : planner} colour={game === 'fetch_colour' ? colour ?? 'red' : null} />}
   </>;
 }
 
@@ -130,7 +148,8 @@ function Settings({ tier, onTier, ghost, onGhost, onClose }: { tier: Tier; onTie
   </section>;
 }
 
-function Results({ r, onAgain, planner }: { r: GameResult; onAgain: () => void; planner: PlayPlanner | null }) {
+function Results({ r, onAgain, planner, colour }: { r: GameResult; onAgain: () => void; planner: PlayPlanner | null; colour: FetchColourId | null }) {
+  const what = colour ? 'colour' : 'shift';
   const c = r.card ?? {};
   const delivered = (c.delivered as { ghost: number | null; driven: number }[] | undefined) ?? [];
   const driven = delivered.reduce((s, d) => s + d.driven, 0), ghost = delivered.reduce((s, d) => s + (d.ghost ?? 0), 0);
@@ -139,7 +158,7 @@ function Results({ r, onAgain, planner }: { r: GameResult; onAgain: () => void; 
   const obj = first ? r.objects?.find((o) => o.id === first) : undefined;
   const compare = `${BASE}?view=compare&world=depot${obj ? `&goal=${obj.x.toFixed(2)},${obj.y.toFixed(2)}` : ''}`;
   return <section className="g1 g1-screen dim" data-testid="g1-results" style={{ position: 'fixed', zIndex: 27, background: 'rgba(8,10,14,.8)' }}>
-    <div className="g1-eyebrow">FETCH RUSH · SHIFT {r.seed} · RESULT</div>
+    <div className="g1-eyebrow" data-testid="results-title">{colour ? <>FETCH BY COLOUR · <span className="g2-colour-dot" data-colour={colour} aria-hidden /> {colourChip(colour)} ROD</> : <>FETCH RUSH · SHIFT {r.seed}</>} · RESULT</div>
     <div className="g1-bigstars" aria-label={`${r.stars ?? 0} of 3 stars`}>{r.stars === null ? <span className="off">☆☆☆</span> : <>{'★'.repeat(r.stars)}<span className="off">{'★'.repeat(3 - r.stars)}</span></>}</div>
     <div className="g1-cards">
       <div className="g1-stat g1-glass"><div className="k">TIME USED</div><div className="v num">{Number(c.time_used ?? 0).toFixed(1)}<small> s</small></div></div>
@@ -153,8 +172,9 @@ function Results({ r, onAgain, planner }: { r: GameResult; onAgain: () => void; 
       <a className="g1-big small ghost" href={compare}>WATCH HOW THE PLANNER DID IT</a>
       <a className="g1-big small ghost" href={`${BASE}?view=play`}>GAMES</a></nav>
     <nav className="g1-menu g2-bag"><BagButton /></nav>
-    {planner && planner !== 'astar' && <p className="g1-note" data-testid="results-planner">AUTO planned with <b>{PLANNER_LABEL[planner]}</b> this run (on its record). The shift's routes, ghost and reference bot are A*, so stars compare against A*; bests are kept per planner.</p>}
-    <p className="g1-note">{r.reference ? `Stars against the reference bot's run for this shift (coco_lab.games.stars; GAMES.md): ★ one delivery, ★★ as many net deliveries, ★★★ ranked at or above it. Reference: ${String(r.reference.deliveries)} delivery(ies), ${Number(r.reference.time_used).toFixed(1)} s.` : 'No reference run exists for this shift, so no stars are given.'} MODEL · kinematic.</p>
+    {planner && planner !== 'astar' && <p className="g1-note" data-testid="results-planner">AUTO planned with <b>{PLANNER_LABEL[planner]}</b> this run (on its record). The {what}'s routes, ghost and reference bot are A*, so stars compare against A*; bests are kept per planner.</p>}
+    {colour && <nav className="g2-colour-chips again" aria-label="Fetch another colour"><span className="g1-eyebrow">FETCH ANOTHER</span>{FETCH_COLOURS.filter((c) => c.id !== colour).map((c) => <a key={c.id} data-colour={c.id} href={colourHref(BASE, c.id, planner ?? 'astar')}>{c.label} · {c.mm} mm</a>)}</nav>}
+    <p className="g1-note">{r.reference ? `Stars against the reference bot's run for this ${what} (coco_lab.games.stars; GAMES.md): ★ one delivery, ★★ as many net deliveries, ★★★ ranked at or above it. Reference: ${String(r.reference.deliveries)} delivery(ies), ${Number(r.reference.time_used).toFixed(1)} s.` : `No reference run exists for this ${what}, so no stars are given.`} MODEL · kinematic.</p>
   </section>;
 }
 
@@ -183,6 +203,7 @@ function ModeSelect() {
               onClick={(e) => { e.preventDefault(); navigate(`${BASE}?view=play&game=fetch_rush&seed=${seed}&race=nav2`); }}>RACE NAV2 · REAL ROS 2 RECORDING</a>}</div>
         </div>;
       })}
+      <ColourCard planner={planner} art={art('0% 0%')} />
       <div role="listitem" className="g1-modecard" data-testid="mode-free-drive"><div className="art" style={art('50% 0%')} /><h3>Free Drive</h3><p>No clock. Drive, explore, pick things up.</p>
         <div className="opts"><a href={withPlanner(`${BASE}?view=play&game=free&world=depot`)}>DEPOT</a><a href={withPlanner(`${BASE}?view=play&game=free&world=proving`)}>PROVING GROUND</a></div></div>
       {[['Rush Hour', 'Cross the forklift lanes.'], ['Fog Scout', 'The map starts dark.'], ['Lost & Found', 'Where am I?']].map(([t, d]) => <div role="listitem" key={t} className="g1-modecard locked" aria-disabled="true"><div className="art" style={art('100% 0%')} /><span className="lock"><Lock size={9} /> SOON</span><h3>{t}</h3><p>{d}</p></div>)}
@@ -194,7 +215,38 @@ function ModeSelect() {
         data-testid={`planner-${id}`} className={planner === id ? 'is-on' : ''} onClick={() => pick(id)}>{PLANNER_LABEL[id]}</button>)}</div>
       <p>{PLANNER_WHAT[planner]} The shift's reference stays A*, so stars compare against A*; bests are kept per planner.</p>
     </section>
-    <p className="g1-note">Fetch Rush and Free Drive run COCO's model in your browser (MODEL · kinematic). Stars and bests stay in this browser.</p>
+    <p className="g1-note">Fetch Rush, Fetch by colour and Free Drive run COCO's model in your browser (MODEL · kinematic). Stars and bests stay in this browser.</p>
+  </main>;
+}
+
+/**
+ * Owner request 2026-10-24: Fetch by colour's card. Four chips, each with its colour's NAME and
+ * diameter (colour is never the only cue); each opens that colour's round (with the AUTO planner).
+ */
+function ColourCard({ planner, art }: { planner: PlayPlanner; art: CSSProperties }) {
+  return <div role="listitem" className="g1-modecard g2-colour-card" data-testid="mode-fetch-colour">
+    <div className="art" style={art} /><span className="g1-eyebrow" style={{ color: 'var(--g1-coco)' }}>NEW · DEPOT</span><h3>Fetch by colour</h3>
+    <p>Four rods in a row. Pick a colour: COCO fetches that rod to Dispatch.</p>
+    <div className="g2-colour-chips" role="group" aria-label="Choose the rod's colour">{FETCH_COLOURS.map((c) => {
+      const href = colourHref(BASE, c.id, planner), best = readColourStars(c.id, planner);
+      return <a key={c.id} data-testid={`mode-fetch-colour-${c.id}`} data-colour={c.id} href={href} aria-label={`${c.label}, ${c.mm} millimetre rod${best !== null ? `, best ${best} of 3 stars` : ''}`}
+        onClick={(e) => { e.preventDefault(); navigate(href); }}><b>{c.label}</b> · {c.mm} mm{best !== null && <i className="st"> {starText(best)}</i>}</a>;
+    })}</div>
+    <p className="src">As COCO's first Gazebo fetch: four rods, one per colour.</p>
+  </div>;
+}
+
+/** Fetch by colour with no (or an unknown) colour in the link: choose one. */
+function ColourChoice({ planner }: { planner: PlayPlanner }) {
+  useEffect(() => { document.title = 'COCO Lab · Fetch by colour'; }, []);
+  return <main className="g1 g1-screen" data-testid="colour-choice" data-ready="true" style={{ position: 'fixed', overflow: 'auto' }}>
+    <a className="g1-icon g1-glass" href={`${BASE}?view=play`} aria-label="Back to the games" style={{ position: 'absolute', left: 'calc(12px + env(safe-area-inset-left))', top: 'calc(12px + env(safe-area-inset-top))', color: 'inherit' }}><ArrowLeft size={20} /></a>
+    <div className="g1-eyebrow">FETCH BY COLOUR · CHOOSE THE ROD</div>
+    <nav className="g2-colour-chips big" aria-label="Choose the rod's colour">{FETCH_COLOURS.map((c) => {
+      const href = colourHref(BASE, c.id, planner);
+      return <a key={c.id} data-testid={`choose-colour-${c.id}`} data-colour={c.id} href={href} onClick={(e) => { e.preventDefault(); navigate(href); }}><b>{c.label}</b> · {c.mm} mm</a>;
+    })}</nav>
+    <p className="g1-note">Four rods stand in a row by COCO's start, as in COCO's first Gazebo fetch. COCO fetches the one you choose to Dispatch. MODEL · kinematic.</p>
   </main>;
 }
 
