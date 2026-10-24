@@ -105,7 +105,10 @@ def test_free_drive_on_the_proving_ground_is_the_plain_arena():
     glue = _glue()
     spec = (REPO / 'worlds/coco_arena_v1.json').read_text()
     world, _ = glue.game_init(spec, 'free', 0, 1, lambda *_: None, hash_version=2)
-    assert json.loads(world)['game'] == {'game': 'free', 'arg': 0, 'v3': False, 'mode': None, 'setup': []}
+    info = json.loads(world)['game']
+    # G2.2: the ROS-shaped model's constants ride along (additive, labelled MODEL)
+    assert info.pop('ros')['graph']['evidence'] == 'MODEL'
+    assert info == {'game': 'free', 'arg': 0, 'v3': False, 'mode': None, 'setup': []}
     t = _step(glue, [])
     assert t['game'] == {}
     glue2 = _glue()

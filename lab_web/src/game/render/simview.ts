@@ -57,7 +57,7 @@ export function axesMesh(width = 0.04): THREE.Mesh {
 }
 
 /** A frame's name, drawn at a constant size on screen (as RViz's TF display labels frames). */
-function label(text: string, colour = '#ffffff'): THREE.Sprite {
+export function label(text: string, colour = '#ffffff'): THREE.Sprite {
   const c = document.createElement('canvas');
   const px = 28, g = c.getContext('2d')!;
   g.font = `600 ${px}px ui-monospace, monospace`;

@@ -265,3 +265,23 @@
 .g2-echo select { font: inherit; background: #0f172a; color: var(--g1-ink); border: 1px solid var(--g1-edge); border-radius: 6px; }
 .g2-echo pre { margin: 6px 0 0; font: 500 calc(10.5px * var(--g1-s)) / 1.35 ui-monospace, monospace; white-space: pre; overflow: auto; color: #e2e8f0; }
 .g2-plot { width: 100%; height: 100%; min-height: 220px; display: block; }
+/* G2.7: the title's badges: plain text (never a logo), what COCO Lab is built from */
+.g2-badges { margin: calc(6px * var(--g1-s)) 0 0; font: 600 calc(11px * var(--g1-s)) / 1.3 ui-monospace, 'JetBrains Mono', monospace; color: #cbd5e1; letter-spacing: .02em;
+  text-shadow: 0 1px 3px rgba(0,0,0,.9); }
+.g2-badges-i { border: 1px solid var(--g1-edge); background: rgba(17,22,32,.6); color: inherit; border-radius: 50%; width: 22px; height: 22px; padding: 0; margin-left: 6px; cursor: pointer; font: inherit; }
+/* G2.7: the results inset: the planner's routes and the drive, on the map (MODEL) */
+.g2-inset { margin: 0; padding: 6px; border-radius: 12px; width: min(420px, 86vw); }
+.g2-inset canvas { width: 100%; height: clamp(110px, 26vh, 210px); display: block; border-radius: 8px; }
+.g2-inset figcaption { font: 500 11px/1.3 var(--g1-ui); color: var(--g1-mute); padding: 4px 2px 0; }
+.g2-inset figcaption b { font: 700 10px ui-monospace, monospace; background: #0c4a6e; color: #7dd3fc; padding: 1px 5px; border-radius: 4px; margin-right: 4px; }
+.g2-inset .k { display: inline-block; width: 14px; height: 3px; vertical-align: middle; margin-left: 3px; }
+.g2-inset .k.cy { background: #22d3ee; } .g2-inset .k.or { background: #ff7a1a; }
+/* G2.6: Race Nav2 -- the chip while racing, and the three-way results card */
+.g2-race { position: absolute; left: 50%; top: calc(52px * var(--g1-s)); transform: translateX(-50%); margin: 0; padding: 4px 12px; border-radius: 999px; font: 600 calc(11px * var(--g1-s)) var(--g1-ui); white-space: nowrap; }
+.g2-race b, .g2-threeway .tag { font: 700 .85em ui-monospace, monospace; padding: 1px 5px; border-radius: 4px; background: #0c4a6e; color: #7dd3fc; }
+.g2-threeway .tag.stack { background: #3f2a0c; color: #fcd34d; }
+.g2-threeway { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 10px 12px; border-radius: 12px; width: min(620px, 92vw); }
+.g2-threeway h4 { margin: 0; font: 700 11px var(--g1-display, system-ui); letter-spacing: .06em; color: var(--g1-mute); }
+.g2-threeway p.num { margin: 2px 0; font: 700 20px var(--g1-display, system-ui); }
+.g2-threeway small { color: var(--g1-mute); font-size: 11px; }
+.g2-threeway .note { grid-column: 1 / -1; margin: 0; font-size: 11px; color: var(--g1-mute); }

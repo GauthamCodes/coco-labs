@@ -1,6 +1,7 @@
 {
  "run": "m6f8_ghost_1",
  "overrides": {},
+ "truth_odom": false,
  "rate": 2.0,
  "updates": 57,
  "class": "STACK component (nav2_amcl) re-run offline on recorded Gazebo data",

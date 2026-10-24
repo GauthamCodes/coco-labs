@@ -18,6 +18,8 @@ import type { Candidate, GameKind, GameTick, GameZone } from './session';
  * modes: 'phone' (2 orders, the default) and 'full' (the Full shift, 3 orders).
  */
 export const FETCH_RUSH_SHIFTS = [1, 2, 3, 4, 5, 6];
+/** the rules the worker plays (coco_lab.games.FETCH_RUSH_RULES; a test keeps them equal) */
+export const FETCH_RUSH_RULES = 4;
 export type FetchRushMode = 'phone' | 'full';
 export const fetchRushMode = (v: string | null): FetchRushMode => (v === 'full' ? 'full' : 'phone');
 

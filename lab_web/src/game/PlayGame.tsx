@@ -26,6 +26,8 @@ import { SimClock, strip } from '../ros/telemetry';
 import { Recorder, TopicStats, topicsOf } from '../ros/recorder';
 import { Panels } from './panels/Panels';
 import { bagName, registerBagSource } from '../ros/bag_saver';
+import { ghostFor, ghostPoseAt, loadGhost, loadGhostIndex, type StackGhost } from './stack_ghost';
+import { FETCH_RUSH_RULES } from './rules_view';
 import type { PanelId } from './panels/learn';
 import { parseDisplays, type Displays } from '../ros/displays';
 import { writePref } from '../prefs';
@@ -55,6 +57,8 @@ export interface PlayProps {
   ghost: boolean;
   /** G2.1: the player tapped "Switch to recommended settings" (never called otherwise) */
   onRecommended?: (s: PlaySettings) => void;
+  /** G2.6: race the recorded Gazebo + Nav2 run of this round (STACK), when one exists */
+  race?: boolean;
 }
 
 const fmt = (s: number) => `${Math.floor(Math.max(0, s) / 60)}:${String(Math.floor(Math.max(0, s) % 60)).padStart(2, '0')}`;
@@ -84,6 +88,7 @@ export function PlayGame(p: PlayProps) {
   const recorder = useRef(new Recorder());
   const stats = useRef(new TopicStats());
   const planGoal = useRef<[number, number] | null>(null);
+  const stackGhost = useRef<StackGhost | null>(null);
   // G2.3: the /rosout console's lines and the Gazebo-style clock (model events and times)
   const rosout = useRef(new Rosout());
   const clock = useRef(new SimClock());
@@ -136,6 +141,11 @@ export function PlayGame(p: PlayProps) {
         renderer.pose = pose;
         shown.current = { from: pose, to: pose, at: 0, z0: 0, z1: 0 };
         await renderer.loadRobot(`${BASE}assets3d/robot_${p.tier === 'high' ? 'high' : 'low'}.glb`);
+        // G2.6: Race Nav2 -- the recorded run, loaded with the world; its ghost compiles with the rest
+        if (p.race && p.game === 'fetch_rush') {
+          const entry = ghostFor(await loadGhostIndex(), FETCH_RUSH_RULES, p.mode ?? 'phone', p.seed);
+          if (entry) { stackGhost.current = await loadGhost(entry); renderer.prepareStackGhost(); }
+        }
         // G1.11: every shader now, behind the loading screen, not on first use in play
         await renderer.precompile();
         if (alive) setSceneReady(true);
@@ -280,6 +290,7 @@ export function PlayGame(p: PlayProps) {
       else if (a.phase === 'idle' && ba.phase !== 'idle' && ba.phase !== 'release' && a.reason) { say(a.reason.length > 46 ? a.reason.slice(0, 44) + '…' : a.reason); sound.current.refuse(); }
     }
     if (g?.clearance !== undefined && g.clearance < 1.2 && (before?.game?.clearance ?? 9) >= 1.2) say('Forklift ahead!');
+    if (stackGhost.current && f) rr.setStackGhost(ghostPoseAt(stackGhost.current.track, f.t));
     if (f?.over && !bf?.over) void finish();
     // G2.3: the model's events as /rosout lines; the clock's sim time and iterations
     const scan = w?.game.ros?.scan;
@@ -422,7 +433,14 @@ export function PlayGame(p: PlayProps) {
     const refs = await fetch(`${BASE}generated/g1/references.json`, { credentials: 'omit' }).then((x) => x.json()).catch(() => null) as { fetch_rush?: Record<string, unknown> } | null;
     const reference = refs?.fetch_rush?.[String(p.seed)] ?? null;
     const [card, rec] = await Promise.all([ss.query<{ card: Record<string, unknown>; stars: number | null; reference: Record<string, unknown> | null }>('stars', reference), ss.query<Record<string, unknown>>('record')]);
-    p.onResult({ game: p.game, seed: p.seed, world: p.world, card: card?.card ?? null, stars: card?.stars ?? null, reference: card?.reference ?? null, record: rec, objects: ss.world?.game.objects });
+    const w = ss.world;
+    const inset = w && occ.current && w.game.round ? { map: { width: w.width, height: w.height, resolution: w.resolution, origin: w.origin }, occupancy: occ.current,
+      planned: w.game.round.routes, driven: recorder.current.frames.filter((_, k) => k % 3 === 0).map((f) => [f.pose[0], f.pose[1]] as [number, number]) } : undefined;
+    const ghost = stackGhost.current;
+    const stack = ghost ? { driving_s: ghost.driving_s, driven_m: ghost.driven_m, legs: ghost.legs.map((l) => ({ id: l.id, status: l.status })), not: ghost.not } : undefined;
+    const planner = w?.game.round ? { route_m: w.game.round.ghost_m.reduce((a, b) => a + b, 0), reference_time_s: w.game.round.reference_time_s } : undefined;
+    p.onResult({ game: p.game, seed: p.seed, world: p.world, card: card?.card ?? null, stars: card?.stars ?? null, reference: card?.reference ?? null, record: rec, objects: ss.world?.game.objects, inset,
+      driven_m: recorder.current.frames.reduce((acc, f, k, a) => acc + (k ? Math.hypot(f.pose[0] - a[k - 1].pose[0], f.pose[1] - a[k - 1].pose[1]) : 0), 0), planner, stack });
   };
 
   // keyboard: WASD/arrows drive; G grab; F auto; C camera; V vision; Space STOP; R release; M map; Esc pause
@@ -618,6 +636,7 @@ export function PlayGame(p: PlayProps) {
       <button className="g1-btn g1-small g1-cam" data-testid="hud-camera" onClick={cycleCam} aria-label={`Camera (C): ${cam}`}><span><Camera className="ic" size={20} />CAM{desktop && <kbd>C</kbd>}</span></button>
       {busy && <p className="g1-busy g1-glass" role="status" data-testid="g1-busy">COCO's planner is computing… <small>(the clock waits)</small></p>}
       {toast && <p key={toast.key} className="g1-toast g1-glass" role="status">{toast.text}</p>}
+      {stackGhost.current && <p className="g2-race g1-glass" data-testid="g2-race-chip">RACING Nav2 · <b>STACK</b> recording (Gazebo, driving only — no grasp)</p>}
       {recommend && <div className="g2-recommend g1-glass" role="status" data-testid="g2-recommend">
         <span>Drawing {recommend.fps.toFixed(0)} fps on your saved settings.</span>
         <button className="go" onClick={() => { const to = recommend.to; setRecommend(null); p.onRecommended?.(to); }}>Switch to recommended settings<small>{recommend.to.quality} quality · 60 fps cap · restarts this run</small></button>

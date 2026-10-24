@@ -15,11 +15,12 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import type { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import type { WorldLook } from '../world/describe';
 import { buildActor, buildWorld, type BuiltWorld, type Tier } from '../world/build3d';
 import { GameCamera, type CamMode } from './camera';
-import { axesMesh, SIM_BACKGROUND, SimView } from './simview';
+import { axesMesh, label, SIM_BACKGROUND, SimView } from './simview';
 import type { Displays } from '../../ros/displays';
 import type { RosInfo, TFMessage } from '../../ros/shapes';
 
@@ -120,6 +121,13 @@ export class GameRenderer {
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); this.lostContext = true; });
     this.scene.background = new THREE.Color(0x0e1116);
+    // G2.7: a baked environment for reflections (Isaac Sim-inspired lighting): three.js's procedural
+    // RoomEnvironment, prefiltered once at load (no image asset), kept dim for the Night Shift look.
+    // Physically based materials reflect it: COCO on every tier, the world on high (build3d.ts).
+    const pmrem = new THREE.PMREMGenerator(this.renderer);
+    this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    this.scene.environmentIntensity = 0.25;
+    pmrem.dispose();
     this.hemi = new THREE.HemisphereLight(0xb4c2de, 0x2c333d, 1.4);
     this.hemi.position.set(0, 0, 1);
     this.key = new THREE.DirectionalLight(0xffe2bd, 1.9);
@@ -363,8 +371,15 @@ export class GameRenderer {
           const hsl = { h: 0, s: 0, l: 0 };
           mat.color.getHSL(hsl);
           const c = withRim(mat);
-          if (hsl.l > 0.62 && hsl.s < 0.2) c.color.set(0xff7a1a);
+          const shell = hsl.l > 0.62 && hsl.s < 0.2;
+          if (shell) c.color.set(0xff7a1a);
           else if (hsl.l < 0.4) c.color.offsetHSL(0, 0, 0.05);  // G1.11: a brighter body
+          // G2.7: one material table for COCO -- rubber tyres, metal arm and gripper, plastic shells,
+          // LiDAR and camera, painted metal frame (presentation; the URDF's colours are kept)
+          const part = (() => { for (let a: THREE.Object3D | null = m; a; a = a.parent) { const k = /^visual:([^:]+)/.exec(a.name); if (k) return k[1]; } return ''; })();
+          const [metal, rough] = /^wheel/.test(part) ? [0, 0.88] : /^(m_link|grip)/.test(part) ? [0.75, 0.32]
+            : /^(lidar|camera)/.test(part) ? [0, 0.35] : shell ? [0, 0.42] : [0.45, 0.45];
+          c.metalness = metal; c.roughness = rough;
           m.material = c;
         }
       }
@@ -392,6 +407,38 @@ export class GameRenderer {
       tri += n * ((m as THREE.InstancedMesh).isInstancedMesh ? (m as THREE.InstancedMesh).count : 1);
     });
     this.stats.triangles = Math.round(tri);
+  }
+
+  /**
+   * G2.6: Race Nav2 -- a see-through copy of COCO driven by a recorded Gazebo + Nav2 run (STACK),
+   * labelled so. Built before play (prepareStackGhost, so its shader compiles behind the loading
+   * screen); posed every tick from the recording (presentation only: it is not in the model).
+   */
+  private stackGhost: THREE.Group | null = null;
+  private ghostFrom: [number, number, number] = [0, 0, 0];
+  private ghostTo: [number, number, number] = [0, 0, 0];
+  private ghostAt = 0;
+  prepareStackGhost() {
+    if (this.stackGhost || !this.body) return;
+    const g = new THREE.Group();
+    const copy = this.body.clone(true);
+    const mat = new THREE.MeshBasicMaterial({ color: 0x7dd3fc, transparent: true, opacity: 0.38, depthWrite: false });
+    copy.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = mat; });
+    const tag = label('Nav2 in Gazebo · STACK', '#7dd3fc');
+    tag.position.set(0, 0, 0.62);
+    g.add(copy, tag);
+    g.visible = false;
+    g.name = 'race:stack-ghost';
+    this.stackGhost = g;
+    this.scene.add(g);
+  }
+  setStackGhost(pose: [number, number, number] | null) {
+    if (!this.stackGhost) return;
+    this.stackGhost.visible = !!pose;
+    if (!pose) return;
+    this.ghostFrom = this.stackGhost.visible && this.ghostAt ? [this.stackGhost.position.x, this.stackGhost.position.y, this.stackGhost.rotation.z] : pose;
+    this.ghostTo = pose;
+    this.ghostAt = this.clock;
   }
 
   setLed(led: Led) { this.led.emissive.set(LED_COLOUR[led]); this.ledGlow.material.color.set(LED_COLOUR[led]); }
@@ -587,6 +634,11 @@ export class GameRenderer {
     for (const m of this.world?.dropZones.values() ?? []) if (m.visible) (m.material as THREE.MeshBasicMaterial).opacity = this.dropStrong ? 0.32 + 0.18 * Math.sin(this.clock * 4) : 0.14;
     if (this.view === 'sim') this.sim?.follow(this.pose, this.z);
     this.robot.position.set(x, y, this.z);
+    if (this.stackGhost?.visible) {
+      const f = Math.min(1, (this.clock - this.ghostAt) / 0.1), a = this.ghostFrom, b = this.ghostTo;
+      this.stackGhost.position.set(a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, 0);
+      this.stackGhost.rotation.set(0, 0, a[2] + Math.atan2(Math.sin(b[2] - a[2]), Math.cos(b[2] - a[2])) * f);
+    }
     this.robot.rotation.set(this.tilt[1], this.tilt[0], th, 'ZYX');
     // wheels turn at the model's own wheel speed
     for (const w of this.wheels) {

@@ -19,6 +19,7 @@ import argparse
 import json
 import math
 import os
+import signal
 import subprocess
 import sys
 import tempfile
@@ -32,8 +33,14 @@ sys.path.insert(0, HERE)
 import diagnose_m6f8 as dg  # noqa: E402
 
 
-def relay_and_record(out_path, stop_after):
-    """A node: /tf_bag -> /tf without map -> odom; /amcl_pose -> jsonl."""
+def relay_and_record(out_path, stop_after, truth_odom=False):
+    """
+    A node: /tf_bag -> /tf without map -> odom; /amcl_pose -> jsonl. ``truth_odom``: the wheel
+    odometry's odom -> base_footprint is dropped too and replaced by the truth's (Gazebo's
+    /model/coco/odometry as a perfect odometry, odom = the world frame).
+    """
+    from nav_msgs.msg import Odometry
+    from geometry_msgs.msg import TransformStamped
     import rclpy
     from geometry_msgs.msg import PoseWithCovarianceStamped
     from rclpy.node import Node
@@ -43,7 +50,17 @@ def relay_and_record(out_path, stop_after):
     n = Node('g2_amcl_replay_relay', parameter_overrides=[rclpy.parameter.Parameter('use_sim_time', value=True)])
     pub = n.create_publisher(TFMessage, '/tf', 100)
     rows = []
-    n.create_subscription(TFMessage, '/tf_bag', lambda m: pub.publish(TFMessage(transforms=[t for t in m.transforms if not (t.header.frame_id == 'map' and t.child_frame_id == 'odom')])), 100)
+    drop = lambda t: (t.header.frame_id == 'map' and t.child_frame_id == 'odom') or (truth_odom and t.child_frame_id == 'base_footprint')
+    n.create_subscription(TFMessage, '/tf_bag', lambda m: pub.publish(TFMessage(transforms=[t for t in m.transforms if not drop(t)])), 100)
+    if truth_odom:
+        def truth(m):
+            t = TransformStamped()
+            t.header.stamp, t.header.frame_id, t.child_frame_id = m.header.stamp, 'odom', 'base_footprint'
+            p = m.pose.pose
+            t.transform.translation.x, t.transform.translation.y, t.transform.translation.z = p.position.x, p.position.y, 0.0
+            t.transform.rotation = p.orientation
+            pub.publish(TFMessage(transforms=[t]))
+        n.create_subscription(Odometry, '/model/coco/odometry', truth, 100)
     qos = QoSProfile(depth=50, reliability=ReliabilityPolicy.RELIABLE, durability=DurabilityPolicy.TRANSIENT_LOCAL)
 
     def got(m):
@@ -64,14 +81,18 @@ def relay_and_record(out_path, stop_after):
 
 def main() -> int:
     if len(sys.argv) > 1 and sys.argv[1] == '--relay':
-        relay_and_record(sys.argv[2], float(sys.argv[3]))
+        relay_and_record(sys.argv[2], float(sys.argv[3]), len(sys.argv) > 4 and sys.argv[4] == 'truth')
         return 0
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     ap.add_argument('run'); ap.add_argument('gen'); ap.add_argument('out')
     ap.add_argument('--set', action='append', default=[], help='amcl parameter override, key=value (YAML value)')
     ap.add_argument('--rate', type=float, default=2.0)
+    ap.add_argument('--truth-odom', action='store_true', help='replace the wheel odometry with the truth (a perfect odometry)')
     o = ap.parse_args()
     env = dict(os.environ, ROS_DOMAIN_ID='83', PYTHONUNBUFFERED='1')
+    # a replay alone: an AMCL left over from any other run would publish into this one's results
+    if subprocess.run(['pgrep', '-x', 'amcl'], capture_output=True).returncode == 0:
+        sys.exit('REFUSING: another nav2_amcl is running (a replay must be the only one)')
     with open(os.path.join(o.gen, 'nav2', 'nav2_params.yaml')) as f:
         params = yaml.safe_load(f)
     amcl = params['amcl']['ros__parameters']
@@ -92,24 +113,27 @@ def main() -> int:
     dur = float(subprocess.run(['ros2', 'bag', 'info', bag], capture_output=True, text=True, env=env).stdout.split('Duration:')[1].split('s')[0])
     procs = []
     try:
-        procs.append(subprocess.Popen([sys.executable, __file__, '--relay', rec, str(dur / o.rate + 60)], env=env))
+        # each child in its own session: stopping its group stops the node `ros2 run` started too
+        # (G2.6: stopping only the `ros2 run` wrapper left the nodes running into later replays)
+        spawn = lambda cmd, **kw: subprocess.Popen(cmd, env=env, start_new_session=True, **kw)
+        procs.append(spawn([sys.executable, __file__, '--relay', rec, str(dur / o.rate + 60)] + (['truth'] if o.truth_odom else [])))
         for exe, name in (('nav2_map_server', 'map_server'), ('nav2_amcl', 'amcl')):
-            procs.append(subprocess.Popen(['ros2', 'run', exe, name, '--ros-args', '--params-file', pfile], env=env, stdout=subprocess.DEVNULL, stderr=open(os.path.join(tmp, f'{name}.log'), 'w')))
-        procs.append(subprocess.Popen(['ros2', 'run', 'nav2_lifecycle_manager', 'lifecycle_manager', '--ros-args', '-r', '__node:=lifecycle_manager_g2', '--params-file', pfile], env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL))
+            procs.append(spawn(['ros2', 'run', exe, name, '--ros-args', '--params-file', pfile], stdout=subprocess.DEVNULL, stderr=open(os.path.join(tmp, f'{name}.log'), 'w')))
+        procs.append(spawn(['ros2', 'run', 'nav2_lifecycle_manager', 'lifecycle_manager', '--ros-args', '-r', '__node:=lifecycle_manager_g2', '--params-file', pfile], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL))
         time.sleep(8)
-        play = subprocess.run(['ros2', 'bag', 'play', bag, '--clock', '100', '-r', str(o.rate), '--topics', '/scan', '/tf', '/tf_static', '/initialpose',
+        play = subprocess.run(['ros2', 'bag', 'play', bag, '--clock', '100', '-r', str(o.rate), '--topics', '/scan', '/tf', '/tf_static', '/initialpose'] + (['/model/coco/odometry'] if o.truth_odom else []) + [
                                '--remap', '/tf:=/tf_bag', '--disable-keyboard-controls'], env=env, capture_output=True, text=True, timeout=dur / o.rate + 120)
         time.sleep(3)
         open(rec + '.done', 'w').close()
         procs[0].wait(timeout=30)
     finally:
-        for p in procs[::-1]:
-            if p.poll() is None:
-                p.terminate()
-        time.sleep(2)
-        for p in procs:
-            if p.poll() is None:
-                p.kill()
+        for sig in (signal.SIGINT, signal.SIGTERM, signal.SIGKILL):
+            for p in procs[::-1]:
+                try:
+                    os.killpg(p.pid, sig)
+                except ProcessLookupError:
+                    pass
+            time.sleep(2)
     with open(rec) as f:
         est = json.load(f)
     data = dg.read(bag)
@@ -122,14 +146,14 @@ def main() -> int:
         rows.append({'t': round(t, 2), 'dx': round(x - g[0], 4), 'dy': round(y - g[1], 4), 'err': round(math.hypot(x - g[0], y - g[1]), 4),
                      'dth_deg': round(math.degrees(math.atan2(math.sin(th - g[2]), math.cos(th - g[2]))), 2)})
     rows = [r for r in rows if r['t'] > 40]   # after the run's /initialpose (the teleport)
-    rep = {'run': os.path.basename(o.run.rstrip('/')), 'overrides': overrides, 'rate': o.rate, 'updates': len(rows),
+    rep = {'run': os.path.basename(o.run.rstrip('/')), 'overrides': overrides, 'truth_odom': o.truth_odom, 'rate': o.rate, 'updates': len(rows),
            'class': 'STACK component (nav2_amcl) re-run offline on recorded Gazebo data',
            'end': rows[-1] if rows else None, 'max_err_m': max((r['err'] for r in rows), default=None),
            'mean_err_m': round(float(np.mean([r['err'] for r in rows])), 4) if rows else None,
            'play_rc': play.returncode, 'rows': rows}
     with open(o.out, 'w') as f:
         json.dump(rep, f, indent=1)
-    print(json.dumps({k: rep[k] for k in ('run', 'overrides', 'updates', 'end', 'max_err_m', 'mean_err_m', 'play_rc')}))
+    print(json.dumps({k: rep[k] for k in ('run', 'overrides', 'truth_odom', 'updates', 'end', 'max_err_m', 'mean_err_m', 'play_rc')}))
     return 0
 
 
