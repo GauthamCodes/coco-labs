@@ -5,7 +5,7 @@
  * while it plays.
  *
  *   ADB=<adb> node tools/phone/real_phone_free.mjs SITE OUT_DIR [--minutes 10] [--trials 15]
- *        [--game free|fetch_rush] [--tap X,Y] [--joy X,Y]
+ *        [--game free|fetch_rush] [--tap X,Y] [--joy X,Y] [--view game|sim]
  *
  * Why: Chrome on Android keeps its status bar, address bar and navigation bar while a DevTools
  * session is attached, even when the page is in full screen (measured: 755 x 269 CSS px instead
@@ -88,6 +88,9 @@ try {
   let p = browser.contexts()[0].pages().find((x) => x.url().includes(marker));
   if (!p) throw new Error(`no tab with ${marker}: ${browser.contexts()[0].pages().map((x) => x.url()).join(' | ')}`);
   await p.addInitScript(recorder);
+  // G2: --view sim opens Play in SIM view (the view pref; every SIM display is on by default)
+  const VIEW = opt('--view', null);
+  if (VIEW) await p.addInitScript((v) => { try { localStorage.setItem('coco.prefs.v1.view', JSON.stringify(v)); } catch { /* none */ } }, VIEW);
   // --defaults: the person's saved quality / 120 fps choices are set aside for the run (the defaults:
   // a phone starts medium, 60 fps) and put back afterwards, exactly as they were
   if (rest.includes('--defaults')) {
@@ -143,6 +146,7 @@ try {
     return { fps_median: q(fps, 0.5), fps_min: fps.length ? Math.min(...fps) : null, fps_p05: q(fps, 0.05), windows: fps.length,
       frame_ms_median: q(iv, 0.5), frame_ms_p95: q(iv, 0.95), frame_ms_p99: q(iv, 0.99), frame_ms_max: iv.length ? Math.max(...iv) : null, frames: at.length, over_50ms: iv.filter((x) => x > 50).length };
   };
+  report.view = VIEW ?? 'saved';
   report.play = { one_minute: stats(soakStart, soakStart + 60000), whole: stats(soakStart, soakEnd), webgl_context_lost: r.lost, page_errors: r.errors,
     end_state: { full_screen: r.fs, orientation: r.o, viewport: [r.iw, r.ih], tick: r.tick, tier: r.tier, pixel_ratio: r.pixel_ratio } };
   report.touch_to_motion = { samples: r.itm, n: r.itm?.length ?? 0, median_ms: q(r.itm ?? [], 0.5), p90_ms: q(r.itm ?? [], 0.9),

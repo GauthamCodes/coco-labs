@@ -1,0 +1,353 @@
+{
+ "about": "G2.6 gate: tools/g2/gate.sh, 5 fresh simulators, derivation 2 (gen_d2v2), goals = M6F.8 phone round (rules 3 seed 1 = rules 4 at 22 m), m6f8_nav.py --initial-pose",
+ "runs": {
+  "gate_d2_1": {
+   "derivation": "2 first form (laser_min_range + obstacle_min_range 0.65, retracted)",
+   "legs": [
+    {
+     "id": "order1_obj_dock_pregrasp",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 13.19,
+     "driven_m": 3.59,
+     "truth_to_goal_m": 0.357,
+     "amcl_error_m": 0.14
+    },
+    {
+     "id": "order1_dock_1",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 67.59,
+     "driven_m": 10.992,
+     "truth_to_goal_m": 0.098,
+     "amcl_error_m": 0.188
+    },
+    {
+     "id": "order2_obj_dispatch_pregrasp",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 47.39,
+     "driven_m": 13.02,
+     "truth_to_goal_m": 0.391,
+     "amcl_error_m": 0.214
+    },
+    {
+     "id": "order2_dispatch_drop",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 38.72,
+     "driven_m": 7.882,
+     "truth_to_goal_m": 0.232,
+     "amcl_error_m": 0.154
+    }
+   ],
+   "all_succeeded": true,
+   "meta": {
+    "started_utc": "2026-10-24T05:38:04Z",
+    "git_commit": "9251ab50bd0c3df76c19bafc3bc19b5e3de30284",
+    "git_dirty_paths": 31,
+    "world_sha256": "11c58b460a56facf080f10500f133490497925e43b287bee69f83560aa012246",
+    "map_pgm_sha256": "53c3bd6b953c1e156eff0448a1618a46da9e3b3de734150e473e592efab3aaff",
+    "nav2_params_sha256": "420339e4b9f72ce96648d66b0d949e0c35de4f4c32d41b2aad5479bc94fc6692",
+    "goals_sha256": "55a867d82f9a0eda3a9c4c972d25404714e57b9283f80a511bb4383cb35172aa",
+    "power_profile": "balanced",
+    "ac_online": "1",
+    "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "ros_domain_id": "79"
+   },
+   "bag_sha256": {
+    "bag_0.mcap": "4069557092a641f5fdad78d5f847d6d0f485e83c54fca407e1f3bdc4bdd92b10"
+   }
+  },
+  "gate_d2v2_1": {
+   "derivation": "2 (update_min_d/a 0.05 + bad_crate mapped)",
+   "legs": [
+    {
+     "id": "order1_obj_dock_pregrasp",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 13.35,
+     "driven_m": 3.603,
+     "truth_to_goal_m": 0.338,
+     "amcl_error_m": 0.137
+    },
+    {
+     "id": "order1_dock_1",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 65.19,
+     "driven_m": 10.946,
+     "truth_to_goal_m": 0.156,
+     "amcl_error_m": 0.054
+    },
+    {
+     "id": "order2_obj_dispatch_pregrasp",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 46.34,
+     "driven_m": 12.9,
+     "truth_to_goal_m": 0.254,
+     "amcl_error_m": 0.109
+    },
+    {
+     "id": "order2_dispatch_drop",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 32.43,
+     "driven_m": 7.678,
+     "truth_to_goal_m": 0.251,
+     "amcl_error_m": 0.195
+    }
+   ],
+   "all_succeeded": true,
+   "meta": {
+    "started_utc": "2026-10-24T05:45:07Z",
+    "git_commit": "9251ab50bd0c3df76c19bafc3bc19b5e3de30284",
+    "git_dirty_paths": 38,
+    "world_sha256": "11c58b460a56facf080f10500f133490497925e43b287bee69f83560aa012246",
+    "map_pgm_sha256": "53c3bd6b953c1e156eff0448a1618a46da9e3b3de734150e473e592efab3aaff",
+    "nav2_params_sha256": "34024179104cd3ab41deaa1db8f074fcc500dcd9852230bea5f021ee6885a740",
+    "goals_sha256": "55a867d82f9a0eda3a9c4c972d25404714e57b9283f80a511bb4383cb35172aa",
+    "power_profile": "balanced",
+    "ac_online": "1",
+    "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "ros_domain_id": "79"
+   },
+   "bag_sha256": {
+    "bag_0.mcap": "d5c9678a57ca0bfdd56795e3b5f7d76c8e37291e0d0afdf2712c5621043b9176"
+   }
+  },
+  "gate_d2v2_2": {
+   "derivation": "2 (update_min_d/a 0.05 + bad_crate mapped)",
+   "legs": [
+    {
+     "id": "order1_obj_dock_pregrasp",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 13.27,
+     "driven_m": 3.594,
+     "truth_to_goal_m": 0.342,
+     "amcl_error_m": 0.095
+    },
+    {
+     "id": "order1_dock_1",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 69.73,
+     "driven_m": 11.029,
+     "truth_to_goal_m": 0.09,
+     "amcl_error_m": 0.128
+    },
+    {
+     "id": "order2_obj_dispatch_pregrasp",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 47.26,
+     "driven_m": 12.991,
+     "truth_to_goal_m": 0.338,
+     "amcl_error_m": 0.196
+    },
+    {
+     "id": "order2_dispatch_drop",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 41.47,
+     "driven_m": 7.834,
+     "truth_to_goal_m": 0.235,
+     "amcl_error_m": 0.251
+    }
+   ],
+   "all_succeeded": true,
+   "meta": {
+    "started_utc": "2026-10-24T05:52:12Z",
+    "git_commit": "9251ab50bd0c3df76c19bafc3bc19b5e3de30284",
+    "git_dirty_paths": 45,
+    "world_sha256": "11c58b460a56facf080f10500f133490497925e43b287bee69f83560aa012246",
+    "map_pgm_sha256": "53c3bd6b953c1e156eff0448a1618a46da9e3b3de734150e473e592efab3aaff",
+    "nav2_params_sha256": "34024179104cd3ab41deaa1db8f074fcc500dcd9852230bea5f021ee6885a740",
+    "goals_sha256": "55a867d82f9a0eda3a9c4c972d25404714e57b9283f80a511bb4383cb35172aa",
+    "power_profile": "balanced",
+    "ac_online": "1",
+    "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "ros_domain_id": "79"
+   },
+   "bag_sha256": {
+    "bag_0.mcap": "e9d0246e62d290693fa57369b63aad982f8d760057eb57a0979127543f1aa62c"
+   }
+  },
+  "gate_d2v2_3": {
+   "derivation": "2 (update_min_d/a 0.05 + bad_crate mapped)",
+   "legs": [
+    {
+     "id": "order1_obj_dock_pregrasp",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 13.37,
+     "driven_m": 3.606,
+     "truth_to_goal_m": 0.333,
+     "amcl_error_m": 0.097
+    },
+    {
+     "id": "order1_dock_1",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 58.48,
+     "driven_m": 10.7,
+     "truth_to_goal_m": 0.182,
+     "amcl_error_m": 0.215
+    },
+    {
+     "id": "order2_obj_dispatch_pregrasp",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 47.84,
+     "driven_m": 13.145,
+     "truth_to_goal_m": 0.226,
+     "amcl_error_m": 0.09
+    },
+    {
+     "id": "order2_dispatch_drop",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 37.59,
+     "driven_m": 7.725,
+     "truth_to_goal_m": 0.242,
+     "amcl_error_m": 0.252
+    }
+   ],
+   "all_succeeded": true,
+   "meta": {
+    "started_utc": "2026-10-24T05:59:00Z",
+    "git_commit": "9251ab50bd0c3df76c19bafc3bc19b5e3de30284",
+    "git_dirty_paths": 45,
+    "world_sha256": "11c58b460a56facf080f10500f133490497925e43b287bee69f83560aa012246",
+    "map_pgm_sha256": "53c3bd6b953c1e156eff0448a1618a46da9e3b3de734150e473e592efab3aaff",
+    "nav2_params_sha256": "34024179104cd3ab41deaa1db8f074fcc500dcd9852230bea5f021ee6885a740",
+    "goals_sha256": "55a867d82f9a0eda3a9c4c972d25404714e57b9283f80a511bb4383cb35172aa",
+    "power_profile": "balanced",
+    "ac_online": "1",
+    "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "ros_domain_id": "79"
+   },
+   "bag_sha256": {
+    "bag_0.mcap": "47ebd9b53d746ea9657b08e2f3a76689d30c3b0917895589132e30311e413489"
+   }
+  },
+  "gate_d2v2_4": {
+   "derivation": "2 (update_min_d/a 0.05 + bad_crate mapped)",
+   "legs": [
+    {
+     "id": "order1_obj_dock_pregrasp",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 13.2,
+     "driven_m": 3.581,
+     "truth_to_goal_m": 0.358,
+     "amcl_error_m": 0.142
+    },
+    {
+     "id": "order1_dock_1",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 59.25,
+     "driven_m": 10.666,
+     "truth_to_goal_m": 0.258,
+     "amcl_error_m": 0.283
+    },
+    {
+     "id": "order2_obj_dispatch_pregrasp",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 47.73,
+     "driven_m": 13.195,
+     "truth_to_goal_m": 0.29,
+     "amcl_error_m": 0.124
+    },
+    {
+     "id": "order2_dispatch_drop",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 32.13,
+     "driven_m": 7.581,
+     "truth_to_goal_m": 0.287,
+     "amcl_error_m": 0.25
+    }
+   ],
+   "all_succeeded": true,
+   "meta": {
+    "started_utc": "2026-10-24T06:05:35Z",
+    "git_commit": "9251ab50bd0c3df76c19bafc3bc19b5e3de30284",
+    "git_dirty_paths": 45,
+    "world_sha256": "11c58b460a56facf080f10500f133490497925e43b287bee69f83560aa012246",
+    "map_pgm_sha256": "53c3bd6b953c1e156eff0448a1618a46da9e3b3de734150e473e592efab3aaff",
+    "nav2_params_sha256": "34024179104cd3ab41deaa1db8f074fcc500dcd9852230bea5f021ee6885a740",
+    "goals_sha256": "55a867d82f9a0eda3a9c4c972d25404714e57b9283f80a511bb4383cb35172aa",
+    "power_profile": "balanced",
+    "ac_online": "1",
+    "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "ros_domain_id": "79"
+   },
+   "bag_sha256": {
+    "bag_0.mcap": "072a2957037f2970b8ee6ab8026fd67b7c66bcbd60d4c511ab04d292520706cc"
+   }
+  },
+  "gate_d2v2_5": {
+   "derivation": "2 (update_min_d/a 0.05 + bad_crate mapped)",
+   "legs": [
+    {
+     "id": "order1_obj_dock_pregrasp",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 13.31,
+     "driven_m": 3.631,
+     "truth_to_goal_m": 0.313,
+     "amcl_error_m": 0.109
+    },
+    {
+     "id": "order1_dock_1",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 64.95,
+     "driven_m": 10.967,
+     "truth_to_goal_m": 0.169,
+     "amcl_error_m": 0.068
+    },
+    {
+     "id": "order2_obj_dispatch_pregrasp",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 46.36,
+     "driven_m": 12.91,
+     "truth_to_goal_m": 0.276,
+     "amcl_error_m": 0.112
+    },
+    {
+     "id": "order2_dispatch_drop",
+     "status": "SUCCEEDED",
+     "error_code": 0,
+     "sim_s": 32.42,
+     "driven_m": 7.688,
+     "truth_to_goal_m": 0.27,
+     "amcl_error_m": 0.222
+    }
+   ],
+   "all_succeeded": true,
+   "meta": {
+    "started_utc": "2026-10-24T06:11:58Z",
+    "git_commit": "9251ab50bd0c3df76c19bafc3bc19b5e3de30284",
+    "git_dirty_paths": 45,
+    "world_sha256": "11c58b460a56facf080f10500f133490497925e43b287bee69f83560aa012246",
+    "map_pgm_sha256": "53c3bd6b953c1e156eff0448a1618a46da9e3b3de734150e473e592efab3aaff",
+    "nav2_params_sha256": "34024179104cd3ab41deaa1db8f074fcc500dcd9852230bea5f021ee6885a740",
+    "goals_sha256": "55a867d82f9a0eda3a9c4c972d25404714e57b9283f80a511bb4383cb35172aa",
+    "power_profile": "balanced",
+    "ac_online": "1",
+    "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "ros_domain_id": "79"
+   },
+   "bag_sha256": {
+    "bag_0.mcap": "af0460400b2c262c8dfc6ff57cef9023170d11fddc864b86243d8a1f40f46bc6"
+   }
+  }
+ }
+}

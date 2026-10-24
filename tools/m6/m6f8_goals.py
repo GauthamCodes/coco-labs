@@ -87,9 +87,9 @@ def smoke(a, spec):
     return {'start': [sx, sy, sth], 'goals': out}
 
 
-def ghost(a, mode, seed):
-    rnd = games.round_for(seed, rules=3, mode=mode)
-    doc = games.load_rounds(rules=3)
+def ghost(a, mode, seed, rules=3):
+    rnd = games.round_for(seed, rules=rules, mode=mode)
+    doc = games.load_rounds(rules=rules)
     out, frm = [], rnd['region']
     for k, ((oid, drop), route) in enumerate(zip(rnd['orders'], rnd['routes'])):
         p = doc['approach'][frm][oid]
@@ -99,7 +99,7 @@ def ghost(a, mode, seed):
         out.append({'id': f'order{k + 1}_{drop}', 'label': f'order {k + 1}: to {drop}',
                     'pose': [round(x, 3), round(y, 3), 0.0], 'route_end': route[-1]})
         frm = drop
-    return {'start': rnd['start'], 'mode': mode, 'seed': seed, 'region': rnd['region'],
+    return {'start': rnd['start'], 'mode': mode, 'seed': seed, 'rules': rules, 'region': rnd['region'],
             'orders': rnd['orders'], 'ghost_m': rnd['ghost_m'],
             'reference_time_s': rnd['reference_time_s'], 'goals': out}
 
@@ -110,10 +110,11 @@ def main() -> int:
     ap.add_argument('out')
     ap.add_argument('--mode', default='phone')
     ap.add_argument('--seed', type=int, default=1)
+    ap.add_argument('--rules', type=int, default=3, choices=(3, 4), help='G2.6: the rounds file (rules 4: G2.1)')
     o = ap.parse_args()
     spec = json.load(open(os.path.join(REPO, 'worlds', f'{LEVEL}.json')))
     a = r3.arena(spec)
-    doc = smoke(a, spec) if o.what == 'smoke' else ghost(a, o.mode, o.seed)
+    doc = smoke(a, spec) if o.what == 'smoke' else ghost(a, o.mode, o.seed, o.rules)
     doc.update({'level': LEVEL, 'frame': 'map', 'world_to_map': spec['world_to_map'],
                 'made_by': 'tools/m6/m6f8_goals.py ' + o.what})
     with open(o.out, 'w') as f:

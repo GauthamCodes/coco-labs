@@ -1,0 +1,46 @@
+# ros2 bag play coco_lab_fetch_rush_phone_seed1.mcap --clock 100  (2026-10-24T03:06:39Z)
+## ros2 topic hz /scan (6 s, while playing)
+average rate: 10.000
+	min: 0.100s max: 0.100s std dev: 0.00010s window: 32
+average rate: 10.000
+	min: 0.100s max: 0.100s std dev: 0.00009s window: 43
+## /map from a late subscriber (transient local: the bag player re-offers it)
+map_load_time:
+  sec: 0
+  nanosec: 100000000
+resolution: 0.10000000149011612
+width: 490
+height: 330
+origin:
+  position:
+    x: -0.5
+    y: -0.5
+    z: 0.0
+  orientation:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+---
+## /scan header
+stamp:
+  sec: 14
+  nanosec: 200000000
+frame_id: lidar_link
+---
+## ros2 topic list (while playing)
+/clock
+/cmd_vel
+/events/read_split
+/goal_pose
+/initialpose
+/joint_states
+/map
+/map_updates
+/odom
+/parameter_events
+/plan
+/rosout
+/scan
+/tf
+/tf_static

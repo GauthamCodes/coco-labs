@@ -563,6 +563,7 @@ M0 ─▶ M1 ─▶ M2 ─▶ M3 ─▶ M4 (done)
    ─▶ [Gautham: 3-person test + phone measurement]
    ─▶ M5 Focus and polish ─▶ [gate: 5-person test + phone pass] ─▶ public v2.0
    ─▶ G1 Game Look: game shell, phone-game HUD, Night Shift Depot visuals, Fetch Rush playable
+   ─▶ G2 Sim Identity: GAME | SIM views, telemetry and /rosout, ROS 2 panels, rosbag2 export, Race Nav2
    ─▶ M6 COCO Depot: world, Grasp Assist, Fetch Rush, Rush Hour, ROS 2 ghosts ─▶ v2.1 game launch
    ─▶ M7 Fog Scout, Lost & Found, Research mode, Connect your ROS 2
    ─▶ M8 Stack in the cloud: batch and experiments
@@ -695,6 +696,18 @@ Details live in `docs/v2/M*_PROMPT.md`, `docs/v2/M*_RESULTS.md` and `docs/v2/rev
 - **Absorbed from M6's UI phase:** the Depot rendering, the Grasp Assist visuals and the Fetch Rush HUD (Fetch Rush playable on the Depot).
 - Robot vision and Compare restyled; M5 carry-overs (native/Pyodide rasterization parity with a versioned hash, update isolation).
 - Prompt: `docs/v2/g1/G1_PROMPT.md`. Progress: `docs/v2/g1/G1_STATUS.md`. The invariants, integrity rules and owner gates above are unchanged.
+
+### G2 · Sim Identity (inserted 2026-10-23, before the M6 UI phase)
+
+**Objective:** Play looks and feels like it comes from robotics simulators (Gazebo, RViz, Isaac Sim) and makes COCO's ROS 2 origin prominent, while staying an attractive, easy phone game. The browser runs a ROS 2-shaped Python model, not ROS 2: every ROS-looking element says MODEL (mirrors COCO's stack) or STACK (recorded from Gazebo + Nav2).
+
+- A GAME | SIM switch: GAME is G1's look plus always-on cues (faint LiDAR, footprint, TF axes, thin global plan); SIM is an RViz-style view of the same moment (grid, TF frames, LaserScan, costmaps, plan, footprint, goal, orbit camera). Switching never changes the model.
+- Telemetry from real model values: a `/cmd_vel` · `/odom` · sim-time strip, a Gazebo-style Sim time / Real time / RTF / Iterations bar, and a `/rosout`-style console of model events.
+- Panels: Displays, "ROS 2 graph (model of COCO's stack)", Topic echo, Plot, Learn; docked on desktop, a bottom sheet on phones that never covers STOP.
+- "Save as rosbag2 (MCAP)": the run's model messages with ROS 2 schemas, labelled MODEL inside the bag, proven with `ros2 bag info`, `ros2 bag play` and RViz.
+- Gazebo + Nav2 on the Depot fixed in the generated files (Dock 1 failure, AMCL drift); real Nav2 ghosts of the phone rounds; "Race Nav2 (real ROS 2 recording)" and a three-way results comparison.
+- Simulator-grade looks (physically based materials, environment reflections, SSAO on high), the new title and a "what the planner computed" results inset; 60 fps on the real Nothing Phone (1).
+- Prompt: `docs/v2/g2/G2_PROMPT.md`. Progress: `docs/v2/g2/G2_STATUS.md`. The invariants, integrity rules and owner gates above are unchanged.
 
 ### M6 · COCO Depot: the game world (about 6–7 weeks)
 

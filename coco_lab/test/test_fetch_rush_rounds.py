@@ -37,7 +37,7 @@ ROUNDS = DOC['rounds']
 def test_the_rounds_are_for_this_level():
     assert DOC['spec_sha256'] == hashlib.sha256(SPEC_PATH.read_bytes()).hexdigest()
     # rules 2's file, kept for its records
-    assert DOC['rules'] == 2 and games.FETCH_RUSH_RULES == 3
+    assert DOC['rules'] == 2 and games.FETCH_RUSH_RULES == 4   # G2.1: the browser plays rules 4
     assert DOC['budget_m'] == games.ROUND_BUDGET_M
     assert DOC['orders'] == games.ROUND_ORDERS
     assert DOC['timer_factor'] == games.ROUND_TIMER_FACTOR

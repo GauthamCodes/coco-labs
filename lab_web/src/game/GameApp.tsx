@@ -23,6 +23,10 @@ import { pickTier } from './tier';
 import './fonts.css';
 import './game.css';
 import { FETCH_RUSH_SHIFTS, fetchRushMode, type FetchRushMode } from './rules_view';
+import { saveBag } from '../ros/bag_saver';
+import { PlannerInset, type InsetData } from './hud/PlannerInset';
+import { FETCH_RUSH_RULES } from './rules_view';
+import { ghostFor, loadGhostIndex, type GhostIndex } from './stack_ghost';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -32,10 +36,16 @@ export interface GameResult {
   record: Record<string, unknown> | null;
   /** the level's objects (map frame), to name the first order's goal for Compare */
   objects?: { id: string; x: number; y: number }[];
+  /** G2.7: the planner's routes for the round and the path driven, for the results inset (MODEL) */
+  inset?: InsetData;
+  /** G2.6: the three-way comparison -- your run, the browser model's planner, Nav2 in Gazebo (STACK) */
+  driven_m?: number;
+  planner?: { route_m: number; reference_time_s: number | null };
+  stack?: { driving_s: number; driven_m: number; legs: { id: string; status: string }[]; not: string[] };
 }
 
-// G1.12: rules 3; the Full shift keeps its own bests
-const bestKey = (seed: number, mode: FetchRushMode = 'phone') => `coco.play.best.v1.g1-fetch-rush.r3-${mode}.seed-${seed}`;
+// G1.12: the Full shift keeps its own bests; G2.1: rules 4 (new rounds), so new keys (rules 3's stay as they were)
+const bestKey = (seed: number, mode: FetchRushMode = 'phone') => `coco.play.best.v1.g1-fetch-rush.r4-${mode}.seed-${seed}`;
 export function readStars(seed: number, mode: FetchRushMode = 'phone'): number | null {
   try { const raw = readRaw(bestKey(seed, mode)); return raw ? (JSON.parse(raw) as { stars: number }).stars : null; } catch { return null; }
 }
@@ -54,10 +64,10 @@ export function GameApp() {
   // Fetch Rush plays the shifts on file (rules_view); another seed opens shift 1. G1.12: &mode=full is the Full shift
   const asked = Math.max(1, Math.min(999, Number.parseInt(q.get('seed') ?? '1', 10) || 1));
   const seed = game === 'fetch_rush' && !FETCH_RUSH_SHIFTS.includes(asked) ? FETCH_RUSH_SHIFTS[0] : asked;
-  return <GameRun game={game} world={world} seed={seed} mode={fetchRushMode(q.get('mode'))} />;
+  return <GameRun game={game} world={world} seed={seed} mode={fetchRushMode(q.get('mode'))} race={q.get('race') === 'nav2'} />;
 }
 
-function GameRun({ game, world, seed, mode }: { game: GameKind; world: WorldId; seed: number; mode: FetchRushMode }) {
+function GameRun({ game, world, seed, mode, race }: { game: GameKind; world: WorldId; seed: number; mode: FetchRushMode; race: boolean }) {
   const [paused, setPaused] = useState(false);
   const [settings, setSettings] = useState(false);
   const [result, setResult] = useState<GameResult | null>(null);
@@ -76,13 +86,15 @@ function GameRun({ game, world, seed, mode }: { game: GameKind; world: WorldId; 
   return <>
     <PlayGame key={`${restartKey}-${tier}`} world={world} game={game} seed={seed} mode={mode} tier={tier} paused={paused || !!result} onPause={() => setPaused((x) => !x)}
       onResult={onResult} restartKey={restartKey} showPerf={showPerf} tutorialSeen={tutorialSeen} ghost={ghost}
-      onTutorialDone={() => { writePref('tutorial', true); setTutorialSeen(true); }} />
+      onTutorialDone={() => { writePref('tutorial', true); setTutorialSeen(true); }} race={race}
+      onRecommended={(to) => { writePref('quality', to.quality); writePref('phone120', to.phone120); setTier(to.quality); restart(); }} />
     {paused && !result && !settings && <section className="g1 g1-screen dim" data-testid="g1-pause-menu" style={{ position: 'fixed', zIndex: 25, background: 'rgba(8,10,14,.62)' }}>
       <div className="g1-eyebrow">PAUSED · {game === 'fetch_rush' ? `FETCH RUSH · SHIFT ${seed}${mode === 'full' ? ' · FULL' : ''}` : `FREE DRIVE · ${world === 'depot' ? 'DEPOT' : 'PROVING GROUND'}`}</div>
       <nav className="g1-menu">
         <button className="main" autoFocus onClick={() => setPaused(false)}>RESUME</button>
         <button onClick={restart}>RESTART</button>
         <button onClick={() => setSettings(true)}>SETTINGS</button>
+        <BagButton />
         <a href={`${BASE}?view=play`}>EXIT</a>
       </nav>
     </section>}
@@ -131,15 +143,21 @@ function Results({ r, onAgain }: { r: GameResult; onAgain: () => void }) {
       <div className="g1-stat g1-glass"><div className="k">CONTACTS</div><div className="v num">{String(c.contacts ?? 0)}</div></div>
       <div className="g1-stat g1-glass"><div className="k">PATH vs PLANNER</div><div className="v num">{delivered.length ? <>{driven.toFixed(1)}<small> m / {ghost.toFixed(1)} m</small></> : '—'}</div></div>
     </div>
+    {r.inset && <PlannerInset d={r.inset} still={typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches} />}
+    {r.stack && <ThreeWay r={r} />}
     <nav className="g1-cards"><button className="g1-big small" autoFocus onClick={onAgain}>▶ PLAY AGAIN</button>
       <a className="g1-big small ghost" href={compare}>WATCH HOW THE PLANNER DID IT</a>
       <a className="g1-big small ghost" href={`${BASE}?view=play`}>GAMES</a></nav>
+    <nav className="g1-menu g2-bag"><BagButton /></nav>
     <p className="g1-note">{r.reference ? `Stars against the reference bot's run for this shift (coco_lab.games.stars; GAMES.md): ★ one delivery, ★★ as many net deliveries, ★★★ ranked at or above it. Reference: ${String(r.reference.deliveries)} delivery(ies), ${Number(r.reference.time_used).toFixed(1)} s.` : 'No reference run exists for this shift, so no stars are given.'} MODEL · kinematic.</p>
   </section>;
 }
 
 function ModeSelect() {
   useEffect(() => { document.title = 'COCO Lab · Play'; }, []);
+  // G2.6: Race Nav2 is offered for a round only when a recorded Gazebo + Nav2 run of it exists
+  const [ghosts, setGhosts] = useState<GhostIndex | null>(null);
+  useEffect(() => { void loadGhostIndex().then(setGhosts); }, []);
   const art = (pos: string) => ({ backgroundImage: `url(${BASE}g1/modes.svg)`, backgroundPosition: pos });
   return <main className="g1 g1-screen" data-testid="play" data-g1="modes" data-ready="true" style={{ position: 'fixed', overflow: 'auto', touchAction: 'pan-x pan-y' }}>
     <a className="g1-icon g1-glass" href={BASE} aria-label="Back to the title" style={{ position: 'absolute', left: 'calc(12px + env(safe-area-inset-left))', top: 'calc(12px + env(safe-area-inset-top))', color: 'inherit' }}><ArrowLeft size={20} /></a>
@@ -151,7 +169,9 @@ function ModeSelect() {
           <div className="art" style={art('0% 0%')} /><span className="g1-eyebrow" style={{ color: 'var(--g1-coco)' }}>NEW · DEPOT</span><h3>Fetch Rush</h3>
           <p>Pick-and-deliver orders in one zone, against the reference clock.</p><div className="st" aria-label="best stars">{starText(readStars(seed))}</div>
           <div className="opts"><a data-testid="mode-fetch-rush" href={`${BASE}?view=play&game=fetch_rush&seed=${seed}`} onClick={go('phone')}>PLAY · 2 ORDERS</a>
-            <a data-testid="mode-fetch-rush-full" href={`${BASE}?view=play&game=fetch_rush&seed=${seed}&mode=full`} onClick={go('full')}>FULL SHIFT · 3</a></div>
+            <a data-testid="mode-fetch-rush-full" href={`${BASE}?view=play&game=fetch_rush&seed=${seed}&mode=full`} onClick={go('full')}>FULL SHIFT · 3</a>
+            {ghostFor(ghosts, FETCH_RUSH_RULES, 'phone', seed) && <a data-testid="mode-race-nav2" href={`${BASE}?view=play&game=fetch_rush&seed=${seed}&race=nav2`}
+              onClick={(e) => { e.preventDefault(); navigate(`${BASE}?view=play&game=fetch_rush&seed=${seed}&race=nav2`); }}>RACE NAV2 · REAL ROS 2 RECORDING</a>}</div>
         </div>;
       })}
       <div role="listitem" className="g1-modecard" data-testid="mode-free-drive"><div className="art" style={art('50% 0%')} /><h3>Free Drive</h3><p>No clock. Drive, explore, pick things up.</p>
@@ -161,4 +181,25 @@ function ModeSelect() {
     </div>
     <p className="g1-note">Fetch Rush and Free Drive run COCO's model in your browser (MODEL · kinematic). Stars and bests stay in this browser.</p>
   </main>;
+}
+
+/** G2.5: the run's model messages as a rosbag2 file (src/ros/bag.ts): ros2 bag info / play and Foxglove open it. */
+function BagButton() {
+  const [state, setState] = useState<string | null>(null);
+  return <>
+    <button data-testid="g2-save-bag" onClick={async () => { setState('Writing…'); const r = await saveBag(); setState(r.ok ? `Saved ${r.name} (${(r.bytes / 1e6).toFixed(1)} MB) · MODEL` : `Not saved: ${r.why}`); }}>SAVE AS ROSBAG2 (MCAP)</button>
+    {state && <p className="g1-note" role="status" data-testid="g2-save-bag-status">{state}</p>}
+  </>;
+}
+
+/** G2.6: your run, the browser model's planner, and real Nav2 in Gazebo, side by side (their labels say which is which). */
+function ThreeWay({ r }: { r: GameResult }) {
+  const c = r.card ?? {};
+  const st = r.stack!;
+  return <section className="g2-threeway g1-glass" data-testid="g2-threeway" aria-label="Your run, the model's planner, Nav2 in Gazebo">
+    <div><h4>YOU</h4><p className="num">{Number(c.time_used ?? 0).toFixed(1)} s</p><small>{(r.driven_m ?? 0).toFixed(1)} m driven · {String(c.deliveries ?? 0)} delivered · {String(c.contacts ?? 0)} contacts</small></div>
+    <div><h4>PLANNER <b className="tag">MODEL</b></h4><p className="num">{r.planner?.reference_time_s != null ? `${r.planner.reference_time_s.toFixed(1)} s` : '—'}</p><small>the reference bot · A* routes {(r.planner?.route_m ?? 0).toFixed(1)} m</small></div>
+    <div><h4>NAV2 IN GAZEBO <b className="tag stack">STACK</b></h4><p className="num">{st.driving_s.toFixed(1)} s</p><small>{st.driven_m.toFixed(1)} m · {st.legs.filter((l) => l.status === 'SUCCEEDED').length}/{st.legs.length} legs · driving only, no grasp</small></div>
+    <p className="note">{st.not.join(' · ')}.</p>
+  </section>;
 }

@@ -1,0 +1,74 @@
+{
+ "about": "Race Nav2: recorded Gazebo + Nav2 runs of Fetch Rush rounds (tools/g2/record_ghosts.sh); driving legs only, no grasp; Gazebo actors parked; never hardware",
+ "evidence": "STACK",
+ "ghosts": [
+  {
+   "all_succeeded": true,
+   "bytes": 110609,
+   "driving_s": 388.27,
+   "file": "r4_phone_seed1.json",
+   "mode": "phone",
+   "recorded_seed": 1,
+   "rules": 4,
+   "seed": 1,
+   "sha256": "f0f2ccd600d46fae3f2725c7b6e7598049a23ad48cd0c8411ebddf30b4c220a6"
+  },
+  {
+   "all_succeeded": true,
+   "bytes": 48204,
+   "driving_s": 166.3,
+   "file": "r4_phone_seed2.json",
+   "mode": "phone",
+   "recorded_seed": 2,
+   "rules": 4,
+   "seed": 2,
+   "sha256": "9afd627d83aca3dcb9a697c50b704aa48302fed210ede5358f92b8ecf0733bed"
+  },
+  {
+   "all_succeeded": true,
+   "bytes": 113084,
+   "driving_s": 411.67,
+   "file": "r4_phone_seed3.json",
+   "mode": "phone",
+   "recorded_seed": 3,
+   "rules": 4,
+   "seed": 3,
+   "sha256": "227d6ee2e9b5333b3739f46828fc32198e061329acd8760758fff3026a4bdfbe"
+  },
+  {
+   "all_succeeded": true,
+   "bytes": 48204,
+   "driving_s": 166.3,
+   "file": "r4_phone_seed2.json",
+   "mode": "phone",
+   "recorded_seed": 2,
+   "rules": 4,
+   "seed": 4,
+   "sha256": "9afd627d83aca3dcb9a697c50b704aa48302fed210ede5358f92b8ecf0733bed"
+  },
+  {
+   "all_succeeded": true,
+   "bytes": 48204,
+   "driving_s": 166.3,
+   "file": "r4_phone_seed2.json",
+   "mode": "phone",
+   "recorded_seed": 2,
+   "rules": 4,
+   "seed": 5,
+   "sha256": "9afd627d83aca3dcb9a697c50b704aa48302fed210ede5358f92b8ecf0733bed"
+  },
+  {
+   "all_succeeded": true,
+   "bytes": 96493,
+   "driving_s": 347.44,
+   "file": "r4_phone_seed6.json",
+   "mode": "phone",
+   "recorded_seed": 6,
+   "rules": 4,
+   "seed": 6,
+   "sha256": "5f548d4e31ad2ddb843ce7b776cdd6a8d3551837c412c0fe8389f3f81930f067"
+  }
+ ],
+ "schema": "coco_lab.stack_ghosts",
+ "version": 1
+}

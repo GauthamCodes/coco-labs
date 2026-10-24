@@ -40,7 +40,7 @@ ROUNDS = [(mode, seed) for mode in sorted(DOC['rounds'])
 
 def test_the_rounds_are_for_this_level_and_these_rules():
     assert DOC['spec_sha256'] == hashlib.sha256(SPEC_PATH.read_bytes()).hexdigest()
-    assert DOC['rules'] == games.FETCH_RUSH_RULES == 3
+    assert DOC['rules'] == 3 and games.FETCH_RUSH_RULES == 4   # G2.1: rules 4 is current; rules 3 stays
     assert DOC['modes'] == games.ROUND_MODES
     # the decision's 16 m admits no lane-free 2-order round on the Depot
     # (docs/v2/g1/data/g112/phone_budget.json); G1.13 (Gautham, 2026-10-22): the smallest
