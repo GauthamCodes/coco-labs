@@ -24,6 +24,13 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
   was retracted.
 - **G2.7** ([`data/g27/`](data/g27/)): env map, SSAO (high), COCO materials, title, results inset,
   Race Nav2 + three-way results; budgets within every tier (incl. SIM).
+- **Rules 5 (owner report 2026-10-24, branch `v2/g2-actor-yield`)** ([`data/rules5/README.md`](data/rules5/README.md)):
+  in AUTO the forklift drove through a stopped COCO (actors are a schedule; nothing checked an actor
+  moving onto COCO). Fetch Rush rules 5: the actors stop for COCO (`actors.yield=1`) and AUTO waits,
+  re-plans around a stopped actor or backs off (`avoid.on=1`); Free Drive on the Depot too. Rules 1–4
+  unchanged (every reference replays to its chain; v3 goldens identical). Rounds = rules 4's draw;
+  phone timers unchanged (≤ 6:00). Browser check: before 114 overlap ticks, after 0. The Gazebo
+  stack's actors still never yield (STACK comparisons say so).
 - **Next step:** finish the ghosts and the suites, G2.8's documents, a draft PR; then the phone checks.
 
 ## Setup facts
