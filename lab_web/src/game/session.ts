@@ -32,19 +32,24 @@ import { ArenaClient } from '../arena/client';
 import { SPEC_FILES, type FamilyMessage, type InputRow, type SpecFile, type Tick, type World } from '../arena/protocol';
 import type { RosInfo, TFMessage } from '../ros/shapes';
 
-export type GameKind = 'fetch_rush' | 'free';
-export type WorldId = 'depot' | 'proving';
-export const SPEC_FOR: Record<WorldId, SpecFile> = { depot: SPEC_FILES.depot, proving: SPEC_FILES.v1 };
+/** owner request 2026-10-24: 'fetch_colour' -- Fetch by colour, on its own level (the Depot plus four rods) */
+export type GameKind = 'fetch_rush' | 'fetch_colour' | 'free';
+export type WorldId = 'depot' | 'proving' | 'depot_colours';
+export const SPEC_FOR: Record<WorldId, SpecFile> = { depot: SPEC_FILES.depot, proving: SPEC_FILES.v1, depot_colours: SPEC_FILES.depot_colours };
+/** Fetch by colour's colours (coco_lab.games.FETCH_COLOURS; a test keeps them equal) */
+export type FetchColourId = 'red' | 'green' | 'blue' | 'yellow';
 
 export interface GameObject { id: string; item: string; label: string; shape: 'cylinder' | 'box'; diameter?: number; height: number; size?: number[]; colour: string; magnetic: boolean; x: number; y: number; z: number }
 export interface GameZone { id: string; role: string; label?: string; center: [number, number]; size: [number, number] }
 /** G1.11: a Fetch Rush rules-2 round: start zone, orders, each order's ghost length and route, the reference clock */
 export interface GameRound { region: string; label: string; orders: [string, string][]; ghost_m: number[]; routes: [number, number][][]; reference_time_s: number | null; timer_s: number | null }
-export interface GameInfo { game: string; v3: boolean; setup: Omit<InputRow, 'tick'>[]; seconds: number | null; round?: GameRound; objects?: GameObject[]; zones?: GameZone[]; actors?: { id: string; actor: 'forklift' | 'walker'; footprint: [number, number]; height: number }[];
+/** Fetch by colour: the chosen colour, its rod and the drop zone (arena_glue game_init) */
+export interface ColourInfo { colour: FetchColourId; object: string; item: string; diameter: number; drop: string; drop_label: string }
+export interface GameInfo { game: string; v3: boolean; setup: Omit<InputRow, 'tick'>[]; seconds: number | null; round?: GameRound; colour?: ColourInfo; objects?: GameObject[]; zones?: GameZone[]; actors?: { id: string; actor: 'forklift' | 'walker'; footprint: [number, number]; height: number }[];
   /** G2.2: the ROS-shaped model's constants (coco_lab.ros_shapes: graph, static frames, scan) */
   ros?: RosInfo }
 export interface AssistState { phase: string; target: string | null; carried: string | null; want: string; reason: string; attempt: number }
-export interface FetchState { t: number; seconds: number; over: boolean; order: [string, string] | null; k: number; orders: number; deliveries: number; contacts: number; ghost: number | null }
+export interface FetchState { t: number; seconds: number; over: boolean; order: [string, string] | null; k: number; orders: number; deliveries: number; contacts: number; ghost: number | null; colour?: FetchColourId }
 export interface GameBlock { assist?: AssistState; objects?: [string, number, number, number, string][]; actors?: [string, number, number, number][]; clearance?: number; fetch?: FetchState }
 /** G2.2: `ros.tf` -- the model's dynamic frames this tick, as coco_lab.ros_shapes.tf built them */
 export type GameTick = Tick & { game?: GameBlock; tilt?: [number, number, number]; ros?: { tf: TFMessage } };
@@ -90,14 +95,14 @@ export class GameSession {
   ticks = 0;
 
   constructor(world: WorldId, readonly game: GameKind, readonly seed: number, ev: SessionEvents,
-    readonly mode: 'phone' | 'full' = 'phone', readonly planner: PlayPlanner = 'astar') {
+    readonly mode: 'phone' | 'full' = 'phone', readonly planner: PlayPlanner = 'astar', readonly colour: FetchColourId = 'red') {
     this.ev = ev;
     this.client = new ArenaClient({
       onWorld: (w, occ) => { this.world = w as World & { game: GameInfo }; ev.onWorld(this.world, occ); },
       onTick: (t, ranges) => this.arrived(t as GameTick, ranges),
       onError: (stage, m) => { this.inFlight = false; ev.onError(stage, m); },
       onFamily: (msg) => ev.onFamily?.(msg),
-    }, { hashVersion: 3, seed: 1, spec: SPEC_FOR[world], game: { game, arg: game === 'fetch_rush' ? seed : 0, ...(game === 'fetch_rush' ? { mode } : {}) } });
+    }, { hashVersion: 3, seed: 1, spec: SPEC_FOR[world], game: { game, arg: game === 'fetch_rush' ? seed : game === 'fetch_colour' ? colour : 0, ...(game === 'fetch_rush' ? { mode } : {}) } });
   }
 
   whenReady() { return this.client.whenReady(); }

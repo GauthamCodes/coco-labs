@@ -1,0 +1,94 @@
+{
+ "record": {
+  "game": "fetch_colour",
+  "arg": "blue",
+  "seed": 1,
+  "ticks": 649,
+  "inputs": [
+   {
+    "tick": 0,
+    "kind": "kidnap",
+    "x": 23,
+    "y": 6,
+    "theta": 2.214297435588181,
+    "has_theta": true
+   },
+   {
+    "tick": 0,
+    "kind": "config",
+    "choice": "actors.on=1"
+   },
+   {
+    "tick": 0,
+    "kind": "config",
+    "choice": "assist.target=any"
+   },
+   {
+    "tick": 5,
+    "kind": "goal",
+    "x": 22,
+    "y": 8
+   },
+   {
+    "tick": 101,
+    "kind": "config",
+    "choice": "assist.target=rod_blue"
+   },
+   {
+    "tick": 101,
+    "kind": "config",
+    "choice": "assist.grasp=go"
+   },
+   {
+    "tick": 359,
+    "kind": "goal",
+    "x": 23,
+    "y": 1.4
+   },
+   {
+    "tick": 588,
+    "kind": "config",
+    "choice": "assist.grasp=go"
+   }
+  ],
+  "hash_version": 3,
+  "rules": 1,
+  "level": "coco_depot_colours_v1"
+ },
+ "hash_chain": "8a9474c10cdd32b2be197ae1925b1400d8be620d7eb221062648bc767d9d0f1a",
+ "last_hash": "dd14f611f8765188c22929b8bfe71593b0d4588ef3694a81b7ffd494d659c349",
+ "scorecard": {
+  "game": "fetch_colour",
+  "deliveries": 1,
+  "contacts": 0,
+  "net_deliveries": 1,
+  "time_used": 64.80000000000001,
+  "path_efficiency": 0.9551891695019978,
+  "orders": [
+   [
+    "rod_blue",
+    "dispatch_drop"
+   ]
+  ],
+  "delivered": [
+   {
+    "object": "rod_blue",
+    "drop": "dispatch_drop",
+    "t": 64.80000000000001,
+    "seconds": 64.80000000000001,
+    "driven": 8.84179247622207,
+    "ghost": 8.445584412271572
+   }
+  ],
+  "contact_log": [],
+  "rules": 1,
+  "round": "start_pad",
+  "timer": 88.2,
+  "colour": "blue",
+  "level": "coco_depot_colours_v1"
+ },
+ "stars": 2,
+ "profile": "desktop",
+ "browser": "Chromium (Playwright), nvidia",
+ "note": "Pyodide in the browser worker; MODEL"
+}

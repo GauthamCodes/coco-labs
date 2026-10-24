@@ -31,7 +31,9 @@ const here = dirname(fileURLToPath(import.meta.url));
 const web = join(here, '..', '..');
 const repo = join(web, '..');
 const out = join(web, 'public', 'generated', 'g1');
-export const WORLDS = { depot: 'coco_depot_v1.json', proving_v1: 'coco_arena_v1.json', proving_v2: 'coco_arena_v2.json' };
+export const WORLDS = { depot: 'coco_depot_v1.json', proving_v1: 'coco_arena_v1.json', proving_v2: 'coco_arena_v2.json',
+  // owner request 2026-10-24: Fetch by colour's level (the Depot plus four rods)
+  depot_colours: 'coco_depot_colours_v1.json' };
 export const TEXEL = 0.1;
 
 const sha256 = (b) => createHash('sha256').update(b).digest('hex');

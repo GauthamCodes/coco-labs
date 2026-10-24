@@ -297,3 +297,24 @@
   font: 700 calc(12px * var(--g1-s))/1 var(--g1-display); letter-spacing: .04em; min-height: 32px; }
 .g2-planner-pick button.is-on { background: var(--g1-coco); color: #1a0e04; border-color: transparent; }
 .g2-planner-pick p { margin: 0; color: var(--g1-mute); font-size: calc(12px * var(--g1-s)); }
+
+/* owner request 2026-10-24: Fetch by colour -- chips carry the colour's NAME and size (colour is never the only cue) */
+.g1-modecard.g2-colour-card { width: calc(206px * var(--g1-s)); }
+.g1-modecard.g2-colour-card h3 { margin-top: 2px; }
+.g2-colour-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 7px; }
+.g2-colour-chips a { display: block; text-align: center; padding: 5px 3px; border-radius: 8px; color: var(--g1-ink); text-decoration: none;
+  font: 600 calc(9px * var(--g1-s)) var(--g1-display); letter-spacing: .02em; white-space: nowrap; background: rgba(10,13,18,.72); border: 1px solid rgba(255,255,255,.16); border-left: 6px solid var(--chip, #888); }
+.g2-colour-chips a b { font-weight: 800; }
+.g2-colour-chips a .st { font-style: normal; color: var(--g1-hazard); margin-left: 2px; }
+.g2-colour-chips a:hover, .g2-colour-chips a:focus-visible { background: rgba(255,255,255,.14); outline: 2px solid var(--chip); outline-offset: 1px; }
+.g2-colour-chips.big { grid-template-columns: repeat(2, minmax(150px, 220px)); gap: 12px; margin: 16px 0; }
+.g2-colour-chips.big a { padding: 16px 8px; font-size: 15px; border-left-width: 10px; }
+.g2-colour-chips.again { grid-template-columns: repeat(4, auto); justify-content: center; align-items: center; }
+.g2-colour-chips.again .g1-eyebrow { margin: 0 4px 0 0; }
+.g2-colour-chips.again a { padding: 6px 12px; }
+.g1-modecard .src { font-size: calc(9.5px * var(--g1-s)); color: var(--g1-mute); margin-top: 6px; }
+[data-colour="red"] { --chip: #d03a2f; }
+[data-colour="green"] { --chip: #2f9e44; }
+[data-colour="blue"] { --chip: #2f6fd0; }
+[data-colour="yellow"] { --chip: #e0b020; }
+.g2-colour-dot { display: inline-block; width: .8em; height: .8em; border-radius: 50%; background: var(--chip); vertical-align: -.05em; margin-right: .35em; box-shadow: 0 0 0 1px rgba(255,255,255,.5); }

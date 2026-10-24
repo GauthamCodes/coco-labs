@@ -36,11 +36,11 @@ import { perf } from '../arena/perf';
 import type { CamMode } from './render/camera';
 import { describe, type Spec, type WorldLook } from './world/describe';
 import type { Tier } from './world/build3d';
-import { GameSession, SPEC_FOR, type Candidate, type GameInfo, type GameKind, type GameTick, type WorldId } from './session';
+import { GameSession, SPEC_FOR, type Candidate, type FetchColourId, type GameInfo, type GameKind, type GameTick, type WorldId } from './session';
 import { FloatJoystick } from './hud/FloatJoystick';
 import { Minimap, TacticalMap, type MapMarks } from './hud/Maps';
 import { GameSound, haptic } from './sound';
-import { LOAD_STAGES, TIPS, primaryAction, type FetchRushMode, type Primary } from './rules_view';
+import { LOAD_STAGES, TIPS, colourChip, colourObjective, isFetch, primaryAction, type FetchRushMode, type Primary } from './rules_view';
 import type { GameResult } from './GameApp';
 import { enterPhonePlay, FrameGate, isPhone, leavePhonePlay, phoneFrameCap } from '../play/phone';
 import { FpsWatch, heavier, recommendedSettings, type PlaySettings } from './fps_watch';
@@ -62,6 +62,8 @@ export interface PlayProps {
   race?: boolean;
   /** the planner AUTO uses (src/game/planners.ts); A* when absent, always A* in a race */
   planner?: PlayPlanner;
+  /** owner request 2026-10-24: Fetch by colour's chosen colour */
+  colour?: FetchColourId;
 }
 
 const fmt = (s: number) => `${Math.floor(Math.max(0, s) / 60)}:${String(Math.floor(Math.max(0, s) % 60)).padStart(2, '0')}`;
@@ -137,7 +139,7 @@ export function PlayGame(p: PlayProps) {
         const spec = await (await fetch(specUrl, { credentials: 'omit' })).json() as Spec & { start: { x: number; y: number; theta: number } };
         const lk = describe(spec);
         look.current = lk;
-        const lightName = p.world === 'depot' ? 'depot' : 'proving_v1';
+        const lightName = p.world === 'depot' || p.world === 'depot_colours' ? p.world : 'proving_v1';
         await renderer.loadWorld(lk, `${BASE}generated/g1/${lightName}.light.png`, (spec as unknown as { robot?: { radius?: number } }).robot?.radius ?? 0.22);
         const st = spec.start as unknown as { x: number; y: number; theta: number };
         const pose: [number, number, number] = [st.x + spec.world_to_map[0], st.y + spec.world_to_map[1], st.theta];
@@ -175,7 +177,7 @@ export function PlayGame(p: PlayProps) {
           if (n) { const row = Object.fromEntries(['joint1', 'joint2', 'finger_left', 'finger_right'].map((k) => [k, Number(cols[k]?.[n - 1])])); r.current?.setArm(row); recorder.current.setArm(row); }
         }
       },
-    }, p.mode ?? 'phone', p.race ? 'astar' : p.planner ?? 'astar');
+    }, p.mode ?? 'phone', p.race ? 'astar' : p.planner ?? 'astar', p.colour ?? 'red');
     s.current = session;
     session.client.worker.addEventListener('message', (m: MessageEvent) => {
       const d = m.data as { type: string; name?: string };
@@ -231,20 +233,22 @@ export function PlayGame(p: PlayProps) {
   useEffect(() => registerRunSaver(async () => {
     const g = s.current;
     if (!g || !g.client.world) return null;
-    return { name: `coco-${p.game}-${p.world}-seed-${p.seed}-run.json`, data: await g.query('record') };
-  }), [p.game, p.world, p.seed]);
+    return { name: `coco-${p.game}-${p.world}-${p.game === 'fetch_colour' ? p.colour ?? 'red' : `seed-${p.seed}`}-run.json`, data: await g.query('record') };
+  }), [p.game, p.world, p.seed, p.colour]);
   useEffect(() => { if (p.paused) s.current?.pause(); else if (started) s.current?.resume(); }, [p.paused, started]);
   // G2.5: "Save as rosbag2 (MCAP)" (pause menu, results): this run's model messages, written in the browser
   useEffect(() => registerBagSource(async () => {
     const w = s.current?.world;
     if (!w?.game.ros || !occ.current) throw new Error('the model has not started yet');
     const { writeBag } = await import('../ros/bag');
-    const name = bagName(p.game, p.game === 'fetch_rush' ? p.mode ?? 'phone' : undefined, p.seed);
+    // Fetch by colour names its colour where Fetch Rush names its mode
+    const bagMode = p.game === 'fetch_rush' ? p.mode ?? 'phone' : p.game === 'fetch_colour' ? p.colour ?? 'red' : undefined;
+    const name = bagName(p.game, bagMode, p.seed);
     const rec = recorder.current;
     const bytes = await writeBag(rec.frames, w.game.ros, { width: w.width, height: w.height, resolution: w.resolution, origin: w.origin }, occ.current,
-      { game: p.game, seed: p.seed, mode: p.game === 'fetch_rush' ? p.mode ?? 'phone' : undefined, world: p.world, hashVersion: 3, app: `COCO Lab ${__BUILD_COMMIT__}`, ticks: rec.frames.length, dropped: rec.dropped }, name);
+      { game: p.game, seed: p.seed, mode: bagMode, world: p.world, hashVersion: 3, app: `COCO Lab ${__BUILD_COMMIT__}`, ticks: rec.frames.length, dropped: rec.dropped }, name);
     return { name, bytes };
-  }), [p.game, p.mode, p.seed, p.world]);
+  }), [p.game, p.mode, p.seed, p.world, p.colour]);
   useEffect(() => { const now = performance.now(); if (started && !p.paused) clock.current.resume(now); else clock.current.pause(now); }, [p.paused, started]);
   // G2.2: the view and the displays (presentation only: the model is never told)
   useEffect(() => { r.current?.setView(view); writePref('view', view); }, [view, sceneReady]);
@@ -352,7 +356,7 @@ export function PlayGame(p: PlayProps) {
       if (alive && res?.rows) {
         const was = cands.some((c) => !c.reason);
         setCands(res.rows);
-        if (!was && res.rows.some((c) => !c.reason && (p.game !== 'fetch_rush' || c.object_id === lt.game?.fetch?.order?.[0]))) say('In range: tap GRAB');
+        if (!was && res.rows.some((c) => !c.reason && (!isFetch(p.game) || c.object_id === lt.game?.fetch?.order?.[0]))) say('In range: tap GRAB');
       }
     }, 500);
     return () => { alive = false; clearInterval(t); };
@@ -367,10 +371,10 @@ export function PlayGame(p: PlayProps) {
     const rr = r.current;
     if (!rr || !tick) return;
     const a = tick.game?.assist;
-    const target = p.game === 'fetch_rush' ? (a?.carried ? null : order?.[0] ?? null) : (primary.kind === 'grab' ? primary.target ?? null : a?.target ?? null);
+    const target = isFetch(p.game) ? (a?.carried ? null : order?.[0] ?? null) : (primary.kind === 'grab' ? primary.target ?? null : a?.target ?? null);
     const stages = ['approach', 'align', 'reach'];
     rr.setTarget(target, a && stages.includes(a.phase) ? (stages.indexOf(a.phase) + 1) / (stages.length + 1) : null);
-    rr.setDropZone(p.game === 'fetch_rush' ? order?.[1] ?? null : primary.kind === 'drop' ? primary.target ?? null : null, !!a?.carried);
+    rr.setDropZone(isFetch(p.game) ? order?.[1] ?? null : primary.kind === 'drop' ? primary.target ?? null : null, !!a?.carried);
   }, [tick, primary]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const begin = () => {
@@ -410,11 +414,11 @@ export function PlayGame(p: PlayProps) {
     const ss = s.current;
     if (!ss || latched) return;
     if (auto) { ss.manual(); setAuto(false); say('Manual: you drive'); return; }
-    if (p.game === 'fetch_rush') {
+    if (isFetch(p.game)) {
       const gTo = await ss.query<{ x: number; y: number; why: string } | null>('auto_goal');
       if (!gTo) { say('No path for the planner from here'); return; }
       ss.goal(gTo.x, gTo.y); setGoal([gTo.x, gTo.y]); r.current?.setGoal([gTo.x, gTo.y]);
-      say(gTo.why === 'drop' ? 'AUTO: to the drop zone' : 'AUTO: to the next pick');
+      say(gTo.why === 'drop' ? 'AUTO: to the drop zone' : p.game === 'fetch_colour' ? `AUTO: to the ${p.colour ?? 'red'} rod` : 'AUTO: to the next pick');
     } else if (goal) ss.goal(goal[0], goal[1]);
     else { say('Set a goal on the map first'); return; }
     setAuto(true);
@@ -434,7 +438,8 @@ export function PlayGame(p: PlayProps) {
     ss.pause();
     // the reference card for this shift (committed M6 reference runs); no reference, no stars
     const refs = await fetch(`${BASE}generated/g1/references.json`, { credentials: 'omit' }).then((x) => x.json()).catch(() => null) as { fetch_rush?: Record<string, unknown> } | null;
-    const reference = refs?.fetch_rush?.[String(p.seed)] ?? null;
+    // (a round -- Fetch Rush rules 2+ or Fetch by colour -- carries its own reference; the glue uses that)
+    const reference = p.game === 'fetch_rush' ? refs?.fetch_rush?.[String(p.seed)] ?? null : null;
     const [card, rec] = await Promise.all([ss.query<{ card: Record<string, unknown>; stars: number | null; reference: Record<string, unknown> | null }>('stars', reference), ss.query<Record<string, unknown>>('record')]);
     const w = ss.world;
     const inset = w && occ.current && w.game.round ? { map: { width: w.width, height: w.height, resolution: w.resolution, origin: w.origin }, occupancy: occ.current,
@@ -603,7 +608,9 @@ export function PlayGame(p: PlayProps) {
     {started && <div className="g1-safe">
       <FloatJoystick enabled={!latched && !p.paused} hint={desktop ? 'WASD / ARROWS' : 'DRAG TO DRIVE'} onChange={(f, t) => { if ((f || t) && !stick.current[0] && !stick.current[1]) perf.driveInput(); stick.current = [f, t]; if (f || t) setAuto(false); s.current?.drive(f, t); }} />
       {world && occ.current && <Minimap world={world} occupancy={occ.current} marks={marks} headingUp={false} onOpen={() => setMapOpen(true)} />}
-      <div className="g1-pill g1-glass" data-testid="objective">{p.game === 'fetch_rush'
+      <div className="g1-pill g1-glass" data-testid="objective">{p.game === 'fetch_colour'
+        ? fr ? <><span className="g2-colour-dot" data-colour={p.colour ?? 'red'} aria-hidden /><span data-testid="colour-objective">{fr.deliveries ? `DELIVERED THE ${(p.colour ?? 'red').toUpperCase()} ROD` : colourObjective(p.colour ?? 'red', !!tick?.game?.assist?.carried, world?.game.colour?.drop_label)}</span><span className="sep">·</span><span className={`num${fr.seconds - fr.t < 30 ? ' low' : ''}`}>⏱ {fmt(fr.seconds - fr.t)}</span>{fr.contacts > 0 && <><span className="sep">·</span><span className="num">✖ {fr.contacts}</span></>}</> : <span>FETCH BY COLOUR · {colourChip(p.colour ?? 'red')}</span>
+        : p.game === 'fetch_rush'
         ? fr ? <><span>DELIVER {fr.deliveries}/{fr.orders}</span><span className="sep">·</span><span className={`num${fr.seconds - fr.t < 30 ? ' low' : ''}`}>⏱ {fmt(fr.seconds - fr.t)}</span>{fr.contacts > 0 && <><span className="sep">·</span><span className="num">✖ {fr.contacts}</span></>}</> : <span>FETCH RUSH</span>
         : <><span>FREE DRIVE</span><span className="sep">·</span><span>{p.world === 'depot' ? 'DEPOT' : 'PROVING GROUND'}</span></>}</div>
       <div className="g1-top-right">
@@ -617,7 +624,8 @@ export function PlayGame(p: PlayProps) {
         <h3>WHAT IS REAL HERE</h3>
         <p><b>MODEL · kinematic.</b> COCO is driven by the Arena model (coco_lab, in your browser): planar kinematics with the robot's real speed and acceleration limits, its real LiDAR geometry. No physics engine; nothing tips or slips.</p>
         {world?.game.v3 && <p><b>MODEL · MoveIt-style.</b> Grasp Assist decides each pick from COCO's own reach envelope and gripper limits. Two fingers and a magnet; the magnet holds.</p>}
-        {p.game === 'fetch_rush' && <p><b>Game rules are not physics.</b> Orders, timer and stars are scoring rules (GAMES.md); stars compare with the reference bot's run.</p>}
+        {p.game === 'fetch_colour' && <p><b>SIMPLIFIED.</b> Here COCO is handed the {p.colour ?? 'red'} rod's id; in COCO's real stack (Gazebo) the camera found the rod by its colour (target_finder).</p>}
+        {isFetch(p.game) && <p><b>Game rules are not physics.</b> Orders, timer and stars are scoring rules (GAMES.md); stars compare with the reference bot's run.</p>}
         <p>No physical robot exists. Real ROS 2 runs are in Research › Recordings (STACK).</p>
       </div>}
       <section className="g1-gauge" data-testid="speed"><svg viewBox="0 0 150 66" aria-hidden><path d="M20 62 A55 55 0 0 1 130 62" stroke="#2A3344" strokeWidth="7" fill="none" strokeLinecap="round" />

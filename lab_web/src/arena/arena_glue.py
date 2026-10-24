@@ -442,7 +442,7 @@ _game = None
 
 def game_init(spec_json, game, arg, seed, post_batch, batch_size=2048,
               post_family=None, hash_version=3, mode=None):
-    """Build the Arena on a level for ``game`` ('fetch_rush' or 'free'); return init()'s pair."""
+    """Build the Arena on a level for ``game`` ('fetch_rush', 'fetch_colour' or 'free'); return init()'s pair."""
     global _game
     import hashlib
     from coco_lab import games
@@ -458,6 +458,11 @@ def game_init(spec_json, game, arg, seed, post_batch, batch_size=2048,
     # waits for a planner search; G1.12: rules 3, in the 'phone' (default) or 'full' mode.
     # Rush Hour is unchanged
     version = games.FETCH_RUSH_RULES if game == 'fetch_rush' else 1
+    if game == 'fetch_colour':
+        # owner request 2026-10-24: Fetch by colour plays on its own level (the Depot plus four rods)
+        version = games.FETCH_COLOUR_RULES
+        if spec.get('id') != games.FETCH_COLOUR_LEVEL:
+            raise ValueError(f'Fetch by colour plays on {games.FETCH_COLOUR_LEVEL}, not {spec.get("id")!r}')
     if game == 'fetch_rush':
         mode = mode or games.ROUND_MODE_DEFAULT
     else:
@@ -465,7 +470,8 @@ def game_init(spec_json, game, arg, seed, post_batch, batch_size=2048,
     rules = games._rules(game, arg, version, mode) if game in games.GAMES else None
     _game = {'rules': rules, 'game': game, 'arg': arg, 'seed': int(seed),
              'chain': hashlib.sha256(), 'ticks': 0, 'inputs': [], 'v3': v3_level,
-             'hash_version': int(hash_version), 'rules_version': version, 'mode': mode}
+             'hash_version': int(hash_version), 'rules_version': version, 'mode': mode,
+             'level': spec.get('id') if game == 'fetch_colour' else None}
     info = {'game': game, 'arg': arg, 'v3': v3_level, 'mode': mode}
     if v3_level:
         info['setup'] = games.setup_inputs(game if rules else 'fetch_rush', arg, version,
@@ -477,6 +483,11 @@ def game_init(spec_json, game, arg, seed, post_batch, batch_size=2048,
             info['round'] = {'region': rnd['region'], 'label': label, 'orders': rnd['orders'],
                              'ghost_m': rnd['ghost_m'], 'routes': rnd['routes'],
                              'reference_time_s': rnd['reference_time_s'], 'timer_s': rnd['timer_s']}
+        if isinstance(rules, games.FetchColour):
+            oid = rnd['object']
+            label = next(z.get('label', z['id']) for z in spec['kit'] if z['id'] == rnd['orders'][0][1])
+            info['colour'] = {'colour': rules.colour, 'object': oid, 'item': rnd['item'],
+                              'diameter': rnd['diameter'], 'drop': rnd['orders'][0][1], 'drop_label': label}
         info['objects'] = [dict(o, x=o['x'] + dx, y=o['y'] + dy) for o in v3.objects(spec)]
         info['zones'] = [dict(z, center=[z['center'][0] + dx, z['center'][1] + dy])
                          for z in spec['kit'] if z['kind'] == 'zone']
@@ -537,6 +548,8 @@ def _game_block(t):
                         'over': r.over, 'order': list(cur) if cur else None, 'k': r.k,
                         'orders': len(r.orders), 'deliveries': len(r.delivered),
                         'contacts': r.contacts, 'ghost': r.ghost}
+        if isinstance(r, games.FetchColour):
+            out['fetch']['colour'] = r.colour
     return out
 
 
@@ -565,10 +578,12 @@ def game_record():
     inputs = [{k: e[k] for k in keys if k in e} for e in g['inputs']]
     rec = {'game': g['game'], 'arg': g['arg'], 'seed': g['seed'], 'ticks': g['ticks'],
            'inputs': inputs, 'hash_version': g['hash_version']}
-    if g.get('rules_version', 1) != 1:
+    if g.get('rules_version', 1) != 1 or g['game'] == 'fetch_colour':
         rec['rules'] = g['rules_version']
     if g.get('mode'):
         rec['mode'] = g['mode']
+    if g.get('level'):
+        rec['level'] = g['level']
     return json.dumps({'record': rec,
                        'hash_chain': g['chain'].hexdigest(), 'last_hash': _arena.state_hash()})
 

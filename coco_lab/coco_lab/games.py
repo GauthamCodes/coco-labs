@@ -15,6 +15,10 @@
 """
 The M6 mini-games, model side (M6F.6; README §5.9): Fetch Rush and Rush Hour.
 
+Plus **Fetch by colour** (``fetch_colour``; owner request 2026-10-24, "multiple rods like in
+the beginning, and the robot goes to the colour of the rod we choose"): one order -- the rod of
+the chosen colour to Dispatch -- on ``coco_depot_colours_v1`` (:class:`FetchColour`).
+
 Three parts, none of them UI:
 
 - **The actors** (:class:`DepotActors`, the Arena subsystem ``actors``): a World
@@ -56,7 +60,7 @@ from .rng import Rng
 from .search import search
 from .sketch import _nearest_free, WAYPOINT_TOL
 
-GAMES = ('fetch_rush', 'rush_hour')
+GAMES = ('fetch_rush', 'rush_hour', 'fetch_colour')
 #: README §5.9: Fetch Rush runs for three minutes
 FETCH_RUSH_SECONDS = 180.0
 #: Rush Hour's objectives on the Depot: pick ``object``, deliver it to ``drop``,
@@ -109,6 +113,22 @@ ROUND_MODES_R4 = {'phone': {'orders': 2, 'budget_m': 26.0},
 #: a lane is drawn this wide each side of an actor's path beyond half its footprint
 #: (lab_web/src/game/world/describe.ts paints the same lanes and stripes)
 LANE_MARGIN = 0.25
+
+#: Fetch by colour (owner request 2026-10-24): the level (the Depot plus a row of four rods,
+#: worlds/coco_depot_colours_v1.json), the colours (the Stack's four targets, coco_config
+#: TARGETS), each colour's rod, and the one drop zone every order goes to (Dispatch, the
+#: drop zone nearest the row: 6.2-7.6 m by plan from the rods' pre-grasp poses).
+FETCH_COLOUR_LEVEL = 'coco_depot_colours_v1'
+FETCH_COLOUR_RULES = 1
+FETCH_COLOURS = ('red', 'green', 'blue', 'yellow')
+FETCH_COLOUR_RODS = {c: f'rod_{c}' for c in FETCH_COLOURS}
+FETCH_COLOUR_DROP = 'dispatch_drop'
+#: which Fetch Rush rules' actor and Grasp Assist set-up (:func:`fetch_actor_inputs`) each
+#: Fetch by colour rules version plays with. ONE PLACE to adopt Fetch Rush rules 5 (actors that
+#: yield, AUTO that avoids; built on another branch) once it is merged: give rules 5's set-up in
+#: fetch_actor_inputs, add ``2: 5`` here, set FETCH_COLOUR_RULES = 2 and re-run
+#: tools/g2/make_fetch_colour_rounds.py (rules 1 records keep replaying on rules 1).
+FETCH_COLOUR_ACTOR_RULES = {1: FETCH_RUSH_RULES}
 
 
 # -- the actors as collision bodies ------------------------------------------------
@@ -623,6 +643,57 @@ class FetchRushRound(FetchRush):
         return card
 
 
+# -- Fetch by colour (owner request 2026-10-24) -----------------------------------------
+
+def colour_rounds_file(level: str = FETCH_COLOUR_LEVEL) -> Path:
+    """Return a level's Fetch by colour rounds file (``<level>.fetch_colour.json``)."""
+    return LEVELS / f'{level}.fetch_colour.json'
+
+
+def colour_round(colour: str, level: str = FETCH_COLOUR_LEVEL,
+                 rules: int = FETCH_COLOUR_RULES) -> Dict[str, object]:
+    """Return the precomputed round for ``colour``, or raise."""
+    if colour not in FETCH_COLOURS:
+        raise ArenaError(f'Fetch by colour: the colours are {list(FETCH_COLOURS)}, not {colour!r}')
+    with open(colour_rounds_file(level), encoding='utf-8') as f:
+        doc = json.load(f)
+    if doc['rules'] != rules:
+        raise ArenaError(f'Fetch by colour: rules {rules} has no rounds on file '
+                         f'(the file is rules {doc["rules"]})')
+    return doc['rounds'][colour]
+
+
+class FetchColour(FetchRushRound):
+    """
+    Fetch by colour: one order, the rod of the chosen colour to Dispatch.
+
+    Fetch Rush rules 2's machinery (:class:`FetchRushRound`) on a one-order round from
+    ``levels/<level>.fetch_colour.json``: the order, its planner ghost (length and route), the
+    start pose and the timer (the reference bot's time x ROUND_TIMER_FACTOR) come from the file;
+    nothing is planned while the game runs. Deliveries, contacts, the ranking and stars are
+    Fetch Rush's. SIMPLIFIED: COCO is handed the rod's id; the Stack found its rod by camera
+    (``target_finder``).
+    """
+
+    def __init__(self, colour: str, rnd: Optional[Dict[str, object]] = None,
+                 seconds: Optional[float] = None, rules: int = FETCH_COLOUR_RULES,
+                 level: str = FETCH_COLOUR_LEVEL):
+        """``rnd`` defaults to the colour's round on file; ``seconds`` overrides its timer."""
+        rnd = rnd if rnd is not None else colour_round(colour, level, rules)
+        # FetchRushRound's rules 2 path: a fixed round, no mode; this game's own version follows
+        super().__init__(0, rnd, seconds=seconds, rules=2)
+        self.rules = int(rules)
+        self.colour = colour
+        self.level = level
+
+    def scorecard(self) -> Dict[str, object]:
+        """Fetch Rush's real metrics, for this game: the colour, its level, its rules."""
+        card = super().scorecard()
+        del card['seed']
+        card.update(game='fetch_colour', colour=self.colour, level=self.level, rules=self.rules)
+        return card
+
+
 # -- Rush Hour -------------------------------------------------------------------------
 
 class RushHour:
@@ -726,7 +797,7 @@ def stars(card: Dict[str, object], reference: Dict[str, object]) -> int:
     delivery; 2 for delivering with no contact no slower than the reference; 3
     for also keeping at least its clearance and at most its RMS jerk.
     """
-    if card['game'] == 'fetch_rush':
+    if card['game'] in ('fetch_rush', 'fetch_colour'):
         if card['deliveries'] < 1:
             return 0
         if card['net_deliveries'] < reference['net_deliveries']:
@@ -744,14 +815,30 @@ def stars(card: Dict[str, object], reference: Dict[str, object]) -> int:
 
 # -- playing a record ------------------------------------------------------------------------
 
+def fetch_actor_inputs(rules: int = FETCH_RUSH_RULES) -> List[Dict[str, object]]:
+    """
+    Return the tick-0 actor and Grasp Assist set-up of Fetch Rush ``rules``.
+
+    Rules 1-4 (and Rush Hour, and Fetch by colour rules 1): the actors on as collision bodies,
+    Grasp Assist on any object. Fetch by colour takes its set-up from here
+    (:data:`FETCH_COLOUR_ACTOR_RULES`), so adopting a later Fetch Rush's actors is one change.
+    """
+    return [{'tick': 0, 'kind': 'config', 'choice': 'actors.on=1'},
+            {'tick': 0, 'kind': 'config', 'choice': 'assist.target=any'}]
+
+
 def setup_inputs(game: str, arg, rules: int = 1, rnd=None,
                  mode: Optional[str] = None) -> List[Dict[str, object]]:
     """Return the tick-0 inputs every session of ``game`` starts with (in its log)."""
-    out = [{'tick': 0, 'kind': 'config', 'choice': 'actors.on=1'},
-           {'tick': 0, 'kind': 'config', 'choice': 'assist.target=any'}]
+    if game == 'fetch_colour':
+        out = fetch_actor_inputs(FETCH_COLOUR_ACTOR_RULES[rules])
+    else:
+        out = fetch_actor_inputs(rules if game == 'fetch_rush' else 1)
     start = None
     if game == 'rush_hour':
         start = RUSH_HOUR[arg]['start']
+    elif game == 'fetch_colour':
+        start = (rnd or colour_round(arg, rules=rules))['start']      # the round's start
     elif game == 'fetch_rush' and rules >= 2:
         start = (rnd or round_for(arg, rules=rules, mode=mode))['start']   # the round's start
     if start is not None:
@@ -787,7 +874,10 @@ def round_for(seed, level: str = 'coco_depot_v1', rules: int = 2,
     return rnd
 
 
-def _rules(game: str, arg, rules: int = 1, mode: Optional[str] = None):
+def _rules(game: str, arg, rules: int = 1, mode: Optional[str] = None,
+           level: Optional[str] = None):
+    if game == 'fetch_colour':
+        return FetchColour(str(arg), rules=rules, level=level or FETCH_COLOUR_LEVEL)
     if game == 'fetch_rush':
         if rules >= 2:
             mode = (mode or ROUND_MODE_DEFAULT) if rules >= 3 else None
@@ -803,13 +893,18 @@ def play(spec, record: Dict[str, object]) -> Dict[str, object]:
     """
     Replay a game record; return the scorecard and the state-hash chain.
 
-    A record is ``{game, arg (seed or objective), seed (the Arena's), ticks, inputs}``.
+    A record is ``{game, arg (seed, objective or colour), seed (the Arena's), ticks, inputs}``;
+    a Fetch by colour record also names its ``level``, which must be the spec's.
     """
+    if record['game'] == 'fetch_colour' and spec.get('id') != record.get('level'):
+        raise ArenaError(f'a Fetch by colour record plays on {record.get("level")!r}, '
+                         f'not {spec.get("id")!r}')
     a = Arena(spec, record['seed'], hash_version=record.get('hash_version', 1))
     by: Dict[int, list] = {}
     for e in record['inputs']:
         by.setdefault(e['tick'], []).append(InputEvent(**e))
-    rules = _rules(record['game'], record['arg'], record.get('rules', 1), record.get('mode'))
+    rules = _rules(record['game'], record['arg'], record.get('rules', 1), record.get('mode'),
+                   record.get('level'))
     chain = hashlib.sha256()
     last = ''
     for _ in range(record['ticks']):
@@ -940,11 +1035,38 @@ def bot_fetch_rush(spec, seed: int, arena_seed: int = 1, rules=None,
     """
     version = rules.rules if isinstance(rules, FetchRushRound) else 1
     d = _Driver(spec, arena_seed, 'fetch_rush', seed, rules, version, hash_version)
-    a, rules = d.a, d.rules
-    assist = a.subsystems['assist']
     # G2.1, rules 4: the round names each order's pre-grasp pose and its legs' crossing mouths
     # (the routes it was drawn with keep the crossing rule); the bot drives through those
-    planned = version >= 4 and 'pick' in rules.round
+    _fetch_orders(d, version >= 4 and 'pick' in d.rules.round)
+    rec = d.record('fetch_rush', seed, arena_seed)
+    return rec, {'scorecard': _card(d.rules, d.a), 'hash_chain': d.chain.hexdigest(),
+                 'last_hash': d.last}
+
+
+def bot_fetch_colour(spec, colour: str, arena_seed: int = 1, rules=None,
+                     hash_version: int = 3) -> Tuple[Dict, Dict]:
+    """
+    Play Fetch by colour as the reference player: Fetch Rush's bot on the colour's round.
+
+    It drives to the round's pre-grasp pose (``pick``, the best approach planned from the
+    start), presses G for the rod, drives to Dispatch's centre and presses G (yielding to
+    actors, as :func:`bot_fetch_rush` does). ``rules`` (a :class:`FetchColour`) defaults to
+    the colour's round on file. Returns ``(record, result)``.
+    """
+    rules = rules if rules is not None else FetchColour(colour)
+    d = _Driver(spec, arena_seed, 'fetch_colour', colour, rules, rules.rules, hash_version)
+    _fetch_orders(d, True)
+    rec = d.record('fetch_colour', colour, arena_seed)
+    rec['rules'] = rules.rules
+    rec['level'] = rules.level
+    return rec, {'scorecard': _card(d.rules, d.a), 'hash_chain': d.chain.hexdigest(),
+                 'last_hash': d.last}
+
+
+def _fetch_orders(d: '_Driver', planned: bool) -> None:
+    """Play the Fetch Rush reference loop over the orders (``planned``: the round's poses)."""
+    a, rules = d.a, d.rules
+    assist = a.subsystems['assist']
     while not d.done():
         cur = rules.current()
         if cur is None:
@@ -978,9 +1100,6 @@ def bot_fetch_rush(spec, seed: int, arena_seed: int = 1, rules=None,
             break
         d.step([{'kind': 'config', 'choice': 'assist.grasp=go'}])
         d.until(lambda: assist.phase == 'idle', 200)
-    rec = d.record('fetch_rush', seed, arena_seed)
-    return rec, {'scorecard': _card(rules, a), 'hash_chain': d.chain.hexdigest(),
-                 'last_hash': d.last}
 
 
 def bot_rush_hour(spec, objective: str, arena_seed: int = 1) -> Tuple[Dict, Dict]:

@@ -223,6 +223,9 @@ function main() {
   // G1: the COCO Depot (World Spec v3), the game's level: canonical bytes from tools/g1/depot_json.py
   const specDepot = readFileSync(join(repo, 'worlds', 'coco_depot_v1.json'));
   writeFileSync(join(arenaDir, 'coco_depot_v1.json'), specDepot);
+  // owner request 2026-10-24: Fetch by colour's level, the Depot plus four rods (tools/g1/depot_json.py --variant colours)
+  const specColours = readFileSync(join(repo, 'worlds', 'coco_depot_colours_v1.json'));
+  writeFileSync(join(arenaDir, 'coco_depot_colours_v1.json'), specColours);
   const outline = robotOutline(readFileSync(join(repo, 'gazebo_models', 'meshes', 'base.stl')));
   writeFileSync(join(arenaDir, 'robot_outline.json'), JSON.stringify({
     source: 'gazebo_models/meshes/base.stl (convex hull of x-z, mm -> base_link m; build_arena_assets.mjs)',
@@ -263,6 +266,7 @@ function main() {
       v1: { file: 'coco_arena_v1.json', bytes: spec.length, sha256: sha256(spec) },
       v2: { file: 'coco_arena_v2.json', bytes: specV2.length, sha256: sha256(specV2) },
       depot: { file: 'coco_depot_v1.json', bytes: specDepot.length, sha256: sha256(specDepot) },
+      depot_colours: { file: 'coco_depot_colours_v1.json', bytes: specColours.length, sha256: sha256(specColours) },
     },
     pyodide_files: files,
     stdlib: FULL_STDLIB ? 'full' : 'trimmed (tools/arena_stdlib.txt)',

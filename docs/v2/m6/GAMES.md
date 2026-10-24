@@ -203,3 +203,28 @@ the start heading). Objects were not moved next to the lanes (the decision).
 With the lanes kept out the Depot offers little variety: the six phone shifts are one round
 (from the Loading dock); the six Full shifts are five rounds, from the Loading dock or the
 Workshop. (Rules 2's High-bay rounds, seeds 2, 4 and 5, all crossed a lane.)
+
+## Fetch by colour (owner request, Gautham 2026-10-24)
+
+*"I want there to be multiple rods like in the beginning, and the robot goes to the colour of the
+rod we choose."* New, versioned behaviour; Fetch Rush's rules, rounds, records and every hash are
+unchanged. Code: `games.FetchColour`, `games.bot_fetch_colour`, `games.colour_round`; level
+`worlds/coco_depot_colours_v1.json` (the Depot plus four rods); rounds
+`coco_lab/coco_lab/levels/coco_depot_colours_v1.fetch_colour.json` from
+`tools/g2/make_fetch_colour_rounds.py`; tests `coco_lab/test/test_fetch_colour.py`,
+`lab_web/tools/test_g2_fetch_colour_glue.py`, `lab_web/test/g2_fetch_colour.test.ts`. Details and
+evidence: [`docs/v2/g2/data/fetch_colour/README.md`](../g2/data/fetch_colour/README.md).
+
+- **The rods:** the catalog's four Stack targets in one row, 1 m apart, 2 m north of the start
+  pad: red 20 mm (20, 8), green 24 mm (21, 8), blue 28 mm (22, 8), yellow 32 mm (23, 8).
+- **One order:** the chosen colour's rod → Dispatch. A record is `{game: 'fetch_colour', arg:
+  <colour>, rules: 1, level: 'coco_depot_colours_v1', ...}`; `games.play` refuses it on another level.
+- **Timer = the reference bot's time × 1.5** (Fetch Rush's factor). Reference: red 68.1 s
+  (timer 102.2 s), green 62.2 s (93.3), blue 58.8 s (88.2), yellow 55.7 s (83.6); 0 contacts each.
+- **Stars** as Fetch Rush, against the colour's reference. Bests are kept per colour and per AUTO
+  planner.
+- **Actors** as Fetch Rush rules 4, from one helper (`games.fetch_actor_inputs`, keyed by
+  `FETCH_COLOUR_ACTOR_RULES`), so Fetch Rush rules 5's actors can be adopted in one place
+  (then `FETCH_COLOUR_RULES = 2` and a re-run of the generator).
+- **SIMPLIFIED:** COCO is handed the rod's id; COCO's real stack found the rod by camera
+  (`target_finder`).

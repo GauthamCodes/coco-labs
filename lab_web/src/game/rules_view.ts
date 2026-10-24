@@ -7,7 +7,7 @@
  * delivery or a score: it only words the model's own state.
  */
 
-import type { Candidate, GameKind, GameTick, GameZone } from './session';
+import type { Candidate, FetchColourId, GameKind, GameTick, GameZone } from './session';
 
 /** The real load stages, in order, and the worker marks that end each (arena.worker.ts). */
 /**
@@ -22,6 +22,25 @@ export const FETCH_RUSH_SHIFTS = [1, 2, 3, 4, 5, 6];
 export const FETCH_RUSH_RULES = 4;
 export type FetchRushMode = 'phone' | 'full';
 export const fetchRushMode = (v: string | null): FetchRushMode => (v === 'full' ? 'full' : 'phone');
+
+/** Fetch Rush or Fetch by colour: the games with orders (one object to one drop zone at a time) */
+export const isFetch = (g: GameKind) => g === 'fetch_rush' || g === 'fetch_colour';
+
+/**
+ * Owner request 2026-10-24, Fetch by colour: COCO's original Gazebo fetch had four rods, one per
+ * colour (coco_config/coco_config/robot.py TARGETS: 20/24/28/32 mm, 0.158 m tall); the
+ * player picks one. The chips carry the colour's NAME and diameter, so colour is never the only cue.
+ */
+export const FETCH_COLOURS: { id: FetchColourId; label: string; mm: number }[] = [
+  { id: 'red', label: 'RED', mm: 20 }, { id: 'green', label: 'GREEN', mm: 24 },
+  { id: 'blue', label: 'BLUE', mm: 28 }, { id: 'yellow', label: 'YELLOW', mm: 32 },
+];
+/** `&colour=` parsed: one of the four, or null (the page then shows the choice) */
+export const fetchColour = (v: string | null): FetchColourId | null => (FETCH_COLOURS.find((c) => c.id === v)?.id ?? null);
+export const colourChip = (c: FetchColourId) => { const k = FETCH_COLOURS.find((x) => x.id === c)!; return `${k.label} · ${k.mm} mm`; };
+/** the HUD objective while the order is open: "FETCH THE RED ROD → DISPATCH" */
+export const colourObjective = (c: FetchColourId, carried: boolean, drop = 'DISPATCH') =>
+  carried ? `CARRY THE ${c.toUpperCase()} ROD → ${drop.toUpperCase()}` : `FETCH THE ${c.toUpperCase()} ROD → ${drop.toUpperCase()}`;
 
 export const LOAD_STAGES = [
   { id: 'worker', label: 'WORKER', marks: ['worker_boot'] },
@@ -78,17 +97,17 @@ export function primaryAction(o: { game: GameKind; tick: GameTick | null; cands:
   const order = o.tick?.game?.fetch?.order ?? null;
   if (a?.carried) {
     const pose = o.tick!.pose;
-    const drops = o.zones.filter((z) => z.role === 'drop' && (o.game !== 'fetch_rush' || z.id === order?.[1]));
+    const drops = o.zones.filter((z) => z.role === 'drop' && (!isFetch(o.game) || z.id === order?.[1]));
     const at = drops.find((z) => inside(z, pose[0], pose[1]));
     if (at) return { kind: 'drop', label: 'DROP', enabled: true, target: at.id };
     const want = drops[0];
     return { kind: 'drop', label: 'DROP', enabled: false, why: want ? `Go to ${(want.label ?? want.id).toUpperCase()}` : 'Not at a drop zone' };
   }
   if (o.cands.length) {
-    const mine = o.game === 'fetch_rush' ? o.cands.find((c) => c.object_id === order?.[0]) : o.cands.find((c) => c.rank === 0);
+    const mine = isFetch(o.game) ? o.cands.find((c) => c.object_id === order?.[0]) : o.cands.find((c) => c.rank === 0);
     if (mine && !mine.reason) return { kind: 'grab', label: 'GRAB', enabled: true, target: mine.object_id };
     if (mine) return { kind: 'grab', label: 'GRAB', enabled: false, why: REASON_SHORT[mine.reason] ?? mine.reason, target: mine.object_id };
-    if (o.game === 'fetch_rush') return { kind: 'grab', label: 'GRAB', enabled: false, why: 'Not the order' };
+    if (isFetch(o.game)) return { kind: 'grab', label: 'GRAB', enabled: false, why: o.game === 'fetch_colour' ? 'Not that colour' : 'Not the order' };
   }
   if (o.goal && !o.auto) return { kind: 'go', label: 'GO', enabled: true };
   return { kind: 'none', label: 'GRAB', enabled: false, why: 'Nothing in range' };
