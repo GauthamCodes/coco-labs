@@ -24,6 +24,12 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
   was retracted.
 - **G2.7** ([`data/g27/`](data/g27/)): env map, SSAO (high), COCO materials, title, results inset,
   Race Nav2 + three-way results; budgets within every tier (incl. SIM).
+- **Fetch by colour** (owner request 2026-10-24, branch `v2/g2-fetch-colour` from `c695cd5`):
+  four rods (red 20 / green 24 / blue 28 / yellow 32 mm) in a row on a derived level
+  `coco_depot_colours_v1`; game `fetch_colour`, one order to Dispatch, timers 83.6–102.2 s;
+  all four colours delivered in the browser (desktop RTX 4050; one emulated phone run), records
+  replay in CPython; Depot bytes and goldens unchanged. [`data/fetch_colour/README.md`](data/fetch_colour/README.md),
+  [`screens/fetch_colour/`](screens/fetch_colour/).
 - **Next step:** finish the ghosts and the suites, G2.8's documents, a draft PR; then the phone checks.
 
 ## Setup facts
