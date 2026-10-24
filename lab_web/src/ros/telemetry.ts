@@ -33,8 +33,15 @@ export function signed(x: number, d = 2): string {
   return s.replace('-', '−');
 }
 
+/**
+ * Right-aligned in a fixed width with figure spaces (U+2007, a digit's width): the monospace strip
+ * keeps one width whatever the values, so it never grows into its neighbours (on the real phone
+ * it reached /rosout at θ 357°, G2.8).
+ */
+const pad = (text: string, width: number) => text.padStart(width, '\u2007');
+
 export function stripText(s: Strip): string {
-  return `/cmd_vel v ${signed(s.v)} ω ${signed(s.w)} · /odom x ${signed(s.x)} y ${signed(s.y)} θ ${Math.round(s.thetaDeg) % 360}° · sim ${s.sim.toFixed(1)} s`;
+  return `/cmd_vel v ${pad(signed(s.v), 5)} ω ${pad(signed(s.w), 5)} · /odom x ${pad(signed(s.x), 6)} y ${pad(signed(s.y), 6)} θ ${pad(String(Math.round(s.thetaDeg) % 360), 3)}° · sim ${pad(s.sim.toFixed(1), 6)} s`;
 }
 
 export const RTF_WINDOW_S = 2;

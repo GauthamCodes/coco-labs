@@ -24,7 +24,11 @@ describe('the telemetry strip', () => {
   });
 
   it('reads like the prompt\'s example, with real minus signs', () => {
-    expect(stripText({ v: 0.24, w: -0.1, x: 3.21, y: -1.04, thetaDeg: 92.2, sim: 67.6 })).toBe('/cmd_vel v 0.24 ω −0.10 · /odom x 3.21 y −1.04 θ 92° · sim 67.6 s');
+    const F = '\u2007';
+    expect(stripText({ v: 0.24, w: -0.1, x: 3.21, y: -1.04, thetaDeg: 92.2, sim: 67.6 })).toBe(`/cmd_vel v ${F}0.24 ω −0.10 · /odom x ${F}${F}3.21 y ${F}−1.04 θ ${F}92° · sim ${F}${F}67.6 s`);
+    // one width whatever the values (figure spaces are a digit wide)
+    const widths = [{ v: 0, w: 0, x: 0, y: 0, thetaDeg: 0, sim: 0 }, { v: -0.3, w: -1.2, x: -45.67, y: -12.5, thetaDeg: 357, sim: 1234.5 }].map((v) => [...stripText(v)].length);
+    expect(widths[0]).toBe(widths[1]);
     expect(signed(-0.0001)).toBe('0.00');
   });
 

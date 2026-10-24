@@ -52,7 +52,9 @@ const POSES = [
 const browser = await chromium.launch({ ...(process.env.G1_CHROMIUM ? { executablePath: process.env.G1_CHROMIUM } : {}), args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
 const report = { scope: 'G1.12: COCO\'s projected box vs every HUD rectangle, chase camera, 20 poses; G2.2: SIM view\'s HUD (no overlaps, STOP visible, the run goes on)', site, profiles: {}, passed: true };
 const REAL_TAB = { viewport: { width: 710, height: 269 }, deviceScaleFactor: 2.9875, isMobile: true, hasTouch: true, userAgent: nothingPhone1(true).userAgent };
-for (const [name, ctxOpts] of [['phone-landscape', nothingPhone1(true)], ['desktop', { viewport: { width: 1280, height: 720 } }], ['real-phone-tab-710x269', REAL_TAB]]) {
+// G2.8: the real phone in full screen (Play's own size there: 803 x 361 CSS px, docs/v2/g2/data/g28)
+const REAL_FULL = { ...REAL_TAB, viewport: { width: 803, height: 361 } };
+for (const [name, ctxOpts] of [['phone-landscape', nothingPhone1(true)], ['desktop', { viewport: { width: 1280, height: 720 } }], ['real-phone-tab-710x269', REAL_TAB], ['real-phone-full-803x361', REAL_FULL]]) {
   const ctx = await browser.newContext(ctxOpts);
   const page = await ctx.newPage();
   const errors = [];

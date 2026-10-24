@@ -36,7 +36,8 @@ export function RosoutConsole({ lines }: { lines: LogLine[] }) {
   return <section className={`g2-rosout g1-glass ${open ? 'is-open' : ''}`} data-testid="g2-rosout" aria-label="/rosout (model events)">
     <button className="head" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
       {open ? <span className="title">/rosout · model events · tap to close</span>
-        : last ? <span className={`line ${LEVEL_CLASS[last.level]}`}>{formatLine(last)}</span> : <span className="title">/rosout · no events yet</span>}
+        // collapsed: level, node and message only (the stamp and brackets are in the open log), up to two lines
+        : last ? <span className={`line ${LEVEL_CLASS[last.level]}`} title={formatLine(last)}>{last.level} {last.node}: {last.msg}</span> : <span className="title">/rosout · no events yet</span>}
     </button>
     {open && <ol className="lines" role="log">{lines.slice(-60).map((l, k) => <li key={`${l.tick}-${k}`} className={LEVEL_CLASS[l.level]}>{formatLine(l)}</li>)}</ol>}
   </section>;
