@@ -102,7 +102,9 @@ ROUND_LANES = ('zone_forklift_lanes',)
 #: phone budget is the smallest giving at least 3 distinct rounds with timers <= 5:00 (else
 #: <= 6:00): ``tools/g2/sweep_phone_budget_r4.py``. Rules 3's rounds and records stay as they were.
 FETCH_RUSH_RULES = 4
-ROUND_MODES_R4 = {'phone': {'orders': 2, 'budget_m': 22.0},
+#: G2.1 sweep (docs/v2/g2/data/g21): no budget from 22 m to the longest trip gives >= 3 distinct
+#: phone rounds with every timer <= 5:00; 26 m is the smallest giving them with every timer <= 6:00
+ROUND_MODES_R4 = {'phone': {'orders': 2, 'budget_m': 26.0},
                   'full': {'orders': ROUND_ORDERS, 'budget_m': ROUND_BUDGET_M}}
 #: a lane is drawn this wide each side of an actor's path beyond half its footprint
 #: (lab_web/src/game/world/describe.ts paints the same lanes and stripes)
