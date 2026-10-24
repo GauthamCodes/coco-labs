@@ -13,7 +13,7 @@
  * light map, COCO's glTF for the tier); the app code is budgeted separately (check_dist's
  * title budget) and reported here beside it. Triangles and draw calls are read from the
  * renderer (three's own per-frame counter) in three views — chase at the start, a wide
- * orbit, the tactical view — and the maximum is kept. Medium is measured too (it has no
+ * orbit, the tactical view; G2.2: and SIM view — and the maximum is kept. Medium is measured too (it has no
  * stated budget; it sits between the two).
  */
 import { chromium } from 'playwright';
@@ -47,6 +47,10 @@ for (const [world, w] of Object.entries(WORLDS)) {
       await p.waitForTimeout(1200);
       views[name] = await p.evaluate(() => ({ ...window.__cocoGame.renderer.stats, calls: window.__cocoGame.renderer.renderer.info.render.calls, frame_tris: window.__cocoGame.renderer.renderer.info.render.triangles }));
     }
+    // G2.2: SIM view (every display on, the costmap requested) counts toward the same budget
+    await p.click('[data-testid="g2-view-sim"]');
+    await p.waitForTimeout(3000);
+    views.sim = await p.evaluate(() => ({ ...window.__cocoGame.renderer.stats, calls: window.__cocoGame.renderer.renderer.info.render.calls, frame_tris: window.__cocoGame.renderer.renderer.info.render.triangles }));
     if (!report.renderer) report.renderer = await p.evaluate(() => { const g = document.createElement('canvas').getContext('webgl2'); const d = g?.getExtension('WEBGL_debug_renderer_info'); return d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : null; });
     const robot = tier === 'high' ? 'assets3d/robot_high.glb' : 'assets3d/robot_low.glb';
     const bytes = { spec: gz(w.spec), light: gz(w.light), robot: gz(robot) };

@@ -4,35 +4,25 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
 
 ## Now
 
-- **Current state (2026-10-24, session paused at the usage limit): WORK IN PROGRESS, commit `[G2.x WIP]`.**
-  G2.0 done. G2.1–G2.5 built and unit-tested; G2.6 diagnosis started. Not yet run: the full suites
-  after G2.0, the real phone in SIM view, the final rules-4 rounds file.
-- **G2.1:** rules 4 implemented (`games.py`, `tools/g2/make_fetch_rush_rounds_r4.py`, tests). Measured
-  (`games.crossing_windows`): both marked crossings are the walkers' own paths, paced end to end; 0 of
-  600 start times let COCO cross without touching the walker, so both are closed and no route crosses
-  (the rule is kept by never crossing). **Question for Gautham:** offset/widen the crossings, or accept
-  that routes never cross? The budget sweep (`tools/g2/sweep_phone_budget_r4.py`, 5:00 then 6:00) was
-  running when the session stopped; 22–32 m: no budget with every timer <= 5:00. The committed
-  `coco_depot_v1.fetch_rush.r4.json` is PROVISIONAL (22 m, written before the crossing windows):
-  regenerate with the chosen budget. fps toast done (`fps_watch.ts`).
-- **G2.2–G2.4:** GAME | SIM switch, SIM view (grid, TF incl. arm frames, LaserScan, Map, global/local
-  costmaps in RViz's palette, plans, footprint, goal, RViz orbit camera), telemetry strip, Gazebo bar,
-  /rosout, panels (Displays, ROS 2 graph (model), Topic echo, Plot, Learn). Parity test: TS shapes =
-  `coco_lab.ros_shapes` (1e-12). Chase HUD check + SIM pass: 0 failures on 3 profiles. Real phone SIM
-  fps: NOT measured yet.
-- **G2.5 done on the laptop:** see [`data/g25/README.md`](data/g25/README.md) — CDR bytes equal rclpy's;
-  `ros2 bag info` accepts the browser's file; `ros2 bag play` + RViz shows map, scan, TF, plan.
-- **G2.6 diagnosis (from M6F.8's recorded bags, offline):** map and world agree (scan fits the truth,
-  best offset <= 0.05 m); wheel odometry over-counts rotation by 14.5 % (12.13 vs 10.59 rad; distance
-  within 2 %); AMCL inherits the heading error and ends 0.35–0.40 m SW; at the 0.8 m pallet gap that
-  puts the believed pose inside the 0.206 m inscribed radius (205 START_OCCUPIED). Unmapped bodies near
-  the route: `bad_crate` (44.5, 7.5), the parked walker (40, 8.75), the parked N–S forklift. Offline
-  Nav2-AMCL replay (`tools/g2/amcl_replay.py`) reproduces the drift (0.398 m); 12 m range + 240 beams
-  alone does not fix it (0.405 m). Next: replay variants (laser weights, update thresholds, map with
-  objects), then derivation 2 and the 5/5 Gazebo gate.
-- **Next step:** let the sweep finish (or rerun it: `tools/g2/sweep_phone_budget_r4.py --trips-cache …
-  --max-timer 300`, then 360), regenerate r4, run `tools/g2/suites.sh`, real-phone SIM fps, then
-  commit G2.1–G2.5 properly and continue G2.6.
+- **State (2026-10-24):** G2.0–G2.7 built; G2.6 fixed and gated (5/5); ghosts being recorded; the
+  full suites and G2.8's documents follow. **Pending the real Nothing Phone (1)** (disconnected): SIM
+  view fps, the G2.7 budgets on the phone, G2.8's 10 + 2 minute run.
+- **G2.1** ([`data/g21/README.md`](data/g21/README.md)): rules 4 implemented; both marked crossings are
+  the walkers' paths (0 of 600 start times clear), so no route crosses the lane. Phone budget **26 m**
+  (no budget 22–81 m meets 5:00; 26 m is the smallest meeting 6:00: 4 distinct rounds, 4:35.9–5:49.1);
+  the 5:00 sweep runs on to the longest trip (152.4 m). fps toast done.
+- **G2.2–G2.4** ([`data/g22/README.md`](data/g22/README.md)): GAME | SIM, telemetry, /rosout, panels;
+  laptop 60 fps in both views (NVIDIA, high); HUD check incl. SIM: 0 failures.
+- **G2.5** ([`data/g25/README.md`](data/g25/README.md)): rosbag2 export proven with ros2 bag info/play + RViz.
+- **G2.6** ([`data/g26/DIAGNOSIS.md`](data/g26/DIAGNOSIS.md), [`GATE.md`](data/g26/GATE.md)): AMCL updating
+  only every 0.25 m / 0.2 rad, and the unmapped `bad_crate`, let a wrong likelihood peak capture AMCL
+  (0.35–0.40 m off) → START_OCCUPIED at the pallet gap. Fixed in the generated files (derivation 2);
+  gate 5/5 (20/20 legs). Ruled out by measurement: map alignment, SDF collisions, scan stamps, wheel
+  odometry (it over-rotates 14.5 % but perfect odometry drifts more). A "COCO sees itself" reading
+  was retracted.
+- **G2.7** ([`data/g27/`](data/g27/)): env map, SSAO (high), COCO materials, title, results inset,
+  Race Nav2 + three-way results; budgets within every tier (incl. SIM).
+- **Next step:** finish the ghosts and the suites, G2.8's documents, a draft PR; then the phone checks.
 
 ## Setup facts
 
@@ -74,14 +64,14 @@ Recorded in `docs/STATUS.md`'s plan-change log.
 | Checkpoint | State | Evidence |
 | --- | --- | --- |
 | G2.0 Baseline | done | [`data/g20/README.md`](data/g20/README.md): suites ([`suites.txt`](data/g20/suites.txt)), before shots [`screens/before/`](screens/before/), real phone 1 min 60 fps median |
-| G2.1 Decisions | pending | |
-| G2.2 GAME \| SIM switch and SIM view | pending | |
-| G2.3 Telemetry | pending | |
-| G2.4 Panels | pending | |
-| G2.5 rosbag2 export | pending | |
-| G2.6 Real ROS 2 ghost | pending | |
-| G2.7 Looks | pending | |
-| G2.8 Close | pending | |
+| G2.1 Decisions | done | [`data/g21/README.md`](data/g21/README.md): rules 4 (crossings measured closed), budget 26 m (6:00 rule), fps toast |
+| G2.2 GAME \| SIM switch and SIM view | done; real phone pending | [`data/g22/README.md`](data/g22/README.md), [`screens/g22/`](screens/g22/) |
+| G2.3 Telemetry | done | same; `test/g2_telemetry`, `test/g2_rosout` |
+| G2.4 Panels | done; real phone pending | same; `test/g2_panels`; panel vs STOP: no overlap |
+| G2.5 rosbag2 export | done | [`data/g25/README.md`](data/g25/README.md): ros2 bag info / play + RViz |
+| G2.6 Real ROS 2 ghost | fixed and gated (5/5); ghosts recording | [`data/g26/DIAGNOSIS.md`](data/g26/DIAGNOSIS.md), [`GATE.md`](data/g26/GATE.md) |
+| G2.7 Looks | done; real-phone budgets pending | [`data/g27/`](data/g27/), [`screens/g27/`](screens/g27/) |
+| G2.8 Close | in progress (phone run pending) | |
 
 ## Gautham: look at these
 
@@ -95,7 +85,21 @@ Recorded in `docs/STATUS.md`'s plan-change log.
 - Two of G2.0's four real-phone screencaps were not committed (a heads-up alarm notification).
 - /rosout node names follow the model graph, not the prompt's Nav2 examples (Gautham's answer,
   2026-10-24).
+- SIM view keeps the pause button and the MODEL chip with STOP, the joystick, the primary action and
+  the switch (pause holds the menus, incl. the rosbag2 export; the chip is an honesty invariant).
+- SIM's "local trajectory candidates": the model's waypoint follower samples none, so SIM draws the
+  commanded arc and says so; localisation: Play has no localiser (belief = truth), so no particle
+  cloud or ellipse is drawn.
+- The Gazebo-style bar is shown on desktop in SIM view (read as "desktop and SIM view only").
+- Foxglove was not tried (not installed on the laptop).
+- Phone round rule: no route crosses the lane (both marked crossings measured unusable); the budget
+  follows the 6:00 fallback (26 m).
 
 ## Questions for Gautham
 
-(none open)
+1. The marked crossings are the walkers' own lanes, so COCO can never cross there clear of a walker
+   (measured, 0 of 600 start times). Move or widen the crossings, or keep "routes never cross"?
+2. Wheel odometry over-counts rotation by 14.5 % (the robot's ros2_control config, frozen). G2 fixed
+   the Depot in the generated Nav2 params; should the robot config be corrected in a future milestone?
+3. AMCL still ends legs up to 0.28 m off (a residual bias, not explained). Investigate further, or
+   accept with the gate passing?

@@ -4,7 +4,7 @@
  * G1.9: Play in the Depot for N minutes, driven, and what it costs per frame.
  *
  *   node tools/g1/perf_play.mjs SITE OUTDIR [--profile phone|desktop] [--tier medium]
- *        [--minutes 10] [--label NAME] [--game free|fetch_rush] [--seed 1]
+ *        [--minutes 10] [--label NAME] [--game free|fetch_rush] [--seed 1] [--view game|sim]
  *
  * G1.13: G1_GPU=nvidia|intel runs on the laptop's GPU (gpu.mjs; the renderer must match);
  * --game fetch_rush plays Fetch Rush (the round restarts through PLAY AGAIN when its timer
@@ -43,6 +43,9 @@ const report = { label, profile, tier, minutes, game, seed, gpu: GPU, machine_st
 p.on('pageerror', (e) => report.errors.push(String(e)));
 p.on('console', (m) => { if (m.type() === 'error') report.console_errors.push(m.text()); });
 const save = () => writeFileSync(`${out}/${label}.json`, JSON.stringify(report, null, 1) + '\n');
+// G2: --view sim plays in SIM view (the view pref; every display on, the default)
+const VIEW = opt('--view', null);
+if (VIEW) await p.addInitScript((v) => { try { localStorage.setItem('coco.prefs.v1.view', JSON.stringify(v)); } catch { /* none */ } }, VIEW);
 await p.addInitScript(() => {
   try { localStorage.setItem('coco.prefs.v1.tutorial', 'true'); } catch { /* none */ }
   const g = window.__g19 = { serial: 0, drawnAt: -1, drawn: 0, lost: 0, js: [], on: false, at: [] };
