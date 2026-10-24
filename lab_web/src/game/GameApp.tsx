@@ -23,6 +23,7 @@ import { pickTier } from './tier';
 import './fonts.css';
 import './game.css';
 import { FETCH_RUSH_SHIFTS, fetchRushMode, type FetchRushMode } from './rules_view';
+import { saveBag } from '../ros/bag_saver';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -34,8 +35,8 @@ export interface GameResult {
   objects?: { id: string; x: number; y: number }[];
 }
 
-// G1.12: rules 3; the Full shift keeps its own bests
-const bestKey = (seed: number, mode: FetchRushMode = 'phone') => `coco.play.best.v1.g1-fetch-rush.r3-${mode}.seed-${seed}`;
+// G1.12: the Full shift keeps its own bests; G2.1: rules 4 (new rounds), so new keys (rules 3's stay as they were)
+const bestKey = (seed: number, mode: FetchRushMode = 'phone') => `coco.play.best.v1.g1-fetch-rush.r4-${mode}.seed-${seed}`;
 export function readStars(seed: number, mode: FetchRushMode = 'phone'): number | null {
   try { const raw = readRaw(bestKey(seed, mode)); return raw ? (JSON.parse(raw) as { stars: number }).stars : null; } catch { return null; }
 }
@@ -76,13 +77,15 @@ function GameRun({ game, world, seed, mode }: { game: GameKind; world: WorldId; 
   return <>
     <PlayGame key={`${restartKey}-${tier}`} world={world} game={game} seed={seed} mode={mode} tier={tier} paused={paused || !!result} onPause={() => setPaused((x) => !x)}
       onResult={onResult} restartKey={restartKey} showPerf={showPerf} tutorialSeen={tutorialSeen} ghost={ghost}
-      onTutorialDone={() => { writePref('tutorial', true); setTutorialSeen(true); }} />
+      onTutorialDone={() => { writePref('tutorial', true); setTutorialSeen(true); }}
+      onRecommended={(to) => { writePref('quality', to.quality); writePref('phone120', to.phone120); setTier(to.quality); restart(); }} />
     {paused && !result && !settings && <section className="g1 g1-screen dim" data-testid="g1-pause-menu" style={{ position: 'fixed', zIndex: 25, background: 'rgba(8,10,14,.62)' }}>
       <div className="g1-eyebrow">PAUSED · {game === 'fetch_rush' ? `FETCH RUSH · SHIFT ${seed}${mode === 'full' ? ' · FULL' : ''}` : `FREE DRIVE · ${world === 'depot' ? 'DEPOT' : 'PROVING GROUND'}`}</div>
       <nav className="g1-menu">
         <button className="main" autoFocus onClick={() => setPaused(false)}>RESUME</button>
         <button onClick={restart}>RESTART</button>
         <button onClick={() => setSettings(true)}>SETTINGS</button>
+        <BagButton />
         <a href={`${BASE}?view=play`}>EXIT</a>
       </nav>
     </section>}
@@ -134,6 +137,7 @@ function Results({ r, onAgain }: { r: GameResult; onAgain: () => void }) {
     <nav className="g1-cards"><button className="g1-big small" autoFocus onClick={onAgain}>▶ PLAY AGAIN</button>
       <a className="g1-big small ghost" href={compare}>WATCH HOW THE PLANNER DID IT</a>
       <a className="g1-big small ghost" href={`${BASE}?view=play`}>GAMES</a></nav>
+    <nav className="g1-menu g2-bag"><BagButton /></nav>
     <p className="g1-note">{r.reference ? `Stars against the reference bot's run for this shift (coco_lab.games.stars; GAMES.md): ★ one delivery, ★★ as many net deliveries, ★★★ ranked at or above it. Reference: ${String(r.reference.deliveries)} delivery(ies), ${Number(r.reference.time_used).toFixed(1)} s.` : 'No reference run exists for this shift, so no stars are given.'} MODEL · kinematic.</p>
   </section>;
 }
@@ -161,4 +165,13 @@ function ModeSelect() {
     </div>
     <p className="g1-note">Fetch Rush and Free Drive run COCO's model in your browser (MODEL · kinematic). Stars and bests stay in this browser.</p>
   </main>;
+}
+
+/** G2.5: the run's model messages as a rosbag2 file (src/ros/bag.ts): ros2 bag info / play and Foxglove open it. */
+function BagButton() {
+  const [state, setState] = useState<string | null>(null);
+  return <>
+    <button data-testid="g2-save-bag" onClick={async () => { setState('Writing…'); const r = await saveBag(); setState(r.ok ? `Saved ${r.name} (${(r.bytes / 1e6).toFixed(1)} MB) · MODEL` : `Not saved: ${r.why}`); }}>SAVE AS ROSBAG2 (MCAP)</button>
+    {state && <p className="g1-note" role="status" data-testid="g2-save-bag-status">{state}</p>}
+  </>;
 }

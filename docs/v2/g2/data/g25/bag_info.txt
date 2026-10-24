@@ -1,0 +1,20 @@
+# ros2 bag info coco_lab_fetch_rush_phone_seed1.mcap  (2026-10-24T03:06:30Z, ROS 2 jazzy)
+
+Files:             /home/gautham/coco_labs_ws/worktrees/g2/docs/v2/g2/data/g25/coco_lab_fetch_rush_phone_seed1.mcap
+Bag size:          1.7 MiB
+Storage id:        mcap
+ROS Distro:        jazzy
+Duration:          48.700000000s
+Start:             Jan  1 1970 05:30:00.100000000 (0.100000000)
+End:               Jan  1 1970 05:30:48.800000000 (48.800000000)
+Messages:          1955
+Topic information: Topic: /cmd_vel | Type: geometry_msgs/msg/TwistStamped | Count: 488 | Serialization Format: cdr
+                   Topic: /joint_states | Type: sensor_msgs/msg/JointState | Count: 0 | Serialization Format: cdr
+                   Topic: /map | Type: nav_msgs/msg/OccupancyGrid | Count: 1 | Serialization Format: cdr
+                   Topic: /odom | Type: nav_msgs/msg/Odometry | Count: 488 | Serialization Format: cdr
+                   Topic: /plan | Type: nav_msgs/msg/Path | Count: 1 | Serialization Format: cdr
+                   Topic: /scan | Type: sensor_msgs/msg/LaserScan | Count: 488 | Serialization Format: cdr
+                   Topic: /tf | Type: tf2_msgs/msg/TFMessage | Count: 488 | Serialization Format: cdr
+                   Topic: /tf_static | Type: tf2_msgs/msg/TFMessage | Count: 1 | Serialization Format: cdr
+Service:           0
+Service information: 

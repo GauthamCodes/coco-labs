@@ -49,13 +49,15 @@ def test_a_played_fetch_rush_replays_to_the_same_chain(hash_version):
     glue = _glue()
     world, _occ = glue.game_init(_depot(), 'fetch_rush', 1, 1, lambda *_: None, hash_version=hash_version)
     info = json.loads(world)['game']
-    # G1.12: rules 3, the phone round by default -- its timer and orders, COCO kidnapped to its start zone
-    rnd = games.round_for(1, rules=3, mode='phone')
+    # G1.12: the current rules (G2.1: rules 4), the phone round by default -- its timer and
+    # orders, COCO kidnapped to its start zone
+    R = games.FETCH_RUSH_RULES
+    rnd = games.round_for(1, rules=R, mode='phone')
     assert info['mode'] == 'phone'
     assert info['v3'] and info['seconds'] == rnd['timer_s'] and info['round']['orders'] == rnd['orders']
     assert info['setup'][0]['kind'] == 'kidnap' and info['setup'][0]['x'] == rnd['start'][0]
     t = _step(glue, info['setup'])
-    assert t['game']['fetch']['orders'] == games.ROUND_MODES['phone']['orders'] == 2
+    assert t['game']['fetch']['orders'] == games.round_modes(R)['phone']['orders'] == 2
     assert t['game']['fetch']['seconds'] == rnd['timer_s']
     assert t['game']['fetch']['order'] is not None
     a = glue._arena
@@ -83,7 +85,7 @@ def test_a_played_fetch_rush_replays_to_the_same_chain(hash_version):
         last = _step(glue, [])
     rec = json.loads(glue.game_op('record'))
     assert rec['record']['ticks'] == 39 and rec['record']['hash_version'] == hash_version
-    assert rec['record']['rules'] == 3 and rec['record']['mode'] == 'phone'
+    assert rec['record']['rules'] == R and rec['record']['mode'] == 'phone'
     replay = games.play(json.loads(_depot()), rec['record'])
     assert replay['hash_chain'] == rec['hash_chain']
     assert replay['last_hash'] == rec['last_hash'] == last['hash']
@@ -113,14 +115,14 @@ def test_free_drive_on_the_proving_ground_is_the_plain_arena():
 
 @pytest.mark.parametrize('mode', ['phone', 'full'])
 def test_stars_come_from_the_committed_reference(mode):
-    """Rules 3: stars against the round's own reference (the bot's run, committed with the round)."""
+    """Rules 3 and 4: stars against the round's own reference (the bot's run, committed with the round)."""
     from coco_lab import games
-    card = games.round_for(1, rules=3, mode=mode)['reference']['card']
+    card = games.round_for(1, rules=games.FETCH_RUSH_RULES, mode=mode)['reference']['card']
     glue = _glue()
     world, _ = glue.game_init(_depot(), 'fetch_rush', 1, 1, lambda *_: None, hash_version=3, mode=mode)
     _step(glue, json.loads(world)['game']['setup'])
     assert json.loads(glue.game_op('record'))['record']['mode'] == mode
-    # whatever the page passes, a rules-3 game is scored against its round's reference
+    # whatever the page passes, a rules-3/4 game is scored against its round's reference
     got = json.loads(glue.game_op('stars', json.dumps({'net_deliveries': 99})))
     assert got['reference'] == card
     assert got['stars'] == games.stars(got['card'], card) == 0

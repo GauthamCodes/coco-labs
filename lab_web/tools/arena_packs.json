@@ -74,7 +74,8 @@
    "modules": [
     "games.py",
     "grasp_assist.py",
-    "levels/coco_depot_v1.fetch_rush.json", "levels/coco_depot_v1.fetch_rush.r3.json"
+    "levels/coco_depot_v1.fetch_rush.json", "levels/coco_depot_v1.fetch_rush.r3.json",
+    "levels/coco_depot_v1.fetch_rush.r4.json"
    ]
   }
  }

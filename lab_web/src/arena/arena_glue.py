@@ -214,6 +214,12 @@ def _tick_json(t, inputs, game=None):
         extra['grasp'] = t.grasp
     if game is not None:
         extra['game'] = game
+    if _game is not None:
+        # G2.2: the ROS-shaped model's dynamic frames this tick (coco_lab.ros_shapes, M6F.7:
+        # map -> odom -> base_footprint), for SIM view, telemetry and the rosbag2 export.
+        # Read-only, computed by ros_shapes itself (the page never re-derives them).
+        from coco_lab import ros_shapes
+        extra['ros'] = {'tf': ros_shapes.tf(_arena)}
     return json.dumps({
         **extra,
         'wheels': list(t.wheels), 'source': t.source,
@@ -478,10 +484,28 @@ def game_init(spec_json, game, arg, seed, post_batch, batch_size=2048,
                            'height': a['height']} for a in v3.elements(spec, 'actor')]
     else:
         info['setup'] = []
+    info['ros'] = _ros_info()
     world['game'] = info
     if v3_level:
         _costmap_static()   # G1.13: Robot vision's static costmap, built while the page loads
     return json.dumps(world), out[1]
+
+
+def _ros_info():
+    """
+    G2.2: the ROS-shaped model's constants for the page, from coco_lab.ros_shapes (M6F.7):
+    its graph (nodes, topics, rates), the static frames, the scan's fixed fields. Labelled
+    MODEL by ros_graph itself: these are message shapes, never a ROS connection.
+    """
+    from coco_lab import numerics, ros_shapes
+    a = _arena
+    li = a.lidar
+    with numerics.version(a.hash_version):
+        return {'graph': ros_shapes.ros_graph(a.dt), 'tf_static': ros_shapes.tf_static(a),
+                'frames': list(ros_shapes.FRAMES),
+                'scan': {'frame_id': ros_shapes.LASER_FRAME, 'angle_min': li.angle_min,
+                         'angle_max': li.angle_max, 'range_min': li.range_min,
+                         'range_max': li.range_max}}
 
 
 def _game_block(t):

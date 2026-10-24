@@ -4,9 +4,35 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
 
 ## Now
 
-- **Current checkpoint:** G2.0 Baseline done (2026-10-24): every suite green on main `7475896`;
-  before screenshots on the laptop (NVIDIA), the emulated phone and the real phone.
-- **Next step:** G2.1 — Fetch Rush rules 4 (the crossing rule), the budget sweep, the fps toast.
+- **Current state (2026-10-24, session paused at the usage limit): WORK IN PROGRESS, commit `[G2.x WIP]`.**
+  G2.0 done. G2.1–G2.5 built and unit-tested; G2.6 diagnosis started. Not yet run: the full suites
+  after G2.0, the real phone in SIM view, the final rules-4 rounds file.
+- **G2.1:** rules 4 implemented (`games.py`, `tools/g2/make_fetch_rush_rounds_r4.py`, tests). Measured
+  (`games.crossing_windows`): both marked crossings are the walkers' own paths, paced end to end; 0 of
+  600 start times let COCO cross without touching the walker, so both are closed and no route crosses
+  (the rule is kept by never crossing). **Question for Gautham:** offset/widen the crossings, or accept
+  that routes never cross? The budget sweep (`tools/g2/sweep_phone_budget_r4.py`, 5:00 then 6:00) was
+  running when the session stopped; 22–32 m: no budget with every timer <= 5:00. The committed
+  `coco_depot_v1.fetch_rush.r4.json` is PROVISIONAL (22 m, written before the crossing windows):
+  regenerate with the chosen budget. fps toast done (`fps_watch.ts`).
+- **G2.2–G2.4:** GAME | SIM switch, SIM view (grid, TF incl. arm frames, LaserScan, Map, global/local
+  costmaps in RViz's palette, plans, footprint, goal, RViz orbit camera), telemetry strip, Gazebo bar,
+  /rosout, panels (Displays, ROS 2 graph (model), Topic echo, Plot, Learn). Parity test: TS shapes =
+  `coco_lab.ros_shapes` (1e-12). Chase HUD check + SIM pass: 0 failures on 3 profiles. Real phone SIM
+  fps: NOT measured yet.
+- **G2.5 done on the laptop:** see [`data/g25/README.md`](data/g25/README.md) — CDR bytes equal rclpy's;
+  `ros2 bag info` accepts the browser's file; `ros2 bag play` + RViz shows map, scan, TF, plan.
+- **G2.6 diagnosis (from M6F.8's recorded bags, offline):** map and world agree (scan fits the truth,
+  best offset <= 0.05 m); wheel odometry over-counts rotation by 14.5 % (12.13 vs 10.59 rad; distance
+  within 2 %); AMCL inherits the heading error and ends 0.35–0.40 m SW; at the 0.8 m pallet gap that
+  puts the believed pose inside the 0.206 m inscribed radius (205 START_OCCUPIED). Unmapped bodies near
+  the route: `bad_crate` (44.5, 7.5), the parked walker (40, 8.75), the parked N–S forklift. Offline
+  Nav2-AMCL replay (`tools/g2/amcl_replay.py`) reproduces the drift (0.398 m); 12 m range + 240 beams
+  alone does not fix it (0.405 m). Next: replay variants (laser weights, update thresholds, map with
+  objects), then derivation 2 and the 5/5 Gazebo gate.
+- **Next step:** let the sweep finish (or rerun it: `tools/g2/sweep_phone_budget_r4.py --trips-cache …
+  --max-timer 300`, then 360), regenerate r4, run `tools/g2/suites.sh`, real-phone SIM fps, then
+  commit G2.1–G2.5 properly and continue G2.6.
 
 ## Setup facts
 

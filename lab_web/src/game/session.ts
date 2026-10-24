@@ -29,6 +29,7 @@
 
 import { ArenaClient } from '../arena/client';
 import { SPEC_FILES, type FamilyMessage, type InputRow, type SpecFile, type Tick, type World } from '../arena/protocol';
+import type { RosInfo, TFMessage } from '../ros/shapes';
 
 export type GameKind = 'fetch_rush' | 'free';
 export type WorldId = 'depot' | 'proving';
@@ -38,11 +39,14 @@ export interface GameObject { id: string; item: string; label: string; shape: 'c
 export interface GameZone { id: string; role: string; label?: string; center: [number, number]; size: [number, number] }
 /** G1.11: a Fetch Rush rules-2 round: start zone, orders, each order's ghost length and route, the reference clock */
 export interface GameRound { region: string; label: string; orders: [string, string][]; ghost_m: number[]; routes: [number, number][][]; reference_time_s: number | null; timer_s: number | null }
-export interface GameInfo { game: string; v3: boolean; setup: Omit<InputRow, 'tick'>[]; seconds: number | null; round?: GameRound; objects?: GameObject[]; zones?: GameZone[]; actors?: { id: string; actor: 'forklift' | 'walker'; footprint: [number, number]; height: number }[] }
+export interface GameInfo { game: string; v3: boolean; setup: Omit<InputRow, 'tick'>[]; seconds: number | null; round?: GameRound; objects?: GameObject[]; zones?: GameZone[]; actors?: { id: string; actor: 'forklift' | 'walker'; footprint: [number, number]; height: number }[];
+  /** G2.2: the ROS-shaped model's constants (coco_lab.ros_shapes: graph, static frames, scan) */
+  ros?: RosInfo }
 export interface AssistState { phase: string; target: string | null; carried: string | null; want: string; reason: string; attempt: number }
 export interface FetchState { t: number; seconds: number; over: boolean; order: [string, string] | null; k: number; orders: number; deliveries: number; contacts: number; ghost: number | null }
 export interface GameBlock { assist?: AssistState; objects?: [string, number, number, number, string][]; actors?: [string, number, number, number][]; clearance?: number; fetch?: FetchState }
-export type GameTick = Tick & { game?: GameBlock; tilt?: [number, number, number] };
+/** G2.2: `ros.tf` -- the model's dynamic frames this tick, as coco_lab.ros_shapes.tf built them */
+export type GameTick = Tick & { game?: GameBlock; tilt?: [number, number, number]; ros?: { tf: TFMessage } };
 export interface Candidate { object_id: string; item: string; reason: string; rank: number; seen_by: string; dist: number; approach_x: number | null; approach_y: number | null }
 
 export interface SessionEvents {

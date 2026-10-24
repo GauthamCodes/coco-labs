@@ -90,11 +90,23 @@ LEVELS = Path(__file__).resolve().parent / 'levels'
 #: route crosses the forklift lanes (ROUND_LANES), and a round the reference bot cannot
 #: finish is rejected when the rounds are generated (the next draw is taken), so every
 #: round on file is offered. Rules 2's rounds and records stay as they were.
-FETCH_RUSH_RULES = 3
 ROUND_MODES = {'phone': {'orders': 2, 'budget_m': 22.0},
                'full': {'orders': ROUND_ORDERS, 'budget_m': ROUND_BUDGET_M}}
 ROUND_MODE_DEFAULT = 'phone'
 ROUND_LANES = ('zone_forklift_lanes',)
+
+#: G2.1 -- Fetch Rush rules 4 (Gautham, 2026-10-23; planning answer 2026-10-24): rules 3's
+#: rounds, but a route may cross the forklift lane (ROUND_LANES, the east-west lane) only at a
+#: marked crossing (:func:`crossings`: hazard-striped where a walker's lane crosses it), with
+#: COCO's whole footprint on the stripes (:func:`crossing_bands`), and never run along it; the
+#: phone budget is the smallest giving at least 3 distinct rounds with timers <= 5:00 (else
+#: <= 6:00): ``tools/g2/sweep_phone_budget_r4.py``. Rules 3's rounds and records stay as they were.
+FETCH_RUSH_RULES = 4
+ROUND_MODES_R4 = {'phone': {'orders': 2, 'budget_m': 22.0},
+                  'full': {'orders': ROUND_ORDERS, 'budget_m': ROUND_BUDGET_M}}
+#: a lane is drawn this wide each side of an actor's path beyond half its footprint
+#: (lab_web/src/game/world/describe.ts paints the same lanes and stripes)
+LANE_MARGIN = 0.25
 
 
 # -- the actors as collision bodies ------------------------------------------------
@@ -203,6 +215,153 @@ def zone_rect(spec, zone_id: str) -> Tuple[float, float, float, float]:
 
 def _inside(xy, r) -> bool:
     return r[0] <= xy[0] <= r[1] and r[2] <= xy[1] <= r[3]
+
+
+# -- G2.1: the marked crossings of the forklift lane (rules 4) --------------------------------
+
+def in_rect(xy, r) -> bool:
+    """Whether ``xy`` lies in the rectangle ``(x0, x1, y0, y1)`` (edges included)."""
+    return _inside(xy, r)
+
+
+def _actor_lanes(spec):
+    """Each actor's lane box ``(actor kind, x0, x1, y0, y1)``, MAP frame (describe.ts's lanes)."""
+    dx, dy = spec['world_to_map']
+    out = []
+    for k in spec['kit']:
+        if k.get('kind') != 'actor':
+            continue
+        w = k['footprint'][1] / 2 + LANE_MARGIN
+        xs = [p[0] + dx for p in k['path']]
+        ys = [p[1] + dy for p in k['path']]
+        out.append((k['actor'], min(xs) - w, max(xs) + w, min(ys) - w, max(ys) + w))
+    return out
+
+
+def crossings(spec, lanes=ROUND_LANES) -> List[Tuple[float, float, float, float]]:
+    """
+    The marked crossings of the round lanes, MAP frame, sorted: where a forklift's lane meets
+    another actor's (the hazard stripes describe.ts paints), across the whole depth of the
+    lane zone it lies in (a lane zone wider than deep is crossed in y, else in x).
+    """
+    zones = [zone_rect(spec, z) for z in lanes]
+    al = _actor_lanes(spec)
+    out = set()
+    for i in range(len(al)):
+        for j in range(i + 1, len(al)):
+            a, b = al[i], al[j]
+            if 'forklift' not in (a[0], b[0]):
+                continue
+            x0, x1 = max(a[1], b[1]), min(a[2], b[2])
+            y0, y1 = max(a[3], b[3]), min(a[4], b[4])
+            if not (x0 < x1 and y0 < y1):
+                continue
+            for z in zones:
+                if not (x0 < z[1] and z[0] < x1 and y0 < z[3] and z[2] < y1):
+                    continue
+                if z[1] - z[0] >= z[3] - z[2]:
+                    out.add((max(x0, z[0]), min(x1, z[1]), z[2], z[3]))
+                else:
+                    out.add((z[0], z[1], max(y0, z[2]), min(y1, z[3])))
+    return sorted(out)
+
+
+def crossing_bands(spec, lanes=ROUND_LANES) -> List[Tuple[float, float, float, float]]:
+    """Where COCO's centre may be inside a lane: each crossing narrowed by the robot radius
+    across its width, so the whole footprint stays on the stripes."""
+    r = spec['robot']['radius']
+    zones = [zone_rect(spec, z) for z in lanes]
+    out = []
+    for c in crossings(spec, lanes):
+        z = next(z for z in zones if z[0] <= c[0] and c[1] <= z[1] and z[2] <= c[2] and c[3] <= z[3])
+        if z[1] - z[0] >= z[3] - z[2]:
+            out.append((c[0] + r, c[1] - r, c[2], c[3]))
+        else:
+            out.append((c[0], c[1], c[2] + r, c[3] - r))
+    return out
+
+
+#: G2.1: a crossing is open to Fetch Rush's routes only if, within this many ticks of start
+#: times (60 s: the walkers' 10 s and the east-west forklift's 40 s cycles), one straight
+#: crossing at the auto speed touches no actor
+CROSSING_WINDOW_TICKS = 600
+
+
+@_in_arena
+def crossing_windows(a: Arena, lanes=ROUND_LANES) -> List[Dict[str, object]]:
+    """
+    For each crossing band: a straight crossing of the lane zone on the band's centre line, at
+    the auto speed, started at each of CROSSING_WINDOW_TICKS start times; the actors move by
+    their known schedules (the model's own). Returns per band its start times with no contact
+    (COCO's disc clear of every actor's box), the best clearance (m; negative: overlapping) and
+    the crossing's duration (s). Measured on the model; nothing here moves it.
+    """
+    actors = v3.elements(a.spec, 'actor')        # the world's actors and their schedules
+    off = tuple(a.spec['world_to_map'])
+    rects = [zone_rect(a.spec, z) for z in lanes]
+    out = []
+    for band in crossing_bands(a.spec, lanes):
+        rect = next(r for r in rects if band[0] >= r[0] - 1e-9 and band[1] <= r[1] + 1e-9)
+        if rect[1] - rect[0] >= rect[3] - rect[2]:
+            x = (band[0] + band[1]) / 2
+            frm, to = (x, rect[2] - a.radius), (x, rect[3] + a.radius)
+        else:
+            y = (band[2] + band[3]) / 2
+            frm, to = (rect[0] - a.radius, y), (rect[1] + a.radius, y)
+        T = math.hypot(to[0] - frm[0], to[1] - frm[1]) / a.limits['auto_linear']
+        n = int(math.ceil(T / a.dt))
+        clear, best = 0, None
+        for k in range(CROSSING_WINDOW_TICKS):
+            worst = None
+            for i in range(n + 1):
+                f = min(1.0, i * a.dt / T)
+                px, py = frm[0] + (to[0] - frm[0]) * f, frm[1] + (to[1] - frm[1]) * f
+                t = k * a.dt + i * a.dt
+                for ac in actors:
+                    d = box_distance(px, py, ac, t, *off) - a.radius
+                    worst = d if worst is None or d < worst else worst
+            if worst is None or worst > 0:
+                clear += 1
+            best = worst if best is None or (worst is not None and worst > best) else best
+        out.append({'band': list(band), 'from': list(frm), 'to': list(to), 'seconds': T,
+                    'clear_starts': clear, 'of': CROSSING_WINDOW_TICKS,
+                    'best_clearance_m': best, 'open': clear > 0})
+    return out
+
+
+def lane_side(xy, rect) -> int:
+    """Which side of a lane zone ``xy`` is on, across the lane: -1 or +1."""
+    if rect[1] - rect[0] >= rect[3] - rect[2]:
+        return -1 if xy[1] < (rect[2] + rect[3]) / 2 else 1
+    return -1 if xy[0] < (rect[0] + rect[1]) / 2 else 1
+
+
+def on_band_centre(xy, band, rect) -> List[float]:
+    """``xy`` moved along the lane onto the band's centre line (rounded to 1 mm)."""
+    if rect[1] - rect[0] >= rect[3] - rect[2]:
+        return [round((band[0] + band[1]) / 2, 3), round(xy[1], 3)]
+    return [round(xy[0], 3), round((band[2] + band[3]) / 2, 3)]
+
+
+def lane_grid(a: Arena, lanes=ROUND_LANES, bands=None):
+    """
+    The Arena's plan grid with every cell whose centre is in a round lane, but not on one of
+    ``bands`` (default: every crossing band), blocked (a new grid; the Arena's own is untouched).
+    """
+    from .grid import Grid
+    g, pm = a.grid, a.plan_map
+    rects = [zone_rect(a.spec, z) for z in lanes]
+    bands = crossing_bands(a.spec, lanes) if bands is None else bands
+    blocked = list(g._blocked)
+    for i in range(g.width * g.height):
+        if blocked[i]:
+            continue
+        xy = pm.cell_centre(i // g.width, i % g.width)
+        if any(_inside(xy, r) for r in rects) and not any(_inside(xy, b) for b in bands):
+            blocked[i] = True
+    return Grid(g.width, g.height, blocked, g._cost, connectivity=g.move_model.connectivity,
+                diagonal_cost=g.move_model.diagonal_cost, corner_cutting=g.corner_cutting,
+                cost_weight=g.cost_weight, cost_scale=g.cost_scale)
 
 
 @_in_arena
@@ -341,12 +500,17 @@ def fetch_rush_key(card) -> Tuple:
 # -- Fetch Rush rules 2: budgeted rounds (G1.11) ----------------------------------------
 
 def rounds_file(level: str = 'coco_depot_v1', rules: int = 2) -> Path:
-    """Rules 2's ``<level>.fetch_rush.json``; rules 3's ``<level>.fetch_rush.r3.json``."""
-    return LEVELS / (f'{level}.fetch_rush.json' if rules == 2 else f'{level}.fetch_rush.r3.json')
+    """Rules 2's ``<level>.fetch_rush.json``; rules 3's (and 4's) ``<level>.fetch_rush.r<N>.json``."""
+    return LEVELS / (f'{level}.fetch_rush.json' if rules == 2 else f'{level}.fetch_rush.r{rules}.json')
+
+
+def round_modes(rules: int) -> Dict[str, Dict[str, float]]:
+    """The modes (orders, budget) of rules 3 or 4."""
+    return ROUND_MODES_R4 if rules >= 4 else ROUND_MODES
 
 
 def load_rounds(level: str = 'coco_depot_v1', rules: int = 2) -> Dict[str, object]:
-    """Return a level's Fetch Rush rounds for ``rules`` (2 or 3)."""
+    """Return a level's Fetch Rush rounds for ``rules`` (2, 3 or 4)."""
     with open(rounds_file(level, rules), encoding='utf-8') as f:
         return json.load(f)
 
@@ -581,12 +745,13 @@ def setup_inputs(game: str, arg, rules: int = 1, rnd=None,
 
 def round_for(seed, level: str = 'coco_depot_v1', rules: int = 2,
               mode: Optional[str] = None) -> Dict[str, object]:
-    """Return the precomputed round for ``seed`` (rules 2, or rules 3 in ``mode``), or raise."""
+    """Return the precomputed round for ``seed`` (rules 2, or rules 3 / 4 in ``mode``), or raise."""
     if rules >= 3:
         mode = mode or ROUND_MODE_DEFAULT
-        if mode not in ROUND_MODES:
-            raise ArenaError(f'Fetch Rush modes are {sorted(ROUND_MODES)}, not {mode!r}')
-        rounds = load_rounds(level, 3)['rounds'][mode]
+        modes = round_modes(rules)
+        if mode not in modes:
+            raise ArenaError(f'Fetch Rush modes are {sorted(modes)}, not {mode!r}')
+        rounds = load_rounds(level, rules)['rounds'][mode]
         rnd = rounds.get(str(int(seed)))
         if rnd is None:
             raise ArenaError(f'Fetch Rush ({mode}) has rounds for seeds '
@@ -759,12 +924,21 @@ def bot_fetch_rush(spec, seed: int, arena_seed: int = 1, rules=None,
     d = _Driver(spec, arena_seed, 'fetch_rush', seed, rules, version, hash_version)
     a, rules = d.a, d.rules
     assist = a.subsystems['assist']
+    # G2.1, rules 4: the round names each order's pre-grasp pose and its legs' crossing mouths
+    # (the routes it was drawn with keep the crossing rule); the bot drives through those
+    planned = version >= 4 and 'pick' in rules.round
     while not d.done():
         cur = rules.current()
         if cur is None:
             break
         oid, drop = cur
-        ba = best_approach(a, assist, oid, a.pose[:2])
+        k = rules.k
+        if planned:
+            for xy in rules.round['via'][k][0]:
+                d.goal(xy, 3000, yield_to_actors=True)
+            ba = (rules.round['pick'][k], None)
+        else:
+            ba = best_approach(a, assist, oid, a.pose[:2])
         if ba is None or not d.goal(ba[0][:2], 3000, yield_to_actors=True):
             d.until(lambda: False, 10)
             if d.done():
@@ -777,6 +951,9 @@ def bot_fetch_rush(spec, seed: int, arena_seed: int = 1, rules=None,
         if not d.until(lambda: assist.carried() == oid or assist.phase == 'idle', 2000) \
                 or assist.carried() != oid:
             continue
+        if planned:
+            for xy in rules.round['via'][k][1]:
+                d.goal(xy, 3000, yield_to_actors=True)
         r = zone_rect(a.spec, drop)
         d.goal(((r[0] + r[1]) / 2, (r[2] + r[3]) / 2), 4000, yield_to_actors=True)
         if d.done():
