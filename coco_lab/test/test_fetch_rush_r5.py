@@ -184,7 +184,7 @@ def test_the_rounds_are_rules_4_s_draw_under_rules_5():
         card, rec = rnd['reference']['card'], rnd['reference']['record']
         assert card['deliveries'] == m['orders'] and card['rules'] == 5 and rec['rules'] == 5
         assert rnd['timer_s'] == round(rnd['reference_time_s'] * games.ROUND_TIMER_FACTOR, 1)
-        assert [r['choice'] for r in rec['inputs'] if r['tick'] == 0][-2:] == \
+        assert [r.get('choice') for r in rec['inputs'] if r['tick'] == 0][-2:] == \
             list(games.YIELD_SETUP)
 
 
