@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Info, Settings } from 'lucide-react';
 import { HeroStage } from '../game/HeroStage';
+import { StageBoundary, WebGLHelp } from '../ui/StageBoundary';
 import { warmModel } from '../arena/worker_pool';
 import { navigate } from '../ui/navigation';
 import { openSettings } from './settings_events';
@@ -49,7 +50,14 @@ export function TitleScreen() {
   }, []);
   const doors = [{ label: 'Compare', copy: 'See algorithms race', view: 'compare' }, { label: 'Research', copy: 'Real ROS 2 recordings', view: 'research' }, { label: 'Learn', copy: 'Guided tours', view: 'learn' }];
   return <main className="g1" data-testid="title" data-g1="title" data-ready={ready ? 'true' : 'false'} style={{ touchAction: 'manipulation' }}>
-    <HeroStage onReady={() => setReady(true)} />
+    {/* no WebGL: the title stays usable (every door below is a link) on a plain background */}
+    <StageBoundary onError={() => setReady(true)} fallback={() => <div className="g1-canvas" data-testid="title-no-3d">
+      <div className="g1-sheet g1-glass" role="note" style={{ top: 'calc(64px + env(safe-area-inset-top))' }}>
+        <h3>3D IS OFF IN THIS BROWSER RIGHT NOW</h3>
+        <p>The browser did not give this page WebGL, so the Depot is not drawn. Play and Compare need it.</p>
+        <WebGLHelp />
+      </div>
+    </div>}><HeroStage onReady={() => setReady(true)} /></StageBoundary>
     <div className="g1-title-top">
       <button className="g1-icon g1-glass" aria-label="Settings" onClick={openSettings}><Settings size={20} /></button>
       <button className="g1-icon g1-glass" aria-label="What is real here" aria-expanded={info} onClick={() => setInfo((x) => !x)}><Info size={20} /></button>
