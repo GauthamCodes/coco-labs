@@ -4,9 +4,11 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
 
 ## Now
 
-- **State (2026-10-24):** G2.0–G2.7 built; G2.6 fixed and gated (5/5); ghosts being recorded; the
-  full suites and G2.8's documents follow. **Pending the real Nothing Phone (1)** (disconnected): SIM
-  view fps, the G2.7 budgets on the phone, G2.8's 10 + 2 minute run.
+- **State (2026-10-24, later):** G2.0–G2.7 done; G2.8 mostly done — suites run, real phone done
+  (SIM 60 fps with every display on, after fixing a saved-SIM-view defect the phone found; GAME 10 min
+  median 60 with dips; touch-to-motion > 1 s samples UNRESOLVED). Owed: ament lint fix, AUTO-gap
+  re-measure, per-round Gazebo gate, after screenshots + BEFORE_AFTER.md, the PR. Results:
+  [`G2_RESULTS.md`](G2_RESULTS.md).
 - **G2.1** ([`data/g21/README.md`](data/g21/README.md)): rules 4 implemented; both marked crossings are
   the walkers' paths (0 of 600 start times clear), so no route crosses the lane. Phone budget **26 m**
   (no budget 22–81 m meets 5:00; 26 m is the smallest meeting 6:00: 4 distinct rounds, 4:35.9–5:49.1);
@@ -65,13 +67,13 @@ Recorded in `docs/STATUS.md`'s plan-change log.
 | --- | --- | --- |
 | G2.0 Baseline | done | [`data/g20/README.md`](data/g20/README.md): suites ([`suites.txt`](data/g20/suites.txt)), before shots [`screens/before/`](screens/before/), real phone 1 min 60 fps median |
 | G2.1 Decisions | done | [`data/g21/README.md`](data/g21/README.md): rules 4 (crossings measured closed), budget 26 m (6:00 rule), fps toast |
-| G2.2 GAME \| SIM switch and SIM view | done; real phone pending | [`data/g22/README.md`](data/g22/README.md), [`screens/g22/`](screens/g22/) |
+| G2.2 GAME \| SIM switch and SIM view | done; real phone SIM 60 fps | [`data/g22/README.md`](data/g22/README.md), [`screens/g22/`](screens/g22/) |
 | G2.3 Telemetry | done | same; `test/g2_telemetry`, `test/g2_rosout` |
-| G2.4 Panels | done; real phone pending | same; `test/g2_panels`; panel vs STOP: no overlap |
+| G2.4 Panels | done | same; `test/g2_panels`; panel vs STOP: no overlap |
 | G2.5 rosbag2 export | done | [`data/g25/README.md`](data/g25/README.md): ros2 bag info / play + RViz |
-| G2.6 Real ROS 2 ghost | fixed and gated (5/5); ghosts recording | [`data/g26/DIAGNOSIS.md`](data/g26/DIAGNOSIS.md), [`GATE.md`](data/g26/GATE.md) |
-| G2.7 Looks | done; real-phone budgets pending | [`data/g27/`](data/g27/), [`screens/g27/`](screens/g27/) |
-| G2.8 Close | in progress (phone run pending) | |
+| G2.6 Real ROS 2 ghost | done: gate 5/5, 4 ghosts 16/16 legs, Race Nav2 | [`data/g26/DIAGNOSIS.md`](data/g26/DIAGNOSIS.md), [`GATE.md`](data/g26/GATE.md) |
+| G2.7 Looks | done; real phone GAME 60 fps median | [`data/g27/`](data/g27/), [`screens/g27/`](screens/g27/) |
+| G2.8 Close | in progress | [`G2_RESULTS.md`](G2_RESULTS.md), [`data/g28/`](data/g28/) |
 
 ## Gautham: look at these
 
