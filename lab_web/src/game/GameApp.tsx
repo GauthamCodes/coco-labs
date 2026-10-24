@@ -12,6 +12,7 @@
  * pause menu, settings and results live here; Play itself is PlayGame.
  */
 
+import { chosenPlanner, PLANNER_LABEL, PLANNER_WHAT, PLAY_PLANNERS, type PlayPlanner } from './planners';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, Lock } from 'lucide-react';
 import { isBool, readPref, readRaw, writePref, writeRaw } from '../prefs';
@@ -45,14 +46,16 @@ export interface GameResult {
 }
 
 // G1.12: the Full shift keeps its own bests; G2.1: rules 4 (new rounds), so new keys (rules 3's stay as they were)
-const bestKey = (seed: number, mode: FetchRushMode = 'phone') => `coco.play.best.v1.g1-fetch-rush.r4-${mode}.seed-${seed}`;
-export function readStars(seed: number, mode: FetchRushMode = 'phone'): number | null {
-  try { const raw = readRaw(bestKey(seed, mode)); return raw ? (JSON.parse(raw) as { stars: number }).stars : null; } catch { return null; }
+// owner request 2026-10-24: bests are per AUTO planner (a like-for-like record); A*'s key is the one it always had
+export const bestKey = (seed: number, mode: FetchRushMode = 'phone', planner: PlayPlanner = 'astar') =>
+  `coco.play.best.v1.g1-fetch-rush.r4-${mode}.seed-${seed}${planner === 'astar' ? '' : `.planner-${planner}`}`;
+export function readStars(seed: number, mode: FetchRushMode = 'phone', planner: PlayPlanner = 'astar'): number | null {
+  try { const raw = readRaw(bestKey(seed, mode, planner)); return raw ? (JSON.parse(raw) as { stars: number }).stars : null; } catch { return null; }
 }
-function keepStars(seed: number, mode: FetchRushMode, stars: number, net: number, time: number) {
-  const old = readStars(seed, mode);
+function keepStars(seed: number, mode: FetchRushMode, planner: PlayPlanner, stars: number, net: number, time: number) {
+  const old = readStars(seed, mode, planner);
   if (old !== null && old >= stars) return;
-  writeRaw(bestKey(seed, mode), JSON.stringify({ stars, net, time }));
+  writeRaw(bestKey(seed, mode, planner), JSON.stringify({ stars, net, time }));
 }
 const starText = (n: number | null) => (n === null ? '☆☆☆' : '★'.repeat(n) + '☆'.repeat(3 - n));
 
@@ -64,10 +67,11 @@ export function GameApp() {
   // Fetch Rush plays the shifts on file (rules_view); another seed opens shift 1. G1.12: &mode=full is the Full shift
   const asked = Math.max(1, Math.min(999, Number.parseInt(q.get('seed') ?? '1', 10) || 1));
   const seed = game === 'fetch_rush' && !FETCH_RUSH_SHIFTS.includes(asked) ? FETCH_RUSH_SHIFTS[0] : asked;
-  return <GameRun game={game} world={world} seed={seed} mode={fetchRushMode(q.get('mode'))} race={q.get('race') === 'nav2'} />;
+  const race = q.get('race') === 'nav2';
+  return <GameRun game={game} world={world} seed={seed} mode={fetchRushMode(q.get('mode'))} race={race} planner={race ? 'astar' : chosenPlanner(q.get('planner'))} />;
 }
 
-function GameRun({ game, world, seed, mode, race }: { game: GameKind; world: WorldId; seed: number; mode: FetchRushMode; race: boolean }) {
+function GameRun({ game, world, seed, mode, race, planner }: { game: GameKind; world: WorldId; seed: number; mode: FetchRushMode; race: boolean; planner: PlayPlanner }) {
   const [paused, setPaused] = useState(false);
   const [settings, setSettings] = useState(false);
   const [result, setResult] = useState<GameResult | null>(null);
@@ -80,13 +84,13 @@ function GameRun({ game, world, seed, mode, race }: { game: GameKind; world: Wor
   useEffect(() => { document.documentElement.classList.add('playing-coco'); return () => document.documentElement.classList.remove('playing-coco'); }, []);
   const onResult = (r: GameResult) => {
     setResult(r);
-    if (r.stars !== null && r.card) keepStars(r.seed, mode, r.stars, Number(r.card.net_deliveries ?? 0), Number(r.card.time_used ?? 0));
+    if (r.stars !== null && r.card) keepStars(r.seed, mode, planner, r.stars, Number(r.card.net_deliveries ?? 0), Number(r.card.time_used ?? 0));
   };
   const restart = () => { setResult(null); setPaused(false); setRestartKey((k) => k + 1); };
   return <>
     <PlayGame key={`${restartKey}-${tier}`} world={world} game={game} seed={seed} mode={mode} tier={tier} paused={paused || !!result} onPause={() => setPaused((x) => !x)}
       onResult={onResult} restartKey={restartKey} showPerf={showPerf} tutorialSeen={tutorialSeen} ghost={ghost}
-      onTutorialDone={() => { writePref('tutorial', true); setTutorialSeen(true); }} race={race}
+      onTutorialDone={() => { writePref('tutorial', true); setTutorialSeen(true); }} race={race} planner={planner}
       onRecommended={(to) => { writePref('quality', to.quality); writePref('phone120', to.phone120); setTier(to.quality); restart(); }} />
     {paused && !result && !settings && <section className="g1 g1-screen dim" data-testid="g1-pause-menu" style={{ position: 'fixed', zIndex: 25, background: 'rgba(8,10,14,.62)' }}>
       <div className="g1-eyebrow">PAUSED · {game === 'fetch_rush' ? `FETCH RUSH · SHIFT ${seed}${mode === 'full' ? ' · FULL' : ''}` : `FREE DRIVE · ${world === 'depot' ? 'DEPOT' : 'PROVING GROUND'}`}</div>
@@ -99,7 +103,7 @@ function GameRun({ game, world, seed, mode, race }: { game: GameKind; world: Wor
       </nav>
     </section>}
     {settings && <Settings tier={tier} onTier={setTier} ghost={ghost} onGhost={(g) => { writePref('ghost', g); setGhost(g); }} onClose={() => setSettings(false)} />}
-    {result && <Results r={result} onAgain={restart} />}
+    {result && <Results r={result} onAgain={restart} planner={race ? null : planner} />}
   </>;
 }
 
@@ -126,7 +130,7 @@ function Settings({ tier, onTier, ghost, onGhost, onClose }: { tier: Tier; onTie
   </section>;
 }
 
-function Results({ r, onAgain }: { r: GameResult; onAgain: () => void }) {
+function Results({ r, onAgain, planner }: { r: GameResult; onAgain: () => void; planner: PlayPlanner | null }) {
   const c = r.card ?? {};
   const delivered = (c.delivered as { ghost: number | null; driven: number }[] | undefined) ?? [];
   const driven = delivered.reduce((s, d) => s + d.driven, 0), ghost = delivered.reduce((s, d) => s + (d.ghost ?? 0), 0);
@@ -149,12 +153,17 @@ function Results({ r, onAgain }: { r: GameResult; onAgain: () => void }) {
       <a className="g1-big small ghost" href={compare}>WATCH HOW THE PLANNER DID IT</a>
       <a className="g1-big small ghost" href={`${BASE}?view=play`}>GAMES</a></nav>
     <nav className="g1-menu g2-bag"><BagButton /></nav>
+    {planner && planner !== 'astar' && <p className="g1-note" data-testid="results-planner">AUTO planned with <b>{PLANNER_LABEL[planner]}</b> this run (on its record). The shift's routes, ghost and reference bot are A*, so stars compare against A*; bests are kept per planner.</p>}
     <p className="g1-note">{r.reference ? `Stars against the reference bot's run for this shift (coco_lab.games.stars; GAMES.md): ★ one delivery, ★★ as many net deliveries, ★★★ ranked at or above it. Reference: ${String(r.reference.deliveries)} delivery(ies), ${Number(r.reference.time_used).toFixed(1)} s.` : 'No reference run exists for this shift, so no stars are given.'} MODEL · kinematic.</p>
   </section>;
 }
 
 function ModeSelect() {
   useEffect(() => { document.title = 'COCO Lab · Play'; }, []);
+  // owner request 2026-10-24: which planner AUTO uses (saved; Race Nav2 is always A*)
+  const [planner, setPlanner] = useState<PlayPlanner>(() => chosenPlanner(null));
+  const pick = (id: PlayPlanner) => { setPlanner(id); writePref('planner', id); };
+  const withPlanner = (href: string) => (planner === 'astar' ? href : `${href}&planner=${planner}`);
   // G2.6: Race Nav2 is offered for a round only when a recorded Gazebo + Nav2 run of it exists
   const [ghosts, setGhosts] = useState<GhostIndex | null>(null);
   useEffect(() => { void loadGhostIndex().then(setGhosts); }, []);
@@ -164,10 +173,10 @@ function ModeSelect() {
     <div className="g1-eyebrow">CHOOSE A GAME</div>
     <div className="g1-modes" role="list">
       {[1].map((seed) => {
-        const go = (mode: FetchRushMode) => (e: { preventDefault(): void }) => { e.preventDefault(); navigate(`${BASE}?view=play&game=fetch_rush&seed=${seed}${mode === 'full' ? '&mode=full' : ''}`); };
+        const go = (mode: FetchRushMode) => (e: { preventDefault(): void }) => { e.preventDefault(); navigate(withPlanner(`${BASE}?view=play&game=fetch_rush&seed=${seed}${mode === 'full' ? '&mode=full' : ''}`)); };
         return <div key={seed} role="listitem" className="g1-modecard hero">
           <div className="art" style={art('0% 0%')} /><span className="g1-eyebrow" style={{ color: 'var(--g1-coco)' }}>NEW · DEPOT</span><h3>Fetch Rush</h3>
-          <p>Pick-and-deliver orders in one zone, against the reference clock.</p><div className="st" aria-label="best stars">{starText(readStars(seed))}</div>
+          <p>Pick-and-deliver orders in one zone, against the reference clock.</p><div className="st" aria-label={`best stars with ${PLANNER_LABEL[planner]}`}>{starText(readStars(seed, 'phone', planner))}</div>
           <div className="opts"><a data-testid="mode-fetch-rush" href={`${BASE}?view=play&game=fetch_rush&seed=${seed}`} onClick={go('phone')}>PLAY · 2 ORDERS</a>
             <a data-testid="mode-fetch-rush-full" href={`${BASE}?view=play&game=fetch_rush&seed=${seed}&mode=full`} onClick={go('full')}>FULL SHIFT · 3</a>
             {ghostFor(ghosts, FETCH_RUSH_RULES, 'phone', seed) && <a data-testid="mode-race-nav2" href={`${BASE}?view=play&game=fetch_rush&seed=${seed}&race=nav2`}
@@ -175,10 +184,16 @@ function ModeSelect() {
         </div>;
       })}
       <div role="listitem" className="g1-modecard" data-testid="mode-free-drive"><div className="art" style={art('50% 0%')} /><h3>Free Drive</h3><p>No clock. Drive, explore, pick things up.</p>
-        <div className="opts"><a href={`${BASE}?view=play&game=free&world=depot`}>DEPOT</a><a href={`${BASE}?view=play&game=free&world=proving`}>PROVING GROUND</a></div></div>
+        <div className="opts"><a href={withPlanner(`${BASE}?view=play&game=free&world=depot`)}>DEPOT</a><a href={withPlanner(`${BASE}?view=play&game=free&world=proving`)}>PROVING GROUND</a></div></div>
       {[['Rush Hour', 'Cross the forklift lanes.'], ['Fog Scout', 'The map starts dark.'], ['Lost & Found', 'Where am I?']].map(([t, d]) => <div role="listitem" key={t} className="g1-modecard locked" aria-disabled="true"><div className="art" style={art('100% 0%')} /><span className="lock"><Lock size={9} /> SOON</span><h3>{t}</h3><p>{d}</p></div>)}
       <a role="listitem" className="g1-modecard" data-testid="mode-challenges" href={`${BASE}?view=play&c=`} onClick={(e) => { e.preventDefault(); navigate(`${BASE}?view=play&list=challenges`); }}><div className="art" style={art('25% 0%')} /><span className="g1-eyebrow">M5</span><h3>Challenges</h3><p>Beat the planner, race the ghost, and three more.</p></a>
     </div>
+    <section className="g2-planner-pick g1-glass" data-testid="planner-pick" aria-label="The planner AUTO uses">
+      <div className="g1-eyebrow">AUTO PLANNER</div>
+      <div className="row" role="radiogroup" aria-label="AUTO planner">{PLAY_PLANNERS.map((id) => <button key={id} role="radio" aria-checked={planner === id}
+        data-testid={`planner-${id}`} className={planner === id ? 'is-on' : ''} onClick={() => pick(id)}>{PLANNER_LABEL[id]}</button>)}</div>
+      <p>{PLANNER_WHAT[planner]} The shift's reference stays A*, so stars compare against A*; bests are kept per planner.</p>
+    </section>
     <p className="g1-note">Fetch Rush and Free Drive run COCO's model in your browser (MODEL · kinematic). Stars and bests stay in this browser.</p>
   </main>;
 }

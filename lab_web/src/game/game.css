@@ -289,3 +289,11 @@
 .g2-threeway p.num { margin: 2px 0; font: 700 20px var(--g1-display, system-ui); }
 .g2-threeway small { color: var(--g1-mute); font-size: 11px; }
 .g2-threeway .note { grid-column: 1 / -1; margin: 0; font-size: 11px; color: var(--g1-mute); }
+
+/* owner request 2026-10-24: the AUTO planner chooser on the mode select */
+.g2-planner-pick { width: min(100%, calc(720px * var(--g1-s))); padding: calc(10px * var(--g1-s)) calc(14px * var(--g1-s)); border-radius: calc(14px * var(--g1-s)); }
+.g2-planner-pick .row { display: flex; flex-wrap: wrap; gap: calc(6px * var(--g1-s)); margin: calc(6px * var(--g1-s)) 0; }
+.g2-planner-pick button { border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.05); border-radius: 999px; padding: calc(6px * var(--g1-s)) calc(12px * var(--g1-s));
+  font: 700 calc(12px * var(--g1-s))/1 var(--g1-display); letter-spacing: .04em; min-height: 32px; }
+.g2-planner-pick button.is-on { background: var(--g1-coco); color: #1a0e04; border-color: transparent; }
+.g2-planner-pick p { margin: 0; color: var(--g1-mute); font-size: calc(12px * var(--g1-s)); }

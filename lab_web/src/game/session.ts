@@ -27,6 +27,7 @@
  * hashes are what they were.
  */
 
+import type { PlayPlanner } from './planners';
 import { ArenaClient } from '../arena/client';
 import { SPEC_FILES, type FamilyMessage, type InputRow, type SpecFile, type Tick, type World } from '../arena/protocol';
 import type { RosInfo, TFMessage } from '../ros/shapes';
@@ -89,7 +90,7 @@ export class GameSession {
   ticks = 0;
 
   constructor(world: WorldId, readonly game: GameKind, readonly seed: number, ev: SessionEvents,
-    readonly mode: 'phone' | 'full' = 'phone') {
+    readonly mode: 'phone' | 'full' = 'phone', readonly planner: PlayPlanner = 'astar') {
     this.ev = ev;
     this.client = new ArenaClient({
       onWorld: (w, occ) => { this.world = w as World & { game: GameInfo }; ev.onWorld(this.world, occ); },
@@ -104,7 +105,12 @@ export class GameSession {
   /** Start ticking (the setup inputs go on the first tick). */
   start() {
     if (!this.world) return;
-    if (this.ticks === 0 && this.queue.length === 0) this.queue.push(...this.world.game.setup);
+    if (this.ticks === 0 && this.queue.length === 0) {
+      this.queue.push(...this.world.game.setup);
+      // the AUTO planner (src/game/planners.ts): A* is the model's own default and sends nothing,
+      // so an A* session is byte-identical to before; another is the run's first input, on record
+      if (this.planner !== 'astar') this.queue.push({ kind: 'planner', choice: this.planner });
+    }
     this.paused = false;
     this.last = performance.now();
     this.due = this.last;

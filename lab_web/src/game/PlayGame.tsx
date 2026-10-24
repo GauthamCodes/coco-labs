@@ -12,6 +12,7 @@
  * own phase and refusal reasons, Fetch Rush's own orders and counts.
  */
 
+import type { PlayPlanner } from './planners';
 import { registerRunSaver } from '../offline/updates';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -59,6 +60,8 @@ export interface PlayProps {
   onRecommended?: (s: PlaySettings) => void;
   /** G2.6: race the recorded Gazebo + Nav2 run of this round (STACK), when one exists */
   race?: boolean;
+  /** the planner AUTO uses (src/game/planners.ts); A* when absent, always A* in a race */
+  planner?: PlayPlanner;
 }
 
 const fmt = (s: number) => `${Math.floor(Math.max(0, s) / 60)}:${String(Math.floor(Math.max(0, s) % 60)).padStart(2, '0')}`;
@@ -172,7 +175,7 @@ export function PlayGame(p: PlayProps) {
           if (n) { const row = Object.fromEntries(['joint1', 'joint2', 'finger_left', 'finger_right'].map((k) => [k, Number(cols[k]?.[n - 1])])); r.current?.setArm(row); recorder.current.setArm(row); }
         }
       },
-    }, p.mode ?? 'phone');
+    }, p.mode ?? 'phone', p.race ? 'astar' : p.planner ?? 'astar');
     s.current = session;
     session.client.worker.addEventListener('message', (m: MessageEvent) => {
       const d = m.data as { type: string; name?: string };
