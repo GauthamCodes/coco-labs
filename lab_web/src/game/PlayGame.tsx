@@ -274,6 +274,9 @@ export function PlayGame(p: PlayProps) {
     if (g?.actors) rr.setActors(g.actors);
     const last = t.plans.length ? t.plans[t.plans.length - 1] : null;
     if (last) { rr.setPlan([[t.pose[0], t.pose[1]], ...last.waypoints]); planGoal.current = last.goal; }
+    // G2 rules 5: AUTO re-planned around an actor this tick (the model's own new route)
+    const av = g?.avoid, bav = before?.game?.avoid;
+    if (av?.waypoints) rr.setPlan([[t.pose[0], t.pose[1]], ...av.waypoints]);
     if (t.arrived || (t.source === 'teleop' && before?.source !== 'teleop')) { rr.setPlan([]); setGoal(null); rr.setGoal(null); setAuto(false); planGoal.current = null; }
     rr.setScan(ranges, { min: w?.lidar.angle_min ?? -2.09, max: w?.lidar.angle_max ?? 2.09, samples: w?.lidar.samples ?? ranges.length }, (w?.lidar.mount ?? [0, 0, 0]) as [number, number, number], w?.lidar.range_max ?? 12,
       { tf: t.ros?.tf ?? null, tickPose: t.pose, v: t.v, w: t.w, goal: planGoal.current });
@@ -293,11 +296,18 @@ export function PlayGame(p: PlayProps) {
       else if (a.phase === 'idle' && ba.phase !== 'idle' && ba.phase !== 'release' && a.reason) { say(a.reason.length > 46 ? a.reason.slice(0, 44) + '…' : a.reason); sound.current.refuse(); }
     }
     if (g?.clearance !== undefined && g.clearance < 1.2 && (before?.game?.clearance ?? 9) >= 1.2) say('Forklift ahead!');
+    if (av && av.state !== bav?.state) {
+      const who = av.actor.startsWith('walker') ? 'walker' : 'forklift';
+      if (av.state === 'waiting') say(`AUTO: waiting for the ${who}`);
+      else if (av.state === 'replanned') say(`AUTO: new route around the ${who}`);
+      else if (av.state === 'go' && bav?.state === 'waiting') say(`AUTO: going on (the ${who} stops for COCO)`);
+    }
+    if (g?.actors_held?.length && !before?.game?.actors_held?.length) say(g.actors_held[0].startsWith('walker') ? 'The walker stopped for COCO' : 'The forklift stopped for COCO');
     if (stackGhost.current && f) rr.setStackGhost(ghostPoseAt(stackGhost.current.track, f.t));
     if (f?.over && !bf?.over) void finish();
     // G2.3: the model's events as /rosout lines; the clock's sim time and iterations
     const scan = w?.game.ros?.scan;
-    if (rosout.current.feed({ tick: t.tick, t_world: t.t_world, source: t.source ?? 'idle', blocked: t.blocked, arrived: t.arrived, plans: t.plans, pose: t.pose },
+    if (rosout.current.feed({ tick: t.tick, t_world: t.t_world, source: t.source ?? 'idle', blocked: t.blocked, arrived: t.arrived, plans: t.plans, pose: t.pose, avoid: av ?? null },
       ranges, scan ?? null, { resolution: w?.resolution ?? 0.1 }).length) setLog([...rosout.current.lines]);
     clock.current.tick(t.t_world, t.tick, performance.now());
     // G2.4 / G2.5: the frame (what the model produced this tick) and the topics it published

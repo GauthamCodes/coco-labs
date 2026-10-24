@@ -20,8 +20,8 @@ describe('AUTO planner choice', () => {
     expect(chosenPlanner(null)).toBe('astar');
   });
   it("keeps A*'s best key as it was and gives other planners their own", () => {
-    expect(bestKey(1, 'phone')).toBe('coco.play.best.v1.g1-fetch-rush.r4-phone.seed-1');
-    expect(bestKey(1, 'phone', 'astar')).toBe('coco.play.best.v1.g1-fetch-rush.r4-phone.seed-1');
-    expect(bestKey(2, 'full', 'greedy')).toBe('coco.play.best.v1.g1-fetch-rush.r4-full.seed-2.planner-greedy');
+    expect(bestKey(1, 'phone')).toBe('coco.play.best.v1.g1-fetch-rush.r5-phone.seed-1');
+    expect(bestKey(1, 'phone', 'astar')).toBe('coco.play.best.v1.g1-fetch-rush.r5-phone.seed-1');
+    expect(bestKey(2, 'full', 'greedy')).toBe('coco.play.best.v1.g1-fetch-rush.r5-full.seed-2.planner-greedy');
   });
 });

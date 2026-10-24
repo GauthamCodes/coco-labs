@@ -468,8 +468,10 @@ def game_init(spec_json, game, arg, seed, post_batch, batch_size=2048,
              'hash_version': int(hash_version), 'rules_version': version, 'mode': mode}
     info = {'game': game, 'arg': arg, 'v3': v3_level, 'mode': mode}
     if v3_level:
+        # G2 rules 5: Free Drive on a v3 level gets rules 5's actors (they stop for COCO) and
+        # AUTO's reaction too; Fetch Rush gets them from its rules (FETCH_RUSH_RULES >= 5)
         info['setup'] = games.setup_inputs(game if rules else 'fetch_rush', arg, version,
-                                           mode=mode)
+                                           mode=mode, yielding=None if rules else True)
         info['seconds'] = rules.seconds if isinstance(rules, games.FetchRush) else None
         if isinstance(rules, games.FetchRushRound):
             rnd = rules.round
@@ -511,7 +513,6 @@ def _ros_info():
 def _game_block(t):
     """The game's state after tick ``t``: what the HUD draws; read from coco_lab only."""
     from coco_lab import games
-    from coco_lab import worldspec_v3 as v3
     g = _game
     a = _arena
     out = {}
@@ -524,12 +525,19 @@ def _game_block(t):
                           for oid, o in sorted(assist.objects.items())]
     act = a.subsystems.get('actors')
     if act is not None:
-        dx, dy = act.offset
-        out['actors'] = []
-        for e in act.actors:
-            x, y, yaw = v3.actor_pose(e, a.t_world)
-            out['actors'].append([e['id'], x + dx, y + dy, yaw])
+        # where each actor really is (G2 rules 5: an actor that stopped for COCO runs late on
+        # its schedule), so the drawing is the model's own
+        out['actors'] = [[e['id'], x, y, yaw]
+                         for e, (x, y, yaw) in zip(act.actors, act.poses())]
         out['clearance'] = act.clearance(a.pose[0], a.pose[1], a.radius)
+        if act.yielding():
+            out['actors_held'] = [e['id'] for e, h in zip(act.actors, act.holding()) if h]
+    av = a.subsystems.get('avoid')
+    if av is not None and av.on:
+        # G2 rules 5: AUTO's reaction (waiting, re-planned, ...) and, on a re-plan, its route
+        out['avoid'] = av.view()
+        if av.replanned == a.tick:
+            out['avoid']['waypoints'] = [list(w) for w in a.waypoints]
     r = g['rules']
     if isinstance(r, games.FetchRush) and r.started:
         cur = r.current()

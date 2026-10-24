@@ -46,9 +46,10 @@ export interface GameResult {
 }
 
 // G1.12: the Full shift keeps its own bests; G2.1: rules 4 (new rounds), so new keys (rules 3's stay as they were)
-// owner request 2026-10-24: bests are per AUTO planner (a like-for-like record); A*'s key is the one it always had
+// owner request 2026-10-24: bests are per AUTO planner (a like-for-like record); A*'s key is the one it always had;
+// G2 rules 5 (the actors stop for COCO, AUTO reacts): new rounds' timers, so new keys (rules 4's stay as they were)
 export const bestKey = (seed: number, mode: FetchRushMode = 'phone', planner: PlayPlanner = 'astar') =>
-  `coco.play.best.v1.g1-fetch-rush.r4-${mode}.seed-${seed}${planner === 'astar' ? '' : `.planner-${planner}`}`;
+  `coco.play.best.v1.g1-fetch-rush.r5-${mode}.seed-${seed}${planner === 'astar' ? '' : `.planner-${planner}`}`;
 export function readStars(seed: number, mode: FetchRushMode = 'phone', planner: PlayPlanner = 'astar'): number | null {
   try { const raw = readRaw(bestKey(seed, mode, planner)); return raw ? (JSON.parse(raw) as { stars: number }).stars : null; } catch { return null; }
 }

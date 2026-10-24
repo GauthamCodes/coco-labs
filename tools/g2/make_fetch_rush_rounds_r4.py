@@ -4,8 +4,14 @@
 """
 G2.1: Fetch Rush rules 4 -- rules 3's rounds, crossing the forklift lane only at a marked crossing.
 
-    tools/g2/make_fetch_rush_rounds_r4.py [--seeds 1-6] [--out PATH] [--trips-cache PATH]
-                                          [--phone-budget M]
+    tools/g2/make_fetch_rush_rounds_r4.py [--rules 4|5] [--seeds 1-6] [--out PATH]
+                                          [--trips-cache PATH]
+
+G2 rules 5 (``--rules 5``, Gautham 2026-10-24): the same draw, budgets and crossing rule as rules 4
+(the same trip table: the crossings are measured on the actors' schedules, as rules 4's), but the
+reference bot plays with the actors stopping for COCO (``actors.yield=1``) and AUTO's reaction
+(``avoid.on=1``) in its setup inputs, so its records, cards, hash chains and timers are rules 5's.
+Writes ``coco_lab/coco_lab/levels/coco_depot_v1.fetch_rush.r5.json``; rules 4's file is untouched.
 
 Writes ``coco_lab/coco_lab/levels/coco_depot_v1.fetch_rush.r4.json``; rules 3's file
 (``tools/g1/make_fetch_rush_rounds_r3.py``'s) is left as it is, so rules-3 records replay on it.
@@ -54,8 +60,7 @@ import make_fetch_rush_rounds_r3 as r3  # noqa: E402
 from make_fetch_rush_rounds import arena, centre, replay, seeds_arg  # noqa: E402
 
 LEVEL = 'coco_depot_v1'
-RULES = 4
-OUT = str(games.rounds_file(LEVEL, RULES))
+RULES = 4      # --rules sets it (4 or 5)
 HV = r3.HV
 MAX_ATTEMPTS = r3.MAX_ATTEMPTS
 PROVISIONAL_S = r3.PROVISIONAL_S
@@ -265,12 +270,16 @@ def setup(spec, cache=None):
 
 
 def main() -> int:
+    global RULES
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
+    ap.add_argument('--rules', type=int, default=4, choices=(4, 5))
     ap.add_argument('--seeds', default='1-6')
-    ap.add_argument('--out', default=OUT)
+    ap.add_argument('--out', help='default: games.rounds_file(level, rules)')
     ap.add_argument('--trips-cache', help='reuse (or write) the trip table here (it takes minutes)')
     ap.add_argument('--modes', default=','.join(sorted(games.ROUND_MODES_R4)))
     o = ap.parse_args()
+    RULES = o.rules
+    o.out = o.out or str(games.rounds_file(LEVEL, RULES))
     spec_path = os.path.join(REPO, 'worlds', f'{LEVEL}.json')
     spec = json.load(open(spec_path))
     spec_sha = hashlib.sha256(open(spec_path, 'rb').read()).hexdigest()
@@ -288,11 +297,17 @@ def main() -> int:
             print(f"{mode} seed {sd}: {rnd['region']} {rnd['orders']} ghost "
                   f"{[round(x, 1) for x in rnd['ghost_m']]} ref {rnd['reference_time_s']:.1f} s "
                   f"timer {rnd['timer_s']} s ({time.time() - t0:.0f} s)", flush=True)
-    doc = {'about': 'G2.1: Fetch Rush rules 4 rounds (tools/g2/make_fetch_rush_rounds_r4.py)',
+    about = {4: 'G2.1: Fetch Rush rules 4 rounds (tools/g2/make_fetch_rush_rounds_r4.py)',
+             5: 'G2 rules 5: Fetch Rush rules 5 rounds -- rules 4\'s draw, with the actors stopping '
+                'for COCO and AUTO reacting (tools/g2/make_fetch_rush_rounds_r4.py --rules 5)'}
+    doc = {'about': about[RULES],
            'level': LEVEL, 'spec_sha256': spec_sha, 'rules': RULES,
            'modes': games.ROUND_MODES_R4, 'default_mode': games.ROUND_MODE_DEFAULT,
            'timer_factor': games.ROUND_TIMER_FACTOR, 'hash_version': HV,
            'lanes': list(games.ROUND_LANES),
+           **({'yield_setup': list(games.YIELD_SETUP),
+               'actor_stop_margin_m': games.ACTOR_STOP_MARGIN} if RULES >= games.YIELD_RULES
+              else {}),
            'crossings': [list(r) for r in games.crossings(a.spec)],
            'crossing_bands': [list(b) for b in games.crossing_bands(a.spec)],
            'crossing_windows': windows,

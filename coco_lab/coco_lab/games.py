@@ -23,7 +23,9 @@ Three parts, none of them UI:
   (``worldspec_v3.actor_pose``), so the LiDAR sees them and the robot cannot
   drive into one. SIMPLIFIED: the discs over-cover the box by a few centimetres
   at its long sides; the game's clearance is measured to the exact box.
-  Actors never yield (they are a schedule, as in Gazebo's ``set_pose``).
+  Actors never yield (they are a schedule, as in Gazebo's ``set_pose``) -- unless
+  ``actors.yield=1`` (Fetch Rush rules 5): then each one stops for COCO, a forklift's
+  safety stop, and :class:`ActorAvoid` (``avoid.on=1``) makes AUTO wait or re-plan.
 - **The rules** (:class:`FetchRush`, :class:`RushHour`): observers of the Arena's
   ticks. A game is a pure function of the World Spec, the seed and the input
   log (:func:`play`); its scorecard is never part of the model's state, as a
@@ -101,11 +103,17 @@ ROUND_LANES = ('zone_forklift_lanes',)
 #: COCO's whole footprint on the stripes (:func:`crossing_bands`), and never run along it; the
 #: phone budget is the smallest giving at least 3 distinct rounds with timers <= 5:00 (else
 #: <= 6:00): ``tools/g2/sweep_phone_budget_r4.py``. Rules 3's rounds and records stay as they were.
-FETCH_RUSH_RULES = 4
+#: G2 rules 5 (below, YIELD_RULES) is the rules the browser plays now.
+FETCH_RUSH_RULES = 5
 #: G2.1 sweep (docs/v2/g2/data/g21): no budget from 22 m to the longest trip gives >= 3 distinct
 #: phone rounds with every timer <= 5:00; 26 m is the smallest giving them with every timer <= 6:00
 ROUND_MODES_R4 = {'phone': {'orders': 2, 'budget_m': 26.0},
                   'full': {'orders': ROUND_ORDERS, 'budget_m': ROUND_BUDGET_M}}
+#: G2 rules 5 (Gautham, 2026-10-24: "the forklift moves forward phasing through the robot"):
+#: rules 4's rounds, budgets and crossing rule, with the actors yielding to COCO
+#: (``actors.yield=1``) and AUTO reacting to them (``avoid.on=1``); rules 4 and earlier stay as
+#: they were (their records never carry those inputs)
+YIELD_RULES = 5
 #: a lane is drawn this wide each side of an actor's path beyond half its footprint
 #: (lab_web/src/game/world/describe.ts paints the same lanes and stripes)
 LANE_MARGIN = 0.25
@@ -140,8 +148,27 @@ def box_distance(px: float, py: float, actor, t: float, dx: float = 0.0,
     return math.hypot(ex, ey)
 
 
+#: G2 rules 5: an actor's safety stop -- it holds while its next step would bring its box within
+#: the robot's radius + this margin (m) of COCO's centre, closer than it is now (the robot ahead of
+#: it, in its direction of travel). 0.3 m: a forklift's protective field, a little over the 0.25 m
+#: the covering discs over-cover a forklift's ends, so the actor stops before COCO's motion could
+#: be refused by it.
+ACTOR_STOP_MARGIN = 0.3
+#: a step closer than this is not an approach (numerical noise on a sideways pass)
+_APPROACH_EPS = 1e-9
+
+
 class DepotActors:
-    """The Arena's ``actors`` subsystem: a v3 level's actor lanes, solid (``actors.on=1``)."""
+    """
+    The Arena's ``actors`` subsystem: a v3 level's actor lanes, solid (``actors.on=1``).
+
+    G2 rules 5, ``actors.yield=1``: each actor keeps its own clock -- the ticks it has held for
+    COCO (``lag``) -- so it sits at its schedule's pose ``lag`` ticks late, and it advances (in
+    :meth:`world_step`) only when its next pose keeps its box at least ``radius +
+    ACTOR_STOP_MARGIN`` from COCO's centre or takes it no closer. The discs, the LiDAR, the
+    clearance and everything predicting an actor read those actual poses. Without the setting
+    nothing is added: the state, and so every hash, is rules 4's.
+    """
 
     def __init__(self, arena):
         """Attach to a World Spec v3 Arena."""
@@ -152,33 +179,412 @@ class DepotActors:
         self.offset = tuple(arena.spec['world_to_map'])
 
     def config(self, key: str, value: str) -> None:
-        """Apply ``actors.on=1`` (they move from t = 0 whether or not anyone watches)."""
+        """Apply ``actors.on=1`` (they move from t = 0, watched or not) or ``actors.yield=1``."""
+        if key == 'yield' and value == '1':
+            if not self.yielding():
+                #: G2 rules 5: per actor, the ticks it has held for COCO, and whether it held at
+                #: the last tick (created here only: a rules-4 Arena never has them)
+                self.lag = [0] * len(self.actors)
+                self.held = [False] * len(self.actors)
+            return
         if key != 'on' or value != '1':
-            raise ArenaError('actors: the only setting is actors.on=1')
+            raise ArenaError('actors: the only setting is actors.on=1 (and actors.yield=1)')
+
+    def yielding(self) -> bool:
+        """Whether the actors stop for COCO (``actors.yield=1``)."""
+        return getattr(self, 'lag', None) is not None
+
+    def times(self) -> List[float]:
+        """Each actor's own schedule time now (s): the world's time, less its held ticks."""
+        a = self.arena
+        if not self.yielding():
+            t = a.t_world
+            return [t] * len(self.actors)
+        return [(a.tick - k) * a.dt for k in self.lag]
+
+    def holding(self) -> List[bool]:
+        """Whether each actor held for COCO at the last tick (all False without yield)."""
+        return list(self.held) if self.yielding() else [False] * len(self.actors)
+
+    def poses(self) -> List[Tuple[float, float, float]]:
+        """Every actor's (x, y, yaw) now, MAP frame (where it really is)."""
+        dx, dy = self.offset
+        out = []
+        for ac, t in zip(self.actors, self.times()):
+            x, y, yaw = v3.actor_pose(ac, t)
+            out.append((x + dx, y + dy, yaw))
+        return out
 
     def discs(self):
         """Return every actor's covering discs at the current time, MAP frame."""
-        t = self.arena.t_world
-        return [d for a in self.actors for d in actor_discs(a, t, *self.offset)]
+        return [d for a, t in zip(self.actors, self.times())
+                for d in actor_discs(a, t, *self.offset)]
 
     def clearance(self, x: float, y: float, radius: float) -> float:
         """Return the robot circle's clearance to the nearest actor box (m; < 0 overlaps)."""
-        t = self.arena.t_world
-        return min((box_distance(x, y, a, t, *self.offset) for a in self.actors),
+        return min((box_distance(x, y, a, t, *self.offset)
+                    for a, t in zip(self.actors, self.times())),
                    default=math.inf) - radius
 
+    def world_step(self, arena) -> None:
+        """
+        G2 rules 5: advance each actor one tick unless that brings it onto COCO.
+
+        Called after the robot moved (its new pose is checked against the actors where they
+        were). An actor holds when its box at its next pose would be within ``radius +
+        ACTOR_STOP_MARGIN`` of COCO's centre (truth) and closer than its box is now: the robot
+        is ahead of it. Moving sideways past COCO, or away, it goes on. Without yield: nothing
+        (an actor's pose is a function of time).
+        """
+        if not self.yielding():
+            return
+        a = arena
+        x, y = a.pose[0], a.pose[1]
+        near = a.radius + ACTOR_STOP_MARGIN
+        for i, ac in enumerate(self.actors):
+            t_now = (a.tick - 1 - self.lag[i]) * a.dt
+            t_next = (a.tick - self.lag[i]) * a.dt
+            d_next = box_distance(x, y, ac, t_next, *self.offset)
+            hold = d_next < near and \
+                d_next < box_distance(x, y, ac, t_now, *self.offset) - _APPROACH_EPS
+            if hold:
+                self.lag[i] += 1
+            self.held[i] = hold
+
     def on_tick(self, arena) -> None:
-        """Do nothing: an actor's pose is a function of time."""
+        """Do nothing: an actor moves in :meth:`world_step` (or as a function of time)."""
 
     def on_reset(self, arena) -> None:
-        """Do nothing: the schedule does not restart."""
+        """Do nothing: the schedule does not restart (nor does a held actor's lag)."""
 
     def state_bytes(self) -> bytes:
         """Return the layout tag and the actor count (their poses follow from the tick)."""
-        return b'coco.arena.actors.v1\x00' + struct.pack('<I', len(self.actors))
+        out = b'coco.arena.actors.v1\x00' + struct.pack('<I', len(self.actors))
+        if self.yielding():
+            # G2 rules 5 only: each actor's held ticks and whether it held at the last tick
+            n = len(self.actors)
+            out += b'yield' + struct.pack(f'<{n}I{n}B', *self.lag, *self.held)
+        return out
 
 
 SUBSYSTEMS['actors'] = DepotActors
+
+
+# -- G2 rules 5: AUTO reacts to the actors ----------------------------------------------------
+
+#: how far ahead in time (s) AUTO predicts its path against the moving actors -- the reference
+#: bots' look-ahead (YIELD_HORIZON) -- and the clearance (m, robot circle to box) it keeps: their
+#: robot diameter
+AVOID_HORIZON = 4.0
+AVOID_MARGIN_RADII = 2.0
+#: waiting this long (ticks) for one moving actor, AUTO re-plans once around its box, and takes
+#: the new route only if that route is clear (crossing a lane, waiting for the actor to pass is
+#: what gets COCO across: a route round a moving actor's predicted sweep led along the lane)
+AVOID_REPLAN_TICKS = 30
+#: waiting this long (ticks) in all, AUTO goes on regardless (the actors stop for COCO), for
+#: AVOID_GO_TICKS ticks, keeping only a short-range check (AVOID_GO_HORIZON s, AVOID_GO_MARGIN m)
+AVOID_WAIT_MAX_TICKS = 100
+AVOID_GO_TICKS = 50
+AVOID_GO_HORIZON = 1.0
+AVOID_GO_MARGIN = 0.1
+#: at most one re-plan per this many ticks (one search each: the per-tick cost stays bounded)
+AVOID_COOLDOWN_TICKS = 20
+#: a stopped (held) actor counts as in the way when the path's next AVOID_AHEAD_M metres would
+#: come within AVOID_TOUCH_M of where the model refuses COCO's motion (its covering discs)
+AVOID_AHEAD_M = 1.5
+AVOID_TOUCH_M = 0.05
+#: the re-plan grid blocks every cell within radius + disc + AVOID_CLEAR_M of the obstructing
+#: actor's covering discs (where it is now)
+AVOID_CLEAR_M = 0.1
+#: an actor that held for COCO within this many ticks is still giving way (it stops and starts
+#: as COCO moves off): AUTO keeps the right of way instead of stopping for it
+AVOID_YIELD_MEMORY_TICKS = 10
+#: when a stopped actor is in the way and no detour exists: back away from it, at most this
+#: long (ticks) at AVOID_BACK_V (m/s), only while the step stays clear of walls and actors
+AVOID_BACK_TICKS = 20
+AVOID_BACK_V = -0.15
+AVOID_STATES = ('clear', 'waiting', 'go', 'replanned', 'blocked', 'backing')
+
+
+def _gap_to_discs(x, y, radius, discs) -> float:
+    """How far (m) COCO's centre is from where the model refuses its motion (< 0: refused)."""
+    return min((math.hypot(x - cx, y - cy) - r for cx, cy, r in discs),
+               default=math.inf) - radius
+
+
+def _along(pts, step: float, length: float):
+    """Return points every ``step`` m along the polyline ``pts`` for ``length`` m (not pts[0])."""
+    out, pos, i, left = [], pts[0], 1, length
+    while i < len(pts) and left > 1e-12:
+        go = min(step, left)
+        while i < len(pts) and go > 0:
+            d = math.hypot(pts[i][0] - pos[0], pts[i][1] - pos[1])
+            if d <= go:
+                pos, go, i = pts[i], go - d, i + 1
+                left -= d
+            else:
+                f = go / d
+                pos = (pos[0] + (pts[i][0] - pos[0]) * f, pos[1] + (pts[i][1] - pos[1]) * f)
+                left -= go
+                go = 0.0
+        out.append(pos)
+    return out
+
+
+def path_waypoints(a: Arena, cells, goal) -> List[Tuple[float, float]]:
+    """Return a search path's cells as the Arena's waypoints (``Arena._plan_finish``'s rule)."""
+    cells = [(c[0], c[1]) for c in cells]
+    out = []
+    for i, c in enumerate(cells):
+        if 0 < i < len(cells) - 1:
+            p, n = cells[i - 1], cells[i + 1]
+            if (c[0] - p[0], c[1] - p[1]) == (n[0] - c[0], n[1] - c[1]):
+                continue
+        out.append(a.plan_map.cell_centre(*c))
+    if not out:
+        return []
+    out[-1] = tuple(goal)
+    return out[1:] or out
+
+
+class ActorAvoid:
+    """
+    G2 rules 5: AUTO reacts to the Depot's actors (the Arena subsystem ``avoid``, ``avoid.on=1``).
+
+    While a goal is driven, each tick, before the waypoint follower:
+
+    - a **moving** actor whose box the path ahead (at the auto speed, AVOID_HORIZON s, from the
+      actors' actual poses on their schedules) would bring within AVOID_MARGIN_RADII x radius of
+      COCO's circle: AUTO **holds** (0, 0) and waits. After AVOID_REPLAN_TICKS of waiting it
+      re-plans once around its box (taken only if the new route is clear); after
+      AVOID_WAIT_MAX_TICKS it goes on for AVOID_GO_TICKS with a short-range check only (the
+      actors stop for COCO);
+    - an actor **stopped for COCO** (held: COCO is in its safety field) has given COCO the right
+      of way: AUTO drives on, unless the path's next AVOID_AHEAD_M would run into it -- then it
+      re-plans around its box at once, or, with no detour, backs away from it.
+
+    A re-plan is one search (the Arena's planner) on a copy of the plan grid with the actor's
+    covering discs (inflated by radius + AVOID_CLEAR_M) blocked; it sets the Arena's waypoints
+    (the plan grid itself is never replaced), at most once per AVOID_COOLDOWN_TICKS. An actor
+    that held for COCO within AVOID_YIELD_MEMORY_TICKS still counts as stopped for it.
+    """
+
+    def __init__(self, arena):
+        """Attach to a v3 Arena with actors; nothing happens until ``avoid.on=1``."""
+        if not v3.is_v3(arena.spec):
+            raise ArenaError('avoid needs a World Spec v3 level')
+        self.arena = arena
+        self.on = False
+        self._clear()
+        self.replans = 0
+        #: the tick (as a Tick reports it) of the last re-plan; -1 before the first
+        self.replanned = -1
+
+    def _clear(self):
+        self.state = 'clear'
+        self.actor = ''
+        self.wait = 0
+        self.go = 0
+        self.cool = 0
+        self.back = 0
+
+    def config(self, key: str, value: str) -> None:
+        """Apply ``avoid.on=1``."""
+        if key != 'on' or value != '1':
+            raise ArenaError('avoid: the only setting is avoid.on=1')
+        self.on = True
+
+    def on_reset(self, arena) -> None:
+        """Forget the wait on a reset."""
+        self._clear()
+
+    def on_tick(self, arena) -> None:
+        """Count the cool-down and each actor's ticks since it held; forget the wait off a goal."""
+        if self.cool:
+            self.cool -= 1
+        act = arena.subsystems.get('actors')
+        if act is not None:
+            held = act.holding()
+            if getattr(self, 'since_held', None) is None:
+                #: per actor, ticks since it last held for COCO (capped)
+                self.since_held = [AVOID_YIELD_MEMORY_TICKS] * len(held)
+            self.since_held = [0 if h else min(AVOID_YIELD_MEMORY_TICKS, k + 1)
+                               for h, k in zip(held, self.since_held)]
+        if arena.mode != 'goal' and self.state != 'clear':
+            cool = self.cool
+            self._clear()
+            self.cool = cool
+
+    # -- what is in the way -------------------------------------------------------------------
+
+    def _giving_way(self, act) -> List[bool]:
+        """Per actor: it stopped for COCO now or within AVOID_YIELD_MEMORY_TICKS."""
+        since = getattr(self, 'since_held', None)
+        if since is None:
+            return act.holding()
+        return [h or k < AVOID_YIELD_MEMORY_TICKS for h, k in zip(act.holding(), since)]
+
+    def _blocker(self, a, act, pts, horizon, margin):
+        """``('parked' | 'moving', actor index)`` for the first actor in the way, or None."""
+        held = self._giving_way(act)
+        times = act.times()
+        off = act.offset
+        here = pts[0]
+        ahead = None
+        for i, ac in enumerate(act.actors):
+            if not held[i]:
+                continue
+            discs = actor_discs(ac, times[i], *off)
+            g0 = _gap_to_discs(here[0], here[1], a.radius, discs)
+            if ahead is None:
+                ahead = _along(pts, 0.05, AVOID_AHEAD_M)
+            for p in ahead:
+                g = _gap_to_discs(p[0], p[1], a.radius, discs)
+                if g < AVOID_TOUCH_M and g < g0 - _APPROACH_EPS:
+                    return ('parked', i)
+        moving = [i for i in range(len(act.actors)) if not held[i]]
+        if not moving:
+            return None
+        speed = a.limits['auto_linear']
+        pos, j, k = here, 1, 0
+        while k * a.dt <= horizon + 1e-9:
+            for i in moving:
+                if box_distance(pos[0], pos[1], act.actors[i], times[i] + k * a.dt, *off) \
+                        - a.radius < margin:
+                    return ('moving', i)
+            step = speed * a.dt
+            while j < len(pts) and step > 0:
+                d = math.hypot(pts[j][0] - pos[0], pts[j][1] - pos[1])
+                if d <= step:
+                    pos, step, j = pts[j], step - d, j + 1
+                else:
+                    f = step / d
+                    pos, step = (pos[0] + (pts[j][0] - pos[0]) * f,
+                                 pos[1] + (pts[j][1] - pos[1]) * f), 0.0
+            k += 1
+        return None
+
+    def _replan(self, a, act, i):
+        """Return a route to the goal around actor ``i``'s box (waypoints), or None; one search."""
+        from .grid import Grid
+        if a.goal is None:
+            return None
+        self.cool = AVOID_COOLDOWN_TICKS
+        discs = actor_discs(act.actors[i], act.times()[i], *act.offset)
+        g, pm = a.grid, a.plan_map
+        blocked = list(g._blocked)
+        res = pm.resolution
+        for cx, cy, r in discs:
+            reach = a.radius + r + AVOID_CLEAR_M
+            c0 = max(0, math.floor((cx - reach - pm.origin[0]) / res))
+            c1 = min(g.width - 1, math.floor((cx + reach - pm.origin[0]) / res))
+            up0 = math.floor((cy - reach - pm.origin[1]) / res)
+            up1 = math.floor((cy + reach - pm.origin[1]) / res)
+            r0 = max(0, g.height - 1 - up1)
+            r1 = min(g.height - 1, g.height - 1 - up0)
+            for row in range(r0, r1 + 1):
+                for col in range(c0, c1 + 1):
+                    x, y = pm.cell_centre(row, col)
+                    if math.hypot(x - cx, y - cy) < reach:
+                        blocked[row * g.width + col] = True
+        grid = Grid(g.width, g.height, blocked, g._cost,
+                    connectivity=g.move_model.connectivity,
+                    diagonal_cost=g.move_model.diagonal_cost, corner_cutting=g.corner_cutting,
+                    cost_weight=g.cost_weight, cost_scale=g.cost_scale)
+        here = a.belief()
+        sc, gc = pm.cell_at(here[0], here[1]), pm.cell_at(*a.goal)
+        if sc is None or gc is None:
+            return None
+        s, t = _nearest_free(grid, sc), _nearest_free(grid, gc)
+        if s is None or t is None:
+            return None
+        r = search(grid, s, t, **PLANNERS[a.planner])
+        return (path_waypoints(a, r.path, a.goal) or None) if r.found else None
+
+    def _adopt(self, a, wps) -> None:
+        """Drive the re-planned route (the Arena's own waypoints; its plan grid is untouched)."""
+        a.waypoints, a.wp_index = wps, 0
+        self.replans += 1
+        self.replanned = a.tick + 1     # the tick this step produces (the Tick that reports it)
+
+    def _back_off(self, a, act, i):
+        """Return one back-off step away from stopped actor ``i``, or None if it is not clear."""
+        if self.back >= AVOID_BACK_TICKS:
+            return None
+        from .sketch import step_pose
+        x, y, th = a.pose
+        nx, ny, _ = step_pose(a.pose, AVOID_BACK_V, 0.0, a.dt)
+        discs = act.discs()
+        if a.smap.clearance(nx, ny) < a.radius or \
+                _gap_to_discs(nx, ny, a.radius, discs) <= max(
+                    _gap_to_discs(x, y, a.radius, discs), 0.0):
+            return None
+        self.back += 1
+        return (AVOID_BACK_V, 0.0, False)
+
+    # -- the command --------------------------------------------------------------------------
+
+    def command(self, a):
+        """Return ``(v, w, arrived)`` to hold or back off, or None (the follower drives)."""
+        act = a.subsystems.get('actors')
+        if not self.on or act is None or a.wp_index >= len(a.waypoints):
+            return None
+        here = a.belief()
+        pts = [(here[0], here[1])] + [tuple(w) for w in a.waypoints[a.wp_index:]]
+        if self.go:
+            self.go -= 1
+            b = self._blocker(a, act, pts, AVOID_GO_HORIZON, AVOID_GO_MARGIN)
+        else:
+            b = self._blocker(a, act, pts, AVOID_HORIZON, AVOID_MARGIN_RADII * a.radius)
+        if b is None:
+            self.state, self.actor, self.wait, self.back = (
+                'go' if self.go else 'clear'), '', 0, 0
+            return None
+        kind, i = b
+        self.actor = act.actors[i]['id']
+        if kind == 'parked':
+            # the actor stopped for COCO: COCO has the right of way, and goes round it
+            self.wait = 0
+            wps = self._replan(a, act, i) if not self.cool else None
+            if wps is not None:
+                self._adopt(a, wps)
+                self.state, self.back = 'replanned', 0
+                return None
+            c = self._back_off(a, act, i)
+            self.state = 'backing' if c is not None else 'blocked'
+            return c if c is not None else (0.0, 0.0, False)
+        self.back = 0
+        self.wait += 1
+        if self.wait >= AVOID_WAIT_MAX_TICKS:
+            # waited long enough: go on (the actors stop for COCO), with a short-range check
+            self.wait, self.go, self.state = 0, AVOID_GO_TICKS, 'go'
+            return None
+        if self.wait == AVOID_REPLAN_TICKS and not self.cool:
+            wps = self._replan(a, act, i)
+            if wps is not None and self._blocker(
+                    a, act, [pts[0]] + list(wps), AVOID_HORIZON,
+                    AVOID_MARGIN_RADII * a.radius) is None:
+                self._adopt(a, wps)
+                self.state = 'replanned'
+                return None
+        self.state = 'waiting'
+        return (0.0, 0.0, False)
+
+    def view(self) -> Dict[str, object]:
+        """Return what the HUD shows: the state, the actor in the way, the last re-plan's tick."""
+        return {'state': self.state, 'actor': self.actor, 'replans': self.replans,
+                'replanned': self.replanned}
+
+    def state_bytes(self) -> bytes:
+        """Return the layout tag and the counters (layout coco.arena.avoid.v1)."""
+        a = self.actor.encode('utf-8')
+        return (b'coco.arena.avoid.v1\x00' +
+                struct.pack('<B5IiI', self.on, AVOID_STATES.index(self.state), self.wait,
+                            self.go, self.cool, self.back, self.replanned, self.replans) +
+                struct.pack('<I', len(a)) + a)
+
+
+SUBSYSTEMS['avoid'] = ActorAvoid
 
 
 # -- helpers -------------------------------------------------------------------------
@@ -744,11 +1150,25 @@ def stars(card: Dict[str, object], reference: Dict[str, object]) -> int:
 
 # -- playing a record ------------------------------------------------------------------------
 
+#: G2 rules 5: the tick-0 inputs that make the actors stop for COCO and AUTO react to them
+YIELD_SETUP = ('actors.yield=1', 'avoid.on=1')
+
+
 def setup_inputs(game: str, arg, rules: int = 1, rnd=None,
-                 mode: Optional[str] = None) -> List[Dict[str, object]]:
-    """Return the tick-0 inputs every session of ``game`` starts with (in its log)."""
+                 mode: Optional[str] = None,
+                 yielding: Optional[bool] = None) -> List[Dict[str, object]]:
+    """
+    Return the tick-0 inputs every session of ``game`` starts with (in its log).
+
+    ``yielding`` (default: Fetch Rush rules >= YIELD_RULES) appends :data:`YIELD_SETUP`
+    (G2 rules 5), after every earlier input, so rules 4's setup is unchanged.
+    """
     out = [{'tick': 0, 'kind': 'config', 'choice': 'actors.on=1'},
            {'tick': 0, 'kind': 'config', 'choice': 'assist.target=any'}]
+    if yielding is None:
+        yielding = game == 'fetch_rush' and rules >= YIELD_RULES
+    if yielding:
+        out += [{'tick': 0, 'kind': 'config', 'choice': c} for c in YIELD_SETUP]
     start = None
     if game == 'rush_hour':
         start = RUSH_HOUR[arg]['start']
@@ -945,6 +1365,9 @@ def bot_fetch_rush(spec, seed: int, arena_seed: int = 1, rules=None,
     # G2.1, rules 4: the round names each order's pre-grasp pose and its legs' crossing mouths
     # (the routes it was drawn with keep the crossing rule); the bot drives through those
     planned = version >= 4 and 'pick' in rules.round
+    # G2 rules 5: the model yields (the actors stop for COCO, ActorAvoid makes the drive wait or
+    # re-plan, as AUTO's does), so the bot sends no STOPs of its own; rules 1-4 bots yield by STOP
+    own_yield = version < YIELD_RULES
     while not d.done():
         cur = rules.current()
         if cur is None:
@@ -953,11 +1376,11 @@ def bot_fetch_rush(spec, seed: int, arena_seed: int = 1, rules=None,
         k = rules.k
         if planned:
             for xy in rules.round['via'][k][0]:
-                d.goal(xy, 3000, yield_to_actors=True)
+                d.goal(xy, 3000, yield_to_actors=own_yield)
             ba = (rules.round['pick'][k], None)
         else:
             ba = best_approach(a, assist, oid, a.pose[:2])
-        if ba is None or not d.goal(ba[0][:2], 3000, yield_to_actors=True):
+        if ba is None or not d.goal(ba[0][:2], 3000, yield_to_actors=own_yield):
             d.until(lambda: False, 10)
             if d.done():
                 break
@@ -971,9 +1394,9 @@ def bot_fetch_rush(spec, seed: int, arena_seed: int = 1, rules=None,
             continue
         if planned:
             for xy in rules.round['via'][k][1]:
-                d.goal(xy, 3000, yield_to_actors=True)
+                d.goal(xy, 3000, yield_to_actors=own_yield)
         r = zone_rect(a.spec, drop)
-        d.goal(((r[0] + r[1]) / 2, (r[2] + r[3]) / 2), 4000, yield_to_actors=True)
+        d.goal(((r[0] + r[1]) / 2, (r[2] + r[3]) / 2), 4000, yield_to_actors=own_yield)
         if d.done():
             break
         d.step([{'kind': 'config', 'choice': 'assist.grasp=go'}])
@@ -1043,11 +1466,12 @@ def _conflict(a: Arena, pts, horizon: float = YIELD_HORIZON) -> bool:
     if act is None:
         return False
     speed, margin = a.limits['auto_linear'], 2 * a.radius
+    # each actor from where it really is (G2 rules 5: a held actor runs late), on its schedule
+    times = act.times()
     pos, i, k = pts[0], 1, 0
     while k * a.dt <= horizon + 1e-9:
-        t = a.t_world + k * a.dt
-        if any(box_distance(pos[0], pos[1], ac, t, *act.offset) - a.radius < margin
-               for ac in act.actors):
+        if any(box_distance(pos[0], pos[1], ac, t0 + k * a.dt, *act.offset) - a.radius < margin
+               for ac, t0 in zip(act.actors, times)):
             return True
         step = speed * a.dt
         while i < len(pts) and step > 0:
@@ -1075,6 +1499,8 @@ def _crossing_delay(a: Arena, frm, to, horizon_ticks: int = 1200) -> int:
     t_cross = dist / speed
     margin = 2 * a.radius
     off = actors.offset
+    # each actor from its own clock (G2 rules 5: a held actor runs late; else the world's)
+    late = [a.t_world - t for t in actors.times()]
     for k in range(horizon_ticks):
         t0 = a.t_world + k * a.dt + t_turn
         ok = True
@@ -1083,7 +1509,8 @@ def _crossing_delay(a: Arena, frm, to, horizon_ticks: int = 1200) -> int:
             f = min(1.0, i * a.dt / t_cross)
             x, y = frm[0] + (to[0] - frm[0]) * f, frm[1] + (to[1] - frm[1]) * f
             t = t0 + i * a.dt
-            if any(box_distance(x, y, ac, t, *off) - a.radius < margin for ac in actors.actors):
+            if any(box_distance(x, y, ac, t - d, *off) - a.radius < margin
+                   for ac, d in zip(actors.actors, late)):
                 ok = False
                 break
         if ok:
