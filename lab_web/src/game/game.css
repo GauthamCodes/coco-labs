@@ -300,9 +300,10 @@
 
 /* owner request 2026-10-24: Fetch by colour -- chips carry the colour's NAME and size (colour is never the only cue) */
 .g1-modecard.g2-colour-card { width: calc(206px * var(--g1-s)); }
+.g1-modecard.g2-colour-card h3 { margin-top: 2px; }
 .g2-colour-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 7px; }
 .g2-colour-chips a { display: block; text-align: center; padding: 5px 3px; border-radius: 8px; color: var(--g1-ink); text-decoration: none;
-  font: 600 10px var(--g1-display); letter-spacing: .05em; background: rgba(10,13,18,.72); border: 1px solid rgba(255,255,255,.16); border-left: 6px solid var(--chip, #888); }
+  font: 600 calc(9px * var(--g1-s)) var(--g1-display); letter-spacing: .02em; white-space: nowrap; background: rgba(10,13,18,.72); border: 1px solid rgba(255,255,255,.16); border-left: 6px solid var(--chip, #888); }
 .g2-colour-chips a b { font-weight: 800; }
 .g2-colour-chips a .st { font-style: normal; color: var(--g1-hazard); margin-left: 2px; }
 .g2-colour-chips a:hover, .g2-colour-chips a:focus-visible { background: rgba(255,255,255,.14); outline: 2px solid var(--chip); outline-offset: 1px; }

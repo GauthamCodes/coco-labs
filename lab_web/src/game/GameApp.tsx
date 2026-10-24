@@ -226,7 +226,7 @@ function ModeSelect() {
 function ColourCard({ planner, art }: { planner: PlayPlanner; art: CSSProperties }) {
   return <div role="listitem" className="g1-modecard g2-colour-card" data-testid="mode-fetch-colour">
     <div className="art" style={art} /><span className="g1-eyebrow" style={{ color: 'var(--g1-coco)' }}>NEW · DEPOT</span><h3>Fetch by colour</h3>
-    <p>Four rods in a row. Pick a colour: COCO fetches that rod to Dispatch.</p>
+    <p>Pick a colour: COCO fetches that rod to Dispatch.</p>
     <div className="g2-colour-chips" role="group" aria-label="Choose the rod's colour">{FETCH_COLOURS.map((c) => {
       const href = colourHref(BASE, c.id, planner), best = readColourStars(c.id, planner);
       return <a key={c.id} data-testid={`mode-fetch-colour-${c.id}`} data-colour={c.id} href={href} aria-label={`${c.label}, ${c.mm} millimetre rod${best !== null ? `, best ${best} of 3 stars` : ''}`}
