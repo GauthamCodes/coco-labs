@@ -1,0 +1,63 @@
+{
+ "site": "http://127.0.0.1:4197/coco-labs/",
+ "seed": "2",
+ "label": "before",
+ "gpu": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "evidence": "MODEL",
+ "setup": [
+  "kidnap",
+  "actors.on=1",
+  "assist.target=any"
+ ],
+ "radius": 0.22,
+ "overlap": "box distance from COCO centre < radius",
+ "ticks_logged": 1457,
+ "ticks_missed_by_the_poller": 1,
+ "legs": {
+  "A": {
+   "goal": [
+    40,
+    15.5
+   ],
+   "from_tick": 5,
+   "to_tick": 311,
+   "arrived": true
+  },
+  "B": {
+   "goal": [
+    36,
+    11
+   ],
+   "from_tick": 311,
+   "to_tick": 564,
+   "arrived": true
+  },
+  "B_wait": {
+   "goal": null,
+   "from_tick": 564,
+   "to_tick": 1167,
+   "arrived": false
+  },
+  "C": {
+   "goal": [
+    28.072020590107975,
+    11
+   ],
+   "from_tick": 1167,
+   "to_tick": 1462,
+   "arrived": true
+  }
+ },
+ "min_clearance_m": -0.22,
+ "closest": {
+  "tick": 243,
+  "actor": "walker_dock",
+  "clearance_m": -0.22
+ },
+ "overlap_ticks": 114,
+ "blocked_ticks": 133,
+ "ticks_with_an_actor_held": 0,
+ "avoid_states": {},
+ "forklift_stop_screenshot_tick": null,
+ "errors": []
+}
