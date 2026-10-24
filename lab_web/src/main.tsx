@@ -11,6 +11,7 @@ import './ui/style.css';
 import { registerStaticCache } from './offline/register';
 import { initUpdates } from './offline/updates';
 import { UpdateNotice } from './shell/UpdateNotice';
+import { PageError, StageBoundary } from './ui/StageBoundary';
 import { countVisit } from './offline/counter';
 import { VISIT_COUNTER_ID } from '../site.config';
 import '@fontsource-variable/outfit';
@@ -18,7 +19,8 @@ import '@fontsource-variable/manrope';
 applyTheme();
 const root = createRoot(document.getElementById('root')!);
 const BASE = import.meta.env.BASE_URL;
-const render = (node: ReactNode) => root.render(<StrictMode><Fragment key={window.location.search}>{node}</Fragment><GlobalSettings /><UpdateNotice /></StrictMode>);
+// a page that throws (no WebGL, a failed renderer) shows PageError, never a blank page
+const render = (node: ReactNode) => root.render(<StrictMode><Fragment key={window.location.search}><StageBoundary fallback={(error) => <PageError error={error} />}>{node}</StageBoundary></Fragment><GlobalSettings /><UpdateNotice /></StrictMode>);
 let generation = 0;
 async function display() {
   const ownGeneration = ++generation;
