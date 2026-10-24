@@ -32,6 +32,7 @@ def test_every_ghost_says_what_it_is():
         assert any('no grasp' in n for n in g['not']) and any('parked' in n for n in g['not']) and any('hardware' in n for n in g['not'])
         assert g['source']['bag_sha256'] and all(len(v) == 64 for v in g['source']['bag_sha256'].values())
         assert e['all_succeeded'] == all(L['status'] == 'SUCCEEDED' for L in g['legs'])
-        assert g['round']['rules'] == 4 and g['track'] and g['track'][0][0] == 0
+        # times count from the first leg's start; its first truth pose follows within one 0.1 s sample
+        assert g['round']['rules'] == 4 and g['track'] and 0 <= g['track'][0][0] <= 0.1
         ts = [p[0] for p in g['track']]
         assert ts == sorted(ts)

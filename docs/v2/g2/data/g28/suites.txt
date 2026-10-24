@@ -1,0 +1,25 @@
+# G2 suites 2026-10-24T09:47:12Z, tree 5c77bbe
+# machine: balanced, AC 1, NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, Node v24.21.0, Python 3.12.3
+STEP venv_install rc=0 
+STEP coco_lab_venv rc=0 1108 passed, 2 deselected in 1050.55s (0:17:30)
+STEP coco_lab_gz rc=0 2 passed, 1108 deselected in 3.89s
+STEP lab_web_tools rc=1 1 failed, 235 passed in 305.06s (0:05:05)
+STEP build_catalog rc=0 wheel: {'path': 'py/coco_lab-0.2.0-py3-none-any.whl', 'sha256': '306e16323907c469066757c9308418b8548602af72556565dbe1acb4b002b4f6', 'bytes': 361925}
+STEP schemas_check rc=0 generated code is current
+STEP typecheck rc=0 
+STEP arena_assets rc=0 missions: 7, every replay link names a run here
+STEP vitest rc=0 
+STEP native_gate rc=0 {"hash_version":3,"passed":true,"cases":{"planners":{"compared":818951,"exact":818951,"failures":0,"max_abs_diff":0},"fetch_rush":{"compared":1436,"exact":1436,"failures":0,"max_abs_diff":0},"control"
+STEP coco_verify rc=0 18 of 18 references earn their stars under Pyodide 314.0.7, Node v24.21.0
+STEP build_twice rc=0 }
+STEP fetch_v1 rc=0 v1 site: v1-site@36e65003d37d9be246110c2dd2c27944aabed193 (tree 6857ff56a2646c0772a2b7780e50f2e1eb910ae289ae3a222fdab6ee9b2bde2b) -> /home/gautham/coco_labs_ws/worktrees/g2/lab_web/dist/v1 (36M)
+STEP update_isolation rc=0 {"passed":true,"checks":{"openDocumentMixed_false":true,"page_A_reads_A":true,"new_version_notice":true,"no_forced_reload":true,"old_cache_kept_while_open":true,"old_cache_deleted_once_closed":true,"r
+STEP det_v1_10 rc=0 {"chromium":[1500,0,"9a9d582d03f4"],"firefox":[1500,0,"9a9d582d03f4"],"webkit":[1500,0,"9a9d582d03f4"],"pyodide-node":[1500,0,"9a9d582d03f4"]} pass true
+STEP det_terrain rc=0 {"chromium":[2100,0,"3a8c227eca45"],"firefox":[2100,0,"3a8c227eca45"],"webkit":[2100,0,"3a8c227eca45"],"pyodide-node":[2100,0,"3a8c227eca45"]} pass true
+STEP screenshots rc=0 {"pass":true,"errors":0}
+STEP chase_hud rc=0 {"passed":true,"phone-landscape":{"poses":20,"failed":0,"errors":0,"sim":true},"desktop":{"poses":20,"failed":0,"errors":0,"sim":true},"real-phone-tab-710x269":{"poses":20,"failed":0,"errors":0,"sim":
+STEP saved_view rc=0 phone-landscape ok {"beforePlay":{"view":"sim","sim":true,"world":false,"cam":"rviz"},"playing":{"view":"sim","sim":true,"world":false,"cam":"rviz"},"game":{"view":"game","sim":false,"world":true,"cam
+STEP v1_links rc=0 {"ok":true,"forms":50,"archive_views":6,"failed":0}
+STEP replays rc=0 {"pass":true,"errors":0}
+STEP packages rc=1 [tests] FAILED: at least one package did not pass
+SUITES DONE
