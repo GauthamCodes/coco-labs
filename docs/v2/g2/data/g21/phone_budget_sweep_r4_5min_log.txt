@@ -58,3 +58,15 @@
 79 m: drawn 6 distinct; seed 6: timer 447.1 s > 300 s
 80 m: drawn 6 distinct; seed 6: timer 447.1 s > 300 s
 81 m: drawn 6 distinct; seed 6: timer 617.7 s > 300 s
+82 m: drawn 6 distinct; seed 6: timer 617.7 s > 300 s
+83 m: drawn 6 distinct; seed 6: timer 617.7 s > 300 s
+84 m: drawn 6 distinct; seed 6: timer 457.3 s > 300 s
+85 m: drawn 6 distinct; seed 3: timer 367.2 s > 300 s
+86 m: drawn 6 distinct; seed 3: timer 367.2 s > 300 s
+87 m: drawn 6 distinct; seed 3: timer 367.2 s > 300 s
+88 m: drawn 6 distinct; seed 2: timer 600.3 s > 300 s
+89 m: drawn 6 distinct; seed 2: timer 600.3 s > 300 s
+90 m: drawn 6 distinct; seed 2: timer 600.3 s > 300 s
+91 m: drawn 6 distinct; seed 2: timer 600.3 s > 300 s
+92 m: drawn 6 distinct; seed 2: timer 551.7 s > 300 s
+93 m: drawn 6 distinct; seed 2: timer 551.7 s > 300 s

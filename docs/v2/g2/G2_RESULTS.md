@@ -5,7 +5,7 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md) · state: [`G2_STATUS.md`](G2_STATUS.md) 
 Evidence classes as AGENTS.md: **MODEL** (the browser model), **STACK** (recorded ROS 2 in
 Gazebo, never hardware), MEASURED, EMULATED, UNRESOLVED.
 
-**Still owed:** the AUTO-gap re-measure and five Gazebo runs of each final phone round (both need a
+**Still owed:** a quiet-laptop re-run of the Full-shift timing (below) and five Gazebo runs of each final phone round (both need a
 quiet laptop on mains power); the touch-to-motion samples over 1 s are UNRESOLVED (below).
 
 ## Checkpoints
@@ -31,7 +31,12 @@ quiet laptop on mains power); the touch-to-motion samples over 1 s are UNRESOLVE
 - **Phone budget 26 m.** No budget from 22 m to 81 m gives ≥ 3 distinct rounds with every timer ≤ 5:00
   (the 5:00 sweep, continued past G2's choice, had reached 92 m with none qualifying); **26 m is the smallest giving them ≤ 6:00**: 4 distinct rounds —
   loading dock (seeds 2, 4, 5) 4:35.9 · workshop (3) 4:59.1 · workshop (1) 5:31.4 · workshop (6) 5:49.1.
-- **AUTO stall 119–141 ms:** accepted, open; G2.8's re-measure is owed (needs a quiet laptop).
+- **AUTO stall 119–141 ms:** accepted, open. Re-measured (G2.8, `tools/g1/fetch_timing.mjs`, NVIDIA, desktop,
+  low tier, AC; [`data/g28/auto_gap/`](data/g28/auto_gap/)): the largest tick gap around an AUTO press as the game
+  shows it is **117 ms** (phone round, G1.13: 119) and **116 ms** (Full shift, G1.13: 141) — G2 did not make it
+  worse. **But** the Full-shift run also had one 332 ms gap and a 272 ms worker step away from AUTO (G1.13's
+  Full shift: max 143 ms); it ran while two build/generation jobs shared the laptop, so it is **UNRESOLVED**
+  whether that is G2 or the load — to re-measure on a quiet laptop.
 - **Heavy settings on phones:** one-tap "Switch to recommended settings" toast after 10 s under
   55 fps; never silent (`fps_watch.ts`, tested).
 - **Old phone screenshots in history:** accepted, no rewrite.

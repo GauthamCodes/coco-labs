@@ -1,0 +1,32 @@
+{
+ "site": "http://127.0.0.1:4184/coco-labs/",
+ "passed": true,
+ "rows": [
+  {
+   "planner": "greedy",
+   "ok": true,
+   "checked": [
+    "planner-greedy"
+   ],
+   "href": "/coco-labs/?view=play&game=fetch_rush&seed=1&planner=greedy",
+   "saved": "\"greedy\"",
+   "plans": [
+    "greedy"
+   ],
+   "errors": []
+  },
+  {
+   "planner": "astar",
+   "ok": true,
+   "checked": [
+    "planner-astar"
+   ],
+   "href": "/coco-labs/?view=play&game=fetch_rush&seed=1",
+   "saved": "\"astar\"",
+   "plans": [
+    "astar"
+   ],
+   "errors": []
+  }
+ ]
+}
