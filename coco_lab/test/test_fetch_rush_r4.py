@@ -59,6 +59,8 @@ OPEN = [tuple(w['band']) for w in DOC['crossing_windows'] if w['open']]
 
 def test_a_crossing_is_open_only_with_a_measured_window():
     """
+    Close both Depot crossings: no start time has a contact-free window.
+
     Measured (games.crossing_windows): a straight crossing at the auto speed, from each of 600
     start times; on the Depot both marked crossings are the walkers' own paths, paced end to
     end, so none of the start times keeps COCO clear of the walker. Both are closed.
@@ -86,7 +88,7 @@ def test_the_crossings_are_where_the_walkers_cross_the_east_west_lane():
 
 
 def _cells(route):
-    """The route's cell centres: each merged segment is a straight or diagonal run of cells."""
+    """Return the route's cell centres: each merged segment is a straight or diagonal run."""
     out = [tuple(route[0])]
     for (x0, y0), (x1, y1) in zip(route, route[1:]):
         n = max(1, round(max(abs(x1 - x0), abs(y1 - y0)) / CELL))
@@ -95,7 +97,7 @@ def _cells(route):
 
 
 def _keeps_the_rule(points):
-    """Return why ``points`` (a route's cells, or a run's poses) break the crossing rule, or None."""
+    """Return why ``points`` (a route's cells or a run's poses) break the crossing rule or None."""
     inside, came = None, None
     last_out = None
     for p in points:
@@ -122,11 +124,13 @@ def test_each_round_keeps_the_decisions(mode, seed):
     assert rnd['region'] not in games.ROUND_NO_START
     assert len(rnd['orders']) == m['orders'] == len(rnd['pick']) == len(rnd['via'])
     frm = rnd['region']
-    for (oid, drop), ghost, route, via in zip(rnd['orders'], rnd['ghost_m'], rnd['routes'], rnd['via']):
+    for (oid, drop), ghost, route, via in zip(rnd['orders'], rnd['ghost_m'], rnd['routes'],
+                                              rnd['via']):
         assert ghost == DOC['trips'][frm][oid][drop] <= m['budget_m']
         why = _keeps_the_rule(_cells(route))
         assert why is None, f'{mode} {seed}: the route {why}'
-        for leg in via:   # the bot's goals: crossing mouths on a band's centre line, outside the lane
+        # the bot's goals: crossing mouths on a band's centre line, outside the lane
+        for leg in via:
             for p in leg:
                 assert not any(games.in_rect(p, r) for r in LANES)
                 assert any(abs(p[0] - (b[0] + b[1]) / 2) < 1e-3 for b in BANDS)
@@ -134,7 +138,8 @@ def test_each_round_keeps_the_decisions(mode, seed):
     card = rnd['reference']['card']
     assert card['deliveries'] == m['orders'] and card['rules'] == 4 and card['mode'] == mode
     assert rnd['timer_s'] == round(rnd['reference_time_s'] * games.ROUND_TIMER_FACTOR, 1)
-    assert card['timer'] == rnd['timer_s'] and card['delivered'][-1]['t'] == rnd['reference_time_s']
+    assert (card['timer'] == rnd['timer_s']
+            and card['delivered'][-1]['t'] == rnd['reference_time_s'])
     rec = rnd['reference']['record']
     assert rec['rules'] == 4 and rec['mode'] == mode and rec['hash_version'] == 3
 

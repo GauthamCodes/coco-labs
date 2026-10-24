@@ -242,9 +242,11 @@ def _actor_lanes(spec):
 
 def crossings(spec, lanes=ROUND_LANES) -> List[Tuple[float, float, float, float]]:
     """
-    The marked crossings of the round lanes, MAP frame, sorted: where a forklift's lane meets
-    another actor's (the hazard stripes describe.ts paints), across the whole depth of the
-    lane zone it lies in (a lane zone wider than deep is crossed in y, else in x).
+    Return the marked crossings of the round lanes, MAP frame, sorted.
+
+    A crossing is where a forklift's lane meets another actor's (the hazard stripes
+    describe.ts paints), across the whole depth of the lane zone it lies in (a lane zone
+    wider than deep is crossed in y, else in x).
     """
     zones = [zone_rect(spec, z) for z in lanes]
     al = _actor_lanes(spec)
@@ -269,13 +271,18 @@ def crossings(spec, lanes=ROUND_LANES) -> List[Tuple[float, float, float, float]
 
 
 def crossing_bands(spec, lanes=ROUND_LANES) -> List[Tuple[float, float, float, float]]:
-    """Where COCO's centre may be inside a lane: each crossing narrowed by the robot radius
-    across its width, so the whole footprint stays on the stripes."""
+    """
+    Return where COCO's centre may be inside a lane.
+
+    Each crossing is narrowed by the robot radius across its width, so the whole footprint
+    stays on the stripes.
+    """
     r = spec['robot']['radius']
     zones = [zone_rect(spec, z) for z in lanes]
     out = []
     for c in crossings(spec, lanes):
-        z = next(z for z in zones if z[0] <= c[0] and c[1] <= z[1] and z[2] <= c[2] and c[3] <= z[3])
+        z = next(z for z in zones
+                 if z[0] <= c[0] and c[1] <= z[1] and z[2] <= c[2] and c[3] <= z[3])
         if z[1] - z[0] >= z[3] - z[2]:
             out.append((c[0] + r, c[1] - r, c[2], c[3]))
         else:
@@ -292,6 +299,8 @@ CROSSING_WINDOW_TICKS = 600
 @_in_arena
 def crossing_windows(a: Arena, lanes=ROUND_LANES) -> List[Dict[str, object]]:
     """
+    Measure, for each crossing band, which start times cross it without contact.
+
     For each crossing band: a straight crossing of the lane zone on the band's centre line, at
     the auto speed, started at each of CROSSING_WINDOW_TICKS start times; the actors move by
     their known schedules (the model's own). Returns per band its start times with no contact
@@ -347,8 +356,10 @@ def on_band_centre(xy, band, rect) -> List[float]:
 
 def lane_grid(a: Arena, lanes=ROUND_LANES, bands=None):
     """
-    The Arena's plan grid with every cell whose centre is in a round lane, but not on one of
-    ``bands`` (default: every crossing band), blocked (a new grid; the Arena's own is untouched).
+    Return the Arena's plan grid with the round lanes blocked off the crossing bands.
+
+    Every cell whose centre is in a round lane, but not on one of ``bands`` (default: every
+    crossing band), is blocked (a new grid; the Arena's own is untouched).
     """
     from .grid import Grid
     g, pm = a.grid, a.plan_map
@@ -502,12 +513,17 @@ def fetch_rush_key(card) -> Tuple:
 # -- Fetch Rush rules 2: budgeted rounds (G1.11) ----------------------------------------
 
 def rounds_file(level: str = 'coco_depot_v1', rules: int = 2) -> Path:
-    """Rules 2's ``<level>.fetch_rush.json``; rules 3's (and 4's) ``<level>.fetch_rush.r<N>.json``."""
-    return LEVELS / (f'{level}.fetch_rush.json' if rules == 2 else f'{level}.fetch_rush.r{rules}.json')
+    """
+    Return a level's Fetch Rush rounds file.
+
+    Rules 2's ``<level>.fetch_rush.json``; rules 3's (and 4's) ``<level>.fetch_rush.r<N>.json``.
+    """
+    return LEVELS / (f'{level}.fetch_rush.json' if rules == 2
+                     else f'{level}.fetch_rush.r{rules}.json')
 
 
 def round_modes(rules: int) -> Dict[str, Dict[str, float]]:
-    """The modes (orders, budget) of rules 3 or 4."""
+    """Return the modes (orders, budget) of rules 3 or 4."""
     return ROUND_MODES_R4 if rules >= 4 else ROUND_MODES
 
 
@@ -747,7 +763,7 @@ def setup_inputs(game: str, arg, rules: int = 1, rnd=None,
 
 def round_for(seed, level: str = 'coco_depot_v1', rules: int = 2,
               mode: Optional[str] = None) -> Dict[str, object]:
-    """Return the precomputed round for ``seed`` (rules 2, or rules 3 / 4 in ``mode``), or raise."""
+    """Return the precomputed round for ``seed`` (rules 2, or rules 3/4 in ``mode``), or raise."""
     if rules >= 3:
         mode = mode or ROUND_MODE_DEFAULT
         modes = round_modes(rules)

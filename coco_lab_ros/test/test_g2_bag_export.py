@@ -52,7 +52,8 @@ def test_rosbag2_opens_it_and_every_message_deserialises():
         '/scan': 'sensor_msgs/msg/LaserScan', '/odom': 'nav_msgs/msg/Odometry',
         '/tf': 'tf2_msgs/msg/TFMessage', '/tf_static': 'tf2_msgs/msg/TFMessage',
         '/map': 'nav_msgs/msg/OccupancyGrid', '/plan': 'nav_msgs/msg/Path',
-        '/cmd_vel': 'geometry_msgs/msg/TwistStamped', '/joint_states': 'sensor_msgs/msg/JointState'}
+        '/cmd_vel': 'geometry_msgs/msg/TwistStamped',
+        '/joint_states': 'sensor_msgs/msg/JointState'}
     assert all(t.serialization_format == 'cdr' for t in topics.values())
     count = {}
     for topic, _m, _t in msgs:
@@ -70,13 +71,16 @@ def test_frames_stamps_and_shapes_are_the_models():
             stamps = [m.header.stamp]
         assert all(s.sec * 1_000_000_000 + s.nanosec == t for s in stamps), topic
         if topic == '/scan':
-            assert m.header.frame_id == 'lidar_link' and len(m.ranges) == 480 and len(m.intensities) == 0
+            assert (m.header.frame_id == 'lidar_link' and len(m.ranges) == 480
+                    and len(m.intensities) == 0)
         if topic == '/odom':
             assert (m.header.frame_id, m.child_frame_id) == ('odom', 'base_footprint')
         if topic == '/tf':
-            assert [(x.header.frame_id, x.child_frame_id) for x in m.transforms] == [('map', 'odom'), ('odom', 'base_footprint')]
+            assert [(x.header.frame_id, x.child_frame_id) for x in m.transforms] == [
+                ('map', 'odom'), ('odom', 'base_footprint')]
         if topic == '/tf_static':
-            assert [(x.header.frame_id, x.child_frame_id) for x in m.transforms] == [('base_footprint', 'base_link'), ('base_link', 'lidar_link')]
+            assert [(x.header.frame_id, x.child_frame_id) for x in m.transforms] == [
+                ('base_footprint', 'base_link'), ('base_link', 'lidar_link')]
         if topic == '/map':
             assert m.header.frame_id == 'map' and len(m.data) == m.info.width * m.info.height
             assert set(m.data) <= {-1, 0, 100}
@@ -92,6 +96,8 @@ def test_latched_topics_are_offered_transient_local():
     for name, t in topics.items():
         qos = [rosbag2_py.convert_rclcpp_qos_to_rclpy_qos(q) for q in t.offered_qos_profiles]
         latched = name in ('/map', '/tf_static')
-        assert qos and all(q.durability == (DurabilityPolicy.TRANSIENT_LOCAL if latched else DurabilityPolicy.VOLATILE)
-                           and q.reliability == ReliabilityPolicy.RELIABLE and q.depth == (1 if latched else 10)
+        assert qos and all(q.durability == (DurabilityPolicy.TRANSIENT_LOCAL if latched
+                                            else DurabilityPolicy.VOLATILE)
+                           and q.reliability == ReliabilityPolicy.RELIABLE
+                           and q.depth == (1 if latched else 10)
                            for q in qos), name
