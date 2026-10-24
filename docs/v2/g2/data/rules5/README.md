@@ -103,8 +103,10 @@ rule holds at 26 m; no budget meets ≤ 5:00, as under rules 4. Every reference:
 Nav2's index lists the rules-5 seeds for the same recordings (same rounds).
 
 **AUTO-only player** ([`auto_player_phone.jsonl`](auto_player_phone.jsonl),
-`tools/g2/auto_player_r5.py`: AUTO, GRAB, DROP through the browser's glue): see the file; on the
-phone rounds AUTO's own routes did not come near an actor.
+`tools/g2/auto_player_r5.py`: AUTO, GRAB, DROP through the browser's glue), phone seeds 1, 2, 3 and
+6 (the four distinct rounds), rules 4 and rules 5: the same result under both — 2 deliveries,
+0 contacts, 198.0–244.4 s used, closest actor 1.82–2.25 m: AUTO's own routes in the phone rounds
+do not meet an actor (the encounters come when COCO is driven or sent into or across a lane).
 
 ## Open
 
