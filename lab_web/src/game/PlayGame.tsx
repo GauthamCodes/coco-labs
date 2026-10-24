@@ -377,7 +377,7 @@ export function PlayGame(p: PlayProps) {
     // Nothing Phone (1): without it Play stayed in the tab, 710 x 269 CSS px under the address bar.
     void enterPhonePlay();
     sound.current.unlock();
-    r.current!.cam.setMode('chase');
+    r.current!.setGameCamera('chase');
     setCam('chase');
     s.current!.start();
     setStarted(true);

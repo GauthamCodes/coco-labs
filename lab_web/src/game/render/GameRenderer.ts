@@ -272,6 +272,7 @@ export class GameRenderer {
     this.sim = new SimView(look, this.radius);
     this.scene.add(this.sim.group);
     this.attachArm();
+    this.setView(this.view);   // a new world and SIM are built visible: show the current view's only
     if (this.pendingRos) { const r = this.pendingRos; this.pendingRos = null; this.setRos(r.info, r.map, r.occ); }
   }
 
@@ -302,16 +303,28 @@ export class GameRenderer {
    * G2.2: GAME or SIM. Instant: visibility, the background, the fog's density and the camera
    * change; no material is swapped (no shader compiles), and the model is never told.
    */
+  /**
+   * GAME's camera (PLAY picks chase): in SIM view it is kept for the switch back, and RViz's camera
+   * stays, reset behind COCO (its pose at the start, not the origin it had before the world).
+   */
+  setGameCamera(mode: CamMode) {
+    if (this.view !== 'sim') { this.cam.setMode(mode); return; }
+    this.gameCam = mode;
+    Object.assign(this.cam.rviz, { yaw: this.pose[2] + Math.PI, pitch: 0.95, dist: 4.5, px: 0, py: 0 });
+  }
+
   setView(view: View) {
-    if (view === this.view) return;
+    // the camera hands over only on a change; what is shown is applied on every call, because a
+    // saved SIM view arrives before the world is built and again once it is (G2.8, real phone)
+    const changed = view !== this.view;
     this.view = view;
     const sim = view === 'sim';
-    if (sim) {
+    if (changed && sim) {
       // RViz's Orbit view, starting behind COCO and looking down at it (the pan reset)
       this.gameCam = this.cam.mode;
       Object.assign(this.cam.rviz, { yaw: this.pose[2] + Math.PI, pitch: 0.95, dist: 4.5, px: 0, py: 0 });
       this.cam.setMode('rviz');
-    } else this.cam.setMode(this.gameCam);
+    } else if (changed) this.cam.setMode(this.gameCam);
     this.scene.background = new THREE.Color(sim ? SIM_BACKGROUND : 0x0e1116);
     if (this.world) this.world.group.visible = !sim;
     if (this.sim) this.sim.group.visible = sim;

@@ -46,6 +46,7 @@ step det_v1_10 bash -c 'rec=../docs/v2/data/m1/determinism; for b in chromium fi
 step det_terrain bash -c 'rec=../docs/v2/data/m4/m43/determinism; for b in chromium firefox webkit; do node tools/perf/determinism.mjs $b --sessions $rec/sessions.json --limit 3 --site '"$SITE"' --out '"$L"'/det_terrain --webkit-exe '"$WEBKIT"' || exit 1; done; node tools/perf/determinism.mjs compare --sessions $rec/sessions.json --limit 3 --ref $rec --out '"$L"'/det_terrain'
 step screenshots node tools/perf/screenshots.mjs check --site "$SITE" --out "$L/shots"
 step chase_hud node tools/g1/chase_hud_check.mjs "$SITE" "$L/chase_hud.json"
+step saved_view node tools/g2/saved_view_check.mjs "$SITE" "$L/saved_view.json"
 step v1_links node tools/perf/v1_links_check.mjs --site "$SITE" --out "$L/v1links"
 step replays node tools/perf/replay_check.mjs --site "$SITE" --out "$L/replays"
 cd "$R"
