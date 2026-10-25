@@ -30,12 +30,12 @@
     "y": 8
    },
    {
-    "tick": 99,
+    "tick": 98,
     "kind": "config",
     "choice": "assist.target=rod_green"
    },
    {
-    "tick": 99,
+    "tick": 98,
     "kind": "config",
     "choice": "assist.grasp=go"
    },
@@ -55,8 +55,8 @@
   "rules": 1,
   "level": "coco_depot_colours_v1"
  },
- "hash_chain": "f8d9128b7780843e0add9d6a33f09f1c79d6f7dad6a0791651b0e0357cefddcf",
- "last_hash": "0446fd6ceb79a3cb4874feee0a2508f48fae85416af26a63f04d29bb2adb1701",
+ "hash_chain": "40e4010b34dd034907c29afcb843c3b7d4b87445d50af627cb4c17a212b57328",
+ "last_hash": "47f62b7c4df039c50ef5b0a0375f5d11cfdc57b84dd77bee6ca58f0f1e6f95ec",
  "scorecard": {
   "game": "fetch_colour",
   "deliveries": 1,

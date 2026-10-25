@@ -3,7 +3,7 @@
   "game": "fetch_colour",
   "arg": "yellow",
   "seed": 1,
-  "ticks": 609,
+  "ticks": 606,
   "inputs": [
    {
     "tick": 0,
@@ -30,23 +30,23 @@
     "y": 8
    },
    {
-    "tick": 73,
+    "tick": 74,
     "kind": "config",
     "choice": "assist.target=rod_yellow"
    },
    {
-    "tick": 73,
+    "tick": 74,
     "kind": "config",
     "choice": "assist.grasp=go"
    },
    {
-    "tick": 336,
+    "tick": 334,
     "kind": "goal",
     "x": 23,
     "y": 1.4
    },
    {
-    "tick": 548,
+    "tick": 545,
     "kind": "config",
     "choice": "assist.grasp=go"
    }
@@ -55,15 +55,15 @@
   "rules": 1,
   "level": "coco_depot_colours_v1"
  },
- "hash_chain": "06b4b323c9b7834c0ff77d03052eae702253328a000d8dca1e1faf0c87b40e0c",
- "last_hash": "fcdd5edc0bd376cb6f661f949d063b0fb19f13b1dd4af9d3d759d34137ff1e38",
+ "hash_chain": "ae144d5d099289494697cf127552003f724dec71af5652bbe91eabee5dd11c78",
+ "last_hash": "d19c830c4dad379b4f6b832cbfb50e8b34246370734edc71be8f0eb5d7f42940",
  "scorecard": {
   "game": "fetch_colour",
   "deliveries": 1,
   "contacts": 0,
   "net_deliveries": 1,
-  "time_used": 60.800000000000004,
-  "path_efficiency": 0.9535419332708138,
+  "time_used": 60.5,
+  "path_efficiency": 0.9570976457948126,
   "orders": [
    [
     "rod_yellow",
@@ -74,9 +74,9 @@
    {
     "object": "rod_yellow",
     "drop": "dispatch_drop",
-    "t": 60.800000000000004,
-    "seconds": 60.800000000000004,
-    "driven": 8.075156142937173,
+    "t": 60.5,
+    "seconds": 60.5,
+    "driven": 8.04515613828055,
     "ghost": 7.7
    }
   ],

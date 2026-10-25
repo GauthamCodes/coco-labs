@@ -318,3 +318,18 @@
 [data-colour="blue"] { --chip: #2f6fd0; }
 [data-colour="yellow"] { --chip: #e0b020; }
 .g2-colour-dot { display: inline-block; width: .8em; height: .8em; border-radius: 50%; background: var(--chip); vertical-align: -.05em; margin-right: .35em; box-shadow: 0 0 0 1px rgba(255,255,255,.5); }
+
+/* Results on a short landscape screen (phones, 412 CSS px tall): compact, so the whole card fits without scrolling */
+@media (orientation: landscape) and (max-height: 460px) {
+  .g1-results.g1-screen { gap: 5px; padding-top: 6px; padding-bottom: 6px; }
+  .g1-results .g1-bigstars { font-size: 28px; }
+  .g1-results .g1-stat { padding: 5px 9px; min-width: 78px; }
+  .g1-results .g1-stat .v { font-size: 17px; }
+  .g1-results .g2-inset { width: min(300px, 60vw); padding: 4px; }
+  .g1-results .g2-inset canvas { height: 64px; }
+  .g1-results .g2-inset figcaption { font-size: 9.5px; }
+  .g1-results .g1-big.small { font-size: 12px; padding: 7px 14px; }
+  .g1-results .g2-bag button { padding-top: 5px; padding-bottom: 5px; font-size: 11px; }
+  .g1-results .g1-note { font-size: 10px; line-height: 1.25; margin: 0; max-width: 92vw; }
+  .g1-results .g2-colour-chips.again a { padding: 3px 9px; }
+}
