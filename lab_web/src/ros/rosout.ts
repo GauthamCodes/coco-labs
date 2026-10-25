@@ -6,7 +6,8 @@
  * log lines (`[LEVEL] [stamp] [node]: message`, stamped with the model's sim time).
  *
  * Only real model events, each from a tick the model produced: a plan found (or not), a goal
- * reached, COCO blocked, the wheels' command source changing, STOP. The node names are the
+ * reached, COCO blocked, the wheels' command source changing, STOP; G2 rules 5: AUTO holding for
+ * an actor, re-planning around one, backing away or going on (coco_lab.games.ActorAvoid's state). The node names are the
  * M6F.7 ROS graph's (coco_lab.ros_shapes.ros_graph: global_planner, local_controller,
  * cmd_vel_arbiter, ...; Gautham, 2026-10-24) -- the model's roles, never ROS processes.
  * Grasp Assist and the game rules have no node in that graph, so they are not written here.
@@ -21,6 +22,8 @@ export interface LogLine { level: Level; t: number; node: string; msg: string; t
 export interface TickFacts {
   tick: number; t_world: number; source: string; blocked: boolean; arrived: boolean;
   plans: PlanInfo[]; pose: [number, number, number];
+  /** G2 rules 5: AUTO's reaction to the actors (coco_lab.games.ActorAvoid), when it is on */
+  avoid?: { state: string; actor: string; waypoints?: [number, number][] } | null;
 }
 
 /** The scan's fixed fields the WARN line needs (from the ROS info). */
@@ -68,6 +71,14 @@ export function linesFor(prev: TickFacts | null, cur: TickFacts, ranges: ArrayLi
     } else {
       line('WARN', 'global_planner', `no path to (${fmtNum(p.goal[0])}, ${fmtNum(p.goal[1])}): ${p.status}${exp !== null ? ` after ${thousands(exp)} expansions` : ''}`);
     }
+  }
+  const av = cur.avoid, bav = prev?.avoid;
+  if (av && av.state !== bav?.state) {
+    if (av.state === 'waiting') line('WARN', 'local_controller', `${av.actor} in the path ahead: holding`);
+    else if (av.state === 'replanned') line('INFO', 'global_planner', `re-planned around ${av.actor}${av.waypoints ? `: ${av.waypoints.length} waypoints` : ''}`);
+    else if (av.state === 'blocked') line('WARN', 'local_controller', `${av.actor} stopped in the path and no detour: holding`);
+    else if (av.state === 'backing') line('INFO', 'local_controller', `backing away from ${av.actor}`);
+    else if (av.state === 'go') line('INFO', 'local_controller', `${av.actor} still in the way: going on (the actors stop for COCO)`);
   }
   if (cur.arrived && !prev?.arrived) line('INFO', 'local_controller', `goal reached at (${fmtNum(cur.pose[0])}, ${fmtNum(cur.pose[1])})`);
   if (cur.blocked && !prev?.blocked) {

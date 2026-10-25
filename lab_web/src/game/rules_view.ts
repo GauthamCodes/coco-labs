@@ -12,14 +12,16 @@ import type { Candidate, FetchColourId, GameKind, GameTick, GameZone } from './s
 /** The real load stages, in order, and the worker marks that end each (arena.worker.ts). */
 /**
  * G1.12: Fetch Rush's shifts; G2.1: rules 4's (coco_lab/levels/coco_depot_v1.fetch_rush.r4.json:
- * rules 3's rounds, with every route crossing the forklift lane only at a striped crossing).
+ * rules 3's rounds, with every route crossing the forklift lane only at a striped crossing);
+ * G2 rules 5 (…fetch_rush.r5.json): rules 4's rounds, with the actors stopping for COCO and AUTO
+ * waiting for them or re-planning around them.
  * Every round on file was finished by the reference bot (a round it could not finish
  * was rejected when the rounds were generated), so every shift is offered, in both
  * modes: 'phone' (2 orders, the default) and 'full' (the Full shift, 3 orders).
  */
 export const FETCH_RUSH_SHIFTS = [1, 2, 3, 4, 5, 6];
 /** the rules the worker plays (coco_lab.games.FETCH_RUSH_RULES; a test keeps them equal) */
-export const FETCH_RUSH_RULES = 4;
+export const FETCH_RUSH_RULES = 5;
 export type FetchRushMode = 'phone' | 'full';
 export const fetchRushMode = (v: string | null): FetchRushMode => (v === 'full' ? 'full' : 'phone');
 
@@ -56,7 +58,8 @@ export const TIPS = [
   'GRAB only lights when Grasp Assist can really pick the object.',
   'STOP always wins: over you, over the planner, over Grasp Assist.',
   'Two fingers and a magnet: the magnet does the holding.',
-  'Forklifts never yield. Their lanes are painted yellow.',
+  'Forklifts and walkers stop for COCO (a safety stop). Their lanes are painted yellow.',
+  'AUTO waits for a forklift in its path, or plans a new route around one.',
   'The planner\'s routes cross the forklift lane only at the striped crossings.',
   'AUTO hands the wheels to the planner. Touch the stick to take them back.',
   'Everything here runs in your browser: Python, in a Web Worker.',

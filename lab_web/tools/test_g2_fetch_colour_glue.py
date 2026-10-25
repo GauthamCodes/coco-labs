@@ -47,7 +47,10 @@ def test_a_short_session_names_the_colour_and_replays():
     assert info['colour'] == {'colour': 'green', 'object': 'rod_green', 'item': 'bottle_steel', 'diameter': 0.024,
                               'drop': 'dispatch_drop', 'drop_label': 'Dispatch'}
     assert info['seconds'] == rnd['timer_s'] and info['round']['orders'] == [['rod_green', 'dispatch_drop']]
-    assert info['setup'][0]['kind'] == 'kidnap' and info['setup'][1:] == games.fetch_actor_inputs(4)
+    # the current rules' actors (rules 2: Fetch Rush rules 5's -- they stop for COCO, AUTO reacts)
+    want = games.fetch_actor_inputs(games.FETCH_COLOUR_ACTOR_RULES[games.FETCH_COLOUR_RULES])
+    assert info['setup'][0]['kind'] == 'kidnap' and info['setup'][1:] == want
+    assert [r['choice'] for r in want][-2:] == ['actors.yield=1', 'avoid.on=1']
     t = _step(glue, info['setup'])
     assert t['game']['fetch']['colour'] == 'green' and t['game']['fetch']['order'] == ['rod_green', 'dispatch_drop']
     a = glue._arena
@@ -65,7 +68,7 @@ def test_a_short_session_names_the_colour_and_replays():
         last = _step(glue, [])
     rec = json.loads(glue.game_op('record'))
     assert rec['record']['game'] == 'fetch_colour' and rec['record']['arg'] == 'green'
-    assert rec['record']['rules'] == 1 and rec['record']['level'] == 'coco_depot_colours_v1'
+    assert rec['record']['rules'] == games.FETCH_COLOUR_RULES == 2 and rec['record']['level'] == 'coco_depot_colours_v1'
     replay = games.play(json.loads(LEVEL.read_text()), rec['record'])
     assert replay['hash_chain'] == rec['hash_chain'] and replay['last_hash'] == last['hash']
     assert replay['scorecard'] == json.loads(glue.game_op('stars', None))['card']

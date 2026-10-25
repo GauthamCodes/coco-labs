@@ -73,9 +73,14 @@ rods, COCO carrying a rod, results; desktop and emulated phone landscape).
   says so.
 - The colour row "like the beginning" is a STACK fact (four coloured targets, one per bay, in
   COCO's Gazebo world); nothing here is a Stack result.
-- Actors as in Fetch Rush rules 4 (`games.fetch_actor_inputs`, via `FETCH_COLOUR_ACTOR_RULES`).
-  When Fetch Rush rules 5 (actors that yield, AUTO that avoids) is merged, Fetch by colour adopts
-  it in one place: give rules 5's set-up in `fetch_actor_inputs`, add `2: 5` to
-  `FETCH_COLOUR_ACTOR_RULES`, set `FETCH_COLOUR_RULES = 2`, re-run the generator. Rules 1 records
-  keep replaying.
+- Actors: rules 1 as Fetch Rush rules 4 (they never yield). **Rules 2 (current) as Fetch Rush
+  rules 5** (the actors stop for COCO, AUTO waits or re-plans; [`../rules5/README.md`](../rules5/README.md)),
+  through the same helper (`games.fetch_actor_inputs(rules, yielding)`, `FETCH_COLOUR_ACTOR_RULES =
+  {1: 4, 2: 5}`). Each rules version keeps its own rounds file: rules 1
+  `coco_depot_colours_v1.fetch_colour.json` (unchanged, so rules-1 records still replay), rules 2
+  `coco_depot_colours_v1.fetch_colour.r2.json`. The reference bot under rules 2 sends no STOPs of
+  its own (the model yields). Rules 2's rounds equal rules 1's (start, orders, routes, timers), and
+  every reference scorecard is identical apart from `rules`: the same times (55.7–68.1 s),
+  0 contacts. The actors never meet COCO on these routes. Bests key `…g2-fetch-colour.r2-<colour>`
+  (rules 1 was never released).
 - Not done: no Gazebo SDF/Nav2 map was compiled for the new level and no Stack run exists for it.

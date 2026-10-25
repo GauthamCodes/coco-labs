@@ -37,6 +37,8 @@ SPEC_PATH = REPO / 'worlds' / 'coco_depot_colours_v1.json'
 SPEC = json.loads(SPEC_PATH.read_text())
 DEPOT = json.loads((REPO / 'worlds' / 'coco_depot_v1.json').read_text())
 DOC = json.loads(games.colour_rounds_file().read_text())
+#: every rules version's rounds (rules 1: actors as Fetch Rush rules 4; rules 2: as rules 5)
+DOCS = {r: json.loads(games.colour_rounds_file(rules=r).read_text()) for r in (1, 2)}
 
 #: sha256 of the Depot's files as they were before Fetch by colour existed (c695cd5)
 UNCHANGED = {
@@ -119,6 +121,11 @@ def test_setup_uses_fetch_rush_actor_setup_and_the_rounds_start():
     rnd = DOC['rounds']['blue']
     got = games.setup_inputs('fetch_colour', 'blue', 1)
     assert got[1:] == games.fetch_actor_inputs(games.FETCH_COLOUR_ACTOR_RULES[1])
+    assert [r['choice'] for r in got[1:]] == ['actors.on=1', 'assist.target=any']
+    # rules 2 (current): Fetch Rush rules 5's actors -- they stop for COCO, AUTO reacts
+    got2 = games.setup_inputs('fetch_colour', 'blue', 2)
+    want2 = ['actors.on=1', 'assist.target=any', 'actors.yield=1', 'avoid.on=1']
+    assert [r['choice'] for r in got2[1:]] == want2
     assert got[0] == {'tick': 0, 'kind': 'kidnap', 'x': rnd['start'][0], 'y': rnd['start'][1],
                       'theta': rnd['start'][2], 'has_theta': True}
     # Fetch Rush's own set-up is what it always was
@@ -127,11 +134,12 @@ def test_setup_uses_fetch_rush_actor_setup_and_the_rounds_start():
         {'tick': 0, 'kind': 'config', 'choice': 'assist.target=any'}]
 
 
+@pytest.mark.parametrize('rules', [1, 2])
 @pytest.mark.parametrize('colour', games.FETCH_COLOURS)
-def test_the_reference_delivers_the_chosen_rod_and_replays(colour):
-    ref = DOC['rounds'][colour]['reference']
+def test_the_reference_delivers_the_chosen_rod_and_replays(colour, rules):
+    ref = DOCS[rules]['rounds'][colour]['reference']
     rec = ref['record']
-    assert rec['game'] == 'fetch_colour' and rec['arg'] == colour and rec['rules'] == 1
+    assert rec['game'] == 'fetch_colour' and rec['arg'] == colour and rec['rules'] == rules
     assert rec['level'] == games.FETCH_COLOUR_LEVEL and rec['hash_version'] == 3
     got = games.play(SPEC, rec)
     assert got['hash_chain'] == ref['hash_chain'] and got['scorecard'] == ref['card']

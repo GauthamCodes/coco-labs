@@ -24,7 +24,8 @@ an Arena, then replays and compares every number.
 covering its box at its kinematic pose (`worldspec_v3.actor_pose`), so the LiDAR sees it
 and the robot cannot drive into it. SIMPLIFIED: the discs over-cover a forklift's long
 sides by up to 0.25 m; clearance in the rules is measured to the exact box. Actors
-never yield: they are a schedule, the same schedule `actors.json` gives Gazebo.
+never yield: they are a schedule, the same schedule `actors.json` gives Gazebo (Rules 1–4;
+under Fetch Rush rules 5 the model's actors stop for COCO: see the end of this file.)
 
 ## Fetch Rush
 
@@ -223,8 +224,43 @@ evidence: [`docs/v2/g2/data/fetch_colour/README.md`](../g2/data/fetch_colour/REA
   (timer 102.2 s), green 62.2 s (93.3), blue 58.8 s (88.2), yellow 55.7 s (83.6); 0 contacts each.
 - **Stars** as Fetch Rush, against the colour's reference. Bests are kept per colour and per AUTO
   planner.
-- **Actors** as Fetch Rush rules 4, from one helper (`games.fetch_actor_inputs`, keyed by
-  `FETCH_COLOUR_ACTOR_RULES`), so Fetch Rush rules 5's actors can be adopted in one place
-  (then `FETCH_COLOUR_RULES = 2` and a re-run of the generator).
+- **Actors** from one helper (`games.fetch_actor_inputs`, keyed by `FETCH_COLOUR_ACTOR_RULES`):
+  rules 1 as Fetch Rush rules 4 (actors never yield); **rules 2 (current) as Fetch Rush rules 5**
+  (the actors stop for COCO, AUTO waits or re-plans). Each rules version keeps its own rounds file
+  (rules 1: `…fetch_colour.json`, rules 2: `…fetch_colour.r2.json`), so rules-1 records replay.
 - **SIMPLIFIED:** COCO is handed the rod's id; COCO's real stack found the rod by camera
   (`target_finder`).
+
+## Fetch Rush rules 5 (G2, Gautham's 2026-10-24 report)
+
+"There is no dynamic path or the fixed path in auto mode is not changing when the forklift
+arrives; the robot just stays still and the forklift moves forward phasing through the robot."
+Implemented 2026-10-24/25 on `v2/g2-actor-yield`; rules 1–4 are unchanged (their setup inputs,
+records, hashes and files; every committed reference of rules 2, 3 and 4 replays to its chain).
+Evidence and numbers: [`docs/v2/g2/data/rules5/README.md`](../g2/data/rules5/README.md) (MODEL).
+
+- **Why it happened (rules 1–4).** An actor is a schedule: its pose is a function of time. The
+  Arena refuses COCO's step into an actor's discs, but nothing checks an actor moving onto COCO.
+  Once a disc covers COCO every step is refused (COCO "stays still") and the forklift drives on
+  through it. AUTO planned once on the static map and never re-planned.
+- **Actors stop for COCO** (`actors.yield=1`, a forklift's safety stop): each actor keeps its
+  own clock (the ticks it has held, `lag`) and holds while its next box would come within COCO's
+  radius + `ACTOR_STOP_MARGIN` (0.3 m) of COCO's centre and closer than now (COCO ahead of it in
+  its direction of travel). Passing COCO sideways, or moving away, it goes on. The discs, the
+  LiDAR, the clearance, the HUD's actors and every prediction read the actual poses.
+- **AUTO reacts** (`avoid.on=1`, the subsystem `games.ActorAvoid`): a moving actor in the path's
+  4 s look-ahead (2 × radius margin, the reference bots' rule) → AUTO holds and waits; after 3 s
+  it re-plans once around the actor's box and takes the route only if it is clear; after 10 s it
+  goes on (the actors stop for it) with a short-range check. An actor that has stopped for COCO
+  gives COCO the right of way: AUTO drives on, re-plans around its box when the path runs into
+  it (one search, at most one per 2 s, on a copy of the plan grid), or backs away from it.
+- **Rounds** (`coco_lab/levels/coco_depot_v1.fetch_rush.r5.json`, `tools/g2/make_fetch_rush_rounds_r4.py
+  --rules 5`): rules 4's draw, budgets and crossing rule; the reference bot plays under rules 5
+  (no STOPs of its own: the model yields). Every round equals rules 4's; reference times are equal
+  except Full shifts 2 and 4 (388.3 s, timer 582.5 s, against 387.8 s / 581.7 s). Phone timers are
+  unchanged (4 distinct rounds, 4:35.9–5:49.1; ≤ 6:00, none ≤ 5:00, as rules 4). Records carry
+  `rules: 5`; bests use new keys (`…r5-{mode}…`).
+- **Free Drive** on a v3 level gets the same two settings in its setup.
+- **The Gazebo stack's actors never yield** (they are parked in the recorded Race Nav2 ghosts,
+  and scripted in Gazebo): model-vs-STACK comparisons under rules 5 compare a yielding model
+  with a stack whose actors do not.

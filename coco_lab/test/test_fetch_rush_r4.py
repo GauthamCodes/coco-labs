@@ -44,7 +44,7 @@ CELL = 0.1
 
 def test_the_rounds_are_for_this_level_and_these_rules():
     assert DOC['spec_sha256'] == hashlib.sha256(SPEC_PATH.read_bytes()).hexdigest()
-    assert DOC['rules'] == games.FETCH_RUSH_RULES == 4
+    assert DOC['rules'] == 4 and games.FETCH_RUSH_RULES == 5  # G2 rules 5: the browser's rules
     assert DOC['modes'] == games.ROUND_MODES_R4 == games.round_modes(4)
     assert DOC['timer_factor'] == games.ROUND_TIMER_FACTOR == 1.5
     assert DOC['lanes'] == list(games.ROUND_LANES) == ['zone_forklift_lanes']

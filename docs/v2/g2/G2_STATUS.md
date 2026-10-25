@@ -30,7 +30,34 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
   all four colours delivered in the browser (desktop RTX 4050; one emulated phone run), records
   replay in CPython; Depot bytes and goldens unchanged. [`data/fetch_colour/README.md`](data/fetch_colour/README.md),
   [`screens/fetch_colour/`](screens/fetch_colour/).
-- **Next step:** finish the ghosts and the suites, G2.8's documents, a draft PR; then the phone checks.
+
+- **Rules 5 (owner report 2026-10-24; first built on branch `v2/g2-actor-yield`)** ([`data/rules5/README.md`](data/rules5/README.md)):
+  in AUTO the forklift drove through a stopped COCO (actors are a schedule; nothing checked an actor
+  moving onto COCO). Fetch Rush rules 5: the actors stop for COCO (`actors.yield=1`) and AUTO waits,
+  re-plans around a stopped actor or backs off (`avoid.on=1`); Free Drive on the Depot too. Rules 1–4
+  unchanged (every reference replays to its chain; v3 goldens identical). Rounds = rules 4's draw;
+  phone timers unchanged (≤ 6:00). Browser check: before 114 overlap ticks, after 0. The Gazebo
+  stack's actors still never yield (STACK comparisons say so).
+  **Carried onto `v2/g2-sim-identity` 2026-10-25** (the session was cleared mid-work; backup
+  `~/g2-wip-2026-10-25.patch`): `v2/g2-actor-yield` (fe210ef, 7 commits from `c695cd5`, never pushed,
+  worktree `~/coco_labs_ws/worktrees/g2-yield`) is the same work done standalone; the g2 copy holds all
+  of it (25 files byte-identical; `games.py` takes the yield set-up as a parameter) **plus Fetch by
+  colour rules 2** (rules 5's actors through the same helper; rounds `…fetch_colour.r2.json`; rules 1
+  kept for its records). The branch is folded in by a merge that keeps its history and changes no
+  file, so it is retired, not deleted. **Re-run on the g2 tree** ([`data/rules5/g2_rerun.md`](data/rules5/g2_rerun.md)):
+  every reference replays (r2 4/4, r3–r5 12/12 each), goldens and game references unchanged, colour r2
+  rounds regenerate identical; forklift check 0 overlap ticks; four colours delivered (each record
+  replays in CPython); suites green after wrapping two long lines (flake8) and re-running
+  update_isolation alone.
+- **Hotfix (no WebGL)**: `v2/hotfix-webgl-fallback` (PR #29 into main), b745ceb: the message page
+  says what to try and links to Compare and Recordings; Compare runs without 3D (results listed, map
+  replaced by a note). `webgl_fallback_check.mjs` 10/10 pages with WebGL refused and working.
+  Evidence `docs/v2/hotfix_webgl/`. To be merged into G2 after Rules 5 and Fetch by colour.
+- **Next (owner's order, 2026-10-25):** (1) Rules 5 committed + pushed → (2) merge
+  `v2/g2-fetch-colour` (abc039f; its last three commits are not in G2) → (3a) merge the hotfix →
+  (3b) Gazebo per-round gate, 5/5 for each distinct phone round (seeds 1, 2, 3, 6) and each colour
+  round, a ghost per passing round, the four-rod level's first Gazebo run → (3c) G2.8 close; PR #28
+  (already open as a draft) marked ready for review. Never merge or deploy.
 
 ## Setup facts
 

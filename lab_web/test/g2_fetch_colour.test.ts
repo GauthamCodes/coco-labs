@@ -12,7 +12,7 @@ import { SPEC_FILES } from '../src/arena/protocol';
 import { SPEC_FOR, type GameTick } from '../src/game/session';
 import { REPO } from './helpers';
 
-const DOC = JSON.parse(readFileSync(join(REPO, 'coco_lab', 'coco_lab', 'levels', 'coco_depot_colours_v1.fetch_colour.json'), 'utf-8')) as
+const DOC = JSON.parse(readFileSync(join(REPO, 'coco_lab', 'coco_lab', 'levels', 'coco_depot_colours_v1.fetch_colour.r2.json'), 'utf-8')) as
   { rules: number; colours: string[]; level: string; rounds: Record<string, { diameter: number; object: string }> };
 
 describe('Fetch by colour', () => {
@@ -32,10 +32,11 @@ describe('Fetch by colour', () => {
     expect(colourHref('/', 'green', 'dijkstra')).toBe('/?view=play&game=fetch_colour&colour=green&planner=dijkstra');
   });
   it('keeps bests per colour and per planner, apart from Fetch Rush\'s', () => {
-    expect(colourBestKey('red')).toBe('coco.play.best.v1.g2-fetch-colour.r1-red');
+    // rules 2 (Fetch Rush rules 5's actors) keeps its own bests; rules 1 was never released
+    expect(colourBestKey('red')).toBe('coco.play.best.v1.g2-fetch-colour.r2-red');
     expect(colourBestKey('red', 'astar')).toBe(colourBestKey('red'));
-    expect(colourBestKey('yellow', 'greedy')).toBe('coco.play.best.v1.g2-fetch-colour.r1-yellow.planner-greedy');
-    expect(bestKey(1, 'phone')).toBe('coco.play.best.v1.g1-fetch-rush.r4-phone.seed-1');
+    expect(colourBestKey('yellow', 'greedy')).toBe('coco.play.best.v1.g2-fetch-colour.r2-yellow.planner-greedy');
+    expect(bestKey(1, 'phone')).toBe('coco.play.best.v1.g1-fetch-rush.r5-phone.seed-1');
   });
   it('labels every chip with text, never colour alone', () => {
     expect(FETCH_COLOURS.map((c) => colourChip(c.id))).toEqual(['RED · 20 mm', 'GREEN · 24 mm', 'BLUE · 28 mm', 'YELLOW · 32 mm']);

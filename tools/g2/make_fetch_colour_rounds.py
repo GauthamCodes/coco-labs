@@ -43,7 +43,7 @@ import make_fetch_rush_rounds_r3 as r3  # noqa: E402
 
 LEVEL = games.FETCH_COLOUR_LEVEL
 RULES = games.FETCH_COLOUR_RULES
-OUT = str(games.colour_rounds_file(LEVEL))
+OUT = str(games.colour_rounds_file(LEVEL, RULES))
 HV = 3
 #: the bot's first run plays to the delivery with this much time (under the link tick limit)
 PROVISIONAL_S = 600.0

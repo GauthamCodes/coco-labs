@@ -50,7 +50,11 @@ export interface GameInfo { game: string; v3: boolean; setup: Omit<InputRow, 'ti
   ros?: RosInfo }
 export interface AssistState { phase: string; target: string | null; carried: string | null; want: string; reason: string; attempt: number }
 export interface FetchState { t: number; seconds: number; over: boolean; order: [string, string] | null; k: number; orders: number; deliveries: number; contacts: number; ghost: number | null; colour?: FetchColourId }
-export interface GameBlock { assist?: AssistState; objects?: [string, number, number, number, string][]; actors?: [string, number, number, number][]; clearance?: number; fetch?: FetchState }
+/** G2 rules 5: AUTO's reaction to the actors (coco_lab.games.ActorAvoid.view); `waypoints` on a re-plan's tick */
+export interface AvoidState { state: 'clear' | 'waiting' | 'go' | 'replanned' | 'blocked' | 'backing'; actor: string; replans: number; replanned: number; waypoints?: [number, number][] }
+export interface GameBlock { assist?: AssistState; objects?: [string, number, number, number, string][]; actors?: [string, number, number, number][]; clearance?: number; fetch?: FetchState;
+  /** G2 rules 5: the actors stopped for COCO this tick, and AUTO's reaction */
+  actors_held?: string[]; avoid?: AvoidState }
 /** G2.2: `ros.tf` -- the model's dynamic frames this tick, as coco_lab.ros_shapes.tf built them */
 export type GameTick = Tick & { game?: GameBlock; tilt?: [number, number, number]; ros?: { tf: TFMessage } };
 export interface Candidate { object_id: string; item: string; reason: string; rank: number; seen_by: string; dist: number; approach_x: number | null; approach_y: number | null }

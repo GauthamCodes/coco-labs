@@ -15,7 +15,7 @@ import { fetchColour } from './rules_view';
 import type { FetchColourId } from './session';
 
 /** the rules the worker plays (coco_lab.games.FETCH_COLOUR_RULES; a test keeps them equal) */
-export const FETCH_COLOUR_RULES = 1;
+export const FETCH_COLOUR_RULES = 2;
 
 /** The colour a Fetch by colour link asks for, or null (show the choice). */
 export const colourFromQuery = (q: URLSearchParams): FetchColourId | null => fetchColour(q.get('colour'));
