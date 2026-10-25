@@ -58,6 +58,27 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
   replaced by a note). `webgl_fallback_check.mjs` 10/10 pages with WebGL refused and working.
   Evidence `docs/v2/hotfix_webgl/`. **Merged into G2 2026-10-25** (it replaced the first form,
   d43115d); the check on the G2 build: 10/10 pages.
+- **Per-round Gazebo gate (3b), RUNNING since 2026-10-25 18:4x UTC:** `tools/g2/round_gate.sh
+  ~/coco_lab_runs/g2/round_gate 5 colour:red colour:green colour:blue colour:yellow phone:2 phone:6
+  phone:1 phone:3` (COCO_WS `~/coco_lab_g2_ws`; output `~/coco_lab_runs/g2/round_gate.out`, per-run
+  lines in `round_gate/gate_rounds.jsonl`). Depot: `gen_d2v2` (G2.6's gate files); colours level:
+  `gen_colours_d2_gate` (same flags, map 0.05 m; checksums committed). Smoke (first Gazebo run of the
+  four-rod level, yellow): both legs SUCCEEDED. If the session is cleared mid-gate: read
+  `round_gate.out`, and re-run only the rounds without 5 counted runs (a void/refused run is retried, not
+  counted). Then convert one passing run per round (`tools/g2/make_ghost.py`), extend
+  `tools/g2/ghost_index.py`, write `data/g28/round_gate/` (README + per-run legs).
+- **Gate so far (2026-10-25/26):** red, green, blue, yellow 5/5 each; phone seed 2 5/5; **phone seed 6
+  0/2 → cannot pass** (run 1: maze leg 104 PATIENCE_EXCEEDED; run 2: maze-exit leg 105
+  FAILED_TO_MAKE_PROGRESS). Diagnosed from run 2's bag (scripts in the job's tmp, to be committed with the
+  write-up): the global plan is clear (>= 0.615 m from mapped walls), no unmapped body near, wheels follow
+  commands; **DWB commands ~0 (v 0, w ~±0.03) for ~40 s at a time beside obj_maze_2's pre-grasp pose**,
+  collision-monitor PolygonSlow (0.3) shrinks it further; only recovery spins move it. G2.6's single
+  runs already took 159-178 s on this leg. All gate runs at RTF 0.41-0.50 (CPU 91 °C, browsers busy; G2.6
+  ran at 0.80). **Next:** let seeds 6, 1, 3 finish (baseline); then derivation 3 = derivation 2 + Nav2's
+  RotationShimController around DWB (installed, never tried; C2-NAV.21's DWB tweaks made standing still
+  more attractive); A/B on the maze round; if better, re-gate every round 5/5 (params change).
+- **Real phone done 2026-10-25** ([`data/g28/real_phone_final/`](data/g28/real_phone_final/)): GAME 10 min 60 fps
+  median, SIM 60; it found and the fix closed two /rosout layout defects (12aa0ab).
 - **Next (owner's order, 2026-10-25):** (1) Rules 5 committed + pushed → (2) merge
   `v2/g2-fetch-colour` (abc039f; its last three commits are not in G2) → (3a) merge the hotfix →
   (3b) Gazebo per-round gate, 5/5 for each distinct phone round (seeds 1, 2, 3, 6) and each colour
