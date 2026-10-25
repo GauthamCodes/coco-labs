@@ -44,19 +44,21 @@ and in the browser through Pyodide). Nothing here was run in Gazebo.
 
 ## Browser runs (`browser/`)
 
-`lab_web/tools/g2/fetch_colour_check.mjs`, 2026-10-24 (UTC), Chromium (Playwright) on the RTX 4050
-(ANGLE, OpenGL ES 3.2), served `dist` on port 4192, laptop shared (load ≈ 8.5). For each colour:
-the mode card's chip, PLAY, AUTO to the rod, GRAB, AUTO to Dispatch, DROP. Every run delivered
-the chosen rod, 0 contacts, no page error; the chips gain `&planner=dijkstra` when that planner
-is chosen and lose it on A*.
+`lab_web/tools/g2/fetch_colour_check.mjs`, 2026-10-25 05:31–05:33 UTC (final build), Chromium
+(Playwright) on the RTX 4050 (ANGLE, OpenGL ES 3.2), served `dist` on port 4192. The laptop was
+shared (another project's Gazebo server was running); these runs measure nothing timing-related.
+For each colour: the mode card's chip, PLAY, AUTO to the rod, GRAB, AUTO to Dispatch, DROP, the
+results. Every run delivered the chosen rod with 0 contacts and no page error; no toast was drawn
+over the results; the results card fitted the screen without scrolling; the chips gain
+`&planner=dijkstra` when that planner is chosen and lose it on A*.
 
-| Colour | Profile | Delivered | Time | Stars |
-|---|---|---|---|---|
-| red | desktop 1440 × 900 | rod_red | 74.3 s | ★★ |
-| green | desktop | rod_green | 66.1 s | ★★ |
-| blue | desktop | rod_blue | 64.8 s | ★★ |
-| yellow | desktop | rod_yellow | 60.8 s | ★★ |
-| blue | emulated Nothing Phone (1), landscape (viewport only, no CPU throttle) | rod_blue | 66.3 s | ★★ |
+| Colour | Profile | Delivered | Time | Stars | Toast hidden | Results fit |
+|---|---|---|---|---|---|---|
+| red | desktop 1440 × 900 | rod_red | 74.3 s | ★★ | yes | yes |
+| green | desktop | rod_green | 66.1 s | ★★ | yes | yes |
+| blue | desktop | rod_blue | 64.7 s | ★★ | yes | yes |
+| yellow | desktop | rod_yellow | 60.5 s | ★★ | yes | yes |
+| blue | emulated Nothing Phone (1), landscape (viewport only, no CPU throttle) | rod_blue | 66.2 s | ★★ | yes | yes (412 of 412 px) |
 
 Driving with AUTO + GRAB is 4–8 s slower than the reference (AUTO drives to the rod and Grasp
 Assist then approaches; the bot drives straight to the pre-grasp pose), so this way of playing
@@ -65,6 +67,16 @@ hash chain and scorecard (`browser/cpython_replay.json`).
 
 Screenshots: [`../../screens/fetch_colour/`](../../screens/fetch_colour/) (mode card, the row of
 rods, COCO carrying a rod, results; desktop and emulated phone landscape).
+
+## The level compiled for Gazebo and Nav2 (README invariant 12)
+
+`tools/m6/gen_level.py worlds/coco_depot_colours_v1.yaml --out <dir> --derivation 2 --gz-check`
+(derivation 2: the Depot's G2.6 generation): the SDF world, each object's SDF (the four rods
+included), `actors.json`, the Nav2 map and params. `gz sdf -k` reports every SDF valid. The 30
+outputs' sha256 are in [`coco_depot_colours_v1_outputs_d2.json`](coco_depot_colours_v1_outputs_d2.json)
+and `--verify` reproduces them. The rods are not added to the Nav2 map (derivation 2 adds only
+objects crossing the LiDAR plane: `bad_crate`, as on the Depot). **Not run in Gazebo:** no
+STACK run of this level exists.
 
 ## Honesty
 
@@ -83,4 +95,33 @@ rods, COCO carrying a rod, results; desktop and emulated phone landscape).
   every reference scorecard is identical apart from `rules`: the same times (55.7–68.1 s),
   0 contacts. The actors never meet COCO on these routes. Bests key `…g2-fetch-colour.r2-<colour>`
   (rules 1 was never released).
-- Not done: no Gazebo SDF/Nav2 map was compiled for the new level and no Stack run exists for it.
+- Not done: no Gazebo run of the new level (no STACK evidence for Fetch by colour).
+
+## After the merge into G2 (2026-10-25): rules 2 in the browser
+
+[`browser_after_merge/`](browser_after_merge/): the same check on the merged G2 build (rules 2:
+Fetch Rush rules 5's actors), Chromium on the RTX 4050. Every run delivered the chosen rod with
+0 contacts, ★★, the toast hidden over the results and the results fitting the screen, no page
+error: red 72.8 s, green 66.0 s, blue 64.8 s, yellow 60.7 s (desktop 1440 × 900); blue 64.9 s on
+the emulated Nothing Phone (1) landscape (viewport only; results 412 of 412 px). All five records
+replay in CPython to the same hash chain and scorecard (`cpython_replay.json`). The rules-1 runs
+above stay as they were measured.
+
+## Defect found by Gautham (2026-10-25): the tactical map went black
+
+Reported: after opening the map and zooming out, the screen turned black and nothing more could
+be done. Reproduced in Chromium (RTX 4050): the map zoomed out to 0.3 m per pixel (the Depot a
+160 px patch) and could be dragged anywhere, so one drag left the screen black with the whole HUD
+hidden behind the map; only the small ✕ (top left) and STOP showed, and a tap would have sent COCO
+to a point off the level. Before: [`map_fix/before-zoomed-out-dragged.png`](../../screens/fetch_colour/map_fix/before-zoomed-out-dragged.png).
+
+Fixed for every Play game (`lab_web/src/game/hud/Maps.tsx`): zoom out stops where the whole level
+fits; the view's centre stays on the level, so a drag can never lose it; a tap off the level sends
+no goal; new **⌖ COCO** and **⤢ WHOLE LEVEL** buttons; the hint says "Esc or ✕ closes"; the wheel
+and a touchpad pinch (ctrl + wheel) zoom the map or COCO's camera, never the page. If the browser
+ever takes the GPU away (WebGL context lost), Play now says so with a RELOAD button instead of a
+silent black screen. Tests: `lab_web/test/g2_tactical_view.test.ts`. Re-checked in the browser:
+zoomed fully out (wheel and ctrl + wheel), dragged to a corner, recentred, closed, drove on; no
+page error, page zoom unchanged. After: [`map_fix/after-max-zoom-out.png`](../../screens/fetch_colour/map_fix/after-max-zoom-out.png),
+[`map_fix/after-dragged.png`](../../screens/fetch_colour/map_fix/after-dragged.png). Not reproduced
+here: a GPU context loss (none occurred in these runs); the notice covers it if it happens.

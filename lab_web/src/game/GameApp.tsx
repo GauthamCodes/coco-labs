@@ -158,7 +158,7 @@ function Results({ r, onAgain, planner, colour }: { r: GameResult; onAgain: () =
   const first = (c.delivered as { object: string }[] | undefined)?.[0]?.object ?? ((c.orders as [string, string][] | undefined)?.[0]?.[0]);
   const obj = first ? r.objects?.find((o) => o.id === first) : undefined;
   const compare = `${BASE}?view=compare&world=depot${obj ? `&goal=${obj.x.toFixed(2)},${obj.y.toFixed(2)}` : ''}`;
-  return <section className="g1 g1-screen dim" data-testid="g1-results" style={{ position: 'fixed', zIndex: 27, background: 'rgba(8,10,14,.8)' }}>
+  return <section className="g1 g1-screen dim g1-results" data-testid="g1-results" style={{ position: 'fixed', zIndex: 27, background: 'rgba(8,10,14,.8)' }}>
     <div className="g1-eyebrow" data-testid="results-title">{colour ? <>FETCH BY COLOUR · <span className="g2-colour-dot" data-colour={colour} aria-hidden /> {colourChip(colour)} ROD</> : <>FETCH RUSH · SHIFT {r.seed}</>} · RESULT</div>
     <div className="g1-bigstars" aria-label={`${r.stars ?? 0} of 3 stars`}>{r.stars === null ? <span className="off">☆☆☆</span> : <>{'★'.repeat(r.stars)}<span className="off">{'★'.repeat(3 - r.stars)}</span></>}</div>
     <div className="g1-cards">

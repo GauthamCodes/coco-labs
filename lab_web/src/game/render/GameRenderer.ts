@@ -120,6 +120,7 @@ export class GameRenderer {
     this.renderer.info.autoReset = false;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); this.lostContext = true; });
+    canvas.addEventListener('webglcontextrestored', () => { this.lostContext = false; });
     this.scene.background = new THREE.Color(0x0e1116);
     // G2.7: a baked environment for reflections (Isaac Sim-inspired lighting): three.js's procedural
     // RoomEnvironment, prefiltered once at load (no image asset), kept dim for the Night Shift look.

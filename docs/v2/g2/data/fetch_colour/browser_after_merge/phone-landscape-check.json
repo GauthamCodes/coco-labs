@@ -1,0 +1,96 @@
+{
+ "site": "http://127.0.0.1:4184/coco-labs/",
+ "profile": "phone-landscape",
+ "device": "emulated Nothing Phone (1) (emulated viewport, landscape; no CPU throttle)",
+ "gpu": "nvidia",
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "when": "2026-10-25T18:21:35.323Z",
+ "planner_links": {
+  "chips": [
+   {
+    "text": "RED · 20 mm",
+    "href": "/coco-labs/?view=play&game=fetch_colour&colour=red"
+   },
+   {
+    "text": "GREEN · 24 mm",
+    "href": "/coco-labs/?view=play&game=fetch_colour&colour=green"
+   },
+   {
+    "text": "BLUE · 28 mm",
+    "href": "/coco-labs/?view=play&game=fetch_colour&colour=blue"
+   },
+   {
+    "text": "YELLOW · 32 mm",
+    "href": "/coco-labs/?view=play&game=fetch_colour&colour=yellow"
+   }
+  ],
+  "dijkstra": [
+   "/coco-labs/?view=play&game=fetch_colour&colour=red&planner=dijkstra",
+   "/coco-labs/?view=play&game=fetch_colour&colour=green&planner=dijkstra",
+   "/coco-labs/?view=play&game=fetch_colour&colour=blue&planner=dijkstra",
+   "/coco-labs/?view=play&game=fetch_colour&colour=yellow&planner=dijkstra"
+  ],
+  "astar": [
+   "/coco-labs/?view=play&game=fetch_colour&colour=red",
+   "/coco-labs/?view=play&game=fetch_colour&colour=green",
+   "/coco-labs/?view=play&game=fetch_colour&colour=blue",
+   "/coco-labs/?view=play&game=fetch_colour&colour=yellow"
+  ],
+  "ok": true
+ },
+ "runs": {
+  "blue": {
+   "url": "http://127.0.0.1:4184/coco-labs/?view=play&game=fetch_colour&colour=blue",
+   "ok": true,
+   "toast_hidden": true,
+   "results_fit": true,
+   "results_scroll_h": 412,
+   "results_client_h": 412,
+   "delivered": "rod_blue",
+   "carried": "rod_blue",
+   "hud_colour": "blue",
+   "objective_at_grab": "FETCH THE BLUE ROD → DISPATCH·⏱ 1:18",
+   "results_title": "FETCH BY COLOUR ·  BLUE · 28 mm ROD · RESULT",
+   "stars": 2,
+   "time_used": 64.9,
+   "contacts": 0,
+   "reference_time": 58.800000000000004,
+   "ticks": 650,
+   "inputs": 10,
+   "wall_s": 73.632,
+   "log": [
+    [
+     "started",
+     5
+    ],
+    [
+     "to the rod (AUTO taken)",
+     8
+    ],
+    [
+     "at the rod (GRAB lit)",
+     100
+    ],
+    [
+     "carried",
+     353
+    ],
+    [
+     "to Dispatch (AUTO taken)",
+     362
+    ],
+    [
+     "at Dispatch (DROP lit)",
+     588
+    ],
+    [
+     "delivered",
+     650
+    ]
+   ]
+  }
+ },
+ "shots": [],
+ "errors": [],
+ "ok": true
+}

@@ -346,6 +346,19 @@ export function PlayGame(p: PlayProps) {
     void s.current?.query<{ order: number; points: [number, number][] } | null>('ghost').then((g) => { r.current?.setGhost(g?.points ?? null); setGhostPts(g?.points ?? null); });
   }, [p.ghost, tick?.game?.fetch?.k]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // the wheel (and a touchpad pinch: ctrl + wheel) zooms COCO's camera, never the page (Gautham,
+  // 2026-10-25: a pinch zoomed the whole page); a native listener, not passive, so it can prevent it
+  useEffect(() => {
+    const c = canvas.current;
+    if (!c) return;
+    const wheel = (e: WheelEvent) => { e.preventDefault(); r.current?.cam.zoom(e.ctrlKey ? Math.exp(e.deltaY * 0.01) : e.deltaY > 0 ? 1.1 : 1 / 1.1); setCam(r.current?.cam.mode ?? 'chase'); };
+    c.addEventListener('wheel', wheel, { passive: false });
+    return () => c.removeEventListener('wheel', wheel);
+  }, []);
+  // the browser can take the GPU away (WebGL context lost): say so, never leave a silent black screen
+  const [glLost, setGlLost] = useState(false);
+  useEffect(() => { const t = setInterval(() => setGlLost(!!r.current?.contextLost), 1000); return () => clearInterval(t); }, []);
+
   // a long tick is shown, never hidden: the model's clock waits with it (every timer is model time)
   useEffect(() => {
     if (!started) return;
@@ -602,7 +615,6 @@ export function PlayGame(p: PlayProps) {
   return <div className={`g1 g1-play coco-play ${view === 'sim' ? 'is-sim' : ''} ${panels ? 'has-panels' : ''}`} data-g1="play" data-testid="arena" data-ready="false" data-view={view}>
     <canvas ref={canvas} className="g1-canvas" data-testid="arena-canvas" data-scene-ready={sceneReady ? 'true' : 'false'} tabIndex={0}
       onPointerDown={onCanvasDown} onPointerMove={onCanvasMove} onPointerUp={onCanvasUp} onPointerCancel={onCanvasUp} onContextMenu={(e) => e.preventDefault()}
-      onWheel={(e) => { r.current?.cam.zoom(e.deltaY > 0 ? 1.1 : 1 / 1.1); setCam(r.current?.cam.mode ?? 'chase'); }}
       aria-label="COCO's world. Drive with WASD or the left thumb; click the floor for a goal" />
     {!started && <section className="g1-screen" data-testid="g1-loading" style={{ justifyContent: 'flex-end' }}>
       <div className="g1-eyebrow">{modelReady ? 'COCO IS AWAKE' : `LOADING COCO'S BRAIN · STEP ${Math.min(loadIndex + 1, LOAD_STAGES.length)} OF ${LOAD_STAGES.length}`}</div>
@@ -673,6 +685,11 @@ export function PlayGame(p: PlayProps) {
       <span>{latched ? 'HOLD' : 'STOP'}{desktop && <kbd>{latched ? 'R' : 'SPACE'}</kbd>}</span>
       {holdStart !== null && <i className="hold" style={{ width: '100%', transition: `width ${STOP_HOLD_MS}ms linear` }} />}
     </button></div>, document.body)}
+    {glLost && <section className="g1-screen dim" data-testid="g1-gl-lost" role="alert" style={{ position: 'fixed', zIndex: 30 }}>
+      <div className="g1-eyebrow">THE 3D VIEW STOPPED</div>
+      <p className="g1-note">The browser took the graphics (GPU) away from this page, so the 3D view went black. It usually comes back by itself in a moment. If it does not, reload: the run restarts.</p>
+      <nav className="g1-menu"><button className="main" onClick={() => window.location.reload()}>RELOAD</button><a href={`${BASE}?view=play`}>GAMES</a></nav>
+    </section>}
     {mapOpen && world && occ.current && <TacticalMap world={world} occupancy={occ.current} marks={marks} onGoal={setGoalAt} onClose={() => setMapOpen(false)} />}
     {tutorial && <Tutorial onDone={() => { setTutorial(false); p.onTutorialDone(); }} />}
     <section className="g1-rotate"><Navigation2 size={32} /><h2>Rotate your phone</h2><p className="g1-note">COCO has room to play in landscape.</p>

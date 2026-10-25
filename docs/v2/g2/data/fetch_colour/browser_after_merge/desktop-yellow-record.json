@@ -1,0 +1,104 @@
+{
+ "record": {
+  "game": "fetch_colour",
+  "arg": "yellow",
+  "seed": 1,
+  "ticks": 608,
+  "inputs": [
+   {
+    "tick": 0,
+    "kind": "kidnap",
+    "x": 23,
+    "y": 6,
+    "theta": 2.214297435588181,
+    "has_theta": true
+   },
+   {
+    "tick": 0,
+    "kind": "config",
+    "choice": "actors.on=1"
+   },
+   {
+    "tick": 0,
+    "kind": "config",
+    "choice": "assist.target=any"
+   },
+   {
+    "tick": 0,
+    "kind": "config",
+    "choice": "actors.yield=1"
+   },
+   {
+    "tick": 0,
+    "kind": "config",
+    "choice": "avoid.on=1"
+   },
+   {
+    "tick": 5,
+    "kind": "goal",
+    "x": 23,
+    "y": 8
+   },
+   {
+    "tick": 75,
+    "kind": "config",
+    "choice": "assist.target=rod_yellow"
+   },
+   {
+    "tick": 75,
+    "kind": "config",
+    "choice": "assist.grasp=go"
+   },
+   {
+    "tick": 336,
+    "kind": "goal",
+    "x": 23,
+    "y": 1.4
+   },
+   {
+    "tick": 547,
+    "kind": "config",
+    "choice": "assist.grasp=go"
+   }
+  ],
+  "hash_version": 3,
+  "rules": 2,
+  "level": "coco_depot_colours_v1"
+ },
+ "hash_chain": "01a4f37558cb235d614d0ce59ba217c1eb9583de4609468c1a932bdb80bf4f7c",
+ "last_hash": "cfc6e95f33ac04b868c3df0a4cee7c8898f86db39d18815ac5673e1b2b70ad75",
+ "scorecard": {
+  "game": "fetch_colour",
+  "deliveries": 1,
+  "contacts": 0,
+  "net_deliveries": 1,
+  "time_used": 60.7,
+  "path_efficiency": 0.9570976457948126,
+  "orders": [
+   [
+    "rod_yellow",
+    "dispatch_drop"
+   ]
+  ],
+  "delivered": [
+   {
+    "object": "rod_yellow",
+    "drop": "dispatch_drop",
+    "t": 60.7,
+    "seconds": 60.7,
+    "driven": 8.04515613828055,
+    "ghost": 7.7
+   }
+  ],
+  "contact_log": [],
+  "rules": 2,
+  "round": "start_pad",
+  "timer": 83.6,
+  "colour": "yellow",
+  "level": "coco_depot_colours_v1"
+ },
+ "stars": 2,
+ "profile": "desktop",
+ "browser": "Chromium (Playwright), nvidia",
+ "note": "Pyodide in the browser worker; MODEL"
+}

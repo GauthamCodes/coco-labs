@@ -4,7 +4,8 @@
  * Fetch by colour (owner request 2026-10-24), played in a real browser through the page's own
  * controls, for each colour: the mode card's chip opens the colour's round, PLAY, AUTO (F) to the
  * rod, GRAB (G) when it lights, AUTO to Dispatch, DROP (G), the results screen. Checks that the
- * delivered rod is the chosen colour (window.__cocoGame's tick and the glue's scorecard), that
+ * delivered rod is the chosen colour (window.__cocoGame's tick and the glue's scorecard), that no
+ * toast is drawn over the results (and whether the results card fits without scrolling), that
  * the AUTO planner chooser still adds &planner= to the chips, and that the page logged no error.
  * Saves each run's record (spec id, seed, input log, hash chain) for a CPython replay.
  *
@@ -100,8 +101,12 @@ for (const [k, colour] of COLOURS.entries()) {
   const stars = await p.evaluate(() => window.__cocoGame.session.query('stars'));
   const rec = await p.evaluate(() => window.__cocoGame.session.query('record'));
   const resultsTitle = await p.textContent('[data-testid="results-title"]').catch(() => null);
+  // no toast drawn over the results; the results card fits the screen (no scrolling needed)
+  const layout = await p.evaluate(() => { const r = document.querySelector('[data-testid="g1-results"]');
+    return { toasts: document.querySelectorAll('.g1-toast').length, scroll_h: r?.scrollHeight ?? null, client_h: r?.clientHeight ?? null }; });
   const delivered = stars?.card?.delivered?.[0]?.object ?? null;
-  report.runs[colour] = { url, ok: delivered === `rod_${colour}` && stars?.card?.colour === colour && final?.f?.colour === colour && rec.record.arg === colour,
+  report.runs[colour] = { url, ok: delivered === `rod_${colour}` && stars?.card?.colour === colour && final?.f?.colour === colour && rec.record.arg === colour && layout.toasts === 0,
+    toast_hidden: layout.toasts === 0, results_fit: layout.scroll_h !== null && layout.scroll_h <= layout.client_h, results_scroll_h: layout.scroll_h, results_client_h: layout.client_h,
     delivered, carried, hud_colour: final?.f?.colour ?? null, objective_at_grab: objectiveBefore, results_title: resultsTitle,
     stars: stars?.stars ?? null, time_used: stars?.card?.time_used ?? null, contacts: stars?.card?.contacts ?? null, reference_time: stars?.reference?.time_used ?? null,
     ticks: rec.record.ticks, inputs: rec.record.inputs.length, wall_s: (Date.now() - t0) / 1000, log };

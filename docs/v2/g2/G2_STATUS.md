@@ -49,6 +49,10 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
   rounds regenerate identical; forklift check 0 overlap ticks; four colours delivered (each record
   replays in CPython); suites green after wrapping two long lines (flake8) and re-running
   update_isolation alone.
+- **Fetch by colour merged again 2026-10-25** (its last three commits: toast hidden through the
+  results, results fit a phone, colours level compiled for Gazebo/Nav2, tactical map can no longer go
+  black, GPU-lost notice): conflicts in a telemetry comment (G2's wording kept) and its README;
+  vitest 607, tools 68, check_dist clean; four colours + phone delivered under rules 2, records replay.
 - **Hotfix (no WebGL)**: `v2/hotfix-webgl-fallback` (PR #29 into main), b745ceb: the message page
   says what to try and links to Compare and Recordings; Compare runs without 3D (results listed, map
   replaced by a note). `webgl_fallback_check.mjs` 10/10 pages with WebGL refused and working.

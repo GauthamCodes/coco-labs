@@ -1,0 +1,25 @@
+{
+ "about": "browser records (Pyodide) replayed in CPython 3.12.3 with coco_lab.games.play",
+ "runs": {
+  "desktop-blue-record.json": {
+   "rules": 2,
+   "identical": true
+  },
+  "desktop-green-record.json": {
+   "rules": 2,
+   "identical": true
+  },
+  "desktop-red-record.json": {
+   "rules": 2,
+   "identical": true
+  },
+  "desktop-yellow-record.json": {
+   "rules": 2,
+   "identical": true
+  },
+  "phone-landscape-blue-record.json": {
+   "rules": 2,
+   "identical": true
+  }
+ }
+}

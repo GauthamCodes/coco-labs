@@ -24,7 +24,7 @@
     "choice": "assist.target=any"
    },
    {
-    "tick": 21,
+    "tick": 19,
     "kind": "goal",
     "x": 20,
     "y": 8
@@ -40,7 +40,7 @@
     "choice": "assist.grasp=go"
    },
    {
-    "tick": 416,
+    "tick": 417,
     "kind": "goal",
     "x": 23,
     "y": 1.4
@@ -55,15 +55,15 @@
   "rules": 1,
   "level": "coco_depot_colours_v1"
  },
- "hash_chain": "06223d920f465c30fc5f2bed1abc096ae1659daa40fae2deff3e5a694ac81424",
- "last_hash": "2cb0175081e5e33e23ed919c5650567bf59025226128e966569463e83fe648bb",
+ "hash_chain": "3f5310e29a30742656a3abbb9c795ba033202fb01b8f22d4461d5fc91437f5cd",
+ "last_hash": "baa858b90c057400d42db5b4975c38b32a72abb8e83ebe27cd9c89f24eba4428",
  "scorecard": {
   "game": "fetch_colour",
   "deliveries": 1,
   "contacts": 0,
   "net_deliveries": 1,
   "time_used": 74.30000000000001,
-  "path_efficiency": 1.0090909337299818,
+  "path_efficiency": 1.0118954859672216,
   "orders": [
    [
     "rod_red",
@@ -76,7 +76,7 @@
     "drop": "dispatch_drop",
     "t": 74.30000000000001,
     "seconds": 74.30000000000001,
-    "driven": 10.824138151819257,
+    "driven": 10.794138155484795,
     "ghost": 10.922539674441614
    }
   ],
