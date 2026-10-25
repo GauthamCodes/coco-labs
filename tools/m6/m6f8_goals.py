@@ -17,7 +17,8 @@
 M6F.8's Nav2 goals on the Depot, from the model (docs/v2/m6/M6F8_PLAN.md, run steps 3-4).
 
     m6f8_goals.py smoke OUT.json
-    m6f8_goals.py ghost OUT.json [--mode phone] [--seed 1]
+    m6f8_goals.py ghost OUT.json [--mode phone] [--seed 1] [--rules 3|4|5]
+    m6f8_goals.py colour OUT.json --colour red [--rules 2]
 
 ``smoke``: one goal per place the plan names, each a pose the model itself drives to --
 the loading dock and the office block at their zone's roomiest free plan-grid cell (the
@@ -31,6 +32,10 @@ silhouette).
 then per order the object's pre-grasp pose (the end of the round's own planned route to it,
 ``approach`` in the rounds file) and the drop zone's centre (the end of the route after it).
 Grasping and dropping are not driven: the legs only.
+
+``colour`` (G2, Fetch by colour on ``coco_depot_colours_v1``): the colour round's start (the start
+pad), the chosen rod's pre-grasp pose (``pick`` in the rounds file, the end of the round's planned
+route to it), then the drop zone's centre (Dispatch).
 
 World and map frames coincide on the Depot (``world_to_map`` [0, 0]); every pose is (x, y,
 yaw) in the map frame. Evidence class of the poses: MODEL (they are the model's).
@@ -104,18 +109,45 @@ def ghost(a, mode, seed, rules=3):
             'reference_time_s': rnd['reference_time_s'], 'goals': out}
 
 
+def colour(a, colour_id, rules):
+    with open(games.colour_rounds_file(rules=rules), encoding='utf-8') as f:
+        doc = json.load(f)
+    rnd = doc['rounds'][colour_id]
+    (oid, drop), = rnd['orders']
+    p = rnd['pick'][0]
+    x, y = r3.centre(a, drop)
+    goals = [{'id': f'order1_{oid}_pregrasp', 'label': f'order 1: to {oid}',
+              'pose': [round(p[0], 3), round(p[1], 3), round(p[2], 4)]},
+             {'id': f'order1_{drop}', 'label': f'order 1: to {drop}',
+              'pose': [round(x, 3), round(y, 3), 0.0], 'route_end': rnd['routes'][-1][-1]}]
+    return {'start': rnd['start'], 'game': 'fetch_colour', 'colour': colour_id, 'rules': rules,
+            'region': rnd['region'], 'orders': rnd['orders'], 'ghost_m': rnd['ghost_m'],
+            'reference_time_s': rnd['reference_time_s'], 'goals': goals}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
-    ap.add_argument('what', choices=('smoke', 'ghost'))
+    ap.add_argument('what', choices=('smoke', 'ghost', 'colour'))
     ap.add_argument('out')
     ap.add_argument('--mode', default='phone')
     ap.add_argument('--seed', type=int, default=1)
-    ap.add_argument('--rules', type=int, default=3, choices=(3, 4), help='G2.6: the rounds file (rules 4: G2.1)')
+    ap.add_argument('--rules', type=int, default=None, choices=(1, 2, 3, 4, 5),
+                    help='the rounds file: Fetch Rush 3 (default), 4 (G2.1), 5 (G2 rules 5); '
+                         'Fetch by colour 1 or 2 (default: the current rules)')
+    ap.add_argument('--colour', choices=games.FETCH_COLOURS, help='colour: the rod to fetch')
     o = ap.parse_args()
-    spec = json.load(open(os.path.join(REPO, 'worlds', f'{LEVEL}.json')))
+    level = games.FETCH_COLOUR_LEVEL if o.what == 'colour' else LEVEL
+    spec = json.load(open(os.path.join(REPO, 'worlds', f'{level}.json')))
     a = r3.arena(spec)
-    doc = smoke(a, spec) if o.what == 'smoke' else ghost(a, o.mode, o.seed, o.rules)
-    doc.update({'level': LEVEL, 'frame': 'map', 'world_to_map': spec['world_to_map'],
+    if o.what == 'smoke':
+        doc = smoke(a, spec)
+    elif o.what == 'ghost':
+        doc = ghost(a, o.mode, o.seed, o.rules or 3)
+    else:
+        if not o.colour:
+            ap.error('colour needs --colour')
+        doc = colour(a, o.colour, o.rules or games.FETCH_COLOUR_RULES)
+    doc.update({'level': level, 'frame': 'map', 'world_to_map': spec['world_to_map'],
                 'made_by': 'tools/m6/m6f8_goals.py ' + o.what})
     with open(o.out, 'w') as f:
         json.dump(doc, f, indent=1)

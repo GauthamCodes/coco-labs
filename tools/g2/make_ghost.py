@@ -2,7 +2,8 @@
 # Copyright 2026 Gautham Anil
 # SPDX-License-Identifier: Apache-2.0
 """
-G2.6: a recorded Gazebo + Nav2 run of a Fetch Rush round, as Play's "Race Nav2" ghost (STACK).
+G2.6: a recorded Gazebo + Nav2 run of a Fetch Rush round (or, G2, a Fetch by colour round), as
+Play's "Race Nav2" ghost (STACK).
 
     source /opt/ros/jazzy/setup.bash && tools/g2/make_ghost.py RUN_DIR GOALS.json OUT.json
 
@@ -55,7 +56,9 @@ def main() -> int:
         'not': ['no grasp: Nav2 drove the round\'s legs only, the arm did not move',
                 'Gazebo\'s actors were parked at their paths\' start (no forklift or walker moved)',
                 'never hardware: no physical robot exists'],
-        'round': {k: goals.get(k) for k in ('rules', 'mode', 'seed', 'region', 'orders', 'ghost_m', 'reference_time_s', 'start')},
+        # a Fetch Rush round (mode, seed) or a Fetch by colour round (game, colour): the goal file's keys
+        'round': {k: goals[k] for k in ('game', 'colour', 'rules', 'mode', 'seed', 'region', 'orders', 'ghost_m',
+                                        'reference_time_s', 'start') if k in goals},
         'legs': [{'id': L['id'], 'status': L['status'], 'error_code': L.get('error_code'), 't0': round(L['t_start_sim'] - t0, 2),
                   'sim_s': L['sim_s'], 'driven_m': L['driven_m'], 'truth_to_goal_m': L.get('truth_to_goal_m')} for L in legs],
         'all_succeeded': all(L['status'] == 'SUCCEEDED' for L in legs),

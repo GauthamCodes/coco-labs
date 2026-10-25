@@ -23,7 +23,7 @@
 # 'gazebo_models/worlds' sweep matches it). Steps: refuse if a simulator or launch is up;
 # ros_clean.sh; launch full_world_robo.launch.py gui:=false world:=<abs> (never --fast);
 # wait for /scan; list every model and its pose; teleport COCO to the goal file's start
-# (/world/coco_depot_v1/set_pose); the arbiter (initial_mode:=nav) and nav.launch.py
+# (/world/$LEVEL/set_pose); the arbiter (initial_mode:=nav) and nav.launch.py
 # arbiter:=true with the generated map and params; wait for Nav2 active and an AMCL pose;
 # record a bag; m6f8_nav.py through the goals; stop; ros_clean.sh. Raw logs in OUT_DIR.
 set -o pipefail
@@ -34,8 +34,10 @@ shift 2
 NAV_FLAGS=("$@")
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 : "${COCO_WS:?set COCO_WS to the overlay built from this repo}"
-GEN="${GEN:-$HOME/coco_lab_runs/m6/gen/coco_depot_v1}"
-WORLD="${WORLD:-$HOME/coco_lab_runs/m6/gazebo_models/worlds/coco_depot_v1.sdf}"
+# LEVEL (G2): the World Spec id -- the Gazebo world's name and the generated map's file name
+LEVEL="${LEVEL:-coco_depot_v1}"
+GEN="${GEN:-$HOME/coco_lab_runs/m6/gen/$LEVEL}"
+WORLD="${WORLD:-$HOME/coco_lab_runs/m6/gazebo_models/worlds/$LEVEL.sdf}"
 export ROS_DOMAIN_ID="${ROS_DOMAIN_ID:-79}"
 CLEAN="$REPO/gazebo_models/scripts/ros_clean.sh"
 mkdir -p "$OUT" || exit 3
@@ -53,9 +55,9 @@ source "$REPO/setup_env.sh" > /dev/null 2>&1
 source "$COCO_WS/install/local_setup.bash"
 PY=python3
 read -r SX SY STH < <("$PY" -c "import json,sys; s=json.load(open(sys.argv[1]))['start']; print(*s)" "$GOALS")
-"$PY" - "$OUT/meta.json" "$REPO" "$GOALS" "$WORLD" "$GEN" <<'EOF'
+"$PY" - "$OUT/meta.json" "$REPO" "$GOALS" "$WORLD" "$GEN" "$LEVEL" <<'EOF'
 import hashlib, json, os, subprocess, sys, time
-out, repo, goals, world, gen = sys.argv[1:6]
+out, repo, goals, world, gen, level = sys.argv[1:7]
 sha = lambda p: hashlib.sha256(open(p, 'rb').read()).hexdigest()
 sh = lambda *a: subprocess.run(a, capture_output=True, text=True).stdout.strip()
 pk = {p: sh('dpkg-query', '-W', '-f=${Version}', p) for p in (
@@ -66,9 +68,9 @@ json.dump({'started_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
            'git_commit': sh('git', '-C', repo, 'rev-parse', 'HEAD'),
            'git_dirty_paths': len(sh('git', '-C', repo, 'status', '--porcelain').splitlines()),
            'ros_domain_id': os.environ.get('ROS_DOMAIN_ID'), 'world_to_map': [0.0, 0.0],
-           'world': world, 'world_sha256': sha(world),
-           'map_yaml_sha256': sha(os.path.join(gen, 'nav2/coco_depot_v1.yaml')),
-           'map_pgm_sha256': sha(os.path.join(gen, 'nav2/coco_depot_v1.pgm')),
+           'level': level, 'world': world, 'world_sha256': sha(world),
+           'map_yaml_sha256': sha(os.path.join(gen, f'nav2/{level}.yaml')),
+           'map_pgm_sha256': sha(os.path.join(gen, f'nav2/{level}.pgm')),
            'nav2_params_sha256': sha(os.path.join(gen, 'nav2/nav2_params.yaml')),
            'goals': goals, 'goals_sha256': sha(goals), 'packages': pk,
            'power_profile': sh('powerprofilesctl', 'get'),
@@ -121,11 +123,11 @@ setsid ros2 launch gazebo_models full_world_robo.launch.py gui:=false world:="$W
 PGIDS+=("$!")
 wait_for "sim publishing /scan" 300 scan_up || { say "VOID: no /scan"; exit 4; }
 timeout 20 gz model --list > "$OUT/models.txt" 2>&1
-timeout 20 gz topic -e -t /world/coco_depot_v1/pose/info -n 1 > "$OUT/poses_at_launch.txt" 2>&1
+timeout 20 gz topic -e -t /world/$LEVEL/pose/info -n 1 > "$OUT/poses_at_launch.txt" 2>&1
 QZ=$("$PY" -c "import math,sys; print(math.sin(float(sys.argv[1])/2))" "$STH")
 QW=$("$PY" -c "import math,sys; print(math.cos(float(sys.argv[1])/2))" "$STH")
 say "teleport coco to ($SX, $SY, $STH)"
-timeout 20 gz service -s /world/coco_depot_v1/set_pose --reqtype gz.msgs.Pose \
+timeout 20 gz service -s /world/$LEVEL/set_pose --reqtype gz.msgs.Pose \
     --reptype gz.msgs.Boolean --timeout 5000 \
     --req "name: 'coco', position: {x: $SX, y: $SY, z: 0.05}, orientation: {x: 0, y: 0, z: $QZ, w: $QW}" \
     > "$OUT/teleport.txt" 2>&1
@@ -137,7 +139,7 @@ setsid ros2 launch custom_teleop arbiter.launch.py initial_mode:=nav use_sim_tim
     > "$OUT/arbiter.log" 2>&1 &
 PGIDS+=("$!")
 setsid ros2 launch gazebo_models nav.launch.py arbiter:=true use_sim_time:=true \
-    map:="$GEN/nav2/coco_depot_v1.yaml" params_file:="$GEN/nav2/nav2_params.yaml" \
+    map:="$GEN/nav2/$LEVEL.yaml" params_file:="$GEN/nav2/nav2_params.yaml" \
     > "$OUT/nav.log" 2>&1 &
 PGIDS+=("$!")
 wait_for "all Nav2 lifecycle nodes active" 300 nav_active || { say "VOID: Nav2 not active"; exit 4; }
@@ -155,8 +157,8 @@ setsid ros2 bag record --use-sim-time --include-hidden-topics -s mcap \
     -o "$OUT/bag" "${TOPICS[@]}" > "$OUT/bag.log" 2>&1 &
 BAG_PGID=$!
 sleep 5
-"$PY" "$REPO/tools/m6/m6f8_nav.py" "$GOALS" "$OUT/results.jsonl" "${NAV_FLAGS[@]}"
+"$PY" "$REPO/tools/m6/m6f8_nav.py" "$GOALS" "$OUT/results.jsonl" --world "$LEVEL" "${NAV_FLAGS[@]}"
 RC=$?
 say "goals done (rc $RC)"
-timeout 20 gz topic -e -t /world/coco_depot_v1/pose/info -n 1 > "$OUT/poses_at_end.txt" 2>&1
+timeout 20 gz topic -e -t /world/$LEVEL/pose/info -n 1 > "$OUT/poses_at_end.txt" 2>&1
 exit "$RC"
