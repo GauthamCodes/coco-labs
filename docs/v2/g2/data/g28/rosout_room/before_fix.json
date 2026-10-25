@@ -1,0 +1,91 @@
+{
+ "site": "http://127.0.0.1:4188/coco-labs/",
+ "passed": false,
+ "note": "viewport/UA emulation of the real phone's full-screen size: looks, not a measurement",
+ "rows": [
+  {
+   "profile": "real-phone-full-screen-803x361",
+   "view": "game",
+   "ok": false,
+   "rosout": [
+    10,
+    324,
+    182,
+    358
+   ],
+   "strip": [
+    170,
+    341,
+    633,
+    356
+   ],
+   "overlap_px": 12,
+   "gap_px": -12,
+   "lines": 3,
+   "errors": []
+  },
+  {
+   "profile": "real-phone-full-screen-803x361",
+   "view": "sim",
+   "ok": false,
+   "rosout": [
+    10,
+    324,
+    182,
+    358
+   ],
+   "strip": [
+    170,
+    341,
+    633,
+    356
+   ],
+   "overlap_px": 12,
+   "gap_px": -12,
+   "lines": 3,
+   "errors": []
+  },
+  {
+   "profile": "desktop-1440x900",
+   "view": "game",
+   "ok": false,
+   "rosout": [
+    13,
+    854,
+    445,
+    896
+   ],
+   "strip": [
+    431,
+    876,
+    1009,
+    894
+   ],
+   "overlap_px": 14,
+   "gap_px": -14,
+   "lines": 3,
+   "errors": []
+  },
+  {
+   "profile": "desktop-1440x900",
+   "view": "sim",
+   "ok": false,
+   "rosout": [
+    13,
+    854,
+    445,
+    896
+   ],
+   "strip": [
+    431,
+    876,
+    1009,
+    894
+   ],
+   "overlap_px": 14,
+   "gap_px": -14,
+   "lines": 3,
+   "errors": []
+  }
+ ]
+}

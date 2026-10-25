@@ -9,6 +9,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { formatLine, linesFor, nearestAhead, Rosout, type TickFacts } from '../src/ros/rosout';
 import type { PlanInfo } from '../src/arena/protocol';
+import { roomBeforeStrip } from '../src/game/hud/RosHud';
 
 const GRID = { resolution: 0.1 };
 const SCAN = { angle_min: -2.0944, angle_max: 2.0944, range_min: 0.15, range_max: 12 };
@@ -68,5 +69,14 @@ describe('/rosout lines', () => {
     const r = new Rosout(3);
     for (let k = 0; k < 10; k++) r.feed({ ...base, tick: k, source: k % 2 ? 'teleop' : 'planner' }, null, SCAN, GRID);
     expect(r.lines).toHaveLength(3);
+  });
+});
+
+describe('the collapsed /rosout console beside the telemetry strip', () => {
+  it('ends where the strip begins, less a gap; no strip leaves the CSS cap; never narrower than 96 px', () => {
+    // the real phone, full screen 803 x 361 (G2.8): console at 10 px, strip from 170 px
+    expect(roomBeforeStrip(10, 170)).toBe(152);
+    expect(roomBeforeStrip(10, null)).toBeNull();
+    expect(roomBeforeStrip(10, 60)).toBe(96);
   });
 });
