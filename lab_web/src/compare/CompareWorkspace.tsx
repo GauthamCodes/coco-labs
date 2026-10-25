@@ -7,6 +7,7 @@ import { SPEC_FILES, type CompareInflation, type CompareResult, type World, type
 import { WorldStage, type ComparisonData } from '../ui/reference/WorldStage';
 import type { CostmapData, CostLayer } from '../ui/reference/comparisonPixels';
 import { ModeNav } from '../ui/ModeNav';
+import { StageBoundary, WebGLHelp } from '../ui/StageBoundary';
 import '../ui/reference/reference.css';
 import './compare.css';
 import '../game/fonts.css';
@@ -141,7 +142,12 @@ export function CompareWorkspace() {
   return <main className={`compare-workspace ${controls ? 'controls-open' : ''}`} data-testid="compare-workspace" data-ready={!!result}>
     <ModeNav current="compare" evidence="MODEL" />
     <section className="compare-stage" aria-label="Comparison panes">
-      <WorldStage kind="compare" data={shown} perspective={perspective} onHover={setHover} onGoal={(x, y) => { if (!busy) { setGoal([x, y]); run(names, params, [x, y]); } }} />
+      {/* no WebGL: the map is not drawn, the comparison still runs and its results are listed */}
+      <StageBoundary fallback={() => <div className="compare-no-3d" data-testid="compare-no-3d" role="note" style={{ position: 'absolute', inset: 0, display: 'grid', placeContent: 'center', padding: 16, maxWidth: 560, margin: 'auto' }}>
+        <h2 style={{ margin: '0 0 6px' }}>The map needs 3D graphics (WebGL), and the browser did not provide it</h2>
+        <p style={{ margin: 0 }}>The comparison still runs: its results are listed with each pane, and every control works (goals can be typed in the controls).</p>
+        <WebGLHelp />
+      </div>}><WorldStage kind="compare" data={shown} perspective={perspective} onHover={setHover} onGoal={(x, y) => { if (!busy) { setGoal([x, y]); run(names, params, [x, y]); } }} /></StageBoundary>
       <div className={`compare-labels panes-${names.length}`}>{names.map((name, i) => <div key={i}><strong>{KEYS[i]} · {LABELS[name] ?? name}</strong><span>MODEL · kinematic</span></div>)}</div>
       <div className="compare-toolbar"><button onClick={() => setPerspective(!perspective)}>{perspective ? 'Top down' : '3D view'}</button><button disabled={family !== 'global'} onClick={() => setDifference(!difference)} aria-pressed={difference}>A/B difference</button><button ref={controlsToggle} className="compare-controls-toggle" onClick={() => setControls(!controls)} aria-expanded={controls}>Controls</button></div>
       <output className={`compare-hover ${hover ? 'has-cell' : 'is-hint'}`}>{hover && data?.costs ? `Cell ${hover.join(', ')} · ${layer} cost ${data.costs[layer][hover[0] * data.world.width + hover[1]]}` : 'Hover a cell for its cost · or focus/edit goal coordinates · click for the shared goal'}</output>

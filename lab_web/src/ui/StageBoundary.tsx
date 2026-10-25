@@ -34,16 +34,28 @@ export function WebGLHelp() {
   </ul>;
 }
 
+/** Pages that work without WebGL: Compare computes and lists its results (its map is not drawn),
+ * Recordings is a plain library. */
+export function NoWebGLLinks() {
+  const link = { color: '#93C5FD' };
+  return <ul data-testid="no-webgl-links" style={{ margin: '8px 0', paddingLeft: 20, lineHeight: 1.6 }}>
+    <li><a href={`${BASE}?view=compare`} style={link}>Compare</a>: the algorithms' results and numbers (the map is not drawn without WebGL).</li>
+    <li><a href={`${BASE}?view=research`} style={link}>Recordings</a>: the real ROS 2 (STACK) recordings and Case Files.</li>
+  </ul>;
+}
+
 /** A whole page that failed: what happened, what to try, and a way back. Never a blank page. */
 export function PageError({ error }: { error: Error }) {
   const gl = isWebGLError(error);
   return <main role="alert" data-testid="page-error" data-webgl={gl ? 'false' : undefined}
     style={{ maxWidth: 640, margin: '12vh auto', padding: '0 16px', color: '#E8EDF5', font: '500 15px/1.45 system-ui, sans-serif' }}>
     <h1 style={{ fontSize: 22, margin: '0 0 8px' }}>{gl ? 'This page needs 3D graphics (WebGL), and the browser did not provide it' : 'Something went wrong on this page'}</h1>
-    {gl ? <WebGLHelp /> : <p>Reloading usually fixes it. If it keeps happening, the details below say what failed.</p>}
-    <p style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+    {gl ? <><h2 style={{ fontSize: 16, margin: '12px 0 0' }}>What to try</h2><WebGLHelp /><h2 style={{ fontSize: 16, margin: '12px 0 0' }}>Works without 3D</h2><NoWebGLLinks /></>
+      : <p>Reloading usually fixes it. If it keeps happening, the details below say what failed.</p>}
+    <p style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
       <button onClick={() => window.location.reload()} style={{ font: 'inherit', padding: '8px 16px', borderRadius: 8, border: 0, background: '#FF7A1A', color: '#111', fontWeight: 700, cursor: 'pointer' }}>Reload</button>
       <a href={BASE} style={{ color: '#93C5FD' }}>COCO Lab title</a>
+      {!gl && <><a href={`${BASE}?view=compare`} style={{ color: '#93C5FD' }}>Compare</a><a href={`${BASE}?view=research`} style={{ color: '#93C5FD' }}>Recordings</a></>}
     </p>
     <details style={{ color: '#93A0B5' }}><summary>Details</summary><pre style={{ whiteSpace: 'pre-wrap' }}>{error.message}</pre></details>
   </main>;
