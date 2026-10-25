@@ -41,7 +41,14 @@ server's FollowPath wraps the same DWB in Nav2's RotationShimController. Measure
 gate: beside ``obj_maze_2``'s pre-grasp pose DWB commanded ~0 (v 0, w ~±0.03 rad/s) for ~40 s at a
 time, its known preference for standing still when every forward arc scores badly; the shim turns
 the robot toward the path first (more than ``SHIM['angular_dist_threshold']`` off), then hands over
-to DWB, whose parameters are unchanged.
+to DWB, whose parameters are unchanged. Measured: not enough (seed 6, 1 of 2: DWB still stood
+still at the maze's corner, already facing the path).
+
+``--derivation 4`` (G2.8): derivation 2, and FollowPath is Nav2's Regulated Pure Pursuit in place of
+DWB, at DWB's limits (``RPP``). At a sharp corner every DWB forward arc leaves the path line while
+standing still costs nothing more, so DWB stood still (C2-NAV.21's degeneracy); RPP steers to a
+lookahead point on the global path (which keeps >= 0.6 m from the walls there) and rotates in place
+first when the path turns sharply.
 
 ``--gz-check`` runs ``gz sdf -k`` on every SDF written (light; allowed while
 other work runs). ``--checksums`` writes the sha256 of every output to a JSON
@@ -81,6 +88,19 @@ SHIM = {'plugin': 'nav2_rotation_shim_controller::RotationShimController',
         'rotate_to_heading_angular_vel': 0.8, 'max_angular_accel': 3.2,
         'simulate_ahead_time': 1.0, 'rotate_to_goal_heading': False}
 
+#: G2.8 (derivation 4): Regulated Pure Pursuit replaces DWB, within DWB's limits (max_vel_x 0.3,
+#: max_vel_theta 1.0, acc_lim_theta 3.2); no reversing; collision checking on; cost-regulated slowing
+#: off (the collision monitor already slows the robot beside obstacles).
+RPP = {'plugin': 'nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController',
+       'desired_linear_vel': 0.3, 'lookahead_dist': 0.6, 'min_lookahead_dist': 0.3, 'max_lookahead_dist': 0.9,
+       'lookahead_time': 1.5, 'use_velocity_scaled_lookahead_dist': False, 'transform_tolerance': 0.1,
+       'min_approach_linear_velocity': 0.05, 'approach_velocity_scaling_dist': 0.6,
+       'use_collision_detection': True, 'max_allowed_time_to_collision_up_to_carrot': 1.0,
+       'use_regulated_linear_velocity_scaling': True, 'use_cost_regulated_linear_velocity_scaling': False,
+       'regulated_linear_scaling_min_radius': 0.9, 'regulated_linear_scaling_min_speed': 0.25,
+       'use_rotate_to_heading': True, 'rotate_to_heading_angular_vel': 0.8, 'rotate_to_heading_min_angle': 0.785,
+       'max_angular_accel': 3.2, 'allow_reversing': False, 'use_fixed_curvature_lookahead': False}
+
 
 def derive_nav2_params(spec, map_yaml_name, resolution, derivation=1):
     """Return (params text, derivation list) from the Stack's nav2_params.yaml."""
@@ -107,7 +127,15 @@ def derive_nav2_params(spec, map_yaml_name, resolution, derivation=1):
         a = ['amcl', 'ros__parameters']
         put(a + ['update_min_d'], AMCL_UPDATE, g26 + 'updates every 0.25 m let a wrong likelihood peak capture the filter while turning; 0.05 measured best of the variants replayed')
         put(a + ['update_min_a'], AMCL_UPDATE, g26 + 'as update_min_d')
-    if derivation >= 3:
+    if derivation == 4:
+        g28 = 'G2.8 (docs/v2/g2/data/g28/round_gate/): '
+        cs = params['controller_server']['ros__parameters']
+        old = cs['FollowPath']
+        assert old['plugin'] == SHIM['primary_controller'], old['plugin']
+        cs['FollowPath'] = dict(RPP)
+        changes.append({'key': 'controller_server.ros__parameters.FollowPath', 'from': old, 'to': dict(RPP),
+                        'why': g28 + 'DWB stood still at the maze corner (every forward arc leaves the path line; standing costs no more); RPP follows the path, which keeps >= 0.6 m from the walls there'})
+    if derivation == 3:
         g28 = 'G2.8 (docs/v2/g2/data/g28/round_gate/): '
         fp = ['controller_server', 'ros__parameters', 'FollowPath']
         dwb = params['controller_server']['ros__parameters']['FollowPath']['plugin']
@@ -225,7 +253,7 @@ def main(argv=None):
     ap.add_argument('--gz-check', action='store_true')
     ap.add_argument('--checksums')
     ap.add_argument('--verify', action='store_true')
-    ap.add_argument('--derivation', type=int, default=1, choices=(1, 2, 3))
+    ap.add_argument('--derivation', type=int, default=1, choices=(1, 2, 3, 4))
     a = ap.parse_args(argv)
     s, root, written, checks = generate(a.spec, a.out, a.arena_res, a.nav_res, a.gz_check, a.derivation)
     bad = [rel for rel, c in checks.items() if c['returncode'] != 0]
