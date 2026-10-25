@@ -77,6 +77,15 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
   ran at 0.80). **Next:** let seeds 6, 1, 3 finish (baseline); then derivation 3 = derivation 2 + Nav2's
   RotationShimController around DWB (installed, never tried; C2-NAV.21's DWB tweaks made standing still
   more attractive); A/B on the maze round; if better, re-gate every round 5/5 (params change).
+- **Gate fix (2026-10-26):** derivation 3 (RotationShim around DWB, 53a23f9): seed 6 **1 of 2**, stopped
+  (DWB still stood still at the maze corner, already facing the path). **Derivation 4 (Regulated Pure
+  Pursuit in place of DWB, c1afe72): seed 6 5 of 5** (maze entry 39.3-39.8 s, exit 70.4-71.8 s; legs end
+  0.22-0.41 m from the goal by truth). **Re-gate on derivation 4 RUNNING:** `GEN_DEPOT=…/gen_d4/coco_depot_v1
+  GEN_COLOURS=…/gen_d4/coco_depot_colours_v1 tools/g2/round_gate.sh ~/coco_lab_runs/g2/round_gate_d4 5
+  colour:red colour:green colour:blue colour:yellow phone:2 phone:1 phone:3` (output appended to
+  `round_gate_d4.out`; seed 6's 5 runs are in the same dir). If cleared: count what is in
+  `round_gate_d4/gate_rounds.jsonl`, re-run only rounds without 5 counted runs. Derivation-2 results
+  (colours 5/5, seed 2 5/5, seed 6 1/5) stay as the baseline in `round_gate/`.
 - **Real phone done 2026-10-25** ([`data/g28/real_phone_final/`](data/g28/real_phone_final/)): GAME 10 min 60 fps
   median, SIM 60; it found and the fix closed two /rosout layout defects (12aa0ab).
 - **Next (owner's order, 2026-10-25):** (1) Rules 5 committed + pushed → (2) merge
