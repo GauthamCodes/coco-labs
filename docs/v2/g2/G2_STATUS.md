@@ -56,7 +56,8 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
 - **Hotfix (no WebGL)**: `v2/hotfix-webgl-fallback` (PR #29 into main), b745ceb: the message page
   says what to try and links to Compare and Recordings; Compare runs without 3D (results listed, map
   replaced by a note). `webgl_fallback_check.mjs` 10/10 pages with WebGL refused and working.
-  Evidence `docs/v2/hotfix_webgl/`. To be merged into G2 after Rules 5 and Fetch by colour.
+  Evidence `docs/v2/hotfix_webgl/`. **Merged into G2 2026-10-25** (it replaced the first form,
+  d43115d); the check on the G2 build: 10/10 pages.
 - **Next (owner's order, 2026-10-25):** (1) Rules 5 committed + pushed → (2) merge
   `v2/g2-fetch-colour` (abc039f; its last three commits are not in G2) → (3a) merge the hotfix →
   (3b) Gazebo per-round gate, 5/5 for each distinct phone round (seeds 1, 2, 3, 6) and each colour
