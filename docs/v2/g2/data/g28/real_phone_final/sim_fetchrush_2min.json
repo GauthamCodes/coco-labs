@@ -1,0 +1,192 @@
+{
+ "class": "REAL DEVICE, full screen, no DevTools attached while playing (Android input only)",
+ "site": "http://localhost:4188/coco-labs/",
+ "game": "fetch_rush",
+ "minutes": 2,
+ "started": "2026-10-25T20:25:08.192Z",
+ "device": {
+  "model": "A063",
+  "android": "15",
+  "build": "V3.2-260618-1045",
+  "chrome": "156.0.8078.47"
+ },
+ "network_note": "served by the laptop over USB (adb reverse); not the phone's mobile network",
+ "battery": [
+  {
+   "at": "2026-10-25T20:25:08.562Z",
+   "level_pct": 86,
+   "temperature_c": 40,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-25T20:31:35.655Z",
+   "level_pct": 86,
+   "temperature_c": 37,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-25T20:32:08.083Z",
+   "level_pct": 86,
+   "temperature_c": 38,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-25T20:32:39.248Z",
+   "level_pct": 86,
+   "temperature_c": 39,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-25T20:33:06.443Z",
+   "level_pct": 86,
+   "temperature_c": 39,
+   "ac_powered": "true"
+  }
+ ],
+ "temps_start": {
+  "battery": 6,
+  "GPU0": 54.8,
+  "CPU7": 60.3,
+  "skin": 41.129,
+  "CPU5": 61.5
+ },
+ "shots": {
+  "portrait_card": [
+   1080,
+   2400
+  ],
+  "after_tap": [
+   2400,
+   1080
+  ],
+  "one_minute": [
+   2400,
+   1080
+  ],
+  "end": [
+   2400,
+   1080
+  ]
+ },
+ "settings_changed": [],
+ "cooled": {
+  "waited_s": 301,
+  "battery": {
+   "at": "2026-10-25T20:30:09.443Z",
+   "level_pct": 86,
+   "temperature_c": 36,
+   "ac_powered": "true"
+  },
+  "temps": {
+   "battery": 5,
+   "GPU0": 47.8,
+   "CPU7": 52.9,
+   "skin": 35.814,
+   "CPU5": 52.9
+  }
+ },
+ "before": {
+  "iw": 361,
+  "ih": 654,
+  "dpr": 2.987499952316284,
+  "o": "portrait-primary"
+ },
+ "full_screen_by_screencap": "landscape buffer",
+ "temps_1min": {
+  "battery": 6,
+  "GPU0": 58.7,
+  "CPU7": 63.9,
+  "skin": 40.425,
+  "CPU5": 65.8
+ },
+ "temps_end": {
+  "battery": 6,
+  "GPU0": 58.3,
+  "CPU7": 64.2,
+  "skin": 40.911,
+  "CPU5": 64.6
+ },
+ "view": "sim",
+ "play": {
+  "one_minute": {
+   "fps_median": 60,
+   "fps_min": 60,
+   "fps_p05": 60,
+   "windows": 60,
+   "frame_ms_median": 16.69999998807907,
+   "frame_ms_p95": 18.599999994039536,
+   "frame_ms_p99": 20.5,
+   "frame_ms_max": 29.599999994039536,
+   "frames": 3600,
+   "over_50ms": 0
+  },
+  "whole": {
+   "fps_median": 60,
+   "fps_min": 60,
+   "fps_p05": 60,
+   "windows": 120,
+   "frame_ms_median": 16.69999998807907,
+   "frame_ms_p95": 18.5,
+   "frame_ms_p99": 20.5,
+   "frame_ms_max": 29.599999994039536,
+   "frames": 7200,
+   "over_50ms": 0
+  },
+  "webgl_context_lost": 0,
+  "page_errors": [],
+  "end_state": {
+   "full_screen": true,
+   "orientation": "landscape-primary",
+   "viewport": [
+    803,
+    361
+   ],
+   "tick": 1993,
+   "tier": "medium",
+   "pixel_ratio": 1.25
+  }
+ },
+ "touch_to_motion": {
+  "samples": [
+   60.5,
+   111.19999998807907,
+   110.69999998807907,
+   107,
+   110.19999998807907,
+   118.69999998807907,
+   103.59999999403954,
+   110.7999999821186,
+   111,
+   93.19999998807907,
+   127,
+   60,
+   70.10000002384186,
+   77,
+   1304.5999999940395,
+   4918.5,
+   3744.199999988079,
+   137.10000002384186,
+   103.09999999403954,
+   102.59999999403954,
+   2534.399999976158,
+   1327.2000000178814,
+   4949.699999988079,
+   6184.200000017881,
+   4894.200000017881,
+   3701.5,
+   4936.5,
+   4917.0999999940395,
+   4934.9000000059605,
+   102
+  ],
+  "n": 30,
+  "median_ms": 118.69999998807907,
+  "p90_ms": 4936.5,
+  "note": "every sample from the trials and the soak (perf.inputToMotion: drive input -> the robot drawn moved)"
+ },
+ "settings_restored": {
+  "acc": "0",
+  "user": "0"
+ },
+ "ended": "2026-10-25T20:33:07.476Z"
+}
