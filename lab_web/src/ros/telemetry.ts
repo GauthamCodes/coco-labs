@@ -35,8 +35,8 @@ export function signed(x: number, d = 2): string {
 
 /**
  * Right-aligned in a fixed width with figure spaces (U+2007, a digit's width): the monospace strip
- * keeps one width whatever the values, so it never grows into its neighbours (on the real phone
- * it reached /rosout at θ 357°, G2.8).
+ * keeps one width whatever the values, so it never grows into its neighbours; on the real phone
+ * it reached /rosout at θ 357° (G2.8).
  */
 const pad = (text: string, width: number) => text.padStart(width, '\u2007');
 

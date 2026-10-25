@@ -646,7 +646,7 @@ export function PlayGame(p: PlayProps) {
       <button className={`g1-btn g1-small g1-auto ${auto ? 'is-on' : ''}`} data-testid="hud-autonomy" aria-pressed={auto} onClick={() => void toggleAuto()} aria-label="AUTO (F): the planner drives"><span><Route className="ic" size={20} />AUTO{desktop && <kbd>F</kbd>}</span></button>
       <button className="g1-btn g1-small g1-cam" data-testid="hud-camera" onClick={cycleCam} aria-label={`Camera (C): ${cam}`}><span><Camera className="ic" size={20} />CAM{desktop && <kbd>C</kbd>}</span></button>
       {busy && <p className="g1-busy g1-glass" role="status" data-testid="g1-busy">COCO's planner is computing… <small>(the clock waits)</small></p>}
-      {toast && <p key={toast.key} className="g1-toast g1-glass" role="status">{toast.text}</p>}
+      {toast && !p.paused && <p key={toast.key} className="g1-toast g1-glass" role="status">{toast.text}</p>}
       {stackGhost.current && <p className="g2-race g1-glass" data-testid="g2-race-chip">RACING Nav2 · <b>STACK</b> recording (Gazebo, driving only — no grasp)</p>}
       {recommend && <div className="g2-recommend g1-glass" role="status" data-testid="g2-recommend">
         <span>Drawing {recommend.fps.toFixed(0)} fps on your saved settings.</span>
