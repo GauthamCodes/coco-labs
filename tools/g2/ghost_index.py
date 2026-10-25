@@ -12,6 +12,9 @@ a seed only when the index names a recording of that seed's round in which every
 G2 rules 5 (the model's actors stop for COCO) keeps rules 4's draw, so each rules-5 seed whose
 round is a recording's (same start zone and orders) is listed too, for the same file: the
 recording is the same Gazebo run (its actors parked), whatever the browser model's actors do.
+Per round, recordings made under that round's own rules come first (G2's per-round gate recorded
+rules 5's), then older ones. Fetch by colour recordings (``game``, ``colour``) are listed per
+colour for each rules version whose round matches.
 """
 import argparse
 import hashlib
@@ -33,24 +36,42 @@ RULES = (4, 5)
 def build():
     docs = [(rules, games.load_rounds(rules=rules)) for rules in RULES
             if games.rounds_file(rules=rules).exists()]
+    colour_docs = [(rules, json.load(open(games.colour_rounds_file(rules=rules), encoding='utf-8')))
+                   for rules in sorted(games.FETCH_COLOUR_ACTOR_RULES)
+                   if games.colour_rounds_file(rules=rules).exists()]
     files = sorted(f for f in os.listdir(DIR) if f.endswith('.json') and f != 'index.json')
     entries = []
     for f in files:
         raw = open(os.path.join(DIR, f), 'rb').read()
         g = json.loads(raw)
-        key = [g['round']['region'], g['round']['orders']]
+        rnd = g['round']
+        common = {'file': f, 'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest(),
+                  'driving_s': g['driving_s'], 'all_succeeded': g['all_succeeded']}
+        if rnd.get('game') == 'fetch_colour':
+            # G2: a Fetch by colour round, listed for every rules version whose round is the same
+            # (start, orders): the Gazebo run is the same whatever the browser model's actors do
+            for rules, doc in colour_docs:
+                r = doc['rounds'].get(rnd['colour'])
+                if r and [r['start'], r['orders']] == [rnd['start'], rnd['orders']]:
+                    entries.append({**common, 'game': 'fetch_colour', 'colour': rnd['colour'], 'rules': rules,
+                                    'recorded_rules': rnd['rules']})
+            continue
+        key = [rnd['region'], rnd['orders']]
         for rules, doc in docs:
             for mode, rounds in sorted(doc['rounds'].items()):
                 for seed, r in sorted(rounds.items(), key=lambda kv: int(kv[0])):
-                    if mode == g['round']['mode'] and [r['region'], r['orders']] == key:
-                        entries.append({'file': f, 'rules': rules, 'mode': mode, 'seed': int(seed),
-                                        'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest(),
-                                        'driving_s': g['driving_s'], 'all_succeeded': g['all_succeeded'],
-                                        'recorded_seed': g['round']['seed']})
+                    if mode == rnd['mode'] and [r['region'], r['orders']] == key:
+                        entries.append({**common, 'rules': rules, 'mode': mode, 'seed': int(seed),
+                                        'recorded_seed': rnd['seed'], 'recorded_rules': rnd['rules']})
+    # per round, a recording made under the same rules comes first (Play takes the first that
+    # succeeded), then the others (an older rules' recording of the same round)
+    order = lambda e: (e.get('game', 'fetch_rush'), e['rules'], e.get('mode', ''), e.get('seed', 0),
+                       e.get('colour', ''), e['recorded_rules'] != e['rules'], e['file'])
     return {'schema': 'coco_lab.stack_ghosts', 'version': 1, 'evidence': 'STACK',
-            'about': 'Race Nav2: recorded Gazebo + Nav2 runs of Fetch Rush rounds (tools/g2/record_ghosts.sh); '
-                     'driving legs only, no grasp; Gazebo actors parked; never hardware',
-            'ghosts': sorted(entries, key=lambda e: (e['rules'], e['mode'], e['seed']))}
+            'about': 'Race Nav2: recorded Gazebo + Nav2 runs of Fetch Rush and Fetch by colour rounds '
+                     '(tools/g2/record_ghosts.sh, tools/g2/round_gate.sh); driving legs only, no grasp; '
+                     'Gazebo actors parked; never hardware',
+            'ghosts': sorted(entries, key=order)}
 
 
 def main() -> int:
@@ -65,7 +86,7 @@ def main() -> int:
         return 0 if same else 1
     with open(path, 'w') as f:
         f.write(text)
-    print('wrote', path, [(e['seed'], e['file'], e['all_succeeded']) for e in json.loads(text)['ghosts']])
+    print('wrote', path, [(e.get('seed', e.get('colour')), e['file'], e['all_succeeded']) for e in json.loads(text)['ghosts']])
     return 0
 
 

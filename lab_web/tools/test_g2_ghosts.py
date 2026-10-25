@@ -4,7 +4,8 @@
 G2.6: Race Nav2's ghosts (lab_web/public/stack/ghosts/) say what they are: recorded Gazebo +
 Nav2 runs (STACK), with what they are not (no grasp, actors parked, never hardware) and where
 they came from (the bag's sha256); the index is current, its checksums match, and a seed is
-offered only for a recording whose every leg succeeded.
+offered only for a recording whose every leg succeeded. G2: Fetch by colour recordings too
+(``game``, ``colour``), and rules 5's own recordings of the phone rounds.
 """
 import hashlib
 import json
@@ -32,7 +33,15 @@ def test_every_ghost_says_what_it_is():
         assert any('no grasp' in n for n in g['not']) and any('parked' in n for n in g['not']) and any('hardware' in n for n in g['not'])
         assert g['source']['bag_sha256'] and all(len(v) == 64 for v in g['source']['bag_sha256'].values())
         assert e['all_succeeded'] == all(L['status'] == 'SUCCEEDED' for L in g['legs'])
+        # the round it recorded: a Fetch Rush rules 4 or 5 round, or (G2) a Fetch by colour round; the
+        # index says which rules it was recorded under and lists it only for a round that is the same
+        recorded = g['round']['rules']
+        assert e['recorded_rules'] == recorded
+        if g['round'].get('game') == 'fetch_colour':
+            assert e['game'] == 'fetch_colour' and e['colour'] == g['round']['colour'] and recorded in (1, 2)
+        else:
+            assert 'game' not in e and recorded in (4, 5) and e['mode'] == g['round']['mode']
         # times count from the first leg's start; its first truth pose follows within one 0.1 s sample
-        assert g['round']['rules'] == 4 and g['track'] and 0 <= g['track'][0][0] <= 0.1
+        assert g['track'] and 0 <= g['track'][0][0] <= 0.1
         ts = [p[0] for p in g['track']]
         assert ts == sorted(ts)

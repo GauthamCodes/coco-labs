@@ -20,7 +20,7 @@ import { isBool, readPref, readRaw, writePref, writeRaw } from '../prefs';
 import { navigate } from '../ui/navigation';
 import { PlayGame } from './PlayGame';
 import type { FetchColourId, GameKind, WorldId } from './session';
-import { colourBestKey, colourFromQuery, colourHref } from './fetch_colour';
+import { FETCH_COLOUR_RULES, colourBestKey, colourFromQuery, colourHref } from './fetch_colour';
 import type { Tier } from './world/build3d';
 import { pickTier } from './tier';
 import './fonts.css';
@@ -29,7 +29,7 @@ import { FETCH_COLOURS, FETCH_RUSH_SHIFTS, colourChip, fetchRushMode, type Fetch
 import { saveBag } from '../ros/bag_saver';
 import { PlannerInset, type InsetData } from './hud/PlannerInset';
 import { FETCH_RUSH_RULES } from './rules_view';
-import { ghostFor, loadGhostIndex, type GhostIndex } from './stack_ghost';
+import { ghostFor, ghostForColour, loadGhostIndex, type GhostIndex } from './stack_ghost';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -77,8 +77,10 @@ export function GameApp() {
   if (game === 'fetch_colour') {
     // owner request 2026-10-24: a missing or unknown colour opens the choice of colour
     const colour = colourFromQuery(q), planner = chosenPlanner(q.get('planner'));
-    if (!colour) return <ColourChoice planner={planner} />;
-    return <GameRun game={game} world="depot_colours" seed={1} mode="phone" race={false} planner={planner} colour={colour} />;
+    // G2: &race=nav2 races the colour's recorded Gazebo + Nav2 run (AUTO plans with A*, as Fetch Rush's race)
+    const race = q.get('race') === 'nav2';
+    if (!colour) return <ColourChoice planner={planner} race={race} />;
+    return <GameRun game={game} world="depot_colours" seed={1} mode="phone" race={race} planner={race ? 'astar' : planner} colour={colour} />;
   }
   if (game !== 'fetch_rush' && game !== 'free') return <ModeSelect />;
   const world: WorldId = game === 'fetch_rush' ? 'depot' : q.get('world') === 'proving' ? 'proving' : 'depot';
@@ -204,7 +206,7 @@ function ModeSelect() {
               onClick={(e) => { e.preventDefault(); navigate(`${BASE}?view=play&game=fetch_rush&seed=${seed}&race=nav2`); }}>RACE NAV2 · REAL ROS 2 RECORDING</a>}</div>
         </div>;
       })}
-      <ColourCard planner={planner} art={art('0% 0%')} />
+      <ColourCard planner={planner} art={art('0% 0%')} ghosts={ghosts} />
       <div role="listitem" className="g1-modecard" data-testid="mode-free-drive"><div className="art" style={art('50% 0%')} /><h3>Free Drive</h3><p>No clock. Drive, explore, pick things up.</p>
         <div className="opts"><a href={withPlanner(`${BASE}?view=play&game=free&world=depot`)}>DEPOT</a><a href={withPlanner(`${BASE}?view=play&game=free&world=proving`)}>PROVING GROUND</a></div></div>
       {[['Rush Hour', 'Cross the forklift lanes.'], ['Fog Scout', 'The map starts dark.'], ['Lost & Found', 'Where am I?']].map(([t, d]) => <div role="listitem" key={t} className="g1-modecard locked" aria-disabled="true"><div className="art" style={art('100% 0%')} /><span className="lock"><Lock size={9} /> SOON</span><h3>{t}</h3><p>{d}</p></div>)}
@@ -224,7 +226,8 @@ function ModeSelect() {
  * Owner request 2026-10-24: Fetch by colour's card. Four chips, each with its colour's NAME and
  * diameter (colour is never the only cue); each opens that colour's round (with the AUTO planner).
  */
-function ColourCard({ planner, art }: { planner: PlayPlanner; art: CSSProperties }) {
+function ColourCard({ planner, art, ghosts }: { planner: PlayPlanner; art: CSSProperties; ghosts: GhostIndex | null }) {
+  const raceHref = `${BASE}?view=play&game=fetch_colour&race=nav2`;
   return <div role="listitem" className="g1-modecard g2-colour-card" data-testid="mode-fetch-colour">
     <div className="art" style={art} /><span className="g1-eyebrow" style={{ color: 'var(--g1-coco)' }}>NEW · DEPOT</span><h3>Fetch by colour</h3>
     <p>Pick a colour: COCO fetches that rod to Dispatch.</p>
@@ -233,18 +236,24 @@ function ColourCard({ planner, art }: { planner: PlayPlanner; art: CSSProperties
       return <a key={c.id} data-testid={`mode-fetch-colour-${c.id}`} data-colour={c.id} href={href} aria-label={`${c.label}, ${c.mm} millimetre rod${best !== null ? `, best ${best} of 3 stars` : ''}`}
         onClick={(e) => { e.preventDefault(); navigate(href); }}><b>{c.label}</b> · {c.mm} mm{best !== null && <i className="st"> {starText(best)}</i>}</a>;
     })}</div>
+    {FETCH_COLOURS.some((c) => ghostForColour(ghosts, FETCH_COLOUR_RULES, c.id)) && <div className="opts"><a data-testid="mode-race-nav2-colour" className="race" href={raceHref}
+      onClick={(e) => { e.preventDefault(); navigate(raceHref); }}>RACE NAV2 · REAL ROS 2 RECORDING</a></div>}
     <p className="src">As COCO's first Gazebo fetch: four rods, one per colour.</p>
   </div>;
 }
 
 /** Fetch by colour with no (or an unknown) colour in the link: choose one. */
-function ColourChoice({ planner }: { planner: PlayPlanner }) {
+function ColourChoice({ planner, race }: { planner: PlayPlanner; race: boolean }) {
   useEffect(() => { document.title = 'COCO Lab · Fetch by colour'; }, []);
+  // G2: racing Nav2 offers only the colours with a recorded Gazebo + Nav2 run in which every leg succeeded
+  const [ghosts, setGhosts] = useState<GhostIndex | null>(null);
+  useEffect(() => { if (race) void loadGhostIndex().then(setGhosts); }, [race]);
+  const shown = race ? FETCH_COLOURS.filter((c) => ghostForColour(ghosts, FETCH_COLOUR_RULES, c.id)) : FETCH_COLOURS;
   return <main className="g1 g1-screen" data-testid="colour-choice" data-ready="true" style={{ position: 'fixed', overflow: 'auto' }}>
     <a className="g1-icon g1-glass" href={`${BASE}?view=play`} aria-label="Back to the games" style={{ position: 'absolute', left: 'calc(12px + env(safe-area-inset-left))', top: 'calc(12px + env(safe-area-inset-top))', color: 'inherit' }}><ArrowLeft size={20} /></a>
-    <div className="g1-eyebrow">FETCH BY COLOUR · CHOOSE THE ROD</div>
-    <nav className="g2-colour-chips big" aria-label="Choose the rod's colour">{FETCH_COLOURS.map((c) => {
-      const href = colourHref(BASE, c.id, planner);
+    <div className="g1-eyebrow">{race ? 'RACE NAV2 · REAL ROS 2 RECORDING · CHOOSE THE ROD' : 'FETCH BY COLOUR · CHOOSE THE ROD'}</div>
+    <nav className="g2-colour-chips big" aria-label="Choose the rod's colour">{shown.map((c) => {
+      const href = race ? `${colourHref(BASE, c.id)}&race=nav2` : colourHref(BASE, c.id, planner);
       return <a key={c.id} data-testid={`choose-colour-${c.id}`} data-colour={c.id} href={href} onClick={(e) => { e.preventDefault(); navigate(href); }}><b>{c.label}</b> · {c.mm} mm</a>;
     })}</nav>
     <p className="g1-note">Four rods stand in a row by COCO's start, as in COCO's first Gazebo fetch. COCO fetches the one you choose to Dispatch. MODEL · kinematic.</p>

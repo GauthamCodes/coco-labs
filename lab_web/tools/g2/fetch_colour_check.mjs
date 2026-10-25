@@ -9,10 +9,13 @@
  * the AUTO planner chooser still adds &planner= to the chips, and that the page logged no error.
  * Saves each run's record (spec id, seed, input log, hash chain) for a CPython replay.
  *
- *   G1_GPU=nvidia node tools/g2/fetch_colour_check.mjs SITE OUTDIR [--colours red,green] [--phone] [--shots]
+ *   G1_GPU=nvidia node tools/g2/fetch_colour_check.mjs SITE OUTDIR [--colours red,green] [--phone] [--shots] [--race]
  *
  * --phone: the emulated Nothing Phone (1) in landscape (tools/phone/nothing-phone-1.mjs; viewport,
  * touch and user agent only -- no CPU throttle, these are looks, not measurements).
+* --race (G2): Race Nav2 -- the colour card's RACE NAV2 link, then the race chooser's chip for the
+ * colour (offered only for a colour with a recorded Gazebo + Nav2 run); requires the STACK race
+ * chip while playing and the three-way card (you, the model's planner, Nav2 in Gazebo) on results.
  * --shots: screenshots of the mode card, the row of rods, COCO carrying a rod and the results
  * (the first colour), as OUTDIR/<profile>-<n>-<name>.png.
  */
@@ -24,8 +27,8 @@ import { DEVICE_NAME, nothingPhone1 } from '../phone/nothing-phone-1.mjs';
 const [site, out, ...rest] = process.argv.slice(2);
 const opt = (k, d) => (rest.includes(k) ? rest[rest.indexOf(k) + 1] : d);
 const COLOURS = opt('--colours', 'red,green,blue,yellow').split(',');
-const PHONE = rest.includes('--phone'), SHOTS = rest.includes('--shots');
-const profile = PHONE ? 'phone-landscape' : 'desktop';
+const PHONE = rest.includes('--phone'), SHOTS = rest.includes('--shots'), RACE = rest.includes('--race');
+const profile = (PHONE ? 'phone-landscape' : 'desktop') + (RACE ? '-race' : '');
 mkdirSync(out, { recursive: true });
 const b = await chromium.launch(launchOptions());
 const ctx = await b.newContext({ ...(PHONE ? nothingPhone1(true) : { viewport: { width: 1440, height: 900 } }), serviceWorkers: 'block' });
@@ -64,13 +67,17 @@ for (const [k, colour] of COLOURS.entries()) {
   const until = async (fn, label, ms = 900000) => { const s0 = Date.now(); for (;;) { const s = await state(); if (s && fn(s)) { log.push([label, s.tick]); return s; } if (Date.now() - s0 > ms) { log.push([`${label} TIMEOUT`, s?.tick]); return s; } await p.waitForTimeout(250); } };
   // open the colour from the mode card's chip (the link the player taps)
   await p.goto(`${site}?view=play`);
-  await p.getByTestId(`mode-fetch-colour-${colour}`).click();
+  if (RACE) {
+    await p.getByTestId('mode-race-nav2-colour').click();
+    await p.getByTestId(`choose-colour-${colour}`).click();
+  } else await p.getByTestId(`mode-fetch-colour-${colour}`).click();
   await p.waitForSelector('[data-testid="g1-play"]:not([disabled])', { timeout: 600000 });
   const url = p.url();
   await p.click('[data-testid="g1-play"]');
   await until((s) => s.tick > 2, 'started', 300000);
   report.renderer ??= await renderer(p).catch(() => null);
   if (SHOTS && k === 0) { await p.waitForTimeout(1500); await snap('row-of-rods'); }
+  const raceChip = RACE ? await p.locator('[data-testid="g2-race-chip"]').textContent({ timeout: 5000 }).catch(() => null) : null;
   const auto = async (label) => {
     for (let tries = 0; tries < 3; tries++) {
       await p.keyboard.press('KeyF');
@@ -105,7 +112,9 @@ for (const [k, colour] of COLOURS.entries()) {
   const layout = await p.evaluate(() => { const r = document.querySelector('[data-testid="g1-results"]');
     return { toasts: document.querySelectorAll('.g1-toast').length, scroll_h: r?.scrollHeight ?? null, client_h: r?.clientHeight ?? null }; });
   const delivered = stars?.card?.delivered?.[0]?.object ?? null;
-  report.runs[colour] = { url, ok: delivered === `rod_${colour}` && stars?.card?.colour === colour && final?.f?.colour === colour && rec.record.arg === colour && layout.toasts === 0,
+  const threeway = RACE ? await p.locator('[data-testid="g2-threeway"]').textContent().catch(() => null) : null;
+  report.runs[colour] = { url, ok: delivered === `rod_${colour}` && stars?.card?.colour === colour && final?.f?.colour === colour && rec.record.arg === colour && layout.toasts === 0 && (!RACE || (/STACK/.test(raceChip ?? '') && /NAV2 IN GAZEBO/.test(threeway ?? ''))),
+    race_chip: raceChip, threeway,
     toast_hidden: layout.toasts === 0, results_fit: layout.scroll_h !== null && layout.scroll_h <= layout.client_h, results_scroll_h: layout.scroll_h, results_client_h: layout.client_h,
     delivered, carried, hud_colour: final?.f?.colour ?? null, objective_at_grab: objectiveBefore, results_title: resultsTitle,
     stars: stars?.stars ?? null, time_used: stars?.card?.time_used ?? null, contacts: stars?.card?.contacts ?? null, reference_time: stars?.reference?.time_used ?? null,

@@ -8,7 +8,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { ghostFor, ghostPoseAt, type GhostIndex, type StackGhost } from '../src/game/stack_ghost';
+import { ghostFor, ghostForColour, ghostPoseAt, type GhostIndex, type StackGhost } from '../src/game/stack_ghost';
 import { FETCH_RUSH_RULES } from '../src/game/rules_view';
 import { REPO } from './helpers';
 
@@ -31,6 +31,23 @@ describe('the STACK ghost', () => {
     expect(ghostFor(idx, 4, 'phone', 2)).toBeNull();
     expect(ghostFor(idx, 3, 'phone', 1)).toBeNull();
     expect(ghostFor(null, 4, 'phone', 1)).toBeNull();
+  });
+
+  it('takes the first listed recording of a round (the index puts the same rules\' recording first)', () => {
+    const idx: GhostIndex = { schema: 's', version: 1, evidence: 'STACK', ghosts: [
+      { file: 'r5.json', rules: 5, mode: 'phone', seed: 1, recorded_rules: 5, bytes: 1, sha256: 'x', driving_s: 1, all_succeeded: true },
+      { file: 'r4.json', rules: 5, mode: 'phone', seed: 1, recorded_rules: 4, bytes: 1, sha256: 'x', driving_s: 1, all_succeeded: true }] };
+    expect(ghostFor(idx, 5, 'phone', 1)?.file).toBe('r5.json');
+  });
+
+  it('G2: a Fetch by colour recording is found by colour, never as a Fetch Rush round', () => {
+    const idx: GhostIndex = { schema: 's', version: 1, evidence: 'STACK', ghosts: [
+      { file: 'c_red.json', rules: 2, game: 'fetch_colour', colour: 'red', bytes: 1, sha256: 'x', driving_s: 1, all_succeeded: true },
+      { file: 'c_blue.json', rules: 2, game: 'fetch_colour', colour: 'blue', bytes: 1, sha256: 'x', driving_s: 1, all_succeeded: false }] };
+    expect(ghostForColour(idx, 2, 'red')?.file).toBe('c_red.json');
+    expect(ghostForColour(idx, 2, 'blue')).toBeNull();
+    expect(ghostForColour(idx, 1, 'red')).toBeNull();
+    expect(ghostFor(idx, 2, 'phone', 1)).toBeNull();
   });
 
   it('the page plays the rules coco_lab plays', () => {

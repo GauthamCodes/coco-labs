@@ -1,0 +1,259 @@
+{
+ "site": "http://127.0.0.1:4184/coco-labs/",
+ "profile": "desktop-race",
+ "device": "desktop 1440 x 900",
+ "gpu": "nvidia",
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "when": "2026-10-25T21:10:58.748Z",
+ "planner_links": {
+  "chips": [
+   {
+    "text": "RED · 20 mm",
+    "href": "/coco-labs/?view=play&game=fetch_colour&colour=red"
+   },
+   {
+    "text": "GREEN · 24 mm",
+    "href": "/coco-labs/?view=play&game=fetch_colour&colour=green"
+   },
+   {
+    "text": "BLUE · 28 mm",
+    "href": "/coco-labs/?view=play&game=fetch_colour&colour=blue"
+   },
+   {
+    "text": "YELLOW · 32 mm",
+    "href": "/coco-labs/?view=play&game=fetch_colour&colour=yellow"
+   }
+  ],
+  "dijkstra": [
+   "/coco-labs/?view=play&game=fetch_colour&colour=red&planner=dijkstra",
+   "/coco-labs/?view=play&game=fetch_colour&colour=green&planner=dijkstra",
+   "/coco-labs/?view=play&game=fetch_colour&colour=blue&planner=dijkstra",
+   "/coco-labs/?view=play&game=fetch_colour&colour=yellow&planner=dijkstra"
+  ],
+  "astar": [
+   "/coco-labs/?view=play&game=fetch_colour&colour=red",
+   "/coco-labs/?view=play&game=fetch_colour&colour=green",
+   "/coco-labs/?view=play&game=fetch_colour&colour=blue",
+   "/coco-labs/?view=play&game=fetch_colour&colour=yellow"
+  ],
+  "ok": true
+ },
+ "runs": {
+  "red": {
+   "url": "http://127.0.0.1:4184/coco-labs/?view=play&game=fetch_colour&colour=red&race=nav2",
+   "ok": true,
+   "race_chip": "RACING Nav2 · STACK recording (Gazebo, driving only — no grasp)",
+   "threeway": "YOU74.4 s10.8 m driven · 1 delivered · 0 contactsPLANNER MODEL68.1 sthe reference bot · A* routes 10.9 mNAV2 IN GAZEBO STACK40.6 s9.6 m · 2/2 legs · driving only, no graspno grasp: Nav2 drove the round's legs only, the arm did not move · Gazebo's actors were parked at their paths' start (no forklift or walker moved) · never hardware: no physical robot exists.",
+   "toast_hidden": true,
+   "results_fit": false,
+   "results_scroll_h": 915,
+   "results_client_h": 900,
+   "delivered": "rod_red",
+   "carried": "rod_red",
+   "hud_colour": "red",
+   "objective_at_grab": "FETCH THE RED ROD → DISPATCH·⏱ 1:26",
+   "results_title": "FETCH BY COLOUR ·  RED · 20 mm ROD · RESULT",
+   "stars": 2,
+   "time_used": 74.4,
+   "contacts": 0,
+   "reference_time": 68.10000000000001,
+   "ticks": 745,
+   "inputs": 10,
+   "wall_s": 87.478,
+   "log": [
+    [
+     "started",
+     4
+    ],
+    [
+     "to the rod (AUTO taken)",
+     24
+    ],
+    [
+     "at the rod (GRAB lit)",
+     162
+    ],
+    [
+     "carried",
+     412
+    ],
+    [
+     "to Dispatch (AUTO taken)",
+     420
+    ],
+    [
+     "at Dispatch (DROP lit)",
+     684
+    ],
+    [
+     "delivered",
+     745
+    ]
+   ]
+  },
+  "green": {
+   "url": "http://127.0.0.1:4184/coco-labs/?view=play&game=fetch_colour&colour=green&race=nav2",
+   "ok": true,
+   "race_chip": "RACING Nav2 · STACK recording (Gazebo, driving only — no grasp)",
+   "threeway": "YOU66.1 s9.6 m driven · 1 delivered · 0 contactsPLANNER MODEL62.2 sthe reference bot · A* routes 9.4 mNAV2 IN GAZEBO STACK38.2 s8.5 m · 2/2 legs · driving only, no graspno grasp: Nav2 drove the round's legs only, the arm did not move · Gazebo's actors were parked at their paths' start (no forklift or walker moved) · never hardware: no physical robot exists.",
+   "toast_hidden": true,
+   "results_fit": false,
+   "results_scroll_h": 915,
+   "results_client_h": 900,
+   "delivered": "rod_green",
+   "carried": "rod_green",
+   "hud_colour": "green",
+   "objective_at_grab": "FETCH THE GREEN ROD → DISPATCH·⏱ 1:23",
+   "results_title": "FETCH BY COLOUR ·  GREEN · 24 mm ROD · RESULT",
+   "stars": 2,
+   "time_used": 66.10000000000001,
+   "contacts": 0,
+   "reference_time": 62.2,
+   "ticks": 662,
+   "inputs": 10,
+   "wall_s": 74.404,
+   "log": [
+    [
+     "started",
+     5
+    ],
+    [
+     "to the rod (AUTO taken)",
+     7
+    ],
+    [
+     "at the rod (GRAB lit)",
+     97
+    ],
+    [
+     "carried",
+     349
+    ],
+    [
+     "to Dispatch (AUTO taken)",
+     358
+    ],
+    [
+     "at Dispatch (DROP lit)",
+     600
+    ],
+    [
+     "delivered",
+     662
+    ]
+   ]
+  },
+  "blue": {
+   "url": "http://127.0.0.1:4184/coco-labs/?view=play&game=fetch_colour&colour=blue&race=nav2",
+   "ok": true,
+   "race_chip": "RACING Nav2 · STACK recording (Gazebo, driving only — no grasp)",
+   "threeway": "YOU64.9 s8.9 m driven · 1 delivered · 0 contactsPLANNER MODEL58.8 sthe reference bot · A* routes 8.4 mNAV2 IN GAZEBO STACK33.8 s7.4 m · 2/2 legs · driving only, no graspno grasp: Nav2 drove the round's legs only, the arm did not move · Gazebo's actors were parked at their paths' start (no forklift or walker moved) · never hardware: no physical robot exists.",
+   "toast_hidden": true,
+   "results_fit": false,
+   "results_scroll_h": 915,
+   "results_client_h": 900,
+   "delivered": "rod_blue",
+   "carried": "rod_blue",
+   "hud_colour": "blue",
+   "objective_at_grab": "FETCH THE BLUE ROD → DISPATCH·⏱ 1:18",
+   "results_title": "FETCH BY COLOUR ·  BLUE · 28 mm ROD · RESULT",
+   "stars": 2,
+   "time_used": 64.9,
+   "contacts": 0,
+   "reference_time": 58.800000000000004,
+   "ticks": 650,
+   "inputs": 10,
+   "wall_s": 72.989,
+   "log": [
+    [
+     "started",
+     5
+    ],
+    [
+     "to the rod (AUTO taken)",
+     8
+    ],
+    [
+     "at the rod (GRAB lit)",
+     101
+    ],
+    [
+     "carried",
+     353
+    ],
+    [
+     "to Dispatch (AUTO taken)",
+     361
+    ],
+    [
+     "at Dispatch (DROP lit)",
+     588
+    ],
+    [
+     "delivered",
+     650
+    ]
+   ]
+  },
+  "yellow": {
+   "url": "http://127.0.0.1:4184/coco-labs/?view=play&game=fetch_colour&colour=yellow&race=nav2",
+   "ok": true,
+   "race_chip": "RACING Nav2 · STACK recording (Gazebo, driving only — no grasp)",
+   "threeway": "YOU60.6 s8.1 m driven · 1 delivered · 0 contactsPLANNER MODEL55.7 sthe reference bot · A* routes 7.7 mNAV2 IN GAZEBO STACK52.4 s7.9 m · 2/2 legs · driving only, no graspno grasp: Nav2 drove the round's legs only, the arm did not move · Gazebo's actors were parked at their paths' start (no forklift or walker moved) · never hardware: no physical robot exists.",
+   "toast_hidden": true,
+   "results_fit": false,
+   "results_scroll_h": 915,
+   "results_client_h": 900,
+   "delivered": "rod_yellow",
+   "carried": "rod_yellow",
+   "hud_colour": "yellow",
+   "objective_at_grab": "FETCH THE YELLOW ROD → DISPATCH·⏱ 1:16",
+   "results_title": "FETCH BY COLOUR ·  YELLOW · 32 mm ROD · RESULT",
+   "stars": 2,
+   "time_used": 60.6,
+   "contacts": 0,
+   "reference_time": 55.7,
+   "ticks": 607,
+   "inputs": 10,
+   "wall_s": 71.827,
+   "log": [
+    [
+     "started",
+     4
+    ],
+    [
+     "to the rod (AUTO taken)",
+     7
+    ],
+    [
+     "at the rod (GRAB lit)",
+     72
+    ],
+    [
+     "carried",
+     329
+    ],
+    [
+     "to Dispatch (AUTO taken)",
+     337
+    ],
+    [
+     "at Dispatch (DROP lit)",
+     545
+    ],
+    [
+     "delivered",
+     607
+    ]
+   ]
+  }
+ },
+ "shots": [
+  "desktop-race-1-mode-card.png",
+  "desktop-race-2-row-of-rods.png",
+  "desktop-race-3-carrying.png",
+  "desktop-race-4-results.png"
+ ],
+ "errors": [],
+ "ok": true
+}

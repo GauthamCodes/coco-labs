@@ -11,7 +11,8 @@
 
 const BASE = import.meta.env.BASE_URL;
 
-export interface GhostIndexEntry { file: string; rules: number; mode: string; seed: number; bytes: number; sha256: string; driving_s: number; all_succeeded: boolean }
+/** A Fetch Rush recording (mode, seed) or, G2, a Fetch by colour one (game 'fetch_colour', colour). */
+export interface GhostIndexEntry { file: string; rules: number; mode?: string; seed?: number; game?: 'fetch_colour'; colour?: string; recorded_rules?: number; bytes: number; sha256: string; driving_s: number; all_succeeded: boolean }
 export interface GhostIndex { schema: string; version: number; evidence: 'STACK'; ghosts: GhostIndexEntry[] }
 export interface StackGhost {
   evidence: 'STACK'; what: string; not: string[];
@@ -30,7 +31,12 @@ export async function loadGhostIndex(): Promise<GhostIndex | null> {
 }
 
 export function ghostFor(index: GhostIndex | null, rules: number, mode: string, seed: number): GhostIndexEntry | null {
-  return index?.ghosts.find((g) => g.rules === rules && g.mode === mode && g.seed === seed && g.all_succeeded) ?? null;
+  return index?.ghosts.find((g) => !g.game && g.rules === rules && g.mode === mode && g.seed === seed && g.all_succeeded) ?? null;
+}
+
+/** G2: the recorded Gazebo + Nav2 run of a Fetch by colour round, if one exists and every leg succeeded. */
+export function ghostForColour(index: GhostIndex | null, rules: number, colour: string): GhostIndexEntry | null {
+  return index?.ghosts.find((g) => g.game === 'fetch_colour' && g.rules === rules && g.colour === colour && g.all_succeeded) ?? null;
 }
 
 export async function loadGhost(entry: GhostIndexEntry): Promise<StackGhost> {

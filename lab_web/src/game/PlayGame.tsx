@@ -27,7 +27,8 @@ import { SimClock, strip } from '../ros/telemetry';
 import { Recorder, TopicStats, topicsOf } from '../ros/recorder';
 import { Panels } from './panels/Panels';
 import { bagName, registerBagSource } from '../ros/bag_saver';
-import { ghostFor, ghostPoseAt, loadGhost, loadGhostIndex, type StackGhost } from './stack_ghost';
+import { ghostFor, ghostForColour, ghostPoseAt, loadGhost, loadGhostIndex, type StackGhost } from './stack_ghost';
+import { FETCH_COLOUR_RULES } from './fetch_colour';
 import { FETCH_RUSH_RULES } from './rules_view';
 import type { PanelId } from './panels/learn';
 import { parseDisplays, type Displays } from '../ros/displays';
@@ -147,8 +148,9 @@ export function PlayGame(p: PlayProps) {
         shown.current = { from: pose, to: pose, at: 0, z0: 0, z1: 0 };
         await renderer.loadRobot(`${BASE}assets3d/robot_${p.tier === 'high' ? 'high' : 'low'}.glb`);
         // G2.6: Race Nav2 -- the recorded run, loaded with the world; its ghost compiles with the rest
-        if (p.race && p.game === 'fetch_rush') {
-          const entry = ghostFor(await loadGhostIndex(), FETCH_RUSH_RULES, p.mode ?? 'phone', p.seed);
+        if (p.race && (p.game === 'fetch_rush' || p.game === 'fetch_colour')) {
+          const index = await loadGhostIndex();
+          const entry = p.game === 'fetch_colour' ? ghostForColour(index, FETCH_COLOUR_RULES, p.colour ?? 'red') : ghostFor(index, FETCH_RUSH_RULES, p.mode ?? 'phone', p.seed);
           if (entry) { stackGhost.current = await loadGhost(entry); renderer.prepareStackGhost(); }
         }
         // G1.11: every shader now, behind the loading screen, not on first use in play
