@@ -91,3 +91,22 @@ STACK run of this level exists.
   `FETCH_COLOUR_ACTOR_RULES`, set `FETCH_COLOUR_RULES = 2`, re-run the generator. Rules 1 records
   keep replaying.
 - Not done: no Gazebo run of the new level (no STACK evidence for Fetch by colour).
+
+## Defect found by Gautham (2026-10-25): the tactical map went black
+
+Reported: after opening the map and zooming out, the screen turned black and nothing more could
+be done. Reproduced in Chromium (RTX 4050): the map zoomed out to 0.3 m per pixel (the Depot a
+160 px patch) and could be dragged anywhere, so one drag left the screen black with the whole HUD
+hidden behind the map; only the small ✕ (top left) and STOP showed, and a tap would have sent COCO
+to a point off the level. Before: [`map_fix/before-zoomed-out-dragged.png`](../../screens/fetch_colour/map_fix/before-zoomed-out-dragged.png).
+
+Fixed for every Play game (`lab_web/src/game/hud/Maps.tsx`): zoom out stops where the whole level
+fits; the view's centre stays on the level, so a drag can never lose it; a tap off the level sends
+no goal; new **⌖ COCO** and **⤢ WHOLE LEVEL** buttons; the hint says "Esc or ✕ closes"; the wheel
+and a touchpad pinch (ctrl + wheel) zoom the map or COCO's camera, never the page. If the browser
+ever takes the GPU away (WebGL context lost), Play now says so with a RELOAD button instead of a
+silent black screen. Tests: `lab_web/test/g2_tactical_view.test.ts`. Re-checked in the browser:
+zoomed fully out (wheel and ctrl + wheel), dragged to a corner, recentred, closed, drove on; no
+page error, page zoom unchanged. After: [`map_fix/after-max-zoom-out.png`](../../screens/fetch_colour/map_fix/after-max-zoom-out.png),
+[`map_fix/after-dragged.png`](../../screens/fetch_colour/map_fix/after-dragged.png). Not reproduced
+here: a GPU context loss (none occurred in these runs); the notice covers it if it happens.

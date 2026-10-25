@@ -118,10 +118,34 @@ export function Minimap({ world, occupancy, marks, headingUp, onOpen }: { world:
 }
 
 /** The full tactical map: drag to pan, pinch or wheel to zoom, tap to send COCO there. */
+/**
+ * The map's view limits (Gautham, 2026-10-25: zooming out and dragging turned the whole screen black,
+ * the level lost off-screen): zoom out stops where the whole level fits, the view's centre stays on
+ * the level, and a tap off the level sends no goal. Pure, tested (test/g2_tactical_view.test.ts).
+ */
+export interface MapView { cx: number; cy: number; mpp: number }
+export const MIN_MPP = 0.01;
+export function levelBounds(world: World) {
+  return { x0: world.origin[0], y0: world.origin[1], x1: world.origin[0] + world.width * world.resolution, y1: world.origin[1] + world.height * world.resolution };
+}
+/** metres per CSS pixel at which the whole level fits a w x h (CSS px) screen, with a 5 % margin */
+export const fitMpp = (world: World, w: number, h: number) => {
+  const b = levelBounds(world);
+  return Math.max(MIN_MPP, 1.05 * Math.max((b.x1 - b.x0) / Math.max(1, w), (b.y1 - b.y0) / Math.max(1, h)));
+};
+export function clampView(v: MapView, world: World, w: number, h: number): MapView {
+  const b = levelBounds(world), mpp = Math.min(fitMpp(world, w, h), Math.max(MIN_MPP, v.mpp));
+  return { mpp, cx: Math.min(b.x1, Math.max(b.x0, v.cx)), cy: Math.min(b.y1, Math.max(b.y0, v.cy)) };
+}
+export const onLevel = (world: World, x: number, y: number) => { const b = levelBounds(world); return x >= b.x0 && x <= b.x1 && y >= b.y0 && y <= b.y1; };
+
 export function TacticalMap({ world, occupancy, marks, onGoal, onClose }: { world: World; occupancy: Uint8Array; marks: MapMarks; onGoal: (x: number, y: number) => void; onClose: () => void }) {
   const ref = useRef<HTMLCanvasElement>(null);
   const img = useRef<HTMLCanvasElement | null>(null);
-  const [view, setView] = useState(() => ({ cx: marks.pose?.[0] ?? world.start[0], cy: marks.pose?.[1] ?? world.start[1], mpp: 0.06 }));
+  const home = (): MapView => ({ cx: marks.pose?.[0] ?? world.start[0], cy: marks.pose?.[1] ?? world.start[1], mpp: 0.06 });
+  const [view, setRaw] = useState<MapView>(() => clampView(home(), world, window.innerWidth, window.innerHeight));
+  const size = () => { const r = ref.current?.getBoundingClientRect(); return [r?.width || window.innerWidth, r?.height || window.innerHeight] as const; };
+  const setView = (f: (v: MapView) => MapView) => setRaw((v) => { const [w, h] = size(); return clampView(f(v), world, w, h); });
   const pointers = useRef(new Map<number, { x: number; y: number; x0: number; y0: number }>());
   const pinch = useRef<{ d: number; mpp: number } | null>(null);
   useEffect(() => { img.current = occupancyImage(world, occupancy); }, [world, occupancy]);
@@ -140,6 +164,15 @@ export function TacticalMap({ world, occupancy, marks, onGoal, onClose }: { worl
     g.drawImage(im, 0, 0);
     drawMarks(g, world, marks, ppc / dpr);
   });
+  // the wheel (and a touchpad pinch, which arrives as ctrl + wheel) zooms the MAP, never the page:
+  // a native listener, not passive, so the browser's own page zoom/scroll is prevented
+  useEffect(() => {
+    const c = ref.current;
+    if (!c) return;
+    const wheel = (e: WheelEvent) => { e.preventDefault(); const k = e.ctrlKey ? Math.exp(e.deltaY * 0.01) : e.deltaY > 0 ? 1.15 : 1 / 1.15; setView((v) => ({ ...v, mpp: v.mpp * k })); };
+    c.addEventListener('wheel', wheel, { passive: false });
+    return () => c.removeEventListener('wheel', wheel);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const toWorld = (clientX: number, clientY: number): [number, number] => {
     const r = ref.current!.getBoundingClientRect();
     return [view.cx + (clientX - r.left - r.width / 2) * view.mpp, view.cy - (clientY - r.top - r.height / 2) * view.mpp];
@@ -153,19 +186,22 @@ export function TacticalMap({ world, occupancy, marks, onGoal, onClose }: { worl
     if (pointers.current.size === 2 && pinch.current) {
       const [a, b] = [...pointers.current.values()];
       const d = Math.hypot(a.x - b.x, a.y - b.y);
-      setView((v) => ({ ...v, mpp: Math.min(0.3, Math.max(0.01, pinch.current!.mpp * pinch.current!.d / Math.max(10, d))) }));
+      setView((v) => ({ ...v, mpp: pinch.current!.mpp * pinch.current!.d / Math.max(10, d) }));
     } else if (pointers.current.size === 1) setView((v) => ({ ...v, cx: v.cx - dx * v.mpp, cy: v.cy + dy * v.mpp }));
   };
   const up = (e: React.PointerEvent) => {
     const p = pointers.current.get(e.pointerId);
     pointers.current.delete(e.pointerId);
     if (pointers.current.size < 2) pinch.current = null;
-    if (p && Math.hypot(e.clientX - p.x0, e.clientY - p.y0) < 8 && pointers.current.size === 0) { const [x, y] = toWorld(e.clientX, e.clientY); onGoal(x, y); }
+    if (p && Math.hypot(e.clientX - p.x0, e.clientY - p.y0) < 8 && pointers.current.size === 0) { const [x, y] = toWorld(e.clientX, e.clientY); if (onLevel(world, x, y)) onGoal(x, y); }
   };
   return <section className="g1-tactical" data-testid="tactical-map" role="dialog" aria-label="Tactical map">
-    <canvas ref={ref} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}
-      onWheel={(e) => setView((v) => ({ ...v, mpp: Math.min(0.3, Math.max(0.01, v.mpp * (e.deltaY > 0 ? 1.15 : 1 / 1.15))) }))} aria-label="Tap to send COCO there; drag to pan; pinch to zoom" />
-    <p className="g1-tactical-hint">Tap to send COCO · drag to pan · pinch to zoom</p>
-    <button className="g1-tactical-close" onClick={onClose} aria-label="Close the map">✕</button>
+    <canvas ref={ref} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up} aria-label="Tap to send COCO there; drag to pan; pinch to zoom" />
+    <p className="g1-tactical-hint">Tap to send COCO · drag to pan · pinch to zoom · Esc or ✕ closes</p>
+    <button className="g1-tactical-close" data-testid="tactical-close" onClick={onClose} aria-label="Close the map (Esc)">✕</button>
+    <div className="g1-tactical-tools">
+      <button data-testid="tactical-coco" onClick={() => setView(() => home())} aria-label="Centre the map on COCO">⌖ COCO</button>
+      <button data-testid="tactical-fit" onClick={() => setView(() => { const b = levelBounds(world); return { cx: (b.x0 + b.x1) / 2, cy: (b.y0 + b.y1) / 2, mpp: Infinity }; })} aria-label="Show the whole level">⤢ WHOLE LEVEL</button>
+    </div>
   </section>;
 }
