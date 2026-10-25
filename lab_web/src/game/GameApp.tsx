@@ -199,7 +199,7 @@ function ModeSelect() {
           <p>Pick-and-deliver orders in one zone, against the reference clock.</p><div className="st" aria-label={`best stars with ${PLANNER_LABEL[planner]}`}>{starText(readStars(seed, 'phone', planner))}</div>
           <div className="opts"><a data-testid="mode-fetch-rush" href={withPlanner(`${BASE}?view=play&game=fetch_rush&seed=${seed}`)} onClick={go('phone')}>PLAY · 2 ORDERS</a>
             <a data-testid="mode-fetch-rush-full" href={withPlanner(`${BASE}?view=play&game=fetch_rush&seed=${seed}&mode=full`)} onClick={go('full')}>FULL SHIFT · 3</a>
-            {ghostFor(ghosts, FETCH_RUSH_RULES, 'phone', seed) && <a data-testid="mode-race-nav2" href={`${BASE}?view=play&game=fetch_rush&seed=${seed}&race=nav2`}
+            {ghostFor(ghosts, FETCH_RUSH_RULES, 'phone', seed) && <a data-testid="mode-race-nav2" className="race" href={`${BASE}?view=play&game=fetch_rush&seed=${seed}&race=nav2`}
               onClick={(e) => { e.preventDefault(); navigate(`${BASE}?view=play&game=fetch_rush&seed=${seed}&race=nav2`); }}>RACE NAV2 · REAL ROS 2 RECORDING</a>}</div>
         </div>;
       })}

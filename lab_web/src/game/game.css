@@ -151,7 +151,9 @@
 .g1-modecard.locked .art { filter: grayscale(1) brightness(.45); }
 .g1-modecard .lock { position: absolute; top: calc(10px * var(--g1-s)); right: calc(10px * var(--g1-s)); font: 700 calc(9px * var(--g1-s)) var(--g1-display); letter-spacing: .12em; padding: 4px 8px; border-radius: 999px; background: rgba(255,255,255,.12); color: var(--g1-mute); }
 .g1-modecard.hero { outline: 2px solid var(--g1-coco); }
-.g1-modecard .opts { display: flex; gap: 6px; margin-top: 8px; }
+.g1-modecard .opts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+/* the Race Nav2 chip takes its own row: its full label (a real ROS 2 recording) never squeezes into a third */
+.g1-modecard .opts a.race { flex-basis: 100%; }
 .g1-modecard .opts a { flex: 1; text-align: center; padding: 6px 4px; border-radius: 8px; background: rgba(255,255,255,.1); color: var(--g1-ink); text-decoration: none; font: 700 10px var(--g1-display); letter-spacing: .08em; }
 .g1-menu { display: flex; flex-direction: column; gap: calc(8px * var(--g1-s)); width: min(calc(260px * var(--g1-s)), 80vw); }
 .g1-menu button, .g1-menu a { padding: calc(12px * var(--g1-s)) calc(16px * var(--g1-s)); border-radius: calc(12px * var(--g1-s)); font: 700 calc(16px * var(--g1-s))/1 var(--g1-display); letter-spacing: .08em;
