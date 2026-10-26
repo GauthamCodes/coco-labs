@@ -4,6 +4,11 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
 
 ## Now
 
+- **State (2026-10-27): G2 · Sim Identity CLOSED, PR #28 ready for review (not merged, not deployed).**
+  G2.0–G2.8 done; Rules 5, Fetch by colour, the no-WebGL hotfix and the per-round Gazebo gate (every
+  round 5/5 on derivation 4) folded in. Final suites green ([`data/g28/close/`](data/g28/close/)); real
+  phone 60 fps median in GAME and SIM; AUTO gap re-measured on a quiet laptop (106 / 110 ms). Results:
+  [`G2_RESULTS.md`](G2_RESULTS.md). Next: Gautham's review of PR #28 and of BEFORE_AFTER.md's "Looks wrong".
 - **State (2026-10-24, later):** G2.0–G2.7 done; G2.8 mostly done — suites run, real phone done
   (SIM 60 fps with every display on, after fixing a saved-SIM-view defect the phone found; GAME 10 min
   median 60 with dips; touch-to-motion > 1 s samples UNRESOLVED). Owed: ament lint fix, AUTO-gap
@@ -157,7 +162,7 @@ Recorded in `docs/STATUS.md`'s plan-change log.
 | G2.5 rosbag2 export | done | [`data/g25/README.md`](data/g25/README.md): ros2 bag info / play + RViz |
 | G2.6 Real ROS 2 ghost | done: gate 5/5, 4 ghosts 16/16 legs, Race Nav2 | [`data/g26/DIAGNOSIS.md`](data/g26/DIAGNOSIS.md), [`GATE.md`](data/g26/GATE.md) |
 | G2.7 Looks | done; real phone GAME 60 fps median | [`data/g27/`](data/g27/), [`screens/g27/`](screens/g27/) |
-| G2.8 Close | in progress | [`G2_RESULTS.md`](G2_RESULTS.md), [`data/g28/`](data/g28/) |
+| G2.8 Close | **done 2026-10-27** | [`G2_RESULTS.md`](G2_RESULTS.md), [`BEFORE_AFTER.md`](BEFORE_AFTER.md), [`data/g28/`](data/g28/) |
 
 ## Gautham: look at these
 

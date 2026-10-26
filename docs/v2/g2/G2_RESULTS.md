@@ -38,12 +38,19 @@ the real phone found, and a final real-phone check. The touch-to-motion samples 
 - **Phone budget 26 m.** No budget from 22 m to 81 m gives ≥ 3 distinct rounds with every timer ≤ 5:00
   (the 5:00 sweep, continued past G2's choice, had reached 92 m with none qualifying); **26 m is the smallest giving them ≤ 6:00**: 4 distinct rounds —
   loading dock (seeds 2, 4, 5) 4:35.9 · workshop (3) 4:59.1 · workshop (1) 5:31.4 · workshop (6) 5:49.1.
-- **AUTO stall 119–141 ms:** accepted, open. Re-measured (G2.8, `tools/g1/fetch_timing.mjs`, NVIDIA, desktop,
-  low tier, AC; [`data/g28/auto_gap/`](data/g28/auto_gap/)): the largest tick gap around an AUTO press as the game
-  shows it is **117 ms** (phone round, G1.13: 119) and **116 ms** (Full shift, G1.13: 141) — G2 did not make it
-  worse. **But** the Full-shift run also had one 332 ms gap and a 272 ms worker step away from AUTO (G1.13's
-  Full shift: max 143 ms); it ran while two build/generation jobs shared the laptop, so it is **UNRESOLVED**
-  whether that is G2 or the load — to re-measure on a quiet laptop.
+- **AUTO stall 119–141 ms:** accepted, open. Re-measured twice (`tools/g1/fetch_timing.mjs`, NVIDIA, desktop, low tier,
+  balanced, AC; [`data/g28/auto_gap/`](data/g28/auto_gap/)); the largest tick gap around an AUTO press **as the game
+  shows it** (`presented.auto_max_tick_gap_ms`):
+
+  | Run | Phone round, seed 1 | Full shift, seed 1 | Largest shown tick gap, Full shift |
+  | --- | --- | --- | --- |
+  | G1.13 | 119 ms | 141 ms | 143 ms |
+  | G2.8 first pass (rules 4; two build jobs sharing the laptop) | 117 ms | 116 ms | **331.9 ms** |
+  | **G2.8 close (rules 5; quiet laptop, 2026-10-27)** | **106 ms** | **110 ms** | **166.5 ms** |
+
+  G2 did not make the AUTO stall worse; it is still above the 100 ms target (accepted). The 331.9 ms
+  gap the first pass left UNRESOLVED did not recur on the quiet laptop (Full shift max 166.5 ms; phone
+  168.1 ms): consistent with the load it ran under, from one quiet run each.
 - **Heavy settings on phones:** one-tap "Switch to recommended settings" toast after 10 s under
   55 fps; never silent (`fps_watch.ts`, tested).
 - **Old phone screenshots in history:** accepted, no rewrite.
@@ -148,21 +155,30 @@ results. Before / after: [`BEFORE_AFTER.md`](BEFORE_AFTER.md).
 
 ## Tests and determinism
 
-`tools/g2/suites.sh` on tree `5c77bbe` (laptop, balanced, AC; [`data/g28/suites.txt`](data/g28/suites.txt)):
+**Final (G2.8 close, 2026-10-26/27, laptop balanced, AC, NVIDIA):** `tools/g2/suites.sh` on `22e521d`
+([`data/g28/close/suites_partial.txt`](data/g28/close/suites_partial.txt); paused on the owner's request after
+saved_view), then the remaining steps on the final tree ([`data/g28/close/suites_after_pause.txt`](data/g28/close/suites_after_pause.txt)):
 
 | Suite | Result |
 | --- | --- |
-| coco_lab (CI venv route) / gz | 1108 passed / 2 passed (G2.0: 1077 / 2) |
-| `pytest lab_web/tools` | 235 passed, **1 failed** → fixed (`test_g2_ghosts` assumed a track starts at t = 0; the first truth pose is at 0.01 s) |
-| vitest, typecheck, schemas, catalog, arena assets, build twice (same hash), check_dist | pass |
+| coco_lab (CI venv route) / gz | **1158 passed** / 2 passed (G2.0: 1077 / 2) |
+| `pytest lab_web/tools` | **244 passed** |
+| catalog, schemas (generated code current), typecheck, arena assets, build twice (same hash), check_dist | pass |
+| vitest | **610 passed** (G2.0: 539) |
 | native gate (CPython vs Pyodide, hash v3) | planners 818,951 / 818,951 exact; fetch_rush 1,436 / 1,436 exact |
 | coco verify + play references | 18 of 18 earn their stars |
-| determinism v1 (10 M1 sessions) | 1500 ticks × Chromium / Firefox / WebKit / Pyodide-Node, 0 mismatches, hash `9a9d582d03f4` |
-| determinism terrain (3 M4 sessions) | 2100 ticks × the same four, 0 mismatches, hash `3a8c227eca45` |
-| screenshots, replays, v1 links (50 forms), update isolation | pass |
-| chase HUD + SIM pass (3 profiles × 20 poses) | 0 failed |
-| saved SIM view (new, G2.8) | pass on desktop and phone landscape |
-| ROS packages | functional tests all pass; **ament lint failed** in coco_lab (flake8 + pep257) and coco_lab_ros (flake8) on G2's new code — style only, being fixed |
+| update isolation | pass (9 checks) |
+| determinism v1 (10 M1 sessions) | 1500 ticks × Chromium / Firefox / WebKit / Pyodide-Node, 0 mismatches, hash `9a9d582d03f4` (= G2.0) |
+| determinism terrain (3 M4 sessions) | 2100 ticks × the same four, 0 mismatches, hash `3a8c227eca45` (= G2.0) |
+| screenshots, saved SIM view, replays | pass |
+| v1 links | 50 forms, 6 archive views, 0 failed (a first run, during which a rebuild wiped `dist/v1`, failed 10; re-run on the restored site) |
+| chase HUD + SIM (4 profiles × 20 poses, incl. the real phone's 803 × 361) | **failed at 803 × 361** (/rosout vs joystick) → fixed (89ce9d0) → **0 failed** |
+| ROS packages (colcon route, incl. ament lint) | **all 12 passed** — coco_lab 1163, coco_lab_ros 165, coco_web 863, … (the first pass's flake8/pep257 failures are fixed) |
+| Rules 5 / Fetch by colour model checks | every committed reference replays (rules 2–5), v3 goldens identical, game references reproduce, colour rounds regenerate identical ([`data/rules5/g2_rerun.md`](data/rules5/g2_rerun.md)) |
+
+First G2.8 pass (tree `5c77bbe`, [`data/g28/suites.txt`](data/g28/suites.txt)): `pytest lab_web/tools` 235 passed and **1 failed**
+(`test_g2_ghosts` assumed a track starts at t = 0; fixed), and the ament lint **failed** in coco_lab and coco_lab_ros
+(fixed since; above).
 
 v1/v2/v3 hashes: the determinism hashes and the native gate match; no golden changed.
 
