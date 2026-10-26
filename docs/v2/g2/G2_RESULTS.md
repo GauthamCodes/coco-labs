@@ -5,8 +5,11 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md) · state: [`G2_STATUS.md`](G2_STATUS.md) 
 Evidence classes as AGENTS.md: **MODEL** (the browser model), **STACK** (recorded ROS 2 in
 Gazebo, never hardware), MEASURED, EMULATED, UNRESOLVED.
 
-**Still owed:** a quiet-laptop re-run of the Full-shift timing (below) and five Gazebo runs of each final phone round (both need a
-quiet laptop on mains power); the touch-to-motion samples over 1 s are UNRESOLVED (below).
+**Added after the first G2.8 pass (2026-10-25/26):** Fetch Rush **rules 5** (actors yield, AUTO avoids),
+**Fetch by colour** (four rods) with its rules 2, the **no-WebGL hotfix**, the **per-round Gazebo gate** (every
+round 5 of 5, on a new controller: derivation 4), Race Nav2 for Fetch by colour, two /rosout layout fixes
+the real phone found, and a final real-phone check. The touch-to-motion samples over 1 s remain
+**UNRESOLVED** (below).
 
 ## Checkpoints
 
@@ -18,9 +21,13 @@ quiet laptop on mains power); the touch-to-motion samples over 1 s are UNRESOLVE
 | G2.3 Telemetry | done | same |
 | G2.4 Panels | done | same |
 | G2.5 rosbag2 export | done | [`data/g25/README.md`](data/g25/README.md) |
-| G2.6 Gazebo + Nav2, ghosts, Race Nav2 | done | [`data/g26/DIAGNOSIS.md`](data/g26/DIAGNOSIS.md), [`data/g26/GATE.md`](data/g26/GATE.md), [`screens/g26/`](screens/g26/) |
+| G2.6 Gazebo + Nav2, ghosts, Race Nav2 | done; **superseded by the per-round gate** (derivation 4) | [`data/g26/DIAGNOSIS.md`](data/g26/DIAGNOSIS.md), [`data/g26/GATE.md`](data/g26/GATE.md), [`screens/g26/`](screens/g26/) |
 | G2.7 Looks | done; real phone GAME 60 fps median | [`data/g27/budgets.json`](data/g27/budgets.json), [`screens/g27/`](screens/g27/) |
-| G2.8 Close | done except the AUTO-gap re-measure and the per-round Gazebo gate | this file, [`data/g28/`](data/g28/) |
+| Rules 5 (owner report 2026-10-24) | done | [`data/rules5/README.md`](data/rules5/README.md), [`data/rules5/g2_rerun.md`](data/rules5/g2_rerun.md) |
+| Fetch by colour (owner request 2026-10-24) | done; rules 2 = rules 5's actors; Race Nav2 | [`data/fetch_colour/README.md`](data/fetch_colour/README.md) |
+| No-WebGL hotfix (owner report 2026-10-24) | done; also PR #29 into main | [`../hotfix_webgl/README.md`](../hotfix_webgl/README.md) |
+| Per-round Gazebo gate (owner 2026-10-25) | **every round 5 of 5** (derivation 4) | [`data/g28/round_gate/README.md`](data/g28/round_gate/README.md) |
+| G2.8 Close | done | this file, [`data/g28/`](data/g28/), [`BEFORE_AFTER.md`](BEFORE_AFTER.md) |
 
 ## Decisions applied (G2.1) — MODEL
 
@@ -95,6 +102,42 @@ tried (not installed).
   no grasp; actors parked; never hardware"). Nav2 drives the three workshop rounds in 347–412 s,
   longer than their timers; the loading-dock round in 166.3 s.
 
+### The per-round gate (G2.8, owner 2026-10-25) — STACK
+
+Every round 5 of 5 in fresh headless simulators ([`data/g28/round_gate/README.md`](data/g28/round_gate/README.md)):
+
+| Round | Derivation 2 (G2.6's params) | **Derivation 4** |
+| --- | --- | --- |
+| Fetch by colour red / green / blue / yellow (the four-rod level's first Gazebo runs) | 5/5 each | **5/5 each** |
+| Fetch Rush phone, loading dock (seed 2) | 5/5 | **5/5** |
+| Fetch Rush phone, workshop (seeds 6 / 1 / 3) | seed 6: **1/5** (1 and 3 not run) | **5/5 each** |
+
+- **Cause of the workshop failures (measured from bags):** DWB commanded ~0 (v 0, w ~±0.03 rad/s) for
+  ~40 s at a time beside `obj_maze_2`'s pre-grasp pose, though the plan was clear (>= 0.615 m from the
+  walls), nothing unmapped was near and the wheels followed their commands — C2-NAV.21's DWB
+  degeneracy. A rotation shim around DWB (derivation 3) was not enough (1 of 2).
+- **Fix (generated params only):** derivation 4 = derivation 2 with Nav2's Regulated Pure Pursuit in
+  place of DWB, at DWB's limits. 40/40 runs, 160/160 legs. Five runs per round are not a rate.
+- **Cost, measured:** legs end farther from the goal by truth — median 0.34–0.37 m against 0.20–0.27 m
+  (Nav2's goal checker, 0.25 m on AMCL's pose, now decides; DWB drove on to 0.05 m). Fine for these
+  driving-only legs and the ghosts; a grasp would need it closer (question 4).
+- All gate runs at RTF 0.30–0.55 (G2.6: 0.80): the CPU sat at 91 °C with the owner's browsers busy.
+- **Ghosts now:** run 1 of each round on derivation 4 — four Fetch by colour ghosts (Race Nav2 for
+  Fetch by colour, new) and rules-5 phone ghosts for seeds 1, 2, 3, 6 (preferred over the rules-4 ones).
+  Nav2 now drives the workshop rounds in 172–195 s (G2.6's recordings: 347–412 s).
+
+## Rules 5, Fetch by colour, the hotfix — MODEL (Gazebo where said)
+
+- **Rules 5:** in AUTO a forklift drove through a stopped COCO (the actors were a schedule). Now the
+  actors stop for COCO and AUTO waits, re-plans around a stopped actor or backs off. Browser forklift
+  check: 114 overlap ticks before, **0** after; every committed reference replays (rules 2–5); goldens
+  unchanged. Phone timers unchanged. The Gazebo actors still never yield (said wherever STACK is shown).
+- **Fetch by colour:** four rods on a derived level; the chosen colour's rod to Dispatch; rules 2 uses
+  rules 5's actors (same rounds and scorecards as rules 1). All four colours delivered in the browser;
+  records replay in CPython. Race Nav2 offered per colour (above).
+- **No-WebGL hotfix:** no page goes blank; Play explains what to try and links to Compare and
+  Recordings; Compare runs without 3D. 10/10 pages in Playwright with WebGL refused and working.
+
 ## Looks — MODEL
 
 Environment map (procedural `RoomEnvironment`), polished floor and GTAO ambient occlusion on high
@@ -124,6 +167,21 @@ results. Before / after: [`BEFORE_AFTER.md`](BEFORE_AFTER.md).
 v1/v2/v3 hashes: the determinism hashes and the native gate match; no golden changed.
 
 ## Real phone
+
+**Final check (2026-10-25, after Rules 5, Fetch by colour and the hotfix;
+[`data/g28/real_phone_final/README.md`](data/g28/real_phone_final/README.md)):** same phone, medium tier,
+full screen, on AC, `real_phone_free.mjs`; rotation settings restored after every run.
+
+| Run (final layout) | fps median / min / p05 | frame p99 / max | > 50 ms | lost | skin °C |
+| --- | --- | --- | --- | --- | --- |
+| **GAME, Free Drive (Depot), 10 min** | 60 / 46 / 59 | 23.9 / 91.2 ms | 14 of 35,864 | 0 | 40.6 → 43.2 (started warm) |
+| **SIM, Fetch Rush seed 1** (2 min on the strip fix; 1 min on the final clamp) | 60 / 56 / 60; 60 / 60 / 60 | 19.8 / 49.9; 21.4 / 27.7 ms | 0 | 0 | 39.4 → 40.2 |
+
+The phone found two /rosout layout defects, both fixed and re-checked on it (12aa0ab): the collapsed line
+ran under the telemetry strip, and showed the top of a third line through its padding. One run that
+loaded the wrong build (port already held) was discarded and is said so in the README.
+
+**First G2.8 pass (2026-10-24):**
 
 Nothing Phone (1) (A063, Android 15, Chrome 156), full screen 803 × 361, **medium tier (shipped
 default)**, pixel ratio 1.25, served by the laptop over USB from a frozen copy of the build;
@@ -165,3 +223,8 @@ real phone (with the dips above: no optimisation pass was needed for the median,
 2. Wheel odometry over-counts rotation by 14.5 % in the frozen robot config. Correct it in a later
    milestone?
 3. AMCL still ends legs up to 0.28 m off; investigate further, or accept with the gate passing?
+4. The Depot's generated Nav2 params now use Regulated Pure Pursuit (derivation 4): every round 5 of 5,
+   but legs end ~0.1 m farther from the goal than DWB's. Keep it for G2's recordings? Should the robot
+   stack's own controller be revisited in a later milestone (its config is unchanged)?
+5. Rules 5's actors yield only in the browser model; Gazebo's actors never do. Should the Gazebo
+   actors be given the same rule in a later milestone?

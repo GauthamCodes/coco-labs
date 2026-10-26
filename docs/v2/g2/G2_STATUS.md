@@ -92,6 +92,18 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
   from the goal by truth vs derivation 2's 0.20-0.27 m. Next: G2.8 close.
 - **Real phone done 2026-10-25** ([`data/g28/real_phone_final/`](data/g28/real_phone_final/)): GAME 10 min 60 fps
   median, SIM 60; it found and the fix closed two /rosout layout defects (12aa0ab).
+- **PAUSED 2026-10-26 ~21:45 IST on Gautham's request** (he needs Gazebo/RViz for other work; resume only when he
+  says so). Nothing of mine is running. **G2.8 close, what is left:** (1) final suites: done up to saved_view
+  ([`data/g28/close/suites_partial.txt`](data/g28/close/suites_partial.txt): coco_lab 1158, tools 244, vitest,
+  native gate exact, coco verify 18/18, build twice, update isolation, det v1 and terrain identical, screenshots,
+  saved view) — **chase_hud FAILED at the real phone's 803 × 361**: the collapsed /rosout (now narrowed to stop
+  before the telemetry strip) wraps to 2 lines and its box overlaps the joystick's
+  ([`…/chase_hud_failed_803x361.json`](data/g28/close/chase_hud_failed_803x361.json)). Planned fix: on short
+  screens (max-height 420 px) clamp the collapsed line to 1 line (the prompt: "on phones it shows the last line
+  only"); then re-run chase_hud, rosout_room_check, vitest, and the steps not run (v1_links, replays, packages).
+  (2) after screenshots (`tools/g1/screens.mjs`, `review_shots.mjs`, as BEFORE_AFTER.md §1–2) + BEFORE_AFTER.md;
+  (3) quiet-laptop AUTO-gap re-measure (`tools/g1/fetch_timing.mjs`); (4) G2_RESULTS.md tests table (sections for
+  the gate, Rules 5, colour, hotfix, phone are written); (5) mark PR #28 ready for review. Never merge.
 - **Next (owner's order, 2026-10-25):** (1) Rules 5 committed + pushed → (2) merge
   `v2/g2-fetch-colour` (abc039f; its last three commits are not in G2) → (3a) merge the hotfix →
   (3b) Gazebo per-round gate, 5/5 for each distinct phone round (seeds 1, 2, 3, 6) and each colour
