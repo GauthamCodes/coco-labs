@@ -9,7 +9,7 @@
    "ok": true,
    "rosout": [
     10,
-    324,
+    337,
     161,
     358
    ],
@@ -21,8 +21,10 @@
    ],
    "overlap_px": 0,
    "gap_px": 9,
-   "shown_lines": 2,
+   "shown_lines": 1,
    "clamped": true,
+   "text_px": 825,
+   "shown_px": 133,
    "errors": []
   },
   {
@@ -31,7 +33,7 @@
    "ok": true,
    "rosout": [
     10,
-    324,
+    337,
     161,
     358
    ],
@@ -43,8 +45,10 @@
    ],
    "overlap_px": 0,
    "gap_px": 9,
-   "shown_lines": 2,
+   "shown_lines": 1,
    "clamped": true,
+   "text_px": 825,
+   "shown_px": 133,
    "errors": []
   },
   {
@@ -67,6 +71,8 @@
    "gap_px": 8,
    "shown_lines": 2.03,
    "clamped": true,
+   "text_px": 388,
+   "shown_px": 388,
    "errors": []
   },
   {
@@ -89,6 +95,8 @@
    "gap_px": 8,
    "shown_lines": 2.03,
    "clamped": true,
+   "text_px": 388,
+   "shown_px": 388,
    "errors": []
   }
  ]

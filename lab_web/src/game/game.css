@@ -226,7 +226,8 @@
 .g2-rosout:not(.is-open) .head > span { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
 /* short phone screens: the last line only (the G2 prompt), so the console stays under the joystick
    (two lines at 803 x 361, narrowed to end before the strip, reached the joystick's box; G2.8) */
-@media (max-height: 460px) { .g2-rosout:not(.is-open) .head > span { -webkit-line-clamp: 1; line-clamp: 1; } }
+/* (one unwrapped line cut with an ellipsis: a clamped line wrapped at the first space and showed only the level) */
+@media (max-height: 460px) { .g2-rosout:not(.is-open) .head > span { display: block; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; } }
 .g2-rosout .title { color: var(--g1-mute); }
 .g2-rosout.is-open { max-width: min(92vw, 640px); }
 .g2-rosout .lines { list-style: none; margin: 0; padding: 0 calc(8px * var(--g1-s)) calc(6px * var(--g1-s)); max-height: 38vh; overflow: auto; }

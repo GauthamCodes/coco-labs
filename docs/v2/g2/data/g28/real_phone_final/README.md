@@ -32,3 +32,14 @@ clear of the strip.
 **A discarded run.** One SIM run measured the wrong build: the port chosen (4190) was already held
 by an older server (the hotfix worktree, main's G1 look) and the new server failed to start, so the
 phone loaded that page. Its numbers are not reported; the run was repeated on a verified port.
+
+## After the close's HUD check (2026-10-27)
+
+The final suites' chase_hud failed at 803 × 361: the collapsed /rosout (narrowed to end before the
+strip) wrapped to two lines and its box reached the joystick's. On screens ≤ 460 px tall it now shows
+**one unwrapped line, cut with an ellipsis** (the G2 prompt: on phones the last line only). A first form
+(a one-line clamp) wrapped after the level and showed only "WARN…" on the phone; the second shows
+"WARN local_contro…". chase_hud passes on all four profiles; rosout_room_check passes (one line,
+133 px of text, 9 px from the strip). On the phone, SIM 1 min on the final layout: **60 / 60 / 60 fps**,
+p99 18.5 ms, max 21.8 ms, 0 over 50 ms, 0 lost (`sim_fetchrush_1min_one_line.*`, screen
+`sim1-one-line-04-end.png`); the phone was charging at 18 % and started at 31 °C.

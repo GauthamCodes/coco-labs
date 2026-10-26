@@ -52,12 +52,14 @@ for (const [name, ctxOpts] of PROFILES) {
         const pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
         res({ rosout: [A.left, A.top, A.right, A.bottom].map(Math.round), strip: [B.left, B.top, B.right, B.bottom].map(Math.round),
           overlap_px: w > 1 && h > 1 ? Math.round(w) : 0, gap_px: Math.round(B.left - A.right),
-          shown_lines: Math.round((text.clientHeight / lh) * 100) / 100, clamped: cs.overflow === 'hidden' && pad === 0 });
+          shown_lines: Math.round((text.clientHeight / lh) * 100) / 100, clamped: cs.overflow === 'hidden' && pad === 0,
+          // one line on a short screen shows more than the level (it is not wrapped after the first word)
+          text_px: Math.round(text.scrollWidth), shown_px: Math.round(text.clientWidth) });
       })));
     }, LONG);
     // short phone screens (<= 460 px tall) show the last line only; taller ones up to two lines
     const maxLines = ctxOpts.viewport.height <= 460 ? 1.05 : 2.05;
-    const ok = r.overlap_px === 0 && r.clamped && r.shown_lines <= maxLines && errors.length === 0;
+    const ok = r.overlap_px === 0 && r.clamped && r.shown_lines <= maxLines && errors.length === 0 && (maxLines > 1.5 || r.shown_px >= 100);
     rows.push({ profile: name, view, ok, ...r, errors: [...errors] });
     console.log(name, view, ok ? 'ok' : 'FAILED', JSON.stringify(r));
   }
