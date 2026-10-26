@@ -86,6 +86,10 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
   `round_gate_d4.out`; seed 6's 5 runs are in the same dir). If cleared: count what is in
   `round_gate_d4/gate_rounds.jsonl`, re-run only rounds without 5 counted runs. Derivation-2 results
   (colours 5/5, seed 2 5/5, seed 6 1/5) stay as the baseline in `round_gate/`.
+- **Per-round gate DONE 2026-10-26 ([`data/g28/round_gate/README.md`](data/g28/round_gate/README.md)): derivation 4
+  (Regulated Pure Pursuit), all 8 rounds 5 of 5 (40/40 runs, 160/160 legs, 0 void)**; ghosts from run 1 of
+  each round (4 colours + rules-5 phone seeds 1, 2, 3, 6). Cost, measured: legs end 0.34-0.37 m (median)
+  from the goal by truth vs derivation 2's 0.20-0.27 m. Next: G2.8 close.
 - **Real phone done 2026-10-25** ([`data/g28/real_phone_final/`](data/g28/real_phone_final/)): GAME 10 min 60 fps
   median, SIM 60; it found and the fix closed two /rosout layout defects (12aa0ab).
 - **Next (owner's order, 2026-10-25):** (1) Rules 5 committed + pushed → (2) merge

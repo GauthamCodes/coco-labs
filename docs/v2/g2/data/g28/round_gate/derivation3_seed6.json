@@ -1,0 +1,165 @@
+{
+ "about": "G2 per-round gate (owner 2026-10-25): tools/g2/round_gate.sh, a fresh headless Gazebo + Nav2 per run, m6f8_nav.py --initial-pose; Gazebo actors parked; driving legs only, no grasp; never hardware",
+ "evidence": "STACK",
+ "rounds": {
+  "r5_phone_seed6": {
+   "counted": 2,
+   "passed": 1,
+   "void": 0
+  }
+ },
+ "runs": [
+  {
+   "all_succeeded": true,
+   "bags": {
+    "bag_0.mcap": {
+     "bytes": 137074608,
+     "sha256": "8c573e938fd06a0ab68c529d1cb8aad5f6e08efbb307df95e5f64d866c05e7f2"
+    }
+   },
+   "dir": "r5_phone_seed6_run1",
+   "legs": [
+    {
+     "amcl_error_m": 0.04,
+     "driven_m": 11.643,
+     "error_code": 0,
+     "id": "order1_obj_maze_2_pregrasp",
+     "sim_s": 183.3,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 0.08
+    },
+    {
+     "amcl_error_m": 0.2,
+     "driven_m": 16.251,
+     "error_code": 0,
+     "id": "order1_dispatch_drop",
+     "sim_s": 70.61,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 0.225
+    },
+    {
+     "amcl_error_m": 0.085,
+     "driven_m": 6.659,
+     "error_code": 0,
+     "id": "order2_obj_dispatch_pregrasp",
+     "sim_s": 25.58,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 0.335
+    },
+    {
+     "amcl_error_m": 0.142,
+     "driven_m": 16.649,
+     "error_code": 0,
+     "id": "order2_dock_2",
+     "sim_s": 65.12,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 0.172
+    }
+   ],
+   "meta": {
+    "ac_online": "1",
+    "git_commit": "53a23f9405f2e5768feabf41d3675b0258411cfc",
+    "git_dirty_paths": 1,
+    "goals_sha256": "12c64cbb981a904411aab86ae33898dc6f86b8695ab411af3d806e7d02466b9f",
+    "level": "coco_depot_v1",
+    "map_pgm_sha256": "53c3bd6b953c1e156eff0448a1618a46da9e3b3de734150e473e592efab3aaff",
+    "map_yaml_sha256": "2fb7d8314d6b5ff5db3b9d566ea130c7011b64439c88edda0fa4d2d3c6d40c76",
+    "nav2_params_sha256": "cdc0043de03d8eacbb4987e7fc63cf461fd7ecb8af7bd452ae96b9522a070a4a",
+    "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "packages": {
+     "ros-jazzy-nav2-amcl": "1.3.11-1noble.20260412.054619",
+     "ros-jazzy-nav2-bringup": "1.3.12-1noble.20260616.082701",
+     "ros-jazzy-nav2-dwb-controller": "1.3.11-1noble.20260412.065547",
+     "ros-jazzy-nav2-smac-planner": "1.3.11-1noble.20260412.062222",
+     "ros-jazzy-ros-gz-sim": "1.0.22-1noble.20260412.044601",
+     "ros-jazzy-rosbag2-py": "0.26.10-2noble.20260412.060353"
+    },
+    "power_profile": "balanced",
+    "ros_domain_id": "79",
+    "started_utc": "2026-10-25T22:32:44Z",
+    "world_sha256": "11c58b460a56facf080f10500f133490497925e43b287bee69f83560aa012246"
+   },
+   "rc": 0,
+   "round": "r5_phone_seed6",
+   "run": 1,
+   "void": false
+  },
+  {
+   "all_succeeded": false,
+   "bags": {
+    "bag_0.mcap": {
+     "bytes": 132445672,
+     "sha256": "4c6f22d6646d17819d43dd085e49a7226e75bdb5398621bf462cb3a5017d9ba4"
+    }
+   },
+   "dir": "r5_phone_seed6_run2",
+   "legs": [
+    {
+     "amcl_error_m": 0.078,
+     "driven_m": 9.329,
+     "error_code": 105,
+     "id": "order1_obj_maze_2_pregrasp",
+     "sim_s": 192.26,
+     "status": "ABORTED",
+     "truth_to_goal_m": 1.57
+    },
+    {
+     "amcl_error_m": 0.181,
+     "driven_m": 13.579,
+     "error_code": 0,
+     "id": "order1_dispatch_drop",
+     "sim_s": 57.82,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 0.197
+    },
+    {
+     "amcl_error_m": 0.168,
+     "driven_m": 6.612,
+     "error_code": 0,
+     "id": "order2_obj_dispatch_pregrasp",
+     "sim_s": 25.51,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 0.407
+    },
+    {
+     "amcl_error_m": 0.163,
+     "driven_m": 16.66,
+     "error_code": 0,
+     "id": "order2_dock_2",
+     "sim_s": 66.07,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 0.188
+    }
+   ],
+   "meta": {
+    "ac_online": "1",
+    "git_commit": "53a23f9405f2e5768feabf41d3675b0258411cfc",
+    "git_dirty_paths": 1,
+    "goals_sha256": "12c64cbb981a904411aab86ae33898dc6f86b8695ab411af3d806e7d02466b9f",
+    "level": "coco_depot_v1",
+    "map_pgm_sha256": "53c3bd6b953c1e156eff0448a1618a46da9e3b3de734150e473e592efab3aaff",
+    "map_yaml_sha256": "2fb7d8314d6b5ff5db3b9d566ea130c7011b64439c88edda0fa4d2d3c6d40c76",
+    "nav2_params_sha256": "cdc0043de03d8eacbb4987e7fc63cf461fd7ecb8af7bd452ae96b9522a070a4a",
+    "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+    "packages": {
+     "ros-jazzy-nav2-amcl": "1.3.11-1noble.20260412.054619",
+     "ros-jazzy-nav2-bringup": "1.3.12-1noble.20260616.082701",
+     "ros-jazzy-nav2-dwb-controller": "1.3.11-1noble.20260412.065547",
+     "ros-jazzy-nav2-smac-planner": "1.3.11-1noble.20260412.062222",
+     "ros-jazzy-ros-gz-sim": "1.0.22-1noble.20260412.044601",
+     "ros-jazzy-rosbag2-py": "0.26.10-2noble.20260412.060353"
+    },
+    "power_profile": "balanced",
+    "ros_domain_id": "79",
+    "started_utc": "2026-10-25T22:48:43Z",
+    "world_sha256": "11c58b460a56facf080f10500f133490497925e43b287bee69f83560aa012246"
+   },
+   "rc": 0,
+   "round": "r5_phone_seed6",
+   "run": 2,
+   "void": false
+  }
+ ],
+ "schema": "coco_lab.g2_round_gate",
+ "version": 1
+}
