@@ -5,7 +5,7 @@ visible in the images; no number here is a measurement except where a committed 
 
 | | Before (G2.0) | After (G2.8) |
 | --- | --- | --- |
-| Tree | `origin/main` `7475896` | `v2/g2-sim-identity` `5c77bbe` build (no source changes since), served at `http://127.0.0.1:4184/coco-labs/` |
+| Tree | `origin/main` `7475896` | `v2/g2-sim-identity` `89ce9d0` build (re-captured 2026-10-27, after Rules 5, Fetch by colour, the hotfix and the /rosout fixes; the first after set was `5c77bbe`), served at `http://127.0.0.1:4184/coco-labs/` |
 | Laptop | RTX 4050, driver 580.178.04, balanced, on AC | same GPU/driver, balanced, on AC |
 | Renderer (both) | ANGLE (NVIDIA GeForce RTX 4050 Laptop GPU, OpenGL ES 3.2) | same |
 | Metadata | [`before/screens/shots.json`](screens/before/screens/shots.json), [`before/review/shots.json`](screens/before/review/shots.json) | [`after/screens/shots.json`](screens/after/screens/shots.json), [`after/review/shots.json`](screens/after/review/shots.json) |
@@ -54,8 +54,8 @@ Robot-vision eye with the GAME | SIM switch:
 | Surface | Before | After | What changed (as seen) |
 | --- | --- | --- | --- |
 | 01 title | [before](screens/before/review/01-title.png) | [after](screens/after/review/01-title.png) | Same changes as the desktop title: the new tagline and badge line, and the footprint ring and TF axes on COCO. |
-| 02 modes | [before](screens/before/review/02-modes.png) | [after](screens/after/review/02-modes.png) | The Fetch Rush card gains a third chip, "RACE NAV2 · REAL ROS 2 RECORDING" (G2.6). The card's text block moved up to fit it. The other cards are unchanged. |
-| 03 Play chase | [before](screens/before/review/03-play-chase.png) | [after](screens/after/review/03-play-chase.png) | Workshop round. LiDAR rays, footprint ring, TF axes and the global plan line are visible. The `/rosout` line shows a real model event, `[INFO] [0.800] [cmd_vel_arbiter]: passing teleop (/cm…` (truncated). The telemetry strip reads `/odom x 1.29 y 0.05 θ 2°` after the W press. |
+| 02 modes | [before](screens/before/review/02-modes.png) | [after](screens/after/review/02-modes.png) | The Fetch Rush card gains "RACE NAV2 · REAL ROS 2 RECORDING" on its own row (G2.6). A new **Fetch by colour** card sits beside it: four chips labelled with text and colour (RED · 20 mm, GREEN · 24 mm, BLUE · 28 mm, YELLOW · 32 mm), its own RACE NAV2 row and the line "As COCO's first Gazebo fetch: four rods, one per colour." The footer now names Fetch Rush, Fetch by colour and Free Drive. |
+| 03 Play chase | [before](screens/before/review/03-play-chase.png) | [after](screens/after/review/03-play-chase.png) | Workshop round. LiDAR rays, footprint ring, TF axes and the global plan line are visible. The `/rosout` line shows a real model event as level, node and message on up to two lines (`INFO cmd_vel_arbiter: passing teleop (/cmd_vel_teleop)`), ending before the telemetry strip. The telemetry strip reads `/odom x 1.29 y 0.05 θ 2°` after the W press. |
 | 04 Robot vision → **SIM view** | [before](screens/before/review/04-play-robot-vision.png) | [after](screens/after/review/04-play-sim.png) | An entirely new view. It has a header "SIM · RViz-style view of the browser model MODEL · Fixed Frame: map", costmaps in the RViz palette (magenta/cyan/purple), LaserScan hit points in yellow-green, labelled TF frames (`lidar_link`, `base_link`, `base_footprint`, `odom`) and a Gazebo-style bottom bar (`Sim time · Real time · RTF · Iterations`) above the telemetry strip. The HUD drops CAM and AUTO, keeping STOP, the joystick, GRAB, pause, panels and the switch. |
 | 05 tactical (vision) → **tactical, GAME view** | [before](screens/before/review/05-play-tactical-vision.png) | [after](screens/after/review/05-play-tactical.png) | Top-down over the workshop maze instead of the loading dock. The before shot had Robot vision's cyan wall highlighting; after shows the plain GAME look, with LiDAR rays and the plan line. The telemetry strip and `/rosout` line are present. |
 | 06 "What is real here" | [before](screens/before/review/06-play-what-is-real.png) | [after](screens/after/review/06-play-what-is-real.png) | The sheet text is unchanged. Behind it the camera is much closer to COCO and shows the G2 materials: rubber tyres, metallic chassis, orange plastic arm, green status light. TF axes and the footprint ring are on the robot, and the floor and walls show reflections. |
@@ -65,6 +65,14 @@ Robot-vision eye with the GAME | SIM switch:
 
 SSAO is on the high tier only (G2.5). The review set's Play shots load `tier=high`. In these screenshots
 I can't tell SSAO apart from the lighting and material changes, so I don't claim it is visible.
+
+## Since the first after set (2026-10-27)
+
+What is new in the re-captured images, as seen: the Fetch by colour card (02); the /rosout line as
+level, node and message, clear of the telemetry strip (03, desktop and phone Play); Fetch Rush seed 1
+plays rules 5 (the same round and timer; the actors now stop for COCO). The no-WebGL fallback pages are
+in [`../hotfix_webgl/screens/`](../hotfix_webgl/screens/) and [`../hotfix_webgl/g2/screens/`](../hotfix_webgl/g2/screens/); Fetch by colour in
+[`screens/fetch_colour/`](screens/fetch_colour/); Rules 5's forklift stopping in [`screens/rules5/`](screens/rules5/).
 
 ## 3. Real phone — **REAL DEVICE** (Nothing Phone (1), status bars redacted)
 
@@ -78,6 +86,8 @@ shots were captured and checked earlier in G2.8. They were not re-captured here.
 | GAME, end | [before](screens/before/real_phone/04-end.png) | [after](screens/g28/real_phone/close-fetchrush-game-end-results.png) | Before ended mid-round. After shows the new results screen: TIME USED 331.4 s · DELIVERIES 0 · CONTACTS 178 · PATH vs PLANNER —. It adds the "What the planner computed" A* inset (labelled MODEL) and buttons PLAY AGAIN · WATCH HOW THE PLANNER DID IT · GAMES · SAVE AS ROSBAG2 (MCAP). |
 | SIM, 1 minute | — (no SIM view before G2) | [after](screens/g28/real_phone/sim-1-minute.png), [close run](screens/g28/real_phone/close-sim-1-minute.png) | SIM view on the phone: the header wraps to two lines, with costmaps, scan points, labelled TF frames and a visible floor grid. There is no Gazebo bar on the phone (desktop/SIM only, per spec). |
 | SIM, end | — | [after](screens/g28/real_phone/sim-end.png), [close run](screens/g28/real_phone/close-sim-end.png) | Same view at about 2 minutes. COCO sits in the same place throughout, against a wall ("Contact! −1" toast). |
+| GAME, final build (2026-10-25) | — | [one minute](screens/g28/real_phone_final/game10-final-build-03-one-minute.png) | Free Drive on the Depot: the /rosout last line is level and node ("INFO cmd_vel_arbiter:…"), clear of the strip. |
+| SIM, final layout (2026-10-27) | — | [end](screens/g28/real_phone_final/sim1-one-line-04-end.png) | One unwrapped /rosout line, "WARN local_contro…", under the joystick and before the strip. |
 | SIM defect (fixed) | — | [sim-BUG-saved-view-before-fix](screens/g28/real_phone/sim-BUG-saved-view-before-fix.png) | Kept as evidence. The switch shows SIM and the SIM header is up, but the scene is still the GAME render. This was the saved-view defect found and fixed in G2.8. |
 
 ## 4. Other G2 screenshot folders
@@ -97,8 +107,8 @@ shots were captured and checked earlier in G2.8. They were not re-captured here.
 4. **Modes card chips are cramped (02).** With the third chip, "PLAY · 2 ORDERS" and "FULL SHIFT · 3" each wrap to three lines. "RACE NAV2 · REAL ROS 2 RECORDING" wraps to four lines and reaches the card's right edge.
 5. **Real-phone HUD crowding.**
    - On the 1-minute shot, the status pill ("… ✖ 41") runs right up to the pause button.
-   - In [sim-1-minute](screens/g28/real_phone/sim-1-minute.png) the telemetry strip overlaps the `/rosout` box, clipping its leading "/" (`/cmd_vel`). The strip grows with its content (θ 357°). In the other phone shots the two boxes only touch.
-   - The phone `/rosout` last line is cut to `[WARN] [109.600] [local_…`, so the node name is lost. Tapping expands it by design, but nothing in the line is readable at rest.
+   - ~~In [sim-1-minute](screens/g28/real_phone/sim-1-minute.png) the telemetry strip overlaps the `/rosout` box~~ — fixed (efb61fb: fixed-width strip; 12aa0ab and 89ce9d0: the console ends before the strip, one line on short screens; `data/g28/rosout_room/`).
+   - ~~The phone `/rosout` last line is cut to `[WARN] [109.600] [local_…`~~ — now level and node first (`WARN local_contro…` on the phone); still short at rest, tapping expands it.
 6. **Results screen on the real phone.**
    - "SAVE AS ROSBAG2 (MCAP)" wraps to two lines and is cut off by the bottom edge.
    - STOP stays drawn over the results.
