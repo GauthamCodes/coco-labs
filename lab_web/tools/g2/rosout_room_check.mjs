@@ -6,8 +6,8 @@
  * ran under the fixed-width strip. Plays Fetch Rush shift 1 at the phone's full-screen CSS size
  * (touch, Android UA; viewport only -- looks, not a measurement), puts a long WARN in the collapsed
  * line (the longest the model writes, doubled), and checks the console's box against the strip's,
- * in GAME and in SIM view, and at the desktop size; and that the collapsed line shows two lines and
- * no part of a third (the clamp needs overflow hidden). Exit 1 on any overlap, leak or page error.
+ * in GAME and in SIM view, and at the desktop size; and that the collapsed line shows one line on a
+ * short phone screen (two elsewhere) and no part of the next (the clamp needs overflow hidden). Exit 1 on any overlap, leak or page error.
  *
  *   node tools/g2/rosout_room_check.mjs SITE [OUT.json]
  */
@@ -55,7 +55,9 @@ for (const [name, ctxOpts] of PROFILES) {
           shown_lines: Math.round((text.clientHeight / lh) * 100) / 100, clamped: cs.overflow === 'hidden' && pad === 0 });
       })));
     }, LONG);
-    const ok = r.overlap_px === 0 && r.clamped && r.shown_lines <= 2.05 && errors.length === 0;
+    // short phone screens (<= 460 px tall) show the last line only; taller ones up to two lines
+    const maxLines = ctxOpts.viewport.height <= 460 ? 1.05 : 2.05;
+    const ok = r.overlap_px === 0 && r.clamped && r.shown_lines <= maxLines && errors.length === 0;
     rows.push({ profile: name, view, ok, ...r, errors: [...errors] });
     console.log(name, view, ok ? 'ok' : 'FAILED', JSON.stringify(r));
   }
