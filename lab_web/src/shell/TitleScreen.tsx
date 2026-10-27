@@ -12,7 +12,8 @@ import '../game/game.css';
 const BASE = import.meta.env.BASE_URL;
 
 /**
- * G1.2: the title. G2.7: "COCO Lab · a ROS 2 robot you can drive in your browser" and a line of
+ * G1.2: the title. G2.7: a ROS 2 tagline (G2.9, Gautham 2026-10-27: "Drive COCO, a ROS 2 robot,
+ * modelled in your browser.") and a line of
  * plain-text badges (no logos); the ⓘ says what is model and what is recorded.
  * A full-bleed 3D hero shot of COCO in the Depot, the logo, one big
  * PLAY and three smaller doors (Compare, Research, Learn). A small ⓘ says what is real.
@@ -71,8 +72,8 @@ export function TitleScreen() {
       <p><b>HARDWARE</b> · a physical robot. None exists.</p>
     </div>}
     <div className="g1-title-bottom">
-      <div className="g1-title-copy"><h1 className="g1-logo" aria-label="COCO Lab">COCO<span>·</span>LAB</h1><p className="g1-tag">a ROS 2 robot you can drive in your browser</p>
-        <p className="g2-badges" data-testid="title-badges" aria-label="What COCO Lab is built from">Model of COCO's ROS 2 stack · Nav2 · Gazebo Harmonic · MoveIt <button className="g2-badges-i" onClick={() => setInfo((x) => !x)} aria-label="What is model and what is recorded">ⓘ</button></p></div>
+      <div className="g1-title-copy"><h1 className="g1-logo" aria-label="COCO Lab">COCO<span>·</span>LAB</h1><p className="g1-tag">Drive COCO, a ROS 2 robot, modelled in your browser.</p>
+        <p className="g2-badges" data-testid="title-badges" aria-label="What COCO Lab is built from"><span>Model of COCO's ROS 2 stack</span><span className="g2-badges-sep"> · </span><span>Nav2 · Gazebo Harmonic · MoveIt <button className="g2-badges-i" onClick={() => setInfo((x) => !x)} aria-label="What is model and what is recorded">ⓘ</button></span></p></div>
       <a className="g1-big" href={`${BASE}?view=play`} data-testid="title-play" aria-label="Play: drive COCO">▶ PLAY</a>
       <nav className="g1-cards" aria-label="Other modes">{doors.map((d) => <a key={d.view} className="g1-card g1-glass" href={`${BASE}?view=${d.view}`}><h3>{d.label}</h3><p>{d.copy}</p></a>)}</nav>
     </div>

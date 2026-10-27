@@ -598,3 +598,5 @@ input::placeholder{color:var(--muted);opacity:1}
   background: var(--panel); color: var(--fg); border: 1px solid var(--line); box-shadow: 0 6px 20px rgb(0 0 0 / 35%); font-size: 14px; }
 .update-notice button { min-height: 32px; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; }
 .update-notice button:disabled { opacity: .55; cursor: default; }
+/* G2.9 (Gautham's review: the wordmark was cut at the left edge): the header keeps a gutter */
+.mode-head { padding-left: max(12px, env(safe-area-inset-left)); padding-right: max(12px, env(safe-area-inset-right)); }

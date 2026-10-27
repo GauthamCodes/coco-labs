@@ -64,7 +64,7 @@ export interface Fixture { x: number; y: number; z: number; kind: 'strip' | 'doc
 export type Paint =
   | { kind: 'line'; from: [number, number]; to: [number, number]; width: number; color: string; dash?: number }
   | { kind: 'hazard'; min: [number, number]; max: [number, number] }
-  | { kind: 'label'; at: [number, number]; text: string; size: number; color: string; rot?: number }
+  | { kind: 'label'; at: [number, number]; text: string; size: number; color: string; rot?: number; align?: 'left' | 'center' }
   | { kind: 'rect'; min: [number, number]; max: [number, number]; color: string; width: number; dash?: number }
   | { kind: 'grid'; step: number; color: string; width: number }
   | { kind: 'cal'; at: [number, number]; size: number; color: string };
@@ -405,7 +405,9 @@ export function describeDepot(spec: Spec): WorldLook {
     } else if (z.role === 'start') {
       paint.push({ kind: 'rect', min: z.min, max: z.max, color: '#FF7A1A', width: 0.05 });
     } else if (z.role === 'region') {
-      paint.push({ kind: 'label', at: [z.min[0] + 1.6, z.min[1] + 0.9], text: z.label.toUpperCase(), size: 0.5, color: 'rgba(220,226,236,0.32)' });
+      // G2.9 (Gautham's review: "…P MAZE", "…RKLIFT LANES"): a region's name starts inside its corner;
+      // centred 1.6 m in, a long name ran out of the zone, under its walls
+      paint.push({ kind: 'label', at: [z.min[0] + 0.6, z.min[1] + 0.9], text: z.label.toUpperCase(), size: 0.5, color: 'rgba(220,226,236,0.32)', align: 'left' });
     }
   }
   // aisle numbers at the ends of the high-bay aisles (between back-to-back rack pairs)

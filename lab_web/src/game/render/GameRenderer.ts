@@ -32,8 +32,26 @@ export const TIER_PIXELS: Record<Tier, number> = { low: 1, medium: 1.25, high: 2
 export type Led = 'manual' | 'auto' | 'stop' | 'idle';
 /** G2.2: two views of the same moment -- G1's game look, or RViz-style SIM */
 export type View = 'game' | 'sim';
+
+/**
+ * G2.9: a route material that fades out nearer the camera than `near.value` metres (view depth),
+ * over 0.4 m. Presentation only; one uniform shared by the routes, set every frame.
+ */
+export function fadeNear<M extends THREE.Material>(m: M, near: { value: number }): M {
+  m.onBeforeCompile = (sh) => {
+    sh.uniforms.uRouteNear = near;
+    sh.vertexShader = sh.vertexShader.replace('void main() {', 'varying float vRouteDepth;\nvoid main() {')
+      .replace('#include <project_vertex>', '#include <project_vertex>\n  vRouteDepth = -mvPosition.z;');
+    sh.fragmentShader = sh.fragmentShader.replace('void main() {', 'uniform float uRouteNear;\nvarying float vRouteDepth;\nvoid main() {')
+      .replace('#include <dithering_fragment>', '#include <dithering_fragment>\n  gl_FragColor.a *= uRouteNear > 0.0 ? smoothstep(uRouteNear - 0.4, uRouteNear, vRouteDepth) : 1.0;');
+  };
+  m.customProgramCacheKey = () => 'g2.9-route-fade';
+  return m;
+}
 /** G2.9: RViz's orbit starts this far from COCO (m): close enough that the robot model reads on a phone */
 const SIM_START_DIST = 2.6;
+/** G2.9: tactical's cut-away height (a fraction of every solid's height) */
+const TACTICAL_CUT = 0.3;
 /** G2.9: SIM lights COCO more (RViz draws a model evenly lit, on its dark background): an intensity, no recompile */
 const SIM_HEMI = 2.1;
 const LED_COLOUR: Record<Led, number> = { manual: 0x34d399, auto: 0x22d3ee, stop: 0xef4444, idle: 0xbfdbfe };
@@ -96,6 +114,9 @@ export class GameRenderer {
   private readonly footprintRing: THREE.Mesh;
   view: View = 'game';
   sim: SimView | null = null;
+  /** G2.9: the depth (m from the camera) in front of which the routes fade out; 0 = none (tactical) */
+  private readonly routeNear = { value: 0 };
+  private readonly routeProbe = new THREE.Vector3();
   private hemiGame = 1.15;
   private gameCam: CamMode = 'chase';
   private pendingRos: { info: RosInfo; map: { width: number; height: number; resolution: number; origin: [number, number] }; occ: Uint8Array } | null = null;
@@ -194,12 +215,12 @@ export class GameRenderer {
     (tfAxes.material as THREE.MeshBasicMaterial).opacity = 0.55;
     this.robot.add(tfAxes);
     this.cues.add(this.rays, this.hits);
-    this.planLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0xf43f8e, transparent: true, opacity: 0.85, depthWrite: false }));
+    this.planLine = new THREE.Mesh(new THREE.BufferGeometry(), fadeNear(new THREE.MeshBasicMaterial({ color: 0xf43f8e, transparent: true, opacity: 0.85, depthWrite: false }), this.routeNear));
     // G1.11: the ghost route as a thin glowing line with small chevrons along it
-    this.ghostLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.38, depthWrite: false }));
+    this.ghostLine = new THREE.Mesh(new THREE.BufferGeometry(), fadeNear(new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.38, depthWrite: false }), this.routeNear));
     const chev = new THREE.BufferGeometry();
     chev.setAttribute('position', new THREE.Float32BufferAttribute([0.04, 0, 0, -0.035, 0.045, 0, -0.02, 0, 0, 0.04, 0, 0, -0.02, 0, 0, -0.035, -0.045, 0], 3));
-    this.ghostChevrons = new THREE.InstancedMesh(chev, new THREE.MeshBasicMaterial({ color: 0x67e8f9, transparent: true, opacity: 0.6, depthWrite: false, side: THREE.DoubleSide }), 400);
+    this.ghostChevrons = new THREE.InstancedMesh(chev, fadeNear(new THREE.MeshBasicMaterial({ color: 0x67e8f9, transparent: true, opacity: 0.6, depthWrite: false, side: THREE.DoubleSide }), this.routeNear), 400);
     this.ghostChevrons.count = 0;
     this.ghostChevrons.frustumCulled = false;
     this.scene.add(this.ghostChevrons);
@@ -669,6 +690,20 @@ export class GameRenderer {
     }
     if (this.tier === 'high') { this.key.position.set(x - 5, y - 8, 14); this.key.target.position.set(x, y, 0); }
     this.cam.update(dt, this.pose, this.z, this.speed);
+    // G2.9: tactical is a cut-away (Gautham's review: tall fences hid the maze): the world drawn at
+    // TACTICAL_CUT of its height, and no headlight beam (from above it read as haze). Presentation only.
+    const cut = this.cam.mode === 'tactical' && this.view === 'game';
+    if (this.world) this.world.group.scale.z = cut ? TACTICAL_CUT : 1;
+    this.cone.visible = this.view !== 'sim' && !cut;
+    // G2.9 (Gautham's review: the plan ran through the gauge): with the camera behind COCO, the routes
+    // are drawn only from COCO's depth on, so the part between the camera and COCO never crosses the HUD
+    const behind = this.view === 'game' && (this.cam.mode === 'chase' || this.cam.mode === 'orbit');
+    if (behind) {
+      // the view depth of COCO's own floor point: the route between it and the camera fades out
+      this.cam.camera.updateMatrixWorld();
+      const d = -this.routeProbe.set(this.robot.position.x, this.robot.position.y, 0).applyMatrix4(this.cam.camera.matrixWorldInverse).z;
+      this.routeNear.value = Math.max(0.01, d - 0.05);
+    } else this.routeNear.value = 0;
     if (this.view === 'sim' && this.sim) { this.cam.camera.updateMatrixWorld(); this.sim.layoutLabels(this.cam.camera, this.canvas.clientWidth, this.canvas.clientHeight, Math.round(Math.min(16, Math.max(12, this.canvas.clientHeight * 0.018)))); }
     // a camera above the roof (tactical, a high orbit) sees through it; fog thins with height
     const above = this.cam.camera.position.z > Math.min(this.ceiling, 5.4) - 0.3;

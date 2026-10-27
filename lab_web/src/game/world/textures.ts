@@ -207,7 +207,7 @@ export function floorTexture(look: WorldLook, pxPerM: number): THREE.Texture {
       }
       case 'label':
         g.save(); g.translate(X(p.at[0]), Y(p.at[1])); if (p.rot) g.rotate(p.rot);
-        g.fillStyle = p.color; g.font = `700 ${p.size * sy}px "Chakra Petch", sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+        g.fillStyle = p.color; g.font = `700 ${p.size * sy}px "Chakra Petch", sans-serif`; g.textAlign = p.align ?? 'center'; g.textBaseline = 'middle';
         g.fillText(p.text, 0, 0); g.restore();
         break;
       case 'cal': {

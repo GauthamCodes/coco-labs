@@ -25,6 +25,10 @@
 import * as THREE from 'three';
 
 export type CamMode = 'chase' | 'tactical' | 'orbit' | 'rviz';
+const FOV = 58;
+/** G2.9: tactical's lens (deg) and how much higher it sits, so `tactical.h` still frames the same ground */
+export const TACTICAL_FOV = 24;
+export const TACTICAL_LIFT = Math.tan((FOV * Math.PI) / 360) / Math.tan((TACTICAL_FOV * Math.PI) / 360);
 export const CAM_MODES: CamMode[] = ['chase', 'tactical', 'orbit'];
 export const BLEND_S = 0.4;
 /**
@@ -43,7 +47,7 @@ const approach = (dt: number, k: number) => 1 - Math.exp(-k * dt);
 const wrap = (a: number) => Math.atan2(Math.sin(a), Math.cos(a));
 
 export class GameCamera {
-  readonly camera = new THREE.PerspectiveCamera(58, 1, 0.05, 200);
+  readonly camera = new THREE.PerspectiveCamera(FOV, 1, 0.05, 200);
   mode: CamMode = 'chase';
   reducedMotion = false;
   /** the chase rig's sprung state */
@@ -124,6 +128,10 @@ export class GameCamera {
    * `v` its signed speed (for the look-ahead).
    */
   update(dt: number, pose: [number, number, number], z: number, v: number) {
+    // G2.9: tactical looks nearly straight down on everything in view: a narrow lens from higher up,
+    // the same ground in frame (walls no longer lean out over the maze)
+    const fov = this.mode === 'tactical' ? TACTICAL_FOV : FOV;
+    if (this.camera.fov !== fov) { this.camera.fov = fov; this.camera.updateProjectionMatrix(); }
     const [x, y, th] = pose;
     const cam = this.camera;
     const target = new THREE.Vector3();
@@ -189,7 +197,7 @@ export class GameCamera {
     } else {
       const t = this.tactical;
       if (t.follow) { t.x = x; t.y = y; }
-      cam.position.set(t.x, t.y - 0.001, t.h);
+      cam.position.set(t.x, t.y - 0.001, t.h * TACTICAL_LIFT);
       cam.lookAt(t.x, t.y, 0);
     }
     if (this.blend) {
