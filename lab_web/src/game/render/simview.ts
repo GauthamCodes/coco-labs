@@ -250,7 +250,9 @@ export class SimView {
     const p11 = camera.projectionMatrix.elements[5], k = 2 / (p11 * h);
     const placed: [number, number, number, number][] = [];
     const v = new THREE.Vector3();
-    const free = (x: number, y: number, bw: number) => x >= 4 && x + bw <= w - 4 && y - px / 2 >= 4 && y + px / 2 <= h - 4
+    // the HUD's top row (buttons, caption) and bottom row (/rosout, Gazebo bar, telemetry) are not free
+    const top = Math.min(60, h * 0.15), bottom = Math.min(70, h * 0.18);
+    const free = (x: number, y: number, bw: number) => x >= 4 && x + bw <= w - 4 && y - px / 2 >= top && y + px / 2 <= h - bottom
       && placed.every(([a, b, c, d]) => x + bw + 3 <= a || x >= c + 3 || y + px / 2 + 2 <= b || y - px / 2 >= d + 2);
     let n = 0;
     for (const { axes, text } of this.frames.values()) {

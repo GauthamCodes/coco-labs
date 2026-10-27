@@ -1,0 +1,64 @@
+{
+ "site": "http://127.0.0.1:4184/coco-labs/",
+ "when": "2026-10-27T15:53:27.479Z",
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "shots": [
+  "desktop-1-game",
+  "desktop-2-sim",
+  "desktop-4-panel-displays",
+  "desktop-4-panel-graph",
+  "desktop-4-panel-echo",
+  "desktop-4-panel-plot",
+  "desktop-5-panel-learn",
+  "desktop-3-game-again",
+  "phone-landscape-1-game",
+  "phone-landscape-2-sim",
+  "phone-landscape-4-panel-displays",
+  "phone-landscape-4-panel-graph",
+  "phone-landscape-4-panel-echo",
+  "phone-landscape-4-panel-plot",
+  "phone-landscape-5-panel-learn",
+  "phone-landscape-3-game-again"
+ ],
+ "errors": [],
+ "desktop_panel_vs_stop": {
+  "overlap": false,
+  "panel": [
+   15,
+   80,
+   475,
+   637.5
+  ],
+  "stop": [
+   1320,
+   637.5,
+   1405,
+   722.5
+  ]
+ },
+ "desktop_state": {
+  "view": "sim",
+  "tick": 186,
+  "ros": true
+ },
+ "phone-landscape_panel_vs_stop": {
+  "overlap": false,
+  "panel": [
+   0,
+   132.5625,
+   793,
+   388
+  ],
+  "stop": [
+   819,
+   202,
+   887,
+   270
+  ]
+ },
+ "phone-landscape_state": {
+  "view": "sim",
+  "tick": 188,
+  "ros": true
+ }
+}

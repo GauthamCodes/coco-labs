@@ -53,7 +53,7 @@ const SIM_START_DIST = 2.6;
 /** G2.9: tactical's cut-away height (a fraction of every solid's height) */
 const TACTICAL_CUT = 0.3;
 /** G2.9: SIM lights COCO more (RViz draws a model evenly lit, on its dark background): an intensity, no recompile */
-const SIM_HEMI = 2.1;
+const SIM_HEMI = 1.7;
 const LED_COLOUR: Record<Led, number> = { manual: 0x34d399, auto: 0x22d3ee, stop: 0xef4444, idle: 0xbfdbfe };
 
 /** Catalog colours as drawn (a page palette, not physics). */
