@@ -495,7 +495,7 @@ export function PlayGame(p: PlayProps) {
       else if (e.code === 'KeyP') setPanels((x) => !x);
       else if (e.code === 'KeyM') setMapOpen((m) => !m);
     };
-    const up = (e: KeyboardEvent) => { if (keyMap[e.code]) held.current.delete(keyMap[e.code]); };
+    const up = (e: KeyboardEvent) => { if (keyMap[e.code]) { held.current.delete(keyMap[e.code]); if (!held.current.size) perf.driveRelease(); } };
     window.addEventListener('keydown', down);
     window.addEventListener('keyup', up);
     return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', up); };
@@ -531,7 +531,7 @@ export function PlayGame(p: PlayProps) {
       const rt = gp.buttons[7]?.value ?? 0, lt = gp.buttons[6]?.value ?? 0;
       const fwd = rt > 0.05 || lt > 0.05 ? rt - lt : -ay;
       if (ax || ay || rt > 0.05 || lt > 0.05) { if (!stick.current[0] && !stick.current[1]) perf.driveInput(); stick.current = [fwd, -ax]; s.current.drive(fwd, -ax); }
-      else if (stick.current[0] || stick.current[1]) { stick.current = [0, 0]; s.current.drive(0, 0); }
+      else if (stick.current[0] || stick.current[1]) { stick.current = [0, 0]; perf.driveRelease(); s.current.drive(0, 0); }
     }
     pads.current = b;
   };
@@ -630,7 +630,7 @@ export function PlayGame(p: PlayProps) {
       {error && <p role="alert" className="g1-note" style={{ color: 'var(--g1-danger)' }}>{error}</p>}
     </section>}
     {started && <div className="g1-safe">
-      <FloatJoystick enabled={!latched && !p.paused} hint={desktop ? 'WASD / ARROWS' : 'DRAG TO DRIVE'} onChange={(f, t) => { if ((f || t) && !stick.current[0] && !stick.current[1]) perf.driveInput(); stick.current = [f, t]; if (f || t) setAuto(false); s.current?.drive(f, t); }} />
+      <FloatJoystick enabled={!latched && !p.paused} hint={desktop ? 'WASD / ARROWS' : 'DRAG TO DRIVE'} onChange={(f, t) => { if ((f || t) && !stick.current[0] && !stick.current[1]) perf.driveInput(); else if (!f && !t) perf.driveRelease(); stick.current = [f, t]; if (f || t) setAuto(false); s.current?.drive(f, t); }} />
       {world && occ.current && <Minimap world={world} occupancy={occ.current} marks={marks} headingUp={false} onOpen={() => setMapOpen(true)} />}
       <div className="g1-pill g1-glass" data-testid="objective">{p.game === 'fetch_colour'
         ? fr ? <><span className="g2-colour-dot" data-colour={p.colour ?? 'red'} aria-hidden /><span data-testid="colour-objective">{fr.deliveries ? `DELIVERED THE ${(p.colour ?? 'red').toUpperCase()} ROD` : colourObjective(p.colour ?? 'red', !!tick?.game?.assist?.carried, world?.game.colour?.drop_label)}</span><span className="sep">·</span><span className={`num${fr.seconds - fr.t < 30 ? ' low' : ''}`}>⏱ {fmt(fr.seconds - fr.t)}</span>{fr.contacts > 0 && <><span className="sep">·</span><span className="num">✖ {fr.contacts}</span></>}</> : <span>FETCH BY COLOUR · {colourChip(p.colour ?? 'red')}</span>

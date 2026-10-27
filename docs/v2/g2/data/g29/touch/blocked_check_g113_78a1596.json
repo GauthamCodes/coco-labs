@@ -1,0 +1,14 @@
+{
+ "site": "http://127.0.0.1:4221/coco-labs/",
+ "index": "index-DCz1wYLt.js",
+ "backed_pose": [
+  21.005,
+  14.553,
+  1.8
+ ],
+ "new_samples_ms": [
+  1261
+ ],
+ "input_no_motion": null,
+ "passed": false
+}

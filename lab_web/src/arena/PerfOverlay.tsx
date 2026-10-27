@@ -44,7 +44,7 @@ export function PerfOverlay() {
           {s.goalToFrontierMs.length ? `${s.goalToFrontierMs[s.goalToFrontierMs.length - 1].toFixed(0)} ms (last of ${s.goalToFrontierMs.length})` : '—'}</dd></div>
         <div><dt>input → motion</dt><dd data-testid="perf-input-motion">
           {s.inputToMotionMs.length
-            ? `${[...s.inputToMotionMs].sort((x, y) => x - y)[s.inputToMotionMs.length >> 1].toFixed(0)} ms median of last ${s.inputToMotionMs.length} (last ${s.inputToMotionMs[s.inputToMotionMs.length - 1].toFixed(0)} ms)`
+            ? `${[...s.inputToMotionMs].sort((x, y) => x - y)[s.inputToMotionMs.length >> 1].toFixed(0)} ms median of last ${s.inputToMotionMs.length} (last ${s.inputToMotionMs[s.inputToMotionMs.length - 1].toFixed(0)} ms)${s.inputNoMotion ? `; ${s.inputNoMotion} blocked, no motion` : ''}`
             : '— (drive from rest)'}</dd></div>
         <div><dt>fps</dt><dd data-testid="perf-fps">{s.fps} (p95 frame {s.frameMsP95.toFixed(1)} ms)</dd></div>
         <div><dt>plan events</dt><dd data-testid="perf-events">{s.eventsReceived.toLocaleString()} ({s.eventsPerSecond.toLocaleString()}/s)</dd></div>
