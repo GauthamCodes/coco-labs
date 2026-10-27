@@ -7,6 +7,16 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
 - **State (2026-10-27, G2.9 "Polish before deploy") — IN PROGRESS.** Gautham's review of PR #28 asked for: (1) the
   touch-to-motion > 1 s blocker, (2) an RViz-style SIM view, (3) the rest of "Looks wrong", (4) Gazebo actor yield,
   odometry calibration and AMCL re-measured with the round gate re-run 5/5. Commits `[G2.9]`, one per item. Never merge or deploy.
+  - Item 1 (8e66c6d): not a G2 regression; ?perf's input→motion timer stayed armed through a blocked push (G1.13's
+    own soak, 78a1596, median 1315 ms). Fixed (`driveRelease`); laptop check FAIL on 78a1596, PASS now
+    ([`data/g29/touch/`](data/g29/touch/README.md)). **Real-phone A/B pending: the phone was in a call, then unplugged.**
+  - Item 2 (c3138b6) and item 3 (0a4d3fa): done on the laptop; real-phone 60 fps re-check pending (phone).
+  - Item 4: derivation 5 (e6fb468). Smoke colour red 1/1, turn scale 1.221 → 1.008, 0 overlap steps.
+    **Gate RUNNING since 2026-10-27 15:46 UTC** (pid 1560193): `source docs/v2/g2/data/g29/round_gate/gate_env.sh;
+    tools/g2/round_gate.sh ~/coco_lab_runs/g2/round_gate_d5 5 colour:red colour:green colour:blue colour:yellow phone:2
+    phone:6 phone:1 phone:3` (log `~/coco_lab_runs/g2/round_gate_d5.out`). If the session is cleared: count
+    `round_gate_d5/gate_rounds.jsonl`, re-run only rounds without 5 counted runs. Then `tools/g2/odom_turn_scale.py`
+    and `tools/g2/amcl_error.py` over the d5 runs (d4 baselines in `data/g29/odom/`), ghosts from run 1 per round.
 - **State (2026-10-27): G2 · Sim Identity CLOSED, PR #28 ready for review (not merged, not deployed).**
   G2.0–G2.8 done; Rules 5, Fetch by colour, the no-WebGL hotfix and the per-round Gazebo gate (every
   round 5/5 on derivation 4) folded in. Final suites green ([`data/g28/close/`](data/g28/close/)); real

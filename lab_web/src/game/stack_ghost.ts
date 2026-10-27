@@ -6,7 +6,7 @@
  * round: the full ROS 2 stack (Nav2) in Gazebo Harmonic, headless (STACK; tools/g2/make_ghost.py).
  * It is replayed, never simulated here: its pose at round time t is the recording's truth at t.
  * What it is not is in the file and shown with it: no grasp (Nav2 drove the legs only), Gazebo's
- * actors parked, never hardware.
+ * actors parked (G2.9: or moving and stopping for COCO by a scenario rule), never hardware.
  */
 
 const BASE = import.meta.env.BASE_URL;

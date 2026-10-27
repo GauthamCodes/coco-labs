@@ -12,7 +12,9 @@ Writes the truth (Gazebo's /model/coco/odometry) at 10 Hz from the first leg's s
 the last leg's end, and the legs (Nav2's status, driving time, distance), with where it came from:
 the bag's sha256, the goals, the run's meta (git commit, generated files' checksums). What it is
 NOT, said in the file: no grasp happened (Nav2 drove the legs only; the arm did not move), and
-Gazebo's actors were parked at their path's start (M6F.8's setup), so no forklift crossed.
+Gazebo's actors were parked at their path's start (M6F.8's setup), so no forklift crossed -- or, G2.9,
+for a run of derivation 5's generated files (``actor_scenario.json`` beside the bag), the actors
+moved on their schedules and stopped for COCO by a scenario rule (Fetch Rush rules 5's), not physics.
 """
 import hashlib
 import json
@@ -23,6 +25,18 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import diagnose_m6f8 as d  # noqa: E402
+
+
+def actors_note(run):
+    """What Gazebo's actors did in the run: parked (M6F.8's setup) or, G2.9, the scenario rule."""
+    path = os.path.join(run, 'actor_scenario.json')
+    if not os.path.exists(path):
+        return 'Gazebo\'s actors were parked at their paths\' start (no forklift or walker moved)'
+    with open(path, encoding='utf-8') as f:
+        sc = json.load(f)
+    held = sum(a['holds'] for a in sc['actors'].values())
+    return (f'Gazebo\'s actors moved on their schedules and stopped for COCO by a scenario rule (Fetch Rush rules 5\'s; '
+            f'not physics): {held} stop(s) in this run')
 
 
 def sha(p):
@@ -53,8 +67,7 @@ def main() -> int:
     doc = {
         'schema': 'coco_lab.stack_ghost', 'version': 1, 'evidence': 'STACK',
         'what': 'COCO driven by Nav2 in Gazebo Harmonic (the full ROS 2 stack, headless), recorded: Gazebo\'s ground truth',
-        'not': ['no grasp: Nav2 drove the round\'s legs only, the arm did not move',
-                'Gazebo\'s actors were parked at their paths\' start (no forklift or walker moved)',
+        'not': ['no grasp: Nav2 drove the round\'s legs only, the arm did not move', actors_note(run),
                 'never hardware: no physical robot exists'],
         # a Fetch Rush round (mode, seed) or a Fetch by colour round (game, colour): the goal file's keys
         'round': {k: goals[k] for k in ('game', 'colour', 'rules', 'mode', 'seed', 'region', 'orders', 'ghost_m',
