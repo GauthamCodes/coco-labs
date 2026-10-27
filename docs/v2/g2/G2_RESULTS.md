@@ -83,7 +83,10 @@ with Rules 5's hold rule, from Gazebo's truth). Derivation 4 still verifies iden
   forklift 4 times (96.7 s), **0 overlap steps**, least clearance 0.106 m ([`data/g29/actor_yield/`](data/g29/actor_yield/)).
 - **A driver defect the gate found:** in 5 of the 40 runs the driver stalled behind failed `set_pose_vector`
   calls (1 s timeouts), so their actors mostly stood still. Fixed (the rule steps by simulation time; one call
-  sends the newest poses). Replacement runs with the fixed driver: **pending** (below when done).
+  sends the newest poses). Replacement runs with the fixed driver, one per
+  stalled run (colour green, red, yellow; phone seeds 3 and 6): **5 / 5 succeeded**, every leg, 0 overlap
+  steps, the world at most 1 step behind the rule (seed 6: once 34 steps, 1.7 s, then caught up). With them
+  every round is 5 of 5 with the scenario working in every counted run ([`runs_d5_rerun.json`](data/g29/round_gate/runs_d5_rerun.json)).
 - Ghosts re-recorded from derivation 5 ([`data/g29/round_gate/`](data/g29/round_gate/)); each says its actors
   moved under the rule.
 

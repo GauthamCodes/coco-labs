@@ -1,0 +1,164 @@
+{
+ "evidence_class": "STACK",
+ "driver": "0aa17e4 (steps by simulation time)",
+ "runs": [
+  {
+   "run": "colour_green_run1",
+   "replaces_stalled": true,
+   "legs": [
+    [
+     "order1_rod_green_pregrasp",
+     "SUCCEEDED",
+     7.98,
+     0.278,
+     0.031
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     32.12,
+     0.381,
+     0.196
+    ]
+   ],
+   "actors": {
+    "steps": 1022,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "max_steps_behind": 1
+   }
+  },
+  {
+   "run": "colour_red_run1",
+   "replaces_stalled": true,
+   "legs": [
+    [
+     "order1_rod_red_pregrasp",
+     "SUCCEEDED",
+     11.09,
+     0.293,
+     0.089
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     32.49,
+     0.4,
+     0.232
+    ]
+   ],
+   "actors": {
+    "steps": 1131,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "max_steps_behind": 1
+   }
+  },
+  {
+   "run": "colour_yellow_run1",
+   "replaces_stalled": true,
+   "legs": [
+    [
+     "order1_rod_yellow_pregrasp",
+     "SUCCEEDED",
+     6.15,
+     0.269,
+     0.088
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     30.16,
+     0.43,
+     0.21
+    ]
+   ],
+   "actors": {
+    "steps": 954,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "max_steps_behind": 1
+   }
+  },
+  {
+   "run": "r5_phone_seed3_run1",
+   "replaces_stalled": true,
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.12,
+     0.238,
+     0.065
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     66.32,
+     0.448,
+     0.22
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.4,
+     0.386,
+     0.108
+    ],
+    [
+     "order2_dispatch_drop",
+     "SUCCEEDED",
+     36.81,
+     0.457,
+     0.22
+    ]
+   ],
+   "actors": {
+    "steps": 3464,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "max_steps_behind": 1
+   }
+  },
+  {
+   "run": "r5_phone_seed6_run1",
+   "replaces_stalled": true,
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.09,
+     0.213,
+     0.067
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     63.55,
+     0.388,
+     0.223
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.56,
+     0.442,
+     0.203
+    ],
+    [
+     "order2_dock_2",
+     "SUCCEEDED",
+     61.88,
+     0.311,
+     0.101
+    ]
+   ],
+   "actors": {
+    "steps": 4031,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 2,
+    "max_steps_behind": 34
+   }
+  }
+ ]
+}
