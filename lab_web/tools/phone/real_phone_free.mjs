@@ -109,7 +109,11 @@ try {
   // G2: --view sim opens Play in SIM view (the view pref; every SIM display is on by default)
   const VIEW = opt('--view', null);
   if (VIEW) await p.addInitScript((v) => { try { localStorage.setItem('coco.prefs.v1.view', JSON.stringify(v)); } catch { /* none */ } }, VIEW);
-  // G2.9: --displays all turns every SIM display on (the costmaps start off on phones)
+  // G2.9: one origin serves every run of a build, so its saved view and displays carry over: a run
+  // sets its own view (GAME unless --view sim) and starts from the default displays unless --displays all
+  if (!VIEW) await p.addInitScript(() => { try { localStorage.setItem('coco.prefs.v1.view', JSON.stringify('game')); } catch { /* none */ } });
+  if (opt('--displays', null) !== 'all') await p.addInitScript(() => { try { localStorage.removeItem('coco.prefs.v1.displays'); } catch { /* none */ } });
+  // --displays all turns every SIM display on (the costmaps start off on phones)
   if (opt('--displays', null) === 'all') await p.addInitScript(() => { try { localStorage.setItem('coco.prefs.v1.displays', JSON.stringify(Object.fromEntries(['grid', 'robot', 'tf', 'scan', 'map', 'global_costmap', 'local_costmap', 'global_plan', 'local_plan', 'footprint', 'goal'].map((k) => [k, { on: true }])))); } catch { /* none */ } });
   report.displays = opt('--displays', 'defaults');
   // --defaults: the person's saved quality / 120 fps choices are set aside for the run (the defaults:
@@ -149,7 +153,7 @@ try {
   p = browser.contexts()[0].pages().find((x) => x.url().includes(marker));
   const r = await p.evaluate((t0wall) => {
     const g = window.__free; const r = window.__cocoGame?.renderer; const three = r?.renderer ?? r?.three?.renderer;
-    return { at: g?.at ?? [], lost: g?.lost, errors: g?.errors, itm: g?.itm, ext: g?.ext, extNoMotion: g?.extNoMotion, inputs: g?.inputs, lifts: g?.lifts, pageNoMotion: window.__cocoPerf?.inputNoMotion ?? null, fs: !!document.fullscreenElement, o: screen.orientation.type, iw: innerWidth, ih: innerHeight,
+    return { at: g?.at ?? [], lost: g?.lost, errors: g?.errors, itm: g?.itm, ext: g?.ext, extNoMotion: g?.extNoMotion, inputs: g?.inputs, lifts: g?.lifts, pageNoMotion: window.__cocoPerf?.inputNoMotion ?? null, steps: [...(window.__cocoPerf?.steps ?? [])], fs: !!document.fullscreenElement, o: screen.orientation.type, iw: innerWidth, ih: innerHeight,
       tick: window.__cocoGame?.tick?.tick ?? null, tier: r?.tier ?? null, pixel_ratio: three?.getPixelRatio?.() ?? null, now: performance.now(), wall: Date.now() };
   }, t0);
   if (report.saved_prefs) {
@@ -167,12 +171,14 @@ try {
     return { fps_median: q(fps, 0.5), fps_min: fps.length ? Math.min(...fps) : null, fps_p05: q(fps, 0.05), windows: fps.length,
       frame_ms_median: q(iv, 0.5), frame_ms_p95: q(iv, 0.95), frame_ms_p99: q(iv, 0.99), frame_ms_max: iv.length ? Math.max(...iv) : null, frames: at.length, over_50ms: iv.filter((x) => x > 50).length };
   };
-  report.view = VIEW ?? 'saved';
+  report.view = VIEW ?? 'game';
   report.play = { one_minute: stats(soakStart, soakStart + 60000), whole: stats(soakStart, soakEnd), webgl_context_lost: r.lost, page_errors: r.errors,
     end_state: { full_screen: r.fs, orientation: r.o, viewport: [r.iw, r.ih], tick: r.tick, tier: r.tier, pixel_ratio: r.pixel_ratio } };
   report.touch_to_motion = { samples: r.itm, n: r.itm?.length ?? 0, median_ms: q(r.itm ?? [], 0.5), p90_ms: q(r.itm ?? [], 0.9),
     trials_median_ms: q((r.itm ?? []).slice(0, TRIALS), 0.5), page_no_motion: r.pageNoMotion,
     note: 'the BUILD\'s own measure, every sample from the trials and the soak (perf.inputToMotion: drive input -> the robot drawn moved); trials_median_ms = the first --trials samples (G1.13\'s "150 ms" definition)' };
+  // G2.9: the model's step times (perf keeps the last 300-600: the worker's tick cost, which an input waits for)
+  report.model_step_ms = { n: r.steps?.length ?? 0, median: q(r.steps ?? [], 0.5), p90: q(r.steps ?? [], 0.9), note: 'perf.steps: the last 300-600 ticks\' worker step time (ms)' };
   report.touch_to_motion_ext = { samples: r.ext, n: r.ext?.length ?? 0, median_ms: q(r.ext ?? [], 0.5), p90_ms: q(r.ext ?? [], 0.9), max_ms: r.ext?.length ? Math.max(...r.ext) : null,
     over_1s: (r.ext ?? []).filter((x) => x > 1000).length, trials_median_ms: q((r.ext ?? []).slice(0, TRIALS), 0.5), no_motion: r.extNoMotion, drive_inputs: r.inputs, touch_lifts: r.lifts,
     note: 'G2.9: computed by the recorder, outside the build (identical for any build): perf.ts\'s rule plus "a touch lifted before any motion is no sample" (no_motion counts them)' };

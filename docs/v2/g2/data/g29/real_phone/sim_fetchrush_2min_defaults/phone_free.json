@@ -1,0 +1,227 @@
+{
+ "class": "REAL DEVICE, full screen, no DevTools attached while playing (Android input only)",
+ "site": "http://localhost:4233/coco-labs/",
+ "game": "fetch_rush",
+ "minutes": 2,
+ "started": "2026-10-27T17:33:39.177Z",
+ "device": {
+  "model": "A063",
+  "android": "15",
+  "build": "V3.2-260618-1045",
+  "chrome": "156.0.8078.47"
+ },
+ "network_note": "served by the laptop over USB (adb reverse); not the phone's mobile network",
+ "battery": [
+  {
+   "at": "2026-10-27T17:33:39.770Z",
+   "level_pct": 99,
+   "temperature_c": 43,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-27T17:35:10.246Z",
+   "level_pct": 99,
+   "temperature_c": 43,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-27T17:35:42.547Z",
+   "level_pct": 99,
+   "temperature_c": 43,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-27T17:36:13.778Z",
+   "level_pct": 99,
+   "temperature_c": 43,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-27T17:36:41.077Z",
+   "level_pct": 99,
+   "temperature_c": 43,
+   "ac_powered": "true"
+  }
+ ],
+ "temps_start": {
+  "battery": 6,
+  "GPU0": 57.1,
+  "CPU7": 61.1,
+  "skin": 43.899,
+  "CPU5": 61.9
+ },
+ "shots": {
+  "portrait_card": [
+   1080,
+   2400
+  ],
+  "after_tap": [
+   2400,
+   1080
+  ],
+  "one_minute": [
+   2400,
+   1080
+  ],
+  "end": [
+   2400,
+   1080
+  ]
+ },
+ "settings_changed": [],
+ "cooled": {
+  "waited_s": 0,
+  "battery": {
+   "at": "2026-10-27T17:33:40.441Z",
+   "level_pct": 99,
+   "temperature_c": 43,
+   "ac_powered": "true"
+  },
+  "temps": {
+   "battery": 6,
+   "GPU0": 58.3,
+   "CPU7": 61.1,
+   "skin": 43.798,
+   "CPU5": 62.3
+  }
+ },
+ "displays": "defaults",
+ "before": {
+  "iw": 361,
+  "ih": 654,
+  "dpr": 2.987499952316284,
+  "o": "portrait-primary"
+ },
+ "full_screen_by_screencap": "landscape buffer",
+ "temps_1min": {
+  "battery": 6,
+  "GPU0": 57.5,
+  "CPU7": 60.7,
+  "skin": 43.906,
+  "CPU5": 60.7
+ },
+ "temps_end": {
+  "battery": 6,
+  "GPU0": 56.3,
+  "CPU7": 59.6,
+  "skin": 43.834,
+  "CPU5": 59.6
+ },
+ "view": "sim",
+ "play": {
+  "one_minute": {
+   "fps_median": 60,
+   "fps_min": 59,
+   "fps_p05": 59,
+   "windows": 60,
+   "frame_ms_median": 16.69999999552965,
+   "frame_ms_p95": 20.099999994039536,
+   "frame_ms_p99": 24.299999997019768,
+   "frame_ms_max": 29.5,
+   "frames": 3600,
+   "over_50ms": 0
+  },
+  "whole": {
+   "fps_median": 60,
+   "fps_min": 59,
+   "fps_p05": 59,
+   "windows": 120,
+   "frame_ms_median": 16.69999999552965,
+   "frame_ms_p95": 19.899999998509884,
+   "frame_ms_p99": 23.299999997019768,
+   "frame_ms_max": 30,
+   "frames": 7200,
+   "over_50ms": 0
+  },
+  "webgl_context_lost": 0,
+  "page_errors": [],
+  "end_state": {
+   "full_screen": true,
+   "orientation": "landscape-primary",
+   "viewport": [
+    803,
+    361
+   ],
+   "tick": 1447,
+   "tier": "medium",
+   "pixel_ratio": 1.25
+  }
+ },
+ "touch_to_motion": {
+  "samples": [
+   216.20000000298023,
+   208.39999999850988,
+   154.69999999552965,
+   254.80000000447035,
+   200.89999999850988,
+   144,
+   211.5,
+   234,
+   170.30000000447035,
+   263.5,
+   167.10000000149012,
+   167.79999999701977,
+   169.80000000447035,
+   215,
+   187.60000000149012,
+   180.20000000298023,
+   217.10000000149012,
+   210,
+   187.80000000447035,
+   247.39999999850988,
+   220.20000000298023,
+   144.69999999552965,
+   131.5,
+   221.39999999850988
+  ],
+  "n": 24,
+  "median_ms": 208.39999999850988,
+  "p90_ms": 247.39999999850988,
+  "trials_median_ms": 211.5,
+  "page_no_motion": 19,
+  "note": "the BUILD's own measure, every sample from the trials and the soak (perf.inputToMotion: drive input -> the robot drawn moved); trials_median_ms = the first --trials samples (G1.13's \"150 ms\" definition)"
+ },
+ "touch_to_motion_ext": {
+  "samples": [
+   216.20000000298023,
+   208.39999999850988,
+   154.69999999552965,
+   254.80000000447035,
+   200.89999999850988,
+   144,
+   211.5,
+   234,
+   170.30000000447035,
+   263.5,
+   167.10000000149012,
+   167.79999999701977,
+   169.80000000447035,
+   215,
+   187.60000000149012,
+   180.20000000298023,
+   217.10000000149012,
+   210,
+   187.80000000447035,
+   247.39999999850988,
+   220.20000000298023,
+   144.69999999552965,
+   131.5,
+   221.39999999850988
+  ],
+  "n": 24,
+  "median_ms": 208.39999999850988,
+  "p90_ms": 247.39999999850988,
+  "max_ms": 263.5,
+  "over_1s": 0,
+  "trials_median_ms": 211.5,
+  "no_motion": 19,
+  "drive_inputs": 109,
+  "touch_lifts": 110,
+  "note": "G2.9: computed by the recorder, outside the build (identical for any build): perf.ts's rule plus \"a touch lifted before any motion is no sample\" (no_motion counts them)"
+ },
+ "settings_restored": {
+  "acc": "0",
+  "user": "0"
+ },
+ "ended": "2026-10-27T17:36:42.846Z"
+}

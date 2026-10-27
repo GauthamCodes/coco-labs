@@ -26,4 +26,12 @@
 Arena): an input released before any motion is no sample, counted in `inputNoMotion` (shown in `?perf`).
 Tests: `test/perf_input.test.ts` (5).
 
-**Real phone:** see the run table below (added when measured).
+**Pacing (2977762).** Emulated phone (4× CPU, `tools/g2/touch_path_check.mjs`): the worker's step is the
+same in both builds (62.8 vs 63.4 ms), so G2 added no step cost. But an input amended during a step's final
+synchronous stretch missed that tick and waited in the worker for the next scheduled send (up to 0.1 s).
+Now the tick after an amendment is sent as soon as the one in flight arrives, and an input with nothing in
+flight is sent at once: emulated median 132 → 90 ms ([`emulated_before_after.json`](emulated_before_after.json)).
+
+**Real phone:** [`../real_phone/README.md`](../real_phone/README.md) — 0 samples over 1 s on the final build
+(313 samples); GAME 142 / 149 / 184 ms medians (pooled 166 ms), SIM pooled 134 ms; ≤ 150 ms met in 2 of 3
+GAME runs, not in the hot 10-minute one.

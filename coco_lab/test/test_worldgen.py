@@ -324,25 +324,29 @@ def test_derivation5_writes_the_scenario_rule_and_keeps_rpp(tmp_path):
     depot = os.path.join(REPO, 'worlds', 'coco_depot_v1.yaml')
     out = {}
     for d in (4, 5):
-        _s, root, written, _c = gen_level.generate(depot, str(tmp_path / f'd{d}'), [0.1], 0.1, False, d)
+        _s, root, written, _c = gen_level.generate(
+            depot, str(tmp_path / f'd{d}'), [0.1], 0.1, False, d)
         out[d] = (root, written)
-    differ = sorted(k for k in set(out[4][1]) | set(out[5][1]) if out[4][1].get(k) != out[5][1].get(k))
-    assert differ == ['gazebo/actors.json', 'gazebo/coco_depot_v1.sdf', 'gazebo/diff_drive_calibration.yaml',
-                      'nav2/nav2_params.yaml', 'nav2/params_derivation.json']
+    w4, w5 = out[4][1], out[5][1]
+    differ = sorted(k for k in set(w4) | set(w5) if w4.get(k) != w5.get(k))
+    assert differ == ['gazebo/actors.json', 'gazebo/coco_depot_v1.sdf',
+                      'gazebo/diff_drive_calibration.yaml', 'nav2/nav2_params.yaml',
+                      'nav2/params_derivation.json']
     doc = json.load(open(os.path.join(out[5][0], 'gazebo', 'actors.json')))
     rule = doc['scenario_rule']
     assert rule['kind'] == 'SCENARIO RULE (not physics)'
     assert rule['stop_margin_m'] == ACTOR_STOP_MARGIN and rule['robot_radius_m'] == 0.22
     assert 'Scenario rule' in open(os.path.join(out[5][0], 'gazebo', 'coco_depot_v1.sdf')).read()
-    p4, p5 = (yaml.safe_load(open(os.path.join(out[d][0], 'nav2', 'nav2_params.yaml'))) for d in (4, 5))
-    assert p4 == p5                                                     # RPP kept; only the header differs
+    p4, p5 = (yaml.safe_load(open(os.path.join(out[d][0], 'nav2', 'nav2_params.yaml')))
+              for d in (4, 5))
+    assert p4 == p5                     # RPP kept; only the header differs
 
 
 def test_the_gazebo_scenario_holds_as_rules_5():
     sys.path.insert(0, os.path.join(REPO, 'tools', 'g2'))
     from actor_scenario import hold_step
-    walker = {'id': 'w', 'actor': 'walker', 'footprint': [0.5, 0.5], 'height': 1.75, 'mode': 'pingpong',
-              'path': [[0.0, 0.0], [0.0, 10.0]], 'phase': 0.0, 'speed': 1.0}
+    walker = {'id': 'w', 'actor': 'walker', 'footprint': [0.5, 0.5], 'height': 1.75,
+              'mode': 'pingpong', 'path': [[0.0, 0.0], [0.0, 10.0]], 'phase': 0.0, 'speed': 1.0}
     near = 0.22 + 0.3
     # COCO ahead on the walker's path, inside the field: it holds
     assert hold_step(walker, 0.0, 0.7, 0.0, 0.05, near)[0]

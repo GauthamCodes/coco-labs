@@ -1,0 +1,191 @@
+{
+ "class": "REAL DEVICE, full screen, no DevTools attached while playing (Android input only)",
+ "site": "http://localhost:4233/coco-labs/",
+ "game": "fetch_rush",
+ "minutes": 1,
+ "started": "2026-10-27T17:36:43.395Z",
+ "device": {
+  "model": "A063",
+  "android": "15",
+  "build": "V3.2-260618-1045",
+  "chrome": "156.0.8078.47"
+ },
+ "network_note": "served by the laptop over USB (adb reverse); not the phone's mobile network",
+ "battery": [
+  {
+   "at": "2026-10-27T17:36:43.924Z",
+   "level_pct": 99,
+   "temperature_c": 43,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-27T17:38:00.867Z",
+   "level_pct": 100,
+   "temperature_c": 43,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-27T17:38:30.983Z",
+   "level_pct": 100,
+   "temperature_c": 43,
+   "ac_powered": "true"
+  },
+  {
+   "at": "2026-10-27T17:38:33.105Z",
+   "level_pct": 100,
+   "temperature_c": 43,
+   "ac_powered": "true"
+  }
+ ],
+ "temps_start": {
+  "battery": 6,
+  "GPU0": 56.7,
+  "CPU7": 60.7,
+  "skin": 43.834,
+  "CPU5": 61.1
+ },
+ "shots": {
+  "portrait_card": [
+   1080,
+   2400
+  ],
+  "after_tap": [
+   2400,
+   1080
+  ],
+  "one_minute": [
+   2400,
+   1080
+  ],
+  "end": [
+   2400,
+   1080
+  ]
+ },
+ "settings_changed": [],
+ "cooled": {
+  "waited_s": 1,
+  "battery": {
+   "at": "2026-10-27T17:36:44.871Z",
+   "level_pct": 99,
+   "temperature_c": 43,
+   "ac_powered": "true"
+  },
+  "temps": {
+   "battery": 6,
+   "GPU0": 57.1,
+   "CPU7": 60.7,
+   "skin": 43.834,
+   "CPU5": 62.7
+  }
+ },
+ "displays": "all",
+ "before": {
+  "iw": 361,
+  "ih": 654,
+  "dpr": 2.987499952316284,
+  "o": "portrait-primary"
+ },
+ "full_screen_by_screencap": "landscape buffer",
+ "temps_1min": {
+  "battery": 6,
+  "GPU0": 57.1,
+  "CPU7": 60,
+  "skin": 43.993,
+  "CPU5": 60
+ },
+ "temps_end": {
+  "battery": 6,
+  "GPU0": 56,
+  "CPU7": 58.8,
+  "skin": 43.993,
+  "CPU5": 59.6
+ },
+ "view": "sim",
+ "play": {
+  "one_minute": {
+   "fps_median": 60,
+   "fps_min": 59,
+   "fps_p05": 59,
+   "windows": 60,
+   "frame_ms_median": 16.69999999552965,
+   "frame_ms_p95": 20.400000005960464,
+   "frame_ms_p99": 25.299999997019768,
+   "frame_ms_max": 33.79999999701977,
+   "frames": 3600,
+   "over_50ms": 0
+  },
+  "whole": {
+   "fps_median": 60,
+   "fps_min": 59,
+   "fps_p05": 59,
+   "windows": 60,
+   "frame_ms_median": 16.69999999552965,
+   "frame_ms_p95": 20.400000005960464,
+   "frame_ms_p99": 25.299999997019768,
+   "frame_ms_max": 33.79999999701977,
+   "frames": 3600,
+   "over_50ms": 0
+  },
+  "webgl_context_lost": 0,
+  "page_errors": [],
+  "end_state": {
+   "full_screen": true,
+   "orientation": "landscape-primary",
+   "viewport": [
+    803,
+    361
+   ],
+   "tick": 732,
+   "tier": "medium",
+   "pixel_ratio": 1.25
+  }
+ },
+ "touch_to_motion": {
+  "samples": [
+   168.89999999850988,
+   163.89999999850988,
+   130.5,
+   227.19999999552965,
+   198.5,
+   184.30000000447035,
+   153.30000000447035,
+   198.30000000447035,
+   190.79999999701977
+  ],
+  "n": 9,
+  "median_ms": 184.30000000447035,
+  "p90_ms": 227.19999999552965,
+  "trials_median_ms": 168.89999999850988,
+  "page_no_motion": 0,
+  "note": "the BUILD's own measure, every sample from the trials and the soak (perf.inputToMotion: drive input -> the robot drawn moved); trials_median_ms = the first --trials samples (G1.13's \"150 ms\" definition)"
+ },
+ "touch_to_motion_ext": {
+  "samples": [
+   168.89999999850988,
+   163.89999999850988,
+   130.5,
+   227.19999999552965,
+   198.5,
+   184.30000000447035,
+   153.30000000447035,
+   198.30000000447035,
+   190.79999999701977
+  ],
+  "n": 9,
+  "median_ms": 184.30000000447035,
+  "p90_ms": 227.19999999552965,
+  "max_ms": 227.19999999552965,
+  "over_1s": 0,
+  "trials_median_ms": 168.89999999850988,
+  "no_motion": 0,
+  "drive_inputs": 55,
+  "touch_lifts": 56,
+  "note": "G2.9: computed by the recorder, outside the build (identical for any build): perf.ts's rule plus \"a touch lifted before any motion is no sample\" (no_motion counts them)"
+ },
+ "settings_restored": {
+  "acc": "0",
+  "user": "0"
+ },
+ "ended": "2026-10-27T17:38:34.667Z"
+}
