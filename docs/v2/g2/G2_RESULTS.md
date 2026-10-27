@@ -60,6 +60,16 @@ Item by item in [`BEFORE_AFTER.md`](BEFORE_AFTER.md) § G2.9. Real phone, final 
 median**, GAME and SIM, SIM with every display on included (min 40–60, 0 WebGL losses, 0 page errors). The
 results screen and the status pill checked on the device ([`screens/g29/real_phone/`](screens/g29/real_phone/)).
 
+### Tests and determinism (final, `e869448`) — [`data/g29/suites/suites_final.txt`](data/g29/suites/suites_final.txt)
+
+All green, laptop balanced on AC: coco_lab 1161 (+ 2 gz), lab_web tools 244, vitest 619, typecheck, schemas,
+catalog, arena assets, build twice (same dist), native gate exact (hash v3: planners 818,951 / 818,951,
+fetch_rush 1,436 / 1,436), coco verify 18 / 18, determinism v1 (10 sessions) and terrain (3) 0 mismatches on
+Chromium / Firefox / WebKit / Pyodide-Node with unchanged hashes (`9a9d582d03f4`, `3a8c227eca45`), screenshots,
+chase HUD (4 profiles × 20 poses + SIM) 0 failed, saved view, v1 links 50 / 0, replays, update isolation, ROS
+packages 12 / 12 (coco_lab 1166 with ament lint). **No golden or hash changed.** (A pass on `5192ed8` found one
+flake8 line-length failure in the new derivation 5 tests; wrapped.)
+
 ### 4. Gazebo: actors yield, odometry calibrated, AMCL re-measured — STACK
 
 `tools/m6/gen_level.py --derivation 5` = derivation 4 (RPP kept) + `gazebo/diff_drive_calibration.yaml` (the
