@@ -26,6 +26,10 @@
 # (/world/$LEVEL/set_pose); the arbiter (initial_mode:=nav) and nav.launch.py
 # arbiter:=true with the generated map and params; wait for Nav2 active and an AMCL pose;
 # record a bag; m6f8_nav.py through the goals; stop; ros_clean.sh. Raw logs in OUT_DIR.
+# G2.9 (derivation 5's generated files, when present): after the teleport, diff_drive_controller is
+# re-spawned with GEN/gazebo/diff_drive_calibration.yaml (the odometry turn scale; VOID if the value
+# does not take); with the goals, tools/g2/actor_scenario.py drives the actors by actors.json's
+# scenario rule (they stop for COCO) and writes actors.jsonl and actor_scenario.json.
 set -o pipefail
 ulimit -c 0
 GOALS="${1:?usage: m6f8_run.sh GOALS.json OUT_DIR [m6f8_nav.py flags]}"
@@ -135,6 +139,24 @@ cat "$OUT/teleport.txt"
 sleep 3
 timeout 8 ros2 topic echo /model/coco/odometry --once > "$OUT/truth_after_teleport.txt" 2>&1
 
+CAL="$GEN/gazebo/diff_drive_calibration.yaml"
+if [ -f "$CAL" ]; then
+    WANT=$("$PY" -c "import sys, yaml; print(yaml.safe_load(open(sys.argv[1]))['diff_drive_controller']['ros__parameters']['wheel_separation_multiplier'])" "$CAL")
+    say "odometry calibration: re-spawning diff_drive_controller with $CAL (wheel_separation_multiplier $WANT)"
+    {
+        timeout 30 ros2 control set_controller_state diff_drive_controller inactive
+        timeout 30 ros2 control unload_controller diff_drive_controller
+        timeout 90 ros2 run controller_manager spawner diff_drive_controller -c /controller_manager -p "$CAL"
+        timeout 15 ros2 control list_controllers
+    } > "$OUT/calibration.txt" 2>&1
+    GOT=$(timeout 15 ros2 param get /diff_drive_controller wheel_separation_multiplier 2>&1 | tee -a "$OUT/calibration.txt" | grep -oE '[0-9.]+$')
+    if ! "$PY" -c "import sys; sys.exit(0 if abs(float(sys.argv[1]) - float(sys.argv[2])) < 1e-9 else 1)" "${GOT:-nan}" "$WANT"; then
+        say "VOID: diff_drive_controller's wheel_separation_multiplier is '${GOT}', not $WANT"; exit 4
+    fi
+    grep -q 'diff_drive_controller.*active' "$OUT/calibration.txt" || { say "VOID: diff_drive_controller not active after the re-spawn"; exit 4; }
+    say "odometry calibration loaded: wheel_separation_multiplier $GOT"
+fi
+
 setsid ros2 launch custom_teleop arbiter.launch.py initial_mode:=nav use_sim_time:=true \
     > "$OUT/arbiter.log" 2>&1 &
 PGIDS+=("$!")
@@ -157,6 +179,12 @@ setsid ros2 bag record --use-sim-time --include-hidden-topics -s mcap \
     -o "$OUT/bag" "${TOPICS[@]}" > "$OUT/bag.log" 2>&1 &
 BAG_PGID=$!
 sleep 5
+if grep -q '"scenario_rule"' "$GEN/gazebo/actors.json" 2>/dev/null; then
+    setsid "$PY" "$REPO/tools/g2/actor_scenario.py" "$LEVEL" "$GEN/gazebo/actors.json" "$OUT/actors.jsonl" \
+        --summary "$OUT/actor_scenario.json" > "$OUT/actor_scenario.log" 2>&1 &
+    PGIDS+=("$!")
+    say "actor scenario (scenario rule: the actors stop for COCO) started"
+fi
 "$PY" "$REPO/tools/m6/m6f8_nav.py" "$GOALS" "$OUT/results.jsonl" --world "$LEVEL" "${NAV_FLAGS[@]}"
 RC=$?
 say "goals done (rc $RC)"

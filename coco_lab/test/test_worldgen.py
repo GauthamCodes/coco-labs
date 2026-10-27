@@ -300,6 +300,59 @@ def test_nav2_params_change_only_the_level_keys_and_never_the_original(tmp_path)
         {'x': 2.0, 'y': 5.0, 'z': 0.0, 'yaw': 0.0}
 
 
+# -- G2.9: derivation 5 (Gautham, 2026-10-27): odometry calibrated and the actors' scenario rule,
+#    in the generated files only ---------------------------------------------------------------
+
+def test_derivation5_calibration_is_the_original_block_but_the_multiplier():
+    sys.path.insert(0, os.path.join(REPO, 'tools', 'm6'))
+    import gen_level
+    original = _read(GZ, 'urdf', 'coco_controllers.yaml')
+    text, old, new = gen_level.diff_drive_calibration()
+    assert _read(GZ, 'urdf', 'coco_controllers.yaml') == original      # never edited
+    base = yaml.safe_load(original)['diff_drive_controller']
+    got = yaml.safe_load(text)['diff_drive_controller']
+    assert old == base['ros__parameters']['wheel_separation_multiplier']
+    assert new == round(old * gen_level.ODOM_TURN_SCALE, 3)
+    got['ros__parameters']['wheel_separation_multiplier'] = old
+    assert got == base
+
+
+def test_derivation5_writes_the_scenario_rule_and_keeps_rpp(tmp_path):
+    sys.path.insert(0, os.path.join(REPO, 'tools', 'm6'))
+    import gen_level
+    from coco_lab.games import ACTOR_STOP_MARGIN
+    depot = os.path.join(REPO, 'worlds', 'coco_depot_v1.yaml')
+    out = {}
+    for d in (4, 5):
+        _s, root, written, _c = gen_level.generate(depot, str(tmp_path / f'd{d}'), [0.1], 0.1, False, d)
+        out[d] = (root, written)
+    differ = sorted(k for k in set(out[4][1]) | set(out[5][1]) if out[4][1].get(k) != out[5][1].get(k))
+    assert differ == ['gazebo/actors.json', 'gazebo/coco_depot_v1.sdf', 'gazebo/diff_drive_calibration.yaml',
+                      'nav2/nav2_params.yaml', 'nav2/params_derivation.json']
+    doc = json.load(open(os.path.join(out[5][0], 'gazebo', 'actors.json')))
+    rule = doc['scenario_rule']
+    assert rule['kind'] == 'SCENARIO RULE (not physics)'
+    assert rule['stop_margin_m'] == ACTOR_STOP_MARGIN and rule['robot_radius_m'] == 0.22
+    assert 'Scenario rule' in open(os.path.join(out[5][0], 'gazebo', 'coco_depot_v1.sdf')).read()
+    p4, p5 = (yaml.safe_load(open(os.path.join(out[d][0], 'nav2', 'nav2_params.yaml'))) for d in (4, 5))
+    assert p4 == p5                                                     # RPP kept; only the header differs
+
+
+def test_the_gazebo_scenario_holds_as_rules_5():
+    sys.path.insert(0, os.path.join(REPO, 'tools', 'g2'))
+    from actor_scenario import hold_step
+    walker = {'id': 'w', 'actor': 'walker', 'footprint': [0.5, 0.5], 'height': 1.75, 'mode': 'pingpong',
+              'path': [[0.0, 0.0], [0.0, 10.0]], 'phase': 0.0, 'speed': 1.0}
+    near = 0.22 + 0.3
+    # COCO ahead on the walker's path, inside the field: it holds
+    assert hold_step(walker, 0.0, 0.7, 0.0, 0.05, near)[0]
+    # beside its path (sideways pass), or behind it: it goes on
+    assert not hold_step(walker, 0.8, 0.1, 0.0, 0.05, near)[0]
+    assert not hold_step(walker, 0.0, -0.5, 0.0, 0.05, near)[0]
+    # far ahead: it goes on
+    assert not hold_step(walker, 0.0, 3.0, 0.0, 0.05, near)[0]
+
+
 @pytest.mark.gz
 @pytest.mark.skipif(shutil.which('gz') is None, reason='the gz CLI is not installed')
 @pytest.mark.parametrize('spec', [KIT, V2], ids=['kit', 'v2'])
