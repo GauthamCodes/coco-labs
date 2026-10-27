@@ -5,7 +5,7 @@
  * while it plays.
  *
  *   ADB=<adb> node tools/phone/real_phone_free.mjs SITE OUT_DIR [--minutes 10] [--trials 15]
- *        [--game free|fetch_rush] [--tap X,Y] [--joy X,Y] [--view game|sim]
+ *        [--game free|fetch_rush] [--tap X,Y] [--joy X,Y] [--view game|sim] [--displays all]
  *
  * Why: Chrome on Android keeps its status bar, address bar and navigation bar while a DevTools
  * session is attached, even when the page is in full screen (measured: 755 x 269 CSS px instead
@@ -109,6 +109,9 @@ try {
   // G2: --view sim opens Play in SIM view (the view pref; every SIM display is on by default)
   const VIEW = opt('--view', null);
   if (VIEW) await p.addInitScript((v) => { try { localStorage.setItem('coco.prefs.v1.view', JSON.stringify(v)); } catch { /* none */ } }, VIEW);
+  // G2.9: --displays all turns every SIM display on (the costmaps start off on phones)
+  if (opt('--displays', null) === 'all') await p.addInitScript(() => { try { localStorage.setItem('coco.prefs.v1.displays', JSON.stringify(Object.fromEntries(['grid', 'robot', 'tf', 'scan', 'map', 'global_costmap', 'local_costmap', 'global_plan', 'local_plan', 'footprint', 'goal'].map((k) => [k, { on: true }])))); } catch { /* none */ } });
+  report.displays = opt('--displays', 'defaults');
   // --defaults: the person's saved quality / 120 fps choices are set aside for the run (the defaults:
   // a phone starts medium, 60 fps) and put back afterwards, exactly as they were
   if (rest.includes('--defaults')) {

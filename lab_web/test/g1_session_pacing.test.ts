@@ -102,6 +102,36 @@ describe('G1.13 tick pacing', () => {
     s.close();
   });
 
+  it('G2.9: an input with nothing in flight is sent at once, not at the next 10 ms pump', () => {
+    stepMs = () => 20;
+    const { s } = session();
+    s.start();
+    vi.advanceTimersByTime(1000);
+    // wait for a moment with nothing in flight
+    for (let i = 0; i < 200 && (s as unknown as { inFlight: boolean }).inFlight; i++) vi.advanceTimersByTime(1);
+    const before = sent.length, t0 = performance.now();
+    s.drive(1, 0);
+    expect(sent.length).toBe(before + 1);
+    expect(sent[before].at).toBe(t0);
+    s.close();
+  });
+
+  it('G2.9: after an input amended into the tick in flight, the next tick is sent when that one arrives', () => {
+    // 60 ms steps: an input during one may miss it in the worker (its last look), so the next must not wait for the schedule
+    stepMs = () => 60;
+    const { s, shown } = session();
+    s.start();
+    vi.advanceTimersByTime(1000);
+    for (let i = 0; i < 200 && !(s as unknown as { inFlight: boolean }).inFlight; i++) vi.advanceTimersByTime(1);
+    const k = sent.length - 1;            // the step in flight
+    s.drive(1, 0);                        // amended into it
+    vi.advanceTimersByTime(80);
+    const arrivedAt = sent[k].at + 60;
+    expect(shown.find((x) => x.tick === k)?.at).toBe(arrivedAt);    // shown on arrival, not held to its due time
+    expect(sent[k + 1].at - arrivedAt).toBeLessThanOrEqual(0);      // the next step at once
+    s.close();
+  });
+
   it('shows a step longer than the lead late, then keeps the schedule from it', () => {
     stepMs = (k) => (k === 30 ? 250 : 20);
     const { s, shown } = session();

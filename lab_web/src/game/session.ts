@@ -25,6 +25,14 @@
  * sent and shown at once (the schedule restarts from it), so a person's input
  * waits no longer than before. Presentation only: the model's inputs, ticks and
  * hashes are what they were.
+ *
+ * G2.9 (touch-to-motion on the real phone): an input sent while a tick is in flight is amended
+ * into it, but the worker applies amendments only until its last look before finishing the tick
+ * (the motion, scan and ROS shapes after it are one synchronous stretch, most of a step). An input
+ * that arrived in that stretch waited in the worker for the next scheduled send, up to 0.1 s
+ * later. Now the tick after an amendment is sent as soon as the one in flight arrives (it carries
+ * any input the worker still holds), and an input with nothing in flight is sent at once, not at
+ * the next 10 ms pump. Pacing only, as above.
  */
 
 import type { PlayPlanner } from './planners';
@@ -84,6 +92,8 @@ export class GameSession {
   private due = 0;
   /** whether the tick in flight was started by an input (shown on arrival) */
   private immediate = false;
+  /** G2.9: an input was amended into the tick in flight: send the next tick as soon as it arrives */
+  private kick = false;
   /** the last send-to-arrival times (ms), for the lead */
   private latencies: number[] = [];
   /** a tick that arrived before it was due, and its timer */
@@ -137,7 +147,7 @@ export class GameSession {
     this.last = now;
     if (this.paused) return;
     if (this.inFlight || this.held && !this.queue.length) return;
-    if (this.queue.length) {
+    if (this.queue.length || this.kick) {
       this.flush();
       this.sendStep(now, true);
     } else if (now >= this.due - this.lead()) {
@@ -147,6 +157,7 @@ export class GameSession {
 
   private sendStep(now: number, immediate: boolean) {
     this.inFlight = true;
+    this.kick = false;
     this.immediate = immediate;
     this.sentAt = now;
     this.client.step(this.queue.splice(0));
@@ -199,8 +210,8 @@ export class GameSession {
   /** Send inputs now (they join the tick in flight, or start the next one). */
   send(rows: Omit<InputRow, 'tick'>[]) {
     if (!rows.length) return;
-    if (this.inFlight) this.client.amend(rows);
-    else this.queue.push(...rows);
+    if (this.inFlight) { this.client.amend(rows); this.kick = true; }
+    else { this.queue.push(...rows); this.pump(); }
   }
 
   /** The person drives: (forward, turn) in [-1, 1], scaled to the robot's real teleop limits. */
