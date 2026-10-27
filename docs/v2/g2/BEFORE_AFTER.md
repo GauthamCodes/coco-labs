@@ -74,6 +74,31 @@ plays rules 5 (the same round and timer; the actors now stop for COCO). The no-W
 in [`../hotfix_webgl/screens/`](../hotfix_webgl/screens/) and [`../hotfix_webgl/g2/screens/`](../hotfix_webgl/g2/screens/); Fetch by colour in
 [`screens/fetch_colour/`](screens/fetch_colour/); Rules 5's forklift stopping in [`screens/rules5/`](screens/rules5/).
 
+## G2.9 · Polish before deploy (2026-10-27)
+
+Gautham reviewed PR #28 and this file's "Looks wrong". The after set below is the G2.9 build, served at
+`http://127.0.0.1:4184/coco-labs/` (RTX 4050, driver 580.178.04, balanced, on AC; the laptop also ran the
+derivation 5 Gazebo gate during capture, so no number inside these images is a measurement). Desktop
+1440 × 900; phone rows are the **EMULATED** Nothing Phone (1) (viewport, touch, UA; rendered by the laptop).
+Folders: [`screens/g29/after/screens/`](screens/g29/after/screens/), [`…/review/`](screens/g29/after/review/),
+[`…/sim/`](screens/g29/after/sim/), [`…/results/`](screens/g29/after/results/).
+
+| "Looks wrong" item | G2.8 | G2.9 | What changed (as seen) |
+| --- | --- | --- | --- |
+| 1. SIM background light grey; joystick label and key hints hard to read | [04](screens/after/review/04-play-sim.png), [real phone](screens/g28/real_phone_final/sim1-one-line-04-end.png) | [desktop](screens/g29/after/review/04-play-sim.png), [phone](screens/g29/after/sim/phone-landscape-2-sim.png) | Background #303030 with a grey map (free a shade lighter, occupied light grey, unknown not drawn). Costmaps are see-through overlays on desktop and **off by default on phones** (Displays turns them on; a saved choice wins). COCO starts closer and is lit more in SIM; the high tier's post passes are skipped in SIM (they washed it out). TF labels are small (12–16 px), placed right of COCO's footprint, stepped to a free row with a leader line and kept off the HUD's top and bottom rows (`odom` sits above the Gazebo bar). Joystick hint and ESC / P / V hints sit on dark pills. |
+| 2. Title over the robot (landscape); "MoveIt ⓘ" alone (portrait) | [landscape](screens/after/screens/phone-landscape-title.png), [portrait](screens/after/screens/phone-portrait-title.png) | [landscape](screens/g29/after/screens/phone-landscape-title.png), [portrait](screens/g29/after/screens/phone-portrait-title.png), [desktop](screens/g29/after/review/01-title.png) | COCO is drawn in the band between the top icons and the title text on every screen (a view offset; the camera still looks at COCO). The badge line wraps only between "Model of COCO's ROS 2 stack ·" and "Nav2 · Gazebo Harmonic · MoveIt ⓘ". |
+| 3. Tagline | "a ROS 2 robot you can drive in your browser" | "Drive COCO, a ROS 2 robot, modelled in your browser." | Gautham's wording, 2026-10-27. |
+| 4. Mode card chips cramped | [02](screens/after/review/02-modes.png) | [02](screens/g29/after/review/02-modes.png) | Fetch Rush's card is as wide as Fetch by colour's. "PLAY · 2 ORDERS" and "FULL SHIFT · 3" are one line each; "RACE NAV2 · REAL ROS 2 RECORDING" is one line on both cards. |
+| 5. Real-phone HUD crowding (status pill vs pause) | [1 min](screens/g28/real_phone/close-fetchrush-game-1-minute.png) | **pending the real phone** | Not changed in code beyond denser backings; to be looked at on the device. |
+| 6. Results on the phone: bag button cut, STOP over the results, HUD text through, legend line that is not drawn | [real phone](screens/g28/real_phone/close-fetchrush-game-end-results.png) | [EMULATED phone](screens/g29/after/results/phone-landscape-results-colour-red.png); real phone pending | STOP and the whole HUD are hidden while the results are up; the backdrop is 94 % opaque (no HUD text shows); "SAVE AS ROSBAG2 (MCAP)" is one line. The inset's legend lists only lines that are drawn: a drive under 0.5 m is said in metres ("COCO drove 0.1 m (too short to draw)") instead of an orange key (`test/g29_inset_legend.test.tsx`). The drive is drawn over the plan, thinner. |
+| 7. Tactical: fences hide the maze, clipped labels, haze | [05](screens/after/review/05-play-tactical.png) | [05](screens/g29/after/review/05-play-tactical.png) | A 24° lens from higher up frames the same ground, nearly straight down; the world is drawn at 30 % of its height while tactical (a cut-away; presentation only); no headlight cone (the haze). Region names now start inside their zone ("FORKLIFT LANES" whole). In this frame the start of "WORKSHOP MAZE" is under the joystick hint (the HUD over the floor, not a wall). |
+| 8. Plan line through the HUD | [03](screens/after/review/03-play-chase.png) | [03](screens/g29/after/review/03-play-chase.png) | The plan, the planner ghost's line and its chevrons fade out from COCO's own floor depth toward a camera behind it: the route behind COCO no longer runs through the gauge and the telemetry strip. Gauge, strip and status pill have denser backings. |
+| 9. "COCO Lab" wordmark clipped; Research's Level select overflowing | [08](screens/after/review/08-research.png) | [08](screens/g29/after/review/08-research.png) | The header keeps a 12 px gutter; the filter selects fit their column. (Not asked and unchanged: the phone-landscape Compare rows under the Replay bar, and "…final phase was succeeded.") |
+
+Checks on this build: `chase_hud_check` 4 profiles × 20 poses + SIM, 0 failed; `saved_view_check` ok;
+`rosout_room_check` ok; `fetch_colour_check --phone` ok, results fit (412 / 412 px)
+([`data/g29/looks/`](data/g29/looks/), [`data/g29/sim/`](data/g29/sim/)).
+
 ## 3. Real phone — **REAL DEVICE** (Nothing Phone (1), status bars redacted)
 
 Before: G2.0, Fetch Rush seed 1 (loading dock), 1 minute ([`phone_free.json`](screens/before/real_phone/phone_free.json)).
@@ -98,6 +123,8 @@ shots were captured and checked earlier in G2.8. They were not re-captured here.
 - [`screens/g28/real_phone/`](screens/g28/real_phone/): **REAL DEVICE** G2.8 shots (table above).
 
 ## Looks wrong / for Gautham to judge
+
+*(G2.8's list, kept as written. G2.9's answer to each item is in the G2.9 section above.)*
 
 1. **SIM background is light grey, not dark.** G2_PROMPT §2.1 asks for "a dark neutral background". The SIM shots (desktop 04, g22, real phone) show a light grey floor/background. Against it:
    - the joystick ring and the "WASD / ARROWS" / "DRAG TO DRIVE" label are hard to read (desktop 04, phone SIM);
