@@ -1,94 +1,94 @@
 {
- "about": "Race Nav2: recorded Gazebo + Nav2 runs of Fetch Rush and Fetch by colour rounds (tools/g2/record_ghosts.sh, tools/g2/round_gate.sh); driving legs only, no grasp; Gazebo actors parked; never hardware",
+ "about": "Race Nav2: recorded Gazebo + Nav2 runs of Fetch Rush and Fetch by colour rounds (tools/g2/record_ghosts.sh, tools/g2/round_gate.sh); driving legs only, no grasp; Gazebo actors parked (rules 4 recordings) or, G2.9, moving under a scenario rule that stops them for COCO (rules 5 and colour recordings); each file says which; never hardware",
  "evidence": "STACK",
  "ghosts": [
   {
    "all_succeeded": true,
-   "bytes": 11859,
+   "bytes": 11752,
    "colour": "blue",
-   "driving_s": 36.58,
+   "driving_s": 35.86,
    "file": "g2_colour_blue.json",
    "game": "fetch_colour",
    "recorded_rules": 2,
    "rules": 1,
-   "sha256": "23a0d7e50e7060fd121ea94d3542d064721a7b4b397c82b21e5f767adcd9eca1"
+   "sha256": "7a390e31e001b4631c2f794721b225e5d397b9c3e1e98544eb38a6ae4cdbb63a"
   },
   {
    "all_succeeded": true,
-   "bytes": 12863,
+   "bytes": 13019,
    "colour": "green",
-   "driving_s": 40.54,
+   "driving_s": 40.5,
    "file": "g2_colour_green.json",
    "game": "fetch_colour",
    "recorded_rules": 2,
    "rules": 1,
-   "sha256": "f574bcd45c3d0dda0acc1c271ce7734c7694f54bde40c18366842a2cf4f3d87f"
+   "sha256": "99e51fff442d29ac6beb52216caa2666cede0d1fb76f7b5f7c5e237549255112"
   },
   {
    "all_succeeded": true,
-   "bytes": 13845,
+   "bytes": 13290,
    "colour": "red",
-   "driving_s": 43.8,
+   "driving_s": 43.36,
    "file": "g2_colour_red.json",
    "game": "fetch_colour",
    "recorded_rules": 2,
    "rules": 1,
-   "sha256": "c8f159c93ab7abb505f812c2c6932379dbb82f75d07bd582b0712684839f2861"
+   "sha256": "bffdfbb6efb7421679b988861654ed84ba96a0bae646fd159843b75d26309393"
   },
   {
    "all_succeeded": true,
-   "bytes": 12345,
+   "bytes": 11395,
    "colour": "yellow",
-   "driving_s": 38.53,
+   "driving_s": 35.88,
    "file": "g2_colour_yellow.json",
    "game": "fetch_colour",
    "recorded_rules": 2,
    "rules": 1,
-   "sha256": "80bdc5390e338325434a5d95b767d5c0e0ab8b1f5510ea628a5be9b6cb514e2c"
+   "sha256": "19b5effaca215952a02028aefa600442f70f9b0223eb53cac87bc15e05fbc674"
   },
   {
    "all_succeeded": true,
-   "bytes": 11859,
+   "bytes": 11752,
    "colour": "blue",
-   "driving_s": 36.58,
+   "driving_s": 35.86,
    "file": "g2_colour_blue.json",
    "game": "fetch_colour",
    "recorded_rules": 2,
    "rules": 2,
-   "sha256": "23a0d7e50e7060fd121ea94d3542d064721a7b4b397c82b21e5f767adcd9eca1"
+   "sha256": "7a390e31e001b4631c2f794721b225e5d397b9c3e1e98544eb38a6ae4cdbb63a"
   },
   {
    "all_succeeded": true,
-   "bytes": 12863,
+   "bytes": 13019,
    "colour": "green",
-   "driving_s": 40.54,
+   "driving_s": 40.5,
    "file": "g2_colour_green.json",
    "game": "fetch_colour",
    "recorded_rules": 2,
    "rules": 2,
-   "sha256": "f574bcd45c3d0dda0acc1c271ce7734c7694f54bde40c18366842a2cf4f3d87f"
+   "sha256": "99e51fff442d29ac6beb52216caa2666cede0d1fb76f7b5f7c5e237549255112"
   },
   {
    "all_succeeded": true,
-   "bytes": 13845,
+   "bytes": 13290,
    "colour": "red",
-   "driving_s": 43.8,
+   "driving_s": 43.36,
    "file": "g2_colour_red.json",
    "game": "fetch_colour",
    "recorded_rules": 2,
    "rules": 2,
-   "sha256": "c8f159c93ab7abb505f812c2c6932379dbb82f75d07bd582b0712684839f2861"
+   "sha256": "bffdfbb6efb7421679b988861654ed84ba96a0bae646fd159843b75d26309393"
   },
   {
    "all_succeeded": true,
-   "bytes": 12345,
+   "bytes": 11395,
    "colour": "yellow",
-   "driving_s": 38.53,
+   "driving_s": 35.88,
    "file": "g2_colour_yellow.json",
    "game": "fetch_colour",
    "recorded_rules": 2,
    "rules": 2,
-   "sha256": "80bdc5390e338325434a5d95b767d5c0e0ab8b1f5510ea628a5be9b6cb514e2c"
+   "sha256": "19b5effaca215952a02028aefa600442f70f9b0223eb53cac87bc15e05fbc674"
   },
   {
    "all_succeeded": true,
@@ -104,15 +104,15 @@
   },
   {
    "all_succeeded": true,
-   "bytes": 53899,
-   "driving_s": 186.74,
+   "bytes": 51094,
+   "driving_s": 176.58,
    "file": "r5_phone_seed1.json",
    "mode": "phone",
    "recorded_rules": 5,
    "recorded_seed": 1,
    "rules": 4,
    "seed": 1,
-   "sha256": "1d5ad8bde8a160622a812a6f0d6cef122fa80876840df337c2a7f45cdd346b7f"
+   "sha256": "abce0a6bd123d7f367926de44d692cf18faa2f1ff23bf6a015dd77db5077f5ba"
   },
   {
    "all_succeeded": true,
@@ -128,15 +128,15 @@
   },
   {
    "all_succeeded": true,
-   "bytes": 49128,
-   "driving_s": 169.49,
+   "bytes": 50877,
+   "driving_s": 175.17,
    "file": "r5_phone_seed2.json",
    "mode": "phone",
    "recorded_rules": 5,
    "recorded_seed": 2,
    "rules": 4,
    "seed": 2,
-   "sha256": "8565f08f67b0ff1f86c4c87fdfbc76380c73afafcc28c9360fb40d6284f930a5"
+   "sha256": "4a711ef82a3466ff70b7edc5e379011d2ce45f82b6e4c1e28188f3337ae1fd7c"
   },
   {
    "all_succeeded": true,
@@ -152,15 +152,15 @@
   },
   {
    "all_succeeded": true,
-   "bytes": 49615,
-   "driving_s": 171.74,
+   "bytes": 47518,
+   "driving_s": 170.44,
    "file": "r5_phone_seed3.json",
    "mode": "phone",
    "recorded_rules": 5,
    "recorded_seed": 3,
    "rules": 4,
    "seed": 3,
-   "sha256": "94578ebddf9dbf948c5bd09cbbb24ae3d3905876276703d4285e5cde2da3b786"
+   "sha256": "fe00d82b753f8200bffe67bbb5f04a59ab4047de3dfe90e35969296c22c0d3dc"
   },
   {
    "all_succeeded": true,
@@ -176,15 +176,15 @@
   },
   {
    "all_succeeded": true,
-   "bytes": 49128,
-   "driving_s": 169.49,
+   "bytes": 50877,
+   "driving_s": 175.17,
    "file": "r5_phone_seed2.json",
    "mode": "phone",
    "recorded_rules": 5,
    "recorded_seed": 2,
    "rules": 4,
    "seed": 4,
-   "sha256": "8565f08f67b0ff1f86c4c87fdfbc76380c73afafcc28c9360fb40d6284f930a5"
+   "sha256": "4a711ef82a3466ff70b7edc5e379011d2ce45f82b6e4c1e28188f3337ae1fd7c"
   },
   {
    "all_succeeded": true,
@@ -200,15 +200,15 @@
   },
   {
    "all_succeeded": true,
-   "bytes": 49128,
-   "driving_s": 169.49,
+   "bytes": 50877,
+   "driving_s": 175.17,
    "file": "r5_phone_seed2.json",
    "mode": "phone",
    "recorded_rules": 5,
    "recorded_seed": 2,
    "rules": 4,
    "seed": 5,
-   "sha256": "8565f08f67b0ff1f86c4c87fdfbc76380c73afafcc28c9360fb40d6284f930a5"
+   "sha256": "4a711ef82a3466ff70b7edc5e379011d2ce45f82b6e4c1e28188f3337ae1fd7c"
   },
   {
    "all_succeeded": true,
@@ -224,27 +224,27 @@
   },
   {
    "all_succeeded": true,
-   "bytes": 56338,
-   "driving_s": 195.2,
+   "bytes": 51825,
+   "driving_s": 185.72,
    "file": "r5_phone_seed6.json",
    "mode": "phone",
    "recorded_rules": 5,
    "recorded_seed": 6,
    "rules": 4,
    "seed": 6,
-   "sha256": "aa744080cb771081c68e2b943f2c2b0d41f618ac987a25a4a666b4a342575f07"
+   "sha256": "c867d3c8b7264492871a8c06599414c3754cfedef9af6401fb9b7dd3dbd67305"
   },
   {
    "all_succeeded": true,
-   "bytes": 53899,
-   "driving_s": 186.74,
+   "bytes": 51094,
+   "driving_s": 176.58,
    "file": "r5_phone_seed1.json",
    "mode": "phone",
    "recorded_rules": 5,
    "recorded_seed": 1,
    "rules": 5,
    "seed": 1,
-   "sha256": "1d5ad8bde8a160622a812a6f0d6cef122fa80876840df337c2a7f45cdd346b7f"
+   "sha256": "abce0a6bd123d7f367926de44d692cf18faa2f1ff23bf6a015dd77db5077f5ba"
   },
   {
    "all_succeeded": true,
@@ -260,15 +260,15 @@
   },
   {
    "all_succeeded": true,
-   "bytes": 49128,
-   "driving_s": 169.49,
+   "bytes": 50877,
+   "driving_s": 175.17,
    "file": "r5_phone_seed2.json",
    "mode": "phone",
    "recorded_rules": 5,
    "recorded_seed": 2,
    "rules": 5,
    "seed": 2,
-   "sha256": "8565f08f67b0ff1f86c4c87fdfbc76380c73afafcc28c9360fb40d6284f930a5"
+   "sha256": "4a711ef82a3466ff70b7edc5e379011d2ce45f82b6e4c1e28188f3337ae1fd7c"
   },
   {
    "all_succeeded": true,
@@ -284,15 +284,15 @@
   },
   {
    "all_succeeded": true,
-   "bytes": 49615,
-   "driving_s": 171.74,
+   "bytes": 47518,
+   "driving_s": 170.44,
    "file": "r5_phone_seed3.json",
    "mode": "phone",
    "recorded_rules": 5,
    "recorded_seed": 3,
    "rules": 5,
    "seed": 3,
-   "sha256": "94578ebddf9dbf948c5bd09cbbb24ae3d3905876276703d4285e5cde2da3b786"
+   "sha256": "fe00d82b753f8200bffe67bbb5f04a59ab4047de3dfe90e35969296c22c0d3dc"
   },
   {
    "all_succeeded": true,
@@ -308,15 +308,15 @@
   },
   {
    "all_succeeded": true,
-   "bytes": 49128,
-   "driving_s": 169.49,
+   "bytes": 50877,
+   "driving_s": 175.17,
    "file": "r5_phone_seed2.json",
    "mode": "phone",
    "recorded_rules": 5,
    "recorded_seed": 2,
    "rules": 5,
    "seed": 4,
-   "sha256": "8565f08f67b0ff1f86c4c87fdfbc76380c73afafcc28c9360fb40d6284f930a5"
+   "sha256": "4a711ef82a3466ff70b7edc5e379011d2ce45f82b6e4c1e28188f3337ae1fd7c"
   },
   {
    "all_succeeded": true,
@@ -332,15 +332,15 @@
   },
   {
    "all_succeeded": true,
-   "bytes": 49128,
-   "driving_s": 169.49,
+   "bytes": 50877,
+   "driving_s": 175.17,
    "file": "r5_phone_seed2.json",
    "mode": "phone",
    "recorded_rules": 5,
    "recorded_seed": 2,
    "rules": 5,
    "seed": 5,
-   "sha256": "8565f08f67b0ff1f86c4c87fdfbc76380c73afafcc28c9360fb40d6284f930a5"
+   "sha256": "4a711ef82a3466ff70b7edc5e379011d2ce45f82b6e4c1e28188f3337ae1fd7c"
   },
   {
    "all_succeeded": true,
@@ -356,15 +356,15 @@
   },
   {
    "all_succeeded": true,
-   "bytes": 56338,
-   "driving_s": 195.2,
+   "bytes": 51825,
+   "driving_s": 185.72,
    "file": "r5_phone_seed6.json",
    "mode": "phone",
    "recorded_rules": 5,
    "recorded_seed": 6,
    "rules": 5,
    "seed": 6,
-   "sha256": "aa744080cb771081c68e2b943f2c2b0d41f618ac987a25a4a666b4a342575f07"
+   "sha256": "c867d3c8b7264492871a8c06599414c3754cfedef9af6401fb9b7dd3dbd67305"
   },
   {
    "all_succeeded": true,

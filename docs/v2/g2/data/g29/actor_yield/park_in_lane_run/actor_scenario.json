@@ -1,0 +1,49 @@
+{
+ "evidence_class": "STACK (Gazebo + Nav2, headless); the actors follow a SCENARIO RULE, not physics",
+ "world": "coco_depot_v1",
+ "rule": {
+  "driver": "tools/g2/actor_scenario.py",
+  "id": "actors_yield_to_coco",
+  "kind": "SCENARIO RULE (not physics)",
+  "label": "Scenario rule (G2.9): the actors stop for COCO, as Fetch Rush rules 5 in the model",
+  "model_rule": "coco_lab.games.DepotActors.world_step (actors.yield=1)",
+  "robot_radius_m": 0.22,
+  "rule": "each actor keeps its own clock; it holds a step when its box at the next pose would be within robot_radius_m + stop_margin_m of COCO's centre (Gazebo truth) and closer than now",
+  "step_s": 0.05,
+  "stop_margin_m": 0.3
+ },
+ "sim_t0": 44.4,
+ "steps": 3829,
+ "simulated_s": 191.45,
+ "actors": {
+  "forklift_east_west": {
+   "holds": 4,
+   "held_steps": 1933,
+   "held_s": 96.65,
+   "min_clearance_m": 0.235
+  },
+  "forklift_north_south": {
+   "holds": 0,
+   "held_steps": 0,
+   "held_s": 0.0,
+   "min_clearance_m": 5.174
+  },
+  "walker_aisle_gap": {
+   "holds": 0,
+   "held_steps": 0,
+   "held_s": 0.0,
+   "min_clearance_m": 14.067
+  },
+  "walker_dock": {
+   "holds": 2,
+   "held_steps": 3095,
+   "held_s": 154.75,
+   "min_clearance_m": 0.106
+  }
+ },
+ "overlap_steps": 0,
+ "set_pose_vector_calls": 3798,
+ "set_pose_vector_failed": 1,
+ "last_step_sent": 3829,
+ "max_steps_behind": 1
+}

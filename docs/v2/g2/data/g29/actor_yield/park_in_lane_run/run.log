@@ -1,0 +1,13 @@
+m6f8: sim publishing /scan after 6s (19:04:10 UTC)
+m6f8: teleport coco to (42.25, 8.45, 5.890486225480862) (19:04:14 UTC)
+data: true
+
+m6f8: odometry calibration: re-spawning diff_drive_controller with /home/gautham/coco_lab_runs/g2/gen_d5/coco_depot_v1/gazebo/diff_drive_calibration.yaml (wheel_separation_multiplier 1.323) (19:04:20 UTC)
+m6f8: odometry calibration loaded: wheel_separation_multiplier 1.323 (19:04:30 UTC)
+m6f8: all Nav2 lifecycle nodes active after 24s (19:04:54 UTC)
+m6f8: AMCL publishing a pose after 2s (19:04:56 UTC)
+m6f8: actor scenario (scenario rule: the actors stop for COCO) started (19:05:21 UTC)
+{"id": "park_on_walker_dock_path", "status": "SUCCEEDED", "error_code": 0, "sim_s": 116.94, "driven_m": 6.835, "truth_to_goal_m": 0.362}
+{"held_s": 60.11, "truth": [39.64281569986076, 12.057999324072272, -2.866810885558284]}
+m6f8: goals done (rc 0) (19:09:02 UTC)
+m6f8: cleaned up (0 left) (19:09:32 UTC)

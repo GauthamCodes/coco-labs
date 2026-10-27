@@ -35,8 +35,10 @@ def actors_note(run):
     with open(path, encoding='utf-8') as f:
         sc = json.load(f)
     held = sum(a['holds'] for a in sc['actors'].values())
-    return (f'Gazebo\'s actors moved on their schedules and stopped for COCO by a scenario rule (Fetch Rush rules 5\'s; '
-            f'not physics): {held} stop(s) in this run')
+    rule = ('Gazebo\'s actors moved on their schedules under a scenario rule that stops them for COCO '
+            '(Fetch Rush rules 5\'s; not physics)')
+    return rule + (f': they stopped {held} time(s) in this run' if held else
+                   ': in this run none came close enough to stop')
 
 
 def sha(p):

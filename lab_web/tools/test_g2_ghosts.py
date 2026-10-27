@@ -2,7 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 """
 G2.6: Race Nav2's ghosts (lab_web/public/stack/ghosts/) say what they are: recorded Gazebo +
-Nav2 runs (STACK), with what they are not (no grasp, actors parked, never hardware) and where
+Nav2 runs (STACK), with what they are not (no grasp, actors parked or, G2.9, under a scenario rule, never
+hardware) and where
 they came from (the bag's sha256); the index is current, its checksums match, and a seed is
 offered only for a recording whose every leg succeeded. G2: Fetch by colour recordings too
 (``game``, ``colour``), and rules 5's own recordings of the phone rounds.
@@ -30,7 +31,9 @@ def test_every_ghost_says_what_it_is():
         assert hashlib.sha256(raw).hexdigest() == e['sha256'] and len(raw) == e['bytes']
         g = json.loads(raw)
         assert g['evidence'] == 'STACK' and g['schema'] == 'coco_lab.stack_ghost'
-        assert any('no grasp' in n for n in g['not']) and any('parked' in n for n in g['not']) and any('hardware' in n for n in g['not'])
+        assert any('no grasp' in n for n in g['not']) and any('hardware' in n for n in g['not'])
+        # what Gazebo's actors did: parked (M6F.8's setup) or, G2.9, moving under the scenario rule
+        assert any('parked' in n or 'scenario rule' in n for n in g['not'])
         assert g['source']['bag_sha256'] and all(len(v) == 64 for v in g['source']['bag_sha256'].values())
         assert e['all_succeeded'] == all(L['status'] == 'SUCCEEDED' for L in g['legs'])
         # the round it recorded: a Fetch Rush rules 4 or 5 round, or (G2) a Fetch by colour round; the

@@ -70,7 +70,8 @@ def build():
     return {'schema': 'coco_lab.stack_ghosts', 'version': 1, 'evidence': 'STACK',
             'about': 'Race Nav2: recorded Gazebo + Nav2 runs of Fetch Rush and Fetch by colour rounds '
                      '(tools/g2/record_ghosts.sh, tools/g2/round_gate.sh); driving legs only, no grasp; '
-                     'Gazebo actors parked; never hardware',
+                     'Gazebo actors parked (rules 4 recordings) or, G2.9, moving under a scenario rule that '
+                     'stops them for COCO (rules 5 and colour recordings); each file says which; never hardware',
             'ghosts': sorted(entries, key=order)}
 
 
