@@ -4,6 +4,9 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
 
 ## Now
 
+- **State (2026-10-27, G2.9 "Polish before deploy") — IN PROGRESS.** Gautham's review of PR #28 asked for: (1) the
+  touch-to-motion > 1 s blocker, (2) an RViz-style SIM view, (3) the rest of "Looks wrong", (4) Gazebo actor yield,
+  odometry calibration and AMCL re-measured with the round gate re-run 5/5. Commits `[G2.9]`, one per item. Never merge or deploy.
 - **State (2026-10-27): G2 · Sim Identity CLOSED, PR #28 ready for review (not merged, not deployed).**
   G2.0–G2.8 done; Rules 5, Fetch by colour, the no-WebGL hotfix and the per-round Gazebo gate (every
   round 5/5 on derivation 4) folded in. Final suites green ([`data/g28/close/`](data/g28/close/)); real
@@ -139,6 +142,18 @@ Recorded in `docs/STATUS.md`'s plan-change log.
 3. **Heavy saved settings on phones:** never override silently; if fps stays under 55 for
    10 s, a one-tap "Switch to recommended settings" toast.
 4. **Old phone screenshots in git history** (status-bar icons only) accepted; no history rewrite.
+
+## Gautham's decisions, 2026-10-27 (G2.9, after reviewing PR #28)
+
+Recorded in `docs/STATUS.md`'s plan-change log.
+
+1. **Keep Regulated Pure Pursuit** in the generated Nav2 params for driving recordings. A precise grasp
+   approach is later M6 work.
+2. **Gazebo actors yield to COCO like Rules 5**, scripted in the generated world and labelled as a scenario
+   rule. Re-run the 5/5 round gate after the change.
+3. **Calibrate the odometry turn scale in the generated Gazebo files only** (never COCO's robot repo), to
+   remove the 14.5 % over-rotation. Then re-measure AMCL's residual error and report it.
+4. **Title tagline** becomes "Drive COCO, a ROS 2 robot, modelled in your browser."
 
 ## Gautham's answers in planning, 2026-10-24
 
