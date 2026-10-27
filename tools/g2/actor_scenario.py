@@ -67,6 +67,8 @@ class Scenario:
         from gz.transport13 import Node
         self.node = Node()
         self.set_calls = self.set_failed = 0
+        self.sent_step = 0          # the last step whose poses reached the world
+        self.max_unsent = 0         # the most steps the world was behind the rule (catch-up)
 
     def on_odom(self, msg):
         st = msg.header.stamp
@@ -79,7 +81,7 @@ class Scenario:
         self.log.flush()
 
     def advance(self):
-        """One step: the hold rule for each actor, then their poses set in one call."""
+        """One step of the hold rule for each actor (the poses are sent by :meth:`send`)."""
         with self.lock:
             t, x, y = self.coco
         self.step += 1
@@ -98,23 +100,39 @@ class Scenario:
             self.min_clear[i] = min(self.min_clear[i], clear)
             if clear < 0:
                 self.overlap_steps += 1
+        if self.step % round(1 / self.dt) == 0:
+            poses = [actor_pose(ac, (self.step - self.lag[i]) * self.dt) for i, ac in enumerate(self.actors)]
+            self.write({'sim_t': round(t, 3), 'step': self.step, 'coco': [round(x, 3), round(y, 3)],
+                        'actors': {ac['id']: [round(v, 3) for v in p] for ac, p in zip(self.actors, poses)},
+                        'lag_steps': list(self.lag), 'held': list(self.held)})
+
+    def send(self):
+        """
+        Every actor's pose at the latest step, in one call to the world's set_pose_vector. G2.9: a call
+        that fails is logged and the next one carries the newest poses (the rule kept stepping by
+        simulation time), so a slow or failed call never holds the schedule back (it did: four gate
+        runs stalled behind 1 s timeouts).
+        """
         from gz.msgs10.boolean_pb2 import Boolean
         from gz.msgs10.pose_v_pb2 import Pose_V
-        poses = [actor_pose(ac, (self.step - self.lag[i]) * self.dt) for i, ac in enumerate(self.actors)]
         req = Pose_V()
-        for ac, (px, py, yaw) in zip(self.actors, poses):
+        for i, ac in enumerate(self.actors):
+            px, py, yaw = actor_pose(ac, (self.step - self.lag[i]) * self.dt)
             p = req.pose.add()
             p.name = ac['id']
             p.position.x, p.position.y, p.position.z = px, py, 0.0
             p.orientation.z, p.orientation.w = math.sin(yaw / 2), math.cos(yaw / 2)
-        ok, rep = self.node.request(f'/world/{self.world}/set_pose_vector', req, Pose_V, Boolean, 1000)
+        sent_step = self.step
+        ok, rep = self.node.request(f'/world/{self.world}/set_pose_vector', req, Pose_V, Boolean, 2000)
         self.set_calls += 1
-        if not (ok and rep.data):
+        if ok and rep.data:
+            self.sent_step = sent_step
+        else:
             self.set_failed += 1
-        if self.step % round(1 / self.dt) == 0:
-            self.write({'sim_t': round(t, 3), 'step': self.step, 'coco': [round(x, 3), round(y, 3)],
-                        'actors': {ac['id']: [round(v, 3) for v in p] for ac, p in zip(self.actors, poses)},
-                        'lag_steps': list(self.lag), 'held': list(self.held)})
+            with self.lock:
+                t = self.coco[0]
+            self.write({'event': 'set_pose_vector_failed', 'sim_t': round(t, 3), 'step': sent_step, 'ok': bool(ok)})
+        self.max_unsent = max(self.max_unsent, self.step - self.sent_step)
 
     def summary(self):
         return {'evidence_class': 'STACK (Gazebo + Nav2, headless); the actors follow a SCENARIO RULE, not physics',
@@ -125,7 +143,8 @@ class Scenario:
                                       'min_clearance_m': None if math.isinf(self.min_clear[i]) else round(self.min_clear[i], 3)}
                            for i, ac in enumerate(self.actors)},
                 'overlap_steps': self.overlap_steps, 'set_pose_vector_calls': self.set_calls,
-                'set_pose_vector_failed': self.set_failed}
+                'set_pose_vector_failed': self.set_failed, 'last_step_sent': self.sent_step,
+                'max_steps_behind': self.max_unsent}
 
 
 def main() -> int:
@@ -161,8 +180,12 @@ def main() -> int:
         while not stop.is_set():
             with sc.lock:
                 now = sc.coco[0]
+            stepped = False
             while now - sc.t0 >= (sc.step + 1) * sc.dt and not stop.is_set():
                 sc.advance()
+                stepped = True
+            if stepped:
+                sc.send()
             if a.max_s is not None and sc.step * sc.dt >= a.max_s:
                 break
             if time.monotonic() - sc.heard > WATCHDOG_S:   # the simulator is gone: stop, with a summary

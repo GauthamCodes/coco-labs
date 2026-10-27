@@ -166,6 +166,8 @@ def main():
     ap.add_argument('--initial-pose', action='store_true')
     ap.add_argument('--reset-each', action='store_true')
     ap.add_argument('--world', default='coco_depot_v1')
+    ap.add_argument('--hold-s', type=float, default=0.0,
+                    help='G2.9: after the goals, stand this many simulated seconds (a scenario check)')
     o = ap.parse_args()
     doc = json.load(open(o.goals))
     rclpy.init()
@@ -194,6 +196,11 @@ def main():
             print(json.dumps({k: row.get(k) for k in ('id', 'status', 'error_code', 'sim_s',
                                                       'driven_m', 'truth_to_goal_m')}),
                   flush=True)
+    if o.hold_s > 0:
+        t0 = n.now_s()
+        while n.now_s() - t0 < o.hold_s:
+            n.spin_for(0.5)
+        print(json.dumps({'held_s': round(n.now_s() - t0, 2), 'truth': n.truth}), flush=True)
     n.destroy_node()
     rclpy.shutdown()
 
