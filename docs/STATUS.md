@@ -2,7 +2,7 @@
 
 ## Position
 
-- **G2 · Sim Identity: G2.9 "Polish before deploy" started 2026-10-27** on the same branch (PR #28; Gautham's 2026-10-27 decisions in the plan-change log).
+- **G2 · Sim Identity: G2.9 "Polish before deploy" done 2026-10-28** on the same branch (PR #28, not merged): touch > 1 s fixed (0 on the real phone), RViz-style SIM, the "Looks wrong" list, Gazebo actors yield (scenario rule), odometry calibrated (turn 1.20 → 1.00; AMCL residual unchanged), gate 40/40. [G2 results](v2/g2/G2_RESULTS.md).
 - **G2 · Sim Identity: started 2026-10-24** on `v2/g2-sim-identity` from main `7475896` (worktree `~/coco_labs_ws/worktrees/g2`): GAME | SIM views, telemetry and /rosout, RViz-like panels, a rosbag2 (MCAP) export, a real Gazebo + Nav2 ghost — every ROS-looking element labelled MODEL or STACK. [Prompt](v2/g2/G2_PROMPT.md), [G2 status](v2/g2/G2_STATUS.md).
 - **G1 · Game Look: G1.0–G1.13 done** (G1.0–G1.12 in the cloud 2026-10-22; G1.13 on the laptop 2026-10-23; PR #27 merged into main as `7475896` on 2026-10-23): [results](v2/g1/G1_RESULTS.md), [G1 status](v2/g1/G1_STATUS.md), [laptop prompt](v2/g1/G1_LAPTOP_PROMPT.md). Phone budget 22 m (no budget meets Gautham's rule); AUTO tick-gap target not met (119–141 ms after one fix); real-GPU 60 fps on both GPUs; four-engine determinism 0 mismatches; ROS 12/12; M6F.4 and M6F.8 measured. Open: the Nothing Phone (1) run, Gautham's G1.13 questions.
 - Independent review of `fe9d544` integrated: PR #26 merged as `d8b6d4c` after exact review-head `a81f8f4` passed Lab run [39438277138](https://github.com/GauthamCodes/coco-labs/actions/runs/39438277138); all three jobs green, deploy skipped.

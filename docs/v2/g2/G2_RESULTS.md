@@ -8,8 +8,8 @@ Gazebo, never hardware), MEASURED, EMULATED, UNRESOLVED.
 **Added after the first G2.8 pass (2026-10-25/26):** Fetch Rush **rules 5** (actors yield, AUTO avoids),
 **Fetch by colour** (four rods) with its rules 2, the **no-WebGL hotfix**, the **per-round Gazebo gate** (every
 round 5 of 5, on a new controller: derivation 4), Race Nav2 for Fetch by colour, two /rosout layout fixes
-the real phone found, and a final real-phone check. The touch-to-motion samples over 1 s remain
-**UNRESOLVED** (below).
+the real phone found, and a final real-phone check. The touch-to-motion samples over 1 s remained
+UNRESOLVED at G2.8; **G2.9 found their cause and removed them** (next section).
 
 ## Checkpoints
 
@@ -28,6 +28,64 @@ the real phone found, and a final real-phone check. The touch-to-motion samples 
 | No-WebGL hotfix (owner report 2026-10-24) | done; also PR #29 into main | [`../hotfix_webgl/README.md`](../hotfix_webgl/README.md) |
 | Per-round Gazebo gate (owner 2026-10-25) | **every round 5 of 5** (derivation 4) | [`data/g28/round_gate/README.md`](data/g28/round_gate/README.md) |
 | G2.8 Close | done | this file, [`data/g28/`](data/g28/), [`BEFORE_AFTER.md`](BEFORE_AFTER.md) |
+| **G2.9 Polish before deploy** (Gautham's review, 2026-10-27) | done; see below | [`data/g29/`](data/g29/), [`BEFORE_AFTER.md`](BEFORE_AFTER.md) § G2.9 |
+
+## G2.9 · Polish before deploy (2026-10-27/28)
+
+Gautham's decisions of 2026-10-27 (G2_STATUS, STATUS): keep Regulated Pure Pursuit for driving recordings;
+Gazebo's actors yield to COCO like Rules 5 (a scenario rule); calibrate the odometry turn scale in the
+generated files only, then re-measure AMCL; the tagline "Drive COCO, a ROS 2 robot, modelled in your browser."
+
+### 1. Touch-to-motion over 1 s — cause found, fixed; MEASURED on the real phone
+
+- **Not a G2 regression.** `?perf`'s input → motion timer started on a drive input from rest and stopped at
+  the first frame drawing COCO moved; a push into a wall never moves COCO (game rules), so the timer stayed
+  armed until a later swipe moved it, and that swipe's ~0.13 s response was logged as 0.13 + k × 1.2 s (the
+  soak's swipe period). G1.13's own 10-minute soak on 78a1596 shows it (median 1315 ms), so the bisect range
+  starts with the artefact: there is no commit to bisect to. Laptop check `touch_blocked_check.mjs`: 1269 ms
+  on 78a1596 (FAIL), 129 ms after the fix (PASS). Fix: releasing the input before any motion disarms the
+  timer and is counted (`inputNoMotion`) ([`data/g29/touch/`](data/g29/touch/README.md)).
+- **A real wait, also fixed (pacing only).** An input amended into a tick during its final synchronous
+  stretch missed it and waited in the worker for the next scheduled send (up to 0.1 s). The tick after an
+  amendment is now sent when the one in flight arrives; an input with nothing in flight is sent at once.
+  EMULATED (4× CPU): median 132 → 90 ms; the worker step is the same in G1.13 and G2.9 (62.8 / 63.4 ms).
+- **Real phone, final build `2977762`** ([`data/g29/real_phone/`](data/g29/real_phone/README.md)): **0 samples
+  over 1 s** (313); GAME run medians **142 / 149 / 184 ms** (pooled 166 ms), SIM pooled 134 ms. The ≤ 150 ms
+  target is met in 2 of 3 GAME runs, **not** in the hot 10-minute run (battery 41 → 43 °C); the G1.13 build
+  measured 159 ms in the same session. What remains is the model's step (65–96 ms median on the phone).
+
+### 2–3. SIM in RViz style; "Looks wrong" — done (MODEL; screenshots for Gautham)
+
+Item by item in [`BEFORE_AFTER.md`](BEFORE_AFTER.md) § G2.9. Real phone, final build: **every run 60 fps
+median**, GAME and SIM, SIM with every display on included (min 40–60, 0 WebGL losses, 0 page errors). The
+results screen and the status pill checked on the device ([`screens/g29/real_phone/`](screens/g29/real_phone/)).
+
+### 4. Gazebo: actors yield, odometry calibrated, AMCL re-measured — STACK
+
+`tools/m6/gen_level.py --derivation 5` = derivation 4 (RPP kept) + `gazebo/diff_drive_calibration.yaml` (the
+Stack's controller block, never edited, `wheel_separation_multiplier` 1.10 → 1.323, loaded over the running
+controller by the runner) + `actors.json`'s labelled `scenario_rule` (driven by `tools/g2/actor_scenario.py`
+with Rules 5's hold rule, from Gazebo's truth). Derivation 4 still verifies identical.
+
+| Measure | derivation 4 (40 runs) | derivation 5 (40 runs) |
+| --- | --- | --- |
+| Per-round gate (8 rounds × 5) | 40 / 40 | **40 / 40** |
+| Odometry turn / truth (pooled) | 1.2029 | **0.9986** (per run 0.976–1.013) |
+| Odometry distance / truth | 0.991 | 0.991 |
+| AMCL error at leg end: median / p90 / max | 0.148 / 0.231 / 0.261 m | 0.154 / 0.217 / 0.259 m |
+| AMCL mean offset (dx, dy) | (−0.032, −0.083) m | (−0.025, −0.086) m |
+| Legs' end to goal by truth (median) | 0.351 m | 0.363 m |
+
+- **AMCL's residual did not change** with the odometry corrected: still ~0.15 m at leg ends with a mean
+  offset ~8.6 cm south. (G2.6 had already measured that perfect odometry does not remove it.) UNRESOLVED.
+- **The gate's routes never came near an actor** (0 holds; least clearance 1.19 m). A targeted check parked
+  COCO on `walker_dock`'s path for 60 s: the walker stopped for it 2 times (154.8 s held), the east–west
+  forklift 4 times (96.7 s), **0 overlap steps**, least clearance 0.106 m ([`data/g29/actor_yield/`](data/g29/actor_yield/)).
+- **A driver defect the gate found:** in 5 of the 40 runs the driver stalled behind failed `set_pose_vector`
+  calls (1 s timeouts), so their actors mostly stood still. Fixed (the rule steps by simulation time; one call
+  sends the newest poses). Replacement runs with the fixed driver: **pending** (below when done).
+- Ghosts re-recorded from derivation 5 ([`data/g29/round_gate/`](data/g29/round_gate/)); each says its actors
+  moved under the rule.
 
 ## Decisions applied (G2.1) — MODEL
 

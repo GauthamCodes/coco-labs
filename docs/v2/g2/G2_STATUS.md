@@ -4,19 +4,16 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
 
 ## Now
 
-- **State (2026-10-27, G2.9 "Polish before deploy") — IN PROGRESS.** Gautham's review of PR #28 asked for: (1) the
-  touch-to-motion > 1 s blocker, (2) an RViz-style SIM view, (3) the rest of "Looks wrong", (4) Gazebo actor yield,
-  odometry calibration and AMCL re-measured with the round gate re-run 5/5. Commits `[G2.9]`, one per item. Never merge or deploy.
-  - Item 1 (8e66c6d): not a G2 regression; ?perf's input→motion timer stayed armed through a blocked push (G1.13's
-    own soak, 78a1596, median 1315 ms). Fixed (`driveRelease`); laptop check FAIL on 78a1596, PASS now
-    ([`data/g29/touch/`](data/g29/touch/README.md)). **Real-phone A/B pending: the phone was in a call, then unplugged.**
-  - Item 2 (c3138b6) and item 3 (0a4d3fa): done on the laptop; real-phone 60 fps re-check pending (phone).
-  - Item 4: derivation 5 (e6fb468). Smoke colour red 1/1, turn scale 1.221 → 1.008, 0 overlap steps.
-    **Gate RUNNING since 2026-10-27 15:46 UTC** (pid 1560193): `source docs/v2/g2/data/g29/round_gate/gate_env.sh;
-    tools/g2/round_gate.sh ~/coco_lab_runs/g2/round_gate_d5 5 colour:red colour:green colour:blue colour:yellow phone:2
-    phone:6 phone:1 phone:3` (log `~/coco_lab_runs/g2/round_gate_d5.out`). If the session is cleared: count
-    `round_gate_d5/gate_rounds.jsonl`, re-run only rounds without 5 counted runs. Then `tools/g2/odom_turn_scale.py`
-    and `tools/g2/amcl_error.py` over the d5 runs (d4 baselines in `data/g29/odom/`), ghosts from run 1 per round.
+- **State (2026-10-28): G2.9 "Polish before deploy" done** (PR #28, not merged, not deployed). Results:
+  [`G2_RESULTS.md`](G2_RESULTS.md) § G2.9; looks: [`BEFORE_AFTER.md`](BEFORE_AFTER.md) § G2.9.
+  - Item 1: touch-to-motion > 1 s was a `?perf` artefact present at G1.13 (fixed, 8e66c6d) plus a real ≤ 0.1 s
+    wait for an input amended late into a tick (pacing, 2977762). Real phone, final build: 0 samples over 1 s;
+    GAME medians 142 / 149 / 184 ms (≤ 150 in 2 of 3; not the hot 10-minute run); SIM pooled 134 ms.
+  - Items 2–3: RViz-style SIM (dark, grey map, costmaps off on phones, TF labels with leader lines) and every
+    "Looks wrong" item; real phone 60 fps median in every GAME and SIM run.
+  - Item 4: derivation 5 (actors' scenario rule, odometry multiplier 1.10 → 1.323). Gate 40/40; turn scale
+    1.2029 → 0.9986; AMCL residual unchanged (~0.15 m, ~8.6 cm south); park-in-lane check: actors stop,
+    0 overlap. Driver defect in 5 runs fixed (0aa17e4); replacement runs: see G2_RESULTS.
 - **State (2026-10-27): G2 · Sim Identity CLOSED, PR #28 ready for review (not merged, not deployed).**
   G2.0–G2.8 done; Rules 5, Fetch by colour, the no-WebGL hotfix and the per-round Gazebo gate (every
   round 5/5 on derivation 4) folded in. Final suites green ([`data/g28/close/`](data/g28/close/)); real
@@ -188,6 +185,7 @@ Recorded in `docs/STATUS.md`'s plan-change log.
 | G2.6 Real ROS 2 ghost | done: gate 5/5, 4 ghosts 16/16 legs, Race Nav2 | [`data/g26/DIAGNOSIS.md`](data/g26/DIAGNOSIS.md), [`GATE.md`](data/g26/GATE.md) |
 | G2.7 Looks | done; real phone GAME 60 fps median | [`data/g27/`](data/g27/), [`screens/g27/`](screens/g27/) |
 | G2.8 Close | **done 2026-10-27** | [`G2_RESULTS.md`](G2_RESULTS.md), [`BEFORE_AFTER.md`](BEFORE_AFTER.md), [`data/g28/`](data/g28/) |
+| G2.9 Polish before deploy | **done 2026-10-28** | [`G2_RESULTS.md`](G2_RESULTS.md) § G2.9, [`data/g29/`](data/g29/), [`BEFORE_AFTER.md`](BEFORE_AFTER.md) § G2.9 |
 
 ## Gautham: look at these
 
@@ -213,9 +211,13 @@ Recorded in `docs/STATUS.md`'s plan-change log.
 
 ## Questions for Gautham
 
-1. The marked crossings are the walkers' own lanes, so COCO can never cross there clear of a walker
-   (measured, 0 of 600 start times). Move or widen the crossings, or keep "routes never cross"?
-2. Wheel odometry over-counts rotation by 14.5 % (the robot's ros2_control config, frozen). G2 fixed
-   the Depot in the generated Nav2 params; should the robot config be corrected in a future milestone?
-3. AMCL still ends legs up to 0.28 m off (a residual bias, not explained). Investigate further, or
-   accept with the gate passing?
+1. The marked crossings are the walkers' own paths, so COCO can never cross there clear of a walker
+   (0 of 600 start times). Move or widen them, or keep "routes never cross"? (open since G2.1)
+2. *(Answered 2026-10-27: calibrate in the generated files; done in derivation 5.)*
+3. AMCL's residual (~0.15 m at leg ends, a ~8.6 cm southward mean offset) is **unchanged** by the odometry
+   calibration. Investigate in a later milestone, or accept with the gate passing?
+4. *(Answered 2026-10-27: keep RPP for driving recordings.)*
+5. *(Answered 2026-10-27: Gazebo's actors yield by a scenario rule; done.)*
+6. Touch-to-motion on a hot phone (battery ≥ 41 °C) is 184 ms in GAME; the remaining cost is the model's own
+   step (65–96 ms on the phone). Accept, or make the model's per-tick Python cheaper (results unchanged) in a
+   later milestone?
