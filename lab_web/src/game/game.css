@@ -24,11 +24,13 @@
 /* ---- the joystick (left half, below the top quarter) ---- */
 .g1-joyzone { position: absolute; left: 0; top: 25%; width: 50%; bottom: 0; touch-action: none; }
 .g1-joy { position: absolute; width: calc(130px * var(--g1-s)); height: calc(130px * var(--g1-s)); margin: calc(-65px * var(--g1-s)) 0 0 calc(-65px * var(--g1-s));
-  border-radius: 50%; border: 2px solid rgba(255,255,255,.24); background: rgba(255,255,255,.05); pointer-events: none; }
+  border-radius: 50%; border: 2px solid rgba(255,255,255,.34); background: rgba(14,17,22,.22); box-shadow: 0 0 0 1px rgba(0,0,0,.35), inset 0 0 0 1px rgba(0,0,0,.25); pointer-events: none; }
 .g1-joy.is-ghost { left: calc(40px * var(--g1-s) + 65px * var(--g1-s)); top: auto; bottom: calc(28px * var(--g1-s)); margin: 0 0 0 calc(-65px * var(--g1-s)); opacity: .7; }
-.g1-joy i { position: absolute; left: 29%; top: 29%; width: 42%; height: 42%; border-radius: 50%; background: rgba(255,255,255,.3); box-shadow: 0 0 0 2px rgba(255,255,255,.25); }
+.g1-joy i { position: absolute; left: 29%; top: 29%; width: 42%; height: 42%; border-radius: 50%; background: rgba(255,255,255,.38); box-shadow: 0 0 0 2px rgba(255,255,255,.3), 0 0 0 3px rgba(0,0,0,.3); }
 .g1-joy.is-active i { background: rgba(255,122,26,.8); }
-.g1-joy-hint { text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 8px rgba(0,0,0,.6); position: absolute; left: 50%; top: calc(-22px * var(--g1-s)); transform: translateX(-50%); font: 700 calc(10px * var(--g1-s)) var(--g1-display); color: var(--g1-mute); white-space: nowrap; letter-spacing: .1em; }
+/* G2.9: a dark pill behind the hint, so it reads on a light floor and on SIM's grid alike */
+.g1-joy-hint { position: absolute; left: 50%; top: calc(-24px * var(--g1-s)); transform: translateX(-50%); font: 700 calc(10px * var(--g1-s))/1 var(--g1-display); color: var(--g1-ink); white-space: nowrap; letter-spacing: .1em;
+  background: rgba(14,17,22,.72); padding: calc(4px * var(--g1-s)) calc(8px * var(--g1-s)); border-radius: 999px; }
 
 /* ---- the minimap and the tactical map ---- */
 .g1-minimap { position: absolute; left: calc(12px * var(--g1-s)); top: calc(12px * var(--g1-s)); width: calc(112px * var(--g1-s)); height: calc(112px * var(--g1-s)); padding: 0;
@@ -51,7 +53,9 @@
 .g1-top-right { position: absolute; right: calc(12px * var(--g1-s)); top: calc(12px * var(--g1-s)); display: flex; gap: calc(8px * var(--g1-s)); }
 .g1-icon { width: calc(44px * var(--g1-s)); height: calc(44px * var(--g1-s)); border-radius: calc(12px * var(--g1-s)); display: grid; place-items: center; padding: 0; position: relative; }
 .g1-icon.is-on { box-shadow: 0 0 0 2px var(--g1-sensor) inset; color: var(--g1-sensor); }
-.g1-icon kbd { position: absolute; bottom: -14px; left: 0; right: 0; text-align: center; }
+/* G2.9: key hints on a dark pill (they faded on light floors and SIM's old light map) */
+.g1-icon kbd, .g2-view kbd { position: absolute; bottom: -15px; left: 50%; right: auto; transform: translateX(-50%); width: max-content; text-align: center;
+  color: var(--g1-ink); background: rgba(14,17,22,.72); padding: 1px 5px; border-radius: 4px; line-height: 1.25; }
 .g1-chip { position: absolute; right: calc(12px * var(--g1-s)); top: calc(64px * var(--g1-s)); font: 600 calc(10px * var(--g1-s))/1 var(--g1-ui); color: var(--g1-mute);
   padding: calc(5px * var(--g1-s)) calc(9px * var(--g1-s)); border-radius: 999px; }
 .g1-sheet { position: absolute; right: calc(12px * var(--g1-s)); top: calc(92px * var(--g1-s)); width: min(320px, 60vw); padding: 12px 14px; border-radius: 14px; z-index: 15; font-size: 12px; }
@@ -201,7 +205,6 @@
   padding: 0 calc(12px * var(--g1-s)); border-radius: calc(9px * var(--g1-s)); cursor: pointer; min-width: calc(52px * var(--g1-s)); }
 .g2-view button[aria-pressed="true"] { background: var(--g1-ink); color: #0e1116; }
 .g2-view button[aria-pressed="true"]:last-of-type { background: #7dd3fc; }
-.g2-view kbd { position: absolute; bottom: -14px; left: 0; right: 0; text-align: center; }
 /* SIM: the HUD shrinks to STOP, the joystick, the primary action and the switch (pause and the MODEL chip stay) */
 .g1-play.is-sim .g1-minimap, .g1-play.is-sim .g1-gauge, .g1-play.is-sim .g1-auto, .g1-play.is-sim .g1-cam, .g1-play.is-sim .g1-pill { display: none; }
 /* G2.2: what SIM view is, always on screen there (honesty: a model, drawn RViz-style) */
@@ -344,3 +347,5 @@
   .g1-results .g1-note { font-size: 10px; line-height: 1.25; margin: 0; max-width: 92vw; }
   .g1-results .g2-colour-chips.again a { padding: 3px 9px; }
 }
+/* G2.9: on short (phone) screens the SIM caption keeps to one line; the fixed frame is the map's TF label */
+@media (max-height: 480px) { .g2-sim-frame { display: none; } .g2-sim-caption { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } }

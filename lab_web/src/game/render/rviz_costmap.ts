@@ -119,6 +119,19 @@ export function mapColour(v: number): [number, number, number] {
   return [k, k, k];
 }
 
+/**
+ * G2.9 (Gautham's review): SIM's Map display in grey on RViz's dark background: free a shade
+ * lighter than the background (the map's extent shows), occupied light grey, unknown not drawn
+ * (the background shows through). RGBA 0..255. RViz's own light "map" scheme is `mapColour`.
+ */
+export function simMapColour(v: number): [number, number, number, number] {
+  if (v === 0) return [70, 70, 72, 255];
+  if (v === 100) return [176, 176, 180, 255];
+  if (v < 0) return [0, 0, 0, 0];
+  const k = 70 + Math.floor((106 * v) / 100);
+  return [k, k, k + 2, 255];
+}
+
 /** The Map display: the world's LabMap (codes 0 free, 1 occupied, 2 unknown) as a texture plane. */
 export function mapPlane(map: { width: number; height: number; resolution: number; origin: [number, number] }, occupancy: ArrayLike<number>): THREE.Mesh {
   const { width: w, height: h } = map;
@@ -126,9 +139,9 @@ export function mapPlane(map: { width: number; height: number; resolution: numbe
   for (let row = 0; row < h; row++) {
     for (let c = 0; c < w; c++) {
       const code = occupancy[row * w + c];
-      const [r, g, b] = mapColour(code === 0 ? 0 : code === 1 ? 100 : -1);
+      const [r, g, b, a] = simMapColour(code === 0 ? 0 : code === 1 ? 100 : -1);
       const k = ((h - 1 - row) * w + c) * 4;   // texture row 0 at the origin (a LabMap's row 0 is the top)
-      rgba[k] = r; rgba[k + 1] = g; rgba[k + 2] = b; rgba[k + 3] = 255;
+      rgba[k] = r; rgba[k + 1] = g; rgba[k + 2] = b; rgba[k + 3] = a;
     }
   }
   const tex = new THREE.DataTexture(rgba, w, h, THREE.RGBAFormat, THREE.UnsignedByteType);
@@ -136,7 +149,7 @@ export function mapPlane(map: { width: number; height: number; resolution: numbe
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.needsUpdate = true;
   const W = w * map.resolution, H = h * map.resolution;
-  const m = new THREE.Mesh(new THREE.PlaneGeometry(W, H), new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.7, depthWrite: false, toneMapped: false }));
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(W, H), new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.85, depthWrite: false, toneMapped: false }));
   m.position.set(map.origin[0] + W / 2, map.origin[1] + H / 2, 0.003);
   m.renderOrder = 2;
   m.name = 'sim:map';

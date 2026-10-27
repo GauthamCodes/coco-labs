@@ -86,7 +86,7 @@ export function PlayGame(p: PlayProps) {
   const [latched, setLatched] = useState(false);
   // G2.2: GAME or SIM (the eye's place), and SIM's displays; both remembered in this browser
   const [view, setView] = useState<View>(() => readPref<View>('view', 'game', (v): v is View => v === 'game' || v === 'sim'));
-  const [displays, setDisplays] = useState<Displays>(() => parseDisplays(readPref<unknown>('displays', null, (_v): _v is unknown => true)));
+  const [displays, setDisplays] = useState<Displays>(() => parseDisplays(readPref<unknown>('displays', null, (_v): _v is unknown => true), isPhone()));
   // G2.4: the panels (Displays, ROS 2 graph, Topic echo, Plot), the run's frames and each topic's rate
   const [panels, setPanels] = useState(false);
   const [panelTab, setPanelTab] = useState<PanelId>('displays');
@@ -642,7 +642,7 @@ export function PlayGame(p: PlayProps) {
         <button className={`g1-icon g1-glass ${panels ? 'is-on' : ''}`} data-testid="g2-panels-button" aria-pressed={panels} aria-label="ROS 2 panels (P): displays, graph, topic echo, plot (model)" onClick={() => setPanels((x) => !x)}><Network size={20} />{desktop && <kbd>P</kbd>}</button>
         <ViewSwitch view={view} desktop={!!desktop} onView={(v) => { setView(v); if (v !== view) say(v === 'sim' ? 'SIM: the same moment, as RViz would show it (model)' : 'GAME view'); }} />
       </div>
-      {view === 'sim' && <p className="g2-sim-caption g1-glass" data-testid="g2-sim-caption">SIM · RViz-style view of the browser model <b>MODEL</b> · Fixed Frame: map</p>}
+      {view === 'sim' && <p className="g2-sim-caption g1-glass" data-testid="g2-sim-caption">SIM · RViz-style view of the browser model <b>MODEL</b><span className="g2-sim-frame"> · Fixed Frame: map</span></p>}
       <button className="g1-chip g1-glass" onClick={() => setInfo((x) => !x)} aria-expanded={info} aria-label="What is real here"><Info size={11} style={{ verticalAlign: '-2px' }} /> MODEL · kinematic</button>
       {info && <div className="g1-sheet g1-glass" role="note">
         <h3>WHAT IS REAL HERE</h3>

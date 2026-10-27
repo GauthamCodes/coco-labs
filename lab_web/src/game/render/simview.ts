@@ -59,19 +59,20 @@ export function axesMesh(width = 0.04): THREE.Mesh {
 /** A frame's name, drawn at a constant size on screen (as RViz's TF display labels frames). */
 export function label(text: string, colour = '#ffffff'): THREE.Sprite {
   const c = document.createElement('canvas');
-  const px = 28, g = c.getContext('2d')!;
+  const px = 32, g = c.getContext('2d')!;
   g.font = `600 ${px}px ui-monospace, monospace`;
   c.width = Math.ceil(g.measureText(text).width) + 12; c.height = px + 12;
   g.font = `600 ${px}px ui-monospace, monospace`;
-  g.fillStyle = 'rgba(0,0,0,0.45)'; g.fillRect(0, 0, c.width, c.height);
+  g.fillStyle = 'rgba(16,16,18,0.78)'; g.fillRect(0, 0, c.width, c.height);
   g.fillStyle = colour; g.textBaseline = 'middle'; g.fillText(text, 6, c.height / 2);
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
   const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, sizeAttenuation: false, depthTest: false, transparent: true, toneMapped: false }));
   const h = 0.026;
   s.scale.set(h * c.width / c.height, h, 1);
-  s.center.set(0, 0);
+  s.center.set(0, 0.5);
   s.renderOrder = 20;
+  s.userData.aspect = c.width / c.height;
   return s;
 }
 
@@ -96,6 +97,9 @@ export class SimView {
   private readonly footprint: THREE.LineLoop;
   private readonly goal: THREE.Group;
   private readonly frames = new Map<string, { axes: THREE.Mesh; text: THREE.Sprite }>();
+  /** G2.9: a leader line from each frame to its label (labels are laid out on screen, never overlapping) */
+  private readonly leaders: THREE.LineSegments;
+  private readonly leaderPos = new Float32Array(32 * 6);
   private info: RosInfo | null = null;
   private displays: Displays | null = null;
   /** the arm's URDF link frames in COCO's drawn model (link:<name> nodes), posed by its joint states */
@@ -117,7 +121,7 @@ export class SimView {
       cyl: () => new THREE.CylinderGeometry(0.5, 0.5, 1, 12).rotateX(Math.PI / 2).translate(0, 0, 0.5),
       wedge: () => new THREE.BoxGeometry(1, 1, 1).translate(0, 0, 0.5),
     };
-    const mat = new THREE.MeshLambertMaterial({ color: 0xb8bec8, transparent: true, opacity: 0.32, flatShading: true, depthWrite: false });
+    const mat = new THREE.MeshLambertMaterial({ color: 0xb8bec8, transparent: true, opacity: 0.24, flatShading: true, depthWrite: false });
     this.disposables.push(mat);
     const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), pv = new THREE.Vector3(), sv = new THREE.Vector3(), zAx = new THREE.Vector3(0, 0, 1);
     for (const [shape, parts] of byShape) {
@@ -178,7 +182,13 @@ export class SimView {
     const head = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.25, 12).rotateZ(-Math.PI / 2).translate(0.72, 0, 0.05), arrowMat);
     this.goal.add(shaft, head);
     this.goal.visible = false;
-    this.group.add(this.scan, this.plan, this.local, this.footprint, this.goal);
+    const lg = new THREE.BufferGeometry();
+    lg.setAttribute('position', new THREE.BufferAttribute(this.leaderPos, 3));
+    lg.setDrawRange(0, 0);
+    this.leaders = new THREE.LineSegments(lg, new THREE.LineBasicMaterial({ color: 0xc8c8cc, transparent: true, opacity: 0.75, depthTest: false, depthWrite: false, toneMapped: false }));
+    this.leaders.frustumCulled = false;
+    this.leaders.renderOrder = 19;
+    this.group.add(this.scan, this.plan, this.local, this.footprint, this.goal, this.leaders);
   }
 
   /** The ROS-shaped model's constants (frames, scan) and the world's map (the Map display). */
@@ -224,6 +234,49 @@ export class SimView {
     this.footprint.visible = d.footprint.on; (this.footprint.material as THREE.LineBasicMaterial).color.set(d.footprint.color ?? '#00ff00');
     for (const m of this.goal.children) ((m as THREE.Mesh).material as THREE.MeshBasicMaterial).color.set(d.goal.color ?? '#ff1900');
     for (const { axes, text } of this.frames.values()) { axes.visible = text.visible = d.tf.on; axes.scale.setScalar(d.tf.size ?? 0.3); }
+    this.leaders.visible = d.tf.on;
+  }
+
+  /**
+   * G2.9 (Gautham's review): the TF labels, small and never overlapping. Each label is drawn at
+   * a constant size on screen (`px` CSS pixels tall), placed up and to the right of its frame;
+   * where that spot is taken, it steps down or up in rows until it is free, and a leader line
+   * joins it to its frame. A label with no free row on screen is hidden (its axes stay).
+   * Call after the camera has moved, with the canvas size in CSS pixels. Presentation only.
+   */
+  layoutLabels(camera: THREE.PerspectiveCamera, w: number, h: number, px = 12) {
+    const geom = this.leaders.geometry;
+    if (!this.group.visible || !this.displays?.tf.on || w <= 0 || h <= 0) { geom.setDrawRange(0, 0); return; }
+    const p11 = camera.projectionMatrix.elements[5], k = 2 / (p11 * h);
+    const placed: [number, number, number, number][] = [];
+    const v = new THREE.Vector3();
+    const free = (x: number, y: number, bw: number) => x >= 4 && x + bw <= w - 4 && y - px / 2 >= 4 && y + px / 2 <= h - 4
+      && placed.every(([a, b, c, d]) => x + bw + 3 <= a || x >= c + 3 || y + px / 2 + 2 <= b || y - px / 2 >= d + 2);
+    let n = 0;
+    for (const { axes, text } of this.frames.values()) {
+      if (!axes.visible) { text.visible = false; continue; }
+      v.copy(axes.position).project(camera);
+      if (v.z > 1 || v.z < -1 || Math.abs(v.x) > 1.05 || Math.abs(v.y) > 1.05) { text.visible = false; continue; }
+      const sx = (v.x + 1) * w / 2, sy = (1 - v.y) * h / 2, nz = v.z;
+      const bw = px * (text.userData.aspect as number);
+      // clear of COCO: right of its footprint's on-screen radius at this frame's depth
+      const depth = -axes.position.clone().applyMatrix4(camera.matrixWorldInverse).z;
+      const reach = depth > 0 ? this.radius * p11 * (h / 2) / depth : 0;
+      const x = sx + Math.max(10, Math.min(reach + 8, w / 4)), y0 = sy - 12;
+      let y: number | null = null;
+      for (let r = 0; r < 24 && y === null; r++) {
+        const dy = (r % 2 ? 1 : -1) * Math.ceil(r / 2) * (px + 3);
+        if (free(x, y0 + dy, bw)) y = y0 + dy;
+      }
+      if (y === null) { text.visible = false; continue; }
+      text.visible = true;
+      placed.push([x, y - px / 2, x + bw, y + px / 2]);
+      text.position.copy(v.set((x / w) * 2 - 1, 1 - (y / h) * 2, nz).unproject(camera));
+      text.scale.set(bw * k, px * k, 1);
+      if (n < 32) { this.leaderPos.set([axes.position.x, axes.position.y, axes.position.z, text.position.x, text.position.y, text.position.z], n * 6); n++; }
+    }
+    geom.setDrawRange(0, n * 2);
+    (geom.getAttribute('position') as THREE.BufferAttribute).needsUpdate = true;
   }
 
   /** The model's scan, plan, frames, command and goal at this tick. */

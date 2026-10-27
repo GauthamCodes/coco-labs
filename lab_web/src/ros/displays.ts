@@ -30,9 +30,9 @@ export const DISPLAYS: DisplayDef[] = [
   { id: 'robot', rviz: 'RobotModel', source: '/tf, /tf_static', what: "COCO's URDF model, posed by the model's frames and joint states.", defaults: { on: true, alpha: 1 }, options: ['alpha'] },
   { id: 'tf', rviz: 'TF', source: '/tf, /tf_static', what: 'Every frame as RGB axes (x red, y green, z blue) with its name.', defaults: { on: true, size: 0.3 }, options: ['size'] },
   { id: 'scan', rviz: 'LaserScan', source: '/scan', what: "The model's 480 LiDAR beams as points, coloured by range.", defaults: { on: true, size: 0.05, alpha: 1 }, options: ['size', 'alpha'] },
-  { id: 'map', rviz: 'Map', source: '/map', what: "The saved map (nav_msgs/OccupancyGrid): free, occupied, unknown.", defaults: { on: true, alpha: 0.45 }, options: ['alpha'] },
-  { id: 'global_costmap', rviz: 'Map (Global Costmap)', source: 'model costmap', what: "The model's layered costmap (static, LiDAR obstacles, inflation), in RViz's costmap palette.", defaults: { on: true, alpha: 0.5 }, options: ['alpha'] },
-  { id: 'local_costmap', rviz: 'Map (Local Costmap)', source: 'model costmap', what: 'The same costmap in a 3 × 3 m window that moves with COCO, as Nav2’s local costmap does.', defaults: { on: true, alpha: 0.8 }, options: ['alpha'] },
+  { id: 'map', rviz: 'Map', source: '/map', what: "The saved map (nav_msgs/OccupancyGrid): free, occupied, unknown.", defaults: { on: true, alpha: 0.85 }, options: ['alpha'] },
+  { id: 'global_costmap', rviz: 'Map (Global Costmap)', source: 'model costmap', what: "The model's layered costmap (static, LiDAR obstacles, inflation), in RViz's costmap palette.", defaults: { on: true, alpha: 0.22 }, options: ['alpha'] },
+  { id: 'local_costmap', rviz: 'Map (Local Costmap)', source: 'model costmap', what: 'The same costmap in a 3 × 3 m window that moves with COCO, as Nav2’s local costmap does.', defaults: { on: true, alpha: 0.35 }, options: ['alpha'] },
   { id: 'global_plan', rviz: 'Path (Global Plan)', source: '/plan', what: "The planner's path (nav_msgs/Path).", defaults: { on: true, color: '#19ff00' }, options: ['color'] },
   { id: 'local_plan', rviz: 'Path (Local Plan)', source: '/cmd_vel', what: "Where the current command (v, ω) takes COCO in the next second. The model's waypoint follower samples no candidate trajectories, so none are drawn.", defaults: { on: true, color: '#ff4040' }, options: ['color'] },
   { id: 'footprint', rviz: 'Polygon (Footprint)', source: 'robot radius', what: "COCO's footprint: a circle of the model's robot radius.", defaults: { on: true, color: '#00ff00' }, options: ['color'] },
@@ -41,16 +41,21 @@ export const DISPLAYS: DisplayDef[] = [
 
 export const DISPLAY_IDS = DISPLAYS.map((d) => d.id);
 
-export function defaultDisplays(): Displays {
-  return Object.fromEntries(DISPLAYS.map((d) => [d.id, { ...d.defaults }])) as Displays;
+/** G2.9: the costmaps start off on phones (semi-transparent overlays, toggled in Displays). */
+export const PHONE_OFF: DisplayId[] = ['global_costmap', 'local_costmap'];
+
+export function defaultDisplays(phone = false): Displays {
+  const d = Object.fromEntries(DISPLAYS.map((x) => [x.id, { ...x.defaults }])) as Displays;
+  if (phone) for (const id of PHONE_OFF) d[id].on = false;
+  return d;
 }
 
 const HEX = /^#[0-9a-f]{6}$/i;
 const unit = (v: unknown) => typeof v === 'number' && Number.isFinite(v) && v >= 0 && v <= 1;
 
 /** Read saved displays, keeping only valid fields; anything missing takes its default. */
-export function parseDisplays(raw: unknown): Displays {
-  const out = defaultDisplays();
+export function parseDisplays(raw: unknown, phone = false): Displays {
+  const out = defaultDisplays(phone);
   if (!raw || typeof raw !== 'object') return out;
   for (const d of DISPLAYS) {
     const s = (raw as Record<string, unknown>)[d.id];

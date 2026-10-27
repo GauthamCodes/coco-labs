@@ -32,6 +32,10 @@ export const TIER_PIXELS: Record<Tier, number> = { low: 1, medium: 1.25, high: 2
 export type Led = 'manual' | 'auto' | 'stop' | 'idle';
 /** G2.2: two views of the same moment -- G1's game look, or RViz-style SIM */
 export type View = 'game' | 'sim';
+/** G2.9: RViz's orbit starts this far from COCO (m): close enough that the robot model reads on a phone */
+const SIM_START_DIST = 2.6;
+/** G2.9: SIM lights COCO more (RViz draws a model evenly lit, on its dark background): an intensity, no recompile */
+const SIM_HEMI = 2.1;
 const LED_COLOUR: Record<Led, number> = { manual: 0x34d399, auto: 0x22d3ee, stop: 0xef4444, idle: 0xbfdbfe };
 
 /** Catalog colours as drawn (a page palette, not physics). */
@@ -92,6 +96,7 @@ export class GameRenderer {
   private readonly footprintRing: THREE.Mesh;
   view: View = 'game';
   sim: SimView | null = null;
+  private hemiGame = 1.15;
   private gameCam: CamMode = 'chase';
   private pendingRos: { info: RosInfo; map: { width: number; height: number; resolution: number; origin: [number, number] }; occ: Uint8Array } | null = null;
   private radius = 0.22;
@@ -260,7 +265,8 @@ export class GameRenderer {
     this.scene.fog = new THREE.FogExp2(look.theme === 'lab' ? 0x1a2230 : 0x0b1018, this.fogDensity);
     this.ceiling = look.ceiling;
     this.overheadMeshes = ['box:ceiling', 'box:fixture'].map((n) => this.world!.group.getObjectByName(n)).filter((m): m is THREE.Object3D => !!m);
-    this.hemi.intensity = look.theme === 'lab' ? 1.5 : 1.15;
+    this.hemiGame = look.theme === 'lab' ? 1.5 : 1.15;
+    this.hemi.intensity = this.view === 'sim' ? SIM_HEMI : this.hemiGame;
     (this.cone.material as THREE.MeshBasicMaterial).opacity = look.theme === 'lab' ? 0.18 : 0.5;
     for (const a of look.actors) {
       const g = buildActor(a);
@@ -311,7 +317,7 @@ export class GameRenderer {
   setGameCamera(mode: CamMode) {
     if (this.view !== 'sim') { this.cam.setMode(mode); return; }
     this.gameCam = mode;
-    Object.assign(this.cam.rviz, { yaw: this.pose[2] + Math.PI, pitch: 0.95, dist: 4.5, px: 0, py: 0 });
+    Object.assign(this.cam.rviz, { yaw: this.pose[2] + Math.PI, pitch: 0.95, dist: SIM_START_DIST, px: 0, py: 0 });
   }
 
   setView(view: View) {
@@ -323,10 +329,11 @@ export class GameRenderer {
     if (changed && sim) {
       // RViz's Orbit view, starting behind COCO and looking down at it (the pan reset)
       this.gameCam = this.cam.mode;
-      Object.assign(this.cam.rviz, { yaw: this.pose[2] + Math.PI, pitch: 0.95, dist: 4.5, px: 0, py: 0 });
+      Object.assign(this.cam.rviz, { yaw: this.pose[2] + Math.PI, pitch: 0.95, dist: SIM_START_DIST, px: 0, py: 0 });
       this.cam.setMode('rviz');
     } else if (changed) this.cam.setMode(this.gameCam);
     this.scene.background = new THREE.Color(sim ? SIM_BACKGROUND : 0x0e1116);
+    this.hemi.intensity = sim ? SIM_HEMI : this.hemiGame;
     if (this.world) this.world.group.visible = !sim;
     if (this.sim) this.sim.group.visible = sim;
     this.cues.visible = !sim;
@@ -662,13 +669,16 @@ export class GameRenderer {
     }
     if (this.tier === 'high') { this.key.position.set(x - 5, y - 8, 14); this.key.target.position.set(x, y, 0); }
     this.cam.update(dt, this.pose, this.z, this.speed);
+    if (this.view === 'sim' && this.sim) { this.cam.camera.updateMatrixWorld(); this.sim.layoutLabels(this.cam.camera, this.canvas.clientWidth, this.canvas.clientHeight, Math.round(Math.min(16, Math.max(12, this.canvas.clientHeight * 0.018)))); }
     // a camera above the roof (tactical, a high orbit) sees through it; fog thins with height
     const above = this.cam.camera.position.z > Math.min(this.ceiling, 5.4) - 0.3;
     for (const m of this.overheadMeshes) m.visible = !above;
     // SIM has no fog (RViz has none): its density is 0, never removed (that would recompile every material)
     if (this.scene.fog instanceof THREE.FogExp2) this.scene.fog.density = this.view === 'sim' ? 0 : this.fogDensity * (above ? 0.25 : 1);
     this.renderer.info.reset();
-    if (this.composer) this.composer.render(dt);
+    // G2.9: SIM draws without the high tier's post passes (RViz has none; the output pass's tone
+    // mapping washed SIM's flat colours out): ACES stays on lit materials, as on every tier
+    if (this.composer && this.view !== 'sim') this.composer.render(dt);
     else this.renderer.render(this.scene, this.cam.camera);
     this.stats.draws = this.renderer.info.render.calls;
   }

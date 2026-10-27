@@ -66,4 +66,15 @@ describe('Displays', () => {
     expect(d.grid.color).toBe('#a0a0a4');    // not a hex colour: the default stays
     expect(parseDisplays('garbage')).toEqual(defaultDisplays());
   });
+
+  it('G2.9: on a phone the costmaps start off (overlays, toggled in Displays); a saved choice wins', () => {
+    const d = defaultDisplays(true);
+    expect(d.global_costmap.on).toBe(false);
+    expect(d.local_costmap.on).toBe(false);
+    expect(Object.entries(d).filter(([k]) => !k.endsWith('costmap')).every(([, v]) => v.on)).toBe(true);
+    expect(parseDisplays({ global_costmap: { on: true } }, true).global_costmap.on).toBe(true);
+    // semi-transparent overlays by default
+    expect(d.global_costmap.alpha).toBeLessThan(0.5);
+    expect(d.local_costmap.alpha).toBeLessThan(0.5);
+  });
 });
