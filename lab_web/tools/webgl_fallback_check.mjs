@@ -1,0 +1,53 @@
+// Copyright 2026 Gautham Anil
+// SPDX-License-Identifier: Apache-2.0
+/**
+ * No page goes blank when the browser gives no WebGL (the deployed site did, in Brave, 2026-10-24:
+ * one failed 3D context unmounted the whole app). With WebGL refused (--disable-webgl) the title
+ * keeps its menus and says why the Depot is not drawn; Play explains, says what to try and links to
+ * the pages that work without 3D (Compare, Recordings); Compare runs its comparison and lists the
+ * results with the map replaced by a note; Recordings and About are unaffected. With WebGL working
+ * nothing changes. Exit 1 on any blank page or page error.
+ *
+ *   node tools/webgl_fallback_check.mjs SITE [OUT.json] [SHOT_DIR]
+ *
+ * SHOT_DIR: a screenshot of every page with WebGL refused (<page>.png).
+ */
+import { chromium } from 'playwright';
+import { mkdirSync, writeFileSync } from 'node:fs';
+
+const [site, out, shots] = process.argv.slice(2);
+if (shots) mkdirSync(shots, { recursive: true });
+const expect = {
+  'webgl-refused': { title: 'title-no-3d', play: 'page-error', compare: 'compare-no-3d', research: null, about: null },
+  'webgl-ok': { title: null, play: null, compare: null, research: null, about: null },
+};
+const rows = [];
+for (const [mode, args] of [['webgl-refused', ['--disable-webgl', '--disable-3d-apis']], ['webgl-ok', ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist']]]) {
+  const b = await chromium.launch({ args });
+  for (const [page, q] of [['title', ''], ['play', '?view=play&game=fetch_rush&seed=1'], ['compare', '?view=compare'], ['research', '?view=research'], ['about', '?view=about']]) {
+    const ctx = await b.newContext({ viewport: { width: 1280, height: 800 }, serviceWorkers: 'block' });
+    const p = await ctx.newPage();
+    const errors = [];
+    p.on('pageerror', (e) => errors.push(String(e).slice(0, 160)));
+    await p.goto(site + q, { timeout: 90000 });
+    await p.waitForTimeout(page === 'play' || page === 'compare' ? 12000 : 6000);
+    const text = (await p.locator('body').innerText()).trim();
+    const want = expect[mode][page];
+    const ids = ['page-error', 'title-no-3d', 'compare-no-3d'];
+    const fallbacks = Object.fromEntries(await Promise.all(ids.map(async (id) => [id, await p.locator(`[data-testid="${id}"]`).count()])));
+    // the error page links to what works without 3D; Compare still computes (results ready)
+    const links = await p.locator('[data-testid="no-webgl-links"] a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+    const compareReady = page === 'compare' ? await p.locator('[data-testid="compare-workspace"]').getAttribute('data-ready') : null;
+    const extra = want === 'page-error' ? links.some((h) => h.endsWith('?view=compare')) && links.some((h) => h.endsWith('?view=research'))
+      : page === 'compare' ? compareReady === 'true' : true;
+    const ok = text.length > 0 && errors.length === 0 && extra && (want ? fallbacks[want] > 0 : ids.every((id) => fallbacks[id] === 0));
+    if (shots && mode === 'webgl-refused') await p.screenshot({ path: `${shots}/${page}.png` });
+    rows.push({ mode, page, ok, blank: text.length === 0, fallbacks, links, compareReady, errors });
+    console.log(mode, page, ok ? 'ok' : 'FAILED', JSON.stringify(fallbacks), errors.join(' | '));
+    await ctx.close();
+  }
+  await b.close();
+}
+const passed = rows.every((r) => r.ok);
+if (out) writeFileSync(out, JSON.stringify({ site, passed, rows }, null, 1) + '\n');
+process.exitCode = passed ? 0 : 1;

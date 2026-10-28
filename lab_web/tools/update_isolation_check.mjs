@@ -67,7 +67,11 @@ try {
   writeFileSync(join(root, PROBE), '"B"');
   const b = buildServiceWorker(root, template); report.versionB = b.version;
   await p.evaluate(async () => { await (await navigator.serviceWorker.getRegistration()).update(); });
-  await p.waitForFunction(async (version) => { const w = navigator.serviceWorker.controller; if (!w) return false; return await new Promise((r) => { const c = new MessageChannel(); c.port1.onmessage = (e) => r(e.data === version); w.postMessage('static-version', [c.port2]); }); }, b.version, { timeout: 120000 });
+  // G2.9: a poll whose message reaches the old worker as it stops (redundant) gets no reply; awaited
+  // without a limit, that one poll hung forever and the wait timed out however long it was (CI's Lab
+  // runs since 2fafce1, and reproduced on one core: B installed and activated in 6 s). A poll with no
+  // reply in 1 s now counts as "not yet", and the next one asks the new controller.
+  await p.waitForFunction(async (version) => { const w = navigator.serviceWorker.controller; if (!w) return false; return await new Promise((r) => { const c = new MessageChannel(); const t = setTimeout(() => r(false), 1000); c.port1.onmessage = (e) => { clearTimeout(t); r(e.data === version); }; w.postMessage('static-version', [c.port2]); }); }, b.version, { timeout: 120000 });
   report.observations = [];
   for (let i = 0; i < 20; i++) { report.observations.push(await snapshot()); await p.waitForTimeout(100); }
   report.openDocumentMixed = report.observations.some((x) => x.documentBuild !== x.controller && (x.asset === 'B' || x.pinnedAsset === 'B'));

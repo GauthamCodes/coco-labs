@@ -1,0 +1,1900 @@
+{
+ "scope": "G1.12: COCO's projected box vs every HUD rectangle, chase camera, 20 poses; G2.2: SIM view's HUD (no overlaps, STOP visible, the run goes on)",
+ "site": "http://127.0.0.1:4184/coco-labs/",
+ "profiles": {
+  "phone-landscape": {
+   "viewport": {
+    "width": 915,
+    "height": 412
+   },
+   "poses": 20,
+   "failed": 0,
+   "errors": [],
+   "rows": [
+    {
+     "k": 0,
+     "hud_clashes": [],
+     "want": [
+      30,
+      0.6,
+      3.141592653589793
+     ],
+     "settle_ms": 3066,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 145,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 1,
+     "hud_clashes": [],
+     "want": [
+      20,
+      0.6,
+      0
+     ],
+     "settle_ms": 1831,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 145,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 2,
+     "hud_clashes": [],
+     "want": [
+      16.2,
+      2,
+      2.356194490192345
+     ],
+     "settle_ms": 1823,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 405,
+      "top": 134,
+      "right": 510,
+      "bottom": 226
+     },
+     "centre_y_fraction": 0.437,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 3,
+     "hud_clashes": [],
+     "want": [
+      26,
+      1.2,
+      1.5707963267948966
+     ],
+     "settle_ms": 1833,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 430,
+      "top": 135,
+      "right": 485,
+      "bottom": 199
+     },
+     "centre_y_fraction": 0.405,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 4,
+     "hud_clashes": [],
+     "want": [
+      28,
+      0.55,
+      0
+     ],
+     "settle_ms": 2134,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 144,
+      "right": 486,
+      "bottom": 208
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 5,
+     "hud_clashes": [],
+     "want": [
+      16.5,
+      17.3,
+      0
+     ],
+     "settle_ms": 2485,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 144,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 6,
+     "hud_clashes": [],
+     "want": [
+      31,
+      21.9,
+      3.141592653589793
+     ],
+     "settle_ms": 3952,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 144,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 7,
+     "hud_clashes": [],
+     "want": [
+      18,
+      16.4,
+      0
+     ],
+     "settle_ms": 5339,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 144,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 8,
+     "hud_clashes": [],
+     "want": [
+      15.2,
+      3,
+      3.141592653589793
+     ],
+     "settle_ms": 4009,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 144,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 9,
+     "hud_clashes": [],
+     "want": [
+      15.5,
+      26.5,
+      3.141592653589793
+     ],
+     "settle_ms": 3729,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 144,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 10,
+     "hud_clashes": [],
+     "want": [
+      37.6,
+      3.6,
+      0
+     ],
+     "settle_ms": 3737,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 144,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 11,
+     "hud_clashes": [],
+     "want": [
+      37,
+      23.65,
+      0
+     ],
+     "settle_ms": 1849,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 145,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 12,
+     "hud_clashes": [],
+     "want": [
+      47.4,
+      16,
+      1.5707963267948966
+     ],
+     "settle_ms": 2151,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 145,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 13,
+     "hud_clashes": [],
+     "want": [
+      45.5,
+      1.5,
+      0
+     ],
+     "settle_ms": 2178,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 145,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 14,
+     "hud_clashes": [],
+     "want": [
+      30,
+      7,
+      0
+     ],
+     "settle_ms": 1846,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 144,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 15,
+     "hud_clashes": [],
+     "want": [
+      24,
+      8,
+      1.5707963267948966
+     ],
+     "settle_ms": 1830,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 145,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 16,
+     "hud_clashes": [],
+     "want": [
+      40,
+      7,
+      3.141592653589793
+     ],
+     "settle_ms": 2134,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 144,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 17,
+     "hud_clashes": [],
+     "want": [
+      35,
+      18,
+      0.7853981633974483
+     ],
+     "settle_ms": 2140,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 405,
+      "top": 134,
+      "right": 510,
+      "bottom": 226
+     },
+     "centre_y_fraction": 0.437,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 18,
+     "hud_clashes": [],
+     "want": [
+      22,
+      7,
+      -1.5707963267948966
+     ],
+     "settle_ms": 1834,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 429,
+      "top": 145,
+      "right": 486,
+      "bottom": 209
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 19,
+     "hud_clashes": [],
+     "want": [
+      44,
+      20,
+      -2.356194490192345
+     ],
+     "settle_ms": 3358,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 405,
+      "top": 134,
+      "right": 510,
+      "bottom": 226
+     },
+     "centre_y_fraction": 0.437,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    }
+   ],
+   "sim": {
+    "clashes": [],
+    "shown": [
+     ".g1-top-right > *",
+     ".g1-top-right > *",
+     ".g1-top-right > *",
+     ".g1-chip",
+     "[data-testid=\"hud-primary\"]",
+     "[data-testid=\"hud-stop\"]",
+     ".g1-joy",
+     "[data-testid=\"g2-telemetry\"]",
+     "[data-testid=\"g2-rosout\"]",
+     ".g1-joy-hint",
+     "[data-testid=\"g2-view\"]",
+     "[data-testid=\"g2-sim-caption\"]"
+    ],
+    "stop_visible": true,
+    "view": "sim",
+    "tick": 486,
+    "kept_ticking": true,
+    "ok": true
+   }
+  },
+  "desktop": {
+   "viewport": {
+    "width": 1280,
+    "height": 720
+   },
+   "poses": 20,
+   "failed": 0,
+   "errors": [],
+   "rows": [
+    {
+     "k": 0,
+     "hud_clashes": [],
+     "want": [
+      30,
+      0.6,
+      3.141592653589793
+     ],
+     "settle_ms": 7886,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 253,
+      "right": 690,
+      "bottom": 364
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 1,
+     "hud_clashes": [],
+     "want": [
+      20,
+      0.6,
+      0
+     ],
+     "settle_ms": 10993,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 253,
+      "right": 690,
+      "bottom": 364
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 2,
+     "hud_clashes": [],
+     "want": [
+      16.2,
+      2,
+      2.356194490192345
+     ],
+     "settle_ms": 8868,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 548,
+      "top": 235,
+      "right": 732,
+      "bottom": 395
+     },
+     "centre_y_fraction": 0.437,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 3,
+     "hud_clashes": [],
+     "want": [
+      26,
+      1.2,
+      1.5707963267948966
+     ],
+     "settle_ms": 7735,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 592,
+      "top": 236,
+      "right": 688,
+      "bottom": 347
+     },
+     "centre_y_fraction": 0.405,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 4,
+     "hud_clashes": [],
+     "want": [
+      28,
+      0.55,
+      0
+     ],
+     "settle_ms": 7892,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 251,
+      "right": 690,
+      "bottom": 364
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 5,
+     "hud_clashes": [],
+     "want": [
+      16.5,
+      17.3,
+      0
+     ],
+     "settle_ms": 13075,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 252,
+      "right": 690,
+      "bottom": 365
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 6,
+     "hud_clashes": [],
+     "want": [
+      31,
+      21.9,
+      3.141592653589793
+     ],
+     "settle_ms": 11573,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 252,
+      "right": 690,
+      "bottom": 365
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 7,
+     "hud_clashes": [],
+     "want": [
+      18,
+      16.4,
+      0
+     ],
+     "settle_ms": 11462,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 253,
+      "right": 690,
+      "bottom": 364
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 8,
+     "hud_clashes": [],
+     "want": [
+      15.2,
+      3,
+      3.141592653589793
+     ],
+     "settle_ms": 8783,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 589,
+      "top": 252,
+      "right": 690,
+      "bottom": 365
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 9,
+     "hud_clashes": [],
+     "want": [
+      15.5,
+      26.5,
+      3.141592653589793
+     ],
+     "settle_ms": 12408,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 252,
+      "right": 690,
+      "bottom": 364
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 10,
+     "hud_clashes": [],
+     "want": [
+      37.6,
+      3.6,
+      0
+     ],
+     "settle_ms": 16082,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 252,
+      "right": 690,
+      "bottom": 364
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 11,
+     "hud_clashes": [],
+     "want": [
+      37,
+      23.65,
+      0
+     ],
+     "settle_ms": 14160,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 253,
+      "right": 690,
+      "bottom": 364
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 12,
+     "hud_clashes": [],
+     "want": [
+      47.4,
+      16,
+      1.5707963267948966
+     ],
+     "settle_ms": 9221,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 253,
+      "right": 690,
+      "bottom": 364
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 13,
+     "hud_clashes": [],
+     "want": [
+      45.5,
+      1.5,
+      0
+     ],
+     "settle_ms": 8902,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 253,
+      "right": 690,
+      "bottom": 364
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 14,
+     "hud_clashes": [],
+     "want": [
+      30,
+      7,
+      0
+     ],
+     "settle_ms": 7502,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 253,
+      "right": 690,
+      "bottom": 365
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 15,
+     "hud_clashes": [],
+     "want": [
+      24,
+      8,
+      1.5707963267948966
+     ],
+     "settle_ms": 7736,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 253,
+      "right": 690,
+      "bottom": 364
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 16,
+     "hud_clashes": [],
+     "want": [
+      40,
+      7,
+      3.141592653589793
+     ],
+     "settle_ms": 9486,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 253,
+      "right": 690,
+      "bottom": 365
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 17,
+     "hud_clashes": [],
+     "want": [
+      35,
+      18,
+      0.7853981633974483
+     ],
+     "settle_ms": 8346,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 548,
+      "top": 235,
+      "right": 732,
+      "bottom": 395
+     },
+     "centre_y_fraction": 0.437,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 18,
+     "hud_clashes": [],
+     "want": [
+      22,
+      7,
+      -1.5707963267948966
+     ],
+     "settle_ms": 7089,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 590,
+      "top": 253,
+      "right": 690,
+      "bottom": 364
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 19,
+     "hud_clashes": [],
+     "want": [
+      44,
+      20,
+      -2.356194490192345
+     ],
+     "settle_ms": 7728,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 548,
+      "top": 235,
+      "right": 732,
+      "bottom": 395
+     },
+     "centre_y_fraction": 0.437,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    }
+   ],
+   "sim": {
+    "clashes": [],
+    "shown": [
+     ".g1-top-right > *",
+     ".g1-top-right > *",
+     ".g1-top-right > *",
+     ".g1-chip",
+     "[data-testid=\"hud-primary\"]",
+     "[data-testid=\"hud-stop\"]",
+     ".g1-joy",
+     "[data-testid=\"g2-telemetry\"]",
+     "[data-testid=\"g2-rosout\"]",
+     "[data-testid=\"g2-gazebo\"]",
+     ".g1-joy-hint",
+     "[data-testid=\"g2-view\"]",
+     "[data-testid=\"g2-sim-caption\"]"
+    ],
+    "stop_visible": true,
+    "view": "sim",
+    "tick": 504,
+    "kept_ticking": true,
+    "ok": true
+   }
+  },
+  "real-phone-tab-710x269": {
+   "viewport": {
+    "width": 710,
+    "height": 269
+   },
+   "poses": 20,
+   "failed": 0,
+   "errors": [],
+   "rows": [
+    {
+     "k": 0,
+     "hud_clashes": [],
+     "want": [
+      30,
+      0.6,
+      3.141592653589793
+     ],
+     "settle_ms": 2135,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 1,
+     "hud_clashes": [],
+     "want": [
+      20,
+      0.6,
+      0
+     ],
+     "settle_ms": 1831,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 2,
+     "hud_clashes": [],
+     "want": [
+      16.2,
+      2,
+      2.356194490192345
+     ],
+     "settle_ms": 1831,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 321,
+      "top": 88,
+      "right": 389,
+      "bottom": 148
+     },
+     "centre_y_fraction": 0.437,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 3,
+     "hud_clashes": [],
+     "want": [
+      26,
+      1.2,
+      1.5707963267948966
+     ],
+     "settle_ms": 1836,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 337,
+      "top": 88,
+      "right": 373,
+      "bottom": 130
+     },
+     "centre_y_fraction": 0.405,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 4,
+     "hud_clashes": [],
+     "want": [
+      28,
+      0.55,
+      0
+     ],
+     "settle_ms": 1859,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.427,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 5,
+     "hud_clashes": [],
+     "want": [
+      16.5,
+      17.3,
+      0
+     ],
+     "settle_ms": 2146,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 6,
+     "hud_clashes": [],
+     "want": [
+      31,
+      21.9,
+      3.141592653589793
+     ],
+     "settle_ms": 3149,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 7,
+     "hud_clashes": [],
+     "want": [
+      18,
+      16.4,
+      0
+     ],
+     "settle_ms": 1841,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 8,
+     "hud_clashes": [],
+     "want": [
+      15.2,
+      3,
+      3.141592653589793
+     ],
+     "settle_ms": 2157,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 9,
+     "hud_clashes": [],
+     "want": [
+      15.5,
+      26.5,
+      3.141592653589793
+     ],
+     "settle_ms": 2163,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 10,
+     "hud_clashes": [],
+     "want": [
+      37.6,
+      3.6,
+      0
+     ],
+     "settle_ms": 2139,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 11,
+     "hud_clashes": [],
+     "want": [
+      37,
+      23.65,
+      0
+     ],
+     "settle_ms": 2137,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 12,
+     "hud_clashes": [],
+     "want": [
+      47.4,
+      16,
+      1.5707963267948966
+     ],
+     "settle_ms": 1833,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 13,
+     "hud_clashes": [],
+     "want": [
+      45.5,
+      1.5,
+      0
+     ],
+     "settle_ms": 2149,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 14,
+     "hud_clashes": [],
+     "want": [
+      30,
+      7,
+      0
+     ],
+     "settle_ms": 1837,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 15,
+     "hud_clashes": [],
+     "want": [
+      24,
+      8,
+      1.5707963267948966
+     ],
+     "settle_ms": 1838,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 16,
+     "hud_clashes": [],
+     "want": [
+      40,
+      7,
+      3.141592653589793
+     ],
+     "settle_ms": 2479,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 17,
+     "hud_clashes": [],
+     "want": [
+      35,
+      18,
+      0.7853981633974483
+     ],
+     "settle_ms": 1842,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 321,
+      "top": 88,
+      "right": 389,
+      "bottom": 148
+     },
+     "centre_y_fraction": 0.437,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 18,
+     "hud_clashes": [],
+     "want": [
+      22,
+      7,
+      -1.5707963267948966
+     ],
+     "settle_ms": 1846,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 336,
+      "top": 94,
+      "right": 374,
+      "bottom": 136
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 19,
+     "hud_clashes": [],
+     "want": [
+      44,
+      20,
+      -2.356194490192345
+     ],
+     "settle_ms": 2139,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 321,
+      "top": 88,
+      "right": 389,
+      "bottom": 148
+     },
+     "centre_y_fraction": 0.437,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    }
+   ],
+   "sim": {
+    "clashes": [],
+    "shown": [
+     ".g1-top-right > *",
+     ".g1-top-right > *",
+     ".g1-top-right > *",
+     ".g1-chip",
+     "[data-testid=\"hud-primary\"]",
+     "[data-testid=\"hud-stop\"]",
+     ".g1-joy",
+     "[data-testid=\"g2-telemetry\"]",
+     "[data-testid=\"g2-rosout\"]",
+     ".g1-joy-hint",
+     "[data-testid=\"g2-view\"]",
+     "[data-testid=\"g2-sim-caption\"]"
+    ],
+    "stop_visible": true,
+    "view": "sim",
+    "tick": 451,
+    "kept_ticking": true,
+    "ok": true
+   }
+  },
+  "real-phone-full-803x361": {
+   "viewport": {
+    "width": 803,
+    "height": 361
+   },
+   "poses": 20,
+   "failed": 0,
+   "errors": [],
+   "rows": [
+    {
+     "k": 0,
+     "hud_clashes": [],
+     "want": [
+      30,
+      0.6,
+      3.141592653589793
+     ],
+     "settle_ms": 2130,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 127,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 1,
+     "hud_clashes": [],
+     "want": [
+      20,
+      0.6,
+      0
+     ],
+     "settle_ms": 1847,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 127,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 2,
+     "hud_clashes": [],
+     "want": [
+      16.2,
+      2,
+      2.356194490192345
+     ],
+     "settle_ms": 1833,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 355,
+      "top": 118,
+      "right": 448,
+      "bottom": 198
+     },
+     "centre_y_fraction": 0.437,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 3,
+     "hud_clashes": [],
+     "want": [
+      26,
+      1.2,
+      1.5707963267948966
+     ],
+     "settle_ms": 1831,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 377,
+      "top": 118,
+      "right": 426,
+      "bottom": 174
+     },
+     "centre_y_fraction": 0.405,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 4,
+     "hud_clashes": [],
+     "want": [
+      28,
+      0.55,
+      0
+     ],
+     "settle_ms": 2149,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 126,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 5,
+     "hud_clashes": [],
+     "want": [
+      16.5,
+      17.3,
+      0
+     ],
+     "settle_ms": 2142,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 126,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 6,
+     "hud_clashes": [],
+     "want": [
+      31,
+      21.9,
+      3.141592653589793
+     ],
+     "settle_ms": 2148,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 126,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 7,
+     "hud_clashes": [],
+     "want": [
+      18,
+      16.4,
+      0
+     ],
+     "settle_ms": 3202,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 127,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 8,
+     "hud_clashes": [],
+     "want": [
+      15.2,
+      3,
+      3.141592653589793
+     ],
+     "settle_ms": 3291,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 127,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 9,
+     "hud_clashes": [],
+     "want": [
+      15.5,
+      26.5,
+      3.141592653589793
+     ],
+     "settle_ms": 2160,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 127,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 10,
+     "hud_clashes": [],
+     "want": [
+      37.6,
+      3.6,
+      0
+     ],
+     "settle_ms": 2149,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 126,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 11,
+     "hud_clashes": [],
+     "want": [
+      37,
+      23.65,
+      0
+     ],
+     "settle_ms": 3040,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 127,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 12,
+     "hud_clashes": [],
+     "want": [
+      47.4,
+      16,
+      1.5707963267948966
+     ],
+     "settle_ms": 4300,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 127,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 13,
+     "hud_clashes": [],
+     "want": [
+      45.5,
+      1.5,
+      0
+     ],
+     "settle_ms": 2148,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 127,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 14,
+     "hud_clashes": [],
+     "want": [
+      30,
+      7,
+      0
+     ],
+     "settle_ms": 1836,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 127,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 15,
+     "hud_clashes": [],
+     "want": [
+      24,
+      8,
+      1.5707963267948966
+     ],
+     "settle_ms": 2154,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 127,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 16,
+     "hud_clashes": [],
+     "want": [
+      40,
+      7,
+      3.141592653589793
+     ],
+     "settle_ms": 1848,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 127,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.429,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 17,
+     "hud_clashes": [],
+     "want": [
+      35,
+      18,
+      0.7853981633974483
+     ],
+     "settle_ms": 2857,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 355,
+      "top": 118,
+      "right": 448,
+      "bottom": 198
+     },
+     "centre_y_fraction": 0.437,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 18,
+     "hud_clashes": [],
+     "want": [
+      22,
+      7,
+      -1.5707963267948966
+     ],
+     "settle_ms": 2140,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 376,
+      "top": 127,
+      "right": 427,
+      "bottom": 183
+     },
+     "centre_y_fraction": 0.428,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    },
+    {
+     "k": 19,
+     "hud_clashes": [],
+     "want": [
+      44,
+      20,
+      -2.356194490192345
+     ],
+     "settle_ms": 2603,
+     "placed": true,
+     "cam": "chase",
+     "box": {
+      "left": 355,
+      "top": 118,
+      "right": 448,
+      "bottom": 198
+     },
+     "centre_y_fraction": 0.438,
+     "on_canvas": true,
+     "overlaps": [],
+     "ok": true
+    }
+   ],
+   "sim": {
+    "clashes": [],
+    "shown": [
+     ".g1-top-right > *",
+     ".g1-top-right > *",
+     ".g1-top-right > *",
+     ".g1-chip",
+     "[data-testid=\"hud-primary\"]",
+     "[data-testid=\"hud-stop\"]",
+     ".g1-joy",
+     "[data-testid=\"g2-telemetry\"]",
+     "[data-testid=\"g2-rosout\"]",
+     ".g1-joy-hint",
+     "[data-testid=\"g2-view\"]",
+     "[data-testid=\"g2-sim-caption\"]"
+    ],
+    "stop_visible": true,
+    "view": "sim",
+    "tick": 471,
+    "kept_ticking": true,
+    "ok": true
+   }
+  }
+ },
+ "passed": true
+}

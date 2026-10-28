@@ -1,0 +1,199 @@
+{
+ "run": "m6f8_ghost_2",
+ "class": "STACK (recorded Gazebo + Nav2), measured offline",
+ "amcl_likelihood": {
+  "model": "likelihood field, 60 beams, sigma 0.2, z_hit 0.5, z_rand 0.5, max dist 2.0, max range 100",
+  "rows": [
+   {
+    "t": 45.0,
+    "at_truth": 5.461,
+    "at_amcl": 5.434,
+    "best_offset": [
+     0.05,
+     -0.25,
+     0.0
+    ],
+    "at_best": 5.644,
+    "amcl_minus_truth": [
+     0.118,
+     -0.052
+    ]
+   },
+   {
+    "t": 49.0,
+    "at_truth": 5.158,
+    "at_amcl": 3.961,
+    "best_offset": [
+     0.05,
+     -0.25,
+     0.0
+    ],
+    "at_best": 5.369,
+    "amcl_minus_truth": [
+     0.138,
+     -0.136
+    ]
+   },
+   {
+    "t": 53.0,
+    "at_truth": 5.965,
+    "at_amcl": 4.922,
+    "best_offset": [
+     0.05,
+     -0.25,
+     0.0
+    ],
+    "at_best": 6.182,
+    "amcl_minus_truth": [
+     0.078,
+     -0.167
+    ]
+   },
+   {
+    "t": 57.0,
+    "at_truth": 6.541,
+    "at_amcl": 5.972,
+    "best_offset": [
+     0.05,
+     -0.2,
+     0.0
+    ],
+    "at_best": 6.643,
+    "amcl_minus_truth": [
+     0.11,
+     -0.167
+    ]
+   },
+   {
+    "t": 61.0,
+    "at_truth": 5.204,
+    "at_amcl": 4.279,
+    "best_offset": [
+     0.0,
+     -0.1,
+     0.0
+    ],
+    "at_best": 5.295,
+    "amcl_minus_truth": [
+     0.09,
+     -0.263
+    ]
+   },
+   {
+    "t": 65.0,
+    "at_truth": 4.935,
+    "at_amcl": 4.156,
+    "best_offset": [
+     0.0,
+     -0.05,
+     0.0
+    ],
+    "at_best": 5.06,
+    "amcl_minus_truth": [
+     -0.047,
+     -0.375
+    ]
+   },
+   {
+    "t": 69.0,
+    "at_truth": 4.371,
+    "at_amcl": 3.659,
+    "best_offset": [
+     0.0,
+     -0.05,
+     0.0
+    ],
+    "at_best": 4.45,
+    "amcl_minus_truth": [
+     0.035,
+     -0.362
+    ]
+   },
+   {
+    "t": 73.0,
+    "at_truth": 4.302,
+    "at_amcl": 3.092,
+    "best_offset": [
+     -0.05,
+     -0.05,
+     0.0
+    ],
+    "at_best": 4.496,
+    "amcl_minus_truth": [
+     -0.169,
+     -0.397
+    ]
+   },
+   {
+    "t": 77.0,
+    "at_truth": 6.635,
+    "at_amcl": 4.995,
+    "best_offset": [
+     0.0,
+     -0.05,
+     0.0
+    ],
+    "at_best": 6.715,
+    "amcl_minus_truth": [
+     -0.173,
+     -0.262
+    ]
+   },
+   {
+    "t": 81.0,
+    "at_truth": 6.809,
+    "at_amcl": 4.709,
+    "best_offset": [
+     0.0,
+     -0.05,
+     0.0
+    ],
+    "at_best": 6.878,
+    "amcl_minus_truth": [
+     -0.199,
+     -0.229
+    ]
+   }
+  ]
+ },
+ "short_returns": {
+  "scans": 394,
+  "per_scan": 13.92,
+  "bins": {
+   "+60 deg, 0.5 m": 2.79,
+   "-50 deg, 0.5 m": 2.65,
+   "-40 deg, 0.6 m": 1.62,
+   "+50 deg, 0.6 m": 1.45,
+   "+50 deg, 0.5 m": 1.41,
+   "+70 deg, 0.6 m": 0.9,
+   "+60 deg, 0.6 m": 0.72,
+   "-40 deg, 0.5 m": 0.72,
+   "-60 deg, 0.6 m": 0.54,
+   "+80 deg, 0.6 m": 0.28,
+   "-50 deg, 0.6 m": 0.23,
+   "-30 deg, 0.6 m": 0.2,
+   "+70 deg, 0.5 m": 0.19,
+   "+80 deg, 0.5 m": 0.12,
+   "+90 deg, 0.6 m": 0.09,
+   "-20 deg, 0.6 m": 0.01
+  }
+ },
+ "short_returns_open_floor": {
+  "scans": 332,
+  "returns_under_0_65m_per_scan": 0.0
+ },
+ "stamp_offset": {
+  "turning_scans": 56,
+  "fraction_within_0_1m": {
+   "-0.30": 0.407,
+   "-0.20": 0.461,
+   "-0.10": 0.604,
+   "-0.05": 0.808,
+   "+0.00": 0.912,
+   "+0.05": 0.793,
+   "+0.10": 0.68,
+   "+0.20": 0.551,
+   "+0.30": 0.466
+  }
+ }
+}

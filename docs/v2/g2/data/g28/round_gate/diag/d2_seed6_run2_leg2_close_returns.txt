@@ -1,0 +1,15 @@
+pose [10.26, 2.58, -2.55] returns < 0.9 m: 196
+  r 0.47  at (10.39, 2.07)  map distance 0.00
+  r 0.47  at (10.42, 2.07)  map distance 0.00
+  r 0.47  at (10.45, 2.07)  map distance 0.00
+  r 0.48  at (10.48, 2.07)  map distance 0.00
+  r 0.49  at (10.51, 2.07)  map distance 0.00
+  r 0.49  at (10.24, 2.08)  map distance 0.00
+  r 0.51  at (10.57, 2.07)  map distance 0.00
+  r 0.52  at (10.17, 2.07)  map distance 0.00
+  r 0.53  at (10.64, 2.07)  map distance 0.00
+  r 0.55  at (10.10, 2.07)  map distance 0.00
+  r 0.58  at (10.72, 2.07)  map distance 0.00
+  r 0.60  at (10.01, 2.07)  map distance 0.00
+  r 0.66  at (10.85, 2.08)  map distance 0.00
+  r 0.76  at (10.99, 2.07)  map distance 0.00

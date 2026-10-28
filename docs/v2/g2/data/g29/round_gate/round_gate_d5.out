@@ -1,0 +1,48 @@
+  colour_red run 1/5 rc=0 pass=1 order1_rod_red_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_red run 2/5 rc=0 pass=1 order1_rod_red_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_red run 3/5 rc=0 pass=1 order1_rod_red_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_red run 4/5 rc=0 pass=1 order1_rod_red_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_red run 5/5 rc=0 pass=1 order1_rod_red_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+ROUND colour_red 5/5
+  colour_green run 1/5 rc=0 pass=1 order1_rod_green_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_green run 2/5 rc=0 pass=1 order1_rod_green_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_green run 3/5 rc=0 pass=1 order1_rod_green_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_green run 4/5 rc=0 pass=1 order1_rod_green_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_green run 5/5 rc=0 pass=1 order1_rod_green_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+ROUND colour_green 5/5
+  colour_blue run 1/5 rc=0 pass=1 order1_rod_blue_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_blue run 2/5 rc=0 pass=1 order1_rod_blue_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_blue run 3/5 rc=0 pass=1 order1_rod_blue_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_blue run 4/5 rc=0 pass=1 order1_rod_blue_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_blue run 5/5 rc=0 pass=1 order1_rod_blue_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+ROUND colour_blue 5/5
+  colour_yellow run 1/5 rc=0 pass=1 order1_rod_yellow_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_yellow run 2/5 rc=0 pass=1 order1_rod_yellow_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_yellow run 3/5 rc=0 pass=1 order1_rod_yellow_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_yellow run 4/5 rc=0 pass=1 order1_rod_yellow_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+  colour_yellow run 5/5 rc=0 pass=1 order1_rod_yellow_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+ROUND colour_yellow 5/5
+  r5_phone_seed2 run 1/5 rc=0 pass=1 order1_obj_dock_pregrasp:SUCCEEDED order1_dock_2:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dispatch_drop:SUCCEEDED
+  r5_phone_seed2 run 2/5 rc=0 pass=1 order1_obj_dock_pregrasp:SUCCEEDED order1_dock_2:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dispatch_drop:SUCCEEDED
+  r5_phone_seed2 run 3/5 rc=0 pass=1 order1_obj_dock_pregrasp:SUCCEEDED order1_dock_2:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dispatch_drop:SUCCEEDED
+  r5_phone_seed2 run 4/5 rc=0 pass=1 order1_obj_dock_pregrasp:SUCCEEDED order1_dock_2:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dispatch_drop:SUCCEEDED
+  r5_phone_seed2 run 5/5 rc=0 pass=1 order1_obj_dock_pregrasp:SUCCEEDED order1_dock_2:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dispatch_drop:SUCCEEDED
+ROUND r5_phone_seed2 5/5
+  r5_phone_seed6 run 1/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dock_2:SUCCEEDED
+  r5_phone_seed6 run 2/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dock_2:SUCCEEDED
+  r5_phone_seed6 run 3/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dock_2:SUCCEEDED
+  r5_phone_seed6 run 4/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dock_2:SUCCEEDED
+  r5_phone_seed6 run 5/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dock_2:SUCCEEDED
+ROUND r5_phone_seed6 5/5
+  r5_phone_seed1 run 1/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dock_1:SUCCEEDED
+  r5_phone_seed1 run 2/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dock_1:SUCCEEDED
+  r5_phone_seed1 run 3/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dock_1:SUCCEEDED
+  r5_phone_seed1 run 4/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dock_1:SUCCEEDED
+  r5_phone_seed1 run 5/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dock_1:SUCCEEDED
+ROUND r5_phone_seed1 5/5
+  r5_phone_seed3 run 1/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dispatch_drop:SUCCEEDED
+  r5_phone_seed3 run 2/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dispatch_drop:SUCCEEDED
+  r5_phone_seed3 run 3/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dispatch_drop:SUCCEEDED
+  r5_phone_seed3 run 4/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dispatch_drop:SUCCEEDED
+  r5_phone_seed3 run 5/5 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dispatch_drop:SUCCEEDED
+ROUND r5_phone_seed3 5/5

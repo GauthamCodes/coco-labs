@@ -1,0 +1,5 @@
+red: rod_red ghost 10.92 m, reference 68.1 s (0 contacts, path efficiency 0.981), timer 102.2 s (60 s)
+green: rod_green ghost 9.37 m, reference 62.2 s (0 contacts, path efficiency 0.957), timer 93.3 s (125 s)
+blue: rod_blue ghost 8.45 m, reference 58.8 s (0 contacts, path efficiency 0.950), timer 88.2 s (202 s)
+yellow: rod_yellow ghost 7.70 m, reference 55.7 s (0 contacts, path efficiency 0.938), timer 83.6 s (256 s)
+coco_depot_colours_v1.fetch_colour.r2.json current

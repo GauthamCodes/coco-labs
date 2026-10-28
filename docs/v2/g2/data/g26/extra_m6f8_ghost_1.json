@@ -1,0 +1,313 @@
+{
+ "run": "m6f8_ghost_1",
+ "class": "STACK (recorded Gazebo + Nav2), measured offline",
+ "amcl_likelihood": {
+  "model": "likelihood field, 60 beams, sigma 0.2, z_hit 0.5, z_rand 0.5, max dist 2.0, max range 100",
+  "rows": [
+   {
+    "t": 45.3,
+    "at_truth": 5.438,
+    "at_amcl": 5.53,
+    "best_offset": [
+     0.05,
+     -0.15,
+     0.0
+    ],
+    "at_best": 5.644,
+    "amcl_minus_truth": [
+     -0.0,
+     -0.026
+    ]
+   },
+   {
+    "t": 49.3,
+    "at_truth": 5.181,
+    "at_amcl": 4.599,
+    "best_offset": [
+     0.05,
+     -0.15,
+     0.0
+    ],
+    "at_best": 5.398,
+    "amcl_minus_truth": [
+     0.014,
+     -0.094
+    ]
+   },
+   {
+    "t": 53.3,
+    "at_truth": 5.707,
+    "at_amcl": 4.975,
+    "best_offset": [
+     0.05,
+     -0.3,
+     0.0
+    ],
+    "at_best": 5.901,
+    "amcl_minus_truth": [
+     -0.044,
+     -0.108
+    ]
+   },
+   {
+    "t": 57.3,
+    "at_truth": 6.972,
+    "at_amcl": 6.867,
+    "best_offset": [
+     0.05,
+     -0.25,
+     0.0
+    ],
+    "at_best": 7.109,
+    "amcl_minus_truth": [
+     0.087,
+     -0.194
+    ]
+   },
+   {
+    "t": 61.3,
+    "at_truth": 5.075,
+    "at_amcl": 3.131,
+    "best_offset": [
+     0.0,
+     -0.25,
+     0.0
+    ],
+    "at_best": 5.166,
+    "amcl_minus_truth": [
+     0.001,
+     -0.376
+    ]
+   },
+   {
+    "t": 65.3,
+    "at_truth": 4.946,
+    "at_amcl": 4.367,
+    "best_offset": [
+     0.0,
+     -0.05,
+     0.0
+    ],
+    "at_best": 5.06,
+    "amcl_minus_truth": [
+     0.1,
+     -0.261
+    ]
+   },
+   {
+    "t": 69.3,
+    "at_truth": 4.196,
+    "at_amcl": 3.547,
+    "best_offset": [
+     0.0,
+     -0.05,
+     0.0
+    ],
+    "at_best": 4.276,
+    "amcl_minus_truth": [
+     0.067,
+     -0.37
+    ]
+   },
+   {
+    "t": 73.3,
+    "at_truth": 4.242,
+    "at_amcl": 3.464,
+    "best_offset": [
+     -0.05,
+     -0.05,
+     0.0
+    ],
+    "at_best": 4.356,
+    "amcl_minus_truth": [
+     0.09,
+     -0.394
+    ]
+   },
+   {
+    "t": 77.3,
+    "at_truth": 4.723,
+    "at_amcl": 3.628,
+    "best_offset": [
+     0.0,
+     -0.05,
+     0.0
+    ],
+    "at_best": 4.803,
+    "amcl_minus_truth": [
+     -0.035,
+     -0.333
+    ]
+   },
+   {
+    "t": 81.3,
+    "at_truth": 5.109,
+    "at_amcl": 4.492,
+    "best_offset": [
+     -0.05,
+     -0.05,
+     0.0
+    ],
+    "at_best": 5.223,
+    "amcl_minus_truth": [
+     -0.133,
+     -0.325
+    ]
+   },
+   {
+    "t": 85.3,
+    "at_truth": 4.851,
+    "at_amcl": 4.079,
+    "best_offset": [
+     -0.05,
+     -0.05,
+     0.0
+    ],
+    "at_best": 4.954,
+    "amcl_minus_truth": [
+     -0.182,
+     -0.309
+    ]
+   },
+   {
+    "t": 89.3,
+    "at_truth": 4.677,
+    "at_amcl": 3.944,
+    "best_offset": [
+     -0.05,
+     -0.05,
+     0.0
+    ],
+    "at_best": 4.871,
+    "amcl_minus_truth": [
+     -0.186,
+     -0.318
+    ]
+   },
+   {
+    "t": 93.3,
+    "at_truth": 4.677,
+    "at_amcl": 4.144,
+    "best_offset": [
+     -0.05,
+     -0.05,
+     0.0
+    ],
+    "at_best": 4.871,
+    "amcl_minus_truth": [
+     -0.169,
+     -0.306
+    ]
+   },
+   {
+    "t": 97.3,
+    "at_truth": 4.957,
+    "at_amcl": 4.479,
+    "best_offset": [
+     -0.05,
+     -0.05,
+     0.0
+    ],
+    "at_best": 5.094,
+    "amcl_minus_truth": [
+     -0.164,
+     -0.291
+    ]
+   },
+   {
+    "t": 101.3,
+    "at_truth": 5.098,
+    "at_amcl": 4.112,
+    "best_offset": [
+     -0.05,
+     -0.05,
+     0.0
+    ],
+    "at_best": 5.212,
+    "amcl_minus_truth": [
+     -0.232,
+     -0.319
+    ]
+   },
+   {
+    "t": 105.3,
+    "at_truth": 4.817,
+    "at_amcl": 4.123,
+    "best_offset": [
+     -0.05,
+     -0.05,
+     0.0
+    ],
+    "at_best": 4.988,
+    "amcl_minus_truth": [
+     -0.2,
+     -0.319
+    ]
+   },
+   {
+    "t": 109.3,
+    "at_truth": 4.946,
+    "at_amcl": 4.263,
+    "best_offset": [
+     -0.1,
+     -0.05,
+     0.0
+    ],
+    "at_best": 5.117,
+    "amcl_minus_truth": [
+     -0.158,
+     -0.309
+    ]
+   }
+  ]
+ },
+ "short_returns": {
+  "scans": 687,
+  "per_scan": 69.97,
+  "bins": {
+   "+50 deg, 0.5 m": 8.11,
+   "+80 deg, 0.4 m": 7.9,
+   "+70 deg, 0.4 m": 7.25,
+   "+90 deg, 0.4 m": 6.56,
+   "+40 deg, 0.5 m": 6.07,
+   "+60 deg, 0.5 m": 4.89,
+   "+60 deg, 0.4 m": 4.7,
+   "+100 deg, 0.5 m": 3.87,
+   "+110 deg, 0.5 m": 3.7,
+   "+100 deg, 0.4 m": 3.24,
+   "+30 deg, 0.6 m": 2.76,
+   "+40 deg, 0.6 m": 2.06,
+   "+70 deg, 0.5 m": 2.04,
+   "+90 deg, 0.5 m": 1.68,
+   "+30 deg, 0.5 m": 1.23,
+   "+50 deg, 0.4 m": 1.07,
+   "+120 deg, 0.5 m": 0.8,
+   "+80 deg, 0.5 m": 0.75,
+   "+50 deg, 0.6 m": 0.44,
+   "+20 deg, 0.6 m": 0.4,
+   "+110 deg, 0.4 m": 0.19,
+   "+70 deg, 0.6 m": 0.13,
+   "+60 deg, 0.6 m": 0.07,
+   "+80 deg, 0.6 m": 0.03,
+   "+20 deg, 0.5 m": 0.02
+  }
+ },
+ "short_returns_open_floor": {
+  "scans": 338,
+  "returns_under_0_65m_per_scan": 0.0
+ },
+ "stamp_offset": {
+  "turning_scans": 114,
+  "fraction_within_0_1m": {
+   "-0.30": 0.471,
+   "-0.20": 0.52,
+   "-0.10": 0.653,
+   "-0.05": 0.832,
+   "+0.00": 0.901,
+   "+0.05": 0.804,
+   "+0.10": 0.655,
+   "+0.20": 0.542,
+   "+0.30": 0.48
+  }
+ }
+}

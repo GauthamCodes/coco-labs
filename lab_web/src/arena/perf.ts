@@ -22,6 +22,7 @@ export interface PerfSnapshot {
   stepMsMedian: number | null;
   goalToFrontierMs: number[];
   inputToMotionMs: number[];            // M4.10: drive input -> the robot drawn moved
+  inputNoMotion: number;                // G2.9: drive inputs released before the robot moved (blocked)
 }
 
 export class Perf {
@@ -93,8 +94,14 @@ export class Perf {
    * in the page so a phone can read it. At rest = the drawn pose unchanged for 3 frames, so a
    * robot still coasting or driven by autonomy never yields a short reading. `performance.now()`
    * time, the clock an event's `timeStamp` is on. The last 20 are kept.
+   *
+   * G2.9: an input released before the robot moved (COCO pushed into a wall: game rules stop it,
+   * so the drawn pose never changes) is not a sample; it is counted in `inputNoMotion` and the
+   * timer is disarmed. Before, the timer stayed armed until a later input moved the robot, and the
+   * phone soak's 1.2 s swipe period showed up as "latencies" of ~0.13 + k × 1.2 s.
    */
   readonly inputToMotion: number[] = [];
+  inputNoMotion = 0;
   private inputAt: number | null = null;
   private inputPose: [number, number, number] = [0, 0, 0];
   private stillPose: [number, number, number] = [NaN, NaN, NaN];
@@ -103,6 +110,13 @@ export class Perf {
     if (this.inputAt !== null || this.stillFrames < 3) return;
     this.inputAt = at;
     this.inputPose = [...this.stillPose];
+  }
+  /** The drive input went back to zero (keys up, joystick released): no motion yet = no sample. */
+  driveRelease() {
+    if (this.inputAt === null) return;
+    this.inputAt = null;
+    this.inputNoMotion += 1;
+    this.emit();
   }
   drawnPose(p: readonly number[], now = performance.now()) {
     const moved = p[0] !== this.stillPose[0] || p[1] !== this.stillPose[1] || p[2] !== this.stillPose[2];
@@ -138,6 +152,7 @@ export class Perf {
       stepMsMedian: s.length ? s[s.length >> 1] : null,
       goalToFrontierMs: [...this.goalToFrontier],
       inputToMotionMs: [...this.inputToMotion],
+      inputNoMotion: this.inputNoMotion,
     };
   }
 

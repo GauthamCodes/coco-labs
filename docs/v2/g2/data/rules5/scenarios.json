@@ -1,0 +1,495 @@
+{
+ "about": "G2 rules 5 scenarios, before (rules 4 setup) and after (rules 5): tools/g2/rules5_scenarios.py",
+ "evidence": "MODEL",
+ "hash_version": 3,
+ "python": "3.12.3",
+ "machine": "x86_64",
+ "note": "step times are wall clock on a shared laptop",
+ "overlap": "COCO circle (truth centre, radius) intersects an actor box: clearance < 0",
+ "actor_stop_margin_m": 0.3,
+ "runs": [
+  {
+   "scenario": "parked_in_lane",
+   "rules": 4,
+   "start": [
+    30.0,
+    11.0,
+    0.0
+   ],
+   "goal": null,
+   "wait_ticks": 0,
+   "min_clearance_m": -0.22,
+   "overlap_ticks": 38,
+   "blocked_ticks": 44,
+   "arrived_s": null,
+   "actor_held_ticks": 0,
+   "avoid_states": {},
+   "worst_step_ms": 65.2,
+   "mean_step_ms": 36.1,
+   "ticks": 400,
+   "replans": null,
+   "replan_ms": [],
+   "actor_lag_ticks": null
+  },
+  {
+   "scenario": "parked_in_lane",
+   "rules": 5,
+   "start": [
+    30.0,
+    11.0,
+    0.0
+   ],
+   "goal": null,
+   "wait_ticks": 0,
+   "min_clearance_m": 0.43,
+   "overlap_ticks": 0,
+   "blocked_ticks": 0,
+   "arrived_s": null,
+   "actor_held_ticks": 320,
+   "avoid_states": {
+    "clear": 400
+   },
+   "worst_step_ms": 60.9,
+   "mean_step_ms": 35.4,
+   "ticks": 400,
+   "replans": 0,
+   "replan_ms": [],
+   "actor_lag_ticks": [
+    320,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "scenario": "cross_lane_t0",
+   "rules": 4,
+   "start": [
+    28.0,
+    8.0,
+    1.5708
+   ],
+   "goal": [
+    28.0,
+    14.3
+   ],
+   "wait_ticks": 0,
+   "min_clearance_m": 0.06,
+   "overlap_ticks": 0,
+   "blocked_ticks": 17,
+   "arrived_s": 22.4,
+   "actor_held_ticks": 0,
+   "avoid_states": {},
+   "worst_step_ms": 164.6,
+   "mean_step_ms": 37.6,
+   "ticks": 224,
+   "replans": null,
+   "replan_ms": [],
+   "actor_lag_ticks": null
+  },
+  {
+   "scenario": "cross_lane_t0",
+   "rules": 5,
+   "start": [
+    28.0,
+    8.0,
+    1.5708
+   ],
+   "goal": [
+    28.0,
+    14.3
+   ],
+   "wait_ticks": 0,
+   "min_clearance_m": 0.4666,
+   "overlap_ticks": 0,
+   "blocked_ticks": 0,
+   "arrived_s": 23.7,
+   "actor_held_ticks": 0,
+   "avoid_states": {
+    "clear": 207,
+    "waiting": 30
+   },
+   "worst_step_ms": 73.0,
+   "mean_step_ms": 43.8,
+   "ticks": 237,
+   "replans": 0,
+   "replan_ms": [
+    20.9
+   ],
+   "actor_lag_ticks": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "scenario": "cross_lane_t4",
+   "rules": 4,
+   "start": [
+    28.0,
+    8.0,
+    1.5708
+   ],
+   "goal": [
+    28.0,
+    14.3
+   ],
+   "wait_ticks": 40,
+   "min_clearance_m": 0.7615,
+   "overlap_ticks": 0,
+   "blocked_ticks": 0,
+   "arrived_s": 20.7,
+   "actor_held_ticks": 0,
+   "avoid_states": {},
+   "worst_step_ms": 67.3,
+   "mean_step_ms": 38.7,
+   "ticks": 207,
+   "replans": null,
+   "replan_ms": [],
+   "actor_lag_ticks": null
+  },
+  {
+   "scenario": "cross_lane_t4",
+   "rules": 5,
+   "start": [
+    28.0,
+    8.0,
+    1.5708
+   ],
+   "goal": [
+    28.0,
+    14.3
+   ],
+   "wait_ticks": 40,
+   "min_clearance_m": 0.7615,
+   "overlap_ticks": 0,
+   "blocked_ticks": 0,
+   "arrived_s": 20.7,
+   "actor_held_ticks": 0,
+   "avoid_states": {
+    "clear": 207
+   },
+   "worst_step_ms": 60.8,
+   "mean_step_ms": 39.6,
+   "ticks": 207,
+   "replans": 0,
+   "replan_ms": [],
+   "actor_lag_ticks": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "scenario": "cross_lane_t10",
+   "rules": 4,
+   "start": [
+    28.0,
+    8.0,
+    1.5708
+   ],
+   "goal": [
+    28.0,
+    14.3
+   ],
+   "wait_ticks": 100,
+   "min_clearance_m": 2.4285,
+   "overlap_ticks": 0,
+   "blocked_ticks": 0,
+   "arrived_s": 20.7,
+   "actor_held_ticks": 0,
+   "avoid_states": {},
+   "worst_step_ms": 55.1,
+   "mean_step_ms": 37.2,
+   "ticks": 207,
+   "replans": null,
+   "replan_ms": [],
+   "actor_lag_ticks": null
+  },
+  {
+   "scenario": "cross_lane_t10",
+   "rules": 5,
+   "start": [
+    28.0,
+    8.0,
+    1.5708
+   ],
+   "goal": [
+    28.0,
+    14.3
+   ],
+   "wait_ticks": 100,
+   "min_clearance_m": 2.4285,
+   "overlap_ticks": 0,
+   "blocked_ticks": 0,
+   "arrived_s": 20.7,
+   "actor_held_ticks": 0,
+   "avoid_states": {
+    "clear": 207
+   },
+   "worst_step_ms": 72.6,
+   "mean_step_ms": 39.8,
+   "ticks": 207,
+   "replans": 0,
+   "replan_ms": [],
+   "actor_lag_ticks": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "scenario": "cross_lane_t15",
+   "rules": 4,
+   "start": [
+    28.0,
+    8.0,
+    1.5708
+   ],
+   "goal": [
+    28.0,
+    14.3
+   ],
+   "wait_ticks": 150,
+   "min_clearance_m": 0.9782,
+   "overlap_ticks": 0,
+   "blocked_ticks": 0,
+   "arrived_s": 20.7,
+   "actor_held_ticks": 0,
+   "avoid_states": {},
+   "worst_step_ms": 70.0,
+   "mean_step_ms": 42.8,
+   "ticks": 207,
+   "replans": null,
+   "replan_ms": [],
+   "actor_lag_ticks": null
+  },
+  {
+   "scenario": "cross_lane_t15",
+   "rules": 5,
+   "start": [
+    28.0,
+    8.0,
+    1.5708
+   ],
+   "goal": [
+    28.0,
+    14.3
+   ],
+   "wait_ticks": 150,
+   "min_clearance_m": 0.9782,
+   "overlap_ticks": 0,
+   "blocked_ticks": 0,
+   "arrived_s": 20.7,
+   "actor_held_ticks": 0,
+   "avoid_states": {
+    "clear": 207
+   },
+   "worst_step_ms": 72.2,
+   "mean_step_ms": 44.2,
+   "ticks": 207,
+   "replans": 0,
+   "replan_ms": [],
+   "actor_lag_ticks": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "scenario": "head_on_in_lane",
+   "rules": 4,
+   "start": [
+    24.0,
+    11.0,
+    3.1416
+   ],
+   "goal": [
+    18.0,
+    11.0
+   ],
+   "wait_ticks": 0,
+   "min_clearance_m": -0.22,
+   "overlap_ticks": 19,
+   "blocked_ticks": 22,
+   "arrived_s": 21.9,
+   "actor_held_ticks": 0,
+   "avoid_states": {},
+   "worst_step_ms": 76.3,
+   "mean_step_ms": 40.9,
+   "ticks": 219,
+   "replans": null,
+   "replan_ms": [],
+   "actor_lag_ticks": null
+  },
+  {
+   "scenario": "head_on_in_lane",
+   "rules": 5,
+   "start": [
+    24.0,
+    11.0,
+    3.1416
+   ],
+   "goal": [
+    18.0,
+    11.0
+   ],
+   "wait_ticks": 0,
+   "min_clearance_m": 0.1953,
+   "overlap_ticks": 0,
+   "blocked_ticks": 0,
+   "arrived_s": 31.5,
+   "actor_held_ticks": 96,
+   "avoid_states": {
+    "waiting": 47,
+    "backing": 8,
+    "replanned": 1,
+    "clear": 259
+   },
+   "worst_step_ms": 83.0,
+   "mean_step_ms": 42.0,
+   "ticks": 315,
+   "replans": 1,
+   "replan_ms": [
+    41.9,
+    22.3
+   ],
+   "actor_lag_ticks": [
+    67,
+    0,
+    85,
+    0
+   ]
+  },
+  {
+   "scenario": "along_walker_path",
+   "rules": 4,
+   "start": [
+    24.2,
+    7.5,
+    1.5708
+   ],
+   "goal": [
+    24.2,
+    14.3
+   ],
+   "wait_ticks": 0,
+   "min_clearance_m": -0.22,
+   "overlap_ticks": 38,
+   "blocked_ticks": 48,
+   "arrived_s": 27.3,
+   "actor_held_ticks": 0,
+   "avoid_states": {},
+   "worst_step_ms": 84.3,
+   "mean_step_ms": 40.2,
+   "ticks": 273,
+   "replans": null,
+   "replan_ms": [],
+   "actor_lag_ticks": null
+  },
+  {
+   "scenario": "along_walker_path",
+   "rules": 5,
+   "start": [
+    24.2,
+    7.5,
+    1.5708
+   ],
+   "goal": [
+    24.2,
+    14.3
+   ],
+   "wait_ticks": 0,
+   "min_clearance_m": 0.2159,
+   "overlap_ticks": 0,
+   "blocked_ticks": 0,
+   "arrived_s": 31.9,
+   "actor_held_ticks": 180,
+   "avoid_states": {
+    "clear": 261,
+    "waiting": 57,
+    "replanned": 1
+   },
+   "worst_step_ms": 87.4,
+   "mean_step_ms": 41.0,
+   "ticks": 319,
+   "replans": 1,
+   "replan_ms": [
+    41.9,
+    19.5
+   ],
+   "actor_lag_ticks": [
+    0,
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "scenario": "across_walker_path",
+   "rules": 4,
+   "start": [
+    22.0,
+    9.5,
+    0.0
+   ],
+   "goal": [
+    26.5,
+    9.5
+   ],
+   "wait_ticks": 0,
+   "min_clearance_m": -0.04,
+   "overlap_ticks": 6,
+   "blocked_ticks": 6,
+   "arrived_s": 15.3,
+   "actor_held_ticks": 0,
+   "avoid_states": {},
+   "worst_step_ms": 60.1,
+   "mean_step_ms": 36.2,
+   "ticks": 153,
+   "replans": null,
+   "replan_ms": [],
+   "actor_lag_ticks": null
+  },
+  {
+   "scenario": "across_walker_path",
+   "rules": 5,
+   "start": [
+    22.0,
+    9.5,
+    0.0
+   ],
+   "goal": [
+    26.5,
+    9.5
+   ],
+   "wait_ticks": 0,
+   "min_clearance_m": 0.41,
+   "overlap_ticks": 0,
+   "blocked_ticks": 0,
+   "arrived_s": 21.5,
+   "actor_held_ticks": 0,
+   "avoid_states": {
+    "clear": 147,
+    "waiting": 68
+   },
+   "worst_step_ms": 77.5,
+   "mean_step_ms": 41.1,
+   "ticks": 215,
+   "replans": 0,
+   "replan_ms": [
+    16.3
+   ],
+   "actor_lag_ticks": [
+    0,
+    0,
+    0,
+    0
+   ]
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+page console warning [.WebGL-0xddc001cce00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+page console warning [.WebGL-0xddc001cce00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+page console warning [.WebGL-0xddc001cce00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+page console warning [.WebGL-0xddc001cce00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+0.1s SW version 0 running activated
+2.1s SW version 1 stopped new
+2.1s SW version 1 starting new
+2.1s SW version 1 starting new
+2.2s SW version 1 starting new
+2.2s SW version 1 starting installing
+2.2s SW version 1 running installing
+page console log updatefound
+5.0s SW version 1 running installed
+5.0s SW version 0 stopping activated
+5.0s SW version 0 stopped activated
+5.0s SW version 0 stopped redundant
+5.0s SW version 1 running activating
+5.0s SW version 1 running activating
+page console log B state installed
+page console log B state activating
+6.1s SW version 1 running activated
+page console log B state activated
+14s {"installing":null,"waiting":null,"active":"activated","ctrl":true,"keys":["coco-build-%2Fcoco-labs%2F-73a412393e75c9e57551bb465b72e1ffa0b73ec0c3fd2fd83797cbd6865fa4ee","coco-build-%2Fcoco-labs%2F-clients","coco-build-%2Fcoco-labs%2F-f8792dcd09e036c36eea26044924187494d8a03bcf5031b3c0a4560bc22995e2"]}
+24s {"installing":null,"waiting":null,"active":"activated","ctrl":true,"keys":["coco-build-%2Fcoco-labs%2F-73a412393e75c9e57551bb465b72e1ffa0b73ec0c3fd2fd83797cbd6865fa4ee","coco-build-%2Fcoco-labs%2F-clients","coco-build-%2Fcoco-labs%2F-f8792dcd09e036c36eea26044924187494d8a03bcf5031b3c0a4560bc22995e2"]}
+34s {"installing":null,"waiting":null,"active":"activated","ctrl":true,"keys":["coco-build-%2Fcoco-labs%2F-73a412393e75c9e57551bb465b72e1ffa0b73ec0c3fd2fd83797cbd6865fa4ee","coco-build-%2Fcoco-labs%2F-clients","coco-build-%2Fcoco-labs%2F-f8792dcd09e036c36eea26044924187494d8a03bcf5031b3c0a4560bc22995e2"]}
+44s {"installing":null,"waiting":null,"active":"activated","ctrl":true,"keys":["coco-build-%2Fcoco-labs%2F-73a412393e75c9e57551bb465b72e1ffa0b73ec0c3fd2fd83797cbd6865fa4ee","coco-build-%2Fcoco-labs%2F-clients","coco-build-%2Fcoco-labs%2F-f8792dcd09e036c36eea26044924187494d8a03bcf5031b3c0a4560bc22995e2"]}
+54s {"installing":null,"waiting":null,"active":"activated","ctrl":true,"keys":["coco-build-%2Fcoco-labs%2F-73a412393e75c9e57551bb465b72e1ffa0b73ec0c3fd2fd83797cbd6865fa4ee","coco-build-%2Fcoco-labs%2F-clients","coco-build-%2Fcoco-labs%2F-f8792dcd09e036c36eea26044924187494d8a03bcf5031b3c0a4560bc22995e2"]}
+64s {"installing":null,"waiting":null,"active":"activated","ctrl":true,"keys":["coco-build-%2Fcoco-labs%2F-73a412393e75c9e57551bb465b72e1ffa0b73ec0c3fd2fd83797cbd6865fa4ee","coco-build-%2Fcoco-labs%2F-clients","coco-build-%2Fcoco-labs%2F-f8792dcd09e036c36eea26044924187494d8a03bcf5031b3c0a4560bc22995e2"]}
+74s {"installing":null,"waiting":null,"active":"activated","ctrl":true,"keys":["coco-build-%2Fcoco-labs%2F-73a412393e75c9e57551bb465b72e1ffa0b73ec0c3fd2fd83797cbd6865fa4ee","coco-build-%2Fcoco-labs%2F-clients","coco-build-%2Fcoco-labs%2F-f8792dcd09e036c36eea26044924187494d8a03bcf5031b3c0a4560bc22995e2"]}
+84s {"installing":null,"waiting":null,"active":"activated","ctrl":true,"keys":["coco-build-%2Fcoco-labs%2F-73a412393e75c9e57551bb465b72e1ffa0b73ec0c3fd2fd83797cbd6865fa4ee","coco-build-%2Fcoco-labs%2F-clients","coco-build-%2Fcoco-labs%2F-f8792dcd09e036c36eea26044924187494d8a03bcf5031b3c0a4560bc22995e2"]}
+poll Error: page.evaluate: Target page, context or browser has been closed
+{"passed":false,"checks":{},"error":"TimeoutError: page.waitForFunction: Timeout 90000ms exceeded."}
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+poll Error: page.evaluate: Target page, context or browser has been closed
+exit 124

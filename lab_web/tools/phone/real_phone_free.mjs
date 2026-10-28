@@ -5,7 +5,7 @@
  * while it plays.
  *
  *   ADB=<adb> node tools/phone/real_phone_free.mjs SITE OUT_DIR [--minutes 10] [--trials 15]
- *        [--game free|fetch_rush] [--tap X,Y] [--joy X,Y]
+ *        [--game free|fetch_rush] [--tap X,Y] [--joy X,Y] [--view game|sim] [--displays all]
  *
  * Why: Chrome on Android keeps its status bar, address bar and navigation bar while a DevTools
  * session is attached, even when the page is in full screen (measured: 755 x 269 CSS px instead
@@ -67,6 +67,24 @@ const recorder = () => {
   };
   // every touch-to-motion sample (perf.ts keeps only the last 20)
   const hook = setInterval(() => { const a = window.__cocoPerf?.inputToMotion; if (!a || a.__free) return; a.__free = true; const push = a.push.bind(a); a.push = (...v) => { g.itm.push(...v); return push(...v); }; clearInterval(hook); }, 200);
+  // G2.9: the same measure computed HERE, outside the build, so any two builds are measured alike
+  // (the G1.13 build has no driveRelease): perf.ts's rule (a drive input with the drawn pose
+  // unchanged for 3 frames -> the first frame drawing it moved), plus "a touch lifted before any
+  // motion is no sample" (counted in ext_no_motion: COCO pushed into a wall by the soak).
+  g.ext = []; g.extNoMotion = 0; g.inputs = 0; g.lifts = 0;
+  const hook2 = setInterval(() => {
+    const P = window.__cocoPerf; if (!P || P.__free2) return; P.__free2 = true; clearInterval(hook2);
+    const st = { at: null, pose: [0, 0, 0], still: [NaN, NaN, NaN], frames: 0 };
+    const di = P.driveInput.bind(P), dp = P.drawnPose.bind(P);
+    P.driveInput = (at = performance.now()) => { g.inputs++; if (st.at === null && st.frames >= 3) { st.at = at; st.pose = [...st.still]; } return di(at); };
+    P.drawnPose = (q, now = performance.now()) => {
+      if (st.at !== null && (q[0] !== st.pose[0] || q[1] !== st.pose[1] || q[2] !== st.pose[2])) { g.ext.push(now - st.at); st.at = null; }
+      if (q[0] !== st.still[0] || q[1] !== st.still[1] || q[2] !== st.still[2]) { st.still = [q[0], q[1], q[2]]; st.frames = 0; } else st.frames += 1;
+      return dp(q, now);
+    };
+    const lift = () => { g.lifts++; if (st.at !== null) { st.at = null; g.extNoMotion++; } };
+    addEventListener('pointerup', lift, true); addEventListener('pointercancel', lift, true);
+  }, 200);
 };
 
 const marker = `run=${Date.now()}`;
@@ -88,6 +106,16 @@ try {
   let p = browser.contexts()[0].pages().find((x) => x.url().includes(marker));
   if (!p) throw new Error(`no tab with ${marker}: ${browser.contexts()[0].pages().map((x) => x.url()).join(' | ')}`);
   await p.addInitScript(recorder);
+  // G2: --view sim opens Play in SIM view (the view pref; every SIM display is on by default)
+  const VIEW = opt('--view', null);
+  if (VIEW) await p.addInitScript((v) => { try { localStorage.setItem('coco.prefs.v1.view', JSON.stringify(v)); } catch { /* none */ } }, VIEW);
+  // G2.9: one origin serves every run of a build, so its saved view and displays carry over: a run
+  // sets its own view (GAME unless --view sim) and starts from the default displays unless --displays all
+  if (!VIEW) await p.addInitScript(() => { try { localStorage.setItem('coco.prefs.v1.view', JSON.stringify('game')); } catch { /* none */ } });
+  if (opt('--displays', null) !== 'all') await p.addInitScript(() => { try { localStorage.removeItem('coco.prefs.v1.displays'); } catch { /* none */ } });
+  // --displays all turns every SIM display on (the costmaps start off on phones)
+  if (opt('--displays', null) === 'all') await p.addInitScript(() => { try { localStorage.setItem('coco.prefs.v1.displays', JSON.stringify(Object.fromEntries(['grid', 'robot', 'tf', 'scan', 'map', 'global_costmap', 'local_costmap', 'global_plan', 'local_plan', 'footprint', 'goal'].map((k) => [k, { on: true }])))); } catch { /* none */ } });
+  report.displays = opt('--displays', 'defaults');
   // --defaults: the person's saved quality / 120 fps choices are set aside for the run (the defaults:
   // a phone starts medium, 60 fps) and put back afterwards, exactly as they were
   if (rest.includes('--defaults')) {
@@ -125,7 +153,7 @@ try {
   p = browser.contexts()[0].pages().find((x) => x.url().includes(marker));
   const r = await p.evaluate((t0wall) => {
     const g = window.__free; const r = window.__cocoGame?.renderer; const three = r?.renderer ?? r?.three?.renderer;
-    return { at: g?.at ?? [], lost: g?.lost, errors: g?.errors, itm: g?.itm, fs: !!document.fullscreenElement, o: screen.orientation.type, iw: innerWidth, ih: innerHeight,
+    return { at: g?.at ?? [], lost: g?.lost, errors: g?.errors, itm: g?.itm, ext: g?.ext, extNoMotion: g?.extNoMotion, inputs: g?.inputs, lifts: g?.lifts, pageNoMotion: window.__cocoPerf?.inputNoMotion ?? null, steps: [...(window.__cocoPerf?.steps ?? [])], fs: !!document.fullscreenElement, o: screen.orientation.type, iw: innerWidth, ih: innerHeight,
       tick: window.__cocoGame?.tick?.tick ?? null, tier: r?.tier ?? null, pixel_ratio: three?.getPixelRatio?.() ?? null, now: performance.now(), wall: Date.now() };
   }, t0);
   if (report.saved_prefs) {
@@ -143,10 +171,17 @@ try {
     return { fps_median: q(fps, 0.5), fps_min: fps.length ? Math.min(...fps) : null, fps_p05: q(fps, 0.05), windows: fps.length,
       frame_ms_median: q(iv, 0.5), frame_ms_p95: q(iv, 0.95), frame_ms_p99: q(iv, 0.99), frame_ms_max: iv.length ? Math.max(...iv) : null, frames: at.length, over_50ms: iv.filter((x) => x > 50).length };
   };
+  report.view = VIEW ?? 'game';
   report.play = { one_minute: stats(soakStart, soakStart + 60000), whole: stats(soakStart, soakEnd), webgl_context_lost: r.lost, page_errors: r.errors,
     end_state: { full_screen: r.fs, orientation: r.o, viewport: [r.iw, r.ih], tick: r.tick, tier: r.tier, pixel_ratio: r.pixel_ratio } };
   report.touch_to_motion = { samples: r.itm, n: r.itm?.length ?? 0, median_ms: q(r.itm ?? [], 0.5), p90_ms: q(r.itm ?? [], 0.9),
-    note: 'every sample from the trials and the soak (perf.inputToMotion: drive input -> the robot drawn moved)' };
+    trials_median_ms: q((r.itm ?? []).slice(0, TRIALS), 0.5), page_no_motion: r.pageNoMotion,
+    note: 'the BUILD\'s own measure, every sample from the trials and the soak (perf.inputToMotion: drive input -> the robot drawn moved); trials_median_ms = the first --trials samples (G1.13\'s "150 ms" definition)' };
+  // G2.9: the model's step times (perf keeps the last 300-600: the worker's tick cost, which an input waits for)
+  report.model_step_ms = { n: r.steps?.length ?? 0, median: q(r.steps ?? [], 0.5), p90: q(r.steps ?? [], 0.9), note: 'perf.steps: the last 300-600 ticks\' worker step time (ms)' };
+  report.touch_to_motion_ext = { samples: r.ext, n: r.ext?.length ?? 0, median_ms: q(r.ext ?? [], 0.5), p90_ms: q(r.ext ?? [], 0.9), max_ms: r.ext?.length ? Math.max(...r.ext) : null,
+    over_1s: (r.ext ?? []).filter((x) => x > 1000).length, trials_median_ms: q((r.ext ?? []).slice(0, TRIALS), 0.5), no_motion: r.extNoMotion, drive_inputs: r.inputs, touch_lifts: r.lifts,
+    note: 'G2.9: computed by the recorder, outside the build (identical for any build): perf.ts\'s rule plus "a touch lifted before any motion is no sample" (no_motion counts them)' };
 } catch (e) { report.error = String(e); console.error(e); process.exitCode = 1; }
 finally {
   if (report.saved_prefs && !report.prefs_restored) {   // a failed run still puts the person's choices back
@@ -163,4 +198,5 @@ finally {
   report.settings_restored = rot0; report.ended = new Date().toISOString(); save();
 }
 console.log(JSON.stringify({ shots: report.shots, fs: report.full_screen_by_screencap, one: report.play?.one_minute, whole: report.play?.whole, end: report.play?.end_state, lost: report.play?.webgl_context_lost,
-  touch: report.touch_to_motion && { n: report.touch_to_motion.n, median: report.touch_to_motion.median_ms, p90: report.touch_to_motion.p90_ms }, temps: [report.temps_start, report.temps_end], battery: [report.battery[0], report.battery.at(-1)] }));
+  touch: report.touch_to_motion && { n: report.touch_to_motion.n, median: report.touch_to_motion.median_ms, p90: report.touch_to_motion.p90_ms, trials: report.touch_to_motion.trials_median_ms },
+  touch_ext: report.touch_to_motion_ext && { n: report.touch_to_motion_ext.n, median: report.touch_to_motion_ext.median_ms, p90: report.touch_to_motion_ext.p90_ms, max: report.touch_to_motion_ext.max_ms, over_1s: report.touch_to_motion_ext.over_1s, trials: report.touch_to_motion_ext.trials_median_ms, no_motion: report.touch_to_motion_ext.no_motion }, temps: [report.temps_start, report.temps_end], battery: [report.battery[0], report.battery.at(-1)] }));

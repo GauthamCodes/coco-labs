@@ -29,6 +29,31 @@ describe('perf input -> motion', () => {
     expect(perf.snapshot().inputToMotionMs.length).toBe(n);
   });
 
+  it('G2.9: an input released before any motion (pushed into a wall) is no sample and disarms the timer', () => {
+    const n = perf.snapshot().inputToMotionMs.length, blocked = perf.snapshot().inputNoMotion;
+    still([5, 5, 0], 5, 500);
+    perf.driveInput(600);                       // pushed into a wall: the drawn pose never changes
+    still([5, 5, 0], 60, 616);
+    perf.driveRelease();                        // released at ~1.6 s with no motion
+    perf.drawnPose([5, 5, 0], 1700);
+    perf.driveInput(1800);                      // backing away moves it 60 ms later
+    perf.drawnPose([4.99, 5, 0], 1860);
+    const s = perf.snapshot();
+    expect(s.inputNoMotion).toBe(blocked + 1);
+    expect(s.inputToMotionMs.length).toBe(n + 1);
+    expect(s.inputToMotionMs.at(-1)).toBe(60);  // not 1260 (timed from the blocked push)
+  });
+
+  it('a release after the motion was drawn changes nothing', () => {
+    const blocked = perf.snapshot().inputNoMotion;
+    still([6, 6, 0], 4, 3000);
+    perf.driveInput(3100);
+    perf.drawnPose([6.1, 6, 0], 3150);
+    perf.driveRelease();
+    expect(perf.snapshot().inputNoMotion).toBe(blocked);
+    expect(perf.snapshot().inputToMotionMs.at(-1)).toBe(50);
+  });
+
   it('keeps the last 20', () => {
     for (let k = 0; k < 25; k += 1) {
       const t = 1000 + k * 200;

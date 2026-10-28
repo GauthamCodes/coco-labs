@@ -1,0 +1,64 @@
+{
+ "site": "http://127.0.0.1:4186/coco-labs/",
+ "passed": false,
+ "rows": [
+  {
+   "profile": "desktop",
+   "ok": false,
+   "beforePlay": {
+    "view": "sim",
+    "sim": false,
+    "world": true,
+    "cam": "rviz"
+   },
+   "playing": {
+    "view": "sim",
+    "sim": false,
+    "world": true,
+    "cam": "chase"
+   },
+   "game": {
+    "view": "game",
+    "sim": false,
+    "world": true,
+    "cam": "orbit"
+   },
+   "simAgain": {
+    "view": "sim",
+    "sim": true,
+    "world": false,
+    "cam": "rviz"
+   },
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "ok": false,
+   "beforePlay": {
+    "view": "sim",
+    "sim": false,
+    "world": true,
+    "cam": "rviz"
+   },
+   "playing": {
+    "view": "sim",
+    "sim": false,
+    "world": true,
+    "cam": "chase"
+   },
+   "game": {
+    "view": "game",
+    "sim": false,
+    "world": true,
+    "cam": "orbit"
+   },
+   "simAgain": {
+    "view": "sim",
+    "sim": true,
+    "world": false,
+    "cam": "rviz"
+   },
+   "errors": []
+  }
+ ]
+}

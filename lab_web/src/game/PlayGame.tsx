@@ -12,24 +12,39 @@
  * own phase and refusal reasons, Fetch Rush's own orders and counts.
  */
 
+import type { PlayPlanner } from './planners';
 import { registerRunSaver } from '../offline/updates';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Camera, Eye, Hand, Pause, PackageCheck, Route, Navigation2, Info } from 'lucide-react';
+import { Camera, Hand, Pause, PackageCheck, Route, Navigation2, Info, Network } from 'lucide-react';
 import type { InputRow, World } from '../arena/protocol';
 import { readPref, isBool } from '../prefs';
-import { GameRenderer, type Led } from './render/GameRenderer';
+import { GameRenderer, type Led, type View } from './render/GameRenderer';
+import { ViewSwitch } from './hud/ViewSwitch';
+import { GazeboBar, RosoutConsole, TelemetryStrip } from './hud/RosHud';
+import { Rosout, type LogLine } from '../ros/rosout';
+import { SimClock, strip } from '../ros/telemetry';
+import { Recorder, TopicStats, topicsOf } from '../ros/recorder';
+import { Panels } from './panels/Panels';
+import { bagName, registerBagSource } from '../ros/bag_saver';
+import { ghostFor, ghostForColour, ghostPoseAt, loadGhost, loadGhostIndex, type StackGhost } from './stack_ghost';
+import { FETCH_COLOUR_RULES } from './fetch_colour';
+import { FETCH_RUSH_RULES } from './rules_view';
+import type { PanelId } from './panels/learn';
+import { parseDisplays, type Displays } from '../ros/displays';
+import { writePref } from '../prefs';
 import { perf } from '../arena/perf';
 import type { CamMode } from './render/camera';
 import { describe, type Spec, type WorldLook } from './world/describe';
 import type { Tier } from './world/build3d';
-import { GameSession, SPEC_FOR, type Candidate, type GameInfo, type GameKind, type GameTick, type WorldId } from './session';
+import { GameSession, SPEC_FOR, type Candidate, type FetchColourId, type GameInfo, type GameKind, type GameTick, type WorldId } from './session';
 import { FloatJoystick } from './hud/FloatJoystick';
 import { Minimap, TacticalMap, type MapMarks } from './hud/Maps';
 import { GameSound, haptic } from './sound';
-import { LOAD_STAGES, TIPS, primaryAction, type FetchRushMode, type Primary } from './rules_view';
+import { LOAD_STAGES, TIPS, colourChip, colourObjective, isFetch, primaryAction, type FetchRushMode, type Primary } from './rules_view';
 import type { GameResult } from './GameApp';
 import { enterPhonePlay, FrameGate, isPhone, leavePhonePlay, phoneFrameCap } from '../play/phone';
+import { FpsWatch, heavier, recommendedSettings, type PlaySettings } from './fps_watch';
 
 const BASE = import.meta.env.BASE_URL;
 const STOP_HOLD_MS = 600;
@@ -42,6 +57,14 @@ export interface PlayProps {
   showPerf: boolean; tutorialSeen: boolean; onTutorialDone: () => void;
   /** draw the planner ghost: the A* route for the current order (Settings) */
   ghost: boolean;
+  /** G2.1: the player tapped "Switch to recommended settings" (never called otherwise) */
+  onRecommended?: (s: PlaySettings) => void;
+  /** G2.6: race the recorded Gazebo + Nav2 run of this round (STACK), when one exists */
+  race?: boolean;
+  /** the planner AUTO uses (src/game/planners.ts); A* when absent, always A* in a race */
+  planner?: PlayPlanner;
+  /** owner request 2026-10-24: Fetch by colour's chosen colour */
+  colour?: FetchColourId;
 }
 
 const fmt = (s: number) => `${Math.floor(Math.max(0, s) / 60)}:${String(Math.floor(Math.max(0, s) % 60)).padStart(2, '0')}`;
@@ -61,7 +84,21 @@ export function PlayGame(p: PlayProps) {
   const occ = useRef<Uint8Array | null>(null);
   const [tick, setTick] = useState<GameTick | null>(null);
   const [latched, setLatched] = useState(false);
-  const [vision, setVision] = useState(false);
+  // G2.2: GAME or SIM (the eye's place), and SIM's displays; both remembered in this browser
+  const [view, setView] = useState<View>(() => readPref<View>('view', 'game', (v): v is View => v === 'game' || v === 'sim'));
+  const [displays, setDisplays] = useState<Displays>(() => parseDisplays(readPref<unknown>('displays', null, (_v): _v is unknown => true), isPhone()));
+  // G2.4: the panels (Displays, ROS 2 graph, Topic echo, Plot), the run's frames and each topic's rate
+  const [panels, setPanels] = useState(false);
+  const [panelTab, setPanelTab] = useState<PanelId>('displays');
+  const [echo, setEcho] = useState('/scan');
+  const recorder = useRef(new Recorder());
+  const stats = useRef(new TopicStats());
+  const planGoal = useRef<[number, number] | null>(null);
+  const stackGhost = useRef<StackGhost | null>(null);
+  // G2.3: the /rosout console's lines and the Gazebo-style clock (model events and times)
+  const rosout = useRef(new Rosout());
+  const clock = useRef(new SimClock());
+  const [log, setLog] = useState<LogLine[]>([]);
   const [cam, setCam] = useState<CamMode>('chase');
   const [mapOpen, setMapOpen] = useState(false);
   const [toast, setToast] = useState<{ text: string; key: number } | null>(null);
@@ -82,10 +119,13 @@ export function PlayGame(p: PlayProps) {
   const stick = useRef<[number, number]>([0, 0]);
   const fps = useRef({ frames: 0, t0: performance.now(), fps: 0 });
   const [perfText, setPerfText] = useState('');
+  // G2.1: a phone drawing under 55 fps for 10 s while playing, on settings heavier than recommended
+  const watch = useRef(new FpsWatch());
+  const [recommend, setRecommend] = useState<{ fps: number; to: PlaySettings } | null>(null);
   const say = useCallback((text: string) => setToast({ text, key: performance.now() }), []);
 
   // the frame loop calls the latest input handlers (they close over this render's state)
-  const live = useRef({ pollGamepad: () => {}, applyHeld: () => {} });
+  const live = useRef({ pollGamepad: () => {}, applyHeld: () => {}, watching: false, onSlow: (_fps: number) => {} });
   // the world (renders at once) and the model (loads behind it)
   useEffect(() => {
     const c = canvas.current!;
@@ -100,37 +140,46 @@ export function PlayGame(p: PlayProps) {
         const spec = await (await fetch(specUrl, { credentials: 'omit' })).json() as Spec & { start: { x: number; y: number; theta: number } };
         const lk = describe(spec);
         look.current = lk;
-        const lightName = p.world === 'depot' ? 'depot' : 'proving_v1';
-        await renderer.loadWorld(lk, `${BASE}generated/g1/${lightName}.light.png`);
+        const lightName = p.world === 'depot' || p.world === 'depot_colours' ? p.world : 'proving_v1';
+        await renderer.loadWorld(lk, `${BASE}generated/g1/${lightName}.light.png`, (spec as unknown as { robot?: { radius?: number } }).robot?.radius ?? 0.22);
         const st = spec.start as unknown as { x: number; y: number; theta: number };
         const pose: [number, number, number] = [st.x + spec.world_to_map[0], st.y + spec.world_to_map[1], st.theta];
         renderer.pose = pose;
         shown.current = { from: pose, to: pose, at: 0, z0: 0, z1: 0 };
         await renderer.loadRobot(`${BASE}assets3d/robot_${p.tier === 'high' ? 'high' : 'low'}.glb`);
+        // G2.6: Race Nav2 -- the recorded run, loaded with the world; its ghost compiles with the rest
+        if (p.race && (p.game === 'fetch_rush' || p.game === 'fetch_colour')) {
+          const index = await loadGhostIndex();
+          const entry = p.game === 'fetch_colour' ? ghostForColour(index, FETCH_COLOUR_RULES, p.colour ?? 'red') : ghostFor(index, FETCH_RUSH_RULES, p.mode ?? 'phone', p.seed);
+          if (entry) { stackGhost.current = await loadGhost(entry); renderer.prepareStackGhost(); }
+        }
         // G1.11: every shader now, behind the loading screen, not on first use in play
         await renderer.precompile();
         if (alive) setSceneReady(true);
       } catch (e) { if (alive) setError(`The world could not load: ${String(e)}`); }
     })();
     const session = new GameSession(p.world, p.game, p.seed, {
-      onWorld: (w, o) => { occ.current = o; setWorld(w); setModelReady(true); setStage('ready'); },
+      onWorld: (w, o) => {
+        occ.current = o; setWorld(w); setModelReady(true); setStage('ready');
+        // G2.2: SIM view's map, frames and scan constants; their materials compile now, behind the loading screen
+        if (w.game.ros) { renderer.setRos(w.game.ros, { width: w.width, height: w.height, resolution: w.resolution, origin: w.origin }, o); void renderer.precompile(); }
+      },
       onTick: (t, ranges) => onTick(t, ranges),
       onError: (stg, m) => setError(`${stg}: ${m}`),
       onFamily: (msg) => {
-        // Robot vision: the model's costmap cells (coco_lab.costmap), drawn as a hologram
-        if (msg.channel === 'coco.costmap.layers.cells.v1' && msg.columns && s.current?.world) {
+        // SIM's Global and Local Costmap displays: the model's costmap cells (coco_lab.costmap)
+        if (msg.channel === 'coco.costmap.layers.cells.v1' && msg.columns) {
           const c = msg.columns as Record<string, ArrayLike<number>>;
-          const w = s.current.world;
-          r.current?.costmapCells({ width: w.width, height: w.height, resolution: w.resolution, origin: w.origin }, c.row, c.col, c.combined_cost);
+          r.current?.costmapCells(c.row, c.col, c.combined_cost);
         }
         // Grasp Assist's arm script, on COCO's real joints (presentation of the model's own state)
         if (msg.channel === 'coco.arm.state.v1' && msg.columns) {
           const cols = msg.columns as Record<string, ArrayLike<number>>;
           const n = cols.joint1?.length ?? 0;
-          if (n) r.current?.setArm(Object.fromEntries(['joint1', 'joint2', 'finger_left', 'finger_right'].map((k) => [k, Number(cols[k]?.[n - 1])])));
+          if (n) { const row = Object.fromEntries(['joint1', 'joint2', 'finger_left', 'finger_right'].map((k) => [k, Number(cols[k]?.[n - 1])])); r.current?.setArm(row); recorder.current.setArm(row); }
         }
       },
-    }, p.mode ?? 'phone');
+    }, p.mode ?? 'phone', p.race ? 'astar' : p.planner ?? 'astar', p.colour ?? 'red');
     s.current = session;
     session.client.worker.addEventListener('message', (m: MessageEvent) => {
       const d = m.data as { type: string; name?: string };
@@ -157,6 +206,8 @@ export function PlayGame(p: PlayProps) {
       live.current.pollGamepad();
       live.current.applyHeld();
       if (!document.hidden) { rr.frame(dt); perf.drawnPose(rr.pose); }
+      if (live.current.watching && !document.hidden) { if (watch.current.frame(now)) live.current.onSlow(watch.current.last); }
+      else watch.current.reset();
       const fp = fps.current;
       fp.frames += 1;
       if (now - fp.t0 > 1000) { fp.fps = (fp.frames * 1000) / (now - fp.t0); fp.frames = 0; fp.t0 = now; if (p.showPerf) setPerfText(`${fp.fps.toFixed(0)} fps · ${rr.stats.draws} draws · ${(rr.stats.triangles / 1000).toFixed(0)}k tris · ${p.tier}`); }
@@ -184,10 +235,29 @@ export function PlayGame(p: PlayProps) {
   useEffect(() => registerRunSaver(async () => {
     const g = s.current;
     if (!g || !g.client.world) return null;
-    return { name: `coco-${p.game}-${p.world}-seed-${p.seed}-run.json`, data: await g.query('record') };
-  }), [p.game, p.world, p.seed]);
+    return { name: `coco-${p.game}-${p.world}-${p.game === 'fetch_colour' ? p.colour ?? 'red' : `seed-${p.seed}`}-run.json`, data: await g.query('record') };
+  }), [p.game, p.world, p.seed, p.colour]);
   useEffect(() => { if (p.paused) s.current?.pause(); else if (started) s.current?.resume(); }, [p.paused, started]);
-  useEffect(() => { r.current?.setVision(vision); r.current?.setCandidates(vision ? cands : []); }, [vision, cands]);
+  // G2.5: "Save as rosbag2 (MCAP)" (pause menu, results): this run's model messages, written in the browser
+  useEffect(() => registerBagSource(async () => {
+    const w = s.current?.world;
+    if (!w?.game.ros || !occ.current) throw new Error('the model has not started yet');
+    const { writeBag } = await import('../ros/bag');
+    // Fetch by colour names its colour where Fetch Rush names its mode
+    const bagMode = p.game === 'fetch_rush' ? p.mode ?? 'phone' : p.game === 'fetch_colour' ? p.colour ?? 'red' : undefined;
+    const name = bagName(p.game, bagMode, p.seed);
+    const rec = recorder.current;
+    const bytes = await writeBag(rec.frames, w.game.ros, { width: w.width, height: w.height, resolution: w.resolution, origin: w.origin }, occ.current,
+      { game: p.game, seed: p.seed, mode: bagMode, world: p.world, hashVersion: 3, app: `COCO Lab ${__BUILD_COMMIT__}`, ticks: rec.frames.length, dropped: rec.dropped }, name);
+    return { name, bytes };
+  }), [p.game, p.mode, p.seed, p.world, p.colour]);
+  useEffect(() => { const now = performance.now(); if (started && !p.paused) clock.current.resume(now); else clock.current.pause(now); }, [p.paused, started]);
+  // G2.2: the view and the displays (presentation only: the model is never told)
+  useEffect(() => { r.current?.setView(view); writePref('view', view); }, [view, sceneReady]);
+  useEffect(() => { r.current?.setDisplays(displays); }, [displays, sceneReady, modelReady]);
+  const changeDisplays = useCallback((d: Displays) => { setDisplays(d); writePref('displays', d); }, []);
+  useEffect(() => { r.current?.setCandidates(view === 'sim' ? cands : []); }, [view, cands]);
+  const toggleView = useCallback(() => setView((v) => (v === 'game' ? 'sim' : 'game')), []);
 
   /** Every tick from the model: draw it, and turn its changes into toasts, flashes and sounds. */
   const onTick = (t: GameTick, ranges: Float32Array) => {
@@ -208,10 +278,14 @@ export function PlayGame(p: PlayProps) {
     const g = t.game;
     if (g?.objects && w?.game.objects) rr.setObjects(new Map(w.game.objects.map((o) => [o.id, o])), g.objects);
     if (g?.actors) rr.setActors(g.actors);
-    const plan = t.plans.length ? t.plans[t.plans.length - 1].waypoints : null;
-    if (plan) rr.setPlan([[t.pose[0], t.pose[1]], ...plan]);
-    if (t.arrived || (t.source === 'teleop' && before?.source !== 'teleop')) { rr.setPlan([]); setGoal(null); rr.setGoal(null); setAuto(false); }
-    rr.setScan(ranges, { min: w?.lidar.angle_min ?? -2.09, max: w?.lidar.angle_max ?? 2.09, samples: w?.lidar.samples ?? ranges.length }, (w?.lidar.mount ?? [0, 0, 0]) as [number, number, number], w?.lidar.range_max ?? 12);
+    const last = t.plans.length ? t.plans[t.plans.length - 1] : null;
+    if (last) { rr.setPlan([[t.pose[0], t.pose[1]], ...last.waypoints]); planGoal.current = last.goal; }
+    // G2 rules 5: AUTO re-planned around an actor this tick (the model's own new route)
+    const av = g?.avoid, bav = before?.game?.avoid;
+    if (av?.waypoints) rr.setPlan([[t.pose[0], t.pose[1]], ...av.waypoints]);
+    if (t.arrived || (t.source === 'teleop' && before?.source !== 'teleop')) { rr.setPlan([]); setGoal(null); rr.setGoal(null); setAuto(false); planGoal.current = null; }
+    rr.setScan(ranges, { min: w?.lidar.angle_min ?? -2.09, max: w?.lidar.angle_max ?? 2.09, samples: w?.lidar.samples ?? ranges.length }, (w?.lidar.mount ?? [0, 0, 0]) as [number, number, number], w?.lidar.range_max ?? 12,
+      { tf: t.ros?.tf ?? null, tickPose: t.pose, v: t.v, w: t.w, goal: planGoal.current });
     sound.current.motor(t.v, (w?.limits as Record<string, number> | undefined)?.teleop_linear ?? 0.5);
     // transitions
     const bf = before?.game?.fetch, f = g?.fetch;
@@ -228,17 +302,40 @@ export function PlayGame(p: PlayProps) {
       else if (a.phase === 'idle' && ba.phase !== 'idle' && ba.phase !== 'release' && a.reason) { say(a.reason.length > 46 ? a.reason.slice(0, 44) + '…' : a.reason); sound.current.refuse(); }
     }
     if (g?.clearance !== undefined && g.clearance < 1.2 && (before?.game?.clearance ?? 9) >= 1.2) say('Forklift ahead!');
+    if (av && av.state !== bav?.state) {
+      const who = av.actor.startsWith('walker') ? 'walker' : 'forklift';
+      if (av.state === 'waiting') say(`AUTO: waiting for the ${who}`);
+      else if (av.state === 'replanned') say(`AUTO: new route around the ${who}`);
+      else if (av.state === 'go' && bav?.state === 'waiting') say(`AUTO: going on (the ${who} stops for COCO)`);
+    }
+    if (g?.actors_held?.length && !before?.game?.actors_held?.length) say(g.actors_held[0].startsWith('walker') ? 'The walker stopped for COCO' : 'The forklift stopped for COCO');
+    if (stackGhost.current && f) rr.setStackGhost(ghostPoseAt(stackGhost.current.track, f.t));
     if (f?.over && !bf?.over) void finish();
+    // G2.3: the model's events as /rosout lines; the clock's sim time and iterations
+    const scan = w?.game.ros?.scan;
+    if (rosout.current.feed({ tick: t.tick, t_world: t.t_world, source: t.source ?? 'idle', blocked: t.blocked, arrived: t.arrived, plans: t.plans, pose: t.pose, avoid: av ?? null },
+      ranges, scan ?? null, { resolution: w?.resolution ?? 0.1 }).length) setLog([...rosout.current.lines]);
+    clock.current.tick(t.t_world, t.tick, performance.now());
+    // G2.4 / G2.5: the frame (what the model produced this tick) and the topics it published
+    const tele = (t.inputs ?? []).filter((x) => x.kind === 'teleop').pop() as { linear?: number; angular?: number } | undefined;
+    const frame = { tick: t.tick, t: t.t_world, pose: t.pose, v: t.v, w: t.w, source: t.source ?? 'idle', tf: t.ros?.tf ?? null, ranges: ranges.slice(),
+      plan: last ? last.waypoints as [number, number][] : null, goal: planGoal.current, teleop: tele ? [tele.linear ?? 0, tele.angular ?? 0] as [number, number] : null, arm: recorder.current.arm };
+    const first = recorder.current.frames.length === 0;
+    recorder.current.push(frame);
+    const wall = performance.now();
+    for (const topic of topicsOf(frame, first)) stats.current.mark(topic, wall, t.t_world);
     setTick(t);
   };
 
-  // Robot vision asks the model for its costmap: at once, then every 4 s while it stays on (view-only, no tick)
+  // SIM's costmap displays ask the model for its costmap: at once, then every 4 s while shown
+  // (view-only, no tick; only the cells that changed after the first: G1.13's delta view)
+  const costmapOn = view === 'sim' && (displays.global_costmap.on || displays.local_costmap.on);
   useEffect(() => {
-    if (!vision || !started) return;
+    if (!costmapOn || !started) return;
     s.current?.client.requestCostmap(true);
     const t = setInterval(() => s.current?.client.requestCostmap(true), 4000);
     return () => clearInterval(t);
-  }, [vision, started]);
+  }, [costmapOn, started]);
 
   // the planner ghost: the round's precomputed route for each order (G1.11: no search while playing)
   const ghostOrder = useRef<number | null>(null);
@@ -250,6 +347,19 @@ export function PlayGame(p: PlayProps) {
     ghostOrder.current = k;
     void s.current?.query<{ order: number; points: [number, number][] } | null>('ghost').then((g) => { r.current?.setGhost(g?.points ?? null); setGhostPts(g?.points ?? null); });
   }, [p.ghost, tick?.game?.fetch?.k]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // the wheel (and a touchpad pinch: ctrl + wheel) zooms COCO's camera, never the page (Gautham,
+  // 2026-10-25: a pinch zoomed the whole page); a native listener, not passive, so it can prevent it
+  useEffect(() => {
+    const c = canvas.current;
+    if (!c) return;
+    const wheel = (e: WheelEvent) => { e.preventDefault(); r.current?.cam.zoom(e.ctrlKey ? Math.exp(e.deltaY * 0.01) : e.deltaY > 0 ? 1.1 : 1 / 1.1); setCam(r.current?.cam.mode ?? 'chase'); };
+    c.addEventListener('wheel', wheel, { passive: false });
+    return () => c.removeEventListener('wheel', wheel);
+  }, []);
+  // the browser can take the GPU away (WebGL context lost): say so, never leave a silent black screen
+  const [glLost, setGlLost] = useState(false);
+  useEffect(() => { const t = setInterval(() => setGlLost(!!r.current?.contextLost), 1000); return () => clearInterval(t); }, []);
 
   // a long tick is shown, never hidden: the model's clock waits with it (every timer is model time)
   useEffect(() => {
@@ -271,7 +381,7 @@ export function PlayGame(p: PlayProps) {
       if (alive && res?.rows) {
         const was = cands.some((c) => !c.reason);
         setCands(res.rows);
-        if (!was && res.rows.some((c) => !c.reason && (p.game !== 'fetch_rush' || c.object_id === lt.game?.fetch?.order?.[0]))) say('In range: tap GRAB');
+        if (!was && res.rows.some((c) => !c.reason && (!isFetch(p.game) || c.object_id === lt.game?.fetch?.order?.[0]))) say('In range: tap GRAB');
       }
     }, 500);
     return () => { alive = false; clearInterval(t); };
@@ -286,10 +396,10 @@ export function PlayGame(p: PlayProps) {
     const rr = r.current;
     if (!rr || !tick) return;
     const a = tick.game?.assist;
-    const target = p.game === 'fetch_rush' ? (a?.carried ? null : order?.[0] ?? null) : (primary.kind === 'grab' ? primary.target ?? null : a?.target ?? null);
+    const target = isFetch(p.game) ? (a?.carried ? null : order?.[0] ?? null) : (primary.kind === 'grab' ? primary.target ?? null : a?.target ?? null);
     const stages = ['approach', 'align', 'reach'];
     rr.setTarget(target, a && stages.includes(a.phase) ? (stages.indexOf(a.phase) + 1) / (stages.length + 1) : null);
-    rr.setDropZone(p.game === 'fetch_rush' ? order?.[1] ?? null : primary.kind === 'drop' ? primary.target ?? null : null, !!a?.carried);
+    rr.setDropZone(isFetch(p.game) ? order?.[1] ?? null : primary.kind === 'drop' ? primary.target ?? null : null, !!a?.carried);
   }, [tick, primary]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const begin = () => {
@@ -299,7 +409,7 @@ export function PlayGame(p: PlayProps) {
     // Nothing Phone (1): without it Play stayed in the tab, 710 x 269 CSS px under the address bar.
     void enterPhonePlay();
     sound.current.unlock();
-    r.current!.cam.setMode('chase');
+    r.current!.setGameCamera('chase');
     setCam('chase');
     s.current!.start();
     setStarted(true);
@@ -329,11 +439,11 @@ export function PlayGame(p: PlayProps) {
     const ss = s.current;
     if (!ss || latched) return;
     if (auto) { ss.manual(); setAuto(false); say('Manual: you drive'); return; }
-    if (p.game === 'fetch_rush') {
+    if (isFetch(p.game)) {
       const gTo = await ss.query<{ x: number; y: number; why: string } | null>('auto_goal');
       if (!gTo) { say('No path for the planner from here'); return; }
       ss.goal(gTo.x, gTo.y); setGoal([gTo.x, gTo.y]); r.current?.setGoal([gTo.x, gTo.y]);
-      say(gTo.why === 'drop' ? 'AUTO: to the drop zone' : 'AUTO: to the next pick');
+      say(gTo.why === 'drop' ? 'AUTO: to the drop zone' : p.game === 'fetch_colour' ? `AUTO: to the ${p.colour ?? 'red'} rod` : 'AUTO: to the next pick');
     } else if (goal) ss.goal(goal[0], goal[1]);
     else { say('Set a goal on the map first'); return; }
     setAuto(true);
@@ -353,9 +463,17 @@ export function PlayGame(p: PlayProps) {
     ss.pause();
     // the reference card for this shift (committed M6 reference runs); no reference, no stars
     const refs = await fetch(`${BASE}generated/g1/references.json`, { credentials: 'omit' }).then((x) => x.json()).catch(() => null) as { fetch_rush?: Record<string, unknown> } | null;
-    const reference = refs?.fetch_rush?.[String(p.seed)] ?? null;
+    // (a round -- Fetch Rush rules 2+ or Fetch by colour -- carries its own reference; the glue uses that)
+    const reference = p.game === 'fetch_rush' ? refs?.fetch_rush?.[String(p.seed)] ?? null : null;
     const [card, rec] = await Promise.all([ss.query<{ card: Record<string, unknown>; stars: number | null; reference: Record<string, unknown> | null }>('stars', reference), ss.query<Record<string, unknown>>('record')]);
-    p.onResult({ game: p.game, seed: p.seed, world: p.world, card: card?.card ?? null, stars: card?.stars ?? null, reference: card?.reference ?? null, record: rec, objects: ss.world?.game.objects });
+    const w = ss.world;
+    const inset = w && occ.current && w.game.round ? { map: { width: w.width, height: w.height, resolution: w.resolution, origin: w.origin }, occupancy: occ.current,
+      planned: w.game.round.routes, driven: recorder.current.frames.filter((_, k) => k % 3 === 0).map((f) => [f.pose[0], f.pose[1]] as [number, number]) } : undefined;
+    const ghost = stackGhost.current;
+    const stack = ghost ? { driving_s: ghost.driving_s, driven_m: ghost.driven_m, legs: ghost.legs.map((l) => ({ id: l.id, status: l.status })), not: ghost.not } : undefined;
+    const planner = w?.game.round ? { route_m: w.game.round.ghost_m.reduce((a, b) => a + b, 0), reference_time_s: w.game.round.reference_time_s } : undefined;
+    p.onResult({ game: p.game, seed: p.seed, world: p.world, card: card?.card ?? null, stars: card?.stars ?? null, reference: card?.reference ?? null, record: rec, objects: ss.world?.game.objects, inset,
+      driven_m: recorder.current.frames.reduce((acc, f, k, a) => acc + (k ? Math.hypot(f.pose[0] - a[k - 1].pose[0], f.pose[1] - a[k - 1].pose[1]) : 0), 0), planner, stack });
   };
 
   // keyboard: WASD/arrows drive; G grab; F auto; C camera; V vision; Space STOP; R release; M map; Esc pause
@@ -371,12 +489,13 @@ export function PlayGame(p: PlayProps) {
       if (e.repeat) return;
       if (e.code === 'KeyG' || e.code === 'KeyE') doPrimary();
       else if (e.code === 'KeyF') void toggleAuto();
-      else if (e.code === 'KeyC') cycleCam();
-      else if (e.code === 'KeyV' || e.code === 'KeyX') setVision((v) => !v);
+      else if (e.code === 'KeyC') { if (view === 'game') cycleCam(); }
+      else if (e.code === 'KeyV' || e.code === 'KeyX') toggleView();
       else if (e.code === 'KeyR' && latched) release();
+      else if (e.code === 'KeyP') setPanels((x) => !x);
       else if (e.code === 'KeyM') setMapOpen((m) => !m);
     };
-    const up = (e: KeyboardEvent) => { if (keyMap[e.code]) held.current.delete(keyMap[e.code]); };
+    const up = (e: KeyboardEvent) => { if (keyMap[e.code]) { held.current.delete(keyMap[e.code]); if (!held.current.size) perf.driveRelease(); } };
     window.addEventListener('keydown', down);
     window.addEventListener('keyup', up);
     return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', up); };
@@ -412,12 +531,19 @@ export function PlayGame(p: PlayProps) {
       const rt = gp.buttons[7]?.value ?? 0, lt = gp.buttons[6]?.value ?? 0;
       const fwd = rt > 0.05 || lt > 0.05 ? rt - lt : -ay;
       if (ax || ay || rt > 0.05 || lt > 0.05) { if (!stick.current[0] && !stick.current[1]) perf.driveInput(); stick.current = [fwd, -ax]; s.current.drive(fwd, -ax); }
-      else if (stick.current[0] || stick.current[1]) { stick.current = [0, 0]; s.current.drive(0, 0); }
+      else if (stick.current[0] || stick.current[1]) { stick.current = [0, 0]; perf.driveRelease(); s.current.drive(0, 0); }
     }
     pads.current = b;
   };
 
-  live.current = { pollGamepad, applyHeld };
+  const onSlow = (fps: number) => {
+    if (!isPhone()) return;
+    const coarse = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches;
+    const now: PlaySettings = { quality: p.tier, phone120: readPref('phone120', false, isBool) };
+    const rec = recommendedSettings(coarse);
+    if (heavier(now, rec)) setRecommend({ fps, to: rec });
+  };
+  live.current = { pollGamepad, applyHeld, watching: started && !p.paused, onSlow };
 
   // canvas: mouse drag orbits, wheel zooms, a click on the floor sets a goal (desktop); two fingers orbit and pinch
   const touches = useRef(new Map<number, { x: number; y: number; x0: number; y0: number; t0: number }>());
@@ -430,16 +556,21 @@ export function PlayGame(p: PlayProps) {
     if (!t || !r.current) return;
     const dx = e.clientX - t.x, dy = e.clientY - t.y;
     const all = [...touches.current.values()];
+    const sim = r.current.view === 'sim';
     if (all.length === 2) {
       const [a, b] = all;
       const before = Math.hypot(a.x - b.x, a.y - b.y);
       t.x = e.clientX; t.y = e.clientY;
       const after = Math.hypot(all[0].x - all[1].x, all[0].y - all[1].y);
       if (before > 0) r.current.cam.zoom(before / Math.max(1, after));
-      r.current.cam.drag(dx / 2, dy / 2);
+      // SIM (RViz's Orbit view): two fingers pan; GAME: they orbit, as in G1
+      if (sim) r.current.cam.pan(dx / 2, dy / 2); else r.current.cam.drag(dx / 2, dy / 2);
     } else {
       t.x = e.clientX; t.y = e.clientY;
-      if (Math.hypot(e.clientX - t.x0, e.clientY - t.y0) > 6) r.current.cam.drag(dx, dy);
+      if (Math.hypot(e.clientX - t.x0, e.clientY - t.y0) > 6) {
+        if (sim && (e.shiftKey || (e.buttons & 2) || (e.buttons & 4))) r.current.cam.pan(dx, dy);   // RViz: right / middle / shift drag
+        else r.current.cam.drag(dx, dy);
+      }
     }
     setCam(r.current.cam.mode);
   };
@@ -483,10 +614,9 @@ export function PlayGame(p: PlayProps) {
   const desktop = typeof window !== 'undefined' && window.matchMedia?.('(hover: hover) and (pointer: fine)').matches;
   const loadIndex = Math.max(0, LOAD_STAGES.findIndex((x) => x.id === stage));
 
-  return <div className="g1 g1-play coco-play" data-g1="play" data-testid="arena" data-ready="false">
+  return <div className={`g1 g1-play coco-play ${view === 'sim' ? 'is-sim' : ''} ${panels ? 'has-panels' : ''}`} data-g1="play" data-testid="arena" data-ready="false" data-view={view}>
     <canvas ref={canvas} className="g1-canvas" data-testid="arena-canvas" data-scene-ready={sceneReady ? 'true' : 'false'} tabIndex={0}
-      onPointerDown={onCanvasDown} onPointerMove={onCanvasMove} onPointerUp={onCanvasUp} onPointerCancel={onCanvasUp}
-      onWheel={(e) => { r.current?.cam.zoom(e.deltaY > 0 ? 1.1 : 1 / 1.1); setCam(r.current?.cam.mode ?? 'chase'); }}
+      onPointerDown={onCanvasDown} onPointerMove={onCanvasMove} onPointerUp={onCanvasUp} onPointerCancel={onCanvasUp} onContextMenu={(e) => e.preventDefault()}
       aria-label="COCO's world. Drive with WASD or the left thumb; click the floor for a goal" />
     {!started && <section className="g1-screen" data-testid="g1-loading" style={{ justifyContent: 'flex-end' }}>
       <div className="g1-eyebrow">{modelReady ? 'COCO IS AWAKE' : `LOADING COCO'S BRAIN · STEP ${Math.min(loadIndex + 1, LOAD_STAGES.length)} OF ${LOAD_STAGES.length}`}</div>
@@ -500,26 +630,38 @@ export function PlayGame(p: PlayProps) {
       {error && <p role="alert" className="g1-note" style={{ color: 'var(--g1-danger)' }}>{error}</p>}
     </section>}
     {started && <div className="g1-safe">
-      <FloatJoystick enabled={!latched && !p.paused} hint={desktop ? 'WASD / ARROWS' : 'DRAG TO DRIVE'} onChange={(f, t) => { if ((f || t) && !stick.current[0] && !stick.current[1]) perf.driveInput(); stick.current = [f, t]; if (f || t) setAuto(false); s.current?.drive(f, t); }} />
+      <FloatJoystick enabled={!latched && !p.paused} hint={desktop ? 'WASD / ARROWS' : 'DRAG TO DRIVE'} onChange={(f, t) => { if ((f || t) && !stick.current[0] && !stick.current[1]) perf.driveInput(); else if (!f && !t) perf.driveRelease(); stick.current = [f, t]; if (f || t) setAuto(false); s.current?.drive(f, t); }} />
       {world && occ.current && <Minimap world={world} occupancy={occ.current} marks={marks} headingUp={false} onOpen={() => setMapOpen(true)} />}
-      <div className="g1-pill g1-glass" data-testid="objective">{p.game === 'fetch_rush'
+      <div className="g1-pill g1-glass" data-testid="objective">{p.game === 'fetch_colour'
+        ? fr ? <><span className="g2-colour-dot" data-colour={p.colour ?? 'red'} aria-hidden /><span data-testid="colour-objective">{fr.deliveries ? `DELIVERED THE ${(p.colour ?? 'red').toUpperCase()} ROD` : colourObjective(p.colour ?? 'red', !!tick?.game?.assist?.carried, world?.game.colour?.drop_label)}</span><span className="sep">·</span><span className={`num${fr.seconds - fr.t < 30 ? ' low' : ''}`}>⏱ {fmt(fr.seconds - fr.t)}</span>{fr.contacts > 0 && <><span className="sep">·</span><span className="num">✖ {fr.contacts}</span></>}</> : <span>FETCH BY COLOUR · {colourChip(p.colour ?? 'red')}</span>
+        : p.game === 'fetch_rush'
         ? fr ? <><span>DELIVER {fr.deliveries}/{fr.orders}</span><span className="sep">·</span><span className={`num${fr.seconds - fr.t < 30 ? ' low' : ''}`}>⏱ {fmt(fr.seconds - fr.t)}</span>{fr.contacts > 0 && <><span className="sep">·</span><span className="num">✖ {fr.contacts}</span></>}</> : <span>FETCH RUSH</span>
         : <><span>FREE DRIVE</span><span className="sep">·</span><span>{p.world === 'depot' ? 'DEPOT' : 'PROVING GROUND'}</span></>}</div>
       <div className="g1-top-right">
         <button className="g1-icon g1-glass" data-testid="g1-pause" aria-label="Pause (Esc)" onClick={p.onPause}><Pause size={20} />{desktop && <kbd>ESC</kbd>}</button>
-        <button className={`g1-icon g1-glass ${vision ? 'is-on' : ''}`} data-testid="g1-vision" aria-pressed={vision} aria-label="Robot vision (V): what COCO sees and computes" onClick={() => { setVision((x) => !x); say(vision ? 'Robot vision off' : 'Robot vision: LiDAR and the plan'); }}><Eye size={20} />{desktop && <kbd>V</kbd>}</button>
+        <button className={`g1-icon g1-glass ${panels ? 'is-on' : ''}`} data-testid="g2-panels-button" aria-pressed={panels} aria-label="ROS 2 panels (P): displays, graph, topic echo, plot (model)" onClick={() => setPanels((x) => !x)}><Network size={20} />{desktop && <kbd>P</kbd>}</button>
+        <ViewSwitch view={view} desktop={!!desktop} onView={(v) => { setView(v); if (v !== view) say(v === 'sim' ? 'SIM: the same moment, as RViz would show it (model)' : 'GAME view'); }} />
       </div>
+      {view === 'sim' && <p className="g2-sim-caption g1-glass" data-testid="g2-sim-caption">SIM · RViz-style view of the browser model <b>MODEL</b><span className="g2-sim-frame"> · Fixed Frame: map</span></p>}
       <button className="g1-chip g1-glass" onClick={() => setInfo((x) => !x)} aria-expanded={info} aria-label="What is real here"><Info size={11} style={{ verticalAlign: '-2px' }} /> MODEL · kinematic</button>
       {info && <div className="g1-sheet g1-glass" role="note">
         <h3>WHAT IS REAL HERE</h3>
         <p><b>MODEL · kinematic.</b> COCO is driven by the Arena model (coco_lab, in your browser): planar kinematics with the robot's real speed and acceleration limits, its real LiDAR geometry. No physics engine; nothing tips or slips.</p>
         {world?.game.v3 && <p><b>MODEL · MoveIt-style.</b> Grasp Assist decides each pick from COCO's own reach envelope and gripper limits. Two fingers and a magnet; the magnet holds.</p>}
-        {p.game === 'fetch_rush' && <p><b>Game rules are not physics.</b> Orders, timer and stars are scoring rules (GAMES.md); stars compare with the reference bot's run.</p>}
+        {p.game === 'fetch_colour' && <p><b>SIMPLIFIED.</b> Here COCO is handed the {p.colour ?? 'red'} rod's id; in COCO's real stack (Gazebo) the camera found the rod by its colour (target_finder).</p>}
+        {isFetch(p.game) && <p><b>Game rules are not physics.</b> Orders, timer and stars are scoring rules (GAMES.md); stars compare with the reference bot's run.</p>}
         <p>No physical robot exists. Real ROS 2 runs are in Research › Recordings (STACK).</p>
       </div>}
       <section className="g1-gauge" data-testid="speed"><svg viewBox="0 0 150 66" aria-hidden><path d="M20 62 A55 55 0 0 1 130 62" stroke="#2A3344" strokeWidth="7" fill="none" strokeLinecap="round" />
         {Math.abs(v) > 0.002 && <path d={`M20 62 A55 55 0 0 1 ${(75 - 55 * Math.cos(angle)).toFixed(2)} ${(62 - 55 * Math.sin(angle)).toFixed(2)}`} stroke={v < 0 ? '#22D3EE' : '#FF7A1A'} strokeWidth="7" fill="none" strokeLinecap="round" />}</svg>
         <div className="v num">{Math.abs(v).toFixed(2)}<small>m/s{v < -0.002 ? ' ◂' : ''}</small></div><span className={`g1-mode ${mode}`} data-testid="mode-chip">{mode.toUpperCase()}</span></section>
+      <TelemetryStrip s={tick ? strip(tick) : null} />
+      {panels && <Panels tab={panelTab} onTab={setPanelTab} onClose={() => setPanels(false)} displays={displays} onDisplays={changeDisplays}
+        info={world?.game.ros ?? null} stats={stats.current} recorder={recorder.current} frame={recorder.current.frames[recorder.current.frames.length - 1] ?? null}
+        map={world ? { width: world.width, height: world.height, resolution: world.resolution, origin: world.origin } : null} occupancy={occ.current} goal={planGoal.current}
+        echo={echo} onEcho={(topic) => { setEcho(topic); setPanelTab('echo'); }} />}
+      {desktop && view === 'sim' && <GazeboBar clock={clock.current} now={performance.now()} />}
+      <RosoutConsole lines={log} />
       <button className={`g1-btn g1-primary ${primary.enabled ? (primary.kind === 'drop' ? 'is-drop' : '') : 'is-grey'}`} data-testid="hud-primary" aria-disabled={!primary.enabled} onClick={doPrimary}
         aria-label={`${primary.label}${primary.why ? `: ${primary.why}` : ''} (G)`}>
         {primary.progress !== undefined && <span className="ring" style={{ background: `conic-gradient(var(--g1-safe) 0 ${Math.round(primary.progress * 100)}%, transparent ${Math.round(primary.progress * 100)}%)` }} />}
@@ -528,7 +670,13 @@ export function PlayGame(p: PlayProps) {
       <button className={`g1-btn g1-small g1-auto ${auto ? 'is-on' : ''}`} data-testid="hud-autonomy" aria-pressed={auto} onClick={() => void toggleAuto()} aria-label="AUTO (F): the planner drives"><span><Route className="ic" size={20} />AUTO{desktop && <kbd>F</kbd>}</span></button>
       <button className="g1-btn g1-small g1-cam" data-testid="hud-camera" onClick={cycleCam} aria-label={`Camera (C): ${cam}`}><span><Camera className="ic" size={20} />CAM{desktop && <kbd>C</kbd>}</span></button>
       {busy && <p className="g1-busy g1-glass" role="status" data-testid="g1-busy">COCO's planner is computing… <small>(the clock waits)</small></p>}
-      {toast && <p key={toast.key} className="g1-toast g1-glass" role="status">{toast.text}</p>}
+      {toast && !p.paused && <p key={toast.key} className="g1-toast g1-glass" role="status">{toast.text}</p>}
+      {stackGhost.current && <p className="g2-race g1-glass" data-testid="g2-race-chip">RACING Nav2 · <b>STACK</b> recording (Gazebo, driving only — no grasp)</p>}
+      {recommend && <div className="g2-recommend g1-glass" role="status" data-testid="g2-recommend">
+        <span>Drawing {recommend.fps.toFixed(0)} fps on your saved settings.</span>
+        <button className="go" onClick={() => { const to = recommend.to; setRecommend(null); p.onRecommended?.(to); }}>Switch to recommended settings<small>{recommend.to.quality} quality · 60 fps cap · restarts this run</small></button>
+        <button className="x" aria-label="Keep my settings" onClick={() => setRecommend(null)}>✕</button>
+      </div>}
       {flash && <div key={flash.key} className={`g1-flash ${flash.side}`} />}
       {p.showPerf && <details className="g1-perf g1-glass"><summary>perf</summary>{perfText}</details>}
     </div>}
@@ -539,6 +687,11 @@ export function PlayGame(p: PlayProps) {
       <span>{latched ? 'HOLD' : 'STOP'}{desktop && <kbd>{latched ? 'R' : 'SPACE'}</kbd>}</span>
       {holdStart !== null && <i className="hold" style={{ width: '100%', transition: `width ${STOP_HOLD_MS}ms linear` }} />}
     </button></div>, document.body)}
+    {glLost && <section className="g1-screen dim" data-testid="g1-gl-lost" role="alert" style={{ position: 'fixed', zIndex: 30 }}>
+      <div className="g1-eyebrow">THE 3D VIEW STOPPED</div>
+      <p className="g1-note">The browser took the graphics (GPU) away from this page, so the 3D view went black. It usually comes back by itself in a moment. If it does not, reload: the run restarts.</p>
+      <nav className="g1-menu"><button className="main" onClick={() => window.location.reload()}>RELOAD</button><a href={`${BASE}?view=play`}>GAMES</a></nav>
+    </section>}
     {mapOpen && world && occ.current && <TacticalMap world={world} occupancy={occ.current} marks={marks} onGoal={setGoalAt} onClose={() => setMapOpen(false)} />}
     {tutorial && <Tutorial onDone={() => { setTutorial(false); p.onTutorialDone(); }} />}
     <section className="g1-rotate"><Navigation2 size={32} /><h2>Rotate your phone</h2><p className="g1-note">COCO has room to play in landscape.</p>
@@ -555,7 +708,7 @@ const TUT = [
   { title: 'Drag to drive', text: 'Put your left thumb anywhere on the left half and drag.', thumb: { left: '18%', bottom: '22%' } },
   { title: 'Tap GRAB when the can glows', text: 'Grasp Assist drives in and picks it up with the arm.', thumb: { right: '6%', bottom: '8%' } },
   { title: 'STOP stops everything', text: 'Hold it to release. STOP always wins.', thumb: { right: '6%', bottom: '36%' } },
-  { title: '👁 shows what COCO sees', text: 'Its LiDAR and the plan its planner found.', thumb: { right: '4%', top: '4%' } },
+  { title: 'SIM shows what COCO computes', text: 'The same moment as RViz would draw it: frames, LiDAR, costmaps, the plan.', thumb: { right: '4%', top: '4%' } },
 ];
 function Tutorial({ onDone }: { onDone: () => void }) {
   const [k, setK] = useState(0);

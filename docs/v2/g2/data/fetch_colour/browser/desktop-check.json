@@ -1,0 +1,251 @@
+{
+ "site": "http://127.0.0.1:4192/coco-labs/",
+ "profile": "desktop",
+ "device": "desktop 1440 x 900",
+ "gpu": "nvidia",
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "when": "2026-10-25T05:33:14.550Z",
+ "planner_links": {
+  "chips": [
+   {
+    "text": "RED · 20 mm",
+    "href": "/coco-labs/?view=play&game=fetch_colour&colour=red"
+   },
+   {
+    "text": "GREEN · 24 mm",
+    "href": "/coco-labs/?view=play&game=fetch_colour&colour=green"
+   },
+   {
+    "text": "BLUE · 28 mm",
+    "href": "/coco-labs/?view=play&game=fetch_colour&colour=blue"
+   },
+   {
+    "text": "YELLOW · 32 mm",
+    "href": "/coco-labs/?view=play&game=fetch_colour&colour=yellow"
+   }
+  ],
+  "dijkstra": [
+   "/coco-labs/?view=play&game=fetch_colour&colour=red&planner=dijkstra",
+   "/coco-labs/?view=play&game=fetch_colour&colour=green&planner=dijkstra",
+   "/coco-labs/?view=play&game=fetch_colour&colour=blue&planner=dijkstra",
+   "/coco-labs/?view=play&game=fetch_colour&colour=yellow&planner=dijkstra"
+  ],
+  "astar": [
+   "/coco-labs/?view=play&game=fetch_colour&colour=red",
+   "/coco-labs/?view=play&game=fetch_colour&colour=green",
+   "/coco-labs/?view=play&game=fetch_colour&colour=blue",
+   "/coco-labs/?view=play&game=fetch_colour&colour=yellow"
+  ],
+  "ok": true
+ },
+ "runs": {
+  "red": {
+   "url": "http://127.0.0.1:4192/coco-labs/?view=play&game=fetch_colour&colour=red",
+   "ok": true,
+   "toast_hidden": true,
+   "results_fit": true,
+   "results_scroll_h": 900,
+   "results_client_h": 900,
+   "delivered": "rod_red",
+   "carried": "rod_red",
+   "hud_colour": "red",
+   "objective_at_grab": "FETCH THE RED ROD → DISPATCH·⏱ 1:26",
+   "results_title": "FETCH BY COLOUR ·  RED · 20 mm ROD · RESULT",
+   "stars": 2,
+   "time_used": 74.30000000000001,
+   "contacts": 0,
+   "reference_time": 68.10000000000001,
+   "ticks": 744,
+   "inputs": 8,
+   "wall_s": 105.108,
+   "log": [
+    [
+     "started",
+     5
+    ],
+    [
+     "to the rod (AUTO taken)",
+     20
+    ],
+    [
+     "at the rod (GRAB lit)",
+     160
+    ],
+    [
+     "carried",
+     411
+    ],
+    [
+     "to Dispatch (AUTO taken)",
+     419
+    ],
+    [
+     "at Dispatch (DROP lit)",
+     682
+    ],
+    [
+     "delivered",
+     744
+    ]
+   ]
+  },
+  "green": {
+   "url": "http://127.0.0.1:4192/coco-labs/?view=play&game=fetch_colour&colour=green",
+   "ok": true,
+   "toast_hidden": true,
+   "results_fit": true,
+   "results_scroll_h": 900,
+   "results_client_h": 900,
+   "delivered": "rod_green",
+   "carried": "rod_green",
+   "hud_colour": "green",
+   "objective_at_grab": "FETCH THE GREEN ROD → DISPATCH·⏱ 1:23",
+   "results_title": "FETCH BY COLOUR ·  GREEN · 24 mm ROD · RESULT",
+   "stars": 2,
+   "time_used": 66.10000000000001,
+   "contacts": 0,
+   "reference_time": 62.2,
+   "ticks": 662,
+   "inputs": 8,
+   "wall_s": 81.716,
+   "log": [
+    [
+     "started",
+     3
+    ],
+    [
+     "to the rod (AUTO taken)",
+     6
+    ],
+    [
+     "at the rod (GRAB lit)",
+     97
+    ],
+    [
+     "carried",
+     349
+    ],
+    [
+     "to Dispatch (AUTO taken)",
+     357
+    ],
+    [
+     "at Dispatch (DROP lit)",
+     600
+    ],
+    [
+     "delivered",
+     662
+    ]
+   ]
+  },
+  "blue": {
+   "url": "http://127.0.0.1:4192/coco-labs/?view=play&game=fetch_colour&colour=blue",
+   "ok": true,
+   "toast_hidden": true,
+   "results_fit": true,
+   "results_scroll_h": 900,
+   "results_client_h": 900,
+   "delivered": "rod_blue",
+   "carried": "rod_blue",
+   "hud_colour": "blue",
+   "objective_at_grab": "FETCH THE BLUE ROD → DISPATCH·⏱ 1:18",
+   "results_title": "FETCH BY COLOUR ·  BLUE · 28 mm ROD · RESULT",
+   "stars": 2,
+   "time_used": 64.7,
+   "contacts": 0,
+   "reference_time": 58.800000000000004,
+   "ticks": 648,
+   "inputs": 8,
+   "wall_s": 112.667,
+   "log": [
+    [
+     "started",
+     4
+    ],
+    [
+     "to the rod (AUTO taken)",
+     6
+    ],
+    [
+     "at the rod (GRAB lit)",
+     99
+    ],
+    [
+     "carried",
+     353
+    ],
+    [
+     "to Dispatch (AUTO taken)",
+     360
+    ],
+    [
+     "at Dispatch (DROP lit)",
+     586
+    ],
+    [
+     "delivered",
+     648
+    ]
+   ]
+  },
+  "yellow": {
+   "url": "http://127.0.0.1:4192/coco-labs/?view=play&game=fetch_colour&colour=yellow",
+   "ok": true,
+   "toast_hidden": true,
+   "results_fit": true,
+   "results_scroll_h": 900,
+   "results_client_h": 900,
+   "delivered": "rod_yellow",
+   "carried": "rod_yellow",
+   "hud_colour": "yellow",
+   "objective_at_grab": "FETCH THE YELLOW ROD → DISPATCH·⏱ 1:16",
+   "results_title": "FETCH BY COLOUR ·  YELLOW · 32 mm ROD · RESULT",
+   "stars": 2,
+   "time_used": 60.5,
+   "contacts": 0,
+   "reference_time": 55.7,
+   "ticks": 606,
+   "inputs": 8,
+   "wall_s": 114.276,
+   "log": [
+    [
+     "started",
+     3
+    ],
+    [
+     "to the rod (AUTO taken)",
+     5
+    ],
+    [
+     "at the rod (GRAB lit)",
+     72
+    ],
+    [
+     "carried",
+     330
+    ],
+    [
+     "to Dispatch (AUTO taken)",
+     335
+    ],
+    [
+     "at Dispatch (DROP lit)",
+     544
+    ],
+    [
+     "delivered",
+     606
+    ]
+   ]
+  }
+ },
+ "shots": [
+  "desktop-1-mode-card.png",
+  "desktop-2-row-of-rods.png",
+  "desktop-3-carrying.png",
+  "desktop-4-results.png"
+ ],
+ "errors": [],
+ "ok": true
+}

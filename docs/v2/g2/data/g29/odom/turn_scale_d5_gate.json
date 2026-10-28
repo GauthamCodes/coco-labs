@@ -1,0 +1,420 @@
+{
+ "evidence_class": "STACK (recorded Gazebo + Nav2 runs, read only)",
+ "step_s": 0.1,
+ "runs": 40,
+ "pooled_turn_scale": 0.9986,
+ "pooled_dist_scale": 0.9913,
+ "turn_scale_per_run": {
+  "min": 0.9756,
+  "median": 0.99935,
+  "max": 1.0125
+ },
+ "pooled": {
+  "odom_turn_rad": 570.764,
+  "truth_turn_rad": 571.582,
+  "odom_dist_m": 996.479,
+  "truth_dist_m": 1005.258
+ },
+ "rows": [
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_blue_run1",
+   "seconds": 53.0,
+   "odom_turn_rad": 5.322,
+   "truth_turn_rad": 5.377,
+   "odom_dist_m": 7.067,
+   "truth_dist_m": 7.169,
+   "turn_scale": 0.9897,
+   "dist_scale": 0.9858
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_blue_run2",
+   "seconds": 52.2,
+   "odom_turn_rad": 5.238,
+   "truth_turn_rad": 5.274,
+   "odom_dist_m": 7.08,
+   "truth_dist_m": 7.178,
+   "turn_scale": 0.9931,
+   "dist_scale": 0.9863
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_blue_run3",
+   "seconds": 52.9,
+   "odom_turn_rad": 5.273,
+   "truth_turn_rad": 5.318,
+   "odom_dist_m": 7.055,
+   "truth_dist_m": 7.157,
+   "turn_scale": 0.9916,
+   "dist_scale": 0.9858
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_blue_run4",
+   "seconds": 51.9,
+   "odom_turn_rad": 5.241,
+   "truth_turn_rad": 5.302,
+   "odom_dist_m": 7.022,
+   "truth_dist_m": 7.123,
+   "turn_scale": 0.9884,
+   "dist_scale": 0.9858
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_blue_run5",
+   "seconds": 52.0,
+   "odom_turn_rad": 5.296,
+   "truth_turn_rad": 5.351,
+   "odom_dist_m": 7.065,
+   "truth_dist_m": 7.168,
+   "turn_scale": 0.9898,
+   "dist_scale": 0.9857
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_green_run1",
+   "seconds": 55.8,
+   "odom_turn_rad": 5.753,
+   "truth_turn_rad": 5.732,
+   "odom_dist_m": 8.049,
+   "truth_dist_m": 8.185,
+   "turn_scale": 1.0038,
+   "dist_scale": 0.9834
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_green_run2",
+   "seconds": 56.6,
+   "odom_turn_rad": 5.656,
+   "truth_turn_rad": 5.65,
+   "odom_dist_m": 8.004,
+   "truth_dist_m": 8.139,
+   "turn_scale": 1.001,
+   "dist_scale": 0.9834
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_green_run3",
+   "seconds": 56.9,
+   "odom_turn_rad": 5.676,
+   "truth_turn_rad": 5.654,
+   "odom_dist_m": 8.044,
+   "truth_dist_m": 8.182,
+   "turn_scale": 1.0039,
+   "dist_scale": 0.9831
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_green_run4",
+   "seconds": 56.6,
+   "odom_turn_rad": 5.71,
+   "truth_turn_rad": 5.675,
+   "odom_dist_m": 7.965,
+   "truth_dist_m": 8.102,
+   "turn_scale": 1.0063,
+   "dist_scale": 0.9831
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_green_run5",
+   "seconds": 57.5,
+   "odom_turn_rad": 5.848,
+   "truth_turn_rad": 5.808,
+   "odom_dist_m": 8.018,
+   "truth_dist_m": 8.155,
+   "turn_scale": 1.0067,
+   "dist_scale": 0.9831
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_red_run1",
+   "seconds": 60.1,
+   "odom_turn_rad": 5.861,
+   "truth_turn_rad": 5.792,
+   "odom_dist_m": 9.448,
+   "truth_dist_m": 9.572,
+   "turn_scale": 1.0118,
+   "dist_scale": 0.987
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_red_run2",
+   "seconds": 57.8,
+   "odom_turn_rad": 5.546,
+   "truth_turn_rad": 5.492,
+   "odom_dist_m": 9.451,
+   "truth_dist_m": 9.572,
+   "turn_scale": 1.0098,
+   "dist_scale": 0.9874
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_red_run3",
+   "seconds": 61.0,
+   "odom_turn_rad": 5.687,
+   "truth_turn_rad": 5.647,
+   "odom_dist_m": 9.42,
+   "truth_dist_m": 9.545,
+   "turn_scale": 1.007,
+   "dist_scale": 0.987
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_red_run4",
+   "seconds": 60.4,
+   "odom_turn_rad": 5.631,
+   "truth_turn_rad": 5.592,
+   "odom_dist_m": 9.409,
+   "truth_dist_m": 9.532,
+   "turn_scale": 1.007,
+   "dist_scale": 0.9871
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_red_run5",
+   "seconds": 60.7,
+   "odom_turn_rad": 5.521,
+   "truth_turn_rad": 5.453,
+   "odom_dist_m": 9.446,
+   "truth_dist_m": 9.567,
+   "turn_scale": 1.0125,
+   "dist_scale": 0.9874
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_yellow_run1",
+   "seconds": 48.2,
+   "odom_turn_rad": 5.56,
+   "truth_turn_rad": 5.679,
+   "odom_dist_m": 6.692,
+   "truth_dist_m": 6.818,
+   "turn_scale": 0.9792,
+   "dist_scale": 0.9815
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_yellow_run2",
+   "seconds": 54.0,
+   "odom_turn_rad": 5.563,
+   "truth_turn_rad": 5.666,
+   "odom_dist_m": 6.668,
+   "truth_dist_m": 6.799,
+   "turn_scale": 0.9818,
+   "dist_scale": 0.9808
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_yellow_run3",
+   "seconds": 53.3,
+   "odom_turn_rad": 5.645,
+   "truth_turn_rad": 5.774,
+   "odom_dist_m": 6.636,
+   "truth_dist_m": 6.764,
+   "turn_scale": 0.9776,
+   "dist_scale": 0.9811
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_yellow_run4",
+   "seconds": 52.7,
+   "odom_turn_rad": 5.702,
+   "truth_turn_rad": 5.844,
+   "odom_dist_m": 6.642,
+   "truth_dist_m": 6.767,
+   "turn_scale": 0.9756,
+   "dist_scale": 0.9814
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/colour_yellow_run5",
+   "seconds": 52.4,
+   "odom_turn_rad": 5.536,
+   "truth_turn_rad": 5.654,
+   "odom_dist_m": 6.588,
+   "truth_dist_m": 6.708,
+   "turn_scale": 0.9792,
+   "dist_scale": 0.9821
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed1_run1",
+   "seconds": 195.7,
+   "odom_turn_rad": 23.041,
+   "truth_turn_rad": 23.048,
+   "odom_dist_m": 45.877,
+   "truth_dist_m": 46.065,
+   "turn_scale": 0.9997,
+   "dist_scale": 0.9959
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed1_run2",
+   "seconds": 196.9,
+   "odom_turn_rad": 22.628,
+   "truth_turn_rad": 22.564,
+   "odom_dist_m": 45.619,
+   "truth_dist_m": 45.814,
+   "turn_scale": 1.0028,
+   "dist_scale": 0.9957
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed1_run3",
+   "seconds": 192.5,
+   "odom_turn_rad": 22.304,
+   "truth_turn_rad": 22.158,
+   "odom_dist_m": 45.816,
+   "truth_dist_m": 45.998,
+   "turn_scale": 1.0066,
+   "dist_scale": 0.996
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed1_run4",
+   "seconds": 192.3,
+   "odom_turn_rad": 22.473,
+   "truth_turn_rad": 22.371,
+   "odom_dist_m": 45.963,
+   "truth_dist_m": 46.144,
+   "turn_scale": 1.0046,
+   "dist_scale": 0.9961
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed1_run5",
+   "seconds": 195.1,
+   "odom_turn_rad": 22.726,
+   "truth_turn_rad": 22.661,
+   "odom_dist_m": 45.86,
+   "truth_dist_m": 46.049,
+   "turn_scale": 1.0029,
+   "dist_scale": 0.9959
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed2_run1",
+   "seconds": 185.1,
+   "odom_turn_rad": 21.965,
+   "truth_turn_rad": 22.186,
+   "odom_dist_m": 34.439,
+   "truth_dist_m": 35.073,
+   "turn_scale": 0.99,
+   "dist_scale": 0.9819
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed2_run2",
+   "seconds": 173.8,
+   "odom_turn_rad": 16.668,
+   "truth_turn_rad": 16.797,
+   "odom_dist_m": 34.565,
+   "truth_dist_m": 34.915,
+   "turn_scale": 0.9923,
+   "dist_scale": 0.99
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed2_run3",
+   "seconds": 193.6,
+   "odom_turn_rad": 23.039,
+   "truth_turn_rad": 23.281,
+   "odom_dist_m": 34.663,
+   "truth_dist_m": 35.293,
+   "turn_scale": 0.9896,
+   "dist_scale": 0.9822
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed2_run4",
+   "seconds": 196.7,
+   "odom_turn_rad": 23.016,
+   "truth_turn_rad": 23.18,
+   "odom_dist_m": 34.618,
+   "truth_dist_m": 35.249,
+   "turn_scale": 0.9929,
+   "dist_scale": 0.9821
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed2_run5",
+   "seconds": 178.1,
+   "odom_turn_rad": 17.496,
+   "truth_turn_rad": 17.613,
+   "odom_dist_m": 34.561,
+   "truth_dist_m": 34.909,
+   "turn_scale": 0.9933,
+   "dist_scale": 0.99
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed3_run1",
+   "seconds": 178.9,
+   "odom_turn_rad": 24.481,
+   "truth_turn_rad": 24.517,
+   "odom_dist_m": 38.862,
+   "truth_dist_m": 39.187,
+   "turn_scale": 0.9985,
+   "dist_scale": 0.9917
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed3_run2",
+   "seconds": 189.3,
+   "odom_turn_rad": 27.7,
+   "truth_turn_rad": 27.727,
+   "odom_dist_m": 39.055,
+   "truth_dist_m": 39.479,
+   "turn_scale": 0.999,
+   "dist_scale": 0.9893
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed3_run3",
+   "seconds": 184.0,
+   "odom_turn_rad": 24.135,
+   "truth_turn_rad": 24.165,
+   "odom_dist_m": 38.655,
+   "truth_dist_m": 38.982,
+   "turn_scale": 0.9988,
+   "dist_scale": 0.9916
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed3_run4",
+   "seconds": 189.6,
+   "odom_turn_rad": 27.797,
+   "truth_turn_rad": 28.096,
+   "odom_dist_m": 38.803,
+   "truth_dist_m": 39.318,
+   "turn_scale": 0.9894,
+   "dist_scale": 0.9869
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed3_run5",
+   "seconds": 183.3,
+   "odom_turn_rad": 24.074,
+   "truth_turn_rad": 24.101,
+   "odom_dist_m": 38.65,
+   "truth_dist_m": 38.981,
+   "turn_scale": 0.9989,
+   "dist_scale": 0.9915
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed6_run1",
+   "seconds": 204.3,
+   "odom_turn_rad": 22.839,
+   "truth_turn_rad": 22.692,
+   "odom_dist_m": 48.994,
+   "truth_dist_m": 49.166,
+   "turn_scale": 1.0065,
+   "dist_scale": 0.9965
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed6_run2",
+   "seconds": 205.1,
+   "odom_turn_rad": 23.14,
+   "truth_turn_rad": 23.037,
+   "odom_dist_m": 48.983,
+   "truth_dist_m": 49.161,
+   "turn_scale": 1.0045,
+   "dist_scale": 0.9964
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed6_run3",
+   "seconds": 206.2,
+   "odom_turn_rad": 23.327,
+   "truth_turn_rad": 23.208,
+   "odom_dist_m": 49.025,
+   "truth_dist_m": 49.205,
+   "turn_scale": 1.0051,
+   "dist_scale": 0.9963
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed6_run4",
+   "seconds": 203.4,
+   "odom_turn_rad": 22.938,
+   "truth_turn_rad": 22.825,
+   "odom_dist_m": 48.877,
+   "truth_dist_m": 49.053,
+   "turn_scale": 1.0049,
+   "dist_scale": 0.9964
+  },
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5/r5_phone_seed6_run5",
+   "seconds": 205.8,
+   "odom_turn_rad": 23.712,
+   "truth_turn_rad": 23.621,
+   "odom_dist_m": 48.825,
+   "truth_dist_m": 49.015,
+   "turn_scale": 1.0039,
+   "dist_scale": 0.9961
+  }
+ ]
+}

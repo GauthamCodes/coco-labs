@@ -34,6 +34,11 @@ const pyodide = `https://cdn.jsdelivr.net/pyodide/v${version}/full/`;
 
 /** URL-shaped strings that are identifiers, not requests. */
 const NOT_FETCHED = [
+  // G2.5: comment lines inside ROS 2's own message definitions (builtin_interfaces/Time,
+  // geometry_msgs/TransformStamped), which the rosbag2 export writes byte for byte as each
+  // schema's text (src/ros/msgdefs.json, from ROS 2 Jazzy); text in a saved file, never requested
+  /^https:\/\/design\.ros2\.org\/articles\/clock_and_time\.html$/,
+  /^https:\/\/docs\.ros\.org\/en\/rolling\/p\/tf2\/$/,
   /^http:\/\/www\.w3\.org\/(2000\/svg|1999\/xlink|1998\/Math\/MathML|XML\/1998\/namespace|1999\/xhtml)$/,
   /^https:\/\/react\.dev\/errors\/$/, // React builds an error message with this link text
   /^http:\/\/www\.apache\.org\/licenses\/LICENSE-2\.0$/, // the licence header of the embedded recompute.py

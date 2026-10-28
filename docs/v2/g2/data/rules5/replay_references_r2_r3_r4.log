@@ -1,0 +1,33 @@
+2 None 1 IDENTICAL 3279 103 s
+2 None 2 no reference
+2 None 3 IDENTICAL 3306 97 s
+2 None 4 no reference
+2 None 5 IDENTICAL 3849 131 s
+2 None 6 IDENTICAL 3378 94 s
+rules 2: 4 identical, 0 different, 2 without a reference
+3 full 1 IDENTICAL 3166 114 s
+3 full 2 IDENTICAL 3240 105 s
+3 full 3 IDENTICAL 3156 90 s
+3 full 4 IDENTICAL 3309 108 s
+3 full 5 IDENTICAL 3240 96 s
+3 full 6 IDENTICAL 3835 111 s
+3 phone 1 IDENTICAL 1824 55 s
+3 phone 2 IDENTICAL 1824 58 s
+3 phone 3 IDENTICAL 1824 60 s
+3 phone 4 IDENTICAL 1824 62 s
+3 phone 5 IDENTICAL 1824 62 s
+3 phone 6 IDENTICAL 1824 66 s
+rules 3: 12 identical, 0 different, 0 without a reference
+4 full 1 IDENTICAL 3166 113 s
+4 full 2 IDENTICAL 3879 125 s
+4 full 3 IDENTICAL 3156 92 s
+4 full 4 IDENTICAL 3879 131 s
+4 full 5 IDENTICAL 3968 113 s
+4 full 6 IDENTICAL 3835 107 s
+4 phone 1 IDENTICAL 2210 71 s
+4 phone 2 IDENTICAL 1840 62 s
+4 phone 3 IDENTICAL 1995 62 s
+4 phone 4 IDENTICAL 1840 61 s
+4 phone 5 IDENTICAL 1840 58 s
+4 phone 6 IDENTICAL 2328 63 s
+rules 4: 12 identical, 0 different, 0 without a reference

@@ -31,7 +31,9 @@ if (shots) mkdirSync(shots, { recursive: true });
 /** The HUD: everything drawn over the world while driving (transient toasts aside). */
 const HUD = ['[data-testid="objective"]', '.g1-top-right > *', '.g1-chip', '[data-testid="speed"]', '[data-testid="hud-primary"]',
   '[data-testid="hud-autonomy"]', '[data-testid="hud-camera"]', '[data-testid="hud-stop"]', '[data-testid="hud-release"]',
-  '[data-testid="minimap"]', '.g1-joy'];
+  '[data-testid="minimap"]', '.g1-joy',
+  // G2.3: the telemetry strip and the /rosout console (always on); the Gazebo-style clock (desktop SIM)
+  '[data-testid="g2-telemetry"]', '[data-testid="g2-rosout"]', '[data-testid="g2-gazebo"]'];
 /** G1.13: HUD elements that must not overlap one another (the joystick's label included) */
 const HUD_PAIRS = [...HUD, '.g1-joy-hint'];
 
@@ -48,9 +50,11 @@ const POSES = [
 ];
 
 const browser = await chromium.launch({ ...(process.env.G1_CHROMIUM ? { executablePath: process.env.G1_CHROMIUM } : {}), args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
-const report = { scope: 'G1.12: COCO\'s projected box vs every HUD rectangle, chase camera, 20 poses', site, profiles: {}, passed: true };
+const report = { scope: 'G1.12: COCO\'s projected box vs every HUD rectangle, chase camera, 20 poses; G2.2: SIM view\'s HUD (no overlaps, STOP visible, the run goes on)', site, profiles: {}, passed: true };
 const REAL_TAB = { viewport: { width: 710, height: 269 }, deviceScaleFactor: 2.9875, isMobile: true, hasTouch: true, userAgent: nothingPhone1(true).userAgent };
-for (const [name, ctxOpts] of [['phone-landscape', nothingPhone1(true)], ['desktop', { viewport: { width: 1280, height: 720 } }], ['real-phone-tab-710x269', REAL_TAB]]) {
+// G2.8: the real phone in full screen (Play's own size there: 803 x 361 CSS px, docs/v2/g2/data/g28)
+const REAL_FULL = { ...REAL_TAB, viewport: { width: 803, height: 361 } };
+for (const [name, ctxOpts] of [['phone-landscape', nothingPhone1(true)], ['desktop', { viewport: { width: 1280, height: 720 } }], ['real-phone-tab-710x269', REAL_TAB], ['real-phone-full-803x361', REAL_FULL]]) {
   const ctx = await browser.newContext(ctxOpts);
   const page = await ctx.newPage();
   const errors = [];
@@ -118,11 +122,40 @@ for (const [name, ctxOpts] of [['phone-landscape', nothingPhone1(true)], ['deskt
     rows.push({ k, hud_clashes: clashes, want: [x, y, th], settle_ms: settleMs, placed, cam: r.cam, box: r.box && Object.fromEntries(Object.entries(r.box).map(([a, b]) => [a, Math.round(b)])), centre_y_fraction: centreY && Math.round(centreY * 1000) / 1000, on_canvas: onCanvas, overlaps, ok });
     if (shots) await page.screenshot({ path: join(shots, `${name}-${String(k + 1).padStart(2, '0')}.png`) });
   }
-  report.profiles[name] = { viewport: ctxOpts.viewport, poses: rows.length, failed: rows.filter((x) => !x.ok).length, errors, rows };
+  // G2.2: SIM view -- the HUD shrinks to STOP, the joystick, the primary action and the switch (plus pause,
+  // the MODEL chip, the SIM caption, telemetry and /rosout): none may overlap another, STOP stays visible,
+  // and the run keeps going (the model's ticks advance across the switch)
+  const before = await page.evaluate(() => window.__cocoGame.tick.tick);
+  await page.click('[data-testid="g2-view-sim"]');
+  await page.waitForTimeout(2500);
+  const sim = await page.evaluate((sel) => {
+    const els = [];
+    for (const s of sel) for (const el of document.querySelectorAll(s)) {
+      const b = el.getBoundingClientRect(); const cs = getComputedStyle(el);
+      if (b.width < 1 || b.height < 1 || cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) continue;
+      els.push([s, el, b]);
+    }
+    const out = [];
+    for (let i = 0; i < els.length; i++) for (let j = i + 1; j < els.length; j++) {
+      const [sa, a, A] = els[i], [sb, b, B] = els[j];
+      if (a === b || a.contains(b) || b.contains(a)) continue;
+      const w = Math.min(A.right, B.right) - Math.max(A.left, B.left), h = Math.min(A.bottom, B.bottom) - Math.max(A.top, B.top);
+      if (w > 1 && h > 1) out.push(`${sa} x ${sb}`);
+    }
+    const stop = document.querySelector('[data-testid="hud-stop"], [data-testid="hud-release"]')?.getBoundingClientRect();
+    return { clashes: [...new Set(out)], shown: els.map(([s]) => s), stop_visible: !!stop && stop.width > 10 && stop.right <= innerWidth && stop.bottom <= innerHeight,
+      view: document.querySelector('[data-testid="g2-view"]')?.getAttribute('data-view'), tick: window.__cocoGame.tick.tick };
+  }, [...HUD_PAIRS, '[data-testid="g2-view"]', '[data-testid="g2-sim-caption"]']);
+  sim.kept_ticking = sim.tick > before;
+  sim.ok = sim.clashes.length === 0 && sim.stop_visible && sim.view === 'sim' && sim.kept_ticking;
+  if (!sim.ok) report.passed = false;
+  if (shots) await page.screenshot({ path: join(shots, `${name}-sim.png`) });
+  report.profiles[name] = { viewport: ctxOpts.viewport, poses: rows.length, failed: rows.filter((x) => !x.ok).length, errors, rows, sim };
   await ctx.close();
 }
 await browser.close();
 writeFileSync(out, JSON.stringify(report, null, 1) + '\n');
 for (const [name, v] of Object.entries(report.profiles)) for (const r of v.rows.filter((x) => !x.ok)) console.log(`${name} pose ${r.k + 1} failed: ${JSON.stringify(r)}`);
-console.log(JSON.stringify({ passed: report.passed, ...Object.fromEntries(Object.entries(report.profiles).map(([k, v]) => [k, { poses: v.poses, failed: v.failed, errors: v.errors.length }])) }));
+for (const [name, v] of Object.entries(report.profiles)) if (!v.sim.ok) console.log(`${name} SIM failed: ${JSON.stringify(v.sim)}`);
+console.log(JSON.stringify({ passed: report.passed, ...Object.fromEntries(Object.entries(report.profiles).map(([k, v]) => [k, { poses: v.poses, failed: v.failed, errors: v.errors.length, sim: v.sim.ok }])) }));
 process.exit(report.passed ? 0 : 1);

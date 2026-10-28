@@ -1,0 +1,5 @@
+{"round": "colour_green", "run": 1, "dir": "/home/gautham/coco_lab_runs/g2/round_gate_d5_rerun/colour_green_run1", "rc": 0, "void": false, "pass": 1}
+{"round": "colour_red", "run": 1, "dir": "/home/gautham/coco_lab_runs/g2/round_gate_d5_rerun/colour_red_run1", "rc": 0, "void": false, "pass": 1}
+{"round": "colour_yellow", "run": 1, "dir": "/home/gautham/coco_lab_runs/g2/round_gate_d5_rerun/colour_yellow_run1", "rc": 0, "void": false, "pass": 1}
+{"round": "r5_phone_seed3", "run": 1, "dir": "/home/gautham/coco_lab_runs/g2/round_gate_d5_rerun/r5_phone_seed3_run1", "rc": 0, "void": false, "pass": 1}
+{"round": "r5_phone_seed6", "run": 1, "dir": "/home/gautham/coco_lab_runs/g2/round_gate_d5_rerun/r5_phone_seed6_run1", "rc": 0, "void": false, "pass": 1}

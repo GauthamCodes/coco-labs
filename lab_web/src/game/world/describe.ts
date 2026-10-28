@@ -64,7 +64,7 @@ export interface Fixture { x: number; y: number; z: number; kind: 'strip' | 'doc
 export type Paint =
   | { kind: 'line'; from: [number, number]; to: [number, number]; width: number; color: string; dash?: number }
   | { kind: 'hazard'; min: [number, number]; max: [number, number] }
-  | { kind: 'label'; at: [number, number]; text: string; size: number; color: string; rot?: number }
+  | { kind: 'label'; at: [number, number]; text: string; size: number; color: string; rot?: number; align?: 'left' | 'center' }
   | { kind: 'rect'; min: [number, number]; max: [number, number]; color: string; width: number; dash?: number }
   | { kind: 'grid'; step: number; color: string; width: number }
   | { kind: 'cal'; at: [number, number]; size: number; color: string };
@@ -88,6 +88,8 @@ export interface WorldLook {
   actors: ActorLook[];
 }
 
+/** G2.1: the lane zones Fetch Rush's routes cross only at marked crossings (coco_lab.games.ROUND_LANES) */
+export const CROSSING_ZONES = ['zone_forklift_lanes'];
 export const WALL_SKIN = 0.05;
 export const OVERHEAD_Z = 3.5;
 export const DECAL_Z = 0.02;
@@ -373,17 +375,27 @@ export function describeDepot(spec: Spec): WorldLook {
       }
     }
   }
-  // hazard stripes where a forklift lane meets another actor's lane
+  // hazard stripes where a forklift lane meets another actor's lane. G2.1: where that meeting
+  // lies in a round lane zone (CROSSING_ZONES), the stripes run across the zone's whole depth:
+  // that is the marked crossing Fetch Rush's routes may use (coco_lab.games.crossings, rules 4;
+  // a test checks the two agree)
   const lanes = actors.map((a) => {
     const path = a.path as [number, number][], w = (a.footprint as [number, number])[1] / 2 + 0.25;
     const xs = path.map((p) => p[0] + dx), ys = path.map((p) => p[1] + dy);
-    return { id: a.id, minX: Math.min(...xs) - w, maxX: Math.max(...xs) + w, minY: Math.min(...ys) - w, maxY: Math.max(...ys) + w };
+    return { id: a.id, forklift: a.actor === 'forklift', minX: Math.min(...xs) - w, maxX: Math.max(...xs) + w, minY: Math.min(...ys) - w, maxY: Math.max(...ys) + w };
   });
+  const crossingZones = zones.filter((z) => CROSSING_ZONES.includes(z.id));
   for (let i = 0; i < lanes.length; i++) for (let j = i + 1; j < lanes.length; j++) {
     const a = lanes[i], c = lanes[j];
     const mn: [number, number] = [Math.max(a.minX, c.minX), Math.max(a.minY, c.minY)];
     const mx: [number, number] = [Math.min(a.maxX, c.maxX), Math.min(a.maxY, c.maxY)];
-    if (mn[0] < mx[0] && mn[1] < mx[1]) paint.push({ kind: 'hazard', min: mn, max: mx });
+    if (!(mn[0] < mx[0] && mn[1] < mx[1])) continue;
+    const z = (a.forklift || c.forklift) ? crossingZones.find((q) => mn[0] < q.max[0] && q.min[0] < mx[0] && mn[1] < q.max[1] && q.min[1] < mx[1]) : undefined;
+    if (!z) { paint.push({ kind: 'hazard', min: mn, max: mx }); continue; }
+    const across = z.max[0] - z.min[0] >= z.max[1] - z.min[1];
+    paint.push(across
+      ? { kind: 'hazard', min: [Math.max(mn[0], z.min[0]), z.min[1]], max: [Math.min(mx[0], z.max[0]), z.max[1]] }
+      : { kind: 'hazard', min: [z.min[0], Math.max(mn[1], z.min[1])], max: [z.max[0], Math.min(mx[1], z.max[1])] });
   }
   for (const z of zones) {
     const c: [number, number] = [(z.min[0] + z.max[0]) / 2, (z.min[1] + z.max[1]) / 2];
@@ -393,7 +405,9 @@ export function describeDepot(spec: Spec): WorldLook {
     } else if (z.role === 'start') {
       paint.push({ kind: 'rect', min: z.min, max: z.max, color: '#FF7A1A', width: 0.05 });
     } else if (z.role === 'region') {
-      paint.push({ kind: 'label', at: [z.min[0] + 1.6, z.min[1] + 0.9], text: z.label.toUpperCase(), size: 0.5, color: 'rgba(220,226,236,0.32)' });
+      // G2.9 (Gautham's review: "…P MAZE", "…RKLIFT LANES"): a region's name starts inside its corner;
+      // centred 1.6 m in, a long name ran out of the zone, under its walls
+      paint.push({ kind: 'label', at: [z.min[0] + 0.6, z.min[1] + 0.9], text: z.label.toUpperCase(), size: 0.5, color: 'rgba(220,226,236,0.32)', align: 'left' });
     }
   }
   // aisle numbers at the ends of the high-bay aisles (between back-to-back rack pairs)

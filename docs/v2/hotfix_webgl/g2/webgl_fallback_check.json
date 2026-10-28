@@ -1,0 +1,149 @@
+{
+ "site": "http://127.0.0.1:4184/coco-labs/",
+ "passed": true,
+ "rows": [
+  {
+   "mode": "webgl-refused",
+   "page": "title",
+   "ok": true,
+   "blank": false,
+   "fallbacks": {
+    "page-error": 0,
+    "title-no-3d": 1,
+    "compare-no-3d": 0
+   },
+   "links": [],
+   "compareReady": null,
+   "errors": []
+  },
+  {
+   "mode": "webgl-refused",
+   "page": "play",
+   "ok": true,
+   "blank": false,
+   "fallbacks": {
+    "page-error": 1,
+    "title-no-3d": 0,
+    "compare-no-3d": 0
+   },
+   "links": [
+    "/coco-labs/?view=compare",
+    "/coco-labs/?view=research"
+   ],
+   "compareReady": null,
+   "errors": []
+  },
+  {
+   "mode": "webgl-refused",
+   "page": "compare",
+   "ok": true,
+   "blank": false,
+   "fallbacks": {
+    "page-error": 0,
+    "title-no-3d": 0,
+    "compare-no-3d": 1
+   },
+   "links": [],
+   "compareReady": "true",
+   "errors": []
+  },
+  {
+   "mode": "webgl-refused",
+   "page": "research",
+   "ok": true,
+   "blank": false,
+   "fallbacks": {
+    "page-error": 0,
+    "title-no-3d": 0,
+    "compare-no-3d": 0
+   },
+   "links": [],
+   "compareReady": null,
+   "errors": []
+  },
+  {
+   "mode": "webgl-refused",
+   "page": "about",
+   "ok": true,
+   "blank": false,
+   "fallbacks": {
+    "page-error": 0,
+    "title-no-3d": 0,
+    "compare-no-3d": 0
+   },
+   "links": [],
+   "compareReady": null,
+   "errors": []
+  },
+  {
+   "mode": "webgl-ok",
+   "page": "title",
+   "ok": true,
+   "blank": false,
+   "fallbacks": {
+    "page-error": 0,
+    "title-no-3d": 0,
+    "compare-no-3d": 0
+   },
+   "links": [],
+   "compareReady": null,
+   "errors": []
+  },
+  {
+   "mode": "webgl-ok",
+   "page": "play",
+   "ok": true,
+   "blank": false,
+   "fallbacks": {
+    "page-error": 0,
+    "title-no-3d": 0,
+    "compare-no-3d": 0
+   },
+   "links": [],
+   "compareReady": null,
+   "errors": []
+  },
+  {
+   "mode": "webgl-ok",
+   "page": "compare",
+   "ok": true,
+   "blank": false,
+   "fallbacks": {
+    "page-error": 0,
+    "title-no-3d": 0,
+    "compare-no-3d": 0
+   },
+   "links": [],
+   "compareReady": "true",
+   "errors": []
+  },
+  {
+   "mode": "webgl-ok",
+   "page": "research",
+   "ok": true,
+   "blank": false,
+   "fallbacks": {
+    "page-error": 0,
+    "title-no-3d": 0,
+    "compare-no-3d": 0
+   },
+   "links": [],
+   "compareReady": null,
+   "errors": []
+  },
+  {
+   "mode": "webgl-ok",
+   "page": "about",
+   "ok": true,
+   "blank": false,
+   "fallbacks": {
+    "page-error": 0,
+    "title-no-3d": 0,
+    "compare-no-3d": 0
+   },
+   "links": [],
+   "compareReady": null,
+   "errors": []
+  }
+ ]
+}

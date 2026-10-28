@@ -13,7 +13,10 @@
  *   moving in -- ray-cast against the world's render meshes; only when no elevation
  *   has room at minDist does it shorten (never through a wall);
  * - tactical: top-down, for planning (the minimap's big brother);
- * - orbit: free, two-finger orbit and pinch zoom, mouse drag and wheel.
+ * - orbit: free, two-finger orbit and pinch zoom, mouse drag and wheel;
+ * - rviz (G2.2, SIM view only; not in CAM's cycle): RViz's Orbit view -- a focal point on
+ *   base_link (plus a pan), drag to orbit, wheel or pinch to zoom, right-drag, shift-drag or two
+ *   fingers to pan; no wall pulls it in (RViz's camera sees through geometry).
  *
  * No shake, no bob (README §5.6). Mode changes blend over BLEND_S seconds
  * (a straight cut under reduced motion).
@@ -21,7 +24,11 @@
 
 import * as THREE from 'three';
 
-export type CamMode = 'chase' | 'tactical' | 'orbit';
+export type CamMode = 'chase' | 'tactical' | 'orbit' | 'rviz';
+const FOV = 58;
+/** G2.9: tactical's lens (deg) and how much higher it sits, so `tactical.h` still frames the same ground */
+export const TACTICAL_FOV = 24;
+export const TACTICAL_LIFT = Math.tan((FOV * Math.PI) / 360) / Math.tan((TACTICAL_FOV * Math.PI) / 360);
 export const CAM_MODES: CamMode[] = ['chase', 'tactical', 'orbit'];
 export const BLEND_S = 0.4;
 /**
@@ -40,7 +47,7 @@ const approach = (dt: number, k: number) => 1 - Math.exp(-k * dt);
 const wrap = (a: number) => Math.atan2(Math.sin(a), Math.cos(a));
 
 export class GameCamera {
-  readonly camera = new THREE.PerspectiveCamera(58, 1, 0.05, 200);
+  readonly camera = new THREE.PerspectiveCamera(FOV, 1, 0.05, 200);
   mode: CamMode = 'chase';
   reducedMotion = false;
   /** the chase rig's sprung state */
@@ -49,6 +56,8 @@ export class GameCamera {
   readonly orbit = { yaw: -Math.PI / 2, pitch: 0.55, dist: 3.2 };
   /** tactical: a top-down view centred where the person dragged it (or on COCO) */
   readonly tactical = { x: 0, y: 0, h: 14, follow: true };
+  /** G2.2 SIM: RViz's Orbit view about base_link (+ a pan, m), its yaw, pitch and distance */
+  readonly rviz = { yaw: -2.2, pitch: 0.75, dist: 7, px: 0, py: 0 };
   private blend: { pos: THREE.Vector3; quat: THREE.Quaternion; t: number } | null = null;
   private readonly ray = new THREE.Raycaster();
   /** what the chase camera may not see through (the world's tall render meshes) */
@@ -73,12 +82,23 @@ export class GameCamera {
   /** Pan the tactical view by a screen drag (m), or orbit by (dyaw, dpitch). */
   drag(dx: number, dy: number) {
     if (this.mode === 'tactical') { this.tactical.follow = false; this.tactical.x -= dx * this.tactical.h / 600; this.tactical.y += dy * this.tactical.h / 600; }
+    else if (this.mode === 'rviz') { this.rviz.yaw -= dx * 0.006; this.rviz.pitch = Math.min(1.55, Math.max(0.05, this.rviz.pitch + dy * 0.005)); }
     else { this.orbit.yaw -= dx * 0.006; this.orbit.pitch = Math.min(1.45, Math.max(0.12, this.orbit.pitch + dy * 0.005)); if (this.mode === 'chase') this.setMode('orbit'); }
   }
 
   zoom(factor: number) {
     if (this.mode === 'tactical') this.tactical.h = Math.min(60, Math.max(4, this.tactical.h * factor));
+    else if (this.mode === 'rviz') this.rviz.dist = Math.min(80, Math.max(0.4, this.rviz.dist * factor));
     else { this.orbit.dist = Math.min(30, Math.max(0.8, this.orbit.dist * factor)); if (this.mode === 'chase') this.setMode('orbit'); }
+  }
+
+  /** G2.2 SIM: drag the scene (px): the focal point moves against the drag, on the floor, scaled with distance. */
+  pan(dx: number, dy: number) {
+    const r = this.rviz, k = r.dist / 700;
+    const rx = -Math.sin(r.yaw), ry = Math.cos(r.yaw);      // the screen's right, on the floor (away x up)
+    const fx = -Math.cos(r.yaw), fy = -Math.sin(r.yaw);     // the screen's up, on the floor (away from the camera)
+    r.px -= (dx * rx - dy * fx) * k;
+    r.py -= (dx * ry - dy * fy) * k;
   }
 
   /** How far a boom from `from` along `dir` may reach (at most `len`), keeping NEAR_PAD from the face it would hit. */
@@ -108,6 +128,10 @@ export class GameCamera {
    * `v` its signed speed (for the look-ahead).
    */
   update(dt: number, pose: [number, number, number], z: number, v: number) {
+    // G2.9: tactical looks nearly straight down on everything in view: a narrow lens from higher up,
+    // the same ground in frame (walls no longer lean out over the maze)
+    const fov = this.mode === 'tactical' ? TACTICAL_FOV : FOV;
+    if (this.camera.fov !== fov) { this.camera.fov = fov; this.camera.updateProjectionMatrix(); }
     const [x, y, th] = pose;
     const cam = this.camera;
     const target = new THREE.Vector3();
@@ -164,10 +188,16 @@ export class GameCamera {
       const dir = new THREE.Vector3(Math.cos(o.pitch) * Math.cos(o.yaw), Math.cos(o.pitch) * Math.sin(o.yaw), Math.sin(o.pitch));
       cam.position.copy(target).addScaledVector(dir, this.boom(target, dir, o.dist));
       cam.lookAt(target);
+    } else if (this.mode === 'rviz') {
+      const o = this.rviz;
+      target.set(x + o.px, y + o.py, z);
+      const dir = new THREE.Vector3(Math.cos(o.pitch) * Math.cos(o.yaw), Math.cos(o.pitch) * Math.sin(o.yaw), Math.sin(o.pitch));
+      cam.position.copy(target).addScaledVector(dir, o.dist);
+      cam.lookAt(target);
     } else {
       const t = this.tactical;
       if (t.follow) { t.x = x; t.y = y; }
-      cam.position.set(t.x, t.y - 0.001, t.h);
+      cam.position.set(t.x, t.y - 0.001, t.h * TACTICAL_LIFT);
       cam.lookAt(t.x, t.y, 0);
     }
     if (this.blend) {

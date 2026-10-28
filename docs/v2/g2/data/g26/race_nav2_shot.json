@@ -1,0 +1,9 @@
+{
+ "site": "http://127.0.0.1:4184/coco-labs/",
+ "seed": "2",
+ "offered_on_mode_select": true,
+ "race_chip": "RACING Nav2 · STACK recording (Gazebo, driving only — no grasp)",
+ "threeway": "YOU275.9 s4.4 m driven · 0 delivered · 0 contactsPLANNER MODEL183.9 sthe reference bot · A* routes 37.1 mNAV2 IN GAZEBO STACK166.3 s35.7 m · 4/4 legs · driving only, no graspno grasp: Nav2 drove the round's legs only, the arm did not move · Gazebo's actors were parked at their paths' start (no forklift or walker moved) · never hardware: no physical robot exists.",
+ "inset": true,
+ "errors": []
+}

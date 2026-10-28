@@ -766,7 +766,7 @@ export function useArenaScene(playHud = false) {
     const keyup = (e: KeyboardEvent) => {
       const a = actionFor(e.code, bindingsRef.current);
       if (a === 'release') clearTimeout(resetTimer);   // released before the hold: release only
-      if (a && held.delete(a)) sendTeleop();
+      if (a && held.delete(a)) { if (!DRIVE.some((d) => d !== 'precision' && held.has(d))) perf.driveRelease(); sendTeleop(); }
     };
     window.addEventListener('keydown', keydown);
     window.addEventListener('keyup', keyup);
@@ -857,6 +857,7 @@ export function useArenaScene(playHud = false) {
     const ang = Math.round(-dx * 10) / 10;
     if (lin === lastJoy.current[0] && ang === lastJoy.current[1]) return;
     if ((lin !== 0 || ang !== 0) && lastJoy.current[0] === 0 && lastJoy.current[1] === 0) perf.driveInput(at);
+    else if (lin === 0 && ang === 0) perf.driveRelease();
     lastJoy.current = [lin, ang];
     takeOver();
     queue.current.push({ kind: 'teleop', linear: lin * lim.teleop_linear, angular: ang * lim.teleop_angular });

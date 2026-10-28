@@ -23,9 +23,13 @@
 # 'gazebo_models/worlds' sweep matches it). Steps: refuse if a simulator or launch is up;
 # ros_clean.sh; launch full_world_robo.launch.py gui:=false world:=<abs> (never --fast);
 # wait for /scan; list every model and its pose; teleport COCO to the goal file's start
-# (/world/coco_depot_v1/set_pose); the arbiter (initial_mode:=nav) and nav.launch.py
+# (/world/$LEVEL/set_pose); the arbiter (initial_mode:=nav) and nav.launch.py
 # arbiter:=true with the generated map and params; wait for Nav2 active and an AMCL pose;
 # record a bag; m6f8_nav.py through the goals; stop; ros_clean.sh. Raw logs in OUT_DIR.
+# G2.9 (derivation 5's generated files, when present): after the teleport, diff_drive_controller is
+# re-spawned with GEN/gazebo/diff_drive_calibration.yaml (the odometry turn scale; VOID if the value
+# does not take); with the goals, tools/g2/actor_scenario.py drives the actors by actors.json's
+# scenario rule (they stop for COCO) and writes actors.jsonl and actor_scenario.json.
 set -o pipefail
 ulimit -c 0
 GOALS="${1:?usage: m6f8_run.sh GOALS.json OUT_DIR [m6f8_nav.py flags]}"
@@ -34,8 +38,10 @@ shift 2
 NAV_FLAGS=("$@")
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 : "${COCO_WS:?set COCO_WS to the overlay built from this repo}"
-GEN="${GEN:-$HOME/coco_lab_runs/m6/gen/coco_depot_v1}"
-WORLD="${WORLD:-$HOME/coco_lab_runs/m6/gazebo_models/worlds/coco_depot_v1.sdf}"
+# LEVEL (G2): the World Spec id -- the Gazebo world's name and the generated map's file name
+LEVEL="${LEVEL:-coco_depot_v1}"
+GEN="${GEN:-$HOME/coco_lab_runs/m6/gen/$LEVEL}"
+WORLD="${WORLD:-$HOME/coco_lab_runs/m6/gazebo_models/worlds/$LEVEL.sdf}"
 export ROS_DOMAIN_ID="${ROS_DOMAIN_ID:-79}"
 CLEAN="$REPO/gazebo_models/scripts/ros_clean.sh"
 mkdir -p "$OUT" || exit 3
@@ -53,9 +59,9 @@ source "$REPO/setup_env.sh" > /dev/null 2>&1
 source "$COCO_WS/install/local_setup.bash"
 PY=python3
 read -r SX SY STH < <("$PY" -c "import json,sys; s=json.load(open(sys.argv[1]))['start']; print(*s)" "$GOALS")
-"$PY" - "$OUT/meta.json" "$REPO" "$GOALS" "$WORLD" "$GEN" <<'EOF'
+"$PY" - "$OUT/meta.json" "$REPO" "$GOALS" "$WORLD" "$GEN" "$LEVEL" <<'EOF'
 import hashlib, json, os, subprocess, sys, time
-out, repo, goals, world, gen = sys.argv[1:6]
+out, repo, goals, world, gen, level = sys.argv[1:7]
 sha = lambda p: hashlib.sha256(open(p, 'rb').read()).hexdigest()
 sh = lambda *a: subprocess.run(a, capture_output=True, text=True).stdout.strip()
 pk = {p: sh('dpkg-query', '-W', '-f=${Version}', p) for p in (
@@ -66,9 +72,9 @@ json.dump({'started_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
            'git_commit': sh('git', '-C', repo, 'rev-parse', 'HEAD'),
            'git_dirty_paths': len(sh('git', '-C', repo, 'status', '--porcelain').splitlines()),
            'ros_domain_id': os.environ.get('ROS_DOMAIN_ID'), 'world_to_map': [0.0, 0.0],
-           'world': world, 'world_sha256': sha(world),
-           'map_yaml_sha256': sha(os.path.join(gen, 'nav2/coco_depot_v1.yaml')),
-           'map_pgm_sha256': sha(os.path.join(gen, 'nav2/coco_depot_v1.pgm')),
+           'level': level, 'world': world, 'world_sha256': sha(world),
+           'map_yaml_sha256': sha(os.path.join(gen, f'nav2/{level}.yaml')),
+           'map_pgm_sha256': sha(os.path.join(gen, f'nav2/{level}.pgm')),
            'nav2_params_sha256': sha(os.path.join(gen, 'nav2/nav2_params.yaml')),
            'goals': goals, 'goals_sha256': sha(goals), 'packages': pk,
            'power_profile': sh('powerprofilesctl', 'get'),
@@ -121,11 +127,11 @@ setsid ros2 launch gazebo_models full_world_robo.launch.py gui:=false world:="$W
 PGIDS+=("$!")
 wait_for "sim publishing /scan" 300 scan_up || { say "VOID: no /scan"; exit 4; }
 timeout 20 gz model --list > "$OUT/models.txt" 2>&1
-timeout 20 gz topic -e -t /world/coco_depot_v1/pose/info -n 1 > "$OUT/poses_at_launch.txt" 2>&1
+timeout 20 gz topic -e -t /world/$LEVEL/pose/info -n 1 > "$OUT/poses_at_launch.txt" 2>&1
 QZ=$("$PY" -c "import math,sys; print(math.sin(float(sys.argv[1])/2))" "$STH")
 QW=$("$PY" -c "import math,sys; print(math.cos(float(sys.argv[1])/2))" "$STH")
 say "teleport coco to ($SX, $SY, $STH)"
-timeout 20 gz service -s /world/coco_depot_v1/set_pose --reqtype gz.msgs.Pose \
+timeout 20 gz service -s /world/$LEVEL/set_pose --reqtype gz.msgs.Pose \
     --reptype gz.msgs.Boolean --timeout 5000 \
     --req "name: 'coco', position: {x: $SX, y: $SY, z: 0.05}, orientation: {x: 0, y: 0, z: $QZ, w: $QW}" \
     > "$OUT/teleport.txt" 2>&1
@@ -133,11 +139,29 @@ cat "$OUT/teleport.txt"
 sleep 3
 timeout 8 ros2 topic echo /model/coco/odometry --once > "$OUT/truth_after_teleport.txt" 2>&1
 
+CAL="$GEN/gazebo/diff_drive_calibration.yaml"
+if [ -f "$CAL" ]; then
+    WANT=$("$PY" -c "import sys, yaml; print(yaml.safe_load(open(sys.argv[1]))['diff_drive_controller']['ros__parameters']['wheel_separation_multiplier'])" "$CAL")
+    say "odometry calibration: re-spawning diff_drive_controller with $CAL (wheel_separation_multiplier $WANT)"
+    {
+        timeout 30 ros2 control set_controller_state diff_drive_controller inactive
+        timeout 30 ros2 control unload_controller diff_drive_controller
+        timeout 90 ros2 run controller_manager spawner diff_drive_controller -c /controller_manager -p "$CAL"
+        timeout 15 ros2 control list_controllers
+    } > "$OUT/calibration.txt" 2>&1
+    GOT=$(timeout 15 ros2 param get /diff_drive_controller wheel_separation_multiplier 2>&1 | tee -a "$OUT/calibration.txt" | grep -oE '[0-9.]+$')
+    if ! "$PY" -c "import sys; sys.exit(0 if abs(float(sys.argv[1]) - float(sys.argv[2])) < 1e-9 else 1)" "${GOT:-nan}" "$WANT"; then
+        say "VOID: diff_drive_controller's wheel_separation_multiplier is '${GOT}', not $WANT"; exit 4
+    fi
+    grep -q 'diff_drive_controller.*active' "$OUT/calibration.txt" || { say "VOID: diff_drive_controller not active after the re-spawn"; exit 4; }
+    say "odometry calibration loaded: wheel_separation_multiplier $GOT"
+fi
+
 setsid ros2 launch custom_teleop arbiter.launch.py initial_mode:=nav use_sim_time:=true \
     > "$OUT/arbiter.log" 2>&1 &
 PGIDS+=("$!")
 setsid ros2 launch gazebo_models nav.launch.py arbiter:=true use_sim_time:=true \
-    map:="$GEN/nav2/coco_depot_v1.yaml" params_file:="$GEN/nav2/nav2_params.yaml" \
+    map:="$GEN/nav2/$LEVEL.yaml" params_file:="$GEN/nav2/nav2_params.yaml" \
     > "$OUT/nav.log" 2>&1 &
 PGIDS+=("$!")
 wait_for "all Nav2 lifecycle nodes active" 300 nav_active || { say "VOID: Nav2 not active"; exit 4; }
@@ -155,8 +179,14 @@ setsid ros2 bag record --use-sim-time --include-hidden-topics -s mcap \
     -o "$OUT/bag" "${TOPICS[@]}" > "$OUT/bag.log" 2>&1 &
 BAG_PGID=$!
 sleep 5
-"$PY" "$REPO/tools/m6/m6f8_nav.py" "$GOALS" "$OUT/results.jsonl" "${NAV_FLAGS[@]}"
+if grep -q '"scenario_rule"' "$GEN/gazebo/actors.json" 2>/dev/null; then
+    setsid "$PY" "$REPO/tools/g2/actor_scenario.py" "$LEVEL" "$GEN/gazebo/actors.json" "$OUT/actors.jsonl" \
+        --summary "$OUT/actor_scenario.json" > "$OUT/actor_scenario.log" 2>&1 &
+    PGIDS+=("$!")
+    say "actor scenario (scenario rule: the actors stop for COCO) started"
+fi
+"$PY" "$REPO/tools/m6/m6f8_nav.py" "$GOALS" "$OUT/results.jsonl" --world "$LEVEL" "${NAV_FLAGS[@]}"
 RC=$?
 say "goals done (rc $RC)"
-timeout 20 gz topic -e -t /world/coco_depot_v1/pose/info -n 1 > "$OUT/poses_at_end.txt" 2>&1
+timeout 20 gz topic -e -t /world/$LEVEL/pose/info -n 1 > "$OUT/poses_at_end.txt" 2>&1
 exit "$RC"

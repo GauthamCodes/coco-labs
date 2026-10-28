@@ -205,7 +205,8 @@ export function buildWorld(look: WorldLook, tier: Tier, lightMap: THREE.Texture 
   const f = look.floor;
   const pxPerM = tier === 'low' ? 14 : tier === 'medium' ? 22 : 32;
   const floorMap = floorTexture(look, pxPerM);
-  const fm = (tier === 'high' ? new THREE.MeshStandardMaterial({ map: floorMap, roughness: look.theme === 'lab' ? 0.75 : 0.55, metalness: 0.0 })
+  // G2.7: the Depot's polished floor (high tier: physically based, reflecting the baked environment)
+  const fm = (tier === 'high' ? new THREE.MeshStandardMaterial({ map: floorMap, roughness: look.theme === 'lab' ? 0.75 : 0.4, metalness: 0.0, envMapIntensity: 0.8 })
     : new THREE.MeshLambertMaterial({ map: floorMap })) as THREE.MeshStandardMaterial;
   if (lightMap) { fm.lightMap = lightMap; fm.lightMapIntensity = look.theme === 'lab' ? 1.4 : 2.6; }
   if (tier === 'high') {

@@ -1,0 +1,26 @@
+{
+ "start": [
+  42.25,
+  8.45,
+  5.890486225480862
+ ],
+ "goals": [
+  {
+   "id": "park_on_walker_dock_path",
+   "label": "park on walker_dock's path, north of the east-west forklift lane",
+   "pose": [
+    40.0,
+    12.0,
+    3.141592653589793
+   ]
+  }
+ ],
+ "level": "coco_depot_v1",
+ "frame": "map",
+ "world_to_map": [
+  0.0,
+  0.0
+ ],
+ "purpose": "G2.9 scenario check: COCO parked on an actor's path; Gazebo's actors must stop for it (scenario rule actors_yield_to_coco), with no overlap",
+ "made_by": "hand (G2.9): start = phone seed 2's start; walker_dock walks x = 40, y 8.75-14.75; forklift_east_west drives y = 11, x 16-46 (1.2 m wide)"
+}

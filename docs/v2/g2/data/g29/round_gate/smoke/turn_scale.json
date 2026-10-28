@@ -1,0 +1,30 @@
+{
+ "evidence_class": "STACK (recorded Gazebo + Nav2 runs, read only)",
+ "step_s": 0.1,
+ "runs": 1,
+ "pooled_turn_scale": 1.0084,
+ "pooled_dist_scale": 0.9871,
+ "turn_scale_per_run": {
+  "min": 1.0085,
+  "median": 1.0085,
+  "max": 1.0085
+ },
+ "pooled": {
+  "odom_turn_rad": 5.527,
+  "truth_turn_rad": 5.481,
+  "odom_dist_m": 9.445,
+  "truth_dist_m": 9.568
+ },
+ "rows": [
+  {
+   "run": "/home/gautham/coco_lab_runs/g2/round_gate_d5_smoke/colour_red_run1",
+   "seconds": 61.9,
+   "odom_turn_rad": 5.527,
+   "truth_turn_rad": 5.481,
+   "odom_dist_m": 9.445,
+   "truth_dist_m": 9.568,
+   "turn_scale": 1.0085,
+   "dist_scale": 0.9871
+  }
+ ]
+}

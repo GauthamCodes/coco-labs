@@ -1,0 +1,35 @@
+{
+ "about": "CPython replay (coco_lab.games.play) of the browser runs saved by lab_web/tools/g2/fetch_colour_check.mjs",
+ "results": {
+  "desktop-blue-record.json": {
+   "chain_equal": true,
+   "card_equal": true,
+   "delivered": "rod_blue",
+   "stars": 2
+  },
+  "desktop-green-record.json": {
+   "chain_equal": true,
+   "card_equal": true,
+   "delivered": "rod_green",
+   "stars": 2
+  },
+  "desktop-red-record.json": {
+   "chain_equal": true,
+   "card_equal": true,
+   "delivered": "rod_red",
+   "stars": 2
+  },
+  "desktop-yellow-record.json": {
+   "chain_equal": true,
+   "card_equal": true,
+   "delivered": "rod_yellow",
+   "stars": 2
+  },
+  "phone-landscape-blue-record.json": {
+   "chain_equal": true,
+   "card_equal": true,
+   "delivered": "rod_blue",
+   "stars": 2
+  }
+ }
+}

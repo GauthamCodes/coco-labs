@@ -1,0 +1,22 @@
+# G2 suites 2026-10-26T14:42:09Z, tree 22e521d
+# machine: balanced, AC 1, NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, Node v24.21.0, Python 3.12.3
+STEP venv_install rc=0 
+STEP coco_lab_venv rc=0 1158 passed, 2 deselected in 2389.52s (0:39:49)
+STEP coco_lab_gz rc=0 2 passed, 1158 deselected in 4.72s
+STEP lab_web_tools rc=0 244 passed in 420.23s (0:07:00)
+STEP build_catalog rc=0 wheel: {'path': 'py/coco_lab-0.2.0-py3-none-any.whl', 'sha256': '69bcb4705ea57c875c31c9842386b0e26b621038cd17c4e9b29847e8caa1aa4c', 'bytes': 382927}
+STEP schemas_check rc=0 generated code is current
+STEP typecheck rc=0 
+STEP arena_assets rc=0 missions: 7, every replay link names a run here
+STEP vitest rc=0 
+STEP native_gate rc=0 {"hash_version":3,"passed":true,"cases":{"planners":{"compared":818951,"exact":818951,"failures":0,"max_abs_diff":0},"fetch_rush":{"compared":1436,"exact":1436,"failures":0,"max_abs_diff":0},"control"
+STEP coco_verify rc=0 18 of 18 references earn their stars under Pyodide 314.0.7, Node v24.21.0
+STEP build_twice rc=0 }
+STEP fetch_v1 rc=0 v1 site: v1-site@36e65003d37d9be246110c2dd2c27944aabed193 (tree 6857ff56a2646c0772a2b7780e50f2e1eb910ae289ae3a222fdab6ee9b2bde2b) -> /home/gautham/coco_labs_ws/worktrees/g2/lab_web/dist/v1 (36M)
+STEP update_isolation rc=0 {"passed":true,"checks":{"openDocumentMixed_false":true,"page_A_reads_A":true,"new_version_notice":true,"no_forced_reload":true,"old_cache_kept_while_open":true,"old_cache_deleted_once_closed":true,"r
+STEP det_v1_10 rc=0 {"chromium":[1500,0,"9a9d582d03f4"],"firefox":[1500,0,"9a9d582d03f4"],"webkit":[1500,0,"9a9d582d03f4"],"pyodide-node":[1500,0,"9a9d582d03f4"]} pass true
+STEP det_terrain rc=0 {"chromium":[2100,0,"3a8c227eca45"],"firefox":[2100,0,"3a8c227eca45"],"webkit":[2100,0,"3a8c227eca45"],"pyodide-node":[2100,0,"3a8c227eca45"]} pass true
+STEP screenshots rc=0 {"pass":true,"errors":0}
+STEP chase_hud rc=1 {"passed":false,"phone-landscape":{"poses":20,"failed":0,"errors":0,"sim":true},"desktop":{"poses":20,"failed":0,"errors":0,"sim":true},"real-phone-tab-710x269":{"poses":20,"failed":0,"errors":0,"sim"
+STEP saved_view rc=0 phone-landscape ok {"beforePlay":{"view":"sim","sim":true,"world":false,"cam":"rviz"},"playing":{"view":"sim","sim":true,"world":false,"cam":"rviz"},"game":{"view":"game","sim":false,"world":true,"cam
+# STOPPED here on the owner's request (2026-10-26, Gazebo/RViz needed for other work): v1_links, replays and packages not run in this pass.

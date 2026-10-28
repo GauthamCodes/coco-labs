@@ -1,0 +1,10 @@
+  colour_green run 1/1 rc=0 pass=1 order1_rod_green_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+ROUND colour_green 1/1
+  colour_red run 1/1 rc=0 pass=1 order1_rod_red_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+ROUND colour_red 1/1
+  colour_yellow run 1/1 rc=0 pass=1 order1_rod_yellow_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED
+ROUND colour_yellow 1/1
+  r5_phone_seed3 run 1/1 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dispatch_drop:SUCCEEDED
+ROUND r5_phone_seed3 1/1
+  r5_phone_seed6 run 1/1 rc=0 pass=1 order1_obj_maze_2_pregrasp:SUCCEEDED order1_dispatch_drop:SUCCEEDED order2_obj_dispatch_pregrasp:SUCCEEDED order2_dock_2:SUCCEEDED
+ROUND r5_phone_seed6 1/1

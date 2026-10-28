@@ -25,24 +25,46 @@
  * sent and shown at once (the schedule restarts from it), so a person's input
  * waits no longer than before. Presentation only: the model's inputs, ticks and
  * hashes are what they were.
+ *
+ * G2.9 (touch-to-motion on the real phone): an input sent while a tick is in flight is amended
+ * into it, but the worker applies amendments only until its last look before finishing the tick
+ * (the motion, scan and ROS shapes after it are one synchronous stretch, most of a step). An input
+ * that arrived in that stretch waited in the worker for the next scheduled send, up to 0.1 s
+ * later. Now the tick after an amendment is sent as soon as the one in flight arrives (it carries
+ * any input the worker still holds), and an input with nothing in flight is sent at once, not at
+ * the next 10 ms pump. Pacing only, as above.
  */
 
+import type { PlayPlanner } from './planners';
 import { ArenaClient } from '../arena/client';
 import { SPEC_FILES, type FamilyMessage, type InputRow, type SpecFile, type Tick, type World } from '../arena/protocol';
+import type { RosInfo, TFMessage } from '../ros/shapes';
 
-export type GameKind = 'fetch_rush' | 'free';
-export type WorldId = 'depot' | 'proving';
-export const SPEC_FOR: Record<WorldId, SpecFile> = { depot: SPEC_FILES.depot, proving: SPEC_FILES.v1 };
+/** owner request 2026-10-24: 'fetch_colour' -- Fetch by colour, on its own level (the Depot plus four rods) */
+export type GameKind = 'fetch_rush' | 'fetch_colour' | 'free';
+export type WorldId = 'depot' | 'proving' | 'depot_colours';
+export const SPEC_FOR: Record<WorldId, SpecFile> = { depot: SPEC_FILES.depot, proving: SPEC_FILES.v1, depot_colours: SPEC_FILES.depot_colours };
+/** Fetch by colour's colours (coco_lab.games.FETCH_COLOURS; a test keeps them equal) */
+export type FetchColourId = 'red' | 'green' | 'blue' | 'yellow';
 
 export interface GameObject { id: string; item: string; label: string; shape: 'cylinder' | 'box'; diameter?: number; height: number; size?: number[]; colour: string; magnetic: boolean; x: number; y: number; z: number }
 export interface GameZone { id: string; role: string; label?: string; center: [number, number]; size: [number, number] }
 /** G1.11: a Fetch Rush rules-2 round: start zone, orders, each order's ghost length and route, the reference clock */
 export interface GameRound { region: string; label: string; orders: [string, string][]; ghost_m: number[]; routes: [number, number][][]; reference_time_s: number | null; timer_s: number | null }
-export interface GameInfo { game: string; v3: boolean; setup: Omit<InputRow, 'tick'>[]; seconds: number | null; round?: GameRound; objects?: GameObject[]; zones?: GameZone[]; actors?: { id: string; actor: 'forklift' | 'walker'; footprint: [number, number]; height: number }[] }
+/** Fetch by colour: the chosen colour, its rod and the drop zone (arena_glue game_init) */
+export interface ColourInfo { colour: FetchColourId; object: string; item: string; diameter: number; drop: string; drop_label: string }
+export interface GameInfo { game: string; v3: boolean; setup: Omit<InputRow, 'tick'>[]; seconds: number | null; round?: GameRound; colour?: ColourInfo; objects?: GameObject[]; zones?: GameZone[]; actors?: { id: string; actor: 'forklift' | 'walker'; footprint: [number, number]; height: number }[];
+  /** G2.2: the ROS-shaped model's constants (coco_lab.ros_shapes: graph, static frames, scan) */
+  ros?: RosInfo }
 export interface AssistState { phase: string; target: string | null; carried: string | null; want: string; reason: string; attempt: number }
-export interface FetchState { t: number; seconds: number; over: boolean; order: [string, string] | null; k: number; orders: number; deliveries: number; contacts: number; ghost: number | null }
-export interface GameBlock { assist?: AssistState; objects?: [string, number, number, number, string][]; actors?: [string, number, number, number][]; clearance?: number; fetch?: FetchState }
-export type GameTick = Tick & { game?: GameBlock; tilt?: [number, number, number] };
+export interface FetchState { t: number; seconds: number; over: boolean; order: [string, string] | null; k: number; orders: number; deliveries: number; contacts: number; ghost: number | null; colour?: FetchColourId }
+/** G2 rules 5: AUTO's reaction to the actors (coco_lab.games.ActorAvoid.view); `waypoints` on a re-plan's tick */
+export interface AvoidState { state: 'clear' | 'waiting' | 'go' | 'replanned' | 'blocked' | 'backing'; actor: string; replans: number; replanned: number; waypoints?: [number, number][] }
+export interface GameBlock { assist?: AssistState; objects?: [string, number, number, number, string][]; actors?: [string, number, number, number][]; clearance?: number; fetch?: FetchState;
+  /** G2 rules 5: the actors stopped for COCO this tick, and AUTO's reaction */
+  actors_held?: string[]; avoid?: AvoidState }
+/** G2.2: `ros.tf` -- the model's dynamic frames this tick, as coco_lab.ros_shapes.tf built them */
+export type GameTick = Tick & { game?: GameBlock; tilt?: [number, number, number]; ros?: { tf: TFMessage } };
 export interface Candidate { object_id: string; item: string; reason: string; rank: number; seen_by: string; dist: number; approach_x: number | null; approach_y: number | null }
 
 export interface SessionEvents {
@@ -70,6 +92,8 @@ export class GameSession {
   private due = 0;
   /** whether the tick in flight was started by an input (shown on arrival) */
   private immediate = false;
+  /** G2.9: an input was amended into the tick in flight: send the next tick as soon as it arrives */
+  private kick = false;
   /** the last send-to-arrival times (ms), for the lead */
   private latencies: number[] = [];
   /** a tick that arrived before it was due, and its timer */
@@ -85,14 +109,14 @@ export class GameSession {
   ticks = 0;
 
   constructor(world: WorldId, readonly game: GameKind, readonly seed: number, ev: SessionEvents,
-    readonly mode: 'phone' | 'full' = 'phone') {
+    readonly mode: 'phone' | 'full' = 'phone', readonly planner: PlayPlanner = 'astar', readonly colour: FetchColourId = 'red') {
     this.ev = ev;
     this.client = new ArenaClient({
       onWorld: (w, occ) => { this.world = w as World & { game: GameInfo }; ev.onWorld(this.world, occ); },
       onTick: (t, ranges) => this.arrived(t as GameTick, ranges),
       onError: (stage, m) => { this.inFlight = false; ev.onError(stage, m); },
       onFamily: (msg) => ev.onFamily?.(msg),
-    }, { hashVersion: 3, seed: 1, spec: SPEC_FOR[world], game: { game, arg: game === 'fetch_rush' ? seed : 0, ...(game === 'fetch_rush' ? { mode } : {}) } });
+    }, { hashVersion: 3, seed: 1, spec: SPEC_FOR[world], game: { game, arg: game === 'fetch_rush' ? seed : game === 'fetch_colour' ? colour : 0, ...(game === 'fetch_rush' ? { mode } : {}) } });
   }
 
   whenReady() { return this.client.whenReady(); }
@@ -100,7 +124,12 @@ export class GameSession {
   /** Start ticking (the setup inputs go on the first tick). */
   start() {
     if (!this.world) return;
-    if (this.ticks === 0 && this.queue.length === 0) this.queue.push(...this.world.game.setup);
+    if (this.ticks === 0 && this.queue.length === 0) {
+      this.queue.push(...this.world.game.setup);
+      // the AUTO planner (src/game/planners.ts): A* is the model's own default and sends nothing,
+      // so an A* session is byte-identical to before; another is the run's first input, on record
+      if (this.planner !== 'astar') this.queue.push({ kind: 'planner', choice: this.planner });
+    }
     this.paused = false;
     this.last = performance.now();
     this.due = this.last;
@@ -118,7 +147,7 @@ export class GameSession {
     this.last = now;
     if (this.paused) return;
     if (this.inFlight || this.held && !this.queue.length) return;
-    if (this.queue.length) {
+    if (this.queue.length || this.kick) {
       this.flush();
       this.sendStep(now, true);
     } else if (now >= this.due - this.lead()) {
@@ -128,6 +157,7 @@ export class GameSession {
 
   private sendStep(now: number, immediate: boolean) {
     this.inFlight = true;
+    this.kick = false;
     this.immediate = immediate;
     this.sentAt = now;
     this.client.step(this.queue.splice(0));
@@ -180,8 +210,8 @@ export class GameSession {
   /** Send inputs now (they join the tick in flight, or start the next one). */
   send(rows: Omit<InputRow, 'tick'>[]) {
     if (!rows.length) return;
-    if (this.inFlight) this.client.amend(rows);
-    else this.queue.push(...rows);
+    if (this.inFlight) { this.client.amend(rows); this.kick = true; }
+    else { this.queue.push(...rows); this.pump(); }
   }
 
   /** The person drives: (forward, turn) in [-1, 1], scaled to the robot's real teleop limits. */

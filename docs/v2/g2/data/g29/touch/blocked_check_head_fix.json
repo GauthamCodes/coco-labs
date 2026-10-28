@@ -1,0 +1,14 @@
+{
+ "site": "http://127.0.0.1:4222/coco-labs/",
+ "index": "index-Sv29mc72.js",
+ "backed_pose": [
+  20.992,
+  14.607,
+  1.8
+ ],
+ "new_samples_ms": [
+  139
+ ],
+ "input_no_motion": 1,
+ "passed": true
+}

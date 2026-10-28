@@ -1,0 +1,147 @@
+{
+ "site": "http://127.0.0.1:4184/coco-labs/",
+ "when": "2026-10-26T21:09:43.759Z",
+ "gpu": "nvidia",
+ "machine": {
+  "gpu_asked": "nvidia",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P8, 66",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "100.0 % python (gautham)",
+   "18.2 % brave (gautham)",
+   "9.1 % 2.1.309 (gautham)",
+   "9.1 % ChatGPT (gautham)",
+   "9.1 % brave (gautham)",
+   "9.1 % top (gautham)"
+  ],
+  "nvidia_util": "24 %, 370 MiB",
+  "nvidia_procs": [
+   "Xorg sm 4 %",
+   "gnome-shell sm - %",
+   "xdg-desktop-por sm - %",
+   "Codex sm - %",
+   "nautilus sm - %",
+   "gnome-control-c sm - %",
+   "brave sm - %",
+   "chrome-headless sm - %"
+  ]
+ },
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "shots": [
+  {
+   "profile": "desktop",
+   "surface": "title",
+   "query": "",
+   "file": "desktop-title.png",
+   "ready": true,
+   "ms": 2297,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "play",
+   "query": "?view=play&game=fetch_rush&seed=1",
+   "file": "desktop-play.png",
+   "ready": true,
+   "ms": 8016,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "compare",
+   "query": "?view=compare",
+   "file": "desktop-compare.png",
+   "ready": true,
+   "ms": 5425,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "recordings",
+   "query": "?view=research",
+   "file": "desktop-recordings.png",
+   "ready": true,
+   "ms": 1708,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "title",
+   "query": "",
+   "file": "phone-landscape-title.png",
+   "ready": true,
+   "ms": 2786,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "play",
+   "query": "?view=play&game=fetch_rush&seed=1",
+   "file": "phone-landscape-play.png",
+   "ready": true,
+   "ms": 9085,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "compare",
+   "query": "?view=compare",
+   "file": "phone-landscape-compare.png",
+   "ready": true,
+   "ms": 6315,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "recordings",
+   "query": "?view=research",
+   "file": "phone-landscape-recordings.png",
+   "ready": true,
+   "ms": 1998,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "title",
+   "query": "",
+   "file": "phone-portrait-title.png",
+   "ready": true,
+   "ms": 2722,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "play",
+   "query": "?view=play&game=fetch_rush&seed=1",
+   "file": "phone-portrait-play.png",
+   "ready": false,
+   "ms": 34689,
+   "errors": [
+    "not ready: TimeoutError: page.click: Timeout 30000ms exceeded."
+   ]
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "compare",
+   "query": "?view=compare",
+   "file": "phone-portrait-compare.png",
+   "ready": true,
+   "ms": 6844,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "recordings",
+   "query": "?view=research",
+   "file": "phone-portrait-recordings.png",
+   "ready": true,
+   "ms": 2009,
+   "errors": []
+  }
+ ],
+ "note": "Emulated Nothing Phone (1): viewport, touch, 4x CPU throttle; rendered by this machine (see renderer). Not a phone measurement."
+}

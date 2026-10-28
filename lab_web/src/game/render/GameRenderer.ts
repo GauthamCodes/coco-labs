@@ -15,11 +15,14 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import type { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import type { WorldLook } from '../world/describe';
 import { buildActor, buildWorld, type BuiltWorld, type Tier } from '../world/build3d';
-import { GameCamera } from './camera';
-import { CostmapHologram } from './costmap';
+import { GameCamera, type CamMode } from './camera';
+import { axesMesh, label, SIM_BACKGROUND, SimView } from './simview';
+import type { Displays } from '../../ros/displays';
+import type { RosInfo, TFMessage } from '../../ros/shapes';
 
 /** coco_lab.arm's joint names and the URDF's (coco_robo2.urdf), as M4's renderer maps them. */
 const ARM_JOINTS: [string, string][] = [['joint1', 'm_link1_Revolute-6'], ['joint2', 'm_link2_Revolute-7'],
@@ -27,6 +30,30 @@ const ARM_JOINTS: [string, string][] = [['joint1', 'm_link1_Revolute-6'], ['join
 
 export const TIER_PIXELS: Record<Tier, number> = { low: 1, medium: 1.25, high: 2 };
 export type Led = 'manual' | 'auto' | 'stop' | 'idle';
+/** G2.2: two views of the same moment -- G1's game look, or RViz-style SIM */
+export type View = 'game' | 'sim';
+
+/**
+ * G2.9: a route material that fades out nearer the camera than `near.value` metres (view depth),
+ * over 0.4 m. Presentation only; one uniform shared by the routes, set every frame.
+ */
+export function fadeNear<M extends THREE.Material>(m: M, near: { value: number }): M {
+  m.onBeforeCompile = (sh) => {
+    sh.uniforms.uRouteNear = near;
+    sh.vertexShader = sh.vertexShader.replace('void main() {', 'varying float vRouteDepth;\nvoid main() {')
+      .replace('#include <project_vertex>', '#include <project_vertex>\n  vRouteDepth = -mvPosition.z;');
+    sh.fragmentShader = sh.fragmentShader.replace('void main() {', 'uniform float uRouteNear;\nvarying float vRouteDepth;\nvoid main() {')
+      .replace('#include <dithering_fragment>', '#include <dithering_fragment>\n  gl_FragColor.a *= uRouteNear > 0.0 ? smoothstep(uRouteNear - 0.4, uRouteNear, vRouteDepth) : 1.0;');
+  };
+  m.customProgramCacheKey = () => 'g2.9-route-fade';
+  return m;
+}
+/** G2.9: RViz's orbit starts this far from COCO (m): close enough that the robot model reads on a phone */
+const SIM_START_DIST = 2.6;
+/** G2.9: tactical's cut-away height (a fraction of every solid's height) */
+const TACTICAL_CUT = 0.3;
+/** G2.9: SIM lights COCO more (RViz draws a model evenly lit, on its dark background): an intensity, no recompile */
+const SIM_HEMI = 1.7;
 const LED_COLOUR: Record<Led, number> = { manual: 0x34d399, auto: 0x22d3ee, stop: 0xef4444, idle: 0xbfdbfe };
 
 /** Catalog colours as drawn (a page palette, not physics). */
@@ -80,9 +107,20 @@ export class GameRenderer {
   private readonly ring: THREE.Mesh;
   private readonly ringFill: THREE.Mesh;
   private readonly beam: THREE.Mesh;
-  private readonly vision = new THREE.Group();
-  private readonly fan: THREE.Mesh;
+  /** G2.2: GAME view's always-on robotics cues: faint LiDAR rays and hits, the footprint, TF axes */
+  private readonly cues = new THREE.Group();
+  private readonly rays: THREE.LineSegments;
   private readonly hits: THREE.Points;
+  private readonly footprintRing: THREE.Mesh;
+  view: View = 'game';
+  sim: SimView | null = null;
+  /** G2.9: the depth (m from the camera) in front of which the routes fade out; 0 = none (tactical) */
+  private readonly routeNear = { value: 0 };
+  private readonly routeProbe = new THREE.Vector3();
+  private hemiGame = 1.15;
+  private gameCam: CamMode = 'chase';
+  private pendingRos: { info: RosInfo; map: { width: number; height: number; resolution: number; origin: [number, number] }; occ: Uint8Array } | null = null;
+  private radius = 0.22;
   private readonly planLine: THREE.Mesh;
   private readonly ghostLine: THREE.Mesh;
   private readonly ghostChevrons: THREE.InstancedMesh;
@@ -108,7 +146,15 @@ export class GameRenderer {
     this.renderer.info.autoReset = false;
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); this.lostContext = true; });
+    canvas.addEventListener('webglcontextrestored', () => { this.lostContext = false; });
     this.scene.background = new THREE.Color(0x0e1116);
+    // G2.7: a baked environment for reflections (Isaac Sim-inspired lighting): three.js's procedural
+    // RoomEnvironment, prefiltered once at load (no image asset), kept dim for the Night Shift look.
+    // Physically based materials reflect it: COCO on every tier, the world on high (build3d.ts).
+    const pmrem = new THREE.PMREMGenerator(this.renderer);
+    this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    this.scene.environmentIntensity = 0.25;
+    pmrem.dispose();
     this.hemi = new THREE.HemisphereLight(0xb4c2de, 0x2c333d, 1.4);
     this.hemi.position.set(0, 0, 1);
     this.key = new THREE.DirectionalLight(0xffe2bd, 1.9);
@@ -153,15 +199,28 @@ export class GameRenderer {
     this.beam = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.12, 3, 16, 1, true).rotateX(Math.PI / 2).translate(0, 0, 1.5),
       new THREE.MeshBasicMaterial({ color: 0x34d399, transparent: true, opacity: 0.22, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide }));
     for (const m of [this.marker, this.ring, this.ringFill, this.beam]) { m.visible = false; this.scene.add(m); }
-    // Robot vision: a holographic scanner (the scan area, its hits), the plan, the planner ghost
-    this.fan = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.018, depthWrite: false, side: THREE.DoubleSide }));
-    this.hits = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({ color: 0xa5f8ff, size: 0.075, sizeAttenuation: true, transparent: true, opacity: 1, depthWrite: false, blending: THREE.AdditiveBlending }));
-    this.planLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0xf43f8e, transparent: true, opacity: 0.9, depthWrite: false }));
+    // G2.2: the robotics cues GAME view always shows, faintly: LiDAR rays and hit points (the
+    // model's /scan), COCO's footprint (its radius), its base_link axes; the plan as a thin line
+    this.rays = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({ color: 0x67e8f9, transparent: true, opacity: 0.05, depthWrite: false }));
+    this.rays.frustumCulled = false;
+    this.hits = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({ color: 0xa5f8ff, size: 0.045, sizeAttenuation: true, transparent: true, opacity: 0.7, depthWrite: false, blending: THREE.AdditiveBlending }));
+    this.hits.frustumCulled = false;
+    this.footprintRing = new THREE.Mesh(new THREE.RingGeometry(0.21, 0.225, 48), new THREE.MeshBasicMaterial({ color: 0x86efac, transparent: true, opacity: 0.35, depthWrite: false }));
+    this.footprintRing.position.z = 0.006;
+    this.robot.add(this.footprintRing);
+    const tfAxes = axesMesh(0.05);
+    tfAxes.scale.setScalar(0.16);
+    tfAxes.position.z = 0.0135;   // base_link above base_footprint (ros_shapes.tf_static: robot.ground_clearance)
+    tfAxes.name = 'cue:base_link';
+    (tfAxes.material as THREE.MeshBasicMaterial).opacity = 0.55;
+    this.robot.add(tfAxes);
+    this.cues.add(this.rays, this.hits);
+    this.planLine = new THREE.Mesh(new THREE.BufferGeometry(), fadeNear(new THREE.MeshBasicMaterial({ color: 0xf43f8e, transparent: true, opacity: 0.85, depthWrite: false }), this.routeNear));
     // G1.11: the ghost route as a thin glowing line with small chevrons along it
-    this.ghostLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.38, depthWrite: false }));
+    this.ghostLine = new THREE.Mesh(new THREE.BufferGeometry(), fadeNear(new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.38, depthWrite: false }), this.routeNear));
     const chev = new THREE.BufferGeometry();
     chev.setAttribute('position', new THREE.Float32BufferAttribute([0.04, 0, 0, -0.035, 0.045, 0, -0.02, 0, 0, 0.04, 0, 0, -0.02, 0, 0, -0.035, -0.045, 0], 3));
-    this.ghostChevrons = new THREE.InstancedMesh(chev, new THREE.MeshBasicMaterial({ color: 0x67e8f9, transparent: true, opacity: 0.6, depthWrite: false, side: THREE.DoubleSide }), 400);
+    this.ghostChevrons = new THREE.InstancedMesh(chev, fadeNear(new THREE.MeshBasicMaterial({ color: 0x67e8f9, transparent: true, opacity: 0.6, depthWrite: false, side: THREE.DoubleSide }), this.routeNear), 400);
     this.ghostChevrons.count = 0;
     this.ghostChevrons.frustumCulled = false;
     this.scene.add(this.ghostChevrons);
@@ -171,9 +230,7 @@ export class GameRenderer {
     const head = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 8).translate(0, 0, 0.34), new THREE.MeshBasicMaterial({ color: 0xf43f8e }));
     this.goalPin.add(pin, head);
     this.goalPin.visible = false;
-    this.vision.add(this.fan, this.hits);
-    this.vision.visible = false;
-    this.scene.add(this.vision, this.planLine, this.ghostLine, this.goalPin);
+    this.scene.add(this.cues, this.planLine, this.ghostLine, this.goalPin);
     this.applyTier(tier);
   }
 
@@ -215,8 +272,9 @@ export class GameRenderer {
     this.cam.setAspect(w, h);
   }
 
-  /** Build the level's look; `lightUrl` is its baked floor light map. */
-  async loadWorld(look: WorldLook, lightUrl: string | null) {
+  /** Build the level's look; `lightUrl` is its baked floor light map; `radius` COCO's (the spec's robot.radius). */
+  async loadWorld(look: WorldLook, lightUrl: string | null, radius = 0.22) {
+    this.radius = radius;
     const light = lightUrl ? await new THREE.TextureLoader().loadAsync(lightUrl).catch(() => null) : null;
     if (light) { light.colorSpace = THREE.NoColorSpace; light.flipY = true; }
     this.world?.dispose();
@@ -228,13 +286,90 @@ export class GameRenderer {
     this.scene.fog = new THREE.FogExp2(look.theme === 'lab' ? 0x1a2230 : 0x0b1018, this.fogDensity);
     this.ceiling = look.ceiling;
     this.overheadMeshes = ['box:ceiling', 'box:fixture'].map((n) => this.world!.group.getObjectByName(n)).filter((m): m is THREE.Object3D => !!m);
-    this.hemi.intensity = look.theme === 'lab' ? 1.5 : 1.15;
+    this.hemiGame = look.theme === 'lab' ? 1.5 : 1.15;
+    this.hemi.intensity = this.view === 'sim' ? SIM_HEMI : this.hemiGame;
     (this.cone.material as THREE.MeshBasicMaterial).opacity = look.theme === 'lab' ? 0.18 : 0.5;
     for (const a of look.actors) {
       const g = buildActor(a);
       this.actors.set(a.id, g);
       this.scene.add(g);
     }
+    // G2.2: SIM view, built now so its materials compile behind the loading screen
+    this.sim?.dispose();
+    if (this.sim) this.scene.remove(this.sim.group);
+    this.sim = new SimView(look, this.radius);
+    this.scene.add(this.sim.group);
+    this.attachArm();
+    this.setView(this.view);   // a new world and SIM are built visible: show the current view's only
+    if (this.pendingRos) { const r = this.pendingRos; this.pendingRos = null; this.setRos(r.info, r.map, r.occ); }
+  }
+
+  /** The arm's URDF link frames for SIM's TF display, once both the robot and SIM exist. */
+  private attachArm() {
+    if (!this.sim || !this.body || this.sim.arm.length) return;
+    const names = ['m_link1', 'm_link2', 'm_link3', 'grip1', 'grip2'];
+    this.body.traverse((o) => { const m = /^link:(.+)$/.exec(o.name); if (m && names.includes(m[1])) this.sim!.arm.push({ name: m[1], node: o }); });
+    this.sim.armReady();
+  }
+
+  /**
+   * G2.2: the ROS-shaped model's constants (from the worker: coco_lab.ros_shapes) and the
+   * world's map, for SIM view. Call precompile() after: the map, costmap and label materials
+   * are new.
+   */
+  setRos(info: RosInfo, map: { width: number; height: number; resolution: number; origin: [number, number] }, occ: Uint8Array) {
+    if (!this.sim) { this.pendingRos = { info, map, occ }; return; }
+    this.sim.setInfo(info, map, occ);
+  }
+
+  setDisplays(d: Displays) {
+    this.sim?.apply(d);
+    for (const o of this.body ? [this.body] : []) o.visible = d.robot.on || this.view === 'game';
+  }
+
+  /**
+   * G2.2: GAME or SIM. Instant: visibility, the background, the fog's density and the camera
+   * change; no material is swapped (no shader compiles), and the model is never told.
+   */
+  /**
+   * GAME's camera (PLAY picks chase): in SIM view it is kept for the switch back, and RViz's camera
+   * stays, reset behind COCO (its pose at the start, not the origin it had before the world).
+   */
+  setGameCamera(mode: CamMode) {
+    if (this.view !== 'sim') { this.cam.setMode(mode); return; }
+    this.gameCam = mode;
+    Object.assign(this.cam.rviz, { yaw: this.pose[2] + Math.PI, pitch: 0.95, dist: SIM_START_DIST, px: 0, py: 0 });
+  }
+
+  setView(view: View) {
+    // the camera hands over only on a change; what is shown is applied on every call, because a
+    // saved SIM view arrives before the world is built and again once it is (G2.8, real phone)
+    const changed = view !== this.view;
+    this.view = view;
+    const sim = view === 'sim';
+    if (changed && sim) {
+      // RViz's Orbit view, starting behind COCO and looking down at it (the pan reset)
+      this.gameCam = this.cam.mode;
+      Object.assign(this.cam.rviz, { yaw: this.pose[2] + Math.PI, pitch: 0.95, dist: SIM_START_DIST, px: 0, py: 0 });
+      this.cam.setMode('rviz');
+    } else if (changed) this.cam.setMode(this.gameCam);
+    this.scene.background = new THREE.Color(sim ? SIM_BACKGROUND : 0x0e1116);
+    this.hemi.intensity = sim ? SIM_HEMI : this.hemiGame;
+    if (this.world) this.world.group.visible = !sim;
+    if (this.sim) this.sim.group.visible = sim;
+    this.cues.visible = !sim;
+    this.footprintRing.visible = !sim;
+    const cue = this.robot.getObjectByName('cue:base_link');
+    if (cue) cue.visible = !sim;
+    for (const m of [this.cone, this.blob]) m.visible = !sim && (m === this.blob ? this.tier !== 'high' : true);
+    this.planLine.visible = !sim;
+    this.ghostLine.visible = !sim && this.ghostOn;
+    this.ghostChevrons.visible = !sim;
+    this.goalPin.visible = !sim && this.goalAt !== null;
+    for (const m of [this.marker, this.ring, this.beam]) if (sim) m.visible = false;
+    for (const m of this.world?.dropZones.values() ?? []) if (sim) m.visible = false;
+    this.candRings.visible = sim;
+    if (this.body) this.body.visible = true;
   }
 
   /** COCO's drawn model (the GLB), for its screen box */
@@ -278,8 +413,15 @@ export class GameRenderer {
           const hsl = { h: 0, s: 0, l: 0 };
           mat.color.getHSL(hsl);
           const c = withRim(mat);
-          if (hsl.l > 0.62 && hsl.s < 0.2) c.color.set(0xff7a1a);
+          const shell = hsl.l > 0.62 && hsl.s < 0.2;
+          if (shell) c.color.set(0xff7a1a);
           else if (hsl.l < 0.4) c.color.offsetHSL(0, 0, 0.05);  // G1.11: a brighter body
+          // G2.7: one material table for COCO -- rubber tyres, metal arm and gripper, plastic shells,
+          // LiDAR and camera, painted metal frame (presentation; the URDF's colours are kept)
+          const part = (() => { for (let a: THREE.Object3D | null = m; a; a = a.parent) { const k = /^visual:([^:]+)/.exec(a.name); if (k) return k[1]; } return ''; })();
+          const [metal, rough] = /^wheel/.test(part) ? [0, 0.88] : /^(m_link|grip)/.test(part) ? [0.75, 0.32]
+            : /^(lidar|camera)/.test(part) ? [0, 0.35] : shell ? [0, 0.42] : [0.45, 0.45];
+          c.metalness = metal; c.roughness = rough;
           m.material = c;
         }
       }
@@ -294,6 +436,7 @@ export class GameRenderer {
       const ax = j.axis.clone().transformDirection(new THREE.Matrix4().extractRotation(j.q.matrixWorld)).applyMatrix4(new THREE.Matrix4().extractRotation(inv));
       this.wheels.push({ name, side: p.z < 0 ? 0 : 1, sign: ax.z < 0 ? 1 : -1 });
     }
+    this.attachArm();
     this.countStats();
   }
 
@@ -306,6 +449,38 @@ export class GameRenderer {
       tri += n * ((m as THREE.InstancedMesh).isInstancedMesh ? (m as THREE.InstancedMesh).count : 1);
     });
     this.stats.triangles = Math.round(tri);
+  }
+
+  /**
+   * G2.6: Race Nav2 -- a see-through copy of COCO driven by a recorded Gazebo + Nav2 run (STACK),
+   * labelled so. Built before play (prepareStackGhost, so its shader compiles behind the loading
+   * screen); posed every tick from the recording (presentation only: it is not in the model).
+   */
+  private stackGhost: THREE.Group | null = null;
+  private ghostFrom: [number, number, number] = [0, 0, 0];
+  private ghostTo: [number, number, number] = [0, 0, 0];
+  private ghostAt = 0;
+  prepareStackGhost() {
+    if (this.stackGhost || !this.body) return;
+    const g = new THREE.Group();
+    const copy = this.body.clone(true);
+    const mat = new THREE.MeshBasicMaterial({ color: 0x7dd3fc, transparent: true, opacity: 0.38, depthWrite: false });
+    copy.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = mat; });
+    const tag = label('Nav2 in Gazebo · STACK', '#7dd3fc');
+    tag.position.set(0, 0, 0.62);
+    g.add(copy, tag);
+    g.visible = false;
+    g.name = 'race:stack-ghost';
+    this.stackGhost = g;
+    this.scene.add(g);
+  }
+  setStackGhost(pose: [number, number, number] | null) {
+    if (!this.stackGhost) return;
+    this.stackGhost.visible = !!pose;
+    if (!pose) return;
+    this.ghostFrom = this.stackGhost.visible && this.ghostAt ? [this.stackGhost.position.x, this.stackGhost.position.y, this.stackGhost.rotation.z] : pose;
+    this.ghostTo = pose;
+    this.ghostAt = this.clock;
   }
 
   setLed(led: Led) { this.led.emissive.set(LED_COLOUR[led]); this.ledGlow.material.color.set(LED_COLOUR[led]); }
@@ -326,7 +501,7 @@ export class GameRenderer {
   setCandidates(rows: { object_id: string; reason: string }[]) {
     if (!this.candRings.parent) this.scene.add(this.candRings);
     for (const c of [...this.candRings.children]) { this.candRings.remove(c); (c as THREE.Mesh).geometry?.dispose(); }
-    if (!this.vision.visible) return;
+    if (this.view !== 'sim') return;
     for (const r of rows) {
       const m = this.objects.get(r.object_id);
       if (!m) continue;
@@ -368,8 +543,8 @@ export class GameRenderer {
   /** Highlight the object GRAB would take, and how far along the approach is (0..1; null hides the ring). */
   setTarget(id: string | null, progress: number | null) {
     const m = id ? this.objects.get(id) : undefined;
-    for (const x of [this.marker, this.ring, this.ringFill, this.beam]) x.visible = !!m;
-    if (!m) return;
+    for (const x of [this.marker, this.ring, this.ringFill, this.beam]) x.visible = !!m && this.view === 'game';
+    if (!m || this.view !== 'game') return;
     const p = m.position;
     this.beam.position.set(p.x, p.y, p.z);
     const top = (m.geometry.boundingBox ?? (m.geometry.computeBoundingBox(), m.geometry.boundingBox!)).max.z;
@@ -389,7 +564,7 @@ export class GameRenderer {
   /** The drop zone that is the target glows (stronger, pulsing, while COCO carries the object). */
   setDropZone(id: string | null, strong = false) {
     this.dropStrong = strong;
-    for (const [zid, m] of this.world?.dropZones ?? []) m.visible = zid === id;
+    for (const [zid, m] of this.world?.dropZones ?? []) m.visible = zid === id && this.view === 'game';
   }
 
   setActors(rows: [string, number, number, number][]) {
@@ -418,9 +593,14 @@ export class GameRenderer {
     mesh.geometry = g;
   }
 
-  setPlan(pts: [number, number][]) { this.ribbon(this.planLine, pts, 0.08, 0.012); }
+  // G2.2: a thin line (the prompt: "the global plan as a thin line"), G1's colour
+  setPlan(pts: [number, number][]) { this.planPts = pts; this.ribbon(this.planLine, pts, 0.035, 0.012); }
+  private planPts: [number, number][] = [];
+  private ghostOn = false;
+  private goalAt: [number, number] | null = null;
   setGhost(pts: [number, number][] | null) {
-    this.ghostLine.visible = !!pts;
+    this.ghostOn = !!pts;
+    this.ghostLine.visible = !!pts && this.view === 'game';
     this.ghostChevrons.count = 0;
     if (!pts) return;
     this.ribbon(this.ghostLine, pts, 0.014, 0.011);
@@ -437,36 +617,37 @@ export class GameRenderer {
     this.ghostChevrons.count = n;
     this.ghostChevrons.instanceMatrix.needsUpdate = true;
   }
-  setGoal(xy: [number, number] | null) { this.goalPin.visible = !!xy; if (xy) this.goalPin.position.set(xy[0], xy[1], 0); }
+  setGoal(xy: [number, number] | null) { this.goalAt = xy; this.goalPin.visible = !!xy && this.view === 'game'; if (xy) this.goalPin.position.set(xy[0], xy[1], 0); }
 
-  setVision(on: boolean) { this.vision.visible = on; }
-
-  costmap: CostmapHologram | null = null;
-  /** Robot vision's costmap (the model's own cells), created for the world's grid on first use. */
-  costmapCells(grid: { width: number; height: number; resolution: number; origin: [number, number] }, rows: ArrayLike<number>, cols: ArrayLike<number>, costs: ArrayLike<number>) {
-    if (!this.costmap) { this.costmap = new CostmapHologram(grid.width, grid.height, grid.resolution, grid.origin); this.vision.add(this.costmap.mesh); }
-    this.costmap.apply(rows, cols, costs);
+  /** The model's costmap cells (coco_lab.costmap), for SIM's Global and Local Costmap displays. */
+  costmapCells(rows: ArrayLike<number>, cols: ArrayLike<number>, costs: ArrayLike<number>) {
+    this.sim?.costs?.apply(rows, cols, costs);
   }
 
-  /** The LiDAR as a holographic fan: what COCO can see, at its beam height, and the bright hit points. */
-  setScan(ranges: Float32Array, angles: { min: number; max: number; samples: number }, mount: [number, number, number], rangeMax: number) {
-    if (!this.vision.visible) return;
-    const [x, y, th] = this.pose;
+  /**
+   * One tick's scan: GAME's faint rays (every 4th beam) and hits from the drawn lidar; SIM's
+   * LaserScan, Path, TF and goal from the model's ROS-shaped state at that tick.
+   */
+  setScan(ranges: Float32Array, angles: { min: number; max: number; samples: number }, mount: [number, number, number], rangeMax: number,
+    ros?: { tf: TFMessage | null; tickPose: [number, number, number]; v: number; w: number; goal: [number, number] | null }) {
+    if (this.view === 'sim') {
+      if (this.sim && ros) this.sim.update({ pose: ros.tickPose, z: this.z, v: ros.v, w: ros.w, ranges, tf: ros.tf, plan: this.planPts.slice(1), goal: ros.goal });
+      return;
+    }
+    const [x, y, th] = ros?.tickPose ?? this.pose;
     const ox = x + mount[0] * Math.cos(th) - mount[1] * Math.sin(th), oy = y + mount[0] * Math.sin(th) + mount[1] * Math.cos(th);
     const z = this.z + 0.02;
     const n = ranges.length, step = (angles.max - angles.min) / Math.max(1, angles.samples - 1);
-    const fan: number[] = [], hits: number[] = [];
-    let prev: [number, number] | null = null;
+    const rays: number[] = [], hits: number[] = [];
     for (let k = 0; k < n; k += 2) {
-      const r = Number.isFinite(ranges[k]) ? Math.min(ranges[k], rangeMax) : rangeMax;
+      if (!(Number.isFinite(ranges[k]) && ranges[k] < rangeMax)) continue;
       const a = th + angles.min + k * step;
-      const px = ox + r * Math.cos(a), py = oy + r * Math.sin(a);
-      if (prev) fan.push(ox, oy, z, prev[0], prev[1], z, px, py, z);
-      prev = [px, py];
-      if (Number.isFinite(ranges[k]) && ranges[k] < rangeMax) hits.push(px, py, z + 0.01);
+      const px = ox + ranges[k] * Math.cos(a), py = oy + ranges[k] * Math.sin(a);
+      hits.push(px, py, z + 0.01);
+      if (k % 16 === 0) rays.push(ox, oy, z, px, py, z);
     }
-    this.fan.geometry.dispose();
-    const fg = new THREE.BufferGeometry(); fg.setAttribute('position', new THREE.Float32BufferAttribute(fan, 3)); this.fan.geometry = fg;
+    this.rays.geometry.dispose();
+    const rg = new THREE.BufferGeometry(); rg.setAttribute('position', new THREE.Float32BufferAttribute(rays, 3)); this.rays.geometry = rg;
     this.hits.geometry.dispose();
     const hg = new THREE.BufferGeometry(); hg.setAttribute('position', new THREE.Float32BufferAttribute(hits, 3)); this.hits.geometry = hg;
   }
@@ -493,8 +674,13 @@ export class GameRenderer {
     this.clock += dt;
     const [x, y, th] = this.pose;
     for (const m of this.world?.dropZones.values() ?? []) if (m.visible) (m.material as THREE.MeshBasicMaterial).opacity = this.dropStrong ? 0.32 + 0.18 * Math.sin(this.clock * 4) : 0.14;
-    this.costmap?.tick(this.clock);
+    if (this.view === 'sim') this.sim?.follow(this.pose, this.z);
     this.robot.position.set(x, y, this.z);
+    if (this.stackGhost?.visible) {
+      const f = Math.min(1, (this.clock - this.ghostAt) / 0.1), a = this.ghostFrom, b = this.ghostTo;
+      this.stackGhost.position.set(a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, 0);
+      this.stackGhost.rotation.set(0, 0, a[2] + Math.atan2(Math.sin(b[2] - a[2]), Math.cos(b[2] - a[2])) * f);
+    }
     this.robot.rotation.set(this.tilt[1], this.tilt[0], th, 'ZYX');
     // wheels turn at the model's own wheel speed
     for (const w of this.wheels) {
@@ -504,12 +690,30 @@ export class GameRenderer {
     }
     if (this.tier === 'high') { this.key.position.set(x - 5, y - 8, 14); this.key.target.position.set(x, y, 0); }
     this.cam.update(dt, this.pose, this.z, this.speed);
+    // G2.9: tactical is a cut-away (Gautham's review: tall fences hid the maze): the world drawn at
+    // TACTICAL_CUT of its height, and no headlight beam (from above it read as haze). Presentation only.
+    const cut = this.cam.mode === 'tactical' && this.view === 'game';
+    if (this.world) this.world.group.scale.z = cut ? TACTICAL_CUT : 1;
+    this.cone.visible = this.view !== 'sim' && !cut;
+    // G2.9 (Gautham's review: the plan ran through the gauge): with the camera behind COCO, the routes
+    // are drawn only from COCO's depth on, so the part between the camera and COCO never crosses the HUD
+    const behind = this.view === 'game' && (this.cam.mode === 'chase' || this.cam.mode === 'orbit');
+    if (behind) {
+      // the view depth of COCO's own floor point: the route between it and the camera fades out
+      this.cam.camera.updateMatrixWorld();
+      const d = -this.routeProbe.set(this.robot.position.x, this.robot.position.y, 0).applyMatrix4(this.cam.camera.matrixWorldInverse).z;
+      this.routeNear.value = Math.max(0.01, d - 0.05);
+    } else this.routeNear.value = 0;
+    if (this.view === 'sim' && this.sim) { this.cam.camera.updateMatrixWorld(); this.sim.layoutLabels(this.cam.camera, this.canvas.clientWidth, this.canvas.clientHeight, Math.round(Math.min(16, Math.max(12, this.canvas.clientHeight * 0.018)))); }
     // a camera above the roof (tactical, a high orbit) sees through it; fog thins with height
     const above = this.cam.camera.position.z > Math.min(this.ceiling, 5.4) - 0.3;
     for (const m of this.overheadMeshes) m.visible = !above;
-    if (this.scene.fog instanceof THREE.FogExp2) this.scene.fog.density = this.fogDensity * (above ? 0.25 : 1);
+    // SIM has no fog (RViz has none): its density is 0, never removed (that would recompile every material)
+    if (this.scene.fog instanceof THREE.FogExp2) this.scene.fog.density = this.view === 'sim' ? 0 : this.fogDensity * (above ? 0.25 : 1);
     this.renderer.info.reset();
-    if (this.composer) this.composer.render(dt);
+    // G2.9: SIM draws without the high tier's post passes (RViz has none; the output pass's tone
+    // mapping washed SIM's flat colours out): ACES stays on lit materials, as on every tier
+    if (this.composer && this.view !== 'sim') this.composer.render(dt);
     else this.renderer.render(this.scene, this.cam.camera);
     this.stats.draws = this.renderer.info.render.calls;
   }
@@ -526,6 +730,7 @@ export class GameRenderer {
 
   dispose() {
     this.world?.dispose();
+    this.sim?.dispose();
     this.composer?.dispose();
     this.renderer.dispose();
   }

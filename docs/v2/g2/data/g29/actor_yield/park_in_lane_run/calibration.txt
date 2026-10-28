@@ -1,0 +1,10 @@
+Successfully deactivated diff_drive_controller
+Successfully unloaded controller diff_drive_controller
+[INFO] [1793127865.833764366] [spawner_diff_drive_controller]: Setting controller param "params_file" to "['/home/gautham/coco_lab_runs/g2/gen_d5/coco_depot_v1/gazebo/diff_drive_calibration.yaml']" for diff_drive_controller
+[INFO] [1793127865.959053066] [spawner_diff_drive_controller]: Loaded diff_drive_controller
+[INFO] [1793127866.051299672] [spawner_diff_drive_controller]: Configured and activated diff_drive_controller
+diff_drive_controller   diff_drive_controller/DiffDriveController              active
+arm_controller          joint_trajectory_controller/JointTrajectoryController  active
+joint_state_broadcaster joint_state_broadcaster/JointStateBroadcaster          active
+gripper_controller      joint_trajectory_controller/JointTrajectoryController  active
+Double value is: 1.323

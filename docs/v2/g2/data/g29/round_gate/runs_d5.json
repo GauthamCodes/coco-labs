@@ -1,0 +1,1566 @@
+{
+ "evidence_class": "STACK (Gazebo + Nav2, headless); actors under a scenario rule",
+ "derivation": 5,
+ "runs": [
+  {
+   "run": "colour_blue_run1",
+   "legs": [
+    [
+     "order1_rod_blue_pregrasp",
+     "SUCCEEDED",
+     6.38,
+     0.29,
+     0.05
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     29.48,
+     0.41,
+     0.224
+    ]
+   ],
+   "actors": {
+    "steps": 986,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 12.233,
+     "walker_aisle_gap": 1.722,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_blue_run2",
+   "legs": [
+    [
+     "order1_rod_blue_pregrasp",
+     "SUCCEEDED",
+     6.29,
+     0.298,
+     0.052
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     29.58,
+     0.392,
+     0.221
+    ]
+   ],
+   "actors": {
+    "steps": 974,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 0,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 12.284,
+     "walker_aisle_gap": 1.733,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_blue_run3",
+   "legs": [
+    [
+     "order1_rod_blue_pregrasp",
+     "SUCCEEDED",
+     6.36,
+     0.299,
+     0.08
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     29.59,
+     0.388,
+     0.216
+    ]
+   ],
+   "actors": {
+    "steps": 981,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 12.232,
+     "walker_aisle_gap": 1.724,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_blue_run4",
+   "legs": [
+    [
+     "order1_rod_blue_pregrasp",
+     "SUCCEEDED",
+     6.26,
+     0.302,
+     0.045
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     29.51,
+     0.408,
+     0.217
+    ]
+   ],
+   "actors": {
+    "steps": 965,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 12.251,
+     "walker_aisle_gap": 1.737,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_blue_run5",
+   "legs": [
+    [
+     "order1_rod_blue_pregrasp",
+     "SUCCEEDED",
+     6.27,
+     0.296,
+     0.055
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     29.74,
+     0.394,
+     0.182
+    ]
+   ],
+   "actors": {
+    "steps": 968,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 12.279,
+     "walker_aisle_gap": 1.723,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_green_run1",
+   "legs": [
+    [
+     "order1_rod_green_pregrasp",
+     "SUCCEEDED",
+     8.32,
+     0.28,
+     0.064
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     32.18,
+     0.376,
+     0.206
+    ]
+   ],
+   "actors": {
+    "steps": 1050,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 12.326,
+     "walker_aisle_gap": 2.047,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_green_run2",
+   "legs": [
+    [
+     "order1_rod_green_pregrasp",
+     "SUCCEEDED",
+     8.37,
+     0.279,
+     0.052
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     31.97,
+     0.403,
+     0.202
+    ]
+   ],
+   "actors": {
+    "steps": 1059,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 12.326,
+     "walker_aisle_gap": 2.086,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_green_run3",
+   "legs": [
+    [
+     "order1_rod_green_pregrasp",
+     "SUCCEEDED",
+     8.31,
+     0.278,
+     0.067
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     32.08,
+     0.395,
+     0.25
+    ]
+   ],
+   "actors": {
+    "steps": 83,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 73,
+    "min_clearance_m": {
+     "forklift_east_west": 3.892,
+     "forklift_north_south": 12.326,
+     "walker_aisle_gap": 2.278,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": true
+  },
+  {
+   "run": "colour_green_run4",
+   "legs": [
+    [
+     "order1_rod_green_pregrasp",
+     "SUCCEEDED",
+     8.14,
+     0.305,
+     0.105
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     32.17,
+     0.398,
+     0.208
+    ]
+   ],
+   "actors": {
+    "steps": 1064,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 12.326,
+     "walker_aisle_gap": 2.105,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_green_run5",
+   "legs": [
+    [
+     "order1_rod_green_pregrasp",
+     "SUCCEEDED",
+     8.47,
+     0.285,
+     0.077
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     32.31,
+     0.381,
+     0.203
+    ]
+   ],
+   "actors": {
+    "steps": 1073,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 12.326,
+     "walker_aisle_gap": 2.098,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_red_run1",
+   "legs": [
+    [
+     "order1_rod_red_pregrasp",
+     "SUCCEEDED",
+     11.13,
+     0.271,
+     0.049
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     33.1,
+     0.408,
+     0.212
+    ]
+   ],
+   "actors": {
+    "steps": 85,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 80,
+    "min_clearance_m": {
+     "forklift_east_west": 2.932,
+     "forklift_north_south": 12.326,
+     "walker_aisle_gap": 2.278,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": true
+  },
+  {
+   "run": "colour_red_run2",
+   "legs": [
+    [
+     "order1_rod_red_pregrasp",
+     "SUCCEEDED",
+     11.14,
+     0.269,
+     0.031
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     32.22,
+     0.393,
+     0.207
+    ]
+   ],
+   "actors": {
+    "steps": 1096,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 12.326,
+     "walker_aisle_gap": 2.045,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_red_run3",
+   "legs": [
+    [
+     "order1_rod_red_pregrasp",
+     "SUCCEEDED",
+     11.14,
+     0.284,
+     0.053
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     32.45,
+     0.401,
+     0.225
+    ]
+   ],
+   "actors": {
+    "steps": 1142,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 12.326,
+     "walker_aisle_gap": 2.153,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_red_run4",
+   "legs": [
+    [
+     "order1_rod_red_pregrasp",
+     "SUCCEEDED",
+     11.03,
+     0.298,
+     0.061
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     32.58,
+     0.403,
+     0.236
+    ]
+   ],
+   "actors": {
+    "steps": 1132,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 12.326,
+     "walker_aisle_gap": 2.113,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_red_run5",
+   "legs": [
+    [
+     "order1_rod_red_pregrasp",
+     "SUCCEEDED",
+     11.18,
+     0.273,
+     0.057
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     32.48,
+     0.402,
+     0.219
+    ]
+   ],
+   "actors": {
+    "steps": 1137,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 12.326,
+     "walker_aisle_gap": 2.121,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_yellow_run1",
+   "legs": [
+    [
+     "order1_rod_yellow_pregrasp",
+     "SUCCEEDED",
+     5.84,
+     0.285,
+     0.087
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     30.04,
+     0.416,
+     0.201
+    ]
+   ],
+   "actors": {
+    "steps": 905,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 11.671,
+     "walker_aisle_gap": 1.21,
+     "walker_dock": 16.562
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_yellow_run2",
+   "legs": [
+    [
+     "order1_rod_yellow_pregrasp",
+     "SUCCEEDED",
+     6.19,
+     0.296,
+     0.132
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     30.77,
+     0.41,
+     0.19
+    ]
+   ],
+   "actors": {
+    "steps": 1006,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 11.63,
+     "walker_aisle_gap": 1.192,
+     "walker_dock": 16.548
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_yellow_run3",
+   "legs": [
+    [
+     "order1_rod_yellow_pregrasp",
+     "SUCCEEDED",
+     5.98,
+     0.309,
+     0.132
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     30.4,
+     0.43,
+     0.21
+    ]
+   ],
+   "actors": {
+    "steps": 988,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 11.636,
+     "walker_aisle_gap": 1.21,
+     "walker_dock": 16.549
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_yellow_run4",
+   "legs": [
+    [
+     "order1_rod_yellow_pregrasp",
+     "SUCCEEDED",
+     6.06,
+     0.303,
+     0.117
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     30.32,
+     0.432,
+     0.194
+    ]
+   ],
+   "actors": {
+    "steps": 983,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.18,
+     "forklift_north_south": 11.636,
+     "walker_aisle_gap": 1.208,
+     "walker_dock": 16.552
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "colour_yellow_run5",
+   "legs": [
+    [
+     "order1_rod_yellow_pregrasp",
+     "SUCCEEDED",
+     5.85,
+     0.334,
+     0.124
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     30.09,
+     0.428,
+     0.251
+    ]
+   ],
+   "actors": {
+    "steps": 67,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 67,
+    "min_clearance_m": {
+     "forklift_east_west": 4.248,
+     "forklift_north_south": 12.326,
+     "walker_aisle_gap": 2.278,
+     "walker_dock": 16.725
+    }
+   },
+   "driver_stalled": true
+  },
+  {
+   "run": "r5_phone_seed1_run1",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.57,
+     0.194,
+     0.068
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     63.25,
+     0.373,
+     0.178
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.91,
+     0.373,
+     0.14
+    ],
+    [
+     "order2_dock_1",
+     "SUCCEEDED",
+     50.85,
+     0.394,
+     0.156
+    ]
+   ],
+   "actors": {
+    "steps": 3828,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 5.155,
+     "forklift_north_south": 9.056,
+     "walker_aisle_gap": 2.364,
+     "walker_dock": 7.018
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed1_run2",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.04,
+     0.221,
+     0.061
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     65.51,
+     0.399,
+     0.193
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.66,
+     0.382,
+     0.124
+    ],
+    [
+     "order2_dock_1",
+     "SUCCEEDED",
+     50.5,
+     0.452,
+     0.189
+    ]
+   ],
+   "actors": {
+    "steps": 3851,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 5.287,
+     "forklift_north_south": 9.067,
+     "walker_aisle_gap": 2.371,
+     "walker_dock": 7.038
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed1_run3",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.43,
+     0.222,
+     0.032
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     62.87,
+     0.365,
+     0.151
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.71,
+     0.341,
+     0.069
+    ],
+    [
+     "order2_dock_1",
+     "SUCCEEDED",
+     50.24,
+     0.412,
+     0.155
+    ]
+   ],
+   "actors": {
+    "steps": 3769,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.886,
+     "forklift_north_south": 9.026,
+     "walker_aisle_gap": 2.701,
+     "walker_dock": 6.956
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed1_run4",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.87,
+     0.186,
+     0.092
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     64.36,
+     0.327,
+     0.165
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.5,
+     0.348,
+     0.131
+    ],
+    [
+     "order2_dock_1",
+     "SUCCEEDED",
+     50.35,
+     0.41,
+     0.196
+    ]
+   ],
+   "actors": {
+    "steps": 3788,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 5.121,
+     "forklift_north_south": 9.052,
+     "walker_aisle_gap": 2.569,
+     "walker_dock": 6.958
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed1_run5",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.58,
+     0.201,
+     0.106
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     65.53,
+     0.329,
+     0.149
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.65,
+     0.345,
+     0.102
+    ],
+    [
+     "order2_dock_1",
+     "SUCCEEDED",
+     50.26,
+     0.398,
+     0.16
+    ]
+   ],
+   "actors": {
+    "steps": 3826,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 5.369,
+     "forklift_north_south": 9.031,
+     "walker_aisle_gap": 2.389,
+     "walker_dock": 7.052
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed2_run1",
+   "legs": [
+    [
+     "order1_obj_dock_pregrasp",
+     "SUCCEEDED",
+     13.16,
+     0.347,
+     0.12
+    ],
+    [
+     "order1_dock_2",
+     "SUCCEEDED",
+     68.03,
+     0.338,
+     0.165
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     61.34,
+     0.359,
+     0.178
+    ],
+    [
+     "order2_dispatch_drop",
+     "SUCCEEDED",
+     32.64,
+     0.489,
+     0.243
+    ]
+   ],
+   "actors": {
+    "steps": 3664,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 2.332,
+     "forklift_north_south": 7.079,
+     "walker_aisle_gap": 3.072,
+     "walker_dock": 1.783
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed2_run2",
+   "legs": [
+    [
+     "order1_obj_dock_pregrasp",
+     "SUCCEEDED",
+     13.56,
+     0.327,
+     0.081
+    ],
+    [
+     "order1_dock_2",
+     "SUCCEEDED",
+     49.54,
+     0.397,
+     0.16
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     62.05,
+     0.314,
+     0.155
+    ],
+    [
+     "order2_dispatch_drop",
+     "SUCCEEDED",
+     33.24,
+     0.444,
+     0.226
+    ]
+   ],
+   "actors": {
+    "steps": 3429,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 2.089,
+     "forklift_north_south": 6.577,
+     "walker_aisle_gap": 2.67,
+     "walker_dock": 1.783
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed2_run3",
+   "legs": [
+    [
+     "order1_obj_dock_pregrasp",
+     "SUCCEEDED",
+     13.28,
+     0.368,
+     0.15
+    ],
+    [
+     "order1_dock_2",
+     "SUCCEEDED",
+     67.92,
+     0.31,
+     0.154
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     62.12,
+     0.308,
+     0.129
+    ],
+    [
+     "order2_dispatch_drop",
+     "SUCCEEDED",
+     34.14,
+     0.425,
+     0.205
+    ]
+   ],
+   "actors": {
+    "steps": 3804,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 2.11,
+     "forklift_north_south": 6.703,
+     "walker_aisle_gap": 2.69,
+     "walker_dock": 1.783
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed2_run4",
+   "legs": [
+    [
+     "order1_obj_dock_pregrasp",
+     "SUCCEEDED",
+     13.64,
+     0.333,
+     0.104
+    ],
+    [
+     "order1_dock_2",
+     "SUCCEEDED",
+     69.39,
+     0.301,
+     0.156
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     61.96,
+     0.281,
+     0.141
+    ],
+    [
+     "order2_dispatch_drop",
+     "SUCCEEDED",
+     33.07,
+     0.474,
+     0.259
+    ]
+   ],
+   "actors": {
+    "steps": 3850,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 1.905,
+     "forklift_north_south": 6.606,
+     "walker_aisle_gap": 2.725,
+     "walker_dock": 1.783
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed2_run5",
+   "legs": [
+    [
+     "order1_obj_dock_pregrasp",
+     "SUCCEEDED",
+     13.4,
+     0.363,
+     0.142
+    ],
+    [
+     "order1_dock_2",
+     "SUCCEEDED",
+     49.71,
+     0.382,
+     0.153
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     62.05,
+     0.319,
+     0.165
+    ],
+    [
+     "order2_dispatch_drop",
+     "SUCCEEDED",
+     34.33,
+     0.456,
+     0.203
+    ]
+   ],
+   "actors": {
+    "steps": 3479,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 1.912,
+     "forklift_north_south": 6.738,
+     "walker_aisle_gap": 2.793,
+     "walker_dock": 1.783
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed3_run1",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.5,
+     0.21,
+     0.081
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     63.4,
+     0.422,
+     0.206
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.84,
+     0.374,
+     0.117
+    ],
+    [
+     "order2_dispatch_drop",
+     "SUCCEEDED",
+     34.39,
+     0.443,
+     0.208
+    ]
+   ],
+   "actors": {
+    "steps": 215,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 210,
+    "min_clearance_m": {
+     "forklift_east_west": 6.351,
+     "forklift_north_south": 22.496,
+     "walker_aisle_gap": 11.926,
+     "walker_dock": 27.319
+    }
+   },
+   "driver_stalled": true
+  },
+  {
+   "run": "r5_phone_seed3_run2",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.57,
+     0.207,
+     0.024
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     63.95,
+     0.348,
+     0.172
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.67,
+     0.368,
+     0.128
+    ],
+    [
+     "order2_dispatch_drop",
+     "SUCCEEDED",
+     44.25,
+     0.422,
+     0.215
+    ]
+   ],
+   "actors": {
+    "steps": 3703,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 5.334,
+     "forklift_north_south": 9.103,
+     "walker_aisle_gap": 2.266,
+     "walker_dock": 13.163
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed3_run3",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.61,
+     0.19,
+     0.06
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     68.7,
+     0.348,
+     0.159
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.49,
+     0.454,
+     0.203
+    ],
+    [
+     "order2_dispatch_drop",
+     "SUCCEEDED",
+     34.22,
+     0.424,
+     0.199
+    ]
+   ],
+   "actors": {
+    "steps": 3596,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.512,
+     "forklift_north_south": 9.359,
+     "walker_aisle_gap": 2.133,
+     "walker_dock": 13.162
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed3_run4",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.59,
+     0.203,
+     0.052
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     63.12,
+     0.319,
+     0.146
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.65,
+     0.41,
+     0.182
+    ],
+    [
+     "order2_dispatch_drop",
+     "SUCCEEDED",
+     45.15,
+     0.444,
+     0.222
+    ]
+   ],
+   "actors": {
+    "steps": 3706,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 0,
+    "min_clearance_m": {
+     "forklift_east_west": 5.107,
+     "forklift_north_south": 9.146,
+     "walker_aisle_gap": 2.302,
+     "walker_dock": 13.168
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed3_run5",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.36,
+     0.211,
+     0.07
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     68.21,
+     0.363,
+     0.158
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.72,
+     0.414,
+     0.153
+    ],
+    [
+     "order2_dispatch_drop",
+     "SUCCEEDED",
+     34.06,
+     0.455,
+     0.211
+    ]
+   ],
+   "actors": {
+    "steps": 3582,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.638,
+     "forklift_north_south": 9.163,
+     "walker_aisle_gap": 2.217,
+     "walker_dock": 13.082
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed6_run1",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.5,
+     0.205,
+     0.066
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     62.8,
+     0.354,
+     0.162
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.55,
+     0.348,
+     0.109
+    ],
+    [
+     "order2_dock_2",
+     "SUCCEEDED",
+     60.87,
+     0.416,
+     0.182
+    ]
+   ],
+   "actors": {
+    "steps": 4002,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.892,
+     "forklift_north_south": 8.729,
+     "walker_aisle_gap": 2.692,
+     "walker_dock": 6.491
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed6_run2",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.37,
+     0.236,
+     0.065
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     63.24,
+     0.343,
+     0.168
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.56,
+     0.379,
+     0.159
+    ],
+    [
+     "order2_dock_2",
+     "SUCCEEDED",
+     61.16,
+     0.343,
+     0.119
+    ]
+   ],
+   "actors": {
+    "steps": 4021,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 5.044,
+     "forklift_north_south": 8.8,
+     "walker_aisle_gap": 2.579,
+     "walker_dock": 6.484
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed6_run3",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.59,
+     0.227,
+     0.073
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     64.14,
+     0.365,
+     0.149
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.84,
+     0.378,
+     0.136
+    ],
+    [
+     "order2_dock_2",
+     "SUCCEEDED",
+     60.93,
+     0.35,
+     0.126
+    ]
+   ],
+   "actors": {
+    "steps": 285,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 254,
+    "min_clearance_m": {
+     "forklift_east_west": 6.351,
+     "forklift_north_south": 22.647,
+     "walker_aisle_gap": 11.945,
+     "walker_dock": 27.3
+    }
+   },
+   "driver_stalled": true
+  },
+  {
+   "run": "r5_phone_seed6_run4",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.45,
+     0.215,
+     0.022
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     62.62,
+     0.39,
+     0.186
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     24.03,
+     0.426,
+     0.179
+    ],
+    [
+     "order2_dock_2",
+     "SUCCEEDED",
+     60.93,
+     0.377,
+     0.153
+    ]
+   ],
+   "actors": {
+    "steps": 3982,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 4.962,
+     "forklift_north_south": 8.817,
+     "walker_aisle_gap": 2.753,
+     "walker_dock": 6.522
+    }
+   },
+   "driver_stalled": false
+  },
+  {
+   "run": "r5_phone_seed6_run5",
+   "legs": [
+    [
+     "order1_obj_maze_2_pregrasp",
+     "SUCCEEDED",
+     37.23,
+     0.217,
+     0.048
+    ],
+    [
+     "order1_dispatch_drop",
+     "SUCCEEDED",
+     62.65,
+     0.47,
+     0.239
+    ],
+    [
+     "order2_obj_dispatch_pregrasp",
+     "SUCCEEDED",
+     25.01,
+     0.376,
+     0.164
+    ],
+    [
+     "order2_dock_2",
+     "SUCCEEDED",
+     61.35,
+     0.387,
+     0.162
+    ]
+   ],
+   "actors": {
+    "steps": 4029,
+    "holds": 0,
+    "overlap_steps": 0,
+    "set_pose_vector_failed": 1,
+    "min_clearance_m": {
+     "forklift_east_west": 5.038,
+     "forklift_north_south": 8.836,
+     "walker_aisle_gap": 2.494,
+     "walker_dock": 6.499
+    }
+   },
+   "driver_stalled": false
+  }
+ ]
+}
