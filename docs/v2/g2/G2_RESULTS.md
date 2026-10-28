@@ -70,6 +70,12 @@ chase HUD (4 profiles × 20 poses + SIM) 0 failed, saved view, v1 links 50 / 0, 
 packages 12 / 12 (coco_lab 1166 with ament lint). **No golden or hash changed.** (A pass on `5192ed8` found one
 flake8 line-length failure in the new derivation 5 tests; wrapped.)
 
+**CI (GitHub), green on `fd4ffa6`** after two fixes to long-standing G2 failures ([`data/g29/ci/`](data/g29/ci/README.md)):
+the update-isolation check hung on a poll answered by no one (the old worker stopping; reproduced on one
+core, where B activated in 6 s yet the wait timed out) — a poll without a reply in 1 s now retries; and the
+plain-venv coco_lab job was cut off at its 30-minute limit (rules 4/5's full-shift tests: green runs 26–28
+min) — now 60.
+
 ### 4. Gazebo: actors yield, odometry calibrated, AMCL re-measured — STACK
 
 `tools/m6/gen_level.py --derivation 5` = derivation 4 (RPP kept) + `gazebo/diff_drive_calibration.yaml` (the

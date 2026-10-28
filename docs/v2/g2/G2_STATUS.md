@@ -14,6 +14,7 @@ Prompt: [`G2_PROMPT.md`](G2_PROMPT.md). Starting point: [`../g1/G1_REVIEW.md`](.
   - Item 4: derivation 5 (actors' scenario rule, odometry multiplier 1.10 → 1.323). Gate 40/40; turn scale
     1.2029 → 0.9986; AMCL residual unchanged (~0.15 m, ~8.6 cm south); park-in-lane check: actors stop,
     0 overlap. Driver defect in 5 runs fixed (0aa17e4); its 5 replacement runs 5/5.
+  - CI green on fd4ffa6 (update-isolation poll hang fixed; plain-venv job limit 30 → 60 min). Final suites green.
 - **State (2026-10-27): G2 · Sim Identity CLOSED, PR #28 ready for review (not merged, not deployed).**
   G2.0–G2.8 done; Rules 5, Fetch by colour, the no-WebGL hotfix and the per-round Gazebo gate (every
   round 5/5 on derivation 4) folded in. Final suites green ([`data/g28/close/`](data/g28/close/)); real
