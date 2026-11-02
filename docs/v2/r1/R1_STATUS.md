@@ -4,8 +4,12 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
-- **State (2026-10-31): R1.0 Baseline in progress.** Worktree created, prompt saved, README §7 R track and the
-  STATUS plan-change entry added. Baseline suites and before screenshots running.
+- **State (2026-10-31): R1.0 Baseline done** ([`data/r10/README.md`](data/r10/README.md)): every suite on
+  `3a03f48` (= main `7bbb430` + paperwork) green — coco_lab 1161, lab_web/tools 244, vitest 619 (80 files), native
+  gate exact, coco verify 18/18, identical builds, v1 and terrain determinism in four engines 0 differences,
+  screenshots/chase HUD/saved view/v1 links/replays pass; packages: all 12 pass (the first run refused: the R1
+  overlay had no test venv; re-run with `--make-venv`). Before screenshots (title, Compare, Recordings, Learn;
+  desktop + emulated phone) in [`screens/before/`](screens/before/).
 
 ## Setup facts
 
@@ -14,8 +18,12 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
   `coco_lab/requirements-test.txt`: pytest 7.4.4, hypothesis 6.98.15, networkx 2.8.8, PyYAML 6.0.1). ROS overlay
   `~/coco_lab_r1_ws` (`scripts/build_overlay.sh`). Node 24.21.0 (`~/coco_v2_ws/node/...`).
 - Suites: `G2_VENV=~/coco_labs_ws/r1_venv/bin/python COCO_WS=~/coco_lab_r1_ws tools/g2/suites.sh OUT`.
-- Laptop at start: 12 cores, 15 GB RAM, ~11 GB disk free; power profile **balanced, on battery (AC 0)**.
-  Timing measurements wait for AC (recorded as pending, never estimated). No phone connected (adb: no device).
+- Laptop at start: 12 cores, 15 GB RAM, ~11 GB disk free; power profile **balanced, on battery (AC 0)**; on AC from
+  about 11:00Z. Timing measurements only on AC. No phone connected (adb: no device).
+- The coco_lab suite step's wall time (7 h 15 min vs G2's 25 min) includes time the laptop was not running the tests
+  (the clock moved ~7 h while it ran); no test failed and nothing is concluded from it.
+- Notebook venv `~/coco_labs_ws/r1_nb_venv` (pandas 2.2.3, matplotlib 3.9.2, nbclient 0.10.0, nbformat 5.10.4,
+  ipykernel 6.29.5) for R1.6; the CI-pinned test venv is untouched.
 
 ## Gautham's answers in planning, 2026-10-31
 
@@ -30,16 +38,17 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
   v1/v2 behaviour and goldens are untouched.
 - One runner in `coco_lab.experiments`, two hosts: CPython (`coco experiment run`) and the browser's Pyodide
   workers. Each run is a pure function of (spec, run index); per-run seeds come from `rng.Rng` splits.
-- Statistics are hand-written (the browser's trimmed stdlib has no `statistics`): Wilson 95%, median/IQR,
-  seeded bootstrap CI of the median, Wilcoxon signed-rank (exact conditional p by DP; normal approximation
-  with tie correction beyond n = 300), rank-biserial r and Hodges–Lehmann effect sizes, McNemar exact for paired
-  success, Holm adjustment for more than two algorithms.
+- Statistics are hand-written (the browser's trimmed stdlib has no `statistics`): Wilson 95%, type-7 median/IQR,
+  Wilcoxon signed-rank (exact conditional p by integer DP up to 50 non-zero pairs; normal approximation with tie and
+  continuity corrections above), rank-biserial r and Hodges–Lehmann effect sizes, McNemar exact for paired success,
+  Holm adjustment across algorithm pairs. No bootstrap (not asked; median and IQR are). The format is fixed in
+  [ADR 0011](../adr/0011-experiments-v1.md).
 
 ## Checkpoints
 
 | Checkpoint | State | Evidence |
 | --- | --- | --- |
-| R1.0 Baseline | in progress | |
+| R1.0 Baseline | done | [`data/r10/README.md`](data/r10/README.md), [`screens/before/`](screens/before/) |
 | R1.1 Model side | pending | |
 | R1.2 Worker pool | pending | |
 | R1.3 Builder and results | pending | |
@@ -56,7 +65,9 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Deviations so far
 
-- None.
+- The before set has no Play shot of a running game: G1's Play opens on its mode select (no canvas), so the shared
+  tool's ready condition timed out on `play`; those three shots are kept and labelled. The prompt's four
+  surfaces (title, Compare, Research, Learn) are all ready.
 
 ## Questions for Gautham
 
