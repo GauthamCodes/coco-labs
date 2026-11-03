@@ -726,3 +726,104 @@ def game_op(op, arg_json=None):
     if op == 'ghost':
         return game_ghost()
     raise ValueError(f'unknown game op {op!r}')
+
+
+# -- R1: experiments (coco_lab.experiments; the Workbench's worker pool) ---------------------------
+
+_exp_plans = {}
+
+
+def experiment_world(world_id, spec_json):
+    """Register a shipped World Spec for experiments (the worker fetched the file)."""
+    from coco_lab import experiments
+    experiments.register_world(world_id, json.loads(spec_json))
+
+
+def _exp_plan(spec_json):
+    from coco_lab import experiments
+    p = _exp_plans.get(spec_json)
+    if p is None:
+        p = experiments.plan(json.loads(spec_json))
+        if len(_exp_plans) >= 4:
+            _exp_plans.pop(next(iter(_exp_plans)))
+        _exp_plans[spec_json] = p
+    return p
+
+
+def experiment(op, spec_json, arg_json=None):
+    """
+    The worker's one entry point for experiments (R1); every answer is JSON.
+
+    ``plan``: the filled spec, its id, scenarios and run count; ``run``: the records
+    of the run indices in ``arg_json``; ``summary`` / ``export``: from the records in
+    ``arg_json`` (``{records, host}`` for export); ``digest``: of the records. Each run
+    is a pure function of the spec and its index (computed under hash version 3), so a
+    pool of workers gives the records CPython gives (lab_web/tools/r1/parity.mjs).
+    """
+    from coco_lab import experiments
+    p = _exp_plan(spec_json)
+    if op == 'plan':
+        return json.dumps({'spec': p['spec'], 'id': p['id'], 'world_sha256': p['world_sha256'],
+                           'scenarios': p['scenarios'], 'scenario_info': p['scenario_info'],
+                           'sweep_points': p['sweep_points'], 'n_runs': len(p['runs'])})
+    if op == 'run':
+        return json.dumps([experiments.run_one(p['runs'][i]) for i in json.loads(arg_json)])
+    if op == 'summary':
+        return json.dumps(experiments.plain(experiments.summarise(p, json.loads(arg_json))))
+    if op == 'export':
+        a = json.loads(arg_json)
+        files = experiments.export(p, a['records'], a['host'])
+        return json.dumps({k: v.decode('utf-8') for k, v in files.items()})
+    if op == 'digest':
+        return json.dumps(experiments.digest(json.loads(arg_json)))
+    if op == 'trace':
+        # R1.6: each Arena run's ticks for its MCAP trace (the same run: its chain is checked)
+        out = []
+        for i in json.loads(arg_json):
+            d, ticks = p['runs'][int(i)], []
+
+            def on_tick(a, t, ticks=ticks):
+                b = a.belief()
+                ticks.append([t.tick, t.t_world, t.pose[0], t.pose[1], t.pose[2], t.v, t.w,
+                              b[0], b[1], b[2], bool(t.contact), t.state_hash])
+            rec = experiments.run_one(d, on_tick=on_tick)
+            out.append({'index': int(i), 'chain': rec['chain'], 'status': rec['status'],
+                        'ticks': ticks, 'record': rec.get('record')})
+        return json.dumps(out)
+    raise ValueError(f'unknown experiment op {op!r}')
+
+
+def experiment_replay(spec_json, indices_json, post_batch, post_frames, batch_size=2048):
+    """
+    R1.7: Compare's replay of experiment runs -- the very runs (coco_lab.experiments.run_one),
+    so every number is the table's. Pane k ('ABCD'[k]) gets run indices[k]: a search streams
+    its event rows as Compare's plan batches (search id -101 - k); a run in the Arena posts
+    its ticks (belief, truth, state hash). Returns the records as JSON.
+    """
+    from coco_lab import experiments
+    from coco_lab.events import SearchEventColumns
+    p = _exp_plan(spec_json)
+    out = []
+    for k, i in enumerate(json.loads(indices_json)[:4]):
+        d = p['runs'][int(i)]
+        side, sid = 'ABCD'[k], -101 - k
+        if d['family'] == 'planning':
+            cols = SearchEventColumns(search_id=sid, tick=0, t_world=0.0)
+            meta = {'search_id': sid, 'planner': d['name'], 'tick': 0, 'compare': side}
+
+            def sink(row, cols=cols, meta=meta):
+                cols.add(row)
+                if len(cols) >= int(batch_size):
+                    post_batch(cols.drain(), json.dumps(dict(meta, final=False)))
+            rec = experiments.run_one(d, sink=sink)
+            post_batch(cols.drain(), json.dumps(dict(meta, final=True)))
+        else:
+            frames = []
+
+            def on_tick(a, t, frames=frames):
+                frames.append({'pose': list(a.belief()), 'truth': list(t.pose),
+                               'hash': t.state_hash, 'tick': t.tick})
+            rec = experiments.run_one(d, on_tick=on_tick)
+            post_frames(side, json.dumps(frames))
+        out.append(rec)
+    return json.dumps(out)

@@ -4,6 +4,9 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-03): R1.2 Worker pool done** ([`data/r12/README.md`](data/r12/README.md)): `ExperimentPool`
+  (streaming, pause, cancel with partial results, ETA); native-vs-Pyodide parity on the four golden experiments:
+  4,269 values, 0 differences, digests = golden (CI step added).
 - **State (2026-11-02): R1.1 Model side done** ([`data/r11/README.md`](data/r11/README.md)): `coco_lab.experiments`
   (spec, scenarios, four families, stats, runner, exports, CLI), golden experiment, 112 focused tests pass, every
   v1/v2/v3 golden unchanged.
@@ -53,7 +56,7 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | --- | --- | --- |
 | R1.0 Baseline | done | [`data/r10/README.md`](data/r10/README.md), [`screens/before/`](screens/before/) |
 | R1.1 Model side | done | [`data/r11/README.md`](data/r11/README.md), [ADR 0011](../adr/0011-experiments-v1.md) |
-| R1.2 Worker pool | pending | |
+| R1.2 Worker pool | done | [`data/r12/README.md`](data/r12/README.md), [`parity.json`](data/r12/parity.json) |
 | R1.3 Builder and results | pending | |
 | R1.4 Links and verification | pending | |
 | R1.5 Benchmarks | pending | |

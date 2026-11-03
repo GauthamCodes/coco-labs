@@ -22,7 +22,7 @@
  */
 
 import { createHash } from 'node:crypto';
-import { copyFileSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { deflateRawSync, inflateRawSync } from 'node:zlib';
@@ -197,7 +197,8 @@ function main() {
   rmSync(arenaDir, { recursive: true, force: true });
   mkdirSync(arenaDir, { recursive: true });
   const src = join(repo, 'coco_lab', 'coco_lab');
-  const all = walk(src).filter((f) => (f.endsWith('.py') || f.endsWith('link_limits.json') || /\/levels\/[^/]+\.json$/.test(f)))
+  // R1: a pack may also carry the benchmark suites (benchmarks/*.json, in the experiments pack)
+  const all = walk(src).filter((f) => (f.endsWith('.py') || f.endsWith('link_limits.json') || /\/(levels|benchmarks)\/[^/]+\.json$/.test(f)))
     .map((f) => [`coco_lab/${relative(src, f)}`, readFileSync(f)]);
   // M2.2: split into packs (tools/arena_packs.json); core = everything not in a lens pack
   const { packs: packDefs } = JSON.parse(readFileSync(join(here, 'arena_packs.json'), 'utf-8'));
@@ -231,6 +232,26 @@ function main() {
     source: 'gazebo_models/meshes/base.stl (convex hull of x-z, mm -> base_link m; build_arena_assets.mjs)',
     frame: 'base_link, x forward, metres', polygon: outline,
   }) + '\n');
+
+  // R1: what the Workbench serves -- the benchmark suites, their committed reference results
+  // (docs/v2/r1/bench/: summary, spec, manifest and results of each) and the datasets index
+  const r1Dir = join(out, 'r1');
+  rmSync(r1Dir, { recursive: true, force: true });
+  mkdirSync(join(r1Dir, 'benchmarks'), { recursive: true });
+  const suiteDir = join(src, 'benchmarks');
+  if (existsSync(suiteDir)) {
+    for (const f of readdirSync(suiteDir).filter((n) => n.endsWith('.json')).sort()) copyFileSync(join(suiteDir, f), join(r1Dir, 'benchmarks', f));
+  }
+  const benchDir = join(repo, 'docs', 'v2', 'r1', 'bench');
+  if (existsSync(benchDir)) {
+    for (const f of walk(benchDir).filter((p) => /(summary|spec|manifest)\.json$|results\.csv$|README\.md$/.test(p))) {
+      const to = join(r1Dir, 'bench', relative(benchDir, f));
+      mkdirSync(dirname(to), { recursive: true });
+      copyFileSync(f, to);
+    }
+  }
+  const datasets = join(repo, 'docs', 'v2', 'r1', 'datasets', 'index.json');
+  if (existsSync(datasets)) copyFileSync(datasets, join(r1Dir, 'datasets.json'));
 
   // pyodide, self-hosted
   const pyDir = join(out, 'pyodide');

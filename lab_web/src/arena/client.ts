@@ -25,6 +25,8 @@ export interface ArenaEvents {
   onFamily?(msg: FamilyMessage): void;
   /** M2.2: a lens's Python pack is loaded (ms it took; 0 if it already was). */
   onPackReady?(pack: string, ms: number): void;
+  /** R1.7: the ticks of a replayed experiment run, for pane `side`. */
+  onExperimentFrames?(side: 'A' | 'B' | 'C' | 'D', frames: import('./protocol').ReplayFrame[]): void;
 }
 
 export type PyodideSource = 'self' | 'cdn';
@@ -73,6 +75,13 @@ export class ArenaClient {
           const w = this.gameWaiting.get(d.id);
           this.gameWaiting.delete(d.id);
           w?.(d.error !== undefined ? { error: d.error } : JSON.parse(d.result ?? 'null'));
+        } else if (d.type === 'experiment_done') {
+          const w = this.expWaiting.get(d.id);
+          this.expWaiting.delete(d.id);
+          if (d.error !== undefined) w?.reject(new Error(d.error));
+          else w?.resolve(JSON.parse(d.result ?? 'null'));
+        } else if (d.type === 'experiment_frames') {
+          ev.onExperimentFrames?.(d.side, d.frames);
         } else if (d.type === 'tick') {
           this.tick = d.tick.tick;
           perf.tick(d.stepMs);
@@ -175,6 +184,21 @@ export class ArenaClient {
     return new Promise<T>((resolve) => {
       this.gameWaiting.set(id, resolve as (v: unknown) => void);
       this.worker.postMessage({ type: 'game', id, op, arg: arg === undefined || arg === null ? null : JSON.stringify(arg) });
+    });
+  }
+
+  private expNext = 1;
+  private readonly expWaiting = new Map<number, { resolve: (v: unknown) => void; reject: (e: Error) => void }>();
+
+  /**
+   * R1: an experiment request (coco_lab.experiments in this worker): `plan`, or `replay` the
+   * runs `arg` names -- Compare's view of runs from the Workbench, their numbers the table's.
+   */
+  experiment<T>(op: import('./protocol').ExperimentRequest['op'], spec: string, world: string, arg?: unknown): Promise<T> {
+    const id = this.expNext++;
+    return new Promise<T>((resolve, reject) => {
+      this.expWaiting.set(id, { resolve: resolve as (v: unknown) => void, reject });
+      this.worker.postMessage({ type: 'experiment', id, op, spec, world, ...(arg === undefined ? {} : { arg: JSON.stringify(arg) }) });
     });
   }
 
