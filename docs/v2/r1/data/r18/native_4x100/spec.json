@@ -1,0 +1,87 @@
+{
+ "algorithms": [
+  {
+   "id": "astar",
+   "label": "A*",
+   "name": "astar",
+   "params": {
+    "connectivity": 8,
+    "cost_scaling_factor": 10,
+    "cost_weight": 2,
+    "inflation_radius": 0.5,
+    "robot_radius": 0.25
+   }
+  },
+  {
+   "id": "dijkstra",
+   "label": "Dijkstra",
+   "name": "dijkstra",
+   "params": {
+    "connectivity": 8,
+    "cost_scaling_factor": 10,
+    "cost_weight": 2,
+    "inflation_radius": 0.5,
+    "robot_radius": 0.25
+   }
+  },
+  {
+   "id": "greedy",
+   "label": "Greedy best-first",
+   "name": "greedy",
+   "params": {
+    "connectivity": 8,
+    "cost_scaling_factor": 10,
+    "cost_weight": 2,
+    "inflation_radius": 0.5,
+    "robot_radius": 0.25
+   }
+  },
+  {
+   "id": "weighted_astar",
+   "label": "Weighted A*",
+   "name": "weighted_astar",
+   "params": {
+    "connectivity": 8,
+    "cost_scaling_factor": 10,
+    "cost_weight": 2,
+    "heuristic_weight": 2,
+    "inflation_radius": 0.5,
+    "robot_radius": 0.25
+   }
+  }
+ ],
+ "family": "planning",
+ "limits": {
+  "max_ticks": 3000
+ },
+ "metrics": [
+  "expansions",
+  "pushes",
+  "path_length_m",
+  "path_cost",
+  "path_steps",
+  "min_clearance_m",
+  "mean_clearance_m",
+  "heading_change_rad",
+  "start_snap_m",
+  "goal_snap_m",
+  "compute_ms"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "id": "depot-nav-100",
+  "kind": "suite"
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 1,
+ "sweep": {
+  "params": []
+ },
+ "title": "R1.8: four planners on depot-nav-100",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841"
+}

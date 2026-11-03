@@ -1,0 +1,68 @@
+{
+ "algorithms": [
+  {
+   "id": "astar",
+   "label": "A*",
+   "name": "astar",
+   "params": {
+    "connectivity": 8,
+    "cost_scaling_factor": 10,
+    "cost_weight": 2,
+    "inflation_radius": 0.5,
+    "robot_radius": 0.25
+   }
+  },
+  {
+   "id": "dijkstra",
+   "label": "Dijkstra",
+   "name": "dijkstra",
+   "params": {
+    "connectivity": 8,
+    "cost_scaling_factor": 10,
+    "cost_weight": 2,
+    "inflation_radius": 0.5,
+    "robot_radius": 0.25
+   }
+  }
+ ],
+ "family": "planning",
+ "limits": {
+  "max_ticks": 3000
+ },
+ "metrics": [
+  "expansions",
+  "pushes",
+  "path_length_m",
+  "path_cost",
+  "path_steps",
+  "min_clearance_m",
+  "mean_clearance_m",
+  "heading_change_rad",
+  "start_snap_m",
+  "goal_snap_m",
+  "compute_ms"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "kind": "sampled",
+  "min_clearance_m": 0.35,
+  "min_separation_m": 3,
+  "n": 20,
+  "require_reachable": true,
+  "seed": 8,
+  "stratify": "none",
+  "zones": null
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 1,
+ "sweep": {
+  "params": []
+ },
+ "title": "R1.8: two planners, 20 pairs",
+ "world": "coco_arena_v1",
+ "world_sha256": "87f5d88f40af39bc98bc0b9cfac5dd2ce1686370fcca7aec8d171ff0181290f0"
+}

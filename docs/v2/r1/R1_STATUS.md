@@ -4,6 +4,9 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-03): R1.8 Performance done** ([`data/r18/README.md`](data/r18/README.md)): 400-run Depot
+  experiment in the browser 54.3 s on 6 workers (native digest identical); emulated phone 2 × 20 in 18.0 s on 2
+  workers; Play fps unchanged (60.07 / 60.02 medians vs baseline 60.07 / 60.02). Real phone: not connected.
 - **State (2026-11-03): R1.7 Compare and navigation done** ([`data/r17/README.md`](data/r17/README.md)): Compare on every
   world; scenario picker (seeded / suite with Previous-Next / hand-placed) replaying the experiments' own runs (=
   the reference numbers); table links; hand-off to the builder; Play · Learn · Compare · Workbench; three doors; Learn page.
@@ -75,7 +78,7 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R1.5 Benchmarks | done | [`data/r15/README.md`](data/r15/README.md), [`bench/`](bench/) |
 | R1.6 Exports and notebook | done | [`data/r16/README.md`](data/r16/README.md), [notebook](notebooks/analyse_experiment.ipynb) |
 | R1.7 Compare and navigation | done | [`data/r17/README.md`](data/r17/README.md), [`compare_check.json`](data/r17/compare_check.json) |
-| R1.8 Performance | pending | |
+| R1.8 Performance | done (real phone pending: not connected) | [`data/r18/README.md`](data/r18/README.md) |
 | R1.9 Close | pending | |
 
 ## Gautham: look at these
@@ -92,4 +95,4 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Questions for Gautham
 
-- None yet.
+- Plug in the Nothing Phone (1) with USB debugging when convenient: R1.8's phone row is emulated only.
