@@ -4,6 +4,8 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-03): R1.3 Builder and results done** ([`data/r13/README.md`](data/r13/README.md)): form ⇄ JSON/YAML,
+  results (N, Wilson, median/IQR, charts, paired tests, every run, failures filter); a11y 12 pages pass.
 - **State (2026-11-03): R1.2 Worker pool done** ([`data/r12/README.md`](data/r12/README.md)): `ExperimentPool`
   (streaming, pause, cancel with partial results, ETA); native-vs-Pyodide parity on the four golden experiments:
   4,269 values, 0 differences, digests = golden (CI step added).
@@ -57,7 +59,7 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R1.0 Baseline | done | [`data/r10/README.md`](data/r10/README.md), [`screens/before/`](screens/before/) |
 | R1.1 Model side | done | [`data/r11/README.md`](data/r11/README.md), [ADR 0011](../adr/0011-experiments-v1.md) |
 | R1.2 Worker pool | done | [`data/r12/README.md`](data/r12/README.md), [`parity.json`](data/r12/parity.json) |
-| R1.3 Builder and results | pending | |
+| R1.3 Builder and results | done | [`data/r13/README.md`](data/r13/README.md), [`a11y.json`](data/r13/a11y/a11y.json) |
 | R1.4 Links and verification | pending | |
 | R1.5 Benchmarks | pending | |
 | R1.6 Exports and notebook | pending | |
@@ -67,7 +69,7 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Gautham: look at these
 
-- (screenshots listed here as checkpoints produce them)
+- R1.3: [`data/r13/a11y/`](data/r13/a11y/) — the Workbench builder and results, desktop and emulated phone landscape, dark and light.
 
 ## Deviations so far
 

@@ -12,7 +12,7 @@ import { openSettings } from '../shell/settings_events';
 import '../shell/shell.css';
 const BASE = import.meta.env.BASE_URL;
 
-export type ModeId = 'learn' | 'play' | 'sandbox' | 'casefiles' | 'compare' | 'research' | 'about';
+export type ModeId = 'learn' | 'play' | 'sandbox' | 'casefiles' | 'compare' | 'research' | 'workbench' | 'about';
 export type Evidence = 'MODEL' | 'STACK';
 
 export const MODES: { id: ModeId; label: string; href: string }[] = [
