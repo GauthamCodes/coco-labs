@@ -1,0 +1,72 @@
+{
+ "families": [
+  "fulltask"
+ ],
+ "generator": {
+  "kind": "rounds",
+  "rules": 2,
+  "tool": "tools/r1/make_suites.py"
+ },
+ "id": "colour-fetch-4",
+ "metrics": {
+  "fulltask": [
+   "deliveries",
+   "orders",
+   "contacts",
+   "net_deliveries",
+   "time_to_complete_s",
+   "time_used_s",
+   "path_efficiency",
+   "ticks",
+   "timer_s",
+   "compute_ms"
+  ]
+ },
+ "scenarios": [
+  {
+   "colour": "red",
+   "game": "fetch_colour",
+   "id": "colour_red",
+   "rules": 2
+  },
+  {
+   "colour": "green",
+   "game": "fetch_colour",
+   "id": "colour_green",
+   "rules": 2
+  },
+  {
+   "colour": "blue",
+   "game": "fetch_colour",
+   "id": "colour_blue",
+   "rules": 2
+  },
+  {
+   "colour": "yellow",
+   "game": "fetch_colour",
+   "id": "colour_yellow",
+   "rules": 2
+  }
+ ],
+ "scenarios_spec": {
+  "colours": [
+   "red",
+   "green",
+   "blue",
+   "yellow"
+  ],
+  "game": "fetch_colour"
+ },
+ "schema": "coco.bench.suite.v0",
+ "stack": {
+  "blue": "lab_web/public/stack/ghosts/g2_colour_blue.json",
+  "green": "lab_web/public/stack/ghosts/g2_colour_green.json",
+  "red": "lab_web/public/stack/ghosts/g2_colour_red.json",
+  "yellow": "lab_web/public/stack/ghosts/g2_colour_yellow.json"
+ },
+ "tests": "The full task on the Depot with colour rods: the reference bot (planner + waypoint driver + Grasp Assist) fetches each rod (red 20 mm, green 24 mm, blue 28 mm, yellow 32 mm) and delivers it to Dispatch, driven by each global planner. Grasp Assist's approach planning stays A*, as in Play. Fetch by colour rules 2 (actors yield). Gazebo + Nav2 recordings of the same four rounds exist (STACK ghosts g2_colour_<colour>).",
+ "title": "Fetch by colour: the four rods",
+ "version": 0,
+ "world": "coco_depot_colours_v1",
+ "world_sha256": "6a16532b6a9cff8a8609fc74bc48265b3d7b313ca66c3ec54d79c2c83d6d0eec"
+}

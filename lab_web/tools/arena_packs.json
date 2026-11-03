@@ -89,7 +89,9 @@
     "experiments.py",
     "exp_families.py",
     "exp_scenarios.py",
-    "exp_stats.py"
+    "exp_stats.py",
+    "benchmarks/arena-nav-50.v0.json", "benchmarks/depot-nav-100.v0.json",
+    "benchmarks/depot-narrow-30.v0.json", "benchmarks/colour-fetch-4.v0.json"
    ]
   }
  }

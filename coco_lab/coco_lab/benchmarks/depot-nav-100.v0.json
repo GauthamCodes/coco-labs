@@ -1,0 +1,1575 @@
+{
+ "families": [
+  "planning",
+  "control",
+  "localisation"
+ ],
+ "generator": {
+  "kind": "sampled",
+  "min_clearance_m": 0.35,
+  "min_separation_m": 5.0,
+  "n": 100,
+  "rejected_separation": 3,
+  "rejected_unreachable": 0,
+  "require_reachable": true,
+  "seed": 1001,
+  "stratify": "zone",
+  "tool": "tools/r1/make_suites.py"
+ },
+ "id": "depot-nav-100",
+ "metrics": {
+  "control": [
+   "time_s",
+   "ticks",
+   "path_length_m",
+   "min_clearance_m",
+   "mean_clearance_m",
+   "heading_change_rad",
+   "contacts",
+   "expansions",
+   "plans",
+   "final_goal_distance_m",
+   "compute_ms"
+  ],
+  "localisation": [
+   "time_s",
+   "ticks",
+   "path_length_m",
+   "min_clearance_m",
+   "mean_clearance_m",
+   "heading_change_rad",
+   "contacts",
+   "expansions",
+   "plans",
+   "final_goal_distance_m",
+   "final_err_xy_m",
+   "final_err_yaw_rad",
+   "mean_err_xy_m",
+   "max_err_xy_m",
+   "converged_s",
+   "recovery_s",
+   "compute_ms"
+  ],
+  "planning": [
+   "expansions",
+   "pushes",
+   "path_length_m",
+   "path_cost",
+   "path_steps",
+   "min_clearance_m",
+   "mean_clearance_m",
+   "heading_change_rad",
+   "start_snap_m",
+   "goal_snap_m",
+   "compute_ms"
+  ]
+ },
+ "scenarios": [
+  {
+   "goal": [
+    29.85,
+    17.05
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s001",
+   "seed": 7488351464849158,
+   "start": [
+    40.95,
+    2.95,
+    0.04193136632847816
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    8.55,
+    20.55
+   ],
+   "goal_zone": "zone_office",
+   "id": "s002",
+   "seed": 8611336686661560,
+   "start": [
+    38.45,
+    1.35,
+    -0.24317161605138127
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    37.35,
+    30.950000000000003
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "s003",
+   "seed": 3964227022952522,
+   "start": [
+    41.25,
+    8.35,
+    2.492569578763952
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    31.25,
+    22.25
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s004",
+   "seed": 5646272526261374,
+   "start": [
+    46.75,
+    1.4500000000000002,
+    0.7610052534186371
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    3.0500000000000003,
+    15.75
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s005",
+   "seed": 3956616418458332,
+   "start": [
+    44.25,
+    5.550000000000001,
+    -2.3757069141315137
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    9.950000000000001,
+    21.650000000000002
+   ],
+   "goal_zone": "zone_office",
+   "id": "s006",
+   "seed": 7500070003093473,
+   "start": [
+    40.45,
+    6.3500000000000005,
+    1.7079943331337377
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    45.85,
+    25.25
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "s007",
+   "seed": 5933893642952257,
+   "start": [
+    47.150000000000006,
+    0.8500000000000001,
+    -2.5020000961364035
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    11.75,
+    24.85
+   ],
+   "goal_zone": "zone_office",
+   "id": "s008",
+   "seed": 7022527877064266,
+   "start": [
+    36.050000000000004,
+    3.35,
+    2.747147951358655
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    7.950000000000001,
+    28.75
+   ],
+   "goal_zone": "zone_office",
+   "id": "s009",
+   "seed": 3114266497695732,
+   "start": [
+    42.35,
+    6.8500000000000005,
+    1.1281449299857016
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    12.850000000000001,
+    23.75
+   ],
+   "goal_zone": "zone_office",
+   "id": "s010",
+   "seed": 850364145071992,
+   "start": [
+    44.35,
+    9.350000000000001,
+    1.9169535012262813
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    24.150000000000002,
+    26.450000000000003
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s011",
+   "seed": 4833085296636574,
+   "start": [
+    39.050000000000004,
+    5.95,
+    3.138587096695268
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    28.950000000000003,
+    11.55
+   ],
+   "goal_zone": "zone_forklift_lanes",
+   "id": "s012",
+   "seed": 1372779398636588,
+   "start": [
+    40.650000000000006,
+    3.1500000000000004,
+    -2.2122243056297117
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    2.25,
+    3.45
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s013",
+   "seed": 6224776039817634,
+   "start": [
+    36.35,
+    5.75,
+    0.5562693354550281
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    41.25,
+    0.9500000000000002
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s014",
+   "seed": 3968895181346659,
+   "start": [
+    40.25,
+    6.3500000000000005,
+    -1.6333200740611162
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    17.45,
+    11.15
+   ],
+   "goal_zone": "zone_forklift_lanes",
+   "id": "s015",
+   "seed": 8466727075906522,
+   "start": [
+    46.85,
+    7.75,
+    -3.038650100241263
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    8.35,
+    29.650000000000002
+   ],
+   "goal_zone": "zone_office",
+   "id": "s016",
+   "seed": 1976870851685753,
+   "start": [
+    41.85,
+    6.95,
+    1.6218705553698456
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    25.450000000000003,
+    25.650000000000002
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s017",
+   "seed": 8878828289195633,
+   "start": [
+    46.25,
+    0.8500000000000001,
+    3.0438901840141064
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    12.55,
+    6.75
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s018",
+   "seed": 1375754933197359,
+   "start": [
+    25.75,
+    22.35,
+    2.9936616027278458
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    10.850000000000001,
+    7.550000000000001
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s019",
+   "seed": 7836090314720943,
+   "start": [
+    28.150000000000002,
+    21.150000000000002,
+    -0.21015398350878023
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    25.150000000000002,
+    17.650000000000002
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s020",
+   "seed": 513310568574054,
+   "start": [
+    16.55,
+    21.150000000000002,
+    -2.903397356292768
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    2.75,
+    28.55
+   ],
+   "goal_zone": "zone_office",
+   "id": "s021",
+   "seed": 583159347848931,
+   "start": [
+    16.25,
+    16.75,
+    -2.242072766008987
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    6.75,
+    3.0500000000000003
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s022",
+   "seed": 2969165884768658,
+   "start": [
+    23.650000000000002,
+    18.75,
+    1.529044938752997
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    0.8500000000000001,
+    24.25
+   ],
+   "goal_zone": "zone_office",
+   "id": "s023",
+   "seed": 2108729232459312,
+   "start": [
+    24.75,
+    26.450000000000003,
+    0.9348221668064696
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    12.65,
+    7.25
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s024",
+   "seed": 1297773991584988,
+   "start": [
+    29.650000000000002,
+    22.150000000000002,
+    -2.968917350548046
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    46.95,
+    27.05
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "s025",
+   "seed": 2038351330914688,
+   "start": [
+    20.150000000000002,
+    26.85,
+    -1.3599269607782294
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    2.35,
+    13.15
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s026",
+   "seed": 5746936895954709,
+   "start": [
+    30.55,
+    25.85,
+    0.06241219457234726
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    36.85,
+    29.35
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "s027",
+   "seed": 8707872854783762,
+   "start": [
+    25.55,
+    18.150000000000002,
+    -2.0588918331432238
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    21.450000000000003,
+    22.05
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s028",
+   "seed": 8729319483290469,
+   "start": [
+    29.55,
+    18.150000000000002,
+    2.8531607333617908
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    43.35,
+    6.8500000000000005
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s029",
+   "seed": 5192443231214385,
+   "start": [
+    25.25,
+    22.650000000000002,
+    1.1050266490808607
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    5.65,
+    26.75
+   ],
+   "goal_zone": "zone_office",
+   "id": "s030",
+   "seed": 8722524343466213,
+   "start": [
+    29.35,
+    17.75,
+    2.375629463939008
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    46.650000000000006,
+    2.25
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s031",
+   "seed": 2772290334856427,
+   "start": [
+    26.450000000000003,
+    21.35,
+    2.218959238667593
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    43.650000000000006,
+    1.75
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s032",
+   "seed": 769517223796038,
+   "start": [
+    20.05,
+    22.25,
+    -2.988885739745007
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    11.15,
+    5.75
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s033",
+   "seed": 6998906434824651,
+   "start": [
+    16.25,
+    16.95,
+    -3.028693156558485
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    46.85,
+    6.3500000000000005
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s034",
+   "seed": 2653854773727213,
+   "start": [
+    26.55,
+    17.650000000000002,
+    2.3050146711208237
+   ],
+   "start_zone": "zone_high_bay"
+  },
+  {
+   "goal": [
+    24.35,
+    26.450000000000003
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s035",
+   "seed": 4262603428394436,
+   "start": [
+    35.050000000000004,
+    30.950000000000003,
+    1.5411644969740594
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    47.35,
+    5.75
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s036",
+   "seed": 2579785485008842,
+   "start": [
+    43.35,
+    25.650000000000002,
+    3.01329632350334
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    23.55,
+    28.450000000000003
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s037",
+   "seed": 1486939441806477,
+   "start": [
+    47.25,
+    27.35,
+    0.6548198518643518
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    10.55,
+    10.65
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s038",
+   "seed": 8055125450959412,
+   "start": [
+    36.95,
+    29.450000000000003,
+    1.1594244151356898
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    2.35,
+    27.950000000000003
+   ],
+   "goal_zone": "zone_office",
+   "id": "s039",
+   "seed": 3627813276237038,
+   "start": [
+    37.050000000000004,
+    26.75,
+    -2.932897859407474
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    23.85,
+    15.05
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s040",
+   "seed": 5977899627500560,
+   "start": [
+    38.050000000000004,
+    25.85,
+    -0.9404346387337492
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    45.35,
+    6.550000000000001
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s041",
+   "seed": 5426479534853156,
+   "start": [
+    36.550000000000004,
+    30.950000000000003,
+    2.60297762937902
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    44.45,
+    2.0500000000000003
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s042",
+   "seed": 8655247952496941,
+   "start": [
+    37.050000000000004,
+    30.85,
+    1.3967282862169146
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    8.55,
+    16.85
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s043",
+   "seed": 2212032002494368,
+   "start": [
+    42.25,
+    26.25,
+    -2.02011927219844
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    26.450000000000003,
+    21.650000000000002
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s044",
+   "seed": 6563023617735501,
+   "start": [
+    38.050000000000004,
+    28.650000000000002,
+    -2.516775889168335
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    31.35,
+    13.15
+   ],
+   "goal_zone": "zone_forklift_lanes",
+   "id": "s045",
+   "seed": 5143850861403734,
+   "start": [
+    43.95,
+    27.25,
+    2.345181953202304
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    4.25,
+    23.05
+   ],
+   "goal_zone": "zone_office",
+   "id": "s046",
+   "seed": 3280724992721335,
+   "start": [
+    38.35,
+    25.55,
+    2.136432823365431
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    24.150000000000002,
+    10.15
+   ],
+   "goal_zone": "zone_forklift_lanes",
+   "id": "s047",
+   "seed": 2195946004412726,
+   "start": [
+    43.85,
+    26.150000000000002,
+    -1.706241427163942
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    10.350000000000001,
+    20.55
+   ],
+   "goal_zone": "zone_office",
+   "id": "s048",
+   "seed": 5339692255671227,
+   "start": [
+    40.050000000000004,
+    26.35,
+    0.30068195017056487
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    42.050000000000004,
+    7.15
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s049",
+   "seed": 4047451714801218,
+   "start": [
+    39.550000000000004,
+    25.650000000000002,
+    -2.7120361197475007
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    5.3500000000000005,
+    15.25
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s050",
+   "seed": 7961549699207253,
+   "start": [
+    42.050000000000004,
+    27.55,
+    -1.9902992763654823
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    23.450000000000003,
+    27.25
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s051",
+   "seed": 6830603122498639,
+   "start": [
+    44.550000000000004,
+    26.55,
+    2.369974182386052
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    13.55,
+    30.85
+   ],
+   "goal_zone": "zone_office",
+   "id": "s052",
+   "seed": 4817614649235960,
+   "start": [
+    5.75,
+    26.35,
+    0.4876398764977483
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    14.55,
+    12.450000000000001
+   ],
+   "goal_zone": "zone_forklift_lanes",
+   "id": "s053",
+   "seed": 185778942518841,
+   "start": [
+    3.6500000000000004,
+    22.150000000000002,
+    2.841111186706759
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    24.75,
+    15.850000000000001
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s054",
+   "seed": 2472167891998024,
+   "start": [
+    1.25,
+    23.150000000000002,
+    2.514465621213085
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    1.9500000000000002,
+    12.450000000000001
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s055",
+   "seed": 3595856136529482,
+   "start": [
+    3.1500000000000004,
+    23.55,
+    -0.4507714803420364
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    39.150000000000006,
+    10.65
+   ],
+   "goal_zone": "zone_forklift_lanes",
+   "id": "s056",
+   "seed": 7029177164070462,
+   "start": [
+    3.55,
+    23.650000000000002,
+    0.011744692203305984
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    39.75,
+    27.05
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "s057",
+   "seed": 1792393072138160,
+   "start": [
+    11.350000000000001,
+    26.75,
+    2.323375794642951
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    2.95,
+    3.6500000000000004
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s058",
+   "seed": 3788745176015508,
+   "start": [
+    13.25,
+    23.450000000000003,
+    -2.634283381021491
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    27.150000000000002,
+    17.75
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s059",
+   "seed": 2051805283289869,
+   "start": [
+    10.450000000000001,
+    23.85,
+    0.08241522689681258
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    18.75,
+    22.55
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s060",
+   "seed": 4530114390840966,
+   "start": [
+    9.55,
+    26.25,
+    1.4473800869468496
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    36.65,
+    26.05
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "s061",
+   "seed": 5321530212605865,
+   "start": [
+    7.550000000000001,
+    22.85,
+    1.792184080282138
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    12.15,
+    21.85
+   ],
+   "goal_zone": "zone_office",
+   "id": "s062",
+   "seed": 299669713555374,
+   "start": [
+    3.55,
+    29.25,
+    -3.1070696634558534
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    8.85,
+    22.650000000000002
+   ],
+   "goal_zone": "zone_office",
+   "id": "s063",
+   "seed": 7843563950793782,
+   "start": [
+    0.75,
+    26.75,
+    3.0084111399635294
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    39.25,
+    9.15
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s064",
+   "seed": 637669600892748,
+   "start": [
+    7.85,
+    26.35,
+    -1.6441042148190481
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    43.550000000000004,
+    25.950000000000003
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "s065",
+   "seed": 3531614921251625,
+   "start": [
+    5.3500000000000005,
+    31.25,
+    1.7672277654702722
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    36.25,
+    1.5500000000000003
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s066",
+   "seed": 7881371402065001,
+   "start": [
+    3.1500000000000004,
+    31.35,
+    2.9184645439819574
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    39.95,
+    8.950000000000001
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s067",
+   "seed": 5410358740560631,
+   "start": [
+    6.45,
+    29.35,
+    -0.8170058871540693
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    31.150000000000002,
+    11.850000000000001
+   ],
+   "goal_zone": "zone_forklift_lanes",
+   "id": "s068",
+   "seed": 8366191847397385,
+   "start": [
+    7.550000000000001,
+    31.150000000000002,
+    0.976450248792486
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    43.75,
+    1.35
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s069",
+   "seed": 4955688159494008,
+   "start": [
+    1.5500000000000003,
+    8.85,
+    -0.34346740206534054
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    7.45,
+    31.05
+   ],
+   "goal_zone": "zone_office",
+   "id": "s070",
+   "seed": 5624097410751212,
+   "start": [
+    12.950000000000001,
+    8.55,
+    2.918035386427303
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    40.150000000000006,
+    10.450000000000001
+   ],
+   "goal_zone": "zone_forklift_lanes",
+   "id": "s071",
+   "seed": 4962790299333026,
+   "start": [
+    3.0500000000000003,
+    4.95,
+    -0.15112133034141628
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    29.55,
+    10.05
+   ],
+   "goal_zone": "zone_forklift_lanes",
+   "id": "s072",
+   "seed": 862274424203026,
+   "start": [
+    9.25,
+    1.35,
+    0.19764514009364742
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    12.450000000000001,
+    0.9500000000000002
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s073",
+   "seed": 8093364925356630,
+   "start": [
+    10.05,
+    6.3500000000000005,
+    -2.1197648612870297
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    40.650000000000006,
+    12.15
+   ],
+   "goal_zone": "zone_forklift_lanes",
+   "id": "s074",
+   "seed": 8018619923858410,
+   "start": [
+    9.15,
+    8.55,
+    -0.8152740507502134
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    10.25,
+    16.95
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s075",
+   "seed": 2432185963848816,
+   "start": [
+    10.850000000000001,
+    4.550000000000001,
+    1.2942247180553004
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    10.350000000000001,
+    2.6500000000000004
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s076",
+   "seed": 1184802363868096,
+   "start": [
+    3.55,
+    12.950000000000001,
+    -1.8883317910454622
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    10.55,
+    27.650000000000002
+   ],
+   "goal_zone": "zone_office",
+   "id": "s077",
+   "seed": 6246094300027484,
+   "start": [
+    5.25,
+    14.350000000000001,
+    0.1394743659842308
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    2.95,
+    2.75
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s078",
+   "seed": 6663522769934168,
+   "start": [
+    11.05,
+    7.65,
+    -1.832083456952321
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    10.15,
+    28.950000000000003
+   ],
+   "goal_zone": "zone_office",
+   "id": "s079",
+   "seed": 3195437950700527,
+   "start": [
+    1.4500000000000002,
+    12.15,
+    2.126275044456821
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    4.65,
+    3.8500000000000005
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s080",
+   "seed": 7796342620518376,
+   "start": [
+    9.65,
+    14.15,
+    2.301170615539638
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    43.35,
+    3.75
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s081",
+   "seed": 7921021948885049,
+   "start": [
+    9.950000000000001,
+    2.45,
+    -1.440288488370136
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    21.25,
+    16.55
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s082",
+   "seed": 1541459114717313,
+   "start": [
+    9.350000000000001,
+    5.050000000000001,
+    -1.0816043784022713
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    10.65,
+    29.05
+   ],
+   "goal_zone": "zone_office",
+   "id": "s083",
+   "seed": 1011211422015028,
+   "start": [
+    10.75,
+    11.950000000000001,
+    -0.7570650308814044
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    3.55,
+    29.950000000000003
+   ],
+   "goal_zone": "zone_office",
+   "id": "s084",
+   "seed": 570926312143549,
+   "start": [
+    0.75,
+    5.65,
+    1.913991411488488
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    21.25,
+    10.05
+   ],
+   "goal_zone": "zone_forklift_lanes",
+   "id": "s085",
+   "seed": 8056445755108220,
+   "start": [
+    28.150000000000002,
+    12.850000000000001,
+    0.8736585371087973
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    40.75,
+    31.150000000000002
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "s086",
+   "seed": 4116499860557999,
+   "start": [
+    42.95,
+    10.55,
+    -2.7337937977266593
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    37.25,
+    24.85
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "s087",
+   "seed": 661746488980043,
+   "start": [
+    43.25,
+    11.350000000000001,
+    3.003608913739539
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    11.05,
+    28.650000000000002
+   ],
+   "goal_zone": "zone_office",
+   "id": "s088",
+   "seed": 1987315749933841,
+   "start": [
+    33.45,
+    12.950000000000001,
+    -0.6740967350642602
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    22.25,
+    22.25
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s089",
+   "seed": 7398785103644514,
+   "start": [
+    33.45,
+    13.15,
+    0.4880334344513453
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    45.150000000000006,
+    6.050000000000001
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "s090",
+   "seed": 3700413765812543,
+   "start": [
+    17.05,
+    10.850000000000001,
+    0.13670990649188042
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    10.05,
+    20.450000000000003
+   ],
+   "goal_zone": "zone_office",
+   "id": "s091",
+   "seed": 2722866890356138,
+   "start": [
+    22.150000000000002,
+    12.65,
+    1.846721778551471
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    0.55,
+    10.15
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s092",
+   "seed": 5998999858135800,
+   "start": [
+    22.55,
+    12.350000000000001,
+    -1.2886991725133854
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    8.450000000000001,
+    30.05
+   ],
+   "goal_zone": "zone_office",
+   "id": "s093",
+   "seed": 4367929646733200,
+   "start": [
+    36.75,
+    10.55,
+    -0.26424986973985876
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    12.25,
+    29.25
+   ],
+   "goal_zone": "zone_office",
+   "id": "s094",
+   "seed": 6262023317241818,
+   "start": [
+    30.55,
+    10.850000000000001,
+    -0.43144572859713826
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    5.25,
+    8.25
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s095",
+   "seed": 5459691060584023,
+   "start": [
+    18.950000000000003,
+    12.950000000000001,
+    1.121417900699619
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    14.950000000000001,
+    11.450000000000001
+   ],
+   "goal_zone": "zone_forklift_lanes",
+   "id": "s096",
+   "seed": 7480915917252593,
+   "start": [
+    36.45,
+    13.450000000000001,
+    0.9128644858894468
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    17.35,
+    21.05
+   ],
+   "goal_zone": "zone_high_bay",
+   "id": "s097",
+   "seed": 6794287795805529,
+   "start": [
+    47.050000000000004,
+    10.65,
+    1.3659249630108716
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    3.1500000000000004,
+    3.6500000000000004
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "s098",
+   "seed": 3122510441100153,
+   "start": [
+    15.15,
+    12.350000000000001,
+    2.6383300381994603
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    42.650000000000006,
+    26.950000000000003
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "s099",
+   "seed": 2234073398657036,
+   "start": [
+    47.25,
+    10.05,
+    0.8063890304551316
+   ],
+   "start_zone": "zone_forklift_lanes"
+  },
+  {
+   "goal": [
+    4.05,
+    26.25
+   ],
+   "goal_zone": "zone_office",
+   "id": "s100",
+   "seed": 5690618663369872,
+   "start": [
+    37.050000000000004,
+    12.850000000000001,
+    0.26356563636901686
+   ],
+   "start_zone": "zone_forklift_lanes"
+  }
+ ],
+ "schema": "coco.bench.suite.v0",
+ "tests": "Navigation across the COCO Depot (0.1 m cells): 100 seeded pairs stratified by the START's zone over the six region zones (17, 17, 17, 17, 16, 16 in spec order: loading dock, high bay, mezzanine, office, workshop, forklift lanes), goals in any zone, at least 5 m apart, connected on the planning grid.",
+ "title": "Depot: 100 pairs across its six zones",
+ "version": 0,
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841"
+}

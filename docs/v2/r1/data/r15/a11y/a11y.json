@@ -1,0 +1,60 @@
+{
+ "site": "http://127.0.0.1:4195/coco-labs/",
+ "when": "2026-11-03T16:37:51.122Z",
+ "pages": [
+  {
+   "profile": "desktop",
+   "theme": "dark",
+   "view": "?view=workbench&tab=benchmarks",
+   "checked": 688,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 46,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "light",
+   "view": "?view=workbench&tab=benchmarks",
+   "checked": 688,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 46,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "dark",
+   "view": "?view=workbench&tab=benchmarks",
+   "checked": 688,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 46,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "light",
+   "view": "?view=workbench&tab=benchmarks",
+   "checked": 688,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 46,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  }
+ ],
+ "errors": [],
+ "passed": true
+}

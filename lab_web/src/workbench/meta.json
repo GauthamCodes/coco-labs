@@ -1067,7 +1067,57 @@
    "error"
   ]
  },
- "suites": [],
+ "suites": [
+  {
+   "families": [
+    "planning",
+    "control",
+    "localisation"
+   ],
+   "id": "arena-nav-50",
+   "n": 50,
+   "tests": "Navigation on the original COCO arena (the Proving Ground, 0.05 m cells): 50 seeded start/goal pairs in free space (clearance > 0.35 m, at least 3 m apart, connected on the planning grid). The reference world for every existing STACK recording.",
+   "title": "Proving Ground: 50 start/goal pairs",
+   "version": 0,
+   "world": "coco_arena_v1"
+  },
+  {
+   "families": [
+    "fulltask"
+   ],
+   "id": "colour-fetch-4",
+   "n": 4,
+   "tests": "The full task on the Depot with colour rods: the reference bot (planner + waypoint driver + Grasp Assist) fetches each rod (red 20 mm, green 24 mm, blue 28 mm, yellow 32 mm) and delivers it to Dispatch, driven by each global planner. Grasp Assist's approach planning stays A*, as in Play. Fetch by colour rules 2 (actors yield). Gazebo + Nav2 recordings of the same four rounds exist (STACK ghosts g2_colour_<colour>).",
+   "title": "Fetch by colour: the four rods",
+   "version": 0,
+   "world": "coco_depot_colours_v1"
+  },
+  {
+   "families": [
+    "planning",
+    "control"
+   ],
+   "id": "depot-narrow-30",
+   "n": 30,
+   "tests": "Planning and control where the Depot is tight. 15 pairs whose reference A* path (default costmap: inflation 0.5 m, scaling 10, robot radius 0.25 m) runs at least 5 m inside the workshop maze (a dead-end corner of the Depot: one end is in the maze, so the route must thread it), and 15 whose reference path crosses at least 5 m of the high-bay rack aisles with both ends outside them. Pairs come in draw order from a seeded pool of 600 (seed 3001, separation >= 4 m); \"passes\" and \"in_zone_m\" record why each was chosen.",
+   "title": "Depot: the workshop maze and the rack aisles",
+   "version": 0,
+   "world": "coco_depot_v1"
+  },
+  {
+   "families": [
+    "planning",
+    "control",
+    "localisation"
+   ],
+   "id": "depot-nav-100",
+   "n": 100,
+   "tests": "Navigation across the COCO Depot (0.1 m cells): 100 seeded pairs stratified by the START's zone over the six region zones (17, 17, 17, 17, 16, 16 in spec order: loading dock, high bay, mezzanine, office, workshop, forklift lanes), goals in any zone, at least 5 m apart, connected on the planning grid.",
+   "title": "Depot: 100 pairs across its six zones",
+   "version": 0,
+   "world": "coco_depot_v1"
+  }
+ ],
  "worlds": [
   {
    "height": 380,

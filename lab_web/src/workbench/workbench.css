@@ -75,3 +75,6 @@
 .wb-bench p a{display:inline-flex;align-items:center;min-height:48px;margin-right:14px}
 .wb-map{margin:12px 0;padding:12px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-md);max-width:680px}
 .wb-map figcaption{color:var(--muted);margin-bottom:8px}
+/* R1.6: long digests and file names wrap inside a card; dataset cards are wider */
+.wb-card p,.wb-card td,.wb-card h3{overflow-wrap:anywhere}
+.wb-cards.wb-wide{grid-template-columns:repeat(auto-fill,minmax(min(100%,440px),1fr))}

@@ -4,6 +4,9 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-03): R1.5 Benchmarks done** ([`data/r15/README.md`](data/r15/README.md)): COCO-Bench v0 — four
+  frozen suites (50, 100, 30, 4 scenarios), 2,170 reference runs committed; a random 10% re-run with the tree's
+  code: 197 of 197 match; Benchmarks tab with maps and Race Nav2 links for the colour rounds.
 - **State (2026-11-03): R1.4 Links and Verify done** ([`data/r14/README.md`](data/r14/README.md)): link → fresh
   context → "Reproduced exactly" in Chromium, Firefox and WebKit (and the fragment form); same digest natively.
 - **State (2026-11-03): R1.3 Builder and results done** ([`data/r13/README.md`](data/r13/README.md)): form ⇄ JSON/YAML,
@@ -63,7 +66,7 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R1.2 Worker pool | done | [`data/r12/README.md`](data/r12/README.md), [`parity.json`](data/r12/parity.json) |
 | R1.3 Builder and results | done | [`data/r13/README.md`](data/r13/README.md), [`a11y.json`](data/r13/a11y/a11y.json) |
 | R1.4 Links and verification | done | [`data/r14/README.md`](data/r14/README.md) |
-| R1.5 Benchmarks | pending | |
+| R1.5 Benchmarks | done | [`data/r15/README.md`](data/r15/README.md), [`bench/`](bench/) |
 | R1.6 Exports and notebook | pending | |
 | R1.7 Compare and navigation | pending | |
 | R1.8 Performance | pending | |

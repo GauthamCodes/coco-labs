@@ -155,6 +155,24 @@ def test_exports_are_complete_and_checksummed():
     assert set(man['files']) == set(files) - {'manifest.json'}
 
 
+def test_every_benchmark_suite_plans_on_its_world():
+    """COCO-Bench v0: each frozen suite loads, names its world's current hash, and plans."""
+    assert ex.suites() == ['arena-nav-50', 'colour-fetch-4', 'depot-narrow-30', 'depot-nav-100']
+    sizes = {'arena-nav-50': 50, 'colour-fetch-4': 4, 'depot-narrow-30': 30, 'depot-nav-100': 100}
+    for sid, n in sizes.items():
+        st = ex.suite(sid)
+        assert st['world_sha256'] == ex.world_sha256(st['world']), sid
+        fam = st['families'][0]
+        algo = ex.ALGORITHMS[fam][0]
+        spec = {'schema': ex.SCHEMA, 'family': fam, 'algorithms': [{'name': algo}],
+                'scenarios': {'kind': 'suite', 'id': sid}}
+        if fam != 'fulltask':
+            spec['world'] = st['world']
+        assert len(ex.plan(spec)['scenarios']) == n, sid
+    zones = [s['start_zone'] for s in ex.suite('depot-nav-100')['scenarios']]
+    assert sorted(zones.count(z) for z in set(zones)) == [16, 16, 17, 17, 17, 17]
+
+
 def test_golden_experiment():
     """The committed digests and chains (tools/r1/make_golden_experiment.py): never edited."""
     gold = json.loads(FIX.read_text())
