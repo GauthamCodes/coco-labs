@@ -15,8 +15,8 @@ def run(script, *args):
                           capture_output=True, text=True, cwd=REPO, timeout=600)
 
 
-@pytest.mark.parametrize('script', ['build_meta.py'])
+@pytest.mark.parametrize('script', ['build_meta.py', 'make_suites.py', 'bench_readmes.py', 'build_datasets.py'])
 def test_generated_file_is_current(script):
-    """meta.json: the experiment builder's tables, generated from coco_lab.experiments."""
+    """meta.json (the builder's tables), the frozen COCO-Bench suites, their READMEs, the datasets index."""
     r = run(script, '--check')
     assert r.returncode == 0, r.stdout + r.stderr

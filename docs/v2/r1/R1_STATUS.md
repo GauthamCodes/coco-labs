@@ -4,8 +4,11 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-03): R1.6 Exports, notebook, Datasets done** ([`data/r16/README.md`](data/r16/README.md)): a
+  browser export (+ MCAP traces) equals the native one byte for byte (wall time removed); the notebook reproduces
+  summary.json from results.csv (2.0e-16); Datasets tab: 11 checksummed datasets incl. 3 MODEL ↔ STACK pairs.
 - **State (2026-11-03): R1.5 Benchmarks done** ([`data/r15/README.md`](data/r15/README.md)): COCO-Bench v0 — four
-  frozen suites (50, 100, 30, 4 scenarios), 2,170 reference runs committed; a random 10% re-run with the tree's
+  frozen suites (50, 100, 30, 4 scenarios), 1,970 reference runs committed (the R1.5 commit message says 2,170: wrong); a random 10% re-run with the tree's
   code: 197 of 197 match; Benchmarks tab with maps and Race Nav2 links for the colour rounds.
 - **State (2026-11-03): R1.4 Links and Verify done** ([`data/r14/README.md`](data/r14/README.md)): link → fresh
   context → "Reproduced exactly" in Chromium, Firefox and WebKit (and the fragment form); same digest natively.
@@ -67,7 +70,7 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R1.3 Builder and results | done | [`data/r13/README.md`](data/r13/README.md), [`a11y.json`](data/r13/a11y/a11y.json) |
 | R1.4 Links and verification | done | [`data/r14/README.md`](data/r14/README.md) |
 | R1.5 Benchmarks | done | [`data/r15/README.md`](data/r15/README.md), [`bench/`](bench/) |
-| R1.6 Exports and notebook | pending | |
+| R1.6 Exports and notebook | done | [`data/r16/README.md`](data/r16/README.md), [notebook](notebooks/analyse_experiment.ipynb) |
 | R1.7 Compare and navigation | pending | |
 | R1.8 Performance | pending | |
 | R1.9 Close | pending | |
