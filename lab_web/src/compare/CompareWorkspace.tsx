@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArenaClient } from '../arena/client';
 import { PlanStore } from '../arena/render/planStore';
-import { SPEC_FILES, type CompareInflation, type CompareResult, type World, type LoopFrame } from '../arena/protocol';
+import { type CompareInflation, type CompareResult, type World, type LoopFrame } from '../arena/protocol';
 import { WorldStage, type ComparisonData } from '../ui/reference/WorldStage';
 import type { CostmapData, CostLayer } from '../ui/reference/comparisonPixels';
 import { ModeNav } from '../ui/ModeNav';
@@ -13,14 +13,26 @@ import './compare.css';
 import '../game/fonts.css';
 import '../game/skin.css';
 import { Tours, type TourPreset } from './Tours';
+import { asCompareSide, C_FAMILY, experimentFromCompare, fragmentSpec, lockstep, runsLike, scenarioSpec, WORLD_NAME, WORLD_PARAM, worldIdOf, type Source } from './experiment_mode';
+import { META, type ExperimentSpec } from '../workbench/spec';
+import { experimentLink } from '../workbench/links';
+import type { RunRecord } from '../workbench/pool';
+import type { ReplayFrame } from '../arena/protocol';
 const BASE = import.meta.env.BASE_URL;
 const LABELS: Record<string, string> = { bfs: 'BFS', dijkstra: 'Dijkstra', astar: 'A*', greedy: 'Greedy', weighted_astar: 'Weighted A*', dstar_lite: 'D* Lite' };
 const FAMILY_NAMES = { global: ['astar', 'dijkstra', 'greedy', 'weighted_astar'], control: ['dwa', 'rpp', 'mppi', 'dwa'], localise: ['mcl', 'mcl_augmented', 'ekf', 'mcl'] };
 type Family = keyof typeof FAMILY_NAMES;
 Object.assign(LABELS, { dwa: 'DWA-style sampler', rpp: 'Pure pursuit', mppi: 'MPPI', mcl: 'MCL · no injection', mcl_augmented: 'MCL · injection', ekf: 'EKF' });
 const KEYS = ['A', 'B', 'C', 'D'] as const;
-/** G1.6: `?world=depot` compares on the COCO Depot (World Spec v3); `&goal=x,y` (map frame) sets the goal. */
-const urlWorld = () => new URLSearchParams(location.search).get('world') === 'depot' ? SPEC_FILES.depot : undefined;
+/** G1.6: `?world=depot` compares on the COCO Depot (World Spec v3); R1.7: every shipped world (v1, v2, depot, depot_colours); `&goal=x,y` (map frame) sets the goal. */
+const urlWorld = () => WORLD_PARAM[new URLSearchParams(location.search).get('world') ?? ''] ?? undefined;
+/** R1.7: a run opened from the Workbench table: its spec in the fragment, its index and failing tick in the query. */
+const urlRun = (): { spec: ExperimentSpec; index: number; tick: number | null } | null => {
+  const q = new URLSearchParams(location.search), h = new URLSearchParams(location.hash.replace(/^#/, ''));
+  const x = h.get('xexp'), i = Number(q.get('xrun')), t = q.get('t');
+  if (!x || !Number.isInteger(i) || i < 0) return null;
+  try { return { spec: fragmentSpec(x), index: i, tick: t !== null && Number.isInteger(Number(t)) ? Number(t) : null }; } catch { return null; }
+};
 const urlGoal = (): [number, number] | null => {
   const g = (new URLSearchParams(location.search).get('goal') ?? '').split(',').map(Number);
   return g.length === 2 && g.every(Number.isFinite) && Math.abs(g[0]) < 1e4 && Math.abs(g[1]) < 1e4 ? [g[0], g[1]] : null;
@@ -49,6 +61,12 @@ export function CompareWorkspace() {
   const [controls, setControls] = useState(new URLSearchParams(location.search).has('tour'));
   const [tours, setTours] = useState(new URLSearchParams(location.search).has('tour'));
   const [preset, setPreset] = useState<TourPreset>(); const appliedPreset = useRef('');
+  const worldId = worldIdOf(urlWorld());
+  const opened = useRef(urlRun());
+  const [source, setSource] = useState<Source>({ kind: 'live' });
+  const [scenarioNote, setScenarioNote] = useState('');
+  const replayFrames = useRef<ReplayFrame[][]>([]);
+  const suites = META.suites.filter((st) => st.world === worldId && st.families.includes(({ global: 'planning', control: 'control', localise: 'localisation' } as const)[family]));
   const closeControls = () => { setControls(false); requestAnimationFrame(() => controlsToggle.current?.focus()); };
   useEffect(() => {
     const escape = (event: KeyboardEvent) => { if (controls && event.key === 'Escape' && !document.querySelector('dialog[open]')) { event.preventDefault(); closeControls(); } };
@@ -61,6 +79,40 @@ export function CompareWorkspace() {
     state.current = next; setData(next); setResult(undefined); setBusy(true); setError(''); setPlaying(false); setCursor(0); history.current = []; setLoopCount(0); setLoopFrames(undefined);
     if (nextFamily === 'global') c.compareMany(nextNames, nextGoal[0], nextGoal[1], nextParams);
     else c.compareLoop({ family: nextFamily, names: nextNames, goal: nextGoal, inflation: nextParams, steps, hash_version: 3 });
+  };
+  /** R1.7: replay experiment runs in the panes (the Workbench's own runs: identical numbers). */
+  const replay = (spec: ExperimentSpec, indices: number[], nextFamily = family, tick: number | null = null) => {
+    const old = state.current, c = client.current; if (!old || !c) return;
+    const next = fresh(old.world, old.occupancy, indices.length);
+    state.current = next; setData(next); setResult(undefined); setBusy(true); setError(''); setPlaying(false); setCursor(0); history.current = []; setLoopCount(0); setLoopFrames(undefined);
+    replayFrames.current = indices.map(() => []);
+    const text = JSON.stringify(spec);
+    void c.experiment<{ scenarios: { id: string; start: number[]; goal: number[]; start_zone?: string; goal_zone?: string }[] }>('plan', text, worldId)
+      .then((pl) => {
+        const sc = pl.scenarios[indices[0] % pl.scenarios.length];
+        setScenarioNote(`${sc.id}: start (${sc.start.slice(0, 2).map((v) => v.toFixed(2)).join(', ')}) → goal (${sc.goal.map((v) => v.toFixed(2)).join(', ')})${sc.start_zone ? ` · ${sc.start_zone.replace('zone_', '')} → ${(sc.goal_zone ?? '').replace('zone_', '')}` : ''}`);
+        return c.experiment<RunRecord[]>('replay', text, worldId, indices);
+      })
+      .then((records) => {
+        const d = state.current; if (!d) return;
+        setResult(Object.fromEntries(records.map((r, k) => [KEYS[k], asCompareSide(r, d.world.resolution)])) as unknown as CompareResult);
+        if (nextFamily === 'global') {
+          d.stores.forEach((store) => store.seek(store.received));
+          setCursor(Math.max(...d.stores.map((store) => store.received))); setData({ ...d });
+        } else {
+          history.current = lockstep(replayFrames.current, records); setLoopCount(history.current.length);
+          applyLoopCursor(tick !== null ? Math.min(tick + 1, history.current.length) : history.current.length);
+        }
+        setBusy(false);
+      })
+      .catch((e: Error) => { setError('experiment: ' + e.message); setBusy(false); });
+  };
+  const runSource = (src: Source, nextNames = names, nextParams = params, nextFamily = family) => {
+    setSource(src);
+    if (src.kind === 'live') { setScenarioNote(''); run(nextNames, nextParams, goal, nextFamily); return; }
+    const n = src.kind === 'suite' ? META.suites.find((st) => st.id === src.id)?.n ?? 1 : 1;
+    const { spec, indices } = scenarioSpec(nextFamily, worldId, nextNames, nextParams, src, n);
+    replay(spec, indices, nextFamily);
   };
   const applyLoopCursor = (value: number) => {
     const d = state.current; if (!d) return;
@@ -78,6 +130,19 @@ export function CompareWorkspace() {
       onWorld(world, occupancy) {
         const next = fresh(world, occupancy, config.current.names.length);
         state.current = next; setData(next);
+        const x = opened.current;
+        if (x) {
+          // R1.7: a run from the Workbench table, with the runs that share its scenario beside it
+          const fam = C_FAMILY[x.spec.family];
+          if (!fam) { setError('Compare replays planning, control and localisation runs; full-task runs play in Play.'); setBusy(false); return; }
+          void c.experiment<{ spec: { algorithms: { name: string }[] }; scenarios: unknown[] }>('plan', JSON.stringify(x.spec), worldIdOf(urlWorld())).then((pl) => {
+            const indices = runsLike(x.index, pl.spec.algorithms.length, pl.scenarios.length);
+            const nm = indices.map((i) => pl.spec.algorithms[Math.floor(i / pl.scenarios.length) % pl.spec.algorithms.length].name);
+            setFamily(fam); setNames(nm); config.current = { ...config.current, names: nm, family: fam };
+            replay(x.spec, indices, fam, x.tick);
+          }).catch((e: Error) => { setError('experiment: ' + e.message); setBusy(false); });
+          return;
+        }
         const cfg = config.current; c.compareMany(cfg.names, ...cfg.goal, cfg.params);
       },
       onFamily(message) {
@@ -108,6 +173,7 @@ export function CompareWorkspace() {
         d.stores.forEach(store => store.seek(store.received));
         setCursor(Math.max(...d.stores.map(store => store.received))); setData({ ...d }); setResult(done); setBusy(false);
       },
+      onExperimentFrames(side, frames) { replayFrames.current[KEYS.indexOf(side)] = frames; },
       onError(stage, message) { setError(stage + ': ' + message); setBusy(false); },
     }, { seed: 1, hashVersion: 3, spec: urlWorld() });
     client.current = c; return () => { c.close(); client.current = undefined; };
@@ -136,9 +202,15 @@ export function CompareWorkspace() {
   const changeParams = (key: keyof CompareInflation, value: number) => {
     const next = { ...params, [key]: value };
     if (next.inflation_radius < next.robot_radius) next.inflation_radius = next.robot_radius;
-    setParams(next); run(names, next);
+    setParams(next); if (source.kind === 'live') run(names, next); else runSource(source, names, next);
   };
-  const select = (index: number, value: string) => { const next = [...names]; next[index] = value; setNames(next); run(next); };
+  const select = (index: number, value: string) => { const next = [...names]; next[index] = value; setNames(next); if (source.kind === 'live') run(next); else runSource(source, next); };
+  const toExperiment = () => { window.location.href = experimentLink(experimentFromCompare(family, worldId, [...new Set(names)], params, source), new URL(BASE, location.href).href); };
+  const stepSource = (d: number) => {
+    if (source.kind === 'random') runSource({ kind: 'random', seed: Math.max(0, source.seed + d) });
+    else if (source.kind === 'suite') { const n = META.suites.find((st) => st.id === source.id)?.n ?? 1; runSource({ ...source, index: (source.index + d + n) % n }); }
+  };
+  const familyOk = (f: Family) => source.kind !== 'suite' || !!META.suites.find((st) => st.id === source.id)?.families.includes(({ global: 'planning', control: 'control', localise: 'localisation' } as const)[f]);
   return <main className={`compare-workspace ${controls ? 'controls-open' : ''}`} data-testid="compare-workspace" data-ready={!!result}>
     <ModeNav current="compare" evidence="MODEL" />
     <section className="compare-stage" aria-label="Comparison panes">
@@ -157,12 +229,30 @@ export function CompareWorkspace() {
       {tours && <Tours onPreset={setPreset} />}
       {preset?.lens && ['map', 'decide'].includes(preset.lens) && <p>This lesson continues in the existing {preset.lens === 'map' ? 'mapping' : 'decision'} Inspect view. <a href={`${BASE}?view=arena&lens=${preset.lens}&level=explain&camera=topdown`}>Open this lesson's computation</a></p>}
       <fieldset disabled={busy}><legend>Compare algorithms</legend>
-        <label>Family<select aria-label="Family" value={family} onChange={e => { const next = e.target.value as Family, values = FAMILY_NAMES[next].slice(0, names.length); setFamily(next); setNames(values); run(values, params, goal, next); }}><option value="global">Global planning</option><option value="control">Local control</option><option value="localise">Localization</option></select></label>
-        <label>Panes<select aria-label="Panes" value={names.length} onChange={e => { const next = Number(e.target.value) === 4 ? [...names.slice(0, 2), ...FAMILY_NAMES[family].slice(2)] : names.slice(0, 2); setNames(next); run(next); }}><option value={2}>2 panes</option><option value={4}>4 panes</option></select></label>
+        <label>Family<select aria-label="Family" value={family} onChange={e => { const next = e.target.value as Family, values = FAMILY_NAMES[next].slice(0, names.length); setFamily(next); setNames(values); if (source.kind === 'live' || !familyOk(next)) { setSource({ kind: 'live' }); setScenarioNote(''); run(values, params, goal, next); } else runSource(source, values, params, next); }}><option value="global">Global planning</option><option value="control">Local control</option><option value="localise">Localization</option></select></label>
+        <label>Panes<select aria-label="Panes" value={names.length} onChange={e => { const next = Number(e.target.value) === 4 ? [...names.slice(0, 2), ...FAMILY_NAMES[family].slice(2)] : names.slice(0, 2); setNames(next); if (source.kind === 'live') run(next); else runSource(source, next); }}><option value={2}>2 panes</option><option value={4}>4 panes</option></select></label>
         {names.map((name, index) => <label key={index}>Algorithm {KEYS[index]}<select aria-label={`Algorithm ${KEYS[index]}`} value={name} onChange={e => select(index, e.target.value)}>{Object.entries(LABELS).filter(([key]) => family === 'global' ? ![...FAMILY_NAMES.control, ...FAMILY_NAMES.localise].includes(key) : FAMILY_NAMES[family].includes(key)).map(([key, title]) => <option key={key} value={key}>{title}</option>)}</select></label>)}
         <label>Inflation radius · {params.inflation_radius.toFixed(2)} m<input type="range" min={params.robot_radius} max={1.5} step={.05} value={params.inflation_radius} onChange={e => changeParams('inflation_radius', +e.target.value)} /></label>
         <label>Cost scaling · {params.cost_scaling_factor}<input type="range" min={0} max={65} step={1} value={params.cost_scaling_factor} onChange={e => changeParams('cost_scaling_factor', +e.target.value)} /></label>
         <label>Robot radius · {params.robot_radius.toFixed(2)} m<input type="range" min={.1} max={.5} step={.01} value={params.robot_radius} onChange={e => changeParams('robot_radius', +e.target.value)} /></label>
+      </fieldset>
+      <fieldset disabled={busy} data-testid="compare-scenario"><legend>Scenario</legend>
+        <label>Start and goal<select aria-label="Scenario source" value={source.kind} onChange={(e) => {
+          const k = e.target.value;
+          runSource(k === 'random' ? { kind: 'random', seed: 1 } : k === 'suite' && suites.length ? { kind: 'suite', id: suites[0].id, index: 0 }
+            : k === 'hand' ? { kind: 'hand', start: [goal[0] - 2, goal[1], 0], goal } : { kind: 'live' });
+        }}><option value="live">Robot's start, clicked goal</option><option value="random">Seeded random pair</option><option value="suite" disabled={!suites.length}>Benchmark suite pair</option><option value="hand">Hand-placed pair</option></select></label>
+        {source.kind === 'random' && <label>Seed<input type="number" min={0} step={1} value={source.seed} onChange={(e) => runSource({ kind: 'random', seed: Math.max(0, Math.floor(+e.target.value)) })} /></label>}
+        {source.kind === 'suite' && <label>Suite<select aria-label="Suite" value={source.id} onChange={(e) => runSource({ kind: 'suite', id: e.target.value, index: 0 })}>{suites.map((st) => <option key={st.id} value={st.id}>{st.id} v{st.version} ({st.n})</option>)}</select></label>}
+        {source.kind === 'hand' && <>{(['Start X', 'Start Y', 'Goal X', 'Goal Y'] as const).map((lbl, k) => <label key={lbl}>{lbl} (m)<input type="number" step="any" value={k < 2 ? source.start[k] : source.goal[k - 2]} onChange={(e) => {
+          const v = +e.target.value; if (!Number.isFinite(v)) return;
+          const st: [number, number, number] = [source.start[0], source.start[1], source.start[2]]; const gl: [number, number] = [source.goal[0], source.goal[1]];
+          if (k < 2) st[k] = v; else gl[k - 2] = v; setSource({ kind: 'hand', start: st, goal: gl });
+        }} /></label>)}<button type="button" onClick={() => runSource(source)}>Run this pair</button></>}
+        {(source.kind === 'random' || source.kind === 'suite') && <div className="compare-steps"><button type="button" onClick={() => stepSource(-1)}>Previous</button><button type="button" onClick={() => stepSource(1)}>Next</button>{source.kind === 'suite' && <output>{source.index + 1} / {META.suites.find((st) => st.id === source.id)?.n}</output>}</div>}
+        {scenarioNote && <p data-testid="compare-scenario-note">{scenarioNote}</p>}
+        {source.kind !== 'live' && <p>Each pane replays an experiment run (coco_lab.experiments), so its numbers are the Workbench's for the same spec.</p>}
+        <button type="button" onClick={toExperiment} data-testid="compare-to-experiment">Turn this into an experiment</button>
       </fieldset>
       <form onSubmit={event => { event.preventDefault(); if (!busy && goal.every(Number.isFinite)) run(); }}>
         <fieldset disabled={busy}><legend>{family === 'localise' ? 'Shared relocation point' : 'Shared goal'}</legend>
@@ -173,7 +263,7 @@ export function CompareWorkspace() {
       {family !== 'global' && <label>Shared time window<select aria-label="Shared time window" disabled={busy} value={windowSteps} onChange={event => { const steps = +event.target.value; setWindowSteps(steps); run(names, params, goal, family, steps); }}><option value={60}>6 seconds</option><option value={200}>20 seconds</option></select></label>}
       <label>Costmap layer<select aria-label="Costmap layer" value={layer} onChange={e => setLayer(e.target.value as CostLayer)}>{['static', 'inflation', 'obstacle', 'combined'].map(key => <option key={key}>{key}</option>)}</select></label>
       {family !== 'global' && <p>{windowSteps / 10}-second MODEL window, shared 0.1 s ticks. {family === 'localise' ? `Same open-loop commands; shared relocation at ${Math.min(50, Math.max(1, Math.floor(windowSteps / 3))) / 10} s. Shared teaching profile: 60 MCL particles and 12 LiDAR beams for each filter. Purple particles, pink estimated trail, green truth outline. Costmap sliders change the displayed common grid, not the localization sensor model. Success means final position error ≤0.5 m.` : 'Same A* global goal; current LiDAR drives each controller. Amber line is the selected candidate. Success means reached within this window.'} The floor costmap shows the common initial grid.</p>}
-      <p>COCO arena · seed 1<br />Goal {goal.map(v => v.toFixed(2)).join(', ')} m</p>
+      <p>{WORLD_NAME[worldId] ?? worldId} · seed 1<br />{source.kind === 'live' ? `Goal ${goal.map(v => v.toFixed(2)).join(', ')} m` : scenarioNote}</p>
       {names.includes('dstar_lite') && <p>D* Lite searches backwards. This is its first plan; the real-story tour examines repair after a costmap change.</p>}
       <p>White contour: lethal 254. Dashed contour: inscribed 253. Circular model radius; current scan marks have no persistence.</p>
       {difference && family === 'global' && <p>Expanded cells stay blue: A only has rising stripes, B only falling stripes, both solid. Paths stay pink: A solid, B dashed where separate.</p>}

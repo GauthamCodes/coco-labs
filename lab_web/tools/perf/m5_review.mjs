@@ -128,7 +128,8 @@ try {
     await p.screenshot({path:`${out}/${name}-compare-${family}.png`,scale:'css'});
    }
   }
-  await p.getByTestId('mode-research').click();
+  await p.getByTestId('mode-workbench').click();
+  await p.getByTestId('wb-tab-recordings').click();
   await p.locator('.recording-card').first().waitFor();
   row.recordings = await p.locator('.recording-card').count();
   await p.screenshot({ path:`${out}/${name}-recordings.png`,scale:'css' });

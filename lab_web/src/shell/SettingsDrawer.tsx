@@ -26,7 +26,7 @@ export default function SettingsDrawer({onClose}:{onClose:()=>void}){
  },[waiting,bindings]);
  return <dialog className="settings-drawer" ref={dialog} aria-labelledby="settings-title" onClose={onClose} data-testid="settings-drawer" onKeyDown={trapDialogTab}>
   <header><h1 id="settings-title">Settings</h1><button autoFocus onClick={()=>dialog.current?.close()} aria-label="Close settings">Close</button></header>
-  <nav aria-label="App modes"><a href={`${import.meta.env.BASE_URL}`}>Title</a> · <a href={`${import.meta.env.BASE_URL}?view=play`}>Play</a> · <a href={`${import.meta.env.BASE_URL}?view=compare`}>Compare</a> · <a href={`${import.meta.env.BASE_URL}?view=research`}>Research</a></nav>
+  <nav aria-label="App modes"><a href={`${import.meta.env.BASE_URL}`}>Title</a> · <a href={`${import.meta.env.BASE_URL}?view=play`}>Play</a> · <a href={`${import.meta.env.BASE_URL}?view=learn`}>Learn</a> · <a href={`${import.meta.env.BASE_URL}?view=compare`}>Compare</a> · <a href={`${import.meta.env.BASE_URL}?view=workbench`}>Workbench</a></nav>
   {document.querySelector('.coco-play')&&<button onClick={()=>{dialog.current?.close();window.dispatchEvent(new Event('coco:play-menu'));}}>Game menu and inspection</button>}
   {document.querySelector('.play-tutorial')&&<button onClick={()=>{dialog.current?.close();window.dispatchEvent(new Event('coco:skip-tutorial'));}}>Skip tutorial</button>}
   <p className="muted">Saved on this device.</p>

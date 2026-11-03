@@ -4,6 +4,9 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-03): R1.7 Compare and navigation done** ([`data/r17/README.md`](data/r17/README.md)): Compare on every
+  world; scenario picker (seeded / suite with Previous-Next / hand-placed) replaying the experiments' own runs (=
+  the reference numbers); table links; hand-off to the builder; Play · Learn · Compare · Workbench; three doors; Learn page.
 - **State (2026-11-03): R1.6 Exports, notebook, Datasets done** ([`data/r16/README.md`](data/r16/README.md)): a
   browser export (+ MCAP traces) equals the native one byte for byte (wall time removed); the notebook reproduces
   summary.json from results.csv (2.0e-16); Datasets tab: 11 checksummed datasets incl. 3 MODEL ↔ STACK pairs.
@@ -71,12 +74,14 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R1.4 Links and verification | done | [`data/r14/README.md`](data/r14/README.md) |
 | R1.5 Benchmarks | done | [`data/r15/README.md`](data/r15/README.md), [`bench/`](bench/) |
 | R1.6 Exports and notebook | done | [`data/r16/README.md`](data/r16/README.md), [notebook](notebooks/analyse_experiment.ipynb) |
-| R1.7 Compare and navigation | pending | |
+| R1.7 Compare and navigation | done | [`data/r17/README.md`](data/r17/README.md), [`compare_check.json`](data/r17/compare_check.json) |
 | R1.8 Performance | pending | |
 | R1.9 Close | pending | |
 
 ## Gautham: look at these
 
+- R1.7: [`data/r17/screens/`](data/r17/screens/) — the three-door title, the Learn page, Compare and Recordings (desktop, emulated phone both orientations).
+- R1.5–R1.6: [`data/r15/a11y/`](data/r15/a11y/), [`data/r16/a11y/`](data/r16/a11y/) — Benchmarks and Datasets.
 - R1.3: [`data/r13/a11y/`](data/r13/a11y/) — the Workbench builder and results, desktop and emulated phone landscape, dark and light.
 
 ## Deviations so far

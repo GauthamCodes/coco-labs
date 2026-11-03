@@ -12,3 +12,5 @@
 .compare-close-controls{display:none}@media(max-width:1000px){.compare-close-controls{display:block;position:sticky;top:0;width:100%;z-index:1}.compare-controls{left:env(safe-area-inset-left);right:env(safe-area-inset-right);bottom:env(safe-area-inset-bottom);padding-bottom:max(24px,env(safe-area-inset-bottom))}}
 
 .compare-mobile-view{display:none}@media(max-width:1000px){.compare-mobile-view{display:flex;gap:8px;margin:12px 0}.compare-toolbar{top:8px;bottom:auto;left:auto;right:8px}.compare-toolbar>button:not(.compare-controls-toggle){display:none}.compare-labels>div{padding:8px}.compare-labels>div span{display:none}.compare-hover.is-hint{display:none}.compare-hover{bottom:4px;padding:4px;max-width:calc(100% - 8px)}}
+/* R1.7: the scenario picker's previous / next row */
+.compare-steps{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.compare-steps button{flex:1}

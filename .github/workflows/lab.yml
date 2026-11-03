@@ -269,6 +269,11 @@ jobs:
         run: |
           node tools/r1/link_e2e.mjs http://127.0.0.1:4174/coco-labs/ "$RUNNER_TEMP/r1_link.json" --browser chromium
           node tools/r1/link_e2e.mjs http://127.0.0.1:4174/coco-labs/ "$RUNNER_TEMP/r1_link_long.json" --browser chromium --long
+      # R1.7: Compare on chosen scenarios shows the experiments' own numbers (the committed COCO-Bench
+      # reference results), opens a run from a results-table link, opens on every world, hands off to the builder
+      - name: Compare replays experiment runs (R1)
+        working-directory: lab_web
+        run: node tools/r1/compare_check.mjs http://127.0.0.1:4174/coco-labs/ "$RUNNER_TEMP/r1_compare.json"
 
   deploy:
     name: Deploy site
