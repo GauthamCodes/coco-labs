@@ -42,7 +42,7 @@ export function Experiments() {
   const [progress, setProgress] = useState<Progress | null>(null);
   const [error, setError] = useState(opened.error);
   const [check, setCheck] = useState<Check | null>(null);
-  const [copied, setCopied] = useState('');
+  const [copied, setCopied] = useState<{ link: string; ok: boolean } | null>(null);
   const [busy, setBusy] = useState('');
   const pool = useRef<ExperimentPool | null>(null);
   const handle = useRef<ReturnType<ExperimentPool['run']> | null>(null);
@@ -111,7 +111,8 @@ export function Experiments() {
   const link = () => experimentLink(spec, SITE(), summary?.complete && ran.current === JSON.stringify(spec) ? summary.digest : undefined);
   const copy = async () => {
     const l = link();
-    try { await navigator.clipboard.writeText(l); setCopied('Link copied.'); } catch { setCopied(l); }
+    // the link is always shown too: a browser may refuse the clipboard, and it is worth seeing
+    try { await navigator.clipboard.writeText(l); setCopied({ link: l, ok: true }); } catch { setCopied({ link: l, ok: false }); }
   };
   const running = handle.current !== null || busy !== '';
   return <>
@@ -129,7 +130,8 @@ export function Experiments() {
       <button onClick={() => void downloadExport(getPool(), spec, records, hostInfo(getPool().size), false)} disabled={!summary || running}>Export results (zip)</button>
       <button onClick={() => void downloadExport(getPool(), spec, records, hostInfo(getPool().size), true)} disabled={!summary || running || spec.family === 'planning'} title={spec.family === 'planning' ? 'A search has no ticks to trace' : undefined}>Export with traces</button>
       {summary && <span className="wb-muted" data-testid="wb-digest">Digest {summary.digest.slice(0, 16)}… · {getPool().size} worker{getPool().size === 1 ? '' : 's'}</span>}
-      {copied && <output aria-live="polite" className="wb-copied">{copied}</output>}
+      {copied && <label className="wb-copied">{copied.ok ? 'Link copied:' : 'Copy this link:'}
+        <input readOnly value={copied.link} data-testid="wb-link" onFocus={(e) => e.currentTarget.select()} /></label>}
     </div>}
     {check?.kind === 'verify' && <p className={check.bad.length ? 'wb-error' : 'wb-ok'} role="status" data-testid="wb-verify-result">{check.bad.length
       ? `Verify: ${check.bad.length} of ${check.checked} re-run(s) differ (runs ${check.bad.join(', ')}).`

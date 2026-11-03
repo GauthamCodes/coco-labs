@@ -4,6 +4,8 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-03): R1.4 Links and Verify done** ([`data/r14/README.md`](data/r14/README.md)): link → fresh
+  context → "Reproduced exactly" in Chromium, Firefox and WebKit (and the fragment form); same digest natively.
 - **State (2026-11-03): R1.3 Builder and results done** ([`data/r13/README.md`](data/r13/README.md)): form ⇄ JSON/YAML,
   results (N, Wilson, median/IQR, charts, paired tests, every run, failures filter); a11y 12 pages pass.
 - **State (2026-11-03): R1.2 Worker pool done** ([`data/r12/README.md`](data/r12/README.md)): `ExperimentPool`
@@ -60,7 +62,7 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R1.1 Model side | done | [`data/r11/README.md`](data/r11/README.md), [ADR 0011](../adr/0011-experiments-v1.md) |
 | R1.2 Worker pool | done | [`data/r12/README.md`](data/r12/README.md), [`parity.json`](data/r12/parity.json) |
 | R1.3 Builder and results | done | [`data/r13/README.md`](data/r13/README.md), [`a11y.json`](data/r13/a11y/a11y.json) |
-| R1.4 Links and verification | pending | |
+| R1.4 Links and verification | done | [`data/r14/README.md`](data/r14/README.md) |
 | R1.5 Benchmarks | pending | |
 | R1.6 Exports and notebook | pending | |
 | R1.7 Compare and navigation | pending | |
