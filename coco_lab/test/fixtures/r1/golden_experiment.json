@@ -1,0 +1,448 @@
+{
+ "about": "R1.1 golden experiment (coco.experiment.v1, hash v3): never edited; made by tools/r1/make_golden_experiment.py",
+ "cases": [
+  {
+   "chains": [
+    "47650acfe85859e198c0744cb141d66b12faaa3ee7a01e73cd8d91aa03aeb114",
+    "fdbe20ffd63c75f1306e0da8d3399c6b6acc4af51a34348262f4d780f9003377",
+    "22a233471aa9f569302f7271efd8c2a49d1931ea069e7ab9c41fe03fc1c7d53e",
+    "c2f9cf16fe253d8f711701b95bf3652ae1ae344fe5e978444ebbd357f32a528b",
+    "596efde74f73ba52bbf9496acecb3d9e662f9b6ebfdd1b6812e961d33d7b9bae",
+    "5ec686382f54f66142580725053d7ab97c576c83957e69cd7b293c189772172f",
+    "6c3c479bb2f8c92eab353875180c903f504835eaf9fc0cd3e54dbb31be27a282",
+    "3aa5690fc60c29dc9abcb3c4481f4b3fd00c803f4eaea2ee2c826468da4febe0",
+    "5a5e5f3f6fe12485579351c61a71e02fce8cb069cd59b5d1aade238c0e09f04a",
+    "2419f703cd9e688f54ce4962632707e4cb322071f0762a760203daba581efbd1",
+    "4f0e03b067c57043423f3cc88f5b509df931475ac21f2287387e7d4f6b752c2d",
+    "673f83feb5e6a5af655286fcf594f187a6c42082b108438be361f21d19871e86",
+    "112b35d0ae542b73ee4209a04354b8a5e8c75f093c6037183742767f8c177d0a",
+    "1f9be6840abe1b1f45dcc5b51c39874904fcf6b3c1921dd46467096950527a13",
+    "2f36c7fb3109a6ea6444fc434908fcddf8b8c6a881c8c158ccdfceaa87bc9e7c",
+    "010f7dbf7241a222dea5676feb0db37c3e79da1f7edbacfdb236343cd30a1332",
+    "e3fcc3e37e7062e689568b3c14ee1b8b129605228de2e9409cdc971737fb1b67",
+    "3027af4c84e417a6e32ba9faf913c25aca06e932b2f1fd1c46332495c5e83ebe",
+    "8814c9fce6b99fb208e2a9110bbac3164036c55d32c03708ca4c0c249f9aa254",
+    "86daeb70b9a139260c6379a3e405f74b4c67222ea2b7e2a16bffec3c2d972802",
+    "87f4e916a4e737bf8ce3a03676859fdfc49c62b54fca6857757621226ae2cc66",
+    "b85bddd25be7d8bb35c3d082e597cc45cd31f006ebcb45aaf71d0d5dcbf51823",
+    "d632843b93303132fd2a3db69158051005bdfee0d60dbae3daed1a61c94bbb27",
+    "1e09bc2db64ee63f024eba79b0dfb29162c0dbdb59caf94289349993e0b21a0d",
+    "727868d2927d0787c91984d609bfbce97e3065f2bf4c1b6a3bb8e483c9d7505d",
+    "3ea8f4ea6af3ea424bcc9c9f51f81a7c2e98725b6d4021ce09db11c64418d96a",
+    "c2caca03c3133f4a69f6cd7a2916ddc5613b2b378f7e9cdeaae208045664bc53",
+    "83a4c55e2a2b0d7f93c3ea43dc68da7a44e5578bf5adfcc0f25cd69f9dc141ef",
+    "014bb8b3b9e62611bb00cd75b2ef40ade437a06dda383acb1717365e3d77746d",
+    "6702e5af799a167ff0c83a56909d75760cc96bbbaa0b6dc2073c460e77613002",
+    "5737f3e2d8556eb3990ed7dcc9f3fb599249e63c6f39ae66137ffffc2330da4b",
+    "f97888f71a5ea419add74c715d6a714712720f1c5ff70d1a4a561ca5df623dfa"
+   ],
+   "digest": "7c7422eaefd872c4b2461d0e7db3f994b2bdc2a9bbdf98f01e9d5061d81c3f7a",
+   "id": "9f7564bc8ef2eb72",
+   "name": "planning",
+   "spec": {
+    "algorithms": [
+     {
+      "id": "astar",
+      "label": "A*",
+      "name": "astar",
+      "params": {}
+     },
+     {
+      "id": "dijkstra",
+      "label": "Dijkstra",
+      "name": "dijkstra",
+      "params": {}
+     },
+     {
+      "id": "dstar_lite",
+      "label": "D* Lite",
+      "name": "dstar_lite",
+      "params": {}
+     },
+     {
+      "id": "weighted_astar",
+      "label": "Weighted A*",
+      "name": "weighted_astar",
+      "params": {
+       "heuristic_weight": 3.0
+      }
+     }
+    ],
+    "family": "planning",
+    "limits": {
+     "max_ticks": 3000
+    },
+    "metrics": [
+     "expansions",
+     "pushes",
+     "path_length_m",
+     "path_cost",
+     "path_steps",
+     "min_clearance_m",
+     "mean_clearance_m",
+     "heading_change_rad",
+     "start_snap_m",
+     "goal_snap_m",
+     "compute_ms"
+    ],
+    "model": {
+     "experiment": 1,
+     "hash_version": 3
+    },
+    "options": {},
+    "scenarios": {
+     "kind": "sampled",
+     "min_clearance_m": 0.35,
+     "min_separation_m": 3.0,
+     "n": 4,
+     "require_reachable": true,
+     "seed": 1,
+     "stratify": "none",
+     "zones": null
+    },
+    "schema": "coco.experiment.v1",
+    "seed": 1,
+    "sweep": {
+     "params": [
+      {
+       "name": "inflation_radius",
+       "values": [
+        0.4,
+        0.6
+       ]
+      }
+     ]
+    },
+    "title": "Golden: planners on the Proving Ground, an inflation sweep",
+    "world": "coco_arena_v1",
+    "world_sha256": "87f5d88f40af39bc98bc0b9cfac5dd2ce1686370fcca7aec8d171ff0181290f0"
+   },
+   "statuses": [
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found",
+    "found"
+   ]
+  },
+  {
+   "chains": [
+    "af3f64f0eb41602f1537671e7df2fdc0d62e9750a377e335fc2f4b068a1cd866",
+    "583a399cc46e2debedca724793d22af9912aae03919790430579291ca631e4b6",
+    "f8b1c6b778a6072119115a2cca1da8f344da61820f63a85ed4d2676fa5d47cda",
+    "aa6244a765cdb167567726ab0f2d4e6fc89c1e944fd6f481efd59614d90b6201",
+    "5d17c174d00487b64bf126d172eac4da7942f935e4fce2a33a9836e0c6372a1a",
+    "83e87a26d92c54e7266068acb7910f3cbd9ae283ba5e6238e33bfad331fd3de6"
+   ],
+   "digest": "e1be2319e615373a3e7b88f23b39877559d107e1023541085ece7dd845d307b3",
+   "id": "3c474b1db711cad7",
+   "name": "control",
+   "spec": {
+    "algorithms": [
+     {
+      "id": "builtin",
+      "label": "Waypoint driver",
+      "name": "builtin",
+      "params": {
+       "planner": "astar",
+       "window.cost_scaling_factor": 65.0,
+       "window.inflation_radius": 0.5,
+       "window.robot_radius": 0.25
+      }
+     },
+     {
+      "id": "rpp",
+      "label": "Regulated Pure Pursuit",
+      "name": "rpp",
+      "params": {
+       "planner": "astar",
+       "rpp.approach_velocity_scaling_dist": 0.6,
+       "rpp.desired_linear_vel": 0.3,
+       "rpp.lookahead_dist": 0.8,
+       "rpp.max_allowed_time_to_collision_up_to_carrot": 1.0,
+       "rpp.max_angular_accel": 3.2,
+       "rpp.min_approach_linear_velocity": 0.05,
+       "rpp.regulated_linear_scaling_min_radius": 0.9,
+       "rpp.regulated_linear_scaling_min_speed": 0.25,
+       "rpp.rotate_to_heading_angular_vel": 1.0,
+       "rpp.rotate_to_heading_min_angle": 0.785,
+       "window.cost_scaling_factor": 65.0,
+       "window.inflation_radius": 0.5,
+       "window.robot_radius": 0.25
+      }
+     },
+     {
+      "id": "mppi",
+      "label": "MPPI",
+      "name": "mppi",
+      "params": {
+       "mppi.ax_max": 3.0,
+       "mppi.ax_min": -2.5,
+       "mppi.az_max": 3.2,
+       "mppi.batch_size": 32,
+       "mppi.goal_threshold": 1.4,
+       "mppi.max_angle_to_furthest": 1.0,
+       "mppi.model_dt": 0.1,
+       "mppi.near_threshold": 0.5,
+       "mppi.temperature": 0.3,
+       "mppi.time_steps": 28,
+       "mppi.vx_max": 0.3,
+       "mppi.vx_min": 0.0,
+       "mppi.vx_std": 0.2,
+       "mppi.weights": [
+        3.81,
+        5.0,
+        3.0,
+        5.0,
+        14.0,
+        2.0
+       ],
+       "mppi.wz_max": 1.0,
+       "mppi.wz_std": 0.4,
+       "planner": "astar",
+       "window.cost_scaling_factor": 65.0,
+       "window.inflation_radius": 0.5,
+       "window.robot_radius": 0.25
+      }
+     }
+    ],
+    "family": "control",
+    "limits": {
+     "max_ticks": 700
+    },
+    "metrics": [
+     "time_s",
+     "ticks",
+     "path_length_m",
+     "min_clearance_m",
+     "mean_clearance_m",
+     "heading_change_rad",
+     "contacts",
+     "expansions",
+     "plans",
+     "final_goal_distance_m",
+     "compute_ms"
+    ],
+    "model": {
+     "experiment": 1,
+     "hash_version": 3
+    },
+    "options": {},
+    "scenarios": {
+     "kind": "sampled",
+     "min_clearance_m": 0.35,
+     "min_separation_m": 2.0,
+     "n": 2,
+     "require_reachable": true,
+     "seed": 5,
+     "stratify": "none",
+     "zones": null
+    },
+    "schema": "coco.experiment.v1",
+    "seed": 1,
+    "sweep": {
+     "params": []
+    },
+    "title": "Golden: controllers on the Proving Ground",
+    "world": "coco_arena_v1",
+    "world_sha256": "87f5d88f40af39bc98bc0b9cfac5dd2ce1686370fcca7aec8d171ff0181290f0"
+   },
+   "statuses": [
+    "succeeded",
+    "timeout",
+    "no_valid_control",
+    "no_valid_control",
+    "timeout",
+    "timeout"
+   ]
+  },
+  {
+   "chains": [
+    "69c3c51d0c2541a46b11446ca603d384c71bb23bba62111de7901847483fd97b",
+    "a4130d735d3de83a18531dce39dce66c0269794d5e4dc4802673678d8babf7f3"
+   ],
+   "digest": "79f821826abe9385bed41831b2de8c9414fd6f3dd501eded924fd933f31be8b2",
+   "id": "45d4a1389a981cdc",
+   "name": "localisation",
+   "spec": {
+    "algorithms": [
+     {
+      "id": "ekf",
+      "label": "EKF",
+      "name": "ekf",
+      "params": {
+       "ekf.alphas": [
+        0.02,
+        0.02,
+        0.02,
+        0.02
+       ],
+       "ekf.beams": 16,
+       "ekf.gate": 9.0,
+       "ekf.init": "tracking",
+       "ekf.sigma_hit": 0.2
+      }
+     },
+     {
+      "id": "mcl",
+      "label": "MCL",
+      "name": "mcl",
+      "params": {
+       "mcl.aggregate": "amcl",
+       "mcl.alpha_fast": 0.1,
+       "mcl.alpha_slow": 0.001,
+       "mcl.alphas": [
+        0.02,
+        0.02,
+        0.02,
+        0.02
+       ],
+       "mcl.beams": 8,
+       "mcl.init": "tracking",
+       "mcl.inject_fraction": 0.05,
+       "mcl.particles": 30,
+       "mcl.resample": "always",
+       "mcl.sigma_hit": 0.2
+      }
+     }
+    ],
+    "family": "localisation",
+    "limits": {
+     "max_ticks": 200
+    },
+    "metrics": [
+     "time_s",
+     "ticks",
+     "path_length_m",
+     "min_clearance_m",
+     "mean_clearance_m",
+     "heading_change_rad",
+     "contacts",
+     "expansions",
+     "plans",
+     "final_goal_distance_m",
+     "final_err_xy_m",
+     "final_err_yaw_rad",
+     "mean_err_xy_m",
+     "max_err_xy_m",
+     "converged_s",
+     "recovery_s",
+     "compute_ms"
+    ],
+    "model": {
+     "experiment": 1,
+     "hash_version": 3
+    },
+    "options": {
+     "kidnap_at_s": 5
+    },
+    "scenarios": {
+     "kind": "sampled",
+     "min_clearance_m": 0.35,
+     "min_separation_m": 3.0,
+     "n": 1,
+     "require_reachable": true,
+     "seed": 6,
+     "stratify": "none",
+     "zones": null
+    },
+    "schema": "coco.experiment.v1",
+    "seed": 1,
+    "sweep": {
+     "params": []
+    },
+    "title": "Golden: EKF and a small MCL, with a kidnap",
+    "world": "coco_arena_v1",
+    "world_sha256": "87f5d88f40af39bc98bc0b9cfac5dd2ce1686370fcca7aec8d171ff0181290f0"
+   },
+   "statuses": [
+    "timeout",
+    "not_localised"
+   ]
+  },
+  {
+   "chains": [
+    "93807cb03efc099ca6c7bb34a82cb4864dda2265d2ec41254ac7fe0a5e6405df"
+   ],
+   "digest": "231b9f1f529711500307fcedf7089f19c873f0f6cbb7899e9217565580309888",
+   "id": "d21615bbdb03d9c7",
+   "name": "fulltask",
+   "spec": {
+    "algorithms": [
+     {
+      "id": "astar",
+      "label": "A*",
+      "name": "astar",
+      "params": {}
+     }
+    ],
+    "family": "fulltask",
+    "limits": {
+     "max_ticks": 3000
+    },
+    "metrics": [
+     "deliveries",
+     "orders",
+     "contacts",
+     "net_deliveries",
+     "time_to_complete_s",
+     "time_used_s",
+     "path_efficiency",
+     "ticks",
+     "timer_s",
+     "compute_ms"
+    ],
+    "model": {
+     "experiment": 1,
+     "hash_version": 3
+    },
+    "options": {},
+    "scenarios": {
+     "colours": [
+      "red"
+     ],
+     "game": "fetch_colour",
+     "kind": "rounds"
+    },
+    "schema": "coco.experiment.v1",
+    "seed": 1,
+    "sweep": {
+     "params": []
+    },
+    "title": "Golden: Fetch by colour, red, driven by A*",
+    "world": "coco_depot_colours_v1",
+    "world_sha256": "6a16532b6a9cff8a8609fc74bc48265b3d7b313ca66c3ec54d79c2c83d6d0eec"
+   },
+   "statuses": [
+    "completed"
+   ]
+  }
+ ]
+}

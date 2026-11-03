@@ -4,6 +4,9 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-02): R1.1 Model side done** ([`data/r11/README.md`](data/r11/README.md)): `coco_lab.experiments`
+  (spec, scenarios, four families, stats, runner, exports, CLI), golden experiment, 112 focused tests pass, every
+  v1/v2/v3 golden unchanged.
 - **State (2026-10-31): R1.0 Baseline done** ([`data/r10/README.md`](data/r10/README.md)): every suite on
   `3a03f48` (= main `7bbb430` + paperwork) green — coco_lab 1161, lab_web/tools 244, vitest 619 (80 files), native
   gate exact, coco verify 18/18, identical builds, v1 and terrain determinism in four engines 0 differences,
@@ -49,7 +52,7 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | Checkpoint | State | Evidence |
 | --- | --- | --- |
 | R1.0 Baseline | done | [`data/r10/README.md`](data/r10/README.md), [`screens/before/`](screens/before/) |
-| R1.1 Model side | pending | |
+| R1.1 Model side | done | [`data/r11/README.md`](data/r11/README.md), [ADR 0011](../adr/0011-experiments-v1.md) |
 | R1.2 Worker pool | pending | |
 | R1.3 Builder and results | pending | |
 | R1.4 Links and verification | pending | |

@@ -32,6 +32,11 @@ Local control in the Arena (M2.5; MODEL): the ``move`` subsystem.
   from the truth, and nothing corrects it (``mislocalised`` sets 3.4 m
   north, Lab 5's operator ``/initialpose``). Only when no localiser runs:
   a localiser's own estimate is the belief otherwise.
+- ``move.<dwa|rpp|mppi>.<field>=<value>`` (R1) -- one of that controller's
+  parameters (:mod:`coco_lab.control`); a list is comma-separated. Kept per
+  controller and applied when it is (or becomes) the chosen one.
+- ``move.window.<field>=<value>`` (R1) -- one of the local costmap's
+  :class:`coco_lab.control.WindowParams`.
 
 **Actors have collision bodies** here: the LiDAR sees them, the robot
 cannot drive into one, and an actor waits while its next step would walk
@@ -49,17 +54,20 @@ command; FAILED_TO_MAKE_PROGRESS (105) when the robot moves less than
 """
 
 import struct
+from dataclasses import fields, replace
 from typing import List, Optional, Tuple
 
 from . import move_scenarios
 from .arena import ArenaError, Q_STATE, SUBSYSTEMS
 from .columns import Batch
-from .control import (DWA, LocalWindow, MPPI, PathTracker, RPP,
-                      WindowParams)
+from .control import (DWA, DWAParams, LocalWindow, MPPI, MPPIParams, PathTracker, RPP,
+                      RPPParams, WindowParams)
 from .numerics import math
 from .sketch import wrap
 
 CONTROLLERS = ('builtin', 'dwa', 'rpp', 'mppi')
+#: R1: each controller's parameters, settable as ``move.<controller>.<field>=<value>``
+CONTROLLER_PARAMS = {'dwa': DWAParams, 'rpp': RPPParams, 'mppi': MPPIParams}
 SCENARIOS = ('none',) + tuple(move_scenarios.SCENARIOS)
 OUTCOMES = ('', 'succeeded', 'invalid_path', 'no_valid_control',
             'failed_to_make_progress')
@@ -140,6 +148,9 @@ class ArenaMover:
         self.scenario = 'none'
         self.offset: Optional[Tuple[float, float, float]] = None
         self.window_params = WindowParams()
+        # R1: ``overrides`` (per-controller parameters, ``move.dwa.v_max=0.4``) exists only
+        # once one is set: hash versions 2 and 3 snapshot every attribute, so a run that
+        # sets none must keep exactly the attributes it always had
         self.actors: List[Actor] = []
         self.engine = None
         self._clear_run()
@@ -166,17 +177,19 @@ class ArenaMover:
             self.controller = value
             if value != 'builtin' and a.plan_clearance < CLEARANCE:
                 a.set_plan_clearance(CLEARANCE)
-            self.engine = {'builtin': None, 'dwa': DWA(), 'rpp': RPP(),
-                           'mppi': MPPI(self.rng)}[value]
-            self._clear_run()
-            if self.engine is not None:
-                e = self.engine
-                a.emit_header('coco.control.local.header.v1', {
-                    'controller_id': value, 'kind': e.kind,
-                    'critics': list(e.critics),
-                    'params': dict(e.params.to_dict(),
-                                   window=self.window_params.size),
-                    'evidence': 'MODEL'})
+            self._build_engine()
+        elif key.partition('.')[0] in CONTROLLER_PARAMS:
+            kind, _, name = key.partition('.')
+            over = vars(self).setdefault('overrides', {})
+            self._set_param(CONTROLLER_PARAMS[kind], over.setdefault(kind, {}), key, name,
+                            value)
+            if self.controller == kind:
+                self._build_engine()
+        elif key.startswith('window.'):
+            name = key.partition('.')[2]
+            over = {}
+            self._set_param(WindowParams, over, key, name, value)
+            self.window_params = replace(self.window_params, **over)
         elif key == 'scenario':
             if value not in SCENARIOS:
                 raise ArenaError(f'move.scenario must be one of {SCENARIOS}')
@@ -189,6 +202,53 @@ class ArenaMover:
             self.offset = None if v == (0.0, 0.0, 0.0) else v
         else:
             raise ArenaError(f'unknown move setting {key!r}')
+
+    def _build_engine(self):
+        """(Re)build the chosen controller with its parameter overrides."""
+        a, value = self.arena, self.controller
+        over = getattr(self, 'overrides', {}).get(value)
+        if not over:
+            # exactly the construction before R1 (the same default parameter objects)
+            self.engine = {'builtin': None, 'dwa': DWA(), 'rpp': RPP(),
+                           'mppi': MPPI(self.rng)}[value]
+        elif value == 'mppi':
+            self.engine = MPPI(self.rng, replace(MPPIParams(), **over))
+        else:
+            cls = {'dwa': DWA, 'rpp': RPP}[value]
+            self.engine = cls(replace(CONTROLLER_PARAMS[value](), **over))
+        self._clear_run()
+        if self.engine is not None:
+            e = self.engine
+            a.emit_header('coco.control.local.header.v1', {
+                'controller_id': value, 'kind': e.kind,
+                'critics': list(e.critics),
+                'params': dict(e.params.to_dict(),
+                               window=self.window_params.size),
+                'evidence': 'MODEL'})
+
+    @staticmethod
+    def _set_param(cls, into, key, name, value):
+        """Parse ``value`` as field ``name`` of dataclass ``cls`` into ``into`` (R1)."""
+        f = next((f for f in fields(cls) if f.name == name), None)
+        if f is None or name == 'emit':
+            raise ArenaError(f'unknown move setting {key!r}')
+        default = getattr(cls(), name)
+        try:
+            if isinstance(default, tuple):
+                v = tuple(float(x) for x in value.split(','))
+                if len(v) != len(default):
+                    raise ValueError
+            elif isinstance(default, int):
+                v = int(value)
+            else:
+                v = float(value)
+        except ValueError:
+            raise ArenaError(f'bad value for move.{key}: {value!r}') from None
+        if not all(math.isfinite(x) for x in (v if isinstance(v, tuple) else (v,))):
+            raise ArenaError(f'move.{key} must be finite')
+        if isinstance(v, int) and v < 1:
+            raise ArenaError(f'move.{key} must be >= 1')
+        into[name] = v
 
     def _start_scenario(self):
         a = self.arena
