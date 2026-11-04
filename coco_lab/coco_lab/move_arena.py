@@ -66,6 +66,12 @@ from .numerics import math
 from .sketch import wrap
 
 CONTROLLERS = ('builtin', 'dwa', 'rpp', 'mppi')
+#: R2: an algorithm file's ``control()`` (coco_lab.exp_user), once one is attached to the
+#: Arena; not one of CONTROLLERS, so every built-in keeps its index in the state bytes
+USER = 'user'
+#: R2: filled by coco_lab.exp_user when it loads (its pack needs this one, not the reverse):
+#: ``has(arena, kind)``, ``engine()``, ``control_cycle(arena, belief, tracker, goal_dist, rng)``
+USER_HOOKS = {}
 #: R1: each controller's parameters, settable as ``move.<controller>.<field>=<value>``
 CONTROLLER_PARAMS = {'dwa': DWAParams, 'rpp': RPPParams, 'mppi': MPPIParams}
 SCENARIOS = ('none',) + tuple(move_scenarios.SCENARIOS)
@@ -172,7 +178,10 @@ class ArenaMover:
         """Apply ``move.<key>=<value>``."""
         a = self.arena
         if key == 'controller':
-            if value not in CONTROLLERS:
+            if value == USER:
+                if 'has' not in USER_HOOKS or not USER_HOOKS['has'](a, 'controller'):
+                    raise ArenaError('move.controller=user: no controller is attached')
+            elif value not in CONTROLLERS:
                 raise ArenaError(f'move.controller must be one of {CONTROLLERS}')
             self.controller = value
             if value != 'builtin' and a.plan_clearance < CLEARANCE:
@@ -207,7 +216,9 @@ class ArenaMover:
         """(Re)build the chosen controller with its parameter overrides."""
         a, value = self.arena, self.controller
         over = getattr(self, 'overrides', {}).get(value)
-        if not over:
+        if value == USER:
+            self.engine = USER_HOOKS['engine']()
+        elif not over:
             # exactly the construction before R1 (the same default parameter objects)
             self.engine = {'builtin': None, 'dwa': DWA(), 'rpp': RPP(),
                            'mppi': MPPI(self.rng)}[value]
@@ -327,11 +338,17 @@ class ArenaMover:
             if abs(err) < GOAL_YAW:
                 return self._finish(arena, 'succeeded')
             return (0.0, max(-1.0, min(1.0, 2.0 * err)), False)
-        win = LocalWindow(b, arena.ranges, arena.angles, arena.lidar.mount,
-                          tr.path[tr.i:tr.i + 200], self.window_params)
-        local = tr.local(b, win)
         e = self.engine
-        if e.kind == 'dwa':
+        if e.kind == USER:
+            win = None
+            cy = USER_HOOKS['control_cycle'](arena, b, tr, gd, self.rng)
+        else:
+            win = LocalWindow(b, arena.ranges, arena.angles, arena.lidar.mount,
+                              tr.path[tr.i:tr.i + 200], self.window_params)
+            local = tr.local(b, win)
+        if e.kind == USER:
+            pass
+        elif e.kind == 'dwa':
             cy = e.compute(b, arena.v, arena.w, win, local, arena.dt)
         elif e.kind == 'rpp':
             cy = e.compute(b, arena.v, arena.w, win, local, arena.dt,
@@ -405,7 +422,8 @@ class ArenaMover:
     def state_bytes(self) -> bytes:
         """Return the move state, quantized (docs/v2/ARENA_MODEL.md)."""
         off = self.offset or (0.0, 0.0, 0.0)
-        out = [struct.pack('<BBB3qIQ', CONTROLLERS.index(self.controller),
+        ci = CONTROLLERS.index(self.controller) if self.controller != USER else len(CONTROLLERS)
+        out = [struct.pack('<BBB3qIQ', ci,
                            SCENARIOS.index(self.scenario),
                            OUTCOMES.index(self.outcome),
                            *(_q(v) for v in off), self.cycle,

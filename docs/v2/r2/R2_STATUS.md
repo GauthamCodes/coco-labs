@@ -4,6 +4,13 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-05): R2.1 API and security design done** ([`data/r21/README.md`](data/r21/README.md)):
+  `coco_lab.api` (`coco.algorithm.v1`, ADR 0013), the guard (`coco_lab.user_code`), user runs in every family but
+  full task, the built-ins wrapped behind the same signatures; ADR 0012 (threat model). Built-ins unchanged: 10%
+  reference sample **197/197 match**; through the API every built-in reproduces its native results bit for bit
+  except **D\* Lite's path length and cost (≤ 3e-15 relative: its native adapter sums with Python 3.12's compensated
+  `sum()`)** — no native result, hash or golden changes; question for Gautham below. Full coco_lab suite on the R2
+  tree: recorded with R2.2.
 - **State (2026-11-04): R2.0 Baseline done** ([`data/r20/README.md`](data/r20/README.md)): main `4894c76`'s tree is R1's
   final tree byte for byte (`git diff 8b40a41 4894c76` empty), so R1.9's committed suites are its baseline; a re-run
   here gave coco_lab 1191 passed + 1 failure caused by an R2 file appearing in the tree mid-run (fixed in R2.1), and was
@@ -26,7 +33,7 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | Checkpoint | State | Evidence |
 | --- | --- | --- |
 | R2.0 Baseline | done | [`data/r20/README.md`](data/r20/README.md) |
-| R2.1 API and security design | | |
+| R2.1 API and security design | done | [`data/r21/README.md`](data/r21/README.md), ADR [0012](../adr/0012-running-strangers-code.md), [0013](../adr/0013-algorithm-api-v1.md) |
 | R2.2 Sandboxed worker | | |
 | R2.3 Algorithm Studio | | |
 | R2.4 Compare, experiments and native | | |
@@ -35,3 +42,10 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R2.7 Run in ROS 2 | | |
 | R2.8 Phone and Learn | | |
 | R2.9 Close | | |
+
+## Questions for Gautham
+
+1. **D\* Lite through the API** (R2.1): its path length and cost differ from the native values by ≤ 3e-15 relative
+   because its native adapter sums with Python's compensated `sum()` while the search planners and the API add in order.
+   Accept as recorded; or make the API's measurement compensated (the five search planners then differ by an ulp); or
+   switch D\* Lite's adapter to sequential addition under a new experiment version? Nothing native changed meanwhile.

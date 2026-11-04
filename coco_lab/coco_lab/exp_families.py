@@ -49,7 +49,7 @@ import copy
 import hashlib
 import struct
 from time import perf_counter
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
 from . import numerics
 from .arena import Arena, InputEvent, PLANNERS
@@ -59,6 +59,7 @@ from .grid import Grid
 from .numerics import math
 from .search import collect, search_events
 from .sketch import _nearest_free, wrap
+from .trace import EXPAND, NO_PARENT, PATH, PUSH
 
 #: the run chain's domain tag (experiment hash version 1)
 RUN_TAG = b'coco.experiment.run.v1'
@@ -135,8 +136,12 @@ COSTMAPS = CostmapCache()
 
 
 def run_planning(world, scenario: Dict, name: str, params: Dict, descriptor: Dict,
-                 sink=None) -> Dict:
+                 sink=None, on_event=None) -> Dict:
     """Plan once on the static costmap; return the run record (``sink`` also sees each row)."""
+    if name == 'user':
+        from . import exp_user
+        return run_user_planning(world, scenario, exp_user.load(descriptor['code_sha256']),
+                                 params, descriptor, sink, on_event)
     with numerics.version(3):
         ip = InflationParams(params['inflation_radius'], params['cost_scaling_factor'],
                              params['robot_radius'])
@@ -195,6 +200,201 @@ def run_planning(world, scenario: Dict, name: str, params: Dict, descriptor: Dic
                 'chain': h.hexdigest(), 'fail_tick': None}
 
 
+# -- planning with an algorithm file (R2) ---------------------------------------------------------
+
+#: a path may have at most this many poses
+MAX_PATH = 200_000
+
+
+def _supercover(r0, c0, r1, c1):
+    """Yield every cell the segment between two cell centres touches (both ends included)."""
+    dr, dc = r1 - r0, c1 - c0
+    n = max(abs(dr), abs(dc))
+    seen = set()
+    steps = 4 * n
+    for i in range(steps + 1):
+        t = i / steps
+        fr, fc = r0 + dr * t, c0 + dc * t
+        for rr in {math.floor(fr + 0.5 - 1e-9), math.floor(fr + 0.5 + 1e-9)}:
+            for cc in {math.floor(fc + 0.5 - 1e-9), math.floor(fc + 0.5 + 1e-9)}:
+                if (rr, cc) not in seen:
+                    seen.add((rr, cc))
+                    yield (rr, cc)
+
+
+def measure_path(m, grid, layers, radius: float, cells: List) -> Dict:
+    """
+    Return ``{collision, length, cost, steps, clearance[], heading}`` for a cell path.
+
+    The same arithmetic, in the same order, as :mod:`coco_lab.search`'s summary and
+    the planning family's metrics, so an 8-connected path measures exactly as the
+    built-in that found it.
+    """
+    length = 0.0
+    cost: Optional[float] = 0.0
+    visited = [cells[0]]
+    w = m.width
+    for a, b in zip(cells, cells[1:]):
+        (r0, c0), (r1, c1) = a, b
+        if abs(r1 - r0) <= 1 and abs(c1 - c0) <= 1:
+            if cost is not None and a != b:
+                if b in set(grid.neighbours(a)):
+                    cost = cost + grid.edge_cost(a, b)
+                else:
+                    cost = None
+            visited.append(b)
+        else:
+            cost = None
+            visited.extend(c for c in _supercover(r0, c0, r1, c1) if c != a)
+        length += math.hypot(r1 - r0, c1 - c0)
+    collision = None
+    for r, c in visited:
+        if not (0 <= r < m.height and 0 <= c < w) or layers.combined[r * w + c] >= 253:
+            collision = (r, c)
+            break
+    clearance = [layers.clearance[r * w + c] - radius for r, c in
+                 (cells if cost is not None else visited)]
+    return {'collision': collision, 'length': length, 'cost': cost,
+            'steps': len(cells) - 1, 'clearance': clearance}
+
+
+def run_user_planning(world, scenario: Dict, alg, params: Dict, descriptor: Dict,
+                      sink=None, on_event=None) -> Dict:
+    """Plan once with an API algorithm on the planning family's costmap; return the record."""
+    from . import api
+    from .exp_user import _call, _finish_report, _plain, costmap_of, FatalUserError, Report
+    from .exp_user import BUDGETS, robot_of
+    from .rng import Rng
+    report = Report()
+    with numerics.version(3):
+        ip = InflationParams(params['inflation_radius'], params['cost_scaling_factor'],
+                             params['robot_radius'])
+        layers, grid = COSTMAPS.get(world, ip, params['connectivity'], params['cost_weight'])
+        m = world.lab_map
+        sx, sy = scenario['start'][:2]
+        gx, gy = scenario['goal'][:2]
+        h = _chain(descriptor)
+        s0, t0 = m.cell_at(sx, sy), m.cell_at(gx, gy)
+        s = _nearest_free(grid, s0) if s0 is not None else None
+        t = _nearest_free(grid, t0) if t0 is not None else None
+        metrics = {'expansions': None, 'pushes': None, 'path_length_m': None,
+                   'path_cost': None, 'path_steps': None, 'min_clearance_m': None,
+                   'mean_clearance_m': None, 'heading_change_rad': None,
+                   'start_snap_m': None, 'goal_snap_m': None, 'compute_ms': None}
+        if s is None or t is None:
+            status = 'start_blocked' if s is None else 'goal_blocked'
+            h.update(status.encode())
+            return {'status': status, 'success': False, 'metrics': metrics,
+                    'chain': h.hexdigest(), 'fail_tick': None, 'report': report.to_dict()}
+        res = m.resolution
+        metrics['start_snap_m'] = math.hypot(s[0] - s0[0], s[1] - s0[1]) * res
+        metrics['goal_snap_m'] = math.hypot(t[0] - t0[0], t[1] - t0[1]) * res
+        costmap = costmap_of(m, layers)
+        sth = scenario['start'][2] if len(scenario['start']) > 2 else 0.0
+        gth = scenario['goal'][2] if len(scenario['goal']) > 2 else 0.0
+        start = api.Pose2D(*m.cell_centre(*s), sth)
+        goal = api.Pose2D(*m.cell_centre(*t), gth)
+        counts = {'expand': 0, 'push': 0}
+
+        def on_emit(ev):
+            kind, data = ev
+            data = {k: _plain(v) for k, v in data.items()}
+            h.update(canonical([kind, data]))
+            if kind in counts:
+                counts[kind] += 1
+            if on_event is not None:
+                on_event(kind, data)
+            if sink is not None and kind in ('expand', 'push', 'frontier'):
+                cell = m.cell_at(data['x'], data['y'])
+                if cell is not None:
+                    code = EXPAND if kind == 'expand' else PUSH
+                    sink((code, cell[0], cell[1], 0, -1.0, -1.0, -1.0) + NO_PARENT)
+        ctx = api.Context(Rng(scenario.get('seed', 1) % (1 << 64)), robot_of(world.spec),
+                          params={k[5:]: v for k, v in params.items() if k.startswith('user.')},
+                          budget=BUDGETS['planner'], dt=world.spec['arena']['dt'],
+                          sink=on_emit,
+                          config={k: v for k, v in params.items() if not k.startswith('user.')})
+        ctx._costmap = costmap
+        started = perf_counter()
+        status, out = None, None
+        try:
+            out = _call(alg, report, ctx, costmap, start, goal)
+        except FatalUserError:
+            status = 'budget_exceeded' if (report.error or {}).get('type') == 'BudgetExceeded' \
+                else 'error'
+        except (api.NoValidControl, api.InvalidPath) as e:
+            report.error = {'type': type(e).__name__, 'message': str(e), 'line': None,
+                            'frames': []}
+            status = 'error'
+        metrics['compute_ms'] = (perf_counter() - started) * 1000
+        cells = None
+        if status is None:
+            if out is None:
+                status = 'no_path'
+            else:
+                cells, why = _path_cells(m, out, s, t)
+                if why:
+                    report.problem(why)
+                    status = 'invalid_output'
+        # None, not 0, when the algorithm reports none (D* Lite has no pushes)
+        metrics['expansions'] = counts['expand'] or None
+        metrics['pushes'] = counts['push'] or None
+        if status is None:
+            mp = measure_path(m, grid, layers, ip.robot_radius, cells)
+            h.update(canonical([[c[0], c[1]] for c in cells]))
+            if mp['collision'] is not None:
+                r, c = mp['collision']
+                report.problem(f'the path crosses cell (mx={c}, my={m.height - 1 - r}), '
+                               'which is lethal or inscribed (cost >= 253)')
+                status = 'collision'
+            else:
+                status = 'found'
+                metrics['path_length_m'] = mp['length'] * res
+                metrics['path_cost'] = mp['cost']
+                metrics['path_steps'] = mp['steps']
+                cl = mp['clearance']
+                metrics['min_clearance_m'] = min(cl)
+                metrics['mean_clearance_m'] = math.fsum(cl) / len(cl)
+                metrics['heading_change_rad'] = _heading_change([m.cell_centre(r, c)
+                                                                 for r, c in cells])
+                if sink is not None:
+                    prev = NO_PARENT
+                    for r, c in cells:
+                        sink((PATH, r, c, 0, -1.0, -1.0, -1.0) + prev)
+                        prev = (r, c, 0)
+        h.update(canonical({k: v for k, v in metrics.items() if k not in TIMING_METRICS}))
+        return {'status': status, 'success': status == 'found', 'metrics': metrics,
+                'chain': h.hexdigest(), 'fail_tick': None,
+                'report': _finish_report(alg, report)}
+
+
+def _path_cells(m, out, s, t):
+    """Return ``(cells, None)`` for a valid returned path, else ``(None, why)``."""
+    if not isinstance(out, (list, tuple)):
+        return None, f'plan() returned {type(out).__name__}; a list of Pose2D (or None) was due'
+    if not out:
+        return None, 'plan() returned an empty path; return None when there is no path'
+    if len(out) > MAX_PATH:
+        return None, f'plan() returned {len(out)} poses; at most {MAX_PATH}'
+    cells = []
+    for i, p in enumerate(out):
+        try:
+            x, y = float(p.x), float(p.y)
+        except (AttributeError, TypeError, ValueError):
+            return None, f'path[{i}] is {type(p).__name__}, not a Pose2D'
+        if not (math.isfinite(x) and math.isfinite(y)):
+            return None, f'path[{i}] is not finite: ({x}, {y})'
+        c = m.cell_at(x, y)
+        if c is None:
+            return None, f'path[{i}] ({x:.3f}, {y:.3f}) is off the map'
+        cells.append(c)
+    if cells[0] != tuple(s):
+        return None, 'the path does not start in the start cell'
+    if cells[-1] != tuple(t):
+        return None, 'the path does not end in the goal cell'
+    return cells, None
+
+
 # -- runs in the Arena ---------------------------------------------------------------------------
 
 def _arena_at(world, scenario: Dict, planner: str = 'astar') -> Arena:
@@ -248,14 +448,15 @@ class _Drive:
 
 
 def run_control(world, scenario: Dict, name: str, params: Dict, descriptor: Dict,
-                max_ticks: int, on_tick=None) -> Dict:
+                max_ticks: int, on_tick=None, on_event=None) -> Dict:
     """Follow the Arena's plan with the chosen controller (``on_tick(arena, tick)`` watches)."""
     with numerics.version(3):
         a = _arena_at(world, scenario, params.get('planner', 'astar'))
+        user = _attach(a, name, params, descriptor, on_event)
         h = _chain(descriptor)
         cfg = []
         for key, value in sorted(params.items()):
-            if key.startswith(('window.', name + '.')):
+            if key.startswith(('window.', name + '.')) and not key.startswith('user.'):
                 v = ','.join(str(x) for x in value) if isinstance(value, list) else str(value)
                 cfg.append(f'move.{key}={v}')
         cfg.append(f'move.controller={name}')
@@ -268,7 +469,9 @@ def run_control(world, scenario: Dict, name: str, params: Dict, descriptor: Dict
         mv = a.subsystems['move']
         status, fail_tick = None, None
         while True:
-            if mv.outcome:
+            if user is not None and user.fatal(a):
+                status = 'error'
+            elif mv.outcome:
                 status = mv.outcome
             elif name == 'builtin' and t.arrived:
                 status = 'succeeded'
@@ -286,21 +489,26 @@ def run_control(world, scenario: Dict, name: str, params: Dict, descriptor: Dict
                                  d.expansions, d.plans, goal)
         h.update(canonical(metrics))
         metrics['compute_ms'] = elapsed
-        return {'status': status, 'success': status == 'succeeded', 'metrics': metrics,
-                'chain': h.hexdigest(), 'fail_tick': fail_tick}
+        out = {'status': status, 'success': status == 'succeeded', 'metrics': metrics,
+               'chain': h.hexdigest(), 'fail_tick': fail_tick}
+        if user is not None:
+            out['report'] = user.finished(a).get('controller')
+        return out
 
 
 def run_localisation(world, scenario: Dict, name: str, params: Dict, descriptor: Dict,
-                     max_ticks: int, kidnap_at_s: Optional[float] = None, on_tick=None) -> Dict:
+                     max_ticks: int, kidnap_at_s: Optional[float] = None, on_tick=None,
+                     on_event=None) -> Dict:
     """Drive start to goal while the filter localises; return the run record with its series."""
     from .localise import OK_HOLD, OK_XY, OK_YAW
     with numerics.version(3):
         a = _arena_at(world, scenario)
+        user = _attach(a, name, params, descriptor, on_event)
         h = _chain(descriptor)
-        kind = 'mcl' if name.startswith('mcl') else 'ekf'
+        kind = 'user' if user is not None else 'mcl' if name.startswith('mcl') else 'ekf'
         cfg = []
         for key, value in sorted(params.items()):
-            if key.startswith(kind + '.'):
+            if key.startswith(kind + '.') and kind != 'user':
                 v = ','.join(str(x) for x in value) if isinstance(value, list) else str(value)
                 cfg.append(f'localise.{key}={v}')
         if kind == 'mcl':
@@ -325,7 +533,7 @@ def run_localisation(world, scenario: Dict, name: str, params: Dict, descriptor:
             if t.arrived:
                 arrived = True
                 break
-            if d.ticks >= max_ticks:
+            if d.ticks >= max_ticks or (user is not None and user.fatal(a)):
                 break
             ev = []
             if kidnap_tick is not None and d.ticks == kidnap_tick:
@@ -363,12 +571,26 @@ def run_localisation(world, scenario: Dict, name: str, params: Dict, descriptor:
         localised = err_xy < OK_XY and err_yaw < OK_YAW
         status = ('localised' if localised else 'not_localised') if arrived else \
             ('timeout' if d.ticks >= max_ticks else 'no_path')
+        if user is not None and user.fatal(a):
+            status, arrived = 'error', False
         h.update(canonical({'metrics': metrics, 'series': series}))
         metrics['compute_ms'] = elapsed
-        return {'status': status, 'success': arrived and localised, 'metrics': metrics,
-                'chain': h.hexdigest(),
-                'fail_tick': None if arrived and localised else d.ticks - 1,
-                'series': series}
+        out = {'status': status, 'success': arrived and localised, 'metrics': metrics,
+               'chain': h.hexdigest(),
+               'fail_tick': None if arrived and localised else d.ticks - 1,
+               'series': series}
+        if user is not None:
+            out['report'] = user.finished(a).get('localiser')
+        return out
+
+
+def _attach(a, name: str, params: Dict, descriptor: Dict, on_event):
+    """R2: attach the descriptor's algorithm file to the Arena; return exp_user (or None)."""
+    if name != 'user':
+        return None
+    from . import exp_user
+    exp_user.attach(a, exp_user.load(descriptor['code_sha256']), params, on_event)
+    return exp_user
 
 
 def run_fulltask(world, scenario: Dict, name: str, params: Dict, descriptor: Dict) -> Dict:
