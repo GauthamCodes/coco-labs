@@ -2,6 +2,7 @@
 
 ## Position
 
+- **R1 · Research Workbench: R1.0–R1.9 done 2026-11-04** on `v2/r1-workbench` (PR ready for review, not merged, not deployed): experiments in the browser (four families, honest statistics), links that reproduce exactly in three engines and natively, COCO-Bench v0 (4 suites, 1,970 reference runs), exports + notebook, Compare on every world, Learn page, three doors. [R1 results](v2/r1/R1_RESULTS.md).
 - **R1 · Research Workbench: started 2026-10-31** on `v2/r1-workbench` from main `7bbb430` (worktree `~/coco_labs_ws/worktrees/r1`): experiments, benchmarks, datasets, shareable reproducible links, native parity. [Prompt](v2/r1/R1_PROMPT.md), [R1 status](v2/r1/R1_STATUS.md).
 - **G2 · Sim Identity: G2.9 "Polish before deploy" done 2026-10-28** on the same branch (PR #28, not merged): touch > 1 s fixed (0 on the real phone), RViz-style SIM, the "Looks wrong" list, Gazebo actors yield (scenario rule), odometry calibrated (turn 1.20 → 1.00; AMCL residual unchanged), gate 40/40. [G2 results](v2/g2/G2_RESULTS.md).
 - **G2 · Sim Identity: started 2026-10-24** on `v2/g2-sim-identity` from main `7475896` (worktree `~/coco_labs_ws/worktrees/g2`): GAME | SIM views, telemetry and /rosout, RViz-like panels, a rosbag2 (MCAP) export, a real Gazebo + Nav2 ghost — every ROS-looking element labelled MODEL or STACK. [Prompt](v2/g2/G2_PROMPT.md), [G2 status](v2/g2/G2_STATUS.md).

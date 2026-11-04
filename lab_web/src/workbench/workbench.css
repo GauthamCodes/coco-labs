@@ -78,3 +78,6 @@
 /* R1.6: long digests and file names wrap inside a card; dataset cards are wider */
 .wb-card p,.wb-card td,.wb-card h3{overflow-wrap:anywhere}
 .wb-cards.wb-wide{grid-template-columns:repeat(auto-fill,minmax(min(100%,440px),1fr))}
+/* R1.9: a field never wider than its row (phone portrait) */
+.wb-row>label{min-width:0}.wb input,.wb select,.wb textarea{max-width:100%;box-sizing:border-box}
+.wb label>input:not([type=checkbox]):not([type=radio]),.wb label>select{width:100%;min-width:0}

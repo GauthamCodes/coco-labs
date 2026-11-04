@@ -18,11 +18,10 @@ import copy
 import json
 from pathlib import Path
 
-import pytest
-
 from coco_lab import experiments as ex
 from coco_lab import games
 from coco_lab.arena import Arena, ArenaError, InputEvent
+import pytest
 
 FIX = Path(__file__).parent / 'fixtures' / 'r1' / 'golden_experiment.json'
 WORLDS = Path(__file__).resolve().parents[2] / 'worlds'

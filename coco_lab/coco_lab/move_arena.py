@@ -53,8 +53,8 @@ command; FAILED_TO_MAKE_PROGRESS (105) when the robot moves less than
 0.1 m in 10 s.
 """
 
-import struct
 from dataclasses import fields, replace
+import struct
 from typing import List, Optional, Tuple
 
 from . import move_scenarios

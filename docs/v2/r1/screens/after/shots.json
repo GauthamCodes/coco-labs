@@ -1,0 +1,282 @@
+{
+ "site": "http://127.0.0.1:4195/coco-labs/",
+ "when": "2026-11-03T21:31:48.335Z",
+ "gpu": "nvidia",
+ "machine": {
+  "gpu_asked": "nvidia",
+  "power_profile": "power-saver",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P8, 55",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "100.0 % python (gautham)",
+   "45.5 % brave (gautham)",
+   "18.2 % brave (gautham)",
+   "9.1 % irq/193-iwlwifi:default_queue (root)",
+   "9.1 % 2.1.311 (gautham)",
+   "0.0 % systemd (root)"
+  ],
+  "nvidia_util": "8 %, 383 MiB",
+  "nvidia_procs": [
+   "Xorg sm 1 %",
+   "gnome-shell sm - %",
+   "xdg-desktop-por sm - %",
+   "brave sm - %",
+   "nautilus sm - %",
+   "firefox sm - %",
+   "chrome-headless sm - %"
+  ]
+ },
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "shots": [
+  {
+   "profile": "desktop",
+   "surface": "title",
+   "query": "",
+   "final_url": "",
+   "file": "desktop-title.png",
+   "ready": true,
+   "ms": 3162,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "play",
+   "query": "?view=play",
+   "final_url": "?view=play",
+   "file": "desktop-play.png",
+   "ready": false,
+   "ms": 180227,
+   "errors": [
+    "not ready: TimeoutError: page.waitForSelector: Timeout 180000ms exceeded."
+   ]
+  },
+  {
+   "profile": "desktop",
+   "surface": "compare",
+   "query": "?view=compare",
+   "final_url": "?view=compare",
+   "file": "desktop-compare.png",
+   "ready": true,
+   "ms": 10109,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "recordings",
+   "query": "?view=research",
+   "final_url": "?view=research",
+   "file": "desktop-recordings.png",
+   "ready": true,
+   "ms": 1913,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "learn",
+   "query": "?view=learn",
+   "final_url": "?view=learn",
+   "file": "desktop-learn.png",
+   "ready": true,
+   "ms": 1793,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "workbench",
+   "query": "?view=workbench",
+   "final_url": "?view=workbench",
+   "file": "desktop-workbench.png",
+   "ready": true,
+   "ms": 1795,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "benchmarks",
+   "query": "?view=workbench&tab=benchmarks",
+   "final_url": "?view=workbench&tab=benchmarks",
+   "file": "desktop-benchmarks.png",
+   "ready": true,
+   "ms": 1901,
+   "errors": []
+  },
+  {
+   "profile": "desktop",
+   "surface": "datasets",
+   "query": "?view=workbench&tab=datasets",
+   "final_url": "?view=workbench&tab=datasets",
+   "file": "desktop-datasets.png",
+   "ready": true,
+   "ms": 1808,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "title",
+   "query": "",
+   "final_url": "",
+   "file": "phone-landscape-title.png",
+   "ready": true,
+   "ms": 3896,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "play",
+   "query": "?view=play",
+   "final_url": "?view=play",
+   "file": "phone-landscape-play.png",
+   "ready": false,
+   "ms": 180358,
+   "errors": [
+    "not ready: TimeoutError: page.waitForSelector: Timeout 180000ms exceeded."
+   ]
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "compare",
+   "query": "?view=compare",
+   "final_url": "?view=compare",
+   "file": "phone-landscape-compare.png",
+   "ready": true,
+   "ms": 10534,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "recordings",
+   "query": "?view=research",
+   "final_url": "?view=research",
+   "file": "phone-landscape-recordings.png",
+   "ready": true,
+   "ms": 2509,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "learn",
+   "query": "?view=learn",
+   "final_url": "?view=learn",
+   "file": "phone-landscape-learn.png",
+   "ready": true,
+   "ms": 2142,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "workbench",
+   "query": "?view=workbench",
+   "final_url": "?view=workbench",
+   "file": "phone-landscape-workbench.png",
+   "ready": true,
+   "ms": 2251,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "benchmarks",
+   "query": "?view=workbench&tab=benchmarks",
+   "final_url": "?view=workbench&tab=benchmarks",
+   "file": "phone-landscape-benchmarks.png",
+   "ready": true,
+   "ms": 2198,
+   "errors": []
+  },
+  {
+   "profile": "phone-landscape",
+   "surface": "datasets",
+   "query": "?view=workbench&tab=datasets",
+   "final_url": "?view=workbench&tab=datasets",
+   "file": "phone-landscape-datasets.png",
+   "ready": true,
+   "ms": 2241,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "title",
+   "query": "",
+   "final_url": "",
+   "file": "phone-portrait-title.png",
+   "ready": true,
+   "ms": 3790,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "play",
+   "query": "?view=play",
+   "final_url": "?view=play",
+   "file": "phone-portrait-play.png",
+   "ready": false,
+   "ms": 17647223,
+   "errors": [
+    "not ready: TimeoutError: page.waitForSelector: Timeout 180000ms exceeded."
+   ]
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "compare",
+   "query": "?view=compare",
+   "final_url": "?view=compare",
+   "file": "phone-portrait-compare.png",
+   "ready": true,
+   "ms": 18016,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "recordings",
+   "query": "?view=research",
+   "final_url": "?view=research",
+   "file": "phone-portrait-recordings.png",
+   "ready": true,
+   "ms": 2962,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "learn",
+   "query": "?view=learn",
+   "final_url": "?view=learn",
+   "file": "phone-portrait-learn.png",
+   "ready": true,
+   "ms": 2635,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "workbench",
+   "query": "?view=workbench",
+   "final_url": "?view=workbench",
+   "file": "phone-portrait-workbench.png",
+   "ready": true,
+   "ms": 2314,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "benchmarks",
+   "query": "?view=workbench&tab=benchmarks",
+   "final_url": "?view=workbench&tab=benchmarks",
+   "file": "phone-portrait-benchmarks.png",
+   "ready": true,
+   "ms": 2306,
+   "errors": []
+  },
+  {
+   "profile": "phone-portrait",
+   "surface": "datasets",
+   "query": "?view=workbench&tab=datasets",
+   "final_url": "?view=workbench&tab=datasets",
+   "file": "phone-portrait-datasets.png",
+   "ready": true,
+   "ms": 2454,
+   "errors": []
+  }
+ ],
+ "note": "Emulated Nothing Phone (1): viewport, touch, 4x CPU throttle; rendered by this machine (see renderer). Not a phone measurement."
+}

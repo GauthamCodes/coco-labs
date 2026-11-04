@@ -39,10 +39,10 @@ counts need no device.
 """
 
 import copy
+from dataclasses import fields
 import hashlib
 import json
 import os
-from dataclasses import fields
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -319,7 +319,7 @@ def suites() -> List[str]:
 
 
 def suite(suite_id: str, version: int = 0) -> Dict:
-    """Return a benchmark suite (``benchmarks/<id>.v<version>.json``)."""
+    """Load a benchmark suite from ``benchmarks/<id>.v<version>.json``."""
     p = BENCHMARKS / f'{suite_id}.v{version}.json'
     if not suite_id.replace('-', '').isalnum() or not p.is_file():
         raise SpecError(f'no benchmark suite {suite_id!r} v{version}; have {suites()}')
@@ -717,7 +717,7 @@ def manifest(p: Dict, records: List[Dict], files: Dict[str, bytes], host: Dict) 
 
 
 def export(p: Dict, records: List[Dict], host: Dict) -> Dict[str, bytes]:
-    """Return the export set ``{name: bytes}``: results.csv, summary.json, spec.json, runs.jsonl, manifest.json."""
+    """Return the export set ``{name: bytes}`` (results, summary, spec, runs, manifest)."""
     records = plain(records)
     files = {
         'spec.json': (json.dumps(plain(p['spec']), indent=1, sort_keys=True) + '\n').encode(),
@@ -769,8 +769,8 @@ def _pool_run(p: Dict, workers: int) -> List[Dict]:
         return run_all(p, lambda i, n: print(f'\r{i}/{n}', end='', flush=True))
     import multiprocessing as mp
     out = []
-    with mp.get_context('spawn').Pool(workers, initializer=_init_worker,
-                                       initargs=(dict(_WORLD_SPECS),)) as pool:
+    ctx = mp.get_context('spawn')
+    with ctx.Pool(workers, initializer=_init_worker, initargs=(dict(_WORLD_SPECS),)) as pool:
         for r in pool.imap_unordered(run_one, p['runs'], chunksize=1):
             out.append(r)
             print(f'\r{len(out)}/{len(p["runs"])}', end='', flush=True)
@@ -794,13 +794,13 @@ def main(argv: Optional[List[str]] = None) -> int:
     r.add_argument('spec')
     r.add_argument('--out', required=True)
     r.add_argument('--workers', type=int, default=max(1, (os.cpu_count() or 2) - 1))
-    r.add_argument('--worlds', help='the worlds/ directory (default: the repository\'s)')
-    v = sub.add_parser('verify', help='re-run an export\'s runs and compare chains and counts')
+    r.add_argument('--worlds', help="the worlds/ directory (default: the repository's)")
+    v = sub.add_parser('verify', help="re-run an export's runs and compare chains and counts")
     v.add_argument('dir')
     v.add_argument('--sample', type=float, default=1.0, help='fraction of runs (default all)')
     v.add_argument('--workers', type=int, default=max(1, (os.cpu_count() or 2) - 1))
     v.add_argument('--worlds')
-    s = sub.add_parser('summarise', help='print an export\'s summary')
+    s = sub.add_parser('summarise', help="print an export's summary")
     s.add_argument('dir')
     a = ap.parse_args(argv)
     if getattr(a, 'worlds', None):

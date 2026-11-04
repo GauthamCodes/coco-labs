@@ -366,7 +366,8 @@ def run_localisation(world, scenario: Dict, name: str, params: Dict, descriptor:
         h.update(canonical({'metrics': metrics, 'series': series}))
         metrics['compute_ms'] = elapsed
         return {'status': status, 'success': arrived and localised, 'metrics': metrics,
-                'chain': h.hexdigest(), 'fail_tick': None if arrived and localised else d.ticks - 1,
+                'chain': h.hexdigest(),
+                'fail_tick': None if arrived and localised else d.ticks - 1,
                 'series': series}
 
 

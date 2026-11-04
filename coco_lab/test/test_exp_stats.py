@@ -18,9 +18,8 @@ from itertools import product
 import math as libm
 import random
 
-import pytest
-
 from coco_lab import exp_stats as st
+import pytest
 
 
 def test_wilson_matches_hand_computed_values():

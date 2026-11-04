@@ -1,0 +1,5 @@
+planning 9f7564bc8ef2eb72 32 runs 7c7422eaefd872c4 ['found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found', 'found']
+control 3c474b1db711cad7 6 runs e1be2319e615373a ['succeeded', 'timeout', 'no_valid_control', 'no_valid_control', 'timeout', 'timeout']
+localisation 45d4a1389a981cdc 2 runs 79f821826abe9385 ['timeout', 'not_localised']
+fulltask d21615bbdb03d9c7 1 runs 231b9f1f52971150 ['completed']
+golden unchanged

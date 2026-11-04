@@ -4,6 +4,9 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-04): R1 closed — R1.0–R1.9 done**; PR "R1 · Research Workbench" into main, ready for review
+  (never merged or deployed by an agent). [`R1_RESULTS.md`](R1_RESULTS.md), [`BEFORE_AFTER.md`](BEFORE_AFTER.md).
+  Final suites on the final tree green except coco_lab's ament lint on R1's new code (fixed; see R1_RESULTS).
 - **State (2026-11-03): R1.8 Performance done** ([`data/r18/README.md`](data/r18/README.md)): 400-run Depot
   experiment in the browser 54.3 s on 6 workers (native digest identical); emulated phone 2 × 20 in 18.0 s on 2
   workers; Play fps unchanged (60.07 / 60.02 medians vs baseline 60.07 / 60.02). Real phone: not connected.
@@ -79,10 +82,11 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R1.6 Exports and notebook | done | [`data/r16/README.md`](data/r16/README.md), [notebook](notebooks/analyse_experiment.ipynb) |
 | R1.7 Compare and navigation | done | [`data/r17/README.md`](data/r17/README.md), [`compare_check.json`](data/r17/compare_check.json) |
 | R1.8 Performance | done (real phone pending: not connected) | [`data/r18/README.md`](data/r18/README.md) |
-| R1.9 Close | pending | |
+| R1.9 Close | done | [`R1_RESULTS.md`](R1_RESULTS.md), [`BEFORE_AFTER.md`](BEFORE_AFTER.md), [`data/r19/`](data/r19/) |
 
 ## Gautham: look at these
 
+- R1.9: [`BEFORE_AFTER.md`](BEFORE_AFTER.md) — every surface before and after.
 - R1.7: [`data/r17/screens/`](data/r17/screens/) — the three-door title, the Learn page, Compare and Recordings (desktop, emulated phone both orientations).
 - R1.5–R1.6: [`data/r15/a11y/`](data/r15/a11y/), [`data/r16/a11y/`](data/r16/a11y/) — Benchmarks and Datasets.
 - R1.3: [`data/r13/a11y/`](data/r13/a11y/) — the Workbench builder and results, desktop and emulated phone landscape, dark and light.
@@ -95,4 +99,4 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Questions for Gautham
 
-- Plug in the Nothing Phone (1) with USB debugging when convenient: R1.8's phone row is emulated only.
+- See [`R1_RESULTS.md`](R1_RESULTS.md) § Questions for Gautham (title doors, the phone, the v0 controller baseline).
