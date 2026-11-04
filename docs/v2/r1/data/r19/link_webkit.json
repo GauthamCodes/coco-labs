@@ -1,0 +1,48 @@
+{
+ "site": "http://127.0.0.1:4198/coco-labs/",
+ "browser": "webkit",
+ "long": false,
+ "when": "2026-11-03T20:56:33.685Z",
+ "steps": [
+  {
+   "name": "built and ran in context A",
+   "ok": true,
+   "digest": "Digest 2554d51e9df9d757… · 6 workers",
+   "rows": 26
+  },
+  {
+   "name": "copied the link",
+   "ok": true,
+   "link_chars": 514,
+   "compressed": false
+  },
+  {
+   "name": "fresh context: reproduced exactly",
+   "ok": true,
+   "check": "Reproduced exactly: every run's status, hash chain and counts match the link (digest 2554d51e9df9d757…)."
+  },
+  {
+   "name": "fresh context: identical runs table",
+   "ok": true
+  },
+  {
+   "name": "fresh context: identical summary",
+   "ok": true
+  },
+  {
+   "name": "fresh context: identical digest",
+   "ok": true
+  },
+  {
+   "name": "Verify: every re-run matches",
+   "ok": true,
+   "verify": "Verify: 2 randomly chosen run(s) re-run; every hash chain and count matches."
+  },
+  {
+   "name": "no page errors",
+   "ok": true,
+   "errors": []
+  }
+ ],
+ "pass": true
+}

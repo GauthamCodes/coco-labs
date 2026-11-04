@@ -1,0 +1,108 @@
+{
+ "site": "http://127.0.0.1:4195/coco-labs/",
+ "case": "laptop",
+ "device": "laptop",
+ "gpu": "nvidia",
+ "machine": {
+  "gpu_asked": "nvidia",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P8, 62",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "27.3 % brave (gautham)",
+   "9.1 % firefox (gautham)",
+   "9.1 % Privileged (gautham)",
+   "0.0 % systemd (root)",
+   "0.0 % kthreadd (root)",
+   "0.0 % pool_workqueue_release (root)"
+  ],
+  "nvidia_util": "5 %, 408 MiB",
+  "nvidia_procs": [
+   "Xorg sm 4 %",
+   "gnome-shell sm - %",
+   "xdg-desktop-por sm - %",
+   "brave sm - %",
+   "nautilus sm - %",
+   "firefox sm - %",
+   "chrome-headless sm - %"
+  ]
+ },
+ "conditions": {
+  "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+  "at_utc": "2026-11-03T17:33:16.858Z",
+  "power_profile": "balanced",
+  "ac_power": true,
+  "battery": {
+   "status": "Full",
+   "capacity_pct": 100
+  },
+  "cpu_governor": "powersave",
+  "load_average": {
+   "1m": 1.06,
+   "5m": 1.79,
+   "15m": 4.25
+  },
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "threads": 12,
+  "standard": true
+ },
+ "when": "2026-11-03T17:33:16.860Z",
+ "spec": {
+  "schema": "coco.experiment.v1",
+  "title": "R1.8: four planners on depot-nav-100",
+  "world": "coco_depot_v1",
+  "family": "planning",
+  "seed": 1,
+  "algorithms": [
+   {
+    "name": "astar"
+   },
+   {
+    "name": "dijkstra"
+   },
+   {
+    "name": "greedy"
+   },
+   {
+    "name": "weighted_astar"
+   }
+  ],
+  "scenarios": {
+   "kind": "suite",
+   "id": "depot-nav-100"
+  }
+ },
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "page": {
+  "cores": 12,
+  "memory_gb": 16,
+  "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36"
+ },
+ "wall_s": 54.283,
+ "digest_prefix": "6060a0d2bf3896a9…",
+ "workers": 6,
+ "runs": 400,
+ "errors": [],
+ "conditions_end": {
+  "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+  "at_utc": "2026-11-03T17:34:11.736Z",
+  "power_profile": "balanced",
+  "ac_power": true,
+  "battery": {
+   "status": "Full",
+   "capacity_pct": 100
+  },
+  "cpu_governor": "powersave",
+  "load_average": {
+   "1m": 4.06,
+   "5m": 2.51,
+   "15m": 4.36
+  },
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "threads": 12,
+  "standard": true
+ }
+}

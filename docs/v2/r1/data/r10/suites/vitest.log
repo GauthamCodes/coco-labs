@@ -1,0 +1,9 @@
+
+ RUN  v5.0.2 /home/gautham/coco_labs_ws/worktrees/r1/lab_web
+
+
+ Test Files  80 passed (80)
+      Tests  619 passed (619)
+   Start at  16:44:15
+   Duration  42.24s (tests 94%, transform 3%, import 3%)
+

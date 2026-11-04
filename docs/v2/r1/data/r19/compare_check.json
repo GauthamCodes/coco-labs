@@ -1,0 +1,109 @@
+{
+ "site": "http://127.0.0.1:4198/coco-labs/",
+ "when": "2026-11-03T20:57:59.664Z",
+ "checks": [
+  {
+   "name": "suite pair 1: astar on s001",
+   "ok": true,
+   "compare": {
+    "expansions": 3035,
+    "length": 19.64
+   },
+   "reference": {
+    "expansions": 3035,
+    "path_length_m": 19.63502884254443
+   }
+  },
+  {
+   "name": "suite pair 1: dijkstra on s001",
+   "ok": true,
+   "compare": {
+    "expansions": 43585,
+    "length": 19.64
+   },
+   "reference": {
+    "expansions": 43585,
+    "path_length_m": 19.635028842544436
+   }
+  },
+  {
+   "name": "next pair: astar on s002",
+   "ok": true,
+   "compare": {
+    "expansions": 64447,
+    "length": 48.63
+   },
+   "reference": {
+    "expansions": 64447,
+    "path_length_m": 48.632799384885885
+   }
+  },
+  {
+   "name": "next pair: dijkstra on s002",
+   "ok": true,
+   "compare": {
+    "expansions": 110839,
+    "length": 48.63
+   },
+   "reference": {
+    "expansions": 110839,
+    "path_length_m": 48.632799384885885
+   }
+  },
+  {
+   "name": "table link: the run opens first",
+   "ok": true,
+   "compare": {
+    "expansions": 71834,
+    "length": 27.67
+   },
+   "reference": 71834
+  },
+  {
+   "name": "world v1 opens and compares",
+   "ok": true,
+   "errors": []
+  },
+  {
+   "name": "world v2 opens and compares",
+   "ok": true,
+   "errors": []
+  },
+  {
+   "name": "world depot opens and compares",
+   "ok": true,
+   "errors": []
+  },
+  {
+   "name": "world depot_colours opens and compares",
+   "ok": true,
+   "errors": []
+  },
+  {
+   "name": "control: a seeded pair replays to an outcome in both panes",
+   "ok": true,
+   "statuses": [
+    "succeeded",
+    "succeeded"
+   ]
+  },
+  {
+   "name": "Turn this into an experiment: the builder opens with the panes",
+   "ok": true,
+   "spec": {
+    "family": "control",
+    "algorithms": [
+     "dwa",
+     "rpp"
+    ],
+    "scenarios": {
+     "kind": "sampled",
+     "n": 20,
+     "seed": 1,
+     "min_separation_m": 3
+    }
+   }
+  }
+ ],
+ "pass": true
+}

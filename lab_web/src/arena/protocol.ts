@@ -53,7 +53,14 @@ export interface GameRequest { type: 'game'; id: number; op: string; arg: string
 export type WarmRequest = Omit<BootRequest, 'type'> & { type: 'warm' };
 export interface LoopCompareRequest { type: 'compare_loop'; family: 'control' | 'localise'; names: string[]; goal: [number, number]; inflation: CompareInflation; steps: number; hash_version?: 2 | 3 }
 export interface LoopFrame { pose: [number, number, number]; truth: [number, number, number]; particles: number[][] | null; chosen: number[][] | null; hash: string; tick: number; summary: Record<string, number | boolean | null>; status: string }
-export type ToWorker = { type: 'costmap_view'; delta?: boolean } | LoopCompareRequest | BootRequest | WarmRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest | GameRequest;
+/**
+ * R1: an experiment request (coco_lab.experiments through arena_glue.experiment), queued
+ * like a game query; `world` names a shipped World Spec the worker fetches once.
+ */
+export interface ExperimentRequest { type: 'experiment'; id: number; op: 'plan' | 'run' | 'summary' | 'export' | 'digest' | 'replay' | 'trace'; spec: string; world: string; arg?: string }
+/** R1.7: one tick of a replayed experiment run (Compare), the frame a Compare loop pane draws. */
+export interface ReplayFrame { pose: [number, number, number]; truth: [number, number, number]; hash: string; tick: number }
+export type ToWorker = { type: 'costmap_view'; delta?: boolean } | LoopCompareRequest | BootRequest | WarmRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest | GameRequest | ExperimentRequest;
 
 export interface CompareSide { planner: string; status: string; summary: Record<string, number | string | null>; resolution: number }
 export interface CompareResult { A: CompareSide; B: CompareSide; C?: CompareSide; D?: CompareSide }
@@ -136,4 +143,6 @@ export type FromWorker =
   | { type: 'compare_done'; result: CompareResult }
   | { type: 'play_done'; id: number; result?: string; error?: string }
   | { type: 'game_done'; id: number; result?: string; error?: string }
+  | { type: 'experiment_done'; id: number; result?: string; error?: string; ms?: number }
+  | { type: 'experiment_frames'; id: number; side: 'A' | 'B' | 'C' | 'D'; frames: ReplayFrame[] }
   | { type: 'error'; stage: string; message: string };

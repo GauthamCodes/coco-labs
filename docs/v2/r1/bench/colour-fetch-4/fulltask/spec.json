@@ -1,0 +1,67 @@
+{
+ "algorithms": [
+  {
+   "id": "bfs",
+   "label": "BFS",
+   "name": "bfs",
+   "params": {}
+  },
+  {
+   "id": "dijkstra",
+   "label": "Dijkstra",
+   "name": "dijkstra",
+   "params": {}
+  },
+  {
+   "id": "astar",
+   "label": "A*",
+   "name": "astar",
+   "params": {}
+  },
+  {
+   "id": "greedy",
+   "label": "Greedy best-first",
+   "name": "greedy",
+   "params": {}
+  },
+  {
+   "id": "weighted_astar",
+   "label": "Weighted A*",
+   "name": "weighted_astar",
+   "params": {}
+  }
+ ],
+ "family": "fulltask",
+ "limits": {
+  "max_ticks": 3000
+ },
+ "metrics": [
+  "deliveries",
+  "orders",
+  "contacts",
+  "net_deliveries",
+  "time_to_complete_s",
+  "time_used_s",
+  "path_efficiency",
+  "ticks",
+  "timer_s",
+  "compute_ms"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "id": "colour-fetch-4",
+  "kind": "suite"
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 1,
+ "sweep": {
+  "params": []
+ },
+ "title": "COCO-Bench v0 reference: colour-fetch-4, fulltask",
+ "world": "coco_depot_colours_v1",
+ "world_sha256": "6a16532b6a9cff8a8609fc74bc48265b3d7b313ca66c3ec54d79c2c83d6d0eec"
+}

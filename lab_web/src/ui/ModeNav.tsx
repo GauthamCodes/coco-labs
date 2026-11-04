@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 /**
- * Play, Compare and Research share navigation and an evidence badge.
- * Legacy mode IDs map to their current homes. About links to Live Stack
- * (simulated) and the frozen v1 labs.
+ * Play, Learn, Compare and Workbench share navigation and an evidence badge
+ * (R1, Gautham 2026-10-31: Research became the Workbench, whose Recordings tab is the
+ * library at ?view=research). Legacy mode IDs map to their current homes. About links
+ * to Live Stack (simulated) and the frozen v1 labs.
  */
 
 import { Settings } from 'lucide-react';
@@ -12,13 +13,14 @@ import { openSettings } from '../shell/settings_events';
 import '../shell/shell.css';
 const BASE = import.meta.env.BASE_URL;
 
-export type ModeId = 'learn' | 'play' | 'sandbox' | 'casefiles' | 'compare' | 'research' | 'about';
+export type ModeId = 'learn' | 'play' | 'sandbox' | 'casefiles' | 'compare' | 'research' | 'workbench' | 'about';
 export type Evidence = 'MODEL' | 'STACK';
 
 export const MODES: { id: ModeId; label: string; href: string }[] = [
   { id: 'play', label: 'Play', href: '?view=play' },
+  { id: 'learn', label: 'Learn', href: '?view=learn' },
   { id: 'compare', label: 'Compare', href: '?view=compare' },
-  { id: 'research', label: 'Research', href: '?view=research' },
+  { id: 'workbench', label: 'Workbench', href: '?view=workbench' },
 ];
 
 /** What each class means, said where the badge is (README §3). */
@@ -36,7 +38,7 @@ export function EvidenceBadge({ evidence }: { evidence: Evidence }) {
 }
 
 export function ModeNav({ current, evidence }: { current: ModeId; evidence: Evidence }) {
-  const mode = current === 'learn' ? 'compare' : current === 'sandbox' ? 'play' : current === 'casefiles' ? 'research' : current;
+  const mode = current === 'sandbox' ? 'play' : current === 'casefiles' || current === 'research' ? 'workbench' : current;
   return (
     <header className="mode-head" data-testid="mode-head">
       <a className="brand" href={BASE}>COCO Lab</a>

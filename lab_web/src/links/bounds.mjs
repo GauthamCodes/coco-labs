@@ -70,7 +70,7 @@ export function urlFieldError(params) {
     for (const key of ['c', 'l', 'challenge', 'replay', 'casefile', 'play', 'pl']) {
       if (params.has(key)) boundedId(params.get(key), key, ['replay','casefile'].includes(key));
     }
-    for (const key of ['run', 's', 'z']) {
+    for (const key of ['run', 's', 'z', 'exp']) {
       const value = params.get(key);
       if (value && value.length > LIMITS.encoded) throw new Error(`Link ${key} exceeds ${LIMITS.encoded} characters`);
     }

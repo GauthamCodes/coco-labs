@@ -564,6 +564,9 @@ M0 ─▶ M1 ─▶ M2 ─▶ M3 ─▶ M4 (done)
    ─▶ M5 Focus and polish ─▶ [gate: 5-person test + phone pass] ─▶ public v2.0
    ─▶ G1 Game Look: game shell, phone-game HUD, Night Shift Depot visuals, Fetch Rush playable
    ─▶ G2 Sim Identity: GAME | SIM views, telemetry and /rosout, ROS 2 panels, rosbag2 export, Race Nav2
+   ─▶ R1 Research Workbench: experiments, benchmarks, datasets, shareable reproducible links, native parity
+   ─▶ R2 Bring your own algorithm ─▶ R3 COCO-Bench and the paper ─▶ R4 Learn course
+   ─▶ R5 World editor, Run it in ROS 2, Live ROS 2 in Docker ─▶ R6 fidelity knobs, more algorithms, multi-robot
    ─▶ M6 COCO Depot: world, Grasp Assist, Fetch Rush, Rush Hour, ROS 2 ghosts ─▶ v2.1 game launch
    ─▶ M7 Fog Scout, Lost & Found, Research mode, Connect your ROS 2
    ─▶ M8 Stack in the cloud: batch and experiments
@@ -708,6 +711,18 @@ Details live in `docs/v2/M*_PROMPT.md`, `docs/v2/M*_RESULTS.md` and `docs/v2/rev
 - Gazebo + Nav2 on the Depot fixed in the generated files (Dock 1 failure, AMCL drift); real Nav2 ghosts of the phone rounds; "Race Nav2 (real ROS 2 recording)" and a three-way results comparison.
 - Simulator-grade looks (physically based materials, environment reflections, SSAO on high), the new title and a "what the planner computed" results inset; 60 fps on the real Nothing Phone (1).
 - Prompt: `docs/v2/g2/G2_PROMPT.md`. Progress: `docs/v2/g2/G2_STATUS.md`. The invariants, integrity rules and owner gates above are unchanged.
+
+### R · The research track (inserted 2026-10-31)
+
+**Objective:** COCO Lab serves learning and research, not just entertainment; the game stays the front door. The model's determinism (hash-verified, the same on every run and browser) and its validation against real Gazebo + Nav2 recordings let any experiment be shared as a link and reproduced exactly by anyone, with no install.
+
+- **R1 · Research Workbench.** Research becomes Workbench (Experiments · Benchmarks · Recordings · Datasets). An experiment builder (world, family, algorithms and parameters, seeded scenarios or a suite, an optional one- or two-parameter sweep, metrics) runs in a pool of Pyodide workers, with honest statistics (N everywhere, Wilson 95% intervals, medians and IQRs, paired Wilcoxon with effect sizes). Experiments are links that reproduce every count exactly, with a Verify button; `coco experiment run` gives the same results natively, checked in CI. COCO-Bench v0 suites with committed reference results; exports and a notebook; Compare on every world with a scenario picker; title doors Play · Learn · Workbench; a Learn page. Pulls §5.10's experiment builder, runner, statistics, exports and `coco run` parity forward from M7.
+- **R2 · Bring your own algorithm.**
+- **R3 · COCO-Bench and the paper.**
+- **R4 · Learn course** (the graded course).
+- **R5 · World editor, "Run it in ROS 2", and Live ROS 2 in Docker.**
+- **R6 · Fidelity knobs, more algorithms and multi-robot.**
+- Prompt: `docs/v2/r1/R1_PROMPT.md`. Progress: `docs/v2/r1/R1_STATUS.md`. The invariants, integrity rules and owner gates above are unchanged.
 
 ### M6 · COCO Depot: the game world (about 6–7 weeks)
 

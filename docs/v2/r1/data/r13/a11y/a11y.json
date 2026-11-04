@@ -1,0 +1,188 @@
+{
+ "site": "http://127.0.0.1:4195/coco-labs/",
+ "when": "2026-11-03T16:21:10.007Z",
+ "pages": [
+  {
+   "profile": "desktop",
+   "theme": "dark",
+   "view": "?view=workbench",
+   "checked": 367,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 75,
+   "small_targets": [
+    "<input type=\"radio\" checked=\"\" name=\"sc-kind\">",
+    "<input type=\"radio\" name=\"sc-kind\">",
+    "<input type=\"checkbox\" checked=\"\">",
+    "<input type=\"radio\" checked=\"\" name=\"wb-format\">",
+    "<input type=\"radio\" name=\"wb-format\">"
+   ],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "dark",
+   "view": "?view=workbench&tab=benchmarks",
+   "checked": 15,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 9,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "dark",
+   "view": "?view=workbench&tab=datasets",
+   "checked": 15,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 9,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "light",
+   "view": "?view=workbench",
+   "checked": 367,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 75,
+   "small_targets": [
+    "<input type=\"radio\" checked=\"\" name=\"sc-kind\">",
+    "<input type=\"radio\" name=\"sc-kind\">",
+    "<input type=\"checkbox\" checked=\"\">",
+    "<input type=\"radio\" checked=\"\" name=\"wb-format\">",
+    "<input type=\"radio\" name=\"wb-format\">"
+   ],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "light",
+   "view": "?view=workbench&tab=benchmarks",
+   "checked": 15,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 9,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "light",
+   "view": "?view=workbench&tab=datasets",
+   "checked": 15,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 9,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "dark",
+   "view": "?view=workbench",
+   "checked": 367,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 75,
+   "small_targets": [
+    "<input type=\"radio\" checked=\"\" name=\"sc-kind\">",
+    "<input type=\"radio\" name=\"sc-kind\">",
+    "<input type=\"checkbox\" checked=\"\">",
+    "<input type=\"radio\" checked=\"\" name=\"wb-format\">",
+    "<input type=\"radio\" name=\"wb-format\">"
+   ],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "dark",
+   "view": "?view=workbench&tab=benchmarks",
+   "checked": 15,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 9,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "dark",
+   "view": "?view=workbench&tab=datasets",
+   "checked": 15,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 9,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "light",
+   "view": "?view=workbench",
+   "checked": 367,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 75,
+   "small_targets": [
+    "<input type=\"radio\" checked=\"\" name=\"sc-kind\">",
+    "<input type=\"radio\" name=\"sc-kind\">",
+    "<input type=\"checkbox\" checked=\"\">",
+    "<input type=\"radio\" checked=\"\" name=\"wb-format\">",
+    "<input type=\"radio\" name=\"wb-format\">"
+   ],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "light",
+   "view": "?view=workbench&tab=benchmarks",
+   "checked": 15,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 9,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "light",
+   "view": "?view=workbench&tab=datasets",
+   "checked": 15,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 9,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  }
+ ],
+ "errors": [],
+ "passed": true
+}

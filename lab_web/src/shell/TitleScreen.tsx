@@ -9,14 +9,16 @@ import { navigate } from '../ui/navigation';
 import { openSettings } from './settings_events';
 import '../game/fonts.css';
 import '../game/game.css';
+import './title_doors.css';
 const BASE = import.meta.env.BASE_URL;
 
 /**
  * G1.2: the title. G2.7: a ROS 2 tagline (G2.9, Gautham 2026-10-27: "Drive COCO, a ROS 2 robot,
  * modelled in your browser.") and a line of
  * plain-text badges (no logos); the ⓘ says what is model and what is recorded.
- * A full-bleed 3D hero shot of COCO in the Depot, the logo, one big
- * PLAY and three smaller doors (Compare, Research, Learn). A small ⓘ says what is real.
+ * A full-bleed 3D hero shot of COCO in the Depot, the logo and three equal doors (R1,
+ * Gautham 2026-10-31): Play · Learn · Workbench. Any key still plays: the game stays the
+ * front door. A small ⓘ says what is real.
  * The model warms only after the first scene has drawn, at idle or on first input (M5
  * review decision 1); any key plays.
  */
@@ -49,7 +51,9 @@ export function TitleScreen() {
     };
     window.addEventListener('keydown', play); return () => window.removeEventListener('keydown', play);
   }, []);
-  const doors = [{ label: 'Compare', copy: 'See algorithms race', view: 'compare' }, { label: 'Research', copy: 'Real ROS 2 recordings', view: 'research' }, { label: 'Learn', copy: 'Guided tours', view: 'learn' }];
+  const doors = [{ label: '▶ Play', copy: 'Drive COCO in the Depot', view: 'play', testid: 'title-play' },
+    { label: 'Learn', copy: 'Seven questions, guided', view: 'learn', testid: 'title-learn' },
+    { label: 'Workbench', copy: 'Run experiments, share them', view: 'workbench', testid: 'title-workbench' }];
   return <main className="g1" data-testid="title" data-g1="title" data-ready={ready ? 'true' : 'false'} style={{ touchAction: 'manipulation' }}>
     {/* no WebGL: the title stays usable (every door below is a link) on a plain background */}
     <StageBoundary onError={() => setReady(true)} fallback={() => <div className="g1-canvas" data-testid="title-no-3d">
@@ -67,15 +71,15 @@ export function TitleScreen() {
     {info && <div className="g1-sheet g1-glass" role="note" style={{ top: 'calc(64px + env(safe-area-inset-top))' }}>
       <h3>WHAT IS REAL HERE</h3>
       <p><b>MODEL</b> · in your browser: a model of COCO's ROS 2 stack (Play, Compare). Its topic names, frames and message shapes mirror the real stack — you can even save a run as a rosbag2 file — but the browser does not run ROS 2. COCO is a kinematic model: no physics engine.</p>
-      <p><b>STACK</b> · recorded: the real ROS 2 stack (Nav2, MoveIt) driving COCO in Gazebo Harmonic (Research › Recordings).</p>
+      <p><b>STACK</b> · recorded: the real ROS 2 stack (Nav2, MoveIt) driving COCO in Gazebo Harmonic (Workbench › Recordings).</p>
       <p><b>REMOTE</b> · the simulated stack over the internet (About › Live).</p>
       <p><b>HARDWARE</b> · a physical robot. None exists.</p>
     </div>}
     <div className="g1-title-bottom">
       <div className="g1-title-copy"><h1 className="g1-logo" aria-label="COCO Lab">COCO<span>·</span>LAB</h1><p className="g1-tag">Drive COCO, a ROS 2 robot, modelled in your browser.</p>
         <p className="g2-badges" data-testid="title-badges" aria-label="What COCO Lab is built from"><span>Model of COCO's ROS 2 stack</span><span className="g2-badges-sep"> · </span><span>Nav2 · Gazebo Harmonic · MoveIt <button className="g2-badges-i" onClick={() => setInfo((x) => !x)} aria-label="What is model and what is recorded">ⓘ</button></span></p></div>
-      <a className="g1-big" href={`${BASE}?view=play`} data-testid="title-play" aria-label="Play: drive COCO">▶ PLAY</a>
-      <nav className="g1-cards" aria-label="Other modes">{doors.map((d) => <a key={d.view} className="g1-card g1-glass" href={`${BASE}?view=${d.view}`}><h3>{d.label}</h3><p>{d.copy}</p></a>)}</nav>
+      <nav className="g1-cards r1-doors" aria-label="Modes">{doors.map((d) => <a key={d.view} className="g1-card g1-glass" href={`${BASE}?view=${d.view}`} data-testid={d.testid}><h3>{d.label}</h3><p>{d.copy}</p></a>)}</nav>
+      <p className="r1-compare-link"><a href={`${BASE}?view=compare`}>Compare algorithms side by side →</a></p>
     </div>
   </main>;
 }

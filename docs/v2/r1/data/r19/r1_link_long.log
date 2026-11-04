@@ -1,0 +1,8 @@
+ok   built and ran in context A {"digest":"Digest 18003fd01a25c051… · 6 workers","rows":26}
+ok   copied the link {"link_chars":458,"compressed":true}
+ok   fresh context: reproduced exactly {"check":"Reproduced exactly: every run's status, hash chain and counts match the link (digest 18003fd01a25c051…)."}
+ok   fresh context: identical runs table {}
+ok   fresh context: identical summary {}
+ok   fresh context: identical digest {}
+ok   Verify: every re-run matches {"verify":"Verify: 2 randomly chosen run(s) re-run; every hash chain and count matches."}
+ok   no page errors {"errors":[]}

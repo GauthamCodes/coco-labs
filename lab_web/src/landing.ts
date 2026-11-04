@@ -5,7 +5,8 @@
  * Where a URL goes (M2.10: the v1 lab views are retired, every v1 URL keeps
  * working). Pure, so every URL form is tested (test/landing.test.ts).
  *
- * - `?view=arena`, `?view=learn` open those apps; `?view=live` opens the
+ * - `?view=arena` opens the Arena; `?view=learn` the Learn page (R1.7; with a mission, its
+ *   tour in Compare as before); `?view=workbench` the Workbench (R1); `?view=live` opens the
  *   Live view, which stays in `main` until M5.
  * - A BARE v1 lab link (`?view=plan|localise|map|search|move`, nothing else
  *   but `perf`) goes to the Learn mission that carries that lab's claims.
@@ -25,7 +26,7 @@
 /** What the bare URL opens (the build-time switch). */
 export type Landing = 'arena' | 'v1';
 /** The code-split apps this build serves. */
-export type AppId = 'arena' | 'learn' | 'live' | 'casefiles' | 'play' | 'title' | 'about' | 'compare';
+export type AppId = 'arena' | 'learn' | 'live' | 'casefiles' | 'play' | 'title' | 'about' | 'compare' | 'workbench' | 'learnhome';
 /** Open an app here, or go to a URL relative to the site root. */
 export type Route = { app: AppId } | { redirect: string };
 
@@ -51,6 +52,8 @@ export function route(search: string, landing: Landing, runIds: ReadonlySet<stri
   const view = q.get('view');
   if (view === 'arena') return { app: 'arena' };
   if (view === 'learn') {
+    // R1.7: the bare Learn door opens the Learn page; a mission (or tour) link keeps its tour
+    if (!q.has('mission') && !q.has('tour')) return { app: 'learnhome' };
     q.set('view', 'compare');
     if (q.has('mission')) { q.set('tour', q.get('mission')!); q.delete('mission'); }
     else q.set('tour', '');
@@ -60,6 +63,7 @@ export function route(search: string, landing: Landing, runIds: ReadonlySet<stri
   if (view === 'casefiles') { q.set('view', 'research'); return { redirect: '?' + q.toString() }; }
   if (view === 'research') return { app: q.has('run') || q.has('replay') || q.has('casefile') ? 'arena' : 'casefiles' };
   if (view === 'compare') return { app: 'compare' };
+  if (view === 'workbench') return { app: 'workbench' };
   if (view === 'about') return { app: 'about' };
   if (view === 'play') return { app: 'play' }; // M3.5
   if (q.has('bundle') || q.has('v')) {
@@ -85,5 +89,5 @@ export function route(search: string, landing: Landing, runIds: ReadonlySet<stri
 /** Whether routing `search` needs the converted-run index first. */
 export const needsRunIds = (search: string): boolean => {
   const q = new URLSearchParams(search);
-  return !['arena', 'learn', 'live', 'casefiles', 'play', 'compare', 'research', 'about'].includes(q.get('view') ?? '') && (q.has('bundle') || q.has('v'));
+  return !['arena', 'learn', 'live', 'casefiles', 'play', 'compare', 'research', 'about', 'workbench'].includes(q.get('view') ?? '') && (q.has('bundle') || q.has('v'));
 };

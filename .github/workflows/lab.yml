@@ -88,7 +88,8 @@ jobs:
     # killed, and finite so a hang is: two runs on 2026-10-01 sat in
     # 'Setup ROS 2 Jazzy' for ~2 h until cancelled by hand. M2.10 added the
     # v1 archive build (~2 min), so 20 -> 30; M3.0 replaced it with a fetch.
-    timeout-minutes: 30
+    # R1.2 adds the experiment parity check (four golden experiments in CPython and Pyodide), 30 -> 45.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -141,6 +142,13 @@ jobs:
       - name: Native vs Pyodide gate (state hash v3)
         working-directory: lab_web
         run: node tools/g1/native_gate.mjs --python "$RUNNER_TEMP/venv/bin/python" --out "$RUNNER_TEMP/native_gate.json"
+      # R1.2: experiments give the same results natively and in the browser -- the golden experiment
+      # of every family (coco_lab/test/fixtures/r1/) run by CPython and by Pyodide (the shipped packs):
+      # every count, status, hash chain, digest, results.csv row and summary.json number identical
+      # (compute_ms, wall time, excluded), and both digests the committed ones
+      - name: Native vs Pyodide experiment parity (R1)
+        working-directory: lab_web
+        run: node tools/r1/parity.mjs --python "$RUNNER_TEMP/venv/bin/python" --out "$RUNNER_TEMP/r1_parity.json"
       # M3.6: every committed Play link (scored by Chromium's page, docs/v2/data/m3/m36/)
       # re-scored in Node by `coco verify` -- the same coco_lab.play, under Pyodide -- must
       # give exactly the result hash the browser gave
@@ -253,6 +261,19 @@ jobs:
       - name: Every replay plays to its end with its badge, results and runs list (M2, M3 regressions)
         working-directory: lab_web
         run: node tools/perf/replay_check.mjs --site http://127.0.0.1:4174/coco-labs/ --out "$RUNNER_TEMP/replays"
+      # R1.4: an experiment shared as a link reproduces exactly: build and run one in the Workbench,
+      # copy its link, open it in a FRESH browser context -- "Reproduced exactly" (the digest in the
+      # link), identical runs and summary tables, and Verify's random re-runs all match
+      - name: Experiment links reproduce exactly (R1)
+        working-directory: lab_web
+        run: |
+          node tools/r1/link_e2e.mjs http://127.0.0.1:4174/coco-labs/ "$RUNNER_TEMP/r1_link.json" --browser chromium
+          node tools/r1/link_e2e.mjs http://127.0.0.1:4174/coco-labs/ "$RUNNER_TEMP/r1_link_long.json" --browser chromium --long
+      # R1.7: Compare on chosen scenarios shows the experiments' own numbers (the committed COCO-Bench
+      # reference results), opens a run from a results-table link, opens on every world, hands off to the builder
+      - name: Compare replays experiment runs (R1)
+        working-directory: lab_web
+        run: node tools/r1/compare_check.mjs http://127.0.0.1:4174/coco-labs/ "$RUNNER_TEMP/r1_compare.json"
 
   deploy:
     name: Deploy site

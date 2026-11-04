@@ -73,8 +73,9 @@ for (const [size, ctx] of Object.entries(SIZES)) {
         };
       }));
       if (size.startsWith('phone')) await page.screenshot({ path: join(OUT, `${size}_${mode}_${rows.length}.png`), scale:'css' });
-      const want = { learn: 'Compare', play: 'Play', sandbox: 'Play', casefiles: 'Research' }[mode];
-      row.ok = errors.length === 0 && row.modes.join('|') === 'Play|Compare|Research' && row.current === want
+      // R1 (Gautham 2026-10-31): Play · Learn · Compare · Workbench; Research's library is the Workbench's Recordings
+      const want = { learn: 'Learn', play: 'Play', sandbox: 'Play', casefiles: 'Workbench' }[mode];
+      row.ok = errors.length === 0 && row.modes.join('|') === 'Play|Learn|Compare|Workbench' && row.current === want
         && row.badge === (evidence === 'MODEL' ? 'MODEL · kinematic' : evidence) && row.badge_visible && !row.live_link && !row.live_is_a_mode && row.scroll <= row.view;
     } catch (e) { row.ok = false; row.failure = String(e); }
     rows.push(row);

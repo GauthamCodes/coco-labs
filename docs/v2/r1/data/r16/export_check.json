@@ -1,0 +1,51 @@
+{
+ "site": "http://127.0.0.1:4195/coco-labs/",
+ "when": "2026-11-03T16:39:35.409Z",
+ "checks": [
+  {
+   "name": "the zip holds the export set",
+   "ok": true,
+   "names": [
+    "manifest.json",
+    "results.csv",
+    "runs.jsonl",
+    "runs/run_00000.mcap",
+    "runs/run_00001.mcap",
+    "runs/run_00002.mcap",
+    "runs/run_00003.mcap",
+    "spec.json",
+    "summary.json"
+   ]
+  },
+  {
+   "name": "manifest checksums match",
+   "ok": true
+  },
+  {
+   "name": "one valid MCAP per run, one message per tick",
+   "ok": true,
+   "mcaps": 4,
+   "runs": 4,
+   "messages": 711
+  },
+  {
+   "name": "native run",
+   "ok": true,
+   "stderr": ""
+  },
+  {
+   "name": "results.csv = native (wall time removed)",
+   "ok": true
+  },
+  {
+   "name": "summary.json = native (wall time removed)",
+   "ok": true
+  },
+  {
+   "name": "digest = native",
+   "ok": true,
+   "digest": "c8420b1e3d1c442553e7fd940b36dcba7b340a3ae5001b062ffd26128f628156"
+  }
+ ],
+ "pass": true
+}

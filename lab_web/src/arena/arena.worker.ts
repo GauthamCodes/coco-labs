@@ -34,7 +34,9 @@ interface Pyodide {
   pyimport(name: string): { init: (...a: unknown[]) => PyProxy; step: (s: string) => PyProxy;
     compare: (...a: unknown[]) => string; costmap_view: (delta?: boolean) => void; game_init: (...a: unknown[]) => PyProxy; game_op: (op: string, arg: string | null) => string; game_prefetch: (ms: number) => boolean;
     loop_compare_begin: (request: string) => void; loop_compare_advance: () => string;
-    begin: (s: string) => void; advance: (n: number) => boolean; amend: (s: string) => void; finish: () => PyProxy; play: (s: string) => string };
+    begin: (s: string) => void; advance: (n: number) => boolean; amend: (s: string) => void; finish: () => PyProxy; play: (s: string) => string;
+    experiment: (op: string, spec: string, arg: string | null) => string; experiment_world: (id: string, spec: string) => void;
+    experiment_replay: (spec: string, indices: string, postBatch: (cols: PyProxy, meta: string) => void, postFrames: (side: string, frames: string) => void) => string };
 }
 
 /**
@@ -237,6 +239,33 @@ function gameQuery(req: Extract<ToWorker, { type: 'game' }>) {
   }
 }
 
+/** R1: the World Specs registered for experiments in this worker (fetched once each). */
+const experimentWorlds = new Set<string>();
+
+/** R1: one experiment request; the experiments pack (and what it needs) loads first. */
+async function experiment(req: Extract<ToWorker, { type: 'experiment' }>) {
+  try {
+    if (!glue || !booted) throw new Error('experiment before the interpreter is warm');
+    await loadPack('experiments');
+    if (!experimentWorlds.has(req.world)) {
+      const file = Object.values(SPEC_FILES).find((f) => f === `${req.world}.json`);
+      if (!file) throw new Error(`${req.world} is not a world this site ships`);
+      glue.experiment_world(req.world, await (await fetch(`${booted.assetsBase}arena/${file}`, { credentials: 'omit' })).text());
+      experimentWorlds.add(req.world);
+    }
+    const t0 = performance.now();
+    // R1.7: Compare's replay streams the runs' search events (the plan batches Compare already
+    // draws) and each Arena run's frames, then answers with the records
+    const result = req.op === 'replay'
+      ? glue.experiment_replay(req.spec, req.arg ?? '[]', onBatchFn ?? ((cols: PyProxy) => cols.destroy()),
+        (side: string, frames: string) => post({ type: 'experiment_frames', id: req.id, side: side as 'A', frames: JSON.parse(frames) }))
+      : glue.experiment(req.op, req.spec, req.arg ?? null);
+    post({ type: 'experiment_done', id: req.id, result, ms: performance.now() - t0 });
+  } catch (e) {
+    post({ type: 'experiment_done', id: req.id, error: e instanceof Error ? e.message : String(e) });
+  }
+}
+
 function compare(req: Extract<ToWorker, { type: 'compare' }>) {
   if (!glue || !onBatchFn) throw new Error('compare before boot');
   const args: unknown[] = [req.a, req.b, req.x, req.y, onBatchFn, 2048];
@@ -303,6 +332,7 @@ self.onmessage = (ev: MessageEvent<ToWorker>) => {
       else if (req.type === 'compare_loop') await compareLoop(req);
       else if (req.type === 'play') await play(req);
       else if (req.type === 'game') gameQuery(req);
+      else if (req.type === 'experiment') await experiment(req);
       else await step(req);
     } catch (e) {
       if (req.type === 'warm') {

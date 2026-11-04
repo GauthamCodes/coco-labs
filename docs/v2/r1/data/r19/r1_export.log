@@ -1,0 +1,7 @@
+ok   the zip holds the export set {"names":["manifest.json","results.csv","runs.jsonl","runs/run_00000.mcap","runs/run_00001.mcap","runs/run_00002.mcap","runs/run_00003.mcap","spec.json","summar
+ok   manifest checksums match {}
+ok   one valid MCAP per run, one message per tick {"mcaps":4,"runs":4,"messages":711}
+ok   native run {"stderr":""}
+ok   results.csv = native (wall time removed) {}
+ok   summary.json = native (wall time removed) {}
+ok   digest = native {"digest":"c8420b1e3d1c442553e7fd940b36dcba7b340a3ae5001b062ffd26128f628156"}

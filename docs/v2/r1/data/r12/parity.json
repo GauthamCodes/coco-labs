@@ -1,0 +1,40 @@
+{
+ "about": "R1.2 native-vs-Pyodide experiment parity (lab_web/tools/r1/parity.mjs); compute_ms excluded",
+ "pass": true,
+ "compared": 4269,
+ "cases": {
+  "control": {
+   "runs": 6,
+   "digest": "e1be2319e615373a3e7b88f23b39877559d107e1023541085ece7dd845d307b3",
+   "golden": "e1be2319e615373a3e7b88f23b39877559d107e1023541085ece7dd845d307b3",
+   "failures": 0
+  },
+  "fulltask": {
+   "runs": 1,
+   "digest": "231b9f1f529711500307fcedf7089f19c873f0f6cbb7899e9217565580309888",
+   "golden": "231b9f1f529711500307fcedf7089f19c873f0f6cbb7899e9217565580309888",
+   "failures": 0
+  },
+  "localisation": {
+   "runs": 2,
+   "digest": "79f821826abe9385bed41831b2de8c9414fd6f3dd501eded924fd933f31be8b2",
+   "golden": "79f821826abe9385bed41831b2de8c9414fd6f3dd501eded924fd933f31be8b2",
+   "failures": 0
+  },
+  "planning": {
+   "runs": 32,
+   "digest": "7c7422eaefd872c4b2461d0e7db3f994b2bdc2a9bbdf98f01e9d5061d81c3f7a",
+   "golden": "7c7422eaefd872c4b2461d0e7db3f994b2bdc2a9bbdf98f01e9d5061d81c3f7a",
+   "failures": 0
+  }
+ },
+ "failures": [],
+ "native": {
+  "python": "3.12.3 x86_64",
+  "ms": 207348
+ },
+ "pyodide": {
+  "version": "314.0.7",
+  "ms": 404982
+ }
+}

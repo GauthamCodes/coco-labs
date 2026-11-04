@@ -1,0 +1,64 @@
+[tests] interpreter: /home/gautham/coco_lab_r1_ws/test_venv/bin/python (3.12.3 pytest 7.4.4 hypothesis 6.98.15 networkx 2.8.8)
+[tests] workspace:   /home/gautham/coco_lab_r1_ws   ROS_DOMAIN_ID=78
+--- Testing coco_config ---
+........................................................................ [ 77%]
+.....................                                                    [100%]
+93 passed in 1.61s
+--- Testing coco_sim ---
+........................................................................ [ 89%]
+...................................                                      [100%]
+323 passed in 4.53s
+--- Testing coco_mission ---
+........................................................................ [ 97%]
+...........                                                              [100%]
+371 passed in 13.40s
+--- Testing coco_web ---
+........................................................................ [ 91%]
+.......................................................................  [100%]
+863 passed, 12 warnings in 29.11s
+--- Testing gazebo_models ---
+........................................................................ [ 93%]
+...............                                                          [100%]
+231 passed in 20.14s
+--- Testing coco_rl ---
+........................................................................ [ 86%]
+...................................                                      [100%]
+251 passed in 15.48s
+--- Testing coco_perception ---
+........................................................................ [ 51%]
+...................................................................      [100%]
+139 passed, 12 warnings in 3.94s
+--- Testing coco_moveit_config ---
+............                                                             [100%]
+12 passed in 1.49s
+--- Testing custom_teleop ---
+........................................................................ [ 96%]
+...                                                                      [100%]
+75 passed, 12 warnings in 3.36s
+--- Testing coco_lab ---
+FAILED test/test_flake8.py::test_flake8 - AssertionError: Found 11 code style...
+FAILED test/test_pep257.py::test_pep257 - AssertionError: Found code style er...
+2 failed, 1195 passed in 3448.00s (0:57:27)
+--- Testing coco_lab_ros ---
+........................................................................ [ 87%]
+.....................                                                    [100%]
+165 passed, 15 warnings in 35.17s
+--- Testing coco_schemas ---
+........................................................................ [ 89%]
+.........................                                                [100%]
+241 passed, 3 warnings in 14.28s
+==================================================
+coco_config          ok   93 passed in 1.61s
+coco_sim             ok   323 passed in 4.53s
+coco_mission         ok   371 passed in 13.40s
+coco_web             ok   863 passed, 12 warnings in 29.11s
+gazebo_models        ok   231 passed in 20.14s
+coco_rl              ok   251 passed in 15.48s
+coco_perception      ok   139 passed, 12 warnings in 3.94s
+coco_moveit_config   ok   12 passed in 1.49s
+custom_teleop        ok   75 passed, 12 warnings in 3.36s
+coco_lab             FAIL (pytest exit 1) 2 failed, 1195 passed in 3448.00s (0:57:27)
+coco_lab_ros         ok   165 passed, 15 warnings in 35.17s
+coco_schemas         ok   241 passed, 3 warnings in 14.28s
+==================================================
+[tests] FAILED: at least one package did not pass

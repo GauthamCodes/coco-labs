@@ -1372,7 +1372,7 @@ class _Driver:
     """Step an Arena, recording every input sent (the bot's own log)."""
 
     def __init__(self, spec, seed, game, arg, rules=None, version: int = 1,
-                 hash_version: int = 1):
+                 hash_version: int = 1, planner: Optional[str] = None):
         self.a = Arena(spec, seed, hash_version=hash_version)
         self.inputs: List[Dict[str, object]] = []
         self.rules = rules if rules is not None else _rules(game, arg)
@@ -1380,7 +1380,11 @@ class _Driver:
         self.hash_version = hash_version
         self.ticks = 0
         self.chain = hashlib.sha256()
-        self.step(setup_inputs(game, arg, version, getattr(self.rules, 'round', None)))
+        setup = setup_inputs(game, arg, version, getattr(self.rules, 'round', None))
+        if planner is not None:
+            # R1: the planner input Play sends after the set-up (lab_web/src/game/session.ts)
+            setup = setup + [{'kind': 'planner', 'choice': planner}]
+        self.step(setup)
 
     @numerics.in_run
     def step(self, inputs=()) -> object:
@@ -1452,17 +1456,18 @@ class _Driver:
 
 
 def bot_fetch_rush(spec, seed: int, arena_seed: int = 1, rules=None,
-                   hash_version: int = 1) -> Tuple[Dict, Dict]:
+                   hash_version: int = 1, planner: Optional[str] = None) -> Tuple[Dict, Dict]:
     """
     Play Fetch Rush as the reference player: the planner plus Grasp Assist.
 
     For each order: drive (A* + the waypoint follower) to the object's best
     pre-grasp pose, press G for that object, drive to the drop zone's centre,
     press G to put it down. Returns ``(record, result)``; :func:`play` on the
-    record gives the result again.
+    record gives the result again. ``planner`` (R1): drive with that planner instead of A*
+    (the input Play sends); None is the reference exactly as before.
     """
     version = rules.rules if isinstance(rules, FetchRushRound) else 1
-    d = _Driver(spec, arena_seed, 'fetch_rush', seed, rules, version, hash_version)
+    d = _Driver(spec, arena_seed, 'fetch_rush', seed, rules, version, hash_version, planner)
     # G2.1, rules 4: the round names each order's pre-grasp pose and its legs' crossing mouths
     # (the routes it was drawn with keep the crossing rule); the bot drives through those
     # G2 rules 5: the model yields (the actors stop for COCO, ActorAvoid makes the drive wait or
@@ -1474,17 +1479,19 @@ def bot_fetch_rush(spec, seed: int, arena_seed: int = 1, rules=None,
 
 
 def bot_fetch_colour(spec, colour: str, arena_seed: int = 1, rules=None,
-                     hash_version: int = 3) -> Tuple[Dict, Dict]:
+                     hash_version: int = 3, planner: Optional[str] = None) -> Tuple[Dict, Dict]:
     """
     Play Fetch by colour as the reference player: Fetch Rush's bot on the colour's round.
 
     It drives to the round's pre-grasp pose (``pick``, the best approach planned from the
     start), presses G for the rod, drives to Dispatch's centre and presses G (yielding to
     actors, as :func:`bot_fetch_rush` does). ``rules`` (a :class:`FetchColour`) defaults to
-    the colour's round on file. Returns ``(record, result)``.
+    the colour's round on file. ``planner`` as for :func:`bot_fetch_rush`. Returns
+    ``(record, result)``.
     """
     rules = rules if rules is not None else FetchColour(colour)
-    d = _Driver(spec, arena_seed, 'fetch_colour', colour, rules, rules.rules, hash_version)
+    d = _Driver(spec, arena_seed, 'fetch_colour', colour, rules, rules.rules, hash_version,
+                planner)
     _fetch_orders(d, True, own_yield=FETCH_COLOUR_ACTOR_RULES[rules.rules] < YIELD_RULES)
     rec = d.record('fetch_colour', colour, arena_seed)
     rec['rules'] = rules.rules

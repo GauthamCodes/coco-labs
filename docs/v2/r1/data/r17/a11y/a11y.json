@@ -1,0 +1,60 @@
+{
+ "site": "http://127.0.0.1:4195/coco-labs/",
+ "when": "2026-11-03T17:06:55.634Z",
+ "pages": [
+  {
+   "profile": "desktop",
+   "theme": "dark",
+   "view": "?view=learn",
+   "checked": 69,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 20,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "light",
+   "view": "?view=learn",
+   "checked": 69,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 20,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "dark",
+   "view": "?view=learn",
+   "checked": 69,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 20,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "light",
+   "view": "?view=learn",
+   "checked": 69,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 20,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  }
+ ],
+ "errors": [],
+ "passed": true
+}

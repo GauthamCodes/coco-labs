@@ -1,0 +1,9 @@
+/* R1.7 (Gautham, 2026-10-31): three equal doors -- Play · Learn · Workbench -- the same size
+   and style; any key still plays. */
+.r1-doors { gap: calc(12px * var(--g1-s)); }
+.r1-doors .g1-card { width: calc(196px * var(--g1-s)); min-height: 48px; padding: calc(14px * var(--g1-s)) calc(16px * var(--g1-s)); }
+.r1-doors .g1-card h3 { font-size: calc(18px * var(--g1-s)); }
+.r1-doors .g1-card p { font-size: calc(12px * var(--g1-s)); }
+.r1-compare-link { margin: calc(8px * var(--g1-s)) 0 0; text-align: center; font-size: calc(12px * var(--g1-s)); }
+.r1-compare-link a { color: var(--g1-mute); display: inline-flex; align-items: center; min-height: 44px; }
+@media (max-width: 480px) { .r1-doors .g1-card { width: 100%; } }

@@ -1,0 +1,563 @@
+{
+ "families": [
+  "planning",
+  "control"
+ ],
+ "generator": {
+  "kind": "filtered",
+  "min_clearance_m": 0.35,
+  "min_in_zone_m": 5.0,
+  "min_separation_m": 4.0,
+  "pool": 600,
+  "reference": "astar on the default static costmap",
+  "seed": 3001,
+  "tool": "tools/r1/make_suites.py"
+ },
+ "id": "depot-narrow-30",
+ "metrics": {
+  "control": [
+   "time_s",
+   "ticks",
+   "path_length_m",
+   "min_clearance_m",
+   "mean_clearance_m",
+   "heading_change_rad",
+   "contacts",
+   "expansions",
+   "plans",
+   "final_goal_distance_m",
+   "compute_ms"
+  ],
+  "planning": [
+   "expansions",
+   "pushes",
+   "path_length_m",
+   "path_cost",
+   "path_steps",
+   "min_clearance_m",
+   "mean_clearance_m",
+   "heading_change_rad",
+   "start_snap_m",
+   "goal_snap_m",
+   "compute_ms"
+  ]
+ },
+ "scenarios": [
+  {
+   "goal": [
+    41.550000000000004,
+    27.25
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "n001",
+   "in_zone_m": 10.2,
+   "passes": "zone_workshop",
+   "seed": 5633846976134763,
+   "start": [
+    2.95,
+    9.65,
+    -0.15720226834562734
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    42.150000000000006,
+    21.650000000000002
+   ],
+   "goal_zone": null,
+   "id": "n002",
+   "in_zone_m": 10.5,
+   "passes": "zone_workshop",
+   "seed": 4289871085312198,
+   "start": [
+    2.85,
+    9.350000000000001,
+    1.862585753504093
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    8.85,
+    5.3500000000000005
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "n003",
+   "in_zone_m": 16.8,
+   "passes": "zone_workshop",
+   "seed": 49900882459900,
+   "start": [
+    6.15,
+    9.25,
+    -2.4739756622819202
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    42.25,
+    21.650000000000002
+   ],
+   "goal_zone": null,
+   "id": "n004",
+   "in_zone_m": 6.0,
+   "passes": "zone_workshop",
+   "seed": 980725241820962,
+   "start": [
+    10.350000000000001,
+    2.45,
+    0.8552279018613573
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    3.6500000000000004,
+    7.050000000000001
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "n005",
+   "in_zone_m": 12.9,
+   "passes": "zone_workshop",
+   "seed": 145622867197779,
+   "start": [
+    0.8500000000000001,
+    21.05,
+    0.949236409567912
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    13.15,
+    6.050000000000001
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "n006",
+   "in_zone_m": 10.3,
+   "passes": "zone_workshop",
+   "seed": 3172450179791919,
+   "start": [
+    12.950000000000001,
+    16.25,
+    1.0894200332196657
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    3.8500000000000005,
+    21.950000000000003
+   ],
+   "goal_zone": "zone_office",
+   "id": "n007",
+   "in_zone_m": 8.7,
+   "passes": "zone_workshop",
+   "seed": 6328698589525200,
+   "start": [
+    1.85,
+    13.55,
+    -2.8460975149826573
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    16.05,
+    31.25
+   ],
+   "goal_zone": null,
+   "id": "n008",
+   "in_zone_m": 11.9,
+   "passes": "zone_workshop",
+   "seed": 7108471986812535,
+   "start": [
+    9.950000000000001,
+    7.3500000000000005,
+    -3.0252448515758856
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    39.35,
+    18.45
+   ],
+   "goal_zone": null,
+   "id": "n009",
+   "in_zone_m": 9.2,
+   "passes": "zone_workshop",
+   "seed": 3805748052187239,
+   "start": [
+    4.550000000000001,
+    10.65,
+    2.924785640463641
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    1.35,
+    3.1500000000000004
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "n010",
+   "in_zone_m": 15.7,
+   "passes": "zone_workshop",
+   "seed": 7722117325941400,
+   "start": [
+    9.950000000000001,
+    16.45,
+    2.73036911552313
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    19.35,
+    29.75
+   ],
+   "goal_zone": null,
+   "id": "n011",
+   "in_zone_m": 6.0,
+   "passes": "zone_workshop",
+   "seed": 5691894517036994,
+   "start": [
+    5.45,
+    15.350000000000001,
+    -2.635915016703197
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    39.85,
+    19.75
+   ],
+   "goal_zone": null,
+   "id": "n012",
+   "in_zone_m": 7.2,
+   "passes": "zone_workshop",
+   "seed": 4274670420064453,
+   "start": [
+    7.3500000000000005,
+    15.15,
+    -1.978112107433241
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    9.65,
+    6.95
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "n013",
+   "in_zone_m": 12.0,
+   "passes": "zone_workshop",
+   "seed": 5698006881415484,
+   "start": [
+    6.050000000000001,
+    0.6500000000000001,
+    -2.870311247674937
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    3.55,
+    28.450000000000003
+   ],
+   "goal_zone": "zone_office",
+   "id": "n014",
+   "in_zone_m": 5.5,
+   "passes": "zone_workshop",
+   "seed": 1405723204976704,
+   "start": [
+    13.25,
+    9.65,
+    0.6265492907563157
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    39.45,
+    26.150000000000002
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "n015",
+   "in_zone_m": 13.5,
+   "passes": "zone_workshop",
+   "seed": 4607357218907092,
+   "start": [
+    11.15,
+    8.950000000000001,
+    -1.6639494416405411
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    26.05,
+    30.35
+   ],
+   "goal_zone": null,
+   "id": "n016",
+   "in_zone_m": 14.0,
+   "passes": "zone_high_bay",
+   "seed": 5970005083137760,
+   "start": [
+    23.25,
+    8.35,
+    2.690600115982549
+   ],
+   "start_zone": null
+  },
+  {
+   "goal": [
+    16.05,
+    7.950000000000001
+   ],
+   "goal_zone": null,
+   "id": "n017",
+   "in_zone_m": 14.0,
+   "passes": "zone_high_bay",
+   "seed": 8831352719532356,
+   "start": [
+    26.150000000000002,
+    29.950000000000003,
+    -1.5571224301673126
+   ],
+   "start_zone": null
+  },
+  {
+   "goal": [
+    38.75,
+    16.150000000000002
+   ],
+   "goal_zone": null,
+   "id": "n018",
+   "in_zone_m": 17.2,
+   "passes": "zone_high_bay",
+   "seed": 3995407438252548,
+   "start": [
+    0.8500000000000001,
+    23.05,
+    0.5245323727220126
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    2.6500000000000004,
+    30.950000000000003
+   ],
+   "goal_zone": "zone_office",
+   "id": "n019",
+   "in_zone_m": 17.1,
+   "passes": "zone_high_bay",
+   "seed": 3754938955363114,
+   "start": [
+    35.85,
+    9.350000000000001,
+    -0.7448014247810799
+   ],
+   "start_zone": "zone_loading_dock"
+  },
+  {
+   "goal": [
+    14.25,
+    18.85
+   ],
+   "goal_zone": null,
+   "id": "n020",
+   "in_zone_m": 16.0,
+   "passes": "zone_high_bay",
+   "seed": 7156381990648006,
+   "start": [
+    38.650000000000006,
+    16.85,
+    -1.4137839931796727
+   ],
+   "start_zone": null
+  },
+  {
+   "goal": [
+    39.150000000000006,
+    29.35
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "n021",
+   "in_zone_m": 17.2,
+   "passes": "zone_high_bay",
+   "seed": 5815015539267164,
+   "start": [
+    9.65,
+    15.350000000000001,
+    -1.5944439834228912
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    42.25,
+    2.25
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "n022",
+   "in_zone_m": 9.1,
+   "passes": "zone_high_bay",
+   "seed": 70228297559846,
+   "start": [
+    10.55,
+    31.25,
+    2.2880906032981425
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    23.75,
+    13.65
+   ],
+   "goal_zone": null,
+   "id": "n023",
+   "in_zone_m": 9.1,
+   "passes": "zone_high_bay",
+   "seed": 872538403286490,
+   "start": [
+    6.050000000000001,
+    22.75,
+    -2.339765283092719
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    15.450000000000001,
+    18.950000000000003
+   ],
+   "goal_zone": null,
+   "id": "n024",
+   "in_zone_m": 17.2,
+   "passes": "zone_high_bay",
+   "seed": 43198467781430,
+   "start": [
+    45.35,
+    26.450000000000003,
+    0.9581716945339434
+   ],
+   "start_zone": "zone_mezzanine"
+  },
+  {
+   "goal": [
+    5.75,
+    17.05
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "n025",
+   "in_zone_m": 17.2,
+   "passes": "zone_high_bay",
+   "seed": 6520754533944138,
+   "start": [
+    33.050000000000004,
+    29.75,
+    -1.9059432044621731
+   ],
+   "start_zone": null
+  },
+  {
+   "goal": [
+    40.550000000000004,
+    8.75
+   ],
+   "goal_zone": "zone_loading_dock",
+   "id": "n026",
+   "in_zone_m": 16.0,
+   "passes": "zone_high_bay",
+   "seed": 7328005035318911,
+   "start": [
+    1.4500000000000002,
+    11.350000000000001,
+    1.7059691810235975
+   ],
+   "start_zone": "zone_workshop"
+  },
+  {
+   "goal": [
+    4.25,
+    15.05
+   ],
+   "goal_zone": "zone_workshop",
+   "id": "n027",
+   "in_zone_m": 17.2,
+   "passes": "zone_high_bay",
+   "seed": 6628196478725838,
+   "start": [
+    32.65,
+    26.55,
+    1.4270078140940567
+   ],
+   "start_zone": null
+  },
+  {
+   "goal": [
+    43.25,
+    19.55
+   ],
+   "goal_zone": null,
+   "id": "n028",
+   "in_zone_m": 16.0,
+   "passes": "zone_high_bay",
+   "seed": 1396961256033689,
+   "start": [
+    13.25,
+    24.35,
+    -1.8803428184683522
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    45.650000000000006,
+    28.75
+   ],
+   "goal_zone": "zone_mezzanine",
+   "id": "n029",
+   "in_zone_m": 16.0,
+   "passes": "zone_high_bay",
+   "seed": 21002776058540,
+   "start": [
+    10.55,
+    30.35,
+    1.8396050006312645
+   ],
+   "start_zone": "zone_office"
+  },
+  {
+   "goal": [
+    14.55,
+    28.650000000000002
+   ],
+   "goal_zone": null,
+   "id": "n030",
+   "in_zone_m": 17.2,
+   "passes": "zone_high_bay",
+   "seed": 4815744968511920,
+   "start": [
+    40.550000000000004,
+    8.25,
+    2.301056797095349
+   ],
+   "start_zone": "zone_loading_dock"
+  }
+ ],
+ "schema": "coco.bench.suite.v0",
+ "tests": "Planning and control where the Depot is tight. 15 pairs whose reference A* path (default costmap: inflation 0.5 m, scaling 10, robot radius 0.25 m) runs at least 5 m inside the workshop maze (a dead-end corner of the Depot: one end is in the maze, so the route must thread it), and 15 whose reference path crosses at least 5 m of the high-bay rack aisles with both ends outside them. Pairs come in draw order from a seeded pool of 600 (seed 3001, separation >= 4 m); \"passes\" and \"in_zone_m\" record why each was chosen.",
+ "title": "Depot: the workshop maze and the rack aisles",
+ "version": 0,
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841"
+}

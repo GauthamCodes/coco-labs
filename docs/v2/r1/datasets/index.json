@@ -1,0 +1,508 @@
+{
+ "about": "R1.6: the committed datasets the Workbench lists (tools/r1/build_datasets.py); sha256 and size of every file; STACK is Gazebo + Nav2 (simulation), never hardware",
+ "datasets": [
+  {
+   "description": "200 runs, every built-in control algorithm at its default parameters (coco experiment run, hash version 3). Digest b492b3de896c0b3b3c8224e42fa270e67fc74bc94e997203403a8b1baf5ad52c.",
+   "evidence": "MODEL",
+   "files": [
+    {
+     "bytes": 65912,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/control/results.csv",
+     "path": "docs/v2/r1/bench/arena-nav-50/control/results.csv",
+     "served": "generated/r1/bench/arena-nav-50/control/results.csv",
+     "sha256": "a55385b3cbf308d7426ed7085aecb36cf839ebd3bb2dddada97c5cecbd2ca2ae"
+    },
+    {
+     "bytes": 40531,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/control/summary.json",
+     "path": "docs/v2/r1/bench/arena-nav-50/control/summary.json",
+     "served": "generated/r1/bench/arena-nav-50/control/summary.json",
+     "sha256": "9ceb43128b67b5d0dd3ab93ccc10d9f7281746910d853ef6c8aa77459f9def14"
+    },
+    {
+     "bytes": 2811,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/control/spec.json",
+     "path": "docs/v2/r1/bench/arena-nav-50/control/spec.json",
+     "served": "generated/r1/bench/arena-nav-50/control/spec.json",
+     "sha256": "82bc3c6e19d611910e85fcc04ddf4c28b5737309605fcdd9905458ac467676a0"
+    },
+    {
+     "bytes": 1303,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/control/manifest.json",
+     "path": "docs/v2/r1/bench/arena-nav-50/control/manifest.json",
+     "served": "generated/r1/bench/arena-nav-50/control/manifest.json",
+     "sha256": "9bcd01f0c897bbdae6baea1bab466a07b2234f60c60b54806402c0f57f252149"
+    },
+    {
+     "bytes": 109583,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/control/runs.jsonl",
+     "path": "docs/v2/r1/bench/arena-nav-50/control/runs.jsonl",
+     "sha256": "1d7494f8a9a87037f5466f2038eb66f97c54eaac65a2a4abe644446816dc2bdd"
+    }
+   ],
+   "id": "bench-arena-nav-50-control",
+   "kind": "benchmark",
+   "title": "COCO-Bench v0 \u00b7 arena-nav-50 \u00b7 control: reference results"
+  },
+  {
+   "description": "150 runs, every built-in localisation algorithm at its default parameters (coco experiment run, hash version 3). Digest 66263713427ed6314842a7011e004f106fd562fb529491415732cd63994c150a.",
+   "evidence": "MODEL",
+   "files": [
+    {
+     "bytes": 62379,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/localisation/results.csv",
+     "path": "docs/v2/r1/bench/arena-nav-50/localisation/results.csv",
+     "served": "generated/r1/bench/arena-nav-50/localisation/results.csv",
+     "sha256": "41581cc9e6d9c2243a11e94775209c1c68a858b642578a11674579ea063fad4d"
+    },
+    {
+     "bytes": 37854,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/localisation/summary.json",
+     "path": "docs/v2/r1/bench/arena-nav-50/localisation/summary.json",
+     "served": "generated/r1/bench/arena-nav-50/localisation/summary.json",
+     "sha256": "33c5e0f7c324d6511ef385eb14ab0801d61b0af7aca192676b33494181c4689e"
+    },
+    {
+     "bytes": 1881,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/localisation/spec.json",
+     "path": "docs/v2/r1/bench/arena-nav-50/localisation/spec.json",
+     "served": "generated/r1/bench/arena-nav-50/localisation/spec.json",
+     "sha256": "f8885cb644801bccd3893943da6bea367d72bc1d2ac62d044c306eb1a0033a4e"
+    },
+    {
+     "bytes": 1305,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/localisation/manifest.json",
+     "path": "docs/v2/r1/bench/arena-nav-50/localisation/manifest.json",
+     "served": "generated/r1/bench/arena-nav-50/localisation/manifest.json",
+     "sha256": "e25bb48585aed5bb8e007076e1a7994712d4c4c1a2a0296e02dba934d359a40e"
+    },
+    {
+     "bytes": 1070663,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/localisation/runs.jsonl",
+     "path": "docs/v2/r1/bench/arena-nav-50/localisation/runs.jsonl",
+     "sha256": "73ee5dce4c54f3f5663effa8da6b12438f145901fd77941643b034ba450ba613"
+    }
+   ],
+   "id": "bench-arena-nav-50-localisation",
+   "kind": "benchmark",
+   "title": "COCO-Bench v0 \u00b7 arena-nav-50 \u00b7 localisation: reference results"
+  },
+  {
+   "description": "300 runs, every built-in planning algorithm at its default parameters (coco experiment run, hash version 3). Digest 3533c4c3e74a0255bbd296818be42c26b859e34525419c9a2871c0e0a50ac66a.",
+   "evidence": "MODEL",
+   "files": [
+    {
+     "bytes": 96590,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/planning/results.csv",
+     "path": "docs/v2/r1/bench/arena-nav-50/planning/results.csv",
+     "served": "generated/r1/bench/arena-nav-50/planning/results.csv",
+     "sha256": "aba1fda13f2fe3fee837928fb686eaf145183e96c9626a7ab9d7dd55fc49365c"
+    },
+    {
+     "bytes": 78428,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/planning/summary.json",
+     "path": "docs/v2/r1/bench/arena-nav-50/planning/summary.json",
+     "served": "generated/r1/bench/arena-nav-50/planning/summary.json",
+     "sha256": "743e34f07a0003a11129faa1f6293875a6804313e5a3ebe6af3685ad280bf595"
+    },
+    {
+     "bytes": 2063,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/planning/spec.json",
+     "path": "docs/v2/r1/bench/arena-nav-50/planning/spec.json",
+     "served": "generated/r1/bench/arena-nav-50/planning/spec.json",
+     "sha256": "83d0c5666c71b267362eaaa091ea03e179d0f323ded65e288dd560907cda7cf4"
+    },
+    {
+     "bytes": 1300,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/planning/manifest.json",
+     "path": "docs/v2/r1/bench/arena-nav-50/planning/manifest.json",
+     "served": "generated/r1/bench/arena-nav-50/planning/manifest.json",
+     "sha256": "437beb738d732028317974a320ac592ab001f14b2decd721d706a28ef56782ac"
+    },
+    {
+     "bytes": 163506,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/arena-nav-50/planning/runs.jsonl",
+     "path": "docs/v2/r1/bench/arena-nav-50/planning/runs.jsonl",
+     "sha256": "d63b66399eb8f777faf13a413484c5958177b6f6b6ed3ff656c48cea3ba8fc61"
+    }
+   ],
+   "id": "bench-arena-nav-50-planning",
+   "kind": "benchmark",
+   "title": "COCO-Bench v0 \u00b7 arena-nav-50 \u00b7 planning: reference results"
+  },
+  {
+   "description": "20 runs, every built-in fulltask algorithm at its default parameters (coco experiment run, hash version 3). Digest d954ee57d494d7d74202c6f1798afcf38e76b64f67e973372c0c205c820aefad.",
+   "evidence": "MODEL",
+   "files": [
+    {
+     "bytes": 4285,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/colour-fetch-4/fulltask/results.csv",
+     "path": "docs/v2/r1/bench/colour-fetch-4/fulltask/results.csv",
+     "served": "generated/r1/bench/colour-fetch-4/fulltask/results.csv",
+     "sha256": "1084224048c3748b5693e8f4be3413d502c40dd8d80a70d56644f44cb71adbd3"
+    },
+    {
+     "bytes": 46340,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/colour-fetch-4/fulltask/summary.json",
+     "path": "docs/v2/r1/bench/colour-fetch-4/fulltask/summary.json",
+     "served": "generated/r1/bench/colour-fetch-4/fulltask/summary.json",
+     "sha256": "e55060ed78669c16af578f27dac68a91d9ff179e718d5f77be191bc9d5a534ea"
+    },
+    {
+     "bytes": 1116,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/colour-fetch-4/fulltask/spec.json",
+     "path": "docs/v2/r1/bench/colour-fetch-4/fulltask/spec.json",
+     "served": "generated/r1/bench/colour-fetch-4/fulltask/spec.json",
+     "sha256": "8498a5b9973d6f28b2897ab7ed7b726e9b0739c1605af13da35ad1dcfd594b0b"
+    },
+    {
+     "bytes": 1304,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/colour-fetch-4/fulltask/manifest.json",
+     "path": "docs/v2/r1/bench/colour-fetch-4/fulltask/manifest.json",
+     "served": "generated/r1/bench/colour-fetch-4/fulltask/manifest.json",
+     "sha256": "25808c4cd22b59513a02c789402117e96d05b00cd02c599123c74f1cf1b1b0c1"
+    },
+    {
+     "bytes": 10979,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/colour-fetch-4/fulltask/runs.jsonl",
+     "path": "docs/v2/r1/bench/colour-fetch-4/fulltask/runs.jsonl",
+     "sha256": "549979be78be1faea934e7a847c49d4aa67838fb688d0608f2be4fc01c2084d1"
+    }
+   ],
+   "id": "bench-colour-fetch-4-fulltask",
+   "kind": "benchmark",
+   "title": "COCO-Bench v0 \u00b7 colour-fetch-4 \u00b7 fulltask: reference results"
+  },
+  {
+   "description": "120 runs, every built-in control algorithm at its default parameters (coco experiment run, hash version 3). Digest 86643da7d30308b949e739b973e7aaac6289c1e0be109b1d15fb822c6964fbd0.",
+   "evidence": "MODEL",
+   "files": [
+    {
+     "bytes": 41328,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-narrow-30/control/results.csv",
+     "path": "docs/v2/r1/bench/depot-narrow-30/control/results.csv",
+     "served": "generated/r1/bench/depot-narrow-30/control/results.csv",
+     "sha256": "d24450b87756b2668813d7f69db5b4cc74b2cb56cd88b7d69605262d6046a7fa"
+    },
+    {
+     "bytes": 40315,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-narrow-30/control/summary.json",
+     "path": "docs/v2/r1/bench/depot-narrow-30/control/summary.json",
+     "served": "generated/r1/bench/depot-narrow-30/control/summary.json",
+     "sha256": "8704a0cd605e60063c7b8afd9f36d5c74adef858b00a0ac8c68b92bf533d32ff"
+    },
+    {
+     "bytes": 2817,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-narrow-30/control/spec.json",
+     "path": "docs/v2/r1/bench/depot-narrow-30/control/spec.json",
+     "served": "generated/r1/bench/depot-narrow-30/control/spec.json",
+     "sha256": "e6cbb1b8e27b1236e52e22b9b2a3888b2d45edc13a5550785555e14e41c102c6"
+    },
+    {
+     "bytes": 1302,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-narrow-30/control/manifest.json",
+     "path": "docs/v2/r1/bench/depot-narrow-30/control/manifest.json",
+     "served": "generated/r1/bench/depot-narrow-30/control/manifest.json",
+     "sha256": "d4e0f94c34caec01f2de5378b1467610db7ace4e4dee4a021f3997f4d17c27d7"
+    },
+    {
+     "bytes": 66095,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-narrow-30/control/runs.jsonl",
+     "path": "docs/v2/r1/bench/depot-narrow-30/control/runs.jsonl",
+     "sha256": "c1f5b6da97860562fdcbc07d0b8caa273f942634405a259fddcea880e5424813"
+    }
+   ],
+   "id": "bench-depot-narrow-30-control",
+   "kind": "benchmark",
+   "title": "COCO-Bench v0 \u00b7 depot-narrow-30 \u00b7 control: reference results"
+  },
+  {
+   "description": "180 runs, every built-in planning algorithm at its default parameters (coco experiment run, hash version 3). Digest 2c35d5b4847ca99766948fd27208b09e9f45bbd02881eee64c1e81958c020686.",
+   "evidence": "MODEL",
+   "files": [
+    {
+     "bytes": 59829,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-narrow-30/planning/results.csv",
+     "path": "docs/v2/r1/bench/depot-narrow-30/planning/results.csv",
+     "served": "generated/r1/bench/depot-narrow-30/planning/results.csv",
+     "sha256": "0317ee00bd7539290f3e8b2af868c210d00db13774a399cc274779d1648fc768"
+    },
+    {
+     "bytes": 77878,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-narrow-30/planning/summary.json",
+     "path": "docs/v2/r1/bench/depot-narrow-30/planning/summary.json",
+     "served": "generated/r1/bench/depot-narrow-30/planning/summary.json",
+     "sha256": "502f67493731ac555ac8bd4ec125a656b1c722295658aeb520e70c259f4b92e9"
+    },
+    {
+     "bytes": 2069,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-narrow-30/planning/spec.json",
+     "path": "docs/v2/r1/bench/depot-narrow-30/planning/spec.json",
+     "served": "generated/r1/bench/depot-narrow-30/planning/spec.json",
+     "sha256": "02e6e850a1ad07344e32edfd850bb0bcc32ba55c542014ed1c26002fadd66535"
+    },
+    {
+     "bytes": 1299,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-narrow-30/planning/manifest.json",
+     "path": "docs/v2/r1/bench/depot-narrow-30/planning/manifest.json",
+     "served": "generated/r1/bench/depot-narrow-30/planning/manifest.json",
+     "sha256": "39747cbf1eccac8a4b2c6850cd2c446218b9dd4f468c68eacacb8c6bb5c2a9ae"
+    },
+    {
+     "bytes": 98057,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-narrow-30/planning/runs.jsonl",
+     "path": "docs/v2/r1/bench/depot-narrow-30/planning/runs.jsonl",
+     "sha256": "27473808459b07dde00401af542f8fd7dbe7e46908586aa93db5d846277f67fc"
+    }
+   ],
+   "id": "bench-depot-narrow-30-planning",
+   "kind": "benchmark",
+   "title": "COCO-Bench v0 \u00b7 depot-narrow-30 \u00b7 planning: reference results"
+  },
+  {
+   "description": "400 runs, every built-in control algorithm at its default parameters (coco experiment run, hash version 3). Digest f8fe561af97903a2342d4a7bbfee83596f1666df6aa96fcd133d32524f7eeef8.",
+   "evidence": "MODEL",
+   "files": [
+    {
+     "bytes": 141029,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-nav-100/control/results.csv",
+     "path": "docs/v2/r1/bench/depot-nav-100/control/results.csv",
+     "served": "generated/r1/bench/depot-nav-100/control/results.csv",
+     "sha256": "e1a0107ebf5e4dfe36ac758983f72a814d474dd08dde4a09348aa4b2b7a261d1"
+    },
+    {
+     "bytes": 42650,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-nav-100/control/summary.json",
+     "path": "docs/v2/r1/bench/depot-nav-100/control/summary.json",
+     "served": "generated/r1/bench/depot-nav-100/control/summary.json",
+     "sha256": "3b5d83ed7d6bb68b9ee3e97175a5bec31cd170c16acf2a51fb74a8cf18bdc9c3"
+    },
+    {
+     "bytes": 2813,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-nav-100/control/spec.json",
+     "path": "docs/v2/r1/bench/depot-nav-100/control/spec.json",
+     "served": "generated/r1/bench/depot-nav-100/control/spec.json",
+     "sha256": "f8da13823cbb73b6c33451812c8a2954935547026380ced45a015227faa8f1ba"
+    },
+    {
+     "bytes": 1303,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-nav-100/control/manifest.json",
+     "path": "docs/v2/r1/bench/depot-nav-100/control/manifest.json",
+     "served": "generated/r1/bench/depot-nav-100/control/manifest.json",
+     "sha256": "feee52c5e40e43b2d726dbc1113fe1a52eb9b4393b2df6d08baf8d58db0f4465"
+    },
+    {
+     "bytes": 220212,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-nav-100/control/runs.jsonl",
+     "path": "docs/v2/r1/bench/depot-nav-100/control/runs.jsonl",
+     "sha256": "05540986c24a772d7d7cdee5d44a46346ff332f7ff84f0ac545fe0b64f8cc1c7"
+    }
+   ],
+   "id": "bench-depot-nav-100-control",
+   "kind": "benchmark",
+   "title": "COCO-Bench v0 \u00b7 depot-nav-100 \u00b7 control: reference results"
+  },
+  {
+   "description": "600 runs, every built-in planning algorithm at its default parameters (coco experiment run, hash version 3). Digest 86876cd8e3dd3fd0c7b43c12230d176dcdb1f155f2e89f147b58af992ca3659c.",
+   "evidence": "MODEL",
+   "files": [
+    {
+     "bytes": 205885,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-nav-100/planning/results.csv",
+     "path": "docs/v2/r1/bench/depot-nav-100/planning/results.csv",
+     "served": "generated/r1/bench/depot-nav-100/planning/results.csv",
+     "sha256": "77e3d956b7a2afeecb14576fc2ef4f3b534475738302bc51f7daf579ddddb653"
+    },
+    {
+     "bytes": 83295,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-nav-100/planning/summary.json",
+     "path": "docs/v2/r1/bench/depot-nav-100/planning/summary.json",
+     "served": "generated/r1/bench/depot-nav-100/planning/summary.json",
+     "sha256": "10fa2b0b3c0669f098c6f6261921960177212f5152a8b2a2e7c7b84db6c3cf3c"
+    },
+    {
+     "bytes": 2065,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-nav-100/planning/spec.json",
+     "path": "docs/v2/r1/bench/depot-nav-100/planning/spec.json",
+     "served": "generated/r1/bench/depot-nav-100/planning/spec.json",
+     "sha256": "fe34699fc1af50bac855e18b684b50fe591ea039d0c3023819a545d3f7c52966"
+    },
+    {
+     "bytes": 1302,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-nav-100/planning/manifest.json",
+     "path": "docs/v2/r1/bench/depot-nav-100/planning/manifest.json",
+     "served": "generated/r1/bench/depot-nav-100/planning/manifest.json",
+     "sha256": "ba2286f2f2004ccaf24fa1d8c4904b098e2ca8313eff16df0504b9355c87a8e4"
+    },
+    {
+     "bytes": 327691,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/r1/bench/depot-nav-100/planning/runs.jsonl",
+     "path": "docs/v2/r1/bench/depot-nav-100/planning/runs.jsonl",
+     "sha256": "c3fd06526b5d70b8ddc1a902e1deabba557d345db87a042948fd55600e3edeed"
+    }
+   ],
+   "id": "bench-depot-nav-100-planning",
+   "kind": "benchmark",
+   "title": "COCO-Bench v0 \u00b7 depot-nav-100 \u00b7 planning: reference results"
+  },
+  {
+   "description": "MODEL: the reference bot's rounds (rules 2; levels file) and the colour-fetch-4 reference results. STACK: Nav2 driving the same rounds in Gazebo (the \"Race Nav2\" ghosts; driving legs only, no grasp; actors under a scenario rule that stops them for COCO). Times are comparable leg by leg; grasp time is model-only.",
+   "evidence": "MODEL + STACK",
+   "files": [
+    {
+     "bytes": 11874,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/coco_lab/coco_lab/levels/coco_depot_colours_v1.fetch_colour.r2.json",
+     "path": "coco_lab/coco_lab/levels/coco_depot_colours_v1.fetch_colour.r2.json",
+     "sha256": "bebf889a7a9c4f0599975dcb863aa73b1cbdb3725345fdb3b6035bba0b86dd1c"
+    },
+    {
+     "bytes": 11752,
+     "evidence": "STACK",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/lab_web/public/stack/ghosts/g2_colour_blue.json",
+     "path": "lab_web/public/stack/ghosts/g2_colour_blue.json",
+     "served": "stack/ghosts/g2_colour_blue.json",
+     "sha256": "7a390e31e001b4631c2f794721b225e5d397b9c3e1e98544eb38a6ae4cdbb63a"
+    },
+    {
+     "bytes": 13019,
+     "evidence": "STACK",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/lab_web/public/stack/ghosts/g2_colour_green.json",
+     "path": "lab_web/public/stack/ghosts/g2_colour_green.json",
+     "served": "stack/ghosts/g2_colour_green.json",
+     "sha256": "99e51fff442d29ac6beb52216caa2666cede0d1fb76f7b5f7c5e237549255112"
+    },
+    {
+     "bytes": 13290,
+     "evidence": "STACK",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/lab_web/public/stack/ghosts/g2_colour_red.json",
+     "path": "lab_web/public/stack/ghosts/g2_colour_red.json",
+     "served": "stack/ghosts/g2_colour_red.json",
+     "sha256": "bffdfbb6efb7421679b988861654ed84ba96a0bae646fd159843b75d26309393"
+    },
+    {
+     "bytes": 11395,
+     "evidence": "STACK",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/lab_web/public/stack/ghosts/g2_colour_yellow.json",
+     "path": "lab_web/public/stack/ghosts/g2_colour_yellow.json",
+     "served": "stack/ghosts/g2_colour_yellow.json",
+     "sha256": "19b5effaca215952a02028aefa600442f70f9b0223eb53cac87bc15e05fbc674"
+    }
+   ],
+   "id": "paired-fetch-colour",
+   "kind": "paired",
+   "title": "Fetch by colour, four rods: the model bot and Gazebo + Nav2"
+  },
+  {
+   "description": "MODEL: the rules-5 rounds and their reference results (levels file). STACK: Nav2 driving the same rounds in Gazebo (Race Nav2 ghosts r5_phone_seed*). Driving legs only on the STACK side.",
+   "evidence": "MODEL + STACK",
+   "files": [
+    {
+     "bytes": 97771,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/coco_lab/coco_lab/levels/coco_depot_v1.fetch_rush.r5.json",
+     "path": "coco_lab/coco_lab/levels/coco_depot_v1.fetch_rush.r5.json",
+     "sha256": "1f0447501314bfe2410c718e3da202a7c02b0de056613b45e31d4dc705d49754"
+    },
+    {
+     "bytes": 51094,
+     "evidence": "STACK",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/lab_web/public/stack/ghosts/r5_phone_seed1.json",
+     "path": "lab_web/public/stack/ghosts/r5_phone_seed1.json",
+     "served": "stack/ghosts/r5_phone_seed1.json",
+     "sha256": "abce0a6bd123d7f367926de44d692cf18faa2f1ff23bf6a015dd77db5077f5ba"
+    },
+    {
+     "bytes": 50877,
+     "evidence": "STACK",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/lab_web/public/stack/ghosts/r5_phone_seed2.json",
+     "path": "lab_web/public/stack/ghosts/r5_phone_seed2.json",
+     "served": "stack/ghosts/r5_phone_seed2.json",
+     "sha256": "4a711ef82a3466ff70b7edc5e379011d2ce45f82b6e4c1e28188f3337ae1fd7c"
+    },
+    {
+     "bytes": 47518,
+     "evidence": "STACK",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/lab_web/public/stack/ghosts/r5_phone_seed3.json",
+     "path": "lab_web/public/stack/ghosts/r5_phone_seed3.json",
+     "served": "stack/ghosts/r5_phone_seed3.json",
+     "sha256": "fe00d82b753f8200bffe67bbb5f04a59ab4047de3dfe90e35969296c22c0d3dc"
+    },
+    {
+     "bytes": 51825,
+     "evidence": "STACK",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/lab_web/public/stack/ghosts/r5_phone_seed6.json",
+     "path": "lab_web/public/stack/ghosts/r5_phone_seed6.json",
+     "served": "stack/ghosts/r5_phone_seed6.json",
+     "sha256": "c867d3c8b7264492871a8c06599414c3754cfedef9af6401fb9b7dd3dbd67305"
+    }
+   ],
+   "id": "paired-fetch-rush-r5",
+   "kind": "paired",
+   "title": "Fetch Rush rules 5, phone rounds 1, 2, 3 and 6: the model bot and Gazebo + Nav2"
+  },
+  {
+   "description": "STACK: Lab 5's 54 Gazebo + Nav2 runs (DWB, RPP, MPPI over four scenarios; actors visual-only, so contact was measured as clearance 0). MODEL: the same scenarios in the Arena (actors have collision bodies there), seeds 1-5 per controller. See docs/v2/M2_MOVE_COMPARISON.md before comparing.",
+   "evidence": "MODEL + STACK",
+   "files": [
+    {
+     "bytes": 90881,
+     "evidence": "STACK",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/data/lab5/results.json",
+     "path": "docs/data/lab5/results.json",
+     "sha256": "fb76958cd50051f5add7cdbc8dec1a502040f785dcb1cecbc4a4dd2d3bdb3d2e"
+    },
+    {
+     "bytes": 94446,
+     "evidence": "MODEL",
+     "github": "https://github.com/GauthamCodes/coco-labs/blob/main/docs/v2/data/m2/m25/move_comparison.json",
+     "path": "docs/v2/data/m2/m25/move_comparison.json",
+     "sha256": "99d2f35393ad0374d6c2218bac87a30d19e96ea05743b1d34c2f05435ad156fa"
+    }
+   ],
+   "id": "paired-lab5-move",
+   "kind": "paired",
+   "title": "Lab 5 local control: 54 Gazebo runs and the model's re-runs (M2.5)"
+  }
+ ]
+}
