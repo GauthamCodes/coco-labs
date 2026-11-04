@@ -7,8 +7,9 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 - **State (2026-11-05): R2.8 Phone and Learn done** ([`data/r28/README.md`](data/r28/README.md)), committed before R2.7
   (whose Gazebo runs take hours): the Studio on the **emulated** phone in both orientations (real phone: not
   connected — plug it in when convenient); "Try it yourself" on Learn; [`API.md`](API.md). Gautham's leaderboard
-  submission: [PR #31](https://github.com/GauthamCodes/coco-labs/pull/31), verified locally natively and in the sandbox
-  container (identical results); its CI verify is running. R2.7's Gazebo + Nav2 validation is running.
+  submission: [PR #31](https://github.com/GauthamCodes/coco-labs/pull/31) — **CI's sandboxed verify passed** (VERIFIED;
+  public results byte-identical to the laptop's native and container runs); the `verified` label comes from the
+  trusted writer once R2 is on main. R2.7's Gazebo + Nav2 validation is running.
 - **State (2026-11-05): R2.6 Leaderboard built** ([`data/r26/README.md`](data/r26/README.md)): submission format,
   the sandboxed `pull_request` verifier (base branch's verifier, `--network none`, no secrets), the trusted
   `workflow_run` writer (validates the artifact as data, comments, labels), re-verification on every version change,
@@ -67,7 +68,7 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R2.3 Algorithm Studio | done | [`data/r23/README.md`](data/r23/README.md), [`screens/r23/`](screens/r23/) |
 | R2.4 Compare, experiments and native | done | [`data/r24/README.md`](data/r24/README.md), [`parity.json`](data/r24/parity.json) |
 | R2.5 Share links | done | [`data/r25/README.md`](data/r25/README.md) |
-| R2.6 Leaderboard | built; submission PR open | [`data/r26/README.md`](data/r26/README.md), [`leaderboard/`](../../../leaderboard/) |
+| R2.6 Leaderboard | done; PR #31 verified in CI (label after R2 merges) | [`data/r26/README.md`](data/r26/README.md), [`leaderboard/`](../../../leaderboard/) |
 | R2.7 Run in ROS 2 | | |
 | R2.8 Phone and Learn | done (emulated phone) | [`data/r28/README.md`](data/r28/README.md), [`API.md`](API.md) |
 | R2.9 Close | | |
