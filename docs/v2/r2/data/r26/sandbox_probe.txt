@@ -1,0 +1,5 @@
+# R2.6: the verifier image run with the workflow's flags (--network none --read-only --cap-drop ALL --security-opt no-new-privileges --user 65534:65534), 2026-11-05, this laptop
+1.1.1.1 connect_ex -> 101
+8.8.8.8 connect_ex -> 101
+dns refused: [Errno -3] Temporary failure in name resolution
+uid 65534 writable /coco: False
