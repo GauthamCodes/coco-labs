@@ -8,7 +8,7 @@
  * exactly. Verify re-runs a random 10% of the runs and checks each one's hash chain
  * and counts against the records already on the page.
  */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { ModeNav } from '../ui/ModeNav';
 import { Builder } from './Builder';
 import { defaultPoolSize, ExperimentPool, type PlanInfo, type Progress, type RunRecord } from './pool';
@@ -18,10 +18,13 @@ import { defaultSpec, worldId, type ExperimentSpec } from './spec';
 import { downloadExport } from './exports';
 import { BenchmarksTab } from './Benchmarks';
 import { DatasetsTab } from './Datasets';
+import { LeaderboardTab } from './Leaderboard';
 import { compareHrefFor } from './compare_link';
 import { WorkbenchTabs, type Tab } from './tabs';
 import './workbench.css';
 import '../game/fonts.css';
+// R2.3: the Algorithm Studio (and CodeMirror with it) loads only when its tab opens
+const StudioTab = lazy(() => import('../studio/StudioTab'));
 const BASE = import.meta.env.BASE_URL;
 const SITE = () => new URL(BASE, window.location.href).href;
 
@@ -147,6 +150,7 @@ export function WorkbenchApp() {
     <header className="wb-head"><p className="eyebrow">WORKBENCH</p><h1>Run it yourself.</h1>
       <p>Every experiment runs the model in your browser and gives the same counts on every run and every browser (hash-verified), so any result can be shared as a link and checked by anyone. MODEL results; real Gazebo + Nav2 recordings are under Recordings.</p>
       <WorkbenchTabs current={tab} /></header>
-    {tab === 'benchmarks' ? <BenchmarksTab /> : tab === 'datasets' ? <DatasetsTab /> : <Experiments />}
+    {tab === 'studio' ? <Suspense fallback={<p className="wb-muted" role="status">Loading the Algorithm Studio…</p>}><StudioTab /></Suspense>
+      : tab === 'benchmarks' ? <BenchmarksTab /> : tab === 'leaderboard' ? <LeaderboardTab /> : tab === 'datasets' ? <DatasetsTab /> : <Experiments />}
   </main>;
 }

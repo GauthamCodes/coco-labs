@@ -26,7 +26,6 @@ place of the matching Nav2 component, the behaviour tree that names its action s
 README. Nothing here imports ROS (README invariant 1): the node is text until it is built.
 """
 
-import argparse
 from pathlib import Path
 import re
 from typing import Dict
@@ -98,6 +97,7 @@ def export(source: str, name: str, author: str = 'COCO Lab user',
 
 def main(argv=None) -> int:
     """``python -m coco_lab.ros2_export FILE --name NAME --out DIR``."""
+    import argparse   # here: the browser's trimmed standard library has no argparse
     ap = argparse.ArgumentParser(prog='coco ros2 export',
                                  description='An algorithm file as a ROS 2 package (R2.7).')
     ap.add_argument('file')

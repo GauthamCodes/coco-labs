@@ -4,6 +4,13 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-05): R2.2 Sandboxed worker done** ([`data/r22/README.md`](data/r22/README.md)): user code runs only
+  in its own Pyodide worker, started from a `blob:` URL so it inherits the page's CSP (no eval/Function/dynamic
+  import), locked down before any user code (network, storage, other contexts, devices; Python's `js` bridge),
+  a 1 GiB memory ceiling on WebAssembly growth, a per-call time limit from the page (5 s control/localisation, 30 s
+  planning; the worker is terminated and rebooted). **Escape tests pass in Chromium, Firefox and WebKit**: 19 hostile
+  files (network, DOM, `import js`, infinite loop, memory blow-ups, huge outputs) all failed safely; the lockdown's 68
+  probes all blocked. The Studio UI they run through is committed with it (R2.3 next).
 - **State (2026-11-05): R2.1 API and security design done** ([`data/r21/README.md`](data/r21/README.md)):
   `coco_lab.api` (`coco.algorithm.v1`, ADR 0013), the guard (`coco_lab.user_code`), user runs in every family but
   full task, the built-ins wrapped behind the same signatures; ADR 0012 (threat model). Built-ins unchanged: 10%
@@ -34,7 +41,7 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | --- | --- | --- |
 | R2.0 Baseline | done | [`data/r20/README.md`](data/r20/README.md) |
 | R2.1 API and security design | done | [`data/r21/README.md`](data/r21/README.md), ADR [0012](../adr/0012-running-strangers-code.md), [0013](../adr/0013-algorithm-api-v1.md) |
-| R2.2 Sandboxed worker | | |
+| R2.2 Sandboxed worker | done | [`data/r22/README.md`](data/r22/README.md) |
 | R2.3 Algorithm Studio | | |
 | R2.4 Compare, experiments and native | | |
 | R2.5 Share links | | |
