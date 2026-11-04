@@ -1,0 +1,44 @@
+# R2.6 · every leaderboard entry re-verified when anything it depends on changes (the model,
+# the API, a suite, the verifier) -- "a version bump re-verifies all entries automatically".
+# Merged entries were reviewed, but they still run in the same sandbox as leaderboard-verify.
+# The job fails, naming each entry, when a recomputed result differs from the committed one
+# (leaderboard/results/), so a change that moves a number is seen before it ships.
+name: Leaderboard re-verify
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'coco_lab/**', 'worlds/**', 'tools/r2/leaderboard.py', 'tools/r2/verifier.Dockerfile', 'leaderboard/**' ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reverify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: The sandbox image
+        run: docker build -q -t coco-verifier -f tools/r2/verifier.Dockerfile .
+      - name: Re-verify every committed entry
+        run: |
+          set -uo pipefail
+          status=0
+          for res in leaderboard/results/*/*/result.json; do
+            suite=$(basename "$(dirname "$(dirname "$res")")"); name=$(basename "$(dirname "$res")")
+            out="$RUNNER_TEMP/re/$suite/$name"; mkdir -p "$out" && chmod 0777 "$out"
+            kind=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1]))['entry']['kind'])" "$res")
+            mb=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1]))['held_out']['merge_base'])" "$res")
+            sandbox="docker run --rm --network none --read-only --tmpfs /tmp:size=256m --cpus 2 --memory 4g --memory-swap 4g --pids-limit 256 --cap-drop ALL --security-opt no-new-privileges --user 65534:65534 -v $out:/out"
+            if [ "$kind" = builtin ]; then
+              $sandbox coco-verifier builtin "$suite" "$name" --out /out --workers 2 || true
+            else
+              $sandbox -v "$PWD/leaderboard/submissions/$suite/$name:/submissions/$suite/$name:ro" coco-verifier verify "/submissions/$suite/$name" --out /out --merge-base "$mb" --workers 2 || true
+            fi
+            python3 tools/r2/leaderboard_writer.py --compare "$res" "$out/result.json" || status=1
+          done
+          exit $status

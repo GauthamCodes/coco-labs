@@ -4,6 +4,12 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-05): R2.6 Leaderboard built** ([`data/r26/README.md`](data/r26/README.md)): submission format,
+  the sandboxed `pull_request` verifier (base branch's verifier, `--network none`, no secrets), the trusted
+  `workflow_run` writer (validates the artifact as data, comments, labels), re-verification on every version change,
+  held-out scenarios (with their stated no-secret limitation), the Leaderboard tab, built-in reference entries for the
+  three planner boards. Gautham's submission (Lazy Theta*, depot-nav-100) verifies locally: 100/100 public, 20/20
+  held-out, path 0.978 × grid-optimal. Its pull request: below.
 - **State (2026-11-05): R2.3 Algorithm Studio and R2.5 Share links done** ([`data/r23/README.md`](data/r23/README.md),
   [`data/r25/README.md`](data/r25/README.md)): the Studio end to end in Chromium — the A* starter found and drawn
   (3,059 expansions), deterministic; Compare beside the built-in A*; pure pursuit drawn tick by tick; ROS 2 export; a
@@ -56,7 +62,7 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R2.3 Algorithm Studio | done | [`data/r23/README.md`](data/r23/README.md), [`screens/r23/`](screens/r23/) |
 | R2.4 Compare, experiments and native | done | [`data/r24/README.md`](data/r24/README.md), [`parity.json`](data/r24/parity.json) |
 | R2.5 Share links | done | [`data/r25/README.md`](data/r25/README.md) |
-| R2.6 Leaderboard | | |
+| R2.6 Leaderboard | built; submission PR open | [`data/r26/README.md`](data/r26/README.md), [`leaderboard/`](../../../leaderboard/) |
 | R2.7 Run in ROS 2 | | |
 | R2.8 Phone and Learn | | |
 | R2.9 Close | | |

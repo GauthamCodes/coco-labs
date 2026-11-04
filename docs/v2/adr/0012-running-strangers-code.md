@@ -55,10 +55,11 @@ makes an escape need a second, independent failure — the boundaries below.
   `Notification`, `RTCPeerConnection`, `requestFileSystem`; and removes `js`, `pyodide`,
   `pyodide.ffi`, `pyodide_js`, `_pyodide` from Python's `sys.modules` and its importers.
 - **Limits:** a hard per-call time limit enforced from the page: the worker posts a heartbeat
-  after every call, and a silence longer than the limit (default 5 s per call) terminates the
-  worker and starts a fresh one. A memory ceiling: the WebAssembly memory is checked after
-  every call (default 1 GiB above the boot size), and an allocation past WebAssembly's own
-  maximum fails inside the call with `MemoryError`; both end the run and restart the worker.
+  after every call, and a silence longer than the limit (5 s for a controller or localiser call,
+  30 s for a planner call) terminates the worker and starts a fresh one. A memory ceiling of
+  1 GiB above the boot size: `WebAssembly.Memory.prototype.grow` (through which Emscripten grows
+  the heap) refuses to pass it, so the allocation fails inside the call with `MemoryError`; the
+  page also checks the size every heartbeat. Either ends the run and restarts the worker.
   Console output is capped (64 KB per run), events per call (20,000 kept), the path
   (200,000 poses), the file (256 KB).
 - The page treats every worker message as untrusted data: typed fields only, text rendered
@@ -102,9 +103,19 @@ depend on the process).
 
 ## Held-out scenarios (R2.6, §1.5)
 
-See the leaderboard section of R2_STATUS / CONTRIBUTING for the scheme and its stated limit:
-a seed committed only in a workflow file is readable by anyone who reads the repository, so
-"unpublished" here means "not in the suite files", not "secret".
+Seed `sha256("coco-lab.leaderboard.held-out.v1|<suite>|<merge-base sha>")`, scenarios drawn by the
+suite's own generator. **Stated limitation:** no secret is possible here (a fork's `pull_request`
+job gets none, and anything committed is public), so anyone who knows a PR's merge-base can
+compute its held-out set beforehand. "Unpublished" means "not in the suite files", not "secret":
+the scheme catches overfitting by habit or chance; code review and the no-hard-coding rule
+(leaderboard/CONTRIBUTING.md) catch a determined cheat.
+
+**A second stated limit:** inside the verifier's container, the algorithm runs in the same
+process that measures it. A file that defeated the guard could falsify its own numbers in the
+artifact. The container stops it reaching anything else, the writer validates the artifact's
+shape and checks the PR, every result is reproducible by anyone natively, and merging is a
+maintainer's decision. Running the user function in a separate process that only returns
+outputs (the parent measuring) would close this; parked in docs/IDEAS.md.
 
 ## Consequences
 
