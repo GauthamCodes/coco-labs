@@ -10,7 +10,7 @@ three signatures), additive wiring in `experiments.py`, `exp_families.py`, `move
 | Check | Result |
 | --- | --- |
 | COCO-Bench v0 references, a 10% sample re-run with the R2 code (`python -m coco_lab.experiments verify DIR --sample 0.1`, the same sample R1.5 drew) | **197 / 197 match** (every chain and count): [`reference_sample.txt`](reference_sample.txt) |
-| every v1, v2 and v3 golden, the golden experiment, the native gate's unit tests | the full coco_lab suite on the R2 tree: [`coco_lab_full.txt`](coco_lab_full.txt) |
+| every v1, v2 and v3 golden, the golden experiment, the native gate's unit tests | the full coco_lab suite on the R2 tree (plain venv, CI's pins): **1298 passed, 0 failed** (R1.9: 1192): [`coco_lab_full.txt`](coco_lab_full.txt) |
 | a built-in spec's id and run descriptors | unchanged by construction: only a `user` entry carries `api` / `code_sha256` (`test_exp_user.py::test_user_spec_is_additive`) |
 | v2/v3 state of a built-in run | unchanged: the user controller's and localiser's runtime lives outside the Arena (a weak map), its engine is plain data, and `user` is not appended to `CONTROLLERS`/`FILTERS` (so every built-in keeps its index in the v1 state bytes) |
 

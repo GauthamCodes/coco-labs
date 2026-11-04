@@ -40,7 +40,7 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
   reference sample **197/197 match**; through the API every built-in reproduces its native results bit for bit
   except **D\* Lite's path length and cost (≤ 3e-15 relative: its native adapter sums with Python 3.12's compensated
   `sum()`)** — no native result, hash or golden changes; question for Gautham below. Full coco_lab suite on the R2
-  tree: recorded with R2.2.
+  tree: **1298 passed, 0 failed**.
 - **State (2026-11-04): R2.0 Baseline done** ([`data/r20/README.md`](data/r20/README.md)): main `4894c76`'s tree is R1's
   final tree byte for byte (`git diff 8b40a41 4894c76` empty), so R1.9's committed suites are its baseline; a re-run
   here gave coco_lab 1191 passed + 1 failure caused by an R2 file appearing in the tree mid-run (fixed in R2.1), and was
