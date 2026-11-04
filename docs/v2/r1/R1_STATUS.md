@@ -6,7 +6,7 @@ Prompt: [`R1_PROMPT.md`](R1_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 - **State (2026-11-04): R1 closed — R1.0–R1.9 done**; PR "R1 · Research Workbench" into main, ready for review
   (never merged or deployed by an agent). [`R1_RESULTS.md`](R1_RESULTS.md), [`BEFORE_AFTER.md`](BEFORE_AFTER.md).
-  Final suites on the final tree green except coco_lab's ament lint on R1's new code (fixed; see R1_RESULTS).
+  Final suites on the final tree green; coco_lab's ament lint on R1's new code failed once and was fixed (re-run 1197 passed).
 - **State (2026-11-03): R1.8 Performance done** ([`data/r18/README.md`](data/r18/README.md)): 400-run Depot
   experiment in the browser 54.3 s on 6 workers (native digest identical); emulated phone 2 × 20 in 18.0 s on 2
   workers; Play fps unchanged (60.07 / 60.02 medians vs baseline 60.07 / 60.02). Real phone: not connected.

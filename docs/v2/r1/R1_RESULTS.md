@@ -90,7 +90,7 @@ draws the plots; "Open in Colab" goes live with the merge. Datasets tab: 11 chec
 | coco_lab gz | 2 passed | 2 passed |
 | lab_web/tools pytest | 244 | 248 |
 | vitest | 619 (80 files) | 631 (83 files) |
-| packages (12) | all pass | 11 pass; coco_lab's ament **flake8 and pep257 failed** on R1's new code (11 style findings: import order, two long lines, quotes, a docstring) — fixed, lint 2/2 pass, coco_lab package re-run: running when this was committed; its result follows in the next commit |
+| packages (12) | all pass | 11 pass; coco_lab's ament **flake8 and pep257 failed** on R1's new code (11 style findings: import order, two long lines, quotes, a docstring) — fixed, lint 2/2 pass, coco_lab package re-run on the fixed tree: **1197 passed** ([log](data/r19/packages_coco_lab_rerun.log)) — so all 12 pass |
 | native gate (hash v3) | exact | exact (818,951 planner values, 1,436 Fetch Rush values) |
 | R1 parity (hash v3, experiments) | — | 4,269 values, 0 differences |
 | determinism v1 (10 sessions × 4 engines) | 1,500 hashes, 0 diff | 1,500, 0 diff |
