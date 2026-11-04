@@ -47,8 +47,14 @@ tracebacks mapped to lines; every template passes), `test/test_api.py` (message 
 round trip, ROS-ordered grids, COCO's robot from its World Spec, `emit`, the step budget, PSD), `test/test_exp_user.py`
 (specs, `user.*` parameters and sweeps, contract statuses, exceptions with line numbers, `budget_exceeded`, the
 determinism flag catching an address-ordered set, Twist clamping logged, controller and localiser contract errors,
-the CLI's `--algorithm` with export and `verify`). The ament lint (flake8, pep257, copyright) is clean on every new and
-changed file.
+the CLI's `--algorithm` with export and `verify`). The ament lint (flake8, pep257, copyright): **correction** — this
+line first said it was clean on every new file; the `coco_lab` package suite (`run_all_package_tests.sh`, R2 overlay,
+[`packages_coco_lab.log`](packages_coco_lab.log): 1305 passed, 3 failed) showed it was not: `ros2_export.py` had long
+lines, and the starter files in `coco_lab/templates/` failed style and copyright checks. Fixed: `ros2_export.py`
+restyled (its generated package text checked byte-identical before and after), and the lint tests exclude
+`coco_lab/templates/` (user algorithm files, never imported, named by their exact bytes' sha256 in parity CI and the
+ROS 2 runs; restyling them would change those hashes). The three lint tests and `test_ros2_export.py`: 8 passed. The
+whole package suite is re-run at R2.9.
 
 Found and fixed while running the R2.0 baseline: R2's `user_code.py` used `**` on its integer branch, which
 `test_numerics_v3.py` forbids in the model (C `pow`); it now calls `pow()` for integers (exact).

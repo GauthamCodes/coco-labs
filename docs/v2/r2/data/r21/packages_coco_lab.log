@@ -1,0 +1,21 @@
+[tests] building /home/gautham/coco_lab_r2_ws/test_venv
+WARNING: Skipping /usr/lib/python3/dist-packages/pytest_repeat.egg-info due to invalid metadata entry 'name'
+WARNING: Skipping /usr/lib/python3/dist-packages/pytest_repeat.egg-info due to invalid metadata entry 'name'
+WARNING: Skipping /usr/lib/python3.12/dist-packages/pybind11-2.11.1.dist-info due to invalid metadata entry 'name'
+WARNING: Skipping /usr/lib/python3/dist-packages/pytest_repeat.egg-info due to invalid metadata entry 'name'
+WARNING: Skipping /usr/lib/python3.12/dist-packages/pybind11-2.11.1.dist-info due to invalid metadata entry 'name'
+WARNING: Skipping /usr/lib/python3/dist-packages/pytest_repeat.egg-info due to invalid metadata entry 'name'
+WARNING: Skipping /usr/lib/python3/dist-packages/pytest_repeat.egg-info due to invalid metadata entry 'name'
+WARNING: Skipping /usr/lib/python3.12/dist-packages/pybind11-2.11.1.dist-info due to invalid metadata entry 'name'
+WARNING: Skipping /usr/lib/python3/dist-packages/pytest_repeat.egg-info due to invalid metadata entry 'name'
+WARNING: Skipping /usr/lib/python3.12/dist-packages/pybind11-2.11.1.dist-info due to invalid metadata entry 'name'
+[tests] interpreter: /home/gautham/coco_lab_r2_ws/test_venv/bin/python (3.12.3 pytest 7.4.4 hypothesis 6.98.15 networkx 2.8.8)
+[tests] workspace:   /home/gautham/coco_lab_r2_ws   ROS_DOMAIN_ID=78
+--- Testing coco_lab ---
+FAILED test/test_flake8.py::test_flake8 - AssertionError: Found 22 code style...
+FAILED test/test_pep257.py::test_pep257 - AssertionError: Found code style er...
+3 failed, 1305 passed in 6414.74s (1:46:54)
+==================================================
+coco_lab             FAIL (pytest exit 1) 3 failed, 1305 passed in 6414.74s (1:46:54)
+==================================================
+[tests] FAILED: at least one package did not pass
