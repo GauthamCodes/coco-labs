@@ -4,6 +4,12 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-05): R2.3 Algorithm Studio and R2.5 Share links done** ([`data/r23/README.md`](data/r23/README.md),
+  [`data/r25/README.md`](data/r25/README.md)): the Studio end to end in Chromium — the A* starter found and drawn
+  (3,059 expansions), deterministic; Compare beside the built-in A*; pure pursuit drawn tick by tick; ROS 2 export; a
+  code link shows the code and runs nothing until "Run this code"; the emulated phone in both orientations. A real bug
+  found by the check and fixed (the editor could show other code than Run would run when a link loaded first).
+  Screenshots in [`screens/r23/`](screens/r23/).
 - **State (2026-11-05): R2.4 Compare, experiments and native done** ([`data/r24/README.md`](data/r24/README.md)):
   `coco experiment run --algorithm` (worker processes, `PYTHONHASHSEED=0`, the file exported beside the results,
   `verify` re-runs it); the Studio's Compare (yours beside any built-in, same scenario) and "Benchmark it" (a whole
@@ -47,9 +53,9 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R2.0 Baseline | done | [`data/r20/README.md`](data/r20/README.md) |
 | R2.1 API and security design | done | [`data/r21/README.md`](data/r21/README.md), ADR [0012](../adr/0012-running-strangers-code.md), [0013](../adr/0013-algorithm-api-v1.md) |
 | R2.2 Sandboxed worker | done | [`data/r22/README.md`](data/r22/README.md) |
-| R2.3 Algorithm Studio | | |
+| R2.3 Algorithm Studio | done | [`data/r23/README.md`](data/r23/README.md), [`screens/r23/`](screens/r23/) |
 | R2.4 Compare, experiments and native | done | [`data/r24/README.md`](data/r24/README.md), [`parity.json`](data/r24/parity.json) |
-| R2.5 Share links | | |
+| R2.5 Share links | done | [`data/r25/README.md`](data/r25/README.md) |
 | R2.6 Leaderboard | | |
 | R2.7 Run in ROS 2 | | |
 | R2.8 Phone and Learn | | |

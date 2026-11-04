@@ -217,10 +217,15 @@ def run(request_json):
         d = p['runs'][int(req['indices'][0])]
         draw = _Draw(req['id'], d['family'])
         rows = []
+        m = experiments.world(d['world']).lab_map
+        builtin = d['name'] != 'user'   # a user's file draws its own ctx.emit events; a built-in its rows
 
         def sink(row):
             if row[0] == 3:
                 rows.append([row[1], row[2]])
+            elif builtin and row[0] in (0, 1):
+                x, y = m.cell_centre(row[1], row[2])
+                draw.event('expand' if row[0] == 1 else 'push', {'x': x, 'y': y})
         rec = experiments.run_one(d, sink=sink if d['family'] == 'planning' else None,
                                   on_tick=draw.frame, on_event=draw.event)
         draw.flush()

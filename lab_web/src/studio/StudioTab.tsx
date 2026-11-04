@@ -40,6 +40,17 @@ interface Report {
 }
 interface Rec { status: string; success: boolean; metrics: Record<string, number | boolean | null>; chain: string; deterministic?: boolean; report?: Report; error?: string; draw?: { path_cells: number[][]; cut: number } }
 interface Pane { draw: RunDraw; rec: Rec | null; failure: Ended | null; title: string }
+export interface StackEntry { label: string; rows: { metric: string; model: string; stack: string; gap: string }[]; source: string }
+
+/** R2.7: the same file in the browser's model and as a real ROS 2 node in Gazebo + Nav2, labelled. */
+export function BrowserVsRos({ s }: { s: StackEntry }) {
+  return <details className="studio-exp" open data-testid="studio-stack">
+    <summary>Browser vs ROS 2: {s.label}</summary>
+    <table className="wb-table"><thead><tr><th scope="col">Metric</th><th scope="col">MODEL (browser)</th><th scope="col">STACK (Gazebo + Nav2)</th><th scope="col">Gap</th></tr></thead>
+      <tbody>{s.rows.map((r) => <tr key={r.metric}><th scope="row">{r.metric}</th><td>{r.model}</td><td>{r.stack}</td><td>{r.gap}</td></tr>)}</tbody></table>
+    <p className="studio-muted">{s.source}</p>
+  </details>;
+}
 
 /** What the per-call times were measured on: what the browser offers without a user-agent string. */
 function deviceLabel(): string {
@@ -74,7 +85,19 @@ export default function StudioTab() {
   const [exp, setExp] = useState<{ spec: ExperimentSpec; plan: PlanInfo; records: RunRecord[]; summary: Summary | null; progress: PoolProgress | null } | null>(null);
   const [rivals, setRivals] = useState<string[]>(['astar']);
   const [probe, setProbe] = useState<Record<string, string> | null>(null);
+  const [stack, setStack] = useState<StackEntry | null>(null);
+  // R2.7: Browser vs ROS 2 -- shown only for the exact file (sha256) that ran in Gazebo + Nav2
+  useEffect(() => {
+    let alive = true;
+    void codeSha256(code).then((sha) => fetch(`${BASE}generated/r2/stack.json`).then((r) => (r.ok ? r.json() : null))
+      .then((d: { entries?: Record<string, StackEntry> } | null) => { if (alive) setStack(d?.entries?.[sha] ?? null); })).catch(() => {});
+    return () => { alive = false; };
+  }, [code]);
   const editor = useRef<StudioEditor | null>(null);
+  // the code the editor must show when it is created: a link or an entry may arrive before CodeMirror
+  // has loaded, and the editor must never show other code than the code Run would run
+  const codeRef = useRef(code);
+  codeRef.current = code;
   const host = useRef<HTMLDivElement>(null);
   const sandbox = useRef<Sandbox | null>(null);
   const pool = useRef<SandboxPool | null>(null);
@@ -92,6 +115,7 @@ export default function StudioTab() {
     if (entry && /^[a-z0-9-]+\/[a-z0-9_-]+$/.test(entry)) {
       const [s, n] = entry.split('/');
       void fetch(`${BASE}generated/r2/submissions/${s}/${n}.py`).then((r) => { if (!r.ok) throw new Error(`no entry ${entry}`); return r.text(); }).then((t) => {
+        codeRef.current = t;
         setCode(t); setFile(`${n}.py`); setTemplate(''); setSuiteId(s);
         const sc = Number(q.get('scenario'));
         if (Number.isInteger(sc) && sc >= 0) setIndex(sc);
@@ -102,6 +126,7 @@ export default function StudioTab() {
     }
     void readCodeFragment(window.location.hash).then((l) => {
       if (!l) return;
+      codeRef.current = l.code;
       setCode(l.code); setFile(l.file); setTemplate(l.template ?? '');
       if (l.suite) setSuiteId(l.suite);
       if (l.index !== undefined) setIndex(l.index);
@@ -114,7 +139,7 @@ export default function StudioTab() {
     let alive = true;
     void import('./editor').then(({ createEditor }) => {
       if (!alive || !host.current) return;
-      editor.current = createEditor(host.current, code, (s) => setCode(s));
+      editor.current = createEditor(host.current, codeRef.current, (s) => setCode(s));
     });
     return () => { alive = false; editor.current?.destroy(); editor.current = null; };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -335,6 +360,7 @@ export default function StudioTab() {
       {share?.url && <label className="wb-copied">Link (the code rides in the # part, never sent to a server):<input readOnly value={share.url} onFocus={(e) => e.currentTarget.select()} data-testid="studio-link" /></label>}
       {share?.error && <p className="wb-error" role="alert">{share.error}</p>}
     </div>
+    {stack && <BrowserVsRos s={stack} />}
     <details className="studio-exp" data-testid="studio-probe">
       <summary>What the sandbox blocks (ADR 0012)</summary>
       <p className="studio-muted">Your code runs in its own worker with the network, storage, other tabs and devices taken away, a time limit per call and a memory ceiling. This runs the worker’s own fixed checks (none of your code) and shows each result.</p>

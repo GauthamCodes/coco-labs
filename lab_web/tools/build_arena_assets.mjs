@@ -261,6 +261,9 @@ function main() {
   mkdirSync(join(r2Dir, 'submissions'), { recursive: true });
   const board = join(repo, 'leaderboard', 'index.json');
   if (existsSync(board)) copyFileSync(board, join(r2Dir, 'leaderboard.json'));
+  // R2.7: MODEL vs STACK for the files that ran as ROS 2 nodes (docs/v2/r2/data/r27/stack.json)
+  const stackFile = join(repo, 'docs', 'v2', 'r2', 'data', 'r27', 'stack.json');
+  if (existsSync(stackFile)) copyFileSync(stackFile, join(r2Dir, 'stack.json'));
   const subs = join(repo, 'leaderboard', 'submissions');
   if (existsSync(subs)) {
     for (const f of walk(subs).filter((p) => p.endsWith('/algorithm.py')).sort()) {

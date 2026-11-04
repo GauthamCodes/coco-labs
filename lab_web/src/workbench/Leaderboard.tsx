@@ -10,6 +10,7 @@
 import { useEffect, useState } from 'react';
 import { fmt } from './charts';
 import { REPO_BLOB_URL } from '../../site.config';
+import '../studio/studio.css';
 
 const BASE = import.meta.env.BASE_URL;
 const GITHUB = REPO_BLOB_URL;
