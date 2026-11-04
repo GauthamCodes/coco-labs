@@ -4,6 +4,11 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-05): R2.4 Compare, experiments and native done** ([`data/r24/README.md`](data/r24/README.md)):
+  `coco experiment run --algorithm` (worker processes, `PYTHONHASHSEED=0`, the file exported beside the results,
+  `verify` re-runs it); the Studio's Compare (yours beside any built-in, same scenario) and "Benchmark it" (a whole
+  suite against built-ins in a pool of sandboxes, R1's statistics). **Parity: every starter template in CPython and
+  Pyodide, 850 values, 0 differences**; added to CI (`lab.yml`).
 - **State (2026-11-05): R2.2 Sandboxed worker done** ([`data/r22/README.md`](data/r22/README.md)): user code runs only
   in its own Pyodide worker, started from a `blob:` URL so it inherits the page's CSP (no eval/Function/dynamic
   import), locked down before any user code (network, storage, other contexts, devices; Python's `js` bridge),
@@ -43,7 +48,7 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R2.1 API and security design | done | [`data/r21/README.md`](data/r21/README.md), ADR [0012](../adr/0012-running-strangers-code.md), [0013](../adr/0013-algorithm-api-v1.md) |
 | R2.2 Sandboxed worker | done | [`data/r22/README.md`](data/r22/README.md) |
 | R2.3 Algorithm Studio | | |
-| R2.4 Compare, experiments and native | | |
+| R2.4 Compare, experiments and native | done | [`data/r24/README.md`](data/r24/README.md), [`parity.json`](data/r24/parity.json) |
 | R2.5 Share links | | |
 | R2.6 Leaderboard | | |
 | R2.7 Run in ROS 2 | | |
