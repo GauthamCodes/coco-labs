@@ -34,7 +34,7 @@ const API: [string, string][] = [
   ['NO_INFORMATION', '255: unknown'], ['FREE_SPACE', '0'],
 ];
 const MEMBERS: [string, string][] = [
-  ['ctx.rng', 'the seeded generator: random(), uniform(a, b), gauss(mu, s), randint, choice, shuffle, sample'],
+  ['ctx.rng', 'the seeded generator: random, uniform, gauss -- a normal draw, randint, choice, shuffle, sample'],
   ['ctx.robot', 'radius, max_linear, max_angular, max_linear_accel, max_angular_accel, lidar_mount'],
   ['ctx.params', 'your parameters (user.<name> in an experiment)'], ['ctx.config', 'the family’s settings (inflation, connectivity, ...)'],
   ['ctx.memory', 'a dict kept between the calls of one run'], ['ctx.time', 'sim time (s)'], ['ctx.dt', 'the tick (s)'],

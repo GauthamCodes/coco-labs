@@ -57,7 +57,7 @@ export function lockdown(g: Bag): string[] {
 }
 
 /**
- * A hard memory ceiling: Emscripten grows the heap through `WebAssembly.Memory.prototype.grow`,
+ * A hard memory ceiling: Emscripten grows its memory through `WebAssembly.Memory.prototype.grow`,
  * so refusing a grow past `ceilingBytes` makes the allocation fail inside the call (Python
  * raises MemoryError) instead of the tab running out of memory.
  */
