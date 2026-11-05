@@ -29,7 +29,7 @@ each file's sha256, so it shows only for that exact file).
   ([`files/theta_star.py`](files/theta_star.py), PR #31's file, `650c80cc…`), the pure-pursuit starter (`5a1f225d…`),
   the particle-filter starter (`de1102c9…`). Each node logs its file's sha256 at start (`nav.log`).
 
-## Results (power-saver profile; see "Conditions")
+## Results (power-saver profile; the balanced check at the end gives the same counts and lengths)
 
 ### Planners — 20 scenarios × 3 sessions, each request sent to stock Nav2 (Smac 2D) and to the user planner(s)
 
@@ -99,4 +99,17 @@ under test are named by sha256 in every session, and the tools are committed wit
 
 ## Balanced check
 
-Pending: `plan_balanced_1` and `drive_balanced_coco_user_theta_star` (balanced, AC) are running.
+`plan_balanced_1` and `drive_balanced_coco_user_theta_star`, **balanced, on AC** (their `meta.json`), the same scenarios,
+packages and settings (the balanced planning session's first minutes overlapped one short native run of
+`ros2_summary.py`):
+
+| | power-saver (sessions 1–3) | balanced |
+| --- | --- | --- |
+| stock Nav2: plans found | 14/20 each session, the same 6 failures | **14/20**, the same 6 (205 × 4, 208 × 2) |
+| A* starter: plans found / median length | 20/20, 30.061 m each session | **20/20, 30.061 m** |
+| Lazy Theta\*: plans found / median length | 17/20 (120 s wait), then 20/20, 29.039 m | **20/20, 29.039 m** |
+| planning time, median wall: stock / A* / Theta\* | 0.17–0.19 s / 3.2–4.2 s / 36–45 s (max 198 s) | **0.06 s / 1.25 s / 14.9 s** (max 66.8 s) |
+| Theta\* driven with Nav2's RPP | 0/5 (4 × 104, 1 × 208; 551 "collision ahead") | **0/5** (4 × 104, 1 × 208; 321 "collision ahead") |
+
+Every count and path length is the same on both profiles; only wall-clock planning time moves (about 2.4–3× faster
+on balanced). The headline planning times to quote are the balanced ones.

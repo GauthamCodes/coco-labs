@@ -12,7 +12,7 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
   trusted writer once R2 is on main. **R2.7 STACK (Gazebo + Nav2, power-saver):** A* starter
   plans 60/60 (stock Smac 42/60: start/goal convention), Lazy Theta* 57/60 but drives **0/5** under Nav2's RPP (it
   plans too close to corners for it); pure pursuit 20/20 colour rounds; the particle filter replaced AMCL for a full
-  round. Balanced-profile check running.
+  round. Balanced check: every count and length the same; planning 2.4–3× faster.
 - **State (2026-11-05): R2.6 Leaderboard built** ([`data/r26/README.md`](data/r26/README.md)): submission format,
   the sandboxed `pull_request` verifier (base branch's verifier, `--network none`, no secrets), the trusted
   `workflow_run` writer (validates the artifact as data, comments, labels), re-verification on every version change,
@@ -72,7 +72,7 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R2.4 Compare, experiments and native | done | [`data/r24/README.md`](data/r24/README.md), [`parity.json`](data/r24/parity.json) |
 | R2.5 Share links | done | [`data/r25/README.md`](data/r25/README.md) |
 | R2.6 Leaderboard | done; PR #31 verified in CI (label after R2 merges) | [`data/r26/README.md`](data/r26/README.md), [`leaderboard/`](../../../leaderboard/) |
-| R2.7 Run in ROS 2 | done on power-saver; balanced check running | [`data/r27/README.md`](data/r27/README.md) |
+| R2.7 Run in ROS 2 | done (balanced check: same counts) | [`data/r27/README.md`](data/r27/README.md) |
 | R2.8 Phone and Learn | done (emulated phone) | [`data/r28/README.md`](data/r28/README.md), [`API.md`](API.md) |
 | R2.9 Close | | |
 
