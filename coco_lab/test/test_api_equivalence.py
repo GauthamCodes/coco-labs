@@ -23,10 +23,21 @@ D* Lite's path length and cost are the recorded exception (ADR 0013).
 """
 
 import copy
+from pathlib import Path
 
 from coco_lab import experiments as E
 from coco_lab.trace import EXPAND, PATH
 import pytest
+
+
+# this tree's worlds/: an installed coco_lab (CI, the suites runner) has none of its own,
+# so set COCO_WORLDS as test_experiments.py does
+WORLDS = Path(__file__).resolve().parents[2] / 'worlds'
+
+
+@pytest.fixture(autouse=True)
+def _worlds(monkeypatch):
+    monkeypatch.setenv('COCO_WORLDS', str(WORLDS))
 
 
 def runs(family, suite, name, n, max_ticks=3000):
