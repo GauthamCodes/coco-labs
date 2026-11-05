@@ -27,6 +27,20 @@
   }
  },
  "drive": {
+  "balanced_coco_user_theta_star": {
+   "goals": 5,
+   "median_driven_m": 2.61,
+   "median_sim_s": 82.58,
+   "median_truth_to_goal_m": 25.944,
+   "statuses": [
+    "ABORTED",
+    "ABORTED",
+    "ABORTED",
+    "ABORTED",
+    "ABORTED"
+   ],
+   "succeeded": 0
+  },
   "coco_user_astar_starter": {
    "goals": 5,
    "median_driven_m": 22.341,
@@ -84,6 +98,11 @@
  },
  "planning": {
   "astar_starter": {
+   "balanced": {
+    "median_wall_s": 1.2525,
+    "requests": 20,
+    "succeeded": 20
+   },
    "by_status": {
     "SUCCEEDED": 60
    },
@@ -113,6 +132,11 @@
    }
   },
   "stock": {
+   "balanced": {
+    "median_wall_s": 0.062,
+    "requests": 20,
+    "succeeded": 14
+   },
    "by_status": {
     "STATUS_6": 18,
     "SUCCEEDED": 42
@@ -132,6 +156,11 @@
    "succeeded": 42
   },
   "theta_star": {
+   "balanced": {
+    "median_wall_s": 14.9375,
+    "requests": 20,
+    "succeeded": 20
+   },
    "by_status": {
     "NO-RESULT": 3,
     "SUCCEEDED": 57

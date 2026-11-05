@@ -89,6 +89,13 @@ def main():
         for r in rows(d / 'results.jsonl'):
             if 'server' in r and 'wall_s' in r:
                 by.setdefault(SERVERS[r['server']], []).append(dict(r, session=d.name))
+    # planning TIME is quoted from the balanced-profile session (the counts come from sessions 1-3)
+    balanced = {}
+    for d in sorted(runs.glob('plan_balanced_[0-9]')):
+        raw.append(d / 'results.jsonl')
+        for r in rows(d / 'results.jsonl'):
+            if 'server' in r and 'wall_s' in r:
+                balanced.setdefault(SERVERS[r['server']], []).append(r)
     scen = json.loads((out / 'depot20_plan.json').read_text())['scenarios']
     model = {}
     for name in ('astar_starter', 'theta_star'):
@@ -102,7 +109,10 @@ def main():
                      'error_codes': sorted({r.get('error_code') for r in rs if r['status'] != 'SUCCEEDED'
                                             and r.get('error_code') is not None}),
                      'median_length_m': med([r['length_m'] for r in ok]),
-                     'median_wall_s': med([r['wall_s'] for r in rs]), 'sessions': sorted({r['session'] for r in rs})}
+                     'median_wall_s': med([r['wall_s'] for r in rs]), 'sessions': sorted({r['session'] for r in rs}),
+                     'balanced': {'requests': len(balanced.get(who, [])),
+                                  'succeeded': sum(1 for r in balanced.get(who, []) if r['status'] == 'SUCCEEDED'),
+                                  'median_wall_s': med([r['wall_s'] for r in balanced.get(who, [])])}}
         if who in model:
             recs, sha = model[who]
             m_ok = {k: v for k, v in recs.items() if v['success']}
@@ -128,8 +138,9 @@ def main():
                               {'metric': 'vs stock Nav2 (Smac 2D), same scenario and session',
                                'model': '—', 'stack': f"{fmt(P['vs_stock_paired_m']['median'])} m median "
                                                       f"(n={P['vs_stock_paired_m']['n']})", 'gap': '—'},
-                              {'metric': 'planning time, median (wall s, this laptop)', 'model': '—',
-                               'stack': fmt(P['median_wall_s']), 'gap': 'not compared (devices differ)'}],
+                              {'metric': 'planning time, median (wall s, this laptop, balanced profile)',
+                               'model': '—', 'stack': fmt(P['balanced']['median_wall_s']),
+                               'gap': 'not compared (devices differ)'}],
                           'source': 'MODEL: coco_lab, the planning family on the same scenarios (0.1 m Depot map). '
                                     'STACK: the exported package in Gazebo Harmonic + Nav2 Jazzy on its live '
                                     '0.05 m global costmap (simulation; no physical robot). '
@@ -238,7 +249,8 @@ def main():
     (out / 'stack.json').write_text(json.dumps({'schema': 'coco.r2.stack.v1', 'evidence': 'MODEL beside STACK',
                                                  'entries': stack}, indent=1, sort_keys=True) + '\n')
     lines = []
-    for p in sorted(set(raw)):
+    # each session's meta.json too: it records the conditions (power profile, AC, versions, git)
+    for p in sorted(set(raw) | {q.parent / 'meta.json' for q in raw}):
         if p.exists():
             lines.append(f'{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.relative_to(runs)}')
     (out / 'raw_checksums.sha256').write_text('\n'.join(lines) + '\n')
