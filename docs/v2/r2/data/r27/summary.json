@@ -1,0 +1,165 @@
+{
+ "controller": {
+  "legs": 40,
+  "legs_succeeded": 40,
+  "median_leg_sim_s": 19.24,
+  "model_legs": "8/8",
+  "model_median_leg_s": 19.400000000000002,
+  "paired_leg_gap_s": {
+   "median": 0.14499999999999957,
+   "n": 8,
+   "per_leg": {
+    "blue:order1_dispatch_drop": -0.7600000000000016,
+    "blue:order1_rod_blue_pregrasp": 0.25,
+    "green:order1_dispatch_drop": 0.4299999999999997,
+    "green:order1_rod_green_pregrasp": 0.21000000000000085,
+    "red:order1_dispatch_drop": 0.0799999999999983,
+    "red:order1_rod_red_pregrasp": -0.09000000000000163,
+    "yellow:order1_dispatch_drop": -0.07000000000000384,
+    "yellow:order1_rod_yellow_pregrasp": 0.5899999999999999
+   }
+  },
+  "rounds": {
+   "blue": "5/5",
+   "green": "5/5",
+   "red": "5/5",
+   "yellow": "5/5"
+  }
+ },
+ "drive": {
+  "coco_user_astar_starter": {
+   "goals": 5,
+   "median_driven_m": 22.341,
+   "median_sim_s": 101.83,
+   "median_truth_to_goal_m": 0.376,
+   "statuses": [
+    "SUCCEEDED",
+    "SUCCEEDED",
+    "ABORTED",
+    "SUCCEEDED",
+    "SUCCEEDED"
+   ],
+   "succeeded": 4
+  },
+  "coco_user_theta_star": {
+   "goals": 5,
+   "median_driven_m": 4.114,
+   "median_sim_s": 151.53,
+   "median_truth_to_goal_m": 25.944,
+   "statuses": [
+    "ABORTED",
+    "ABORTED",
+    "ABORTED",
+    "ABORTED",
+    "ABORTED"
+   ],
+   "succeeded": 0
+  },
+  "stock": {
+   "goals": 5,
+   "median_driven_m": 19.785,
+   "median_sim_s": 87.47,
+   "median_truth_to_goal_m": 0.297,
+   "statuses": [
+    "SUCCEEDED",
+    "SUCCEEDED",
+    "ABORTED",
+    "ABORTED",
+    "SUCCEEDED"
+   ],
+   "succeeded": 3
+  }
+ },
+ "localiser": {
+  "error_at_leg_end_m": [
+   0.063,
+   0.258
+  ],
+  "legs": 2,
+  "model_final_err_m": [
+   0.09733131837314557,
+   0.11008903254164001
+  ],
+  "succeeded": 2
+ },
+ "planning": {
+  "astar_starter": {
+   "by_status": {
+    "SUCCEEDED": 60
+   },
+   "error_codes": [],
+   "median_length_m": 30.061349999999997,
+   "median_wall_s": 3.4635,
+   "model": {
+    "median_length_m": 31.49005409571386,
+    "scenarios": 20,
+    "succeeded": 20
+   },
+   "paired_gap_m": {
+    "median": 0.2318167541846332,
+    "median_relative": 0.007958133332343765,
+    "n": 60
+   },
+   "requests": 60,
+   "sessions": [
+    "plan_rep1",
+    "plan_rep2",
+    "plan_rep3"
+   ],
+   "succeeded": 60,
+   "vs_stock_paired_m": {
+    "median": 0.5507500000000025,
+    "n": 42
+   }
+  },
+  "stock": {
+   "by_status": {
+    "STATUS_6": 18,
+    "SUCCEEDED": 42
+   },
+   "error_codes": [
+    205,
+    208
+   ],
+   "median_length_m": 33.10315,
+   "median_wall_s": 0.187,
+   "requests": 60,
+   "sessions": [
+    "plan_rep1",
+    "plan_rep2",
+    "plan_rep3"
+   ],
+   "succeeded": 42
+  },
+  "theta_star": {
+   "by_status": {
+    "NO-RESULT": 3,
+    "SUCCEEDED": 57
+   },
+   "error_codes": [],
+   "median_length_m": 28.4949,
+   "median_wall_s": 41.232,
+   "model": {
+    "median_length_m": 30.35909203672418,
+    "scenarios": 20,
+    "succeeded": 20
+   },
+   "paired_gap_m": {
+    "median": -0.08641336435510283,
+    "median_relative": -0.003166238095745479,
+    "n": 57
+   },
+   "requests": 60,
+   "sessions": [
+    "plan_rep1",
+    "plan_rep2",
+    "plan_rep3"
+   ],
+   "succeeded": 57,
+   "vs_stock_paired_m": {
+    "median": -0.7423000000000002,
+    "n": 39
+   }
+  }
+ }
+}
