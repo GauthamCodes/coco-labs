@@ -10,7 +10,7 @@ Overlay for local package tests: `~/coco_lab_r3_ws` (symlink-install of this che
 | Checkpoint | State | Evidence |
 | --- | --- | --- |
 | R3.0 Start, A1 follow-up tooling | in progress | `tools/r2/ros2_bench.py` (`--snap`, `--costs`), `tools/r3/ros2_queue_a1.sh` |
-| R3.1 COCO-Bench v1 suites, tiers, datasheets | in progress: 12 suites written (`ada432a`), datasheets generated; to do: `--check` determinism, smoke of each condition, tests, browser listing | `coco_lab/coco_lab/benchmarks/*.v1.json`, `docs/bench/v1/` |
+| R3.1 COCO-Bench v1 suites, tiers, datasheets | in progress: 12 suites written and frozen; `make_suites_v1.py --check` regenerates all 12 byte for byte; `test_bench_v1.py` 13/13, ament lint clean; every new condition smoke-run once (below). To do: the suites in the browser (Benchmarks tab, Studio picker), datasheet `--check` in CI | `coco_lab/coco_lab/benchmarks/*.v1.json`, `docs/bench/v1/` |
 | R3.2 Browser-model baselines | — | |
 | R3.3 Held-out from a secret salt (ADR 0014) + hostile tests | — | |
 | R3.4 Gazebo + Nav2 baselines | — | |
@@ -28,6 +28,22 @@ Overlay for local package tests: `~/coco_lab_r3_ws` (symlink-install of this che
 
 - 2026-11-07 (after midnight): still on battery (33 %, discharging). Work committed and pushed; a suspend
   would stop local runs, which resume from the last commit.
+
+## R3.1 smoke (MODEL, one run each, laptop on battery: a functional check, not a measurement)
+
+| suite / scenario | algorithm | status | note |
+| --- | --- | --- | --- |
+| depot-clutter-50 c001 | A* | found | 55.3 m |
+| depot-long-50 l001 | D* Lite | found | 48.4 m |
+| ctrl-dynamic-30 d001_yield | RPP | no_valid_control | stuck behind a yielding actor at 59.9 s |
+| ctrl-dynamic-30 d001_no_yield | RPP | succeeded | 1 contact |
+| ctrl-corners-30 t001 | DWA | succeeded | |
+| loc-global-20 g001 | MCL + injection | timeout (300 s) | final error 21.9 m: not localised |
+| loc-kidnap-20 q001 | MCL + injection | timeout (300 s) | final error 28.7 m: no recovery |
+| loc-track-30 p001 | EKF | localised | final error 0.139 m |
+
+Cost: MCL runs took ~11 min each on one core (6000 particles?): the localisation baselines need the
+worker pool and hours; budgeted in R3.2.
 
 ## Part A open items
 
