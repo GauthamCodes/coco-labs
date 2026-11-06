@@ -42,7 +42,7 @@ Overlay for local package tests: `~/coco_lab_r3_ws` (symlink-install of this che
 | loc-kidnap-20 q001 | MCL + injection | timeout (300 s) | final error 28.7 m: no recovery |
 | loc-track-30 p001 | EKF | localised | final error 0.139 m |
 
-Cost: MCL runs took ~11 min each on one core (6000 particles?): the localisation baselines need the
+Cost: MCL runs took ~11 min each on one core: the localisation baselines need the
 worker pool and hours; budgeted in R3.2.
 
 ## Part A open items
