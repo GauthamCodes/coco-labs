@@ -26,10 +26,13 @@ jobs:
       - uses: actions/checkout@v4
 
       # R3 Part A (2026-11-06): runner timeouts kept recurring in this step (a
-      # stalled mirror connection hangs apt with no retry). apt now gives up on a
-      # stalled connection after 60 s and retries each download 5 times; the
-      # setup gets 20 min per attempt (median 5-6 min) and up to three attempts,
-      # the later ones after repairing any half-finished dpkg state.
+      # stalled or crawling mirror; apt has no retry of its own). apt now gives up
+      # on a stalled connection after 60 s and retries each download 5 times; the
+      # setup gets 20 min per attempt (median 5-6 min) and up to three attempts.
+      # Before a retry, the recovery step kills the timed-out attempt's apt (it
+      # survives the step timeout and holds the dpkg lock: run 42252885733),
+      # repairs dpkg and moves archive.ubuntu.com ahead of the Azure mirror
+      # (that run crawled at ~30 kB/s on azure.archive.ubuntu.com).
       - name: Make apt retry and time out stalled downloads
         run: |
           printf 'Acquire::Retries "5";\nAcquire::http::Timeout "60";\nAcquire::https::Timeout "60";\n' \
@@ -45,8 +48,8 @@ jobs:
 
       - name: Setup ROS 2 Jazzy (retry 1)
         if: steps.ros1.outcome != 'success'
-        timeout-minutes: 20
-        run: sudo dpkg --configure -a || true
+        timeout-minutes: 10
+        run: bash scripts/ci_apt_recover.sh
 
       - name: Setup ROS 2 Jazzy (retry 1, install)
         id: ros2i
@@ -59,8 +62,8 @@ jobs:
 
       - name: Setup ROS 2 Jazzy (retry 2)
         if: steps.ros1.outcome != 'success' && steps.ros2i.outcome != 'success'
-        timeout-minutes: 25
-        run: sudo dpkg --configure -a || true
+        timeout-minutes: 10
+        run: bash scripts/ci_apt_recover.sh
 
       - name: Setup ROS 2 Jazzy (retry 2, install)
         if: steps.ros1.outcome != 'success' && steps.ros2i.outcome != 'success'
