@@ -96,7 +96,10 @@ def test_meta_rules(tmp_path):
 def test_every_committed_submission_is_well_formed():
     # submissions arrive by pull request (Gautham's Theta* is PR #31, not on this branch): whatever is
     # committed under leaderboard/submissions/<suite>/<name>/ must be exactly the three files
-    for d in sorted((REPO / 'leaderboard' / 'submissions').glob('*/*/')):
+    found = sorted((REPO / 'leaderboard' / 'submissions').glob('*/*/'))
+    if not found:
+        pytest.skip('no submission committed yet (PR #31 brings the first)')
+    for d in found:
         assert sorted(p.name for p in d.iterdir()) == ['algorithm.py', 'meta.yaml', 'summary.json'], d
         assert L.read_meta(d)['licence'] in ('MIT', 'Apache-2.0'), d
 

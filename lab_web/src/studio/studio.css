@@ -57,10 +57,14 @@
 .studio-rivals label{display:inline-flex;gap:6px;align-items:center}
 .studio-rivals input{min-height:0!important}
 @media (max-width:1100px){.studio-grid{grid-template-columns:1fr}.studio-code{height:46vh}}
-/* phone landscape: code and the view side by side, short */
+/* phone landscape: code and the view side by side, short; the view first in its column
+   (Gautham, 2026-11-06), the scenario and Run below it */
 @media (orientation:landscape) and (max-height:500px){
   .studio-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .studio-code{height:78vh}
+  .studio-panes{order:-1}
+  .wb:has(.studio) .wb-head>p{display:none}
+  .wb:has(.studio) .wb-head h1{font-size:22px;margin:4px 0}
   .studio-panes.n2{grid-template-columns:1fr}
   .studio-intro{display:none}
 }

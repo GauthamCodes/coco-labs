@@ -58,3 +58,5 @@ whole package suite is re-run at R2.9.
 
 Found and fixed while running the R2.0 baseline: R2's `user_code.py` used `**` on its integer branch, which
 `test_numerics_v3.py` forbids in the model (C `pow`); it now calls `pow()` for integers (exact).
+
+**Update 2026-11-06 (R3 Part A, Gautham: exactness first).** Resolved: the wrapper declares its native summation (`Builtin.summation`) and the measurement adds in that order, so D\* Lite through the API is now **identical** in every metric, including `path_length_m` and `path_cost` (exact-equality test on arena-nav-50 × 4 and depot-narrow-30 × 2). The finding above is kept as found. See ADR 0013 and R2_RESULTS "Gautham's answers".

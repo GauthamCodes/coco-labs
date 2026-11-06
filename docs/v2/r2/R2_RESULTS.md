@@ -35,6 +35,8 @@ never silently).
   (status, every metric, expansions in order, paths cell for cell, every tick's truth pose) ([`data/r21/`](data/r21/README.md)).
 - **D\* Lite**: identical except path length and cost, ≤ 3 × 10⁻¹⁵ relative — its native adapter sums with Python
   3.12's compensated `sum()`. No native result, hash or golden changed (question 1 below).
+  **Resolved 2026-11-06:** the measurement now adds in each built-in's native order; D\* Lite is
+  identical too (see "Gautham's answers" below).
 - The 10% sample of the 1,970 COCO-Bench v0 reference runs re-run with the final code: **197/197 match**; every
   v1/v2/v3 golden unchanged; native gate exact.
 
@@ -221,6 +223,22 @@ Play's frame rate did not get worse.
 7. **Controller and localiser reference entries** for the leaderboard: generate them (hours of MPPI/MCL) in R3?
 8. **The real phone**: plug the Nothing Phone (1) in over USB (debugging on) when convenient; the Studio, its timings
    and Play are then measured on the device.
+
+## Gautham's answers and the decisions taken (2026-11-06)
+
+Recorded at R3 Part A ("land R2"). Principles for the ones left to the agent: exact reproducibility
+first, no hidden failures, honest labels, the smallest change that serves learners and researchers.
+
+| # | Question | Answer / decision | Applied |
+| --- | --- | --- | --- |
+| 1 | D\* Lite's ≤ 3e-15 | **Gautham:** byte-identical; the adapter adds up the path in native order, a 1e-12 tolerance for derived floats only if impossible. | Done without a tolerance: `Builtin.summation` + `measure_path(..., summation)`; exact-equality test on 6 scenarios (ADR 0013 update). No native result, hash or golden changed. |
+| 2 | PR #31 | **Gautham:** retarget to main once R2 merges; the verifier labels it; merged under the standing gate. | R3 Part A3. |
+| 3 | Theta\* drives 0/5 | **Gautham:** keep the visible negative row; re-run the 5 drives recording the costmap cost along each Theta\* path to confirm or reject "hugs corners". | Row unchanged; the re-run is in R3 (Gazebo, `docs/v2/r3/`), result appended here when measured. |
+| 4 | Stock Nav2's start/goal | **Gautham:** report both, stock (unchanged) and "snapped" (start and goal moved to the nearest free cell, as COCO Lab does), clearly labelled. | R3 (Gazebo); stock rows stay as measured. |
+| 5 | Studio on a phone in landscape | **Gautham:** view first. | The drawing heads the right column and the Workbench header is compact on the Studio in phone landscape; `studio_check.mjs` asserts the view starts above Run and inside the first screen (emulated: view y = 323 of 412 px, Run y = 678). |
+| 6 | A 3D view of user runs | **Decision: not now.** The 2D GAME/SIM drawing already shows every thinking event exactly; a 3D view adds rendering work and no measurement. Parked in `docs/IDEAS.md` for R4 (Learn course), where it may serve learners. | Parked. |
+| 7 | Controller/localiser reference entries | **Decision: yes, in R3** (B3: Leaderboard v1 boards for controllers and localisers), generated with resumable runs; until then those boards stay labelled "submissions only". | R3. |
+| 8 | The real phone | Not connected at R3 start (`adb devices` empty); stays pending, measured automatically when it is. | Pending. |
 
 ## Next step (R3 · COCO-Bench v1 and the paper)
 
