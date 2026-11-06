@@ -78,7 +78,8 @@ LABELS = {'user': 'Your algorithm',
           'dwa': 'DWA', 'rpp': 'Regulated Pure Pursuit', 'mppi': 'MPPI', 'mcl': 'MCL',
           'mcl_augmented': 'MCL + augmented injection', 'ekf': 'EKF'}
 #: the worlds the browser ships; the CLI also accepts any World Spec in worlds/
-WORLDS = ('coco_arena_v1', 'coco_arena_v2', 'coco_depot_v1', 'coco_depot_colours_v1')
+WORLDS = ('coco_arena_v1', 'coco_arena_v2', 'coco_depot_v1', 'coco_depot_colours_v1',
+          'coco_depot_clutter_v1')
 BENCHMARKS = Path(__file__).parent / 'benchmarks'
 LIMITS = {'algorithms': 8, 'scenarios': 1000, 'sweep_params': 2, 'sweep_values': 12,
           'sweep_points': 64, 'runs': 20000, 'max_ticks': 12000}
@@ -563,8 +564,11 @@ def _run(desc: Dict, sink=None, on_tick=None, on_event=None) -> Dict:
     if fam == 'control':
         return run_control(w, sc, name, params, desc, desc['max_ticks'], on_tick, on_event)
     if fam == 'localisation':
-        return run_localisation(w, sc, name, params, desc, desc['max_ticks'],
-                                desc['options'].get('kidnap_at_s'), on_tick, on_event)
+        kid = desc['options'].get('kidnap_at_s')
+        if kid is None:   # R3: a v1 kidnap scenario carries its own
+            kid = sc.get('kidnap_at_s')
+        return run_localisation(w, sc, name, params, desc, desc['max_ticks'], kid, on_tick,
+                                on_event)
     return run_fulltask(w, sc, name, params, desc)
 
 

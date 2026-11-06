@@ -406,6 +406,21 @@ def _path_cells(m, out, s, t):
 
 # -- runs in the Arena ---------------------------------------------------------------------------
 
+#: R3 (COCO-Bench v1): the Arena settings a scenario may carry as conditions
+CONDITION_KEYS = ('actors.on', 'actors.yield', 'localise.mcl.init')
+
+
+def _conditions(scenario: Dict) -> List[str]:
+    """A v1 scenario's ``config`` (sent at tick 0 after the family's own); [] for every other."""
+    cfg = list(scenario.get('config') or [])
+    for c in cfg:
+        if not isinstance(c, str) or c.partition('=')[0] not in CONDITION_KEYS:
+            raise ValueError(f'scenario condition {c!r}: one of {CONDITION_KEYS}')
+    if any(c.startswith('actors.') for c in cfg):
+        from . import games  # noqa: F401 -- registers the Arena's 'actors' subsystem
+    return cfg
+
+
 def _arena_at(world, scenario: Dict, planner: str = 'astar') -> Arena:
     spec = copy.deepcopy(world.spec)
     dx, dy = spec['world_to_map']
@@ -469,6 +484,7 @@ def run_control(world, scenario: Dict, name: str, params: Dict, descriptor: Dict
                 v = ','.join(str(x) for x in value) if isinstance(value, list) else str(value)
                 cfg.append(f'move.{key}={v}')
         cfg.append(f'move.controller={name}')
+        cfg += _conditions(scenario)
         goal = tuple(scenario['goal'][:2])
         events = [InputEvent(0, 'config', choice=c) for c in cfg]
         events.append(InputEvent(0, 'goal', x=goal[0], y=goal[1]))
@@ -523,6 +539,7 @@ def run_localisation(world, scenario: Dict, name: str, params: Dict, descriptor:
         if kind == 'mcl':
             cfg.append('localise.mcl.injection=' +
                        ('augmented' if name == 'mcl_augmented' else 'none'))
+        cfg += _conditions(scenario)   # before the filter is made (localise.mcl.init)
         cfg.append('localise.filter=' + kind)
         goal = tuple(scenario['goal'][:2])
         events = [InputEvent(0, 'config', choice=c) for c in cfg]

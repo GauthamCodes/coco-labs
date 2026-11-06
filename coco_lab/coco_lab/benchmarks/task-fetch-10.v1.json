@@ -1,0 +1,245 @@
+{
+ "schema": "coco.bench.suite.v1",
+ "id": "task-fetch-10",
+ "version": 1,
+ "title": "Full task: the six Fetch Rush phone rounds and the four colour rounds",
+ "world": null,
+ "worlds": [
+  "coco_depot_v1",
+  "coco_depot_colours_v1"
+ ],
+ "world_sha256": {
+  "coco_depot_v1": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841",
+  "coco_depot_colours_v1": "6a16532b6a9cff8a8609fc74bc48265b3d7b313ca66c3ec54d79c2c83d6d0eec"
+ },
+ "families": [
+  "fulltask"
+ ],
+ "metrics": {
+  "fulltask": [
+   "deliveries",
+   "orders",
+   "contacts",
+   "net_deliveries",
+   "time_to_complete_s",
+   "time_used_s",
+   "path_efficiency",
+   "ticks",
+   "timer_s",
+   "compute_ms"
+  ]
+ },
+ "generator": {
+  "kind": "rounds",
+  "tool": "tools/r3/make_suites_v1.py",
+  "rule": "the committed rounds only (R1): Fetch Rush rules 5 phone seeds 1-6, Fetch by colour rules 2 (actors yield)",
+  "name": "task-fetch-10: the prompt asked for 12; the committed rounds are 6 phone + 4 colour = 10, and new rounds are not invented"
+ },
+ "tiers": {
+  "method": "mean percentile rank of the tier features; thirds by (difficulty, id)",
+  "features": [
+   "route_m",
+   "orders"
+  ],
+  "counts": {
+   "easy": 4,
+   "medium": 3,
+   "hard": 3
+  },
+  "cut_difficulty": [
+   0.25,
+   0.638889
+  ]
+ },
+ "held_out": {
+  "n": 0,
+  "scheme": "none: committed rounds only (stated limitation)"
+ },
+ "experiments": [
+  {
+   "world": "coco_depot_v1",
+   "scenarios": {
+    "kind": "rounds",
+    "game": "fetch_rush",
+    "rounds": [
+     {
+      "seed": 1,
+      "mode": "phone"
+     },
+     {
+      "seed": 2,
+      "mode": "phone"
+     },
+     {
+      "seed": 3,
+      "mode": "phone"
+     },
+     {
+      "seed": 4,
+      "mode": "phone"
+     },
+     {
+      "seed": 5,
+      "mode": "phone"
+     },
+     {
+      "seed": 6,
+      "mode": "phone"
+     }
+    ]
+   }
+  },
+  {
+   "world": "coco_depot_colours_v1",
+   "scenarios": {
+    "kind": "rounds",
+    "game": "fetch_colour",
+    "colours": [
+     "red",
+     "green",
+     "blue",
+     "yellow"
+    ]
+   }
+  }
+ ],
+ "datasheet": "docs/bench/v1/task-fetch-10.md",
+ "scenarios": [
+  {
+   "id": "fr_phone_1",
+   "world": "coco_depot_v1",
+   "game": "fetch_rush",
+   "round": 1,
+   "mode": "phone",
+   "rules": 5,
+   "features": {
+    "route_m": 47.086,
+    "orders": 2
+   },
+   "difficulty": 0.805556,
+   "tier": "hard"
+  },
+  {
+   "id": "fr_phone_2",
+   "world": "coco_depot_v1",
+   "game": "fetch_rush",
+   "round": 2,
+   "mode": "phone",
+   "rules": 5,
+   "features": {
+    "route_m": 37.1375,
+    "orders": 2
+   },
+   "difficulty": 0.638889,
+   "tier": "medium"
+  },
+  {
+   "id": "fr_phone_3",
+   "world": "coco_depot_v1",
+   "game": "fetch_rush",
+   "round": 3,
+   "mode": "phone",
+   "rules": 5,
+   "features": {
+    "route_m": 40.2576,
+    "orders": 2
+   },
+   "difficulty": 0.75,
+   "tier": "hard"
+  },
+  {
+   "id": "fr_phone_4",
+   "world": "coco_depot_v1",
+   "game": "fetch_rush",
+   "round": 4,
+   "mode": "phone",
+   "rules": 5,
+   "features": {
+    "route_m": 37.1375,
+    "orders": 2
+   },
+   "difficulty": 0.638889,
+   "tier": "medium"
+  },
+  {
+   "id": "fr_phone_5",
+   "world": "coco_depot_v1",
+   "game": "fetch_rush",
+   "round": 5,
+   "mode": "phone",
+   "rules": 5,
+   "features": {
+    "route_m": 37.1375,
+    "orders": 2
+   },
+   "difficulty": 0.638889,
+   "tier": "medium"
+  },
+  {
+   "id": "fr_phone_6",
+   "world": "coco_depot_v1",
+   "game": "fetch_rush",
+   "round": 6,
+   "mode": "phone",
+   "rules": 5,
+   "features": {
+    "route_m": 50.586,
+    "orders": 2
+   },
+   "difficulty": 0.861111,
+   "tier": "hard"
+  },
+  {
+   "id": "colour_red",
+   "world": "coco_depot_colours_v1",
+   "game": "fetch_colour",
+   "colour": "red",
+   "rules": 2,
+   "features": {
+    "route_m": 10.9225,
+    "orders": 1
+   },
+   "difficulty": 0.25,
+   "tier": "easy"
+  },
+  {
+   "id": "colour_green",
+   "world": "coco_depot_colours_v1",
+   "game": "fetch_colour",
+   "colour": "green",
+   "rules": 2,
+   "features": {
+    "route_m": 9.3669,
+    "orders": 1
+   },
+   "difficulty": 0.194444,
+   "tier": "easy"
+  },
+  {
+   "id": "colour_blue",
+   "world": "coco_depot_colours_v1",
+   "game": "fetch_colour",
+   "colour": "blue",
+   "rules": 2,
+   "features": {
+    "route_m": 8.4456,
+    "orders": 1
+   },
+   "difficulty": 0.138889,
+   "tier": "easy"
+  },
+  {
+   "id": "colour_yellow",
+   "world": "coco_depot_colours_v1",
+   "game": "fetch_colour",
+   "colour": "yellow",
+   "rules": 2,
+   "features": {
+    "route_m": 7.7,
+    "orders": 1
+   },
+   "difficulty": 0.083333,
+   "tier": "easy"
+  }
+ ]
+}

@@ -1,0 +1,975 @@
+{
+ "schema": "coco.bench.suite.v1",
+ "id": "ctrl-dynamic-30",
+ "version": 1,
+ "title": "Control: moving forklifts and walkers, yielding and not (scenario rules)",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841",
+ "families": [
+  "control"
+ ],
+ "metrics": {
+  "control": [
+   "time_s",
+   "ticks",
+   "path_length_m",
+   "min_clearance_m",
+   "mean_clearance_m",
+   "heading_change_rad",
+   "contacts",
+   "expansions",
+   "plans",
+   "final_goal_distance_m",
+   "compute_ms"
+  ]
+ },
+ "generator": {
+  "kind": "paired_rules",
+  "seed": 7401,
+  "pool": 1500,
+  "min_separation_m": 6.0,
+  "rule": ">= 3 m of the reference path within 1.5 m of an actor lane; each pair run with the actors yielding (scenario rule: Fetch Rush rules 5) and not yielding (rules 4)",
+  "tool": "tools/r3/make_suites_v1.py",
+  "module": "coco_lab.bench_v1"
+ },
+ "tiers": {
+  "method": "mean percentile rank of the tier features; thirds by (difficulty, id); over the pairs, both rules of a pair in its tier",
+  "features": [
+   "actor_exposure_m",
+   "path_length_m",
+   "min_clearance_m"
+  ],
+  "counts": {
+   "easy": 10,
+   "medium": 10,
+   "hard": 10
+  },
+  "cut_difficulty": [
+   0.47619,
+   0.595238
+  ]
+ },
+ "held_out": {
+  "n": 10,
+  "scheme": "ADR 0014 (secret salt, per head) in CI; R2 public salt locally",
+  "generator": "the same, another seed"
+ },
+ "datasheet": "docs/bench/v1/ctrl-dynamic-30.md",
+ "scenarios": [
+  {
+   "id": "d001_yield",
+   "start": [
+    42.650000000000006,
+    9.25,
+    -2.8113892129721454
+   ],
+   "goal": [
+    16.35,
+    8.55
+   ],
+   "seed": 2180281141499324,
+   "start_zone": "zone_loading_dock",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 26.5899,
+    "min_clearance_m": 0.55,
+    "narrow_run_m": 3.2,
+    "turns": 3,
+    "zones": 1,
+    "actor_exposure_m": 6.0
+   },
+   "pair": "d001",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.285714,
+   "tier": "easy"
+  },
+  {
+   "id": "d002_yield",
+   "start": [
+    35.85,
+    12.05,
+    3.1267085121643854
+   ],
+   "goal": [
+    30.25,
+    5.65
+   ],
+   "seed": 5689945510554590,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 8.7196,
+    "min_clearance_m": 2.2259,
+    "narrow_run_m": 0.0,
+    "turns": 2,
+    "zones": 1,
+    "actor_exposure_m": 3.2042
+   },
+   "pair": "d002",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.047619,
+   "tier": "easy"
+  },
+  {
+   "id": "d003_yield",
+   "start": [
+    41.25,
+    10.05,
+    1.4951052866247698
+   ],
+   "goal": [
+    6.45,
+    21.75
+   ],
+   "seed": 6053515583301053,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": "zone_office",
+   "features": {
+    "path_length_m": 51.4245,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 13.1213,
+    "turns": 15,
+    "zones": 3,
+    "actor_exposure_m": 8.2024
+   },
+   "pair": "d003",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.809524,
+   "tier": "hard"
+  },
+  {
+   "id": "d004_yield",
+   "start": [
+    36.65,
+    29.950000000000003,
+    -2.989460398375582
+   ],
+   "goal": [
+    26.150000000000002,
+    3.55
+   ],
+   "seed": 6102093302185206,
+   "start_zone": "zone_mezzanine",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 31.2179,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 2.5728,
+    "turns": 9,
+    "zones": 2,
+    "actor_exposure_m": 8.7971
+   },
+   "pair": "d004",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.571429,
+   "tier": "medium"
+  },
+  {
+   "id": "d005_yield",
+   "start": [
+    36.95,
+    12.55,
+    1.4358782817394689
+   ],
+   "goal": [
+    11.450000000000001,
+    1.5500000000000003
+   ],
+   "seed": 2341896235110146,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": "zone_workshop",
+   "features": {
+    "path_length_m": 30.1392,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 2.3799,
+    "turns": 8,
+    "zones": 2,
+    "actor_exposure_m": 7.9426
+   },
+   "pair": "d005",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.642857,
+   "tier": "hard"
+  },
+  {
+   "id": "d006_yield",
+   "start": [
+    24.650000000000002,
+    21.85,
+    1.361996117997613
+   ],
+   "goal": [
+    45.050000000000004,
+    6.3500000000000005
+   ],
+   "seed": 5862697192261656,
+   "start_zone": "zone_high_bay",
+   "goal_zone": "zone_loading_dock",
+   "features": {
+    "path_length_m": 27.5818,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 6.5142,
+    "turns": 6,
+    "zones": 3,
+    "actor_exposure_m": 9.1924
+   },
+   "pair": "d006",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.595238,
+   "tier": "medium"
+  },
+  {
+   "id": "d007_yield",
+   "start": [
+    13.15,
+    3.0500000000000003,
+    -2.240051135338904
+   ],
+   "goal": [
+    46.85,
+    31.05
+   ],
+   "seed": 4982174188774119,
+   "start_zone": "zone_workshop",
+   "goal_zone": "zone_mezzanine",
+   "features": {
+    "path_length_m": 50.6286,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 4.0071,
+    "turns": 9,
+    "zones": 4,
+    "actor_exposure_m": 14.061
+   },
+   "pair": "d007",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.761905,
+   "tier": "hard"
+  },
+  {
+   "id": "d008_yield",
+   "start": [
+    42.45,
+    29.05,
+    -0.9179479180159285
+   ],
+   "goal": [
+    20.25,
+    11.350000000000001
+   ],
+   "seed": 7565535402656576,
+   "start_zone": "zone_mezzanine",
+   "goal_zone": "zone_forklift_lanes",
+   "features": {
+    "path_length_m": 33.5735,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.4899,
+    "turns": 12,
+    "zones": 3,
+    "actor_exposure_m": 4.6841
+   },
+   "pair": "d008",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.47619,
+   "tier": "easy"
+  },
+  {
+   "id": "d009_yield",
+   "start": [
+    41.95,
+    9.25,
+    -1.7766870143393012
+   ],
+   "goal": [
+    28.55,
+    22.25
+   ],
+   "seed": 4522637767668394,
+   "start_zone": "zone_loading_dock",
+   "goal_zone": "zone_high_bay",
+   "features": {
+    "path_length_m": 19.6635,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 4.8142,
+    "turns": 4,
+    "zones": 3,
+    "actor_exposure_m": 8.9095
+   },
+   "pair": "d009",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.47619,
+   "tier": "medium"
+  },
+  {
+   "id": "d010_yield",
+   "start": [
+    14.65,
+    21.450000000000003,
+    -0.6806955146571219
+   ],
+   "goal": [
+    29.05,
+    6.15
+   ],
+   "seed": 5228829542461674,
+   "start_zone": null,
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 24.135,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 2.6142,
+    "turns": 9,
+    "zones": 1,
+    "actor_exposure_m": 9.1426
+   },
+   "pair": "d010",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.52381,
+   "tier": "medium"
+  },
+  {
+   "id": "d011_yield",
+   "start": [
+    40.050000000000004,
+    26.25,
+    -1.3214456371509473
+   ],
+   "goal": [
+    41.85,
+    2.5500000000000003
+   ],
+   "seed": 3136228150952407,
+   "start_zone": "zone_mezzanine",
+   "goal_zone": "zone_loading_dock",
+   "features": {
+    "path_length_m": 34.535,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 4.7799,
+    "turns": 13,
+    "zones": 3,
+    "actor_exposure_m": 5.2799
+   },
+   "pair": "d011",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.690476,
+   "tier": "hard"
+  },
+  {
+   "id": "d012_yield",
+   "start": [
+    43.150000000000006,
+    20.75,
+    -1.2980852856780427
+   ],
+   "goal": [
+    14.75,
+    6.65
+   ],
+   "seed": 5728400625893859,
+   "start_zone": null,
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 34.2404,
+    "min_clearance_m": 0.45,
+    "narrow_run_m": 0.2828,
+    "turns": 6,
+    "zones": 1,
+    "actor_exposure_m": 15.4426
+   },
+   "pair": "d012",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.619048,
+   "tier": "hard"
+  },
+  {
+   "id": "d013_yield",
+   "start": [
+    35.45,
+    19.950000000000003,
+    3.122367541339976
+   ],
+   "goal": [
+    30.650000000000002,
+    30.150000000000002
+   ],
+   "seed": 3400118807426448,
+   "start_zone": null,
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 12.1882,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 2.2142,
+    "turns": 6,
+    "zones": 1,
+    "actor_exposure_m": 3.6071
+   },
+   "pair": "d013",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.285714,
+   "tier": "easy"
+  },
+  {
+   "id": "d014_yield",
+   "start": [
+    22.85,
+    13.55,
+    -0.8048618900336479
+   ],
+   "goal": [
+    31.65,
+    17.35
+   ],
+   "seed": 4748560066052255,
+   "start_zone": null,
+   "goal_zone": "zone_high_bay",
+   "features": {
+    "path_length_m": 10.7841,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 2.1142,
+    "turns": 3,
+    "zones": 1,
+    "actor_exposure_m": 3.087
+   },
+   "pair": "d014",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.190476,
+   "tier": "easy"
+  },
+  {
+   "id": "d015_yield",
+   "start": [
+    6.75,
+    12.15,
+    1.519226138896367
+   ],
+   "goal": [
+    46.650000000000006,
+    23.25
+   ],
+   "seed": 8610737594735665,
+   "start_zone": "zone_workshop",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 51.8007,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.8314,
+    "turns": 12,
+    "zones": 2,
+    "actor_exposure_m": 3.1
+   },
+   "pair": "d015",
+   "actor_rule": "yield",
+   "config": [
+    "actors.on=1",
+    "actors.yield=1"
+   ],
+   "difficulty": 0.52381,
+   "tier": "medium"
+  },
+  {
+   "id": "d001_no_yield",
+   "start": [
+    42.650000000000006,
+    9.25,
+    -2.8113892129721454
+   ],
+   "goal": [
+    16.35,
+    8.55
+   ],
+   "seed": 2180281141499324,
+   "start_zone": "zone_loading_dock",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 26.5899,
+    "min_clearance_m": 0.55,
+    "narrow_run_m": 3.2,
+    "turns": 3,
+    "zones": 1,
+    "actor_exposure_m": 6.0
+   },
+   "pair": "d001",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.285714,
+   "tier": "easy"
+  },
+  {
+   "id": "d002_no_yield",
+   "start": [
+    35.85,
+    12.05,
+    3.1267085121643854
+   ],
+   "goal": [
+    30.25,
+    5.65
+   ],
+   "seed": 5689945510554590,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 8.7196,
+    "min_clearance_m": 2.2259,
+    "narrow_run_m": 0.0,
+    "turns": 2,
+    "zones": 1,
+    "actor_exposure_m": 3.2042
+   },
+   "pair": "d002",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.047619,
+   "tier": "easy"
+  },
+  {
+   "id": "d003_no_yield",
+   "start": [
+    41.25,
+    10.05,
+    1.4951052866247698
+   ],
+   "goal": [
+    6.45,
+    21.75
+   ],
+   "seed": 6053515583301053,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": "zone_office",
+   "features": {
+    "path_length_m": 51.4245,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 13.1213,
+    "turns": 15,
+    "zones": 3,
+    "actor_exposure_m": 8.2024
+   },
+   "pair": "d003",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.809524,
+   "tier": "hard"
+  },
+  {
+   "id": "d004_no_yield",
+   "start": [
+    36.65,
+    29.950000000000003,
+    -2.989460398375582
+   ],
+   "goal": [
+    26.150000000000002,
+    3.55
+   ],
+   "seed": 6102093302185206,
+   "start_zone": "zone_mezzanine",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 31.2179,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 2.5728,
+    "turns": 9,
+    "zones": 2,
+    "actor_exposure_m": 8.7971
+   },
+   "pair": "d004",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.571429,
+   "tier": "medium"
+  },
+  {
+   "id": "d005_no_yield",
+   "start": [
+    36.95,
+    12.55,
+    1.4358782817394689
+   ],
+   "goal": [
+    11.450000000000001,
+    1.5500000000000003
+   ],
+   "seed": 2341896235110146,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": "zone_workshop",
+   "features": {
+    "path_length_m": 30.1392,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 2.3799,
+    "turns": 8,
+    "zones": 2,
+    "actor_exposure_m": 7.9426
+   },
+   "pair": "d005",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.642857,
+   "tier": "hard"
+  },
+  {
+   "id": "d006_no_yield",
+   "start": [
+    24.650000000000002,
+    21.85,
+    1.361996117997613
+   ],
+   "goal": [
+    45.050000000000004,
+    6.3500000000000005
+   ],
+   "seed": 5862697192261656,
+   "start_zone": "zone_high_bay",
+   "goal_zone": "zone_loading_dock",
+   "features": {
+    "path_length_m": 27.5818,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 6.5142,
+    "turns": 6,
+    "zones": 3,
+    "actor_exposure_m": 9.1924
+   },
+   "pair": "d006",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.595238,
+   "tier": "medium"
+  },
+  {
+   "id": "d007_no_yield",
+   "start": [
+    13.15,
+    3.0500000000000003,
+    -2.240051135338904
+   ],
+   "goal": [
+    46.85,
+    31.05
+   ],
+   "seed": 4982174188774119,
+   "start_zone": "zone_workshop",
+   "goal_zone": "zone_mezzanine",
+   "features": {
+    "path_length_m": 50.6286,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 4.0071,
+    "turns": 9,
+    "zones": 4,
+    "actor_exposure_m": 14.061
+   },
+   "pair": "d007",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.761905,
+   "tier": "hard"
+  },
+  {
+   "id": "d008_no_yield",
+   "start": [
+    42.45,
+    29.05,
+    -0.9179479180159285
+   ],
+   "goal": [
+    20.25,
+    11.350000000000001
+   ],
+   "seed": 7565535402656576,
+   "start_zone": "zone_mezzanine",
+   "goal_zone": "zone_forklift_lanes",
+   "features": {
+    "path_length_m": 33.5735,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.4899,
+    "turns": 12,
+    "zones": 3,
+    "actor_exposure_m": 4.6841
+   },
+   "pair": "d008",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.47619,
+   "tier": "easy"
+  },
+  {
+   "id": "d009_no_yield",
+   "start": [
+    41.95,
+    9.25,
+    -1.7766870143393012
+   ],
+   "goal": [
+    28.55,
+    22.25
+   ],
+   "seed": 4522637767668394,
+   "start_zone": "zone_loading_dock",
+   "goal_zone": "zone_high_bay",
+   "features": {
+    "path_length_m": 19.6635,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 4.8142,
+    "turns": 4,
+    "zones": 3,
+    "actor_exposure_m": 8.9095
+   },
+   "pair": "d009",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.47619,
+   "tier": "medium"
+  },
+  {
+   "id": "d010_no_yield",
+   "start": [
+    14.65,
+    21.450000000000003,
+    -0.6806955146571219
+   ],
+   "goal": [
+    29.05,
+    6.15
+   ],
+   "seed": 5228829542461674,
+   "start_zone": null,
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 24.135,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 2.6142,
+    "turns": 9,
+    "zones": 1,
+    "actor_exposure_m": 9.1426
+   },
+   "pair": "d010",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.52381,
+   "tier": "medium"
+  },
+  {
+   "id": "d011_no_yield",
+   "start": [
+    40.050000000000004,
+    26.25,
+    -1.3214456371509473
+   ],
+   "goal": [
+    41.85,
+    2.5500000000000003
+   ],
+   "seed": 3136228150952407,
+   "start_zone": "zone_mezzanine",
+   "goal_zone": "zone_loading_dock",
+   "features": {
+    "path_length_m": 34.535,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 4.7799,
+    "turns": 13,
+    "zones": 3,
+    "actor_exposure_m": 5.2799
+   },
+   "pair": "d011",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.690476,
+   "tier": "hard"
+  },
+  {
+   "id": "d012_no_yield",
+   "start": [
+    43.150000000000006,
+    20.75,
+    -1.2980852856780427
+   ],
+   "goal": [
+    14.75,
+    6.65
+   ],
+   "seed": 5728400625893859,
+   "start_zone": null,
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 34.2404,
+    "min_clearance_m": 0.45,
+    "narrow_run_m": 0.2828,
+    "turns": 6,
+    "zones": 1,
+    "actor_exposure_m": 15.4426
+   },
+   "pair": "d012",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.619048,
+   "tier": "hard"
+  },
+  {
+   "id": "d013_no_yield",
+   "start": [
+    35.45,
+    19.950000000000003,
+    3.122367541339976
+   ],
+   "goal": [
+    30.650000000000002,
+    30.150000000000002
+   ],
+   "seed": 3400118807426448,
+   "start_zone": null,
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 12.1882,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 2.2142,
+    "turns": 6,
+    "zones": 1,
+    "actor_exposure_m": 3.6071
+   },
+   "pair": "d013",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.285714,
+   "tier": "easy"
+  },
+  {
+   "id": "d014_no_yield",
+   "start": [
+    22.85,
+    13.55,
+    -0.8048618900336479
+   ],
+   "goal": [
+    31.65,
+    17.35
+   ],
+   "seed": 4748560066052255,
+   "start_zone": null,
+   "goal_zone": "zone_high_bay",
+   "features": {
+    "path_length_m": 10.7841,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 2.1142,
+    "turns": 3,
+    "zones": 1,
+    "actor_exposure_m": 3.087
+   },
+   "pair": "d014",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.190476,
+   "tier": "easy"
+  },
+  {
+   "id": "d015_no_yield",
+   "start": [
+    6.75,
+    12.15,
+    1.519226138896367
+   ],
+   "goal": [
+    46.650000000000006,
+    23.25
+   ],
+   "seed": 8610737594735665,
+   "start_zone": "zone_workshop",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 51.8007,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.8314,
+    "turns": 12,
+    "zones": 2,
+    "actor_exposure_m": 3.1
+   },
+   "pair": "d015",
+   "actor_rule": "no_yield",
+   "config": [
+    "actors.on=1"
+   ],
+   "difficulty": 0.52381,
+   "tier": "medium"
+  }
+ ]
+}

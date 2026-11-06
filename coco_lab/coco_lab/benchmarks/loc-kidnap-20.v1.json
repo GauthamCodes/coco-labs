@@ -1,0 +1,685 @@
+{
+ "schema": "coco.bench.suite.v1",
+ "id": "loc-kidnap-20",
+ "version": 1,
+ "title": "Localisation: the kidnapped robot (carried >= 5 m at 12 s, odometry untold)",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841",
+ "families": [
+  "localisation"
+ ],
+ "metrics": {
+  "localisation": [
+   "time_s",
+   "ticks",
+   "path_length_m",
+   "min_clearance_m",
+   "mean_clearance_m",
+   "heading_change_rad",
+   "contacts",
+   "expansions",
+   "plans",
+   "final_goal_distance_m",
+   "final_err_xy_m",
+   "final_err_yaw_rad",
+   "mean_err_xy_m",
+   "max_err_xy_m",
+   "converged_s",
+   "recovery_s",
+   "compute_ms"
+  ]
+ },
+ "generator": {
+  "kind": "localisation",
+  "seed": 7701,
+  "min_separation_m": 6.0,
+  "kidnap_min_m": 5.0,
+  "tool": "tools/r3/make_suites_v1.py",
+  "module": "coco_lab.bench_v1"
+ },
+ "tiers": {
+  "method": "mean percentile rank of the tier features; thirds by (difficulty, id)",
+  "features": [
+   "kidnap_m",
+   "path_length_m",
+   "turns"
+  ],
+  "counts": {
+   "easy": 7,
+   "medium": 7,
+   "hard": 6
+  },
+  "cut_difficulty": [
+   0.298246,
+   0.649123
+  ]
+ },
+ "held_out": {
+  "n": 6,
+  "scheme": "ADR 0014 (secret salt, per head) in CI; R2 public salt locally",
+  "generator": "the same, another seed"
+ },
+ "datasheet": "docs/bench/v1/loc-kidnap-20.md",
+ "scenarios": [
+  {
+   "id": "q001",
+   "start": [
+    6.15,
+    17.150000000000002,
+    -1.5521531449077568
+   ],
+   "goal": [
+    6.25,
+    23.650000000000002
+   ],
+   "seed": 2566170091081331,
+   "start_zone": "zone_workshop",
+   "goal_zone": "zone_office",
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    25.35,
+    1.75
+   ],
+   "features": {
+    "path_length_m": 31.2125,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 25.0941,
+    "turns": 15,
+    "zones": 2,
+    "actor_exposure_m": 0.0,
+    "kidnap_m": 24.613
+   },
+   "difficulty": 0.614035,
+   "tier": "medium"
+  },
+  {
+   "id": "q002",
+   "start": [
+    0.8500000000000001,
+    4.65,
+    -0.12619631648634932
+   ],
+   "goal": [
+    10.65,
+    27.150000000000002
+   ],
+   "seed": 3106851176238422,
+   "start_zone": "zone_workshop",
+   "goal_zone": "zone_office",
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    18.85,
+    11.65
+   ],
+   "features": {
+    "path_length_m": 37.5894,
+    "min_clearance_m": 0.1743,
+    "narrow_run_m": 17.6284,
+    "turns": 22,
+    "zones": 2,
+    "actor_exposure_m": 0.0,
+    "kidnap_m": 19.3132
+   },
+   "difficulty": 0.666667,
+   "tier": "hard"
+  },
+  {
+   "id": "q003",
+   "start": [
+    12.15,
+    23.85,
+    -0.934603091977265
+   ],
+   "goal": [
+    47.050000000000004,
+    22.450000000000003
+   ],
+   "seed": 3718808346963167,
+   "start_zone": "zone_office",
+   "goal_zone": null,
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    1.9500000000000002,
+    26.05
+   ],
+   "features": {
+    "path_length_m": 41.0439,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 11.7142,
+    "turns": 9,
+    "zones": 3,
+    "actor_exposure_m": 0.0,
+    "kidnap_m": 10.4346
+   },
+   "difficulty": 0.429825,
+   "tier": "medium"
+  },
+  {
+   "id": "q004",
+   "start": [
+    45.550000000000004,
+    9.350000000000001,
+    1.946252070588252
+   ],
+   "goal": [
+    9.25,
+    21.25
+   ],
+   "seed": 7772663150441946,
+   "start_zone": "zone_loading_dock",
+   "goal_zone": "zone_office",
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    2.25,
+    30.05
+   ],
+   "features": {
+    "path_length_m": 48.0316,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 9.9314,
+    "turns": 14,
+    "zones": 4,
+    "actor_exposure_m": 11.8581,
+    "kidnap_m": 47.9935
+   },
+   "difficulty": 0.903509,
+   "tier": "hard"
+  },
+  {
+   "id": "q005",
+   "start": [
+    39.75,
+    1.5500000000000003,
+    -0.30330488802135624
+   ],
+   "goal": [
+    46.25,
+    11.55
+   ],
+   "seed": 7869800298025961,
+   "start_zone": "zone_loading_dock",
+   "goal_zone": "zone_forklift_lanes",
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    38.550000000000004,
+    26.450000000000003
+   ],
+   "features": {
+    "path_length_m": 12.6924,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 2.9728,
+    "turns": 4,
+    "zones": 2,
+    "actor_exposure_m": 2.3071,
+    "kidnap_m": 24.9289
+   },
+   "difficulty": 0.263158,
+   "tier": "easy"
+  },
+  {
+   "id": "q006",
+   "start": [
+    45.75,
+    31.150000000000002,
+    1.3978378457912912
+   ],
+   "goal": [
+    1.05,
+    8.55
+   ],
+   "seed": 2736296084196896,
+   "start_zone": "zone_mezzanine",
+   "goal_zone": "zone_workshop",
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    1.25,
+    23.75
+   ],
+   "features": {
+    "path_length_m": 59.5517,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.5142,
+    "turns": 25,
+    "zones": 3,
+    "actor_exposure_m": 0.0,
+    "kidnap_m": 45.1111
+   },
+   "difficulty": 0.982456,
+   "tier": "hard"
+  },
+  {
+   "id": "q007",
+   "start": [
+    43.35,
+    28.450000000000003,
+    0.9115074961351599
+   ],
+   "goal": [
+    6.550000000000001,
+    24.75
+   ],
+   "seed": 5877941066878764,
+   "start_zone": "zone_mezzanine",
+   "goal_zone": "zone_office",
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    23.150000000000002,
+    6.45
+   ],
+   "features": {
+    "path_length_m": 44.6255,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 8.6971,
+    "turns": 9,
+    "zones": 3,
+    "actor_exposure_m": 0.0,
+    "kidnap_m": 29.867
+   },
+   "difficulty": 0.657895,
+   "tier": "hard"
+  },
+  {
+   "id": "q008",
+   "start": [
+    15.15,
+    21.55,
+    2.651008952039475
+   ],
+   "goal": [
+    34.45,
+    30.950000000000003
+   ],
+   "seed": 5270438129966309,
+   "start_zone": null,
+   "goal_zone": "zone_mezzanine",
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    46.35,
+    26.25
+   ],
+   "features": {
+    "path_length_m": 24.4238,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 6.7142,
+    "turns": 12,
+    "zones": 2,
+    "actor_exposure_m": 0.0,
+    "kidnap_m": 31.552
+   },
+   "difficulty": 0.596491,
+   "tier": "medium"
+  },
+  {
+   "id": "q009",
+   "start": [
+    18.45,
+    1.35,
+    0.6209694980625948
+   ],
+   "goal": [
+    30.55,
+    12.75
+   ],
+   "seed": 7984515652991036,
+   "start_zone": null,
+   "goal_zone": "zone_forklift_lanes",
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    0.55,
+    21.85
+   ],
+   "features": {
+    "path_length_m": 16.822,
+    "min_clearance_m": 0.672,
+    "narrow_run_m": 0.0,
+    "turns": 3,
+    "zones": 1,
+    "actor_exposure_m": 6.4811,
+    "kidnap_m": 27.2151
+   },
+   "difficulty": 0.298246,
+   "tier": "easy"
+  },
+  {
+   "id": "q010",
+   "start": [
+    25.950000000000003,
+    16.75,
+    -0.2896787228544526
+   ],
+   "goal": [
+    22.150000000000002,
+    6.3500000000000005
+   ],
+   "seed": 93991609054827,
+   "start_zone": "zone_high_bay",
+   "goal_zone": null,
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    37.45,
+    17.45
+   ],
+   "features": {
+    "path_length_m": 12.3255,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 1.8314,
+    "turns": 6,
+    "zones": 2,
+    "actor_exposure_m": 6.187,
+    "kidnap_m": 11.5213
+   },
+   "difficulty": 0.192982,
+   "tier": "easy"
+  },
+  {
+   "id": "q011",
+   "start": [
+    3.55,
+    12.15,
+    -0.400190022996167
+   ],
+   "goal": [
+    31.25,
+    30.650000000000002
+   ],
+   "seed": 6417588895044253,
+   "start_zone": "zone_workshop",
+   "goal_zone": null,
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    35.75,
+    17.05
+   ],
+   "features": {
+    "path_length_m": 41.4392,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 7.5899,
+    "turns": 19,
+    "zones": 2,
+    "actor_exposure_m": 0.0,
+    "kidnap_m": 32.5707
+   },
+   "difficulty": 0.842105,
+   "tier": "hard"
+  },
+  {
+   "id": "q012",
+   "start": [
+    25.150000000000002,
+    11.75,
+    -0.5898119560794788
+   ],
+   "goal": [
+    26.650000000000002,
+    31.05
+   ],
+   "seed": 8395072563716287,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": null,
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    14.450000000000001,
+    8.65
+   ],
+   "features": {
+    "path_length_m": 20.2527,
+    "min_clearance_m": 0.2599,
+    "narrow_run_m": 3.5,
+    "turns": 3,
+    "zones": 2,
+    "actor_exposure_m": 4.2657,
+    "kidnap_m": 11.14
+   },
+   "difficulty": 0.175439,
+   "tier": "easy"
+  },
+  {
+   "id": "q013",
+   "start": [
+    31.550000000000004,
+    14.25,
+    -3.0634420236046793
+   ],
+   "goal": [
+    25.75,
+    18.150000000000002
+   ],
+   "seed": 2494776655008726,
+   "start_zone": null,
+   "goal_zone": "zone_high_bay",
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    45.550000000000004,
+    18.45
+   ],
+   "features": {
+    "path_length_m": 9.0941,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 4.6071,
+    "turns": 6,
+    "zones": 1,
+    "actor_exposure_m": 0.0,
+    "kidnap_m": 14.6164
+   },
+   "difficulty": 0.210526,
+   "tier": "easy"
+  },
+  {
+   "id": "q014",
+   "start": [
+    44.35,
+    22.150000000000002,
+    0.45767380883430775
+   ],
+   "goal": [
+    19.35,
+    2.6500000000000004
+   ],
+   "seed": 558252849800055,
+   "start_zone": null,
+   "goal_zone": null,
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    40.050000000000004,
+    28.450000000000003
+   ],
+   "features": {
+    "path_length_m": 33.0772,
+    "min_clearance_m": 0.35,
+    "narrow_run_m": 0.4243,
+    "turns": 3,
+    "zones": 1,
+    "actor_exposure_m": 12.1296,
+    "kidnap_m": 7.6276
+   },
+   "difficulty": 0.245614,
+   "tier": "easy"
+  },
+  {
+   "id": "q015",
+   "start": [
+    39.85,
+    30.950000000000003,
+    0.43496361228624414
+   ],
+   "goal": [
+    26.05,
+    8.25
+   ],
+   "seed": 158934342697330,
+   "start_zone": "zone_mezzanine",
+   "goal_zone": null,
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    18.150000000000002,
+    6.75
+   ],
+   "features": {
+    "path_length_m": 29.5877,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 3.4,
+    "turns": 6,
+    "zones": 2,
+    "actor_exposure_m": 6.1326,
+    "kidnap_m": 32.5043
+   },
+   "difficulty": 0.561404,
+   "tier": "medium"
+  },
+  {
+   "id": "q016",
+   "start": [
+    9.05,
+    22.25,
+    -0.9764980921258841
+   ],
+   "goal": [
+    13.05,
+    11.75
+   ],
+   "seed": 2358010008937789,
+   "start_zone": "zone_office",
+   "goal_zone": "zone_workshop",
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    40.150000000000006,
+    28.85
+   ],
+   "features": {
+    "path_length_m": 23.6154,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 12.2971,
+    "turns": 11,
+    "zones": 2,
+    "actor_exposure_m": 0.0,
+    "kidnap_m": 31.7926
+   },
+   "difficulty": 0.578947,
+   "tier": "medium"
+  },
+  {
+   "id": "q017",
+   "start": [
+    15.05,
+    12.55,
+    -0.5700396372562615
+   ],
+   "goal": [
+    4.05,
+    13.350000000000001
+   ],
+   "seed": 781201121881997,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": "zone_workshop",
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    45.650000000000006,
+    31.25
+   ],
+   "features": {
+    "path_length_m": 21.6225,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 11.8698,
+    "turns": 13,
+    "zones": 2,
+    "actor_exposure_m": 0.0,
+    "kidnap_m": 35.8615
+   },
+   "difficulty": 0.649123,
+   "tier": "medium"
+  },
+  {
+   "id": "q018",
+   "start": [
+    5.45,
+    24.650000000000002,
+    0.2051017712567078
+   ],
+   "goal": [
+    41.75,
+    12.05
+   ],
+   "seed": 4227492139125875,
+   "start_zone": "zone_office",
+   "goal_zone": "zone_forklift_lanes",
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    20.55,
+    25.650000000000002
+   ],
+   "features": {
+    "path_length_m": 47.7233,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 14.4042,
+    "turns": 14,
+    "zones": 3,
+    "actor_exposure_m": 8.9095,
+    "kidnap_m": 15.1331
+   },
+   "difficulty": 0.657895,
+   "tier": "hard"
+  },
+  {
+   "id": "q019",
+   "start": [
+    32.85,
+    11.25,
+    -2.1765004313748166
+   ],
+   "goal": [
+    44.150000000000006,
+    16.35
+   ],
+   "seed": 6383431026866327,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": null,
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    20.650000000000002,
+    3.6500000000000004
+   ],
+   "features": {
+    "path_length_m": 13.4125,
+    "min_clearance_m": 3.45,
+    "narrow_run_m": 0.0,
+    "turns": 2,
+    "zones": 1,
+    "actor_exposure_m": 1.9971,
+    "kidnap_m": 14.3736
+   },
+   "difficulty": 0.122807,
+   "tier": "easy"
+  },
+  {
+   "id": "q020",
+   "start": [
+    17.45,
+    5.050000000000001,
+    2.7530706332806565
+   ],
+   "goal": [
+    17.55,
+    17.45
+   ],
+   "seed": 8184039351851335,
+   "start_zone": null,
+   "goal_zone": "zone_high_bay",
+   "kidnap_at_s": 12.0,
+   "kidnap": [
+    4.3500000000000005,
+    31.150000000000002
+   ],
+   "features": {
+    "path_length_m": 14.5669,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 4.1799,
+    "turns": 5,
+    "zones": 2,
+    "actor_exposure_m": 3.0,
+    "kidnap_m": 29.2031
+   },
+   "difficulty": 0.350877,
+   "tier": "medium"
+  }
+ ]
+}

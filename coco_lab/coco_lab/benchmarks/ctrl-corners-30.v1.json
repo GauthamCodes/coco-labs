@@ -1,0 +1,810 @@
+{
+ "schema": "coco.bench.suite.v1",
+ "id": "ctrl-corners-30",
+ "version": 1,
+ "title": "Control: routes with many corners",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841",
+ "families": [
+  "control"
+ ],
+ "metrics": {
+  "control": [
+   "time_s",
+   "ticks",
+   "path_length_m",
+   "min_clearance_m",
+   "mean_clearance_m",
+   "heading_change_rad",
+   "contacts",
+   "expansions",
+   "plans",
+   "final_goal_distance_m",
+   "compute_ms"
+  ]
+ },
+ "generator": {
+  "kind": "filtered",
+  "seed": 7301,
+  "pool": 1500,
+  "min_separation_m": 4.0,
+  "rule": ">= 5 bends of 45 deg or more, reference path 8-30 m",
+  "tool": "tools/r3/make_suites_v1.py",
+  "module": "coco_lab.bench_v1"
+ },
+ "tiers": {
+  "method": "mean percentile rank of the tier features; thirds by (difficulty, id)",
+  "features": [
+   "turns",
+   "min_clearance_m",
+   "path_length_m"
+  ],
+  "counts": {
+   "easy": 10,
+   "medium": 10,
+   "hard": 10
+  },
+  "cut_difficulty": [
+   0.37931,
+   0.568966
+  ]
+ },
+ "held_out": {
+  "n": 10,
+  "scheme": "ADR 0014 (secret salt, per head) in CI; R2 public salt locally",
+  "generator": "the same, another seed"
+ },
+ "datasheet": "docs/bench/v1/ctrl-corners-30.md",
+ "scenarios": [
+  {
+   "id": "t001",
+   "start": [
+    32.85,
+    26.950000000000003,
+    1.7794519223547658
+   ],
+   "goal": [
+    26.85,
+    13.450000000000001
+   ],
+   "seed": 6496682880770793,
+   "start_zone": null,
+   "goal_zone": "zone_forklift_lanes",
+   "features": {
+    "path_length_m": 18.1527,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 6.5899,
+    "turns": 8,
+    "zones": 1,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.362069,
+   "tier": "easy"
+  },
+  {
+   "id": "t002",
+   "start": [
+    32.65,
+    27.450000000000003,
+    -2.0748133692861708
+   ],
+   "goal": [
+    15.850000000000001,
+    30.450000000000003
+   ],
+   "seed": 6747470173476702,
+   "start_zone": null,
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 18.4527,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 2.5142,
+    "turns": 7,
+    "zones": 0,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.310345,
+   "tier": "easy"
+  },
+  {
+   "id": "t003",
+   "start": [
+    45.35,
+    14.450000000000001,
+    0.3535721675685428
+   ],
+   "goal": [
+    38.25,
+    27.150000000000002
+   ],
+   "seed": 6853014317300903,
+   "start_zone": null,
+   "goal_zone": "zone_mezzanine",
+   "features": {
+    "path_length_m": 22.2635,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 4.5556,
+    "turns": 8,
+    "zones": 1,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.454023,
+   "tier": "medium"
+  },
+  {
+   "id": "t004",
+   "start": [
+    16.55,
+    31.05,
+    0.07043026572355782
+   ],
+   "goal": [
+    36.25,
+    15.650000000000002
+   ],
+   "seed": 2585874799999142,
+   "start_zone": null,
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 29.3007,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.8728,
+    "turns": 10,
+    "zones": 1,
+    "actor_exposure_m": 4.3841
+   },
+   "difficulty": 0.712644,
+   "tier": "hard"
+  },
+  {
+   "id": "t005",
+   "start": [
+    33.15,
+    11.05,
+    2.6559243943664264
+   ],
+   "goal": [
+    15.450000000000001,
+    25.05
+   ],
+   "seed": 7052933068886811,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 27.4238,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 9.7314,
+    "turns": 9,
+    "zones": 2,
+    "actor_exposure_m": 8.2598
+   },
+   "difficulty": 0.643678,
+   "tier": "hard"
+  },
+  {
+   "id": "t006",
+   "start": [
+    0.9500000000000002,
+    23.85,
+    -0.9667903288302955
+   ],
+   "goal": [
+    23.55,
+    22.85
+   ],
+   "seed": 8230567141115171,
+   "start_zone": "zone_office",
+   "goal_zone": "zone_high_bay",
+   "features": {
+    "path_length_m": 26.7841,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 13.787,
+    "turns": 11,
+    "zones": 2,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.83908,
+   "tier": "hard"
+  },
+  {
+   "id": "t007",
+   "start": [
+    34.25,
+    25.25,
+    0.1846749419289342
+   ],
+   "goal": [
+    39.550000000000004,
+    25.25
+   ],
+   "seed": 5285164467182920,
+   "start_zone": "zone_mezzanine",
+   "goal_zone": "zone_mezzanine",
+   "features": {
+    "path_length_m": 8.6012,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 4.9213,
+    "turns": 6,
+    "zones": 1,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.178161,
+   "tier": "easy"
+  },
+  {
+   "id": "t008",
+   "start": [
+    9.65,
+    14.850000000000001,
+    -1.1098110008721829
+   ],
+   "goal": [
+    20.25,
+    4.65
+   ],
+   "seed": 5412310422849713,
+   "start_zone": "zone_workshop",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 20.6368,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 6.5728,
+    "turns": 11,
+    "zones": 1,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.522989,
+   "tier": "medium"
+  },
+  {
+   "id": "t009",
+   "start": [
+    6.75,
+    17.650000000000002,
+    1.6871121018855444
+   ],
+   "goal": [
+    24.55,
+    14.65
+   ],
+   "seed": 7844982223296142,
+   "start_zone": "zone_workshop",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 20.2811,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.6556,
+    "turns": 13,
+    "zones": 2,
+    "actor_exposure_m": 1.7142
+   },
+   "difficulty": 0.551724,
+   "tier": "medium"
+  },
+  {
+   "id": "t010",
+   "start": [
+    17.35,
+    0.55,
+    -1.9829918900115802
+   ],
+   "goal": [
+    25.25,
+    26.35
+   ],
+   "seed": 6153504772051784,
+   "start_zone": null,
+   "goal_zone": "zone_high_bay",
+   "features": {
+    "path_length_m": 29.0723,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 3.5243,
+    "turns": 7,
+    "zones": 2,
+    "actor_exposure_m": 7.6012
+   },
+   "difficulty": 0.729885,
+   "tier": "hard"
+  },
+  {
+   "id": "t011",
+   "start": [
+    12.55,
+    16.05,
+    0.018635781017021014
+   ],
+   "goal": [
+    30.150000000000002,
+    21.75
+   ],
+   "seed": 4831224278514907,
+   "start_zone": "zone_workshop",
+   "goal_zone": "zone_high_bay",
+   "features": {
+    "path_length_m": 21.351,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 6.9142,
+    "turns": 11,
+    "zones": 2,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.545977,
+   "tier": "medium"
+  },
+  {
+   "id": "t012",
+   "start": [
+    34.65,
+    7.75,
+    -1.8009278179581858
+   ],
+   "goal": [
+    12.75,
+    3.35
+   ],
+   "seed": 6936704073923755,
+   "start_zone": null,
+   "goal_zone": "zone_workshop",
+   "features": {
+    "path_length_m": 23.8882,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 2.5,
+    "turns": 7,
+    "zones": 1,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.425287,
+   "tier": "medium"
+  },
+  {
+   "id": "t013",
+   "start": [
+    33.25,
+    13.450000000000001,
+    -2.7366035911643403
+   ],
+   "goal": [
+    11.65,
+    5.75
+   ],
+   "seed": 890209137558067,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": "zone_workshop",
+   "features": {
+    "path_length_m": 27.2362,
+    "min_clearance_m": 0.1743,
+    "narrow_run_m": 2.3971,
+    "turns": 9,
+    "zones": 2,
+    "actor_exposure_m": 4.5255
+   },
+   "difficulty": 0.747126,
+   "tier": "hard"
+  },
+  {
+   "id": "t014",
+   "start": [
+    30.55,
+    22.05,
+    2.063767484515127
+   ],
+   "goal": [
+    8.85,
+    24.35
+   ],
+   "seed": 8311614023193203,
+   "start_zone": "zone_high_bay",
+   "goal_zone": "zone_office",
+   "features": {
+    "path_length_m": 25.2468,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 6.3142,
+    "turns": 11,
+    "zones": 2,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.804598,
+   "tier": "hard"
+  },
+  {
+   "id": "t015",
+   "start": [
+    14.450000000000001,
+    8.05,
+    -2.537711568634435
+   ],
+   "goal": [
+    39.150000000000006,
+    2.75
+   ],
+   "seed": 4345634759305946,
+   "start_zone": null,
+   "goal_zone": "zone_loading_dock",
+   "features": {
+    "path_length_m": 26.8953,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 2.1,
+    "turns": 8,
+    "zones": 1,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.747126,
+   "tier": "hard"
+  },
+  {
+   "id": "t016",
+   "start": [
+    39.050000000000004,
+    31.05,
+    -2.660793313549771
+   ],
+   "goal": [
+    31.65,
+    6.45
+   ],
+   "seed": 519097999867075,
+   "start_zone": "zone_mezzanine",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 28.3095,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 3.0,
+    "turns": 5,
+    "zones": 2,
+    "actor_exposure_m": 3.0
+   },
+   "difficulty": 0.448276,
+   "tier": "medium"
+  },
+  {
+   "id": "t017",
+   "start": [
+    26.950000000000003,
+    26.85,
+    0.7653012410700408
+   ],
+   "goal": [
+    39.35,
+    15.05
+   ],
+   "seed": 6638756409563349,
+   "start_zone": "zone_high_bay",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 18.9865,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 2.3142,
+    "turns": 10,
+    "zones": 1,
+    "actor_exposure_m": 3.8184
+   },
+   "difficulty": 0.45977,
+   "tier": "medium"
+  },
+  {
+   "id": "t018",
+   "start": [
+    1.1500000000000001,
+    16.25,
+    -1.0255728463267073
+   ],
+   "goal": [
+    7.550000000000001,
+    11.05
+   ],
+   "seed": 7018058875886434,
+   "start_zone": "zone_workshop",
+   "goal_zone": "zone_workshop",
+   "features": {
+    "path_length_m": 11.5154,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 2.2142,
+    "turns": 7,
+    "zones": 1,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.41954,
+   "tier": "medium"
+  },
+  {
+   "id": "t019",
+   "start": [
+    23.950000000000003,
+    4.15,
+    -2.4786640936526516
+   ],
+   "goal": [
+    15.75,
+    16.45
+   ],
+   "seed": 4705322922954995,
+   "start_zone": null,
+   "goal_zone": "zone_high_bay",
+   "features": {
+    "path_length_m": 15.9451,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 2.5071,
+    "turns": 6,
+    "zones": 2,
+    "actor_exposure_m": 4.2426
+   },
+   "difficulty": 0.201149,
+   "tier": "easy"
+  },
+  {
+   "id": "t020",
+   "start": [
+    22.75,
+    25.650000000000002,
+    -0.3147959065612751
+   ],
+   "goal": [
+    9.15,
+    30.35
+   ],
+   "seed": 4300204663533725,
+   "start_zone": "zone_high_bay",
+   "goal_zone": "zone_office",
+   "features": {
+    "path_length_m": 16.5426,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 5.7556,
+    "turns": 8,
+    "zones": 2,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.517241,
+   "tier": "medium"
+  },
+  {
+   "id": "t021",
+   "start": [
+    39.25,
+    17.05,
+    1.668708794310656
+   ],
+   "goal": [
+    46.45,
+    30.150000000000002
+   ],
+   "seed": 6682927316491309,
+   "start_zone": null,
+   "goal_zone": "zone_mezzanine",
+   "features": {
+    "path_length_m": 26.1451,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 4.0971,
+    "turns": 9,
+    "zones": 1,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.586207,
+   "tier": "hard"
+  },
+  {
+   "id": "t022",
+   "start": [
+    8.05,
+    19.35,
+    -1.1269121511420006
+   ],
+   "goal": [
+    26.950000000000003,
+    12.950000000000001
+   ],
+   "seed": 5926925292324970,
+   "start_zone": null,
+   "goal_zone": "zone_forklift_lanes",
+   "features": {
+    "path_length_m": 21.6095,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 7.1142,
+    "turns": 7,
+    "zones": 2,
+    "actor_exposure_m": 2.6627
+   },
+   "difficulty": 0.37931,
+   "tier": "easy"
+  },
+  {
+   "id": "t023",
+   "start": [
+    24.55,
+    30.85,
+    -0.9718645811087616
+   ],
+   "goal": [
+    46.650000000000006,
+    28.950000000000003
+   ],
+   "seed": 4649838109230212,
+   "start_zone": null,
+   "goal_zone": "zone_mezzanine",
+   "features": {
+    "path_length_m": 23.3012,
+    "min_clearance_m": 0.2599,
+    "narrow_run_m": 3.6314,
+    "turns": 6,
+    "zones": 1,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.235632,
+   "tier": "easy"
+  },
+  {
+   "id": "t024",
+   "start": [
+    35.25,
+    12.55,
+    -0.9241590903376427
+   ],
+   "goal": [
+    42.75,
+    25.35
+   ],
+   "seed": 6494771930674474,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": "zone_mezzanine",
+   "features": {
+    "path_length_m": 24.874,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 3.9657,
+    "turns": 5,
+    "zones": 2,
+    "actor_exposure_m": 8.0
+   },
+   "difficulty": 0.333333,
+   "tier": "easy"
+  },
+  {
+   "id": "t025",
+   "start": [
+    15.95,
+    30.55,
+    0.4757125360377148
+   ],
+   "goal": [
+    23.650000000000002,
+    11.950000000000001
+   ],
+   "seed": 584324977194353,
+   "start_zone": null,
+   "goal_zone": "zone_forklift_lanes",
+   "features": {
+    "path_length_m": 25.2456,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 4.0728,
+    "turns": 10,
+    "zones": 2,
+    "actor_exposure_m": 4.0
+   },
+   "difficulty": 0.586207,
+   "tier": "hard"
+  },
+  {
+   "id": "t026",
+   "start": [
+    9.55,
+    11.05,
+    -0.8143620246285037
+   ],
+   "goal": [
+    17.95,
+    10.05
+   ],
+   "seed": 8630863284412867,
+   "start_zone": "zone_workshop",
+   "goal_zone": "zone_forklift_lanes",
+   "features": {
+    "path_length_m": 25.8309,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 8.7728,
+    "turns": 12,
+    "zones": 2,
+    "actor_exposure_m": 0.8485
+   },
+   "difficulty": 0.844828,
+   "tier": "hard"
+  },
+  {
+   "id": "t027",
+   "start": [
+    12.450000000000001,
+    17.150000000000002,
+    1.427906370394286
+   ],
+   "goal": [
+    30.650000000000002,
+    6.75
+   ],
+   "seed": 2028835442105142,
+   "start_zone": "zone_workshop",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 22.9179,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 2.8971,
+    "turns": 7,
+    "zones": 2,
+    "actor_exposure_m": 4.2426
+   },
+   "difficulty": 0.568966,
+   "tier": "medium"
+  },
+  {
+   "id": "t028",
+   "start": [
+    18.35,
+    10.05,
+    -0.008019138711260698
+   ],
+   "goal": [
+    18.950000000000003,
+    27.05
+   ],
+   "seed": 7189929291896512,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": "zone_high_bay",
+   "features": {
+    "path_length_m": 20.7054,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 5.7899,
+    "turns": 7,
+    "zones": 2,
+    "actor_exposure_m": 2.7728
+   },
+   "difficulty": 0.356322,
+   "tier": "easy"
+  },
+  {
+   "id": "t029",
+   "start": [
+    24.35,
+    2.35,
+    2.6030324150206523
+   ],
+   "goal": [
+    46.95,
+    12.55
+   ],
+   "seed": 4774017004622080,
+   "start_zone": null,
+   "goal_zone": "zone_forklift_lanes",
+   "features": {
+    "path_length_m": 26.825,
+    "min_clearance_m": 0.4571,
+    "narrow_run_m": 0.9899,
+    "turns": 5,
+    "zones": 1,
+    "actor_exposure_m": 7.2426
+   },
+   "difficulty": 0.275862,
+   "tier": "easy"
+  },
+  {
+   "id": "t030",
+   "start": [
+    17.45,
+    16.85,
+    0.4504700664577208
+   ],
+   "goal": [
+    28.450000000000003,
+    8.25
+   ],
+   "seed": 5820150942013070,
+   "start_zone": "zone_high_bay",
+   "goal_zone": null,
+   "features": {
+    "path_length_m": 16.3196,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 6.6728,
+    "turns": 6,
+    "zones": 2,
+    "actor_exposure_m": 7.4983
+   },
+   "difficulty": 0.212644,
+   "tier": "easy"
+  }
+ ]
+}
