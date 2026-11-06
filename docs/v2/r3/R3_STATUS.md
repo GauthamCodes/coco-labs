@@ -47,8 +47,13 @@ worker pool and hours; budgeted in R3.2.
 
 ## Part A open items
 
-- PR #33 (leaderboard scope fix, found landing #31): CI running; merge under the gate, then merge main
-  into `leaderboard/theta-star` (PR #31), let verify + writer run, merge #31; deploy; live smoke.
+- PR #32 merged `5df4427` (2026-11-06). PR #33 (leaderboard scope fix, found landing #31) merged
+  `90c3dce` (2026-11-07) after green CI on `a47a20e`.
+- PR #31: retargeted to main; main merged in (`01b8794`, pushed); waiting for its verify + writer +
+  CI runs on that head. Then merge under the gate; deploy (`gh workflow run lab.yml --ref main -f
+  confirmation=DEPLOY`); live smoke (Playwright on the public URL).
+- Battery reached 5 % at that point (no charger since the evening of 2026-11-06): a suspend is
+  expected; resume here.
 
 ## Next step
 
