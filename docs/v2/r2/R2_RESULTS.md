@@ -157,10 +157,15 @@ comparison and the Theta* drive gave **the same counts and path lengths**, plann
 | accessibility | 16 pages | **24 pages** (+ Studio, Leaderboard), 0 failures |
 | escape tests | — | **pass × 3 browsers** |
 
-The close-out found and fixed four defects (all evidence kept in [`data/r29/failures/`](data/r29/failures/)): R2's
+The close-out found and fixed five defects (evidence kept in [`data/r29/failures/`](data/r29/failures/)): R2's
 tests lacked a `COCO_WORLDS` fixture (29 failures against an installed coco_lab, as CI runs it); a test required PR
 #31's files; the Studio's light-theme syntax colours (92 contrast failures); ament lint on `ros2_export.py` and the
-starter files (R2.7).
+starter files (R2.7); and — found by the R2 PR's own CI — `check_dist.mjs` failing on external URLs. That last one
+was **already failing on main since the R1 merge** (`4894c76`: the Datasets tab's hyperlinks and its Colab link; main's
+lab run 41897972116, "Build twice") and R2 added one (the lockdown's `https://example.invalid/x.mjs` probe). The
+local suites runner piped `check_dist` into `tail`, which hid its exit code, so "build twice: pass" above did not
+include it. Fixed: the three are hyperlinks or a probe, never fetched, and are allow-listed narrowly with reasons;
+the runner uses `pipefail`; build twice + `check_dist` re-run: identical trees, 0 failures.
 
 ## Performance — MEASURED (balanced, AC; RTX 4050, i5-13420H)
 

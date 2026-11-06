@@ -12,6 +12,12 @@ records it); the laptop's own profile (power-saver) restored afterwards.
 | attempt 2 | `86a28e1` | every suite and check ([`suites_final.txt`](suites_final.txt), [`close_attempt2.log`](close_attempt2.log)). Three things failed and were fixed in `7eaa7b6`: **lab_web/tools 1 failed** (a test required Gautham's Theta* submission in the tree; it is PR #31) ([`failures/attempt2_lab_web_tools.txt`](failures/attempt2_lab_web_tools.txt)); **a11y**: the Studio on the **light theme** had 92 text nodes under AA contrast (the editor's syntax colours were the dark theme's: 1.1–1.9:1) ([`failures/attempt2_a11y.json`](failures/attempt2_a11y.json)); the new Studio timing tool waited on the wrong element (a tool bug, no measurement) ([`failures/`](failures/)). The laptop suspended for 30 h mid-run (lid closed, 2026-11-05 02:46Z → 2026-11-06 09:11Z) and resumed where it was; the steps run after resuming were correctness checks, AC was back before any measurement |
 | re-check | **`7eaa7b6` (final)** | everything the fixes touch: lab_web/tools, typecheck, vitest, build twice, a11y, escape × 3, the Studio check and after-screenshots, the Studio timings, Play fps ([`recheck_final.log`](recheck_final.log)) |
 
+**Found afterwards by the R2 PR's CI** (lab run 42213656796, "Build twice"): `tools/check_dist.mjs` rejected
+external URLs in the build — R1's Datasets hyperlinks and Colab link (main has failed this step since the R1 merge,
+run 41897972116) and R2's lockdown probe URL. `tools/g2/suites.sh` piped the check into `tail` and so reported it as
+passing locally. Fixed (narrow allow-list entries with reasons; `pipefail` in the runner); build twice + check_dist
+re-run on the fixed tree: identical, 0 failures; vitest 640/640.
+
 Between attempt 2 and the final tree only `lab_web/src/studio/{editor.ts,studio.css}` (colours), one test and one tool
 changed; every suite those files can reach was re-run on the final tree.
 

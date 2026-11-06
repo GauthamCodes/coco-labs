@@ -34,7 +34,7 @@ step arena_assets npm run arena-assets
 step vitest npx vitest run
 step native_gate env -u PYTHONPATH node tools/g1/native_gate.mjs --python "$V" --out "$L/native_gate.json"
 step coco_verify bash -c "node tools/coco.mjs verify --file ../docs/v2/data/m3/m36/links.json && node tools/play_reference_check.mjs"
-step build_twice bash -c 'npm run build >/dev/null && first=$(node tools/check_dist.mjs | node -e "let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>console.log(JSON.parse(s).tree_sha256))") && npm run build >/dev/null && node tools/check_dist.mjs --expect-hash "$first" | tail -3'
+step build_twice bash -c 'set -o pipefail; npm run build >/dev/null && first=$(node tools/check_dist.mjs | node -e "let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>console.log(JSON.parse(s).tree_sha256))") && npm run build >/dev/null && node tools/check_dist.mjs --expect-hash "$first" | tail -3'
 step fetch_v1 env PYTHON="$V" tools/fetch_v1_site.sh dist/v1
 step update_isolation node tools/update_isolation_check.mjs dist "$L/update-isolation"
 node tools/perf/serve_dist.mjs --port "$PORT" > "$L/serve.log" 2>&1 &
