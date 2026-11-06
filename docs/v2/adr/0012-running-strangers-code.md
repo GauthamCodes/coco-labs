@@ -121,3 +121,5 @@ outputs (the parent measuring) would close this; parked in docs/IDEAS.md.
 
 - Each escape route has two independent stops in the browser and one hard boundary in CI.
 - The escape tests (R2.2) are part of CI; a passing escape is a stop condition.
+
+*Update 2026-11-06 (R3 Part A).* The writer's own commit of a same-repository PR's verified result (`leaderboard/results/<suite>/<name>/result.json`) made the PR fail both scope checks on its next run (found landing PR #31). Both checks now allow exactly that file for a suite/name the PR submits; the writer accepts a fork's copy only if it equals the verified result (ignoring the machine and times), overwrites a stale one on a same-repository branch, and makes no commit when the file already matches (so its commit cannot trigger an endless re-verification). Tests: `test_r2_leaderboard.py` (scope, stable comparison).

@@ -53,8 +53,14 @@ jobs:
           import re, sys
           changed = [l for l in open(sys.argv[1]).read().split('\n') if l]
           ok = re.compile(r'^leaderboard/submissions/([a-z0-9-]+)/([a-z0-9][a-z0-9_-]{1,39})/(algorithm\.py|meta\.yaml|summary\.json)$')
-          outside = [c for c in changed if not ok.match(c)]
+          # R3 Part A: the trusted writer commits the verified result of a same-repository PR to
+          # its branch; that one file per submission is allowed (never read here; the writer
+          # accepts it only if it equals the verified result)
+          res = re.compile(r'^leaderboard/results/([a-z0-9-]+)/([a-z0-9][a-z0-9_-]{1,39})/result\.json$')
           dirs = sorted({'/'.join(c.split('/')[:4]) for c in changed if ok.match(c)})
+          subs = {tuple(d.split('/')[2:4]) for d in dirs}
+          outside = [c for c in changed if not ok.match(c)
+                     and not (res.match(c) and res.match(c).groups() in subs)]
           open(sys.argv[2], 'w').write('\n'.join(dirs) + '\n')
           print('submissions:', dirs)
           if outside:
