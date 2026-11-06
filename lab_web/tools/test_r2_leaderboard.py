@@ -93,10 +93,12 @@ def test_meta_rules(tmp_path):
     assert L.read_meta(d)['licence'] == 'MIT'
 
 
-def test_the_committed_submission_is_well_formed():
-    d = REPO / 'leaderboard' / 'submissions' / 'depot-nav-100' / 'theta_star'
-    assert sorted(p.name for p in d.iterdir()) == ['algorithm.py', 'meta.yaml', 'summary.json']
-    assert L.read_meta(d)['licence'] == 'MIT'
+def test_every_committed_submission_is_well_formed():
+    # submissions arrive by pull request (Gautham's Theta* is PR #31, not on this branch): whatever is
+    # committed under leaderboard/submissions/<suite>/<name>/ must be exactly the three files
+    for d in sorted((REPO / 'leaderboard' / 'submissions').glob('*/*/')):
+        assert sorted(p.name for p in d.iterdir()) == ['algorithm.py', 'meta.yaml', 'summary.json'], d
+        assert L.read_meta(d)['licence'] in ('MIT', 'Apache-2.0'), d
 
 
 def test_the_committed_index_is_current(tmp_path):

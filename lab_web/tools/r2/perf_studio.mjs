@@ -36,10 +36,12 @@ try {
   report.page = await page.evaluate(() => ({ cores: navigator.hardwareConcurrency, memory_gb: navigator.deviceMemory ?? null }));
   // one run (the sandbox boots on the first)
   let t0 = Date.now();
-  await page.getByRole('button', { name: /^Run/ }).first().click();
-  await page.locator('[data-testid=studio-validation]').waitFor({ timeout: 600000 });
-  report.one_run = { wall_s: (Date.now() - t0) / 1000, status: await page.locator('[data-testid=studio-status-0]').innerText(),
-    validation: await page.locator('[data-testid=studio-validation]').innerText() };
+  await page.locator('[data-testid=studio-run]').click();
+  // done when the status cell no longer says running (as studio_check.mjs waits)
+  await page.waitForFunction(() => { const e = document.querySelector('[data-testid=studio-status-0]'); return e && e.textContent && !/running/.test(e.textContent); }, null, { timeout: 600000 });
+  report.one_run = { wall_s: (Date.now() - t0) / 1000, status: await page.locator('[data-testid=studio-status-0]').innerText() };
+  await page.getByRole('tab', { name: 'Validation' }).click();
+  report.one_run.validation = await page.locator('[data-testid=studio-validation]').innerText();
   // Benchmark it: the starter against the built-in A* on the whole suite
   await page.locator('.studio-exp summary', { hasText: 'Benchmark it' }).click();
   const astar = page.locator('.studio-rivals label', { hasText: /^\s*A\*\s*$/ }).locator('input');

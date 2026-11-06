@@ -59,10 +59,10 @@ function apiCompletions(cx: CompletionContext): CompletionResult | null {
 }
 
 const night = HighlightStyle.define([
-  { tag: t.keyword, color: 'var(--accent, #ffb547)' }, { tag: [t.string, t.special(t.string)], color: '#9ad7a0' },
-  { tag: t.comment, color: 'var(--muted, #8a97a6)', fontStyle: 'italic' }, { tag: [t.number, t.bool, t.null], color: '#ff9e7a' },
-  { tag: [t.function(t.variableName), t.function(t.propertyName)], color: '#7cc7ff' }, { tag: t.definition(t.variableName), color: '#e8eef5' },
-  { tag: t.className, color: '#f2c879' }, { tag: t.operator, color: '#c7d1dc' },
+  { tag: t.keyword, color: 'var(--accent, #ffb547)' }, { tag: [t.string, t.special(t.string)], color: 'var(--code-str, #9ad7a0)' },
+  { tag: t.comment, color: 'var(--muted, #8a97a6)', fontStyle: 'italic' }, { tag: [t.number, t.bool, t.null], color: 'var(--code-num, #ff9e7a)' },
+  { tag: [t.function(t.variableName), t.function(t.propertyName)], color: 'var(--code-fn, #7cc7ff)' }, { tag: t.definition(t.variableName), color: 'var(--code-def, #e8eef5)' },
+  { tag: t.className, color: 'var(--code-cls, #f2c879)' }, { tag: t.operator, color: 'var(--code-op, #c7d1dc)' },
 ]);
 
 export interface StudioEditor {
