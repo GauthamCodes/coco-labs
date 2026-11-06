@@ -31,3 +31,4 @@ One line per idea (README §0, change control), in the form:
 2026-11-05 | Leaderboard verifier: run the user function in a child process that returns only its outputs (the parent measures) | a guard-escaping submission could falsify its own numbers inside the container (ADR 0012) | R3
 2026-11-05 | Run the browser's user-code worker inside a sandboxed iframe with a stricter CSP (connect-src self only) | removes the residual reach to the pinned CDN and loopback after a double escape (ADR 0012) | R3
 2026-11-05 | Experiment links (?exp=/#expz=) that carry algorithm files | share a whole benchmark of your own code as one link (R2.5 shares the file + one scenario) | R3
+2026-11-06 | A 3D view of user-code runs in the Algorithm Studio (today 2D GAME/SIM) | learners may follow a run more easily in 3D; adds no measurement (R2 question 6, decided "not now") | R4

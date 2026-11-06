@@ -1,0 +1,262 @@
+{
+ "site": "http://127.0.0.1:4197/coco-labs/",
+ "browser": "firefox",
+ "when": "2026-11-06T11:28:44.398Z",
+ "probe": {
+  "fetch": "blocked",
+  "fetchLater": "blocked",
+  "XMLHttpRequest": "blocked",
+  "XMLHttpRequestUpload": "blocked",
+  "WebSocket": "blocked",
+  "WebSocketStream": "blocked",
+  "WebTransport": "blocked",
+  "EventSource": "blocked",
+  "importScripts": "blocked",
+  "Worker": "blocked",
+  "SharedWorker": "blocked",
+  "ServiceWorker": "blocked",
+  "BroadcastChannel": "blocked",
+  "MessageChannel": "blocked",
+  "indexedDB": "blocked",
+  "IDBFactory": "blocked",
+  "caches": "blocked",
+  "CacheStorage": "blocked",
+  "Notification": "blocked",
+  "RTCPeerConnection": "blocked",
+  "webkitRTCPeerConnection": "blocked",
+  "RTCDataChannel": "blocked",
+  "RTCRtpScriptTransform": "blocked",
+  "requestFileSystem": "blocked",
+  "webkitRequestFileSystem": "blocked",
+  "requestFileSystemSync": "blocked",
+  "webkitRequestFileSystemSync": "blocked",
+  "FileSystemHandle": "blocked",
+  "FileSystemDirectoryHandle": "blocked",
+  "FileSystemFileHandle": "blocked",
+  "FileSystemSyncAccessHandle": "blocked",
+  "StorageManager": "blocked",
+  "LockManager": "blocked",
+  "Serial": "blocked",
+  "USB": "blocked",
+  "HID": "blocked",
+  "Bluetooth": "blocked",
+  "NavigatorUAData": "blocked",
+  "PushManager": "blocked",
+  "BackgroundFetchManager": "blocked",
+  "cookieStore": "blocked",
+  "CookieStore": "blocked",
+  "document": "blocked",
+  "window": "blocked",
+  "localStorage": "blocked",
+  "sessionStorage": "blocked",
+  "parent": "blocked",
+  "top": "blocked",
+  "opener": "blocked",
+  "navigator.storage": "blocked",
+  "navigator.locks": "blocked",
+  "navigator.serviceWorker": "blocked",
+  "navigator.usb": "blocked",
+  "navigator.serial": "blocked",
+  "navigator.hid": "blocked",
+  "navigator.bluetooth": "blocked",
+  "navigator.sendBeacon": "blocked",
+  "eval": "blocked (EvalError)",
+  "Function": "blocked (EvalError)",
+  "import(remote)": "blocked (TypeError)",
+  "import(data:)": "blocked (TypeError)",
+  "import js": "blocked (ImportError)",
+  "import pyodide_js": "blocked (ImportError)",
+  "guard: import js": "blocked (GuardError)",
+  "guard: from pyodide.ffi import to_js": "blocked (GuardError)",
+  "guard: x = ().__class__": "blocked (GuardError)",
+  "guard: import sys": "blocked (GuardError)",
+  "guard: f = open": "blocked (NameError)"
+ },
+ "cases": [
+  {
+   "name": "network: import js, fetch",
+   "category": "network calls",
+   "expected": "guard",
+   "ok": true,
+   "ms": 332,
+   "outcome": "guard: line 1 import js: only bisect, coco_lab.api, collections, dataclasses, functools, heapq, itertools, math, random, typing may be imported",
+   "external_requests": []
+  },
+  {
+   "name": "network: pyodide.http",
+   "category": "network calls",
+   "expected": "guard",
+   "ok": true,
+   "ms": 65,
+   "outcome": "guard: line 1 from pyodide.http import ...: only bisect, coco_lab.api, collections, dataclasses, functools, heapq, itertools, math, random, typing may be imported",
+   "external_requests": []
+  },
+  {
+   "name": "network: urllib",
+   "category": "network calls",
+   "expected": "guard",
+   "ok": true,
+   "ms": 54,
+   "outcome": "guard: line 1 import urllib.request: only bisect, coco_lab.api, collections, dataclasses, functools, heapq, itertools, math, random, typing may be imported",
+   "external_requests": []
+  },
+  {
+   "name": "escape: object graph to sys",
+   "category": "import js",
+   "expected": "guard",
+   "ok": true,
+   "ms": 65,
+   "outcome": "guard: line 2 .__subclasses__: attribute names starting with _ are not allowed (sandbox rule; name it without the underscore)\n\nline 2 .__base__: attribute names starti",
+   "external_requests": []
+  },
+  {
+   "name": "escape: __import__(\"js\")",
+   "category": "import js",
+   "expected": "guard",
+   "ok": true,
+   "ms": 322,
+   "outcome": "guard: line 2 __import__: names starting with __ are not allowed",
+   "external_requests": []
+  },
+  {
+   "name": "escape: getattr dunder",
+   "category": "import js",
+   "expected": "error",
+   "ok": true,
+   "ms": 1342,
+   "outcome": "status: error",
+   "external_requests": []
+  },
+  {
+   "name": "escape: import js",
+   "category": "import js",
+   "expected": "guard",
+   "ok": true,
+   "ms": 64,
+   "outcome": "guard: line 1 import js: only bisect, coco_lab.api, collections, dataclasses, functools, heapq, itertools, math, random, typing may be imported",
+   "external_requests": []
+  },
+  {
+   "name": "escape: pyodide.ffi",
+   "category": "import js",
+   "expected": "guard",
+   "ok": true,
+   "ms": 323,
+   "outcome": "guard: line 1 import pyodide.ffi: only bisect, coco_lab.api, collections, dataclasses, functools, heapq, itertools, math, random, typing may be imported",
+   "external_requests": []
+  },
+  {
+   "name": "escape: generator frame",
+   "category": "import js",
+   "expected": "guard",
+   "ok": true,
+   "ms": 56,
+   "outcome": "guard: line 3 .f_globals is not allowed (sandbox rule)\n\nline 3 .gi_frame is not allowed (sandbox rule)",
+   "external_requests": []
+  },
+  {
+   "name": "DOM: document",
+   "category": "DOM access",
+   "expected": "error",
+   "ok": true,
+   "ms": 573,
+   "outcome": "status: error",
+   "external_requests": []
+  },
+  {
+   "name": "DOM: js.document",
+   "category": "DOM access",
+   "expected": "guard",
+   "ok": true,
+   "ms": 69,
+   "outcome": "guard: line 1 import js: only bisect, coco_lab.api, collections, dataclasses, functools, heapq, itertools, math, random, typing may be imported",
+   "external_requests": []
+  },
+  {
+   "name": "storage: open a file",
+   "category": "DOM access",
+   "expected": "error",
+   "ok": true,
+   "ms": 568,
+   "outcome": "status: error",
+   "external_requests": []
+  },
+  {
+   "name": "infinite loop (controller)",
+   "category": "infinite loops",
+   "expected": "time_limit",
+   "ok": true,
+   "ms": 5543,
+   "outcome": "status: stopped: time_limit",
+   "external_requests": []
+  },
+  {
+   "name": "memory: one huge allocation",
+   "category": "memory blow-ups",
+   "expected": "memory",
+   "ok": true,
+   "ms": 3160,
+   "outcome": "status: error",
+   "external_requests": []
+  },
+  {
+   "name": "memory: a huge list",
+   "category": "memory blow-ups",
+   "expected": "memory",
+   "ok": true,
+   "ms": 3159,
+   "outcome": "status: error",
+   "external_requests": []
+  },
+  {
+   "name": "memory: growing list",
+   "category": "memory blow-ups",
+   "expected": "memory",
+   "ok": true,
+   "ms": 3665,
+   "outcome": "status: error",
+   "external_requests": []
+  },
+  {
+   "name": "huge output: print",
+   "category": "huge outputs",
+   "expected": "console_capped",
+   "ok": true,
+   "ms": 3667,
+   "outcome": "status: no_path",
+   "external_requests": []
+  },
+  {
+   "name": "huge output: events",
+   "category": "huge outputs",
+   "expected": "events_capped|time_limit",
+   "ok": true,
+   "ms": 15061,
+   "outcome": "status: no_path",
+   "external_requests": []
+  },
+  {
+   "name": "huge output: path",
+   "category": "huge outputs",
+   "expected": "invalid_output",
+   "ok": true,
+   "ms": 572,
+   "outcome": "status: invalid_output",
+   "external_requests": []
+  }
+ ],
+ "normal": [
+  {
+   "file": "planner_astar.py",
+   "ok": true,
+   "status": "found ✓"
+  },
+  {
+   "file": "controller_pure_pursuit.py",
+   "ok": true,
+   "status": "succeeded ✓"
+  }
+ ],
+ "page_errors": [],
+ "pass": true
+}

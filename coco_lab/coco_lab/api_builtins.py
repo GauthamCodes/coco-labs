@@ -51,6 +51,10 @@ class Builtin:
         """``fn`` has the API signature."""
         self.kind, self.name, self.fn = kind, name, fn
         self.sha256 = 'builtin:' + name
+        # how the native built-in adds up a path's length and cost, so the API's
+        # measurement adds them in the same order: D* Lite's native summary uses
+        # Python's compensated ``sum()``, the search planners add one edge at a time
+        self.summation = 'compensated' if name == 'dstar_lite' else 'sequential'
 
     def call(self, ctx, *args):
         """Call the wrapper."""

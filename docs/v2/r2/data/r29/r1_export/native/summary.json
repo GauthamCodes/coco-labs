@@ -1,0 +1,542 @@
+{
+ "alpha": 0.05,
+ "complete": true,
+ "digest": "c8420b1e3d1c442553e7fd940b36dcba7b340a3ae5001b062ffd26128f628156",
+ "experiment": "ea2df91a51d2203f",
+ "family": "control",
+ "groups": [
+  {
+   "algorithm": "builtin",
+   "metrics": {
+    "compute_ms": {
+     "iqr": 1018.4976820019074,
+     "max": 3987.0668690127786,
+     "median": 2968.5691870108712,
+     "min": 1950.0715050089639,
+     "n": 2,
+     "q1": 2459.3203460099176,
+     "q3": 3477.818028011825,
+     "timing": true
+    },
+    "contacts": {
+     "iqr": 0,
+     "max": 0,
+     "median": 0,
+     "min": 0,
+     "n": 2,
+     "q1": 0,
+     "q3": 0,
+     "timing": false
+    },
+    "expansions": {
+     "iqr": 526.5,
+     "max": 1131,
+     "median": 604.5,
+     "min": 78,
+     "n": 2,
+     "q1": 341.25,
+     "q3": 867.75,
+     "timing": false
+    },
+    "final_goal_distance_m": {
+     "iqr": 2.0101221921209733,
+     "max": 4.107616258196928,
+     "median": 2.0974940660759547,
+     "min": 0.08737187395498189,
+     "n": 2,
+     "q1": 1.0924329700154682,
+     "q3": 3.1025551621364413,
+     "timing": false
+    },
+    "heading_change_rad": {
+     "iqr": 2.8192460190187587,
+     "max": 9.274331300867786,
+     "median": 6.455085281849026,
+     "min": 3.6358392628302676,
+     "n": 2,
+     "q1": 5.045462272339647,
+     "q3": 7.864708291358406,
+     "timing": false
+    },
+    "mean_clearance_m": {
+     "iqr": 0.36789946171512805,
+     "max": 0.8727147541980957,
+     "median": 0.5048152924829676,
+     "min": 0.13691583076783947,
+     "n": 2,
+     "q1": 0.32086556162540353,
+     "q3": 0.6887650233405316,
+     "timing": false
+    },
+    "min_clearance_m": {
+     "iqr": 0.3689339828220179,
+     "max": 0.7300000000000001,
+     "median": 0.3610660171779822,
+     "min": -0.007867965644035746,
+     "n": 2,
+     "q1": 0.17659902576697323,
+     "q3": 0.5455330085889911,
+     "timing": false
+    },
+    "path_length_m": {
+     "iqr": 3.5314915532760356,
+     "max": 10.95349225952334,
+     "median": 7.422000706247305,
+     "min": 3.8905091529712705,
+     "n": 2,
+     "q1": 5.656254929609288,
+     "q3": 9.187746482885323,
+     "timing": false
+    },
+    "plans": {
+     "iqr": 0,
+     "max": 1,
+     "median": 1,
+     "min": 1,
+     "n": 2,
+     "q1": 1,
+     "q3": 1,
+     "timing": false
+    },
+    "ticks": {
+     "iqr": 126,
+     "max": 400,
+     "median": 274,
+     "min": 148,
+     "n": 2,
+     "q1": 211,
+     "q3": 337,
+     "timing": false
+    },
+    "time_s": {
+     "iqr": 12.600000000000001,
+     "max": 40,
+     "median": 27.4,
+     "min": 14.8,
+     "n": 2,
+     "q1": 21.1,
+     "q3": 33.7,
+     "timing": false
+    }
+   },
+   "n": 2,
+   "status": {
+    "succeeded": 1,
+    "timeout": 1
+   },
+   "success": {
+    "high": 0.9054687942657693,
+    "low": 0.09453120573423074,
+    "rate": 0.5
+   },
+   "successes": 1,
+   "sweep": {},
+   "sweep_index": 0
+  },
+  {
+   "algorithm": "rpp",
+   "metrics": {
+    "compute_ms": {
+     "iqr": 1134.5113424977171,
+     "max": 2669.8297260008985,
+     "median": 1535.3183835031814,
+     "min": 400.80704100546427,
+     "n": 2,
+     "q1": 968.0627122543228,
+     "q3": 2102.57405475204,
+     "timing": true
+    },
+    "contacts": {
+     "iqr": 0,
+     "max": 0,
+     "median": 0,
+     "min": 0,
+     "n": 2,
+     "q1": 0,
+     "q3": 0,
+     "timing": false
+    },
+    "expansions": {
+     "iqr": 498,
+     "max": 1074,
+     "median": 576,
+     "min": 78,
+     "n": 2,
+     "q1": 327,
+     "q3": 825,
+     "timing": false
+    },
+    "final_goal_distance_m": {
+     "iqr": 7.184196373635718,
+     "max": 14.61719877404696,
+     "median": 7.433002400411241,
+     "min": 0.24880602677552124,
+     "n": 2,
+     "q1": 3.8409042135933813,
+     "q3": 11.0251005872291,
+     "timing": false
+    },
+    "heading_change_rad": {
+     "iqr": 0.4565102212235632,
+     "max": 2.485020442447127,
+     "median": 2.0285102212235637,
+     "min": 1.572000000000001,
+     "n": 2,
+     "q1": 1.8002551106117823,
+     "q3": 2.2567653318353456,
+     "timing": false
+    },
+    "mean_clearance_m": {
+     "iqr": 0.2930215694094197,
+     "max": 0.8403847878440962,
+     "median": 0.5473632184346766,
+     "min": 0.2543416490252569,
+     "n": 2,
+     "q1": 0.4008524337299667,
+     "q3": 0.6938740031393864,
+     "timing": false
+    },
+    "min_clearance_m": {
+     "iqr": 0.2378291754873716,
+     "max": 0.7300000000000001,
+     "median": 0.4921708245126285,
+     "min": 0.2543416490252569,
+     "n": 2,
+     "q1": 0.3732562367689427,
+     "q3": 0.6110854122563143,
+     "timing": false
+    },
+    "path_length_m": {
+     "iqr": 1.845522014905902,
+     "max": 3.6910440298118035,
+     "median": 1.8455220149059017,
+     "min": 0,
+     "n": 2,
+     "q1": 0.9227610074529509,
+     "q3": 2.768283022358853,
+     "timing": false
+    },
+    "plans": {
+     "iqr": 0,
+     "max": 1,
+     "median": 1,
+     "min": 1,
+     "n": 2,
+     "q1": 1,
+     "q3": 1,
+     "timing": false
+    },
+    "ticks": {
+     "iqr": 60.5,
+     "max": 142,
+     "median": 81.5,
+     "min": 21,
+     "n": 2,
+     "q1": 51.25,
+     "q3": 111.75,
+     "timing": false
+    },
+    "time_s": {
+     "iqr": 6.050000000000001,
+     "max": 14.200000000000001,
+     "median": 8.15,
+     "min": 2.1,
+     "n": 2,
+     "q1": 5.125,
+     "q3": 11.175,
+     "timing": false
+    }
+   },
+   "n": 2,
+   "status": {
+    "no_valid_control": 1,
+    "succeeded": 1
+   },
+   "success": {
+    "high": 0.9054687942657693,
+    "low": 0.09453120573423074,
+    "rate": 0.5
+   },
+   "successes": 1,
+   "sweep": {},
+   "sweep_index": 0
+  }
+ ],
+ "metrics": [
+  {
+   "better": "lower",
+   "id": "time_s",
+   "label": "Time to goal or end",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "ticks",
+   "label": "Ticks",
+   "test": false,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "path_length_m",
+   "label": "Distance driven",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "higher",
+   "id": "min_clearance_m",
+   "label": "Minimum clearance",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "higher",
+   "id": "mean_clearance_m",
+   "label": "Mean clearance",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "heading_change_rad",
+   "label": "Total heading change",
+   "test": true,
+   "timing": false,
+   "unit": "rad"
+  },
+  {
+   "better": "lower",
+   "id": "contacts",
+   "label": "Contacts",
+   "test": true,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "expansions",
+   "label": "Global planner expansions",
+   "test": false,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "plans",
+   "label": "Plans made",
+   "test": false,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "final_goal_distance_m",
+   "label": "Final distance to goal",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "compute_ms",
+   "label": "Compute time",
+   "test": true,
+   "timing": true,
+   "unit": "ms"
+  }
+ ],
+ "n_planned": 4,
+ "n_runs": 4,
+ "notes": [
+  "Counts are model outputs and need no device; compute_ms is wall time on the device named in the manifest.",
+  "Success rates: Wilson 95% intervals. Metrics: median and IQR (type-7 quantiles) over the runs where the metric is defined.",
+  "Paired tests on shared scenarios: Wilcoxon signed-rank (exact up to 50 non-zero pairs) with rank-biserial r and Hodges-Lehmann shift; McNemar exact for success; Holm-adjusted across algorithm pairs."
+ ],
+ "paired": [
+  {
+   "a": "builtin",
+   "b": "rpp",
+   "metrics": {
+    "compute_ms": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 1433.2508035076899,
+     "median_diff": 1433.2508035076899,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 2,
+     "n_zero": 0,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": 0.3333333333333333,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": true,
+     "verdict": "no test",
+     "w_minus": 1,
+     "w_plus": 2
+    },
+    "contacts": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 0,
+     "median_diff": 0,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 0,
+     "n_pairs": 2,
+     "n_zero": 2,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": null,
+     "reason": "all paired differences are 0: no difference, test undefined",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": null,
+     "w_plus": null
+    },
+    "final_goal_distance_m": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": -5.335508334335286,
+     "median_diff": -5.335508334335286,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 2,
+     "n_zero": 0,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": -1,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 3,
+     "w_plus": 0
+    },
+    "heading_change_rad": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 4.426575060625463,
+     "median_diff": 4.4265750606254635,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 2,
+     "n_zero": 0,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": 1,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 0,
+     "w_plus": 3
+    },
+    "mean_clearance_m": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": -0.04254792595170895,
+     "median_diff": -0.04254792595170895,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 2,
+     "n_zero": 0,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": -0.3333333333333333,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 2,
+     "w_plus": 1
+    },
+    "min_clearance_m": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": -0.13110480733464633,
+     "median_diff": -0.13110480733464633,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 1,
+     "n_pairs": 2,
+     "n_zero": 1,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": -1,
+     "reason": "too few non-zero pairs for a test (1 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 1,
+     "w_plus": 0
+    },
+    "path_length_m": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 5.5764786913414035,
+     "median_diff": 5.5764786913414035,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 2,
+     "n_zero": 0,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": 1,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 0,
+     "w_plus": 3
+    },
+    "time_s": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 19.25,
+     "median_diff": 19.25,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 2,
+     "n_zero": 0,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": 1,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 0,
+     "w_plus": 3
+    }
+   },
+   "n_shared": 2,
+   "success": {
+    "a_only": 0,
+    "b_only": 0,
+    "n_excluded": 0,
+    "n_pairs": 2,
+    "p": null,
+    "p_holm": null,
+    "reason": "no discordant pairs: identical outcomes, test undefined",
+    "risk_difference": 0,
+    "test": "mcnemar_exact",
+    "verdict": "no test"
+   },
+   "sweep_index": 0
+  }
+ ],
+ "scenario_info": {
+  "kind": "sampled",
+  "rejected_separation": 0,
+  "rejected_unreachable": 0
+ },
+ "schema": "coco.experiment.summary.v1"
+}

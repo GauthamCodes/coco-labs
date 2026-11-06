@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+from pathlib import Path
+
 from ament_pep257.main import main
 import pytest
 
@@ -20,6 +23,9 @@ import pytest
 @pytest.mark.pep257
 def test_pep257():
     # The vendored ISRO code keeps its original style (coco_lab/isro).
-    rc = main(argv=['--exclude', 'coco_lab/isro/upstream_v3_6.py', '--',
-                    '.', 'test'])
+    # R2: coco_lab/templates holds user algorithm files (see test_flake8.py)
+    templates = [str(p) for p in sorted(Path(__file__).resolve().parents[1].glob(
+        'coco_lab/templates/*.py'))]
+    rc = main(argv=['--exclude', 'coco_lab/isro/upstream_v3_6.py', *templates,
+                    *[os.path.relpath(t) for t in templates], '--', '.', 'test'])
     assert rc == 0, 'Found code style errors / warnings'

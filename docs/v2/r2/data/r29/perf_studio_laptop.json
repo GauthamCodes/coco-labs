@@ -1,0 +1,87 @@
+{
+ "site": "http://127.0.0.1:4197/coco-labs/",
+ "case": "laptop",
+ "device": "laptop",
+ "gpu": "nvidia",
+ "machine": {
+  "gpu_asked": "nvidia",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P8, 53",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "18.2 % brave (gautham)",
+   "18.2 % top (gautham)",
+   "0.0 % systemd (root)",
+   "0.0 % kthreadd (root)",
+   "0.0 % pool_workqueue_release (root)",
+   "0.0 % kworker/R-rcu_g (root)"
+  ],
+  "nvidia_util": "0 %, 336 MiB",
+  "nvidia_procs": [
+   "Xorg sm 3 %",
+   "gnome-shell sm - %",
+   "xdg-desktop-por sm - %",
+   "nautilus sm - %",
+   "chrome-headless sm 1 %"
+  ]
+ },
+ "conditions": {
+  "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+  "at_utc": "2026-11-06T11:32:34.009Z",
+  "power_profile": "balanced",
+  "ac_power": true,
+  "battery": {
+   "status": "Charging",
+   "capacity_pct": 97
+  },
+  "cpu_governor": "powersave",
+  "load_average": {
+   "1m": 1.4,
+   "5m": 1.56,
+   "15m": 1.54
+  },
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "threads": 12,
+  "standard": true
+ },
+ "when": "2026-11-06T11:32:34.010Z",
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "page": {
+  "cores": 12,
+  "memory_gb": 16
+ },
+ "one_run": {
+  "wall_s": 5.741,
+  "status": "found ✓",
+  "validation": "Contract problems: 0\nClamped outputs (logged, never silent): 0\nDeterminism: ran twice, identical hash chains\nCalls: 1; per call 1713.60 ms mean, 1713.6 ms max (wall time on HeadlessChrome on Linux, 12 cores; never a ranking metric)\nThinking events dropped past the per-call cap: 0"
+ },
+ "benchmark": {
+  "button": "Run on all 50 scenarios of arena-nav-50",
+  "wall_s": 29.068,
+  "heading": "Experiment · Global planning · 100 of 100 runs",
+  "summary": "Summary per algorithm\nAlgorithm\tN\tSuccess (Wilson 95%)\tOutcomes\tExpansions: N · median [IQR] count\n planner_astar\t50\t50/50 · 100.0% [92.9%, 100.0%]\tfound 50\t50 · 12300 [3767, 27,649]\n A*\t50\t50/50 · 100.0% [92.9%, 100.0%]\tfound 50\t50 · 12,105 [3150, 27620]"
+ },
+ "errors": [],
+ "conditions_end": {
+  "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+  "at_utc": "2026-11-06T11:33:10.209Z",
+  "power_profile": "balanced",
+  "ac_power": true,
+  "battery": {
+   "status": "Charging",
+   "capacity_pct": 97
+  },
+  "cpu_governor": "powersave",
+  "load_average": {
+   "1m": 2.55,
+   "5m": 1.83,
+   "15m": 1.63
+  },
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "threads": 12,
+  "standard": true
+ }
+}

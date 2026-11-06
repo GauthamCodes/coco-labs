@@ -44,10 +44,12 @@ export function LeaderboardTab() {
   const [idx, setIdx] = useState<Index | null>(null);
   const [error, setError] = useState('');
   useEffect(() => {
-    void fetch(`${BASE}generated/r2/leaderboard.json`).then((r) => r.json()).then(setIdx).catch((e: Error) => setError(e.message));
+    void fetch(`${BASE}generated/r2/leaderboard.json`).then((r) => (r.ok ? r.json() : { boards: {}, verifier: 1 }))
+      .then(setIdx).catch((e: Error) => setError(e.message));
   }, []);
-  if (error) return <p className="wb-error" role="alert">The leaderboard could not load: {error}</p>;
-  if (!idx) return <p className="wb-muted" role="status">Loading the leaderboard…</p>;
+  if (error) return <section className="wb-board"><p className="wb-error" role="alert">The leaderboard could not load: {error}</p></section>;
+  if (!idx) return <section className="wb-board"><p className="wb-muted" role="status">Loading the leaderboard…</p></section>;
+  if (!Object.keys(idx.boards).length) return <section className="wb-board"><p className="wb-note">No verified entries yet. <a href={`${REPO_BLOB_URL}leaderboard/CONTRIBUTING.md`}>How to submit</a></p></section>;
   return <section className="wb-board" data-testid="leaderboard">
     <p className="wb-note">Every entry was re-run by the verifier (verifier {idx.verifier}) on the suite’s public scenarios and on held-out ones, each run twice for determinism. Ranked by deterministic metrics only; compute time is per device and never ranks. MODEL evidence (COCO Lab’s kinematic model); STACK results (real ROS 2 in Gazebo + Nav2) appear where an entry has them. <a href={`${REPO_BLOB_URL}leaderboard/CONTRIBUTING.md`}>How to submit</a></p>
     {Object.entries(idx.boards).map(([board, entries]) => {

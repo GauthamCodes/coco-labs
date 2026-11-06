@@ -1,0 +1,24 @@
+2026-11-05T01:52:59Z R2.9 close: tree 86a28e1 dirty=0; balanced, AC 1
+2026-11-06T09:55:33Z suites done: 21 rc=0, STEP lab_web_tools rc=1 1 failed, 262 passed in 313.41s (0:05:13);
+2026-11-06T09:59:14Z STEP det_v2 rc=0 {"chromium":[1500,0,"4597f9417b0b"],"firefox":[1500,0,"4597f9417b0b"],"pyodide-node":[1500,0,"4597f9417b0b"],"webkit":[1500,0,"4597f9417b0b"]} pass true
+2026-11-06T10:04:06Z STEP r1_parity rc=0 }
+2026-11-06T10:08:12Z STEP r2_parity rc=0 }
+2026-11-06T10:08:34Z STEP r1_link_chromium rc=0 ok   no page errors {"errors":[]}
+2026-11-06T10:09:13Z STEP r1_link_firefox rc=0 ok   no page errors {"errors":[]}
+2026-11-06T10:09:51Z STEP r1_link_webkit rc=0 ok   no page errors {"errors":[]}
+2026-11-06T10:10:20Z STEP r1_link_long rc=0 ok   no page errors {"errors":[]}
+2026-11-06T10:13:44Z STEP r1_compare rc=0 ok   Turn this into an experiment: the builder opens with the panes {"spec":{"family":"control","algorithms":["dwa","rpp"],"scenarios":{"kind":"sampled","n":20,"seed":1,"min_separation_m":3}}}
+2026-11-06T10:14:26Z STEP r1_export rc=0 ok   digest = native {"digest":"c8420b1e3d1c442553e7fd940b36dcba7b340a3ae5001b062ffd26128f628156"}
+2026-11-06T10:16:26Z STEP a11y rc=1 {"passed":false,"pages":[["desktop","dark","?view=workbench",370,0,0,true],["desktop","dark","?view=workbench&tab=benchmarks",691,0,0,true],["desktop","dark","?view=workbench&tab=datasets",395,0,0,true],["desktop","dark"
+2026-11-06T10:18:07Z STEP escape_chromium rc=0 ESCAPE TESTS PASS: every escape failed safely
+2026-11-06T10:20:25Z STEP escape_firefox rc=0 ESCAPE TESTS PASS: every escape failed safely
+2026-11-06T10:22:09Z STEP escape_webkit rc=0 ESCAPE TESTS PASS: every escape failed safely
+2026-11-06T10:23:56Z STEP studio_check rc=0 STUDIO CHECK PASS
+2026-11-06T10:50:57Z STEP reference_sample rc=0 verified 60 run(s): 60 match, 0 differ
+2026-11-06T11:01:00Z STEP studio_laptop rc=0 {"case":"laptop","error":"TimeoutError: locator.waitFor: Timeout 600000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=studio-validation]') to be visible\u001b[22m\n"}
+2026-11-06T11:11:02Z STEP studio_phone rc=0 {"case":"phone","error":"TimeoutError: locator.waitFor: Timeout 600000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=studio-validation]') to be visible\u001b[22m\n"}
+2026-11-06T11:13:09Z STEP fps_base_desktop rc=0 {"label":"base desktop","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)","restarts":0,"play_coverage":{"windows":119,"ticking":118},"frame_interval_ms":{"median":16.5,"
+2026-11-06T11:15:16Z STEP fps_base_phone rc=0 {"label":"base phone","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)","restarts":0,"play_coverage":{"windows":119,"ticking":118},"frame_interval_ms":{"median":16.60000
+2026-11-06T11:17:23Z STEP fps_r2_desktop rc=0 {"label":"r2 desktop","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)","restarts":0,"play_coverage":{"windows":119,"ticking":118},"frame_interval_ms":{"median":16.60000
+2026-11-06T11:19:31Z STEP fps_r2_phone rc=0 {"label":"r2 phone","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)","restarts":0,"play_coverage":{"windows":119,"ticking":118},"frame_interval_ms":{"median":16.6000000
+2026-11-06T11:19:31Z R2.9 close done; tree still 86a28e1 dirty=0

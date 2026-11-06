@@ -4,6 +4,23 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 
 ## Now
 
+- **State (2026-11-06): R2 done (R2.0–R2.9)** — final tree `7eaa7b6` + this close commit; [`R2_RESULTS.md`](R2_RESULTS.md).
+  Every suite passes (coco_lab 1303, lab_web/tools 263, vitest 640, all 12 ROS packages); determinism v1/terrain/v2
+  0 differences in 4 engines; native gate exact; R1 reference sample 197/197; parity R1 4,269 + R2 850 values, 0
+  differences; escape tests pass in Chromium, Firefox, WebKit; accessibility 24 pages; Play fps unchanged (desktop
+  60.10, emulated phone 60.01; balanced, AC). The close-out found and fixed four defects (kept in
+  [`data/r29/failures/`](data/r29/failures/)). No stop condition fired. Real phone not connected. **Exact next step:
+  Gautham reviews the R2 PR** (and the screenshots in [`BEFORE_AFTER.md`](BEFORE_AFTER.md)); after the merge, retarget
+  PR #31 to main so the trusted writer labels it.
+- **State (2026-11-05): R2.8 Phone and Learn done** ([`data/r28/README.md`](data/r28/README.md)), committed before R2.7
+  (whose Gazebo runs take hours): the Studio on the **emulated** phone in both orientations (real phone: not
+  connected — plug it in when convenient); "Try it yourself" on Learn; [`API.md`](API.md). Gautham's leaderboard
+  submission: [PR #31](https://github.com/GauthamCodes/coco-labs/pull/31) — **CI's sandboxed verify passed** (VERIFIED;
+  public results byte-identical to the laptop's native and container runs); the `verified` label comes from the
+  trusted writer once R2 is on main. **R2.7 STACK (Gazebo + Nav2, power-saver):** A* starter
+  plans 60/60 (stock Smac 42/60: start/goal convention), Lazy Theta* 57/60 but drives **0/5** under Nav2's RPP (it
+  plans too close to corners for it); pure pursuit 20/20 colour rounds; the particle filter replaced AMCL for a full
+  round. Balanced check: every count and length the same; planning 2.4–3× faster.
 - **State (2026-11-05): R2.6 Leaderboard built** ([`data/r26/README.md`](data/r26/README.md)): submission format,
   the sandboxed `pull_request` verifier (base branch's verifier, `--network none`, no secrets), the trusted
   `workflow_run` writer (validates the artifact as data, comments, labels), re-verification on every version change,
@@ -34,7 +51,7 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
   reference sample **197/197 match**; through the API every built-in reproduces its native results bit for bit
   except **D\* Lite's path length and cost (≤ 3e-15 relative: its native adapter sums with Python 3.12's compensated
   `sum()`)** — no native result, hash or golden changes; question for Gautham below. Full coco_lab suite on the R2
-  tree: recorded with R2.2.
+  tree: **1298 passed, 0 failed**.
 - **State (2026-11-04): R2.0 Baseline done** ([`data/r20/README.md`](data/r20/README.md)): main `4894c76`'s tree is R1's
   final tree byte for byte (`git diff 8b40a41 4894c76` empty), so R1.9's committed suites are its baseline; a re-run
   here gave coco_lab 1191 passed + 1 failure caused by an R2 file appearing in the tree mid-run (fixed in R2.1), and was
@@ -62,12 +79,14 @@ Prompt: [`R2_PROMPT.md`](R2_PROMPT.md). Plan-change entry: [`../../STATUS.md`](.
 | R2.3 Algorithm Studio | done | [`data/r23/README.md`](data/r23/README.md), [`screens/r23/`](screens/r23/) |
 | R2.4 Compare, experiments and native | done | [`data/r24/README.md`](data/r24/README.md), [`parity.json`](data/r24/parity.json) |
 | R2.5 Share links | done | [`data/r25/README.md`](data/r25/README.md) |
-| R2.6 Leaderboard | built; submission PR open | [`data/r26/README.md`](data/r26/README.md), [`leaderboard/`](../../../leaderboard/) |
-| R2.7 Run in ROS 2 | | |
-| R2.8 Phone and Learn | | |
-| R2.9 Close | | |
+| R2.6 Leaderboard | done; PR #31 verified in CI (label after R2 merges) | [`data/r26/README.md`](data/r26/README.md), [`leaderboard/`](../../../leaderboard/) |
+| R2.7 Run in ROS 2 | done (balanced check: same counts) | [`data/r27/README.md`](data/r27/README.md) |
+| R2.8 Phone and Learn | done (emulated phone) | [`data/r28/README.md`](data/r28/README.md), [`API.md`](API.md) |
+| R2.9 Close | done; PR into main, not merged | [`data/r29/README.md`](data/r29/README.md), [`R2_RESULTS.md`](R2_RESULTS.md), [`BEFORE_AFTER.md`](BEFORE_AFTER.md) |
 
 ## Questions for Gautham
+
+The full list (8) is in [`R2_RESULTS.md`](R2_RESULTS.md#questions-for-gautham); the first:
 
 1. **D\* Lite through the API** (R2.1): its path length and cost differ from the native values by ≤ 3e-15 relative
    because its native adapter sums with Python's compensated `sum()` while the search planners and the API add in order.

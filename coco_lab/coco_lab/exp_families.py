@@ -222,13 +222,16 @@ def _supercover(r0, c0, r1, c1):
                     yield (rr, cc)
 
 
-def measure_path(m, grid, layers, radius: float, cells: List) -> Dict:
+def measure_path(m, grid, layers, radius: float, cells: List,
+                 summation: str = 'sequential') -> Dict:
     """
     Return ``{collision, length, cost, steps, clearance[], heading}`` for a cell path.
 
     The same arithmetic, in the same order, as :mod:`coco_lab.search`'s summary and
     the planning family's metrics, so an 8-connected path measures exactly as the
-    built-in that found it.
+    built-in that found it. ``summation='compensated'`` adds the length and the cost
+    with Python's ``sum()``, as :func:`coco_lab.compare_planning.run_planner` does for
+    D* Lite; only the built-in D* Lite wrapper asks for it.
     """
     length = 0.0
     cost: Optional[float] = 0.0
@@ -252,6 +255,10 @@ def measure_path(m, grid, layers, radius: float, cells: List) -> Dict:
         if not (0 <= r < m.height and 0 <= c < w) or layers.combined[r * w + c] >= 253:
             collision = (r, c)
             break
+    if summation == 'compensated':
+        length = sum(math.hypot(b[0] - a[0], b[1] - a[1]) for a, b in zip(cells, cells[1:]))
+        if cost is not None:
+            cost = sum(grid.edge_cost(a, b) for a, b in zip(cells, cells[1:]))
     clearance = [layers.clearance[r * w + c] - radius for r, c in
                  (cells if cost is not None else visited)]
     return {'collision': collision, 'length': length, 'cost': cost,
@@ -340,7 +347,9 @@ def run_user_planning(world, scenario: Dict, alg, params: Dict, descriptor: Dict
         metrics['expansions'] = counts['expand'] or None
         metrics['pushes'] = counts['push'] or None
         if status is None:
-            mp = measure_path(m, grid, layers, ip.robot_radius, cells)
+            from .api_builtins import Builtin
+            summation = alg.summation if isinstance(alg, Builtin) else 'sequential'
+            mp = measure_path(m, grid, layers, ip.robot_radius, cells, summation)
             h.update(canonical([[c[0], c[1]] for c in cells]))
             if mp['collision'] is not None:
                 r, c = mp['collision']

@@ -34,7 +34,7 @@ const API: [string, string][] = [
   ['NO_INFORMATION', '255: unknown'], ['FREE_SPACE', '0'],
 ];
 const MEMBERS: [string, string][] = [
-  ['ctx.rng', 'the seeded generator: random(), uniform(a, b), gauss(mu, s), randint, choice, shuffle, sample'],
+  ['ctx.rng', 'the seeded generator: random, uniform, gauss -- a normal draw, randint, choice, shuffle, sample'],
   ['ctx.robot', 'radius, max_linear, max_angular, max_linear_accel, max_angular_accel, lidar_mount'],
   ['ctx.params', 'your parameters (user.<name> in an experiment)'], ['ctx.config', 'the family’s settings (inflation, connectivity, ...)'],
   ['ctx.memory', 'a dict kept between the calls of one run'], ['ctx.time', 'sim time (s)'], ['ctx.dt', 'the tick (s)'],
@@ -59,10 +59,10 @@ function apiCompletions(cx: CompletionContext): CompletionResult | null {
 }
 
 const night = HighlightStyle.define([
-  { tag: t.keyword, color: 'var(--accent, #ffb547)' }, { tag: [t.string, t.special(t.string)], color: '#9ad7a0' },
-  { tag: t.comment, color: 'var(--muted, #8a97a6)', fontStyle: 'italic' }, { tag: [t.number, t.bool, t.null], color: '#ff9e7a' },
-  { tag: [t.function(t.variableName), t.function(t.propertyName)], color: '#7cc7ff' }, { tag: t.definition(t.variableName), color: '#e8eef5' },
-  { tag: t.className, color: '#f2c879' }, { tag: t.operator, color: '#c7d1dc' },
+  { tag: t.keyword, color: 'var(--accent, #ffb547)' }, { tag: [t.string, t.special(t.string)], color: 'var(--code-str, #9ad7a0)' },
+  { tag: t.comment, color: 'var(--muted, #8a97a6)', fontStyle: 'italic' }, { tag: [t.number, t.bool, t.null], color: 'var(--code-num, #ff9e7a)' },
+  { tag: [t.function(t.variableName), t.function(t.propertyName)], color: 'var(--code-fn, #7cc7ff)' }, { tag: t.definition(t.variableName), color: 'var(--code-def, #e8eef5)' },
+  { tag: t.className, color: 'var(--code-cls, #f2c879)' }, { tag: t.operator, color: 'var(--code-op, #c7d1dc)' },
 ]);
 
 export interface StudioEditor {

@@ -20,6 +20,17 @@ from pathlib import Path
 from coco_lab import exp_user, experiments as E
 import pytest
 
+
+# this tree's worlds/: an installed coco_lab (CI, the suites runner) has none of its own,
+# so set COCO_WORLDS as test_experiments.py does
+WORLDS = Path(__file__).resolve().parents[2] / 'worlds'
+
+
+@pytest.fixture(autouse=True)
+def _worlds(monkeypatch):
+    monkeypatch.setenv('COCO_WORLDS', str(WORLDS))
+
+
 TEMPLATES = Path(__file__).resolve().parents[1] / 'coco_lab' / 'templates'
 ASTAR = (TEMPLATES / 'planner_astar.py').read_text()
 

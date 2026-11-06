@@ -30,6 +30,10 @@
 # re-spawned with GEN/gazebo/diff_drive_calibration.yaml (the odometry turn scale; VOID if the value
 # does not take); with the goals, tools/g2/actor_scenario.py drives the actors by actors.json's
 # scenario rule (they stop for COCO) and writes actors.jsonl and actor_scenario.json.
+# R2.7 (additive; unset = exactly as before): NAV_LAUNCH="<package> <launch file>" launches that
+# instead of gazebo_models nav.launch.py arbiter:=true (a generated coco_user_<name> package);
+# NAV_DRIVER=<script> drives the goals instead of m6f8_nav.py (same arguments);
+# NAV_NODES_OVERRIDE="..." names the lifecycle nodes to wait for (a localiser run has no /amcl).
 set -o pipefail
 ulimit -c 0
 GOALS="${1:?usage: m6f8_run.sh GOALS.json OUT_DIR [m6f8_nav.py flags]}"
@@ -113,6 +117,7 @@ scan_up() { timeout 8 ros2 topic echo /scan --once --field header.stamp.sec > /d
 NAV_NODES=(/bt_navigator /controller_server /planner_server /amcl /map_server
            /local_costmap/local_costmap /global_costmap/global_costmap
            /velocity_smoother /collision_monitor /behavior_server)
+if [ -n "${NAV_NODES_OVERRIDE:-}" ]; then read -r -a NAV_NODES <<< "$NAV_NODES_OVERRIDE"; fi
 nav_active() {
     local n s
     for n in "${NAV_NODES[@]}"; do
@@ -160,9 +165,17 @@ fi
 setsid ros2 launch custom_teleop arbiter.launch.py initial_mode:=nav use_sim_time:=true \
     > "$OUT/arbiter.log" 2>&1 &
 PGIDS+=("$!")
+if [ -n "${NAV_LAUNCH:-}" ]; then
+    say "R2.7: launching $NAV_LAUNCH in place of nav.launch.py"
+    # shellcheck disable=SC2086
+    setsid ros2 launch $NAV_LAUNCH use_sim_time:=true \
+        map:="$GEN/nav2/$LEVEL.yaml" params_file:="$GEN/nav2/nav2_params.yaml" \
+        > "$OUT/nav.log" 2>&1 &
+else
 setsid ros2 launch gazebo_models nav.launch.py arbiter:=true use_sim_time:=true \
     map:="$GEN/nav2/$LEVEL.yaml" params_file:="$GEN/nav2/nav2_params.yaml" \
     > "$OUT/nav.log" 2>&1 &
+fi
 PGIDS+=("$!")
 wait_for "all Nav2 lifecycle nodes active" 300 nav_active || { say "VOID: Nav2 not active"; exit 4; }
 wait_for "AMCL publishing a pose" 120 amcl_up || { say "VOID: no AMCL pose"; exit 4; }
@@ -185,7 +198,7 @@ if grep -q '"scenario_rule"' "$GEN/gazebo/actors.json" 2>/dev/null; then
     PGIDS+=("$!")
     say "actor scenario (scenario rule: the actors stop for COCO) started"
 fi
-"$PY" "$REPO/tools/m6/m6f8_nav.py" "$GOALS" "$OUT/results.jsonl" --world "$LEVEL" "${NAV_FLAGS[@]}"
+"$PY" "${NAV_DRIVER:-$REPO/tools/m6/m6f8_nav.py}" "$GOALS" "$OUT/results.jsonl" --world "$LEVEL" "${NAV_FLAGS[@]}"
 RC=$?
 say "goals done (rc $RC)"
 timeout 20 gz topic -e -t /world/$LEVEL/pose/info -n 1 > "$OUT/poses_at_end.txt" 2>&1

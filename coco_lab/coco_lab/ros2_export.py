@@ -36,16 +36,21 @@ TEMPLATES = Path(__file__).parent / 'ros2_package'
 ACTIONS = {'planner': 'user_compute_path_to_pose', 'controller': 'user_follow_path',
            'localiser': ''}
 ROLES = {
-    'planner': 'It serves `nav2_msgs/action/ComputePathToPose` as `user_compute_path_to_pose`; the '
-               'launch file points Nav2\'s behaviour tree at it instead of `planner_server` (which '
-               'still runs, unused). It plans on `/global_costmap/costmap_raw`.',
-    'controller': 'It serves `nav2_msgs/action/FollowPath` as `user_follow_path`; the launch file '
-                  'points Nav2\'s behaviour tree at it instead of `controller_server`. It publishes '
-                  '`TwistStamped` on `/cmd_vel_nav`, into Nav2\'s velocity smoother, collision '
-                  'monitor, `cmd_vel_relay` and COCO\'s `cmd_vel_arbiter`.',
-    'localiser': 'It replaces AMCL: Nav2 starts without it, map_server runs from this launch file, '
-                 'and the node publishes `/amcl_pose` and the `map -> odom` transform from your '
-                 'estimate.'}
+    'planner': 'It serves `nav2_msgs/action/ComputePathToPose` as '
+               '`user_compute_path_to_pose`; the '
+               "launch file points Nav2's behaviour tree at it instead of `planner_server` "
+               '(which still runs, unused). It plans on `/global_costmap/costmap_raw`.',
+    'controller': 'It serves `nav2_msgs/action/FollowPath` as `user_follow_path`; the launch '
+                  "file points Nav2's behaviour tree at it instead of `controller_server`. "
+                  "It publishes `TwistStamped` on `/cmd_vel_nav`, into Nav2's velocity "
+                  'smoother, collision monitor, `cmd_vel_relay` and '
+                  "COCO's `cmd_vel_arbiter`.",
+    'localiser': 'It replaces AMCL: Nav2 starts without it, map_server runs from this launch '
+                 'file, and the node publishes `/amcl_pose` and the `map -> odom` transform '
+                 'from your estimate.'}
+BT_NOTES = {'planner': 'ComputePathToPose names server_name="user_compute_path_to_pose".',
+            'controller': 'FollowPath names server_name="user_follow_path".',
+            'localiser': 'nothing (the localiser replaces AMCL; the tree is stock).'}
 NAME = re.compile(r'^[a-z][a-z0-9_]{1,39}$')
 
 
@@ -65,11 +70,11 @@ def export(source: str, name: str, author: str = 'COCO Lab user',
     sub = {'NAME': name, 'KIND': kind, 'KIND_TITLE': kind.capitalize(), 'ACTION': ACTIONS[kind],
            'AUTHOR': re.sub(r'[<>&"\']', '', author)[:80], 'LICENCE': licence,
            'SHA': code_sha256(source), 'ROLE': ROLES[kind],
-           'BT_NOTE': {'planner': 'ComputePathToPose names server_name="user_compute_path_to_pose".',
-                       'controller': 'FollowPath names server_name="user_follow_path".',
-                       'localiser': 'nothing (the localiser replaces AMCL; the tree is stock).'}[kind],
-           'PLANNER_SERVER': ' server_name="user_compute_path_to_pose"' if kind == 'planner' else '',
-           'CONTROLLER_SERVER': ' server_name="user_follow_path"' if kind == 'controller' else ''}
+           'BT_NOTE': BT_NOTES[kind],
+           'PLANNER_SERVER':
+               ' server_name="user_compute_path_to_pose"' if kind == 'planner' else '',
+           'CONTROLLER_SERVER':
+               ' server_name="user_follow_path"' if kind == 'controller' else ''}
 
     def fill(t: str) -> str:
         text = (TEMPLATES / t).read_text(encoding='utf-8')

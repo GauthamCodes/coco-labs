@@ -23,10 +23,21 @@ D* Lite's path length and cost are the recorded exception (ADR 0013).
 """
 
 import copy
+from pathlib import Path
 
 from coco_lab import experiments as E
 from coco_lab.trace import EXPAND, PATH
 import pytest
+
+
+# this tree's worlds/: an installed coco_lab (CI, the suites runner) has none of its own,
+# so set COCO_WORLDS as test_experiments.py does
+WORLDS = Path(__file__).resolve().parents[2] / 'worlds'
+
+
+@pytest.fixture(autouse=True)
+def _worlds(monkeypatch):
+    monkeypatch.setenv('COCO_WORLDS', str(WORLDS))
 
 
 def runs(family, suite, name, n, max_ticks=3000):
@@ -64,17 +75,24 @@ def test_search_planners_identical(name):
         assert api['report']['n_problems'] == 0 and api['report']['clamped'] == 0
 
 
-def test_dstar_lite_identical_but_summation():
-    for d in runs('planning', 'arena-nav-50', 'dstar_lite', 4):
+def test_dstar_lite_identical():
+    # the wrapper's measurement adds the path in D* Lite's own order (compensated sum()),
+    # so length and cost are byte-identical too (Gautham, 2026-11-06)
+    cases = runs('planning', 'arena-nav-50', 'dstar_lite', 4)
+    cases += runs('planning', 'depot-narrow-30', 'dstar_lite', 2)
+    for d in cases:
         native, _, n_path = planned(d)
         api, _, a_path = planned(wrapped(d))
         assert native['status'] == api['status'] and n_path == a_path
-        a, b = strip(native['metrics']), strip(api['metrics'])
-        for k in ('path_length_m', 'path_cost'):
-            if a[k] is not None:
-                assert abs(a[k] - b[k]) <= 3e-15 * abs(a[k])
-            a.pop(k), b.pop(k)
-        assert a == b
+        assert strip(native['metrics']) == strip(api['metrics'])
+
+
+def test_user_paths_add_up_sequentially():
+    # a user's file is never measured with D* Lite's summation, whatever it is called
+    from coco_lab import api_builtins
+    assert all(api_builtins.algorithm(n).summation == 'sequential'
+               for n in api_builtins.PLANNERS if n != 'dstar_lite')
+    assert api_builtins.algorithm('dstar_lite').summation == 'compensated'
 
 
 def poses(d):

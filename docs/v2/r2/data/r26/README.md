@@ -32,5 +32,11 @@ generated in R2 (MPPI and MCL take hours per board on this laptop): those boards
 `leaderboard/submissions/depot-nav-100/theta_star/` (written through the API with Claude Code for Gautham; MIT). Locally,
 the verifier gives **VERIFIED**: public 100/100 (Wilson 95% 0.963–1.000), median path 0.978 × grid-optimal (any-angle
 beats the 8-connected optimum), median min clearance 0.033 m (it takes corners close: the trade-off is visible), held-out
-20/20; deterministic; 0 contract problems; claim digest matches. The pull request, its CI verification and the label:
-see R2_STATUS (the trusted writer runs only once these workflows are on the default branch, i.e. after R2 merges).
+20/20; deterministic; 0 contract problems; claim digest matches. The end-to-end proof:
+
+| Step | Result |
+| --- | --- |
+| The pull request | [#31](https://github.com/GauthamCodes/coco-labs/pull/31) `leaderboard/theta-star` → `v2/r2-byoa`: exactly the three submission files (checked through the API the writer uses), open, left for Gautham |
+| Leaderboard verify (CI, sandboxed) | run [41905826181](https://github.com/GauthamCodes/coco-labs/actions/runs/41905826181): **pass**, 5 m 44 s on GitHub's AMD EPYC 7763; artifact [`theta_star_ci_result.json`](theta_star_ci_result.json): **VERIFIED**, public 100/100, held-out (merge-base `c5cfc50`) 20/20 |
+| The same in three places | public results **byte-identical** (digest `ca9216a0d0d7435e…`) natively on the laptop, in the laptop's sandbox container ([`theta_star_sandbox_result.json`](theta_star_sandbox_result.json); no route out, no DNS, uid 65534: [`sandbox_probe.txt`](sandbox_probe.txt)) and in CI |
+| Leaderboard results (trusted writer) | **not yet run**: a `workflow_run` workflow runs only from the default branch, so it acts once R2 is merged into main (then re-run the PR's checks; retarget #31 to main). Dry run of its validation and comment on the CI artifact, nothing posted: [`theta_star_writer_comment.md`](theta_star_writer_comment.md) |

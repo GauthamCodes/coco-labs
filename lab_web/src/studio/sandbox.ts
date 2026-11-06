@@ -145,7 +145,7 @@ export class Sandbox {
     } else if (m.type === 'done' && typeof m.result === 'string') {
       clearTimeout(p.timer);
       this.pending.delete(id);
-      // a run that ran out of memory leaves a heap that never shrinks: start the next one fresh
+      // a run that ran out of memory leaves memory that never shrinks: start the next one fresh
       if (m.result.includes('"MemoryError"')) this.kill();
       p.done({ ok: true, result: m.result, ms: typeof m.ms === 'number' ? m.ms : 0 });
     } else if (m.type === 'failed') {

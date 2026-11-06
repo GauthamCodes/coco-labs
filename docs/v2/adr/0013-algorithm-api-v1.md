@@ -84,6 +84,15 @@ Python's built-in `sum()`, which since Python 3.12 is compensated (Neumaier), wh
 golden changes; one measurement cannot reproduce both conventions. Open question for Gautham
 (R2_STATUS).
 
+*Update 2026-11-06 (Gautham: exactness is the project's promise).* Resolved without touching any
+native result, hash or golden: each built-in wrapper now declares how its native code adds up a
+path (`Builtin.summation`: `compensated` for D\* Lite, `sequential` for the five search planners),
+and `exp_families.measure_path` adds the length and cost in that order. Through the API, D\* Lite
+is now byte-identical too (`test_api_equivalence.py::test_dstar_lite_identical`, exact equality on
+arena-nav-50 and depot-narrow-30). User files are always measured sequentially; the attribute
+exists only on `api_builtins.Builtin`, which user code cannot construct or reach. No tolerance
+was needed, so none is documented.
+
 **Not wrapped:** the waypoint driver (`builtin`) is the Arena's own M1 driving loop, not a
 controller function.
 

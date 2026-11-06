@@ -1,0 +1,33 @@
+........................................................................ [ 27%]
+........................................................................ [ 54%]
+......................................F................................. [ 82%]
+...............................................                          [100%]
+=================================== FAILURES ===================================
+_________________ test_the_committed_submission_is_well_formed _________________
+
+    def test_the_committed_submission_is_well_formed():
+        d = REPO / 'leaderboard' / 'submissions' / 'depot-nav-100' / 'theta_star'
+>       assert sorted(p.name for p in d.iterdir()) == ['algorithm.py', 'meta.yaml', 'summary.json']
+
+lab_web/tools/test_r2_leaderboard.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+lab_web/tools/test_r2_leaderboard.py:98: in <genexpr>
+    assert sorted(p.name for p in d.iterdir()) == ['algorithm.py', 'meta.yaml', 'summary.json']
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/home/gautham/coco_labs_ws/worktrees/r2/leaderboard/submissions/depot-nav-100/theta_star')
+
+    def iterdir(self):
+        """Yield path objects of the directory contents.
+    
+        The children are yielded in arbitrary order, and the
+        special entries '.' and '..' are not included.
+        """
+>       for name in os.listdir(self):
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/gautham/coco_labs_ws/worktrees/r2/leaderboard/submissions/depot-nav-100/theta_star'
+
+/usr/lib/python3.12/pathlib.py:1058: FileNotFoundError
+- generated xml file: /home/gautham/.claude/jobs/fc1fb270/tmp/r29/suites/tools.xml -
+=========================== short test summary info ============================
+FAILED lab_web/tools/test_r2_leaderboard.py::test_the_committed_submission_is_well_formed
+1 failed, 262 passed in 313.41s (0:05:13)

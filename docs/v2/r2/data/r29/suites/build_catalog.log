@@ -1,0 +1,3 @@
+oncoming                     replay        15 runs   1036536 B  every metric recomputed from the recording (movebundle.replay_drive)
+static_room                  replay        15 runs   1668760 B  every metric recomputed from the recording (movebundle.replay_drive)
+wheel: {'path': 'py/coco_lab-0.2.0-py3-none-any.whl', 'sha256': '7a8df85a781c73d50d02c6bc48c0735347b9322904c8205fd467cedf63015449', 'bytes': 480646}

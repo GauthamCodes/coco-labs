@@ -1,0 +1,83 @@
+{
+ "site": "http://127.0.0.1:4197/coco-labs/",
+ "when": "2026-11-06T11:31:17.364Z",
+ "steps": [
+  {
+   "name": "A* starter on depot-nav-100 s001: found, deterministic, expansions drawn",
+   "ok": true,
+   "st": "found ✓",
+   "det": "yes: identical hash chains",
+   "exp": "3059 expansions"
+  },
+  {
+   "name": "validation report: contract problems, clamps, determinism, per-call time with the device",
+   "ok": true,
+   "val": "Contract problems: 0\nClamped outputs (logged, never silent): 0\nDeterminism: ran twice, identical hash chains\nCalls: 1; per call 169.20 ms mean, 169.2 ms max (wa"
+  },
+  {
+   "name": "Compare: yours beside the built-in A* on the same scenario",
+   "ok": true,
+   "st": "found ✓ | found ✓"
+  },
+  {
+   "name": "pure pursuit on a scenario: an outcome, drawn tick by tick",
+   "ok": true,
+   "st": "succeeded ✓"
+  },
+  {
+   "name": "coco_user_controller_pure_pursuit.zip",
+   "ok": true,
+   "bytes": 14407
+  },
+  {
+   "name": "a code link: the code is shown, Run is blocked, nothing ran before consent",
+   "ok": true,
+   "chars": 2359,
+   "runDisabled": true,
+   "sandboxBooted": false
+  },
+  {
+   "name": "after \"Run this code\": Run is enabled",
+   "ok": true
+  },
+  {
+   "name": "no page errors",
+   "ok": true,
+   "errors": []
+  },
+  {
+   "name": "Learn: \"Try it yourself\" opens the teaching starters",
+   "ok": true
+  },
+  {
+   "name": "phone-landscape (emulated): the phone note shown, Run reachable, no sideways scroll",
+   "ok": true,
+   "note": 1,
+   "runBox": {
+    "x": 465.5,
+    "y": 559.875,
+    "width": 167,
+    "height": 48
+   },
+   "overflow": 0
+  },
+  {
+   "name": "phone landscape (emulated): the A* starter runs",
+   "ok": true,
+   "st": "found ✓"
+  },
+  {
+   "name": "phone-portrait (emulated): the phone note shown, Run reachable, no sideways scroll",
+   "ok": true,
+   "note": 1,
+   "runBox": {
+    "x": 16,
+    "y": 1338.84375,
+    "width": 167,
+    "height": 48
+   },
+   "overflow": 0
+  }
+ ],
+ "pass": true
+}

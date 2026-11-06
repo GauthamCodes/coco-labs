@@ -93,10 +93,26 @@ def test_meta_rules(tmp_path):
     assert L.read_meta(d)['licence'] == 'MIT'
 
 
-def test_the_committed_submission_is_well_formed():
-    d = REPO / 'leaderboard' / 'submissions' / 'depot-nav-100' / 'theta_star'
-    assert sorted(p.name for p in d.iterdir()) == ['algorithm.py', 'meta.yaml', 'summary.json']
-    assert L.read_meta(d)['licence'] == 'MIT'
+def _well_formed(d):
+    return (sorted(p.name for p in d.iterdir()) == ['algorithm.py', 'meta.yaml', 'summary.json']
+            and L.read_meta(d)['licence'] in ('MIT', 'Apache-2.0'))
+
+
+def test_every_committed_submission_is_well_formed(tmp_path):
+    # submissions arrive by pull request (Gautham's Theta* is PR #31): whatever is committed under
+    # leaderboard/submissions/<suite>/<name>/ must be exactly the three files. Passes with none
+    # committed, and never vacuously: the rule itself is checked on a made-up submission (the Lab
+    # workflow allows no skips, so this is not a skip)
+    for d in sorted((REPO / 'leaderboard' / 'submissions').glob('*/*/')):
+        assert _well_formed(d), d
+    d = tmp_path / 'depot-nav-100' / 'mine'
+    d.mkdir(parents=True)
+    for f in ('algorithm.py', 'summary.json'):
+        (d / f).write_text('')
+    (d / 'meta.yaml').write_text('author: A\ndisplay_name: X\ndescription: d\nlicence: MIT\n')
+    assert _well_formed(d)
+    (d / 'extra.txt').write_text('')
+    assert not _well_formed(d)
 
 
 def test_the_committed_index_is_current(tmp_path):

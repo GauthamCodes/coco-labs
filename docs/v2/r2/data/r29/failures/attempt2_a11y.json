@@ -1,0 +1,2742 @@
+{
+ "site": "http://127.0.0.1:4197/coco-labs/",
+ "when": "2026-11-06T10:14:27.132Z",
+ "pages": [
+  {
+   "profile": "desktop",
+   "theme": "dark",
+   "view": "?view=workbench",
+   "checked": 370,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 79,
+   "small_targets": [
+    "<input type=\"radio\" checked=\"\" name=\"sc-kind\">",
+    "<input type=\"radio\" name=\"sc-kind\">",
+    "<input type=\"radio\" name=\"sc-kind\">",
+    "<input type=\"checkbox\" checked=\"\">",
+    "<input type=\"radio\" checked=\"\" name=\"wb-format\">",
+    "<input type=\"radio\" name=\"wb-format\">"
+   ],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "dark",
+   "view": "?view=workbench&tab=benchmarks",
+   "checked": 691,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 49,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "dark",
+   "view": "?view=workbench&tab=datasets",
+   "checked": 395,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 66,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "dark",
+   "view": "?view=learn",
+   "checked": 75,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 22,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "dark",
+   "view": "?view=workbench&tab=studio",
+   "checked": 290,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 29,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "dark",
+   "view": "?view=workbench&tab=leaderboard",
+   "checked": 362,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 31,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "light",
+   "view": "?view=workbench",
+   "checked": 370,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 79,
+   "small_targets": [
+    "<input type=\"radio\" checked=\"\" name=\"sc-kind\">",
+    "<input type=\"radio\" name=\"sc-kind\">",
+    "<input type=\"radio\" name=\"sc-kind\">",
+    "<input type=\"checkbox\" checked=\"\">",
+    "<input type=\"radio\" checked=\"\" name=\"wb-format\">",
+    "<input type=\"radio\" name=\"wb-format\">"
+   ],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "light",
+   "view": "?view=workbench&tab=benchmarks",
+   "checked": 691,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 49,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "light",
+   "view": "?view=workbench&tab=datasets",
+   "checked": 395,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 66,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "light",
+   "view": "?view=learn",
+   "checked": 75,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 22,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "light",
+   "view": "?view=workbench&tab=studio",
+   "checked": 290,
+   "failures": [
+    {
+     "text": "\"\"\"",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250.2,
+      251.15999999999997,
+      247.32
+     ],
+     "contrast": 1.6059699462575125,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "A* on Nav2's costmap: a starter planner for COCO Lab (coco.algorithm.v1).",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "plan() gets the global costmap (nav2_msgs/Costmap: raw costs 0..255), the start and",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "the goal (map-frame poses, already at the centres of free cells) and ctx. It returns",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "the path as a list of Pose2D from start to goal, or None when there is none.",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "Run it in the Studio, then change something -- the heuristic, the cost term, the",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "neighbours -- and watch the expansions change.",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "\"\"\"",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "sqrt",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "2.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "sqrt",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "2.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "sqrt",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "2.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "sqrt",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "2.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "heuristic",
+     "tag": "SPAN",
+     "foreground": "rgb(232, 238, 245)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.1238778843417252,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "\"\"\"Octile distance between two cells: exact on an empty 8-connected grid.\"\"\"",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "abs",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "abs",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "max",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "+",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "sqrt",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "2.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "*",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "min",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "plan",
+     "tag": "SPAN",
+     "foreground": "rgb(232, 238, 245)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.1238778843417252,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "world_to_map",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "world_to_map",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "get",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "'cost_weight'",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "2.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "heuristic",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "None",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    }
+   ],
+   "nonFocusable": [],
+   "controls": 29,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "desktop",
+   "theme": "light",
+   "view": "?view=workbench&tab=leaderboard",
+   "checked": 362,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 31,
+   "small_targets": [],
+   "scroll": 1440,
+   "width": 1440,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "dark",
+   "view": "?view=workbench",
+   "checked": 370,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 79,
+   "small_targets": [
+    "<input type=\"radio\" checked=\"\" name=\"sc-kind\">",
+    "<input type=\"radio\" name=\"sc-kind\">",
+    "<input type=\"radio\" name=\"sc-kind\">",
+    "<input type=\"checkbox\" checked=\"\">",
+    "<input type=\"radio\" checked=\"\" name=\"wb-format\">",
+    "<input type=\"radio\" name=\"wb-format\">"
+   ],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "dark",
+   "view": "?view=workbench&tab=benchmarks",
+   "checked": 691,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 49,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "dark",
+   "view": "?view=workbench&tab=datasets",
+   "checked": 395,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 66,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "dark",
+   "view": "?view=learn",
+   "checked": 75,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 22,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "dark",
+   "view": "?view=workbench&tab=studio",
+   "checked": 281,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 28,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "dark",
+   "view": "?view=workbench&tab=leaderboard",
+   "checked": 362,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 31,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "light",
+   "view": "?view=workbench",
+   "checked": 370,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 79,
+   "small_targets": [
+    "<input type=\"radio\" checked=\"\" name=\"sc-kind\">",
+    "<input type=\"radio\" name=\"sc-kind\">",
+    "<input type=\"radio\" name=\"sc-kind\">",
+    "<input type=\"checkbox\" checked=\"\">",
+    "<input type=\"radio\" checked=\"\" name=\"wb-format\">",
+    "<input type=\"radio\" name=\"wb-format\">"
+   ],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "light",
+   "view": "?view=workbench&tab=benchmarks",
+   "checked": 691,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 49,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "light",
+   "view": "?view=workbench&tab=datasets",
+   "checked": 395,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 66,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "light",
+   "view": "?view=learn",
+   "checked": 75,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 22,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "light",
+   "view": "?view=workbench&tab=studio",
+   "checked": 281,
+   "failures": [
+    {
+     "text": "\"\"\"",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250.2,
+      251.15999999999997,
+      247.32
+     ],
+     "contrast": 1.6059699462575125,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "A* on Nav2's costmap: a starter planner for COCO Lab (coco.algorithm.v1).",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "plan() gets the global costmap (nav2_msgs/Costmap: raw costs 0..255), the start and",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "the goal (map-frame poses, already at the centres of free cells) and ctx. It returns",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "the path as a list of Pose2D from start to goal, or None when there is none.",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "Run it in the Studio, then change something -- the heuristic, the cost term, the",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "neighbours -- and watch the expansions change.",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "\"\"\"",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "sqrt",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "2.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "sqrt",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "2.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "sqrt",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "2.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "sqrt",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "2.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "heuristic",
+     "tag": "SPAN",
+     "foreground": "rgb(232, 238, 245)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.1238778843417252,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "\"\"\"Octile distance between two cells: exact on an empty 8-connected grid.\"\"\"",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "abs",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "abs",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "max",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "+",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "sqrt",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "2.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "-",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "1.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "*",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "min",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "plan",
+     "tag": "SPAN",
+     "foreground": "rgb(232, 238, 245)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.1238778843417252,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "world_to_map",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "world_to_map",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": ".",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "get",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "'cost_weight'",
+     "tag": "SPAN",
+     "foreground": "rgb(154, 215, 160)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.6034821465938753,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "2.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "heuristic",
+     "tag": "SPAN",
+     "foreground": "rgb(124, 199, 255)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.7616451218807194,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "0.0",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "=",
+     "tag": "SPAN",
+     "foreground": "rgb(199, 209, 220)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.48775194451393,
+     "minimum": 4.5,
+     "size": 13
+    },
+    {
+     "text": "None",
+     "tag": "SPAN",
+     "foreground": "rgb(255, 158, 122)",
+     "background": [
+      250,
+      251,
+      247
+     ],
+     "contrast": 1.9385257764917363,
+     "minimum": 4.5,
+     "size": 13
+    }
+   ],
+   "nonFocusable": [],
+   "controls": 28,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  },
+  {
+   "profile": "phone-landscape",
+   "theme": "light",
+   "view": "?view=workbench&tab=leaderboard",
+   "checked": 362,
+   "failures": [],
+   "nonFocusable": [],
+   "controls": 31,
+   "small_targets": [],
+   "scroll": 915,
+   "width": 915,
+   "reducedMotion": "reduced"
+  }
+ ],
+ "errors": [],
+ "passed": false
+}

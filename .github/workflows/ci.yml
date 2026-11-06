@@ -19,11 +19,55 @@ jobs:
     # No apt/ROS cache: ros-tooling/setup-ros@v0.7 has no cache input,
     # and caching /var/cache/apt by hand is not clean (root-owned, and
     # it saves only the download). Skipped deliberately.
-    timeout-minutes: 90
+    # R3 Part A (2026-11-06): the setup is now bounded per attempt and retried
+    # (below), so the job limit covers three attempts plus the ~10 min rest.
+    timeout-minutes: 100
     steps:
       - uses: actions/checkout@v4
 
+      # R3 Part A (2026-11-06): runner timeouts kept recurring in this step (a
+      # stalled or crawling mirror; apt has no retry of its own). apt now gives up
+      # on a stalled connection after 60 s and retries each download 5 times; the
+      # setup gets 20 min per attempt (median 5-6 min) and up to three attempts.
+      # Before a retry, the recovery step kills the timed-out attempt's apt (it
+      # survives the step timeout and holds the dpkg lock: run 42252885733),
+      # repairs dpkg and moves archive.ubuntu.com ahead of the Azure mirror
+      # (that run crawled at ~30 kB/s on azure.archive.ubuntu.com).
+      - name: Make apt retry and time out stalled downloads
+        run: |
+          printf 'Acquire::Retries "5";\nAcquire::http::Timeout "60";\nAcquire::https::Timeout "60";\n' \
+            | sudo tee /etc/apt/apt.conf.d/80-coco-retries
+
       - name: Setup ROS 2 Jazzy
+        id: ros1
+        continue-on-error: true
+        timeout-minutes: 20
+        uses: ros-tooling/setup-ros@v0.7
+        with:
+          required-ros-distributions: jazzy
+
+      - name: Setup ROS 2 Jazzy (retry 1)
+        if: steps.ros1.outcome != 'success'
+        timeout-minutes: 10
+        run: bash scripts/ci_apt_recover.sh
+
+      - name: Setup ROS 2 Jazzy (retry 1, install)
+        id: ros2i
+        if: steps.ros1.outcome != 'success'
+        continue-on-error: true
+        timeout-minutes: 20
+        uses: ros-tooling/setup-ros@v0.7
+        with:
+          required-ros-distributions: jazzy
+
+      - name: Setup ROS 2 Jazzy (retry 2)
+        if: steps.ros1.outcome != 'success' && steps.ros2i.outcome != 'success'
+        timeout-minutes: 10
+        run: bash scripts/ci_apt_recover.sh
+
+      - name: Setup ROS 2 Jazzy (retry 2, install)
+        if: steps.ros1.outcome != 'success' && steps.ros2i.outcome != 'success'
+        timeout-minutes: 25
         uses: ros-tooling/setup-ros@v0.7
         with:
           required-ros-distributions: jazzy

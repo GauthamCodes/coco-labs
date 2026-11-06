@@ -1,0 +1,1 @@
+{"schema":"coco.experiment.v1","title":"Export check: two controllers","world":"coco_arena_v1","family":"control","seed":3,"algorithms":[{"name":"builtin"},{"name":"rpp"}],"scenarios":{"kind":"sampled","n":2,"seed":3,"min_separation_m":2.5},"limits":{"max_ticks":400}}

@@ -138,6 +138,13 @@ try {
     const runBox = await pp.locator('[data-testid=studio-run]').boundingBox();
     const width = await pp.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     step(`${tag} (emulated): the phone note shown, Run reachable, no sideways scroll`, note === 1 && !!runBox && width <= 1, { note, runBox, overflow: width });
+    if (landscape) {
+      // the view first in its column, starting inside the first screen (Gautham, 2026-11-06)
+      const viewBox = await pp.locator('.studio-panes').boundingBox();
+      const inner = await pp.evaluate(() => window.innerHeight);
+      step('phone landscape (emulated): the view comes first, above Run, inside the first screen',
+        !!viewBox && !!runBox && viewBox.y < runBox.y && viewBox.y < inner, { viewBox, runBox, inner });
+    }
     await pp.screenshot({ path: join(out, `${tag}-studio.png`) });
     if (landscape && !screensOnly) {
       await pp.locator('[data-testid=studio-run]').click();
