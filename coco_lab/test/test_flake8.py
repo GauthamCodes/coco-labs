@@ -19,8 +19,11 @@ import pytest
 @pytest.mark.flake8
 @pytest.mark.linter
 def test_flake8():
-    # The vendored ISRO code keeps its original style (coco_lab/isro).
-    rc, errors = main_with_errors(argv=['--exclude', 'upstream_v3_6.py'])
+    # The vendored ISRO code keeps its original style (coco_lab/isro). R2: coco_lab/templates
+    # holds algorithm FILES (coco_lab.api's starters: user code, data to this package, never
+    # imported); parity CI and the ROS 2 runs name their exact bytes by sha256, so they are not
+    # restyled.
+    rc, errors = main_with_errors(argv=['--exclude', 'upstream_v3_6.py,templates'])
     assert rc == 0, \
         'Found %d code style errors / warnings:\n' % len(errors) + \
         '\n'.join(errors)

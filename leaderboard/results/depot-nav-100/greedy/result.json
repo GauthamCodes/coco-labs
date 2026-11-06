@@ -1,0 +1,2296 @@
+{
+ "checks": {
+  "claim_matches": null,
+  "claimed_digest": null,
+  "clamped_outputs": 0,
+  "contract_problems": 0,
+  "deterministic": true
+ },
+ "entry": {
+  "author": "COCO Lab (built-in reference)",
+  "code_path": "coco_lab/coco_lab/",
+  "code_sha256": null,
+  "description": "The built-in Greedy best-first, as the Workbench runs it.",
+  "display_name": "Greedy best-first",
+  "family": "planning",
+  "kind": "builtin",
+  "licence": "Apache-2.0",
+  "name": "greedy",
+  "paper": null,
+  "suite": "depot-nav-100"
+ },
+ "held_out": {
+  "digest": "bb2702edcb8180f9326d30ed7e7bd31f13653f625c530984dbf3b3031c64de57",
+  "merge_base": "reference",
+  "n": 20,
+  "runs": [
+   {
+    "chain": "059c9fc0f73b35e4be48104a4a461ccb7ce0636fb3e8577bb8c5d41f61af92fd",
+    "counts": {
+     "expansions": 1390,
+     "goal_snap_m": 0,
+     "heading_change_rad": 16.49336143134718,
+     "mean_clearance_m": 1.953303707869676,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 506.23849421086743,
+     "path_length_m": 37.10954544295052,
+     "path_steps": 345,
+     "pushes": 2104,
+     "start_snap_m": 0
+    },
+    "scenario": "s001",
+    "scenario_index": 0,
+    "status": "found"
+   },
+   {
+    "chain": "7a464dec176431bcdc6ef2de75dc62ae4fc333bbcfb9fcec653ee14f27cfab5f",
+    "counts": {
+     "expansions": 796,
+     "goal_snap_m": 0,
+     "heading_change_rad": 14.922565104554796,
+     "mean_clearance_m": 1.011945342666926,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 741.0018577208589,
+     "path_length_m": 49.72274887854705,
+     "path_steps": 409,
+     "pushes": 1871,
+     "start_snap_m": 0
+    },
+    "scenario": "s002",
+    "scenario_index": 1,
+    "status": "found"
+   },
+   {
+    "chain": "1aaf2d9760acd0af6e2aa7d27d77394647c04f9ed0fc61c216eb26b7b915a7b3",
+    "counts": {
+     "expansions": 90,
+     "goal_snap_m": 0,
+     "heading_change_rad": 3.926990816987561,
+     "mean_clearance_m": 2.488859557243359,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 115.8659588618402,
+     "path_length_m": 9.752691193458118,
+     "path_steps": 88,
+     "pushes": 301,
+     "start_snap_m": 0
+    },
+    "scenario": "s003",
+    "scenario_index": 2,
+    "status": "found"
+   },
+   {
+    "chain": "72a4dd1f28326de5b578ad552112201dd10138219a79d7f11371747f73cf6960",
+    "counts": {
+     "expansions": 214,
+     "goal_snap_m": 0,
+     "heading_change_rad": 2.3561944901937326,
+     "mean_clearance_m": 2.3445850276821845,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 269.3031131548903,
+     "path_length_m": 25.15218613006978,
+     "path_steps": 213,
+     "pushes": 818,
+     "start_snap_m": 0
+    },
+    "scenario": "s004",
+    "scenario_index": 3,
+    "status": "found"
+   },
+   {
+    "chain": "7fb10d5437f0cefc282313cd7e0bc3bdf2c0a17232dde540f7366651240cd7a2",
+    "counts": {
+     "expansions": 127,
+     "goal_snap_m": 0,
+     "heading_change_rad": 2.3561944901932685,
+     "mean_clearance_m": 1.3705534439685747,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 219.38543475344682,
+     "path_length_m": 14.588225099390849,
+     "path_steps": 126,
+     "pushes": 420,
+     "start_snap_m": 0
+    },
+    "scenario": "s005",
+    "scenario_index": 4,
+    "status": "found"
+   },
+   {
+    "chain": "91ca990f16ad0ac250083f1ffba1a8197a3bcc8d1038f0965620c035caa2c27d",
+    "counts": {
+     "expansions": 208,
+     "goal_snap_m": 0,
+     "heading_change_rad": 11.780972450963166,
+     "mean_clearance_m": 0.8313165454118964,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 239.6525445869461,
+     "path_length_m": 19.150966799187824,
+     "path_steps": 165,
+     "pushes": 646,
+     "start_snap_m": 0
+    },
+    "scenario": "s006",
+    "scenario_index": 5,
+    "status": "found"
+   },
+   {
+    "chain": "a123e6fd8262fb8cb87069a5bd65a9cf84947ea39c6622438952147b0a98d928",
+    "counts": {
+     "expansions": 9698,
+     "goal_snap_m": 0,
+     "heading_change_rad": 18.064157758142766,
+     "mean_clearance_m": 0.26339592686715513,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 842.3095520941773,
+     "path_length_m": 56.09310242291888,
+     "path_steps": 493,
+     "pushes": 10696,
+     "start_snap_m": 0
+    },
+    "scenario": "s007",
+    "scenario_index": 6,
+    "status": "found"
+   },
+   {
+    "chain": "f727878f20fe0c595de25e87aadfdad67f2644ef6f6e0480ed5cf51a489f805e",
+    "counts": {
+     "expansions": 79,
+     "goal_snap_m": 0,
+     "heading_change_rad": 2.356194490192487,
+     "mean_clearance_m": 0.14272432886507141,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 132.49717582005076,
+     "path_length_m": 8.131370849898477,
+     "path_steps": 78,
+     "pushes": 232,
+     "start_snap_m": 0
+    },
+    "scenario": "s008",
+    "scenario_index": 7,
+    "status": "found"
+   },
+   {
+    "chain": "e3c207315993eb4b465e29e545e4448819acb3cd800604f1f4a91775d8e7c22b",
+    "counts": {
+     "expansions": 6682,
+     "goal_snap_m": 0,
+     "heading_change_rad": 6.283185307182642,
+     "mean_clearance_m": 1.9585420067301875,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 392.48061428960193,
+     "path_length_m": 34.50193359837573,
+     "path_steps": 292,
+     "pushes": 7442,
+     "start_snap_m": 0
+    },
+    "scenario": "s009",
+    "scenario_index": 8,
+    "status": "found"
+   },
+   {
+    "chain": "5d7fede7fb58625a829953b6e68a602b9e3ded339f8d43abd2e0f63003a86dfe",
+    "counts": {
+     "expansions": 84,
+     "goal_snap_m": 0,
+     "heading_change_rad": 0.7853981633974847,
+     "mean_clearance_m": 2.2931317318692157,
+     "min_clearance_m": 0.55,
+     "path_cost": 84.24264068711929,
+     "path_length_m": 8.42426406871193,
+     "path_steps": 83,
+     "pushes": 261,
+     "start_snap_m": 0
+    },
+    "scenario": "s010",
+    "scenario_index": 9,
+    "status": "found"
+   },
+   {
+    "chain": "bc8b67da0ffbb554467a9a48a5fc565532f3b9e975825a2ace497754a1418e72",
+    "counts": {
+     "expansions": 357,
+     "goal_snap_m": 0,
+     "heading_change_rad": 5.4977871437834525,
+     "mean_clearance_m": 0.9350476527047494,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 245.786602817368,
+     "path_length_m": 19.086500705120564,
+     "path_steps": 154,
+     "pushes": 774,
+     "start_snap_m": 0
+    },
+    "scenario": "s011",
+    "scenario_index": 10,
+    "status": "found"
+   },
+   {
+    "chain": "6747ca7ca87f7f234991606c9110a5b860889910450d2763c2b00ac2349636c0",
+    "counts": {
+     "expansions": 9789,
+     "goal_snap_m": 0,
+     "heading_change_rad": 18.064157758142386,
+     "mean_clearance_m": 0.18984847613249922,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 652.9114401704495,
+     "path_length_m": 39.269343417595245,
+     "path_steps": 355,
+     "pushes": 10443,
+     "start_snap_m": 0
+    },
+    "scenario": "s012",
+    "scenario_index": 11,
+    "status": "found"
+   },
+   {
+    "chain": "87f3354dee5679a05503f80d5735c6d3b6d12dc4933e23c278b2f7d59a7b9126",
+    "counts": {
+     "expansions": 242,
+     "goal_snap_m": 0,
+     "heading_change_rad": 8.639379797372545,
+     "mean_clearance_m": 0.5405990089529162,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 126.56166645351689,
+     "path_length_m": 9.446803743153541,
+     "path_steps": 75,
+     "pushes": 505,
+     "start_snap_m": 0
+    },
+    "scenario": "s013",
+    "scenario_index": 12,
+    "status": "found"
+   },
+   {
+    "chain": "b9bf6aba301d1a3e0eb79c5af6ee2a9be410342e9d413bcb448109240e210184",
+    "counts": {
+     "expansions": 933,
+     "goal_snap_m": 0,
+     "heading_change_rad": 13.351768777758046,
+     "mean_clearance_m": 0.30220173710192894,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 409.58542832432363,
+     "path_length_m": 26.24924240491754,
+     "path_steps": 219,
+     "pushes": 1449,
+     "start_snap_m": 0
+    },
+    "scenario": "s014",
+    "scenario_index": 13,
+    "status": "found"
+   },
+   {
+    "chain": "d23305387f45df36160237b5dbbe40d7cb1b9f8e1017af6291fdafd88883c338",
+    "counts": {
+     "expansions": 1750,
+     "goal_snap_m": 0,
+     "heading_change_rad": 14.92256510455277,
+     "mean_clearance_m": 0.2488761495181868,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 671.7201238763931,
+     "path_length_m": 41.96051224213838,
+     "path_steps": 367,
+     "pushes": 2455,
+     "start_snap_m": 0
+    },
+    "scenario": "s015",
+    "scenario_index": 14,
+    "status": "found"
+   },
+   {
+    "chain": "ef69db4197b3773dcc52c5a8d5f3986d3c7ff3c9837bc70a45cf9b95a8186f48",
+    "counts": {
+     "expansions": 6533,
+     "goal_snap_m": 0,
+     "heading_change_rad": 29.05973204570663,
+     "mean_clearance_m": 0.18356704597668996,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 1104.2927772806117,
+     "path_length_m": 59.61198410471454,
+     "path_steps": 546,
+     "pushes": 7429,
+     "start_snap_m": 0
+    },
+    "scenario": "s016",
+    "scenario_index": 15,
+    "status": "found"
+   },
+   {
+    "chain": "b89ecb3bf0111b0e123d124f13a1c9f36fe5a65f4b77541da4778412eefb9c03",
+    "counts": {
+     "expansions": 934,
+     "goal_snap_m": 0,
+     "heading_change_rad": 21.20575041173326,
+     "mean_clearance_m": 1.0318408530152743,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 620.6307464466371,
+     "path_length_m": 42.414422766478545,
+     "path_steps": 350,
+     "pushes": 1837,
+     "start_snap_m": 0
+    },
+    "scenario": "s017",
+    "scenario_index": 16,
+    "status": "found"
+   },
+   {
+    "chain": "228707b2374e5489a816775c8e9d3ef213e54b4bc59648297f7a4caf886e47ac",
+    "counts": {
+     "expansions": 112,
+     "goal_snap_m": 0,
+     "heading_change_rad": 2.3561944901928333,
+     "mean_clearance_m": 0.6667306826644863,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 143.39972050822252,
+     "path_length_m": 12.176955262170045,
+     "path_steps": 111,
+     "pushes": 374,
+     "start_snap_m": 0
+    },
+    "scenario": "s018",
+    "scenario_index": 17,
+    "status": "found"
+   },
+   {
+    "chain": "98ce6c1fb0db0e05c82a4f63c85d5b40276b157b613793df65a31667ad82e088",
+    "counts": {
+     "expansions": 1066,
+     "goal_snap_m": 0,
+     "heading_change_rad": 16.49336143134708,
+     "mean_clearance_m": 0.2170642144388857,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 430.78180143844315,
+     "path_length_m": 23.726702730475893,
+     "path_steps": 212,
+     "pushes": 1530,
+     "start_snap_m": 0
+    },
+    "scenario": "s019",
+    "scenario_index": 18,
+    "status": "found"
+   },
+   {
+    "chain": "e99b676c2314eae0c5e5763e402bbed92e5e6d15bd8e986d1bb786a155e47016",
+    "counts": {
+     "expansions": 241,
+     "goal_snap_m": 0,
+     "heading_change_rad": 0.7853981633983276,
+     "mean_clearance_m": 2.05214056494855,
+     "min_clearance_m": 0.15000000000000002,
+     "path_cost": 293.2258296154021,
+     "path_length_m": 26.48528137423856,
+     "path_steps": 240,
+     "pushes": 846,
+     "start_snap_m": 0
+    },
+    "scenario": "s020",
+    "scenario_index": 19,
+    "status": "found"
+   }
+  ],
+  "scenarios": 20,
+  "score": {
+   "compute_ms": {
+    "median": 34.59293850028189,
+    "n": 20,
+    "q1": 12.29370350120007,
+    "q3": 101.257611750043
+   },
+   "expansions": {
+    "median": 576.5,
+    "n": 20,
+    "q1": 187.75,
+    "q3": 1480
+   },
+   "failures": [],
+   "min_clearance_m": {
+    "median": 0.050000000000000044,
+    "n": 20,
+    "q1": 0.050000000000000044,
+    "q3": 0.050000000000000044
+   },
+   "n": 20,
+   "path_ratio": {
+    "median": 1.0696645652133956,
+    "n": 20,
+    "q1": 1.0000000000000004,
+    "q3": 1.1598940725645266
+   },
+   "success_rate": 1,
+   "successes": 20,
+   "wilson95": [
+    0.8388748419471806,
+    1
+   ]
+  },
+  "seed": 75243760415678,
+  "spec_id": "930f1299fc733d78",
+  "worst": {
+   "scenario": "s016",
+   "scenario_index": 15,
+   "why": "worst path ratio"
+  }
+ },
+ "host": {
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "git": "41e2a7ee1664247c851390055637e716c11ff39e",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "runner": "cpython",
+  "workers": 2
+ },
+ "problems": [],
+ "public": {
+  "digest": "b29a5b4f144a8e725f0d76db3c618409a96d07ed7df5346917d01b72dd1fbd0f",
+  "runs": [
+   {
+    "chain": "86a8b4a6df5fb09b31c006c5acd020cf17f67a2bcc6579e07bebd4b88302ab44",
+    "counts": {
+     "expansions": 307,
+     "goal_snap_m": 0,
+     "heading_change_rad": 10.210176124168239,
+     "mean_clearance_m": 0.9971276890041115,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 319.7987669478721,
+     "path_length_m": 23.059292911256353,
+     "path_steps": 190,
+     "pushes": 831,
+     "start_snap_m": 0
+    },
+    "scenario": "s001",
+    "scenario_index": 0,
+    "status": "found"
+   },
+   {
+    "chain": "5117ea1a84332cba62ae7f4b9d5ee4041e79e4c31ab25a419d7c468f68a6787d",
+    "counts": {
+     "expansions": 7173,
+     "goal_snap_m": 0,
+     "heading_change_rad": 10.210176124170008,
+     "mean_clearance_m": 1.0299422297170269,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 682.3099603042909,
+     "path_length_m": 47.99848480983512,
+     "path_steps": 393,
+     "pushes": 8414,
+     "start_snap_m": 0
+    },
+    "scenario": "s002",
+    "scenario_index": 1,
+    "status": "found"
+   },
+   {
+    "chain": "1c643bdec81c220ed6b332e12bbeb7a9e756281ec903090e189dd5cbb0d77ac8",
+    "counts": {
+     "expansions": 394,
+     "goal_snap_m": 0,
+     "heading_change_rad": 10.210176124167948,
+     "mean_clearance_m": 2.337029796335732,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 372.73451564080676,
+     "path_length_m": 28.96518036156094,
+     "path_steps": 259,
+     "pushes": 1008,
+     "start_snap_m": 0
+    },
+    "scenario": "s003",
+    "scenario_index": 2,
+    "status": "found"
+   },
+   {
+    "chain": "c175fea106bfa2e9c52efe42c09d658417fdb57defce0164302bff0bbcc4f8e7",
+    "counts": {
+     "expansions": 221,
+     "goal_snap_m": 0,
+     "heading_change_rad": 8.639379797374584,
+     "mean_clearance_m": 1.3238314049368876,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 342.00099433883906,
+     "path_length_m": 28.02031021678305,
+     "path_steps": 216,
+     "pushes": 920,
+     "start_snap_m": 0
+    },
+    "scenario": "s004",
+    "scenario_index": 3,
+    "status": "found"
+   },
+   {
+    "chain": "3342b401792825764346ab10e4e139254c6444baead164e92982cae9b13cc0be",
+    "counts": {
+     "expansions": 1816,
+     "goal_snap_m": 0,
+     "heading_change_rad": 16.493361431348525,
+     "mean_clearance_m": 0.8049533953042487,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 821.5104362703405,
+     "path_length_m": 50.38893936688455,
+     "path_steps": 443,
+     "pushes": 2814,
+     "start_snap_m": 0
+    },
+    "scenario": "s005",
+    "scenario_index": 4,
+    "status": "found"
+   },
+   {
+    "chain": "081c66958eb9654ae43ba9fb88166b797ba34866eac8529f0f47be988571abea",
+    "counts": {
+     "expansions": 3499,
+     "goal_snap_m": 0,
+     "heading_change_rad": 14.922565104553659,
+     "mean_clearance_m": 0.7357600072845811,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 653.2581629558441,
+     "path_length_m": 46.13036072312187,
+     "path_steps": 400,
+     "pushes": 4574,
+     "start_snap_m": 0
+    },
+    "scenario": "s006",
+    "scenario_index": 5,
+    "status": "found"
+   },
+   {
+    "chain": "e843c50808f375a0e05520b4d2754ced4ec6841ba8698d1244823ae368bab77b",
+    "counts": {
+     "expansions": 11936,
+     "goal_snap_m": 0,
+     "heading_change_rad": 11.78097245096351,
+     "mean_clearance_m": 1.5679640633066398,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 528.6447133974336,
+     "path_length_m": 47.65218613006988,
+     "path_steps": 438,
+     "pushes": 12740,
+     "start_snap_m": 0
+    },
+    "scenario": "s007",
+    "scenario_index": 6,
+    "status": "found"
+   },
+   {
+    "chain": "ebc6900b758f5bcbc9805ce0c3539741fe620e8b1d1ab42cd81aa81a8ddc49df",
+    "counts": {
+     "expansions": 428,
+     "goal_snap_m": 0,
+     "heading_change_rad": 10.21017612416928,
+     "mean_clearance_m": 1.0436269363711883,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 604.1952406200262,
+     "path_length_m": 40.52447327281732,
+     "path_steps": 334,
+     "pushes": 1300,
+     "start_snap_m": 0
+    },
+    "scenario": "s008",
+    "scenario_index": 7,
+    "status": "found"
+   },
+   {
+    "chain": "87e0b52a6cfc63aa86eb8fbc599ad9573a49d12250ec5efabeb6ab55904ccaa8",
+    "counts": {
+     "expansions": 372,
+     "goal_snap_m": 0,
+     "heading_change_rad": 10.210176124170275,
+     "mean_clearance_m": 0.8832506693126968,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 670.7862017709571,
+     "path_length_m": 45.052900397563526,
+     "path_steps": 371,
+     "pushes": 1326,
+     "start_snap_m": 0
+    },
+    "scenario": "s009",
+    "scenario_index": 8,
+    "status": "found"
+   },
+   {
+    "chain": "6372ffb60f4702409788e89edda608fcca58240d72ee21cdc1631700927fda55",
+    "counts": {
+     "expansions": 1059,
+     "goal_snap_m": 0,
+     "heading_change_rad": 13.351768777760213,
+     "mean_clearance_m": 1.5247336915899046,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 690.1148637046584,
+     "path_length_m": 46.49726547895311,
+     "path_steps": 390,
+     "pushes": 2018,
+     "start_snap_m": 0
+    },
+    "scenario": "s010",
+    "scenario_index": 9,
+    "status": "found"
+   },
+   {
+    "chain": "027f0f0b2919f380fd8d4dd4cc7fa35bd6305180b2ecbfc5ef839958f81d0fc6",
+    "counts": {
+     "expansions": 260,
+     "goal_snap_m": 0,
+     "heading_change_rad": 3.9269908169886936,
+     "mean_clearance_m": 1.1270932371775408,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 365.5184164026,
+     "path_length_m": 29.71787155501903,
+     "path_steps": 257,
+     "pushes": 917,
+     "start_snap_m": 0
+    },
+    "scenario": "s011",
+    "scenario_index": 10,
+    "status": "found"
+   },
+   {
+    "chain": "6e4314d5f55d083ec1629ff94207ab62cdf5e5a28f0685a074458903ff8ae59f",
+    "counts": {
+     "expansions": 129,
+     "goal_snap_m": 0,
+     "heading_change_rad": 5.4977871437832615,
+     "mean_clearance_m": 1.5179544861639642,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 204.9504934458507,
+     "path_length_m": 15.765180361560898,
+     "path_steps": 127,
+     "pushes": 499,
+     "start_snap_m": 0
+    },
+    "scenario": "s012",
+    "scenario_index": 11,
+    "status": "found"
+   },
+   {
+    "chain": "2c98237a06419a25307de1c9e46fb7fbd7b21a75993b1862fec9a4578648a2da",
+    "counts": {
+     "expansions": 7398,
+     "goal_snap_m": 0,
+     "heading_change_rad": 30.63052837250138,
+     "mean_clearance_m": 0.7235699284562106,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 760.9721348723567,
+     "path_length_m": 57.25756851698615,
+     "path_steps": 515,
+     "pushes": 8431,
+     "start_snap_m": 0
+    },
+    "scenario": "s013",
+    "scenario_index": 12,
+    "status": "found"
+   },
+   {
+    "chain": "5c26a53bd20e5330eb8edb022bb0a4727fdf6b10379fe55dd653175ff799d775",
+    "counts": {
+     "expansions": 57,
+     "goal_snap_m": 0,
+     "heading_change_rad": 2.356194490192518,
+     "mean_clearance_m": 0.6531315009903375,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 78.6880087414053,
+     "path_length_m": 5.979898987322334,
+     "path_steps": 54,
+     "pushes": 182,
+     "start_snap_m": 0
+    },
+    "scenario": "s014",
+    "scenario_index": 13,
+    "status": "found"
+   },
+   {
+    "chain": "a74eafc57dcfc5bc4e60fa2e636220e9d31ab931e339e4754a083d29752904b4",
+    "counts": {
+     "expansions": 295,
+     "goal_snap_m": 0,
+     "heading_change_rad": 0.7853981633979901,
+     "mean_clearance_m": 3.389810002581252,
+     "min_clearance_m": 0.75,
+     "path_cost": 308.0832611206852,
+     "path_length_m": 30.808326112068524,
+     "path_steps": 294,
+     "pushes": 956,
+     "start_snap_m": 0
+    },
+    "scenario": "s015",
+    "scenario_index": 14,
+    "status": "found"
+   },
+   {
+    "chain": "c7e250793b4fc2d9904651ca98236c1ee8c6d4cf3f096b6b44a1e5f07f363101",
+    "counts": {
+     "expansions": 363,
+     "goal_snap_m": 0,
+     "heading_change_rad": 10.210176124170022,
+     "mean_clearance_m": 0.8359476401596021,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 660.2745134445453,
+     "path_length_m": 44.48427124746201,
+     "path_steps": 362,
+     "pushes": 1319,
+     "start_snap_m": 0
+    },
+    "scenario": "s016",
+    "scenario_index": 15,
+    "status": "found"
+   },
+   {
+    "chain": "3f771e710cc779f653d5f947566fbe1e99dccab872c0866b74fd37b6eb564003",
+    "counts": {
+     "expansions": 313,
+     "goal_snap_m": 0,
+     "heading_change_rad": 11.780972450964569,
+     "mean_clearance_m": 0.9793750881049935,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 527.1686979911407,
+     "path_length_m": 37.4416305603427,
+     "path_steps": 304,
+     "pushes": 1145,
+     "start_snap_m": 0
+    },
+    "scenario": "s017",
+    "scenario_index": 16,
+    "status": "found"
+   },
+   {
+    "chain": "11a5044d4a43bc587fa744abf0cdb57b529c2e3ffabc579cf8b890a1497ed82c",
+    "counts": {
+     "expansions": 215,
+     "goal_snap_m": 0,
+     "heading_change_rad": 5.497787143783472,
+     "mean_clearance_m": 0.2764844091193025,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 353.46115333276117,
+     "path_length_m": 24.465180361560932,
+     "path_steps": 214,
+     "pushes": 717,
+     "start_snap_m": 0
+    },
+    "scenario": "s018",
+    "scenario_index": 17,
+    "status": "found"
+   },
+   {
+    "chain": "920516ee59f1d39352ed1315e00f02a9f568633435b756237028326e961102d7",
+    "counts": {
+     "expansions": 428,
+     "goal_snap_m": 0,
+     "heading_change_rad": 11.7809724509627,
+     "mean_clearance_m": 0.20458715425709778,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 509.6682824148684,
+     "path_length_m": 29.779393923934038,
+     "path_steps": 263,
+     "pushes": 957,
+     "start_snap_m": 0
+    },
+    "scenario": "s019",
+    "scenario_index": 18,
+    "status": "found"
+   },
+   {
+    "chain": "92038b3c36742af3e44be86891a73ee2bbced2adc946dc751950b584f89b893e",
+    "counts": {
+     "expansions": 100,
+     "goal_snap_m": 0,
+     "heading_change_rad": 3.9269908169877388,
+     "mean_clearance_m": 0.15979758772809,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 200.11220075595702,
+     "path_length_m": 10.811269837220804,
+     "path_steps": 99,
+     "pushes": 272,
+     "start_snap_m": 0
+    },
+    "scenario": "s020",
+    "scenario_index": 19,
+    "status": "found"
+   },
+   {
+    "chain": "07b50317749237607a1385f7a2f2c380e0736f6b73b643540b2d3d50edc0cdea",
+    "counts": {
+     "expansions": 5709,
+     "goal_snap_m": 0,
+     "heading_change_rad": 11.780972450962485,
+     "mean_clearance_m": 0.15585774402220254,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 438.5022886368005,
+     "path_length_m": 23.678174593052034,
+     "path_steps": 214,
+     "pushes": 6171,
+     "start_snap_m": 0
+    },
+    "scenario": "s021",
+    "scenario_index": 20,
+    "status": "found"
+   },
+   {
+    "chain": "8783754a69652f0adde135c34dd6288c678f083e133d87467e1e982bc84b3af1",
+    "counts": {
+     "expansions": 10240,
+     "goal_snap_m": 0,
+     "heading_change_rad": 18.06415775814246,
+     "mean_clearance_m": 0.2460843046728246,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 773.0081469423299,
+     "path_length_m": 49.291883092036876,
+     "path_steps": 437,
+     "pushes": 11058,
+     "start_snap_m": 0
+    },
+    "scenario": "s022",
+    "scenario_index": 21,
+    "status": "found"
+   },
+   {
+    "chain": "833f88380635590938e8070e5469c1c76e50e8c5bedd39d4c9ed6c103db2f42c",
+    "counts": {
+     "expansions": 1930,
+     "goal_snap_m": 0,
+     "heading_change_rad": 18.064157758142024,
+     "mean_clearance_m": 0.17922959283844625,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 532.3534773936426,
+     "path_length_m": 28.395331880577427,
+     "path_steps": 262,
+     "pushes": 2461,
+     "start_snap_m": 0
+    },
+    "scenario": "s023",
+    "scenario_index": 22,
+    "status": "found"
+   },
+   {
+    "chain": "4dd8d713c9c0aa29e3b70624e6794cd971a032396a5c912759b294e3bbe2ad3d",
+    "counts": {
+     "expansions": 241,
+     "goal_snap_m": 0,
+     "heading_change_rad": 7.068583470577961,
+     "mean_clearance_m": 0.2716218741537426,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 404.36648211648514,
+     "path_length_m": 27.272287142747473,
+     "path_steps": 240,
+     "pushes": 778,
+     "start_snap_m": 0
+    },
+    "scenario": "s024",
+    "scenario_index": 23,
+    "status": "found"
+   },
+   {
+    "chain": "c17794fe8bfda3edf63e97ded55b22d3f2cf42f839a064cb355c421a55df1f1f",
+    "counts": {
+     "expansions": 269,
+     "goal_snap_m": 0,
+     "heading_change_rad": 0.785398163397466,
+     "mean_clearance_m": 1.1186271669147207,
+     "min_clearance_m": 0.15000000000000002,
+     "path_cost": 278.47922077554006,
+     "path_length_m": 26.882842712474623,
+     "path_steps": 268,
+     "pushes": 814,
+     "start_snap_m": 0
+    },
+    "scenario": "s025",
+    "scenario_index": 24,
+    "status": "found"
+   },
+   {
+    "chain": "2264d6158a027e6e318dd411c3968b1f0bc9ff117b8fa632479792071799f1dc",
+    "counts": {
+     "expansions": 466,
+     "goal_snap_m": 0,
+     "heading_change_rad": 13.351768777758533,
+     "mean_clearance_m": 0.20054488712807675,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 639.7387643843209,
+     "path_length_m": 38.08061325481605,
+     "path_steps": 334,
+     "pushes": 1121,
+     "start_snap_m": 0
+    },
+    "scenario": "s026",
+    "scenario_index": 25,
+    "status": "found"
+   },
+   {
+    "chain": "25d0fc483b565c1d8335e3f93d5d40c432fbef7b18d12d59a554227694cc8a5e",
+    "counts": {
+     "expansions": 286,
+     "goal_snap_m": 0,
+     "heading_change_rad": 10.995574287566178,
+     "mean_clearance_m": 0.46873288898258486,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 384.95126359550454,
+     "path_length_m": 23.37939392393403,
+     "path_steps": 199,
+     "pushes": 734,
+     "start_snap_m": 0
+    },
+    "scenario": "s027",
+    "scenario_index": 26,
+    "status": "found"
+   },
+   {
+    "chain": "edf339a2de3f9418669a00ed602521e0e6a2bd70f52e11bde05526d862bfc814",
+    "counts": {
+     "expansions": 89,
+     "goal_snap_m": 0,
+     "heading_change_rad": 3.9269908169877388,
+     "mean_clearance_m": 0.2601044625544136,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 167.78913619167878,
+     "path_length_m": 10.125483399593897,
+     "path_steps": 88,
+     "pushes": 280,
+     "start_snap_m": 0
+    },
+    "scenario": "s028",
+    "scenario_index": 27,
+    "status": "found"
+   },
+   {
+    "chain": "13ce5f554874d3964fd291f0f13bcb1c00843630cc6ef591804dfd928d1e3494",
+    "counts": {
+     "expansions": 205,
+     "goal_snap_m": 0,
+     "heading_change_rad": 2.356194490194796,
+     "mean_clearance_m": 2.5629030173481024,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 319.1703025469503,
+     "path_length_m": 25.991883092036858,
+     "path_steps": 204,
+     "pushes": 840,
+     "start_snap_m": 0
+    },
+    "scenario": "s029",
+    "scenario_index": 28,
+    "status": "found"
+   },
+   {
+    "chain": "16da6e3fe4e584dcfec4fb1dea82a9b5bd6b01b2568acbb678552032a92fc70b",
+    "counts": {
+     "expansions": 263,
+     "goal_snap_m": 0,
+     "heading_change_rad": 7.068583470578083,
+     "mean_clearance_m": 0.26580694535430843,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 444.43093620547893,
+     "path_length_m": 28.892388155425138,
+     "path_steps": 262,
+     "pushes": 797,
+     "start_snap_m": 0
+    },
+    "scenario": "s030",
+    "scenario_index": 29,
+    "status": "found"
+   },
+   {
+    "chain": "d3c533c004de27f589fc3dfc0b69a12cbc1a0476035857b69c8b2e349dd8402e",
+    "counts": {
+     "expansions": 265,
+     "goal_snap_m": 0,
+     "heading_change_rad": 7.06858347057995,
+     "mean_clearance_m": 2.2144823330470693,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 398.803188603786,
+     "path_length_m": 31.234523779156177,
+     "path_steps": 244,
+     "pushes": 1023,
+     "start_snap_m": 0
+    },
+    "scenario": "s031",
+    "scenario_index": 30,
+    "status": "found"
+   },
+   {
+    "chain": "851b993bc39b3965ac4f17f764cb75c8c3b7d592e6494d4883438a15ffb09399",
+    "counts": {
+     "expansions": 276,
+     "goal_snap_m": 0,
+     "heading_change_rad": 7.068583470579841,
+     "mean_clearance_m": 0.9457682614210206,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 456.01751725117794,
+     "path_length_m": 34.3759451353935,
+     "path_steps": 275,
+     "pushes": 1078,
+     "start_snap_m": 0
+    },
+    "scenario": "s032",
+    "scenario_index": 31,
+    "status": "found"
+   },
+   {
+    "chain": "f59d63940ddee4ca1df073910ac9749a7fed19c4adee66a061c88ae76e8e4d91",
+    "counts": {
+     "expansions": 126,
+     "goal_snap_m": 0,
+     "heading_change_rad": 3.926990816987562,
+     "mean_clearance_m": 0.17195714245674212,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 244.5695268213467,
+     "path_length_m": 14.07401153701776,
+     "path_steps": 125,
+     "pushes": 374,
+     "start_snap_m": 0
+    },
+    "scenario": "s033",
+    "scenario_index": 32,
+    "status": "found"
+   },
+   {
+    "chain": "ac701683fa67064a9f5503be6e123804a0a88a8040655266cf3a4ee8ce59b42c",
+    "counts": {
+     "expansions": 204,
+     "goal_snap_m": 0,
+     "heading_change_rad": 2.3561944901943255,
+     "mean_clearance_m": 1.32478686470747,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 297.9759829743652,
+     "path_length_m": 24.980613254816017,
+     "path_steps": 203,
+     "pushes": 802,
+     "start_snap_m": 0
+    },
+    "scenario": "s034",
+    "scenario_index": 33,
+    "status": "found"
+   },
+   {
+    "chain": "c16f61fb6252008100b794308d910fa9054e360d0df3bb40b3d85cd6a3cc026a",
+    "counts": {
+     "expansions": 109,
+     "goal_snap_m": 0,
+     "heading_change_rad": 2.356194490192914,
+     "mean_clearance_m": 0.8370770305375931,
+     "min_clearance_m": 0.066227766016838,
+     "path_cost": 130.8910653298701,
+     "path_length_m": 12.622539674441615,
+     "path_steps": 108,
+     "pushes": 415,
+     "start_snap_m": 0
+    },
+    "scenario": "s035",
+    "scenario_index": 34,
+    "status": "found"
+   },
+   {
+    "chain": "a4d1c4dcdeab5cf4aed00d0eb9630ff87691bdf2b5e166ca4b63346b501aaa0d",
+    "counts": {
+     "expansions": 6720,
+     "goal_snap_m": 0,
+     "heading_change_rad": 6.283185307183103,
+     "mean_clearance_m": 1.5065451240913232,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 424.1480940390294,
+     "path_length_m": 36.63036072312193,
+     "path_steps": 305,
+     "pushes": 7548,
+     "start_snap_m": 0
+    },
+    "scenario": "s036",
+    "scenario_index": 35,
+    "status": "found"
+   },
+   {
+    "chain": "89ad913965453e0ef4d3bb543a87166e5a2dc91620608565f7fbcfb0a7141d95",
+    "counts": {
+     "expansions": 253,
+     "goal_snap_m": 0,
+     "heading_change_rad": 5.497787143782565,
+     "mean_clearance_m": 1.1640935211234829,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 334.43025546196134,
+     "path_length_m": 24.887005768508892,
+     "path_steps": 241,
+     "pushes": 712,
+     "start_snap_m": 0
+    },
+    "scenario": "s037",
+    "scenario_index": 36,
+    "status": "found"
+   },
+   {
+    "chain": "bae0be35a0ed430fbd5107f12725103e773cd2fe5a9eb8b361a5feb19f55330d",
+    "counts": {
+     "expansions": 2428,
+     "goal_snap_m": 0,
+     "heading_change_rad": 16.493361431348774,
+     "mean_clearance_m": 0.28998916727301455,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 689.5927393942123,
+     "path_length_m": 46.98305191658003,
+     "path_steps": 399,
+     "pushes": 3332,
+     "start_snap_m": 0
+    },
+    "scenario": "s038",
+    "scenario_index": 37,
+    "status": "found"
+   },
+   {
+    "chain": "c277ec86570853babcd1d45bd97b6b430fea991e05706529b6ecb7b93650de28",
+    "counts": {
+     "expansions": 1429,
+     "goal_snap_m": 0,
+     "heading_change_rad": 22.77654673852637,
+     "mean_clearance_m": 0.20923267728076175,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 713.5323162481792,
+     "path_length_m": 38.52253967444165,
+     "path_steps": 367,
+     "pushes": 2056,
+     "start_snap_m": 0
+    },
+    "scenario": "s039",
+    "scenario_index": 38,
+    "status": "found"
+   },
+   {
+    "chain": "3a390c144eb5412bbdeb0dc93208c37662ef6fbbf2451b61893150a93b8d76fc",
+    "counts": {
+     "expansions": 337,
+     "goal_snap_m": 0,
+     "heading_change_rad": 8.639379797373142,
+     "mean_clearance_m": 0.3772989007897995,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 402.19881451989556,
+     "path_length_m": 25.86518036156093,
+     "path_steps": 228,
+     "pushes": 809,
+     "start_snap_m": 0
+    },
+    "scenario": "s040",
+    "scenario_index": 39,
+    "status": "found"
+   },
+   {
+    "chain": "b8de12361775f1c9d81d3c0390f824b97d0b87d41e6f385ce1d7fc81c2d234f3",
+    "counts": {
+     "expansions": 6687,
+     "goal_snap_m": 0,
+     "heading_change_rad": 7.068583470580908,
+     "mean_clearance_m": 2.1397515932003945,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 418.6643804736756,
+     "path_length_m": 37.1203102167831,
+     "path_steps": 307,
+     "pushes": 7561,
+     "start_snap_m": 0
+    },
+    "scenario": "s041",
+    "scenario_index": 40,
+    "status": "found"
+   },
+   {
+    "chain": "2d23f7f5c9522307989f063d16fbbb0be8516546b760c2db82d231baae1f75e2",
+    "counts": {
+     "expansions": 6578,
+     "goal_snap_m": 0,
+     "heading_change_rad": 11.780972450965091,
+     "mean_clearance_m": 2.1070467999005906,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 496.26842602748025,
+     "path_length_m": 42.37888886054579,
+     "path_steps": 360,
+     "pushes": 7549,
+     "start_snap_m": 0
+    },
+    "scenario": "s042",
+    "scenario_index": 41,
+    "status": "found"
+   },
+   {
+    "chain": "8f50aa180ce0b1835a27830be4ef1c098ecc74eeec2c9d092947b3bae15116ec",
+    "counts": {
+     "expansions": 641,
+     "goal_snap_m": 0,
+     "heading_change_rad": 16.493361431348067,
+     "mean_clearance_m": 0.285971352634961,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 778.3473525384362,
+     "path_length_m": 47.13919189857876,
+     "path_steps": 425,
+     "pushes": 1485,
+     "start_snap_m": 0
+    },
+    "scenario": "s043",
+    "scenario_index": 42,
+    "status": "found"
+   },
+   {
+    "chain": "fc528e4fb70909cc81787068cb166c7cd9604dfebe4af231a6b55bd89f2595e3",
+    "counts": {
+     "expansions": 135,
+     "goal_snap_m": 0,
+     "heading_change_rad": 5.497787143782885,
+     "mean_clearance_m": 0.5655371664170399,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 208.03893115102736,
+     "path_length_m": 15.578174593052015,
+     "path_steps": 133,
+     "pushes": 473,
+     "start_snap_m": 0
+    },
+    "scenario": "s044",
+    "scenario_index": 43,
+    "status": "found"
+   },
+   {
+    "chain": "fb1b1f452b12cdb7defe6d799b0a39d69e18305ff9768d854cfa143fa5fb0553",
+    "counts": {
+     "expansions": 1004,
+     "goal_snap_m": 0,
+     "heading_change_rad": 14.922565104552834,
+     "mean_clearance_m": 0.4758009054081576,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 419.12788523345387,
+     "path_length_m": 27.7107647738325,
+     "path_steps": 239,
+     "pushes": 1504,
+     "start_snap_m": 0
+    },
+    "scenario": "s045",
+    "scenario_index": 44,
+    "status": "found"
+   },
+   {
+    "chain": "257a98fdd04945ce6e6f1984bfc35e1748c7735967d37507370c8ba6cdc26c29",
+    "counts": {
+     "expansions": 2726,
+     "goal_snap_m": 0,
+     "heading_change_rad": 25.918139392116675,
+     "mean_clearance_m": 0.18470480263129846,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 901.5316405108665,
+     "path_length_m": 47.19238815542514,
+     "path_steps": 445,
+     "pushes": 3490,
+     "start_snap_m": 0
+    },
+    "scenario": "s046",
+    "scenario_index": 45,
+    "status": "found"
+   },
+   {
+    "chain": "8eefa7a84548e11f5dfebb250aea6ea251f6476207fe9b735713d0437de61549",
+    "counts": {
+     "expansions": 931,
+     "goal_snap_m": 0,
+     "heading_change_rad": 8.639379797373284,
+     "mean_clearance_m": 0.7821976266431233,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 509.89243320553953,
+     "path_length_m": 35.27645019878175,
+     "path_steps": 313,
+     "pushes": 1579,
+     "start_snap_m": 0
+    },
+    "scenario": "s047",
+    "scenario_index": 46,
+    "status": "found"
+   },
+   {
+    "chain": "a1aa20e977b2a293dfb455c64160c94baf6c33326471c64431e6da1f18b2d4b0",
+    "counts": {
+     "expansions": 6316,
+     "goal_snap_m": 0,
+     "heading_change_rad": 21.205750411732296,
+     "mean_clearance_m": 0.36084887268959154,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 777.5594966874784,
+     "path_length_m": 47.310764773832524,
+     "path_steps": 435,
+     "pushes": 7199,
+     "start_snap_m": 0
+    },
+    "scenario": "s048",
+    "scenario_index": 47,
+    "status": "found"
+   },
+   {
+    "chain": "0e9ba2301cd4c4a1c89b4c0ebe6dac88e15b6344704940f6bd2dc0a939e7cf00",
+    "counts": {
+     "expansions": 5661,
+     "goal_snap_m": 0,
+     "heading_change_rad": 9.424777960771582,
+     "mean_clearance_m": 2.8102053218726266,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 339.8115667312893,
+     "path_length_m": 29.235028842544445,
+     "path_steps": 253,
+     "pushes": 6394,
+     "start_snap_m": 0
+    },
+    "scenario": "s049",
+    "scenario_index": 48,
+    "status": "found"
+   },
+   {
+    "chain": "a0b0d02c70706db874b84cf58ecceb0557c933ae05028a21c59af742f17049d4",
+    "counts": {
+     "expansions": 2354,
+     "goal_snap_m": 0,
+     "heading_change_rad": 21.20575041173346,
+     "mean_clearance_m": 0.28626258188574244,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 926.3759914395102,
+     "path_length_m": 54.48599564173235,
+     "path_steps": 479,
+     "pushes": 3370,
+     "start_snap_m": 0
+    },
+    "scenario": "s050",
+    "scenario_index": 49,
+    "status": "found"
+   },
+   {
+    "chain": "be81932d1f3d75f06074279b6ad3c470f0aed9394f4ef929df0a62cd98aacb9b",
+    "counts": {
+     "expansions": 212,
+     "goal_snap_m": 0,
+     "heading_change_rad": 0.7853981633975904,
+     "mean_clearance_m": 1.1818020685106172,
+     "min_clearance_m": 0.15000000000000002,
+     "path_cost": 242.66139969851716,
+     "path_length_m": 21.389949493661167,
+     "path_steps": 211,
+     "pushes": 653,
+     "start_snap_m": 0
+    },
+    "scenario": "s051",
+    "scenario_index": 50,
+    "status": "found"
+   },
+   {
+    "chain": "88e74ad75554c002ea94e6697d2bbcc4e375a83216908a0ee19253573cc88821",
+    "counts": {
+     "expansions": 83,
+     "goal_snap_m": 0,
+     "heading_change_rad": 3.926990816987743,
+     "mean_clearance_m": 0.3024795128323754,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 154.39318459419374,
+     "path_length_m": 9.898275605729681,
+     "path_steps": 82,
+     "pushes": 291,
+     "start_snap_m": 0
+    },
+    "scenario": "s052",
+    "scenario_index": 51,
+    "status": "found"
+   },
+   {
+    "chain": "e403e0bb8b01d71829a17558764bdc8a711e7664edf98f337b0b0aaeb7e55fcc",
+    "counts": {
+     "expansions": 5728,
+     "goal_snap_m": 0,
+     "heading_change_rad": 9.42477796076954,
+     "mean_clearance_m": 0.2992337048433041,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 427.6396252415563,
+     "path_length_m": 28.43847763108503,
+     "path_steps": 279,
+     "pushes": 6204,
+     "start_snap_m": 0
+    },
+    "scenario": "s053",
+    "scenario_index": 52,
+    "status": "found"
+   },
+   {
+    "chain": "4acd235f15dd7a79b19ac9f3f07793a83b14625e4040bacbee72bdd4725ac592",
+    "counts": {
+     "expansions": 4150,
+     "goal_snap_m": 0,
+     "heading_change_rad": 18.0641577581424,
+     "mean_clearance_m": 0.3340626353591839,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 603.6744369371486,
+     "path_length_m": 37.055129855222134,
+     "path_steps": 337,
+     "pushes": 4778,
+     "start_snap_m": 0
+    },
+    "scenario": "s054",
+    "scenario_index": 53,
+    "status": "found"
+   },
+   {
+    "chain": "e43ceeb6f78aa883893615072636dad890f8286667ea1fdb0ae54185e549be13",
+    "counts": {
+     "expansions": 9684,
+     "goal_snap_m": 0,
+     "heading_change_rad": 15.707963267949777,
+     "mean_clearance_m": 0.25161074427412333,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 596.9676010206285,
+     "path_length_m": 39.36518036156098,
+     "path_steps": 363,
+     "pushes": 10233,
+     "start_snap_m": 0
+    },
+    "scenario": "s055",
+    "scenario_index": 54,
+    "status": "found"
+   },
+   {
+    "chain": "e2bc0ced80d11a56c9ab7907fa26c23647389af688487fc3668b859b403ebfda",
+    "counts": {
+     "expansions": 4256,
+     "goal_snap_m": 0,
+     "heading_change_rad": 18.064157758143317,
+     "mean_clearance_m": 0.6198545249150725,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 758.8331732820599,
+     "path_length_m": 46.05756851698617,
+     "path_steps": 403,
+     "pushes": 5184,
+     "start_snap_m": 0
+    },
+    "scenario": "s056",
+    "scenario_index": 55,
+    "status": "found"
+   },
+   {
+    "chain": "81def1549f97d9a25c754f6cb07bb3a06d4efcb0f0a7b9785994c1e2b5161dcc",
+    "counts": {
+     "expansions": 288,
+     "goal_snap_m": 0,
+     "heading_change_rad": 3.926990816987268,
+     "mean_clearance_m": 0.5526511112560052,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 314.3115256693701,
+     "path_length_m": 28.689949493661164,
+     "path_steps": 284,
+     "pushes": 866,
+     "start_snap_m": 0
+    },
+    "scenario": "s057",
+    "scenario_index": 56,
+    "status": "found"
+   },
+   {
+    "chain": "1ae8036ae5f5ace279a3de11b6f10091fbf05457c8ebd769f570d4bbccd55584",
+    "counts": {
+     "expansions": 9664,
+     "goal_snap_m": 0,
+     "heading_change_rad": 24.3473430653222,
+     "mean_clearance_m": 0.2899428851884063,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 696.6488459164442,
+     "path_length_m": 44.72914139223994,
+     "path_steps": 398,
+     "pushes": 10442,
+     "start_snap_m": 0
+    },
+    "scenario": "s058",
+    "scenario_index": 57,
+    "status": "found"
+   },
+   {
+    "chain": "6dca7d18fda33dd667e5a45715c007fb3301c657002d4ff35484191f7faa0db6",
+    "counts": {
+     "expansions": 2096,
+     "goal_snap_m": 0,
+     "heading_change_rad": 13.351768777757488,
+     "mean_clearance_m": 0.2554727267470647,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 396.2982150036736,
+     "path_length_m": 23.85096679918783,
+     "path_steps": 212,
+     "pushes": 2555,
+     "start_snap_m": 0
+    },
+    "scenario": "s059",
+    "scenario_index": 58,
+    "status": "found"
+   },
+   {
+    "chain": "ab83763bf86aebdbe7073a71a5e9e68de441d2da7ea30a2377e59393ca8c3a8d",
+    "counts": {
+     "expansions": 1807,
+     "goal_snap_m": 0,
+     "heading_change_rad": 11.780972450961986,
+     "mean_clearance_m": 0.16111572854218723,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 207.60188384513623,
+     "path_length_m": 12.401219330881972,
+     "path_steps": 112,
+     "pushes": 2096,
+     "start_snap_m": 0
+    },
+    "scenario": "s060",
+    "scenario_index": 59,
+    "status": "found"
+   },
+   {
+    "chain": "b451953f089f29b131b842750c0bbc0afbc4eab79a58a8e050f8aa4d72787f8b",
+    "counts": {
+     "expansions": 843,
+     "goal_snap_m": 0,
+     "heading_change_rad": 11.780972450962164,
+     "mean_clearance_m": 0.4955104103316001,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 380.51938766544527,
+     "path_length_m": 32.01543289325508,
+     "path_steps": 304,
+     "pushes": 1565,
+     "start_snap_m": 0
+    },
+    "scenario": "s061",
+    "scenario_index": 60,
+    "status": "found"
+   },
+   {
+    "chain": "9ff242e38f7ff7dfdb06d6828791495940260169abeb6f91662495ab5730333b",
+    "counts": {
+     "expansions": 702,
+     "goal_snap_m": 0,
+     "heading_change_rad": 7.068583470577625,
+     "mean_clearance_m": 0.40818695113194375,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 227.26744475221838,
+     "path_length_m": 14.588225099390849,
+     "path_steps": 126,
+     "pushes": 1006,
+     "start_snap_m": 0
+    },
+    "scenario": "s062",
+    "scenario_index": 61,
+    "status": "found"
+   },
+   {
+    "chain": "8b145acea61c179312eda6cb4d2dbe0c25c78c90a792f4290ce756116ae38dda",
+    "counts": {
+     "expansions": 2082,
+     "goal_snap_m": 0,
+     "heading_change_rad": 8.639379797372385,
+     "mean_clearance_m": 0.29113510652399816,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 251.96185373093908,
+     "path_length_m": 14.042640687119283,
+     "path_steps": 128,
+     "pushes": 2383,
+     "start_snap_m": 0
+    },
+    "scenario": "s063",
+    "scenario_index": 62,
+    "status": "found"
+   },
+   {
+    "chain": "88ee91ee5d0c5b647672acb6e97dc24f9e335aeac89a4a1ca1a3aad39990306a",
+    "counts": {
+     "expansions": 2245,
+     "goal_snap_m": 0,
+     "heading_change_rad": 16.49336143134875,
+     "mean_clearance_m": 0.6397705109825672,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 644.3212472979844,
+     "path_length_m": 40.60315292925772,
+     "path_steps": 341,
+     "pushes": 3119,
+     "start_snap_m": 0
+    },
+    "scenario": "s064",
+    "scenario_index": 63,
+    "status": "found"
+   },
+   {
+    "chain": "d0cf26d4c195b9548774e98d7dd9e0cb6bb843fb8b0fc7549405bcdda31b3fc5",
+    "counts": {
+     "expansions": 9396,
+     "goal_snap_m": 0,
+     "heading_change_rad": 11.780972450962448,
+     "mean_clearance_m": 0.5840798118733427,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 562.8821793712484,
+     "path_length_m": 47.35096679918783,
+     "path_steps": 447,
+     "pushes": 10538,
+     "start_snap_m": 0
+    },
+    "scenario": "s065",
+    "scenario_index": 64,
+    "status": "found"
+   },
+   {
+    "chain": "ca6e966e577fa06c617caef2c263b1bd3f485fc8cff1d48ef34d6d8267b269c2",
+    "counts": {
+     "expansions": 3257,
+     "goal_snap_m": 0,
+     "heading_change_rad": 27.48893571891344,
+     "mean_clearance_m": 0.5802372381901719,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 910.1350170023087,
+     "path_length_m": 57.91147904132627,
+     "path_steps": 500,
+     "pushes": 4412,
+     "start_snap_m": 0
+    },
+    "scenario": "s066",
+    "scenario_index": 65,
+    "status": "found"
+   },
+   {
+    "chain": "5646c17316c6781d3844a8c839a4660e47d30140de7285513b923c41cfa975ae",
+    "counts": {
+     "expansions": 3152,
+     "goal_snap_m": 0,
+     "heading_change_rad": 19.634954084938812,
+     "mean_clearance_m": 0.5733900905146628,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 786.7772408522022,
+     "path_length_m": 49.921529547665116,
+     "path_steps": 423,
+     "pushes": 4168,
+     "start_snap_m": 0
+    },
+    "scenario": "s067",
+    "scenario_index": 66,
+    "status": "found"
+   },
+   {
+    "chain": "8ee8cd1621c77910d7d2a6ac293dbc94a6fa8bbe1e750bc20f7657a0bfac4a02",
+    "counts": {
+     "expansions": 1064,
+     "goal_snap_m": 0,
+     "heading_change_rad": 16.493361431347886,
+     "mean_clearance_m": 0.38494171342084776,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 594.3926409936752,
+     "path_length_m": 37.20193359837568,
+     "path_steps": 319,
+     "pushes": 1816,
+     "start_snap_m": 0
+    },
+    "scenario": "s068",
+    "scenario_index": 67,
+    "status": "found"
+   },
+   {
+    "chain": "c0e7323bba62dcd6e258c248fcf9f09145b7a8346cf15cae647813c8f46934af",
+    "counts": {
+     "expansions": 2122,
+     "goal_snap_m": 0,
+     "heading_change_rad": 16.493361431346898,
+     "mean_clearance_m": 0.5113727598809118,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 996.3018264255359,
+     "path_length_m": 67.40782104868025,
+     "path_steps": 631,
+     "pushes": 3247,
+     "start_snap_m": 0
+    },
+    "scenario": "s069",
+    "scenario_index": 68,
+    "status": "found"
+   },
+   {
+    "chain": "754ccc72430235ed71b91e215ae0e283550d8a9581f705f8086ec8814e27f580",
+    "counts": {
+     "expansions": 2350,
+     "goal_snap_m": 0,
+     "heading_change_rad": 13.35176877775749,
+     "mean_clearance_m": 0.17645088006550366,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 562.9158871784457,
+     "path_length_m": 30.8166522241371,
+     "path_steps": 280,
+     "pushes": 2946,
+     "start_snap_m": 0
+    },
+    "scenario": "s070",
+    "scenario_index": 69,
+    "status": "found"
+   },
+   {
+    "chain": "38e48b1c36cb73e32c874c2ba7321bc928dd1fee8b53ef0c63380e2c3fa34051",
+    "counts": {
+     "expansions": 2462,
+     "goal_snap_m": 0,
+     "heading_change_rad": 16.493361431347097,
+     "mean_clearance_m": 1.6475282098830324,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 896.7046351009793,
+     "path_length_m": 61.029141392239914,
+     "path_steps": 561,
+     "pushes": 3574,
+     "start_snap_m": 0
+    },
+    "scenario": "s071",
+    "scenario_index": 70,
+    "status": "found"
+   },
+   {
+    "chain": "40a328ddd47f236ff55ba2b0c9f232a1456206847a594e593c410f88d17c74ad",
+    "counts": {
+     "expansions": 205,
+     "goal_snap_m": 0,
+     "heading_change_rad": 5.497787143783197,
+     "mean_clearance_m": 3.0315795891327473,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 279.7556544448552,
+     "path_length_m": 23.986500705120548,
+     "path_steps": 203,
+     "pushes": 761,
+     "start_snap_m": 0
+    },
+    "scenario": "s072",
+    "scenario_index": 71,
+    "status": "found"
+   },
+   {
+    "chain": "1ab8ad2722819a6d4e85b718ac3daf90bfeba7287bad5ec442b32836f97a9098",
+    "counts": {
+     "expansions": 56,
+     "goal_snap_m": 0,
+     "heading_change_rad": 2.356194490192509,
+     "mean_clearance_m": 0.4582694553125672,
+     "min_clearance_m": 0.066227766016838,
+     "path_cost": 80.0584174599518,
+     "path_length_m": 6.4526911934581195,
+     "path_steps": 55,
+     "pushes": 213,
+     "start_snap_m": 0
+    },
+    "scenario": "s073",
+    "scenario_index": 72,
+    "status": "found"
+   },
+   {
+    "chain": "01d635dccb5f287cb80137617f09eb25ee28c19b8a6d15fb0e129720801ac079",
+    "counts": {
+     "expansions": 2118,
+     "goal_snap_m": 0,
+     "heading_change_rad": 10.210176124167209,
+     "mean_clearance_m": 1.5114665389359079,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 799.2618101471115,
+     "path_length_m": 53.52670273047593,
+     "path_steps": 510,
+     "pushes": 3046,
+     "start_snap_m": 0
+    },
+    "scenario": "s074",
+    "scenario_index": 73,
+    "status": "found"
+   },
+   {
+    "chain": "b0ee732d891cb0ee295a76573722fe046bec6e829729263bd29fac72efac2c5b",
+    "counts": {
+     "expansions": 126,
+     "goal_snap_m": 0,
+     "heading_change_rad": 3.9269908169873213,
+     "mean_clearance_m": 0.3343484719936399,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 213.4784660494129,
+     "path_length_m": 12.731370849898475,
+     "path_steps": 124,
+     "pushes": 325,
+     "start_snap_m": 0
+    },
+    "scenario": "s075",
+    "scenario_index": 74,
+    "status": "found"
+   },
+   {
+    "chain": "c99229e908ff6213086a7cc1a92810be39615d87c3ef056ea2804063807b1f50",
+    "counts": {
+     "expansions": 7071,
+     "goal_snap_m": 0,
+     "heading_change_rad": 16.49336143134675,
+     "mean_clearance_m": 0.2536078768799702,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 489.1693246091612,
+     "path_length_m": 28.799494936611666,
+     "path_steps": 259,
+     "pushes": 7513,
+     "start_snap_m": 0
+    },
+    "scenario": "s076",
+    "scenario_index": 75,
+    "status": "found"
+   },
+   {
+    "chain": "040b92a133b614ba80604a108cd1269d5cbc17eb66a4fbba5ac199c9d889d875",
+    "counts": {
+     "expansions": 841,
+     "goal_snap_m": 0,
+     "heading_change_rad": 11.780972450962324,
+     "mean_clearance_m": 0.10691665859404918,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 514.2022731727848,
+     "path_length_m": 26.83675323681472,
+     "path_steps": 246,
+     "pushes": 1254,
+     "start_snap_m": 0
+    },
+    "scenario": "s077",
+    "scenario_index": 76,
+    "status": "found"
+   },
+   {
+    "chain": "a6dba7b82992b1a8d429edc0b69fbad184a3d0ef53f24ae2505ba8d828472882",
+    "counts": {
+     "expansions": 7866,
+     "goal_snap_m": 0,
+     "heading_change_rad": 16.493361431346738,
+     "mean_clearance_m": 0.38368786116577813,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 349.6200191682037,
+     "path_length_m": 26.36223663640865,
+     "path_steps": 228,
+     "pushes": 8458,
+     "start_snap_m": 0
+    },
+    "scenario": "s078",
+    "scenario_index": 77,
+    "status": "found"
+   },
+   {
+    "chain": "b694c53a025d2c6cb208a6e065f40cc134bd3111856ef1cdd0d93642ab530b99",
+    "counts": {
+     "expansions": 998,
+     "goal_snap_m": 0,
+     "heading_change_rad": 14.922565104552252,
+     "mean_clearance_m": 0.15297551010841456,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 591.4842539122586,
+     "path_length_m": 32.77939392393403,
+     "path_steps": 293,
+     "pushes": 1535,
+     "start_snap_m": 0
+    },
+    "scenario": "s079",
+    "scenario_index": 78,
+    "status": "found"
+   },
+   {
+    "chain": "91c0d63b8b060b53d13003a63aafda930f27971bc97f2b4a2f99e56ba7cc0091",
+    "counts": {
+     "expansions": 144,
+     "goal_snap_m": 0,
+     "heading_change_rad": 3.9269908169874643,
+     "mean_clearance_m": 0.43518874726651763,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 180.78131875695536,
+     "path_length_m": 14.288225099390852,
+     "path_steps": 123,
+     "pushes": 467,
+     "start_snap_m": 0
+    },
+    "scenario": "s080",
+    "scenario_index": 79,
+    "status": "found"
+   },
+   {
+    "chain": "47a77900d4deb32b271aa928b37db031a72051329bd6b61b5b11718876068c31",
+    "counts": {
+     "expansions": 708,
+     "goal_snap_m": 0,
+     "heading_change_rad": 6.283185307179667,
+     "mean_clearance_m": 0.9113908656447853,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 494.3801495130609,
+     "path_length_m": 35.49411254969542,
+     "path_steps": 345,
+     "pushes": 1366,
+     "start_snap_m": 0
+    },
+    "scenario": "s081",
+    "scenario_index": 80,
+    "status": "found"
+   },
+   {
+    "chain": "7ba1a74be2f64315e6e9f486ce5143ffc6b83c0e6af5821003004980dca9afd5",
+    "counts": {
+     "expansions": 3176,
+     "goal_snap_m": 0,
+     "heading_change_rad": 7.068583470577727,
+     "mean_clearance_m": 0.23918632432329132,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 510.51394257623855,
+     "path_length_m": 31.55807358037439,
+     "path_steps": 287,
+     "pushes": 3627,
+     "start_snap_m": 0
+    },
+    "scenario": "s082",
+    "scenario_index": 81,
+    "status": "found"
+   },
+   {
+    "chain": "15f5678da1dccfe6bde0418d180900d0eaf6ad800e83945b51841f083f9005a2",
+    "counts": {
+     "expansions": 1101,
+     "goal_snap_m": 0,
+     "heading_change_rad": 10.21017612416712,
+     "mean_clearance_m": 0.19343303144096427,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 526.0571250331792,
+     "path_length_m": 29.442640687119297,
+     "path_steps": 282,
+     "pushes": 1551,
+     "start_snap_m": 0
+    },
+    "scenario": "s083",
+    "scenario_index": 82,
+    "status": "found"
+   },
+   {
+    "chain": "d296ba91c29d5dd63daae07438056503fac9e8cf8195815a136520508092176a",
+    "counts": {
+     "expansions": 5056,
+     "goal_snap_m": 0,
+     "heading_change_rad": 24.347343065321326,
+     "mean_clearance_m": 0.2399830784672617,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 798.9825326431818,
+     "path_length_m": 50.08233764908633,
+     "path_steps": 471,
+     "pushes": 5794,
+     "start_snap_m": 0
+    },
+    "scenario": "s084",
+    "scenario_index": 83,
+    "status": "found"
+   },
+   {
+    "chain": "1ec5fddadf54a747f247c8dedb877ac77d198ee60c37374810314b3e16688894",
+    "counts": {
+     "expansions": 70,
+     "goal_snap_m": 0,
+     "heading_change_rad": 0.7853981633977316,
+     "mean_clearance_m": 4.086701710031158,
+     "min_clearance_m": 1.85,
+     "path_cost": 80.59797974644667,
+     "path_length_m": 8.059797974644667,
+     "path_steps": 69,
+     "pushes": 269,
+     "start_snap_m": 0
+    },
+    "scenario": "s085",
+    "scenario_index": 84,
+    "status": "found"
+   },
+   {
+    "chain": "ef4592f7b67fe98611222cd142cb4c8e611c8a83ab3e48b696d527bbe3ffb2ee",
+    "counts": {
+     "expansions": 1467,
+     "goal_snap_m": 0,
+     "heading_change_rad": 10.210176124168118,
+     "mean_clearance_m": 2.250342649456376,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 417.944315442676,
+     "path_length_m": 31.77228714274752,
+     "path_steps": 285,
+     "pushes": 2143,
+     "start_snap_m": 0
+    },
+    "scenario": "s086",
+    "scenario_index": 85,
+    "status": "found"
+   },
+   {
+    "chain": "a3992b0723506cce153725509e1819d19efa70c263eb411e1bda0ad4d2dbe556",
+    "counts": {
+     "expansions": 2267,
+     "goal_snap_m": 0,
+     "heading_change_rad": 8.639379797373326,
+     "mean_clearance_m": 2.853082039876529,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 283.9689890397191,
+     "path_length_m": 24.969343417595194,
+     "path_steps": 212,
+     "pushes": 2843,
+     "start_snap_m": 0
+    },
+    "scenario": "s087",
+    "scenario_index": 86,
+    "status": "found"
+   },
+   {
+    "chain": "bf52904e15a3628df85f6a260a9617c9a3925aa2061ce1e20c8effccc095e470",
+    "counts": {
+     "expansions": 309,
+     "goal_snap_m": 0,
+     "heading_change_rad": 10.210176124168328,
+     "mean_clearance_m": 0.22977665334265984,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 611.1491855550606,
+     "path_length_m": 34.06223663640866,
+     "path_steps": 305,
+     "pushes": 877,
+     "start_snap_m": 0
+    },
+    "scenario": "s088",
+    "scenario_index": 87,
+    "status": "found"
+   },
+   {
+    "chain": "1b2e3e8d225cd76ffc45a427ea676d12a09cdd772cf85b3e67694a17efcd2b54",
+    "counts": {
+     "expansions": 137,
+     "goal_snap_m": 0,
+     "heading_change_rad": 5.497787143782928,
+     "mean_clearance_m": 0.3974874868374628,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 252.46675070218234,
+     "path_length_m": 16.37523086789975,
+     "path_steps": 136,
+     "pushes": 477,
+     "start_snap_m": 0
+    },
+    "scenario": "s089",
+    "scenario_index": 88,
+    "status": "found"
+   },
+   {
+    "chain": "f4da47c56b75c82449d1c54376341d5f690b37078460197b9933f674ff6a7e12",
+    "counts": {
+     "expansions": 282,
+     "goal_snap_m": 0,
+     "heading_change_rad": 0.7853981633981322,
+     "mean_clearance_m": 2.411556550340282,
+     "min_clearance_m": 0.75,
+     "path_cost": 300.88225099390854,
+     "path_length_m": 30.088225099390854,
+     "path_steps": 281,
+     "pushes": 945,
+     "start_snap_m": 0
+    },
+    "scenario": "s090",
+    "scenario_index": 89,
+    "status": "found"
+   },
+   {
+    "chain": "409fb81e94dfe608d581fb0b59b5336f83ab1bf0054b57403ae5f4ff6048ad30",
+    "counts": {
+     "expansions": 6326,
+     "goal_snap_m": 0,
+     "heading_change_rad": 14.922565104552625,
+     "mean_clearance_m": 0.47496870756004833,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 436.8396755003269,
+     "path_length_m": 29.765180361560933,
+     "path_steps": 267,
+     "pushes": 6855,
+     "start_snap_m": 0
+    },
+    "scenario": "s091",
+    "scenario_index": 90,
+    "status": "found"
+   },
+   {
+    "chain": "0e3e6388f07b135de587f32845720e90e12410b029ec64498c852a9fbc7aea74",
+    "counts": {
+     "expansions": 3363,
+     "goal_snap_m": 0,
+     "heading_change_rad": 19.634954084936982,
+     "mean_clearance_m": 0.7094813229490164,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 781.9233431623913,
+     "path_length_m": 48.20487732352801,
+     "path_steps": 434,
+     "pushes": 4280,
+     "start_snap_m": 0
+    },
+    "scenario": "s092",
+    "scenario_index": 91,
+    "status": "found"
+   },
+   {
+    "chain": "9271c97f2e377a867c5052f96b4dbe3a2dc443dcc856311ad288fbe901f0721d",
+    "counts": {
+     "expansions": 321,
+     "goal_snap_m": 0,
+     "heading_change_rad": 11.780972450963848,
+     "mean_clearance_m": 0.598975829615464,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 600.7934259971123,
+     "path_length_m": 38.544574285494996,
+     "path_steps": 320,
+     "pushes": 1110,
+     "start_snap_m": 0
+    },
+    "scenario": "s093",
+    "scenario_index": 92,
+    "status": "found"
+   },
+   {
+    "chain": "f5f4f660b2f8d15b12ddaceea0afaa68a1e86aa42a16df8c3cf4f9282a0239e0",
+    "counts": {
+     "expansions": 366,
+     "goal_snap_m": 0,
+     "heading_change_rad": 8.639379797373664,
+     "mean_clearance_m": 0.4422290232317397,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 544.3247747248233,
+     "path_length_m": 33.10487732352794,
+     "path_steps": 283,
+     "pushes": 1004,
+     "start_snap_m": 0
+    },
+    "scenario": "s094",
+    "scenario_index": 93,
+    "status": "found"
+   },
+   {
+    "chain": "81f27e31fdfda96cc8dbf215e53303f1d7dba402d9c8ff7c24cb774ca865f033",
+    "counts": {
+     "expansions": 3244,
+     "goal_snap_m": 0,
+     "heading_change_rad": 12.566370614360002,
+     "mean_clearance_m": 0.5799602400459398,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 479.001544614302,
+     "path_length_m": 35.920310216783086,
+     "path_steps": 295,
+     "pushes": 3889,
+     "start_snap_m": 0
+    },
+    "scenario": "s095",
+    "scenario_index": 94,
+    "status": "found"
+   },
+   {
+    "chain": "f27b785263a17837068de83c1edd50a1037e7ec72f1a6f600439a1af889db3b1",
+    "counts": {
+     "expansions": 216,
+     "goal_snap_m": 0,
+     "heading_change_rad": 0.7853981633977938,
+     "mean_clearance_m": 3.2427006068434943,
+     "min_clearance_m": 0.65,
+     "path_cost": 223.2842712474619,
+     "path_length_m": 22.32842712474619,
+     "path_steps": 215,
+     "pushes": 691,
+     "start_snap_m": 0
+    },
+    "scenario": "s096",
+    "scenario_index": 95,
+    "status": "found"
+   },
+   {
+    "chain": "15f8ef9fa50e05c0d8836fbbd95c36b8871d1fc0d197e65f4454291385093c35",
+    "counts": {
+     "expansions": 298,
+     "goal_snap_m": 0,
+     "heading_change_rad": 0.7853981633996421,
+     "mean_clearance_m": 1.8756186754351836,
+     "min_clearance_m": 0.15000000000000002,
+     "path_cost": 394.99884540743835,
+     "path_length_m": 34.00782104868019,
+     "path_steps": 297,
+     "pushes": 1105,
+     "start_snap_m": 0
+    },
+    "scenario": "s097",
+    "scenario_index": 96,
+    "status": "found"
+   },
+   {
+    "chain": "980f1ec0f89fd11201e31b99de7fdf10e3875edaf08f9faeaac18bceab693202",
+    "counts": {
+     "expansions": 7235,
+     "goal_snap_m": 0,
+     "heading_change_rad": 24.347343065321308,
+     "mean_clearance_m": 0.27163968360516233,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 616.546196439101,
+     "path_length_m": 41.10071426749374,
+     "path_steps": 370,
+     "pushes": 7867,
+     "start_snap_m": 0
+    },
+    "scenario": "s098",
+    "scenario_index": 97,
+    "status": "found"
+   },
+   {
+    "chain": "945b66c707ce5336baeeef4f2568f3a56ccf36b7a5a52f4381c72918f46b287b",
+    "counts": {
+     "expansions": 5773,
+     "goal_snap_m": 0,
+     "heading_change_rad": 8.639379797373273,
+     "mean_clearance_m": 2.2215381712199846,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 387.30124127433766,
+     "path_length_m": 33.97939392393404,
+     "path_steps": 305,
+     "pushes": 6429,
+     "start_snap_m": 0
+    },
+    "scenario": "s099",
+    "scenario_index": 98,
+    "status": "found"
+   },
+   {
+    "chain": "0f70053566c6a60acc2ad79bed3e7e66b0c922def0098b0a9ddf9569a11467a6",
+    "counts": {
+     "expansions": 357,
+     "goal_snap_m": 0,
+     "heading_change_rad": 7.068583470579157,
+     "mean_clearance_m": 0.6515829616053441,
+     "min_clearance_m": 0.050000000000000044,
+     "path_cost": 587.9040802675815,
+     "path_length_m": 40.01492782986679,
+     "path_steps": 355,
+     "pushes": 1139,
+     "start_snap_m": 0
+    },
+    "scenario": "s100",
+    "scenario_index": 99,
+    "status": "found"
+   }
+  ],
+  "scenarios": 100,
+  "score": {
+   "compute_ms": {
+    "median": 60.816924495156854,
+    "n": 100,
+    "q1": 22.16016999227577,
+    "q3": 209.09769100035192
+   },
+   "expansions": {
+    "median": 887,
+    "n": 100,
+    "q1": 268,
+    "q3": 3247.25
+   },
+   "failures": [],
+   "min_clearance_m": {
+    "median": 0.050000000000000044,
+    "n": 100,
+    "q1": 0.050000000000000044,
+    "q3": 0.050000000000000044
+   },
+   "n": 100,
+   "path_ratio": {
+    "median": 1.0331738906264598,
+    "n": 100,
+    "q1": 1.0000000000000002,
+    "q3": 1.1099272558529778
+   },
+   "success_rate": 1,
+   "successes": 100,
+   "wilson95": [
+    0.9630065017930143,
+    1
+   ]
+  },
+  "spec_id": "bf74a8f39f4e7920",
+  "worst": {
+   "scenario": "s092",
+   "scenario_index": 91,
+   "why": "worst path ratio"
+  }
+ },
+ "schema": "coco.leaderboard.entry.v1",
+ "verified": true,
+ "versions": {
+  "api": 1,
+  "experiment": 1,
+  "model_hash_version": 3,
+  "suite": "depot-nav-100",
+  "suite_version": 0,
+  "verifier": 1
+ }
+}

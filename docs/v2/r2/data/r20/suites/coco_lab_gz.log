@@ -1,0 +1,35 @@
+
+==================================== ERRORS ====================================
+______________________ ERROR collecting test/test_api.py _______________________
+ImportError while importing test module '/home/gautham/coco_labs_ws/worktrees/r2/coco_lab/test/test_api.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+test/test_api.py:20: in <module>
+    from coco_lab import api
+E   ImportError: cannot import name 'api' from 'coco_lab' (/home/gautham/coco_labs_ws/r1_venv/lib/python3.12/site-packages/coco_lab/__init__.py)
+____________________ ERROR collecting test/test_exp_user.py ____________________
+ImportError while importing test module '/home/gautham/coco_labs_ws/worktrees/r2/coco_lab/test/test_exp_user.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+test/test_exp_user.py:20: in <module>
+    from coco_lab import experiments as E, exp_user
+E   ImportError: cannot import name 'exp_user' from 'coco_lab' (/home/gautham/coco_labs_ws/r1_venv/lib/python3.12/site-packages/coco_lab/__init__.py)
+___________________ ERROR collecting test/test_user_code.py ____________________
+ImportError while importing test module '/home/gautham/coco_labs_ws/worktrees/r2/coco_lab/test/test_user_code.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+test/test_user_code.py:19: in <module>
+    from coco_lab import api, numerics
+E   ImportError: cannot import name 'api' from 'coco_lab' (/home/gautham/coco_labs_ws/r1_venv/lib/python3.12/site-packages/coco_lab/__init__.py)
+=========================== short test summary info ============================
+ERROR test/test_api.py
+ERROR test/test_exp_user.py
+ERROR test/test_user_code.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 3 errors during collection !!!!!!!!!!!!!!!!!!!!
+1204 deselected, 3 errors in 6.50s

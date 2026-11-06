@@ -67,7 +67,13 @@ ALGORITHMS = {
     'localisation': ('mcl', 'mcl_augmented', 'ekf'),
     'fulltask': tuple(PLANNERS),
 }
-LABELS = {'bfs': 'BFS', 'dijkstra': 'Dijkstra', 'astar': 'A*', 'greedy': 'Greedy best-first',
+#: R2: an algorithm file (coco_lab.api, ``coco.algorithm.v1``): ``{"name": "user", "api": 1,
+#: "code_sha256": ...}``; its source travels beside the spec (a link, ``--algorithm``)
+USER = 'user'
+USER_FAMILIES = ('planning', 'control', 'localisation')
+API_VERSION = 1
+LABELS = {'user': 'Your algorithm',
+          'bfs': 'BFS', 'dijkstra': 'Dijkstra', 'astar': 'A*', 'greedy': 'Greedy best-first',
           'weighted_astar': 'Weighted A*', 'dstar_lite': 'D* Lite', 'builtin': 'Waypoint driver',
           'dwa': 'DWA', 'rpp': 'Regulated Pure Pursuit', 'mppi': 'MPPI', 'mcl': 'MCL',
           'mcl_augmented': 'MCL + augmented injection', 'ekf': 'EKF'}
@@ -143,18 +149,41 @@ for _k, _v in PARAMS['localisation'].items():
 
 def _applies(family: str, algo: str, key: str) -> bool:
     """Whether parameter ``key`` does anything for ``algo`` (others are refused)."""
+    if key.startswith('user.'):
+        return algo == USER
     if family == 'planning':
         return key != 'heuristic_weight' or algo == 'weighted_astar'
     if family == 'control':
         head = key.split('.')[0]
         return head in ('planner', 'window') or head == algo
     if family == 'localisation':
+        if algo == USER:
+            return False
         return key.startswith(('mcl.' if algo.startswith('mcl') else 'ekf.'))
     return False
 
 
+def _check_user_param(key: str, value):
+    """``user.<name>``: a parameter of the algorithm file (``ctx.params[name]``)."""
+    name = key[5:]
+    if not (name[:1].isalpha() and all(c.isalnum() or c == '_' for c in name)
+            and len(name) <= 40):
+        raise SpecError(f'{key}: user parameters are user.<letters, digits, _>')
+    if isinstance(value, bool) or (isinstance(value, str) and len(value) <= 200):
+        return value
+    if isinstance(value, (int, float)) and math.isfinite(value):
+        return value
+    if isinstance(value, list) and len(value) <= 64 and all(
+            isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v)
+            for v in value):
+        return value
+    raise SpecError(f'{key}: a number, a short string, true/false or a list of numbers')
+
+
 def _check_param(family: str, algo: str, key: str, value):
     table = PARAMS[family]
+    if key.startswith('user.') and algo == USER:
+        return _check_user_param(key, value)
     if key not in table:
         raise SpecError(f'{family} has no parameter {key!r}')
     if not _applies(family, algo, key):
@@ -256,7 +285,8 @@ METRICS['localisation'] = METRICS['control'][:-1] + [
     _m('compute_ms', 'Compute time', 'ms', 'lower', timing=True),
 ]
 STATUSES = {
-    'planning': ('found', 'no_path', 'start_blocked', 'goal_blocked', 'error'),
+    'planning': ('found', 'no_path', 'start_blocked', 'goal_blocked', 'collision',
+                 'invalid_output', 'budget_exceeded', 'error'),
     'control': ('succeeded', 'no_path', 'invalid_path', 'no_valid_control',
                 'failed_to_make_progress', 'timeout', 'stopped', 'error'),
     'localisation': ('localised', 'not_localised', 'timeout', 'no_path', 'error'),
@@ -403,7 +433,20 @@ def plan(spec: Dict) -> Dict:
     ids, resolved_algos = set(), []
     for a in algos:
         name = a.get('name')
-        if name not in ALGORITHMS[family]:
+        user = {}
+        if name == USER:
+            if family not in USER_FAMILIES:
+                raise SpecError(f'a {family} experiment runs the built-ins only '
+                                f'(algorithm files: {", ".join(USER_FAMILIES)})')
+            sha = a.get('code_sha256')
+            if not (isinstance(sha, str) and len(sha) == 64
+                    and all(c in '0123456789abcdef' for c in sha)):
+                raise SpecError('an algorithm file is named by its code_sha256 (64 hex digits)')
+            if a.get('api', API_VERSION) != API_VERSION:
+                raise SpecError(f'this build runs algorithm API {API_VERSION}, '
+                                f'not {a.get("api")}')
+            user = {'api': API_VERSION, 'code_sha256': sha}
+        elif name not in ALGORITHMS[family]:
             raise SpecError(f'{family} algorithms: {list(ALGORITHMS[family])}')
         aid = a.get('id') or name
         if aid in ids:
@@ -416,12 +459,13 @@ def plan(spec: Dict) -> Dict:
             for k, v in pt.items():
                 if _applies(family, name, k):
                     merged[k] = v
-                elif k not in PARAMS[family]:
+                elif k not in PARAMS[family] and not k.startswith('user.'):
                     raise SpecError(f'{family} has no parameter {k!r} to sweep')
             per_point.append(resolved_params(family, name, merged))
-        resolved_algos.append({'id': aid, 'name': name, 'label': a.get('label') or LABELS[name],
-                               'params': per_point[0] if not sp else given,
-                               '_per_point': per_point})
+        resolved_algos.append(dict({'id': aid, 'name': name,
+                                    'label': a.get('label') or LABELS[name],
+                                    'params': per_point[0] if not sp else given,
+                                    '_per_point': per_point}, **user))
     seed = spec.get('seed', 1)
     if isinstance(seed, bool) or not isinstance(seed, int) or not 0 <= seed < (1 << 63):
         raise SpecError('seed is an integer in [0, 2**63)')
@@ -496,36 +540,51 @@ def plan(spec: Dict) -> Dict:
     for pi, pt in enumerate(points):
         for ai, a in enumerate(resolved_algos):
             for si, s in enumerate(scenarios):
-                runs.append({'experiment': eid, 'index': len(runs), 'world': world_id,
-                             'world_sha256': wsha, 'family': family, 'sweep_index': pi,
-                             'sweep': pt, 'algorithm': a['id'], 'name': a['name'],
-                             'params': a['_per_point'][pi], 'scenario_index': si,
-                             'scenario': s, 'max_ticks': max_ticks, 'options': options})
+                d = {'experiment': eid, 'index': len(runs), 'world': world_id,
+                     'world_sha256': wsha, 'family': family, 'sweep_index': pi,
+                     'sweep': pt, 'algorithm': a['id'], 'name': a['name'],
+                     'params': a['_per_point'][pi], 'scenario_index': si,
+                     'scenario': s, 'max_ticks': max_ticks, 'options': options}
+                if a['name'] == USER:
+                    # only a user's descriptor carries these: every built-in's chain is unchanged
+                    d['api'], d['code_sha256'] = a['api'], a['code_sha256']
+                runs.append(d)
     return {'spec': full, 'id': eid, 'world_sha256': wsha, 'scenarios': scenarios,
             'scenario_info': info, 'sweep_points': points, 'runs': runs}
 
 
 # -- running -------------------------------------------------------------------------------------
 
-def run_one(desc: Dict, sink=None, on_tick=None) -> Dict:
+def _run(desc: Dict, sink=None, on_tick=None, on_event=None) -> Dict:
+    w = world(desc['world'])
+    fam, name, params, sc = desc['family'], desc['name'], desc['params'], desc['scenario']
+    if fam == 'planning':
+        return run_planning(w, sc, name, params, desc, sink, on_event)
+    if fam == 'control':
+        return run_control(w, sc, name, params, desc, desc['max_ticks'], on_tick, on_event)
+    if fam == 'localisation':
+        return run_localisation(w, sc, name, params, desc, desc['max_ticks'],
+                                desc['options'].get('kidnap_at_s'), on_tick, on_event)
+    return run_fulltask(w, sc, name, params, desc)
+
+
+def run_one(desc: Dict, sink=None, on_tick=None, on_event=None, twice: bool = True) -> Dict:
     """
     Run one descriptor from :func:`plan`; return its record (an error is a recorded result).
 
     ``sink`` (planning) sees every search event row and ``on_tick(arena, tick)`` (control,
     localisation) every tick, for Compare's replay of the run; neither changes the run.
+    ``on_event(kind, data)`` sees an algorithm file's ``ctx.emit`` thinking. An algorithm
+    file's run is run ``twice`` (unless told not to) and its record says whether the two
+    chains agree (``deterministic``): ADR 0012's determinism check.
     """
-    w = world(desc['world'])
-    fam, name, params, sc = desc['family'], desc['name'], desc['params'], desc['scenario']
+    fam, name, sc = desc['family'], desc['name'], desc['scenario']
     try:
-        if fam == 'planning':
-            r = run_planning(w, sc, name, params, desc, sink)
-        elif fam == 'control':
-            r = run_control(w, sc, name, params, desc, desc['max_ticks'], on_tick)
-        elif fam == 'localisation':
-            r = run_localisation(w, sc, name, params, desc, desc['max_ticks'],
-                                 desc['options'].get('kidnap_at_s'), on_tick)
-        else:
-            r = run_fulltask(w, sc, name, params, desc)
+        r = _run(desc, sink, on_tick, on_event)
+        if name == USER and twice:
+            again = _run(desc)
+            r['deterministic'] = again['chain'] == r['chain'] and \
+                again['status'] == r['status']
     except (ValueError, KeyError) as e:
         h = hashlib.sha256(b'coco.experiment.run.v1')
         h.update(canonical(desc))
@@ -718,7 +777,8 @@ def manifest(p: Dict, records: List[Dict], files: Dict[str, bytes], host: Dict) 
 
 def export(p: Dict, records: List[Dict], host: Dict) -> Dict[str, bytes]:
     """Return the export set ``{name: bytes}`` (results, summary, spec, runs, manifest)."""
-    records = plain(records)
+    records = plain([dict(r, report=_portable_report(r['report'])) if r.get('report') else r
+                     for r in records])
     files = {
         'spec.json': (json.dumps(plain(p['spec']), indent=1, sort_keys=True) + '\n').encode(),
         'results.csv': results_csv(p, records).encode(),
@@ -729,9 +789,19 @@ def export(p: Dict, records: List[Dict], host: Dict) -> Dict[str, bytes]:
                        separators=(',', ':')) + '\n'
             for r in sorted(records, key=lambda r: r['index'])).encode(),
     }
+    for a in p['spec']['algorithms']:
+        if a['name'] == USER:
+            from . import exp_user
+            files[f'algorithms/{a["id"]}.py'] = exp_user.source(a['code_sha256']).encode()
     files['manifest.json'] = (json.dumps(plain(manifest(p, records, files, host)), indent=1,
                                          sort_keys=True) + '\n').encode()
     return files
+
+
+def _portable_report(report: Dict) -> Dict:
+    """Return a run's validation report without its wall times (an export is the same anywhere)."""
+    return {k: v for k, v in report.items()
+            if k not in ('call_ms_max', 'call_ms_total', 'max_call_index')}
 
 
 # -- the command line ----------------------------------------------------------------------------
@@ -764,13 +834,45 @@ def _host(workers: int) -> Dict:
             platform.platform(), 'cpu': cpu, 'workers': workers, 'git': sha}
 
 
-def _pool_run(p: Dict, workers: int) -> List[Dict]:
-    if workers <= 1:
+def add_algorithms(spec: Dict, files: List[str]) -> Dict[str, str]:
+    """
+    Register algorithm files for ``spec``; return ``{sha256: source}``.
+
+    A file whose sha256 a ``user`` entry already names fills it; any other file is
+    appended as a new ``user`` entry (its id the file's name). Every ``user`` entry
+    must then have its file.
+    """
+    from . import exp_user
+    codes = {}
+    algos = spec.setdefault('algorithms', [])
+    named = {a.get('code_sha256') for a in algos if a.get('name') == USER}
+    for f in files:
+        src = Path(f).read_text(encoding='utf-8')
+        sha = exp_user.register(src)
+        codes[sha] = src
+        if sha not in named:
+            algos.append({'name': USER, 'id': Path(f).stem, 'label': Path(f).stem, 'api':
+                          API_VERSION, 'code_sha256': sha})
+    missing = [a.get('id') for a in algos
+               if a.get('name') == USER and a.get('code_sha256') not in codes]
+    if missing:
+        raise SpecError(f'no --algorithm file for {missing} (matched by code_sha256)')
+    return codes
+
+
+def _pool_run(p: Dict, workers: int, codes: Optional[Dict[str, str]] = None) -> List[Dict]:
+    codes = codes or {}
+    if codes:
+        # user code: str hashes (set order) must not depend on the process (ADR 0012)
+        os.environ['PYTHONHASHSEED'] = '0'
+        workers = max(1, workers)
+    elif workers <= 1:
         return run_all(p, lambda i, n: print(f'\r{i}/{n}', end='', flush=True))
     import multiprocessing as mp
     out = []
     ctx = mp.get_context('spawn')
-    with ctx.Pool(workers, initializer=_init_worker, initargs=(dict(_WORLD_SPECS),)) as pool:
+    with ctx.Pool(workers, initializer=_init_worker,
+                  initargs=(dict(_WORLD_SPECS), codes)) as pool:
         for r in pool.imap_unordered(run_one, p['runs'], chunksize=1):
             out.append(r)
             print(f'\r{len(out)}/{len(p["runs"])}', end='', flush=True)
@@ -778,9 +880,13 @@ def _pool_run(p: Dict, workers: int) -> List[Dict]:
     return sorted(out, key=lambda r: r['index'])
 
 
-def _init_worker(specs):
+def _init_worker(specs, codes=None):
     for k, v in specs.items():
         register_world(k, v)
+    if codes:
+        from . import exp_user
+        for src in codes.values():
+            exp_user.register(src)
 
 
 def main(argv: Optional[List[str]] = None) -> int:
@@ -792,6 +898,9 @@ def main(argv: Optional[List[str]] = None) -> int:
     sub = ap.add_subparsers(dest='cmd', required=True)
     r = sub.add_parser('run', help='run a spec; write the export set to --out')
     r.add_argument('spec')
+    r.add_argument('--algorithm', action='append', default=[], metavar='FILE.py',
+                   help='an algorithm file (coco_lab.api): added to the spec as "user" '
+                        '(or matched to a "user" entry by its code_sha256)')
     r.add_argument('--out', required=True)
     r.add_argument('--workers', type=int, default=max(1, (os.cpu_count() or 2) - 1))
     r.add_argument('--worlds', help="the worlds/ directory (default: the repository's)")
@@ -816,22 +925,29 @@ def main(argv: Optional[List[str]] = None) -> int:
         return 0
     if a.cmd == 'run':
         spec = _load_spec(a.spec)
+        codes = add_algorithms(spec, a.algorithm)
         p = plan(spec)
         for wid in {p['spec']['world']}:
             world_spec(wid)
         print(f'experiment {p["id"]}: {len(p["runs"])} runs, {a.workers} worker(s)')
         t0 = time.time()
-        records = _pool_run(p, a.workers)
+        records = _pool_run(p, a.workers, codes)
         host = dict(_host(a.workers), wall_s=round(time.time() - t0, 3))
         files = export(p, records, host)
         out = Path(a.out)
         out.mkdir(parents=True, exist_ok=True)
         for name, data in files.items():
+            (out / name).parent.mkdir(parents=True, exist_ok=True)
             (out / name).write_bytes(data)
         print(f'digest {digest(records)}  ({host["wall_s"]} s)  -> {out}')
         return 0
     d = Path(a.dir)
     spec = json.loads((d / 'spec.json').read_text())
+    codes = {}
+    for f in sorted(d.glob('algorithms/*.py')):
+        from . import exp_user
+        src = f.read_text(encoding='utf-8')
+        codes[exp_user.register(src)] = src
     p = plan(spec)
     want = {}
     for ln in (d / 'runs.jsonl').read_text().splitlines():
@@ -845,7 +961,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         pool = list(idx)
         idx = sorted(pool.pop(rng.randrange(len(pool))) for _ in range(k))
     sub_plan = dict(p, runs=[p['runs'][i] for i in idx])
-    got = _pool_run(sub_plan, a.workers)
+    got = _pool_run(sub_plan, a.workers, codes)
     bad = [g['index'] for g in got
            if g['chain'] != want[g['index']]['chain'] or counts(g) != counts(want[g['index']])]
     print(f'verified {len(got)} run(s): {len(got) - len(bad)} match, {len(bad)} differ'

@@ -717,10 +717,10 @@ Details live in `docs/v2/M*_PROMPT.md`, `docs/v2/M*_RESULTS.md` and `docs/v2/rev
 **Objective:** COCO Lab serves learning and research, not just entertainment; the game stays the front door. The model's determinism (hash-verified, the same on every run and browser) and its validation against real Gazebo + Nav2 recordings let any experiment be shared as a link and reproduced exactly by anyone, with no install.
 
 - **R1 · Research Workbench.** Research becomes Workbench (Experiments · Benchmarks · Recordings · Datasets). An experiment builder (world, family, algorithms and parameters, seeded scenarios or a suite, an optional one- or two-parameter sweep, metrics) runs in a pool of Pyodide workers, with honest statistics (N everywhere, Wilson 95% intervals, medians and IQRs, paired Wilcoxon with effect sizes). Experiments are links that reproduce every count exactly, with a Verify button; `coco experiment run` gives the same results natively, checked in CI. COCO-Bench v0 suites with committed reference results; exports and a notebook; Compare on every world with a scenario picker; title doors Play · Learn · Workbench; a Learn page. Pulls §5.10's experiment builder, runner, statistics, exports and `coco run` parity forward from M7.
-- **R2 · Bring your own algorithm.**
-- **R3 · COCO-Bench and the paper.**
+- **R2 · Bring your own algorithm.** Anyone writes a planner, controller or localiser in Python against `coco_lab.api` (`coco.algorithm.v1`: ROS 2 message shapes, a seeded RNG, `ctx.emit` for glass-box thinking; ADR 0013), in the browser (Algorithm Studio in Workbench: CodeMirror 6, starter templates, a sandboxed Pyodide worker with no network, DOM or storage; ADR 0012) or natively (`coco experiment run --algorithm`), watches it think in GAME, SIM and Compare, benchmarks it on COCO-Bench with R1's statistics, shares it as a link (code shown, never run without consent), submits it to a leaderboard verified by re-running it in a sandboxed CI job (public and held-out scenarios), and exports the same file as an `ament_python` package that runs as a real ROS 2 node in Gazebo + Nav2 (planner, controller through `cmd_vel_arbiter`, localiser), with a "Browser vs ROS 2" panel labelled MODEL and STACK. Pulls R5's "Run it in ROS 2" export forward; Live ROS 2 in Docker stays R5. Prompt `docs/v2/r2/R2_PROMPT.md`, progress `docs/v2/r2/R2_STATUS.md`.
+- **R3 · COCO-Bench v1 and the paper.** A citable benchmark: frozen, versioned v1 suites with datasheets and difficulty tiers (global planning, local control, localisation, full task), held-out scenarios, browser-model baselines on every suite paired with real Gazebo + Nav2 baselines on validated subsets (stock and snapped), a "Model vs ROS 2" gap analysis, Leaderboard v1 (planners, controllers, localisers), and a workshop paper whose every number regenerates from committed data, with a "Reproduce this paper" link. Prompt `docs/v2/r3/R3_PROMPT.md`, progress `docs/v2/r3/R3_STATUS.md`.
 - **R4 · Learn course** (the graded course).
-- **R5 · World editor, "Run it in ROS 2", and Live ROS 2 in Docker.**
+- **R5 · World editor, "Run it in ROS 2" (the export itself built in R2), and Live ROS 2 in Docker.**
 - **R6 · Fidelity knobs, more algorithms and multi-robot.**
 - Prompt: `docs/v2/r1/R1_PROMPT.md`. Progress: `docs/v2/r1/R1_STATUS.md`. The invariants, integrity rules and owner gates above are unchanged.
 
@@ -855,6 +855,32 @@ runs Lab manually on main: the **Deploy site** job requires the confirmation
 `DEPLOY`, after the real-phone check and five-person usability test pass. Agents
 never trigger that deployment. PR #25 is merged only by Gautham.
 
+**Standing merge and deploy authority (Gautham, 2026-11-06; supersedes the two
+"never" lines above and rule 9's merge line for Claude Code's own PRs).** Claude Code
+may open, update, merge and deploy its own pull requests and do the git/GitHub
+housekeeping without asking first, under these conditions:
+
+1. **Merge gate:** every required CI check green on the PR's exact head; local suites
+   pass; no stop condition fired; a short self-review (what changed, risks, evidence)
+   written to the PR. Single exception: when `build-and-test` fails only inside
+   "Setup ROS 2 Jazzy" (before any repository code runs), merge is allowed after up to
+   3 re-runs if the same workflow passed on a commit with the identical source tree
+   except docs, and the PR comment links both runs.
+2. **Merging:** merge commits, never squash; never force-push or rewrite pushed
+   history; base retargets, rebasing unpushed work and merging main into feature
+   branches are allowed; feature branches are kept after merging.
+3. **Deploying:** `gh workflow run lab.yml --ref main -f confirmation=DEPLOY`, wait for
+   it, then a live Playwright smoke test of the public URL (title, Play round starts and
+   moves, Compare, Workbench experiment, Studio A* starter, Leaderboard, Learn, and the
+   "New version ready" path of an open tab); run ID and results recorded in STATUS.
+4. **A broken live site:** a revert PR at once (`git revert -m 1 <merge>`), merged under
+   the same gate (it may skip waiting for the Gazebo checks, never the web and unit
+   checks), redeployed and reported. Never force-push main.
+5. **Still Gautham's:** releases and tags, deleting branches, anything in the COCO robot
+   repository, publishing outside GitHub (arXiv, Zenodo, LinkedIn, email, workshop
+   submissions), licence changes, spending money.
+6. Every other rule in this file still holds.
+
 These apply to every agent: Claude Code, Codex or any other.
 
 1. **One prompt per milestone.** Work through every checkpoint without pausing, unless a stop condition fires. Commit at every checkpoint, so any session can resume from `docs/STATUS.md`.
@@ -883,7 +909,7 @@ These apply to every agent: Claude Code, Codex or any other.
     - invent numbers
     - mark anything MEASURED without committed data
     - mark a Gautham-owned row as done
-    - merge a milestone pull request without Gautham's explicit permission
+    - merge a milestone pull request without Gautham's explicit permission (Claude Code's own PRs: the standing authority above, under its gate)
 10. **Final report**, in this form:
 
 ```

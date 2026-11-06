@@ -1,0 +1,15 @@
+2026-11-06T11:20:15Z R2.9 re-check: tree 7eaa7b6 dirty=0; balanced, AC 1
+2026-11-06T11:25:26Z STEP lab_web_tools rc=0 263 passed in 310.37s (0:05:10)
+2026-11-06T11:25:27Z STEP typecheck rc=0 
+2026-11-06T11:25:51Z STEP vitest rc=0 
+2026-11-06T11:26:18Z STEP build_twice rc=0 }
+2026-11-06T11:27:38Z STEP a11y rc=0 {"passed":true,"pages":[["desktop","dark","?view=workbench",370,0,0,true],["desktop","dark","?view=workbench&tab=benchmarks",691,0,0,true],["desktop","dark","?view=workbench&tab=datasets",395,0,0,true],["desktop","dark",
+2026-11-06T11:28:44Z STEP escape_chromium rc=0 ESCAPE TESTS PASS: every escape failed safely
+2026-11-06T11:30:10Z STEP escape_firefox rc=0 ESCAPE TESTS PASS: every escape failed safely
+2026-11-06T11:31:17Z STEP escape_webkit rc=0 ESCAPE TESTS PASS: every escape failed safely
+2026-11-06T11:32:33Z STEP studio_check rc=0 STUDIO CHECK PASS
+2026-11-06T11:33:10Z STEP studio_laptop rc=0 {"case":"laptop","one_run_s":5.741,"benchmark_s":29.068,"heading":"Experiment · Global planning · 100 of 100 runs"}
+2026-11-06T11:34:54Z STEP studio_phone rc=0 {"case":"phone","one_run_s":5.887,"benchmark_s":95.911,"heading":"Experiment · Global planning · 100 of 100 runs"}
+2026-11-06T11:37:00Z STEP fps_r2_desktop rc=0 {"label":"r2 desktop","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)","restarts":0,"play_coverage":{"windows":119,"ticking":118},"frame_interval_ms":{"median":16.59999
+2026-11-06T11:39:08Z STEP fps_r2_phone rc=0 {"label":"r2 phone","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)","restarts":0,"play_coverage":{"windows":119,"ticking":118},"frame_interval_ms":{"median":16.6000000
+2026-11-06T11:39:08Z R2.9 re-check done; tree still 7eaa7b6 dirty=0; AC 1

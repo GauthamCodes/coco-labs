@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+from pathlib import Path
+
 from ament_copyright.main import main
 import pytest
 
@@ -19,5 +22,9 @@ import pytest
 @pytest.mark.copyright
 @pytest.mark.linter
 def test_copyright():
-    rc = main(argv=['.', 'test'])
+    # R2: coco_lab/templates holds user algorithm files, under their authors' licences
+    templates = [str(p) for p in sorted(Path(__file__).resolve().parents[1].glob(
+        'coco_lab/templates/*.py'))]
+    rc = main(argv=['--exclude', *templates, *[os.path.relpath(t) for t in templates], '--',
+                    '.', 'test'])
     assert rc == 0, 'Found errors'

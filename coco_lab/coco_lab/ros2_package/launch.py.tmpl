@@ -1,0 +1,66 @@
+"""
+coco_user_{{NAME}}.launch.py: COCO's Nav2 bring-up with your {{KIND}} in place of Nav2's.
+
+    ros2 launch coco_user_{{NAME}} coco_user_{{NAME}}.launch.py \
+        map:=<the level's map.yaml> params_file:=<the level's nav2_params.yaml>
+
+Start Gazebo with COCO (gazebo_models full_world_robo.launch.py) and the arbiter
+(custom_teleop arbiter.launch.py initial_mode:=nav) first, as for COCO's own Nav2.
+
+  planner     Nav2's behaviour tree asks {{ACTION}} (this package) for paths, not
+              planner_server (which still runs, unused)
+  controller  the tree asks {{ACTION}} (this package) to follow them, not controller_server;
+              commands go into Nav2's velocity smoother, collision monitor, cmd_vel_relay and
+              COCO's cmd_vel_arbiter, never straight to the wheels
+  localiser   Nav2 runs without AMCL; this package publishes map -> odom and /amcl_pose;
+              map_server runs here
+"""
+import os
+
+from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
+from nav2_common.launch import RewrittenYaml
+
+KIND = '{{KIND}}'
+
+
+def generate_launch_description():
+    share = get_package_share_directory('coco_user_{{NAME}}')
+    gz = get_package_share_directory('gazebo_models')
+    bringup = get_package_share_directory('nav2_bringup')
+    sim = LaunchConfiguration('use_sim_time')
+    rewrites = {}
+    if KIND in ('planner', 'controller'):
+        rewrites['default_nav_to_pose_bt_xml'] = os.path.join(share, 'bt', 'navigate_to_pose.xml')
+    params = RewrittenYaml(source_file=LaunchConfiguration('params_file'),
+                           param_rewrites=rewrites, convert_types=True)
+    node = Node(package='coco_user_{{NAME}}', executable='coco_user_{{NAME}}', output='screen',
+                parameters=[{'use_sim_time': sim,
+                             'initial_pose': [float(v) for v in
+                                              os.environ.get('COCO_INITIAL_POSE', '0,0,0').split(',')]}])
+    args = [DeclareLaunchArgument('use_sim_time', default_value='true'),
+            DeclareLaunchArgument('map'), DeclareLaunchArgument('params_file')]
+    if KIND != 'localiser':
+        nav = IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(os.path.join(gz, 'launch', 'nav.launch.py')),
+            launch_arguments={'use_sim_time': sim, 'arbiter': 'true',
+                              'map': LaunchConfiguration('map'), 'params_file': params}.items())
+        return LaunchDescription(args + [nav, node])
+    # the localiser: Nav2 without AMCL (map_server here), the same relay into the arbiter
+    nav = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(os.path.join(bringup, 'launch', 'navigation_launch.py')),
+        launch_arguments={'use_sim_time': sim, 'params_file': params, 'autostart': 'true'}.items())
+    map_server = Node(package='nav2_map_server', executable='map_server', name='map_server',
+                      output='screen', parameters=[params, {'use_sim_time': sim,
+                                                            'yaml_filename': LaunchConfiguration('map')}])
+    lifecycle = Node(package='nav2_lifecycle_manager', executable='lifecycle_manager',
+                     name='lifecycle_manager_localization', output='screen',
+                     parameters=[{'use_sim_time': sim, 'autostart': True,
+                                  'node_names': ['map_server']}])
+    relay = Node(package='custom_teleop', executable='cmd_vel_relay', name='cmd_vel_relay',
+                 output='screen', parameters=[{'use_sim_time': sim, 'output_topic': '/cmd_vel_gated'}])
+    return LaunchDescription(args + [map_server, lifecycle, nav, relay, node])

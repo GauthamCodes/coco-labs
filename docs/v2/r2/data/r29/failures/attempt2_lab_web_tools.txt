@@ -1,0 +1,3 @@
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/gautham/coco_labs_ws/worktrees/r2/leaderboard/submissions/depot-nav-100/theta_star'
+FAILED lab_web/tools/test_r2_leaderboard.py::test_the_committed_submission_is_well_formed
+1 failed, 262 passed in 313.41s (0:05:13)

@@ -1,0 +1,48 @@
+# R2.6 · the leaderboard's trusted writer (ADR 0012).
+#
+# Runs after "Leaderboard verify" finishes, from the DEFAULT branch's copy of this file, with a
+# token that can comment and label. It never checks out or runs the pull request's code: it reads
+# the verifier's artifact as DATA (tools/r2/leaderboard_writer.py validates every field), checks
+# again through the API that the PR changes only its submission directories, then comments the
+# report and labels the PR `verified` or `not-verified`. For a PR from this repository it also
+# commits the verified result to the PR's branch (leaderboard/results/<suite>/<name>/result.json);
+# for a fork the result is in the comment and a maintainer adds it when merging.
+name: Leaderboard results
+
+on:
+  workflow_run:
+    workflows: [ 'Leaderboard verify' ]
+    types: [ completed ]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  actions: read
+
+jobs:
+  write:
+    if: github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: The default branch (the writer's own code; no pull-request code)
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: The verifier's artifact (data)
+        uses: actions/download-artifact@v4
+        with:
+          name: leaderboard-verification
+          path: verification
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Validate, comment, label (and commit the result for a same-repository PR)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          HEAD_REPO: ${{ github.event.workflow_run.head_repository.full_name }}
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+        run: python3 tools/r2/leaderboard_writer.py verification

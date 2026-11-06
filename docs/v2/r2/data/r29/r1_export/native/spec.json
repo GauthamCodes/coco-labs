@@ -1,0 +1,76 @@
+{
+ "algorithms": [
+  {
+   "id": "builtin",
+   "label": "Waypoint driver",
+   "name": "builtin",
+   "params": {
+    "planner": "astar",
+    "window.cost_scaling_factor": 65,
+    "window.inflation_radius": 0.5,
+    "window.robot_radius": 0.25
+   }
+  },
+  {
+   "id": "rpp",
+   "label": "Regulated Pure Pursuit",
+   "name": "rpp",
+   "params": {
+    "planner": "astar",
+    "rpp.approach_velocity_scaling_dist": 0.6,
+    "rpp.desired_linear_vel": 0.3,
+    "rpp.lookahead_dist": 0.6,
+    "rpp.max_allowed_time_to_collision_up_to_carrot": 1,
+    "rpp.max_angular_accel": 3.2,
+    "rpp.min_approach_linear_velocity": 0.05,
+    "rpp.regulated_linear_scaling_min_radius": 0.9,
+    "rpp.regulated_linear_scaling_min_speed": 0.25,
+    "rpp.rotate_to_heading_angular_vel": 1,
+    "rpp.rotate_to_heading_min_angle": 0.785,
+    "window.cost_scaling_factor": 65,
+    "window.inflation_radius": 0.5,
+    "window.robot_radius": 0.25
+   }
+  }
+ ],
+ "family": "control",
+ "limits": {
+  "max_ticks": 400
+ },
+ "metrics": [
+  "time_s",
+  "ticks",
+  "path_length_m",
+  "min_clearance_m",
+  "mean_clearance_m",
+  "heading_change_rad",
+  "contacts",
+  "expansions",
+  "plans",
+  "final_goal_distance_m",
+  "compute_ms"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "kind": "sampled",
+  "min_clearance_m": 0.35,
+  "min_separation_m": 2.5,
+  "n": 2,
+  "require_reachable": true,
+  "seed": 3,
+  "stratify": "none",
+  "zones": null
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 3,
+ "sweep": {
+  "params": []
+ },
+ "title": "Export check: two controllers",
+ "world": "coco_arena_v1",
+ "world_sha256": "87f5d88f40af39bc98bc0b9cfac5dd2ce1686370fcca7aec8d171ff0181290f0"
+}

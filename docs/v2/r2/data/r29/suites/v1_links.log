@@ -1,0 +1,57 @@
+ok   (bare) -> 
+ok   ?view=plan -> ?view=compare&tour=find-a-path
+ok   ?view=localise -> ?view=compare&tour=where-it-is
+ok   ?view=map -> ?view=compare&tour=build-a-map
+ok   ?view=search -> ?view=compare&tour=where-to-look
+ok   ?view=move -> ?view=compare&tour=avoid-things
+ok   ?view=plan&perf -> ?view=compare&tour=find-a-path
+ok   ?view=live -> ?view=live
+ok   ?view=exhibit -> v1/?view=exhibit
+ok   ?view=localise&loc=exhibits -> v1/?view=localise&loc=exhibits
+ok   ?view=map&scene=map_loop -> v1/?view=map&scene=map_loop
+ok   ?view=move&move=replan -> v1/?view=move&move=replan
+ok   ?view=search&search=matrix -> v1/?view=search&search=matrix
+ok   ?bundle=astar_open -> ?view=arena&replay=astar_open
+ok   ?bundle=astar_open&v=1 -> ?view=arena&replay=astar_open
+ok   ?view=plan&bundle=astar_open&v=1 -> ?view=arena&replay=astar_open
+ok   ?bundle=lab1c_astar -> ?view=arena&replay=lab1c_astar
+ok   ?v=1 -> v1/?v=1
+ok   ?v=1&bundle=astar_open&s=4.1.4.1.9 -> v1/?v=1&bundle=astar_open&s=4.1.4.1.9
+ok   ?v=1&bundle=astar_open&e=vQEB -> v1/?v=1&bundle=astar_open&e=vQEB
+ok   ?bundle=not_a_bundle -> v1/?bundle=not_a_bundle
+ok   v1/ -> v1/
+ok   ?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlszLDAsMSwyXSwiciI6IjRjM2E4YmI5YTRhNWQwMmUwZWY5ZjAxMDMxODBjMmNkODdlMTU1YjNjYWQ2YzFkM2JjMmVhN2M3ZjYzMzJlODQifQ -> ?view=play&c=search-the-bays&l=ends&s=eyJ2IjoxLCJoIjoiNDNiMTI5MDkzYWNlYzg5N2M5NGYxMjY5ZTRhNDNkMWMxZjYwZGY5MTBiYjNhNzFkYWRmNDFiODFkNGUxOTdmNSIsImkiOlszLDAsMSwyXSwiciI6IjRjM2E4YmI5YTRhNWQwMmUwZWY5ZjAxMDMxODBjMmNkODdlMTU1YjNjYWQ2YzFkM2JjMmVhN2M3ZjYzMzJlODQifQ
+ok   ?view=play&c=race-the-ghost&l=warm-up&z=ndXNbuQgDAfwd_E5ExkbMORVVj1AILujjqZVO9vLaN696mEVZ6VBIbmin_nwH3KHL5jMAH9gAsqeap6tl7hIkJSLhMIL5xBdkliqybww5pBicuS8Qx8oL6lyCaWigQHOMP26w-08v8KEA7yerwUmuNVLfXuHAS7na00fMOHIDjcfD5Cuv_9efkbNaMxj-FfGNMv4p46aTp46brq4cRhXZ1vOmtZ20a5lXLOMdjhGNb1vOrd1K5Mm8xsmyoWmk-e7xdGHtUxslgkb57wKRTNcNm6gVcdrTAdkDZt52p4vacf7nXHK2f1Ox9C4jnUq5vczVkx6jlMUDD0N_P_2qDrxYBCoK0GqMURHZ-QeqHpDtgcq5w42h_zBS0JyKEUUOjKr1xk7nJqPca874ajTxqYH6p8KdUCjtsj7Q3PaNJ9tF1RvK7suqd4eXnPzeXt7h8fLAB8wAXvMJlVxi8mpoMSCYlAEfU3o7Lx49s7GhaPNC2Ms80yZKCP5iMFGeHwD -> ?view=play&c=race-the-ghost&l=warm-up&z=ndXNbuQgDAfwd_E5ExkbMORVVj1AILujjqZVO9vLaN696mEVZ6VBIbmin_nwH3KHL5jMAH9gAsqeap6tl7hIkJSLhMIL5xBdkliqybww5pBicuS8Qx8oL6lyCaWigQHOMP26w-08v8KEA7yerwUmuNVLfXuHAS7na00fMOHIDjcfD5Cuv_9efkbNaMxj-FfGNMv4p46aTp46brq4cRhXZ1vOmtZ20a5lXLOMdjhGNb1vOrd1K5Mm8xsmyoWmk-e7xdGHtUxslgkb57wKRTNcNm6gVcdrTAdkDZt52p4vacf7nXHK2f1Ox9C4jnUq5vczVkx6jlMUDD0N_P_2qDrxYBCoK0GqMURHZ-QeqHpDtgcq5w42h_zBS0JyKEUUOjKr1xk7nJqPca874ajTxqYH6p8KdUCjtsj7Q3PaNJ9tF1RvK7suqd4eXnPzeXt7h8fLAB8wAXvMJlVxi8mpoMSCYlAEfU3o7Lx49s7GhaPNC2Ms80yZKCP5iMFGeHwD
+ok   ?view=play -> ?view=play
+ok   ?view=arena -> ?view=arena
+ok   ?view=arena&world=v2&camera=follow -> ?view=arena&world=v2&camera=follow
+ok   ?view=arena&lens=localise&level=inspect&camera=topdown -> ?view=arena&lens=localise&level=inspect&camera=topdown
+ok   ?view=compare -> ?view=compare
+ok   ?view=about -> ?view=about
+ok   ?view=learn&mission=find-a-path -> ?view=compare&tour=find-a-path
+ok   ?view=compare&tour=find-a-path -> ?view=compare&tour=find-a-path
+ok   ?view=play&c=beat-the-planner&l=two-fields -> ?view=play&c=beat-the-planner&l=two-fields
+ok   ?view=play&c=case-file-detective&l=told-wrong -> ?view=play&c=case-file-detective&l=told-wrong
+ok   ?view=play&c=map-the-arena&l=forty-metres -> ?view=play&c=map-the-arena&l=forty-metres
+ok   ?view=play&c=next-node&l=wall -> ?view=play&c=next-node&l=wall
+ok   ?view=play&c=race-the-ghost&l=warm-up -> ?view=play&c=race-the-ghost&l=warm-up
+ok   ?view=play&c=search-the-bays&l=no-idea -> ?view=play&c=search-the-bays&l=no-idea
+ok   ?view=arena&play=map-the-arena&pl=forty-metres&lens=map&cfg=map.poses%3Dodometry&cfg=map.algorithm%3Doccupancy -> ?view=arena&play=map-the-arena&pl=forty-metres&lens=map&cfg=map.poses%3Dodometry&cfg=map.algorithm%3Doccupancy
+ok   ?view=arena&play=case-file-detective&pl=told-wrong&casefile=lab5_mislocalised_mppi_1&lens=localise -> ?view=arena&play=case-file-detective&pl=told-wrong&casefile=lab5_mislocalised_mppi_1&lens=localise
+ok   ?view=arena&play=race-the-ghost&pl=warm-up&camera=follow&seed=1&lens=plan -> ?view=arena&play=race-the-ghost&pl=warm-up&camera=follow&seed=1&lens=plan
+ok   ?view=casefiles -> ?view=research
+ok   ?view=research -> ?view=research
+ok   ?view=casefiles&case=lab1-runs -> ?view=research&case=lab1-runs
+ok   ?view=casefiles&case=lab1-runs&file=lab1_run_astar -> ?view=research&case=lab1-runs&file=lab1_run_astar
+ok   ?view=arena&casefile=lab1_run_astar -> ?view=arena&casefile=lab1_run_astar
+ok   ?view=arena&run=eyJ2IjoxLCJzIjoiNjljODQzYTEzNzZmZTc1YmU4N2MwNzhlNTQ2NDFjOTY0MDdjNmRjMWMzNWE1ZTFmMmM4NjNiNDcyMjVlMjY5ZiIsImUiOjcsInQiOjI1LCJjIjoiOGE5MWQwOTJhZmQ4NzlhYWE4NjBmY2Q4MzEyNzkzOGFiZTZiY2QyZTk2OTBhMTdlMjFkYjMxM2U4MzI0YWNkZCIsImkiOltbMCwxLDAuMywwLjJdLFszLDJdLFs2LDAsMi41LDJdLFs5LDhdLFsxMiw3XSxbMTYsMywiZ3JlZWR5Il0sWzIwLDJdXX0 -> ?view=arena&run=eyJ2IjoxLCJzIjoiNjljODQzYTEzNzZmZTc1YmU4N2MwNzhlNTQ2NDFjOTY0MDdjNmRjMWMzNWE1ZTFmMmM4NjNiNDcyMjVlMjY5ZiIsImUiOjcsInQiOjI1LCJjIjoiOGE5MWQwOTJhZmQ4NzlhYWE4NjBmY2Q4MzEyNzkzOGFiZTZiY2QyZTk2OTBhMTdlMjFkYjMxM2U4MzI0YWNkZCIsImkiOltbMCwxLDAuMywwLjJdLFszLDJdLFs2LDAsMi41LDJdLFs5LDhdLFsxMiw3XSxbMTYsMywiZ3JlZWR5Il0sWzIwLDJdXX0
+ok   ?view=arena&run=eyJ2IjoxLCJzIjoiOTIwMTY3YjE5YTRmOTQyODg0MWM4NjcyNWQxNjM4MGFlNDhjN2M2OWZlMjA5ODk4ODFhMmI1Y2Q3YmY4NzY2ZiIsImUiOjcsInQiOjI1LCJjIjoiNTAzMmU3MzI3YTUzMzI0YTA4NjQzMDNmMWI4NzYwNDQ0Yjc0YTM1Yjk5MmE1ZDJiODI0NmU1YTk3ZWVlMzRjNyIsImkiOltbMCwxLDAuMywwLjJdLFszLDJdLFs2LDAsMi41LDJdLFs5LDhdLFsxMiw3XSxbMTYsMywiZ3JlZWR5Il0sWzIwLDJdXX0&world=v2 -> ?view=arena&run=eyJ2IjoxLCJzIjoiOTIwMTY3YjE5YTRmOTQyODg0MWM4NjcyNWQxNjM4MGFlNDhjN2M2OWZlMjA5ODk4ODFhMmI1Y2Q3YmY4NzY2ZiIsImUiOjcsInQiOjI1LCJjIjoiNTAzMmU3MzI3YTUzMzI0YTA4NjQzMDNmMWI4NzYwNDQ0Yjc0YTM1Yjk5MmE1ZDJiODI0NmU1YTk3ZWVlMzRjNyIsImkiOltbMCwxLDAuMywwLjJdLFszLDJdLFs2LDAsMi41LDJdLFs5LDhdLFsxMiw3XSxbMTYsMywiZ3JlZWR5Il0sWzIwLDJdXX0&world=v2
+ok   ?view=arena&run=eyJ2IjoxLCJodiI6MiwicyI6IjY5Yzg0M2ExMzc2ZmU3NWJlODdjMDc4ZTU0NjQxYzk2NDA3YzZkYzFjMzVhNWUxZjJjODYzYjQ3MjI1ZTI2OWYiLCJlIjo3LCJ0IjoyNSwiYyI6IjcyMmFlNWRhYjJhYzhkODFhYThhYTJjN2EwMTBlODU2NGJmNTg4ZWQ1NjE1YWJmY2I5YzIzNjk2MjhjYzY5M2IiLCJpIjpbWzAsMSwwLjMsMC4yXSxbMywyXSxbNiwwLDIuNSwyXSxbOSw4XSxbMTIsN10sWzE2LDMsImdyZWVkeSJdLFsyMCwyXV19 -> ?view=arena&run=eyJ2IjoxLCJodiI6MiwicyI6IjY5Yzg0M2ExMzc2ZmU3NWJlODdjMDc4ZTU0NjQxYzk2NDA3YzZkYzFjMzVhNWUxZjJjODYzYjQ3MjI1ZTI2OWYiLCJlIjo3LCJ0IjoyNSwiYyI6IjcyMmFlNWRhYjJhYzhkODFhYThhYTJjN2EwMTBlODU2NGJmNTg4ZWQ1NjE1YWJmY2I5YzIzNjk2MjhjYzY5M2IiLCJpIjpbWzAsMSwwLjMsMC4yXSxbMywyXSxbNiwwLDIuNSwyXSxbOSw4XSxbMTIsN10sWzE2LDMsImdyZWVkeSJdLFsyMCwyXV19
+ok   ?view=arena&run=eyJ2IjoxLCJodiI6MiwicyI6IjkyMDE2N2IxOWE0Zjk0Mjg4NDFjODY3MjVkMTYzODBhZTQ4YzdjNjlmZTIwOTg5ODgxYTJiNWNkN2JmODc2NmYiLCJlIjo3LCJ0IjoyNSwiYyI6IjRiNGU1NDBjZDRlYjEzYmQ1MDkzYTFjMWM1ZmRjOWZkNmNlM2ExNjkwY2JkOWFhYWZlYmVhYWQ1MjYwZmMwYWUiLCJpIjpbWzAsMSwwLjMsMC4yXSxbMywyXSxbNiwwLDIuNSwyXSxbOSw4XSxbMTIsN10sWzE2LDMsImdyZWVkeSJdLFsyMCwyXV19&world=v2 -> ?view=arena&run=eyJ2IjoxLCJodiI6MiwicyI6IjkyMDE2N2IxOWE0Zjk0Mjg4NDFjODY3MjVkMTYzODBhZTQ4YzdjNjlmZTIwOTg5ODgxYTJiNWNkN2JmODc2NmYiLCJlIjo3LCJ0IjoyNSwiYyI6IjRiNGU1NDBjZDRlYjEzYmQ1MDkzYTFjMWM1ZmRjOWZkNmNlM2ExNjkwY2JkOWFhYWZlYmVhYWQ1MjYwZmMwYWUiLCJpIjpbWzAsMSwwLjMsMC4yXSxbMywyXSxbNiwwLDIuNSwyXSxbOSw4XSxbMTIsN10sWzE2LDMsImdyZWVkeSJdLFsyMCwyXV19&world=v2
+ok   v1/ [view-lab] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=localise [view-localise] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=map [view-map] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=search [view-search] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=move [view-move] real_robot=0 live="Live Stack (simulated)"
+ok   v1/?view=live [view-live] real_robot=0 live="Live Stack (simulated)"
+{"ok":true,"forms":50,"archive_views":6,"failed":0}

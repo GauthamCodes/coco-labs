@@ -18,13 +18,15 @@
 export const PREF_PREFIXES = ['coco.play.best.v1.', 'coco.prefs.v1.'] as const;
 
 /** The named preferences (one key each). */
-export type PrefName = 'keys' | 'camera' | 'quality' | 'sound' | 'motion' | 'bars' | 'tank' | 'theme' | 'walls' | 'phone120' | 'haptics' | 'tutorial' | 'ghost' | 'view' | 'displays' | 'planner';
+export type PrefName = 'keys' | 'camera' | 'quality' | 'sound' | 'motion' | 'bars' | 'tank' | 'theme' | 'walls' | 'phone120' | 'haptics' | 'tutorial' | 'ghost' | 'view' | 'displays' | 'planner' | 'studio';
 const KEY: Record<PrefName, string> = {
   phone120: 'coco.prefs.v1.phone120', haptics: 'coco.prefs.v1.haptics', tutorial: 'coco.prefs.v1.tutorial', ghost: 'coco.prefs.v1.ghost',
   // G2.2: GAME or SIM, and SIM's displays (RViz's names) and their options
   view: 'coco.prefs.v1.view', displays: 'coco.prefs.v1.displays',
   // owner request 2026-10-24: the planner Play's AUTO uses (src/game/planners.ts)
   planner: 'coco.prefs.v1.planner',
+  // R2.3: the Algorithm Studio's local draft (code, template, scenario)
+  studio: 'coco.prefs.v1.studio',
   theme: 'coco.prefs.v1.theme',
   walls: 'coco.prefs.v1.walls',
   keys: 'coco.prefs.v1.keys', camera: 'coco.prefs.v1.camera', quality: 'coco.prefs.v1.quality',

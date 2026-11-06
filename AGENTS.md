@@ -149,6 +149,12 @@ node tools/check_dist.mjs
   dirty/unpushed initial M5.0 checkout, or deletion of protected evidence/URL.
 - At close push branch and open PR into main with gh pr create; never merge it.
   Public release/announcement are Gautham's after final launch gates pass.
+- 2026-11-06 standing authority (README §9 supersedes the two lines above for
+  Claude Code's own PRs): merge under the gate (exact-head CI green, local suites,
+  no stop condition, self-review on the PR), merge commits only, keep branches;
+  deploy via `gh workflow run lab.yml --ref main -f confirmation=DEPLOY` + live
+  smoke test; broken site -> revert PR. Releases, tags, branch deletion, robot
+  repo, publishing outside GitHub, licences and money stay Gautham's.
 
 ## End-of-session report
 

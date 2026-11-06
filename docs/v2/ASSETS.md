@@ -70,6 +70,7 @@ Source of full checksums: [DESIGN_ASSETS.json](DESIGN_ASSETS.json). Packages are
 | Chakra Petch | game display (G1) | 5.3.0 | OFL-1.1 | https://fontsource.org/fonts/chakra-petch |
 | Inter | game UI (G1) | 5.3.0 | OFL-1.1 | https://fontsource.org/fonts/inter |
 | Lucide | icon set | 1.57.0 | ISC (retained Feather MIT notice included) | https://lucide.dev |
+| CodeMirror 6 | Algorithm Studio editor (R2) | @codemirror/autocomplete@6.20.4, @codemirror/commands@6.11.1, @codemirror/lang-python@6.2.1, @codemirror/language@6.13.1, @codemirror/lint@6.9.7, @codemirror/state@6.7.6, @codemirror/streamparser@6.0.0, @codemirror/view@6.43.15, @lezer/common@1.5.5, @lezer/highlight@1.2.5, @lezer/lr@1.4.12, @lezer/python@1.1.19, crelt@1.0.7, style-mod@4.1.4, w3c-keyname@2.2.8 | MIT | https://codemirror.net |
 | COCO Lab app icon | installable app | 1.0 | Apache-2.0 | lab_web/public/icons/coco.svg (original repository artwork) |
 
 **Outfit**
@@ -104,6 +105,11 @@ Source of full checksums: [DESIGN_ASSETS.json](DESIGN_ASSETS.json). Packages are
 
 - complete distributed Lucide ESM tree: `cada8419f7862ec60fd537da6fa600c1ad293e10c3a851644394d5b5cfb706b3`
 - Licence checksum: `b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57`
+
+**CodeMirror 6**
+
+- complete distributed CodeMirror 6 JavaScript (15 packages): `8f33675331d09aff3ceb17e3b1f14bc976a97487d6fd63564f133185e6463dca`
+- Licence checksum: `581985132923024b66d23a0e2414c27b28e4c64fa8d0409f4a4c16260e96a978`
 
 **COCO Lab app icon**
 

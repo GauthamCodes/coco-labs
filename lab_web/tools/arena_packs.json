@@ -1,5 +1,5 @@
 {
- "about": "M2.2: coco_lab split into Python packs the Arena worker loads lazily. 'core' (coco_lab.zip, every module not listed below) is what the Plan lens needs and loads at boot; a lens's pack loads the first time the lens is selected. build_arena_assets.mjs refuses a module in two packs, and an import that crosses packs except into core or into a pack listed in 'requires'. G1: 'game' (Fetch Rush rules and Grasp Assist) loads before a game session boots; R1: 'experiments' (coco_lab.experiments, its families, scenarios, statistics and the benchmark suites) loads before a Workbench worker runs;",
+ "about": "M2.2: coco_lab split into Python packs the Arena worker loads lazily. 'core' (coco_lab.zip, every module not listed below) is what the Plan lens needs and loads at boot; a lens's pack loads the first time the lens is selected. build_arena_assets.mjs refuses a module in two packs, and an import that crosses packs except into core or into a pack listed in 'requires'. G1: 'game' (Fetch Rush rules and Grasp Assist) loads before a game session boots; R1: 'experiments' (coco_lab.experiments, its families, scenarios, statistics and the benchmark suites) loads before a Workbench worker runs; R2: 'user' (coco_lab.exp_user and the built-ins behind the algorithm API) loads with the experiments; coco_lab.api and coco_lab.user_code are core.",
  "packs": {
   "localise": {
    "requires": [],
@@ -74,24 +74,47 @@
    "modules": [
     "games.py",
     "grasp_assist.py",
-    "levels/coco_depot_v1.fetch_rush.json", "levels/coco_depot_v1.fetch_rush.r3.json",
-    "levels/coco_depot_v1.fetch_rush.r4.json", "levels/coco_depot_v1.fetch_rush.r5.json",
-    "levels/coco_depot_colours_v1.fetch_colour.json", "levels/coco_depot_colours_v1.fetch_colour.r2.json"
+    "levels/coco_depot_v1.fetch_rush.json",
+    "levels/coco_depot_v1.fetch_rush.r3.json",
+    "levels/coco_depot_v1.fetch_rush.r4.json",
+    "levels/coco_depot_v1.fetch_rush.r5.json",
+    "levels/coco_depot_colours_v1.fetch_colour.json",
+    "levels/coco_depot_colours_v1.fetch_colour.r2.json"
    ]
   },
   "experiments": {
    "requires": [
     "localise",
     "move",
-    "game"
+    "game",
+    "user"
    ],
    "modules": [
     "experiments.py",
     "exp_families.py",
     "exp_scenarios.py",
     "exp_stats.py",
-    "benchmarks/arena-nav-50.v0.json", "benchmarks/depot-nav-100.v0.json",
-    "benchmarks/depot-narrow-30.v0.json", "benchmarks/colour-fetch-4.v0.json"
+    "benchmarks/arena-nav-50.v0.json",
+    "benchmarks/depot-nav-100.v0.json",
+    "benchmarks/depot-narrow-30.v0.json",
+    "benchmarks/colour-fetch-4.v0.json"
+   ]
+  },
+  "user": {
+   "requires": [
+    "localise",
+    "move"
+   ],
+   "modules": [
+    "exp_user.py",
+    "api_builtins.py",
+    "ros2_export.py",
+    "ros2_package/README.md.tmpl",
+    "ros2_package/launch.py.tmpl",
+    "ros2_package/navigate_to_pose.xml.tmpl",
+    "ros2_package/node.py.tmpl",
+    "ros2_package/package.xml.tmpl",
+    "ros2_package/setup.py.tmpl"
    ]
   }
  }

@@ -198,7 +198,8 @@ function main() {
   mkdirSync(arenaDir, { recursive: true });
   const src = join(repo, 'coco_lab', 'coco_lab');
   // R1: a pack may also carry the benchmark suites (benchmarks/*.json, in the experiments pack)
-  const all = walk(src).filter((f) => (f.endsWith('.py') || f.endsWith('link_limits.json') || /\/(levels|benchmarks)\/[^/]+\.json$/.test(f)))
+  // R2: templates/ holds algorithm files (user code the Studio loads as text), never modules
+  const all = walk(src).filter((f) => !f.includes('/templates/') && (f.endsWith('.py') || f.endsWith('link_limits.json') || /\/(levels|benchmarks)\/[^/]+\.json$/.test(f) || /\/ros2_package\/[^/]+\.tmpl$/.test(f)))
     .map((f) => [`coco_lab/${relative(src, f)}`, readFileSync(f)]);
   // M2.2: split into packs (tools/arena_packs.json); core = everything not in a lens pack
   const { packs: packDefs } = JSON.parse(readFileSync(join(here, 'arena_packs.json'), 'utf-8'));
@@ -252,6 +253,25 @@ function main() {
   }
   const datasets = join(repo, 'docs', 'v2', 'r1', 'datasets', 'index.json');
   if (existsSync(datasets)) copyFileSync(datasets, join(r1Dir, 'datasets.json'));
+
+  // R2.6: the leaderboard (leaderboard/index.json, ranked by tools/r2/leaderboard.py index) and
+  // each submission's file, which the Studio opens (shown, never run without consent)
+  const r2Dir = join(out, 'r2');
+  rmSync(r2Dir, { recursive: true, force: true });
+  mkdirSync(join(r2Dir, 'submissions'), { recursive: true });
+  const board = join(repo, 'leaderboard', 'index.json');
+  if (existsSync(board)) copyFileSync(board, join(r2Dir, 'leaderboard.json'));
+  // R2.7: MODEL vs STACK for the files that ran as ROS 2 nodes (docs/v2/r2/data/r27/stack.json)
+  const stackFile = join(repo, 'docs', 'v2', 'r2', 'data', 'r27', 'stack.json');
+  if (existsSync(stackFile)) copyFileSync(stackFile, join(r2Dir, 'stack.json'));
+  const subs = join(repo, 'leaderboard', 'submissions');
+  if (existsSync(subs)) {
+    for (const f of walk(subs).filter((p) => p.endsWith('/algorithm.py')).sort()) {
+      const [suite, name] = relative(subs, f).split('/');
+      mkdirSync(join(r2Dir, 'submissions', suite), { recursive: true });
+      copyFileSync(f, join(r2Dir, 'submissions', suite, `${name}.py`));
+    }
+  }
 
   // pyodide, self-hosted
   const pyDir = join(out, 'pyodide');

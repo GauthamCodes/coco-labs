@@ -51,8 +51,13 @@ describe('privacy', () => {
     // src/play/best.ts, local storage only, every access inside try/catch
     // M4.5: the preferences module is the one place that touches storage (Play's bests go through it)
     const PREFS = 'prefs.ts';
+    // R2.2: the user-code sandbox's lockdown names these APIs only to DELETE them from its worker
+    // (ADR 0012); its names are checked to be exactly that list, nothing else in it may match
+    const LOCKDOWN = join('studio', 'lockdown.ts');
     for (const { p, text } of src) {
-      const allowed = relative(join(LAB_WEB, 'src'), p) === PREFS ? text.replace(/window\.localStorage/g, '') : text;
+      const rel = relative(join(LAB_WEB, 'src'), p);
+      const allowed = rel === PREFS ? text.replace(/window\.localStorage/g, '')
+        : rel === LOCKDOWN ? text.replace(/'(indexedDB|localStorage|sessionStorage|sendBeacon)'/g, '') : text;
       expect(/document\.cookie|localStorage|sessionStorage|indexedDB|sendBeacon|navigator\.userAgent/.test(allowed), p)
         .toBe(false);
     }

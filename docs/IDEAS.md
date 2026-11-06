@@ -28,3 +28,7 @@ One line per idea (README §0, change control), in the form:
 2026-10-11 | A Canvas 2D top-down view for a browser with no WebGL 2 | README §5.3 asks for a fallback to the top-down renderer "without WebGL 2", but that renderer is Three.js on WebGL 2 too (three r163+ has no WebGL 1 path), so today such a browser gets the panels and a notice, no view (M4.4) | after M4, if a measured share of visitors lacks WebGL 2
 
 2026-10-17 | Mapping comparisons in the shared Compare panes | Retain the existing mapping tour and Inspect lens while bringing occupancy/EKF-SLAM/FastSLAM/pose-graph comparisons together | M7
+2026-11-05 | Leaderboard verifier: run the user function in a child process that returns only its outputs (the parent measures) | a guard-escaping submission could falsify its own numbers inside the container (ADR 0012) | R3
+2026-11-05 | Run the browser's user-code worker inside a sandboxed iframe with a stricter CSP (connect-src self only) | removes the residual reach to the pinned CDN and loopback after a double escape (ADR 0012) | R3
+2026-11-05 | Experiment links (?exp=/#expz=) that carry algorithm files | share a whole benchmark of your own code as one link (R2.5 shares the file + one scenario) | R3
+2026-11-06 | A 3D view of user-code runs in the Algorithm Studio (today 2D GAME/SIM) | learners may follow a run more easily in 3D; adds no measurement (R2 question 6, decided "not now") | R4

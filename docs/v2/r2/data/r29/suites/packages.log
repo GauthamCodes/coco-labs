@@ -1,0 +1,64 @@
+[tests] interpreter: /home/gautham/coco_lab_r2_ws/test_venv/bin/python (3.12.3 pytest 7.4.4 hypothesis 6.98.15 networkx 2.8.8)
+[tests] workspace:   /home/gautham/coco_lab_r2_ws   ROS_DOMAIN_ID=78
+--- Testing coco_config ---
+........................................................................ [ 77%]
+.....................                                                    [100%]
+93 passed in 0.43s
+--- Testing coco_sim ---
+........................................................................ [ 89%]
+...................................                                      [100%]
+323 passed in 1.96s
+--- Testing coco_mission ---
+........................................................................ [ 97%]
+...........                                                              [100%]
+371 passed in 9.37s
+--- Testing coco_web ---
+........................................................................ [ 91%]
+.......................................................................  [100%]
+863 passed, 12 warnings in 21.40s
+--- Testing gazebo_models ---
+........................................................................ [ 93%]
+...............                                                          [100%]
+231 passed in 12.41s
+--- Testing coco_rl ---
+........................................................................ [ 86%]
+...................................                                      [100%]
+251 passed in 8.02s
+--- Testing coco_perception ---
+........................................................................ [ 51%]
+...................................................................      [100%]
+139 passed, 12 warnings in 1.58s
+--- Testing coco_moveit_config ---
+............                                                             [100%]
+12 passed in 0.50s
+--- Testing custom_teleop ---
+........................................................................ [ 96%]
+...                                                                      [100%]
+75 passed, 12 warnings in 1.40s
+--- Testing coco_lab ---
+........................................................................ [ 99%]
+............                                                             [100%]
+1308 passed in 1894.29s (0:31:34)
+--- Testing coco_lab_ros ---
+........................................................................ [ 87%]
+.....................                                                    [100%]
+165 passed, 15 warnings in 22.35s
+--- Testing coco_schemas ---
+........................................................................ [ 89%]
+.........................                                                [100%]
+241 passed, 3 warnings in 6.49s
+==================================================
+coco_config          ok   93 passed in 0.43s
+coco_sim             ok   323 passed in 1.96s
+coco_mission         ok   371 passed in 9.37s
+coco_web             ok   863 passed, 12 warnings in 21.40s
+gazebo_models        ok   231 passed in 12.41s
+coco_rl              ok   251 passed in 8.02s
+coco_perception      ok   139 passed, 12 warnings in 1.58s
+coco_moveit_config   ok   12 passed in 0.50s
+custom_teleop        ok   75 passed, 12 warnings in 1.40s
+coco_lab             ok   1308 passed in 1894.29s (0:31:34)
+coco_lab_ros         ok   165 passed, 15 warnings in 22.35s
+coco_schemas         ok   241 passed, 3 warnings in 6.49s
+==================================================
+[tests] all 12 packages passed

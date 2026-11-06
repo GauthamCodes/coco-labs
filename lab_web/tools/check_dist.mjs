@@ -52,6 +52,12 @@ const NOT_FETCHED = [
   // M1.6: three.js 0.186.0 keeps a citation of a graphics paper (JCGT) in a
   // shader-chunk string; it is text, never requested.
   /^https:\/\/jcgt\.org\/published\/0007\/04\/01\/$/,
+  // R1.6: the Datasets tab's "Open in Colab" hyperlink, built from the repository's URL (the
+  // minified template text); followed by a visitor, never requested by the page
+  /^https:\/\/colab\.research\.google\.com\/github\/\$\{/,
+  // R2.2: the user-code worker's lockdown probe proves a dynamic import() of a remote module is
+  // blocked (the CSP refuses it); .invalid never resolves (RFC 2606)
+  /^https:\/\/example\.invalid\/x\.mjs$/,
 ];
 
 // Local licence texts contain credit URLs; they never trigger a network request.
@@ -119,7 +125,10 @@ for (const f of files) {
       // the configured remote session's probe origin, named in the CSP
       (remoteHttps !== null && f.endsWith('index.html') && url.replace(/;$/, '') === remoteHttps) ||
       // a local stack's /healthz origin, named in the CSP (checked above)
-      (f.endsWith('index.html') && localHttp.includes(url.replace(/;$/, '')));
+      (f.endsWith('index.html') && localHttp.includes(url.replace(/;$/, ''))) ||
+      // R1.6: the Datasets tab's hyperlinks to each dataset's committed files; followed by a
+      // visitor, never requested by the page (only in that one generated file)
+      (f.endsWith(join('generated', 'r1', 'datasets.json')) && /^https:\/\/github\.com\/GauthamCodes\/coco-labs\/blob\/main\/[\w./-]+$/.test(url));
     const key = `${relative(dist, f)}: ${url}`;
     found.set(key, ok);
     if (!ok) failures.push(`external URL ${key}`);

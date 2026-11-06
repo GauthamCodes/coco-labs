@@ -1,0 +1,5 @@
+# G2 suites 2026-11-04T17:06:36Z, tree 4894c76 + uncommitted
+# machine: power-saver, AC 1, NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, Node v24.21.0, Python 3.12.3
+STEP venv_install rc=0 
+STEP coco_lab_venv rc=1 1 failed, 1191 passed, 2 deselected in 4293.73s (1:11:33)
+STEP coco_lab_gz rc=2 1204 deselected, 3 errors in 6.50s

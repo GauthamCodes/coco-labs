@@ -1,0 +1,52 @@
+{
+ "start": [
+  23.0,
+  6.0,
+  2.214297435588181
+ ],
+ "game": "fetch_colour",
+ "colour": "blue",
+ "rules": 2,
+ "region": "start_pad",
+ "orders": [
+  [
+   "rod_blue",
+   "dispatch_drop"
+  ]
+ ],
+ "ghost_m": [
+  8.445584412271572
+ ],
+ "reference_time_s": 58.800000000000004,
+ "goals": [
+  {
+   "id": "order1_rod_blue_pregrasp",
+   "label": "order 1: to rod_blue",
+   "pose": [
+    22.184,
+    7.557,
+    1.9635
+   ]
+  },
+  {
+   "id": "order1_dispatch_drop",
+   "label": "order 1: to dispatch_drop",
+   "pose": [
+    23.0,
+    1.4,
+    0.0
+   ],
+   "route_end": [
+    23.05,
+    1.35
+   ]
+  }
+ ],
+ "level": "coco_depot_colours_v1",
+ "frame": "map",
+ "world_to_map": [
+  0.0,
+  0.0
+ ],
+ "made_by": "tools/m6/m6f8_goals.py colour"
+}

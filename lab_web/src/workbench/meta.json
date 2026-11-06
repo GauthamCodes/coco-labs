@@ -75,6 +75,7 @@
   "mcl_augmented": "MCL + augmented injection",
   "mppi": "MPPI",
   "rpp": "Regulated Pure Pursuit",
+  "user": "Your algorithm",
   "weighted_astar": "Weighted A*"
  },
  "limits": {
@@ -1064,6 +1065,9 @@
    "no_path",
    "start_blocked",
    "goal_blocked",
+   "collision",
+   "invalid_output",
+   "budget_exceeded",
    "error"
   ]
  },

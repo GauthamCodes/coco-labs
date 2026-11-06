@@ -1,0 +1,120 @@
+{
+ "entries": {
+  "31ba4f6601c2c460ba08a4b6d73b81230dbf1f9b1b16c816d895e147e6bed836": {
+   "label": "astar_starter as the Nav2 planner (ComputePathToPose) on 20 depot-nav-100 scenarios, 3 Gazebo sessions",
+   "rows": [
+    {
+     "gap": "\u2014",
+     "metric": "plans found",
+     "model": "20/20",
+     "stack": "60/60"
+    },
+    {
+     "gap": "0.232 m paired median (n=60)",
+     "metric": "path length, median (m)",
+     "model": "31.490",
+     "stack": "30.061"
+    },
+    {
+     "gap": "\u2014",
+     "metric": "vs stock Nav2 (Smac 2D), same scenario and session",
+     "model": "\u2014",
+     "stack": "0.551 m median (n=42)"
+    },
+    {
+     "gap": "not compared (devices differ)",
+     "metric": "planning time, median (wall s, this laptop, balanced profile)",
+     "model": "\u2014",
+     "stack": "1.252"
+    },
+    {
+     "gap": "stock Nav2 planner: 3/5",
+     "metric": "driven to the goal (NavigateToPose, Nav2's stock RPP controller, 5 Depot goals)",
+     "model": "\u2014",
+     "stack": "4/5"
+    }
+   ],
+   "source": "MODEL: coco_lab, the planning family on the same scenarios (0.1 m Depot map). STACK: the exported package in Gazebo Harmonic + Nav2 Jazzy on its live 0.05 m global costmap (simulation; no physical robot). docs/v2/r2/data/r27/README.md"
+  },
+  "5a1f225d9c97ecb8b440e40bfc4e456736bed0fc47b376349d8e909de63abdb2": {
+   "label": "the pure-pursuit starter as the Nav2 controller (FollowPath, through cmd_vel_arbiter) on the four colour rounds, 5 runs each",
+   "rows": [
+    {
+     "gap": "\u2014",
+     "metric": "rounds completed",
+     "model": "\u2014",
+     "stack": "red 5/5, green 5/5, blue 5/5, yellow 5/5"
+    },
+    {
+     "gap": "\u2014",
+     "metric": "legs reached",
+     "model": "8/8",
+     "stack": "40/40"
+    },
+    {
+     "gap": "0.145 s paired median (n=8 legs)",
+     "metric": "time per leg, median (sim s)",
+     "model": "19.400",
+     "stack": "19.240"
+    }
+   ],
+   "source": "MODEL: coco_lab, the control family on the same legs (Arena A* plans, the model's kinematics). STACK: Gazebo + Nav2 with Nav2's own planner, the controller exported as a ROS 2 package; legs counted by NavigateToPose. docs/v2/r2/data/r27/README.md"
+  },
+  "650c80cc456656d5aeaf863289793d76d1cf471c15a72fa656a39b5c3943cdf9": {
+   "label": "theta_star as the Nav2 planner (ComputePathToPose) on 20 depot-nav-100 scenarios, 3 Gazebo sessions",
+   "rows": [
+    {
+     "gap": "\u2014",
+     "metric": "plans found",
+     "model": "20/20",
+     "stack": "57/60"
+    },
+    {
+     "gap": "-0.086 m paired median (n=57)",
+     "metric": "path length, median (m)",
+     "model": "30.359",
+     "stack": "28.495"
+    },
+    {
+     "gap": "\u2014",
+     "metric": "vs stock Nav2 (Smac 2D), same scenario and session",
+     "model": "\u2014",
+     "stack": "-0.742 m median (n=39)"
+    },
+    {
+     "gap": "not compared (devices differ)",
+     "metric": "planning time, median (wall s, this laptop, balanced profile)",
+     "model": "\u2014",
+     "stack": "14.938"
+    },
+    {
+     "gap": "stock Nav2 planner: 3/5",
+     "metric": "driven to the goal (NavigateToPose, Nav2's stock RPP controller, 5 Depot goals)",
+     "model": "\u2014",
+     "stack": "0/5"
+    }
+   ],
+   "source": "MODEL: coco_lab, the planning family on the same scenarios (0.1 m Depot map). STACK: the exported package in Gazebo Harmonic + Nav2 Jazzy on its live 0.05 m global costmap (simulation; no physical robot). docs/v2/r2/data/r27/README.md"
+  },
+  "de1102c91ffd098650b3226e136b7658af768f906f46c1430cd3e11f1095d375": {
+   "label": "the particle-filter starter in place of AMCL (map -> odom, /amcl_pose), one red round",
+   "rows": [
+    {
+     "gap": "\u2014",
+     "metric": "legs reached",
+     "model": "2/2",
+     "stack": "2/2"
+    },
+    {
+     "gap": "STACK error: /amcl_pose (yours) against Gazebo's ground truth",
+     "metric": "pose error at each leg end (m)",
+     "model": "0.097, 0.110",
+     "stack": "0.063, 0.258"
+    }
+   ],
+   "source": "A smoke run, not a rate. docs/v2/r2/data/r27/README.md"
+  }
+ },
+ "evidence": "MODEL beside STACK",
+ "schema": "coco.r2.stack.v1"
+}

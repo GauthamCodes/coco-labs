@@ -51,6 +51,12 @@ export const MISSION_EXPERIMENTS: Record<string, { ask: string; spec: Experiment
       limits: { max_ticks: 3000 } } },
 };
 
+/** R2.8: "Try it yourself" -- the Algorithm Studio's teaching starters beside their missions (the R4 course builds on them). */
+export const MISSION_STARTERS: Record<string, { template: string; ask: string }> = {
+  'find-a-path': { template: 'teach_heuristic', ask: 'Write A*\'s heuristic yourself, then watch how many cells it expands.' },
+  'avoid-things': { template: 'teach_tune_dwa', ask: 'Tune DWA\'s critic weights and watch its candidate trajectories change.' },
+};
+
 export function LearnPage() {
   const [missions, setMissions] = useState<Mission[] | null>(null);
   const [error, setError] = useState('');
@@ -75,6 +81,8 @@ export function LearnPage() {
         {x?.note && <p className="wb-muted">{x.note}</p>}
         <a href={`${BASE}?view=learn&mission=${m.id}`}>Take the tour</a>
         {x && <a href={experimentLink(x.spec, site)} data-testid={`learn-experiment-${m.id}`}>Run the experiment</a>}
+        {MISSION_STARTERS[m.id] && <p className="wb-try"><b>Try it yourself:</b> {MISSION_STARTERS[m.id].ask}{' '}
+          <a href={`${BASE}?view=workbench&tab=studio&template=${MISSION_STARTERS[m.id].template}`} data-testid={`learn-studio-${m.id}`}>Open it in the Algorithm Studio</a></p>}
       </article>; })}</div>
     </section>
   </main>;

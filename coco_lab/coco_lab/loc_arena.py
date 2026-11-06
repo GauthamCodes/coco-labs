@@ -42,6 +42,11 @@ from .numerics import math
 from .sketch import odom_delta, UPDATE_MIN_A, UPDATE_MIN_D, wrap
 
 FILTERS = ('off', 'mcl', 'ekf', 'both')
+#: R2: an algorithm file's ``localise()`` (coco_lab.exp_user), called every tick; not one
+#: of FILTERS, so every built-in keeps its index in the state bytes
+USER = 'user'
+#: R2: filled by coco_lab.exp_user when it loads: ``has``, ``localise_start``, ``localise_tick``
+USER_HOOKS = {}
 MCL_KEYS = {'particles': int, 'injection': str, 'alpha_slow': float,
             'alpha_fast': float, 'inject_fraction': float,
             'sigma_hit': float, 'beams': int, 'alphas': 'alphas',
@@ -85,7 +90,10 @@ class ArenaLocaliser:
     def config(self, key: str, value: str) -> None:
         """Apply ``localise.<key>=<value>``; (re)start the filters it touches."""
         if key == 'filter':
-            if value not in FILTERS:
+            if value == USER:
+                if 'has' not in USER_HOOKS or not USER_HOOKS['has'](self.arena, 'localiser'):
+                    raise ArenaError('localise.filter=user: no localiser is attached')
+            elif value not in FILTERS:
                 raise ArenaError(f'localise.filter must be one of {FILTERS}')
             self.filter = value
             self._start()
@@ -128,6 +136,10 @@ class ArenaLocaliser:
             a.emit_header('coco.localise.ekf.header.v1', {
                 'filter_id': 'ekf', 'kind': 'ekf',
                 'params': self.ekf_params.to_dict()})
+        if self.filter == USER:
+            USER_HOOKS['localise_start'](a, start, self.rng)
+            a.emit_header('coco.localise.particles.header.v1', {
+                'filter_id': 'user', 'kind': 'user', 'params': {}})
         self.anchor, self.anchor_odom = start, a.odom
         self.last_odom = None
         self._est: Dict[str, Tuple[float, float, float]] = {}
@@ -153,7 +165,7 @@ class ArenaLocaliser:
         EKF's); ``filter``: which. None before the first update.
         """
         cov = getattr(self, '_cov', {})
-        for who in ('mcl', 'ekf'):
+        for who in ('mcl', 'ekf', USER):
             if who in cov:
                 xx, yy = cov[who]
                 return {'sigma_xy': math.sqrt(max(0.0, xx + yy)),
@@ -163,10 +175,13 @@ class ArenaLocaliser:
     def belief(self) -> Optional[Tuple[float, float, float]]:
         """Return the estimate (MCL's, else the EKF's), once one has updated."""
         est = getattr(self, '_est', {})
-        return est.get('mcl') or est.get('ekf')
+        return est.get('mcl') or est.get('ekf') or est.get(USER)
 
     def on_tick(self, arena) -> None:
         """Update the filters when odometry has moved enough (or first)."""
+        if self.filter == USER:
+            self._user_tick(arena)
+            return
         if self.mcl is None and self.ekf is None:
             return
         odom = arena.odom
@@ -244,6 +259,24 @@ class ArenaLocaliser:
         arena.emit('coco.metrics.values.v1', metrics)
         self.updates += 1
 
+    def _user_tick(self, arena) -> None:
+        """R2: call the attached ``localise()``; its estimate becomes the belief."""
+        got = USER_HOOKS['localise_tick'](arena, self.rng)
+        if got is None:
+            return
+        est, cov = got
+        self._est[USER] = est
+        self._cov[USER] = cov
+        if arena.on_family is not None:
+            tick, t = arena.tick, arena.t_world
+            eb = Batch('coco.estimate.v1.EstimateBatch', estimator='user')
+            eb.add(tick, t, x=est[0], y=est[1], theta=est[2], cov_xx=cov[0], cov_xy=0.0,
+                   cov_xt=0.0, cov_yy=cov[1], cov_yt=0.0, cov_tt=0.0)
+            arena.emit('coco.estimate.pose.v1', eb)
+            mb = Batch('coco.metrics.v1.MetricBatch')
+            self._metrics(mb, tick, t, 'user', est, arena.pose)
+            arena.emit('coco.metrics.values.v1', mb)
+
     @staticmethod
     def _metrics(b, tick, t, who, est, truth):
         b.add(tick, t, name=f'err_xy.{who}', unit='m',
@@ -255,7 +288,8 @@ class ArenaLocaliser:
 
     def state_bytes(self) -> bytes:
         """Return the filters' state, quantized (docs/v2/ARENA_MODEL.md)."""
-        out = [struct.pack('<B', FILTERS.index(self.filter)),
+        fi = FILTERS.index(self.filter) if self.filter != USER else len(FILTERS)
+        out = [struct.pack('<B', fi),
                struct.pack('<4Q', *self.rng.state)]
         if self.mcl is not None:
             m = self.mcl

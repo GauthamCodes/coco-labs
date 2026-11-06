@@ -1,0 +1,23 @@
+from glob import glob
+
+from setuptools import setup
+
+PKG = 'coco_user_{{NAME}}'
+
+setup(
+    name=PKG,
+    version='0.1.0',
+    packages=[PKG],
+    data_files=[
+        ('share/ament_index/resource_index/packages', [f'resource/{PKG}']),
+        (f'share/{PKG}', ['package.xml', 'README.md']),
+        (f'share/{PKG}/launch', glob('launch/*.launch.py')),
+        (f'share/{PKG}/bt', glob('bt/*.xml')),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='{{AUTHOR}}',
+    description='{{KIND_TITLE}} "{{NAME}}" (coco_lab.api) as a ROS 2 node in COCO\'s Nav2.',
+    license='{{LICENCE}}',
+    entry_points={'console_scripts': [f'{PKG} = {PKG}.node:main']},
+)

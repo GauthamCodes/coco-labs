@@ -1,0 +1,87 @@
+{
+ "site": "http://127.0.0.1:4197/coco-labs/",
+ "case": "phone",
+ "device": "emulated Nothing Phone (1): viewport, touch, 4x CPU throttle on this laptop",
+ "gpu": "nvidia",
+ "machine": {
+  "gpu_asked": "nvidia",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P8, 58",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "90.0 % chrome-headless (gautham)",
+   "0.0 % systemd (root)",
+   "0.0 % kthreadd (root)",
+   "0.0 % pool_workqueue_release (root)",
+   "0.0 % kworker/R-rcu_g (root)",
+   "0.0 % kworker/R-rcu_p (root)"
+  ],
+  "nvidia_util": "0 %, 327 MiB",
+  "nvidia_procs": [
+   "Xorg sm 1 %",
+   "gnome-shell sm - %",
+   "xdg-desktop-por sm - %",
+   "nautilus sm - %",
+   "chrome-headless sm - %"
+  ]
+ },
+ "conditions": {
+  "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+  "at_utc": "2026-11-06T11:33:11.056Z",
+  "power_profile": "balanced",
+  "ac_power": true,
+  "battery": {
+   "status": "Charging",
+   "capacity_pct": 97
+  },
+  "cpu_governor": "powersave",
+  "load_average": {
+   "1m": 2.43,
+   "5m": 1.82,
+   "15m": 1.63
+  },
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "threads": 12,
+  "standard": true
+ },
+ "when": "2026-11-06T11:33:11.057Z",
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "page": {
+  "cores": 12,
+  "memory_gb": 16
+ },
+ "one_run": {
+  "wall_s": 5.887,
+  "status": "found ✓",
+  "validation": "Contract problems: 0\nClamped outputs (logged, never silent): 0\nDeterminism: ran twice, identical hash chains\nCalls: 1; per call 1716.70 ms mean, 1716.7 ms max (wall time on HeadlessChrome on Android, 12 cores; never a ranking metric)\nThinking events dropped past the per-call cap: 0"
+ },
+ "benchmark": {
+  "button": "Run on all 50 scenarios of arena-nav-50",
+  "wall_s": 95.911,
+  "heading": "Experiment · Global planning · 100 of 100 runs",
+  "summary": "Summary per algorithm\nAlgorithm\tN\tSuccess (Wilson 95%)\tOutcomes\tExpansions: N · median [IQR] count\n planner_astar\t50\t50/50 · 100.0% [92.9%, 100.0%]\tfound 50\t50 · 12300 [3767, 27,649]\n A*\t50\t50/50 · 100.0% [92.9%, 100.0%]\tfound 50\t50 · 12,105 [3150, 27620]"
+ },
+ "errors": [],
+ "conditions_end": {
+  "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+  "at_utc": "2026-11-06T11:34:53.970Z",
+  "power_profile": "balanced",
+  "ac_power": true,
+  "battery": {
+   "status": "Charging",
+   "capacity_pct": 97
+  },
+  "cpu_governor": "powersave",
+  "load_average": {
+   "1m": 2.01,
+   "5m": 1.87,
+   "15m": 1.67
+  },
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "threads": 12,
+  "standard": true
+ }
+}

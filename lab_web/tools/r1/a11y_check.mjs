@@ -8,14 +8,19 @@
  * The results view is audited with a small experiment finished on the page.
  *
  *   node tools/r1/a11y_check.mjs SITE OUT_DIR [--views workbench,benchmarks,datasets,learn]
+ *   (R2: also studio,leaderboard)
  */
 import { chromium } from 'playwright';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { nothingPhone1 } from '../phone/nothing-phone-1.mjs';
 
 const [site, out, ...rest] = process.argv.slice(2);
-const VIEWS = { workbench: '?view=workbench', benchmarks: '?view=workbench&tab=benchmarks', datasets: '?view=workbench&tab=datasets', learn: '?view=learn' };
-const views = (rest.includes('--views') ? rest[rest.indexOf('--views') + 1] : Object.keys(VIEWS).join(',')).split(',').map((v) => VIEWS[v]);
+const VIEWS = { workbench: '?view=workbench', benchmarks: '?view=workbench&tab=benchmarks', datasets: '?view=workbench&tab=datasets', learn: '?view=learn',
+  // R2: the Algorithm Studio and the Leaderboard (opt-in with --views; the default set is R1's)
+  studio: '?view=workbench&tab=studio', leaderboard: '?view=workbench&tab=leaderboard' };
+const R2_WAIT = { '?view=workbench&tab=studio': '[data-testid="studio"]', '?view=workbench&tab=leaderboard': '[data-testid="leaderboard"] h2' };
+const DEFAULT_VIEWS = 'workbench,benchmarks,datasets,learn';
+const views = (rest.includes('--views') ? rest[rest.indexOf('--views') + 1] : DEFAULT_VIEWS).split(',').map((v) => VIEWS[v]);
 mkdirSync(out, { recursive: true });
 const audit = () => {
   const rgb = s => { const n = s.match(/[\d.]+/g)?.map(Number) ?? [0, 0, 0, 0]; const scale = s.startsWith('color(srgb') ? 255 : 1; return [n[0] * scale, n[1] * scale, n[2] * scale, n[3] ?? 1]; }, blend = (a, b, alpha = a[3]) => [0, 1, 2].map(i => a[i] * alpha + b[i] * (1 - alpha)), lum = c => c.map(v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }).reduce((s, v, i) => s + v * [.2126, .7152, .0722][i], 0), ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
@@ -45,7 +50,7 @@ try {
         const ctx = await b.newContext({ ...opts, reducedMotion: 'reduce', serviceWorkers: 'block' });
         const p = await ctx.newPage(); p.on('pageerror', e => report.errors.push(String(e)));
         await p.goto(`${site}${view}&theme=${theme}`);
-        await p.waitForSelector(view.includes('learn') ? '[data-mission]' : view.includes('tab=') ? '.wb-section h2' : '.wb-builder', { timeout: 120000 });
+        await p.waitForSelector(R2_WAIT[view] ?? (view.includes('learn') ? '[data-mission]' : view.includes('tab=') ? '.wb-section h2' : '.wb-builder'), { timeout: 120000 });
         if (view === '?view=workbench') {
           await p.locator('.wb-text summary').click();
           await p.locator('.wb-text textarea').fill(JSON.stringify(SPEC));
