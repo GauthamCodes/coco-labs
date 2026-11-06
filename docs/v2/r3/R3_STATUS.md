@@ -35,7 +35,7 @@ Overlay for local package tests: `~/coco_lab_r3_ws` (symlink-install of this che
 | --- | --- | --- | --- |
 | depot-clutter-50 c001 | A* | found | 55.3 m |
 | depot-long-50 l001 | D* Lite | found | 48.4 m |
-| ctrl-dynamic-30 d001_yield | RPP | no_valid_control | stuck behind a yielding actor at 59.9 s |
+| ctrl-dynamic-30 d001_yield | RPP | no_valid_control | ended at 59.9 s; cause not yet examined |
 | ctrl-dynamic-30 d001_no_yield | RPP | succeeded | 1 contact |
 | ctrl-corners-30 t001 | DWA | succeeded | |
 | loc-global-20 g001 | MCL + injection | timeout (300 s) | final error 21.9 m: not localised |
