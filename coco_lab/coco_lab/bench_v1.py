@@ -65,7 +65,7 @@ SMALLER_IS_HARDER = ('min_clearance_m',)
 # -- the reference path and features ----------------------------------------------------------
 
 def reference(world, start, goal):
-    """The reference A* path's cells (None if unreachable), the costmap layers and the grid."""
+    """Return the reference A* path's cells (None if unreachable) and the costmap layers."""
     from .arena import PLANNERS
     from .costmap import InflationParams
     from .exp_families import COSTMAPS
@@ -109,7 +109,7 @@ def _seg_dist(p, a, b):
 
 
 def actor_lanes(world) -> List[tuple]:
-    """Each actor's lane as segments in map coordinates."""
+    """Return each actor's lane as segments in map coordinates."""
     dx, dy = world.spec.get('world_to_map', [0, 0])
     out = []
     for k in world.spec.get('kit', []):
@@ -120,7 +120,7 @@ def actor_lanes(world) -> List[tuple]:
 
 
 def features(world, scenario: Dict) -> Optional[Dict]:
-    """The scenario's features (None when the reference plan finds no path)."""
+    """Return what the reference plan says of the scenario; None if it finds no path."""
     cells, layers, ip = reference(world, scenario['start'], scenario['goal'])
     if cells is None:
         return None
@@ -238,7 +238,7 @@ def _kidnap_point(world, rng, s, min_m):
 
 def generate(suite_id: str, seed: Optional[int] = None, n: Optional[int] = None) -> List[Dict]:
     """
-    The suite's scenarios (with features), drawn by its own generator.
+    Return the suite's scenarios (with features), drawn by its own generator.
 
     ``seed``/``n`` default to the suite's public ones; the held-out sets (ADR 0014) pass another
     seed and their own ``n``. A carried-over suite's public scenarios are its v0 scenarios
@@ -324,76 +324,82 @@ NAV_TIER = ['path_length_m', 'min_clearance_m', 'turns']
 
 SUITES: Dict[str, Dict] = {
     # global planning
-    'arena-nav-50': dict(
-        world='coco_arena_v1', n=50, families=['planning', 'control', 'localisation'],
-        generator={'kind': 'carried', 'seed': 5001}, heldout_n=15, tier_features=NAV_TIER,
-        title='Proving Ground: 50 start/goal pairs (v0 scenarios, now tiered)'),
-    'depot-nav-100': dict(
-        world='coco_depot_v1', n=100, families=['planning', 'control', 'localisation'],
-        generator={'kind': 'carried', 'seed': 1001}, heldout_n=20,
-        tier_features=NAV_TIER + ['zones'],
-        title='Depot: 100 pairs across its six zones (v0 scenarios, now tiered)'),
-    'depot-narrow-30': dict(
-        world='coco_depot_v1', n=30, families=['planning', 'control'],
-        generator={'kind': 'carried', 'seed': 3001}, heldout_n=10,
-        tier_features=NAV_TIER + ['narrow_run_m'],
-        title='Depot: the workshop maze and the rack aisles (v0 scenarios, now tiered)'),
-    'depot-long-50': dict(
-        world='coco_depot_v1', n=50, families=['planning', 'control'], prefix='l',
-        generator={'kind': 'filtered', 'seed': 7001, 'pool': 1500, 'min_separation_m': 20.0,
-                   'rule': 'reference path >= 35 m through >= 3 zones'},
-        keep=lambda f: f['path_length_m'] >= 35.0 and f['zones'] >= 3,
-        heldout_n=15, tier_features=NAV_TIER + ['zones'],
-        title='Depot: long routes across three or more zones'),
-    'depot-clutter-50': dict(
-        world='coco_depot_clutter_v1', n=50, families=['planning', 'control'], prefix='c',
-        generator={'kind': 'filtered', 'seed': 7101, 'pool': 600, 'min_separation_m': 6.0,
-                   'rule': 'reference path passes within 0.6 m clearance for >= 1 m'},
-        keep=lambda f: f['narrow_run_m'] >= 1.0,
-        heldout_n=15, tier_features=NAV_TIER + ['narrow_run_m'],
-        title='Cluttered Depot: the Depot plus 24 kit pallets, routes that pass them'),
+    'arena-nav-50': {
+        'world': 'coco_arena_v1', 'n': 50, 'families': ['planning', 'control', 'localisation'],
+        'generator': {'kind': 'carried', 'seed': 5001}, 'heldout_n': 15,
+        'tier_features': NAV_TIER,
+        'title': 'Proving Ground: 50 start/goal pairs (v0 scenarios, now tiered)'},
+    'depot-nav-100': {
+        'world': 'coco_depot_v1', 'n': 100, 'families': ['planning', 'control', 'localisation'],
+        'generator': {'kind': 'carried', 'seed': 1001}, 'heldout_n': 20,
+        'tier_features': NAV_TIER + ['zones'],
+        'title': 'Depot: 100 pairs across its six zones (v0 scenarios, now tiered)'},
+    'depot-narrow-30': {
+        'world': 'coco_depot_v1', 'n': 30, 'families': ['planning', 'control'],
+        'generator': {'kind': 'carried', 'seed': 3001}, 'heldout_n': 10,
+        'tier_features': NAV_TIER + ['narrow_run_m'],
+        'title': 'Depot: the workshop maze and the rack aisles (v0 scenarios, now tiered)'},
+    'depot-long-50': {
+        'world': 'coco_depot_v1', 'n': 50, 'families': ['planning', 'control'], 'prefix': 'l',
+        'generator': {'kind': 'filtered', 'seed': 7001, 'pool': 1500, 'min_separation_m': 20.0,
+                      'rule': 'reference path >= 35 m through >= 3 zones'},
+        'keep': lambda f: f['path_length_m'] >= 35.0 and f['zones'] >= 3,
+        'heldout_n': 15, 'tier_features': NAV_TIER + ['zones'],
+        'title': 'Depot: long routes across three or more zones'},
+    'depot-clutter-50': {
+        'world': 'coco_depot_clutter_v1', 'n': 50, 'families': ['planning', 'control'],
+        'prefix': 'c',
+        'generator': {'kind': 'filtered', 'seed': 7101, 'pool': 600, 'min_separation_m': 6.0,
+                      'rule': 'reference path passes within 0.6 m clearance for >= 1 m'},
+        'keep': lambda f: f['narrow_run_m'] >= 1.0,
+        'heldout_n': 15, 'tier_features': NAV_TIER + ['narrow_run_m'],
+        'title': 'Cluttered Depot: the Depot plus 24 kit pallets, routes that pass them'},
     # local control
-    'ctrl-corridor-30': dict(
-        world='coco_depot_v1', n=30, families=['control'], prefix='k',
-        generator={'kind': 'filtered', 'seed': 7201, 'pool': 1500, 'min_separation_m': 4.0,
-                   'rule': '>= 4 m of the reference path with clearance < 0.6 m'},
-        keep=lambda f: f['narrow_run_m'] >= 4.0,
-        heldout_n=10, tier_features=['narrow_run_m', 'min_clearance_m', 'path_length_m'],
-        title='Control: long narrow passages'),
-    'ctrl-corners-30': dict(
-        world='coco_depot_v1', n=30, families=['control'], prefix='t',
-        generator={'kind': 'filtered', 'seed': 7301, 'pool': 1500, 'min_separation_m': 4.0,
-                   'rule': '>= 5 bends of 45 deg or more, reference path 8-30 m'},
-        keep=lambda f: f['turns'] >= 5 and 8.0 <= f['path_length_m'] <= 30.0,
-        heldout_n=10, tier_features=['turns', 'min_clearance_m', 'path_length_m'],
-        title='Control: routes with many corners'),
-    'ctrl-dynamic-30': dict(
-        world='coco_depot_v1', n=30, families=['control'], prefix='d',
-        generator={'kind': 'paired_rules', 'seed': 7401, 'pool': 1500, 'min_separation_m': 6.0,
-                   'rule': '>= 3 m of the reference path within 1.5 m of an actor lane; each '
-                           'pair run with the actors yielding (scenario rule: Fetch Rush rules '
-                           '5) and not yielding (rules 4)'},
-        keep=lambda f: f['actor_exposure_m'] >= 3.0,
-        heldout_n=10, tier_features=['actor_exposure_m', 'path_length_m', 'min_clearance_m'],
-        title='Control: moving forklifts and walkers, yielding and not (scenario rules)'),
+    'ctrl-corridor-30': {
+        'world': 'coco_depot_v1', 'n': 30, 'families': ['control'], 'prefix': 'k',
+        'generator': {'kind': 'filtered', 'seed': 7201, 'pool': 1500, 'min_separation_m': 4.0,
+                      'rule': '>= 4 m of the reference path with clearance < 0.6 m'},
+        'keep': lambda f: f['narrow_run_m'] >= 4.0,
+        'heldout_n': 10, 'tier_features': ['narrow_run_m', 'min_clearance_m', 'path_length_m'],
+        'title': 'Control: long narrow passages'},
+    'ctrl-corners-30': {
+        'world': 'coco_depot_v1', 'n': 30, 'families': ['control'], 'prefix': 't',
+        'generator': {'kind': 'filtered', 'seed': 7301, 'pool': 1500, 'min_separation_m': 4.0,
+                      'rule': '>= 5 bends of 45 deg or more, reference path 8-30 m'},
+        'keep': lambda f: f['turns'] >= 5 and 8.0 <= f['path_length_m'] <= 30.0,
+        'heldout_n': 10, 'tier_features': ['turns', 'min_clearance_m', 'path_length_m'],
+        'title': 'Control: routes with many corners'},
+    'ctrl-dynamic-30': {
+        'world': 'coco_depot_v1', 'n': 30, 'families': ['control'], 'prefix': 'd',
+        'generator': {'kind': 'paired_rules', 'seed': 7401, 'pool': 1500,
+                      'min_separation_m': 6.0,
+                      'rule': '>= 3 m of the reference path within 1.5 m of an actor lane; each '
+                              'pair run with the actors yielding (scenario rule: Fetch Rush rules '
+                              '5) and not yielding (rules 4)'},
+        'keep': lambda f: f['actor_exposure_m'] >= 3.0,
+        'heldout_n': 10,
+        'tier_features': ['actor_exposure_m', 'path_length_m', 'min_clearance_m'],
+        'title': 'Control: moving forklifts and walkers, yielding and not (scenario rules)'},
     # localisation
-    'loc-track-30': dict(
-        world='coco_depot_v1', n=30, families=['localisation'], prefix='p',
-        generator={'kind': 'localisation', 'seed': 7501, 'min_separation_m': 6.0},
-        heldout_n=10, tier_features=['path_length_m', 'turns', 'min_clearance_m'],
-        title='Localisation: tracking from a known start'),
-    'loc-global-20': dict(
-        world='coco_depot_v1', n=20, families=['localisation'], prefix='g', init='global',
-        generator={'kind': 'localisation', 'seed': 7601, 'min_separation_m': 6.0},
-        heldout_n=6, tier_features=['path_length_m', 'turns', 'min_clearance_m'],
-        algorithms=['mcl', 'mcl_augmented', 'user'],
-        title='Localisation: global, from an unknown start (MCL family; an EKF cannot)'),
-    'loc-kidnap-20': dict(
-        world='coco_depot_v1', n=20, families=['localisation'], prefix='q', kidnap_at_s=12.0,
-        generator={'kind': 'localisation', 'seed': 7701, 'min_separation_m': 6.0,
-                   'kidnap_min_m': 5.0},
-        heldout_n=6, tier_features=['kidnap_m', 'path_length_m', 'turns'],
-        title='Localisation: the kidnapped robot (carried >= 5 m at 12 s, odometry untold)'),
+    'loc-track-30': {
+        'world': 'coco_depot_v1', 'n': 30, 'families': ['localisation'], 'prefix': 'p',
+        'generator': {'kind': 'localisation', 'seed': 7501, 'min_separation_m': 6.0},
+        'heldout_n': 10, 'tier_features': ['path_length_m', 'turns', 'min_clearance_m'],
+        'title': 'Localisation: tracking from a known start'},
+    'loc-global-20': {
+        'world': 'coco_depot_v1', 'n': 20, 'families': ['localisation'], 'prefix': 'g',
+        'init': 'global',
+        'generator': {'kind': 'localisation', 'seed': 7601, 'min_separation_m': 6.0},
+        'heldout_n': 6, 'tier_features': ['path_length_m', 'turns', 'min_clearance_m'],
+        'algorithms': ['mcl', 'mcl_augmented', 'user'],
+        'title': 'Localisation: global, from an unknown start (MCL family; an EKF cannot)'},
+    'loc-kidnap-20': {
+        'world': 'coco_depot_v1', 'n': 20, 'families': ['localisation'], 'prefix': 'q',
+        'kidnap_at_s': 12.0,
+        'generator': {'kind': 'localisation', 'seed': 7701, 'min_separation_m': 6.0,
+                      'kidnap_min_m': 5.0},
+        'heldout_n': 6, 'tier_features': ['kidnap_m', 'path_length_m', 'turns'],
+        'title': 'Localisation: the kidnapped robot (carried >= 5 m at 12 s, odometry untold)'},
 }
 
 #: the full task: committed rounds only (R1 rule), so neither tiers by generator nor held-out

@@ -411,7 +411,7 @@ CONDITION_KEYS = ('actors.on', 'actors.yield', 'localise.mcl.init')
 
 
 def _conditions(scenario: Dict) -> List[str]:
-    """A v1 scenario's ``config`` (sent at tick 0 after the family's own); [] for every other."""
+    """Return a v1 scenario's ``config`` (sent at tick 0); [] for every other scenario."""
     cfg = list(scenario.get('config') or [])
     for c in cfg:
         if not isinstance(c, str) or c.partition('=')[0] not in CONDITION_KEYS:
