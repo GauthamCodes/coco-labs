@@ -10,7 +10,7 @@ Overlay for local package tests: `~/coco_lab_r3_ws` (symlink-install of this che
 | Checkpoint | State | Evidence |
 | --- | --- | --- |
 | R3.0 Start, A1 follow-up tooling | in progress | `tools/r2/ros2_bench.py` (`--snap`, `--costs`), `tools/r3/ros2_queue_a1.sh` |
-| R3.1 COCO-Bench v1 suites, tiers, datasheets | — | |
+| R3.1 COCO-Bench v1 suites, tiers, datasheets | in progress: 12 suites written (`ada432a`), datasheets generated; to do: `--check` determinism, smoke of each condition, tests, browser listing | `coco_lab/coco_lab/benchmarks/*.v1.json`, `docs/bench/v1/` |
 | R3.2 Browser-model baselines | — | |
 | R3.3 Held-out from a secret salt (ADR 0014) + hostile tests | — | |
 | R3.4 Gazebo + Nav2 baselines | — | |
@@ -26,7 +26,16 @@ Overlay for local package tests: `~/coco_lab_r3_ws` (symlink-install of this che
   AC went offline (battery discharging, 98 %): the A1 Gazebo queue was stopped before any simulator started;
   it now waits for AC + balanced before every session (`on_ac` in the queue).
 
+- 2026-11-07 (after midnight): still on battery (33 %, discharging). Work committed and pushed; a suspend
+  would stop local runs, which resume from the last commit.
+
+## Part A open items
+
+- PR #33 (leaderboard scope fix, found landing #31): CI running; merge under the gate, then merge main
+  into `leaderboard/theta-star` (PR #31), let verify + writer run, merge #31; deploy; live smoke.
+
 ## Next step
 
-Land PR #31 (verified by the sandboxed verifier and the trusted writer on main), deploy, live smoke; then
-R3.1. The A1 Gazebo queue runs as soon as AC is back.
+Finish Part A (above). Then R3.1: `python tools/r3/make_suites_v1.py --check`, the condition smoke
+(`actors`, global init, kidnap), tests for `bench_v1`, the suites listed in the browser. The A1 Gazebo queue
+(`tools/r3/ros2_queue_a1.sh`) starts by itself when AC + balanced are back.
