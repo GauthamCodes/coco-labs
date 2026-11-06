@@ -1,0 +1,77 @@
+{
+ "site": "http://127.0.0.1:4197/coco-labs/",
+ "case": "phone",
+ "device": "emulated Nothing Phone (1): viewport, touch, 4x CPU throttle on this laptop",
+ "gpu": "nvidia",
+ "machine": {
+  "gpu_asked": "nvidia",
+  "power_profile": "balanced",
+  "ac": "on AC",
+  "nvidia": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04, P8, 48",
+  "mesa": "25.2.8-0ubuntu0.24.04.2",
+  "kernel": "6.8.0-147-generic",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "top_cpu_now": [
+   "81.8 % chrome-headless (gautham)",
+   "9.1 % 2.1.311 (gautham)",
+   "9.1 % top (gautham)",
+   "0.0 % systemd (root)",
+   "0.0 % kthreadd (root)",
+   "0.0 % pool_workqueue_release (root)"
+  ],
+  "nvidia_util": "0 %, 327 MiB",
+  "nvidia_procs": [
+   "Xorg sm 0 %",
+   "gnome-shell sm - %",
+   "xdg-desktop-por sm - %",
+   "nautilus sm - %",
+   "chrome-headless sm 9 %"
+  ]
+ },
+ "conditions": {
+  "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+  "at_utc": "2026-11-06T11:01:01.033Z",
+  "power_profile": "balanced",
+  "ac_power": true,
+  "battery": {
+   "status": "Charging",
+   "capacity_pct": 78
+  },
+  "cpu_governor": "powersave",
+  "load_average": {
+   "1m": 0.43,
+   "5m": 0.95,
+   "15m": 2.75
+  },
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "threads": 12,
+  "standard": true
+ },
+ "when": "2026-11-06T11:01:01.034Z",
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)",
+ "page": {
+  "cores": 12,
+  "memory_gb": 16
+ },
+ "error": "TimeoutError: locator.waitFor: Timeout 600000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=studio-validation]') to be visible\u001b[22m\n",
+ "errors": [],
+ "conditions_end": {
+  "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+  "at_utc": "2026-11-06T11:11:02.111Z",
+  "power_profile": "balanced",
+  "ac_power": true,
+  "battery": {
+   "status": "Charging",
+   "capacity_pct": 87
+  },
+  "cpu_governor": "powersave",
+  "load_average": {
+   "1m": 0.72,
+   "5m": 0.77,
+   "15m": 1.8
+  },
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "threads": 12,
+  "standard": true
+ }
+}

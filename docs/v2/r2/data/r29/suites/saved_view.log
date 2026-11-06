@@ -1,0 +1,2 @@
+desktop ok {"beforePlay":{"view":"sim","sim":true,"world":false,"cam":"rviz"},"playing":{"view":"sim","sim":true,"world":false,"cam":"rviz"},"game":{"view":"game","sim":false,"world":true,"cam":"chase"},"simAgain":{"view":"sim","sim":true,"world":false,"cam":"rviz"}}
+phone-landscape ok {"beforePlay":{"view":"sim","sim":true,"world":false,"cam":"rviz"},"playing":{"view":"sim","sim":true,"world":false,"cam":"rviz"},"game":{"view":"game","sim":false,"world":true,"cam":"chase"},"simAgain":{"view":"sim","sim":true,"world":false,"cam":"rviz"}}
