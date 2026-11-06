@@ -52,6 +52,13 @@ worker pool and hours; budgeted in R3.2.
 - PR #31: retargeted to main; main merged in (`01b8794`, pushed); waiting for its verify + writer +
   CI runs on that head. Then merge under the gate; deploy (`gh workflow run lab.yml --ref main -f
   confirmation=DEPLOY`); live smoke (Playwright on the public URL).
+- On `01b8794` the verifier passed (run 42276302298) and the trusted writer re-committed
+  `result.json` (`06a1cc9`): R2's held-out seed hashes the PR's merge-base, which moved from
+  `5df4427` to `90c3dce` when main was merged in, so the held-out set and the result legitimately
+  changed (same-repo branch: overwritten, as PR #33 intends). The bot commit's runs needed approval
+  (`action_required`); approved through the API (runs 42277291466 verify, 42277291467 CI,
+  42277291430 Lab). On `06a1cc9` the merge-base is unchanged, so the writer should find the same
+  result and make no further commit. Merge #31 once those are green.
 - Battery reached 5 % at that point (no charger since the evening of 2026-11-06): a suspend is
   expected; resume here.
 
