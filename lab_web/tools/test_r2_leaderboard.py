@@ -73,6 +73,28 @@ def test_compare_ignores_only_the_machine(tmp_path):
     assert W.compare(tmp_path / 'a.json', tmp_path / 'b.json') == 1
 
 
+def test_scope_allows_only_the_writers_result_for_a_submitted_entry():
+    sub = [f'leaderboard/submissions/depot-nav-100/theta_star/{f}'
+           for f in ('algorithm.py', 'meta.yaml', 'summary.json')]
+    res = 'leaderboard/results/depot-nav-100/theta_star/result.json'
+    assert W.in_scope(sub) == (True, [])
+    assert W.in_scope(sub + [res]) == (True, [('depot-nav-100', 'theta_star')])
+    # a result for an entry the PR does not submit, or any other file: out of scope
+    assert not W.in_scope(sub + ['leaderboard/results/depot-nav-100/astar/result.json'])[0]
+    assert not W.in_scope(sub + ['leaderboard/index.json'])[0]
+    assert not W.in_scope(sub + ['leaderboard/results/depot-nav-100/theta_star/report.md'])[0]
+    assert not W.in_scope([res])[0]   # a result alone is no submission
+
+
+def test_stable_ignores_the_machine_and_times_only():
+    a = entry(host={'cpu': 'A'})
+    b = entry(host={'cpu': 'B'})
+    a['public']['score']['compute_ms'] = {'n': 1, 'median': 5.0}
+    assert W.stable(a) == W.stable(b)
+    b['held_out']['score']['successes'] = 19
+    assert W.stable(a) != W.stable(b)
+
+
 def test_held_out_seed_is_fixed_and_53_bit():
     s = L.held_out_seed('depot-nav-100', 'a' * 40)
     assert s == L.held_out_seed('depot-nav-100', 'a' * 40) and 0 <= s < 2 ** 53
