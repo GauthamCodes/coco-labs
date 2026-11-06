@@ -31,7 +31,7 @@ Recorded in README §9 ("Standing merge and deploy authority"), AGENTS.md (Git s
 | 2 Studio light theme contrast (92) | fixed in R2.9 (`7eaa7b6`); accessibility 24 pages 0 failures (R2.9) |
 | 3 lint in the exporter and starters | fixed in R2.7/R2.9; package run with lint 1308 passed (R2.9); re-run in this landing's suites |
 | 4 ROS 2 CI setup hardening | **done**: apt retries/timeouts + bounded (20 min) setup with two retries after `dpkg --configure -a`; job limit 90 → 100 min |
-| 5 the Theta\* submission test | **done**: skips with a reason when no submission is committed (was passing vacuously) |
+| 5 the Theta\* submission test | **done**: passes cleanly with no submission committed and is never vacuous (the layout rule is checked on a made-up submission too). A first attempt used `pytest.skip`; the Lab workflow allows **no skips** in `lab_web/tools` (so a skip cannot hide a test), and failed it (run 42250916620) — so no skip. |
 
 ## A3 · Merge and deploy
 
