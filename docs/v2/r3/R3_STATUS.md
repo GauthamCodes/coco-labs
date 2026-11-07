@@ -62,15 +62,14 @@ MCL runs took ~11 min each on one core: the localisation baselines need the work
   the family re-runs from the start). The five finished suite/family sets kept their DONE markers and were
   skipped on restart (00:55, same command, `--workers 10`); the R3.4 queue re-chained behind the baselines.
 
-## Next step (updated 2026-11-07 afternoon)
+## Next step (updated 2026-11-08 ~02:40)
 
-Part A is done (STATUS; `data/deploy1/`). R3:
-1. **R3.2 baselines** run in the background (`tools/r3/make_baselines.py --workers 10`; resumable). Done and
-   checked identical to R1's v0 references run for run: arena-nav-50 planning/control/localisation (300/200/150),
-   depot-nav-100 planning/control (600/400). Then `check_carried.py` on depot-narrow-30, commit `docs/v2/r3/bench/`,
-   `leaderboard.py builtin-bench SUITE FAMILY` for every suite/family (reference entries from the baselines).
-2. **R3.4** after the baselines: `tools/r3/ros2_queue_r34.sh`; then `tools/r3/gap.py` → R3.5 page.
-3. After R3 merges: a small PR with Theta\*'s v1 claim (`summary.json`, saved in commit `9ca4d58`) so the
-   verifier/writer re-verify it on main (local re-verification on v1: VERIFIED, public 100/100, held-out 20/20).
-4. Set the repository secret `COCO_HELDOUT_SECRET` (+ commitment) when the R3 workflow reaches main.
-5. Paper results macros, R3.9 close.
+1. **R3.2** baselines running (restarted after the reboot). Committed and checked: arena-nav-50 ×3,
+   depot-nav-100 planning/control (`f398617`). As each further set finishes: `check_carried.py` for
+   depot-narrow-30, commit the set, `builtin_bench` for it (reference entries; done for the first five, `8c580ba`),
+   `docs/paper/scripts/tables.py` (the baseline tables list unfinished sets as not yet run).
+2. **R3.4** starts by itself after the baselines (`tmp/chain_r34.sh` → `tools/r3/ros2_queue_r34.sh`); then `gap.py` →
+   `docs/v2/r3/data/r35/gap.json` and the Model vs ROS 2 tab.
+3. Leaderboard page with the new control/localisation boards: check rendering in the close's screenshots.
+4. After R3 merges: Theta\*'s v1 claim PR (`9ca4d58`); the repository secret `COCO_HELDOUT_SECRET` + commitment.
+5. R3.9 close.
