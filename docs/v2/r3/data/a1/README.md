@@ -43,9 +43,28 @@ inscribed band in the other.
 
 ## 2. Stock Nav2 and Nav2 with start and goal snapped (answer 3)
 
-Pending: three planning sessions (`plan_snap1..3`), each request to stock Nav2 sent twice — as given
-and with start and goal moved to the nearest free cell of the live global costmap (raw cost < 253,
-breadth first, the rule COCO Lab and the exported node use) — beside the A\* starter.
+Three planning sessions (`plan_snap1..3`), the 20 Depot scenarios of R2.7
+(`docs/v2/r2/data/r27/depot20_plan.json`), each request to stock Nav2 (Smac 2D, `GridBased`) sent twice
+— **as given** (stock, unchanged) and **snapped** (start and goal moved to the nearest free cell of the
+live global costmap: raw cost < 253, breadth first, the rule COCO Lab and the exported node use) —
+beside the A\* starter. [`snap_summary.json`](snap_summary.json) (`tools/r3/a1_snap.py`).
+
+| request | plans found | failures |
+| --- | --- | --- |
+| stock Nav2, as given | **42/60** | 12 × 205 START_OCCUPIED, 6 × 208 NO_VALID_PATH — the same six scenarios every session (s036, s041, s046, s051, s061, s086), as in R2.7 |
+| stock Nav2, **snapped** | **60/60** | — |
+| A\* starter (user node; snaps itself) | **60/60** | — |
+
+- Snapping moves start or goal by more than one cell **only on those six scenarios**: starts 0.78–2.78 m
+  (s036, s041, s046, s051), goals 0.88 m (s061) and **7.38 m (s086)**; every other request moves
+  0.035 m (to its cell's centre).
+- Snapped, Nav2's paths are a little shorter than the A\* starter's: paired median −0.610 m (n = 60).
+- **So R2.7's 60 vs 42 is the snapping convention, not a better planner** — as R2 said; with the same
+  convention stock Nav2 finds every path.
+- **UNRESOLVED:** s086's goal lies 7.38 m from the nearest free cell of the live global costmap, although
+  the model drew it with more than 0.35 m clearance. Something in Gazebo's costmap (LiDAR marks, an
+  object or the actors) covers it; not diagnosed here. Snapping it to a point 7.4 m away is a different
+  task, so the snapped s086 row should not be read as "the same request planned".
 
 ## Notes
 
