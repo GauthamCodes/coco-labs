@@ -259,7 +259,8 @@ function main() {
   const r2Dir = join(out, 'r2');
   rmSync(r2Dir, { recursive: true, force: true });
   mkdirSync(join(r2Dir, 'submissions'), { recursive: true });
-  const board = join(repo, 'leaderboard', 'index.json');
+  // R3 Part A: generated from leaderboard/results/ by build_catalog.py (which runs first)
+  const board = join(out, 'leaderboard_index.json');
   if (existsSync(board)) copyFileSync(board, join(r2Dir, 'leaderboard.json'));
   // R2.7: MODEL vs STACK for the files that ran as ROS 2 nodes (docs/v2/r2/data/r27/stack.json)
   const stackFile = join(repo, 'docs', 'v2', 'r2', 'data', 'r27', 'stack.json');
