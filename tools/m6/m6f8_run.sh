@@ -188,6 +188,12 @@ TOPICS=(/model/coco/odometry /amcl_pose /odometry/filtered /diff_drive_controlle
         /diff_drive_controller/cmd_vel /cmd_vel_gated /cmd_vel_nav /cmd_vel_smoothed /cmd_vel
         /cmd_vel_arbiter/status /collision_monitor_state /initialpose
         /navigate_to_pose/_action/status /follow_path/_action/status)
+# R3.4 (additive; unset = exactly as before): BAG_SLIM=1 records only the truth, AMCL's pose and
+# the action/arbiter status (no scan, tf or plans: a long baseline batch fits the disk)
+if [ "${BAG_SLIM:-0}" = 1 ]; then
+    TOPICS=(/model/coco/odometry /amcl_pose /cmd_vel_arbiter/status /collision_monitor_state
+            /navigate_to_pose/_action/status /follow_path/_action/status)
+fi
 setsid ros2 bag record --use-sim-time --include-hidden-topics -s mcap \
     -o "$OUT/bag" "${TOPICS[@]}" > "$OUT/bag.log" 2>&1 &
 BAG_PGID=$!

@@ -12,8 +12,8 @@ R="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 LEVEL="$1"; PKG="$2"; SC="$3"; OUT="$4"; shift 4
 export COCO_WS="${COCO_WS:-$HOME/coco_lab_r2_ws}"
 export LEVEL
-export GEN="$HOME/coco_lab_runs/g2/gen_d5/$LEVEL"
-export WORLD="$HOME/coco_lab_runs/g2/d5/$LEVEL/gazebo_models/worlds/$LEVEL.sdf"
+export GEN="${GEN:-$HOME/coco_lab_runs/g2/gen_d5/$LEVEL}"   # R3.4: overridable (unset = as before)
+export WORLD="${WORLD:-$HOME/coco_lab_runs/g2/d5/$LEVEL/gazebo_models/worlds/$LEVEL.sdf}"
 export NAV_DRIVER="$R/tools/r2/ros2_bench.py"
 if [ "$PKG" != stock ]; then
   export NAV_LAUNCH="$PKG $PKG.launch.py"

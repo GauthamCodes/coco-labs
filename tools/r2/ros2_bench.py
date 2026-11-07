@@ -181,7 +181,8 @@ def plan_row(n, client, server, sc, wait_s=120.0):
         return dict(row, status='NO-SERVER')
     g = ComputePathToPose.Goal()
     g.use_start = True
-    g.planner_id = 'GridBased'
+    # R3.4: a server may name Nav2's planner as ACTION@PLANNER_ID (default GridBased, as R2.7)
+    g.planner_id = server.partition('@')[2] or 'GridBased'
     for ps, (x, y, th) in ((g.start, sc['start']), (g.goal, sc['goal'])):
         ps.header.frame_id = 'map'
         ps.header.stamp = n.get_clock().now().to_msg()
@@ -256,7 +257,8 @@ def main():
                                                       'driven_m', 'sim_s', 'truth_to_goal_m')}),
                   flush=True)
         if o.mode == 'plan':
-            clients = {s: ActionClient(n, ComputePathToPose, s) for s in doc['servers']}
+            clients = {s: ActionClient(n, ComputePathToPose, s.partition('@')[0])
+                       for s in doc['servers']}
             for sc in doc['scenarios']:
                 for s, c in clients.items():
                     row = plan_row(n, c, s, sc, o.plan_wait)
