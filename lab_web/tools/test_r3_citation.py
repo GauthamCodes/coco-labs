@@ -12,7 +12,9 @@ def test_cite_text_matches_citation_cff():
     ts = (REPO / 'lab_web' / 'src' / 'shell' / 'citation.ts').read_text()
     title = re.search(r"CITATION_TITLE =\s*'([^']+)'", ts).group(1)
     author = re.search(r"CITATION_AUTHOR = '([^']+)'", ts).group(1)
-    url = re.search(r"CITATION_URL = '([^']+)'", ts).group(1)
+    cfg = (REPO / 'lab_web' / 'site.config.ts').read_text()
+    url = re.search(r"REPO_BLOB_URL = '([^']+)'", cfg).group(1).removesuffix('/blob/main/')
+    assert 'CITATION_URL = REPO_BLOB_URL' in ts
     assert title == cff['title']
     assert author == cff['authors'][0]['given-names']
     assert url == cff['repository-code']

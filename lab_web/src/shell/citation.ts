@@ -4,16 +4,20 @@
  * R3.7: how to cite COCO Lab / COCO-Bench (the "Cite" section of About). Kept in step with the
  * repository's CITATION.cff by lab_web/tools/test_r3_citation.py.
  */
+import { DEFAULT_BASE, REPO_BLOB_URL } from '../../site.config';
+
 export const CITATION_TITLE =
   'COCO Lab and COCO-Bench: reproducible, browser-based benchmarking of mobile-robot navigation, validated against ROS 2 and Gazebo';
 export const CITATION_AUTHOR = 'Gautham';
-export const CITATION_URL = 'https://github.com/GauthamCodes/coco-labs';
+/** the repository, from site.config (the repository name is defined once) */
+export const CITATION_URL = REPO_BLOB_URL.replace(/\/blob\/main\/$/, '');
+export const SITE_URL = `https://gauthamcodes.github.io${DEFAULT_BASE}`;
 
 export const BIBTEX = `@software{coco_lab,
   author = {${CITATION_AUTHOR}},
   title  = {${CITATION_TITLE}},
   url    = {${CITATION_URL}},
-  note   = {Live at https://gauthamcodes.github.io/coco-labs/},
+  note   = {Live at ${SITE_URL}},
   license = {Apache-2.0}
 }`;
 

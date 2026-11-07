@@ -271,6 +271,19 @@ function main() {
   if (boardBytes) writeFileSync(join(r2Dir, 'leaderboard.json'), boardBytes);
   rmSync(board, { force: true });
   // R2.7: MODEL vs STACK for the files that ran as ROS 2 nodes (docs/v2/r2/data/r27/stack.json)
+  // R3.5: Model vs ROS 2 (docs/v2/r3/data/r35/gap.json, tools/r3/gap.py) and the paired runs it offers
+  const r3Dir = join(out, 'r3');
+  rmSync(r3Dir, { recursive: true, force: true });
+  const gapFile = join(repo, 'docs', 'v2', 'r3', 'data', 'r35', 'gap.json');
+  if (existsSync(gapFile)) {
+    mkdirSync(r3Dir, { recursive: true });
+    copyFileSync(gapFile, join(r3Dir, 'gap.json'));
+    for (const d of JSON.parse(readFileSync(gapFile, 'utf-8')).downloads ?? []) {
+      if (!/^r3\/paired\/[\w.-]+$/.test(d.path)) throw new Error(`gap.json: download path ${d.path} is not r3/paired/<file>`);
+      mkdirSync(join(out, 'r3', 'paired'), { recursive: true });
+      copyFileSync(join(repo, 'docs', 'v2', 'r3', 'data', 'r35', 'paired', d.path.slice('r3/paired/'.length)), join(out, d.path));
+    }
+  }
   const stackFile = join(repo, 'docs', 'v2', 'r2', 'data', 'r27', 'stack.json');
   if (existsSync(stackFile)) copyFileSync(stackFile, join(r2Dir, 'stack.json'));
   const subs = join(repo, 'leaderboard', 'submissions');

@@ -58,10 +58,9 @@ const NOT_FETCHED = [
   // R2.2: the user-code worker's lockdown probe proves a dynamic import() of a remote module is
   // blocked (the CSP refuses it); .invalid never resolves (RFC 2606)
   /^https:\/\/example\.invalid\/x\.mjs$/,
-  // R3.7: About's "Cite" BibTeX names the project's own repository and site (citation text in a
-  // <pre>, copied by a visitor, never requested); the minified template leaves "}," after them
-  /^https:\/\/github\.com\/GauthamCodes\/coco-labs\},?$/,
-  /^https:\/\/gauthamcodes\.github\.io\/coco-labs\/\},?$/,
+  // R3.7: About's "Cite" BibTeX names the project's own site (citation text in a <pre>, copied by
+  // a visitor, never requested); its origin, joined to the base path at run time
+  /^https:\/\/gauthamcodes\.github\.io(\$\{\w+\})?$/,
 ];
 
 // Local licence texts contain credit URLs; they never trigger a network request.
