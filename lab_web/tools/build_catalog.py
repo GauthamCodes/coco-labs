@@ -495,6 +495,17 @@ def build_wheel(dest_dir):
     return os.path.join(dest_dir, wheels[0])
 
 
+def leaderboard_index(path):
+    """Write the leaderboard's ranked index (tools/r2/leaderboard.py ``index``) to ``path``."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        'coco_leaderboard', os.path.join(common.REPO, 'tools', 'r2', 'leaderboard.py'))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    from pathlib import Path
+    mod.index(Path(path))
+
+
 def build(out=OUT, wheel='build', with_benchmark=True, with_localise=True,
           with_map=True, with_search=True, with_move=True):
     """Build the site data under ``out``; return the catalog."""
@@ -621,6 +632,10 @@ def build(out=OUT, wheel='build', with_benchmark=True, with_localise=True,
                             'gaps': fidelity.gaps()}, indent=1, sort_keys=True) + '\n')
     with open(os.path.join(out, 'exhibit.json'), 'w') as f:
         f.write(json.dumps(exhibit_data(), indent=1, sort_keys=True) + '\n')
+    # R3 Part A: the leaderboard's ranked index, generated from leaderboard/results/ at every
+    # build (it was a committed copy that a verified submission's result made stale);
+    # build_arena_assets.mjs copies it to generated/r2/leaderboard.json
+    leaderboard_index(os.path.join(out, 'leaderboard_index.json'))
     with open(os.path.join(out, 'catalog.json'), 'w') as f:
         f.write(json.dumps(catalog, indent=1, sort_keys=True) + '\n')
     return catalog
