@@ -11,7 +11,7 @@ import type { RunRecord } from './pool';
 import { worldId, type ExperimentSpec } from './spec';
 
 const BASE = import.meta.env.BASE_URL;
-const COMPARE_WORLD: Record<string, string> = { coco_depot_v1: 'depot', coco_depot_colours_v1: 'depot_colours', coco_arena_v2: 'v2', coco_arena_v1: 'v1' };
+const COMPARE_WORLD: Record<string, string> = { coco_depot_v1: 'depot', coco_depot_colours_v1: 'depot_colours', coco_depot_clutter_v1: 'depot_clutter', coco_arena_v2: 'v2', coco_arena_v1: 'v1' };
 
 const b64 = (s: string) => btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 

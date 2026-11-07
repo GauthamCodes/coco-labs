@@ -26,7 +26,8 @@ OUT = REPO / 'lab_web' / 'src' / 'workbench' / 'meta.json'
 WORLD_TITLES = {'coco_arena_v1': 'Proving Ground (the COCO arena)',
                 'coco_arena_v2': 'Proving Ground with terrain',
                 'coco_depot_v1': 'COCO Depot',
-                'coco_depot_colours_v1': 'COCO Depot with colour rods'}
+                'coco_depot_colours_v1': 'COCO Depot with colour rods',
+                'coco_depot_clutter_v1': 'COCO Depot, cluttered (COCO-Bench v1)'}
 
 
 def _finite(v):

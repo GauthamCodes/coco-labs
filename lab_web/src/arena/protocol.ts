@@ -27,7 +27,7 @@ export interface BootRequest {
 }
 
 /** The World Specs the site ships (tools/build_arena_assets.mjs); v1 is every default. */
-export const SPEC_FILES = { v1: 'coco_arena_v1.json', v2: 'coco_arena_v2.json', depot: 'coco_depot_v1.json', depot_colours: 'coco_depot_colours_v1.json' } as const;
+export const SPEC_FILES = { v1: 'coco_arena_v1.json', v2: 'coco_arena_v2.json', depot: 'coco_depot_v1.json', depot_colours: 'coco_depot_colours_v1.json', depot_clutter: 'coco_depot_clutter_v1.json' } as const;
 export type SpecFile = (typeof SPEC_FILES)[keyof typeof SPEC_FILES];
 /** `?world=v2` picks World Spec v2; anything else (or nothing) is v1. */
 export const specFileFor = (world: string | null): SpecFile => (world === 'v2' ? SPEC_FILES.v2 : SPEC_FILES.v1);

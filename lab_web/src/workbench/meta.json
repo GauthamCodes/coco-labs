@@ -1252,6 +1252,57 @@
    "spec_version": "coco.world_spec.v3",
    "title": "COCO Depot with colour rods",
    "width": 490
+  },
+  {
+   "height": 330,
+   "id": "coco_depot_clutter_v1",
+   "origin": [
+    -0.5,
+    -0.5
+   ],
+   "regions": {
+    "zone_forklift_lanes": [
+     14.5,
+     47.9,
+     10.0,
+     13.5
+    ],
+    "zone_high_bay": [
+     15.7,
+     31.7,
+     14.899999999999999,
+     28.9
+    ],
+    "zone_loading_dock": [
+     35.550000000000004,
+     47.85,
+     0.14999999999999947,
+     9.45
+    ],
+    "zone_mezzanine": [
+     34.1,
+     47.699999999999996,
+     24.0,
+     31.700000000000003
+    ],
+    "zone_office": [
+     0.0,
+     14.0,
+     20.0,
+     32.0
+    ],
+    "zone_workshop": [
+     0.0,
+     14.0,
+     0.0,
+     18.0
+    ]
+   },
+   "resolution": 0.1,
+   "sha256": "d5fd39ebe6c90d84b95f6c2413c4128df28dce17c481a3748f03edd63eb7d578",
+   "spec_version": "coco.world_spec.v3",
+   "title": "COCO Depot, cluttered (COCO-Bench v1)",
+   "width": 490
   }
  ]
 }

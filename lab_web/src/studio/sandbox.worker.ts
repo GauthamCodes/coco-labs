@@ -29,7 +29,7 @@ interface PackInfo { file: string; sha256: string; requires: string[]; modules: 
 interface Manifest { coco_lab_zip: { sha256: string }; packs?: Record<string, PackInfo> }
 
 /** The worlds an experiment can name (coco_lab.experiments.WORLDS), as shipped. */
-const WORLDS = ['coco_arena_v1', 'coco_arena_v2', 'coco_depot_v1', 'coco_depot_colours_v1'];
+const WORLDS = ['coco_arena_v1', 'coco_arena_v2', 'coco_depot_v1', 'coco_depot_colours_v1', 'coco_depot_clutter_v1'];
 /** The memory the algorithm may grow to on top of what the boot used. */
 const HEADROOM = 1024 * 2 ** 20;
 
