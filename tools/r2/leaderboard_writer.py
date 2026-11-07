@@ -25,8 +25,11 @@ SCHEMA = 'coco.leaderboard.entry.v1'
 NAME = re.compile(r'^[a-z0-9][a-z0-9_-]{1,39}$')
 SUITE = re.compile(r'^[a-z0-9][a-z0-9-]{1,39}$')
 SHA = re.compile(r'^[0-9a-f]{40}$')
-FILES = re.compile(r'^leaderboard/submissions/[a-z0-9-]+/[a-z0-9][a-z0-9_-]{1,39}/'
+FILES = re.compile(r'^leaderboard/submissions/([a-z0-9-]+)/([a-z0-9][a-z0-9_-]{1,39})/'
                    r'(algorithm\.py|meta\.yaml|summary\.json)$')
+#: R3 Part A: this writer's own commit to a same-repository PR (the verified result); allowed
+#: only for a submission the PR makes, and only while it equals the verified result
+RESULT = re.compile(r'^leaderboard/results/([a-z0-9-]+)/([a-z0-9][a-z0-9_-]{1,39})/result\.json$')
 MAX_BYTES = 8 * 1024 * 1024
 #: what may differ between two verifications of the same entry (the machine)
 VOLATILE = ('host',)
@@ -207,12 +210,22 @@ def write(verification: Path) -> int:
         raise Invalid(f'PR #{pr} does not have {head} as a commit')
     files = json.loads(gh('api', '--paginate', '--slurp', f'repos/{repo}/pulls/{int(pr)}/files'))
     names = [f['filename'] for page in files for f in page]
-    scope_ok = bool(names) and all(FILES.match(n) for n in names)
     results = []
     for p in sorted(verification.glob('*/*/result.json')):
         if p.stat().st_size > MAX_BYTES:
             raise Invalid(f'{p}: too large')
         results.append((str(p.relative_to(verification)), validate(json.loads(p.read_text()))))
+    scope_ok, committed = in_scope(names)
+    same_repo = os.environ.get('HEAD_REPO') == repo
+    # a fork's result.json must be the verified one; on a same-repository branch (writable only
+    # by maintainers) a stale one is simply overwritten below
+    for suite, name in ([] if same_repo else committed):
+        mine = [r for _, r in results if (r.get('entry') or {}).get('suite') == suite
+                and (r.get('entry') or {}).get('name') == name]
+        path = f'leaderboard/results/{suite}/{name}/result.json'
+        theirs = _contents(repo, path, head)
+        if not mine or theirs is None or stable(theirs) != stable(mine[0]):
+            scope_ok = False
     ok = scope_ok and conclusion == 'success' and results and all(r['verified'] for _, r in results)
     for label, colour in (('verified', '1f883d'), ('not-verified', 'cf222e')):
         gh('label', 'create', label, '--repo', repo, '--color', colour, '--force')
@@ -220,11 +233,14 @@ def write(verification: Path) -> int:
        data=comment(results, scope_ok, conclusion))
     gh('pr', 'edit', str(int(pr)), '--repo', repo, '--add-label',
        'verified' if ok else 'not-verified', '--remove-label', 'not-verified' if ok else 'verified')
-    if ok and os.environ.get('HEAD_REPO') == repo:
+    if ok and same_repo:
         branch = os.environ['HEAD_BRANCH']
         for rel, r in results:
             e = r['entry']
             path = f"leaderboard/results/{e['suite']}/{e['name']}/result.json"
+            old = _contents(repo, path, branch)
+            if old is not None and stable(old) == stable(r):
+                continue   # already there: no commit, so no new run of this workflow
             body = {'message': f"[leaderboard] verified result for {e['suite']}/{e['name']}",
                     'content': base64.b64encode((json.dumps(r, indent=1, sort_keys=True) + '\n')
                                                 .encode()).decode(), 'branch': branch}
@@ -238,17 +254,45 @@ def write(verification: Path) -> int:
     return 0
 
 
+def in_scope(names):
+    """(every changed file allowed?, the (suite, name) of each result.json among them)."""
+    subs = {FILES.match(n).groups()[:2] for n in names if FILES.match(n)}
+    results = [RESULT.match(n).groups() for n in names if RESULT.match(n)]
+    ok = bool(subs) and all(FILES.match(n) or (RESULT.match(n) and
+                                                RESULT.match(n).groups() in subs) for n in names)
+    return ok, sorted(set(results) & subs)
+
+
+def _contents(repo, path, ref):
+    """The JSON file at ``ref`` through the API (None if absent or not a small JSON object)."""
+    try:
+        meta = json.loads(gh('api', f'repos/{repo}/contents/{path}?ref={ref}'))
+        if not isinstance(meta, dict) or meta.get('size', MAX_BYTES + 1) > MAX_BYTES:
+            return None
+        if meta.get('content'):
+            raw = base64.b64decode(meta['content'])
+        else:   # over the contents API's 1 MB inline limit: the blob
+            blob = json.loads(gh('api', f"repos/{repo}/git/blobs/{meta['sha']}"))
+            raw = base64.b64decode(blob['content'])
+        r = json.loads(raw.decode())
+        return r if isinstance(r, dict) else None
+    except (RuntimeError, ValueError, KeyError):
+        return None
+
+
+def stable(r):
+    """A result without what may differ between two verifications of it (the machine, times)."""
+    r = {k: v for k, v in r.items() if k not in VOLATILE}
+    for part in ('public', 'held_out'):
+        if isinstance(r.get(part), dict) and isinstance(r[part].get('score'), dict):
+            r[part] = dict(r[part], score={k: v for k, v in r[part]['score'].items()
+                                            if k != 'compute_ms'})
+    return r
+
+
 def compare(old: Path, new: Path) -> int:
     a, b = json.loads(old.read_text()), json.loads(new.read_text())
-
-    def strip(r):
-        r = {k: v for k, v in r.items() if k not in VOLATILE}
-        for part in ('public', 'held_out'):
-            if r.get(part):
-                r[part] = dict(r[part], score={k: v for k, v in r[part]['score'].items()
-                                                if k != 'compute_ms'})
-        return r
-    if strip(a) != strip(b):
+    if stable(a) != stable(b):
         print(f'DIFFERS: {old} (committed) vs {new} (re-verified)')
         return 1
     print(f'same: {old}')
