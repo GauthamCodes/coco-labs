@@ -52,7 +52,49 @@ def draw_tiers(data, out):
     plt.close(fig)
 
 
-FIGURES = {'tiers': (fig_tiers, draw_tiers)}
+PLANNER_LABEL = {'stock': 'stock Nav2 (Smac 2D)', 'coco_user_astar_starter': 'A* starter (ROS 2 node)',
+                 'coco_user_theta_star': 'Lazy Theta* (ROS 2 node)'}
+
+
+def fig_corner_cost():
+    """Share of received plans with a pose at cost >= 253 (local costmap), per drive (STACK)."""
+    d = json.loads((REPO / 'docs' / 'v2' / 'r3' / 'data' / 'a1' / 'costs_summary.json').read_text())
+    out = {}
+    for name in ('stock', 'coco_user_astar_starter', 'coco_user_theta_star'):
+        p = d['planners'][name]
+        out[name] = {'reached': f"{p['reached']}/{p['goals']}",
+                     'share': {sid: s['share_of_plans_local_ge253'] for sid, s in p['scenarios'].items()
+                               if s['share_of_plans_local_ge253'] is not None}}
+    return out
+
+
+def draw_corner_cost(data, out):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    sids = sorted({s for v in data.values() for s in v['share']})
+    fig, ax = plt.subplots(figsize=(3.4, 1.9))
+    width = 0.26
+    colours = {'stock': '#8A8F98', 'coco_user_astar_starter': '#4C9F70', 'coco_user_theta_star': '#C8553D'}
+    for i, (name, v) in enumerate(data.items()):
+        xs = [k + (i - 1) * width for k, s in enumerate(sids) if s in v['share']]
+        ax.bar(xs, [100 * v['share'][s] for s in sids if s in v['share']], width,
+               label=f"{PLANNER_LABEL[name]}, reached {v['reached']}", color=colours[name])
+        for k, s in enumerate(sids):   # no plan received at all (e.g. 208): say so, never a 0 bar
+            if s not in v['share']:
+                ax.text(k + (i - 1) * width, 1, 'no plan', rotation=90, fontsize=4.5,
+                        ha='center', va='bottom', color=colours[name])
+    ax.set_xticks(range(len(sids)))
+    ax.set_xticklabels(sids, fontsize=6)
+    ax.set_ylabel('plans in cost >= 253 (%)', fontsize=6)
+    ax.tick_params(labelsize=6)
+    ax.legend(fontsize=5, frameon=False, loc='upper left')
+    fig.tight_layout(pad=0.3)
+    fig.savefig(out, metadata={'CreationDate': None, 'ModDate': None})
+    plt.close(fig)
+
+
+FIGURES = {'tiers': (fig_tiers, draw_tiers), 'corner_cost': (fig_corner_cost, draw_corner_cost)}
 
 
 def main():
