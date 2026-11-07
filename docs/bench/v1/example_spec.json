@@ -1,0 +1,8 @@
+{
+  "schema": "coco.experiment.v1",
+  "title": "A* vs Dijkstra on depot-narrow-30 (COCO-Bench v1)",
+  "family": "planning",
+  "world": "coco_depot_v1",
+  "algorithms": [{"name": "astar"}, {"name": "dijkstra"}],
+  "scenarios": {"kind": "suite", "id": "depot-narrow-30", "version": 1}
+}
