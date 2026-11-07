@@ -52,8 +52,18 @@ not created). Overlay for local package tests: `~/coco_lab_r3_ws` (symlink-insta
 
 MCL runs took ~11 min each on one core: the localisation baselines need the worker pool and hours.
 
-## Next step
+## Next step (session paused 2026-11-07 ~10:30 IST: usage limit)
 
-PR #34 → PR #31 → deploy + live smoke (Part A). When the A1 queue ends: `tools/r3/a1_costs.py`
-(compare Theta\* with the A\* and stock controls), the snapped planning summary, then the hostile check
-in docker, then R3.2 baselines.
+1. **PR #35** (paper link allowed in check_dist; index moved): CI was running (build-and-test and lab_web
+   passed). When green: self-review, merge; then `gh api -X PUT repos/GauthamCodes/coco-labs/pulls/31/update-branch`,
+   approve the bot's runs (`gh api -X POST .../actions/runs/<id>/approve`), merge #31 when its exact head is
+   green; deploy (`gh workflow run lab.yml --ref main -f confirmation=DEPLOY`) with
+   `lab_web/tools/r3/live_smoke.mjs https://gauthamcodes.github.io/coco-labs/ OUT --wait-signal FILE` started
+   BEFORE the deploy (touch FILE when the run finishes).
+2. **R3.2 baselines** are running in the background (`tools/r3/make_baselines.py --workers 10`, log in the job's
+   tmp; output `docs/v2/r3/bench/`, untracked until finished; resumable per suite/family via DONE). Done so far:
+   arena-nav-50 planning and control (public + held-out; v1 = R1's v0 references run for run: 300/300 and
+   200/200). Then `tools/r3/check_carried.py` for every carried suite, commit, results macros for the paper.
+3. **R3.4** after the baselines: `tools/r3/ros2_queue_r34.sh` (AC + balanced gated; ~37 h of Gazebo).
+4. Then R3.5 gap analysis + "Model vs ROS 2" page, R3.6 leaderboard v1, the repository secret for ADR 0014,
+   paper experiments, R3.9 close (PR, merge, deploy, smoke). Restore the power profile to power-saver at the end.
