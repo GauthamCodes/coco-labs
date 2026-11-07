@@ -315,6 +315,8 @@ def _narrow(w, n, seed):
                 picked[z].append(dict(s, passes=z))
                 break
     out = picked['zone_workshop'] + picked['zone_high_bay']
+    if len(out) < n:   # never report a size the draw does not have (as _filtered)
+        raise ValueError(f'only {len(out)} of {n} narrow scenarios in a pool of 600')
     for i, s in enumerate(out):
         s['id'] = f'n{i + 1:03d}'
     return out
