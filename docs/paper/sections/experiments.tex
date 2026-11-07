@@ -41,7 +41,7 @@ starter (\SnapAstarFound{}). Snapping moved a start or goal by more than one cel
 a discrepancy we report as unresolved. Snapped, Nav2's paths were slightly shorter than the
 starter's (paired median \SnapPairedGapM{}~m).
 
-\textbf{Why the any-angle planner fails under Nav2.} Re-running the five drives while recording,
+\textbf{Why the any-angle planner fails under Nav2.} Re-running the \StackDriveScenarios{} drives while recording,
 for every plan the controller received, the raw cost under each pose in the live local costmap:
 with Lazy Theta* (\CostThetaReached{} reached), \CostThetaMinPct{}--\CostThetaMaxPct{}\,\% of
 the received plans put at least one pose in inscribed or lethal cost on each drivable scenario,
