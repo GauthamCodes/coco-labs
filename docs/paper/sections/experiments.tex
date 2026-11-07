@@ -2,6 +2,20 @@
 % enter here through generated/results.tex once their data are committed; nothing is written
 % before then. The case study below rests on R2.7's committed STACK data.
 
+\subsection{Baselines in the model}\label{sec:exp-baselines}
+Every built-in ran on every suite of its family, on the public scenarios and on a held-out
+reference draw (\cref{tab:base-planning,tab:base-control,tab:base-localisation}; \evclass{model},
+all runs committed with their hash chains). The tables are generated from the committed runs and
+list the suites whose runs are not yet committed. Two readings recur. Planners that minimise
+costmap cost (A*, Dijkstra, D* Lite) return longer paths than breadth-first search, which ignores
+cost; path length alone is therefore not a measure of quality here. Localisers are separated
+by the tier structure: in the localisation runs committed so far, Monte Carlo localisation at the
+teaching profile loses its track far more often on hard scenarios than on easy ones.
+
+\input{generated/baselines_planning}
+\input{generated/baselines_control}
+\input{generated/baselines_localisation}
+
 \subsection{The same planner in the model and in ROS~2}\label{sec:exp-r27}
 We exported the A* starter file to a ROS~2 node and asked it and Nav2's stock planner (Smac 2D)
 for paths on the same requests from the live global costmap in Gazebo: \StackPlanRequests{}
