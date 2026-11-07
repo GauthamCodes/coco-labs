@@ -30,6 +30,10 @@ not created). Overlay for local package tests: `~/coco_lab_r3_ws` (symlink-insta
   because R2's held-out seed hashes the merge-base, which moved; the runs on `06a1cc9` were approved;
   Lab failed there only on the stale index (fixed by #34).
 
+## Decisions
+
+- 2026-11-07 (Gautham): no affiliation on the paper or in CITATION.cff; author "Gautham".
+
 ## Machine log
 
 - 2026-11-06: start balanced/AC (profile changed from power-saver; restore at the end). AC went offline in

@@ -3,9 +3,8 @@ message: "If you use COCO Lab or COCO-Bench, please cite it as below."
 title: "COCO Lab and COCO-Bench: reproducible, browser-based benchmarking of mobile-robot navigation, validated against ROS 2 and Gazebo"
 type: software
 authors:
-  # name form and affiliation to be confirmed by the author (R3 report)
+  # no affiliation (Gautham, 2026-11-07)
   - given-names: Gautham
-    affiliation: Amrita Vishwa Vidyapeetham
 repository-code: "https://github.com/GauthamCodes/coco-labs"
 url: "https://gauthamcodes.github.io/coco-labs/"
 license: Apache-2.0
@@ -23,6 +22,5 @@ preferred-citation:
   title: "COCO-Bench: Reproducible, Browser-Based Benchmarking of Mobile-Robot Navigation, Validated Against ROS 2 and Gazebo"
   authors:
     - given-names: Gautham
-      affiliation: Amrita Vishwa Vidyapeetham
   url: "https://github.com/GauthamCodes/coco-labs/tree/main/docs/paper"
   notes: "Manuscript in preparation; the paper's source and every number in it are in docs/paper."
