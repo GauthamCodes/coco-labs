@@ -1,7 +1,8 @@
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
 /**
- * R2.6: the COCO-Bench leaderboard (leaderboard/index.json, ranked by tools/r2/leaderboard.py).
+ * R2.6: the COCO-Bench leaderboard (generated/r2/leaderboard.json: ranked by tools/r2/leaderboard.py
+ * from leaderboard/results/ at every build).
  * One table per suite and family; deterministic metrics only rank; compute time is shown per
  * device and never ranks. Every entry: its code, a reproduce link (the Studio opens the file and
  * waits for "Run this code"), the replay of its worst run, its failures, public beside held-out,
