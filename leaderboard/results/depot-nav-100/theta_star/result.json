@@ -1,7 +1,7 @@
 {
  "checks": {
   "claim_matches": true,
-  "claimed_digest": "ca9216a0d0d7435e1348ea7a9de9e663d83e098960e82cb3938c87678770f3c0",
+  "claimed_digest": "56c5dc9f7a6117e48cff3cbbb1fd6e28e5acd43ef8ba3dd91859b40d1e96ff9f",
   "clamped_outputs": 0,
   "contract_problems": 0,
   "deterministic": true,
@@ -22,21 +22,21 @@
   "suite": "depot-nav-100"
  },
  "held_out": {
-  "digest": "3b8eef7be6071b54ceec5abdd0235c9e3e87310158dc78e7ab24d98d1bf5250a",
-  "merge_base": "56e93184f4f59ed1453af9d8106e2351e00d057e",
+  "digest": "9d8d6eb298e632e5885083421c1d3d659a916752fbde7b843b04e1a774d59d91",
+  "merge_base": "reverify-v1",
   "n": 20,
   "runs": [
    {
-    "chain": "a7b3b3064e008cc9a36c043778ee72dfd72f6b5551a29817afc3fb0c081c7397",
+    "chain": "516af6b6a57174c136371cd8bcc69941611fd6a35f9c9b054ccb53966ac9b64b",
     "counts": {
-     "expansions": 114,
+     "expansions": 49433,
      "goal_snap_m": 0,
-     "heading_change_rad": 0,
-     "mean_clearance_m": 2.917337276396663,
-     "min_clearance_m": 0.3903124237432849,
+     "heading_change_rad": 2.8491785934766534,
+     "mean_clearance_m": 0.7947337980600481,
+     "min_clearance_m": 0.050000000000000044,
      "path_cost": null,
-     "path_length_m": 15.910059710761615,
-     "path_steps": 1,
+     "path_length_m": 40.35744247599798,
+     "path_steps": 6,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -45,16 +45,16 @@
     "status": "found"
    },
    {
-    "chain": "9cdbd095e2826e30c008eecd92810d83466edbde4570713ddd4382ff4de98e20",
+    "chain": "f92964e28fad8367f6426e22c428c677ed4921dd362c6d494f490948d714706f",
     "counts": {
-     "expansions": 65270,
+     "expansions": 9910,
      "goal_snap_m": 0,
-     "heading_change_rad": 8.097895901246545,
-     "mean_clearance_m": 0.937404315632181,
-     "min_clearance_m": 0.03284271247461906,
+     "heading_change_rad": 1.1889267879897942,
+     "mean_clearance_m": 3.1616211923531172,
+     "min_clearance_m": 0.050000000000000044,
      "path_cost": null,
-     "path_length_m": 44.18737299226291,
-     "path_steps": 15,
+     "path_length_m": 20.435904048529345,
+     "path_steps": 2,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -63,16 +63,16 @@
     "status": "found"
    },
    {
-    "chain": "f7bd800fee0d29c670c59cdde688de4380527e46d2019e12db4fdbd953cb2553",
+    "chain": "116c917c80b1e55286376ec48358ce39f080eb14f8280b85c17f27d002fcd3e1",
     "counts": {
-     "expansions": 1118,
+     "expansions": 64227,
      "goal_snap_m": 0,
-     "heading_change_rad": 1.3101120510203463,
-     "mean_clearance_m": 2.357143124568698,
-     "min_clearance_m": 0.03284271247461906,
+     "heading_change_rad": 10.016607462202346,
+     "mean_clearance_m": 0.7003882407979333,
+     "min_clearance_m": 0.050000000000000044,
      "path_cost": null,
-     "path_length_m": 12.482534643390633,
-     "path_steps": 5,
+     "path_length_m": 45.39310560402763,
+     "path_steps": 15,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -81,16 +81,16 @@
     "status": "found"
    },
    {
-    "chain": "46de7f62caf02592ae78dbc722cfc9889e3021060bf689ae80cf8c022e495d30",
+    "chain": "270164f3cace616bbdd3124ef619f5724fadfb44b3e577ac6d779b83cd3515e5",
     "counts": {
-     "expansions": 71056,
+     "expansions": 3491,
      "goal_snap_m": 0,
-     "heading_change_rad": 7.657428211411045,
-     "mean_clearance_m": 1.4054699464840648,
-     "min_clearance_m": 0.03284271247461906,
+     "heading_change_rad": 0.6171030367075825,
+     "mean_clearance_m": 2.1489772635110267,
+     "min_clearance_m": 0.050000000000000044,
      "path_cost": null,
-     "path_length_m": 46.859829438782356,
-     "path_steps": 14,
+     "path_length_m": 20.28348033105442,
+     "path_steps": 3,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -99,16 +99,16 @@
     "status": "found"
    },
    {
-    "chain": "78490057819386aa35f3ab369d07c366cee9f1a965767e476882cd67cbc274c8",
+    "chain": "a940dd3d4886776b5137052b2e5fd9df5eb72a8f1039ea82bebba6b4160bbe1f",
     "counts": {
-     "expansions": 9540,
+     "expansions": 18553,
      "goal_snap_m": 0,
-     "heading_change_rad": 4.861396990928142,
-     "mean_clearance_m": 0.43760288223547705,
-     "min_clearance_m": 0.03284271247461906,
+     "heading_change_rad": 4.547420288569272,
+     "mean_clearance_m": 0.4983368505417504,
+     "min_clearance_m": 0.050000000000000044,
      "path_cost": null,
-     "path_length_m": 24.011921591606978,
-     "path_steps": 10,
+     "path_length_m": 24.98488464817054,
+     "path_steps": 6,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -117,16 +117,16 @@
     "status": "found"
    },
    {
-    "chain": "b65331d00dabee58eb026d11dfeec6bcb9453ff8ed70493a7b56c9806c088bc8",
+    "chain": "4005db44c20155a76c799c37aaf8b4337745a239479c2f29c0c196d15d6ec8d8",
     "counts": {
-     "expansions": 1290,
+     "expansions": 115,
      "goal_snap_m": 0,
-     "heading_change_rad": 0.8621700546672262,
-     "mean_clearance_m": 0.6409033875937586,
-     "min_clearance_m": 0.066227766016838,
+     "heading_change_rad": 0,
+     "mean_clearance_m": 0.8757794688748848,
+     "min_clearance_m": 0.03284271247461906,
      "path_cost": null,
-     "path_length_m": 8.217834050993666,
-     "path_steps": 2,
+     "path_length_m": 5.571355310873648,
+     "path_steps": 1,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -135,16 +135,16 @@
     "status": "found"
    },
    {
-    "chain": "2f386f8dbdca3f781f26209d3ba0e2dfb7ed7eff38f95028e5c590472f1d7a27",
+    "chain": "b09b51ee7d4e1b750f32b77124e3df8cfde61be61216d2d75f39f1dde0dc827a",
     "counts": {
-     "expansions": 14230,
+     "expansions": 12373,
      "goal_snap_m": 0,
-     "heading_change_rad": 6.244546822425303,
-     "mean_clearance_m": 0.47145953487306913,
-     "min_clearance_m": 0.03284271247461906,
+     "heading_change_rad": 5.777289691843176,
+     "mean_clearance_m": 0.3663077717595643,
+     "min_clearance_m": 0.050000000000000044,
      "path_cost": null,
-     "path_length_m": 24.89010775338103,
-     "path_steps": 9,
+     "path_length_m": 20.994058542828054,
+     "path_steps": 17,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -153,16 +153,16 @@
     "status": "found"
    },
    {
-    "chain": "47d1ee73676a9224db64e8f9c573eb526cab6ac215f028a067e257253a568973",
+    "chain": "290e280cd8704bc42ad2e1dccad46c4097190e62cf7cfa3182d22f86a631c4a0",
     "counts": {
-     "expansions": 3980,
+     "expansions": 6730,
      "goal_snap_m": 0,
-     "heading_change_rad": 4.462994251754909,
-     "mean_clearance_m": 0.5622613904026087,
+     "heading_change_rad": 2.591378570016838,
+     "mean_clearance_m": 0.45197422907412804,
      "min_clearance_m": 0.050000000000000044,
      "path_cost": null,
-     "path_length_m": 12.618816393020545,
-     "path_steps": 7,
+     "path_length_m": 22.061632533015956,
+     "path_steps": 3,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -171,16 +171,16 @@
     "status": "found"
    },
    {
-    "chain": "c1dd391e884fdf5ae9453c9a50cac9b548eddb7329748b6ef587fb4ab0c3730e",
+    "chain": "850dc3411038ab10fbbe6a7dddf46516d17b562e88a9cf9e08c38b14aa45146d",
     "counts": {
-     "expansions": 39149,
+     "expansions": 20544,
      "goal_snap_m": 0,
-     "heading_change_rad": 4.678503650480591,
-     "mean_clearance_m": 2.214988470944647,
+     "heading_change_rad": 5.138043446267828,
+     "mean_clearance_m": 0.5244963342564518,
      "min_clearance_m": 0.03284271247461906,
      "path_cost": null,
-     "path_length_m": 35.56184022023095,
-     "path_steps": 7,
+     "path_length_m": 40.58856357986244,
+     "path_steps": 10,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -189,16 +189,16 @@
     "status": "found"
    },
    {
-    "chain": "c044eb3e0335bfdcaaceea8141a18066afa6849758780287cfaa2f3b75003d96",
+    "chain": "08ccc0d66e8b00da70b315a2aa5e43836cab6e7f003aa3292f34649a968eb469",
     "counts": {
-     "expansions": 30374,
+     "expansions": 15342,
      "goal_snap_m": 0,
-     "heading_change_rad": 5.591465817093788,
-     "mean_clearance_m": 0.6427552252821142,
+     "heading_change_rad": 5.095591278440105,
+     "mean_clearance_m": 1.1340478050065583,
      "min_clearance_m": 0.03284271247461906,
      "path_cost": null,
-     "path_length_m": 36.56416270575388,
-     "path_steps": 10,
+     "path_length_m": 31.856653198789083,
+     "path_steps": 11,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -207,16 +207,16 @@
     "status": "found"
    },
    {
-    "chain": "7f7b0af5f16f682ee24da9dfddd25b217835a5456221d08a8ccd423cc64d88be",
+    "chain": "0a5c2d7f1ec2e287a7db06b5ed6da932814e62604119983d03710f70ee8aa3fd",
     "counts": {
-     "expansions": 52205,
+     "expansions": 21200,
      "goal_snap_m": 0,
-     "heading_change_rad": 7.732417762587519,
-     "mean_clearance_m": 1.7947525016552341,
+     "heading_change_rad": 2.9441970937398763,
+     "mean_clearance_m": 0.6770206504767277,
      "min_clearance_m": 0.03284271247461906,
      "path_cost": null,
-     "path_length_m": 46.382584558538895,
-     "path_steps": 8,
+     "path_length_m": 38.74287250080573,
+     "path_steps": 7,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -225,16 +225,16 @@
     "status": "found"
    },
    {
-    "chain": "ef7378a464f8049212543ae2ffc90384466b638e3b294d159f1f45dbe7f81d14",
+    "chain": "07b59049a6d94513ec6b5866fef73403e3aa2013c3470b12c882a1500c10af1d",
     "counts": {
-     "expansions": 4586,
+     "expansions": 17460,
      "goal_snap_m": 0,
-     "heading_change_rad": 4.011837209213462,
-     "mean_clearance_m": 0.3682945967029474,
+     "heading_change_rad": 6.923980656706817,
+     "mean_clearance_m": 0.3841079866307898,
      "min_clearance_m": 0.03284271247461906,
      "path_cost": null,
-     "path_length_m": 22.41861845427698,
-     "path_steps": 6,
+     "path_length_m": 32.40179004001177,
+     "path_steps": 9,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -243,16 +243,16 @@
     "status": "found"
    },
    {
-    "chain": "76c12fa694d4258d0a37bf3668295d8f5c3747c9f6f88d862ce5b48bfa7d79b4",
+    "chain": "673fd96bb3cedd2ca7953b665150167c955b190767af13da18958cfe36100c95",
     "counts": {
-     "expansions": 6579,
+     "expansions": 55286,
      "goal_snap_m": 0,
-     "heading_change_rad": 3.017543394985652,
-     "mean_clearance_m": 0.569540485306676,
-     "min_clearance_m": 0.050000000000000044,
+     "heading_change_rad": 6.994598318077339,
+     "mean_clearance_m": 1.277923186024692,
+     "min_clearance_m": 0.03284271247461906,
      "path_cost": null,
-     "path_length_m": 23.42652928928707,
-     "path_steps": 5,
+     "path_length_m": 59.403393946376426,
+     "path_steps": 10,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -261,16 +261,16 @@
     "status": "found"
    },
    {
-    "chain": "fe421c232653650b3b6afc364ac25ebaee682b53ef243b4410d9af9c27278792",
+    "chain": "db3015da2cc0d7f3dc75f76e24fd4164a72573f2a27d4427caf0b1b23783b069",
     "counts": {
-     "expansions": 6119,
+     "expansions": 2749,
      "goal_snap_m": 0,
-     "heading_change_rad": 5.414645911893696,
-     "mean_clearance_m": 0.5842858588161619,
+     "heading_change_rad": 3.2834897081939594,
+     "mean_clearance_m": 0.5845360801189673,
      "min_clearance_m": 0.03284271247461906,
      "path_cost": null,
-     "path_length_m": 13.516571609296449,
-     "path_steps": 9,
+     "path_length_m": 11.917274232650788,
+     "path_steps": 5,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -279,16 +279,16 @@
     "status": "found"
    },
    {
-    "chain": "cc5b1a0783918d60595a571cb703907ca5353f08771c4ccf3b5d186f0a56d79b",
+    "chain": "907f18c80ee488deceb881b889227947b472ef672253c0d2d3c73106cc1a3f4f",
     "counts": {
-     "expansions": 2636,
+     "expansions": 29022,
      "goal_snap_m": 0,
-     "heading_change_rad": 0.6849395353634811,
-     "mean_clearance_m": 2.279502057950057,
-     "min_clearance_m": 0.050000000000000044,
+     "heading_change_rad": 17.56535907826743,
+     "mean_clearance_m": 0.8165275190221273,
+     "min_clearance_m": 0.03284271247461906,
      "path_cost": null,
-     "path_length_m": 16.158299141086314,
-     "path_steps": 5,
+     "path_length_m": 59.862126698357066,
+     "path_steps": 35,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -297,16 +297,16 @@
     "status": "found"
    },
    {
-    "chain": "ad468de48059c1dfd33c7b278e48652e8a064ba3303712546f9ebf68791db537",
+    "chain": "ba6a05fb99a4c61e35883bbf06fb48d8920d6ec3d7b37efe370060ac5f672ee0",
     "counts": {
-     "expansions": 2995,
+     "expansions": 5711,
      "goal_snap_m": 0,
-     "heading_change_rad": 3.3650167364803822,
-     "mean_clearance_m": 2.552496171607337,
-     "min_clearance_m": 0.03284271247461906,
+     "heading_change_rad": 5.247939232982555,
+     "mean_clearance_m": 0.5038881386222772,
+     "min_clearance_m": 0.050000000000000044,
      "path_cost": null,
-     "path_length_m": 21.845157654140213,
-     "path_steps": 6,
+     "path_length_m": 27.754300599189794,
+     "path_steps": 8,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -315,16 +315,16 @@
     "status": "found"
    },
    {
-    "chain": "3af37fec0463f5419b9d07ca038af8e758e5c8b6046493f2b83a05d9ad863a38",
+    "chain": "50ef1478c153c37be376939fc835f45e1115a73d8f1a17d1cf84492d7ba56757",
     "counts": {
-     "expansions": 6567,
+     "expansions": 13189,
      "goal_snap_m": 0,
-     "heading_change_rad": 6.557352758299246,
-     "mean_clearance_m": 0.42150797770580134,
+     "heading_change_rad": 14.98242321367712,
+     "mean_clearance_m": 0.331370905940757,
      "min_clearance_m": 0.03284271247461906,
      "path_cost": null,
-     "path_length_m": 20.207403492863506,
-     "path_steps": 15,
+     "path_length_m": 37.68201959993963,
+     "path_steps": 19,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -333,16 +333,16 @@
     "status": "found"
    },
    {
-    "chain": "27b606a8c56323c7a32db24cc7f619fb7ffd2c1fff817cf4b88275fd28a62efc",
+    "chain": "bf61b5d4d3c1f3b5568d246690ab0e0690a9308665e77dccd1ea19db0dfe3325",
     "counts": {
-     "expansions": 8490,
+     "expansions": 66269,
      "goal_snap_m": 0,
-     "heading_change_rad": 1.753298906157251,
-     "mean_clearance_m": 2.112580013830861,
-     "min_clearance_m": 0.066227766016838,
+     "heading_change_rad": 8.105224010446411,
+     "mean_clearance_m": 1.8778014127792766,
+     "min_clearance_m": 0.03284271247461906,
      "path_cost": null,
-     "path_length_m": 18.061946949989526,
-     "path_steps": 3,
+     "path_length_m": 45.90242984324851,
+     "path_steps": 12,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -351,16 +351,16 @@
     "status": "found"
    },
    {
-    "chain": "b904c83861d150cfa3a9c9001e12981f48d0e689d44d5c16cfffe2fac6a3c17b",
+    "chain": "b3aad35175b50ad35d7dd89f5a023d5a7c2529884a8174c4e03447fb3d27470f",
     "counts": {
-     "expansions": 10832,
+     "expansions": 4683,
      "goal_snap_m": 0,
-     "heading_change_rad": 1.9236993934031767,
-     "mean_clearance_m": 0.7265894576678942,
-     "min_clearance_m": 0.050000000000000044,
+     "heading_change_rad": 1.9589330779054448,
+     "mean_clearance_m": 3.852184534934406,
+     "min_clearance_m": 0.066227766016838,
      "path_cost": null,
-     "path_length_m": 29.01086552825928,
-     "path_steps": 3,
+     "path_length_m": 16.825950512294618,
+     "path_steps": 5,
      "pushes": null,
      "start_snap_m": 0
     },
@@ -369,15 +369,15 @@
     "status": "found"
    },
    {
-    "chain": "f5a2810e9a5c90d516b7b72b2e1ded08fb76e3eae11460597d498b5c1b2ee355",
+    "chain": "48d6ee1a453c9bf4e0fb7b7130fe1348470c8bcd9878872db0b114247adb3531",
     "counts": {
-     "expansions": 27194,
+     "expansions": 34688,
      "goal_snap_m": 0,
-     "heading_change_rad": 5.05198907026846,
-     "mean_clearance_m": 0.6737107588667482,
+     "heading_change_rad": 3.1033469933197297,
+     "mean_clearance_m": 2.1323136434163183,
      "min_clearance_m": 0.03284271247461906,
      "path_cost": null,
-     "path_length_m": 26.718418639475797,
+     "path_length_m": 37.20429528195048,
      "path_steps": 7,
      "pushes": null,
      "start_snap_m": 0
@@ -390,16 +390,16 @@
   "scenarios": 20,
   "score": {
    "compute_ms": {
-    "median": 367.4666250000058,
+    "median": 2424.0790780004318,
     "n": 20,
-    "q1": 159.3056470000036,
-    "q3": 1380.5250774999963
+    "q1": 1023.4240467498239,
+    "q3": 5750.9595547517165
    },
    "expansions": {
-    "median": 7534.5,
+    "median": 16401,
     "n": 20,
-    "q1": 3733.75,
-    "q3": 27989
+    "q1": 6475.25,
+    "q3": 30438.5
    },
    "failures": [],
    "min_clearance_m": {
@@ -410,10 +410,10 @@
    },
    "n": 20,
    "path_ratio": {
-    "median": 0.9745239457932628,
+    "median": 0.9774854944876216,
     "n": 20,
-    "q1": 0.9663418034016226,
-    "q3": 0.992082414177899
+    "q1": 0.9596741928914484,
+    "q3": 0.9929090458270877
    },
    "success_rate": 1,
    "successes": 20,
@@ -422,28 +422,28 @@
     1
    ]
   },
-  "seed": 1543177728773429,
-  "spec_id": "bfdd880b1ef190f0",
+  "seed": 2903081777819088,
+  "spec_id": "4c6cd6987ef18b39",
   "worst": {
-   "scenario": "s008",
-   "scenario_index": 7,
+   "scenario": "s003",
+   "scenario_index": 2,
    "why": "worst path ratio"
   }
  },
  "host": {
-  "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
-  "git": null,
-  "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.36",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "git": "8c5b9674d7db70519485e356441f48062c7d5a84",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
   "python": "3.12.3",
   "runner": "cpython",
-  "workers": 2
+  "workers": 4
  },
  "problems": [],
  "public": {
-  "digest": "ca9216a0d0d7435e1348ea7a9de9e663d83e098960e82cb3938c87678770f3c0",
+  "digest": "56c5dc9f7a6117e48cff3cbbb1fd6e28e5acd43ef8ba3dd91859b40d1e96ff9f",
   "runs": [
    {
-    "chain": "636a36b0f352ec46cc36e2e69bd8905057a17a0a4ab9f5cd1be43ce23dfe28c0",
+    "chain": "188cbaff21a402a12c6fc36008d98fa3a9f9b4aff4930aa6e86a819b14cecb0a",
     "counts": {
      "expansions": 10806,
      "goal_snap_m": 0,
@@ -461,7 +461,7 @@
     "status": "found"
    },
    {
-    "chain": "e99806445150be0b92cf6dc7ceab70361cb4497ec575d0446d39976bfebc2980",
+    "chain": "c9c2f58b2693fb941a4853368b65d6b4f70bb76cd515ea9d8787c277ac6b07b5",
     "counts": {
      "expansions": 73754,
      "goal_snap_m": 0,
@@ -479,7 +479,7 @@
     "status": "found"
    },
    {
-    "chain": "973dcef3965d6baa83e183a091b94f05c995e837d0b76dea1206d0b6e39e33a3",
+    "chain": "f10fbbb8952779dd988991b2ce7c12f884bdd19851bba6ce937306d02f64ce04",
     "counts": {
      "expansions": 20678,
      "goal_snap_m": 0,
@@ -497,7 +497,7 @@
     "status": "found"
    },
    {
-    "chain": "18eafd1db3888f453fc8633e441bdbdb24992847b476b392409d4136b155c29f",
+    "chain": "d0230d8cb5bf35c534349fd4cf67cfd06b727e1627c98887f7b538fe14234862",
     "counts": {
      "expansions": 2277,
      "goal_snap_m": 0,
@@ -515,7 +515,7 @@
     "status": "found"
    },
    {
-    "chain": "fb411a4f4b6f68319ecca7038159f08c0cd6674e7906af7745d890d51cf4ee2f",
+    "chain": "d6b93bc3f26cb890af477526c26534195bb4785ed52ae16e3dd6bc1c73caf7d8",
     "counts": {
      "expansions": 52585,
      "goal_snap_m": 0,
@@ -533,7 +533,7 @@
     "status": "found"
    },
    {
-    "chain": "f3330d4097f130641f748c022cd3c196a9cd387e680a2dc9654789832d0a65ce",
+    "chain": "b275c21c48439ab83f17bd3382ad8f6f6840d725ffb984b70bd3f274cd94f960",
     "counts": {
      "expansions": 73688,
      "goal_snap_m": 0,
@@ -551,7 +551,7 @@
     "status": "found"
    },
    {
-    "chain": "655f3b64fbc8b7ee5862a8e4cfed7ba50d29b457d8878afa4b9eb7f3b6d3cf42",
+    "chain": "905f50e526910a7762cd96ca5c901f7a1ddd4e518202a1c395a286dcd37d1f27",
     "counts": {
      "expansions": 39064,
      "goal_snap_m": 0,
@@ -569,7 +569,7 @@
     "status": "found"
    },
    {
-    "chain": "000cdcd48a6e9ee55ac705f409345da455cfabccac4e20d6c6707d0793f1fcef",
+    "chain": "94bb23e6e5cc46cf32be41de9fb9c278b93645baf579b6959b8b39352ec64835",
     "counts": {
      "expansions": 55955,
      "goal_snap_m": 0,
@@ -587,7 +587,7 @@
     "status": "found"
    },
    {
-    "chain": "8618bb0ddad21ba8b14772244fcce39b95ccce2993e734ee1f5d0199b0e89519",
+    "chain": "1c82c0f07758b40af842199eb6c370ba1ae5216c39fe52ce21e312fa940c1bd5",
     "counts": {
      "expansions": 54618,
      "goal_snap_m": 0,
@@ -605,7 +605,7 @@
     "status": "found"
    },
    {
-    "chain": "1ff9459edd403cca9ff92545c860b5d7ea8a750bf09b4251930904a68a7638df",
+    "chain": "c9dbe4abc5284413c0082a719906fff1d70c9bcd064aae2f9a42acd4be8c8a25",
     "counts": {
      "expansions": 77463,
      "goal_snap_m": 0,
@@ -623,7 +623,7 @@
     "status": "found"
    },
    {
-    "chain": "db9c1e2d2968675a34825f2f205d5a66e2b1bea78efbd1239593a011b6a21928",
+    "chain": "b40cd57a06e5c058ea5f5f525bb611335840670cf4e30fa7ea5860fc2ae5e180",
     "counts": {
      "expansions": 19843,
      "goal_snap_m": 0,
@@ -641,7 +641,7 @@
     "status": "found"
    },
    {
-    "chain": "fb7f1919b8397f249b32675a6add98eb83db2e8a10df1bfd2549f19d097ba19e",
+    "chain": "24fee57a93ac259f3329e401f9a9c8792c5681f1223b72674854880704da8bad",
     "counts": {
      "expansions": 1361,
      "goal_snap_m": 0,
@@ -659,7 +659,7 @@
     "status": "found"
    },
    {
-    "chain": "f377f6e709bd82c6df59f5d4aa2b48c834b86a0d88a273f51efccf1b473ad27c",
+    "chain": "57d2b1ab1056656dc21e9f3646cc9dd54c90d67eed9f0a07ca4eb55251df13f1",
     "counts": {
      "expansions": 68888,
      "goal_snap_m": 0,
@@ -677,7 +677,7 @@
     "status": "found"
    },
    {
-    "chain": "e06e4e89de6df01b32c5cf124476cad3272a92ad63dfe6e0ffc89274aa8ec0e1",
+    "chain": "7dc503107db8fa9a447fb09ac4048550a1e0e983794881b07607cd800e3da006",
     "counts": {
      "expansions": 922,
      "goal_snap_m": 0,
@@ -695,7 +695,7 @@
     "status": "found"
    },
    {
-    "chain": "e80b19c18399a19239affdfddfb33069aa6c8243965c6ebc7475e4c347ade7f4",
+    "chain": "f58d7621d1789e0b51f5470d9a4c47e58786e19a2d5c69a4dab548020ac4b2c4",
     "counts": {
      "expansions": 931,
      "goal_snap_m": 0,
@@ -713,7 +713,7 @@
     "status": "found"
    },
    {
-    "chain": "891902f21fdf713cd5c90f36c5dbe566d1527613af701cb0de48beaf1f764eeb",
+    "chain": "ecb0ed6c86a58421313164d0955f50ae896b9689722c960fa653c932d3475b58",
     "counts": {
      "expansions": 53188,
      "goal_snap_m": 0,
@@ -731,7 +731,7 @@
     "status": "found"
    },
    {
-    "chain": "d3236721c8b2bea56f52aea19ea52a0ec2bdc39b5d4f24cd8047ef9e61f0ca20",
+    "chain": "532994659ae50afdf54453623a1dd84028f72ea62517b62478cd0e108b36509d",
     "counts": {
      "expansions": 38669,
      "goal_snap_m": 0,
@@ -749,7 +749,7 @@
     "status": "found"
    },
    {
-    "chain": "9713a9dad5fa5828a4694bb3d246ceb781c0b7fb149de449d86b50984e21d195",
+    "chain": "a945ba60f3dfcc074f28dca65446ba7afb9b7526b042e83f25f4c747e24e7956",
     "counts": {
      "expansions": 15767,
      "goal_snap_m": 0,
@@ -767,7 +767,7 @@
     "status": "found"
    },
    {
-    "chain": "27c23ff8895f4a66e4e2b5041ab8e4443c0a2e4c0e4a7055708f796a60b971d2",
+    "chain": "61b7ccc9defcd04878a4a8820f9375098aea51c1e2a738f446695a3bca0f8f90",
     "counts": {
      "expansions": 25939,
      "goal_snap_m": 0,
@@ -785,7 +785,7 @@
     "status": "found"
    },
    {
-    "chain": "0699f74713b48d3a9d9461ee109c65ac62e17a771a5b02a5acdf1c21e6cf9866",
+    "chain": "810eb48fc137e4c899481ca69bdc41e808acf671ef5042a58b635acbe47d9a59",
     "counts": {
      "expansions": 2608,
      "goal_snap_m": 0,
@@ -803,7 +803,7 @@
     "status": "found"
    },
    {
-    "chain": "1c2a335f9c01eade4031178a90ad16429a358001db250aa08df682e982aeffb7",
+    "chain": "e2fcdc11f5dfd33d32a0ca41af6b45e02f6aee1d50843240f3ac1cead1d84d6d",
     "counts": {
      "expansions": 12155,
      "goal_snap_m": 0,
@@ -821,7 +821,7 @@
     "status": "found"
    },
    {
-    "chain": "84cac4e163baa9fe78de48276b6e04d8aac47337117c007ed83d543787e14852",
+    "chain": "d8f0e85d0a77995f714ee3c9cee498b7f541d81eebe439bec37dacd4906524d5",
     "counts": {
      "expansions": 62841,
      "goal_snap_m": 0,
@@ -839,7 +839,7 @@
     "status": "found"
    },
    {
-    "chain": "923cc0d2810bca2ac3f4dd6725b402b4d96027a8d2182a7aa7b07db8e149bafe",
+    "chain": "b842177ae1ab495213b96d02b8346725813eca5d8fc0f70b45a19fd375b407dd",
     "counts": {
      "expansions": 14059,
      "goal_snap_m": 0,
@@ -857,7 +857,7 @@
     "status": "found"
    },
    {
-    "chain": "14b46bb98a8a1f5ecff1e944d7897e61eb7a3334dd1484078e32c83313faeb80",
+    "chain": "87f3e68ed2f4dc18022ce131ea59ef6f504fa1573d8a65a6f3fe1f54abd70f1a",
     "counts": {
      "expansions": 14697,
      "goal_snap_m": 0,
@@ -875,7 +875,7 @@
     "status": "found"
    },
    {
-    "chain": "485952db404701158e147591f79b0e538e5ffef1d43844d2d27f6c5c7ef33416",
+    "chain": "47e011406d6bfe9ccc5328ccf2b849ac1b0e0022a2e2f0df54d64e37b177da0b",
     "counts": {
      "expansions": 728,
      "goal_snap_m": 0,
@@ -893,7 +893,7 @@
     "status": "found"
    },
    {
-    "chain": "fe8a183bb4ffe1e538f0a21086db31b6965ade6688bb80cb9d043c5f549cff33",
+    "chain": "84fac82612972db8f9b0b648215396a84409cd34c57dc3f5949faad8c5a55f3f",
     "counts": {
      "expansions": 29641,
      "goal_snap_m": 0,
@@ -911,7 +911,7 @@
     "status": "found"
    },
    {
-    "chain": "2b10c9d8f7135ad929a992e466f7b73d3d561f602d6c19a234ed9748da2ec1c6",
+    "chain": "91cd1a6459a1c4cb20bbc69c7db50e19dbfc87f61fea1ad8b7bcb994197537e3",
     "counts": {
      "expansions": 6326,
      "goal_snap_m": 0,
@@ -929,7 +929,7 @@
     "status": "found"
    },
    {
-    "chain": "80d66f53e0d70b1a47cf4e03e049f24f820828cb325bae89551714a08951244d",
+    "chain": "70f9fd881cfd0d8b20e30803735b9a2c9d5b5accc7fa06d69201ac390bac3eb5",
     "counts": {
      "expansions": 2718,
      "goal_snap_m": 0,
@@ -947,7 +947,7 @@
     "status": "found"
    },
    {
-    "chain": "47d237757100f662d21bfc6913b28b1ae7633165aed635ac9d1755925ba9a625",
+    "chain": "a94c5ec2580b5ffae94877250cba00f65ab27cb49de7285dac3bb374122620ca",
     "counts": {
      "expansions": 1707,
      "goal_snap_m": 0,
@@ -965,7 +965,7 @@
     "status": "found"
    },
    {
-    "chain": "543d61e78d96f814d0803eccbbccf2e4f98ed2ce41ad8e345fde139daac9affa",
+    "chain": "92dbaadd6d3fbd96df8cecc0da0d42e1f27e8d91486b68ea5087d97a09308565",
     "counts": {
      "expansions": 8387,
      "goal_snap_m": 0,
@@ -983,7 +983,7 @@
     "status": "found"
    },
    {
-    "chain": "2e39120b19e77bc4c2c853d1167b3e2e76e7bd122e4f2e62c84cc5c6a042ee81",
+    "chain": "b63e02a1b393f7e51c58e377d6115fa92a6ce9420707c3032b16a51cad2a335e",
     "counts": {
      "expansions": 20094,
      "goal_snap_m": 0,
@@ -1001,7 +1001,7 @@
     "status": "found"
    },
    {
-    "chain": "64999fb3a66c75cade305513ea8ce05efb7d0ec21ae88b6f7f91c5401575b1f5",
+    "chain": "16e99e71d95aeb6def85794304611bf1590867edcb2a187d185f5509f97b78c7",
     "counts": {
      "expansions": 20262,
      "goal_snap_m": 0,
@@ -1019,7 +1019,7 @@
     "status": "found"
    },
    {
-    "chain": "47b5799462475cc0ffe16cd8abaa7103969e60e10a6e5f99e25d0d1a9b638293",
+    "chain": "9562edca14503ed67c1b546667aa7d639d1415911916466e918dd8f71b86ddfb",
     "counts": {
      "expansions": 3870,
      "goal_snap_m": 0,
@@ -1037,7 +1037,7 @@
     "status": "found"
    },
    {
-    "chain": "e481fedba6c5df31fd6794d8c0ad724cb2a822eec78cb0bb15b9ce893cc244a1",
+    "chain": "69676739c4258351735671d33285c78bc9f54f31920898d4335da017ae867cc8",
     "counts": {
      "expansions": 1940,
      "goal_snap_m": 0,
@@ -1055,7 +1055,7 @@
     "status": "found"
    },
    {
-    "chain": "4c255fbcb5881780c8863884c3f05f204786529645b7ef4c9ce2210ba1983bcd",
+    "chain": "62a83edcd42e7b49e4d6b5a4a2b8ee6778c174b2047eaaffabc3ee7a0165bcfd",
     "counts": {
      "expansions": 2411,
      "goal_snap_m": 0,
@@ -1073,7 +1073,7 @@
     "status": "found"
    },
    {
-    "chain": "2b091c28467106d881c2428b66b381fe463691a8a3d43e3b265bb5a6a2813e6f",
+    "chain": "4f624df9476267e06349e050cd973c14a092e90bfe31cf75b0aabf1e08b2b417",
     "counts": {
      "expansions": 21917,
      "goal_snap_m": 0,
@@ -1091,7 +1091,7 @@
     "status": "found"
    },
    {
-    "chain": "21a18e4b44296c1d0b13d6df3e7248e29576fccbe5dedb5a064ae41668fbdbc5",
+    "chain": "5849ea70e44760ebd654391465db8edabd83e546f4cb165dcf7c5eecb7bccf8e",
     "counts": {
      "expansions": 11759,
      "goal_snap_m": 0,
@@ -1109,7 +1109,7 @@
     "status": "found"
    },
    {
-    "chain": "05b21f1cd29c5880ce37e7b783f14e7babd67e3c33449f54a3acd261cdf613ea",
+    "chain": "45af75b48806d381c3057355dba390d081580f9865c7939689558521e609a47d",
     "counts": {
      "expansions": 66707,
      "goal_snap_m": 0,
@@ -1127,7 +1127,7 @@
     "status": "found"
    },
    {
-    "chain": "e57306a3f4142fdcfd3dcc75d86c5c379dc4eca660c27cdce98dd32dc7247006",
+    "chain": "edb281032f7dab9a8c2ae2a35215d0ab2cdc8982914808a8d4cc3cf11cc7ab90",
     "counts": {
      "expansions": 15825,
      "goal_snap_m": 0,
@@ -1145,7 +1145,7 @@
     "status": "found"
    },
    {
-    "chain": "3251844a9cc1845b5471ddac61da3b97291ff04834793619f607f55d26ff7ce1",
+    "chain": "781591d9217e60141addd260da4aa2b984f06c256e8b460807872add502bb601",
     "counts": {
      "expansions": 10503,
      "goal_snap_m": 0,
@@ -1163,7 +1163,7 @@
     "status": "found"
    },
    {
-    "chain": "fb5ee3f3511a54088bceefadecf574941d93fa47eb8dc46543a40758ba27953a",
+    "chain": "383c07e623ab09c53f01d5e5df8da750a598d8b731697c460a37dc65650aeb9b",
     "counts": {
      "expansions": 6780,
      "goal_snap_m": 0,
@@ -1181,7 +1181,7 @@
     "status": "found"
    },
    {
-    "chain": "e7dc1be6ad2ae3e4741687d3e6253989f24805252ba9fec16d26b228088c95eb",
+    "chain": "0bc34feb3ede7b72e7b646ee06f75c2550c99f39ccd796f457e4786c84adeace",
     "counts": {
      "expansions": 30580,
      "goal_snap_m": 0,
@@ -1199,7 +1199,7 @@
     "status": "found"
    },
    {
-    "chain": "0dba5e86a2ce0822724d5ccb7f139a38c1a5a16064d824861a7c283e3805c70d",
+    "chain": "26263740771a34258496fed9a0d8bdf456dadf90b124f292cc7f53b44b08e1e2",
     "counts": {
      "expansions": 30732,
      "goal_snap_m": 0,
@@ -1217,7 +1217,7 @@
     "status": "found"
    },
    {
-    "chain": "2ba2f895cb113cf2273a97176e2c8fd457bd2dac35b7250866aa76f51e0354b3",
+    "chain": "d087788dc02d7a9b530095fd20e3fea68fa38df94ea4eb5a1d7f69dc50dd5d98",
     "counts": {
      "expansions": 3834,
      "goal_snap_m": 0,
@@ -1235,7 +1235,7 @@
     "status": "found"
    },
    {
-    "chain": "23d52922ddf45816f0f81c0f9e803b3503b7d617d130f269b6af15d8e4c4a2c0",
+    "chain": "0c4acb3462ebb50b11912b24e26c1ab3b2509a3601c285b35a6aca6a9b5e38d6",
     "counts": {
      "expansions": 8770,
      "goal_snap_m": 0,
@@ -1253,7 +1253,7 @@
     "status": "found"
    },
    {
-    "chain": "aab26a725c4f2ae1899e19435762416ed6093df0324059dd786d145fdb71462f",
+    "chain": "e6d069831271ff1afa5957a40f2c76e96663a754ef3f12fe47e10264b9675f92",
     "counts": {
      "expansions": 30418,
      "goal_snap_m": 0,
@@ -1271,7 +1271,7 @@
     "status": "found"
    },
    {
-    "chain": "38ad0b39e00b900032df203cb72a28ed1016a25eae6c00d21c820466a408c327",
+    "chain": "69b5920c5d1992745848b70503de3ba33bffc6d6e069ff5438c33dbf6b80a3b2",
     "counts": {
      "expansions": 17925,
      "goal_snap_m": 0,
@@ -1289,7 +1289,7 @@
     "status": "found"
    },
    {
-    "chain": "659b463c42ffbcecef4d9a2dc4dba7dbc38483c0a31894f107542947bee6bb66",
+    "chain": "9d9ad01927fc6ba36ab40d1b92bd4fe724aca31172bd4962f4012eebece28e4e",
     "counts": {
      "expansions": 26478,
      "goal_snap_m": 0,
@@ -1307,7 +1307,7 @@
     "status": "found"
    },
    {
-    "chain": "78363bd944761962600608ef60e33aa978dd10ab6e7d9435d39107dbff58f63b",
+    "chain": "ca00b9e04968b1cfc527b56e92aa953b1c4bf5ba0e6550c6a284baf316b7063a",
     "counts": {
      "expansions": 8038,
      "goal_snap_m": 0,
@@ -1325,7 +1325,7 @@
     "status": "found"
    },
    {
-    "chain": "b121d5925ef53f72e7e9b6b0a82781977489561dfa6cc9bc6e2063de19c12a84",
+    "chain": "6d6d553728da0e7d4ac4c4b3955c3c648920bf504c07018b3595b83348a5d8f0",
     "counts": {
      "expansions": 41862,
      "goal_snap_m": 0,
@@ -1343,7 +1343,7 @@
     "status": "found"
    },
    {
-    "chain": "892fb2a496c42369bf0d9a434c7e343442abdadcdb8d797f42b7ac20d97c016f",
+    "chain": "e8728b9f1a430aec02f3abb68f1afaf4da0e95879f1f3aedc44a42c0355145bb",
     "counts": {
      "expansions": 6070,
      "goal_snap_m": 0,
@@ -1361,7 +1361,7 @@
     "status": "found"
    },
    {
-    "chain": "cbb6e89d02d05e5815aee2944058388b122117adbb841075e473d2f52e6ace75",
+    "chain": "a54260587e6664b35cf458200ed75f679cde420d79cdd02d11aaf3ade80da7c6",
     "counts": {
      "expansions": 1880,
      "goal_snap_m": 0,
@@ -1379,7 +1379,7 @@
     "status": "found"
    },
    {
-    "chain": "768c26575f236513c935d5ece96a9d970702e5151a100e23773d16c7b59c6e17",
+    "chain": "76de447d1afbdfe479fa0144daafe0b7a3d7582e447b295bdbc5e3af95dc6901",
     "counts": {
      "expansions": 11250,
      "goal_snap_m": 0,
@@ -1397,7 +1397,7 @@
     "status": "found"
    },
    {
-    "chain": "8618973ece2a848650ae159ee964b87fcbe45fcfdf591bc4658b47e2b5381668",
+    "chain": "4615188dc289eb57c3c238154b58b05a4fa2d835286ab6afb7e8865b4b251052",
     "counts": {
      "expansions": 12082,
      "goal_snap_m": 0,
@@ -1415,7 +1415,7 @@
     "status": "found"
    },
    {
-    "chain": "c5dc3863bd69c10eddbe168e42a054dd4f7b9b7cba86a5737341e62fa94b585d",
+    "chain": "c79f8a63abadd767def5a7838183bdd14900825cf04e47deebdf2557f01d9bdc",
     "counts": {
      "expansions": 22586,
      "goal_snap_m": 0,
@@ -1433,7 +1433,7 @@
     "status": "found"
    },
    {
-    "chain": "e661abf9b2031f3812fbb9f8a1ba102d9a3b2a1b5aaa8c97548da62833729614",
+    "chain": "b7c512a1bd45ecb466710196bdbc04474623c57219a27bd10dde544f8621767a",
     "counts": {
      "expansions": 19410,
      "goal_snap_m": 0,
@@ -1451,7 +1451,7 @@
     "status": "found"
    },
    {
-    "chain": "4b15a925b54d88f1ead854cb933181a7d932706947e2b33dfd1bc5fdcd917df0",
+    "chain": "a0d21752154ca871ad659549e9d6e0e1ab70c5c0d043b8e442f5beda43175b30",
     "counts": {
      "expansions": 1240,
      "goal_snap_m": 0,
@@ -1469,7 +1469,7 @@
     "status": "found"
    },
    {
-    "chain": "820549687a7cbdb815761296b2a18dc2b02a24f5d73124a8a83ac5937ec39876",
+    "chain": "25ac5789736250cb60ccd7ed6ff5872810df1ae954c5d1bf2bfca237f6e8159d",
     "counts": {
      "expansions": 38724,
      "goal_snap_m": 0,
@@ -1487,7 +1487,7 @@
     "status": "found"
    },
    {
-    "chain": "5fcea8dc6781bdad13bfcb918944142e925916f889c0e2e600820550a35fcf88",
+    "chain": "94f9a5b18471cd73eea25776b28d8defe552ea7150c03ec41915ff784affd7c8",
     "counts": {
      "expansions": 9415,
      "goal_snap_m": 0,
@@ -1505,7 +1505,7 @@
     "status": "found"
    },
    {
-    "chain": "e667158d74c9e9316da31ae101b12cb9caac6cfe9bda9275a45397b245ae67ae",
+    "chain": "fca67358101a1d1606efc46c95bfa2613ded8207df2aa6a5351acc6e8b98dec9",
     "counts": {
      "expansions": 3742,
      "goal_snap_m": 0,
@@ -1523,7 +1523,7 @@
     "status": "found"
    },
    {
-    "chain": "ba6f5fc25a0b08d80b16614c18e96ed1db0242fa5236e6e449c7df52052f2520",
+    "chain": "7f5e3fec5d50582c787c382545b7109cf5112adaf9ce83c0c2d5fcd04fc603e9",
     "counts": {
      "expansions": 8220,
      "goal_snap_m": 0,
@@ -1541,7 +1541,7 @@
     "status": "found"
    },
    {
-    "chain": "d15e73aaec8a8d78f59686e3787c62cb36acbabe1617351b53b685b0327245a1",
+    "chain": "83da07e5ce628fa4e1a1e744351bfb725013b2bf95b6308e9ff3dfa0f584fd4a",
     "counts": {
      "expansions": 4535,
      "goal_snap_m": 0,
@@ -1559,7 +1559,7 @@
     "status": "found"
    },
    {
-    "chain": "80efedeb0d5d5730e9aff6d3f05e73f46444d6731f8776f00cea922491417fdc",
+    "chain": "8e35f02cb85f305d41676cf0f9546854f7a095dcfcd9bedc23ed5dbb58318fbe",
     "counts": {
      "expansions": 4790,
      "goal_snap_m": 0,
@@ -1577,7 +1577,7 @@
     "status": "found"
    },
    {
-    "chain": "a75aa65f6ea5a22757fd7db28efb90f3e698b0e85eea76639dbd5b64e60d92a6",
+    "chain": "8d73fedab15662db5f61672aaec4b4926a9cc840503232b529d03eec441ff34e",
     "counts": {
      "expansions": 15532,
      "goal_snap_m": 0,
@@ -1595,7 +1595,7 @@
     "status": "found"
    },
    {
-    "chain": "3c657e4bed524b3ba0fc258fdf650269049272b75f60ff43a1981a284240a745",
+    "chain": "2f347f54e373f3cacca00d67a180ae10fec0f0957220ec8ffb223703bb51e0f8",
     "counts": {
      "expansions": 12066,
      "goal_snap_m": 0,
@@ -1613,7 +1613,7 @@
     "status": "found"
    },
    {
-    "chain": "8bed99799c87dc82d1dc92535d57511dcd58820906f749063cfe13ff5d2b3799",
+    "chain": "8f22556c389b0381ab006c69149c4a863dbe6de3c74366be5fbf28a6a38deead",
     "counts": {
      "expansions": 19495,
      "goal_snap_m": 0,
@@ -1631,7 +1631,7 @@
     "status": "found"
    },
    {
-    "chain": "4d2c7ba9fb73df04256985589ce7e56a259f4d7bb04550dd6a63f19682c203fd",
+    "chain": "51de20fe926095992c751ffeda8d509fe653770cd61b96f5771664065d866ab0",
     "counts": {
      "expansions": 19985,
      "goal_snap_m": 0,
@@ -1649,7 +1649,7 @@
     "status": "found"
    },
    {
-    "chain": "23331173941bc69f508e2b0f4f031473221b84a3655aba7a5f279b83fe1127b5",
+    "chain": "e5d6610e759e0ac51db968e06315838252afa11f1d3399012a6ea329c356f894",
     "counts": {
      "expansions": 16075,
      "goal_snap_m": 0,
@@ -1667,7 +1667,7 @@
     "status": "found"
    },
    {
-    "chain": "8f1d6dd31eb65acc266fc86ad15324fe188cbbb9bc87a32d022e21102de1646d",
+    "chain": "f395c4dd63743248b6f5296d7f8f0db987c7a23c56e4d93939f729319d922265",
     "counts": {
      "expansions": 17869,
      "goal_snap_m": 0,
@@ -1685,7 +1685,7 @@
     "status": "found"
    },
    {
-    "chain": "45c714f6303e722f5759c03ee1b7275e211bb884f1228845515bf459f13ad17f",
+    "chain": "64543a16446e694756b70b0fe28e95e04fcbbf7010e6d7737405871725ec490f",
     "counts": {
      "expansions": 14280,
      "goal_snap_m": 0,
@@ -1703,7 +1703,7 @@
     "status": "found"
    },
    {
-    "chain": "5d82f4d9aa9006baefc8842203198260493b1c5829ee1e138614ff265074ed73",
+    "chain": "3fb20b484871ca78692e4b4aa0bb3b0737d1950fd1cffc6c1c69cb8268042809",
     "counts": {
      "expansions": 15418,
      "goal_snap_m": 0,
@@ -1721,7 +1721,7 @@
     "status": "found"
    },
    {
-    "chain": "3d1d4c2a3dace96f5b080f09e2dca0f222299354622d647b72b83db1a4c5a316",
+    "chain": "65aaa406c59dd9f4c34ce6842791778d847ff9cc28815f93f34324cbad41e73f",
     "counts": {
      "expansions": 3169,
      "goal_snap_m": 0,
@@ -1739,7 +1739,7 @@
     "status": "found"
    },
    {
-    "chain": "4b9d86a3473a0328798d7a017b71e57f41469fdf1bc98839f42e748a72ca6b3f",
+    "chain": "37785647325c8ef0f93db149034775ee5e1212de559b9044db71e479a0351fca",
     "counts": {
      "expansions": 798,
      "goal_snap_m": 0,
@@ -1757,7 +1757,7 @@
     "status": "found"
    },
    {
-    "chain": "402048a3498213db184ec1e0afbdd2064546b74fc77192cb2d60358adf2273e3",
+    "chain": "b88832b4603b02b1066a7606a1827d9a8639dbeedbf1bed0dec39252124f5ad4",
     "counts": {
      "expansions": 13379,
      "goal_snap_m": 0,
@@ -1775,7 +1775,7 @@
     "status": "found"
    },
    {
-    "chain": "f5f8f0a84c8314717ab2357390d54031a2f6c4e5bd3b169bf70c3130dc799cfe",
+    "chain": "3870bcd35131463a7b25bb76c3c5a32461c4fc6add26ac70952d5305285e102e",
     "counts": {
      "expansions": 1531,
      "goal_snap_m": 0,
@@ -1793,7 +1793,7 @@
     "status": "found"
    },
    {
-    "chain": "92db5105022c36fd17bd1e75b786b81c9a9f2df0d6bfae0bf24ab88dcafe2b5f",
+    "chain": "b1633d537d0c61763e3f675a8e0e13c21ae6413491e43b11de7a9733f9f3166a",
     "counts": {
      "expansions": 17706,
      "goal_snap_m": 0,
@@ -1811,7 +1811,7 @@
     "status": "found"
    },
    {
-    "chain": "62ee7d3a40ba87bec1f3e14f32b610f746a0b17ce92541176ad8dda459522674",
+    "chain": "8926748c9bcfd82c8c867e80669f0feabd71daba2417cf6a94a7395d783dcd3e",
     "counts": {
      "expansions": 15652,
      "goal_snap_m": 0,
@@ -1829,7 +1829,7 @@
     "status": "found"
    },
    {
-    "chain": "86052f4477bec8ba9309144edae65bfb94470f917dc89ea4186dfb8e7d0b5ce9",
+    "chain": "96858146318fad5d1509263f85be05c1edc6203c74534b5517b76657d98d3bf0",
     "counts": {
      "expansions": 11585,
      "goal_snap_m": 0,
@@ -1847,7 +1847,7 @@
     "status": "found"
    },
    {
-    "chain": "931cadd1ac1c6fa96501a33e81521cc295f5b04979e67dcc609ca604cc416859",
+    "chain": "994473d15e35b9ab5e59c2eb9fee94cde7502df687188bf49e123e1bc03e04ff",
     "counts": {
      "expansions": 18002,
      "goal_snap_m": 0,
@@ -1865,7 +1865,7 @@
     "status": "found"
    },
    {
-    "chain": "568bc268465dad3cf093e6d54a954a8196b045f62b4bb7547e4e36f3ab40c1e3",
+    "chain": "aff223e4cf44383f7b2e4182b3cf2bde394d887d20452fc887adde02d2d22ec9",
     "counts": {
      "expansions": 2557,
      "goal_snap_m": 0,
@@ -1883,7 +1883,7 @@
     "status": "found"
    },
    {
-    "chain": "054342b107733cf7ec52eceea265d530738c502da769f7852005d473c686642b",
+    "chain": "204591d98bbe032bf857abc24978f9f0e1ead9f1c97db8cf42e6d97b31854e0c",
     "counts": {
      "expansions": 28565,
      "goal_snap_m": 0,
@@ -1901,7 +1901,7 @@
     "status": "found"
    },
    {
-    "chain": "851dcf9f35538d4ce2cf6b30276bb5bb45455f7b07d5d58cd2e64495edf41c6e",
+    "chain": "5eeb5e07310bba7e20f3f72f65c1dbe8e9213f93f64c74d05235dbbb474eb20b",
     "counts": {
      "expansions": 11919,
      "goal_snap_m": 0,
@@ -1919,7 +1919,7 @@
     "status": "found"
    },
    {
-    "chain": "fa9a8d8ced4d4d4f06b8e2b529484bf08d2b03b78cbc689afe2b37f0fff92010",
+    "chain": "701926ac7d0de50a83723a2cf9b3962e31ff6bb6ccb62f599a14ee8b3baec8ef",
     "counts": {
      "expansions": 18330,
      "goal_snap_m": 0,
@@ -1937,7 +1937,7 @@
     "status": "found"
    },
    {
-    "chain": "38cb7e1489ad37b8d1547e02de066188068924761a7c7ab37158cfb3875371e8",
+    "chain": "28d12a4d3f01807ef7311fdc40ce5f9ea38990ac74c1b9b9731f7c4cf33918c5",
     "counts": {
      "expansions": 26069,
      "goal_snap_m": 0,
@@ -1955,7 +1955,7 @@
     "status": "found"
    },
    {
-    "chain": "c01b2a57fc18136ad16de267e60dce003b97e3db3acbbfa9de99da891468e867",
+    "chain": "2968927766f9bb8e1764cb962d035411176890d6a821adb8ff6502a583f17665",
     "counts": {
      "expansions": 192,
      "goal_snap_m": 0,
@@ -1973,7 +1973,7 @@
     "status": "found"
    },
    {
-    "chain": "2673e6cd3fb40d9d9b8f8ce80f96869a5de8d1160a8be8b74a5bd1e00a14276a",
+    "chain": "910e3591b9e6d65f2249bba1a53b5f8f2d0279cfdaee213ff9a86d343f6773f2",
     "counts": {
      "expansions": 23945,
      "goal_snap_m": 0,
@@ -1991,7 +1991,7 @@
     "status": "found"
    },
    {
-    "chain": "cf507ecfba4cc23eebba31694a960a066f369737600685e712333d4572826057",
+    "chain": "d6636a63426ce954c40b4f2e5fa4a55b9ca360cb4eb15a0cc3d2c241a7728c20",
     "counts": {
      "expansions": 28010,
      "goal_snap_m": 0,
@@ -2009,7 +2009,7 @@
     "status": "found"
    },
    {
-    "chain": "f21e20a283ce46b79ece6ce89f259c4071c343d97fc550c05e8f917368291187",
+    "chain": "095d2d4f4a4c99b34a1cd006c8e2284214b884eec00deb19103dc7008d1f7afe",
     "counts": {
      "expansions": 30297,
      "goal_snap_m": 0,
@@ -2027,7 +2027,7 @@
     "status": "found"
    },
    {
-    "chain": "d435cb90ec25e5865f95aaec2fe5da8e39add0175beb43c81de2cebf9da6fcb2",
+    "chain": "a2a86251c82b58b02b5270b78c660a845c189908000fb4fa22da88453b88744e",
     "counts": {
      "expansions": 4114,
      "goal_snap_m": 0,
@@ -2045,7 +2045,7 @@
     "status": "found"
    },
    {
-    "chain": "051784d14ca67dbcb09b87d9267b775cc9090ac0ec7729df0bf2607953cf972d",
+    "chain": "8f3a37a608e2709bf6415026bd26cd4d9da33073c4f32d23e0f89d3a4e53cd65",
     "counts": {
      "expansions": 10914,
      "goal_snap_m": 0,
@@ -2063,7 +2063,7 @@
     "status": "found"
    },
    {
-    "chain": "744d3a12beec4ac3b837121a7de7a341a6baf6972b9e4acbe9dcaa5b44603c59",
+    "chain": "4eec4eaebae213a6bccc376606882b2234a288a383fb779d8e4d593e32b17516",
     "counts": {
      "expansions": 35803,
      "goal_snap_m": 0,
@@ -2081,7 +2081,7 @@
     "status": "found"
    },
    {
-    "chain": "15a019b204f9cdd7b278681555e40970cea759c08633a46aa92832b6e79c52ea",
+    "chain": "c858125fbe7cb7fa84589c787e179ab35d5d70580ece91dd1093e08f1305531f",
     "counts": {
      "expansions": 42521,
      "goal_snap_m": 0,
@@ -2099,7 +2099,7 @@
     "status": "found"
    },
    {
-    "chain": "0d410c360c2c0df23b2e6dfe30e35d032eba267d0c8681e3c999d7c2018dc217",
+    "chain": "f71fa4a6fa48bd6493261f2c6c74268eaeb6c2df86a3a125e648968005796204",
     "counts": {
      "expansions": 37247,
      "goal_snap_m": 0,
@@ -2117,7 +2117,7 @@
     "status": "found"
    },
    {
-    "chain": "f58f56a637be11a900b353bf63d29017341b309103d6760220511587b8699a62",
+    "chain": "7519768bfcaacd3f0c65d1a1b1bfb206dd5301c3c76b0fb584eff96cfc41d6d9",
     "counts": {
      "expansions": 36876,
      "goal_snap_m": 0,
@@ -2135,7 +2135,7 @@
     "status": "found"
    },
    {
-    "chain": "7ab0b7d1a6f1bec68f7784b30559beaed3fd46640e9dbba590571977510eec13",
+    "chain": "309231435c2f6c1ed3c3c0cce07cb4c5a622ba0ad3292eaa522aba51bfa19474",
     "counts": {
      "expansions": 37138,
      "goal_snap_m": 0,
@@ -2153,7 +2153,7 @@
     "status": "found"
    },
    {
-    "chain": "dbf7dd8219993da6a9096a3042f19ddd18ae3d2dd81d823bd42a30a80b5b3a2b",
+    "chain": "18d7732515187ace5be356bea2eb9939f5696f2e16d91be8792d4d7d4339c323",
     "counts": {
      "expansions": 522,
      "goal_snap_m": 0,
@@ -2171,7 +2171,7 @@
     "status": "found"
    },
    {
-    "chain": "02fa51c68267b94d0f5f64bf33b17990098e479158f0ad007edec892ca0ca8c8",
+    "chain": "6c823130de4f5ed616c22fe5fb53e68ce32abb50d29bb95effad4f4ec0f73e9b",
     "counts": {
      "expansions": 29087,
      "goal_snap_m": 0,
@@ -2189,7 +2189,7 @@
     "status": "found"
    },
    {
-    "chain": "c5c3e9fca96faee17e0b8a7f43063b658cf5dea9117969cda13619a95cd53163",
+    "chain": "554237cb61826acc0cc02aedc260a5496eb1c444ea12e3b0b8aaa4b243bd9ccd",
     "counts": {
      "expansions": 36802,
      "goal_snap_m": 0,
@@ -2207,7 +2207,7 @@
     "status": "found"
    },
    {
-    "chain": "0d79a4f93edf26fbf00fd7dcffc4d8d90b36c4d92b91cccfb6f51aabd31cc8c2",
+    "chain": "d0103ca638e4259118bb51aafdab8bc6a2db5c3c67dc40ba09b118b8cf9eef4a",
     "counts": {
      "expansions": 27634,
      "goal_snap_m": 0,
@@ -2225,7 +2225,7 @@
     "status": "found"
    },
    {
-    "chain": "f6295eb13eaceab29e0a020a147215c2f702c4d848dfb43cc81fb46428b1dee1",
+    "chain": "ff079dde861586e2ccf5066535879ffd4d1692943c43e49529168c65b07f9e92",
     "counts": {
      "expansions": 31748,
      "goal_snap_m": 0,
@@ -2246,10 +2246,10 @@
   "scenarios": 100,
   "score": {
    "compute_ms": {
-    "median": 707.7387849999894,
+    "median": 2377.651930000866,
     "n": 100,
-    "q1": 327.63342425000985,
-    "q3": 1816.4735980000019
+    "q1": 1061.823142998037,
+    "q3": 5746.755196500999
    },
    "expansions": {
     "median": 15796,
@@ -2278,7 +2278,33 @@
     1
    ]
   },
-  "spec_id": "e92a67a3e113ad2a",
+  "spec_id": "8a053466d534fffe",
+  "tiers": {
+   "easy": {
+    "n": 34,
+    "successes": 34,
+    "wilson95": [
+     0.8984854458466761,
+     1
+    ]
+   },
+   "hard": {
+    "n": 33,
+    "successes": 33,
+    "wilson95": [
+     0.895730002457548,
+     1
+    ]
+   },
+   "medium": {
+    "n": 33,
+    "successes": 33,
+    "wilson95": [
+     0.895730002457548,
+     1
+    ]
+   }
+  },
   "worst": {
    "scenario": "s098",
    "scenario_index": 97,
@@ -2292,7 +2318,7 @@
   "experiment": 1,
   "model_hash_version": 3,
   "suite": "depot-nav-100",
-  "suite_version": 0,
-  "verifier": 1
+  "suite_version": 1,
+  "verifier": 2
  }
 }

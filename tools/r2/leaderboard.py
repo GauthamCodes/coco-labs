@@ -247,7 +247,8 @@ def user_entry(d: Path):
 def claim(d: Path, workers: int) -> dict:
     """Write the submission's summary.json: the canonical public run's summary (the claim)."""
     meta, src, family, algo = user_entry(d)
-    p = ex.plan(canonical_spec(family, d.parent.name, algo, {'kind': 'suite', 'id': d.parent.name}))
+    p = ex.plan(canonical_spec(family, d.parent.name, algo,
+                               {'kind': 'suite', 'id': d.parent.name, 'version': SUITE_VERSION}))
     recs = _run(p, workers, {algo['code_sha256']: src})
     summ = ex.plain(ex.summarise(p, recs))
     (d / 'summary.json').write_text(json.dumps(summ, indent=1, sort_keys=True,
