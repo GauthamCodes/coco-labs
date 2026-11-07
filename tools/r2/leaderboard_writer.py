@@ -31,8 +31,9 @@ FILES = re.compile(r'^leaderboard/submissions/([a-z0-9-]+)/([a-z0-9][a-z0-9_-]{1
 #: only for a submission the PR makes, and only while it equals the verified result
 RESULT = re.compile(r'^leaderboard/results/([a-z0-9-]+)/([a-z0-9][a-z0-9_-]{1,39})/result\.json$')
 MAX_BYTES = 8 * 1024 * 1024
-#: what may differ between two verifications of the same entry (the machine)
-VOLATILE = ('host',)
+#: what may differ between two verifications of the same entry: the machine, and (R3.3, ADR
+#: 0014) the secret held-out result, drawn fresh for every head (a re-commit for it would loop)
+VOLATILE = ('host', 'held_out_secret')
 
 
 class Invalid(ValueError):
@@ -215,6 +216,18 @@ def write(verification: Path) -> int:
         if p.stat().st_size > MAX_BYTES:
             raise Invalid(f'{p}: too large')
         results.append((str(p.relative_to(verification)), validate(json.loads(p.read_text()))))
+    agg_dir = os.environ.get('HELDOUT_DIR')
+    for _, r in results:   # R3.3 (ADR 0014): the secret held-out aggregate of this head
+        e = r.get('entry')
+        if not agg_dir or not e:
+            continue
+        h = secret_heldout(agg_dir, e['suite'], e['name'])
+        if h is None:
+            r['held_out_secret'] = None
+            r['problems'].append('the secret held-out run gave no valid result')
+            r['verified'] = False
+        else:
+            r['held_out_secret'] = h if h == 'none' else dict(h, head=head)
     scope_ok, committed = in_scope(names)
     same_repo = os.environ.get('HEAD_REPO') == repo
     # a fork's result.json must be the verified one; on a same-repository branch (writable only

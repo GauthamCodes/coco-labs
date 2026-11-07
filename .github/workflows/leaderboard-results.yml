@@ -134,8 +134,15 @@ jobs:
           path: verification
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: The held-out aggregates (data; ADR 0014)
+        if: needs.heldout.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: leaderboard-heldout
+          path: heldout_agg
       - name: Validate, comment, label (and commit the result for a same-repository PR)
         env:
+          HELDOUT_DIR: ${{ needs.heldout.result == 'success' && 'heldout_agg' || 'heldout_missing' }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
