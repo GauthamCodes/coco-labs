@@ -1,0 +1,106 @@
+{
+ "algorithms": [
+  {
+   "id": "mcl",
+   "label": "MCL",
+   "name": "mcl",
+   "params": {
+    "mcl.aggregate": "amcl",
+    "mcl.alpha_fast": 0.1,
+    "mcl.alpha_slow": 0.001,
+    "mcl.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "mcl.beams": 12,
+    "mcl.init": "tracking",
+    "mcl.inject_fraction": 0.05,
+    "mcl.particles": 60,
+    "mcl.resample": "always",
+    "mcl.sigma_hit": 0.2
+   }
+  },
+  {
+   "id": "mcl_augmented",
+   "label": "MCL + augmented injection",
+   "name": "mcl_augmented",
+   "params": {
+    "mcl.aggregate": "amcl",
+    "mcl.alpha_fast": 0.1,
+    "mcl.alpha_slow": 0.001,
+    "mcl.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "mcl.beams": 12,
+    "mcl.init": "tracking",
+    "mcl.inject_fraction": 0.05,
+    "mcl.particles": 60,
+    "mcl.resample": "always",
+    "mcl.sigma_hit": 0.2
+   }
+  },
+  {
+   "id": "ekf",
+   "label": "EKF",
+   "name": "ekf",
+   "params": {
+    "ekf.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "ekf.beams": 12,
+    "ekf.gate": 9,
+    "ekf.init": "tracking",
+    "ekf.sigma_hit": 0.2
+   }
+  }
+ ],
+ "family": "localisation",
+ "limits": {
+  "max_ticks": 3000
+ },
+ "metrics": [
+  "time_s",
+  "ticks",
+  "path_length_m",
+  "min_clearance_m",
+  "mean_clearance_m",
+  "heading_change_rad",
+  "contacts",
+  "expansions",
+  "plans",
+  "final_goal_distance_m",
+  "final_err_xy_m",
+  "final_err_yaw_rad",
+  "mean_err_xy_m",
+  "max_err_xy_m",
+  "converged_s",
+  "recovery_s",
+  "compute_ms"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "id": "arena-nav-50",
+  "kind": "suite",
+  "version": 1
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 1,
+ "sweep": {
+  "params": []
+ },
+ "title": "COCO-Bench v1 baseline: arena-nav-50, localisation, public",
+ "world": "coco_arena_v1",
+ "world_sha256": "87f5d88f40af39bc98bc0b9cfac5dd2ce1686370fcca7aec8d171ff0181290f0"
+}
