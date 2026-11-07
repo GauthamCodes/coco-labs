@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { REPO_BLOB_URL } from '../../site.config';
 import { ModeNav } from '../ui/ModeNav';
-import { BIBTEX } from './citation';
+import { BIBTEX, REPRODUCE_QUERY } from './citation';
 import './shell.css';
 const BASE = import.meta.env.BASE_URL;
 export function AboutPage() {
@@ -34,6 +34,7 @@ export function AboutPage() {
         void navigator.clipboard.writeText(BIBTEX).then(() => { b.textContent = 'Copied'; }, () => { b.textContent = 'Select the text above to copy'; });
       } catch { b.textContent = 'Select the text above to copy'; }
     }}>Copy citation</button></p>
+    <p><a href={`${BASE}${REPRODUCE_QUERY}`} data-testid="reproduce-paper">Reproduce this paper</a>: opens the Workbench with the paper's browser experiment (every built-in planner on depot-nav-100) and checks that your browser computes the same digest.</p>
     <h2>Credits and licences</h2>
     <p>COCO's CAD, robot and warehouse assets are Gautham Anil's work. COCO Lab is <a href={`${REPO_BLOB_URL}LICENSE`}>Apache-2.0 software</a>.</p>
     <p>Display type: Outfit. Interface type: Manrope. Both are self-hosted under the SIL Open Font License: <a href={`${BASE}licenses/outfit.txt`}>Outfit licence</a>, <a href={`${BASE}licenses/manrope.txt`}>Manrope licence</a>. Icons: Lucide, ISC, with the retained Feather MIT notice: <a href={`${BASE}licenses/lucide.txt`}>icon licence</a>.</p>

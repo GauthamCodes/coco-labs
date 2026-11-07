@@ -9,6 +9,7 @@ PY ?= python3
 all: paper.pdf
 
 generated:
+	$(PY) -P ../../tools/r3/paper_link.py
 	$(PY) -P scripts/paper_numbers.py
 	$(PY) -P scripts/tables.py
 	$(PY) -P scripts/figures.py
@@ -18,6 +19,7 @@ paper.pdf: generated main.tex refs.bib sections/*.tex
 	latexmk -pdf -interaction=nonstopmode -halt-on-error -jobname=paper main.tex
 
 check:
+	$(PY) -P ../../tools/r3/paper_link.py --check
 	$(PY) -P scripts/paper_numbers.py --check
 	$(PY) -P scripts/tables.py --check
 	$(PY) -P scripts/figures.py --check

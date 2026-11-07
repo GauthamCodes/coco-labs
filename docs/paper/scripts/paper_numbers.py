@@ -138,6 +138,8 @@ def macros():
     add('BenchControlSuites', len(fam.get('control', ())), src)
     add('BenchLocalisationSuites', len(fam.get('localisation', ())), src)
     add('BenchHeldOutTotal', sum(x['held_out']['n'] for x in suites), src)
+    REP = 'docs/paper/generated/reproduce.json'
+    add('ReproduceRuns', j(REP)['runs'], REP)
     add('BenchCarried', sum(1 for x in suites if x.get('from_v0')), src)
     depot = j('worlds/coco_depot_v1.json')
     b = depot['bounds']
