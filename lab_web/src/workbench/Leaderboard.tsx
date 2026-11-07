@@ -87,7 +87,7 @@ function EntryRow({ e, rank, cols }: { e: Entry; rank: number; cols: { key: keyo
   return <>
     <tr data-testid={`entry-${e.entry.name}`}>
       <td>{rank}</td>
-      <th scope="row"><b>{e.entry.display_name}</b>{sub ? '' : ' (built-in)'}<div className="wb-muted">{e.entry.author} · {e.entry.licence}{e.entry.paper ? <> · <a href={e.entry.paper}>paper</a></> : null}</div></th>
+      <th scope="row"><b>{e.entry.display_name}</b>{sub ? '' : ' (built-in)'}<div className="wb-muted">{e.entry.author} · {e.entry.licence}{e.entry.paper?.startsWith('https://') ? <> · <a href={e.entry.paper} rel="noopener noreferrer">paper</a></> : null}</div></th>
       <td>{pct(s)}{ci(s)}</td>
       {cols.map((c) => <td key={c.key}>{med(s[c.key] as Q | undefined)}</td>)}
       <td>{pct(h)}{ci(h)}{h.path_ratio ? ` · ratio ${med(h.path_ratio)}` : ''}</td>

@@ -81,6 +81,9 @@ def validate(r: dict) -> dict:
             'planning', 'control', 'localisation') or e['kind'] not in ('submission', 'builtin'):
         raise Invalid('entry licence / family / kind')
     _text(e.get('paper'), 'entry.paper', 500, none=True)
+    # the verify job's read_meta already requires https://; the writer re-checks (a PR controls its workflow file)
+    if e.get('paper') is not None and not re.fullmatch(r'https://[^\s"\'<>`]+', e['paper']):
+        raise Invalid('entry.paper is an https:// URL')
     for part in ('public', 'held_out'):
         s = (r.get(part) or {}).get('score')
         if not isinstance(s, dict):

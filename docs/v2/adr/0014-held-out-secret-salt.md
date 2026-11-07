@@ -14,7 +14,7 @@
 ## Decision
 
 1. **Seed.** `seed = int(HMAC-SHA256(key = SECRET, msg = "coco-bench.held-out.v1|" + suite + "|" + head_sha)[:13], 16)`
-   (53 bits, as every experiment seed). `head_sha` is the pull request's head commit, so **every push gets a
+   (52 bits: the first 13 hex digits; within the 53-bit seed range). `head_sha` is the pull request's head commit, so **every push gets a
    fresh, unpredictable held-out set**: a set, once seen, is never used again.
 2. **Where the secret lives.** A repository secret `COCO_HELDOUT_SECRET` (32 random bytes, hex), readable only by
    the trusted workflow `leaderboard-heldout.yml` (`workflow_run` after "Leaderboard verify" succeeds; runs the

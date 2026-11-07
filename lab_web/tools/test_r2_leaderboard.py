@@ -47,6 +47,9 @@ def test_writer_accepts_a_verifier_result():
     {'public': {'score': {'n': 100, 'successes': 101}}},
     {'public': {'score': {'n': 100, 'successes': 1, 'path_ratio': {'median': float('nan')}}}},
     {'checks': {'deterministic': 'true'}},
+    # R3 review: a paper link must be https:// (a PR controls its verify workflow file)
+    {'entry': {'suite': 'depot-nav-100', 'name': 'ok_name', 'display_name': 'x', 'author': 'a', 'description': 'd',
+               'licence': 'MIT', 'family': 'planning', 'kind': 'submission', 'paper': 'javascript:alert(1)'}},
 ])
 def test_writer_refuses_anything_else(bad):
     with pytest.raises(W.Invalid):

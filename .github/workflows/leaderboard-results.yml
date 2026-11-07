@@ -79,6 +79,7 @@ jobs:
           set -euo pipefail
           mkdir -p heldout
           if [ -z "$COCO_HELDOUT_SECRET" ]; then echo "no secret configured" > heldout/NONE; exit 0; fi
+          shopt -s nullglob
           for d in sub/*/; do
             suite=$(basename "$d")
             PYTHONPATH=coco_lab:coco_schemas:coco_config "$RUNNER_TEMP/venv/bin/python" -P \
@@ -89,11 +90,12 @@ jobs:
         run: |
           set -uo pipefail
           mkdir -p agg
+          shopt -s nullglob
           for d in sub/*/*/; do
             suite=$(basename "$(dirname "$d")"); name=$(basename "$d")
             o="$RUNNER_TEMP/out/$suite/$name"; mkdir -p "$o" && chmod 0777 "$o"
             # output to a file that is never printed or uploaded (ADR 0014, T4)
-            timeout 140m docker run --rm --network none --read-only --tmpfs /tmp:size=256m \
+            timeout 60m docker run --rm --network none --read-only --tmpfs /tmp:size=256m \
               --cpus 2 --memory 4g --memory-swap 4g --pids-limit 256 --cap-drop ALL \
               --security-opt no-new-privileges --user 65534:65534 \
               -v "$PWD/$d:/submissions/$suite/$name:ro" \

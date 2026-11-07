@@ -59,7 +59,7 @@ class SubmissionError(ValueError):
 
 
 def held_out_seed(suite_id: str, merge_base: str) -> int:
-    """Return the held-out scenarios' seed (53 bits, as every experiment seed)."""
+    """Return the held-out scenarios' seed (52 bits: 13 hex digits, within the 53-bit seed range)."""
     h = hashlib.sha256(f'{SALT}|{suite_id}|{merge_base}'.encode()).hexdigest()
     return int(h[:13], 16)
 
