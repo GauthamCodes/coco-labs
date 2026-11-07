@@ -28,6 +28,9 @@ const step = (name, ok, detail = {}) => {
   console.log(`${ok ? 'ok  ' : 'FAIL'} ${name} ${JSON.stringify(detail).slice(0, 300)}`);
 };
 const browser = await chromium.launch({ args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'] });
+// a screenshot is evidence, not a site function: a timeout is noted, never a failure
+const shot = (pg, path, opts = {}) => pg.screenshot({ path, timeout: 60000, ...opts })
+  .catch((e) => report.errors_screenshots = [...(report.errors_screenshots ?? []), `${path}: ${String(e).slice(0, 120)}`]);
 const watch = (p, tag) => {
   p.on('pageerror', (e) => report.errors.push(`${tag}: ${String(e)}`));
   p.on('console', (m) => { if (m.type() === 'error') report.errors.push(`${tag}: ${m.text()}`.slice(0, 400)); });
@@ -53,7 +56,7 @@ try {
     }
     const reloaded = await p0.evaluate(() => performance.getEntriesByType('navigation')[0]?.type === 'reload');
     step('an open tab shows "New version ready" and was not reloaded', shown && !reloaded, { shown, reloaded });
-    await p0.screenshot({ path: join(out, 'open-tab-update.png') });
+    await shot(p0, join(out, 'open-tab-update.png'));
     await ctx0.close();
   }
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
@@ -65,7 +68,7 @@ try {
   await p.waitForTimeout(3000);
   const title = await p.title();
   step('title screen', /COCO/.test(title), { title });
-  await p.screenshot({ path: join(out, 'title.png') });
+  await shot(p, join(out, 'title.png'));
   // 2. Play: a Fetch Rush round starts and COCO moves under AUTO
   await p.goto(`${site}?view=play&game=fetch_rush&seed=1&tier=low`);
   await p.waitForSelector('[data-testid="g1-play"]:not([disabled])', { timeout: 240000 });
@@ -78,12 +81,12 @@ try {
   const b = await pose();
   const moved = !!(a && b && b.tick > a.tick && JSON.stringify(a.pose) !== JSON.stringify(b.pose));
   step('Play: a Fetch Rush round starts and COCO moves under AUTO', moved, { a, b });
-  await p.screenshot({ path: join(out, 'play.png') });
+  await shot(p, join(out, 'play.png'));
   // 3. Compare
   await p.goto(`${site}?view=compare`);
   const cmp = await p.locator('[data-testid="compare-workspace"][data-ready="true"]').waitFor({ timeout: 240000 }).then(() => true, () => false);
   step('Compare: the workspace is ready', cmp);
-  await p.screenshot({ path: join(out, 'compare.png') });
+  await shot(p, join(out, 'compare.png'));
   // 4. Workbench: a small experiment runs to a digest
   const spec = { schema: 'coco.experiment.v1', family: 'planning', world: 'coco_arena_v1',
     algorithms: [{ name: 'astar' }, { name: 'dijkstra' }], scenarios: { kind: 'sampled', n: 3, seed: 7 } };
@@ -94,25 +97,32 @@ try {
   await p.locator('.wb-runbar button[type=submit]').click();
   const digest = await p.locator('[data-testid="wb-digest"]').innerText({ timeout: 600000 }).catch(() => '');
   step('Workbench: a small experiment runs', /[0-9a-f]{16}/.test(digest), { digest: digest.slice(0, 80) });
-  await p.screenshot({ path: join(out, 'workbench.png') });
+  await shot(p, join(out, 'workbench.png'));
   // 5. Studio: the A* starter runs
   await p.goto(`${site}?view=workbench&tab=studio`);
   await p.locator('[data-testid=studio-editor] .cm-content').waitFor({ timeout: 240000 });
   await p.locator('[data-testid=studio-run]').click();
-  const st = await p.locator('[data-testid=studio-results]').innerText({ timeout: 600000 }).catch(() => '');
-  step('Studio: the A* starter runs', /found/.test(st), { results: st.slice(0, 120) });
-  await p.screenshot({ path: join(out, 'studio.png') });
+  // the results table appears at once ("running…"); wait for the run's own status to settle
+  // (as tools/r2/studio_check.mjs does)
+  let st = '';
+  for (const t0 = Date.now(); Date.now() - t0 < 600000;) {
+    st = await p.locator('[data-testid=studio-status-0]').innerText().catch(() => '');
+    if (st && !/running/i.test(st)) break;
+    await p.waitForTimeout(1000);
+  }
+  step('Studio: the A* starter runs', /found/.test(st), { status: st.slice(0, 120) });
+  await shot(p, join(out, 'studio.png'));
   // 6. Leaderboard
   await p.goto(`${site}?view=workbench&tab=leaderboard`);
   const lb = await p.locator('[data-testid="leaderboard"] table').first().waitFor({ timeout: 120000 }).then(() => true, () => false);
   const lbText = lb ? await p.locator('[data-testid="leaderboard"]').innerText() : '';
   step('Leaderboard: the boards render', lb, { theta_listed: /Theta/.test(lbText) });
-  await p.screenshot({ path: join(out, 'leaderboard.png'), fullPage: true });
+  await shot(p, join(out, 'leaderboard.png'), { fullPage: true });
   // 7. Learn
   await p.goto(`${site}?view=learn`);
   const learn = await p.locator('[data-testid="learn-page"]').waitFor({ timeout: 120000 }).then(() => true, () => false);
   step('Learn renders', learn);
-  await p.screenshot({ path: join(out, 'learn.png') });
+  await shot(p, join(out, 'learn.png'));
   report.page_errors = report.errors.length;
   step('no page errors', report.errors.length === 0, { n: report.errors.length });
 } catch (e) {

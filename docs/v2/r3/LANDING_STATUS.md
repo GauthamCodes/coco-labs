@@ -41,9 +41,10 @@ Recorded in README §9 ("Standing merge and deploy authority"), AGENTS.md (Git s
 | PR #31 retargeted to main | done (REST API; `gh pr edit` failed on the classic-Projects deprecation) | |
 | gap 1: the writer's own `result.json` broke both scope checks | fixed by **PR #33** (merged `90c3dce`) | |
 | gap 2: the committed leaderboard index went stale when a result was committed | fixed by **PR #34** (merged `bbc94ca`): the index is generated at build | |
-| gap 3: the generated index carried Theta\*'s `paper` URL into the site; `check_dist` refused it (twice: the intermediate shipped too) | **PR #35** open: the paper link allowed only as an entry's `paper` in the leaderboard file; the intermediate moved | Lab run 42335350980 |
-| PR #31 merge | after #35: update-branch, approve the bot's runs, merge under the gate | |
-| deploy + live smoke | after #31 | |
+| gap 3: the generated index carried Theta\*'s `paper` URL into the site; `check_dist` refused it (twice: the intermediate shipped too) | fixed by **PR #35** (merged `56e9318`) | Lab run 42335350980 |
+| PR #31 merge | **done 2026-11-07**, merge commit `adde736` (exact head `10488e0` all green; verified: public 100/100, ratio 0.978, held-out 20/20) | self-review on #31 |
+| deploy + live smoke | **done**: deploy run 42356268133 (success); live smoke PASS (attempt 3; attempt 1 proved "New version ready" in an open tab) | [`data/deploy1/`](data/deploy1/README.md) |
+| real phone | not connected: pending | |
 
 Notes: each main merge into #31 moves its merge-base, which R2's public-salt held-out seed hashes, so the trusted
 writer re-commits a new `result.json` (same-repository branch: overwritten, as #33 intends) and the bot commit's
