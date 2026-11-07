@@ -260,11 +260,16 @@ function main() {
   // R2.6: the leaderboard (leaderboard/index.json, ranked by tools/r2/leaderboard.py index) and
   // each submission's file, which the Studio opens (shown, never run without consent)
   const r2Dir = join(out, 'r2');
+  // R3 Part A: generated from leaderboard/results/ by build_catalog.py (which runs first) as
+  // generated/leaderboard_index.json; MOVED here, so it ships once (a second run of this script
+  // without the catalog keeps the board it made before)
+  const board = join(out, 'leaderboard_index.json');
+  const prevBoard = join(r2Dir, 'leaderboard.json');
+  const boardBytes = existsSync(board) ? readFileSync(board) : existsSync(prevBoard) ? readFileSync(prevBoard) : null;
   rmSync(r2Dir, { recursive: true, force: true });
   mkdirSync(join(r2Dir, 'submissions'), { recursive: true });
-  // R3 Part A: generated from leaderboard/results/ by build_catalog.py (which runs first)
-  const board = join(out, 'leaderboard_index.json');
-  if (existsSync(board)) copyFileSync(board, join(r2Dir, 'leaderboard.json'));
+  if (boardBytes) writeFileSync(join(r2Dir, 'leaderboard.json'), boardBytes);
+  rmSync(board, { force: true });
   // R2.7: MODEL vs STACK for the files that ran as ROS 2 nodes (docs/v2/r2/data/r27/stack.json)
   const stackFile = join(repo, 'docs', 'v2', 'r2', 'data', 'r27', 'stack.json');
   if (existsSync(stackFile)) copyFileSync(stackFile, join(r2Dir, 'stack.json'));

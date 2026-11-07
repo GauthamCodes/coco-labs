@@ -97,7 +97,20 @@
     "benchmarks/arena-nav-50.v0.json",
     "benchmarks/depot-nav-100.v0.json",
     "benchmarks/depot-narrow-30.v0.json",
-    "benchmarks/colour-fetch-4.v0.json"
+    "benchmarks/colour-fetch-4.v0.json",
+    "bench_v1.py",
+    "benchmarks/arena-nav-50.v1.json",
+    "benchmarks/ctrl-corners-30.v1.json",
+    "benchmarks/ctrl-corridor-30.v1.json",
+    "benchmarks/ctrl-dynamic-30.v1.json",
+    "benchmarks/depot-clutter-50.v1.json",
+    "benchmarks/depot-long-50.v1.json",
+    "benchmarks/depot-narrow-30.v1.json",
+    "benchmarks/depot-nav-100.v1.json",
+    "benchmarks/loc-global-20.v1.json",
+    "benchmarks/loc-kidnap-20.v1.json",
+    "benchmarks/loc-track-30.v1.json",
+    "benchmarks/task-fetch-10.v1.json"
    ]
   },
   "user": {
