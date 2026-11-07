@@ -1,21 +1,21 @@
 {
  "alpha": 0.05,
  "complete": true,
- "digest": "56c5dc9f7a6117e48cff3cbbb1fd6e28e5acd43ef8ba3dd91859b40d1e96ff9f",
- "experiment": "8a053466d534fffe",
+ "digest": "ca9216a0d0d7435e1348ea7a9de9e663d83e098960e82cb3938c87678770f3c0",
+ "experiment": "e92a67a3e113ad2a",
  "family": "planning",
  "groups": [
   {
    "algorithm": "theta_star",
    "metrics": {
     "compute_ms": {
-     "iqr": 6109.932712500267,
-     "max": 25124.97894199987,
-     "median": 3228.4995465015527,
-     "min": 53.885572000581305,
+     "iqr": 4524.667288256751,
+     "max": 18061.59722901066,
+     "median": 1960.7101255023736,
+     "min": 18.753121999907307,
      "n": 100,
-     "q1": 1283.2281815008173,
-     "q3": 7393.160894001085,
+     "q1": 743.2608677445387,
+     "q3": 5267.92815600129,
      "timing": true
     },
     "expansions": {
@@ -234,7 +234,7 @@
  "scenario_info": {
   "kind": "suite",
   "suite": "depot-nav-100",
-  "suite_version": 1
+  "suite_version": 0
  },
  "schema": "coco.experiment.summary.v1"
 }
