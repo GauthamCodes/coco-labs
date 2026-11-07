@@ -1,0 +1,240 @@
+{
+ "alpha": 0.05,
+ "complete": true,
+ "digest": "ca9216a0d0d7435e1348ea7a9de9e663d83e098960e82cb3938c87678770f3c0",
+ "experiment": "e92a67a3e113ad2a",
+ "family": "planning",
+ "groups": [
+  {
+   "algorithm": "theta_star",
+   "metrics": {
+    "compute_ms": {
+     "iqr": 4524.667288256751,
+     "max": 18061.59722901066,
+     "median": 1960.7101255023736,
+     "min": 18.753121999907307,
+     "n": 100,
+     "q1": 743.2608677445387,
+     "q3": 5267.92815600129,
+     "timing": true
+    },
+    "expansions": {
+     "iqr": 23543,
+     "max": 77463,
+     "median": 15796,
+     "min": 192,
+     "n": 100,
+     "q1": 6262,
+     "q3": 29805,
+     "timing": false
+    },
+    "goal_snap_m": {
+     "iqr": 0,
+     "max": 0,
+     "median": 0,
+     "min": 0,
+     "n": 100,
+     "q1": 0,
+     "q3": 0,
+     "timing": false
+    },
+    "heading_change_rad": {
+     "iqr": 4.662027969437036,
+     "max": 17.133161355443313,
+     "median": 4.536933689716273,
+     "min": 0,
+     "n": 100,
+     "q1": 2.1733307791758523,
+     "q3": 6.835358748612888,
+     "timing": false
+    },
+    "mean_clearance_m": {
+     "iqr": 1.0810524166101536,
+     "max": 3.2717759466882232,
+     "median": 0.7368815714428026,
+     "min": 0.30878683143844343,
+     "n": 100,
+     "q1": 0.47933849588351574,
+     "q3": 1.5603909124936692,
+     "timing": false
+    },
+    "min_clearance_m": {
+     "iqr": 0.017157287525380982,
+     "max": 1.85,
+     "median": 0.03284271247461906,
+     "min": 0.03284271247461906,
+     "n": 100,
+     "q1": 0.03284271247461906,
+     "q3": 0.050000000000000044,
+     "timing": false
+    },
+    "path_cost": {
+     "iqr": null,
+     "max": null,
+     "median": null,
+     "min": null,
+     "n": 0,
+     "q1": null,
+     "q3": null,
+     "timing": false
+    },
+    "path_length_m": {
+     "iqr": 14.485063641121524,
+     "max": 56.74657321731994,
+     "median": 28.86401408407141,
+     "min": 5.976769956730078,
+     "n": 100,
+     "q1": 22.910627964601094,
+     "q3": 37.39569160572262,
+     "timing": false
+    },
+    "path_steps": {
+     "iqr": 8,
+     "max": 66,
+     "median": 8,
+     "min": 1,
+     "n": 100,
+     "q1": 4,
+     "q3": 12,
+     "timing": false
+    },
+    "pushes": {
+     "iqr": null,
+     "max": null,
+     "median": null,
+     "min": null,
+     "n": 0,
+     "q1": null,
+     "q3": null,
+     "timing": false
+    },
+    "start_snap_m": {
+     "iqr": 0,
+     "max": 0,
+     "median": 0,
+     "min": 0,
+     "n": 100,
+     "q1": 0,
+     "q3": 0,
+     "timing": false
+    }
+   },
+   "n": 100,
+   "status": {
+    "found": 100
+   },
+   "success": {
+    "high": 1,
+    "low": 0.9630065017930143,
+    "rate": 1
+   },
+   "successes": 100,
+   "sweep": {},
+   "sweep_index": 0
+  }
+ ],
+ "metrics": [
+  {
+   "better": "lower",
+   "id": "expansions",
+   "label": "Expansions",
+   "test": true,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "pushes",
+   "label": "Pushes",
+   "test": false,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "path_length_m",
+   "label": "Path length",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "path_cost",
+   "label": "Path cost",
+   "test": true,
+   "timing": false,
+   "unit": "cost"
+  },
+  {
+   "better": "lower",
+   "id": "path_steps",
+   "label": "Path steps",
+   "test": false,
+   "timing": false,
+   "unit": "cells"
+  },
+  {
+   "better": "higher",
+   "id": "min_clearance_m",
+   "label": "Minimum clearance",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "higher",
+   "id": "mean_clearance_m",
+   "label": "Mean clearance",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "heading_change_rad",
+   "label": "Total heading change",
+   "test": true,
+   "timing": false,
+   "unit": "rad"
+  },
+  {
+   "better": "lower",
+   "id": "start_snap_m",
+   "label": "Start snap",
+   "test": false,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "goal_snap_m",
+   "label": "Goal snap",
+   "test": false,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "compute_ms",
+   "label": "Compute time",
+   "test": true,
+   "timing": true,
+   "unit": "ms"
+  }
+ ],
+ "n_planned": 100,
+ "n_runs": 100,
+ "notes": [
+  "Counts are model outputs and need no device; compute_ms is wall time on the device named in the manifest.",
+  "Success rates: Wilson 95% intervals. Metrics: median and IQR (type-7 quantiles) over the runs where the metric is defined.",
+  "Paired tests on shared scenarios: Wilcoxon signed-rank (exact up to 50 non-zero pairs) with rank-biserial r and Hodges-Lehmann shift; McNemar exact for success; Holm-adjusted across algorithm pairs."
+ ],
+ "paired": [],
+ "scenario_info": {
+  "kind": "suite",
+  "suite": "depot-nav-100",
+  "suite_version": 0
+ },
+ "schema": "coco.experiment.summary.v1"
+}

@@ -1,0 +1,10 @@
+author: Gautham Anil
+display_name: Theta* (any-angle A*)
+description: >-
+  Any-angle A*: a cell's parent may be any earlier cell in straight line of sight, so the path is
+  a few long segments instead of 45-degree zig-zags. Line of sight is the runner's own collision
+  rule (every cell a segment touches costs under 253); a segment costs its length times
+  (1 + cost_weight x the highest cost it touches / 252). Written through coco_lab.api with
+  Claude Code as the leaderboard's first submission (R2.6).
+licence: MIT
+paper: https://ojs.aaai.org/index.php/AAAI/article/view/6895
