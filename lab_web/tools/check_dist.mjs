@@ -114,6 +114,15 @@ if (!frameDist) failures.push('dist/coco/frame.js is missing');
 else if (!frameDist.equals(frameSrc)) failures.push('dist/coco/frame.js differs from coco_web/web/frame.js');
 
 // 3: external URLs anywhere in the build
+// R3 Part A: a leaderboard entry's `paper` is a hyperlink the page shows (rel="noopener"), never
+// fetched; it is allowed only in the leaderboard file, and only as some entry's `paper` value
+const boardFile = join(dist, 'generated', 'r2', 'leaderboard.json');
+const papers = new Set();
+try {
+  for (const rows of Object.values(JSON.parse(readFileSync(boardFile, 'utf-8')).boards ?? {})) {
+    for (const r of rows) if (typeof r?.entry?.paper === 'string') papers.add(r.entry.paper);
+  }
+} catch { /* no leaderboard in this build */ }
 const found = new Map();
 for (const f of files) {
   if (!/\.(html|js|css|json|txt|map)$/.test(f)) continue;
@@ -128,7 +137,8 @@ for (const f of files) {
       (f.endsWith('index.html') && localHttp.includes(url.replace(/;$/, ''))) ||
       // R1.6: the Datasets tab's hyperlinks to each dataset's committed files; followed by a
       // visitor, never requested by the page (only in that one generated file)
-      (f.endsWith(join('generated', 'r1', 'datasets.json')) && /^https:\/\/github\.com\/GauthamCodes\/coco-labs\/blob\/main\/[\w./-]+$/.test(url));
+      (f.endsWith(join('generated', 'r1', 'datasets.json')) && /^https:\/\/github\.com\/GauthamCodes\/coco-labs\/blob\/main\/[\w./-]+$/.test(url)) ||
+      (f === boardFile && papers.has(url));
     const key = `${relative(dist, f)}: ${url}`;
     found.set(key, ok);
     if (!ok) failures.push(`external URL ${key}`);
