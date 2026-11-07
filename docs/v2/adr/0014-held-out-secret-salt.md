@@ -1,6 +1,7 @@
 # ADR 0014 · Held-out scenarios from a secret salt, generated outside the sandbox
 
-- **Status:** proposed (R3.1, 2026-11-06); accepted only after the hostile-submission tests (R3.3).
+- **Status:** **accepted** 2026-11-07 (R3.3), after the threat analysis below and the hostile tests in the
+  real container passed ([`docs/v2/r3/data/heldout/`](../r3/data/heldout/README.md)); residual T5 observed as stated.
 - **Supersedes in part:** ADR 0012's held-out paragraph (R2.6: the salt is committed, so anyone who knows a
   PR's merge-base can compute its held-out set). R2's scheme stays as the *public-salt* held-out check for
   local runs and for any repository without the secret.
