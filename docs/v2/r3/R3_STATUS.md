@@ -56,6 +56,12 @@ not created). Overlay for local package tests: `~/coco_lab_r3_ws` (symlink-insta
 
 MCL runs took ~11 min each on one core: the localisation baselines need the worker pool and hours.
 
+## Interruptions
+
+- 2026-11-08 ~00:42: the laptop rebooted during depot-nav-100/localisation (183/300; partial runs discarded,
+  the family re-runs from the start). The five finished suite/family sets kept their DONE markers and were
+  skipped on restart (00:55, same command, `--workers 10`); the R3.4 queue re-chained behind the baselines.
+
 ## Next step (updated 2026-11-07 afternoon)
 
 Part A is done (STATUS; `data/deploy1/`). R3:
