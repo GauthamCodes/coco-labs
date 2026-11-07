@@ -56,8 +56,8 @@ def macros():
     add('DetTicksPerEngine', eng['chromium']['ticks_compared'], DET)
     add('DetSessionsPerEngine', eng['chromium']['sessions'], DET)
     add('DetMismatches', sum(e['ticks_mismatched'] for e in eng.values()), DET)
-    add('DetSameDigest', 'yes' if len({e['all_hashes_sha256'] for e in eng.values()}) == 1
-        else 'no', DET)
+    add('DetDigests', 'identical' if len({e['all_hashes_sha256'] for e in eng.values()}) == 1
+        else 'different', DET)
     par = j(PAR)
     add('ParityValues', par['compared'], PAR)
     add('ParityDiffs', sum(c['differences'] for c in par['cases'].values()), PAR)
@@ -73,6 +73,14 @@ def macros():
     s = j(R27)
     pl = s['planning']
     add('StackPlanRequests', pl['stock']['requests'], R27)
+    add('StackPlanScenarios', len(j('docs/v2/r2/data/r27/depot20_plan.json')['scenarios']),
+        'docs/v2/r2/data/r27/depot20_plan.json')
+    add('StackPlanSessions', len(pl['stock']['sessions']), R27)
+    add('StackDriveScenarios', len(j('docs/v2/r2/data/r27/depot5_drive.json')['scenarios']),
+        'docs/v2/r2/data/r27/depot5_drive.json')
+    add('StackPPRounds', len(s['controller']['rounds']), R27)
+    add('StackPPRunsPerRound', max(int(v.split('/')[1]) for v in s['controller']['rounds'].values()),
+        R27)
     add('StackStockPlans', frac(pl['stock']['succeeded'], pl['stock']['requests']), R27)
     add('StackAstarPlans', frac(pl['astar_starter']['succeeded'],
                                 pl['astar_starter']['requests']), R27)
@@ -101,6 +109,21 @@ def macros():
     add('BenchControlSuites', len(fam.get('control', ())), src)
     add('BenchLocalisationSuites', len(fam.get('localisation', ())), src)
     add('BenchHeldOutTotal', sum(x['held_out']['n'] for x in suites), src)
+    add('BenchCarried', sum(1 for x in suites if x.get('from_v0')), src)
+    depot = j('worlds/coco_depot_v1.json')
+    b = depot['bounds']
+    add('DepotWidthM', f"{b['x_max'] - b['x_min']:g}", 'worlds/coco_depot_v1.json')
+    add('DepotHeightM', f"{b['y_max'] - b['y_min']:g}", 'worlds/coco_depot_v1.json')
+    zones = [k for k in depot['kit'] if k.get('kind') == 'zone' and k.get('role') == 'region']
+    add('DepotZones', len(zones), 'worlds/coco_depot_v1.json')
+    add('DepotActors', sum(1 for k in depot['kit'] if k.get('kind') == 'actor'),
+        'worlds/coco_depot_v1.json')
+    sys.path.insert(0, str(REPO / 'coco_lab'))
+    from coco_lab import bench_v1
+    import math
+    add('BendDeg', f'{math.degrees(bench_v1.BEND_RAD):g}', 'coco_lab/coco_lab/bench_v1.py')
+    add('NarrowM', f'{bench_v1.NARROW_M:g}', 'coco_lab/coco_lab/bench_v1.py')
+    add('ActorNearM', f'{bench_v1.ACTOR_NEAR_M:g}', 'coco_lab/coco_lab/bench_v1.py')
     clutter = j('worlds/coco_depot_clutter_v1.json')
     add('ClutterPallets', sum(1 for k in clutter['kit'] if k['id'].startswith('pallet_clutter_')),
         'worlds/coco_depot_clutter_v1.json')

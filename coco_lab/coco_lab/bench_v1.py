@@ -57,6 +57,8 @@ SCHEMA = 'coco.bench.suite.v1'
 TOOL = 'tools/r3/make_suites_v1.py'
 TIERS = ('easy', 'medium', 'hard')
 NARROW_M = 0.6
+#: a bend: an 8-connected direction change of at least this (45 degrees)
+BEND_RAD = math.pi / 4
 ACTOR_NEAR_M = 1.5
 #: features where a smaller value is harder
 SMALLER_IS_HARDER = ('min_clearance_m',)
@@ -92,7 +94,7 @@ def _turns(cells) -> int:
         if prev is not None and d != prev:
             a = math.atan2(d[0], d[1]) - math.atan2(prev[0], prev[1])
             a = abs((a + math.pi) % (2 * math.pi) - math.pi)
-            if a >= math.pi / 4 - 1e-9 and i - last > 3:
+            if a >= BEND_RAD - 1e-9 and i - last > 3:
                 turns += 1
                 last = i
         prev = d

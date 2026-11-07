@@ -1,0 +1,38 @@
+Comparing navigation algorithms should be easy: fix the map, the start, the goal and the seed,
+change one algorithm, and measure. In practice it rarely is. A result depends on a simulator
+version, a ROS distribution, a costmap configuration, the machine's speed and a seed that is
+often not reported; re-running a published comparison usually means rebuilding a software stack
+first, and a small difference in any layer can change the outcome
+\cite{bonsignorio2015replicable}. Benchmarks for navigation exist
+\cite{perille2020barn,wen2020mrpb,heiden2021benchmr,kastner2022arenabench}, but each is tied to a
+local installation, so ``reproducing'' a number means trusting that the installation matches.
+
+We take the opposite approach and ask how far one can get when the benchmark itself is the
+reproducible artefact. \bench{} runs a Python reference model of a differential-drive robot
+(planar kinematics with terrain following, a simulated LiDAR, costmaps, planners, local
+controllers and localisers) unchanged in any web browser through Pyodide \cite{pyodide}. Every
+run produces a chain of hashes of the simulation state; the same run on the same inputs must
+produce the same chain on every engine and natively, and continuous integration checks that it
+does. A result is therefore a link: anyone can open it and re-run it in seconds, and a
+mismatch is detectable, not a matter of opinion.
+
+A deterministic kinematic model is only useful if one knows how far its verdicts carry to a real
+robotics stack. We therefore pair the model with the full ROS~2 navigation stack
+\cite{macenski2022ros2,macenski2020marathon} in Gazebo \cite{koenig2004gazebo} on the same worlds
+and scenarios, and report where the two agree and where they do not. No physical robot was
+used; every result is labelled \evclass{model} (the browser model) or \evclass{stack} (ROS~2 in
+Gazebo), and failures are reported, not filtered.
+
+Our contributions are:
+\begin{itemize}
+\item a browser-based, hash-verified navigation model whose results reproduce exactly across
+  \DetEngines{} engines and natively (\cref{sec:system});
+\item \bench{} v1, \BenchSuites{} frozen suites (\BenchScenarios{} scenarios) for global planning,
+  local control, localisation and a full fetch task, with measurable difficulty tiers, datasheets
+  and held-out scenarios drawn from a secret outside the sandbox (\cref{sec:bench});
+\item a ROS~2-shaped algorithm API and a sandboxed, verified leaderboard, with export of the same
+  user file to a real ROS~2 node (\cref{sec:system});
+\item a model-versus-ROS~2 comparison on shared scenarios, including an honest negative case
+  study: an any-angle planner that wins in the model and loses every drive under Nav2's
+  controller (\cref{sec:experiments}).
+\end{itemize}

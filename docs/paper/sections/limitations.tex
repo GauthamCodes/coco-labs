@@ -1,0 +1,26 @@
+\textbf{A kinematic model.} The browser model is differential-drive planar kinematics with
+terrain following: no dynamics, contact forces, friction, wheel slip by default, or tipping.
+Its verdicts are about algorithms on this model; \cref{sec:exp-gap} measures how far they carry
+to ROS~2 in Gazebo, which is itself a simulation.
+
+\textbf{No hardware.} No physical robot was used. Every result here is \evclass{model} or
+\evclass{stack} (ROS~2 and Gazebo, simulated); nothing is a real-robot result.
+
+\textbf{One robot, authored worlds.} All suites use one robot model and worlds authored in a
+World Spec; there is no multi-robot interaction and no scanned real building.
+
+\textbf{Scenario generation.} Scenarios are drawn from free space with a clearance margin and
+must be connected; filtered suites keep scenarios whose reference A* path passes the filter. The
+suites therefore under-represent starts in tight spots, unreachable goals and cases that A*
+handles badly but other planners do not.
+
+\textbf{Held-out scenarios.} The secret keeps the held-out set unpredictable and outside the
+sandbox, but the set comes from the same generator as the public suite, so a method tuned to that
+distribution is not caught. A submission that escaped both the Python guard and the container
+could still falsify its own reported numbers; rounding and per-push sets limit what such a
+submission can learn or leak, but do not make its numbers trustworthy. Review remains part of the
+process.
+
+\textbf{Simulated live stack and emulated phones.} The interactive ``Live Stack'' in the
+application is simulated; the \evclass{stack} results in this paper are recorded Gazebo runs.
+Phone results quoted anywhere in the project are on an emulated device unless stated otherwise.

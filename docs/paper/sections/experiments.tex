@@ -1,0 +1,32 @@
+% R3.7: the model baselines (R3.2), the Gazebo + Nav2 baselines (R3.4) and the gap analysis (R3.5)
+% enter here through generated/results.tex once their data are committed; nothing is written
+% before then. The case study below rests on R2.7's committed STACK data.
+
+\subsection{The same planner in the model and in ROS~2}\label{sec:exp-r27}
+We exported the A* starter file to a ROS~2 node and asked it and Nav2's stock planner (Smac 2D)
+for paths on the same requests from the live global costmap in Gazebo: \StackPlanRequests{}
+requests (\StackPlanScenarios{} Depot scenarios, \StackPlanSessions{} fresh sessions). The exported file found
+\StackAstarPlans{}, stock Nav2 \StackStockPlans{}. This is a convention difference, not a better
+planner: Nav2's planner server refuses a start or goal inside inflated cost, whereas \cocolab{}
+(and therefore the exported node) first moves them to the nearest free cell. We therefore also
+report Nav2 with the same snapping applied to its requests (\cref{sec:exp-gap}).
+
+\subsection{Case study: an any-angle planner that wins in the model and loses in ROS~2}
+A community submission, Lazy Theta* \cite{nash2010lazytheta}, was verified on the leaderboard
+in the sandbox. As a ROS~2 node it planned \StackThetaPlans{} requests in Gazebo, but with
+Nav2's Regulated Pure Pursuit controller \cite{macenski2023rpp} it reached \StackThetaDrives{}
+goals, against \StackStockDrives{} for stock Nav2 and \StackAstarDrives{} for the exported A*
+starter on the same \StackDriveScenarios{} drives. When first observed, this was attributed, as an
+inference, to the any-angle paths passing close to obstacles, where the controller's collision
+check stops the robot. We report the negative result rather than remove it, and test the
+inference by recording the costmap cost under every path the controller received
+(\cref{sec:exp-gap}).
+
+\subsection{A user controller through the real stack}
+The exported pure-pursuit starter replaced Nav2's controller behind COCO's command arbiter on
+the \StackPPRounds{} fetch rounds of the colour Depot, \StackPPRunsPerRound{} runs each: \StackPPLegs{} legs reached. Paired
+with the model on the same legs, the median difference in time per leg was \StackPPGapS{}~s
+(\StackPPGapN{} legs).
+
+\subsection{Model versus ROS~2}\label{sec:exp-gap}
+% pending R3.4 and R3.5 (generated/results.tex)
