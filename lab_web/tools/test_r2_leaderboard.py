@@ -150,3 +150,17 @@ def test_the_index_is_generated_from_every_verified_result(tmp_path):
     for p in (REPO / 'leaderboard' / 'results').glob('*/*/result.json'):
         r = json.loads(p.read_text())
         assert ((r['entry']['suite'], r['entry']['name']) in listed) == bool(r['verified']), p
+
+
+def test_contributing_lists_exactly_the_verifiers_boards():
+    # R3.6: CONTRIBUTING's board table is the verifier's FAMILY_SUITES (COCO-Bench v1)
+    text = (REPO / 'leaderboard' / 'CONTRIBUTING.md').read_text()
+    rows = {}
+    for line in text.splitlines():
+        cells = [c.strip() for c in line.strip().strip('|').split('|')]
+        if len(cells) == 4 and cells[0].startswith('`'):
+            rows[cells[0].strip('`')] = [c == 'yes' for c in cells[1:]]
+    fams = ('planning', 'control', 'localisation')
+    want = {s: [s in L.FAMILY_SUITES[f] for f in fams]
+            for s in sorted({s for f in fams for s in L.FAMILY_SUITES[f]})}
+    assert rows == want

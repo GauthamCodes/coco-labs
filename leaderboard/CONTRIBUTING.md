@@ -1,7 +1,7 @@
 # Submitting to the COCO-Bench leaderboard
 
 The leaderboard ranks planners, controllers and localisers written against `coco_lab.api`
-([API reference](../docs/v2/r2/API.md)) on the COCO-Bench v0 suites. Every number on it was
+([API reference](../docs/v2/r2/API.md)) on the COCO-Bench v1 suites ([datasheets](../docs/bench/v1/README.md)). Every number on it was
 computed by re-running the submitted file: nobody's word is taken for anything.
 
 All results are **MODEL** evidence: COCO Lab's kinematic model, the same in the browser and
@@ -17,8 +17,16 @@ those **STACK** results beside them, labelled.
    | Suite | Planners | Controllers | Localisers |
    | --- | --- | --- | --- |
    | `arena-nav-50` | yes | yes | yes |
-   | `depot-nav-100` | yes | yes | — |
+   | `depot-nav-100` | yes | yes | yes |
    | `depot-narrow-30` | yes | yes | — |
+   | `depot-long-50` | yes | yes | — |
+   | `depot-clutter-50` | yes | yes | — |
+   | `ctrl-corridor-30` | — | yes | — |
+   | `ctrl-corners-30` | — | yes | — |
+   | `ctrl-dynamic-30` | — | yes | — |
+   | `loc-track-30` | — | — | yes |
+   | `loc-global-20` | — | — | yes |
+   | `loc-kidnap-20` | — | — | yes |
 
 3. Make a directory `leaderboard/submissions/<suite>/<name>/` (`<name>`: lower-case letters,
    digits, `_` and `-`; 2–40 characters) holding exactly three files:

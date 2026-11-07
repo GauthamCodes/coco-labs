@@ -185,6 +185,8 @@ def evaluate(family, suite_id, algo, codes, workers, merge_base):
         out[which] = {'spec_id': p['id'], 'digest': ex.digest(mine), 'records': mine,
                       'score': score(family, mine, optimal), 'worst': worst(family, mine, optimal),
                       'scenarios': len(p['scenarios'])}
+        if which == 'public':
+            out[which]['tiers'] = tier_scores(suite_id, mine)
     return out
 
 
@@ -353,6 +355,8 @@ def builtins_from_bench(suite_id: str, family: str, root: Path, workers: int) ->
                      'records': mine, 'scenarios': len(mine),
                      'score': score(family, mine, optimal.get(w, {})),
                      'worst': worst(family, mine, optimal.get(w, {}))}
+            if w == 'public':
+                ev[w]['tiers'] = tier_scores(suite_id, mine)
         result = {'schema': SCHEMA, 'verified': True, 'problems': [], 'versions': _versions(suite_id),
                   'entry': {'suite': suite_id, 'name': name, 'kind': 'builtin', 'family': family,
                             'display_name': ex.LABELS[name],
@@ -400,9 +404,22 @@ def _versions(suite_id):
             'api': ex.API_VERSION, 'verifier': VERIFIER_VERSION}
 
 
+def tier_scores(suite_id: str, records: list) -> dict:
+    """R3.6: success per difficulty tier of the v1 suite (public scenarios only; held-out has none)."""
+    tier = {x['id']: x['tier'] for x in ex.suite(suite_id, SUITE_VERSION)['scenarios']}
+    out = {}
+    for t in B.TIERS:
+        rs = [r for r in records if tier.get(r['scenario']) == t]
+        k = sum(1 for r in rs if r['success'])
+        w = exp_stats.wilson(k, len(rs)) if rs else None
+        out[t] = {'n': len(rs), 'successes': k, 'wilson95': [w['low'], w['high']] if w else None}
+    return out
+
+
 def _public(w):
     return {'spec_id': w['spec_id'], 'digest': w['digest'], 'scenarios': w['scenarios'],
             'score': w['score'], 'worst': w['worst'],
+            **({'tiers': w['tiers']} if 'tiers' in w else {}),
             'runs': [{'scenario_index': r['scenario_index'], 'scenario': r['scenario'],
                       'status': r['status'], 'chain': r['chain'],
                       'counts': ex.counts(r)} for r in w['records']]}

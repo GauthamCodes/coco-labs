@@ -22,7 +22,8 @@ interface Score {
   path_ratio?: Q; expansions?: Q; min_clearance_m?: Q; time_s?: Q; final_err_xy_m?: Q; mean_err_xy_m?: Q; contacts?: number;
   compute_ms: Q; failures: { scenario: string; scenario_index: number; status: string }[];
 }
-interface Part { score: Score; worst: { scenario_index: number; scenario: string; why: string } | null; digest: string; scenarios: number; merge_base?: string }
+interface Tier { n: number; successes: number; wilson95: [number, number] | null }
+interface Part { score: Score; worst: { scenario_index: number; scenario: string; why: string } | null; digest: string; scenarios: number; merge_base?: string; tiers?: Record<'easy' | 'medium' | 'hard', Tier> }
 interface Entry {
   entry: { suite: string; name: string; kind: 'submission' | 'builtin'; family: string; display_name: string; author: string; description: string; licence: string; paper: string | null; code_path: string; code_sha256: string | null };
   public: Part; held_out: Part; versions: Record<string, number | string>; checks: { deterministic: boolean; contract_problems: number; clamped_outputs: number };
@@ -52,6 +53,15 @@ export function LeaderboardTab() {
   if (!idx) return <section className="wb-board"><p className="wb-muted" role="status">Loading the leaderboard…</p></section>;
   if (!Object.keys(idx.boards).length) return <section className="wb-board"><p className="wb-note">No verified entries yet. <a href={`${REPO_BLOB_URL}leaderboard/CONTRIBUTING.md`}>How to submit</a></p></section>;
   return <section className="wb-board" data-testid="leaderboard">
+    <details className="wb-submit" data-testid="lb-submit"><summary>Submit your algorithm</summary>
+      <ol>
+        <li>Write a planner, controller or localiser against <code>coco_lab.api</code> (the <a href="?view=workbench&amp;tab=studio">Algorithm Studio</a> has starters).</li>
+        <li>Pick a board below: a COCO-Bench v1 suite and your file's family.</li>
+        <li>Open a pull request adding <code>leaderboard/submissions/&lt;suite&gt;/&lt;name&gt;/</code> with <code>algorithm.py</code>, <code>meta.yaml</code> and <code>summary.json</code> (your claim, made by the verifier's own command).</li>
+        <li>The verifier re-runs it in a sandbox (no network) on the public scenarios and on held-out ones drawn for your pull request; a maintainer merges a verified entry.</li>
+      </ol>
+      <p><a href={`${REPO_BLOB_URL}leaderboard/CONTRIBUTING.md`}>The full guide (CONTRIBUTING)</a> · <a href={`${REPO_BLOB_URL}docs/bench/v1/README.md`}>Suite datasheets</a></p>
+    </details>
     <p className="wb-note">Every entry was re-run by the verifier (verifier {idx.verifier}) on the suite’s public scenarios and on held-out ones, each run twice for determinism. Ranked by deterministic metrics only; compute time is per device and never ranks. MODEL evidence (COCO Lab’s kinematic model); STACK results (real ROS 2 in Gazebo + Nav2) appear where an entry has them. <a href={`${REPO_BLOB_URL}leaderboard/CONTRIBUTING.md`}>How to submit</a></p>
     {Object.entries(idx.boards).map(([board, entries]) => {
       const [suite, fam] = board.split(':');
@@ -88,7 +98,8 @@ function EntryRow({ e, rank, cols }: { e: Entry; rank: number; cols: { key: keyo
         {sub && worst && <> · <a href={`${studio}&scenario=${worst.scenario_index}`}>worst run ({worst.scenario}: {worst.why})</a></>}
       </td>
     </tr>
-    {(s.failures.length > 0 || e.stack) && <tr className="wb-sub"><td /><td colSpan={cols.length + 5}>
+    {(s.failures.length > 0 || e.stack || e.public.tiers) && <tr className="wb-sub"><td /><td colSpan={cols.length + 5}>
+      {e.public.tiers && <p className="wb-muted" data-testid="lb-tiers">By tier (public): {(['easy', 'medium', 'hard'] as const).map((t) => `${t} ${e.public.tiers![t].successes}/${e.public.tiers![t].n}`).join(' · ')}</p>}
       {s.failures.length > 0 && <details><summary>{s.failures.length} failed scenario{s.failures.length === 1 ? '' : 's'}</summary>
         <ul>{s.failures.slice(0, 50).map((f) => <li key={f.scenario}>{f.scenario}: {f.status}</li>)}</ul></details>}
       {e.stack && <details open><summary>Browser vs ROS 2: {e.stack.label}</summary>
