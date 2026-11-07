@@ -29,4 +29,23 @@ with the model on the same legs, the median difference in time per leg was \Stac
 (\StackPPGapN{} legs).
 
 \subsection{Model versus ROS~2}\label{sec:exp-gap}
-% pending R3.4 and R3.5 (generated/results.tex)
+% the suite-wide comparison enters here from R3.4/R3.5 (generated/results.tex); the two follow-ups
+% below rest on committed STACK data (docs/v2/r3/data/a1/)
+
+\textbf{The snapping convention.} Over \SnapSessions{} further sessions on the same requests,
+Nav2 as given found \SnapStockFound{} paths; with start and goal snapped to the nearest free cell
+of its live costmap (the rule the model uses) it found \SnapSnappedFound{}, as did the exported A*
+starter (\SnapAstarFound{}). Snapping moved a start or goal by more than one cell only on the
+\SnapMovedScenarios{} scenarios stock Nav2 refused; on one of them the goal lies
+\SnapMaxGoalM{}~m from free space in Gazebo's costmap although the model drew it with clearance,
+a discrepancy we report as unresolved. Snapped, Nav2's paths were slightly shorter than the
+starter's (paired median \SnapPairedGapM{}~m).
+
+\textbf{Why the any-angle planner fails under Nav2.} Re-running the five drives while recording,
+for every plan the controller received, the raw cost under each pose in the live local costmap:
+with Lazy Theta* (\CostThetaReached{} reached), \CostThetaMinPct{}--\CostThetaMaxPct{}\,\% of
+the received plans put at least one pose in inscribed or lethal cost on each drivable scenario,
+against at most \CostControlMaxPct{}\,\% for stock Nav2 (\CostStockReached{}) and the A* starter
+(\CostAstarReached{}) on the same drives. This supports the corner-cutting explanation; that the
+controller's collision check is what stops each drive remains an inference, as its decisions were
+not logged.

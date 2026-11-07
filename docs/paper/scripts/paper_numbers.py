@@ -95,6 +95,35 @@ def macros():
     add('StackPPLegs', frac(c['legs_succeeded'], c['legs']), R27)
     add('StackPPGapS', f(c['paired_leg_gap_s']['median'], 3), R27)
     add('StackPPGapN', c['paired_leg_gap_s']['n'], R27)
+    # R3 Part A follow-ups (Gazebo + Nav2): the cost under received paths; snapped Nav2
+    A1C = 'docs/v2/r3/data/a1/costs_summary.json'
+    a1 = j(A1C)['planners']
+
+    def shares(name):
+        return [s['share_of_plans_local_ge253'] for s in a1[name]['scenarios'].values()
+                if s['share_of_plans_local_ge253'] is not None]
+    th = shares('coco_user_theta_star')
+    ctrl = shares('coco_user_astar_starter') + shares('stock')
+    add('CostThetaMinPct', round(100 * min(th)), A1C)
+    add('CostThetaMaxPct', round(100 * max(th)), A1C)
+    add('CostControlMaxPct', round(100 * max(ctrl)), A1C)
+    add('CostThetaReached', frac(a1['coco_user_theta_star']['reached'],
+                                 a1['coco_user_theta_star']['goals']), A1C)
+    add('CostStockReached', frac(a1['stock']['reached'], a1['stock']['goals']), A1C)
+    add('CostAstarReached', frac(a1['coco_user_astar_starter']['reached'],
+                                 a1['coco_user_astar_starter']['goals']), A1C)
+    A1S = 'docs/v2/r3/data/a1/snap_summary.json'
+    sv = j(A1S)['servers']
+    add('SnapStockFound', frac(sv['compute_path_to_pose']['found'],
+                               sv['compute_path_to_pose']['requests']), A1S)
+    add('SnapSnappedFound', frac(sv['compute_path_to_pose+snapped']['found'],
+                                 sv['compute_path_to_pose+snapped']['requests']), A1S)
+    add('SnapAstarFound', frac(sv['user_compute_path_to_pose']['found'],
+                               sv['user_compute_path_to_pose']['requests']), A1S)
+    add('SnapMovedScenarios', len(sv['snap']['moved_scenarios']), A1S)
+    add('SnapMaxGoalM', f(sv['snap']['goal_snap_m_max'], 2), A1S)
+    add('SnapPairedGapM', f(sv['paired_snapped_minus_astar_starter_m']['median'], 3), A1S)
+    add('SnapSessions', len(j(A1S)['sessions']), A1S)
     # COCO-Bench v1
     files = suites_v1()
     suites = [json.loads(p.read_text()) for p in files]
