@@ -21,7 +21,104 @@ permissions:
   actions: read
 
 jobs:
+  # R3.3 · ADR 0014: held-out scenarios from a SECRET, generated here, outside the sandbox. The
+  # secret is in one step's environment only, before any untrusted code starts; the submission
+  # runs in the same locked-down container as the verifier with three mounts (its files, the
+  # scenario file, an empty output); the container's output is never printed or uploaded; only
+  # rounded aggregates leave (tools/r3/heldout.py aggregate). Read-only token, nothing written.
+  heldout:
+    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: The default branch (the generator, the judge; no pull-request code)
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      # built first: no pull-request file and nothing derived from the secret is in the
+      # workspace (the build context) yet
+      - name: The sandbox image (from the default branch)
+        run: docker build -q -t coco-verifier -f tools/r2/verifier.Dockerfile .
+      - name: The verifier's artifact (data, which submissions)
+        uses: actions/download-artifact@v4
+        with:
+          name: leaderboard-verification
+          path: verification
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: The submissions' files at the verified head (data, through the API)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          for d in verification/*/*/; do
+            suite=$(basename "$(dirname "$d")"); name=$(basename "$d")
+            [[ "$suite" =~ ^[a-z0-9-]+$ && "$name" =~ ^[a-z0-9][a-z0-9_-]{1,39}$ ]] || exit 1
+            mkdir -p "sub/$suite/$name"
+            for f in algorithm.py meta.yaml summary.json; do
+              gh api -H 'Accept: application/vnd.github.raw' \
+                "repos/$REPO/contents/leaderboard/submissions/$suite/$name/$f?ref=$HEAD_SHA" \
+                > "sub/$suite/$name/$f"
+              [ "$(stat -c %s "sub/$suite/$name/$f")" -lt 1048576 ] || exit 1
+            done
+          done
+      - name: coco_lab for the generator (the default branch's)
+        run: |
+          python -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install -q PyYAML==6.0.1
+      - name: Generate the held-out scenarios (the only step that sees the secret)
+        env:
+          COCO_HELDOUT_SECRET: ${{ secrets.COCO_HELDOUT_SECRET }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          mkdir -p heldout
+          if [ -z "$COCO_HELDOUT_SECRET" ]; then echo "no secret configured" > heldout/NONE; exit 0; fi
+          for d in sub/*/; do
+            suite=$(basename "$d")
+            PYTHONPATH=coco_lab:coco_schemas:coco_config "$RUNNER_TEMP/venv/bin/python" -P \
+              tools/r3/heldout.py generate "$suite" --head "$HEAD_SHA" --out "heldout/$suite.json"
+          done
+      - name: Run the held-out scenarios in the sandbox; aggregate
+        if: hashFiles('heldout/NONE') == ''
+        run: |
+          set -uo pipefail
+          mkdir -p agg
+          for d in sub/*/*/; do
+            suite=$(basename "$(dirname "$d")"); name=$(basename "$d")
+            o="$RUNNER_TEMP/out/$suite/$name"; mkdir -p "$o" && chmod 0777 "$o"
+            # output to a file that is never printed or uploaded (ADR 0014, T4)
+            timeout 140m docker run --rm --network none --read-only --tmpfs /tmp:size=256m \
+              --cpus 2 --memory 4g --memory-swap 4g --pids-limit 256 --cap-drop ALL \
+              --security-opt no-new-privileges --user 65534:65534 \
+              -v "$PWD/$d:/submissions/$suite/$name:ro" \
+              -v "$PWD/heldout/$suite.json:/heldout/$suite.json:ro" -v "$o:/out" \
+              coco-verifier heldout "/submissions/$suite/$name" --scenarios "/heldout/$suite.json" \
+              --out /out --workers 2 > "$RUNNER_TEMP/container_${suite}_${name}.log" 2>&1
+            echo "$suite/$name: container exit $?"
+            mkdir -p "agg/$suite"
+            "$RUNNER_TEMP/venv/bin/python" -P tools/r3/heldout.py aggregate \
+              "$o/heldout_runs.json" --out "agg/$suite/$name.json" || echo '{"error": "invalid"}' > "agg/$suite/$name.json"
+            "$RUNNER_TEMP/venv/bin/python" -c "import hashlib,sys; print('held-out digest', hashlib.sha256(open(sys.argv[1],'rb').read()).hexdigest())" "heldout/$suite.json"
+          done
+      - name: The aggregates (all that leaves)
+        uses: actions/upload-artifact@v4
+        with:
+          name: leaderboard-heldout
+          path: |
+            agg/
+            heldout/NONE
+          if-no-files-found: ignore
+          retention-days: 90
+
   write:
+    needs: heldout
+    if: always() && github.event.workflow_run.event == 'pull_request'
     if: github.event.workflow_run.event == 'pull_request'
     runs-on: ubuntu-24.04
     timeout-minutes: 15

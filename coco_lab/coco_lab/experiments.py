@@ -364,6 +364,41 @@ def spec_id(spec: Dict) -> str:
     return hashlib.sha256(canonical(spec)).hexdigest()[:16]
 
 
+#: what an inline scenario may hold (ADR 0014; COCO-Bench v1's conditions included)
+INLINE_KEYS = {'id', 'start', 'goal', 'seed', 'config', 'kidnap_at_s', 'kidnap'}
+
+
+def _inline(w, scen) -> List[Dict]:
+    """Check explicit scenarios (``scenarios.kind == 'inline'``); return them as given."""
+    if not isinstance(scen, list) or not 1 <= len(scen) <= LIMITS['scenarios']:
+        raise SpecError(f'inline scenarios: a list of 1 to {LIMITS["scenarios"]}')
+    out, ids = [], set()
+
+    def point(v, n):
+        return (isinstance(v, list) and len(v) == n and
+                all(isinstance(x, (int, float)) and not isinstance(x, bool) and math.isfinite(x)
+                    for x in v))
+    for i, s in enumerate(scen):
+        if not isinstance(s, dict) or set(s) - INLINE_KEYS:
+            raise SpecError(f'inline scenario {i}: only {sorted(INLINE_KEYS)}')
+        sid = s.get('id')
+        if not (isinstance(sid, str) and 1 <= len(sid) <= 40 and sid not in ids):
+            raise SpecError(f'inline scenario {i}: a unique id of 1 to 40 characters')
+        ids.add(sid)
+        if not (point(s.get('start'), 3) and point(s.get('goal'), 2)):
+            raise SpecError(f'inline scenario {sid}: start [x, y, theta] and goal [x, y]')
+        seed = s.get('seed')
+        if isinstance(seed, bool) or not isinstance(seed, int) or not 0 <= seed < (1 << 63):
+            raise SpecError(f'inline scenario {sid}: seed is an integer in [0, 2**63)')
+        for name in ('start', 'goal'):
+            if w.lab_map.cell_at(*s[name][:2]) is None:
+                raise SpecError(f'inline scenario {sid}: {name} is off the map')
+        if 'kidnap' in s and not point(s['kidnap'], 2):
+            raise SpecError(f'inline scenario {sid}: kidnap [x, y]')
+        out.append(dict(s))
+    return out
+
+
 def _rounds(sc: Dict) -> List[Dict]:
     game = sc.get('game')
     if game == 'fetch_rush':
@@ -497,8 +532,11 @@ def plan(spec: Dict) -> Dict:
             if not 1 <= len(pairs) <= LIMITS['scenarios']:
                 raise SpecError(f'1 to {LIMITS["scenarios"]} hand-placed pairs')
             scenarios = hand_pairs(w, pairs, sc.get('seed', seed))
+        elif kind == 'inline':
+            # R3 (ADR 0014): explicit scenarios -- a held-out file, run exactly as written
+            scenarios = _inline(w, sc.get('scenarios'))
         else:
-            raise SpecError("scenarios.kind is 'sampled', 'suite' or 'pairs'")
+            raise SpecError("scenarios.kind is 'sampled', 'suite', 'pairs' or 'inline'")
     except ScenarioError as e:
         raise SpecError(str(e)) from None
     max_ticks = (spec.get('limits') or {}).get('max_ticks', 3000)

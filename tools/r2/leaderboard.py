@@ -185,6 +185,48 @@ def evaluate(family, suite_id, algo, codes, workers, merge_base):
     return out
 
 
+#: R3 (ADR 0014): per family, the only per-run numbers the held-out run writes
+HELDOUT_METRICS = {'planning': ('path_ratio', 'min_clearance_m'),
+                   'control': ('time_s', 'min_clearance_m'),
+                   'localisation': ('final_err_xy_m', 'mean_err_xy_m')}
+
+
+def heldout(d: Path, scenarios_file: Path, out: Path, workers: int) -> int:
+    """
+    Run a submission on a held-out scenario file (ADR 0014; inside the sandbox).
+
+    Writes ``out/heldout_runs.json``: per run its status, success and the family's two headline
+    numbers -- nothing about the scenarios. The trusted workflow reads it as data and publishes
+    rounded aggregates only (tools/r3/heldout.py aggregate).
+    """
+    doc = json.loads(scenarios_file.read_text(encoding='utf-8'))
+    meta, src, family, algo = user_entry(d)
+    world = doc['world']
+    spec = {'schema': ex.SCHEMA, 'family': family, 'world': world, 'seed': 1,
+            'algorithms': [algo], 'limits': {'max_ticks': 3000},
+            'scenarios': {'kind': 'inline', 'scenarios': doc['scenarios']}}
+    p = ex.plan(spec)
+    recs = _run(p, workers, {algo['code_sha256']: src})
+    optimal = {}
+    if family == 'planning':
+        q = ex.plan(dict(spec, algorithms=[{'name': 'dijkstra', 'id': 'grid_optimal',
+                                            'params': {'cost_weight': 0.0}}]))
+        optimal = {r['scenario']: r['metrics']['path_length_m'] for r in _run(q, workers, {})
+                   if r['success']}
+    runs = []
+    for r in recs:
+        m = dict(r['metrics'])
+        if family == 'planning':
+            opt = optimal.get(r['scenario'])
+            m['path_ratio'] = (m['path_length_m'] / opt) if (r['success'] and opt) else None
+        runs.append({'status': r['status'], 'success': r['success'],
+                     'metrics': {k: m.get(k) for k in HELDOUT_METRICS[family]}})
+    out.mkdir(parents=True, exist_ok=True)
+    (out / 'heldout_runs.json').write_text(json.dumps(
+        ex.plain({'family': family, 'runs': runs}), sort_keys=True, allow_nan=False) + '\n')
+    return len(runs)
+
+
 def user_entry(d: Path):
     """Return (meta, source, module kind -> family, the canonical algorithm entry)."""
     meta = read_meta(d)
@@ -395,11 +437,20 @@ def main(argv=None):
     c.add_argument('--workers', type=int, default=2)
     i = sub.add_parser('index')
     i.add_argument('--out', required=True)
+    h = sub.add_parser('heldout', help='R3 (ADR 0014): run on a held-out file, write numbers only')
+    h.add_argument('dir')
+    h.add_argument('--scenarios', required=True)
+    h.add_argument('--out', required=True)
+    h.add_argument('--workers', type=int, default=2)
     a = ap.parse_args(argv)
     if a.cmd == 'index':
         index(Path(a.out))
         return 0
     os.environ['PYTHONHASHSEED'] = '0'
+    if a.cmd == 'heldout':
+        n = heldout(Path(a.dir), Path(a.scenarios), Path(a.out), a.workers)
+        print(f'held-out: {n} runs written')   # no scenario, no number: the log is public
+        return 0
     if a.cmd == 'claim':
         summ = claim(Path(a.dir), a.workers)
         print(f"wrote {Path(a.dir) / 'summary.json'}: digest {summ['digest']}")

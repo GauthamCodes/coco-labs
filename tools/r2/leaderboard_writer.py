@@ -102,6 +102,46 @@ def _md(s) -> str:
     return s.replace('@', '@\u200b')   # a zero-width space: never a mention
 
 
+#: R3.3 (ADR 0014): the only keys a held-out aggregate may carry
+AGG_KEYS = {'family', 'n', 'successes', 'wilson95', 'path_ratio_median', 'min_clearance_m_median',
+            'time_s_median', 'final_err_xy_m_median', 'mean_err_xy_m_median'}
+
+
+def validate_agg(a) -> dict:
+    """A held-out aggregate from tools/r3/heldout.py: numbers only, its keys only."""
+    if not isinstance(a, dict) or set(a) - AGG_KEYS or a.get('family') not in (
+            'planning', 'control', 'localisation'):
+        raise Invalid('held-out aggregate')
+    _num(a.get('n'), 'held-out n', 1, 200, none=False)
+    _num(a.get('successes'), 'held-out successes', 0, a['n'], none=False)
+    w = a.get('wilson95')
+    if not (isinstance(w, list) and len(w) == 2):
+        raise Invalid('held-out wilson95')
+    for v in w:
+        _num(v, 'held-out wilson95', 0, 1, none=False)
+    for k in AGG_KEYS - {'family', 'n', 'successes', 'wilson95'}:
+        _num(a.get(k), f'held-out {k}', -1e6, 1e6)
+    return a
+
+
+def secret_heldout(agg_dir, suite, name):
+    """The secret held-out aggregate of one entry: dict, 'none' (no secret configured) or None."""
+    if agg_dir is None:
+        return None
+    root = Path(agg_dir)
+    if (root / 'heldout' / 'NONE').exists() or (root / 'NONE').exists():
+        return 'none'
+    p = root / 'agg' / suite / f'{name}.json'
+    if not p.is_file():
+        p = root / suite / f'{name}.json'
+    if not p.is_file() or p.stat().st_size > 10000:
+        return None
+    try:
+        return validate_agg(json.loads(p.read_text()))
+    except (Invalid, ValueError):
+        return None
+
+
 def comment(results, scope_ok, conclusion) -> str:
     """The PR comment, regenerated from the validated numbers."""
     ok = scope_ok and conclusion == 'success' and results and all(r['verified'] for _, r in results)
@@ -128,6 +168,18 @@ def comment(results, scope_ok, conclusion) -> str:
                     if isinstance(s.get(k), dict) and s[k].get('median') is not None:
                         txt += f"; {k} median {float(s[k]['median']):.4g}"
                 lines.append(txt)
+        h = r.get('held_out_secret')
+        if h == 'none':
+            lines.append('- held-out (secret, ADR 0014): not run, no secret configured')
+        elif isinstance(h, dict):
+            txt = (f"- held-out (secret, ADR 0014; fresh for this head): {h['successes']}/{h['n']} "
+                   f"succeeded (Wilson 95% {h['wilson95'][0]}-{h['wilson95'][1]})")
+            for k in sorted(h):
+                if k.endswith('_median') and h[k] is not None:
+                    txt += f'; {k[:-7]} median {h[k]}'
+            lines.append(txt)
+        elif 'held_out_secret' in r:
+            lines.append('- held-out (secret, ADR 0014): no valid result')
         c = r.get('checks') or {}
         if c:
             lines.append(f"- deterministic: {c.get('deterministic')}; contract problems: "
