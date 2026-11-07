@@ -137,7 +137,16 @@ def test_every_committed_submission_is_well_formed(tmp_path):
     assert not _well_formed(d)
 
 
-def test_the_committed_index_is_current(tmp_path):
-    out = tmp_path / 'index.json'
-    L.index(out)
-    assert out.read_text() == (REPO / 'leaderboard' / 'index.json').read_text()
+def test_the_index_is_generated_from_every_verified_result(tmp_path):
+    # R3 Part A: no committed copy (a submission's verified result made it stale); every build
+    # generates it (build_catalog.py), so it must be deterministic and complete
+    a, b = tmp_path / 'a.json', tmp_path / 'b.json'
+    L.index(a)
+    L.index(b)
+    assert a.read_text() == b.read_text()
+    assert not (REPO / 'leaderboard' / 'index.json').exists()
+    listed = {(r['entry']['suite'], r['entry']['name'])
+              for rows in json.loads(a.read_text())['boards'].values() for r in rows}
+    for p in (REPO / 'leaderboard' / 'results').glob('*/*/result.json'):
+        r = json.loads(p.read_text())
+        assert ((r['entry']['suite'], r['entry']['name']) in listed) == bool(r['verified']), p
