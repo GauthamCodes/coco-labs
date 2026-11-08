@@ -320,6 +320,12 @@ def verify(d: Path, out: Path, merge_base: str, workers: int) -> dict:
 BENCH = REPO / 'docs' / 'v2' / 'r3' / 'bench'
 
 
+#: what a reader must know to read a built-in's row (R3.2)
+BUILTIN_NOTE = {'builtin': ' A plan reference, not a controller result: it drives the global plan '
+                           'without a local costmap or collision check and has none of Nav2\'s '
+                           'failure outcomes.'}
+
+
 def builtins_from_bench(suite_id: str, family: str, root: Path, workers: int) -> list:
     """
     R3.6: every built-in's reference entry for one v1 suite and family, from the R3.2 baseline runs.
@@ -363,7 +369,7 @@ def builtins_from_bench(suite_id: str, family: str, root: Path, workers: int) ->
                             'display_name': ex.LABELS[name],
                             'author': 'COCO Lab (built-in reference)',
                             'description': f'The built-in {ex.LABELS[name]}, as the Workbench runs '
-                                           f'it (COCO-Bench v1 baseline, R3.2).',
+                                           f'it (COCO-Bench v1 baseline, R3.2).' + BUILTIN_NOTE.get(name, ''),
                             'licence': 'Apache-2.0', 'paper': None, 'code_sha256': None,
                             'code_path': 'coco_lab/coco_lab/'},
                   'public': _public(ev['public']),

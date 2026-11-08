@@ -11,7 +11,7 @@
   "author": "COCO Lab (built-in reference)",
   "code_path": "coco_lab/coco_lab/",
   "code_sha256": null,
-  "description": "The built-in Waypoint driver, as the Workbench runs it (COCO-Bench v1 baseline, R3.2).",
+  "description": "The built-in Waypoint driver, as the Workbench runs it (COCO-Bench v1 baseline, R3.2). A plan reference, not a controller result: it drives the global plan without a local costmap or collision check and has none of Nav2's failure outcomes.",
   "display_name": "Waypoint driver",
   "family": "control",
   "kind": "builtin",
