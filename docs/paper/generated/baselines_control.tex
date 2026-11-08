@@ -2,7 +2,7 @@
 \begin{table}[t]
 \centering
 \scriptsize
-\caption{\evclass{model} baselines, control: successes per tier (easy/medium/hard), on all public scenarios and on a held-out reference draw; time (s) is the public median. Not yet run: \texttt{ctrl-corners-30}, \texttt{ctrl-dynamic-30}.}
+\caption{\evclass{model} baselines, control: successes per tier (easy/medium/hard), on all public scenarios and on a held-out reference draw; time (s) is the public median. Not yet run: \texttt{ctrl-dynamic-30}.}
 \label{tab:base-control}
 \setlength{\tabcolsep}{2.5pt}
 \begin{tabular}{llrrrrrr}
@@ -13,6 +13,11 @@ suite & algorithm & easy & med. & hard & public & held-out & time (s) \\
  & \texttt{dwa} & 14/17 & 11/17 & 6/16 & 31/50 & 10/15 & 38.30 \\
  & \texttt{mppi} & 17/17 & 16/17 & 16/16 & 49/50 & 15/15 & 113.10 \\
  & \texttt{rpp} & 16/17 & 15/17 & 10/16 & 41/50 & 11/15 & 49.90 \\
+\midrule
+\texttt{ctrl-corners-30} & \texttt{builtin} & 10/10 & 10/10 & 10/10 & 30/30 & 10/10 & 78.55 \\
+ & \texttt{dwa} & 10/10 & 8/10 & 9/10 & 27/30 & 9/10 & 74.05 \\
+ & \texttt{mppi} & 10/10 & 10/10 & 8/10 & 28/30 & 10/10 & 144.40 \\
+ & \texttt{rpp} & 9/10 & 4/10 & 5/10 & 18/30 & 6/10 & 59.30 \\
 \midrule
 \texttt{ctrl-corridor-30} & \texttt{builtin} & 10/10 & 10/10 & 10/10 & 30/30 & 10/10 & 94.80 \\
  & \texttt{dwa} & 9/10 & 4/10 & 5/10 & 18/30 & 8/10 & 72.65 \\
