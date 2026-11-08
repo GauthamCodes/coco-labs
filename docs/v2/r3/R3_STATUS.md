@@ -56,6 +56,13 @@ not created). Overlay for local package tests: `~/coco_lab_r3_ws` (symlink-insta
 
 MCL runs took ~11 min each on one core: the localisation baselines need the worker pool and hours.
 
+## Questions for Gautham (collected for the close)
+
+- loc-global-20 and loc-kidnap-20 are unsolved by every built-in at the teaching profile (60 particles): 0/40 and
+  0/60, no convergence or recovery (`0df82ee`, `247315e`). Kept as negative baselines with headroom. Should R3 add
+  a stronger reference (e.g. MCL with far more particles) to show the suites are solvable in the model? Untested:
+  each 60-particle run already took ~17 CPU-minutes here.
+
 ## Interruptions
 
 - 2026-11-08 ~00:42: the laptop rebooted during depot-nav-100/localisation (183/300; partial runs discarded,
