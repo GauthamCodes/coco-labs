@@ -1,0 +1,236 @@
+{
+ "algorithms": [
+  {
+   "id": "mcl",
+   "label": "MCL",
+   "name": "mcl",
+   "params": {
+    "mcl.aggregate": "amcl",
+    "mcl.alpha_fast": 0.1,
+    "mcl.alpha_slow": 0.001,
+    "mcl.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "mcl.beams": 12,
+    "mcl.init": "tracking",
+    "mcl.inject_fraction": 0.05,
+    "mcl.particles": 60,
+    "mcl.resample": "always",
+    "mcl.sigma_hit": 0.2
+   }
+  },
+  {
+   "id": "mcl_augmented",
+   "label": "MCL + augmented injection",
+   "name": "mcl_augmented",
+   "params": {
+    "mcl.aggregate": "amcl",
+    "mcl.alpha_fast": 0.1,
+    "mcl.alpha_slow": 0.001,
+    "mcl.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "mcl.beams": 12,
+    "mcl.init": "tracking",
+    "mcl.inject_fraction": 0.05,
+    "mcl.particles": 60,
+    "mcl.resample": "always",
+    "mcl.sigma_hit": 0.2
+   }
+  },
+  {
+   "id": "ekf",
+   "label": "EKF",
+   "name": "ekf",
+   "params": {
+    "ekf.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "ekf.beams": 12,
+    "ekf.gate": 9,
+    "ekf.init": "tracking",
+    "ekf.sigma_hit": 0.2
+   }
+  }
+ ],
+ "family": "localisation",
+ "limits": {
+  "max_ticks": 3000
+ },
+ "metrics": [
+  "time_s",
+  "ticks",
+  "path_length_m",
+  "min_clearance_m",
+  "mean_clearance_m",
+  "heading_change_rad",
+  "contacts",
+  "expansions",
+  "plans",
+  "final_goal_distance_m",
+  "final_err_xy_m",
+  "final_err_yaw_rad",
+  "mean_err_xy_m",
+  "max_err_xy_m",
+  "converged_s",
+  "recovery_s",
+  "compute_ms"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "kind": "inline",
+  "scenarios": [
+   {
+    "goal": [
+     42.85,
+     25.85
+    ],
+    "id": "p001",
+    "seed": 4600994085209972,
+    "start": [
+     32.15,
+     30.05,
+     1.5204606803023415
+    ]
+   },
+   {
+    "goal": [
+     3.75,
+     23.85
+    ],
+    "id": "p002",
+    "seed": 642475624327460,
+    "start": [
+     34.85,
+     19.25,
+     -0.3220898271225461
+    ]
+   },
+   {
+    "goal": [
+     31.35,
+     4.15
+    ],
+    "id": "p003",
+    "seed": 1801866988463168,
+    "start": [
+     6.95,
+     2.6500000000000004,
+     -0.5045424715283082
+    ]
+   },
+   {
+    "goal": [
+     38.150000000000006,
+     16.05
+    ],
+    "id": "p004",
+    "seed": 8130123431888987,
+    "start": [
+     21.55,
+     17.25,
+     -0.9386807611175914
+    ]
+   },
+   {
+    "goal": [
+     35.75,
+     15.95
+    ],
+    "id": "p005",
+    "seed": 1995087427228206,
+    "start": [
+     27.450000000000003,
+     1.05,
+     -1.2638567002907217
+    ]
+   },
+   {
+    "goal": [
+     8.450000000000001,
+     8.55
+    ],
+    "id": "p006",
+    "seed": 8323756872834176,
+    "start": [
+     20.25,
+     17.85,
+     3.0620231629266055
+    ]
+   },
+   {
+    "goal": [
+     47.150000000000006,
+     24.75
+    ],
+    "id": "p007",
+    "seed": 6155941619708337,
+    "start": [
+     28.25,
+     10.25,
+     -1.3011577119080333
+    ]
+   },
+   {
+    "goal": [
+     7.550000000000001,
+     26.150000000000002
+    ],
+    "id": "p008",
+    "seed": 6357476422681933,
+    "start": [
+     26.35,
+     6.65,
+     0.6967639153879457
+    ]
+   },
+   {
+    "goal": [
+     31.950000000000003,
+     4.550000000000001
+    ],
+    "id": "p009",
+    "seed": 6748019005070174,
+    "start": [
+     42.050000000000004,
+     22.05,
+     2.005178959164115
+    ]
+   },
+   {
+    "goal": [
+     39.650000000000006,
+     4.95
+    ],
+    "id": "p010",
+    "seed": 3502109403658804,
+    "start": [
+     14.75,
+     22.150000000000002,
+     2.193181856370326
+    ]
+   }
+  ]
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 1,
+ "sweep": {
+  "params": []
+ },
+ "title": "COCO-Bench v1 baseline: loc-track-30, localisation, held_out",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841"
+}
