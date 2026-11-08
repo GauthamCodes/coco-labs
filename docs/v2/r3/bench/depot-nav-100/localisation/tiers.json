@@ -1,0 +1,126 @@
+{
+ "about": "R3.2 tools/r3/make_baselines.py: per tier (the suite file's tiers), public scenarios",
+ "family": "localisation",
+ "held_out": {
+  "n": 20,
+  "note": "a reference draw from a public seed (not an ADR 0014 secret)",
+  "seed": 39076702790516
+ },
+ "suite": "depot-nav-100",
+ "tiers": {
+  "ekf": {
+   "easy": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 0.03266114878216282,
+    "mean_err_xy_m_median": 0.12237333899092345,
+    "n": 34,
+    "recovery_s_median": null,
+    "successes": 32,
+    "wilson95": [
+     0.80906393095719,
+     0.9837173447898772
+    ]
+   },
+   "hard": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 0.019321261610633616,
+    "mean_err_xy_m_median": 0.11453211185873358,
+    "n": 33,
+    "recovery_s_median": null,
+    "successes": 30,
+    "wilson95": [
+     0.7642739435353026,
+     0.9685960584754184
+    ]
+   },
+   "medium": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 0.024777643274927444,
+    "mean_err_xy_m_median": 0.10935484642377563,
+    "n": 33,
+    "recovery_s_median": null,
+    "successes": 30,
+    "wilson95": [
+     0.7642739435353026,
+     0.9685960584754184
+    ]
+   }
+  },
+  "mcl": {
+   "easy": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 0.1622084385870548,
+    "mean_err_xy_m_median": 0.16876133902062546,
+    "n": 34,
+    "recovery_s_median": null,
+    "successes": 26,
+    "wilson95": [
+     0.6000386207746361,
+     0.8756301446736042
+    ]
+   },
+   "hard": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 0.17745133293941434,
+    "mean_err_xy_m_median": 0.1728234514178986,
+    "n": 33,
+    "recovery_s_median": null,
+    "successes": 9,
+    "wilson95": [
+     0.1506744088542064,
+     0.44217559002872625
+    ]
+   },
+   "medium": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 0.21893408538342937,
+    "mean_err_xy_m_median": 0.17330440547839635,
+    "n": 33,
+    "recovery_s_median": null,
+    "successes": 15,
+    "wilson95": [
+     0.29842938513876116,
+     0.6201406146378254
+    ]
+   }
+  },
+  "mcl_augmented": {
+   "easy": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 0.16426219854337448,
+    "mean_err_xy_m_median": 0.18559170658376115,
+    "n": 34,
+    "recovery_s_median": null,
+    "successes": 22,
+    "wilson95": [
+     0.47913963119781733,
+     0.785120794051205
+    ]
+   },
+   "hard": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 0.24925421612923865,
+    "mean_err_xy_m_median": 0.2309051131137091,
+    "n": 33,
+    "recovery_s_median": null,
+    "successes": 5,
+    "wilson95": [
+     0.06650457281607568,
+     0.3091987588044212
+    ]
+   },
+   "medium": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 0.22148787753185067,
+    "mean_err_xy_m_median": 0.19974572644814306,
+    "n": 33,
+    "recovery_s_median": null,
+    "successes": 7,
+    "wilson95": [
+     0.10676021533020799,
+     0.3775164499215069
+    ]
+   }
+  }
+ }
+}
