@@ -158,6 +158,29 @@ def macros():
     clutter = j('worlds/coco_depot_clutter_v1.json')
     add('ClutterPallets', sum(1 for k in clutter['kit'] if k['id'].startswith('pallet_clutter_')),
         'worlds/coco_depot_clutter_v1.json')
+    # R3.2: ctrl-dynamic-30 split by the actor rule (MODEL), when its baseline is committed
+    dyn = 'docs/v2/r3/bench/ctrl-dynamic-30/control/public/runs.jsonl'
+    if (REPO / dyn).is_file():
+        suite = j('coco_lab/coco_lab/benchmarks/ctrl-dynamic-30.v1.json')
+        rule = {s['id']: ('Yield' if 'actors.yield=1' in s.get('config', []) else 'Walk')
+                for s in suite['scenarios']}
+        cnt = {}
+        for line in (REPO / dyn).read_text().splitlines():
+            r = json.loads(line)
+            k = (r['algorithm'], rule[r['scenario']])
+            c = cnt.setdefault(k, {'ok': 0, 'n': 0, 'timeout': 0, 'contact_ok': 0})
+            c['n'] += 1
+            c['ok'] += bool(r['success'])
+            c['timeout'] += r['status'] == 'timeout'
+            c['contact_ok'] += bool(r['success']) and (r['metrics']['contacts'] or 0) > 0
+        name = {'builtin': 'Waypoint', 'dwa': 'Dwa', 'rpp': 'Rpp', 'mppi': 'Mppi'}
+        for (algo, rl), c in sorted(cnt.items()):
+            add(f'Dyn{name[algo]}{rl}', frac(c['ok'], c['n']), dyn)
+        add('DynWaypointYieldTimeouts', cnt[('builtin', 'Yield')]['timeout'], dyn)
+        add('DynWaypointWalkContactWins', cnt[('builtin', 'Walk')]['contact_ok'], dyn)
+        add('DynWaypointWalkMaxContacts', max(
+            (json.loads(x)['metrics']['contacts'] or 0) for x in (REPO / dyn).read_text().splitlines()
+            if json.loads(x)['algorithm'] == 'builtin' and rule[json.loads(x)['scenario']] == 'Walk'), dyn)
     return out
 
 

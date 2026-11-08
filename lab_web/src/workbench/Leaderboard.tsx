@@ -38,7 +38,8 @@ const med = (q?: Q) => (q && q.median !== null ? fmt(q.median) : '—');
 
 function headline(fam: string): { key: keyof Score; label: string }[] {
   if (fam === 'planning') return [{ key: 'path_ratio', label: 'Path ÷ grid-optimal (median)' }, { key: 'min_clearance_m', label: 'Min clearance (m, median)' }, { key: 'expansions', label: 'Expansions (median, self-reported)' }];
-  if (fam === 'control') return [{ key: 'time_s', label: 'Time to goal (s, median)' }, { key: 'min_clearance_m', label: 'Min clearance (m, median)' }];
+  // R3.2: contacts beside success -- a driver that pushes through actors can still arrive
+  if (fam === 'control') return [{ key: 'time_s', label: 'Time to goal (s, median)' }, { key: 'min_clearance_m', label: 'Min clearance (m, median)' }, { key: 'contacts', label: 'Contacts (all runs, total)' }];
   return [{ key: 'final_err_xy_m', label: 'Final error (m, median)' }, { key: 'mean_err_xy_m', label: 'Mean error (m, median)' }];
 }
 
@@ -89,7 +90,7 @@ function EntryRow({ e, rank, cols }: { e: Entry; rank: number; cols: { key: keyo
       <td>{rank}</td>
       <th scope="row"><b>{e.entry.display_name}</b>{sub ? '' : ' (built-in)'}<div className="wb-muted">{e.entry.author} · {e.entry.licence}{e.entry.paper?.startsWith('https://') ? <> · <a href={e.entry.paper} rel="noopener noreferrer">paper</a></> : null}</div></th>
       <td>{pct(s)}{ci(s)}</td>
-      {cols.map((c) => <td key={c.key}>{med(s[c.key] as Q | undefined)}</td>)}
+      {cols.map((c) => <td key={c.key}>{typeof s[c.key] === 'number' ? String(s[c.key]) : med(s[c.key] as Q | undefined)}</td>)}
       <td>{pct(h)}{ci(h)}{h.path_ratio ? ` · ratio ${med(h.path_ratio)}` : ''}</td>
       <td>{med(s.compute_ms)}<div className="wb-muted">{e.host.cpu ?? '?'}</div></td>
       <td className="wb-links">

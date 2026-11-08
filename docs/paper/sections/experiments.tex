@@ -20,6 +20,20 @@ that the suites discriminate. Localisers are separated
 by the tier structure: in the localisation runs committed so far, Monte Carlo localisation at the
 teaching profile loses its track far more often on hard scenarios than on easy ones.
 
+\textbf{Moving actors.} \texttt{ctrl-dynamic-30} drives each route twice: once with actors that
+keep their schedule and once with actors that stop while their next step would walk into the
+robot (the scenario rule, not a parameter of the algorithm). The Waypoint driver succeeded on
+\DynWaypointWalk{} routes with scheduled actors but \DynWaypointYield{} with yielding ones; all
+\DynWaypointYieldTimeouts{} failures were timeouts. With scheduled actors, \DynWaypointWalkContactWins{}
+of its successes included contact (up to \DynWaypointWalkMaxContacts{} per drive): blocked by an
+actor, it waited until the actor walked on. A yielding actor does not walk on while the robot is
+ahead of it, and a driver without a local planner cannot go round, so both wait; this reading
+follows from the model's rules and the recorded contacts, but was not traced tick by tick
+(\evclass{inference}). The local controllers were nearly insensitive to the rule (DWA
+\DynDwaWalk{} vs \DynDwaYield{}, RPP \DynRppWalk{} vs \DynRppYield{}, MPPI \DynMppiWalk{} vs
+\DynMppiYield{}). Success alone would rank the contact-making driver first; the leaderboard
+therefore reports contacts beside success.
+
 \input{generated/baselines_planning}
 \input{generated/baselines_control}
 \input{generated/baselines_localisation}
