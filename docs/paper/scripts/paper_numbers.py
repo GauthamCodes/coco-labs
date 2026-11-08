@@ -167,6 +167,19 @@ def macros():
         add('GlobalSuccesses', sum(bool(r['success']) for r in gr), glob + '/runs.jsonl')
         add('GlobalRuns', len(gr), glob + '/runs.jsonl')
         add('GlobalConverged', sum(r['metrics']['converged_s'] is not None for r in gr), glob + '/runs.jsonl')
+    # R3.2: loc-kidnap-20 (MODEL), when its baseline is committed
+    kid = 'docs/v2/r3/bench/loc-kidnap-20/localisation/public/runs.jsonl'
+    if (REPO / kid).is_file():
+        kr = [json.loads(x) for x in (REPO / kid).read_text().splitlines()]
+        add('KidnapRuns', len(kr), kid)
+        add('KidnapSuccesses', sum(bool(r['success']) for r in kr), kid)
+        add('KidnapRecovered', sum(r['metrics']['recovery_s'] is not None for r in kr), kid)
+        add('KidnapBeliefArrivals', sum(bool(r['metrics']['reached_goal']) for r in kr), kid)
+        ks = j('coco_lab/coco_lab/benchmarks/loc-kidnap-20.v1.json')['scenarios']
+        km = sorted(s['features']['kidnap_m'] for s in ks)
+        add('KidnapMinM', f'{km[0]:.1f}', 'coco_lab/coco_lab/benchmarks/loc-kidnap-20.v1.json')
+        add('KidnapMaxM', f'{km[-1]:.1f}', 'coco_lab/coco_lab/benchmarks/loc-kidnap-20.v1.json')
+        add('KidnapAtS', f"{ks[0]['kidnap_at_s']:g}", 'coco_lab/coco_lab/benchmarks/loc-kidnap-20.v1.json')
     # R3.2: ctrl-dynamic-30 split by the actor rule (MODEL), when its baseline is committed
     dyn = 'docs/v2/r3/bench/ctrl-dynamic-30/control/public/runs.jsonl'
     if (REPO / dyn).is_file():

@@ -34,11 +34,17 @@ follows from the model's rules and the recorded contacts, but was not traced tic
 \DynMppiYield{}). Success alone would rank the contact-making driver first; the leaderboard
 therefore reports contacts beside success.
 
-\textbf{Global localisation is unsolved by the built-ins.} On \texttt{loc-global-20} the robot
-starts with no pose estimate. At the teaching profile (\MclParticles{} particles) neither Monte
-Carlo variant converged in any of its \GlobalRuns{} runs (\GlobalConverged{} converged,
-\GlobalSuccesses{} successes); the EKF cannot start without a pose and is not run. We keep the
-suite as a negative baseline with headroom. Whether a larger particle set would solve it was not
+\textbf{Global localisation and kidnapping are unsolved by the built-ins.} On \texttt{loc-global-20}
+the robot starts with no pose estimate. At the teaching profile (\MclParticles{} particles) neither
+Monte Carlo variant converged in any of its \GlobalRuns{} runs (\GlobalConverged{} converged,
+\GlobalSuccesses{} successes); the EKF cannot start without a pose and is not run. On
+\texttt{loc-kidnap-20} the robot is moved \KidnapMinM{}--\KidnapMaxM{}~m without being told, at
+\KidnapAtS{}~s. No localiser recovered in any of the \KidnapRuns{} runs (\KidnapRecovered{}
+recoveries, \KidnapSuccesses{} successes), including MCL with augmented injection, which exists
+for this case; in \KidnapBeliefArrivals{} runs the robot arrived at the goal by its own estimate
+while elsewhere in truth, which the suite scores as a failure. With so few particles a handful of
+injected ones rarely lands near the true pose; that is our reading, not a measurement. We keep both
+suites as negative baselines with headroom. Whether larger particle sets would solve them was not
 tested: each run already cost minutes of CPU at this profile (\evclass{unresolved}).
 
 \input{generated/baselines_planning}
