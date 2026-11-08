@@ -19,6 +19,7 @@ interface Pair {
   ratio_median: number | null; ratio_n: number;
 }
 interface Gap { about: string; planning: Record<string, Record<string, Pair>>; control: Record<string, Record<string, Pair>>;
+  localisation?: Record<string, Record<string, Pair>>;
   notes?: string[]; downloads?: { label: string; path: string }[] }
 
 const pct = (x: number | null) => (x === null ? '—' : `${Math.round(x * 100)} %`);
@@ -49,6 +50,7 @@ export function ModelVsRos2Tab() {
     {gap && gap !== 'none' && <>
       {Object.entries(gap.planning).map(([suite, pairs]) => <article key={suite} className="wb-bench"><h2>{suite} · planning</h2><PairTable pairs={pairs} /></article>)}
       {Object.entries(gap.control).map(([suite, pairs]) => <article key={suite} className="wb-bench"><h2>{suite} · control</h2><PairTable pairs={pairs} /></article>)}
+      {Object.entries(gap.localisation ?? {}).map(([suite, pairs]) => <article key={suite} className="wb-bench"><h2>{suite} · localisation</h2><PairTable pairs={pairs} /></article>)}
       {gap.notes?.length ? <ul>{gap.notes.map((n) => <li key={n}>{n}</li>)}</ul> : null}
       {gap.downloads?.length ? <p>Paired runs: {gap.downloads.map((d, i) => <span key={d.path}>{i ? ' · ' : ''}<a href={`${GEN}${d.path}`} download>{d.label}</a></span>)}</p> : null}
     </>}

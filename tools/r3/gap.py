@@ -14,7 +14,11 @@ R3.2 baselines (docs/v2/r3/bench/<suite>/<family>/public/runs.jsonl). Pairs, per
   as given (stock) and snapped. Success = a path found; length ratio = STACK / MODEL.
 - control: model RPP / DWA / MPPI vs Nav2 RPP / DWB / MPPI (Nav2's own controllers, counterparts)
   under the same scenario; success = goal reached; ratios of time and distance driven.
-- localisation: model MCL (+ injection) vs AMCL; final error at the goal.
+- localisation (loc-track-30): model MCL and MCL + injection vs Nav2 AMCL, and model MCL vs the
+  particle-filter starter as a ROS 2 node in AMCL's place (counterparts). Drive sessions record no
+  estimate error, so STACK success = Nav2 SUCCEEDED and the TRUE distance to the goal within
+  ``LOC_OK_M`` (Nav2's 0.25 m goal tolerance + the model's 0.5 m ``localise.OK_XY``); the model's
+  own success (arrived and its estimate within 0.5 m / 0.3 rad) is unchanged. Ratio: time to goal.
 
 For every pair: the success confusion table (model x stack), agreement, the share where the model is
 optimistic (model succeeds, stack fails) or pessimistic (the reverse), and the median ratios over
@@ -36,6 +40,11 @@ PLAN_PAIRS = [('astar', 'user_compute_path_to_pose', 'the same A* file, browser 
               ('astar', 'compute_path_to_pose@SmacHybrid+snapped',
                'model A* vs Nav2 Smac Hybrid-A*, snapped (no model counterpart: reference only)')]
 CTRL_PAIRS = [('rpp', 'rpp'), ('dwa', 'dwb'), ('mppi', 'mppi')]
+LOC_PAIRS = [('mcl', 'amcl', 'model MCL vs Nav2 AMCL'),
+             ('mcl_augmented', 'amcl', 'model MCL + injection vs Nav2 AMCL'),
+             ('mcl', 'pf', 'model MCL vs the particle-filter starter as a ROS 2 node')]
+#: STACK localisation success: Nav2's xy_goal_tolerance (prepare_gazebo.py) + localise.OK_XY (m)
+LOC_OK_M = 0.25 + 0.5
 
 
 def model_runs(suite, family):
@@ -125,9 +134,30 @@ def control(runs_dir, suite, rule=''):
     return out
 
 
+def localisation(runs_dir, suite='loc-track-30'):
+    model = model_runs(suite, 'localisation')
+    out = {}
+    for m_alg, s_loc, label in LOC_PAIRS:
+        by = {}
+        for r in stack_rows(runs_dir, f'{suite}_{s_loc}'):
+            by.setdefault(r['id'], []).append(r)
+        items = []
+        for sid, rs in sorted(by.items()):
+            m = model.get((m_alg, sid))
+            if m is None:
+                continue
+            oks = [r['status'] == 'SUCCEEDED' and r.get('truth_to_goal_m') is not None
+                   and r['truth_to_goal_m'] <= LOC_OK_M for r in rs]
+            items.append((sid, m['success'], oks, m['metrics'].get('time_s'), [r.get('sim_s') for r in rs]))
+        if items:
+            out[f'{s_loc}:{m_alg}'] = dict(pair_stats(items), model=m_alg, label=label,
+                                         metric=f'time to goal (s); STACK success = arrived, truth within {LOC_OK_M} m')
+    return out
+
+
 def main():
     runs_dir, out = Path(sys.argv[1]), Path(sys.argv[2])
-    doc = {'about': __doc__.strip().split('\n\n')[1].replace('\n', ' '), 'planning': {}, 'control': {}}
+    doc = {'about': __doc__.strip().split('\n\n')[1].replace('\n', ' '), 'planning': {}, 'control': {}, 'localisation': {}}
     for s in ('depot-nav-100', 'depot-narrow-30', 'depot-long-50', 'depot-clutter-50'):
         r = planning(runs_dir, s)
         if r:
@@ -139,10 +169,13 @@ def main():
     r = control(runs_dir, 'ctrl-dynamic-30', '-noyield')
     if r:
         doc['control']['ctrl-dynamic-30 (actors keep schedule)'] = r
+    r = localisation(runs_dir)
+    if r:
+        doc['localisation'] = {'loc-track-30': r}
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(doc, indent=1, sort_keys=True) + '\n')
     print(json.dumps({k: {s: {p: (v['agreement'], v['ratio_median']) for p, v in x.items()}
-                          for s, x in doc[k].items()} for k in ('planning', 'control')}, indent=1))
+                          for s, x in doc[k].items()} for k in ('planning', 'control', 'localisation')}, indent=1))
     return 0
 
 

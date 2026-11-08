@@ -150,3 +150,23 @@ def test_main_writes_the_document(dirs, tmp_path):
     doc = json.loads(out.read_text())
     assert doc['control']['ctrl-corners-30']['mppi']['ratio_median'] == 1.2
     assert doc['planning'] == {}
+
+
+def test_localisation_success_needs_arrival_and_the_truth_near_the_goal(dirs):
+    bench, runs = dirs
+    write_model(bench, 'loc-track-30', 'localisation',
+                [m('mcl', 'k001', True, time_s=40.0), m('mcl', 'k002', True, time_s=40.0),
+                 m('mcl_augmented', 'k001', False, time_s=300.0)])
+    write_stack(runs, 'loc-track-30_amcl_rep1', [
+        {'id': 'k001', 'status': 'SUCCEEDED', 'sim_s': 44.0, 'truth_to_goal_m': 0.3},
+        # Nav2 believes it arrived, the truth is far: a localisation failure
+        {'id': 'k002', 'status': 'SUCCEEDED', 'sim_s': 41.0, 'truth_to_goal_m': 2.0}])
+    write_stack(runs, 'loc-track-30_pf_rep1', [
+        {'id': 'k001', 'status': 'ABORTED', 'sim_s': 420.0, 'truth_to_goal_m': None}])
+    r = G.localisation(runs)
+    assert set(r) == {'amcl:mcl', 'amcl:mcl_augmented', 'pf:mcl'}
+    assert r['amcl:mcl']['confusion'] == {'both': 1, 'model_only': 1, 'stack_only': 0, 'neither': 0}
+    assert r['amcl:mcl']['ratio_median'] == 1.1
+    assert r['amcl:mcl_augmented']['confusion']['stack_only'] == 1
+    assert r['pf:mcl']['confusion']['model_only'] == 1
+    assert G.LOC_OK_M == 0.75
