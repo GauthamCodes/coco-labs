@@ -65,6 +65,10 @@ MCL runs took ~11 min each on one core: the localisation baselines need the work
 
 ## Interruptions
 
+- 2026-11-08 19:56: all 19 MODEL baseline sets done and committed (last `935c0fb`). The R3.4 queue started at
+  20:01 (first session depot-nav-100_plan_rep1, headless, AC + balanced); ~15 min late because an old background
+  wait loop's own command line matched the chain's `pgrep -f` check (fixed by stopping it; nothing else affected).
+
 - 2026-11-08 ~00:42: the laptop rebooted during depot-nav-100/localisation (183/300; partial runs discarded,
   the family re-runs from the start). The five finished suite/family sets kept their DONE markers and were
   skipped on restart (00:55, same command, `--workers 10`); the R3.4 queue re-chained behind the baselines.
