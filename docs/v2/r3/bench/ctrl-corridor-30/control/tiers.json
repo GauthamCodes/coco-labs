@@ -1,0 +1,152 @@
+{
+ "about": "R3.2 tools/r3/make_baselines.py: per tier (the suite file's tiers), public scenarios",
+ "family": "control",
+ "held_out": {
+  "n": 10,
+  "note": "a reference draw from a public seed (not an ADR 0014 secret)",
+  "seed": 3310494095033400
+ },
+ "suite": "ctrl-corridor-30",
+ "tiers": {
+  "builtin": {
+   "easy": {
+    "contacts_median": 0,
+    "min_clearance_m_median": 0.0036067977499789905,
+    "n": 10,
+    "successes": 10,
+    "time_s_median": 70.2,
+    "wilson95": [
+     0.7224672001371107,
+     1
+    ]
+   },
+   "hard": {
+    "contacts_median": 0,
+    "min_clearance_m_median": 0.0036067977499789905,
+    "n": 10,
+    "successes": 10,
+    "time_s_median": 132.85,
+    "wilson95": [
+     0.7224672001371107,
+     1
+    ]
+   },
+   "medium": {
+    "contacts_median": 0,
+    "min_clearance_m_median": 0.0036067977499789905,
+    "n": 10,
+    "successes": 10,
+    "time_s_median": 94.80000000000001,
+    "wilson95": [
+     0.7224672001371107,
+     1
+    ]
+   }
+  },
+  "dwa": {
+   "easy": {
+    "contacts_median": 0,
+    "min_clearance_m_median": 0.096227766016838,
+    "n": 10,
+    "successes": 9,
+    "time_s_median": 63.5,
+    "wilson95": [
+     0.5958499732047615,
+     0.9821237869049271
+    ]
+   },
+   "hard": {
+    "contacts_median": 0,
+    "min_clearance_m_median": 0.096227766016838,
+    "n": 10,
+    "successes": 5,
+    "time_s_median": 127.2,
+    "wilson95": [
+     0.236593090512564,
+     0.7634069094874361
+    ]
+   },
+   "medium": {
+    "contacts_median": 0,
+    "min_clearance_m_median": 0.11839144678161848,
+    "n": 10,
+    "successes": 4,
+    "time_s_median": 91.55000000000001,
+    "wilson95": [
+     0.16818032970623614,
+     0.6873262302663417
+    ]
+   }
+  },
+  "mppi": {
+   "easy": {
+    "contacts_median": 0,
+    "min_clearance_m_median": 0.18000000000000002,
+    "n": 10,
+    "successes": 10,
+    "time_s_median": 134.5,
+    "wilson95": [
+     0.7224672001371107,
+     1
+    ]
+   },
+   "hard": {
+    "contacts_median": 0,
+    "min_clearance_m_median": 0.18000000000000002,
+    "n": 10,
+    "successes": 9,
+    "time_s_median": 259.7,
+    "wilson95": [
+     0.5958499732047615,
+     0.9821237869049271
+    ]
+   },
+   "medium": {
+    "contacts_median": 0,
+    "min_clearance_m_median": 0.18000000000000002,
+    "n": 10,
+    "successes": 10,
+    "time_s_median": 184.10000000000002,
+    "wilson95": [
+     0.7224672001371107,
+     1
+    ]
+   }
+  },
+  "rpp": {
+   "easy": {
+    "contacts_median": 0,
+    "min_clearance_m_median": 0.096227766016838,
+    "n": 10,
+    "successes": 6,
+    "time_s_median": 68.15,
+    "wilson95": [
+     0.31267376973365824,
+     0.8318196702937638
+    ]
+   },
+   "hard": {
+    "contacts_median": null,
+    "min_clearance_m_median": null,
+    "n": 10,
+    "successes": 0,
+    "time_s_median": null,
+    "wilson95": [
+     0,
+     0.2775327998628892
+    ]
+   },
+   "medium": {
+    "contacts_median": 0,
+    "min_clearance_m_median": 0.096227766016838,
+    "n": 10,
+    "successes": 3,
+    "time_s_median": 104.10000000000001,
+    "wilson95": [
+     0.10779126740630099,
+     0.6032218525388546
+    ]
+   }
+  }
+ }
+}
