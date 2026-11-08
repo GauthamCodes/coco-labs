@@ -2,7 +2,7 @@
 \begin{table}[t]
 \centering
 \scriptsize
-\caption{\evclass{model} baselines, planning: successes per tier (easy/medium/hard), on all public scenarios and on a held-out reference draw; path (m) is the public median. Not yet run: \texttt{depot-clutter-50}, \texttt{depot-long-50}.}
+\caption{\evclass{model} baselines, planning: successes per tier (easy/medium/hard), on all public scenarios and on a held-out reference draw; path (m) is the public median. Not yet run: \texttt{depot-clutter-50}.}
 \label{tab:base-planning}
 \setlength{\tabcolsep}{2.5pt}
 \begin{tabular}{llrrrrrr}
@@ -15,6 +15,13 @@ suite & algorithm & easy & med. & hard & public & held-out & path (m) \\
  & \texttt{dstar\_lite} & 17/17 & 17/17 & 16/16 & 50/50 & 15/15 & 17.65 \\
  & \texttt{greedy} & 17/17 & 17/17 & 16/16 & 50/50 & 15/15 & 18.60 \\
  & \texttt{weighted\_astar} & 17/17 & 17/17 & 16/16 & 50/50 & 15/15 & 17.79 \\
+\midrule
+\texttt{depot-long-50} & \texttt{astar} & 17/17 & 17/17 & 16/16 & 50/50 & 15/15 & 44.33 \\
+ & \texttt{bfs} & 17/17 & 17/17 & 16/16 & 50/50 & 15/15 & 43.67 \\
+ & \texttt{dijkstra} & 17/17 & 17/17 & 16/16 & 50/50 & 15/15 & 44.33 \\
+ & \texttt{dstar\_lite} & 17/17 & 17/17 & 16/16 & 50/50 & 15/15 & 44.33 \\
+ & \texttt{greedy} & 17/17 & 17/17 & 16/16 & 50/50 & 15/15 & 47.43 \\
+ & \texttt{weighted\_astar} & 17/17 & 17/17 & 16/16 & 50/50 & 15/15 & 44.87 \\
 \midrule
 \texttt{depot-narrow-30} & \texttt{astar} & 10/10 & 10/10 & 10/10 & 30/30 & 10/10 & 38.44 \\
  & \texttt{bfs} & 10/10 & 10/10 & 10/10 & 30/30 & 10/10 & 37.71 \\
