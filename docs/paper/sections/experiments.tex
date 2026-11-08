@@ -6,7 +6,10 @@
 Every built-in ran on every suite of its family, on the public scenarios and on a held-out
 reference draw (\cref{tab:base-planning,tab:base-control,tab:base-localisation}; \evclass{model},
 all runs committed with their hash chains). The tables are generated from the committed runs and
-list the suites whose runs are not yet committed. Two readings recur. Planners that minimise
+list the suites whose runs are not yet committed. Every built-in planner reaches every goal of
+every planning suite, public and held-out: on these maps success does not separate the planners,
+and the planning suites rank them by path quality and search effort instead (the leaderboard's
+path ratio and expansions). Two further readings recur. Planners that minimise
 costmap cost (A*, Dijkstra, D* Lite) return longer paths than breadth-first search, which ignores
 cost; path length alone is therefore not a measure of quality here. In control, the Waypoint driver is
 the model's own path follower: it drives the global plan without a local costmap or a local
