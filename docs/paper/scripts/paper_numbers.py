@@ -167,6 +167,15 @@ def macros():
         add('GlobalSuccesses', sum(bool(r['success']) for r in gr), glob + '/runs.jsonl')
         add('GlobalRuns', len(gr), glob + '/runs.jsonl')
         add('GlobalConverged', sum(r['metrics']['converged_s'] is not None for r in gr), glob + '/runs.jsonl')
+    # R3.2: task-fetch-10 (MODEL), when its baseline is committed
+    fet = 'docs/v2/r3/bench/task-fetch-10/fulltask'
+    if (REPO / fet / 'DONE').is_file():
+        fr = [json.loads(x) for part in ('part1', 'part2')
+              for x in (REPO / fet / part / 'runs.jsonl').read_text().splitlines()]
+        add('FetchRuns', len(fr), fet)
+        add('FetchCompleted', sum(bool(r['success']) for r in fr), fet)
+        add('FetchPlanners', len({r['algorithm'] for r in fr}), fet)
+        add('FetchContacts', sum(r['metrics']['contacts'] or 0 for r in fr), fet)
     # R3.2: loc-kidnap-20 (MODEL), when its baseline is committed
     kid = 'docs/v2/r3/bench/loc-kidnap-20/localisation/public/runs.jsonl'
     if (REPO / kid).is_file():

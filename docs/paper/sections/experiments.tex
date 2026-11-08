@@ -47,6 +47,11 @@ injected ones rarely lands near the true pose; that is our reading, not a measur
 suites as negative baselines with headroom. Whether larger particle sets would solve them was not
 tested: each run already cost minutes of CPU at this profile (\evclass{unresolved}).
 
+\textbf{Full task.} On \texttt{task-fetch-10} the \FetchPlanners{} planners that drive the fetch
+loop completed \FetchCompleted{} of \FetchRuns{} rounds with \FetchContacts{} contacts; like
+planning, the task does not separate them by success, and its scorecard (time used, path
+efficiency) is what differs.
+
 \input{generated/baselines_planning}
 \input{generated/baselines_control}
 \input{generated/baselines_localisation}

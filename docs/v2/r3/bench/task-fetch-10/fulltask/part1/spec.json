@@ -1,0 +1,93 @@
+{
+ "algorithms": [
+  {
+   "id": "bfs",
+   "label": "BFS",
+   "name": "bfs",
+   "params": {}
+  },
+  {
+   "id": "dijkstra",
+   "label": "Dijkstra",
+   "name": "dijkstra",
+   "params": {}
+  },
+  {
+   "id": "astar",
+   "label": "A*",
+   "name": "astar",
+   "params": {}
+  },
+  {
+   "id": "greedy",
+   "label": "Greedy best-first",
+   "name": "greedy",
+   "params": {}
+  },
+  {
+   "id": "weighted_astar",
+   "label": "Weighted A*",
+   "name": "weighted_astar",
+   "params": {}
+  }
+ ],
+ "family": "fulltask",
+ "limits": {
+  "max_ticks": 3000
+ },
+ "metrics": [
+  "deliveries",
+  "orders",
+  "contacts",
+  "net_deliveries",
+  "time_to_complete_s",
+  "time_used_s",
+  "path_efficiency",
+  "ticks",
+  "timer_s",
+  "compute_ms"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "game": "fetch_rush",
+  "kind": "rounds",
+  "rounds": [
+   {
+    "mode": "phone",
+    "seed": 1
+   },
+   {
+    "mode": "phone",
+    "seed": 2
+   },
+   {
+    "mode": "phone",
+    "seed": 3
+   },
+   {
+    "mode": "phone",
+    "seed": 4
+   },
+   {
+    "mode": "phone",
+    "seed": 5
+   },
+   {
+    "mode": "phone",
+    "seed": 6
+   }
+  ]
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 1,
+ "sweep": {
+  "params": []
+ },
+ "title": "COCO-Bench v1 baseline: task-fetch-10, part 1",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841"
+}
