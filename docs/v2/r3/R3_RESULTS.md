@@ -33,13 +33,27 @@ found nowhere, no network, leaks not published; the stated residual (one rounded
 a set never reused) reproduced. [data/heldout](data/heldout/README.md). The repository secret is set when the workflow
 reaches main.
 
-## B2 · Baselines and the gap — pending
+## B2 · Baselines and the gap
 
-- MODEL baselines (`tools/r3/make_baselines.py`, `docs/v2/r3/bench/`): running. Carried suites reproduce R1's v0
-  references run for run so far: arena-nav-50 planning 300/300, control 200/200, localisation 150/150; depot-nav-100
-  planning 600/600, control 400/400.
-- STACK baselines (`tools/r3/ros2_queue_r34.sh`): after the MODEL baselines.
-- Gap analysis (`tools/r3/gap.py`, the Workbench "Model vs ROS 2" tab): after the STACK baselines.
+**MODEL baselines — done** ([`bench/`](bench/README.md), 19 suite/family sets, every built-in, public + a held-out
+reference draw, all runs with hash chains; generated tables in the paper). Carried suites reproduce R1's v0 references
+run for run: arena-nav-50 planning/control/localisation 300/200/150, depot-nav-100 planning/control 600/400,
+depot-narrow-30 planning/control 180/120 — **2,350 of 2,350 identical**. The laptop rebooted once
+(2026-11-08 ~00:42); the set in progress re-ran from its start.
+
+| family | what the baselines show (MODEL) | evidence |
+| --- | --- | --- |
+| planning (5 suites) | every built-in planner reaches every goal, public and held-out (30 of 30 rows full): success does not separate them; path ratio and expansions do. Cost-aware A*/Dijkstra/D* Lite return longer paths than BFS | `bench/*/planning/`, paper Table "baselines, planning" |
+| control (7 suites) | the Waypoint driver (the model's plan follower: no local costmap, no collision check, no Nav2 failure outcomes) is a **plan reference**, not a controller result; among DWA/RPP/MPPI, MPPI is the most reliable and slowest, RPP the fastest and least reliable (e.g. ctrl-corridor-30: MPPI 29/30, DWA 18/30, RPP 9/30) | `bench/*/control/` |
+| control, moving actors | ctrl-dynamic-30: the Waypoint driver wins 15/15 with scheduled actors (10 of them with contact) but 9/15 with yielding actors (6 timeouts; a mutual wait — INFERENCE, not traced); DWA/RPP/MPPI nearly insensitive to the rule. The Leaderboard now shows **Contacts** beside success | `bench/ctrl-dynamic-30/`, `a9e0bb9` |
+| localisation (5 suites) | EKF most reliable on tracking (depot-nav-100 92/100, loc-track-30 28/30); MCL fails far more on hard tiers; MCL + injection is *worse* than MCL for plain tracking at 60 particles | `bench/*/localisation/` |
+| localisation, negative | **loc-global-20: 0/40** (no MCL variant converged; EKF cannot start) and **loc-kidnap-20: 0/60** (no recovery, augmented MCL included) at the teaching profile. Kept as negative baselines; larger particle sets UNRESOLVED (question for Gautham) | `0df82ee`, `247315e` |
+| full task | task-fetch-10: 50/50 rounds completed by the five fetch planners, 0 contacts | `bench/task-fetch-10/` |
+
+**STACK baselines (Gazebo + Nav2)** — `tools/r3/ros2_queue_r34.sh`, started 2026-11-08 20:01. Time budget (the laptop
+until 2026-11-09 ~14:00): repeat 1 of everything, planning repeats 2–3 (`tools/r3/ros2_queue_r34_plan.sh`).
+**Control and localisation have n = 1 repeat: the prompt's "× 3 repeats" is NOT MET for them.** Results and the gap
+analysis: below, once the sessions are committed.
 
 ## B3 · Leaderboard v1 — in progress
 
