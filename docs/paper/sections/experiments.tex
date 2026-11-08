@@ -8,7 +8,12 @@ reference draw (\cref{tab:base-planning,tab:base-control,tab:base-localisation};
 all runs committed with their hash chains). The tables are generated from the committed runs and
 list the suites whose runs are not yet committed. Two readings recur. Planners that minimise
 costmap cost (A*, Dijkstra, D* Lite) return longer paths than breadth-first search, which ignores
-cost; path length alone is therefore not a measure of quality here. Localisers are separated
+cost; path length alone is therefore not a measure of quality here. In control, the Waypoint driver is
+the model's own path follower: it drives the global plan without a local costmap or a local
+collision check, and it has none of Nav2's failure outcomes, so its success is a reference for the
+plan rather than a controller result. DWA, RPP and MPPI each plan in a local window built from the
+scan, keep a larger clearance from walls, and can fail as Nav2's controllers do; it is among them
+that the suites discriminate. Localisers are separated
 by the tier structure: in the localisation runs committed so far, Monte Carlo localisation at the
 teaching profile loses its track far more often on hard scenarios than on easy ones.
 
