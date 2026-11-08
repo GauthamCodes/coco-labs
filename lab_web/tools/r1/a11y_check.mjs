@@ -17,8 +17,11 @@ import { nothingPhone1 } from '../phone/nothing-phone-1.mjs';
 const [site, out, ...rest] = process.argv.slice(2);
 const VIEWS = { workbench: '?view=workbench', benchmarks: '?view=workbench&tab=benchmarks', datasets: '?view=workbench&tab=datasets', learn: '?view=learn',
   // R2: the Algorithm Studio and the Leaderboard (opt-in with --views; the default set is R1's)
-  studio: '?view=workbench&tab=studio', leaderboard: '?view=workbench&tab=leaderboard' };
-const R2_WAIT = { '?view=workbench&tab=studio': '[data-testid="studio"]', '?view=workbench&tab=leaderboard': '[data-testid="leaderboard"] h2' };
+  studio: '?view=workbench&tab=studio', leaderboard: '?view=workbench&tab=leaderboard',
+  // R3: Model vs ROS 2, and About (Cite, Reproduce this paper)
+  gap: '?view=workbench&tab=gap', about: '?view=about' };
+const R2_WAIT = { '?view=workbench&tab=studio': '[data-testid="studio"]', '?view=workbench&tab=leaderboard': '[data-testid="leaderboard"] h2',
+  '?view=workbench&tab=gap': '[data-testid="model-vs-ros2"] h2, [data-testid="gap-pending"]', '?view=about': '[data-testid="reproduce-paper"]' };
 const DEFAULT_VIEWS = 'workbench,benchmarks,datasets,learn';
 const views = (rest.includes('--views') ? rest[rest.indexOf('--views') + 1] : DEFAULT_VIEWS).split(',').map((v) => VIEWS[v]);
 mkdirSync(out, { recursive: true });
