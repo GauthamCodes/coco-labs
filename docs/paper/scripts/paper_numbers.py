@@ -158,6 +158,15 @@ def macros():
     clutter = j('worlds/coco_depot_clutter_v1.json')
     add('ClutterPallets', sum(1 for k in clutter['kit'] if k['id'].startswith('pallet_clutter_')),
         'worlds/coco_depot_clutter_v1.json')
+    # R3.2: loc-global-20 at the teaching profile (MODEL), when its baseline is committed
+    glob = 'docs/v2/r3/bench/loc-global-20/localisation/public'
+    if (REPO / glob / 'runs.jsonl').is_file():
+        spec = j(glob + '/spec.json')
+        add('MclParticles', spec['algorithms'][0]['params']['mcl.particles'], glob + '/spec.json')
+        gr = [json.loads(x) for x in (REPO / glob / 'runs.jsonl').read_text().splitlines()]
+        add('GlobalSuccesses', sum(bool(r['success']) for r in gr), glob + '/runs.jsonl')
+        add('GlobalRuns', len(gr), glob + '/runs.jsonl')
+        add('GlobalConverged', sum(r['metrics']['converged_s'] is not None for r in gr), glob + '/runs.jsonl')
     # R3.2: ctrl-dynamic-30 split by the actor rule (MODEL), when its baseline is committed
     dyn = 'docs/v2/r3/bench/ctrl-dynamic-30/control/public/runs.jsonl'
     if (REPO / dyn).is_file():

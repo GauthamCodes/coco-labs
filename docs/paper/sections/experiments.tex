@@ -34,6 +34,13 @@ follows from the model's rules and the recorded contacts, but was not traced tic
 \DynMppiYield{}). Success alone would rank the contact-making driver first; the leaderboard
 therefore reports contacts beside success.
 
+\textbf{Global localisation is unsolved by the built-ins.} On \texttt{loc-global-20} the robot
+starts with no pose estimate. At the teaching profile (\MclParticles{} particles) neither Monte
+Carlo variant converged in any of its \GlobalRuns{} runs (\GlobalConverged{} converged,
+\GlobalSuccesses{} successes); the EKF cannot start without a pose and is not run. We keep the
+suite as a negative baseline with headroom. Whether a larger particle set would solve it was not
+tested: each run already cost minutes of CPU at this profile (\evclass{unresolved}).
+
 \input{generated/baselines_planning}
 \input{generated/baselines_control}
 \input{generated/baselines_localisation}
