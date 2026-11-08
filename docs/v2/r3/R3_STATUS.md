@@ -63,6 +63,15 @@ MCL runs took ~11 min each on one core: the localisation baselines need the work
   a stronger reference (e.g. MCL with far more particles) to show the suites are solvable in the model? Untested:
   each 60-particle run already took ~17 CPU-minutes here.
 
+## Time budget (Gautham, 2026-11-09 ~00:30): laptop available until ~14:00 today, then closed for a while
+
+Plan (assumes Monday 14:00, the earlier reading): Gazebo finishes repeat 1 of everything (~05:30) and repeat 2's
+planning; the queue is then stopped before repeat 2's controllers (`tmp/handover_r34.sh`) and
+`tools/r3/ros2_queue_r34_plan.sh 3` runs repeat 3's planning. So **planning keeps 3 repeats; control and
+localisation have repeat 1 only (n = 1, no majority)** -- the prompt's "x 3 repeats" is NOT MET for them and is
+reported so; repeats 2-3 can be resumed later with `tools/r3/ros2_queue_r34.sh 2 3` (DONE sessions skipped).
+Then gap.py, the Model vs ROS 2 tab, local suites, PR, merge under the gate, deploy, live smoke -- before 14:00.
+
 ## Interruptions
 
 - 2026-11-08 19:56: all 19 MODEL baseline sets done and committed (last `935c0fb`). The R3.4 queue started at
