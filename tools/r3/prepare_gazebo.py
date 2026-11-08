@@ -131,11 +131,24 @@ def variant(level_dir: Path, level: str, ctrl: str) -> Path:
     if CONTROLLERS[ctrl] is not None:
         cs = p['controller_server']['ros__parameters']
         old = cs['FollowPath']['plugin']
-        cs['FollowPath'] = CONTROLLERS[ctrl]
+        cs['FollowPath'] = dict(CONTROLLERS[ctrl])
         changes.append({'key': 'controller_server.FollowPath', 'from': old,
                         'to': CONTROLLERS[ctrl]['plugin'],
                         'why': "R3.4: Nav2 Jazzy's bringup defaults for this controller, with "
                                "COCO's limits (0.3 m/s, 1.0 rad/s, no reversing)"})
+        if ctrl == 'mppi':
+            # MPPI refuses a controller period longer than its model_dt (found 2026-11-09: Nav2
+            # never activated, 'Controller period more then model dt'). Jazzy's defaults assume
+            # 20 Hz; COCO's controller_server runs at its own frequency for every controller, so
+            # model_dt = its period and time_steps keep the defaults' horizon.
+            dt = round(1.0 / float(cs['controller_frequency']), 6)
+            steps = round(MPPI['time_steps'] * MPPI['model_dt'] / dt)
+            cs['FollowPath'].update(model_dt=dt, time_steps=steps)
+            changes.append({'key': 'controller_server.FollowPath.model_dt / time_steps',
+                            'from': f"{MPPI['model_dt']} / {MPPI['time_steps']}", 'to': f'{dt} / {steps}',
+                            'why': 'MPPI requires model_dt >= the controller period '
+                                   f"(controller_frequency {cs['controller_frequency']} Hz, COCO's, "
+                                   f"kept for every controller); horizon kept at {dt * steps:g} s"})
     (v / 'nav2' / 'nav2_params.yaml').write_text(yaml.safe_dump(p, sort_keys=False, width=100))
     d = json.loads((level_dir / 'nav2' / 'params_derivation.json').read_text())
     d['r3'] = {'tool': 'tools/r3/prepare_gazebo.py', 'controller': ctrl, 'changes': changes}
@@ -166,10 +179,11 @@ def no_yield(v: Path) -> Path:
 
 
 def main():
+    only = sys.argv[sys.argv.index('--only') + 1:] if '--only' in sys.argv else list(CONTROLLERS)
     clutter = generate_clutter()
     made = []
     for level, ldir in (('coco_depot_v1', G2_GEN / 'coco_depot_v1'), (CLUTTER, clutter)):
-        for ctrl in CONTROLLERS:
+        for ctrl in [c for c in CONTROLLERS if c in only]:
             v = variant(ldir, level, ctrl)
             made.append(str(v))
             if level == 'coco_depot_v1':
