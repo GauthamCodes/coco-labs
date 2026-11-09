@@ -52,8 +52,18 @@ depot-narrow-30 planning/control 180/120 — **2,350 of 2,350 identical**. The l
 
 **STACK baselines (Gazebo + Nav2)** — `tools/r3/ros2_queue_r34.sh`, started 2026-11-08 20:01. Time budget (the laptop
 until 2026-11-09 ~14:00): repeat 1 of everything, planning repeats 2–3 (`tools/r3/ros2_queue_r34_plan.sh`).
-**Control and localisation have n = 1 repeat: the prompt's "× 3 repeats" is NOT MET for them.** Results and the gap
-analysis: below, once the sessions are committed.
+**Control and localisation have n = 1 repeat: the prompt's "× 3 repeats" is NOT MET for them.** 26 sessions
+committed (`aa601a7`; [`data/r34/`](data/r34/), raw files checksummed). Two incidents, no data affected: MPPI never
+activated with Jazzy's model_dt (fixed, `c889335`; two voided tries kept), and a 30-min queue stall of my own making.
+
+**Model vs ROS 2 (R3.5)** — [`data/r35/README.md`](data/r35/README.md), [`gap.json`](data/r35/gap.json), the
+Workbench "Model vs ROS 2" tab (paired runs downloadable):
+
+| family | STACK vs MODEL |
+| --- | --- |
+| planning (4 suites × 20; 3 repeats, majority) | **ROS 2 never found a path the model missed (0 of 480)**: the model is only ever optimistic. Same A* file: 77/80, median length ratios 1.001–1.008. Nav2 Smac 2D: 62/80 as given → 78/80 snapped (depot-long-50: 10/20 → 19/20). The gap is the start/goal convention, not the search |
+| control (n = 1) | agreement RPP 25/70, DWB vs DWA 39/70, MPPI 40/70. The model's RPP is pessimistic (33 STACK-only vs 12 model-only; 13 of 20 corridor routes). Times close for RPP/DWB (1.00–1.11); Nav2 MPPI 0.56–0.58 of the model MPPI's time |
+| localisation (n = 1) | MCL vs AMCL 12/20, vs the PF starter as a ROS 2 node 12/20; the 5 STACK failures are the same routes for both and aborted 7–35 m from the goal (navigation aborts, INFERENCE) |
 
 ## B3 · Leaderboard v1 — in progress
 
