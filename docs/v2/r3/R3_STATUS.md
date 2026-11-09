@@ -74,6 +74,14 @@ Then gap.py, the Model vs ROS 2 tab, local suites, PR, merge under the gate, dep
 
 ## Interruptions
 
+- 2026-11-09 01:45-02:00: the first MPPI session voided twice (Nav2 never activated: MPPI refuses a controller
+  period longer than its model_dt; Jazzy's 0.05 s default vs COCO's 10 Hz). Fixed in `c889335` (model_dt 0.1 s,
+  28 steps, same 2.8 s horizon; recorded in the variant's params_derivation.json); try 3 activated in 17 s and every
+  MPPI session after it finished rc=0. The voided tries are kept (`*_void2`, `*_void3` in the raw runs).
+- 2026-11-09 06:27-06:57: repeat 3's planning stalled 30 min because a wait command of mine contained the text the
+  queue's `quiet()` check looks for (`pgrep -f 'g[z] sim'` matched my shell). No data affected; waits now never
+  contain those patterns.
+
 - 2026-11-08 19:56: all 19 MODEL baseline sets done and committed (last `935c0fb`). The R3.4 queue started at
   20:01 (first session depot-nav-100_plan_rep1, headless, AC + balanced); ~15 min late because an old background
   wait loop's own command line matched the chain's `pgrep -f` check (fixed by stopping it; nothing else affected).
