@@ -1,0 +1,13 @@
+2026-11-09T04:55:38Z R3.9 re-check: tree a4b3d95 dirty=0; balanced, AC 1
+2026-11-09T04:55:46Z STEP coco_lab_ament rc=0 3 passed in 8.02s
+2026-11-09T04:58:31Z STEP coco_lab_experiments rc=0 34 passed in 165.04s (0:02:45)
+2026-11-09T05:03:49Z STEP lab_web_tools rc=0 299 passed in 317.60s (0:05:17)
+2026-11-09T05:05:36Z STEP build_catalog rc=0 wheel: {'path': 'py/coco_lab-0.2.0-py3-none-any.whl', 'sha256': '554afacf0bb0ef5337401c52574ac9ca5ad054cd29d57c291567a2422a95a7a0', 'bytes': 533275}
+2026-11-09T05:05:49Z STEP arena_assets rc=0 missions: 7, every replay link names a run here
+2026-11-09T05:05:50Z STEP typecheck rc=0 
+2026-11-09T05:06:27Z STEP vitest rc=0 
+2026-11-09T05:06:55Z STEP build_twice rc=0 }
+2026-11-09T05:08:33Z STEP a11y rc=0 {"passed":true,"pages":[["desktop","dark","?view=workbench",371,0,0,true],["desktop","dark","?view=workbench&tab=benchmarks",692,0,0,true],["desktop","dark","?view=workbench&tab=datasets",396,0,0,true],["desktop","dark",
+2026-11-09T05:09:51Z STEP studio_check rc=0 STUDIO CHECK PASS
+2026-11-09T05:10:08Z STEP r3_screens rc=0 R3 SCREENS PASS
+2026-11-09T05:10:08Z R3.9 re-check done; tree still a4b3d95 dirty=0; AC 1

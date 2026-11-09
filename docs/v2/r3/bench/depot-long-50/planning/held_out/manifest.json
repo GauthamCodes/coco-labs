@@ -1,0 +1,44 @@
+{
+ "complete": true,
+ "digest": "ed9394b5d18b74e775e8c7833e45168901b36bdf65accf3e3cf7d8317300f2ca",
+ "evidence": "MODEL",
+ "experiment": "38047d26a76dbe6b",
+ "files": {
+  "results.csv": {
+   "bytes": 28470,
+   "sha256": "ed0ab75439bb61e3855097a6a0e822cb170cb5e723e14d8b2841e1f8a90bf76a"
+  },
+  "runs.jsonl": {
+   "bytes": 49034,
+   "sha256": "03ca75024c40fb3d1c1d426382f3d3155e00a1f2f098b8ffe00d775af1775cdc"
+  },
+  "spec.json": {
+   "bytes": 4942,
+   "sha256": "64a182627b3c4d0c6cdd1d02f0fd80fb85e2f8a8a02af07f54d8599436558972"
+  },
+  "summary.json": {
+   "bytes": 76332,
+   "sha256": "14859ea096d348425b97fb1fb486108b9f888e28cac740f48f4a46f48aad3cb2"
+  }
+ },
+ "host": {
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "git": "24eced42b17446547f1e9f592c19422d18185308",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "runner": "cpython",
+  "wall_s": 23.824,
+  "workers": 10
+ },
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "n_planned": 90,
+ "n_runs": 90,
+ "schema": "coco.experiment.manifest.v1",
+ "spec_sha256": "38047d26a76dbe6b03051068f4b01fa31030378d39526846f881b282656db365",
+ "timing_note": "compute_ms is wall time on this host; counts are device-independent",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841"
+}

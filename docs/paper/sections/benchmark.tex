@@ -1,0 +1,50 @@
+\input{generated/suites_table}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/tiers.pdf}
+\caption{Planning scenarios of four \bench{} v1 suites by the reference path's length and bends,
+coloured by tier (generated from the frozen suite files).}
+\label{fig:tiers}
+\end{figure*}
+
+\textbf{Suites.} \bench{} v1 (\cref{tab:suites}) has \BenchSuites{} frozen suites with
+\BenchScenarios{} scenarios on the original COCO arena and on a \DepotWidthM{}~m by \DepotHeightM{}~m warehouse, the
+Depot, with \DepotZones{} zones, rack aisles, a workshop maze and \DepotActors{} scheduled forklifts and walkers. \BenchCarried{}
+global-planning suites carry over the earlier v0 suites with identical scenarios (v1 adds
+features and tiers only); \texttt{depot-long-50} keeps routes whose reference path is long and
+crosses several zones; \texttt{depot-clutter-50} runs on a variant of the Depot with
+\ClutterPallets{} extra pallets taken from the world's own kit, placed by a seeded generator that
+keeps every carried-over start and goal connected, so a scenario looks exactly as cluttered as it
+is in the model and in Gazebo. The local-control suites select long narrow passages, routes with
+many bends, and routes that pass the actors' lanes; in \texttt{ctrl-dynamic-30} each start and
+goal appears twice, once with the actors stopping for the robot and once with them keeping their
+schedule, a scenario rule rather than physics. The localisation suites test tracking from a
+known start, global localisation from an unknown start (filters that can represent it), and the
+kidnapped robot. The full-task suite is the committed fetch rounds; we did not invent new ones.
+
+\textbf{Features and tiers.} Each scenario is described by features of one reference plan (A* on
+the default costmap): path length, the narrowest clearance, the longest narrow stretch, bends of
+\BendDeg{}$^\circ$ or more, zones crossed and exposure to actor lanes. Within a suite, each tier
+feature becomes a percentile rank, the ranks are averaged into a difficulty score, and the
+scenarios are cut into thirds (\cref{fig:tiers}). Results are reported per tier.
+
+\textbf{Metrics.} Planning: success, path length (and its ratio to the grid-optimal length),
+path cost, the minimum and mean clearance and expansions. Control: success under Nav2-like
+goal and progress checkers, time, the distance driven by the true pose, clearance and contacts.
+Localisation: success (reaching the goal with final error below thresholds), final, mean and
+maximum error, convergence and recovery time. Success rates come with Wilson intervals
+\cite{wilson1927}; continuous metrics with medians and quartiles. Wall-clock compute time is
+reported but never compared across machines and never enters a hash.
+
+\textbf{Held-out scenarios.} A leaderboard entry is also run on scenarios it has never seen:
+\(\mathrm{seed} = \mathrm{HMAC}(\mathit{secret},\ \mathit{suite} \,\|\, \mathit{head})\), where
+\(\mathit{head}\) is the submission's commit, so every push gets a fresh set. The trusted
+workflow generates the scenario file before any untrusted code runs and passes only that file
+into the sandbox; the secret never enters the container, the container's output is never
+published, and only rounded aggregates leave. \Cref{sec:limits} states what this does not
+prevent.
+
+\textbf{Datasheets.} Each suite ships a generated datasheet: purpose, composition, generation
+procedure and seeds, conditions, the features per tier, metric definitions with formulas,
+held-out policy, known biases and limitations, versioning and licence.

@@ -19,9 +19,9 @@ export const C_FAMILY: Record<string, CompareFamily> = { planning: 'global', con
 export type Source = { kind: 'live' } | { kind: 'random'; seed: number } | { kind: 'suite'; id: string; index: number } | { kind: 'hand'; start: [number, number, number]; goal: [number, number] };
 
 /** `?world=` names Compare accepts, and the World Spec each opens (G1.6 + R1.7: every shipped world). */
-export const WORLD_PARAM: Record<string, SpecFile> = { v1: SPEC_FILES.v1, v2: SPEC_FILES.v2, depot: SPEC_FILES.depot, depot_colours: SPEC_FILES.depot_colours };
+export const WORLD_PARAM: Record<string, SpecFile> = { v1: SPEC_FILES.v1, v2: SPEC_FILES.v2, depot: SPEC_FILES.depot, depot_colours: SPEC_FILES.depot_colours, depot_clutter: SPEC_FILES.depot_clutter };
 export const worldIdOf = (spec: SpecFile | undefined) => (spec ?? SPEC_FILES.v1).replace(/\.json$/, '');
-export const WORLD_NAME: Record<string, string> = { coco_arena_v1: 'COCO arena (Proving Ground)', coco_arena_v2: 'Proving Ground with terrain', coco_depot_v1: 'COCO Depot', coco_depot_colours_v1: 'COCO Depot with colour rods' };
+export const WORLD_NAME: Record<string, string> = { coco_arena_v1: 'COCO arena (Proving Ground)', coco_arena_v2: 'Proving Ground with terrain', coco_depot_v1: 'COCO Depot', coco_depot_colours_v1: 'COCO Depot with colour rods', coco_depot_clutter_v1: 'COCO Depot, cluttered' };
 
 /** The panes' algorithms with the sliders' parameters, as experiment algorithms (ids unique per pane). */
 export function paneAlgorithms(family: CompareFamily, names: string[], p: CompareInflation) {

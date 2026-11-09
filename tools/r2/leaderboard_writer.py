@@ -31,8 +31,9 @@ FILES = re.compile(r'^leaderboard/submissions/([a-z0-9-]+)/([a-z0-9][a-z0-9_-]{1
 #: only for a submission the PR makes, and only while it equals the verified result
 RESULT = re.compile(r'^leaderboard/results/([a-z0-9-]+)/([a-z0-9][a-z0-9_-]{1,39})/result\.json$')
 MAX_BYTES = 8 * 1024 * 1024
-#: what may differ between two verifications of the same entry (the machine)
-VOLATILE = ('host',)
+#: what may differ between two verifications of the same entry: the machine, and (R3.3, ADR
+#: 0014) the secret held-out result, drawn fresh for every head (a re-commit for it would loop)
+VOLATILE = ('host', 'held_out_secret')
 
 
 class Invalid(ValueError):
@@ -80,6 +81,9 @@ def validate(r: dict) -> dict:
             'planning', 'control', 'localisation') or e['kind'] not in ('submission', 'builtin'):
         raise Invalid('entry licence / family / kind')
     _text(e.get('paper'), 'entry.paper', 500, none=True)
+    # the verify job's read_meta already requires https://; the writer re-checks (a PR controls its workflow file)
+    if e.get('paper') is not None and not re.fullmatch(r'https://[^\s"\'<>`]+', e['paper']):
+        raise Invalid('entry.paper is an https:// URL')
     for part in ('public', 'held_out'):
         s = (r.get(part) or {}).get('score')
         if not isinstance(s, dict):
@@ -103,6 +107,46 @@ def _md(s) -> str:
     s = s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
     s = re.sub(r'([\\`*_{}\[\]()#+!|~])', r'\\\1', s)
     return s.replace('@', '@\u200b')   # a zero-width space: never a mention
+
+
+#: R3.3 (ADR 0014): the only keys a held-out aggregate may carry
+AGG_KEYS = {'family', 'n', 'successes', 'wilson95', 'path_ratio_median', 'min_clearance_m_median',
+            'time_s_median', 'final_err_xy_m_median', 'mean_err_xy_m_median'}
+
+
+def validate_agg(a) -> dict:
+    """A held-out aggregate from tools/r3/heldout.py: numbers only, its keys only."""
+    if not isinstance(a, dict) or set(a) - AGG_KEYS or a.get('family') not in (
+            'planning', 'control', 'localisation'):
+        raise Invalid('held-out aggregate')
+    _num(a.get('n'), 'held-out n', 1, 200, none=False)
+    _num(a.get('successes'), 'held-out successes', 0, a['n'], none=False)
+    w = a.get('wilson95')
+    if not (isinstance(w, list) and len(w) == 2):
+        raise Invalid('held-out wilson95')
+    for v in w:
+        _num(v, 'held-out wilson95', 0, 1, none=False)
+    for k in AGG_KEYS - {'family', 'n', 'successes', 'wilson95'}:
+        _num(a.get(k), f'held-out {k}', -1e6, 1e6)
+    return a
+
+
+def secret_heldout(agg_dir, suite, name):
+    """The secret held-out aggregate of one entry: dict, 'none' (no secret configured) or None."""
+    if agg_dir is None:
+        return None
+    root = Path(agg_dir)
+    if (root / 'heldout' / 'NONE').exists() or (root / 'NONE').exists():
+        return 'none'
+    p = root / 'agg' / suite / f'{name}.json'
+    if not p.is_file():
+        p = root / suite / f'{name}.json'
+    if not p.is_file() or p.stat().st_size > 10000:
+        return None
+    try:
+        return validate_agg(json.loads(p.read_text()))
+    except (Invalid, ValueError):
+        return None
 
 
 def comment(results, scope_ok, conclusion) -> str:
@@ -131,6 +175,18 @@ def comment(results, scope_ok, conclusion) -> str:
                     if isinstance(s.get(k), dict) and s[k].get('median') is not None:
                         txt += f"; {k} median {float(s[k]['median']):.4g}"
                 lines.append(txt)
+        h = r.get('held_out_secret')
+        if h == 'none':
+            lines.append('- held-out (secret, ADR 0014): not run, no secret configured')
+        elif isinstance(h, dict):
+            txt = (f"- held-out (secret, ADR 0014; fresh for this head): {h['successes']}/{h['n']} "
+                   f"succeeded (Wilson 95% {h['wilson95'][0]}-{h['wilson95'][1]})")
+            for k in sorted(h):
+                if k.endswith('_median') and h[k] is not None:
+                    txt += f'; {k[:-7]} median {h[k]}'
+            lines.append(txt)
+        elif 'held_out_secret' in r:
+            lines.append('- held-out (secret, ADR 0014): no valid result')
         c = r.get('checks') or {}
         if c:
             lines.append(f"- deterministic: {c.get('deterministic')}; contract problems: "
@@ -163,6 +219,18 @@ def write(verification: Path) -> int:
         if p.stat().st_size > MAX_BYTES:
             raise Invalid(f'{p}: too large')
         results.append((str(p.relative_to(verification)), validate(json.loads(p.read_text()))))
+    agg_dir = os.environ.get('HELDOUT_DIR')
+    for _, r in results:   # R3.3 (ADR 0014): the secret held-out aggregate of this head
+        e = r.get('entry')
+        if not agg_dir or not e:
+            continue
+        h = secret_heldout(agg_dir, e['suite'], e['name'])
+        if h is None:
+            r['held_out_secret'] = None
+            r['problems'].append('the secret held-out run gave no valid result')
+            r['verified'] = False
+        else:
+            r['held_out_secret'] = h if h == 'none' else dict(h, head=head)
     scope_ok, committed = in_scope(names)
     same_repo = os.environ.get('HEAD_REPO') == repo
     # a fork's result.json must be the verified one; on a same-repository branch (writable only

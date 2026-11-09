@@ -1,0 +1,225 @@
+{
+ "about": "    tools/r3/a1_costs.py RUNS_DIR OUT.json",
+ "planners": {
+  "coco_user_astar_starter": {
+   "goals": 5,
+   "reached": 4,
+   "scenarios": {
+    "s001": {
+     "driven_m": 19.572,
+     "error_code": 0,
+     "global_ge253": 12,
+     "local_ge128": 31,
+     "local_ge253": 31,
+     "local_unavailable": 0,
+     "max_local_share_ge253": 0.7692,
+     "plans": 1184,
+     "share_of_plans_local_ge253": 0.0262,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 0.384
+    },
+    "s021": {
+     "driven_m": 22.344,
+     "error_code": 0,
+     "global_ge253": 0,
+     "local_ge128": 0,
+     "local_ge253": 0,
+     "local_unavailable": 0,
+     "max_local_share_ge253": 0.0,
+     "plans": 988,
+     "share_of_plans_local_ge253": 0.0,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 0.303
+    },
+    "s041": {
+     "driven_m": 0.005,
+     "error_code": 208,
+     "plans": 0,
+     "share_of_plans_local_ge253": null,
+     "status": "ABORTED",
+     "truth_to_goal_m": 25.944
+    },
+    "s061": {
+     "driven_m": 29.647,
+     "error_code": 0,
+     "global_ge253": 0,
+     "local_ge128": 126,
+     "local_ge253": 126,
+     "local_unavailable": 0,
+     "max_local_share_ge253": 0.3333,
+     "plans": 1246,
+     "share_of_plans_local_ge253": 0.1011,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 1.101
+    },
+    "s081": {
+     "driven_m": 36.247,
+     "error_code": 0,
+     "global_ge253": 2,
+     "local_ge128": 161,
+     "local_ge253": 161,
+     "local_unavailable": 0,
+     "max_local_share_ge253": 0.5,
+     "plans": 2061,
+     "share_of_plans_local_ge253": 0.0781,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 0.267
+    }
+   },
+   "session": {
+    "ac": "1",
+    "dirty": false,
+    "git": "d4c81f0036efe0e69d8611114de5dbca78f56de9",
+    "level": "coco_depot_v1",
+    "package": "coco_user_astar_starter",
+    "power": "balanced",
+    "started_utc": "2026-11-07T02:58:06Z"
+   }
+  },
+  "coco_user_theta_star": {
+   "goals": 5,
+   "reached": 0,
+   "scenarios": {
+    "s001": {
+     "driven_m": 15.35,
+     "error_code": 104,
+     "global_ge253": 257,
+     "local_ge128": 641,
+     "local_ge253": 612,
+     "local_unavailable": 0,
+     "max_local_share_ge253": 0.9667,
+     "plans": 1360,
+     "share_of_plans_local_ge253": 0.45,
+     "status": "ABORTED",
+     "truth_to_goal_m": 5.208
+    },
+    "s021": {
+     "driven_m": 20.794,
+     "error_code": 104,
+     "global_ge253": 65,
+     "local_ge128": 694,
+     "local_ge253": 670,
+     "local_unavailable": 0,
+     "max_local_share_ge253": 0.5806,
+     "plans": 1631,
+     "share_of_plans_local_ge253": 0.4108,
+     "status": "ABORTED",
+     "truth_to_goal_m": 2.076
+    },
+    "s041": {
+     "driven_m": 0.005,
+     "error_code": 208,
+     "plans": 0,
+     "share_of_plans_local_ge253": null,
+     "status": "ABORTED",
+     "truth_to_goal_m": 25.944
+    },
+    "s061": {
+     "driven_m": 4.116,
+     "error_code": 104,
+     "global_ge253": 46,
+     "local_ge128": 344,
+     "local_ge253": 344,
+     "local_unavailable": 0,
+     "max_local_share_ge253": 0.3667,
+     "plans": 445,
+     "share_of_plans_local_ge253": 0.773,
+     "status": "ABORTED",
+     "truth_to_goal_m": 26.767
+    },
+    "s081": {
+     "driven_m": 1.132,
+     "error_code": 104,
+     "global_ge253": 60,
+     "local_ge128": 102,
+     "local_ge253": 102,
+     "local_unavailable": 0,
+     "max_local_share_ge253": 0.1739,
+     "plans": 348,
+     "share_of_plans_local_ge253": 0.2931,
+     "status": "ABORTED",
+     "truth_to_goal_m": 33.54
+    }
+   },
+   "session": {
+    "ac": "1",
+    "dirty": false,
+    "git": "4c143c2fb828dec5098a1703b29abadf8ee4aec2",
+    "level": "coco_depot_v1",
+    "package": "coco_user_theta_star",
+    "power": "balanced",
+    "started_utc": "2026-11-07T02:40:12Z"
+   }
+  },
+  "stock": {
+   "goals": 5,
+   "reached": 3,
+   "scenarios": {
+    "s001": {
+     "driven_m": 19.326,
+     "error_code": 0,
+     "global_ge253": 0,
+     "local_ge128": 0,
+     "local_ge253": 0,
+     "local_unavailable": 0,
+     "max_local_share_ge253": 0.0,
+     "plans": 936,
+     "share_of_plans_local_ge253": 0.0,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 0.439
+    },
+    "s021": {
+     "driven_m": 22.511,
+     "error_code": 0,
+     "global_ge253": 0,
+     "local_ge128": 0,
+     "local_ge253": 0,
+     "local_unavailable": 0,
+     "max_local_share_ge253": 0.0,
+     "plans": 971,
+     "share_of_plans_local_ge253": 0.0,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 0.326
+    },
+    "s041": {
+     "driven_m": 0.006,
+     "error_code": 208,
+     "plans": 0,
+     "share_of_plans_local_ge253": null,
+     "status": "ABORTED",
+     "truth_to_goal_m": 25.944
+    },
+    "s061": {
+     "driven_m": 0.445,
+     "error_code": 208,
+     "plans": 0,
+     "share_of_plans_local_ge253": null,
+     "status": "ABORTED",
+     "truth_to_goal_m": 28.95
+    },
+    "s081": {
+     "driven_m": 36.361,
+     "error_code": 0,
+     "global_ge253": 26,
+     "local_ge128": 135,
+     "local_ge253": 135,
+     "local_unavailable": 0,
+     "max_local_share_ge253": 0.5,
+     "plans": 1718,
+     "share_of_plans_local_ge253": 0.0786,
+     "status": "SUCCEEDED",
+     "truth_to_goal_m": 0.343
+    }
+   },
+   "session": {
+    "ac": "1",
+    "dirty": false,
+    "git": "cb229a25160e876811410e89a56a7a89fb1fc52e",
+    "level": "coco_depot_v1",
+    "package": "stock",
+    "power": "balanced",
+    "started_utc": "2026-11-07T03:13:37Z"
+   }
+  }
+ }
+}

@@ -1,0 +1,48 @@
+# R3.7 · the paper: every number, table and figure must be what the committed data give, no number
+# may be typed into the text, and the PDF must build from a clean checkout.
+name: Paper
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  paper:
+    name: Paper (numbers from data, PDF builds)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Python for the scripts (coco_lab's own, matplotlib)
+        run: |
+          python -m venv "$RUNNER_TEMP/venv"
+          # numpy pinned: matplotlib 3.6 calls numpy.row_stack, gone in numpy 2 (run 42546497992)
+          "$RUNNER_TEMP/venv/bin/pip" install -q PyYAML==6.0.1 matplotlib==3.6.3 numpy==1.26.4
+      - name: Numbers, tables and figure data match the committed data; no typed numbers
+        working-directory: docs/paper
+        run: make check PY="$RUNNER_TEMP/venv/bin/python"
+      - name: TeX (IEEEtran)
+        run: |
+          sudo apt-get update -o Acquire::Retries=5
+          sudo apt-get install -y -o Acquire::Retries=5 --no-install-recommends \
+            latexmk texlive-latex-recommended texlive-latex-extra texlive-publishers \
+            texlive-fonts-recommended
+      - name: Build the PDF from a clean checkout
+        working-directory: docs/paper
+        run: make PY="$RUNNER_TEMP/venv/bin/python"
+      - name: The PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: coco-bench-paper
+          path: docs/paper/paper.pdf
+          retention-days: 90

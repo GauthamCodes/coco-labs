@@ -131,6 +131,9 @@ for (const f of files) {
     const url = m[0];
     const ok = url.startsWith(pyodide) || (url === pyodide.slice(0, -1)) ||
       NOT_FETCHED.some((re) => re.test(url)) || (f.includes('/licenses/') && LICENCE_CREDITS.some((re) => re.test(url))) || url.startsWith('https://cdn.jsdelivr.net/pyodide/v${') ||
+      // R3.7: About's "Cite" BibTeX names the project's own site (citation text in a <pre>, copied
+      // by a visitor, never requested): its origin, joined to the base path at run time; About only
+      (f.includes('AboutPage-') && /^https:\/\/gauthamcodes\.github\.io(\$\{\w+\})?$/.test(url)) ||
       // the configured remote session's probe origin, named in the CSP
       (remoteHttps !== null && f.endsWith('index.html') && url.replace(/;$/, '') === remoteHttps) ||
       // a local stack's /healthz origin, named in the CSP (checked above)

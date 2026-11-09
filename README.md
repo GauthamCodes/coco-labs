@@ -1,3 +1,40 @@
+# COCO Lab · COCO-Bench
+
+**A ROS 2 robot you can drive, benchmark and program in your browser — and the same code runs in
+real ROS 2.** Live, no install: **<https://gauthamcodes.github.io/coco-labs/>**
+
+<!-- GIF placeholders (record from docs/launch/DEMO_SCRIPT.md): play.gif · workbench.gif · studio.gif · ros2.gif -->
+
+- **Play** — drive COCO through warehouse rounds; switch to SIM to see what it computes.
+- **Workbench** — experiments with honest statistics, shared as links that reproduce exactly:
+  every simulation tick is hashed, and the same run gives the same hash chain in every browser and
+  natively.
+- **COCO-Bench v1** — frozen suites for planning, control, localisation and a fetch task, with
+  difficulty tiers and datasheets ([`docs/bench/v1/`](docs/bench/v1/README.md)).
+- **Algorithm Studio + leaderboard** — write a planner, controller or localiser in Python against
+  ROS 2-shaped messages, watch it think, submit it (verified in a sandbox, on held-out scenarios)
+  ([`leaderboard/CONTRIBUTING.md`](leaderboard/CONTRIBUTING.md)).
+- **Run it in ROS 2** — export the same file as a ROS 2 node and run it with Nav2 in Gazebo.
+
+Every result is labelled **MODEL** (the browser model, kinematic) or **STACK** (full ROS 2 in
+Gazebo — a simulation). No physical robot exists; failures stay visible.
+
+**Quick start (native).**
+
+```bash
+git clone https://github.com/GauthamCodes/coco-labs && cd coco-labs
+python3 -m venv .venv && .venv/bin/pip install ./coco_lab
+COCO_WORLDS=$PWD/worlds .venv/bin/python -m coco_lab.experiments run \
+    docs/bench/v1/example_spec.json --out results/      # A* vs Dijkstra on depot-narrow-30
+# your own algorithm file:  ... run SPEC.json --algorithm my_planner.py --out results/
+```
+
+Write an algorithm: [`docs/v2/r2/API.md`](docs/v2/r2/API.md) · the paper:
+[`docs/paper/`](docs/paper/) · **Cite:** [`CITATION.cff`](CITATION.cff) (About → Cite on the site) ·
+Apache-2.0.
+
+---
+
 # COCO Lab v2 — Master Plan: Play, Compare, Research
 
 > **Authority file for all COCO Lab work. Revision 3, 14 October 2026: three purposes, three modes.**

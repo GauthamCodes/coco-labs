@@ -1,0 +1,142 @@
+% R3.7: the model baselines (R3.2), the Gazebo + Nav2 baselines (R3.4) and the gap analysis (R3.5)
+% enter here through generated/results.tex once their data are committed; nothing is written
+% before then. The case study below rests on R2.7's committed STACK data.
+
+\subsection{Baselines in the model}\label{sec:exp-baselines}
+Every built-in ran on every suite of its family, on the public scenarios and on a held-out
+reference draw (\cref{tab:base-planning,tab:base-control,tab:base-localisation}; \evclass{model},
+all runs committed with their hash chains). The tables are generated from the committed runs and
+list the suites whose runs are not yet committed. Every built-in planner reaches every goal of
+every planning suite, public and held-out: on these maps success does not separate the planners,
+and the planning suites rank them by path quality and search effort instead (the leaderboard's
+path ratio and expansions). Two further readings recur. Planners that minimise
+costmap cost (A*, Dijkstra, D* Lite) return longer paths than breadth-first search, which ignores
+cost; path length alone is therefore not a measure of quality here. In control, the Waypoint driver is
+the model's own path follower: it drives the global plan without a local costmap or a local
+collision check, and it has none of Nav2's failure outcomes, so its success is a reference for the
+plan rather than a controller result. DWA, RPP and MPPI each plan in a local window built from the
+scan, keep a larger clearance from walls, and can fail as Nav2's controllers do; it is among them
+that the suites discriminate. Localisers are separated
+by the tier structure: in the localisation runs committed so far, Monte Carlo localisation at the
+teaching profile loses its track far more often on hard scenarios than on easy ones.
+
+\textbf{Moving actors.} \texttt{ctrl-dynamic-30} drives each route twice: once with actors that
+keep their schedule and once with actors that stop while their next step would walk into the
+robot (the scenario rule, not a parameter of the algorithm). The Waypoint driver succeeded on
+\DynWaypointWalk{} routes with scheduled actors but \DynWaypointYield{} with yielding ones; all
+\DynWaypointYieldTimeouts{} failures were timeouts. With scheduled actors, \DynWaypointWalkContactWins{}
+of its successes included contact (up to \DynWaypointWalkMaxContacts{} per drive): blocked by an
+actor, it waited until the actor walked on. A yielding actor does not walk on while the robot is
+ahead of it, and a driver without a local planner cannot go round, so both wait; this reading
+follows from the model's rules and the recorded contacts, but was not traced tick by tick
+(\evclass{inference}). The local controllers were nearly insensitive to the rule (DWA
+\DynDwaWalk{} vs \DynDwaYield{}, RPP \DynRppWalk{} vs \DynRppYield{}, MPPI \DynMppiWalk{} vs
+\DynMppiYield{}). Success alone would rank the contact-making driver first; the leaderboard
+therefore reports contacts beside success.
+
+\textbf{Global localisation and kidnapping are unsolved by the built-ins.} On \texttt{loc-global-20}
+the robot starts with no pose estimate. At the teaching profile (\MclParticles{} particles) neither
+Monte Carlo variant converged in any of its \GlobalRuns{} runs (\GlobalConverged{} converged,
+\GlobalSuccesses{} successes); the EKF cannot start without a pose and is not run. On
+\texttt{loc-kidnap-20} the robot is moved \KidnapMinM{}--\KidnapMaxM{}~m without being told, at
+\KidnapAtS{}~s. No localiser recovered in any of the \KidnapRuns{} runs (\KidnapRecovered{}
+recoveries, \KidnapSuccesses{} successes), including MCL with augmented injection, which exists
+for this case; in \KidnapBeliefArrivals{} runs the robot arrived at the goal by its own estimate
+while elsewhere in truth, which the suite scores as a failure. With so few particles a handful of
+injected ones rarely lands near the true pose; that is our reading, not a measurement. We keep both
+suites as negative baselines with headroom. Whether larger particle sets would solve them was not
+tested: each run already cost minutes of CPU at this profile (\evclass{unresolved}).
+
+\textbf{Full task.} On \texttt{task-fetch-10} the \FetchPlanners{} planners that drive the fetch
+loop completed \FetchCompleted{} of \FetchRuns{} rounds with \FetchContacts{} contacts; like
+planning, the task does not separate them by success, and its scorecard (time used, path
+efficiency) is what differs.
+
+\input{generated/baselines_planning}
+\input{generated/baselines_control}
+\input{generated/baselines_localisation}
+
+\subsection{The same planner in the model and in ROS~2}\label{sec:exp-r27}
+We exported the A* starter file to a ROS~2 node and asked it and Nav2's stock planner (Smac 2D)
+for paths on the same requests from the live global costmap in Gazebo: \StackPlanRequests{}
+requests (\StackPlanScenarios{} Depot scenarios, \StackPlanSessions{} fresh sessions). The exported file found
+\StackAstarPlans{}, stock Nav2 \StackStockPlans{}. This is a convention difference, not a better
+planner: Nav2's planner server refuses a start or goal inside inflated cost, whereas \cocolab{}
+(and therefore the exported node) first moves them to the nearest free cell. We therefore also
+report Nav2 with the same snapping applied to its requests (\cref{sec:exp-gap}).
+
+\subsection{Case study: an any-angle planner that wins in the model and loses in ROS~2}
+A community submission, Lazy Theta* \cite{nash2010lazytheta}, was verified on the leaderboard
+in the sandbox. As a ROS~2 node it planned \StackThetaPlans{} requests in Gazebo, but with
+Nav2's Regulated Pure Pursuit controller \cite{macenski2023rpp} it reached \StackThetaDrives{}
+goals, against \StackStockDrives{} for stock Nav2 and \StackAstarDrives{} for the exported A*
+starter on the same \StackDriveScenarios{} drives. When first observed, this was attributed, as an
+inference, to the any-angle paths passing close to obstacles, where the controller's collision
+check stops the robot. We report the negative result rather than remove it, and test the
+inference by recording the costmap cost under every path the controller received
+(\cref{sec:exp-gap}).
+
+\subsection{A user controller through the real stack}
+The exported pure-pursuit starter replaced Nav2's controller behind COCO's command arbiter on
+the \StackPPRounds{} fetch rounds of the colour Depot, \StackPPRunsPerRound{} runs each: \StackPPLegs{} legs reached. Paired
+with the model on the same legs, the median difference in time per leg was \StackPPGapS{}~s
+(\StackPPGapN{} legs).
+
+\subsection{Model versus ROS~2}\label{sec:exp-gap}
+We ran tier-stratified subsets of the suites (\GapPlanScenarios{} scenarios per suite) through the
+full ROS~2 stack in Gazebo and paired every STACK result with the model's run on the same scenario
+(\evclass{stack} vs \evclass{model}; every pair is downloadable from the Workbench). Planning ran
+\GapPlanReps{} times per session and a scenario's STACK success is the majority; control and
+localisation ran \GapCtrlReps{} time each, because the machine was available for one pass only, so
+their numbers are single runs and their agreement shares carry no repeat-to-repeat check.
+
+\textbf{Planning.} Over \GapPlanPairs{} paired requests on \GapPlanSuites{} suites, ROS~2 never found a
+path the model missed (\GapPlanStackOnly{} cases): every disagreement is the model being
+optimistic. The same A* file agreed with its ROS~2 node on \GapSameFileAgree{} scenarios, with
+median length ratios of \GapSameFileRatioMin{}--\GapSameFileRatioMax{}. Nav2's Smac 2D agreed on
+\GapSmacStockAgree{} as given and \GapSmacSnappedAgree{} with start and goal snapped to free
+space; the long routes show it most (\GapLongStockBoth{} as given, \GapLongSnappedBoth{} snapped). The
+dominant planning gap is therefore the start/goal convention, not the search.
+
+\textbf{Control.} Here the model is a weak predictor. Agreement on success with Nav2's own
+controllers (counterparts, not the same code) was \GapCtrlRppAgree{} for RPP, \GapCtrlDwbAgree{} for
+DWB against the model's DWA, and \GapCtrlMppiAgree{} for MPPI. The disagreements run both ways but
+not evenly: the model's RPP failed where Nav2's succeeded in \GapCtrlRppStackOnly{} cases (the
+reverse in \GapCtrlRppModelOnly{}), \GapCorridorRppStackOnly{} of them among the
+\GapCorridorRppN{} corridor routes, so the model's RPP is pessimistic. Times where both succeeded
+were close for RPP and DWB (median ratios \GapCtrlRppRatioMin{}--\GapCtrlRppRatioMax{} and
+\GapCtrlDwbRatioMin{}--\GapCtrlDwbRatioMax{}), while Nav2's MPPI took \GapCtrlMppiRatioMin{}--\GapCtrlMppiRatioMax{}
+of the model MPPI's time. Our model's controllers are teaching implementations; these results say
+where they diverge from Nav2's, not which is right.
+
+\textbf{Localisation.} On \texttt{loc-track-30}, success agreed on \GapLocAmclAgree{} routes for the
+model's MCL against AMCL and \GapLocPfAgree{} against the particle-filter starter running as a ROS~2
+node. The STACK failures were the same routes for AMCL and the starter and aborted far from the goal,
+which suggests navigation aborts rather than lost poses (\evclass{inference}).
+
+
+\textbf{The snapping convention.} Over \SnapSessions{} further sessions on the same requests,
+Nav2 as given found \SnapStockFound{} paths; with start and goal snapped to the nearest free cell
+of its live costmap (the rule the model uses) it found \SnapSnappedFound{}, as did the exported A*
+starter (\SnapAstarFound{}). Snapping moved a start or goal by more than one cell only on the
+\SnapMovedScenarios{} scenarios stock Nav2 refused; on one of them the goal lies
+\SnapMaxGoalM{}~m from free space in Gazebo's costmap although the model drew it with clearance,
+a discrepancy we report as unresolved. Snapped, Nav2's paths were slightly shorter than the
+starter's (paired median \SnapPairedGapM{}~m).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/corner_cost.pdf}
+\caption{Share of the plans the controller received that put a pose in inscribed or lethal cost
+of the local costmap, per drive (\evclass{stack}; generated from the committed cost summary).}
+\label{fig:corner}
+\end{figure}
+
+\textbf{Why the any-angle planner fails under Nav2} (\cref{fig:corner}). Re-running the \StackDriveScenarios{} drives while recording,
+for every plan the controller received, the raw cost under each pose in the live local costmap:
+with Lazy Theta* (\CostThetaReached{} reached), \CostThetaMinPct{}--\CostThetaMaxPct{}\,\% of
+the received plans put at least one pose in inscribed or lethal cost on each drivable scenario,
+against at most \CostControlMaxPct{}\,\% for stock Nav2 (\CostStockReached{}) and the A* starter
+(\CostAstarReached{}) on the same drives. This supports the corner-cutting explanation; that the
+controller's collision check is what stops each drive remains an inference, as its decisions were
+not logged.

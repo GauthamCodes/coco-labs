@@ -1,0 +1,980 @@
+{
+ "baseline": "docs/v2/r3/bench/depot-narrow-30/control/",
+ "checks": {
+  "claim_matches": null,
+  "claimed_digest": null,
+  "clamped_outputs": 0,
+  "contract_problems": 0,
+  "deterministic": true
+ },
+ "entry": {
+  "author": "COCO Lab (built-in reference)",
+  "code_path": "coco_lab/coco_lab/",
+  "code_sha256": null,
+  "description": "The built-in DWA, as the Workbench runs it (COCO-Bench v1 baseline, R3.2).",
+  "display_name": "DWA",
+  "family": "control",
+  "kind": "builtin",
+  "licence": "Apache-2.0",
+  "name": "dwa",
+  "paper": null,
+  "suite": "depot-narrow-30"
+ },
+ "held_out": {
+  "digest": "08d3e1dddcf560319368a38e849fa8af5241f393d4d84eec1ef9ad9fa4198c17",
+  "merge_base": "reference-v1",
+  "n": 10,
+  "runs": [
+   {
+    "chain": "ce3c3cfec2e72c177ede149a8b2e39d86302db3011f914df90cc2acb7e804d19",
+    "counts": {
+     "contacts": 0,
+     "expansions": 54661,
+     "final_goal_distance_m": 0.24570179364980133,
+     "heading_change_rad": 10.436241374136216,
+     "mean_clearance_m": 1.5877373811142572,
+     "min_clearance_m": 0.14055512754639896,
+     "path_length_m": 40.139322427872244,
+     "plans": 1,
+     "ticks": 1363,
+     "time_s": 136.3
+    },
+    "scenario": "n001",
+    "scenario_index": 0,
+    "status": "succeeded"
+   },
+   {
+    "chain": "e23b035432216a1d6c4538868e48470bf84ddaf476ba1a8d4952d171c8f5dfa3",
+    "counts": {
+     "contacts": 0,
+     "expansions": 31167,
+     "final_goal_distance_m": 5.8647114659079715,
+     "heading_change_rad": 9.05031246976009,
+     "mean_clearance_m": 0.46343871373167095,
+     "min_clearance_m": 0.14055512754639896,
+     "path_length_m": 20.507458922044396,
+     "plans": 1,
+     "ticks": 824,
+     "time_s": 82.4
+    },
+    "scenario": "n002",
+    "scenario_index": 1,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "f4a3e7985897ee7170e73e74c2b1d9cafc5ee3e268d64cd4ef37bbc996bcda97",
+    "counts": {
+     "contacts": 0,
+     "expansions": 1731,
+     "final_goal_distance_m": 10.517278283689263,
+     "heading_change_rad": 2.915620999999997,
+     "mean_clearance_m": 0.24818181818181823,
+     "min_clearance_m": 0.08000000000000004,
+     "path_length_m": 0.37991157097897,
+     "plans": 1,
+     "ticks": 44,
+     "time_s": 4.4
+    },
+    "scenario": "n003",
+    "scenario_index": 2,
+    "status": "no_valid_control"
+   },
+   {
+    "chain": "abeb7f0531365c7ba2296c848dde668b14bf0b909dc162b3bcc8242ec3f21380",
+    "counts": {
+     "contacts": 0,
+     "expansions": 4245,
+     "final_goal_distance_m": 0.24976118880237258,
+     "heading_change_rad": 6.292436071314524,
+     "mean_clearance_m": 0.32560288945103344,
+     "min_clearance_m": 0.14055512754639896,
+     "path_length_m": 19.622114367073433,
+     "plans": 1,
+     "ticks": 668,
+     "time_s": 66.8
+    },
+    "scenario": "n004",
+    "scenario_index": 3,
+    "status": "succeeded"
+   },
+   {
+    "chain": "cffd98284ccedda5b61cf3806d9ea1797a36d7e44eedd949fd9ee301b98e70f3",
+    "counts": {
+     "contacts": 0,
+     "expansions": 9351,
+     "final_goal_distance_m": 23.937439852130204,
+     "heading_change_rad": 5.233089800000011,
+     "mean_clearance_m": 0.36410578619709305,
+     "min_clearance_m": 0.14055512754639896,
+     "path_length_m": 4.7117387417282925,
+     "plans": 1,
+     "ticks": 270,
+     "time_s": 27
+    },
+    "scenario": "n005",
+    "scenario_index": 4,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "65d644a80b80a30a071e2b8d941916d96f47debb57d39ec9c9e812909905eee2",
+    "counts": {
+     "contacts": 0,
+     "expansions": 10393,
+     "final_goal_distance_m": 0.24225030181035898,
+     "heading_change_rad": 9.547249563344986,
+     "mean_clearance_m": 0.598149581746247,
+     "min_clearance_m": -0.01999999999999999,
+     "path_length_m": 24.447560491504394,
+     "plans": 1,
+     "ticks": 828,
+     "time_s": 82.80000000000001
+    },
+    "scenario": "n006",
+    "scenario_index": 5,
+    "status": "succeeded"
+   },
+   {
+    "chain": "3228e21a5f3596a266facf8a68ed1ba06bdfe6dca2e740685665859418a27ee7",
+    "counts": {
+     "contacts": 0,
+     "expansions": 4760,
+     "final_goal_distance_m": 0.24612354866635622,
+     "heading_change_rad": 6.556319385999894,
+     "mean_clearance_m": 0.6583791062425772,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 23.028490984851008,
+     "plans": 1,
+     "ticks": 782,
+     "time_s": 78.2
+    },
+    "scenario": "n007",
+    "scenario_index": 6,
+    "status": "succeeded"
+   },
+   {
+    "chain": "fcdc82abe607466e25c931ec219cf7f89aaed89cf0f44c3720ffb8a1a2129d76",
+    "counts": {
+     "contacts": 0,
+     "expansions": 210,
+     "final_goal_distance_m": 0.24927677928050504,
+     "heading_change_rad": 0.9727999999999959,
+     "mean_clearance_m": 0.7737160885539993,
+     "min_clearance_m": 0.3800000000000001,
+     "path_length_m": 20.796676040279348,
+     "plans": 1,
+     "ticks": 701,
+     "time_s": 70.10000000000001
+    },
+    "scenario": "n008",
+    "scenario_index": 7,
+    "status": "succeeded"
+   },
+   {
+    "chain": "47b7bcfeffbcc7832423a33d484d902a62d49d2d8b14f70da53c34ddbf3fced5",
+    "counts": {
+     "contacts": 0,
+     "expansions": 2842,
+     "final_goal_distance_m": 0.24501878473597674,
+     "heading_change_rad": 2.6496000000000124,
+     "mean_clearance_m": 0.7360285839845687,
+     "min_clearance_m": 0.14055512754639896,
+     "path_length_m": 30.32584009935623,
+     "plans": 1,
+     "ticks": 1039,
+     "time_s": 103.9
+    },
+    "scenario": "n009",
+    "scenario_index": 8,
+    "status": "succeeded"
+   },
+   {
+    "chain": "fb2d836bc230090b64561c451dc4d226c70529be0895cf479df1db6c022ac072",
+    "counts": {
+     "contacts": 0,
+     "expansions": 8143,
+     "final_goal_distance_m": 0.24559614934190271,
+     "heading_change_rad": 2.227199999999995,
+     "mean_clearance_m": 1.640711049083965,
+     "min_clearance_m": 0.18000000000000002,
+     "path_length_m": 34.305141389729506,
+     "plans": 1,
+     "ticks": 1151,
+     "time_s": 115.10000000000001
+    },
+    "scenario": "n010",
+    "scenario_index": 9,
+    "status": "succeeded"
+   }
+  ],
+  "scenarios": 10,
+  "score": {
+   "compute_ms": {
+    "median": 67588.18584900109,
+    "n": 10,
+    "q1": 48851.862588000586,
+    "q3": 95525.92803550215
+   },
+   "contacts": 0,
+   "failures": [
+    {
+     "scenario": "n002",
+     "scenario_index": 1,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n003",
+     "scenario_index": 2,
+     "status": "no_valid_control"
+    },
+    {
+     "scenario": "n005",
+     "scenario_index": 4,
+     "status": "failed_to_make_progress"
+    }
+   ],
+   "min_clearance_m": {
+    "median": 0.14055512754639896,
+    "n": 7,
+    "q1": 0.11839144678161848,
+    "q3": 0.1602775637731995
+   },
+   "n": 10,
+   "success_rate": 0.7,
+   "successes": 7,
+   "time_s": {
+    "median": 82.80000000000001,
+    "n": 7,
+    "q1": 74.15,
+    "q3": 109.5
+   },
+   "wilson95": [
+    0.39677814746114537,
+    0.8922087325936989
+   ]
+  },
+  "seed": 1290919632493097,
+  "spec_id": "fb23d9d7bfbcd707",
+  "worst": {
+   "scenario": "n002",
+   "scenario_index": 1,
+   "why": "failed_to_make_progress"
+  }
+ },
+ "host": {
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "git": "24eced42b17446547f1e9f592c19422d18185308",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "runner": "cpython",
+  "workers": 10
+ },
+ "problems": [],
+ "public": {
+  "digest": "8afa5c2f7f35d82593eb761330882c19d2b3bc9fb82f4ee2d99c01e5b888440c",
+  "runs": [
+   {
+    "chain": "a690d2875c192fd120f17b6fb4abd71e71dd3980b3877f402b58929b76e8c9c8",
+    "counts": {
+     "contacts": 0,
+     "expansions": 17423,
+     "final_goal_distance_m": 39.306666393099796,
+     "heading_change_rad": 3.989848000000011,
+     "mean_clearance_m": 0.4853306266449216,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 6.056830760702764,
+     "plans": 1,
+     "ticks": 303,
+     "time_s": 30.3
+    },
+    "scenario": "n001",
+    "scenario_index": 0,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "ab87080059c493507be6e87624920c7adf05c5ea0e95d3a57d376fcecd9f82ac",
+    "counts": {
+     "contacts": 0,
+     "expansions": 8412,
+     "final_goal_distance_m": 0.24150354094270177,
+     "heading_change_rad": 11.317338661899978,
+     "mean_clearance_m": 0.8208928230405631,
+     "min_clearance_m": 0.08000000000000004,
+     "path_length_m": 47.82308351433568,
+     "plans": 1,
+     "ticks": 1605,
+     "time_s": 160.5
+    },
+    "scenario": "n002",
+    "scenario_index": 1,
+    "status": "succeeded"
+   },
+   {
+    "chain": "664c2c6f002e139345fe0dbb6bee88a69a428491b9572d0f0f163f8bfa80bfe4",
+    "counts": {
+     "contacts": 0,
+     "expansions": 6934,
+     "final_goal_distance_m": 8.354101731675293,
+     "heading_change_rad": 5.865450524793499,
+     "mean_clearance_m": 0.5697359346923269,
+     "min_clearance_m": 0.14055512754639896,
+     "path_length_m": 6.635312896065099,
+     "plans": 1,
+     "ticks": 336,
+     "time_s": 33.6
+    },
+    "scenario": "n003",
+    "scenario_index": 2,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "628c7943c3baa415f7ce234ee76646de571e9b621605a2a41c66830436f04ad3",
+    "counts": {
+     "contacts": 0,
+     "expansions": 13652,
+     "final_goal_distance_m": 37.223412684396706,
+     "heading_change_rad": 1.4485559999999866,
+     "mean_clearance_m": 0.18000000000000002,
+     "min_clearance_m": 0.18000000000000002,
+     "path_length_m": 0.008997707126990941,
+     "plans": 1,
+     "ticks": 102,
+     "time_s": 10.200000000000001
+    },
+    "scenario": "n004",
+    "scenario_index": 3,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "4a2b65a7058c6bb26ffab50a3765299feaa273efbdf247d5e7676adde3eeb8fe",
+    "counts": {
+     "contacts": 0,
+     "expansions": 19789,
+     "final_goal_distance_m": 21.81444541135209,
+     "heading_change_rad": 5.605249999999957,
+     "mean_clearance_m": 0.4298716334368631,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 16.171029901967014,
+     "plans": 1,
+     "ticks": 554,
+     "time_s": 55.400000000000006
+    },
+    "scenario": "n005",
+    "scenario_index": 4,
+    "status": "no_valid_control"
+   },
+   {
+    "chain": "4ab992959566ee11b07cbd33826257b06b6a90053253b3ac444115b50e326f76",
+    "counts": {
+     "contacts": 0,
+     "expansions": 103,
+     "final_goal_distance_m": 0.24915990889119075,
+     "heading_change_rad": 3.368588402500018,
+     "mean_clearance_m": 0.5828218683726881,
+     "min_clearance_m": 0.3800000000000001,
+     "path_length_m": 10.172023437511367,
+     "plans": 1,
+     "ticks": 358,
+     "time_s": 35.800000000000004
+    },
+    "scenario": "n006",
+    "scenario_index": 5,
+    "status": "succeeded"
+   },
+   {
+    "chain": "9f382d61a3b965fcea61a33bf8a7708ad8751ba13c202fedc77e39157c641c46",
+    "counts": {
+     "contacts": 0,
+     "expansions": 20490,
+     "final_goal_distance_m": 8.577881018386012,
+     "heading_change_rad": 2.8402729599999956,
+     "mean_clearance_m": 0.1628571428571429,
+     "min_clearance_m": 0.08000000000000004,
+     "path_length_m": 0.06397597794399554,
+     "plans": 1,
+     "ticks": 35,
+     "time_s": 3.5
+    },
+    "scenario": "n007",
+    "scenario_index": 6,
+    "status": "no_valid_control"
+   },
+   {
+    "chain": "d6e8401d37eff109cbd74097c3bf0e5eb83d90cd1dfbcdfd811c51083a83de68",
+    "counts": {
+     "contacts": 0,
+     "expansions": 6123,
+     "final_goal_distance_m": 0.24803232524907676,
+     "heading_change_rad": 9.752845219999891,
+     "mean_clearance_m": 0.37459517045186186,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 29.664221660168042,
+     "plans": 1,
+     "ticks": 1007,
+     "time_s": 100.7
+    },
+    "scenario": "n008",
+    "scenario_index": 7,
+    "status": "succeeded"
+   },
+   {
+    "chain": "242020a8bdc04ee05c1229c2776978458022fd4e3bfc93de8f9b68c9bf885440",
+    "counts": {
+     "contacts": 0,
+     "expansions": 6703,
+     "final_goal_distance_m": 35.398738455018666,
+     "heading_change_rad": 3.6067600000000066,
+     "mean_clearance_m": 0.4356558791948003,
+     "min_clearance_m": 0.14055512754639896,
+     "path_length_m": 5.143564680145062,
+     "plans": 1,
+     "ticks": 273,
+     "time_s": 27.3
+    },
+    "scenario": "n009",
+    "scenario_index": 8,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "9b64d8745cd52709008440bea01b8be02aa3f902e782474d9ae57bf964134540",
+    "counts": {
+     "contacts": 0,
+     "expansions": 3854,
+     "final_goal_distance_m": 15.837711693760964,
+     "heading_change_rad": 2.190880000000004,
+     "mean_clearance_m": 0.18000000000000002,
+     "min_clearance_m": 0.18000000000000002,
+     "path_length_m": 0.002999872001639322,
+     "plans": 1,
+     "ticks": 102,
+     "time_s": 10.200000000000001
+    },
+    "scenario": "n010",
+    "scenario_index": 9,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "97ea8e3f06f2add8a88abdabff71fc8a41660e221ad0bc037674093ee9392605",
+    "counts": {
+     "contacts": 0,
+     "expansions": 6556,
+     "final_goal_distance_m": 20.12268258739932,
+     "heading_change_rad": 2.905731386249992,
+     "mean_clearance_m": 0.2190070921985816,
+     "min_clearance_m": 0.18000000000000002,
+     "path_length_m": 0.6148575420818169,
+     "plans": 1,
+     "ticks": 141,
+     "time_s": 14.100000000000001
+    },
+    "scenario": "n011",
+    "scenario_index": 10,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "c7f1387d7dca5e3a01b3078868c68a4f1a434c92fb5d82ffa71dde7993a9f647",
+    "counts": {
+     "contacts": 0,
+     "expansions": 5287,
+     "final_goal_distance_m": 30.46455597187191,
+     "heading_change_rad": 3.0553383999999775,
+     "mean_clearance_m": 0.3465024630541872,
+     "min_clearance_m": 0.28,
+     "path_length_m": 2.4236176378260543,
+     "plans": 1,
+     "ticks": 203,
+     "time_s": 20.3
+    },
+    "scenario": "n012",
+    "scenario_index": 11,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "6244389798bfedcf3940c073b97b5e7378fd4c2dac408317d3d39301485a10d8",
+    "counts": {
+     "contacts": 0,
+     "expansions": 1618,
+     "final_goal_distance_m": 5.868951512007024,
+     "heading_change_rad": 5.6313068889849855,
+     "mean_clearance_m": 0.36427042958049766,
+     "min_clearance_m": 0.08000000000000004,
+     "path_length_m": 6.434772088036776,
+     "plans": 1,
+     "ticks": 240,
+     "time_s": 24
+    },
+    "scenario": "n013",
+    "scenario_index": 12,
+    "status": "no_valid_control"
+   },
+   {
+    "chain": "0711198a02f33f3e15644165ca039ecc92492fde16191fe333439db1d39c8620",
+    "counts": {
+     "contacts": 0,
+     "expansions": 6915,
+     "final_goal_distance_m": 0.2431049152039901,
+     "heading_change_rad": 8.338855579842011,
+     "mean_clearance_m": 0.3797670738698599,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 28.950341902293,
+     "plans": 1,
+     "ticks": 976,
+     "time_s": 97.60000000000001
+    },
+    "scenario": "n014",
+    "scenario_index": 13,
+    "status": "succeeded"
+   },
+   {
+    "chain": "c37b7a744f91082632243c599fe2e85730580cdb0ba9c9cdcfd3631ba92ee47a",
+    "counts": {
+     "contacts": 0,
+     "expansions": 41760,
+     "final_goal_distance_m": 34.26414244687989,
+     "heading_change_rad": 0.8863999999999996,
+     "mean_clearance_m": 0.30878787878787883,
+     "min_clearance_m": 0.28,
+     "path_length_m": 2.6641634998413446,
+     "plans": 1,
+     "ticks": 198,
+     "time_s": 19.8
+    },
+    "scenario": "n015",
+    "scenario_index": 14,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "78a08926c17740cc653da76bbb9c73174ddc0c3c383bf6505dbeccf80a9bff9a",
+    "counts": {
+     "contacts": 0,
+     "expansions": 4195,
+     "final_goal_distance_m": 0.24313466789082766,
+     "heading_change_rad": 5.592112506567247,
+     "mean_clearance_m": 1.3465666974448953,
+     "min_clearance_m": 0.18000000000000002,
+     "path_length_m": 22.70399070208719,
+     "plans": 1,
+     "ticks": 770,
+     "time_s": 77
+    },
+    "scenario": "n016",
+    "scenario_index": 15,
+    "status": "succeeded"
+   },
+   {
+    "chain": "4324c35f498d31d0ce4bb63e5859d8c8a31652623986f9ba69163dad399f5635",
+    "counts": {
+     "contacts": 0,
+     "expansions": 3887,
+     "final_goal_distance_m": 0.2423117379028661,
+     "heading_change_rad": 6.759330300000074,
+     "mean_clearance_m": 1.194738256401924,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 26.06344204634246,
+     "plans": 1,
+     "ticks": 879,
+     "time_s": 87.9
+    },
+    "scenario": "n017",
+    "scenario_index": 16,
+    "status": "succeeded"
+   },
+   {
+    "chain": "9b15f0408f928a5d4affffbf018618f9b86b7d0e39728adee0cd6a59cd3a4a1a",
+    "counts": {
+     "contacts": 0,
+     "expansions": 9777,
+     "final_goal_distance_m": 0.24260364287459205,
+     "heading_change_rad": 8.337718728319913,
+     "mean_clearance_m": 1.1931152529588958,
+     "min_clearance_m": 0.14055512754639896,
+     "path_length_m": 43.61929198169231,
+     "plans": 1,
+     "ticks": 1478,
+     "time_s": 147.8
+    },
+    "scenario": "n018",
+    "scenario_index": 17,
+    "status": "succeeded"
+   },
+   {
+    "chain": "b521bc6a4e3d9d17aceeee9c1fec718167829187af9ab54fc9544bb953984794",
+    "counts": {
+     "contacts": 0,
+     "expansions": 37123,
+     "final_goal_distance_m": 0.2460900809990695,
+     "heading_change_rad": 18.59822842839981,
+     "mean_clearance_m": 0.8006892878611866,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 46.3335290822789,
+     "plans": 1,
+     "ticks": 1575,
+     "time_s": 157.5
+    },
+    "scenario": "n019",
+    "scenario_index": 18,
+    "status": "succeeded"
+   },
+   {
+    "chain": "1c3a1171a33734f7b72994644fdd2b8cd786452f516cc47b3f9a2cb1ee898aad",
+    "counts": {
+     "contacts": 0,
+     "expansions": 3657,
+     "final_goal_distance_m": 0.24300414868617404,
+     "heading_change_rad": 5.964269119999935,
+     "mean_clearance_m": 1.4260606248598418,
+     "min_clearance_m": 0.18000000000000002,
+     "path_length_m": 25.040274269617132,
+     "plans": 1,
+     "ticks": 854,
+     "time_s": 85.4
+    },
+    "scenario": "n020",
+    "scenario_index": 19,
+    "status": "succeeded"
+   },
+   {
+    "chain": "67c30f19caa397ff424572d1711bc4bb4aca46ae7ba6682071cb7fb1e72c91a0",
+    "counts": {
+     "contacts": 0,
+     "expansions": 11933,
+     "final_goal_distance_m": 32.54880925766188,
+     "heading_change_rad": 4.476759010505969,
+     "mean_clearance_m": 0.30600000000000005,
+     "min_clearance_m": 0.28,
+     "path_length_m": 0.15297760391193288,
+     "plans": 1,
+     "ticks": 150,
+     "time_s": 15
+    },
+    "scenario": "n021",
+    "scenario_index": 20,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "ccae73d35cd8ed0071aa80f168a95d0305c44b840ee6ab4cd485a48253a71798",
+    "counts": {
+     "contacts": 0,
+     "expansions": 21079,
+     "final_goal_distance_m": 1.8181865290186585,
+     "heading_change_rad": 17.027712000000122,
+     "mean_clearance_m": 0.8810995378063918,
+     "min_clearance_m": 0.08000000000000004,
+     "path_length_m": 47.357860393454445,
+     "plans": 1,
+     "ticks": 1603,
+     "time_s": 160.3
+    },
+    "scenario": "n022",
+    "scenario_index": 21,
+    "status": "no_valid_control"
+   },
+   {
+    "chain": "22b1cda0f43cf13dc69360651b5897b78ead808485cdbb3a2b6ef362b1d1d6f5",
+    "counts": {
+     "contacts": 0,
+     "expansions": 12750,
+     "final_goal_distance_m": 22.40223886270315,
+     "heading_change_rad": 3.5511596414110835,
+     "mean_clearance_m": 0.90512077294686,
+     "min_clearance_m": 0.68,
+     "path_length_m": 2.737342410099733,
+     "plans": 1,
+     "ticks": 207,
+     "time_s": 20.700000000000003
+    },
+    "scenario": "n023",
+    "scenario_index": 22,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "b0e38982622bdeefa30c5f6de76cfa9f1e06d20c01dd15a86ed891df02fe9b6c",
+    "counts": {
+     "contacts": 0,
+     "expansions": 11981,
+     "final_goal_distance_m": 0.24243792718266957,
+     "heading_change_rad": 13.103848345599904,
+     "mean_clearance_m": 0.8628264594826572,
+     "min_clearance_m": 0.08000000000000004,
+     "path_length_m": 34.345411121096994,
+     "plans": 1,
+     "ticks": 1165,
+     "time_s": 116.5
+    },
+    "scenario": "n024",
+    "scenario_index": 23,
+    "status": "succeeded"
+   },
+   {
+    "chain": "e1ce862efa14ef9bfc2c1b837d63203566585da756b52eede02979459b9728a5",
+    "counts": {
+     "contacts": 0,
+     "expansions": 11065,
+     "final_goal_distance_m": 0.24231424772627724,
+     "heading_change_rad": 9.766399999999976,
+     "mean_clearance_m": 0.5021156542280432,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 33.19308972505331,
+     "plans": 1,
+     "ticks": 1117,
+     "time_s": 111.7
+    },
+    "scenario": "n025",
+    "scenario_index": 24,
+    "status": "succeeded"
+   },
+   {
+    "chain": "4ccc36e69b2243c3d401cafcb803063139abcb0f226658c78a13bc7e9c455492",
+    "counts": {
+     "contacts": 0,
+     "expansions": 13834,
+     "final_goal_distance_m": 36.90517289055136,
+     "heading_change_rad": 4.0639999999999965,
+     "mean_clearance_m": 0.49045505945095513,
+     "min_clearance_m": 0.14055512754639896,
+     "path_length_m": 5.545828761509678,
+     "plans": 1,
+     "ticks": 293,
+     "time_s": 29.3
+    },
+    "scenario": "n026",
+    "scenario_index": 25,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "c9424e8aab00e5f70397fb4e5172686faf02166160d66bf72c06fe075282974b",
+    "counts": {
+     "contacts": 0,
+     "expansions": 12801,
+     "final_goal_distance_m": 1.355487391497693,
+     "heading_change_rad": 10.928719999999991,
+     "mean_clearance_m": 0.5048119129410491,
+     "min_clearance_m": 0.14055512754639896,
+     "path_length_m": 32.88953617441574,
+     "plans": 1,
+     "ticks": 1225,
+     "time_s": 122.5
+    },
+    "scenario": "n027",
+    "scenario_index": 26,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "70fa5a88e1c997690565ba07786a55e13420df58051856a9baffac12042866b3",
+    "counts": {
+     "contacts": 0,
+     "expansions": 6121,
+     "final_goal_distance_m": 31.621312215005133,
+     "heading_change_rad": 3.9295784661445317,
+     "mean_clearance_m": 0.7124324324324325,
+     "min_clearance_m": 0.4800000000000001,
+     "path_length_m": 1.4048272962088408,
+     "plans": 1,
+     "ticks": 148,
+     "time_s": 14.8
+    },
+    "scenario": "n028",
+    "scenario_index": 27,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "4ab81bf732fcf0f3ff2c9e02e4b5595d9aa70c004af77f0074408404c79180d6",
+    "counts": {
+     "contacts": 0,
+     "expansions": 4670,
+     "final_goal_distance_m": 0.24124932138160804,
+     "heading_change_rad": 9.51970035965012,
+     "mean_clearance_m": 0.9976839707619909,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 38.75637628931758,
+     "plans": 1,
+     "ticks": 1357,
+     "time_s": 135.70000000000002
+    },
+    "scenario": "n029",
+    "scenario_index": 28,
+    "status": "succeeded"
+   },
+   {
+    "chain": "40cd61a99584153922a5d95a4bf19c71baec5ec77830ef1fc60e603720b2dab0",
+    "counts": {
+     "contacts": 0,
+     "expansions": 21015,
+     "final_goal_distance_m": 18.896241121667458,
+     "heading_change_rad": 1.097599999999991,
+     "mean_clearance_m": 1.9915770106499269,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 16.064172408777473,
+     "plans": 1,
+     "ticks": 541,
+     "time_s": 54.1
+    },
+    "scenario": "n030",
+    "scenario_index": 29,
+    "status": "no_valid_control"
+   }
+  ],
+  "scenarios": 30,
+  "score": {
+   "compute_ms": {
+    "median": 45494.58962350036,
+    "n": 30,
+    "q1": 18658.33490924979,
+    "q3": 103877.69506599853
+   },
+   "contacts": 0,
+   "failures": [
+    {
+     "scenario": "n001",
+     "scenario_index": 0,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n003",
+     "scenario_index": 2,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n004",
+     "scenario_index": 3,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n005",
+     "scenario_index": 4,
+     "status": "no_valid_control"
+    },
+    {
+     "scenario": "n007",
+     "scenario_index": 6,
+     "status": "no_valid_control"
+    },
+    {
+     "scenario": "n009",
+     "scenario_index": 8,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n010",
+     "scenario_index": 9,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n011",
+     "scenario_index": 10,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n012",
+     "scenario_index": 11,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n013",
+     "scenario_index": 12,
+     "status": "no_valid_control"
+    },
+    {
+     "scenario": "n015",
+     "scenario_index": 14,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n021",
+     "scenario_index": 20,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n022",
+     "scenario_index": 21,
+     "status": "no_valid_control"
+    },
+    {
+     "scenario": "n023",
+     "scenario_index": 22,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n026",
+     "scenario_index": 25,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n027",
+     "scenario_index": 26,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n028",
+     "scenario_index": 27,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "n030",
+     "scenario_index": 29,
+     "status": "no_valid_control"
+    }
+   ],
+   "min_clearance_m": {
+    "median": 0.096227766016838,
+    "n": 12,
+    "q1": 0.096227766016838,
+    "q3": 0.15041634565979922
+   },
+   "n": 30,
+   "success_rate": 0.4,
+   "successes": 12,
+   "time_s": {
+    "median": 106.2,
+    "n": 12,
+    "q1": 87.275,
+    "q3": 138.72500000000002
+   },
+   "wilson95": [
+    0.24590628116801852,
+    0.5767963974667752
+   ]
+  },
+  "spec_id": "e8b2148cd6081d66",
+  "tiers": {
+   "easy": {
+    "n": 10,
+    "successes": 5,
+    "wilson95": [
+     0.236593090512564,
+     0.7634069094874361
+    ]
+   },
+   "hard": {
+    "n": 10,
+    "successes": 2,
+    "wilson95": [
+     0.05668215145437519,
+     0.5098375284633583
+    ]
+   },
+   "medium": {
+    "n": 10,
+    "successes": 5,
+    "wilson95": [
+     0.236593090512564,
+     0.7634069094874361
+    ]
+   }
+  },
+  "worst": {
+   "scenario": "n001",
+   "scenario_index": 0,
+   "why": "failed_to_make_progress"
+  }
+ },
+ "schema": "coco.leaderboard.entry.v1",
+ "verified": true,
+ "versions": {
+  "api": 1,
+  "experiment": 1,
+  "model_hash_version": 3,
+  "suite": "depot-narrow-30",
+  "suite_version": 1,
+  "verifier": 2
+ }
+}

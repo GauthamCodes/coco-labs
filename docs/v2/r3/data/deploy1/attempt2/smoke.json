@@ -1,0 +1,53 @@
+{
+ "site": "https://gauthamcodes.github.io/coco-labs/",
+ "started_utc": "2026-11-07T09:42:46.206Z",
+ "steps": [
+  {
+   "name": "title screen",
+   "ok": true,
+   "title": "COCO Lab"
+  },
+  {
+   "name": "Play: a Fetch Rush round starts and COCO moves under AUTO",
+   "ok": true,
+   "a": {
+    "tick": 3,
+    "pose": [
+     9.950000000000001,
+     6.050000000000001,
+     -0.7853981633974492
+    ]
+   },
+   "b": {
+    "tick": 6,
+    "pose": [
+     10.006568542494925,
+     5.993431457505077,
+     -0.7853981633974492
+    ]
+   }
+  },
+  {
+   "name": "Compare: the workspace is ready",
+   "ok": true
+  },
+  {
+   "name": "Workbench: a small experiment runs",
+   "ok": true,
+   "digest": "Digest d4d0646135b6bd5a… · 6 workers"
+  },
+  {
+   "name": "Studio: the A* starter runs",
+   "ok": true,
+   "status": "found ✓"
+  },
+  {
+   "name": "the smoke test ran to the end",
+   "ok": false,
+   "error": "TimeoutError: page.screenshot: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n"
+  }
+ ],
+ "errors": [],
+ "finished_utc": "2026-11-07T09:46:04.487Z",
+ "pass": false
+}

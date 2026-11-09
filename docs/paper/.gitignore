@@ -1,0 +1,8 @@
+# build outputs: remade by `make` (generated/*.tex and generated/fig_*.json are committed and checked)
+paper.*
+!paper.mk
+figures/
+arxiv/
+*.tar.gz
+*.fls
+*.fdb_latexmk

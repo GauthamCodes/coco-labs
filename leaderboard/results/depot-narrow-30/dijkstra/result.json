@@ -1,4 +1,5 @@
 {
+ "baseline": "docs/v2/r3/bench/depot-narrow-30/planning/",
  "checks": {
   "claim_matches": null,
   "claimed_digest": null,
@@ -10,7 +11,7 @@
   "author": "COCO Lab (built-in reference)",
   "code_path": "coco_lab/coco_lab/",
   "code_sha256": null,
-  "description": "The built-in Dijkstra, as the Workbench runs it.",
+  "description": "The built-in Dijkstra, as the Workbench runs it (COCO-Bench v1 baseline, R3.2).",
   "display_name": "Dijkstra",
   "family": "planning",
   "kind": "builtin",
@@ -20,187 +21,187 @@
   "suite": "depot-narrow-30"
  },
  "held_out": {
-  "digest": "02db61b89a04396bbcc0e60ae6f2dc818ad5546d4170f1abd4eaec95c34f77a9",
-  "merge_base": "reference",
+  "digest": "9674491b0c3b7b1e94ff1a39ce65dea3d97ead83322a4398569497291cb8e553",
+  "merge_base": "reference-v1",
   "n": 10,
   "runs": [
    {
-    "chain": "3180052a78722c4b25b5a2f01cee875970d5287ddcdd25f7fbcd34a7334ac612",
+    "chain": "12e1386bd6658814c5fc067923740d75249e8e360d0649baf834dc59ebbd9793",
     "counts": {
-     "expansions": 8296,
+     "expansions": 101478,
      "goal_snap_m": 0,
-     "heading_change_rad": 10.21017612416706,
-     "mean_clearance_m": 0.5345762834184706,
-     "min_clearance_m": 0.15000000000000002,
-     "path_cost": 114.49059009552053,
-     "path_length_m": 10.952691193458115,
-     "path_steps": 100,
-     "pushes": 8428,
+     "heading_change_rad": 14.92256510455255,
+     "mean_clearance_m": 1.4673007072295923,
+     "min_clearance_m": 0.25,
+     "path_cost": 408.9156953025956,
+     "path_length_m": 40.81492782986676,
+     "path_steps": 363,
+     "pushes": 101904,
      "start_snap_m": 0
     },
-    "scenario": "s001",
+    "scenario": "n001",
     "scenario_index": 0,
     "status": "found"
    },
    {
-    "chain": "f8bfe7405a38c2861aee637d9e05991f6d8cc05387467c0a1a3c3d48ae2f6e23",
+    "chain": "0573d33e4b5ef83cbfe1dc5c2cc1568de1898a03d7e2652a1c6a315b7ab2abef",
     "counts": {
-     "expansions": 19572,
+     "expansions": 103097,
      "goal_snap_m": 0,
-     "heading_change_rad": 4.712388980385674,
-     "mean_clearance_m": 1.848673559060962,
-     "min_clearance_m": 0.15000000000000002,
-     "path_cost": 103.52624877208704,
-     "path_length_m": 10.285281374238558,
-     "path_steps": 78,
-     "pushes": 20172,
+     "heading_change_rad": 21.205750411732136,
+     "mean_clearance_m": 0.45017264959090175,
+     "min_clearance_m": 0.25,
+     "path_cost": 308.5678323706392,
+     "path_length_m": 30.613708498984803,
+     "path_steps": 273,
+     "pushes": 103542,
      "start_snap_m": 0
     },
-    "scenario": "s002",
+    "scenario": "n002",
     "scenario_index": 1,
     "status": "found"
    },
    {
-    "chain": "db59eb2c0552fe715966807940338578bba90ce32b2437498071e37eff8eb62f",
+    "chain": "00e7fa56dbb59b44784af04b880f3ea700d7f569141847c0f03473ba64c9987b",
     "counts": {
-     "expansions": 99967,
+     "expansions": 13768,
      "goal_snap_m": 0,
-     "heading_change_rad": 16.493361431348436,
-     "mean_clearance_m": 1.2105524555905365,
+     "heading_change_rad": 11.780972450962224,
+     "mean_clearance_m": 0.3603754932517213,
      "min_clearance_m": 0.25,
-     "path_cost": 386.8749556338554,
-     "path_length_m": 38.53036072312186,
-     "path_steps": 324,
-     "pushes": 100143,
+     "path_cost": 154.1965481840162,
+     "path_length_m": 15.208326112068528,
+     "path_steps": 138,
+     "pushes": 13894,
      "start_snap_m": 0
     },
-    "scenario": "s003",
+    "scenario": "n003",
     "scenario_index": 2,
     "status": "found"
    },
    {
-    "chain": "77a5b2aee6e3d24871f880e59e4dddac21d9995c31f8578ab188766d1a217fa5",
+    "chain": "e003f1e1977a69b30ea765cdd37566ab39f6c12ac65bfe34a05affe9f5bcfc81",
     "counts": {
-     "expansions": 65347,
+     "expansions": 32888,
      "goal_snap_m": 0,
-     "heading_change_rad": 13.351768777758553,
-     "mean_clearance_m": 1.4923663619033802,
+     "heading_change_rad": 11.780972450961977,
+     "mean_clearance_m": 0.43271188292014445,
      "min_clearance_m": 0.25,
-     "path_cost": 267.7387890451903,
-     "path_length_m": 26.639191898578737,
-     "path_steps": 220,
-     "pushes": 66064,
+     "path_cost": 206.9811744936206,
+     "path_length_m": 20.608326112068536,
+     "path_steps": 192,
+     "pushes": 33464,
      "start_snap_m": 0
     },
-    "scenario": "s004",
+    "scenario": "n004",
     "scenario_index": 3,
     "status": "found"
    },
    {
-    "chain": "0b8ab004545c1fe3db55e492cada7a99aa6786ef92ac0fa69729a86b4bc01ec2",
+    "chain": "e07373fda246b3777e7a31dc3f590fab6a63115665a388c11926f206c47cf4a1",
     "counts": {
-     "expansions": 42907,
+     "expansions": 53741,
      "goal_snap_m": 0,
-     "heading_change_rad": 11.780972450961876,
-     "mean_clearance_m": 0.829145560101216,
+     "heading_change_rad": 23.561944901924697,
+     "mean_clearance_m": 0.4176953140360089,
      "min_clearance_m": 0.25,
-     "path_cost": 182.48461821174476,
-     "path_length_m": 18.18111831820433,
-     "path_steps": 164,
-     "pushes": 43492,
+     "path_cost": 347.39998380428074,
+     "path_length_m": 34.36223663640866,
+     "path_steps": 308,
+     "pushes": 54370,
      "start_snap_m": 0
     },
-    "scenario": "s005",
+    "scenario": "n005",
     "scenario_index": 4,
     "status": "found"
    },
    {
-    "chain": "326f48bef0e44c15ac2fd2421aec0181cd3d702fae4b1e4ac94cb9c2edb4715b",
+    "chain": "d8962c7e24f69e6634713166f82c1e78652427042cdba6e727d23e66d6fd1b9b",
     "counts": {
-     "expansions": 20645,
+     "expansions": 68953,
      "goal_snap_m": 0,
-     "heading_change_rad": 6.283185307179783,
-     "mean_clearance_m": 0.46632332806572485,
+     "heading_change_rad": 13.351768777757718,
+     "mean_clearance_m": 0.8489197813318267,
      "min_clearance_m": 0.25,
-     "path_cost": 160.93954393327792,
-     "path_length_m": 16.004163056034262,
-     "path_steps": 153,
-     "pushes": 21026,
+     "path_cost": 258.7197083001219,
+     "path_length_m": 25.692388155425135,
+     "path_steps": 230,
+     "pushes": 69513,
      "start_snap_m": 0
     },
-    "scenario": "s006",
+    "scenario": "n006",
     "scenario_index": 5,
     "status": "found"
    },
    {
-    "chain": "69bb1b7d7f6550452421964f5e4dfd37499b3c6753e8d9149c2559da23a209b1",
+    "chain": "cdd11199fead70b83fbc8bc343542ae8826ede6a57af0ea00b031286dfa69f7f",
     "counts": {
-     "expansions": 96068,
+     "expansions": 78553,
      "goal_snap_m": 0,
-     "heading_change_rad": 3.9269908169881296,
-     "mean_clearance_m": 0.7320382460026003,
-     "min_clearance_m": 0.15000000000000002,
-     "path_cost": 398.79561590657306,
-     "path_length_m": 39.509545442950525,
-     "path_steps": 369,
-     "pushes": 96407,
+     "heading_change_rad": 8.639379797373662,
+     "mean_clearance_m": 0.6489009918939177,
+     "min_clearance_m": 0.25,
+     "path_cost": 235.65552792450453,
+     "path_length_m": 23.43086578651016,
+     "path_steps": 202,
+     "pushes": 79125,
      "start_snap_m": 0
     },
-    "scenario": "s007",
+    "scenario": "n007",
     "scenario_index": 6,
     "status": "found"
    },
    {
-    "chain": "66bcd30f2ac891216ed8bf448cc6a7a61d0152615c511605bb2b28c17f8e3c7c",
+    "chain": "9f4c35d92cf30a364837907e3d278b7a457c69ebf88d6740908f48b02c6528df",
     "counts": {
-     "expansions": 13949,
+     "expansions": 68999,
      "goal_snap_m": 0,
-     "heading_change_rad": 1.5707963267949143,
-     "mean_clearance_m": 1.4682988721657075,
+     "heading_change_rad": 3.141592653589882,
+     "mean_clearance_m": 1.0206427408848604,
      "min_clearance_m": 0.15000000000000002,
-     "path_cost": 86.33787878235735,
-     "path_length_m": 8.024264068711927,
-     "path_steps": 79,
-     "pushes": 14373,
+     "path_cost": 211.67424241504008,
+     "path_length_m": 21.10710678118655,
+     "path_steps": 209,
+     "pushes": 69652,
      "start_snap_m": 0
     },
-    "scenario": "s008",
+    "scenario": "n008",
     "scenario_index": 7,
     "status": "found"
    },
    {
-    "chain": "6b3a0aadedfc34f3f4b847b01b5fd23e5f47bbbe07078550ae920f94c5134f3c",
+    "chain": "15885f77976d166a11e87a20f2cae053cb94b6e7ba56ed6e665868c4b5b284ae",
     "counts": {
-     "expansions": 108269,
+     "expansions": 77856,
      "goal_snap_m": 0,
-     "heading_change_rad": 3.926990816990368,
-     "mean_clearance_m": 3.6678359074565745,
-     "min_clearance_m": 0.3156854249492381,
-     "path_cost": 397.0142853498739,
-     "path_length_m": 39.70142853498739,
-     "path_steps": 315,
-     "pushes": 108750,
+     "heading_change_rad": 7.06858347057755,
+     "mean_clearance_m": 0.8892214090969106,
+     "min_clearance_m": 0.25,
+     "path_cost": 309.087012939161,
+     "path_length_m": 30.87695526217007,
+     "path_steps": 298,
+     "pushes": 78551,
      "start_snap_m": 0
     },
-    "scenario": "s009",
+    "scenario": "n009",
     "scenario_index": 8,
     "status": "found"
    },
    {
-    "chain": "497749a46de33c52422667df99bf1e0f7654d9a0f6ee1788cbc1882f13014920",
+    "chain": "2e7afe30535d6ecede5d75c393002711461e46457134e35e47cbc1344d4a9ef6",
     "counts": {
-     "expansions": 53822,
+     "expansions": 91436,
      "goal_snap_m": 0,
-     "heading_change_rad": 8.639379797374541,
-     "mean_clearance_m": 3.4083861380085905,
-     "min_clearance_m": 0.2599019513592785,
-     "path_cost": 254.67619023324886,
-     "path_length_m": 25.467619023324886,
-     "path_steps": 200,
-     "pushes": 54218,
+     "heading_change_rad": 7.068583470578553,
+     "mean_clearance_m": 1.286177716265493,
+     "min_clearance_m": 0.25,
+     "path_cost": 348.01089449341185,
+     "path_length_m": 34.76934341759515,
+     "path_steps": 310,
+     "pushes": 91579,
      "start_snap_m": 0
     },
-    "scenario": "s010",
+    "scenario": "n010",
     "scenario_index": 9,
     "status": "found"
    }
@@ -208,30 +209,30 @@
   "scenarios": 10,
   "score": {
    "compute_ms": {
-    "median": 2425.4502344992943,
+    "median": 2413.5823270007677,
     "n": 10,
-    "q1": 923.2388585041917,
-    "q3": 4343.4629502480675
+    "q1": 1308.5589290003554,
+    "q3": 2780.6123347500034
    },
    "expansions": {
-    "median": 48364.5,
+    "median": 73427.5,
     "n": 10,
-    "q1": 19840.25,
-    "q3": 88387.75
+    "q1": 57544,
+    "q3": 88215.25
    },
    "failures": [],
    "min_clearance_m": {
     "median": 0.25,
     "n": 10,
-    "q1": 0.15000000000000002,
+    "q1": 0.25,
     "q3": 0.25
    },
    "n": 10,
    "path_ratio": {
-    "median": 1.0065631971188518,
+    "median": 1.0115985474425573,
     "n": 10,
-    "q1": 1.001427150709292,
-    "q3": 1.0176750735403755
+    "q1": 1.003273972812683,
+    "q3": 1.0336409033035299
    },
    "success_rate": 1,
    "successes": 10,
@@ -240,28 +241,28 @@
     1
    ]
   },
-  "seed": 1778610174337379,
-  "spec_id": "5f5fa74e9867f6db",
+  "seed": 1290919632493097,
+  "spec_id": "6f2352d21782ce1b",
   "worst": {
-   "scenario": "s002",
-   "scenario_index": 1,
+   "scenario": "n003",
+   "scenario_index": 2,
    "why": "worst path ratio"
   }
  },
  "host": {
   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
-  "git": "947aa56814a95171e08dcb31ed8932ecc5e75324",
+  "git": "f002fc1b97feb884f166c1806867c2bf90d7d052",
   "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
   "python": "3.12.3",
   "runner": "cpython",
-  "workers": 2
+  "workers": 10
  },
  "problems": [],
  "public": {
-  "digest": "36cf7ef98d28b73cddfe59582466914755ce7c15f4a9c9c86f72f482d6155296",
+  "digest": "4c157f7df9a5e163fbfeea9d2132dbf41fff8c5c28fbe83b9675640d08655525",
   "runs": [
    {
-    "chain": "9f68e9158e7eb03d656dafc1dbe30e8f174a2d07bd1f245c23195fe3323666f0",
+    "chain": "e3717c64cc663af1277ddcd25be0bb59b9d9564295fb6c735e5664c009a46e40",
     "counts": {
      "expansions": 106762,
      "goal_snap_m": 0,
@@ -279,7 +280,7 @@
     "status": "found"
    },
    {
-    "chain": "4c3148697178336ee1230033c133662860f8d3ce27d45edfe7cfceb4ca1a9432",
+    "chain": "a8cca4818bf50f65173b69f2b4b8b6bfe91ac3ec789c36ef0c469cd7ac637ba5",
     "counts": {
      "expansions": 99183,
      "goal_snap_m": 0,
@@ -297,7 +298,7 @@
     "status": "found"
    },
    {
-    "chain": "45db1b40a33a104869be875719d9106e10eec61a00a5c6b6db9ecc5ab55d2f39",
+    "chain": "cbfdd5c31a8620caaac7507b687c82a99081bb7e29aaff4636a1cba45b4b9fc2",
     "counts": {
      "expansions": 14336,
      "goal_snap_m": 0,
@@ -315,7 +316,7 @@
     "status": "found"
    },
    {
-    "chain": "1a75c430774703930021ac5d3c144201f403968cd74a4762c24edb9622da935d",
+    "chain": "0baff5edceb74d3b8a8a5a3cab362f0a94e2ffea31b54bce9645eda97437e026",
     "counts": {
      "expansions": 100433,
      "goal_snap_m": 0,
@@ -333,7 +334,7 @@
     "status": "found"
    },
    {
-    "chain": "0a7d77110962698394ffeb09d8d5c0d2550a55dfbd20754dcaad8bfbcf22f6e4",
+    "chain": "f98cee6f004ce0dc766038eba4a8ad09b86aa6926b3d4f4431b04c1b88788395",
     "counts": {
      "expansions": 88201,
      "goal_snap_m": 0,
@@ -351,7 +352,7 @@
     "status": "found"
    },
    {
-    "chain": "b7d2ead8b68ec64cbd34e1c5a873f5879f7f5532ae6200abc3750070fa759275",
+    "chain": "db17e61fd81b787f5f08206c830b0f05dfe790b527f930b6caab982ed6cd9918",
     "counts": {
      "expansions": 9404,
      "goal_snap_m": 0,
@@ -369,7 +370,7 @@
     "status": "found"
    },
    {
-    "chain": "8048432e2978c0ed69681e142cce16de44b3f5e23e293c3e0af9b7b32e9830ec",
+    "chain": "ee8dbbb175cfc3c9cef0091f715166fc8f72ab9253c5dc2b0438e1f0ca8d16e1",
     "counts": {
      "expansions": 76884,
      "goal_snap_m": 0,
@@ -387,7 +388,7 @@
     "status": "found"
    },
    {
-    "chain": "8a7c08fbe611b1fbf990a5571a67467a4c795bac08bee99bd4fc6975bc57ed5d",
+    "chain": "fafd0fecf5bb80b914641babff006d4e8ddc26320a6823cbfe5de141e1ec2790",
     "counts": {
      "expansions": 62043,
      "goal_snap_m": 0,
@@ -405,7 +406,7 @@
     "status": "found"
    },
    {
-    "chain": "f4c80fdca8ae0d0ada3ce3f432906ca7520adc032e4de5d4b82755e74d469477",
+    "chain": "8d9e425529246f60e5beb445925f2cb89ac7c15c65db0fc56201959842068543",
     "counts": {
      "expansions": 90021,
      "goal_snap_m": 0,
@@ -423,7 +424,7 @@
     "status": "found"
    },
    {
-    "chain": "f06254b5aca62a1e1d2d3a3883c0c4d20fd7c5ceb5978ebfa3ba9a2c024037e2",
+    "chain": "2c979c03f59d6a6ff9b11d6c260b8f1ba93a04dfa2977f2c200226a2bd8c6297",
     "counts": {
      "expansions": 24071,
      "goal_snap_m": 0,
@@ -441,7 +442,7 @@
     "status": "found"
    },
    {
-    "chain": "2dd72103998464c9f1a915acc7489b8cef41c168e695fe2aae46d669af07e2a6",
+    "chain": "f54c2743a9eab9fedf5d6c1d1b5c3f4c7100883373f2536de2f92106c9bf41f3",
     "counts": {
      "expansions": 41650,
      "goal_snap_m": 0,
@@ -459,7 +460,7 @@
     "status": "found"
    },
    {
-    "chain": "e74badb1c2a0733766bce58d58b952f7f331384ae052e8c9ba46902f66175770",
+    "chain": "61098ebf7a2caa9054463de52b9ada6500a7edd3997d2d80c8473841e8f73054",
     "counts": {
      "expansions": 93503,
      "goal_snap_m": 0,
@@ -477,7 +478,7 @@
     "status": "found"
    },
    {
-    "chain": "6504a376375a9ff3a21236cd5599dad7b8966bf2662d917b410ec833d22ffefa",
+    "chain": "6f460f7b8d8f7d232aa03620b89df60f87e6085a68ff198257eab3087e80bd5d",
     "counts": {
      "expansions": 6003,
      "goal_snap_m": 0,
@@ -495,7 +496,7 @@
     "status": "found"
    },
    {
-    "chain": "97e1e20a4b8a84e5540c61ebd60050c86eb7364eb5042f5aa873a6c7e0c51362",
+    "chain": "0500d3885a8818989111a80bfb32f9a6da8725ca2fc29287af3a981560a02ea0",
     "counts": {
      "expansions": 78366,
      "goal_snap_m": 0,
@@ -513,7 +514,7 @@
     "status": "found"
    },
    {
-    "chain": "191e71f3a9c12c26bc36cdae9220fb8c1f02690cf62b1feaf9d1539c7d1c3818",
+    "chain": "a6e6aad926fd564b871877d67b0d627c9c78ac9b2caa487e78f615b3d0dac181",
     "counts": {
      "expansions": 114369,
      "goal_snap_m": 0,
@@ -531,7 +532,7 @@
     "status": "found"
    },
    {
-    "chain": "b02932867936f6cddf2a7538d2f2827ad8a2a7253f83ec4fa2a0719f5d078bb4",
+    "chain": "7188c2271fc0b45ae4f3ad896eb617aec42f84c952d1dd2b4d68acaf97bf4426",
     "counts": {
      "expansions": 72544,
      "goal_snap_m": 0,
@@ -549,7 +550,7 @@
     "status": "found"
    },
    {
-    "chain": "4c6ddd89d39c67313b3c79062d108067a3b357d0f24ff0b0758e00dee8d09dfb",
+    "chain": "abe17eefc41737db39c83d2a51218d14da8021679a67a1096d02983d70976028",
     "counts": {
      "expansions": 72012,
      "goal_snap_m": 0,
@@ -567,7 +568,7 @@
     "status": "found"
    },
    {
-    "chain": "4f1ff9cf648918810f8786dcea999d67a8019a0004b1091c5b097c605252990b",
+    "chain": "d7318051a9c1ad4c68298aad9d3fc82be583b1254120dbfd98be2d85eb9835c8",
     "counts": {
      "expansions": 83862,
      "goal_snap_m": 0,
@@ -585,7 +586,7 @@
     "status": "found"
    },
    {
-    "chain": "d629a871eb8d1048178cb418554c73dbbc66ee8ea5eee5228c32a0c799dbf910",
+    "chain": "ce789c67279e078de4017a1b58bf12461c9bfe871b75be4a81d5267086cf9585",
     "counts": {
      "expansions": 115583,
      "goal_snap_m": 0,
@@ -603,7 +604,7 @@
     "status": "found"
    },
    {
-    "chain": "9a1bf59d2da68a5ce9ac3b388aefff597f5ddf0c8a258466e6567d5941ae8edc",
+    "chain": "7f81ce04c6fa3827c32573081cff20eabde9c7758fd02a514d16a4a616ad6df0",
     "counts": {
      "expansions": 79821,
      "goal_snap_m": 0,
@@ -621,7 +622,7 @@
     "status": "found"
    },
    {
-    "chain": "c3770ccbea08301679f9ef76ececca3a3815a9d1545e6fae96a37ebda5744abc",
+    "chain": "77470e579e8bfef7b45d0b7848deadd1955c1dc32942bf693e04070b410a77b7",
     "counts": {
      "expansions": 103645,
      "goal_snap_m": 0,
@@ -639,7 +640,7 @@
     "status": "found"
    },
    {
-    "chain": "e6bd7438b438e69d4828d9507b9d7de80bd4437f253f660f985177d43535935b",
+    "chain": "666be4877c37879192e36e10e8f9c949633cdeb421cd91496747e921a50213cb",
     "counts": {
      "expansions": 118650,
      "goal_snap_m": 0,
@@ -657,7 +658,7 @@
     "status": "found"
    },
    {
-    "chain": "9b6dae9c8f23dd1cc52e45cc125d3f59591133fd6658a843dac6ad49ff6113a4",
+    "chain": "93269aa5552ca1909258715fb7398470b3fb3becb7b7cc12567c562ab673a55d",
     "counts": {
      "expansions": 41018,
      "goal_snap_m": 0,
@@ -675,7 +676,7 @@
     "status": "found"
    },
    {
-    "chain": "7cfe4a9432950ca1c850108d49770156056e58ebd9dcff23c7922254da14a8b9",
+    "chain": "5b41d8a02972cc98fa6c308d3b2526564d819cd6480b92347ce8d1c9eafbcd9b",
     "counts": {
      "expansions": 63977,
      "goal_snap_m": 0,
@@ -693,7 +694,7 @@
     "status": "found"
    },
    {
-    "chain": "9e822a908431aa127933662d316a414e601ede2dd1050ac7d7859c02e90cf501",
+    "chain": "2c6f6cd0fc5450ef97a022e9de52d2367166e3b0901ccbaf4be69d89ab678788",
     "counts": {
      "expansions": 97381,
      "goal_snap_m": 0,
@@ -711,7 +712,7 @@
     "status": "found"
    },
    {
-    "chain": "7c1ec70b38c1614904414587e428263652faff2b9a30b036e2d60e3320116ca4",
+    "chain": "555396f263eb494b3ebe208a162222fa7589064a61602f907c90f67c8321e4b7",
     "counts": {
      "expansions": 101527,
      "goal_snap_m": 0,
@@ -729,7 +730,7 @@
     "status": "found"
    },
    {
-    "chain": "c58f62ae2b24c84262234935f2b0c7b45e86a60bcdc694c7086b94a1f733491c",
+    "chain": "6be25e7cce9869e083e7c600e704b258d17773f5b7cb03ea0d68f3b6d7768b38",
     "counts": {
      "expansions": 106646,
      "goal_snap_m": 0,
@@ -747,7 +748,7 @@
     "status": "found"
    },
    {
-    "chain": "c01b4de753cec5c313d0f1600a8fcf4fbe9d654dac0edfd3258360bbb78531e5",
+    "chain": "2e7c063162a8935826a773e84bc5a6a2196572ff8fac55c84f4751d34372674d",
     "counts": {
      "expansions": 94099,
      "goal_snap_m": 0,
@@ -765,7 +766,7 @@
     "status": "found"
    },
    {
-    "chain": "30ff89c15f24fb8b289c8008c1cf8b4b3d05a40badfd4ff2a54407c86759e891",
+    "chain": "27f6418fba78ea7a4899db30f2b12c5b69d391f7707957c3f86a2b25a780cdcb",
     "counts": {
      "expansions": 95828,
      "goal_snap_m": 0,
@@ -783,7 +784,7 @@
     "status": "found"
    },
    {
-    "chain": "c312f29d4cfeccb9b11d5c057b950a7a524988effca830ee479885fd2f6746a0",
+    "chain": "452ad76e1c4ead67c90e3ec0769792dc0f797779e164420d0a38a5eb992e01c9",
     "counts": {
      "expansions": 94229,
      "goal_snap_m": 0,
@@ -804,10 +805,10 @@
   "scenarios": 30,
   "score": {
    "compute_ms": {
-    "median": 4438.589447003324,
+    "median": 2719.271169999047,
     "n": 30,
-    "q1": 3116.4126082476287,
-    "q3": 5131.02877450001
+    "q1": 1305.3217629994833,
+    "q3": 3403.3620672507823
    },
    "expansions": {
     "median": 89111,
@@ -836,7 +837,33 @@
     1
    ]
   },
-  "spec_id": "a0964db2d609ac63",
+  "spec_id": "419c941cf222d31a",
+  "tiers": {
+   "easy": {
+    "n": 10,
+    "successes": 10,
+    "wilson95": [
+     0.7224672001371107,
+     1
+    ]
+   },
+   "hard": {
+    "n": 10,
+    "successes": 10,
+    "wilson95": [
+     0.7224672001371107,
+     1
+    ]
+   },
+   "medium": {
+    "n": 10,
+    "successes": 10,
+    "wilson95": [
+     0.7224672001371107,
+     1
+    ]
+   }
+  },
   "worst": {
    "scenario": "n003",
    "scenario_index": 2,
@@ -850,7 +877,7 @@
   "experiment": 1,
   "model_hash_version": 3,
   "suite": "depot-narrow-30",
-  "suite_version": 0,
-  "verifier": 1
+  "suite_version": 1,
+  "verifier": 2
  }
 }

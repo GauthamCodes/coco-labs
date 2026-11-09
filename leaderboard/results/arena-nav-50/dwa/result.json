@@ -1,0 +1,1445 @@
+{
+ "baseline": "docs/v2/r3/bench/arena-nav-50/control/",
+ "checks": {
+  "claim_matches": null,
+  "claimed_digest": null,
+  "clamped_outputs": 0,
+  "contract_problems": 0,
+  "deterministic": true
+ },
+ "entry": {
+  "author": "COCO Lab (built-in reference)",
+  "code_path": "coco_lab/coco_lab/",
+  "code_sha256": null,
+  "description": "The built-in DWA, as the Workbench runs it (COCO-Bench v1 baseline, R3.2).",
+  "display_name": "DWA",
+  "family": "control",
+  "kind": "builtin",
+  "licence": "Apache-2.0",
+  "name": "dwa",
+  "paper": null,
+  "suite": "arena-nav-50"
+ },
+ "held_out": {
+  "digest": "63346586a0fad4fd9ad7ae2f433256e3d8aca473c8c35d413659e11ac1f5c747",
+  "merge_base": "reference-v1",
+  "n": 15,
+  "runs": [
+   {
+    "chain": "a7c1b81279e8b2c1337c9945b93c85ea859d615d3ddcca699028c2434b62b2ad",
+    "counts": {
+     "contacts": 0,
+     "expansions": 2755,
+     "final_goal_distance_m": 0.24307380875517745,
+     "heading_change_rad": 4.295233599999996,
+     "mean_clearance_m": 0.5029102059250489,
+     "min_clearance_m": 0.11541019662496851,
+     "path_length_m": 5.71047628831587,
+     "plans": 1,
+     "ticks": 202,
+     "time_s": 20.200000000000003
+    },
+    "scenario": "s001",
+    "scenario_index": 0,
+    "status": "succeeded"
+   },
+   {
+    "chain": "d0d2f1fc87787a28a4bde5c594ce40dc3928f9b5b89f746215b8d70057d9d6b9",
+    "counts": {
+     "contacts": 0,
+     "expansions": 13074,
+     "final_goal_distance_m": 0.23906979199844938,
+     "heading_change_rad": 5.206242999999981,
+     "mean_clearance_m": 0.46063124354441315,
+     "min_clearance_m": 0.13000000000000003,
+     "path_length_m": 18.590941374133,
+     "plans": 1,
+     "ticks": 633,
+     "time_s": 63.300000000000004
+    },
+    "scenario": "s002",
+    "scenario_index": 1,
+    "status": "succeeded"
+   },
+   {
+    "chain": "4638f5fbc0bef95108131e87c71b26b9ccfab7adc01bf17ee314edafe06bf153",
+    "counts": {
+     "contacts": 0,
+     "expansions": 9913,
+     "final_goal_distance_m": 0.24068170770752875,
+     "heading_change_rad": 4.140970575000095,
+     "mean_clearance_m": 0.5156622415154739,
+     "min_clearance_m": 0.11541019662496851,
+     "path_length_m": 20.44879048531746,
+     "plans": 1,
+     "ticks": 689,
+     "time_s": 68.9
+    },
+    "scenario": "s003",
+    "scenario_index": 2,
+    "status": "succeeded"
+   },
+   {
+    "chain": "be882b50ee0115d606a97d29df6cf011b3ff447915763f2c4c7f630298711073",
+    "counts": {
+     "contacts": 0,
+     "expansions": 171,
+     "final_goal_distance_m": 0.2479481330819774,
+     "heading_change_rad": 2.7064843549999607,
+     "mean_clearance_m": 0.2775101650286523,
+     "min_clearance_m": 0.18000000000000002,
+     "path_length_m": 8.421836643211966,
+     "plans": 1,
+     "ticks": 294,
+     "time_s": 29.400000000000002
+    },
+    "scenario": "s004",
+    "scenario_index": 3,
+    "status": "succeeded"
+   },
+   {
+    "chain": "75c940a4971e149724b1199b56d5fbf97b5f0ca2dbc4950ca8814e1392ff21a2",
+    "counts": {
+     "contacts": 0,
+     "expansions": 3155,
+     "final_goal_distance_m": 0.2448635419730685,
+     "heading_change_rad": 3.030259397858695,
+     "mean_clearance_m": 0.9693894461534529,
+     "min_clearance_m": 0.13000000000000003,
+     "path_length_m": 19.110062088782474,
+     "plans": 1,
+     "ticks": 647,
+     "time_s": 64.7
+    },
+    "scenario": "s005",
+    "scenario_index": 4,
+    "status": "succeeded"
+   },
+   {
+    "chain": "9423a105d52c93ff149cbebe83b7b3b0a09ae83a972c68cb8a47efc9341dd571",
+    "counts": {
+     "contacts": 0,
+     "expansions": 32392,
+     "final_goal_distance_m": 0.24144839898325912,
+     "heading_change_rad": 7.318399999999995,
+     "mean_clearance_m": 0.5104769676184464,
+     "min_clearance_m": 0.11541019662496851,
+     "path_length_m": 26.606393191835988,
+     "plans": 1,
+     "ticks": 896,
+     "time_s": 89.60000000000001
+    },
+    "scenario": "s006",
+    "scenario_index": 5,
+    "status": "succeeded"
+   },
+   {
+    "chain": "a1035462f98c171d30e4f41c8b143a7e408d5abbf3e084de7ec7c13495997353",
+    "counts": {
+     "contacts": 0,
+     "expansions": 11053,
+     "final_goal_distance_m": 0.24106912036211345,
+     "heading_change_rad": 4.50560000000001,
+     "mean_clearance_m": 0.5732162378721001,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 24.984098232192395,
+     "plans": 1,
+     "ticks": 840,
+     "time_s": 84
+    },
+    "scenario": "s007",
+    "scenario_index": 6,
+    "status": "succeeded"
+   },
+   {
+    "chain": "9d9a39e3de64d6e3e113fa4d162c5a37932620a16bc3a173f3e0f75ebfbbafc7",
+    "counts": {
+     "contacts": 0,
+     "expansions": 86995,
+     "final_goal_distance_m": 22.403236373345706,
+     "heading_change_rad": 0.18880000000000052,
+     "mean_clearance_m": 0.3300000000000001,
+     "min_clearance_m": 0.33000000000000007,
+     "path_length_m": 0,
+     "plans": 1,
+     "ticks": 102,
+     "time_s": 10.200000000000001
+    },
+    "scenario": "s008",
+    "scenario_index": 7,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "8b06c900d9b1e4b7244d75a92fe9dc5f9eac504b6bbfeeb2dbc4a3afd9bee7c8",
+    "counts": {
+     "contacts": 0,
+     "expansions": 1135,
+     "final_goal_distance_m": 7.773784151473801,
+     "heading_change_rad": 2.959243999999997,
+     "mean_clearance_m": 0.2400969510286903,
+     "min_clearance_m": 0.08000000000000004,
+     "path_length_m": 0.5525105109440632,
+     "plans": 1,
+     "ticks": 43,
+     "time_s": 4.3
+    },
+    "scenario": "s009",
+    "scenario_index": 8,
+    "status": "no_valid_control"
+   },
+   {
+    "chain": "d7815f7ea042de1425720f903a77b35205856a92841c2b936e0613496285c681",
+    "counts": {
+     "contacts": 0,
+     "expansions": 10948,
+     "final_goal_distance_m": 0.24606989210598168,
+     "heading_change_rad": 7.135785309672228,
+     "mean_clearance_m": 0.3527387486782827,
+     "min_clearance_m": 0.10015621187164245,
+     "path_length_m": 13.64372418485155,
+     "plans": 1,
+     "ticks": 463,
+     "time_s": 46.300000000000004
+    },
+    "scenario": "s010",
+    "scenario_index": 9,
+    "status": "succeeded"
+   },
+   {
+    "chain": "e16a3faf15c9bc3784c485cc7f88c4edd272d67c515b308490b31b58746197f7",
+    "counts": {
+     "contacts": 0,
+     "expansions": 33747,
+     "final_goal_distance_m": 18.602486392952958,
+     "heading_change_rad": 0.1280000000000019,
+     "mean_clearance_m": 1.3800000000000001,
+     "min_clearance_m": 1.3800000000000001,
+     "path_length_m": 0,
+     "plans": 1,
+     "ticks": 102,
+     "time_s": 10.200000000000001
+    },
+    "scenario": "s011",
+    "scenario_index": 10,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "7ecc5a7808de999400af94323fda6737ee3252792bf432e72a5488d207c44e11",
+    "counts": {
+     "contacts": 0,
+     "expansions": 23121,
+     "final_goal_distance_m": 16.05848627439009,
+     "heading_change_rad": 1.2704000000000053,
+     "mean_clearance_m": 0.20478991596638657,
+     "min_clearance_m": 0.18000000000000002,
+     "path_length_m": 3.723145631630179,
+     "plans": 1,
+     "ticks": 238,
+     "time_s": 23.8
+    },
+    "scenario": "s012",
+    "scenario_index": 11,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "def079b62f4f9cc273a863ce6e39d8b5c42ed58e328a0335b5c08bb0410147c1",
+    "counts": {
+     "contacts": 0,
+     "expansions": 1358,
+     "final_goal_distance_m": 0.2450420775050751,
+     "heading_change_rad": 4.484997873100035,
+     "mean_clearance_m": 0.407423331620159,
+     "min_clearance_m": 0.13000000000000003,
+     "path_length_m": 10.1847863592156,
+     "plans": 1,
+     "ticks": 368,
+     "time_s": 36.800000000000004
+    },
+    "scenario": "s013",
+    "scenario_index": 12,
+    "status": "succeeded"
+   },
+   {
+    "chain": "b43b94fde001f773fa5c956689f0783ceb2f551da1b8668d0410dc8e7a688c31",
+    "counts": {
+     "contacts": 0,
+     "expansions": 5767,
+     "final_goal_distance_m": 0.2462242603765844,
+     "heading_change_rad": 6.420280000000091,
+     "mean_clearance_m": 0.7579456778324517,
+     "min_clearance_m": 0.11541019662496851,
+     "path_length_m": 16.97889698425327,
+     "plans": 1,
+     "ticks": 577,
+     "time_s": 57.7
+    },
+    "scenario": "s014",
+    "scenario_index": 13,
+    "status": "succeeded"
+   },
+   {
+    "chain": "06bacaebe2f5d5ccd66fc6f44979f914c58d513a888776aae13bc7c391a70070",
+    "counts": {
+     "contacts": 0,
+     "expansions": 6194,
+     "final_goal_distance_m": 13.910877039209284,
+     "heading_change_rad": 0.08639999999999581,
+     "mean_clearance_m": 0.28,
+     "min_clearance_m": 0.28,
+     "path_length_m": 0,
+     "plans": 1,
+     "ticks": 102,
+     "time_s": 10.200000000000001
+    },
+    "scenario": "s015",
+    "scenario_index": 14,
+    "status": "failed_to_make_progress"
+   }
+  ],
+  "scenarios": 15,
+  "score": {
+   "compute_ms": {
+    "median": 33181.78816899945,
+    "n": 15,
+    "q1": 14970.116004999909,
+    "q3": 45619.44668599972
+   },
+   "contacts": 0,
+   "failures": [
+    {
+     "scenario": "s008",
+     "scenario_index": 7,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s009",
+     "scenario_index": 8,
+     "status": "no_valid_control"
+    },
+    {
+     "scenario": "s011",
+     "scenario_index": 10,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s012",
+     "scenario_index": 11,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s015",
+     "scenario_index": 14,
+     "status": "failed_to_make_progress"
+    }
+   ],
+   "min_clearance_m": {
+    "median": 0.11541019662496851,
+    "n": 10,
+    "q1": 0.11541019662496851,
+    "q3": 0.13000000000000003
+   },
+   "n": 15,
+   "success_rate": 0.6666666666666666,
+   "successes": 10,
+   "time_s": {
+    "median": 60.5,
+    "n": 10,
+    "q1": 39.175000000000004,
+    "q3": 67.85000000000001
+   },
+   "wilson95": [
+    0.41713547738519774,
+    0.8482367556028526
+   ]
+  },
+  "seed": 2213807711433326,
+  "spec_id": "59a20147074d5fb7",
+  "worst": {
+   "scenario": "s008",
+   "scenario_index": 7,
+   "why": "failed_to_make_progress"
+  }
+ },
+ "host": {
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "git": "39c7580f17e625549b4412743cc07a2614f8337e",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "runner": "cpython",
+  "workers": 10
+ },
+ "problems": [],
+ "public": {
+  "digest": "adf0cb994f4723696c2b0be423ffe4b954d21150ce53c38b5a9c07bb7ed9a5ae",
+  "runs": [
+   {
+    "chain": "d4e483fe3cce6c624e91fb049f37e95282910fae998cb01a366fd1dcb891afa1",
+    "counts": {
+     "contacts": 0,
+     "expansions": 27829,
+     "final_goal_distance_m": 10.82601034545968,
+     "heading_change_rad": 1.2897799999999906,
+     "mean_clearance_m": 0.18000000000000002,
+     "min_clearance_m": 0.18000000000000002,
+     "path_length_m": 0,
+     "plans": 1,
+     "ticks": 102,
+     "time_s": 10.200000000000001
+    },
+    "scenario": "s001",
+    "scenario_index": 0,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "d347d18322b89c7a11e45424db60c04b8d881f98e1bc6bb12b65fa9bf94b7e9e",
+    "counts": {
+     "contacts": 0,
+     "expansions": 4305,
+     "final_goal_distance_m": 0.2445997429537097,
+     "heading_change_rad": 3.6640000000000157,
+     "mean_clearance_m": 0.45364728896575957,
+     "min_clearance_m": 0.11541019662496851,
+     "path_length_m": 9.351595191526007,
+     "plans": 1,
+     "ticks": 319,
+     "time_s": 31.900000000000002
+    },
+    "scenario": "s002",
+    "scenario_index": 1,
+    "status": "succeeded"
+   },
+   {
+    "chain": "23829ead08eefba74179e1fdb7b74f760873709d345fb4ac3bbcdf3cd0d11e65",
+    "counts": {
+     "contacts": 0,
+     "expansions": 23702,
+     "final_goal_distance_m": 0.24297883785126873,
+     "heading_change_rad": 7.445695999999959,
+     "mean_clearance_m": 0.540308201880384,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 16.366185741751273,
+     "plans": 1,
+     "ticks": 564,
+     "time_s": 56.400000000000006
+    },
+    "scenario": "s003",
+    "scenario_index": 2,
+    "status": "succeeded"
+   },
+   {
+    "chain": "09fc482195b3582d3dc70b8a5c4df50b85b73e86f2c8cf40698885e9f2209f6e",
+    "counts": {
+     "contacts": 0,
+     "expansions": 108,
+     "final_goal_distance_m": 0.2449757180102294,
+     "heading_change_rad": 4.483243968000003,
+     "mean_clearance_m": 0.282650852212807,
+     "min_clearance_m": 0.13000000000000003,
+     "path_length_m": 5.4003175015438885,
+     "plans": 1,
+     "ticks": 204,
+     "time_s": 20.400000000000002
+    },
+    "scenario": "s004",
+    "scenario_index": 3,
+    "status": "succeeded"
+   },
+   {
+    "chain": "711598899d6976a5c17338c20d8b3d8c8f6892877d54eee5b7fd2e10cab4c7a4",
+    "counts": {
+     "contacts": 0,
+     "expansions": 2033,
+     "final_goal_distance_m": 9.419527534302526,
+     "heading_change_rad": 0.04159999999999986,
+     "mean_clearance_m": 0.4800000000000001,
+     "min_clearance_m": 0.4800000000000001,
+     "path_length_m": 0.011999782401211457,
+     "plans": 1,
+     "ticks": 102,
+     "time_s": 10.200000000000001
+    },
+    "scenario": "s005",
+    "scenario_index": 4,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "44ca49c52024ccf400d283339c37c3805289670e126d2dc17e0280c2243244a1",
+    "counts": {
+     "contacts": 0,
+     "expansions": 22533,
+     "final_goal_distance_m": 0.2478517571648701,
+     "heading_change_rad": 6.174040525090032,
+     "mean_clearance_m": 0.7034232082520238,
+     "min_clearance_m": 0.13355339059327379,
+     "path_length_m": 17.722141040237474,
+     "plans": 1,
+     "ticks": 605,
+     "time_s": 60.5
+    },
+    "scenario": "s006",
+    "scenario_index": 5,
+    "status": "succeeded"
+   },
+   {
+    "chain": "a9a6c0e1c53c2a86809bd9a47aac7cb8cf1169873ebb253c48556b76956c0564",
+    "counts": {
+     "contacts": 0,
+     "expansions": 12185,
+     "final_goal_distance_m": 0.241739247129492,
+     "heading_change_rad": 3.129599999999974,
+     "mean_clearance_m": 0.5562035851708694,
+     "min_clearance_m": 0.13000000000000003,
+     "path_length_m": 20.211113030970672,
+     "plans": 1,
+     "ticks": 681,
+     "time_s": 68.10000000000001
+    },
+    "scenario": "s007",
+    "scenario_index": 6,
+    "status": "succeeded"
+   },
+   {
+    "chain": "913e8a89bb10f870fd282e02ed813237b1f8286fce07204ed533a479a8c19c9e",
+    "counts": {
+     "contacts": 0,
+     "expansions": 86,
+     "final_goal_distance_m": 5.145143341054745,
+     "heading_change_rad": 0.2944000000000022,
+     "mean_clearance_m": 1.2300000000000002,
+     "min_clearance_m": 1.2300000000000002,
+     "path_length_m": 0,
+     "plans": 1,
+     "ticks": 102,
+     "time_s": 10.200000000000001
+    },
+    "scenario": "s008",
+    "scenario_index": 7,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "a7c2699b587d5a9a67fd2f5a7593211c3fdd0c8747b824cd515b6282a3b4aafa",
+    "counts": {
+     "contacts": 0,
+     "expansions": 109,
+     "final_goal_distance_m": 0.24772909163465365,
+     "heading_change_rad": 4.482812199999991,
+     "mean_clearance_m": 0.8540972749089614,
+     "min_clearance_m": 0.13000000000000003,
+     "path_length_m": 6.063777887656251,
+     "plans": 1,
+     "ticks": 216,
+     "time_s": 21.6
+    },
+    "scenario": "s009",
+    "scenario_index": 8,
+    "status": "succeeded"
+   },
+   {
+    "chain": "57d86ce5dd70ef67f7c92a410d272086c70d17dd66bb387ca03efbd1ebe46dc3",
+    "counts": {
+     "contacts": 0,
+     "expansions": 2006,
+     "final_goal_distance_m": 0.24724487923652005,
+     "heading_change_rad": 2.393599999999993,
+     "mean_clearance_m": 0.4175037005818791,
+     "min_clearance_m": 0.13000000000000003,
+     "path_length_m": 10.326629382113735,
+     "plans": 1,
+     "ticks": 351,
+     "time_s": 35.1
+    },
+    "scenario": "s010",
+    "scenario_index": 9,
+    "status": "succeeded"
+   },
+   {
+    "chain": "150b16528a8a0e69a4e9d54ea9033ba0a1df6ffddff6d757a1f493caf5363d7d",
+    "counts": {
+     "contacts": 0,
+     "expansions": 66740,
+     "final_goal_distance_m": 3.2522989677134504,
+     "heading_change_rad": 7.300763015199907,
+     "mean_clearance_m": 0.3421401174272422,
+     "min_clearance_m": 0.13000000000000003,
+     "path_length_m": 21.56338330677311,
+     "plans": 1,
+     "ticks": 822,
+     "time_s": 82.2
+    },
+    "scenario": "s011",
+    "scenario_index": 10,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "e969d5d3157be9c86f8a77d4a61e0f91fe2af867c70794d8f48e0bb44f783f09",
+    "counts": {
+     "contacts": 0,
+     "expansions": 48159,
+     "final_goal_distance_m": 2.142439653264262,
+     "heading_change_rad": 7.975674127999941,
+     "mean_clearance_m": 0.3795269557775115,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 18.274917450332413,
+     "plans": 1,
+     "ticks": 714,
+     "time_s": 71.4
+    },
+    "scenario": "s012",
+    "scenario_index": 11,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "8aed108031fa294f1dfa830494e92a215ba93014370be3ac320ed673565bdb7e",
+    "counts": {
+     "contacts": 0,
+     "expansions": 61555,
+     "final_goal_distance_m": 6.059119679331845,
+     "heading_change_rad": 7.007481399999915,
+     "mean_clearance_m": 0.3643450579630359,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 18.51176326095925,
+     "plans": 1,
+     "ticks": 726,
+     "time_s": 72.60000000000001
+    },
+    "scenario": "s013",
+    "scenario_index": 12,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "296349210a605db6a0ad7180340d9bd0129178b50437a9fd3d8c7c6806607fed",
+    "counts": {
+     "contacts": 0,
+     "expansions": 2772,
+     "final_goal_distance_m": 0.24586524762080395,
+     "heading_change_rad": 5.455059999999958,
+     "mean_clearance_m": 0.3145812732709079,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 8.996702569302242,
+     "plans": 1,
+     "ticks": 322,
+     "time_s": 32.2
+    },
+    "scenario": "s014",
+    "scenario_index": 13,
+    "status": "succeeded"
+   },
+   {
+    "chain": "93c4968559a2c43aca885253dea45316217d6daef06def466a901954d8aa6bd0",
+    "counts": {
+     "contacts": 0,
+     "expansions": 8271,
+     "final_goal_distance_m": 0.24609340770759902,
+     "heading_change_rad": 5.982880000000035,
+     "mean_clearance_m": 0.8977038445242224,
+     "min_clearance_m": 0.18311288741492746,
+     "path_length_m": 17.082467945268025,
+     "plans": 1,
+     "ticks": 582,
+     "time_s": 58.2
+    },
+    "scenario": "s015",
+    "scenario_index": 14,
+    "status": "succeeded"
+   },
+   {
+    "chain": "3c02dcc86557ed25c76b4918805760a6dd4df6c21f4da5b0e43ff9584dad41f7",
+    "counts": {
+     "contacts": 0,
+     "expansions": 48280,
+     "final_goal_distance_m": 17.740138105437623,
+     "heading_change_rad": 0.4576000000000029,
+     "mean_clearance_m": 0.7313148795220223,
+     "min_clearance_m": 0.7313148795220223,
+     "path_length_m": 0,
+     "plans": 1,
+     "ticks": 102,
+     "time_s": 10.200000000000001
+    },
+    "scenario": "s016",
+    "scenario_index": 15,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "f0004bb7a30761124edb7658a9f2fd7b3b74cf9916614fe915628be47f53a8fa",
+    "counts": {
+     "contacts": 0,
+     "expansions": 6522,
+     "final_goal_distance_m": 0.2399337626271046,
+     "heading_change_rad": 5.782304000000024,
+     "mean_clearance_m": 0.313644582122927,
+     "min_clearance_m": 0.11541019662496851,
+     "path_length_m": 14.339267152135882,
+     "plans": 1,
+     "ticks": 487,
+     "time_s": 48.7
+    },
+    "scenario": "s017",
+    "scenario_index": 16,
+    "status": "succeeded"
+   },
+   {
+    "chain": "1783a1ac2496c716705b58a8504afc2cdf08ddee678170ad071368dc66ed8fcc",
+    "counts": {
+     "contacts": 0,
+     "expansions": 10936,
+     "final_goal_distance_m": 18.18023911529508,
+     "heading_change_rad": 5.552700169703467,
+     "mean_clearance_m": 0.2341529314648045,
+     "min_clearance_m": 0.13000000000000003,
+     "path_length_m": 2.264207681841021,
+     "plans": 1,
+     "ticks": 218,
+     "time_s": 21.8
+    },
+    "scenario": "s018",
+    "scenario_index": 17,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "a4cd3623f35ce61c812a8210914821587ef2e476b20fa28af5d75bb72e601977",
+    "counts": {
+     "contacts": 0,
+     "expansions": 30143,
+     "final_goal_distance_m": 5.256440596189404,
+     "heading_change_rad": 1.1807999999999925,
+     "mean_clearance_m": 0.3503027855555829,
+     "min_clearance_m": 0.11541019662496851,
+     "path_length_m": 7.488676012728029,
+     "plans": 1,
+     "ticks": 378,
+     "time_s": 37.800000000000004
+    },
+    "scenario": "s019",
+    "scenario_index": 18,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "3e1d4896e5b51a996a16fc92a205ab3359067dbca3c7f343dd1fcac3434b494b",
+    "counts": {
+     "contacts": 0,
+     "expansions": 23820,
+     "final_goal_distance_m": 16.015982939264926,
+     "heading_change_rad": 4.441017932721976,
+     "mean_clearance_m": 0.46135794062559454,
+     "min_clearance_m": 0.13355339059327379,
+     "path_length_m": 7.513286875218588,
+     "plans": 1,
+     "ticks": 351,
+     "time_s": 35.1
+    },
+    "scenario": "s020",
+    "scenario_index": 19,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "c500664a112cf5d7d2b8df488737e406afa4481271cdd82c5563d8d48af882d9",
+    "counts": {
+     "contacts": 0,
+     "expansions": 29201,
+     "final_goal_distance_m": 18.97452239188117,
+     "heading_change_rad": 0,
+     "mean_clearance_m": 0.53,
+     "min_clearance_m": 0.53,
+     "path_length_m": 0,
+     "plans": 1,
+     "ticks": 102,
+     "time_s": 10.200000000000001
+    },
+    "scenario": "s021",
+    "scenario_index": 20,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "83692543c4caaf95cd1e86dbc13f42892cbd6cd5a37eada5218e27359020b78b",
+    "counts": {
+     "contacts": 0,
+     "expansions": 16539,
+     "final_goal_distance_m": 0.2456282636880151,
+     "heading_change_rad": 11.707331359999955,
+     "mean_clearance_m": 0.497300022288698,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 19.8338107208913,
+     "plans": 1,
+     "ticks": 693,
+     "time_s": 69.3
+    },
+    "scenario": "s022",
+    "scenario_index": 21,
+    "status": "succeeded"
+   },
+   {
+    "chain": "feecb22df7e35cde7262db457aa71fc1537caf9ceb33d1e8e7bf2b221f2c24d7",
+    "counts": {
+     "contacts": 0,
+     "expansions": 320,
+     "final_goal_distance_m": 0.2492283424035406,
+     "heading_change_rad": 3.680067272282159,
+     "mean_clearance_m": 0.34308863756668734,
+     "min_clearance_m": 0.13000000000000003,
+     "path_length_m": 5.132826962177352,
+     "plans": 1,
+     "ticks": 187,
+     "time_s": 18.7
+    },
+    "scenario": "s023",
+    "scenario_index": 22,
+    "status": "succeeded"
+   },
+   {
+    "chain": "fe81e9f5f1e2f04ee825c00610416a265ce496b3dad39c3e187317a6e52d84b2",
+    "counts": {
+     "contacts": 0,
+     "expansions": 23740,
+     "final_goal_distance_m": 2.819573862037721,
+     "heading_change_rad": 4.043520000000015,
+     "mean_clearance_m": 0.33644772711948573,
+     "min_clearance_m": 0.16078865529319544,
+     "path_length_m": 11.697088979893554,
+     "plans": 1,
+     "ticks": 542,
+     "time_s": 54.2
+    },
+    "scenario": "s024",
+    "scenario_index": 23,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "b830ecab5379626d916082a4b7b1f72f33f87e9a2b0732336a3e9282e9fe73d0",
+    "counts": {
+     "contacts": 0,
+     "expansions": 1623,
+     "final_goal_distance_m": 0.24595941328806137,
+     "heading_change_rad": 3.7919999999999985,
+     "mean_clearance_m": 0.3987770108520348,
+     "min_clearance_m": 0.11541019662496851,
+     "path_length_m": 5.859078867966041,
+     "plans": 1,
+     "ticks": 201,
+     "time_s": 20.1
+    },
+    "scenario": "s025",
+    "scenario_index": 24,
+    "status": "succeeded"
+   },
+   {
+    "chain": "6749f04253f704da97b74eb4fa1832b53fb914139cf34f6b78ce548df695693a",
+    "counts": {
+     "contacts": 0,
+     "expansions": 13257,
+     "final_goal_distance_m": 10.887566126434642,
+     "heading_change_rad": 2.1183673763999993,
+     "mean_clearance_m": 0.1978571428571429,
+     "min_clearance_m": 0.08000000000000004,
+     "path_length_m": 0.323172987147615,
+     "plans": 1,
+     "ticks": 28,
+     "time_s": 2.8000000000000003
+    },
+    "scenario": "s026",
+    "scenario_index": 25,
+    "status": "no_valid_control"
+   },
+   {
+    "chain": "0bd5fb9266fe947d90f3f92717ab8fff0931c897888bc3a52d5bbaf9d0531b48",
+    "counts": {
+     "contacts": 0,
+     "expansions": 21693,
+     "final_goal_distance_m": 0.23869751455290672,
+     "heading_change_rad": 10.635625905950096,
+     "mean_clearance_m": 0.4166940871877498,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 20.72774419329818,
+     "plans": 1,
+     "ticks": 708,
+     "time_s": 70.8
+    },
+    "scenario": "s027",
+    "scenario_index": 26,
+    "status": "succeeded"
+   },
+   {
+    "chain": "7deac47a91ca40af013d296615e66f6dc7e74cc9e13a7c7cf6c48038289c89e7",
+    "counts": {
+     "contacts": 0,
+     "expansions": 291,
+     "final_goal_distance_m": 0.24416739801238457,
+     "heading_change_rad": 2.4217159999999374,
+     "mean_clearance_m": 0.7169180764297408,
+     "min_clearance_m": 0.23,
+     "path_length_m": 14.77659937687589,
+     "plans": 1,
+     "ticks": 500,
+     "time_s": 50
+    },
+    "scenario": "s028",
+    "scenario_index": 27,
+    "status": "succeeded"
+   },
+   {
+    "chain": "3b7f687d66afe4f71f7e47313566cb26340f957040230e8c1525a657b5130e86",
+    "counts": {
+     "contacts": 0,
+     "expansions": 3573,
+     "final_goal_distance_m": 1.7351485166240554,
+     "heading_change_rad": 2.2007791999999844,
+     "mean_clearance_m": 0.2348983906650706,
+     "min_clearance_m": 0.13000000000000003,
+     "path_length_m": 3.853907669704831,
+     "plans": 1,
+     "ticks": 238,
+     "time_s": 23.8
+    },
+    "scenario": "s029",
+    "scenario_index": 28,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "482aa0d43a92cc4858d98d0a2915fd98efd935a9cd7bb432c45ee43a73375e79",
+    "counts": {
+     "contacts": 0,
+     "expansions": 1658,
+     "final_goal_distance_m": 0.24526151793440049,
+     "heading_change_rad": 4.834600078019991,
+     "mean_clearance_m": 0.5923218167848564,
+     "min_clearance_m": 0.13355339059327379,
+     "path_length_m": 7.414339426863188,
+     "plans": 1,
+     "ticks": 263,
+     "time_s": 26.3
+    },
+    "scenario": "s030",
+    "scenario_index": 29,
+    "status": "succeeded"
+   },
+   {
+    "chain": "37f61d497085791d791be1fc5b8a5ea53fdfe5f4da7937acff142c77827b9b6a",
+    "counts": {
+     "contacts": 0,
+     "expansions": 16312,
+     "final_goal_distance_m": 1.5773054118538459,
+     "heading_change_rad": 3.3631999999999986,
+     "mean_clearance_m": 0.5731298797206353,
+     "min_clearance_m": 0.18000000000000002,
+     "path_length_m": 12.62592605742271,
+     "plans": 1,
+     "ticks": 535,
+     "time_s": 53.5
+    },
+    "scenario": "s031",
+    "scenario_index": 30,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "ed59b619ec743c5f055272127264fc0ac54a6ca8c639f9ac385edd7a00f97190",
+    "counts": {
+     "contacts": 0,
+     "expansions": 10137,
+     "final_goal_distance_m": 13.87081187280156,
+     "heading_change_rad": 2.089936000000022,
+     "mean_clearance_m": 0.21872053872053876,
+     "min_clearance_m": 0.18000000000000002,
+     "path_length_m": 3.1830960762366645,
+     "plans": 1,
+     "ticks": 297,
+     "time_s": 29.700000000000003
+    },
+    "scenario": "s032",
+    "scenario_index": 31,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "cf394e2edc50d8f906e01139e47a8a287391d07a7021c0299dc08e55e4f31a1e",
+    "counts": {
+     "contacts": 0,
+     "expansions": 2139,
+     "final_goal_distance_m": 0.2425875485954554,
+     "heading_change_rad": 4.46708160000003,
+     "mean_clearance_m": 0.437639865026711,
+     "min_clearance_m": 0.11541019662496851,
+     "path_length_m": 7.341083773647146,
+     "plans": 1,
+     "ticks": 278,
+     "time_s": 27.8
+    },
+    "scenario": "s033",
+    "scenario_index": 32,
+    "status": "succeeded"
+   },
+   {
+    "chain": "1a5e5a7abc2ff7da0fb01863a9762e137d6726fb110bccf60852f9535986f73c",
+    "counts": {
+     "contacts": 0,
+     "expansions": 37279,
+     "final_goal_distance_m": 15.310127367203709,
+     "heading_change_rad": 0,
+     "mean_clearance_m": 0.5800000000000001,
+     "min_clearance_m": 0.5800000000000001,
+     "path_length_m": 0,
+     "plans": 1,
+     "ticks": 102,
+     "time_s": 10.200000000000001
+    },
+    "scenario": "s034",
+    "scenario_index": 33,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "fed4470916592809bf6fcc9f945e1116a31cf807cc01e044c3da3281b3004d8c",
+    "counts": {
+     "contacts": 0,
+     "expansions": 3781,
+     "final_goal_distance_m": 0.24007701660575298,
+     "heading_change_rad": 5.438169911450006,
+     "mean_clearance_m": 0.2926558735211388,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 10.784248189719472,
+     "plans": 1,
+     "ticks": 377,
+     "time_s": 37.7
+    },
+    "scenario": "s035",
+    "scenario_index": 34,
+    "status": "succeeded"
+   },
+   {
+    "chain": "c473cc8fa52c345d0264eabf99e8ccdf5f5cab779f232a55d9121134f1272d86",
+    "counts": {
+     "contacts": 0,
+     "expansions": 4284,
+     "final_goal_distance_m": 0.2388398032962785,
+     "heading_change_rad": 6.235536419999992,
+     "mean_clearance_m": 0.5329234535934734,
+     "min_clearance_m": 0.13355339059327379,
+     "path_length_m": 8.47101582431518,
+     "plans": 1,
+     "ticks": 308,
+     "time_s": 30.8
+    },
+    "scenario": "s036",
+    "scenario_index": 35,
+    "status": "succeeded"
+   },
+   {
+    "chain": "819dd57f49cebbdf0a7d809a1ed17a98777ea35635f816e0d466ca01beab3292",
+    "counts": {
+     "contacts": 0,
+     "expansions": 13848,
+     "final_goal_distance_m": 20.59787610410355,
+     "heading_change_rad": 0.15040000000000164,
+     "mean_clearance_m": 0.9893386622447824,
+     "min_clearance_m": 0.9893386622447824,
+     "path_length_m": 0,
+     "plans": 1,
+     "ticks": 102,
+     "time_s": 10.200000000000001
+    },
+    "scenario": "s037",
+    "scenario_index": 36,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "30d4e1179560ff65bdfd0930baa10255143cb56837cd7492bcb8d33581569eb5",
+    "counts": {
+     "contacts": 0,
+     "expansions": 2124,
+     "final_goal_distance_m": 10.714126189288606,
+     "heading_change_rad": 2.3400375999999965,
+     "mean_clearance_m": 0.18000000000000002,
+     "min_clearance_m": 0.18000000000000002,
+     "path_length_m": 0,
+     "plans": 1,
+     "ticks": 102,
+     "time_s": 10.200000000000001
+    },
+    "scenario": "s038",
+    "scenario_index": 37,
+    "status": "failed_to_make_progress"
+   },
+   {
+    "chain": "63efb9608d1454970147cc08660b59446d4efb227e127a9e216f4d4aa9e98e51",
+    "counts": {
+     "contacts": 0,
+     "expansions": 2065,
+     "final_goal_distance_m": 0.24896176340223572,
+     "heading_change_rad": 6.0506992399998545,
+     "mean_clearance_m": 0.602414724189484,
+     "min_clearance_m": 0.18000000000000002,
+     "path_length_m": 17.699776326569776,
+     "plans": 1,
+     "ticks": 614,
+     "time_s": 61.400000000000006
+    },
+    "scenario": "s039",
+    "scenario_index": 38,
+    "status": "succeeded"
+   },
+   {
+    "chain": "866dcd3655fe30d507e9b64396d624d8be97ae345770550f3565ae129d6f8fdf",
+    "counts": {
+     "contacts": 0,
+     "expansions": 25785,
+     "final_goal_distance_m": 0.24253320396548497,
+     "heading_change_rad": 11.041854467549975,
+     "mean_clearance_m": 0.5075492899899777,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 17.488824899249394,
+     "plans": 1,
+     "ticks": 611,
+     "time_s": 61.1
+    },
+    "scenario": "s040",
+    "scenario_index": 39,
+    "status": "succeeded"
+   },
+   {
+    "chain": "2b76bea0ac8d9f522c6563b89b020f403ae4bf768d7a8bf8d6163be93e357d46",
+    "counts": {
+     "contacts": 0,
+     "expansions": 1318,
+     "final_goal_distance_m": 0.24212111938213154,
+     "heading_change_rad": 6.0422603360000045,
+     "mean_clearance_m": 0.24637139658836055,
+     "min_clearance_m": 0.16078865529319544,
+     "path_length_m": 14.048955566340986,
+     "plans": 1,
+     "ticks": 488,
+     "time_s": 48.800000000000004
+    },
+    "scenario": "s041",
+    "scenario_index": 40,
+    "status": "succeeded"
+   },
+   {
+    "chain": "e192e82b8b6e9fde740ba8a8905d0703dfd1f0dd78ed560d5a8323aa96a6bfb0",
+    "counts": {
+     "contacts": 0,
+     "expansions": 7864,
+     "final_goal_distance_m": 0.2403395110598996,
+     "heading_change_rad": 5.5284599999999315,
+     "mean_clearance_m": 0.7909993457888248,
+     "min_clearance_m": 0.1705124837953327,
+     "path_length_m": 20.487772076562987,
+     "plans": 1,
+     "ticks": 694,
+     "time_s": 69.4
+    },
+    "scenario": "s042",
+    "scenario_index": 41,
+    "status": "succeeded"
+   },
+   {
+    "chain": "f3761acd5a18209a598f02ebbf9d56aa0e69768925d31cfd03803946f166c499",
+    "counts": {
+     "contacts": 0,
+     "expansions": 53582,
+     "final_goal_distance_m": 0.2459625866639388,
+     "heading_change_rad": 12.81791123180723,
+     "mean_clearance_m": 0.3907430853728456,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 28.58272842388886,
+     "plans": 1,
+     "ticks": 967,
+     "time_s": 96.7
+    },
+    "scenario": "s043",
+    "scenario_index": 42,
+    "status": "succeeded"
+   },
+   {
+    "chain": "73ff2033ae6bf8237936ccc378161d3292bd3b07238a7b5c6370c1b68cdfebc4",
+    "counts": {
+     "contacts": 0,
+     "expansions": 13221,
+     "final_goal_distance_m": 0.23913072210675276,
+     "heading_change_rad": 4.96272500000005,
+     "mean_clearance_m": 0.39760240806386044,
+     "min_clearance_m": 0.11541019662496851,
+     "path_length_m": 17.45160432138548,
+     "plans": 1,
+     "ticks": 600,
+     "time_s": 60
+    },
+    "scenario": "s044",
+    "scenario_index": 43,
+    "status": "succeeded"
+   },
+   {
+    "chain": "3fc676c3b71a36990ca87730e81fbf7f43c71b3c6a302b75fc585405360a25e0",
+    "counts": {
+     "contacts": 0,
+     "expansions": 12355,
+     "final_goal_distance_m": 0.24828299598560402,
+     "heading_change_rad": 8.848902568579991,
+     "mean_clearance_m": 0.4824141837221162,
+     "min_clearance_m": 0.10015621187164245,
+     "path_length_m": 21.213818533684787,
+     "plans": 1,
+     "ticks": 716,
+     "time_s": 71.60000000000001
+    },
+    "scenario": "s045",
+    "scenario_index": 44,
+    "status": "succeeded"
+   },
+   {
+    "chain": "94c09cc73f5549336aa22c67c85030bea77b3da6f0f5f1bcc5860dbe78d3d657",
+    "counts": {
+     "contacts": 0,
+     "expansions": 2040,
+     "final_goal_distance_m": 0.24865070513574283,
+     "heading_change_rad": 6.034399999999989,
+     "mean_clearance_m": 0.7388251396579042,
+     "min_clearance_m": 0.08000000000000004,
+     "path_length_m": 10.82911923489626,
+     "plans": 1,
+     "ticks": 388,
+     "time_s": 38.800000000000004
+    },
+    "scenario": "s046",
+    "scenario_index": 45,
+    "status": "succeeded"
+   },
+   {
+    "chain": "93ac7c01dc9cffbc5429d1e58efc14954932453c738d6042c8dcdccf1b35c579",
+    "counts": {
+     "contacts": 0,
+     "expansions": 17461,
+     "final_goal_distance_m": 0.24223633121381608,
+     "heading_change_rad": 5.873471999999984,
+     "mean_clearance_m": 0.7322956106715403,
+     "min_clearance_m": 0.11541019662496851,
+     "path_length_m": 17.944639943886173,
+     "plans": 1,
+     "ticks": 612,
+     "time_s": 61.2
+    },
+    "scenario": "s047",
+    "scenario_index": 46,
+    "status": "succeeded"
+   },
+   {
+    "chain": "7f9877fdb123f4cbf73b65d1d3859a2be1d28b55520ca0e070b1888e609c5b78",
+    "counts": {
+     "contacts": 0,
+     "expansions": 5077,
+     "final_goal_distance_m": 0.2432587261115391,
+     "heading_change_rad": 7.02712000000007,
+     "mean_clearance_m": 0.6735686968006617,
+     "min_clearance_m": 0.08000000000000004,
+     "path_length_m": 13.393522578043214,
+     "plans": 1,
+     "ticks": 469,
+     "time_s": 46.900000000000006
+    },
+    "scenario": "s048",
+    "scenario_index": 47,
+    "status": "succeeded"
+   },
+   {
+    "chain": "075af348274f74a692ef854944052fb4bf20c345dd9b315eba07c787fce825e9",
+    "counts": {
+     "contacts": 0,
+     "expansions": 18999,
+     "final_goal_distance_m": 0.24094076583314908,
+     "heading_change_rad": 7.593599999999983,
+     "mean_clearance_m": 0.5345604935172954,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 23.111977939060132,
+     "plans": 1,
+     "ticks": 779,
+     "time_s": 77.9
+    },
+    "scenario": "s049",
+    "scenario_index": 48,
+    "status": "succeeded"
+   },
+   {
+    "chain": "c8b48b56b34346e05719dd79f95f43c539150a01b9c558ca36efd7fe0136858f",
+    "counts": {
+     "contacts": 0,
+     "expansions": 40580,
+     "final_goal_distance_m": 0.24123786922146695,
+     "heading_change_rad": 11.488149689246871,
+     "mean_clearance_m": 0.3770818989081015,
+     "min_clearance_m": 0.096227766016838,
+     "path_length_m": 27.658291766629144,
+     "plans": 1,
+     "ticks": 973,
+     "time_s": 97.30000000000001
+    },
+    "scenario": "s050",
+    "scenario_index": 49,
+    "status": "succeeded"
+   }
+  ],
+  "scenarios": 50,
+  "score": {
+   "compute_ms": {
+    "median": 35423.600069500026,
+    "n": 50,
+    "q1": 18423.753906249884,
+    "q3": 52727.203704249405
+   },
+   "contacts": 0,
+   "failures": [
+    {
+     "scenario": "s001",
+     "scenario_index": 0,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s005",
+     "scenario_index": 4,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s008",
+     "scenario_index": 7,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s011",
+     "scenario_index": 10,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s012",
+     "scenario_index": 11,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s013",
+     "scenario_index": 12,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s016",
+     "scenario_index": 15,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s018",
+     "scenario_index": 17,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s019",
+     "scenario_index": 18,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s020",
+     "scenario_index": 19,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s021",
+     "scenario_index": 20,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s024",
+     "scenario_index": 23,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s026",
+     "scenario_index": 25,
+     "status": "no_valid_control"
+    },
+    {
+     "scenario": "s029",
+     "scenario_index": 28,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s031",
+     "scenario_index": 30,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s032",
+     "scenario_index": 31,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s034",
+     "scenario_index": 33,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s037",
+     "scenario_index": 36,
+     "status": "failed_to_make_progress"
+    },
+    {
+     "scenario": "s038",
+     "scenario_index": 37,
+     "status": "failed_to_make_progress"
+    }
+   ],
+   "min_clearance_m": {
+    "median": 0.11541019662496851,
+    "n": 31,
+    "q1": 0.096227766016838,
+    "q3": 0.1317766952966369
+   },
+   "n": 50,
+   "success_rate": 0.62,
+   "successes": 31,
+   "time_s": {
+    "median": 50,
+    "n": 31,
+    "q1": 32.050000000000004,
+    "q3": 64.75
+   },
+   "wilson95": [
+    0.4815044693099298,
+    0.7413721068980641
+   ]
+  },
+  "spec_id": "2f7432d1a52d62f4",
+  "tiers": {
+   "easy": {
+    "n": 17,
+    "successes": 14,
+    "wilson95": [
+     0.5897054143116588,
+     0.9380887336237901
+    ]
+   },
+   "hard": {
+    "n": 16,
+    "successes": 6,
+    "wilson95": [
+     0.18481232558863633,
+     0.6135895945449727
+    ]
+   },
+   "medium": {
+    "n": 17,
+    "successes": 11,
+    "wilson95": [
+     0.41300363485218694,
+     0.8269027960275627
+    ]
+   }
+  },
+  "worst": {
+   "scenario": "s001",
+   "scenario_index": 0,
+   "why": "failed_to_make_progress"
+  }
+ },
+ "schema": "coco.leaderboard.entry.v1",
+ "verified": true,
+ "versions": {
+  "api": 1,
+  "experiment": 1,
+  "model_hash_version": 3,
+  "suite": "arena-nav-50",
+  "suite_version": 1,
+  "verifier": 2
+ }
+}

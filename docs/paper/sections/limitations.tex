@@ -1,0 +1,30 @@
+\textbf{A kinematic model.} The browser model is planar differential-drive kinematics with terrain
+following. It has no dynamics, contact forces, friction or tipping, and no wheel slip by default. Its
+verdicts concern algorithms on this model; \cref{sec:exp-gap} measures how far they carry over to
+ROS~2 in Gazebo, which is itself a simulation.
+
+\textbf{No hardware.} No physical robot was used. Every result is \evclass{model} or \evclass{stack}
+(ROS~2 in Gazebo); none is a real-robot result.
+
+\textbf{One robot, authored worlds.} All suites use one robot and worlds authored in a World Spec.
+There is no multi-robot interaction and no scanned real building.
+
+\textbf{Scenario generation.} Scenarios are drawn from free space with a clearance margin and must be
+connected, and filtered suites keep a scenario only if the reference A* path passes the filter. The
+suites therefore under-represent starts in tight spots, unreachable goals, and cases that A* handles
+badly but other planners do not.
+
+\textbf{Counterparts are not the same code.} Except for the exported A* starter, each comparison with
+Nav2 pairs the model's reference implementation with Nav2's own implementation of the same idea, so a
+gap mixes model simplification with implementation differences. The \evclass{stack} subsets are small,
+and rates come with intervals for that reason.
+
+\textbf{Held-out scenarios.} The secret keeps each held-out set unpredictable and outside the sandbox,
+but the set comes from the same generator as the public suite, so a method tuned to that distribution
+is not caught. A submission that escaped both the Python guard and the container could still falsify
+its own reported numbers; rounding and per-push sets limit what it can learn or leak, but do not make
+its numbers trustworthy. Review remains part of the process.
+
+\textbf{Simulated live stack and emulated phones.} The application's interactive ``Live Stack'' is
+simulated; the \evclass{stack} results in this paper are recorded Gazebo runs. Phone results quoted
+anywhere in the project come from an emulated device unless stated otherwise.

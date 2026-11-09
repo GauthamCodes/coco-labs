@@ -1,0 +1,108 @@
+{
+ "about": "    tools/r3/a1_snap.py RUNS_DIR OUT.json",
+ "servers": {
+  "compute_path_to_pose": {
+   "failed_scenarios": [
+    "s036",
+    "s041",
+    "s046",
+    "s051",
+    "s061",
+    "s086"
+   ],
+   "failures_by_error_code": {
+    "205": 12,
+    "208": 6
+   },
+   "found": 42,
+   "median_length_m": 33.1031,
+   "requests": 60
+  },
+  "compute_path_to_pose+snapped": {
+   "failed_scenarios": [],
+   "failures_by_error_code": {},
+   "found": 60,
+   "median_length_m": 29.6076,
+   "requests": 60
+  },
+  "paired_snapped_minus_astar_starter_m": {
+   "median": -0.6102,
+   "n": 60
+  },
+  "snap": {
+   "goal_snap_m_max": 7.375,
+   "moved_scenarios": [
+    "s036",
+    "s041",
+    "s046",
+    "s051",
+    "s061",
+    "s086"
+   ],
+   "per_scenario_m": {
+    "s036": [
+     1.8752,
+     0.0354
+    ],
+    "s041": [
+     0.7754,
+     0.0354
+    ],
+    "s046": [
+     1.7752,
+     0.0354
+    ],
+    "s051": [
+     2.7751,
+     0.0354
+    ],
+    "s061": [
+     0.0354,
+     0.8754
+    ],
+    "s086": [
+     0.0354,
+     7.375
+    ]
+   },
+   "requests_moved": 18,
+   "start_snap_m_max": 2.7751
+  },
+  "user_compute_path_to_pose": {
+   "failed_scenarios": [],
+   "failures_by_error_code": {},
+   "found": 60,
+   "median_length_m": 30.0613,
+   "requests": 60
+  }
+ },
+ "sessions": {
+  "plan_snap1": {
+   "ac": "1",
+   "dirty": false,
+   "git": "cb229a25160e876811410e89a56a7a89fb1fc52e",
+   "level": "coco_depot_v1",
+   "package": "coco_user_astar_starter",
+   "power": "balanced",
+   "started_utc": "2026-11-07T03:26:15Z"
+  },
+  "plan_snap2": {
+   "ac": "1",
+   "dirty": false,
+   "git": "5897ae0fc578c77f2be808bf3e93a1044a839733",
+   "level": "coco_depot_v1",
+   "package": "coco_user_astar_starter",
+   "power": "balanced",
+   "started_utc": "2026-11-07T03:29:11Z"
+  },
+  "plan_snap3": {
+   "ac": "1",
+   "dirty": false,
+   "git": "5897ae0fc578c77f2be808bf3e93a1044a839733",
+   "level": "coco_depot_v1",
+   "package": "coco_user_astar_starter",
+   "power": "balanced",
+   "started_utc": "2026-11-07T03:32:11Z"
+  }
+ }
+}

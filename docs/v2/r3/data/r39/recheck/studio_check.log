@@ -1,0 +1,14 @@
+ok   A* starter on depot-nav-100 s001: found, deterministic, expansions drawn {"st":"found ✓","det":"yes: identical hash chains","exp":"3059 expansions"}
+ok   validation report: contract problems, clamps, determinism, per-call time with the device {"val":"Contract problems: 0\nClamped outputs (logged, never silent): 0\nDeterminism: ran twice, identical hash chains\nCalls: 1; per call 178.00 ms mean, 178.0 ms max (wa"}
+ok   Compare: yours beside the built-in A* on the same scenario {"st":"found ✓ | found ✓"}
+ok   pure pursuit on a scenario: an outcome, drawn tick by tick {"st":"succeeded ✓"}
+ok   Export as ROS 2 package: a zip holding the user file unchanged {"name":"coco_user_controller_pure_pursuit.zip","bytes":14407}
+ok   a code link: the code is shown, Run is blocked, nothing ran before consent {"chars":2359,"runDisabled":true,"sandboxBooted":false}
+ok   after "Run this code": Run is enabled {}
+ok   no page errors {"errors":[]}
+ok   Learn: "Try it yourself" opens the teaching starters {}
+ok   phone-landscape (emulated): the phone note shown, Run reachable, no sideways scroll {"note":1,"runBox":{"x":465.5,"y":677.9375,"width":167,"height":48},"overflow":0}
+ok   phone landscape (emulated): the view comes first, above Run, inside the first screen {"viewBox":{"x":465.5,"y":323.1875,"width":425.5,"height":261.75},"runBox":{"x":465.5,"y":677.9375,"width":167,"height":48},"inner":412}
+ok   phone landscape (emulated): the A* starter runs {"st":"found ✓"}
+ok   phone-portrait (emulated): the phone note shown, Run reachable, no sideways scroll {"note":1,"runBox":{"x":16,"y":1338.84375,"width":167,"height":48},"overflow":0}
+STUDIO CHECK PASS

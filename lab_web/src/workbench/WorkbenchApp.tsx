@@ -19,6 +19,7 @@ import { downloadExport } from './exports';
 import { BenchmarksTab } from './Benchmarks';
 import { DatasetsTab } from './Datasets';
 import { LeaderboardTab } from './Leaderboard';
+import { ModelVsRos2Tab } from './ModelVsRos2';
 import { compareHrefFor } from './compare_link';
 import { WorkbenchTabs, type Tab } from './tabs';
 import './workbench.css';
@@ -151,6 +152,6 @@ export function WorkbenchApp() {
       <p>Every experiment runs the model in your browser and gives the same counts on every run and every browser (hash-verified), so any result can be shared as a link and checked by anyone. MODEL results; real Gazebo + Nav2 recordings are under Recordings.</p>
       <WorkbenchTabs current={tab} /></header>
     {tab === 'studio' ? <Suspense fallback={<p className="wb-muted" role="status">Loading the Algorithm Studio…</p>}><StudioTab /></Suspense>
-      : tab === 'benchmarks' ? <BenchmarksTab /> : tab === 'leaderboard' ? <LeaderboardTab /> : tab === 'datasets' ? <DatasetsTab /> : <Experiments />}
+      : tab === 'benchmarks' ? <BenchmarksTab /> : tab === 'leaderboard' ? <LeaderboardTab /> : tab === 'gap' ? <ModelVsRos2Tab /> : tab === 'datasets' ? <DatasetsTab /> : <Experiments />}
   </main>;
 }

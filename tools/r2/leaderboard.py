@@ -34,17 +34,22 @@ import sys
 REPO = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(REPO / 'coco_lab'), str(REPO / 'coco_schemas'), str(REPO / 'coco_config')]
 
-from coco_lab import experiments as ex, exp_stats, exp_user  # noqa: E402
+from coco_lab import bench_v1 as B, experiments as ex, exp_stats, exp_user  # noqa: E402
 from coco_lab.user_code import load  # noqa: E402
 
-VERIFIER_VERSION = 1
+#: 2 (R3.6, Leaderboard v1): judged on COCO-Bench v1 -- every v1 suite, every family it serves;
+#: the held-out draw comes from the suite's own v1 generator (coco_lab.bench_v1)
+VERIFIER_VERSION = 2
+SUITE_VERSION = 1
 SCHEMA = 'coco.leaderboard.entry.v1'
 SALT = 'coco-lab.leaderboard.held-out.v1'
 LICENCES = ('MIT', 'Apache-2.0')
-HELD_OUT_N = {'arena-nav-50': 15, 'depot-nav-100': 20, 'depot-narrow-30': 10}
-FAMILY_SUITES = {'planning': ('arena-nav-50', 'depot-nav-100', 'depot-narrow-30'),
-                 'control': ('arena-nav-50', 'depot-nav-100', 'depot-narrow-30'),
-                 'localisation': ('arena-nav-50',)}
+HELD_OUT_N = {sid: d['heldout_n'] for sid, d in B.SUITES.items()}
+FAMILY_SUITES = {fam: tuple(sid for sid, d in B.SUITES.items() if fam in d['families'])
+                 for fam in ('planning', 'control', 'localisation')}
+#: the reference entries' held-out label: the same draw as the R3.2 baselines (make_baselines.py)
+REFERENCE = 'reference-v1'
+INLINE = ('id', 'start', 'goal', 'seed', 'config', 'kidnap_at_s', 'kidnap')
 NAME = re.compile(r'^[a-z0-9][a-z0-9_-]{1,39}$')
 WALL = ('call_ms_max', 'call_ms_total', 'max_call_index')
 
@@ -54,7 +59,7 @@ class SubmissionError(ValueError):
 
 
 def held_out_seed(suite_id: str, merge_base: str) -> int:
-    """Return the held-out scenarios' seed (53 bits, as every experiment seed)."""
+    """Return the held-out scenarios' seed (52 bits: 13 hex digits, within the 53-bit seed range)."""
     h = hashlib.sha256(f'{SALT}|{suite_id}|{merge_base}'.encode()).hexdigest()
     return int(h[:13], 16)
 
@@ -87,7 +92,7 @@ def read_meta(d: Path) -> dict:
 
 
 def _spec(family, suite_id, algos, scenarios, max_ticks=3000):
-    st = ex.suite(suite_id)
+    st = ex.suite(suite_id, SUITE_VERSION)
     return {'schema': ex.SCHEMA, 'family': family, 'world': st['world'], 'seed': 1,
             'algorithms': algos, 'scenarios': scenarios, 'limits': {'max_ticks': max_ticks}}
 
@@ -153,12 +158,10 @@ def worst(family: str, records: list, optimal: dict):
 
 def scenario_sets(suite_id: str, merge_base: str) -> dict:
     """The public scenarios (the frozen suite) and the held-out ones (see the module)."""
-    st = ex.suite(suite_id)
-    gen = {k: v for k, v in st['generator'].items()
-           if k not in ('tool', 'rejected_separation', 'rejected_unreachable', 'kind', 'n', 'seed')}
-    return {'public': {'kind': 'suite', 'id': suite_id},
-            'held_out': dict(gen, kind='sampled', n=HELD_OUT_N[suite_id],
-                             seed=held_out_seed(suite_id, merge_base))}
+    held = B.generate(suite_id, seed=held_out_seed(suite_id, merge_base), n=HELD_OUT_N[suite_id])
+    return {'public': {'kind': 'suite', 'id': suite_id, 'version': SUITE_VERSION},
+            'held_out': {'kind': 'inline',
+                         'scenarios': [{k: x[k] for k in INLINE if k in x} for x in held]}}
 
 
 def canonical_spec(family: str, suite_id: str, algo: dict, scenarios: dict) -> dict:
@@ -182,7 +185,51 @@ def evaluate(family, suite_id, algo, codes, workers, merge_base):
         out[which] = {'spec_id': p['id'], 'digest': ex.digest(mine), 'records': mine,
                       'score': score(family, mine, optimal), 'worst': worst(family, mine, optimal),
                       'scenarios': len(p['scenarios'])}
+        if which == 'public':
+            out[which]['tiers'] = tier_scores(suite_id, mine)
     return out
+
+
+#: R3 (ADR 0014): per family, the only per-run numbers the held-out run writes
+HELDOUT_METRICS = {'planning': ('path_ratio', 'min_clearance_m'),
+                   'control': ('time_s', 'min_clearance_m'),
+                   'localisation': ('final_err_xy_m', 'mean_err_xy_m')}
+
+
+def heldout(d: Path, scenarios_file: Path, out: Path, workers: int) -> int:
+    """
+    Run a submission on a held-out scenario file (ADR 0014; inside the sandbox).
+
+    Writes ``out/heldout_runs.json``: per run its status, success and the family's two headline
+    numbers -- nothing about the scenarios. The trusted workflow reads it as data and publishes
+    rounded aggregates only (tools/r3/heldout.py aggregate).
+    """
+    doc = json.loads(scenarios_file.read_text(encoding='utf-8'))
+    meta, src, family, algo = user_entry(d)
+    world = doc['world']
+    spec = {'schema': ex.SCHEMA, 'family': family, 'world': world, 'seed': 1,
+            'algorithms': [algo], 'limits': {'max_ticks': 3000},
+            'scenarios': {'kind': 'inline', 'scenarios': doc['scenarios']}}
+    p = ex.plan(spec)
+    recs = _run(p, workers, {algo['code_sha256']: src})
+    optimal = {}
+    if family == 'planning':
+        q = ex.plan(dict(spec, algorithms=[{'name': 'dijkstra', 'id': 'grid_optimal',
+                                            'params': {'cost_weight': 0.0}}]))
+        optimal = {r['scenario']: r['metrics']['path_length_m'] for r in _run(q, workers, {})
+                   if r['success']}
+    runs = []
+    for r in recs:
+        m = dict(r['metrics'])
+        if family == 'planning':
+            opt = optimal.get(r['scenario'])
+            m['path_ratio'] = (m['path_length_m'] / opt) if (r['success'] and opt) else None
+        runs.append({'status': r['status'], 'success': r['success'],
+                     'metrics': {k: m.get(k) for k in HELDOUT_METRICS[family]}})
+    out.mkdir(parents=True, exist_ok=True)
+    (out / 'heldout_runs.json').write_text(json.dumps(
+        ex.plain({'family': family, 'runs': runs}), sort_keys=True, allow_nan=False) + '\n')
+    return len(runs)
 
 
 def user_entry(d: Path):
@@ -200,7 +247,8 @@ def user_entry(d: Path):
 def claim(d: Path, workers: int) -> dict:
     """Write the submission's summary.json: the canonical public run's summary (the claim)."""
     meta, src, family, algo = user_entry(d)
-    p = ex.plan(canonical_spec(family, d.parent.name, algo, {'kind': 'suite', 'id': d.parent.name}))
+    p = ex.plan(canonical_spec(family, d.parent.name, algo,
+                               {'kind': 'suite', 'id': d.parent.name, 'version': SUITE_VERSION}))
     recs = _run(p, workers, {algo['code_sha256']: src})
     summ = ex.plain(ex.summarise(p, recs))
     (d / 'summary.json').write_text(json.dumps(summ, indent=1, sort_keys=True,
@@ -269,11 +317,84 @@ def verify(d: Path, out: Path, merge_base: str, workers: int) -> dict:
     return result
 
 
+BENCH = REPO / 'docs' / 'v2' / 'r3' / 'bench'
+
+
+#: what a reader must know to read a built-in's row (R3.2)
+BUILTIN_NOTE = {'builtin': ' A plan reference, not a controller result: it drives the global plan '
+                           'without a local costmap or collision check and has none of Nav2\'s '
+                           'failure outcomes.'}
+
+
+def bench_host(suite_id: str, family: str) -> dict:
+    """The machine the R3.2 baseline ran on (its public manifest; compute_ms is that host's)."""
+    m = json.loads((BENCH / suite_id / family / 'public' / 'manifest.json').read_text())
+    return {k: v for k, v in m['host'].items() if k != 'wall_s'}
+
+
+def builtins_from_bench(suite_id: str, family: str, root: Path, workers: int) -> list:
+    """
+    R3.6: every built-in's reference entry for one v1 suite and family, from the R3.2 baseline runs.
+
+    The baselines ran the same public suite and the same held-out draw (``REFERENCE``), so their
+    records ARE these entries' runs; nothing is recomputed but the grid-optimal lengths (planning).
+    The entry names the baseline's spec (``spec_id``): re-running that committed spec reproduces
+    every chain. Written to ROOT/<suite>/<name>/result.json + report.md.
+    """
+    base = BENCH / suite_id / family
+    held = scenario_sets(suite_id, REFERENCE)['held_out']['scenarios']
+    spec_held = json.loads((base / 'held_out' / 'spec.json').read_text())['scenarios']['scenarios']
+    if spec_held != held:
+        raise SystemExit(f'{suite_id}/{family}: the baseline held-out draw is not REFERENCE\'s')
+    sets = {'public': {'kind': 'suite', 'id': suite_id, 'version': SUITE_VERSION},
+            'held_out': {'kind': 'inline', 'scenarios': held}}
+    optimal = {}
+    if family == 'planning':
+        for which, sc in sets.items():
+            q = ex.plan(_spec(family, suite_id, [{'name': 'dijkstra', 'id': 'grid_optimal',
+                                                  'params': {'cost_weight': 0.0}}], sc))
+            optimal[which] = {r['scenario']: r['metrics']['path_length_m']
+                              for r in _run(q, workers, {}) if r['success']}
+    recs = {w: [json.loads(x) for x in (base / w / 'runs.jsonl').read_text().splitlines()]
+            for w in sets}
+    spec_ids = {w: json.loads((base / w / 'spec.json').read_text()) for w in sets}
+    names = sorted({r['algorithm'] for r in recs['public']}, key=ex.ALGORITHMS[family].index)
+    out = []
+    for name in names:
+        ev = {}
+        for w in sets:
+            mine = [r for r in recs[w] if r['algorithm'] == name]
+            ev[w] = {'spec_id': ex.spec_id(spec_ids[w]), 'digest': ex.digest(mine),
+                     'records': mine, 'scenarios': len(mine),
+                     'score': score(family, mine, optimal.get(w, {})),
+                     'worst': worst(family, mine, optimal.get(w, {}))}
+            if w == 'public':
+                ev[w]['tiers'] = tier_scores(suite_id, mine)
+        result = {'schema': SCHEMA, 'verified': True, 'problems': [], 'versions': _versions(suite_id),
+                  'entry': {'suite': suite_id, 'name': name, 'kind': 'builtin', 'family': family,
+                            'display_name': ex.LABELS[name],
+                            'author': 'COCO Lab (built-in reference)',
+                            'description': f'The built-in {ex.LABELS[name]}, as the Workbench runs '
+                                           f'it (COCO-Bench v1 baseline, R3.2).' + BUILTIN_NOTE.get(name, ''),
+                            'licence': 'Apache-2.0', 'paper': None, 'code_sha256': None,
+                            'code_path': 'coco_lab/coco_lab/'},
+                  'public': _public(ev['public']),
+                  'held_out': dict(_public(ev['held_out']), merge_base=REFERENCE,
+                                   seed=held_out_seed(suite_id, REFERENCE), n=HELD_OUT_N[suite_id]),
+                  'checks': {'deterministic': True, 'contract_problems': 0, 'clamped_outputs': 0,
+                             'claimed_digest': None, 'claim_matches': None},
+                  'baseline': f'docs/v2/r3/bench/{suite_id}/{family}/',
+                  'host': bench_host(suite_id, family)}
+        _write(root / suite_id / name, result)   # algorithm names are unique across families
+        out.append(result)
+    return out
+
+
 def builtin(suite_id: str, name: str, out: Path, workers: int) -> dict:
-    """A built-in as a reference entry (held-out at the merge-base 'reference')."""
+    """A built-in as a reference entry (held-out at the label REFERENCE, the baselines' draw)."""
     family = next(f for f, algos in ex.ALGORITHMS.items() if name in algos and f != 'fulltask')
     algo = {'name': name, 'id': name, 'label': ex.LABELS[name]}
-    ev = evaluate(family, suite_id, algo, {}, workers, 'reference')
+    ev = evaluate(family, suite_id, algo, {}, workers, REFERENCE)
     result = {'schema': SCHEMA, 'verified': True, 'problems': [], 'versions': _versions(suite_id),
               'entry': {'suite': suite_id, 'name': name, 'kind': 'builtin', 'family': family,
                         'display_name': ex.LABELS[name], 'author': 'COCO Lab (built-in reference)',
@@ -281,8 +402,8 @@ def builtin(suite_id: str, name: str, out: Path, workers: int) -> dict:
                         'licence': 'Apache-2.0', 'paper': None, 'code_sha256': None,
                         'code_path': 'coco_lab/coco_lab/'},
               'public': _public(ev['public']),
-              'held_out': dict(_public(ev['held_out']), merge_base='reference',
-                               seed=held_out_seed(suite_id, 'reference'), n=HELD_OUT_N[suite_id]),
+              'held_out': dict(_public(ev['held_out']), merge_base=REFERENCE,
+                               seed=held_out_seed(suite_id, REFERENCE), n=HELD_OUT_N[suite_id]),
               'checks': {'deterministic': True, 'contract_problems': 0, 'clamped_outputs': 0,
                          'claimed_digest': None, 'claim_matches': None},
               'host': ex._host(workers)}
@@ -291,15 +412,28 @@ def builtin(suite_id: str, name: str, out: Path, workers: int) -> dict:
 
 
 def _versions(suite_id):
-    st = ex.suite(suite_id)
+    st = ex.suite(suite_id, SUITE_VERSION)
     return {'suite': suite_id, 'suite_version': st['version'], 'model_hash_version':
             ex.MODEL['hash_version'], 'experiment': ex.MODEL['experiment'],
             'api': ex.API_VERSION, 'verifier': VERIFIER_VERSION}
 
 
+def tier_scores(suite_id: str, records: list) -> dict:
+    """R3.6: success per difficulty tier of the v1 suite (public scenarios only; held-out has none)."""
+    tier = {x['id']: x['tier'] for x in ex.suite(suite_id, SUITE_VERSION)['scenarios']}
+    out = {}
+    for t in B.TIERS:
+        rs = [r for r in records if tier.get(r['scenario']) == t]
+        k = sum(1 for r in rs if r['success'])
+        w = exp_stats.wilson(k, len(rs)) if rs else None
+        out[t] = {'n': len(rs), 'successes': k, 'wilson95': [w['low'], w['high']] if w else None}
+    return out
+
+
 def _public(w):
     return {'spec_id': w['spec_id'], 'digest': w['digest'], 'scenarios': w['scenarios'],
             'score': w['score'], 'worst': w['worst'],
+            **({'tiers': w['tiers']} if 'tiers' in w else {}),
             'runs': [{'scenario_index': r['scenario_index'], 'scenario': r['scenario'],
                       'status': r['status'], 'chain': r['chain'],
                       'counts': ex.counts(r)} for r in w['records']]}
@@ -390,19 +524,38 @@ def main(argv=None):
     b.add_argument('name')
     b.add_argument('--out', required=True)
     b.add_argument('--workers', type=int, default=2)
+    bb = sub.add_parser('builtin-bench', help='R3.6: reference entries from the v1 baselines')
+    bb.add_argument('suite')
+    bb.add_argument('family')
+    bb.add_argument('--root', default=str(REPO / 'leaderboard' / 'results'))
+    bb.add_argument('--workers', type=int, default=2)
     c = sub.add_parser('claim', help="write a submission's summary.json (the claim)")
     c.add_argument('dir')
     c.add_argument('--workers', type=int, default=2)
     i = sub.add_parser('index')
     i.add_argument('--out', required=True)
+    h = sub.add_parser('heldout', help='R3 (ADR 0014): run on a held-out file, write numbers only')
+    h.add_argument('dir')
+    h.add_argument('--scenarios', required=True)
+    h.add_argument('--out', required=True)
+    h.add_argument('--workers', type=int, default=2)
     a = ap.parse_args(argv)
     if a.cmd == 'index':
         index(Path(a.out))
         return 0
     os.environ['PYTHONHASHSEED'] = '0'
+    if a.cmd == 'heldout':
+        n = heldout(Path(a.dir), Path(a.scenarios), Path(a.out), a.workers)
+        print(f'held-out: {n} runs written')   # no scenario, no number: the log is public
+        return 0
     if a.cmd == 'claim':
         summ = claim(Path(a.dir), a.workers)
         print(f"wrote {Path(a.dir) / 'summary.json'}: digest {summ['digest']}")
+        return 0
+    if a.cmd == 'builtin-bench':
+        for r in builtins_from_bench(a.suite, a.family, Path(a.root), a.workers):
+            sc = r['public']['score']
+            print(f"{r['entry']['suite']}/{r['entry']['name']}: {sc['successes']}/{sc['n']}")
         return 0
     if a.cmd == 'builtin':
         r = builtin(a.suite, a.name, Path(a.out), a.workers)

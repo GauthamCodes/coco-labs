@@ -1,0 +1,242 @@
+{
+ "algorithms": [
+  {
+   "id": "bfs",
+   "label": "BFS",
+   "name": "bfs",
+   "params": {
+    "connectivity": 8,
+    "cost_scaling_factor": 10,
+    "cost_weight": 2,
+    "inflation_radius": 0.5,
+    "robot_radius": 0.25
+   }
+  },
+  {
+   "id": "dijkstra",
+   "label": "Dijkstra",
+   "name": "dijkstra",
+   "params": {
+    "connectivity": 8,
+    "cost_scaling_factor": 10,
+    "cost_weight": 2,
+    "inflation_radius": 0.5,
+    "robot_radius": 0.25
+   }
+  },
+  {
+   "id": "astar",
+   "label": "A*",
+   "name": "astar",
+   "params": {
+    "connectivity": 8,
+    "cost_scaling_factor": 10,
+    "cost_weight": 2,
+    "inflation_radius": 0.5,
+    "robot_radius": 0.25
+   }
+  },
+  {
+   "id": "greedy",
+   "label": "Greedy best-first",
+   "name": "greedy",
+   "params": {
+    "connectivity": 8,
+    "cost_scaling_factor": 10,
+    "cost_weight": 2,
+    "inflation_radius": 0.5,
+    "robot_radius": 0.25
+   }
+  },
+  {
+   "id": "weighted_astar",
+   "label": "Weighted A*",
+   "name": "weighted_astar",
+   "params": {
+    "connectivity": 8,
+    "cost_scaling_factor": 10,
+    "cost_weight": 2,
+    "heuristic_weight": 2,
+    "inflation_radius": 0.5,
+    "robot_radius": 0.25
+   }
+  },
+  {
+   "id": "dstar_lite",
+   "label": "D* Lite",
+   "name": "dstar_lite",
+   "params": {
+    "connectivity": 8,
+    "cost_scaling_factor": 10,
+    "cost_weight": 2,
+    "inflation_radius": 0.5,
+    "robot_radius": 0.25
+   }
+  }
+ ],
+ "family": "planning",
+ "limits": {
+  "max_ticks": 3000
+ },
+ "metrics": [
+  "expansions",
+  "pushes",
+  "path_length_m",
+  "path_cost",
+  "path_steps",
+  "min_clearance_m",
+  "mean_clearance_m",
+  "heading_change_rad",
+  "start_snap_m",
+  "goal_snap_m",
+  "compute_ms"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "kind": "inline",
+  "scenarios": [
+   {
+    "goal": [
+     10.950000000000001,
+     14.15
+    ],
+    "id": "n001",
+    "seed": 6979106932362822,
+    "start": [
+     39.050000000000004,
+     11.25,
+     0.16927399945751098
+    ]
+   },
+   {
+    "goal": [
+     8.85,
+     12.65
+    ],
+    "id": "n002",
+    "seed": 1296670027462575,
+    "start": [
+     25.55,
+     12.65,
+     -1.021636695421583
+    ]
+   },
+   {
+    "goal": [
+     15.15,
+     17.85
+    ],
+    "id": "n003",
+    "seed": 7313931570732925,
+    "start": [
+     5.050000000000001,
+     15.350000000000001,
+     0.06296537377710365
+    ]
+   },
+   {
+    "goal": [
+     2.95,
+     15.15
+    ],
+    "id": "n004",
+    "seed": 1266064797536477,
+    "start": [
+     8.85,
+     5.050000000000001,
+     0.4011305833750627
+    ]
+   },
+   {
+    "goal": [
+     24.35,
+     27.950000000000003
+    ],
+    "id": "n005",
+    "seed": 6327922363776035,
+    "start": [
+     1.4500000000000002,
+     13.450000000000001,
+     -2.3190616186058577
+    ]
+   },
+   {
+    "goal": [
+     18.35,
+     14.05
+    ],
+    "id": "n006",
+    "seed": 8249602901226809,
+    "start": [
+     34.65,
+     27.25,
+     -1.3592188147229536
+    ]
+   },
+   {
+    "goal": [
+     15.25,
+     13.850000000000001
+    ],
+    "id": "n007",
+    "seed": 7226207022139448,
+    "start": [
+     35.25,
+     21.85,
+     2.197696467015585
+    ]
+   },
+   {
+    "goal": [
+     14.450000000000001,
+     21.35
+    ],
+    "id": "n008",
+    "seed": 5544141494110549,
+    "start": [
+     35.35,
+     21.85,
+     -2.5518806082398617
+    ]
+   },
+   {
+    "goal": [
+     41.45,
+     29.150000000000002
+    ],
+    "id": "n009",
+    "seed": 1426219245680318,
+    "start": [
+     11.65,
+     26.75,
+     0.4616869484530537
+    ]
+   },
+   {
+    "goal": [
+     10.15,
+     26.25
+    ],
+    "id": "n010",
+    "seed": 1255406074290203,
+    "start": [
+     41.150000000000006,
+     17.35,
+     2.685565700795949
+    ]
+   }
+  ]
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 1,
+ "sweep": {
+  "params": []
+ },
+ "title": "COCO-Bench v1 baseline: depot-narrow-30, planning, held_out",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841"
+}

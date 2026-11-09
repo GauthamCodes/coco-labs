@@ -1,0 +1,12 @@
+Navigation results are hard to reproduce because they depend on a local software stack. We
+present \bench{}, a benchmark whose runs are themselves reproducible: a Python model of a
+differential-drive robot runs unchanged in any web browser, every run produces a hash chain that
+must match across \DetEngines{} engines and natively, and every result is a link anyone can
+re-run. \bench{} v1 has \BenchSuites{} frozen suites (\BenchScenarios{} scenarios) for global
+planning, local control, localisation and a fetch task, with difficulty tiers from measurable
+features, datasheets, and held-out scenarios drawn from a secret outside the sandbox. A
+ROS~2-shaped API lets users bring their own algorithm, verified on a sandboxed leaderboard and
+exported unchanged to a ROS~2 node. We pair the browser model with Nav2 in Gazebo on the same
+scenarios and report where they agree and where they do not, including an any-angle planner
+that wins in the model and loses every drive in ROS~2. Every number in this paper is generated
+from committed data.

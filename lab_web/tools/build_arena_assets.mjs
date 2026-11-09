@@ -228,6 +228,9 @@ function main() {
   // owner request 2026-10-24: Fetch by colour's level, the Depot plus four rods (tools/g1/depot_json.py --variant colours)
   const specColours = readFileSync(join(repo, 'worlds', 'coco_depot_colours_v1.json'));
   writeFileSync(join(arenaDir, 'coco_depot_colours_v1.json'), specColours);
+  // R3.1: COCO-Bench v1's cluttered Depot (worlds/tools/make_coco_depot_clutter_v1.py)
+  const specClutter = readFileSync(join(repo, 'worlds', 'coco_depot_clutter_v1.json'));
+  writeFileSync(join(arenaDir, 'coco_depot_clutter_v1.json'), specClutter);
   const outline = robotOutline(readFileSync(join(repo, 'gazebo_models', 'meshes', 'base.stl')));
   writeFileSync(join(arenaDir, 'robot_outline.json'), JSON.stringify({
     source: 'gazebo_models/meshes/base.stl (convex hull of x-z, mm -> base_link m; build_arena_assets.mjs)',
@@ -268,6 +271,19 @@ function main() {
   if (boardBytes) writeFileSync(join(r2Dir, 'leaderboard.json'), boardBytes);
   rmSync(board, { force: true });
   // R2.7: MODEL vs STACK for the files that ran as ROS 2 nodes (docs/v2/r2/data/r27/stack.json)
+  // R3.5: Model vs ROS 2 (docs/v2/r3/data/r35/gap.json, tools/r3/gap.py) and the paired runs it offers
+  const r3Dir = join(out, 'r3');
+  rmSync(r3Dir, { recursive: true, force: true });
+  const gapFile = join(repo, 'docs', 'v2', 'r3', 'data', 'r35', 'gap.json');
+  if (existsSync(gapFile)) {
+    mkdirSync(r3Dir, { recursive: true });
+    copyFileSync(gapFile, join(r3Dir, 'gap.json'));
+    for (const d of JSON.parse(readFileSync(gapFile, 'utf-8')).downloads ?? []) {
+      if (!/^r3\/paired\/[\w.-]+$/.test(d.path)) throw new Error(`gap.json: download path ${d.path} is not r3/paired/<file>`);
+      mkdirSync(join(out, 'r3', 'paired'), { recursive: true });
+      copyFileSync(join(repo, 'docs', 'v2', 'r3', 'data', 'r35', 'paired', d.path.slice('r3/paired/'.length)), join(out, d.path));
+    }
+  }
   const stackFile = join(repo, 'docs', 'v2', 'r2', 'data', 'r27', 'stack.json');
   if (existsSync(stackFile)) copyFileSync(stackFile, join(r2Dir, 'stack.json'));
   const subs = join(repo, 'leaderboard', 'submissions');
@@ -314,6 +330,7 @@ function main() {
       v2: { file: 'coco_arena_v2.json', bytes: specV2.length, sha256: sha256(specV2) },
       depot: { file: 'coco_depot_v1.json', bytes: specDepot.length, sha256: sha256(specDepot) },
       depot_colours: { file: 'coco_depot_colours_v1.json', bytes: specColours.length, sha256: sha256(specColours) },
+      depot_clutter: { file: 'coco_depot_clutter_v1.json', bytes: specClutter.length, sha256: sha256(specClutter) },
     },
     pyodide_files: files,
     stdlib: FULL_STDLIB ? 'full' : 'trimmed (tools/arena_stdlib.txt)',

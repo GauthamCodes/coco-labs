@@ -1,0 +1,38 @@
+{
+ "digest": "e32dc88b25aebfee0298103dbcdc1105439d3d25b5e73f731c9476a22e780543",
+ "runs": 600,
+ "source": "docs/v2/r3/bench/depot-nav-100/planning/public/summary.json",
+ "spec": {
+  "algorithms": [
+   {
+    "name": "bfs"
+   },
+   {
+    "name": "dijkstra"
+   },
+   {
+    "name": "astar"
+   },
+   {
+    "name": "greedy"
+   },
+   {
+    "name": "weighted_astar"
+   },
+   {
+    "name": "dstar_lite"
+   }
+  ],
+  "family": "planning",
+  "scenarios": {
+   "id": "depot-nav-100",
+   "kind": "suite",
+   "version": 1
+  },
+  "schema": "coco.experiment.v1",
+  "seed": 1,
+  "title": "COCO-Bench v1 baseline: depot-nav-100, planning, public",
+  "world": "coco_depot_v1"
+ },
+ "url": "https://gauthamcodes.github.io/coco-labs/?view=workbench&exp=eyJzY2hlbWEiOiJjb2NvLmV4cGVyaW1lbnQudjEiLCJ0aXRsZSI6IkNPQ08tQmVuY2ggdjEgYmFzZWxpbmU6IGRlcG90LW5hdi0xMDAsIHBsYW5uaW5nLCBwdWJsaWMiLCJmYW1pbHkiOiJwbGFubmluZyIsInNlZWQiOjEsIndvcmxkIjoiY29jb19kZXBvdF92MSIsImFsZ29yaXRobXMiOlt7Im5hbWUiOiJiZnMifSx7Im5hbWUiOiJkaWprc3RyYSJ9LHsibmFtZSI6ImFzdGFyIn0seyJuYW1lIjoiZ3JlZWR5In0seyJuYW1lIjoid2VpZ2h0ZWRfYXN0YXIifSx7Im5hbWUiOiJkc3Rhcl9saXRlIn1dLCJzY2VuYXJpb3MiOnsia2luZCI6InN1aXRlIiwiaWQiOiJkZXBvdC1uYXYtMTAwIiwidmVyc2lvbiI6MX19&d=e32dc88b25aebfee0298103dbcdc1105439d3d25b5e73f731c9476a22e780543"
+}

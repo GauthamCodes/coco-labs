@@ -1,0 +1,73 @@
+{
+ "site": "https://gauthamcodes.github.io/coco-labs/",
+ "started_utc": "2026-11-07T08:36:58.095Z",
+ "steps": [
+  {
+   "name": "an open tab shows \"New version ready\" and was not reloaded",
+   "ok": true,
+   "shown": true,
+   "reloaded": false
+  },
+  {
+   "name": "title screen",
+   "ok": true,
+   "title": "COCO Lab"
+  },
+  {
+   "name": "Play: a Fetch Rush round starts and COCO moves under AUTO",
+   "ok": true,
+   "a": {
+    "tick": 3,
+    "pose": [
+     9.950000000000001,
+     6.050000000000001,
+     -0.7853981633974492
+    ]
+   },
+   "b": {
+    "tick": 11,
+    "pose": [
+     10.091421356237312,
+     5.90857864376269,
+     -0.7853981633974492
+    ]
+   }
+  },
+  {
+   "name": "Compare: the workspace is ready",
+   "ok": true
+  },
+  {
+   "name": "Workbench: a small experiment runs",
+   "ok": true,
+   "digest": "Digest d4d0646135b6bd5a… · 6 workers"
+  },
+  {
+   "name": "Studio: the A* starter runs",
+   "ok": false,
+   "results": "Metric (MODEL)\tYours: planner_astar.py\nStatus\trunning…\nDeterministic (ran twice)\t— (built-in)\nExpansions (count)\t—\nPushe"
+  },
+  {
+   "name": "Leaderboard: the boards render",
+   "ok": true,
+   "theta_listed": true
+  },
+  {
+   "name": "Learn renders",
+   "ok": true
+  },
+  {
+   "name": "no page errors",
+   "ok": true,
+   "n": 0
+  }
+ ],
+ "errors": [],
+ "open_tab_before": {
+  "controlled": false,
+  "build": "7913dbd37b9d0a2bce27f8f7efde7559d0c7eea9c60fc2538c6e518a8d61a00e"
+ },
+ "page_errors": 0,
+ "finished_utc": "2026-11-07T09:42:28.465Z",
+ "pass": false
+}

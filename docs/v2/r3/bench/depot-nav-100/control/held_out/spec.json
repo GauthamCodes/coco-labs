@@ -1,0 +1,393 @@
+{
+ "algorithms": [
+  {
+   "id": "builtin",
+   "label": "Waypoint driver",
+   "name": "builtin",
+   "params": {
+    "planner": "astar",
+    "window.cost_scaling_factor": 65,
+    "window.inflation_radius": 0.5,
+    "window.robot_radius": 0.25
+   }
+  },
+  {
+   "id": "dwa",
+   "label": "DWA",
+   "name": "dwa",
+   "params": {
+    "dwa.acc_theta": 3.2,
+    "dwa.acc_x": 3,
+    "dwa.decel_x": -2.5,
+    "dwa.forward_point_distance": 0.1,
+    "dwa.period": 0.1,
+    "dwa.scales": [
+     8,
+     32,
+     24,
+     32,
+     24
+    ],
+    "dwa.sim_time": 1.5,
+    "dwa.v_max": 0.3,
+    "dwa.vtheta_samples": 21,
+    "dwa.vx_samples": 11,
+    "dwa.w_max": 1,
+    "planner": "astar",
+    "window.cost_scaling_factor": 65,
+    "window.inflation_radius": 0.5,
+    "window.robot_radius": 0.25
+   }
+  },
+  {
+   "id": "rpp",
+   "label": "Regulated Pure Pursuit",
+   "name": "rpp",
+   "params": {
+    "planner": "astar",
+    "rpp.approach_velocity_scaling_dist": 0.6,
+    "rpp.desired_linear_vel": 0.3,
+    "rpp.lookahead_dist": 0.6,
+    "rpp.max_allowed_time_to_collision_up_to_carrot": 1,
+    "rpp.max_angular_accel": 3.2,
+    "rpp.min_approach_linear_velocity": 0.05,
+    "rpp.regulated_linear_scaling_min_radius": 0.9,
+    "rpp.regulated_linear_scaling_min_speed": 0.25,
+    "rpp.rotate_to_heading_angular_vel": 1,
+    "rpp.rotate_to_heading_min_angle": 0.785,
+    "window.cost_scaling_factor": 65,
+    "window.inflation_radius": 0.5,
+    "window.robot_radius": 0.25
+   }
+  },
+  {
+   "id": "mppi",
+   "label": "MPPI",
+   "name": "mppi",
+   "params": {
+    "mppi.ax_max": 3,
+    "mppi.ax_min": -2.5,
+    "mppi.az_max": 3.2,
+    "mppi.batch_size": 128,
+    "mppi.goal_threshold": 1.4,
+    "mppi.max_angle_to_furthest": 1,
+    "mppi.model_dt": 0.1,
+    "mppi.near_threshold": 0.5,
+    "mppi.temperature": 0.3,
+    "mppi.time_steps": 28,
+    "mppi.vx_max": 0.3,
+    "mppi.vx_min": 0,
+    "mppi.vx_std": 0.2,
+    "mppi.weights": [
+     3.81,
+     5,
+     3,
+     5,
+     14,
+     2
+    ],
+    "mppi.wz_max": 1,
+    "mppi.wz_std": 0.4,
+    "planner": "astar",
+    "window.cost_scaling_factor": 65,
+    "window.inflation_radius": 0.5,
+    "window.robot_radius": 0.25
+   }
+  }
+ ],
+ "family": "control",
+ "limits": {
+  "max_ticks": 3000
+ },
+ "metrics": [
+  "time_s",
+  "ticks",
+  "path_length_m",
+  "min_clearance_m",
+  "mean_clearance_m",
+  "heading_change_rad",
+  "contacts",
+  "expansions",
+  "plans",
+  "final_goal_distance_m",
+  "compute_ms"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "kind": "inline",
+  "scenarios": [
+   {
+    "goal": [
+     10.850000000000001,
+     12.55
+    ],
+    "id": "s001",
+    "seed": 6287454026216261,
+    "start": [
+     46.75,
+     5.45,
+     -0.877188071319789
+    ]
+   },
+   {
+    "goal": [
+     8.75,
+     28.25
+    ],
+    "id": "s002",
+    "seed": 4191802858453260,
+    "start": [
+     40.35,
+     6.75,
+     1.3873522459243812
+    ]
+   },
+   {
+    "goal": [
+     16.75,
+     16.85
+    ],
+    "id": "s003",
+    "seed": 6889207055131332,
+    "start": [
+     39.550000000000004,
+     4.65,
+     -0.34786049603822367
+    ]
+   },
+   {
+    "goal": [
+     10.05,
+     4.550000000000001
+    ],
+    "id": "s004",
+    "seed": 395470563143410,
+    "start": [
+     37.65,
+     3.25,
+     -2.1893034505871958
+    ]
+   },
+   {
+    "goal": [
+     41.550000000000004,
+     4.8500000000000005
+    ],
+    "id": "s005",
+    "seed": 3550953753209670,
+    "start": [
+     18.650000000000002,
+     21.85,
+     1.5508096138663268
+    ]
+   },
+   {
+    "goal": [
+     42.25,
+     3.0500000000000003
+    ],
+    "id": "s006",
+    "seed": 1639348392441766,
+    "start": [
+     26.950000000000003,
+     17.75,
+     0.8605310235447652
+    ]
+   },
+   {
+    "goal": [
+     31.05,
+     17.05
+    ],
+    "id": "s007",
+    "seed": 7547547009761748,
+    "start": [
+     24.450000000000003,
+     21.75,
+     -2.449969066603076
+    ]
+   },
+   {
+    "goal": [
+     43.050000000000004,
+     11.55
+    ],
+    "id": "s008",
+    "seed": 525769958370678,
+    "start": [
+     26.950000000000003,
+     21.85,
+     2.7606326506225516
+    ]
+   },
+   {
+    "goal": [
+     6.65,
+     9.05
+    ],
+    "id": "s009",
+    "seed": 4134062383835870,
+    "start": [
+     37.45,
+     29.75,
+     0.6121374392002856
+    ]
+   },
+   {
+    "goal": [
+     11.450000000000001,
+     16.95
+    ],
+    "id": "s010",
+    "seed": 4817279760190604,
+    "start": [
+     39.35,
+     28.450000000000003,
+     -0.49802173184641685
+    ]
+   },
+   {
+    "goal": [
+     25.35,
+     11.350000000000001
+    ],
+    "id": "s011",
+    "seed": 2458093749041194,
+    "start": [
+     37.25,
+     25.25,
+     -1.1806020910321147
+    ]
+   },
+   {
+    "goal": [
+     12.75,
+     2.95
+    ],
+    "id": "s012",
+    "seed": 4041150153063220,
+    "start": [
+     12.950000000000001,
+     28.150000000000002,
+     -1.3042360185853612
+    ]
+   },
+   {
+    "goal": [
+     12.950000000000001,
+     10.15
+    ],
+    "id": "s013",
+    "seed": 388953903011344,
+    "start": [
+     3.55,
+     29.75,
+     -1.8827802296571197
+    ]
+   },
+   {
+    "goal": [
+     42.650000000000006,
+     8.15
+    ],
+    "id": "s014",
+    "seed": 6151561431977145,
+    "start": [
+     11.950000000000001,
+     29.150000000000002,
+     -1.0946532339496549
+    ]
+   },
+   {
+    "goal": [
+     35.550000000000004,
+     10.450000000000001
+    ],
+    "id": "s015",
+    "seed": 5451454358366336,
+    "start": [
+     9.350000000000001,
+     1.65,
+     -3.0820209060742045
+    ]
+   },
+   {
+    "goal": [
+     2.1500000000000004,
+     31.450000000000003
+    ],
+    "id": "s016",
+    "seed": 6969772695875455,
+    "start": [
+     4.75,
+     12.850000000000001,
+     -2.7792336420174655
+    ]
+   },
+   {
+    "goal": [
+     10.950000000000001,
+     1.1500000000000001
+    ],
+    "id": "s017",
+    "seed": 7619536911420015,
+    "start": [
+     4.25,
+     14.65,
+     0.09581252317564193
+    ]
+   },
+   {
+    "goal": [
+     38.85,
+     25.75
+    ],
+    "id": "s018",
+    "seed": 6461505360145098,
+    "start": [
+     42.95,
+     11.75,
+     -1.0874033574752056
+    ]
+   },
+   {
+    "goal": [
+     12.55,
+     3.95
+    ],
+    "id": "s019",
+    "seed": 4156081382474136,
+    "start": [
+     41.75,
+     10.75,
+     -2.2268677189635744
+    ]
+   },
+   {
+    "goal": [
+     39.050000000000004,
+     28.05
+    ],
+    "id": "s020",
+    "seed": 1598671496063987,
+    "start": [
+     41.95,
+     12.950000000000001,
+     -1.2095818640735125
+    ]
+   }
+  ]
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 1,
+ "sweep": {
+  "params": []
+ },
+ "title": "COCO-Bench v1 baseline: depot-nav-100, control, held_out",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841"
+}

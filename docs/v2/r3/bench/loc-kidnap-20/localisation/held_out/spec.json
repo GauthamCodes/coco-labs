@@ -1,0 +1,214 @@
+{
+ "algorithms": [
+  {
+   "id": "mcl",
+   "label": "MCL",
+   "name": "mcl",
+   "params": {
+    "mcl.aggregate": "amcl",
+    "mcl.alpha_fast": 0.1,
+    "mcl.alpha_slow": 0.001,
+    "mcl.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "mcl.beams": 12,
+    "mcl.init": "tracking",
+    "mcl.inject_fraction": 0.05,
+    "mcl.particles": 60,
+    "mcl.resample": "always",
+    "mcl.sigma_hit": 0.2
+   }
+  },
+  {
+   "id": "mcl_augmented",
+   "label": "MCL + augmented injection",
+   "name": "mcl_augmented",
+   "params": {
+    "mcl.aggregate": "amcl",
+    "mcl.alpha_fast": 0.1,
+    "mcl.alpha_slow": 0.001,
+    "mcl.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "mcl.beams": 12,
+    "mcl.init": "tracking",
+    "mcl.inject_fraction": 0.05,
+    "mcl.particles": 60,
+    "mcl.resample": "always",
+    "mcl.sigma_hit": 0.2
+   }
+  },
+  {
+   "id": "ekf",
+   "label": "EKF",
+   "name": "ekf",
+   "params": {
+    "ekf.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "ekf.beams": 12,
+    "ekf.gate": 9,
+    "ekf.init": "tracking",
+    "ekf.sigma_hit": 0.2
+   }
+  }
+ ],
+ "family": "localisation",
+ "limits": {
+  "max_ticks": 3000
+ },
+ "metrics": [
+  "time_s",
+  "ticks",
+  "path_length_m",
+  "min_clearance_m",
+  "mean_clearance_m",
+  "heading_change_rad",
+  "contacts",
+  "expansions",
+  "plans",
+  "final_goal_distance_m",
+  "final_err_xy_m",
+  "final_err_yaw_rad",
+  "mean_err_xy_m",
+  "max_err_xy_m",
+  "converged_s",
+  "recovery_s",
+  "compute_ms"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "kind": "inline",
+  "scenarios": [
+   {
+    "goal": [
+     2.45,
+     3.95
+    ],
+    "id": "q001",
+    "kidnap": [
+     39.45,
+     21.75
+    ],
+    "kidnap_at_s": 12,
+    "seed": 7757606385437877,
+    "start": [
+     24.950000000000003,
+     29.35,
+     0.022427161429774856
+    ]
+   },
+   {
+    "goal": [
+     35.45,
+     6.8500000000000005
+    ],
+    "id": "q002",
+    "kidnap": [
+     29.75,
+     30.150000000000002
+    ],
+    "kidnap_at_s": 12,
+    "seed": 5948177708157959,
+    "start": [
+     13.350000000000001,
+     6.75,
+     -2.0203993163691703
+    ]
+   },
+   {
+    "goal": [
+     36.85,
+     0.55
+    ],
+    "id": "q003",
+    "kidnap": [
+     22.85,
+     30.75
+    ],
+    "kidnap_at_s": 12,
+    "seed": 3975668538110275,
+    "start": [
+     12.450000000000001,
+     10.15,
+     -3.0682009169262527
+    ]
+   },
+   {
+    "goal": [
+     15.05,
+     2.0500000000000003
+    ],
+    "id": "q004",
+    "kidnap": [
+     3.75,
+     28.25
+    ],
+    "kidnap_at_s": 12,
+    "seed": 5629427384726355,
+    "start": [
+     7.050000000000001,
+     1.35,
+     1.704533231048968
+    ]
+   },
+   {
+    "goal": [
+     31.65,
+     16.45
+    ],
+    "id": "q005",
+    "kidnap": [
+     43.45,
+     13.55
+    ],
+    "kidnap_at_s": 12,
+    "seed": 2414674725968390,
+    "start": [
+     41.25,
+     26.55,
+     0.5321314016763496
+    ]
+   },
+   {
+    "goal": [
+     16.75,
+     4.45
+    ],
+    "id": "q006",
+    "kidnap": [
+     1.1500000000000001,
+     10.950000000000001
+    ],
+    "kidnap_at_s": 12,
+    "seed": 8725321658260456,
+    "start": [
+     25.650000000000002,
+     1.9500000000000002,
+     2.575576198617968
+    ]
+   }
+  ]
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 1,
+ "sweep": {
+  "params": []
+ },
+ "title": "COCO-Bench v1 baseline: loc-kidnap-20, localisation, held_out",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841"
+}

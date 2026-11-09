@@ -1,0 +1,4 @@
+chromium: 3 sessions, 2100 ticks
+firefox: 3 sessions, 2100 ticks
+webkit: 3 sessions, 2100 ticks
+{"chromium":[2100,0,"3a8c227eca45"],"firefox":[2100,0,"3a8c227eca45"],"webkit":[2100,0,"3a8c227eca45"],"pyodide-node":[2100,0,"3a8c227eca45"]} pass true

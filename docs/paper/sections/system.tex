@@ -1,0 +1,51 @@
+\textbf{The model.} \cocolab{}'s reference model is a pure-Python simulation of COCO, a
+differential-drive robot with a planar LiDAR: kinematics with terrain following (no dynamics,
+contact forces or friction), a Nav2-style costmap (static and inflation layers), global planners,
+local controllers that follow a global plan through a rolling local window, and localisers fed
+by wheel odometry and the simulated scan. Worlds are authored once as a World Spec and compiled
+both into the model's occupancy grid and into Gazebo and Nav2 files, so the two evidence classes
+share their geometry. Every model view in the user interface is labelled ``MODEL $\cdot$
+kinematic''.
+
+\textbf{Determinism and hash chains.} Each tick's state is serialised in a fixed, versioned
+layout and hashed; a run's chain hashes its descriptor, every tick (or every search event and the
+final path, for planning) and its metrics. IEEE~754 fixes $+$, $-$, $\times$, $/$ and
+$\sqrt{\cdot}$ exactly, but not \texttt{sin}, \texttt{atan2}, \texttt{exp} or \texttt{log}, and
+the libm of CPython and of Pyodide's WebAssembly build can differ in the last bit; under the
+current hash version every transcendental the model calls is therefore computed in pure Python
+from correctly rounded operations (fdlibm's algorithms). A layout change introduces a new hash
+version (never an edit of an old one), so old links keep verifying.
+In the closing check of the release this paper builds on, \DetSessionsPerEngine{} recorded
+sessions were replayed in each of \DetEngines{} engines (Chromium, Firefox, WebKit and
+Pyodide under Node), \DetTicksPerEngine{} ticks per engine, with \DetMismatches{} mismatched
+ticks, and the engines' digests of all hashes were \DetDigests{}. A user's algorithm file is held
+to the same standard: across the \ParityTemplates{} starter templates, CPython and Pyodide
+agreed on \ParityValues{} compared values with \ParityDiffs{} differences.
+
+\textbf{A ROS~2-shaped API.} A user writes one Python file defining
+\texttt{plan(costmap, start, goal, ctx)}, \texttt{control(state, scan, path, ctx)} or
+\texttt{localise(odom, scan, map, ctx)}. Inputs and outputs mirror ROS~2 messages
+(\texttt{nav2\_msgs/Costmap}, \texttt{LaserScan}, \texttt{Twist},
+\texttt{PoseWithCovariance}); \texttt{ctx} offers a seeded random generator, the robot's
+parameters, a time budget and \texttt{ctx.emit} for ``thinking'' events (expansions, candidate
+trajectories, particles) that the interface draws. The built-in algorithms are wrapped behind
+the same API and reproduce their native results bit for bit, which shows that a user file is
+measured exactly as the references are.
+
+\textbf{Sandboxing.} In the browser, user code runs in a dedicated worker with network, DOM and
+storage removed, an import allow-list, per-call time limits and a memory ceiling, and nothing
+from a shared link runs without explicit consent. Adversarial files probe each boundary: in
+each of \EscapeBrowsers{} browsers, \EscapeCasesSafe{} of \EscapeCases{} hostile files failed
+safely and \EscapeProbesBlocked{} of \EscapeProbes{} lockdown probes were blocked.
+
+\textbf{A verified leaderboard.} A submission is a pull request adding one algorithm file and
+its metadata. A continuous-integration job with no secrets and a read-only token re-runs it with
+the base branch's code inside a container without network, capabilities or a writable root
+filesystem, running every scenario twice to check determinism; a separate trusted workflow
+validates the result as data and labels the pull request. Held-out scenarios are drawn from a
+secret outside the sandbox (\cref{sec:bench}).
+
+\textbf{From the browser to ROS~2.} The same file can be exported as an \texttt{ament\_python}
+package whose node serves Nav2's \texttt{ComputePathToPose} or \texttt{FollowPath} action, or
+replaces AMCL, behind COCO's command arbiter. The file is unchanged and runs under the same
+guard; this is how the \evclass{stack} results in \cref{sec:experiments} were obtained.

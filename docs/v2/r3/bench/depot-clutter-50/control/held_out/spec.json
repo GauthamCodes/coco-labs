@@ -1,0 +1,328 @@
+{
+ "algorithms": [
+  {
+   "id": "builtin",
+   "label": "Waypoint driver",
+   "name": "builtin",
+   "params": {
+    "planner": "astar",
+    "window.cost_scaling_factor": 65,
+    "window.inflation_radius": 0.5,
+    "window.robot_radius": 0.25
+   }
+  },
+  {
+   "id": "dwa",
+   "label": "DWA",
+   "name": "dwa",
+   "params": {
+    "dwa.acc_theta": 3.2,
+    "dwa.acc_x": 3,
+    "dwa.decel_x": -2.5,
+    "dwa.forward_point_distance": 0.1,
+    "dwa.period": 0.1,
+    "dwa.scales": [
+     8,
+     32,
+     24,
+     32,
+     24
+    ],
+    "dwa.sim_time": 1.5,
+    "dwa.v_max": 0.3,
+    "dwa.vtheta_samples": 21,
+    "dwa.vx_samples": 11,
+    "dwa.w_max": 1,
+    "planner": "astar",
+    "window.cost_scaling_factor": 65,
+    "window.inflation_radius": 0.5,
+    "window.robot_radius": 0.25
+   }
+  },
+  {
+   "id": "rpp",
+   "label": "Regulated Pure Pursuit",
+   "name": "rpp",
+   "params": {
+    "planner": "astar",
+    "rpp.approach_velocity_scaling_dist": 0.6,
+    "rpp.desired_linear_vel": 0.3,
+    "rpp.lookahead_dist": 0.6,
+    "rpp.max_allowed_time_to_collision_up_to_carrot": 1,
+    "rpp.max_angular_accel": 3.2,
+    "rpp.min_approach_linear_velocity": 0.05,
+    "rpp.regulated_linear_scaling_min_radius": 0.9,
+    "rpp.regulated_linear_scaling_min_speed": 0.25,
+    "rpp.rotate_to_heading_angular_vel": 1,
+    "rpp.rotate_to_heading_min_angle": 0.785,
+    "window.cost_scaling_factor": 65,
+    "window.inflation_radius": 0.5,
+    "window.robot_radius": 0.25
+   }
+  },
+  {
+   "id": "mppi",
+   "label": "MPPI",
+   "name": "mppi",
+   "params": {
+    "mppi.ax_max": 3,
+    "mppi.ax_min": -2.5,
+    "mppi.az_max": 3.2,
+    "mppi.batch_size": 128,
+    "mppi.goal_threshold": 1.4,
+    "mppi.max_angle_to_furthest": 1,
+    "mppi.model_dt": 0.1,
+    "mppi.near_threshold": 0.5,
+    "mppi.temperature": 0.3,
+    "mppi.time_steps": 28,
+    "mppi.vx_max": 0.3,
+    "mppi.vx_min": 0,
+    "mppi.vx_std": 0.2,
+    "mppi.weights": [
+     3.81,
+     5,
+     3,
+     5,
+     14,
+     2
+    ],
+    "mppi.wz_max": 1,
+    "mppi.wz_std": 0.4,
+    "planner": "astar",
+    "window.cost_scaling_factor": 65,
+    "window.inflation_radius": 0.5,
+    "window.robot_radius": 0.25
+   }
+  }
+ ],
+ "family": "control",
+ "limits": {
+  "max_ticks": 3000
+ },
+ "metrics": [
+  "time_s",
+  "ticks",
+  "path_length_m",
+  "min_clearance_m",
+  "mean_clearance_m",
+  "heading_change_rad",
+  "contacts",
+  "expansions",
+  "plans",
+  "final_goal_distance_m",
+  "compute_ms"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "kind": "inline",
+  "scenarios": [
+   {
+    "goal": [
+     45.85,
+     8.35
+    ],
+    "id": "c001",
+    "seed": 5029329656482106,
+    "start": [
+     26.55,
+     9.55,
+     2.1172788798880413
+    ]
+   },
+   {
+    "goal": [
+     16.55,
+     10.65
+    ],
+    "id": "c002",
+    "seed": 5097211899095722,
+    "start": [
+     42.150000000000006,
+     0.9500000000000002,
+     -0.4535112072370526
+    ]
+   },
+   {
+    "goal": [
+     10.850000000000001,
+     29.450000000000003
+    ],
+    "id": "c003",
+    "seed": 2152032022923235,
+    "start": [
+     6.550000000000001,
+     5.15,
+     1.8306584122209077
+    ]
+   },
+   {
+    "goal": [
+     32.15,
+     14.75
+    ],
+    "id": "c004",
+    "seed": 6138534457803132,
+    "start": [
+     9.450000000000001,
+     6.25,
+     -2.702087222825325
+    ]
+   },
+   {
+    "goal": [
+     24.85,
+     26.75
+    ],
+    "id": "c005",
+    "seed": 4202458077500385,
+    "start": [
+     40.050000000000004,
+     21.75,
+     2.014116762868504
+    ]
+   },
+   {
+    "goal": [
+     24.85,
+     15.350000000000001
+    ],
+    "id": "c006",
+    "seed": 8167674211920081,
+    "start": [
+     27.150000000000002,
+     6.3500000000000005,
+     1.9991709831649027
+    ]
+   },
+   {
+    "goal": [
+     29.650000000000002,
+     0.8500000000000001
+    ],
+    "id": "c007",
+    "seed": 8379911613330561,
+    "start": [
+     29.05,
+     26.950000000000003,
+     -0.008060829094202582
+    ]
+   },
+   {
+    "goal": [
+     45.25,
+     23.450000000000003
+    ],
+    "id": "c008",
+    "seed": 4341349652191797,
+    "start": [
+     21.450000000000003,
+     6.75,
+     -1.2947707452520518
+    ]
+   },
+   {
+    "goal": [
+     5.15,
+     3.1500000000000004
+    ],
+    "id": "c009",
+    "seed": 4401371603624999,
+    "start": [
+     12.450000000000001,
+     16.25,
+     -3.09257517892781
+    ]
+   },
+   {
+    "goal": [
+     17.25,
+     13.65
+    ],
+    "id": "c010",
+    "seed": 3286768712196339,
+    "start": [
+     40.85,
+     30.950000000000003,
+     -0.5790681661235237
+    ]
+   },
+   {
+    "goal": [
+     44.95,
+     12.350000000000001
+    ],
+    "id": "c011",
+    "seed": 3371061634853226,
+    "start": [
+     34.25,
+     14.55,
+     -0.04580515769937055
+    ]
+   },
+   {
+    "goal": [
+     4.550000000000001,
+     6.25
+    ],
+    "id": "c012",
+    "seed": 7155484537266956,
+    "start": [
+     24.75,
+     14.05,
+     -0.20107332876680584
+    ]
+   },
+   {
+    "goal": [
+     33.050000000000004,
+     11.65
+    ],
+    "id": "c013",
+    "seed": 7452962828305576,
+    "start": [
+     13.05,
+     22.75,
+     -1.816877202775215
+    ]
+   },
+   {
+    "goal": [
+     10.450000000000001,
+     6.550000000000001
+    ],
+    "id": "c014",
+    "seed": 4373656791495717,
+    "start": [
+     9.850000000000001,
+     27.05,
+     -0.7624811170089769
+    ]
+   },
+   {
+    "goal": [
+     0.8500000000000001,
+     6.25
+    ],
+    "id": "c015",
+    "seed": 8324186027282103,
+    "start": [
+     36.35,
+     18.650000000000002,
+     1.3508717395581282
+    ]
+   }
+  ]
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 1,
+ "sweep": {
+  "params": []
+ },
+ "title": "COCO-Bench v1 baseline: depot-clutter-50, control, held_out",
+ "world": "coco_depot_clutter_v1",
+ "world_sha256": "d5fd39ebe6c90d84b95f6c2413c4128df28dce17c481a3748f03edd63eb7d578"
+}

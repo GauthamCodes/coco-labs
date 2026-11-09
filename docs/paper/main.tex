@@ -1,0 +1,60 @@
+% COCO-Bench paper (R3.7). Build: `make` in docs/paper (numbers -> figures -> PDF).
+% Every number comes from generated/numbers.tex (scripts/paper_numbers.py); lint_tex.py refuses
+% a number typed into the text.
+\documentclass[conference]{IEEEtran}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\input{generated/numbers.tex}
+\IfFileExists{generated/results.tex}{\input{generated/results.tex}}{}
+
+\newcommand{\cocolab}{COCO Lab}
+\newcommand{\bench}{COCO-Bench}
+\newcommand{\evclass}[1]{\textsc{#1}}
+
+\begin{document}
+
+\title{COCO-Bench: Reproducible, Browser-Based Benchmarking of Mobile-Robot Navigation, Validated Against ROS~2 and Gazebo}
+
+\author{\IEEEauthorblockN{Gautham}}
+
+\maketitle
+
+\begin{abstract}
+\input{sections/abstract}
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+\input{sections/intro}
+
+\section{Related Work}\label{sec:related}
+\input{sections/related}
+
+\section{System}\label{sec:system}
+\input{sections/system}
+
+\section{Benchmark Design}\label{sec:bench}
+\input{sections/benchmark}
+
+\section{Experiments}\label{sec:experiments}
+\input{sections/experiments}
+
+\section{Limitations}\label{sec:limits}
+\input{sections/limitations}
+
+\section{Conclusion}\label{sec:conclusion}
+\input{sections/conclusion}
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\appendix
+\section{Reproducibility}\label{sec:repro}
+\input{sections/appendix}
+
+\end{document}

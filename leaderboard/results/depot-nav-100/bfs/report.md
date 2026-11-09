@@ -1,9 +1,9 @@
 ## Leaderboard verification: VERIFIED
 
-`depot-nav-100/bfs` · planning · verifier 1 · MODEL (coco_lab, natively; in CI inside the sandboxed container)
+`depot-nav-100/bfs` · planning · verifier 2 · MODEL (coco_lab, natively; in CI inside the sandboxed container)
 
 - **public** (100 scenarios): success 100/100 (Wilson 95% 0.963–1.000); path_ratio median 1; expansions median 7.872e+04; min_clearance_m median 0.05
-- **held-out** (20 scenarios): success 20/20 (Wilson 95% 0.839–1.000); path_ratio median 1; expansions median 4.944e+04; min_clearance_m median 0.05
+- **held-out** (20 scenarios): success 20/20 (Wilson 95% 0.839–1.000); path_ratio median 1; expansions median 7.259e+04; min_clearance_m median 0.05
 
 - deterministic (every run twice): True
 - contract problems: 0; clamped outputs: 0

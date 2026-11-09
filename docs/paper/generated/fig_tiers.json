@@ -1,0 +1,1390 @@
+{
+"depot-clutter-50": [
+{
+"min_clearance_m": 0.15,
+"path_length_m": 55.3257,
+"tier": "hard",
+"turns": 15
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 20.2711,
+"tier": "medium",
+"turns": 8
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 36.2279,
+"tier": "hard",
+"turns": 18
+},
+{
+"min_clearance_m": 0.1106,
+"path_length_m": 14.0267,
+"tier": "medium",
+"turns": 7
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 27.5551,
+"tier": "medium",
+"turns": 12
+},
+{
+"min_clearance_m": 0.3157,
+"path_length_m": 8.2468,
+"tier": "easy",
+"turns": 3
+},
+{
+"min_clearance_m": 0.2599,
+"path_length_m": 9.8113,
+"tier": "easy",
+"turns": 7
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 18.1355,
+"tier": "easy",
+"turns": 5
+},
+{
+"min_clearance_m": 0.2599,
+"path_length_m": 13.6284,
+"tier": "easy",
+"turns": 6
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 12.6054,
+"tier": "easy",
+"turns": 4
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 39.8919,
+"tier": "hard",
+"turns": 16
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 28.277,
+"tier": "medium",
+"turns": 9
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 15.6995,
+"tier": "easy",
+"turns": 3
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 32.3752,
+"tier": "medium",
+"turns": 9
+},
+{
+"min_clearance_m": 0.2599,
+"path_length_m": 32.3426,
+"tier": "easy",
+"turns": 6
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 20.4326,
+"tier": "medium",
+"turns": 13
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 62.999,
+"tier": "hard",
+"turns": 25
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 44.2404,
+"tier": "hard",
+"turns": 18
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 19.0711,
+"tier": "medium",
+"turns": 7
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 24.1877,
+"tier": "medium",
+"turns": 8
+},
+{
+"min_clearance_m": 0.2599,
+"path_length_m": 18.7841,
+"tier": "easy",
+"turns": 8
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 27.2995,
+"tier": "medium",
+"turns": 11
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 6.6912,
+"tier": "easy",
+"turns": 3
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 19.264,
+"tier": "medium",
+"turns": 7
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 36.3823,
+"tier": "hard",
+"turns": 18
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 57.4161,
+"tier": "hard",
+"turns": 16
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 55.6019,
+"tier": "hard",
+"turns": 20
+},
+{
+"min_clearance_m": 0.2885,
+"path_length_m": 24.5492,
+"tier": "easy",
+"turns": 5
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 21.9409,
+"tier": "medium",
+"turns": 9
+},
+{
+"min_clearance_m": 0.2599,
+"path_length_m": 16.3971,
+"tier": "easy",
+"turns": 4
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 17.4355,
+"tier": "medium",
+"turns": 6
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 7.2355,
+"tier": "easy",
+"turns": 4
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 24.9853,
+"tier": "hard",
+"turns": 11
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 33.4853,
+"tier": "hard",
+"turns": 12
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 31.5907,
+"tier": "hard",
+"turns": 14
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 21.1421,
+"tier": "easy",
+"turns": 6
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 19.0468,
+"tier": "medium",
+"turns": 12
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 36.8865,
+"tier": "hard",
+"turns": 20
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 11.687,
+"tier": "easy",
+"turns": 5
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 21.077,
+"tier": "medium",
+"turns": 7
+},
+{
+"min_clearance_m": 0.1743,
+"path_length_m": 16.8627,
+"tier": "medium",
+"turns": 6
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 38.822,
+"tier": "hard",
+"turns": 15
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 36.109,
+"tier": "hard",
+"turns": 11
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 53.6563,
+"tier": "hard",
+"turns": 20
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 10.5941,
+"tier": "medium",
+"turns": 6
+},
+{
+"min_clearance_m": 0.2599,
+"path_length_m": 21.6284,
+"tier": "easy",
+"turns": 5
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 8.5385,
+"tier": "easy",
+"turns": 3
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 9.777,
+"tier": "easy",
+"turns": 5
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 35.6421,
+"tier": "medium",
+"turns": 10
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 38.9238,
+"tier": "hard",
+"turns": 15
+}
+],
+"depot-long-50": [
+{
+"min_clearance_m": 0.15,
+"path_length_m": 48.4375,
+"tier": "hard",
+"turns": 24
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 37.5037,
+"tier": "easy",
+"turns": 11
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 54.3546,
+"tier": "medium",
+"turns": 23
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 48.909,
+"tier": "medium",
+"turns": 15
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 44.7706,
+"tier": "medium",
+"turns": 24
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 43.9007,
+"tier": "medium",
+"turns": 13
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 41.886,
+"tier": "medium",
+"turns": 12
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 46.1902,
+"tier": "hard",
+"turns": 20
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 54.6416,
+"tier": "hard",
+"turns": 7
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 35.6723,
+"tier": "easy",
+"turns": 11
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 36.3042,
+"tier": "easy",
+"turns": 8
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 37.1375,
+"tier": "easy",
+"turns": 7
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 51.5044,
+"tier": "hard",
+"turns": 17
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 52.2605,
+"tier": "hard",
+"turns": 28
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 45.163,
+"tier": "hard",
+"turns": 15
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 52.699,
+"tier": "hard",
+"turns": 28
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 36.2492,
+"tier": "easy",
+"turns": 22
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 44.8066,
+"tier": "medium",
+"turns": 9
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 38.925,
+"tier": "easy",
+"turns": 15
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 39.1983,
+"tier": "easy",
+"turns": 11
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 56.8642,
+"tier": "hard",
+"turns": 17
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 49.6919,
+"tier": "medium",
+"turns": 25
+},
+{
+"min_clearance_m": 0.1743,
+"path_length_m": 36.2291,
+"tier": "easy",
+"turns": 10
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 44.1978,
+"tier": "medium",
+"turns": 19
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 38.1735,
+"tier": "easy",
+"turns": 20
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 38.2321,
+"tier": "easy",
+"turns": 10
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 60.8647,
+"tier": "hard",
+"turns": 26
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 41.6328,
+"tier": "easy",
+"turns": 8
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 48.5943,
+"tier": "hard",
+"turns": 18
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 37.612,
+"tier": "easy",
+"turns": 14
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 41.4546,
+"tier": "easy",
+"turns": 12
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 39.8446,
+"tier": "medium",
+"turns": 15
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 41.1262,
+"tier": "hard",
+"turns": 18
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 43.3316,
+"tier": "medium",
+"turns": 9
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 46.7333,
+"tier": "medium",
+"turns": 16
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 44.6032,
+"tier": "medium",
+"turns": 8
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 35.6125,
+"tier": "easy",
+"turns": 16
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 37.9806,
+"tier": "easy",
+"turns": 9
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 44.5701,
+"tier": "hard",
+"turns": 18
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 40.6103,
+"tier": "easy",
+"turns": 14
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 38.7421,
+"tier": "easy",
+"turns": 10
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 39.8434,
+"tier": "medium",
+"turns": 17
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 45.0054,
+"tier": "medium",
+"turns": 13
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 44.4622,
+"tier": "medium",
+"turns": 18
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 47.3191,
+"tier": "hard",
+"turns": 25
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 46.9161,
+"tier": "medium",
+"turns": 14
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 47.46,
+"tier": "hard",
+"turns": 13
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 49.3742,
+"tier": "hard",
+"turns": 15
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 51.3007,
+"tier": "hard",
+"turns": 17
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 42.7978,
+"tier": "medium",
+"turns": 18
+}
+],
+"depot-narrow-30": [
+{
+"min_clearance_m": 0.25,
+"path_length_m": 51.0291,
+"tier": "hard",
+"turns": 22
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 48.948,
+"tier": "medium",
+"turns": 14
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 18.3154,
+"tier": "easy",
+"turns": 9
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 42.9399,
+"tier": "medium",
+"turns": 9
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 46.8492,
+"tier": "hard",
+"turns": 28
+},
+{
+"min_clearance_m": 0.55,
+"path_length_m": 10.2828,
+"tier": "easy",
+"turns": 1
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 39.9681,
+"tier": "hard",
+"turns": 20
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 30.4368,
+"tier": "medium",
+"turns": 10
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 44.1681,
+"tier": "medium",
+"turns": 15
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 18.6238,
+"tier": "easy",
+"turns": 14
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 28.8782,
+"tier": "easy",
+"turns": 17
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 42.1711,
+"tier": "medium",
+"turns": 14
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 13.5569,
+"tier": "easy",
+"turns": 7
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 29.8355,
+"tier": "medium",
+"turns": 9
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 47.2362,
+"tier": "hard",
+"turns": 21
+},
+{
+"min_clearance_m": 0.2599,
+"path_length_m": 23.1598,
+"tier": "easy",
+"turns": 5
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 26.7108,
+"tier": "easy",
+"turns": 6
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 44.4291,
+"tier": "hard",
+"turns": 13
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 47.4191,
+"tier": "hard",
+"turns": 17
+},
+{
+"min_clearance_m": 0.35,
+"path_length_m": 25.2284,
+"tier": "easy",
+"turns": 2
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 43.2463,
+"tier": "hard",
+"turns": 21
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 50.1558,
+"tier": "hard",
+"turns": 13
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 35.0167,
+"tier": "hard",
+"turns": 16
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 35.4267,
+"tier": "easy",
+"turns": 15
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 34.0836,
+"tier": "medium",
+"turns": 18
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 49.6304,
+"tier": "hard",
+"turns": 19
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 35.735,
+"tier": "easy",
+"turns": 15
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 39.338,
+"tier": "medium",
+"turns": 13
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 39.3184,
+"tier": "medium",
+"turns": 8
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 37.5546,
+"tier": "medium",
+"turns": 10
+}
+],
+"depot-nav-100": [
+{
+"min_clearance_m": 0.15,
+"path_length_m": 19.635,
+"tier": "medium",
+"turns": 10
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 48.6328,
+"tier": "hard",
+"turns": 15
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 27.6664,
+"tier": "medium",
+"turns": 9
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 27.2203,
+"tier": "medium",
+"turns": 5
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 47.9446,
+"tier": "hard",
+"turns": 10
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 45.4759,
+"tier": "hard",
+"turns": 18
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 44.6446,
+"tier": "hard",
+"turns": 14
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 41.2416,
+"tier": "hard",
+"turns": 17
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 45.6387,
+"tier": "hard",
+"turns": 15
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 45.2144,
+"tier": "hard",
+"turns": 16
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 29.835,
+"tier": "medium",
+"turns": 7
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 15.8238,
+"tier": "easy",
+"turns": 4
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 51.912,
+"tier": "medium",
+"turns": 17
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 6.1213,
+"tier": "easy",
+"turns": 3
+},
+{
+"min_clearance_m": 0.55,
+"path_length_m": 30.8083,
+"tier": "easy",
+"turns": 7
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 45.0701,
+"tier": "hard",
+"turns": 16
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 37.2132,
+"tier": "hard",
+"turns": 10
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 24.6995,
+"tier": "medium",
+"turns": 16
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 30.5309,
+"tier": "medium",
+"turns": 18
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 11.0113,
+"tier": "easy",
+"turns": 5
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 23.1326,
+"tier": "medium",
+"turns": 11
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 36.5581,
+"tier": "medium",
+"turns": 17
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 25.0456,
+"tier": "easy",
+"turns": 6
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 27.6238,
+"tier": "medium",
+"turns": 14
+},
+{
+"min_clearance_m": 0.2599,
+"path_length_m": 27.0485,
+"tier": "easy",
+"turns": 4
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 37.0765,
+"tier": "medium",
+"turns": 21
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 20.0882,
+"tier": "medium",
+"turns": 13
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 10.5255,
+"tier": "easy",
+"turns": 5
+},
+{
+"min_clearance_m": 0.1623,
+"path_length_m": 26.109,
+"tier": "medium",
+"turns": 7
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 29.361,
+"tier": "easy",
+"turns": 10
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 30.3375,
+"tier": "medium",
+"turns": 7
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 34.9617,
+"tier": "medium",
+"turns": 7
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 14.474,
+"tier": "easy",
+"turns": 7
+},
+{
+"min_clearance_m": 0.3903,
+"path_length_m": 24.9806,
+"tier": "easy",
+"turns": 4
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 12.7397,
+"tier": "easy",
+"turns": 4
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 37.1617,
+"tier": "medium",
+"turns": 9
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 24.4042,
+"tier": "easy",
+"turns": 3
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 45.4635,
+"tier": "hard",
+"turns": 25
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 36.0941,
+"tier": "hard",
+"turns": 12
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 23.8167,
+"tier": "easy",
+"turns": 11
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 30.9161,
+"tier": "medium",
+"turns": 11
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 35.0676,
+"tier": "hard",
+"turns": 10
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 42.2765,
+"tier": "hard",
+"turns": 19
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 15.7296,
+"tier": "easy",
+"turns": 7
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 25.0598,
+"tier": "easy",
+"turns": 5
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 39.1154,
+"tier": "hard",
+"turns": 11
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 33.2137,
+"tier": "medium",
+"turns": 10
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 35.777,
+"tier": "hard",
+"turns": 11
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 29.7664,
+"tier": "medium",
+"turns": 11
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 46.5664,
+"tier": "hard",
+"turns": 25
+},
+{
+"min_clearance_m": 0.2599,
+"path_length_m": 21.5556,
+"tier": "easy",
+"turns": 5
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 9.9569,
+"tier": "easy",
+"turns": 6
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 28.6971,
+"tier": "medium",
+"turns": 8
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 32.8652,
+"tier": "medium",
+"turns": 14
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 38.5995,
+"tier": "hard",
+"turns": 21
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 46.3848,
+"tier": "hard",
+"turns": 13
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 28.7728,
+"tier": "medium",
+"turns": 7
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 41.6078,
+"tier": "hard",
+"turns": 26
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 24.2853,
+"tier": "medium",
+"turns": 15
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 12.187,
+"tier": "easy",
+"turns": 6
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 32.064,
+"tier": "hard",
+"turns": 12
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 14.1255,
+"tier": "easy",
+"turns": 8
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 13.877,
+"tier": "easy",
+"turns": 8
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 40.4576,
+"tier": "medium",
+"turns": 10
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 45.7811,
+"tier": "hard",
+"turns": 10
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 52.6487,
+"tier": "hard",
+"turns": 14
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 49.9759,
+"tier": "hard",
+"turns": 15
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 36.1049,
+"tier": "hard",
+"turns": 13
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 57.5836,
+"tier": "hard",
+"turns": 18
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 27.9439,
+"tier": "medium",
+"turns": 11
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 54.4576,
+"tier": "hard",
+"turns": 17
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 23.9037,
+"tier": "easy",
+"turns": 6
+},
+{
+"min_clearance_m": 0.2599,
+"path_length_m": 6.7941,
+"tier": "easy",
+"turns": 5
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 49.0179,
+"tier": "hard",
+"turns": 14
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 12.6485,
+"tier": "easy",
+"turns": 5
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 28.0823,
+"tier": "easy",
+"turns": 17
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 26.6267,
+"tier": "medium",
+"turns": 15
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 23.0267,
+"tier": "easy",
+"turns": 16
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 31.848,
+"tier": "medium",
+"turns": 19
+},
+{
+"min_clearance_m": 0.1106,
+"path_length_m": 13.2497,
+"tier": "easy",
+"turns": 7
+},
+{
+"min_clearance_m": 0.1106,
+"path_length_m": 36.5569,
+"tier": "hard",
+"turns": 12
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 21.3154,
+"tier": "easy",
+"turns": 10
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 29.5882,
+"tier": "medium",
+"turns": 16
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 46.4723,
+"tier": "hard",
+"turns": 19
+},
+{
+"min_clearance_m": 1.85,
+"path_length_m": 8.0598,
+"tier": "easy",
+"turns": 3
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 28.8919,
+"tier": "easy",
+"turns": 7
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 24.8563,
+"tier": "easy",
+"turns": 10
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 33.3593,
+"tier": "hard",
+"turns": 21
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 16.6095,
+"tier": "easy",
+"turns": 6
+},
+{
+"min_clearance_m": 0.65,
+"path_length_m": 30.0882,
+"tier": "easy",
+"turns": 4
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 29.064,
+"tier": "medium",
+"turns": 11
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 33.0936,
+"tier": "hard",
+"turns": 18
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 39.1889,
+"tier": "hard",
+"turns": 23
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 33.5978,
+"tier": "hard",
+"turns": 13
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 29.9037,
+"tier": "medium",
+"turns": 19
+},
+{
+"min_clearance_m": 0.65,
+"path_length_m": 22.3284,
+"tier": "easy",
+"turns": 3
+},
+{
+"min_clearance_m": 0.15,
+"path_length_m": 34.1735,
+"tier": "medium",
+"turns": 4
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 32.6823,
+"tier": "medium",
+"turns": 20
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 31.5818,
+"tier": "easy",
+"turns": 9
+},
+{
+"min_clearance_m": 0.25,
+"path_length_m": 40.5664,
+"tier": "medium",
+"turns": 13
+}
+]
+}

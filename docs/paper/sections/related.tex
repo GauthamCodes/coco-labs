@@ -1,0 +1,24 @@
+\textbf{Navigation benchmarks.} BARN \cite{perille2020barn} provides procedurally generated
+environments ordered by difficulty metrics and evaluates planners in Gazebo. MRPB
+\cite{wen2020mrpb} evaluates local planners in Gazebo on safety, efficiency and smoothness.
+Bench-MR \cite{heiden2021benchmr} benchmarks sampling-based planners for wheeled robots on top of
+OMPL \cite{sucan2012ompl}. Arena-Bench \cite{kastner2022arenabench} targets highly dynamic
+environments and integrates with ROS. All of these run where their software stack is installed.
+\bench{} makes the run itself portable and checkable through hash chains that must agree across
+engines, and treats the full ROS~2 stack as a second, slower evidence class to validate against
+rather than as the only one.
+
+\textbf{Difficulty.} Like BARN, we order scenarios by measurable features. Ours are taken from a
+reference plan (path length, narrowest clearance, bends, zones crossed, exposure to moving actors)
+and serve to report results per tier, not as a learned difficulty score.
+
+\textbf{Reproducibility.} Calls for replicable and measurable robotics research
+\cite{bonsignorio2015replicable} shape our design: frozen and versioned suites, committed reference
+results, success rates with confidence intervals \cite{wilson1927}, and no number in this paper that
+is not generated from committed data.
+
+\textbf{Algorithms.} The built-in references are breadth-first search, Dijkstra, A*, greedy and
+weighted A* and D* Lite \cite{koenig2002dstarlite} for planning; DWA \cite{fox1997dwa}, Regulated
+Pure Pursuit \cite{macenski2023rpp} and MPPI \cite{williams2017mppi} for local control; and Monte
+Carlo localisation \cite{fox1999mcl} and an EKF for localisation. The community entry in our case
+study is Lazy Theta* \cite{nash2010lazytheta}, an any-angle variant of Theta* \cite{nash2007theta}.

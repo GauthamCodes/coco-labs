@@ -1,0 +1,88 @@
+{
+ "about": "R3.2 tools/r3/make_baselines.py: per tier (the suite file's tiers), public scenarios",
+ "family": "localisation",
+ "held_out": {
+  "n": 6,
+  "note": "a reference draw from a public seed (not an ADR 0014 secret)",
+  "seed": 4028285236339930
+ },
+ "suite": "loc-global-20",
+ "tiers": {
+  "mcl": {
+   "easy": {
+    "converged_s_median": null,
+    "final_err_xy_m_median": 25.284855739895146,
+    "mean_err_xy_m_median": 25.259040465829752,
+    "n": 7,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   },
+   "hard": {
+    "converged_s_median": null,
+    "final_err_xy_m_median": 19.336388918703527,
+    "mean_err_xy_m_median": 19.390788408284237,
+    "n": 6,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.3903342879021653
+    ]
+   },
+   "medium": {
+    "converged_s_median": null,
+    "final_err_xy_m_median": 10.533873020451942,
+    "mean_err_xy_m_median": 10.427262452213599,
+    "n": 7,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   }
+  },
+  "mcl_augmented": {
+   "easy": {
+    "converged_s_median": null,
+    "final_err_xy_m_median": 19.045272190351564,
+    "mean_err_xy_m_median": 19.79487927257269,
+    "n": 7,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   },
+   "hard": {
+    "converged_s_median": null,
+    "final_err_xy_m_median": 19.336388918703527,
+    "mean_err_xy_m_median": 19.390788408284237,
+    "n": 6,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.3903342879021653
+    ]
+   },
+   "medium": {
+    "converged_s_median": null,
+    "final_err_xy_m_median": 11.649351945693239,
+    "mean_err_xy_m_median": 11.62793350355169,
+    "n": 7,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   }
+  }
+ }
+}

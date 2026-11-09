@@ -1,0 +1,18 @@
+\textbf{Regenerating this paper.} From a clean checkout, \texttt{make -C docs/paper} runs
+\texttt{scripts/paper\_numbers.py} (every number, as a macro naming its source file),
+\texttt{scripts/tables.py} and \texttt{scripts/figures.py} on committed data, then typesets the
+PDF. \texttt{make -C docs/paper check} regenerates the macros, tables and figures and fails if
+any differs from the committed copy; continuous integration runs it, together with
+\texttt{scripts/lint\_tex.py}, which refuses a number typed into the text.
+
+\textbf{Re-running the experiments.} One link (``Reproduce this paper'' on the project site's
+About page) opens the Workbench with the paper's browser experiment, every built-in planner on
+\texttt{depot-nav-100} (\ReproduceRuns{} runs), runs it in the reader's browser and checks that
+the digest of all runs equals the committed one. Natively, \texttt{coco experiment run} gives the same
+results. The ROS~2 runs are driven by the scripts under \texttt{tools/r2/} and \texttt{tools/r3/}
+with the same scenario files; their raw logs are kept by the author and checksummed in the
+repository.
+
+\textbf{Data.} The suites (\texttt{coco\_lab/coco\_lab/benchmarks/*.v1.json}), their datasheets
+(\texttt{docs/bench/v1/}), the reference results and the paired runs are in the repository under
+the Apache-2.0 licence.

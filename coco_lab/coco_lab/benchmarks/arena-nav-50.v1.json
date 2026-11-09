@@ -1,0 +1,1245 @@
+{
+ "schema": "coco.bench.suite.v1",
+ "id": "arena-nav-50",
+ "version": 1,
+ "title": "Proving Ground: 50 start/goal pairs (v0 scenarios, now tiered)",
+ "world": "coco_arena_v1",
+ "world_sha256": "87f5d88f40af39bc98bc0b9cfac5dd2ce1686370fcca7aec8d171ff0181290f0",
+ "families": [
+  "planning",
+  "control",
+  "localisation"
+ ],
+ "metrics": {
+  "planning": [
+   "expansions",
+   "pushes",
+   "path_length_m",
+   "path_cost",
+   "path_steps",
+   "min_clearance_m",
+   "mean_clearance_m",
+   "heading_change_rad",
+   "start_snap_m",
+   "goal_snap_m",
+   "compute_ms"
+  ],
+  "control": [
+   "time_s",
+   "ticks",
+   "path_length_m",
+   "min_clearance_m",
+   "mean_clearance_m",
+   "heading_change_rad",
+   "contacts",
+   "expansions",
+   "plans",
+   "final_goal_distance_m",
+   "compute_ms"
+  ],
+  "localisation": [
+   "time_s",
+   "ticks",
+   "path_length_m",
+   "min_clearance_m",
+   "mean_clearance_m",
+   "heading_change_rad",
+   "contacts",
+   "expansions",
+   "plans",
+   "final_goal_distance_m",
+   "final_err_xy_m",
+   "final_err_yaw_rad",
+   "mean_err_xy_m",
+   "max_err_xy_m",
+   "converged_s",
+   "recovery_s",
+   "compute_ms"
+  ]
+ },
+ "generator": {
+  "kind": "carried",
+  "seed": 5001,
+  "tool": "tools/r3/make_suites_v1.py",
+  "module": "coco_lab.bench_v1"
+ },
+ "tiers": {
+  "method": "mean percentile rank of the tier features; thirds by (difficulty, id)",
+  "features": [
+   "path_length_m",
+   "min_clearance_m",
+   "turns"
+  ],
+  "counts": {
+   "easy": 17,
+   "medium": 17,
+   "hard": 16
+  },
+  "cut_difficulty": [
+   0.418367,
+   0.598639
+  ]
+ },
+ "held_out": {
+  "n": 15,
+  "scheme": "ADR 0014 (secret salt, per head) in CI; R2 public salt locally",
+  "generator": "the same, another seed"
+ },
+ "datasheet": "docs/bench/v1/arena-nav-50.md",
+ "from_v0": {
+  "scenarios_sha256": "5654820b7e25d761693b896db6953d5141d6f30cf89b38193846d38d22e4b86c",
+  "note": "identical scenarios; v1 adds features and tiers only"
+ },
+ "scenarios": [
+  {
+   "goal": [
+    -2.775,
+    3.575000000000001
+   ],
+   "goal_zone": null,
+   "id": "s001",
+   "seed": 4254499076856295,
+   "start": [
+    8.025,
+    2.825000000000001,
+    1.1114027227290206
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 19.914,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 8.4935,
+    "turns": 19
+   },
+   "difficulty": 0.782313,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    5.125,
+    4.175000000000001
+   ],
+   "goal_zone": null,
+   "id": "s002",
+   "seed": 3101132449135060,
+   "start": [
+    3.1750000000000007,
+    7.925000000000001,
+    2.7625136791216462
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 10.0577,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 3.6763,
+    "turns": 9
+   },
+   "difficulty": 0.285714,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    16.525000000000002,
+    -6.475
+   ],
+   "goal_zone": null,
+   "id": "s003",
+   "seed": 6361243551878658,
+   "start": [
+    9.425,
+    2.6750000000000007,
+    2.580490756152267
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 17.0826,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 7.445,
+    "turns": 9
+   },
+   "difficulty": 0.37415,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    12.225000000000001,
+    -1.0749999999999993
+   ],
+   "goal_zone": null,
+   "id": "s004",
+   "seed": 6342078784893237,
+   "start": [
+    11.525000000000002,
+    -6.425,
+    -1.8959537425257365
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 5.7642,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 5.1314,
+    "turns": 5
+   },
+   "difficulty": 0.309524,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    -0.9249999999999998,
+    5.975000000000001
+   ],
+   "goal_zone": null,
+   "id": "s005",
+   "seed": 6047644392489686,
+   "start": [
+    8.475000000000001,
+    6.525000000000002,
+    1.3581386643367512
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 12.0977,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.0314,
+    "turns": 7
+   },
+   "difficulty": 0.265306,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    -5.575,
+    6.824999999999999
+   ],
+   "goal_zone": null,
+   "id": "s006",
+   "seed": 8876171243490292,
+   "start": [
+    -1.125,
+    -5.775,
+    -0.3235454605719874
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 18.3542,
+    "min_clearance_m": 0.1,
+    "narrow_run_m": 7.4107,
+    "turns": 11
+   },
+   "difficulty": 0.666667,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    9.225000000000001,
+    8.375
+   ],
+   "goal_zone": null,
+   "id": "s007",
+   "seed": 8293223563647132,
+   "start": [
+    15.125,
+    -8.225,
+    3.013814500043998
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 21.0012,
+    "min_clearance_m": 0.2525,
+    "narrow_run_m": 4.4698,
+    "turns": 13
+   },
+   "difficulty": 0.438776,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    1.2750000000000004,
+    3.875
+   ],
+   "goal_zone": null,
+   "id": "s008",
+   "seed": 1976258320032905,
+   "start": [
+    -2.9749999999999996,
+    0.9750000000000014,
+    -2.6331260715853357
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 5.4512,
+    "min_clearance_m": 0.5562,
+    "narrow_run_m": 0.4243,
+    "turns": 5
+   },
+   "difficulty": 0.006803,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    -2.375,
+    2.075000000000001
+   ],
+   "goal_zone": null,
+   "id": "s009",
+   "seed": 6648197272941534,
+   "start": [
+    3.0250000000000004,
+    -0.27500000000000036,
+    0.8998547779705026
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 6.3734,
+    "min_clearance_m": 0.1,
+    "narrow_run_m": 2.1728,
+    "turns": 7
+   },
+   "difficulty": 0.380952,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    0.9750000000000005,
+    4.175000000000001
+   ],
+   "goal_zone": null,
+   "id": "s010",
+   "seed": 684759987525195,
+   "start": [
+    3.875,
+    -3.7249999999999996,
+    3.0965736801272605
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 11.2042,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 3.4692,
+    "turns": 14
+   },
+   "difficulty": 0.557823,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    12.675,
+    -3.3249999999999993
+   ],
+   "goal_zone": null,
+   "id": "s011",
+   "seed": 4055785070424296,
+   "start": [
+    2.325000000000001,
+    7.475000000000001,
+    1.882053791908108
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 29.0533,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.1521,
+    "turns": 19
+   },
+   "difficulty": 0.727891,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    -2.775,
+    4.825000000000001
+   ],
+   "goal_zone": null,
+   "id": "s012",
+   "seed": 3494490473486775,
+   "start": [
+    8.525,
+    -4.175,
+    1.284093781981876
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 24.3447,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 9.3213,
+    "turns": 20
+   },
+   "difficulty": 0.710884,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    16.675,
+    4.075000000000001
+   ],
+   "goal_zone": null,
+   "id": "s013",
+   "seed": 5040837313953751,
+   "start": [
+    1.9749999999999996,
+    -2.125,
+    -2.9321031247355838
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 29.1258,
+    "min_clearance_m": 0.2,
+    "narrow_run_m": 11.8663,
+    "turns": 24
+   },
+   "difficulty": 0.87415,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    8.575000000000001,
+    -1.9249999999999998
+   ],
+   "goal_zone": null,
+   "id": "s014",
+   "seed": 3284448472544017,
+   "start": [
+    1.375,
+    -3.4749999999999996,
+    -2.4852244900317633
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 9.7056,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.9107,
+    "turns": 8
+   },
+   "difficulty": 0.255102,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    1.575000000000001,
+    -4.825
+   ],
+   "goal_zone": null,
+   "id": "s015",
+   "seed": 4096617109314495,
+   "start": [
+    17.075000000000003,
+    -0.07499999999999929,
+    -1.4106709980513392
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 17.4968,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 7.3935,
+    "turns": 10
+   },
+   "difficulty": 0.418367,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    -5.125,
+    -3.425
+   ],
+   "goal_zone": null,
+   "id": "s016",
+   "seed": 940458409283729,
+   "start": [
+    11.925,
+    1.4750000000000014,
+    1.2260919851248433
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 25.5436,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 7.5278,
+    "turns": 19
+   },
+   "difficulty": 0.707483,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    -0.375,
+    1.9250000000000007
+   ],
+   "goal_zone": null,
+   "id": "s017",
+   "seed": 6375707489107145,
+   "start": [
+    11.475000000000001,
+    -3.7249999999999996,
+    1.2434319515095344
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 15.3033,
+    "min_clearance_m": 0.2,
+    "narrow_run_m": 11.7077,
+    "turns": 16
+   },
+   "difficulty": 0.598639,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    -4.575,
+    1.075000000000001
+   ],
+   "goal_zone": null,
+   "id": "s018",
+   "seed": 8022634054839131,
+   "start": [
+    12.825000000000003,
+    5.475000000000001,
+    -2.606094034915781
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 22.9631,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 7.6642,
+    "turns": 19
+   },
+   "difficulty": 0.673469,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    16.175,
+    4.725000000000001
+   ],
+   "goal_zone": null,
+   "id": "s019",
+   "seed": 2475030290800593,
+   "start": [
+    11.875,
+    -0.22499999999999964,
+    1.8296553570224976
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 17.8069,
+    "min_clearance_m": 0.2,
+    "narrow_run_m": 8.1592,
+    "turns": 14
+   },
+   "difficulty": 0.598639,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    0.4250000000000007,
+    -4.125
+   ],
+   "goal_zone": null,
+   "id": "s020",
+   "seed": 3754048320349133,
+   "start": [
+    17.325000000000003,
+    4.625,
+    2.361146156711933
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 30.7466,
+    "min_clearance_m": 0.2,
+    "narrow_run_m": 11.887,
+    "turns": 17
+   },
+   "difficulty": 0.816327,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    9.825,
+    -8.475
+   ],
+   "goal_zone": null,
+   "id": "s021",
+   "seed": 7363798559403721,
+   "start": [
+    0.7250000000000005,
+    8.175,
+    0.757728257595085
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 24.9148,
+    "min_clearance_m": 0.2,
+    "narrow_run_m": 12.3542,
+    "turns": 17
+   },
+   "difficulty": 0.768707,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    10.525000000000002,
+    -0.9249999999999989
+   ],
+   "goal_zone": null,
+   "id": "s022",
+   "seed": 701168970029181,
+   "start": [
+    -4.324999999999999,
+    7.375,
+    2.3853062721230405
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 21.0524,
+    "min_clearance_m": 0.2,
+    "narrow_run_m": 11.1042,
+    "turns": 21
+   },
+   "difficulty": 0.778912,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    10.425,
+    -1.2249999999999996
+   ],
+   "goal_zone": null,
+   "id": "s023",
+   "seed": 6665311790510719,
+   "start": [
+    9.725000000000001,
+    -6.425,
+    -3.114474935192536
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 5.5314,
+    "min_clearance_m": 0.1,
+    "narrow_run_m": 2.9192,
+    "turns": 7
+   },
+   "difficulty": 0.367347,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    14.125,
+    5.775
+   ],
+   "goal_zone": null,
+   "id": "s024",
+   "seed": 4647623376282480,
+   "start": [
+    9.325000000000001,
+    -4.175,
+    1.87720010403865
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 16.8847,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 6.4027,
+    "turns": 18
+   },
+   "difficulty": 0.544218,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    8.125,
+    2.375
+   ],
+   "goal_zone": null,
+   "id": "s025",
+   "seed": 2283301599800839,
+   "start": [
+    10.975000000000001,
+    7.525000000000002,
+    -2.3764167163341403
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 6.477,
+    "min_clearance_m": 0.2525,
+    "narrow_run_m": 3.1885,
+    "turns": 9
+   },
+   "difficulty": 0.146259,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    14.475000000000001,
+    7.525000000000002
+   ],
+   "goal_zone": null,
+   "id": "s026",
+   "seed": 337487212399765,
+   "start": [
+    11.275000000000002,
+    -3.0749999999999993,
+    -2.492469461904383
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 14.2435,
+    "min_clearance_m": 0.2,
+    "narrow_run_m": 7.6485,
+    "turns": 10
+   },
+   "difficulty": 0.465986,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    10.375,
+    1.875
+   ],
+   "goal_zone": null,
+   "id": "s027",
+   "seed": 6920706030867463,
+   "start": [
+    -4.375,
+    -7.775,
+    -1.965270339818959
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 21.9882,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 10.9456,
+    "turns": 23
+   },
+   "difficulty": 0.690476,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    -1.2749999999999995,
+    -7.725
+   ],
+   "goal_zone": null,
+   "id": "s028",
+   "seed": 1312106449698942,
+   "start": [
+    0.22500000000000053,
+    6.775000000000002,
+    -1.5100451078269315
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 15.1213,
+    "min_clearance_m": 0.2525,
+    "narrow_run_m": 5.6414,
+    "turns": 5
+   },
+   "difficulty": 0.170068,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    -3.125,
+    6.625
+   ],
+   "goal_zone": null,
+   "id": "s029",
+   "seed": 6282306747123174,
+   "start": [
+    -1.3249999999999993,
+    3.5250000000000004,
+    0.6283124504618804
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 7.0506,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 6.1471,
+    "turns": 11
+   },
+   "difficulty": 0.319728,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    -0.9749999999999996,
+    -4.0249999999999995
+   ],
+   "goal_zone": null,
+   "id": "s030",
+   "seed": 1064336175522821,
+   "start": [
+    4.275,
+    -8.475,
+    0.871001528999539
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 7.9719,
+    "min_clearance_m": 0.2,
+    "narrow_run_m": 2.3728,
+    "turns": 14
+   },
+   "difficulty": 0.469388,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    8.075000000000001,
+    5.875
+   ],
+   "goal_zone": null,
+   "id": "s031",
+   "seed": 3399922366470379,
+   "start": [
+    -3.275,
+    0.375,
+    0.3836616948290845
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 15.7796,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.6592,
+    "turns": 13
+   },
+   "difficulty": 0.44898,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    -0.22499999999999964,
+    6.675000000000001
+   ],
+   "goal_zone": null,
+   "id": "s032",
+   "seed": 8970673301781668,
+   "start": [
+    -2.775,
+    -3.925,
+    -0.527573027190666
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 20.137,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 5.8642,
+    "turns": 10
+   },
+   "difficulty": 0.472789,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    -5.075,
+    -7.625
+   ],
+   "goal_zone": null,
+   "id": "s033",
+   "seed": 4406890887150873,
+   "start": [
+    -1.375,
+    -3.675,
+    2.9911589494309494
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 8.1349,
+    "min_clearance_m": 0.1,
+    "narrow_run_m": 5.9349,
+    "turns": 10
+   },
+   "difficulty": 0.493197,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    3.075000000000001,
+    2.125
+   ],
+   "goal_zone": null,
+   "id": "s034",
+   "seed": 8060043381096599,
+   "start": [
+    15.875,
+    -6.275,
+    -0.8057708068957674
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 26.0924,
+    "min_clearance_m": 0.2,
+    "narrow_run_m": 11.887,
+    "turns": 28
+   },
+   "difficulty": 0.860544,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    9.225000000000001,
+    5.275
+   ],
+   "goal_zone": null,
+   "id": "s035",
+   "seed": 2611514902359698,
+   "start": [
+    -1.0249999999999995,
+    4.875,
+    2.294113372408658
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 11.3885,
+    "min_clearance_m": 0.2525,
+    "narrow_run_m": 9.9971,
+    "turns": 9
+   },
+   "difficulty": 0.20068,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    -4.525,
+    -1.375
+   ],
+   "goal_zone": null,
+   "id": "s036",
+   "seed": 3220822200234622,
+   "start": [
+    0.375,
+    -7.175,
+    -1.0695453046120424
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 9.1184,
+    "min_clearance_m": 0.2525,
+    "narrow_run_m": 5.0971,
+    "turns": 16
+   },
+   "difficulty": 0.316327,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    15.375,
+    1.2250000000000014
+   ],
+   "goal_zone": null,
+   "id": "s037",
+   "seed": 8850039842730266,
+   "start": [
+    -4.475,
+    6.725000000000001,
+    -2.490986648703131
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 23.6323,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 10.4956,
+    "turns": 15
+   },
+   "difficulty": 0.608844,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    12.325,
+    1.2250000000000014
+   ],
+   "goal_zone": null,
+   "id": "s038",
+   "seed": 4673784806837918,
+   "start": [
+    1.625,
+    1.7750000000000004,
+    1.5323301314784423
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 14.6562,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 10.9299,
+    "turns": 10
+   },
+   "difficulty": 0.534014,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    -0.17499999999999982,
+    0.125
+   ],
+   "goal_zone": null,
+   "id": "s039",
+   "seed": 5162690563314621,
+   "start": [
+    17.075000000000003,
+    -1.8249999999999993,
+    -0.41010871605554877
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 18.0577,
+    "min_clearance_m": 0.2525,
+    "narrow_run_m": 6.7707,
+    "turns": 6
+   },
+   "difficulty": 0.238095,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    17.075000000000003,
+    -3.925
+   ],
+   "goal_zone": null,
+   "id": "s040",
+   "seed": 2494248788043856,
+   "start": [
+    13.125,
+    1.7250000000000014,
+    1.5338599288344756
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 18.6225,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.1385,
+    "turns": 18
+   },
+   "difficulty": 0.598639,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    1.125,
+    -8.525
+   ],
+   "goal_zone": null,
+   "id": "s041",
+   "seed": 8075238163627547,
+   "start": [
+    13.175,
+    -5.125,
+    0.21548318930346078
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 14.6299,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 14.6299,
+    "turns": 8
+   },
+   "difficulty": 0.465986,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    -1.4249999999999998,
+    -7.275
+   ],
+   "goal_zone": null,
+   "id": "s042",
+   "seed": 90093527042432,
+   "start": [
+    16.575000000000003,
+    -0.5250000000000004,
+    -1.5608601592081517
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 21.001,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 7.3228,
+    "turns": 10
+   },
+   "difficulty": 0.479592,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    15.975000000000001,
+    7.225000000000001
+   ],
+   "goal_zone": null,
+   "id": "s043",
+   "seed": 2140166566678318,
+   "start": [
+    -0.625,
+    -8.325,
+    1.9581592620586319
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 30.106,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.0349,
+    "turns": 30
+   },
+   "difficulty": 0.792517,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    3.1750000000000007,
+    3.9750000000000014
+   ],
+   "goal_zone": null,
+   "id": "s044",
+   "seed": 4062209514388482,
+   "start": [
+    8.425,
+    -8.175,
+    -1.2363729815498403
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 17.9849,
+    "min_clearance_m": 0.2525,
+    "narrow_run_m": 6.9864,
+    "turns": 7
+   },
+   "difficulty": 0.248299,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    12.575,
+    0.375
+   ],
+   "goal_zone": null,
+   "id": "s045",
+   "seed": 7718642742628619,
+   "start": [
+    -5.175,
+    6.125,
+    1.3330486764340694
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 22.1329,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 10.4956,
+    "turns": 16
+   },
+   "difficulty": 0.612245,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    14.925,
+    -1.0749999999999993
+   ],
+   "goal_zone": null,
+   "id": "s046",
+   "seed": 1161348086210814,
+   "start": [
+    9.175,
+    7.725000000000001,
+    0.9115800822070064
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 11.5453,
+    "min_clearance_m": 0.2,
+    "narrow_run_m": 4.6491,
+    "turns": 10
+   },
+   "difficulty": 0.445578,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    9.175,
+    7.275000000000002
+   ],
+   "goal_zone": null,
+   "id": "s047",
+   "seed": 2534214502731852,
+   "start": [
+    -4.074999999999999,
+    -1.3249999999999993,
+    2.572264833719201
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 18.3646,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.0728,
+    "turns": 12
+   },
+   "difficulty": 0.493197,
+   "tier": "medium"
+  },
+  {
+   "goal": [
+    -1.0249999999999995,
+    4.625
+   ],
+   "goal_zone": null,
+   "id": "s048",
+   "seed": 2880165415908962,
+   "start": [
+    5.825000000000001,
+    -3.875,
+    0.4162743058451621
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 13.9148,
+    "min_clearance_m": 0.2525,
+    "narrow_run_m": 6.1678,
+    "turns": 8
+   },
+   "difficulty": 0.197279,
+   "tier": "easy"
+  },
+  {
+   "goal": [
+    17.175,
+    -8.525
+   ],
+   "goal_zone": null,
+   "id": "s049",
+   "seed": 927075697592571,
+   "start": [
+    -1.375,
+    0.9250000000000007,
+    -1.139905992476257
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 24.1338,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 7.3763,
+    "turns": 16
+   },
+   "difficulty": 0.789116,
+   "tier": "hard"
+  },
+  {
+   "goal": [
+    17.025000000000002,
+    -8.325
+   ],
+   "goal_zone": null,
+   "id": "s050",
+   "seed": 6330868903754836,
+   "start": [
+    1.2750000000000004,
+    5.925000000000001,
+    0.3869496763279847
+   ],
+   "start_zone": null,
+   "features": {
+    "path_length_m": 28.8004,
+    "min_clearance_m": 0.2525,
+    "narrow_run_m": 7.2521,
+    "turns": 14
+   },
+   "difficulty": 0.534014,
+   "tier": "medium"
+  }
+ ]
+}

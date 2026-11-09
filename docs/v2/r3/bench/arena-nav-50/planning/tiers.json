@@ -1,0 +1,222 @@
+{
+ "about": "R3.2 tools/r3/make_baselines.py: per tier (the suite file's tiers), public scenarios",
+ "family": "planning",
+ "held_out": {
+  "n": 15,
+  "note": "a reference draw from a public seed (not an ADR 0014 secret)",
+  "seed": 2213807711433326
+ },
+ "suite": "arena-nav-50",
+ "tiers": {
+  "astar": {
+   "easy": {
+    "expansions_median": 3716,
+    "min_clearance_m_median": 0.25,
+    "n": 17,
+    "path_length_m_median": 10.057716446627532,
+    "successes": 17,
+    "wilson95": [
+     0.8156818649911483,
+     1
+    ]
+   },
+   "hard": {
+    "expansions_median": 31080.5,
+    "min_clearance_m_median": 0.225,
+    "n": 16,
+    "path_length_m_median": 24.23926586339946,
+    "successes": 16,
+    "wilson95": [
+     0.8063923194655637,
+     1
+    ]
+   },
+   "medium": {
+    "expansions_median": 9798,
+    "min_clearance_m_median": 0.2,
+    "n": 17,
+    "path_length_m_median": 15.779646455628175,
+    "successes": 17,
+    "wilson95": [
+     0.8156818649911483,
+     1
+    ]
+   }
+  },
+  "bfs": {
+   "easy": {
+    "expansions_median": 43080,
+    "min_clearance_m_median": 0.019258240356725187,
+    "n": 17,
+    "path_length_m_median": 9.49913780286485,
+    "successes": 17,
+    "wilson95": [
+     0.8156818649911483,
+     1
+    ]
+   },
+   "hard": {
+    "expansions_median": 92166.5,
+    "min_clearance_m_median": 0.019258240356725187,
+    "n": 16,
+    "path_length_m_median": 23.718124086713246,
+    "successes": 16,
+    "wilson95": [
+     0.8063923194655637,
+     1
+    ]
+   },
+   "medium": {
+    "expansions_median": 67634,
+    "min_clearance_m_median": 0.019258240356725187,
+    "n": 17,
+    "path_length_m_median": 15.40893577750953,
+    "successes": 17,
+    "wilson95": [
+     0.8156818649911483,
+     1
+    ]
+   }
+  },
+  "dijkstra": {
+   "easy": {
+    "expansions_median": 39758,
+    "min_clearance_m_median": 0.25,
+    "n": 17,
+    "path_length_m_median": 10.05771644662753,
+    "successes": 17,
+    "wilson95": [
+     0.8156818649911483,
+     1
+    ]
+   },
+   "hard": {
+    "expansions_median": 94574,
+    "min_clearance_m_median": 0.225,
+    "n": 16,
+    "path_length_m_median": 24.239265863399456,
+    "successes": 16,
+    "wilson95": [
+     0.8063923194655637,
+     1
+    ]
+   },
+   "medium": {
+    "expansions_median": 67268,
+    "min_clearance_m_median": 0.2,
+    "n": 17,
+    "path_length_m_median": 15.779646455628171,
+    "successes": 17,
+    "wilson95": [
+     0.8156818649911483,
+     1
+    ]
+   }
+  },
+  "dstar_lite": {
+   "easy": {
+    "expansions_median": 4691,
+    "min_clearance_m_median": 0.25,
+    "n": 17,
+    "path_length_m_median": 10.057716446627536,
+    "successes": 17,
+    "wilson95": [
+     0.8156818649911483,
+     1
+    ]
+   },
+   "hard": {
+    "expansions_median": 29243,
+    "min_clearance_m_median": 0.225,
+    "n": 16,
+    "path_length_m_median": 24.239265863399424,
+    "successes": 16,
+    "wilson95": [
+     0.8063923194655637,
+     1
+    ]
+   },
+   "medium": {
+    "expansions_median": 8600,
+    "min_clearance_m_median": 0.2,
+    "n": 17,
+    "path_length_m_median": 15.779646455628166,
+    "successes": 17,
+    "wilson95": [
+     0.8156818649911483,
+     1
+    ]
+   }
+  },
+  "greedy": {
+   "easy": {
+    "expansions_median": 248,
+    "min_clearance_m_median": 0.019258240356725187,
+    "n": 17,
+    "path_length_m_median": 11.62989898732234,
+    "successes": 17,
+    "wilson95": [
+     0.8156818649911483,
+     1
+    ]
+   },
+   "hard": {
+    "expansions_median": 2313.5,
+    "min_clearance_m_median": 0.019258240356725187,
+    "n": 16,
+    "path_length_m_median": 26.69949493661172,
+    "successes": 16,
+    "wilson95": [
+     0.8063923194655637,
+     1
+    ]
+   },
+   "medium": {
+    "expansions_median": 687,
+    "min_clearance_m_median": 0.019258240356725187,
+    "n": 17,
+    "path_length_m_median": 17.744722215136417,
+    "successes": 17,
+    "wilson95": [
+     0.8156818649911483,
+     1
+    ]
+   }
+  },
+  "weighted_astar": {
+   "easy": {
+    "expansions_median": 544,
+    "min_clearance_m_median": 0.08541019662496852,
+    "n": 17,
+    "path_length_m_median": 9.840559159102149,
+    "successes": 17,
+    "wilson95": [
+     0.8156818649911483,
+     1
+    ]
+   },
+   "hard": {
+    "expansions_median": 9814,
+    "min_clearance_m_median": 0.07015621187164245,
+    "n": 16,
+    "path_length_m_median": 25.496856044179957,
+    "successes": 16,
+    "wilson95": [
+     0.8063923194655637,
+     1
+    ]
+   },
+   "medium": {
+    "expansions_median": 1419,
+    "min_clearance_m_median": 0.07015621187164245,
+    "n": 17,
+    "path_length_m_median": 16.29594154601841,
+    "successes": 17,
+    "wilson95": [
+     0.8156818649911483,
+     1
+    ]
+   }
+  }
+ }
+}

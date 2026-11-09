@@ -1,0 +1,10 @@
+## Leaderboard verification: VERIFIED
+
+`depot-narrow-30/weighted_astar` · planning · verifier 1 · MODEL (coco_lab, natively; in CI inside the sandboxed container)
+
+- **public** (30 scenarios): success 30/30 (Wilson 95% 0.886–1.000); path_ratio median 1.032; expansions median 2076; min_clearance_m median 0.1106
+- **held-out** (10 scenarios): success 10/10 (Wilson 95% 0.722–1.000); path_ratio median 1.006; expansions median 406; min_clearance_m median 0.1106
+
+- deterministic (every run twice): True
+- contract problems: 0; clamped outputs: 0
+- claim matches: None

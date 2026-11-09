@@ -47,6 +47,9 @@ def test_writer_accepts_a_verifier_result():
     {'public': {'score': {'n': 100, 'successes': 101}}},
     {'public': {'score': {'n': 100, 'successes': 1, 'path_ratio': {'median': float('nan')}}}},
     {'checks': {'deterministic': 'true'}},
+    # R3 review: a paper link must be https:// (a PR controls its verify workflow file)
+    {'entry': {'suite': 'depot-nav-100', 'name': 'ok_name', 'display_name': 'x', 'author': 'a', 'description': 'd',
+               'licence': 'MIT', 'family': 'planning', 'kind': 'submission', 'paper': 'javascript:alert(1)'}},
 ])
 def test_writer_refuses_anything_else(bad):
     with pytest.raises(W.Invalid):
@@ -150,3 +153,23 @@ def test_the_index_is_generated_from_every_verified_result(tmp_path):
     for p in (REPO / 'leaderboard' / 'results').glob('*/*/result.json'):
         r = json.loads(p.read_text())
         assert ((r['entry']['suite'], r['entry']['name']) in listed) == bool(r['verified']), p
+
+
+def test_contributing_lists_exactly_the_verifiers_boards():
+    # R3.6: CONTRIBUTING's board table is the verifier's FAMILY_SUITES (COCO-Bench v1)
+    text = (REPO / 'leaderboard' / 'CONTRIBUTING.md').read_text()
+    rows = {}
+    for line in text.splitlines():
+        cells = [c.strip() for c in line.strip().strip('|').split('|')]
+        if len(cells) == 4 and cells[0].startswith('`'):
+            rows[cells[0].strip('`')] = [c == 'yes' for c in cells[1:]]
+    fams = ('planning', 'control', 'localisation')
+    want = {s: [s in L.FAMILY_SUITES[f] for f in fams]
+            for s in sorted({s for f in fams for s in L.FAMILY_SUITES[f]})}
+    assert rows == want
+
+
+def test_every_committed_entry_names_its_host():
+    # R3.9: entries made from the baselines once lacked 'host' and the Leaderboard page crashed on it
+    for f in sorted((REPO / 'leaderboard' / 'results').glob('*/*/result.json')):
+        assert json.loads(f.read_text()).get('host', {}).get('cpu'), f

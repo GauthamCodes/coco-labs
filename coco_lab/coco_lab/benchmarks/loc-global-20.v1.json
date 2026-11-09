@@ -1,0 +1,629 @@
+{
+ "schema": "coco.bench.suite.v1",
+ "id": "loc-global-20",
+ "version": 1,
+ "title": "Localisation: global, from an unknown start (MCL family; an EKF cannot)",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841",
+ "families": [
+  "localisation"
+ ],
+ "metrics": {
+  "localisation": [
+   "time_s",
+   "ticks",
+   "path_length_m",
+   "min_clearance_m",
+   "mean_clearance_m",
+   "heading_change_rad",
+   "contacts",
+   "expansions",
+   "plans",
+   "final_goal_distance_m",
+   "final_err_xy_m",
+   "final_err_yaw_rad",
+   "mean_err_xy_m",
+   "max_err_xy_m",
+   "converged_s",
+   "recovery_s",
+   "compute_ms"
+  ]
+ },
+ "generator": {
+  "kind": "localisation",
+  "seed": 7601,
+  "min_separation_m": 6.0,
+  "tool": "tools/r3/make_suites_v1.py",
+  "module": "coco_lab.bench_v1"
+ },
+ "tiers": {
+  "method": "mean percentile rank of the tier features; thirds by (difficulty, id)",
+  "features": [
+   "path_length_m",
+   "turns",
+   "min_clearance_m"
+  ],
+  "counts": {
+   "easy": 7,
+   "medium": 7,
+   "hard": 6
+  },
+  "cut_difficulty": [
+   0.394737,
+   0.675439
+  ]
+ },
+ "held_out": {
+  "n": 6,
+  "scheme": "ADR 0014 (secret salt, per head) in CI; R2 public salt locally",
+  "generator": "the same, another seed"
+ },
+ "datasheet": "docs/bench/v1/loc-global-20.md",
+ "algorithms": [
+  "mcl",
+  "mcl_augmented",
+  "user"
+ ],
+ "scenarios": [
+  {
+   "id": "g001",
+   "start": [
+    40.050000000000004,
+    15.05,
+    2.925400647266672
+   ],
+   "goal": [
+    46.35,
+    17.150000000000002
+   ],
+   "seed": 2092029922609656,
+   "start_zone": null,
+   "goal_zone": null,
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 7.1698,
+    "min_clearance_m": 1.25,
+    "narrow_run_m": 0.0,
+    "turns": 3,
+    "zones": 0,
+    "actor_exposure_m": 1.3414
+   },
+   "difficulty": 0.078947,
+   "tier": "easy"
+  },
+  {
+   "id": "g002",
+   "start": [
+    11.05,
+    13.65,
+    1.7669278476722416
+   ],
+   "goal": [
+    37.35,
+    19.450000000000003
+   ],
+   "seed": 873567166141189,
+   "start_zone": "zone_workshop",
+   "goal_zone": null,
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 38.5468,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 10.8556,
+    "turns": 13,
+    "zones": 2,
+    "actor_exposure_m": 3.1414
+   },
+   "difficulty": 0.72807,
+   "tier": "hard"
+  },
+  {
+   "id": "g003",
+   "start": [
+    47.050000000000004,
+    6.25,
+    -2.9252613385162505
+   ],
+   "goal": [
+    34.95,
+    22.25
+   ],
+   "seed": 336400213029458,
+   "start_zone": "zone_loading_dock",
+   "goal_zone": null,
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 21.012,
+    "min_clearance_m": 0.55,
+    "narrow_run_m": 0.0,
+    "turns": 3,
+    "zones": 2,
+    "actor_exposure_m": 8.4853
+   },
+   "difficulty": 0.219298,
+   "tier": "easy"
+  },
+  {
+   "id": "g004",
+   "start": [
+    36.25,
+    1.4500000000000002,
+    -0.31479415077397244
+   ],
+   "goal": [
+    1.5500000000000003,
+    23.35
+   ],
+   "seed": 7012285879933505,
+   "start_zone": "zone_loading_dock",
+   "goal_zone": "zone_office",
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 51.5872,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 19.6042,
+    "turns": 12,
+    "zones": 4,
+    "actor_exposure_m": 8.3468
+   },
+   "difficulty": 0.850877,
+   "tier": "hard"
+  },
+  {
+   "id": "g005",
+   "start": [
+    29.150000000000002,
+    25.75,
+    2.4271320223558357
+   ],
+   "goal": [
+    18.55,
+    4.65
+   ],
+   "seed": 361170010533258,
+   "start_zone": "zone_high_bay",
+   "goal_zone": null,
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 27.9167,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 4.9314,
+    "turns": 6,
+    "zones": 2,
+    "actor_exposure_m": 7.4314
+   },
+   "difficulty": 0.491228,
+   "tier": "medium"
+  },
+  {
+   "id": "g006",
+   "start": [
+    36.75,
+    9.950000000000001,
+    0.8986319944724341
+   ],
+   "goal": [
+    17.05,
+    10.850000000000001
+   ],
+   "seed": 8430354975378239,
+   "start_zone": null,
+   "goal_zone": "zone_forklift_lanes",
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 20.0728,
+    "min_clearance_m": 1.75,
+    "narrow_run_m": 0.0,
+    "turns": 2,
+    "zones": 1,
+    "actor_exposure_m": 20.0728
+   },
+   "difficulty": 0.114035,
+   "tier": "easy"
+  },
+  {
+   "id": "g007",
+   "start": [
+    20.650000000000002,
+    2.5500000000000003,
+    -1.7213225042425624
+   ],
+   "goal": [
+    37.35,
+    25.25
+   ],
+   "seed": 2504617179856215,
+   "start_zone": null,
+   "goal_zone": "zone_mezzanine",
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 34.7889,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 4.7971,
+    "turns": 10,
+    "zones": 2,
+    "actor_exposure_m": 9.1882
+   },
+   "difficulty": 0.657895,
+   "tier": "medium"
+  },
+  {
+   "id": "g008",
+   "start": [
+    39.150000000000006,
+    9.350000000000001,
+    0.9995894921535546
+   ],
+   "goal": [
+    44.650000000000006,
+    1.1500000000000001
+   ],
+   "seed": 8469229977291194,
+   "start_zone": "zone_loading_dock",
+   "goal_zone": "zone_loading_dock",
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 10.5953,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 3.2971,
+    "turns": 4,
+    "zones": 1,
+    "actor_exposure_m": 2.4042
+   },
+   "difficulty": 0.394737,
+   "tier": "easy"
+  },
+  {
+   "id": "g009",
+   "start": [
+    19.450000000000003,
+    0.75,
+    1.615533747373905
+   ],
+   "goal": [
+    15.05,
+    13.55
+   ],
+   "seed": 7383776513805024,
+   "start_zone": null,
+   "goal_zone": null,
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 14.6225,
+    "min_clearance_m": 0.35,
+    "narrow_run_m": 1.6,
+    "turns": 4,
+    "zones": 1,
+    "actor_exposure_m": 3.5698
+   },
+   "difficulty": 0.219298,
+   "tier": "easy"
+  },
+  {
+   "id": "g010",
+   "start": [
+    45.45,
+    24.85,
+    -1.143465140013091
+   ],
+   "goal": [
+    3.6500000000000004,
+    7.45
+   ],
+   "seed": 1483210255597247,
+   "start_zone": "zone_mezzanine",
+   "goal_zone": "zone_workshop",
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 58.8718,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 8.3627,
+    "turns": 29,
+    "zones": 3,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.850877,
+   "tier": "hard"
+  },
+  {
+   "id": "g011",
+   "start": [
+    35.35,
+    30.75,
+    -0.19917652078442005
+   ],
+   "goal": [
+    20.75,
+    2.25
+   ],
+   "seed": 6395184281635004,
+   "start_zone": "zone_mezzanine",
+   "goal_zone": null,
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 34.6647,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 2.4,
+    "turns": 5,
+    "zones": 2,
+    "actor_exposure_m": 9.7397
+   },
+   "difficulty": 0.552632,
+   "tier": "medium"
+  },
+  {
+   "id": "g012",
+   "start": [
+    46.650000000000006,
+    19.85,
+    -1.6824980668122416
+   ],
+   "goal": [
+    30.75,
+    21.75
+   ],
+   "seed": 7429247824300198,
+   "start_zone": null,
+   "goal_zone": "zone_high_bay",
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 16.687,
+    "min_clearance_m": 0.85,
+    "narrow_run_m": 0.0,
+    "turns": 2,
+    "zones": 1,
+    "actor_exposure_m": 3.1
+   },
+   "difficulty": 0.131579,
+   "tier": "easy"
+  },
+  {
+   "id": "g013",
+   "start": [
+    14.450000000000001,
+    23.25,
+    0.25714805031104504
+   ],
+   "goal": [
+    4.3500000000000005,
+    5.15
+   ],
+   "seed": 1532876969532502,
+   "start_zone": null,
+   "goal_zone": "zone_workshop",
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 28.451,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 8.3627,
+    "turns": 17,
+    "zones": 1,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.736842,
+   "tier": "hard"
+  },
+  {
+   "id": "g014",
+   "start": [
+    5.45,
+    3.6500000000000004,
+    0.9166942155365172
+   ],
+   "goal": [
+    15.350000000000001,
+    21.650000000000002
+   ],
+   "seed": 8400749454897174,
+   "start_zone": "zone_workshop",
+   "goal_zone": null,
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 28.9309,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 7.2627,
+    "turns": 19,
+    "zones": 1,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.675439,
+   "tier": "medium"
+  },
+  {
+   "id": "g015",
+   "start": [
+    2.95,
+    10.65,
+    2.005231620028062
+   ],
+   "goal": [
+    39.85,
+    24.450000000000003
+   ],
+   "seed": 2120790827624581,
+   "start_zone": "zone_workshop",
+   "goal_zone": "zone_mezzanine",
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 49.4889,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 9.0314,
+    "turns": 21,
+    "zones": 3,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.912281,
+   "tier": "hard"
+  },
+  {
+   "id": "g016",
+   "start": [
+    29.05,
+    9.55,
+    2.302445687462453
+   ],
+   "goal": [
+    9.75,
+    4.8500000000000005
+   ],
+   "seed": 5866133215582247,
+   "start_zone": null,
+   "goal_zone": "zone_workshop",
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 22.6551,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 3.6142,
+    "turns": 8,
+    "zones": 1,
+    "actor_exposure_m": 3.2728
+   },
+   "difficulty": 0.5,
+   "tier": "medium"
+  },
+  {
+   "id": "g017",
+   "start": [
+    15.75,
+    26.85,
+    -3.1289264033405018
+   ],
+   "goal": [
+    27.150000000000002,
+    0.8500000000000001
+   ],
+   "seed": 5289256932010740,
+   "start_zone": "zone_high_bay",
+   "goal_zone": null,
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 30.9706,
+    "min_clearance_m": 0.2599,
+    "narrow_run_m": 3.7243,
+    "turns": 5,
+    "zones": 2,
+    "actor_exposure_m": 3.9527
+   },
+   "difficulty": 0.45614,
+   "tier": "medium"
+  },
+  {
+   "id": "g018",
+   "start": [
+    31.65,
+    12.75,
+    2.095950394053614
+   ],
+   "goal": [
+    19.650000000000002,
+    7.65
+   ],
+   "seed": 2136155095266892,
+   "start_zone": "zone_forklift_lanes",
+   "goal_zone": null,
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 14.1125,
+    "min_clearance_m": 1.9704,
+    "narrow_run_m": 0.0,
+    "turns": 5,
+    "zones": 1,
+    "actor_exposure_m": 9.274
+   },
+   "difficulty": 0.157895,
+   "tier": "easy"
+  },
+  {
+   "id": "g019",
+   "start": [
+    37.85,
+    2.95,
+    2.7451345055579006
+   ],
+   "goal": [
+    25.75,
+    26.55
+   ],
+   "seed": 8221974970988615,
+   "start_zone": "zone_loading_dock",
+   "goal_zone": "zone_high_bay",
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 30.2605,
+    "min_clearance_m": 0.25,
+    "narrow_run_m": 3.9071,
+    "turns": 6,
+    "zones": 3,
+    "actor_exposure_m": 6.7569
+   },
+   "difficulty": 0.561404,
+   "tier": "medium"
+  },
+  {
+   "id": "g020",
+   "start": [
+    33.75,
+    25.35,
+    -2.9672088901578135
+   ],
+   "goal": [
+    7.45,
+    30.05
+   ],
+   "seed": 6991361412490157,
+   "start_zone": null,
+   "goal_zone": "zone_office",
+   "config": [
+    "localise.mcl.init=global"
+   ],
+   "features": {
+    "path_length_m": 28.4811,
+    "min_clearance_m": 0.15,
+    "narrow_run_m": 7.3414,
+    "turns": 12,
+    "zones": 2,
+    "actor_exposure_m": 0.0
+   },
+   "difficulty": 0.710526,
+   "tier": "hard"
+  }
+ ]
+}

@@ -1,0 +1,185 @@
+{
+ "algorithms": [
+  {
+   "id": "mcl",
+   "label": "MCL",
+   "name": "mcl",
+   "params": {
+    "mcl.aggregate": "amcl",
+    "mcl.alpha_fast": 0.1,
+    "mcl.alpha_slow": 0.001,
+    "mcl.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "mcl.beams": 12,
+    "mcl.init": "tracking",
+    "mcl.inject_fraction": 0.05,
+    "mcl.particles": 60,
+    "mcl.resample": "always",
+    "mcl.sigma_hit": 0.2
+   }
+  },
+  {
+   "id": "mcl_augmented",
+   "label": "MCL + augmented injection",
+   "name": "mcl_augmented",
+   "params": {
+    "mcl.aggregate": "amcl",
+    "mcl.alpha_fast": 0.1,
+    "mcl.alpha_slow": 0.001,
+    "mcl.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "mcl.beams": 12,
+    "mcl.init": "tracking",
+    "mcl.inject_fraction": 0.05,
+    "mcl.particles": 60,
+    "mcl.resample": "always",
+    "mcl.sigma_hit": 0.2
+   }
+  }
+ ],
+ "family": "localisation",
+ "limits": {
+  "max_ticks": 3000
+ },
+ "metrics": [
+  "time_s",
+  "ticks",
+  "path_length_m",
+  "min_clearance_m",
+  "mean_clearance_m",
+  "heading_change_rad",
+  "contacts",
+  "expansions",
+  "plans",
+  "final_goal_distance_m",
+  "final_err_xy_m",
+  "final_err_yaw_rad",
+  "mean_err_xy_m",
+  "max_err_xy_m",
+  "converged_s",
+  "recovery_s",
+  "compute_ms"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "kind": "inline",
+  "scenarios": [
+   {
+    "config": [
+     "localise.mcl.init=global"
+    ],
+    "goal": [
+     5.45,
+     21.05
+    ],
+    "id": "g001",
+    "seed": 3957239904142203,
+    "start": [
+     44.35,
+     26.150000000000002,
+     -1.7359709033603274
+    ]
+   },
+   {
+    "config": [
+     "localise.mcl.init=global"
+    ],
+    "goal": [
+     19.950000000000003,
+     12.850000000000001
+    ],
+    "id": "g002",
+    "seed": 7044868137500781,
+    "start": [
+     30.450000000000003,
+     12.75,
+     0.6359082011241202
+    ]
+   },
+   {
+    "config": [
+     "localise.mcl.init=global"
+    ],
+    "goal": [
+     4.550000000000001,
+     10.450000000000001
+    ],
+    "id": "g003",
+    "seed": 953618362068424,
+    "start": [
+     15.55,
+     18.45,
+     2.6652246362030247
+    ]
+   },
+   {
+    "config": [
+     "localise.mcl.init=global"
+    ],
+    "goal": [
+     12.65,
+     9.55
+    ],
+    "id": "g004",
+    "seed": 1874644257900448,
+    "start": [
+     45.550000000000004,
+     20.25,
+     0.7129280838641607
+    ]
+   },
+   {
+    "config": [
+     "localise.mcl.init=global"
+    ],
+    "goal": [
+     40.95,
+     25.55
+    ],
+    "id": "g005",
+    "seed": 354609006098081,
+    "start": [
+     18.25,
+     29.25,
+     -0.8029360145776891
+    ]
+   },
+   {
+    "config": [
+     "localise.mcl.init=global"
+    ],
+    "goal": [
+     42.85,
+     5.550000000000001
+    ],
+    "id": "g006",
+    "seed": 5290926505161728,
+    "start": [
+     23.150000000000002,
+     17.55,
+     -2.745758688661033
+    ]
+   }
+  ]
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 1,
+ "sweep": {
+  "params": []
+ },
+ "title": "COCO-Bench v1 baseline: loc-global-20, localisation, held_out",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841"
+}

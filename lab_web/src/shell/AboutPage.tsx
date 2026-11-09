@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { REPO_BLOB_URL } from '../../site.config';
 import { ModeNav } from '../ui/ModeNav';
+import { BIBTEX, REPRODUCE_QUERY } from './citation';
 import './shell.css';
 const BASE = import.meta.env.BASE_URL;
 export function AboutPage() {
@@ -24,6 +25,16 @@ export function AboutPage() {
     <h2>Explore</h2>
     <p><a href={`${BASE}?view=live`} data-testid="live-link">Live Stack (simulated)</a> connects to the simulated ROS 2 stack when a session is available.</p>
     <p><a href={`${BASE}v1/`} data-testid="v1-labs-link">The v1 archive</a> preserves the earlier labs and their links.</p>
+    <h2 id="cite">Cite</h2>
+    <p>If you use COCO Lab or COCO-Bench in your work, please cite it (also in <a href={`${REPO_BLOB_URL}CITATION.cff`}>CITATION.cff</a>):</p>
+    <pre className="about-cite" data-testid="cite-bibtex">{BIBTEX}</pre>
+    <p><button type="button" data-testid="cite-copy" onClick={(e) => {
+      const b = e.currentTarget;
+      try {
+        void navigator.clipboard.writeText(BIBTEX).then(() => { b.textContent = 'Copied'; }, () => { b.textContent = 'Select the text above to copy'; });
+      } catch { b.textContent = 'Select the text above to copy'; }
+    }}>Copy citation</button></p>
+    <p><a href={`${BASE}${REPRODUCE_QUERY}`} data-testid="reproduce-paper">Reproduce this paper</a>: opens the Workbench with the paper's browser experiment (every built-in planner on depot-nav-100) and checks that your browser computes the same digest.</p>
     <h2>Credits and licences</h2>
     <p>COCO's CAD, robot and warehouse assets are Gautham Anil's work. COCO Lab is <a href={`${REPO_BLOB_URL}LICENSE`}>Apache-2.0 software</a>.</p>
     <p>Display type: Outfit. Interface type: Manrope. Both are self-hosted under the SIL Open Font License: <a href={`${BASE}licenses/outfit.txt`}>Outfit licence</a>, <a href={`${BASE}licenses/manrope.txt`}>Manrope licence</a>. Icons: Lucide, ISC, with the retained Feather MIT notice: <a href={`${BASE}licenses/lucide.txt`}>icon licence</a>.</p>
