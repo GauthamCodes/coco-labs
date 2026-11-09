@@ -360,6 +360,14 @@
    "why": "failed_to_make_progress"
   }
  },
+ "host": {
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "git": "39c7580f17e625549b4412743cc07a2614f8337e",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "runner": "cpython",
+  "workers": 10
+ },
  "problems": [],
  "public": {
   "digest": "adf0cb994f4723696c2b0be423ffe4b954d21150ce53c38b5a9c07bb7ed9a5ae",

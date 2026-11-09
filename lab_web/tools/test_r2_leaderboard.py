@@ -167,3 +167,9 @@ def test_contributing_lists_exactly_the_verifiers_boards():
     want = {s: [s in L.FAMILY_SUITES[f] for f in fams]
             for s in sorted({s for f in fams for s in L.FAMILY_SUITES[f]})}
     assert rows == want
+
+
+def test_every_committed_entry_names_its_host():
+    # R3.9: entries made from the baselines once lacked 'host' and the Leaderboard page crashed on it
+    for f in sorted((REPO / 'leaderboard' / 'results').glob('*/*/result.json')):
+        assert json.loads(f.read_text()).get('host', {}).get('cpu'), f

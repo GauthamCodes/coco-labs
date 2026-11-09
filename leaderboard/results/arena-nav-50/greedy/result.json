@@ -339,6 +339,14 @@
    "why": "worst path ratio"
   }
  },
+ "host": {
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "git": "08a7eda2e0729a9b0c37069c6fec5e0be03780d7",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "runner": "cpython",
+  "workers": 10
+ },
  "problems": [],
  "public": {
   "digest": "a7adc108ec2f42bc0d681f15c6a39bfc60e763c64ecd3335822b23405c0b4b55",

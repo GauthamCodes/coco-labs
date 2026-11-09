@@ -345,6 +345,14 @@
    "why": "no_valid_control"
   }
  },
+ "host": {
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "git": "353a66d93bad26467b137b9b783ab9fd89b87573",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "runner": "cpython",
+  "workers": 10
+ },
  "problems": [],
  "public": {
   "digest": "0463af0113314d2731ae5ce9c72cdd547d21023a295c545357bd66c99e1e2097",

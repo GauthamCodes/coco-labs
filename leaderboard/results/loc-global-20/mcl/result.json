@@ -244,6 +244,14 @@
    "why": "timeout"
   }
  },
+ "host": {
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "git": "f34686235545004c4f1c5d7e206d310880cb76b9",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "runner": "cpython",
+  "workers": 10
+ },
  "problems": [],
  "public": {
   "digest": "aef640a880f62675a1f86257a8d2bf8d0fc4111230e6a7c55a9f356f713380e3",

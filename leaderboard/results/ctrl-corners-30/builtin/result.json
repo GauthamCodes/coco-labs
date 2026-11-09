@@ -244,6 +244,14 @@
    "why": "worst time"
   }
  },
+ "host": {
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "git": "7ab4059529ada9a1ce5ada012d7aabb436d6c620",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "runner": "cpython",
+  "workers": 10
+ },
  "problems": [],
  "public": {
   "digest": "68f5f9e8ef7c4f7c9d704a5e4040dc729dc1fdc065b4fc0be8c94a6d62f6a92e",

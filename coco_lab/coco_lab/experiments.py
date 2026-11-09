@@ -395,12 +395,14 @@ def _inline(w, scen) -> List[Dict]:
                 raise SpecError(f'inline scenario {sid}: {name} is off the map')
         if 'kidnap' in s and not point(s['kidnap'], 2):
             raise SpecError(f'inline scenario {sid}: kidnap [x, y]')
-        if 'kidnap_at_s' in s and not (point([s['kidnap_at_s']], 1) and 0.1 <= s['kidnap_at_s'] <= 1000):
+        if 'kidnap_at_s' in s and not (point([s['kidnap_at_s']], 1)
+                                       and 0.1 <= s['kidnap_at_s'] <= 1000):
             raise SpecError(f'inline scenario {sid}: kidnap_at_s is 0.1 to 1000 s')
         cfg = s.get('config', [])
         if not (isinstance(cfg, list) and len(cfg) <= 8 and
                 all(isinstance(c, str) and 1 <= len(c) <= 80 for c in cfg)):
-            raise SpecError(f'inline scenario {sid}: config is up to 8 strings of 1 to 80 characters')
+            raise SpecError(f'inline scenario {sid}: config is up to 8 strings '
+                            'of 1 to 80 characters')
         out.append(dict(s))
     return out
 

@@ -27,7 +27,7 @@ interface Part { score: Score; worst: { scenario_index: number; scenario: string
 interface Entry {
   entry: { suite: string; name: string; kind: 'submission' | 'builtin'; family: string; display_name: string; author: string; description: string; licence: string; paper: string | null; code_path: string; code_sha256: string | null };
   public: Part; held_out: Part; versions: Record<string, number | string>; checks: { deterministic: boolean; contract_problems: number; clamped_outputs: number };
-  host: { cpu?: string; python?: string; workers?: number };
+  host?: { cpu?: string; python?: string; workers?: number };
   stack?: { label: string; rows: { metric: string; model: string; stack: string; gap: string }[]; source: string };
 }
 interface Index { boards: Record<string, Entry[]>; verifier: number }
@@ -92,7 +92,7 @@ function EntryRow({ e, rank, cols }: { e: Entry; rank: number; cols: { key: keyo
       <td>{pct(s)}{ci(s)}</td>
       {cols.map((c) => <td key={c.key}>{typeof s[c.key] === 'number' ? String(s[c.key]) : med(s[c.key] as Q | undefined)}</td>)}
       <td>{pct(h)}{ci(h)}{h.path_ratio ? ` · ratio ${med(h.path_ratio)}` : ''}</td>
-      <td>{med(s.compute_ms)}<div className="wb-muted">{e.host.cpu ?? '?'}</div></td>
+      <td>{med(s.compute_ms)}<div className="wb-muted">{e.host?.cpu ?? '?'}</div></td>
       <td className="wb-links">
         <a href={`${GITHUB}${e.entry.code_path}`}>code</a>
         {sub && <> · <a href={studio}>reproduce in the Studio</a></>}

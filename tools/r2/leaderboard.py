@@ -326,6 +326,12 @@ BUILTIN_NOTE = {'builtin': ' A plan reference, not a controller result: it drive
                            'failure outcomes.'}
 
 
+def bench_host(suite_id: str, family: str) -> dict:
+    """The machine the R3.2 baseline ran on (its public manifest; compute_ms is that host's)."""
+    m = json.loads((BENCH / suite_id / family / 'public' / 'manifest.json').read_text())
+    return {k: v for k, v in m['host'].items() if k != 'wall_s'}
+
+
 def builtins_from_bench(suite_id: str, family: str, root: Path, workers: int) -> list:
     """
     R3.6: every built-in's reference entry for one v1 suite and family, from the R3.2 baseline runs.
@@ -377,7 +383,8 @@ def builtins_from_bench(suite_id: str, family: str, root: Path, workers: int) ->
                                    seed=held_out_seed(suite_id, REFERENCE), n=HELD_OUT_N[suite_id]),
                   'checks': {'deterministic': True, 'contract_problems': 0, 'clamped_outputs': 0,
                              'claimed_digest': None, 'claim_matches': None},
-                  'baseline': f'docs/v2/r3/bench/{suite_id}/{family}/'}
+                  'baseline': f'docs/v2/r3/bench/{suite_id}/{family}/',
+                  'host': bench_host(suite_id, family)}
         _write(root / suite_id / name, result)   # algorithm names are unique across families
         out.append(result)
     return out
