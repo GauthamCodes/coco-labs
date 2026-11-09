@@ -83,8 +83,37 @@ with the model on the same legs, the median difference in time per leg was \Stac
 (\StackPPGapN{} legs).
 
 \subsection{Model versus ROS~2}\label{sec:exp-gap}
-% the suite-wide comparison enters here from R3.4/R3.5 (generated/results.tex); the two follow-ups
-% below rest on committed STACK data (docs/v2/r3/data/a1/)
+We ran tier-stratified subsets of the suites (\GapPlanScenarios{} scenarios per suite) through the
+full ROS~2 stack in Gazebo and paired every STACK result with the model's run on the same scenario
+(\evclass{stack} vs \evclass{model}; every pair is downloadable from the Workbench). Planning ran
+\GapPlanReps{} times per session and a scenario's STACK success is the majority; control and
+localisation ran \GapCtrlReps{} time each, because the machine was available for one pass only, so
+their numbers are single runs and their agreement shares carry no repeat-to-repeat check.
+
+\textbf{Planning.} Over \GapPlanPairs{} paired requests on \GapPlanSuites{} suites, ROS~2 never found a
+path the model missed (\GapPlanStackOnly{} cases): every disagreement is the model being
+optimistic. The same A* file agreed with its ROS~2 node on \GapSameFileAgree{} scenarios, with
+median length ratios of \GapSameFileRatioMin{}--\GapSameFileRatioMax{}. Nav2's Smac 2D agreed on
+\GapSmacStockAgree{} as given and \GapSmacSnappedAgree{} with start and goal snapped to free
+space; the long routes show it most (\GapLongStockBoth{} as given, \GapLongSnappedBoth{} snapped). The
+dominant planning gap is therefore the start/goal convention, not the search.
+
+\textbf{Control.} Here the model is a weak predictor. Agreement on success with Nav2's own
+controllers (counterparts, not the same code) was \GapCtrlRppAgree{} for RPP, \GapCtrlDwbAgree{} for
+DWB against the model's DWA, and \GapCtrlMppiAgree{} for MPPI. The disagreements run both ways but
+not evenly: the model's RPP failed where Nav2's succeeded in \GapCtrlRppStackOnly{} cases (the
+reverse in \GapCtrlRppModelOnly{}), \GapCorridorRppStackOnly{} of them among the
+\GapCorridorRppN{} corridor routes, so the model's RPP is pessimistic. Times where both succeeded
+were close for RPP and DWB (median ratios \GapCtrlRppRatioMin{}--\GapCtrlRppRatioMax{} and
+\GapCtrlDwbRatioMin{}--\GapCtrlDwbRatioMax{}), while Nav2's MPPI took \GapCtrlMppiRatioMin{}--\GapCtrlMppiRatioMax{}
+of the model MPPI's time. Our model's controllers are teaching implementations; these results say
+where they diverge from Nav2's, not which is right.
+
+\textbf{Localisation.} On \texttt{loc-track-30}, success agreed on \GapLocAmclAgree{} routes for the
+model's MCL against AMCL and \GapLocPfAgree{} against the particle-filter starter running as a ROS~2
+node. The STACK failures were the same routes for AMCL and the starter and aborted far from the goal,
+which suggests navigation aborts rather than lost poses (\evclass{inference}).
+
 
 \textbf{The snapping convention.} Over \SnapSessions{} further sessions on the same requests,
 Nav2 as given found \SnapStockFound{} paths; with start and goal snapped to the nearest free cell

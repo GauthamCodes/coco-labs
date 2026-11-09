@@ -167,6 +167,54 @@ def macros():
         add('GlobalSuccesses', sum(bool(r['success']) for r in gr), glob + '/runs.jsonl')
         add('GlobalRuns', len(gr), glob + '/runs.jsonl')
         add('GlobalConverged', sum(r['metrics']['converged_s'] is not None for r in gr), glob + '/runs.jsonl')
+    # R3.5: MODEL vs STACK (tools/r3/gap.py over the R3.4 sessions), when committed
+    gp = 'docs/v2/r3/data/r35/gap.json'
+    if (REPO / gp).is_file():
+        g = j(gp)
+
+        def pool(fam, key):
+            c = {'both': 0, 'model_only': 0, 'stack_only': 0, 'neither': 0, 'n': 0, 'r': []}
+            for s, ps in g[fam].items():
+                for k, p in ps.items():
+                    if k == key:
+                        for x in ('both', 'model_only', 'stack_only', 'neither'):
+                            c[x] += p['confusion'][x]
+                        c['n'] += p['n']
+                        if p['ratio_median'] is not None:
+                            c['r'].append(p['ratio_median'])
+            return c
+        reps = g['repeats']
+        add('GapPlanReps', min(len(v) for k, v in reps.items() if k.endswith('_plan')), gp)
+        add('GapCtrlReps', max(len(v) for k, v in reps.items() if not k.endswith('_plan')), gp)
+        add('GapPlanScenarios', g['planning']['depot-nav-100']['user_compute_path_to_pose']['n'], gp)
+        add('GapPlanSuites', len(g['planning']), gp)
+        add('GapPlanStackOnly', sum(p['confusion']['stack_only'] for ps in g['planning'].values()
+                                    for p in ps.values()), gp)
+        add('GapPlanPairs', sum(p['n'] for ps in g['planning'].values() for p in ps.values()), gp)
+        same = pool('planning', 'user_compute_path_to_pose')
+        add('GapSameFileAgree', frac(same['both'] + same['neither'], same['n']), gp)
+        add('GapSameFileRatioMin', f"{min(same['r']):.3f}", gp)
+        add('GapSameFileRatioMax', f"{max(same['r']):.3f}", gp)
+        for key, name in (('compute_path_to_pose', 'Stock'), ('compute_path_to_pose+snapped', 'Snapped')):
+            c = pool('planning', key)
+            add(f'GapSmac{name}Agree', frac(c['both'] + c['neither'], c['n']), gp)
+        lg = g['planning']['depot-long-50']
+        add('GapLongStockBoth', frac(lg['compute_path_to_pose']['confusion']['both'], lg['compute_path_to_pose']['n']), gp)
+        add('GapLongSnappedBoth', frac(lg['compute_path_to_pose+snapped']['confusion']['both'],
+                                       lg['compute_path_to_pose+snapped']['n']), gp)
+        for ctrl, name in (('rpp', 'Rpp'), ('dwb', 'Dwb'), ('mppi', 'Mppi')):
+            c = pool('control', ctrl)
+            add(f'GapCtrl{name}Agree', frac(c['both'] + c['neither'], c['n']), gp)
+            add(f'GapCtrl{name}ModelOnly', c['model_only'], gp)
+            add(f'GapCtrl{name}StackOnly', c['stack_only'], gp)
+            add(f'GapCtrl{name}RatioMin', f"{min(c['r']):.2f}", gp)
+            add(f'GapCtrl{name}RatioMax', f"{max(c['r']):.2f}", gp)
+        cr = g['control']['ctrl-corridor-30']['rpp']['confusion']
+        add('GapCorridorRppStackOnly', cr['stack_only'], gp)
+        add('GapCorridorRppN', g['control']['ctrl-corridor-30']['rpp']['n'], gp)
+        for key, name in (('amcl:mcl', 'Amcl'), ('pf:mcl', 'Pf')):
+            p = g['localisation']['loc-track-30'][key]
+            add(f'GapLoc{name}Agree', frac(p['confusion']['both'] + p['confusion']['neither'], p['n']), gp)
     # R3.2: task-fetch-10 (MODEL), when its baseline is committed
     fet = 'docs/v2/r3/bench/task-fetch-10/fulltask'
     if (REPO / fet / 'DONE').is_file():

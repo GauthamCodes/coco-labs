@@ -1,0 +1,772 @@
+{
+ "about": "    tools/r3/gap.py RUNS_DIR OUT.json",
+ "control": {
+  "ctrl-corners-30": {
+   "dwb": {
+    "agreement": 0.8,
+    "confusion": {
+     "both": 15,
+     "model_only": 4,
+     "neither": 1,
+     "stack_only": 0
+    },
+    "label": "model dwa vs Nav2 DWB",
+    "metric": "time to goal (s)",
+    "model": "dwa",
+    "model_optimistic": 0.2,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 1.0953,
+    "ratio_n": 15
+   },
+   "mppi": {
+    "agreement": 0.65,
+    "confusion": {
+     "both": 13,
+     "model_only": 6,
+     "neither": 0,
+     "stack_only": 1
+    },
+    "label": "model mppi vs Nav2 MPPI",
+    "metric": "time to goal (s)",
+    "model": "mppi",
+    "model_optimistic": 0.3,
+    "model_pessimistic": 0.05,
+    "n": 20,
+    "ratio_median": 0.5715,
+    "ratio_n": 13
+   },
+   "rpp": {
+    "agreement": 0.45,
+    "confusion": {
+     "both": 9,
+     "model_only": 5,
+     "neither": 0,
+     "stack_only": 6
+    },
+    "label": "model rpp vs Nav2 RPP",
+    "metric": "time to goal (s)",
+    "model": "rpp",
+    "model_optimistic": 0.25,
+    "model_pessimistic": 0.3,
+    "n": 20,
+    "ratio_median": 1.0942,
+    "ratio_n": 9
+   }
+  },
+  "ctrl-corridor-30": {
+   "dwb": {
+    "agreement": 0.6,
+    "confusion": {
+     "both": 9,
+     "model_only": 3,
+     "neither": 3,
+     "stack_only": 5
+    },
+    "label": "model dwa vs Nav2 DWB",
+    "metric": "time to goal (s)",
+    "model": "dwa",
+    "model_optimistic": 0.15,
+    "model_pessimistic": 0.25,
+    "n": 20,
+    "ratio_median": 1.0654,
+    "ratio_n": 9
+   },
+   "mppi": {
+    "agreement": 0.85,
+    "confusion": {
+     "both": 17,
+     "model_only": 3,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model mppi vs Nav2 MPPI",
+    "metric": "time to goal (s)",
+    "model": "mppi",
+    "model_optimistic": 0.15,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.5573,
+    "ratio_n": 17
+   },
+   "rpp": {
+    "agreement": 0.2,
+    "confusion": {
+     "both": 4,
+     "model_only": 3,
+     "neither": 0,
+     "stack_only": 13
+    },
+    "label": "model rpp vs Nav2 RPP",
+    "metric": "time to goal (s)",
+    "model": "rpp",
+    "model_optimistic": 0.15,
+    "model_pessimistic": 0.65,
+    "n": 20,
+    "ratio_median": 1.0722,
+    "ratio_n": 4
+   }
+  },
+  "ctrl-dynamic-30": {
+   "dwb": {
+    "agreement": 0.2667,
+    "confusion": {
+     "both": 3,
+     "model_only": 3,
+     "neither": 1,
+     "stack_only": 8
+    },
+    "label": "model dwa vs Nav2 DWB",
+    "metric": "time to goal (s)",
+    "model": "dwa",
+    "model_optimistic": 0.2,
+    "model_pessimistic": 0.5333,
+    "n": 15,
+    "ratio_median": 1.1072,
+    "ratio_n": 3
+   },
+   "mppi": {
+    "agreement": 0.3333,
+    "confusion": {
+     "both": 3,
+     "model_only": 3,
+     "neither": 2,
+     "stack_only": 7
+    },
+    "label": "model mppi vs Nav2 MPPI",
+    "metric": "time to goal (s)",
+    "model": "mppi",
+    "model_optimistic": 0.2,
+    "model_pessimistic": 0.4667,
+    "n": 15,
+    "ratio_median": 0.5839,
+    "ratio_n": 3
+   },
+   "rpp": {
+    "agreement": 0.4,
+    "confusion": {
+     "both": 4,
+     "model_only": 2,
+     "neither": 2,
+     "stack_only": 7
+    },
+    "label": "model rpp vs Nav2 RPP",
+    "metric": "time to goal (s)",
+    "model": "rpp",
+    "model_optimistic": 0.1333,
+    "model_pessimistic": 0.4667,
+    "n": 15,
+    "ratio_median": 1.0512,
+    "ratio_n": 4
+   }
+  },
+  "ctrl-dynamic-30 (actors keep schedule)": {
+   "dwb": {
+    "agreement": 0.4667,
+    "confusion": {
+     "both": 5,
+     "model_only": 3,
+     "neither": 2,
+     "stack_only": 5
+    },
+    "label": "model dwa vs Nav2 DWB",
+    "metric": "time to goal (s)",
+    "model": "dwa",
+    "model_optimistic": 0.2,
+    "model_pessimistic": 0.3333,
+    "n": 15,
+    "ratio_median": 1.0041,
+    "ratio_n": 5
+   },
+   "mppi": {
+    "agreement": 0.3333,
+    "confusion": {
+     "both": 3,
+     "model_only": 3,
+     "neither": 2,
+     "stack_only": 7
+    },
+    "label": "model mppi vs Nav2 MPPI",
+    "metric": "time to goal (s)",
+    "model": "mppi",
+    "model_optimistic": 0.2,
+    "model_pessimistic": 0.4667,
+    "n": 15,
+    "ratio_median": 0.5585,
+    "ratio_n": 3
+   },
+   "rpp": {
+    "agreement": 0.4,
+    "confusion": {
+     "both": 4,
+     "model_only": 2,
+     "neither": 2,
+     "stack_only": 7
+    },
+    "label": "model rpp vs Nav2 RPP",
+    "metric": "time to goal (s)",
+    "model": "rpp",
+    "model_optimistic": 0.1333,
+    "model_pessimistic": 0.4667,
+    "n": 15,
+    "ratio_median": 1.0472,
+    "ratio_n": 4
+   }
+  }
+ },
+ "downloads": [
+  {
+   "label": "planning (480 pairs)",
+   "path": "r3/paired/planning.jsonl"
+  },
+  {
+   "label": "control (210 pairs)",
+   "path": "r3/paired/control.jsonl"
+  },
+  {
+   "label": "localisation (60 pairs)",
+   "path": "r3/paired/localisation.jsonl"
+  }
+ ],
+ "localisation": {
+  "loc-track-30": {
+   "amcl:mcl": {
+    "agreement": 0.6,
+    "confusion": {
+     "both": 11,
+     "model_only": 4,
+     "neither": 1,
+     "stack_only": 4
+    },
+    "label": "model MCL vs Nav2 AMCL",
+    "metric": "time to goal (s); STACK success = arrived, truth within 0.75 m",
+    "model": "mcl",
+    "model_optimistic": 0.2,
+    "model_pessimistic": 0.2,
+    "n": 20,
+    "ratio_median": 1.0521,
+    "ratio_n": 11
+   },
+   "amcl:mcl_augmented": {
+    "agreement": 0.5,
+    "confusion": {
+     "both": 8,
+     "model_only": 3,
+     "neither": 2,
+     "stack_only": 7
+    },
+    "label": "model MCL + injection vs Nav2 AMCL",
+    "metric": "time to goal (s); STACK success = arrived, truth within 0.75 m",
+    "model": "mcl_augmented",
+    "model_optimistic": 0.15,
+    "model_pessimistic": 0.35,
+    "n": 20,
+    "ratio_median": 1.0438,
+    "ratio_n": 8
+   },
+   "pf:mcl": {
+    "agreement": 0.6,
+    "confusion": {
+     "both": 11,
+     "model_only": 4,
+     "neither": 1,
+     "stack_only": 4
+    },
+    "label": "model MCL vs the particle-filter starter as a ROS 2 node",
+    "metric": "time to goal (s); STACK success = arrived, truth within 0.75 m",
+    "model": "mcl",
+    "model_optimistic": 0.2,
+    "model_pessimistic": 0.2,
+    "n": 20,
+    "ratio_median": 1.0311,
+    "ratio_n": 11
+   }
+  }
+ },
+ "planning": {
+  "depot-clutter-50": {
+   "compute_path_to_pose": {
+    "agreement": 0.85,
+    "confusion": {
+     "both": 17,
+     "model_only": 3,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model A* vs Nav2 Smac 2D, stock",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.15,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9866,
+    "ratio_n": 17
+   },
+   "compute_path_to_pose+snapped": {
+    "agreement": 0.95,
+    "confusion": {
+     "both": 19,
+     "model_only": 1,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model A* vs Nav2 Smac 2D, snapped",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.05,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9885,
+    "ratio_n": 19
+   },
+   "compute_path_to_pose@NavFn": {
+    "agreement": 0.85,
+    "confusion": {
+     "both": 17,
+     "model_only": 3,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model Dijkstra vs Nav2 NavFn, stock",
+    "metric": "path length",
+    "model": "dijkstra",
+    "model_optimistic": 0.15,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9773,
+    "ratio_n": 17
+   },
+   "compute_path_to_pose@NavFn+snapped": {
+    "agreement": 0.95,
+    "confusion": {
+     "both": 19,
+     "model_only": 1,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model Dijkstra vs Nav2 NavFn, snapped",
+    "metric": "path length",
+    "model": "dijkstra",
+    "model_optimistic": 0.05,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9783,
+    "ratio_n": 19
+   },
+   "compute_path_to_pose@SmacHybrid+snapped": {
+    "agreement": 0.9,
+    "confusion": {
+     "both": 18,
+     "model_only": 2,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model A* vs Nav2 Smac Hybrid-A*, snapped (no model counterpart: reference only)",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.1,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9972,
+    "ratio_n": 18
+   },
+   "user_compute_path_to_pose": {
+    "agreement": 0.9,
+    "confusion": {
+     "both": 18,
+     "model_only": 2,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "the same A* file, browser vs ROS 2 node",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.1,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 1.0048,
+    "ratio_n": 18
+   }
+  },
+  "depot-long-50": {
+   "compute_path_to_pose": {
+    "agreement": 0.5,
+    "confusion": {
+     "both": 10,
+     "model_only": 10,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model A* vs Nav2 Smac 2D, stock",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.5,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9902,
+    "ratio_n": 10
+   },
+   "compute_path_to_pose+snapped": {
+    "agreement": 0.95,
+    "confusion": {
+     "both": 19,
+     "model_only": 1,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model A* vs Nav2 Smac 2D, snapped",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.05,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9841,
+    "ratio_n": 19
+   },
+   "compute_path_to_pose@NavFn": {
+    "agreement": 0.5,
+    "confusion": {
+     "both": 10,
+     "model_only": 10,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model Dijkstra vs Nav2 NavFn, stock",
+    "metric": "path length",
+    "model": "dijkstra",
+    "model_optimistic": 0.5,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9733,
+    "ratio_n": 10
+   },
+   "compute_path_to_pose@NavFn+snapped": {
+    "agreement": 0.9,
+    "confusion": {
+     "both": 18,
+     "model_only": 2,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model Dijkstra vs Nav2 NavFn, snapped",
+    "metric": "path length",
+    "model": "dijkstra",
+    "model_optimistic": 0.1,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.968,
+    "ratio_n": 18
+   },
+   "compute_path_to_pose@SmacHybrid+snapped": {
+    "agreement": 0.75,
+    "confusion": {
+     "both": 15,
+     "model_only": 5,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model A* vs Nav2 Smac Hybrid-A*, snapped (no model counterpart: reference only)",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.25,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9771,
+    "ratio_n": 15
+   },
+   "user_compute_path_to_pose": {
+    "agreement": 0.95,
+    "confusion": {
+     "both": 19,
+     "model_only": 1,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "the same A* file, browser vs ROS 2 node",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.05,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 1.0013,
+    "ratio_n": 19
+   }
+  },
+  "depot-narrow-30": {
+   "compute_path_to_pose": {
+    "agreement": 0.9,
+    "confusion": {
+     "both": 18,
+     "model_only": 2,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model A* vs Nav2 Smac 2D, stock",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.1,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9922,
+    "ratio_n": 18
+   },
+   "compute_path_to_pose+snapped": {
+    "agreement": 1.0,
+    "confusion": {
+     "both": 20,
+     "model_only": 0,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model A* vs Nav2 Smac 2D, snapped",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.0,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9901,
+    "ratio_n": 20
+   },
+   "compute_path_to_pose@NavFn": {
+    "agreement": 0.9,
+    "confusion": {
+     "both": 18,
+     "model_only": 2,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model Dijkstra vs Nav2 NavFn, stock",
+    "metric": "path length",
+    "model": "dijkstra",
+    "model_optimistic": 0.1,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9888,
+    "ratio_n": 18
+   },
+   "compute_path_to_pose@NavFn+snapped": {
+    "agreement": 1.0,
+    "confusion": {
+     "both": 20,
+     "model_only": 0,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model Dijkstra vs Nav2 NavFn, snapped",
+    "metric": "path length",
+    "model": "dijkstra",
+    "model_optimistic": 0.0,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9867,
+    "ratio_n": 20
+   },
+   "compute_path_to_pose@SmacHybrid+snapped": {
+    "agreement": 1.0,
+    "confusion": {
+     "both": 20,
+     "model_only": 0,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model A* vs Nav2 Smac Hybrid-A*, snapped (no model counterpart: reference only)",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.0,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9891,
+    "ratio_n": 20
+   },
+   "user_compute_path_to_pose": {
+    "agreement": 1.0,
+    "confusion": {
+     "both": 20,
+     "model_only": 0,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "the same A* file, browser vs ROS 2 node",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.0,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 1.0083,
+    "ratio_n": 20
+   }
+  },
+  "depot-nav-100": {
+   "compute_path_to_pose": {
+    "agreement": 0.85,
+    "confusion": {
+     "both": 17,
+     "model_only": 3,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model A* vs Nav2 Smac 2D, stock",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.15,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.991,
+    "ratio_n": 17
+   },
+   "compute_path_to_pose+snapped": {
+    "agreement": 1.0,
+    "confusion": {
+     "both": 20,
+     "model_only": 0,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model A* vs Nav2 Smac 2D, snapped",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.0,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9892,
+    "ratio_n": 20
+   },
+   "compute_path_to_pose@NavFn": {
+    "agreement": 0.85,
+    "confusion": {
+     "both": 17,
+     "model_only": 3,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model Dijkstra vs Nav2 NavFn, stock",
+    "metric": "path length",
+    "model": "dijkstra",
+    "model_optimistic": 0.15,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9764,
+    "ratio_n": 17
+   },
+   "compute_path_to_pose@NavFn+snapped": {
+    "agreement": 1.0,
+    "confusion": {
+     "both": 20,
+     "model_only": 0,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model Dijkstra vs Nav2 NavFn, snapped",
+    "metric": "path length",
+    "model": "dijkstra",
+    "model_optimistic": 0.0,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9782,
+    "ratio_n": 20
+   },
+   "compute_path_to_pose@SmacHybrid+snapped": {
+    "agreement": 0.9,
+    "confusion": {
+     "both": 18,
+     "model_only": 2,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "model A* vs Nav2 Smac Hybrid-A*, snapped (no model counterpart: reference only)",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.1,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 0.9904,
+    "ratio_n": 18
+   },
+   "user_compute_path_to_pose": {
+    "agreement": 1.0,
+    "confusion": {
+     "both": 20,
+     "model_only": 0,
+     "neither": 0,
+     "stack_only": 0
+    },
+    "label": "the same A* file, browser vs ROS 2 node",
+    "metric": "path length",
+    "model": "astar",
+    "model_optimistic": 0.0,
+    "model_pessimistic": 0.0,
+    "n": 20,
+    "ratio_median": 1.0075,
+    "ratio_n": 20
+   }
+  }
+ },
+ "repeats": {
+  "ctrl-corners-30_dwb": [
+   1
+  ],
+  "ctrl-corners-30_mppi": [
+   1
+  ],
+  "ctrl-corners-30_rpp": [
+   1
+  ],
+  "ctrl-corridor-30_dwb": [
+   1
+  ],
+  "ctrl-corridor-30_mppi": [
+   1
+  ],
+  "ctrl-corridor-30_rpp": [
+   1
+  ],
+  "ctrl-dynamic-30-noyield_dwb": [
+   1
+  ],
+  "ctrl-dynamic-30-noyield_mppi": [
+   1
+  ],
+  "ctrl-dynamic-30-noyield_rpp": [
+   1
+  ],
+  "ctrl-dynamic-30_dwb": [
+   1
+  ],
+  "ctrl-dynamic-30_mppi": [
+   1
+  ],
+  "ctrl-dynamic-30_rpp": [
+   1
+  ],
+  "depot-clutter-50_plan": [
+   1,
+   2,
+   3
+  ],
+  "depot-long-50_plan": [
+   1,
+   2,
+   3
+  ],
+  "depot-narrow-30_plan": [
+   1,
+   2,
+   3
+  ],
+  "depot-nav-100_plan": [
+   1,
+   2,
+   3
+  ],
+  "loc-track-30_amcl": [
+   1
+  ],
+  "loc-track-30_pf": [
+   1
+  ]
+ },
+ "sessions_not_used": [
+  "ctrl-corridor-30_mppi_rep1_void2",
+  "ctrl-corridor-30_mppi_rep1_void3"
+ ]
+}
