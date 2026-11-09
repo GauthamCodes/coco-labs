@@ -14,6 +14,6 @@ Phone (1) (412×915, DPR 2.625; never the real phone, which was not connected).
 ## Looks to judge
 
 1. The Model vs ROS 2 tab is one long page of tables (9 of them, one per suite and family). Enough as is, or group by family behind tabs?
-2. The Leaderboard's control boards rank the Waypoint driver first (it never fails: it is a plan reference without a
+2. The Leaderboard's control boards rank the Waypoint driver first (it fails only against yielding actors, 24/30 on ctrl-dynamic-30: it is a plan reference without a
    local collision check, as its description says). Keep it ranked, or show it outside the ranking?
 3. The Leaderboard tables still scroll sideways inside their cards on a phone (unchanged from R2).

@@ -90,14 +90,9 @@ Then gap.py, the Model vs ROS 2 tab, local suites, PR, merge under the gate, dep
   the family re-runs from the start). The five finished suite/family sets kept their DONE markers and were
   skipped on restart (00:55, same command, `--workers 10`); the R3.4 queue re-chained behind the baselines.
 
-## Next step (updated 2026-11-08 ~02:40)
+## Next step (updated 2026-11-09 ~10:50)
 
-1. **R3.2** baselines running (restarted after the reboot). Committed and checked: arena-nav-50 ×3,
-   depot-nav-100 planning/control (`f398617`). As each further set finishes: `check_carried.py` for
-   depot-narrow-30, commit the set, `builtin_bench` for it (reference entries; done for the first five, `8c580ba`),
-   `docs/paper/scripts/tables.py` (the baseline tables list unfinished sets as not yet run).
-2. **R3.4** starts by itself after the baselines (`tmp/chain_r34.sh` → `tools/r3/ros2_queue_r34.sh`); then `gap.py` →
-   `docs/v2/r3/data/r35/gap.json` and the Model vs ROS 2 tab.
-3. Leaderboard page with the new control/localisation boards: check rendering in the close's screenshots.
-4. After R3 merges: Theta\*'s v1 claim PR (`9ca4d58`); the repository secret `COCO_HELDOUT_SECRET` + commitment.
-5. R3.9 close.
+R3 done agent-side: PR #36, close evidence in `data/r39/`. Then: merge under the gate (exact-head CI green), deploy,
+live smoke, a post-merge PR recording both in STATUS; Theta*'s v1 claim PR (`9ca4d58`); `COCO_HELDOUT_SECRET` +
+commitment; resume control/localisation repeats 2-3 when the laptop is free (`tools/r3/ros2_queue_r34.sh 2 3`);
+power profile back to power-saver.
