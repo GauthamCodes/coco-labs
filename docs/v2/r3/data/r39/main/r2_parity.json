@@ -1,0 +1,130 @@
+{
+ "about": "R2.4 native-vs-Pyodide parity of the starter templates (lab_web/tools/r2/parity.mjs); wall times excluded",
+ "pass": true,
+ "compared": 850,
+ "cases": {
+  "controller_empty.py": {
+   "runs": 4,
+   "digest": "4f100cacc82c559c6b0ad0ac73f3416cb472d2c602126ec4d4162beafd37a3e1",
+   "statuses": [
+    "controller_empty:failed_to_make_progress",
+    "controller_empty:failed_to_make_progress",
+    "dwa:failed_to_make_progress",
+    "dwa:timeout"
+   ],
+   "nondeterministic": 0,
+   "differences": 0
+  },
+  "controller_pure_pursuit.py": {
+   "runs": 4,
+   "digest": "6ff04401b4dea25fb239a16c1e7c11c3444227d39d019ddd887402947a8c6abc",
+   "statuses": [
+    "controller_pure_pursuit:succeeded",
+    "controller_pure_pursuit:succeeded",
+    "rpp:no_valid_control",
+    "rpp:succeeded"
+   ],
+   "nondeterministic": 0,
+   "differences": 0
+  },
+  "localiser_empty.py": {
+   "runs": 2,
+   "digest": "1629df72b730babd8cf0da70da6fbbe82b4adf53f40a571ffc6017c7f38b9ede",
+   "statuses": [
+    "localiser_empty:timeout",
+    "ekf:timeout"
+   ],
+   "nondeterministic": 0,
+   "differences": 0
+  },
+  "localiser_particle_filter.py": {
+   "runs": 2,
+   "digest": "382419dcb9029627dd75435adbe46b5ce38fa33c5d96cee48ea85916a3b6346e",
+   "statuses": [
+    "localiser_particle_filter:timeout",
+    "ekf:timeout"
+   ],
+   "nondeterministic": 0,
+   "differences": 0
+  },
+  "planner_astar.py": {
+   "runs": 8,
+   "digest": "c3454b89a9660c7f36f348b4d6dba7b6f74e3e5b370f938779f515c3dc32b955",
+   "statuses": [
+    "planner_astar:found",
+    "planner_astar:found",
+    "planner_astar:found",
+    "planner_astar:found",
+    "astar:found",
+    "astar:found",
+    "astar:found",
+    "astar:found"
+   ],
+   "nondeterministic": 0,
+   "differences": 0
+  },
+  "planner_empty.py": {
+   "runs": 6,
+   "digest": "82d2d6e2ab3cb8c988981599cad8ee02fa855c11f56063b7d349af5a8c31475d",
+   "statuses": [
+    "planner_empty:collision",
+    "planner_empty:collision",
+    "planner_empty:collision",
+    "astar:found",
+    "astar:found",
+    "astar:found"
+   ],
+   "nondeterministic": 0,
+   "differences": 0
+  },
+  "planner_greedy.py": {
+   "runs": 8,
+   "digest": "c36dee12cce3fe01291ac53a0dced73da21a15528abbc6f0559799f1d60c78aa",
+   "statuses": [
+    "planner_greedy:found",
+    "planner_greedy:found",
+    "planner_greedy:found",
+    "planner_greedy:found",
+    "greedy:found",
+    "greedy:found",
+    "greedy:found",
+    "greedy:found"
+   ],
+   "nondeterministic": 0,
+   "differences": 0
+  },
+  "teach_heuristic.py": {
+   "runs": 6,
+   "digest": "548c3ef160a1bf6377bce390d23d178708d6570fe7274661ce4358b06539a2b5",
+   "statuses": [
+    "teach_heuristic:found",
+    "teach_heuristic:found",
+    "teach_heuristic:found",
+    "dijkstra:found",
+    "dijkstra:found",
+    "dijkstra:found"
+   ],
+   "nondeterministic": 0,
+   "differences": 0
+  },
+  "teach_tune_dwa.py": {
+   "runs": 2,
+   "digest": "62b9a9675da04ea83567fb8d4038693154e9da9f1064c0681ff80886aeebed5e",
+   "statuses": [
+    "teach_tune_dwa:timeout",
+    "dwa:failed_to_make_progress"
+   ],
+   "nondeterministic": 0,
+   "differences": 0
+  }
+ },
+ "failures": [],
+ "native": {
+  "python": "3.12.3 x86_64",
+  "ms": 87252
+ },
+ "pyodide": {
+  "version": "314.0.7",
+  "ms": 158580
+ }
+}

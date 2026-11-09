@@ -1,0 +1,1 @@
+{"passed":true,"checks":{"openDocumentMixed_false":true,"page_A_reads_A":true,"new_version_notice":true,"no_forced_reload":true,"old_cache_kept_while_open":true,"old_cache_deleted_once_closed":true,"reload_consistent_B":true,"model_worker_pinned":true,"no_page_errors":true}}

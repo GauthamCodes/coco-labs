@@ -1,0 +1,24 @@
+2026-11-09T01:36:32Z R3.9 close: tree aa601a7 dirty=0; balanced, AC 1
+2026-11-09T01:36:32Z STEP paper_check rc=0 lint_tex: 10 files, 0 problem(s)
+2026-11-09T01:38:47Z STEP suites_v1_check rc=0 13 files checked
+2026-11-09T03:17:56Z suites done: 21 rc=0, failing: STEP packages rc=1 [tests] FAILED: at least one package did not pass;
+2026-11-09T03:21:41Z STEP det_v2 rc=0 {"chromium":[1500,0,"4597f9417b0b"],"firefox":[1500,0,"4597f9417b0b"],"pyodide-node":[1500,0,"4597f9417b0b"],"webkit":[1500,0,"4597f9417b0b"]} pass true
+2026-11-09T03:26:35Z STEP r1_parity rc=0 }
+2026-11-09T03:30:41Z STEP r2_parity rc=0 }
+2026-11-09T03:30:58Z STEP r1_link_chromium rc=0 ok   no page errors {"errors":[]}
+2026-11-09T03:31:24Z STEP r1_link_firefox rc=0 ok   no page errors {"errors":[]}
+2026-11-09T03:31:53Z STEP r1_link_webkit rc=0 ok   no page errors {"errors":[]}
+2026-11-09T03:32:14Z STEP r1_link_long rc=0 ok   no page errors {"errors":[]}
+2026-11-09T03:35:06Z STEP r1_compare rc=0 ok   Turn this into an experiment: the builder opens with the panes {"spec":{"family":"control","algorithms":["dwa","rpp"],"scenarios":{"kind":"sampled","n":20,"seed":1,"min_separation_m":3}}}
+2026-11-09T03:35:32Z STEP r1_export rc=0 ok   digest = native {"digest":"c8420b1e3d1c442553e7fd940b36dcba7b340a3ae5001b062ffd26128f628156"}
+2026-11-09T03:37:53Z STEP a11y rc=1 {"passed":false,"pages":[["desktop","dark","?view=workbench",371,0,0,true],["desktop","dark","?view=workbench&tab=benchmarks",692,0,0,true],["desktop","dark","?view=workbench&tab=datasets",396,0,0,true],["desktop","dark"
+2026-11-09T03:39:00Z STEP escape_chromium rc=0 ESCAPE TESTS PASS: every escape failed safely
+2026-11-09T03:40:28Z STEP escape_firefox rc=0 ESCAPE TESTS PASS: every escape failed safely
+2026-11-09T03:41:45Z STEP escape_webkit rc=0 ESCAPE TESTS PASS: every escape failed safely
+2026-11-09T03:43:02Z STEP studio_check rc=0 STUDIO CHECK PASS
+2026-11-09T03:45:03Z STEP r3_screens rc=1 Node.js v24.21.0
+2026-11-09T04:08:59Z STEP reference_sample rc=0 verified 60 run(s): 60 match, 0 differ
+2026-11-09T04:51:15Z STEP r3_baseline_sample rc=0 verified 4 run(s): 4 match, 0 differ
+2026-11-09T04:53:22Z STEP fps_r3_desktop rc=0 {"label":"r3 desktop","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)","restarts":0,"play_coverage":{"windows":119,"ticking":118},"frame_interval_ms":{"median":16.60000
+2026-11-09T04:55:30Z STEP fps_r3_phone rc=0 {"label":"r3 phone","renderer":"ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL ES 3.2)","restarts":0,"play_coverage":{"windows":119,"ticking":118},"frame_interval_ms":{"median":16.6000000
+2026-11-09T04:55:30Z R3.9 close done; tree still a4b3d95 dirty=0; AC 1

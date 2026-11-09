@@ -1,0 +1,23 @@
+ok   lockdown probes: 68 checked, 0 reachable []
+ok   network calls · network: import js, fetch → refused by the guard (331 ms)
+ok   network calls · network: pyodide.http → refused by the guard (297 ms)
+ok   network calls · network: urllib → refused by the guard (303 ms)
+ok   import js · escape: object graph to sys → refused by the guard (309 ms)
+ok   import js · escape: __import__("js") → refused by the guard (293 ms)
+ok   import js · escape: getattr dunder → error (949 ms)
+ok   import js · escape: import js → refused by the guard (303 ms)
+ok   import js · escape: pyodide.ffi → refused by the guard (297 ms)
+ok   import js · escape: generator frame → refused by the guard (289 ms)
+ok   DOM access · DOM: document → error (414 ms)
+ok   DOM access · DOM: js.document → refused by the guard (310 ms)
+ok   DOM access · storage: open a file → error (521 ms)
+ok   infinite loops · infinite loop (controller) → stopped: time_limit (5290 ms)
+ok   memory blow-ups · memory: one huge allocation → error (2942 ms)
+ok   memory blow-ups · memory: a huge list → error (2946 ms)
+ok   memory blow-ups · memory: growing list → error (5385 ms)
+ok   huge outputs · huge output: print → no_path (3747 ms)
+ok   huge outputs · huge output: events → no_path (12441 ms)
+ok   huge outputs · huge output: path → invalid_output (419 ms)
+ok   after the escapes: planner_astar.py → found ✓
+ok   after the escapes: controller_pure_pursuit.py → succeeded ✓
+ESCAPE TESTS PASS: every escape failed safely
