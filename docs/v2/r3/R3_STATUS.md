@@ -90,9 +90,13 @@ Then gap.py, the Model vs ROS 2 tab, local suites, PR, merge under the gate, dep
   the family re-runs from the start). The five finished suite/family sets kept their DONE markers and were
   skipped on restart (00:55, same command, `--workers 10`); the R3.4 queue re-chained behind the baselines.
 
-## Next step (updated 2026-11-09 ~10:50)
+## Next step (updated 2026-11-09 ~13:00)
 
-R3 done agent-side: PR #36, close evidence in `data/r39/`. Then: merge under the gate (exact-head CI green), deploy,
-live smoke, a post-merge PR recording both in STATUS; Theta*'s v1 claim PR (`9ca4d58`); `COCO_HELDOUT_SECRET` +
-commitment; resume control/localisation repeats 2-3 when the laptop is free (`tools/r3/ros2_queue_r34.sh 2 3`);
-power profile back to power-saver.
+**R3 closed.** PR #36 merged (`62096d1`), deployed (run 42571842915), live smoke PASS, R3 surfaces PASS on the live
+site, "Reproduce this paper" reproduced exactly live ([deploy2](data/deploy2/README.md)). Open, in order:
+1. Set the repository secret `COCO_HELDOUT_SECRET` and its commitment (`docs/v2/r3/HELDOUT_SECRET_COMMITMENTS.md`).
+2. Then Theta*'s v1 claim PR (`summary.json` only, saved in `9ca4d58`): without the secret the v1 verifier has no held-out.
+3. Resume control/localisation STACK repeats 2-3 when the laptop is free: `tools/r3/ros2_queue_r34.sh 2 3`, then
+   `tools/r3/finalize_r34.py` and the paper macros (they regenerate from the data).
+4. Gautham's questions (R3_RESULTS): stronger global/kidnap references; looks in BEFORE_AFTER; submission decisions.
+5. Next milestone per README: R4 · Learn course.

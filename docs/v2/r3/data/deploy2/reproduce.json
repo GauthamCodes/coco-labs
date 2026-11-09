@@ -1,0 +1,12 @@
+{
+ "site": "https://gauthamcodes.github.io/coco-labs/",
+ "committed_digest": "e32dc88b25aebfee0298103dbcdc1105439d3d25b5e73f731c9476a22e780543",
+ "runs": 600,
+ "started": "2026-11-09T07:18:57.818Z",
+ "link_digest": "e32dc88b25aebfee0298103dbcdc1105439d3d25b5e73f731c9476a22e780543",
+ "link_carries_committed_digest": true,
+ "seconds": 172,
+ "verdict": "Reproduced exactly: every run's status, hash chain and counts match the link (digest e32dc88b25aebfee…).",
+ "ok": true,
+ "errors": []
+}
