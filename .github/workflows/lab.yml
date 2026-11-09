@@ -40,8 +40,10 @@ jobs:
     # G2.9 (2026-10-28): Fetch Rush rules 4 and 5 (full-shift reference bots,
     # ~30-40 s each; ~830 s of the suite's 1526 s on the laptop) made the green
     # run 26-28 min (runs 40570746811, 40535829211) and cut it off at 30
-    # (run 40706374455), so 60.
-    timeout-minutes: 60
+    # (run 40706374455), so 60. R3 (2026-11-09): COCO-Bench v1's suite and
+    # experiment tests made it 1317 passed in 59:38 and the 60-minute limit
+    # cancelled it as it finished (run 42546497882), so 90.
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -196,7 +198,8 @@ jobs:
     # match the committed canvas screenshots (lab_web/test/screenshots/).
     name: lab_web in Chromium, Firefox and WebKit (determinism, screenshots)
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    # R3 (2026-11-09): 42:40 of 45 on run 42546497882; headroom, so 60
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7

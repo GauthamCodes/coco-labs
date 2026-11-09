@@ -26,7 +26,8 @@ jobs:
       - name: Python for the scripts (coco_lab's own, matplotlib)
         run: |
           python -m venv "$RUNNER_TEMP/venv"
-          "$RUNNER_TEMP/venv/bin/pip" install -q PyYAML==6.0.1 matplotlib==3.6.3
+          # numpy pinned: matplotlib 3.6 calls numpy.row_stack, gone in numpy 2 (run 42546497992)
+          "$RUNNER_TEMP/venv/bin/pip" install -q PyYAML==6.0.1 matplotlib==3.6.3 numpy==1.26.4
       - name: Numbers, tables and figure data match the committed data; no typed numbers
         working-directory: docs/paper
         run: make check PY="$RUNNER_TEMP/venv/bin/python"
