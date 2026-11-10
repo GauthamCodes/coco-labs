@@ -1,0 +1,346 @@
+{
+ "alpha": 0.05,
+ "complete": true,
+ "digest": "6bf0d4161d51699b028145826038812ded79d558934362ca183ebde8860036a5",
+ "experiment": "8f7ee9d36c95037f",
+ "family": "localisation",
+ "groups": [
+  {
+   "algorithm": "mcl_reference",
+   "metrics": {
+    "compute_ms": {
+     "iqr": 89547.60613373201,
+     "max": 1479292.2197369917,
+     "median": 1349822.0638599887,
+     "min": 1295729.661527992,
+     "n": 6,
+     "q1": 1318790.3685657512,
+     "q3": 1408337.9746994833,
+     "timing": true
+    },
+    "contacts": {
+     "iqr": 0,
+     "max": 2,
+     "median": 1,
+     "min": 1,
+     "n": 6,
+     "q1": 1,
+     "q3": 1,
+     "timing": false
+    },
+    "converged_s": {
+     "iqr": 0,
+     "max": 0,
+     "median": 0,
+     "min": 0,
+     "n": 6,
+     "q1": 0,
+     "q3": 0,
+     "timing": false
+    },
+    "expansions": {
+     "iqr": 4795.25,
+     "max": 61552,
+     "median": 4983.5,
+     "min": 153,
+     "n": 6,
+     "q1": 2164,
+     "q3": 6959.25,
+     "timing": false
+    },
+    "final_err_xy_m": {
+     "iqr": 9.30298564757377,
+     "max": 29.67164718556572,
+     "median": 19.95503167833242,
+     "min": 13.847403261028266,
+     "n": 6,
+     "q1": 15.159381774285414,
+     "q3": 24.462367421859184,
+     "timing": false
+    },
+    "final_err_yaw_rad": {
+     "iqr": 1.6503803286237877,
+     "max": 3.028352015927789,
+     "median": 0.9547530161675053,
+     "min": 0.027735225825435972,
+     "n": 6,
+     "q1": 0.09881016541122212,
+     "q3": 1.7491904940350098,
+     "timing": false
+    },
+    "final_goal_distance_m": {
+     "iqr": 11.54809785723399,
+     "max": 39.27876700733348,
+     "median": 25.899730155294442,
+     "min": 13.033570541849,
+     "n": 6,
+     "q1": 19.22765307394569,
+     "q3": 30.77575093117968,
+     "timing": false
+    },
+    "heading_change_rad": {
+     "iqr": 18.910466933494142,
+     "max": 112.03605067542267,
+     "median": 6.773674290816922,
+     "min": 2.705085909299561,
+     "n": 6,
+     "q1": 6.096082894419851,
+     "q3": 25.006549827913993,
+     "timing": false
+    },
+    "max_err_xy_m": {
+     "iqr": 4.327102018494539,
+     "max": 38.100618221184526,
+     "median": 26.96937240642118,
+     "min": 23.264518578046612,
+     "n": 6,
+     "q1": 25.241506874529176,
+     "q3": 29.568608893023715,
+     "timing": false
+    },
+    "mean_clearance_m": {
+     "iqr": 0.42610178203197796,
+     "max": 2.5203464756857303,
+     "median": 0.057125202379355255,
+     "min": -0.0071666666666666545,
+     "n": 6,
+     "q1": 0.027574447158048625,
+     "q3": 0.4536762291900266,
+     "timing": false
+    },
+    "mean_err_xy_m": {
+     "iqr": 8.11696248260918,
+     "max": 28.4901659644076,
+     "median": 21.0825447271253,
+     "min": 13.782795006868247,
+     "n": 6,
+     "q1": 15.375915922336818,
+     "q3": 23.492878404945998,
+     "timing": false
+    },
+    "min_clearance_m": {
+     "iqr": 0,
+     "max": -0.01999999999999999,
+     "median": -0.01999999999999999,
+     "min": -0.01999999999999999,
+     "n": 6,
+     "q1": -0.01999999999999999,
+     "q3": -0.01999999999999999,
+     "timing": false
+    },
+    "path_length_m": {
+     "iqr": 3.402314473118288,
+     "max": 46.02870783842937,
+     "median": 32.64608104978976,
+     "min": 27.685780378895462,
+     "n": 6,
+     "q1": 30.814017484666287,
+     "q3": 34.216331957784575,
+     "timing": false
+    },
+    "plans": {
+     "iqr": 0,
+     "max": 2,
+     "median": 2,
+     "min": 2,
+     "n": 6,
+     "q1": 2,
+     "q3": 2,
+     "timing": false
+    },
+    "recovery_s": {
+     "iqr": null,
+     "max": null,
+     "median": null,
+     "min": null,
+     "n": 0,
+     "q1": null,
+     "q3": null,
+     "timing": false
+    },
+    "ticks": {
+     "iqr": 0,
+     "max": 3000,
+     "median": 3000,
+     "min": 3000,
+     "n": 6,
+     "q1": 3000,
+     "q3": 3000,
+     "timing": false
+    },
+    "time_s": {
+     "iqr": 0,
+     "max": 300,
+     "median": 300,
+     "min": 300,
+     "n": 6,
+     "q1": 300,
+     "q3": 300,
+     "timing": false
+    }
+   },
+   "n": 6,
+   "status": {
+    "timeout": 6
+   },
+   "success": {
+    "high": 0.3903342879021653,
+    "low": 0,
+    "rate": 0
+   },
+   "successes": 0,
+   "sweep": {},
+   "sweep_index": 0
+  }
+ ],
+ "metrics": [
+  {
+   "better": "lower",
+   "id": "time_s",
+   "label": "Time to goal or end",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "ticks",
+   "label": "Ticks",
+   "test": false,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "path_length_m",
+   "label": "Distance driven",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "higher",
+   "id": "min_clearance_m",
+   "label": "Minimum clearance",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "higher",
+   "id": "mean_clearance_m",
+   "label": "Mean clearance",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "heading_change_rad",
+   "label": "Total heading change",
+   "test": true,
+   "timing": false,
+   "unit": "rad"
+  },
+  {
+   "better": "lower",
+   "id": "contacts",
+   "label": "Contacts",
+   "test": true,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "expansions",
+   "label": "Global planner expansions",
+   "test": false,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "plans",
+   "label": "Plans made",
+   "test": false,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "final_goal_distance_m",
+   "label": "Final distance to goal",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "final_err_xy_m",
+   "label": "Final position error",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "final_err_yaw_rad",
+   "label": "Final heading error",
+   "test": true,
+   "timing": false,
+   "unit": "rad"
+  },
+  {
+   "better": "lower",
+   "id": "mean_err_xy_m",
+   "label": "Mean position error",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "max_err_xy_m",
+   "label": "Maximum position error",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "converged_s",
+   "label": "Convergence time",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "recovery_s",
+   "label": "Recovery time after kidnap",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "compute_ms",
+   "label": "Compute time",
+   "test": true,
+   "timing": true,
+   "unit": "ms"
+  }
+ ],
+ "n_planned": 6,
+ "n_runs": 6,
+ "notes": [
+  "Counts are model outputs and need no device; compute_ms is wall time on the device named in the manifest.",
+  "Success rates: Wilson 95% intervals. Metrics: median and IQR (type-7 quantiles) over the runs where the metric is defined.",
+  "Paired tests on shared scenarios: Wilcoxon signed-rank (exact up to 50 non-zero pairs) with rank-biserial r and Hodges-Lehmann shift; McNemar exact for success; Holm-adjusted across algorithm pairs."
+ ],
+ "paired": [],
+ "scenario_info": {
+  "kind": "inline"
+ },
+ "schema": "coco.experiment.summary.v1"
+}
