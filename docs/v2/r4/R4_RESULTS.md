@@ -47,6 +47,7 @@ function exercises tested).
 - Two answers meet their targets as stated and are not wrong: lookahead 1.0 m (clearance 0.03-0.05 m against the
   reference's 0.13-0.18 m; Nav2 RPP's own maximum is 0.9 m) and weighted x5 A* in the benchmark (median ratio
   1.005 / 1.026 hidden).
+- The clearance tune: its first target (1.15x the shortest paths' mean clearance) was above what ANY setting reaches on the public routes (1.126-1.129x for every weighted setting); now 1.10x (weight 0 gives 1.0x and fails), measured on the fixed hidden set too (1.21-1.24x). Test run 75/76 before, 76/76 after.
 - The weighted-A* tune window moved when the hidden set was fixed per exercise: w 2.5-4.0 passes (w <= 2.0 needs
   more than half of A*'s expansions on the hidden routes; w = 5 makes a path 11.7 % longer).
 

@@ -699,8 +699,8 @@
      "kind": "sum_ratio_min",
      "metric": "mean_clearance_m",
      "vs": "astar",
-     "value": 1.15,
-     "label": "at least 15 % more mean clearance than the shortest paths, in total"
+     "value": 1.1,
+     "label": "at least 10 % more mean clearance than the shortest paths, in total"
     },
     {
      "kind": "ratio_max",
@@ -713,7 +713,7 @@
    "hints": [
     "With weight 0 the planner ignores inflation and takes the shortest line, close past corners and shelves. Raise the weight first.",
     "The cost of stepping into a cell is length x (1 + weight x cost / 252). A higher weight makes cells near obstacles dearer; a lower cost_scaling_factor makes the cost fall off more slowly, so it reaches further from them.",
-    "Weights of 5 or more with a cost_scaling_factor of 2 to 5 keep about 15 % more clearance for paths 5 to 20 % longer."
+    "Measured here: any inflation weight of 5 or more (with a cost_scaling_factor of 1 to 5) keeps about 13 % more clearance on the public routes, for paths at most about 19 % longer."
    ]
   },
   {
