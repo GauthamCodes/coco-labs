@@ -48,9 +48,12 @@ export function ModelVsRos2Tab() {
     {gap === null && <p className="wb-muted" role="status">Loading…</p>}
     {gap === 'none' && <p className="wb-muted" data-testid="gap-pending">The paired Gazebo + Nav2 runs are not in this build yet.</p>}
     {gap && gap !== 'none' && <>
-      {Object.entries(gap.planning).map(([suite, pairs]) => <article key={suite} className="wb-bench"><h2>{suite} · planning</h2><PairTable pairs={pairs} /></article>)}
-      {Object.entries(gap.control).map(([suite, pairs]) => <article key={suite} className="wb-bench"><h2>{suite} · control</h2><PairTable pairs={pairs} /></article>)}
-      {Object.entries(gap.localisation ?? {}).map(([suite, pairs]) => <article key={suite} className="wb-bench"><h2>{suite} · localisation</h2><PairTable pairs={pairs} /></article>)}
+      {/* R4 Part A: one long page, said plainly, with a contents list per family (the smallest fix) */}
+      <nav className="wb-note" aria-label="Tables on this page" data-testid="gap-contents"><b>{Object.keys(gap.planning).length + Object.keys(gap.control).length + Object.keys(gap.localisation ?? {}).length} tables on this page</b>, one per suite and family:
+        {([['planning', gap.planning], ['control', gap.control], ['localisation', gap.localisation ?? {}]] as const).map(([fam, g]) => Object.keys(g).length ? <span key={fam}> {fam}: {Object.keys(g).map((s, i) => <span key={s}>{i ? ', ' : ''}<a href={`#gap-${s}-${fam}`}>{s}</a></span>)}.</span> : null)}</nav>
+      {Object.entries(gap.planning).map(([suite, pairs]) => <article key={suite} className="wb-bench" id={`gap-${suite}-planning`}><h2>{suite} · planning</h2><PairTable pairs={pairs} /></article>)}
+      {Object.entries(gap.control).map(([suite, pairs]) => <article key={suite} className="wb-bench" id={`gap-${suite}-control`}><h2>{suite} · control</h2><PairTable pairs={pairs} /></article>)}
+      {Object.entries(gap.localisation ?? {}).map(([suite, pairs]) => <article key={suite} className="wb-bench" id={`gap-${suite}-localisation`}><h2>{suite} · localisation</h2><PairTable pairs={pairs} /></article>)}
       {gap.notes?.length ? <ul>{gap.notes.map((n) => <li key={n}>{n}</li>)}</ul> : null}
       {gap.downloads?.length ? <p>Paired runs: {gap.downloads.map((d, i) => <span key={d.path}>{i ? ' · ' : ''}<a href={`${GEN}${d.path}`} download>{d.label}</a></span>)}</p> : null}
     </>}

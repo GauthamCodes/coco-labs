@@ -326,6 +326,16 @@ BUILTIN_NOTE = {'builtin': ' A plan reference, not a controller result: it drive
                            'failure outcomes.'}
 
 
+#: R4 Part A (Gautham, 2026-11-10): reference rows are never ranked. They are pinned, greyed and
+#: unranked on every board, with this one-line note; only real controllers and localisers rank.
+REFERENCES = {
+    'builtin': 'Plan-following reference: drives the global plan with no local costmap or '
+               'collision check, so it is not a controller result.',
+    'mcl_reference': 'Localisation reference: MCL with 2,000 particles and random-particle '
+                     'injection, run to test whether the suite is solvable; slow, not a competitor.',
+}
+
+
 def bench_host(suite_id: str, family: str) -> dict:
     """The machine the R3.2 baseline ran on (its public manifest; compute_ms is that host's)."""
     m = json.loads((BENCH / suite_id / family / 'public' / 'manifest.json').read_text())
@@ -503,7 +513,11 @@ def index(out: Path) -> None:
                     r['entry']['name'])
         return (-(s['success_rate'] or 0), med('final_err_xy_m') or inf, r['entry']['name'])
     for k in boards:
-        boards[k].sort(key=rank)
+        for r in boards[k]:
+            note = REFERENCES.get(r['entry']['name']) if r['entry']['kind'] == 'builtin' else None
+            r['entry']['reference'] = note
+        # references first (pinned), then the ranked entries; a reference is never given a rank
+        boards[k].sort(key=lambda r: (r['entry']['reference'] is None, rank(r)))
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(ex.plain({'schema': 'coco.leaderboard.v1', 'boards': boards,
                                         'verifier': VERIFIER_VERSION}), sort_keys=True) + '\n')
