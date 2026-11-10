@@ -129,6 +129,39 @@
     "ros2_package/package.xml.tmpl",
     "ros2_package/setup.py.tmpl"
    ]
+  },
+  "course": {
+   "requires": [
+    "experiments",
+    "user",
+    "localise",
+    "move",
+    "game"
+   ],
+   "modules": [
+    "course.py",
+    "course/exercises.v1.json",
+    "course/files/m10_export_solution.py",
+    "course/files/m10_export_starter.py",
+    "course/files/m1_bench_solution.py",
+    "course/files/m1_bench_starter.py",
+    "course/files/m1_dijkstra_solution.py",
+    "course/files/m1_dijkstra_starter.py",
+    "course/files/m1_heuristic_solution.py",
+    "course/files/m1_heuristic_starter.py",
+    "course/files/m2_inflation_solution.py",
+    "course/files/m2_inflation_starter.py",
+    "course/files/m3_nogo_solution.py",
+    "course/files/m3_nogo_starter.py",
+    "course/files/m4_goal_solution.py",
+    "course/files/m4_goal_starter.py",
+    "course/files/m4_lookahead_solution.py",
+    "course/files/m4_lookahead_starter.py",
+    "course/files/m5_resample_solution.py",
+    "course/files/m5_resample_starter.py",
+    "course/files/m6_logodds_solution.py",
+    "course/files/m6_logodds_starter.py"
+   ]
   }
  }
 }

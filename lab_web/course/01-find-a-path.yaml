@@ -1,0 +1,203 @@
+# R4 Learn course, module 1 (coco.lesson.v1, ADR 0015). Data, not code: lab_web/tools/course.py
+# checks it and fails the build if any claim's evidence does not resolve.
+schema: coco.lesson.v1
+id: find-a-path
+number: 1
+title: How does a robot find a path?
+question: Out of every way across the floor, how does COCO pick one -- and is it the shortest?
+mission: find-a-path
+lessons:
+  - id: astar-vs-dijkstra
+    track: explorer
+    title: A* against Dijkstra
+    predict: p1-astar-cost
+    observe:
+      text: >-
+        Run A* and Dijkstra on the same three Depot routes. Look at two numbers for each:
+        the path length and how many cells each one expanded (opened) before it found the goal.
+      experiment: {family: planning, world: coco_depot_v1, algorithms: [astar, dijkstra], from: m1-tune-weight}
+    explain:
+      diagram: search
+      text: >-
+        A grid planner splits the floor into cells, 5 or 10 cm wide, and searches outwards from
+        the start. Dijkstra's algorithm always expands the cell that is cheapest to reach so
+        far. It spreads like a ripple, in every direction, until the ripple reaches the goal.
+        Because it never skips a cheaper cell, the first time it reaches the goal it has the
+        cheapest path.
+
+        A* adds a guess, the heuristic h: how much it will still cost from this cell to the
+        goal. It expands the cell with the smallest g + h, cost so far plus guess, so the
+        ripple leans towards the goal. If the guess never overestimates (an admissible
+        heuristic), A* still returns the cheapest path -- the same cost as Dijkstra -- but opens
+        far fewer cells to get there. A* is not better at finding paths; it is less work.
+
+        Weighted A* multiplies the guess by w > 1. It becomes greedier: fewer expansions again,
+        but now the path may be longer, by at most w times the optimum. That trade -- effort
+        against quality -- is what you will tune next.
+      claims: [astar-equals-dijkstra, bounds]
+    try: m1-tune-weight
+    ros2:
+      label: MEASURED
+      text: >-
+        Nav2's planner server loads planner plugins. NavFn runs Dijkstra by default (A* is an
+        option); SmacPlanner2D searches the same kind of 2D grid. On COCO's real costmap, Smac's
+        raw search cost equalled coco_lab's optimum in all 36 comparable pairs, and A* returned
+        Dijkstra's optimum in 50 of 50.
+      claims: [smac-agrees, real-stack-50, navfn-default]
+  - id: write-the-heuristic
+    track: builder
+    title: Write A*'s heuristic
+    predict: p1-heuristic-zero
+    observe:
+      text: >-
+        Open the starter in the Algorithm Studio and run it as it is (h = 0). Count the expanded
+        cells. Then imagine the cheapest way to the goal on an empty floor.
+      studio: m1-heuristic
+    explain:
+      diagram: search
+      text: >-
+        The heuristic is a function of two cells: where you are and where the goal is. It must
+        be fast (it runs for every cell A* pushes) and it must never overestimate the true
+        remaining cost, or A* can return a longer path.
+
+        On an 8-connected grid a straight step costs 1 and a diagonal step costs sqrt(2), about
+        1.414. If nothing is in the way, the cheapest route from (0, 0) to (dx, dy) uses as many
+        diagonal steps as it can -- min(dx, dy) of them -- and then goes straight for the rest.
+        That cost is the octile distance. Walls only make the real route longer, so octile can
+        never overestimate: it is admissible.
+
+        Other guesses: straight-line (Euclidean) distance is admissible too but a little weaker;
+        Manhattan distance (dx + dy) overestimates when diagonals are allowed. A weaker guess
+        expands more cells; an overestimating guess can return a longer path. Your check runs
+        your heuristic on scenarios you can see and ones you cannot, and compares both numbers
+        with the reference.
+      claims: [astar-equals-dijkstra, octile-tested]
+    try: m1-heuristic
+    ros2:
+      label: SIMULATION RESULT
+      text: >-
+        The same planner file runs as a Nav2 planner plugin node: R2 exported the A* starter and
+        Nav2 drove it in Gazebo to 60 of 60 goals. In R3, planning on the Depot, ROS 2 never
+        found a path the model missed (0 of 480 runs).
+      claims: [r2-export-60, r3-planning-gap]
+  - id: implement-dijkstra
+    track: builder
+    title: Implement Dijkstra's algorithm
+    predict: p1-bfs
+    observe:
+      text: >-
+        In the Proving Ground's Plan lens, pick Dijkstra and watch the ripple: cells open in order
+        of cost, not in order of steps.
+      arena: {lens: plan, level: watch, camera: topdown}
+    explain:
+      diagram: search
+      text: >-
+        Dijkstra needs three things: a priority queue of (cost so far, cell), a table best[cell]
+        of the cheapest cost found so far, and parent[cell] to walk the path back at the end.
+
+        Loop: pop the cheapest cell. If it is already done (a cheaper copy came out earlier),
+        skip it. Otherwise mark it done; if it is the goal, stop. For each free neighbour, the
+        new cost is the cell's cost plus the step length. If that beats best[neighbour], store
+        it, set the parent, and push the neighbour.
+
+        Two details decide whether the answer is right. First, the queue must be ordered by
+        cost: a first-in-first-out queue gives breadth-first search, which finds the path with
+        the fewest steps, not the shortest in metres. Second, diagonal steps cost sqrt(2);
+        treating them as 1 again counts steps rather than distance. The starter keeps the robot
+        out of cells with cost 253 or more and stops diagonals from cutting a blocked corner, so
+        your loop only has to search.
+      claims: [race-optimum, bfs-unit-costs]
+    try: m1-dijkstra
+    ros2:
+      label: MEASURED
+      text: >-
+        NavFn, Nav2's default planner, is a Dijkstra search unless use_astar is set. COCO
+        checked its own Dijkstra against Nav2's Smac search on the real costmap: equal raw cost
+        in every comparable pair.
+      claims: [navfn-default, smac-agrees]
+  - id: benchmark-a-planner
+    track: researcher
+    title: Benchmark your own planner
+    predict: p1-bench
+    observe:
+      text: >-
+        Look at the Leaderboard's depot-nav-100 board: every entry was run on public scenarios and
+        on a held-out set nobody saw before. Then open the Studio with an empty planner.
+      link: {view: workbench, tab: leaderboard}
+    explain:
+      diagram: search
+      text: >-
+        A benchmark asks one question over many scenarios, with everything else fixed: the map,
+        the starts and goals, the seed, the robot. One good run is an anecdote; a suite is
+        evidence.
+
+        COCO-Bench draws its scenarios with a seeded generator, so anyone can regenerate them.
+        That also means anyone could tune a planner to the public set. So every check here has a
+        hidden set too, drawn from a seed that includes your file's own hash: change one
+        character and you meet new scenarios. A planner that is right on the public six but
+        hard-codes them meets six it has never seen.
+
+        Your target: solve every scenario, with a median path within 5 % of the A* starter's.
+        Then submit it to the leaderboard (a pull request; the verifier re-runs it in a locked
+        sandbox, including a held-out set from a secret), and export it to ROS 2 (module 10).
+      claims: [heldout-secret, astar-equals-dijkstra]
+    try: m1-bench
+    ros2:
+      label: SIMULATION RESULT
+      text: >-
+        The first community entry, a Lazy Theta*, planned in Gazebo but its paths were driven
+        0 of 5 by Regulated Pure Pursuit: 29-77 % of its plans passed a pose at cost 253 or more
+        in the local costmap. A short path is not the whole story on a real stack.
+      claims: [theta-stack]
+claims:
+  - {id: astar-equals-dijkstra, label: TESTED, mission: find-a-path/astar-equals-dijkstra, text: ''}
+  - {id: bounds, label: TESTED, mission: find-a-path/bounds, text: ''}
+  - {id: smac-agrees, label: MEASURED, mission: find-a-path/smac-agrees, text: ''}
+  - {id: real-stack-50, label: MEASURED, mission: find-a-path/real-stack-50, text: ''}
+  - {id: race-optimum, label: TESTED, mission: find-a-path/race-optimum, text: ''}
+  - id: navfn-default
+    label: MEASURED
+    text: >-
+      Nav2's NavFn planner declares use_astar = false by default, so it runs Dijkstra; its
+      tolerance (0.5 m) is how far around an unreachable goal it looks for a reachable point.
+    evidence: ['docs/v2/r4/SOURCES.md > navfn']
+  - id: octile-tested
+    label: TESTED
+    text: >-
+      The course's reference heuristic (octile distance) returns the optimal path on every
+      scenario the check draws, with fewer expansions than h = 0; h = 0, 3 x octile and
+      Manhattan distance are each caught by the check.
+    evidence: ['coco_lab/test/test_course.py::test_every_code_exercise_reference_passes', 'coco_lab/test/test_course.py::test_wrong_solutions_fail_with_a_message']
+  - id: bfs-unit-costs
+    label: TESTED
+    text: >-
+      Breadth-first search is optimal only when every step costs the same; COCO's property
+      tests check it under unit costs.
+    evidence: ['coco_lab/test/test_properties.py::test_bfs_is_optimal_under_unit_costs']
+  - id: r2-export-60
+    label: SIMULATION RESULT
+    text: >-
+      R2 exported the Studio's A* starter as a ROS 2 package and ran it as Nav2's planner in
+      Gazebo: 60 of 60 goals reached.
+    evidence: ['docs/v2/r2/R2_RESULTS.md']
+  - id: r3-planning-gap
+    label: SIMULATION RESULT
+    text: >-
+      R3 ran the same planning scenarios in Gazebo with Nav2 (4 suites x 20, 3 repeats): ROS 2
+      never found a path the model missed (0 of 480); the same A* file reached 77 of 80 with a
+      median length ratio of 1.001-1.008.
+    evidence: ['docs/v2/r3/R3_RESULTS.md', 'docs/v2/r3/data/r35/README.md']
+  - id: heldout-secret
+    label: TESTED
+    text: >-
+      The leaderboard's verifier runs a submission in a sandbox with no network, on public
+      scenarios and on a held-out set generated from a repository secret; attack tests tried
+      to read the secret and leak the scenarios and failed.
+    evidence: ['docs/v2/adr/0014-held-out-secret-salt.md', 'docs/v2/r4/data/secret/README.md']
+  - id: theta-stack
+    label: SIMULATION RESULT
+    text: >-
+      Lazy Theta* reached 0 of 5 goals on the stack under Regulated Pure Pursuit; 29-77 % of
+      its received plans had a pose at cost >= 253 in the local costmap, against 0-10 % for
+      stock Nav2 and the A* starter. Why the controller then failed is INFERENCE.
+    evidence: ['docs/v2/r3/data/a1/README.md']

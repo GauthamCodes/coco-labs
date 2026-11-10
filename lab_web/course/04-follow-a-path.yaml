@@ -1,0 +1,154 @@
+# R4 Learn course, module 4 (coco.lesson.v1, ADR 0015).
+schema: coco.lesson.v1
+id: follow-a-path
+number: 4
+title: Following a path
+question: A path is a line on a map. What turns it into wheel speeds -- and what does each controller optimise?
+mission: avoid-things
+lessons:
+  - id: what-controllers-optimise
+    track: explorer
+    title: Four ways to follow a path
+    predict: p4-optimise
+    observe:
+      text: >-
+        Run the waypoint driver, DWA, Regulated Pure Pursuit and MPPI on the same two short
+        routes with corners. Watch the Move lens: DWA and MPPI draw their candidate
+        trajectories; pure pursuit draws one arc to one point.
+      experiment: {family: control, world: coco_arena_v1, algorithms: [builtin, dwa, rpp, mppi], from: m4-lookahead}
+    explain:
+      diagram: follow
+      text: >-
+        A local controller runs ten or twenty times a second. Each time, it reads where the
+        robot is, the global path and the latest scan, and returns one command: forward speed
+        and turn rate.
+
+        Pure pursuit is geometry. It picks the point on the path one lookahead distance ahead
+        and drives the circular arc that passes through it. Regulated Pure Pursuit, Nav2's
+        version, adds rules: slow down on tight curves and near obstacles.
+
+        DWA (Nav2's DWB) generates candidate trajectories -- many pairs of speed and turn rate,
+        each rolled forward a second or two -- and scores each with critics: how close it stays
+        to the path, how near it goes to obstacles, how much progress it makes. It picks the
+        best. MPPI samples thousands of noisy control sequences, scores them the same way, and
+        averages them, weighting the good ones exponentially more.
+
+        So pure pursuit optimises nothing; it follows. DWA picks the best of a fixed set. MPPI
+        builds a smooth command from many random tries. That changes how they fail: on COCO's
+        stack DWB stalled at a hairpin where RPP and MPPI did not.
+      claims: [controllers, dwb-source, mppi-source]
+    try: p4-lookahead-long
+    ros2:
+      label: SIMULATION RESULT
+      text: >-
+        On the full stack in Gazebo, around a wall end and into a room, DWB failed 5 of 5 with
+        FAILED_TO_MAKE_PROGRESS while RPP and MPPI succeeded 5 of 5. In R3, the model's
+        controllers agreed with Nav2's on 25-40 of 70 control scenarios: the model's RPP is
+        pessimistic (more model-only failures than stack-only).
+      claims: [hairpin, r3-control-gap]
+  - id: choose-lookahead
+    track: builder
+    title: Choose the lookahead
+    predict: p4-curvature
+    observe:
+      text: >-
+        Open the starter in the Algorithm Studio (lookahead 2 m) and run it on a corner route.
+        Watch the lookahead dot at each bend.
+      studio: m4-lookahead
+    explain:
+      diagram: follow
+      text: >-
+        Pure pursuit steers towards a point a fixed distance ahead along the path. Its curvature
+        is 2y / L^2, where y is the point's sideways offset in the robot's frame and L its
+        distance. One number, the lookahead L, decides almost everything.
+
+        Long lookahead: the point is far ahead, so the arc is gentle and the motion smooth. But
+        at a bend the point is already around the corner, so the arc starts across the inside
+        of the bend: it cuts corners, and in a narrow place the body meets the wall.
+
+        Short lookahead: the robot tracks the path closely, through every small kink, and slows
+        down on the tight arcs. On a real robot with delay a very short lookahead also
+        oscillates; COCO's model has no delay, so here it is only slower.
+
+        Pick a value that reaches every goal on the corner routes with no contact and with the
+        body never crossing into a wall. The check also runs routes you have not seen.
+      claims: [rpp-lookahead, lookahead-measured]
+    try: m4-lookahead
+    ros2:
+      label: MEASURED
+      text: >-
+        Nav2's Regulated Pure Pursuit uses lookahead_dist 0.6 m by default, and can scale it with
+        speed between 0.3 m and 0.9 m. Its lookahead point is the point on the path exactly that
+        far from the robot.
+      claims: [rpp-lookahead]
+  - id: goal-tolerance
+    track: builder
+    title: Add a goal tolerance
+    predict: p4-wrap
+    observe:
+      text: >-
+        Watch any run's last second in the Move lens: the robot slows, and stops when it is
+        close enough -- not exactly on the goal.
+      arena: {lens: move, level: watch, camera: follow}
+    explain:
+      diagram: follow
+      text: >-
+        A controller needs to know when to stop. Wheels slip, the estimate is noisy, and the
+        robot cannot stop on a millimetre. So Nav2 uses a goal checker: the goal is reached when
+        the robot is within a distance tolerance AND facing within an angle tolerance.
+
+        Two details make the difference between a working check and a subtle bug. Nav2 compares
+        squared distance with squared tolerance (no square root needed), and a robot exactly on
+        the boundary counts as arrived. And headings wrap around: 3.10 rad and -3.10 rad are
+        only 0.08 rad apart, because both are close to pi. Subtracting them gives 6.20; the
+        short way round is what matters.
+
+        Your function gets the robot's pose, the goal's pose and both tolerances. The check
+        compares your verdict with Nav2's rule on many poses, including poses exactly on the
+        boundary and across the wrap.
+      claims: [goal-checker]
+    try: m4-goal
+    ros2:
+      label: MEASURED
+      text: >-
+        This is Nav2's SimpleGoalChecker: dx^2 + dy^2 > xy_goal_tolerance^2 rejects, then
+        |shortest angular distance| <= yaw_goal_tolerance accepts; both default to 0.25. COCO's
+        runner checks the goal the same way (0.25 m) for every controller.
+      claims: [goal-checker]
+claims:
+  - {id: controllers, label: SIMPLIFIED MODEL, mission: avoid-things/controllers, text: ''}
+  - {id: hairpin, label: SIMULATION RESULT, mission: avoid-things/hairpin, text: ''}
+  - id: dwb-source
+    label: MEASURED
+    text: DWB generates trajectories and critic plugins score them.
+    evidence: ['docs/v2/r4/SOURCES.md > dwb']
+  - id: mppi-source
+    label: MEASURED
+    text: MPPI samples many trajectories and scores them with critic plugins (Jazzy defaults model_dt 0.05 s, 56 time steps, batch 1000).
+    evidence: ['docs/v2/r4/SOURCES.md > mppi']
+  - id: rpp-lookahead
+    label: MEASURED
+    text: >-
+      Regulated Pure Pursuit's lookahead_dist defaults to 0.6 m (0.3-0.9 m when scaled with
+      speed); its lookahead point is the path point exactly that far from the robot.
+    evidence: ['docs/v2/r4/SOURCES.md > rpp-lookahead']
+  - id: lookahead-measured
+    label: MEASURED
+    text: >-
+      In COCO's model, on the exercise's corner routes, pure pursuit with a 0.45 m lookahead
+      reaches every goal without contact; 2 m cuts the corners and fails. The check and three
+      wrong lookaheads are run in CI.
+    evidence: ['coco_lab/test/test_course.py::test_every_code_exercise_reference_passes', 'coco_lab/test/test_course.py::test_wrong_solutions_fail_with_a_message']
+  - id: goal-checker
+    label: MEASURED
+    text: >-
+      Nav2's SimpleGoalChecker: reached when dx^2 + dy^2 <= xy_goal_tolerance^2 and
+      |shortest angular distance| <= yaw_goal_tolerance; both default 0.25.
+    evidence: ['docs/v2/r4/SOURCES.md > goal-checker']
+  - id: r3-control-gap
+    label: SIMULATION RESULT
+    text: >-
+      R3 (one Gazebo repeat, so not a rate): on 70 control scenarios the model and Nav2 agreed
+      on the outcome for RPP 25, DWB vs DWA 39, MPPI 40; the model's RPP failed where the stack
+      succeeded 33 times, the reverse 12 times.
+    evidence: ['docs/v2/r3/R3_RESULTS.md', 'docs/v2/r3/data/r35/README.md']

@@ -1,0 +1,102 @@
+# R4 Learn course, module 2 (coco.lesson.v1, ADR 0015).
+schema: coco.lesson.v1
+id: costmaps
+number: 2
+title: Costmaps and inflation
+question: Why do good paths keep their distance from walls -- and how much distance?
+mission: build-a-map
+lessons:
+  - id: why-paths-keep-distance
+    track: explorer
+    title: Why paths keep their distance
+    predict: p2-hug
+    observe:
+      text: >-
+        Run A* on three Depot routes twice: once ignoring the inflation cost (weight 0) and once
+        with it. Compare the minimum and mean clearance of each path.
+      experiment: {family: planning, world: coco_depot_v1, algorithms: [astar], from: m2-tune-clearance}
+    explain:
+      diagram: inflation
+      text: >-
+        A costmap is a grid of numbers from 0 to 255 that a planner reads instead of the raw
+        map. 254 is an obstacle (lethal). 253 is "inscribed": a cell so close to an obstacle
+        that the robot's centre there would put its body into it. 255 is unknown. Everything
+        else, 0 to 252, is free but has a price.
+
+        Inflation sets that price. Around every obstacle the cost falls off exponentially with
+        distance, from 252 just outside the robot's radius down to 0 at the inflation radius.
+        A planner that adds this cost to each step it takes now pays to pass close to a wall,
+        so it moves away from walls when that is cheap, and squeezes past only when it has to.
+
+        Two numbers shape it. The cost scaling factor sets how fast the cost falls: a high
+        factor gives a thin, steep band; a low one spreads cost further into the room. The
+        weight, how much a planner cares about cost compared with distance, decides how far it
+        will detour to stay clear. Too little and paths hug walls; too much and paths take long
+        detours. Your target asks for both: clearance, and a path no more than 25 % longer.
+      claims: [inflation-formula, inflation-defaults, cost-model]
+    try: m2-tune-clearance
+    ros2:
+      label: MEASURED
+      text: >-
+        Nav2's inflation layer is one plugin of its costmap. Its defaults are an inflation
+        radius of 0.55 m and a cost scaling factor of 10.0. COCO's model uses the same formula,
+        and its costs equalled Smac's raw costs on COCO's real map.
+      claims: [inflation-defaults, smac-raw]
+  - id: write-inflation
+    track: builder
+    title: Write Nav2's inflation cost
+    predict: p2-inscribed
+    observe:
+      text: >-
+        Open the Proving Ground's Plan lens with the costmap shown: the coloured band around each
+        wall is inflation. Notice it is the same width everywhere.
+      arena: {lens: plan, level: inspect, camera: topdown}
+    explain:
+      diagram: inflation
+      text: >-
+        Nav2 computes a cell's cost from d, its distance to the nearest obstacle cell, in four
+        ranges. At d = 0 the cell is the obstacle: 254. Up to the robot's inscribed radius (for
+        a round robot, its radius) the cost is 253: the centre cannot go there. Beyond the
+        inflation radius it is 0. In between it is 252 x exp(-k (d - r)), where k is the cost
+        scaling factor and r the radius.
+
+        One detail matters for an exact match: Nav2 stores a cost as one byte, an unsigned char,
+        so the exponential is truncated to a whole number, never rounded. 252 x exp(-0.5) is
+        152.84; Nav2 stores 152. Your check calls your function at many distances -- some exactly
+        on the radius, some exactly on the inflation radius -- and compares every value.
+
+        The order of the tests matters too. Distance 0 must be lethal before anything else is
+        checked.
+      claims: [inflation-formula, cost-model]
+    try: m2-inflation
+    ros2:
+      label: MEASURED
+      text: >-
+        This is the computeCost function of Nav2's inflation_layer.hpp (Jazzy). COCO's model
+        implements it with the same truncation, and on COCO's own map its costs matched what
+        Nav2's Smac planner read.
+      claims: [inflation-formula, smac-raw]
+claims:
+  - id: inflation-formula
+    label: MEASURED
+    text: >-
+      Nav2 Jazzy's inflation cost: distance 0 is lethal (254), within the inscribed radius 253,
+      beyond it 252 x exp(-cost_scaling_factor x (distance - inscribed radius)), stored as a
+      byte. COCO's model uses the same formula and truncation.
+    evidence: ['docs/v2/r4/SOURCES.md > inflation-formula', 'coco_lab/coco_lab/costmap.py', 'coco_lab/test/test_course.py::test_inflation_solution_is_coco_labs_costmap_function']
+  - id: inflation-defaults
+    label: MEASURED
+    text: Nav2's inflation layer defaults to inflation_radius 0.55 m and cost_scaling_factor 10.0.
+    evidence: ['docs/v2/r4/SOURCES.md > inflation-defaults']
+  - id: cost-model
+    label: SIMPLIFIED MODEL
+    text: >-
+      COCO's planners step from cell to cell at cost length x (1 + weight x cell cost / 252);
+      weight 0 ignores inflation. This is COCO's choice, not Nav2's formula for step cost.
+    evidence: ['coco_lab/coco_lab/templates/planner_astar.py']
+  - id: smac-raw
+    label: MEASURED
+    text: >-
+      On COCO's real costmap, SmacPlanner2D's raw search cost equalled coco_lab's optimum within
+      1e-15 in all 36 comparable pairs: the costs the model plans on are the costs Nav2 plans on.
+    evidence: ['docs/RESULTS.md "COCO Lab Phase 1C"', 'docs/data/lab1c/conformance/conformance.json']

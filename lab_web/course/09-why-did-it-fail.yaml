@@ -1,0 +1,49 @@
+# R4 Learn course, module 9 (coco.lesson.v1, ADR 0015).
+schema: coco.lesson.v1
+id: why-did-it-fail
+number: 9
+title: Why did the robot fail?
+question: A run ended in failure. Where in its recording did it actually go wrong?
+mission: why-did-it-fail
+lessons:
+  - id: read-a-recording
+    track: explorer
+    title: Read a recording, find the tick
+    predict: p9-cause
+    observe:
+      text: >-
+        Below is a recorded MODEL run: DWA on a Depot route with many corners. It ended with
+        "failed to make progress". Read its timeline: speed, clearance, position.
+      timeline: m9-failure-stuck
+    explain:
+      diagram: timeline
+      text: >-
+        A robot run is recorded tick by tick: where the robot truly was, where it believed it
+        was, what it was told to do, what it saw. When a run fails, the failure message comes at
+        the END, but the cause is usually earlier.
+
+        "Failed to make progress" is a good example. Nav2's progress checker waits: if the robot
+        has not moved far enough within a time window, the controller gives up. So the message
+        arrives seconds after the robot actually got stuck. Read backwards from the end: find the
+        last moment the robot was still getting somewhere. Around that tick, look at what
+        changed: did the clearance drop, did the speed collapse, did the belief jump?
+
+        COCO's Case Files do this with committed rules. Run 15, the one failed fetch, is the
+        famous one: the robot believed it was 3.4 m from where it was, and the controller then
+        refused every trajectory. In all nine reproductions the belief left the truth at ticks
+        30-31 and the controller refused at ticks 122-130 -- the cause 90 ticks before the
+        symptom.
+      claims: [moments, run15-original, unresolved-exact]
+    try: m9-failure-stuck
+    ros2:
+      label: SIMULATION RESULT
+      text: >-
+        Run 15 was a real ROS 2 stack run in Gazebo; its log reads "DWBLocalPlanner: No valid
+        trajectories out of 819!". The real cause was localisation, not the controller. Exactly
+        what happened in run 15 itself is still unresolved; its mechanism is reproduced.
+      claims: [run15-original, reproduction, unresolved-exact]
+claims:
+  - {id: moments, label: MEASURED, mission: why-did-it-fail/moments, text: ''}
+  - {id: run15-original, label: SIMULATION RESULT, mission: why-did-it-fail/run15-original, text: ''}
+  - {id: reproduction, label: SIMULATION RESULT, mission: why-did-it-fail/reproduction, text: ''}
+  - {id: unresolved-exact, label: UNRESOLVED, mission: why-did-it-fail/unresolved-exact, text: ''}

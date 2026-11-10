@@ -33,7 +33,8 @@ def _test_requirements():
 setup(
     # R2: the starter algorithm files (data, never modules) and the ROS 2 package templates
     package_data={'coco_lab': ['link_limits.json', 'levels/*.json', 'benchmarks/*.json',
-                               'templates/*.py', 'ros2_package/*.tmpl']},
+                               'templates/*.py', 'ros2_package/*.tmpl',
+                               'course/*.json', 'course/files/*.py']},
     name=package_name,
     version='0.2.0',
     packages=find_packages(exclude=['test']),

@@ -1,0 +1,49 @@
+# R4 Learn course, module 8 (coco.lesson.v1, ADR 0015).
+schema: coco.lesson.v1
+id: where-to-look
+number: 8
+title: Deciding where to look
+question: COCO is told "fetch the red one" -- not where it is. Four bays. Which first, and what does a miss tell it?
+mission: where-to-look
+lessons:
+  - id: which-bay-first
+    track: explorer
+    title: Which bay first?
+    predict: p8-bay
+    observe:
+      text: >-
+        Open the Decide lens and run a colour fetch: watch the belief over the four bays change
+        after each look.
+      arena: {lens: decide, level: watch, camera: orbit}
+    explain:
+      diagram: search-bays
+      text: >-
+        Searching is deciding under uncertainty. COCO knows its map, the four bays, what it costs
+        to drive to each, and that its camera sometimes misses a target that is there. It does
+        not know which bay holds red.
+
+        Two simple rules come to mind. Nearest first: cheap, but it ignores how likely each bay
+        is. Most likely first: it ignores distance, and may cross the floor twice. The right
+        quantity is the expected distance driven until the object is found, over every order of
+        bays. With a perfect camera nearest-first happens to be optimal here; with a camera
+        assumed to see a present target 9 times in 10, it is not: COCO's chosen order expects 30.45 m,
+        nearest-first 30.83 m and most-likely-first 32.26 m.
+
+        A miss is evidence, not proof. After looking in a bay and not seeing red, that bay keeps
+        a little belief (the camera might have missed) and the others rise: Bayes' rule.
+      claims: [counterexample, bayes, told-only-colour]
+    try: p8-miss
+    ros2:
+      label: SIMULATION RESULT
+      text: >-
+        The same search ran as a ROS 2 mission in Gazebo, a fresh simulator per run: 14 of 16
+        scored runs completed. Each Gazebo search is rebuilt from the robot's own looks, and
+        coco_lab chooses every bay again from the same belief: a recording that disagreed would
+        fail CI.
+      claims: [p05-matrix, p05-replay]
+claims:
+  - {id: counterexample, label: TESTED, mission: where-to-look/counterexample, text: ''}
+  - {id: bayes, label: TESTED, mission: where-to-look/bayes, text: ''}
+  - {id: told-only-colour, label: ASSUMPTION, mission: where-to-look/told-only-colour, text: ''}
+  - {id: p05-matrix, label: SIMULATION RESULT, mission: where-to-look/p05-matrix, text: ''}
+  - {id: p05-replay, label: TESTED, mission: where-to-look/p05-replay, text: ''}

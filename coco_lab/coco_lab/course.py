@@ -161,7 +161,10 @@ def scenarios(e: Dict, which: str, answer: Optional[Dict] = None) -> List[Dict]:
     from . import experiments as ex
     g = e['scenarios']
     n = g['public'] if which == 'public' else g['hidden']
-    seed = e['seed'] if which == 'public' else hidden_seed(e, answer or {})
+    # a tune answer is parameters only (nothing to hard-code): its hidden set is the
+    # exercise's own, so moving a slider does not draw new scenarios
+    seed = e['seed'] if which == 'public' else \
+        hidden_seed(e, {} if e['type'] == 'tune' else (answer or {}))
     if 'suite' in g:
         if which == 'public':
             scen = B.generate(g['suite'])[:n]
@@ -221,6 +224,13 @@ def _reference_cells(e: Dict, s: Dict) -> List:
 
 # -- running -------------------------------------------------------------------------------------
 
+def _beat(*_):
+    """Tell the browser's watchdog the grader is alive (exp_user.ON_CALL; natively a no-op)."""
+    from . import exp_user
+    if exp_user.ON_CALL is not None:
+        exp_user.ON_CALL(0.0)
+
+
 def _spec(e: Dict, algorithms: List[Dict], scen: List[Dict]) -> Dict:
     from . import experiments as ex
     inline = [{k: v for k, v in s.items() if k not in ('zone', 'features')} for s in scen]
@@ -253,9 +263,15 @@ def run_set(e: Dict, algo: Dict, scen: List[Dict]) -> List[Dict]:
             a['params'] = dict(a.get('params', {}), **{'user.nogo': s['zone']})
         p = ex.plan(_spec(e, [a], [s]))
         cells: List = []
-        sink = (lambda row: cells.append(list(row[1:3])) if row[0] == 3 else None) \
-            if e['family'] == 'planning' else None
-        r = ex.run_one(p['runs'][0], sink=sink, twice=False)
+        sink = None
+        if e['family'] == 'planning':
+            def sink(row):
+                if row[0] == 3:
+                    cells.append(list(row[1:3]))
+                elif row[0] == 1 and len(cells) == 0:
+                    _beat()
+        r = ex.run_one(p['runs'][0], sink=sink, on_tick=_beat if sink is None else None,
+                       twice=False)
         r = ex.plain(r)
         r['scenario'] = s['id']
         if sink is not None:
@@ -352,6 +368,19 @@ def check_sum_ratio_max(c, runs, which, **_):
     return [_result(c, ok, which, None, round(q, 6), c['value'],
                     f'{c["metric"]}: {sum(a)} in total, {q:.3f}x the {c["vs"]}\'s {sum(b)} '
                     f'(at most {c["value"]}x)')]
+
+
+def check_sum_ratio_min(c, runs, which, **_):
+    """Over all scenarios: sum(learner metric) / sum(``vs`` metric) is at least ``value``."""
+    a = [_m(r, c['metric']) for r in runs['user']]
+    b = [_m(r, c['metric']) for r in runs[c['vs']]]
+    if any(v is None for v in a + b) or sum(b) <= 0:
+        return [_result(c, False, which, None, None, c['value'],
+                        f'{c["metric"]} missing on a run: fix the failing runs first')]
+    q = sum(a) / sum(b)
+    ok = q >= c['value']
+    return [_result(c, ok, which, None, round(q, 6), c['value'],
+                    f'{c["metric"]}: {q:.3f}x the {c["vs"]}\'s in total (at least {c["value"]}x)')]
 
 
 def check_zone_avoid(c, runs, which, scen=None, **_):
@@ -523,7 +552,8 @@ def check_exports(c, runs, which, answer=None, **_):
 CHECKS: Dict[str, Callable] = {
     'success_all': check_success_all, 'metric_max': check_metric_max,
     'metric_min': check_metric_min, 'ratio_max': check_ratio_max,
-    'sum_ratio_max': check_sum_ratio_max, 'zone_avoid': check_zone_avoid,
+    'sum_ratio_max': check_sum_ratio_max, 'sum_ratio_min': check_sum_ratio_min,
+    'zone_avoid': check_zone_avoid,
     'success_rate_min': check_success_rate_min, 'median_ratio_max': check_median_ratio_max,
     'function_cases': check_function_cases, 'resample': check_resample,
     'choice': check_choice, 'tick_within': check_tick_within, 'cell_within': check_cell_within,
@@ -660,6 +690,7 @@ def _truth_tick(e: Dict) -> Optional[int]:
     poses: List = []
 
     def on_tick(a, t):
+        _beat()
         if t.contact and not contacts:
             contacts.append(t.tick)
         poses.append((t.tick, t.pose[0], t.pose[1]))
@@ -786,6 +817,7 @@ def inspect(ex_id: str) -> Dict:
     series = []
 
     def on_tick(a, t):
+        _beat()
         b = a.belief()
         series.append([t.tick, round(t.pose[0], 3), round(t.pose[1], 3), round(t.v, 3),
                        round(a.smap.clearance(t.pose[0], t.pose[1]) - a.radius, 3),

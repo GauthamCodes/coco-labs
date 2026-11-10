@@ -18,7 +18,7 @@
 export const PREF_PREFIXES = ['coco.play.best.v1.', 'coco.prefs.v1.'] as const;
 
 /** The named preferences (one key each). */
-export type PrefName = 'keys' | 'camera' | 'quality' | 'sound' | 'motion' | 'bars' | 'tank' | 'theme' | 'walls' | 'phone120' | 'haptics' | 'tutorial' | 'ghost' | 'view' | 'displays' | 'planner' | 'studio';
+export type PrefName = 'keys' | 'camera' | 'quality' | 'sound' | 'motion' | 'bars' | 'tank' | 'theme' | 'walls' | 'phone120' | 'haptics' | 'tutorial' | 'ghost' | 'view' | 'displays' | 'planner' | 'studio' | 'course';
 const KEY: Record<PrefName, string> = {
   phone120: 'coco.prefs.v1.phone120', haptics: 'coco.prefs.v1.haptics', tutorial: 'coco.prefs.v1.tutorial', ghost: 'coco.prefs.v1.ghost',
   // G2.2: GAME or SIM, and SIM's displays (RViz's names) and their options
@@ -27,6 +27,8 @@ const KEY: Record<PrefName, string> = {
   planner: 'coco.prefs.v1.planner',
   // R2.3: the Algorithm Studio's local draft (code, template, scenario)
   studio: 'coco.prefs.v1.studio',
+  // R4: the Learn course's progress (stars, hints, the answers that passed); export/import as a file
+  course: 'coco.prefs.v1.course',
   theme: 'coco.prefs.v1.theme',
   walls: 'coco.prefs.v1.walls',
   keys: 'coco.prefs.v1.keys', camera: 'coco.prefs.v1.camera', quality: 'coco.prefs.v1.quality',

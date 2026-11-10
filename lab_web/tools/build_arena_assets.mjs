@@ -199,7 +199,8 @@ function main() {
   const src = join(repo, 'coco_lab', 'coco_lab');
   // R1: a pack may also carry the benchmark suites (benchmarks/*.json, in the experiments pack)
   // R2: templates/ holds algorithm files (user code the Studio loads as text), never modules
-  const all = walk(src).filter((f) => !f.includes('/templates/') && (f.endsWith('.py') || f.endsWith('link_limits.json') || /\/(levels|benchmarks)\/[^/]+\.json$/.test(f) || /\/ros2_package\/[^/]+\.tmpl$/.test(f)))
+  // R4: course/ holds the course's exercises (JSON) and its starter/solution files (user code, data)
+  const all = walk(src).filter((f) => !f.includes('/templates/') && (f.endsWith('.py') || f.endsWith('link_limits.json') || /\/(levels|benchmarks|course)\/[^/]+\.json$/.test(f) || /\/ros2_package\/[^/]+\.tmpl$/.test(f)))
     .map((f) => [`coco_lab/${relative(src, f)}`, readFileSync(f)]);
   // M2.2: split into packs (tools/arena_packs.json); core = everything not in a lens pack
   const { packs: packDefs } = JSON.parse(readFileSync(join(here, 'arena_packs.json'), 'utf-8'));
@@ -215,7 +216,7 @@ function main() {
     writeFileSync(join(arenaDir, file), z);
     packs[name] = { file, bytes: z.length, sha256: sha256(z), requires: packDefs[name].requires,
       // the modules the worker imports after unpacking: Python only (G1.11: a pack may carry data, the level's rounds)
-      modules: files.filter(([n]) => n.endsWith('.py')).map(([n]) => n.replace(/^coco_lab\//, '').replace(/\.py$/, '').replace(/\//g, '.')) };
+      modules: files.filter(([n]) => n.endsWith('.py') && !n.includes('/course/files/')).map(([n]) => n.replace(/^coco_lab\//, '').replace(/\.py$/, '').replace(/\//g, '.')) };
   }
   const spec = readFileSync(join(repo, 'worlds', 'coco_arena_v1.json'));
   writeFileSync(join(arenaDir, 'coco_arena_v1.json'), spec);
