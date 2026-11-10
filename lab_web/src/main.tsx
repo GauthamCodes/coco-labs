@@ -58,7 +58,8 @@ async function display() {
       case 'about': { const { AboutPage } = await import('./shell/AboutPage'); node = <AboutPage />; break; }
       case 'compare': { const { CompareWorkspace } = await import('./compare/CompareWorkspace'); node = <CompareWorkspace />; break; }
       case 'workbench': { const { WorkbenchApp } = await import('./workbench/WorkbenchApp'); node = <WorkbenchApp />; break; }
-      case 'learnhome': { const { LearnPage } = await import('./learn/LearnPage'); node = <LearnPage />; break; }
+      // R4: the bare Learn door opens the course (the seven tours stay at ?view=compare&tour=)
+      case 'learnhome': { const { CourseApp } = await import('./course/CourseApp'); node = <CourseApp />; break; }
       case 'arena': { const { ArenaApp } = await import('./arena/ArenaApp'); node = <ArenaApp />; break; }
       case 'learn': { const { LearnApp } = await import('./learn/LearnApp'); node = <LearnApp />; break; }
       case 'casefiles': { const { CaseFilesApp } = await import('./casefiles/CaseFilesApp'); node = <CaseFilesApp />; break; }

@@ -608,6 +608,14 @@ def build(out=OUT, wheel='build', with_benchmark=True, with_localise=True,
         raise SystemExit('missions: ' + '; '.join(bad + uncovered + unknown))
     with open(os.path.join(out, 'missions.json'), 'w') as f:
         f.write(json.dumps(missions.site_json(ms), indent=1, sort_keys=True) + '\n')
+    # R4: the Learn course (coco.lesson.v1), refused here if any claim's evidence does not resolve
+    import course
+    mods = course.load()
+    bad = course.evidence_problems(mods)
+    if bad:
+        raise SystemExit('course: ' + '; '.join(bad))
+    with open(os.path.join(out, 'course.json'), 'w') as f:
+        f.write(json.dumps(course.site_json(mods), indent=1, sort_keys=True) + '\n')
     # M3.3: the Case Files' text and inventory, refused here on any problem (the
     # evidence check extended to Case Files); their files are copied by build_v2_runs.mjs
     if os.path.isfile(casefiles.INDEX):

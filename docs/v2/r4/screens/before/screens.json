@@ -1,0 +1,89 @@
+{
+ "site": "https://gauthamcodes.github.io/coco-labs/",
+ "set": "before",
+ "device_note": "desktop 1440x1000; phone = EMULATED Nothing Phone (1) (viewport, DPR 2.625, touch, UA)",
+ "shots": [
+  {
+   "device": "desktop",
+   "page": "learn",
+   "query": "?view=learn",
+   "file": "desktop-learn.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "desktop",
+   "page": "tours",
+   "query": "?view=compare&tour=",
+   "file": "desktop-tours.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "desktop",
+   "page": "tour-1-predict",
+   "query": "?view=compare&tour=find-a-path&beat=1",
+   "file": "desktop-tour-1-predict.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-landscape",
+   "page": "learn",
+   "query": "?view=learn",
+   "file": "phone-landscape-learn.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-landscape",
+   "page": "tours",
+   "query": "?view=compare&tour=",
+   "file": "phone-landscape-tours.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-landscape",
+   "page": "tour-1-predict",
+   "query": "?view=compare&tour=find-a-path&beat=1",
+   "file": "phone-landscape-tour-1-predict.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-portrait",
+   "page": "learn",
+   "query": "?view=learn",
+   "file": "phone-portrait-learn.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-portrait",
+   "page": "tours",
+   "query": "?view=compare&tour=",
+   "file": "phone-portrait-tours.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-portrait",
+   "page": "tour-1-predict",
+   "query": "?view=compare&tour=find-a-path&beat=1",
+   "file": "phone-portrait-tour-1-predict.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  }
+ ],
+ "taken": "2026-11-10T13:35:37.161Z"
+}

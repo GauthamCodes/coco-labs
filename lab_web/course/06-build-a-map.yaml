@@ -1,0 +1,95 @@
+# R4 Learn course, module 6 (coco.lesson.v1, ADR 0015).
+schema: coco.lesson.v1
+id: build-a-map
+number: 6
+title: Building a map
+question: To map a room you need to know where you are; to know where you are you need a map. How does a robot do both?
+mission: build-a-map
+lessons:
+  - id: chicken-and-egg
+    track: explorer
+    title: The SLAM chicken-and-egg problem
+    predict: p6-slam
+    observe:
+      text: >-
+        In the Map lens, drive a loop and watch the map grow scan by scan. Then watch what happens
+        when the robot comes back to where it started.
+      arena: {lens: map, level: watch, camera: topdown}
+    explain:
+      diagram: logodds
+      text: >-
+        An occupancy grid is a map of cells, each holding how likely it is to be occupied. To
+        add a scan to it you must know where the scan was taken from. Get the pose wrong by 10
+        cm and the walls land 10 cm off, so the next scan is matched against a slightly wrong
+        map, and so on: errors compound.
+
+        SLAM -- simultaneous localisation and mapping -- estimates both together. Each new scan is
+        matched against the map built so far to correct the pose, and then added to the map
+        from the corrected pose. Odometry gives the first guess between scans.
+
+        Drift still accumulates on a long drive. The cure is a loop closure: when the robot
+        recognises a place it has been before, the whole trajectory can be bent back into
+        shape. In COCO's Sketch tests a pose graph closed the loop in 19 of 20 ring rooms and
+        that lowered the error in 19. In a long featureless corridor every SLAM drifts, because
+        a scan there cannot say how far along it is.
+      claims: [loop-sketch, corridor]
+    try: p6-map-try
+    ros2:
+      label: SIMULATION RESULT
+      text: >-
+        In ROS 2, slam_toolbox (built on Karto's scan matcher) and Cartographer are the common
+        choices. COCO replayed one Gazebo drive into both and into its own SLAMs with identical
+        scans and odometry. One honest surprise: turning loop closure on made slam_toolbox's map
+        much worse on one tour -- still unresolved.
+      claims: [slam-toolbox, s1-tour, loop-backends]
+  - id: log-odds
+    track: builder
+    title: Update a cell in log-odds
+    predict: p6-logodds
+    observe:
+      text: >-
+        In the Map lens, look at one wall cell: it darkens over several scans, not at once.
+      arena: {lens: map, level: inspect, camera: topdown}
+    explain:
+      diagram: logodds
+      text: >-
+        A cell's belief could be stored as a probability p, but combining evidence in
+        probabilities needs multiplications and divisions. Log-odds, l = log(p / (1 - p)), turns
+        Bayes' rule into addition: each observation adds a fixed amount. l = 0 means p = 0.5,
+        "no idea"; positive means probably occupied; negative probably free.
+
+        A LiDAR beam says two things. The cell where it ends is probably occupied: add l_occ
+        (COCO: +0.85). Every cell it passed through is probably free: add l_free (COCO: -0.4).
+        Free evidence is weaker on purpose: one beam passing by a thin pole should not erase it.
+
+        Without a limit, a cell seen as a wall a thousand times would need a thousand passes to
+        clear if the wall moved. So the value is clamped after every update, to [-4, 4] here.
+        Clamping after every step is not the same as clamping once at the end; your check
+        includes sequences where that difference shows.
+      claims: [occgrid-params, score]
+    try: m6-logodds
+    ros2:
+      label: SIMULATION RESULT
+      text: >-
+        The model's LiDAR, which the grid is built from, agreed with Gazebo's on the same poses
+        within a median 2.2 mm over 111,804 beams. Nav2 saves maps in map_saver's trinary
+        format, using occupied and free thresholds (COCO: 0.65 and 0.25).
+      claims: [sensor-fidelity, occgrid-params]
+claims:
+  - {id: loop-sketch, label: TESTED, mission: build-a-map/loop-sketch, text: ''}
+  - {id: corridor, label: TESTED, mission: build-a-map/corridor, text: ''}
+  - {id: s1-tour, label: SIMULATION RESULT, mission: build-a-map/s1-tour, text: ''}
+  - {id: loop-backends, label: UNRESOLVED, mission: build-a-map/loop-backends, text: ''}
+  - {id: score, label: TESTED, mission: build-a-map/score, text: ''}
+  - {id: sensor-fidelity, label: MEASURED, mission: build-a-map/sensor-fidelity, text: ''}
+  - id: slam-toolbox
+    label: MEASURED
+    text: slam_toolbox does 2D SLAM from laser scans, using Karto's scan matcher.
+    evidence: ['docs/v2/r4/SOURCES.md > slam-toolbox']
+  - id: occgrid-params
+    label: TESTED
+    text: >-
+      COCO's grid adds l_occ = 0.85 where a beam ends and l_free = -0.4 along it, clamps to
+      [-4, 4] after each add, and saves with map_saver's thresholds 0.65 / 0.25; the course's
+      reference update equals it.
+    evidence: ['coco_lab/coco_lab/occgrid.py', 'coco_lab/test/test_course.py::test_logodds_solution_is_coco_labs_grid']

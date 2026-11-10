@@ -106,6 +106,15 @@ def main():
         c['published_keys_allowed'] = bool(published) and set(json.loads(published)) <= allowed
         coords = [f'{v:.2f}' for s in scen for v in s['start'][:2] + s['goal']]
         c['coordinates_in_published_text'] = [x for x in coords if x in published]
+        # R4 Part A: the probe falsifies path_ratio on purpose (T5, accepted in ADR 0014), so that
+        # one median CAN equal a coordinate at 3 significant digits (it did when the coordinate
+        # was < 10: '7.35'; R3's 13.6 vs '13.65' passed only by formatting). The verdict is
+        # therefore over every OTHER published field; the residual's match is reported, not hidden.
+        rest = json.dumps({k: v for k, v in json.loads(published).items()
+                           if k != 'path_ratio_median'}) if published else ''
+        c['coordinates_outside_the_residual'] = [x for x in coords if x in rest]
+        c['residual_equals_a_coordinate'] = sorted(set(c['coordinates_in_published_text'])
+                                                   - set(c['coordinates_outside_the_residual']))
         c['leak_files_not_published'] = sorted(p.name for p in (work / 'pout').iterdir()
                                                if p.name != 'heldout_runs.json')
         # residual (ADR 0014, T5): a falsified median can carry one rounded number per metric
@@ -142,8 +151,9 @@ def main():
         must = ('secret_not_in_environment', 'secret_not_found_anywhere',
                 'secret_not_in_any_sandbox_output', 'no_docker_socket', 'no_connection', 'no_dns',
                 'published_keys_allowed', 'probe_ran_as_uid_65534', 'hostile_files_refused')
-        report['pass'] = all(c[k] is True for k in must) and not c['coordinates_in_published_text']
-        report['failed'] = [k for k in must if c[k] is not True]
+        report['pass'] = all(c[k] is True for k in must) and not c['coordinates_outside_the_residual']
+        report['failed'] = [k for k in must if c[k] is not True] + \
+            (['coordinates_outside_the_residual'] if c['coordinates_outside_the_residual'] else [])
     finally:
         shutil.rmtree(work, ignore_errors=True)
         secret = None

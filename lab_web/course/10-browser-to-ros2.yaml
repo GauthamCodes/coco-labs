@@ -1,0 +1,120 @@
+# R4 Learn course, module 10 (coco.lesson.v1, ADR 0015).
+schema: coco.lesson.v1
+id: browser-to-ros2
+number: 10
+title: From the browser to ROS 2
+question: Everything so far ran in your browser. What is the same, and what changes, on a real ROS 2 stack?
+lessons:
+  - id: topics-and-frames
+    track: explorer
+    title: Topics, messages and frames
+    predict: p10-tf
+    observe:
+      text: >-
+        Switch the Arena to its SIM view: the panels name the ROS 2 topics and frames COCO's
+        stack uses, each labelled MODEL or STACK.
+      arena: {lens: plan, level: watch, camera: follow}
+    explain:
+      diagram: ros-graph
+      text: >-
+        ROS 2 programs are nodes that talk over named topics. A topic carries one message type:
+        sensor_msgs/LaserScan on /scan, nav_msgs/Odometry on /odom, geometry_msgs/Twist on
+        /cmd_vel. Any node can publish or subscribe; nobody calls anybody directly.
+
+        Positions need a frame: "1 m ahead" of what? REP 105 names three. base_link is the robot
+        itself. odom is where wheel odometry started: continuous, but it drifts without bound.
+        map is the world: it can jump when localisation corrects itself, but should not drift.
+        TF, the transform library, keeps the tree map -> odom -> base_link. Odometry publishes
+        odom -> base_link; the localisation node (AMCL in Nav2) publishes map -> odom.
+
+        Nav2 is a set of nodes: a planner server (global path), a controller server (wheel
+        commands), a behaviour tree that sequences them, costmaps, AMCL. Recordings are rosbag2
+        files; Jazzy records to MCAP by default.
+      claims: [rep105, amcl-defaults, rosbag2-mcap, costmap-raw]
+    try: p10-topic
+    ros2:
+      label: SIMULATION RESULT
+      text: >-
+        Every STACK recording in this course was recorded on the full ROS 2 stack in Gazebo and
+        converted to COCO's format, every array rebuilt from the channels and its content hash
+        re-checked by the lab's own decoder. No physical robot exists: STACK means simulation.
+      claims: [stack-drives]
+  - id: export-a-node
+    track: researcher
+    title: Export your algorithm as a real node
+    predict: p10-node
+    observe:
+      text: >-
+        In the Algorithm Studio, open your planner and press Export: you get a ROS 2 package. Its
+        README says how to build and launch it with Nav2.
+      link: {view: workbench, tab: studio}
+    explain:
+      diagram: ros-graph
+      text: >-
+        The Studio's API mirrors ROS 2's messages on purpose: plan() receives a costmap with the
+        fields of nav2_msgs/Costmap, the costmap Nav2 publishes on its costmap_raw topic, with raw
+        costs 0..255. The export wraps your file, unchanged, in a node: it subscribes to the real
+        topics, converts each message into the API's types, calls your function, and converts
+        the answer back.
+
+        What stays the same: your function, its inputs on the same costmap, and so its plans.
+        What changes: the world. Gazebo simulates physics and real timing; Nav2's controller and
+        behaviour tree drive the robot; nothing waits for your function. COCO measured the
+        difference. The A* starter, exported, reached 60 of 60 goals in Gazebo; over R3's
+        planning suites ROS 2 never found a path the model missed. Controllers agree less: the
+        model is a simplification, and the course says so.
+
+        Your check: your planner must work here first, and it must export to a package that
+        carries your exact file (its sha256).
+      claims: [costmap-raw, r2-export-60, r3-planning-gap]
+    try: m10-export
+    ros2:
+      label: SIMULATION RESULT
+      text: >-
+        R2 ran exported files as real nodes with Nav2 in Gazebo: the A* starter planned and was
+        driven to 60 of 60 goals; Lazy Theta* planned but was driven to 0 of 5 under Regulated
+        Pure Pursuit; the pure-pursuit starter completed 20 of 20 rounds.
+      claims: [r2-export-60, theta-stack, r2-pure-pursuit]
+claims:
+  - id: rep105
+    label: MEASURED
+    text: >-
+      REP 105: odom can drift without bound but is continuous; map may jump but should not
+      significantly drift; localisation broadcasts map -> odom.
+    evidence: ['docs/v2/r4/SOURCES.md > rep105']
+  - id: amcl-defaults
+    label: MEASURED
+    text: nav2_amcl publishes the map -> odom transform.
+    evidence: ['docs/v2/r4/SOURCES.md > amcl-defaults']
+  - id: rosbag2-mcap
+    label: MEASURED
+    text: Jazzy's rosbag2 records to MCAP by default.
+    evidence: ['docs/v2/r4/SOURCES.md > rosbag2-mcap']
+  - id: costmap-raw
+    label: MEASURED
+    text: A Nav2 costmap also publishes nav2_msgs/Costmap on <topic>_raw, such as /global_costmap/costmap_raw.
+    evidence: ['docs/v2/r4/SOURCES.md > costmap-raw', 'coco_lab/coco_lab/api.py']
+  - {id: stack-drives, label: SIMULATION RESULT, mission: avoid-things/stack-drives, text: ''}
+  - id: r2-export-60
+    label: SIMULATION RESULT
+    text: >-
+      R2 exported the Studio's A* starter as a ROS 2 package and ran it as Nav2's planner in
+      Gazebo: 60 of 60 goals reached.
+    evidence: ['docs/v2/r2/R2_RESULTS.md']
+  - id: r3-planning-gap
+    label: SIMULATION RESULT
+    text: >-
+      R3, planning (4 suites x 20, 3 Gazebo repeats): ROS 2 never found a path the model missed
+      (0 of 480).
+    evidence: ['docs/v2/r3/R3_RESULTS.md', 'docs/v2/r3/data/r35/README.md']
+  - id: theta-stack
+    label: SIMULATION RESULT
+    text: >-
+      Lazy Theta* reached 0 of 5 goals on the stack under Regulated Pure Pursuit; 29-77 % of its
+      plans passed a pose at cost >= 253 in the local costmap (why the controller failed is
+      INFERENCE).
+    evidence: ['docs/v2/r3/data/a1/README.md']
+  - id: r2-pure-pursuit
+    label: SIMULATION RESULT
+    text: The Studio's pure-pursuit starter, exported as a ROS 2 controller, completed 20 of 20 rounds in Gazebo.
+    evidence: ['docs/v2/r2/R2_RESULTS.md']

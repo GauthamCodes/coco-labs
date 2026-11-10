@@ -195,6 +195,16 @@ def run(request_json):
         return _dumps(_check(req['code'][0]))
     if op == 'map':
         return _dumps(_map(req['world']))
+    if op == 'grade':
+        # R4: the Learn course's grader -- coco_lab.course.grade, the very function the native
+        # check runs; the learner's file still only runs through the guard
+        from coco_lab import course
+        _post(json.dumps({'k': 'beat', 'calls': _calls[0], 'ms': 0}))
+        return _dumps(course.grade(req['exercise'], req['answer']))
+    if op == 'inspect':
+        from coco_lab import course
+        _post(json.dumps({'k': 'beat', 'calls': _calls[0], 'ms': 0}))
+        return _dumps(course.inspect(req['exercise']))
     if op == 'export':
         # R2.7: the ROS 2 package -- coco_lab.ros2_export, the very function the CLI runs
         from coco_lab import ros2_export

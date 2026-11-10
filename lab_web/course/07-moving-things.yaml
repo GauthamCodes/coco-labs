@@ -1,0 +1,63 @@
+# R4 Learn course, module 7 (coco.lesson.v1, ADR 0015).
+schema: coco.lesson.v1
+id: moving-things
+number: 7
+title: Avoiding things that move
+question: The path was clear when it was planned. Then a forklift moved. Who decides what the wheels do now?
+mission: avoid-things
+lessons:
+  - id: stop-wins
+    track: explorer
+    title: Moving obstacles, yielding and STOP
+    predict: p7-arbiter
+    observe:
+      text: >-
+        Below is a recorded MODEL run: Regulated Pure Pursuit crossing the Depot while forklifts
+        and walkers that do NOT yield move along their lanes. Read the timeline -- speed,
+        clearance and contact -- and find the first contact.
+      timeline: m7-failure-contact
+    explain:
+      diagram: arbiter
+      text: >-
+        A global plan is made for a still world. People and forklifts move, so the local
+        controller sees them in each new scan and slows, stops or steers. In COCO's model a
+        walker or forklift can yield to the robot or not, a rule of the scenario. When they do
+        not, the robot can do everything right and still be touched.
+
+        Safety does not rely on the controller alone. Many things want to drive the wheels: the
+        autonomy, a person with a joystick, assists. COCO allows exactly one node to publish to
+        the wheels, the cmd_vel arbiter, and it ranks the sources. Teleop preempts every
+        autonomous mode. STOP is above both: once pressed, the server refuses drive and goal
+        commands until someone explicitly picks a mode again, so nothing -- not even the mission
+        executive -- can quietly start the wheels after a stop.
+
+        Why so strict? Before the latch, STOP sent a single zero. The wheels stopped in 1.5 ms,
+        and then the mission re-asserted its mode and they were moving again at 723 ms.
+      claims: [sole-publisher, teleop-preempts, stop-latch, head-on]
+    try: m7-failure-contact
+    ros2:
+      label: SIMULATION RESULT
+      text: >-
+        On COCO's stack the arbiter is a ROS 2 node (custom_teleop/cmd_vel_arbiter) between
+        every command source and the wheels. In Gazebo, a person walking down the path was seen
+        by the LiDAR but had no collision body, so DWB and MPPI "succeeded" with a contact -- the
+        actor walked into a stopped robot. The Arena's actor is solid. Nobody swerved in either.
+      claims: [head-on, actor]
+claims:
+  - {id: head-on, label: SIMPLIFIED MODEL, mission: avoid-things/head-on, text: ''}
+  - {id: actor, label: TESTED, mission: avoid-things/actor, text: ''}
+  - id: sole-publisher
+    label: TESTED
+    text: The cmd_vel arbiter is the only node that publishes wheel commands in COCO's stack.
+    evidence: ['gazebo_models/test/test_cmd_vel_wiring.py', 'coco_sim/test/test_multi_bay_invariants.py::test_inv_11_sole_wheel_publisher_arbiter_invariant']
+  - id: teleop-preempts
+    label: TESTED
+    text: While teleop commands are fresh, the arbiter forwards them in every mode.
+    evidence: ['custom_teleop/test/test_cmd_vel_arbiter.py::test_teleop_preempts_every_mode']
+  - id: stop-latch
+    label: TESTED
+    text: >-
+      A latched STOP blocks drive and goal commands until a mode is picked again; before the
+      latch existed, a STOP during a fetch stopped the wheels in 1.5 ms and they moved again at
+      723 ms (measured, Phase 2 Part A).
+    evidence: ['coco_web/test/test_stop_latch.py::test_latch_lifecycle', 'coco_web/coco_web/stop_latch.py', 'docs/live/PART_A_AUDIT.md']
