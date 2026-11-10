@@ -29,14 +29,14 @@ Prompt: [`R4_PROMPT.md`](R4_PROMPT.md) (Gautham, 2026-11-10).
 
 | checkpoint | state | evidence |
 | --- | --- | --- |
-| R4.0 Baseline | before-screenshots taken from the live site (desktop + emulated phone, 9); suites: main's CI on `60c6e1f` (CI, Paper green); local heavy suites deferred to the close (the laptop was on battery) | `screens/before/` |
-| R4.1 Lesson engine | `coco_lab.course` (coco.lesson.v1, ADR 0015): 5 exercise types, answer-seeded hidden scenarios, 14 check kinds; `test_course.py`; sandbox ops `grade`/`inspect`; the course pack | `docs/v2/adr/0015-lesson-format-and-exact-grading.md` |
-| R4.2 Modules 1-2 | content done; UI written, typechecked, unit-tested (`test/r4_course.test.ts` 9); site build + screenshots in progress | `lab_web/course/`, `lab_web/src/course/` |
-| R4.3-R4.4 Modules 3-10 | content done (20 lessons total, 66 claims, 0 evidence problems, 0 [CHECK]) | |
-| R4.5 Progress and teaching | written (progress pref + file export, completion links, verify page, assignments, class dashboard + CSV) | |
-| R4.6 Glossary, a11y, phone | glossary 54 terms; 10 SVG diagrams (Okabe-Ito, never colour alone); audit and phone pass to do | |
-| R4.7 Grading integrity | first full run 69/75: 6 failures, each analysed -- see below | |
-| R4.8 Close | — | |
+| R4.0 Baseline | done: before-screenshots from the live site (9); suites: main's CI on `60c6e1f`; local heavy suites at the close | `screens/before/` |
+| R4.1 Lesson engine | done: `coco_lab.course`, ADR 0015, `test_course.py`, sandbox ops, the course pack | ADR 0015 |
+| R4.2 Modules 1-2 | done, end to end in the browser; 30 look-review screenshots (desktop + emulated phone) | `screens/r42/`, [BEFORE_AFTER](BEFORE_AFTER.md) |
+| R4.3-R4.4 Modules 3-10 | done (20 lessons, 66 claims, 0 evidence problems, 0 [CHECK]) | `lab_web/course/` |
+| R4.5 Progress and teaching | done: browser check 15/15 (completion link re-verified, class dashboard, CSV) | `data/r47/course_check.json` |
+| R4.6 Glossary, a11y, phone | done: 54 terms; a11y 28/28; Explorer on the EMULATED phone 6/6 (real phone not connected) | `data/r46/` |
+| R4.7 Grading integrity | done: every code exercise's reference passes, >= 3 wrong solutions caught, hard-coding fails hidden; browser = native 7/7; 2 uncaught bugs documented | [R4_RESULTS](R4_RESULTS.md) |
+| R4.8 Close | in progress | |
 
 ### R4.7 findings so far (kept; negative results stay)
 

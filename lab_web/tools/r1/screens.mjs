@@ -23,7 +23,7 @@ const ALL = {
   play: { query: opt('--play', '?view=play'), click: opt('--play-click', null), ready: 'canvas[data-scene-ready="true"], [data-g1="play"][data-ready="true"]', settle: 4000 },
   compare: { query: opt('--compare', '?view=compare'), ready: '[data-testid="compare-workspace"][data-ready="true"]' },
   recordings: { query: '?view=research', ready: '.recording-card' },
-  learn: { query: '?view=learn', ready: '[data-testid="learn-page"], [data-testid="compare-workspace"][data-ready="true"]' },
+  learn: { query: '?view=learn', ready: '[data-testid="course-modules"], [data-testid="learn-page"], [data-testid="compare-workspace"][data-ready="true"]' },
   workbench: { query: '?view=workbench', ready: '[data-testid="workbench"] .wb-builder' },
   benchmarks: { query: '?view=workbench&tab=benchmarks', ready: '[data-testid="workbench"] .wb-section' },
   datasets: { query: '?view=workbench&tab=datasets', ready: '[data-testid="workbench"] .wb-section' },
