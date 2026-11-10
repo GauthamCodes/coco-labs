@@ -1,0 +1,467 @@
+{
+ "schema": "coco.lesson.v1",
+ "about": "R4: every gradeable exercise of the Learn course (ADR 0015). Lessons (lab_web/course/*.yaml) reference these ids; coco_lab.course grades them, in the browser and natively.",
+ "exercises": [
+  {
+   "id": "p1-astar-cost", "type": "predict", "seed": 101,
+   "question": "A* and Dijkstra both plan across COCO's arena from the same start to the same goal. Which path costs less?",
+   "options": ["A*'s: it is guided towards the goal", "Dijkstra's: it searches everywhere, so it finds better paths", "Neither: with a heuristic that never overestimates they cost exactly the same", "It depends on the map"],
+   "answer": 2,
+   "misconceptions": {
+    "0": "Being guided changes how MUCH A* searches, not what it finds. With a heuristic that never overestimates, A* returns an optimal path -- the same cost as Dijkstra's.",
+    "1": "Dijkstra does search more, but extra searching cannot beat optimal. A* with an admissible heuristic is also optimal, so the costs tie.",
+    "3": "It would depend on the map only if the heuristic could overestimate. COCO's never does, and a property test checks the tie on every map it generates."
+   }
+  },
+  {
+   "id": "p1-heuristic-zero", "type": "predict", "seed": 102,
+   "question": "You give A* the heuristic h = 0 for every cell. What does it become?",
+   "options": ["Greedy best-first search", "Dijkstra's algorithm", "Breadth-first search", "It stops working: it needs a heuristic"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "Greedy is the opposite extreme: it orders cells by h ALONE and ignores the cost so far. With h = 0, A* orders by g alone -- that is Dijkstra.",
+    "2": "Breadth-first ignores step lengths (every step costs 1). A* with h = 0 still orders by the true cost so far, diagonals sqrt(2): Dijkstra.",
+    "3": "A* works with any heuristic; h = 0 is the weakest admissible one. It stays correct, it just expands as much as Dijkstra."
+   }
+  },
+  {
+   "id": "p1-bfs", "type": "predict", "seed": 103,
+   "question": "On a grid where diagonal steps cost sqrt(2) and straight steps 1, you replace Dijkstra's priority queue with a plain first-in-first-out queue (breadth-first search). What happens to the path?",
+   "options": ["Nothing: BFS and Dijkstra find the same path", "It has the fewest steps, but can be longer in metres", "It finds no path at all", "It is always shorter"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "BFS is optimal only when every step costs the same. Here a diagonal costs more than a straight step, so 'fewest steps' and 'shortest' disagree.",
+    "2": "BFS still reaches every reachable cell, so it finds a path; the question is whether it is the shortest.",
+    "3": "Nothing beats Dijkstra's optimal length on the same costs; BFS can only tie or be longer."
+   }
+  },
+  {
+   "id": "p1-bench", "type": "predict", "seed": 104,
+   "question": "Your planner finds the optimal path on the 6 public Depot scenarios. What does that tell you about the hidden ones?",
+   "options": ["It will pass them too: it is optimal", "Nothing for certain: they are new scenarios, so run it", "It will fail them: hidden scenarios are harder", "Hidden scenarios are the same ones, shuffled"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "Six results are evidence, not proof. A bug that only shows near a narrow door, or a hard-coded answer, passes six and fails the seventh. That is why there is a hidden set.",
+    "2": "They are drawn by the same generator as the public ones: not harder on purpose, just unseen.",
+    "3": "They are drawn fresh from a seed that includes your file's own hash, so they change whenever your code does."
+   }
+  },
+  {
+   "id": "p2-hug", "type": "predict", "seed": 201,
+   "question": "A planner treats the robot as a point and only refuses cells inside walls. Where does its path run in a wide corridor?",
+   "options": ["Down the middle", "Close along the walls, cutting every corner", "Randomly", "Exactly 0.5 m from the walls"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "Nothing pulls a pure shortest path to the middle: the shortest line around a corner touches the corner. That is why Nav2 adds an inflation cost.",
+    "2": "Planners are deterministic: the same map and goal give the same path every time.",
+    "3": "Keeping a distance needs a cost that rises near walls -- inflation. Without it there is no reason for 0.5 m."
+   }
+  },
+  {
+   "id": "p2-inscribed", "type": "predict", "seed": 202,
+   "question": "COCO's radius is about 0.25 m. A cell 0.2 m from a wall gets Nav2 cost 253, 'inscribed'. What does that mean?",
+   "options": ["The cell is a wall", "The robot's centre there would put its body into the wall, so a planner must not use it", "The cell is expensive but allowed", "The cell is unknown"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "A wall cell is 254, lethal. 253 means: not a wall, but too close for the robot's centre.",
+    "2": "Expensive-but-allowed is 1..252. At 253 the robot's own radius would overlap the obstacle.",
+    "3": "Unknown is 255 (no information)."
+   }
+  },
+  {
+   "id": "p3-dstar", "type": "predict", "seed": 301,
+   "question": "A pallet is dropped across COCO's planned route. D* Lite repairs its old search; A* plans again from scratch. Which one is the better choice in general?",
+   "options": ["D* Lite, always: repairing is less work", "A*, always", "It depends: repair pays off when the change is small and near the robot; measured on COCO's real costmap, D* Lite was worse", "Neither can handle a change"],
+   "answer": 2,
+   "misconceptions": {
+    "0": "Repair saves work only if little has changed. COCO measured D* Lite against A* on its real costmap and D* Lite did more work. Always check the claim against your own map.",
+    "1": "On a small change near the robot, repairing can beat starting over -- that is why D* Lite exists. 'Always' is wrong both ways.",
+    "3": "Both handle it: A* by replanning, D* Lite by repairing. The question is which costs less."
+   }
+  },
+  {
+   "id": "p3-keepout", "type": "predict", "seed": 302,
+   "question": "A zone is closed for work. In Nav2, how does the planner learn about it?",
+   "options": ["The planner reads a list of zones", "A keepout filter writes the zone into the costmap from a mask, so the planner just sees high-cost cells", "The robot drives to the zone and bumps into it", "Someone edits the map file and restarts"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "Nav2's planners only read the costmap. The keepout filter puts the zone INTO the costmap, so no planner needs to change.",
+    "2": "Collision would be the failure the zone is meant to prevent.",
+    "3": "No restart: the filter mask can be published while the robot runs."
+   }
+  },
+  {
+   "id": "p4-optimise", "type": "predict", "seed": 401,
+   "question": "Pure pursuit, DWA and MPPI all follow a path. Which of them scores many candidate trajectories with cost functions ('critics') before choosing a command?",
+   "options": ["Only pure pursuit", "DWA and MPPI", "Only MPPI", "All three"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "Pure pursuit computes ONE arc to a lookahead point: geometry, no scoring of candidates.",
+    "2": "DWA (Nav2's DWB) also generates trajectories and scores them with critics; MPPI samples many more and averages them by score.",
+    "3": "Pure pursuit is the odd one out: one arc, no candidates."
+   }
+  },
+  {
+   "id": "p4-lookahead-long", "type": "predict", "seed": 402,
+   "question": "You make pure pursuit's lookahead much longer (2 m instead of 0.45 m). What happens at a sharp corner?",
+   "options": ["It follows the corner more precisely", "It starts turning early and cuts the corner", "Nothing changes", "It stops before the corner"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "A long lookahead aims at a point already past the corner, so the arc it drives crosses the inside of the bend.",
+    "2": "The lookahead decides which point it steers to, so it changes the whole arc.",
+    "3": "Pure pursuit has no reason to stop: it keeps steering at the lookahead point."
+   }
+  },
+  {
+   "id": "p4-wrap", "type": "predict", "seed": 403,
+   "question": "The robot's heading is 3.10 rad and the goal's is -3.10 rad. How far apart are they?",
+   "options": ["6.20 rad", "About 0.08 rad", "0 rad", "3.10 rad"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "That is the long way round. Angles wrap at plus/minus pi (3.14159): 3.10 and -3.10 are both just short of pi, about 0.08 rad apart.",
+    "2": "Close, but not equal: they differ by 2 pi - 6.20 = about 0.083 rad.",
+    "3": "Measure the short way round: about 0.083 rad."
+   }
+  },
+  {
+   "id": "p5-kidnap", "type": "predict", "seed": 501,
+   "question": "COCO's particle filter is tracking well. The robot is picked up and carried 6 m away without the wheels knowing (a 'kidnap'). What does a plain particle filter do?",
+   "options": ["It notices immediately and jumps to the new place", "It keeps believing it is where it was, because no particle is near the new place", "It loses all its particles and crashes", "It averages the old and new places"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "To jump, some particle must already be near the true pose. After converging, all particles sit around the OLD pose, so resampling can only copy those.",
+    "2": "The particles remain; they are just all wrong. Their weights drop, but resampling normalises them.",
+    "3": "With no particle near the new place, there is nothing to average with."
+   }
+  },
+  {
+   "id": "p5-resample", "type": "predict", "seed": 502,
+   "question": "After resampling, a particle that had weight 0.5 out of 100 particles has about how many copies?",
+   "options": ["1", "About 50", "0", "100"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "Resampling copies in proportion to weight: N x w = 100 x 0.5 = 50.",
+    "2": "A high weight means a good guess: it gets MORE copies, not fewer.",
+    "3": "It took half of the weight, so it gets about half of the copies."
+   }
+  },
+  {
+   "id": "p6-slam", "type": "predict", "seed": 601,
+   "question": "To build a map you need to know where you are; to know where you are you need a map. How does SLAM get out of this?",
+   "options": ["It cannot: it needs GPS", "It estimates both at once: each scan both places the robot on the map so far and extends the map", "It builds the map first with the robot standing still", "It guesses the map"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "Indoors there is no GPS, and SLAM does not need it: odometry plus scan matching is enough to start.",
+    "2": "Standing still sees only one view. The map grows as the robot moves, and each new scan is matched to the map so far.",
+    "3": "Nothing is guessed: every cell comes from scans, combined in log-odds."
+   }
+  },
+  {
+   "id": "p6-logodds", "type": "predict", "seed": 602,
+   "question": "A cell starts at log-odds 0 (no idea). A beam ends in it once (+0.85), then two beams pass through it (-0.4 each). Is it now more likely occupied or free?",
+   "options": ["Occupied: it was hit", "Free: log-odds below 0", "Occupied: log-odds above 0 (0.05)", "Exactly unknown"],
+   "answer": 2,
+   "misconceptions": {
+    "0": "Right answer, wrong reason: the passes count too. 0.85 - 0.4 - 0.4 = 0.05, just above 0, so very slightly occupied.",
+    "1": "0.85 - 0.8 = 0.05, still above 0.",
+    "3": "Unknown is exactly 0; this is 0.05."
+   }
+  },
+  {
+   "id": "p6-map-try", "type": "predict", "seed": 603,
+   "question": "Why do mapping systems clamp log-odds (COCO: between -4 and +4)?",
+   "options": ["To save memory", "So a cell seen as a wall many times can still be cleared quickly if the wall moves", "Because probabilities cannot exceed 1", "To make the map look nicer"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "Each cell is one number either way; clamping saves no memory.",
+    "2": "Log-odds can grow without limit while the probability stays below 1. The clamp is there so the map can still change.",
+    "3": "It changes what the map can learn, not how it looks."
+   }
+  },
+  {
+   "id": "p7-arbiter", "type": "predict", "seed": 701,
+   "question": "COCO's autonomy is driving, the operator is also steering with the keyboard, and someone presses STOP. Who controls the wheels?",
+   "options": ["The autonomy: it was first", "The keyboard: humans first", "STOP: it wins over everything", "Whoever sent the last message"],
+   "answer": 2,
+   "misconceptions": {
+    "0": "Order of arrival does not matter. The arbiter ranks sources: STOP above teleop above assists and autonomy.",
+    "1": "Teleop does win over autonomy -- but STOP wins over teleop.",
+    "3": "'Last message wins' is exactly the bug an arbiter prevents: one node, cmd_vel_arbiter, is the only one allowed to publish to the wheels."
+   }
+  },
+  {
+   "id": "p8-bay", "type": "predict", "seed": 801,
+   "question": "COCO is told 'fetch the red one' but not where it is. Four bays could hold it. What should decide which bay to look in first?",
+   "options": ["Always the nearest bay", "Always bay 1", "How likely the object is there AND how far it is: expected cost to find it", "A random bay"],
+   "answer": 2,
+   "misconceptions": {
+    "0": "Nearest is a fine tie-breaker, but a near bay that rarely holds red is a poor first look.",
+    "1": "A fixed order ignores everything COCO knows.",
+    "3": "Random search wastes what the robot already knows about where things usually are."
+   }
+  },
+  {
+   "id": "p8-miss", "type": "predict", "seed": 802,
+   "question": "COCO looks in a bay and does not see the red object. What should that tell it?",
+   "options": ["Nothing", "That bay is now less likely; the others become more likely", "The object does not exist", "Search the same bay again"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "A miss is evidence. Unless the camera is unreliable, the belief should shift away from that bay.",
+    "2": "One miss removes one place, not the object.",
+    "3": "Looking again pays only if the first look could easily have missed it."
+   }
+  },
+  {
+   "id": "p9-cause", "type": "predict", "seed": 901,
+   "question": "A run ends with 'failed to make progress'. Where in its recording do you look first?",
+   "options": ["The last tick", "Where the robot stopped moving, a while BEFORE the end", "The first tick", "Anywhere: they all look the same"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "The last tick is when the controller GAVE UP, after waiting. What went wrong happened earlier: where it stopped making progress.",
+    "2": "The start rarely shows the problem; it shows where the robot began.",
+    "3": "They do not: speed, clearance and position change exactly where the trouble starts."
+   }
+  },
+  {
+   "id": "p10-tf", "type": "predict", "seed": 1001,
+   "question": "In ROS 2 (REP 105), which node usually publishes the transform map -> odom?",
+   "options": ["The wheel odometry", "The localisation node (AMCL in Nav2)", "The LiDAR driver", "The planner"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "Wheel odometry publishes odom -> base_link: smooth, but it drifts.",
+    "2": "The LiDAR driver publishes scans in its own frame, not a correction between map and odom.",
+    "3": "The planner reads transforms; it does not publish this one."
+   }
+  },
+  {
+   "id": "p10-topic", "type": "predict", "seed": 1002,
+   "question": "A Nav2 planner plugin plans on the global costmap. Which message carries the raw 0..255 costs that your exported planner receives?",
+   "options": ["sensor_msgs/LaserScan on /scan", "nav2_msgs/Costmap on /global_costmap/costmap_raw", "nav_msgs/Path on /plan", "geometry_msgs/Twist on /cmd_vel"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "/scan is the LiDAR. The costmap is built FROM it (and the map), and published separately.",
+    "2": "/plan is the OUTPUT of a planner, not its input.",
+    "3": "/cmd_vel carries velocity commands to the wheels."
+   }
+  },
+  {
+   "id": "p10-node", "type": "predict", "seed": 1003,
+   "question": "You export your Studio planner as a ROS 2 package and run it in Gazebo with Nav2. Will it behave exactly as in the browser?",
+   "options": ["Yes, bit for bit", "Its plans on the same costmap match, but the run differs: Gazebo has physics, timing and a different controller loop", "No, the code is rewritten for ROS 2", "It will not run"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "Your function is the same, but the world is not: the browser model is kinematic; Gazebo simulates physics and real timing. COCO measured both and reports the differences.",
+    "2": "The exported package runs the same file; only the message conversion around it is new.",
+    "3": "R2 ran exported files in Gazebo with Nav2: the A* starter reached 60 of 60 goals."
+   }
+  },
+  {
+   "id": "p3-replan-try", "type": "predict", "seed": 303,
+   "question": "COCO is driving to a goal and a forklift parks across its path. What has to happen before it can continue?",
+   "options": ["Nothing: it drives through", "The costmap marks the forklift, the plan is checked against it and a new plan is made around it (or COCO waits)", "It returns to the start", "The map file is edited"],
+   "answer": 1,
+   "misconceptions": {
+    "0": "COCO's local controller and safety stop prevent that; the global plan must change or the robot waits.",
+    "2": "Nothing about a blocked path requires going back; a new plan from where it is will do.",
+    "3": "The static map stays; the LiDAR's obstacle layer marks the forklift in the costmap."
+   }
+  },
+  {
+   "id": "m1-tune-weight", "type": "tune", "seed": 1101, "family": "planning", "world": "coco_depot_v1",
+   "algorithm": "weighted_astar",
+   "params": {"heuristic_weight": {"min": 1.0, "max": 5.0, "step": 0.1, "default": 1.0, "label": "Heuristic weight w"}},
+   "compare": {"astar": {"algorithm": "astar"}},
+   "scenarios": {"public": 3, "hidden": 4, "min_separation_m": 12.0, "pool": 60, "keep": {"path_length_m": [15.0, 60.0]}},
+   "checks": [
+    {"kind": "success_all", "label": "every path found"},
+    {"kind": "ratio_max", "metric": "path_length_m", "vs": "astar", "value": 1.05, "label": "each path at most 5 % longer than A*'s"},
+    {"kind": "sum_ratio_max", "metric": "expansions", "vs": "astar", "value": 0.5, "label": "at most half of A*'s expansions in total"}
+   ],
+   "hints": [
+    "Start at w = 1 (plain A*) and raise it. Watch the two numbers: total expansions and the longest path ratio.",
+    "Weighting the heuristic makes A* greedier: f = g + w h. It opens fewer cells, but the path can be up to w times the optimum (the bound is tested).",
+    "Expansions drop fast between w = 1 and w = 2; past that the paths start getting longer. Try values around 1.5 to 2.5."
+   ]
+  },
+  {
+   "id": "m1-heuristic", "type": "code", "seed": 1201, "family": "planning", "world": "coco_arena_v1",
+   "entry": "plan", "starter": "m1_heuristic_starter", "solution": "m1_heuristic_solution",
+   "compare": {"h0": {"starter": true}, "reference": {"solution": true}},
+   "scenarios": {"public": 3, "hidden": 4, "min_separation_m": 5.0, "pool": 60, "keep": {"path_length_m": [6.0, 40.0]}},
+   "checks": [
+    {"kind": "success_all", "label": "every path found"},
+    {"kind": "ratio_max", "metric": "path_length_m", "vs": "reference", "value": 1.0, "label": "still the shortest path (optimal)"},
+    {"kind": "sum_ratio_max", "metric": "expansions", "vs": "h0", "value": 0.7, "label": "at most 70 % of h = 0's expansions"}
+   ],
+   "hints": [
+    "dx and dy are the numbers of cells to the goal along each axis. What is the cheapest possible way across them if nothing is in the way?",
+    "Admissible means: never more than the true remaining cost. A straight step costs 1 and a diagonal sqrt(2); the cheapest route on an empty grid uses as many diagonals as it can.",
+    "Use min(dx, dy) diagonal steps and the rest straight: max(dx, dy) + (sqrt(2) - 1) * min(dx, dy). That is the octile distance."
+   ]
+  },
+  {
+   "id": "m1-dijkstra", "type": "code", "seed": 1301, "family": "planning", "world": "coco_arena_v1",
+   "entry": "plan", "starter": "m1_dijkstra_starter", "solution": "m1_dijkstra_solution",
+   "compare": {"reference": {"solution": true}},
+   "scenarios": {"public": 3, "hidden": 4, "min_separation_m": 5.0, "pool": 60, "keep": {"path_length_m": [6.0, 40.0]}},
+   "checks": [
+    {"kind": "success_all", "label": "every path found"},
+    {"kind": "ratio_max", "metric": "path_length_m", "vs": "reference", "value": 1.0, "label": "the shortest path (optimal)"}
+   ],
+   "hints": [
+    "Each time round the loop, take the cheapest cell off the heap. heapq.heappop(heap) gives you (g, cell).",
+    "Skip a cell already in done (a cheaper copy was handled before). Otherwise mark it done, then for each neighbour compute g + step length and keep it only if it beats best.get(nxt, math.inf).",
+    "gc, cell = heapq.heappop(heap); if cell in done: continue; done.add(cell); ... if cell == g: break; for nxt, length in neighbours(costmap, cell): ng = gc + length; if ng < best.get(nxt, math.inf): best[nxt] = ng; parent[nxt] = cell; heapq.heappush(heap, (ng, nxt))"
+   ]
+  },
+  {
+   "id": "m1-bench", "type": "benchmark", "seed": 1401, "family": "planning", "world": "coco_depot_v1",
+   "entry": "plan", "starter": "m1_bench_starter", "solution": "m1_bench_solution",
+   "compare": {"reference": {"solution": true}},
+   "scenarios": {"suite": "depot-nav-100", "public": 6, "hidden": 6},
+   "checks": [
+    {"kind": "success_rate_min", "value": 1.0, "label": "every scenario solved"},
+    {"kind": "median_ratio_max", "metric": "path_length_m", "vs": "reference", "value": 1.05, "label": "median path within 5 % of the A* starter's"}
+   ],
+   "hints": [
+    "The empty planner draws a straight line, which hits a wall in most of the Depot. You need a real search.",
+    "Any optimal or near-optimal grid search works: Dijkstra, A*, or Theta*. Keep away from cells with cost >= 253.",
+    "Start from the A* starter in the Algorithm Studio (Planner: A*), check it here, then change one thing at a time and re-check."
+   ]
+  },
+  {
+   "id": "m2-tune-clearance", "type": "tune", "seed": 2101, "family": "planning", "world": "coco_depot_v1",
+   "algorithm": "astar",
+   "params": {"cost_weight": {"min": 0.0, "max": 20.0, "step": 0.5, "default": 0.0, "label": "Inflation cost weight"},
+              "cost_scaling_factor": {"min": 1.0, "max": 20.0, "step": 0.5, "default": 10.0, "label": "cost_scaling_factor"}},
+   "fixed_params": {"inflation_radius": 1.0},
+   "compare": {"astar": {"algorithm": "astar", "params": {"cost_weight": 0.0, "inflation_radius": 1.0}}},
+   "scenarios": {"suite": "depot-narrow-30", "public": 3, "hidden": 3},
+   "checks": [
+    {"kind": "success_all", "label": "every path found"},
+    {"kind": "metric_min", "metric": "mean_clearance_m", "value": 0.3, "label": "mean clearance at least 0.3 m"},
+    {"kind": "ratio_max", "metric": "path_length_m", "vs": "astar", "value": 1.25, "label": "each path at most 25 % longer than the shortest"}
+   ],
+   "hints": [
+    "With weight 0 the planner ignores inflation and hugs the walls. Raise the weight first.",
+    "The cost of stepping into a cell is length x (1 + weight x cost / 252). A higher weight makes cells near walls dearer; a lower cost_scaling_factor makes the cost fall off more slowly, so it reaches further from the wall.",
+    "Try a weight of 5 to 10 with cost_scaling_factor around 3 to 5, then check the longest path ratio."
+   ]
+  },
+  {
+   "id": "m2-inflation", "type": "code", "seed": 2201, "functions": ["inflation_cost"],
+   "starter": "m2_inflation_starter", "solution": "m2_inflation_solution",
+   "cases": {"generator": "inflation", "public": 20, "hidden": 60,
+             "fixed": [[0.0, 0.22, 0.55, 10.0], [0.22, 0.22, 0.55, 10.0], [0.3, 0.22, 0.55, 10.0], [0.55, 0.22, 0.55, 10.0], [0.56, 0.22, 0.55, 10.0]]},
+   "checks": [{"kind": "function_cases", "function": "inflation_cost", "label": "every cost equals Nav2's"}],
+   "hints": [
+    "Handle the four ranges of distance in order: 0, up to the robot radius, up to the inflation radius, beyond.",
+    "Nav2 stores costs as bytes: the exponential part is TRUNCATED to a whole number, not rounded. The top value is 252, one below inscribed.",
+    "if distance == 0: return 254; if distance > inflation_radius: return 0; if distance <= robot_radius: return 253; return int(252 * math.exp(-cost_scaling_factor * (distance - robot_radius)))"
+   ]
+  },
+  {
+   "id": "m3-nogo", "type": "code", "seed": 3201, "family": "planning", "world": "coco_arena_v1",
+   "entry": "plan", "starter": "m3_nogo_starter", "solution": "m3_nogo_solution",
+   "zones": {"half_m": 0.6},
+   "compare": {"reference": {"solution": true}},
+   "scenarios": {"public": 2, "hidden": 3, "min_separation_m": 6.0, "pool": 80, "keep": {"path_length_m": [7.0, 30.0]}},
+   "checks": [
+    {"kind": "zone_avoid", "label": "the path stays out of the zone"},
+    {"kind": "ratio_max", "metric": "path_length_m", "vs": "reference", "value": 1.05, "label": "the detour is no more than 5 % longer than needed"}
+   ],
+   "hints": [
+    "zone is [xmin, ymin, xmax, ymax]. A point is inside when it is inside on BOTH axes.",
+    "Inside on x means xmin <= x <= xmax; the same for y with ymin and ymax. Edges count as inside.",
+    "return zone[0] <= x <= zone[2] and zone[1] <= y <= zone[3]"
+   ]
+  },
+  {
+   "id": "m4-lookahead", "type": "code", "seed": 4201, "family": "control", "world": "coco_arena_v1",
+   "entry": "control", "starter": "m4_lookahead_starter", "solution": "m4_lookahead_solution",
+   "max_ticks": 1200,
+   "scenarios": {"public": 2, "hidden": 2, "min_separation_m": 4.0, "pool": 80, "keep": {"path_length_m": [5.0, 12.0], "turns": [2, 99]}},
+   "checks": [
+    {"kind": "success_all", "label": "every goal reached"},
+    {"kind": "metric_max", "metric": "contacts", "value": 0, "label": "no contact"},
+    {"kind": "metric_min", "metric": "min_clearance_m", "value": 0.0, "label": "the body never crosses into a wall (clearance >= 0)"}
+   ],
+   "hints": [
+    "2 m is longer than most of the straight pieces between corners here. Watch where the lookahead point (the dot) sits when the robot reaches a bend.",
+    "The lookahead should be shorter than the distance from a corner to the wall beside it; otherwise the arc to the lookahead point crosses the inside of the bend.",
+    "Nav2's Regulated Pure Pursuit uses 0.6 m by default (0.3 to 0.9 m when it scales the lookahead with speed). Something around 0.3 to 0.6 m works here."
+   ]
+  },
+  {
+   "id": "m4-goal", "type": "code", "seed": 4301, "functions": ["goal_reached"],
+   "starter": "m4_goal_starter", "solution": "m4_goal_solution",
+   "cases": {"generator": "goal", "public": 20, "hidden": 50,
+             "fixed": [[[0.25, 0.0, 0.0], [0.0, 0.0, 0.0], 0.25, 0.25], [[0.0, 0.0, 0.25], [0.0, 0.0, 0.0], 0.25, 0.25], [[0.0, 0.0, 3.1], [0.0, 0.0, -3.1], 0.25, 0.25], [[0.2, 0.2, 0.0], [0.0, 0.0, 0.0], 0.25, 0.25], [[0.1, 0.0, 0.5], [0.0, 0.0, 0.0], 0.25, 0.25]]},
+   "checks": [{"kind": "function_cases", "function": "goal_reached", "label": "the same verdict as Nav2's goal checker"}],
+   "hints": [
+    "Two tests, both must hold: close enough in position AND in heading.",
+    "Position: dx * dx + dy * dy <= xy_tolerance ** 2 (edges count). Heading: wrap the difference with angle_diff before comparing its absolute value.",
+    "dx, dy = pose[0] - goal[0], pose[1] - goal[1]; return dx * dx + dy * dy <= xy_tolerance * xy_tolerance and abs(angle_diff(pose[2], goal[2])) <= yaw_tolerance"
+   ]
+  },
+  {
+   "id": "m5-resample", "type": "code", "seed": 5201, "functions": ["resample"],
+   "starter": "m5_resample_starter", "solution": "m5_resample_solution",
+   "cases": {"generator": "weights", "public": 4, "hidden": 8},
+   "checks": [{"kind": "resample", "function": "resample", "label": "copies follow the weights"}],
+   "hints": [
+    "Each output particle is a COPY of an input. Which input? Pick it with probability equal to its weight.",
+    "Picture the weights laid end to end on [0, 1). A number u lands in one particle's piece; that particle is copied. The low-variance method uses u = r, r + 1/N, r + 2/N, ... from one random r in [0, 1/N).",
+    "n = len(particles); r = rng.random() / n; c, i = weights[0], 0; for k in range(n): u = r + k / n; while u > c and i < n - 1: i += 1; c += weights[i]; out.append(particles[i])"
+   ]
+  },
+  {
+   "id": "m6-logodds", "type": "code", "seed": 6201, "functions": ["update"],
+   "starter": "m6_logodds_starter", "solution": "m6_logodds_solution",
+   "cases": {"generator": "logodds", "public": 20, "hidden": 50,
+             "fixed": [[0.0, [true]], [0.0, [false, false]], [3.9, [true, true]], [-3.9, [false, false, true]]]},
+   "checks": [{"kind": "function_cases", "function": "update", "tol": 1e-09, "label": "the same log-odds as COCO's grid"}],
+   "hints": [
+    "Go through hits one by one. A hit adds L_OCC; a pass adds L_FREE.",
+    "Clamp AFTER EVERY step, not once at the end: 3.9 plus two hits is 4.0, but 3.9 + 0.85 + 0.85 - 0.4 would be different if you clamp only at the end.",
+    "for hit in hits: l += L_OCC if hit else L_FREE; l = max(L_MIN, min(L_MAX, l)); return l"
+   ]
+  },
+  {
+   "id": "m7-failure-contact", "type": "failure", "seed": 7101, "family": "control", "world": "coco_depot_v1",
+   "run": {"name": "rpp"}, "truth": "first_contact", "max_ticks": 1500,
+   "scenario": {"id": "d004_no_yield", "start": [36.65, 29.950000000000003, -2.989460398375582], "goal": [26.150000000000002, 3.55], "seed": 6102093302185206, "config": ["actors.on=1"]},
+   "checks": [{"kind": "tick_within", "window": 10, "label": "the tick of the first contact (within 1 s)"}],
+   "hints": [
+    "Watch the clearance line: contact means it reached zero against something that MOVES.",
+    "The forklifts and walkers in this run do not yield. Find where the clearance drops suddenly while the robot is still moving or just stopped.",
+    "Look for the first red contact mark on the timeline and pick that tick."
+   ]
+  },
+  {
+   "id": "m9-failure-stuck", "type": "failure", "seed": 9101, "family": "control", "world": "coco_depot_v1",
+   "run": {"name": "dwa"}, "truth": "stall_start", "max_ticks": 1500,
+   "scenario": {"id": "t026", "start": [9.55, 11.05, -0.8143620246285037], "goal": [17.95, 10.05], "seed": 8630863284412867},
+   "checks": [{"kind": "tick_within", "window": 15, "label": "the tick where it stopped making progress (within 1.5 s)"}],
+   "hints": [
+    "The run ends long after the problem: Nav2-style progress checking waits before giving up.",
+    "Find the last moment the robot was still getting somewhere. After it, its position barely changes.",
+    "Pick the first tick after which the robot never moves more than a quarter of a metre again."
+   ]
+  },
+  {
+   "id": "m10-export", "type": "code", "seed": 10201, "family": "planning", "world": "coco_arena_v1",
+   "entry": "plan", "starter": "m10_export_starter", "solution": "m10_export_solution",
+   "scenarios": {"public": 2, "hidden": 2, "min_separation_m": 5.0, "pool": 60, "keep": {"path_length_m": [6.0, 40.0]}},
+   "checks": [
+    {"kind": "success_all", "label": "the planner works here first"},
+    {"kind": "exports", "label": "it exports to a ROS 2 package"}
+   ],
+   "hints": [
+    "A file that fails in the browser will fail in ROS 2 too: make it pass here first.",
+    "The export wraps your plan() in a Nav2 planner node: your file is copied in unchanged, and the node converts nav2_msgs/Costmap and the poses for it.",
+    "Press Export in the Algorithm Studio to download the package; build it with colcon and launch it with Nav2 (the README inside says how)."
+   ]
+  }
+ ]
+}
