@@ -596,7 +596,7 @@ function Teacher({ course }: { course: Course }) {
         const c = await readCompletion(hash);
         const rows = await verifyCompletion(course, c);
         setTable((t) => [...t, { who: c.name ?? '(no name)', title: c.title, rows }]);
-      } catch (e) { setTable((t) => [...t, { who: '?', title: line.slice(0, 40), rows: [], error: String((e as Error).message) }]); }
+      } catch (e) { setTable((t) => [...t, { who: '?', title: line.slice(0, 40), rows: [], error: `This link could not be read: ${String((e as Error).message ?? e)}` }]); }
     }
     setBusy(false);
   };

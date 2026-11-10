@@ -19,9 +19,18 @@ const VIEWS = { workbench: '?view=workbench', benchmarks: '?view=workbench&tab=b
   // R2: the Algorithm Studio and the Leaderboard (opt-in with --views; the default set is R1's)
   studio: '?view=workbench&tab=studio', leaderboard: '?view=workbench&tab=leaderboard',
   // R3: Model vs ROS 2, and About (Cite, Reproduce this paper)
-  gap: '?view=workbench&tab=gap', about: '?view=about' };
+  gap: '?view=workbench&tab=gap', about: '?view=about',
+  // R4: the Learn course (the learn view above is now its home page)
+  lesson_predict: '?view=learn&lesson=astar-vs-dijkstra&step=predict', lesson_explain: '?view=learn&lesson=astar-vs-dijkstra&step=explain',
+  lesson_code: '?view=learn&lesson=write-the-heuristic&step=try', glossary: '?view=learn&page=glossary',
+  teacher: '?view=learn&page=teacher', progress: '?view=learn&page=progress' };
 const R2_WAIT = { '?view=workbench&tab=studio': '[data-testid="studio"]', '?view=workbench&tab=leaderboard': '[data-testid="leaderboard"] h2',
-  '?view=workbench&tab=gap': '[data-testid="model-vs-ros2"] h2, [data-testid="gap-pending"]', '?view=about': '[data-testid="reproduce-paper"]' };
+  '?view=workbench&tab=gap': '[data-testid="model-vs-ros2"] h2, [data-testid="gap-pending"]', '?view=about': '[data-testid="reproduce-paper"]',
+  '?view=learn': '[data-testid="course-modules"]', '?view=learn&page=glossary': '[data-testid="glossary"] dt',
+  '?view=learn&page=teacher': '[data-testid="teacher"]', '?view=learn&page=progress': '[data-testid="progress"] table',
+  '?view=learn&lesson=astar-vs-dijkstra&step=predict': '[data-testid="option-0"]',
+  '?view=learn&lesson=astar-vs-dijkstra&step=explain': '[data-testid="diagram-search"]',
+  '?view=learn&lesson=write-the-heuristic&step=try': '.cm-content' };
 const DEFAULT_VIEWS = 'workbench,benchmarks,datasets,learn';
 const views = (rest.includes('--views') ? rest[rest.indexOf('--views') + 1] : DEFAULT_VIEWS).split(',').map((v) => VIEWS[v]);
 mkdirSync(out, { recursive: true });

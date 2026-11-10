@@ -32,6 +32,7 @@ try {
     const privacy = await page.textContent('[data-testid="course-privacy"]');
     step('home: 10 modules, 3 tracks, the privacy statement', mods === 10 && tracks.length === 3 && /No account, no analytics, no tracking/.test(privacy ?? ''), { mods, tracks: tracks.length });
     await page.goto(site + '?view=learn&page=glossary', { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('[data-testid="glossary"] dt', { timeout: 60000 });
     const terms = await page.$$eval('[data-testid="glossary"] dt', (d) => d.length);
     step('glossary renders every term', terms >= 50, { terms });
     await page.goto(site + '?view=learn&lesson=astar-vs-dijkstra&step=predict', { waitUntil: 'domcontentloaded' });
@@ -78,6 +79,24 @@ try {
     const status = await page.textContent('[data-testid="verify-status"]');
     const m = /Re-verified: (\d+) of (\d+)/.exec(status ?? '');
     step('a completion link re-verifies its passed answers', m && m[1] === m[2] && Number(m[2]) >= 1, { status });
+    // the class dashboard: two real completion links and one damaged; re-verify; CSV
+    await page.goto(site + '?view=learn&page=teacher', { waitUntil: 'domcontentloaded' });
+    await page.click('[data-testid="pick-astar-vs-dijkstra"]', { timeout: 60000 });
+    await page.click('[data-testid="make-assignment"]');
+    const assign = await page.getAttribute('[data-testid="assignment-link"]', 'href', { timeout: 30000 });
+    step('teacher: an assignment link carries no student data', /#assign=/.test(assign ?? '') && !/done=/.test(assign ?? ''), { length: assign?.length });
+    const damaged = link.replace(/done=([A-Za-z0-9_-]{10})/, 'done=AAAAAAAAAA');
+    await page.fill('[data-testid="class-links"]', [link, link, damaged].join('\n'));
+    await page.click('[data-testid="check-class"]');
+    await page.waitForFunction(() => document.querySelectorAll('[data-testid="class-row"]').length === 3, null, { timeout: 10 * 60000 });
+    const rows = await page.$$eval('[data-testid="class-row"]', (r) => r.map((x) => x.textContent ?? ''));
+    const good = rows.filter((r) => /✓ pass/.test(r) && !/✗ fail/.test(r)).length;
+    const bad = rows.filter((r) => /could not be read/.test(r)).length;
+    step('class dashboard: 2 links re-verified, the damaged one reported', good === 2 && bad === 1, { good, bad, rows: rows.map((r) => r.slice(0, 160)) });
+    const [dl] = await Promise.all([page.waitForEvent('download'), page.click('[data-testid="class-csv"]')]);
+    const csv = readFileSync(await dl.path(), 'utf-8');
+    const lines = csv.trim().split(/\r?\n/);
+    step('class dashboard: CSV export (header + one row per lesson and the error)', lines[0].startsWith('"name"') && lines.length >= 4, { lines: lines.length });
   }
   step('no page errors', errors.length === 0, { errors });
 } catch (e) {

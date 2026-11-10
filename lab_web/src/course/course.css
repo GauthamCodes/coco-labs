@@ -54,3 +54,5 @@
 .course .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .course .course-nav{display:flex;gap:12px;margin:24px 0}
 @media (max-width:600px){.course .wb-section,.course .course-crumbs{padding-left:16px;padding-right:16px}.course .course-results{font-size:12px}}
+/* R4.6: the editor keeps its dark palette in both themes (its syntax colours are the dark set; a11y light 45 -> 0) */
+.course .course-editor{--accent:#ffb547;--panel:#121a22;--panel2:#0e151c;--fg:#e8eef5;--muted:#8a97a6;background:#121a22;color-scheme:dark}
