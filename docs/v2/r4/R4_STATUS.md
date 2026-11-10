@@ -36,7 +36,7 @@ Prompt: [`R4_PROMPT.md`](R4_PROMPT.md) (Gautham, 2026-11-10).
 | R4.5 Progress and teaching | done: browser check 15/15 (completion link re-verified, class dashboard, CSV) | `data/r47/course_check.json` |
 | R4.6 Glossary, a11y, phone | done: 54 terms; a11y 28/28; Explorer on the EMULATED phone 6/6 (real phone not connected) | `data/r46/` |
 | R4.7 Grading integrity | done: every code exercise's reference passes, >= 3 wrong solutions caught, hard-coding fails hidden; browser = native 7/7; 2 uncaught bugs documented | [R4_RESULTS](R4_RESULTS.md) |
-| R4.8 Close | in progress | |
+| R4.8 Close | **shipped**: PR #39 merged `5a9f54d` under the gate, deployed (run 42893898506), live smoke PASS, a code exercise passed on the live site (digests = native) | [deploy](data/deploy/README.md) (PR #40) |
 
 ### R4.7 findings so far (kept; negative results stay)
 
