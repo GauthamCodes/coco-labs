@@ -22,5 +22,7 @@ both the guard and the container's Python could publish about one rounded number
 describing a set that is never used again) was reproduced and is accepted in ADR 0014. ADR 0014 is
 **accepted**.
 
-Not yet done: the repository secret `COCO_HELDOUT_SECRET` and its commitment
-(`docs/v2/r3/HELDOUT_SECRET_COMMITMENTS.md`) are set when the R3 workflow reaches main.
+Done 2026-11-10 (R4 Part A): the repository secret `COCO_HELDOUT_SECRET` is set and its commitment is in
+[`HELDOUT_SECRET_COMMITMENTS.md`](../../HELDOUT_SECRET_COMMITMENTS.md); first CI run with it and three more hostile
+runs in [`docs/v2/r4/data/secret/`](../../../r4/data/secret/README.md) (which also records that this run's
+"no coordinate in the published text" passed only by formatting: the accepted T5 residual was 13.6).
