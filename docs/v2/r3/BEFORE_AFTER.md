@@ -17,3 +17,9 @@ Phone (1) (412×915, DPR 2.625; never the real phone, which was not connected).
 2. The Leaderboard's control boards rank the Waypoint driver first (it fails only against yielding actors, 24/30 on ctrl-dynamic-30: it is a plan reference without a
    local collision check, as its description says). Keep it ranked, or show it outside the ranking?
 3. The Leaderboard tables still scroll sideways inside their cards on a phone (unchanged from R2).
+
+**Resolved (Gautham, 2026-11-10: "by being honest, with the smallest fix"; R4 Part A):**
+1. Model vs ROS 2 now says how many tables it holds and lists them per family with jump links (`gap-contents`).
+2. Reference rows are never ranked: the Waypoint driver (plan-following reference) and the MCL reference are pinned
+   first, greyed and unranked on every board, each with a one-line note; only real controllers and localisers rank.
+3. On narrow screens each leaderboard table says it is wider than the screen and scrolls sideways.
