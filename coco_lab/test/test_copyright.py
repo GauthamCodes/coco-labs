@@ -25,6 +25,11 @@ def test_copyright():
     # R2: coco_lab/templates holds user algorithm files, under their authors' licences
     templates = [str(p) for p in sorted(Path(__file__).resolve().parents[1].glob(
         'coco_lab/templates/*.py'))]
+    # R4: the course's user algorithm files and the wrong solutions, likewise
+    root = Path(__file__).resolve().parents[1]
+    pats = ('coco_lab/course/files/*.py', 'test/course_wrong/*.py',
+            'test/course_wrong_uncaught/*.py')
+    templates += [str(p) for pat in pats for p in sorted(root.glob(pat))]
     rc = main(argv=['--exclude', *templates, *[os.path.relpath(t) for t in templates], '--',
                     '.', 'test'])
     assert rc == 0, 'Found errors'

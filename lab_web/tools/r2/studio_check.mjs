@@ -122,9 +122,10 @@ try {
     await page.waitForTimeout(3000);
     await page.screenshot({ path: join(out, `desktop-${name}.png`), fullPage: tab === 'leaderboard' });
   }
-  await page.goto(`${site}?view=learn`);
-  await page.locator('[data-testid=learn-studio-find-a-path]').waitFor({ timeout: 60000 });
-  step('Learn: "Try it yourself" opens the teaching starters', (await page.locator('[data-testid^=learn-studio-]').count()) === 2);
+  // R4: the course replaced the mission cards; a Builder lesson's Observe step opens its starter in the Studio
+  await page.goto(`${site}?view=learn&lesson=write-the-heuristic&step=observe`);
+  await page.locator('[data-testid=observe-studio]').waitFor({ timeout: 60000 });
+  step('Learn: a Builder lesson opens its starter in the Studio', /tab=studio#code=/.test(await page.getAttribute('[data-testid=observe-studio]', 'href') ?? ''));
   await page.screenshot({ path: join(out, 'desktop-learn.png'), fullPage: true });
   await ctx.close();
   // the emulated Nothing Phone (1): landscape and portrait

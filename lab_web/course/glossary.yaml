@@ -1,0 +1,58 @@
+# R4 Learn course: the glossary. Every technical term the lessons introduce, defined once, in
+# plain English. lab_web/tools/course.py refuses a term listed twice.
+schema: coco.lesson.v1
+terms:
+  - {term: A*, module: 1, text: "A grid search that expands the cell with the smallest cost-so-far plus a guess of the cost still to go. With a guess that never overestimates, it finds the cheapest path."}
+  - {term: Admissible heuristic, module: 1, text: "A guess of the remaining cost that is never more than the true remaining cost. It keeps A* optimal."}
+  - {term: AMCL, module: 5, text: "Adaptive Monte Carlo Localisation: Nav2's particle filter. It publishes where the robot is on the map, as the transform map -> odom."}
+  - {term: Benchmark, module: 1, text: "One question asked over many scenarios with everything else fixed, so results can be compared fairly."}
+  - {term: Breadth-first search (BFS), module: 1, text: "A search that expands cells in the order they were found. It finds the path with the fewest steps, which is the shortest only if every step costs the same."}
+  - {term: Clearance, module: 2, text: "How far the robot's body is from the nearest obstacle. Negative clearance means the body overlaps it."}
+  - {term: cmd_vel, module: 7, text: "The ROS 2 topic of velocity commands (geometry_msgs/Twist): forward speed and turn rate."}
+  - {term: cmd_vel arbiter, module: 7, text: "COCO's one node allowed to drive the wheels. It picks which command source wins: STOP, then teleop, then autonomy."}
+  - {term: Completion link, module: 0, text: "A link that carries your answers to a module. Anyone who opens it re-runs the checks in their own browser. Self-verified, not proctored."}
+  - {term: Controller (local), module: 4, text: "The part of the navigation stack that turns the global path into wheel commands, many times a second."}
+  - {term: Cost scaling factor, module: 2, text: "How fast the inflation cost falls with distance from an obstacle. Higher means a thinner band of cost."}
+  - {term: Costmap, module: 2, text: "A grid of numbers 0..255 a planner reads: 254 obstacle, 253 too close for the robot's centre, 255 unknown, and 0..252 free but with a price."}
+  - {term: Critic, module: 4, text: "A scoring function a controller uses to rate a candidate trajectory: distance to the path, to obstacles, progress to the goal."}
+  - {term: D* Lite, module: 3, text: "A planner that keeps its previous search and repairs it when the map changes, instead of starting over."}
+  - {term: Dijkstra's algorithm, module: 1, text: "A search that always expands the cheapest cell so far. It finds the cheapest path, but expands in every direction."}
+  - {term: DWA / DWB, module: 4, text: "Dynamic Window Approach (Nav2's version is DWB): generate candidate trajectories, score each with critics, drive the best."}
+  - {term: Evidence label, module: 0, text: "What kind of evidence a claim rests on: MEASURED, TESTED, SIMULATION RESULT, SIMPLIFIED MODEL, ASSUMPTION, INFERENCE or UNRESOLVED."}
+  - {term: Expansion, module: 1, text: "One cell taken off the search queue and examined. Fewer expansions means less work."}
+  - {term: Frame, module: 10, text: "A coordinate system positions are measured in, such as map, odom or base_link."}
+  - {term: Goal checker, module: 4, text: "The rule that decides the robot has arrived: within a distance and a heading tolerance."}
+  - {term: Grading (exact), module: 0, text: "The course's checks compare numbers from deterministic runs -- path length, expansions, clearance, success -- never the text of your answer."}
+  - {term: Heuristic, module: 1, text: "A quick guess of how much it will cost to reach the goal from a cell."}
+  - {term: Hidden scenarios, module: 1, text: "Check scenarios you do not see in advance, drawn from a seed that includes your file's hash: they change whenever your code changes."}
+  - {term: Inflation, module: 2, text: "Adding a cost around every obstacle that falls with distance, so planners keep their distance from walls."}
+  - {term: Inscribed radius, module: 2, text: "The radius of the largest circle inside the robot's footprint. A cell closer than this to an obstacle is cost 253."}
+  - {term: Keepout zone, module: 3, text: "An area the robot must not enter. Nav2's keepout filter writes it into the costmap from a mask."}
+  - {term: Kidnapped robot, module: 5, text: "A robot moved without its wheels knowing. A converged particle filter has no particle near the new place."}
+  - {term: LiDAR, module: 5, text: "A sensor that measures distance along many beams by timing laser light. COCO's has 480 beams."}
+  - {term: Log-odds, module: 6, text: "log(p / (1 - p)): a way to store a probability so that combining evidence is addition. 0 means p = 0.5."}
+  - {term: Lookahead, module: 4, text: "How far along the path pure pursuit aims. Long is smooth but cuts corners; short tracks closely."}
+  - {term: Loop closure, module: 6, text: "Recognising a place seen before, so the whole trajectory and map can be corrected."}
+  - {term: MCAP, module: 10, text: "A file format for recorded robot data; ROS 2 Jazzy's rosbag2 records to it by default."}
+  - {term: Message, module: 10, text: "A typed piece of data sent on a ROS 2 topic, such as sensor_msgs/LaserScan."}
+  - {term: MODEL, module: 0, text: "Results from COCO's browser model: kinematic, deterministic, no physics. Labelled MODEL · kinematic."}
+  - {term: MPPI, module: 4, text: "Model Predictive Path Integral control: sample thousands of noisy command sequences, score them, and average them weighted by score."}
+  - {term: Nav2, module: 10, text: "The ROS 2 navigation stack: planner and controller servers, costmaps, AMCL and a behaviour tree that sequences them."}
+  - {term: Node, module: 10, text: "One running ROS 2 program. Nodes talk over topics."}
+  - {term: Occupancy grid, module: 6, text: "A map of cells, each holding how likely it is to be occupied."}
+  - {term: Octile distance, module: 1, text: "The cheapest cost across an empty 8-connected grid: diagonal steps for the shorter side, straight steps for the rest."}
+  - {term: Odometry, module: 5, text: "Where the robot thinks it moved, from counting wheel turns. Smooth, but it drifts."}
+  - {term: Optimal path, module: 1, text: "A path no other path beats on the same costs."}
+  - {term: Particle filter, module: 5, text: "Localisation with many guesses of the pose: move them with odometry, weigh them by the scan, resample."}
+  - {term: Planner (global), module: 1, text: "The part of the navigation stack that finds a whole path from start to goal on the costmap."}
+  - {term: Pure pursuit, module: 4, text: "A controller that drives the arc through a point one lookahead ahead on the path."}
+  - {term: Regulated Pure Pursuit (RPP), module: 4, text: "Nav2's pure pursuit, which also slows on tight curves and near obstacles."}
+  - {term: REP 105, module: 10, text: "The ROS convention for the frames map, odom and base_link."}
+  - {term: Resampling, module: 5, text: "Making a new set of particles by copying old ones in proportion to their weights."}
+  - {term: rosbag2, module: 10, text: "ROS 2's tool for recording and replaying topics."}
+  - {term: SLAM, module: 6, text: "Simultaneous Localisation And Mapping: estimating the map and the robot's place in it together."}
+  - {term: STACK, module: 0, text: "Results from the full ROS 2 stack running in the Gazebo simulator. No physical robot exists."}
+  - {term: TF, module: 10, text: "ROS 2's transform library: it keeps the tree of frames, such as map -> odom -> base_link."}
+  - {term: Topic, module: 10, text: "A named channel in ROS 2 that carries one message type, such as /scan or /cmd_vel."}
+  - {term: Twist, module: 10, text: "geometry_msgs/Twist: a velocity command, forward speed (linear.x) and turn rate (angular.z)."}
+  - {term: Weighted A*, module: 1, text: "A* with its guess multiplied by w > 1: fewer expansions, paths at most w times the optimum."}

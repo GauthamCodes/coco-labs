@@ -60,6 +60,7 @@ async function boot(pyodideBase: string, assetsBase: string): Promise<void> {
     order.push(name);
   };
   visit('experiments');
+  visit('course');   // R4: the Learn course's grader and its exercises
   for (const name of order) {
     const info = manifest.packs?.[name];
     if (!info) throw new Error(`no pack ${name}`);

@@ -351,8 +351,14 @@ def _guarded(name, fn):
 class UserModule:
     """A loaded algorithm file: its kind, functions, hash and console."""
 
-    def __init__(self, source: str, filename: str = 'algorithm.py'):
-        """Check and execute ``source`` in a fresh namespace of its own."""
+    def __init__(self, source: str, filename: str = 'algorithm.py',
+                 entry: Optional[str] = None):
+        """
+        Check and execute ``source`` in a fresh namespace of its own.
+
+        ``entry`` (R4, the course's function exercises): require that function instead of
+        exactly one of plan/control/localise; the file is still guarded the same way.
+        """
         self.source = source
         self.filename = filename
         self.sha256 = code_sha256(source)
@@ -402,6 +408,13 @@ class UserModule:
                           '__coco_pow__': exact_pow}
         code = compile(tree, filename, 'exec')
         exec(code, self.namespace)
+        if entry is not None:
+            if not callable(self.namespace.get(entry)):
+                raise GuardError([{'line': 0, 'col': 0,
+                                   'message': f'define a function {entry}()'}])
+            self.function_name, self.kind = entry, 'function'
+            self.fn = self.namespace[entry]
+            return
         found = [k for k in KINDS if callable(self.namespace.get(k))]
         if len(found) != 1:
             raise GuardError([{'line': 0, 'col': 0, 'message':

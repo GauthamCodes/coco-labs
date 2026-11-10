@@ -1,0 +1,182 @@
+{
+ "site": "http://127.0.0.1:4190/coco-labs/",
+ "started": "2026-11-10T15:52:41.247Z",
+ "steps": [
+  {
+   "name": "home: 10 modules, 3 tracks, the privacy statement",
+   "ok": true,
+   "mods": 10,
+   "tracks": 3
+  },
+  {
+   "name": "glossary renders every term",
+   "ok": true,
+   "terms": 54
+  },
+  {
+   "name": "predict: a wrong pick explains the misconception",
+   "ok": true,
+   "note": "Being guided changes how MUCH A* searches, not what it finds. With a heuristic t"
+  },
+  {
+   "name": "agreement m1-heuristic:reference: browser pass = native pass, digest equal",
+   "ok": true,
+   "native": "b3d5362c8813ad952c37992d63eb8dd34f83175cb864bec5aa4a6b049a99155d",
+   "browser": "b3d5362c8813ad952c37992d63eb8dd34f83175cb864bec5aa4a6b049a99155d",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 82
+  },
+  {
+   "name": "agreement m1-heuristic:three_octile: browser fail = native fail, digest equal",
+   "ok": true,
+   "native": "ae343c2555e86b1732eb524548211b769abea77781d36c5a45d15ce861acab2b",
+   "browser": "ae343c2555e86b1732eb524548211b769abea77781d36c5a45d15ce861acab2b",
+   "passed": false,
+   "native_passed": false,
+   "same": true,
+   "seconds": 78
+  },
+  {
+   "name": "agreement m1-tune-weight:w3: browser pass = native pass, digest equal",
+   "ok": true,
+   "native": "944ea87536f641df2ef68647c4522dde0a20629762b2fd5b22423a5d47e1c145",
+   "browser": "944ea87536f641df2ef68647c4522dde0a20629762b2fd5b22423a5d47e1c145",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 54
+  },
+  {
+   "name": "agreement m2-inflation:reference: browser pass = native pass, digest equal",
+   "ok": true,
+   "native": "13db34ef40e9d0fe26e99a929db45c2d64d9f4d3aa83ed635e3296bdf35ec3e1",
+   "browser": "13db34ef40e9d0fe26e99a929db45c2d64d9f4d3aa83ed635e3296bdf35ec3e1",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 11
+  },
+  {
+   "name": "agreement m2-inflation:rounded: browser fail = native fail, digest equal",
+   "ok": true,
+   "native": "d7815f06df866b375aacf4461eef74f70a8c3375b596df6f1775274106bcb121",
+   "browser": "d7815f06df866b375aacf4461eef74f70a8c3375b596df6f1775274106bcb121",
+   "passed": false,
+   "native_passed": false,
+   "same": true,
+   "seconds": 10
+  },
+  {
+   "name": "agreement m4-goal:reference: browser pass = native pass, digest equal",
+   "ok": true,
+   "native": "a6899c01c5a9b4119054d0b3e0808abe947c5c5138ce8721731673c5161457d9",
+   "browser": "a6899c01c5a9b4119054d0b3e0808abe947c5c5138ce8721731673c5161457d9",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 9
+  },
+  {
+   "name": "agreement m5-resample:reference: browser pass = native pass, digest equal",
+   "ok": true,
+   "native": "082ec7a2918849d73891783db187d39fdf8989b3c59f3e71cc1d1d13191fa621",
+   "browser": "082ec7a2918849d73891783db187d39fdf8989b3c59f3e71cc1d1d13191fa621",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 11
+  },
+  {
+   "name": "a completion link re-verifies its passed answers",
+   "ok": true,
+   "status": "Re-verified: 2 of 2 pass."
+  },
+  {
+   "name": "teacher: an assignment link carries no student data",
+   "ok": true,
+   "length": 195
+  },
+  {
+   "name": "class dashboard: 2 links re-verified, the damaged one reported",
+   "ok": true,
+   "good": 2,
+   "bad": 1,
+   "rows": [
+    "(no name) · Module 1: How does a robot find a path?LessonRe-verifiedHints usedSolution viewedDetailA* against Dijkstra✓ pass0no16/16 checksWrite A*'s heuristic✓",
+    "(no name) · Module 1: How does a robot find a path?LessonRe-verifiedHints usedSolution viewedDetailA* against Dijkstra✓ pass0no16/16 checksWrite A*'s heuristic✓",
+    "? · http://127.0.0.1:4190/coco-labs/?view=leThis link could not be read: Failed to fetch"
+   ]
+  },
+  {
+   "name": "class dashboard: CSV export (header + one row per lesson and the error)",
+   "ok": true,
+   "lines": 6
+  },
+  {
+   "name": "no page errors",
+   "ok": true,
+   "errors": []
+  }
+ ],
+ "cases": {
+  "m1-heuristic:reference": {
+   "native": "b3d5362c8813ad952c37992d63eb8dd34f83175cb864bec5aa4a6b049a99155d",
+   "browser": "b3d5362c8813ad952c37992d63eb8dd34f83175cb864bec5aa4a6b049a99155d",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 82
+  },
+  "m1-heuristic:three_octile": {
+   "native": "ae343c2555e86b1732eb524548211b769abea77781d36c5a45d15ce861acab2b",
+   "browser": "ae343c2555e86b1732eb524548211b769abea77781d36c5a45d15ce861acab2b",
+   "passed": false,
+   "native_passed": false,
+   "same": true,
+   "seconds": 78
+  },
+  "m1-tune-weight:w3": {
+   "native": "944ea87536f641df2ef68647c4522dde0a20629762b2fd5b22423a5d47e1c145",
+   "browser": "944ea87536f641df2ef68647c4522dde0a20629762b2fd5b22423a5d47e1c145",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 54
+  },
+  "m2-inflation:reference": {
+   "native": "13db34ef40e9d0fe26e99a929db45c2d64d9f4d3aa83ed635e3296bdf35ec3e1",
+   "browser": "13db34ef40e9d0fe26e99a929db45c2d64d9f4d3aa83ed635e3296bdf35ec3e1",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 11
+  },
+  "m2-inflation:rounded": {
+   "native": "d7815f06df866b375aacf4461eef74f70a8c3375b596df6f1775274106bcb121",
+   "browser": "d7815f06df866b375aacf4461eef74f70a8c3375b596df6f1775274106bcb121",
+   "passed": false,
+   "native_passed": false,
+   "same": true,
+   "seconds": 10
+  },
+  "m4-goal:reference": {
+   "native": "a6899c01c5a9b4119054d0b3e0808abe947c5c5138ce8721731673c5161457d9",
+   "browser": "a6899c01c5a9b4119054d0b3e0808abe947c5c5138ce8721731673c5161457d9",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 9
+  },
+  "m5-resample:reference": {
+   "native": "082ec7a2918849d73891783db187d39fdf8989b3c59f3e71cc1d1d13191fa621",
+   "browser": "082ec7a2918849d73891783db187d39fdf8989b3c59f3e71cc1d1d13191fa621",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 11
+  }
+ },
+ "finished": "2026-11-10T15:59:56.688Z"
+}

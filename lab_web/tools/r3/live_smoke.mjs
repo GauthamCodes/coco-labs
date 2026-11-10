@@ -120,7 +120,7 @@ try {
   await shot(p, join(out, 'leaderboard.png'), { fullPage: true });
   // 7. Learn
   await p.goto(`${site}?view=learn`);
-  const learn = await p.locator('[data-testid="learn-page"]').waitFor({ timeout: 120000 }).then(() => true, () => false);
+  const learn = await p.locator('[data-testid="course-modules"]').waitFor({ timeout: 120000 }).then(() => true, () => false);   // R4: the course
   step('Learn renders', learn);
   await shot(p, join(out, 'learn.png'));
   report.page_errors = report.errors.length;

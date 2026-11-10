@@ -1,0 +1,108 @@
+# R4 Learn course, module 5 (coco.lesson.v1, ADR 0015).
+schema: coco.lesson.v1
+id: where-am-i
+number: 5
+title: Where am I?
+question: The wheels say one thing, the LiDAR another. Where is COCO -- and what happens when it is wrong?
+mission: where-it-is
+lessons:
+  - id: drift-and-kidnap
+    track: explorer
+    title: Drift, particles and the kidnapped robot
+    predict: p5-kidnap
+    observe:
+      text: >-
+        In the Localise lens, watch the particle cloud: spread out when unsure, tight when
+        sure. Then kidnap the robot (carry it away without telling the wheels) and watch the
+        cloud stay where it was.
+      arena: {lens: localise, level: watch, camera: topdown}
+    explain:
+      diagram: particles
+      text: >-
+        Wheel odometry counts wheel turns. It is smooth, but every small slip adds up, so it
+        drifts: COCO's model drifts about 0.2 m over a 6 m straight. A LiDAR sees walls, but a
+        scan alone does not say where you are -- many places look alike.
+
+        A particle filter combines them. It keeps hundreds of guesses of the pose, the
+        particles. When the wheels move, every particle moves the same way, plus a little noise.
+        When a scan arrives, each particle is weighted by how well the scan, cast from that
+        guess, lands on the map's walls. Then resampling copies good guesses and drops bad ones.
+        The cloud follows the robot.
+
+        Its weakness is the kidnapped robot. After it has converged, every particle sits around
+        the old pose. Carry the robot away and no particle is near the new place, so resampling
+        can only copy wrong guesses. The fix is to inject a few random particles when the
+        measurements stop matching, so some land near the truth. In COCO's Sketch tests, MCL
+        with injection recovered 18 of 20 kidnaps and without it 0 of 20. But in the Arena,
+        where a lost robot drives on its wrong belief into walls, it recovered 0 of 20.
+      claims: [odometry-model, kidnap, arena-kidnap-closed-loop]
+    try: p5-resample
+    ros2:
+      label: UNRESOLVED
+      text: >-
+        Nav2's AMCL is this filter (500-2000 particles), and it publishes the transform map ->
+        odom. Its recovery_alpha parameters control random-particle injection; COCO ships both at
+        0.0. On the full stack, with recovery on, AMCL recovered 2 of 10 kidnaps and as shipped 0
+        of 10: the difference is not statistically resolved.
+      claims: [amcl-defaults, kidnap-ab]
+  - id: resampling
+    track: builder
+    title: Write particle-filter resampling
+    predict: p5-resample
+    observe:
+      text: >-
+        Open the particle-filter starter in the Algorithm Studio and run it on a tracking route:
+        watch how the cloud tightens after each resample.
+      studio: m5-resample
+    explain:
+      diagram: particles
+      text: >-
+        Resampling turns a weighted cloud back into an unweighted one of the same size. Each new
+        particle is a copy of an old one, chosen with probability equal to its weight. A particle
+        with weight 0.3 out of 100 gets about 30 copies; one with weight 0 gets none.
+
+        The simplest way is to draw N times at random (multinomial resampling). The low-variance
+        or systematic method used by COCO's filter does better with one random number: lay the
+        weights end to end on a line from 0 to 1, start at r, a random point in [0, 1/N), and
+        step N times by exactly 1/N, copying whichever particle each step lands in. Every
+        particle then gets floor(N w) or ceil(N w) copies, so luck matters less.
+
+        Your check does not ask for one method. It checks properties any correct resampler has:
+        the same count, only copies of inputs, never a zero-weight particle, and copies close to
+        N x w for every particle. Use rng.random() for randomness so the run repeats exactly.
+      claims: [resample-properties]
+    try: m5-resample
+    ros2:
+      label: SIMULATION RESULT
+      text: >-
+        R3 ran the Studio's particle-filter starter as a ROS 2 node in Gazebo in place of AMCL.
+        On 12 of 20 tracking routes its success agreed with the same file in the model -- the
+        same agreement as AMCL against the model's MCL (one repeat). The five stack failures
+        were the same routes for both.
+      claims: [r3-loc-gap]
+claims:
+  - {id: odometry-model, label: MEASURED, mission: where-it-is/odometry-model, text: ''}
+  - {id: kidnap, label: TESTED, mission: where-it-is/kidnap, text: ''}
+  - {id: arena-kidnap-closed-loop, label: SIMPLIFIED MODEL, mission: where-it-is/arena-kidnap-closed-loop, text: ''}
+  - {id: kidnap-ab, label: UNRESOLVED, mission: where-it-is/kidnap-ab, text: ''}
+  - id: amcl-defaults
+    label: MEASURED
+    text: >-
+      nav2_amcl defaults: max_particles 2000, min_particles 500, recovery_alpha_fast and
+      recovery_alpha_slow 0.0; AMCL publishes map -> odom.
+    evidence: ['docs/v2/r4/SOURCES.md > amcl-defaults']
+  - id: resample-properties
+    label: TESTED
+    text: >-
+      The course's resampling check passes the low-variance reference on every draw and catches
+      a resampler that ignores the weights, one that keeps only the best particle, and one that
+      keeps the input unchanged.
+    evidence: ['coco_lab/test/test_course.py::test_wrong_solutions_fail_with_a_message']
+  - id: r3-loc-gap
+    label: SIMULATION RESULT
+    text: >-
+      R3, one Gazebo repeat on loc-track-30: success agreed between model and stack on 12 of
+      20 routes for MCL vs AMCL, and 12 of 20 for the particle-filter starter vs the same file
+      as a ROS 2 node; the five STACK failures were the same routes for both and aborted 7-35 m
+      from the goal (INFERENCE: navigation aborts, not lost poses).
+    evidence: ['docs/v2/r3/R3_RESULTS.md', 'docs/v2/r3/data/r35/README.md']

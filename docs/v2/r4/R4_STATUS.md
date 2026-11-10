@@ -29,15 +29,26 @@ Prompt: [`R4_PROMPT.md`](R4_PROMPT.md) (Gautham, 2026-11-10).
 
 | checkpoint | state | evidence |
 | --- | --- | --- |
-| R4.0 Baseline | — | |
-| R4.1 Lesson engine | — | |
-| R4.2 Modules 1–2 | — | |
-| R4.3 Modules 3–6 | — | |
-| R4.4 Modules 7–10 | — | |
-| R4.5 Progress and teaching | — | |
-| R4.6 Glossary and accessibility | — | |
-| R4.7 Grading integrity | — | |
-| R4.8 Close | — | |
+| R4.0 Baseline | done: before-screenshots from the live site (9); suites: main's CI on `60c6e1f`; local heavy suites at the close | `screens/before/` |
+| R4.1 Lesson engine | done: `coco_lab.course`, ADR 0015, `test_course.py`, sandbox ops, the course pack | ADR 0015 |
+| R4.2 Modules 1-2 | done, end to end in the browser; 30 look-review screenshots (desktop + emulated phone) | `screens/r42/`, [BEFORE_AFTER](BEFORE_AFTER.md) |
+| R4.3-R4.4 Modules 3-10 | done (20 lessons, 66 claims, 0 evidence problems, 0 [CHECK]) | `lab_web/course/` |
+| R4.5 Progress and teaching | done: browser check 15/15 (completion link re-verified, class dashboard, CSV) | `data/r47/course_check.json` |
+| R4.6 Glossary, a11y, phone | done: 54 terms; a11y 28/28; Explorer on the EMULATED phone 6/6 (real phone not connected) | `data/r46/` |
+| R4.7 Grading integrity | done: every code exercise's reference passes, >= 3 wrong solutions caught, hard-coding fails hidden; browser = native 7/7; 2 uncaught bugs documented | [R4_RESULTS](R4_RESULTS.md) |
+| R4.8 Close | in progress | |
+
+### R4.7 findings so far (kept; negative results stay)
+
+- BFS (FIFO) and "stop when the goal is first pushed" PASSED Dijkstra on the Proving Ground's easy routes:
+  probing harder Depot routes.
+- Lookahead 1.0 m PASSES the lookahead exercise even on harder corner routes (clearance 0.03-0.05 m vs the
+  reference's 0.13-0.18 m): not a grading hole -- it meets the stated target (reach every goal, no contact,
+  body never in a wall) just above Nav2 RPP's own 0.9 m maximum. Recorded; the wrong solutions are 1.5, 2.0, 3.0 m.
+- Weighted x5 A* PASSES the benchmark (median ratio 1.005 public, 1.026 hidden): a valid planner meeting a median
+  target. Recorded; the third wrong solution is now "blocks only lethal cells" (a real bug).
+- The hard-coding test was wrong itself (keyed on the unsnapped start); fixed.
+- The tune exercise's window moved once the hidden set was fixed per exercise: w 2.5-4.0 passes; hint corrected.
 
 ## Machine log
 

@@ -1,0 +1,278 @@
+{
+ "site": "http://127.0.0.1:4190/coco-labs/",
+ "set": "all",
+ "device_note": "desktop 1440x1000; phone = EMULATED Nothing Phone (1) (viewport, DPR 2.625, touch, UA)",
+ "shots": [
+  {
+   "device": "desktop",
+   "page": "learn",
+   "query": "?view=learn",
+   "file": "desktop-learn.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "desktop",
+   "page": "module-1",
+   "query": "?view=learn&module=find-a-path",
+   "file": "desktop-module-1.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "desktop",
+   "page": "module-2",
+   "query": "?view=learn&module=costmaps",
+   "file": "desktop-module-2.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "desktop",
+   "page": "glossary",
+   "query": "?view=learn&page=glossary",
+   "file": "desktop-glossary.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "desktop",
+   "page": "lesson-predict",
+   "query": "?view=learn&lesson=astar-vs-dijkstra&step=predict",
+   "file": "desktop-lesson-predict.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "desktop",
+   "page": "lesson-explain",
+   "query": "?view=learn&lesson=astar-vs-dijkstra&step=explain",
+   "file": "desktop-lesson-explain.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "desktop",
+   "page": "lesson-try-code",
+   "query": "?view=learn&lesson=write-the-heuristic&step=try",
+   "file": "desktop-lesson-try-code.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "desktop",
+   "page": "lesson-ros2",
+   "query": "?view=learn&lesson=astar-vs-dijkstra&step=ros2",
+   "file": "desktop-lesson-ros2.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "desktop",
+   "page": "teacher",
+   "query": "?view=learn&page=teacher",
+   "file": "desktop-teacher.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "desktop",
+   "page": "progress",
+   "query": "?view=learn&page=progress",
+   "file": "desktop-progress.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-landscape",
+   "page": "learn",
+   "query": "?view=learn",
+   "file": "phone-landscape-learn.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-landscape",
+   "page": "module-1",
+   "query": "?view=learn&module=find-a-path",
+   "file": "phone-landscape-module-1.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-landscape",
+   "page": "module-2",
+   "query": "?view=learn&module=costmaps",
+   "file": "phone-landscape-module-2.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-landscape",
+   "page": "glossary",
+   "query": "?view=learn&page=glossary",
+   "file": "phone-landscape-glossary.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-landscape",
+   "page": "lesson-predict",
+   "query": "?view=learn&lesson=astar-vs-dijkstra&step=predict",
+   "file": "phone-landscape-lesson-predict.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-landscape",
+   "page": "lesson-explain",
+   "query": "?view=learn&lesson=astar-vs-dijkstra&step=explain",
+   "file": "phone-landscape-lesson-explain.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-landscape",
+   "page": "lesson-try-code",
+   "query": "?view=learn&lesson=write-the-heuristic&step=try",
+   "file": "phone-landscape-lesson-try-code.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-landscape",
+   "page": "lesson-ros2",
+   "query": "?view=learn&lesson=astar-vs-dijkstra&step=ros2",
+   "file": "phone-landscape-lesson-ros2.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-landscape",
+   "page": "teacher",
+   "query": "?view=learn&page=teacher",
+   "file": "phone-landscape-teacher.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-landscape",
+   "page": "progress",
+   "query": "?view=learn&page=progress",
+   "file": "phone-landscape-progress.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-portrait",
+   "page": "learn",
+   "query": "?view=learn",
+   "file": "phone-portrait-learn.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-portrait",
+   "page": "module-1",
+   "query": "?view=learn&module=find-a-path",
+   "file": "phone-portrait-module-1.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-portrait",
+   "page": "module-2",
+   "query": "?view=learn&module=costmaps",
+   "file": "phone-portrait-module-2.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-portrait",
+   "page": "glossary",
+   "query": "?view=learn&page=glossary",
+   "file": "phone-portrait-glossary.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-portrait",
+   "page": "lesson-predict",
+   "query": "?view=learn&lesson=astar-vs-dijkstra&step=predict",
+   "file": "phone-portrait-lesson-predict.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-portrait",
+   "page": "lesson-explain",
+   "query": "?view=learn&lesson=astar-vs-dijkstra&step=explain",
+   "file": "phone-portrait-lesson-explain.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-portrait",
+   "page": "lesson-try-code",
+   "query": "?view=learn&lesson=write-the-heuristic&step=try",
+   "file": "phone-portrait-lesson-try-code.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-portrait",
+   "page": "lesson-ros2",
+   "query": "?view=learn&lesson=astar-vs-dijkstra&step=ros2",
+   "file": "phone-portrait-lesson-ros2.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-portrait",
+   "page": "teacher",
+   "query": "?view=learn&page=teacher",
+   "file": "phone-portrait-teacher.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  },
+  {
+   "device": "phone-portrait",
+   "page": "progress",
+   "query": "?view=learn&page=progress",
+   "file": "phone-portrait-progress.png",
+   "ok": true,
+   "sideways_scroll": false,
+   "errors": []
+  }
+ ],
+ "taken": "2026-11-10T15:28:54.120Z"
+}

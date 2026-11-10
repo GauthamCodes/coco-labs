@@ -1,0 +1,88 @@
+# R4 Learn course, module 3 (coco.lesson.v1, ADR 0015).
+schema: coco.lesson.v1
+id: world-changes
+number: 3
+title: What if the world changes?
+question: The robot planned on the map it had. The world disagrees. Plan again, or repair the plan?
+mission: world-changes
+lessons:
+  - id: replan-or-repair
+    track: explorer
+    title: Replan or repair?
+    predict: p3-dstar
+    observe:
+      text: >-
+        Compare A* and D* Lite's first plans on three Depot routes. Same path cost; D* Lite's
+        advantage, if it has one, comes later, when something changes.
+      experiment: {family: planning, world: coco_depot_v1, algorithms: [astar, dstar_lite], from: m1-tune-weight}
+    explain:
+      diagram: replan
+      text: >-
+        A global plan is made on the map as it was. Then a pallet is dropped, a person stops, a
+        door closes. The robot's LiDAR marks the new obstacle in the costmap, and the plan must
+        change.
+
+        The simple answer is to plan again from scratch with A*: correct, and as much work as the
+        first plan. D* Lite keeps its search from last time and repairs only the part the change
+        affects. When the change is small and near the robot, that can be much less work. When
+        the change is big, or far away on the search's frontier, repairing can touch more cells
+        than starting over.
+
+        COCO measured both. Over 200 seeded worlds D* Lite's total work was below A*'s in 191,
+        with a median of 0.59 of A*'s work -- yet in 188 of 2,204 single replans it did more. On a
+        real Nav2 costmap change saved from Gazebo, D* Lite touched 3,209 cells where A* from
+        scratch touched 1,114. Both found the same cost every time. The lesson is not "D* Lite is
+        faster"; it is "measure on your map".
+      claims: [dstar-work, dstar-optimal]
+    try: p3-replan-try
+    ros2:
+      label: MEASURED
+      text: >-
+        Experiment C used two of Nav2's own global costmaps from Gazebo, before and after a
+        person stopped on the apron; coco_lab's searches ran on them. Nav2 itself replans by
+        running its planner again on the updated costmap, as its behaviour tree asks.
+      claims: [experiment-c]
+  - id: keep-out
+    track: builder
+    title: Respect a no-go zone
+    predict: p3-keepout
+    observe:
+      text: >-
+        Open the starter in the Algorithm Studio and run it: its path goes straight through the
+        area you are about to close.
+      studio: m3-nogo
+    explain:
+      diagram: replan
+      text: >-
+        Sometimes the world changes on purpose: an aisle is closed for maintenance, a loading
+        area is off limits. Nothing physical blocks it, so the LiDAR cannot see it. The planner
+        has to be told.
+
+        In your starter, the zone arrives as a rectangle [xmin, ymin, xmax, ymax] in metres,
+        through ctx.params. The planner already asks one question before it steps into a cell:
+        is this cell's centre inside the zone? Your job is to answer it. A point is inside a
+        rectangle when it is inside on both axes at once; the edges count as inside.
+
+        The check draws a new zone across the middle of the shortest path for every scenario,
+        so ignoring it, or testing only one axis, puts cells of the path inside. It also checks
+        that the detour is no more than 5 % longer than needed: making the whole map expensive
+        would avoid the zone too, but badly.
+      claims: [keepout-source]
+    try: m3-nogo
+    ros2:
+      label: MEASURED
+      text: >-
+        Nav2 does this without touching any planner: its keepout filter reads a filter mask (an
+        occupancy grid you publish) and writes its values into the costmap. Occupied mask cells
+        become zones the robot never enters, and every planner sees them as cost.
+      claims: [keepout-source]
+claims:
+  - {id: dstar-work, label: MEASURED, mission: world-changes/dstar-work, text: ''}
+  - {id: dstar-optimal, label: TESTED, mission: world-changes/dstar-optimal, text: ''}
+  - {id: experiment-c, label: MEASURED, mission: world-changes/experiment-c, text: ''}
+  - id: keepout-source
+    label: MEASURED
+    text: >-
+      Nav2's keepout filter reads a filter mask (nav_msgs/OccupancyGrid) and copies its values
+      into the costmap; cells with occupied values are zones the robot never enters.
+    evidence: ['docs/v2/r4/SOURCES.md > keepout']
