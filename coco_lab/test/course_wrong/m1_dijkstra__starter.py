@@ -7,9 +7,11 @@ the start. It always takes out the cheapest cell, marks it done, and "relaxes" i
 neighbours: if going through this cell makes a neighbour cheaper, remember the new cost and
 the parent, and push the neighbour.
 
-Costs here are geometric: a straight step costs 1 cell, a diagonal step sqrt(2). A cell with
-cost >= 253 (inscribed or lethal) cannot hold the robot's centre, and a diagonal step may
-not cut a blocked corner. Everything around the loop is written; the loop is yours.
+Costs come from the costmap, as in Nav2: stepping into a cell costs the step's length (1 cell
+straight, sqrt(2) diagonal) times (1 + WEIGHT x the cell's cost / 252), so a step beside a wall
+costs more than one in the open. step_cost() computes it. A cell with cost >= 253 (inscribed or
+lethal) cannot hold the robot's centre, and a diagonal step may not cut a blocked corner.
+Everything around the loop is written; the loop is yours.
 """
 import heapq
 import math
@@ -19,6 +21,14 @@ from coco_lab.api import INSCRIBED_INFLATED_OBSTACLE, Pose2D
 MOVES = [(1, 0, 1.0), (-1, 0, 1.0), (0, 1, 1.0), (0, -1, 1.0),
          (1, 1, math.sqrt(2.0)), (1, -1, math.sqrt(2.0)),
          (-1, 1, math.sqrt(2.0)), (-1, -1, math.sqrt(2.0))]
+
+
+WEIGHT = 2.0     # how much a cell's inflation cost adds to stepping into it
+
+
+def step_cost(costmap, nxt, length):
+    """What stepping into cell nxt costs: its length, made dearer near obstacles."""
+    return length * (1.0 + WEIGHT * costmap.cost(*nxt) / 252.0)
 
 
 def blocked(costmap, cell):
@@ -50,8 +60,9 @@ def plan(costmap, start, goal, ctx):
         #   2. mark it done; show it: x, y = costmap.map_to_world(*cell);
         #      ctx.emit('expand', x=x, y=y); ctx.step()
         #   3. stop when cell == g
-        #   4. for nxt, length in neighbours(costmap, cell): if gc + length beats
-        #      best.get(nxt, math.inf), store it in best and parent and push (new g, nxt)
+        #   4. for nxt, length in neighbours(costmap, cell): the new cost is
+        #      gc + step_cost(costmap, nxt, length); if it beats best.get(nxt, math.inf),
+        #      store it in best and parent and push (new cost, nxt)
         break
     if g not in parent:
         return None

@@ -208,7 +208,7 @@ function LessonPlayer({ course, module: m, lesson: l, step, go, onChange }: {
 }
 
 function Paragraphs({ text }: { text: string }) {
-  return <>{text.split(/\n\s*\n/).map((p, k) => <p key={k} className="course-p">{p}</p>)}</>;
+  return <>{text.split(/\n+/).map((p, k) => <p key={k} className="course-p">{p}</p>)}</>;
 }
 
 function Claims({ ids, claims }: { ids: string[]; claims: Map<string, Claim> }) {
@@ -264,7 +264,7 @@ function PredictStep({ e, lessonId, kind, onChange, onGraded }: { e: Exercise; l
 function specFor(course: Course, family: string, world: string, algorithms: string[], scen: Scenario[], maxTicks?: number): ExperimentSpec {
   const s: ExperimentSpec = { schema: 'coco.experiment.v1', title: 'From the Learn course', world, family: family as ExperimentSpec['family'], seed: 1,
     algorithms: algorithms.map((name) => ({ name })) as ExperimentSpec['algorithms'],
-    scenarios: { kind: 'inline', scenarios: scen.map(({ id, start, goal, seed, config }) => ({ id, start, goal, seed, ...(config ? { config } : {}) })) } as ExperimentSpec['scenarios'] };
+    scenarios: { kind: 'inline', scenarios: scen.map(({ id, start, goal, seed, config }) => ({ id, start, goal, seed, ...(config ? { config } : {}) })) } as unknown as ExperimentSpec['scenarios'] };
   if (family !== 'planning') s.limits = { max_ticks: maxTicks ?? 1500 };
   void course;
   return s;
@@ -426,7 +426,7 @@ function CheckStep({ e, grade: g, lesson, onRetry }: { e: Exercise; grade: Grade
     <button type="button" onClick={onRetry}>Go to Try</button></div>;
   const scen = new Map([...(g.scenarios?.public ?? []), ...(g.scenarios?.hidden ?? [])].map((s) => [s.id, s]));
   return <div data-testid="check-result">
-    <p className={g.passed ? 'wb-ok' : 'wb-error'} role="status" data-testid="verdict">
+    <p className={g.passed ? 'wb-ok' : 'wb-error'} role="status" data-testid="verdict" data-digest={g.digest} data-passed={String(g.passed)}>
       {g.passed ? <><b>Passed.</b> {g.checks_passed} of {g.checks} checks. <Stars n={stars(p)} label="this lesson" /></>
         : <><b>Not yet.</b> {g.checks_passed} of {g.checks} checks passed. Read what failed, then try again.</>}</p>
     <div className="course-table-wrap"><table className="course-results">

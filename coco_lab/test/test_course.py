@@ -1,5 +1,16 @@
 # Copyright 2026 Gautham Anil
-# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 """
 R4 · the Learn course's grader (coco_lab.course; ADR 0015) and R4.7's grading integrity.
 
@@ -11,11 +22,10 @@ import json
 import os
 from pathlib import Path
 
+from coco_lab import course as C
 import pytest
 
 os.environ.setdefault('COCO_WORLDS', str(Path(__file__).resolve().parents[2] / 'worlds'))
-
-from coco_lab import course as C  # noqa: E402
 
 HERE = Path(__file__).parent
 WRONG = sorted((HERE / 'course_wrong').glob('*.py'))
@@ -98,6 +108,12 @@ def test_hidden_scenarios_change_with_the_file_and_public_ones_do_not():
     assert not pub & {tuple(s['start'][:2]) for s in ha}
 
 
+def test_a_slider_value_is_the_same_answer_as_an_integer_or_a_float():
+    # R4.7: the browser's JSON says 3 where Python says 3.0; the grade must not differ
+    assert C.answer_digest({'params': {'heuristic_weight': 3}}) == \
+        C.answer_digest({'params': {'heuristic_weight': 3.0}})
+
+
 def test_a_tune_exercise_keeps_one_hidden_set():
     e = C.exercise('m1-tune-weight')
     assert C.scenarios(e, 'hidden', {'params': {'heuristic_weight': 1.5}}) == \
@@ -105,16 +121,17 @@ def test_a_tune_exercise_keeps_one_hidden_set():
 
 
 def _memoriser(ex_id: str) -> str:
-    """A planner that returns the reference's own paths on the PUBLIC scenarios, else a line."""
+    """Return a planner that knows the reference's paths on the PUBLIC scenarios only."""
     from coco_lab import experiments as ex
     e = C.exercise(ex_id)
     scen = C.scenarios(e, 'public', {})
     ref = C.run_set(e, C._user_algo(C.file_text(e['solution'])), scen)
     m = ex.world(e['world']).lab_map
     table = {}
-    for s, r in zip(scen, ref):
-        key = f'{s["start"][0]:.2f},{s["start"][1]:.2f}'
-        table[key] = [list(m.cell_centre(*c)) for c in r['path_cells']]
+    for r in ref:
+        # plan() receives the start snapped to its free cell's centre: key on that
+        x, y = m.cell_centre(*r['path_cells'][0])
+        table[f'{x:.2f},{y:.2f}'] = [list(m.cell_centre(*c)) for c in r['path_cells']]
     return (
         'from coco_lab.api import Pose2D\n'
         f'PATHS = {json.dumps(table)}\n\n\n'
@@ -203,9 +220,10 @@ def test_stall_start():
 
 def test_a_tune_exercise_has_a_passing_setting_and_its_default_fails():
     assert not C.grade('m1-tune-weight', {'params': {}})['passed']
-    assert C.grade('m1-tune-weight', {'params': {'heuristic_weight': 2.0}})['passed']
+    assert C.grade('m1-tune-weight', {'params': {'heuristic_weight': 3.0}})['passed']
     assert not C.grade('m2-tune-clearance', {'params': {}})['passed']
-    assert C.grade('m2-tune-clearance', {'params': {'cost_weight': 5.0, 'cost_scaling_factor': 5.0}})['passed']
+    good = {'cost_weight': 5.0, 'cost_scaling_factor': 5.0}
+    assert C.grade('m2-tune-clearance', {'params': good})['passed']
 
 
 def test_an_export_carries_the_file():

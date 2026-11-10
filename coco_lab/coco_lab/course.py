@@ -1,5 +1,16 @@
 # Copyright 2026 Gautham Anil
-# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 """
 R4 · the Learn course's grader (``coco.lesson.v1``; ADR 0015).
 
@@ -127,6 +138,10 @@ def canonical(obj) -> bytes:
 def answer_digest(answer: Dict) -> str:
     """Return sha256 of the canonical answer (code by its sha256, the rest as given)."""
     a = dict(answer)
+    if isinstance(a.get('params'), dict):
+        # a slider value is a number: 3 and 3.0 are the same answer (JSON from a browser says 3)
+        a['params'] = {k: float(v) if isinstance(v, (int, float)) and not isinstance(v, bool)
+                       else v for k, v in a['params'].items()}
     if 'code' in a:
         a['code'] = hashlib.sha256(a['code'].encode('utf-8')).hexdigest()
     return hashlib.sha256(canonical(a)).hexdigest()
@@ -150,7 +165,7 @@ def _keep(f: Dict, rules: Dict) -> bool:
 
 def scenarios(e: Dict, which: str, answer: Optional[Dict] = None) -> List[Dict]:
     """
-    Return an exercise's ``public`` or ``hidden`` scenarios (inline experiment scenarios).
+    Return the exercise's public or hidden set, as inline experiment scenarios.
 
     Drawn by COCO-Bench's generator (``bench_v1``'s pool and features) from the exercise's
     seed (public) or :func:`hidden_seed` (hidden), keeping the first ``n`` whose features pass
@@ -199,7 +214,7 @@ def scenarios(e: Dict, which: str, answer: Optional[Dict] = None) -> List[Dict]:
 
 
 def _zone(e: Dict, s: Dict) -> List[float]:
-    """A no-go rectangle across the reference path's middle (the no-go zone exercise)."""
+    """Return a no-go rectangle across the reference path's middle (the no-go exercise)."""
     from . import experiments as ex
     w = ex.world(e['world'])
     cells = _reference_cells(e, s)
@@ -263,13 +278,13 @@ def run_set(e: Dict, algo: Dict, scen: List[Dict]) -> List[Dict]:
             a['params'] = dict(a.get('params', {}), **{'user.nogo': s['zone']})
         p = ex.plan(_spec(e, [a], [s]))
         cells: List = []
-        sink = None
-        if e['family'] == 'planning':
-            def sink(row):
-                if row[0] == 3:
-                    cells.append(list(row[1:3]))
-                elif row[0] == 1 and len(cells) == 0:
-                    _beat()
+
+        def path_sink(row):
+            if row[0] == 3:
+                cells.append(list(row[1:3]))
+            elif row[0] == 1 and len(cells) == 0:
+                _beat()
+        sink = path_sink if e['family'] == 'planning' else None
         r = ex.run_one(p['runs'][0], sink=sink, on_tick=_beat if sink is None else None,
                        twice=False)
         r = ex.plain(r)
@@ -313,7 +328,8 @@ def check_success_all(c, runs, which, **_):
             why = why.get('message', '')
         out.append(_result(c, ok, which, r['scenario'], r['status'], c.get('want', 'success'),
                            'reached the goal' if ok else
-                           f'did not succeed: status {r["status"]}' + (f' ({why})' if why else '')))
+                           f'did not succeed: status {r["status"]}'
+                           + (f' ({why})' if why else '')))
     return out
 
 
@@ -430,7 +446,7 @@ def check_median_ratio_max(c, runs, which, **_):
 
 
 def check_function_cases(c, runs, which, fns=None, cases=None, **_):
-    """A function's return values equal the reference solution's on every case (exact or tol)."""
+    """Check that a function returns the reference solution's values on every case."""
     user, ref = fns
     tol = c.get('tol', 0.0)
     bad = []
@@ -456,7 +472,7 @@ def check_function_cases(c, runs, which, fns=None, cases=None, **_):
 
 def check_resample(c, runs, which, fns=None, cases=None, **_):
     """
-    Resampling, by properties (any correct resampler passes, a deterministic rng):
+    Check resampling by properties (any correct resampler passes; the rng is seeded).
 
     the same number of particles; each one of the inputs; never a zero-weight particle; and
     each particle's count within ``N w +- (4 sqrt(N w (1 - w)) + 1)`` (a 4-sigma band that
@@ -475,7 +491,8 @@ def check_resample(c, runs, which, fns=None, cases=None, **_):
         n = len(parts)
         if not isinstance(out, (list, tuple)) or len(out) != n:
             return [_result(c, False, which, None, None, n,
-                            f'case {k + 1}: returned {len(out) if hasattr(out, "__len__") else out}'
+                            f'case {k + 1}: returned '
+                            f'{len(out) if hasattr(out, "__len__") else out}'
                             f' particles, expected {n} (resampling keeps the count)')]
         index = {tuple(p): i for i, p in enumerate(parts)}
         counts = [0] * n
@@ -483,7 +500,8 @@ def check_resample(c, runs, which, fns=None, cases=None, **_):
             i = index.get(tuple(p))
             if i is None:
                 return [_result(c, False, which, None, None, None,
-                                f'case {k + 1}: returned a particle that was not one of the inputs')]
+                                f'case {k + 1}: returned a particle that was not one '
+                                'of the inputs')]
             counts[i] += 1
         for i, (wi, ci) in enumerate(zip(wts, counts)):
             if wi == 0 and ci:
@@ -531,7 +549,7 @@ def check_cell_within(c, runs, which, e=None, answer=None, **_):
 
 
 def check_exports(c, runs, which, answer=None, **_):
-    """The file exports to a ROS 2 package (``coco_lab.ros2_export``, the Studio's own export)."""
+    """Check that the file exports to a ROS 2 package (the Studio's own export)."""
     if which != 'public':
         return []
     from . import ros2_export, user_code
@@ -588,7 +606,7 @@ def _same(a, b, tol) -> bool:
 # -- function cases ------------------------------------------------------------------------------
 
 def _cases(e: Dict, which: str, answer: Dict) -> List:
-    """The arguments a function exercise is called with (public from the seed, hidden drawn)."""
+    """Return the arguments a function exercise is called with (public or hidden)."""
     from .rng import Rng
     seed = e['seed'] if which == 'public' else hidden_seed(e, answer)
     rng = Rng(seed % (1 << 63))
@@ -680,9 +698,10 @@ STALL_RADIUS_M = 0.25
 
 def _truth_tick(e: Dict) -> Optional[int]:
     """
-    The failure exercise's true tick, by its rule: ``first_contact`` (the first tick in
-    contact), ``stall_start`` (the first tick after which the robot stays within
-    :data:`STALL_RADIUS_M` of where it was) or ``fail_tick`` (the record's own).
+    Return the failure exercise's true tick, by its rule.
+
+    ``first_contact``: the first tick in contact; ``stall_start``: the first tick after which
+    the robot stays within :data:`STALL_RADIUS_M` of where it was; ``fail_tick``: the record's.
     """
     from . import experiments as ex
     p = ex.plan(_spec(e, [e['run']], [e['scenario']]))
@@ -704,7 +723,7 @@ def _truth_tick(e: Dict) -> Optional[int]:
 
 
 def stall_start(poses: List) -> Optional[int]:
-    """The first tick after which every later position is within STALL_RADIUS_M of it."""
+    """Return the first tick after which every later position is within STALL_RADIUS_M."""
     for i, (tick, x, y) in enumerate(poses):
         if all(math.hypot(x2 - x, y2 - y) <= STALL_RADIUS_M for _, x2, y2 in poses[i:]):
             return tick if i < len(poses) - 1 else None
@@ -713,7 +732,7 @@ def stall_start(poses: List) -> Optional[int]:
 
 def grade(ex_id: str, answer: Dict) -> Dict:
     """
-    Grade ``answer`` to exercise ``ex_id``; return the grade (``coco.lesson.grade.v1``).
+    Grade one answer to one exercise (``coco.lesson.grade.v1``).
 
     ``passed`` is true only when every check passes, on the public and the hidden set. A file
     that fails to load is graded (passed false, the guard's or Python's message), never raised.
@@ -758,8 +777,8 @@ def grade(ex_id: str, answer: Dict) -> Dict:
            'checks_passed': sum(1 for r in results if r['passed']), 'checks': len(results),
            'results': results}
     out.update(info)
-    out['digest'] = hashlib.sha256(canonical({k: v for k, v in out.items()
-                                               if k != 'digest'})).hexdigest()
+    body = {k: v for k, v in out.items() if k != 'digest'}
+    out['digest'] = hashlib.sha256(canonical(body)).hexdigest()
     return out
 
 
@@ -803,12 +822,12 @@ def _tune_params(e: Dict, given: Dict) -> Dict:
         if isinstance(v, bool) or not isinstance(v, (int, float)) or \
                 not rng['min'] <= v <= rng['max']:
             raise CourseError(f'{key} must be a number from {rng["min"]} to {rng["max"]}')
-        out[key] = v
+        out[key] = float(v)
     return out
 
 
 def inspect(ex_id: str) -> Dict:
-    """A failure exercise's run as a timeline for the page (no answer in it): sampled series."""
+    """Return a failure exercise's run as a timeline for the page (no answer in it)."""
     from . import experiments as ex
     e = exercise(ex_id)
     if e['type'] != 'failure':
@@ -837,7 +856,7 @@ def main(argv=None) -> int:
     g = sub.add_parser('grade')
     g.add_argument('exercise')
     g.add_argument('answer', help='a JSON file: {"code": ...} | {"choice": i} | ...')
-    g.add_argument('--code', help='take the answer\'s code from this .py file')
+    g.add_argument('--code', help="take the answer's code from this .py file")
     sub.add_parser('list')
     i = sub.add_parser('inspect')
     i.add_argument('exercise')

@@ -508,7 +508,7 @@
    "hints": [
     "Start at w = 1 (plain A*) and raise it. Watch the two numbers: total expansions and the longest path ratio.",
     "Weighting the heuristic makes A* greedier: f = g + w h. It opens fewer cells, but the path can be up to w times the optimum (the bound is tested).",
-    "Expansions drop fast between w = 1 and w = 2; past that the paths start getting longer. Try values around 1.5 to 2.5."
+    "Below about w = 2.5 the hidden routes still need more than half of A*'s expansions; above about 4 a path gets more than 10 % longer. Look between them."
    ]
   },
   {
@@ -599,16 +599,16 @@
     },
     {
      "kind": "ratio_max",
-     "metric": "path_length_m",
+     "metric": "path_cost",
      "vs": "reference",
      "value": 1.0,
-     "label": "the shortest path (optimal)"
+     "label": "the cheapest path (optimal cost)"
     }
    ],
    "hints": [
     "Each time round the loop, take the cheapest cell off the heap. heapq.heappop(heap) gives you (g, cell).",
-    "Skip a cell already in done (a cheaper copy was handled before). Otherwise mark it done, then for each neighbour compute g + step length and keep it only if it beats best.get(nxt, math.inf).",
-    "gc, cell = heapq.heappop(heap); if cell in done: continue; done.add(cell); ... if cell == g: break; for nxt, length in neighbours(costmap, cell): ng = gc + length; if ng < best.get(nxt, math.inf): best[nxt] = ng; parent[nxt] = cell; heapq.heappush(heap, (ng, nxt))"
+    "Skip a cell already in done (a cheaper copy was handled before). Otherwise mark it done, then for each neighbour compute g + step_cost(...) and keep it only if it beats best.get(nxt, math.inf). The queue must be ordered by cost, not by arrival.",
+    "gc, cell = heapq.heappop(heap); if cell in done: continue; done.add(cell); ... if cell == g: break; for nxt, length in neighbours(costmap, cell): ng = gc + step_cost(costmap, nxt, length); if ng < best.get(nxt, math.inf): best[nxt] = ng; parent[nxt] = cell; heapq.heappush(heap, (ng, nxt))"
    ]
   },
   {
@@ -837,15 +837,19 @@
     "public": 2,
     "hidden": 2,
     "min_separation_m": 4.0,
-    "pool": 80,
+    "pool": 120,
     "keep": {
      "path_length_m": [
       5.0,
       12.0
      ],
      "turns": [
-      2,
+      3,
       99
+     ],
+     "min_clearance_m": [
+      0.0,
+      0.45
      ]
     }
    },

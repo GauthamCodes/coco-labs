@@ -23,7 +23,10 @@ def test_flake8():
     # holds algorithm FILES (coco_lab.api's starters: user code, data to this package, never
     # imported); parity CI and the ROS 2 runs name their exact bytes by sha256, so they are not
     # restyled.
-    rc, errors = main_with_errors(argv=['--exclude', 'upstream_v3_6.py,templates'])
+    # R4: the course's starter/solution files (coco_lab/course/files) and the wrong solutions
+    # (test/course_wrong*) are user algorithm files too, kept exactly as a learner would write them
+    excluded = 'upstream_v3_6.py,templates,files,course_wrong,course_wrong_uncaught'
+    rc, errors = main_with_errors(argv=['--exclude', excluded])
     assert rc == 0, \
         'Found %d code style errors / warnings:\n' % len(errors) + \
         '\n'.join(errors)

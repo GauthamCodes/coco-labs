@@ -1,4 +1,4 @@
-# R4.7 wrong solution for m4-lookahead: lookahead 1.0 m cuts the corners
+# R4.7 wrong solution for m4-lookahead: lookahead 2.0 m cuts the corners
 """
 Builder exercise: choose the pure-pursuit lookahead. (Reference solution.)
 
@@ -11,7 +11,7 @@ import math
 
 from coco_lab.api import NoValidControl, Pose2D, Twist
 
-LOOKAHEAD = 1.0       # m
+LOOKAHEAD = 2.0       # m
 SPEED = 0.25          # m/s, cruising
 ROTATE_FIRST = 1.0    # rad: turn on the spot when the lookahead is further off than this
 STOP_RANGE = 0.30     # m: anything this close in front of the LiDAR stops forward motion

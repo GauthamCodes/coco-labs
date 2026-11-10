@@ -100,12 +100,13 @@ lessons:
         new cost is the cell's cost plus the step length. If that beats best[neighbour], store
         it, set the parent, and push the neighbour.
 
-        Two details decide whether the answer is right. First, the queue must be ordered by
-        cost: a first-in-first-out queue gives breadth-first search, which finds the path with
-        the fewest steps, not the shortest in metres. Second, diagonal steps cost sqrt(2);
-        treating them as 1 again counts steps rather than distance. The starter keeps the robot
-        out of cells with cost 253 or more and stops diagonals from cutting a blocked corner, so
-        your loop only has to search.
+        Here a step's cost comes from the costmap, as on a real robot: its length (1 straight,
+        sqrt(2) diagonal) made dearer near obstacles by the inflation cost. That is why the queue
+        must be ordered by cost: a first-in-first-out queue gives breadth-first search, which
+        finds the path with the fewest steps -- on an empty grid often the shortest too, but not
+        the cheapest once steps cost different amounts. The starter keeps the robot out of cells
+        with cost 253 or more and stops diagonals cutting a blocked corner, so your loop only has
+        to search.
       claims: [race-optimum, bfs-unit-costs]
     try: m1-dijkstra
     ros2:

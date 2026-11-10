@@ -1,4 +1,4 @@
-# R4.7 wrong solution for m1-bench: A* with its heuristic weighted x5
+# R4.7 wrong solution for m1-bench: a stack (LIFO) instead of a priority queue: depth-first, very long paths
 """
 A* on Nav2's costmap: a starter planner for COCO Lab (coco.algorithm.v1).
 
@@ -37,7 +37,7 @@ def plan(costmap, start, goal, ctx):
     parent = {s: None}
     closed = set()
     while open_heap:
-        f, gc, cell = heapq.heappop(open_heap)
+        f, gc, cell = open_heap.pop()
         if cell in closed:
             continue                     # a stale entry: this cell was reached more cheaply
         closed.add(cell)
@@ -58,7 +58,7 @@ def plan(costmap, start, goal, ctx):
             if new_g < g_cost.get(nxt, math.inf):
                 g_cost[nxt] = new_g
                 parent[nxt] = cell
-                heapq.heappush(open_heap, (new_g + 5.0 * heuristic(nxt, g), new_g, nxt))
+                open_heap.append((new_g + heuristic(nxt, g), new_g, nxt))
                 px, py = costmap.map_to_world(*nxt)
                 ctx.emit('push', x=px, y=py)
     if g not in parent:
