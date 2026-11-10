@@ -326,6 +326,16 @@ BUILTIN_NOTE = {'builtin': ' A plan reference, not a controller result: it drive
                            'failure outcomes.'}
 
 
+#: R4 Part A (Gautham, 2026-11-10): reference rows are never ranked. They are pinned, greyed and
+#: unranked on every board, with this one-line note; only real controllers and localisers rank.
+REFERENCES = {
+    'builtin': 'Plan-following reference: drives the global plan with no local costmap or '
+               'collision check, so it is not a controller result.',
+    'mcl_reference': 'Localisation reference: MCL with 2,000 particles and random-particle '
+                     'injection, run to test whether the suite is solvable; slow, not a competitor.',
+}
+
+
 def bench_host(suite_id: str, family: str) -> dict:
     """The machine the R3.2 baseline ran on (its public manifest; compute_ms is that host's)."""
     m = json.loads((BENCH / suite_id / family / 'public' / 'manifest.json').read_text())
@@ -386,6 +396,56 @@ def builtins_from_bench(suite_id: str, family: str, root: Path, workers: int) ->
                   'baseline': f'docs/v2/r3/bench/{suite_id}/{family}/',
                   'host': bench_host(suite_id, family)}
         _write(root / suite_id / name, result)   # algorithm names are unique across families
+        out.append(result)
+    return out
+
+
+MCL_REFERENCE = REPO / 'docs' / 'v2' / 'r4' / 'data' / 'mcl_reference'
+
+
+def mcl_reference_entries(root: Path) -> list:
+    """
+    R4 Part A: the MCL reference's entries (loc-global-20, loc-kidnap-20) from its committed runs.
+
+    tools/r3/mcl_reference.py ran the public suite and the same reference held-out draw as the
+    R3.2 baselines (checked here); the entry is a REFERENCE (index() never ranks it).
+    """
+    out = []
+    for suite_id in ('loc-global-20', 'loc-kidnap-20'):
+        base = MCL_REFERENCE / suite_id
+        held = scenario_sets(suite_id, REFERENCE)['held_out']['scenarios']
+        spec_held = json.loads((base / 'held_out' / 'spec.json').read_text())['scenarios']
+        if spec_held['scenarios'] != held:
+            raise SystemExit(f'{suite_id}: the MCL reference held-out draw is not REFERENCE\'s')
+        ev = {}
+        for w in ('public', 'held_out'):
+            recs = [json.loads(x) for x in (base / w / 'runs.jsonl').read_text().splitlines()]
+            spec = json.loads((base / w / 'spec.json').read_text())
+            ev[w] = {'spec_id': ex.spec_id(spec), 'digest': ex.digest(recs), 'records': recs,
+                     'scenarios': len(recs), 'score': score('localisation', recs, {}),
+                     'worst': worst('localisation', recs, {})}
+            if w == 'public':
+                ev[w]['tiers'] = tier_scores(suite_id, recs)
+        m = json.loads((base / 'public' / 'manifest.json').read_text())
+        result = {'schema': SCHEMA, 'verified': True, 'problems': [], 'versions': _versions(suite_id),
+                  'entry': {'suite': suite_id, 'name': 'mcl_reference', 'kind': 'builtin',
+                            'family': 'localisation',
+                            'display_name': 'MCL reference (2,000 particles)',
+                            'author': 'COCO Lab (reference, R4)',
+                            'description': 'MCL with augmented random-particle injection, 2,000 '
+                                           'particles and 24 beams: a deliberately expensive '
+                                           'reference run to test whether the suite can be solved '
+                                           'in the model. ' + REFERENCES['mcl_reference'],
+                            'licence': 'Apache-2.0', 'paper': None, 'code_sha256': None,
+                            'code_path': 'tools/r3/mcl_reference.py'},
+                  'public': _public(ev['public']),
+                  'held_out': dict(_public(ev['held_out']), merge_base=REFERENCE,
+                                   seed=held_out_seed(suite_id, REFERENCE), n=HELD_OUT_N[suite_id]),
+                  'checks': {'deterministic': True, 'contract_problems': 0, 'clamped_outputs': 0,
+                             'claimed_digest': None, 'claim_matches': None},
+                  'baseline': f'docs/v2/r4/data/mcl_reference/{suite_id}/',
+                  'host': {k: v for k, v in m['host'].items() if k != 'wall_s'}}
+        _write(root / suite_id / 'mcl_reference', result)
         out.append(result)
     return out
 
@@ -503,7 +563,11 @@ def index(out: Path) -> None:
                     r['entry']['name'])
         return (-(s['success_rate'] or 0), med('final_err_xy_m') or inf, r['entry']['name'])
     for k in boards:
-        boards[k].sort(key=rank)
+        for r in boards[k]:
+            note = REFERENCES.get(r['entry']['name']) if r['entry']['kind'] == 'builtin' else None
+            r['entry']['reference'] = note
+        # references first (pinned), then the ranked entries; a reference is never given a rank
+        boards[k].sort(key=lambda r: (r['entry']['reference'] is None, rank(r)))
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(ex.plain({'schema': 'coco.leaderboard.v1', 'boards': boards,
                                         'verifier': VERIFIER_VERSION}), sort_keys=True) + '\n')
@@ -529,6 +593,8 @@ def main(argv=None):
     bb.add_argument('family')
     bb.add_argument('--root', default=str(REPO / 'leaderboard' / 'results'))
     bb.add_argument('--workers', type=int, default=2)
+    mr = sub.add_parser('mcl-reference', help='R4: the MCL reference entries from its committed runs')
+    mr.add_argument('--root', default=str(REPO / 'leaderboard' / 'results'))
     c = sub.add_parser('claim', help="write a submission's summary.json (the claim)")
     c.add_argument('dir')
     c.add_argument('--workers', type=int, default=2)
@@ -551,6 +617,12 @@ def main(argv=None):
     if a.cmd == 'claim':
         summ = claim(Path(a.dir), a.workers)
         print(f"wrote {Path(a.dir) / 'summary.json'}: digest {summ['digest']}")
+        return 0
+    if a.cmd == 'mcl-reference':
+        for r in mcl_reference_entries(Path(a.root)):
+            sc, h = r['public']['score'], r['held_out']['score']
+            print(f"{r['entry']['suite']}/mcl_reference: public {sc['successes']}/{sc['n']}, "
+                  f"held-out {h['successes']}/{h['n']}")
         return 0
     if a.cmd == 'builtin-bench':
         for r in builtins_from_bench(a.suite, a.family, Path(a.root), a.workers):

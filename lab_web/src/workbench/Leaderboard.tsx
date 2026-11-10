@@ -25,7 +25,7 @@ interface Score {
 interface Tier { n: number; successes: number; wilson95: [number, number] | null }
 interface Part { score: Score; worst: { scenario_index: number; scenario: string; why: string } | null; digest: string; scenarios: number; merge_base?: string; tiers?: Record<'easy' | 'medium' | 'hard', Tier> }
 interface Entry {
-  entry: { suite: string; name: string; kind: 'submission' | 'builtin'; family: string; display_name: string; author: string; description: string; licence: string; paper: string | null; code_path: string; code_sha256: string | null };
+  entry: { suite: string; name: string; kind: 'submission' | 'builtin'; family: string; reference?: string | null; display_name: string; author: string; description: string; licence: string; paper: string | null; code_path: string; code_sha256: string | null };
   public: Part; held_out: Part; versions: Record<string, number | string>; checks: { deterministic: boolean; contract_problems: number; clamped_outputs: number };
   host?: { cpu?: string; python?: string; workers?: number };
   stack?: { label: string; rows: { metric: string; model: string; stack: string; gap: string }[]; source: string };
@@ -69,26 +69,28 @@ export function LeaderboardTab() {
       const cols = headline(fam);
       return <article key={board} className="wb-bench" id={`board-${suite}-${fam}`}>
         <h2>{suite} · {fam}</h2>
+        <p className="wb-scroll-hint" data-testid="lb-scroll-hint">This table is wider than the screen: scroll it sideways →</p>
         <div className="wb-scroll"><table className="wb-table" data-testid={`board-${suite}-${fam}`}>
           <thead><tr><th scope="col">#</th><th scope="col">Algorithm</th><th scope="col">Success, public (Wilson 95%)</th>
             {cols.map((c) => <th key={c.key} scope="col">{c.label}</th>)}
             <th scope="col">Held-out success</th><th scope="col">Compute (ms, median; device)</th><th scope="col">Links</th></tr></thead>
-          <tbody>{entries.map((e, i) => <EntryRow key={e.entry.name} e={e} rank={i + 1} cols={cols} />)}</tbody>
+          <tbody>{(() => { let n = 0; return entries.map((e) => <EntryRow key={e.entry.name} e={e} rank={e.entry.reference ? null : ++n} cols={cols} />); })()}</tbody>
         </table></div>
       </article>;
     })}
   </section>;
 }
 
-function EntryRow({ e, rank, cols }: { e: Entry; rank: number; cols: { key: keyof Score; label: string }[] }) {
+function EntryRow({ e, rank, cols }: { e: Entry; rank: number | null; cols: { key: keyof Score; label: string }[] }) {
   const s = e.public.score, h = e.held_out.score;
   const sub = e.entry.kind === 'submission';
   const studio = `${BASE}?view=workbench&tab=studio&entry=${encodeURIComponent(`${e.entry.suite}/${e.entry.name}`)}`;
   const worst = e.public.worst;
   return <>
-    <tr data-testid={`entry-${e.entry.name}`}>
-      <td>{rank}</td>
-      <th scope="row"><b>{e.entry.display_name}</b>{sub ? '' : ' (built-in)'}<div className="wb-muted">{e.entry.author} · {e.entry.licence}{e.entry.paper?.startsWith('https://') ? <> · <a href={e.entry.paper} rel="noopener noreferrer">paper</a></> : null}</div></th>
+    <tr data-testid={`entry-${e.entry.name}`} className={rank === null ? 'wb-ref' : undefined}>
+      <td>{rank ?? <span title="A reference row: never ranked">ref</span>}</td>
+      <th scope="row"><b>{e.entry.display_name}</b>{sub ? '' : rank === null ? ' (reference, unranked)' : ' (built-in)'}
+        {e.entry.reference && <div className="wb-ref-note" data-testid="lb-reference-note">{e.entry.reference}</div>}<div className="wb-muted">{e.entry.author} · {e.entry.licence}{e.entry.paper?.startsWith('https://') ? <> · <a href={e.entry.paper} rel="noopener noreferrer">paper</a></> : null}</div></th>
       <td>{pct(s)}{ci(s)}</td>
       {cols.map((c) => <td key={c.key}>{typeof s[c.key] === 'number' ? String(s[c.key]) : med(s[c.key] as Q | undefined)}</td>)}
       <td>{pct(h)}{ci(h)}{h.path_ratio ? ` · ratio ${med(h.path_ratio)}` : ''}</td>

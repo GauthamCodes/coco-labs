@@ -155,6 +155,24 @@ def test_the_index_is_generated_from_every_verified_result(tmp_path):
         assert ((r['entry']['suite'], r['entry']['name']) in listed) == bool(r['verified']), p
 
 
+def test_reference_rows_are_pinned_first_and_never_ranked(tmp_path):
+    # R4 Part A (Gautham, 2026-11-10): the Waypoint driver and the MCL reference are references:
+    # pinned first on every board, with a one-line note; only real entries are ranked after them
+    out = tmp_path / 'i.json'
+    L.index(out)
+    boards = json.loads(out.read_text())['boards']
+    seen = 0
+    for rows in boards.values():
+        refs = [r['entry']['reference'] is not None for r in rows]
+        assert refs == sorted(refs, reverse=True), [r['entry']['name'] for r in rows]
+        for r in rows:
+            is_ref = r['entry']['name'] in L.REFERENCES and r['entry']['kind'] == 'builtin'
+            assert (r['entry']['reference'] is not None) == is_ref
+            seen += is_ref
+    assert seen >= 1     # the Waypoint driver is on the control boards
+    assert all(len(n) < 160 for n in L.REFERENCES.values())
+
+
 def test_contributing_lists_exactly_the_verifiers_boards():
     # R3.6: CONTRIBUTING's board table is the verifier's FAMILY_SUITES (COCO-Bench v1)
     text = (REPO / 'leaderboard' / 'CONTRIBUTING.md').read_text()

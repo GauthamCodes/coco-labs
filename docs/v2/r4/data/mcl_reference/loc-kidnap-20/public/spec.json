@@ -1,0 +1,67 @@
+{
+ "algorithms": [
+  {
+   "id": "mcl_reference",
+   "label": "MCL reference (2,000 particles)",
+   "name": "mcl_augmented",
+   "params": {
+    "mcl.aggregate": "amcl",
+    "mcl.alpha_fast": 0.1,
+    "mcl.alpha_slow": 0.001,
+    "mcl.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "mcl.beams": 24,
+    "mcl.init": "tracking",
+    "mcl.inject_fraction": 0.05,
+    "mcl.particles": 2000,
+    "mcl.resample": "always",
+    "mcl.sigma_hit": 0.2
+   }
+  }
+ ],
+ "family": "localisation",
+ "limits": {
+  "max_ticks": 3000
+ },
+ "metrics": [
+  "time_s",
+  "ticks",
+  "path_length_m",
+  "min_clearance_m",
+  "mean_clearance_m",
+  "heading_change_rad",
+  "contacts",
+  "expansions",
+  "plans",
+  "final_goal_distance_m",
+  "final_err_xy_m",
+  "final_err_yaw_rad",
+  "mean_err_xy_m",
+  "max_err_xy_m",
+  "converged_s",
+  "recovery_s",
+  "compute_ms"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "id": "loc-kidnap-20",
+  "kind": "suite",
+  "version": 1
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 1,
+ "sweep": {
+  "params": []
+ },
+ "title": "R4 MCL reference: loc-kidnap-20, public",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841"
+}

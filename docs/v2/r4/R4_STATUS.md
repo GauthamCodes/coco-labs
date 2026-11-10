@@ -21,9 +21,9 @@ Prompt: [`R4_PROMPT.md`](R4_PROMPT.md) (Gautham, 2026-11-10).
 | proof: attack tests | **done**: 3 runs; run 1 FAIL under R3's check (the accepted T5 residual matched a coordinate < 10; R3 had passed by formatting); check fixed honestly; runs 2–3 PASS | [secret](data/secret/README.md) |
 | PR #37 (deploy record) | **merged** `60c6e1f` (exact head 4da1587, 5/5 green) | PR #37 self-review |
 | PR #38 Theta\* v1 claim | VERIFIED; the writer's commit `242c5ab` needs its 3 CI runs **approved** (refused to me as self-approval) | PR #38 |
-| MCL reference | probing | |
-| reference rows unranked; looks 1 and 3 | to do | |
-| Gazebo repeats 2–3 | to do (laptop on battery at the start: AC offline) | |
+| MCL reference | **done**: 2,000 particles + injection; loc-global-20 public 1/20, held-out 1/6; loc-kidnap-20 0/20, 0/6: NOT shown solvable (closed-loop: driving on a wrong belief) | [mcl_reference](data/mcl_reference/README.md) |
+| reference rows unranked; looks 1 and 3 | **done** (Waypoint driver and MCL reference pinned, greyed, unranked with a note; Model vs ROS 2 contents list; "scrolls sideways" on narrow screens) | `leaderboard.py REFERENCES`, test |
+| Gazebo repeats 2-3 | **running overnight** 2026-11-10 20:56 UTC, guarded (`tools/r3/overnight_r34.sh`); finalize + paper macros next session | |
 
 ## Part B · R4 (branch `v2/r4-learn`, worktree `~/coco_labs_ws/worktrees/r4`)
 
@@ -36,7 +36,7 @@ Prompt: [`R4_PROMPT.md`](R4_PROMPT.md) (Gautham, 2026-11-10).
 | R4.5 Progress and teaching | done: browser check 15/15 (completion link re-verified, class dashboard, CSV) | `data/r47/course_check.json` |
 | R4.6 Glossary, a11y, phone | done: 54 terms; a11y 28/28; Explorer on the EMULATED phone 6/6 (real phone not connected) | `data/r46/` |
 | R4.7 Grading integrity | done: every code exercise's reference passes, >= 3 wrong solutions caught, hard-coding fails hidden; browser = native 7/7; 2 uncaught bugs documented | [R4_RESULTS](R4_RESULTS.md) |
-| R4.8 Close | in progress | |
+| R4.8 Close | **shipped**: PR #39 merged `5a9f54d` under the gate, deployed (run 42893898506), live smoke PASS, a code exercise passed on the live site (digests = native) | [deploy](data/deploy/README.md) (PR #40) |
 
 ### R4.7 findings so far (kept; negative results stay)
 

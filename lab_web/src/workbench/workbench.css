@@ -81,3 +81,9 @@
 /* R1.9: a field never wider than its row (phone portrait) */
 .wb-row>label{min-width:0}.wb input,.wb select,.wb textarea{max-width:100%;box-sizing:border-box}
 .wb label>input:not([type=checkbox]):not([type=radio]),.wb label>select{width:100%;min-width:0}
+/* R4 Part A: reference rows are pinned, greyed and unranked */
+.wb-table tr.wb-ref>*{color:var(--muted)}.wb-table tr.wb-ref{background:var(--panel2)}
+.wb-ref-note{font-weight:400;font-size:12px;color:var(--muted);max-width:42ch}
+/* R4 Part A: say a wide table scrolls (phones), rather than hide it */
+.wb-scroll-hint{display:none;color:var(--muted);font-size:12px;margin:4px 0}
+@media (max-width:900px){.wb-scroll-hint{display:block}}
