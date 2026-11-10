@@ -1,0 +1,11 @@
+open tab ready; waiting for /home/gautham/.claude/jobs/fc1fb270/tmp/deploy2/deployed.signal
+ok   an open tab shows "New version ready" and was not reloaded {"shown":true,"reloaded":false}
+ok   title screen {"title":"COCO Lab"}
+ok   Play: a Fetch Rush round starts and COCO moves under AUTO {"a":{"tick":12,"pose":[9.950000000000001,6.050000000000001,-0.7853981633974492]},"b":{"tick":42,"pose":[10.55811183182044,5.4418881681795614,-0.7853981633974492]}}
+ok   Compare: the workspace is ready {}
+ok   Workbench: a small experiment runs {"digest":"Digest d4d0646135b6bd5a… · 6 workers"}
+ok   Studio: the A* starter runs {"status":"found ✓"}
+ok   Leaderboard: the boards render {"theta_listed":true}
+ok   Learn renders {}
+ok   no page errors {"n":0}
+LIVE SMOKE PASS

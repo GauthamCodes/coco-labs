@@ -1,0 +1,13 @@
+PASS leaderboard: control and localisation boards shown
+PASS leaderboard: a Contacts column on every control board
+PASS leaderboard: tiers and the Submit guide present
+PASS model vs ROS 2: paired tables shown (not the pending note)
+PASS about: the Reproduce link is a same-site experiment link
+PASS desktop: no page errors
+PASS phone-landscape (emulated) leaderboard: no sideways page scroll
+PASS phone-landscape (emulated) model-vs-ros2: no sideways page scroll
+PASS phone-landscape (emulated) about: no sideways page scroll
+PASS phone-portrait (emulated) leaderboard: no sideways page scroll
+PASS phone-portrait (emulated) model-vs-ros2: no sideways page scroll
+PASS phone-portrait (emulated) about: no sideways page scroll
+R3 SCREENS PASS

@@ -1,0 +1,4 @@
+2026-11-09T07:13:42Z deploy run 42571842915 exit 0
+success | coco_lab in a plain venv (no ROS)=success, lab_web in Chromium, Firefox and WebKit (determinism, screenshots)=success, lab_web (tools, decoder, site build)=success, Deploy site=success
+2026-11-09T07:17:29Z smoke exit 0
+2026-11-09T07:17:50Z R3 screens on the live site exit 0
