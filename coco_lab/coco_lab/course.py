@@ -663,7 +663,13 @@ def _gen_weights(rng) -> list:
         w = [0.0] * n
         w[k] = 1.0
     else:
-        raw = [rng.random() ** 3 if rng.random() > 0.3 else 0.0 for _ in range(n)]
+        raw = []
+        for _ in range(n):   # the same draws in the same order; x*x*x, never ** on a float
+            if rng.random() > 0.3:
+                u = rng.random()
+                raw.append(u * u * u)
+            else:
+                raw.append(0.0)
         if not any(raw):
             raw[0] = 1.0
         s = math.fsum(raw)
