@@ -17,6 +17,8 @@ say() { echo "$(date -u +%FT%TZ) $*" >> "$LOG"; }
 if pgrep -f "$FOREIGN" > /dev/null || pgrep -f 'g[z] sim' > /dev/null; then
   say "NOT STARTED: another simulator / Isaac / FR3 / franka_ws process is running"; exit 3
 fi
+export COCO_WS="${COCO_WS:-$HOME/coco_lab_r3_ws}"
+[ -f "$COCO_WS/install/local_setup.bash" ] || { say "NOT STARTED: no overlay at $COCO_WS"; exit 3; }
 ORIG="$(powerprofilesctl get 2>/dev/null)"
 say "start; power profile was '$ORIG'; AC $(cat /sys/class/power_supply/AC*/online 2>/dev/null)"
 powerprofilesctl set balanced 2>/dev/null

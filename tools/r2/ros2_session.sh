@@ -10,7 +10,8 @@
 # PACKAGE a built coco_user_<name>, or "stock" for COCO's own nav.launch.py.
 R="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 LEVEL="$1"; PKG="$2"; SC="$3"; OUT="$4"; shift 4
-export COCO_WS="${COCO_WS:-$HOME/coco_lab_r2_ws}"
+# R4 (2026-11-11): the r2 overlay was removed in a disk cleanup; r3's holds the same packages
+export COCO_WS="${COCO_WS:-$HOME/coco_lab_r3_ws}"
 export LEVEL
 export GEN="${GEN:-$HOME/coco_lab_runs/g2/gen_d5/$LEVEL}"   # R3.4: overridable (unset = as before)
 export WORLD="${WORLD:-$HOME/coco_lab_runs/g2/d5/$LEVEL/gazebo_models/worlds/$LEVEL.sdf}"

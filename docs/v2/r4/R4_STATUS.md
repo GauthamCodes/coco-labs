@@ -58,3 +58,12 @@ Prompt: [`R4_PROMPT.md`](R4_PROMPT.md) (Gautham, 2026-11-10).
 ## Next step
 
 MCL reference probes → reference rows → Part A PR; R4.0 in parallel.
+
+## Interruptions
+
+- 2026-11-11 02:15-02:35 UTC: the Gazebo queue voided `ctrl-corridor-30_mppi_rep2` four times (the simulator never
+  published /scan). Cause, my own: the session runner's default overlay `~/coco_lab_r2_ws` had been deleted in the
+  disk cleanup an hour earlier (`gazebo_models` not found). No data affected: the 7 finished repeat-2 sessions kept
+  their DONE markers; the void tries are kept (`*_void2..4`). Fixed by defaulting to `~/coco_lab_r3_ws` (the same
+  packages; `tools/r2/ros2_session.sh`, `tools/r3/overnight_r34.sh` now refuses to start without an overlay) and
+  restarting the queue, which skips DONE sessions.
