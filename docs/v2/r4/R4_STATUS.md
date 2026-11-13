@@ -67,3 +67,9 @@ MCL reference probes → reference rows → Part A PR; R4.0 in parallel.
   their DONE markers; the void tries are kept (`*_void2..4`). Fixed by defaulting to `~/coco_lab_r3_ws` (the same
   packages; `tools/r2/ros2_session.sh`, `tools/r3/overnight_r34.sh` now refuses to start without an overlay) and
   restarting the queue, which skips DONE sessions.
+- 2026-11-11 02:25 UTC: the restart on `~/coco_lab_r3_ws` voided at once: that overlay's `diff_drive_controller` has
+  `wheel_separation_multiplier` 1.1 (built 2026-11-06, before G2's calibration to 1.323 reached it), so it is NOT the
+  deleted r2 overlay's equal. The queue was then killed with the laptop (exit 143, 13:51 UTC); no data affected
+  (the void tries are kept). Needed before the repeats can resume: rebuild the overlay from the current tree
+  (`scripts/build_overlay.sh ~/coco_lab_r3_ws`), with the laptop otherwise free. On 2026-11-13 it was running
+  Gautham's e-Yantra task3b simulator, so the rebuild and the repeats wait.
