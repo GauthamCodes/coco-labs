@@ -20,10 +20,10 @@ Prompt: [`R4_PROMPT.md`](R4_PROMPT.md) (Gautham, 2026-11-10).
 | proof: verifier run with the secret | **done**: PR #38, results run 42824431748, secret held-out 20/20 | [secret](data/secret/README.md) |
 | proof: attack tests | **done**: 3 runs; run 1 FAIL under R3's check (the accepted T5 residual matched a coordinate < 10; R3 had passed by formatting); check fixed honestly; runs 2–3 PASS | [secret](data/secret/README.md) |
 | PR #37 (deploy record) | **merged** `60c6e1f` (exact head 4da1587, 5/5 green) | PR #37 self-review |
-| PR #38 Theta\* v1 claim | VERIFIED; the writer's commit `242c5ab` needs its 3 CI runs **approved** (refused to me as self-approval) | PR #38 |
+| PR #38 Theta\* v1 claim | **merged** `4d52d63` 2026-11-22 (bot-commit runs approved via the API; exact head `242c5ab` all green; local verify VERIFIED, same numbers; tests 31/31); deployed run 45055100174; live smoke PASS 9/9; live board: Theta\* v1 held-out 20/20 and secret held-out 20/20 | PR #38 self-review, [deploy_a1](data/deploy_a1/) |
 | MCL reference | **done**: 2,000 particles + injection; loc-global-20 public 1/20, held-out 1/6; loc-kidnap-20 0/20, 0/6: NOT shown solvable (closed-loop: driving on a wrong belief) | [mcl_reference](data/mcl_reference/README.md) |
 | reference rows unranked; looks 1 and 3 | **done** (Waypoint driver and MCL reference pinned, greyed, unranked with a note; Model vs ROS 2 contents list; "scrolls sideways" on narrow screens) | `leaderboard.py REFERENCES`, test |
-| Gazebo repeats 2-3 | repeat 2: 8/14 control+loc sessions DONE (RPP, DWB); MPPI x4, loc x2 and all of repeat 3 (14) left = 20 sessions; resumed 2026-11-22 | `~/coco_lab_runs/r3/r34/queue.log` |
+| Gazebo repeats 2-3 | repeat 2: 8/14 control+loc sessions DONE (RPP, DWB); MPPI x4, loc x2 and all of repeat 3 (14) left = 20 sessions; resumed 2026-11-22 19:33 UTC (`overnight_2026-11-23.log`); first session `ctrl-corridor-30_mppi_rep2` loaded calibration 1.323 on `~/coco_lab_r3_ws` | `~/coco_lab_runs/r3/r34/queue.log` |
 
 ## Part B · R4 (branch `v2/r4-learn`, worktree `~/coco_labs_ws/worktrees/r4`)
 
@@ -88,3 +88,9 @@ PR, merge under the gate, deploy, live smoke. `worktrees/r4` was removed after R
   repeat 1: most likely a suspend (the lid) -- the journal for 2026-11-11 has rotated, so UNRESOLVED. Kept as is
   (`~/coco_lab_runs` is read-only evidence): its results are sim-time and match repeat 1's (10 SUCCEEDED / 5
   ABORTED both; 13/15 scenarios the same status; 1,550 vs 1,387 sim s); flagged here and in the finalize notes.
+- 2026-11-22: `leaderboard-reverify.yml` on main has been **cancelled at its 6 h limit** on 62096d1, 5a9f54d and
+  0dff353 (and was still running on 4d52d63 at deploy): pre-existing since R3 (more entries, v1 suites); the R3/R4
+  deploys shipped without it and so did this one. Open for Gautham (shard it or raise the limit).
+- 2026-11-22: the laptop's Playwright browsers had been deleted (cleanup); the first smoke attempt failed before
+  reaching the site. `npx playwright install chromium` (the pinned 1.64 build), smoke re-run against the same deploy
+  with its tab opened before the Deploy job: PASS.
