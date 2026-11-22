@@ -23,7 +23,7 @@ Prompt: [`R4_PROMPT.md`](R4_PROMPT.md) (Gautham, 2026-11-10).
 | PR #38 Theta\* v1 claim | VERIFIED; the writer's commit `242c5ab` needs its 3 CI runs **approved** (refused to me as self-approval) | PR #38 |
 | MCL reference | **done**: 2,000 particles + injection; loc-global-20 public 1/20, held-out 1/6; loc-kidnap-20 0/20, 0/6: NOT shown solvable (closed-loop: driving on a wrong belief) | [mcl_reference](data/mcl_reference/README.md) |
 | reference rows unranked; looks 1 and 3 | **done** (Waypoint driver and MCL reference pinned, greyed, unranked with a note; Model vs ROS 2 contents list; "scrolls sideways" on narrow screens) | `leaderboard.py REFERENCES`, test |
-| Gazebo repeats 2-3 | **running overnight** 2026-11-10 20:56 UTC, guarded (`tools/r3/overnight_r34.sh`); finalize + paper macros next session | |
+| Gazebo repeats 2-3 | repeat 2: 8/14 control+loc sessions DONE (RPP, DWB); MPPI x4, loc x2 and all of repeat 3 (14) left = 20 sessions; resumed 2026-11-22 | `~/coco_lab_runs/r3/r34/queue.log` |
 
 ## Part B · R4 (branch `v2/r4-learn`, worktree `~/coco_labs_ws/worktrees/r4`)
 
@@ -57,7 +57,11 @@ Prompt: [`R4_PROMPT.md`](R4_PROMPT.md) (Gautham, 2026-11-10).
 
 ## Next step
 
-MCL reference probes → reference rows → Part A PR; R4.0 in parallel.
+(2026-11-22) R4 shipped and Part A merged (PR #41). Left: PR #38 (Theta\* v1 claim; its bot-commit runs were
+approved through the API on 2026-11-22), then the Gazebo repeats 2-3 (20 sessions, `tools/r3/overnight_r34.sh LOG`
+from this checkout, overlay `~/coco_lab_r3_ws`), then `tools/r3/finalize_r34.py`, `make -C docs/paper generated check`,
+PR, merge under the gate, deploy, live smoke. `worktrees/r4` was removed after R4 shipped; this checkout
+(`worktrees/r1`, branch `v2/r4a-loose-ends`) is the live one, and the overlay's symlinks point into it.
 
 ## Interruptions
 
@@ -73,3 +77,14 @@ MCL reference probes → reference rows → Part A PR; R4.0 in parallel.
   (the void tries are kept). Needed before the repeats can resume: rebuild the overlay from the current tree
   (`scripts/build_overlay.sh ~/coco_lab_r3_ws`), with the laptop otherwise free. On 2026-11-13 it was running
   Gautham's e-Yantra task3b simulator, so the rebuild and the repeats wait.
+- **Correction (2026-11-22): the entry above is wrong.** Re-read from the run directories: every void try (7) came
+  from the deleted `~/coco_lab_r2_ws` (`package 'gazebo_models' not found`; `/home/gautham/coco_lab_r2_ws/install/
+  local_setup.bash: No such file`). The one session run on `~/coco_lab_r3_ws`, `ctrl-dynamic-30-noyield_dwb_rep2`,
+  loaded the odometry calibration through the runner's own VOID guard (`tools/m6/m6f8_run.sh` 147-162:
+  `wheel_separation_multiplier 1.323`, `calibration.txt`: "Double value is: 1.323") and finished DONE (rc 0). The
+  installed `coco_controllers.yaml` reads 1.10 in the overlay AND in the source tree by design: the per-level
+  `gazebo/diff_drive_calibration.yaml` is loaded over the running controller. **No rebuild is needed.**
+- That session spans **670 min of wall clock with no runner output** (02:26:07 -> 13:36:43 UTC) against ~40 min for
+  repeat 1: most likely a suspend (the lid) -- the journal for 2026-11-11 has rotated, so UNRESOLVED. Kept as is
+  (`~/coco_lab_runs` is read-only evidence): its results are sim-time and match repeat 1's (10 SUCCEEDED / 5
+  ABORTED both; 13/15 scenarios the same status; 1,550 vs 1,387 sim s); flagged here and in the finalize notes.
