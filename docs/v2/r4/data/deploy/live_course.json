@@ -1,0 +1,50 @@
+{
+ "site": "https://gauthamcodes.github.io/coco-labs/",
+ "started": "2026-11-10T21:23:28.441Z",
+ "steps": [
+  {
+   "name": "agreement m1-heuristic:reference: browser pass = native pass, digest equal",
+   "ok": true,
+   "native": "b3d5362c8813ad952c37992d63eb8dd34f83175cb864bec5aa4a6b049a99155d",
+   "browser": "b3d5362c8813ad952c37992d63eb8dd34f83175cb864bec5aa4a6b049a99155d",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 33
+  },
+  {
+   "name": "agreement m2-inflation:reference: browser pass = native pass, digest equal",
+   "ok": true,
+   "native": "13db34ef40e9d0fe26e99a929db45c2d64d9f4d3aa83ed635e3296bdf35ec3e1",
+   "browser": "13db34ef40e9d0fe26e99a929db45c2d64d9f4d3aa83ed635e3296bdf35ec3e1",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 4
+  },
+  {
+   "name": "no page errors",
+   "ok": true,
+   "errors": []
+  }
+ ],
+ "cases": {
+  "m1-heuristic:reference": {
+   "native": "b3d5362c8813ad952c37992d63eb8dd34f83175cb864bec5aa4a6b049a99155d",
+   "browser": "b3d5362c8813ad952c37992d63eb8dd34f83175cb864bec5aa4a6b049a99155d",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 33
+  },
+  "m2-inflation:reference": {
+   "native": "13db34ef40e9d0fe26e99a929db45c2d64d9f4d3aa83ed635e3296bdf35ec3e1",
+   "browser": "13db34ef40e9d0fe26e99a929db45c2d64d9f4d3aa83ed635e3296bdf35ec3e1",
+   "passed": true,
+   "native_passed": true,
+   "same": true,
+   "seconds": 4
+  }
+ },
+ "finished": "2026-11-10T21:24:05.459Z"
+}

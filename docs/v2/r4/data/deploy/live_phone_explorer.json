@@ -1,0 +1,42 @@
+{
+ "site": "https://gauthamcodes.github.io/coco-labs/",
+ "device": "emulated Nothing Phone (1), landscape, 4x CPU throttle (EMULATED)",
+ "steps": [
+  {
+   "name": "home: the Explorer track lists the lesson",
+   "ok": true,
+   "sideways": false
+  },
+  {
+   "name": "predict: tap an answer, see the verdict",
+   "ok": true,
+   "sideways": false
+  },
+  {
+   "name": "observe, explain, try: reached by taps, none scrolls sideways",
+   "ok": true,
+   "seen": {
+    "observe": true,
+    "explain": true,
+    "try": true
+   }
+  },
+  {
+   "name": "try: the tune exercise graded on the phone (first check boots Python)",
+   "ok": true,
+   "weight": "3",
+   "seconds": 18,
+   "sideways": false
+  },
+  {
+   "name": "In real ROS 2: reached, no sideways scroll",
+   "ok": true
+  },
+  {
+   "name": "no page errors",
+   "ok": true,
+   "errors": []
+  }
+ ],
+ "finished": "2026-11-10T21:24:26.308Z"
+}
