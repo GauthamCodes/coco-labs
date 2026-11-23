@@ -43,7 +43,7 @@ lessons:
       text: >-
         On the full stack in Gazebo, around a wall end and into a room, DWB failed 5 of 5 with
         FAILED_TO_MAKE_PROGRESS while RPP and MPPI succeeded 5 of 5. In R3, the model's
-        controllers agreed with Nav2's on 25-40 of 70 control scenarios: the model's RPP is
+        controllers agreed with Nav2's on 25-39 of 70 control scenarios: the model's RPP is
         pessimistic (more model-only failures than stack-only).
       claims: [hairpin, r3-control-gap]
   - id: choose-lookahead
@@ -148,7 +148,7 @@ claims:
   - id: r3-control-gap
     label: SIMULATION RESULT
     text: >-
-      R3 (one Gazebo repeat, so not a rate): on 70 control scenarios the model and Nav2 agreed
-      on the outcome for RPP 25, DWB vs DWA 39, MPPI 40; the model's RPP failed where the stack
-      succeeded 33 times, the reverse 12 times.
+      R3 (three Gazebo repeats; STACK success = the majority): on 70 control scenarios the model
+      and Nav2 agreed on the outcome for RPP 25, DWB vs DWA 37, MPPI 39; the model's RPP failed
+      where the stack succeeded 33 times, the reverse 12 times.
     evidence: ['docs/v2/r3/R3_RESULTS.md', 'docs/v2/r3/data/r35/README.md']

@@ -77,7 +77,8 @@ lessons:
       text: >-
         R3 ran the Studio's particle-filter starter as a ROS 2 node in Gazebo in place of AMCL.
         On 12 of 20 tracking routes its success agreed with the same file in the model -- the
-        same agreement as AMCL against the model's MCL (one repeat). The five stack failures
+        same agreement as AMCL against the model's MCL (three repeats; every route ended the same
+        way in all three). The five stack failures
         were the same routes for both.
       claims: [r3-loc-gap]
 claims:
@@ -101,7 +102,8 @@ claims:
   - id: r3-loc-gap
     label: SIMULATION RESULT
     text: >-
-      R3, one Gazebo repeat on loc-track-30: success agreed between model and stack on 12 of
+      R3, three Gazebo repeats on loc-track-30 (STACK success = the majority; every route ended the
+      same way in all three): success agreed between model and stack on 12 of
       20 routes for MCL vs AMCL, and 12 of 20 for the particle-filter starter vs the same file
       as a ROS 2 node; the five STACK failures were the same routes for both and aborted 7-35 m
       from the goal (INFERENCE: navigation aborts, not lost poses).
