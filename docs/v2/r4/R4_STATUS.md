@@ -94,3 +94,12 @@ PR, merge under the gate, deploy, live smoke. `worktrees/r4` was removed after R
 - 2026-11-22: the laptop's Playwright browsers had been deleted (cleanup); the first smoke attempt failed before
   reaching the site. `npx playwright install chromium` (the pinned 1.64 build), smoke re-run against the same deploy
   with its tab opened before the Deploy job: PASS.
+- 2026-11-22 23:19-23:39 UTC: `loc-track-30_pf_rep2` VOID x4 (`package 'coco_user_particle_filter' not found`):
+  the r3 overlay never held the `coco_user_*` packages (repeat 1 ran on the deleted r2 overlay; the runner's comment
+  "r3's holds the same packages" was wrong for these). Fixed 2026-11-23 ~17:00 UTC: the starter exported with
+  `python -m coco_lab.ros2_export` into `~/coco_lab_r3_ws/user_src/` and built into that overlay (`algorithm.py`
+  sha256 `de1102c9...` = repeat 1's logged file). Only the pf sessions use a `coco_user_*` package in this queue;
+  `loc-track-30_pf_rep2` is re-run by starting `overnight_r34.sh` again once the queue ends (DONE sessions skip).
+- 2026-11-23 02:36-15:43 UTC: `ctrl-corridor-30_dwb_rep3` **spanned a suspend** -- journal: "Lid closed" 08:06:56
+  IST, "System returned from sleep" 20:27:20 IST (12.3 h). Kept (read-only evidence); results are sim-time and in
+  range: 14/20 SUCCEEDED (rep1 14/20, rep2 15/20), 3/20 scenarios differ from rep2.
