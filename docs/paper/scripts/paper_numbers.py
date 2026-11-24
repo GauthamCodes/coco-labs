@@ -185,7 +185,7 @@ def macros():
             return c
         reps = g['repeats']
         add('GapPlanReps', min(len(v) for k, v in reps.items() if k.endswith('_plan')), gp)
-        add('GapCtrlReps', max(len(v) for k, v in reps.items() if not k.endswith('_plan')), gp)
+        add('GapCtrlReps', min(len(v) for k, v in reps.items() if not k.endswith('_plan')), gp)  # every kind ran at least this often
         add('GapPlanScenarios', g['planning']['depot-nav-100']['user_compute_path_to_pose']['n'], gp)
         add('GapPlanSuites', len(g['planning']), gp)
         add('GapPlanStackOnly', sum(p['confusion']['stack_only'] for ps in g['planning'].values()

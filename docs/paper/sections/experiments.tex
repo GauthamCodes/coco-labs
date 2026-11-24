@@ -86,9 +86,8 @@ with the model on the same legs, the median difference in time per leg was \Stac
 We ran tier-stratified subsets of the suites (\GapPlanScenarios{} scenarios per suite) through the
 full ROS~2 stack in Gazebo and paired every STACK result with the model's run on the same scenario
 (\evclass{stack} vs \evclass{model}; every pair is downloadable from the Workbench). Planning ran
-\GapPlanReps{} times per session and a scenario's STACK success is the majority; control and
-localisation ran \GapCtrlReps{} time each, because the machine was available for one pass only, so
-their numbers are single runs and their agreement shares carry no repeat-to-repeat check.
+\GapPlanReps{} times per session and control and localisation \GapCtrlReps{} times; a scenario's STACK
+success is the majority over its repeats, and every repeat is kept in the downloadable rows.
 
 \textbf{Planning.} Over \GapPlanPairs{} paired requests on \GapPlanSuites{} suites, ROS~2 never found a
 path the model missed (\GapPlanStackOnly{} cases): every disagreement is the model being

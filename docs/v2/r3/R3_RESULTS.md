@@ -84,3 +84,12 @@ with dates and sources ([VENUES](../../paper/VENUES.md)). Author "Gautham", no a
 
 `docs/launch/`: 90-second demo script, LinkedIn post (long and short), résumé bullets with evidence, an architecture
 SVG; CITATION.cff and About → Cite; the README front page. Nothing published.
+
+## Update 2026-11-24 (R4 Part A): control and localisation repeats 2–3
+
+The "n = 1 repeat … NOT MET" above is now met: control and localisation ran 3 repeats each (54 STACK sessions in
+all, `data/r34/sessions/`; STACK success = the majority). Against the n = 1 figures: control agreement DWB vs DWA
+**39 -> 37/70**, MPPI **40 -> 39/70**, RPP unchanged (25/70; 33 STACK-only vs 12 model-only); RPP/DWB median time
+ratios 1.00–1.13 (was 1.00–1.11), MPPI 0.56–0.58 unchanged; localisation unchanged (12/20 both pairs, the same 5
+STACK failures; every route ended the same way in all 3 repeats). Two sessions spanned a laptop suspend and were
+kept (R4_STATUS). The paper's macros regenerate from these data (`docs/paper/generated/numbers.tex`, 7 changed).

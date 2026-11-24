@@ -16,25 +16,25 @@
     "model_optimistic": 0.2,
     "model_pessimistic": 0.0,
     "n": 20,
-    "ratio_median": 1.0953,
+    "ratio_median": 1.1287,
     "ratio_n": 15
    },
    "mppi": {
-    "agreement": 0.65,
+    "agreement": 0.6,
     "confusion": {
-     "both": 13,
-     "model_only": 6,
+     "both": 12,
+     "model_only": 7,
      "neither": 0,
      "stack_only": 1
     },
     "label": "model mppi vs Nav2 MPPI",
     "metric": "time to goal (s)",
     "model": "mppi",
-    "model_optimistic": 0.3,
+    "model_optimistic": 0.35,
     "model_pessimistic": 0.05,
     "n": 20,
-    "ratio_median": 0.5715,
-    "ratio_n": 13
+    "ratio_median": 0.5751,
+    "ratio_n": 12
    },
    "rpp": {
     "agreement": 0.45,
@@ -56,18 +56,18 @@
   },
   "ctrl-corridor-30": {
    "dwb": {
-    "agreement": 0.6,
+    "agreement": 0.55,
     "confusion": {
      "both": 9,
      "model_only": 3,
-     "neither": 3,
-     "stack_only": 5
+     "neither": 2,
+     "stack_only": 6
     },
     "label": "model dwa vs Nav2 DWB",
     "metric": "time to goal (s)",
     "model": "dwa",
     "model_optimistic": 0.15,
-    "model_pessimistic": 0.25,
+    "model_pessimistic": 0.3,
     "n": 20,
     "ratio_median": 1.0654,
     "ratio_n": 9
@@ -86,7 +86,7 @@
     "model_optimistic": 0.15,
     "model_pessimistic": 0.0,
     "n": 20,
-    "ratio_median": 0.5573,
+    "ratio_median": 0.5641,
     "ratio_n": 17
    },
    "rpp": {
@@ -103,7 +103,7 @@
     "model_optimistic": 0.15,
     "model_pessimistic": 0.65,
     "n": 20,
-    "ratio_median": 1.0722,
+    "ratio_median": 1.0573,
     "ratio_n": 4
    }
   },
@@ -122,7 +122,7 @@
     "model_optimistic": 0.2,
     "model_pessimistic": 0.5333,
     "n": 15,
-    "ratio_median": 1.1072,
+    "ratio_median": 1.035,
     "ratio_n": 3
    },
    "mppi": {
@@ -139,7 +139,7 @@
     "model_optimistic": 0.2,
     "model_pessimistic": 0.4667,
     "n": 15,
-    "ratio_median": 0.5839,
+    "ratio_median": 0.557,
     "ratio_n": 3
    },
    "rpp": {
@@ -156,24 +156,24 @@
     "model_optimistic": 0.1333,
     "model_pessimistic": 0.4667,
     "n": 15,
-    "ratio_median": 1.0512,
+    "ratio_median": 1.0613,
     "ratio_n": 4
    }
   },
   "ctrl-dynamic-30 (actors keep schedule)": {
    "dwb": {
-    "agreement": 0.4667,
+    "agreement": 0.4,
     "confusion": {
      "both": 5,
      "model_only": 3,
-     "neither": 2,
-     "stack_only": 5
+     "neither": 1,
+     "stack_only": 6
     },
     "label": "model dwa vs Nav2 DWB",
     "metric": "time to goal (s)",
     "model": "dwa",
     "model_optimistic": 0.2,
-    "model_pessimistic": 0.3333,
+    "model_pessimistic": 0.4,
     "n": 15,
     "ratio_median": 1.0041,
     "ratio_n": 5
@@ -192,7 +192,7 @@
     "model_optimistic": 0.2,
     "model_pessimistic": 0.4667,
     "n": 15,
-    "ratio_median": 0.5585,
+    "ratio_median": 0.5674,
     "ratio_n": 3
    },
    "rpp": {
@@ -209,7 +209,7 @@
     "model_optimistic": 0.1333,
     "model_pessimistic": 0.4667,
     "n": 15,
-    "ratio_median": 1.0472,
+    "ratio_median": 1.0434,
     "ratio_n": 4
    }
   }
@@ -244,7 +244,7 @@
     "model_optimistic": 0.2,
     "model_pessimistic": 0.2,
     "n": 20,
-    "ratio_median": 1.0521,
+    "ratio_median": 1.0757,
     "ratio_n": 11
    },
    "amcl:mcl_augmented": {
@@ -261,7 +261,7 @@
     "model_optimistic": 0.15,
     "model_pessimistic": 0.35,
     "n": 20,
-    "ratio_median": 1.0438,
+    "ratio_median": 1.0451,
     "ratio_n": 8
    },
    "pf:mcl": {
@@ -278,7 +278,7 @@
     "model_optimistic": 0.2,
     "model_pessimistic": 0.2,
     "n": 20,
-    "ratio_median": 1.0311,
+    "ratio_median": 1.0599,
     "ratio_n": 11
    }
   }
@@ -703,40 +703,64 @@
  },
  "repeats": {
   "ctrl-corners-30_dwb": [
-   1
+   1,
+   2,
+   3
   ],
   "ctrl-corners-30_mppi": [
-   1
+   1,
+   2,
+   3
   ],
   "ctrl-corners-30_rpp": [
-   1
+   1,
+   2,
+   3
   ],
   "ctrl-corridor-30_dwb": [
-   1
+   1,
+   2,
+   3
   ],
   "ctrl-corridor-30_mppi": [
-   1
+   1,
+   2,
+   3
   ],
   "ctrl-corridor-30_rpp": [
-   1
+   1,
+   2,
+   3
   ],
   "ctrl-dynamic-30-noyield_dwb": [
-   1
+   1,
+   2,
+   3
   ],
   "ctrl-dynamic-30-noyield_mppi": [
-   1
+   1,
+   2,
+   3
   ],
   "ctrl-dynamic-30-noyield_rpp": [
-   1
+   1,
+   2,
+   3
   ],
   "ctrl-dynamic-30_dwb": [
-   1
+   1,
+   2,
+   3
   ],
   "ctrl-dynamic-30_mppi": [
-   1
+   1,
+   2,
+   3
   ],
   "ctrl-dynamic-30_rpp": [
-   1
+   1,
+   2,
+   3
   ],
   "depot-clutter-50_plan": [
    1,
@@ -759,14 +783,29 @@
    3
   ],
   "loc-track-30_amcl": [
-   1
+   1,
+   2,
+   3
   ],
   "loc-track-30_pf": [
-   1
+   1,
+   2,
+   3
   ]
  },
  "sessions_not_used": [
   "ctrl-corridor-30_mppi_rep1_void2",
-  "ctrl-corridor-30_mppi_rep1_void3"
+  "ctrl-corridor-30_mppi_rep1_void3",
+  "ctrl-corridor-30_mppi_rep2_void2",
+  "ctrl-corridor-30_mppi_rep2_void3",
+  "ctrl-corridor-30_mppi_rep2_void4",
+  "ctrl-dynamic-30-noyield_dwb_rep2_void1",
+  "ctrl-dynamic-30-noyield_dwb_rep2_void2",
+  "ctrl-dynamic-30-noyield_dwb_rep2_void3",
+  "ctrl-dynamic-30-noyield_dwb_rep2_void4",
+  "loc-track-30_pf_rep2_void1",
+  "loc-track-30_pf_rep2_void2",
+  "loc-track-30_pf_rep2_void3",
+  "loc-track-30_pf_rep2_void4"
  ]
 }
