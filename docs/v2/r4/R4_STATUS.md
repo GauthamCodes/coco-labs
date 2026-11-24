@@ -23,7 +23,7 @@ Prompt: [`R4_PROMPT.md`](R4_PROMPT.md) (Gautham, 2026-11-10).
 | PR #38 Theta\* v1 claim | **merged** `4d52d63` 2026-11-22 (bot-commit runs approved via the API; exact head `242c5ab` all green; local verify VERIFIED, same numbers; tests 31/31); deployed run 45055100174; live smoke PASS 9/9; live board: Theta\* v1 held-out 20/20 and secret held-out 20/20 | PR #38 self-review, [deploy_a1](data/deploy_a1/) |
 | MCL reference | **done**: 2,000 particles + injection; loc-global-20 public 1/20, held-out 1/6; loc-kidnap-20 0/20, 0/6: NOT shown solvable (closed-loop: driving on a wrong belief) | [mcl_reference](data/mcl_reference/README.md) |
 | reference rows unranked; looks 1 and 3 | **done** (Waypoint driver and MCL reference pinned, greyed, unranked with a note; Model vs ROS 2 contents list; "scrolls sideways" on narrow screens) | `leaderboard.py REFERENCES`, test |
-| Gazebo repeats 2-3 | repeat 2: 8/14 control+loc sessions DONE (RPP, DWB); MPPI x4, loc x2 and all of repeat 3 (14) left = 20 sessions; resumed 2026-11-22 19:33 UTC (`overnight_2026-11-23.log`); first session `ctrl-corridor-30_mppi_rep2` loaded calibration 1.323 on `~/coco_lab_r3_ws` | `~/coco_lab_runs/r3/r34/queue.log` |
+| Gazebo repeats 2-3 | **done 2026-11-24**: 54 sessions, 3 repeats per kind; finalized; paper macros (7 moved); PR #42 merged `129ee48`, deployed run 45295291339, live smoke PASS ([deploy_a2](data/deploy_a2/README.md)). Was: repeat 2: 8/14 control+loc sessions DONE (RPP, DWB); MPPI x4, loc x2 and all of repeat 3 (14) left = 20 sessions; resumed 2026-11-22 19:33 UTC (`overnight_2026-11-23.log`); first session `ctrl-corridor-30_mppi_rep2` loaded calibration 1.323 on `~/coco_lab_r3_ws` | `~/coco_lab_runs/r3/r34/queue.log` |
 
 ## Part B · R4 (branch `v2/r4-learn`, worktree `~/coco_labs_ws/worktrees/r4`)
 
@@ -56,6 +56,10 @@ Prompt: [`R4_PROMPT.md`](R4_PROMPT.md) (Gautham, 2026-11-10).
   disk 3.9 GB free (so Part A works in `worktrees/r1`, switched from the merged, clean, pushed R3 branch).
 
 ## Next step
+
+**Part A closed 2026-11-24.** Next per README: R5 · World editor, Run it in ROS 2 and Live ROS 2 in Docker (Gautham's prompt).
+
+Earlier:
 
 (2026-11-22) R4 shipped and Part A merged (PR #41). Left: PR #38 (Theta\* v1 claim; its bot-commit runs were
 approved through the API on 2026-11-22), then the Gazebo repeats 2-3 (20 sessions, `tools/r3/overnight_r34.sh LOG`
