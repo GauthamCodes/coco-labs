@@ -89,9 +89,10 @@ def test_every_copied_source_exists_and_is_not_dockerignored():
         assert not any(s == g.lstrip('/') or s.startswith(g.lstrip('/') + '/') for g in ignored), s
 
 
-def test_one_port_published_and_the_entrypoint_is_coco_ros2_under_tini():
+def test_two_ports_published_and_the_entrypoint_is_coco_ros2_under_tini():
+    # 8765: the read-only foxglove_bridge; 8766: the coco.v1 control gateway (R5.2, 2026-11-26)
     ins = dockerfile_instructions()
-    assert [a for i, a in ins if i == 'EXPOSE'] == ['8765']
+    assert [a for i, a in ins if i == 'EXPOSE'] == ['8765 8766']
     assert ('ENTRYPOINT', '["/usr/bin/tini", "--", "/opt/coco/bin/coco-ros2"]') in ins
     assert ('CMD', '["--level", "depot"]') in ins
     assert any(i == 'HEALTHCHECK' and '/tmp/coco/ready.json' in a for i, a in ins)
@@ -254,3 +255,20 @@ def test_the_workflow_pushes_only_after_every_check():
     assert 'always()' not in str(steps[push].get('if', ''))
     assert int(WORKFLOW['jobs']['image']['env']['MAX_IMAGE_BYTES']) < 7_552_487_424
     assert WORKFLOW['permissions'] == {'contents': 'read', 'packages': 'write'}
+
+
+def test_the_gateway_is_cocos_own_coco_v1_server_in_remote_mode():
+    # R5.2 (Gautham, 2026-11-26): control goes through a gateway restricted by construction; it is
+    # coco_web's platform_server, whose publishers are its allowlist (never the wheels)
+    text = open(os.path.join(D, 'entrypoint.sh')).read()
+    assert 'ros2 run coco_web platform_server' in text and '-p remote:=true' in text
+    assert 'origins:=${GW_ORIGINS}' in text and 'https://gauthamcodes.github.io' in text
+    srv = open(os.path.join(REPO, 'coco_web', 'coco_web', 'platform_server.py')).read()
+    pubs = re.findall(r"create_publisher\(\s*\w+,\s*([^,]+),", srv)
+    assert pubs and not any('diff_drive_controller' in t or t.strip() in ("'/cmd_vel'",) for t in pubs), pubs
+    probe = open(os.path.join(D, 'gw_probe.mjs')).read()
+    for k in ('wheels_only_arbiter', 'teleop_input_is_the_gateway', 'stop_latches_and_holds',
+              'goal_reaches_nav2', 'foreign_origin_refused'):
+        assert k in probe, k
+    wf = open(os.path.join(REPO, '.github', 'workflows', 'coco-ros2-image.yml')).read()
+    assert wf.index('gw_probe.mjs') < wf.index('- name: Push to ghcr.io')

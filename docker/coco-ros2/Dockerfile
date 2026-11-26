@@ -3,17 +3,19 @@
 #
 # ghcr.io/gauthamcodes/coco-ros2 -- R5.1: COCO's ROS 2 stack, headless, for LIVE ROS 2 in the browser.
 #
-#   docker run --rm -p 8765:8765 ghcr.io/gauthamcodes/coco-ros2 --level depot
+#   docker run --rm -p 8765:8765 -p 8766:8766 ghcr.io/gauthamcodes/coco-ros2 --level depot
 #
 # ROS 2 Jazzy (ros-base), Gazebo Harmonic as a server only (no GUI; software OpenGL through Xvfb for
 # the GPU LiDAR and the camera), Nav2, COCO's stack built from THIS repository's packages
 # (gazebo_models, custom_teleop with cmd_vel_arbiter, coco_config, coco_sim; never the COCO robot
-# repository), foxglove_bridge on 8765, and COCO Lab's generated levels. Built, tested and measured in
+# repository), foxglove_bridge on 8765 (READ-ONLY), COCO's coco.v1 control gateway (coco_web's
+# platform_server, remote mode) on 8766, and COCO Lab's generated levels. Built, tested and measured in
 # CI (.github/workflows/coco-ros2-image.yml) before anyone pulls it; docs/DOCKER.md, "coco-ros2".
 #
 # Kept out, to stay far below the 8.18 GB appliance (/Dockerfile: osrf/ros:jazzy-desktop, MoveIt,
-# CPU torch): the desktop variant, MoveIt, torch and the RL climb, the mission executive, perception,
-# the coco_web platform and web_video_server. The arm's controllers still load (full_world_robo
+# CPU torch): the desktop variant, MoveIt, torch and the RL climb, the mission executive, perception
+# and web_video_server. coco_web runs in remote mode (/ws and /healthz only), with OpenCV's headless
+# wheel instead of Ubuntu's python3-opencv (its GUI stack would not fit the size budget). The arm's controllers still load (full_world_robo
 # spawns them); nothing here plans arm motions.
 #
 # Build context: the repository root.
@@ -47,9 +49,10 @@ COPY coco_config src/coco-labs/coco_config
 COPY coco_sim src/coco-labs/coco_sim
 COPY custom_teleop src/coco-labs/custom_teleop
 COPY gazebo_models src/coco-labs/gazebo_models
+COPY coco_web src/coco-labs/coco_web
 # BUILD_TESTING off: the tests run in CI's ROS job (ci.yml); the image needs none of their deps.
 RUN . /opt/ros/jazzy/setup.sh \
- && colcon build --packages-select coco_config coco_sim custom_teleop gazebo_models \
+ && colcon build --packages-select coco_config coco_sim custom_teleop gazebo_models coco_web \
       --cmake-args -DBUILD_TESTING=OFF --event-handlers console_cohesion+
 
 # ---- 3. the runtime ----
@@ -79,6 +82,14 @@ RUN apt-get update \
       libgl1-mesa-dri \
       libglx-mesa0 \
       tini \
+      ros-jazzy-std-srvs \
+      ros-jazzy-trajectory-msgs \
+      python3-tornado \
+      python3-numpy \
+      python3-pip \
+ && python3 -m pip install --no-cache-dir --break-system-packages --no-deps opencv-python-headless==4.10.0.84 \
+ && python3 -c "import cv2, numpy, tornado; print('cv2', cv2.__version__, 'numpy', numpy.__version__, 'tornado', tornado.version)" \
+ && apt-get purge -y python3-pip && apt-get autoremove -y \
  && rm -rf /var/lib/apt/lists/*
 
 COPY --from=overlay /opt/coco_ws/install /opt/coco_ws/install
@@ -100,13 +111,14 @@ ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp \
     GZ_IP=127.0.0.1 \
     GZ_VERSION=harmonic \
     LIBGL_ALWAYS_SOFTWARE=1 \
-    COCO_BRIDGE_PORT=8765
+    COCO_BRIDGE_PORT=8765 \
+    COCO_GATEWAY_PORT=8766
 
 LABEL org.opencontainers.image.source="https://github.com/GauthamCodes/coco-labs" \
-      org.opencontainers.image.description="COCO's ROS 2 stack (Jazzy, Gazebo Harmonic headless, Nav2, cmd_vel_arbiter) with foxglove_bridge on 8765, for COCO Lab's LIVE view. A simulation; never hardware." \
+      org.opencontainers.image.description="COCO's ROS 2 stack (Jazzy, Gazebo Harmonic headless, Nav2, cmd_vel_arbiter) with a read-only foxglove_bridge on 8765 and the coco.v1 control gateway on 8766, for COCO Lab's LIVE view. A simulation; never hardware." \
       org.opencontainers.image.licenses="Apache-2.0"
 
-EXPOSE 8765
+EXPOSE 8765 8766
 # Ready = every Nav2 lifecycle node active and AMCL publishing (the entrypoint writes the file then).
 # The start period covers Gazebo's start under software rendering on a small CPU.
 HEALTHCHECK --interval=10s --timeout=5s --start-period=600s --retries=3 \

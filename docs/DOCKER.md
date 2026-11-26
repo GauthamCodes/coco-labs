@@ -14,7 +14,7 @@ yet; the first green run of `.github/workflows/coco-ros2-image.yml` decides it, 
 to `docs/v2/r5/R5_STATUS.md`. Until then every statement below is design, not evidence.
 
 ```bash
-docker run --rm -p 8765:8765 ghcr.io/gauthamcodes/coco-ros2 --level depot
+docker run --rm -p 8765:8765 -p 8766:8766 ghcr.io/gauthamcodes/coco-ros2 --level depot
 docker exec <container> coco-ros2 check      # R5.1's acceptance, against the running stack
 docker run --rm ghcr.io/gauthamcodes/coco-ros2 levels
 ```

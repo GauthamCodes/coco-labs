@@ -35,7 +35,7 @@ WebSocket bridge (foxglove_bridge) on port 8765 — a simulation, labelled LIVE 
 hardware:
 
 ```bash
-docker run --rm -p 8765:8765 ghcr.io/gauthamcodes/coco-ros2 --level depot
+docker run --rm -p 8765:8765 -p 8766:8766 ghcr.io/gauthamcodes/coco-ros2 --level depot
 # levels: depot, depot_colours, depot_clutter, arena;  docker exec <id> coco-ros2 check
 ```
 

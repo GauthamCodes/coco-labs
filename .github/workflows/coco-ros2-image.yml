@@ -21,6 +21,7 @@ on:
       - 'custom_teleop/**'
       - 'coco_config/**'
       - 'coco_sim/**'
+      - 'coco_web/**'
       - 'coco_lab/coco_lab/**'
       - 'tools/m6/gen_level.py'
       - 'worlds/**'
@@ -103,7 +104,7 @@ jobs:
 
       - name: Start it with the README's command (detached and named for the test)
         run: |
-          docker run -d --rm --name coco -p 8765:8765 coco-ros2:ci --level depot
+          docker run -d --rm --name coco -p 8765:8765 -p 8766:8766 coco-ros2:ci --level depot
           nohup docker logs -f coco > out/container.log 2>&1 &
           start=$(date +%s)
           for i in $(seq 1 150); do
@@ -127,6 +128,9 @@ jobs:
 
       - name: The bridge from outside the container (ws://127.0.0.1:8765)
         run: node docker/coco-ros2/ws_probe.mjs ws://127.0.0.1:8765 out/probe.json --seconds 10 --container coco
+
+      - name: The control gateway from outside the container (ws://127.0.0.1:8766/ws, coco.v1)
+        run: node docker/coco-ros2/gw_probe.mjs ws://127.0.0.1:8766/ws out/gw_probe.json --container coco
 
       - name: After the probe, the stack still passes (the arbiter still the only wheel publisher)
         run: |

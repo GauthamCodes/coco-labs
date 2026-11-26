@@ -6,7 +6,7 @@
 # COCO Lab level, with a WebSocket bridge, in one container. LIVE means this stack running now;
 # it is a simulation (Gazebo), never hardware.
 #
-#   docker run --rm -p 8765:8765 ghcr.io/gauthamcodes/coco-ros2 --level depot
+#   docker run --rm -p 8765:8765 -p 8766:8766 ghcr.io/gauthamcodes/coco-ros2 --level depot
 #
 #   coco-ros2 [--level NAME] [--port N]   start (default --level depot, port 8765)
 #   coco-ros2 levels                      the levels this image carries
@@ -32,6 +32,10 @@ COCO=/opt/coco
 INDEX="$COCO/levels/index.json"
 LOGS="${COCO_LOG_DIR:-/tmp/coco}"
 PORT="${COCO_BRIDGE_PORT:-8765}"
+GW_PORT="${COCO_GATEWAY_PORT:-8766}"
+# The browser origins the gateway accepts (tornado refuses any other Origin at the handshake);
+# a non-browser client sends no Origin and is not affected.
+GW_ORIGINS="${COCO_GATEWAY_ORIGINS:-https://gauthamcodes.github.io,http://localhost:*,http://127.0.0.1:*}"
 LEVEL="${COCO_LEVEL:-depot}"
 SCAN_TIMEOUT="${COCO_SCAN_TIMEOUT:-300}"
 NAV_TIMEOUT="${COCO_NAV_TIMEOUT:-300}"
@@ -119,7 +123,8 @@ run_stack() {
 
   say "COCO's ROS 2 stack (LIVE when running: a simulation in Gazebo, never hardware)"
   say "  level ${LEVEL_ALIAS} = ${LEVEL_ID} (${LEVEL_KIND}; files ${LEVEL_VERIFIED})"
-  say "  bridge ws://0.0.0.0:${PORT} (foxglove_bridge); RMW ${RMW_IMPLEMENTATION}"
+  say "  bridge ws://0.0.0.0:${PORT} (foxglove_bridge, read-only); RMW ${RMW_IMPLEMENTATION}"
+  say "  control ws://0.0.0.0:${GW_PORT}/ws (coco.v1, coco_web platform_server, remote mode)"
 
   # 1. software OpenGL for Gazebo's sensors (gpu_lidar, rgbd_camera): no GPU is assumed
   start xvfb Xvfb :99 -screen 0 1280x1024x24 +extension GLX +render -noreset -nolisten tcp
@@ -176,6 +181,10 @@ run_stack() {
 
   # 6. the arbiter (the only wheel publisher), then Nav2 through it
   start arbiter ros2 launch custom_teleop arbiter.launch.py initial_mode:=nav use_sim_time:=true
+  # 6b. the control gateway: COCO's own coco.v1 server. It publishes only its allowlist (the arbiter's
+  # teleop input and mode, /goal_pose, the arm and gripper trajectories): never the wheels.
+  start gateway ros2 run coco_web platform_server --ros-args -p use_sim_time:=true \
+    -p "http_port:=${GW_PORT}" -p remote:=true -p access:=open -p "origins:=${GW_ORIGINS}"
   if [ -n "$LEVEL_MAP" ]; then
     start nav ros2 launch gazebo_models nav.launch.py arbiter:=true use_sim_time:=true \
       map:="$LEVEL_MAP" params_file:="$LEVEL_PARAMS"
@@ -187,8 +196,10 @@ run_stack() {
   wait_for "AMCL publishing a pose" "$AMCL_TIMEOUT" amcl_up || fail "no AMCL pose" nav.log
 
   printf '{"level": "%s", "id": "%s", "bridge_port": %s, "ready_utc": "%s", "nav2": "active"}\n' \
-    "$LEVEL_ALIAS" "$LEVEL_ID" "$PORT" "$(date -u +%FT%TZ)" > "$LOGS/ready.json"
-  say "READY: Nav2 active on ${LEVEL_ID}; connect to ws://localhost:${PORT}"
+    "$LEVEL_ALIAS" "$LEVEL_ID" "$PORT" "$(date -u +%FT%TZ)" > "$LOGS/ready.json.tmp"
+  python3 -c "import json,sys; r=json.load(open(sys.argv[1])); r['gateway_port']=int(sys.argv[2]); print(json.dumps(r))" \
+    "$LOGS/ready.json.tmp" "$GW_PORT" > "$LOGS/ready.json" && rm -f "$LOGS/ready.json.tmp"
+  say "READY: Nav2 active on ${LEVEL_ID}; connect to ws://localhost:${PORT} (topics) and ws://localhost:${GW_PORT}/ws (control)"
 
   # Hold the container on the stack: if any part exits, say which and stop the rest.
   while :; do
